@@ -4,90 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3461C87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 09:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B46EC87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 10:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujx9R-0006hV-Rn; Thu, 07 Aug 2025 05:43:09 -0400
+	id 1ujxcm-0000th-El; Thu, 07 Aug 2025 06:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ujx9Q-0006cO-6f
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 05:43:08 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ujx9O-0002RR-1A
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 05:43:07 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e904114e1c0so182704276.0
- for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 02:43:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754559784; x=1755164584; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nNOj+Fog91d5AhklEuu/5oGoMorQcoVZ9r41Ehy9MHM=;
- b=SknZsAMIgPIvJu0i3YZwAboWj9uybjbngjedc8H5Uu2nB3nkvcth4YsWMfwTUSXbep
- L+skYUlCQtvEkhSF9ApDlAw/WIi0EG6rCyOJxC7j/dQpSio3MY39e4MQMTmB0vKCQVOK
- BEG/Z1Oz1J0D0yTQ5Aa7Ywjp7s2Zmqb2Xr1L8TbIpcxh1Cz1BiFUj03ZdwRtCfgk/6rz
- GbWfZAP4yIz/1GRY8EyEj7dpz9fGiF4qGjFwX2GgE3M8fVo5XgUgX2t0EoQ7B1dTm2Ly
- ZkB13vkM8zqWxSwjDdGLKE4cO28KdpOvg0o1Oz/garz+yw/ut0tT+10x3QqsqQizT5Ll
- l76g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754559784; x=1755164584;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nNOj+Fog91d5AhklEuu/5oGoMorQcoVZ9r41Ehy9MHM=;
- b=irbazXyBXaeFcDEFy5r4OehSSer/JiE1YqsPrmMUQHcppHnXZn7ZGUXXKNH+zxnRQT
- u58Oe25DC0Ika+6Ahey6U/cO/mY4yJ1wRuetivOUQ9g7Kad2XB8bkf7AK7A3ghge2Mp9
- Wg64rlbA8Nq3ktAuTiwyDcIF6aqtEevH6YyEUFtoC3mUWPC1dr8I01Cf0EGT+kN2Or4p
- iPFSYmSthCwzI85idwMNkUPtaWL5xTvyb+3nqAP4foGn2t/W1sC+YWDDW9hhFvli2acC
- ZxAGwujP/kkBhWnoz7tT1UBMf8QqKasBYBu1Xt6vhOwfhHiG/wqMA2JFp2HN35BiUm8E
- 9PMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRc1WTCIJw4ofIyO/Hsn0qNuq4il0UpssBPRv9Qx6FGS4Rezm6iB1pg5XuLZ4ompCjnJK7rUEhSrGL@nongnu.org
-X-Gm-Message-State: AOJu0YzX7XBwextLSOtZUaL/yX3olCXkMnT2Du3cQhUYnXaV7UjIahwd
- e6XOCTsbsUo8z12oP0TbFtHSghicjJr+esK7Vrp3ojKVm0zztp2x8YzCAx054UG3od98zMHHDgW
- XNoJAsUXKvLSFukcz4m8KiUYPLaEBv1ZsCSPrmT4Q4w==
-X-Gm-Gg: ASbGnct7xwwFarDmQbX2WhEvSv+44jesQrPfI7RcTI/sK2hqNdZvSzf3z7+6Z6bGtXi
- nOOw7YZfRHHoF3It3rvjpce1/q/xkOF7KdpzZflpvZ917U9lqt7tT/lLLCCJqm2+rt719z+wJFg
- arFi+ql5TeREtw80HdNFAonQn7aph740AmA6iX7j5dZHqqWXzIVdzyBsgIA4oEbqyRy3T5dUYpS
- KMtoGgf
-X-Google-Smtp-Source: AGHT+IGyMYNRHQzSHhgea7B4Jb2jf7My4wczQ3l+DmQ8quU3P+6Rc3KAEvzClY3BD+QplutJOOFhmj2pPIVqozloLr8=
-X-Received: by 2002:a05:690c:968a:b0:718:17b1:40d with SMTP id
- 00721157ae682-71bc973985bmr85378337b3.7.1754559784091; Thu, 07 Aug 2025
- 02:43:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ujxcj-0000a8-5y
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 06:13:25 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ujxcf-0007vX-Tc
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 06:13:24 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 577AD710036742
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 7 Aug 2025 19:13:07 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=VkuZ0tzb4mKRc+5VnFqU/I5ErGuIcEXpVpBx69Sz2r8=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1754561587; v=1;
+ b=hGcBN9xGhVkQzDhr9wT93LwgAMTkdLYkEQruVOzL4sSXq7m7A24v6YT/0IR1M0Az
+ /hHXqdAYNpmZwbpVhmsHn0V/zIkYd1jRmXMI3G6qHMcUsgupziJrvJGeZG5u9alj
+ a+nxMgkz+xMPsfilrJJciBtKO1TCVL+JRrI7pUOz8MQ0I1XpqiaX7lWr398P3Zuc
+ OoOG7xTsqrS3ufK2mMtqaxPwhm2ki+7xOnNpa2gfN87hOvVegu2NGwDbHhQBk8nf
+ NLCCdoZ/IPhO4krOqY+48TKq08yGI6qSyWDR1vciTOoFWyvUI9y/iJ4amyeIimNw
+ uSpHOSKzamB0CW9X8EcyCw==
+Message-ID: <e7a32cb5-9d60-4dd3-b8af-4dd734de2f03@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 7 Aug 2025 19:13:06 +0900
 MIME-Version: 1.0
-References: <20250722201404.2368507-1-vacha.bhavsar@oss.qualcomm.com>
- <20250722201404.2368507-2-vacha.bhavsar@oss.qualcomm.com>
- <875xf36qyk.fsf@draig.linaro.org>
- <CAFEAcA8o4wEHHDXVj0Fcc3i8g+49psY7YSf1AqGiGe9vNuXiQA@mail.gmail.com>
- <87ikj3545v.fsf@draig.linaro.org>
- <CAFEAcA-Y7utLb9cciGJOVAPF8Y0W4RxcOLDnNS7ptpHtYVG_EQ@mail.gmail.com>
- <CAEWVDmsOD-vNc6YbwfND9yzfz-G8kEsFfpEtJ5A+duhUzGU2Pg@mail.gmail.com>
- <CAEWVDms3R+_dv79GTdmzbJBJ3rb=hSi7rRj=f4rzRFwsHnzXJg@mail.gmail.com>
-In-Reply-To: <CAEWVDms3R+_dv79GTdmzbJBJ3rb=hSi7rRj=f4rzRFwsHnzXJg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Aug 2025 10:42:52 +0100
-X-Gm-Features: Ac12FXziHR0QgX7Lu1Vbwgf3rgW2LXJfit-0IrvjmFBIDgH3Odju9jUtVI78Hws
-Message-ID: <CAFEAcA_Q-MhmFNvXUwUXF2_MJqHxujPL7C3=PxC8=hMprerDxA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] target/arm: Increase MAX_PACKET_LENGTH for SME ZA
- remote gdb debugging
-To: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] e1000e: Prevent crash from legacy interrupt firing after
+ MSI-X enable
+To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Jason Wang <jasowang@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250806152940.362418-1-lvivier@redhat.com>
+ <cd941b5f-c969-4d31-8153-1237fa0d0538@rsg.ci.i.u-tokyo.ac.jp>
+ <36d5da25-8cae-40e0-bea4-47c6020b4f92@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <36d5da25-8cae-40e0-bea4-47c6020b4f92@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URI_DOTEDU=1 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,46 +78,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 6 Aug 2025 at 22:18, Vacha Bhavsar
-<vacha.bhavsar@oss.qualcomm.com> wrote:
->
-> Hi,
->
-> I reached out to the gdb dev team regarding these questions
-> on how to correctly handle the SME za storage. This discussion
-> can be found here:
->
-> https://sourceware.org/pipermail/gdb/2025-August/051858.html
-> https://sourceware.org/pipermail/gdb/2025-August/051860.html
->
-> It seems this approach of increasing the buffer size to above
-> 131100 has also been applied to gdbserver as there currently
-> isn't support for partial data transfers.
+On 2025/08/07 17:36, Laurent Vivier wrote:
+> On 06/08/2025 19:44, Akihiko Odaki wrote:
+>> On 2025/08/07 0:29, Laurent Vivier wrote:
+>>> A race condition between guest driver actions and QEMU timers can lead
+>>> to an assertion failure when the guest switches the e1000e from legacy
+>>> interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
+>>> RDTR) is active, but the guest enables MSI-X before the timer fires,
+>>> the pending interrupt cause can trigger an assert in
+>>> `e1000e_intmgr_collect_delayed_causes()`.
+>>>
+>>> The function's assertion (`assert(core->delayed_causes == 0)`)
+>>> incorrectly assumes that it's impossible for a legacy delayed interrupt
+>>> to be pending once the device is in MSI-X mode.
+>>>
+>>> This behavior is incorrect. On a physical device, a driver-initiated
+>>> mode switch would mask interrupts, reconfigure the hardware, and clear
+>>> any stale interrupt states. The legacy delay timers (TIDV/RDTR) are not
+>>> used for moderation in MSI-X mode; the Interrupt Throttle Rate (ITR)
+>>> mechanism is used instead. Therefore, any pending interrupt from the
+>>> old mode should be ignored.
+>>
+>> It is true that triggering assertion is incorrect as per: docs/devel/ 
+>> secure-coding- practices.rst
+>>
+>> However, I don't see statements in the datasheet that says mode switch 
+>> will clear stale interrupts.
+> 
+> The datasheet doesn't say "stale interrupts are cleared." but it 
+> describes two fundamentally separate and mutually exclusive hardware 
+> paths for generating interrupts:
+> 
+> Intel® 82574 GbE Controller Family Datasheet
+> https://docs.rs-online.com/96e8/0900766b81384733.pdf
 
-Thanks for chasing that up.
+It is an old revision (2.5). More recent revision (3.4) can be found at:
+https://courses.cs.washington.edu/courses/cse451/18au/readings/e1000e.pdf
 
-(1) I note that gdb bumped this to 131104, and we only
-have 131100. We should check what the worst-case is and
-make sure our number is big enough (maybe we count different
-things in our buffer size than gdbstub does?)
+> 
+> See 7.4.1 Legacy and MSI Interrupt Modes
+> 
+> Legacy/MSI Path: An event (like a packet transmission completing) sets a 
+> cause bit in the ICR (Interrupt Cause Register). The legacy delay timers 
+> (TIDV/RDTR) can delay the propagation of this cause. When the timer 
+> expires, if the corresponding bit in the IMS (Interrupt Mask Set) is 
+> enabled, the hardware asserts the INTx pin to signal the CPU.
 
-(2) We should add a comment to MAX_PACKET_LENGTH, something
-like:
+Both revisions 2.5 and 3.4 have the following statements, different from 
+what you quoted:
 
-/*
- * Most "large" transfers (e.g. memory reads, feature XML
- * transfer) have mechanisms in the gdb protocol for splitting
- * them. However, register values in particular cannot currently
- * be split. This packet size must therefore be at least big enough
- * for the worst-case register size. Currently that is Arm SME
- * ZA storage with a 256x256 byte value. We also must account
- * for the conversion from raw data to hex in gdb_memtohex(),
- * which writes 2*size + 1 bytes, and for other overhead like
- * the command itself or the checksum.
- */
+ > In legacy and MSI modes, an interrupt cause is reflected by setting
+ > one of the bits in the ICR register, where each bit reflects one or
+ > more causes. This description of ICR register provides the mapping of
+ > interrupt causes (for example, a specific Rx queue event or a LSC
+ > event) to bits in the ICR.
+ >
+ > Mapping of causes relating to the Tx and Rx queues as well as
+ > non-queue causes in this mode is not configurable. Each possible queue
+ > interrupt cause (such as, each Rx queue, Tx queue or any other
+ > interrupt source) has an entry in the ICR.
+ >
+ > The following configuration and parameters are involved:
+ > • The ICR[31:0] bits are allocated to specific interrupt causes
 
-(but ideally check the figures and be a bit less vague about
-the "other overhead" :-))
+Please ensure that you refer a correct datasheet and share it for me.
 
--- PMM
+> 
+> See 7.4.2 MSI-X Mode
+> 
+> MSI-X Path: An event on a specific queue (e.g., Rx Queue 1) is mapped 
+> via the IVAR (Interrupt Vector Allocation Register) to a specific MSI-X 
+> vector. The ITR (Interrupt Throttle Rate) register for that vector then 
+> determines if an interrupt should be generated. If allowed, the hardware 
+> performs a memory write to the address specified in the PCI MSI-X table, 
+> delivering the message to a specific CPU core.
+> 
+> Only non-queue causes are reflected in ICR (so not TIDV/RDTR).
+> 
+> The key here is that a TIDV timer expiring is only connected to the 
+> legacy ICR->IMS->INTx path. There is no described hardware path for a 
+> TIDV timer expiration to trigger an MSI-X memory write.
+> 
+> Therefore, if a guest enables MSI-X, it reconfigures its interrupt 
+> controller (APIC) to listen for MSI-X messages, not legacy INTx pin 
+> assertions. So, even if the stale TIDV timer fires on the hardware, the 
+> interrupt it generates has no configured path to be received by the 
+> guest OS. From the guest's perspective, the interrupt is lost. Our 
+> emulation should model this by ignoring/clearing the stale event, which 
+> is precisely what the patch does.
+> 
+>>
+>> The expression "TIDV/RDTR are not used for moderation in MSI-X mode" 
+>> is also unclear. Behaving drivers may indeed use ITR for that purpose, 
+>> but the question for us is: what will e1000e do when the guest tries 
+>> to use TIDV/RDTR in MSI-X mode anyway? That defines the behavior we 
+>> need to implement.
+> 
+> The TIDV and RDTR registers are part of the device's memory-mapped I/O 
+> space. The hardware will almost certainly allow a write to these 
+> registers at any time.
+> 
+> However, based on the separate hardware paths described above, the write 
+> would be ineffective. A driver could set the TIDV timer, and the timer 
+> would likely count down, but its expiration event is only wired to the 
+> legacy interrupt generation logic. Since the device is configured for 
+> MSI-X interrupt delivery, that path is dormant. The write is accepted, 
+> but the action is inert.
+> 
+>>
+>> If the datasheet describes the expected behavior with delayed 
+>> interrupts in MSI-X, a reference to the datasheet should be made at 
+>> least in the patch message. Otherwise, perhaps this "if 
+>> (msix_enabled(core->owner))" is just extraneous and should be removed.
+> 
+> The "if (msix_enabled(core->owner))" check is not extraneous and must be 
+> kept. It correctly separates the emulation logic for these two mutually 
+> exclusive hardware modes. Removing it would incorrectly allow a legacy 
+> delayed interrupt to be processed as if it were valid in MSI-X mode, 
+> which is not how the hardware works.
+> 
+> Moreover it can introduce unexpected behavior in the guest as this case 
+> could not be managed.
+
+Revision 3.4's 4.6.1 Interrupts During Initialization says:
+ > Most drivers disable interrupts during initialization to prevent
+ > re-entrancy. Interrupts are disabled by writing to the IMC register.
+ > Note that the interrupts need to be disabled also after issuing a
+ > global reset, so a typical driver initialization flow is:
+ >
+ > 1. Disable interrupts
+ > 2. Issue a global reset
+ > 3. Disable interrupts (again)
+ > 4. …
+ >
+ > After the initialization completes, a typical driver enables the
+ > desired interrupts by
+ > writing to the IMS register.
+
+Drivers can ensure that old interrupts will not fire by following this 
+procedure. The behavior when not following this is undefined (in the 
+datasheet I'm referring to).
+
+Regards,
+Akihiko Odaki
 
