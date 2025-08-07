@@ -4,117 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3861C87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 06:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58773C87FD2
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 06:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujtnd-0007iA-OW; Thu, 07 Aug 2025 02:08:25 -0400
+	id 1ujuGo-0004Kh-Bm; Thu, 07 Aug 2025 02:38:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1ujtnJ-0007NI-Ix
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 02:08:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
+ id 1ujuGa-00048a-3n
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 02:38:24 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1ujtnH-00089y-AD
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 02:08:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754546881;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ix4PbdgaAOU/hWe2aDzUNcAp7UZXS71g0znTYp8PC9g=;
- b=btAX/FdOrUX1ImlgV1ZGJ/hc9UmqCAe1z7zxVJ/KbEk//hgY2nIST3UEVLWBxz1eLHp0Le
- GWlRM3+dpuA7X22OPtG4a9QXLzevIMsYLKiI7g1WX5bb96N+ukNUDhAftLFwtOhPymbxJB
- Zp+eMAK0EKdpsR3eoNxAYBeyJapupmU=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-Vi4jNDjbNiuz4-a5m0qAUQ-1; Thu, 07 Aug 2025 02:08:00 -0400
-X-MC-Unique: Vi4jNDjbNiuz4-a5m0qAUQ-1
-X-Mimecast-MFC-AGG-ID: Vi4jNDjbNiuz4-a5m0qAUQ_1754546879
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4b0791a8e8dso19558251cf.2
- for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 23:07:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
+ id 1ujuGX-0004iB-La
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 02:38:19 -0400
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id C77EF3F674
+ for <qemu-devel@nongnu.org>; Thu,  7 Aug 2025 06:38:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1754548694;
+ bh=M4pYwtZ55GK+4yd3r1Pe6fHiYh1YmdIqVBrIK6Z31JI=;
+ h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+ To:Cc:Content-Type;
+ b=tSsDzxi9/OVb73KWTBh7kvG6dlwLS666wajBPBChjTO9avL0UNy9AqdMKR0wZlp/K
+ rH5JIEjZ8g3F1me/6o1Se2VcylA7387vgs6nxchLS7viDBmUFhx9t4WQ9dTomYIm1E
+ ijaoPSf54vtaVOz8gXgSDpKIiA/ghrEWqr2KAmBOAld4LykIJED++isoxOhlFqE+oI
+ UXIzgAd1IBCWvcwnYiV+aAYDJFUEWVptlLd9FmwF28w+ef/jiCQxNVcROVVfOqXaTg
+ U+c1s3keoxdi+JR79jjgciklp0sbnjB4VYKB8/X1m0o4kyeZH3Hpdr5Xw9ubani1fy
+ rU50sFnXBP5xw==
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-6154cf8c32cso559652a12.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 23:38:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754546879; x=1755151679;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ix4PbdgaAOU/hWe2aDzUNcAp7UZXS71g0znTYp8PC9g=;
- b=u37wLn6oY0RaNZlMa/25HSbDXRCgVozKHPRABD0ERMqMp0T464QYwU+jwhi9dspJ/b
- m02Rs+V8mz9cIg+nv34t5yGCr9nBxnD3GAnWt6PSNDnLlGUCy0zOOfb+QMMWF15No8jt
- gtK0PniEVNtGY6extMxIzhcTIn1CSo+uZZB55/cxa7pa+g7xXfSmHOVcXddJR16D8DXl
- fsEGCE/HEuTgktiEVDtxNv3el+walaNDAtdcoXamhNmdAxDkYJYcV4VFpiobQ46SoFU7
- PNi5S0+9wKrAe08L5iW55+2BS2Ia+xMHOxKR0dNZfLhXRjsn690LsQHgP0qErUT9qQky
- WG6g==
-X-Gm-Message-State: AOJu0YxW9F6X/eHmdcmfWjs1McQ74onsIz/c30pYpYGw9aQtucVpTUzg
- PylD4n5v95oQR3Wn+cSbuHIFo28TfyeKK+k3DPe0GPmjgiKH0z0q1T3CHlZOo1o0nKNLu31VP0t
- 51OzV+TvOduk2ayK0DrIBqWnZUrPI/hDihuTuQWD5A17CBuxmoooWopSy
-X-Gm-Gg: ASbGncsTTMkxBGLf+tzwIdimPegs2nHYj1NlBIvDMCjfjlGSqGmhs7BRD1OLuRuAIB8
- 3LdKxo+eJUi6441mBndlK+oxUJihs+9XWZDirV93tSFmxbDCPicsJ7BfVDr3Qsw+A2AqYe6RqfZ
- hMBXHUlpLl1Sgd69nBULTK7u46Ho6RLXwaBhXCfHHFY84/DgpxWoSgVbtY2zz+tVi4Z20gxdEeb
- hI9zuyTfut4ggvQWPu2MIgIV2KfhIoVn8+i9NZAXmUzSSVNJvFaq9GJ+UUyFfPHYJCDUsUH0a/q
- /9i4P4ANdEAUwkkX34qOYEsrgMrd2hx8F5H797dJhaliPJrvKVU=
-X-Received: by 2002:a05:6214:230c:b0:707:43cd:4a63 with SMTP id
- 6a1803df08f44-7097ae6387emr66562576d6.18.1754546879150; 
- Wed, 06 Aug 2025 23:07:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IESomNjbew68ZdJPWGJO0CsYoBD/hWeiCAPF9KPCdqzt+TZ8y8Nh13Lk05XefHIZpgWnxeFtg==
-X-Received: by 2002:a05:6214:230c:b0:707:43cd:4a63 with SMTP id
- 6a1803df08f44-7097ae6387emr66562146d6.18.1754546878629; 
- Wed, 06 Aug 2025 23:07:58 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.36.97.53])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077ca3c76dsm95313076d6.34.2025.08.06.23.07.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Aug 2025 23:07:58 -0700 (PDT)
-Date: Thu, 7 Aug 2025 11:37:42 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: Re: [PATCH v9 24/27] migration: Propagate last encountered error in
- vmstate_save_state_v() function
-Message-ID: <aJRCrlfZdnmIzOft@armenon-kvm.bengluru.csb>
-References: <20250805-propagate_tpm_error-v9-0-123450810db7@redhat.com>
- <20250805-propagate_tpm_error-v9-24-123450810db7@redhat.com>
- <a8d174a7-44cf-48b0-ae6c-4e33e9a2e232@rsg.ci.i.u-tokyo.ac.jp>
+ d=1e100.net; s=20230601; t=1754548694; x=1755153494;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M4pYwtZ55GK+4yd3r1Pe6fHiYh1YmdIqVBrIK6Z31JI=;
+ b=mteT+uZhAOoZxCEWs8tDz2SmUvtEsqrDH3y4lNHU1rMuLlI6x92gixb4JpePngikOV
+ vgzD7j3/22v95VhgiIYr0qseyM4r0HmAs87H391swQCya2JVU8BHcoIEBnSI4MmixWvq
+ r+2JkeBDXjK5sFUUa3PR267JTdcn3iF1hLsKvKqMkvptKkGtcfrdHxXVzaZ2NeKQoxm9
+ vrwrcr48xXOiG//PK/mSNM3yOZPdliqNPF1Rk1ZOOKHqmXNxz065SWngOgjhJByzS0QL
+ sK+tAMMoGx18DXpzf3ib8xlHreQarIvnOV4jsy2XnulaErr4WvXVHvp5dzBOBJ2ZeswT
+ qHMw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPtStE1w6Gol6EDaMwBtv32xc5yYk0VWswyGJdHXLaXbnEYxkrLOixYTh3eZxDQ63awetKzxqOR70y@nongnu.org
+X-Gm-Message-State: AOJu0YxSq7ZYN+NOdm67m/eyx6tntoeiN1Afz0gvVJQHo+O74CRbTOLK
+ 4Kl6Dxdp4S0/DZ6eNOK5SbmMDp6IIpPgNN2EeC4XizOb7uyMj+ft11EECw2cW02F/dE+9bJuUOZ
+ ScfEJ8jhlzJKQk8jDw8Hx5eutO4wuPQeq7ipnUspDpAB1jdWzHA7pCi4qH426u5ECpXXvpm2nNx
+ YxI2Q+SSlNQnpsKpryBht4VAdL7jJJIRXIlMGFAyf8lOQ2qN4=
+X-Gm-Gg: ASbGncvaGGVZyg9dvO4LVN3ZyXSDxJxiEu1iXxLC9s67W7V/bdvnFu/oeO3YKjRrp4A
+ QPEqsWLWTFV1H68C+FeE8Y+bEni8pYFVVddy/HaqbZkZf+9k/L2ot65LH9r8uQDEDH8Y3EAs24n
+ 3TZrdiHFOAjp8ZQych/tO6
+X-Received: by 2002:a05:6402:42d0:b0:615:4ce4:3228 with SMTP id
+ 4fb4d7f45d1cf-61796096273mr5150775a12.4.1754548694253; 
+ Wed, 06 Aug 2025 23:38:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF0cMG45LqTO0NDN8EpkEjwQYd+1h8ilc3LAUn/Q1XVsPAFxa4xQSd2klXZ7VG3X+AlH5nabU1XyNzczkG8HyM=
+X-Received: by 2002:a05:6402:42d0:b0:615:4ce4:3228 with SMTP id
+ 4fb4d7f45d1cf-61796096273mr5150749a12.4.1754548693704; Wed, 06 Aug 2025
+ 23:38:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a8d174a7-44cf-48b0-ae6c-4e33e9a2e232@rsg.ci.i.u-tokyo.ac.jp>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <CAATJJ0+Qq3ksRmNRDrGQLVHQ=XnsnFHxCNxUhjJfNfgwUKkDPQ@mail.gmail.com>
+ <aJNDxxjeqkOLAO2r@redhat.com>
+ <CAATJJ0L-E=JsKOX_E=jqraeK__jLF851DDbEx5psVkTMSppKXw@mail.gmail.com>
+ <aJOqmxTimJ_mFCqp@redhat.com> <2dbe2da9-895a-45ca-9f41-7ec273e0bb80@intel.com>
+In-Reply-To: <2dbe2da9-895a-45ca-9f41-7ec273e0bb80@intel.com>
+From: Christian Ehrhardt <christian.ehrhardt@canonical.com>
+Date: Thu, 7 Aug 2025 08:37:47 +0200
+X-Gm-Features: Ac12FXyNQ614dd7RPyxWtxLvc1lQKL3BorOZoiLiu3UNirzgzhAbbxLuPc2c01g
+Message-ID: <CAATJJ0Jpn8VMRDOFuk7VaV5jC3tj0V1817OiRa6tH3x1OtYFSQ@mail.gmail.com>
+Subject: Re: Issues with pdcm in qemu 10.1-rc on migration and save/restore
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=christian.ehrhardt@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,106 +112,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
+On Thu, Aug 7, 2025 at 5:38=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> wr=
+ote:
+>
+> On 8/7/2025 3:18 AM, Daniel P. Berrang=C3=A9 wrote:
+> > On Wed, Aug 06, 2025 at 07:57:34PM +0200, Christian Ehrhardt wrote:
+> >> On Wed, Aug 6, 2025 at 2:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
+ge@redhat.com> wrote:
+> >>>
+> >>> On Wed, Aug 06, 2025 at 01:52:17PM +0200, Christian Ehrhardt wrote:
+> >>>> Hi,
+> >>>> I was unsure if this would be better sent to libvirt or qemu - the
+> >>>> issue is somewhere between libvirt modelling CPUs and qemu 10.1
+> >>>> behaving differently. I did not want to double post and gladly most =
+of
+> >>>> the people are on both lists - since the switch in/out of the proble=
+m
+> >>>> is qemu 10.0 <-> 10.1 let me start here. I beg your pardon for not y=
+et
+> >>>> having all the answers, I'm sure I could find more with debugging, b=
+ut
+> >>>> I also wanted to report early for your awareness while we are still =
+in
+> >>>> the RC phase.
+> >>>>
+> >>>>
+> >>>> # Problem
+> >>>>
+> >>>> What I found when testing migrations in Ubuntu with qemu 10.1-rc1 wa=
+s:
+> >>>>    error: operation failed: guest CPU doesn't match specification:
+> >>>> missing features: pdcm
+> >>>>
+> >>>> This is behaving the same with libvirt 11.4 or the more recent 11.6.
+> >>>> But switching back to qemu 10.0 confirmed that this behavior is new
+> >>>> with qemu 10.1-rc.
+> >>>
+> >>>
+> >>>> Without yet having any hard evidence against them I found a few pdcm
+> >>>> related commits between 10.0 and 10.1-rc1:
+> >>>>    7ff24fb65 i386/tdx: Don't mask off CPUID_EXT_PDCM
+> >>>>    00268e000 i386/cpu: Warn about why CPUID_EXT_PDCM is not availabl=
+e
+> >>>>    e68ec2980 i386/cpu: Move adjustment of CPUID_EXT_PDCM before
+> >>>> feature_dependencies[] check
+> >>>>    0ba06e46d i386/tdx: Add TDX fixed1 bits to supported CPUIDs
+> >>>>
+> >>>>
+> >>>> # Caveat
+> >>>>
+> >>>> My test environment is in LXD system containers, that gives me issue=
+s
+> >>>> in the power management detection
+> >>>>    libvirtd[406]: error from service: GDBus.Error:System.Error.EROFS=
+:
+> >>>> Read-only file system
+> >>>>    libvirtd[406]: Failed to get host power management capabilities
+> >>>
+> >>> That's harmless.
+> >>
+> >> Yeah, it always was for me - thanks for confirming.
+> >>
+> >>>> And the resulting host-model on a  rather old test server will there=
+fore have:
+> >>>>    <cpu mode=3D'custom' match=3D'exact' check=3D'full'>
+> >>>>      <model fallback=3D'forbid'>Haswell-noTSX-IBRS</model>
+> >>>>      <vendor>Intel</vendor>
+> >>>>      <feature policy=3D'require' name=3D'vmx'/>
+> >>>>      <feature policy=3D'disable' name=3D'pdcm'/>
+> >>>>       ...
+> >>>>
+> >>>> But that was fine in the past, and the behavior started to break
+> >>>> save/restore or migrations just now with the new qemu 10.1-rc.
+> >>>>
+> >>>> # Next steps
+> >>>>
+> >>>> I'm soon overwhelmed by meetings for the rest of the day, but would =
+be
+> >>>> curious if one has a suggestion about what to look at next for
+> >>>> debugging or a theory about what might go wrong. If nothing else com=
+es
+> >>>> up I'll try to set up a bisect run tomorrow.
+> >>>
+> >>> Yeah, git bisect is what I'd start with.
+> >>
+> >> Bisect complete, identified this commit
+> >>
+> >> commit 00268e00027459abede448662f8794d78eb4b0a4
+> >> Author: Xiaoyao Li <xiaoyao.li@intel.com>
+> >> Date:   Tue Mar 4 00:24:50 2025 -0500
+> >>
+> >>      i386/cpu: Warn about why CPUID_EXT_PDCM is not available
+> >>
+> >>      When user requests PDCM explicitly via "+pdcm" without PMU enable=
+d, emit
+> >>      a warning to inform the user.
+> >>
+> >>      Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> >>      Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> >>      Link: https://lore.kernel.org/r/20250304052450.465445-3-xiaoyao.l=
+i@intel.com
+> >>      Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> >>
+> >>   target/i386/cpu.c | 3 +++
+> >>   1 file changed, 3 insertions(+)
+> >>
+> >>
+> >>
+> >> Which is odd as it should only add a warning right?
+> >
+> > No, that commit message is misleading.
+> >
+> > IIUC mark_unavailable_features() actively blocks usage of the feature,
+> > so it is a functional change, not merely a emitting warning.
+> >
+> > It makes me wonder if that commit was actually intended to block the
+> > feature or not, vs merely warning ?  CC'ing those involved in the
+> > commit.
+>
+> The intention was to print a warning to tell users PDCM cannot be
+> enabled if pmu is not enabled. While mark_unavailable_features() does
+> has the effect of setting the bit in cpu->filtered_features[].
+>
+> But the feature is masked off anyway
 
-Thanks for the review.
+Right - it was disabled right from the beginning.
+As I reported libvirt detected it as not available and constructed the
+CPU as with it disabled.
+Which translated it into -cpu ...,pdcm=3Doff,...
 
-On Wed, Aug 06, 2025 at 02:24:37PM +0900, Akihiko Odaki wrote:
-> On 2025/08/06 3:25, Arun Menon wrote:
-> > We consider,
-> >    - the saving of the device state (save or subsection save) and
-> >    - running the cleanup after (post_save)
-> > as an atomic operation. And that is why, post_save() is called regardless
-> > of whether there is a preceeding error. This means that, it is possible
-> > that we have 2 distict errors, one from the preceeding function and the
-> > other from the post_save() function.
-> > 
-> > This commit changes the error handling behavior when two errors occur during
-> > a save operation.
-> > 
-> > 1) Preceding errors were propagated before, but they are now dismissed, if there
-> >     is a new post_save() error.
-> >      - A failure during the main save operation, means the system failed to
-> >        reach a new desired state. A failure during the post-save cleanup,
-> >        however, is a more critical issue as it can leave the system in an
-> >        inconsistent or corrupted state. At present, all post_save() calls
-> >        succeed. However, the introduction of error handling variants of these
-> >        functions (post_save_errp) in the following commit, imply that we need
-> >        to handle and propagate these errors. Therefore, we prioritize reporting
-> >        the more severe error.
-> 
-> This explains why the post_save() error is propagated instead of propagating
-> the preceding error. But the preceding errors still do not have to be
-> dismissed if we report them with error_report_err() instead.
+The new and bad aspect we need to overcome is that in these conditions
+this now somehow breaks save/restore and migration operations.
 
-Yes, both can also be reported.
+As a cross-check I reverted just and only 00268e0002 on top of
+10.1-rc2 and these use cases work again.
 
-> 
-> > 
-> > 2) post_save() errors were dismissed before, but they are now propagated.
-> >      - The original design implicitly assumed post-save hooks were infallible
-> >        cleanup routines.
-> >        This will not be the case after introducing the post/pre save/load errp
-> >        variant functions. Dismissing these errors prevents users from
-> >        identifying the specific operation that failed.
-> 
-> Re-iterating previous comments, if introducing post save errp variant
-> functions break the assumption, we just don't have to introduce one. The
-> reason to introduce one needs to be explained.
+> even without the
+> mark_unavailable_features():
+>
+>      env->features[FEAT_1_ECX] &=3D ~CPUID_EXT_PDCM;
+>
+> So is it that PDCM is set in cpu->filtered_features[] causing the problem=
+?
+>
+> > With regards,
+> > Daniel
+>
 
-Sure, let's keep the original design and try the approach where we rename
-post_save to cleanup_save and return void. This should make things clear.
 
-That way, we can avoid introducing post_save_errp() and also we can discard
-patches [PATCH v9 23/27] Refactor vmstate_save_state_v() function and this
-one [PATCH v9 24/27] Propagate last encountered error in vmstate_save_state_v()
-function.
-
-I will post a new version with that patch.
-
-> 
-> >        The entire save-and-cleanup process is treated as a single
-> >        logical operation, and all potential failures are communicated.
-> > 
-> > Signed-off-by: Arun Menon <armenon@redhat.com>
-> > ---
-> >   migration/vmstate.c | 14 ++++++++++++--
-> >   1 file changed, 12 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/migration/vmstate.c b/migration/vmstate.c
-> > index fbc59caadbbcc75fe6de27b459aa9aa25e76aa0a..ef78a1e62ad92e9608de72d125da80ea496c8dd1 100644
-> > --- a/migration/vmstate.c
-> > +++ b/migration/vmstate.c
-> > @@ -554,6 +554,12 @@ static int vmstate_save_dispatch(QEMUFile *f,
-> >                       error_setg(errp, "Save of field %s/%s failed",
-> >                                   vmsd->name, field->name);
-> >                       ps_ret = post_save_dispatch(vmsd, opaque, &local_err);
-> > +                    if (ps_ret) {
-> > +                        ret = ps_ret;
-> > +                        error_free_or_abort(errp);
-> > +                        error_setg(errp, "post-save for %s failed, ret: %d",
-> > +                                   vmsd->name, ret);
-> > +                    }
-> >                       return ret;
-> >                   }
-> > @@ -603,10 +609,14 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-> >       }
-> >       ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
-> > +
-> >       ps_ret = post_save_dispatch(vmsd, opaque, &local_err);
-> > -    if (!ret && ps_ret) {
-> > +    if (ps_ret) {
-> > +        if (ret) {
-> > +            error_free_or_abort(errp);
-> > +        }
-> >           ret = ps_ret;
-> > -        error_setg(errp, "post-save failed: %s", vmsd->name);
-> > +        error_propagate(errp, local_err);
-> >       }
-> >       return ret;
-> > 
-> 
-Regards,
-Arun
-
+--=20
+Christian Ehrhardt
+Director of Engineering, Ubuntu Server
+Canonical Ltd
 
