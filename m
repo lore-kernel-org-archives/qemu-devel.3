@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BA4C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C0C5C87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:45:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk1ow-000109-H5; Thu, 07 Aug 2025 10:42:18 -0400
+	id 1uk1qi-0005JO-AM; Thu, 07 Aug 2025 10:44:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uk1oG-0000Bx-7u
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:38 -0400
+ id 1uk1pJ-0002ez-4f
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:42:43 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1o3-00010b-2P
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:29 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1pH-00018U-IR
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:42:40 -0400
 Received: from localhost.localdomain (unknown [167.220.208.72])
- by linux.microsoft.com (Postfix) with ESMTPSA id 758AE201BC82;
- Thu,  7 Aug 2025 07:41:17 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 758AE201BC82
+ by linux.microsoft.com (Postfix) with ESMTPSA id C2415201BC8F;
+ Thu,  7 Aug 2025 07:42:23 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C2415201BC8F
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1754577681;
- bh=Nt4UBWXes3AxB90SryE8zirrNwQ3P5gh+k2XSafdH4c=;
+ s=default; t=1754577748;
+ bh=8/mtb2eWWn+SXc7DzCHe6kt2AAzBbP3Jai1V55zbYYQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=iGGZiHcco8U9cbG07uRxIMY75YWeOn9bes1brIuq/gI1yL/d/SzQo0t3OUUTUoOmD
- aYDG2GURAsofAuipLHnrZ7YmVYYugzx3yYYBjtqHLbjQ8H7j1+9FLk/FMv+Ly4VDKW
- aaPs+tQhRaBrUxjNkDLZt5/5Q2R37vr633adpWeI=
+ b=r2a1pXtBo3B+gNZRjZigkzXxLkmdBdkTPa0MT3Z393hNfq12ypaWzaQLPwzyXUx5S
+ BJEpelQ5OIiL841QtFsDFpyk9n8n0Ek2a4YZUAgw5ZuwWFtiAiTjDNtijjsbX3W9Kh
+ fY8+2bCNN5qyvmZQkVwh5P5N22liE6JXkwarbC+w=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -50,9 +50,9 @@ Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 12/26] target/i386/mshv: Add CPU create and remove logic
-Date: Thu,  7 Aug 2025 16:39:37 +0200
-Message-Id: <20250807143951.1154713-13-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v3 25/26] MAINTAINERS: Add maintainers for mshv accelerator
+Date: Thu,  7 Aug 2025 16:39:50 +0200
+Message-Id: <20250807143951.1154713-26-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
 References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
@@ -82,63 +82,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement MSHV-specific hooks for vCPU creation and teardown in the
-i386 target.
+Adding Magnus Kulke and Wei Liu to the maintainers file for the
+respective folders/files.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/mshv-cpu.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ MAINTAINERS | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 2fe5319201..7a6965d7fb 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -28,6 +28,8 @@
- #include "trace-accel_mshv.h"
- #include "trace.h"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a07086ed76..7527264f30 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -546,6 +546,21 @@ F: target/i386/whpx/
+ F: accel/stubs/whpx-stub.c
+ F: include/system/whpx.h
  
-+#include <sys/ioctl.h>
++MSHV
++M: Magnus Kulke <magnus.kulke@linux.microsoft.com>
++R: Wei Liu <wei.liu@kernel.org>
++S: Supported
++F: accel/mshv/
++F: include/system/mshv.h
++F: include/hw/hyperv/hvgdk*.h
++F: include/hw/hyperv/hvhdk*.h
 +
- int mshv_store_regs(CPUState *cpu)
- {
-     error_report("unimplemented");
-@@ -60,20 +62,29 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- 
- void mshv_remove_vcpu(int vm_fd, int cpu_fd)
- {
--    error_report("unimplemented");
--    abort();
-+    close(cpu_fd);
- }
- 
++MSHV CPUs
++M: Magnus Kulke <magnus.kulke@linux.microsoft.com>
++R: Wei Liu <wei.liu@kernel.org>
++S: Supported
++F: target/i386/mshv/
 +
- int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
- {
--    error_report("unimplemented");
--    abort();
-+    int ret;
-+    struct mshv_create_vp vp_arg = {
-+        .vp_index = vp_index,
-+    };
-+    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
-+    if (ret < 0) {
-+        error_report("failed to create mshv vcpu: %s", strerror(errno));
-+        return -1;
-+    }
-+
-+    *cpu_fd = ret;
-+
-+    return 0;
- }
- 
- void mshv_init_cpu_logic(void)
- {
--    error_report("unimplemented");
--    abort();
- }
- 
- void mshv_arch_init_vcpu(CPUState *cpu)
+ X86 Instruction Emulator
+ M: Cameron Esfahani <dirty@apple.com>
+ M: Roman Bolshakov <rbolshakov@ddn.com>
 -- 
 2.34.1
 
