@@ -4,87 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CF5C87FD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 05:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C98E1C87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 06:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujtNk-00054Z-Fb; Thu, 07 Aug 2025 01:41:40 -0400
+	id 1ujtmW-00079R-24; Thu, 07 Aug 2025 02:07:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ujtNj-00053R-4t
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 01:41:39 -0400
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1ujtmJ-00076M-MO
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 02:07:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ujtNh-0004m4-6P
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 01:41:38 -0400
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1ujtmF-00085b-QR
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 02:07:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754545295;
+ s=mimecast20190719; t=1754546816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=opNt31OvSllS59rmbkTm1e2lfJQ34iTzbLzukkSguwc=;
- b=TUr455IGV5myz9YEVEpkh+2bPeBBlQHEvFRdui3ryw+KBs+3WmoQnibskIlokWqQedkDlz
- 4qMqdIqqpzO4bLkvWVEXj4Iz/50awoDDRJhwM05xyQ2GNupaoo27IkKQvW9wi0ywFI6C6r
- BKNWZPQrp9n5O9/A5+1NNGUayR7NhIU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-Z-AQq8sbNQyyI4mnpkc1Dg-1; Thu,
- 07 Aug 2025 01:41:29 -0400
-X-MC-Unique: Z-AQq8sbNQyyI4mnpkc1Dg-1
-X-Mimecast-MFC-AGG-ID: Z-AQq8sbNQyyI4mnpkc1Dg_1754545288
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 532AF1956094; Thu,  7 Aug 2025 05:41:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AFE4519560AD; Thu,  7 Aug 2025 05:41:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id F090821E6A27; Thu, 07 Aug 2025 07:41:24 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  qemu-devel@nongnu.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gustavo
- Romero <gustavo.romero@linaro.org>
-Subject: Re: [PATCH RFC] util/error.c: Print backtrace on error
-In-Reply-To: <62284106-30c9-4e30-8b97-ef38f920d237@linaro.org> (Pierrick
- Bouvier's message of "Wed, 6 Aug 2025 13:26:48 -0700")
-References: <20250805-backtrace-v1-1-d189d09b1e92@linaro.org>
- <aJIqdQSYXO4K6lCJ@redhat.com>
- <CAAjaMXY1ytnhp+APdwM39-K=Mu=5p8W=MEUVvLers3M=rLS6Qw@mail.gmail.com>
- <aJI18an38eBkVL-Q@redhat.com>
- <CAAjaMXZhFM7keE1abmhQqehsZn7LaJXwYvUAuOvd-MdNTYtw1Q@mail.gmail.com>
- <aJJGvL8feHr7Wme7@redhat.com> <87h5ykzout.fsf@draig.linaro.org>
- <aJM9v0ASQOPWzcQ9@redhat.com>
- <62284106-30c9-4e30-8b97-ef38f920d237@linaro.org>
-Date: Thu, 07 Aug 2025 07:41:24 +0200
-Message-ID: <87bjorr8mz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=D4CmV5YASTUZprXp5ORNdpqU8Pxy4LKF5SrvfpyfSnQ=;
+ b=hQmPTn+8AS7E/UsmFKLRVZ/liK67iPeruZ4Sjl04CCWrRwc2gPswDU33607yYlkNKS8yjl
+ ruZ/AWNje+XROcujsoQUdCvO+2U/nbIY4kVesL/Oc2LjA3iyL48Ypy1vp2cSOyl2Jc4hln
+ jPmTsbUQ5//qhWSI9xYQfyGr9JPGXW8=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-13-ph7qWKKyN5yxUrr6EK-W7g-1; Thu, 07 Aug 2025 02:06:55 -0400
+X-MC-Unique: ph7qWKKyN5yxUrr6EK-W7g-1
+X-Mimecast-MFC-AGG-ID: ph7qWKKyN5yxUrr6EK-W7g_1754546814
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7e348600cadso165394785a.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Aug 2025 23:06:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754546814; x=1755151614;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=D4CmV5YASTUZprXp5ORNdpqU8Pxy4LKF5SrvfpyfSnQ=;
+ b=YIVkuVcofhVX2JisalCdpEm4b+kJTgNnl7nwUuKh1XU1dQpda8Dl9qBHFm5ti7aDE1
+ Y3LoV1SDZrdno0OPSW+HS1yDW4xLX9blXSe7VHzZcrLFOCpomtD+7/IhYXPe4y80fLGL
+ fMqQu53oT27IXi8LNE+JBa7Ynq30/YlsHpoB6iEZA1IiNOSXmrgJPs65QNsIiHGmVdqc
+ CoxJvGiO0Dv62zmemwhA3SWz2e8YIWk95ngVFf+YvAGDJXrrsd7SaZahASyshXVo5whh
+ vCJt6XquGnpFillrsUNc6HvYaqxMciQhTkNy+UBgmFC0st3jonrQzLtxZ30pLILeyxUo
+ f7Sw==
+X-Gm-Message-State: AOJu0YwSuK+IfrYyfQRFGPOVkMIP9+jyimbBtoyEMIaMdO5RG8SJLHfl
+ IWRz3ND5SFNbhF2xHMtO9TPm/h5MgQICRzVqRWTxvo6ZZVew5Iw9234p4LBD2AKAzTXSM3R9kBJ
+ GBMICfsE0a5oJQhNvsNbvjVNGRErWsN0l01f+rHBjWxL3manXEaPobQj+
+X-Gm-Gg: ASbGncu58v0Uzu37US11939qkNEtCUBqJ+hjRrVlfydd32Nk+YxXFZJhho0mUZzEBTg
+ KUxjUh8srCRcTfFeijKo/lF7LKMvEg3FltbdbE3AaPC0rR5Uhb+kJgW6yY/6oK03L6oRe0mUin8
+ YAqFL02SezjH9NZWL9iGHMPI/a/rmOvSWPZGEFaEL59Az/GTiAdRhS1FXSMN8vIR2bFWBEVuEUv
+ PNGWMneLQuD2FSNSixhvhfskS/7QoTrFrm2mGeYpuMI/+JiI+hHlHmGTcY9kbYUxTZV1YM7rNfT
+ 2BXezV2fB38M/34emZhGH4RnilTLGUeqtsUHxVentTh7catv9OE=
+X-Received: by 2002:a05:620a:ab06:b0:7de:fa4b:773f with SMTP id
+ af79cd13be357-7e82080d982mr262221185a.17.1754546814425; 
+ Wed, 06 Aug 2025 23:06:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGjqi4mzQoa29gR6lnFyd/gZIarpKyFPyEz/b6dIE9mrXZLJuv/CbyD9ByJJWgVNdm8gUx8zg==
+X-Received: by 2002:a05:620a:ab06:b0:7de:fa4b:773f with SMTP id
+ af79cd13be357-7e82080d982mr262219285a.17.1754546813964; 
+ Wed, 06 Aug 2025 23:06:53 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.36.97.53])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e7fc4db4bdsm513631785a.28.2025.08.06.23.06.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Aug 2025 23:06:53 -0700 (PDT)
+Date: Thu, 7 Aug 2025 11:36:35 +0530
+From: Arun Menon <armenon@redhat.com>
+To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
+Subject: Re: [PATCH v9 18/27] migration: push Error **errp into
+ loadvm_postcopy_ram_handle_discard()
+Message-ID: <aJRCa94RnXGdTfeM@armenon-kvm.bengluru.csb>
+References: <20250805-propagate_tpm_error-v9-0-123450810db7@redhat.com>
+ <20250805-propagate_tpm_error-v9-18-123450810db7@redhat.com>
+ <CAMxuvay5ysmMXw14SBZtY7M2mJdoq4Fk2MYD-JjXurBCPZwLEQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMxuvay5ysmMXw14SBZtY7M2mJdoq4Fk2MYD-JjXurBCPZwLEQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,116 +131,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Hi Marc-André,
 
-> On 8/6/25 4:34 AM, Daniel P. Berrang=C3=A9 wrote:
->> On Wed, Aug 06, 2025 at 12:11:38PM +0100, Alex Benn=C3=A9e wrote:
->>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>>
->>>> On Tue, Aug 05, 2025 at 07:57:38PM +0300, Manos Pitsidianakis wrote:
->>>>> On Tue, Aug 5, 2025 at 7:49=E2=80=AFPM Daniel P. Berrang=C3=A9 <berra=
-nge@redhat.com> wrote:
->>>>>>
->>>>>>
->>>>>> Was there a specific place where you found things hard to debug
->>>>>> from the error message alone ?  I'm sure we have plenty of examples
->>>>>> of errors that can be improved, but wondering if there are some
->>>>>> general patterns we're doing badly that would be a good win
->>>>>> to improve ?
->>>>>
->>>>> Some months ago I was debugging a MemoryRegion use-after-free and used
->>>>> this code to figure out that the free was called from RCU context
->>>>> instead of the main thread.
->>>>
->
-> I ran into something similar recently [1], and it was a pain to reproduce=
- it. Luckily, I caught it using rr and could debug it, but it would have be=
-en much easier to just get a backtrace of the crash.
->
-> In this case, it was a segmentation fault, which is not covered by curren=
-t patch. Which brings me the thought I share at the end of this email.
->
-> [1] https://lore.kernel.org/qemu-devel/173c1c78-1432-48a4-8251-65c65568c1=
-12@linaro.org/T/#
->
->>>> We give useful names to many (but not neccessarily all) threads that we
->>>> spawn. Perhaps we should call pthread_getname_np() to fetch the current
->>>> thread name, and used that as a prefix on the error message we print
->>>> out, as a bit of extra context ?
->>>
->>> Do we always have sensible names for threads or only if we enable the
->>> option?
->>
->> I was surprised to discover we don't name threads by default, only if we
->> add '-name debug-threads=3Dyes'.  I'm struggling to understand why we wo=
-uld
->> ever want thread naming disabled, if an OS supports it ?
->> I'm inclined to deprecate 'debug-threads' and always set the names when
->> available.
+Thank you for the review.
 
-On POSIX, thread naming uses pthread_setname_np(), which is a GNU
-extension.  Can't see drawbacks; just use it when available.
+On Wed, Aug 06, 2025 at 11:54:36AM +0400, Marc-André Lureau wrote:
+> Hi
+> 
+> On Tue, Aug 5, 2025 at 10:30 PM Arun Menon <armenon@redhat.com> wrote:
+> 
+> > This is an incremental step in converting vmstate loading
+> > code to report error via Error objects instead of directly
+> > printing it to console/monitor.
+> > It is ensured that loadvm_postcopy_ram_handle_discard() must report an
+> > error
+> > in errp, in case of failure.
+> >
+> > Signed-off-by: Arun Menon <armenon@redhat.com>
+> >
+> 
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> 
+> > ---
+> >  migration/savevm.c | 26 +++++++++++++-------------
+> >  1 file changed, 13 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index
+> > eb90873a750ded354b3db31cba40b44d1be79864..3abe4193e02aae9c813ff07fb388a7ee470c8a6a
+> > 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -2004,7 +2004,7 @@ static int
+> > loadvm_postcopy_handle_advise(MigrationIncomingState *mis,
+> >   * There can be 0..many of these messages, each encoding multiple pages.
+> >   */
+> >  static int loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
+> > -                                              uint16_t len)
+> > +                                              uint16_t len, Error **errp)
+> >  {
+> >      int tmp;
+> >      char ramid[256];
+> > @@ -2017,6 +2017,7 @@ static int
+> > loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
+> >          /* 1st discard */
+> >          tmp = postcopy_ram_prepare_discard(mis);
+> >          if (tmp) {
+> > +            error_setg(errp, "Failed to prepare for RAM discard: %d",
+> > tmp);
+> >              return tmp;
+> >          }
+> >          break;
+> > @@ -2026,8 +2027,9 @@ static int
+> > loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
+> >          break;
+> >
+> >      default:
+> > -        error_report("CMD_POSTCOPY_RAM_DISCARD in wrong postcopy state
+> > (%d)",
+> > -                     ps);
+> > +        error_setg(errp,
+> > +                   "CMD_POSTCOPY_RAM_DISCARD in wrong postcopy state
+> > (%d)",
+> > +                   ps);
+> >          return -1;
+> >      }
+> >      /* We're expecting a
+> > @@ -2036,29 +2038,30 @@ static int
+> > loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
+> >       *    then at least 1 16 byte chunk
+> >      */
+> >      if (len < (1 + 1 + 1 + 1 + 2 * 8)) {
+> > -        error_report("CMD_POSTCOPY_RAM_DISCARD invalid length (%d)", len);
+> > +        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD invalid length (%d)",
+> > len);
+> >          return -1;
+> >      }
+> >
+> >      tmp = qemu_get_byte(mis->from_src_file);
+> >      if (tmp != postcopy_ram_discard_version) {
+> > -        error_report("CMD_POSTCOPY_RAM_DISCARD invalid version (%d)",
+> > tmp);
+> > +        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD invalid version (%d)",
+> > tmp);
+> >          return -1;
+> >      }
+> >
+> >      if (!qemu_get_counted_string(mis->from_src_file, ramid)) {
+> > -        error_report("CMD_POSTCOPY_RAM_DISCARD Failed to read RAMBlock
+> > ID");
+> > +        error_setg(errp,
+> > +                   "CMD_POSTCOPY_RAM_DISCARD Failed to read RAMBlock ID");
+> >          return -1;
+> >      }
+> >      tmp = qemu_get_byte(mis->from_src_file);
+> >      if (tmp != 0) {
+> > -        error_report("CMD_POSTCOPY_RAM_DISCARD missing nil (%d)", tmp);
+> > +        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD missing nil (%d)",
+> > tmp);
+> >          return -1;
+> >      }
+> >
+> >      len -= 3 + strlen(ramid);
+> >      if (len % 16) {
+> > -        error_report("CMD_POSTCOPY_RAM_DISCARD invalid length (%d)", len);
+> > +        error_setg(errp, "CMD_POSTCOPY_RAM_DISCARD invalid length (%d)",
+> > len);
+> >          return -1;
+> >      }
+> >      trace_loadvm_postcopy_ram_handle_discard_header(ramid, len);
+> > @@ -2070,6 +2073,7 @@ static int
+> > loadvm_postcopy_ram_handle_discard(MigrationIncomingState *mis,
+> >          len -= 16;
+> >          int ret = ram_discard_range(ramid, start_addr, block_length);
+> >          if (ret) {
+> > +            error_setg(errp, "Failed to discard RAM range %s: %d", ramid,
+> > ret);
+> >
+> 
+> note: the ram_discard_range() and ram_block_discard_range() functions also
+> calls error_report()  Maybe they can be converted too.., let's not do this
+> in this already long series.
 
-On Windows, thread naming appears to use a dynamically loaded
-SetThreadDescription().  Any drawbacks?  I'm a Windows ignoramus...
+Agreed.
 
->>>> Obviously not as much info as a full stack trace, but that is something
->>>> we could likely enable unconditionally without any overheads to worry
->>>> about, so a likely incremental wni.
->>>
->>> The place where it comes in useful is when we get bug reports from users
->>> who have crashed QEMU in a embedded docker container and can't give us a
->>> reasonable reproducer. If we can encourage such users to enable this
->>> option (or maybe make it part of --enable-debug-info) then we could get
->>> a slightly more useful backtrace for those bugs.
->> The challenge is whether this build option would be enabled widely
->> enough to make a significant difference ?
->>
->
-> For developers working on crashes/bug fix, it's definitely a good additio=
-n (could come with --enable-debug for sure). It's something we could enable=
- in CI by default too. Usually, with sanitizers, the reported stacktrace is=
- enough to get a rough idea of what the problem is, without having to use a=
-ny debugger.
->
->> I don't think we could really enable this in any distro builds, as
->> this is way too noisy to have turned on unconditionally at build
->> time for all users. Most containers are going to be consuming
->> distro builds, with relatively few building custom QEMU themselves
->> IME.  We might have better luck if this was a runtime option to
->> the -msg arg.
->>
->
-> Regarding the outside world and users, I share Daniel's opinion that it w=
-ould be too verbose if a backtrace is emitted with every fatal error messag=
-e.
+> 
+> 
+> 
+> 
+> >              return ret;
+> >          }
+> >      }
+> > @@ -2629,11 +2633,7 @@ static int loadvm_process_command(QEMUFile *f,
+> > Error **errp)
+> >          return loadvm_postcopy_handle_run(mis, errp);
+> >
+> >      case MIG_CMD_POSTCOPY_RAM_DISCARD:
+> > -        ret = loadvm_postcopy_ram_handle_discard(mis, len);
+> > -        if (ret < 0) {
+> > -            error_setg(errp, "Failed to load device state command: %d",
+> > ret);
+> > -        }
+> > -        return ret;
+> > +        return loadvm_postcopy_ram_handle_discard(mis, len, errp);
+> >
+> >      case MIG_CMD_POSTCOPY_RESUME:
+> >          loadvm_postcopy_handle_resume(mis);
+> >
+> > --
+> > 2.50.1
+> >
+> >
 
-Yes, that's out of the question.  We can debate backtrace on internal
-errors, such as hitting &error_abort, or more generally abort().  Need
-to demonstrate it adds value to simply dumping core, which we get for
-free.
-
-> However, I think it could have *incredible* value if we reported this bac=
-ktrace when QEMU segfaults, which is always something exceptional.
-
-This would be a best effort.  The program is already out of order, and
-printing may or may not work.  Avoiding printf() and memory allocation
-would improve the odds.
-
-> In this case, we could always enable this.
-> It's not covered by the current patch, maybe it could be a great addition?
->
-> Regarding binary size increase due to -rdynamic, I already know some peop=
-le won't like it, so I'm not sure how we can ensure to have useful symbols =
-in distributed binaries, which is a harder debate than enabling backtraces =
-on segfaults or not.
-
-1. Core dumps may take disk space!  Let's disable them.
-
-2. My programs crash!  I need to know why.
-
-3. I know!  Let's make all the program bigger!
-
-SCNR ;)
+Regards,
+Arun
 
 
