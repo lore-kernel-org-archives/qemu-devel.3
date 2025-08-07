@@ -4,79 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCCA1C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 08:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148ACC87FDA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 08:37:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujvgt-0003Qd-9r; Thu, 07 Aug 2025 04:09:36 -0400
+	id 1ujw7H-0006Dy-8S; Thu, 07 Aug 2025 04:36:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ujvgg-0003MJ-J9
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 04:09:25 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
+ id 1ujw7E-00065k-5M; Thu, 07 Aug 2025 04:36:49 -0400
+Received: from mail-m16.yeah.net ([1.95.21.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1ujvgb-0003Ug-MN
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 04:09:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1754554158; x=1786090158;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=VxPwqOrbI3ZDR9D/N1QjtZUQZOTlIko4QFgglkb9ZHA=;
- b=Hu7CsWIxj3dvuWNKBK6hT1twDQ7cvNAWuhKFVgrtglwq5ecdLXbrxURY
- LMkRJwdOjVacsDhsLEZg9j4J0Eh3WihMHqMG0tQfMPa8J+k3X4euei0xi
- e8XABe69coqZ8wzlpaLR//6r0dX/OXGiuM4sVIxS5fQ9FhwIfCAwNH/06
- 5Phixikc5ZsM5yyO/83n6zJBA+LPNQfwnU8ez4wEgBcmmNFjQFRNd8U63
- M8iGkkNk9hswf+sOtpbhz0Pz5rXWtoBZZY+rCBbYv1GTdBY7uNHwdoKzz
- oqgXve6+HNEBAzoi8CE66YfPzs5Bo5uJ3vygfGLd1x3vh3j1tT8vpIRuJ A==;
-X-CSE-ConnectionGUID: GdgWlc6mT0+CylSBG7TFpg==
-X-CSE-MsgGUID: 8hc1eZTwT4eBWKgQc+NmaA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="60722122"
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="60722122"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2025 01:09:14 -0700
-X-CSE-ConnectionGUID: 1xwLEUuWS6mL763aOizkiw==
-X-CSE-MsgGUID: scvFOpu1QkmMGQ4eSpts1g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="170258873"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2025 01:09:12 -0700
-Message-ID: <da824dc2-c241-4858-a233-6253b6b62926@intel.com>
-Date: Thu, 7 Aug 2025 16:09:02 +0800
+ (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
+ id 1ujw78-0008SU-Lt; Thu, 07 Aug 2025 04:36:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+ s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=u0
+ wU2PZMcyzQPCTGLadgEEYeyspIfb3MUYpbGNCZNRA=; b=ituoLrQnZxSMb5XfM3
+ 09mrTjaTsmdU9rW7dvKgW1sxOoMS1YyIH5eeD5nYQIz1pirteSuugE7RCpdJUGkT
+ z5I+KKPaP+1NXHAEON59DlJ2yYM+SvyZa+lETaAQ/VUcXkZsOTIZfyOPaTouuTFe
+ BNtKkjmZ5QPmRRfQZvfxfacKg=
+Received: from vcore-181.. (unknown [])
+ by gzsmtp1 (Coremail) with SMTP id Mc8vCgCHtrJ_ZZRo1nQxAg--.30694S2;
+ Thu, 07 Aug 2025 16:36:17 +0800 (CST)
+From: Yang Jialong <z_bajeer@yeah.net>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: yangjialong@rvcore.com, Yang Jialong <z_bajeer@yeah.net>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH] aplic: fix mask for smsiaddrcfgh
+Date: Thu,  7 Aug 2025 16:23:46 +0800
+Message-Id: <20250807082346.3752212-1-z_bajeer@yeah.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Issues with pdcm in qemu 10.1-rc on migration and save/restore
-To: Christian Ehrhardt <christian.ehrhardt@canonical.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>
-References: <CAATJJ0+Qq3ksRmNRDrGQLVHQ=XnsnFHxCNxUhjJfNfgwUKkDPQ@mail.gmail.com>
- <aJNDxxjeqkOLAO2r@redhat.com>
- <CAATJJ0L-E=JsKOX_E=jqraeK__jLF851DDbEx5psVkTMSppKXw@mail.gmail.com>
- <aJOqmxTimJ_mFCqp@redhat.com>
- <2dbe2da9-895a-45ca-9f41-7ec273e0bb80@intel.com>
- <CAATJJ0Jpn8VMRDOFuk7VaV5jC3tj0V1817OiRa6tH3x1OtYFSQ@mail.gmail.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <CAATJJ0Jpn8VMRDOFuk7VaV5jC3tj0V1817OiRa6tH3x1OtYFSQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: Mc8vCgCHtrJ_ZZRo1nQxAg--.30694S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tw4xZrWfZF48AF1xWr47CFg_yoW8uFykpr
+ 4DK39rCF45Jr1xKa1rta1kGry7trykCr9rur1DW3409F18Ars0934kKws09ryUCFyfGr45
+ Jw4Fq3WDGF4fA37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0ziKii3UUUUU=
+X-Originating-IP: [49.7.252.142]
+X-CM-SenderInfo: p2betyxhhuq5hhdkh0dhw/1tbiCwWiI2iUX6gQNQAAsh
+Received-SPF: pass client-ip=1.95.21.15; envelope-from=z_bajeer@yeah.net;
+ helo=mail-m16.yeah.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,151 +73,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/2025 2:37 PM, Christian Ehrhardt wrote:
-> On Thu, Aug 7, 2025 at 5:38 AM Xiaoyao Li <xiaoyao.li@intel.com> wrote:
->>
->> On 8/7/2025 3:18 AM, Daniel P. Berrangé wrote:
->>> On Wed, Aug 06, 2025 at 07:57:34PM +0200, Christian Ehrhardt wrote:
->>>> On Wed, Aug 6, 2025 at 2:00 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
->>>>>
->>>>> On Wed, Aug 06, 2025 at 01:52:17PM +0200, Christian Ehrhardt wrote:
->>>>>> Hi,
->>>>>> I was unsure if this would be better sent to libvirt or qemu - the
->>>>>> issue is somewhere between libvirt modelling CPUs and qemu 10.1
->>>>>> behaving differently. I did not want to double post and gladly most of
->>>>>> the people are on both lists - since the switch in/out of the problem
->>>>>> is qemu 10.0 <-> 10.1 let me start here. I beg your pardon for not yet
->>>>>> having all the answers, I'm sure I could find more with debugging, but
->>>>>> I also wanted to report early for your awareness while we are still in
->>>>>> the RC phase.
->>>>>>
->>>>>>
->>>>>> # Problem
->>>>>>
->>>>>> What I found when testing migrations in Ubuntu with qemu 10.1-rc1 was:
->>>>>>     error: operation failed: guest CPU doesn't match specification:
->>>>>> missing features: pdcm
->>>>>>
->>>>>> This is behaving the same with libvirt 11.4 or the more recent 11.6.
->>>>>> But switching back to qemu 10.0 confirmed that this behavior is new
->>>>>> with qemu 10.1-rc.
->>>>>
->>>>>
->>>>>> Without yet having any hard evidence against them I found a few pdcm
->>>>>> related commits between 10.0 and 10.1-rc1:
->>>>>>     7ff24fb65 i386/tdx: Don't mask off CPUID_EXT_PDCM
->>>>>>     00268e000 i386/cpu: Warn about why CPUID_EXT_PDCM is not available
->>>>>>     e68ec2980 i386/cpu: Move adjustment of CPUID_EXT_PDCM before
->>>>>> feature_dependencies[] check
->>>>>>     0ba06e46d i386/tdx: Add TDX fixed1 bits to supported CPUIDs
->>>>>>
->>>>>>
->>>>>> # Caveat
->>>>>>
->>>>>> My test environment is in LXD system containers, that gives me issues
->>>>>> in the power management detection
->>>>>>     libvirtd[406]: error from service: GDBus.Error:System.Error.EROFS:
->>>>>> Read-only file system
->>>>>>     libvirtd[406]: Failed to get host power management capabilities
->>>>>
->>>>> That's harmless.
->>>>
->>>> Yeah, it always was for me - thanks for confirming.
->>>>
->>>>>> And the resulting host-model on a  rather old test server will therefore have:
->>>>>>     <cpu mode='custom' match='exact' check='full'>
->>>>>>       <model fallback='forbid'>Haswell-noTSX-IBRS</model>
->>>>>>       <vendor>Intel</vendor>
->>>>>>       <feature policy='require' name='vmx'/>
->>>>>>       <feature policy='disable' name='pdcm'/>
->>>>>>        ...
->>>>>>
->>>>>> But that was fine in the past, and the behavior started to break
->>>>>> save/restore or migrations just now with the new qemu 10.1-rc.
->>>>>>
->>>>>> # Next steps
->>>>>>
->>>>>> I'm soon overwhelmed by meetings for the rest of the day, but would be
->>>>>> curious if one has a suggestion about what to look at next for
->>>>>> debugging or a theory about what might go wrong. If nothing else comes
->>>>>> up I'll try to set up a bisect run tomorrow.
->>>>>
->>>>> Yeah, git bisect is what I'd start with.
->>>>
->>>> Bisect complete, identified this commit
->>>>
->>>> commit 00268e00027459abede448662f8794d78eb4b0a4
->>>> Author: Xiaoyao Li <xiaoyao.li@intel.com>
->>>> Date:   Tue Mar 4 00:24:50 2025 -0500
->>>>
->>>>       i386/cpu: Warn about why CPUID_EXT_PDCM is not available
->>>>
->>>>       When user requests PDCM explicitly via "+pdcm" without PMU enabled, emit
->>>>       a warning to inform the user.
->>>>
->>>>       Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>>>       Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->>>>       Link: https://lore.kernel.org/r/20250304052450.465445-3-xiaoyao.li@intel.com
->>>>       Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->>>>
->>>>    target/i386/cpu.c | 3 +++
->>>>    1 file changed, 3 insertions(+)
->>>>
->>>>
->>>>
->>>> Which is odd as it should only add a warning right?
->>>
->>> No, that commit message is misleading.
->>>
->>> IIUC mark_unavailable_features() actively blocks usage of the feature,
->>> so it is a functional change, not merely a emitting warning.
->>>
->>> It makes me wonder if that commit was actually intended to block the
->>> feature or not, vs merely warning ?  CC'ing those involved in the
->>> commit.
->>
->> The intention was to print a warning to tell users PDCM cannot be
->> enabled if pmu is not enabled. While mark_unavailable_features() does
->> has the effect of setting the bit in cpu->filtered_features[].
->>
->> But the feature is masked off anyway
-> 
-> Right - it was disabled right from the beginning.
-> As I reported libvirt detected it as not available and constructed the
-> CPU as with it disabled.
-> Which translated it into -cpu ...,pdcm=off,...
-> 
-> The new and bad aspect we need to overcome is that in these conditions
-> this now somehow breaks save/restore and migration operations.
+4.5.4. Supervisor MSI address configuration (smsiaddrcfg and
+  smsiaddrcfgh)
+smsiaddrcfgh:
+	bits 22:20 LHXS(WARL)
+	bits 11:0  High Base PPN(WARL)
 
-The commit 00268e0002 makes a difference only for the case "-cpu 
-xxx,pdcm=on" without "pmu=on", and it emits a warning and sets the PDCM 
-in cpu->filtered_features[].
+Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
+---
+ hw/intc/riscv_aplic.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-So libvirt must first request with "-cpu xxx,pdcm=on" without "pmu=on" 
-and gets the result that PDCM is filtered (set in cpu->filtered_features[]).
-
-This indeed introduces the behavior change that before the commit, "-cpu 
-xxx,pdcm=on" without "pmu=on" doesn't get warning nor PDCM is set in 
-cpu->filtered_features[], but PDCM is just not set in guest's CPUID.
-
-I couldn't understand how the warning or PDCM is set in 
-cpu->filtered_features[] breaks save/restore and migration.
-
-> As a cross-check I reverted just and only 00268e0002 on top of
-> 10.1-rc2 and these use cases work again.
-> 
->> even without the
->> mark_unavailable_features():
->>
->>       env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
->>
->> So is it that PDCM is set in cpu->filtered_features[] causing the problem?
->>
->>> With regards,
->>> Daniel
->>
-> 
-> 
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index a1d9fa5085..174ccb3a64 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -96,7 +96,7 @@
+     (APLIC_xMSICFGADDR_PPN_HHX_MASK(__hhxw) << \
+      APLIC_xMSICFGADDR_PPN_HHX_SHIFT(__hhxs))
+ 
+-#define APLIC_xMSICFGADDRH_VALID_MASK   \
++#define APLIC_MMSICFGADDRH_VALID_MASK   \
+     (APLIC_xMSICFGADDRH_L | \
+      (APLIC_xMSICFGADDRH_HHXS_MASK << APLIC_xMSICFGADDRH_HHXS_SHIFT) | \
+      (APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
+@@ -104,6 +104,10 @@
+      (APLIC_xMSICFGADDRH_LHXW_MASK << APLIC_xMSICFGADDRH_LHXW_SHIFT) | \
+      APLIC_xMSICFGADDRH_BAPPN_MASK)
+ 
++#define APLIC_SMSICFGADDRH_VALID_MASK   \
++    ((APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
++     APLIC_xMSICFGADDRH_BAPPN_MASK)
++
+ #define APLIC_SETIP_BASE               0x1c00
+ #define APLIC_SETIPNUM                 0x1cdc
+ 
+@@ -771,7 +775,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_MMSICFGADDRH)) {
+         if (!(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
+-            aplic->mmsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
++            aplic->mmsicfgaddrH = value & APLIC_MMSICFGADDRH_VALID_MASK;
+         }
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_SMSICFGADDR)) {
+@@ -792,7 +796,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+                (addr == APLIC_SMSICFGADDRH)) {
+         if (aplic->num_children &&
+             !(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
+-            aplic->smsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
++            aplic->smsicfgaddrH = value & APLIC_SMSICFGADDRH_VALID_MASK;
+         }
+     } else if ((APLIC_SETIP_BASE <= addr) &&
+             (addr < (APLIC_SETIP_BASE + aplic->bitfield_words * 4))) {
+-- 
+2.34.1
 
 
