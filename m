@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BBDC87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C40C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujzRU-0000O4-5U; Thu, 07 Aug 2025 08:09:56 -0400
+	id 1ujzRs-0001Zi-Im; Thu, 07 Aug 2025 08:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ujzR5-0007ia-Fw; Thu, 07 Aug 2025 08:09:36 -0400
+ id 1ujzRD-0007xZ-2A; Thu, 07 Aug 2025 08:09:41 -0400
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ujzR3-00058G-Ac; Thu, 07 Aug 2025 08:09:31 -0400
+ id 1ujzR9-00058l-L4; Thu, 07 Aug 2025 08:09:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1754568569; x=1786104569;
+ t=1754568576; x=1786104576;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=/6Sn5bBqav7a/VOe4eY0q12wWkysC4c3gYyVvzV9Usk=;
- b=Qt+efbhmiXKaRCOrrb9VnuvvcnFhD1zKULjJDTVJFsE56o1Q76mXxCN9
- 9MCrF40LzrKSK2h8ethDltRG9ATgAFqyVKezp7mHX+YiSYpjarJL5EH9H
- 7q9WXskEzEwF2FKnwVdg1n+U5oSX64B+xVUtmAa8y6mn7Iv/t9fmKcqKv
- yZdNQM7/PqLHk2nNwTqBEtF/VGmcBmuQV5o9ypqUJwm6nIWfidlb/uDGv
- CacMftzlqJu6r1UIkNJYH9kIVHnH2nAaOicrbicb1804zREu011dfyaTI
- nIHI6b1AWL3ZUOy/jg1vMRiFG06Ul8gBBphPzm4x2xYxePhFX8N0egwj4 g==;
-X-CSE-ConnectionGUID: GVCzBLPCTFiBeieLDvn1JA==
-X-CSE-MsgGUID: 8luwCznERJ6zALQQSmTtQQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036764"
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036764"
+ bh=IcxfGX15IY6iFsOKxfs10AFkyWYMXNZqJnwjVx46zZc=;
+ b=f+BtDV4UTcs+iFp/3IsfJt6z9VQDjG/BapuICwVPVJ/Z8pnksyXLB1TJ
+ q1mHNS1Wj1ga9/RjaElYP2m/zWO1HYst68pizeOhpuSo9HqXX09qRyoSH
+ AbjrbKFrSM/pdo7Gbc6nX5tIDppWlQJ6FCvRkVr9UI99qLXwdZYWaxuII
+ gFh0Cpq2z3EQjavjW40LUbsh882RqO3pWMCjESbtwDUxjJwhHXV04B+6z
+ cLqKn03vuv+2RyjRv8cGlYiimw3teBr8uYsgJxnbM2vaNkXb/3q+3lDzh
+ iQgljXj5o4QQXId6mAtFuwA6Hol9a3a/YKuPIOMbW8ZqyNGw0RImFSulw g==;
+X-CSE-ConnectionGUID: gRCeL4+aQxW+I24AUM+GLA==
+X-CSE-MsgGUID: 4IMNRqXOQyGiTtnwuMX0DQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="57036785"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="57036785"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2025 05:09:27 -0700
-X-CSE-ConnectionGUID: uK0ipsbsSyqLIfgG7GPzKw==
-X-CSE-MsgGUID: /RMVBElBQjGkelAahNAIxQ==
+ 07 Aug 2025 05:09:34 -0700
+X-CSE-ConnectionGUID: mvEPT2R8R6WHRfp7AlWChg==
+X-CSE-MsgGUID: DlHmuEwnTeuxQDQ7EjUj4A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701097"
+X-IronPort-AV: E=Sophos;i="6.17,271,1747724400"; d="scan'208";a="164701119"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:09:25 -0700
+ by orviesa009.jf.intel.com with ESMTP; 07 Aug 2025 05:09:31 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  David Hildenbrand <david@redhat.com>,
@@ -53,9 +53,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 08/26] subprojects: Add vm-memory crate
-Date: Thu,  7 Aug 2025 20:30:09 +0800
-Message-Id: <20250807123027.2910950-9-zhao1.liu@intel.com>
+Subject: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU memory
+ backend
+Date: Thu,  7 Aug 2025 20:30:11 +0800
+Message-Id: <20250807123027.2910950-11-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807123027.2910950-1-zhao1.liu@intel.com>
 References: <20250807123027.2910950-1-zhao1.liu@intel.com>
@@ -86,114 +87,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add 2 patches to support QEMU memory backend implementation.
+
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- scripts/archive-source.sh                     |  2 +-
- scripts/make-release                          |  2 +-
- subprojects/.gitignore                        |  1 +
- .../vm-memory-0.16-rs/meson.build             | 35 +++++++++++++++++++
- subprojects/vm-memory-0.16-rs.wrap            | 12 +++++++
- 5 files changed, 50 insertions(+), 2 deletions(-)
- create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/meson.build
- create mode 100644 subprojects/vm-memory-0.16-rs.wrap
+ .../packagefiles/vm-memory-0.16-rs/0001.diff  |  81 +++++++++++++
+ .../packagefiles/vm-memory-0.16-rs/0002.diff  | 111 ++++++++++++++++++
+ subprojects/vm-memory-0.16-rs.wrap            |   2 +
+ 3 files changed, 194 insertions(+)
+ create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+ create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0002.diff
 
-diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index 99d0d898d010..41cf095ca33d 100755
---- a/scripts/archive-source.sh
-+++ b/scripts/archive-source.sh
-@@ -32,7 +32,7 @@ subprojects="keycodemapdb libvfio-user berkeley-softfloat-3
-   libc-0.2-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
-   syn-2-rs thiserror-1-rs thiserror-impl-1-rs unicode-ident-1-rs
--  winapi-0.3-rs winapi-i686-pc-windows-gnu-0.4-rs
-+  vm-memory-0.16-rs winapi-0.3-rs winapi-i686-pc-windows-gnu-0.4-rs
-   winapi-x86_64-pc-windows-gnu-0.4-rs"
- sub_deinit=""
- 
-diff --git a/scripts/make-release b/scripts/make-release
-index c53dfa0a7f4f..115739d31623 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -45,7 +45,7 @@ SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
-   libc-0.2-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
-   syn-2-rs thiserror-1-rs thiserror-impl-1-rs unicode-ident-1-rs
--  winapi-0.3-rs winapi-i686-pc-windows-gnu-0.4-rs
-+  vm-memory-0.16-rs winapi-0.3-rs winapi-i686-pc-windows-gnu-0.4-rs
-   winapi-x86_64-pc-windows-gnu-0.4-rs"
- 
- src="$1"
-diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-index c42adaa928ec..518dd39199ab 100644
---- a/subprojects/.gitignore
-+++ b/subprojects/.gitignore
-@@ -22,6 +22,7 @@
- /thiserror-1.0.65
- /thiserror-impl-1.0.65
- /unicode-ident-1.0.12
-+/vm-memory-0.16
- /winapi-0.3.9
- /winapi-i686-pc-windows-gnu-0.4.0
- /winapi-x86_64-pc-windows-gnu-0.4.0
-diff --git a/subprojects/packagefiles/vm-memory-0.16-rs/meson.build b/subprojects/packagefiles/vm-memory-0.16-rs/meson.build
+diff --git a/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
 new file mode 100644
-index 000000000000..f0d99bad5b7f
+index 000000000000..037193108d45
 --- /dev/null
-+++ b/subprojects/packagefiles/vm-memory-0.16-rs/meson.build
-@@ -0,0 +1,35 @@
-+project(
-+  'vm-memory-0.16-rs',
-+  'rust',
-+  meson_version: '>=1.5.0',
-+  #version : '0.2.0',
-+  license : 'Apache-2.0 or BSD-3-Clause',
-+)
++++ b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+@@ -0,0 +1,81 @@
++From 298f8ba019b2fe159fa943e0ae4dfd3c83ee64e0 Mon Sep 17 00:00:00 2001
++From: Zhao Liu <zhao1.liu@intel.com>
++Date: Wed, 6 Aug 2025 11:31:11 +0800
++Subject: [PATCH 1/2] guest_memory: Add a marker tarit to implement
++ Bytes<GuestAddress> for GuestMemory
 +
-+all_deps = []
++At present, Bytes<GuestAddress> is implemented as the blanet trait for
++all types which implemented GuestMemory.
 +
-+subproject('thiserror-1-rs', required: true)
-+all_deps += dependency('thiserror-1-rs')
++QEMU needs to customize its own Bytes<GuestAddress> implementation.
 +
-+if host_machine.system() == 'windows'
-+  subproject('winapi-0.3-rs', required: true)
-+  all_deps += dependency('winapi-0.3-rs')
-+endif
++So add a marker trait to still provide the default implementation for
++GuestRegionCollection and GuestMemoryMmap, and QEMU could have its own
++implementation.
 +
-+# Note "rawfd" (as the only default feature) is disabled by default in
-+# meson. It cause compilation failure on Windows and fortunately, we
-+# don't need it either.
-+lib = static_library(
-+  'vm_memory',
-+  'src/lib.rs',
-+  override_options : ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi : 'rust',
-+  rust_args: ['--cap-lints', 'allow'],
-+  dependencies: all_deps,
-+)
++Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
++---
++ src/guest_memory.rs | 8 +++++++-
++ src/lib.rs          | 2 +-
++ src/region.rs       | 6 ++++--
++ 3 files changed, 12 insertions(+), 4 deletions(-)
 +
-+dep = declare_dependency(
-+  link_with : [lib],
-+)
++diff --git a/src/guest_memory.rs b/src/guest_memory.rs
++index 39e4f10a89d6..5b78038c3c92 100644
++--- a/src/guest_memory.rs
+++++ b/src/guest_memory.rs
++@@ -457,7 +457,13 @@ pub trait GuestMemory {
++     }
++ }
++ 
++-impl<T: GuestMemory + ?Sized> Bytes<GuestAddress> for T {
+++/// A marker trait that if implemented on a type `M` makes available a default
+++/// implementation of `Bytes<GuestAddress>` for `M`, based on the assumption
+++/// that the entire `GuestMemory` is just traditional Guest memory abstraction
+++/// without any special access requirements.
+++pub trait GuestMemoryBytes: GuestMemory {}
+++
+++impl<M: GuestMemoryBytes + ?Sized> Bytes<GuestAddress> for M {
++     type E = Error;
++ 
++     fn write(&self, buf: &[u8], addr: GuestAddress) -> Result<usize> {
++diff --git a/src/lib.rs b/src/lib.rs
++index 2f87f4c8482f..64ed3ec27a36 100644
++--- a/src/lib.rs
+++++ b/src/lib.rs
++@@ -47,7 +47,7 @@ pub use endian::{Be16, Be32, Be64, BeSize, Le16, Le32, Le64, LeSize};
++ pub mod guest_memory;
++ pub use guest_memory::{
++     Error as GuestMemoryError, FileOffset, GuestAddress, GuestAddressSpace, GuestMemory,
++-    GuestUsize, MemoryRegionAddress, Result as GuestMemoryResult,
+++    GuestMemoryBytes, GuestUsize, MemoryRegionAddress, Result as GuestMemoryResult,
++ };
++ 
++ pub mod region;
++diff --git a/src/region.rs b/src/region.rs
++index e716a6290e75..7114dfbe15a7 100644
++--- a/src/region.rs
+++++ b/src/region.rs
++@@ -3,8 +3,8 @@
++ use crate::bitmap::{Bitmap, BS};
++ use crate::guest_memory::Result;
++ use crate::{
++-    Address, AtomicAccess, Bytes, FileOffset, GuestAddress, GuestMemory, GuestMemoryError,
++-    GuestUsize, MemoryRegionAddress, ReadVolatile, VolatileSlice, WriteVolatile,
+++    Address, AtomicAccess, Bytes, FileOffset, GuestAddress, GuestMemory, GuestMemoryBytes,
+++    GuestMemoryError, GuestUsize, MemoryRegionAddress, ReadVolatile, VolatileSlice, WriteVolatile,
++ };
++ use std::sync::atomic::Ordering;
++ use std::sync::Arc;
++@@ -322,6 +322,8 @@ impl<R: GuestMemoryRegion> GuestMemory for GuestRegionCollection<R> {
++     }
++ }
++ 
+++impl<R: GuestMemoryRegion> GuestMemoryBytes for GuestRegionCollection<R> {}
+++
++ /// A marker trait that if implemented on a type `R` makes available a default
++ /// implementation of `Bytes<MemoryRegionAddress>` for `R`, based on the assumption
++ /// that the entire `GuestMemoryRegion` is just traditional memory without any
++-- 
++2.34.1
 +
-+meson.override_dependency('vm-memory-0.16-rs', dep)
+diff --git a/subprojects/packagefiles/vm-memory-0.16-rs/0002.diff b/subprojects/packagefiles/vm-memory-0.16-rs/0002.diff
+new file mode 100644
+index 000000000000..bfef1bf1fee3
+--- /dev/null
++++ b/subprojects/packagefiles/vm-memory-0.16-rs/0002.diff
+@@ -0,0 +1,111 @@
++From 2af7ea12a589fde619690e5060c01710cb6f2e0e Mon Sep 17 00:00:00 2001
++From: Zhao Liu <zhao1.liu@intel.com>
++Date: Wed, 6 Aug 2025 14:27:14 +0800
++Subject: [PATCH 2/2] guest_memory: Add is_write argument for
++ GuestMemory::try_access()
++
++QEMU needs to know whether the memory access is for write or not, e.g.,
++memory region may be read-only, or iommu needs to distinguish write
++access.
++
++The alternative option is to move try_access() into Bytes trait, and
++implement Bytes<(GuestAddress, is_write)> for QEMU's GuestMemory
++abstraction. However, try_access() seems to lack generality in the
++abstraction of Bytes, as only GuestMemory needs it.
++
++Therefore, just add another argument in try_access() to help handle
++more complex memory backend.
++
++Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
++---
++ src/bitmap/mod.rs   | 17 +++++++++++------
++ src/guest_memory.rs | 10 ++++++----
++ 2 files changed, 17 insertions(+), 10 deletions(-)
++
++diff --git a/src/bitmap/mod.rs b/src/bitmap/mod.rs
++index cf1555b29350..de4203166304 100644
++--- a/src/bitmap/mod.rs
+++++ b/src/bitmap/mod.rs
++@@ -287,12 +287,17 @@ pub(crate) mod tests {
++         // Finally, let's invoke the generic tests for `Bytes`.
++         let check_range_closure = |m: &M, start: usize, len: usize, clean: bool| -> bool {
++             let mut check_result = true;
++-            m.try_access(len, GuestAddress(start as u64), |_, size, reg_addr, reg| {
++-                if !check_range(&reg.bitmap(), reg_addr.0 as usize, size, clean) {
++-                    check_result = false;
++-                }
++-                Ok(size)
++-            })
+++            m.try_access(
+++                len,
+++                GuestAddress(start as u64),
+++                false,
+++                |_, size, reg_addr, reg| {
+++                    if !check_range(&reg.bitmap(), reg_addr.0 as usize, size, clean) {
+++                        check_result = false;
+++                    }
+++                    Ok(size)
+++                },
+++            )
++             .unwrap();
++ 
++             check_result
++diff --git a/src/guest_memory.rs b/src/guest_memory.rs
++index 5b78038c3c92..53981c4e8e94 100644
++--- a/src/guest_memory.rs
+++++ b/src/guest_memory.rs
++@@ -353,7 +353,7 @@ pub trait GuestMemory {
++ 
++     /// Check whether the range [base, base + len) is valid.
++     fn check_range(&self, base: GuestAddress, len: usize) -> bool {
++-        match self.try_access(len, base, |_, count, _, _| -> Result<usize> { Ok(count) }) {
+++        match self.try_access(len, base, false, |_, count, _, _| -> Result<usize> { Ok(count) }) {
++             Ok(count) => count == len,
++             _ => false,
++         }
++@@ -374,7 +374,7 @@ pub trait GuestMemory {
++     /// - the error code returned by the callback 'f'
++     /// - the size of the already handled data when encountering the first hole
++     /// - the size of the already handled data when the whole range has been handled
++-    fn try_access<F>(&self, count: usize, addr: GuestAddress, mut f: F) -> Result<usize>
+++    fn try_access<F>(&self, count: usize, addr: GuestAddress, _is_write: bool, mut f: F) -> Result<usize>
++     where
++         F: FnMut(usize, usize, MemoryRegionAddress, &Self::R) -> Result<usize>,
++     {
++@@ -470,6 +470,7 @@ impl<M: GuestMemoryBytes + ?Sized> Bytes<GuestAddress> for M {
++         self.try_access(
++             buf.len(),
++             addr,
+++            true,
++             |offset, _count, caddr, region| -> Result<usize> {
++                 region.write(&buf[offset..], caddr)
++             },
++@@ -480,6 +481,7 @@ impl<M: GuestMemoryBytes + ?Sized> Bytes<GuestAddress> for M {
++         self.try_access(
++             buf.len(),
++             addr,
+++            false,
++             |offset, _count, caddr, region| -> Result<usize> {
++                 region.read(&mut buf[offset..], caddr)
++             },
++@@ -547,7 +549,7 @@ impl<M: GuestMemoryBytes + ?Sized> Bytes<GuestAddress> for M {
++     where
++         F: ReadVolatile,
++     {
++-        self.try_access(count, addr, |_, len, caddr, region| -> Result<usize> {
+++        self.try_access(count, addr, false, |_, len, caddr, region| -> Result<usize> {
++             region.read_volatile_from(caddr, src, len)
++         })
++     }
++@@ -575,7 +577,7 @@ impl<M: GuestMemoryBytes + ?Sized> Bytes<GuestAddress> for M {
++     where
++         F: WriteVolatile,
++     {
++-        self.try_access(count, addr, |_, len, caddr, region| -> Result<usize> {
+++        self.try_access(count, addr, true, |_, len, caddr, region| -> Result<usize> {
++             // For a non-RAM region, reading could have side effects, so we
++             // must use write_all().
++             region.write_all_volatile_to(caddr, dst, len).map(|()| len)
++-- 
++2.34.1
++
 diff --git a/subprojects/vm-memory-0.16-rs.wrap b/subprojects/vm-memory-0.16-rs.wrap
-new file mode 100644
-index 000000000000..a057c8c9efc1
---- /dev/null
+index a057c8c9efc1..592271300294 100644
+--- a/subprojects/vm-memory-0.16-rs.wrap
 +++ b/subprojects/vm-memory-0.16-rs.wrap
-@@ -0,0 +1,12 @@
-+[wrap-git]
-+directory = vm-memory-0.16
-+# The latest v0.16.2 didn't contain Paolo's commit 5f59e29c3d30
-+# ("guest_memory: let multiple regions slice one global bitmap").
-+# Once a new release has that change, switch to crates.io.
-+url = https://github.com/rust-vmm/vm-memory.git
-+revision = 5eb996a060d7ca3844cbd2f10b1d048c0c91942f
-+patch_directory = vm-memory-0.16-rs
-+depth = 1
+@@ -8,5 +8,7 @@ revision = 5eb996a060d7ca3844cbd2f10b1d048c0c91942f
+ patch_directory = vm-memory-0.16-rs
+ depth = 1
+ 
++diff_files = vm-memory-0.16-rs/0001.diff, vm-memory-0.16-rs/0002.diff
 +
-+# bump this version number on every change to meson.build or the patches:
-+# v2
+ # bump this version number on every change to meson.build or the patches:
+ # v2
 -- 
 2.34.1
 
