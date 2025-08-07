@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99C1C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B41CC87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk1nM-0006lf-OK; Thu, 07 Aug 2025 10:40:40 -0400
+	id 1uk1nj-0007fO-3r; Thu, 07 Aug 2025 10:41:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uk1nK-0006hI-11
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:40:38 -0400
+ id 1uk1nf-0007WJ-Ov
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:00 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1nH-0000uz-M7
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:40:37 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1nd-0000xd-MO
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:40:59 -0400
 Received: from localhost.localdomain (unknown [167.220.208.72])
- by linux.microsoft.com (Postfix) with ESMTPSA id 8C68D201BC65;
- Thu,  7 Aug 2025 07:40:29 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8C68D201BC65
+ by linux.microsoft.com (Postfix) with ESMTPSA id 822DC201BC72;
+ Thu,  7 Aug 2025 07:40:51 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 822DC201BC72
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1754577634;
- bh=P7FwbnEZftMsjN50y690OiMppdrIz0q3SjQwrEvD/mA=;
+ s=default; t=1754577655;
+ bh=sxcdffU9Fs8P+PvT1bCv7XNkZsAB+E65hqgnj7AV1dw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=GzD5hgPbvoHEHntjYcRpuAY2HnJhdwZK9ZgzLEERgxzWjicfIQJVzpgYZz07O+x38
- zmiYVWzxBSpu4wh40eISn1GuQyComRDdgsXJueUuUpBKcQfgf1IGk1ellGRzkDssrO
- I5F0riVfMSn/UddWOfxYBL4BveysWy0tUG8mbBLA=
+ b=fqVKFGhCn03JsZCYZPJaZzYnQssD2zbKXh7AMuxbXtxA74swaQnQK+J2pruGXPKA6
+ 2WJjfhETFvSSVchmRB1xjhfGTlAXQUp+HviWqWZuzdhtCvjdk4ljspE15JPneMCRmZ
+ /VRuItxwa7dKb0AhK/p5LFh7VeH2dKojv7Ez+v+g=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -50,9 +50,9 @@ Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 03/26] target/i386/mshv: Add x86 decoder/emu implementation
-Date: Thu,  7 Aug 2025 16:39:28 +0200
-Message-Id: <20250807143951.1154713-4-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v3 07/26] accel/mshv: Add accelerator skeleton
+Date: Thu,  7 Aug 2025 16:39:32 +0200
+Message-Id: <20250807143951.1154713-8-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
 References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
@@ -82,418 +82,247 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MSHV accelerator requires a x86 decoder/emulator in userland to
-emulate MMIO instructions. This change contains the implementations for
-the generalized i386 instruction decoder/emulator.
+Introduce the initial scaffold for the MSHV (Microsoft Hypervisor)
+accelerator backend. This includes the basic directory structure and
+stub implementations needed to integrate with QEMU's accelerator
+framework.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- include/system/mshv.h           |  25 +++
- target/i386/cpu.h               |   2 +-
- target/i386/emulate/meson.build |   7 +-
- target/i386/meson.build         |   2 +
- target/i386/mshv/meson.build    |   7 +
- target/i386/mshv/x86.c          | 297 ++++++++++++++++++++++++++++++++
- 6 files changed, 337 insertions(+), 3 deletions(-)
- create mode 100644 include/system/mshv.h
- create mode 100644 target/i386/mshv/meson.build
- create mode 100644 target/i386/mshv/x86.c
+ accel/meson.build      |   1 +
+ accel/mshv/meson.build |   6 ++
+ accel/mshv/mshv-all.c  | 143 +++++++++++++++++++++++++++++++++++++++++
+ include/system/mshv.h  |  35 ++++++++++
+ 4 files changed, 185 insertions(+)
+ create mode 100644 accel/mshv/meson.build
+ create mode 100644 accel/mshv/mshv-all.c
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
+diff --git a/accel/meson.build b/accel/meson.build
+index 6349efe682..983dfd0bd5 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -10,6 +10,7 @@ if have_system
+   subdir('kvm')
+   subdir('xen')
+   subdir('stubs')
++  subdir('mshv')
+ endif
+ 
+ # qtest
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
 new file mode 100644
-index 0000000000..a971982b52
+index 0000000000..4c03ac7921
 --- /dev/null
-+++ b/include/system/mshv.h
-@@ -0,0 +1,25 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors: Ziqiao Zhou  <ziqiaozhou@microsoft.com>
-+ *          Magnus Kulke <magnuskulke@microsoft.com>
-+ *          Jinank Jain  <jinankjain@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#ifndef QEMU_MSHV_INT_H
-+#define QEMU_MSHV_INT_H
-+
-+#ifdef COMPILING_PER_TARGET
-+#ifdef CONFIG_MSHV
-+#define CONFIG_MSHV_IS_POSSIBLE
-+#endif
-+#else
-+#define CONFIG_MSHV_IS_POSSIBLE
-+#endif
-+
-+#endif
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index f977fc49a7..6d3d2b1440 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2126,7 +2126,7 @@ typedef struct CPUArchState {
-     QEMUTimer *xen_periodic_timer;
-     QemuMutex xen_timers_lock;
- #endif
--#if defined(CONFIG_HVF)
-+#if defined(CONFIG_HVF) || defined(CONFIG_MSHV)
-     void *emu_mmio_buf;
- #endif
- 
-diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
-index 4edd4f462f..b6dafb6a5b 100644
---- a/target/i386/emulate/meson.build
-+++ b/target/i386/emulate/meson.build
-@@ -1,5 +1,8 @@
--i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
-+emulator_files = files(
-   'x86_decode.c',
-   'x86_emu.c',
-   'x86_flags.c',
--))
-+)
-+
-+i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: emulator_files)
-+i386_system_ss.add(when: 'CONFIG_MSHV', if_true: emulator_files)
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 092af34e2d..89ba4912aa 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -13,6 +13,7 @@ i386_ss.add(when: 'CONFIG_KVM', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_HVF', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_WHPX', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_NVMM', if_true: files('host-cpu.c'))
-+i386_ss.add(when: 'CONFIG_MSHV', if_true: files('host-cpu.c'))
- 
- i386_system_ss = ss.source_set()
- i386_system_ss.add(files(
-@@ -34,6 +35,7 @@ subdir('nvmm')
- subdir('hvf')
- subdir('tcg')
- subdir('emulate')
-+subdir('mshv')
- 
- target_arch += {'i386': i386_ss}
- target_system_arch += {'i386': i386_system_ss}
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-new file mode 100644
-index 0000000000..8ddaa7c11d
---- /dev/null
-+++ b/target/i386/mshv/meson.build
-@@ -0,0 +1,7 @@
-+i386_mshv_ss = ss.source_set()
-+
-+i386_mshv_ss.add(files(
-+  'x86.c',
++++ b/accel/mshv/meson.build
+@@ -0,0 +1,6 @@
++mshv_ss = ss.source_set()
++mshv_ss.add(if_true: files(
++  'mshv-all.c'
 +))
 +
-+i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
-diff --git a/target/i386/mshv/x86.c b/target/i386/mshv/x86.c
++specific_ss.add_all(when: 'CONFIG_MSHV', if_true: mshv_ss)
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
 new file mode 100644
-index 0000000000..d574b3bc52
+index 0000000000..f548b1187b
 --- /dev/null
-+++ b/target/i386/mshv/x86.c
-@@ -0,0 +1,297 @@
++++ b/accel/mshv/mshv-all.c
+@@ -0,0 +1,143 @@
 +/*
 + * QEMU MSHV support
 + *
 + * Copyright Microsoft, Corp. 2025
 + *
-+ * Authors: Magnus Kulke <magnuskulke@microsoft.com>
++ * Authors:
++ *  Ziqiao Zhou       <ziqiaozhou@microsoft.com>
++ *  Magnus Kulke      <magnuskulke@microsoft.com>
++ *  Jinank Jain       <jinankjain@microsoft.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
++ *
 + */
 +
 +#include "qemu/osdep.h"
-+
-+#include "cpu.h"
-+#include "emulate/x86_decode.h"
-+#include "emulate/x86_emu.h"
-+#include "qemu/typedefs.h"
++#include "qapi/error.h"
 +#include "qemu/error-report.h"
++#include "qemu/event_notifier.h"
++#include "qemu/module.h"
++#include "qemu/main-loop.h"
++#include "hw/boards.h"
++
++#include "hw/hyperv/hvhdk.h"
++#include "hw/hyperv/hvhdk_mini.h"
++#include "hw/hyperv/hvgdk.h"
++#include "linux/mshv.h"
++
++#include "qemu/accel.h"
++#include "qemu/guest-random.h"
++#include "accel/accel-ops.h"
++#include "accel/accel-cpu-ops.h"
++#include "system/cpus.h"
++#include "system/runstate.h"
++#include "system/accel-blocker.h"
++#include "system/address-spaces.h"
 +#include "system/mshv.h"
++#include "system/reset.h"
++#include "trace.h"
++#include <err.h>
++#include <stdint.h>
++#include <sys/ioctl.h>
 +
-+/* RW or Exec segment */
-+static const uint8_t RWRX_SEGMENT_TYPE        = 0x2;
-+static const uint8_t CODE_SEGMENT_TYPE        = 0x8;
-+static const uint8_t EXPAND_DOWN_SEGMENT_TYPE = 0x4;
++#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
 +
-+typedef enum CpuMode {
-+    REAL_MODE,
-+    PROTECTED_MODE,
-+    LONG_MODE,
-+} CpuMode;
++DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
 +
-+static CpuMode cpu_mode(CPUState *cpu)
++bool mshv_allowed;
++
++MshvState *mshv_state;
++
++static int mshv_init(AccelState *as, MachineState *ms)
 +{
-+    enum CpuMode m = REAL_MODE;
-+
-+    if (x86_is_protected(cpu)) {
-+        m = PROTECTED_MODE;
-+
-+        if (x86_is_long_mode(cpu)) {
-+            m = LONG_MODE;
-+        }
-+    }
-+
-+    return m;
-+}
-+
-+static bool segment_type_ro(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    return (type_ & (~RWRX_SEGMENT_TYPE)) == 0;
-+}
-+
-+static bool segment_type_code(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+    return (type_ & CODE_SEGMENT_TYPE) != 0;
-+}
-+
-+static bool segment_expands_down(const SegmentCache *seg)
-+{
-+    uint32_t type_ = (seg->flags >> DESC_TYPE_SHIFT) & 15;
-+
-+    if (segment_type_code(seg)) {
-+        return false;
-+    }
-+
-+    return (type_ & EXPAND_DOWN_SEGMENT_TYPE) != 0;
-+}
-+
-+static uint32_t segment_limit(const SegmentCache *seg)
-+{
-+    uint32_t limit = seg->limit;
-+    uint32_t granularity = (seg->flags & DESC_G_MASK) != 0;
-+
-+    if (granularity != 0) {
-+        limit = (limit << 12) | 0xFFF;
-+    }
-+
-+    return limit;
-+}
-+
-+static uint8_t segment_db(const SegmentCache *seg)
-+{
-+    return (seg->flags >> DESC_B_SHIFT) & 1;
-+}
-+
-+static uint32_t segment_max_limit(const SegmentCache *seg)
-+{
-+    if (segment_db(seg) != 0) {
-+        return 0xFFFFFFFF;
-+    }
-+    return 0xFFFF;
-+}
-+
-+static int linearize(CPUState *cpu,
-+                     target_ulong logical_addr, target_ulong *linear_addr,
-+                     X86Seg seg_idx)
-+{
-+    enum CpuMode mode;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    SegmentCache *seg = &env->segs[seg_idx];
-+    target_ulong base = seg->base;
-+    target_ulong logical_addr_32b;
-+    uint32_t limit;
-+    /* TODO: the emulator will not pass us "write" indicator yet */
-+    bool write = false;
-+
-+    mode = cpu_mode(cpu);
-+
-+    switch (mode) {
-+    case LONG_MODE:
-+        if (__builtin_add_overflow(logical_addr, base, linear_addr)) {
-+            error_report("Address overflow");
-+            return -1;
-+        }
-+        break;
-+    case PROTECTED_MODE:
-+    case REAL_MODE:
-+        if (segment_type_ro(seg) && write) {
-+            error_report("Cannot write to read-only segment");
-+            return -1;
-+        }
-+
-+        logical_addr_32b = logical_addr & 0xFFFFFFFF;
-+        limit = segment_limit(seg);
-+
-+        if (segment_expands_down(seg)) {
-+            if (logical_addr_32b >= limit) {
-+                error_report("Address exceeds limit (expands down)");
-+                return -1;
-+            }
-+
-+            limit = segment_max_limit(seg);
-+        }
-+
-+        if (logical_addr_32b > limit) {
-+            error_report("Address exceeds limit %u", limit);
-+            return -1;
-+        }
-+        *linear_addr = logical_addr_32b + base;
-+        break;
-+    default:
-+        error_report("Unknown cpu mode: %d", mode);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+bool x86_read_segment_descriptor(CPUState *cpu,
-+                                 struct x86_segment_descriptor *desc,
-+                                 x86_segment_selector sel)
-+{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    target_ulong gva;
-+
-+    memset(desc, 0, sizeof(*desc));
-+
-+    /* valid gdt descriptors start from index 1 */
-+    if (!sel.index && GDT_SEL == sel.ti) {
-+        return false;
-+    }
-+
-+    if (GDT_SEL == sel.ti) {
-+        base = env->gdt.base;
-+        limit = env->gdt.limit;
-+    } else {
-+        base = env->ldt.base;
-+        limit = env->ldt.limit;
-+    }
-+
-+    if (sel.index * 8 >= limit) {
-+        return false;
-+    }
-+
-+    gva = base + sel.index * 8;
-+    emul_ops->read_mem(cpu, desc, gva, sizeof(*desc));
-+
-+    return true;
-+}
-+
-+bool x86_read_call_gate(CPUState *cpu, struct x86_call_gate *idt_desc,
-+                        int gate)
-+{
-+    target_ulong base;
-+    uint32_t limit;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    target_ulong gva;
-+
-+    base = env->idt.base;
-+    limit = env->idt.limit;
-+
-+    memset(idt_desc, 0, sizeof(*idt_desc));
-+    if (gate * 8 >= limit) {
-+        perror("call gate exceeds idt limit");
-+        return false;
-+    }
-+
-+    gva = base + gate * 8;
-+    emul_ops->read_mem(cpu, idt_desc, gva, sizeof(*idt_desc));
-+
-+    return true;
-+}
-+
-+bool x86_is_protected(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr0 = env->cr[0];
-+
-+    return cr0 & CR0_PE_MASK;
-+}
-+
-+bool x86_is_real(CPUState *cpu)
-+{
-+    return !x86_is_protected(cpu);
-+}
-+
-+bool x86_is_v8086(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    return x86_is_protected(cpu) && (env->eflags & VM_MASK);
-+}
-+
-+bool x86_is_long_mode(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t efer = env->efer;
-+    uint64_t lme_lma = (MSR_EFER_LME | MSR_EFER_LMA);
-+
-+    return ((efer & lme_lma) == lme_lma);
-+}
-+
-+bool x86_is_long64_mode(CPUState *cpu)
-+{
-+    error_report("unimplemented: is_long64_mode()");
++    error_report("unimplemented");
 +    abort();
 +}
 +
-+bool x86_is_paging_mode(CPUState *cpu)
++static void mshv_start_vcpu_thread(CPUState *cpu)
 +{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr0 = env->cr[0];
-+
-+    return cr0 & CR0_PG_MASK;
++    error_report("unimplemented");
++    abort();
 +}
 +
-+bool x86_is_pae_enabled(CPUState *cpu)
++static void mshv_cpu_synchronize_post_init(CPUState *cpu)
 +{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t cr4 = env->cr[4];
-+
-+    return cr4 & CR4_PAE_MASK;
++    error_report("unimplemented");
++    abort();
 +}
 +
-+target_ulong linear_addr(CPUState *cpu, target_ulong addr, X86Seg seg)
++static void mshv_cpu_synchronize_post_reset(CPUState *cpu)
 +{
-+    int ret;
-+    target_ulong linear_addr;
-+
-+    ret = linearize(cpu, addr, &linear_addr, seg);
-+    if (ret < 0) {
-+        error_report("failed to linearize address");
-+        abort();
-+    }
-+
-+    return linear_addr;
++    error_report("unimplemented");
++    abort();
 +}
 +
-+target_ulong linear_addr_size(CPUState *cpu, target_ulong addr, int size,
-+                              X86Seg seg)
++static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
 +{
-+    switch (size) {
-+    case 2:
-+        addr = (uint16_t)addr;
-+        break;
-+    case 4:
-+        addr = (uint32_t)addr;
-+        break;
-+    default:
-+        break;
-+    }
-+    return linear_addr(cpu, addr, seg);
++    error_report("unimplemented");
++    abort();
 +}
 +
-+target_ulong linear_rip(CPUState *cpu, target_ulong rip)
++static void mshv_cpu_synchronize(CPUState *cpu)
 +{
-+    return linear_addr(cpu, rip, R_CS);
++    error_report("unimplemented");
++    abort();
 +}
++
++static bool mshv_cpus_are_resettable(void)
++{
++    error_report("unimplemented");
++    abort();
++}
++
++static void mshv_accel_class_init(ObjectClass *oc, const void *data)
++{
++    AccelClass *ac = ACCEL_CLASS(oc);
++
++    ac->name = "MSHV";
++    ac->init_machine = mshv_init;
++    ac->allowed = &mshv_allowed;
++}
++
++static void mshv_accel_instance_init(Object *obj)
++{
++    MshvState *s = MSHV_STATE(obj);
++
++    s->vm = 0;
++}
++
++static const TypeInfo mshv_accel_type = {
++    .name = TYPE_MSHV_ACCEL,
++    .parent = TYPE_ACCEL,
++    .instance_init = mshv_accel_instance_init,
++    .class_init = mshv_accel_class_init,
++    .instance_size = sizeof(MshvState),
++};
++
++static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
++{
++    AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
++
++    ops->create_vcpu_thread = mshv_start_vcpu_thread;
++    ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
++    ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
++    ops->synchronize_state = mshv_cpu_synchronize;
++    ops->synchronize_pre_loadvm = mshv_cpu_synchronize_pre_loadvm;
++    ops->cpus_are_resettable = mshv_cpus_are_resettable;
++    ops->handle_interrupt = generic_handle_interrupt;
++}
++
++static const TypeInfo mshv_accel_ops_type = {
++    .name = ACCEL_OPS_NAME("mshv"),
++    .parent = TYPE_ACCEL_OPS,
++    .class_init = mshv_accel_ops_class_init,
++    .abstract = true,
++};
++
++static void mshv_type_init(void)
++{
++    type_register_static(&mshv_accel_type);
++    type_register_static(&mshv_accel_ops_type);
++}
++
++type_init(mshv_type_init);
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index a358691428..45808c5c50 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -14,6 +14,15 @@
+ #ifndef QEMU_MSHV_INT_H
+ #define QEMU_MSHV_INT_H
+ 
++#include "qemu/osdep.h"
++#include "qemu/accel.h"
++#include "hw/hyperv/hyperv-proto.h"
++#include "linux/mshv.h"
++#include "hw/hyperv/hvhdk.h"
++#include "qapi/qapi-types-common.h"
++#include "system/memory.h"
++#include "accel/accel-ops.h"
++
+ #ifdef COMPILING_PER_TARGET
+ #ifdef CONFIG_MSHV
+ #define CONFIG_MSHV_IS_POSSIBLE
+@@ -25,6 +34,32 @@
+ #ifdef CONFIG_MSHV_IS_POSSIBLE
+ extern bool mshv_allowed;
+ #define mshv_enabled() (mshv_allowed)
++
++typedef struct MshvMemoryListener {
++    MemoryListener listener;
++    int as_id;
++} MshvMemoryListener;
++
++typedef struct MshvAddressSpace {
++    MshvMemoryListener *ml;
++    AddressSpace *as;
++} MshvAddressSpace;
++
++typedef struct MshvState {
++    AccelState parent_obj;
++    int vm;
++    MshvMemoryListener memory_listener;
++    /* number of listeners */
++    int nr_as;
++    MshvAddressSpace *as;
++} MshvState;
++extern MshvState *mshv_state;
++
++struct AccelCPUState {
++    int cpufd;
++    bool dirty;
++};
++
+ #else /* CONFIG_MSHV_IS_POSSIBLE */
+ #define mshv_enabled() false
+ #endif
 -- 
 2.34.1
 
