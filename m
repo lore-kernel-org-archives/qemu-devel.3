@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B41CC87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16AAC87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 14:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk1nj-0007fO-3r; Thu, 07 Aug 2025 10:41:03 -0400
+	id 1uk1q8-0004la-1S; Thu, 07 Aug 2025 10:43:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1uk1nf-0007WJ-Ov
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:41:00 -0400
+ id 1uk1pG-0002dW-5H
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:42:39 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1nd-0000xd-MO
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:40:59 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1uk1pC-00016z-4l
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 10:42:36 -0400
 Received: from localhost.localdomain (unknown [167.220.208.72])
- by linux.microsoft.com (Postfix) with ESMTPSA id 822DC201BC72;
- Thu,  7 Aug 2025 07:40:51 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 822DC201BC72
+ by linux.microsoft.com (Postfix) with ESMTPSA id BE86A201BC88;
+ Thu,  7 Aug 2025 07:42:18 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com BE86A201BC88
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1754577655;
- bh=sxcdffU9Fs8P+PvT1bCv7XNkZsAB+E65hqgnj7AV1dw=;
+ s=default; t=1754577743;
+ bh=3+/2eC45+m6/AMOWPXDhLwN8zStY/ahX510ZouuUZLE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fqVKFGhCn03JsZCYZPJaZzYnQssD2zbKXh7AMuxbXtxA74swaQnQK+J2pruGXPKA6
- 2WJjfhETFvSSVchmRB1xjhfGTlAXQUp+HviWqWZuzdhtCvjdk4ljspE15JPneMCRmZ
- /VRuItxwa7dKb0AhK/p5LFh7VeH2dKojv7Ez+v+g=
+ b=FFK2OMC0izcDhDZFqfmoSQtlRs5yyZSkanOjUuAr4ddN7nve5cr1GYFsK6ahDIhN2
+ xnZwPCp6FylCVBeuJRB+bkijc/eF+q/Z3nJysmP8KL7QXIhiCHY9C5rVu4Rz3/BcwL
+ xxNwnmZ0+7hGDxl9hlyZnmG/V2NuElMorwgFC3tI=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -50,9 +50,9 @@ Cc: Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 07/26] accel/mshv: Add accelerator skeleton
-Date: Thu,  7 Aug 2025 16:39:32 +0200
-Message-Id: <20250807143951.1154713-8-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v3 24/26] docs: Add mshv to documentation
+Date: Thu,  7 Aug 2025 16:39:49 +0200
+Message-Id: <20250807143951.1154713-25-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
 References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
@@ -82,247 +82,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the initial scaffold for the MSHV (Microsoft Hypervisor)
-accelerator backend. This includes the basic directory structure and
-stub implementations needed to integrate with QEMU's accelerator
-framework.
+Added mshv to the list of accelerators in doc text.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/meson.build      |   1 +
- accel/mshv/meson.build |   6 ++
- accel/mshv/mshv-all.c  | 143 +++++++++++++++++++++++++++++++++++++++++
- include/system/mshv.h  |  35 ++++++++++
- 4 files changed, 185 insertions(+)
- create mode 100644 accel/mshv/meson.build
- create mode 100644 accel/mshv/mshv-all.c
+ docs/devel/codebase.rst |  2 +-
+ qemu-options.hx         | 16 ++++++++--------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/accel/meson.build b/accel/meson.build
-index 6349efe682..983dfd0bd5 100644
---- a/accel/meson.build
-+++ b/accel/meson.build
-@@ -10,6 +10,7 @@ if have_system
-   subdir('kvm')
-   subdir('xen')
-   subdir('stubs')
-+  subdir('mshv')
- endif
+diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
+index 2a3143787a..69d8827117 100644
+--- a/docs/devel/codebase.rst
++++ b/docs/devel/codebase.rst
+@@ -48,7 +48,7 @@ yet, so sometimes the source code is all you have.
+ * `accel <https://gitlab.com/qemu-project/qemu/-/tree/master/accel>`_:
+   Infrastructure and architecture agnostic code related to the various
+   `accelerators <Accelerators>` supported by QEMU
+-  (TCG, KVM, hvf, whpx, xen, nvmm).
++  (TCG, KVM, hvf, whpx, xen, nvmm, mshv).
+   Contains interfaces for operations that will be implemented per
+   `target <https://gitlab.com/qemu-project/qemu/-/tree/master/target>`_.
+ * `audio <https://gitlab.com/qemu-project/qemu/-/tree/master/audio>`_:
+diff --git a/qemu-options.hx b/qemu-options.hx
+index ab23f14d21..ad747eb154 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -28,7 +28,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "-machine [type=]name[,prop[=value][,...]]\n"
+     "                selects emulated machine ('-machine help' for list)\n"
+     "                property accel=accel1[:accel2[:...]] selects accelerator\n"
+-    "                supported accelerators are kvm, xen, hvf, nvmm, whpx or tcg (default: tcg)\n"
++    "                supported accelerators are kvm, xen, hvf, nvmm, whpx, mshv or tcg (default: tcg)\n"
+     "                vmport=on|off|auto controls emulation of vmport (default: auto)\n"
+     "                dump-guest-core=on|off include guest memory in a core dump (default=on)\n"
+     "                mem-merge=on|off controls memory merge support (default: on)\n"
+@@ -66,10 +66,10 @@ SRST
  
- # qtest
-diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
-new file mode 100644
-index 0000000000..4c03ac7921
---- /dev/null
-+++ b/accel/mshv/meson.build
-@@ -0,0 +1,6 @@
-+mshv_ss = ss.source_set()
-+mshv_ss.add(if_true: files(
-+  'mshv-all.c'
-+))
-+
-+specific_ss.add_all(when: 'CONFIG_MSHV', if_true: mshv_ss)
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-new file mode 100644
-index 0000000000..f548b1187b
---- /dev/null
-+++ b/accel/mshv/mshv-all.c
-@@ -0,0 +1,143 @@
-+/*
-+ * QEMU MSHV support
-+ *
-+ * Copyright Microsoft, Corp. 2025
-+ *
-+ * Authors:
-+ *  Ziqiao Zhou       <ziqiaozhou@microsoft.com>
-+ *  Magnus Kulke      <magnuskulke@microsoft.com>
-+ *  Jinank Jain       <jinankjain@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "qemu/event_notifier.h"
-+#include "qemu/module.h"
-+#include "qemu/main-loop.h"
-+#include "hw/boards.h"
-+
-+#include "hw/hyperv/hvhdk.h"
-+#include "hw/hyperv/hvhdk_mini.h"
-+#include "hw/hyperv/hvgdk.h"
-+#include "linux/mshv.h"
-+
-+#include "qemu/accel.h"
-+#include "qemu/guest-random.h"
-+#include "accel/accel-ops.h"
-+#include "accel/accel-cpu-ops.h"
-+#include "system/cpus.h"
-+#include "system/runstate.h"
-+#include "system/accel-blocker.h"
-+#include "system/address-spaces.h"
-+#include "system/mshv.h"
-+#include "system/reset.h"
-+#include "trace.h"
-+#include <err.h>
-+#include <stdint.h>
-+#include <sys/ioctl.h>
-+
-+#define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
-+
-+DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE, TYPE_MSHV_ACCEL)
-+
-+bool mshv_allowed;
-+
-+MshvState *mshv_state;
-+
-+static int mshv_init(AccelState *as, MachineState *ms)
-+{
-+    error_report("unimplemented");
-+    abort();
-+}
-+
-+static void mshv_start_vcpu_thread(CPUState *cpu)
-+{
-+    error_report("unimplemented");
-+    abort();
-+}
-+
-+static void mshv_cpu_synchronize_post_init(CPUState *cpu)
-+{
-+    error_report("unimplemented");
-+    abort();
-+}
-+
-+static void mshv_cpu_synchronize_post_reset(CPUState *cpu)
-+{
-+    error_report("unimplemented");
-+    abort();
-+}
-+
-+static void mshv_cpu_synchronize_pre_loadvm(CPUState *cpu)
-+{
-+    error_report("unimplemented");
-+    abort();
-+}
-+
-+static void mshv_cpu_synchronize(CPUState *cpu)
-+{
-+    error_report("unimplemented");
-+    abort();
-+}
-+
-+static bool mshv_cpus_are_resettable(void)
-+{
-+    error_report("unimplemented");
-+    abort();
-+}
-+
-+static void mshv_accel_class_init(ObjectClass *oc, const void *data)
-+{
-+    AccelClass *ac = ACCEL_CLASS(oc);
-+
-+    ac->name = "MSHV";
-+    ac->init_machine = mshv_init;
-+    ac->allowed = &mshv_allowed;
-+}
-+
-+static void mshv_accel_instance_init(Object *obj)
-+{
-+    MshvState *s = MSHV_STATE(obj);
-+
-+    s->vm = 0;
-+}
-+
-+static const TypeInfo mshv_accel_type = {
-+    .name = TYPE_MSHV_ACCEL,
-+    .parent = TYPE_ACCEL,
-+    .instance_init = mshv_accel_instance_init,
-+    .class_init = mshv_accel_class_init,
-+    .instance_size = sizeof(MshvState),
-+};
-+
-+static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
-+{
-+    AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
-+
-+    ops->create_vcpu_thread = mshv_start_vcpu_thread;
-+    ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
-+    ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
-+    ops->synchronize_state = mshv_cpu_synchronize;
-+    ops->synchronize_pre_loadvm = mshv_cpu_synchronize_pre_loadvm;
-+    ops->cpus_are_resettable = mshv_cpus_are_resettable;
-+    ops->handle_interrupt = generic_handle_interrupt;
-+}
-+
-+static const TypeInfo mshv_accel_ops_type = {
-+    .name = ACCEL_OPS_NAME("mshv"),
-+    .parent = TYPE_ACCEL_OPS,
-+    .class_init = mshv_accel_ops_class_init,
-+    .abstract = true,
-+};
-+
-+static void mshv_type_init(void)
-+{
-+    type_register_static(&mshv_accel_type);
-+    type_register_static(&mshv_accel_ops_type);
-+}
-+
-+type_init(mshv_type_init);
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index a358691428..45808c5c50 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -14,6 +14,15 @@
- #ifndef QEMU_MSHV_INT_H
- #define QEMU_MSHV_INT_H
+     ``accel=accels1[:accels2[:...]]``
+         This is used to enable an accelerator. Depending on the target
+-        architecture, kvm, xen, hvf, nvmm, whpx or tcg can be available.
+-        By default, tcg is used. If there is more than one accelerator
+-        specified, the next one is used if the previous one fails to
+-        initialize.
++        architecture, kvm, xen, hvf, nvmm, whpx, mshv or tcg can be
++        available. By default, tcg is used. If there is more than one
++        accelerator specified, the next one is used if the previous one
++        fails to initialize.
  
-+#include "qemu/osdep.h"
-+#include "qemu/accel.h"
-+#include "hw/hyperv/hyperv-proto.h"
-+#include "linux/mshv.h"
-+#include "hw/hyperv/hvhdk.h"
-+#include "qapi/qapi-types-common.h"
-+#include "system/memory.h"
-+#include "accel/accel-ops.h"
-+
- #ifdef COMPILING_PER_TARGET
- #ifdef CONFIG_MSHV
- #define CONFIG_MSHV_IS_POSSIBLE
-@@ -25,6 +34,32 @@
- #ifdef CONFIG_MSHV_IS_POSSIBLE
- extern bool mshv_allowed;
- #define mshv_enabled() (mshv_allowed)
-+
-+typedef struct MshvMemoryListener {
-+    MemoryListener listener;
-+    int as_id;
-+} MshvMemoryListener;
-+
-+typedef struct MshvAddressSpace {
-+    MshvMemoryListener *ml;
-+    AddressSpace *as;
-+} MshvAddressSpace;
-+
-+typedef struct MshvState {
-+    AccelState parent_obj;
-+    int vm;
-+    MshvMemoryListener memory_listener;
-+    /* number of listeners */
-+    int nr_as;
-+    MshvAddressSpace *as;
-+} MshvState;
-+extern MshvState *mshv_state;
-+
-+struct AccelCPUState {
-+    int cpufd;
-+    bool dirty;
-+};
-+
- #else /* CONFIG_MSHV_IS_POSSIBLE */
- #define mshv_enabled() false
- #endif
+     ``vmport=on|off|auto``
+         Enables emulation of VMWare IO port, for vmmouse etc. auto says
+@@ -226,7 +226,7 @@ ERST
+ 
+ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+     "-accel [accel=]accelerator[,prop[=value][,...]]\n"
+-    "                select accelerator (kvm, xen, hvf, nvmm, whpx or tcg; use 'help' for a list)\n"
++    "                select accelerator (kvm, xen, hvf, nvmm, whpx, mshv or tcg; use 'help' for a list)\n"
+     "                igd-passthru=on|off (enable Xen integrated Intel graphics passthrough, default=off)\n"
+     "                kernel-irqchip=on|off|split controls accelerated irqchip support (default=on)\n"
+     "                kvm-shadow-mem=size of KVM shadow MMU in bytes\n"
+@@ -241,8 +241,8 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+ SRST
+ ``-accel name[,prop=value[,...]]``
+     This is used to enable an accelerator. Depending on the target
+-    architecture, kvm, xen, hvf, nvmm, whpx or tcg can be available. By
+-    default, tcg is used. If there is more than one accelerator
++    architecture, kvm, xen, hvf, nvmm, whpx, mshv or tcg can be available.
++    By default, tcg is used. If there is more than one accelerator
+     specified, the next one is used if the previous one fails to
+     initialize.
+ 
 -- 
 2.34.1
 
