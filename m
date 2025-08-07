@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826D5C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B77A0C87FCA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 12:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ujzwN-0003hc-Sx; Thu, 07 Aug 2025 08:41:51 -0400
+	id 1ujzzv-0005i6-5i; Thu, 07 Aug 2025 08:45:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ujzwL-0003dj-5U
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 08:41:50 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1ujzzr-0005gE-Hj
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 08:45:27 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ujzwI-000301-13
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 08:41:47 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-615a115f0c0so1773697a12.0
- for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 05:41:45 -0700 (PDT)
+ id 1ujzzp-0003aN-JJ
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 08:45:27 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-af94e75445dso179319366b.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 05:45:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754570504; x=1755175304; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754570724; x=1755175524; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Uvdal751jqyRTot/pDvPZqEYDMdRfnZS0zQnhiX+4XU=;
- b=aRu2tqDc3wPs6BUTcucQ88uGAt8SUSL4Q7MERg4hwJj8IAQeM1rmjoJf160BdgrxK8
- zWuSUFDq3Q2KKrwP25AGOUZjuebRr+n7hdzM81ifJ3cv2cA0vGVyP+rgSFUwfm5jNt6P
- LKfb1BXfFklVoMa1TRKFVN/O+LP0OL/6G74poXCfuZmeJOHi+YMAxTZ/FY/u3DrbZu6L
- gw6RhLW4zO39sTi16xOeUAhlShtEPmBZ8XyNVO/5Jyx5J50vltmKG+ZByPkyqLnByDK8
- +yDRpdfiamgS00TUmlEGpL9aMDFDb51kYDcAdNWoPRJsI3ZL7Uq/urlKtIbZJlt1N8DP
- /3cA==
+ bh=d4mxnmdWURKrspkJkgabtVF7shbXvkNrjRY+cj6lEhk=;
+ b=BuFRz10OQprOAbFbMuNLuXo/HyIslIPUTU/A4yDlVdoa0moCiSGDySdQD6zXBod+jJ
+ 5rWNrj+LAJvToyH4LawQ9rjxOElhRk8EaGWS7SuDMYS2UoqGcbWoU0D/YyMHksZqFdob
+ Mp88+DIT4wzv0bKITXsovcZnM5R315TTzT5tJo22kLLcA0A4R9MzPVX027KQ6QTCy/1M
+ f9J/BYaAgZYq9PlCANGfL4khGyWsSjn8QvMqjkGw5Go+zy89fB9jL+U+vWsVdpi5z/2L
+ A8RKL1WbG33SYJn9RpW/Lf9VgullNXuQ3Zx+9xECJFuPWLnVl+pr4Te3GTWx3F3PsfGI
+ mhlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754570504; x=1755175304;
+ d=1e100.net; s=20230601; t=1754570724; x=1755175524;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Uvdal751jqyRTot/pDvPZqEYDMdRfnZS0zQnhiX+4XU=;
- b=wNlg1hMISE9mT+xs0lDb7wHSutKGWq4EBCH+4eizko+AfkUmi6/Du8Sv1sbwn/OBSc
- j+iXwJDssFV1R07GAlDtTLc2hu4ODaIxJgDDGHqr8oyOF+MMEq+aMBZb4NhKQNs1Mdgy
- lZG5uOpQrlwgdLq6Eks3effl3w2wWLuHH8xoojRyjKHEgcYG9l8ITJT3SRTuu6EYo8t1
- 8jsczrQ7U3dFHADj8c8GlQXnKU8WbN19Uq2Fjknoww+0u0ec0OYCWufSvyttrbwGNLSf
- 0XmPYHtQ7L7xQSLsXWEGg4jEWl7X3RRD8yd+2lvgzsRUCke0Qc8MH4GlnPfqBWs3yWmj
- +QDw==
+ bh=d4mxnmdWURKrspkJkgabtVF7shbXvkNrjRY+cj6lEhk=;
+ b=PXmeNiv+EEnarnrzoJGRqXC/smv052Yr84nRAKfCaaoxp4ayVF4io2nHOfbvUpTdyA
+ AKY2Pnf56V/5hvCn5tqPlvfIYm79r7w1qWDxd1OP/yY4cFRq8xouJbNIY8gW+/iEl88C
+ sLHBM7IFEx5ZhQpM5zJ3wKCQtNVLaaJHnCCVVz564+kyZDn7sa/kddfejXiAZE58NR//
+ SVmSCbvu2cRYTQ7lFQcgMK3dGhQthcG7QGteGG2iUxR5lLOHZWcS9mg6xVhlzEQLgEgJ
+ zwoKZ0F12dL4idZMrBuG4YW5gnP+Jn89wTdXcM95mfnwCsFvvIAE4TPVMxSvWFmWZqna
+ Q/Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxiYzD+xCHbpioSrqvpm0mo29OF4Gtu1wB1XPbGtjDQv8mKilIkUzJSLF/SYv8lC0YYimvCzPhADGe@nongnu.org
-X-Gm-Message-State: AOJu0Yx3EGWDNC1djsdSwkepNY15tJyRJlYabR/rUN54g0OcmRCKiABN
- kJpCGF6x/Pgc/rY690VNGYo0h7K1CkS0YJxpmb17Hw9jejevAbEqTMsp+GJRYaM3q5nWKigCuFK
- mO6txnWG0HUSSbtt301IdfoKmmig/TSBaKjgRpxpPiQ==
-X-Gm-Gg: ASbGncsQHOJgoVBWKd8lFGOxSa0V8DOlTkcYv4sF9BSLNPScYBbtcjUng2nhk+QtwZK
- Xl7Py7pU4+7P3KvmiUeFqW6mffEnwX+XZnqNQMCTPc1H5dcHFLrjLhbtoZG5va9ITofovAff4I7
- B/Mx1ui6E5WOb+CuPNfHAAcA8QoU/9ijNjLO/WEN/mTEoBDrVNQ5zDaYioZjb3m0CH/KGhaWlYU
- hXlQaxD
-X-Google-Smtp-Source: AGHT+IG1IJW+DwzcfbmsruHztxRdT0K2AGQNODwg69IQGcsp6u86KWZI/0XX7A0voTeyO22HcorXVdUxMHhwI/TBVKg=
-X-Received: by 2002:a05:6402:2355:b0:617:cd9d:e26a with SMTP id
- 4fb4d7f45d1cf-617cd9de772mr819235a12.6.1754570503923; Thu, 07 Aug 2025
- 05:41:43 -0700 (PDT)
+ AJvYcCUZuKHBlJ1QDdXNpIhOWc5Iex4IuKNbcsl4jGfxgWqT3Kzx8DokSpZcc+kmJ5FcjZSEisQ37FJWrHbd@nongnu.org
+X-Gm-Message-State: AOJu0YxmaFcDL5wIgDIWJhAqRyWEfTmhp8oq5FVvLxTMt7M7Ub7pBWwb
+ LFN6km4JQ7H1U5+Eph7y5T7Uxq12z90rDKzEI3Wude+v0Ny3WGLGdJZXmkAdTa2AEG3mKb5Ncan
+ JDVlR5hmdTOt55xniR7QbToL0ZmjxqmXGrBvdBWz+9w==
+X-Gm-Gg: ASbGncuWcW53F2Vu5bBuQZWEdO/boRfyi48Sc/olgyFZq1239cBJjG5Lv17Ki7SBlcu
+ aBQw4wcwxrc9RDwtMyOfMsk8bQrT7w0iaunpIpy/MXD4g6h5WInJWofAbvzu41kNsBV3z/Clp1W
+ uxiqzlwV3t77kC+BaCs0tOTdmWjpr88LswJ3ScMq6kTFcicWE0c4VdMWpZhHeG4R1+yPiZ3J5kR
+ nqQGjtd
+X-Google-Smtp-Source: AGHT+IHRq/HhoBkia7VvEENszVQ+ymQvQSWJdZDLzKe2FOBBDEwXybC8DQDXCiIGAI9cwJmHl8R9bmbnP6ib/m5Ebm0=
+X-Received: by 2002:a17:906:c10b:b0:af9:3116:e0f6 with SMTP id
+ a640c23a62f3a-af9904baf22mr672198666b.53.1754570723408; Thu, 07 Aug 2025
+ 05:45:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250807123027.2910950-1-zhao1.liu@intel.com>
- <20250807123027.2910950-19-zhao1.liu@intel.com>
-In-Reply-To: <20250807123027.2910950-19-zhao1.liu@intel.com>
+ <20250807123027.2910950-26-zhao1.liu@intel.com>
+In-Reply-To: <20250807123027.2910950-26-zhao1.liu@intel.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 7 Aug 2025 15:41:17 +0300
-X-Gm-Features: Ac12FXyxJB611_11oQwNY6s66qm8p492d7Z8RoVCHMRP2EcUEchUPvIoXXqDUlw
-Message-ID: <CAAjaMXaNVFinLS3eRcBw+-R21XnHWDx5ACWQDhnS-ndseDBhJw@mail.gmail.com>
-Subject: Re: [RFC 18/26] memory: Rename flatview_access_allowed() to
- memory_region_access_allowed()
+Date: Thu, 7 Aug 2025 15:44:57 +0300
+X-Gm-Features: Ac12FXxMhbtJ6yZr4cYSYbkHseHf6_3gREmBqkNcXXr1xmu1weK83lwusimXAnY
+Message-ID: <CAAjaMXa3SK2Zh06jiMsONh73zpKLCGTaG7oK=4uoqHYkja=X7g@mail.gmail.com>
+Subject: Re: [RFC 25/26] rust/memory: Add binding to check target endian
 To: Zhao Liu <zhao1.liu@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
  David Hildenbrand <david@redhat.com>,
@@ -81,8 +80,8 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,87 +104,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-
 On Thu, Aug 7, 2025 at 3:10=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrote=
 :
 >
-> flatview_access_allowed() accepts `MemoryRegion *mr` as an argument, so
-> it's based on MemoryRegion and should be named as
-> memory_region_access_allowed().
+> Add a binding (target_is_big_endian()) to check whether target is big
+> endian or not. This could help user to adjust endian before calling
+
+s/adjust endian/adjust endianness/
+
+> AddresssSpace::store() or after calling AddressSpace::load().
+
+No strong preference, but maybe we can keep the same name as C,
+target_big_endian()? Just for consistency.
+
+Either way:
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+
+>
+> Add the example in the documentation of AddresssSpace::store() to help
+> explain how to use it.
 >
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->  system/physmem.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+>  rust/qemu-api/src/memory.rs | 28 +++++++++++++++++++++++++---
+>  rust/qemu-api/wrapper.h     |  1 +
+>  2 files changed, 26 insertions(+), 3 deletions(-)
 >
-> diff --git a/system/physmem.c b/system/physmem.c
-> index d2106d0ffa87..8aaaab4d3a74 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2921,7 +2921,7 @@ bool prepare_mmio_access(MemoryRegion *mr)
->  }
->
->  /**
-> - * flatview_access_allowed
-> + * memory_region_access_allowed
->   * @mr: #MemoryRegion to be accessed
->   * @attrs: memory transaction attributes
->   * @addr: address within that memory region
-> @@ -2931,8 +2931,8 @@ bool prepare_mmio_access(MemoryRegion *mr)
->   *
->   * Returns: true if transaction is allowed, false if denied.
->   */
-> -static bool flatview_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
-> -                                    hwaddr addr, hwaddr len)
-> +static bool memory_region_access_allowed(MemoryRegion *mr, MemTxAttrs at=
-trs,
-> +                                         hwaddr addr, hwaddr len)
->  {
->      if (likely(!attrs.memory)) {
->          return true;
-> @@ -2952,7 +2952,7 @@ static MemTxResult flatview_write_continue_step(Mem=
-TxAttrs attrs,
->                                                  hwaddr len, hwaddr mr_ad=
-dr,
->                                                  hwaddr *l, MemoryRegion =
-*mr)
->  {
-> -    if (!flatview_access_allowed(mr, attrs, mr_addr, *l)) {
-> +    if (!memory_region_access_allowed(mr, attrs, mr_addr, *l)) {
->          return MEMTX_ACCESS_ERROR;
->      }
->
-> @@ -3036,7 +3036,7 @@ static MemTxResult flatview_write(FlatView *fv, hwa=
-ddr addr, MemTxAttrs attrs,
->
->      l =3D len;
->      mr =3D flatview_translate(fv, addr, &mr_addr, &l, true, attrs);
-> -    if (!flatview_access_allowed(mr, attrs, addr, len)) {
-> +    if (!memory_region_access_allowed(mr, attrs, addr, len)) {
->          return MEMTX_ACCESS_ERROR;
->      }
->      return flatview_write_continue(fv, addr, attrs, buf, len,
-> @@ -3048,7 +3048,7 @@ static MemTxResult flatview_read_continue_step(MemT=
-xAttrs attrs, uint8_t *buf,
->                                                 hwaddr *l,
->                                                 MemoryRegion *mr)
->  {
-> -    if (!flatview_access_allowed(mr, attrs, mr_addr, *l)) {
-> +    if (!memory_region_access_allowed(mr, attrs, mr_addr, *l)) {
->          return MEMTX_ACCESS_ERROR;
->      }
->
-> @@ -3127,7 +3127,7 @@ static MemTxResult flatview_read(FlatView *fv, hwad=
-dr addr,
->
->      l =3D len;
->      mr =3D flatview_translate(fv, addr, &mr_addr, &l, false, attrs);
-> -    if (!flatview_access_allowed(mr, attrs, addr, len)) {
-> +    if (!memory_region_access_allowed(mr, attrs, addr, len)) {
->          return MEMTX_ACCESS_ERROR;
->      }
->      return flatview_read_continue(fv, addr, attrs, buf, len,
+> diff --git a/rust/qemu-api/src/memory.rs b/rust/qemu-api/src/memory.rs
+> index 42bba23cf3f8..a8eb83c95ead 100644
+> --- a/rust/qemu-api/src/memory.rs
+> +++ b/rust/qemu-api/src/memory.rs
+> @@ -31,7 +31,7 @@
+>          memory_region_init_io, section_access_allowed, section_covers_re=
+gion_addr,
+>          section_fuzz_dma_read, section_get_host_addr, section_rust_load,
+>          section_rust_read_continue_step, section_rust_store, section_rus=
+t_write_continue_step,
+> -        MEMTX_OK,
+> +        target_big_endian, MEMTX_OK,
+>      },
+>      callbacks::FnCall,
+>      cell::Opaque,
+> @@ -1107,9 +1107,25 @@ pub fn read(&self, buf: &mut [u8], addr: GuestAddr=
+ess) -> Result<usize> {
+>      /// This function is similar to `address_space_st{size}` in C side.
+>      ///
+>      /// But it only assumes @val follows target-endian by default. So en=
+sure
+> -    /// the endian of `val` aligned with target, before using this metho=
+d.
+> +    /// the endian of `val` aligned with target, before using this metho=
+d.  The
+> +    /// taget-endian can be checked with [`target_is_big_endian`].
+>      ///
+>      /// And it assumes the memory attributes is MEMTXATTRS_UNSPECIFIED.
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```
+> +    /// use qemu_api::memory::{ADDRESS_SPACE_MEMORY, target_is_big_endia=
+n};
+> +    ///
+> +    /// let addr =3D GuestAddress(0x123438000);
+> +    /// let val: u32 =3D 5;
+> +    /// let val_end =3D if target_is_big_endian() {
+> +    ///     val.to_be()
+> +    /// } else {
+> +    ///     val.to_le()
+> +    /// }
+> +    ///
+> +    /// assert!(ADDRESS_SPACE_MEMORY.store(addr, val_end).is_ok());
+>      pub fn store<T: AtomicAccess>(&self, addr: GuestAddress, val: T) -> =
+Result<()> {
+>          rcu_read_lock();
+>          let r =3D self.memory().deref().store(val, addr, Ordering::Relax=
+ed);
+> @@ -1122,7 +1138,8 @@ pub fn store<T: AtomicAccess>(&self, addr: GuestAdd=
+ress, val: T) -> Result<()> {
+>      /// This function is similar to `address_space_ld{size}` in C side.
+>      ///
+>      /// But it only support target-endian by default.  The returned valu=
+e is
+> -    /// with target-endian.
+> +    /// with target-endian.  The taget-endian can be checked with
+> +    /// [`target_is_big_endian`].
+>      ///
+>      /// And it assumes the memory attributes is MEMTXATTRS_UNSPECIFIED.
+>      pub fn load<T: AtomicAccess>(&self, addr: GuestAddress) -> Result<T>=
+ {
+> @@ -1147,3 +1164,8 @@ pub fn load<T: AtomicAccess>(&self, addr: GuestAddr=
+ess) -> Result<T> {
+>      // the whole QEMU life.
+>      &*wrapper_ptr
+>  };
+> +
+> +pub fn target_is_big_endian() -> bool {
+> +    // SAFETY: the return value is boolean, so it is always valid.
+> +    unsafe { target_big_endian() }
+> +}
+> diff --git a/rust/qemu-api/wrapper.h b/rust/qemu-api/wrapper.h
+> index ce0ac8d3f550..c466b93054aa 100644
+> --- a/rust/qemu-api/wrapper.h
+> +++ b/rust/qemu-api/wrapper.h
+> @@ -70,3 +70,4 @@ typedef enum memory_order {
+>  #include "system/address-spaces.h"
+>  #include "hw/char/pl011.h"
+>  #include "qemu/rcu.h"
+> +#include "qemu/target-info.h"
 > --
 > 2.34.1
 >
