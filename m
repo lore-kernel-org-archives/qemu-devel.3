@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0151C87FCF
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 21:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE3DC87FCF
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 21:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uk8DO-0007bc-JX; Thu, 07 Aug 2025 17:31:58 -0400
+	id 1uk8Rc-0008KZ-S2; Thu, 07 Aug 2025 17:46:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8DK-0007Xd-Df
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 17:31:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8RP-0008I4-M2
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 17:46:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8DI-0005Gi-FC
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 17:31:54 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uk8RN-0006uH-Mb
+ for qemu-devel@nongnu.org; Thu, 07 Aug 2025 17:46:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754602310;
+ s=mimecast20190719; t=1754603183;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JqZ1WJSpkptdpqldQTyNXLMfXBWLe+yiMA3um8GvK1A=;
- b=eqi+eFMEuxqyaQgkyoon02+sFGRdnRidRAL9KTYOYozI7ieM4ESECvtmqMgq6WY6EC6dsA
- vFjq29Zng7o6CoMNd8cVE1pW8PxiWhoQEiidVpqOko2Wa2tLlJuRrl4d9D5LRLs2zYUiqw
- ldAoxZh8n8gaQ6iCJEzjPRDdhGWVg1I=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=33BiKZoJcHL7UF/G76qB++Xc8DI2mugrDy+Qj4VM8J0=;
+ b=cVZlj3NS8OUMm2MIBaKxJEUzItD6AIHMB6POPPYtVVEuw338XKCWPeUCgU3i8sZlumantb
+ LRVL/5Df366tyrUzGh66zcoB3gMRUlIOWFTi997C8Rt6kPkkhuw6Nw/UTQQK0Q6G07jdda
+ eJelrqaM+i07gIO6UcAZ/134XACxfIk=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-qUFwybaiMjyJl2o9303sog-1; Thu, 07 Aug 2025 17:31:49 -0400
-X-MC-Unique: qUFwybaiMjyJl2o9303sog-1
-X-Mimecast-MFC-AGG-ID: qUFwybaiMjyJl2o9303sog_1754602307
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-31f030b1cb9so2589468a91.2
- for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 14:31:49 -0700 (PDT)
+ us-mta-110-0CI9St5-PaSva5-qaX7mkg-1; Thu, 07 Aug 2025 17:46:21 -0400
+X-MC-Unique: 0CI9St5-PaSva5-qaX7mkg-1
+X-Mimecast-MFC-AGG-ID: 0CI9St5-PaSva5-qaX7mkg_1754603180
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b4227538a47so1142640a12.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Aug 2025 14:46:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754602307; x=1755207107;
+ d=1e100.net; s=20230601; t=1754603180; x=1755207980;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JqZ1WJSpkptdpqldQTyNXLMfXBWLe+yiMA3um8GvK1A=;
- b=KxcynPV/QIHclOBLPriAHXEw11TnI/sygnwD6KsLy+/svfYRNdyZ4d1oUnNcPMbZ1T
- nTjro0wavytKQ30+iVjv1/t13TNYLtysBIKjJGQQS9Kaw9Xp8z+YpUO7wOpk4zZ73eJk
- cCWm5EkWdlpJP2UMyNFyUvRq5BiBvAMP5W2jcEVFbAbqcCoBwVoOAgVAdXa7rFrZE9Ro
- 4oKPs86zB/Oke32Cw4LqAlcyB/9RGHuk3QRMB60GyD0U32ueKV3Sr8ZbTt+2rZhZUvRG
- KYVIBxrDFyXGgZGRZ2edpc1WSphNZkX2KBolg18v7aBbVdQqIsECvcPnb4a9e8mwz3dn
- Mwjg==
-X-Gm-Message-State: AOJu0YxYFJw00g4+Gmb4YGR2zYOSUD4n/SzoFdcTpJH0s991BCqlVCw9
- pcr4lw/GzGxIerIhVQ63oG5cEbcC2/6goQ60CTEJbH4reMHX7nl28vHw+74nfBcnPHSa5Uc7R1f
- E+f1+1sHrVfcJDpRf/LxGk4eO1VejAPRIqsz4JGrOx+nb9xcy0sVOFSfA1xn8Aj67OK3JwzLtZB
- 7b1xaLe9wE6TMQ046ODGmrhhCBPv3Syj0=
-X-Gm-Gg: ASbGncuVS8OkoHPFeoV3B9g5fruEsHD3bfUMNcou1st+Ouz+lb5Xvx/hgBY0RDv9V7x
- 51UYmOQ/s6e3vWVRvY9tVQ54ZgEk/JVMMAFuyHFQ4lgqwS2hfuAv/8glEgZJ8FoZzZi1ewWqUo/
- 7j+whpa9ilpSjpvj0e6eQM4yRUDaSRi5UZ8YloKlzG29/rHek1s0kj
-X-Received: by 2002:a17:902:cec8:b0:242:9bbc:6018 with SMTP id
- d9443c01a7336-242c2277f70mr6889995ad.56.1754602307139; 
- Thu, 07 Aug 2025 14:31:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGsZiNLnT2hqVWZ67rawXnm8lOYdMDnh+FyseOTetr3fcE3ncUHWJbxuZ3Pq273wkB94D2kB0M+tjfJUG7H6Ag=
-X-Received: by 2002:a17:902:cec8:b0:242:9bbc:6018 with SMTP id
- d9443c01a7336-242c2277f70mr6889795ad.56.1754602306765; Thu, 07 Aug 2025
- 14:31:46 -0700 (PDT)
+ bh=33BiKZoJcHL7UF/G76qB++Xc8DI2mugrDy+Qj4VM8J0=;
+ b=Lf2o2VUpWXdLTprgLPiGHqoTSguZWgFXGL7KK2BcyXif+zUksJBJNcuTLJSEl3kzi1
+ VLig15qV4d0M0rPG8ufBnpyT3YvmVGUUb9H5sgZrGveiPwDMze+x33FFoFPRIN9kuCPP
+ xtacJxR4JJS1WUQl5QJ5NGb+Z4ZKNOq9RitVQof0vlOaZkFUHc9OnVOpedqu17nXUBJT
+ k4vbZOMMpa6RoL7d+l7e2d7QnhzZwfqjDQrDO6hEapPvgmbeFoJPIc+jqszBRqGxJfnX
+ Z9q03ogTGr5eS9icYuRGqMp70h6maYpgHstHytkZZKE+Cb683ZSiuf213JdYKis2fg7u
+ XO2Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEV88Ob5ym0HA0zbTRYi59+4RUUOJE+GWljFbby5FlRX9TM1yvZastC0l/KmxwrlC3yWRqEG0xuPmh@nongnu.org
+X-Gm-Message-State: AOJu0YzoA/qxZWztA5MTD353KT6BadSnH0XTMZmNrPPJquKpfsoIaFAA
+ EkMlnxNR6A50NVZI+WYioRLk5I8TdlWPqIVG3RI10MNJ6n/rVxNia/VQv0wPJAA3xEKQynvrlwf
+ Mf939toPDrPg+TmwcBSIa5+u2OXEinhxhbvMh9IMLlHnsxVNz7mKnFp2Ls65GWcBOwdwOBLkQQy
+ Gqld9an4LwzD2QF4JduGDLle0ef6Y7D5g=
+X-Gm-Gg: ASbGncuemImqTuD61N6P2A9rlZjASE9gXKvzHAHlu663OIHti54IGBFAyzK8wbbS6mF
+ F3P37grIUaXtlCyiNIItMw0Nbe4P//Hw6Gfa15Ozl8Id5Mh71G0sDXdbD1xSSB+gbv8TnmpdTKi
+ Jmejbi2yR6aLyfjb5jRnBgQsC6HLevDe82NgaHoS8cPiAXRCO5JvtP
+X-Received: by 2002:a17:90b:1f84:b0:313:b1a:3939 with SMTP id
+ 98e67ed59e1d1-32183a079c3mr859842a91.15.1754603180436; 
+ Thu, 07 Aug 2025 14:46:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNXabEPtDpc8phSm60XcxkJGIBHHb2g+USCKP86Y6akOLAARqi8lSxyu+96rVdTDioQEVaddThEWHBo4fQmbg=
+X-Received: by 2002:a17:90b:1f84:b0:313:b1a:3939 with SMTP id
+ 98e67ed59e1d1-32183a079c3mr859820a91.15.1754603180086; Thu, 07 Aug 2025
+ 14:46:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250731054044.4011789-1-armbru@redhat.com>
- <20250731054044.4011789-4-armbru@redhat.com>
-In-Reply-To: <20250731054044.4011789-4-armbru@redhat.com>
+References: <20250716-functional_tests_debug_arg-v1-1-6a9cd68318bb@linaro.org>
+ <87ms93xl69.fsf@draig.linaro.org>
+ <CAFn=p-YTFYr-cxz0B8jay=-HVpjyo9To72DZAg5o45SRBR0wnA@mail.gmail.com>
+ <f208a06d-2dfe-4cce-a848-938b3e3b6a31@redhat.com>
+In-Reply-To: <f208a06d-2dfe-4cce-a848-938b3e3b6a31@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Thu, 7 Aug 2025 17:31:34 -0400
-X-Gm-Features: Ac12FXx73uF4OiCGqKNtEzMqZ5vU5UqAhEC3_SUVHvS6HCQFGlG2CJv6FwPnoRM
-Message-ID: <CAFn=p-bYKEjGX-DYPNbxFn=52-dJH29-SwmPvWYZ7tgo9ZBS+w@mail.gmail.com>
-Subject: Re: [PATCH 3/3] docs/devel/qapi-code-gen: Update cross-reference
- syntax
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, peter.maydell@linaro.org, 
- eblake@redhat.com
+Date: Thu, 7 Aug 2025 17:46:08 -0400
+X-Gm-Features: Ac12FXxbBCQdRCavY2f_yYs_CRipH4EIwduS9TxYrlf1n5QybBCrF5ho8UhVOMM
+Message-ID: <CAFn=p-aZA0_DhBEFohK6TS=xev459S2YGPm9N3X5w+QDi0noEA@mail.gmail.com>
+Subject: Re: [PATCH] tests/functional: add --debug CLI arg
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,70 +110,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 31, 2025 at 1:40=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+On Thu, Jul 24, 2025 at 3:47=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
+e:
 >
-> The new QAPI code generator creates a cross-reference target for each
-> definition documentation.  Enabled for the QEMU QMP Reference manual
-> in commit a377f39f38f, and for the QEMU Storage Daemon QMP Reference
-> Manual and the QEMU Guest Agent Protocol Reference in commit
-> a6af5443440.  We've put these targets to use since, but neglected to
-> update doc comment markup documentation.  Do that now.
+> On 21/07/2025 22.38, John Snow wrote:
+> > On Thu, Jul 17, 2025 at 4:44=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@l=
+inaro.org> wrote:
+> ...
+> >> Am I holding it wrong?
+> >>
+> >>    =E2=9E=9C  ./pyvenv/bin/python ../../tests/functional/test_aarch64_=
+virt.py --help
+> >>    Traceback (most recent call last):
+> >>      File "/home/alex/lsrc/qemu.git/builds/all/../../tests/functional/=
+test_aarch64_virt.py", line 16, in <module>
+> >>        from qemu_test import QemuSystemTest, Asset, exec_command_and_w=
+ait_for_pattern
+> >>      File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/__init_=
+_.py", line 14, in <module>
+> >>        from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTes=
+t
+> >>      File "/home/alex/lsrc/qemu.git/tests/functional/qemu_test/testcas=
+e.py", line 26, in <module>
+> >>        from qemu.machine import QEMUMachine
+> >>    ModuleNotFoundError: No module named 'qemu'
+> >>
+> >> I thought the point of the venv is we had all the modules we need
+> >> automatically available to the PYTHONPATH?
+> >
+> > As Thomas points out, "qemu" is special since it's already in the
+> > tree. There has been some dragging-of-feet by yours-truly because
+> > installing the "qemu" module by default when running configure
+> > introduces a considerable startup lag time, and the module is not
+> > actually needed for the simple configuration and building of QEMU -
+> > only testing.
+> >
+> > It's something I want to fix, but must admit to being a bit stumped as
+> > to how I will bridge that gap long term. Currently, all of the modules
+> > we need are in the tree with no dependencies, so it can be fixed with
+> > a simple PYTHONPATH hack. However, if I actually remove the QMP
+> > library from the tree like I have wanted to, then we need pip to do a
+> > real install and process dependencies, and this creates some
+> > complications and extra startup lag.
 >
-> Co-developed-by: John Snow <jsnow@redhat.com>
+> Wouldn't it be possible to add the module as a wheel in python/wheels/ ?
+> That's maybe the easiest solution, isn't it?
 
-No need for this in my opinion, the SOB suffices to say the same thing
-in my book. I don't insist you remove it, just seems ... oddly
-pretentious to say I "co-developed" a single paragraph of text ;)
+The qemu.qmp wheel, yes, because it's purepython. The part I am
+worried about is that by removing qemu.qmp from the tree, you cannot
+just use the PYTHONPATH hack anymore to use the remaining in-tree
+goodies, namely the machine module used extensively throughout
+testing, because they will now rely on an external dependency.
 
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Normally, you'd just install the in-tree stuff like any other package
+and pip would take care of the qemu.qmp dependency. As handled through
+mkvenv, it would search our vendored wheels directory in the process
+and use that wheel, it's not a big deal.
 
-Reviewed-by: John Snow <jsnow@redhat.com>
+The tricky part in my head is that this "pip install" of the in-tree
+goodies takes a few seconds because pip is quite slow - it technically
+has to "build" the package before it installs it, so it adds some lag
+time.
 
-> ---
->  docs/devel/qapi-code-gen.rst | 11 ++++++++---
->  docs/devel/qapi-domain.rst   |  1 +
->  2 files changed, 9 insertions(+), 3 deletions(-)
+Since qemu.qmp isn't actually needed to configure or build QEMU, I
+thought it'd be inappropriate to add it to those dependencies - and
+inappropriate to enforce a 3-4 second hit on every configure call
+whether or not you intend to run tests afterwards.
+
+I'm sure it's solvable, I just tried once a while back and hit a wall,
+got distracted, and haven't revisited it yet... Maybe a good
+rubber-ducking session would help.
+
 >
-> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-> index 2cd51729c3..d97602f464 100644
-> --- a/docs/devel/qapi-code-gen.rst
-> +++ b/docs/devel/qapi-code-gen.rst
-> @@ -943,9 +943,14 @@ The usual ****strong****, *\*emphasized\** and ````l=
-iteral```` markup
->  should be used.  If you need a single literal ``*``, you will need to
->  backslash-escape it.
+> > Naively, I think adding a "just in time installation of testing
+> > dependencies" when you go to run a testing command from "make XXXX"
+> > might be sufficient for us, possibly in conjunction with a configure
+> > flag that lets you pre-load testing dependencies.
 >
-> -Use ``@foo`` to reference a name in the schema.  This is an rST
-> -extension.  It is rendered the same way as ````foo````, but carries
-> -additional meaning.
-> +Use ```foo``` to reference a definition in the schema.  This generates
-> +a link to the definition.  In the event that such a cross-reference is
-> +ambiguous, you can use `QAPI cross-reference roles
-> +<QAPI-domain-cross-references>` to disambiguate.
-> +
-> +Use @foo to reference a member description within the current
-> +definition.  This is an rST extension.  It is currently rendered the
-> +same way as ````foo````, but carries additional meaning.
+> We could likely re-use "make check-venv" for the functional tests ... it'=
+s
+> already installed in that case. However, you then still have to remember =
+to
+> call it first before you can run a test directly, without the Makefile wr=
+appers.
 >
->  Example::
->
-> diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
-> index fe540d1e40..1924f12d42 100644
-> --- a/docs/devel/qapi-domain.rst
-> +++ b/docs/devel/qapi-domain.rst
-> @@ -375,6 +375,7 @@ Will allow you to add arbitrary field lists in QAPI d=
-irectives::
->
->        :see also: Lorem ipsum, dolor sit amet ...
->
-> +.. _QAPI-domain-cross-references:
->
->  Cross-references
->  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> --
-> 2.49.0
+>   Thomas
 >
 
 
