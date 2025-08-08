@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE89C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 08:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890B7C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 09:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukIlJ-0003bO-Bt; Fri, 08 Aug 2025 04:47:41 -0400
+	id 1ukJ5T-0005U8-Rz; Fri, 08 Aug 2025 05:08:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ukIlG-0003aI-3I
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:47:38 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1ukJ5S-0005To-I3
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 05:08:30 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ukIl4-0003my-7l
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:47:29 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-458aee6e86aso11461445e9.3
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 01:47:23 -0700 (PDT)
+ id 1ukJ5Q-000634-AO
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 05:08:30 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-af93c3bac8fso278371466b.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 02:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754642842; x=1755247642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754644106; x=1755248906; darn=nongnu.org;
  h=mime-version:message-id:in-reply-to:references:user-agent:subject
  :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=zXwNKmnko2/AYlR9DsU3B2PeYMyf9/XW40u2WUn77cE=;
- b=S4Gv87woLA7iKMwQm4XVlSF9Y+W8xWwOdoQG6JZ2mnGnG2LXnP3yxN7d6ixAqeSKTP
- w2y9e1pfAD/QDPI0FAW1FwCcmW9Jryu6OPCutGwbAcV5u33fMNgClm2EG4TJSskHuoDo
- rItwmTGu3tS6R9Gzc2bWg7RTVSOE3lR01BfLZSXXeDlLWeOlAcEWeF3tBpIoj8od6RNX
- Zk+KQ8Y0gxSRmAypbqls9Yhq0pF1sVIf3eAsIqqrBgpboWDguDE7zdNY10NM2zBWsgF9
- /SdHnrClrY56LK1YwTzg2Xzwaral5acD6wFq8NZPfrtQpcdiEa6whGQzXUberELJGHSA
- WZyg==
+ bh=4uWW4/OI7oNNN8Qt6MsN5xTp7YNTk2oyZefI5zLj/N8=;
+ b=IUv+cItvO/0ZmeImyOOQw0yEEbUd5z5gUF60cwzB0mha8vwCPqIAn6NW+vGl9y1IXM
+ 5eGbExUOoaZ6y46JNxszrfUgeto6Zd1/9Uz9NzTpmO9vYIRRo5xajDGiFu0Mz4DKuRV9
+ jwkuPNd2DghiPeXG9zFZKLRguYlpEXArGpttomzDST62N190rpck7ENTIhbebVTPv0rQ
+ tK1q35eUOFUqWRc41RbXyqredhLqpl/BoZzL2vDnHeblZm9UvJm5UOeC2780JxBEqlFL
+ n3La2JP8k92ylmgnmtMztavubKGnVmuBWgBqzc5BHstGN41TbBDQ/J75XTptXGVtxnsa
+ 2OIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754642842; x=1755247642;
+ d=1e100.net; s=20230601; t=1754644106; x=1755248906;
  h=mime-version:message-id:in-reply-to:references:user-agent:subject
  :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zXwNKmnko2/AYlR9DsU3B2PeYMyf9/XW40u2WUn77cE=;
- b=AOe5I0NDNplxlr3PYkI6lb2+7sjtTTbF4uNSwlHbYs+RvM48NCIkanB2xszDYhSEnu
- ARnOl4sV8NauXakim6nvcgm9phYJBV9kCZbgtDsuhGGMq1fQWssaSM7CHBY94JdPoiPY
- WVMPOLNTOQBZbt+4LfDU7GHGU1p0YhuJ3km3CNnnyLjB4ZPVkocWIqAaBoFhU+8LmQfG
- oIkgpBZh3epuND4JyGBcZxnvZZ5gWvGdNPUGfy1bWdOZOobkVtRdqBiFnwfIInaX73+B
- sEPDN9rjqJiW745jnr3qeKFUviT1Na5jwGDEINMDqk4vFLTOKq8yA5HZpl9b2QL/3wDb
- jJrg==
+ bh=4uWW4/OI7oNNN8Qt6MsN5xTp7YNTk2oyZefI5zLj/N8=;
+ b=SqOlvHKwtthg6SAHsl0b2SwR4Xh+wj1LanhByODO6Co1XtLQ+OaoxmtTiEmWI5h69K
+ 4nQVM8ZPZCScvjJCx0L0pFXbmfOMSEQuuZskWpHcBHfHf3skG7lYJLLycHiZnKHXjE0Q
+ mGsfFtFmaIRa7r+C7jRi0NcUfu6dpNt5Q3V9QrVERiHOPDTBA0PMXWSW8jrhdAnpfyU1
+ t1R9DS8+9uMOcOrdhe9iO1fnWfzbro3vRDdlW7XxP6gpn4WIL44uQmtdiFEGQ7Kih07q
+ S8Xep+/nMSlVyaiNwJpDTHRXJVQp83C9Sq2mV5u7dSSVwj+aVjdHjU46DV61FZxhK4lz
+ GuMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3GJHb8nCRSI9qQ+E2JJQsc55V/JhG2RHQ/GoggisSeliZWA4o/UgEjczvEznCdZ4tSg3p02Hh8oZ0@nongnu.org
-X-Gm-Message-State: AOJu0YzycavNnQstIELbv8mzQMZmcZmlbZ1QDcylohqZD7KZimFHuRTO
- eniSsszTrOhIKBhHr2YA4v3AKR50NKoJTGwNccoYmI4RrYmCEG8O8PWHWMCGMVDMYV0=
-X-Gm-Gg: ASbGncsGAFCTiCIGjNvV8hiS/uBCZ+ugK2c2U4ZpcaMFQ503o5OE0v1seCz3fI8M2NW
- ljKuYfz3i4fM/NR+3usNmKPrlP7bcFBNyFDEQWocBcNVNfEyovSdsXuIchpPyjy5Jtq7jcMxkyi
- uMMV0SNwvVl7Q37iJIpZybruQYEnAioeRMeDCufodzJ1DbBA/tChDGI3PUyL4AYApnuJgf2g67L
- xs0ldcgc0P/ZQ/ZRE/xniVDDLylh/RyslvyHXsbQNhwUMzevXbIgULafdnArlSondkYvA+g44f0
- Hvy1Yj0RfolmAExvdh3oIr//IXBtbEX3LFP3UMxWNNw4RHNUELnVDrOoggmdNVz2pG4ZVeAiOyU
- KwP8ew3MGJ04pE9jemNUXYq5POOEUcVDWt1sViA7nOW+smlrdBJ0fhWvNPusAdGGqyicMYX/r
-X-Google-Smtp-Source: AGHT+IFQXtuLqMeyGmRFVIPwvBegw7RbosSuY0m6miCV8N8GKrdT4ReIaI+g+8EB5gpFrn/r4hpQ4A==
-X-Received: by 2002:a05:6000:40cc:b0:3b8:ffd1:136e with SMTP id
- ffacd0b85a97d-3b9008c7094mr1883287f8f.0.1754642841922; 
- Fri, 08 Aug 2025 01:47:21 -0700 (PDT)
+ AJvYcCVfGvhbhcZWFEv3aCeNwok+hp32FDYSOXluX8czbyf3sry/ytbAJCsryrTv4Q8sWpROAI0Zhbwb0ghv@nongnu.org
+X-Gm-Message-State: AOJu0YyO26fp2pMzS6G13F6Gqe4k00z+kmkUtthRJlPSUZ4O+DQPSuES
+ 67ZLSGxZEgmEV2RP9OSYKMpabcJ3Awn5qumw1ikVRuzOzxDyOR6wrqqvwaRzO1j/8GU=
+X-Gm-Gg: ASbGncvv/nGAh3T1gqThVD0CJ0ub5Knl4w1u4B8q33WQoJjy8ft252Kr1wMmL9CvJiH
+ RncrO8qKrefFFlCvbapwpQlaCVVlRReomAU0fLZS0J47ahNkzVfJyJn6D2ywjDUvg7mfAK04NdP
+ ovSMxO/dUNqBkWT1cMlrIEGKfOcixB2ZkNkmsp14Xu5VNr9rL11pypmI7LJZs0ZgkbqkQuyv1vX
+ 1421F1XYuoc32OBOYZJrGgZciiYoThAqiWOlQf/AbporQETDg/UckA2BscYJLDUi9DJzmGGjSsR
+ CANVvAN+cur1QPvLndHGJckYzSzMdXVasvH4Tq+Xy8MwpwCVu4XRBqgj9aA3Jo21oQ+0CGI5xXJ
+ TEroRWdRNotEpgyFAXxeKcR/U0gWbt3TX8L488J7X6E7I6F6eRU7CUQZlJ38KU0VcwwxAUqFw
+X-Google-Smtp-Source: AGHT+IEzXu2oUR0J1EMb97B5LLhE+oQ7HeaxjKM9+XApX/yUhBQlfArKNzLjOscfdxDyz6OSR8ZC5A==
+X-Received: by 2002:a17:907:da2:b0:ae3:696c:60a with SMTP id
+ a640c23a62f3a-af9c6375a29mr159752666b.8.1754644105625; 
+ Fri, 08 Aug 2025 02:08:25 -0700 (PDT)
 Received: from meli-email.org (athedsl-4440194.home.otenet.gr.
  [79.129.176.114]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b8fc28a830sm5066561f8f.16.2025.08.08.01.47.21
+ a640c23a62f3a-af91a750253sm1466301466b.86.2025.08.08.02.08.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Aug 2025 01:47:21 -0700 (PDT)
-Date: Fri, 08 Aug 2025 11:28:16 +0300
+ Fri, 08 Aug 2025 02:08:25 -0700 (PDT)
+Date: Fri, 08 Aug 2025 11:49:55 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
@@ -75,17 +75,16 @@ Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
  Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 2/9] contrib/plugins/uftrace: define cpu operations and
- implement aarch64
+Subject: Re: [PATCH v5 3/9] contrib/plugins/uftrace: track callstack
 User-Agent: meli/0.8.12
 References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
- <20250808020702.410109-3-pierrick.bouvier@linaro.org>
-In-Reply-To: <20250808020702.410109-3-pierrick.bouvier@linaro.org>
-Message-ID: <t0o32w.19lmgtfzlutzr@linaro.org>
+ <20250808020702.410109-4-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250808020702.410109-4-pierrick.bouvier@linaro.org>
+Message-ID: <t0o41z.23tpc2iz8vjf3@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,193 +108,240 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 08 Aug 2025 05:06, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->We define a new CpuOps structure that will be used to implement tracking
->independently of guest architecture.
->
->As well, we now instrument only instructions following ones that might
->have touch the frame pointer.
+>We now track callstack, based on frame pointer analysis. We can detect
+>function calls, returns, and discontinuities.
+>We implement a frame pointer based unwinding that is used for
+>discontinuities.
 
-s/touch/touched
+
+Nit: Never heard of the "discontinuity" term for program execution 
+before :D Maybe "async control flow (signals, interrupts)"?
 
 >
 >Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >---
-> contrib/plugins/uftrace.c | 112 ++++++++++++++++++++++++++++++++++++--
-> 1 file changed, 108 insertions(+), 4 deletions(-)
+> contrib/plugins/uftrace.c | 160 ++++++++++++++++++++++++++++++++++++++
+> 1 file changed, 160 insertions(+)
 >
 >diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
->index d60c1077496..4b1a2f38143 100644
+>index 4b1a2f38143..d51faceb344 100644
 >--- a/contrib/plugins/uftrace.c
 >+++ b/contrib/plugins/uftrace.c
->@@ -11,14 +11,94 @@
-> 
-> #include <qemu-plugin.h>
-> #include <glib.h>
->+#include <stdio.h>
+>@@ -15,6 +15,15 @@
 > 
 > QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
 > 
->+typedef struct Cpu Cpu;
+>+typedef struct {
+>+    GArray *s;
+>+} Callstack;
 >+
 >+typedef struct {
->+    void (*init)(Cpu *cpu);
->+    void (*end)(Cpu *cpu);
->+    uint64_t (*get_frame_pointer)(Cpu *cpu);
->+    bool (*does_insn_modify_frame_pointer)(const char *disas);
->+} CpuOps;
+>+    uint64_t pc;
+>+    uint64_t frame_pointer;
+>+} CallstackEntry;
 >+
-> typedef struct Cpu {
->     GByteArray *buf;
->+    CpuOps ops;
->+    void *arch;
-> } Cpu;
+> typedef struct Cpu Cpu;
 > 
->+typedef struct {
->+    struct qemu_plugin_register *reg_fp;
->+} Aarch64Cpu;
->+
+> typedef struct {
+>@@ -25,6 +34,7 @@ typedef struct {
+> } CpuOps;
+> 
+> typedef struct Cpu {
+>+    Callstack *cs;
+>     GByteArray *buf;
+>     CpuOps ops;
+>     void *arch;
+>@@ -37,6 +47,71 @@ typedef struct {
 > static struct qemu_plugin_scoreboard *score;
->+static CpuOps arch_ops;
->+
->+static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+> static CpuOps arch_ops;
+> 
+>+static Callstack *callstack_new(void)
 >+{
+>+    Callstack *cs = g_new0(Callstack, 1);
+>+    cs->s = g_array_new(false, false, sizeof(CallstackEntry));
+>+    return cs;
+>+}
+>+
+>+static void callstack_free(Callstack *cs)
+>+{
+>+    g_array_free(cs->s, true);
+>+    cs->s = NULL;
+>+    g_free(cs);
+>+}
+>+
+>+static size_t callstack_depth(const Callstack *cs)
+>+{
+>+    return cs->s->len;
+>+}
+>+
+>+static size_t callstack_empty(const Callstack *cs)
+>+{
+>+    return callstack_depth(cs) == 0;
+>+}
+>+
+>+static void callstack_clear(Callstack *cs)
+>+{
+>+    g_array_set_size(cs->s, 0);
+>+}
+>+
+>+static const CallstackEntry *callstack_at(const Callstack *cs, size_t depth)
+>+{
+>+    g_assert(depth > 0);
+>+    g_assert(depth <= callstack_depth(cs));
+>+    return &g_array_index(cs->s, CallstackEntry, depth - 1);
+>+}
+>+
+>+static CallstackEntry callstack_top(const Callstack *cs)
+>+{
+>+    if (callstack_depth(cs) >= 1) {
+>+        return *callstack_at(cs, callstack_depth(cs));
+>+    }
+>+    return (CallstackEntry){};
+>+}
+>+
+>+static CallstackEntry callstack_caller(const Callstack *cs)
+>+{
+>+    if (callstack_depth(cs) >= 2) {
+>+        return *callstack_at(cs, callstack_depth(cs) - 1);
+>+    }
+>+    return (CallstackEntry){};
+>+}
+>+
+>+static void callstack_push(Callstack *cs, CallstackEntry e)
+>+{
+>+    g_array_append_val(cs->s, e);
+>+}
+>+
+>+static CallstackEntry callstack_pop(Callstack *cs)
+>+{
+>+    g_assert(!callstack_empty(cs));
+>+    CallstackEntry e = callstack_top(cs);
+>+    g_array_set_size(cs->s, callstack_depth(cs) - 1);
+>+    return e;
+>+}
+>+
+> static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+> {
+>     GByteArray *buf = cpu->buf;
+>@@ -47,6 +122,50 @@ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+>     return *((uint64_t *) buf->data);
+> }
+> 
+>+static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
+>+{
+>+    g_assert(addr);
 >+    GByteArray *buf = cpu->buf;
 >+    g_byte_array_set_size(buf, 0);
->+    size_t sz = qemu_plugin_read_register(reg, buf);
->+    g_assert(sz == 8);
+>+    bool read = qemu_plugin_read_memory_vaddr(addr, buf, 8);
+>+    if (!read) {
+>+        return 0;
+>+    }
 >+    g_assert(buf->len == 8);
 >+    return *((uint64_t *) buf->data);
 >+}
 >+
->+static struct qemu_plugin_register *plugin_find_register(const char *name)
+>+static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
 >+{
->+    g_autoptr(GArray) regs = qemu_plugin_get_registers();
-
-Question about the plugin API and not this patch per se, if the cpu is 
-in a32/thumb mode does it still return the aarch64 registers?
-
->+    for (int i = 0; i < regs->len; ++i) {
->+        qemu_plugin_reg_descriptor *reg;
->+        reg = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
->+        if (!strcmp(reg->name, name)) {
->+            return reg->handle;
+>+    g_assert(callstack_empty(cpu->cs));
+>+
+>+    #define UNWIND_STACK_MAX_DEPTH 1024
+>+    CallstackEntry unwind[UNWIND_STACK_MAX_DEPTH];
+>+    size_t depth = 0;
+>+    do {
+>+        /* check we don't have an infinite stack */
+>+        for (size_t i = 0; i < depth; ++i) {
+>+            if (frame_pointer == unwind[i].frame_pointer) {
+>+                break;
+>+            }
 >+        }
->+    }
->+    return NULL;
->+}
+>+        CallstackEntry e = {.frame_pointer = frame_pointer, .pc = pc};
+>+        unwind[depth] = e;
+>+        depth++;
+>+        if (frame_pointer) {
+>+            frame_pointer = cpu_read_memory64(cpu, frame_pointer);
+>+        }
+>+        pc = cpu_read_memory64(cpu, frame_pointer + 8); /* read previous lr */
+>+    } while (frame_pointer && pc && depth < UNWIND_STACK_MAX_DEPTH);
+>+    #undef UNWIND_STACK_MAX_DEPTH
 >+
->+static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
->+{
->+    Aarch64Cpu *cpu = cpu_->arch;
->+    return cpu_read_register64(cpu_, cpu->reg_fp);
->+}
->+
->+static void aarch64_init(Cpu *cpu_)
->+{
->+    Aarch64Cpu *cpu = g_new0(Aarch64Cpu, 1);
->+    cpu_->arch = cpu;
->+    cpu->reg_fp = plugin_find_register("x29");
->+    if (!cpu->reg_fp) {
->+        fprintf(stderr, "uftrace plugin: frame pointer register (x29) is not "
->+                        "available. Please use an AArch64 cpu (or -cpu max).\n");
->+        g_abort();
+>+    /* push it from bottom to top */
+>+    while (depth) {
+>+        callstack_push(cpu->cs, unwind[depth - 1]);
+>+        --depth;
 >+    }
 >+}
->+
->+static void aarch64_end(Cpu *cpu)
->+{
->+    g_free(cpu->arch);
->+}
->+
->+static bool aarch64_does_insn_modify_frame_pointer(const char *disas)
->+{
->+    /*
->+     * Check if current instruction concerns fp register "x29".
->+     * We add a prefix space to make sure we don't match addresses dump
->+     * in disassembly.
->+     */
->+    return strstr(disas, " x29");
 
-Hm is the whitespace before x29 guaranteed? Neat trick otherwise.
+Nice.
 
->+}
 >+
->+static CpuOps aarch64_ops = {
->+    .init = aarch64_init,
->+    .end = aarch64_end,
->+    .get_frame_pointer = aarch64_get_frame_pointer,
->+    .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
->+};
+> static struct qemu_plugin_register *plugin_find_register(const char *name)
+> {
+>     g_autoptr(GArray) regs = qemu_plugin_get_registers();
+>@@ -102,6 +221,43 @@ static CpuOps aarch64_ops = {
 > 
 > static void track_callstack(unsigned int cpu_index, void *udata)
 > {
->@@ -28,20 +108,36 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> {
->     size_t n_insns = qemu_plugin_tb_n_insns(tb);
-> 
->+    /*
->+     * We instrument all instructions following one that might have updated
->+     * the frame pointer. We always instrument first instruction in block, as
->+     * last executed instruction, in previous tb, may have modified it.
-
-Modified it how?
-
->+     */
->+    bool instrument_insn = true;
->     for (int i = 0; i < n_insns; i++) {
->         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-> 
->-        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
->-        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
->-                QEMU_PLUGIN_CB_R_REGS,
->-                (void *) pc);
->+        if (instrument_insn) {
->+            uintptr_t pc = qemu_plugin_insn_vaddr(insn);
->+            qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
->+                                                   QEMU_PLUGIN_CB_R_REGS,
->+                                                   (void *) pc);
->+            instrument_insn = false;
->+        }
-> 
->+        char *disas = qemu_plugin_insn_disas(insn);
->+        if (arch_ops.does_insn_modify_frame_pointer(disas)) {
->+            instrument_insn = true;
->+        }
-
-So if I understand correctly you check if an instruction needs to be 
-instrumented and then do it in the next forloop. This means if the last 
-insn needs to be instrumented too it is not done, is that ok?
-
->     }
-> }
-> 
-> static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
-> {
->     Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
->+    cpu->ops = arch_ops;
+>+    uint64_t pc = (uintptr_t) udata;
+>+    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
+>+    Callstack *cs = cpu->cs;
 >+
->+    cpu->ops.init(cpu);
->     cpu->buf = g_byte_array_new();
-> }
-> 
->@@ -65,6 +161,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->                                            const qemu_info_t *info,
->                                            int argc, char **argv)
-> {
->+    if (!strcmp(info->target_name, "aarch64")) {
->+        arch_ops = aarch64_ops;
->+    } else {
->+        fprintf(stderr, "plugin uftrace: %s target is not supported\n",
->+                info->target_name);
->+        return 1;
+>+    uint64_t fp = cpu->ops.get_frame_pointer(cpu);
+>+    if (!fp && callstack_empty(cs)) {
+>+        /*
+>+         * We simply push current pc. Note that we won't detect symbol change as
+>+         * long as a proper call does not happen.
+>+         */
+>+        callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
+>+        return;
 >+    }
 >+
->     score = qemu_plugin_scoreboard_new(sizeof(Cpu));
->     qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
->     qemu_plugin_register_atexit_cb(id, at_exit, NULL);
+>+    CallstackEntry top = callstack_top(cs);
+>+    if (fp == top.frame_pointer) {
+>+        /* same function */
+>+        return;
+>+    }
+>+
+>+    CallstackEntry caller = callstack_caller(cs);
+>+    if (fp == caller.frame_pointer) {
+>+        /* return */
+>+        callstack_pop(cs);
+>+        return;
+>+    }
+>+
+>+    uint64_t caller_fp = fp ? cpu_read_memory64(cpu, fp) : 0;
+>+    if (caller_fp == top.frame_pointer) {
+>+        /* call */
+>+        callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
+>+        return;
+>+    }
+>+
+>+    /* discontinuity, exit current stack and unwind new one */
+>+    callstack_clear(cs);
+>+    cpu_unwind_stack(cpu, fp, pc);
+> }
+> 
+> static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>@@ -139,12 +295,16 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+> 
+>     cpu->ops.init(cpu);
+>     cpu->buf = g_byte_array_new();
+>+
+>+    cpu->cs = callstack_new();
+> }
+> 
+> static void vcpu_end(unsigned int vcpu_index)
+> {
+>     Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
+>     g_byte_array_free(cpu->buf, true);
+>+
+>+    callstack_free(cpu->cs);
+>     memset(cpu, 0, sizeof(Cpu));
+> }
+> 
 >-- 
 >2.47.2
 >
+Looks good I think,
 
-LGTM overall, it makes sense.
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
