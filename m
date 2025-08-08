@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1494C87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:03:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EEFFC87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:03:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukPXh-0003OO-5y; Fri, 08 Aug 2025 12:02:06 -0400
+	id 1ukPXd-0003LR-MX; Fri, 08 Aug 2025 12:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukPW7-0000ed-V5
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:00:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukPW5-0005w1-O4
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:00:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754668823;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=t4d2vNvuny4A0g0c38QyAitFG/+yWVgkQb4NvRj80Sk=;
- b=eCtlUejtGdhGnMIwUhwhPd5UD5hkGIL9oBr4bXff5mwrgfvwVn+bane5PgGrOiGR9xxWGB
- VXWB+eRyE36KEPjg+9k7XGEmqGhzZqomxR6gmFJPWxJ5iV3CQmjV7CPhYTEvwmzKsGNT5T
- 06yJ+/NYjyRaZ+LUd5trQhoZv6rC/9E=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-416-8geJmPlmPyijraYWrjTdlw-1; Fri, 08 Aug 2025 12:00:22 -0400
-X-MC-Unique: 8geJmPlmPyijraYWrjTdlw-1
-X-Mimecast-MFC-AGG-ID: 8geJmPlmPyijraYWrjTdlw_1754668821
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-71b58de76caso31635917b3.1
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:00:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPVx-0000MZ-Bb
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:00:19 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPVr-0005sn-6G
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:00:15 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-459ddf9019cso8600325e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:00:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754668807; x=1755273607; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U31oiKsgx+8pzsWRmfBacKIbeg55k+w2ihJyrAPos7o=;
+ b=Cxn0OlmCEz9Um5w2Ccji8vi/o/ZlrwhhhWu4b1xSaaU17kC7CCECQcWr3yR+AlautR
+ +KQ4NPmVZ9Ba+L3MeRK3wrr+AsPVa3zjGQKF4bKUVJC5Jn2kEF2C7N24AUx3sWxWql+W
+ Sm2PDINgkojeswO2D6IQI9YtuItEhReqFz2/hXq9zhY8VdTWcu6EtQ416cCCHBjVij6U
+ 0Hsmvv5WRTmX1+0pHc8rlnrzr4YYqn7sspfLlyGV1Jg15Ff3yJJC/dxTVxfNRiNYmtLi
+ YaB8JqJlGWdUHVXgJQGdCHgPcI+c41maMeXQrS/7KYg36K4w1TcrZXdwGga5/B0IMdIU
+ +3mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754668821; x=1755273621;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=t4d2vNvuny4A0g0c38QyAitFG/+yWVgkQb4NvRj80Sk=;
- b=th3X/ElhZuN1+s/WGgqiR/SGg1W5fNmgDpJGpnKUQ7IeA7DmzMobsU1kZx8rCozNdf
- wo/nncjH1dcJMWwi59naQzjSnHLN2w2azkLw6bFTo1bkprLz6EiV8/rJf7iODxIZNZQ+
- yeBSgTqajBBbmc6tK96FvqyJQpipWW1SkD2yc4X+cmr6azIwpUTb+iWaS3S/A4fUlurp
- T4tdPvmY23ElN1+Y+jklbplgE9hN6Fo7/buR1ODGjJYCUER+CDEYh0pg0trHAvZ1mUtA
- cngstKjyEJIaTnRMeYi80Imvb8CqxcT1S0bB9nWxRLgCCnMvKtWgZDEGxkauiH3an1bi
- XWCQ==
-X-Gm-Message-State: AOJu0YyHRKrLGeg7Z6fRLQww/LfnhffVXn4oq0A3Hb7IEkVIneKj8mKE
- /j0y/GYCxpclVHH3t2BOwHPE/f5u1g3YgGrTI/kc61k9osYzZRumHm1bmq4WBlsiJiKdL116fFF
- uC9+3H9it4W80TAR/pymZ/gerJwZCw982H93Kc6PcXk8H5LWOcEAnkBbH
-X-Gm-Gg: ASbGncts7/lBnWB0ghAIyKCr4SbHTDY0hGByt8U5aBxqkeOo9xkOYtwDx4CUUQGlppf
- jV+/G6HU9Hnaiy35rMGaDQcI9/93pfdjeiLiJsL0n7Dc8FIl/+m1SZZFoPzWEfF/Kj/h8KUhGSc
- 8xzTDgxMdLq+jO/zojBEvniqTNvk4PgVVOewP37DGrqbnc8gqilTel5refecCkZF2te2lQh8hN9
- bMBCyTFR28IwbtJkCNXP78ZF4R2eG07aRIk2UtlzcAo7W68V3YbCM/i7yqxP8yPtU6pDeJdHXnr
- lpiQ1Tf5uRXrRuso3nKqsaQDZADZld+m
-X-Received: by 2002:a05:690c:6710:b0:71a:400c:a454 with SMTP id
- 00721157ae682-71bf0ef44a0mr44235057b3.41.1754668821350; 
- Fri, 08 Aug 2025 09:00:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFR1VVPtov1suzMo8+4Vn2ZlEga2R/ps28K81ZmbWzlYmJNdKwDXimnTj7W85aC/4b4Vkp2+Q==
-X-Received: by 2002:a05:690c:6710:b0:71a:400c:a454 with SMTP id
- 00721157ae682-71bf0ef44a0mr44234417b3.41.1754668820822; 
- Fri, 08 Aug 2025 09:00:20 -0700 (PDT)
-Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-71bf9bd4710sm2788767b3.79.2025.08.08.09.00.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Aug 2025 09:00:20 -0700 (PDT)
-Date: Fri, 8 Aug 2025 12:00:07 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [RFC PATCH 2/4] migration: Fix state transition in
- postcopy_start() error handling
-Message-ID: <aJYfB3mVzALiCu3P@x1.local>
-References: <20250807114922.1013286-1-jmarcin@redhat.com>
- <20250807114922.1013286-3-jmarcin@redhat.com>
- <aJUSeOIKfQ47uliY@x1.local>
- <ftnfp4glpvoe3hwycvzqc2q3soyrmblshllfxgnjt7dlmpryvp@sqjom56wab5j>
+ d=1e100.net; s=20230601; t=1754668807; x=1755273607;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U31oiKsgx+8pzsWRmfBacKIbeg55k+w2ihJyrAPos7o=;
+ b=iotv8KOMsoOSYRkJxYIoPUh4sajLMQWePHUWwUVUSJ5jJQ6AKl16FZT0qbegWSJXPR
+ st6XFsfkRJ5vPhgRWpGYFCo4aF4yVXUvIUu3PSlWou6ApmcOXRHMcfzQCXSYGWtaAqug
+ Plsd/WZ+yHc8HYZD6MDfoWceTBwW+O3BLCAnfUY5sXIE7JUR+lErNwSsWDs4hqHWFJla
+ AaLCgRZVs3bnR+2B3NXc0WeB6mPCCZIHeII7Jm1Onmo7TR9QdwsjpkXO9ckyf2MtNAV2
+ V+/thFk3Yzbpa/b2lvCxlKJJT1m3NJ/m7iD2VaDP9jLUliqKDK+aPd3mcT0HvC5Aqzgu
+ mYow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXvRlz8Gpi0GzyLyMdCQbhjL2N7npRdz0H4nkHskCrfWvww9RUIWg3jzpZ6LTZJLL/p2UyE125vcsf4@nongnu.org
+X-Gm-Message-State: AOJu0YzzZNPXiYxRGUZ9jDlPahAl/onylzsVFhBJkuoUekvh8AE9nvu3
+ 3BmVo6aRoPv3KFOwCIgJbjZS5IIdRmEfIF4bevdnQmM7nNzdclWrS5Tng1WaV1ogxLE=
+X-Gm-Gg: ASbGncvKDg2tp+Jq3BG0Vmb2KJAWIxtMeEzGwcOc5nj7N8GvwSzFodcU87xaxaTwV13
+ yhR7PCs0IMZTOkddbB04ZzJJJTwI815px2zqIWnOmEdMj35VhjKYgUzTdbG7uSWpMjqV4PrzJTn
+ OybduuT8KsAjgV5yz9qTuujhscldrTfF4tb5X6B7WAG71Jpk5X4/vGYKGxAaaoXTeyUymd8lBxj
+ 2U4+HvV0Zbrp7yL5SyjyWuwxN7n2XPKp5XS6pItuFufJgGSpLokO7CzhMtdO6tGbUseUX+gYdG2
+ tYdUmo6eGNI5qyoYs+lTCSHRAilWPDrVVyTVNfL3MtgTmWsHSGrbNpCF09XVCIW/7esIE8u3fAT
+ FL+ZrMiJl9S/5V4QMWoUqE8R73k43tIKealTZOol4JToF8/XnkldCruKvHV7wNx14dQ==
+X-Google-Smtp-Source: AGHT+IHLIlXbXN8fjsUj603FuCKXF6oEaAVEnyi8xeupi0dYAUzrDVAKsLTsoa4ulHOLrE/y1mT7hw==
+X-Received: by 2002:a05:600c:4fc4:b0:459:dc99:51bf with SMTP id
+ 5b1f17b1804b1-459f4f289e7mr29396045e9.25.1754668807184; 
+ Fri, 08 Aug 2025 09:00:07 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e6867193sm138084875e9.6.2025.08.08.09.00.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Aug 2025 09:00:06 -0700 (PDT)
+Message-ID: <a9874cc7-e18e-4b6c-aaac-2c6ce56c1bf7@linaro.org>
+Date: Fri, 8 Aug 2025 18:00:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ftnfp4glpvoe3hwycvzqc2q3soyrmblshllfxgnjt7dlmpryvp@sqjom56wab5j>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 08/14] hw/misc: Add RISC-V CMGCR device implementation
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
+References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
+ <20250717093833.402237-9-djordje.todorovic@htecgroup.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250717093833.402237-9-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,15 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 08, 2025 at 11:44:36AM +0200, Juraj Marcin wrote:
-> Such function could be useful. I could also send it with the above fix
-> together as a separate patchset, and send it also to stable.
+On 17/7/25 11:38, Djordje Todorovic wrote:
+> Add RISC-V implementation of the Coherent Manager Global Control
+> Register (CMGCR) device. It is based on the existing MIPS CMGCR
+> implementation but adapted for RISC-V systems.
+> 
+> The CMGCR device provides global system control for multi-core
+> configurations in RISC-V systems.
+> 
+> This is needed for the MIPS BOSTON AIA board.
+> 
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> ---
+>   hw/misc/Kconfig               |  10 ++
+>   hw/misc/meson.build           |   2 +
+>   hw/misc/riscv_cmgcr.c         | 234 ++++++++++++++++++++++++++++++++++
+>   include/hw/misc/riscv_cmgcr.h |  49 +++++++
+>   4 files changed, 295 insertions(+)
+>   create mode 100644 hw/misc/riscv_cmgcr.c
+>   create mode 100644 include/hw/misc/riscv_cmgcr.h
 
-Yep that works.  The 2nd patch as a cleanup doesn't need to copy stable.
 
-Thanks,
+> +static void riscv_gcr_realize(DeviceState *dev, Error **errp)
+> +{
+> +    RISCVGCRState *s = RISCV_GCR(dev);
 
--- 
-Peter Xu
+Please report an error for invalid num_vps values (0 or >MAX).
 
+> +
+> +    /* Create local set of registers for each VP */
+> +    s->vps = g_new(RISCVGCRVPState, s->num_vps);
+> +}
 
