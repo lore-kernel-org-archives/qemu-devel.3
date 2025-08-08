@@ -4,98 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F19C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF02BC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:37:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukQ5D-0001X6-84; Fri, 08 Aug 2025 12:36:43 -0400
+	id 1ukQ5k-0002zp-JQ; Fri, 08 Aug 2025 12:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukQ5B-0001WM-Q3
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:36:41 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukQ59-0004rY-Hb
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:36:41 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-240763b322fso26242255ad.0
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:36:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754670998; x=1755275798; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gmRoOPjo3vzk+LrjKXfqm/l9OFuWP7yK7UbYtyWLxw8=;
- b=FlMdYd2AngQxZtnjwZbmq+NDxjS49yVbgADVLOqcAiI7iEgzU5GaMpGtqPtvMAqZ0H
- 3C3vOU8bWsuusKJheXfnYccHCfzWKIjzg7E+fRJiHTvAln/bhkG+gQjyg1VomKspm4zs
- xgFx6Rs32mXoJtVtn6wQsZtRHvqAkq2WkXCSKqw2vYYp6//Vge4or3BMNRnVzNPa8s/5
- SmvvZ5TpgR0LFxuGxksDm5rZT8jXFlXpi3dt+xoKqPSBkMNMgEtidJT/siRtEYrGX6ek
- kfachKXHiq3/VfGBL29HSjp9Pwpew2RHZUVYgr20f5zF/JBsZAEKjMcD11C1fzhDhzNm
- fzUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754670998; x=1755275798;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gmRoOPjo3vzk+LrjKXfqm/l9OFuWP7yK7UbYtyWLxw8=;
- b=KlXEcGxnyzwlCpgv9DkYjbnV4bs4UU91Fardi30zQk4kVYaHxs/YB9MMTb7wiONC1U
- CN+gks0AX4S0ZAHsSB+k3cPcKxoPah+EOTuL5hSDqIXcDtoso8XV/z2PfEidGUk5Nh0j
- xbPfcRF5iUh1gHvI1OWh07lgo+trHMXxo706nzYCYtgWaEiwtICjGrnI99olfT2XXZiK
- CKfYQUzP0tnM8XXBN8iSCPlfyTJYJZfuoZgQ0Xg7yK+n+H61H6Wi1rEmkIhJEc3hhlUS
- VmUZ1DHUnngc4RpfbkLPVuMq7f/uSMN0P3L3jLMB8PoiVRLDmv36wjON0TTbJPBTrxaH
- zCQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRsUWM90fekSlwlp9xIkTqZwtDeAnJnks3y2/YuejVMdWu2Abt5fR91rrGOA/7O95Yyt2o/t34NAm3@nongnu.org
-X-Gm-Message-State: AOJu0Yz7SL19lWVQAq8S2J8oJoZk4cEbCkrdYQ4WoOo/IWqVrgtHbk14
- 3cjRKTaClzmH2I+smvOVV7CJ1qiMWQCtklShopFyFUomwqHSn6B4GMxmn/XjF3BPamw=
-X-Gm-Gg: ASbGncuIsNbW8o9MUWDNDOvPlT2TKpV/rsFMDkVX0gGJ+iOYO5KVkX7Kd5tOYPLlEqe
- v3jDkJiIhoya1cXF3RYZhrK6n91gHrEID1oemRvDyfiMAZKDq8eHvgGIJzJsWX+THwYPf34XYk5
- lrzOC1LRZe2VoGmk4ZbhSj93QzYE8ifnOOQZ/KdPSHlcNxm2PA8aFeikQoEhiAStq8/WkHpYSy4
- m+FUcpEqGxga+8+HPxutNyuARESbbXlspeUJBvazDzJnAqw9hHvdHsnNB2J+lpuJn1j+hw1vfNX
- RTMX1F0/XnnrojYZskxZzrLSKMI4u+p/Bj/BgaIQ7WSNzPHQVVkXzf8WXdybusgcVNr5MXq1wpl
- F+9jgoR7meTGCSvtY5/AUDWWMbneI7uW8ppE=
-X-Google-Smtp-Source: AGHT+IFMdAR5+/yg2bwYYKE0V6Q/WHJKsx6qdmKH/lzCVBswEeYnYei8LDDHjY9+ZzNoYqgf/ER/lg==
-X-Received: by 2002:a17:903:1b43:b0:240:2145:e527 with SMTP id
- d9443c01a7336-242c204c492mr42945425ad.25.1754670997510; 
- Fri, 08 Aug 2025 09:36:37 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e8aab0b3sm213558075ad.161.2025.08.08.09.36.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 09:36:37 -0700 (PDT)
-Message-ID: <7fba89cc-d96a-432b-b228-326379729fa9@linaro.org>
-Date: Fri, 8 Aug 2025 09:36:36 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/9] contrib/plugins/uftrace: track callstack
-Content-Language: en-US
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
- rowan Hart <rowanbhart@gmail.com>, Gustavo Romero
- <gustavo.romero@linaro.org>, =?UTF-8?Q?Alex_Benn_=C3=A9_e?=
- <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
- <20250808020702.410109-4-pierrick.bouvier@linaro.org>
- <t0o41z.23tpc2iz8vjf3@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <t0o41z.23tpc2iz8vjf3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ukQ5h-0002qo-Ne; Fri, 08 Aug 2025 12:37:13 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ukQ5e-00051b-3o; Fri, 08 Aug 2025 12:37:13 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578AXl25020980;
+ Fri, 8 Aug 2025 16:37:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=/8t/wG+mprjz3n7p3qHcLjKea/O5z8/S9wMWq4RcYIw=; b=rQDo1PsVlJm7
+ I+HGBFLJXlDvme+KWXY0dN+vB48owWlIiEjfQwOuqqzHzDhtzevQknTYKaWEfmQi
+ oh6qJuui7rI6bfTolycG05QPpPOix6N4QMZWQ/Ir3Mqu5mK5UJZmQW7KO3FVpKhv
+ JZU7m1CWFya17uw3OdYr2ZvY59YVhNyk3CWBb4myo0jEiDntDvlvYrTwyIelJwos
+ iZ+qXh7nPYfkPpfXkllcr+1RD+7PavES5AXWLvMSk7FjJJaZ8Q+v2UBLDn2VuGGC
+ lWleS7vqsj44DvyfmSqMwsE6FDMsSur/rX7sIoia8sogIhrbNTcK2uiHJgmD73GU
+ XMdSyF4YHw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bq63h4ru-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:37:07 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 578Gakdt012659;
+ Fri, 8 Aug 2025 16:37:07 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bq63h4rs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:37:07 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 578F57ve031307;
+ Fri, 8 Aug 2025 16:37:06 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48bpwnpd9f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:37:06 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 578Gb5Z814418676
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 8 Aug 2025 16:37:05 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 68E0058043;
+ Fri,  8 Aug 2025 16:37:05 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED76258055;
+ Fri,  8 Aug 2025 16:37:04 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  8 Aug 2025 16:37:04 +0000 (GMT)
+Message-ID: <a423cbb98f851fe29901485f4bf6485857f24386.camel@linux.ibm.com>
+Subject: Re: [PULL 00/50] ppc queue
+From: Miles Glenn <milesg@linux.ibm.com>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, Michael Tokarev
+ <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
+ <danielhb413@gmail.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
+ Schlossin <calebs@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Date: Fri, 08 Aug 2025 11:37:04 -0500
+In-Reply-To: <3b1fcc0a-6ce7-4639-a17c-34d640745c20@redhat.com>
+References: <20250721162233.686837-1-clg@redhat.com>
+ <10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru>
+ <ce863981-3d5e-4ec4-94ee-e35d773eab78@redhat.com>
+ <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
+ <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
+ <4468aea8-b8cc-4313-abbe-8a5f58a35adc@redhat.com>
+ <6afc919bdb18166a71a2dba1a3862709629d5e08.camel@linux.ibm.com>
+ <a9d36b56-2954-4a48-aec4-09657a2295b2@tls.msk.ru>
+ <3b1fcc0a-6ce7-4639-a17c-34d640745c20@redhat.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=NInV+16g c=1 sm=1 tr=0 ts=689627b3 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=ymyJ6kAnLaKtO-8wbJQA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: gVb8hNRnbG0gaTvTgjwoWYoJqIaQQsSo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA4MDEzMyBTYWx0ZWRfX2T9k4bT5iySL
+ FsW/jXzustPotWSv1fDhRrjTf0+Gg1S5meLiHCQ8Tzq+ceFh3TrgTMDPQdyWScYTcBAKJdpbBYD
+ SMmnC+GM5R2AiS4CV/vJBQc/LAFUsZWHXeNSArlmxl+p2jadjx0N/NVytLYk6h41hifYwYl8cYQ
+ EC2R/kCpDlXs8DKmCekKDugzJkE/Q1mpOg8jWDZF4c6L1eNB5EjBi03MBEz+igLk2FiNW9oAGGi
+ 5zDCS2iqNOWjiZ2u+q4HaFSnCUj89rxKLrVmHWLOBKg/AvymBjCf5t2MAphwAaFEWvsgT+RXNza
+ s6g/YNkdbZwyYyTZzUSmVNpoL6DqFq2LEUFKfgGNnqSniiSQyBYm8lALK9mZunh8VTSmz7TfI99
+ Oz8MJ1zaqwdpGia+EmPkosfY3fsUdM6ki+h0/P5vQUjjNUNGjZUlEv2tb1lBAH+n7IGcOrZa
+X-Proofpoint-ORIG-GUID: bwTavnlfvlR6PtHi8HBxW9yE3OZpxgdD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-08_05,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 impostorscore=0 mlxlogscore=999
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0 mlxscore=0
+ bulkscore=0 priorityscore=1501 spamscore=0 classifier=spam authscore=0
+ authtc=n/a authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508080133
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,268 +135,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 1:49 AM, Manos Pitsidianakis wrote:
-> On Fri, 08 Aug 2025 05:06, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->> We now track callstack, based on frame pointer analysis. We can detect
->> function calls, returns, and discontinuities.
->> We implement a frame pointer based unwinding that is used for
->> discontinuities.
+On Fri, 2025-08-08 at 10:17 +0200, Cédric Le Goater wrote:
+> On 8/8/25 08:07, Michael Tokarev wrote:
+> > On 06.08.2025 23:46, Miles Glenn wrote:
+> > > On Tue, 2025-08-05 at 22:07 +0200, Cédric Le Goater wrote:
+> > ...
+> > > > These seem to be interesting to have :
+> > > > 
+> > > > ppc/xive2: Fix treatment of PIPR in CPPR update
+> > > > ppc/xive2: Fix irq preempted by lower priority group irq
+> 
+> I added :
+> 
+>    ppc/xive2: Reset Generation Flipped bit on END Cache Watch
+> 
+> > > > ppc/xive: Fix PHYS NSR ring matching
+> > > > ppc/xive2: fix context push calculation of IPB priority
+> > > > ppc/xive2: Remote VSDs need to match on forwarding address
+> > > > ppc/xive2: Fix calculation of END queue sizes
+> > > > ppc/xive: Report access size in XIVE TM operation error logs
+> > > > ppc/xive: Fix xive trace event output
+> > > 
+> > > I'm still not sure that the benefit is worth the effort, but I
+> > > certainly don't have a problem with them being backported if someone
+> > > has the desire and the time to do it.
+> > 
+> > I mentioned already that 10.0 series will (hopefully) be LTS series.
+> > At the very least, it is what we'll have in the upcoming debian
+> > stable release (trixie), which will be stable for the next 2 years.
+> > Whenever this is important to have working Power* support in debian -
+> > I don't know.
+> > 
+> > All the mentioned patches applied to 10.0 branch cleanly (in the
+> > reverse order, from bottom to top), so there's no effort needed
+> > to back-port them.  And the result passes at least the standard
+> > qemu testsuite.  So it looks like everything works as intended.
+> 
+> 24.04 operates correctly with a "6.14.0-27-generic #27~24.04.1-Ubuntu"
+> kernel on a PowerNV10 system defined as :
+> 
+>    Architecture:             ppc64le
+>      Byte Order:             Little Endian
+>    CPU(s):                   16
+>      On-line CPU(s) list:    0-15
+>    Model name:               POWER10, altivec supported
+>      Model:                  2.0 (pvr 0080 1200)
+>      Thread(s) per core:     4
+>      Core(s) per socket:     2
+>      Socket(s):              2
+>      Frequency boost:        enabled
+>      CPU(s) scaling MHz:     76%
+>      CPU max MHz:            3800.0000
+>      CPU min MHz:            2000.0000
+>    Caches (sum of all):
+>      L1d:                    128 KiB (4 instances)
+>      L1i:                    128 KiB (4 instances)
+>    NUMA:
+>      NUMA node(s):           2
+>      NUMA node0 CPU(s):      0-7
+>      NUMA node1 CPU(s):      8-15
+> 
+> with devices :
+> 
+>    0000:00:00.0 PCI bridge: IBM Device 0652
+>    0000:01:00.0 Non-Volatile memory controller: Red Hat, Inc. QEMU NVM Express Controller (rev 02)
+>    0001:00:00.0 PCI bridge: IBM Device 0652
+>    0001:01:00.0 PCI bridge: Red Hat, Inc. Device 000e
+>    0001:02:02.0 USB controller: NEC Corporation uPD720200 USB 3.0 Host Controller (rev 03)
+>    0001:02:03.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
+>    0002:00:00.0 PCI bridge: IBM Device 0652
+>    ...
+> 
+> A rhel9 nested guest boots too.
+> 
+> Poweroff and reboot are fine.
 > 
 > 
-> Nit: Never heard of the "discontinuity" term for program execution
-> before :D Maybe "async control flow (signals, interrupts)"?
->
-
-Someone posted a series to detect discontinuities in program execution.
-I asked the same question as you:
-[1] 
-https://lore.kernel.org/qemu-devel/51ac04eea17a6c5b59a240d3c57ce54a851e4989@nut.email/
-
-Since we'll probably have this series merged in the future, I though it 
-was nice to reuse it.
-As well, it's not only async control flow, a setjmp/longjmp will 
-generate a discontinuity too. That's why I picked this name compared to 
-"exceptional/async control flow".
-That said, I don't have strong opinion, and as the name appears only in 
-comments and commit message, it can be changed to anything.
-
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->> contrib/plugins/uftrace.c | 160 ++++++++++++++++++++++++++++++++++++++
->> 1 file changed, 160 insertions(+)
->>
->> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
->> index 4b1a2f38143..d51faceb344 100644
->> --- a/contrib/plugins/uftrace.c
->> +++ b/contrib/plugins/uftrace.c
->> @@ -15,6 +15,15 @@
->>
->> QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
->>
->> +typedef struct {
->> +    GArray *s;
->> +} Callstack;
->> +
->> +typedef struct {
->> +    uint64_t pc;
->> +    uint64_t frame_pointer;
->> +} CallstackEntry;
->> +
->> typedef struct Cpu Cpu;
->>
->> typedef struct {
->> @@ -25,6 +34,7 @@ typedef struct {
->> } CpuOps;
->>
->> typedef struct Cpu {
->> +    Callstack *cs;
->>      GByteArray *buf;
->>      CpuOps ops;
->>      void *arch;
->> @@ -37,6 +47,71 @@ typedef struct {
->> static struct qemu_plugin_scoreboard *score;
->> static CpuOps arch_ops;
->>
->> +static Callstack *callstack_new(void)
->> +{
->> +    Callstack *cs = g_new0(Callstack, 1);
->> +    cs->s = g_array_new(false, false, sizeof(CallstackEntry));
->> +    return cs;
->> +}
->> +
->> +static void callstack_free(Callstack *cs)
->> +{
->> +    g_array_free(cs->s, true);
->> +    cs->s = NULL;
->> +    g_free(cs);
->> +}
->> +
->> +static size_t callstack_depth(const Callstack *cs)
->> +{
->> +    return cs->s->len;
->> +}
->> +
->> +static size_t callstack_empty(const Callstack *cs)
->> +{
->> +    return callstack_depth(cs) == 0;
->> +}
->> +
->> +static void callstack_clear(Callstack *cs)
->> +{
->> +    g_array_set_size(cs->s, 0);
->> +}
->> +
->> +static const CallstackEntry *callstack_at(const Callstack *cs, size_t depth)
->> +{
->> +    g_assert(depth > 0);
->> +    g_assert(depth <= callstack_depth(cs));
->> +    return &g_array_index(cs->s, CallstackEntry, depth - 1);
->> +}
->> +
->> +static CallstackEntry callstack_top(const Callstack *cs)
->> +{
->> +    if (callstack_depth(cs) >= 1) {
->> +        return *callstack_at(cs, callstack_depth(cs));
->> +    }
->> +    return (CallstackEntry){};
->> +}
->> +
->> +static CallstackEntry callstack_caller(const Callstack *cs)
->> +{
->> +    if (callstack_depth(cs) >= 2) {
->> +        return *callstack_at(cs, callstack_depth(cs) - 1);
->> +    }
->> +    return (CallstackEntry){};
->> +}
->> +
->> +static void callstack_push(Callstack *cs, CallstackEntry e)
->> +{
->> +    g_array_append_val(cs->s, e);
->> +}
->> +
->> +static CallstackEntry callstack_pop(Callstack *cs)
->> +{
->> +    g_assert(!callstack_empty(cs));
->> +    CallstackEntry e = callstack_top(cs);
->> +    g_array_set_size(cs->s, callstack_depth(cs) - 1);
->> +    return e;
->> +}
->> +
->> static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
->> {
->>      GByteArray *buf = cpu->buf;
->> @@ -47,6 +122,50 @@ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
->>      return *((uint64_t *) buf->data);
->> }
->>
->> +static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
->> +{
->> +    g_assert(addr);
->> +    GByteArray *buf = cpu->buf;
->> +    g_byte_array_set_size(buf, 0);
->> +    bool read = qemu_plugin_read_memory_vaddr(addr, buf, 8);
->> +    if (!read) {
->> +        return 0;
->> +    }
->> +    g_assert(buf->len == 8);
->> +    return *((uint64_t *) buf->data);
->> +}
->> +
->> +static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
->> +{
->> +    g_assert(callstack_empty(cpu->cs));
->> +
->> +    #define UNWIND_STACK_MAX_DEPTH 1024
->> +    CallstackEntry unwind[UNWIND_STACK_MAX_DEPTH];
->> +    size_t depth = 0;
->> +    do {
->> +        /* check we don't have an infinite stack */
->> +        for (size_t i = 0; i < depth; ++i) {
->> +            if (frame_pointer == unwind[i].frame_pointer) {
->> +                break;
->> +            }
->> +        }
->> +        CallstackEntry e = {.frame_pointer = frame_pointer, .pc = pc};
->> +        unwind[depth] = e;
->> +        depth++;
->> +        if (frame_pointer) {
->> +            frame_pointer = cpu_read_memory64(cpu, frame_pointer);
->> +        }
->> +        pc = cpu_read_memory64(cpu, frame_pointer + 8); /* read previous lr */
->> +    } while (frame_pointer && pc && depth < UNWIND_STACK_MAX_DEPTH);
->> +    #undef UNWIND_STACK_MAX_DEPTH
->> +
->> +    /* push it from bottom to top */
->> +    while (depth) {
->> +        callstack_push(cpu->cs, unwind[depth - 1]);
->> +        --depth;
->> +    }
->> +}
 > 
-> Nice.
->
-
-I noticed at some point, during the boot sequence, we had a chain of 
-frame pointers that looked like this:
-A, B, A, B, A, B...
-Thus the need to check we don't have an infinite stack.
-It was in code without symbols, but I wonder why we had such a situation 
-happening.
-
->> +
->> static struct qemu_plugin_register *plugin_find_register(const char *name)
->> {
->>      g_autoptr(GArray) regs = qemu_plugin_get_registers();
->> @@ -102,6 +221,43 @@ static CpuOps aarch64_ops = {
->>
->> static void track_callstack(unsigned int cpu_index, void *udata)
->> {
->> +    uint64_t pc = (uintptr_t) udata;
->> +    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
->> +    Callstack *cs = cpu->cs;
->> +
->> +    uint64_t fp = cpu->ops.get_frame_pointer(cpu);
->> +    if (!fp && callstack_empty(cs)) {
->> +        /*
->> +         * We simply push current pc. Note that we won't detect symbol change as
->> +         * long as a proper call does not happen.
->> +         */
->> +        callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
->> +        return;
->> +    }
->> +
->> +    CallstackEntry top = callstack_top(cs);
->> +    if (fp == top.frame_pointer) {
->> +        /* same function */
->> +        return;
->> +    }
->> +
->> +    CallstackEntry caller = callstack_caller(cs);
->> +    if (fp == caller.frame_pointer) {
->> +        /* return */
->> +        callstack_pop(cs);
->> +        return;
->> +    }
->> +
->> +    uint64_t caller_fp = fp ? cpu_read_memory64(cpu, fp) : 0;
->> +    if (caller_fp == top.frame_pointer) {
->> +        /* call */
->> +        callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
->> +        return;
->> +    }
->> +
->> +    /* discontinuity, exit current stack and unwind new one */
->> +    callstack_clear(cs);
->> +    cpu_unwind_stack(cpu, fp, pc);
->> }
->>
->> static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->> @@ -139,12 +295,16 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
->>
->>      cpu->ops.init(cpu);
->>      cpu->buf = g_byte_array_new();
->> +
->> +    cpu->cs = callstack_new();
->> }
->>
->> static void vcpu_end(unsigned int vcpu_index)
->> {
->>      Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
->>      g_byte_array_free(cpu->buf, true);
->> +
->> +    callstack_free(cpu->cs);
->>      memset(cpu, 0, sizeof(Cpu));
->> }
->>
->> -- 
->> 2.47.2
->>
-> Looks good I think,
+> Michael,
 > 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> I would say ship it.
+> 
+> 
+> Glenn, Gautam,
+> 
+> It would nice to get rid of these messages.
+>    
+>    [    0.000000] NR_IRQS: 512, nr_irqs: 512, preallocated irqs: 16
+>    [    2.270794918,5] XIVE: [ IC 00  ] Resetting one xive...
+>    [    2.271575295,3] XIVE: [CPU 0000] Error enabling PHYS CAM already enabled
+>    CPU 0100 Backtrace:
+>     S: 0000000032413a20 R: 0000000030021408   .backtrace+0x40
+>     S: 0000000032413ad0 R: 000000003008427c   .xive2_tima_enable_phys+0x40
+>     S: 0000000032413b50 R: 0000000030087430   .__xive_reset.constprop.0.isra.0+0x520
+>     S: 0000000032413c90 R: 0000000030087638   .opal_xive_reset+0x78
+>     S: 0000000032413d10 R: 00000000300038bc   opal_entry+0x14c
+>     --- OPAL call token: 0x80 caller R1: 0xc0000000014bbc90 ---
+>    [    2.273581201,3] XIVE: [CPU 0001] Error enabling PHYS CAM already enabled
+> 
+> 
+> Is it a modeling issue ?
+> 
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
+> 
+
+Thank you, Cédric!
+
+I'm not sure what's causing that error message.  I'm assuming it wasn't
+there before now, which would probably mean that something (the model?)
+is enabling the PHYS cams at initialization or realization where we
+didn't used to.
+
+Mike Kowal, is that the expecected behavior?  Can you take a look when
+you have a chance?
+
+Thanks,
+
+Glenn
 
 
