@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 078E8C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 17:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74DE5C87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 17:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukQXP-00030c-JA; Fri, 08 Aug 2025 13:05:52 -0400
+	id 1ukQXU-00033n-1t; Fri, 08 Aug 2025 13:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukQXN-0002yt-9y
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:05:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=IoBu=2U=kaod.org=clg@ozlabs.org>)
+ id 1ukQXQ-00030y-MB; Fri, 08 Aug 2025 13:05:52 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukQXK-0001Kt-AC
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:05:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754672744;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vQt+CNI6Lv7EOnlvVxpwbQ+XsxjORiU+LOFIMzTVBhU=;
- b=LLe3I3xmbNInPy5hTcLVFc9x28GR7GeOdnMwMxUBSuKqan3rs3FGlHlmJxRsCFIO+EmrWS
- vAutNj4ZQcX/rwMSpcfPAc+/IlkEAbYT3N6QC40WROeaETHZSaZnHtFoC2VB6F2Dp6hE3E
- q/4Ji9ZEmXwVwwKn3ihyazWmfJrO9Ec=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-DKNE8aMSNJaSpw53073BfA-1; Fri, 08 Aug 2025 13:05:43 -0400
-X-MC-Unique: DKNE8aMSNJaSpw53073BfA-1
-X-Mimecast-MFC-AGG-ID: DKNE8aMSNJaSpw53073BfA_1754672743
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-70e73d3c474so36688337b3.3
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 10:05:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754672743; x=1755277543;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vQt+CNI6Lv7EOnlvVxpwbQ+XsxjORiU+LOFIMzTVBhU=;
- b=GYe5bpPrjk5dn9csvKUyqk29dnVTlYCgfxwOlzsANwa/UNcQrGH7kTs8T0ABno/VUb
- vYQOoT2kilZJpwIDFd89Q6uTgC2CygjwSfTLGIw/z1CZI7LGf9eHrqlM9FkBPP/o2boU
- MxN40NRttP2iezaGZO/vtGtQl//JgG7ovzAjMKmKBZxDihZPPzMNZLsdx5rmgI7klDWM
- rizA8bZZTmsO8oJXnNlg26YsSQP93z30aCA70kTnCqc8PCAelrmbC8z7WFxzamSaUuaX
- j/tIa691VNhhteFSwrblERm/9SP+b617zUnylQmYx4ejbEb2pB/qFnweVOct3DYmdAfX
- 3kOw==
-X-Gm-Message-State: AOJu0Yw7KKH09DkPI7Cag+Lf1rQohxQ8rLc2icy5In/1UIVgw5hmY/xL
- T6FKbUTLif++NVQywkdCyS+tz0EF5tKGCRqiSQa7SC7f5gtpKGygjbLvq+bh93Rz/CsLIHcY3lp
- 2vU3f2zppL3Z1nY1ZhEttFYxCYDpV1HtkT33vWGi6U/71AMN1swHn8ZIo
-X-Gm-Gg: ASbGncu7oZ1L3THIWV/agTztrxED42HIfJMNOnYNidUuzAbktHb8K7E6cNA7N2+MHcR
- fIgYNlLAR+NHRtoHvutAOyZYdst9iqpfUhX5a1V0ce4rGwU+HiWUNLHdJICnSHuG9iHkH4tbvjp
- P4l3KxecTbv2Dwb39HA8GOPlQSmFCF8k6qxCmGZbValE4xd17hW5CJSZEv8WRw0qaBljybrLnWb
- g8AE4p6+bGRxivMup2rnqlOxlPiNmxkaGOnOQXE/AdQ7221/gAPoIGhhaaq+oo7fTwl+64H85Rk
- JzRjkn+XmMsv5uEl1G+fLJBE+Sgf69YB
-X-Received: by 2002:a05:690c:6d13:b0:71a:18fb:6eaa with SMTP id
- 00721157ae682-71bf0cedbc2mr44917327b3.3.1754672742483; 
- Fri, 08 Aug 2025 10:05:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUhyDVu0cLQUuQ43PjXootakVZJ03zT+ulg+S4/cBvNhXSnN1aYagRkumlCxEjnB70tiUoBQ==
-X-Received: by 2002:a05:690c:6d13:b0:71a:18fb:6eaa with SMTP id
- 00721157ae682-71bf0cedbc2mr44916747b3.3.1754672742019; 
- Fri, 08 Aug 2025 10:05:42 -0700 (PDT)
-Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-71b5a5cc216sm53278607b3.73.2025.08.08.10.05.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Aug 2025 10:05:41 -0700 (PDT)
-Date: Fri, 8 Aug 2025 13:05:28 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [RFC PATCH 3/4] migration: Make listen thread joinable
-Message-ID: <aJYuWKjb8ij7NRx6@x1.local>
-References: <20250807114922.1013286-1-jmarcin@redhat.com>
- <20250807114922.1013286-4-jmarcin@redhat.com>
- <aJUTO0n9NyIWaFNj@x1.local>
- <2svq64am2z4dr7q7x2jozlgzhiwluzi3je3f4acjylxqyzbxml@mnqscmlofjro>
+ (Exim 4.90_1) (envelope-from <SRS0=IoBu=2U=kaod.org=clg@ozlabs.org>)
+ id 1ukQXO-0001Ke-4u; Fri, 08 Aug 2025 13:05:52 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bz9QZ5ZTvz4xcZ;
+ Sat,  9 Aug 2025 03:05:42 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bz9QW6132z4wbd;
+ Sat,  9 Aug 2025 03:05:39 +1000 (AEST)
+Message-ID: <16df8d03-94a8-452b-a80a-97116e890eca@kaod.org>
+Date: Fri, 8 Aug 2025 19:05:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2svq64am2z4dr7q7x2jozlgzhiwluzi3je3f4acjylxqyzbxml@mnqscmlofjro>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ppc/xive2: Fix integer overflow warning in
+ xive2_redistribute()
+To: milesg@linux.ibm.com, Gautam Menghani <gautam@linux.ibm.com>,
+ npiggin@gmail.com, kowal@linux.ibm.com, ganeshgr@linux.ibm.com,
+ harshpb@linux.ibm.com
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+References: <20250808100917.37006-1-gautam@linux.ibm.com>
+ <7fd16019aa7400e024bf1fcbcd1246cc1dbaea1b.camel@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <7fd16019aa7400e024bf1fcbcd1246cc1dbaea1b.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=IoBu=2U=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,82 +110,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 08, 2025 at 01:08:39PM +0200, Juraj Marcin wrote:
-> Hi Peter,
+On 8/8/25 18:57, Miles Glenn wrote:
+> On Fri, 2025-08-08 at 15:39 +0530, Gautam Menghani wrote:
+>> Coverity reported an integer overflow warning in xive2_redistribute()
+>> where the code does a left shift operation "0xffffffff << crowd". Fix the
+>> warning by using a 64 byte integer type. Also refactor the calculation
+>> into dedicated routines.
+>>
+>> Resolves: Coverity CID 1612608
+>> Fixes: 555e446019f5 ("ppc/xive2: Support redistribution of group interrupts")
+>> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+>> ---
+>>   hw/intc/xive2.c | 45 +++++++++++++++++++++++++++++++--------------
+>>   1 file changed, 31 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+>> index ee5fa26178..90fe9c883b 100644
+>> --- a/hw/intc/xive2.c
+>> +++ b/hw/intc/xive2.c
+>> @@ -95,6 +95,35 @@ static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
+>>       }
+>>   }
+>>   
+>> +static inline uint32_t xive2_nvgc_get_idx(uint32_t nvp_idx, uint8_t group)
+>> +{
+>> +    uint32_t nvgc_idx;
+>> +
+>> +    if (group > 0) {
+>> +        nvgc_idx = (nvp_idx & (0xffffffffULL << group)) |
+>> +                   ((1 << (group - 1)) - 1);
+>> +    } else {
+>> +        nvgc_idx = nvp_idx;
+>> +    }
+>> +
+>> +    return nvgc_idx;
+>> +}
+>> +
+>> +static inline uint8_t xive2_nvgc_get_blk(uint8_t nvp_blk, uint8_t crowd)
+>> +{
+>> +    uint8_t nvgc_blk;
+>> +
+>> +    if (crowd > 0) {
+>> +        crowd = (crowd == 3) ? 4 : crowd;
+>> +        nvgc_blk = (nvp_blk & (0xffffffffULL << crowd)) |
+>> +                   ((1 << (crowd - 1)) - 1);
+>> +    } else {
+>> +        nvgc_blk = nvp_blk;
+>> +    }
+>> +
+>> +    return nvgc_blk;
+>> +}
+>> +
+>>   uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
+>>                                            bool crowd,
+>>                                            uint8_t blk, uint32_t idx,
+>> @@ -638,20 +667,8 @@ static void xive2_redistribute(Xive2Router *xrtr, XiveTCTX *tctx, uint8_t ring)
+>>   
+>>       trace_xive_redistribute(tctx->cs->cpu_index, ring, nvp_blk, nvp_idx);
+>>       /* convert crowd/group to blk/idx */
+>> -    if (group > 0) {
+>> -        nvgc_idx = (nvp_idx & (0xffffffff << group)) |
+>> -                   ((1 << (group - 1)) - 1);
+>> -    } else {
+>> -        nvgc_idx = nvp_idx;
+>> -    }
+>> -
+>> -    if (crowd > 0) {
+>> -        crowd = (crowd == 3) ? 4 : crowd;
+>> -        nvgc_blk = (nvp_blk & (0xffffffff << crowd)) |
+>> -                   ((1 << (crowd - 1)) - 1);
+>> -    } else {
+>> -        nvgc_blk = nvp_blk;
+>> -    }
+>> +    nvgc_idx = xive2_nvgc_get_idx(nvp_idx, group);
+>> +    nvgc_blk = xive2_nvgc_get_blk(nvp_blk, crowd);
+>>   
+>>       /* Use blk/idx to retrieve the NVGC */
+>>       if (xive2_router_get_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, &nvgc)) {
 > 
-> On 2025-08-07 16:57, Peter Xu wrote:
-> > On Thu, Aug 07, 2025 at 01:49:11PM +0200, Juraj Marcin wrote:
-> > > From: Juraj Marcin <jmarcin@redhat.com>
-> > > 
-> > > This patch allows joining the migration listen thread. This is done in
-> > > preparation for the introduction of "postcopy-setup" state at the
-> > > beginning of a postcopy migration, when destination can fail gracefully
-> > > and source side then resume to a running state.
-> > > 
-> > > In case of such failure, to gracefully perform all cleanup in the main
-> > > migration thread, we need to wait for the listen thread to exit, which
-> > > can be done by joining it.
-> > > 
-> > > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> > > ---
-> > >  migration/migration.c | 1 +
-> > >  migration/savevm.c    | 2 +-
-> > >  2 files changed, 2 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/migration/migration.c b/migration/migration.c
-> > > index e5ce2940d5..8174e811eb 100644
-> > > --- a/migration/migration.c
-> > > +++ b/migration/migration.c
-> > > @@ -901,6 +901,7 @@ process_incoming_migration_co(void *opaque)
-> > >               * Postcopy was started, cleanup should happen at the end of the
-> > >               * postcopy thread.
-> > >               */
-> > > +            qemu_thread_detach(&mis->listen_thread);
-> > >              trace_process_incoming_migration_co_postcopy_end_main();
-> > >              goto out;
-> > >          }
-> > > diff --git a/migration/savevm.c b/migration/savevm.c
-> > > index fabbeb296a..d2360be53c 100644
-> > > --- a/migration/savevm.c
-> > > +++ b/migration/savevm.c
-> > > @@ -2217,7 +2217,7 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
-> > >      mis->have_listen_thread = true;
-> > >      postcopy_thread_create(mis, &mis->listen_thread,
-> > >                             MIGRATION_THREAD_DST_LISTEN,
-> > > -                           postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
-> > > +                           postcopy_ram_listen_thread, QEMU_THREAD_JOINABLE);
-> > 
-> > This is good; I actually forgot it used to be detached..
-> > 
-> > Instead of proactively detach it above, could we always properly join it
-> 
-> However, after the main thread finishes loading device state from the
-> package, process_incoming_migration_co() exits, and IIUC main thread is
-> then no longer occupied with migration. So, if we should instead join
-> the listen thread, we probably should yield the coroutine until the
-> listen thread can be joined, so we are not blocking the main thread?
+> Thanks for fixing that, Gautam!  I was wondering, do we really need the
+> inline keywords here? Maybe it's better to let the compiler decide if
+> they should be inlined (which it probably will since they are only
+> called by a single function in the same file)?
 
-Or could we schedule a bottom half at the end of
-postcopy_ram_listen_thread() to join itself?  We could move something over
-into the BH:
+yes. the inline should be removed.
 
-    ... join() ...
-    mis->have_listen_thread = false;
-    migration_incoming_state_destroy();
-    object_unref(OBJECT(migr));
+C.
+
 
 > 
-> > (and hopefully every migration thread)?  Then we could drop patch 1 too.
+> Either way...
 > 
-> If I haven't missed any, there are no detached migration threads except
-> listen and get dirty rate threads.
-
-Yep.
-
-From mgmt pov, IMHO it's always good we create joinable threads.  But we
-can leave the calc_dirty_rate thread until necessary.
-
--- 
-Peter Xu
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> 
+> Thanks,
+> 
+> Glenn
+> 
 
 
