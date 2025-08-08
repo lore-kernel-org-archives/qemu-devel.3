@@ -4,145 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0384BC87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 08:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFCA5C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 08:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukIIw-00067K-NW; Fri, 08 Aug 2025 04:18:25 -0400
+	id 1ukIJs-0006ke-98; Fri, 08 Aug 2025 04:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ukIIc-0005yh-7h
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:18:03 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1ukIJI-0006UH-Sp
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:18:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ukIIa-0007v6-50
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:18:02 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1ukIJF-0007yx-KC
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:18:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754641078;
+ s=mimecast20190719; t=1754641120;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=USyOz6dIxmzT79afywxwNHFLNVQONRr9+3TPPFDeby0=;
- b=TDVFLkd1qZZc8un5kGmCIyThFC2wn0k0tGSLKGuxxnFoCpujoQp0L6fCcke10kjZpm5Ohn
- 45+PC/+2rF5XVzxnygJOJwiFbtMGdBEYraRQTsPYQs0c5rUmXI4oWB1aXQwH4AxPRrMMpo
- 62yFZwtQbmsc2PLTwue/I3EKn78KDO0=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=i9vYFAu1kUyOVMhI08f9XXMNOmpN66Ge3kiIBY53K9o=;
+ b=PmJqnOkfWL6e/dRWsSPufeJM1jpl3u/coKKCB/C9aI8DlGCbGxsj2DHDp1n8XFANGW62h4
+ 9tb5pOwLYlZQ70vEJL2wMiGNIr3i1rSN/1+2ZU7u+MNg10Wz1GuGAVjNww9f+RETS3qgwV
+ jEDk1oJsFMq7M9i2g/fIWPG7RlaU6BM=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-XJS0-Lu8PsG_2xvLxAw-lw-1; Fri, 08 Aug 2025 04:17:56 -0400
-X-MC-Unique: XJS0-Lu8PsG_2xvLxAw-lw-1
-X-Mimecast-MFC-AGG-ID: XJS0-Lu8PsG_2xvLxAw-lw_1754641075
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-459e4b85895so9730555e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 01:17:56 -0700 (PDT)
+ us-mta-260-O-4n7SHAOUy6VfDG86TQwQ-1; Fri, 08 Aug 2025 04:18:39 -0400
+X-MC-Unique: O-4n7SHAOUy6VfDG86TQwQ-1
+X-Mimecast-MFC-AGG-ID: O-4n7SHAOUy6VfDG86TQwQ_1754641118
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-b3f76a5ba7fso1596738a12.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 01:18:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754641075; x=1755245875;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1754641118; x=1755245918;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=USyOz6dIxmzT79afywxwNHFLNVQONRr9+3TPPFDeby0=;
- b=dyKgOTd09veObi+GyAjG+VOiuSU/1a9FkIPTb73ny84fUHpB+58mHpm+JG9LjXrQS5
- csXc9avY1oMb8EzQQ2WFoA/RTdbxJsgm/V9dwW+7znPETotS9HauXafHXfqrTB/oY7JH
- 1LGOAi6TAaVF61zypl4eNWD3FfyCObIqAs1v7icW13ofWiy9SKeX5+ZMGytSqreD/NDr
- tGd4SyH70aYz5CCiDQtQkPRCvRaA9q9woLT6k7ogDeOgfDtFqANLIcgFhpFwT3tL/SfI
- KjYlXrkz8iN7ooH3IPXCFnNiCkS+DCIfCt5qSyBU/DmmGKExhHjfE9n8Or9X2HwFzN9F
- YjEg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXL9X3zW/H8jbhgANzS9DJxFvrzkvG/oo4T7ROs5KqOAdnH+HgCoTkNOYjyUelDrmFx8mzspsIdRvbH@nongnu.org
-X-Gm-Message-State: AOJu0YzHroWmIWtwFM5nIhJ2tE1SmsByTpTY2eC3f1YnyTs5056sNsfN
- 3bK6fDb5Z8Nr1g2RbXHnNsG2HsV8aY63cLODHaR/7E1RO/BSMOsM5rhoVlFVpLglvFOl5Q8IJqW
- Cx0beVNN9NUmZPplsknGXca55HU+oLHNlfELkydE0sHZAfzBgKQ3zraYT
-X-Gm-Gg: ASbGncsviu4L84ZAWaYb18i/eA9kNRYJFxE+95vhjnBWxngqPaaknuB333vqM+zzv4w
- d5oUJJxD7jxMgxiZagsgswSalKqIbOIPzQYWL3jGz815yeTwrEz4gUBOQcnUtB/5NjV2glWvVaK
- SS2R3MLZBWDFBrzyrZaZsJe6Z+fuaRfAclJZ47Zwf7El/n/eROZDjOL6JyxaULWdcKWU/Kc8hwK
- LmYl4iFUar8M6jhJJIHG+DArgQHFv/0hg+eIvyx1u0R927YmBLurua3BIqGWSWtGnOo7cl0xlTd
- 3qQPfBj461BtNulfsQrXmg/PE6EPZQUDr0vNrg7lBZcGR/Fu5/Gj8WWgcpeTXwr09QpUbDgs
-X-Received: by 2002:a05:600c:1c92:b0:453:66f:b96e with SMTP id
- 5b1f17b1804b1-459f4eb9fbbmr14175805e9.11.1754641075314; 
- Fri, 08 Aug 2025 01:17:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEMa4Btk7p4Qm2NjR5tmGGKCSishBs8HxYZGNSGmlA+AIZKwgChk4WS259idlAQbT/mBqAZQ==
-X-Received: by 2002:a05:600c:1c92:b0:453:66f:b96e with SMTP id
- 5b1f17b1804b1-459f4eb9fbbmr14175495e9.11.1754641074790; 
- Fri, 08 Aug 2025 01:17:54 -0700 (PDT)
-Received: from [10.170.62.123] (93-33-81-67.ip43.fastwebnet.it. [93.33.81.67])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3b79c453333sm30540251f8f.45.2025.08.08.01.17.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 01:17:54 -0700 (PDT)
-Message-ID: <d3cf543f-c0aa-421e-8151-b554e77aaa40@redhat.com>
-Date: Fri, 8 Aug 2025 10:17:51 +0200
+ bh=i9vYFAu1kUyOVMhI08f9XXMNOmpN66Ge3kiIBY53K9o=;
+ b=FsD584xOv14rdRm/eM8SXVItx2TNDYr4Wz/KmcAzsW2HWlcSAYuOtnN8BSFb69fz90
+ cR3lez9VPHo2WpNgoVMQv1tX+b5c5S96ViNBkfktVrwUet6SoOWzpmckOMMyBskuJ2tx
+ OfuaJIUOB79QLqqmdtvMz9fAGhZymaeVwJ74sfTQjIP/PxlTlMVd5GP6ekCKnbAIXyyz
+ Eh4zQYjv/IDmP7/n8W+0rArqs9EPEp3vq+IgzpZzulhAYpg4zH4Vld/E8BL2UWxMg53a
+ PLQ8DELKVyAXPrGEwZylpP0Qu/S6+fczjLviM5Fpg0FYgKTOtAC6/NszJl4OE0q61vuH
+ FzWQ==
+X-Gm-Message-State: AOJu0Yx9rURegnyeMz8nJ5LBEaT/+7gW6bp48UGU8A1GVsehZ1JikHpM
+ PcmxWNfNrTaNHtERUnIwpJk+x10DWqed4LhP4I4Sv9eFFWiazoknGHlE8WGZbjaj8sDHc7biCOi
+ PRaEBOkmDrenOm+7LIgBTLJOSpgjX7APeyYi3mZ5nA7xg8RKVkp3gre+CHqTSWNNFKVHKAUITuD
+ Cep96pHxPPqcTKWJxeDjxr630VK31lrCQ=
+X-Gm-Gg: ASbGncuY5lgZrjtFJkAyidy7dwXU9Fa81LofA5sh/d08SQS76U1rYrzQ0LCJq6+e0We
+ uN1ombcxcLAVRGT7YcEByCxtKszEtk0vYUDmIKtxcuOrA70qoDq5VOqpkQkBe5py2k42tHqMk7t
+ w8IaKcUsjMrl5U8MrCcsNoPQ==
+X-Received: by 2002:a17:90b:48c4:b0:31e:fe18:c6df with SMTP id
+ 98e67ed59e1d1-32183e32f54mr3599294a91.16.1754641117804; 
+ Fri, 08 Aug 2025 01:18:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE67m7o0tc9tvvvf66WZ02P3HGjHHU13VJeLnMOnFS8cFStYpeD8kI+PjvPLwjkXKFHGXDzzThz9d5mseebrnI=
+X-Received: by 2002:a17:90b:48c4:b0:31e:fe18:c6df with SMTP id
+ 98e67ed59e1d1-32183e32f54mr3599263a91.16.1754641117386; Fri, 08 Aug 2025
+ 01:18:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU
- memory backend
-To: Zhao Liu <zhao1.liu@intel.com>, Hanna Reitz <hreitz@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Dapeng Mi <dapeng1.mi@linux.intel.com>,
- Chuanxiao Dong <chuanxiao.dong@intel.com>
-References: <20250807123027.2910950-1-zhao1.liu@intel.com>
- <20250807123027.2910950-11-zhao1.liu@intel.com>
- <d144ae17-afe3-4578-a875-79c1d6a4d723@redhat.com>
- <aJWyt+4JRzqhfIzU@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <aJWyt+4JRzqhfIzU@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+References: <20250808080823.2638861-1-armbru@redhat.com>
+ <20250808080823.2638861-7-armbru@redhat.com>
+In-Reply-To: <20250808080823.2638861-7-armbru@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Fri, 8 Aug 2025 12:18:25 +0400
+X-Gm-Features: Ac12FXy9T-441wT04PVB87h1aDi3AJ_urlwZ3Ev5WCwz8AZGV5QGzK_tM5EAE88
+Message-ID: <CAMxuvawHmyKityYCzu6yTXRdFkS26ja8o1xtkQE5QFENm9DD-g@mail.gmail.com>
+Subject: Re: [PATCH 06/12] net/slirp: Clean up error reporting
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, odaki@rsg.ci.i.u-tokyo.ac.jp
+Content-Type: multipart/alternative; boundary="00000000000082bb00063bd63862"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,116 +102,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 10:17, Zhao Liu wrote:
-> (+Hanna: I would like to align with Hanna on 0002.diff patch :-))
-> 
-> On Thu, Aug 07, 2025 at 03:59:26PM +0200, Paolo Bonzini wrote:
->> Date: Thu, 7 Aug 2025 15:59:26 +0200
->> From: Paolo Bonzini <pbonzini@redhat.com>
->> Subject: Re: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU
->>   memory backend
->>
->> On 8/7/25 14:30, Zhao Liu wrote:
->>> Add 2 patches to support QEMU memory backend implementation.
->>>
->>> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
->>> ---
->>>    .../packagefiles/vm-memory-0.16-rs/0001.diff  |  81 +++++++++++++
->>>    .../packagefiles/vm-memory-0.16-rs/0002.diff  | 111 ++++++++++++++++++
->>>    subprojects/vm-memory-0.16-rs.wrap            |   2 +
->>>    3 files changed, 194 insertions(+)
->>>    create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
->>>    create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0002.diff
->>>
->>> diff --git a/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
->>> new file mode 100644
->>> index 000000000000..037193108d45
->>> --- /dev/null
->>> +++ b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
->>> @@ -0,0 +1,81 @@
->>> +From 298f8ba019b2fe159fa943e0ae4dfd3c83ee64e0 Mon Sep 17 00:00:00 2001
->>> +From: Zhao Liu <zhao1.liu@intel.com>
->>> +Date: Wed, 6 Aug 2025 11:31:11 +0800
->>> +Subject: [PATCH 1/2] guest_memory: Add a marker tarit to implement
->>> + Bytes<GuestAddress> for GuestMemory
->>
->> This was a bit surprising.  Maybe this is something where GuestMemory needs
->> some extra flexibility.
-> 
-> At least, the default GuestMemory::try_access() need to re-implement in
-> QEMU, and this is because GuestMemory::iter() doesn't fit for QEMU's
-> case, and GuestMemory::to_region_addr() also needs adjustment to support
-> complete translation.
-> 
-> For details,
-> 
-> 1) iter() - QEMU has implemented the two-level "page" walk in
->     `phys_page_find`, which is more efficient than linear iteration.
-> 
-> 2) to_region_addr() - it's function signature is:
-> 
->      fn to_region_addr(
->          &self,
-> 	addr: GuestAddress
->      ) -> Option<(&Self::R, MemoryRegionAddress)>;
-> 
-> but QEMU currentlt wants:
-> 
->      fn translate(
->          &self,
->          addr: GuestAddress,
->          len: GuestUsize,
->          is_write: bool,
->      ) -> Option<(&MemoryRegionSection, MemoryRegionAddress, GuestUsize)>
-> 
-> `is_write` is mainly about IOMMU (and read-only case, but that could be
-> workaround I think).
-> 
-> And the 3rd member `GuestUsize` of (&MemoryRegionSection,
-> MemoryRegionAddress, GuestUsize) indicates the remianing size, which is
-> used to detect cross-region case. Maybe this `GuestUsize` is not
-> necessary in its return, since we can check the size of `MemoryRegionSection`
-> later. But this would be a bit repetitive.
-> 
-> But at least, this marker trait is acceptable, right? :-)
-> 
-> The marker trait for GuestMemoryRegion is introduced at commit 66ff347
-> ("refactor: use matches! instead of to_string() for tests").
-> 
->>> @@ -0,0 +1,111 @@
->>> +From 2af7ea12a589fde619690e5060c01710cb6f2e0e Mon Sep 17 00:00:00 2001
->>> +From: Zhao Liu <zhao1.liu@intel.com>
->>> +Date: Wed, 6 Aug 2025 14:27:14 +0800
->>> +Subject: [PATCH 2/2] guest_memory: Add is_write argument for
->>> + GuestMemory::try_access()
->>
->> This should be fine.  But Hanna is also working on IOMMU so maybe this won't
->> be needed!
-> 
-> I'm not sure what method could align with Hanna's design. If there's
-> another interface/method, I can have a try.
+--00000000000082bb00063bd63862
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-For example she already has similar fixes in 
-https://github.com/rust-vmm/vm-memory/pull/327:
+Hi
 
-https://github.com/rust-vmm/vm-memory/pull/327/commits/9bcd5ac9b9ae37d1fb421f86f0aff310411933af
-    Bytes: Fix read() and write()
+On Fri, Aug 8, 2025 at 12:08=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-    read() and write() must not ignore the `count` parameter: The
-    mappings passed into the `try_access()` closure are only valid for up
-    to `count` bytes, not more.
+> net_slirp_register_poll_sock() and net_slirp_unregister_poll_sock()
+> report WSAEventSelect() failure with error_setg(&error_warn, ...).
+>
+> I'm not familiar with liblirp, so I can't say whether the network
+> backend will work after such a failure.  If it doesn't, then this
+> should be an error.  If it does, then why bother the user with a
+> warning that isn't actionable, and likely confusing?
+>
 
-https://github.com/rust-vmm/vm-memory/pull/327/commits/2b83c72be656e5d46b83cb3a66d580e56cf33d5b
-     Bytes: Do not use to_region_addr()
+I don't know if this is recoverable either. It's probably not if the handle
+is invalid. I guess you could turn it into a non-fatal error.
 
-     When we switch to a (potentially) virtual memory model [...]
-     the one memory-region-referencing part we are going to keep is
-     `try_access()` [...] switch `Bytes::load()` and `store()` from using
-     `to_region_addr()` to `try_access()`.
 
-With some luck, your custom implementation of Bytes<GuestAddress> is not 
-needed once vm-memory supports iommu.
+>
+> Regardless of that, error_setg_win32(&error_warn, ...) is undesirable
+> just like error_setg(&error_fatal, ...) and error_setg(&error_abort,
+> ...)  are.  Replace by warn_report().
+>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>
 
-Paolo
+lgtm, thanks
+
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+
+
+> ---
+>  net/slirp.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/net/slirp.c b/net/slirp.c
+> index 9657e86a84..d75b09f16b 100644
+> --- a/net/slirp.c
+> +++ b/net/slirp.c
+> @@ -262,7 +262,8 @@ static void
+> net_slirp_register_poll_sock(slirp_os_socket fd, void *opaque)
+>      if (WSAEventSelect(fd, event_notifier_get_handle(&ctxt->notifier),
+>                         FD_READ | FD_ACCEPT | FD_CLOSE |
+>                         FD_CONNECT | FD_WRITE | FD_OOB) !=3D 0) {
+> -        error_setg_win32(&error_warn, WSAGetLastError(), "failed to
+> WSAEventSelect()");
+> +        warn_report("failed to WSAEventSelect(): %s",
+> +                    g_win32_error_message(WSAGetLastError()));
+>      }
+>  #endif
+>  }
+> @@ -271,7 +272,8 @@ static void
+> net_slirp_unregister_poll_sock(slirp_os_socket fd, void *opaque)
+>  {
+>  #ifdef WIN32
+>      if (WSAEventSelect(fd, NULL, 0) !=3D 0) {
+> -        error_setg_win32(&error_warn, WSAGetLastError(), "failed to
+> WSAEventSelect()");
+> +        warn_report("failed to WSAEventSelect()",
+> +                    g_win32_error_message(WSAGetLastError()));
+>      }
+>  #endif
+>  }
+> --
+> 2.49.0
+>
+>
+
+--00000000000082bb00063bd63862
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Aug 8, 20=
+25 at 12:08=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redha=
+t.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">net_slirp_register_poll_sock() and net_slirp_unregi=
+ster_poll_sock()<br>
+report WSAEventSelect() failure with error_setg(&amp;error_warn, ...).<br>
+<br>
+I&#39;m not familiar with liblirp, so I can&#39;t say whether the network<b=
+r>
+backend will work after such a failure.=C2=A0 If it doesn&#39;t, then this<=
+br>
+should be an error.=C2=A0 If it does, then why bother the user with a<br>
+warning that isn&#39;t actionable, and likely confusing?<br></blockquote><d=
+iv><br></div><div>I don&#39;t know if this is recoverable either. It&#39;s =
+probably not if the handle is invalid. I guess you could turn it into a non=
+-fatal error.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+<br>
+Regardless of that, error_setg_win32(&amp;error_warn, ...) is undesirable<b=
+r>
+just like error_setg(&amp;error_fatal, ...) and error_setg(&amp;error_abort=
+,<br>
+...)=C2=A0 are.=C2=A0 Replace by warn_report().<br>
+<br>
+Cc: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.co=
+m" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
+arget=3D"_blank">armbru@redhat.com</a>&gt;<br></blockquote><div><br></div><=
+div><div>lgtm, thanks</div><div><br></div><div>Reviewed-by: Marc-Andr=C3=A9=
+ Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.com">marcandre.lureau=
+@redhat.com</a>&gt;</div><div><br></div>=C2=A0</div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">
+---<br>
+=C2=A0net/slirp.c | 6 ++++--<br>
+=C2=A01 file changed, 4 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/net/slirp.c b/net/slirp.c<br>
+index 9657e86a84..d75b09f16b 100644<br>
+--- a/net/slirp.c<br>
++++ b/net/slirp.c<br>
+@@ -262,7 +262,8 @@ static void net_slirp_register_poll_sock(slirp_os_socke=
+t fd, void *opaque)<br>
+=C2=A0 =C2=A0 =C2=A0if (WSAEventSelect(fd, event_notifier_get_handle(&amp;c=
+txt-&gt;notifier),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 FD_READ | FD_ACCEPT | FD_CLOSE |<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 FD_CONNECT | FD_WRITE | FD_OOB) !=3D 0) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_win32(&amp;error_warn, WSAGetLastEr=
+ror(), &quot;failed to WSAEventSelect()&quot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 warn_report(&quot;failed to WSAEventSelect(): =
+%s&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_wi=
+n32_error_message(WSAGetLastError()));<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0#endif<br>
+=C2=A0}<br>
+@@ -271,7 +272,8 @@ static void net_slirp_unregister_poll_sock(slirp_os_soc=
+ket fd, void *opaque)<br>
+=C2=A0{<br>
+=C2=A0#ifdef WIN32<br>
+=C2=A0 =C2=A0 =C2=A0if (WSAEventSelect(fd, NULL, 0) !=3D 0) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_win32(&amp;error_warn, WSAGetLastEr=
+ror(), &quot;failed to WSAEventSelect()&quot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 warn_report(&quot;failed to WSAEventSelect()&q=
+uot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_wi=
+n32_error_message(WSAGetLastError()));<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0#endif<br>
+=C2=A0}<br>
+-- <br>
+2.49.0<br>
+<br>
+</blockquote></div></div>
+
+--00000000000082bb00063bd63862--
 
 
