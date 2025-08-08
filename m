@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E358C87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 17:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 078E8C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 17:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukQUW-0008Ic-Iy; Fri, 08 Aug 2025 13:02:52 -0400
+	id 1ukQXP-00030c-JA; Fri, 08 Aug 2025 13:05:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukQUV-0008Hr-4U
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:02:51 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukQUS-0000qz-Oa
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:02:50 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-7e6399d0654so182058785a.0
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 10:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754672567; x=1755277367; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hX1EdMERcc/cpXmk877A92VJUK6N0YpUh3j1jQLfqcs=;
- b=KKGOab0UHM1WAdoJUeml7T3FK/HId+LlZUoEWSh6FlFITsiFT9xP4Nk6qpqfduC4YW
- OnBHnQrMlWDd2C8BGgF18vImmoS05O4vh79LySoN3hEvJnNmE10XK97i/VjMbp311/ZX
- T6Bwc71YXkRm6UzwDHn0B+e1AgNHIw5O9u2gqLyMmiF3AHmGLGvBMCJyskj4ADdiGWtc
- 6nN5eYtClc7fXmfO2BvWQZncuilYuNjLbgCug05IaVY9BnM+e3f3bMlHfkKochsQhlcx
- 6VWBs6WOdyX1OgJc6huK4bp/QGiprGanAo9lyoMy3eIWg/JGs0v1DGxbmw3Bcg+EP9d3
- +SmA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukQXN-0002yt-9y
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:05:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukQXK-0001Kt-AC
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:05:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754672744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vQt+CNI6Lv7EOnlvVxpwbQ+XsxjORiU+LOFIMzTVBhU=;
+ b=LLe3I3xmbNInPy5hTcLVFc9x28GR7GeOdnMwMxUBSuKqan3rs3FGlHlmJxRsCFIO+EmrWS
+ vAutNj4ZQcX/rwMSpcfPAc+/IlkEAbYT3N6QC40WROeaETHZSaZnHtFoC2VB6F2Dp6hE3E
+ q/4Ji9ZEmXwVwwKn3ihyazWmfJrO9Ec=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-394-DKNE8aMSNJaSpw53073BfA-1; Fri, 08 Aug 2025 13:05:43 -0400
+X-MC-Unique: DKNE8aMSNJaSpw53073BfA-1
+X-Mimecast-MFC-AGG-ID: DKNE8aMSNJaSpw53073BfA_1754672743
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-70e73d3c474so36688337b3.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 10:05:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754672567; x=1755277367;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hX1EdMERcc/cpXmk877A92VJUK6N0YpUh3j1jQLfqcs=;
- b=V36Gm84rVeQN+Abc3yKdgTXD9pn6G8K6ocA6BLxvOFI4l2GTlv8NPwMkfu45hS+gFM
- 3bsv4CrQAZdtBIDrRhveghZebnat/FtSsgeOgAGWQk3/5yISyqnsO8jZzC7aRTsoCydj
- 48fhGwlA5W4bY9VT7ZVwb7mnXdHL+osB8KrvlSeAHrzblXkirrHsaGT5h7nCH/OUwtIf
- AcLhPtP2x0UYBeJ8tGMirpymCka76FaJr/4/9+ZLTHZdjeSddKmxPQ5x7OuzcNvZpTXN
- /zFmgNtCWh2hGKsuJz88ZYcl4qRrLHgzlB69JABRIpQfG3cy2VH1fWeVyoSZyl4ODVuu
- 5YfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzx7sQE5UsslN9YjYGVwfSCSmTk8kHk2UpG6y5/0XQtgbQkoQWyTiYOf5YMGf+93J47a3GT4RF+ZYo@nongnu.org
-X-Gm-Message-State: AOJu0Yz7ZVolkiZ51NSW+NjZKWYlWBRRahgFOc2YqzBYFBDdsRSyrcsq
- uoz4QEDlCn2Pia1PPRv67JTfViclVv52A0L5j1TVBmkMRlwBrU+Ml9Y7BR85o3nRSzk=
-X-Gm-Gg: ASbGnctd/2nN92b2rnHzX7/nAJbyUaKXk/45XKYRoeNDsmuehT0XRq9cUDNHh5GIR6H
- Xy+kHJpyh1SPbx69XR8P2aJ1mMpj6ghS97czp1/388JFV50Ccu/B8bdeQWCtranzFZWjAS1uxfO
- 6AYWt7mkwq/oNaYqJMqEf6SGjXHzRNkCPsSpDc3Bi9aQowCsIlT2GQ8dr9v/gh3AlYEqzlHxMmg
- QVmlI0/zCnp4jQVJ+RcwWSWiD2mNdp81gf3JAw8kDvEM4bmHOSBQ2t8Vm5Mr9NqA52Au7tP8Md0
- eVqP+qbmpqJLrods+pQlfmnpUet1LPivexwqoluWH4AUG/5fmm5e4tvfU9n6ymMgwJRLv06NtJZ
- tArH5wooK1nT7FvSUef/1VbDUCIh0ER2BDjjj7lwa63c/0Z513c//Mrz57YGz1umluw==
-X-Google-Smtp-Source: AGHT+IGHdhNKzbMLa9GOycImQ554pJR7E07y23DfDRD27WaQbu8H1SVOOutCpCJDo6KSUxwhu7lwIw==
-X-Received: by 2002:a05:620a:40ce:b0:7e3:46da:9e12 with SMTP id
- af79cd13be357-7e82c7b3df9mr621629585a.57.1754672566849; 
- Fri, 08 Aug 2025 10:02:46 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e67f5cd509sm1146499785a.40.2025.08.08.10.02.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 10:02:46 -0700 (PDT)
-Message-ID: <18b51ea3-abea-4a1e-ae48-43bf12bb9afc@linaro.org>
-Date: Fri, 8 Aug 2025 19:02:42 +0200
+ d=1e100.net; s=20230601; t=1754672743; x=1755277543;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vQt+CNI6Lv7EOnlvVxpwbQ+XsxjORiU+LOFIMzTVBhU=;
+ b=GYe5bpPrjk5dn9csvKUyqk29dnVTlYCgfxwOlzsANwa/UNcQrGH7kTs8T0ABno/VUb
+ vYQOoT2kilZJpwIDFd89Q6uTgC2CygjwSfTLGIw/z1CZI7LGf9eHrqlM9FkBPP/o2boU
+ MxN40NRttP2iezaGZO/vtGtQl//JgG7ovzAjMKmKBZxDihZPPzMNZLsdx5rmgI7klDWM
+ rizA8bZZTmsO8oJXnNlg26YsSQP93z30aCA70kTnCqc8PCAelrmbC8z7WFxzamSaUuaX
+ j/tIa691VNhhteFSwrblERm/9SP+b617zUnylQmYx4ejbEb2pB/qFnweVOct3DYmdAfX
+ 3kOw==
+X-Gm-Message-State: AOJu0Yw7KKH09DkPI7Cag+Lf1rQohxQ8rLc2icy5In/1UIVgw5hmY/xL
+ T6FKbUTLif++NVQywkdCyS+tz0EF5tKGCRqiSQa7SC7f5gtpKGygjbLvq+bh93Rz/CsLIHcY3lp
+ 2vU3f2zppL3Z1nY1ZhEttFYxCYDpV1HtkT33vWGi6U/71AMN1swHn8ZIo
+X-Gm-Gg: ASbGncu7oZ1L3THIWV/agTztrxED42HIfJMNOnYNidUuzAbktHb8K7E6cNA7N2+MHcR
+ fIgYNlLAR+NHRtoHvutAOyZYdst9iqpfUhX5a1V0ce4rGwU+HiWUNLHdJICnSHuG9iHkH4tbvjp
+ P4l3KxecTbv2Dwb39HA8GOPlQSmFCF8k6qxCmGZbValE4xd17hW5CJSZEv8WRw0qaBljybrLnWb
+ g8AE4p6+bGRxivMup2rnqlOxlPiNmxkaGOnOQXE/AdQ7221/gAPoIGhhaaq+oo7fTwl+64H85Rk
+ JzRjkn+XmMsv5uEl1G+fLJBE+Sgf69YB
+X-Received: by 2002:a05:690c:6d13:b0:71a:18fb:6eaa with SMTP id
+ 00721157ae682-71bf0cedbc2mr44917327b3.3.1754672742483; 
+ Fri, 08 Aug 2025 10:05:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUhyDVu0cLQUuQ43PjXootakVZJ03zT+ulg+S4/cBvNhXSnN1aYagRkumlCxEjnB70tiUoBQ==
+X-Received: by 2002:a05:690c:6d13:b0:71a:18fb:6eaa with SMTP id
+ 00721157ae682-71bf0cedbc2mr44916747b3.3.1754672742019; 
+ Fri, 08 Aug 2025 10:05:42 -0700 (PDT)
+Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-71b5a5cc216sm53278607b3.73.2025.08.08.10.05.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Aug 2025 10:05:41 -0700 (PDT)
+Date: Fri, 8 Aug 2025 13:05:28 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH 3/4] migration: Make listen thread joinable
+Message-ID: <aJYuWKjb8ij7NRx6@x1.local>
+References: <20250807114922.1013286-1-jmarcin@redhat.com>
+ <20250807114922.1013286-4-jmarcin@redhat.com>
+ <aJUTO0n9NyIWaFNj@x1.local>
+ <2svq64am2z4dr7q7x2jozlgzhiwluzi3je3f4acjylxqyzbxml@mnqscmlofjro>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 03/14] target/riscv: Add MIPS P8700 CPU
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
-References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
- <20250717093833.402237-4-djordje.todorovic@htecgroup.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250717093833.402237-4-djordje.todorovic@htecgroup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=philmd@linaro.org; helo=mail-qk1-x732.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2svq64am2z4dr7q7x2jozlgzhiwluzi3je3f4acjylxqyzbxml@mnqscmlofjro>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,44 +108,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/7/25 11:38, Djordje Todorovic wrote:
-> Introduce P8700 CPU by MIPS.
+On Fri, Aug 08, 2025 at 01:08:39PM +0200, Juraj Marcin wrote:
+> Hi Peter,
 > 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->   target/riscv/cpu-qom.h      |  1 +
->   target/riscv/cpu.c          | 15 +++++++++++++++
->   target/riscv/cpu_vendorid.h |  1 +
->   3 files changed, 17 insertions(+)
+> On 2025-08-07 16:57, Peter Xu wrote:
+> > On Thu, Aug 07, 2025 at 01:49:11PM +0200, Juraj Marcin wrote:
+> > > From: Juraj Marcin <jmarcin@redhat.com>
+> > > 
+> > > This patch allows joining the migration listen thread. This is done in
+> > > preparation for the introduction of "postcopy-setup" state at the
+> > > beginning of a postcopy migration, when destination can fail gracefully
+> > > and source side then resume to a running state.
+> > > 
+> > > In case of such failure, to gracefully perform all cleanup in the main
+> > > migration thread, we need to wait for the listen thread to exit, which
+> > > can be done by joining it.
+> > > 
+> > > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> > > ---
+> > >  migration/migration.c | 1 +
+> > >  migration/savevm.c    | 2 +-
+> > >  2 files changed, 2 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/migration/migration.c b/migration/migration.c
+> > > index e5ce2940d5..8174e811eb 100644
+> > > --- a/migration/migration.c
+> > > +++ b/migration/migration.c
+> > > @@ -901,6 +901,7 @@ process_incoming_migration_co(void *opaque)
+> > >               * Postcopy was started, cleanup should happen at the end of the
+> > >               * postcopy thread.
+> > >               */
+> > > +            qemu_thread_detach(&mis->listen_thread);
+> > >              trace_process_incoming_migration_co_postcopy_end_main();
+> > >              goto out;
+> > >          }
+> > > diff --git a/migration/savevm.c b/migration/savevm.c
+> > > index fabbeb296a..d2360be53c 100644
+> > > --- a/migration/savevm.c
+> > > +++ b/migration/savevm.c
+> > > @@ -2217,7 +2217,7 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
+> > >      mis->have_listen_thread = true;
+> > >      postcopy_thread_create(mis, &mis->listen_thread,
+> > >                             MIGRATION_THREAD_DST_LISTEN,
+> > > -                           postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
+> > > +                           postcopy_ram_listen_thread, QEMU_THREAD_JOINABLE);
+> > 
+> > This is good; I actually forgot it used to be detached..
+> > 
+> > Instead of proactively detach it above, could we always properly join it
+> 
+> However, after the main thread finishes loading device state from the
+> package, process_incoming_migration_co() exits, and IIUC main thread is
+> then no longer occupied with migration. So, if we should instead join
+> the listen thread, we probably should yield the coroutine until the
+> listen thread can be joined, so we are not blocking the main thread?
 
+Or could we schedule a bottom half at the end of
+postcopy_ram_listen_thread() to join itself?  We could move something over
+into the BH:
 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index e584bdc5ac..401c0f6c7d 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -3180,6 +3180,21 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->           .cfg.max_satp_mode = VM_1_10_SV39,
->       ),
->   
+    ... join() ...
+    mis->have_listen_thread = false;
+    migration_incoming_state_destroy();
+    object_unref(OBJECT(migr));
 
-Can we add the datasheet link here?
+> 
+> > (and hopefully every migration thread)?  Then we could drop patch 1 too.
+> 
+> If I haven't missed any, there are no detached migration threads except
+> listen and get dirty rate threads.
 
-        /* https://mips.com/products/hardware/p8700/ */
+Yep.
 
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MIPS_P8700, TYPE_RISCV_VENDOR_CPU,
-> +        .misa_mxl_max = MXL_RV64,
-> +        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
-> +        .priv_spec = PRIV_VERSION_1_12_0,
-> +        .cfg.max_satp_mode = VM_1_10_SV48,
-> +        .cfg.ext_zifencei = true,
-> +        .cfg.ext_zicsr = true,
-> +        .cfg.mmu = true,
-> +        .cfg.pmp = true,
-> +        .cfg.ext_zba = true,
-> +        .cfg.ext_zbb = true,
-> +        .cfg.marchid = 0x8000000000000201,
-> +        .cfg.mvendorid = MIPS_VENDOR_ID,
-> +    ),
+From mgmt pov, IMHO it's always good we create joinable threads.  But we
+can leave the calc_dirty_rate thread until necessary.
+
+-- 
+Peter Xu
 
 
