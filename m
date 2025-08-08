@@ -4,115 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF9EC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0282BC87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukQPm-0003L7-HI; Fri, 08 Aug 2025 12:57:58 -0400
+	id 1ukQR8-0004KN-Ep; Fri, 08 Aug 2025 12:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ukQPc-0003Jj-Tm; Fri, 08 Aug 2025 12:57:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ukQPb-0008EN-0b; Fri, 08 Aug 2025 12:57:48 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578EVFiv022100;
- Fri, 8 Aug 2025 16:57:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=cmltrdRDz0C8zf0bdzt8TeeVBZVdgTVZzvkdbh8v+OY=; b=h4WHatkhvlhC
- ZDRxQlfUWkeCVE/Kr0A5/jFX9OQJqcAsKHIvxItC69ia/+tYn8NfWU1uz3t6e/1f
- hDc9FCps1RWXTtSZ5GJ4dl52E8d1UqBbJxjs1g6ABxWYmxiFCY0WoCqyH0SlqmND
- MrXwGNQQpCPywJD1kLIANEXzMMKgFTXPOBqWlcqNEHejqYMfYMaMQFfz0axYSBEJ
- /Po1t2825L9WUvgGo0oF7sQWSQxxbIsTXaJlMEipNvgir3Dn1aNx0RvCsfm8zzYx
- c2jwov/pHNzUfCjRjd7/PZyzMNfAVgL/oxhIghhteESZIgdjBLc3kYurhoDurr5B
- 33H5tMRo1Q==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dk2n8pya-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Aug 2025 16:57:36 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 578GrjpV021654;
- Fri, 8 Aug 2025 16:57:36 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dk2n8py4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Aug 2025 16:57:36 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 578FBZur020626;
- Fri, 8 Aug 2025 16:57:35 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48bpwn6fq5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Aug 2025 16:57:35 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 578GvYXI26084088
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 8 Aug 2025 16:57:34 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 10E8C58058;
- Fri,  8 Aug 2025 16:57:34 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 529D458059;
- Fri,  8 Aug 2025 16:57:33 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  8 Aug 2025 16:57:33 +0000 (GMT)
-Message-ID: <7fd16019aa7400e024bf1fcbcd1246cc1dbaea1b.camel@linux.ibm.com>
-Subject: Re: [PATCH] ppc/xive2: Fix integer overflow warning in
- xive2_redistribute()
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Gautam Menghani <gautam@linux.ibm.com>, clg@kaod.org, npiggin@gmail.com,
- kowal@linux.ibm.com, ganeshgr@linux.ibm.com, harshpb@linux.ibm.com
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Date: Fri, 08 Aug 2025 11:57:32 -0500
-In-Reply-To: <20250808100917.37006-1-gautam@linux.ibm.com>
-References: <20250808100917.37006-1-gautam@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukQR6-0004Jp-LM
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:59:20 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukQR4-0000Fm-7m
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:59:20 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-23dc5bcf49eso27293665ad.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:59:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754672357; x=1755277157; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2nPUc/cS2pxEqi04MAq9UpFX1qPVPuGkxcuFQsCA2FM=;
+ b=gz3CzgMLxZ0qoV9AKImviYtoQQp27DsfoDHOR0npZTw6o5LISYXbFv7sy9rjxIiFWS
+ fvlsrISs2MOWXd3OfSTbvFQZ15fqCdeZV9XZHwtKs6Dqf/whbCcn27EIWfTXGvz0QeCn
+ CYSytQtWWRrEU9WiCp941vHlQVkweq6MEbCL7EVGrvx6mlPUedreXEka77bcrK9qeKsM
+ qxxHlW6iLxsPokz1cKGa3WHbyk7wAMoUho1OYioQjNp0/epnRtgysdnXsPEIY0c21KRj
+ sSLoc0RW1gSwIwCuinpUCOCzq3aIZBUKs/HxeHbu6RPA3ApxKkn5GwL21JGTnkd4kC6M
+ Xokw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754672357; x=1755277157;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2nPUc/cS2pxEqi04MAq9UpFX1qPVPuGkxcuFQsCA2FM=;
+ b=vDdamon9Oqt3OfTAnYwFgvIPAbXV4bkvVp7gzvdSnZsUzauTjF9LFZa+ZVWbqzHq97
+ +A0iMjTLFXMttMxFWU4CLQgJychf+AUiE/e43DICOP7pDTAqFgNkCCh8UX+czMRYhBU7
+ IyR9mmHmQew3q0ZcttGprS81iTP1hagM4qPqj4grbpvh+DC8IBLMNplmpvVNTpae7Yap
+ 151jp03K0bpWk1X0JSFU+ydic+55AzpcEj0Hsk6Ygr0q+BJwjvMXqQN7+QdBSMBjjvS9
+ sRZ//NjWZlswfRZeJ/honyx3/0i9e40znfvegI6g+/4x6WYeJSG0z5Lvjs6rSdqHXSWf
+ J8yg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBUpNi7KYKE+cMNrAOfk/wkvPWxWdTvTsNU0UvSfb0+BHi7l3RJOmiCYVqvui3VomZN2eU+rHEKCrd@nongnu.org
+X-Gm-Message-State: AOJu0YyQMY/iedj4Sa+G3UFW+vjTi+1RbHrNnSk7+SszRZkR2SCprLoZ
+ bBTcOPZQ6F0MWdfYtk7OGQmcw9etuVrDP2woGOp6OzsVs+arf9kfGOjU3736eCuagY8=
+X-Gm-Gg: ASbGncuqLolLb1kwhb84PJgJtzaOSquOxTO2TZu6arF58QoGv0BvYK4h5fYNiuq+rrf
+ zO+dnJqoobmNdI7u9jOp5nUtuC2l1b6pIIURXcS+DytYBWnZdhenk0xaHAxfrv4xxecjZ2WQwFA
+ uUw4m2csgrmD7wRo8zq2kq0RFvbyquad+ieJuYF+CFo0IH2k3RvBunRcYpTSMfqVq4dLQMsRvKh
+ /4U+WBRk+YYhXqOrxZIH80aeWUmjQXqfv+s5/mXtj5kW9KobXVe3kvU/brS7JtQM2a1SO3P5/fQ
+ V/6bE12j1teubnDx8kzDgUCCDtX6McUK0jaaMKznoltBfghH5AkRzL6r7DDFfAMKoRzXYSPf6Sm
+ XxW1/hp02Xbek4t3p8cXhPd1GHxrf8gh0i8U=
+X-Google-Smtp-Source: AGHT+IFuTm1OrbUD2mo2QF8c+4ezRhN+mlkTiInBCMiIdjevQKyaiBn00NzC8uyUxM/lrPMCPuH+vg==
+X-Received: by 2002:a17:902:ef0a:b0:235:f459:69c7 with SMTP id
+ d9443c01a7336-242c225dbfemr62239995ad.52.1754672356583; 
+ Fri, 08 Aug 2025 09:59:16 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e8976faesm213355465ad.90.2025.08.08.09.59.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Aug 2025 09:59:16 -0700 (PDT)
+Message-ID: <1c44ecb4-c1fa-45d0-b8c7-7d4de6de8f9e@linaro.org>
+Date: Fri, 8 Aug 2025 09:59:15 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 9/9] contrib/plugins/uftrace: add documentation
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ rowan Hart <rowanbhart@gmail.com>, Gustavo Romero
+ <gustavo.romero@linaro.org>, =?UTF-8?Q?Alex_Benn_=C3=A9_e?=
+ <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
+ <20250808020702.410109-10-pierrick.bouvier@linaro.org>
+ <t0o659.1do94331ogqw5@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <t0o659.1do94331ogqw5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA4MDEzNyBTYWx0ZWRfX+F8Rbl4z0kVT
- 2Q77x0E0hiyvKCXVw348gcfMLT8PxCXrHGYBKnGSmpwn7guwveG5fDNfmfWDS2TrN5qT4Sdh/8o
- c7/MbMMwWpeh9lgXET9ZS/pl7q9/2QrSIQhkosuQJGXvTOCgToo2KexG0hyRD2aAbGHcPyASz/0
- nrCoDXvUPeq/53tfX8dRIE1XLpyCqNCPWty7DxviuEy0gprt5TpdAi+Od8RR/zrQapV+0NagJIh
- L2JW9Ql4sh++kZ6T+indyWf8mhl9E8FVCzn9dTGYkcZ6bz0apcA/ySBYEFvWWkAHNLVIAm1i+fv
- 6+Om0JpT4OOgNUcCTI/EokfIgFd4y68bET344KtkbTRoL6xt58qJruw24OeZrgAnxzPnJMCE2Xp
- 9weDPye5VVZlLr9o+8W7z27LTIK8bd+e5A38YFlis7E6WIUvkPCvlbR91yHRkfeyOu5TCFqr
-X-Proofpoint-GUID: NlPHwMULOpKu_b_GHz4uxLkuSHMfoYBZ
-X-Proofpoint-ORIG-GUID: 6sowt29E1DIlryE5cdmatTUDtuYtiqzr
-X-Authority-Analysis: v=2.4 cv=BNWzrEQG c=1 sm=1 tr=0 ts=68962c81 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=kmnn1oEFiaEaPxf70MkA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-08_05,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0
- phishscore=0 mlxscore=0 clxscore=1011 malwarescore=0 priorityscore=1501
- adultscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2507300000
- definitions=main-2508080137
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,98 +108,266 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-08-08 at 15:39 +0530, Gautam Menghani wrote:
-> Coverity reported an integer overflow warning in xive2_redistribute()
-> where the code does a left shift operation "0xffffffff << crowd". Fix the
-> warning by using a 64 byte integer type. Also refactor the calculation
-> into dedicated routines.
+On 8/8/25 2:46 AM, Manos Pitsidianakis wrote:
+> On Fri, 08 Aug 2025 05:07, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>> This documentation summarizes how to use the plugin, and present two
+>> examples of the possibilities offered by it, in system and user mode.
+>>
+>> As well, it explains how to rebuild and reproduce those examples.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>> docs/about/emulation.rst | 197 +++++++++++++++++++++++++++++++++++++++
+>> 1 file changed, 197 insertions(+)
+>>
+>> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+>> index 456d01d5b08..9ce47ac2712 100644
+>> --- a/docs/about/emulation.rst
+>> +++ b/docs/about/emulation.rst
+>> @@ -816,6 +816,203 @@ This plugin can limit the number of Instructions Per Second that are executed::
+>>        The lower the number the more accurate time will be, but the less efficient the plugin.
+>>        Defaults to ips/10
+>>
+>> +Uftrace
+>> +.......
+>> +
+>> +``contrib/plugins/uftrace.c``
+>> +
+>> +This plugin generates a binary trace compatible with
+>> +`uftrace <https://github.com/namhyung/uftrace>`_.
+>> +
+>> +Plugin supports aarch64 and x64, and works in user and system mode, allowing to
+>> +trace a system boot, which is not something possible usually.
 > 
-> Resolves: Coverity CID 1612608
-> Fixes: 555e446019f5 ("ppc/xive2: Support redistribution of group interrupts")
-> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-> ---
->  hw/intc/xive2.c | 45 +++++++++++++++++++++++++++++++--------------
->  1 file changed, 31 insertions(+), 14 deletions(-)
+> Now it is!
 > 
-> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-> index ee5fa26178..90fe9c883b 100644
-> --- a/hw/intc/xive2.c
-> +++ b/hw/intc/xive2.c
-> @@ -95,6 +95,35 @@ static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
->      }
->  }
->  
-> +static inline uint32_t xive2_nvgc_get_idx(uint32_t nvp_idx, uint8_t group)
-> +{
-> +    uint32_t nvgc_idx;
-> +
-> +    if (group > 0) {
-> +        nvgc_idx = (nvp_idx & (0xffffffffULL << group)) |
-> +                   ((1 << (group - 1)) - 1);
-> +    } else {
-> +        nvgc_idx = nvp_idx;
-> +    }
-> +
-> +    return nvgc_idx;
-> +}
-> +
-> +static inline uint8_t xive2_nvgc_get_blk(uint8_t nvp_blk, uint8_t crowd)
-> +{
-> +    uint8_t nvgc_blk;
-> +
-> +    if (crowd > 0) {
-> +        crowd = (crowd == 3) ? 4 : crowd;
-> +        nvgc_blk = (nvp_blk & (0xffffffffULL << crowd)) |
-> +                   ((1 << (crowd - 1)) - 1);
-> +    } else {
-> +        nvgc_blk = nvp_blk;
-> +    }
-> +
-> +    return nvgc_blk;
-> +}
-> +
->  uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
->                                           bool crowd,
->                                           uint8_t blk, uint32_t idx,
-> @@ -638,20 +667,8 @@ static void xive2_redistribute(Xive2Router *xrtr, XiveTCTX *tctx, uint8_t ring)
->  
->      trace_xive_redistribute(tctx->cs->cpu_index, ring, nvp_blk, nvp_idx);
->      /* convert crowd/group to blk/idx */
-> -    if (group > 0) {
-> -        nvgc_idx = (nvp_idx & (0xffffffff << group)) |
-> -                   ((1 << (group - 1)) - 1);
-> -    } else {
-> -        nvgc_idx = nvp_idx;
-> -    }
-> -
-> -    if (crowd > 0) {
-> -        crowd = (crowd == 3) ? 4 : crowd;
-> -        nvgc_blk = (nvp_blk & (0xffffffff << crowd)) |
-> -                   ((1 << (crowd - 1)) - 1);
-> -    } else {
-> -        nvgc_blk = nvp_blk;
-> -    }
-> +    nvgc_idx = xive2_nvgc_get_idx(nvp_idx, group);
-> +    nvgc_blk = xive2_nvgc_get_blk(nvp_blk, crowd);
->  
->      /* Use blk/idx to retrieve the NVGC */
->      if (xive2_router_get_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, &nvgc)) {
+>> +
+>> +In user mode, the memory mapping is directly copied from ``/proc/self/maps`` at
+>> +the end of execution. Uftrace should be able to retrieve symbols by itself,
+>> +without any additional step.
+>> +In system mode, the default memory mapping is empty, and you can generate
+>> +one (and associated symbols) using ``contrib/plugins/uftrace_symbols.py``.
+>> +Symbols must be present in ELF binaries.
+>> +
+>> +It tracks the call stack (based on frame pointer analysis). Thus, your program
+>> +and its dependencies must be compiled using ``-fno-omit-frame-pointer
+>> +-mno-omit-leaf-frame-pointer``. In 2024, `Ubuntu and Fedora enabled it by
+>> +default again on x64
+>> +<https://www.brendangregg.com/blog/2024-03-17/the-return-of-the-frame-pointers.html>`_.
+>> +On aarch64, this is less of a problem, as they are usually part of the ABI,
+>> +except for leaf functions. That's true for user space applications, but not
+>> +necessarily for bare metal code. You can read this `section
+>> +<uftrace_build_system_example>` to easily build a system with frame pointers.
+>> +
+>> +When tracing long scenarios (> 1 min), the generated trace can become very long,
+>> +making it hard to extract data from it. In this case, a simple solution is to
+>> +trace execution while generating a timestamped output log using
+>> +``qemu-system-aarch64 ... | ts "%s"``. Then, ``uftrace --time-range=start~end``
+>> +can be used to reduce trace for only this part of execution.
+>> +
+>> +Performance wise, overhead compared to normal tcg execution is around x5-x15.
+>> +
+>> +.. list-table:: Uftrace plugin arguments
+>> +  :widths: 20 80
+>> +  :header-rows: 1
+>> +
+>> +  * - Option
+>> +    - Description
+>> +  * - trace-privilege-level=[on|off]
+>> +    - Generate separate traces for each privilege level (Exception Level +
+>> +      Security State on aarch64, Rings on x64).
+>> +
+>> +.. list-table:: uftrace_symbols.py arguments
+>> +  :widths: 20 80
+>> +  :header-rows: 1
+>> +
+>> +  * - Option
+>> +    - Description
+>> +  * - elf_file [elf_file ...]
+>> +    - path to an ELF file. Use /path/to/file:0xdeadbeef to add a mapping offset.
+>> +  * - --prefix-symbols
+>> +    - prepend binary name to symbols
+>> +
+>> +Example user trace
+>> +++++++++++++++++++
+>> +
+>> +As an example, we can trace qemu itself running git::
+>> +
+>> +    $ ./build/qemu-aarch64 -plugin \
+>> +      build/contrib/plugins/libuftrace.so \
+>> +      ./build/qemu-aarch64 /usr/bin/git --help
+>> +
+>> +    # and generate a chrome trace directly
+>> +    $ uftrace dump --chrome | gzip > ~/qemu_aarch64_git_help.json.gz
+>> +
+>> +For convenience, you can download this trace `qemu_aarch64_git_help.json.gz
+>> +<https://fileserver.linaro.org/s/N8X8fnZ5yGRZLsT/download/qemu_aarch64_git_help.json.gz>`_.
+> 
+> We should be able to add static files in the docs/ folder that sphinx
+> html can link to for images and json. WDYT?
+>
 
-Thanks for fixing that, Gautam!  I was wondering, do we really need the
-inline keywords here? Maybe it's better to let the compiler decide if
-they should be inlined (which it probably will since they are only
-called by a single function in the same file)?
+Json is around 100MB, so I don't think we want to version that.
+For images, it's more debatable, but I anticipated (maybe wrongly) that 
+community would not like to see +1MB on qemu source code for doc images.
 
-Either way...
+My git-publish client was a bit worried too, despite my encouragements, 
+to try pushing a patch with a binary blob that will break half of the 
+people "custom" setups, and freeze the mailing list.
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+So, since the json have to be hosted externally, I thought it was not 
+the worst idea to keep images with it.
 
-Thanks,
+>> +Download it and open this trace on https://ui.perfetto.dev/. You can zoom in/out
+>> +using w,a,s,d keys. Some sequences taken from this trace:
+> 
+> You can use :kbd:`W` etc for nice key formatting
+> 
+>> +
+>> +- Loading program and its interpreter
+>> +
+>> +.. image:: https://fileserver.linaro.org/s/fie8JgX76yyL5cq/preview
+>> +   :height: 200px
+>> +
+>> +- open syscall
+>> +
+>> +.. image:: https://fileserver.linaro.org/s/rsXPTeZZPza4PcE/preview
+>> +   :height: 200px
+>> +
+>> +- TB creation
+>> +
+>> +.. image:: https://fileserver.linaro.org/s/GXY6NKMw5EeRCew/preview
+>> +   :height: 200px
+>> +
+>> +It's usually better to use ``uftrace record`` directly. However, tracing
+>> +binaries through qemu-user can be convenient when you don't want to recompile
+>> +them (``uftrace record`` requires instrumentation), as long as symbols are
+>> +present.
+>> +
+>> +Example system trace
+>> +++++++++++++++++++++
+>> +
+>> +A full trace example (chrome trace, from instructions below) generated from a
+>> +system boot can be found `here
+>> +<https://fileserver.linaro.org/s/WsemLboPEzo24nw/download/aarch64_boot.json.gz>`_.
+>> +Download it and open this trace on https://ui.perfetto.dev/. You can see code
+>> +executed for all privilege levels, and zoom in/out using w,a,s,d keys. You can
+>> +find below some sequences taken from this trace:
+>> +
+>> +- Two first stages of boot sequence in Arm Trusted Firmware (EL3 and S-EL1)
+>> +
+>> +.. image:: https://fileserver.linaro.org/s/kkxBS552W7nYESX/preview
+>> +   :height: 200px
+>> +
+>> +- U-boot initialization (until code relocation, after which we can't track it)
+>> +
+>> +.. image:: https://fileserver.linaro.org/s/LKTgsXNZFi5GFNC/preview
+>> +   :height: 200px
+>> +
+>> +- Stat and open syscalls in kernel
+>> +
+>> +.. image:: https://fileserver.linaro.org/s/dXe4MfraKg2F476/preview
+>> +   :height: 200px
+>> +
+>> +- Timer interrupt
+>> +
+>> +.. image:: https://fileserver.linaro.org/s/TM5yobYzJtP7P3C/preview
+>> +   :height: 200px
+>> +
+>> +- Poweroff sequence (from kernel back to firmware, NS-EL2 to EL3)
+>> +
+>> +.. image:: https://fileserver.linaro.org/s/oR2PtyGKJrqnfRf/preview
+>> +   :height: 200px
+>> +
+>> +Build and run system example
+>> +++++++++++++++++++++++++++++
+>> +
+>> +.. _uftrace_build_system_example:
+>> +
+>> +Building a full system image with frame pointers is not trivial.
+>> +
+>> +We provide a `simple way <https://github.com/pbo-linaro/qemu-linux-stack>`_ to
+>> +build an aarch64 system, combining Arm Trusted firmware, U-boot, Linux kernel
+>> +and debian userland. It's based on containers (``podman`` only) and
+>> +``qemu-user-static (binfmt)`` to make sure it's easily reproducible and does not depend
+>> +on machine where you build it.
+>> +
+>> +You can follow the exact same instructions for a x64 system, combining edk2,
+>> +Linux, and Ubuntu, simply by switching to
+>> +`x86_64 <https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64>`_ branch.
+>> +
+>> +To build the system::
+>> +
+>> +    # Install dependencies
+>> +    $ sudo apt install -y podman qemu-user-static
+>> +
+>> +    $ git clone https://github.com/pbo-linaro/qemu-linux-stack
+>> +    $ cd qemu-linux-stack
+>> +    $ ./build.sh
+>> +
+>> +    # system can be started using:
+>> +    $ ./run.sh /path/to/qemu-system-aarch64
+>> +
+>> +To generate a uftrace for a system boot from that::
+>> +
+>> +    # run true and poweroff the system
+>> +    $ env INIT=true ./run.sh path/to/qemu-system-aarch64 \
+>> +      -plugin path/to/contrib/plugins/libuftrace.so,trace-privilege-level=on
+>> +
+>> +    # generate symbols and memory mapping
+>> +    $ path/to/contrib/plugins/uftrace_symbols.py \
+>> +      --prefix-symbols \
+>> +      arm-trusted-firmware/build/qemu/debug/bl1/bl1.elf \
+>> +      arm-trusted-firmware/build/qemu/debug/bl2/bl2.elf \
+>> +      arm-trusted-firmware/build/qemu/debug/bl31/bl31.elf \
+>> +      u-boot/u-boot:0x60000000 \
+>> +      linux/vmlinux
+>> +
+>> +    # inspect trace with
+>> +    $ uftrace replay
+>> +
+>> +Uftrace allows to filter the trace, and dump flamegraphs, or a chrome trace.
+>> +This last one is very interesting to see visually the boot process::
+>> +
+>> +    $ uftrace dump --chrome > boot.json
+>> +    # Open your browser, and load boot.json on https://ui.perfetto.dev/.
+>> +
+>> +Long visual chrome traces can't be easily opened, thus, it might be
+>> +interesting to generate them around a particular point of execution::
+>> +
+>> +    # execute qemu and timestamp output log
+>> +    $ env INIT=true ./run.sh path/to/qemu-system-aarch64 \
+>> +      -plugin path/to/contrib/plugins/libuftrace.so,trace-privilege-level=on |&
+>> +      ts "%s" | tee exec.log
+>> +
+>> +    $ cat exec.log  | grep 'Run /init'
+>> +      1753122320 [   11.834391] Run /init as init process
+>> +      # init was launched at 1753122320
+>> +
+>> +    # generate trace around init execution (2 seconds):
+>> +    $ uftrace dump --chrome --time-range=1753122320~1753122322 > init.json
+>> +
+>> Other emulation features
+>> ------------------------
+>>
+>> -- 
+>> 2.47.2
+>>
+> 
+> 
+> Sounds comprehensive all in all. I will try to follow the instructions
+> and post a Tested-by
+>
 
-Glenn
+Thanks.
+You can try on our lab vm, as it's quite network intensive, between the 
+container creation, and sources download.
+
+> For the doc text:
+> 
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
