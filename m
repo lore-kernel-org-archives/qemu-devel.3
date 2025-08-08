@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74DE5C87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 17:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BA1C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 17:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukQXU-00033n-1t; Fri, 08 Aug 2025 13:05:56 -0400
+	id 1ukQg7-0007MJ-84; Fri, 08 Aug 2025 13:14:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=IoBu=2U=kaod.org=clg@ozlabs.org>)
- id 1ukQXQ-00030y-MB; Fri, 08 Aug 2025 13:05:52 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=IoBu=2U=kaod.org=clg@ozlabs.org>)
- id 1ukQXO-0001Ke-4u; Fri, 08 Aug 2025 13:05:52 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bz9QZ5ZTvz4xcZ;
- Sat,  9 Aug 2025 03:05:42 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bz9QW6132z4wbd;
- Sat,  9 Aug 2025 03:05:39 +1000 (AEST)
-Message-ID: <16df8d03-94a8-452b-a80a-97116e890eca@kaod.org>
-Date: Fri, 8 Aug 2025 19:05:37 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukQg5-00079W-F6
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:14:49 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukQg3-0002Sj-UC
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:14:49 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-24014cd385bso25900765ad.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 10:14:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754673286; x=1755278086; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PC7pyqqca3zOKfWHTrtPy17QNkLEZYu1x4vHEZfjDzU=;
+ b=UJqmV/mMrj78ZNcQ6a6l+QoXMTRqNGDzdmKZhnOFpYMr7tTArnld/D9sCSZKv6KvCG
+ xg7B402Y2ULwtLrMr2RTiT5FQPAcFSPdiUEKeR4MFcIfbSW01N38aoqQK4In9YJkUDQw
+ fJS4EoNQgBZsFLJUFpPZhDfKULwHWb4jBlCV5Lfy46BSjx+IxIAfVkU6df1lfwFE+mRb
+ U/hSmeNbAfSqFEE07s9SFEmjMiifoRktpOmw94zrSkwIPkClNBdYt7AzEKx/vk6VZ1kz
+ Jk+wMPNJHMMEU3WvYfw0810O9G2dUg4SGuA0peWMVMw5ThRrkb+EmOvsloAa/vor/Hic
+ iEyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754673286; x=1755278086;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PC7pyqqca3zOKfWHTrtPy17QNkLEZYu1x4vHEZfjDzU=;
+ b=xNzjwycimHExZK+XZcbsUfdASRLUsBMB6ztLYtD+s21v+anwHg2hjYJIKcqoZ8m6Zs
+ jyM8P1XtUIboweoxdjyOopEjT30Djb6FLv3yOImzWW9MWbgeTRhKlSPWMqbWhEC9T49O
+ kvos41yjWPsmGfQd2rfvt66aUvLZMhlM6s4EPQf2oO8MIqLIj0GyTa5ObSENU9iGD8fw
+ DgVj9k2S7UqIEJEa0nK11axa6FiZ7ZK3+I29T+IxRPRGXeqp+pPwwSpCE3TjnIqxC08v
+ zeVSsFF9l6G7ZhqTmCqy2Q/O6k3ERYwl0ze+66PbDAbHUgt9qZnRL05wTaCN3BcFXNzS
+ PE8w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUg/QScm1q7SjSw6lkofx76BeS8n01ciqX+hQRdSMwAyIFTRF0YHjAYtqO5xPhTCtpLw5c/dPmFIsQY@nongnu.org
+X-Gm-Message-State: AOJu0YxRGYrbk++UjbVXYk4/hsFoZHf0yGBeRL/hmGPZjUdYuKDzDw8Z
+ ZSZPy6NMM5huc7GVBS9pGrooBH71f1kDQszlk5nVPGJ+gRzeATe+rc7YkKW0+IsYnr8=
+X-Gm-Gg: ASbGncu9VScaHHrv2xww52E41SN3LaaAR9KoSTtsjlrqk7DX0qjXwA3ZEgOrouCTWoW
+ O2Uj0E0//dzgVXIscJDNxgextIcR3LL9XIx14T3mhhrBZyg2DlRmB2cr1VXrdpim/ZQ48h5DLgO
+ 7C7JBoD+yWuqaDd7Jda/Fj7l5fkUGfNGHsWmkej/BwjfqbDRBWocSloNkehE/N8PPdPEq1wl2EJ
+ 4jfkEb/M3lfVkDzdLmDIHMSjvFfJXaeo7oHR9VCKjw3Kpow+nIatc0wlGtgCUUHC5l1OAwzReaR
+ xuxpGDsmPwuXsZFLQu+OrQ/OnwpAUjNxJH2oHD4lzswEpgMWCSowcrDbew3I5MIrEQxzdfUzf/R
+ 9v74DTjPv+6fbkuaxTEQcCgK2LWIYE0P5Lb4=
+X-Google-Smtp-Source: AGHT+IF5E6Q38WsetPX4vGjTIp7+4v4tQn9kBod1/eK/qLw8gXZApqPEHPs5n/x6eUB0m0t0AU9H6g==
+X-Received: by 2002:a17:902:dacd:b0:240:5549:7094 with SMTP id
+ d9443c01a7336-242c200e82emr56046905ad.18.1754673286061; 
+ Fri, 08 Aug 2025 10:14:46 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e8ab3da8sm213752765ad.175.2025.08.08.10.14.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Aug 2025 10:14:45 -0700 (PDT)
+Message-ID: <96a27883-e02e-4d76-9dde-41ae1a19e0c3@linaro.org>
+Date: Fri, 8 Aug 2025 10:14:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/xive2: Fix integer overflow warning in
- xive2_redistribute()
-To: milesg@linux.ibm.com, Gautam Menghani <gautam@linux.ibm.com>,
- npiggin@gmail.com, kowal@linux.ibm.com, ganeshgr@linux.ibm.com,
- harshpb@linux.ibm.com
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20250808100917.37006-1-gautam@linux.ibm.com>
- <7fd16019aa7400e024bf1fcbcd1246cc1dbaea1b.camel@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <7fd16019aa7400e024bf1fcbcd1246cc1dbaea1b.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/4] gdbstub/aarch64: add CurrentEL register
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+References: <20250808-gdbstub-aarch64-pstate-regs-v1-0-14ba70be1b3d@linaro.org>
+ <20250808-gdbstub-aarch64-pstate-regs-v1-1-14ba70be1b3d@linaro.org>
+ <CAFEAcA-2Zt7HTDX_bdBHjJyQS7o=csE1x6eDymyEPkV3K+pXrg@mail.gmail.com>
+ <CAAjaMXbZK=n_HJGrmuGv1DZZ3AeaX7-fK-soFto4J=w-9=vdmQ@mail.gmail.com>
+ <6190716c-09da-4abe-94e5-2b713855f0e9@linaro.org>
+ <CAFEAcA-QcjtkAUUUGVvaUVrJBqP3NvSX0DuXQ==MGcPrjNtGQw@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA-QcjtkAUUUGVvaUVrJBqP3NvSX0DuXQ==MGcPrjNtGQw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=IoBu=2U=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,102 +112,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 18:57, Miles Glenn wrote:
-> On Fri, 2025-08-08 at 15:39 +0530, Gautam Menghani wrote:
->> Coverity reported an integer overflow warning in xive2_redistribute()
->> where the code does a left shift operation "0xffffffff << crowd". Fix the
->> warning by using a 64 byte integer type. Also refactor the calculation
->> into dedicated routines.
+On 8/8/25 9:14 AM, Peter Maydell wrote:
+> On Fri, 8 Aug 2025 at 17:11, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
 >>
->> Resolves: Coverity CID 1612608
->> Fixes: 555e446019f5 ("ppc/xive2: Support redistribution of group interrupts")
->> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
->> ---
->>   hw/intc/xive2.c | 45 +++++++++++++++++++++++++++++++--------------
->>   1 file changed, 31 insertions(+), 14 deletions(-)
+>> On 8/8/25 5:26 AM, Manos Pitsidianakis wrote:
+>>> On Fri, Aug 8, 2025 at 3:21 PM Peter Maydell <peter.maydell@linaro.org> wrote:
+>>>>
+>>>> On Fri, 8 Aug 2025 at 12:30, Manos Pitsidianakis
+>>>> <manos.pitsidianakis@linaro.org> wrote:
+>>>> The debugger already has this information in the 'cpsr'
+>>>> register, so it could implement convenience views of
+>>>> the subfields itself if it liked.
+>>>
+>>> Yep, but consider: it is a register, architecturally, so it's nice to
+>>> include it for consistency. It's redundant only because gdb has cpsr
+>>> which is not a register. So this is about more about being technically
+>>> correct than correcting an actual problem.
+>>>
 >>
->> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
->> index ee5fa26178..90fe9c883b 100644
->> --- a/hw/intc/xive2.c
->> +++ b/hw/intc/xive2.c
->> @@ -95,6 +95,35 @@ static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
->>       }
->>   }
->>   
->> +static inline uint32_t xive2_nvgc_get_idx(uint32_t nvp_idx, uint8_t group)
->> +{
->> +    uint32_t nvgc_idx;
->> +
->> +    if (group > 0) {
->> +        nvgc_idx = (nvp_idx & (0xffffffffULL << group)) |
->> +                   ((1 << (group - 1)) - 1);
->> +    } else {
->> +        nvgc_idx = nvp_idx;
->> +    }
->> +
->> +    return nvgc_idx;
->> +}
->> +
->> +static inline uint8_t xive2_nvgc_get_blk(uint8_t nvp_blk, uint8_t crowd)
->> +{
->> +    uint8_t nvgc_blk;
->> +
->> +    if (crowd > 0) {
->> +        crowd = (crowd == 3) ? 4 : crowd;
->> +        nvgc_blk = (nvp_blk & (0xffffffffULL << crowd)) |
->> +                   ((1 << (crowd - 1)) - 1);
->> +    } else {
->> +        nvgc_blk = nvp_blk;
->> +    }
->> +
->> +    return nvgc_blk;
->> +}
->> +
->>   uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
->>                                            bool crowd,
->>                                            uint8_t blk, uint32_t idx,
->> @@ -638,20 +667,8 @@ static void xive2_redistribute(Xive2Router *xrtr, XiveTCTX *tctx, uint8_t ring)
->>   
->>       trace_xive_redistribute(tctx->cs->cpu_index, ring, nvp_blk, nvp_idx);
->>       /* convert crowd/group to blk/idx */
->> -    if (group > 0) {
->> -        nvgc_idx = (nvp_idx & (0xffffffff << group)) |
->> -                   ((1 << (group - 1)) - 1);
->> -    } else {
->> -        nvgc_idx = nvp_idx;
->> -    }
->> -
->> -    if (crowd > 0) {
->> -        crowd = (crowd == 3) ? 4 : crowd;
->> -        nvgc_blk = (nvp_blk & (0xffffffff << crowd)) |
->> -                   ((1 << (crowd - 1)) - 1);
->> -    } else {
->> -        nvgc_blk = nvp_blk;
->> -    }
->> +    nvgc_idx = xive2_nvgc_get_idx(nvp_idx, group);
->> +    nvgc_blk = xive2_nvgc_get_blk(nvp_blk, crowd);
->>   
->>       /* Use blk/idx to retrieve the NVGC */
->>       if (xive2_router_get_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, &nvgc)) {
+>> I agree with Manos on this.
+>> As mentioned on a previous thread, cpsr is not even supposed to exist
+>> for aarch64. So adding architecturally defined registers, even if data
+>> is redundant with cpsr, should not be a problem.
+>> I'm sure gdb folks can understand this too.
 > 
-> Thanks for fixing that, Gautam!  I was wondering, do we really need the
-> inline keywords here? Maybe it's better to let the compiler decide if
-> they should be inlined (which it probably will since they are only
-> called by a single function in the same file)?
+> I'm not saying this is the wrong way to represent this.
+> I'm just saying we're not the only gdbstub in the world,
+> and it would be nice to have a wider discussion than just
+> QEMU folks so we are consistent about how we represent
+> PSTATE (including what we want to do about the new
+> bits that appear in the high 32 bits of an SPSR), before
+> we commit to any particular direction.
+>
 
-yes. the inline should be removed.
+Considering we have our own set of gdb xml, is that really important to 
+agree on pstate layout before we simply make those registers visible on 
+our side?
+The new registers added in this series on gdb/kgdb side at the moment, 
+so we don't really break anything.
 
-C.
+I agree it would be good to see this on gdb side, but my point is that 
+we are not necessarily stuck and we can make this visible without 
+waiting two releases. As well, it would be a good motivation to add this 
+on gdb showing QEMU already exposes this.
 
-
-> 
-> Either way...
-> 
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> 
-> Thanks,
-> 
-> Glenn
-> 
+> -- PMM
 
 
