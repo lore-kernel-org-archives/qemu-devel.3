@@ -4,74 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B092C87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 13:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6560FC87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 13:35:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukLp3-0007t6-QL; Fri, 08 Aug 2025 08:03:46 -0400
+	id 1ukNF5-0004cO-9I; Fri, 08 Aug 2025 09:34:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ukLnL-000385-MM
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:02:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ukLnJ-00077E-PW
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:01:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754654517;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XpmwOQHX1SgGpJskyx5fWBOPbTgrLh6qjQ11c8Kgzo8=;
- b=BXsr4bEpTMz0ZA2ORifgi2PcTXhb0pU7+FfNPqLX5HvahHDzPXiMiCiscW8gzb4jxzJgKk
- 0MgoDQJrMwJHLHPrmOYSL/NGPcP92uEIVhDm5Tnw519ff37ckmpgP2dyZ7rWmkDkbydpiA
- CkxayZmhqr1XyzUubuMUtW2jbVFG+wc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-GU4XYO6sML2Dxc5UUfB9Pg-1; Fri,
- 08 Aug 2025 08:01:55 -0400
-X-MC-Unique: GU4XYO6sML2Dxc5UUfB9Pg-1
-X-Mimecast-MFC-AGG-ID: GU4XYO6sML2Dxc5UUfB9Pg_1754654513
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 663BC180036E; Fri,  8 Aug 2025 12:01:53 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6770719560AD; Fri,  8 Aug 2025 12:01:51 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
- philmd@linaro.org, mtosatti@redhat.com
-Subject: [PATCH v3 04/10] hpet: move out main counter read into a separate
- block
-Date: Fri,  8 Aug 2025 14:01:31 +0200
-Message-ID: <20250808120137.2208800-5-imammedo@redhat.com>
-In-Reply-To: <20250808120137.2208800-1-imammedo@redhat.com>
-References: <20250808120137.2208800-1-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNEs-0004UN-DI
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 09:34:33 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNEo-0007Mf-Dw
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 09:34:28 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-458bdde7dedso14957755e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 06:34:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754660061; x=1755264861; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=e170LGFXn1rlJaN78yP9eVnF2Ri6sfI7ENjDPoXcdww=;
+ b=JBrzi+tPdUK+WVUe97h0gELy7BFXkvwimasT1NXURd4fbO3Ew/ONGipX1T9J8V+d6R
+ uCsQwci90/bP8n3Uzz2lCPdr/962J7KoPtcLiriQssK7SM3NWoK4RH3SYRdj/gry9tn3
+ v+ZXcyr+a8KyS/SB4gzoBDcFJfQ0nr5YsBxRC8k1lV7AWeI+hNLDCBEM+3qJunw6eyVD
+ Aqfcl+zyypDP1pJ9x3KSSA2AxHq34uZDn8+o5xRnD7NOzmXP9xeIh6s0dtjIWbS0reAm
+ SYy4OJyTbQbsql05RxcHgl4AuoyJO+phaMz6rrgHs+PC8MWFfRx8eFIZdh8y62XVE4AE
+ iF+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754660061; x=1755264861;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=e170LGFXn1rlJaN78yP9eVnF2Ri6sfI7ENjDPoXcdww=;
+ b=LSlTARO4L6LSj+cBG4LqtXsB+JLd2UJGiyCJaP54csPXSdeEf+mNXev6DNt75pqUQI
+ Fkw7/MsVBgqXcAcFgI6taG8wFYAOq/Yy9xZ+EdOwZO3bbcKOxl7Mc/stuQdphwY6HWSm
+ KRhygvBRBHlKjg17T/sY2DqpzkNdjNvzgirURdsYDEsDmhmaZdmDuXiofSEktsy8ohLe
+ WLvgyZH4eoA3f/tGgq5T8fI1QbleQjsr0PuwOdTFsDsIdaiF6UmyuGXMRomJas9LEozw
+ XOFwHO75t6G4xwS04qZ0v6n1oIYIKFYok2Jt7KgV9M3gK/eeaKa7g/g9rmEt05AGcoQp
+ sKCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBlKpR3f0TN6arADN/aOQkTkIaeSKLPIX+SGxXSq9q+p1VieWxOnu1JVY0W0V+SBHzF6eY0JTi+0jQ@nongnu.org
+X-Gm-Message-State: AOJu0YxqNWRjO6AK8HSbdCAOb6vmGWbz+3K1ae6qgXeWWjbdoL3MS8tx
+ BGYs2UpkvUwQIOr01z2d3WVNRkoAgpeC/mg06Mef2K/sqlVucTuMtvaPlRWvA/v/IZQ=
+X-Gm-Gg: ASbGnct/xawqoXJnUGiu6T4AJS//7ri3rry0bho3TTdhPt+i3OTdqoEYZpntSAxfwxP
+ NZs3X85qirU054G7ETx8NLYBM5XyqDIcOA/A1Xh0iLxgPCO6CAo4oYnmS28zh/j6vaYA+ETQurO
+ EpiA2Zshxga8Cf4mTXpAvFP94uKBiru8SGArWcdGwxs/Ioou+UymylGqQ3N+wNe08AL3Gaow407
+ 4OWcKVBXeBIWlCv5krF/mlA/VWkzFMOE+k5CbPXAmDRt8wR53CIGM2vpDTs5nj+ZfEqPD5xVJgh
+ 6dEu7zWDAPuqqwOjMNc/Xb33Fe/vvnMS7wekBrmvLFiXYyY/0HRUEC6l9x8Q+6fWIk+iWvVCm/i
+ PCTE+DxDWgiEXpbg6tFfC5Ptl1vMYTdNvxVArdovkWqtirF25Ab7EfUBXz8Rv79p1pg==
+X-Google-Smtp-Source: AGHT+IFlgYVZCum5aT/6nO/o0heDInm5TgPBGHB6k/QDaa+VzganUxVLOKqrUB0h8/zdixkz4XpnRA==
+X-Received: by 2002:a05:6000:144c:b0:3b8:ebfb:4592 with SMTP id
+ ffacd0b85a97d-3b900b57347mr2961413f8f.55.1754660060792; 
+ Fri, 08 Aug 2025 06:34:20 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e585430csm136220455e9.11.2025.08.08.06.34.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Aug 2025 06:34:19 -0700 (PDT)
+Message-ID: <5dc6784f-bbe8-4354-ab8a-4d8e6b0d1f39@linaro.org>
+Date: Fri, 8 Aug 2025 15:34:19 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v2 00/11] hw/sd: Fix SD cards in SPI mode
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell
+ <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Ben Dooks <ben.dooks@codethink.co.uk>, qemu-riscv@nongnu.org,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, Bin Meng <bmeng.cn@gmail.com>
+References: <20250804133406.17456-1-philmd@linaro.org>
+ <39982478-b3fb-46b0-bef0-c0839c123300@tls.msk.ru>
+ <9dc90489-9e74-4e00-8fc6-f97e3f425495@linaro.org>
+ <5b2dc427-f0db-4332-a997-fe0c82415acd@roeck-us.net>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5b2dc427-f0db-4332-a997-fe0c82415acd@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,60 +107,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow up patche will switch main counter read to
-lock-less mode. As preparation for that move relevant
-branch into a separate top level block to make followup
-patch cleaner/simplier by reducing contextual noise
-when lock-less read is introduced.
+On 7/8/25 18:06, Guenter Roeck wrote:
+> On Wed, Aug 06, 2025 at 09:22:46AM +0200, Philippe Mathieu-Daudé wrote:
+>> On 6/8/25 08:39, Michael Tokarev wrote:
+>>
+>>> Philippe, do you think this series is something which should
+>>> go to stable-10.0 (LTS) branch?  I'm not sure for the impact if
+>>> it is not applied, though, - what do we miss in this case?
+>>
+>> Only 2 machines use a SD card wired over SPI lines:
+>>
+>> $ git grep '"ssi-sd"'
+>> hw/arm/stellaris.c:1302:            sddev = ssi_create_peripheral(bus,
+>> "ssi-sd");
+>> hw/riscv/sifive_u.c:671:    sd_dev = ssi_create_peripheral(s->soc.spi2.spi,
+>> "ssi-sd");
+>> hw/sd/ssi-sd.c:70:#define TYPE_SSI_SD "ssi-sd"
+>>
+>> I don't know them enough to tell if they are that important. This
+>> isn't a security problem. The emulation of the transport (SPI) to the
+>> SD card being broken, guests can not access the emulated card.
+> 
+> With 10.1.0-rc2, trying to boot v6.16-11744-g9c389564fa8e on sifive_u, I get:
+> 
+> [    2.503619] riscv-pmu-sbi: 16 firmware and 18 hardware counters
+> [    2.503672] riscv-pmu-sbi: Perf sampling/filtering is not supported as sscof extension is not available
+> qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion `s->arglen > 0' failed.
+> 
+> This is without trying to boot from it. Oddly enough, booting from SD card
+> does work.
 
-no functional changes.
+This was a latent bug, thank you for the report.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
----
-v3:
-  * drop 'addr <= 0xff' as addr == HPET_COUNTER is sufficient
-     Peter Xu <peterx@redhat.com>
----
- hw/timer/hpet.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+I'll post a fix & test ASAP.
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index ab5aa59ae4..c776afc0f2 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -431,6 +431,16 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
-     addr &= ~4;
- 
-     QEMU_LOCK_GUARD(&s->lock);
-+    if (addr == HPET_COUNTER) {
-+        if (hpet_enabled(s)) {
-+            cur_tick = hpet_get_ticks(s);
-+        } else {
-+            cur_tick = s->hpet_counter;
-+        }
-+        trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
-+        return cur_tick >> shift;
-+    }
-+
-     /*address range of all global regs*/
-     if (addr <= 0xff) {
-         switch (addr) {
-@@ -438,14 +448,6 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
-             return s->capability >> shift;
-         case HPET_CFG:
-             return s->config >> shift;
--        case HPET_COUNTER:
--            if (hpet_enabled(s)) {
--                cur_tick = hpet_get_ticks(s);
--            } else {
--                cur_tick = s->hpet_counter;
--            }
--            trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
--            return cur_tick >> shift;
-         case HPET_STATUS:
-             return s->isr >> shift;
-         default:
--- 
-2.47.1
+Regards,
+
+Phil.
 
 
