@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BA1C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 17:16:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19462C87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 17:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukQg7-0007MJ-84; Fri, 08 Aug 2025 13:14:51 -0400
+	id 1ukQt2-00083Z-UG; Fri, 08 Aug 2025 13:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukQg5-00079W-F6
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:14:49 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1ukQt1-00082p-KS
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:28:11 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukQg3-0002Sj-UC
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:14:49 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-24014cd385bso25900765ad.0
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 10:14:47 -0700 (PDT)
+ id 1ukQsz-0004Wz-PA
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 13:28:11 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-31f017262d9so2000793a91.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 10:28:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754673286; x=1755278086; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754674088; x=1755278888; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PC7pyqqca3zOKfWHTrtPy17QNkLEZYu1x4vHEZfjDzU=;
- b=UJqmV/mMrj78ZNcQ6a6l+QoXMTRqNGDzdmKZhnOFpYMr7tTArnld/D9sCSZKv6KvCG
- xg7B402Y2ULwtLrMr2RTiT5FQPAcFSPdiUEKeR4MFcIfbSW01N38aoqQK4In9YJkUDQw
- fJS4EoNQgBZsFLJUFpPZhDfKULwHWb4jBlCV5Lfy46BSjx+IxIAfVkU6df1lfwFE+mRb
- U/hSmeNbAfSqFEE07s9SFEmjMiifoRktpOmw94zrSkwIPkClNBdYt7AzEKx/vk6VZ1kz
- Jk+wMPNJHMMEU3WvYfw0810O9G2dUg4SGuA0peWMVMw5ThRrkb+EmOvsloAa/vor/Hic
- iEyg==
+ bh=Bt0YmC+LVIpa/vI1OUxdKrDuHHBI/syGkJEznSRfivU=;
+ b=C+yHwClObdJF2vKAJda3gbg2V9/XC15gZPFvCcWKvmz4x3wQ9MwnFWFYFA5ZGW0HZM
+ KF1OYx413YCT8771rxanwGNfVGc6/g/ntOdTqvt8Gn21qCj7bMWCqiKlT9DJMNjpyDWs
+ h0qD24dTHs/9YxJ61R7FA4bHSvK+liuLeV9g+fHAp80t+n/aRV02dW5me8nWi8+bvwU4
+ FCKr2FXbpVs8TRu0R8hw9egFMCgOqXO3+gzFLRIMgKifTGWHJXJ7vevyWjPclZalNLhR
+ P0GLNBxMt3TciBE6NxsOdWI8+3hRj6Y8B6vBPeCKHMmp0rDMLuO4SLLuPsR/S8VHME+H
+ vcOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754673286; x=1755278086;
+ d=1e100.net; s=20230601; t=1754674088; x=1755278888;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PC7pyqqca3zOKfWHTrtPy17QNkLEZYu1x4vHEZfjDzU=;
- b=xNzjwycimHExZK+XZcbsUfdASRLUsBMB6ztLYtD+s21v+anwHg2hjYJIKcqoZ8m6Zs
- jyM8P1XtUIboweoxdjyOopEjT30Djb6FLv3yOImzWW9MWbgeTRhKlSPWMqbWhEC9T49O
- kvos41yjWPsmGfQd2rfvt66aUvLZMhlM6s4EPQf2oO8MIqLIj0GyTa5ObSENU9iGD8fw
- DgVj9k2S7UqIEJEa0nK11axa6FiZ7ZK3+I29T+IxRPRGXeqp+pPwwSpCE3TjnIqxC08v
- zeVSsFF9l6G7ZhqTmCqy2Q/O6k3ERYwl0ze+66PbDAbHUgt9qZnRL05wTaCN3BcFXNzS
- PE8w==
+ bh=Bt0YmC+LVIpa/vI1OUxdKrDuHHBI/syGkJEznSRfivU=;
+ b=BgbhcyeJQO7HU/um2OzEht1/DnuD4R6eEZQvD55vMioYyk17Xo8Kek8Y6VbOa/9lDu
+ MUu1lPA5Fy/UTlULTJbVW1bflup10pkXa9OjXuTd6KxKiJTrjyO1BH0q9KfomVJ8+C7t
+ P3iU3v+xvQO+M3JZnZfBpWZthVfDebODuhRHCnTDtQyuLws+FbMl7N+V6zh34XAGHLtn
+ HAFaBMiqdQGwn9+uaFvxGgRiM8+bM1ZGezgEyWGTO8CdgLvSff4HTcaRgBiUcSPQVNtn
+ y75DyS4GTDlTZiqT0m5ool+FoyVYOrljjhmuGFVtWr5I9XbLlWMqP3wPs3IrGHsTx9GY
+ 6F1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUg/QScm1q7SjSw6lkofx76BeS8n01ciqX+hQRdSMwAyIFTRF0YHjAYtqO5xPhTCtpLw5c/dPmFIsQY@nongnu.org
-X-Gm-Message-State: AOJu0YxRGYrbk++UjbVXYk4/hsFoZHf0yGBeRL/hmGPZjUdYuKDzDw8Z
- ZSZPy6NMM5huc7GVBS9pGrooBH71f1kDQszlk5nVPGJ+gRzeATe+rc7YkKW0+IsYnr8=
-X-Gm-Gg: ASbGncu9VScaHHrv2xww52E41SN3LaaAR9KoSTtsjlrqk7DX0qjXwA3ZEgOrouCTWoW
- O2Uj0E0//dzgVXIscJDNxgextIcR3LL9XIx14T3mhhrBZyg2DlRmB2cr1VXrdpim/ZQ48h5DLgO
- 7C7JBoD+yWuqaDd7Jda/Fj7l5fkUGfNGHsWmkej/BwjfqbDRBWocSloNkehE/N8PPdPEq1wl2EJ
- 4jfkEb/M3lfVkDzdLmDIHMSjvFfJXaeo7oHR9VCKjw3Kpow+nIatc0wlGtgCUUHC5l1OAwzReaR
- xuxpGDsmPwuXsZFLQu+OrQ/OnwpAUjNxJH2oHD4lzswEpgMWCSowcrDbew3I5MIrEQxzdfUzf/R
- 9v74DTjPv+6fbkuaxTEQcCgK2LWIYE0P5Lb4=
-X-Google-Smtp-Source: AGHT+IF5E6Q38WsetPX4vGjTIp7+4v4tQn9kBod1/eK/qLw8gXZApqPEHPs5n/x6eUB0m0t0AU9H6g==
-X-Received: by 2002:a17:902:dacd:b0:240:5549:7094 with SMTP id
- d9443c01a7336-242c200e82emr56046905ad.18.1754673286061; 
- Fri, 08 Aug 2025 10:14:46 -0700 (PDT)
+ AJvYcCUBOv50rbxoLqnqpg3hMHAo/v7MR4kjvI4y1TXt6YVDz2rWgccbDa0al+826vcaqEcXzBc0B4A7Bmiw@nongnu.org
+X-Gm-Message-State: AOJu0Ywgx3MWk2eKFEzNMHneyBD0YIYMW+Z2vkasST+jBKg1zU0ySsJ3
+ KkXj9NxU6tb08GQr6ODxP0DoK3pPOPXFkYPR8w260SLq5jBBXyDP2hweL91aZyEo27o=
+X-Gm-Gg: ASbGncvykSJbIt7PQMRNKp0BhHZ1MuFb5wEDRuB8eGaEkJIitbMJTD1YEZPjSumzHYf
+ +BmouGBZ3X9gUqnpmx58ncz0g+eVwYPpWok6MkUr4IPPk5ZBnVNTmPvkvXDwZbEwRQdaGutsKe1
+ Us++gdDiJf++jXmhVuk0j59ccuHzH/7rFG7Vldz3YAxmGzUWYZF55ctPsVMUqPST1CLlHc1KBI3
+ TbVb3qpejoJc4nfKyL4tU+5Kfv1Wq7zHpdShH9KU1v0EjI/y4Sgjm5qOgJze+Tu5JYG9yOMb1J2
+ /JhZ5cxnFRjU/wFy0DCU6blFC6R3pKTRn/MFCbZuddSiVSz2MMOYJDtGKdmziIuHZ19XDMxeEcJ
+ dZEOY6q9741Bl8gAW4+ShHyAbLNhuNDCgHo8=
+X-Google-Smtp-Source: AGHT+IG7wxZVDQWd5oN++JVpq1muxlOEC7B9542LpFBDQjQZ4BcjOeDlbFMFwnU/gmoZppJLeB2r7g==
+X-Received: by 2002:a17:90b:2685:b0:2fa:157e:c790 with SMTP id
+ 98e67ed59e1d1-321839d6666mr5942665a91.5.1754674087918; 
+ Fri, 08 Aug 2025 10:28:07 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e8ab3da8sm213752765ad.175.2025.08.08.10.14.45
+ 98e67ed59e1d1-31f63da6141sm25462613a91.1.2025.08.08.10.28.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 10:14:45 -0700 (PDT)
-Message-ID: <96a27883-e02e-4d76-9dde-41ae1a19e0c3@linaro.org>
-Date: Fri, 8 Aug 2025 10:14:44 -0700
+ Fri, 08 Aug 2025 10:28:07 -0700 (PDT)
+Message-ID: <b92e7af8-c15c-4fc7-ade8-603d30568202@linaro.org>
+Date: Fri, 8 Aug 2025 10:28:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] gdbstub/aarch64: add CurrentEL register
+Subject: Re: [PATCH v5 1/9] contrib/plugins/uftrace: skeleton file
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
-References: <20250808-gdbstub-aarch64-pstate-regs-v1-0-14ba70be1b3d@linaro.org>
- <20250808-gdbstub-aarch64-pstate-regs-v1-1-14ba70be1b3d@linaro.org>
- <CAFEAcA-2Zt7HTDX_bdBHjJyQS7o=csE1x6eDymyEPkV3K+pXrg@mail.gmail.com>
- <CAAjaMXbZK=n_HJGrmuGv1DZZ3AeaX7-fK-soFto4J=w-9=vdmQ@mail.gmail.com>
- <6190716c-09da-4abe-94e5-2b713855f0e9@linaro.org>
- <CAFEAcA-QcjtkAUUUGVvaUVrJBqP3NvSX0DuXQ==MGcPrjNtGQw@mail.gmail.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ rowan Hart <rowanbhart@gmail.com>, Gustavo Romero
+ <gustavo.romero@linaro.org>, =?UTF-8?Q?Alex_Benn_=C3=A9_e?=
+ <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
+ <20250808020702.410109-2-pierrick.bouvier@linaro.org>
+ <t0o24e.37nl0tbfod6ih@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CAFEAcA-QcjtkAUUUGVvaUVrJBqP3NvSX0DuXQ==MGcPrjNtGQw@mail.gmail.com>
+In-Reply-To: <t0o24e.37nl0tbfod6ih@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,51 +111,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 9:14 AM, Peter Maydell wrote:
-> On Fri, 8 Aug 2025 at 17:11, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
+On 8/8/25 1:14 AM, Manos Pitsidianakis wrote:
+> On Fri, 08 Aug 2025 05:06, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>> We define a scoreboard that will hold our data per cpu. As well, we
+>> define a buffer per cpu that will be used to read registers and memories
+>> in a thread-safe way.
 >>
->> On 8/8/25 5:26 AM, Manos Pitsidianakis wrote:
->>> On Fri, Aug 8, 2025 at 3:21 PM Peter Maydell <peter.maydell@linaro.org> wrote:
->>>>
->>>> On Fri, 8 Aug 2025 at 12:30, Manos Pitsidianakis
->>>> <manos.pitsidianakis@linaro.org> wrote:
->>>> The debugger already has this information in the 'cpsr'
->>>> register, so it could implement convenience views of
->>>> the subfields itself if it liked.
->>>
->>> Yep, but consider: it is a register, architecturally, so it's nice to
->>> include it for consistency. It's redundant only because gdb has cpsr
->>> which is not a register. So this is about more about being technically
->>> correct than correcting an actual problem.
->>>
+>> For now, we just instrument all instructions with an empty callback.
 >>
->> I agree with Manos on this.
->> As mentioned on a previous thread, cpsr is not even supposed to exist
->> for aarch64. So adding architecturally defined registers, even if data
->> is redundant with cpsr, should not be a problem.
->> I'm sure gdb folks can understand this too.
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>> contrib/plugins/uftrace.c   | 74 +++++++++++++++++++++++++++++++++++++
+>> contrib/plugins/meson.build |  3 +-
+>> 2 files changed, 76 insertions(+), 1 deletion(-)
+>> create mode 100644 contrib/plugins/uftrace.c
+>>
+>> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+>> new file mode 100644
+>> index 00000000000..d60c1077496
+>> --- /dev/null
+>> +++ b/contrib/plugins/uftrace.c
+>> @@ -0,0 +1,74 @@
+>> +/*
+>> + * Copyright (C) 2025, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> + *
+>> + * Generates a trace compatible with uftrace (similar to uftrace record).
+>> + * https://github.com/namhyung/uftrace
+>> + *
+>> + * See docs/about/emulation.rst|Uftrace for details and examples.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include <qemu-plugin.h>
+>> +#include <glib.h>
+>> +
+>> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+>> +
+>> +typedef struct Cpu {
+>> +    GByteArray *buf;
+>> +} Cpu;
+>> +
+>> +static struct qemu_plugin_scoreboard *score;
+>> +
+>> +static void track_callstack(unsigned int cpu_index, void *udata)
+>> +{
+>> +}
+>> +
+>> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>> +{
+>> +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
+>> +
+>> +    for (int i = 0; i < n_insns; i++) {
 > 
-> I'm not saying this is the wrong way to represent this.
-> I'm just saying we're not the only gdbstub in the world,
-> and it would be nice to have a wider discussion than just
-> QEMU folks so we are consistent about how we represent
-> PSTATE (including what we want to do about the new
-> bits that appear in the high 32 bits of an SPSR), before
-> we commit to any particular direction.
+> s/int i/size_t i/
+> 
+>> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> 
+> This can return NULL,
+> 
+>> +
+>> +        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
+> 
+> And this would lead to a NULL dereference (it performs insn->vaddr
+> access)
+> 
+>> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
+>> +                QEMU_PLUGIN_CB_R_REGS,
+>> +                (void *) pc);
+> 
+> Hm indentation got broken here, should be
+> 
+> 
+> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
+> +                                               QEMU_PLUGIN_CB_R_REGS,
+> +                                               (void *)pc);
+> 
+>> +
+>> +    }
+>> +}
+>> +
+>> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+>> +{
+>> +    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
+>> +    cpu->buf = g_byte_array_new();
+>> +}
+>> +
+>> +static void vcpu_end(unsigned int vcpu_index)
+>> +{
+>> +    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
+>> +    g_byte_array_free(cpu->buf, true);
+>> +    memset(cpu, 0, sizeof(Cpu));
+> 
+> Nitpick, cpu->buf = NULL; is easier to understand (suggestion)
 >
 
-Considering we have our own set of gdb xml, is that really important to 
-agree on pstate layout before we simply make those registers visible on 
-our side?
-The new registers added in this series on gdb/kgdb side at the moment, 
-so we don't really break anything.
+Looking at this twice, it does not scale with other commits, which will 
+free other members. That's why there was a memset in the first place.
+Sorry, I rebuilt intermediate commits by reverting various parts, so it 
+may result in suck quirks.
 
-I agree it would be good to see this on gdb side, but my point is that 
-we are not necessarily stuck and we can make this visible without 
-waiting two releases. As well, it would be a good motivation to add this 
-on gdb showing QEMU already exposes this.
-
-> -- PMM
+>> +}
+>> +
+>> +static void at_exit(qemu_plugin_id_t id, void *data)
+>> +{
+>> +    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
+>> +        vcpu_end(i);
+>> +    }
+>> +
+>> +    qemu_plugin_scoreboard_free(score);
+>> +}
+>> +
+>> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>> +                                           const qemu_info_t *info,
+>> +                                           int argc, char **argv)
+>> +{
+>> +    score = qemu_plugin_scoreboard_new(sizeof(Cpu));
+>> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+>> +    qemu_plugin_register_atexit_cb(id, at_exit, NULL);
+>> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>> +
+>> +    return 0;
+>> +}
+>> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+>> index 1876bc78438..7eb3629c95d 100644
+>> --- a/contrib/plugins/meson.build
+>> +++ b/contrib/plugins/meson.build
+>> @@ -1,5 +1,6 @@
+>> contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
+>> -                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
+>> +                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
+>> +                   'uftrace']
+>> if host_os != 'windows'
+>>    # lockstep uses socket.h
+>>    contrib_plugins += 'lockstep'
+>> -- 
+>> 2.47.2
+>>
+> 
+> If no other comments rise for this patch, you can add my r-b after
+> fixing the NULL check:
+> 
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
