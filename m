@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F305C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31BA7C87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:04:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukLoV-0006cv-Sw; Fri, 08 Aug 2025 08:03:17 -0400
+	id 1ukNhx-0004Yr-3f; Fri, 08 Aug 2025 10:04:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ukLnd-0004Hr-CS
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:02:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1ukNht-0004Y9-V9
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:04:29 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ukLnb-0007CP-Hc
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:02:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754654534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/TjsEiU6idgYODMC5HW9snh3H7FKlCoSoz/xZ8Ri2Fo=;
- b=iedkf7y8Jx38y2ymDsbNqqLFF4XMTiMlPeG+0hUC0QTiy4PxQ5XHzOYSyM6v78wUoQxmZ5
- HjS1RKE4oo0be+eT7XE2mVeKUQirgkrW7OfEy/SKBKDqnRg1PcSn1JjSbwvsrrUVBWTn2M
- MLC9P1oCH7a2sRevTSwRFRBmAxs5SmA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-89tdTXCqMRSY6zuAZuSwWg-1; Fri,
- 08 Aug 2025 08:02:11 -0400
-X-MC-Unique: 89tdTXCqMRSY6zuAZuSwWg-1
-X-Mimecast-MFC-AGG-ID: 89tdTXCqMRSY6zuAZuSwWg_1754654530
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 88C931800297; Fri,  8 Aug 2025 12:02:10 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E63DC19560B0; Fri,  8 Aug 2025 12:02:07 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
- philmd@linaro.org, mtosatti@redhat.com
-Subject: [PATCH v3 10/10] tcg: move interrupt caching and single step masking
- closer to user
-Date: Fri,  8 Aug 2025 14:01:37 +0200
-Message-ID: <20250808120137.2208800-11-imammedo@redhat.com>
-In-Reply-To: <20250808120137.2208800-1-imammedo@redhat.com>
-References: <20250808120137.2208800-1-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1ukNhn-0005D9-V0
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:04:29 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bz5Hr33LGz6L4vy;
+ Fri,  8 Aug 2025 21:59:36 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6817A14022E;
+ Fri,  8 Aug 2025 22:04:15 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (7.182.85.172) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 8 Aug 2025 16:04:15 +0200
+Received: from frapeml500007.china.huawei.com ([7.182.85.172]) by
+ frapeml500007.china.huawei.com ([7.182.85.172]) with mapi id 15.01.2507.039;
+ Fri, 8 Aug 2025 16:04:15 +0200
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>, "armbru@redhat.com"
+ <armbru@redhat.com>, "dave@stgolabs.net" <dave@stgolabs.net>, Linuxarm
+ <linuxarm@huawei.com>
+Subject: RE: [PATCH v5 1/7] hw/cxl/events: Update for rev3.2 common event
+ record format
+Thread-Topic: [PATCH v5 1/7] hw/cxl/events: Update for rev3.2 common event
+ record format
+Thread-Index: AQHcB7IbgHJy8x5snE+W5U6ovLZH5LRYn+mAgAArEnA=
+Date: Fri, 8 Aug 2025 14:04:15 +0000
+Message-ID: <891c3fc930fa45cc9a3b01ac028a4c15@huawei.com>
+References: <20250807154346.2209-1-shiju.jose@huawei.com>
+ <20250807154346.2209-2-shiju.jose@huawei.com>
+ <20250808142907.000022f4@huawei.com>
+In-Reply-To: <20250808142907.000022f4@huawei.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.195.244.202]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,73 +80,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiju Jose <shiju.jose@huawei.com>
+From:  Shiju Jose via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-in cpu_handle_interrupt() the only place where cached interrupt_request
-might have effect is when CPU_INTERRUPT_SSTEP_MASK applied and
-cached interrupt_request handed over to cpu_exec_interrupt() and
-need_replay_interrupt().
 
-Simplify code by moving interrupt_request caching and CPU_INTERRUPT_SSTEP_MASK
-masking into the block where it actually matters and drop reloading cached value
-from CPUState:interrupt_request as the rest of the code directly uses
-CPUState:interrupt_request.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
----
- accel/tcg/cpu-exec.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+>-----Original Message-----
+>From: Jonathan Cameron <jonathan.cameron@huawei.com>
+>Sent: 08 August 2025 14:29
+>To: Shiju Jose <shiju.jose@huawei.com>
+>Cc: qemu-devel@nongnu.org; linux-cxl@vger.kernel.org; armbru@redhat.com;
+>dave@stgolabs.net; Linuxarm <linuxarm@huawei.com>
+>Subject: Re: [PATCH v5 1/7] hw/cxl/events: Update for rev3.2 common event
+>record format
+>
+>On Thu, 7 Aug 2025 16:43:40 +0100
+><shiju.jose@huawei.com> wrote:
+>
+>> From: Shiju Jose <shiju.jose@huawei.com>
+>>
+>> CXL spec 3.2 section 8.2.9.2.1 Table 8-55, Common Event Record format
+>> has updated with optional Maintenance Operation Subclass, LD ID and ID
+>> of the device head information.
+>>
+>> Add updates for the above optional parameters in the related CXL
+>> events reporting and in the QMP commands to inject CXL events.
+>>
+>> In qapi/cxl.json added fields of Common Event Record to a common
+>> structure CXLCommonEventBase.
+>>
+>> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>Hi Shiju,
+>
+>Sign off chain doesn't make sense. Drop my SoB.  I guess this is because i=
+t went
+>through my tree at some stage and hence was tagged by me. Given it's your
+>patch, you should drop that from new versions.
+Hi Jonathan,
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 1269c2c6ba..82867f456c 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -779,13 +779,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-     qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
- 
-     if (unlikely(cpu_test_interrupt(cpu, ~0))) {
--        int interrupt_request;
-         bql_lock();
--        interrupt_request = cpu->interrupt_request;
--        if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
--            /* Mask out external interrupts for this step. */
--            interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
--        }
-         if (cpu_test_interrupt(cpu, CPU_INTERRUPT_DEBUG)) {
-             cpu->interrupt_request &= ~CPU_INTERRUPT_DEBUG;
-             cpu->exception_index = EXCP_DEBUG;
-@@ -804,6 +798,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-             return true;
-         } else {
-             const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
-+            int interrupt_request = cpu->interrupt_request;
- 
-             if (cpu_test_interrupt(cpu, CPU_INTERRUPT_RESET)) {
-                 replay_interrupt();
-@@ -812,6 +807,11 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-                 return true;
-             }
- 
-+            if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
-+                /* Mask out external interrupts for this step. */
-+                interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
-+            }
-+
-             /*
-              * The target hook has 3 exit conditions:
-              * False when the interrupt isn't processed,
-@@ -836,9 +836,6 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-                 cpu->exception_index = -1;
-                 *last_tb = NULL;
-             }
--            /* The target hook may have updated the 'cpu->interrupt_request';
--             * reload the 'interrupt_request' value */
--            interrupt_request = cpu->interrupt_request;
-         }
- #endif /* !CONFIG_USER_ONLY */
-         if (cpu_test_interrupt(cpu, CPU_INTERRUPT_EXITTB)) {
--- 
-2.47.1
+Thanks. I will do.
 
+>
+>Jonathan
+>
+>
+>> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+
+Thanks,
+Shiju
 
