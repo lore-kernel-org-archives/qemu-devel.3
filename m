@@ -4,94 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE57C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 08:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C464BC87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 08:31:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukIR4-0006Je-3a; Fri, 08 Aug 2025 04:26:46 -0400
+	id 1ukIUk-0000mq-Vy; Fri, 08 Aug 2025 04:30:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ukIR2-0006IU-Cg
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:26:44 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ukIR0-0000z2-2B
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:26:44 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-af90fd52147so287411566b.3
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 01:26:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754641600; x=1755246400; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=F7MnF48tkyi8ftEE3o79HV8m3sxNi/ax7oXpAjnZ1nI=;
- b=HnZ7fdf7nSzsbBwVKbwbuJ/ud9y0t35ljxy6jt55iP3ODnV/U07Y/0DPJLrItLsFox
- aycf26ejW7IyyRmO8nrm6rZKWie4sc2KkNFA10ldsonoFuf38GhaO0T6JD692bV9kk/z
- 491Im5Uc9EzmndChr1zvZKqpTO+hINLh4bZ6Zz6KIAzjGCqDCMmq6ANyAas+zcpZelEm
- g5j77NQku4cCdzRve3612mZ//oWXo6kz8JOGyvCNEPnNodrZsvR+SP1fivz9LEWsMPIO
- CFLmrzixwRIm7Ecw5uO6A56nDAYx2CMaQgoocMdJeS2bhXYmLCRplgaIQDLkVp9gEA41
- /Log==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754641600; x=1755246400;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F7MnF48tkyi8ftEE3o79HV8m3sxNi/ax7oXpAjnZ1nI=;
- b=J4CnHwOHIyV99oITr07yRLgupNj8fdDWIqSZrnHsaYK9qXboKwb/P2RY2UKSxxu3Hq
- H9PpuEL4pJE95OZV9cRm3v9680cO9Qu+ygcAM1BYa1+mJuw2YaejQ51URR2Kv51lOTdq
- zZoa5goazQ59UdmZpY9zlMXKVmP0UvPXWBknMejpjRIB7wTsKU2NdPWoWjOmUB3xa3Aa
- X5sNl3+n71a3pj5TPNU2cvyZlylaconjwyFP5Ret43P/wOLvEQqwhzStC6RS/5qqVVqp
- Frn9tj/hJXuk+9hDoilaPNXfP6T31D4yPA2a9uPPbxHWnoKS4DsJi4BsTCWF4kRxUX5I
- A6Xw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWiPyzEbC7mvIRCI29rdFFDJ6L7DLR7xiOD3Iynl9N+pbqRgn9/hHxIK9a+hmBIpNZ4Ct/pf45WNlxE@nongnu.org
-X-Gm-Message-State: AOJu0YxjePAg4RueslBpsB3Yw1bjJoF56MXeg4kIGkUE99rjgAA3v2cQ
- xue2QpKlsuacgEQD90Cf+f2B8oQpXzhsmLypMEtUCzeny8vLuslj5rYl4eSytTKYOOw=
-X-Gm-Gg: ASbGncs6oarl6ggITET2Q0Q+Ho6N8ZN/HCXfZWJyuEXrCenxBt6q0kWRGlGPFLZkDlZ
- QnJn3nrdjU42wrM6Y3eLRXtc1CxTVG5KL97VlTN2tkYdyQyYwrht5iDBpBfg27yhf2CjVaTbs+v
- gxWLoFS6CiY+35fIvx37e9dLg1jsj1ES4HRx2FvEr8Y6AkAXfdcJ4AdRY03V9iCmR3wHA+HeMeT
- GTLhWlNQ3kKuhZHsb5H8HTSeFNGvdQLH/KnYbjyd0SY3kut5PS8D8hXC4QHCm0aFYMsV9mWquEy
- nSay29IyOxJAfXaCMOVj9LDJ4fhGVzj8/5si0SJWw+MzvuTTK06AewdBX7Cb+4FxKtsFe++4u4f
- HBFoMlH+0ANDL4ii5XzzE0uhsLAfFW6fDohk0pyW9Ra3gDxvHOcbCSCafKtkiyzOd55psLOIA
-X-Google-Smtp-Source: AGHT+IHbt7t4uXKPbRS1gB8grVinQYi36HM/i12e/oQYw9DTxmcFUAjrBV0J+9wwawzjJQoR/TL2Hg==
-X-Received: by 2002:a17:907:968f:b0:ae0:ab3f:36b5 with SMTP id
- a640c23a62f3a-af9c63754e6mr178808766b.4.1754641599908; 
- Fri, 08 Aug 2025 01:26:39 -0700 (PDT)
-Received: from meli-email.org (athedsl-4440194.home.otenet.gr.
- [79.129.176.114]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af91a0a3b77sm1453714966b.51.2025.08.08.01.26.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Aug 2025 01:26:39 -0700 (PDT)
-Date: Fri, 08 Aug 2025 11:14:27 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- rowan Hart <rowanbhart@gmail.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ukIUg-0000lg-8p; Fri, 08 Aug 2025 04:30:30 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ukIUa-0001Xl-Sj; Fri, 08 Aug 2025 04:30:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1754641825; x=1786177825;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=yrhL5k7zVIWjKaha/1QRBHtx5U77Qus6rDuG/DIbP24=;
+ b=XPHtcbg0rcHTP5MAAVpwyJhqzg2DYul4w7q+zoiuV8TU6xZB49Job/+8
+ //RDtE9BUL2bF+FEODpMxe+sy/WVY+CIADXq1dpVyALTXyl9zyUEgwNdj
+ J7KfRxd9CySMUZyAVvQYO2XfBkOaf3tI79jihTRgwo/kHevNCmh5Z+XRe
+ y2uKBWgi4zHkazBy0RV3BqvwQMsPpFiyklj3pluHDZXYqfa3yTn1Bp/VK
+ zl4FBgIyR3aNnnpR6coh3NVIrRBNA4RFOrGa9FttutY99XkelqPMxfAPO
+ mSBH5JwhaCQy1qZp+7xH8PutR0gBjf3cB7/6P60/GBBZr+VW/t7hSNugt g==;
+X-CSE-ConnectionGUID: yilFcF56QjGYTxnL8H1aqQ==
+X-CSE-MsgGUID: s/2svWl3TACcf2hS3OnHIw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="79544167"
+X-IronPort-AV: E=Sophos;i="6.17,274,1747724400"; d="scan'208";a="79544167"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Aug 2025 01:30:19 -0700
+X-CSE-ConnectionGUID: yIOsdR8QR66LZJcukeAalw==
+X-CSE-MsgGUID: g1M1XugyQvmoFlQfvPoE4w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,274,1747724400"; d="scan'208";a="165663049"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 08 Aug 2025 01:30:15 -0700
+Date: Fri, 8 Aug 2025 16:51:55 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 1/9] contrib/plugins/uftrace: skeleton file
-User-Agent: meli/0.8.12
-References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
- <20250808020702.410109-2-pierrick.bouvier@linaro.org>
-In-Reply-To: <20250808020702.410109-2-pierrick.bouvier@linaro.org>
-Message-ID: <t0o24e.37nl0tbfod6ih@linaro.org>
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Chuanxiao Dong <chuanxiao.dong@intel.com>
+Subject: Re: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU
+ memory backend
+Message-ID: <aJW6qxSHsJEGoGG2@intel.com>
+References: <20250807123027.2910950-1-zhao1.liu@intel.com>
+ <20250807123027.2910950-11-zhao1.liu@intel.com>
+ <d144ae17-afe3-4578-a875-79c1d6a4d723@redhat.com>
+ <aJWyt+4JRzqhfIzU@intel.com>
+ <d3cf543f-c0aa-421e-8151-b554e77aaa40@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x631.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d3cf543f-c0aa-421e-8151-b554e77aaa40@redhat.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,139 +92,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 08 Aug 2025 05:06, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->We define a scoreboard that will hold our data per cpu. As well, we
->define a buffer per cpu that will be used to read registers and memories
->in a thread-safe way.
->
->For now, we just instrument all instructions with an empty callback.
->
->Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->---
-> contrib/plugins/uftrace.c   | 74 +++++++++++++++++++++++++++++++++++++
-> contrib/plugins/meson.build |  3 +-
-> 2 files changed, 76 insertions(+), 1 deletion(-)
-> create mode 100644 contrib/plugins/uftrace.c
->
->diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
->new file mode 100644
->index 00000000000..d60c1077496
->--- /dev/null
->+++ b/contrib/plugins/uftrace.c
->@@ -0,0 +1,74 @@
->+/*
->+ * Copyright (C) 2025, Pierrick Bouvier <pierrick.bouvier@linaro.org>
->+ *
->+ * Generates a trace compatible with uftrace (similar to uftrace record).
->+ * https://github.com/namhyung/uftrace
->+ *
->+ * See docs/about/emulation.rst|Uftrace for details and examples.
->+ *
->+ * SPDX-License-Identifier: GPL-2.0-or-later
->+ */
->+
->+#include <qemu-plugin.h>
->+#include <glib.h>
->+
->+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
->+
->+typedef struct Cpu {
->+    GByteArray *buf;
->+} Cpu;
->+
->+static struct qemu_plugin_scoreboard *score;
->+
->+static void track_callstack(unsigned int cpu_index, void *udata)
->+{
->+}
->+
->+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->+{
->+    size_t n_insns = qemu_plugin_tb_n_insns(tb);
->+
->+    for (int i = 0; i < n_insns; i++) {
+On Fri, Aug 08, 2025 at 10:17:51AM +0200, Paolo Bonzini wrote:
+> Date: Fri, 8 Aug 2025 10:17:51 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU
+>  memory backend
+> 
+> On 8/8/25 10:17, Zhao Liu wrote:
+> > (+Hanna: I would like to align with Hanna on 0002.diff patch :-))
+> > 
+> > On Thu, Aug 07, 2025 at 03:59:26PM +0200, Paolo Bonzini wrote:
+> > > Date: Thu, 7 Aug 2025 15:59:26 +0200
+> > > From: Paolo Bonzini <pbonzini@redhat.com>
+> > > Subject: Re: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU
+> > >   memory backend
+> > > 
+> > > On 8/7/25 14:30, Zhao Liu wrote:
+> > > > Add 2 patches to support QEMU memory backend implementation.
+> > > > 
+> > > > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > > > ---
+> > > >    .../packagefiles/vm-memory-0.16-rs/0001.diff  |  81 +++++++++++++
+> > > >    .../packagefiles/vm-memory-0.16-rs/0002.diff  | 111 ++++++++++++++++++
+> > > >    subprojects/vm-memory-0.16-rs.wrap            |   2 +
+> > > >    3 files changed, 194 insertions(+)
+> > > >    create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+> > > >    create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0002.diff
+> > > > 
+> > > > diff --git a/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+> > > > new file mode 100644
+> > > > index 000000000000..037193108d45
+> > > > --- /dev/null
+> > > > +++ b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+> > > > @@ -0,0 +1,81 @@
+> > > > +From 298f8ba019b2fe159fa943e0ae4dfd3c83ee64e0 Mon Sep 17 00:00:00 2001
+> > > > +From: Zhao Liu <zhao1.liu@intel.com>
+> > > > +Date: Wed, 6 Aug 2025 11:31:11 +0800
+> > > > +Subject: [PATCH 1/2] guest_memory: Add a marker tarit to implement
+> > > > + Bytes<GuestAddress> for GuestMemory
+> > > 
+> > > This was a bit surprising.  Maybe this is something where GuestMemory needs
+> > > some extra flexibility.
+> > 
+> > At least, the default GuestMemory::try_access() need to re-implement in
+> > QEMU, and this is because GuestMemory::iter() doesn't fit for QEMU's
+> > case, and GuestMemory::to_region_addr() also needs adjustment to support
+> > complete translation.
+> > 
+> > For details,
+> > 
+> > 1) iter() - QEMU has implemented the two-level "page" walk in
+> >     `phys_page_find`, which is more efficient than linear iteration.
+> > 
+> > 2) to_region_addr() - it's function signature is:
+> > 
+> >      fn to_region_addr(
+> >          &self,
+> > 	addr: GuestAddress
+> >      ) -> Option<(&Self::R, MemoryRegionAddress)>;
+> > 
+> > but QEMU currentlt wants:
+> > 
+> >      fn translate(
+> >          &self,
+> >          addr: GuestAddress,
+> >          len: GuestUsize,
+> >          is_write: bool,
+> >      ) -> Option<(&MemoryRegionSection, MemoryRegionAddress, GuestUsize)>
+> > 
+> > `is_write` is mainly about IOMMU (and read-only case, but that could be
+> > workaround I think).
+> > 
+> > And the 3rd member `GuestUsize` of (&MemoryRegionSection,
+> > MemoryRegionAddress, GuestUsize) indicates the remianing size, which is
+> > used to detect cross-region case. Maybe this `GuestUsize` is not
+> > necessary in its return, since we can check the size of `MemoryRegionSection`
+> > later. But this would be a bit repetitive.
+> > 
+> > But at least, this marker trait is acceptable, right? :-)
+> > 
+> > The marker trait for GuestMemoryRegion is introduced at commit 66ff347
+> > ("refactor: use matches! instead of to_string() for tests").
+> > 
+> > > > @@ -0,0 +1,111 @@
+> > > > +From 2af7ea12a589fde619690e5060c01710cb6f2e0e Mon Sep 17 00:00:00 2001
+> > > > +From: Zhao Liu <zhao1.liu@intel.com>
+> > > > +Date: Wed, 6 Aug 2025 14:27:14 +0800
+> > > > +Subject: [PATCH 2/2] guest_memory: Add is_write argument for
+> > > > + GuestMemory::try_access()
+> > > 
+> > > This should be fine.  But Hanna is also working on IOMMU so maybe this won't
+> > > be needed!
+> > 
+> > I'm not sure what method could align with Hanna's design. If there's
+> > another interface/method, I can have a try.
+> 
+> For example she already has similar fixes in
+> https://github.com/rust-vmm/vm-memory/pull/327:
+> 
+> https://github.com/rust-vmm/vm-memory/pull/327/commits/9bcd5ac9b9ae37d1fb421f86f0aff310411933af
+>    Bytes: Fix read() and write()
+> 
+>    read() and write() must not ignore the `count` parameter: The
+>    mappings passed into the `try_access()` closure are only valid for up
+>    to `count` bytes, not more.
+> 
+> https://github.com/rust-vmm/vm-memory/pull/327/commits/2b83c72be656e5d46b83cb3a66d580e56cf33d5b
+>     Bytes: Do not use to_region_addr()
+> 
+>     When we switch to a (potentially) virtual memory model [...]
+>     the one memory-region-referencing part we are going to keep is
+>     `try_access()` [...] switch `Bytes::load()` and `store()` from using
+>     `to_region_addr()` to `try_access()`.
+> 
+> With some luck, your custom implementation of Bytes<GuestAddress> is not
+> needed once vm-memory supports iommu.
 
-s/int i/size_t i/
+Nice! I took a quick look, and these patches seem to be shaped as what
+this RFC wants. I'll give them a try.
 
->+        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+Thanks,
+Zhao
 
-This can return NULL,
-
->+
->+        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
-
-And this would lead to a NULL dereference (it performs insn->vaddr 
-access)
-
->+        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
->+                QEMU_PLUGIN_CB_R_REGS,
->+                (void *) pc);
-
-Hm indentation got broken here, should be 
-
-
-+        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
-+                                               QEMU_PLUGIN_CB_R_REGS,
-+                                               (void *)pc);
-
->+
->+    }
->+}
->+
->+static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
->+{
->+    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
->+    cpu->buf = g_byte_array_new();
->+}
->+
->+static void vcpu_end(unsigned int vcpu_index)
->+{
->+    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
->+    g_byte_array_free(cpu->buf, true);
->+    memset(cpu, 0, sizeof(Cpu));
-
-Nitpick, cpu->buf = NULL; is easier to understand (suggestion)
-
->+}
->+
->+static void at_exit(qemu_plugin_id_t id, void *data)
->+{
->+    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
->+        vcpu_end(i);
->+    }
->+
->+    qemu_plugin_scoreboard_free(score);
->+}
->+
->+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->+                                           const qemu_info_t *info,
->+                                           int argc, char **argv)
->+{
->+    score = qemu_plugin_scoreboard_new(sizeof(Cpu));
->+    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
->+    qemu_plugin_register_atexit_cb(id, at_exit, NULL);
->+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
->+
->+    return 0;
->+}
->diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
->index 1876bc78438..7eb3629c95d 100644
->--- a/contrib/plugins/meson.build
->+++ b/contrib/plugins/meson.build
->@@ -1,5 +1,6 @@
-> contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
->-                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
->+                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
->+                   'uftrace']
-> if host_os != 'windows'
->   # lockstep uses socket.h
->   contrib_plugins += 'lockstep'
->-- 
->2.47.2
->
-
-If no other comments rise for this patch, you can add my r-b after 
-fixing the NULL check:
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
