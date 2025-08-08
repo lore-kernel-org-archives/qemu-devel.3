@@ -4,124 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFADCC87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3198C87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukPmZ-0001kJ-I7; Fri, 08 Aug 2025 12:17:28 -0400
+	id 1ukPoZ-0005NT-UB; Fri, 08 Aug 2025 12:19:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ukPmO-0001Pm-AN; Fri, 08 Aug 2025 12:17:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ukPmM-0001d0-FV; Fri, 08 Aug 2025 12:17:16 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578CJqjV028220;
- Fri, 8 Aug 2025 16:17:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=HbXXcGySMe0CA/KLnP6wSx3F7ePQ54xfQ7yc9Fe19dk=; b=CZb/bkbjq/YB
- PMWPnXZDVnfUlm0UrF7Vlk1OBrlFrDFdFeKTi0fbAEJu7KOL5mBow1pEm8OI6UVN
- xXG1CwNTX/Qh2aYSwPUAKorLPxlxi1iJTKkv8R/DPeWwcV7fXK/ovsuUrLipUO/e
- /KL7H2GgsFpDcGkmaNXhrCflUcnX8K0JeJbZARhsctqJZQ1W0XS0Z81IRUBJrVPu
- b92K/SFEorvd2N6yCVeHVQIKvKKnbvlrFBEkWYO/bSgXAPucSJMIYDGhCxG5c5Wf
- ETaLfZK75t9lComxTYXo74I3r1BPxPfeEOAQ2wkLtpuvg1t0qV5DHpyqOtBUph5F
- N/jqZcxMyA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bq619hdt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Aug 2025 16:17:05 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 578FiVgk009285;
- Fri, 8 Aug 2025 16:17:05 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bq619hdr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Aug 2025 16:17:05 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 578FBZjB020626;
- Fri, 8 Aug 2025 16:17:04 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48bpwn6ad1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Aug 2025 16:17:03 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 578GH2eo28377768
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 8 Aug 2025 16:17:02 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 85AB258068;
- Fri,  8 Aug 2025 16:17:02 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B2745805A;
- Fri,  8 Aug 2025 16:17:02 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  8 Aug 2025 16:17:02 +0000 (GMT)
-Message-ID: <424f4adcd7752d8736b370cc29053bf22688b03b.camel@linux.ibm.com>
-Subject: Re: [PULL 00/50] ppc queue
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Michael Tokarev <mjt@tls.msk.ru>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
- <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
- Schlossin <calebs@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Date: Fri, 08 Aug 2025 11:17:01 -0500
-In-Reply-To: <a9d36b56-2954-4a48-aec4-09657a2295b2@tls.msk.ru>
-References: <20250721162233.686837-1-clg@redhat.com>
- <10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru>
- <ce863981-3d5e-4ec4-94ee-e35d773eab78@redhat.com>
- <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
- <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
- <4468aea8-b8cc-4313-abbe-8a5f58a35adc@redhat.com>
- <6afc919bdb18166a71a2dba1a3862709629d5e08.camel@linux.ibm.com>
- <a9d36b56-2954-4a48-aec4-09657a2295b2@tls.msk.ru>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Y0TsJN2XumphC_NU5ix0a_0n2WaUoVro
-X-Proofpoint-ORIG-GUID: SCSsrO_DyBarzyqv4zqnLpfjZ0Ty_tXN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA4MDEyOSBTYWx0ZWRfX0iXFQyoBJmf3
- c2bH58enBtXmnYxkzXG3lzZ3rvEzzJSrhFb0ic52E2cQ/HU0+oe+5PwOa02d9EfonyMKOyqu6Ah
- qRaK+7WFRKF7+VqIXEVPCZmWOGPLlROQRTnEEuGRjWysjr95ZnurAuhZB7YdfFWwfHZy4VN1+9t
- HeVCFyjkoaUhSGowVvcrCR0WXLP94b/NBUmWSqhXcxNFdOr2hL+Dg1T188iGZSxjJIOgf4UFd6N
- TPsZow2goDs3I5hdVJVt+ytix37T0lniUrxmsTQf5xU/cIXsDFsW6fXXY+I6dZjj5weJAQyQ6gh
- aVnHRFI9yMcas2rMQoytcygdVQogRquK3re0dyoDKegnlWp0teEualESaTZ2rmhqeFpJg3nqKqo
- bHztadusonGvECwPR12L/ZhqwjHd5ezCRmq6sQe+sM+T1fJ9qGDtEIlozUFiX711As7JP6tf
-X-Authority-Analysis: v=2.4 cv=TayWtQQh c=1 sm=1 tr=0 ts=68962301 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=E_gU1cQRGPPUBrA8uesA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-08_05,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 impostorscore=0 spamscore=0
- mlxlogscore=999 bulkscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2507300000
- definitions=main-2508080129
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukPoQ-0005JE-NO
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:19:24 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukPoO-0001v7-95
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:19:22 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2400f746440so18862285ad.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:19:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754669958; x=1755274758; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WW+nRzqybbKRH+r/Ot471yJ9eOde91Ntg6p0vn1hjmE=;
+ b=BQQ40suLKqueW8A1BUrFxVEgs6RJ96ub82Ej7y3mP9i50EEc7bMBkbc7B4utZeZtSk
+ OrW2Jz7FmQVYtnexzvyuVE7rCKlYq9B9NC4pNbSUqwVKROlcJpMzckTNs8180w2/S0fW
+ btbVRpYLmlC6oSsJDkWhugY9GHOm2Sr3/xwshSKi/Yd61fud0GI7lRSKN+mVe48xmqKc
+ FHIjOEafRmDEiuemsIiun/K1BMJ1KIU7V1E9npTHkBwamhHAbqCIMeqSnAPsiaxIUOoY
+ gVF0+p++PjtSPdagxMj9hWXRoju2KB5wzLFtAzmvRU2qAydswoX0U4FWKWqhsqg3Sbzk
+ jeGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754669958; x=1755274758;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WW+nRzqybbKRH+r/Ot471yJ9eOde91Ntg6p0vn1hjmE=;
+ b=RVV0Jhmkaz8AvSp3mHp1FF8Xzae9Y2CgDj0cMkXPlDhp+W8A0S1BwO7sie4sXQKH8U
+ QCJrHlv6W5E84eTRDpqsmC/ZsSjCFMcTDXdweaKUvnxmSuMdv2kt3h6VPcQ1jLx/KhbO
+ DJEHvPEsIzP0u9dK31Tm28l5axiWxmmpezbTxa/wNqLnkZMnLYqr3JqX/cYNrkuMRWqw
+ M05CuQGTxRb2+GyWjB0vZbsIByILEIGWQT3/9PvIUByeT9fZtk1Nnkq3okIB7E+wcc/o
+ gaiBHQEGLzSfh8M4hDP00FBkEjvmv4nEqON0/grk5ZFf/d8fsduBLbM4d3v2VF2MS6x3
+ ORAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUAfuUDYmGdiBULBqXn6VDHvGTcFvNkVj0SvjsAgbI/dAVW53IgGwMX9EjrN8deQy9TUTEvcdYdasoE@nongnu.org
+X-Gm-Message-State: AOJu0Ywgt2kg8TE3Bj84Y2mviZvFcCdTuuBRlyEeVhco+6GEJfxljLNQ
+ dPtf95CAYsNhdrnTXSGBGCo5Qc5HMU4Cg8Gx5oMItF+2TFL8NT77+hXf72czty5n17Q=
+X-Gm-Gg: ASbGncv04EL7LSKhcQswIbjqsZ7KdpmxizBEitm5lTZu2RDVROXFZ2u1sege5O6sM4D
+ C9bZgeNx4+ZAeEqM4O2iLbkrANXwYKcg2BtGUcbrjQ6uGmMIWagl/YFk5YLHZPSqdqycSJV3x+w
+ b8OnePZPLMt7Yhz1N8Zu64Hw4z9a5vEo6WmZ73/Y2fDFRrcqsjoiJXc5TMs6f2HO6/riZampAzA
+ 2fTBYJTMm517442PSajBFxbCPzV3oU903tua85WC5DRSbGj6ljEO4tOpiHAH0sGD4HoNJ61V44x
+ 5nyY143MYBvCRmBJdhKoKuFk1bpdh6DAkIIA/5faff5gEEv4OMNR7iR+eQ6M7k/Igz9bKIaGcoy
+ 76MBQy+LiuoEpSDozYCBXOyjt6rMjgxFexcE=
+X-Google-Smtp-Source: AGHT+IGeUu8k8Khj36Gw+DWynvAfn7pgmfT7G0ypKNZMhif/fI7D14SrmcxdkfE9RfEi6oVKvvz+Bg==
+X-Received: by 2002:a17:902:ec82:b0:240:6fda:582a with SMTP id
+ d9443c01a7336-242c21c0b4fmr51115795ad.23.1754669957734; 
+ Fri, 08 Aug 2025 09:19:17 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31f63ee49ebsm24700001a91.19.2025.08.08.09.19.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Aug 2025 09:19:17 -0700 (PDT)
+Message-ID: <09a8120a-051c-4d39-9506-5922f5d65697@linaro.org>
+Date: Fri, 8 Aug 2025 09:19:16 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/9] contrib/plugins/uftrace: skeleton file
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ rowan Hart <rowanbhart@gmail.com>, Gustavo Romero
+ <gustavo.romero@linaro.org>, =?UTF-8?Q?Alex_Benn_=C3=A9_e?=
+ <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
+ <20250808020702.410109-2-pierrick.bouvier@linaro.org>
+ <t0o24e.37nl0tbfod6ih@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <t0o24e.37nl0tbfod6ih@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,49 +108,162 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2025-08-08 at 09:07 +0300, Michael Tokarev wrote:
-> On 06.08.2025 23:46, Miles Glenn wrote:
-> > On Tue, 2025-08-05 at 22:07 +0200, Cédric Le Goater wrote:
-> ...
-> > > These seem to be interesting to have :
-> > > 
-> > > ppc/xive2: Fix treatment of PIPR in CPPR update
-> > > ppc/xive2: Fix irq preempted by lower priority group irq
-> > > ppc/xive: Fix PHYS NSR ring matching
-> > > ppc/xive2: fix context push calculation of IPB priority
-> > > ppc/xive2: Remote VSDs need to match on forwarding address
-> > > ppc/xive2: Fix calculation of END queue sizes
-> > > ppc/xive: Report access size in XIVE TM operation error logs
-> > > ppc/xive: Fix xive trace event output
-> > 
-> > I'm still not sure that the benefit is worth the effort, but I
-> > certainly don't have a problem with them being backported if someone
-> > has the desire and the time to do it.
+On 8/8/25 1:14 AM, Manos Pitsidianakis wrote:
+> On Fri, 08 Aug 2025 05:06, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>> We define a scoreboard that will hold our data per cpu. As well, we
+>> define a buffer per cpu that will be used to read registers and memories
+>> in a thread-safe way.
+>>
+>> For now, we just instrument all instructions with an empty callback.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>> contrib/plugins/uftrace.c   | 74 +++++++++++++++++++++++++++++++++++++
+>> contrib/plugins/meson.build |  3 +-
+>> 2 files changed, 76 insertions(+), 1 deletion(-)
+>> create mode 100644 contrib/plugins/uftrace.c
+>>
+>> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+>> new file mode 100644
+>> index 00000000000..d60c1077496
+>> --- /dev/null
+>> +++ b/contrib/plugins/uftrace.c
+>> @@ -0,0 +1,74 @@
+>> +/*
+>> + * Copyright (C) 2025, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> + *
+>> + * Generates a trace compatible with uftrace (similar to uftrace record).
+>> + * https://github.com/namhyung/uftrace
+>> + *
+>> + * See docs/about/emulation.rst|Uftrace for details and examples.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include <qemu-plugin.h>
+>> +#include <glib.h>
+>> +
+>> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+>> +
+>> +typedef struct Cpu {
+>> +    GByteArray *buf;
+>> +} Cpu;
+>> +
+>> +static struct qemu_plugin_scoreboard *score;
+>> +
+>> +static void track_callstack(unsigned int cpu_index, void *udata)
+>> +{
+>> +}
+>> +
+>> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>> +{
+>> +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
+>> +
+>> +    for (int i = 0; i < n_insns; i++) {
 > 
-> I mentioned already that 10.0 series will (hopefully) be LTS series.
-> At the very least, it is what we'll have in the upcoming debian
-> stable release (trixie), which will be stable for the next 2 years.
-> Whenever this is important to have working Power* support in debian -
-> I don't know.
-> 
-> All the mentioned patches applied to 10.0 branch cleanly (in the
-> reverse order, from bottom to top), so there's no effort needed
-> to back-port them.  And the result passes at least the standard
-> qemu testsuite.  So it looks like everything works as intended.
-> 
-> Please keep qemu-stable@ in Cc for other fixes which you think are
-> of interest for older/stable series of qemu.
-> 
-> Thanks,
-> 
-> /mjt
+> s/int i/size_t i/
+>
 
-Will do, and thanks for doing the backporting, Michael!
+Yep, that's better.
 
--Glenn
+>> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> 
+> This can return NULL,
+>
+
+It will return NULL only if i is out of the tb range, which will never 
+happen here, because i < n_insns.
+As you can see in all other plugins we have, there is never a NULL check 
+for the return of qemu_plugin_tb_get_insn.
+It points a good thing in the API though, that maybe we should simply 
+assert i is in the range, because there is no reason for a user to use a 
+random index that may fall out of the tb range.
+
+>> +
+>> +        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
+> 
+> And this would lead to a NULL dereference (it performs insn->vaddr
+> access)
+> 
+>> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
+>> +                QEMU_PLUGIN_CB_R_REGS,
+>> +                (void *) pc);
+> 
+> Hm indentation got broken here, should be
+> 
+
+Thanks, probably when I created the intermediate series of patches.
+
+> 
+> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
+> +                                               QEMU_PLUGIN_CB_R_REGS,
+> +                                               (void *)pc);
+> 
+>> +
+>> +    }
+>> +}
+>> +
+>> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+>> +{
+>> +    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
+>> +    cpu->buf = g_byte_array_new();
+>> +}
+>> +
+>> +static void vcpu_end(unsigned int vcpu_index)
+>> +{
+>> +    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
+>> +    g_byte_array_free(cpu->buf, true);
+>> +    memset(cpu, 0, sizeof(Cpu));
+> 
+> Nitpick, cpu->buf = NULL; is easier to understand (suggestion)
+>
+
+Yes, it does not hurt, I'll add it.
+
+>> +}
+>> +
+>> +static void at_exit(qemu_plugin_id_t id, void *data)
+>> +{
+>> +    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
+>> +        vcpu_end(i);
+>> +    }
+>> +
+>> +    qemu_plugin_scoreboard_free(score);
+>> +}
+>> +
+>> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>> +                                           const qemu_info_t *info,
+>> +                                           int argc, char **argv)
+>> +{
+>> +    score = qemu_plugin_scoreboard_new(sizeof(Cpu));
+>> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+>> +    qemu_plugin_register_atexit_cb(id, at_exit, NULL);
+>> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>> +
+>> +    return 0;
+>> +}
+>> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+>> index 1876bc78438..7eb3629c95d 100644
+>> --- a/contrib/plugins/meson.build
+>> +++ b/contrib/plugins/meson.build
+>> @@ -1,5 +1,6 @@
+>> contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
+>> -                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
+>> +                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
+>> +                   'uftrace']
+>> if host_os != 'windows'
+>>    # lockstep uses socket.h
+>>    contrib_plugins += 'lockstep'
+>> -- 
+>> 2.47.2
+>>
+> 
+> If no other comments rise for this patch, you can add my r-b after
+> fixing the NULL check:
+> 
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
 
