@@ -4,59 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED14AC87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 10:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF3EC87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 10:48:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukKau-0007bf-0O; Fri, 08 Aug 2025 06:45:04 -0400
+	id 1ukKeC-0002gf-Tm; Fri, 08 Aug 2025 06:48:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ukKar-0007Zy-Td
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 06:45:01 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukKeA-0002ck-GO
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 06:48:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ukKao-0003dB-61
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 06:45:01 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bz0sd1yXpz6GD6h;
- Fri,  8 Aug 2025 18:40:05 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id D76FD14038F;
- Fri,  8 Aug 2025 18:44:43 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 8 Aug
- 2025 12:44:43 +0200
-Date: Fri, 8 Aug 2025 11:44:42 +0100
-To: Markus Armbruster <armbru@redhat.com>
-CC: <qemu-devel@nongnu.org>, <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 03/12] hw/cxl: Convert cxl_fmws_link() to Error
-Message-ID: <20250808114442.0000234d@huawei.com>
-In-Reply-To: <20250808080823.2638861-4-armbru@redhat.com>
-References: <20250808080823.2638861-1-armbru@redhat.com>
- <20250808080823.2638861-4-armbru@redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukKe8-0004Qd-Fe
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 06:48:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754650102;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rRkzzxR1VVIbbYj6enXKWSSXJfM5rw+2FQewa+7Zugk=;
+ b=iCIndarCdnRoRNQipeUyluVyaOyxBKkvaQ6SPDz34botgfxsUAblBxtyBwZILmjiQA3tpL
+ yhrrvgWjrRrx73aNYHGqxh3CQVXTaJbdobihZbneZv/8abkbP/wuqqQJAAnYsSo0erbPC1
+ gFBofkXPgg6wKX0qTxhs26WDbQ5qsuA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-YreWYYbANV6ZwYElSvfxcw-1; Fri,
+ 08 Aug 2025 06:48:19 -0400
+X-MC-Unique: YreWYYbANV6ZwYElSvfxcw-1
+X-Mimecast-MFC-AGG-ID: YreWYYbANV6ZwYElSvfxcw_1754650098
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C6991955E7F; Fri,  8 Aug 2025 10:48:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B51C63001455; Fri,  8 Aug 2025 10:48:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3633E21E6A27; Fri, 08 Aug 2025 12:48:14 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org,  peterx@redhat.com,  farosas@suse.de,
+ eblake@redhat.com,  armbru@redhat.com,  jasowang@redhat.com,
+ mst@redhat.com,  si-wei.liu@oracle.com,  eperezma@redhat.com,
+ boris.ostrovsky@oracle.com
+Subject: Re: [RFC 1/6] migration: Add virtio-iterative capability
+In-Reply-To: <20250722124127.2497406-2-jonah.palmer@oracle.com> (Jonah
+ Palmer's message of "Tue, 22 Jul 2025 12:41:22 +0000")
+References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+ <20250722124127.2497406-2-jonah.palmer@oracle.com>
+Date: Fri, 08 Aug 2025 12:48:14 +0200
+Message-ID: <874iuihyxd.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,79 +85,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri,  8 Aug 2025 10:08:14 +0200
-Markus Armbruster <armbru@redhat.com> wrote:
+I apologize for the lateness of my review.
 
-> Functions that use an Error **errp parameter to return errors should
-> not also report them to the user, because reporting is the caller's
-> job.  When the caller does, the error is reported twice.  When it
-> doesn't (because it recovered from the error), there is no error to
-> report, i.e. the report is bogus.
-> 
-> cxl_fmws_link_targets() violates this principle: it calls
-> error_setg(&error_fatal, ...) via cxl_fmws_link().  Goes back to
-> commit 584f722eb3ab (hw/cxl: Make the CXL fixed memory windows
-> devices.)  Currently harmless, because cxl_fmws_link_targets()'s
-> callers always pass &error_fatal.  Clean this up by converting
-> cxl_fmws_link() to Error.
+Jonah Palmer <jonah.palmer@oracle.com> writes:
 
-Patch is definitely an improvement though I'm no sure how
-it is really a violation of the above principle given
-it has no effect on being called twice for example.
+> Adds a new migration capability 'virtio-iterative' that will allow
+> virtio devices, where supported, to iteratively migrate configuration
+> changes that occur during the migration process.
 
-> 
-> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Why is that desirable?
 
-The -1 return is perhaps unrelated to the main thing here,
-but does make more sense than return 1 so fair enough.
+> This capability is added to the validated capabilities list to ensure
+> both the source and destination support it before enabling.
 
-None of the above comments I've raised are that important to me though.
+What happens when only one side enables it?
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
-
+> The capability defaults to off to maintain backward compatibility.
+>
+> To enable the capability via HMP:
+> (qemu) migrate_set_capability virtio-iterative on
+>
+> To enable the capability via QMP:
+> {"execute": "migrate-set-capabilities", "arguments": {
+>      "capabilities": [
+>         { "capability": "virtio-iterative", "state": true }
+>      ]
+>   }
+> }
+>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 > ---
->  hw/cxl/cxl-host.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> index 5c2ce25a19..0d891c651d 100644
-> --- a/hw/cxl/cxl-host.c
-> +++ b/hw/cxl/cxl-host.c
-> @@ -72,6 +72,7 @@ static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
+>  migration/savevm.c  | 1 +
+>  qapi/migration.json | 7 ++++++-
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index bb04a4520d..40a2189866 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -279,6 +279,7 @@ static bool should_validate_capability(int capability)
+>      switch (capability) {
+>      case MIGRATION_CAPABILITY_X_IGNORE_SHARED:
+>      case MIGRATION_CAPABILITY_MAPPED_RAM:
+> +    case MIGRATION_CAPABILITY_VIRTIO_ITERATIVE:
+>          return true;
+>      default:
+>          return false;
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 4963f6ca12..8f042c3ba5 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -479,6 +479,11 @@
+>  #     each RAM page.  Requires a migration URI that supports seeking,
+>  #     such as a file.  (since 9.0)
+>  #
+> +# @virtio-iterative: Enable iterative migration for virtio devices, if
+> +#     the device supports it. When enabled, and where supported, virtio
+> +#     devices will track and migrate configuration changes that may
+> +#     occur during the migration process. (Since 10.1)
+
+When and why should the user enable this?
+
+What exactly do you mean by "where supported"?
+
+docs/devel/qapi-code-gen.rst:
+
+    For legibility, wrap text paragraphs so every line is at most 70
+    characters long.
+
+    Separate sentences with two spaces.
+
+> +#
+>  # Features:
+>  #
+>  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+> @@ -498,7 +503,7 @@
+>             { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+>             'validate-uuid', 'background-snapshot',
+>             'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+> -           'dirty-limit', 'mapped-ram'] }
+> +           'dirty-limit', 'mapped-ram', 'virtio-iterative'] }
 >  
->  static int cxl_fmws_link(Object *obj, void *opaque)
->  {
-> +    Error **errp = opaque;
->      struct CXLFixedWindow *fw;
->      int i;
->  
-> @@ -87,9 +88,9 @@ static int cxl_fmws_link(Object *obj, void *opaque)
->          o = object_resolve_path_type(fw->targets[i], TYPE_PXB_CXL_DEV,
->                                       &ambig);
->          if (!o) {
-> -            error_setg(&error_fatal, "Could not resolve CXLFM target %s",
-> +            error_setg(errp, "Could not resolve CXLFM target %s",
->                         fw->targets[i]);
-> -            return 1;
-> +            return -1;
->          }
->          fw->target_hbs[i] = PXB_CXL_DEV(o);
->      }
-> @@ -99,7 +100,7 @@ static int cxl_fmws_link(Object *obj, void *opaque)
->  void cxl_fmws_link_targets(Error **errp)
->  {
->      /* Order doesn't matter for this, so no need to build list */
-> -    object_child_foreach_recursive(object_get_root(), cxl_fmws_link, NULL);
-> +    object_child_foreach_recursive(object_get_root(), cxl_fmws_link, errp);
->  }
->  
->  static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+>  ##
+>  # @MigrationCapabilityStatus:
 
 
