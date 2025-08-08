@@ -4,98 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 294E8C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF9EC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:59:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukQKL-0005td-BU; Fri, 08 Aug 2025 12:52:21 -0400
+	id 1ukQPm-0003L7-HI; Fri, 08 Aug 2025 12:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukQKH-0005sg-EM
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:52:18 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukQKE-0007P1-H8
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:52:16 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-76bdea88e12so2269578b3a.0
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:52:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754671930; x=1755276730; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gD8VDHiXC6O1QhiTrZvgU8TUrWttzrd06dV+8VVw1aA=;
- b=McOIt+IFo+XeWjmbZ/Qee1Dj9TWcYAw/U2NUpoUarVk1CtGkzP5xc/w6P8LMjrkJtA
- xYMNYpXLLZEzgRANC2ZrPuWYqFGQAj/e01MmXqRFuXaSS+h/XgZ3hgUQI/VzwaErXXt4
- zOHv1z+WPkR6UXJHddkJUYieRxdTHsN6AFfKnvN1pxkt1Zrzpfb6e7U24C1xUYA1bPTl
- muZebMXXo9TIFDvFOtxWD2LCxfv9Itsh6DbyMbGihMDjp0L112UMnm3axlRjgchm244M
- tHU74M/akujH2m0wni63rCs38gkSeOS0enMt9xT2Sp70W2nQFiBjbXmF57iLF6LNyk9z
- NGOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754671930; x=1755276730;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gD8VDHiXC6O1QhiTrZvgU8TUrWttzrd06dV+8VVw1aA=;
- b=g6J/k1hOASM4BpUsZGYX4o25wX2Eaaryq9rjUId77OzyXzZt9l6Iq2tnoOp5I699IN
- yo2Rd9Uef2FnAyNK1o0ad4S2dlzhf4aaqXrAHCRvNYbFC3rQPhLs82G9cBYplZVNpegG
- 2YJqHa75RlXQf4z6PW8wMlo7uJRXzo97R8XO/OF69lj+IAP40W6Vr9q6nINJOOhAAzkO
- HwrTsCVdtxo/UO6R/uNIjC1hUksY0AMAl+wTWiZXN9KQuuHT72D8+Rze09x6k7PpNvmc
- naLA+dLcgpHlUKkd6kSLOCVdBWCXDKhUqLtO8GT8m0PBKuQhh4sIUqldO9rRUb+aqZ4R
- vsJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVcYIC1X+PE7xrpqCPdk3/8XXkYeJj2CYj1kxWkOKQeoFL9pecePsMo19Wo5aQZxiK4PQaCxiPNJflh@nongnu.org
-X-Gm-Message-State: AOJu0Yz1OfVKxGHjek4i0Hcsr6vf+mOeEd+2vOIe2LWGuaUrIOD0afiz
- 58zJMqEswFsBMuhqEISCz9tbqzr2s3ymRp8JPHmhd7r+oWeEQAGFzTKalmGpla/wEqM=
-X-Gm-Gg: ASbGncslmCTdXZ3uNzkP8mjycAmC2pnPZSbl0HRJI/EatRx1+c1N94N4qVBeHXsmXQG
- LJnIr/aL254sn0okRi1lqoMZShyZxcLIQ4QSSGvaUzZkLhB6hy71oW8IcXca7wd5vZjbZo2/XBU
- huujxhlq7BrCaY7pNY6fV8VVxDZ+Xmix4VIu2slh/dKYNeasyN91wDwDZSxvFJbc328RBZb+sb8
- fXG/G5pen0KhZXugN6PDQEpFeCUz9jEXOnu/NFBQEfRJKPXVbd09ReAyYpGh+rE2Xu5QrKk2QMz
- V74I6Kc+nILZ3+Kg1alWt84KlEsPtbFWC1PXEckDYWsUWKqbWqoYVjYbpmDc/KUisEnHfvBE6NW
- nIvwWlZ7RsuVdDtmrCyGNM4mBWiMz6R4oMWY=
-X-Google-Smtp-Source: AGHT+IGiEuFQJsL6DqwPy/4s+qzAsn2v7sd25VWwktiKfh0mA3t/mP1O0MXKXkLdijYbPOmTUekjQw==
-X-Received: by 2002:a05:6a00:b44:b0:746:2ae9:fc42 with SMTP id
- d2e1a72fcca58-76c461784fcmr5746130b3a.19.1754671930159; 
- Fri, 08 Aug 2025 09:52:10 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bccfbcea9sm20908232b3a.61.2025.08.08.09.52.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 09:52:09 -0700 (PDT)
-Message-ID: <db63fc94-72e0-4af4-976b-291860b69056@linaro.org>
-Date: Fri, 8 Aug 2025 09:52:09 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/9] contrib/plugins/uftrace: implement x64 support
-Content-Language: en-US
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
- rowan Hart <rowanbhart@gmail.com>, Gustavo Romero
- <gustavo.romero@linaro.org>, =?UTF-8?Q?Alex_Benn_=C3=A9_e?=
- <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
- <20250808020702.410109-8-pierrick.bouvier@linaro.org>
- <t0o5pl.3rum11rfv1tyj@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <t0o5pl.3rum11rfv1tyj@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ukQPc-0003Jj-Tm; Fri, 08 Aug 2025 12:57:51 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ukQPb-0008EN-0b; Fri, 08 Aug 2025 12:57:48 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578EVFiv022100;
+ Fri, 8 Aug 2025 16:57:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=cmltrdRDz0C8zf0bdzt8TeeVBZVdgTVZzvkdbh8v+OY=; b=h4WHatkhvlhC
+ ZDRxQlfUWkeCVE/Kr0A5/jFX9OQJqcAsKHIvxItC69ia/+tYn8NfWU1uz3t6e/1f
+ hDc9FCps1RWXTtSZ5GJ4dl52E8d1UqBbJxjs1g6ABxWYmxiFCY0WoCqyH0SlqmND
+ MrXwGNQQpCPywJD1kLIANEXzMMKgFTXPOBqWlcqNEHejqYMfYMaMQFfz0axYSBEJ
+ /Po1t2825L9WUvgGo0oF7sQWSQxxbIsTXaJlMEipNvgir3Dn1aNx0RvCsfm8zzYx
+ c2jwov/pHNzUfCjRjd7/PZyzMNfAVgL/oxhIghhteESZIgdjBLc3kYurhoDurr5B
+ 33H5tMRo1Q==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dk2n8pya-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:57:36 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 578GrjpV021654;
+ Fri, 8 Aug 2025 16:57:36 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dk2n8py4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:57:36 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 578FBZur020626;
+ Fri, 8 Aug 2025 16:57:35 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48bpwn6fq5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:57:35 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 578GvYXI26084088
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 8 Aug 2025 16:57:34 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 10E8C58058;
+ Fri,  8 Aug 2025 16:57:34 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 529D458059;
+ Fri,  8 Aug 2025 16:57:33 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  8 Aug 2025 16:57:33 +0000 (GMT)
+Message-ID: <7fd16019aa7400e024bf1fcbcd1246cc1dbaea1b.camel@linux.ibm.com>
+Subject: Re: [PATCH] ppc/xive2: Fix integer overflow warning in
+ xive2_redistribute()
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Gautam Menghani <gautam@linux.ibm.com>, clg@kaod.org, npiggin@gmail.com,
+ kowal@linux.ibm.com, ganeshgr@linux.ibm.com, harshpb@linux.ibm.com
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Date: Fri, 08 Aug 2025 11:57:32 -0500
+In-Reply-To: <20250808100917.37006-1-gautam@linux.ibm.com>
+References: <20250808100917.37006-1-gautam@linux.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA4MDEzNyBTYWx0ZWRfX+F8Rbl4z0kVT
+ 2Q77x0E0hiyvKCXVw348gcfMLT8PxCXrHGYBKnGSmpwn7guwveG5fDNfmfWDS2TrN5qT4Sdh/8o
+ c7/MbMMwWpeh9lgXET9ZS/pl7q9/2QrSIQhkosuQJGXvTOCgToo2KexG0hyRD2aAbGHcPyASz/0
+ nrCoDXvUPeq/53tfX8dRIE1XLpyCqNCPWty7DxviuEy0gprt5TpdAi+Od8RR/zrQapV+0NagJIh
+ L2JW9Ql4sh++kZ6T+indyWf8mhl9E8FVCzn9dTGYkcZ6bz0apcA/ySBYEFvWWkAHNLVIAm1i+fv
+ 6+Om0JpT4OOgNUcCTI/EokfIgFd4y68bET344KtkbTRoL6xt58qJruw24OeZrgAnxzPnJMCE2Xp
+ 9weDPye5VVZlLr9o+8W7z27LTIK8bd+e5A38YFlis7E6WIUvkPCvlbR91yHRkfeyOu5TCFqr
+X-Proofpoint-GUID: NlPHwMULOpKu_b_GHz4uxLkuSHMfoYBZ
+X-Proofpoint-ORIG-GUID: 6sowt29E1DIlryE5cdmatTUDtuYtiqzr
+X-Authority-Analysis: v=2.4 cv=BNWzrEQG c=1 sm=1 tr=0 ts=68962c81 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=kmnn1oEFiaEaPxf70MkA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-08_05,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 mlxscore=0 clxscore=1011 malwarescore=0 priorityscore=1501
+ adultscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2507300000
+ definitions=main-2508080137
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,145 +125,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 2:42 AM, Manos Pitsidianakis wrote:
-> On Fri, 08 Aug 2025 05:07, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->> It's trivial to implement x64 support, as it's the same stack layout
->> than aarch64.
+On Fri, 2025-08-08 at 15:39 +0530, Gautam Menghani wrote:
+> Coverity reported an integer overflow warning in xive2_redistribute()
+> where the code does a left shift operation "0xffffffff << crowd". Fix the
+> warning by using a 64 byte integer type. Also refactor the calculation
+> into dedicated routines.
 > 
-> s/than/as
+> Resolves: Coverity CID 1612608
+> Fixes: 555e446019f5 ("ppc/xive2: Support redistribution of group interrupts")
+> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+> ---
+>  hw/intc/xive2.c | 45 +++++++++++++++++++++++++++++++--------------
+>  1 file changed, 31 insertions(+), 14 deletions(-)
 > 
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->> contrib/plugins/uftrace.c | 85 +++++++++++++++++++++++++++++++++++++++
->> 1 file changed, 85 insertions(+)
->>
->> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
->> index 6628b4256fd..f10172eed10 100644
->> --- a/contrib/plugins/uftrace.c
->> +++ b/contrib/plugins/uftrace.c
->> @@ -79,6 +79,20 @@ typedef struct {
->>      struct qemu_plugin_register *reg_scr_el3;
->> } Aarch64Cpu;
->>
->> +typedef enum {
->> +    X64_RING0,
->> +    X64_RING1,
->> +    X64_RING2,
->> +    X64_RING3,
->> +    X64_REAL_MODE,
->> +} X64PrivilegeLevel;
->> +
->> +typedef struct {
->> +    struct qemu_plugin_register *reg_rbp;
->> +    struct qemu_plugin_register *reg_cs;
->> +    struct qemu_plugin_register *reg_cr0;
->> +} X64Cpu;
->> +
->> typedef struct {
->>      uint64_t timestamp;
->>      uint64_t data;
->> @@ -565,6 +579,75 @@ static CpuOps aarch64_ops = {
->>      .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
->> };
->>
->> +static uint8_t x64_num_privilege_levels(void)
->> +{
->> +    return X64_REAL_MODE + 1;
->> +}
->> +
->> +static const char *x64_get_privilege_level_name(uint8_t pl)
->> +{
->> +    switch (pl) {
->> +    case X64_RING0: return "Ring0";
->> +    case X64_RING1: return "Ring1";
->> +    case X64_RING2: return "Ring2";
->> +    case X64_RING3: return "Ring3";
->> +    case X64_REAL_MODE: return "RealMode";
->> +    default:
->> +        g_assert_not_reached();
->> +    }
->> +}
->> +
->> +static uint8_t x64_get_privilege_level(Cpu *cpu_)
->> +{
->> +    X64Cpu *cpu = cpu_->arch;
->> +    uint64_t cr0 = cpu_read_register64(cpu_, cpu->reg_cr0);
->> +    uint64_t protected_mode = (cr0 >> 0) & 0b1;
->> +    if (!protected_mode) {
->> +        return X64_REAL_MODE;
->> +    }
->> +    uint32_t cs = cpu_read_register32(cpu_, cpu->reg_cs);
->> +    uint32_t ring_level = (cs >> 0) & 0b11;
->> +    return ring_level;
->> +}
->> +
->> +static uint64_t x64_get_frame_pointer(Cpu *cpu_)
->> +{
->> +    X64Cpu *cpu = cpu_->arch;
->> +    return cpu_read_register64(cpu_, cpu->reg_rbp);
->> +}
->> +
->> +static void x64_init(Cpu *cpu_)
->> +{
->> +    X64Cpu *cpu = g_new0(X64Cpu, 1);
->> +    cpu_->arch = cpu;
->> +    cpu->reg_rbp = plugin_find_register("rbp");
->> +    g_assert(cpu->reg_rbp);
->> +    cpu->reg_cs = plugin_find_register("cs");
->> +    g_assert(cpu->reg_cs);
->> +    cpu->reg_cr0 = plugin_find_register("cr0");
->> +    g_assert(cpu->reg_cr0);
->> +}
->> +
->> +static void x64_end(Cpu *cpu)
->> +{
->> +    g_free(cpu->arch);
->> +}
->> +
->> +static bool x64_does_insn_modify_frame_pointer(const char *disas)
->> +{
->> +    return strstr(disas, "rbp");
->> +}
->> +
->> +static CpuOps x64_ops = {
->> +    .init = x64_init,
->> +    .end = x64_end,
->> +    .get_frame_pointer = x64_get_frame_pointer,
->> +    .get_privilege_level = x64_get_privilege_level,
->> +    .num_privilege_levels = x64_num_privilege_levels,
->> +    .get_privilege_level_name = x64_get_privilege_level_name,
->> +    .does_insn_modify_frame_pointer = x64_does_insn_modify_frame_pointer,
->> +};
->> +
->> static void track_privilege_change(unsigned int cpu_index, void *udata)
->> {
->>      Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
->> @@ -771,6 +854,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->>
->>      if (!strcmp(info->target_name, "aarch64")) {
->>          arch_ops = aarch64_ops;
->> +    } else if (!strcmp(info->target_name, "x86_64")) {
->> +        arch_ops = x64_ops;
->>      } else {
->>          fprintf(stderr, "plugin uftrace: %s target is not supported\n",
->>                  info->target_name);
->> -- 
->> 2.47.2
->>
-> 
-> No idea about x86 assembly tbh but this looks correct to me.
-> 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> index ee5fa26178..90fe9c883b 100644
+> --- a/hw/intc/xive2.c
+> +++ b/hw/intc/xive2.c
+> @@ -95,6 +95,35 @@ static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
+>      }
+>  }
+>  
+> +static inline uint32_t xive2_nvgc_get_idx(uint32_t nvp_idx, uint8_t group)
+> +{
+> +    uint32_t nvgc_idx;
+> +
+> +    if (group > 0) {
+> +        nvgc_idx = (nvp_idx & (0xffffffffULL << group)) |
+> +                   ((1 << (group - 1)) - 1);
+> +    } else {
+> +        nvgc_idx = nvp_idx;
+> +    }
+> +
+> +    return nvgc_idx;
+> +}
+> +
+> +static inline uint8_t xive2_nvgc_get_blk(uint8_t nvp_blk, uint8_t crowd)
+> +{
+> +    uint8_t nvgc_blk;
+> +
+> +    if (crowd > 0) {
+> +        crowd = (crowd == 3) ? 4 : crowd;
+> +        nvgc_blk = (nvp_blk & (0xffffffffULL << crowd)) |
+> +                   ((1 << (crowd - 1)) - 1);
+> +    } else {
+> +        nvgc_blk = nvp_blk;
+> +    }
+> +
+> +    return nvgc_blk;
+> +}
+> +
+>  uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
+>                                           bool crowd,
+>                                           uint8_t blk, uint32_t idx,
+> @@ -638,20 +667,8 @@ static void xive2_redistribute(Xive2Router *xrtr, XiveTCTX *tctx, uint8_t ring)
+>  
+>      trace_xive_redistribute(tctx->cs->cpu_index, ring, nvp_blk, nvp_idx);
+>      /* convert crowd/group to blk/idx */
+> -    if (group > 0) {
+> -        nvgc_idx = (nvp_idx & (0xffffffff << group)) |
+> -                   ((1 << (group - 1)) - 1);
+> -    } else {
+> -        nvgc_idx = nvp_idx;
+> -    }
+> -
+> -    if (crowd > 0) {
+> -        crowd = (crowd == 3) ? 4 : crowd;
+> -        nvgc_blk = (nvp_blk & (0xffffffff << crowd)) |
+> -                   ((1 << (crowd - 1)) - 1);
+> -    } else {
+> -        nvgc_blk = nvp_blk;
+> -    }
+> +    nvgc_idx = xive2_nvgc_get_idx(nvp_idx, group);
+> +    nvgc_blk = xive2_nvgc_get_blk(nvp_blk, crowd);
+>  
+>      /* Use blk/idx to retrieve the NVGC */
+>      if (xive2_router_get_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, &nvgc)) {
 
-Funny enough, I tried to implement that for risv64 also, just to realize 
-the utter mess this architecture did with frame pointer, hiding it on 
-the other side of the stack frame.
-Thus, it's not possible to easily walk frame pointers on this arch, and 
-you need to disassemble prologue to find how big your stack frame is. 
-It's crazy architects didn't learn their lesson from the past issues on 
-other arch regarding frame pointers.
+Thanks for fixing that, Gautam!  I was wondering, do we really need the
+inline keywords here? Maybe it's better to let the compiler decide if
+they should be inlined (which it probably will since they are only
+called by a single function in the same file)?
+
+Either way...
+
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+
+Thanks,
+
+Glenn
+
 
