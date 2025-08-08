@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61CDEC87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B084C87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukNeV-0001KD-69; Fri, 08 Aug 2025 10:00:59 -0400
+	id 1ukNgS-0002df-GJ; Fri, 08 Aug 2025 10:03:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNeK-0001F0-Tj
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:00:49 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNgD-0002Om-1U
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:02:48 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNeI-0004fW-Mk
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:00:48 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3b8de193b60so1270107f8f.0
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 07:00:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNgA-0004yU-JO
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:02:44 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3b7886bee77so1689448f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 07:02:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754661644; x=1755266444; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754661760; x=1755266560; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hfS5Hmt57Z+KzcDQPGb3wcfopvdyDu9bCffSUpn1V1g=;
- b=nUjqdGcjq9+PvJdFfH6TsJjimR6YGs/QjRjHenhe1T/yxXAAvIHBIbQFFNTMs96LjZ
- IliHtVntQUXyMB+nudxk8thavnlCUcGcGs5lRf4n7d4XKGFFGROUEMoDgnRwbftUQKRI
- hrQeRQQ0oCj4/99aqAxUQqxBIMHPN6e+ereGv5CYcwq8d5AaQJwZhIYooCGtkZ8Jn0EL
- 2uzpGAssY5wxqyasU9TJ+aUNaHvjkcToWYfytALn7KPvqSMMHhU5aVoE7wiI6SohBVDH
- Eb91aI9TskbssQ6jJB7yv0EC3Zf9LAiZxngkFR9WT1jXxDE5DVyZMQJ0mCjNNwt3R8JK
- 0SeQ==
+ bh=EbZZ4sywkonj7FnhWZK8OKG+k1BfHFsIoacIJtQdkJA=;
+ b=O6IjJHayBIDqc85p6/YzbNUr+/CoF7rqqfxEyuBZp8UYgT6ig3XBsOqrN2Gr4JNc0z
+ FelBL6ujRPqz5jX01ucjjK+IuLhZivLk4nQWaYERtQFKQ1sF3XGemjVj5illlZIV7rZO
+ NgA7R//lAgSOWQ5lY5BpxLkHmG6DCgVNhTlOC96DfSKAxVwFT3/mCIYLK/Q2g5X+4jxx
+ z8G3z9s/6AZbrUxw0uH0Y8wO10II5qbXyF7EBxzcla66bOO0i2RjMGGwCXfxCANV6YKf
+ yzZSW76If+0OTrQGGJChyxWmu0A4k5p9cLIlmRXMLOxFlWLqHnz0OJHpUH7iDwYcBF+Y
+ 7+uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754661644; x=1755266444;
+ d=1e100.net; s=20230601; t=1754661760; x=1755266560;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hfS5Hmt57Z+KzcDQPGb3wcfopvdyDu9bCffSUpn1V1g=;
- b=OSZW1i1DlBuoX9EzHBtVw1PHqvJh7Z6Db3qlEUO5sn+OsUEH4uGk3BbgxiZrt+qv8s
- 6C8V98YFKhRVfLtj2gLOmjUjRSg3778zxk1nAZJeu6KL5XtzdDmdU+nMjxj3c8SLcJdw
- K5aZUe/zDi8RsZyLc88tMuwvAnbw5nmZdrexiPfYfYOHaMKZ4+CFag8aAjq7YVwmEClu
- itLo0pb96Mnw/m8jr2VncGDXmspPpHOLGh2mIvjBdBiPZu+SCFSbjzBHKl6TW93z+Agh
- XXUMAyG337CA1peoH7/B3XhfToUhKLV5h7ugX2ArcGTr9tDgTJalwNEjoCjC5hlJjK/N
- hEaw==
+ bh=EbZZ4sywkonj7FnhWZK8OKG+k1BfHFsIoacIJtQdkJA=;
+ b=MF+yNxTQUPZ6XTrtyIxGj2cF1/8bCxJ7urhKx6+Nyeouefm3U9INtdDjgAuc4QzEVy
+ 0E9JtvxNeBYg9uwVhCh1FPWpph6T5atzqH5aDC49wbUAWbaLHIafYDdgXr+lyol0Iv1N
+ deSYORQtMShjoF/fAmCB47oMapKhlgQG4ThWEa8Cv2LTpYJoAb+Ytpi/NgJTUkGoJJLD
+ whEdjGuP9czksQvcSQKOjwF6SrVhSrY02r9NOmW799wBblX0EefScz0vLpwNBY+L5tM9
+ M7AOljkIBzY9Pr5tFcxmMfBpQBx/Q/YLJPRAH04PHBSFPcr8jYOd4PvDpLUVkeyzjKs5
+ UTQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAiVH8hV0d4RPyk7crPQRCe3nd1U7XxoVr9fQ29FQYIc4pgBzxMo3tSuxuO2aTFFlFHwwgytQop3u8@nongnu.org
-X-Gm-Message-State: AOJu0YxGM6dSHhqUfVXnJM/z+YwCP8yXLCRjR7NixB4KxBYsuPODw1AI
- PDGvowwyS43BS2Uw3NY00xfUo560nRCnOXGsuooMvWekH6zFy/Qc9+QwjqbKCJgOal68g5sP2N7
- QFpRi
-X-Gm-Gg: ASbGnctQyCD6dIbTA5IF5yC6hMsiZKgzWSHFo5WMgvbYA3jZTOIunYjNXVY+tKkE/u8
- 7ZOWczGaKMHmf0PFlxZ3rdfmAACCnvqiCQXtsRgabkCNwxzXSEx2mctvEemIX/TgvSHQT/bWU13
- j9uFekmBFoyu9vkIiQWu8oLSQ8mfZT3BuUYp/BxLRT/YVohbAdqWjybt4SJZtCsZPrPMBe8B0di
- y7z2+rYRrKMwu83KMFHbMZyRy+9LKC5heGy2DRANHrRp918pSNHl46nQ90miKK9B5QdfnMVp7yV
- nhaBftMTZDAjua/guIGghbdTjIXN6tyTfiUHcB/6E/58+kvfTBQnEABN9GrBZqeCphj3Ku/T2bx
- JirR31DFH5L93zEI9m0Q5FEOUGwsA3AIPWp7PypXB8XQeHt/IUPNKgyc5T/Ac+qGlYA==
-X-Google-Smtp-Source: AGHT+IG2b3Kxt/joA4u8FEcci7eWsNgm7My+hNWadSXLGaQNjlB9N08Dh3Dsvd8VJE/5Zbd4Qpq8zw==
-X-Received: by 2002:a05:6000:144f:b0:3b7:8984:5134 with SMTP id
- ffacd0b85a97d-3b900940321mr2233478f8f.16.1754661644186; 
- Fri, 08 Aug 2025 07:00:44 -0700 (PDT)
+ AJvYcCXMI16qRcWurKfxYTT5iuYcqsuJk01AWt3xEU+SAl5ghEHyFpavI7uHjrQJoNfgt7yoa5MF9jnKmlT6@nongnu.org
+X-Gm-Message-State: AOJu0YwioIVwhyVltW+n8MLX8Fz9ZodmKdFhGhdd9AnSPVqkbOE7RN3/
+ OJZ+g5XnoWcoCu30ncgUNnLLOun6scpmHfo5Qrv17sWGW8eSeA3Jytw4YO7Rop9aWKg=
+X-Gm-Gg: ASbGncspMmuUgcdx8F/Fcagv3bSrvujPyDSfDhs9kvg4LjBGqou3UYZsJjVhDagvAuv
+ f0aNGhHeRCFYfN28UPJHkhy8r9M5WidkbkQv+1rkOUFEF8n4qvg2iSudBVLr1gA6HFSwflaJWcS
+ uAQL4eIzDXr4ExDp6dHDQKZtPvfzTxaDzgsp7Jk2Ry4WGmSXrOIKpv6oKWO+rDH4jevivqa7JnD
+ WMTNfJJqPNHcXnQ4dVaq49d78eUqy1Ard+BxApg5C8BldEy9Mwct8jx78SVuRv54vsfIFaGem+V
+ TCukk1GmK/LgAxJi2ALM/sZuAqhwDsGlj81WFfu7q6DNBRkuoXGxsjBLhnk3rmspxDH/FfB/eqb
+ 6lLd9MkAoNdJi1/YGItQTOE1M0OE4qXxRWRd/jLA9Mo2WoWbMzehH0Q/ZBViujL42jA==
+X-Google-Smtp-Source: AGHT+IGp1wuLH77xRs9n2uv08MOo3SrgGdzjNYFbwoyik856Ymo7iNKin+cBQFcm+3eOqy2ydyR1MA==
+X-Received: by 2002:a05:6000:2511:b0:3b6:17c0:f094 with SMTP id
+ ffacd0b85a97d-3b900b50329mr2761402f8f.14.1754661760190; 
+ Fri, 08 Aug 2025 07:02:40 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458bd5a11d3sm137004285e9.0.2025.08.08.07.00.42
+ 5b1f17b1804b1-459e075047fsm97562835e9.1.2025.08.08.07.02.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 07:00:43 -0700 (PDT)
-Message-ID: <e864d8f9-505c-41d0-90a2-5a6d040caacf@linaro.org>
-Date: Fri, 8 Aug 2025 16:00:42 +0200
+ Fri, 08 Aug 2025 07:02:39 -0700 (PDT)
+Message-ID: <7c4d300a-3f61-42d9-90a9-f0781db024e7@linaro.org>
+Date: Fri, 8 Aug 2025 16:02:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/12] tcg: Fix error reporting on mprotect() failure in
- tcg_region_init()
+Subject: Re: [PATCH 12/12] error: Kill @error_warn
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
- Richard Henderson <richard.henderson@linaro.org>
+Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com
 References: <20250808080823.2638861-1-armbru@redhat.com>
- <20250808080823.2638861-3-armbru@redhat.com>
+ <20250808080823.2638861-13-armbru@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250808080823.2638861-3-armbru@redhat.com>
+In-Reply-To: <20250808080823.2638861-13-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,74 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
-
 On 8/8/25 10:08, Markus Armbruster wrote:
-> tcg_region_init() calls one of qemu_mprotect_rwx(),
-> qemu_mprotect_rw(), and mprotect(), then reports failure with
-> error_setg_errno(&error_fatal, errno, ...).
+> We added @error_warn some two years ago in commit 3ffef1a55ca (error:
+> add global &error_warn destination).  It has multiple issues:
 > 
-> The use of &error_fatal is undesirable.  qapi/error.h advises:
+> * error.h's big comment was not updated for it.
 > 
->   * Please don't error_setg(&error_fatal, ...), use error_report() and
->   * exit(), because that's more obvious.
+> * Function contracts were not updated for it.
 > 
-> The use of errno is wrong.  qemu_mprotect_rwx() and qemu_mprotect_rw()
-> wrap around qemu_mprotect__osdep().  qemu_mprotect__osdep() calls
-> mprotect() on POSIX, VirtualProtect() on Windows, and reports failure
-> with error_report().  VirtualProtect() doesn't set errno.  mprotect()
-> does, but error_report() may clobber it.
+> * ERRP_GUARD() is unaware of @error_warn, and fails to mask it from
+>    error_prepend() and such.  These crash on @error_warn, as pointed
+>    out by Akihiko Odaki.
 > 
-> Fix tcg_region_init() to report errors only when it calls mprotect(),
-> and rely on qemu_mprotect_rwx()'s and qemu_mprotect_rw()'s error
-> reporting otherwise.  Use error_report(), not error_setg().
+> All fixable.  However, after more than two years, we had just of 15
+> uses, of which the last few patches removed eight as unclean or
+> otherwise undesirable.  I didn't look closely enough at the remaining
+> seven to decide whether they are desirable or not.
+
+Is it a call for help? If so, better to split this patch per
+maintained areas, and finally kill @error_warn.
+
 > 
-> Fixes: 22c6a9938f75 (tcg: Merge buffer protection and guard page protection)
-> Fixes: 6bc144237a85 (tcg: Use Error with alloc_code_gen_buffer)
-> Cc: Richard Henderson <richard.henderson@linaro.org>
+> I don't think this feature earns its keep.  Drop it.
+> 
+> Thanks-to: Akihiko  Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   tcg/region.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tcg/region.c b/tcg/region.c
-> index 7ea0b37a84..74e3b4b774 100644
-> --- a/tcg/region.c
-> +++ b/tcg/region.c
-> @@ -832,13 +832,17 @@ void tcg_region_init(size_t tb_size, int splitwx, unsigned max_threads)
->               } else {
->   #ifdef CONFIG_POSIX
->                   rc = mprotect(start, end - start, need_prot);
-> +                if (rc) {
-> +                    error_report("mprotect of jit buffer: %s",
-> +                                 strerror(errno));
-> +                }
-> +
->   #else
->                   g_assert_not_reached();
->   #endif
->               }
->               if (rc) {
-> -                error_setg_errno(&error_fatal, errno,
-> -                                 "mprotect of jit buffer");
-> +                exit(1);
-
-- Before:
-
-Error displayed when qemu_mprotect_rwx/qemu_mprotect_rw/mprotect fail,
-then exit.
-
-- After:
-
-Error only displayed when mprotect() fails, then exit.
-Nothing displayed when qemu_mprotect_rwx() or qemu_mprotect_rw() failed,
-and exit.
-
-Can we keep the "mprotect of jit buffer" string displayed before
-exiting, but using error_report()?
-
->               }
->           }
->           if (have_prot != 0) {
-
+>   include/qapi/error.h           |  6 ------
+>   hw/display/virtio-gpu.c        |  8 ++++++--
+>   hw/net/virtio-net.c            |  8 +++++++-
+>   tests/unit/test-error-report.c | 17 -----------------
+>   ui/gtk.c                       |  6 +++++-
+>   util/error.c                   |  5 +----
+>   6 files changed, 19 insertions(+), 31 deletions(-)
 
