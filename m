@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA34C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 20:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6462FC87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 20:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukTya-0000lL-28; Fri, 08 Aug 2025 16:46:08 -0400
+	id 1ukTzX-0001qm-Vv; Fri, 08 Aug 2025 16:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukTyS-0000bw-QT
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:46:01 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukTzV-0001q3-6h
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:47:06 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukTyR-0003eo-4u
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:46:00 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-459eb4ae596so22919815e9.1
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 13:45:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukTzR-0003vZ-GM
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:47:04 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-31efefd2655so2114662a91.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 13:47:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754685957; x=1755290757; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1754686020; x=1755290820; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DWbHVPSnx3zBRESkWw4iY6+p9DQAd5CJqsRJ0vGzSSs=;
- b=Rs0pF6O4HWaNjs58+EFLCZNHwQgOVhjIWKnjPiS4crBD2vgQptfe1zjP9hN4JHsNRE
- eBx7Q2TaoTpLh8mus4y15AGEUWfNvsnn1HgTVK2IMPbFwX1kSAnfkIKMgq1Job7GK04g
- jgCiieY7Hu3mgHkBK/K4xRd0UYk55a4yB0pAQiuNMa8EobpdZ0aI9a0ClMxjFp+VKhNa
- PfzuaZMozfbVWicJCmexFm2kA5ixhklGlPOcJAZdtzerFUxSwgXL7zqB5efiYNM1XF5S
- ruZNVMandWYn0D7oJWOUgfpvIsrkYPtvAiQJu19wAtvmtYfqTHh1ecQUe5SQXApnflFT
- 1jQA==
+ bh=/74K7khizFR9OV/b7qDXkBSWiiOLUqA6zwAlsZronWg=;
+ b=CsnV9vxo2dcRZ/eKkbO8xMm9NYrK3ALLxQBTDEQVHBm7w6m04mOsoul8iAeUVjWs2/
+ 1AcwEvVQs+3vYPhVva2yA4oPs3DvKEkqobLDmTQyB/gpdGRyVURRaYT4VswEX3pM2hUN
+ 1ya/6clyxhTTotlQ+R0Rg6GxVVhOgZdL5MfLc+yDBUGBBeUlHlNh4Ed0Ms5U61IAcbuv
+ rXi9g4jN23sfC8GvdwfStanSAbCdWd9VWzQfajAQT45jXVcQcSM1oWnIqCuXgLoZVoJx
+ x0P4jBDCI7qVf8Jaif178G0iGZaeefAI6SlEiAfcqjd0Y2d4MqIexbEGOWQ3GLOSxJFI
+ KcrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754685957; x=1755290757;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754686020; x=1755290820;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DWbHVPSnx3zBRESkWw4iY6+p9DQAd5CJqsRJ0vGzSSs=;
- b=gq5/YirYkyMuHAiIeFlOI8vL8nX0cYocGeEF04xd4TYIfR9C+m7z0TZ6EcBplak/Ln
- AWY/DokQdrNSosyg7sYdjNdCyxX7YRU/5iGeyFLmz+FAD7Ta/DSsxgCzKEHLWlo5irxX
- Y635rg/rGuNZTyEAyBpQSFnYXkaagndRhMUYIHebnytWG4WLWqRhaK9SnuHnRbU9SDwa
- /bwAjEE/UV95icKiE4mXVcTDxK8mKvY+EYxWo8uLiP9gqmeUv/aDSEf404JuzeHh2+d4
- SDum8AlOIYLGW9RXfQ0CVyh9lC3c6c3UTLbxZ0+8xz2iyLpqOGcHchm2ADKiqBo8SdOk
- n5Cg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXF0NloRysvVV62CpsrIAMOhBObpNlOlXBnLpNYw/xGWg4Hwhb17AF7tAwUpFjGgc0NeuXm0kMMgswm@nongnu.org
-X-Gm-Message-State: AOJu0Yzy3xsPaI2uH9HW5JzZKr2e6D9BjFfLzYZG6IsKd/i5KXlulyMQ
- yBdUMfM5RpSIEfEXMA5E2wrcKn79BuBYOiFkTEXsExxEURd5ZmglbiebaDSjN9c7XkU=
-X-Gm-Gg: ASbGncvzuDbzrz0SuUcPnhPvRCqtVcao2neEW+hZIaLqvWnGqHvngzBYCx3TTFO+b73
- Tw+8b1cK1C4F3LqA+Pt7+A6EAvcJF7uIMLd/tPy+V8nb39cbVnL6RO/1jd9nC3VaAA1sy0uSW7s
- ItcepSm4p1B5U6PNSZTkyhprt5Oqn7oNBXUtxYs4gUJv+Gjadr+FBS3uEDNZ4vs0cyiR0BAI2IQ
- isRZSzO5t+CMkxgcEHbNOwadaicjkLMtGAwkWRzG+2KTZhnjTXCfXR2AWE6r3LPVNadajCQoVMk
- kqIZxO61onOJZgsGIH3BA9O0kQqbX5HahJblPjtEMCGqPXoQgWx6Up+/zehV2dis68nDqhdvHG8
- mAxA09ewZng9+mGYS8keGD3V93J213Ya/DIbD7FO2yjdy1WNK7JM8lk+Q+TTmyQdmBw==
-X-Google-Smtp-Source: AGHT+IEhLJ2welCu6ohViBY86RDdco6ICImm1tGHosw1q+JqBz/RI6BeqmpYLcX57zPq/NKnTagcig==
-X-Received: by 2002:a05:600c:474f:b0:459:db54:5f34 with SMTP id
- 5b1f17b1804b1-459f4fc273dmr45806025e9.31.1754685956783; 
- Fri, 08 Aug 2025 13:45:56 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458be70c5f7sm273777125e9.26.2025.08.08.13.45.55
+ bh=/74K7khizFR9OV/b7qDXkBSWiiOLUqA6zwAlsZronWg=;
+ b=IlxHWPpTUXGibnKf8vvbYF7sZVYL/sXZU2CrP5G9UDsiwJoVnz0oAgueI7niq60e7q
+ LkeUOHU8N6fa2woIlSbRT6ehcx7SpKSWbVWBnG9IHtSV5NXPYrY1oJYIq9GAy8wU+/U1
+ a9zTreGS38HxoAtqYFzMGm8oLFZ7hUlCOdJ6JBw1whi1/7AuztHJKgPEouPCZ/Uy4Vuv
+ 0N1lZcIhP7B0MYDeJeUna65c/6o3+TQApAS6HLBBvOmk/gufbXr3qCRhYBBxxdl9IFmz
+ 9H/xpBFmI3lpFWX8t68radjrCVQo01rLaPlmTQ/4tMujXByxgOXNtkqayjMmKTmMe/w6
+ vlLw==
+X-Gm-Message-State: AOJu0Yy5eXHpfAEH+ffsgsB1ZbsclSIfqIxufC88v/fce4cN2z1Cdxzt
+ hcnkutWN4R6r1NTS51JF0fieQcn93VRzll7VyEmc928WNxKdqVOymNQsTObq2GLiNOCYzl+gFWO
+ HiOp2rXhPnw==
+X-Gm-Gg: ASbGncu+aDEZzY2TKhC6QEgFiCAZE1Vh3D/Hlxia+uq8WEISPZTvrYzWJCNn1u3f51/
+ gNYVRPIv6/KSz6CXbRz2xg7ixR+XXKl2VZRpIHxPmYsffKm6AqL3nvT1vYpXkK9q4YeANZJL1/v
+ RyvNXr5YcY6mmSP+i69h/4qp3TIhxk7v8aCdz/5QJ3ODxxlXJv8hveFFSoFpTBf0rVTOBmbWlHe
+ TrfY3TnyKaFFo8e4ww8jjVrf0ccWXOUACecoMXfUTdab8CLkTppIdt7jn0xtIyFGZpRoX7f8qCq
+ TQENPUod+UDeuGcX9qdkOhtLs0IvZzBl/WMioGRzvQgHJ+LuxP0eULVi1T+Rps2AgcJLgsKntvd
+ QAjQu/tBfhXRxtNGgCDZCjBkmkQxdpOgGEVQ=
+X-Google-Smtp-Source: AGHT+IFaLshfsZa0ldnbaqNDMN4OMEYSs1CPtAZNyOf0pS8mhGFLeradTFVJpv87arZCpKqcocVj0Q==
+X-Received: by 2002:a17:90b:4f47:b0:321:2b89:958b with SMTP id
+ 98e67ed59e1d1-3218425082fmr6741268a91.0.1754686019850; 
+ Fri, 08 Aug 2025 13:46:59 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-32102a95be9sm10019998a91.2.2025.08.08.13.46.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 13:45:56 -0700 (PDT)
-Message-ID: <ae58547f-79f2-4bde-a3ac-46bea847b37d@linaro.org>
-Date: Fri, 8 Aug 2025 22:45:54 +0200
+ Fri, 08 Aug 2025 13:46:59 -0700 (PDT)
+Message-ID: <3ebeccb9-3cb4-469d-8163-f71cdec888f1@linaro.org>
+Date: Fri, 8 Aug 2025 13:46:58 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 07/18] hw, target, accel: whpx: change apic_in_platform
- to kernel_irqchip
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
- <phil@philjordan.eu>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- qemu-arm@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250808065419.47415-1-mohamed@unpredictable.fr>
- <20250808065419.47415-8-mohamed@unpredictable.fr>
+Subject: Re: [PATCH v6 0/9] contrib/plugins: uftrace
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250808065419.47415-8-mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, rowan Hart <rowanbhart@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Richard Henderson <richard.henderson@linaro.org>
+References: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,23 +108,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 08:54, Mohamed Mediouni wrote:
-> Change terminology to match the KVM one, as APIC is x86-specific.
+On 8/8/25 1:41 PM, Pierrick Bouvier wrote:
 > 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> v6
+> --
 > 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   accel/whpx/whpx-accel-ops.c    |  2 +-
->   accel/whpx/whpx-common.c       |  4 ++--
->   hw/i386/x86-cpu.c              |  4 ++--
->   include/system/whpx-internal.h |  2 +-
->   include/system/whpx.h          |  4 ++--
->   target/i386/cpu-apic.c         |  2 +-
->   target/i386/whpx/whpx-all.c    | 14 +++++++-------
->   7 files changed, 16 insertions(+), 16 deletions(-)
+> - fix types and spelling mistakes
+> - use _MAX for privilege level enums
+> - uftrace info file: use empty strings
+> - trace flush: assert we wrote all data
+> - doc: added style for keyboard keys
+> - added URL to document uftrace entry format
+> - updated comment in vcpu_tb_trans to explain why we always instrument the first
+>    instruction in tb
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Patch 4 and 8 still miss review.
 
+Thanks,
+Pierrick
 
