@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB92C87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 20:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D79AC87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 20:43:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukTus-000308-Uq; Fri, 08 Aug 2025 16:42:18 -0400
+	id 1ukTut-00030W-Rg; Fri, 08 Aug 2025 16:42:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukTur-0002yV-4A
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:42:17 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1ukTup-0002xd-0M
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:42:16 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukTuo-0003DO-PB
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:42:16 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-23dc5bcf49eso29792755ad.2
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 13:42:13 -0700 (PDT)
+ id 1ukTul-0003Cn-D6
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:42:14 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-23fc5aedaf0so17958255ad.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 13:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754685733; x=1755290533; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754685730; x=1755290530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qof9Qj78VVSEid4N6FOGHfZkZXIU0Ub5qskH0ZkOHjU=;
- b=UrsuynZ2vwS+m1TJa43As9CYaX5v3PD00pkVGT31sXa/LgCpoGFgR07tHcSMuxatAk
- RJC7ghU/teH2SiKoXx2Arv78asYsawcXoRGcCeh3LjbhMFAZaX6CltTUikFz/Nms65Cl
- zbkPHOOWwQ1i5d1z6keRMIVV2m3eM2xPFcFZR7+yCUQLcdCoVVnZ+TePmTgTYcl/bfLC
- Ha1Ua8LKEjd3eupUdT74kjqh1mkPnnm2ij0NKE00rjbeW644wbUDEHrDRwHvHkzvsADu
- 1mvsS8HN2nrmsghAXw5M79ZUuc+c+CPc7oLDFIO/Ok/EkeEhkZrVBR67rFv3Bpl5Smpe
- /LpQ==
+ bh=n8jo0LSSh8lJpsdcimtvOxocpTr/cr5eTG3kdaxxUXg=;
+ b=xR+5p2yf+WaJCXZfrMeAJFHIutsX8m1tK51Mcs2j/8sQ9bn2n/aTdGZRCcf9qftbrO
+ G12uQdy/a1WZCcRDHxVBEyGXL4g6zKLyG1eWWRmu2TeGbDu7kUQKbqGooqxoey8k8L92
+ k/g0swKW+HikCu7S4sQ/fhL/TrrebxEixJBZXwp5cZOd4KSBsCJzFMhbJmjtH1k5qJal
+ hZH9rSg0YGx70YYVvKCl42xwAG3h8wxY1Dk3FI++3hlFmZL+AnTKTFwLCUNIv8/FT/UT
+ Yn+Y9JqUaLgH9ob9I6NxKfxBSHku30ik4/sZgtKYQDnYaChskUKtchs2jhKef0khmpyS
+ Biyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754685733; x=1755290533;
+ d=1e100.net; s=20230601; t=1754685730; x=1755290530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qof9Qj78VVSEid4N6FOGHfZkZXIU0Ub5qskH0ZkOHjU=;
- b=CjQJEdLpaxbz0Hn5dVdSw8099wgL/ohbKAdLZkF9VKR3K83geuKDRG6TtVNLMNTkVl
- wYpYk+zTIfhknUCw5QiwDHSW8wl+cRtBIqDPJT3FXCbRB6uw9BESIFj3V4g9QqiN9QOV
- BpZ8Dp/qX76kUK5xLNwm6M++BwRhXd9NIOnaeuydHkNxWlRrB8UdIChzzKQX37wDZkSj
- E1yZiSOBZrLHPK3zs/90zcwdoMzEqhIEg4q2WHvGODHNPqFS4jI8gDUU3Gh0AOM2+G8V
- CocHe4HaieDn/C7sy9pihYhA092bCrklgC+ICAqYwOF/Pz0+GtinTcYQTe7zKUYATpqO
- /kiQ==
-X-Gm-Message-State: AOJu0YzwsjVjiDU7Sid+VtZK8MuST8WNS+uA5oGGP6zjRsrJE0yLl98V
- LycSWkfsfj6dx5dptCna7v8hZZduSdJIgliS4md5WaeNSs98grHGCrjVmdXn45m0kQG20UlkuyD
- mrbPfteDkvg==
-X-Gm-Gg: ASbGncuETAfy1BLvXlZnZ6R4H5EwZXR4beu7gRaFtf+65tsBst8T4Ml7hfxTtnhI70t
- C7CASGC76eODzyRxDAv5YVbRVOi2us5q3KojPZLhr1SeCLkPiV1D/FivhYKDL8JWpGVi8bpHHYQ
- 1dxI7APPjqQRBHQlYBYnOtS2CJZEfdE3ieUkeJJsMapS+eQ/zv4NmYMe7x8AtqpUxO0NZzbadeJ
- ygk+6gfR3egr2xDYxtYuqSM46tTr6TBWUkS54obKqBu7UT1gbTPBfcux780q1U8+TrK6TcTn9JL
- B14u+v/iOx7VvhyY4Bkra2szn++mJofE5Tr0/AAClFcm96U4r0DBKtZEpF1/ZJfJo5Co92euBj5
- zN3+kxpNXYWNoNAwJBi3yNJECEujj7vLH
-X-Google-Smtp-Source: AGHT+IGKygQORO9yAFr0wkyzD+psRcNYqUfG2u3yqCb36r3HaWeW8WYcW599TRN7Iy0SP/pXu/IPeA==
-X-Received: by 2002:a17:903:2b06:b0:242:9be2:f67a with SMTP id
- d9443c01a7336-242c1fdce56mr64910355ad.11.1754685732695; 
- Fri, 08 Aug 2025 13:42:12 -0700 (PDT)
+ bh=n8jo0LSSh8lJpsdcimtvOxocpTr/cr5eTG3kdaxxUXg=;
+ b=UYoZum8mCTNYt4E53/fyP5ToaLWAvc3ghc1UXnamm0MNUkn+7S+ejkknBAao5lo7OJ
+ Mz4tk1pKt8CcSE4Ok82ly0eLout1KXDM6M83p+l+c4ueH6T1Z6kh/X64sg2ilZ2Rgtnx
+ c/09zhnhtSSPAVBAxXbr6fvJFb2oyCilWlgNZoxc1GEzHP4hW/K6idjjaT9mZsJO3ugy
+ 5RuW1gVTwIm97bfg7zVM10MnkUP27o8vF7rC6TVviLROIBbnuOIGhyyEz1u/2myxRvjD
+ GviZ4VpJ2nwtPJMGUwEFqf/bJatJclBwr3Eb4AjYmR1gRsEWI7FY1/945RFYXn1vUQGl
+ RGww==
+X-Gm-Message-State: AOJu0YzIwFnxrS/7B7KAcV9C9deNpPSyEB13rmBx+iZh4UeQPbWpHK6v
+ L8PsOK5JJLdHqDv/o60ZIhmtKj4gmhB/F1W8G9WtTER/vyChyYIH968ivrVmTYFBJz+FyJUf/Et
+ ohzqOPR4oUg==
+X-Gm-Gg: ASbGncuTa5Fi74yh5rFd3Id2ZZWNt+u2SfOGRdiIsAvLCKWCUp9DZLKoKu0EloQwHan
+ XpmZWeNvd538kz8Eoj3YWE/CD90Utvlm81sDp+5j+TJgOamQeIYz9Sw51B63aDYBP/ELjo15lUH
+ fLgc01hyu5dDXTINSO5fOHTKsj/HkmGvvPH9m4ID0kgPiLBV0in/vMcX4Xkr5trteqtDIlL4AYC
+ V+W6hYpvGsB7Rk5/WFUc8vfplmzO6f3fqLcag7Kc1P0Omwf0MOB/71g5W6MT5FouHHdMuu41En9
+ 4Hy914iJDNFPkYjGLmAei+g+isK46O8Xr8wTvxnuTv7Ktt8RvK51cABE781W17uJLj5f/fApJZF
+ YQS9SWyjoVRrJ7CRlvPnjWg==
+X-Google-Smtp-Source: AGHT+IHdyzwZo6v3pLXWFd5wdi1PwGtBgW4b459IoDCidfZlewJaQGcNMIUZEfzm2EH8PTbD0W6R6Q==
+X-Received: by 2002:a17:903:40c9:b0:240:5549:708e with SMTP id
+ d9443c01a7336-242c225ad36mr67222365ad.46.1754685729829; 
+ Fri, 08 Aug 2025 13:42:09 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e899a814sm217789945ad.117.2025.08.08.13.42.11
+ d9443c01a7336-241e899a814sm217789945ad.117.2025.08.08.13.42.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Aug 2025 13:42:12 -0700 (PDT)
+ Fri, 08 Aug 2025 13:42:09 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org,
 	pierrick.bouvier@linaro.org
@@ -76,17 +76,16 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v6 6/9] contrib/plugins/uftrace: generate additional files for
- uftrace
-Date: Fri,  8 Aug 2025 13:41:53 -0700
-Message-ID: <20250808204156.659715-7-pierrick.bouvier@linaro.org>
+Subject: [PATCH v6 3/9] contrib/plugins/uftrace: track callstack
+Date: Fri,  8 Aug 2025 13:41:50 -0700
+Message-ID: <20250808204156.659715-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
 References: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,191 +108,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Beyond traces per cpu, uftrace expect to find some specific files.
-- info: contains information about machine/program run
-  those values are not impacting uftrace behaviour (only reported by
-  uftrace info), and we simply added empty strings.
-- memory mapping: how every binary is mapped in memory. For system mode,
-  we generate an empty mapping (uftrace_symbols.py, coming in future
-  commit, will take care of that). For user mode, we copy current
-  /proc/self/maps. We don't need to do any special filtering, as
-  reported addresses will necessarily concern guest program, and not
-  QEMU and its libraries.
-- task: list of tasks. We present every vcpu/privilege level as a
-  separate process, as it's the best view we can have when generating a
-  (visual) chrome trace. Using threads is less convenient in terms of
-  UI.
+We now track callstack, based on frame pointer analysis. We can detect
+function calls, returns, and discontinuities.
+We implement a frame pointer based unwinding that is used for
+discontinuities.
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/uftrace.c | 131 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 130 insertions(+), 1 deletion(-)
+ contrib/plugins/uftrace.c | 160 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 160 insertions(+)
 
 diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-index fa95341b8b9..290e40ee390 100644
+index d060513446c..bb775916270 100644
 --- a/contrib/plugins/uftrace.c
 +++ b/contrib/plugins/uftrace.c
-@@ -116,6 +116,127 @@ static uint64_t gettime_ns(void)
-     return now_ns;
+@@ -15,6 +15,15 @@
+ 
+ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+ 
++typedef struct {
++    GArray *s;
++} Callstack;
++
++typedef struct {
++    uint64_t pc;
++    uint64_t frame_pointer;
++} CallstackEntry;
++
+ typedef struct Cpu Cpu;
+ 
+ typedef struct {
+@@ -25,6 +34,7 @@ typedef struct {
+ } CpuOps;
+ 
+ typedef struct Cpu {
++    Callstack *cs;
+     GByteArray *buf;
+     CpuOps ops;
+     void *arch;
+@@ -37,6 +47,71 @@ typedef struct {
+ static struct qemu_plugin_scoreboard *score;
+ static CpuOps arch_ops;
+ 
++static Callstack *callstack_new(void)
++{
++    Callstack *cs = g_new0(Callstack, 1);
++    cs->s = g_array_new(false, false, sizeof(CallstackEntry));
++    return cs;
++}
++
++static void callstack_free(Callstack *cs)
++{
++    g_array_free(cs->s, true);
++    cs->s = NULL;
++    g_free(cs);
++}
++
++static size_t callstack_depth(const Callstack *cs)
++{
++    return cs->s->len;
++}
++
++static size_t callstack_empty(const Callstack *cs)
++{
++    return callstack_depth(cs) == 0;
++}
++
++static void callstack_clear(Callstack *cs)
++{
++    g_array_set_size(cs->s, 0);
++}
++
++static const CallstackEntry *callstack_at(const Callstack *cs, size_t depth)
++{
++    g_assert(depth > 0);
++    g_assert(depth <= callstack_depth(cs));
++    return &g_array_index(cs->s, CallstackEntry, depth - 1);
++}
++
++static CallstackEntry callstack_top(const Callstack *cs)
++{
++    if (callstack_depth(cs) >= 1) {
++        return *callstack_at(cs, callstack_depth(cs));
++    }
++    return (CallstackEntry){};
++}
++
++static CallstackEntry callstack_caller(const Callstack *cs)
++{
++    if (callstack_depth(cs) >= 2) {
++        return *callstack_at(cs, callstack_depth(cs) - 1);
++    }
++    return (CallstackEntry){};
++}
++
++static void callstack_push(Callstack *cs, CallstackEntry e)
++{
++    g_array_append_val(cs->s, e);
++}
++
++static CallstackEntry callstack_pop(Callstack *cs)
++{
++    g_assert(!callstack_empty(cs));
++    CallstackEntry e = callstack_top(cs);
++    g_array_set_size(cs->s, callstack_depth(cs) - 1);
++    return e;
++}
++
+ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+ {
+     GByteArray *buf = cpu->buf;
+@@ -47,6 +122,50 @@ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+     return *((uint64_t *) buf->data);
  }
  
-+static void uftrace_write_map(bool system_emulation)
++static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
 +{
-+    const char *path = "./uftrace.data/sid-0.map";
++    g_assert(addr);
++    GByteArray *buf = cpu->buf;
++    g_byte_array_set_size(buf, 0);
++    bool read = qemu_plugin_read_memory_vaddr(addr, buf, 8);
++    if (!read) {
++        return 0;
++    }
++    g_assert(buf->len == 8);
++    return *((uint64_t *) buf->data);
++}
 +
-+    if (system_emulation && access(path, F_OK) == 0) {
-+        /* do not erase existing map in system emulation, as a custom one might
-+         * already have been generated by uftrace_symbols.py */
++static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
++{
++    g_assert(callstack_empty(cpu->cs));
++
++    #define UNWIND_STACK_MAX_DEPTH 1024
++    CallstackEntry unwind[UNWIND_STACK_MAX_DEPTH];
++    size_t depth = 0;
++    do {
++        /* check we don't have an infinite stack */
++        for (size_t i = 0; i < depth; ++i) {
++            if (frame_pointer == unwind[i].frame_pointer) {
++                break;
++            }
++        }
++        CallstackEntry e = {.frame_pointer = frame_pointer, .pc = pc};
++        unwind[depth] = e;
++        depth++;
++        if (frame_pointer) {
++            frame_pointer = cpu_read_memory64(cpu, frame_pointer);
++        }
++        pc = cpu_read_memory64(cpu, frame_pointer + 8); /* read previous lr */
++    } while (frame_pointer && pc && depth < UNWIND_STACK_MAX_DEPTH);
++    #undef UNWIND_STACK_MAX_DEPTH
++
++    /* push it from bottom to top */
++    while (depth) {
++        callstack_push(cpu->cs, unwind[depth - 1]);
++        --depth;
++    }
++}
++
+ static struct qemu_plugin_register *plugin_find_register(const char *name)
+ {
+     g_autoptr(GArray) regs = qemu_plugin_get_registers();
+@@ -102,6 +221,43 @@ static CpuOps aarch64_ops = {
+ 
+ static void track_callstack(unsigned int cpu_index, void *udata)
+ {
++    uint64_t pc = (uintptr_t) udata;
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
++    Callstack *cs = cpu->cs;
++
++    uint64_t fp = cpu->ops.get_frame_pointer(cpu);
++    if (!fp && callstack_empty(cs)) {
++        /*
++         * We simply push current pc. Note that we won't detect symbol change as
++         * long as a proper call does not happen.
++         */
++        callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
 +        return;
 +    }
 +
-+    FILE *sid_map = fopen(path, "w");
-+    g_assert(sid_map);
-+
-+    if (system_emulation) {
-+        fprintf(sid_map,
-+                "# map stack on highest address possible, to prevent uftrace\n"
-+                "# from considering any kernel address\n");
-+        fprintf(sid_map,
-+          "ffffffffffff-ffffffffffff rw-p 00000000 00:00 0 [stack]\n");
-+    } else {
-+        /* in user mode, copy /proc/self/maps instead */
-+        FILE *self_map = fopen("/proc/self/maps", "r");
-+        g_assert(self_map);
-+        for (;;) {
-+            int c = fgetc(self_map);
-+            if (c == EOF) {
-+                break;
-+            }
-+            fputc(c, sid_map);
-+        }
-+        fclose(self_map);
-+    }
-+    fclose(sid_map);
-+}
-+
-+static void uftrace_write_task(const GArray *traces)
-+{
-+    FILE *task = fopen("./uftrace.data/task.txt", "w");
-+    g_assert(task);
-+    for (int i = 0; i < traces->len; ++i) {
-+        Trace *t = g_array_index(traces, Trace*, i);
-+        fprintf(task, "SESS timestamp=0.0 pid=%"PRIu32" sid=0 exename=\"%s\"\n",
-+                t->id, t->name->str);
-+        fprintf(task, "TASK timestamp=0.0 tid=%"PRIu32" pid=%"PRIu32"\n",
-+                t->id, t->id);
-+    }
-+    fclose(task);
-+}
-+
-+static void uftrace_write_info(const GArray *traces)
-+{
-+    g_autoptr(GString) taskinfo_tids = g_string_new("taskinfo:tids=");
-+    for (int i = 0; i < traces->len; ++i) {
-+        Trace *t = g_array_index(traces, Trace*, i);
-+        const char *delim = i > 0 ? "," : "";
-+        g_string_append_printf(taskinfo_tids, "%s%"PRIu32, delim, t->id);
++    CallstackEntry top = callstack_top(cs);
++    if (fp == top.frame_pointer) {
++        /* same function */
++        return;
 +    }
 +
-+    g_autoptr(GString) taskinfo_nr_tid = g_string_new("taskinfo:nr_tid=");
-+    g_string_append_printf(taskinfo_nr_tid, "%d", traces->len);
-+
-+    FILE *info = fopen("./uftrace.data/info", "w");
-+    g_assert(info);
-+    /*
-+     * $ uftrace dump --debug
-+     * uftrace file header: magic         = 4674726163652100
-+     * uftrace file header: version       = 4
-+     * uftrace file header: header size   = 40
-+     * uftrace file header: endian        = 1 (little)
-+     * uftrace file header: class          = 2 (64 bit)
-+     * uftrace file header: features      = 0x1263 (PLTHOOK | ...
-+     * uftrace file header: info          = 0x7bff (EXE_NAME | ...
-+     *  <0000000000000000>: 46 74 72 61 63 65 21 00  04 00 00 00 28 00 01 02
-+     *  <0000000000000010>: 63 12 00 00 00 00 00 00  ff 7b 00 00 00 00 00 00
-+     *  <0000000000000020>: 00 04 00 00 00 00 00 00
-+     */
-+    const uint8_t header[] = {0x46, 0x74, 0x72, 0x61, 0x63, 0x65, 0x21, 0x00,
-+                              0x04, 0x00, 0x00, 0x00, 0x28, 0x00, 0x01, 0x02,
-+                              0x63, 0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+                              0xff, 0x7b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+                              0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-+    size_t wrote = fwrite(header, sizeof(header), 1, info);
-+    g_assert(wrote == 1);
-+    const char *info_data[] = {
-+        "exename:",
-+        "build_id:0000000000000000000000000000000000000000",
-+        "exit_status:",
-+        "cmdline:",
-+        "cpuinfo:lines=2",
-+        "cpuinfo:nr_cpus=",
-+        "cpuinfo:desc=",
-+        "meminfo:",
-+        "osinfo:lines=3",
-+        "osinfo:kernel=",
-+        "osinfo:hostname=",
-+        "osinfo:distro=",
-+        "taskinfo:lines=2",
-+        taskinfo_nr_tid->str,
-+        taskinfo_tids->str,
-+        "usageinfo:lines=6",
-+        "usageinfo:systime=",
-+        "usageinfo:usrtime=",
-+        "usageinfo:ctxsw=",
-+        "usageinfo:maxrss=",
-+        "usageinfo:pagefault=",
-+        "usageinfo:iops=",
-+        "loadinfo:",
-+        "record_date:",
-+        "elapsed_time:",
-+        "pattern_type:regex",
-+        "uftrace_version:",
-+        "utc_offset:",
-+        0};
-+    const char **info_data_it = info_data;
-+    while (*(info_data_it)) {
-+        fprintf(info, "%s\n", *info_data_it);
-+        ++info_data_it;
++    CallstackEntry caller = callstack_caller(cs);
++    if (fp == caller.frame_pointer) {
++        /* return */
++        callstack_pop(cs);
++        return;
 +    }
-+    fclose(info);
-+}
 +
- static Callstack *callstack_new(void)
++    uint64_t caller_fp = fp ? cpu_read_memory64(cpu, fp) : 0;
++    if (caller_fp == top.frame_pointer) {
++        /* call */
++        callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
++        return;
++    }
++
++    /* discontinuity, exit current stack and unwind new one */
++    callstack_clear(cs);
++    cpu_unwind_stack(cpu, fp, pc);
+ }
+ 
+ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+@@ -140,12 +296,16 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+ 
+     cpu->ops.init(cpu);
+     cpu->buf = g_byte_array_new();
++
++    cpu->cs = callstack_new();
+ }
+ 
+ static void vcpu_end(unsigned int vcpu_index)
  {
-     Callstack *cs = g_new0(Callstack, 1);
-@@ -610,14 +731,22 @@ static void vcpu_end(unsigned int vcpu_index)
- 
- static void at_exit(qemu_plugin_id_t id, void *data)
- {
-+    bool system_emulation = (bool) data;
-+    g_autoptr(GArray) traces = g_array_new(0, 0, sizeof(Trace *));
+     Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
+     g_byte_array_free(cpu->buf, true);
 +
-     for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
-         Cpu *cpu = qemu_plugin_scoreboard_find(score, i);
-         for (size_t j = 0; j < cpu->traces->len; ++j) {
-             Trace *t = g_array_index(cpu->traces, Trace*, j);
-             trace_flush(t, true);
-+            g_array_append_val(traces, t);
-         }
-     }
++    callstack_free(cpu->cs);
+     memset(cpu, 0, sizeof(Cpu));
+ }
  
-+    uftrace_write_map(system_emulation);
-+    uftrace_write_info(traces);
-+    uftrace_write_task(traces);
-+
-     for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
-         vcpu_end(i);
-     }
-@@ -654,7 +783,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
- 
-     score = qemu_plugin_scoreboard_new(sizeof(Cpu));
-     qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
--    qemu_plugin_register_atexit_cb(id, at_exit, NULL);
-+    qemu_plugin_register_atexit_cb(id, at_exit, (void *) info->system_emulation);
-     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
- 
-     return 0;
 -- 
 2.47.2
 
