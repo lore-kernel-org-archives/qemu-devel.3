@@ -4,89 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B084C87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F305C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukNgS-0002df-GJ; Fri, 08 Aug 2025 10:03:10 -0400
+	id 1ukLoV-0006cv-Sw; Fri, 08 Aug 2025 08:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNgD-0002Om-1U
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:02:48 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNgA-0004yU-JO
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:02:44 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3b7886bee77so1689448f8f.0
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 07:02:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754661760; x=1755266560; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EbZZ4sywkonj7FnhWZK8OKG+k1BfHFsIoacIJtQdkJA=;
- b=O6IjJHayBIDqc85p6/YzbNUr+/CoF7rqqfxEyuBZp8UYgT6ig3XBsOqrN2Gr4JNc0z
- FelBL6ujRPqz5jX01ucjjK+IuLhZivLk4nQWaYERtQFKQ1sF3XGemjVj5illlZIV7rZO
- NgA7R//lAgSOWQ5lY5BpxLkHmG6DCgVNhTlOC96DfSKAxVwFT3/mCIYLK/Q2g5X+4jxx
- z8G3z9s/6AZbrUxw0uH0Y8wO10II5qbXyF7EBxzcla66bOO0i2RjMGGwCXfxCANV6YKf
- yzZSW76If+0OTrQGGJChyxWmu0A4k5p9cLIlmRXMLOxFlWLqHnz0OJHpUH7iDwYcBF+Y
- 7+uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754661760; x=1755266560;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EbZZ4sywkonj7FnhWZK8OKG+k1BfHFsIoacIJtQdkJA=;
- b=MF+yNxTQUPZ6XTrtyIxGj2cF1/8bCxJ7urhKx6+Nyeouefm3U9INtdDjgAuc4QzEVy
- 0E9JtvxNeBYg9uwVhCh1FPWpph6T5atzqH5aDC49wbUAWbaLHIafYDdgXr+lyol0Iv1N
- deSYORQtMShjoF/fAmCB47oMapKhlgQG4ThWEa8Cv2LTpYJoAb+Ytpi/NgJTUkGoJJLD
- whEdjGuP9czksQvcSQKOjwF6SrVhSrY02r9NOmW799wBblX0EefScz0vLpwNBY+L5tM9
- M7AOljkIBzY9Pr5tFcxmMfBpQBx/Q/YLJPRAH04PHBSFPcr8jYOd4PvDpLUVkeyzjKs5
- UTQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXMI16qRcWurKfxYTT5iuYcqsuJk01AWt3xEU+SAl5ghEHyFpavI7uHjrQJoNfgt7yoa5MF9jnKmlT6@nongnu.org
-X-Gm-Message-State: AOJu0YwioIVwhyVltW+n8MLX8Fz9ZodmKdFhGhdd9AnSPVqkbOE7RN3/
- OJZ+g5XnoWcoCu30ncgUNnLLOun6scpmHfo5Qrv17sWGW8eSeA3Jytw4YO7Rop9aWKg=
-X-Gm-Gg: ASbGncspMmuUgcdx8F/Fcagv3bSrvujPyDSfDhs9kvg4LjBGqou3UYZsJjVhDagvAuv
- f0aNGhHeRCFYfN28UPJHkhy8r9M5WidkbkQv+1rkOUFEF8n4qvg2iSudBVLr1gA6HFSwflaJWcS
- uAQL4eIzDXr4ExDp6dHDQKZtPvfzTxaDzgsp7Jk2Ry4WGmSXrOIKpv6oKWO+rDH4jevivqa7JnD
- WMTNfJJqPNHcXnQ4dVaq49d78eUqy1Ard+BxApg5C8BldEy9Mwct8jx78SVuRv54vsfIFaGem+V
- TCukk1GmK/LgAxJi2ALM/sZuAqhwDsGlj81WFfu7q6DNBRkuoXGxsjBLhnk3rmspxDH/FfB/eqb
- 6lLd9MkAoNdJi1/YGItQTOE1M0OE4qXxRWRd/jLA9Mo2WoWbMzehH0Q/ZBViujL42jA==
-X-Google-Smtp-Source: AGHT+IGp1wuLH77xRs9n2uv08MOo3SrgGdzjNYFbwoyik856Ymo7iNKin+cBQFcm+3eOqy2ydyR1MA==
-X-Received: by 2002:a05:6000:2511:b0:3b6:17c0:f094 with SMTP id
- ffacd0b85a97d-3b900b50329mr2761402f8f.14.1754661760190; 
- Fri, 08 Aug 2025 07:02:40 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e075047fsm97562835e9.1.2025.08.08.07.02.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 07:02:39 -0700 (PDT)
-Message-ID: <7c4d300a-3f61-42d9-90a9-f0781db024e7@linaro.org>
-Date: Fri, 8 Aug 2025 16:02:38 +0200
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ukLnd-0004Hr-CS
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:02:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ukLnb-0007CP-Hc
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:02:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754654534;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/TjsEiU6idgYODMC5HW9snh3H7FKlCoSoz/xZ8Ri2Fo=;
+ b=iedkf7y8Jx38y2ymDsbNqqLFF4XMTiMlPeG+0hUC0QTiy4PxQ5XHzOYSyM6v78wUoQxmZ5
+ HjS1RKE4oo0be+eT7XE2mVeKUQirgkrW7OfEy/SKBKDqnRg1PcSn1JjSbwvsrrUVBWTn2M
+ MLC9P1oCH7a2sRevTSwRFRBmAxs5SmA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-89tdTXCqMRSY6zuAZuSwWg-1; Fri,
+ 08 Aug 2025 08:02:11 -0400
+X-MC-Unique: 89tdTXCqMRSY6zuAZuSwWg-1
+X-Mimecast-MFC-AGG-ID: 89tdTXCqMRSY6zuAZuSwWg_1754654530
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88C931800297; Fri,  8 Aug 2025 12:02:10 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E63DC19560B0; Fri,  8 Aug 2025 12:02:07 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
+ philmd@linaro.org, mtosatti@redhat.com
+Subject: [PATCH v3 10/10] tcg: move interrupt caching and single step masking
+ closer to user
+Date: Fri,  8 Aug 2025 14:01:37 +0200
+Message-ID: <20250808120137.2208800-11-imammedo@redhat.com>
+In-Reply-To: <20250808120137.2208800-1-imammedo@redhat.com>
+References: <20250808120137.2208800-1-imammedo@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/12] error: Kill @error_warn
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com
-References: <20250808080823.2638861-1-armbru@redhat.com>
- <20250808080823.2638861-13-armbru@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250808080823.2638861-13-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,37 +87,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 10:08, Markus Armbruster wrote:
-> We added @error_warn some two years ago in commit 3ffef1a55ca (error:
-> add global &error_warn destination).  It has multiple issues:
-> 
-> * error.h's big comment was not updated for it.
-> 
-> * Function contracts were not updated for it.
-> 
-> * ERRP_GUARD() is unaware of @error_warn, and fails to mask it from
->    error_prepend() and such.  These crash on @error_warn, as pointed
->    out by Akihiko Odaki.
-> 
-> All fixable.  However, after more than two years, we had just of 15
-> uses, of which the last few patches removed eight as unclean or
-> otherwise undesirable.  I didn't look closely enough at the remaining
-> seven to decide whether they are desirable or not.
+in cpu_handle_interrupt() the only place where cached interrupt_request
+might have effect is when CPU_INTERRUPT_SSTEP_MASK applied and
+cached interrupt_request handed over to cpu_exec_interrupt() and
+need_replay_interrupt().
 
-Is it a call for help? If so, better to split this patch per
-maintained areas, and finally kill @error_warn.
+Simplify code by moving interrupt_request caching and CPU_INTERRUPT_SSTEP_MASK
+masking into the block where it actually matters and drop reloading cached value
+from CPUState:interrupt_request as the rest of the code directly uses
+CPUState:interrupt_request.
 
-> 
-> I don't think this feature earns its keep.  Drop it.
-> 
-> Thanks-to: Akihiko  Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   include/qapi/error.h           |  6 ------
->   hw/display/virtio-gpu.c        |  8 ++++++--
->   hw/net/virtio-net.c            |  8 +++++++-
->   tests/unit/test-error-report.c | 17 -----------------
->   ui/gtk.c                       |  6 +++++-
->   util/error.c                   |  5 +----
->   6 files changed, 19 insertions(+), 31 deletions(-)
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ accel/tcg/cpu-exec.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 1269c2c6ba..82867f456c 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -779,13 +779,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+     qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
+ 
+     if (unlikely(cpu_test_interrupt(cpu, ~0))) {
+-        int interrupt_request;
+         bql_lock();
+-        interrupt_request = cpu->interrupt_request;
+-        if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
+-            /* Mask out external interrupts for this step. */
+-            interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
+-        }
+         if (cpu_test_interrupt(cpu, CPU_INTERRUPT_DEBUG)) {
+             cpu->interrupt_request &= ~CPU_INTERRUPT_DEBUG;
+             cpu->exception_index = EXCP_DEBUG;
+@@ -804,6 +798,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+             return true;
+         } else {
+             const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
++            int interrupt_request = cpu->interrupt_request;
+ 
+             if (cpu_test_interrupt(cpu, CPU_INTERRUPT_RESET)) {
+                 replay_interrupt();
+@@ -812,6 +807,11 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+                 return true;
+             }
+ 
++            if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
++                /* Mask out external interrupts for this step. */
++                interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
++            }
++
+             /*
+              * The target hook has 3 exit conditions:
+              * False when the interrupt isn't processed,
+@@ -836,9 +836,6 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+                 cpu->exception_index = -1;
+                 *last_tb = NULL;
+             }
+-            /* The target hook may have updated the 'cpu->interrupt_request';
+-             * reload the 'interrupt_request' value */
+-            interrupt_request = cpu->interrupt_request;
+         }
+ #endif /* !CONFIG_USER_ONLY */
+         if (cpu_test_interrupt(cpu, CPU_INTERRUPT_EXITTB)) {
+-- 
+2.47.1
+
 
