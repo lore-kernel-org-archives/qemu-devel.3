@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBBFCC87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 10:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3414C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 11:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukKkL-0002sN-2i; Fri, 08 Aug 2025 06:54:49 -0400
+	id 1ukKy1-0002s7-CV; Fri, 08 Aug 2025 07:08:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukKkI-0002nx-U9
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 06:54:47 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukKkG-00054K-F2
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 06:54:46 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-458b49c98a7so12751225e9.1
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 03:54:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754650481; x=1755255281; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WNhqOzyDwe5dusDE+NJULiqYkQaDt+VVSfCckGVd1/k=;
- b=oFxkb/ImA4QXK8N+rMyW+euIIwqXeTHH9m9Y4RGtALs5W37BUJJFEPjPcNLazXY+oF
- Hin46oedJSqnuTo+hrKI1HE5U6q7Y5FwGgSvgwLF2S86IDOMCXc76k+8hDkeZR6Nq/xS
- WT9tnQTCY3amboi3ZVwuWzMSZIXV/nrCXighXj2NOJ5iEMw7Kn1/FkeQJ84l9hyPwHlu
- Efe343JzCNHh3GbFm4MX6uYzyJzJd+VkYie2KvEfioqolEGkguEeIeEMuSGenKczwbXw
- NBAgz3EC43xbtyxPXN1oZLpOJk9jdLUdyP/jBlmahqpVJEiHyxOZmKEWCgK/VMzaa/Ts
- fv2Q==
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1ukKxv-0002pN-3V
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 07:08:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1ukKxr-0007Xs-GE
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 07:08:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754651325;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TqFbHnKRIRFJltmMETKWH6B3/lkGqma8lEd+JfTH330=;
+ b=hhsY1bMDcdvS1PvDJaIKwheOG92biEk8KLwUnitS9pYcDkG0neSAapKQCSHbgAIpIbFuMg
+ uydh4nvgMg/Xbi/jJIJ+CRXEzHLne011P2y2ZUfxUKgGDFA3ekRBf6YxQ3vV04Xatwsl5y
+ ++jjE1Zl3xVXxMeKv4WLPjWSBD0Uupo=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-336-WXwN7GElN1OTnqnU-j125g-1; Fri, 08 Aug 2025 07:08:44 -0400
+X-MC-Unique: WXwN7GElN1OTnqnU-j125g-1
+X-Mimecast-MFC-AGG-ID: WXwN7GElN1OTnqnU-j125g_1754651324
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7c5bb68b386so644943885a.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 04:08:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754650481; x=1755255281;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WNhqOzyDwe5dusDE+NJULiqYkQaDt+VVSfCckGVd1/k=;
- b=GbSwqgUkFTT+vUx/aoMDLs5log6vAYhAlNvjngfuYwhiuCVTLSztxfrN0f5yu8S/XN
- 4kdlTVSAGsNj6MGgQn4bzPioIdxIcEKNYyIdploxxme+YkkxszD/3lmp4QcktWRa5FRo
- A2vpIY5GeJ8S/0+du+UcG6huUFJN5rCEPU26Zczdk771f6rTRq9cJybFDooTy9HZw4Qm
- MG35TDmlj7mvc8QbDuJrhMms5MErBOyEE3ytoziLm02dZBqeZeGR+zpdWx2cC758eBJA
- LXZMTyRJMXCYjgjMomNvMApbcQUnnpICTMZERZkMQ65oywAi0USm6n9TlekVy0GdjuyE
- zNRQ==
-X-Gm-Message-State: AOJu0Yz4z8xugX6RQobghCNMYWm6kykLLFZ1T28ZZYh1DQZ2PihgZn3Z
- Cxyag6tuLaE7qhLhmH2yFgmP7m70KqqbHZH854vWYm4rQ8itBT7MKnPo7FNyx5cX5eA=
-X-Gm-Gg: ASbGncsVGNIlRb6KFRGNnN/6nMxGTrMXZj+WrwyQx9qfP/l9/7Eoo10ej2jB/hdqELX
- 5oWjsofTKZIb7ebkDEt0YQaqltl5TDDsnCP+0V+xVTC5PJusA6HZy7ze4o9gsW1OGHmJQXAN8Pm
- Biz6ZJ1HyIRQgUatBc/8zoX6ITZ4afHldCokTNR3Su7J/UHmD8FdCdUy5YXzf3DUrhYHwYHMdcf
- InKxa4X6PSClb9ka5x1WnmSa7Ggutmooz/F+HvI6CG/9KTVsXLfcn8xI532OoxWJ9LkmWsSmqf2
- TAIAfpT2JKuPGKAkcUGjYKSmLTOpf4dd9xei5CUVFGIe8hsDFC/A3sOQevJ1R2t+jXkYjR9FKsl
- PfUF6TbIvEMuDZG4tZuI6bjksLAiop9Vw8tQar0bX1gW/JQyDKM9X5ufwnCYIf09JPA==
-X-Google-Smtp-Source: AGHT+IHalif+aeEf0ZCJiSvWujzwKi74GkEB/ibKbW+UHqcYV+n1NitxWQyqKtzU7mGH0eGMrRBOMg==
-X-Received: by 2002:a05:6000:402b:b0:3b7:dd87:d730 with SMTP id
- ffacd0b85a97d-3b900b5558cmr1707359f8f.52.1754650481179; 
- Fri, 08 Aug 2025 03:54:41 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c4534b3sm29807430f8f.47.2025.08.08.03.54.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 03:54:40 -0700 (PDT)
-Message-ID: <d480bd1f-535c-4001-b489-4a0d8b62a80b@linaro.org>
-Date: Fri, 8 Aug 2025 12:54:39 +0200
+ d=1e100.net; s=20230601; t=1754651324; x=1755256124;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TqFbHnKRIRFJltmMETKWH6B3/lkGqma8lEd+JfTH330=;
+ b=omTDTqVbPAR+otmYVToXrH/tyDD/aPyFu4jyjyOFzzJP9m00qE2kasAM/6pA7voblU
+ I6WIB0FZ4P2G1ssa/X267/Uel9ruBGmCmnctIZ9rDPMHVnhYSJSNK1wwrG7HUWv42wYK
+ MThwB09twcWZnFqvE053tUTSMiJG03Fm5SDanWkiMtHFAwmnMB9tBqc2IAhqE41gSX0Q
+ 8HbAUE68T2p9LPWF63vTyKRlhmUwz5hQtiQvUGBdbKLS1bKQDWdZ+9q+i0ltk58cFmC7
+ vYZrUfMUr3jVxMowd9fgf3ttqWffQkHgNfetAF0caiY91dcVkZ49oSTO+BwS/h+oi0Z8
+ vNSg==
+X-Gm-Message-State: AOJu0YzXXXm2rCXA4LygWFUlENQhwJ1SGYrW9AHft80d0mj0ur7YP29y
+ jqlbib+uSLbwrUEvSkEO7tvL80EZPI7OhY9g4rfyNZc/VH9uoWSioHBZJVl7afRKeg7zw32ArUX
+ T/z9rthQfWheQgUqPBglYq2TqttZoSLblSBpBWIuMnon4hF+7aBl6zmxx
+X-Gm-Gg: ASbGncuZKYpHNvc0YssDS84/PjpMDU2UeLpEOXo9INMazfccS+USnbQoU45IqlcJ4Nv
+ XT2LEGLQxA3L0sfDGvGftuynk0q8x53OVav6iWhtfvDww9V9/1Mj+xSIuhLUUKJMQPemzdQFjt/
+ Ha8DgqCMu7Mj9X0RHBF43q1gnB+JgzPXeqtX4v56nL29OVFxBRoLCV6fw3ZnT2fE3JRMCBDJB4B
+ 67FE0HF4niIzcDs0ucEZl8a4+VZXHBvrXIXaiDkne7XgpPAj45fKb/2q+3Y3SnFiq//svG3kYnR
+ Bd0esKfbtSfCr6Q/NVJsRE1PG+2/
+X-Received: by 2002:a05:620a:c50:b0:7e6:211b:217a with SMTP id
+ af79cd13be357-7e82c78f592mr299096485a.43.1754651324042; 
+ Fri, 08 Aug 2025 04:08:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFL8izLLZ6+oU4+5q7dbMnAwzHF96Flo1TJDWAuE2pI6T3vMpEzWZJAHVRvv8EbhD9Rz145tQ==
+X-Received: by 2002:a05:620a:c50:b0:7e6:211b:217a with SMTP id
+ af79cd13be357-7e82c78f592mr299092185a.43.1754651323444; 
+ Fri, 08 Aug 2025 04:08:43 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e7fe61c778sm677808885a.20.2025.08.08.04.08.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Aug 2025 04:08:43 -0700 (PDT)
+Date: Fri, 8 Aug 2025 13:08:39 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>, 
+ Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH 3/4] migration: Make listen thread joinable
+Message-ID: <2svq64am2z4dr7q7x2jozlgzhiwluzi3je3f4acjylxqyzbxml@mnqscmlofjro>
+References: <20250807114922.1013286-1-jmarcin@redhat.com>
+ <20250807114922.1013286-4-jmarcin@redhat.com>
+ <aJUTO0n9NyIWaFNj@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] multiboot: Fix the split lock
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Chenyi Qiang <chenyi.qiang@intel.com>
-References: <20250808035027.2194673-1-xiaoyao.li@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250808035027.2194673-1-xiaoyao.li@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJUTO0n9NyIWaFNj@x1.local>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,76 +109,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 05:50, Xiaoyao Li wrote:
-> While running the kvm-unit-tests on Intel platforms with "split lock
-> disable" feature, every test triggers a kernel warning of
-> 
->    x86/split lock detection: #AC: qemu-system-x86_64/373232 took a split_lock trap at address: 0x1e3
-> 
-> Hack KVM by exiting to QEMU on split lock #AC, we get
-> 
-> KVM: exception 17 exit (error code 0x0)
-> EAX=00000001 EBX=00000000 ECX=00000014 EDX=0001fb80
-> ESI=00000000 EDI=000000a8 EBP=00000000 ESP=00006f10
-> EIP=000001e3 EFL=00010002 [-------] CPL=0 II=0 A20=1 SMM=0 HLT=0
-> ES =0900 00009000 0000ffff 00009300 DPL=0 DS16 [-WA]
-> CS =c000 000c0000 0000ffff 00009b00 DPL=0 CS16 [-RA]
-> SS =0000 00000000 0000ffff 00009300 DPL=0 DS16 [-WA]
-> DS =c000 000c0000 0000ffff 00009300 DPL=0 DS16 [-WA]
-> FS =0950 00009500 0000ffff 00009300 DPL=0 DS16 [-WA]
-> GS =06f2 00006f20 0000ffff 00009300 DPL=0 DS16 [-WA]
-> LDT=0000 00000000 0000ffff 00008200 DPL=0 LDT
-> TR =0000 00000000 0000ffff 00008b00 DPL=0 TSS32-busy
-> GDT=     000c02b4 00000027
-> IDT=     00000000 000003ff
-> CR0=00000011 CR2=00000000 CR3=00000000 CR4=00000000
-> DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 DR3=0000000000000000
-> DR6=00000000ffff0ff0 DR7=0000000000000400
-> EFER=0000000000000000
-> Code=89 16 08 00 65 66 0f 01 16 06 00 66 b8 01 00 00 00 0f 22 c0 <65> 66 ff 2e 00 00 b8 10 00 00 00 8e d0 8e d8 8e c0 8e e0 8e e8 66 b8 08 00 66 ba 10 05 66
-> 
-> And it matches with what disassembled from multiboo_dma.bin:
-> 
->   #objdump -b binary -m i386 -D pc-bios/multiboot_dma.bin
-> 
->    1d1:   08 00                   or     %al,(%eax)
->    1d3:   65 66 0f 01 16          lgdtw  %gs:(%esi)
->    1d8:   06                      push   %es
->    1d9:   00 66 b8                add    %ah,-0x48(%esi)
->    1dc:   01 00                   add    %eax,(%eax)
->    1de:   00 00                   add    %al,(%eax)
->    1e0:   0f 22 c0                mov    %eax,%cr0
->> 1e3:   65 66 ff 2e             ljmpw  *%gs:(%esi)
->    1e7:   00 00                   add    %al,(%eax)
->    1e9:   b8 10 00 00 00          mov    $0x10,%eax
->    1ee:   8e d0                   mov    %eax,%ss
->    1f0:   8e d8                   mov    %eax,%ds
->    1f2:   8e c0                   mov    %eax,%es
->    1f4:   8e e0                   mov    %eax,%fs
->    1f6:   8e e8                   mov    %eax,%gs
->    1f8:   66 b8 08 00             mov    $0x8,%ax
->    1fc:   66 ba 10 05             mov    $0x510,%dx
-> 
-> We can see that the instruction at 0x1e3 is a far jmp through the GDT.
-> However, the GDT is not 8 byte aligned, the base is 0xc02b4.
-> 
-> Intel processors follow the LOCK semantics to set the accessed flag of the
-> segment descriptor when loading a segment descriptor. If the the segment
-> descriptor crosses two cache line, it causes split lock.
-> 
-> Fix it by aligning the GDT on 8 bytes, so that segment descriptor cannot
-> span two cache lines.
-> 
+Hi Peter,
 
-Cc: qemu-stable@nongnu.org
-Fixes: f16408dfb0e ("Multiboot support")
+On 2025-08-07 16:57, Peter Xu wrote:
+> On Thu, Aug 07, 2025 at 01:49:11PM +0200, Juraj Marcin wrote:
+> > From: Juraj Marcin <jmarcin@redhat.com>
+> > 
+> > This patch allows joining the migration listen thread. This is done in
+> > preparation for the introduction of "postcopy-setup" state at the
+> > beginning of a postcopy migration, when destination can fail gracefully
+> > and source side then resume to a running state.
+> > 
+> > In case of such failure, to gracefully perform all cleanup in the main
+> > migration thread, we need to wait for the listen thread to exit, which
+> > can be done by joining it.
+> > 
+> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> > ---
+> >  migration/migration.c | 1 +
+> >  migration/savevm.c    | 2 +-
+> >  2 files changed, 2 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index e5ce2940d5..8174e811eb 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -901,6 +901,7 @@ process_incoming_migration_co(void *opaque)
+> >               * Postcopy was started, cleanup should happen at the end of the
+> >               * postcopy thread.
+> >               */
+> > +            qemu_thread_detach(&mis->listen_thread);
+> >              trace_process_incoming_migration_co_postcopy_end_main();
+> >              goto out;
+> >          }
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index fabbeb296a..d2360be53c 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -2217,7 +2217,7 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
+> >      mis->have_listen_thread = true;
+> >      postcopy_thread_create(mis, &mis->listen_thread,
+> >                             MIGRATION_THREAD_DST_LISTEN,
+> > -                           postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
+> > +                           postcopy_ram_listen_thread, QEMU_THREAD_JOINABLE);
+> 
+> This is good; I actually forgot it used to be detached..
+> 
+> Instead of proactively detach it above, could we always properly join it
 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
->   pc-bios/multiboot_dma.bin     | Bin 1024 -> 1024 bytes
->   pc-bios/optionrom/multiboot.S |   2 +-
->   2 files changed, 1 insertion(+), 1 deletion(-)
+However, after the main thread finishes loading device state from the
+package, process_incoming_migration_co() exits, and IIUC main thread is
+then no longer occupied with migration. So, if we should instead join
+the listen thread, we probably should yield the coroutine until the
+listen thread can be joined, so we are not blocking the main thread?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> (and hopefully every migration thread)?  Then we could drop patch 1 too.
+
+If I haven't missed any, there are no detached migration threads except
+listen and get dirty rate threads.
+
+
+Thanks,
+
+Juraj Marcin
+
+> 
+> >      trace_loadvm_postcopy_handle_listen("return");
+> >  
+> >      return 0;
+> > -- 
+> > 2.50.1
+> > 
+> 
+> -- 
+> Peter Xu
+> 
 
 
