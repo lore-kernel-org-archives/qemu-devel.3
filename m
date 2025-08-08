@@ -4,74 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A204C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 06:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A893C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 06:36:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukGaS-0004Oj-LI; Fri, 08 Aug 2025 02:28:20 -0400
+	id 1ukGhl-0001JW-LW; Fri, 08 Aug 2025 02:35:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukGaR-0004O2-PA
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 02:28:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukGhj-0001IW-V6
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 02:35:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukGaP-0008Ve-7X
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 02:28:19 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukGhh-0001am-VK
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 02:35:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754634494;
+ s=mimecast20190719; t=1754634948;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SvO5V+sDEbFSlwDDPt0J8/g4+21TywkJvCe+D9VV4tk=;
- b=KTY8PBqy3b7CfNtiq+5sd3oed/gWSBohRVhL4knEEDnsE6cWiOu5Qm0aUxiRgalwQLdQsl
- aseR1fBO7Aq4mCppHKo7w78JqRy8aZv/byp7tD7jt1+ZZWvAOVvzFiqjzPGi/aXMfJDUai
- bl+UfDnyoKx0ELIZNvmoZFTlf/npbrI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VNKkH58xD67GRdATg81kxt5+wxc0oCm6Rudn3KSKJ7I=;
+ b=awp/TBMCFgXSc1rCbSfSb40r+DH05ehwzCbV/AGDxBwp2mHCN5B8xqNxmKL0O6lzcvwFPj
+ UDv2X/OiPrV6RbWwkCEW7h6yp7n/G5DQsYq7jNZVoQh7t2dcCp9TdT0Rbg1aKOcLBuTAPJ
+ qj8rPLC4Pdc4GB6Wv3DEOPPHNYb2byk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-lans37pNNBmlju48AUqM2A-1; Fri,
- 08 Aug 2025 02:28:13 -0400
-X-MC-Unique: lans37pNNBmlju48AUqM2A-1
-X-Mimecast-MFC-AGG-ID: lans37pNNBmlju48AUqM2A_1754634492
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-9GmpnuJ5O5KuCMTKKAtQ0Q-1; Fri,
+ 08 Aug 2025 02:35:46 -0400
+X-MC-Unique: 9GmpnuJ5O5KuCMTKKAtQ0Q-1
+X-Mimecast-MFC-AGG-ID: 9GmpnuJ5O5KuCMTKKAtQ0Q_1754634946
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 975DA195608E; Fri,  8 Aug 2025 06:28:11 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D1DE3195608B; Fri,  8 Aug 2025 06:35:45 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA7D619560AD; Fri,  8 Aug 2025 06:28:10 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6316D180028A; Fri,  8 Aug 2025 06:35:45 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id F157621E6A27; Fri, 08 Aug 2025 08:28:07 +0200 (CEST)
+ id C6BCC21E6A27; Fri, 08 Aug 2025 08:35:42 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>,  qemu-devel
- <qemu-devel@nongnu.org>,  Cleber Rosa <crosa@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  "Daniel P.
- Berrange" <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,
- Fabiano Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: Re: [PATCH V4 2/3] python: use qom-list-get
-In-Reply-To: <CAFn=p-biuic_12kWEj==NmNp54MW6X4wf=2hu0edvqJF+deyaw@mail.gmail.com>
- (John Snow's message of "Thu, 7 Aug 2025 18:04:14 -0400")
-References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
- <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
- <871pqmwzqr.fsf@pond.sub.org>
- <CAFn=p-YhYqG5oyWt=zpPCic=2npUkxNJuvuGBuxwthqfMAxL1g@mail.gmail.com>
- <87zfd4v8m5.fsf@pond.sub.org>
- <CAFn=p-biuic_12kWEj==NmNp54MW6X4wf=2hu0edvqJF+deyaw@mail.gmail.com>
-Date: Fri, 08 Aug 2025 08:28:07 +0200
-Message-ID: <87o6sqmio8.fsf@pond.sub.org>
+Cc: qemu-devel@nongnu.org,  michael.roth@amd.com,  peter.maydell@linaro.org,
+ eblake@redhat.com
+Subject: Re: [PATCH 3/3] docs/devel/qapi-code-gen: Update cross-reference
+ syntax
+In-Reply-To: <CAFn=p-bYKEjGX-DYPNbxFn=52-dJH29-SwmPvWYZ7tgo9ZBS+w@mail.gmail.com>
+ (John Snow's message of "Thu, 7 Aug 2025 17:31:34 -0400")
+References: <20250731054044.4011789-1-armbru@redhat.com>
+ <20250731054044.4011789-4-armbru@redhat.com>
+ <CAFn=p-bYKEjGX-DYPNbxFn=52-dJH29-SwmPvWYZ7tgo9ZBS+w@mail.gmail.com>
+Date: Fri, 08 Aug 2025 08:35:42 +0200
+Message-ID: <87ikiymibl.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -98,72 +92,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> On Wed, Jul 16, 2025 at 4:32=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+> On Thu, Jul 31, 2025 at 1:40=E2=80=AFAM Markus Armbruster <armbru@redhat.=
 com> wrote:
 >>
->> John Snow <jsnow@redhat.com> writes:
+>> The new QAPI code generator creates a cross-reference target for each
+>> definition documentation.  Enabled for the QEMU QMP Reference manual
+>> in commit a377f39f38f, and for the QEMU Storage Daemon QMP Reference
+>> Manual and the QEMU Guest Agent Protocol Reference in commit
+>> a6af5443440.  We've put these targets to use since, but neglected to
+>> update doc comment markup documentation.  Do that now.
 >>
->> > On Fri, Jul 11, 2025, 10:47=E2=80=AFAM Markus Armbruster <armbru@redha=
-t.com> wrote:
->>
->> [...]
->>
->> >> Exception ignored in: <function QEMUMonitorProtocol.__del__ at 0x7fcf=
-cd080d60>
->> >> Traceback (most recent call last):
->> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py=
-", line 310, in __del__
->> >>     self.close()
->> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py=
-", line 281, in close
->> >>     self._sync(
->> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.py=
-", line 102, in _sync
->> >>     return self._aloop.run_until_complete(
->> >>   File "/usr/lib64/python3.13/asyncio/base_events.py", line 719, in r=
-un_until_complete
->> >>     return future.result()
->> >>   File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_for
->> >>     return await fut
->> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.=
-py", line 399, in disconnect
->> >>     await self._wait_disconnect()
->> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.=
-py", line 719, in _wait_disconnect
->> >>     await all_defined_tasks  # Raise Exceptions from the bottom half.
->> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protocol.=
-py", line 870, in _bh_loop_forever
->> >>     await async_fn()
->> >> RuntimeError: cannot reuse already awaited coroutine
->> >
->> > Curious about this backtrace. It looks like something has gone
->> > fundamentally wrong in the internals and the error is being raised by =
-the
->> > garbage collector which is not ideal.
->> >
->> > Can you help me reproduce this? Even if it's old/bad code, I don't want
->> > python-qemu-qmp faulting like this.
->>
->> Reproducer for Fedora 41, current master c079d3a31e4:
->>
->> Run
->>
->>     $ qemu-system-x86_64 -S -display none -chardev socket,id=3Dmon1,path=
-=3Dtest-qmp,server=3Don,wait=3Doff -mon mode=3Dcontrol,id=3Dqmp,chardev=3Dm=
-on1
->>
->> and
->>
->>     $ scripts/qmp/qom-tree -s test-qmp >/dev/null
->>
->> Questions?
->>
+>> Co-developed-by: John Snow <jsnow@redhat.com>
 >
-> Doesn't seem to trigger for me on Fedora 42 from the c079d3a31e4
-> build. Is this a Python version difference thing rearing its head?
+> No need for this in my opinion, the SOB suffices to say the same thing
+> in my book. I don't insist you remove it, just seems ... oddly
+> pretentious to say I "co-developed" a single paragraph of text ;)
 
-I have no idea.
+It wasn't obvious to me how to best credit you, so I tried this.  The
+Co-developed-by serves as an explanation why your S-o-b is there.
 
-Is there anything else I can do to help you?
+Please pick one:
+
+1. Do nothing.
+
+2. Delete Co-developed-by.
+
+3. Delete Co-developed-by, your Signed-off-by, add your Reviewed-by.
+
+>> Signed-off-by: John Snow <jsnow@redhat.com>
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>
+> Reviewed-by: John Snow <jsnow@redhat.com>
+
+Thanks!
 
 
