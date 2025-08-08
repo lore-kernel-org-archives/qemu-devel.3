@@ -4,99 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AF0C87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C252DC87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:29:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukPwm-0004FB-3S; Fri, 08 Aug 2025 12:28:00 -0400
+	id 1ukPyJ-00065Q-DB; Fri, 08 Aug 2025 12:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukPwe-00048y-FQ
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:27:56 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPy5-0005m8-DI
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:29:21 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukPwc-0003Wu-EU
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:27:52 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-76bd2b11f80so2315513b3a.3
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:27:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPy3-0003fY-Qm
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:29:21 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-451d41e1ad1so15752925e9.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:29:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754670469; x=1755275269; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1754670558; x=1755275358; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cZgouQ8bunA5EGb9zT1spd4MOP9pMaN7HGEbPgoH5cY=;
- b=IhzxwGjkR0q1E9P7PZicidW66J0+g5vqS6/GBJ5DDhfJleWZCfBJ2VZhPHhjT5CQf1
- niR4o5pBXrEz8gLHefy/PfqDuaYndQb+V7NH7SmqEQUdFo2Fcp6NBaARxVhu5Uk5YAss
- ZE8DSy5aTGbbru3Gl361hL63LRyQYADa3Ps7hpW5HW8kNy3HFphrSy8FKKWk95aXQLC9
- YfHQZmKyxxhBtQVmRa+fYPaBoJG0zc5GFl2dfNZ4/Ja7+RBGnWNTi9O4i/JN24mTMpQG
- p/uIfpWPzeHcVszSZgosVY3TS6qAshwuz5UuHOhBNag9cYNtToOuEuJ0WZYg83lFMyVv
- TKBQ==
+ bh=XhVLTNJcWQ9Xfp0MistoB4xDcUzTDPT9DI8lMRvFw5w=;
+ b=c54mAZPS5KihdgI3iAaME3w2UteHstDBb1DwDmag0qk2x4KNL5zEkwVDrgB6YnYLq3
+ G8+QkTRqJg0pX7G6iiG840Xk0Ax97TgKGKRXF72usE65rjvH25P4gs+blSNO8xj7Tg4B
+ dtyDHi8nelIsMOY/3MrA7JYllB5O9rR3/AV0HO8QV8OydjPFaKYiFuS0mm1KPpdpGedJ
+ RpkzPQdXqfWaRV1fS/2Qr3HFOCJY4Atg10C6tcOzQy2AoxWlv/IqH1o2R3LMW/OQIwoS
+ YtbRp217zFmJgNaDbQ7dU6mnm3WCiRW8JubS1a+W1H0lF8iUp42Zkrqn4GNVaFxqxOUW
+ PJfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754670469; x=1755275269;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754670558; x=1755275358;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cZgouQ8bunA5EGb9zT1spd4MOP9pMaN7HGEbPgoH5cY=;
- b=qSVdsf+ho9WMhmxxEZZf5dXjnD/codT+2yNs8pL+v+JS6bBPfH14SPg5IkXtZQ1MrQ
- C3tKCFp64HmjTxvL5twUNMCJkj6v+U03Wzrj3utMHZRA8jLygFXejiGgdXKd+lGa2P2W
- GrZcbYNloefoHyXencq/QC8D6MIUzpwt0qQ2GHevN4/KFPk8hgGbt3ofyFzFuXEjKyI5
- fnxUNaTmnME1iTYEa7ovD5jAqFHtFOr0Za/6FK6Ck4OulQdBViwoCWWp4gfCZTlcFhWN
- FIoql84pIRUlxzBRKubKQwiVG0wyS1VYuDdSLePljSw07lZDmD9ph1ioLWQhRJqxMdwF
- cquQ==
+ bh=XhVLTNJcWQ9Xfp0MistoB4xDcUzTDPT9DI8lMRvFw5w=;
+ b=YkcveZjDu9Ec8mD3BVpgvXy3Ee1SY/whULqpjJfVAhidD2jyP4wFA3sPMONOUS7p4K
+ Q2tWwY6Z/gbfzw4Q8L35lXukkJOIg4GYJdOcwCcZiFPmUnbb21gCTirLZc5AKKM1Jz3Y
+ Dh/XuC7KFQJ6AgI3W3m8Ofx3QCJPEIKexlgduz2fLDhjayX/Un9tgjx31DY51uW9yvXT
+ LMrcMS/2PLRP+AmQ0iHDlYyVB3q+iG/WvwQDYcy+dyORBT2NVUzyiTb6enRh/JQhemqO
+ oWTVawNRN93p8CYTwyUKy12uhQv91EI1ok3Q44jqg+44hPjfOjP8M0ukWeKNl2CoWTS8
+ uxDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWT1e3LOeHc5CSLLfrwpwR0LEeKmn6y0pUYbFBCYESDwR6BYkDIGXtz7pvcUQXi7a44Y3aqzEooA/Ll@nongnu.org
-X-Gm-Message-State: AOJu0YzxlhcbFobcGRvW1H51KjxCojsdLzrkCz+LX9kHXwla6M+O0dJC
- vGPPMe/DmRNrlatBjOhNH/+ug6Dhx3tjmt2kDVi2Jn+sueau7o850NOgsPsovKnNLz8=
-X-Gm-Gg: ASbGncul9ttqvByvINfcuQLjf3kjh1SaSdmJuvMhxb+HfWOl6YqqtlNGVNQk3DtFN5I
- A6lqvjCWfszAUDL9Tv52mQ/VDvm8GPKUysBpaes347l59OiMCQ23OZTBw9UC4bhWEx77yHZJYwO
- t98QDENgms2kTxB3L4+EM5PAFkvC0baTWho9U8/jVDpsWDwwD9+JcM+f+z2dzbZIClIfmj6ls8N
- cVqDeiuJWiyo4tpF46sr/HhiIWcIpwhL1hDqwBpu534EuBXpOJ261jxkpBNHeO8fBsMuedaBhpe
- dexvLlf29zCnkC0GOa4s7qqAk/Gmt8TaxeYJv8Nk7JZF/rLZ4uuIzzPzw2qB+nSCCyPSPqGW/QB
- FRkrTZxv63iFbyBSPHinBMZYnGMVnbi1ztwf0jUO8PID14g==
-X-Google-Smtp-Source: AGHT+IEOmd5HyuARH8AqkdcGCquWQbIelT8haqZY2J3I+fK7pschYQYCPTCDGHH9k45tbb6A44EqjA==
-X-Received: by 2002:a17:902:ce08:b0:240:5c0e:758b with SMTP id
- d9443c01a7336-242c2279bd6mr51934895ad.50.1754670468051; 
- Fri, 08 Aug 2025 09:27:48 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1f0e585sm213032695ad.40.2025.08.08.09.27.47
+ AJvYcCVjAh4PjebpJW8Xd7uAzOFeW1TYLTgUdK3A22XkZHd/mI+2q7x7kJ2xpMGAW+T/0uasPv+p1CQ+cZuo@nongnu.org
+X-Gm-Message-State: AOJu0YwX1+FkUSU8BdlRWB9Mv0XfKpkrcDcndwGCOmwTRNHlSla/4GCc
+ 72/CUNSd5A0gwqyhc4j95/AySGiJrvfZPin/TZ5RdAQ2hsEeTi3FxGmsXrRX4hWTpZI=
+X-Gm-Gg: ASbGnctP/lzv7W8V4osxvtX46hRlr+Ilg+VrlA3My3Z64Au/AodFqIVYZfUnei1r5VZ
+ wsZLNkrFM6Ox05+f0HnGOR9WPg1+yJ1eUmMh/KlDPVnVvpzdw6uzyNDRHk7IQ0yTnVJwvX4UbRT
+ C1M2dhA1zVicQ7Q9XuLybrmGT8KnNYDOnSrLC8A6IJQJ33A9KdY1PZZClzJ2gKvfr4QcICDiiBg
+ QDc2D6nxNVjkJSOF4aLpT6rxq9NOM+a1cutI1mixRlwC6aHjUd8n52vPW4hkfj2pjahcEuRtCB9
+ AmwpEVQ4LiRglRCAQA4/v4auTdFmuGJzyOurSfdJVRoLtzQdyKo1VowIXKIo3jAlVU2ghMgzTbt
+ 14QNBectUVZk8viMrKDGTEJyrymw9s5y7wIuoh4074Zf4BD48PvnksU2bjHAIUAP0Pg==
+X-Google-Smtp-Source: AGHT+IE0UqaZGAfmznke7q+KKEA244bejtNySxO+hYNRTewcAVQtUZSySopHpDtyTFdATUbSCzomzg==
+X-Received: by 2002:a05:600c:3589:b0:456:24aa:958e with SMTP id
+ 5b1f17b1804b1-459f4e9e4c9mr35163675e9.0.1754670558081; 
+ Fri, 08 Aug 2025 09:29:18 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b79c3abf0csm30203019f8f.14.2025.08.08.09.29.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 09:27:47 -0700 (PDT)
-Message-ID: <55a99df1-616f-4ac5-8bd1-fd2b47755df4@linaro.org>
-Date: Fri, 8 Aug 2025 09:27:47 -0700
+ Fri, 08 Aug 2025 09:29:17 -0700 (PDT)
+Message-ID: <89d0c3e5-9a86-4230-936b-9d3b3d53ffdc@linaro.org>
+Date: Fri, 8 Aug 2025 18:29:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/9] contrib/plugins/uftrace: define cpu operations and
- implement aarch64
+Subject: Re: [PATCH v6 12/14] hw/pci: Allow explicit function numbers in pci
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
+References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
+ <20250717093833.402237-13-djordje.todorovic@htecgroup.com>
 Content-Language: en-US
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
- rowan Hart <rowanbhart@gmail.com>, Gustavo Romero
- <gustavo.romero@linaro.org>, =?UTF-8?Q?Alex_Benn_=C3=A9_e?=
- <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
- <20250808020702.410109-3-pierrick.bouvier@linaro.org>
- <t0o32w.19lmgtfzlutzr@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <t0o32w.19lmgtfzlutzr@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250717093833.402237-13-djordje.todorovic@htecgroup.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,223 +106,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 1:28 AM, Manos Pitsidianakis wrote:
-> On Fri, 08 Aug 2025 05:06, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->> We define a new CpuOps structure that will be used to implement tracking
->> independently of guest architecture.
->>
->> As well, we now instrument only instructions following ones that might
->> have touch the frame pointer.
+On 17/7/25 11:38, Djordje Todorovic wrote:
+> Since there is no pch_gbe emulation, we could be using func other
+> than 0 when adding new devices to specific boards.
 > 
-> s/touch/touched
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> ---
+>   hw/pci/pci.c | 15 +++++++++------
+>   1 file changed, 9 insertions(+), 6 deletions(-)
 > 
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->> contrib/plugins/uftrace.c | 112 ++++++++++++++++++++++++++++++++++++--
->> 1 file changed, 108 insertions(+), 4 deletions(-)
->>
->> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
->> index d60c1077496..4b1a2f38143 100644
->> --- a/contrib/plugins/uftrace.c
->> +++ b/contrib/plugins/uftrace.c
->> @@ -11,14 +11,94 @@
->>
->> #include <qemu-plugin.h>
->> #include <glib.h>
->> +#include <stdio.h>
->>
->> QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
->>
->> +typedef struct Cpu Cpu;
->> +
->> +typedef struct {
->> +    void (*init)(Cpu *cpu);
->> +    void (*end)(Cpu *cpu);
->> +    uint64_t (*get_frame_pointer)(Cpu *cpu);
->> +    bool (*does_insn_modify_frame_pointer)(const char *disas);
->> +} CpuOps;
->> +
->> typedef struct Cpu {
->>      GByteArray *buf;
->> +    CpuOps ops;
->> +    void *arch;
->> } Cpu;
->>
->> +typedef struct {
->> +    struct qemu_plugin_register *reg_fp;
->> +} Aarch64Cpu;
->> +
->> static struct qemu_plugin_scoreboard *score;
->> +static CpuOps arch_ops;
->> +
->> +static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
->> +{
->> +    GByteArray *buf = cpu->buf;
->> +    g_byte_array_set_size(buf, 0);
->> +    size_t sz = qemu_plugin_read_register(reg, buf);
->> +    g_assert(sz == 8);
->> +    g_assert(buf->len == 8);
->> +    return *((uint64_t *) buf->data);
->> +}
->> +
->> +static struct qemu_plugin_register *plugin_find_register(const char *name)
->> +{
->> +    g_autoptr(GArray) regs = qemu_plugin_get_registers();
-> 
-> Question about the plugin API and not this patch per se, if the cpu is
-> in a32/thumb mode does it still return the aarch64 registers?
->
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index f5ab510697..23f7f02837 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -974,14 +974,15 @@ static int pci_parse_devaddr(const char *addr, int *domp, int *busp,
+>   
+>       slot = val;
+>   
+> -    if (funcp != NULL) {
+> -        if (*e != '.')
+> +    if (funcp != NULL && *e != 0) {
+> +        if (*e != '.') {
+>               return -1;
+> -
+> +        }
+>           p = e + 1;
+>           val = strtoul(p, &e, 16);
+> -        if (e == p)
+> +        if (e == p) {
+>               return -1;
+> +        }
+>   
+>           func = val;
+>       }
+> @@ -2045,13 +2046,15 @@ bool pci_init_nic_in_slot(PCIBus *rootbus, const char *model,
+>       int dom, busnr, devfn;
+>       PCIDevice *pci_dev;
+>       unsigned slot;
+> +
 
-I didn't check this part, and it's a good question though.
-It would be a massive headache from plugins point of view if registers 
-list could vary along execution.
+[*]
 
->> +    for (int i = 0; i < regs->len; ++i) {
->> +        qemu_plugin_reg_descriptor *reg;
->> +        reg = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
->> +        if (!strcmp(reg->name, name)) {
->> +            return reg->handle;
->> +        }
->> +    }
->> +    return NULL;
->> +}
->> +
->> +static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
->> +{
->> +    Aarch64Cpu *cpu = cpu_->arch;
->> +    return cpu_read_register64(cpu_, cpu->reg_fp);
->> +}
->> +
->> +static void aarch64_init(Cpu *cpu_)
->> +{
->> +    Aarch64Cpu *cpu = g_new0(Aarch64Cpu, 1);
->> +    cpu_->arch = cpu;
->> +    cpu->reg_fp = plugin_find_register("x29");
->> +    if (!cpu->reg_fp) {
->> +        fprintf(stderr, "uftrace plugin: frame pointer register (x29) is not "
->> +                        "available. Please use an AArch64 cpu (or -cpu max).\n");
->> +        g_abort();
->> +    }
->> +}
->> +
->> +static void aarch64_end(Cpu *cpu)
->> +{
->> +    g_free(cpu->arch);
->> +}
->> +
->> +static bool aarch64_does_insn_modify_frame_pointer(const char *disas)
->> +{
->> +    /*
->> +     * Check if current instruction concerns fp register "x29".
->> +     * We add a prefix space to make sure we don't match addresses dump
->> +     * in disassembly.
->> +     */
->> +    return strstr(disas, " x29");
-> 
-> Hm is the whitespace before x29 guaranteed? Neat trick otherwise.
->
+>       PCIBus *bus;
+>   
+>       if (!nd) {
+>           return false;
+>       }
+>   
+> -    if (!devaddr || pci_parse_devaddr(devaddr, &dom, &busnr, &slot, NULL) < 0) {
+> +    unsigned func;
 
-At least for aarch64 disassembler, yes, from what I saw.
-Either it's the first operand, and then there is a whitespace between 
-instruction name and it. Or it's another operand, and we always have a 
-whitespace after ','.
-I don't think we'll change disassembler soon, but in case this looks too 
-fragile, we can always simply return yes if x29 is fine. In worst case, 
-we match some additional instructions, but it should not have a huge 
-performance hit.
+Declare 'func' earlier in [*], otherwise LGTM.
 
->> +}
->> +
->> +static CpuOps aarch64_ops = {
->> +    .init = aarch64_init,
->> +    .end = aarch64_end,
->> +    .get_frame_pointer = aarch64_get_frame_pointer,
->> +    .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
->> +};
->>
->> static void track_callstack(unsigned int cpu_index, void *udata)
->> {
->> @@ -28,20 +108,36 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->> {
->>      size_t n_insns = qemu_plugin_tb_n_insns(tb);
->>
->> +    /*
->> +     * We instrument all instructions following one that might have updated
->> +     * the frame pointer. We always instrument first instruction in block, as
->> +     * last executed instruction, in previous tb, may have modified it.
-> 
-> Modified it how?
->
-
-I ran an assert that latest instruction of a block never contained " 
-x29", and it was triggered quickly. I don't remember exactly which 
-instruction triggered the assert.
-
->> +     */
->> +    bool instrument_insn = true;
->>      for (int i = 0; i < n_insns; i++) {
->>          struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
->>
->> -        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
->> -        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
->> -                QEMU_PLUGIN_CB_R_REGS,
->> -                (void *) pc);
->> +        if (instrument_insn) {
->> +            uintptr_t pc = qemu_plugin_insn_vaddr(insn);
->> +            qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
->> +                                                   QEMU_PLUGIN_CB_R_REGS,
->> +                                                   (void *) pc);
->> +            instrument_insn = false;
->> +        }
->>
->> +        char *disas = qemu_plugin_insn_disas(insn);
->> +        if (arch_ops.does_insn_modify_frame_pointer(disas)) {
->> +            instrument_insn = true;
->> +        }
-> 
-> So if I understand correctly you check if an instruction needs to be
-> instrumented and then do it in the next forloop. This means if the last
-> insn needs to be instrumented too it is not done, is that ok?
->
-
-Yes, that is why we always instrument the first, to catch this.
-There is no (current) way to instrument *after* instruction, and 
-probably hard to implement, considering an instruction might generate a 
-fault. So the only safe choice left is to instrument the first one of 
-any tb.
-
->>      }
->> }
->>
->> static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
->> {
->>      Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
->> +    cpu->ops = arch_ops;
->> +
->> +    cpu->ops.init(cpu);
->>      cpu->buf = g_byte_array_new();
->> }
->>
->> @@ -65,6 +161,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->>                                             const qemu_info_t *info,
->>                                             int argc, char **argv)
->> {
->> +    if (!strcmp(info->target_name, "aarch64")) {
->> +        arch_ops = aarch64_ops;
->> +    } else {
->> +        fprintf(stderr, "plugin uftrace: %s target is not supported\n",
->> +                info->target_name);
->> +        return 1;
->> +    }
->> +
->>      score = qemu_plugin_scoreboard_new(sizeof(Cpu));
->>      qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
->>      qemu_plugin_register_atexit_cb(id, at_exit, NULL);
->> -- 
->> 2.47.2
->>
-> 
-> LGTM overall, it makes sense.
+> +    if (!devaddr || pci_parse_devaddr(devaddr, &dom, &busnr, &slot, &func) < 0) {
+>           error_report("Invalid PCI device address %s for device %s",
+>                        devaddr, model);
+>           exit(1);
+> @@ -2062,7 +2065,7 @@ bool pci_init_nic_in_slot(PCIBus *rootbus, const char *model,
+>           exit(1);
+>       }
+>   
+> -    devfn = PCI_DEVFN(slot, 0);
+> +    devfn = PCI_DEVFN(slot, func);
+>   
+>       bus = pci_find_bus_nr(rootbus, busnr);
+>       if (!bus) {
 
 
