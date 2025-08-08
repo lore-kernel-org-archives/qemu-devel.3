@@ -4,100 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4573AC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFADCC87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukPm1-0008Np-1J; Fri, 08 Aug 2025 12:16:53 -0400
+	id 1ukPmZ-0001kJ-I7; Fri, 08 Aug 2025 12:17:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ukPly-0008Ld-Ha
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:16:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ukPmO-0001Pm-AN; Fri, 08 Aug 2025 12:17:16 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ukPlv-0001b3-Oo
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:16:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754669804;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qFMAZWDbRO33G5LEdTR1tBUZBC/zSCOMha9kAWfgrHU=;
- b=XUHb8Tpf+fUCg+Tzi0DSkIbFC5Kbd7EngWMIU1PfyBIp/S8HoQ5FNLU/XlIctVu8h5HlaQ
- iP4NKSz3Gp0tytSvyz5bKWNg4dVwuk6XdbcZQUMLG/Ie0Ua8GCXfnk69tDbL9MwEoli+F4
- sh3tIG8KviE9n2g3V8AEWmYw0U1KLqM=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-261-zsy17Zh8OV-HcgyOuimS9g-1; Fri, 08 Aug 2025 12:16:43 -0400
-X-MC-Unique: zsy17Zh8OV-HcgyOuimS9g-1
-X-Mimecast-MFC-AGG-ID: zsy17Zh8OV-HcgyOuimS9g_1754669802
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-23fd831def4so20601325ad.3
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:16:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754669802; x=1755274602;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qFMAZWDbRO33G5LEdTR1tBUZBC/zSCOMha9kAWfgrHU=;
- b=rlCC21LRVoI+boS4SIy5nkTsbEkPSSSKY4OCkl/K7fZ0pqH/z/BUT/MPzqlH+nI0ds
- QzTPQaAd/0eud53I3feR5iwbNTvzGryRDHIfu5BnckjW4pxAh9YhVvj4uaiWnzSbvt7+
- YYLdzVfG+kEIEGWOagZKLdW9Vh8OG4N7JNyfO24ISfqx0/ICEVqYGutKCjZBMtk03Y4l
- 8koAAHqWvM6OhWEIkFb8inLB56LGeL1SIwpD/tbrpCCvgoCm/+pAUQ0zpnbSLY2GrLjK
- Z8XlalzMum3/nAuN6IUgZxDUyGYO5DFO+1P7iG2DRQxi3BLGI/whyHiBtxaX4OLcqXhV
- Lx2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFy8Yrf0XlIS08iute058Z/rcQBEhLQiuA+tIlcVVfa6SQXShtENYW0C4E3NmhwGDjJCJbrp6JIESx@nongnu.org
-X-Gm-Message-State: AOJu0YxGZUEzJHrebl1XUkqQ11xKkFzJMSlnBKOGs/r3/D2poegSPARG
- ZStaaROhWNagtbcUeGG0XHE6XXafKhNyxdM7UQ0B2Ygdh34KVE77px2XwtYahJRO40scsJrCo4d
- 8B09ewVK70mU3oLZGZ9t8YBMfTw2be6kEOqYT64g7hBT6y2wwvdfhssNJr0pYPRpeKu5EdXrW8D
- FC8/mTg5FIXmT8dFNl0UqH/4iK2JryiQ8=
-X-Gm-Gg: ASbGncv8r/m99K1DQwlkKyXPSQci9gXs6dHglCh2wgVqAXab6AnmljICmBomqqtnh/q
- D0Vst97imPK2IoEQl793v1qaZ1/7Z1ptrUdEy78+YG0iz9JMe/m4kyCTKHIlb0mJ1zNi+uxSGj2
- zo8kon183wVjyokCYb76jJbVtmjLK8L3SRiMXWQRIEU8jOYdKQFjCm
-X-Received: by 2002:a17:902:ef0a:b0:240:70d4:85d9 with SMTP id
- d9443c01a7336-242c19a606bmr59388915ad.0.1754669801829; 
- Fri, 08 Aug 2025 09:16:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbfXLvAVeXfw+nS16wIdqN98gorQ8a5bZ6wEHBRpJAErKw499fGsyBsIcbqdKSkdFrZR6/DXvK+ccC3MJyl70=
-X-Received: by 2002:a17:902:ef0a:b0:240:70d4:85d9 with SMTP id
- d9443c01a7336-242c19a606bmr59388495ad.0.1754669801448; Fri, 08 Aug 2025
- 09:16:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <1752164694-215567-1-git-send-email-steven.sistare@oracle.com>
- <1752164694-215567-3-git-send-email-steven.sistare@oracle.com>
- <871pqmwzqr.fsf@pond.sub.org>
- <CAFn=p-YhYqG5oyWt=zpPCic=2npUkxNJuvuGBuxwthqfMAxL1g@mail.gmail.com>
- <87zfd4v8m5.fsf@pond.sub.org>
- <CAFn=p-biuic_12kWEj==NmNp54MW6X4wf=2hu0edvqJF+deyaw@mail.gmail.com>
- <87o6sqmio8.fsf@pond.sub.org>
-In-Reply-To: <87o6sqmio8.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 8 Aug 2025 12:16:29 -0400
-X-Gm-Features: Ac12FXxX-HOzy-01fSgkLjDiiXfTyF-4ET-zH5k30Sq3vr_5O0x7wDqLl0c52AE
-Message-ID: <CAFn=p-ZSMnaedcpUA0x0OVkTgrshCF83Lx4u4Wi0Y1woVT7ThQ@mail.gmail.com>
-Subject: Re: [PATCH V4 2/3] python: use qom-list-get
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>,
- qemu-devel <qemu-devel@nongnu.org>, 
- Cleber Rosa <crosa@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Philippe Mathieu-Daude <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1ukPmM-0001d0-FV; Fri, 08 Aug 2025 12:17:16 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 578CJqjV028220;
+ Fri, 8 Aug 2025 16:17:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=HbXXcGySMe0CA/KLnP6wSx3F7ePQ54xfQ7yc9Fe19dk=; b=CZb/bkbjq/YB
+ PMWPnXZDVnfUlm0UrF7Vlk1OBrlFrDFdFeKTi0fbAEJu7KOL5mBow1pEm8OI6UVN
+ xXG1CwNTX/Qh2aYSwPUAKorLPxlxi1iJTKkv8R/DPeWwcV7fXK/ovsuUrLipUO/e
+ /KL7H2GgsFpDcGkmaNXhrCflUcnX8K0JeJbZARhsctqJZQ1W0XS0Z81IRUBJrVPu
+ b92K/SFEorvd2N6yCVeHVQIKvKKnbvlrFBEkWYO/bSgXAPucSJMIYDGhCxG5c5Wf
+ ETaLfZK75t9lComxTYXo74I3r1BPxPfeEOAQ2wkLtpuvg1t0qV5DHpyqOtBUph5F
+ N/jqZcxMyA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bq619hdt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:17:05 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 578FiVgk009285;
+ Fri, 8 Aug 2025 16:17:05 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48bq619hdr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:17:05 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 578FBZjB020626;
+ Fri, 8 Aug 2025 16:17:04 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48bpwn6ad1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Aug 2025 16:17:03 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 578GH2eo28377768
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 8 Aug 2025 16:17:02 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 85AB258068;
+ Fri,  8 Aug 2025 16:17:02 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1B2745805A;
+ Fri,  8 Aug 2025 16:17:02 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  8 Aug 2025 16:17:02 +0000 (GMT)
+Message-ID: <424f4adcd7752d8736b370cc29053bf22688b03b.camel@linux.ibm.com>
+Subject: Re: [PULL 00/50] ppc queue
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Michael Tokarev <mjt@tls.msk.ru>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
+ <danielhb413@gmail.com>, Michael Kowal <kowal@linux.ibm.com>, Caleb
+ Schlossin <calebs@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Date: Fri, 08 Aug 2025 11:17:01 -0500
+In-Reply-To: <a9d36b56-2954-4a48-aec4-09657a2295b2@tls.msk.ru>
+References: <20250721162233.686837-1-clg@redhat.com>
+ <10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru>
+ <ce863981-3d5e-4ec4-94ee-e35d773eab78@redhat.com>
+ <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
+ <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
+ <4468aea8-b8cc-4313-abbe-8a5f58a35adc@redhat.com>
+ <6afc919bdb18166a71a2dba1a3862709629d5e08.camel@linux.ibm.com>
+ <a9d36b56-2954-4a48-aec4-09657a2295b2@tls.msk.ru>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Y0TsJN2XumphC_NU5ix0a_0n2WaUoVro
+X-Proofpoint-ORIG-GUID: SCSsrO_DyBarzyqv4zqnLpfjZ0Ty_tXN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA4MDEyOSBTYWx0ZWRfX0iXFQyoBJmf3
+ c2bH58enBtXmnYxkzXG3lzZ3rvEzzJSrhFb0ic52E2cQ/HU0+oe+5PwOa02d9EfonyMKOyqu6Ah
+ qRaK+7WFRKF7+VqIXEVPCZmWOGPLlROQRTnEEuGRjWysjr95ZnurAuhZB7YdfFWwfHZy4VN1+9t
+ HeVCFyjkoaUhSGowVvcrCR0WXLP94b/NBUmWSqhXcxNFdOr2hL+Dg1T188iGZSxjJIOgf4UFd6N
+ TPsZow2goDs3I5hdVJVt+ytix37T0lniUrxmsTQf5xU/cIXsDFsW6fXXY+I6dZjj5weJAQyQ6gh
+ aVnHRFI9yMcas2rMQoytcygdVQogRquK3re0dyoDKegnlWp0teEualESaTZ2rmhqeFpJg3nqKqo
+ bHztadusonGvECwPR12L/ZhqwjHd5ezCRmq6sQe+sM+T1fJ9qGDtEIlozUFiX711As7JP6tf
+X-Authority-Analysis: v=2.4 cv=TayWtQQh c=1 sm=1 tr=0 ts=68962301 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=E_gU1cQRGPPUBrA8uesA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-08_05,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 phishscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=999 bulkscore=0 priorityscore=1501 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2507300000
+ definitions=main-2508080129
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,109 +134,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 8, 2025 at 2:28=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > On Wed, Jul 16, 2025 at 4:32=E2=80=AFAM Markus Armbruster <armbru@redha=
-t.com> wrote:
-> >>
-> >> John Snow <jsnow@redhat.com> writes:
-> >>
-> >> > On Fri, Jul 11, 2025, 10:47=E2=80=AFAM Markus Armbruster <armbru@red=
-hat.com> wrote:
-> >>
-> >> [...]
-> >>
-> >> >> Exception ignored in: <function QEMUMonitorProtocol.__del__ at 0x7f=
-cfcd080d60>
-> >> >> Traceback (most recent call last):
-> >> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.=
-py", line 310, in __del__
-> >> >>     self.close()
-> >> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.=
-py", line 281, in close
-> >> >>     self._sync(
-> >> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/legacy.=
-py", line 102, in _sync
-> >> >>     return self._aloop.run_until_complete(
-> >> >>   File "/usr/lib64/python3.13/asyncio/base_events.py", line 719, in=
- run_until_complete
-> >> >>     return future.result()
-> >> >>   File "/usr/lib64/python3.13/asyncio/tasks.py", line 507, in wait_=
-for
-> >> >>     return await fut
-> >> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protoco=
-l.py", line 399, in disconnect
-> >> >>     await self._wait_disconnect()
-> >> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protoco=
-l.py", line 719, in _wait_disconnect
-> >> >>     await all_defined_tasks  # Raise Exceptions from the bottom hal=
-f.
-> >> >>   File "/work/armbru/qemu/scripts/qmp/../../python/qemu/qmp/protoco=
-l.py", line 870, in _bh_loop_forever
-> >> >>     await async_fn()
-> >> >> RuntimeError: cannot reuse already awaited coroutine
-> >> >
-> >> > Curious about this backtrace. It looks like something has gone
-> >> > fundamentally wrong in the internals and the error is being raised b=
-y the
-> >> > garbage collector which is not ideal.
-> >> >
-> >> > Can you help me reproduce this? Even if it's old/bad code, I don't w=
-ant
-> >> > python-qemu-qmp faulting like this.
-> >>
-> >> Reproducer for Fedora 41, current master c079d3a31e4:
-> >>
-> >> Run
-> >>
-> >>     $ qemu-system-x86_64 -S -display none -chardev socket,id=3Dmon1,pa=
-th=3Dtest-qmp,server=3Don,wait=3Doff -mon mode=3Dcontrol,id=3Dqmp,chardev=
-=3Dmon1
-> >>
-> >> and
-> >>
-> >>     $ scripts/qmp/qom-tree -s test-qmp >/dev/null
-> >>
-> >> Questions?
-> >>
-> >
-> > Doesn't seem to trigger for me on Fedora 42 from the c079d3a31e4
-> > build. Is this a Python version difference thing rearing its head?
->
-> I have no idea.
->
-> Is there anything else I can do to help you?
+On Fri, 2025-08-08 at 09:07 +0300, Michael Tokarev wrote:
+> On 06.08.2025 23:46, Miles Glenn wrote:
+> > On Tue, 2025-08-05 at 22:07 +0200, Cédric Le Goater wrote:
+> ...
+> > > These seem to be interesting to have :
+> > > 
+> > > ppc/xive2: Fix treatment of PIPR in CPPR update
+> > > ppc/xive2: Fix irq preempted by lower priority group irq
+> > > ppc/xive: Fix PHYS NSR ring matching
+> > > ppc/xive2: fix context push calculation of IPB priority
+> > > ppc/xive2: Remote VSDs need to match on forwarding address
+> > > ppc/xive2: Fix calculation of END queue sizes
+> > > ppc/xive: Report access size in XIVE TM operation error logs
+> > > ppc/xive: Fix xive trace event output
+> > 
+> > I'm still not sure that the benefit is worth the effort, but I
+> > certainly don't have a problem with them being backported if someone
+> > has the desire and the time to do it.
+> 
+> I mentioned already that 10.0 series will (hopefully) be LTS series.
+> At the very least, it is what we'll have in the upcoming debian
+> stable release (trixie), which will be stable for the next 2 years.
+> Whenever this is important to have working Power* support in debian -
+> I don't know.
+> 
+> All the mentioned patches applied to 10.0 branch cleanly (in the
+> reverse order, from bottom to top), so there's no effort needed
+> to back-port them.  And the result passes at least the standard
+> qemu testsuite.  So it looks like everything works as intended.
+> 
+> Please keep qemu-stable@ in Cc for other fixes which you think are
+> of interest for older/stable series of qemu.
+> 
+> Thanks,
+> 
+> /mjt
 
-Hm. Can you still reproduce this stack trace as of today?
+Will do, and thanks for doing the backporting, Michael!
 
-If so, can you please try modifying
-qemu.git/python/qemu/utils/qom_common.py and add "import logging" up
-at the top, and modify the entry_point classmethod:
-
->       @classmethod
->      def entry_point(cls) -> int:
->      """
->          Build this command's parser, parse arguments, and run the comman=
-d.
->
->          :return: `run`'s return code.
->          """
-> +    logging.basicConfig(level=3Dlogging.DEBUG)
->      parser =3D argparse.ArgumentParser(description=3Dcls.help)
->      cls.configure_parser(parser)
->      args =3D parser.parse_args()
->       return cls.command_runner(args)
-
-And then try running the crashy version again, and send me the (quite
-likely very long) output?
-
-Note: I really oughtta add a formal --debug/DEBUG=3D1 configuration to
-the QOM scripts so this is possible without code modification.
+-Glenn
 
 
