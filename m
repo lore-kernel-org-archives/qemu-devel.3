@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C85EC87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 15:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D546C87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 15:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukPAI-0007dF-EN; Fri, 08 Aug 2025 11:37:54 -0400
+	id 1ukPEd-0006U9-60; Fri, 08 Aug 2025 11:42:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukPAH-0007cB-8p
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 11:37:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukPEb-0006NS-DB
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 11:42:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukPAF-0000Hz-2U
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 11:37:52 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ukPEZ-0001GD-NL
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 11:42:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754667467;
+ s=mimecast20190719; t=1754667738;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DHzETSWz0D0KMjFPISG7opCAwgjoN74KNRfYqID/tYc=;
- b=EFI06zRay26VWVn7s5Fz0G0GrevBD/0xMkJtJGa/zC3qW45RE5EbAw7UioC17KwP5H1T9J
- FWlttf89WL+eebYiSYb1nxAMsgbwXWujQWM81xQM98Cc0khCUrU5gyXiTZpUk228VF6EW0
- VUIJBbxG/TKaQ9lzmQg64NVJEd8fmDg=
+ bh=p8AVM9Iih8D+StVMZ3w+7yUhR5Jdlz3y7zoNHGyYXNQ=;
+ b=e2xZcbsklYS0/Lf7wxxq2pfDXtSEBDlVPC0QbOzddIMLN+wyjHxyvypHsT2O1T8GFDWZ/3
+ oMSfIc88ETBPC7FATVMi+sUAMtF7OUbVrmzTjH6EtfrXJSnqJn7q2RU8nE2/sSPt/RL5HG
+ G1+wrX6nJjuQzAgUYKvGWGErJvqAXKM=
 Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
  [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-5s5vvRVxMlqw1kiVpR2CNQ-1; Fri, 08 Aug 2025 11:37:46 -0400
-X-MC-Unique: 5s5vvRVxMlqw1kiVpR2CNQ-1
-X-Mimecast-MFC-AGG-ID: 5s5vvRVxMlqw1kiVpR2CNQ_1754667466
+ us-mta-613-y5mVYeM5OhWI8nkXb-Sn3w-1; Fri, 08 Aug 2025 11:42:17 -0400
+X-MC-Unique: y5mVYeM5OhWI8nkXb-Sn3w-1
+X-Mimecast-MFC-AGG-ID: y5mVYeM5OhWI8nkXb-Sn3w_1754667737
 Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-70e5ae5c517so29283397b3.1
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 08:37:46 -0700 (PDT)
+ 00721157ae682-71bc21d27b2so32496277b3.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 08:42:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754667466; x=1755272266;
+ d=1e100.net; s=20230601; t=1754667737; x=1755272537;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DHzETSWz0D0KMjFPISG7opCAwgjoN74KNRfYqID/tYc=;
- b=bNdl9R0LxOsR8Q4Meb1gfWdHDdL5Nx2vfOTlgWddovcWWcsfUX6fwQ2zHHRP3oHNHk
- tHhzaWCkEtmb/5wNx4n3Q9dBrotk7d+9lx/pASc7Uo+jBAeZP9QXBUUoFMJIBOH5T2cQ
- hQUZJAIV+YkkV6+Cjj9b7+v9uq1XbrMjk8ginMnFzDJoM5B8AKtMfgi70lKDo3R1d8dK
- qUSTvTzzv1Qlika9NxRhfheSflqXCfkPjkPaPqzS17OyINrHAHDOqXnsVMDv8VvQ+nrf
- A3pJ+zrQ0k1kIsxSGoJXsOlxs2cN5q6zrPawCdSO6fIA4CnfgtIIZuFOtSY/yNwWcH34
- 8gtg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVbjt3UJ9EyMKsOrbkde4+BogiNgtEqGehEROwrzQBO3wVCcDWlQa5LFidNxJmJfdgve+yoYl0X+P6X@nongnu.org
-X-Gm-Message-State: AOJu0YxPlHVCqhjRZ6Eb01exLqs8jYtKUTMELe8wJaayf03hUGonQmHM
- bEenGGiaLEhOOqAGwzmUUi3ip28mM3qw00TsuczGyZ2tnHcwaBq6hhhM+4uVl4NILlTqdx3o9yg
- II311F6sxwd4RXZMvGM5KyEAnum4nb1HXwyjcHeNvTd9v9CD9S9SV+Gnb
-X-Gm-Gg: ASbGncueSRHjanBsh+frzPIq8SZefSIwsmkEcQY29fSVlX5+leF8Gy+iIMfRo6BlcyV
- mgKxz5cOqlAPq3dLY3gnj6FSolM1srCElltt3zturcWh1TR65fL1d14/s39Xz7za/P603AEWXXx
- avQHy2CK3+NLspBqsYg12QGqg8XG+oFklao8QiYqwNDuw2+rk4Y4C4TOlT30a5k2Y76LgOHHCLK
- rE9JpKJ48TpmjKLs8BDKQd6sRm+8xkOGog873nERu9Z8u6srrAoFOGzobiGtnIJLHvp+2bAHvM4
- VGZmNf9GMNLK1I8fF9A+NK0gSnzKOthd
-X-Received: by 2002:a05:690c:338f:b0:71a:3f7e:ff0c with SMTP id
- 00721157ae682-71bf0e78d8dmr40532547b3.32.1754667465633; 
- Fri, 08 Aug 2025 08:37:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdbbD2js4XmrV2CL00sulReOkERCWZRURrqtCJhHE4cVOxkHIR1246it2e2M8ywkfvDhrjMw==
-X-Received: by 2002:a05:690c:338f:b0:71a:3f7e:ff0c with SMTP id
- 00721157ae682-71bf0e78d8dmr40532317b3.32.1754667465250; 
- Fri, 08 Aug 2025 08:37:45 -0700 (PDT)
+ bh=p8AVM9Iih8D+StVMZ3w+7yUhR5Jdlz3y7zoNHGyYXNQ=;
+ b=e2Ugxi6LhdINzFRH8cQ2n6cHSS23DfS0Efwg8fpO9jCnjADuf8xp2E+EmRv7l0+un+
+ e5/Sql+lKPO4iWPU+h1DUa6javhYWOjjZ96B/G2aAo9hnOzoTg0XObN3q/x0gKW1Dq0b
+ 7othKgHe9wOQrt1Y0h7hIWH+daV1S/zBr3osq3e4FJn2di0M0uCwwBm0kNt9y9qN14EX
+ +Oxyu85Bb510CJ+KF3sR7uFChoG0FHt0g6NqiIzzELcQ66sbfraplicJ35j7tNhYC60v
+ TeUvC4f1tW0dUSVyuCW/JwHR8d7LLFsIH8hf1Dgxl2D1HMFe6edmz6ypp67qQzOCr80N
+ 5Cdg==
+X-Gm-Message-State: AOJu0YwEVkaGJL9/oxwZRv/xc1AYX6Hg5A/aF6/Rwd3sPVovO1LpBW5Q
+ vPbD13WF6f+J9hycJLUTiPnt+OW8P+rm8O3c/I3vXe1Jw7srDjMLn157p75vYK7VDSUFwCA8r7f
+ kpoJ5YLJExP8/SN5RWFx1QovdGTKMHTt51P5hcWL9oX5PyJXu6LaEPG8X
+X-Gm-Gg: ASbGncsZ7I9XyKg67jGiKjSLrmHFnv5LZfV9nb/9SoscnTcQT+efqDiPiaEBUfTUp7l
+ 7hmZfvnGr1GzFmtKV31eRYHOKl+xrhLe3SxHHiKXl1fOBLTO2xAs8khycr+x1Biy5U+n7Yna05/
+ 1Hehvor8zh6Dmz+8KZBTgF1vZNMh91ySjhBRHVfrLhu8SyxfgOOFzkeG5OJi9p+Qzamc27b5fHZ
+ kuHGKkuAct90cEKWuEpNv8oUbxdKry9NjyYT3Hejmuwg549/6yrvn1WttYYh+zJw1ay1gEQ6By2
+ amUkQdKpXns/YqwTf31DoH+CuOwtB1oa
+X-Received: by 2002:a05:690c:620b:b0:71b:da3a:93aa with SMTP id
+ 00721157ae682-71bf0e1448dmr42520067b3.27.1754667736899; 
+ Fri, 08 Aug 2025 08:42:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGr48aYuwYxxEUzolBKVf/RiIiz3J3uFKtF1fVcthWNRAvZ1GmgSjfzKFaoonmHrNiIdQh7Cg==
+X-Received: by 2002:a05:690c:620b:b0:71b:da3a:93aa with SMTP id
+ 00721157ae682-71bf0e1448dmr42519727b3.27.1754667736437; 
+ Fri, 08 Aug 2025 08:42:16 -0700 (PDT)
 Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-71b5a5c8fd9sm52474247b3.61.2025.08.08.08.37.44
+ 00721157ae682-71bfc653df6sm2238337b3.45.2025.08.08.08.42.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Aug 2025 08:37:44 -0700 (PDT)
-Date: Fri, 8 Aug 2025 11:37:23 -0400
+ Fri, 08 Aug 2025 08:42:15 -0700 (PDT)
+Date: Fri, 8 Aug 2025 11:42:03 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Yong Huang <yong.huang@smartx.com>, Lukas Straub <lukasstraub2@web.de>,
- qemu-devel@nongnu.org
+To: yong.huang@smartx.com
+Cc: qemu-devel <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>
 Subject: Re: [PATCH] multifd: Make the main thread yield periodically to the
  main loop
-Message-ID: <aJYZs9NnAOqVMcd1@x1.local>
+Message-ID: <aJYay1BNkq8fiTVf@x1.local>
 References: <5512220e1005ae2bc7357b2def32639d164e84eb.1754534263.git.yong.huang@smartx.com>
- <20250807113639.66d1c5bf@penguin>
- <CAK9dgmZb=5uEwVq65Ygcza0+qtng+-5zmtQRdviX2npg_qhJRQ@mail.gmail.com>
- <20250808090054.13cb8342@penguin>
- <CAK9dgmbybw+WkC2C_qdZnwSYjGn3Q2Du4yjLOz+EmCx1po8YPg@mail.gmail.com>
- <87o6sp2a0i.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87o6sp2a0i.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <5512220e1005ae2bc7357b2def32639d164e84eb.1754534263.git.yong.huang@smartx.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,27 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 08, 2025 at 10:55:25AM -0300, Fabiano Rosas wrote:
-> Please work with Lukas to figure out whether yank can be used here. I
-> think that's the correct approach. If the main loop is blocked, then
-> some out-of-band cancellation routine is needed. migrate_cancel() could
-> be it, but at the moment it's not. Yank is the second best thing.
+On Thu, Aug 07, 2025 at 10:41:17AM +0800, yong.huang@smartx.com wrote:
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index b255778855..aca0aeb341 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -1228,6 +1228,16 @@ void multifd_recv_sync_main(void)
+>              }
+>          }
+>          trace_multifd_recv_sync_main_signal(p->id);
+> +        do {
+> +            if (qemu_sem_timedwait(&multifd_recv_state->sem_sync, 10000) == 0) {
+> +                break;
+> +            }
+> +            if (qemu_in_coroutine()) {
+> +                aio_co_schedule(qemu_get_current_aio_context(),
+> +                                qemu_coroutine_self());
+> +                qemu_coroutine_yield();
+> +            }
+> +        } while (1);
 
-I agree.
+I still think either yank or fixing migrate_cancel is the way to go, but
+when staring at this change.. I don't think I understand this patch at all.
 
-migrate_cancel() should really be an OOB command..  It should be a superset
-of yank features, plus anything migration speficic besides yanking the
-channels, for example, when migration thread is blocked in PRE_SWITCHOVER.
+It timedwait()s on the sem_sync that we just consumed.  Do you at least
+need to remove the ones above this piece of code to not hang forever?
 
-I'll add this into my todo; maybe I can do something with it this release.
-I'm happy if anyone would beat me to it.
+    for (i = 0; i < thread_count; i++) {
+        trace_multifd_recv_sync_main_wait(i);
+        qemu_sem_wait(&multifd_recv_state->sem_sync);
+    }
 
+>          qemu_sem_post(&p->sem_sync);
+>      }
+>      trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
+> -- 
+> 2.27.0
 > 
-> The need for a timeout is usually indicative of a design issue. In this
-> case, the choice of a coroutine for the incoming side is the obvious
-> one. Peter will tell you all about it! =)
-
-Nah. :)
 
 -- 
 Peter Xu
