@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F72C87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 21:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A81D9C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 21:24:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukUWS-0001gO-KC; Fri, 08 Aug 2025 17:21:08 -0400
+	id 1ukUZj-0003XR-Ak; Fri, 08 Aug 2025 17:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukUWR-0001fx-9q
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 17:21:07 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukUZh-0003W9-B2
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 17:24:29 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukUWP-0008Gh-NF
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 17:21:07 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-459d62184c9so15707985e9.1
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 14:21:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukUZf-0000G6-Gi
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 17:24:29 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3b785a69454so1450856f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 14:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754688064; x=1755292864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754688265; x=1755293065; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=a7hWASVeuLPuBjF8NDJUu0dnW3MNKBfRrk3TUZDnk6A=;
- b=gC974QjBsE5KR+VFYCZfjCmq+0ZeJmbPqU++2iQKt4LpBFFeFNbqEQTEEF9tn8OxC9
- jubYmyb9zgAGDok5k5NzCYDBzd3DO19II169C9LFW8sMO7PQWqkjvWo2wSl9XYeUYnUH
- IBZBiCQPcuv7ZkMaBy1Tegwjn0+4hVbectdZbFx+aFgbrdTm9FvJh0fErGDSijSKaicz
- hYp7dJnP4g2bOY2SXWiWzkZJ8Tz3FlCJs5AIf59p7c0NdqMpIEcw+BSI/NybezahQz4q
- Qb2y4NVijLwE+28Vwr/mBeHqIdBRWxv+OQZaDzlUhlQJmyztG04+VVOmpZ6+fYUh1K32
- +8sQ==
+ bh=fb+SfSoPZlynboeBUrdrc4P4D7nm+adi191E883lDsI=;
+ b=UFA4/8WM6we/pnA3a387GV13z6IsN6ggpZ3DaTe6OTRRdg0O+xgGgb89V503NWPB6E
+ ANVKAHYRKluvUXygYOvvjtmazsIKk1OIMdJ5uJFEA0fEY6552OaB+NVzLykpjiLfuBgP
+ 3HsOtfYgS+niX7KpEwL0kFVT9aSG3lVasDFkyJ2vAbhKmZsOm795qwfoydEhhs1hLqPY
+ 0xy5Q2YTy9EWagKzJaie0NJVG2HTDcLEe59W4NKvfV8sKHXqYTvnv/zTyhSK2DQtZ5/g
+ Oksi5zbsFwpmzuvdPLePtWvngmRHPWZCEkJyhNZHRcVsFm53A9JDd3hc0/RufIgvFxIa
+ D6vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754688064; x=1755292864;
+ d=1e100.net; s=20230601; t=1754688265; x=1755293065;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a7hWASVeuLPuBjF8NDJUu0dnW3MNKBfRrk3TUZDnk6A=;
- b=W4mb+lK/zqfk0VzmyaucuDdw7xPevx4eaTsRT6nhjDF1eXJQKKWPsB2GmrClF2p1Af
- iOBmgxfGtriw1JtIOa9n1Ab66H5Oa3IHUEcdEL7FyarB8xPD/UQKH/kMGPCH/TynojSm
- qjuYEem7aMXSkIaxNGWaHbptkolcbNdePbKZwaoKcpnM9bP+5SK4CFZHpq5vRbTmOvpp
- 357Xjykng6gZEy+ykieYxcBwI3NttWuPSK70lAGbamCd5E07BNFnfhT7uejaI26K4r/b
- zYMGiHQ7Jbs9A2AgiNzr3/DxbiwrlfE83Ko23SJLy24saPJDInVD7HkyGn6+8Nj5KsD+
- b27Q==
+ bh=fb+SfSoPZlynboeBUrdrc4P4D7nm+adi191E883lDsI=;
+ b=THwjTpcIk+A3SKH8VzUHM6Qz84x19WX6/uTVXvqz3oCwZ77J+XBK8uQSADXK8orwut
+ kMlc3zoeGfjKPLycltTRKLxt2jDmyIXAGsD597ekCJ14gvkTLoZVUVxCV/GmIimyoOOy
+ 1VDyQ1WALfd/arBQfG4PnMgu6ybPovZhQNepd1CjbsH+O3Ta4HRj633oq4ygkHugIaCV
+ Jwh1EwHw2gZB1n9xwD6BfcC8S3pbpVPWgLYw1Zj8Bm+I4DJUQb/gpjGQbbwaFXLw/uW4
+ AYUe7DU844X/SD0oQfXhffvt442t613vymFHXM7otuvLqianA/Dp9X66wr+T626/cRvm
+ d5/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAR+an7dUo8+dBNS4bpi5ahUIj8jtFSxwhxWH2MrmTjX2lrasWWCxRlNe3K6oPkQjoZPGWzbQCbTyo@nongnu.org
-X-Gm-Message-State: AOJu0Yw53oN0ZOF2FyJ68lQXBTtnurS7dqBiQobwNmQJT7szYu7nbfrb
- DCeIGlQfmOUr/tU6YXmDvG8JpzkeDPo6OIHa+WsRgCtiLiT3Hby6K+gJHgiWqWqf/nmOR/sb5VO
- qRpNO
-X-Gm-Gg: ASbGncvdnB+eINmUyh1av1S/dNVu6pV6GPaOXi0NwwRGv/SuuP5aIfuoVzdWD0uSHPR
- cYc3+p/LPeKlTyazqYRsM3Ewehu/BffPLPY+5WuXKVnaLOFxnD7n1v/0DTiXBI+sFK1SWyP9ScM
- cVIaQ0++DzNHGLlfjedRNEh5iLha0LENjao4z1M/T+xiOkU3p9ZdLQ21+2pg9wnQCBYO3uo/3vH
- q33KjjtGbLqDDPqtc0PlOJ0Uu7D90S6DUAaU4wlbYtx9KxpD9l/Z3bMJgfESEir2rVwyGEx7KXx
- PjTczieKnnMCpwrQUl7tmYiCjxKDUz4QMj8Sh0QYafUhypeVxeq7ewAaVJ16Xt8RNwwDuX5+ijM
- /HG/Z6fbWwSLpsx8828A3GHb9ZySPfEcYwgZChe3KGDqaw0SF5kEYJ7Ngi3vfPtbutA==
-X-Google-Smtp-Source: AGHT+IEt4YVUWwFgyIzhdn5IbgXOq6MpXuk1ycqNDSbqohoyP2LWKqeQhzVLhX2Un94Kouh9YIsSHg==
-X-Received: by 2002:a05:600c:1912:b0:442:c993:6f94 with SMTP id
- 5b1f17b1804b1-459f4eb1a07mr40401175e9.12.1754688064043; 
- Fri, 08 Aug 2025 14:21:04 -0700 (PDT)
+ AJvYcCVVeMGos1k2S2ExKQqmOV6l1dgnYmVUMpeatLfCfEfF2eRbLQKLVdAb9av2tQVBSTkQuXeAI7Ufotnx@nongnu.org
+X-Gm-Message-State: AOJu0Yzo1GGy9Mz+Kz39CV0a6rzhvOxXR1gfOXOPD1gsPvZmsgQSTvRa
+ PW76+wg5+k9FniXJy9AW9BqqMa5PZkvSLmTfcIQ26B/RTtfXmfgJ4Pbqolh5UlswLxM=
+X-Gm-Gg: ASbGncvwi7HY52K1TfdESmW72jqobAVKZsUHOW8Nf6AbM/BJUZ0JwD1zctMpkrQvfAG
+ qEQlx21K+hAHH9zJjGOoHOaBp+X7we8v4d7fhVsoBLHwtKvU3Z3kr9yX3pyjzPAeOU+ovoW2/8c
+ 9SKa4ij23EzbT/0yPf68JB4/bJmIx0Pci7dqEytSfcAvBeX+gaRA5TfYbpNix2HNmN1uSzA3n+Y
+ 0UcWw8Sumc7DiuHFKhHaGESuENlzYsaNqGrliLWO1rDfW4b7FmeLnbPWVJfO7XyZEligkOtaj/u
+ 9MZcxefe0p0Flq0RmuCJJfw8YeqapW0EihM16RcM6Fyq1egmh/iDpvll8nz6jMiSylFIsGn1RRp
+ t5xwcfH3PiMmCPIjeL6ff4H0DunPpbFj2A+LzitxcUE7ZL4A51pw66RVjEEAxadUNEQ==
+X-Google-Smtp-Source: AGHT+IFabKx3FUcHOawLppjwKK3v58/iJ+nRRKpyBfNMXmDhjahnhlPgd9MVV3l5/i5HQQXrPudngw==
+X-Received: by 2002:a05:6000:144e:b0:3b7:95b7:92e7 with SMTP id
+ ffacd0b85a97d-3b900b6a21cmr2937109f8f.52.1754688265531; 
+ Fri, 08 Aug 2025 14:24:25 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459db3048bdsm242603625e9.29.2025.08.08.14.21.03
+ 5b1f17b1804b1-459e075047fsm104951015e9.1.2025.08.08.14.24.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 14:21:03 -0700 (PDT)
-Message-ID: <42480805-2aa0-456b-8b19-bf9b4265da06@linaro.org>
-Date: Fri, 8 Aug 2025 23:21:02 +0200
+ Fri, 08 Aug 2025 14:24:25 -0700 (PDT)
+Message-ID: <50f36e7c-c274-4a1e-9fba-1a70c492e3f6@linaro.org>
+Date: Fri, 8 Aug 2025 23:24:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] tcg/user: do not set exit_request gratuitously
+Subject: Re: [PATCH 8/8] accel: make all calls to qemu_wait_io_event look the
+ same
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: imammedo@redhat.com, richard.henderson@linaro.org, peterx@redhat.com
 References: <20250808185905.62776-1-pbonzini@redhat.com>
- <20250808185905.62776-8-pbonzini@redhat.com>
+ <20250808185905.62776-9-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250808185905.62776-8-pbonzini@redhat.com>
+In-Reply-To: <20250808185905.62776-9-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,36 +104,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/8/25 20:59, Paolo Bonzini wrote:
-> User-mode emulation correctly uses cpu_exit() whenever it needs to go
-> all the way out of the cpu exec loop.  It never uses qemu_cpu_kick();
-> therefore, there is no need for tcg_kick_vcpu_thread() to set
-> cpu->exit_request again.
+> There is no reason for some accelerators to use qemu_wait_io_event_common
+> (which is specifically separated for round robin).  They can also check
+> on the first pass through the loop as well directly, without setting
+> cpu->exit_request for no particular reason.
+> 
+> There is also no need to use qatomic_set_mb() because the ordering of
+> the communication between I/O and vCPU threads is always the same.
+> In the I/O thread:
+> 
+> (a) store other memory locations that will be checked if cpu->exit_request
+>      or cpu->interrupt_request is 1 (for example cpu->stop or cpu->work_list
+>      for cpu->exit_request)
+> 
+> (b) cpu_exit(): store-release cpu->exit_request, or
+> (b) cpu_interrupt(): store-release cpu->interrupt_request
+> 
+>>>> at this point, cpu->halt_cond is broadcast and the BQL released
+> 
+> (c) do the accelerator-specific kick (e.g. write icount_decr for TCG,
+>      pthread_kill for KVM, etc.)
+> 
+> In the vCPU thread instead the opposite order is respected:
+> 
+> (c) the accelerator's execution loop exits thanks to the kick
+> 
+> (b) then the inner execution loop checks cpu->interrupt_request
+>      and cpu->exit_request.  If needed cpu->interrupt_request is
+>      converted into cpu->exit_request when work is needed outside
+>      the execution loop.
+> 
+> (a) then the other memory locations are checked.  Some may need
+>      to be read under the BQL, and the vCPU thread may also take
+>      for the vCPU thread can sleep on cpu->halt_cond; but in
+>      principle this step is correct even without the BQL.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   accel/tcg/cpu-exec.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> index 1a973596d87..b9da2e3770e 100644
-> --- a/accel/tcg/cpu-exec.c
-> +++ b/accel/tcg/cpu-exec.c
-> @@ -750,6 +750,7 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
->   
->   void tcg_kick_vcpu_thread(CPUState *cpu)
->   {
-> +#ifdef CONFIG_SYSTEM
->       /*
->        * Ensure cpu_exec will see the reason why the exit request was set.
->        * FIXME: this is not always needed.  Other accelerators instead
-> @@ -757,6 +758,7 @@ void tcg_kick_vcpu_thread(CPUState *cpu)
->        * CPU thread; see kvm_arch_pre_run() for example.
->        */
->       qatomic_store_release(&cpu->exit_request, 1);
-> +#endif
->   
->       /* Ensure cpu_exec will see the exit request after TCG has exited.  */
->       qatomic_store_release(&cpu->neg.icount_decr.u16.high, -1);
+>   accel/dummy-cpus.c                |  2 +-
+>   accel/hvf/hvf-accel-ops.c         |  2 +-
+>   accel/kvm/kvm-accel-ops.c         |  3 ++-
+>   accel/kvm/kvm-all.c               |  2 --
+>   accel/tcg/cpu-exec.c              |  1 -
+>   accel/tcg/tcg-accel-ops-mttcg.c   |  7 ++----
+>   accel/tcg/tcg-accel-ops-rr.c      | 38 ++++++++++++++++---------------
+>   accel/tcg/tcg-accel-ops.c         |  2 --
+>   system/cpus.c                     |  1 +
+>   target/i386/nvmm/nvmm-accel-ops.c |  6 ++---
+>   target/i386/nvmm/nvmm-all.c       |  2 --
+>   target/i386/whpx/whpx-accel-ops.c |  6 ++---
+>   target/i386/whpx/whpx-all.c       |  2 --
+>   13 files changed, 31 insertions(+), 43 deletions(-)
 
-What about cpu_handle_interrupt()?
+Great!
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
