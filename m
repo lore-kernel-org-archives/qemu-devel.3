@@ -4,110 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D975C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 13:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61CDEC87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukNZJ-0000pt-B4; Fri, 08 Aug 2025 09:55:37 -0400
+	id 1ukNeV-0001KD-69; Fri, 08 Aug 2025 10:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ukNZF-0000fz-73
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 09:55:33 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNeK-0001F0-Tj
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:00:49 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ukNZD-0003Hk-3F
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 09:55:32 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 42D2A5BDE0;
- Fri,  8 Aug 2025 13:55:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1754661329; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ebUv/lW/3otBN7J5qDCgoYzpyYeZOYc7iBmL8EHKxAc=;
- b=oUBfcxufjpv1eaMW5MjMXxkEkMcVLRkOeQSE1MkumCenr4M6Gsftxcq1JuA0H+qkdZWdz8
- 4xUvugARryGNWkwuoNaQwB1GxBA4cYoYA8mz8Xn2ibHr9OCywzCXK3Qi4WnuLQK5q4IQ7w
- 57pNqw9nKxSAUMRZaY55QUN0owhrHIY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1754661329;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ebUv/lW/3otBN7J5qDCgoYzpyYeZOYc7iBmL8EHKxAc=;
- b=/jMVmqmKXePMd+1Mk3Ec+XJushxFBbv0bXzrgY2Nn73MfaTrGWMlq1DTuVcJX9LYaovGTm
- Ocm6dxBaBrQdhFAA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1754661329; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ebUv/lW/3otBN7J5qDCgoYzpyYeZOYc7iBmL8EHKxAc=;
- b=oUBfcxufjpv1eaMW5MjMXxkEkMcVLRkOeQSE1MkumCenr4M6Gsftxcq1JuA0H+qkdZWdz8
- 4xUvugARryGNWkwuoNaQwB1GxBA4cYoYA8mz8Xn2ibHr9OCywzCXK3Qi4WnuLQK5q4IQ7w
- 57pNqw9nKxSAUMRZaY55QUN0owhrHIY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1754661329;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ebUv/lW/3otBN7J5qDCgoYzpyYeZOYc7iBmL8EHKxAc=;
- b=/jMVmqmKXePMd+1Mk3Ec+XJushxFBbv0bXzrgY2Nn73MfaTrGWMlq1DTuVcJX9LYaovGTm
- Ocm6dxBaBrQdhFAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B09111392A;
- Fri,  8 Aug 2025 13:55:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id tjePG9ABlmgXKwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 08 Aug 2025 13:55:28 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yong Huang <yong.huang@smartx.com>, Lukas Straub <lukasstraub2@web.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH] multifd: Make the main thread yield periodically to the
- main loop
-In-Reply-To: <CAK9dgmbybw+WkC2C_qdZnwSYjGn3Q2Du4yjLOz+EmCx1po8YPg@mail.gmail.com>
-References: <5512220e1005ae2bc7357b2def32639d164e84eb.1754534263.git.yong.huang@smartx.com>
- <20250807113639.66d1c5bf@penguin>
- <CAK9dgmZb=5uEwVq65Ygcza0+qtng+-5zmtQRdviX2npg_qhJRQ@mail.gmail.com>
- <20250808090054.13cb8342@penguin>
- <CAK9dgmbybw+WkC2C_qdZnwSYjGn3Q2Du4yjLOz+EmCx1po8YPg@mail.gmail.com>
-Date: Fri, 08 Aug 2025 10:55:25 -0300
-Message-ID: <87o6sp2a0i.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukNeI-0004fW-Mk
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:00:48 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3b8de193b60so1270107f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 07:00:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754661644; x=1755266444; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hfS5Hmt57Z+KzcDQPGb3wcfopvdyDu9bCffSUpn1V1g=;
+ b=nUjqdGcjq9+PvJdFfH6TsJjimR6YGs/QjRjHenhe1T/yxXAAvIHBIbQFFNTMs96LjZ
+ IliHtVntQUXyMB+nudxk8thavnlCUcGcGs5lRf4n7d4XKGFFGROUEMoDgnRwbftUQKRI
+ hrQeRQQ0oCj4/99aqAxUQqxBIMHPN6e+ereGv5CYcwq8d5AaQJwZhIYooCGtkZ8Jn0EL
+ 2uzpGAssY5wxqyasU9TJ+aUNaHvjkcToWYfytALn7KPvqSMMHhU5aVoE7wiI6SohBVDH
+ Eb91aI9TskbssQ6jJB7yv0EC3Zf9LAiZxngkFR9WT1jXxDE5DVyZMQJ0mCjNNwt3R8JK
+ 0SeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754661644; x=1755266444;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hfS5Hmt57Z+KzcDQPGb3wcfopvdyDu9bCffSUpn1V1g=;
+ b=OSZW1i1DlBuoX9EzHBtVw1PHqvJh7Z6Db3qlEUO5sn+OsUEH4uGk3BbgxiZrt+qv8s
+ 6C8V98YFKhRVfLtj2gLOmjUjRSg3778zxk1nAZJeu6KL5XtzdDmdU+nMjxj3c8SLcJdw
+ K5aZUe/zDi8RsZyLc88tMuwvAnbw5nmZdrexiPfYfYOHaMKZ4+CFag8aAjq7YVwmEClu
+ itLo0pb96Mnw/m8jr2VncGDXmspPpHOLGh2mIvjBdBiPZu+SCFSbjzBHKl6TW93z+Agh
+ XXUMAyG337CA1peoH7/B3XhfToUhKLV5h7ugX2ArcGTr9tDgTJalwNEjoCjC5hlJjK/N
+ hEaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUAiVH8hV0d4RPyk7crPQRCe3nd1U7XxoVr9fQ29FQYIc4pgBzxMo3tSuxuO2aTFFlFHwwgytQop3u8@nongnu.org
+X-Gm-Message-State: AOJu0YxGM6dSHhqUfVXnJM/z+YwCP8yXLCRjR7NixB4KxBYsuPODw1AI
+ PDGvowwyS43BS2Uw3NY00xfUo560nRCnOXGsuooMvWekH6zFy/Qc9+QwjqbKCJgOal68g5sP2N7
+ QFpRi
+X-Gm-Gg: ASbGnctQyCD6dIbTA5IF5yC6hMsiZKgzWSHFo5WMgvbYA3jZTOIunYjNXVY+tKkE/u8
+ 7ZOWczGaKMHmf0PFlxZ3rdfmAACCnvqiCQXtsRgabkCNwxzXSEx2mctvEemIX/TgvSHQT/bWU13
+ j9uFekmBFoyu9vkIiQWu8oLSQ8mfZT3BuUYp/BxLRT/YVohbAdqWjybt4SJZtCsZPrPMBe8B0di
+ y7z2+rYRrKMwu83KMFHbMZyRy+9LKC5heGy2DRANHrRp918pSNHl46nQ90miKK9B5QdfnMVp7yV
+ nhaBftMTZDAjua/guIGghbdTjIXN6tyTfiUHcB/6E/58+kvfTBQnEABN9GrBZqeCphj3Ku/T2bx
+ JirR31DFH5L93zEI9m0Q5FEOUGwsA3AIPWp7PypXB8XQeHt/IUPNKgyc5T/Ac+qGlYA==
+X-Google-Smtp-Source: AGHT+IG2b3Kxt/joA4u8FEcci7eWsNgm7My+hNWadSXLGaQNjlB9N08Dh3Dsvd8VJE/5Zbd4Qpq8zw==
+X-Received: by 2002:a05:6000:144f:b0:3b7:8984:5134 with SMTP id
+ ffacd0b85a97d-3b900940321mr2233478f8f.16.1754661644186; 
+ Fri, 08 Aug 2025 07:00:44 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458bd5a11d3sm137004285e9.0.2025.08.08.07.00.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Aug 2025 07:00:43 -0700 (PDT)
+Message-ID: <e864d8f9-505c-41d0-90a2-5a6d040caacf@linaro.org>
+Date: Fri, 8 Aug 2025 16:00:42 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[web.de]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; FREEMAIL_TO(0.00)[smartx.com,web.de];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/12] tcg: Fix error reporting on mprotect() failure in
+ tcg_region_init()
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250808080823.2638861-1-armbru@redhat.com>
+ <20250808080823.2638861-3-armbru@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250808080823.2638861-3-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,154 +105,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yong Huang <yong.huang@smartx.com> writes:
+Hi Markus,
 
-> On Fri, Aug 8, 2025 at 3:02=E2=80=AFPM Lukas Straub <lukasstraub2@web.de>=
- wrote:
->
->> On Fri, 8 Aug 2025 10:36:24 +0800
->> Yong Huang <yong.huang@smartx.com> wrote:
->>
->> > On Thu, Aug 7, 2025 at 5:36=E2=80=AFPM Lukas Straub <lukasstraub2@web.=
-de> wrote:
->> >
->> > > On Thu,  7 Aug 2025 10:41:17 +0800
->> > > yong.huang@smartx.com wrote:
->> > >
->> > > > From: Hyman Huang <yong.huang@smartx.com>
->> > > >
->> > > > When there are network issues like missing TCP ACKs on the send
->> > > > side during the multifd live migration. At the send side, the error
->> > > > "Connection timed out" is thrown out and source QEMU process stop
->> > > > sending data, at the receive side, The IO-channels may be blocked
->> > > > at recvmsg() and thus the main loop gets stuck and fails to respond
->> > > > to QMP commands consequently.
->> > > > ...
->> > >
->> > > Hi Hyman Huang,
->> > >
->> > > Have you tried the 'yank' command to shutdown the sockets? It exactly
->> > > meant to recover from hangs and should solve your issue.
->> > >
->> > >
->> https://www.qemu.org/docs/master/interop/qemu-qmp-ref.html#yank-feature
->> >
->> >
->> > Thanks for the comment and advice.
->> >
->> > Let me give more details about the migration state when the issue
->> happens:
->> >
->> > On the source side, libvirt has already aborted the migration job:
->> >
->> > $ virsh domjobinfo fdecd242-f278-4308-8c3b-46e144e55f63
->> > Job type:         Failed
->> > Operation:        Outgoing migration
->> >
->> > QMP query-yank shows that there is no migration yank instance:
->> >
->> > $ virsh qemu-monitor-command fdecd242-f278-4308-8c3b-46e144e55f63
->> > '{"execute":"query-yank"}' --pretty
->> > {
->> >   "return": [
->> >     {
->> >       "type": "chardev",
->> >       "id": "charmonitor"
->> >     },
->> >     {
->> >       "type": "chardev",
->> >       "id": "charchannel0"
->> >     },
->> >     {
->> >       "type": "chardev",
->> >       "id": "libvirt-2-virtio-format"
->> >     }
->> >   ],
->> >   "id": "libvirt-5217"
->> > }
->>
->> You are supposed to run it on the destination side, there the migration
->> yank instance should be present if qemu hangs in the migration code.
->>
->> Also, you need to execute it as an out-of-band command to bypass the
->> main loop. Like this:
->>
->> '{"exec-oob": "yank", "id": "yank0", "arguments": {"instances": [ {"type=
-":
->> "migration"} ] } }'
->
-> In our case, Libvirt's operation about the VM on the destination side has
-> been blocked
-> by Migration JOB:
->
-> $ virsh qemu-monitor-command fdecd242-f278-4308-8c3b-46e144e55f63
-> '{"query-commands"}' --pretty
-> error: Timed out during operation: cannot acquire state change lock (held
-> by monitor=3DremoteDispatchDomainMigratePrepare3Params)
-> Using Libvirt to issue the yank command can not be taken into account.
->
->
->>
->>
->> I'm not sure if libvirt can do that, maybe you need to add an
->> additional qmp socket and do it outside of libvirt. Note that you need
->> to enable the oob feature during qmp negotiation, like this:
->>
->> '{ "execute": "qmp_capabilities", "arguments": { "enable": [ "oob" ] } }'
->
->
-> No, I checked Libvirt's source code and figured out that when the QEMU
-> monitor is initialized, Libvirt by default disables the OOB.
->
-> Therefore, perhaps we can first enable the OOB and add the yank capability
-> to Libvirt then adding the yank logic to the necessary path=E2=80=94in our
-> instance, the migration code:
->
-> qemuMigrationDstFinish=EF=BC=9A
->     if (retcode !=3D 0) {
->         /* Check for a possible error on the monitor in case Finish was c=
-alled
->          * earlier than monitor EOF handler got a chance to process the e=
-rror
->          */
->         qemuDomainCheckMonitor(driver, vm, QEMU_ASYNC_JOB_MIGRATION_IN);
->         goto endjob;
->     }
->
->
->
->>
->> Regards,
->> Lukas Straub
->>
->> >
->> > The libvirt migration job is stuck as the following backtrace shows; it
->> > shows that migration is waiting for the "Finish" RPC on the destination
->> > side to return.
->> >
->> > ...
->> >
->> > IMHO, the key reason for the issue is that QEMU fails to run the main
->> loop
->> > and fails to respond to QMP, which is not what we usually expected.
->> >
->> > Giving the Libvirt a window of time to issue a QMP and kill the VM is =
-the
->> > ideal solution for this issue; this provides an automatic method.
->> >
->> > I do not dig the yank feature, perhaps it is helpful, but only manuall=
-y?
->> >
->> > After all, these two options are not exclusive of one another,  I thin=
-k.
->> >
+On 8/8/25 10:08, Markus Armbruster wrote:
+> tcg_region_init() calls one of qemu_mprotect_rwx(),
+> qemu_mprotect_rw(), and mprotect(), then reports failure with
+> error_setg_errno(&error_fatal, errno, ...).
+> 
+> The use of &error_fatal is undesirable.  qapi/error.h advises:
+> 
+>   * Please don't error_setg(&error_fatal, ...), use error_report() and
+>   * exit(), because that's more obvious.
+> 
+> The use of errno is wrong.  qemu_mprotect_rwx() and qemu_mprotect_rw()
+> wrap around qemu_mprotect__osdep().  qemu_mprotect__osdep() calls
+> mprotect() on POSIX, VirtualProtect() on Windows, and reports failure
+> with error_report().  VirtualProtect() doesn't set errno.  mprotect()
+> does, but error_report() may clobber it.
+> 
+> Fix tcg_region_init() to report errors only when it calls mprotect(),
+> and rely on qemu_mprotect_rwx()'s and qemu_mprotect_rw()'s error
+> reporting otherwise.  Use error_report(), not error_setg().
+> 
+> Fixes: 22c6a9938f75 (tcg: Merge buffer protection and guard page protection)
+> Fixes: 6bc144237a85 (tcg: Use Error with alloc_code_gen_buffer)
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   tcg/region.c | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tcg/region.c b/tcg/region.c
+> index 7ea0b37a84..74e3b4b774 100644
+> --- a/tcg/region.c
+> +++ b/tcg/region.c
+> @@ -832,13 +832,17 @@ void tcg_region_init(size_t tb_size, int splitwx, unsigned max_threads)
+>               } else {
+>   #ifdef CONFIG_POSIX
+>                   rc = mprotect(start, end - start, need_prot);
+> +                if (rc) {
+> +                    error_report("mprotect of jit buffer: %s",
+> +                                 strerror(errno));
+> +                }
+> +
+>   #else
+>                   g_assert_not_reached();
+>   #endif
+>               }
+>               if (rc) {
+> -                error_setg_errno(&error_fatal, errno,
+> -                                 "mprotect of jit buffer");
+> +                exit(1);
 
-Please work with Lukas to figure out whether yank can be used here. I
-think that's the correct approach. If the main loop is blocked, then
-some out-of-band cancellation routine is needed. migrate_cancel() could
-be it, but at the moment it's not. Yank is the second best thing.
+- Before:
 
-The need for a timeout is usually indicative of a design issue. In this
-case, the choice of a coroutine for the incoming side is the obvious
-one. Peter will tell you all about it! =3D)
+Error displayed when qemu_mprotect_rwx/qemu_mprotect_rw/mprotect fail,
+then exit.
+
+- After:
+
+Error only displayed when mprotect() fails, then exit.
+Nothing displayed when qemu_mprotect_rwx() or qemu_mprotect_rw() failed,
+and exit.
+
+Can we keep the "mprotect of jit buffer" string displayed before
+exiting, but using error_report()?
+
+>               }
+>           }
+>           if (have_prot != 0) {
+
 
