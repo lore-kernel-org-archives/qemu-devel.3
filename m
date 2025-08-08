@@ -4,43 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 577F0C87FCA
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Aug 2025 23:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEEF3C87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 01:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukATY-0006yU-9t; Thu, 07 Aug 2025 19:56:49 -0400
+	id 1ukC16-0005bo-Mt; Thu, 07 Aug 2025 21:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1ukATT-0006wV-UE
- for qemu-devel@nongnu.org; Thu, 07 Aug 2025 19:56:44 -0400
-Received: from fencepost.gnu.org ([2001:470:142:3::e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.thibault@gnu.org>)
- id 1ukATS-0001ld-0L; Thu, 07 Aug 2025 19:56:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnu.org;
- s=fencepost-gnu-org; h=In-Reply-To:MIME-Version:References:Subject:To:From:
- Date; bh=gfFwROyn/FNYt1OAXIrEQXk2DeONnxLrlOkV6mc1DYY=; b=c/l8SFQV9vgcqoh0IkQn
- Fhw0HemJxsakAxNje8p9jf5YC+0bhHVlRBTlJzDkX3BaocTKcKkHPK3fZLsM8TwTC3MRvFZ2nB0o2
- F7ZYfuBXXlEIJ3FJ0wlp+Hh8XtNe/RThR0ND81Ie2znAtQ464v/8TzZ4UqzeGhT2yro9YFeV6qivM
- 3JzBXrjJ8nzJSZNh4mEYYIDS+sh2+aCjq6i2fjAHOPzvpCMiiBCdn1GwIek3jRGtj1dY00AFo1vEx
- L34ONU0fL9rqiQeHGKNwuSQPCyHIerk7JqGMWCE6F3DSPS46LvmIDVnnaXkHPionRsrTXp26LzerV
- rXJQ0TBRVvZ8AQ==;
-Date: Fri, 8 Aug 2025 01:56:18 +0200
-From: Samuel Thibault <samuel.thibault@gnu.org>
-To: Viktor Kurilko <murlockkinght@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v4] Add a feature for mapping a host unix socket to a
- guest tcp socket
-Message-ID: <aJU9IgWHfCpUEoi5@begin>
-References: <20250805145543.580526-1-murlockkinght@gmail.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1ukC0v-0005Ss-VA; Thu, 07 Aug 2025 21:35:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>)
+ id 1ukC0s-0006Ih-U8; Thu, 07 Aug 2025 21:35:21 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8AxmnFLVJVojIM7AQ--.49698S3;
+ Fri, 08 Aug 2025 09:35:07 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJAxT+ZHVJVosPY7AA--.25968S2;
+ Fri, 08 Aug 2025 09:35:04 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: stefanha@gmail.com,
+	qemu-stable@nongnu.org
+Subject: [PULL 0/1] loongarch bug fix for 10.1
+Date: Fri,  8 Aug 2025 09:11:56 +0800
+Message-Id: <20250808011157.375125-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250805145543.580526-1-murlockkinght@gmail.com>
-Organization: I am not organized
+X-CM-TRANSID: qMiowJAxT+ZHVJVosPY7AA--.25968S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,71 +62,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're almost there :)
+The following changes since commit cd21ee5b27b22ae66c103d36516aa5077881aa3d:
 
-Viktor Kurilko, le mar. 05 août 2025 21:52:50 +0700, a ecrit:
-> @@ -824,30 +827,81 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
->          is_udp = 0;
->      } else if (!strcmp(buf, "udp")) {
->          is_udp = 1;
-> -    } else {
-> -        fail_reason = "Bad protocol name";
-> -        goto fail_syntax;
->      }
-> -
-> -    if (get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
-> -        fail_reason = "Missing : separator";
-> -        goto fail_syntax;
-> +#if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
-> +    else if (!strcmp(buf, "unix")) {
-> +        is_unix = 1;
->      }
-> -    if (buf[0] != '\0' && !inet_aton(buf, &host_addr.sin_addr)) {
-> -        fail_reason = "Bad host address";
-> +#endif
-> +    else {
-> +        fail_reason = "Bad protocol name";
->          goto fail_syntax;
->      }
->  
-> -    if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
-> -        fail_reason = "Bad host port separator";
-> +    if (get_str_sep(buf, sizeof(buf), &p, is_unix ? '-' : ':') < 0) {
+  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2025-08-07 11:02:50 -0400)
 
-This factorization looks odd. I don't think it's actually more readable
-to try to factorize some separator parsing. I'd say rather have an if
-(unix) part and else (ip) part, which both make their own get_str_sep
-calls, and factorize just the parsing of the guest part.
+are available in the Git repository at:
 
-> +#endif
-> +    {
-> +        if (buf[0] != '\0' && !inet_aton(buf, &host_addr.in.sin_addr)) {
-> +            fail_reason = "Bad host address";
-> +            goto fail_syntax;
-> +        }
-> +
-> +        if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
-> +            fail_reason = "Bad host port separator";
-> +            goto fail_syntax;
-> +        }
-> +
-> +        err = qemu_strtoi(buf, &end, 0, &host_port);
-> +        if (err || host_port < 0 || host_port > 65535) {
-> +            fail_reason = "Bad host port";
-> +            goto fail_syntax;
-> +        }
-> +        host_addr.in.sin_family = AF_INET;
-> +        host_addr.in.sin_addr.s_addr = INADDR_ANY;
+  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20250808
 
-This is overwriting the inet_aton call above?
+for you to fetch changes up to e66644c48e96e81848c6aa94b185f59fc212d080:
 
-> +        host_addr.in.sin_port = htons(host_port);
-> +        host_addr_size = sizeof(host_addr.in);
->      }
-> -    host_addr.sin_port = htons(host_port);
->  
->      if (get_str_sep(buf, sizeof(buf), &p, ':') < 0) {
->          fail_reason = "Missing guest address";
+  target/loongarch: Fix [X]VLDI raising exception incorrectly (2025-08-08 09:18:44 +0800)
 
-Samuel
+----------------------------------------------------------------
+pul-loongarch-20250808
+
+----------------------------------------------------------------
+WANG Rui (1):
+      target/loongarch: Fix [X]VLDI raising exception incorrectly
+
+ target/loongarch/tcg/insn_trans/trans_vec.c.inc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
 
