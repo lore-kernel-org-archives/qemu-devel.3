@@ -4,143 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB85C87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 20:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED6BCA0EC0
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 20:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukTSg-0001oV-KK; Fri, 08 Aug 2025 16:13:10 -0400
+	id 1ukTus-0002zJ-50; Fri, 08 Aug 2025 16:42:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1ukTSb-0001lq-92; Fri, 08 Aug 2025 16:13:05 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukTum-0002x0-Tb
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:42:14 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1ukTSX-0007F5-Ph; Fri, 08 Aug 2025 16:13:04 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-76bdc73f363so2507565b3a.3; 
- Fri, 08 Aug 2025 13:12:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukTuk-0003Cc-9U
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:42:12 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2400f746440so20851205ad.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 13:42:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754683979; x=1755288779; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=CqcAcp9Y/0mTvAESsvSkuGhtwb6vFv5pOqiTj6z4VsE=;
- b=Vz5PfLOXr+Mw2rVjO5SRfeBCuJvdyBTHHCfCNh7EuidxelBRCEVSDfHFJwObsgzT7H
- AaD7M4EvXkPPu8AnV5Uj6ZoZRpP9cadaolwvutRBaW4jn1URCYKPsspWOFYw5odcw+OH
- 6TmKfK6ZLv+jxSqLkcY/9+gTKIHUEwdt+lhk8eWDismUfdLMNfR9DCVHoDylWa4OFoZz
- cst1EuJPMNgV6gyyXfI+AtxTX4xONkXlUSlXM6Kz1ekKReaRfN0cHut6Jj0JDI2Sq1cn
- llPDIvLPmTXByWUiWrSTObZz2LCSUO6m5e0BE2ZxpQs63OY0NDOoD0IZCluw8ARAQ7An
- /gRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754683979; x=1755288779;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1754685728; x=1755290528; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CqcAcp9Y/0mTvAESsvSkuGhtwb6vFv5pOqiTj6z4VsE=;
- b=cZIwje6VAbyXuEtTEaiWYd2g3uhYqJtUYowmaZRwg4TDL0P1TT6QtG+uGUrMUt3f+G
- LirJnnJfzhqf4JHj9IvPE51VFZjaywjnagJGIt+xr9hBCAARhVHWxCAPRtNjmR6OB4me
- DkrwfmAF8eBgxOuPxin25kCmCJizgPX5K1Y6uKlYNS16A7MUIsoWgOiyOM/9pRQhSPkf
- VTbcgKb7KMMuq2u0NyTSACuKWu/y6AdUL0tjY4pZvIHwOlVbPEZDOCH5uRbNuhySYnAJ
- 27g7IgD7xTN5MLVQBu4KaUnQ0AKmUh3SL8bqlUx2n0s7nk2S97V6N3zoW1bmD/gCDaZE
- IF7w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV6tLOsGsB5g/h1N2xF/HufdX2yAenvze7J6KxR1f5tSeHs2VKUDRZ5rxUg96Pqztn3RysPEpreT2/Q@nongnu.org,
- AJvYcCXBgZEwmeZANcJlYuHbENrgopL+IsR6mz06DHLAsNTMj/+ZgSw+OVok3zXTHVmbtyjry5GiltYFwXwMiA==@nongnu.org
-X-Gm-Message-State: AOJu0YxicHZuGgje4zLEsuhHX2LAlLPpZTSfZZNOiIjM4HVlDEpgXMd/
- bMnxxR5hlODW9OyHNh/4cHUaCT2WZpI0SXJtgkZjtZOxgAu3DBx4t/nq
-X-Gm-Gg: ASbGncu9tB93WwT8nmeG4H8zbBjLYZwlQtW4Z59nzHudFuTPG0RLtNVJ5MIP/bJUs77
- l6wngqh6tfZk0JJ2UCgmkOjuqnrP6yj8oYw0tWlXH8vaEJOnObIdqGK0AEQWJHiBhhqbGy0vZqU
- zvU35DR/lbUYVHzxYdiu0WNNP73SiKcVjRUKZR29EjhWBkK6Ur/UOsMHPsRjE/dvuvLn4Gx+53I
- oU9QfbSsMdHDHLF3TnX80qIfKJAhXcEYDCQc9WF1LWkdzgO/neZ5LygYF74qhYiYFCO8Zj71dns
- dj6+KbaagmiA8YbvM7SQWHL8GUfvTSkmeVFd0EM1pRc/VWlXvUr2IElI/iUUW9EWguelidN9MWr
- DgeloGMn60jSQLvO7BlT1bo81GmG8cc9jGVu73uBtSWemLf48jrGGg0MTmi4hT1HgjdhyBQg=
-X-Google-Smtp-Source: AGHT+IFZrYuorYr8pRsvCRUbo8gPJbJE9DamwhzJ9b1qixJ6BI8ISA4EC9Pde5fTFHJWMcFVsnpACg==
-X-Received: by 2002:a05:6a00:4b53:b0:76a:d724:d6fe with SMTP id
- d2e1a72fcca58-76c46176c9bmr6215107b3a.11.1754683978381; 
- Fri, 08 Aug 2025 13:12:58 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5?
- ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bccfd4893sm21000034b3a.107.2025.08.08.13.12.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 13:12:57 -0700 (PDT)
-Message-ID: <6466150c-c4aa-41a0-b362-7d47b92fddb7@roeck-us.net>
-Date: Fri, 8 Aug 2025 13:12:56 -0700
+ bh=KsrgAwcfXPf60wLi3R10FjsXpsAPM+d7uJ0mGFTRCRw=;
+ b=MAI31nQ3dMQTULDWyoAItG0hL9C3jpRfp5XuMgyaMWi9xEXVapwng51RaEihIOHw6b
+ xHryHrJHscPIEQK9aObAt44ETHEmkuG1vGS0bPL+V3oT8VclH6cENFS8PdsuASDVfbbE
+ jkgtUfjOSiOVp5XJ8pPJtTiX3W5Xz+Jt69qVcHnnfZKUKtE0WXT/k86kAYH7VS39O5rN
+ EeX/sGK5Ro+Yp65gCRir27sZSyjG85qd27vFfAzZsuMkENUJli2vbf/JKzkEVDqHufha
+ BdaeIsmmlb4XwMMPWjvD6byoBHyRmLRT74gUp3AtLYPtWZ0Qh9dzvU0ANKRzUmijng4j
+ pnJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754685728; x=1755290528;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KsrgAwcfXPf60wLi3R10FjsXpsAPM+d7uJ0mGFTRCRw=;
+ b=kJIBKJp2xeXBCth3JOP7vVas0X8OK2v8es+zOhskWZYff+9okoVtHEWPkgmKrPehfX
+ sjCOJAUka9RkCQeUAMVNUbkrL5jiHKkbzWJyRpklCbZiTk1Sv7+NUAKS/lWH7pt/wMcP
+ Bfa5+csD7YJqAqTq/PI+xZHqgZf/T9i0yuTD1Io8PocT9Z50E/m5rhkXVLzmbM2BnozF
+ ize7oeziWdTAkkNV1yp0RzgjIt4hqNcOLWbX/VgAbwc5sJHz1ec1XHcDj3EnIJlQ3dM4
+ L5/9dBsQUQTQDDPlvq7R1h8GwhHHwO82A66drceEwEt1xVVt/X3LVTOOzKVJuHvV4kj3
+ SlcA==
+X-Gm-Message-State: AOJu0YyBSRF+nEyKNi3D+E3p6a+FAJbJGnMTiP/iGDO10Tux/51bF/06
+ tc7jgFw74QX4sLLzLIRNbBGoq5Qe27+imdu2/njKDl/Z50kYGBJqFNh3FP2G+PGR2DlCHWDCsRa
+ Dugz/1VPmdA==
+X-Gm-Gg: ASbGncs48XgdFA6/iMP+v1eh0h1XbQdGT9Z3XxrDp79VqOSCM/+/L7nS8mx7Tdtxz1y
+ ad4Kt8a1qy+j9Cv4qyodT9hiKJwz3Kbfg0LSfpR7r3oi9KgdjBd3pPgrnmGDBgWa6eGcdzTwLTR
+ 9nW4S4oMQpJJR1XG3x3qJmBDF718Zjg9UjJHKheIjVJn7y5tin1R7imxMxn84bIN54kzw6FDDVO
+ 8/fWplsJ2Jgg86WikQBnNOsP4tqL2U5qdher2ipmA/5ctAs1ivw9galRmgNYeqgTvNwla7EidE/
+ JVoQHxdEXsBG3qZLDqER1hW2gGN3zJXgHoWDriD3mNbcqedZ09Q/Y88gGLjXAwUPOpU3RF5th9X
+ mD+ohXt4L+S5Z7WPeuPhzpA==
+X-Google-Smtp-Source: AGHT+IEwyCsAeCiNeliWBaQeHKXOqBNPQx4cnRwJB7/U5KzSuW3BJCZlF3epghzUvbxKefiWhlTrtA==
+X-Received: by 2002:a17:903:1aa3:b0:240:8262:1a46 with SMTP id
+ d9443c01a7336-242c21e355fmr60893775ad.25.1754685727922; 
+ Fri, 08 Aug 2025 13:42:07 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e899a814sm217789945ad.117.2025.08.08.13.42.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Aug 2025 13:42:07 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org,
+	pierrick.bouvier@linaro.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ rowan Hart <rowanbhart@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v6 1/9] contrib/plugins/uftrace: skeleton file
+Date: Fri,  8 Aug 2025 13:41:48 -0700
+Message-ID: <20250808204156.659715-2-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
+References: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 1/2] hw/sd/ssi-sd: Return noise (dummy byte) when
- no card connected
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-block@nongnu.org
-References: <20250808135115.77310-1-philmd@linaro.org>
- <20250808135115.77310-2-philmd@linaro.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20250808135115.77310-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,40 +108,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 06:51, Philippe Mathieu-Daudé wrote:
-> Commit 1585ab9f1ba ("hw/sd/sdcard: Fill SPI response bits in card
-> code") exposed a bug in the SPI adapter: if no SD card is plugged,
-> we shouldn't return any particular packet response, but the noise
-> shifted on the MISO line. Return the dummy byte, otherwise we get:
-> 
->    qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion `s->arglen > 0' failed.
-> 
-> Reported-by: Guenter Roeck <linux@roeck-us.net>
-> Fixes: 775616c3ae8 ("Partial SD card SPI mode support")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+We define a scoreboard that will hold our data per cpu. As well, we
+define a buffer per cpu that will be used to read registers and memories
+in a thread-safe way.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+For now, we just instrument all instructions with an empty callback.
 
-Guenter
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/uftrace.c   | 73 +++++++++++++++++++++++++++++++++++++
+ contrib/plugins/meson.build |  3 +-
+ 2 files changed, 75 insertions(+), 1 deletion(-)
+ create mode 100644 contrib/plugins/uftrace.c
 
-> ---
->   hw/sd/ssi-sd.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/hw/sd/ssi-sd.c b/hw/sd/ssi-sd.c
-> index 594dead19ee..3aacbd03871 100644
-> --- a/hw/sd/ssi-sd.c
-> +++ b/hw/sd/ssi-sd.c
-> @@ -89,6 +89,10 @@ static uint32_t ssi_sd_transfer(SSIPeripheral *dev, uint32_t val)
->       SDRequest request;
->       uint8_t longresp[5];
->   
-> +    if (!sdbus_get_inserted(&s->sdbus)) {
-> +        return SSI_DUMMY;
-> +    }
-> +
->       /*
->        * Special case: allow CMD12 (STOP TRANSMISSION) while reading data.
->        *
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+new file mode 100644
+index 00000000000..4af0130b159
+--- /dev/null
++++ b/contrib/plugins/uftrace.c
+@@ -0,0 +1,73 @@
++/*
++ * Copyright (C) 2025, Pierrick Bouvier <pierrick.bouvier@linaro.org>
++ *
++ * Generates a trace compatible with uftrace (similar to uftrace record).
++ * https://github.com/namhyung/uftrace
++ *
++ * See docs/about/emulation.rst|Uftrace for details and examples.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <qemu-plugin.h>
++#include <glib.h>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++typedef struct Cpu {
++    GByteArray *buf;
++} Cpu;
++
++static struct qemu_plugin_scoreboard *score;
++
++static void track_callstack(unsigned int cpu_index, void *udata)
++{
++}
++
++static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
++{
++    size_t n_insns = qemu_plugin_tb_n_insns(tb);
++
++    for (size_t i = 0; i < n_insns; i++) {
++        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
++
++        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
++        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
++                                               QEMU_PLUGIN_CB_R_REGS,
++                                               (void *) pc);
++    }
++}
++
++static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
++{
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
++    cpu->buf = g_byte_array_new();
++}
++
++static void vcpu_end(unsigned int vcpu_index)
++{
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
++    g_byte_array_free(cpu->buf, true);
++    memset(cpu, 0, sizeof(Cpu));
++}
++
++static void at_exit(qemu_plugin_id_t id, void *data)
++{
++    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
++        vcpu_end(i);
++    }
++
++    qemu_plugin_scoreboard_free(score);
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info,
++                                           int argc, char **argv)
++{
++    score = qemu_plugin_scoreboard_new(sizeof(Cpu));
++    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
++    qemu_plugin_register_atexit_cb(id, at_exit, NULL);
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
++
++    return 0;
++}
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 1876bc78438..7eb3629c95d 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -1,5 +1,6 @@
+ contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
+-                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
++                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
++                   'uftrace']
+ if host_os != 'windows'
+   # lockstep uses socket.h
+   contrib_plugins += 'lockstep'
+-- 
+2.47.2
 
 
