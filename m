@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6462FC87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 20:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79117C87FCB
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 20:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukTzX-0001qm-Vv; Fri, 08 Aug 2025 16:47:08 -0400
+	id 1ukU6G-0004iJ-G7; Fri, 08 Aug 2025 16:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukTzV-0001q3-6h
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:47:06 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukU6D-0004gj-Ox
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:54:01 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ukTzR-0003vZ-GM
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:47:04 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-31efefd2655so2114662a91.0
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 13:47:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukU6B-0004dG-5L
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 16:54:01 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-458bc3ce3beso15957195e9.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 13:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754686020; x=1755290820; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1754686435; x=1755291235; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/74K7khizFR9OV/b7qDXkBSWiiOLUqA6zwAlsZronWg=;
- b=CsnV9vxo2dcRZ/eKkbO8xMm9NYrK3ALLxQBTDEQVHBm7w6m04mOsoul8iAeUVjWs2/
- 1AcwEvVQs+3vYPhVva2yA4oPs3DvKEkqobLDmTQyB/gpdGRyVURRaYT4VswEX3pM2hUN
- 1ya/6clyxhTTotlQ+R0Rg6GxVVhOgZdL5MfLc+yDBUGBBeUlHlNh4Ed0Ms5U61IAcbuv
- rXi9g4jN23sfC8GvdwfStanSAbCdWd9VWzQfajAQT45jXVcQcSM1oWnIqCuXgLoZVoJx
- x0P4jBDCI7qVf8Jaif178G0iGZaeefAI6SlEiAfcqjd0Y2d4MqIexbEGOWQ3GLOSxJFI
- KcrQ==
+ bh=dK1mSePuzQi5vFMqq3zLVnNB9mgHDPjX169GJFS95+w=;
+ b=tK16qAWTdEXT8H2S+4rvIl61F+ha/sEprxZX5vTiJBYkOvTTxv5Vjl62H7PKuckxVP
+ saRxDACdmUJ1N4Y/Cya7jU2S41HJlbwOQcjlArpG7nOi7VtaWMyFdfgO42KqVbJ7yJMI
+ x8tBoM+PfcO7Apy4t0TTQnxjXP6KP+tcITRPQVkITQbrOxU8ApoVCjQmA1DsDD3/ABg+
+ fWHU90NCX3TSJiW/veQ5dLJOFv9itrAv+ERCNdO+Yvu0PHvlHHo2WNX0ydOlZNPAo+rY
+ bkWivREBTzfW+1yxYmuH8pHWVcxKc9hO71sKYyp2+AGmNkmmBy/8xvR6fcvoGaGCuriR
+ DEXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754686020; x=1755290820;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754686435; x=1755291235;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/74K7khizFR9OV/b7qDXkBSWiiOLUqA6zwAlsZronWg=;
- b=IlxHWPpTUXGibnKf8vvbYF7sZVYL/sXZU2CrP5G9UDsiwJoVnz0oAgueI7niq60e7q
- LkeUOHU8N6fa2woIlSbRT6ehcx7SpKSWbVWBnG9IHtSV5NXPYrY1oJYIq9GAy8wU+/U1
- a9zTreGS38HxoAtqYFzMGm8oLFZ7hUlCOdJ6JBw1whi1/7AuztHJKgPEouPCZ/Uy4Vuv
- 0N1lZcIhP7B0MYDeJeUna65c/6o3+TQApAS6HLBBvOmk/gufbXr3qCRhYBBxxdl9IFmz
- 9H/xpBFmI3lpFWX8t68radjrCVQo01rLaPlmTQ/4tMujXByxgOXNtkqayjMmKTmMe/w6
- vlLw==
-X-Gm-Message-State: AOJu0Yy5eXHpfAEH+ffsgsB1ZbsclSIfqIxufC88v/fce4cN2z1Cdxzt
- hcnkutWN4R6r1NTS51JF0fieQcn93VRzll7VyEmc928WNxKdqVOymNQsTObq2GLiNOCYzl+gFWO
- HiOp2rXhPnw==
-X-Gm-Gg: ASbGncu+aDEZzY2TKhC6QEgFiCAZE1Vh3D/Hlxia+uq8WEISPZTvrYzWJCNn1u3f51/
- gNYVRPIv6/KSz6CXbRz2xg7ixR+XXKl2VZRpIHxPmYsffKm6AqL3nvT1vYpXkK9q4YeANZJL1/v
- RyvNXr5YcY6mmSP+i69h/4qp3TIhxk7v8aCdz/5QJ3ODxxlXJv8hveFFSoFpTBf0rVTOBmbWlHe
- TrfY3TnyKaFFo8e4ww8jjVrf0ccWXOUACecoMXfUTdab8CLkTppIdt7jn0xtIyFGZpRoX7f8qCq
- TQENPUod+UDeuGcX9qdkOhtLs0IvZzBl/WMioGRzvQgHJ+LuxP0eULVi1T+Rps2AgcJLgsKntvd
- QAjQu/tBfhXRxtNGgCDZCjBkmkQxdpOgGEVQ=
-X-Google-Smtp-Source: AGHT+IFaLshfsZa0ldnbaqNDMN4OMEYSs1CPtAZNyOf0pS8mhGFLeradTFVJpv87arZCpKqcocVj0Q==
-X-Received: by 2002:a17:90b:4f47:b0:321:2b89:958b with SMTP id
- 98e67ed59e1d1-3218425082fmr6741268a91.0.1754686019850; 
- Fri, 08 Aug 2025 13:46:59 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-32102a95be9sm10019998a91.2.2025.08.08.13.46.59
+ bh=dK1mSePuzQi5vFMqq3zLVnNB9mgHDPjX169GJFS95+w=;
+ b=vOqLzopw8q6+ClTC7URcx6rR4gguJGAIIMQ63fG0TLAVA6wZBXwu7jcTwkdNtTUgSf
+ XdD++X779vy65Xujxd5Lxi5d8FRUCJ74elW8TzkilsUy56vf+Wl/a7R5HFQgEsBxEtfE
+ yhXEDIjGYd7Nqw4KBd+ZOGDTgWbQkx9pH0gzUhjwza+pzsNNZxlGPE7t8IavHPYy78pE
+ klIMmXjgBcdPp1hHamNtKtTlb5w8/0QRh2AgYDE+KK5Rh0S1GwnTqsFNqI+lvpRZGSvh
+ TqW/DC08yT36bDfngw1s5Aqz0rQkLgvOXa6PIfQyy1yjCZ0HxAyprfDrXBVkfMO3/rmw
+ 7KXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyxUrJDd2DcyYpXHvZl+ZdJqdXWVsdFIysrX1wzyME/u34P/BdFWG19/xVEyNXHWNfTltgPJ0tHfsS@nongnu.org
+X-Gm-Message-State: AOJu0YzN1djAgAP0lzbKiTHdfcz9qbvj0tGHTQU+DikHvrDNsgNvc2af
+ dpsvBuVYqHFXwpZX13f5fUeRa3FK9NeqasudKV0RVaO7rl6Xsq0vRHuO0ZSNHJnooLo=
+X-Gm-Gg: ASbGnctbFCAGxYoCMUPWIIHj5pdQqBeygErFkNYLBJMpvu/lHMjYHX7BvINtGUFrK5H
+ otK/CyC1E1DjwdfuiTef8pKcC+oFopHF2OizTB8KGtw6cx7BiuvztWgMJODxQfKpl4GTOFSz7gJ
+ EjgKBVi6Fk1Vo5h9lsetz1mnLoWgnksBmmPnmQIm9kHE64BaDgS841dEIyRjt5QP7YBXOVfZVH5
+ RpIjxM79aegnBa2zF4T1pgeNTOmanO0UU/a9mp7cI3gx/ZzEjriZQHlP60uSLS+u6Ctv8as37f8
+ hfYw1GRv5/jtHDxCAhOmAPJQfBn4kS4q7VmOMGr6hQIQ/EkZKvMT89DuqmJELpRtB7WXT77JV9Q
+ W8uKCNXXDJXjUEfwa8k1LWgnq/zdC6Yr7ZUnxoRTCJB3pTifjK7VEViH74l0iheklFA==
+X-Google-Smtp-Source: AGHT+IGiYtqWUPDxeDAm9Y6dGkC4VVcGlK6VCEt81E2pwWSu8bvoptIBPZAuLKCfYRojSMyIyX0oFA==
+X-Received: by 2002:a05:600c:c493:b0:453:66f:b96e with SMTP id
+ 5b1f17b1804b1-459faf4758bmr15864755e9.11.1754686434800; 
+ Fri, 08 Aug 2025 13:53:54 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459c58ececdsm141719175e9.1.2025.08.08.13.53.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 13:46:59 -0700 (PDT)
-Message-ID: <3ebeccb9-3cb4-469d-8163-f71cdec888f1@linaro.org>
-Date: Fri, 8 Aug 2025 13:46:58 -0700
+ Fri, 08 Aug 2025 13:53:54 -0700 (PDT)
+Message-ID: <cf8eeadb-fd6b-4d39-bcf7-4db9745f736a@linaro.org>
+Date: Fri, 8 Aug 2025 22:53:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/9] contrib/plugins: uftrace
+Subject: Re: [PATCH v5 11/18] target/arm: cpu: mark WHPX as supporting PSCI 1.1
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Ani Sinha <anisinha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
+ Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Cameron Esfahani <dirty@apple.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ qemu-arm@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250808065419.47415-1-mohamed@unpredictable.fr>
+ <20250808065419.47415-12-mohamed@unpredictable.fr>
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, rowan Hart <rowanbhart@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Richard Henderson <richard.henderson@linaro.org>
-References: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250808065419.47415-12-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,23 +115,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 1:41 PM, Pierrick Bouvier wrote:
+On 8/8/25 08:54, Mohamed Mediouni wrote:
+> Hyper-V supports PSCI 1.3, and that implementation is exposed through
+> WHPX.
 > 
-> v6
-> --
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > 
-> - fix types and spelling mistakes
-> - use _MAX for privilege level enums
-> - uftrace info file: use empty strings
-> - trace flush: assert we wrote all data
-> - doc: added style for keyboard keys
-> - added URL to document uftrace entry format
-> - updated comment in vcpu_tb_trans to explain why we always instrument the first
->    instruction in tb
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   target/arm/cpu.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index e2b2337399..3b69c9786a 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -23,6 +23,7 @@
+>   #include "qemu/timer.h"
+>   #include "qemu/log.h"
+>   #include "exec/page-vary.h"
+> +#include "system/whpx.h"
+>   #include "target/arm/idau.h"
+>   #include "qemu/module.h"
+>   #include "qapi/error.h"
+> @@ -1496,7 +1497,7 @@ static void arm_cpu_initfn(Object *obj)
+>       cpu->psci_version = QEMU_PSCI_VERSION_0_1; /* By default assume PSCI v0.1 */
+>       cpu->kvm_target = QEMU_KVM_ARM_TARGET_NONE;
+>   
+> -    if (tcg_enabled() || hvf_enabled()) {
+> +    if (tcg_enabled() || hvf_enabled() || whpx_enabled()) {
+>           /* TCG and HVF implement PSCI 1.1 */
 
-Patch 4 and 8 still miss review.
+(Update comment, or simply remove it?)
 
-Thanks,
-Pierrick
+>           cpu->psci_version = QEMU_PSCI_VERSION_1_1;
+
+Maybe we could implement SYSTEM_RESET2, SYSTEM_OFF2 and MEM_PROTECT*
+and bump to QEMU_PSCI_VERSION_1_3. Or add UNIMP stubs and here
+directly start with:
+
+        } else if (whpx_enabled()) {
+            cpu->psci_version = QEMU_PSCI_VERSION_1_3;
+
+>       }
+
 
