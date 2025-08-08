@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97ACC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE37C87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukQ1k-0002Yz-7n; Fri, 08 Aug 2025 12:33:08 -0400
+	id 1ukQ39-0006MQ-9x; Fri, 08 Aug 2025 12:34:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukQ1i-0002Vi-RH
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:33:06 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ukQ36-00064D-2q
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:34:32 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukQ1f-0004BN-6e
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:33:05 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-458aee6e86aso14781875e9.3
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:33:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ukQ33-0004NV-Tb
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:34:31 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-617d24e7246so3123367a12.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:34:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754670781; x=1755275581; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Is/btaog9h8T57V7yZAZzOB7kmb1Hrj+dsZm3eUzTAo=;
- b=EtOPI1cZhtoTbH+evYWizkC1DbUt4sKWRRXgWEvvz2Y8o1UfwG+iWgnd5pym8mxMk9
- 4WXzUGlgjh6YYpwvW1TpnGA+jUdXtVeXOIx+Lhd5ad+JKJgVuHZBVuSx/0GdcROkE8pY
- BxpV9OpCbX82Z/xvWQgZSTKvUcb+YDJrpdiy05AIy1MhZHn8KjWuSrn15DPPbkDBkANX
- 1V9F6Q20/vInxrc74fGQ0Y/lQZKg78crQtfdU51x0dlFkdkUPF8Jk9yaJEFZR5NFJHNS
- otzkQXk4lZKUR52feepK8DDu3RyzQHdURrY5s8jBOTkQ4lrhopnXb8kzSibIZdWjTfej
- ye4A==
+ d=linaro.org; s=google; t=1754670868; x=1755275668; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8JGQHR3LwlWFXqRVnBhF10osURSIlyt3G5Y4D5+vjC4=;
+ b=gj3HpwqoCYPRLbQleq/HjzVp+LlfxoMmoYFzfBo/2zsM43MUHPUHEX0MuoltP4nozC
+ kFMJ7gjdFNkzJs90dGekI/39+DS4QOpLaC813DrERsLJoXZbiJHOCH8srGkrkWQKnQQl
+ UYzeODX0lirtUprwe4mHzA8wo+HfC24iiF6dfDO/ZrsGGQrZrEjKKMEevAe36i9S6B9Q
+ 0JPC+5egShPq9Gzb5Tee6OHQC4/WQyHRCoJKl62WaapsSX5WX46wxGWaalRtFxdGgEGc
+ IzcOAS0+wLBqewuglacWbJWIJJQxuE5ByS75AfyzxhqIXejKHjqy6hc0FKK8RlHXXtgX
+ Q05g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754670781; x=1755275581;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Is/btaog9h8T57V7yZAZzOB7kmb1Hrj+dsZm3eUzTAo=;
- b=gcdbTQM23D+DVMMKBheCCS3lTJGKbjCSwmwwqVcT/JsZ3Qm7+eRCdiJAIxxmiBLyV6
- z4PqPXRYyJ/Dswr8nw9Mq0DCcW7pA/cGOtFNw/vpmFsu3BEcIH8eiEjtqhEAJR36uHF5
- vBVzQXww5ryzqSJkhIV3GAujd+JptGdDYm6znuBGx2wHH4g/5RdaWoshVYkyWsGdqkc9
- V4vbaglcHQxW6yECZ9LT6jomIDEZRyvvG/dC1kxvFPV3GxqzksI0YEH/JZE1ucqzgXsR
- tLVHayS9A/BvtOL9tf58m9ejatNvIsneYiD5w00JSAqevNWqNcQJ6JNkFO9mOHlp89UP
- 7qDA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhplHf11vXlD1l9FgXTxu/MSe08Y6OU2CeGomkB9me5ideixmKR6YWtDEjymW7yv1ibtJoGYZSJDiW@nongnu.org
-X-Gm-Message-State: AOJu0YwiQbZz3oTVLGABYPPGcFoAdotrHGdcXxCUDgXxOo2PYRfIU1Fs
- vbfbanhriWGcxtMJAzz3+b0loBE70WAh+cGLt//pqgOAjRFgrYC5CAS64Cvx4MddyyA=
-X-Gm-Gg: ASbGncv8o8ptysThYo/hB2rcv+AQn8XuUxkos3zKA/SAUG+7/spam9u8AXvM/P+VovF
- iMByUeaO/Y7cEUIAaHsWM1oSOHC5xbdSueFQjBc0MPNQV6zdyeJvRm5ljky6fYOWm6VuG9IrVQ3
- d0u1my6Tr977PZIPLkhLlXAvB+Jmkj6zSXjXp3/cUO1ZNSvLaWaE9WISKeKqmz43HWR6FJxg6KU
- 9IKZYYj4UsX9nc4pgwNazOH2xIlqUBL/jiyoIQAcjcyVDXQeCm5r5N8bND0yHo/AFMABXb5yFIz
- uh0evFNtj8AylbMq+b35Vq2sVMB9cx0t3VrkhOt2xXHhnClZl7C3sjWoxqprUMDquutNIWj/R11
- slWyQWCFvIgh4kvk5aOSwqsBmO5YzSCKvH3hzuKJshh8XqDK/RxW+DC8NJs2aBSd+uWnu8CUnaa
- L5
-X-Google-Smtp-Source: AGHT+IHksJpCMyiL77F69qBIG+cDZD3iFhHa6ArtUddJMFv3XF4A3JM2mk6qbwG1+Tj0GngHxUQoBA==
-X-Received: by 2002:a05:600c:1c21:b0:459:d616:25c5 with SMTP id
- 5b1f17b1804b1-459f4eb406fmr34250415e9.12.1754670780823; 
- Fri, 08 Aug 2025 09:33:00 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-458bbf91b69sm146991445e9.3.2025.08.08.09.32.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 09:33:00 -0700 (PDT)
-Message-ID: <8f2db989-df19-4fb3-b58e-151bd175d57e@linaro.org>
-Date: Fri, 8 Aug 2025 18:32:59 +0200
+ d=1e100.net; s=20230601; t=1754670868; x=1755275668;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8JGQHR3LwlWFXqRVnBhF10osURSIlyt3G5Y4D5+vjC4=;
+ b=Z8ywsWVTbgfJ2y6ivScgubogzFofFaoMnMmOUumUKKD+SjO8PDG/pVURuIIn3aWkJM
+ bioUIebn8kd3HOT7J/XEN2xXdp+6cLvmtNJWJOF//GhZSN6+yQC6zI+k422n3o/3yCuG
+ pTqLM7NvpKqVmTbF7qa/q5xFVg/DL5ZcZK8KKaAHG1SBgXDQ2/H9dHYKUPMv8js6hjM4
+ 1DtD2P3EXnZEP130qRdaVccQorz64sz30UJ7j1DBoZwcNqBF6t7MEZspWlH0C63yFq2A
+ 27yPtGEFOuzV5L3Dwhi/b8wENmRWWfqPeV8sqL9olvyYWEPJnku6DvL+DS1upGEQQSnZ
+ 05hg==
+X-Gm-Message-State: AOJu0YzQ4iIRu7RXymuDUSQW9Jnt7xx16k/AQfcx1aJ/7ob86/HhpMol
+ TxL+Truw8R6m1oTsT4YCQAjpgRl1ixjTqIoCbyRaZgrL13HFrqkDqLovEw8iJ+1Nc9yTyTpIB1c
+ wVBKWWMj5bVUFr117muItsuO+9nSGmJ7FXKVqoLrsLg==
+X-Gm-Gg: ASbGncsrDzvbm/0G7emtttydolG0oBjy+nNom6nMam77cJ/dAKDJiPgGSBSAFeVoznv
+ KjJGjlxDvmqJid6qh7IJ6C9jm/nFhOQabU8oyIge/JgBKxG2zBwhZHoB1CTOacDq8OoaqYMjarL
+ bYJgMIh+CRe6XXwqtu5zOLARzNu1pQNzZmc0X76ixvmDTAxeJEF2xfAuz2apr7w0Bw50tP2bSP/
+ 4104q1H
+X-Google-Smtp-Source: AGHT+IEVqJ0uTXw2pnUGgRM9Q2XotMbvXutKatuRAGaDSKV6B7Ok7J5ovYvITDm2qmTIp4lSQ1MfKj0gDS9WXjlRhrE=
+X-Received: by 2002:a05:6402:35c8:b0:615:c5a9:4caf with SMTP id
+ 4fb4d7f45d1cf-617e2b7097fmr2877715a12.7.1754670867967; Fri, 08 Aug 2025
+ 09:34:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 14/14] test/functional: Add test for boston-aia board
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
- <20250717093833.402237-15-djordje.todorovic@htecgroup.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250717093833.402237-15-djordje.todorovic@htecgroup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
+ <20250808020702.410109-2-pierrick.bouvier@linaro.org>
+ <t0o24e.37nl0tbfod6ih@linaro.org>
+ <09a8120a-051c-4d39-9506-5922f5d65697@linaro.org>
+In-Reply-To: <09a8120a-051c-4d39-9506-5922f5d65697@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 8 Aug 2025 19:34:01 +0300
+X-Gm-Features: Ac12FXxlNzPdGXx9UbX1BuRLVyPyvbdScdHm64O4xMLQaIc0VLErgE3PQGANC20
+Message-ID: <CAAjaMXbNXYqvAsX9n057f9aO-weUt0v-eUi+=qPkysC2p_f6_A@mail.gmail.com>
+Subject: Re: [PATCH v5 1/9] contrib/plugins/uftrace: skeleton file
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud_=C3=A9?= <philmd@linaro.org>, 
+ rowan Hart <rowanbhart@gmail.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell <peter.maydell@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,114 +102,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Fri, Aug 8, 2025 at 7:19=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 8/8/25 1:14 AM, Manos Pitsidianakis wrote:
+> > On Fri, 08 Aug 2025 05:06, Pierrick Bouvier <pierrick.bouvier@linaro.or=
+g> wrote:
+> >> We define a scoreboard that will hold our data per cpu. As well, we
+> >> define a buffer per cpu that will be used to read registers and memori=
+es
+> >> in a thread-safe way.
+> >>
+> >> For now, we just instrument all instructions with an empty callback.
+> >>
+> >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> >> ---
+> >> contrib/plugins/uftrace.c   | 74 +++++++++++++++++++++++++++++++++++++
+> >> contrib/plugins/meson.build |  3 +-
+> >> 2 files changed, 76 insertions(+), 1 deletion(-)
+> >> create mode 100644 contrib/plugins/uftrace.c
+> >>
+> >> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+> >> new file mode 100644
+> >> index 00000000000..d60c1077496
+> >> --- /dev/null
+> >> +++ b/contrib/plugins/uftrace.c
+> >> @@ -0,0 +1,74 @@
+> >> +/*
+> >> + * Copyright (C) 2025, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> >> + *
+> >> + * Generates a trace compatible with uftrace (similar to uftrace reco=
+rd).
+> >> + * https://github.com/namhyung/uftrace
+> >> + *
+> >> + * See docs/about/emulation.rst|Uftrace for details and examples.
+> >> + *
+> >> + * SPDX-License-Identifier: GPL-2.0-or-later
+> >> + */
+> >> +
+> >> +#include <qemu-plugin.h>
+> >> +#include <glib.h>
+> >> +
+> >> +QEMU_PLUGIN_EXPORT int qemu_plugin_version =3D QEMU_PLUGIN_VERSION;
+> >> +
+> >> +typedef struct Cpu {
+> >> +    GByteArray *buf;
+> >> +} Cpu;
+> >> +
+> >> +static struct qemu_plugin_scoreboard *score;
+> >> +
+> >> +static void track_callstack(unsigned int cpu_index, void *udata)
+> >> +{
+> >> +}
+> >> +
+> >> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb =
+*tb)
+> >> +{
+> >> +    size_t n_insns =3D qemu_plugin_tb_n_insns(tb);
+> >> +
+> >> +    for (int i =3D 0; i < n_insns; i++) {
+> >
+> > s/int i/size_t i/
+> >
+>
+> Yep, that's better.
+>
+> >> +        struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(tb,=
+ i);
+> >
+> > This can return NULL,
+> >
+>
+> It will return NULL only if i is out of the tb range, which will never
+> happen here, because i < n_insns.
+> As you can see in all other plugins we have, there is never a NULL check
+> for the return of qemu_plugin_tb_get_insn.
+> It points a good thing in the API though, that maybe we should simply
+> assert i is in the range, because there is no reason for a user to use a
+> random index that may fall out of the tb range.
 
-On 17/7/25 11:38, Djordje Todorovic wrote:
-> Add functional test for Boston AIA board. The P8700 RISC-V based
-> CPU by MIPS supports it at the moment.
-> 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->   tests/functional/meson.build            |  1 +
->   tests/functional/test_riscv64_boston.py | 78 +++++++++++++++++++++++++
->   2 files changed, 79 insertions(+)
->   create mode 100755 tests/functional/test_riscv64_boston.py
+Ah thanks for pointing that out. Keep my r-b
 
-
-> diff --git a/tests/functional/test_riscv64_boston.py b/tests/functional/test_riscv64_boston.py
-> new file mode 100755
-> index 0000000000..eb5dd07b79
-> --- /dev/null
-> +++ b/tests/functional/test_riscv64_boston.py
-> @@ -0,0 +1,78 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Boston board test for RISC-V P8700 processor by MIPS
-> +#
-> +# Copyright (c) 2025 MIPS
-> +#
-> +# SPDX-License-Identifier: LGPL-2.1-or-later
-> +#
-> +
-> +from qemu_test import QemuSystemTest
-> +
-> +class RiscvBostonTest(QemuSystemTest):
-> +    """
-> +    Test the boston-aia board with P8700 processor
-> +    """
-> +
-> +    timeout = 10
-> +
-> +    def test_boston_memory_constraints(self):
-> +        """
-> +        Test that boston-aia board enforces memory size constraints
-> +        """
-> +        # Test invalid memory size
-> +        self.set_machine('boston-aia')
-> +        self.vm.add_args('-cpu', 'mips-p8700')
-> +        self.vm.add_args('-m', '512M')  # Invalid size
-> +        self.vm.add_args('-nographic')
-> +        self.vm.set_qmp_monitor(enabled=False)
-> +        self.vm.launch()
-> +        self.vm.wait()
-> +
-> +        # Should fail due to invalid memory size
-> +        self.assertEqual(self.vm.exitcode(), 1)
-> +        log = self.vm.get_log()
-> +        self.assertIn("Memory size must be 1GB, 2GB, 3GB, or 4GB", log)
-> +
-> +    def test_boston_requires_kernel(self):
-> +        """
-> +        Test that boston-aia board requires a kernel or bios
-> +        """
-> +        self.set_machine('boston-aia')
-> +        self.vm.add_args('-cpu', 'mips-p8700')
-> +        self.vm.add_args('-m', '1G')  # Valid size
-> +        self.vm.add_args('-nographic')
-> +        # No kernel or bios specified
-> +        self.vm.set_qmp_monitor(enabled=False)
-> +        self.vm.launch()
-> +        self.vm.wait()
-> +
-> +        # Should fail due to missing kernel/bios
-> +        self.assertEqual(self.vm.exitcode(), 1)
-> +        log = self.vm.get_log()
-> +        self.assertIn("Please provide either a -kernel or -bios argument", log)
-> +
-> +    def test_boston_cpu_count(self):
-> +        """
-> +        Test various CPU counts for boston-aia board
-> +        """
-> +        cpu_counts = [1, 2, 4, 8]
-> +
-> +        for cpus in cpu_counts:
-> +            with self.subTest(cpus=cpus):
-> +                self.set_machine('boston-aia')
-> +                self.vm.add_args('-cpu', 'mips-p8700')
-> +                self.vm.add_args('-smp', str(cpus))
-> +                self.vm.add_args('-m', '1G')
-> +                self.vm.add_args('-nographic')
-> +                self.vm.set_qmp_monitor(enabled=False)
-> +                self.vm.launch()
-> +                self.vm.wait()
-> +
-> +                # Board should fail due to missing kernel, not CPU count
-> +                self.assertEqual(self.vm.exitcode(), 1)
-> +                log = self.vm.get_log()
-> +                self.assertIn("Please provide either a -kernel or -bios argument", log)
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
-
-Thanks for testing these constraints, but can we have guest code
-actually exercising the code path to the XMIPS instructions?
-
-Also code testing powering VPs up/down, to cover CPS, GCR and CPC.
-
-Code using the e1000e card would be awesome ;)
-
-Thanks,
-
-Phil.
+>
+> >> +
+> >> +        uintptr_t pc =3D qemu_plugin_insn_vaddr(insn);
+> >
+> > And this would lead to a NULL dereference (it performs insn->vaddr
+> > access)
+> >
+> >> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
+> >> +                QEMU_PLUGIN_CB_R_REGS,
+> >> +                (void *) pc);
+> >
+> > Hm indentation got broken here, should be
+> >
+>
+> Thanks, probably when I created the intermediate series of patches.
+>
+> >
+> > +        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
+> > +                                               QEMU_PLUGIN_CB_R_REGS,
+> > +                                               (void *)pc);
+> >
+> >> +
+> >> +    }
+> >> +}
+> >> +
+> >> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+> >> +{
+> >> +    Cpu *cpu =3D qemu_plugin_scoreboard_find(score, vcpu_index);
+> >> +    cpu->buf =3D g_byte_array_new();
+> >> +}
+> >> +
+> >> +static void vcpu_end(unsigned int vcpu_index)
+> >> +{
+> >> +    Cpu *cpu =3D qemu_plugin_scoreboard_find(score, vcpu_index);
+> >> +    g_byte_array_free(cpu->buf, true);
+> >> +    memset(cpu, 0, sizeof(Cpu));
+> >
+> > Nitpick, cpu->buf =3D NULL; is easier to understand (suggestion)
+> >
+>
+> Yes, it does not hurt, I'll add it.
+>
+> >> +}
+> >> +
+> >> +static void at_exit(qemu_plugin_id_t id, void *data)
+> >> +{
+> >> +    for (size_t i =3D 0; i < qemu_plugin_num_vcpus(); ++i) {
+> >> +        vcpu_end(i);
+> >> +    }
+> >> +
+> >> +    qemu_plugin_scoreboard_free(score);
+> >> +}
+> >> +
+> >> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> >> +                                           const qemu_info_t *info,
+> >> +                                           int argc, char **argv)
+> >> +{
+> >> +    score =3D qemu_plugin_scoreboard_new(sizeof(Cpu));
+> >> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> >> +    qemu_plugin_register_atexit_cb(id, at_exit, NULL);
+> >> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+> >> +
+> >> +    return 0;
+> >> +}
+> >> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+> >> index 1876bc78438..7eb3629c95d 100644
+> >> --- a/contrib/plugins/meson.build
+> >> +++ b/contrib/plugins/meson.build
+> >> @@ -1,5 +1,6 @@
+> >> contrib_plugins =3D ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hot=
+blocks',
+> >> -                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptri=
+gger']
+> >> +                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptri=
+gger',
+> >> +                   'uftrace']
+> >> if host_os !=3D 'windows'
+> >>    # lockstep uses socket.h
+> >>    contrib_plugins +=3D 'lockstep'
+> >> --
+> >> 2.47.2
+> >>
+> >
+> > If no other comments rise for this patch, you can add my r-b after
+> > fixing the NULL check:
+> >
+> > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>
 
