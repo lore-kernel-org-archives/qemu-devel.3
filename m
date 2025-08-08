@@ -4,60 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12462C87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 13:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B092C87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 13:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukN9x-0006jg-FB; Fri, 08 Aug 2025 09:29:25 -0400
+	id 1ukLp3-0007t6-QL; Fri, 08 Aug 2025 08:03:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ukN9t-0006gU-9r
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 09:29:22 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ukLnL-000385-MM
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:02:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ukN9q-0006Io-3x
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 09:29:21 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bz4Zb62mgz6M4LB;
- Fri,  8 Aug 2025 21:27:19 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id E91781402ED;
- Fri,  8 Aug 2025 21:29:09 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 8 Aug
- 2025 15:29:09 +0200
-Date: Fri, 8 Aug 2025 14:29:07 +0100
-To: <shiju.jose@huawei.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, <armbru@redhat.com>, 
- <dave@stgolabs.net>, <linuxarm@huawei.com>
-Subject: Re: [PATCH v5 1/7] hw/cxl/events: Update for rev3.2 common event
- record format
-Message-ID: <20250808142907.000022f4@huawei.com>
-In-Reply-To: <20250807154346.2209-2-shiju.jose@huawei.com>
-References: <20250807154346.2209-1-shiju.jose@huawei.com>
- <20250807154346.2209-2-shiju.jose@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ukLnJ-00077E-PW
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:01:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754654517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XpmwOQHX1SgGpJskyx5fWBOPbTgrLh6qjQ11c8Kgzo8=;
+ b=BXsr4bEpTMz0ZA2ORifgi2PcTXhb0pU7+FfNPqLX5HvahHDzPXiMiCiscW8gzb4jxzJgKk
+ 0MgoDQJrMwJHLHPrmOYSL/NGPcP92uEIVhDm5Tnw519ff37ckmpgP2dyZ7rWmkDkbydpiA
+ CkxayZmhqr1XyzUubuMUtW2jbVFG+wc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-GU4XYO6sML2Dxc5UUfB9Pg-1; Fri,
+ 08 Aug 2025 08:01:55 -0400
+X-MC-Unique: GU4XYO6sML2Dxc5UUfB9Pg-1
+X-Mimecast-MFC-AGG-ID: GU4XYO6sML2Dxc5UUfB9Pg_1754654513
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 663BC180036E; Fri,  8 Aug 2025 12:01:53 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6770719560AD; Fri,  8 Aug 2025 12:01:51 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
+ philmd@linaro.org, mtosatti@redhat.com
+Subject: [PATCH v3 04/10] hpet: move out main counter read into a separate
+ block
+Date: Fri,  8 Aug 2025 14:01:31 +0200
+Message-ID: <20250808120137.2208800-5-imammedo@redhat.com>
+In-Reply-To: <20250808120137.2208800-1-imammedo@redhat.com>
+References: <20250808120137.2208800-1-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,35 +84,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 Aug 2025 16:43:40 +0100
-<shiju.jose@huawei.com> wrote:
+Follow up patche will switch main counter read to
+lock-less mode. As preparation for that move relevant
+branch into a separate top level block to make followup
+patch cleaner/simplier by reducing contextual noise
+when lock-less read is introduced.
 
-> From: Shiju Jose <shiju.jose@huawei.com>
-> 
-> CXL spec 3.2 section 8.2.9.2.1 Table 8-55, Common Event Record
-> format has updated with optional Maintenance Operation Subclass,
-> LD ID and ID of the device head information.
-> 
-> Add updates for the above optional parameters in the related
-> CXL events reporting and in the QMP commands to inject CXL events.
-> 
-> In qapi/cxl.json added fields of Common Event Record to a common
-> structure CXLCommonEventBase.
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Hi Shiju,
+no functional changes.
 
-Sign off chain doesn't make sense. Drop my SoB.  I guess this is because
-it went through my tree at some stage and hence was tagged by
-me. Given it's your patch, you should drop that from new versions.
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+v3:
+  * drop 'addr <= 0xff' as addr == HPET_COUNTER is sufficient
+     Peter Xu <peterx@redhat.com>
+---
+ hw/timer/hpet.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-Jonathan
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index ab5aa59ae4..c776afc0f2 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -431,6 +431,16 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+     addr &= ~4;
+ 
+     QEMU_LOCK_GUARD(&s->lock);
++    if (addr == HPET_COUNTER) {
++        if (hpet_enabled(s)) {
++            cur_tick = hpet_get_ticks(s);
++        } else {
++            cur_tick = s->hpet_counter;
++        }
++        trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
++        return cur_tick >> shift;
++    }
++
+     /*address range of all global regs*/
+     if (addr <= 0xff) {
+         switch (addr) {
+@@ -438,14 +448,6 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+             return s->capability >> shift;
+         case HPET_CFG:
+             return s->config >> shift;
+-        case HPET_COUNTER:
+-            if (hpet_enabled(s)) {
+-                cur_tick = hpet_get_ticks(s);
+-            } else {
+-                cur_tick = s->hpet_counter;
+-            }
+-            trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
+-            return cur_tick >> shift;
+         case HPET_STATUS:
+             return s->isr >> shift;
+         default:
+-- 
+2.47.1
 
-
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
 
