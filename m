@@ -4,93 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2059FC87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 07:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A07DC87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 07:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukHe4-0000bN-Uq; Fri, 08 Aug 2025 03:36:09 -0400
+	id 1ukHy0-0007iX-RG; Fri, 08 Aug 2025 03:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ukHdv-0000Wp-8Q; Fri, 08 Aug 2025 03:35:59 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ukHxq-0007gF-Rm; Fri, 08 Aug 2025 03:56:35 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ukHds-00023v-SO; Fri, 08 Aug 2025 03:35:58 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 66C7613FB2A;
- Fri, 08 Aug 2025 10:35:23 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0A21A25A641;
- Fri,  8 Aug 2025 10:35:50 +0300 (MSK)
-Message-ID: <bdb784a9-d5e1-4eaf-864c-e04c8f63ed3b@tls.msk.ru>
-Date: Fri, 8 Aug 2025 10:35:50 +0300
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1ukHxm-0004u1-Vk; Fri, 08 Aug 2025 03:56:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1754639791; x=1786175791;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=MSBG2C2T4HKi4e6nVEf13wGKcbe/sABWR7tyiRwbU/0=;
+ b=OwUmHRu2ULECXl6F2VcvXjOKNmeWDAm/NOQ1GPlltigqxB8dbRiOGNc5
+ jLTCzLUNiqlD4LXm+EAeCVCCX69/LrQGomi3/OORjJogCQ04/J+dDSWK6
+ pyn5q92YbaCNCZvOK+Kp+ac0CfLEDbUWUNcez3q3V+V5cQUWgwRfXWymb
+ wXsPrV9eBLiJ5EqgFSwylL3wFpd9ggNqPkhEthmuRGbVdFrnGyb1+BZOE
+ pC4QAHnS/LC1EB8buDHbsKXOzCsvKEHcPGASDlwlWeC1mEWVDlTdHhlWJ
+ VaGZaaZLgI4RK5pN8bk3j3B8UD6GSruCPQh7gDY92fHs5LD/blRkRrJuy Q==;
+X-CSE-ConnectionGUID: YNbyzv12Q7qbNiMubrK/Bg==
+X-CSE-MsgGUID: d5t62mEJRYSy8xMY/UFrBw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11514"; a="79542219"
+X-IronPort-AV: E=Sophos;i="6.17,274,1747724400"; d="scan'208";a="79542219"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Aug 2025 00:56:24 -0700
+X-CSE-ConnectionGUID: rKnuzrZ7TE+OnqxLaiTP6g==
+X-CSE-MsgGUID: P2SlIW4iSEeaSqUEN+LCow==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,274,1747724400"; d="scan'208";a="166062214"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa010.fm.intel.com with ESMTP; 08 Aug 2025 00:56:20 -0700
+Date: Fri, 8 Aug 2025 16:17:59 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>,
+ qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Chuanxiao Dong <chuanxiao.dong@intel.com>
+Subject: Re: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU
+ memory backend
+Message-ID: <aJWyt+4JRzqhfIzU@intel.com>
+References: <20250807123027.2910950-1-zhao1.liu@intel.com>
+ <20250807123027.2910950-11-zhao1.liu@intel.com>
+ <d144ae17-afe3-4578-a875-79c1d6a4d723@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial] tests/qemu-iotests/tests/mirror-sparse: actually
- require O_DIRECT
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, qemu-block@nongnu.org
-References: <20250806075635.3290-1-mjt@tls.msk.ru>
- <d844430a-7b95-4b10-b7e5-7e268348efe6@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <d844430a-7b95-4b10-b7e5-7e268348efe6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d144ae17-afe3-4578-a875-79c1d6a4d723@redhat.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,34 +90,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06.08.2025 13:01, Philippe Mathieu-Daudé wrote:
-> On 6/8/25 09:56, Michael Tokarev wrote:
+(+Hanna: I would like to align with Hanna on 0002.diff patch :-))
 
->> This is what happens when rushing for last-minute
->> pre-release fixes..  I'm sorry for this.
+On Thu, Aug 07, 2025 at 03:59:26PM +0200, Paolo Bonzini wrote:
+> Date: Thu, 7 Aug 2025 15:59:26 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [RFC 10/26] subprojects/vm-memory: Patch vm-memory for QEMU
+>  memory backend
 > 
-> My bad actually :/
+> On 8/7/25 14:30, Zhao Liu wrote:
+> > Add 2 patches to support QEMU memory backend implementation.
+> > 
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >   .../packagefiles/vm-memory-0.16-rs/0001.diff  |  81 +++++++++++++
+> >   .../packagefiles/vm-memory-0.16-rs/0002.diff  | 111 ++++++++++++++++++
+> >   subprojects/vm-memory-0.16-rs.wrap            |   2 +
+> >   3 files changed, 194 insertions(+)
+> >   create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+> >   create mode 100644 subprojects/packagefiles/vm-memory-0.16-rs/0002.diff
+> > 
+> > diff --git a/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+> > new file mode 100644
+> > index 000000000000..037193108d45
+> > --- /dev/null
+> > +++ b/subprojects/packagefiles/vm-memory-0.16-rs/0001.diff
+> > @@ -0,0 +1,81 @@
+> > +From 298f8ba019b2fe159fa943e0ae4dfd3c83ee64e0 Mon Sep 17 00:00:00 2001
+> > +From: Zhao Liu <zhao1.liu@intel.com>
+> > +Date: Wed, 6 Aug 2025 11:31:11 +0800
+> > +Subject: [PATCH 1/2] guest_memory: Add a marker tarit to implement
+> > + Bytes<GuestAddress> for GuestMemory
+> 
+> This was a bit surprising.  Maybe this is something where GuestMemory needs
+> some extra flexibility.
 
-Well, we both are guilty here :)
+At least, the default GuestMemory::try_access() need to re-implement in
+QEMU, and this is because GuestMemory::iter() doesn't fit for QEMU's
+case, and GuestMemory::to_region_addr() also needs adjustment to support
+complete translation.
 
-And I'm probably more guilty because my initial fix was testing the
-same as the actual code is using, and I felt that your suggestion is
-wrong - I had everything to at least *check* the damn thing closely.
-But I didn't do that.
+For details,
 
-It is more, - I felt that with your condition, the test might be skipped
-even on o_direct-supporting filesystem.  But I didn't verify that *too*,
-which is even worse.
+1) iter() - QEMU has implemented the two-level "page" walk in
+   `phys_page_find`, which is more efficient than linear iteration.
 
-Instead, I blindly took your advice, without verifying my own doubts.
-I think this is more wrong than, when one have serious doubts but does
-not bother even verifying them.
+2) to_region_addr() - it's function signature is:
 
-Now, back to work..
+    fn to_region_addr(
+        &self,
+	addr: GuestAddress
+    ) -> Option<(&Self::R, MemoryRegionAddress)>;
 
-Philippe, R-b? :)
+but QEMU currentlt wants:
+
+    fn translate(
+        &self,
+        addr: GuestAddress,
+        len: GuestUsize,
+        is_write: bool,
+    ) -> Option<(&MemoryRegionSection, MemoryRegionAddress, GuestUsize)>
+
+`is_write` is mainly about IOMMU (and read-only case, but that could be
+workaround I think).
+
+And the 3rd member `GuestUsize` of (&MemoryRegionSection,
+MemoryRegionAddress, GuestUsize) indicates the remianing size, which is
+used to detect cross-region case. Maybe this `GuestUsize` is not
+necessary in its return, since we can check the size of `MemoryRegionSection`
+later. But this would be a bit repetitive.
+
+But at least, this marker trait is acceptable, right? :-)
+
+The marker trait for GuestMemoryRegion is introduced at commit 66ff347
+("refactor: use matches! instead of to_string() for tests").
+
+> > @@ -0,0 +1,111 @@
+> > +From 2af7ea12a589fde619690e5060c01710cb6f2e0e Mon Sep 17 00:00:00 2001
+> > +From: Zhao Liu <zhao1.liu@intel.com>
+> > +Date: Wed, 6 Aug 2025 14:27:14 +0800
+> > +Subject: [PATCH 2/2] guest_memory: Add is_write argument for
+> > + GuestMemory::try_access()
+> 
+> This should be fine.  But Hanna is also working on IOMMU so maybe this won't
+> be needed!
+
+I'm not sure what method could align with Hanna's design. If there's
+another interface/method, I can have a try.
+
+Or, should I just ignore all IOMMU code path directly? This may need
+to decouple some C codes. For example, I can split flatview_do_translate
+into a non-iommu case and an iommu case.
 
 Thanks,
+Zhao
 
-/mjt
 
