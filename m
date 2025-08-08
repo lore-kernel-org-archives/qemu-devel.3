@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42EFC87FDA
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AF0C87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukPvg-0002ro-V6; Fri, 08 Aug 2025 12:26:52 -0400
+	id 1ukPwm-0004FB-3S; Fri, 08 Aug 2025 12:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPve-0002r5-1U
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:26:50 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukPwe-00048y-FQ
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:27:56 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPvb-0003A7-QC
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:26:49 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-459d7726ee6so11907965e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:26:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1ukPwc-0003Wu-EU
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:27:52 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-76bd2b11f80so2315513b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:27:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754670406; x=1755275206; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1754670469; x=1755275269; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Cm5x3aYEzOQ437ur+X6QBqGaqDEGOduULTLzYCGhyEY=;
- b=c43Xfv19oGSKknJHbndoNArh905eC+scoOl+WCQMamrjTd8IWv6u6kFVFBxnrMXMbK
- sRlsy0GQZ5kCzu7uqnaPRGeUEsq2uUlXdqd17rVCmmn1UhRRX5/UV23wPx4IPVG594li
- aZT3Ez4CWDPoCTufRo+EuNtu/EvEfRGxk/nH+lM+XFMTyUDpycibn/KKUWBM2ccBac2v
- mKlY8jFMGNnn/PE5KkbXNBeLWZKWUsBUxHscI3FFB1hqciDRf+SvZ6W/xP/ftUcLepJa
- BBCCQYoMBU85OirzH6JtGr/qJV8LiZen+x3m6P813qkdYK3bc2w33wr/6rRJTm3QU190
- IvOA==
+ bh=cZgouQ8bunA5EGb9zT1spd4MOP9pMaN7HGEbPgoH5cY=;
+ b=IhzxwGjkR0q1E9P7PZicidW66J0+g5vqS6/GBJ5DDhfJleWZCfBJ2VZhPHhjT5CQf1
+ niR4o5pBXrEz8gLHefy/PfqDuaYndQb+V7NH7SmqEQUdFo2Fcp6NBaARxVhu5Uk5YAss
+ ZE8DSy5aTGbbru3Gl361hL63LRyQYADa3Ps7hpW5HW8kNy3HFphrSy8FKKWk95aXQLC9
+ YfHQZmKyxxhBtQVmRa+fYPaBoJG0zc5GFl2dfNZ4/Ja7+RBGnWNTi9O4i/JN24mTMpQG
+ p/uIfpWPzeHcVszSZgosVY3TS6qAshwuz5UuHOhBNag9cYNtToOuEuJ0WZYg83lFMyVv
+ TKBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754670406; x=1755275206;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1754670469; x=1755275269;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Cm5x3aYEzOQ437ur+X6QBqGaqDEGOduULTLzYCGhyEY=;
- b=cxPthlBxtQMheqcaTrSlxe2C/P8BFfNC2BbEyoL5wNzc8oGqFzRY8GjR4gyEnIcsjc
- A63F2v6OI7RfG4px+gCy6NGU/l3AVi74mgKCA+FA1NgkM5XbKNoT3NtI/uXbkVjhEvUi
- cP46jrtH5BISg3m1680gOsA8+VeZ8kTnfNIqVxmucw41Q7h92RkfiJrMx64fUmOXUS15
- 9LdlVZixogwSGMcpDmbSVM3J4bNOX3i4Iz3/tf9iDv0OtbSEp+CffyFBKVk6kW7oxTjF
- FYHriruIfUFdRxYUtZFdWzuZjJ5mfN59cygNGiZlKUdhVIOSzCIDdTknpA6bnUJ1iU05
- GW2A==
+ bh=cZgouQ8bunA5EGb9zT1spd4MOP9pMaN7HGEbPgoH5cY=;
+ b=qSVdsf+ho9WMhmxxEZZf5dXjnD/codT+2yNs8pL+v+JS6bBPfH14SPg5IkXtZQ1MrQ
+ C3tKCFp64HmjTxvL5twUNMCJkj6v+U03Wzrj3utMHZRA8jLygFXejiGgdXKd+lGa2P2W
+ GrZcbYNloefoHyXencq/QC8D6MIUzpwt0qQ2GHevN4/KFPk8hgGbt3ofyFzFuXEjKyI5
+ fnxUNaTmnME1iTYEa7ovD5jAqFHtFOr0Za/6FK6Ck4OulQdBViwoCWWp4gfCZTlcFhWN
+ FIoql84pIRUlxzBRKubKQwiVG0wyS1VYuDdSLePljSw07lZDmD9ph1ioLWQhRJqxMdwF
+ cquQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNemJGfd7F/yxZEJ+31gKFb2imz3Er8QYiqHh9ZiYpRy0pTxQK4XaBozw5Z9SYo1vWDC0Vh//zAE3+@nongnu.org
-X-Gm-Message-State: AOJu0Yzl49UP+n5ijHAbzDtAE5JbuS4pJpZOX/JX9UhwC2U4c0EICW0e
- Eds5Tpz6i8wToseRz78rNxYPqfl1TKpc2PXksUwxsbApdhom7J79hxwVtjoCeouqdjg=
-X-Gm-Gg: ASbGncs++f6vULWzjkNX5fTcE5hFX7ovYfsd2kaDhYi5yHbvv4kRtoIpCb7/VVv9Hf4
- qTtX5udKTI2Tlt3hQAY7olt4xyffSAJMP/ohKlbAV6Z324/H47Oi7swllwKYWB1Ce4GaqO9C9QS
- mTscUawdBW+hG5SLlvhAtVJwPsn85/5XHMkMIBsKcgI1aXUAufZCtTAqKpz13Aw9jF3hTNY1y5m
- jpTqAVlhLrk+VIMqUs/i9XyqG1OV5KcZ0pb/lCU2g85yPw4ruIED7ZOAgWwyxuq8+dcl9h0zyNz
- l5zwtF8MAg3JSUBYNjWK2rNULF+MQ6wHPp08Z6xP4rvkzMKHqGjH144dEzWw9ByJvarBZmziqru
- wMSa2+MklFlq0yaNxGieL9xysFd8FcutuMeKufR/I0JTUI/YBTw71WRlvRMzfri9ryfsDX0KP41
- fP
-X-Google-Smtp-Source: AGHT+IHt4eJnYqnyWF/+LfBm82WDEzdwXJ71AM7IfupNCkE3OEF0GZMnV7TMwDRMqttnfNEUT2TUCQ==
-X-Received: by 2002:a05:600c:5298:b0:456:29ae:3dbe with SMTP id
- 5b1f17b1804b1-459f59cec5bmr31095545e9.24.1754670405737; 
- Fri, 08 Aug 2025 09:26:45 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459dc7e1ddesm223988975e9.27.2025.08.08.09.26.44
+ AJvYcCWT1e3LOeHc5CSLLfrwpwR0LEeKmn6y0pUYbFBCYESDwR6BYkDIGXtz7pvcUQXi7a44Y3aqzEooA/Ll@nongnu.org
+X-Gm-Message-State: AOJu0YzxlhcbFobcGRvW1H51KjxCojsdLzrkCz+LX9kHXwla6M+O0dJC
+ vGPPMe/DmRNrlatBjOhNH/+ug6Dhx3tjmt2kDVi2Jn+sueau7o850NOgsPsovKnNLz8=
+X-Gm-Gg: ASbGncul9ttqvByvINfcuQLjf3kjh1SaSdmJuvMhxb+HfWOl6YqqtlNGVNQk3DtFN5I
+ A6lqvjCWfszAUDL9Tv52mQ/VDvm8GPKUysBpaes347l59OiMCQ23OZTBw9UC4bhWEx77yHZJYwO
+ t98QDENgms2kTxB3L4+EM5PAFkvC0baTWho9U8/jVDpsWDwwD9+JcM+f+z2dzbZIClIfmj6ls8N
+ cVqDeiuJWiyo4tpF46sr/HhiIWcIpwhL1hDqwBpu534EuBXpOJ261jxkpBNHeO8fBsMuedaBhpe
+ dexvLlf29zCnkC0GOa4s7qqAk/Gmt8TaxeYJv8Nk7JZF/rLZ4uuIzzPzw2qB+nSCCyPSPqGW/QB
+ FRkrTZxv63iFbyBSPHinBMZYnGMVnbi1ztwf0jUO8PID14g==
+X-Google-Smtp-Source: AGHT+IEOmd5HyuARH8AqkdcGCquWQbIelT8haqZY2J3I+fK7pschYQYCPTCDGHH9k45tbb6A44EqjA==
+X-Received: by 2002:a17:902:ce08:b0:240:5c0e:758b with SMTP id
+ d9443c01a7336-242c2279bd6mr51934895ad.50.1754670468051; 
+ Fri, 08 Aug 2025 09:27:48 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241d1f0e585sm213032695ad.40.2025.08.08.09.27.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 09:26:45 -0700 (PDT)
-Message-ID: <8be60d9d-ee2d-439c-8d55-c0349939d27a@linaro.org>
-Date: Fri, 8 Aug 2025 18:26:44 +0200
+ Fri, 08 Aug 2025 09:27:47 -0700 (PDT)
+Message-ID: <55a99df1-616f-4ac5-8bd1-fd2b47755df4@linaro.org>
+Date: Fri, 8 Aug 2025 09:27:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/14] hw/riscv: Add support for RISCV CPS
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
-References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
- <20250717093833.402237-11-djordje.todorovic@htecgroup.com>
+Subject: Re: [PATCH v5 2/9] contrib/plugins/uftrace: define cpu operations and
+ implement aarch64
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250717093833.402237-11-djordje.todorovic@htecgroup.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ rowan Hart <rowanbhart@gmail.com>, Gustavo Romero
+ <gustavo.romero@linaro.org>, =?UTF-8?Q?Alex_Benn_=C3=A9_e?=
+ <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
+ <20250808020702.410109-3-pierrick.bouvier@linaro.org>
+ <t0o32w.19lmgtfzlutzr@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <t0o32w.19lmgtfzlutzr@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,160 +112,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/7/25 11:38, Djordje Todorovic wrote:
-> Add support for the Coherent Processing System for RISC-V.
-> This enables SMP support for RISC-V boards that require
-> cache-coherent multiprocessor systems.
+On 8/8/25 1:28 AM, Manos Pitsidianakis wrote:
+> On Fri, 08 Aug 2025 05:06, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>> We define a new CpuOps structure that will be used to implement tracking
+>> independently of guest architecture.
+>>
+>> As well, we now instrument only instructions following ones that might
+>> have touch the frame pointer.
 > 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->   hw/misc/Kconfig        |   5 ++
->   hw/riscv/cps.c         | 197 +++++++++++++++++++++++++++++++++++++++++
->   hw/riscv/meson.build   |   2 +
->   include/hw/riscv/cps.h |  76 ++++++++++++++++
->   4 files changed, 280 insertions(+)
->   create mode 100644 hw/riscv/cps.c
->   create mode 100644 include/hw/riscv/cps.h
+> s/touch/touched
+> 
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>> contrib/plugins/uftrace.c | 112 ++++++++++++++++++++++++++++++++++++--
+>> 1 file changed, 108 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+>> index d60c1077496..4b1a2f38143 100644
+>> --- a/contrib/plugins/uftrace.c
+>> +++ b/contrib/plugins/uftrace.c
+>> @@ -11,14 +11,94 @@
+>>
+>> #include <qemu-plugin.h>
+>> #include <glib.h>
+>> +#include <stdio.h>
+>>
+>> QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+>>
+>> +typedef struct Cpu Cpu;
+>> +
+>> +typedef struct {
+>> +    void (*init)(Cpu *cpu);
+>> +    void (*end)(Cpu *cpu);
+>> +    uint64_t (*get_frame_pointer)(Cpu *cpu);
+>> +    bool (*does_insn_modify_frame_pointer)(const char *disas);
+>> +} CpuOps;
+>> +
+>> typedef struct Cpu {
+>>      GByteArray *buf;
+>> +    CpuOps ops;
+>> +    void *arch;
+>> } Cpu;
+>>
+>> +typedef struct {
+>> +    struct qemu_plugin_register *reg_fp;
+>> +} Aarch64Cpu;
+>> +
+>> static struct qemu_plugin_scoreboard *score;
+>> +static CpuOps arch_ops;
+>> +
+>> +static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+>> +{
+>> +    GByteArray *buf = cpu->buf;
+>> +    g_byte_array_set_size(buf, 0);
+>> +    size_t sz = qemu_plugin_read_register(reg, buf);
+>> +    g_assert(sz == 8);
+>> +    g_assert(buf->len == 8);
+>> +    return *((uint64_t *) buf->data);
+>> +}
+>> +
+>> +static struct qemu_plugin_register *plugin_find_register(const char *name)
+>> +{
+>> +    g_autoptr(GArray) regs = qemu_plugin_get_registers();
+> 
+> Question about the plugin API and not this patch per se, if the cpu is
+> in a32/thumb mode does it still return the aarch64 registers?
+>
 
+I didn't check this part, and it's a good question though.
+It would be a massive headache from plugins point of view if registers 
+list could vary along execution.
 
-> +static void main_cpu_reset(void *opaque)
-> +{
-> +    RISCVCPU *cpu = opaque;
-> +    CPUState *cs = CPU(cpu);
+>> +    for (int i = 0; i < regs->len; ++i) {
+>> +        qemu_plugin_reg_descriptor *reg;
+>> +        reg = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
+>> +        if (!strcmp(reg->name, name)) {
+>> +            return reg->handle;
+>> +        }
+>> +    }
+>> +    return NULL;
+>> +}
+>> +
+>> +static uint64_t aarch64_get_frame_pointer(Cpu *cpu_)
+>> +{
+>> +    Aarch64Cpu *cpu = cpu_->arch;
+>> +    return cpu_read_register64(cpu_, cpu->reg_fp);
+>> +}
+>> +
+>> +static void aarch64_init(Cpu *cpu_)
+>> +{
+>> +    Aarch64Cpu *cpu = g_new0(Aarch64Cpu, 1);
+>> +    cpu_->arch = cpu;
+>> +    cpu->reg_fp = plugin_find_register("x29");
+>> +    if (!cpu->reg_fp) {
+>> +        fprintf(stderr, "uftrace plugin: frame pointer register (x29) is not "
+>> +                        "available. Please use an AArch64 cpu (or -cpu max).\n");
+>> +        g_abort();
+>> +    }
+>> +}
+>> +
+>> +static void aarch64_end(Cpu *cpu)
+>> +{
+>> +    g_free(cpu->arch);
+>> +}
+>> +
+>> +static bool aarch64_does_insn_modify_frame_pointer(const char *disas)
+>> +{
+>> +    /*
+>> +     * Check if current instruction concerns fp register "x29".
+>> +     * We add a prefix space to make sure we don't match addresses dump
+>> +     * in disassembly.
+>> +     */
+>> +    return strstr(disas, " x29");
+> 
+> Hm is the whitespace before x29 guaranteed? Neat trick otherwise.
+>
 
-If you call in [*]:
+At least for aarch64 disassembler, yes, from what I saw.
+Either it's the first operand, and then there is a whitespace between 
+instruction name and it. Or it's another operand, and we always have a 
+whitespace after ','.
+I don't think we'll change disassembler soon, but in case this looks too 
+fragile, we can always simply return yes if x29 is fine. In worst case, 
+we match some additional instructions, but it should not have a huge 
+performance hit.
 
-        qemu_register_reset(main_cpu_reset, s->cpus[i]);
+>> +}
+>> +
+>> +static CpuOps aarch64_ops = {
+>> +    .init = aarch64_init,
+>> +    .end = aarch64_end,
+>> +    .get_frame_pointer = aarch64_get_frame_pointer,
+>> +    .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
+>> +};
+>>
+>> static void track_callstack(unsigned int cpu_index, void *udata)
+>> {
+>> @@ -28,20 +108,36 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>> {
+>>      size_t n_insns = qemu_plugin_tb_n_insns(tb);
+>>
+>> +    /*
+>> +     * We instrument all instructions following one that might have updated
+>> +     * the frame pointer. We always instrument first instruction in block, as
+>> +     * last executed instruction, in previous tb, may have modified it.
+> 
+> Modified it how?
+>
 
-then here you can just do:
+I ran an assert that latest instruction of a block never contained " 
+x29", and it was triggered quickly. I don't remember exactly which 
+instruction triggered the assert.
 
-        CPUState *cs = opaque;
+>> +     */
+>> +    bool instrument_insn = true;
+>>      for (int i = 0; i < n_insns; i++) {
+>>          struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+>>
+>> -        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
+>> -        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
+>> -                QEMU_PLUGIN_CB_R_REGS,
+>> -                (void *) pc);
+>> +        if (instrument_insn) {
+>> +            uintptr_t pc = qemu_plugin_insn_vaddr(insn);
+>> +            qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
+>> +                                                   QEMU_PLUGIN_CB_R_REGS,
+>> +                                                   (void *) pc);
+>> +            instrument_insn = false;
+>> +        }
+>>
+>> +        char *disas = qemu_plugin_insn_disas(insn);
+>> +        if (arch_ops.does_insn_modify_frame_pointer(disas)) {
+>> +            instrument_insn = true;
+>> +        }
+> 
+> So if I understand correctly you check if an instruction needs to be
+> instrumented and then do it in the next forloop. This means if the last
+> insn needs to be instrumented too it is not done, is that ok?
+>
 
-> +
-> +    cpu_reset(cs);
-> +}
-> +
-> +static void riscv_cps_realize(DeviceState *dev, Error **errp)
-> +{
-> +    RISCVCPSState *s = RISCV_CPS(dev);
-> +    RISCVCPU *cpu;
-> +    int i;
-> +
+Yes, that is why we always instrument the first, to catch this.
+There is no (current) way to instrument *after* instruction, and 
+probably hard to implement, considering an instruction might generate a 
+fault. So the only safe choice left is to instrument the first one of 
+any tb.
 
-Please check num_vp range.
+>>      }
+>> }
+>>
+>> static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+>> {
+>>      Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
+>> +    cpu->ops = arch_ops;
+>> +
+>> +    cpu->ops.init(cpu);
+>>      cpu->buf = g_byte_array_new();
+>> }
+>>
+>> @@ -65,6 +161,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>>                                             const qemu_info_t *info,
+>>                                             int argc, char **argv)
+>> {
+>> +    if (!strcmp(info->target_name, "aarch64")) {
+>> +        arch_ops = aarch64_ops;
+>> +    } else {
+>> +        fprintf(stderr, "plugin uftrace: %s target is not supported\n",
+>> +                info->target_name);
+>> +        return 1;
+>> +    }
+>> +
+>>      score = qemu_plugin_scoreboard_new(sizeof(Cpu));
+>>      qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+>>      qemu_plugin_register_atexit_cb(id, at_exit, NULL);
+>> -- 
+>> 2.47.2
+>>
+> 
+> LGTM overall, it makes sense.
 
-> +    /* Allocate CPU array */
-> +    s->cpus = g_new0(CPUState *, s->num_vp);
-> +
-> +    /* Set up cpu_index and mhartid for avaiable CPUs. */
-> +    int harts_in_cluster = s->num_hart * s->num_core;
-> +    int num_of_clusters = s->num_vp / harts_in_cluster;
-> +    for (i = 0; i < s->num_vp; i++) {
-> +        cpu = RISCV_CPU(object_new(s->cpu_type));
-> +
-> +        /* All VPs are halted on reset. Leave powering up to CPC. */
-> +        object_property_set_bool(OBJECT(cpu), "start-powered-off", true,
-> +                                 &error_abort);
-> +
-> +        if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
-> +            return;
-> +        }
-> +
-> +        /* Store CPU in array */
-> +        s->cpus[i] = CPU(cpu);
-> +
-> +        /* Set up mhartid */
-> +        int cluster_id = i / harts_in_cluster;
-> +        int hart_id = (i % harts_in_cluster) % s->num_hart;
-> +        int core_id = (i % harts_in_cluster) / s->num_hart;
-> +        int mhartid = (cluster_id << MHARTID_CLUSTER_SHIFT) +
-> +                      (core_id << MHARTID_CORE_SHIFT) +
-> +                      (hart_id << MHARTID_HART_SHIFT);
-> +        cpu->env.mhartid = mhartid;
-> +        qemu_register_reset(main_cpu_reset, cpu);
-
-[*]
-
-> +    }
-> +
-> +    /* Cluster Power Controller */
-> +    object_initialize_child(OBJECT(dev), "cpc", &s->cpc, TYPE_RISCV_CPC);
-> +    object_property_set_uint(OBJECT(&s->cpc), "cluster-id", 0,
-> +                            &error_abort);
-> +    object_property_set_uint(OBJECT(&s->cpc), "num-vp", s->num_vp,
-> +                            &error_abort);
-> +    object_property_set_uint(OBJECT(&s->cpc), "num-hart", s->num_hart,
-> +                            &error_abort);
-> +    object_property_set_uint(OBJECT(&s->cpc), "num-core", s->num_core,
-> +                            &error_abort);
-> +    object_property_set_int(OBJECT(&s->cpc), "vp-start-running", 1,
-> +                            &error_abort);
-
-(1 is already the default)
-
-> +
-> +    /* Pass CPU array to CPC */
-> +    s->cpc.cpus = s->cpus;
-
-Please do that using a link property.
-
-> +
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->cpc), errp)) {
-> +        return;
-> +    }
-> +
-> +    memory_region_add_subregion(&s->container, 0,
-> +                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->cpc), 0));
-> +
-> +    /* Global Configuration Registers */
-> +    object_initialize_child(OBJECT(dev), "gcr", &s->gcr, TYPE_RISCV_GCR);
-> +    object_property_set_uint(OBJECT(&s->gcr), "cluster-id", 0,
-> +                            &error_abort);
-> +    object_property_set_uint(OBJECT(&s->gcr), "num-vp", s->num_vp,
-> +                            &error_abort);
-> +    object_property_set_int(OBJECT(&s->gcr), "gcr-rev", 0xa00,
-> +                            &error_abort);
-> +    object_property_set_int(OBJECT(&s->gcr), "gcr-base", s->gcr_base,
-> +                            &error_abort);
-> +    object_property_set_link(OBJECT(&s->gcr), "cpc", OBJECT(&s->cpc.mr),
-> +                             &error_abort);
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gcr), errp)) {
-> +        return;
-> +    }
-> +
-> +    memory_region_add_subregion(&s->container, s->gcr_base,
-> +                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gcr), 0));
-> +
-> +    for (i = 0; i < num_of_clusters; i++) {
-> +        uint64_t cm_base = GLOBAL_CM_BASE + (CM_SIZE * i);
-> +        uint32_t hartid_base = i << MHARTID_CLUSTER_SHIFT;
-> +        s->aplic = riscv_aplic_create(cm_base + AIA_PLIC_M_OFFSET,
-> +                                      AIA_PLIC_M_SIZE,
-> +                                      hartid_base, /* hartid_base */
-> +                                      MAX_HARTS, /* num_harts */
-> +                                      APLIC_NUM_SOURCES,
-> +                                      APLIC_NUM_PRIO_BITS,
-> +                                      false, true, NULL);
-> +        riscv_aplic_create(cm_base + AIA_PLIC_S_OFFSET,
-> +                           AIA_PLIC_S_SIZE,
-> +                           hartid_base, /* hartid_base */
-> +                           MAX_HARTS, /* num_harts */
-> +                           APLIC_NUM_SOURCES,
-> +                           APLIC_NUM_PRIO_BITS,
-> +                           false, false, s->aplic);
-> +        /* PLIC changes msi_nonbroken to ture. We revert the change. */
-> +        msi_nonbroken = false;
-> +        riscv_aclint_swi_create(cm_base + AIA_CLINT_OFFSET,
-> +                                hartid_base, MAX_HARTS, false);
-> +        riscv_aclint_mtimer_create(cm_base + AIA_CLINT_OFFSET +
-> +                                   RISCV_ACLINT_SWI_SIZE,
-> +                                   RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
-> +                                   hartid_base,
-> +                                   MAX_HARTS,
-> +                                   RISCV_ACLINT_DEFAULT_MTIMECMP,
-> +                                   RISCV_ACLINT_DEFAULT_MTIME,
-> +                                   RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, false);
-> +    }
-> +}
 
