@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31BA7C87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B22C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 14:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukNhx-0004Yr-3f; Fri, 08 Aug 2025 10:04:34 -0400
+	id 1ukNiM-0005Gk-Eb; Fri, 08 Aug 2025 10:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1ukNht-0004Y9-V9
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:04:29 -0400
+ id 1ukNiK-00058B-T6
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:04:56 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1ukNhn-0005D9-V0
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:04:29 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bz5Hr33LGz6L4vy;
- Fri,  8 Aug 2025 21:59:36 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 6817A14022E;
- Fri,  8 Aug 2025 22:04:15 +0800 (CST)
+ id 1ukNiJ-0005Ks-97
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 10:04:56 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bz5JT6GLFz6L4vy;
+ Fri,  8 Aug 2025 22:00:09 +0800 (CST)
+Received: from frapeml100007.china.huawei.com (unknown [7.182.85.133])
+ by mail.maildlp.com (Postfix) with ESMTPS id D40D5140427;
+ Fri,  8 Aug 2025 22:04:48 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (7.182.85.172) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ frapeml100007.china.huawei.com (7.182.85.133) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 8 Aug 2025 16:04:15 +0200
+ 15.1.2507.39; Fri, 8 Aug 2025 16:04:48 +0200
 Received: from frapeml500007.china.huawei.com ([7.182.85.172]) by
  frapeml500007.china.huawei.com ([7.182.85.172]) with mapi id 15.01.2507.039;
- Fri, 8 Aug 2025 16:04:15 +0200
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
+ Fri, 8 Aug 2025 16:04:48 +0200
+To: Markus Armbruster <armbru@redhat.com>
 CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>, "armbru@redhat.com"
- <armbru@redhat.com>, "dave@stgolabs.net" <dave@stgolabs.net>, Linuxarm
- <linuxarm@huawei.com>
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>, Jonathan Cameron
+ <jonathan.cameron@huawei.com>, "dave@stgolabs.net" <dave@stgolabs.net>,
+ Linuxarm <linuxarm@huawei.com>
 Subject: RE: [PATCH v5 1/7] hw/cxl/events: Update for rev3.2 common event
  record format
 Thread-Topic: [PATCH v5 1/7] hw/cxl/events: Update for rev3.2 common event
  record format
-Thread-Index: AQHcB7IbgHJy8x5snE+W5U6ovLZH5LRYn+mAgAArEnA=
-Date: Fri, 8 Aug 2025 14:04:15 +0000
-Message-ID: <891c3fc930fa45cc9a3b01ac028a4c15@huawei.com>
+Thread-Index: AQHcB7IbgHJy8x5snE+W5U6ovLZH5LRYkanpgAA5niA=
+Date: Fri, 8 Aug 2025 14:04:48 +0000
+Message-ID: <a6a73b09a26149e8ac4f867ecab89b03@huawei.com>
 References: <20250807154346.2209-1-shiju.jose@huawei.com>
- <20250807154346.2209-2-shiju.jose@huawei.com>
- <20250808142907.000022f4@huawei.com>
-In-Reply-To: <20250808142907.000022f4@huawei.com>
+ <20250807154346.2209-2-shiju.jose@huawei.com> <87ldnuhzes.fsf@pond.sub.org>
+In-Reply-To: <87ldnuhzes.fsf@pond.sub.org>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -88,16 +87,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 >-----Original Message-----
->From: Jonathan Cameron <jonathan.cameron@huawei.com>
->Sent: 08 August 2025 14:29
+>From: Markus Armbruster <armbru@redhat.com>
+>Sent: 08 August 2025 11:38
 >To: Shiju Jose <shiju.jose@huawei.com>
->Cc: qemu-devel@nongnu.org; linux-cxl@vger.kernel.org; armbru@redhat.com;
->dave@stgolabs.net; Linuxarm <linuxarm@huawei.com>
+>Cc: qemu-devel@nongnu.org; linux-cxl@vger.kernel.org; Jonathan Cameron
+><jonathan.cameron@huawei.com>; dave@stgolabs.net; Linuxarm
+><linuxarm@huawei.com>
 >Subject: Re: [PATCH v5 1/7] hw/cxl/events: Update for rev3.2 common event
 >record format
 >
->On Thu, 7 Aug 2025 16:43:40 +0100
-><shiju.jose@huawei.com> wrote:
+><shiju.jose@huawei.com> writes:
 >
 >> From: Shiju Jose <shiju.jose@huawei.com>
 >>
@@ -112,21 +111,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 >> structure CXLCommonEventBase.
 >>
 >> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->Hi Shiju,
->
->Sign off chain doesn't make sense. Drop my SoB.  I guess this is because i=
-t went
->through my tree at some stage and hence was tagged by me. Given it's your
->patch, you should drop that from new versions.
-Hi Jonathan,
-
-Thanks. I will do.
-
->
->Jonathan
->
->
 >> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+>
+>Please split this patch for easier review:
+>
+>1. CXLCommonEventBase.  Pure refactoring.
+>
+>2. Add new members.
+
+Sure. I will do.
+>
 
 Thanks,
 Shiju
