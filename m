@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC56C87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 12:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DFCC87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 12:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukLo3-0005I7-Dp; Fri, 08 Aug 2025 08:02:43 -0400
+	id 1ukLnT-0003cF-15; Fri, 08 Aug 2025 08:02:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ukLnJ-0002v3-0U
+ id 1ukLnJ-0002v1-07
  for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:01:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ukLnE-00075w-UB
+ id 1ukLnE-00076J-U8
  for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:01:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754654507;
+ s=mimecast20190719; t=1754654510;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=3wnoL5uKCjVb8/cZ6dTXTFWVuPc5ytY1pJh+9HjSHLw=;
- b=Y4w+RlQFN934oETYoMfZU8Th1E8KvGr+5zx3hR5yV5laMtPdp+YSSzhxwUuzrdPQIrmh6X
- mAUUbM8IorV2ItFuoUhBfTtGVwxRoaEaBSnltKAfkSBYHfK6STUeqgJlj0TtOVyfKYBrGg
- l17G1l2aw6r9IAj08CV4Ut4XcczWo80=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VRDAzl4q6o2ZOj98CGNsHZ+fXsoqdX1zXUVWLEyK8NA=;
+ b=FoEueTarxXvj6lPULzrMLJDf6k3cgdoNA7o00t+GDnH2OaXUmda3ZGc1B0xT5YxVLfpm2R
+ tp2U4h3PRkGmw8vmu4f9GMP7gDmRvqq7gYAI8K03QRFxqtypy/qI+AXqT0c49ByaVLrzFi
+ Ij7fMxrIzhJfLy3MHLC13/PjZfWcGRc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-f90EzI_tMhO76XbrptpfLQ-1; Fri,
- 08 Aug 2025 08:01:44 -0400
-X-MC-Unique: f90EzI_tMhO76XbrptpfLQ-1
-X-Mimecast-MFC-AGG-ID: f90EzI_tMhO76XbrptpfLQ_1754654503
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-Q6tVC_gUOt2CfudKGbnqeA-1; Fri,
+ 08 Aug 2025 08:01:49 -0400
+X-MC-Unique: Q6tVC_gUOt2CfudKGbnqeA-1
+X-Mimecast-MFC-AGG-ID: Q6tVC_gUOt2CfudKGbnqeA_1754654508
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A500180048E; Fri,  8 Aug 2025 12:01:43 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8BBA518002CE; Fri,  8 Aug 2025 12:01:48 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A31BB19560AD; Fri,  8 Aug 2025 12:01:40 +0000 (UTC)
+ id 851B519560AD; Fri,  8 Aug 2025 12:01:46 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
  philmd@linaro.org, mtosatti@redhat.com
-Subject: [PATCH v3 00/10] Reinvent BQL-free PIO/MMIO
-Date: Fri,  8 Aug 2025 14:01:27 +0200
-Message-ID: <20250808120137.2208800-1-imammedo@redhat.com>
+Subject: [PATCH v3 02/10] acpi: mark PMTIMER as unlocked
+Date: Fri,  8 Aug 2025 14:01:29 +0200
+Message-ID: <20250808120137.2208800-3-imammedo@redhat.com>
+In-Reply-To: <20250808120137.2208800-1-imammedo@redhat.com>
+References: <20250808120137.2208800-1-imammedo@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -83,123 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3:
-  * hpet: replace explicit atomics with use seqlock API  (PeterX)
-  * introduce cpu_test_interrupt() (Paolo)
-    and use it tree wide for checking interrupts
-  * don't take BQL for setting exit_request, use qatomic_set() instead. (Paolo)
-  * after above change, relace conditional BQL with unconditional
-    to simlify things a bit (Paolo)
-  * drop not needed barriers (Paolo)
-  * minor tcg:cpu_handle_interrupt() cleanup
+Reading QEMU_CLOCK_VIRTUAL is thread-safe, write access is NOP.
 
-v2:
-  * Make both read and write pathes BQL-less (Gerd)
-  * Refactor HPET to handle lock-less access correctly
-    when stopping/starting counter in parallel. (Peter Maydell)
-  * Publish kvm-unit-tests HPET bench/torture test [1] to verify
-    HPET lock-less handling
+This makes possible to boot Windows with large vCPUs count when
+hv-time is not used.
 
-When booting WS2025 with following CLI
- 1)   -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4
-the guest boots very slow and is sluggish after boot
-or it's stuck on boot at spinning circle (most of the time).
+Reproducer:
+  -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4 -m 8G WS2025.img
+fails to boot within 30min.
 
-pref shows that VM is experiencing heavy BQL contention on IO path
-which happens to be ACPI PM timer read access. A variation with
-HPET enabled moves contention to HPET timer read access.
-And it only gets worse with increasing number of VCPUs.
+With this fix it boots within 2-1min.
 
-Series prevents large VM vCPUs contending on BQL due to PM|HPET timer
-access and lets Windows to move on with boot process.
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ hw/acpi/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Testing lock-less IO with HPET micro benchmark [2] shows approx 80%
-better performance than the current BLQ locked path.
-[chart https://ibb.co/MJY9999 shows much better scaling of lock-less
-IO compared to BQL one.]
-
-In my tests, with CLI WS2025 guest wasn't able to boot within 30min
-on both hosts
-  * 32 core 2NUMA nodes
-  * 448 cores 8NUMA nodes
-With ACPI PM timer in BQL-free read mode, guest boots within approx:
- * 2min
- * 1min
-respectively.
-
-With HPET enabled boot time shrinks ~2x
- * 4m13 -> 2m21
- * 2m19 -> 1m15
-respectively.
-
-2) "[kvm-unit-tests PATCH v4 0/5] x86: add HPET counter tests"
-    https://lore.kernel.org/kvm/20250725095429.1691734-1-imammedo@redhat.com/T/#t
-PS:
-Using hv-time=on cpu option helps a lot (when it works) and
-lets [1] guest boot fine in ~1-2min. Series doesn't make
-a significant impact in this case.
-
-PS2:
-Tested series with a bunch of different guests:
- RHEL-[6..10]x64, WS2012R2, WS2016, WS2022, WS2025
-
-PS3:
- dropped mention of https://bugzilla.redhat.com/show_bug.cgi?id=1322713
- as it's not reproducible with current software stack or even with
- the same qemu/seabios as reported (kernel versions mentioned in
- the report were interim ones and no longer available,
- so I've used nearest released at the time for testing) 
-
-Igor Mammedov (10):
-  memory: reintroduce BQL-free fine-grained PIO/MMIO
-  acpi: mark PMTIMER as unlocked
-  hpet: switch to fain-grained device locking
-  hpet: move out main counter read into a separate block
-  hpet: make main counter read lock-less
-  introduce cpu_test_interrupt() that will replace open coded checks
-  x86: kvm: use cpu_test_interrupt() instead of oppen coding checks
-  kvm: i386: irqchip: take BQL only if there is an interrupt
-  use cpu_test_interrupt() instead of oppen coding checks tree wide
-  tcg: move interrupt caching and single step masking closer to user
-
- include/hw/core/cpu.h               | 12 ++++++++
- include/system/memory.h             | 10 +++++++
- accel/tcg/cpu-exec.c                | 25 +++++++---------
- accel/tcg/tcg-accel-ops.c           |  3 +-
- hw/acpi/core.c                      |  1 +
- hw/timer/hpet.c                     | 38 +++++++++++++++++++-----
- system/cpus.c                       |  3 +-
- system/memory.c                     | 15 ++++++++++
- system/physmem.c                    |  2 +-
- target/alpha/cpu.c                  |  8 ++---
- target/arm/cpu.c                    | 20 ++++++-------
- target/arm/helper.c                 | 16 +++++-----
- target/arm/hvf/hvf.c                |  6 ++--
- target/avr/cpu.c                    |  2 +-
- target/hppa/cpu.c                   |  2 +-
- target/i386/hvf/hvf.c               |  4 +--
- target/i386/hvf/x86hvf.c            | 21 +++++++------
- target/i386/kvm/kvm.c               | 46 ++++++++++++++---------------
- target/i386/nvmm/nvmm-all.c         | 24 +++++++--------
- target/i386/tcg/system/seg_helper.c |  2 +-
- target/i386/whpx/whpx-all.c         | 34 ++++++++++-----------
- target/loongarch/cpu.c              |  2 +-
- target/m68k/cpu.c                   |  2 +-
- target/microblaze/cpu.c             |  2 +-
- target/mips/cpu.c                   |  6 ++--
- target/mips/kvm.c                   |  2 +-
- target/openrisc/cpu.c               |  3 +-
- target/ppc/cpu_init.c               |  2 +-
- target/ppc/kvm.c                    |  2 +-
- target/rx/cpu.c                     |  3 +-
- target/rx/helper.c                  |  2 +-
- target/s390x/cpu-system.c           |  2 +-
- target/sh4/cpu.c                    |  2 +-
- target/sh4/helper.c                 |  2 +-
- target/sparc/cpu.c                  |  2 +-
- target/sparc/int64_helper.c         |  4 +--
- 36 files changed, 193 insertions(+), 139 deletions(-)
-
+diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+index 58f8964e13..ff16582803 100644
+--- a/hw/acpi/core.c
++++ b/hw/acpi/core.c
+@@ -547,6 +547,7 @@ void acpi_pm_tmr_init(ACPIREGS *ar, acpi_update_sci_fn update_sci,
+     ar->tmr.timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, acpi_pm_tmr_timer, ar);
+     memory_region_init_io(&ar->tmr.io, memory_region_owner(parent),
+                           &acpi_pm_tmr_ops, ar, "acpi-tmr", 4);
++    memory_region_enable_lockless_io(&ar->tmr.io);
+     memory_region_add_subregion(parent, 8, &ar->tmr.io);
+ }
+ 
 -- 
 2.47.1
 
