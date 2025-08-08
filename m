@@ -4,73 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99FE8C87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 04:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D50CC87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 06:08:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukF8P-0003Pt-UM; Fri, 08 Aug 2025 00:55:18 -0400
+	id 1ukGGV-0002HG-Ex; Fri, 08 Aug 2025 02:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ukF8K-0003G3-Hu
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 00:55:12 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ukGGR-0002BZ-GQ; Fri, 08 Aug 2025 02:07:39 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ukF8B-0002iV-TR
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 00:55:12 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5784oVlO018015
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 8 Aug 2025 13:50:31 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=vwDXeJjRJ5SlyyoLk+cpBjzxzrPVuSCJIoSqZbBX5Oo=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1754628631; v=1;
- b=n8v0lefwkzg28j6E4KVIYHjRaXC9sxW9G/SlVgCR0eehDpXtupT043BtMjDCf+x9
- RFvSnV7cVKBb1za53xHq4wtAH3RZE54s2hnBwNJedlSOg/lWmGYL5QmLpz4Yo0+S
- j7VT+TwiRQsz1uyFLSirspnlfPrsjmUk7HdHlinMwUwj2HnXQWzALeA+hwGTCLnw
- 5fLyCSt92ypjVv4pieYsCQ7ffiFrD0czNFFj3tN1bLRL/Wz7KR8OePmBeT/CfTAx
- bEUKU5s2NvgpThnwSEPrYwK1hjUXgzYZCWY+eEPh3apk2TcYOgE0z3dO4iSeZuES
- mE/sv81Hh3aiHrV8etsqmw==
-Message-ID: <8e3c5aa3-3180-4df2-b378-18e3e91d3f80@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 8 Aug 2025 13:50:29 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ukGGO-0005FU-JZ; Fri, 08 Aug 2025 02:07:39 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 63B8813F95B;
+ Fri, 08 Aug 2025 09:07:04 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C9A3425A2FB;
+ Fri,  8 Aug 2025 09:07:30 +0300 (MSK)
+Message-ID: <a9d36b56-2954-4a48-aec4-09657a2295b2@tls.msk.ru>
+Date: Fri, 8 Aug 2025 09:07:30 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 07/14] virtio-pci: implement support for extended
- features
-To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org,
- Jason Wang <jasowang@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1753297661.git.pabeni@redhat.com>
- <8e8a91adcbf4e37c7a5e086780e1000d3b3298d3.1753297661.git.pabeni@redhat.com>
- <de3c69a8-d874-44a3-bd47-91b6b298e184@rsg.ci.i.u-tokyo.ac.jp>
- <7c7c3f2c-e643-46ad-810c-aefdd486ad78@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <7c7c3f2c-e643-46ad-810c-aefdd486ad78@redhat.com>
+Subject: Re: [PULL 00/50] ppc queue
+To: milesg@linux.ibm.com, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Michael Kowal <kowal@linux.ibm.com>, Caleb Schlossin <calebs@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250721162233.686837-1-clg@redhat.com>
+ <10177005-d549-41bc-b0eb-c98b7e475f97@tls.msk.ru>
+ <ce863981-3d5e-4ec4-94ee-e35d773eab78@redhat.com>
+ <fe6a0924-aff9-4881-9c2a-5665776d619f@tls.msk.ru>
+ <dc796c6ae712a1a63eba2c6ab9c5c59b03942f50.camel@linux.ibm.com>
+ <4468aea8-b8cc-4313-abbe-8a5f58a35adc@redhat.com>
+ <6afc919bdb18166a71a2dba1a3862709629d5e08.camel@linux.ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <6afc919bdb18166a71a2dba1a3862709629d5e08.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,53 +113,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/08/08 5:18, Paolo Abeni wrote:
-> On 7/26/25 1:52 PM, Akihiko Odaki wrote:
->> On 2025/07/24 4:31, Paolo Abeni wrote:
->>> @@ -1477,6 +1509,13 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
->>>        return virtio_pci_add_mem_cap(proxy, &cap.cap);
->>>    }
->>>    
->>> +static int virtio_pci_select_max(const VirtIODevice *vdev)
->>> +{
->>> +    return virtio_features_use_ex(vdev->host_features_ex) ?
->>> +           VIRTIO_FEATURES_NU32S :
->>> +           2;
+On 06.08.2025 23:46, Miles Glenn wrote:
+> On Tue, 2025-08-05 at 22:07 +0200, Cédric Le Goater wrote:
+...
+>> These seem to be interesting to have :
 >>
->> This function could be simplified by replacing VIRTIO_FEATURES_NU32S
->> without any functional difference:
->>
->> 1. For writes: virtio_set_features_ex() already ignores extended
->> features when !virtio_features_use_ex(vdev->host_features_ex)
->> 2. For reads: When !virtio_features_use_ex(vdev->host_features_ex), the
->> upper bits of host_features_ex are zero, and guest_features upper bits
->> remain zero (since they can't be set per point 1)
->>
->> So the conditional logic is redundant here.
+>> ppc/xive2: Fix treatment of PIPR in CPPR update
+>> ppc/xive2: Fix irq preempted by lower priority group irq
+>> ppc/xive: Fix PHYS NSR ring matching
+>> ppc/xive2: fix context push calculation of IPB priority
+>> ppc/xive2: Remote VSDs need to match on forwarding address
+>> ppc/xive2: Fix calculation of END queue sizes
+>> ppc/xive: Report access size in XIVE TM operation error logs
+>> ppc/xive: Fix xive trace event output
 > 
-> This is to satisfy a request from Jason:
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05291.html
-> https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05423.html
-> 
-> I agree there will not be functional differences always accessing the
-> full space, but the guest could still be able to notice, i.e. the
-> extended space will be zeroed on read with that patched qemu and
-> untouched by the current code and this patch. To be on the safe side I
-> think it would be better to avoid such difference, as suggested by Jason.
-> 
-> Does the above make sense to you?
+> I'm still not sure that the benefit is worth the effort, but I
+> certainly don't have a problem with them being backported if someone
+> has the desire and the time to do it.
 
-By functional, I meant the functionality of QEMU, visible to the guest, 
-rather than the whole system including the guest, visible to the end 
-user. The guest cannot notice the difference because the extended space 
-is zero on read even without the conditional, which is described as 
-point 2 in the previous email.
+I mentioned already that 10.0 series will (hopefully) be LTS series.
+At the very least, it is what we'll have in the upcoming debian
+stable release (trixie), which will be stable for the next 2 years.
+Whenever this is important to have working Power* support in debian -
+I don't know.
 
- > 2. For reads: When !virtio_features_use_ex(vdev->host_features_ex),
- > the upper bits of host_features_ex are zero, and guest_features upper
- > bits remain zero (since they can't be set per point 1)
+All the mentioned patches applied to 10.0 branch cleanly (in the
+reverse order, from bottom to top), so there's no effort needed
+to back-port them.  And the result passes at least the standard
+qemu testsuite.  So it looks like everything works as intended.
 
-Regards,
-Akihiko Odaki
+Please keep qemu-stable@ in Cc for other fixes which you think are
+of interest for older/stable series of qemu.
+
+Thanks,
+
+/mjt
 
