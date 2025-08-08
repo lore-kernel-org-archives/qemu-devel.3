@@ -4,92 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C2D9C87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF392C87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukPYE-0004pt-I8; Fri, 08 Aug 2025 12:02:38 -0400
+	id 1ukPXx-0003vY-KK; Fri, 08 Aug 2025 12:02:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPYD-0004mk-7B
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:02:37 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPYA-00075k-Fz
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:02:36 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-459ebb6bbdfso15242335e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:02:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754668953; x=1755273753; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1oOym4G1Uqgj8cAdpo1OSXmVxF88jHGTUaHRF/kQ9ac=;
- b=GCH1HMuj8TbSo4FVsGKPo1UhnxErT+xt78ggn65bqPhuqHRfnx3hfQ+moiI9OB+Dr/
- l1vEmiBxWmtV51lPAxtKFUJBtfYRNt4nv87pnk3YOvbUQbG28PHI7dChTii+MxIhU+ae
- jb8irp9lfIG9vt19yq42H1ub8DscI4+xX3+ON4BZKRcF7iK9BNOFJLct48cGJYckRuWk
- 4pkilu3J+EWgseckKxEGIYuGUSEVRgm/BGrw/lzvbtJVURjHkXotTkiyrO+1gQSUfwVN
- elU/v5m/bSmLQMmUKxLpzO9y4/vt6hYknHgPBMJnFkwwcGQOmmXJGTtO8C2tbF8YbqKR
- mS5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754668953; x=1755273753;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1oOym4G1Uqgj8cAdpo1OSXmVxF88jHGTUaHRF/kQ9ac=;
- b=D+Z3WjgqTZIPZeV195/NLZfbiARv0EWZ+prN+DhBOc4lA48ipIEmvBvl+JAGc9uGU3
- amfU8aQYS+4RYEmClxWvc/1eRlm2gT0AEniXFcd0qEdI1yr9thcKoIDaeloUxmskL5GL
- 11NBKtDQOWZuTIuZ5BY2PZU3OcIFhfBFrE5Y61vJ/8xnYIfBu/zWxOPzMxZWPQKZC0mt
- U2IE2j5Xy0jgFX5wh043OQS+/jaFfT+3D9tq2j0LpFA+wJqYfaYuXLgH5JEY7tvg+RDt
- 8EwnHrtSxzmirFCtpqa70knYy6k4wEUrFu5/E3OpCJVgBv5w98L3iqLZzr3szE55381a
- Y+KQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVY425S3hlxPIZ9jr1uHQ6UhzYtTkKnc+iJqVI6xjmD2T2fTqQNWJd6s6hWU8P1aO269uKJn9C3lyK6@nongnu.org
-X-Gm-Message-State: AOJu0YyAn0inllF3Sg5jRLzeUpYw35uQQrXk6KouZpnEQPDOc7JgLAYq
- 3URwM8IZiQJ0pvAyOP1F4SlPZcH2pZoxc/Z6aqSf8u/kMjeYfy32UaZZyFS+OVIDzdE=
-X-Gm-Gg: ASbGnctaPjtuJZ7Y2Pi1nLyVE0YzMltQXQpvMAeEKbfrmuv6R0tBTFgTb63862cimrD
- dCiZjzOVxnCnmFgYrRtesxEPsYeGTvY8yim9+YtuBSqKedpraGAuM7kwMcf7se2u9d/IU1NAIoY
- v3+gaDlGTg70XKZT6smPQWYLsTfPNhRxmtqW+tz4AhuZFjdaKDHL0S9uYx5zjuE3Iun6NZAb1LF
- jeQE1bZHVPxgtsuCSuJZLCkFXtH4vHROHTXRPczXMEf0lLNaKA2B3AAv9bG4xJv5kdvgTCUmbwC
- A/Ef9c+CYcU1YrsAIl5purWN7mT2DOf5Yp5QT5q7tql599lrbytCGOo49tjjg4nKGNPfFuMWcmD
- TeFQ28vQNrgaEqHM9TDJ1CPC0jWIIS2/d+3lK6pyb/YFj2MhfFPmglQ83Vgensj+jHQ==
-X-Google-Smtp-Source: AGHT+IHi1QWxohBh4U0B/OD5TWTEFQflyahwLR2+ADsoi/ZWgQa2zZq5A4rgwuuaHJXbTXPiyedN9g==
-X-Received: by 2002:a05:6000:220c:b0:3b3:9c75:acc6 with SMTP id
- ffacd0b85a97d-3b900b579abmr2912548f8f.59.1754668952577; 
- Fri, 08 Aug 2025 09:02:32 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3c33fesm31295635f8f.29.2025.08.08.09.02.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Aug 2025 09:02:32 -0700 (PDT)
-Message-ID: <87427d18-af1e-4815-b95f-75bae32720d3@linaro.org>
-Date: Fri, 8 Aug 2025 18:02:31 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ukPXs-0003r1-2g
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:02:16 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ukPXo-0006hB-4Y
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:02:15 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bz7z01fdfz6K9Fl;
+ Sat,  9 Aug 2025 00:00:12 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 7922214027A;
+ Sat,  9 Aug 2025 00:02:02 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 8 Aug
+ 2025 18:02:02 +0200
+Date: Fri, 8 Aug 2025 17:02:00 +0100
+To: Davidlohr Bueso <dave@stgolabs.net>
+CC: <ira.weiny@intel.com>, <alucerop@amd.com>, <a.manzanares@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 1/4] hw/pcie: Support enabling flit mode
+Message-ID: <20250808170200.00001cde@huawei.com>
+In-Reply-To: <20250806055708.196851-2-dave@stgolabs.net>
+References: <20250806055708.196851-1-dave@stgolabs.net>
+ <20250806055708.196851-2-dave@stgolabs.net>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 07/14] target/riscv: Add Xmipslsp instructions
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
-References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
- <20250717093833.402237-8-djordje.todorovic@htecgroup.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250717093833.402237-8-djordje.todorovic@htecgroup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,34 +69,292 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/7/25 11:38, Djordje Todorovic wrote:
-> Add MIPS P8700 ldp, lwp, sdp, swp instructions.
+On Tue,  5 Aug 2025 22:57:05 -0700
+Davidlohr Bueso <dave@stgolabs.net> wrote:
+
+> As with the link speed and width training, have ad-hoc property for
+> setting the flit mode and allow CXL components to make use of it.
 > 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> For the CXL root port and dsp cases, always report flit mode but
+> the actual value after 'training' will depend on the downstream
+> device configuration.
+Hi Davidlohr,
+
+I'm not immediately spotting how this bit works. I was expecting
+to see some code in pcie_sync_bridge_lnk() to see the Link Status
+stuff indicating if it 'trained' in flit mode or not.
+
+What am I missing?
+
+J
+
+> 
+> Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
 > ---
->   target/riscv/cpu.c                        |  3 +
->   target/riscv/cpu_cfg.h                    |  2 +-
->   target/riscv/cpu_cfg_fields.h.inc         |  1 +
->   target/riscv/insn_trans/trans_xmips.c.inc | 84 +++++++++++++++++++++++
->   target/riscv/xmips.decode                 | 23 +++++++
->   5 files changed, 112 insertions(+), 1 deletion(-)
+>  hw/core/qdev-properties-system.c          | 11 +++++++++++
+>  hw/mem/cxl_type3.c                        |  4 +++-
+>  hw/pci-bridge/cxl_downstream.c            |  1 +
+>  hw/pci-bridge/cxl_root_port.c             |  1 +
+>  hw/pci-bridge/cxl_upstream.c              |  3 ++-
+>  hw/pci-bridge/gen_pcie_root_port.c        |  1 +
+>  hw/pci/pcie.c                             | 13 +++++++++----
+>  include/hw/cxl/cxl_device.h               |  1 +
+>  include/hw/pci-bridge/cxl_upstream_port.h |  1 +
+>  include/hw/pci/pcie.h                     |  2 +-
+>  include/hw/pci/pcie_port.h                |  1 +
+>  include/hw/qdev-properties-system.h       |  3 +++
+>  qapi/common.json                          | 14 ++++++++++++++
+>  13 files changed, 49 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+> index 24e145d87001..94a1b754ecdc 100644
+> --- a/hw/core/qdev-properties-system.c
+> +++ b/hw/core/qdev-properties-system.c
+> @@ -1172,6 +1172,17 @@ const PropertyInfo qdev_prop_pcie_link_width = {
+>      .set_default_value = qdev_propinfo_set_default_value_enum,
+>  };
+>  
+> +/* --- Flit mode --- */
+> +
+> +const PropertyInfo qdev_prop_pcie_link_flit = {
+> +    .type = "PCIELinkFlit",
+> +    .description = "off/on",
+> +    .enum_table = &PCIELinkFlit_lookup,
+> +    .get   = qdev_propinfo_get_enum,
+> +    .set   = qdev_propinfo_set_enum,
+> +    .set_default_value = qdev_propinfo_set_default_value_enum,
+> +};
+> +
+>  /* --- UUID --- */
+>  
+>  static void get_uuid(Object *obj, Visitor *v, const char *name, void *opaque,
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index c4658e0955d5..324cf62e8141 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -1501,7 +1501,8 @@ void ct3d_reset(DeviceState *dev)
+>      uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
+>      uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
+>  
+> -    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed);
+> +    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
+> +                              ct3d->flitmode);
+>      cxl_component_register_init_common(reg_state, write_msk, CXL2_TYPE3_DEVICE);
+>      cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
+>  
+> @@ -1540,6 +1541,7 @@ static const Property ct3_props[] = {
+>                                  speed, PCIE_LINK_SPEED_32),
+>      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLType3Dev,
+>                                  width, PCIE_LINK_WIDTH_16),
+> +    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", CXLType3Dev, flitmode, 0),
+>      DEFINE_PROP_UINT16("chmu-port", CXLType3Dev, cxl_dstate.chmu[0].port, 0),
+>  };
+>  
+> diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+> index 6aa8586f0161..82e6618b111c 100644
+> --- a/hw/pci-bridge/cxl_downstream.c
+> +++ b/hw/pci-bridge/cxl_downstream.c
+> @@ -257,6 +257,7 @@ static const Property cxl_dsp_props[] = {
+>                                  speed, PCIE_LINK_SPEED_64),
+>      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
+>                                  width, PCIE_LINK_WIDTH_16),
+> +    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", PCIESlot, flitmode, 1),
+>  };
+>  
+>  static void cxl_dsp_class_init(ObjectClass *oc, const void *data)
+> diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
+> index f035987b6f1f..721dc3981fd2 100644
+> --- a/hw/pci-bridge/cxl_root_port.c
+> +++ b/hw/pci-bridge/cxl_root_port.c
+> @@ -235,6 +235,7 @@ static const Property gen_rp_props[] = {
+>                                  speed, PCIE_LINK_SPEED_64),
+>      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
+>                                  width, PCIE_LINK_WIDTH_32),
+> +    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", PCIESlot, flitmode, 1),
+>  };
+>  
+>  static void cxl_rp_dvsec_write_config(PCIDevice *dev, uint32_t addr,
+> diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+> index c2150afff39b..5e6d559a3215 100644
+> --- a/hw/pci-bridge/cxl_upstream.c
+> +++ b/hw/pci-bridge/cxl_upstream.c
+> @@ -147,7 +147,7 @@ static void cxl_usp_reset(DeviceState *qdev)
+>  
+>      pci_bridge_reset(qdev);
+>      pcie_cap_deverr_reset(d);
+> -    pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed);
+> +    pcie_cap_fill_link_ep_usp(d, usp->width, usp->speed, usp->flitmode);
+>      latch_registers(usp);
+>  }
+>  
+> @@ -433,6 +433,7 @@ static const Property cxl_upstream_props[] = {
+>                                  speed, PCIE_LINK_SPEED_32),
+>      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLUpstreamPort,
+>                                  width, PCIE_LINK_WIDTH_16),
+> +    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", CXLUpstreamPort, flitmode, 0),
+>  };
+>  
+>  static void cxl_upstream_class_init(ObjectClass *oc, const void *data)
+> diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+> index d9078e783bf0..c00be8147c2a 100644
+> --- a/hw/pci-bridge/gen_pcie_root_port.c
+> +++ b/hw/pci-bridge/gen_pcie_root_port.c
+> @@ -145,6 +145,7 @@ static const Property gen_rp_props[] = {
+>                                  speed, PCIE_LINK_SPEED_16),
+>      DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
+>                                  width, PCIE_LINK_WIDTH_32),
+> +    DEFINE_PROP_PCIE_LINK_FLIT("256b-flit", PCIESlot, flitmode, 0),
+>  };
+>  
+>  static void gen_rp_dev_class_init(ObjectClass *klass, const void *data)
+> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+> index eaeb68894e6e..55e0f7110ae5 100644
+> --- a/hw/pci/pcie.c
+> +++ b/hw/pci/pcie.c
+> @@ -113,7 +113,7 @@ pcie_cap_v1_fill(PCIDevice *dev, uint8_t port, uint8_t type, uint8_t version)
+>  
+>  /* Includes setting the target speed default */
+>  static void pcie_cap_fill_lnk(uint8_t *exp_cap, PCIExpLinkWidth width,
+> -                              PCIExpLinkSpeed speed)
+> +                              PCIExpLinkSpeed speed, PCIELinkFlit flitmode)
+>  {
+>      /* Clear and fill LNKCAP from what was configured above */
+>      pci_long_test_and_clear_mask(exp_cap + PCI_EXP_LNKCAP,
+> @@ -158,10 +158,15 @@ static void pcie_cap_fill_lnk(uint8_t *exp_cap, PCIExpLinkWidth width,
+>                                         PCI_EXP_LNKCAP2_SLS_64_0GB);
+>          }
+>      }
+> +
+> +    if (flitmode) {
+> +        pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA2,
+> +                                   PCI_EXP_LNKSTA2_FLIT);
+> +    }
+>  }
+>  
+>  void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
+> -                               PCIExpLinkSpeed speed)
+> +                               PCIExpLinkSpeed speed, PCIELinkFlit flitmode)
+>  {
+>      uint8_t *exp_cap = dev->config + dev->exp.exp_cap;
+>  
+> @@ -175,7 +180,7 @@ void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
+>                                 QEMU_PCI_EXP_LNKSTA_NLW(width) |
+>                                 QEMU_PCI_EXP_LNKSTA_CLS(speed));
+>  
+> -    pcie_cap_fill_lnk(exp_cap, width, speed);
+> +    pcie_cap_fill_lnk(exp_cap, width, speed, flitmode);
+>  }
+>  
+>  static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
+> @@ -212,7 +217,7 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
+>          /* the PCI_EXP_LNKSTA_DLLLA will be set in the hotplug function */
+>      }
+>  
+> -    pcie_cap_fill_lnk(exp_cap, s->width, s->speed);
+> +    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->flitmode);
+>  }
+>  
+>  int pcie_cap_init(PCIDevice *dev, uint8_t offset,
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 068c20d61ebc..4c9d2247cf02 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -796,6 +796,7 @@ struct CXLType3Dev {
+>      /* PCIe link characteristics */
+>      PCIExpLinkSpeed speed;
+>      PCIExpLinkWidth width;
+> +    PCIELinkFlit flitmode;
+>  
+>      /* DOE */
+>      DOECap doe_cdat;
+> diff --git a/include/hw/pci-bridge/cxl_upstream_port.h b/include/hw/pci-bridge/cxl_upstream_port.h
+> index db1dfb6afd98..584e43c37291 100644
+> --- a/include/hw/pci-bridge/cxl_upstream_port.h
+> +++ b/include/hw/pci-bridge/cxl_upstream_port.h
+> @@ -20,6 +20,7 @@ typedef struct CXLUpstreamPort {
+>  
+>      PCIExpLinkSpeed speed;
+>      PCIExpLinkWidth width;
+> +    PCIELinkFlit flitmode;
+>  
+>      DOECap doe_cdat;
+>      uint64_t sn;
+> diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+> index ff6ce08e135a..82fcbc9f8823 100644
+> --- a/include/hw/pci/pcie.h
+> +++ b/include/hw/pci/pcie.h
+> @@ -142,7 +142,7 @@ void pcie_ari_init(PCIDevice *dev, uint16_t offset);
+>  void pcie_dev_ser_num_init(PCIDevice *dev, uint16_t offset, uint64_t ser_num);
+>  void pcie_ats_init(PCIDevice *dev, uint16_t offset, bool aligned);
+>  void pcie_cap_fill_link_ep_usp(PCIDevice *dev, PCIExpLinkWidth width,
+> -                               PCIExpLinkSpeed speed);
+> +                               PCIExpLinkSpeed speed, PCIELinkFlit flitmode);
+>  
+>  void pcie_cap_slot_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
+>                                 Error **errp);
+> diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
+> index 7cd7af8cfa4b..2f96fc685729 100644
+> --- a/include/hw/pci/pcie_port.h
+> +++ b/include/hw/pci/pcie_port.h
+> @@ -58,6 +58,7 @@ struct PCIESlot {
+>  
+>      PCIExpLinkSpeed speed;
+>      PCIExpLinkWidth width;
+> +    PCIELinkFlit flitmode;
+>  
+>      /* Disable ACS (really for a pcie_root_port) */
+>      bool        disable_acs;
+> diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
+> index b921392c5256..dd5dc4515ea7 100644
+> --- a/include/hw/qdev-properties-system.h
+> +++ b/include/hw/qdev-properties-system.h
+> @@ -28,6 +28,7 @@ extern const PropertyInfo qdev_prop_audiodev;
+>  extern const PropertyInfo qdev_prop_off_auto_pcibar;
+>  extern const PropertyInfo qdev_prop_pcie_link_speed;
+>  extern const PropertyInfo qdev_prop_pcie_link_width;
+> +extern const PropertyInfo qdev_prop_pcie_link_flit;
+>  extern const PropertyInfo qdev_prop_cpus390entitlement;
+>  extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
+>  extern const PropertyInfo qdev_prop_endian_mode;
+> @@ -80,6 +81,8 @@ extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
+>  #define DEFINE_PROP_PCIE_LINK_WIDTH(_n, _s, _f, _d) \
+>      DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pcie_link_width, \
+>                          PCIExpLinkWidth)
+> +#define DEFINE_PROP_PCIE_LINK_FLIT(_n, _s, _f, _d) \
+> +    DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pcie_link_flit, PCIELinkFlit)
+>  
+>  #define DEFINE_PROP_UUID(_name, _state, _field) \
+>      DEFINE_PROP(_name, _state, _field, qdev_prop_uuid, QemuUUID, \
+> diff --git a/qapi/common.json b/qapi/common.json
+> index 0e3a0bbbfb0b..da047fbf874f 100644
+> --- a/qapi/common.json
+> +++ b/qapi/common.json
+> @@ -140,6 +140,20 @@
+>  { 'enum': 'PCIELinkWidth',
+>    'data': [ '1', '2', '4', '8', '12', '16', '32' ] }
+>  
+> +##
+> +# @PCIELinkFlit:
+> +#
+> +# An enumeration of PCIe link FLIT mode
+> +#
+> +# @off: the link is not operating in FLIT mode
+> +#
+> +# @on: each FLIT is a fixed 256 bytes in size
+> +#
+> +# Since: 10.0
+> +##
+> +{ 'enum': 'PCIELinkFlit',
+> +  'data': [ 'off', 'on'] }
+> +
+>  ##
+>  # @HostMemPolicy:
+>  #
 
-
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 9734963035..f35d477f27 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -39,7 +39,7 @@ static inline bool always_true_p(const RISCVCPUConfig *cfg __attribute__((__unus
->   
->   static inline bool has_xmips_p(const RISCVCPUConfig *cfg)
->   {
-> -    return cfg->ext_xmipscbop || cfg->ext_xmipscmov;
-> +    return cfg->ext_xmipscbop || cfg->ext_xmipscmov || cfg->ext_xmipslsp;
-
-Checking for any XMIPS instruction implemented to return vendor
-extension presence seems odd. Can you implement them separately?
 
