@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC87DC87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 08:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA96C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 08:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukI9Y-00079c-EX; Fri, 08 Aug 2025 04:08:40 -0400
+	id 1ukI9Z-00079v-0K; Fri, 08 Aug 2025 04:08:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukI9V-00075U-IG
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukI9U-000748-WA
  for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:08:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukI9T-0006Um-NX
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:08:37 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukI9T-0006UA-1R
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 04:08:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1754640514;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mLTZcSj7iNq5OuEH8/JlnbJNdOKdUQD0MxDROOyY5U8=;
- b=R7AeL6L+TOVR+MdyM+VWCvti/c10sgZBIcL2qZ885aARY3YlHZEpzx9lX2nKzqYp7cPl7L
- hrCff3Fcg1nbP5hi3cHfwF00pVSD2F23vVDty4DX/6fug6O9l5bvGKp9tO5wXaU8OCemjx
- l7hlJ6H39+gfJiZa8DYtHyu/UU7dYVA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=CKNHjrkE+SV7LG40jEVf1ht2LSznPIly+hKCp2dcHGI=;
+ b=V3nYX2W+rcJn1gkwP/I0ZFz358zfalYUpFd8hPTN0rC4nyTgE/8W+/KVr315yWK1R7WDOI
+ KPoUEAiSqx6UqTaL7T2wbi3JZSRbagn37LjVwvOGeQILXlWo+J2T941os7bhpVx0rzVp9x
+ /Kkxdk8+Ga/RKyzx86TOm9Ckx7AC5gY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-KJDt79g7NeurZo2YeYiZsg-1; Fri,
- 08 Aug 2025 04:08:31 -0400
-X-MC-Unique: KJDt79g7NeurZo2YeYiZsg-1
-X-Mimecast-MFC-AGG-ID: KJDt79g7NeurZo2YeYiZsg_1754640510
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-PRP5d_yOMk-NkE5wPjTg8g-1; Fri,
+ 08 Aug 2025 04:08:30 -0400
+X-MC-Unique: PRP5d_yOMk-NkE5wPjTg8g-1
+X-Mimecast-MFC-AGG-ID: PRP5d_yOMk-NkE5wPjTg8g_1754640509
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0941B1956080; Fri,  8 Aug 2025 08:08:30 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB4D11800359; Fri,  8 Aug 2025 08:08:29 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67FDD19560B0; Fri,  8 Aug 2025 08:08:29 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 82E24180028A; Fri,  8 Aug 2025 08:08:29 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 63A0C21E6741; Fri, 08 Aug 2025 10:08:23 +0200 (CEST)
+ id 5C03C21E6779; Fri, 08 Aug 2025 10:08:23 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: odaki@rsg.ci.i.u-tokyo.ac.jp,
 	marcandre.lureau@redhat.com
-Subject: [PATCH 08/12] util/oslib-win32: Revert warning on WSAEventSelect()
- failure
-Date: Fri,  8 Aug 2025 10:08:19 +0200
-Message-ID: <20250808080823.2638861-9-armbru@redhat.com>
+Subject: [PATCH 06/12] net/slirp: Clean up error reporting
+Date: Fri,  8 Aug 2025 10:08:17 +0200
+Message-ID: <20250808080823.2638861-7-armbru@redhat.com>
 In-Reply-To: <20250808080823.2638861-1-armbru@redhat.com>
 References: <20250808080823.2638861-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,42 +85,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_socket_select() and its wrapper qemu_socket_unselect() treat a
-NULL @errp as &error_warn.  This is wildly inappropriate.  A caller
-passing NULL specifies that errors are to be ignored.  If warnings are
-wanted, the caller must pass &error_warn.
+net_slirp_register_poll_sock() and net_slirp_unregister_poll_sock()
+report WSAEventSelect() failure with error_setg(&error_warn, ...).
 
-I'm not familiar with the calling code, so I can't say whether it will
-work after WSAEventSelect() failure.  If it doesn't, then this should
-be an error.  If it does, then why bother the user with a warning that
-isn't actionable, and likely confusing?
+I'm not familiar with liblirp, so I can't say whether the network
+backend will work after such a failure.  If it doesn't, then this
+should be an error.  If it does, then why bother the user with a
+warning that isn't actionable, and likely confusing?
 
-The warning goes back to commit f5fd677ae7cf (win32/socket: introduce
-qemu_socket_select() helper).  Before that commit, the error was
-ignored, as indicated by passing a null @errp.  Revert to that
-behavior.
+Regardless of that, error_setg_win32(&error_warn, ...) is undesirable
+just like error_setg(&error_fatal, ...) and error_setg(&error_abort,
+...)  are.  Replace by warn_report().
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- util/oslib-win32.c | 4 ----
- 1 file changed, 4 deletions(-)
+ net/slirp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-index b7351634ec..136a8fe118 100644
---- a/util/oslib-win32.c
-+++ b/util/oslib-win32.c
-@@ -296,10 +296,6 @@ bool qemu_socket_select(int sockfd, WSAEVENT hEventObject,
+diff --git a/net/slirp.c b/net/slirp.c
+index 9657e86a84..d75b09f16b 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -262,7 +262,8 @@ static void net_slirp_register_poll_sock(slirp_os_socket fd, void *opaque)
+     if (WSAEventSelect(fd, event_notifier_get_handle(&ctxt->notifier),
+                        FD_READ | FD_ACCEPT | FD_CLOSE |
+                        FD_CONNECT | FD_WRITE | FD_OOB) != 0) {
+-        error_setg_win32(&error_warn, WSAGetLastError(), "failed to WSAEventSelect()");
++        warn_report("failed to WSAEventSelect(): %s",
++                    g_win32_error_message(WSAGetLastError()));
+     }
+ #endif
+ }
+@@ -271,7 +272,8 @@ static void net_slirp_unregister_poll_sock(slirp_os_socket fd, void *opaque)
  {
-     SOCKET s = _get_osfhandle(sockfd);
- 
--    if (errp == NULL) {
--        errp = &error_warn;
--    }
--
-     if (s == INVALID_SOCKET) {
-         error_setg(errp, "invalid socket fd=%d", sockfd);
-         return false;
+ #ifdef WIN32
+     if (WSAEventSelect(fd, NULL, 0) != 0) {
+-        error_setg_win32(&error_warn, WSAGetLastError(), "failed to WSAEventSelect()");
++        warn_report("failed to WSAEventSelect()",
++                    g_win32_error_message(WSAGetLastError()));
+     }
+ #endif
+ }
 -- 
 2.49.0
 
