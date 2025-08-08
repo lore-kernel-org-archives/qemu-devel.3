@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4ACEC87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 12:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF821C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 12:27:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukLoV-0006cQ-Ss; Fri, 08 Aug 2025 08:03:17 -0400
+	id 1ukMBb-0007MC-6J; Fri, 08 Aug 2025 08:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ukLnR-0003ZI-QF
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:02:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ukLnP-00077y-Rw
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:02:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754654521;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9gU7swm5ZspRBwgeTchPHmXOlAVgt162VWjPJI6eLxY=;
- b=Rt6fOTYKL3Nw00sCO5lJHS0T1S0qOmKvhxFfRboRhsqbtkZC1+1ArrArWBgH520AfFWPIp
- 3fvlpDXoy/VczAdkUYfrGFdPi0vuXLH9lk5PW38bV82+A/s2SPVCD6Q3J11VEvhPzE4qw7
- 3QZHSaiegWzwtoBfb+7eprxhmrfTvvY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-kUctXBwINC2Gz0gWcS9EyQ-1; Fri,
- 08 Aug 2025 08:01:56 -0400
-X-MC-Unique: kUctXBwINC2Gz0gWcS9EyQ-1
-X-Mimecast-MFC-AGG-ID: kUctXBwINC2Gz0gWcS9EyQ_1754654515
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9F391956058; Fri,  8 Aug 2025 12:01:55 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA9C219560B0; Fri,  8 Aug 2025 12:01:53 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
- philmd@linaro.org, mtosatti@redhat.com
-Subject: [PATCH v3 05/10] hpet: make main counter read lock-less
-Date: Fri,  8 Aug 2025 14:01:32 +0200
-Message-ID: <20250808120137.2208800-6-imammedo@redhat.com>
-In-Reply-To: <20250808120137.2208800-1-imammedo@redhat.com>
-References: <20250808120137.2208800-1-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ukMBT-0007LC-Jc
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:26:55 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1ukMBR-00037D-EB
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:26:55 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-617d24e7246so2597516a12.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 05:26:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754656011; x=1755260811; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MHkclpiD8YC6oyRY7ajOLzf14SPFUCjolM10wDvyHMg=;
+ b=w3P/214dOh1vdj++EpoiMqGJYZgJFko0YngnG45+wfz0s0B4jlS5yLWosTrurn1i9g
+ oPf/qgxEiQyHXmB6XubXoVEu2G67Z7CTjEhz6gHXYdnBDY2X4zDmn3XWcMIrOzhkW6XP
+ 86+Btzgf9RWJ9OgQTPm21MuSvJiF1PNk5nTy9WPYEBmFdx6JnNDjU5jqbEbpQEppi0Eg
+ o2HYwdvQnzaZgVoynasx8ou6UOFatUlB3jiIUCE4WgmIJMrzSPxI2p+70fsjdXfvPNdo
+ aO3CFZkF2Lw2RLTQx/7TluGY6ftM0PdAVDj6TODDFkhyUwLXGI8Lv1lSfsGXS/CHtg8I
+ U0SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754656011; x=1755260811;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MHkclpiD8YC6oyRY7ajOLzf14SPFUCjolM10wDvyHMg=;
+ b=Lepsut7mud5m94z96167cTRi66HLmwxF7n/4c1FXfP7+CZYYJfku3RwqfNxtSDb/RQ
+ LIdg99IjGTi2ukrUDqk7PTAA3E98sbQ+dLPpMZ+b7b1PukL6Zpoqu3AAVhhzY865Rg5M
+ AWvUy7afGJWtLY/wtYvVLHIJ5cdc3zeGYQzA/08MNLkxy2acl0cpO7FR7IXA+RcL45j4
+ tQAe0/1Hffhl9fRW+0rzCdws21mgxAG9M6Vrw83+m/zcaFBSnr4vufbtqP19VWJGhnT6
+ c3uaFWsthTqta0bXeE/0qyfgkKwFwO8zBApLDAbJqm2GTYXU+06w56cFnVG/x9mpsRn4
+ nzug==
+X-Gm-Message-State: AOJu0YzvWmm09HXEKjQ2vP/7NqAtZOAYcyuOxsNgqi6FBz6qwa8yRc2C
+ TUi8hb5rGUC5QmRPjUNRP2kwcqLj2pMwK2ymFg7cmJ4Y9aXdr0gE0ywVqB9uyIH4UR8rN6GCuP1
+ glh2oszjuFYleJjzacySA0tqti1PPE8KeUhKxsIIPNw==
+X-Gm-Gg: ASbGncuJ0sewG7F80vawIb7cVBQdudw4wIOoBkT1Mpet1cA1ncSQOJ2T0cplhiTTwAH
+ 1+ZD/fBnwRilQV0CdJuYDSFiEUvc++93X8lEqwcUv/6JbGk8IG5LT+bbuv8LRcgESSb7XfweUX/
+ CcYGnEH9BA5H95m66VqJfHcnBKuJURmZsG4R/8JdOqp6iZXv+gApTn0bkcGTy3uwNz8ys3XnY31
+ A92YMY8
+X-Google-Smtp-Source: AGHT+IH6UoqUnU/QpUShLGftP7CdVKHxQa5bhFp5H4j2FM0T7zV7TRg9lzO7HiG8QMMkmeLuEFuHeaP6H3WnYEXA6D0=
+X-Received: by 2002:a05:6402:3485:b0:617:bb83:99a0 with SMTP id
+ 4fb4d7f45d1cf-617e2e7c16dmr2266350a12.30.1754656011113; Fri, 08 Aug 2025
+ 05:26:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250808-gdbstub-aarch64-pstate-regs-v1-0-14ba70be1b3d@linaro.org>
+ <20250808-gdbstub-aarch64-pstate-regs-v1-1-14ba70be1b3d@linaro.org>
+ <CAFEAcA-2Zt7HTDX_bdBHjJyQS7o=csE1x6eDymyEPkV3K+pXrg@mail.gmail.com>
+In-Reply-To: <CAFEAcA-2Zt7HTDX_bdBHjJyQS7o=csE1x6eDymyEPkV3K+pXrg@mail.gmail.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 8 Aug 2025 15:26:25 +0300
+X-Gm-Features: Ac12FXxb_WNFiQ0jXr-R33ezBkmA_j-8G9JPQ6q5lo7r9GQ5a6tc-KGIMngASXk
+Message-ID: <CAAjaMXbZK=n_HJGrmuGv1DZZ3AeaX7-fK-soFto4J=w-9=vdmQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] gdbstub/aarch64: add CurrentEL register
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,101 +101,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make access to main HPET counter lock-less.
+On Fri, Aug 8, 2025 at 3:21=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
+> On Fri, 8 Aug 2025 at 12:30, Manos Pitsidianakis
+> <manos.pitsidianakis@linaro.org> wrote:
+> >
+> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > ---
+> >  gdb-xml/aarch64-core.xml | 5 +++++
+> >  target/arm/cpu.h         | 1 +
+> >  target/arm/gdbstub64.c   | 6 ++++++
+> >  3 files changed, 12 insertions(+)
+> >
+> > diff --git a/gdb-xml/aarch64-core.xml b/gdb-xml/aarch64-core.xml
+> > index b8046510b9a085d30463d37b3ecc8d435f5fb7a4..19ad743dc5607b4021fb795=
+bfb9b8e9cf0adef68 100644
+> > --- a/gdb-xml/aarch64-core.xml
+> > +++ b/gdb-xml/aarch64-core.xml
+> > @@ -91,4 +91,9 @@
+> >    </flags>
+> >    <reg name=3D"cpsr" bitsize=3D"32" type=3D"cpsr_flags"/>
+> >
+> > +  <flags id=3D"current_el_flags" size=3D"8">
+> > +    <!-- Exception Level.  -->
+> > +    <field name=3D"EL" start=3D"2" end=3D"3"/>
+> > +  </flags>
+> > +  <reg name=3D"CurrentEL" bitsize=3D"64" type=3D"current_el"/>
+> >  </feature>
+> > diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> > index dc9b6dce4c92297b2636d0d7c0dce580f1806d5b..c3070cd9863381fac40f564=
+0e0a7a84dfa1c6e06 100644
+> > --- a/target/arm/cpu.h
+> > +++ b/target/arm/cpu.h
+> > @@ -1473,6 +1473,7 @@ void pmu_init(ARMCPU *cpu);
+> >   * AArch32 mode SPSRs are basically CPSR-format.
+> >   */
+> >  #define PSTATE_SP (1U)
+> > +#define PSTATE_EL (3U << 2)
+> >  #define PSTATE_M (0xFU)
+> >  #define PSTATE_nRW (1U << 4)
+> >  #define PSTATE_F (1U << 6)
+> > diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+> > index 08e28585396816ab90d6d8e460ff8171892fe8da..16b564e1a970cb5e854a705=
+619f71ffc61545a73 100644
+> > --- a/target/arm/gdbstub64.c
+> > +++ b/target/arm/gdbstub64.c
+> > @@ -48,6 +48,9 @@ int aarch64_cpu_gdb_read_register(CPUState *cs, GByte=
+Array *mem_buf, int n)
+> >          return gdb_get_reg64(mem_buf, env->pc);
+> >      case 33:
+> >          return gdb_get_reg32(mem_buf, pstate_read(env));
+> > +    case 34:
+> > +        /* CurrentEL */
+> > +        return gdb_get_reg64(mem_buf, env->pstate & PSTATE_EL);
+> >      }
+>
+> The debugger already has this information in the 'cpsr'
+> register, so it could implement convenience views of
+> the subfields itself if it liked.
 
-In unlikely event of an update in progress, readers will busy wait
-untill update is finished.
+Yep, but consider: it is a register, architecturally, so it's nice to
+include it for consistency. It's redundant only because gdb has cpsr
+which is not a register. So this is about more about being technically
+correct than correcting an actual problem.
 
-As result micro benchmark of concurrent reading of HPET counter
-with large number of vCPU shows over 80% better (less) latency.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
----
-v3:
-  * make reader busy wait during update and reuse existing seqlock API
-       Peter Xu <peterx@redhat.com>
----
- hw/timer/hpet.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+>
+> If we're going to do this I would prefer it to be because
+> we've gained some consensus with e.g. the gdb maintainers
+> that this is the "preferred" way to expose the CPU state.
+> The XML config stuff lets us do it in our own way if we
+> want to, but I think there is value in consistency across
+> stubs here.
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index c776afc0f2..789a31d0a0 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -39,6 +39,7 @@
- #include "system/address-spaces.h"
- #include "qom/object.h"
- #include "qemu/lockable.h"
-+#include "qemu/seqlock.h"
- #include "trace.h"
- 
- struct hpet_fw_config hpet_fw_cfg = {.count = UINT8_MAX};
-@@ -74,6 +75,7 @@ struct HPETState {
-     MemoryRegion iomem;
-     uint64_t hpet_offset;
-     bool hpet_offset_saved;
-+    QemuSeqLock state_version;
-     qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
-     uint32_t flags;
-     uint8_t rtc_irq_level;
-@@ -430,17 +432,25 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
-     trace_hpet_ram_read(addr);
-     addr &= ~4;
- 
--    QEMU_LOCK_GUARD(&s->lock);
-     if (addr == HPET_COUNTER) {
--        if (hpet_enabled(s)) {
--            cur_tick = hpet_get_ticks(s);
--        } else {
--            cur_tick = s->hpet_counter;
--        }
-+        unsigned version;
-+
-+        /*
-+         * Write update is rare, so busywait here is unlikely to happen
-+         */
-+        do {
-+            version = seqlock_read_begin(&s->state_version);
-+            if (unlikely(!hpet_enabled(s))) {
-+                cur_tick = s->hpet_counter;
-+            } else {
-+                cur_tick = hpet_get_ticks(s);
-+            }
-+        } while (seqlock_read_retry(&s->state_version, version));
-         trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
-         return cur_tick >> shift;
-     }
- 
-+    QEMU_LOCK_GUARD(&s->lock);
-     /*address range of all global regs*/
-     if (addr <= 0xff) {
-         switch (addr) {
-@@ -500,6 +510,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-             old_val = s->config;
-             new_val = deposit64(old_val, shift, len, value);
-             new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
-+            seqlock_write_begin(&s->state_version);
-             s->config = new_val;
-             if (activating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
-                 /* Enable main counter and interrupt generation. */
-@@ -518,6 +529,8 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-                     hpet_del_timer(&s->timer[i]);
-                 }
-             }
-+            seqlock_write_end(&s->state_version);
-+
-             /* i8254 and RTC output pins are disabled
-              * when HPET is in legacy mode */
-             if (activating_bit(old_val, new_val, HPET_CFG_LEGACY)) {
-@@ -686,6 +699,7 @@ static void hpet_init(Object *obj)
-     HPETState *s = HPET(obj);
- 
-     qemu_mutex_init(&s->lock);
-+    seqlock_init(&s->state_version);
-     /* HPET Area */
-     memory_region_init_io(&s->iomem, obj, &hpet_ram_ops, s, "hpet", HPET_LEN);
-     memory_region_enable_lockless_io(&s->iomem);
--- 
-2.47.1
+I plan to upstream the XML patches to gdb as well, separately. But
+since we use custom target xml it's not like we depend on gdb to
+change it.
 
+>
+> thanks
+> -- PMM
 
