@@ -4,52 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7968BC87FD3
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 13:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA0E5C87FD2
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 13:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukM1P-0008L5-WC; Fri, 08 Aug 2025 08:16:32 -0400
+	id 1ukLzc-0004Et-UE; Fri, 08 Aug 2025 08:14:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu@bonslack.org>) id 1ukM1N-0008Hy-No
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:16:29 -0400
-Received: from bonnix2.bonnix.it ([37.247.49.194])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <qemu@bonslack.org>) id 1ukM1J-0001En-MX
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:16:29 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 bonnix2.bonnix.it 1DAD5230FBE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bonslack.org;
- s=20220805; t=1754655371;
- bh=7dKGwCWlnpYC7OaP1o+M7c+B+2KzCNiRVoMSWyLbvWA=;
- h=Date:To:Cc:From:Subject;
- b=DU8nF00Y3lOi20jOY9UU1e1JQA4vJNLreoC4xVa/NWMo4MhjYLmdHr/S2AVQYycre
- gE+AVrMa+lRMi5/X5XugaL5FmrudfH22M5MEYvDO2Lac9VoO6MZZiakf3LgnjaaQ4u
- KLaSQvHnkw8rVmJCHQ11+NesF6KVIGPg6ZlvQkWA=
-Received: from [10.0.0.70] (dynamic-adsl-84-220-72-247.clienti.tiscali.it
- [84.220.72.247])
- by bonnix2.bonnix.it (Postfix) with ESMTPSA id 1DAD5230FBE;
- Fri,  8 Aug 2025 14:16:11 +0200 (CEST)
-Message-ID: <e18add5b-c75a-4547-8ae0-01d9924883dd@bonslack.org>
-Date: Fri, 8 Aug 2025 14:16:10 +0200
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ukLzY-0003zD-TR
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:14:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1ukLy2-0000as-Pa
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 08:13:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754655178;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uZGwOPWhCEXGzT5mW8sGJbLfQe3OeHqPBz8qka+frOI=;
+ b=TWgKDUul18NOOddcq7GVXkXehPahZ7oy6T73bXnW32oY6nd4afaTHE+buCJI0IzOCp2rJ6
+ hHjj8Hl3k4ReyfyTuyGTNhuwo5qhUKn7CeHBgkkRbvw8OHPo3tNtJtlHTEPDcE2v6J9fO9
+ flWNLtGebFGa8kXemzZocJjeSbCeH9w=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-154-0r3KOR5-Ns6aEVrBQLcFlw-1; Fri, 08 Aug 2025 08:12:57 -0400
+X-MC-Unique: 0r3KOR5-Ns6aEVrBQLcFlw-1
+X-Mimecast-MFC-AGG-ID: 0r3KOR5-Ns6aEVrBQLcFlw_1754655176
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-458b9ded499so14625625e9.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 05:12:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754655176; x=1755259976;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=uZGwOPWhCEXGzT5mW8sGJbLfQe3OeHqPBz8qka+frOI=;
+ b=pHEtvRMdboCvnfKyZTJxN2rLGrtV31VuKq2gxLP7AR5zMBylaTwzkt1Dd7GtBmOPlw
+ 2TXBoSG1kYmX/hHhbKVHPGcL5uHUDVg9t4ojNmjJTou5b7QA8OnznSbHAl+iTOAdsakN
+ yoEF8KbgnZabRYHP2nfI3bpy97PvdGcPYNn4LukqxDgajHsJ4knF4aEYBLN/HI6VgzIT
+ iW38jIq8IUv3hCsImAhPaC3lGXGEbO0luugDUjBza7fYU8rcTF80RRreJVdg+25eqIgE
+ xNNSvMbb/EqthRE1AI45E+d3Mot5SCfpEuGfeX/e2ALnAb1y1KsXciJBs2ldj2LdeDT1
+ JSwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9aTXwTBiVEq+j06PeUTqPcDa/nvOBGritymRA+tYRLOWtBi/cYPjebvhucV/IviFEV6y4959IFP3Z@nongnu.org
+X-Gm-Message-State: AOJu0Ywjd1QRWzV7OOwHp+xe2MNyuT92sZaKLGuMPECVV7lTuS5FQ2bz
+ VZ+JE4XqSSlVQs1Uw+tV4yAq4Cwt0P6Dje+kgTHLPbP+/sBlXX3a8qYJgyvLpnYKo9uB7+5metH
+ EyCa4fjLS2EsujasCEmjlJmbNluxY/3pepfoW77tUNP7EB2JlKRwOB4kL
+X-Gm-Gg: ASbGncu+hXCx0CPgQm7OsCOy/Grw3GM/AWxsO2Sz1xqFzNYSbi2IngIBe1sKwR41wJy
+ gAkuwD6lT4B6JLJbj682JO8Ix+ATlFoPLsqO6wfmAm55Og/ZUl5EG8Gi5Tg569lkdGmtUpDYy6j
+ g+pZuxpW8cvO65eAEoAcarFuBHcxHVA3N022+k2e8VkiAyTviWj4Z4ZV98mBdWhvXpmyJaTVNta
+ H7M6x6d9zQ/gu3GpVquYDp0c+gTbc+mnLDa5SwWULHdetJFfPdC/Csyc2BNQEigdpP+uVE798bz
+ C6ULs2DCEeAw0fYsXLBavaK1Atc/CXNjcKHjVcVsekW/dahhh5qtQjK8WY+BJ7SZiJObMwE7jBL
+ Sw9533KXqmRNQOJ6D6knZWQ+M2ZEwGYrWGKXQi4SYBo9ci2qaYbzbUgHxzpFdZuyx
+X-Received: by 2002:a05:600c:1f06:b0:456:25e7:bed with SMTP id
+ 5b1f17b1804b1-459f4f652f2mr26714965e9.14.1754655176148; 
+ Fri, 08 Aug 2025 05:12:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcdtL1PI5drrxmMJmEP3BOlE8EcFd5J2zzqJtfq3ybZdFCLcxT/XJVHbaFC8yMatWH/fXoIA==
+X-Received: by 2002:a05:600c:1f06:b0:456:25e7:bed with SMTP id
+ 5b1f17b1804b1-459f4f652f2mr26714675e9.14.1754655175742; 
+ Fri, 08 Aug 2025 05:12:55 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f25:900:2e1e:d717:2543:c4d6?
+ (p200300d82f2509002e1ed7172543c4d6.dip0.t-ipconnect.de.
+ [2003:d8:2f25:900:2e1e:d717:2543:c4d6])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e5873c43sm145980265e9.22.2025.08.08.05.12.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Aug 2025 05:12:54 -0700 (PDT)
+Message-ID: <2de4fa21-a9ec-454a-9c10-39dd77e16f38@redhat.com>
+Date: Fri, 8 Aug 2025 14:12:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: it
-To: Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-From: Luca Bonissi <qemu@bonslack.org>
-Subject: [PATCH] Adding termios2 support
+Subject: Re: [PATCH v3 01/10] memory: reintroduce BQL-free fine-grained
+ PIO/MMIO
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, pbonzini@redhat.com, peterx@redhat.com,
+ philmd@linaro.org, mtosatti@redhat.com
+References: <20250808120137.2208800-1-imammedo@redhat.com>
+ <20250808120137.2208800-2-imammedo@redhat.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ g3eXuA==
+Organization: Red Hat
+In-Reply-To: <20250808120137.2208800-2-imammedo@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.247.49.194; envelope-from=qemu@bonslack.org;
- helo=bonnix2.bonnix.it
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,602 +161,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luca Bonissi <qemu@bonslack.org>
-Date: Fri, 8 Aug 2025 13:30:19 +0200
-Subject: [PATCH] Adding termios2 support
+On 08.08.25 14:01, Igor Mammedov wrote:
+> This patch brings back Jan's idea [1] of BQL-free IO access
+> 
+> This will let us make access to ACPI PM/HPET timers cheaper,
+> and prevent BQL contention in case of workload that heavily
+> uses the timers with a lot of vCPUs.
+> 
+> 1) 196ea13104f (memory: Add global-locking property to memory regions)
+>     ... de7ea885c539 (kvm: Switch to unlocked MMIO)
+> 
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+> v3:
+>    add comment for 'mr->disable_reentrancy_guard = true'
+>      Peter Xu <peterx@redhat.com>
+> ---
+>   include/system/memory.h | 10 ++++++++++
+>   system/memory.c         | 15 +++++++++++++++
+>   system/physmem.c        |  2 +-
+>   3 files changed, 26 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index e2cd6ed126..d04366c994 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -833,6 +833,7 @@ struct MemoryRegion {
+>       bool nonvolatile;
+>       bool rom_device;
+>       bool flush_coalesced_mmio;
+> +    bool lockless_io;
+>       bool unmergeable;
+>       uint8_t dirty_log_mask;
+>       bool is_iommu;
+> @@ -2341,6 +2342,15 @@ void memory_region_set_flush_coalesced(MemoryRegion *mr);
+>    */
+>   void memory_region_clear_flush_coalesced(MemoryRegion *mr);
+>   
+> +/**
+> + * memory_region_enable_lockless_io: Enable lockless (BQL free) acceess.
+> + *
+> + * Enable BQL-free access for devices with fine-grained locking.
+> + *
+> + * @mr: the memory region to be updated.
+> + */
+> +void memory_region_enable_lockless_io(MemoryRegion *mr);
 
-glibc 2.42 switched on some architectures (mips*, sh4, or1k) to termios2 
-ioctl syscalls (TCGETS2, TCSETS2, TCSETSW2, TCSETSF2).
-This patch add support to termios2 structure and releated ioctls.
+Is this safe to use on any IO region, or could actually something break 
+when mis-used? In case it's the latter, I assume we would want to 
+carefully document under which scenarios this is safe to use.
 
-Fixed also wrong TC*2 definition on mips (missing "target_" from "struct 
-termios2").
-
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
----
-  linux-user/alpha/termbits.h | 29 ++++++++++++++
-  linux-user/hppa/termbits.h  | 29 ++++++++++++++
-  linux-user/ioctls.h         |  6 +++
-  linux-user/mips/termbits.h  | 31 ++++++++++++--
-  linux-user/ppc/termbits.h   | 24 +++++++++++
-  linux-user/sh4/termbits.h   | 46 +++++++++++++++------
-  linux-user/sparc/termbits.h | 28 +++++++++++++
-  linux-user/strace.c         | 63 +++++++++++++++++++++++++++++
-  linux-user/syscall.c        | 80 +++++++++++++++++++++++++++++++++++++
-  linux-user/syscall_types.h  |  3 ++
-  linux-user/user-internals.h |  3 ++
-  11 files changed, 326 insertions(+), 16 deletions(-)
-
-diff --git a/linux-user/alpha/termbits.h b/linux-user/alpha/termbits.h
-index 4a4b1e96f2..b7be23ea13 100644
---- a/linux-user/alpha/termbits.h
-+++ b/linux-user/alpha/termbits.h
-@@ -17,6 +17,29 @@ struct target_termios {
-  	target_speed_t c_ospeed;		/* output speed */
-  };
-
-+struct target_termios2 {
-+	target_tcflag_t c_iflag;		/* input mode flags */
-+	target_tcflag_t c_oflag;		/* output mode flags */
-+	target_tcflag_t c_cflag;		/* control mode flags */
-+	target_tcflag_t c_lflag;		/* local mode flags */
-+	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
-+	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
-+	target_speed_t c_ispeed;		/* input speed */
-+	target_speed_t c_ospeed;		/* output speed */
-+};
-+
-+struct target_ktermios {
-+	target_tcflag_t c_iflag;		/* input mode flags */
-+	target_tcflag_t c_oflag;		/* output mode flags */
-+	target_tcflag_t c_cflag;		/* control mode flags */
-+	target_tcflag_t c_lflag;		/* local mode flags */
-+	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
-+	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
-+	target_speed_t c_ispeed;		/* input speed */
-+	target_speed_t c_ospeed;		/* output speed */
-+};
-+
-+
-  /* c_cc characters */
-  #define TARGET_VEOF 0
-  #define TARGET_VEOL 1
-@@ -247,6 +270,12 @@ struct target_termios {
-  #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
-  #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
-  #define TARGET_TIOCGSID	0x5429  /* Return the session ID of FD */
-+#define TARGET_TCGETS2		TARGET_IOR('T', 0x2A, struct target_termios2)
-+#define TARGET_TCSETS2		TARGET_IOW('T', 0x2B, struct target_termios2)
-+#define TARGET_TCSETSW2	TARGET_IOW('T', 0x2C, struct target_termios2)
-+#define TARGET_TCSETSF2	TARGET_IOW('T', 0x2D, struct target_termios2)
-+#define TARGET_TIOCGRS485	TARGET_IOR('T', 0x2E, struct serial_rs485)
-+#define TARGET_TIOCSRS485	TARGET_IOWR('T', 0x2F, struct serial_rs485)
-  #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty 
-Number (of pty-mux device) */
-  #define TARGET_TIOCSPTLCK	TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
-  #define TARGET_TIOCGPTPEER      TARGET_IO('T', 0x41) /* Safely open 
-the slave */
-diff --git a/linux-user/hppa/termbits.h b/linux-user/hppa/termbits.h
-index 11fd4eed62..645f17bf63 100644
---- a/linux-user/hppa/termbits.h
-+++ b/linux-user/hppa/termbits.h
-@@ -18,6 +18,29 @@ struct target_termios {
-      target_cc_t c_cc[TARGET_NCCS];         /* control characters */
-  };
-
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+
-  /* c_iflag bits */
-  #define TARGET_IGNBRK  0000001
-  #define TARGET_BRKINT  0000002
-@@ -190,6 +213,12 @@ struct target_termios {
-  #define TARGET_TIOCSBRK         0x5427 /* BSD compatibility */
-  #define TARGET_TIOCCBRK         0x5428 /* BSD compatibility */
-  #define TARGET_TIOCGSID         TARGET_IOR('T', 20, int)
-+#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct 
-target_termios2)
-+#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct 
-target_termios2)
-+#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct 
-target_termios2)
-+#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct 
-target_termios2)
-+#define TARGET_TIOCGRS485       TARGET_IOR('T', 0x2E, struct serial_rs485)
-+#define TARGET_TIOCSRS485       TARGET_IOWR('T', 0x2F, struct serial_rs485)
-  #define TARGET_TIOCGPTN         TARGET_IOR('T', 0x30, unsigned int)
-          /* Get Pty Number (of pty-mux device) */
-  #define TARGET_TIOCSPTLCK       TARGET_IOW('T', 0x31, int)
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 3b41128fd7..0b2deb2824 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -1,5 +1,11 @@
-       /* emulated ioctl list */
-
-+#ifdef TARGET_TCGETS2
-+     IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+#endif
-       IOCTL(TCGETS, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios)))
-       IOCTL(TCSETS, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-       IOCTL(TCSETSF, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-diff --git a/linux-user/mips/termbits.h b/linux-user/mips/termbits.h
-index e8b4b58d87..27610f7c4d 100644
---- a/linux-user/mips/termbits.h
-+++ b/linux-user/mips/termbits.h
-@@ -18,6 +18,29 @@ struct target_termios {
-      target_cc_t c_cc[TARGET_NCCS];         /* control characters */
-  };
-
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+
-  /* c_iflag bits */
-  #define TARGET_IGNBRK  0000001
-  #define TARGET_BRKINT  0000002
-@@ -227,10 +250,10 @@ struct target_termios {
-  #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
-  #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
-  #define TARGET_TIOCGSID	0x7416  /* Return the session ID of FD */
--#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct termios2)
--#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct termios2)
--#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct termios2)
--#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct termios2)
-+#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct 
-target_termios2)
-+#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct 
-target_termios2)
-+#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct 
-target_termios2)
-+#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct 
-target_termios2)
-  #define TARGET_TIOCGRS485       TARGET_IOR('T', 0x2E, struct serial_rs485)
-  #define TARGET_TIOCSRS485       TARGET_IOWR('T', 0x2F, struct 
-serial_rs485)
-  #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty 
-Number (of pty-mux device) */
-diff --git a/linux-user/ppc/termbits.h b/linux-user/ppc/termbits.h
-index eb226e0999..ae6ee8897c 100644
---- a/linux-user/ppc/termbits.h
-+++ b/linux-user/ppc/termbits.h
-@@ -20,6 +20,28 @@ struct target_termios {
-      target_speed_t c_ospeed;               /* output speed */
-  };
-
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;               /* input mode flags */
-+    target_tcflag_t c_oflag;               /* output mode flags */
-+    target_tcflag_t c_cflag;               /* control mode flags */
-+    target_tcflag_t c_lflag;               /* local mode flags */
-+    target_cc_t c_cc[TARGET_NCCS];         /* control characters */
-+    target_cc_t c_line;                    /* line discipline */
-+    target_speed_t c_ispeed;               /* input speed */
-+    target_speed_t c_ospeed;               /* output speed */
-+};
-+
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;               /* input mode flags */
-+    target_tcflag_t c_oflag;               /* output mode flags */
-+    target_tcflag_t c_cflag;               /* control mode flags */
-+    target_tcflag_t c_lflag;               /* local mode flags */
-+    target_cc_t c_cc[TARGET_NCCS];         /* control characters */
-+    target_cc_t c_line;                    /* line discipline */
-+    target_speed_t c_ispeed;               /* input speed */
-+    target_speed_t c_ospeed;               /* output speed */
-+};
-+
-  /* c_cc character offsets */
-  #define TARGET_VINTR 	0
-  #define TARGET_VQUIT 	1
-@@ -225,6 +247,8 @@ struct target_termios {
-  #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
-  #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
-  #define TARGET_TIOCGSID	0x5429  /* Return the session ID of FD */
-+#define TARGET_TIOCGRS485	0x542e
-+#define TARGET_TIOCSRS485	0x542f
-  #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty 
-Number (of pty-mux device) */
-  #define TARGET_TIOCSPTLCK	TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
-  #define TARGET_TIOCGPTPEER      TARGET_IO('T', 0x41) /* Safely open 
-the slave */
-diff --git a/linux-user/sh4/termbits.h b/linux-user/sh4/termbits.h
-index 28e79f2c9a..cab6b1299e 100644
---- a/linux-user/sh4/termbits.h
-+++ b/linux-user/sh4/termbits.h
-@@ -18,6 +18,28 @@ struct target_termios {
-      target_cc_t c_cc[TARGET_NCCS];         /* control characters */
-  };
-
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-
-  /* c_cc characters */
-  #define TARGET_VINTR 0
-@@ -251,14 +273,17 @@ struct target_termios {
-  #define TARGET_TIOCNOTTY       TARGET_IO('T', 34) /* 0x5422 */
-  #define TARGET_TIOCSETD        TARGET_IOW('T', 35, int) /* 0x5423 */
-  #define TARGET_TIOCGETD        TARGET_IOR('T', 36, int) /* 0x5424 */
--#define TARGET_TCSBRKP         TARGET_IOW('T', 37, int) /* 0x5425 */ /* 
-Needed for POSIX tcse
--ndbreak() */
-+#define TARGET_TCSBRKP         TARGET_IOW('T', 37, int) /* 0x5425 */ /* 
-Needed for POSIX tcsendbreak() */
-  #define TARGET_TIOCSBRK        TARGET_IO('T', 39) /* 0x5427 */ /* BSD 
-compatibility */
-  #define TARGET_TIOCCBRK        TARGET_IO('T', 40) /* 0x5428 */ /* BSD 
-compatibility */
--#define TARGET_TIOCGSID        TARGET_IOR('T', 41, pid_t) /* 0x5429 */ 
-/* Return the session
--ID of FD */
--#define TARGET_TIOCGPTN        TARGET_IOR('T',0x30, unsigned int) /* 
-Get Pty Number (of pty-m
--ux device) */
-+#define TARGET_TIOCGSID        TARGET_IOR('T', 41, pid_t) /* 0x5429 */ 
-/* Return the session ID of FD */
-+#define TARGET_TCGETS2         TARGET_IOR('T', 0x2A, struct 
-target_termios2)
-+#define TARGET_TCSETS2         TARGET_IOW('T', 0x2B, struct 
-target_termios2)
-+#define TARGET_TCSETSW2        TARGET_IOW('T', 0x2C, struct 
-target_termios2)
-+#define TARGET_TCSETSF2        TARGET_IOW('T', 0x2D, struct 
-target_termios2)
-+#define TARGET_TIOCGRS485      TARGET_IOR('T', 0x2E, struct serial_rs485)
-+#define TARGET_TIOCSRS485      TARGET_IOWR('T', 0x2F, struct serial_rs485)
-+#define TARGET_TIOCGPTN        TARGET_IOR('T',0x30, unsigned int) /* 
-Get Pty Number (of pty-mux device) */
-  #define TARGET_TIOCSPTLCK      TARGET_IOW('T',0x31, int)  /* 
-Lock/unlock Pty */
-  #define TARGET_TIOCGPTPEER     TARGET_IO('T', 0x41) /* Safely open the 
-slave */
-
-@@ -270,8 +295,7 @@ ux device) */
-  #define TARGET_TIOCSLCKTRMIOS  0x5457
-  #define TARGET_TIOCSERGSTRUCT  TARGET_IOR('T', 88, int) /* 0x5458 */ 
-/* For d
-  ebugging only */
--#define TARGET_TIOCSERGETLSR   TARGET_IOR('T', 89, unsigned int) /* 
-0x5459 */ /* Get line sta
--tus register */
-+#define TARGET_TIOCSERGETLSR   TARGET_IOR('T', 89, unsigned int) /* 
-0x5459 */ /* Get line status register */
-    /* ioctl (fd, TIOCSERGETLSR, &result) where result may be as below */
-  # define TARGET_TIOCSER_TEMT   0x01   /* Transmitter physically empty */
-  #define TARGET_TIOCSERGETMULTI TARGET_IOR('T', 90, int) /* 0x545A
-@@ -279,9 +303,7 @@ tus register */
-  #define TARGET_TIOCSERSETMULTI TARGET_IOW('T', 91, int) /* 0x545B
-  */ /* Set multiport config */
-
--#define TARGET_TIOCMIWAIT      TARGET_IO('T', 92) /* 0x545C */       /* 
-wait for a change on
--serial input line(s) */
--#define TARGET_TIOCGICOUNT     TARGET_IOR('T', 93, int) /* 0x545D */ /* 
-read
--serial port inline interrupt counts */
-+#define TARGET_TIOCMIWAIT      TARGET_IO('T', 92) /* 0x545C */       /* 
-wait for a change on serial input line(s) */
-+#define TARGET_TIOCGICOUNT     TARGET_IOR('T', 93, int) /* 0x545D */ /* 
-read serial port inline interrupt counts */
-
-  #endif
-diff --git a/linux-user/sparc/termbits.h b/linux-user/sparc/termbits.h
-index 704bee1c42..588d7e8dcd 100644
---- a/linux-user/sparc/termbits.h
-+++ b/linux-user/sparc/termbits.h
-@@ -18,6 +18,28 @@ struct target_termios {
-      target_cc_t c_cc[TARGET_NCCS];         /* control characters */
-  };
-
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-
-  /* c_cc characters */
-  #define TARGET_VINTR    0
-@@ -251,6 +273,12 @@ struct target_termios {
-  #define TARGET_TIOCGPGRP	TARGET_IOR('t', 131, int)
-  #define TARGET_TIOCSCTTY	TARGET_IO('t', 132)
-  #define TARGET_TIOCGSID	TARGET_IOR('t', 133, int)
-+#define TARGET_TCGETS2		TARGET_IOR('T', 12, struct target_termios2)
-+#define TARGET_TCSETS2		TARGET_IOW('T', 13, struct target_termios2)
-+#define TARGET_TCSETSW2	TARGET_IOW('T', 14, struct target_termios2)
-+#define TARGET_TCSETSF2	TARGET_IOW('T', 15, struct target_termios2)
-+#define TARGET_TIOCGRS485	TARGET_IOR('T', 0x41, struct serial_rs485)
-+#define TARGET_TIOCSRS485	TARGET_IOWR('T', 0x42, struct serial_rs485)
-  /* Get minor device of a pty master's FD -- Solaris equiv is ISPTM */
-  #define TARGET_TIOCGPTN	TARGET_IOR('t', 134, unsigned int) /* Get Pty 
-Number */
-  #define TARGET_TIOCSPTLCK	TARGET_IOW('t', 135, int) /* Lock/unlock PTY */
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 3b744ccd4a..aa7556a802 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -1929,6 +1929,69 @@ print_termios(void *arg)
-      qemu_log("}");
-  }
-
-+#ifdef TARGET_TCGETS2
-+void
-+print_termios2(void *arg)
-+{
-+    const struct target_termios2 *target = arg;
-+
-+    target_tcflag_t iflags = tswap32(target->c_iflag);
-+    target_tcflag_t oflags = tswap32(target->c_oflag);
-+    target_tcflag_t cflags = tswap32(target->c_cflag);
-+    target_tcflag_t lflags = tswap32(target->c_lflag);
-+
-+    qemu_log("{");
-+
-+    qemu_log("c_iflag = ");
-+    print_flags(termios_iflags, iflags, 0);
-+
-+    qemu_log("c_oflag = ");
-+    target_tcflag_t oflags_clean =  oflags & ~(TARGET_NLDLY | 
-TARGET_CRDLY |
-+                                               TARGET_TABDLY | 
-TARGET_BSDLY |
-+                                               TARGET_VTDLY | 
-TARGET_FFDLY);
-+    print_flags(termios_oflags, oflags_clean, 0);
-+    if (oflags & TARGET_NLDLY) {
-+        print_enums(termios_oflags_NLDLY, oflags & TARGET_NLDLY, 0);
-+    }
-+    if (oflags & TARGET_CRDLY) {
-+        print_enums(termios_oflags_CRDLY, oflags & TARGET_CRDLY, 0);
-+    }
-+    if (oflags & TARGET_TABDLY) {
-+        print_enums(termios_oflags_TABDLY, oflags & TARGET_TABDLY, 0);
-+    }
-+    if (oflags & TARGET_BSDLY) {
-+        print_enums(termios_oflags_BSDLY, oflags & TARGET_BSDLY, 0);
-+    }
-+    if (oflags & TARGET_VTDLY) {
-+        print_enums(termios_oflags_VTDLY, oflags & TARGET_VTDLY, 0);
-+    }
-+    if (oflags & TARGET_FFDLY) {
-+        print_enums(termios_oflags_FFDLY, oflags & TARGET_FFDLY, 0);
-+    }
-+
-+    qemu_log("c_cflag = ");
-+    if (cflags & TARGET_CBAUD) {
-+        print_enums(termios_cflags_CBAUD, cflags & TARGET_CBAUD, 0);
-+    }
-+    if (cflags & TARGET_CSIZE) {
-+        print_enums(termios_cflags_CSIZE, cflags & TARGET_CSIZE, 0);
-+    }
-+    target_tcflag_t cflags_clean = cflags & ~(TARGET_CBAUD | TARGET_CSIZE);
-+    print_flags(termios_cflags, cflags_clean, 0);
-+
-+    qemu_log("c_lflag = ");
-+    print_flags(termios_lflags, lflags, 0);
-+
-+    qemu_log("c_cc = ");
-+    qemu_log("\"%s\",", target->c_cc);
-+
-+    qemu_log("c_line = ");
-+    print_raw_param("\'%c\'", target->c_line, 1);
-+
-+    qemu_log("}");
-+}
-+#endif
-+
-  #undef UNUSED
-
-  #ifdef TARGET_NR_accept
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 91360a072c..41ef690e52 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -88,6 +88,7 @@
-  #endif
-
-  #define termios host_termios
-+#define termios2 host_termios2
-  #define winsize host_winsize
-  #define termio host_termio
-  #define sgttyb host_sgttyb /* same as target */
-@@ -5887,6 +5888,85 @@ static const StructEntry struct_termios_def = {
-      .print = print_termios,
-  };
-
-+#ifdef TARGET_TCGETS2
-+static void target_to_host_termios2 (void *dst, const void *src)
-+{
-+    struct host_termios2 *host = dst;
-+    const struct target_termios2 *target = src;
-+
-+    host->c_iflag =
-+        target_to_host_bitmask(tswap32(target->c_iflag), iflag_tbl);
-+    host->c_oflag =
-+        target_to_host_bitmask(tswap32(target->c_oflag), oflag_tbl);
-+    host->c_cflag =
-+        target_to_host_bitmask(tswap32(target->c_cflag), cflag_tbl);
-+    host->c_lflag =
-+        target_to_host_bitmask(tswap32(target->c_lflag), lflag_tbl);
-+    host->c_line = target->c_line;
-+
-+    memset(host->c_cc, 0, sizeof(host->c_cc));
-+    host->c_cc[VINTR] = target->c_cc[TARGET_VINTR];
-+    host->c_cc[VQUIT] = target->c_cc[TARGET_VQUIT];
-+    host->c_cc[VERASE] = target->c_cc[TARGET_VERASE];
-+    host->c_cc[VKILL] = target->c_cc[TARGET_VKILL];
-+    host->c_cc[VEOF] = target->c_cc[TARGET_VEOF];
-+    host->c_cc[VTIME] = target->c_cc[TARGET_VTIME];
-+    host->c_cc[VMIN] = target->c_cc[TARGET_VMIN];
-+    host->c_cc[VSWTC] = target->c_cc[TARGET_VSWTC];
-+    host->c_cc[VSTART] = target->c_cc[TARGET_VSTART];
-+    host->c_cc[VSTOP] = target->c_cc[TARGET_VSTOP];
-+    host->c_cc[VSUSP] = target->c_cc[TARGET_VSUSP];
-+    host->c_cc[VEOL] = target->c_cc[TARGET_VEOL];
-+    host->c_cc[VREPRINT] = target->c_cc[TARGET_VREPRINT];
-+    host->c_cc[VDISCARD] = target->c_cc[TARGET_VDISCARD];
-+    host->c_cc[VWERASE] = target->c_cc[TARGET_VWERASE];
-+    host->c_cc[VLNEXT] = target->c_cc[TARGET_VLNEXT];
-+    host->c_cc[VEOL2] = target->c_cc[TARGET_VEOL2];
-+}
-+
-+static void host_to_target_termios2 (void *dst, const void *src)
-+{
-+    struct target_termios2 *target = dst;
-+    const struct host_termios2 *host = src;
-+
-+    target->c_iflag =
-+        tswap32(host_to_target_bitmask(host->c_iflag, iflag_tbl));
-+    target->c_oflag =
-+        tswap32(host_to_target_bitmask(host->c_oflag, oflag_tbl));
-+    target->c_cflag =
-+        tswap32(host_to_target_bitmask(host->c_cflag, cflag_tbl));
-+    target->c_lflag =
-+        tswap32(host_to_target_bitmask(host->c_lflag, lflag_tbl));
-+    target->c_line = host->c_line;
-+
-+    memset(target->c_cc, 0, sizeof(target->c_cc));
-+    target->c_cc[TARGET_VINTR] = host->c_cc[VINTR];
-+    target->c_cc[TARGET_VQUIT] = host->c_cc[VQUIT];
-+    target->c_cc[TARGET_VERASE] = host->c_cc[VERASE];
-+    target->c_cc[TARGET_VKILL] = host->c_cc[VKILL];
-+    target->c_cc[TARGET_VEOF] = host->c_cc[VEOF];
-+    target->c_cc[TARGET_VTIME] = host->c_cc[VTIME];
-+    target->c_cc[TARGET_VMIN] = host->c_cc[VMIN];
-+    target->c_cc[TARGET_VSWTC] = host->c_cc[VSWTC];
-+    target->c_cc[TARGET_VSTART] = host->c_cc[VSTART];
-+    target->c_cc[TARGET_VSTOP] = host->c_cc[VSTOP];
-+    target->c_cc[TARGET_VSUSP] = host->c_cc[VSUSP];
-+    target->c_cc[TARGET_VEOL] = host->c_cc[VEOL];
-+    target->c_cc[TARGET_VREPRINT] = host->c_cc[VREPRINT];
-+    target->c_cc[TARGET_VDISCARD] = host->c_cc[VDISCARD];
-+    target->c_cc[TARGET_VWERASE] = host->c_cc[VWERASE];
-+    target->c_cc[TARGET_VLNEXT] = host->c_cc[VLNEXT];
-+    target->c_cc[TARGET_VEOL2] = host->c_cc[VEOL2];
-+}
-+
-+static const StructEntry struct_termios2_def = {
-+    .convert = { host_to_target_termios2, target_to_host_termios2 },
-+    .size = { sizeof(struct target_termios2), sizeof(struct 
-host_termios2) },
-+    .align = { __alignof__(struct target_termios2), __alignof__(struct 
-host_termios2) },
-+    .print = print_termios2,
-+};
-+#endif
-+
-  /* If the host does not provide these bits, they may be safely 
-discarded. */
-  #ifndef MAP_SYNC
-  #define MAP_SYNC 0
-diff --git a/linux-user/syscall_types.h b/linux-user/syscall_types.h
-index 6dd7a80ce5..ac45705acf 100644
---- a/linux-user/syscall_types.h
-+++ b/linux-user/syscall_types.h
-@@ -1,4 +1,7 @@
-  STRUCT_SPECIAL(termios)
-+#ifdef TARGET_TCGETS2
-+STRUCT_SPECIAL(termios2)
-+#endif
-
-  STRUCT(winsize,
-         TYPE_SHORT, TYPE_SHORT, TYPE_SHORT, TYPE_SHORT)
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 691b9a1775..191e01c3a8 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -127,6 +127,9 @@ static inline uint64_t target_offset64(uint64_t 
-word0, uint64_t word1)
-  #endif /* TARGET_ABI_BITS != 32 */
-
-  void print_termios(void *arg);
-+#ifdef TARGET_TCGETS2
-+void print_termios2(void *arg);
-+#endif
-
-  /* ARM EABI and MIPS expect 64bit types aligned even on pairs or 
-registers */
-  #ifdef TARGET_ARM
 -- 
-2.50.1
+Cheers,
 
+David / dhildenb
 
 
