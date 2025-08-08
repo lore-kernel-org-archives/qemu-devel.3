@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6BBFC87FCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42EFC87FDA
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 16:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukPvS-0002TK-Sh; Fri, 08 Aug 2025 12:26:39 -0400
+	id 1ukPvg-0002ro-V6; Fri, 08 Aug 2025 12:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ukPvM-0002Q8-UT
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:26:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ukPvK-00035l-U3
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:26:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754670389;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MQcg/yvq/AS8691EuiY3/B63e1mjimPVj2ylK6a0nc4=;
- b=YGTy/uP1VBV9ZGEycFkwcE2doTJ7+KzzmZIMdxRivZqAr1UL0ILOJ4Tz5d79Y0PU9m/U58
- SDI8dOsftfyJKd1tnM5MLnya6IT+psmLZMeVHNh0MJeujaNS1bKuNkcTaF+p24+6rDT4CO
- ss6oy/Xo2C4c4vhG25bN1D7KBbrxIWg=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-275-Kuel7i1GOFOF_g-xtqL7Rw-1; Fri, 08 Aug 2025 12:26:27 -0400
-X-MC-Unique: Kuel7i1GOFOF_g-xtqL7Rw-1
-X-Mimecast-MFC-AGG-ID: Kuel7i1GOFOF_g-xtqL7Rw_1754670387
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-23fe98c50daso19367435ad.3
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:26:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPve-0002r5-1U
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:26:50 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukPvb-0003A7-QC
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 12:26:49 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-459d7726ee6so11907965e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 09:26:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754670406; x=1755275206; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Cm5x3aYEzOQ437ur+X6QBqGaqDEGOduULTLzYCGhyEY=;
+ b=c43Xfv19oGSKknJHbndoNArh905eC+scoOl+WCQMamrjTd8IWv6u6kFVFBxnrMXMbK
+ sRlsy0GQZ5kCzu7uqnaPRGeUEsq2uUlXdqd17rVCmmn1UhRRX5/UV23wPx4IPVG594li
+ aZT3Ez4CWDPoCTufRo+EuNtu/EvEfRGxk/nH+lM+XFMTyUDpycibn/KKUWBM2ccBac2v
+ mKlY8jFMGNnn/PE5KkbXNBeLWZKWUsBUxHscI3FFB1hqciDRf+SvZ6W/xP/ftUcLepJa
+ BBCCQYoMBU85OirzH6JtGr/qJV8LiZen+x3m6P813qkdYK3bc2w33wr/6rRJTm3QU190
+ IvOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754670387; x=1755275187;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MQcg/yvq/AS8691EuiY3/B63e1mjimPVj2ylK6a0nc4=;
- b=QfMlosYMv35q80hDTu5f5Ya4M1zSimKAvWkZVP2DP6cVJPNwKTKwd8JrNke+/GbrvO
- bBU7oC0mF1zMa5HGwZRmpRw/4QoSw/oKYQ2rUQpo/EB2N7By+PCM2KDl0YEpk1QT4ime
- 2uyCkHLx84k85BneHAUEluZEG1/gMqZ5cVx7142UANLyM1s/bbwEYoqz25HnGl8lD5wR
- Qtn1/iGzdjNGIfdVc3d2rsdSirn9oOLCtc6GbyDyq4zXAsMwgDlUgAT/256BoeEsjDxf
- X4VjKowqkxLKNRW2uaNPrsocYeRDso/FLzCEWebLPpTLSWO5teUtJb7USsDEB/yc/dKu
- rDOA==
-X-Gm-Message-State: AOJu0YxVH9Fy5231wjmrCt0kVpJh+qr0SdXicJc7DCv3YRMj39aJnmet
- 4yTn/l9x5h/+9GFN/WhRinwVGn1DaYcHtq3d1N4xqLoY1YCRZ8Fe7Sl51AvWZUmiEMstSyyYk9e
- wt5jte1wiomNCOWQddyP3O7nClWcgbnVPfJv4QxtMVaXbcdp7I/nAnse5BBivj+KCsAx5+DnR/d
- qwBl/rOlxTi6K2zrd0T/rbah8fvZixe0U=
-X-Gm-Gg: ASbGncvjZipQYsjn6nYSm/gFY/CsiWq/RkzLnO3Vwcfi/ijCEhxvESHBE3PzOtf08A7
- djDQcqLl+z7TJiXUXQxPt1RkkoNgZLwWBfINP0aUWaau+pnBicQdm13PY5jx3XA5gNcNzIqeOfK
- pgojQZoGQrstyU3BQc+CSCV+31QM/MrjXx8978q7GVSdbLvu5fARK9
-X-Received: by 2002:a17:903:1105:b0:240:63a9:30c9 with SMTP id
- d9443c01a7336-242c2044621mr59353635ad.17.1754670386765; 
- Fri, 08 Aug 2025 09:26:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6HMY5AJYrS9cTPMUVn6P5glD3gH9vXuh7tBGYLQB50AQ7Vzt6zp8gcNIBAhV4EFcpcXFpL2dfepTgbJp+2pI=
-X-Received: by 2002:a17:903:1105:b0:240:63a9:30c9 with SMTP id
- d9443c01a7336-242c2044621mr59353305ad.17.1754670386356; Fri, 08 Aug 2025
- 09:26:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754670406; x=1755275206;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cm5x3aYEzOQ437ur+X6QBqGaqDEGOduULTLzYCGhyEY=;
+ b=cxPthlBxtQMheqcaTrSlxe2C/P8BFfNC2BbEyoL5wNzc8oGqFzRY8GjR4gyEnIcsjc
+ A63F2v6OI7RfG4px+gCy6NGU/l3AVi74mgKCA+FA1NgkM5XbKNoT3NtI/uXbkVjhEvUi
+ cP46jrtH5BISg3m1680gOsA8+VeZ8kTnfNIqVxmucw41Q7h92RkfiJrMx64fUmOXUS15
+ 9LdlVZixogwSGMcpDmbSVM3J4bNOX3i4Iz3/tf9iDv0OtbSEp+CffyFBKVk6kW7oxTjF
+ FYHriruIfUFdRxYUtZFdWzuZjJ5mfN59cygNGiZlKUdhVIOSzCIDdTknpA6bnUJ1iU05
+ GW2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNemJGfd7F/yxZEJ+31gKFb2imz3Er8QYiqHh9ZiYpRy0pTxQK4XaBozw5Z9SYo1vWDC0Vh//zAE3+@nongnu.org
+X-Gm-Message-State: AOJu0Yzl49UP+n5ijHAbzDtAE5JbuS4pJpZOX/JX9UhwC2U4c0EICW0e
+ Eds5Tpz6i8wToseRz78rNxYPqfl1TKpc2PXksUwxsbApdhom7J79hxwVtjoCeouqdjg=
+X-Gm-Gg: ASbGncs++f6vULWzjkNX5fTcE5hFX7ovYfsd2kaDhYi5yHbvv4kRtoIpCb7/VVv9Hf4
+ qTtX5udKTI2Tlt3hQAY7olt4xyffSAJMP/ohKlbAV6Z324/H47Oi7swllwKYWB1Ce4GaqO9C9QS
+ mTscUawdBW+hG5SLlvhAtVJwPsn85/5XHMkMIBsKcgI1aXUAufZCtTAqKpz13Aw9jF3hTNY1y5m
+ jpTqAVlhLrk+VIMqUs/i9XyqG1OV5KcZ0pb/lCU2g85yPw4ruIED7ZOAgWwyxuq8+dcl9h0zyNz
+ l5zwtF8MAg3JSUBYNjWK2rNULF+MQ6wHPp08Z6xP4rvkzMKHqGjH144dEzWw9ByJvarBZmziqru
+ wMSa2+MklFlq0yaNxGieL9xysFd8FcutuMeKufR/I0JTUI/YBTw71WRlvRMzfri9ryfsDX0KP41
+ fP
+X-Google-Smtp-Source: AGHT+IHt4eJnYqnyWF/+LfBm82WDEzdwXJ71AM7IfupNCkE3OEF0GZMnV7TMwDRMqttnfNEUT2TUCQ==
+X-Received: by 2002:a05:600c:5298:b0:456:29ae:3dbe with SMTP id
+ 5b1f17b1804b1-459f59cec5bmr31095545e9.24.1754670405737; 
+ Fri, 08 Aug 2025 09:26:45 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459dc7e1ddesm223988975e9.27.2025.08.08.09.26.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Aug 2025 09:26:45 -0700 (PDT)
+Message-ID: <8be60d9d-ee2d-439c-8d55-c0349939d27a@linaro.org>
+Date: Fri, 8 Aug 2025 18:26:44 +0200
 MIME-Version: 1.0
-References: <20250731054044.4011789-1-armbru@redhat.com>
- <20250731054044.4011789-4-armbru@redhat.com>
- <CAFn=p-bYKEjGX-DYPNbxFn=52-dJH29-SwmPvWYZ7tgo9ZBS+w@mail.gmail.com>
- <87ikiymibl.fsf@pond.sub.org>
-In-Reply-To: <87ikiymibl.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 8 Aug 2025 12:26:14 -0400
-X-Gm-Features: Ac12FXybjJVQzsskJlGSoKBRvIOGZXHEnlN-ITbyUCfCbV1jORUfQlygjmch7iY
-Message-ID: <CAFn=p-ZtydXfO7a9rmn2RVx0U+O2+ovPH0R-QVV_3xTWmnsxaw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] docs/devel/qapi-code-gen: Update cross-reference
- syntax
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, peter.maydell@linaro.org, 
- eblake@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 10/14] hw/riscv: Add support for RISCV CPS
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
+References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
+ <20250717093833.402237-11-djordje.todorovic@htecgroup.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250717093833.402237-11-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,47 +107,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 8, 2025 at 2:35=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > On Thu, Jul 31, 2025 at 1:40=E2=80=AFAM Markus Armbruster <armbru@redha=
-t.com> wrote:
-> >>
-> >> The new QAPI code generator creates a cross-reference target for each
-> >> definition documentation.  Enabled for the QEMU QMP Reference manual
-> >> in commit a377f39f38f, and for the QEMU Storage Daemon QMP Reference
-> >> Manual and the QEMU Guest Agent Protocol Reference in commit
-> >> a6af5443440.  We've put these targets to use since, but neglected to
-> >> update doc comment markup documentation.  Do that now.
-> >>
-> >> Co-developed-by: John Snow <jsnow@redhat.com>
-> >
-> > No need for this in my opinion, the SOB suffices to say the same thing
-> > in my book. I don't insist you remove it, just seems ... oddly
-> > pretentious to say I "co-developed" a single paragraph of text ;)
->
-> It wasn't obvious to me how to best credit you, so I tried this.  The
-> Co-developed-by serves as an explanation why your S-o-b is there.
->
-> Please pick one:
->
-> 1. Do nothing.
+On 17/7/25 11:38, Djordje Todorovic wrote:
+> Add support for the Coherent Processing System for RISC-V.
+> This enables SMP support for RISC-V boards that require
+> cache-coherent multiprocessor systems.
+> 
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> ---
+>   hw/misc/Kconfig        |   5 ++
+>   hw/riscv/cps.c         | 197 +++++++++++++++++++++++++++++++++++++++++
+>   hw/riscv/meson.build   |   2 +
+>   include/hw/riscv/cps.h |  76 ++++++++++++++++
+>   4 files changed, 280 insertions(+)
+>   create mode 100644 hw/riscv/cps.c
+>   create mode 100644 include/hw/riscv/cps.h
 
-You're on vacation now, so by process of elimination, we'll do this ;)
 
->
-> 2. Delete Co-developed-by.
->
-> 3. Delete Co-developed-by, your Signed-off-by, add your Reviewed-by.
->
-> >> Signed-off-by: John Snow <jsnow@redhat.com>
-> >> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> >
-> > Reviewed-by: John Snow <jsnow@redhat.com>
->
-> Thanks!
->
+> +static void main_cpu_reset(void *opaque)
+> +{
+> +    RISCVCPU *cpu = opaque;
+> +    CPUState *cs = CPU(cpu);
 
+If you call in [*]:
+
+        qemu_register_reset(main_cpu_reset, s->cpus[i]);
+
+then here you can just do:
+
+        CPUState *cs = opaque;
+
+> +
+> +    cpu_reset(cs);
+> +}
+> +
+> +static void riscv_cps_realize(DeviceState *dev, Error **errp)
+> +{
+> +    RISCVCPSState *s = RISCV_CPS(dev);
+> +    RISCVCPU *cpu;
+> +    int i;
+> +
+
+Please check num_vp range.
+
+> +    /* Allocate CPU array */
+> +    s->cpus = g_new0(CPUState *, s->num_vp);
+> +
+> +    /* Set up cpu_index and mhartid for avaiable CPUs. */
+> +    int harts_in_cluster = s->num_hart * s->num_core;
+> +    int num_of_clusters = s->num_vp / harts_in_cluster;
+> +    for (i = 0; i < s->num_vp; i++) {
+> +        cpu = RISCV_CPU(object_new(s->cpu_type));
+> +
+> +        /* All VPs are halted on reset. Leave powering up to CPC. */
+> +        object_property_set_bool(OBJECT(cpu), "start-powered-off", true,
+> +                                 &error_abort);
+> +
+> +        if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
+> +            return;
+> +        }
+> +
+> +        /* Store CPU in array */
+> +        s->cpus[i] = CPU(cpu);
+> +
+> +        /* Set up mhartid */
+> +        int cluster_id = i / harts_in_cluster;
+> +        int hart_id = (i % harts_in_cluster) % s->num_hart;
+> +        int core_id = (i % harts_in_cluster) / s->num_hart;
+> +        int mhartid = (cluster_id << MHARTID_CLUSTER_SHIFT) +
+> +                      (core_id << MHARTID_CORE_SHIFT) +
+> +                      (hart_id << MHARTID_HART_SHIFT);
+> +        cpu->env.mhartid = mhartid;
+> +        qemu_register_reset(main_cpu_reset, cpu);
+
+[*]
+
+> +    }
+> +
+> +    /* Cluster Power Controller */
+> +    object_initialize_child(OBJECT(dev), "cpc", &s->cpc, TYPE_RISCV_CPC);
+> +    object_property_set_uint(OBJECT(&s->cpc), "cluster-id", 0,
+> +                            &error_abort);
+> +    object_property_set_uint(OBJECT(&s->cpc), "num-vp", s->num_vp,
+> +                            &error_abort);
+> +    object_property_set_uint(OBJECT(&s->cpc), "num-hart", s->num_hart,
+> +                            &error_abort);
+> +    object_property_set_uint(OBJECT(&s->cpc), "num-core", s->num_core,
+> +                            &error_abort);
+> +    object_property_set_int(OBJECT(&s->cpc), "vp-start-running", 1,
+> +                            &error_abort);
+
+(1 is already the default)
+
+> +
+> +    /* Pass CPU array to CPC */
+> +    s->cpc.cpus = s->cpus;
+
+Please do that using a link property.
+
+> +
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->cpc), errp)) {
+> +        return;
+> +    }
+> +
+> +    memory_region_add_subregion(&s->container, 0,
+> +                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->cpc), 0));
+> +
+> +    /* Global Configuration Registers */
+> +    object_initialize_child(OBJECT(dev), "gcr", &s->gcr, TYPE_RISCV_GCR);
+> +    object_property_set_uint(OBJECT(&s->gcr), "cluster-id", 0,
+> +                            &error_abort);
+> +    object_property_set_uint(OBJECT(&s->gcr), "num-vp", s->num_vp,
+> +                            &error_abort);
+> +    object_property_set_int(OBJECT(&s->gcr), "gcr-rev", 0xa00,
+> +                            &error_abort);
+> +    object_property_set_int(OBJECT(&s->gcr), "gcr-base", s->gcr_base,
+> +                            &error_abort);
+> +    object_property_set_link(OBJECT(&s->gcr), "cpc", OBJECT(&s->cpc.mr),
+> +                             &error_abort);
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gcr), errp)) {
+> +        return;
+> +    }
+> +
+> +    memory_region_add_subregion(&s->container, s->gcr_base,
+> +                            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gcr), 0));
+> +
+> +    for (i = 0; i < num_of_clusters; i++) {
+> +        uint64_t cm_base = GLOBAL_CM_BASE + (CM_SIZE * i);
+> +        uint32_t hartid_base = i << MHARTID_CLUSTER_SHIFT;
+> +        s->aplic = riscv_aplic_create(cm_base + AIA_PLIC_M_OFFSET,
+> +                                      AIA_PLIC_M_SIZE,
+> +                                      hartid_base, /* hartid_base */
+> +                                      MAX_HARTS, /* num_harts */
+> +                                      APLIC_NUM_SOURCES,
+> +                                      APLIC_NUM_PRIO_BITS,
+> +                                      false, true, NULL);
+> +        riscv_aplic_create(cm_base + AIA_PLIC_S_OFFSET,
+> +                           AIA_PLIC_S_SIZE,
+> +                           hartid_base, /* hartid_base */
+> +                           MAX_HARTS, /* num_harts */
+> +                           APLIC_NUM_SOURCES,
+> +                           APLIC_NUM_PRIO_BITS,
+> +                           false, false, s->aplic);
+> +        /* PLIC changes msi_nonbroken to ture. We revert the change. */
+> +        msi_nonbroken = false;
+> +        riscv_aclint_swi_create(cm_base + AIA_CLINT_OFFSET,
+> +                                hartid_base, MAX_HARTS, false);
+> +        riscv_aclint_mtimer_create(cm_base + AIA_CLINT_OFFSET +
+> +                                   RISCV_ACLINT_SWI_SIZE,
+> +                                   RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+> +                                   hartid_base,
+> +                                   MAX_HARTS,
+> +                                   RISCV_ACLINT_DEFAULT_MTIMECMP,
+> +                                   RISCV_ACLINT_DEFAULT_MTIME,
+> +                                   RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, false);
+> +    }
+> +}
 
