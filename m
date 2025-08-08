@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B94BC87FD2
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 09:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8468FC87FD3
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Aug 2025 09:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukJe4-0001fr-7p; Fri, 08 Aug 2025 05:44:16 -0400
+	id 1ukJea-0002D1-CY; Fri, 08 Aug 2025 05:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ukJe2-0001f7-Me
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 05:44:14 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ukJe0-00034J-TJ
- for qemu-devel@nongnu.org; Fri, 08 Aug 2025 05:44:14 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-af95b919093so294462166b.2
- for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 02:44:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754646251; x=1755251051; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=l1+HnhaNBrcMVmfRMAv6DTbpFaIokMaqjl/qHmHLjPQ=;
- b=EGhb2CN29Da31wr4+NsmCn78NlyCcp0ILU/QauKh92uoGsXyYH/CuU4a75mkhYMmu7
- ZnFcC52n6Bc7B/MTk66mbYhzGSeRWadFrAfS0173yd2jTmMf/vAEUgorIpR1PJAE5I6r
- BCtKhQi/HNveFNca88/c4SSG3ZJltD+VRmAWtxl+nPMziWiYDowXMAzyCIeV9Oi8kn0q
- qX29NB9tcfqFVNABzTtk/r97MAUg+NoOk5X1iw6D5h+Ve+lD5bftXJofeO8jz2K/Kfn4
- iY987yglRgD1A45hjmBdP4OmPQ9cAABmeZkSIBP15lujTEqaNN/JBo8V2E8iv7t7g+1D
- l92Q==
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1ukJeY-0002BS-Av
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 05:44:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1ukJeV-00037F-Vn
+ for qemu-devel@nongnu.org; Fri, 08 Aug 2025 05:44:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754646282;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nOEYYEZAhx9Sond3tj8SaSDtfgIIePAGBmpgAJzIL08=;
+ b=aTg4hu+8UvtVc8LN2/dB/ijWZNTo7n1jQ4Ur7+oKK9Fq5HAgF5f1MLvvTLQRKzxyyytEmT
+ h49B/Vro0av55+Y/4tPXsYYFWZxU1lrrwZpyAc9Zrh9bnpfKz9ov9XQ9B9qSLUct12kaj3
+ 1+Zh+GrGH46q97eb6SLdvu4AIFIikg0=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-517-J92SBe_0OsmkvWMp4B-yqg-1; Fri, 08 Aug 2025 05:44:41 -0400
+X-MC-Unique: J92SBe_0OsmkvWMp4B-yqg-1
+X-Mimecast-MFC-AGG-ID: J92SBe_0OsmkvWMp4B-yqg_1754646280
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-7073a5f61a6so36442806d6.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Aug 2025 02:44:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754646251; x=1755251051;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1754646280; x=1755251080;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l1+HnhaNBrcMVmfRMAv6DTbpFaIokMaqjl/qHmHLjPQ=;
- b=b657CW0bl5QvkWoBPXIdzHgNAlUeBKwgF4vIxV/Ur259iIiTuDkkOZuIvKGSVgtNGs
- 1G1kEEdNB40ef5aci4Ln1H5NMaAv5IdnjgahtUO7XKEItvMVonIG5VqP8Gw6T3bQXq+q
- Mqgpg2ZRp/LOHp7rzoJTr110rfzETzh8szbUdR4hKd3TI3zwp9RO8GAh5ZtCwfPexRIP
- 8rNNsyZwh2Mi96pU9u94n/bDybHR+6XVFH0D8mzdsA0cOHKwl12H/LwFbo0JKAuTcBcj
- OTQ3NO0e5V23oIbBkKpv2lhRmkEsttE9qZyPEAOgrd8jOORn40rfeUc/SY22qXpcHcd9
- yAgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrFlgKA72uXtbyz7LKpJUlog/ZxDl5HpY3XIUd7hEYCusGLYtzyPCrax6vUutOP9cmb1Ith3Cc25cL@nongnu.org
-X-Gm-Message-State: AOJu0YxwLn+/ysWkqJZoN7Gu/Z8rpo7CTVx/xmpfYJ2qbUul+6uDxcfW
- IuwACwdulLvfjONzR9EhDYVyiCiij8J2VFwNGVm4gHzId//DyWtYmicefCmLjuhaG7w=
-X-Gm-Gg: ASbGncuU9PD4Ho5P84SB/3mVrN4CtGbXpjBD3F9kCX3zmmVn8jx08hNxFu+t51BA2Wt
- /qaWHos5ga55uI/UQSXeWgVBslEEfvxzJGG8nBRuF5EjarxxlfXA3S5NuvBB5V0HXjIpVDRW3GP
- FL33px44qNlA/P0PEq+agCnh+TEVn3tTc4160sxVoC5RL51RYPyI53iEcJjbgd0aLlNRICXfCPQ
- /2GegtMvdwX+YxxDgsj9nZhwsJfDjE6D2QB6vB1Qas/29sS3BbufBWq9YCi0HU9WXVJNsZmB16s
- 2M+iYu5JiZkvHrKHhIczhghGp9ukw0p2/JdQjDbAwJj+QaG++twiP91giCP0kwtqOyveOOZZNKs
- VXnheMPIGtfaIwJAsNjEe0RoQn72BMEZ9cVNznI6gTKpNIm5z8IRH9KoE9YJ9I2ptML7/zXUl
-X-Google-Smtp-Source: AGHT+IHdayUIpcKPpbFk7ik2OZaVFKDtuJdsoFle0mrjh65cUtofjvecvQcizBJVaSPYHDJTjZTiOA==
-X-Received: by 2002:a17:907:a4d:b0:ae3:74be:4998 with SMTP id
- a640c23a62f3a-af9c640dd23mr189830666b.11.1754646250533; 
- Fri, 08 Aug 2025 02:44:10 -0700 (PDT)
-Received: from meli-email.org (athedsl-4440194.home.otenet.gr.
- [79.129.176.114]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-af986a477c4sm616167466b.56.2025.08.08.02.44.09
+ bh=nOEYYEZAhx9Sond3tj8SaSDtfgIIePAGBmpgAJzIL08=;
+ b=kKFCcztL+9iOkyYm8FStr7CAf3se6AlFYGt3vwx97HgxddXdseThFDUGHJ1EZkWCVf
+ qGaF/oHrNpZ0kH/QnfOXBeBoyE9zsbM2qlP3te2XvRG6fsPlFPkkgrfCygG4/TM7mJpK
+ 6NFCzV2zCGytLbVla1gluTyIxeN/jv2Qd983vRk0ZELiIxv5eZk509Yaz2lQS2JPWV9E
+ dtYz84LQ7yxYvtjigFMTKfdrFWmqMctVwUgTgn4n5PijkovKgLiEYdl5awOcah5M7yFT
+ 9kBGMRKgIun/AngsqavOF7LyVTUS6a1fv3pBij0HxX/dkXgYAYrWxpSgQHn6G7rXqDgt
+ iRew==
+X-Gm-Message-State: AOJu0Yw0ikblXj4ov8pIXiYaWK99QBKVNyDKgMT8S1iOKHOs+mE4CDGA
+ WpLmDd2t32vOiEgY4VlaoitIEMfcsQY8O0WM5qgdgLeO/RDzYDfFua7EQWkTszzMi4KHHs5xsac
+ JQY4Nd0E1JrB2AgfIcNGJU7hf8lmAd6vPvggEKJCsE8csCwN0F1yY+G5Z
+X-Gm-Gg: ASbGncuScmjPCgjTJoCDwGQc6DguN88Z/+1zZfkc2tzq5kcWDpy0FJ5ruiEtdtjZQZC
+ HRqFq7dWIDo28j7yLKH2nnvy24GPjBCHtYaBbAP3Ukxgzbbdd9WTXiX75OT/hBGJKLo76USVs3N
+ gqW93Kg2YbX+ZdW6N2uEobYGPJmUEANgXM68yZChbaG6C4hfI9QYgitAKK6ukK7JK6/vJ32gt6Q
+ xfwoKwpic427iizjhBREYcZHOcGqMlYu7jxhcoPK8XJCfNKTqc1/SwYYyFPY+cTlzEIW7X3Glbj
+ wQHWfqTNR5rV/dPz8JpUgNeQFWEw
+X-Received: by 2002:ad4:5aad:0:b0:709:8fad:cd2d with SMTP id
+ 6a1803df08f44-7099a369a8dmr24454716d6.43.1754646280480; 
+ Fri, 08 Aug 2025 02:44:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHONGKzCCKqn9QBYAhY6BLWwkey+T5w4MVlvhFbxSvxtfsbZJm9hD/BQzwjhfWsu+A85Ef+g==
+X-Received: by 2002:ad4:5aad:0:b0:709:8fad:cd2d with SMTP id
+ 6a1803df08f44-7099a369a8dmr24454546d6.43.1754646280042; 
+ Fri, 08 Aug 2025 02:44:40 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-7077ca1d5ecsm112209516d6.26.2025.08.08.02.44.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Aug 2025 02:44:10 -0700 (PDT)
-Date: Fri, 08 Aug 2025 12:42:38 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- rowan Hart <rowanbhart@gmail.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v5 7/9] contrib/plugins/uftrace: implement x64 support
-User-Agent: meli/0.8.12
-References: <20250808020702.410109-1-pierrick.bouvier@linaro.org>
- <20250808020702.410109-8-pierrick.bouvier@linaro.org>
-In-Reply-To: <20250808020702.410109-8-pierrick.bouvier@linaro.org>
-Message-ID: <t0o5pl.3rum11rfv1tyj@linaro.org>
+ Fri, 08 Aug 2025 02:44:39 -0700 (PDT)
+Date: Fri, 8 Aug 2025 11:44:36 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>, 
+ Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH 2/4] migration: Fix state transition in
+ postcopy_start() error handling
+Message-ID: <ftnfp4glpvoe3hwycvzqc2q3soyrmblshllfxgnjt7dlmpryvp@sqjom56wab5j>
+References: <20250807114922.1013286-1-jmarcin@redhat.com>
+ <20250807114922.1013286-3-jmarcin@redhat.com>
+ <aJUSeOIKfQ47uliY@x1.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62b.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJUSeOIKfQ47uliY@x1.local>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,133 +110,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 08 Aug 2025 05:07, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
->It's trivial to implement x64 support, as it's the same stack layout
->than aarch64.
+Hi Peter,
 
-s/than/as
-
->
->Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->---
-> contrib/plugins/uftrace.c | 85 +++++++++++++++++++++++++++++++++++++++
-> 1 file changed, 85 insertions(+)
->
->diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
->index 6628b4256fd..f10172eed10 100644
->--- a/contrib/plugins/uftrace.c
->+++ b/contrib/plugins/uftrace.c
->@@ -79,6 +79,20 @@ typedef struct {
->     struct qemu_plugin_register *reg_scr_el3;
-> } Aarch64Cpu;
+On 2025-08-07 16:54, Peter Xu wrote:
+> On Thu, Aug 07, 2025 at 01:49:10PM +0200, Juraj Marcin wrote:
+> > From: Juraj Marcin <jmarcin@redhat.com>
+> > 
+> > Depending on where an error during postcopy_start() happens, the state
+> > can be either "active", "device" or "cancelling", but never
+> > "postcopy-active". Migration state is transitioned to "postcopy-active"
+> > only just before a successful return from the function.
+> > 
+> > Accept any state except "cancelling" when transitioning to "failed"
+> > state.
+> > 
+> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> > ---
+> >  migration/migration.c | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 10c216d25d..e5ce2940d5 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -2872,8 +2872,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+> >  fail_closefb:
+> >      qemu_fclose(fb);
+> >  fail:
+> > -    migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> > -                          MIGRATION_STATUS_FAILED);
+> > +    if ( ms->state != MIGRATION_STATUS_CANCELLING) {
+> > +        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+> > +    }
 > 
->+typedef enum {
->+    X64_RING0,
->+    X64_RING1,
->+    X64_RING2,
->+    X64_RING3,
->+    X64_REAL_MODE,
->+} X64PrivilegeLevel;
->+
->+typedef struct {
->+    struct qemu_plugin_register *reg_rbp;
->+    struct qemu_plugin_register *reg_cs;
->+    struct qemu_plugin_register *reg_cr0;
->+} X64Cpu;
->+
-> typedef struct {
->     uint64_t timestamp;
->     uint64_t data;
->@@ -565,6 +579,75 @@ static CpuOps aarch64_ops = {
->     .does_insn_modify_frame_pointer = aarch64_does_insn_modify_frame_pointer,
-> };
-> 
->+static uint8_t x64_num_privilege_levels(void)
->+{
->+    return X64_REAL_MODE + 1;
->+}
->+
->+static const char *x64_get_privilege_level_name(uint8_t pl)
->+{
->+    switch (pl) {
->+    case X64_RING0: return "Ring0";
->+    case X64_RING1: return "Ring1";
->+    case X64_RING2: return "Ring2";
->+    case X64_RING3: return "Ring3";
->+    case X64_REAL_MODE: return "RealMode";
->+    default:
->+        g_assert_not_reached();
->+    }
->+}
->+
->+static uint8_t x64_get_privilege_level(Cpu *cpu_)
->+{
->+    X64Cpu *cpu = cpu_->arch;
->+    uint64_t cr0 = cpu_read_register64(cpu_, cpu->reg_cr0);
->+    uint64_t protected_mode = (cr0 >> 0) & 0b1;
->+    if (!protected_mode) {
->+        return X64_REAL_MODE;
->+    }
->+    uint32_t cs = cpu_read_register32(cpu_, cpu->reg_cs);
->+    uint32_t ring_level = (cs >> 0) & 0b11;
->+    return ring_level;
->+}
->+
->+static uint64_t x64_get_frame_pointer(Cpu *cpu_)
->+{
->+    X64Cpu *cpu = cpu_->arch;
->+    return cpu_read_register64(cpu_, cpu->reg_rbp);
->+}
->+
->+static void x64_init(Cpu *cpu_)
->+{
->+    X64Cpu *cpu = g_new0(X64Cpu, 1);
->+    cpu_->arch = cpu;
->+    cpu->reg_rbp = plugin_find_register("rbp");
->+    g_assert(cpu->reg_rbp);
->+    cpu->reg_cs = plugin_find_register("cs");
->+    g_assert(cpu->reg_cs);
->+    cpu->reg_cr0 = plugin_find_register("cr0");
->+    g_assert(cpu->reg_cr0);
->+}
->+
->+static void x64_end(Cpu *cpu)
->+{
->+    g_free(cpu->arch);
->+}
->+
->+static bool x64_does_insn_modify_frame_pointer(const char *disas)
->+{
->+    return strstr(disas, "rbp");
->+}
->+
->+static CpuOps x64_ops = {
->+    .init = x64_init,
->+    .end = x64_end,
->+    .get_frame_pointer = x64_get_frame_pointer,
->+    .get_privilege_level = x64_get_privilege_level,
->+    .num_privilege_levels = x64_num_privilege_levels,
->+    .get_privilege_level_name = x64_get_privilege_level_name,
->+    .does_insn_modify_frame_pointer = x64_does_insn_modify_frame_pointer,
->+};
->+
-> static void track_privilege_change(unsigned int cpu_index, void *udata)
-> {
->     Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
->@@ -771,6 +854,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> 
->     if (!strcmp(info->target_name, "aarch64")) {
->         arch_ops = aarch64_ops;
->+    } else if (!strcmp(info->target_name, "x86_64")) {
->+        arch_ops = x64_ops;
->     } else {
->         fprintf(stderr, "plugin uftrace: %s target is not supported\n",
->                 info->target_name);
->-- 
->2.47.2
->
+> Hmm, this might have been overlooked from my commit 48814111366b.  Maybe
+> worth a Fixes and copy stable?
 
-No idea about x86 assembly tbh but this looks correct to me.
+yeah, it looks like it. POSTCOPY_ACTIVE state used to be set way sooner
+before. I'll add Fixes tag to the patch.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> 
+> For example, I would expect the old code (prior of 48814111366b) still be
+> able to fail postcopy and resume src QEMU if qemu_savevm_send_packaged()
+> failed.  Now, looks like it'll be stuck at "device" state..
+> 
+> The other thing is it also looks like a common pattern to set FAILED
+> meanwhile not messing with a CANCELLING stage.  It's not easy to always
+> remember this, so maybe we should consider having a helper function?
+> 
+>   migrate_set_failure(MigrationState *, Error *err);
+> 
+> Which could set err with migrate_set_error() (likely we could also
+> error_report() the error), and update FAILED iff it's not CANCELLING.
+> 
+> I saw three of such occurances that such helper may apply, but worth double
+> check:
+> 
+> postcopy_start[2725]           if (ms->state != MIGRATION_STATUS_CANCELLING) {
+> migration_completion[3069]     if (s->state != MIGRATION_STATUS_CANCELLING) {
+> igration_connect[4064]        if (s->state != MIGRATION_STATUS_CANCELLING) {
+> 
+> If the cleanup looks worthwhile, and if the Fixes apply, we could have the
+> cleanup patch on top of the fixes patch so patch 1 is easier to backport.
+
+Such function could be useful. I could also send it with the above fix
+together as a separate patchset, and send it also to stable.
+
+
+Best regards
+
+Juraj Marcin
+
+> 
+> Thanks,
+> 
+> >      migration_block_activate(NULL);
+> >      migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+> >      bql_unlock();
+> > -- 
+> > 2.50.1
+> > 
+> 
+> -- 
+> Peter Xu
+> 
+
 
