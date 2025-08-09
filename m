@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1BF8C87FCF
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 23:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 063D1C87FCF
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 23:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uksoQ-0007DV-DW; Sat, 09 Aug 2025 19:17:19 -0400
+	id 1uksof-0007Iy-96; Sat, 09 Aug 2025 19:17:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uksoB-0007CS-SE
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:17:05 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ id 1uksoc-0007IY-3W
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:17:30 -0400
+Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uksoA-0002oq-12
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:17:03 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-4b0619a353dso25064241cf.3
- for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 16:17:00 -0700 (PDT)
+ id 1uksoa-0002qp-GS
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:17:29 -0400
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-4b0a27ebf01so18336581cf.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 16:17:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754781420; x=1755386220; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754781447; x=1755386247; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7PACCWhhqfiRGdYyqWmDSy3Drgy8yZiHJvw2YlzwVuk=;
- b=bGY0+DjEhx0fXZ2RPN3cKAkxLlkGhEOeN7GehEWm1n8HJuA5YcuNQyNm0NRe3gwNUm
- lLt251/iu78vBhAagZ67R2LTSqbfApTCxVdgcG6KmLJDT7Ze7N/MgReCt/C2Lcn4AtR9
- WxsyEVnjn48hGHtMF4P5A8t90TrAcF5IiYMHX7vmTdbi27AaCQgGywHsYLrBzFxNN3bP
- wVsscv1y2O8pRFJxe8ubzd+Z4MqYdSzp/tae4heNPrNzcqJmumlMhQaSLFkjj0hE8AsH
- oq6T5rcVdjZPb7JJpdMZzUyp55jy7cPxwXrUfpPTbnZgYALU29jAWCBLhP3Lt19shIep
- EIsw==
+ bh=Fh1P6DOqT/nInwwwtojPJ8fSiPA6xoKkNMxsb5+S3qo=;
+ b=obabPfaZMGiXM0emG4fMhCpoOUZSsItBXeFzxuq7MxYbvSsiybFtOH7XVjMCCtLiZZ
+ LfN5m23dyS8KyVBsEH2LEPVk6lQmUAQVis0ay+rQW4Pq6pAPP3gvkxvRh3V1snjqNuc2
+ 4HK4JAEg33vdWgTWxTiYP1kThCq9v3Z3EBkqPcyg23aXWg99DkJys0vq9lv6Sod5CW5n
+ z6ERVgs0RzbM7cPwfJ/U/ehVPGu1l0aNPP9kvpAvtRklsNHR3OTxyshhGsK2YA0rI1UW
+ 59QyjhAuqC94FCiZGAlpJVJ4wUg1Pj5Kav28mQ5Hc1KeGWn+sQqYy4OhuRMYy7Auf1F8
+ GslQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754781420; x=1755386220;
+ d=1e100.net; s=20230601; t=1754781447; x=1755386247;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7PACCWhhqfiRGdYyqWmDSy3Drgy8yZiHJvw2YlzwVuk=;
- b=oiti6Lb7IUT4HZ3q64Bgsc76ET1oHQkGPBx61LpV2OfjtmgRQVQikBCnAEi5pBtSvB
- ksTHGjGXSZJHZ9Mm2yEL4z1I1rHD22Zq+V7jcjqlK2HyGNkXJAMqAj5w1o6SRf6LGeYO
- JKRV/g65c0w/3TFsofhSV1kDgts+OgThFuyF0HwPMXNt9j5HMoniALYskN7zC9lkH4wv
- RaCfj3ebgph8/7olQm5wQbiU0qsFcVermG4dI1LReuuPRFWaJqvn/7gtKfMiiGXLiBhA
- 7mS6gsD+I+z85U1nkE3sYMM8q5W4l7puYyZUtOO3airn2JukkFvlsGX7e7uHxQkFeTWC
- WCTA==
+ bh=Fh1P6DOqT/nInwwwtojPJ8fSiPA6xoKkNMxsb5+S3qo=;
+ b=Q2YIBJamosLW0zUXhkGo2FZaaFK8QW0r2cbbUKucuQx7F7+p+aaLCEYYhwbDNXYJov
+ uInAfDxXPRhPj65iBqfLng6SZD9mCQNkXjyoW2TA2YZj54SEYaas5AEKw8m465VUOquX
+ o0z1e2z8p5yy2VszOruZ/bW2ZakTbYdQ5zaHz5DvXjghQenwh4xBzAxDHP+psBi/C4bl
+ 1VAJU5JIZy/Se70mL25a2wptVnbRrziiC1LIYx9d1m6JqIKOZUZJ0ZzdQIzRSJpJ7A/V
+ 5+qi3wu3AVSAnvg49XT7g1kN4/r765eQGNmK4kNQ+02ioycCnuqukwlpVVQ8MPXW4MKM
+ KZMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJaGreTVD9hQFbM6kKeIW9d8Cuzqa04o3zHxiMy9fX/4qqAqi3F/IAL0oXIPvaLqVobZ14tnwPc08K@nongnu.org
-X-Gm-Message-State: AOJu0Yx7XgSFF2GGTxPHQXuJ3FU6bHs8c5sOt6EwKvngwDd5ySs/Fmd1
- Wx+0LF+NI3oY4n90LGgrIsqcpZHSlaBL2sJ4BZ0/0Xh2ABjufCjfk3KpANl5Y2ESn/4=
-X-Gm-Gg: ASbGncsYfIhguvMANuBTLZ89jmew2DL6OL+Xknm40qEnaV73nrF5LYcKtPX31mLsBfT
- OW5azatLVvrxX4Lkxeg9d7O26EHkkkk76BwjO8Iynb9ekS8jL3mSIt0eiM+kus2AinlpjrFbh1H
- 6JbGtrjRMQ8dyfe21esKMPsaZzSs2mpAViPcvvb0vih8QYIWSH1XOJdhwkml0lA/pf31jPzRjUE
- kuq4uoMNIFAHGvliDK4nPAaSeYm8khDUdrQ6bjnlofrH7bVm0MLzVBMXhgzOaqwY22ROK52o3bW
- TmkPcjz9LcsID6ol1xj0zgsxa5IQVKAL4xuW/1PlNoexj0tU3ba/8UXepARsaMqU1A+3k4rT5ed
- 4RrY/XO0wId1L+KnLx2R/mJQl8rJdEGM+aAlXf1Z8FRMX+focT00O7nbvlaodttK6t0Cd5t5bBl
- XVJpoZeU7BR68dmHGK
-X-Google-Smtp-Source: AGHT+IF9dkmx9+z2ExyuML08Nn1N1zpmD1b3qGlonbpac3+HFD1SZv7c4vHjM7z31xndZ219TYbVFg==
-X-Received: by 2002:ac8:584c:0:b0:4ab:41a2:b980 with SMTP id
- d75a77b69052e-4b0aedd7480mr112878781cf.33.1754781419509; 
- Sat, 09 Aug 2025 16:16:59 -0700 (PDT)
+ AJvYcCXVQ2zBemEGvc62xO159rPqeOvLpyTHnfAY9xvLILB1BF39T2LL9nft/idqEsmoTOUgJpN1vflT9ACB@nongnu.org
+X-Gm-Message-State: AOJu0YwyxJSXojw2eTaaAwmIvFNe5Ly5HnHrnYcBkrEDEfUVvX8phzkK
+ 56lX+WZe3/k/83k7Fg/3DxepMtGESgx58qieVJzdMwI+Xe9Qd0Zi/HCy1O2G+Icezac=
+X-Gm-Gg: ASbGncuDTLwc/IY7tGUE9ZBLCd0O/dEekhQpAw/dikGbtVUQjm5BmUVC6+zPNmyClJr
+ 6HQhMlU9Bbrw9xR7D812qBc1aJikjIa/PJUMqpeoCsGtXZ1mCBkfGUvUesZFT4YnqE5WiQ8/uGy
+ 1NuLSz5PIyjJbeRoPzg0oRHv4iJ+Xer/3P9UdHkS3gI99A+8HEwUi0fR8BWt1dAoFNydat5dxEe
+ pQJXrVNG4BEKgqfH6uoBe+17Y6GcFzk0/1QsuhSl0FguhFMW6Zb+/zpO5Wft6008I14SEdVkj1x
+ 69S7v/oy6eTVyFXgZpzsAcGW9Da+REzLUSGBc533q7E8bXqD26OJfTr5VeBM1EHOmq6akssW0tX
+ 9SGn3fRpcTN1UhZmmAhvrycSeQaFW/w6NJTn/9hL2j5yNdHFuQuzTb18UqFXPkyQ4GFHGnKZbKw
+ 4rWnc2ow4aMI5QPiLs
+X-Google-Smtp-Source: AGHT+IFDz9aL0om46mXM5fkuEa5A5DEplm8rH7viWlSZ+iDg15CX1/N7ZWX+tRV4Tv4dTAmYBsvZDA==
+X-Received: by 2002:ac8:5904:0:b0:4b0:8392:80e4 with SMTP id
+ d75a77b69052e-4b0aed3680amr117521931cf.14.1754781447127; 
+ Sat, 09 Aug 2025 16:17:27 -0700 (PDT)
 Received: from [10.153.194.227] ([172.58.166.125])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b093596ff5sm50699181cf.30.2025.08.09.16.16.54
+ 6a1803df08f44-7077ce24cd9sm132794216d6.76.2025.08.09.16.17.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Aug 2025 16:16:59 -0700 (PDT)
-Message-ID: <23517f70-dd7b-487f-9fb2-75356779fe72@linaro.org>
-Date: Sun, 10 Aug 2025 09:16:47 +1000
+ Sat, 09 Aug 2025 16:17:26 -0700 (PDT)
+Message-ID: <3188806e-fa7e-43fd-9602-d6a3009272c3@linaro.org>
+Date: Sun, 10 Aug 2025 09:17:17 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] accel/tcg: introduce tcg_kick_vcpu_thread
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 5/8] cpus: remove TCG-ism from cpu_exit()
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: imammedo@redhat.com, peterx@redhat.com
 References: <20250808185905.62776-1-pbonzini@redhat.com>
- <20250808185905.62776-5-pbonzini@redhat.com>
- <6a3b97ad-63c4-4b29-98e6-fba98eba33c4@linaro.org>
+ <20250808185905.62776-6-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <6a3b97ad-63c4-4b29-98e6-fba98eba33c4@linaro.org>
+In-Reply-To: <20250808185905.62776-6-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82a.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -107,65 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/9/25 07:15, Philippe Mathieu-Daudé wrote:
-> On 8/8/25 20:59, Paolo Bonzini wrote:
->> qemu_cpu_kick() does not always have to set cpu->exit_request,
->> though it does for now.  Introduce a function tcg_kick_vcpu_thread()
->> which can be changed in the future to not set cpu->exit_request,
->> and reserve cpu_exit() for when *all accelerators* need to set
->> that flag.
->>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>   docs/devel/tcg-icount.rst       |  2 +-
->>   accel/tcg/tcg-accel-ops-mttcg.h |  3 ---
->>   include/exec/cpu-common.h       |  1 +
->>   accel/tcg/cpu-exec.c            | 17 ++++++++++++++++-
->>   accel/tcg/tcg-accel-ops-mttcg.c |  5 -----
->>   accel/tcg/tcg-accel-ops-rr.c    |  2 +-
->>   accel/tcg/tcg-accel-ops.c       |  2 +-
->>   bsd-user/main.c                 |  2 +-
->>   linux-user/main.c               |  2 +-
->>   9 files changed, 22 insertions(+), 14 deletions(-)
->>
->> diff --git a/docs/devel/tcg-icount.rst b/docs/devel/tcg-icount.rst
->> index 7df883446a7..a1dcd79e0fd 100644
->> --- a/docs/devel/tcg-icount.rst
->> +++ b/docs/devel/tcg-icount.rst
->> @@ -37,7 +37,7 @@ translator starts by allocating a budget of instructions to be
->>   executed. The budget of instructions is limited by how long it will be
->>   until the next timer will expire. We store this budget as part of a
->>   vCPU icount_decr field which shared with the machinery for handling
->> -cpu_exit(). The whole field is checked at the start of every
->> +qemu_cpu_kick(). The whole field is checked at the start of every
->>   translated block and will cause a return to the outer loop to deal
->>   with whatever caused the exit.
->> diff --git a/accel/tcg/tcg-accel-ops-mttcg.h b/accel/tcg/tcg-accel-ops-mttcg.h
->> index 8ffa7a9a9fe..5c145cc8595 100644
->> --- a/accel/tcg/tcg-accel-ops-mttcg.h
->> +++ b/accel/tcg/tcg-accel-ops-mttcg.h
->> @@ -10,9 +10,6 @@
->>   #ifndef TCG_ACCEL_OPS_MTTCG_H
->>   #define TCG_ACCEL_OPS_MTTCG_H
->> -/* kick MTTCG vCPU thread */
->> -void mttcg_kick_vcpu_thread(CPUState *cpu);
->> -
->>   /* start an mttcg vCPU thread */
->>   void mttcg_start_vcpu_thread(CPUState *cpu);
->> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
->> index 9b658a3f48f..e843b09cc99 100644
->> --- a/include/exec/cpu-common.h
->> +++ b/include/exec/cpu-common.h
->> @@ -226,6 +226,7 @@ G_NORETURN void cpu_loop_exit(CPUState *cpu);
->>   G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
->>   /* accel/tcg/cpu-exec.c */
->> +void tcg_kick_vcpu_thread(CPUState *cpu);
+On 8/9/25 04:59, Paolo Bonzini wrote:
+> Now that TCG has its own kick function, make cpu_exit() do the right kick
+> for all accelerators.
 > 
-> "exec/cpu-common.h" is not the place, maybe "accel/tcg/cpu-ops.h"?
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   hw/core/cpu-common.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index f189ce861c9..045b1778236 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -86,9 +86,7 @@ void cpu_exit(CPUState *cpu)
+>   {
+>       /* Ensure cpu_exec will see the reason why the exit request was set.  */
+>       qatomic_store_release(&cpu->exit_request, 1);
+> -    /* Ensure cpu_exec will see the exit request after TCG has exited.  */
+> -    smp_wmb();
+> -    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
+> +    qemu_cpu_kick(cpu);
+>   }
+>   
+>   static int cpu_common_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
 
-Agreed.  At some point we should split the non-system qemu_cpu_kick() etc out of 
-{linux,bsd}-user to common-user, or something.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
