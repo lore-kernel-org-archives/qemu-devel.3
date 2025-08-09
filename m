@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFEECC87FCB
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 09:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E30AEC87FCF
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 09:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukfqZ-0002My-8i; Sat, 09 Aug 2025 05:26:39 -0400
+	id 1ukgHa-0006zh-6y; Sat, 09 Aug 2025 05:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ukfqY-0002Lc-9I
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 05:26:38 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ukfqU-0002vF-PB
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 05:26:37 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-61571192c3aso3467843a12.2
- for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 02:26:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754731593; x=1755336393; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jUsyLeMcjo0obv2tl0deW5AH4ur98BKlIJokAb6Rhfo=;
- b=uD4r8479kL9Mzr9jb2ncQfbO0FWOuUjSdpeTvOrXp6JFMsr8eU4qsuqKX0cfh+OAPD
- Yw28gcE92Cv9uDEzUYdoSPWiN+OR8PDCYqIOJjtpoyPXfONV2Nc4+SpN+WV0mc9b+Q7b
- rPmZ1OFqe6UvpE23k3vleZd+fIrH5oiSBOgIrWzPO/WeteSpEMZmNTVgdlmnYh0K8ZMO
- uJziBCBzw4semzCR8qn+o4EgW1KtCWhAUqFDGKqUd1OO1ijCKmr8rQwQmMtNzuJTABQI
- F/w52qTxzqfXKVBNznQKrR2xMt78d3ltEkyW/dahcriNoqsebPLMKCX+heAkr/V81j3q
- MQsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754731593; x=1755336393;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jUsyLeMcjo0obv2tl0deW5AH4ur98BKlIJokAb6Rhfo=;
- b=H06YMahURr10xanpaEw0ZeyxMtQzmsFor/fuTIS9psdYq1UHLqzm0Yyvdq3/AhjiwK
- +7v0f7ZMch3LyEmgLAs2+q6mzeAkB8Vfz3sWfGYKLHemHdQoBIcTPPePeYnZlAeOj0Fn
- iofeCy6ftEDkbw+jWoAKT2YvYhG/cBdr/JPmCF7IsNjd5URf3WCv2ya+F4iXqMJ6E6NU
- iGApnoK3Aa8WFDaaaEDnnXla9l0rB/vkZhdf5t2hTR82AKRF9tmVkZvQZokXqASUrR9z
- jfnOoPIWH5vaGHwn3jMAjSjhlveo4PNsin3KvUXpdwpGq3C6qa7m57GRsZRKzuI7fVlM
- 4vWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW48dtS7Uz0jN8iyx3kHxMcDjGySqB7JqdVjmVFxz2q+dzWW8amT1c+xGdFCoRcS1ERka2zYLJ2sdV7@nongnu.org
-X-Gm-Message-State: AOJu0YyoKMAEryVvyYzhwi3qTsaFAPfZA0JiH657rs3otZzrXMoxTf9S
- 2DEfnaBTplT+aQq3HvcEazGJl15riwK0Cx6uqEZDh+EQ3whziJN6AU6RDmcwfgA7yIe/nZdVDG1
- COopyfFYGyET+b34zxQDOb3I2hhyWK3DytJSDKJV21A==
-X-Gm-Gg: ASbGncsvu6M7SsM4uILY2ZsN+KAIa6iGEjcU5BZujJRT4OjuG2csNkNXAUkCJJiU83G
- uVmMvmd1s6nl9fDsxlC2gKAjGlJDPRr8T2swTttpnQsmy2BG7EVXVo6RLnvwiYp878AwRSUxtjC
- gcBjD39oVV5q98CPPfSKsfRixrQQIzqUPNaskCzvVVvnusCjARGkae3F0SUgxnXxUSqufT3Ib0a
- cDeWI86puEO2U6R1RsqT/TO4yztSUYkfw5Q92Y=
-X-Google-Smtp-Source: AGHT+IHCxPYB+yrG1oYIRgnyfrsnRfmCjaMy5oLq1sBiHxuro4UBb6ZEO61vAoV/jhnqx05JIIMy1/4SHQS7sMioxDQ=
-X-Received: by 2002:a05:6402:1d50:b0:618:13d0:93e2 with SMTP id
- 4fb4d7f45d1cf-61813d0a197mr108054a12.9.1754731592931; Sat, 09 Aug 2025
- 02:26:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ukgHS-0006oj-9y; Sat, 09 Aug 2025 05:54:26 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ukgHO-0006Sz-R1; Sat, 09 Aug 2025 05:54:26 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5799rqXV047689
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 9 Aug 2025 18:53:52 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=0zGfXjhwkabZsWWC2qH6Bq2NwRPrZKF6UAOmIGuKYH4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1754733232; v=1;
+ b=m+0k+KTx4sbsTwF7HzQoSmBWml4QX770rvjOmPUYJXnZXnOp7y+VHV4u1n3AJLan
+ mGruEUkntDZwUTI4Cco//MdgFosKVBZNXymRsgmbtwGhpaoH2cuLp3pONTU9d85j
+ NrH+hR2WDT7P52gJKzUEBp0MCSLdcJ5losid0zh7XbjqucSpsCZj9JSCOvDBxxAF
+ Dyzg3/taAz6NdhkNahzHlQi3Ailjjh1qlOzFbD/FvK5MdjXob7fibtTeHWt03Ini
+ wdl7qfWPVu3ewWFE0fdkdHPjQMIWnKMIgnCRjs96RECrH/bRfpnd5xWE/CS29pq1
+ 23S6qftGOzVV4h0I+5Lq7g==
+Message-ID: <d3c6cac8-cbf6-4c27-afea-c49391262935@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 9 Aug 2025 18:53:51 +0900
 MIME-Version: 1.0
-References: <20250807123027.2910950-1-zhao1.liu@intel.com>
- <20250807123027.2910950-14-zhao1.liu@intel.com>
- <CAAjaMXZ9XbEmcJVg1-8uFhnkG-qUF+sB5g26e0W3HhxK_-NFwg@mail.gmail.com>
- <c641dbf2-a2e7-4c44-b231-fc872df1fe69@redhat.com> <aJb3C8qbXQ1zx306@intel.com>
- <CABgObfaVoYi09-HkwojkJT_-AJosdKNPwxMySHn6yn2cuS1Z5g@mail.gmail.com>
-In-Reply-To: <CABgObfaVoYi09-HkwojkJT_-AJosdKNPwxMySHn6yn2cuS1Z5g@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Sat, 9 Aug 2025 12:26:20 +0300
-X-Gm-Features: Ac12FXxeNrZjgSNWAZbp1R4IcB95KRnfOyV27uiYoVxS5-R_lud7nxBU-KTcS0E
-Message-ID: <CAAjaMXbHOTj1ed=sbkvR=4Uhgk2TyrqaAsXAgZ6uH622cart9w@mail.gmail.com>
-Subject: Re: [RFC 13/26] rust: Add RCU bindings
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 23/24] migration: Add error-parameterized function
+ variants in VMSD struct
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>, 
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- Dapeng Mi <dapeng1.mi@linux.intel.com>,
- Chuanxiao Dong <chuanxiao.dong@intel.com>
-Content-Type: multipart/alternative; boundary="00000000000045effb063beb492d"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20250721-propagate_tpm_error-v6-0-fef740e15e17@redhat.com>
+ <20250721-propagate_tpm_error-v6-23-fef740e15e17@redhat.com>
+ <3e9aa703-2805-4ac4-9f10-f4ba71c10c8a@rsg.ci.i.u-tokyo.ac.jp>
+ <aH5AtUcjI3HYXdBe@redhat.com>
+ <9c552525-72fa-4d1e-89a2-b5c0e446935a@rsg.ci.i.u-tokyo.ac.jp>
+ <87fre0ucxu.fsf@pond.sub.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <87fre0ucxu.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,135 +100,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000045effb063beb492d
-Content-Type: text/plain; charset="UTF-8"
-
-On Sat, 9 Aug 2025, 12:13 Paolo Bonzini, <pbonzini@redhat.com> wrote:
-
->
->
-> Il sab 9 ago 2025, 09:00 Zhao Liu <zhao1.liu@intel.com> ha scritto:
->
->> >     pub fn get<'g>(&self, _: &'g RcuGuard) -> Option<&'g T> {
->> >         unsafe {
->> >             self.raw_get().as_ref()
->> >         }
->> >     }
->> > }
->> >
->> > Using this is a bit ugly, because you need transmute, but it's isolated:
->> >
->> > impl AddressSpace {
->> >    pub fn get_flatview(&self, rcu: &'g Guard) -> &'g FlatView {
+On 2025/08/09 17:17, Markus Armbruster wrote:
+> Almost missed this, sorry.
+> 
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
+> 
+>> On 2025/07/21 22:29, Daniel P. Berrangé wrote:
+>>> On Mon, Jul 21, 2025 at 10:14:30PM +0900, Akihiko Odaki wrote:
+>>>> On 2025/07/21 20:29, Arun Menon wrote:
+>>>>> - We need to have good error reporting in the callbacks in
+>>>>>    VMStateDescription struct. Specifically pre_save, post_save,
+>>>>>    pre_load and post_load callbacks.
+>>>>> - It is not possible to change these functions everywhere in one
+>>>>>    patch, therefore, we introduce a duplicate set of callbacks
+>>>>>    with Error object passed to them.
+>>>>> - So, in this commit, we implement 'errp' variants of these callbacks,
+>>>>>    introducing an explicit Error object parameter.
+>>>>> - This is a functional step towards transitioning the entire codebase
+>>>>>    to the new error-parameterized functions.
+>>>>> - Deliberately called in mutual exclusion from their counterparts,
+>>>>>    to prevent conflicts during the transition.
+>>>>> - New impls should preferentally use 'errp' variants of
+>>>>>    these methods, and existing impls incrementally converted.
+>>>>>    The variants without 'errp' are intended to be removed
+>>>>>    once all usage is converted.
+>>>>>
+>>>>> Signed-off-by: Arun Menon <armenon@redhat.com>
+>>>>> ---
+>>>>>   include/migration/vmstate.h | 11 +++++++++++
+>>>>>   migration/vmstate.c         | 47 +++++++++++++++++++++++++++++++++++++++------
+>>>>>   2 files changed, 52 insertions(+), 6 deletions(-)
+>>>>>
+>>>>> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+>>>>> index 056781b1c21e737583f081594d9f88b32adfd674..53fa72c1bbde399be02c88fc8745fdbb79bfd7c8 100644
+>>>>> --- a/include/migration/vmstate.h
+>>>>> +++ b/include/migration/vmstate.h
+>>>>> @@ -200,15 +200,26 @@ struct VMStateDescription {
+>>>>>        * exclusive. For this reason, also early_setup VMSDs are migrated in a
+>>>>>        * QEMU_VM_SECTION_FULL section, while save_setup() data is migrated in
+>>>>>        * a QEMU_VM_SECTION_START section.
+>>>>> +     *
+>>>>> +     * There are duplicate impls of the post/pre save/load hooks.
+>>>>> +     * New impls should preferentally use 'errp' variants of these
+>>>>> +     * methods and existing impls incrementally converted.
+>>>>> +     * The variants without 'errp' are intended to be removed
+>>>>> +     * once all usage is converted.
+>>>>>        */
+>>>>> +
+>>>>>       bool early_setup;
+>>>>>       int version_id;
+>>>>>       int minimum_version_id;
+>>>>>       MigrationPriority priority;
+>>>>>       int (*pre_load)(void *opaque);
+>>>>> +    int (*pre_load_errp)(void *opaque, Error **errp);
+>>>>>       int (*post_load)(void *opaque, int version_id);
+>>>>> +    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+>>>>>       int (*pre_save)(void *opaque);
+>>>>> +    int (*pre_save_errp)(void *opaque, Error **errp);
+>>>>>       int (*post_save)(void *opaque);
+>>>>> +    int (*post_save_errp)(void *opaque, Error **errp);
+>>>>
+>>>> I think the new functions should have void as return value instead.
+>>>>
+>>>> As I discussed before, I think having an integer return value is a source of
+>>>> confusion:
+>>>> https://lore.kernel.org/qemu-devel/0447e269-c242-4cd7-b68e-d0c7211784a7@rsg.ci.i.u-tokyo.ac.jp/
+> 
+> I disagree.
+> 
+> We've discussed this a few times.  Here's a recent instance:
+> https://lore.kernel.org/qemu-devel/87jz5tbbqx.fsf@pond.sub.org/
+> 
+>>>> In the previous discussion, I suggested using bool, but void fits better in
+>>>> this particular case.
+>>>>
+>>>> include/qapi/error.h says:
+>>>>> Whenever practical, also return a value that indicates success /
+>>>>> failure.  This can make the error checking more concise, and can avoid
+>>>>> useless error object creation and destruction.  Note that we still
+>>>>> have many functions returning void.
+>>>>
+>>>> There will be more implementations of these function pointers than their
+>>>> callers, so it makes more sense to let return void and make implementations
+>>>> more concise while making the callers less so. There is also DeviceRealize,
+>>>> an example of function pointer type that takes errp but returns void.
+>>>
+>>> No, please do NOT make these functions void. As that text you quote
+>>> says, we want functions to return a value indicating success/failure.
+>>> 'void' return is a historical practice we don't want to continue
+>>> in QEMU.
+>>>
+>>> Given that the existing methods all return 'int', we should remain
+>>> consistent with the new functions and return 'int', with -1 for
+>>> failure, 0 for success, and not use bool.
 >>
->> IIUC, this lifetime is using the "branded type" pattern as ParentInit.
->>
->
-> No, it's much simpler (that one uses the combination of for<'identity> and
-> PhantomData as explained in the comment). It says that the lifetime of the
-> returned reference cannot exceed the guard. It's just like
->
-> pub fn get_item(&self, array: &'g [u8]) -> &'g u8 {
->    &array[self.0]
-> }
->
-> Except that the guard is only there to limit the lifetime and not to hold
-> data.
->
-> In addition, about rcu_read_lock_held(), I thought at C side, there're
->> so many comments are saying "Called within RCU critical section" but
->> without any check.
->>
->> So I wonder whether we should do some check for RCU critical section,
->> just like bql check via `assert!(bql_locked())`. Maybe we can have a
->> Rcu debug feature to cover all these checks.
->>
->
-> In Rust you would just pass a &RcuGuard into the function (or store it in
-> a struct) for a zero-cost assertion that you are in the RCU critical
-> section.
->
+>> Markus, I'd also like to hear your opinion since you are the maintainer of the error reporting facility.
+> 
+> I'm with Daniel.
+> 
+> New code should stick to the rules.
+> 
+> Changing existing code from "sticks to the rules" to not requires pretty
+> compelling justification.
+> 
+> The other direction is more welcome, but whether the juice is worth the
+> squeeze still needs to be decided case by case.
 
-Agreed. You could put debug_asserts for sanity check for good measure.
+What do you refer with the rules?
 
-Paolo
->
->
->> Thanks,
->> Zhao
->>
->>
->>
+There were three options on the table: bool, int, and void.
 
---00000000000045effb063beb492d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The previous discussion you referred explains why void should be 
+avoided, and include/qapi/error.h also says void should be avoided.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, 9 Aug 2025, 12:13 Paolo =
-Bonzini, &lt;<a href=3D"mailto:pbonzini@redhat.com">pbonzini@redhat.com</a>=
-&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div=
- dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
-s=3D"gmail_attr">Il sab 9 ago 2025, 09:00 Zhao Liu &lt;<a href=3D"mailto:zh=
-ao1.liu@intel.com" target=3D"_blank" rel=3D"noreferrer">zhao1.liu@intel.com=
-</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"ma=
-rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
-1ex">&gt;=C2=A0 =C2=A0 =C2=A0pub fn get&lt;&#39;g&gt;(&amp;self, _: &amp;&#=
-39;g RcuGuard) -&gt; Option&lt;&amp;&#39;g T&gt; {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unsafe {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0self.raw_get().as_ref()=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt; }<br>
-&gt; <br>
-&gt; Using this is a bit ugly, because you need transmute, but it&#39;s iso=
-lated:<br>
-&gt; <br>
-&gt; impl AddressSpace {<br>
-&gt;=C2=A0 =C2=A0 pub fn get_flatview(&amp;self, rcu: &amp;&#39;g Guard) -&=
-gt; &amp;&#39;g FlatView {<br>
-<br>
-IIUC, this lifetime is using the &quot;branded type&quot; pattern as Parent=
-Init.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"a=
-uto">No, it&#39;s much simpler (that one uses the combination of for&lt;&#3=
-9;identity&gt; and PhantomData as explained in the comment). It says that t=
-he lifetime of the returned reference cannot exceed the guard. It&#39;s jus=
-t like</div><div dir=3D"auto"><br></div><div dir=3D"auto">pub fn get_item(&=
-amp;self, array: &amp;&#39;g [u8]) -&gt; &amp;&#39;g u8 {</div><div dir=3D"=
-auto">=C2=A0 =C2=A0&amp;array[self.0]</div><div dir=3D"auto">}</div><div di=
-r=3D"auto"><br></div><div dir=3D"auto">Except that the guard is only there =
-to limit the lifetime and not to hold data.</div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">In addition, about rcu_read_lock_held(), I thought at=
- C side, there&#39;re<br>
-so many comments are saying &quot;Called within RCU critical section&quot; =
-but<br>
-without any check.<br>
-<br>
-So I wonder whether we should do some check for RCU critical section,<br>
-just like bql check via `assert!(bql_locked())`. Maybe we can have a<br>
-Rcu debug feature to cover all these checks.<br></blockquote></div></div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">In Rust you would just pass a &=
-amp;RcuGuard into the function (or store it in a struct) for a zero-cost as=
-sertion that you are in the RCU critical section.</div></div></blockquote><=
-/div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Agreed. You could =
-put debug_asserts for sanity check for good measure.</div><div dir=3D"auto"=
-><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_containe=
-r"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"auto"><div=
- dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div=
- class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Thanks,<br>
-Zhao<br>
-<br>
-<br>
-</blockquote></div></div></div>
-</blockquote></div></div></div>
+There is pre_load() that does not use Error returns int, but now we are 
+adding pre_load_errp() that uses Error.
 
---00000000000045effb063beb492d--
+Then what pre_load_errp() should return: bool or int?
 
