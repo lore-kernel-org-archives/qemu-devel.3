@@ -4,63 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4FBC87FCF
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 10:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99D3C87FCB
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 11:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukgoG-0007K1-UA; Sat, 09 Aug 2025 06:28:22 -0400
+	id 1ukiDb-0005NF-7Q; Sat, 09 Aug 2025 07:58:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ukgo2-0006Vi-RA
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 06:28:10 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ukgnz-0002ti-CG
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 06:28:06 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 579ARtUN057805
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 9 Aug 2025 19:27:55 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ZWWBOldRQeUOMUA2ex8babqxKbMGUfc4fLuQjjlyQe4=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1754735275; v=1;
- b=DeEd1CM1nW26WLgtg2KFZo2qSPtUjM/l2r/Rye/ThgiH3N0/ZLzPYYnj0xZxyPzC
- rsULWVC/vcYO0Tf8W8JGrpXF5iMOUOLayS/XaQ6v3gN02rj2qsFlzvbIRRgza/1N
- 5HMo0t3lYD1mKGkGgsjqM1N90VM502F6msZobqrZphgEU+w33HgMiBta9ATfMyRb
- l8v7GR2oHPOVjGhi6Nk46dUCj7orBtzapJOqprqu57mXwuw1xonCTMfsO1K8+QTe
- Kx8m5XAc/T25/6Qz2bLaS77Z3R8//mK427qvuT6/8FKJJRo6Q/f/c2D5cLc5zVaa
- HDpVaUTd58Tg2VP3k4N1cg==
-Message-ID: <baeed4ff-9366-482c-9b08-85e0fdcc6ebb@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 9 Aug 2025 19:27:55 +0900
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukiDZ-0005Li-Ed
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 07:58:33 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ukiDX-0008Nj-Jm
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 07:58:33 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45994a72356so22703755e9.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 04:58:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754740709; x=1755345509; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CuVeWiDXup3Fxz11lR8lgrgzHwCPEXpLHAd+940VFDc=;
+ b=D4DVz5HwB8DwNpu023lL98qhM+Rzk+tCy3dOX1P6mal2zaYTsj99abItsE+kmFMqsL
+ 4RwrnxIU6fkADimAmpkY7d885PgvglDU+Xc1wLb/eka9ox2AWEAZMd1HPWuTin670OEw
+ ZsYKWqREJ3WPMNw8AgwshqNMyR0XhhXhdqp6ViXcfh8mggZgzSLCqwvgEpayYiuQfFPl
+ +cwfgewx43gm6xoXlok5UzuBPSuvweYlgPYEm0Cjgwb2eP1QDhHj2yDlpn/uU5rTF77p
+ DDdGXTV4pEghy/KRxEARZB7Du3+GVmF96GTNfxf243YJ8CxKa+ut2UqnavybBbrtg1k4
+ VGbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754740709; x=1755345509;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CuVeWiDXup3Fxz11lR8lgrgzHwCPEXpLHAd+940VFDc=;
+ b=fyOd3nwYMf+Z1qGF+2JH0z1fRX/6J6/YTO+32PGLlq1pSdzLtkScA17wyMKAPR0FQI
+ qF6v+dYyz6KV1WABjoJm4eP9hxQrhQkjJRTCUEaYNz1u0NrpOXOOtRxRA8tNCwz/2O7l
+ oDi5mGeMMX5trfNWtOyPEL8NOcpVrs3ffPX3R2rdOb/nyHB3py+kzqpK+MAf0TTP7HI/
+ n601T/KjlLCKdy074RaaflfxCJS5DjMb8IYM1kcyyWZesw2OFbr77ysRNGEPj4K3sMk9
+ DDM8PhY97EUg8B+tdVz7LZjo3BHaaluL06rEXpyH0OU0tSnk9bUDrnupdkG+oWOnQpaf
+ 4vJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0Qz+EpEWihhM2wAa638t25pF959lITh5aG76fwr76jDhTATWKIfyvxDcQf3Aq2sGRbAHV+2HwZU83@nongnu.org
+X-Gm-Message-State: AOJu0Yxibc415ZBsFPf6wDotzA0WW8B48nJFO9a4h3I/2gskN2jkKX/k
+ Lmf6vt8xvgywvxvONw7tBHfq0CZFtdAx9pByxt5BYSHIK5xqnnVUwdSB1Wkli180Ujw=
+X-Gm-Gg: ASbGncvQtCxnIH+H+7K0Kj5h/rb1QfrwtIQrwdbdm2PIh9Tuq3AznAwwHhM/M96IxNW
+ 1IWxPAw/mlgbwGzdO7ZdZNoeibla289ypVHCDrRqZ+rf3vF44eFQXn3lmWOSHfUB9sxxypWjg22
+ yQvaHH3bjJPl6Aaml7NLU9GC80yXP0KQGNTpImbL0lYxo11JHmP5fnq3TsMeZ1AUFsWaCAIjMqy
+ 3VLIy+OKlubFW14Oewa9AY9MQG8W/CWlDrUYFTHbeuRVpsTILGL8Su0/QdWV6L7HUk1ANL/S1Sy
+ 4xlSt37gSvPFBlfOCbkZPoxrkQO6h+oQ6mh3tOJB8H/kFL4iQ/DlZv4JebzrS91LYjs6QoCeVcK
+ CdhT/c4ZWpZcG33f185hmPCtaY8bXdNFDYbPLwg1JsaBaa5dRPw43sI/Wen6V1xWvoA==
+X-Google-Smtp-Source: AGHT+IEVmK+enMCd1CVLC4fTfNQraFKiWHh0FSFWhxfCwNkZSZpY58pN7yTnAOJz7ZBdwAaYjn1mzQ==
+X-Received: by 2002:a05:600c:a31a:b0:456:1d06:f37d with SMTP id
+ 5b1f17b1804b1-459ee0db219mr79392515e9.16.1754740709352; 
+ Sat, 09 Aug 2025 04:58:29 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459de0d4cf1sm236447195e9.13.2025.08.09.04.58.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 09 Aug 2025 04:58:28 -0700 (PDT)
+Message-ID: <0f865d71-1910-40fd-aa8a-aa72801dabde@linaro.org>
+Date: Sat, 9 Aug 2025 13:58:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/12] error: Kill @error_warn
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com
-References: <20250808080823.2638861-1-armbru@redhat.com>
- <20250808080823.2638861-13-armbru@redhat.com>
- <fcd5c891-b3c5-4b7d-a0ed-0e776d55ad5e@rsg.ci.i.u-tokyo.ac.jp>
- <875xewucar.fsf@pond.sub.org>
+Subject: Re: [PATCH v6 4/9] contrib/plugins/uftrace: implement tracing
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, rowan Hart <rowanbhart@gmail.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Richard Henderson <richard.henderson@linaro.org>
+References: <20250808204156.659715-1-pierrick.bouvier@linaro.org>
+ <20250808204156.659715-5-pierrick.bouvier@linaro.org>
+ <ef71cc03-53a3-4a9f-8052-eabf528227e4@linaro.org>
+ <a0ae6c62-24d3-4772-aa4d-126fdf88df72@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <875xewucar.fsf@pond.sub.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <a0ae6c62-24d3-4772-aa4d-126fdf88df72@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,93 +109,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/08/09 17:30, Markus Armbruster wrote:
-> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
-> 
->> On 2025/08/08 17:08, Markus Armbruster wrote:
->>> We added @error_warn some two years ago in commit 3ffef1a55ca (error:
->>> add global &error_warn destination).  It has multiple issues:
+On 9/8/25 00:05, Pierrick Bouvier wrote:
+> On 8/8/25 2:45 PM, Philippe Mathieu-Daudé wrote:
+>> On 8/8/25 22:41, Pierrick Bouvier wrote:
+>>> We implement tracing, following uftrace format.
+>>> Trace is flushed every 32 MB, so file operations don't impact
+>>> performance at runtime.
 >>>
->>> * error.h's big comment was not updated for it.
+>>> A different trace is generated per cpu, and we ensure they have a unique
+>>> name, based on vcpu_index, while keeping room for privilege level coming
+>>> in next commit.
 >>>
->>> * Function contracts were not updated for it.
+>>> Uftrace format is not officially documented, but it can be found here:
+>>> https://github.com/namhyung/uftrace/blob/v0.18/libmcount/record.c#L909
 >>>
->>> * ERRP_GUARD() is unaware of @error_warn, and fails to mask it from
->>>     error_prepend() and such.  These crash on @error_warn, as pointed
->>>     out by Akihiko Odaki.
->>>
->>> All fixable.  However, after more than two years, we had just of 15
->>> uses, of which the last few patches removed eight as unclean or
->>> otherwise undesirable.  I didn't look closely enough at the remaining
->>> seven to decide whether they are desirable or not.
->>>
->>> I don't think this feature earns its keep.  Drop it.
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>    contrib/plugins/uftrace.c | 150 ++++++++++++++++++++++++++++++++++ 
+>>> +++-
+>>>    1 file changed, 149 insertions(+), 1 deletion(-)
+
+
+>>> @@ -297,6 +432,16 @@ static void vcpu_init(qemu_plugin_id_t id, 
+>>> unsigned int vcpu_index)
+>>>        cpu->ops.init(cpu);
+>>>        cpu->buf = g_byte_array_new();
+>>> +    g_assert(vcpu_index < UINT32_MAX / 100);
+>>> +    /* trace_id is: cpu_number * 100 */
+>>> +    uint32_t trace_id = (vcpu_index + 1) * 100;
+>>> +
+>>> +    g_autoptr(GString) trace_name = g_string_new(NULL);
+>>> +    g_string_append_printf(trace_name, "cpu%u", vcpu_index);
 >>
->> I want to note that the following patch series temporarily use &error_warn during its conversion to add errp parameters:
->> https://lore.kernel.org/qemu-devel/20250808-propagate_tpm_error-v10-0-3e81a1d419b2@redhat.com/
->> ("[PATCH v10 00/27] migration: propagate vTPM errors using Error objects")
+>>     g_autofree char *trace_name = g_strdup_printf("cpu%u", vcpu_index);
 >>
->> I think this series needs to be rebased on top of the migration change.
+>> and pass (const?) char * to trace_new().
+>>
 > 
-> Thanks for the heads-up.
+> I tried to do something clean with GString everywhere for dynamic/ 
+> mutable strings, and const char* for immutable ones, favoring 
+> readability and clear memory ownership over C char pointer soup. It does 
+> not optimize anything important in this context since it's called only 
+> once during the program execution.
 > 
->> I'm not sure if seven uses are insufficient to keep it.
+> Thus, I would prefer to keep it as it is if that's acceptable for you.
+
+No problem.
+
+>>> +    cpu->trace = trace_new(trace_id, trace_name);
+>>> +    /* create/truncate trace file */
+>>> +    trace_flush(cpu->trace, false);
+>>> +
+>>>        cpu->cs = callstack_new();
+>>>    }
 >>
->> I also have a general impression that perhaps a special error destination for error_report_err() is more useful. Today, there are many functions use Error, but there are also functions that still follow old error handling patterns. When legacy functions call functions with Error, a common pattern is to use error_report_err() and return -1.
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
 > 
-> You mean like &error_fatal less the exit(1)?
 
-Yes, that's what I meant.
-
-> 
->> "[PATCH 01/12] monitor: Clean up HMP gdbserver error reporting" and "[PATCH 09/12] ui/pixman: Consistent error handling in qemu_pixman_shareable_free()" are examples that will benefit from error_report_err() as an error destination. The migration patch series I mentioned earlier can also use one.
->>
->> Perhaps it is nicer if there is an infrastructure shared by the special destinations. In particular, we can have common solutions for the three problems you pointed out:
->>
->>> * error.h's big comment was not updated for it.
->>>
->>> * Function contracts were not updated for it.
->>
->> For these two problems, they can refer to "special error destinations" instead of listing them, and delegate explanations of them to corresponding ones.
->>
->>>
->>> * ERRP_GUARD() is unaware of @error_warn, and fails to mask it from
->>>    error_prepend() and such.  These crash on @error_warn, as pointed
->>>    out by Akihiko Odaki.
->>
->> For this problem, Error can tell that it is a special destination by leaving msg NULL, for example. ERRP_GUARD() then rewrites errp it is not &error_abort and msg is NULL.
-> 
-> As I wrote, the defects are all fixable.  However, there has been so
-> little use of &error_warn, and so much of it has been unclean or
-> otherwise undesirable.  It's obviously prone to misuse.  I think we're
-> better off without it.
-> 
-> See also the memo "Abuse of warnings for unhandled errors and
-> programming errors" I posted yesterday.
-
-It is insightful. The cover letter can have a reference to it and this 
-patch can have similar description.
-
-However I still have a few counterarguments:
-
-A reason of the &error_warn usage may be caused by the complexity
-to deal with unhandled errors and programming errors. If so, adding 
-mechanisms to ease that may naturally sufficiently reduce the wrong 
-usage added in the future.
-
-The "&error_fatal without exit(1)" may be good enough for unhandled 
-errors. For example, "[PATCH v10 00/27] migration: propagate vTPM errors 
-using Error objects" would not have used &error_warn if there is the 
-"&error_fatal without exit(1)".
-
-There are also warn_report*() functions which also have the same 
-problem. A comprehensive solution needs to deal with them all. Removing 
-all of them will do but may not be practical. Another possibility is 
-that to write a documentation telling warning should be avoided for 
-unhandled/programming errors and let all refer to it.
-
-I agree that there is little valid usage of &error_warn and removing it 
-may not cause a problem at all, but it is still nice if there is a 
-reasoning for the removal, ideally addressing these counterarguments as 
-well.
 
