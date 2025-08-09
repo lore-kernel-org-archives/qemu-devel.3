@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD43C87FCF
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 23:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FBEAC87FCB
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 23:43:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uktCp-0005iB-GS; Sat, 09 Aug 2025 19:42:31 -0400
+	id 1uktCt-0005jh-79; Sat, 09 Aug 2025 19:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uktCk-0005h3-Aj
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:26 -0400
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ id 1uktCr-0005j8-BE
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:33 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uktCi-0005gt-RI
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:26 -0400
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-7094f298dc3so27924406d6.2
- for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 16:42:24 -0700 (PDT)
+ id 1uktCp-0005hZ-NV
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:33 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-4b08c56d838so41746201cf.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 16:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754782943; x=1755387743; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754782950; x=1755387750; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iwsN5KKKv0HfyrR92BG0UgTuRe26Xxcui2WMmMpb4O0=;
- b=ECURkT34G8gsySlA6CAvYc872jdOBscjpr/dxjYcoW0k44Qvd3mJZ+Gv/8JhNMXkro
- 52jJ8Yu+fgImBHDOt4isV+F/IPFRSBtTEi6N+1JEsi8vRZwN37KcFC9IZ0Xaj9yTqKOI
- inlmujxBVQpP2wFR+zpLT3PN+gachfAfUhKeLgJcQDcqgWbPA9TuhwcaCzNfDfPH6Q07
- sjt0WTBjDIYj16ZUzY2X8JmHG3aXTce7S5PAwZWTcM3KRiBVQ7jn20b5tZELvyGLdMJ/
- dEuJsipMnMPmSO/3TFwZDO1dAwOb6msTA/Cskv4bx0z3E82J/xQczVYmrK4g19dlN5kT
- ZDAg==
+ :reply-to; bh=N4OkU+DgDKGb66i12ye1eGOR4zW3QJF0mGHVePO3CKA=;
+ b=rrnxyEOAuU8uUDcs84cVET7DTOJkQX9ouqEnLZrupKYGi3rkUjZ7O/GkWsC/Xi06sC
+ LnfkdBB1AwqJRFsV7vom5AV3UUvSLqmjoHqXLqB0qW2TGHorRCOhrDlk6uAAYipX8gLd
+ bC8CLsaUa7cFHsJXLnkQTN/bpiELvwsWOb/ASQ2xovmLlltc/LgDSwqG53c4tqpgt5Pn
+ K+viNvs9fVpfn+y1CiRPV3DIGIh8gYk7CQTWSZip//ttDSfx3ahtpk86Ya+2diZpwKtz
+ GZdGHyuY7CsuwxRxI7bW7yzgFIwNwAt8janVaVUyQn8PeSWdc2uVNZFNLAp/I0L/NaBY
+ VSqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754782943; x=1755387743;
+ d=1e100.net; s=20230601; t=1754782950; x=1755387750;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iwsN5KKKv0HfyrR92BG0UgTuRe26Xxcui2WMmMpb4O0=;
- b=s1nhWXISEQadRMIfpQZ5V8qImGrRB4+kNwQMMcpSYGgmX2pEqNdgqpYDJBGw/Ze+Q+
- PLNJgV2igU9HpIa/g6h9E0vD0VwEtNgAdQfrMzI7QTXIeduOOp958v03Lkpi7rpt1u9Q
- Dj1rAuJxTn47Ju0Avip2P1LTUjuDCSSbcNRCg1g52sUSzETJT3WdwUCRcLnezwXHqB+g
- CwIC9Uwth8Jv0gHTsq6IJvfaQfxhSzlz+ozZLQ+C1DSpJmaJWCNlCX+nQNUTjpRBUnwo
- 42rbR4+WEYCiu6h0hlaYL16jF2A/Py3sa7RFDfTSVIlTk45wsvVyBB2YeFxPnKqDykoI
- HiIw==
-X-Gm-Message-State: AOJu0YyZ1rpLwCbLvjMZYTG+YjymUSMHIF/gOA1SEylGVFFuKZdnkziJ
- K4m7ZqjXPI9jaSJKnEfLlpAArGiBzAal2sya6Ho14hveVVhykdziNpHxancbAafriCywtx2ZvSm
- YtTLo
-X-Gm-Gg: ASbGnctwLGeZZdlM6aK4xpk048WswixFRlAvjODZRCr73xW0lSNHns2uRP/jwTuBvEU
- VYtsSt/rr5yks7cZrON2qxgDQX/KRoX5rBRWuFQabj43MAwFuqBkMMGC5Kp81V9ea2N48EIcAKE
- BOIzynbszZCc0sTHFKO7aL4Xq/yK/hR2rAJlX6G3SbbgiV3iG01GsvWx0c9tnlxTQyei1as3HqE
- K8kp+s6nystnCBn3mY1TUOJDWZt98tf3eQGYeg6ftHtW/jSCPXu1EgFP1HW6bjCztcWjoRwdQfN
- GmTpU409RS3IJ/Wyvt4FMPH74m6t1XRj5XQ3hwzbxlbeRblbXcEEq2c5FmcJQtqQvEQPn4xv+y2
- IZFR1CglNAzwq+VT6k5+YBPakdpBr7JqMvSnU98PvMBsO8QNi7Cu13AtN0y93FNlgXFsFo9dHNh
- O8xMf+KIfG34/6ab0=
-X-Google-Smtp-Source: AGHT+IEDT9my3k7p3+s9VlUZP8ek3Wp2kTzFZbJd9EiA4WAFO/DPf3W5DSjPA7sAu+S+llN1hhxmGg==
-X-Received: by 2002:a05:6214:c62:b0:709:262d:6f64 with SMTP id
- 6a1803df08f44-7099a52094dmr96464016d6.46.1754782943464; 
- Sat, 09 Aug 2025 16:42:23 -0700 (PDT)
+ bh=N4OkU+DgDKGb66i12ye1eGOR4zW3QJF0mGHVePO3CKA=;
+ b=Hwt5Ss4TD/RK2Qs0K80vc31kh/W2AcWnAPiDbNcWWmRvTh6vPRLF2GhXBq7KAzylMe
+ UTkM+ha0DBgXnQmIU7500ZAZSzkSspDetcPkO0ofQy7tBmsPOEys0bkTggQWei0h8nRd
+ 17iyNd5hKJZED42rC7ST7QAvJwX7BlB8oPmmPbhX8wDemFpaBT1EDSVxoW479mrxNJsv
+ aHFATvPJPhw8W7u6SYM4J/AcGZ4S6uZ6nJEAQCh44EAAnTs1qkNiJWz5JC3oI8HgGMzc
+ D5p/VYht27tG66fKF/PKL34qYBLqhv9+EJLnvaaZ6Nzpe8FLXyxLPny9DOGCeaBskT78
+ w/Ug==
+X-Gm-Message-State: AOJu0YyPS2/GmJBEK9QlPUjd2UJl3FRNdeGnIP9vDu2+vdLYV88MwxBW
+ cOWBJkoRkkCdyDAiAb4MCbchfPJoUSyASDRLgk/Vm/3W0vRtU68mOSIcPWX0WLfvlcczohQuE2q
+ dtjhw
+X-Gm-Gg: ASbGncs7vbzSizBby/b1dNnN00SLH/IHFEr8JGju0+ENeQtd/8npvcpLUnEoBTiHezx
+ 39oFmBd+I/qXA50Z3A18+wYnfessljjxIrhgkOT7ysPRIrqpPqBfIGAaZOe26P9k0LBI2ECVjQH
+ X4ucIXSIkkD+v2f9QGSKkj10htjKnR3DNN4Ohjy9SpkS2KV+wi0dmcKW930wp2A5iPetwbIrsNF
+ iO8L9rY+X5OCN6JzxekFYIhQpuutQW3AZe3KHeg55xYhftVAb+sNqGVd6N8e0z6cht6ObrIEmN7
+ 2bemtQaKQpR299YISB9hRDkVi7ebaKTkGM4Rnfv8lglxR/rcMt5fuQ8eE0X8gv4xNZz4KROlyYd
+ uMoQbVfYmrNWKo4FSS8ubRRgLZdatIlLWRLcqSqhIHZ1NwAFltqzUA0olaufPECW8kGYFOr7DjY
+ wzipTm
+X-Google-Smtp-Source: AGHT+IGV3hR5B+EyX8W8ZCDmnLBWoBGij2ZL2P/R6DtI05fDgLnksrPOjvJdqN+3TP488YGjQkcTwg==
+X-Received: by 2002:a05:622a:1aa0:b0:4ab:640d:414e with SMTP id
+ d75a77b69052e-4b0a06eedfdmr186607741cf.3.1754782950476; 
+ Sat, 09 Aug 2025 16:42:30 -0700 (PDT)
 Received: from stoup.. ([172.58.166.125]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077cd56226sm132135636d6.44.2025.08.09.16.42.20
+ 6a1803df08f44-7077cd56226sm132135636d6.44.2025.08.09.16.42.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 Aug 2025 16:42:23 -0700 (PDT)
+ Sat, 09 Aug 2025 16:42:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/3] cpuinfo/i386: Detect GFNI as an AVX extension
-Date: Sun, 10 Aug 2025 09:42:06 +1000
-Message-ID: <20250809234208.12158-2-richard.henderson@linaro.org>
+Subject: [PATCH 3/3] tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts
+Date: Sun, 10 Aug 2025 09:42:08 +1000
+Message-ID: <20250809234208.12158-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250809234208.12158-1-richard.henderson@linaro.org>
 References: <20250809234208.12158-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x832.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -99,54 +99,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We won't use the SSE GFNI instructions, so delay
-detection until we know AVX is present.
+A constant matrix can describe the movement of the 8 bits,
+so these shifts can be performed with one instruction.
+
+Logic courtesy of Andi Kleen <ak@linux.intel.com>:
+https://gcc.gnu.org/pipermail/gcc-patches/2025-August/691624.html
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- host/include/i386/host/cpuinfo.h | 1 +
- include/qemu/cpuid.h             | 3 +++
- util/cpuinfo-i386.c              | 1 +
- 3 files changed, 5 insertions(+)
+ tcg/i386/tcg-target.c.inc | 75 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 71 insertions(+), 4 deletions(-)
 
-diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
-index 9541a64da6..93d029d499 100644
---- a/host/include/i386/host/cpuinfo.h
-+++ b/host/include/i386/host/cpuinfo.h
-@@ -27,6 +27,7 @@
- #define CPUINFO_ATOMIC_VMOVDQU  (1u << 17)
- #define CPUINFO_AES             (1u << 18)
- #define CPUINFO_PCLMUL          (1u << 19)
-+#define CPUINFO_GFNI            (1u << 20)
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index 9dd588fc41..fb76724941 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -4342,12 +4342,46 @@ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+     }
+ }
  
- /* Initialized with a constructor. */
- extern unsigned cpuinfo;
-diff --git a/include/qemu/cpuid.h b/include/qemu/cpuid.h
-index b11161555b..f8351b80b0 100644
---- a/include/qemu/cpuid.h
-+++ b/include/qemu/cpuid.h
-@@ -68,6 +68,9 @@
- #ifndef bit_AVX512VBMI2
- #define bit_AVX512VBMI2 (1 << 6)
- #endif
-+#ifndef bit_GNFI
-+#define bit_GNFI        (1 << 8)
-+#endif
++static void gen_vgf2p8affineqb0(TCGType type, TCGv_vec v0,
++                                TCGv_vec v1, uint64_t matrix)
++{
++    vec_gen_4(INDEX_op_x86_vgf2p8affineqb_vec, type, MO_8,
++              tcgv_vec_arg(v0), tcgv_vec_arg(v1),
++              tcgv_vec_arg(tcg_constant_vec(type, MO_64, matrix)), 0);
++}
++
+ static void expand_vec_shi(TCGType type, unsigned vece, bool right,
+                            TCGv_vec v0, TCGv_vec v1, TCGArg imm)
+ {
++    static const uint64_t gf2_shi[2][8] = {
++        /* left shift */
++        { 0,
++          0x0001020408102040ull,
++          0x0000010204081020ull,
++          0x0000000102040810ull,
++          0x0000000001020408ull,
++          0x0000000000010204ull,
++          0x0000000000000102ull,
++          0x0000000000000001ull },
++        /* right shift */
++        { 0,
++          0x0204081020408000ull,
++          0x0408102040800000ull,
++          0x0810204080000000ull,
++          0x1020408000000000ull,
++          0x2040800000000000ull,
++          0x4080000000000000ull,
++          0x8000000000000000ull }
++    };
+     uint8_t mask;
  
- /* Leaf 0x80000001, %ecx */
- #ifndef bit_LZCNT
-diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
-index c8c8a1b370..f4c5b6ff40 100644
---- a/util/cpuinfo-i386.c
-+++ b/util/cpuinfo-i386.c
-@@ -50,6 +50,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
-             if ((bv & 6) == 6) {
-                 info |= CPUINFO_AVX1;
-                 info |= (b7 & bit_AVX2 ? CPUINFO_AVX2 : 0);
-+                info |= (c7 & bit_GFNI ? CPUINFO_GFNI : 0);
+     tcg_debug_assert(vece == MO_8);
++
++    if (cpuinfo & CPUINFO_GFNI) {
++        gen_vgf2p8affineqb0(type, v0, v1, gf2_shi[right][imm]);
++        return;
++    }
++
+     if (right) {
+         mask = 0xff >> imm;
+         tcg_gen_shri_vec(MO_16, v0, v1, imm);
+@@ -4361,10 +4395,25 @@ static void expand_vec_shi(TCGType type, unsigned vece, bool right,
+ static void expand_vec_sari(TCGType type, unsigned vece,
+                             TCGv_vec v0, TCGv_vec v1, TCGArg imm)
+ {
++    static const uint64_t gf2_sar[8] = {
++        0,
++        0x0204081020408080ull,
++        0x0408102040808080ull,
++        0x0810204080808080ull,
++        0x1020408080808080ull,
++        0x2040808080808080ull,
++        0x4080808080808080ull,
++        0x8080808080808080ull,
++    };
+     TCGv_vec t1, t2;
  
-                 if ((bv & 0xe0) == 0xe0) {
-                     info |= (b7 & bit_AVX512F ? CPUINFO_AVX512F : 0);
+     switch (vece) {
+     case MO_8:
++        if (cpuinfo & CPUINFO_GFNI) {
++            gen_vgf2p8affineqb0(type, v0, v1, gf2_sar[imm]);
++            break;
++        }
++
+         /* Unpack to 16-bit, shift, and repack.  */
+         t1 = tcg_temp_new_vec(type);
+         t2 = tcg_temp_new_vec(type);
+@@ -4416,12 +4465,30 @@ static void expand_vec_sari(TCGType type, unsigned vece,
+ static void expand_vec_rotli(TCGType type, unsigned vece,
+                              TCGv_vec v0, TCGv_vec v1, TCGArg imm)
+ {
++    static const uint64_t gf2_rol[8] = {
++        0,
++        0x8001020408102040ull,
++        0x4080010204081020ull,
++        0x2040800102040810ull,
++        0x1020408001020408ull,
++        0x0810204080010204ull,
++        0x0408102040800102ull,
++        0x0204081020408001ull,
++    };
+     TCGv_vec t;
+ 
+-    if (vece != MO_8 && have_avx512vbmi2) {
+-        vec_gen_4(INDEX_op_x86_vpshldi_vec, type, vece,
+-                  tcgv_vec_arg(v0), tcgv_vec_arg(v1), tcgv_vec_arg(v1), imm);
+-        return;
++    if (vece == MO_8) {
++        if (cpuinfo & CPUINFO_GFNI) {
++            gen_vgf2p8affineqb0(type, v0, v1, gf2_rol[imm]);
++            return;
++        }
++    } else {
++        if (have_avx512vbmi2) {
++            vec_gen_4(INDEX_op_x86_vpshldi_vec, type, vece,
++                      tcgv_vec_arg(v0), tcgv_vec_arg(v1),
++                      tcgv_vec_arg(v1), imm);
++            return;
++        }
+     }
+ 
+     t = tcg_temp_new_vec(type);
 -- 
 2.43.0
 
