@@ -4,76 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BD3C87FCB
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 06:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60BC0C87FCB
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 06:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukcwm-0003RY-Ke; Sat, 09 Aug 2025 02:20:52 -0400
+	id 1ukd3j-0007Uo-PT; Sat, 09 Aug 2025 02:28:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukcwg-0003K6-7A
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 02:20:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ukcwe-0005Ou-Kf
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 02:20:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754720443;
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>)
+ id 1ukd3h-0007U1-5e; Sat, 09 Aug 2025 02:28:01 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>)
+ id 1ukd3e-0006Ge-FK; Sat, 09 Aug 2025 02:28:00 -0400
+Received: from [192.168.44.78] (unknown [185.238.219.27])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 213E7DA077B;
+ Sat, 09 Aug 2025 08:27:55 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1754720875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S+wqlEX+dbhZlu+2Q2U1ufU4MoJGnbtQuMwJYP7rN6I=;
- b=M9Vs1HaaAWLG8bBoIaKrnIyO/+OnXjnVkp5wSmUcz+Ylqs03S8umQ0/rbVvYUXwn7vh0Ta
- pjGmNSCs6M2F5T89Nf5+HwqhiscvsteBB9/af/fe9MoLoKQlVhl4Fi/qVgPm+oGKaGPW+b
- cLzXgJFvlbOAGPfuHfrcX1HC/JooxXI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-FAWXzMsyPayYDPRAyPb26w-1; Sat,
- 09 Aug 2025 02:20:40 -0400
-X-MC-Unique: FAWXzMsyPayYDPRAyPb26w-1
-X-Mimecast-MFC-AGG-ID: FAWXzMsyPayYDPRAyPb26w_1754720438
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F20E19560AF; Sat,  9 Aug 2025 06:20:37 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47441195419C; Sat,  9 Aug 2025 06:20:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A1F2D21E6A27; Sat, 09 Aug 2025 08:20:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Stefan Weil via <qemu-devel@nongnu.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Samuel Thibault
- <samuel.thibault@ens-lyon.org>,  Michael Tokarev <mjt@tls.msk.ru>,  rent
- Vivier <laurent@vivier.eu>,  Stefan Weil <sw@weilnetz.de>,
- qemu-trivial@nongnu.org
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=BXI5NyO/xeryv4zCmvWYckD8aUzqVTI/BuLOipkbd9I=;
+ b=Uz7TQ87MeY+e9HRgCyGqBC3BAvfutRuCHM+NEYGEn/EKsPycoL6BxwvWMuADUde0RPPOJa
+ JcE9FQk7bqiE5bUBPtdHZfi7ljdjBkBfMusVL5pnE7aFQ7VyUvBEqIXwn8/oZG8a6NkrP0
+ UhmjgNxiGlCWd2FcCzd5zu13rZtQe1o=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
+Message-ID: <8e34a7e3-29a7-4f19-98d6-b4b4ecd73da9@weilnetz.de>
+Date: Sat, 9 Aug 2025 08:27:54 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH trivial] chardev/baum: Fix compiler warning for Windows
  builds
-In-Reply-To: <20250809061302.596931-1-sw@weilnetz.de> (Stefan Weil via's
- message of "Sat, 9 Aug 2025 08:13:02 +0200")
+To: Markus Armbruster <armbru@redhat.com>,
+ Stefan Weil via <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, rent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org
 References: <20250809061302.596931-1-sw@weilnetz.de>
-Date: Sat, 09 Aug 2025 08:20:32 +0200
-Message-ID: <87y0rtnhhr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ <87y0rtnhhr.fsf@pond.sub.org>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+In-Reply-To: <87y0rtnhhr.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Server: v2201612906741603
+X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[99.99%];
+ MIME_GOOD(-0.10)[text/plain]; FROM_HAS_DN(0.00)[];
+ ARC_NA(0.00)[];
+ ASN(0.00)[asn:210070, ipnet:185.238.219.0/24, country:DE];
+ MIME_TRACE(0.00)[0:+]; RCVD_COUNT_ZERO(0.00)[0];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[nongnu.org:email, weilnetz.de:mid,
+ weilnetz.de:email]
+X-Rspamd-Queue-Id: 213E7DA077B
+X-Spamd-Bar: ---
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: 16
+X-Spam_score: 1.6
+X-Spam_bar: +
+X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,57 +132,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Weil via <qemu-devel@nongnu.org> writes:
+Am 09.08.25 um 08:20 schrieb Markus Armbruster:
 
-> Compiler warning:
+> Stefan Weil via <qemu-devel@nongnu.org> writes:
 >
-> ../chardev/baum.c:657:25: warning: comparison between pointer and integer
->
-> Use brlapi_fileDescriptor instead of int for brlapi_fd and
-> BRLAPI_INVALID_FILE_DESCRIPTOR instead of -1.
->
-> Signed-off-by: Stefan Weil <sw@weilnetz.de>
-> ---
->
-> This is a rather old patch which I now use since more than two years
-> to support Braille with QEMU on Windows.
->
-> It's a hack (because Windows uses a pointer (64 bit) which is
-> assigned to an int (32 bit), but it seems to work.
+>> Compiler warning:
+>>
+>> ../chardev/baum.c:657:25: warning: comparison between pointer and integer
+>>
+>> Use brlapi_fileDescriptor instead of int for brlapi_fd and
+>> BRLAPI_INVALID_FILE_DESCRIPTOR instead of -1.
+>>
+>> Signed-off-by: Stefan Weil <sw@weilnetz.de>
+>> ---
+>>
+>> This is a rather old patch which I now use since more than two years
+>> to support Braille with QEMU on Windows.
+>>
+>> It's a hack (because Windows uses a pointer (64 bit) which is
+>> assigned to an int (32 bit), but it seems to work.
+> Would a code comment pointing out the hack be useful?
 
-Would a code comment pointing out the hack be useful?
 
-> Regards,
-> Stefan
->
->
->  chardev/baum.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/chardev/baum.c b/chardev/baum.c
-> index f3e8cd27f0..5c3587dda5 100644
-> --- a/chardev/baum.c
-> +++ b/chardev/baum.c
-> @@ -94,7 +94,7 @@ struct BaumChardev {
->      Chardev parent;
->  
->      brlapi_handle_t *brlapi;
-> -    int brlapi_fd;
-> +    brlapi_fileDescriptor brlapi_fd;
->      unsigned int x, y;
->      bool deferred_init;
->  
-> @@ -654,7 +654,7 @@ static void baum_chr_open(Chardev *chr,
->      baum->brlapi = handle;
->  
->      baum->brlapi_fd = brlapi__openConnection(handle, NULL, NULL);
-> -    if (baum->brlapi_fd == -1) {
-> +    if (baum->brlapi_fd == BRLAPI_INVALID_FILE_DESCRIPTOR) {
->          error_setg(errp, "brlapi__openConnection: %s",
->                     brlapi_strerror(brlapi_error_location()));
->          g_free(handle);
+Maybe. Michael, feel free to add such a comment if you take the patch.
+
+Note that there is also a compiler warning for 
+`qemu_set_fd_handler(baum->brlapi_fd, baum_chr_read, NULL, baum)`:
+
+warning: passing argument 1 of ‘qemu_set_fd_handler’ makes integer from 
+pointer without a cast [-Wint-conversion]
+
+That would be a good place for the comment.
+
+Stefan
+
 
 
