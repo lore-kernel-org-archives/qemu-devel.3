@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7A4CA0EC0
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 21:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42528C87FCB
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 21:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukqqM-0002nF-IP; Sat, 09 Aug 2025 17:11:10 -0400
+	id 1ukqqN-0002p0-2W; Sat, 09 Aug 2025 17:11:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ukqqI-0002fO-UQ; Sat, 09 Aug 2025 17:11:08 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1ukqqL-0002kd-AW; Sat, 09 Aug 2025 17:11:09 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ukqqH-0000S5-0s; Sat, 09 Aug 2025 17:11:06 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-af93c3bac8fso458546666b.2; 
- Sat, 09 Aug 2025 14:11:04 -0700 (PDT)
+ id 1ukqqJ-0000SR-1s; Sat, 09 Aug 2025 17:11:09 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-61521cd7be2so4424481a12.3; 
+ Sat, 09 Aug 2025 14:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754773863; x=1755378663; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1754773865; x=1755378665; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zLS1IfdtfCYJXwM0afrlw5a/dpGN+DNTjiPZRtgb6mU=;
- b=CPokN0siSZRs2G1dLycNhCRv2fjEzn9soiIGDUdVLmf6A8AjFXtqqyxux+9phHFM5e
- jrJ0e6xnVdK3bJWeeOnp+knR9qfYK0dfdZB9pbV5HdVMRJccqLs2G6/HEjVyRGdI4Up+
- V5+n2cJAf5E3bxH9xuOYJaqQ9L0YVafXj/gfacq6ax/vi89poa4b/Gs44rkq2uSGWqGr
- H4iXIpdjY7Tf9jPTMHw2zxcaBDrSniNCAJokIbL+J5n7kwe9L0XHC42bLr2h8kVEEtDb
- PcuQYiNZBa2pvWGYEmBTgcydxxs2T4azqOkFaCfmdnUCErapx1AptFt77HkKzCfbRiYi
- ugog==
+ bh=E3E7y/HiFOV12vylnrfnt9s4sgvYTh8dgFULKwaB7zg=;
+ b=na6XiCxkzhuDQVeDNW2zxRpIKSOP31lg1yJDTfwi7XnCk0Ih+Jps77WhRI55z0beqL
+ U7apTbrhPMxyfDVexEVa25RzFdAWTL9hTP9Eo0kEMUwnPZx2Ainhua0B1Fi6GrJNNoIn
+ /jR6eFwTprbfHOG7uEZNcFaNXWmPYHneRPLx2RbQXPeZIKp2XYvvCocjxPZG6KixbqvW
+ +hNqm8wa/x6qRCDMRDVKRgdW40+uX9AggC5xLPqw6BHr8s7BIhzo8dSCmNqQGzzZiSdw
+ 8w15AaTomHApJ7UPzJoqU6t8uV2b72OGPr230/0DVaWFGb+J+R0jYxBF5bwdCEnBpZt6
+ U4oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754773863; x=1755378663;
+ d=1e100.net; s=20230601; t=1754773865; x=1755378665;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zLS1IfdtfCYJXwM0afrlw5a/dpGN+DNTjiPZRtgb6mU=;
- b=hJWjsc338SgUCY382IZkNM4dGcVTbBw6TdFFt3ZQAlGh+RHD8ldRCFNH0G6noMUivD
- uACp0/n4NEz+OFaJvj1P9O155k4jom4ez0dRnLfh6M+pnYNiY+rG0C0ed5XMzO4ZmcM9
- sIhOp/WvXgWum6WEIpFnDjX5mJyE41R+CwhPRR/wwHwPJbviLBYyLOhg34wMYwKS/Jrz
- dgVjeAyr4NEaUszbiRRJnCB3/P+Si1P7OyUvpxNBETLUEKScrDDnjqdCi7PTfgVfjgcb
- SuuDfYau+OyruNrUMlEv4N2qNF5YqVfjPhPRCoptVEm3B71I+Za0oeOlLiAGa8ybflbx
- 2WUw==
-X-Gm-Message-State: AOJu0YybmMl6f8uotRbj2qbz1XWgXIZltdfPxJzly0d76iXyoMMEGQ2N
- FJFaP9duVUsAPh+51xXOWHBiLSnHgImsixxa0th7ertbTIyVNKS/KJtdXL7QsFbNVu0=
-X-Gm-Gg: ASbGncuMa5P+Y0eXo0+G9kt1xgxLVgdcuTbZunPn4XIyT3nIXph1TRe0vAZaZB4odRR
- ggDFIFRZuqmg3EmyjJ2hH6bvV/HMe81F7KadLwH+h60qC5/7GpFG5M0yW6Q4a5ItPqeLGEdOAXd
- fWbwIicZMZlDmstFCJw/O6En//OnOoSvLI5PahrDO9hnLLcV/uw+oWP0kea8K49S790L24QTGxb
- DnxB7j7i3m6boYwirnxPhe7btQca1v2oMEbdJrFK1oR2ztWuNGUw52CsN5QEf/ib7bIcye81iFf
- p+Z3xraV7RtFyCu0iWNhtBz726VKJy6HwkH+hrCbHMv86RDI2TwOOxQcHm5tBsgA0WKhBPV/AVV
- 3JbIJZ/nrDN3KjQ84IDFEFWLvubZMZRPuU8XUUhxQ4mRl3jW8
-X-Google-Smtp-Source: AGHT+IGCFF1z8GyfRrmlCjpSnUFgH0FFYvzAJ+qHVKUBVL6qRkb4x8p9ksfb15cd4u8okAx4NH9K8A==
-X-Received: by 2002:a17:907:3e1d:b0:af9:3ad2:6923 with SMTP id
- a640c23a62f3a-af9c64f2230mr713317366b.38.1754773862559; 
- Sat, 09 Aug 2025 14:11:02 -0700 (PDT)
+ bh=E3E7y/HiFOV12vylnrfnt9s4sgvYTh8dgFULKwaB7zg=;
+ b=D/orUX7DS9kFvSVk11TDRd+D9tQQbzTGXESM79i4DSxkV0znl1Gza0eRlPgCN5qMCO
+ RHnhWWXeylxlleM0i2H47cnY85Bq5DYxYog+U19zivFmcq3b9uS0vx/HluH3iC6jrKZR
+ 60w4Oic623dKbV0qZPLk7qUm7Cy7phZ4rLN25St+tGAWscQIgRdKq9/i7rcIz/dz6Bi2
+ iQZV1JIpGQrQqOadBjkVun4xCLTqKMKZRJT2YdFH2am0QlV9JHkJgH5NTIDoR/S4nyjP
+ gDzeKz2xyGHKCoscIf0RfF4DGfPSok5qsvPwLPWJ7kBYW6cTXXd7Ta0RDQIG5JmS8cQw
+ 8exw==
+X-Gm-Message-State: AOJu0YxWfRHIVVGS57R+DrvZgBx4DJ9ybBpONNv5WmTyZ6Hoel07iZ9u
+ F4ZHbNLwN76PfhV4tPvh4JYIjiW8XLtrz8B2YhRGVmDlXHY+woeOGBkFj9vuVJv36pk=
+X-Gm-Gg: ASbGncv8Ooi+ANt9WX8216im9PAIsKBNiN0ZnN+IGLwigbnW+ala5VIDvLJim6Icf6k
+ fZHZCb/vNzamHvKYZrMhbalajd20aFbFiPNy6FCJUH6Jcqk4VYsV2xdOby6GDdN+ZdM7esMMfGZ
+ or7ICfq1PJ4mRcOkSz41ubW6u5SHPz0YVgdO6CfthS97pADiiL7k1JB7nolyELAEjEhDUAxn6rd
+ AlJrigqpgCAJg64LTPRus/IJAFNJr4+3bVwVJkVamoTFTCnUYbQkUht6oiIz/coTwb+oS8HrCir
+ uRl+22qwLPm74XPRXhAGc0UgfQhPKvFbzIw14qElTPAFygdqZZArm6XUmJiW2rhUFxa5zEvdwYJ
+ mk17y0p9U5GU+C9e3pF2oFj+fx5ArN+ylNDHa+57t5ehE51+h
+X-Google-Smtp-Source: AGHT+IEdS47Lh0kda4tg6mPXOJ+pT2xgh6rqFMrVPWfj0R9b1PM/WAJ2+7+6mw6TekMMJxsukISy/w==
+X-Received: by 2002:a17:907:7f90:b0:af2:9a9d:2857 with SMTP id
+ a640c23a62f3a-af9c6375b94mr676408366b.3.1754773864471; 
+ Sat, 09 Aug 2025 14:11:04 -0700 (PDT)
 Received: from localhost.localdomain ([87.251.30.120])
  by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-af91a078a11sm1759490766b.7.2025.08.09.14.11.01
+ a640c23a62f3a-af91a078a11sm1759490766b.7.2025.08.09.14.11.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Aug 2025 14:11:02 -0700 (PDT)
+ Sat, 09 Aug 2025 14:11:04 -0700 (PDT)
 From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Vadim Chichikalyuk <chichikalyuk@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 1/3] tests: acpi: whitelist expected blobs
-Date: Sun, 10 Aug 2025 00:10:49 +0300
-Message-Id: <20250809211051.68824-2-chichikalyuk@gmail.com>
+Subject: [PATCH v2 2/3] hw: arm: acpi: upgrade SPCR table to revision 4
+Date: Sun, 10 Aug 2025 00:10:50 +0300
+Message-Id: <20250809211051.68824-3-chichikalyuk@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250809211051.68824-1-chichikalyuk@gmail.com>
 References: <20250809211051.68824-1-chichikalyuk@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=chichikalyuk@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=chichikalyuk@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,18 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On the ARM virt machine, there is currently no way to programmatically
+discover the frequency of the UART reference clock solely through the use of
+UEFI/ACPI (without the DTB). The SPCR table can include this information
+as of revision 4, but is currently at revision 2.
+
+Bump the revision to 4, add the clock frequency of 24 MHz and
+complete the other new fields.
+
 Signed-off-by: Vadim Chichikalyuk <chichikalyuk@gmail.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+ hw/arm/virt-acpi-build.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..a60794a3f6 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/SPCR",
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index b01fc4f8ef..f685668c5e 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -536,6 +536,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ static void
+ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ {
++    const char name[] = ".";
+     AcpiSpcrData serial = {
+         .interface_type = 3,       /* ARM PL011 UART */
+         .base_addr.id = AML_AS_SYSTEM_MEMORY,
+@@ -559,13 +560,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         .pci_function = 0,
+         .pci_flags = 0,
+         .pci_segment = 0,
++        .uart_clk_freq = 24000000,
++        .precise_baudrate = 0,
++        .namespace_string_length = sizeof(name),
++        .namespace_string_offset = 88,
+     };
+-    /*
+-     * Passing NULL as the SPCR Table for Revision 2 doesn't support
+-     * NameSpaceString.
+-     */
+-    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id,
+-               NULL);
++
++    build_spcr(table_data, linker, &serial, 4, vms->oem_id, vms->oem_table_id,
++               name);
+ }
+ 
+ /*
 -- 
 2.39.5 (Apple Git-154)
 
