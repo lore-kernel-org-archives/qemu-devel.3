@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 794E3C87FD2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80768CA0EC1
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 21:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukqqV-0002y6-9a; Sat, 09 Aug 2025 17:11:19 -0400
+	id 1ukqqK-0002g4-En; Sat, 09 Aug 2025 17:11:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ukqqM-0002oG-K2; Sat, 09 Aug 2025 17:11:10 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1ukqqG-0002Xb-K1; Sat, 09 Aug 2025 17:11:04 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ukqqK-0000TM-Th; Sat, 09 Aug 2025 17:11:10 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-af9180a11bcso660389066b.0; 
- Sat, 09 Aug 2025 14:11:08 -0700 (PDT)
+ id 1ukqqF-0000RH-3n; Sat, 09 Aug 2025 17:11:04 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-af95ecfbd5bso550395266b.1; 
+ Sat, 09 Aug 2025 14:11:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754773867; x=1755378667; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hy0jRWoRKSa/ItelcnJbwYMxz/tJPxS++i76CTjN9hM=;
- b=QeZjXYxqeFQcVXHoJ5nfZe7kaFZFNkB0MqgQj3l1e60DkST6GzLqlTcBUEm0jiX2Of
- /eNyh+0LXvU2DIm5wHdzV8rRUdRpxwg3Wobq7VL1ejFqkSKqMFIfGRLaxuTu7WErrLzQ
- LptLkW2dkVSriMKxv75QSFW+1IWaEUg7VBcgi14McJLvpj4vr5bW+rFkHWTbJi8ps6Tz
- V4POCfmiQNhaqnVFCYUSO9vP3poKOsMztkKKAhYqiJOoJm/gRFM7o1am/y9zGC4JoDyN
- Ja9i73rltLQxDKc4ocx2dZPJAP2R+CxbJ+daVQHW2RfmCmTbKUisyegbLE2tCvqnerE4
- Zk3w==
+ d=gmail.com; s=20230601; t=1754773860; x=1755378660; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yuhrFQ4YMQGngl1ljCiD9nY1lduhD/ZObTT4cnNlv/U=;
+ b=jRldKPZvCYS9IH+ql0hX47Xx6RQ05PHZl7b33LckD7Dz8dL/+YAoFpbBdRkklIvJhK
+ gf2IONmVOZSKZ1rdtRL1tVcmWh/DX4ou0TY8cNmjv+DsdST2o4zQ0YtqcxO/H1gSDLdC
+ +vdxHWXGbyZKQHrhcROcvENfulB5j4i3rEOFSUuRLAIRI1Jrzufeq2HoNsIsYv8vjU/I
+ ysU55tM768lLRmLzmLqUVbxhguNX8T3KWoxA/Cu3f6M404cdAKwPuMnvLSG1iUHapQow
+ YM6tq9W/awQE+GMOqDtRYZDtFUocxHNkXhcWXvfHk/91tUmVQInSPzjDV6WK9+JiNigR
+ Q2gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754773867; x=1755378667;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hy0jRWoRKSa/ItelcnJbwYMxz/tJPxS++i76CTjN9hM=;
- b=j0hpo4kPBgbn2kxsFK55HxJX4HLh0bbNVXQbwAZQVuFO/D7jrZGY9aNhfehaXJlHIy
- /snEeRQtnmdj0q1nlAl1QpeLZ0jyVXy8YVpFOioZ6xHjdtzz0Mnjfu3g07b1skozZat6
- eyymARSjOQOUHlUA8Gmo/3pqpitI93z5+e2PFyITSmkV+cND0SmX7u6sKtl8CXPldp3J
- oNQELs1Ql3yx0xQCl2OJEZlrUFdds4hVx089hCPSWMCg7Fx2rlYMzoXZkeYeWEnmORyx
- tu1gfwU86WGDmj8GIgRfKugj3mImRyoDSwSeDhahP+KThA/07OQx+57Mzaw+EewEN8ns
- OCVw==
-X-Gm-Message-State: AOJu0Yy61jefj34INXhe8g28ehz/A4LIfbPofnwT9MJEivgZvq2dTnnE
- LCAcuJNmkP+s+0d5ukJgT3VOfjKDcBiW9aZn6bcA1mNcFg2vR1pKwprSNyKCJ8vCBIQ=
-X-Gm-Gg: ASbGncs5TbbFWREr9SNcfUn12yCvoQ3eIN0FjT7mTdehimyU9ktixZKKvcAgIHh6pHM
- l/JZTMur0wmuXr23vj0QP1aZKnjeJRNWGkLzW/mHG1cCsBfqCwu5hp9OZ0+V3+XgbhpOtC8HrzN
- I8bCA2n4iwxCxKWuqdg9HZ8nMQAlsUOyedFi6Uaqdd2Ygzj3YOB7lqhfSSXrczaMFDKlmvK4sdQ
- OijBoOCL1BdBmWzgNiQD/jUAS+X5xWXu1uewluKw8c3vAP2a15oIYVYtjB/vGXit8FgrTeQgd+M
- qapK/mNDFEKsPNnvZjEkP0GEjAFQiyRslh3HxfFaFirI2ugwgNjCszX0dOsam1bwLKCsa4Z4EbO
- ZrhErPr28r4+ZmAnWaeukSaNXBbKuLin5snEldgAori+Hbh0O
-X-Google-Smtp-Source: AGHT+IF66LENE1fFLXx2cWgIkhikOv2s+KX10w26arXhQyxhLvSmGNR/IFog2DM3TFpiWm4/WtUG8w==
-X-Received: by 2002:a17:907:948d:b0:af9:21ed:6ebe with SMTP id
- a640c23a62f3a-af9c700b437mr659975466b.21.1754773866577; 
- Sat, 09 Aug 2025 14:11:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754773860; x=1755378660;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yuhrFQ4YMQGngl1ljCiD9nY1lduhD/ZObTT4cnNlv/U=;
+ b=NNOpZ4ufy4mvnq8GOf+9s3/r/c/ZQJpSWcd7vj1EH/14Sbx4Iy2P1iUeIBkoR+m3Is
+ BlGrJUg3BE3uW6VbDCuh/Ew/lAbSgtxeisaHVeOSJmaeGbdIuj8EmsChssKeXIYwENOm
+ nsUPifjK/t1sXyYuhr3a9p4xaqGaSk1sJFv9Cz9MIrj+1iujeL5J6FytFVHeW6OgcWd+
+ vxGiCyoN9SLO3nNSc/8Xuvoprv9D8UP/3L+44Yr/aP5wQvhztrTW2W007FLwg6HmIuZ8
+ rt7Hc8axk9kH3CIcIelb7e/FQ+tvL7WBNYwbrX2A9VdJxFSN8F38OEa4KNv6B2y3rPdL
+ k3sw==
+X-Gm-Message-State: AOJu0Yyc46dYwaMUUWk6AET6sMD/GuuBUHH+5xqyA3+RYK4nTjYS5MyL
+ SWkkor8WZ0AVn0kCXOEhkjsxOrAu+j++8yh8EN/ZEQvcU2Kxx2U1PqdEXoPAfgDDrrg=
+X-Gm-Gg: ASbGncttOeDeF7n3VjryS7itTKY+606/bNXDnMrCdRb0pVEpz/Baq88/c9KEPaC5FUA
+ 3iU4lieWZxKKnAQPhvMgLFpNfw8ExHivLF3gE13e5pmr/dTcJnn/CUYO4J6YEESTpqAWsswqDcZ
+ 4kdEWQ/agtIDZzOiPCptM+FHKf+UvPIgQyE5E7zI5cAvcDh5kw/dWKkphChgO043bKBG9totpvJ
+ 1s1p2omH6B9royt8xvf17b/SgkBXrIV7XbfbBchuuMzPK2RtKniz1zsbgujDa9AFOwN0l3luzOC
+ 5x7drt3SB3W1RauSA+EvROdhPjqSKJOpJ08KN8EHcSHJgNergad4bS1kcAYrnCSAsW9pdrn75TS
+ jmEJWyXOS5JFxDTR0iU6MzCT3IdUCxzNBCBJN6ushvXz1GZ61
+X-Google-Smtp-Source: AGHT+IHcgdbWpeXHRWitx3TVSK0i4Wf3yWNwmJZMOKPggfvY3PfiVAsDwmcCB6sZlhcQUSB9UEpVVQ==
+X-Received: by 2002:a17:906:f5aa:b0:af9:5a60:3319 with SMTP id
+ a640c23a62f3a-af9c64674fdmr728772766b.19.1754773860448; 
+ Sat, 09 Aug 2025 14:11:00 -0700 (PDT)
 Received: from localhost.localdomain ([87.251.30.120])
  by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-af91a078a11sm1759490766b.7.2025.08.09.14.11.05
+ a640c23a62f3a-af91a078a11sm1759490766b.7.2025.08.09.14.10.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Aug 2025 14:11:06 -0700 (PDT)
+ Sat, 09 Aug 2025 14:11:00 -0700 (PDT)
 From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Vadim Chichikalyuk <chichikalyuk@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 3/3] tests: acpi: update expected blobs
-Date: Sun, 10 Aug 2025 00:10:51 +0300
-Message-Id: <20250809211051.68824-4-chichikalyuk@gmail.com>
+Subject: [PATCH v2 0/3] hw: acpi: add UART clock freq to AArch64 SPCR
+Date: Sun, 10 Aug 2025 00:10:48 +0300
+Message-Id: <20250809211051.68824-1-chichikalyuk@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250809211051.68824-1-chichikalyuk@gmail.com>
-References: <20250809211051.68824-1-chichikalyuk@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=chichikalyuk@gmail.com; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=chichikalyuk@gmail.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,40 +97,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previous patch changed the SPCR ACPI table for AArch64 virt.
-Hexdump diff:
-@@ -1 +1 @@
--00000000  53 50 43 52 50 00 00 00  02 b1 42 4f 43 48 53 20
-+00000000  53 50 43 52 5a 00 00 00  04 78 42 4f 43 48 53 20
-@@ -5,2 +5,3 @@
--00000040  ff ff ff ff 00 00 00 00  00 00 00 00 00 00 00 00
--00000050
-+00000040  ff ff ff ff 00 00 00 00  00 00 00 00 00 36 6e 01
-+00000050  00 00 00 00 02 00 58 00  2e 00
-+0000005a
+This series upgrades the ACPI SPCR table for AArch64 virt to revision 4,
+adding the UART clock frequency, which was not previously available via ACPI.
+
+Regarding the NamespaceString: following the example of the SPCR table
+for RISC-V, I've set it to "." (indicating that there is no device
+corresponding to the UART in the ACPI namespace). However, looking
+at build_dsdt(), the UART is actually added to the DSDT, as
+"\_SB.COM0" (same as RISC-V). Should the NamespaceString be that instead?
+
+Thanks,
+Vadim
 
 Signed-off-by: Vadim Chichikalyuk <chichikalyuk@gmail.com>
----
- tests/data/acpi/aarch64/virt/SPCR           | Bin 80 -> 90 bytes
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- 2 files changed, 1 deletion(-)
 
-diff --git a/tests/data/acpi/aarch64/virt/SPCR b/tests/data/acpi/aarch64/virt/SPCR
-index cf0f2b75226515097c08d2e2016a83a4f08812ba..6df47f5c95dfbad2a0b060151c0733bdbc9f7392 100644
-GIT binary patch
-delta 30
-kcmWHD;tCFM4vJ!6U|^}3$mPsymd6NWGcYkkFz7J=09{iA+W-In
+Vadim Chichikalyuk (3):
+  tests: acpi: whitelist expected blobs
+  hw: arm: acpi: upgrade SPCR table to revision 4
+  tests: acpi: update expected blobs
 
-delta 20
-acmazF;0g|K4hmpkU|`xfk;|DG$N&H@<O9(F
+ hw/arm/virt-acpi-build.c          |  14 ++++++++------
+ tests/data/acpi/aarch64/virt/SPCR | Bin 80 -> 90 bytes
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index a60794a3f6..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/SPCR",
 -- 
 2.39.5 (Apple Git-154)
 
