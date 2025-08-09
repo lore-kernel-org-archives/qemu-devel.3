@@ -4,86 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 510CEC87FCF
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 23:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D71EC87FD2
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 23:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukt57-0000j2-3e; Sat, 09 Aug 2025 19:34:33 -0400
+	id 1uktCk-0005hP-UE; Sat, 09 Aug 2025 19:42:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ukt55-0000iL-9o
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:34:31 -0400
-Received: from mail-qk1-x72a.google.com ([2607:f8b0:4864:20::72a])
+ id 1uktCh-0005gh-Rp
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:23 -0400
+Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ukt53-0004dm-9t
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:34:31 -0400
-Received: by mail-qk1-x72a.google.com with SMTP id
- af79cd13be357-7e1d89fcc31so337397185a.1
- for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 16:34:28 -0700 (PDT)
+ id 1uktCg-0005ga-81
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:23 -0400
+Received: by mail-qv1-xf33.google.com with SMTP id
+ 6a1803df08f44-707365f4d47so33657046d6.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 16:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754782467; x=1755387267; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=595vqFNt+OWlRGOZf+6J+Rayv0WWXuITmOxKlHTsAfM=;
- b=IbYgapEqenFP4aT16vztAjbgmXecLMaNhiuu69ZtQOLed9mV+5/+0F5nH1FHkEmtoj
- UB2Ydnj2LAEnFhR53L5Cnzkm2BQ48fUv5W+xeaECSWhpkvDznX16AnB821ZDNuCEwyEo
- g9Hngyl9dyYkVvGnyTBE+ty4UwGjJ0TzkcC9hng4405Oa99iK3SPPNd4WOQn5VK9he3W
- vF4IIev2dM05iNru/559uS6v7vZyVyTfC3+YNpVyHXjGgRMURJ7uKJM62SPCBI2ZPlSs
- R2797FVnEi3OKWVqd/bnm2od96ucJTMJ9SVjkZ/PNRFaDIriLtgut7RqX9BjpxfxrUz8
- Wusg==
+ d=linaro.org; s=google; t=1754782940; x=1755387740; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sfVuGac2CDyxX83RG/Zy/sSiKRv5/J7fUNEQNl9HtMM=;
+ b=hAd7Vfj/pKSAT0Jtfa2S1xpzdkcmZjDwZrrgw0QDS4c+ca2L90yCkQyVj3MkGqfU7U
+ OYlhY+w2qGamggdWYWp6kTjsSqKMNsKBb7zZcS5hq0RbQf0A6kzZPJaHIVGiXE3IR7d/
+ qyBC4Zo+uTmHQRilJYwM+6Pe475tolkIaCGy6pjVS/DFNFhg5gYrux1qrZ2A+wLOAJcs
+ IO6cVF9JVPotfByHb3JuVa6FaOGvdA46+LKHbvn3LGjG70BiaZZxKkkL26SHBSaqpFfB
+ ax2JlzVr5+ok2Tw7zL5nbEGg0lexpWjGcNJc1eJ09HkP48BtsLjBpZFiA/QUAzSo5lR1
+ Bq0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754782467; x=1755387267;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=595vqFNt+OWlRGOZf+6J+Rayv0WWXuITmOxKlHTsAfM=;
- b=sUlzeBGueADXxt8AMV9WQ8rHEdjyXQOdGsx4dyxoc0FXXx8SkX35w0A64kSEDm1qiO
- Qwyj5NXViUGuOoLHDQR7R37t4JvCj3TDEOSobEtrO09N8IvvAS59XULHfhIZER/RhpP8
- 1sqgYNYInzmjIjMuTE2zGxRewzsGSFjJYwC29ZB8q6c4t9P5a7DGoT5Y3D4K+6iomi00
- hgNRUsCesXSK/uWOP0ku81MoWjjts27DxDflyV3ysi4O8kP7pUR/n3t7D2cUNTiMRxNB
- MK5YK7I40SBlbq7mFxvkjQyngrvOjKFTE56mjLGrl57koNsSY9FGPYQfx5HfDtMN7NIF
- HkTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtZBM7rEEKr6WBh7AI5Br8qep4ieBZVGthauJ/GZE6ZjSBRaLdloJnKSANp1Y76VZRJAtVPhayUi84@nongnu.org
-X-Gm-Message-State: AOJu0YzV3O06wnzLJgaJh97OCAstiQecQAHEXlXukMwy6Rx1jBxDuxyf
- u11w13DHJtspG1uKwrDtj+PZ5VKF/TX+l/XIcjseFjg+zZsbTdthXxBAbXIEn09je5Q=
-X-Gm-Gg: ASbGnct0lpOuZdQOy3X8oxwlzZRPFQSJz8OhyOtAYiegGyTOQKil393RLqMU1p1ga8r
- My1bb+MDhCM7lSbSlSnGmRq9G/LZRiBmjDB+RdGg4UGzi6yeEiEnVppGly9YQVxgSLF3ZCkkMDq
- aBOkVNYH2goR1jbEwaO52jz+7ubQ74GNWT45UpPDJ0cNVdXgdMU55ICeUaC3CLJq1YTErvaeqmZ
- 4Fih3Bu5TuWM1ShZqtHV3P0HQGvhCD8j1Zc4JN3bNyKOl71LL7l/Z42Tj8/45IFp+mxHqnk6b7w
- 7eOXN0SCZsKmh0S2xvNEt+yDcr8TUALW2w6vMx3vMh5Ej/6EdzVHpq0mp8xs+U4OeNlwcUPrlHE
- Yh48Nw8pCJtX0/7NX83dK3yksNUYUJUZxdf9zEJcCr9lUEIbz/bH8BFuDIdLWC9L1i7/Niwtqjy
- LiKngrcXh/8Qm5Bsvg
-X-Google-Smtp-Source: AGHT+IFwuv7rYE8xDS4SLVPsRWwEn8WOCeYo1f/jH0sMtpKrNO9ogenyrO5sYQxM6zZyaO4lEmxffg==
-X-Received: by 2002:a05:620a:a808:b0:7e6:55b8:3cdc with SMTP id
- af79cd13be357-7e82c7a1176mr1050267885a.49.1754782467490; 
- Sat, 09 Aug 2025 16:34:27 -0700 (PDT)
-Received: from [10.153.194.227] ([172.58.166.125])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e826870838sm401627085a.31.2025.08.09.16.34.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Aug 2025 16:34:27 -0700 (PDT)
-Message-ID: <8c97dcba-0ba7-4a2f-9bfb-7b87872c9675@linaro.org>
-Date: Sun, 10 Aug 2025 09:34:17 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] accel: make all calls to qemu_wait_io_event look the
- same
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: imammedo@redhat.com, peterx@redhat.com
-References: <20250808185905.62776-1-pbonzini@redhat.com>
- <20250808185905.62776-9-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1754782940; x=1755387740;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sfVuGac2CDyxX83RG/Zy/sSiKRv5/J7fUNEQNl9HtMM=;
+ b=NyAxkpaQIRt7yrCwiYTmbtjfBm3fwUPSxr9quOqSStY6R2jRTAuNAXnfPYL/DDyjR2
+ xtLAOp+s4HO/nxb66/GP7cbWnqu+mHfzsVIvTDD44h6eyq5R7jovOxDj6hoQx0VgbYP6
+ p9SJgA9LR00TdmDrvuT89tgKvJ9gV9aJg4FgRTs/FZGmys85FPE3u/fFAuZGCeo/gbH4
+ V7N1QEUJqI+7RYK1Fi4N7wqsBEfVJyeCqpLot81FER35UGu6XjGuL/Ty5IOkzlVFMmUS
+ 1qP7JgtRXTk3u+RnEGpntSWzlfaNsONZnR/DfYjKsXW5ELqgaOOX+E0zbpLhcL6WuEoP
+ xL0g==
+X-Gm-Message-State: AOJu0YzJSuyTUMNB9jETKNd4NwT19JQYzB+3xTLUtfGZzykxij5GSrAy
+ 3ba4ABGsprkrHnYwX2mjzjei19PImMGBSpt1g83BIKgRvZDcJbWVLSvqqGtt3rrzHFjz5UOruhB
+ 7sgTN
+X-Gm-Gg: ASbGncu65vkkMyNmG81xyQwArR8xrtKU170zIRtsOlOfKW+KFjR/0iLC40WbU5YNXO2
+ Cn+WaY7SzDyqVSCN3Kt6uFRbeED0ox7+cTz4yL0qPseuXZCO/72OYuCdAxRU3EjGEtYWHZT5hyC
+ +YhrUy8qpY4wAeUWEWjyBWVngiECQUkb9l05hpsg4qgBW1sxIlhcvoa+5ZszW4OXeEIgdQYFX4X
+ XgTcypriWpfxZkl8cBlaQpPRynbA9nfkv5tdkEdZDaoCO8X9Fv3LVfXQo+Xn33gIWfPmXVesjsN
+ Qr1VSUIynL3fNiyunad4njcixCT3AmswD1WGNH2iw2SYAp2UAUGC4y4lyNumwrF5QVxojylzy+H
+ EMg3Kxc7R/aeBK6Zz52weKAPW8ATRIqVCkyHh2CJHRMjdwj7upPtLumftTce5K83cqrJB9po27u
+ 8t8gCD
+X-Google-Smtp-Source: AGHT+IEo/aVksE/m5+/fCDYCwg+UVdb5RO91JXVYR7hGYD2r4av09HtuAn5lNJLWDSqU2HGbm2Pe1Q==
+X-Received: by 2002:a05:6214:4104:b0:704:7dfa:3fd with SMTP id
+ 6a1803df08f44-7099b909ce7mr99612556d6.4.1754782939837; 
+ Sat, 09 Aug 2025 16:42:19 -0700 (PDT)
+Received: from stoup.. ([172.58.166.125]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-7077cd56226sm132135636d6.44.2025.08.09.16.42.17
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 Aug 2025 16:42:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250808185905.62776-9-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72a;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x72a.google.com
+To: qemu-devel@nongnu.org
+Subject: [PATCH 0/3] tcg/i386: Improve 8-bit shifts with VGF2P8AFFINEQB
+Date: Sun, 10 Aug 2025 09:42:05 +1000
+Message-ID: <20250809234208.12158-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf33.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -106,151 +96,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/9/25 04:59, Paolo Bonzini wrote:
-> There is no reason for some accelerators to use qemu_wait_io_event_common
-> (which is specifically separated for round robin).  They can also check
-> on the first pass through the loop as well directly, without setting
-> cpu->exit_request for no particular reason.
-> 
-> There is also no need to use qatomic_set_mb() because the ordering of
-> the communication between I/O and vCPU threads is always the same.
-> In the I/O thread:
-> 
-> (a) store other memory locations that will be checked if cpu->exit_request
->      or cpu->interrupt_request is 1 (for example cpu->stop or cpu->work_list
->      for cpu->exit_request)
-> 
-> (b) cpu_exit(): store-release cpu->exit_request, or
-> (b) cpu_interrupt(): store-release cpu->interrupt_request
-> 
->>>> at this point, cpu->halt_cond is broadcast and the BQL released
-> 
-> (c) do the accelerator-specific kick (e.g. write icount_decr for TCG,
->      pthread_kill for KVM, etc.)
-> 
-> In the vCPU thread instead the opposite order is respected:
-> 
-> (c) the accelerator's execution loop exits thanks to the kick
-> 
-> (b) then the inner execution loop checks cpu->interrupt_request
->      and cpu->exit_request.  If needed cpu->interrupt_request is
->      converted into cpu->exit_request when work is needed outside
->      the execution loop.
-> 
-> (a) then the other memory locations are checked.  Some may need
->      to be read under the BQL, and the vCPU thread may also take
->      for the vCPU thread can sleep on cpu->halt_cond; but in
->      principle this step is correct even without the BQL.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   accel/dummy-cpus.c                |  2 +-
->   accel/hvf/hvf-accel-ops.c         |  2 +-
->   accel/kvm/kvm-accel-ops.c         |  3 ++-
->   accel/kvm/kvm-all.c               |  2 --
->   accel/tcg/cpu-exec.c              |  1 -
->   accel/tcg/tcg-accel-ops-mttcg.c   |  7 ++----
->   accel/tcg/tcg-accel-ops-rr.c      | 38 ++++++++++++++++---------------
->   accel/tcg/tcg-accel-ops.c         |  2 --
->   system/cpus.c                     |  1 +
->   target/i386/nvmm/nvmm-accel-ops.c |  6 ++---
->   target/i386/nvmm/nvmm-all.c       |  2 --
->   target/i386/whpx/whpx-accel-ops.c |  6 ++---
->   target/i386/whpx/whpx-all.c       |  2 --
->   13 files changed, 31 insertions(+), 43 deletions(-)
-
-I think this is doing two separate things: rearranging the qemu_wait_io_event, and ...
-
-
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 57e35960125..db95e06e768 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -3155,7 +3155,6 @@ int kvm_cpu_exec(CPUState *cpu)
->       trace_kvm_cpu_exec();
->   
->       if (kvm_arch_process_async_events(cpu)) {
-> -        qatomic_set(&cpu->exit_request, 0);
->           return EXCP_HLT;
->       }
->   
-> @@ -3345,7 +3344,6 @@ int kvm_cpu_exec(CPUState *cpu)
->           vm_stop(RUN_STATE_INTERNAL_ERROR);
->       }
->   
-> -    qatomic_set(&cpu->exit_request, 0);
->       return ret;
->   }
->   
-> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> index b9da2e3770e..f474ccb37f5 100644
-> --- a/accel/tcg/cpu-exec.c
-> +++ b/accel/tcg/cpu-exec.c
-> @@ -871,7 +871,6 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
->        * The corresponding store-release is in cpu_exit.
->        */
->       if (unlikely(qatomic_load_acquire(&cpu->exit_request)) || icount_exit_request(cpu)) {
-> -        qatomic_set(&cpu->exit_request, 0);
->           if (cpu->exception_index == -1) {
->               cpu->exception_index = EXCP_INTERRUPT;
->           }
-> diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-> index f4d5372866a..ad3f29107e1 100644
-> --- a/accel/tcg/tcg-accel-ops.c
-> +++ b/accel/tcg/tcg-accel-ops.c
-> @@ -82,8 +82,6 @@ int tcg_cpu_exec(CPUState *cpu)
->       ret = cpu_exec(cpu);
->       cpu_exec_end(cpu);
->   
-> -    qatomic_set_mb(&cpu->exit_request, 0);
-> -
->       return ret;
->   }
->   
-> diff --git a/system/cpus.c b/system/cpus.c
-> index d2cfa2a9c4e..0cc14eae6a0 100644
-> --- a/system/cpus.c
-> +++ b/system/cpus.c
-> @@ -458,6 +458,7 @@ void qemu_wait_io_event(CPUState *cpu)
->   {
->       bool slept = false;
->   
-> +    qatomic_set(&cpu->exit_request, false);
->       while (cpu_thread_is_idle(cpu)) {
->           if (!slept) {
->               slept = true;
-> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
-> index d2d90f38976..09839d45b92 100644
-> --- a/target/i386/nvmm/nvmm-all.c
-> +++ b/target/i386/nvmm/nvmm-all.c
-> @@ -817,8 +817,6 @@ nvmm_vcpu_loop(CPUState *cpu)
->       cpu_exec_end(cpu);
->       bql_lock();
->   
-> -    qatomic_set(&cpu->exit_request, false);
-> -
->       return ret < 0;
->   }
->   
-> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-> index 9b07716121a..2e248a0a6d5 100644
-> --- a/target/i386/whpx/whpx-all.c
-> +++ b/target/i386/whpx/whpx-all.c
-> @@ -2050,8 +2050,6 @@ static int whpx_vcpu_run(CPUState *cpu)
->           whpx_last_vcpu_stopping(cpu);
->       }
->   
-> -    qatomic_set(&cpu->exit_request, false);
-> -
->       return ret < 0;
->   }
->   
-
-... sinking the clear of exit_request.
-
-It would be nice to actually unify the run loop that you're manipulating here.  But I 
-suppose that can be a follow-up.
+x86 doesn't directly support 8-bit vector shifts, so we have
+some 2 to 5 insn expansions.  With VGF2P8AFFINEQB, we can do
+it in 1 insn, plus a (possibly shared) constant load.
 
 
 r~
+
+
+Richard Henderson (3):
+  cpuinfo/i386: Detect GFNI as an AVX extension
+  tcg/i386: Add INDEX_op_x86_vgf2p8affineqb_vec
+  tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts
+
+ host/include/i386/host/cpuinfo.h |  1 +
+ include/qemu/cpuid.h             |  3 ++
+ util/cpuinfo-i386.c              |  1 +
+ tcg/i386/tcg-target-opc.h.inc    |  1 +
+ tcg/i386/tcg-target.c.inc        | 81 ++++++++++++++++++++++++++++++--
+ 5 files changed, 83 insertions(+), 4 deletions(-)
+
+-- 
+2.43.0
+
 
