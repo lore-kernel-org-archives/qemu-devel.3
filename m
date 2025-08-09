@@ -4,111 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CACC87FCF
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 17:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 794E3C87FD2
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 21:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukmw8-0001p3-Ah; Sat, 09 Aug 2025 13:00:52 -0400
+	id 1ukqqV-0002y6-9a; Sat, 09 Aug 2025 17:11:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ukmw6-0001ls-08
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 13:00:50 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
+ id 1ukqqM-0002oG-K2; Sat, 09 Aug 2025 17:11:10 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ukmw2-0006WH-4W
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 13:00:49 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-b429abd429aso1516166a12.1
- for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 10:00:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
+ id 1ukqqK-0000TM-Th; Sat, 09 Aug 2025 17:11:10 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-af9180a11bcso660389066b.0; 
+ Sat, 09 Aug 2025 14:11:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1754758844; x=1755363644; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ixQgNraBzt43yG3Hmff9feLCBFYhlz8KdrJ9jJlcCo8=;
- b=HgkxSs2/3AdqjqyhIIm2EouKVnMXco3PXn3wsbbKn8DRiaCYyY24FK1JJCoHQZlK5s
- 5ntJY5GlYOJvXjbF/D7CoYmJBf8JhVjb9sRRw/hxfPFcKEqJJoOFu38wgte+0kCUdKee
- e5078Nxai9JfeC9rMn+yrjfUPEZomVwZBO7fGhsTNSE8nKqLqwo2C35SUiQ+Ug1G6Xw1
- SxwwnsUCfA0VEm5MquVJmOEwwp1kSt76WobHL+da8ytWkHw0V7OjOKhYdDWzkE/ryOLz
- kT42Jv9po87pEqOGM6NUxJDsdilg4hXEUir4JCFhTgALbHB+qYVuCyVhy3aQjGnhipon
- PuiA==
+ d=gmail.com; s=20230601; t=1754773867; x=1755378667; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hy0jRWoRKSa/ItelcnJbwYMxz/tJPxS++i76CTjN9hM=;
+ b=QeZjXYxqeFQcVXHoJ5nfZe7kaFZFNkB0MqgQj3l1e60DkST6GzLqlTcBUEm0jiX2Of
+ /eNyh+0LXvU2DIm5wHdzV8rRUdRpxwg3Wobq7VL1ejFqkSKqMFIfGRLaxuTu7WErrLzQ
+ LptLkW2dkVSriMKxv75QSFW+1IWaEUg7VBcgi14McJLvpj4vr5bW+rFkHWTbJi8ps6Tz
+ V4POCfmiQNhaqnVFCYUSO9vP3poKOsMztkKKAhYqiJOoJm/gRFM7o1am/y9zGC4JoDyN
+ Ja9i73rltLQxDKc4ocx2dZPJAP2R+CxbJ+daVQHW2RfmCmTbKUisyegbLE2tCvqnerE4
+ Zk3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754758844; x=1755363644;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ixQgNraBzt43yG3Hmff9feLCBFYhlz8KdrJ9jJlcCo8=;
- b=o1rjlw+mF0NRMY6uJedRfqjue7cjZl2Wvv1johus4ymvUtP7LUfFA5remUKOrY5275
- KCy3dMh5e9ESJHHbowPx+jb2xa7h2SZQND9ga/OsMHJODAoj8lH2niteygU36tS9gGqR
- YrL+uTlKoZKWhn5rFtXiPZluAG2YssruSySOywxjbXhNHNWRNB2sqlysvCl78raNaWRR
- Q3c8BWwuHRKtpP69JET6PUesG5ueJMxlJQWBLeX2/UH/if5Nqc3Cnn4V07lNBDfzInix
- m08lib/89gJUQUfTfA1YVsrcnxPZXfJEosXU+8id1zLBCQYQlCM0heKHWMVPATbQAxxs
- DABw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXqmYIjuLgrz61vns+sltbIStDNorCam+uzlAa7jeL7iSimm7E/KfhIVmbygQQbgoZklGRhtIs4409k@nongnu.org
-X-Gm-Message-State: AOJu0YzQLOvo/DPAQbJCFfmV7vvVCUKYO04KBSuAOSuBr8fqhF6Imj/u
- RpcKfRCLrmYYIEabBRXA6BpnS89nBkKiTzYlKXTa6ESk38vfyjn/ksnxCRFj+WpcGaA=
-X-Gm-Gg: ASbGncuPcRAITmArjLS0Soxk9unvEjDeVtvTJiCmgAiHMnzk3rsB7qLPHz9f+FJ+oSx
- 9j0qavJIrv2Mn3pru520+jkLj92eXNM6IUAXQqC9VGpGyGlKllkzMn2ELzLIX/Jeh/l4iwESqj+
- W2ojRAr8XkYNYXQFgUMeMBKnZELLSmUaXmnvoZVD6glYimkIQ1l7khP83nCJKEvi9jJjdbYKwGi
- ITKiL1GERViw7uvSjvoE08Z8ZT2hFxUTQ1tse9fin4bpKg/M4UQ++vRfkZI1R5UdygX6sSlC1wI
- HinqvL2xdcoZEWmqWIrSU2f/VoRJdk+7sav+KGII5aIrFgk6mqx+ntlkVbZ0h3mVyTCyPjYZWX2
- R5IeUgh6+sG6Szc6YCJTs5mwbabvRNvdL9NP4mw==
-X-Google-Smtp-Source: AGHT+IEbJ7NQ9OA+h8EyRZsqHa5e4ZzGya8/10FIk9zy6JMyoA2Qz5S9euveaEVM75hTNj7J0TMbvA==
-X-Received: by 2002:a17:902:d4ce:b0:240:2145:e526 with SMTP id
- d9443c01a7336-242c1fd9655mr101663685ad.6.1754758843771; 
- Sat, 09 Aug 2025 10:00:43 -0700 (PDT)
-Received: from [192.168.68.110] ([152.234.127.110])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e89a3ae8sm232953515ad.144.2025.08.09.10.00.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Aug 2025 10:00:43 -0700 (PDT)
-Message-ID: <fc3faef9-c69b-42da-8e26-9f59d45ee14b@ventanamicro.com>
-Date: Sat, 9 Aug 2025 14:00:33 -0300
+ d=1e100.net; s=20230601; t=1754773867; x=1755378667;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hy0jRWoRKSa/ItelcnJbwYMxz/tJPxS++i76CTjN9hM=;
+ b=j0hpo4kPBgbn2kxsFK55HxJX4HLh0bbNVXQbwAZQVuFO/D7jrZGY9aNhfehaXJlHIy
+ /snEeRQtnmdj0q1nlAl1QpeLZ0jyVXy8YVpFOioZ6xHjdtzz0Mnjfu3g07b1skozZat6
+ eyymARSjOQOUHlUA8Gmo/3pqpitI93z5+e2PFyITSmkV+cND0SmX7u6sKtl8CXPldp3J
+ oNQELs1Ql3yx0xQCl2OJEZlrUFdds4hVx089hCPSWMCg7Fx2rlYMzoXZkeYeWEnmORyx
+ tu1gfwU86WGDmj8GIgRfKugj3mImRyoDSwSeDhahP+KThA/07OQx+57Mzaw+EewEN8ns
+ OCVw==
+X-Gm-Message-State: AOJu0Yy61jefj34INXhe8g28ehz/A4LIfbPofnwT9MJEivgZvq2dTnnE
+ LCAcuJNmkP+s+0d5ukJgT3VOfjKDcBiW9aZn6bcA1mNcFg2vR1pKwprSNyKCJ8vCBIQ=
+X-Gm-Gg: ASbGncs5TbbFWREr9SNcfUn12yCvoQ3eIN0FjT7mTdehimyU9ktixZKKvcAgIHh6pHM
+ l/JZTMur0wmuXr23vj0QP1aZKnjeJRNWGkLzW/mHG1cCsBfqCwu5hp9OZ0+V3+XgbhpOtC8HrzN
+ I8bCA2n4iwxCxKWuqdg9HZ8nMQAlsUOyedFi6Uaqdd2Ygzj3YOB7lqhfSSXrczaMFDKlmvK4sdQ
+ OijBoOCL1BdBmWzgNiQD/jUAS+X5xWXu1uewluKw8c3vAP2a15oIYVYtjB/vGXit8FgrTeQgd+M
+ qapK/mNDFEKsPNnvZjEkP0GEjAFQiyRslh3HxfFaFirI2ugwgNjCszX0dOsam1bwLKCsa4Z4EbO
+ ZrhErPr28r4+ZmAnWaeukSaNXBbKuLin5snEldgAori+Hbh0O
+X-Google-Smtp-Source: AGHT+IF66LENE1fFLXx2cWgIkhikOv2s+KX10w26arXhQyxhLvSmGNR/IFog2DM3TFpiWm4/WtUG8w==
+X-Received: by 2002:a17:907:948d:b0:af9:21ed:6ebe with SMTP id
+ a640c23a62f3a-af9c700b437mr659975466b.21.1754773866577; 
+ Sat, 09 Aug 2025 14:11:06 -0700 (PDT)
+Received: from localhost.localdomain ([87.251.30.120])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-af91a078a11sm1759490766b.7.2025.08.09.14.11.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 09 Aug 2025 14:11:06 -0700 (PDT)
+From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Vadim Chichikalyuk <chichikalyuk@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 3/3] tests: acpi: update expected blobs
+Date: Sun, 10 Aug 2025 00:10:51 +0300
+Message-Id: <20250809211051.68824-4-chichikalyuk@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250809211051.68824-1-chichikalyuk@gmail.com>
+References: <20250809211051.68824-1-chichikalyuk@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/18] Implements RISC-V WorldGuard extension v0.4
-To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Michael Rolnik <mrolnik@gmail.com>, Helge Deller <deller@gmx.de>,
- Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
- Stafford Horne <shorne@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Max Filippov <jcmvbkbc@gmail.com>,
- "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>,
- "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
-References: <20250417105249.18232-1-jim.shu@sifive.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20250417105249.18232-1-jim.shu@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x536.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=chichikalyuk@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,126 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey,
+Previous patch changed the SPCR ACPI table for AArch64 virt.
+Hexdump diff:
+@@ -1 +1 @@
+-00000000  53 50 43 52 50 00 00 00  02 b1 42 4f 43 48 53 20
++00000000  53 50 43 52 5a 00 00 00  04 78 42 4f 43 48 53 20
+@@ -5,2 +5,3 @@
+-00000040  ff ff ff ff 00 00 00 00  00 00 00 00 00 00 00 00
+-00000050
++00000040  ff ff ff ff 00 00 00 00  00 00 00 00 00 36 6e 01
++00000050  00 00 00 00 02 00 58 00  2e 00
++0000005a
 
-Sorry for the late review. Frank told me that this work was left behind.
-Somehow it went completely under my radar for months ...
+Signed-off-by: Vadim Chichikalyuk <chichikalyuk@gmail.com>
+---
+ tests/data/acpi/aarch64/virt/SPCR           | Bin 80 -> 90 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ 2 files changed, 1 deletion(-)
 
-I didn't find some patches - probably because I wasn't directly CC on them
-and I've cleanup some mailboxes recently. Feel free to add myself in the CC
-for all patches, even if the patch is for a different subsystem - having anyone
-taking a look in the patch will help the subsystem maintainer.
+diff --git a/tests/data/acpi/aarch64/virt/SPCR b/tests/data/acpi/aarch64/virt/SPCR
+index cf0f2b75226515097c08d2e2016a83a4f08812ba..6df47f5c95dfbad2a0b060151c0733bdbc9f7392 100644
+GIT binary patch
+delta 30
+kcmWHD;tCFM4vJ!6U|^}3$mPsymd6NWGcYkkFz7J=09{iA+W-In
 
-I'm not sure how the WorldGuard support is faring in Linux. If you could add
-some documentation (patch 18) on the current state of the support, how we
-can test the feature and so on, that would be terrific.
+delta 20
+acmazF;0g|K4hmpkU|`xfk;|DG$N&H@<O9(F
 
-
-Thanks,
-
-Daniel
-
-
-
-On 4/17/25 7:52 AM, Jim Shu wrote:
-> This patchset implements Smwg/Smwgd/Sswg CPU extension and wgChecker
-> device defined in WorldGuard spec v0.4.
-> 
-> The WG v0.4 spec could be found here:
-> https://lists.riscv.org/g/security/attachment/711/0/worldguard_rvia_spec-v0.4.pdf
-> 
-> To enable WG in QEMU, pass "wg=on" as machine parameter to virt machine.
-> It enables both WG CPU CSRs to apply WID of CPU and wgCheckers on
-> the DRAM, FLASH, and UART to protect these resources.
-> 
-> This patchset contains 5 parts:
-> 
-> 1. Commit  1 ~ 2: Bugfix of IOMMUMemoryRegion
-> 2. Commit  3 ~ 4: Extend IOMMUMemoryRegion and MemTxAttr for WG support
-> 3. Commit  5 ~ 13: Add WG global device and CPU extensions
-> 4. Commit 14 ~ 17: Add WG checker device
-> 5. Commit 18: Add WG support to the virt machine
-> 
-> QEMU code can be found at [1]
-> 
-> [1] https://github.com/cwshu/qemu/tree/riscv-wg-v2
-> 
-> Changed since v1:
-> - Remove the assertion of 4k sections limitation. Remove
->    iotlb_to_section() and rename 'xlat_section' to 'xlat'.
-> - Fix RST issue and typo in virt machine doc
-> 
-> Changed since RFCv1:
-> - Rebase to latest QEMU (v10.0.0-rc3)
-> - Add the description of HW config and CPU option of WG in the
->    virt machine documentation
-> - Expose CPU options of WG after WG CPU code has been implemented
-> - Change 'mwid' and 'mwidlist' options to experimental options
-> - Change 'world_id' to unsigned int type + bit field.
-> 
-> Jim Shu (18):
->    accel/tcg: Store section pointer in CPUTLBEntryFull
->    system/physmem: Remove the assertion of page-aligned section number
->    accel/tcg: memory access from CPU will pass access_type to IOMMU
->    exec: Add RISC-V WorldGuard WID to MemTxAttrs
->    hw/misc: riscv_worldguard: Add RISC-V WorldGuard global config
->    target/riscv: Add CPU options of WorldGuard CPU extension
->    target/riscv: Add hard-coded CPU state of WG extension
->    target/riscv: Add defines for WorldGuard CSRs
->    target/riscv: Allow global WG config to set WG CPU callbacks
->    target/riscv: Implement WorldGuard CSRs
->    target/riscv: Add WID to MemTxAttrs of CPU memory transactions
->    target/riscv: Expose CPU options of WorldGuard
->    hw/misc: riscv_worldguard: Add API to enable WG extension of CPU
->    hw/misc: riscv_wgchecker: Implement RISC-V WorldGuard Checker
->    hw/misc: riscv_wgchecker: Implement wgchecker slot registers
->    hw/misc: riscv_wgchecker: Implement correct block-access behavior
->    hw/misc: riscv_wgchecker: Check the slot settings in translate
->    hw/riscv: virt: Add WorldGuard support
-> 
->   accel/tcg/cputlb.c                   |   49 +-
->   docs/system/riscv/virt.rst           |   20 +
->   hw/misc/Kconfig                      |    3 +
->   hw/misc/meson.build                  |    1 +
->   hw/misc/riscv_wgchecker.c            | 1160 ++++++++++++++++++++++++++
->   hw/misc/riscv_worldguard.c           |  272 ++++++
->   hw/misc/trace-events                 |    9 +
->   hw/riscv/Kconfig                     |    1 +
->   hw/riscv/virt.c                      |  163 +++-
->   include/exec/cputlb.h                |   13 +-
->   include/exec/exec-all.h              |   18 +-
->   include/exec/memattrs.h              |    8 +-
->   include/hw/core/cpu.h                |   12 +-
->   include/hw/misc/riscv_worldguard.h   |  123 +++
->   include/hw/riscv/virt.h              |   15 +-
->   system/physmem.c                     |   39 +-
->   target/alpha/helper.c                |    2 +-
->   target/avr/helper.c                  |    2 +-
->   target/hppa/mem_helper.c             |    1 -
->   target/i386/tcg/system/excp_helper.c |    3 +-
->   target/loongarch/tcg/tlb_helper.c    |    2 +-
->   target/m68k/helper.c                 |   10 +-
->   target/microblaze/helper.c           |    8 +-
->   target/mips/tcg/system/tlb_helper.c  |    4 +-
->   target/openrisc/mmu.c                |    2 +-
->   target/ppc/mmu_helper.c              |    2 +-
->   target/riscv/cpu.c                   |   17 +-
->   target/riscv/cpu.h                   |   12 +
->   target/riscv/cpu_bits.h              |    5 +
->   target/riscv/cpu_cfg.h               |    5 +
->   target/riscv/cpu_helper.c            |   69 +-
->   target/riscv/csr.c                   |  107 +++
->   target/riscv/tcg/tcg-cpu.c           |   11 +
->   target/rx/cpu.c                      |    3 +-
->   target/s390x/tcg/excp_helper.c       |    2 +-
->   target/sh4/helper.c                  |    2 +-
->   target/sparc/mmu_helper.c            |    6 +-
->   target/tricore/helper.c              |    2 +-
->   target/xtensa/helper.c               |    3 +-
->   39 files changed, 2074 insertions(+), 112 deletions(-)
->   create mode 100644 hw/misc/riscv_wgchecker.c
->   create mode 100644 hw/misc/riscv_worldguard.c
->   create mode 100644 include/hw/misc/riscv_worldguard.h
-> 
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index a60794a3f6..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/SPCR",
+-- 
+2.39.5 (Apple Git-154)
 
 
