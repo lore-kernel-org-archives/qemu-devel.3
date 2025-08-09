@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42528C87FCB
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 21:12:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E6FC87FCF
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 22:43:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ukqqN-0002p0-2W; Sat, 09 Aug 2025 17:11:11 -0400
+	id 1uksGO-0007Ho-42; Sat, 09 Aug 2025 18:42:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ukqqL-0002kd-AW; Sat, 09 Aug 2025 17:11:09 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uksGM-0007HZ-8z
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 18:42:06 -0400
+Received: from mail-il1-x134.google.com ([2607:f8b0:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1ukqqJ-0000SR-1s; Sat, 09 Aug 2025 17:11:09 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-61521cd7be2so4424481a12.3; 
- Sat, 09 Aug 2025 14:11:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uksGK-0006hF-89
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 18:42:06 -0400
+Received: by mail-il1-x134.google.com with SMTP id
+ e9e14a558f8ab-3e543e231f4so1846205ab.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 15:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754773865; x=1755378665; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E3E7y/HiFOV12vylnrfnt9s4sgvYTh8dgFULKwaB7zg=;
- b=na6XiCxkzhuDQVeDNW2zxRpIKSOP31lg1yJDTfwi7XnCk0Ih+Jps77WhRI55z0beqL
- U7apTbrhPMxyfDVexEVa25RzFdAWTL9hTP9Eo0kEMUwnPZx2Ainhua0B1Fi6GrJNNoIn
- /jR6eFwTprbfHOG7uEZNcFaNXWmPYHneRPLx2RbQXPeZIKp2XYvvCocjxPZG6KixbqvW
- +hNqm8wa/x6qRCDMRDVKRgdW40+uX9AggC5xLPqw6BHr8s7BIhzo8dSCmNqQGzzZiSdw
- 8w15AaTomHApJ7UPzJoqU6t8uV2b72OGPr230/0DVaWFGb+J+R0jYxBF5bwdCEnBpZt6
- U4oA==
+ d=linaro.org; s=google; t=1754779322; x=1755384122; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aYUaC+w1msnD21FD1YQF/q46+yp67v/LMkyamV0bwTU=;
+ b=fNnsAO76Bv77iIWgRaW0fIJZVamcMzXFXRm4pq/oaFNvp7rqJ0zPEPtjsmr64ksHnT
+ RCXgMKaSucnZYc6Bsh7CMuVW8HAuy2SvWAprXU4lQrOue98Ix/DHgO7qbMD/ZV0daEc6
+ uxsazzDGA0pOOYlLhUdE4WYzbq+2YBpfSjnTHynkkqWy8fx4WnfaisCyeJ5A3fw5fHpk
+ oFiX1ODsVtheKmssOk7xNZwNd9hc59eJ6muElCNotAaC5hS5+jUz5hB13l60UdBs+K3z
+ l1p+EbtZ1doui/hj1ka8JT/wD/AoMg0ydH+Q9GDM2VgEy0LdKEBN0G6Y9kUSByl66xG9
+ W8EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754773865; x=1755378665;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=E3E7y/HiFOV12vylnrfnt9s4sgvYTh8dgFULKwaB7zg=;
- b=D/orUX7DS9kFvSVk11TDRd+D9tQQbzTGXESM79i4DSxkV0znl1Gza0eRlPgCN5qMCO
- RHnhWWXeylxlleM0i2H47cnY85Bq5DYxYog+U19zivFmcq3b9uS0vx/HluH3iC6jrKZR
- 60w4Oic623dKbV0qZPLk7qUm7Cy7phZ4rLN25St+tGAWscQIgRdKq9/i7rcIz/dz6Bi2
- iQZV1JIpGQrQqOadBjkVun4xCLTqKMKZRJT2YdFH2am0QlV9JHkJgH5NTIDoR/S4nyjP
- gDzeKz2xyGHKCoscIf0RfF4DGfPSok5qsvPwLPWJ7kBYW6cTXXd7Ta0RDQIG5JmS8cQw
- 8exw==
-X-Gm-Message-State: AOJu0YxWfRHIVVGS57R+DrvZgBx4DJ9ybBpONNv5WmTyZ6Hoel07iZ9u
- F4ZHbNLwN76PfhV4tPvh4JYIjiW8XLtrz8B2YhRGVmDlXHY+woeOGBkFj9vuVJv36pk=
-X-Gm-Gg: ASbGncv8Ooi+ANt9WX8216im9PAIsKBNiN0ZnN+IGLwigbnW+ala5VIDvLJim6Icf6k
- fZHZCb/vNzamHvKYZrMhbalajd20aFbFiPNy6FCJUH6Jcqk4VYsV2xdOby6GDdN+ZdM7esMMfGZ
- or7ICfq1PJ4mRcOkSz41ubW6u5SHPz0YVgdO6CfthS97pADiiL7k1JB7nolyELAEjEhDUAxn6rd
- AlJrigqpgCAJg64LTPRus/IJAFNJr4+3bVwVJkVamoTFTCnUYbQkUht6oiIz/coTwb+oS8HrCir
- uRl+22qwLPm74XPRXhAGc0UgfQhPKvFbzIw14qElTPAFygdqZZArm6XUmJiW2rhUFxa5zEvdwYJ
- mk17y0p9U5GU+C9e3pF2oFj+fx5ArN+ylNDHa+57t5ehE51+h
-X-Google-Smtp-Source: AGHT+IEdS47Lh0kda4tg6mPXOJ+pT2xgh6rqFMrVPWfj0R9b1PM/WAJ2+7+6mw6TekMMJxsukISy/w==
-X-Received: by 2002:a17:907:7f90:b0:af2:9a9d:2857 with SMTP id
- a640c23a62f3a-af9c6375b94mr676408366b.3.1754773864471; 
- Sat, 09 Aug 2025 14:11:04 -0700 (PDT)
-Received: from localhost.localdomain ([87.251.30.120])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-af91a078a11sm1759490766b.7.2025.08.09.14.11.03
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Aug 2025 14:11:04 -0700 (PDT)
-From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Vadim Chichikalyuk <chichikalyuk@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 2/3] hw: arm: acpi: upgrade SPCR table to revision 4
-Date: Sun, 10 Aug 2025 00:10:50 +0300
-Message-Id: <20250809211051.68824-3-chichikalyuk@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250809211051.68824-1-chichikalyuk@gmail.com>
-References: <20250809211051.68824-1-chichikalyuk@gmail.com>
+ d=1e100.net; s=20230601; t=1754779322; x=1755384122;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aYUaC+w1msnD21FD1YQF/q46+yp67v/LMkyamV0bwTU=;
+ b=nEArc5RPhmcf4CwR5sV5KRjVO2DkaCjut5HworL71Do3Uo9qkmOAPcRdlyuGqKoXgV
+ 3iF/9FzUdSI8LU5wksz+Qp06+SKyjyM1ceJOZMXzTgV61E4Kv6YqTDouGH059ibf7diQ
+ 6MMEmJC5vNes7zqV2QiiaoCnl0l93RXNItQVd+DGuj/bTfwST2eaerwFxP+ZPbAwLmbv
+ q8NxQJK+Mcd5IKKkXyt4lNxGFqPIIPQ1WSvUzp5l1lYrDz94TrnMsGuo/s8+B/iBG1mF
+ ByKPWD/Ow6mZcnpXKk4hum0XhGWtPb3tcF96fQNQJbCQ3+QGZhYIw7CqY2YGF3V0cDgy
+ TSqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqIcV4o6Hewj9UVKYEYWr7pG4IMPagTHVVPiE+AIZ22/qIt9+fQ8fX+uZou26ml/oAF7kt2zWqIqh2@nongnu.org
+X-Gm-Message-State: AOJu0Yw4Nf1G3ETlWJWyY6Y3vFGh9MhVq1H8MBTPLT/YLeaVSHOAiVpw
+ pvVByd6eEqARFY+IYze7K62fXZiImQ+r+UeGrv0asbrDSW/AgBRbYpPiUPMEm1xjy0M=
+X-Gm-Gg: ASbGnctSfIWJcsrRLrhEMDc2+a2isNuZjPLqfDAfSxR7ALmE50Y3A0kX9JyAYnmk1sG
+ PASKWt9spkFpZiwW+RIyCkWGqxwHqSNPoMzZEfR0blw08i+zl2LxJLL3GMAvBbZGrJAhTxxC1BH
+ Jjo9mFogdz2ROd4nEVW9/CeoBBz2/tx34kuBqcxZFJD1RgYJikmBdtenbBP5bhL4iybZadRhwIo
+ OaerCLkke5mp3yOksO/WpG3WiZzMF+87fbQW6x08OqfWbuUBeDdg4XsVI+Ga41MB0TEPXlSXcUs
+ /3ewo91AwpEP9Wk6ytdRyOP+z1qETMQY+TB5Hd3zDOu1rtjPEYAifmF3tFV0SnYoH7R/PDgnOzx
+ HTyPA3G/VRihtA2pBzaC0PcoqdjW2ABwFi/DUE2KYMDG6ijFMiyy/NestbdmEWN60b2PyUyHWs/
+ 3Lsq5hTHyArhOjpuam
+X-Google-Smtp-Source: AGHT+IGENvWHKO/HaWvjIPBtGtieSz4qjPpikKHWlJw5onVPrrmvLUkzhOx1XGtove8dpV8y7e9tFw==
+X-Received: by 2002:a05:6e02:1d85:b0:3e3:ed80:843f with SMTP id
+ e9e14a558f8ab-3e533aee918mr122727825ab.9.1754779321926; 
+ Sat, 09 Aug 2025 15:42:01 -0700 (PDT)
+Received: from [10.153.194.227] ([172.58.166.125])
+ by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3e533bd1b44sm21029665ab.4.2025.08.09.15.41.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 09 Aug 2025 15:42:01 -0700 (PDT)
+Message-ID: <eff1c21d-bec0-44c1-ab82-5ec53de06c24@linaro.org>
+Date: Sun, 10 Aug 2025 08:41:50 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=chichikalyuk@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] accel: use store_release/load_acquire for
+ cross-thread exit_request
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: imammedo@redhat.com, peterx@redhat.com
+References: <20250808185905.62776-1-pbonzini@redhat.com>
+ <20250808185905.62776-2-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250808185905.62776-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::134;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x134.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,53 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On the ARM virt machine, there is currently no way to programmatically
-discover the frequency of the UART reference clock solely through the use of
-UEFI/ACPI (without the DTB). The SPCR table can include this information
-as of revision 4, but is currently at revision 2.
+On 8/9/25 04:58, Paolo Bonzini wrote:
+> cpu->exit_request do not use a load-acquire/store-release pair right now,
+> but this means that cpu_exit() does not store it after any flags that are
+> read in the slow path.
+> 
+> Probably everything is protected one way or the other by the BQL, because
+> after reading cpu->exit_request the CPU thread often goes to sleep
+> (by waiting on the BQL-protected cpu->halt_cond), but it's not clear.
+> Use load-acquire/store-release consistently.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   accel/kvm/kvm-all.c          | 19 +++++++++----------
+>   accel/tcg/cpu-exec.c         |  7 +++++--
+>   accel/tcg/tcg-accel-ops-rr.c |  2 +-
+>   hw/core/cpu-common.c         |  3 ++-
+>   target/i386/nvmm/nvmm-all.c  |  5 ++---
+>   target/i386/whpx/whpx-all.c  |  3 ++-
+>   6 files changed, 21 insertions(+), 18 deletions(-)
 
-Bump the revision to 4, add the clock frequency of 24 MHz and
-complete the other new fields.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Vadim Chichikalyuk <chichikalyuk@gmail.com>
----
- hw/arm/virt-acpi-build.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index 39e674aca21..f189ce861c9 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -84,7 +84,8 @@ void cpu_reset_interrupt(CPUState *cpu, int mask)
+>   
+>   void cpu_exit(CPUState *cpu)
+>   {
+> -    qatomic_set(&cpu->exit_request, 1);
+> +    /* Ensure cpu_exec will see the reason why the exit request was set.  */
+> +    qatomic_store_release(&cpu->exit_request, 1);
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index b01fc4f8ef..f685668c5e 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -536,6 +536,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
- static void
- spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
- {
-+    const char name[] = ".";
-     AcpiSpcrData serial = {
-         .interface_type = 3,       /* ARM PL011 UART */
-         .base_addr.id = AML_AS_SYSTEM_MEMORY,
-@@ -559,13 +560,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         .pci_function = 0,
-         .pci_flags = 0,
-         .pci_segment = 0,
-+        .uart_clk_freq = 24000000,
-+        .precise_baudrate = 0,
-+        .namespace_string_length = sizeof(name),
-+        .namespace_string_offset = 88,
-     };
--    /*
--     * Passing NULL as the SPCR Table for Revision 2 doesn't support
--     * NameSpaceString.
--     */
--    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id,
--               NULL);
-+
-+    build_spcr(table_data, linker, &serial, 4, vms->oem_id, vms->oem_table_id,
-+               name);
- }
- 
- /*
--- 
-2.39.5 (Apple Git-154)
 
+While you're touching the lines, since exit_request is bool, let's use true (and elsewhere 
+in other patches, false).
+
+
+r~
 
