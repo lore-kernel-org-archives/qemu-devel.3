@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E373C87FCF
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 23:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD43C87FCF
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Aug 2025 23:43:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uktCq-0005j1-SS; Sat, 09 Aug 2025 19:42:32 -0400
+	id 1uktCp-0005iB-GS; Sat, 09 Aug 2025 19:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uktCn-0005i6-EY
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:31 -0400
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ id 1uktCk-0005h3-Aj
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:26 -0400
+Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uktCl-0005hI-UJ
- for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:29 -0400
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-4af123c6fc4so32601251cf.0
- for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 16:42:27 -0700 (PDT)
+ id 1uktCi-0005gt-RI
+ for qemu-devel@nongnu.org; Sat, 09 Aug 2025 19:42:26 -0400
+Received: by mail-qv1-xf34.google.com with SMTP id
+ 6a1803df08f44-7094f298dc3so27924406d6.2
+ for <qemu-devel@nongnu.org>; Sat, 09 Aug 2025 16:42:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754782947; x=1755387747; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754782943; x=1755387743; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1G3tyzVolSQP8KoEaSpUQ9g+A1OBOYb9Sx6tiF8VyrU=;
- b=DdRArAb/VU1mvSPtWEeUaeqV1AUmOlUDHlmGHEWWoKg/peTAn7ZZHcGpFI39i26Vkp
- H21XQ0L7a3iSBOya3b5/7f2oj06gi9pd2pHmyTJQ1XKgGRPJRpFKSlU26qI2n4w2m2c3
- BIBAIAtbsZaCB66ZTME/2nw8YaFy00KfIpw0KyDl6NQkkLG7meODS/4awcb7PKnh2zpk
- 7lpO8o745fE/5uxMTKIaO+fz24JmeDguZmTjoI5vkqTlZj2VRc6eQOXadjusvzhkENA5
- dMzmswxcoUFGt90+RFZOqIG71sYD7B2KuZ8RQ2ndQRHZb4DO+v3jnBNBLqlTEiaWn3Ga
- 04Cw==
+ :reply-to; bh=iwsN5KKKv0HfyrR92BG0UgTuRe26Xxcui2WMmMpb4O0=;
+ b=ECURkT34G8gsySlA6CAvYc872jdOBscjpr/dxjYcoW0k44Qvd3mJZ+Gv/8JhNMXkro
+ 52jJ8Yu+fgImBHDOt4isV+F/IPFRSBtTEi6N+1JEsi8vRZwN37KcFC9IZ0Xaj9yTqKOI
+ inlmujxBVQpP2wFR+zpLT3PN+gachfAfUhKeLgJcQDcqgWbPA9TuhwcaCzNfDfPH6Q07
+ sjt0WTBjDIYj16ZUzY2X8JmHG3aXTce7S5PAwZWTcM3KRiBVQ7jn20b5tZELvyGLdMJ/
+ dEuJsipMnMPmSO/3TFwZDO1dAwOb6msTA/Cskv4bx0z3E82J/xQczVYmrK4g19dlN5kT
+ ZDAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754782947; x=1755387747;
+ d=1e100.net; s=20230601; t=1754782943; x=1755387743;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1G3tyzVolSQP8KoEaSpUQ9g+A1OBOYb9Sx6tiF8VyrU=;
- b=xKn+sk8aecMrd1ps8YEw5/Ih+vmbHYXGyBQPPTtdoQtKIr2duPB1XDF/QkHHSIWGb/
- 1jIUhokXBZ+E8KPFUzzTH8NI3sCcGM2O0xvDROvaIdK8wl973leB+MjbBKW3RwhGxSNL
- VDEqfzY1jrg+ZG7QF3YQwX05b3BbkO9auuEHaHerixZrbLS7IR3GLydAwajMwoELN/1r
- 2lTcMjcYP9aUWqiioUV78I7HU3kzgr5ZrXqSaMlOeevL/dSOaaNXQOE5uo4JVQIXrIS2
- 8Qxt8D+4IiMvK4r2DMZRMdUA39Gsil3XK2cbz7OCzqgSBvGvtZVytgQk4sdFt9OUHG0D
- GyXQ==
-X-Gm-Message-State: AOJu0YxtB5T/K1Dbb96IrjDlfmMIfeaMemXbYM1VTTqQ8TyXXGf849fh
- Mj02tS/BMC/UyaJcXs/GjzDS+1J4n+2jGG6lwIJw6CkXXueFxoPuhlQtoRtwfztDQIZ9wmiCYOj
- DrIMO
-X-Gm-Gg: ASbGncuLbdskMlzRAiIihr8SFP511LbcBlzZ2uJhS62AIYI5vwstHEqAu8T4U1zmlbX
- 7jQg8SkPnIQKuhYKDj9lztKBrJ3r37eE2KE8Tdp25QQcz6yMNfcCgvBaLfRX96nxJbGkeTG041s
- eORfHB8PF/p+Lj1vrKFl5+yWKHVeUFkqMopeoKhxEBEwzYJ9yYl68a11wBkqgPFKpmP/Yi5KYfS
- Z0k+FozvV/R7zNdQYS3+HXawVSgVCHK4HX163vlmmr9Cg692zzWccegbawq6Qc5BhbfP0XYxU2r
- htQsjFaz1hX50LNP4h2ct4yO9r/JYe2HZ6J48bqjQ+wCNsju/a8UCLy57JwKL9jbMtzBDBhDWfu
- yCVzluWW4Jp5dawEpVmKROHN0HYgEF+o/qzywe+4Tsej+DmMTSt8b89SUSWs3LAQpcLPpIp4MnV
- /+6DYVQj3rTNaciRA=
-X-Google-Smtp-Source: AGHT+IG6ggpVHmSVNk2CXSnmU9eSl/24yzgwXrGosTdvYV0PzaaG6CW/7xd44h4+RytRe2tLULaBVw==
-X-Received: by 2002:ac8:5850:0:b0:4b0:89c2:68e0 with SMTP id
- d75a77b69052e-4b0aed91060mr131000931cf.60.1754782946766; 
- Sat, 09 Aug 2025 16:42:26 -0700 (PDT)
+ bh=iwsN5KKKv0HfyrR92BG0UgTuRe26Xxcui2WMmMpb4O0=;
+ b=s1nhWXISEQadRMIfpQZ5V8qImGrRB4+kNwQMMcpSYGgmX2pEqNdgqpYDJBGw/Ze+Q+
+ PLNJgV2igU9HpIa/g6h9E0vD0VwEtNgAdQfrMzI7QTXIeduOOp958v03Lkpi7rpt1u9Q
+ Dj1rAuJxTn47Ju0Avip2P1LTUjuDCSSbcNRCg1g52sUSzETJT3WdwUCRcLnezwXHqB+g
+ CwIC9Uwth8Jv0gHTsq6IJvfaQfxhSzlz+ozZLQ+C1DSpJmaJWCNlCX+nQNUTjpRBUnwo
+ 42rbR4+WEYCiu6h0hlaYL16jF2A/Py3sa7RFDfTSVIlTk45wsvVyBB2YeFxPnKqDykoI
+ HiIw==
+X-Gm-Message-State: AOJu0YyZ1rpLwCbLvjMZYTG+YjymUSMHIF/gOA1SEylGVFFuKZdnkziJ
+ K4m7ZqjXPI9jaSJKnEfLlpAArGiBzAal2sya6Ho14hveVVhykdziNpHxancbAafriCywtx2ZvSm
+ YtTLo
+X-Gm-Gg: ASbGnctwLGeZZdlM6aK4xpk048WswixFRlAvjODZRCr73xW0lSNHns2uRP/jwTuBvEU
+ VYtsSt/rr5yks7cZrON2qxgDQX/KRoX5rBRWuFQabj43MAwFuqBkMMGC5Kp81V9ea2N48EIcAKE
+ BOIzynbszZCc0sTHFKO7aL4Xq/yK/hR2rAJlX6G3SbbgiV3iG01GsvWx0c9tnlxTQyei1as3HqE
+ K8kp+s6nystnCBn3mY1TUOJDWZt98tf3eQGYeg6ftHtW/jSCPXu1EgFP1HW6bjCztcWjoRwdQfN
+ GmTpU409RS3IJ/Wyvt4FMPH74m6t1XRj5XQ3hwzbxlbeRblbXcEEq2c5FmcJQtqQvEQPn4xv+y2
+ IZFR1CglNAzwq+VT6k5+YBPakdpBr7JqMvSnU98PvMBsO8QNi7Cu13AtN0y93FNlgXFsFo9dHNh
+ O8xMf+KIfG34/6ab0=
+X-Google-Smtp-Source: AGHT+IEDT9my3k7p3+s9VlUZP8ek3Wp2kTzFZbJd9EiA4WAFO/DPf3W5DSjPA7sAu+S+llN1hhxmGg==
+X-Received: by 2002:a05:6214:c62:b0:709:262d:6f64 with SMTP id
+ 6a1803df08f44-7099a52094dmr96464016d6.46.1754782943464; 
+ Sat, 09 Aug 2025 16:42:23 -0700 (PDT)
 Received: from stoup.. ([172.58.166.125]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077cd56226sm132135636d6.44.2025.08.09.16.42.24
+ 6a1803df08f44-7077cd56226sm132135636d6.44.2025.08.09.16.42.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 Aug 2025 16:42:26 -0700 (PDT)
+ Sat, 09 Aug 2025 16:42:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 2/3] tcg/i386: Add INDEX_op_x86_vgf2p8affineqb_vec
-Date: Sun, 10 Aug 2025 09:42:07 +1000
-Message-ID: <20250809234208.12158-3-richard.henderson@linaro.org>
+Subject: [PATCH 1/3] cpuinfo/i386: Detect GFNI as an AVX extension
+Date: Sun, 10 Aug 2025 09:42:06 +1000
+Message-ID: <20250809234208.12158-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250809234208.12158-1-richard.henderson@linaro.org>
 References: <20250809234208.12158-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf34.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -99,56 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a backend-specific opcode for expanding the
-GFNI vgf2p8affineqb instruction, which we can use
-for expanding 8-bit immediate shifts and rotates.
+We won't use the SSE GFNI instructions, so delay
+detection until we know AVX is present.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/i386/tcg-target-opc.h.inc | 1 +
- tcg/i386/tcg-target.c.inc     | 6 ++++++
- 2 files changed, 7 insertions(+)
+ host/include/i386/host/cpuinfo.h | 1 +
+ include/qemu/cpuid.h             | 3 +++
+ util/cpuinfo-i386.c              | 1 +
+ 3 files changed, 5 insertions(+)
 
-diff --git a/tcg/i386/tcg-target-opc.h.inc b/tcg/i386/tcg-target-opc.h.inc
-index 8cc0dbaeaf..8a5cb34dbe 100644
---- a/tcg/i386/tcg-target-opc.h.inc
-+++ b/tcg/i386/tcg-target-opc.h.inc
-@@ -35,3 +35,4 @@ DEF(x86_punpckh_vec, 1, 2, 0, TCG_OPF_VECTOR)
- DEF(x86_vpshldi_vec, 1, 2, 1, TCG_OPF_VECTOR)
- DEF(x86_vpshldv_vec, 1, 3, 0, TCG_OPF_VECTOR)
- DEF(x86_vpshrdv_vec, 1, 3, 0, TCG_OPF_VECTOR)
-+DEF(x86_vgf2p8affineqb_vec, 1, 2, 1, TCG_OPF_VECTOR)
-diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-index 088c6c9264..9dd588fc41 100644
---- a/tcg/i386/tcg-target.c.inc
-+++ b/tcg/i386/tcg-target.c.inc
-@@ -451,6 +451,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
- #define OPC_VPBROADCASTW (0x79 | P_EXT38 | P_DATA16)
- #define OPC_VPBROADCASTD (0x58 | P_EXT38 | P_DATA16)
- #define OPC_VPBROADCASTQ (0x59 | P_EXT38 | P_DATA16)
-+#define OPC_VGF2P8AFFINEQB (0xce | P_EXT3A | P_DATA16 | P_VEXW)
- #define OPC_VPMOVM2B    (0x28 | P_EXT38 | P_SIMDF3 | P_EVEX)
- #define OPC_VPMOVM2W    (0x28 | P_EXT38 | P_SIMDF3 | P_VEXW | P_EVEX)
- #define OPC_VPMOVM2D    (0x38 | P_EXT38 | P_SIMDF3 | P_EVEX)
-@@ -4084,6 +4085,10 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         insn = vpshldi_insn[vece];
-         sub = args[3];
-         goto gen_simd_imm8;
-+    case INDEX_op_x86_vgf2p8affineqb_vec:
-+        insn = OPC_VGF2P8AFFINEQB;
-+        sub = args[3];
-+        goto gen_simd_imm8;
+diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
+index 9541a64da6..93d029d499 100644
+--- a/host/include/i386/host/cpuinfo.h
++++ b/host/include/i386/host/cpuinfo.h
+@@ -27,6 +27,7 @@
+ #define CPUINFO_ATOMIC_VMOVDQU  (1u << 17)
+ #define CPUINFO_AES             (1u << 18)
+ #define CPUINFO_PCLMUL          (1u << 19)
++#define CPUINFO_GFNI            (1u << 20)
  
-     case INDEX_op_not_vec:
-         insn = OPC_VPTERNLOGQ;
-@@ -4188,6 +4193,7 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_x86_punpckl_vec:
-     case INDEX_op_x86_punpckh_vec:
-     case INDEX_op_x86_vpshldi_vec:
-+    case INDEX_op_x86_vgf2p8affineqb_vec:
- #if TCG_TARGET_REG_BITS == 32
-     case INDEX_op_dup2_vec:
+ /* Initialized with a constructor. */
+ extern unsigned cpuinfo;
+diff --git a/include/qemu/cpuid.h b/include/qemu/cpuid.h
+index b11161555b..f8351b80b0 100644
+--- a/include/qemu/cpuid.h
++++ b/include/qemu/cpuid.h
+@@ -68,6 +68,9 @@
+ #ifndef bit_AVX512VBMI2
+ #define bit_AVX512VBMI2 (1 << 6)
  #endif
++#ifndef bit_GNFI
++#define bit_GNFI        (1 << 8)
++#endif
+ 
+ /* Leaf 0x80000001, %ecx */
+ #ifndef bit_LZCNT
+diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
+index c8c8a1b370..f4c5b6ff40 100644
+--- a/util/cpuinfo-i386.c
++++ b/util/cpuinfo-i386.c
+@@ -50,6 +50,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+             if ((bv & 6) == 6) {
+                 info |= CPUINFO_AVX1;
+                 info |= (b7 & bit_AVX2 ? CPUINFO_AVX2 : 0);
++                info |= (c7 & bit_GFNI ? CPUINFO_GFNI : 0);
+ 
+                 if ((bv & 0xe0) == 0xe0) {
+                     info |= (b7 & bit_AVX512F ? CPUINFO_AVX512F : 0);
 -- 
 2.43.0
 
