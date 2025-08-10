@@ -4,38 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015B1C87FCF
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Aug 2025 07:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65ED3C87FCA
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Aug 2025 08:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ul0wM-0000Hf-Rv; Sun, 10 Aug 2025 03:58:03 -0400
+	id 1ul0ys-0002P6-9a; Sun, 10 Aug 2025 04:00:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ul0wK-0000H9-Ea; Sun, 10 Aug 2025 03:58:00 -0400
+ id 1ul0yk-0002Mw-9i; Sun, 10 Aug 2025 04:00:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ul0wI-0004ap-AJ; Sun, 10 Aug 2025 03:58:00 -0400
+ id 1ul0yi-0005HT-LI; Sun, 10 Aug 2025 04:00:30 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 15131140420;
- Sun, 10 Aug 2025 10:57:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E0C40140424;
+ Sun, 10 Aug 2025 10:59:53 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 31BBF25D10D;
- Sun, 10 Aug 2025 10:57:56 +0300 (MSK)
-Message-ID: <b06c4273-650b-4ba3-bf35-9af16bfc70e7@tls.msk.ru>
-Date: Sun, 10 Aug 2025 10:57:56 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id F27B225D112;
+ Sun, 10 Aug 2025 11:00:23 +0300 (MSK)
+Message-ID: <1368a4f5-2984-417b-9224-5d6f866ccc85@tls.msk.ru>
+Date: Sun, 10 Aug 2025 11:00:23 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
-To: Smail AIDER <smail.aider@huawei.com>, qemu-devel@nongnu.org
-Cc: alexander.spyridakis@huawei.com, zhangyue165@huawei.com,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- liuyutao2@huawei.com, qemu-stable@nongnu.org
-References: <20250722131925.2119169-1-smail.aider@huawei.com>
-Content-Language: en-US, ru-RU
+Subject: Re: [PATCH 3/3] hw/ppc: Add stub for pnv_chip_find_core()
 From: Michael Tokarev <mjt@tls.msk.ru>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250526112346.48744-1-philmd@linaro.org>
+ <20250526112346.48744-4-philmd@linaro.org>
+ <eff37ca7-d977-450e-85e0-ca8e4f6f3d5a@redhat.com>
+ <ba766eae-e8e0-436a-ad30-625744b872e4@linaro.org>
+ <199516cc-a180-4859-b10f-17590c8c7f19@tls.msk.ru>
+Content-Language: en-US, ru-RU
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -79,9 +88,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250722131925.2119169-1-smail.aider@huawei.com>
+In-Reply-To: <199516cc-a180-4859-b10f-17590c8c7f19@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -105,16 +114,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22.07.2025 16:19, Smail AIDER via wrote:
-> Trap PMCR_EL0 or PMCR accesses to EL2 when MDCR_EL2.TPMCR is set.
-> Similar to MDCR_EL2.TPM, MDCR_EL2.TPMCR allows trapping EL0 and EL1
-> accesses to the PMCR register to EL2.
+On 13.07.2025 14:18, Michael Tokarev wrote:
+> Hi!
+> 
+> Has this change been forgotten?
 
-Ping?
+Another ping?
 
-Has this patch been forgotten?
+Or can we assume this change isn't needed anymore? :)
 
 Thanks,
 
 /mjt
+
+> On 26.05.2025 14:51, Philippe Mathieu-Daudé wrote:
+>> On 26/5/25 13:48, Cédric Le Goater wrote:
+>>> On 5/26/25 13:23, Philippe Mathieu-Daudé wrote:
+>>>> Since commit 9808ce6d5cb, building QEMU configured with
+>>>> '--without-default-devices' fails:
+>>>>
+>>>>    Undefined symbols for architecture arm64:
+>>>>      "_pnv_chip_find_core", referenced from:
+>>>>          _helper_load_sprd in target_ppc_misc_helper.c.o
+>>>>          _helper_store_sprd in target_ppc_misc_helper.c.o
+>>>>    ld: symbol(s) not found for architecture arm64
+>>>>    clang: error: linker command failed with exit code 1
+>>>> > Fix by adding a stub when CONFIG_POWERNV is not available.
+>>>
+>>> The fix would be to add an abstract handler to implement SPRD accesses
+>>> on the PowerNV machine.
+>>
+>> I don't know what "SPRD" is so I'll let someone more familiar with
+>> this area do the proper cleanup.
+> 
+> 
+
 
