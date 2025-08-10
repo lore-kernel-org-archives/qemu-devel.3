@@ -4,150 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B3EC87FCF
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Aug 2025 12:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 749CEC87FCA
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Aug 2025 13:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ul5RR-0001lW-Tk; Sun, 10 Aug 2025 08:46:25 -0400
+	id 1ul5mf-0000ep-FP; Sun, 10 Aug 2025 09:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ul5RM-0001ZT-97
- for qemu-devel@nongnu.org; Sun, 10 Aug 2025 08:46:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
+ id 1ul5mc-0000dg-MM
+ for qemu-devel@nongnu.org; Sun, 10 Aug 2025 09:08:18 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ul5RJ-0006or-MW
- for qemu-devel@nongnu.org; Sun, 10 Aug 2025 08:46:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754829975;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DvZHVHXKMWTJaAiZArleZjT9oNCBUUtRUnniAqWNuqM=;
- b=TKvmCcdsCc2z7MQQ0QJfyI2ZcxhtikWUh7AFfcSt6jO3EmeYJ/9YOrkJlkZhFrtowNgOEf
- 50rVP4Q0M1AVvkIceATwQTQ037Ow6RFivEmBtUGKGQh1PSie2IK4pTx0DUxtXusf1gHZYq
- OvPFFT0lb72X1jN9+D4FNEdRJBlrN6Q=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-367-ecB_UNIyOeSHmkbOIvUb8Q-1; Sun, 10 Aug 2025 08:46:12 -0400
-X-MC-Unique: ecB_UNIyOeSHmkbOIvUb8Q-1
-X-Mimecast-MFC-AGG-ID: ecB_UNIyOeSHmkbOIvUb8Q_1754829972
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b7886bfc16so2239229f8f.1
- for <qemu-devel@nongnu.org>; Sun, 10 Aug 2025 05:46:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
+ id 1ul5mZ-0001Sg-Op
+ for qemu-devel@nongnu.org; Sun, 10 Aug 2025 09:08:18 -0400
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id AB2A53F078
+ for <qemu-devel@nongnu.org>; Sun, 10 Aug 2025 13:08:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1754831290;
+ bh=JrvAH2k1r/PunODBbwYSqmsSLUXYFkYk7DSuCc1d3YU=;
+ h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+ To:Cc:Content-Type;
+ b=LOchLLMk5bbe1QNylPgwxGAGrqPexYk8nkairSxtkQYeDRRjbrpo05R9KKVjRrh9I
+ mHuHmysSAmUFTZ4zjvxs6T8SYTgv6Ib1lhNjuS6pFy2D5vjqWiUp2SaoYw/hZ10GyN
+ BGyTQs+3YEzG1WuV4EpBc+Gf5pP9Lw5QcjMZzv9SoSW1JXDwrb+Hxv3jO44tKxJJKD
+ 24oUn9WDoEh8piTodHZP75xdjhf2oDwRuJ1Mt8MpukehaT8BFfJw4zotkj2QL36JB8
+ RWE5eLe+8ANsZrRb4blhjWAuD4+ibUx6lC3LLTk972Wn+8FyBJsQ+Gj8jyzWTAu9vY
+ NZFqamBfERy+A==
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-60c9d8a169cso3680527a12.0
+ for <qemu-devel@nongnu.org>; Sun, 10 Aug 2025 06:08:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754829972; x=1755434772;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DvZHVHXKMWTJaAiZArleZjT9oNCBUUtRUnniAqWNuqM=;
- b=FArQm0pA9f1U9R9qpXcr8ywZJK82JweByn4mKzT0lCQKN8ocv1k+OD//uhaALhEOPj
- knpDyW+pugFxYqKZTOko8VajuIZ2ADPAXeZ9/NjKzvyD4w9JUjapjPgfKzaAwTdUN9oQ
- +3XpowumovtmC/r4NhA/Qorsi8WVsRHYZucx7JuKIjJLA6H2RFBCtCQw7Jo50aWpb8Vh
- mNjHxwxR9MINySEBeDeG/8GwbdTnjUPi9CVgdyQtnFGD8Adc4F70f/v7YYYHuNTNXHR0
- 29GnAttHBCEK4O/BPmvA5ki3G4pxvtEGtNQd0VUfVOXiE1LtIvBwBnFiyUhVvqeBovkA
- /zhA==
+ d=1e100.net; s=20230601; t=1754831290; x=1755436090;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JrvAH2k1r/PunODBbwYSqmsSLUXYFkYk7DSuCc1d3YU=;
+ b=pGs0ka59nWFGK/zVFQWHy4lddY1PEFEuem2tJs7fSgmpXnqyBWyMqIhgl6HA1t7YCL
+ XIeWPbYtBoPDcKi9qJgt79XMCi/R02aqGxiRKgitX8jNY7GvF1lC5/erxcn9h2gb7QiW
+ mlGLVWPVJTasjs/guOdmIT1+gyaCUck4V/4OWL8p8hmsFbN00fAVpgisPgGD/idfBa8F
+ Ih4fU7Vg1sZj+XQPCs1eV/qqL5PnqjDAXh1+FhoyUpSWvBc52Q+VSAYs314GyUdgXySB
+ eWehFNQRRbEaSnwaxLj86B4wfXtLAGh0HoLFosyTK1+qCx848/8hIqRD+Ifb9AKe5sD7
+ RYNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbwceEDZ12gS/lwBLWf5OiA9Sh7+5+V43XpBIAXFgK/azOEgEzsM2no0fQk0+1hT8PCOYjnF6X1out@nongnu.org
-X-Gm-Message-State: AOJu0YxXn5URm4cbaINWjb1hbwvC0CuX8sjorU8hXrpB6IzfzcOmOCHT
- Tjkonu7ppda2Q3noKh/Jf/Z9gLAihwg1STHngy7gop4fwXdHskx5UMKQC/BmSkwvT+TgVHXKMxz
- Xo1cdy24z+OU7xuWzdVHZaOz6/XIw+BH3f0a6Kk8KK7SpU3gi2wL+FYZE
-X-Gm-Gg: ASbGnct3VxRyEt5596wBwTLndLSuNWkdfJHW1EvCGcCsjwS8/z9xda0TwEjPHViDh5G
- WVEoCN9c2ibk8U+7MwVJ+4JT3FwofNyucrNBFALUWrsoXSrDDOM6vJ001N2A12ffn3QXblJrnLS
- tW7S7BM3R6AvvdygS1GZYZHH5+V+swWUK+cgaAGbY9YXtvD839L4IbCZjuLsX5oN+ziBlhcsMvF
- jMUexHtohucOYyB2YxBpihESfUgjsl+mWdvx1hEDOagCUGJMFuynAkzd2/HQzItTUbaw0theytE
- OhpGPjzolzTYSDOjtlcyY0q/ZCtLaT7O2v0daseGIOc2S/yWRtawvzlWLhlHc+6bblBPz/2GYgq
- 2vg==
-X-Received: by 2002:a05:6000:240b:b0:3b7:6205:25c7 with SMTP id
- ffacd0b85a97d-3b900b4cae9mr7636135f8f.13.1754829971326; 
- Sun, 10 Aug 2025 05:46:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWo7zH+w8s+5+nVdGAyBrKdmVa+SdjSglMuPLx0KylaoOLPea31z4tsxF9PUSe1+fPQbKofg==
-X-Received: by 2002:a05:6000:240b:b0:3b7:6205:25c7 with SMTP id
- ffacd0b85a97d-3b900b4cae9mr7636111f8f.13.1754829970842; 
- Sun, 10 Aug 2025 05:46:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e5853104sm212693855e9.8.2025.08.10.05.46.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 Aug 2025 05:46:10 -0700 (PDT)
-Message-ID: <04eb08b6-b787-47f3-86b7-b2d3a0f50ed6@redhat.com>
-Date: Sun, 10 Aug 2025 14:46:09 +0200
+ AJvYcCUXMIYn9+asel6L1sgWT6oOIZN9J61mo0gYxU5AN2zOFpCRbvzOHPx3q6DU5nyAWSrHhoWcXscVDDj4@nongnu.org
+X-Gm-Message-State: AOJu0YzS7SH1AfixQCfZ/ptu6fWo+Vo5EmPWalTwpJVyQQ1K3tYLTNE9
+ plLnlGjB2ennKnF03drdtV8REZ5daJTRzUdxx/lekjLLzNeeo/pIVAoVBqAeGXbaXLl7adLUVM2
+ JT/7BdYc5XxaXsg/507nvyEq/Ins2UAy6NLfoG8xK+o5dTDiCXSSFHWV+Q8KwYeRNzl2rYukr4m
+ 2MMXQPFVOAEkJ26G3ioD/DvgwvgQkGxgjSqNDLmteQhvsnGLg=
+X-Gm-Gg: ASbGnctUMyNvF8Uh19cXIbQAhk9lz5JzIYiy4T1WW/qKBAMXuf8YFsl4x9ciBUxEa1A
+ okGMuSrV/u5RSnC77aeKn1nnq0YnbC+QNc+ZxlyE29fX3r2adg3GgB4zf4Y5I2EOiSImtqqM2x5
+ Kt/wvfX70Up4TZPzsv3ONy
+X-Received: by 2002:a05:6402:2745:b0:615:6482:7498 with SMTP id
+ 4fb4d7f45d1cf-617e2e9295cmr7153077a12.31.1754831290016; 
+ Sun, 10 Aug 2025 06:08:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCfxJ4kO1C1zc6Pmu8U3Ri3GLFt/Bq8oGbKEGyhzA4FzNs0DeGlDbaBt7Qyqzp35IF5sQ2BF82gWBDhCQbndg=
+X-Received: by 2002:a05:6402:2745:b0:615:6482:7498 with SMTP id
+ 4fb4d7f45d1cf-617e2e9295cmr7153059a12.31.1754831289527; Sun, 10 Aug 2025
+ 06:08:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Access to remote XIVE2 units (was Re: [PATCH v9 0/7] Power11 support
- for QEMU [PowerNV])
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>, gautam@linux.ibm.com
-References: <20250808115929.1073910-1-adityag@linux.ibm.com>
- <baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com>
- <yo6uk5z6dlq4jlk5hsaoyhymozdpo6ijpq5bz4fipkf5ftws4b@um57vsttgf65>
- <wdkarichs5jrmpz3k4gxosw42dt6qxwodnc6t6tcuecsmxgqcd@km4q644fiixb>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <wdkarichs5jrmpz3k4gxosw42dt6qxwodnc6t6tcuecsmxgqcd@km4q644fiixb>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <CAATJJ0+Qq3ksRmNRDrGQLVHQ=XnsnFHxCNxUhjJfNfgwUKkDPQ@mail.gmail.com>
+ <aJNDxxjeqkOLAO2r@redhat.com>
+ <CAATJJ0L-E=JsKOX_E=jqraeK__jLF851DDbEx5psVkTMSppKXw@mail.gmail.com>
+ <aJOqmxTimJ_mFCqp@redhat.com> <2dbe2da9-895a-45ca-9f41-7ec273e0bb80@intel.com>
+ <CAATJJ0Jpn8VMRDOFuk7VaV5jC3tj0V1817OiRa6tH3x1OtYFSQ@mail.gmail.com>
+ <da824dc2-c241-4858-a233-6253b6b62926@intel.com>
+In-Reply-To: <da824dc2-c241-4858-a233-6253b6b62926@intel.com>
+From: Christian Ehrhardt <christian.ehrhardt@canonical.com>
+Date: Sun, 10 Aug 2025 15:07:43 +0200
+X-Gm-Features: Ac12FXy3FODRjkr0UFS8aqkiCww1PDoM5TFdK-oNekltN0ncLpB3qgQ6LsKkx7o
+Message-ID: <CAATJJ0KRFuJHt6-Cc7t9CJ5Fzr9v-GYODJH+27ibsHOjd1215A@mail.gmail.com>
+Subject: Re: Issues with pdcm in qemu 10.1-rc on migration and save/restore
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=christian.ehrhardt@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,80 +114,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Glenn
-+ Gautam
+On Thu, Aug 7, 2025 at 10:09=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> w=
+rote:
+>
+> On 8/7/2025 2:37 PM, Christian Ehrhardt wrote:
+> > On Thu, Aug 7, 2025 at 5:38=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com=
+> wrote:
+> >>
+> >> On 8/7/2025 3:18 AM, Daniel P. Berrang=C3=A9 wrote:
+> >>> On Wed, Aug 06, 2025 at 07:57:34PM +0200, Christian Ehrhardt wrote:
+> >>>> On Wed, Aug 6, 2025 at 2:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berr=
+ange@redhat.com> wrote:
+> >>>>>
+> >>>>> On Wed, Aug 06, 2025 at 01:52:17PM +0200, Christian Ehrhardt wrote:
+> >>>>>> Hi,
+> >>>>>> I was unsure if this would be better sent to libvirt or qemu - the
+> >>>>>> issue is somewhere between libvirt modelling CPUs and qemu 10.1
+> >>>>>> behaving differently. I did not want to double post and gladly mos=
+t of
+> >>>>>> the people are on both lists - since the switch in/out of the prob=
+lem
+> >>>>>> is qemu 10.0 <-> 10.1 let me start here. I beg your pardon for not=
+ yet
+> >>>>>> having all the answers, I'm sure I could find more with debugging,=
+ but
+> >>>>>> I also wanted to report early for your awareness while we are stil=
+l in
+> >>>>>> the RC phase.
+> >>>>>>
+> >>>>>>
+> >>>>>> # Problem
+> >>>>>>
+> >>>>>> What I found when testing migrations in Ubuntu with qemu 10.1-rc1 =
+was:
+> >>>>>>     error: operation failed: guest CPU doesn't match specification=
+:
+> >>>>>> missing features: pdcm
+> >>>>>>
+> >>>>>> This is behaving the same with libvirt 11.4 or the more recent 11.=
+6.
+> >>>>>> But switching back to qemu 10.0 confirmed that this behavior is ne=
+w
+> >>>>>> with qemu 10.1-rc.
+> >>>>>
+> >>>>>
+> >>>>>> Without yet having any hard evidence against them I found a few pd=
+cm
+> >>>>>> related commits between 10.0 and 10.1-rc1:
+> >>>>>>     7ff24fb65 i386/tdx: Don't mask off CPUID_EXT_PDCM
+> >>>>>>     00268e000 i386/cpu: Warn about why CPUID_EXT_PDCM is not avail=
+able
+> >>>>>>     e68ec2980 i386/cpu: Move adjustment of CPUID_EXT_PDCM before
+> >>>>>> feature_dependencies[] check
+> >>>>>>     0ba06e46d i386/tdx: Add TDX fixed1 bits to supported CPUIDs
+> >>>>>>
+> >>>>>>
+> >>>>>> # Caveat
+> >>>>>>
+> >>>>>> My test environment is in LXD system containers, that gives me iss=
+ues
+> >>>>>> in the power management detection
+> >>>>>>     libvirtd[406]: error from service: GDBus.Error:System.Error.ER=
+OFS:
+> >>>>>> Read-only file system
+> >>>>>>     libvirtd[406]: Failed to get host power management capabilitie=
+s
+> >>>>>
+> >>>>> That's harmless.
+> >>>>
+> >>>> Yeah, it always was for me - thanks for confirming.
+> >>>>
+> >>>>>> And the resulting host-model on a  rather old test server will the=
+refore have:
+> >>>>>>     <cpu mode=3D'custom' match=3D'exact' check=3D'full'>
+> >>>>>>       <model fallback=3D'forbid'>Haswell-noTSX-IBRS</model>
+> >>>>>>       <vendor>Intel</vendor>
+> >>>>>>       <feature policy=3D'require' name=3D'vmx'/>
+> >>>>>>       <feature policy=3D'disable' name=3D'pdcm'/>
+> >>>>>>        ...
+> >>>>>>
+> >>>>>> But that was fine in the past, and the behavior started to break
+> >>>>>> save/restore or migrations just now with the new qemu 10.1-rc.
+> >>>>>>
+> >>>>>> # Next steps
+> >>>>>>
+> >>>>>> I'm soon overwhelmed by meetings for the rest of the day, but woul=
+d be
+> >>>>>> curious if one has a suggestion about what to look at next for
+> >>>>>> debugging or a theory about what might go wrong. If nothing else c=
+omes
+> >>>>>> up I'll try to set up a bisect run tomorrow.
+> >>>>>
+> >>>>> Yeah, git bisect is what I'd start with.
+> >>>>
+> >>>> Bisect complete, identified this commit
+> >>>>
+> >>>> commit 00268e00027459abede448662f8794d78eb4b0a4
+> >>>> Author: Xiaoyao Li <xiaoyao.li@intel.com>
+> >>>> Date:   Tue Mar 4 00:24:50 2025 -0500
+> >>>>
+> >>>>       i386/cpu: Warn about why CPUID_EXT_PDCM is not available
+> >>>>
+> >>>>       When user requests PDCM explicitly via "+pdcm" without PMU ena=
+bled, emit
+> >>>>       a warning to inform the user.
+> >>>>
+> >>>>       Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> >>>>       Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> >>>>       Link: https://lore.kernel.org/r/20250304052450.465445-3-xiaoya=
+o.li@intel.com
+> >>>>       Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> >>>>
+> >>>>    target/i386/cpu.c | 3 +++
+> >>>>    1 file changed, 3 insertions(+)
+> >>>>
+> >>>>
+> >>>>
+> >>>> Which is odd as it should only add a warning right?
+> >>>
+> >>> No, that commit message is misleading.
+> >>>
+> >>> IIUC mark_unavailable_features() actively blocks usage of the feature=
+,
+> >>> so it is a functional change, not merely a emitting warning.
+> >>>
+> >>> It makes me wonder if that commit was actually intended to block the
+> >>> feature or not, vs merely warning ?  CC'ing those involved in the
+> >>> commit.
+> >>
+> >> The intention was to print a warning to tell users PDCM cannot be
+> >> enabled if pmu is not enabled. While mark_unavailable_features() does
+> >> has the effect of setting the bit in cpu->filtered_features[].
+> >>
+> >> But the feature is masked off anyway
+> >
+> > Right - it was disabled right from the beginning.
+> > As I reported libvirt detected it as not available and constructed the
+> > CPU as with it disabled.
+> > Which translated it into -cpu ...,pdcm=3Doff,...
+> >
+> > The new and bad aspect we need to overcome is that in these conditions
+> > this now somehow breaks save/restore and migration operations.
+>
+> The commit 00268e0002 makes a difference only for the case "-cpu
+> xxx,pdcm=3Don" without "pmu=3Don", and it emits a warning and sets the PD=
+CM
+> in cpu->filtered_features[].
 
-On 8/10/25 12:45, Aditya Gupta wrote:
-> On 25/08/10 12:26PM, Aditya Gupta wrote:
->>> <...snip...>
->>
->> About the error, seems xive2 always expecting powernv10 chip, I will
->> have to rethink how should I use the same xive2 for powernv11.
->>
-> 
-> There's a type cast to Pnv10Chip in 'pnv_xive2_get_remote'.
-> The cast is only temporarily used to get the 'PnvXive2' object in the
-> Pnv10Chip.
-> It's the only place in hw/intc/pnv_xive2.c assuming Pnv10Chip object.
-> 
-> Thinking to have a helper function to just return the 'PnvXive2' object
-> inside the chip, given a 'PnvChip'.
-> 
-> Or the below change where we are adding another pointer in PnvChipClass:
-> 
->      diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
->      index e019cad5c14c..9832be5fd297 100644
->      --- a/hw/intc/pnv_xive2.c
->      +++ b/hw/intc/pnv_xive2.c
->      @@ -110,8 +110,8 @@ static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
->           int i;
->       
->           for (i = 0; i < pnv->num_chips; i++) {
->      -        Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
->      -        PnvXive2 *xive = &chip10->xive;
->      +        PnvChipClass *k = PNV_CHIP_GET_CLASS(pnv->chips[i]);
->      +        PnvXive2 *xive = k->intc_get(pnv->chips[i]);
->       
->               /*
->                * Is this the XIVE matching the forwarded VSD address is for this
-> 
-> Which one do you suggest ? Or should I look for another way ?
-> 
-> I am preferring the first way to have a helper, but both ways look hacky.
+But this is `pdcm=3Doff` as I said above, yet with/without the change it
+breaks the mentioned migration and save/restors.
+But since you mentioned pmu, that isn't mentioned in the qemu cmdline
+arguments that libvirt used and the base type is Haswell-noTSX-IBRS.
 
-Any call to qdev_get_machine() in device model is at best
-a modeling shortcut, most likely it is a hack :
-
-   /*
-    * Remote access to INT controllers. HW uses MMIOs(?). For now, a simple
-    * scan of all the chips INT controller is good enough.
-    */
-
-So all these calls are suspicious :
-
-   $ git grep qdev_get_machine hw/*/*pnv*
-   hw/intc/pnv_xive2.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-   hw/pci-host/pnv_phb.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-   hw/pci-host/pnv_phb3.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-   hw/ppc/pnv.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-   hw/ppc/pnv.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-   hw/ppc/pnv_chiptod.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-   hw/ppc/pnv_chiptod.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-   hw/ppc/pnv_lpc.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-
-In the particular case of XIVE2, the solution is to rework
-pnv_xive2_get_remote() like it was for P9. See b68147b7a5bf
-("ppc/xive: Add support for the PC MMIOs").
+> So libvirt must first request with "-cpu xxx,pdcm=3Don" without "pmu=3Don=
+"
+> and gets the result that PDCM is filtered (set in cpu->filtered_features[=
+]).
+>
+> This indeed introduces the behavior change that before the commit, "-cpu
+> xxx,pdcm=3Don" without "pmu=3Don" doesn't get warning nor PDCM is set in
+> cpu->filtered_features[], but PDCM is just not set in guest's CPUID.
+>
+> I couldn't understand how the warning or PDCM is set in
+> cpu->filtered_features[] breaks save/restore and migration.
+>
+> > As a cross-check I reverted just and only 00268e0002 on top of
+> > 10.1-rc2 and these use cases work again.
+> >
+> >> even without the
+> >> mark_unavailable_features():
+> >>
+> >>       env->features[FEAT_1_ECX] &=3D ~CPUID_EXT_PDCM;
+> >>
+> >> So is it that PDCM is set in cpu->filtered_features[] causing the prob=
+lem?
+> >>
+> >>> With regards,
+> >>> Daniel
+> >>
+> >
+> >
+>
 
 
-Thanks,
-
-C.
-
-
-
-
-
-
-
+--=20
+Christian Ehrhardt
+Director of Engineering, Ubuntu Server
+Canonical Ltd
 
