@@ -4,94 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763E3C87FCF
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Aug 2025 14:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5C65C87FCA
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Aug 2025 16:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ul7EX-0005tJ-6y; Sun, 10 Aug 2025 10:41:14 -0400
+	id 1ul8UW-0001RW-RQ; Sun, 10 Aug 2025 12:01:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ul7EE-0005ql-Io; Sun, 10 Aug 2025 10:40:56 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ul8UG-0001KW-SS
+ for qemu-devel@nongnu.org; Sun, 10 Aug 2025 12:01:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ul7EC-0006NB-C3; Sun, 10 Aug 2025 10:40:54 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 10E221407E8;
- Sun, 10 Aug 2025 17:40:16 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9D20625D2A2;
- Sun, 10 Aug 2025 17:40:46 +0300 (MSK)
-Message-ID: <4288fe0a-a9ed-4a85-8edd-5af8256ff647@tls.msk.ru>
-Date: Sun, 10 Aug 2025 17:40:46 +0300
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ul8UD-0008K7-Eu
+ for qemu-devel@nongnu.org; Sun, 10 Aug 2025 12:01:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754841688;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tmlDAyNEs1gvhtmX+7NrN+bSP9kqKus7+Y2NGGcQDsc=;
+ b=KISep+7s/YmhJA7aeEeLqllyAXUNumRonu8LP5w+mlDTcIBu1/sJDjn80CGjBtEj9iW5BZ
+ uLq8Uz/YueTlzgOVahax2uYdW83djnkZzGZHFGP627pIRv2t9Amnmhdcj2vVKSdaptt0x+
+ g6terKwEBGbBN+LwcykaMzCHfnmYPZM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-9-bgqjZrPoOcSXpMiyw6Fg-1; Sun,
+ 10 Aug 2025 12:01:26 -0400
+X-MC-Unique: 9-bgqjZrPoOcSXpMiyw6Fg-1
+X-Mimecast-MFC-AGG-ID: 9-bgqjZrPoOcSXpMiyw6Fg_1754841685
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA7D119560B1; Sun, 10 Aug 2025 16:01:25 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.11])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 60E46300145A; Sun, 10 Aug 2025 16:01:24 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Steve Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 1/3] vfio/pci: augment set_handler
+Date: Sun, 10 Aug 2025 18:01:16 +0200
+Message-ID: <20250810160118.450430-2-clg@redhat.com>
+In-Reply-To: <20250810160118.450430-1-clg@redhat.com>
+References: <20250810160118.450430-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
-To: Smail AIDER <smail.aider@huawei.com>, qemu-devel@nongnu.org
-Cc: alexander.spyridakis@huawei.com, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, zhangyue165@huawei.com,
- richard.henderson@linaro.org, liuyutao2@huawei.com,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20250801090645.2205449-1-smail.aider@huawei.com>
- <20250801090645.2205449-2-smail.aider@huawei.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250801090645.2205449-2-smail.aider@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,20 +83,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.08.2025 12:06, Smail AIDER via wrote:
-> From: Smail AIDER via <qemu-devel@nongnu.org>
-> 
-> Trap PMCR_EL0 or PMCR accesses to EL2 when MDCR_EL2.TPMCR is set.
-> Similar to MDCR_EL2.TPM, MDCR_EL2.TPMCR allows trapping EL0 and EL1
-> accesses to the PMCR register to EL2.
-> 
-> Signed-off-by: Smail AIDER <smail.aider@huawei.com>
-> Message-Id: <20250722131925.2119169-1-smail.aider@huawei.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-I'm assuming this is for qemu-stable too (Cc'ed), just like the
-v1 of this patch was.  Please let me know it it isn't.
+Extend vfio_pci_msi_set_handler() so it can set or clear the handler.
+Add a similar accessor for INTx.  No functional change.
 
-Thanks,
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/1752689169-233452-2-git-send-email-steven.sistare@oracle.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/pci.h |  3 ++-
+ hw/vfio/cpr.c |  2 +-
+ hw/vfio/pci.c | 13 +++++++++++--
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-/mjt
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 81465a8214a4008716806ae85c7f320f6b198bb2..2b564baf88640a4fe2e78b5ec4c4eb3ba3141357 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -209,8 +209,9 @@ void vfio_pci_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+ void vfio_pci_prepare_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
+ void vfio_pci_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev);
+ bool vfio_pci_intx_enable(VFIOPCIDevice *vdev, Error **errp);
++void vfio_pci_intx_set_handler(VFIOPCIDevice *vdev, bool enable);
+ void vfio_pci_msix_set_notifiers(VFIOPCIDevice *vdev);
+-void vfio_pci_msi_set_handler(VFIOPCIDevice *vdev, int nr);
++void vfio_pci_msi_set_handler(VFIOPCIDevice *vdev, int nr, bool enable);
+ 
+ uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len);
+ void vfio_pci_write_config(PCIDevice *pdev,
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index 384b56c4c74d8224df0ceecb2b8ea4e1a1f40562..ade7ff745dc26e13712dbdafda38e1875a016505 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -70,7 +70,7 @@ static void vfio_cpr_claim_vectors(VFIOPCIDevice *vdev, int nr_vectors,
+         fd = vfio_cpr_load_vector_fd(vdev, "interrupt", i);
+         if (fd >= 0) {
+             vfio_pci_vector_init(vdev, i);
+-            vfio_pci_msi_set_handler(vdev, i);
++            vfio_pci_msi_set_handler(vdev, i, true);
+         }
+ 
+         if (vfio_cpr_load_vector_fd(vdev, "kvm_interrupt", i) >= 0) {
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 4fa692c1a32bcfa4e4939e5fcb64f2bf19905b3b..4cd6894ca81731258ad10a5f9f894289e671a3db 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -413,6 +413,14 @@ bool vfio_pci_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+     return vfio_intx_enable(vdev, errp);
+ }
+ 
++void vfio_pci_intx_set_handler(VFIOPCIDevice *vdev, bool enable)
++{
++    int fd = event_notifier_get_fd(&vdev->intx.interrupt);
++    IOHandler *handler = (enable ? vfio_intx_interrupt : NULL);
++
++    qemu_set_fd_handler(fd, handler, NULL, vdev);
++}
++
+ /*
+  * MSI/X
+  */
+@@ -451,12 +459,13 @@ static void vfio_msi_interrupt(void *opaque)
+     notify(&vdev->pdev, nr);
+ }
+ 
+-void vfio_pci_msi_set_handler(VFIOPCIDevice *vdev, int nr)
++void vfio_pci_msi_set_handler(VFIOPCIDevice *vdev, int nr, bool enable)
+ {
+     VFIOMSIVector *vector = &vdev->msi_vectors[nr];
+     int fd = event_notifier_get_fd(&vector->interrupt);
++    IOHandler *handler = (enable ? vfio_msi_interrupt : NULL);
+ 
+-    qemu_set_fd_handler(fd, vfio_msi_interrupt, NULL, vector);
++    qemu_set_fd_handler(fd, handler, NULL, vector);
+ }
+ 
+ /*
+-- 
+2.50.1
+
 
