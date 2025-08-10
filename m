@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14982C87FCA
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Aug 2025 13:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763E3C87FCF
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Aug 2025 14:42:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ul6A4-00031x-Aq; Sun, 10 Aug 2025 09:32:32 -0400
+	id 1ul7EX-0005tJ-6y; Sun, 10 Aug 2025 10:41:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ul69m-0002yX-SU
- for qemu-devel@nongnu.org; Sun, 10 Aug 2025 09:32:16 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ul69j-0005KW-Uh
- for qemu-devel@nongnu.org; Sun, 10 Aug 2025 09:32:13 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-71bce78e14fso36812717b3.1
- for <qemu-devel@nongnu.org>; Sun, 10 Aug 2025 06:32:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754832728; x=1755437528; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4a+1rRJDKqWQsRx2A+SIAn0OH7mlg7e4jUDSAR3Hw+k=;
- b=XAiRz0GAsFjq8eica40TkfNawzh+2tW/pns0DBPdeZBLtIuOqcAPhPsCUG4HfPUT/R
- qG+C1g3nowGwHjFQGu4nsWhTtfyOIq0+vcPo0SncEZ3S7WRcXJqdECiukP2agwrSnB+p
- gmaKBUH0AP292Zcx+IRQFLJ5Y0M7KwvFtvwUoy83B7viOCpsXexUv1ZG0MofN+hN9j4v
- XwKTIEfX9xZErhLVbcQPe1CJ2+txBK47dWXCdb7pR6GAMT95RgEHeLNv95LJFBco9JCx
- vBZiiwSmz4Um8RNX7p4b/0rGMxsJ17PosD8Pzf87wm3/NFcbztqXjyWHgY38rv1iZOh/
- ZOWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754832728; x=1755437528;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4a+1rRJDKqWQsRx2A+SIAn0OH7mlg7e4jUDSAR3Hw+k=;
- b=WN5DhcTJ0igUFExWlsdXL6vySsSO6n1TL3uJSrJt6mgBLVUfKun3NB8x87E8hbMpoq
- aHxY33UTPXwAOP7RYcM8QXf7fT0cF6S9AlBuzrc3cMO5cT77SchpEVBB4W4vTQCqqoJf
- sflH/xJXl4ljKejwVoNB58NyWKDueVRAaZuzLtLmizsDz9zhAkeLAbhe1J9kndsHGivD
- pNGwk8yEGb6RkEngIfO5W/nKdjE9BldLuBQy6QKBZKBhsS9atJ2vOWWH+qPvGs5pvggF
- XelTYCxgWLho9IAmWeov5uFgaWf/WsTfN2XfvTV5DfeviSMlGvYcuBl7ufCebGtpM1TY
- xKgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJmVMWuzov2eg3ZtHYJNknBrbt0YUmk4+KTS3TA2boOk4C2io09HLJakuTtMEtcXUDPg0qr2ppWk7C@nongnu.org
-X-Gm-Message-State: AOJu0Yz3aWAqf9mhudu8mUh0wXp4HIzGe2eL+iFA7aS6BKDmmC8dgkw7
- YLwMErVcYybemCv/wk0pWBVuFkHwXcDJi4Qg6ce8ZdJ5TpAUb5XQ+CcLm4AYrzJiYKpjHmGKueu
- K3Zwjk0IVRAxiAX7eE2sdN9nvxDdWxMrRwjkfIuCqDw==
-X-Gm-Gg: ASbGncutrYzDsNah1AZcQb6HG0PTExeQ93oza4ij8kpsKz6T29UO6GRkC/YAvUvUrU+
- 9eSH3JGp9pjklSaa7J3jejSKMDC4ArVgqdlOLU8e+XwGyQTaLM85s29+Tr/nUnvB8sUtuFxFfxm
- nlfSTmKlX61cB+UvXtqAMjIkNIicuucsbMxlS2AJExeXt5nLkCQCP290Jy5TQdsQOS6Waa7dQx/
- IzVwAgC
-X-Google-Smtp-Source: AGHT+IEx48t+wkyr4+LjxZfbUnm88FeFcnOAvFmsR1/1vXSfQsWvW+ehtfUpT/tjPsMDQONHVmRZvn/PIpwnoHyLDFA=
-X-Received: by 2002:a05:690c:6202:b0:71b:69ed:50ba with SMTP id
- 00721157ae682-71bf0e34ademr115573397b3.23.1754832727807; Sun, 10 Aug 2025
- 06:32:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ul7EE-0005ql-Io; Sun, 10 Aug 2025 10:40:56 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ul7EC-0006NB-C3; Sun, 10 Aug 2025 10:40:54 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 10E221407E8;
+ Sun, 10 Aug 2025 17:40:16 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D20625D2A2;
+ Sun, 10 Aug 2025 17:40:46 +0300 (MSK)
+Message-ID: <4288fe0a-a9ed-4a85-8edd-5af8256ff647@tls.msk.ru>
+Date: Sun, 10 Aug 2025 17:40:46 +0300
 MIME-Version: 1.0
-References: <20250722131925.2119169-1-smail.aider@huawei.com>
- <b06c4273-650b-4ba3-bf35-9af16bfc70e7@tls.msk.ru>
-In-Reply-To: <b06c4273-650b-4ba3-bf35-9af16bfc70e7@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 10 Aug 2025 14:31:56 +0100
-X-Gm-Features: Ac12FXzLkhVWjMVKKkhJaN0zTN4oPQ-dKieb8tSk8HP8x82ek4RQBd2pTs7-Wq8
-Message-ID: <CAFEAcA8oSaNp3bKeOF-xcfNnWhm-vYnbwr9_yrpHDQcDwOmwDQ@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Smail AIDER <smail.aider@huawei.com>, qemu-devel@nongnu.org, 
- alexander.spyridakis@huawei.com, zhangyue165@huawei.com, qemu-arm@nongnu.org, 
- liuyutao2@huawei.com, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
+To: Smail AIDER <smail.aider@huawei.com>, qemu-devel@nongnu.org
+Cc: alexander.spyridakis@huawei.com, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, zhangyue165@huawei.com,
+ richard.henderson@linaro.org, liuyutao2@huawei.com,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250801090645.2205449-1-smail.aider@huawei.com>
+ <20250801090645.2205449-2-smail.aider@huawei.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250801090645.2205449-2-smail.aider@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,22 +107,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 10 Aug 2025 at 08:57, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> On 22.07.2025 16:19, Smail AIDER via wrote:
-> > Trap PMCR_EL0 or PMCR accesses to EL2 when MDCR_EL2.TPMCR is set.
-> > Similar to MDCR_EL2.TPM, MDCR_EL2.TPMCR allows trapping EL0 and EL1
-> > accesses to the PMCR register to EL2.
->
-> Ping?
->
-> Has this patch been forgotten?
+On 01.08.2025 12:06, Smail AIDER via wrote:
+> From: Smail AIDER via <qemu-devel@nongnu.org>
+> 
+> Trap PMCR_EL0 or PMCR accesses to EL2 when MDCR_EL2.TPMCR is set.
+> Similar to MDCR_EL2.TPM, MDCR_EL2.TPMCR allows trapping EL0 and EL1
+> accesses to the PMCR register to EL2.
+> 
+> Signed-off-by: Smail AIDER <smail.aider@huawei.com>
+> Message-Id: <20250722131925.2119169-1-smail.aider@huawei.com>
 
-This is v1, it got code review comments, and there is a v2 on list.
+I'm assuming this is for qemu-stable too (Cc'ed), just like the
+v1 of this patch was.  Please let me know it it isn't.
 
-The v2 on my list but it's passed the "worth putting into 10.1"
-point already and hasn't yet been reviewed. I was assuming RTH would
-review as he looked at v1.
+Thanks,
 
--- PMM
+/mjt
 
