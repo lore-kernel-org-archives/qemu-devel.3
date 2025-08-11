@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A3BDCA0ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 17:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B07CA0ED3
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 17:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulVzu-0005II-Te; Mon, 11 Aug 2025 13:07:47 -0400
+	id 1ulVz0-0004rz-4F; Mon, 11 Aug 2025 13:06:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulVzU-000512-8d
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:07:25 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulVyy-0004rA-L9
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:06:48 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulVzI-0001s3-NX
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:07:18 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3b7910123a0so4251316f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 10:07:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulVyp-0001mz-Cf
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:06:48 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3b7862bd22bso2798966f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 10:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754932023; x=1755536823; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754931996; x=1755536796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wXHYeE/dbTRdflhUmCNmx7Q9a47atxr+CRA/ufWMQVM=;
- b=SNku07GjtRGK5Zp5BGpsUb2eb3fJD/wrlu8en9z+x6mH1pzz0bLRmGgffnEKbipp0J
- cUMIIFvmbrZBMjaeVvgTbDKAhDbuG/Vy77kg8GqRG1yDW/AsYDIrIYBy9CytRViTipnZ
- eYiM+bI41NO7kYyT36qW7t/zRfqKzP+Yy3f+lpwI8ZMvydFr8EVVrmZ6GlIsdX6BpxUh
- MveaNjWsJG3epysNZRF8xVtMS72WDpRn7zcw6CfrZjAx+we2K4Ar6ia4zpMY+/9k3tgP
- 9T5yNNGc2k8io/PME7LVx7wLTbapeOZuDXCoiXrMiZnW4NObtU5hDDpjaeuvJrBd08Xu
- 4whw==
+ bh=4kCcMKgJsUFQdM/mVU8Sb2r9KycdWMl/tLnBwMf6U/Q=;
+ b=oy/l4rcInepRoex/IKDezCvpAgxqsY/leWH8zOO35rCDZvfMUaUZkus1icH2RBLMa9
+ nmxfxPeMOAo4C3TfUhRrTGCi+S08HYV569JdpfnkdcxEoAwNKARIc9gf5wX9/LzxJMEg
+ MwBPM65hUbakaRTbYWV2x776bfbD9ElEy7ljjDmMSkytCOlpUp4uH+5nj0R/ryBRZF6n
+ ioogttgRz90TCFvgUfgBG6yQHDchtvYPWi6wvjF7uuCD1EbzTfz1u/nIz1Moc1cjq1qJ
+ FZFtGV5F4aGlFh376rdDE88nvrXP9bCiJmESrxkpoQiIDNPVBebOjOl0P/Cpl4UT59oS
+ qLQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754932023; x=1755536823;
+ d=1e100.net; s=20230601; t=1754931996; x=1755536796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wXHYeE/dbTRdflhUmCNmx7Q9a47atxr+CRA/ufWMQVM=;
- b=QOAnRtxe6kOOdXTYMSNKSmef0XUCqRnS/238dcy01hJqZhjxkTYKW7EjIZP4yGa5dJ
- /ZuNmHbNmqA+PfCYXu5Za18toldD02uwJK/ACAis05CI1eWGYyP6oRrkomhOxMDYt2xW
- CFzeLw4C3CK6sJ9FchLSID3uqBPeHYQXOjqDLCBd2bv2YRu+hsGwc213vaeeg5nmpkSb
- QDQF8fvlkerJn74QmbOB3ZW3x1raP5yAUQaiWd3lPbjfL3vSrME4alVteiVpFebiS/O1
- JXzxZ+mNfEDsjPVqpHDuo7dLWhW43UWUUT3LibxAHZImKB+XQCWu2xDpats3yOdfxnXx
- BhuA==
-X-Gm-Message-State: AOJu0Yx0KVsn/GHmjDOdIhq7GEHFCeEoOKhbxYc71z5PN6D9wVgiRga/
- yj1Vu6aFjZsatBa7r9uurem63KApKPJ25w03cJNMfkBPTk+sneYkV6PEWoK61GbYqVyzyGL0ltv
- isEgA
-X-Gm-Gg: ASbGnctGHH3rkXOqzcw4hegc+pL1NKKjP4caj8Ss9/gjq6odVWEoDpvdTKnGeJiThjd
- +o/KNcB4EQPcB6o8wEdF0yb/qthS4FQ27F8XyIgXCa2550bEFJAfFK9pE/FeknHFPwyaHqTivBV
- onC3/gLjPXgCebdRwMrmFiFoMJ5BkHG73BiOTQkQRRHaBPlpi3vn+c+7dhDxs89qE65HXlVhsDR
- PmV3vgVXz53Ptsf4njmk+5dbbPmb9K+zKqRFL6tlkVat2OTBRQ9noXYz1QwwwZXLiwI7PMcVsq3
- m6ZinYIay8NGq2gn7wopFUboVG78980v9rxr475jWgIfYoag3kzlzRGOLGBz+0ZMVadZTR/qF6B
- Ea+1Ogxaf955ljGnUFxFjC6AdxuxOrjTpgEnbdUX92h5xxHH6N25q7yiZ2nGkrjuqM8vobTN6
-X-Google-Smtp-Source: AGHT+IFUuly7Dqrg66psU4QHCuRXsJhkEzRy6aRPP2+eyqivHdPhhh2IohEjZISBtH74GHrPxa9how==
-X-Received: by 2002:a05:6000:2c09:b0:3b7:806e:7773 with SMTP id
- ffacd0b85a97d-3b910fd97fbmr541303f8f.15.1754932022551; 
- Mon, 11 Aug 2025 10:07:02 -0700 (PDT)
+ bh=4kCcMKgJsUFQdM/mVU8Sb2r9KycdWMl/tLnBwMf6U/Q=;
+ b=wVqSyTOka3klj/j7ij3zncKUxUzmxNEwTFQo0oM7/IEJgwdEQdjNZIDLo/A/N+odXe
+ Zl5IUKiyIHlcnQWUcBsppd/Ji0z3bwkmSKImt5IXs44Oernc9n2DQGiQ0mcDdcQolWNX
+ w3J04r9BWL9xUyUcbmibK7i5nHaRvp3JyZw5OP+mdiG+cqHb8OZHRofevB4fCUbrOr5f
+ IYc8MJjdn7hiyU4kdssvtbvapZA7RZ2hLNXgsminx+0bGa7NDBpL8Jgf4FdOXPd3mOtR
+ D7RGiMRQXaN0mL1ruPKvbjneYAqz11TUR+9Vrh67c8QI+X9txyVtK4uhqJtZVbYRwc4P
+ GRbA==
+X-Gm-Message-State: AOJu0YzzN26tFh7ih96tXv4KQHUdLzO5GCJtiX8174fSk2QRpcQFCuHU
+ 9VOTTlvSgoM+iUpyCUD5E0aOQdWzkMBnZI8+ICrLy8CORopKwueFOfkDGbfEuNxvH56jnZMHtpf
+ 0O0uP
+X-Gm-Gg: ASbGncuRZsvW4MuJBikEYHkdKksSbAPrP4KFDg6X1SSgEX8Ikt1IN4go5meMxWmWVbH
+ chSzp6zxV7EN1s3VwH14T/LBwibMrzS3ziloaDUla2QVso5903C62K/32iFEhed3nMjI/67QIZl
+ OH6+8u6ii3Wxm6kqvwXtgcqM6wUHfpuRNIBLq9g7S3iT7yZwqhyNKQwSwazB0+4OBUmZvkVs/06
+ EStgr3aTvZEIl2rdcpC77R1FwpTsyvG3HQoJ04hlYScuSAXCTCUgg7wjD/htbBq9gHSsMycK2U5
+ XQzrCsmdxdVhtvEQ0Bt8BDqF/bFpYHyYPcVmviwpX6jfdPd7xU2U/jfzVZi0ajd0tmi/C9jjao8
+ /ZeYRr/F1sMXamfQdxVzTfiZw43HZiFsQ29HaqZWV/lztjXN0BMbLRlkgmUI2OFDgUmNcl7yT
+X-Google-Smtp-Source: AGHT+IH0cwxj5ttg7X/SuYwtZcuM0ETCatH/wcruBaxy12H3LRe2v4MWcJy+yEUAgit00aPOKJauoQ==
+X-Received: by 2002:a5d:5f53:0:b0:3b8:de54:6e64 with SMTP id
+ ffacd0b85a97d-3b9111b5fb8mr312079f8f.26.1754931995845; 
+ Mon, 11 Aug 2025 10:06:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3abf33sm41526775f8f.7.2025.08.11.10.07.01
+ ffacd0b85a97d-3b8e0846777sm31486669f8f.48.2025.08.11.10.06.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 Aug 2025 10:07:02 -0700 (PDT)
+ Mon, 11 Aug 2025 10:06:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Miguel Luis <miguel.luis@oracle.com>,
@@ -76,17 +76,17 @@ Cc: Miguel Luis <miguel.luis@oracle.com>,
  Mads Ynddal <mads@ynddal.dk>, Eric Auger <eric.auger@redhat.com>,
  qemu-arm@nongnu.org, Cameron Esfahani <dirty@apple.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 09/11] target/arm/hvf: Sync registers used at EL2
-Date: Mon, 11 Aug 2025 19:06:09 +0200
-Message-ID: <20250811170611.37482-10-philmd@linaro.org>
+Subject: [RFC PATCH 04/11] target/arm: Factor hvf_psci_get_target_el() out
+Date: Mon, 11 Aug 2025 19:06:04 +0200
+Message-ID: <20250811170611.37482-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250811170611.37482-1-philmd@linaro.org>
 References: <20250811170611.37482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,81 +111,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-When starting up the VM at EL2, more sysregs are available. Sync the state of those.
+Factor hvf_psci_get_target_el() out so it will be easier
+to allow switching to other EL later.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-[PMD: Adapted to host_cpu_feature_supported() API]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ target/arm/hvf/hvf.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 5174973991f..778dc3cedf7 100644
+index 47b0cd3a351..81dc4df686d 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -400,6 +400,7 @@ static const struct hvf_reg_match hvf_fpreg_match[] = {
- struct hvf_sreg_match {
-     int reg;
-     uint32_t key;
-+    bool el2;
-     uint32_t cp_idx;
- };
+@@ -1107,6 +1107,10 @@ static void hvf_psci_cpu_off(ARMCPU *arm_cpu)
+     assert(ret == QEMU_ARM_POWERCTL_RET_SUCCESS);
+ }
  
-@@ -545,6 +546,27 @@ static struct hvf_sreg_match hvf_sreg_match[] = {
-     { HV_SYS_REG_CNTV_CTL_EL0, HVF_SYSREG(14, 3, 3, 3, 1) },
-     { HV_SYS_REG_CNTV_CVAL_EL0, HVF_SYSREG(14, 3, 3, 3, 2) },
-     { HV_SYS_REG_SP_EL1, HVF_SYSREG(4, 1, 3, 4, 0) },
-+    /* EL2 */
-+    { HV_SYS_REG_CPTR_EL2, HVF_SYSREG(1, 1, 3, 4, 2), .el2 = true },
-+    { HV_SYS_REG_ELR_EL2, HVF_SYSREG(4, 0, 3, 4, 1), .el2 = true },
-+    { HV_SYS_REG_ESR_EL2, HVF_SYSREG(5, 2, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_FAR_EL2, HVF_SYSREG(6, 0, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_HCR_EL2, HVF_SYSREG(1, 1, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_HPFAR_EL2, HVF_SYSREG(6, 0, 3, 4, 4), .el2 = true },
-+    { HV_SYS_REG_MAIR_EL2, HVF_SYSREG(10, 2, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_MDCR_EL2, HVF_SYSREG(1, 1, 3, 4, 1), .el2 = true },
-+    { HV_SYS_REG_SCTLR_EL2, HVF_SYSREG(1, 0, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_SPSR_EL2, HVF_SYSREG(4, 0, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_SP_EL2, HVF_SYSREG(4, 1, 3, 6, 0), .el2 = true},
-+    { HV_SYS_REG_TCR_EL2, HVF_SYSREG(2, 0, 3, 4, 2), .el2 = true },
-+    { HV_SYS_REG_TPIDR_EL2, HVF_SYSREG(13, 0, 3, 4, 2), .el2 = true },
-+    { HV_SYS_REG_TTBR0_EL2, HVF_SYSREG(2, 0, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_TTBR1_EL2, HVF_SYSREG(2, 0, 3, 4, 1), .el2 = true },
-+    { HV_SYS_REG_VBAR_EL2, HVF_SYSREG(12, 0, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_VMPIDR_EL2, HVF_SYSREG(0, 0, 3, 4, 5), .el2 = true },
-+    { HV_SYS_REG_VPIDR_EL2, HVF_SYSREG(0, 0, 3, 4, 0), .el2 = true },
-+    { HV_SYS_REG_VTCR_EL2, HVF_SYSREG(2, 1, 3, 4, 2), .el2 = true },
-+    { HV_SYS_REG_VTTBR_EL2, HVF_SYSREG(2, 1, 3, 4, 0), .el2 = true },
- };
++static int hvf_psci_get_target_el(void)
++{
++    return 1;
++}
+ /*
+  * Handle a PSCI call.
+  *
+@@ -1128,7 +1132,6 @@ static bool hvf_handle_psci_call(CPUState *cpu)
+     CPUState *target_cpu_state;
+     ARMCPU *target_cpu;
+     target_ulong entry;
+-    int target_el = 1;
+     int32_t ret = 0;
  
- int hvf_get_registers(CPUState *cpu)
-@@ -588,6 +610,12 @@ int hvf_get_registers(CPUState *cpu)
-             continue;
-         }
- 
-+        if (hvf_sreg_match[i].el2
-+            && arm_feature(env, ARM_FEATURE_EL2)
-+            && !host_cpu_feature_supported(ARM_FEATURE_EL2, false)) {
-+            continue;
-+        }
-+
-         if (cpu->accel->guest_debug_enabled) {
-             /* Handle debug registers */
-             switch (hvf_sreg_match[i].reg) {
-@@ -725,6 +753,12 @@ int hvf_put_registers(CPUState *cpu)
-             continue;
-         }
- 
-+        if (hvf_sreg_match[i].el2
-+            && arm_feature(env, ARM_FEATURE_EL2)
-+            && !host_cpu_feature_supported(ARM_FEATURE_EL2, false)) {
-+            continue;
-+        }
-+
-         if (cpu->accel->guest_debug_enabled) {
-             /* Handle debug registers */
-             switch (hvf_sreg_match[i].reg) {
+     trace_hvf_psci_call(param[0], param[1], param[2], param[3],
+@@ -1182,7 +1185,7 @@ static bool hvf_handle_psci_call(CPUState *cpu)
+         entry = param[2];
+         context_id = param[3];
+         ret = arm_set_cpu_on(mpidr, entry, context_id,
+-                             target_el, target_aarch64);
++                             hvf_psci_get_target_el(), target_aarch64);
+         break;
+     case QEMU_PSCI_0_1_FN_CPU_OFF:
+     case QEMU_PSCI_0_2_FN_CPU_OFF:
 -- 
 2.49.0
 
