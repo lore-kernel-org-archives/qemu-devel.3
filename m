@@ -4,108 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F5D0C87FD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 07:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1FA9C87FD2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 07:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulNI9-0004Zl-Lp; Mon, 11 Aug 2025 03:50:01 -0400
+	id 1ulNO4-0007I9-E7; Mon, 11 Aug 2025 03:56:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1ulNI4-0004Wb-3n; Mon, 11 Aug 2025 03:49:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulNNv-0007Dj-ML
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 03:56:00 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1ulNHq-0001TI-W9; Mon, 11 Aug 2025 03:49:52 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57ANMQ2c009288;
- Mon, 11 Aug 2025 07:49:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=+Mxb2L4BWHpt3YmM5OUzWtGuCi64HkvbBfoMl/To5
- vQ=; b=cO9S1m11QQRjRdHBdB51HuD9ak/GzA5bXyRhpHX4/lW83gdcygxqy+USl
- uom6cwOK76kpVUISFR5JG55slA8v88oiCApbP1kLgmfl5yUgJkFPXoMXg/PGrgSy
- YTknQd8OvUIwwtRCxElwVnJ6/pvwtgsZ3Rjv8MBhu2n/LNon6Oqxf4y5sog7nSWA
- 0BTRCaxomPzIkYFvC3qGiT3ooYeFTfL8M98fTai9piDsPQ83zzaLws+ulalBrdyd
- bdsJ/NSkqsqQaXS6zxanASUGyjXCVXdG6I1BNeCqdWGLZgc7OQb9l1c09wZH96F9
- RzCvnlKvZKr0dbJxIqRu7DxqTfCLQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dx14839b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Aug 2025 07:49:31 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57B7cee5018959;
- Mon, 11 Aug 2025 07:49:31 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dx148398-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Aug 2025 07:49:31 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57B62jaf028674;
- Mon, 11 Aug 2025 07:49:29 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48ej5mvspa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Aug 2025 07:49:28 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57B7nOD516449896
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 Aug 2025 07:49:24 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E0202004D;
- Mon, 11 Aug 2025 07:49:24 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7632020043;
- Mon, 11 Aug 2025 07:49:21 +0000 (GMT)
-Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com.com (unknown
- [9.39.30.61]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 11 Aug 2025 07:49:21 +0000 (GMT)
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: milesg@linux.ibm.com, kowal@linux.ibm.com, ganeshgr@linux.ibm.com,
- clg@kaod.org, harshpb@linux.ibm.com, npiggin@gmail.com
-Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v2] ppc/xive2: Fix integer overflow warning in
- xive2_redistribute()
-Date: Mon, 11 Aug 2025 13:19:11 +0530
-Message-ID: <20250811074912.162774-1-gautam@linux.ibm.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulNNp-0002ZY-Td
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 03:55:59 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E79D140F9D
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 10:55:07 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 18C8625D7DC
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 10:55:39 +0300 (MSK)
+Message-ID: <bf6e627f-b2dc-4776-ba30-cc7670dde685@tls.msk.ru>
+Date: Mon, 11 Aug 2025 10:55:39 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ksAxpKdVTalDbGVCpFHtvlcOlySjlYMW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA0OCBTYWx0ZWRfXxfWkY3IdXC41
- +udTzEd3SwlRpg8iS1E4N9ILQUh5M+PtNj7J+8MxuoELUjtbMhmHSRUSI9/JBHRdRDtlGUSucXo
- t/N+B9XypWSuqm6weHL/5Jmsz40BIsQjEadKayNf8Khp5O4TGm/kE0OE9mollbhEkY7YFimvlaw
- xrlAHAZ6JmxMUGT6HvPu1uWy+rJ5JW1xr+CPCDkmAj3DRvn2UUzC4J+zCivBVkI/DKyIouqbcsC
- 6GfH7j1ybZJiCQ7d8BOwetk860W7c8eUwWB2rj7jBiquYdTLjvH9W1HPQSdovvM07QfvWqpyGO1
- YeXRPjagmO2T/je+BGpxQoT7Vikl72nAPc8FzAZYLEjgAN/Y0n3S869EwvwGJ3xigd0+IrdPqxa
- 9Kc8bJLNu/GOO7vswD3c/5hwum7A1HMfXwZ8b3soGcMY2myjuNIY//A3hI+AeDhG7O2qoEpF
-X-Proofpoint-GUID: 96QSvNCrbLM6k8V6OE7mJmRvBeL66B8i
-X-Authority-Analysis: v=2.4 cv=fLg53Yae c=1 sm=1 tr=0 ts=6899a08b cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=oGpWkBbS-i_JAY9sGPEA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-11_01,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0 priorityscore=1501
- impostorscore=0 phishscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0
- mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2507300000
- definitions=main-2508110048
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=gautam@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: QEMU Development <qemu-devel@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: using qemu linux-user with setuid applications (C binfmt flag)
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,86 +100,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reported an integer overflow warning in xive2_redistribute()
-where the code does a left shift operation "0xffffffff << crowd". Fix the
-warning by using a 64 byte integer type. Also refactor the calculation
-into dedicated routines.
+Hi!
 
-Resolves: Coverity CID 1612608
-Fixes: 555e446019f5 ("ppc/xive2: Support redistribution of group interrupts")
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
----
-v1 -> v2:
-1. Remove inline keyword from the function definition (Glenn)
+It's been quite some time since many distributions enabled the C
+(credentials) flag when using qemu-user binfmt_misc emulation.
+This means that qemu-user executable is used to run setuid binaries,
+usually with elevated privileges.  The binary itself might be suited
+well for security-sensitive and probably hostile environment, but
+qemu-user binary is definitely not, - it is a quite complex piece
+of software with a lot of possible attack vectors.
 
- hw/intc/xive2.c | 45 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 14 deletions(-)
+To me it looks like a Very Bad Idea (tm) to enable the C flag in
+this case.  But maybe it's not *that* bad because the administrator
+is the one who controls *which* setuid binaries are present on the
+system.
 
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index ee5fa26178..fbb3b7975e 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -95,6 +95,35 @@ static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
-     }
- }
- 
-+static uint32_t xive2_nvgc_get_idx(uint32_t nvp_idx, uint8_t group)
-+{
-+    uint32_t nvgc_idx;
-+
-+    if (group > 0) {
-+        nvgc_idx = (nvp_idx & (0xffffffffULL << group)) |
-+                   ((1 << (group - 1)) - 1);
-+    } else {
-+        nvgc_idx = nvp_idx;
-+    }
-+
-+    return nvgc_idx;
-+}
-+
-+static uint8_t xive2_nvgc_get_blk(uint8_t nvp_blk, uint8_t crowd)
-+{
-+    uint8_t nvgc_blk;
-+
-+    if (crowd > 0) {
-+        crowd = (crowd == 3) ? 4 : crowd;
-+        nvgc_blk = (nvp_blk & (0xffffffffULL << crowd)) |
-+                   ((1 << (crowd - 1)) - 1);
-+    } else {
-+        nvgc_blk = nvp_blk;
-+    }
-+
-+    return nvgc_blk;
-+}
-+
- uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
-                                          bool crowd,
-                                          uint8_t blk, uint32_t idx,
-@@ -638,20 +667,8 @@ static void xive2_redistribute(Xive2Router *xrtr, XiveTCTX *tctx, uint8_t ring)
- 
-     trace_xive_redistribute(tctx->cs->cpu_index, ring, nvp_blk, nvp_idx);
-     /* convert crowd/group to blk/idx */
--    if (group > 0) {
--        nvgc_idx = (nvp_idx & (0xffffffff << group)) |
--                   ((1 << (group - 1)) - 1);
--    } else {
--        nvgc_idx = nvp_idx;
--    }
--
--    if (crowd > 0) {
--        crowd = (crowd == 3) ? 4 : crowd;
--        nvgc_blk = (nvp_blk & (0xffffffff << crowd)) |
--                   ((1 << (crowd - 1)) - 1);
--    } else {
--        nvgc_blk = nvp_blk;
--    }
-+    nvgc_idx = xive2_nvgc_get_idx(nvp_idx, group);
-+    nvgc_blk = xive2_nvgc_get_blk(nvp_blk, crowd);
- 
-     /* Use blk/idx to retrieve the NVGC */
-     if (xive2_router_get_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, &nvgc)) {
--- 
-2.50.1
+What's the qemu project view on this?
 
+Thanks,
+
+/mjt
 
