@@ -4,81 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E96BC87FD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 10:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64BEC87FDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 10:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulPSR-0004o5-KX; Mon, 11 Aug 2025 06:08:47 -0400
+	id 1ulPVo-000762-LY; Mon, 11 Aug 2025 06:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1ulPSN-0004nk-Kc
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:08:43 -0400
-Received: from p-east1-cluster6-host2-snip4-10.eps.apple.com ([57.103.90.151]
- helo=outbound.ci.icloud.com)
+ (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
+ id 1ulPVl-00075J-DZ
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:12:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1ulPSF-0006MY-Qz
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:08:43 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-1 (Postfix) with ESMTPS id
- 7A2E718000B2; Mon, 11 Aug 2025 10:08:27 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=yE2Zz5SdXnft02cp3Dzc9pGHcq8QxtyDjTzLPwFNT1c=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=F2fDDGzFurr0iGrFdeVkPTIYPC74IPNZC7ZhxD4ZDTiNC1P5tj/VI0GDE1X1sQXmwwLBKJ9P2qD4uWWMtflUI+HV09bSZzkJwcq0SUEa3my1UdkXnaNQA7Bft1mrbK6mGum683B6+8R4/FY7HfsjG0uTygabdPSNUI4KK0yzzlYnllVEr5RF7V3/pRlA/AhpglbcM0/0oMNlYEITldqYUpKiAlrgoYPHR1tOHMH+6oamTC5HKFjSZlIXdF7lL6iivtZ2zWi1HEjhVtUR68FUq6HNVHqCazcq5/z6bJWDRgpObuLZpqvJpnMkZcdF7Cp/QCW2hpMHl+j+azc9LiwoRw==
-X-Client-IP: 194.62.217.67
-Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
- [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-1 (Postfix) with ESMTPSA id
- F0B4718002A2; Mon, 11 Aug 2025 10:08:24 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH v5 06/13] target/arm: hvf: pass through CNTHCTL_EL2 and
- MDCCINT_EL1
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <d2e93df6-bbb4-427b-828e-b6f5466ae2be@linaro.org>
-Date: Mon, 11 Aug 2025 12:08:13 +0200
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Igor Mammedov <imammedo@redhat.com>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Cameron Esfahani <dirty@apple.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5CB6CE7B-B122-4BE1-B031-EF44D0A79B63@ynddal.dk>
-References: <20250728134114.77545-1-mohamed@unpredictable.fr>
- <20250728134114.77545-7-mohamed@unpredictable.fr>
- <d2e93df6-bbb4-427b-828e-b6f5466ae2be@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3826.700.81)
-X-Proofpoint-GUID: hbrtOuySDH8ABkVvJzAr0NRB4ctnHbRA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA2NyBTYWx0ZWRfX8ME59dx4laS0
- tcQNVsXNLjmmcXcmk2RT6UIeqoRjOWxoHyQHTARtWUaid8hFGm/TO6IuUCcf8T1ASwKmH0aT0We
- CfYCSDro/LkQ1HNlPiCrEWGADeSMUyuVjIlUfSrLHGmo5hUntFF5gedMej2d1h21QbfFx1c2jO3
- feLhV06zX2kY0gPTQSsXjAqqzA45uiNgDZAJagDfFAzlsrZwvIgx14IrGvFvqHYpgYBa20cM522
- aJBdM2YyI/3f6vkYVEpKR2MfvLxQpYmkqscEGAkoKOl5RcX/wOnXqctjZLr182A9+zmh/iYFc=
-X-Proofpoint-ORIG-GUID: hbrtOuySDH8ABkVvJzAr0NRB4ctnHbRA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-11_01,2025-08-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxlogscore=540 clxscore=1030 mlxscore=0 malwarescore=0 adultscore=0
- spamscore=0 bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508110067
-Received-SPF: pass client-ip=57.103.90.151; envelope-from=mads@ynddal.dk;
- helo=outbound.ci.icloud.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
+ (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
+ id 1ulPVh-0007GU-AV
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:12:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754907119;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xF5yoHc+2beu6J3VT/748F6+IGRKBcTxaiNePhTe8mQ=;
+ b=CIZrNPHXcFkRd+AP0dwdSdX42rFAtuvY4cFfh1gP+Akf/68oA9LhZaSgPaFH370C7ap10f
+ a45jrSF6T/ZlPKEAWxkOO5t6xSzxtYMV5P2jEPXCfL7MOQ18edDHV5hbzBZIGhEwf09yOk
+ e8sfKAAAGFIASacz1a79bGrOSrarNsI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-BXeEPZCqMgqhyMUXzYei1w-1; Mon,
+ 11 Aug 2025 06:11:56 -0400
+X-MC-Unique: BXeEPZCqMgqhyMUXzYei1w-1
+X-Mimecast-MFC-AGG-ID: BXeEPZCqMgqhyMUXzYei1w_1754907115
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E7F71956088; Mon, 11 Aug 2025 10:11:55 +0000 (UTC)
+Received: from fedora (unknown [10.45.225.64])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 68D5518003FC; Mon, 11 Aug 2025 10:11:53 +0000 (UTC)
+From: Mauro Matteo Cascella <mcascell@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mcascell@redhat.com,
+	zdi-disclosures@trendmicro.com,
+	kraxel@redhat.com
+Subject: [PATCH] hw/uefi: clear uefi-vars buffer in uefi_vars_write callback
+Date: Mon, 11 Aug 2025 12:11:24 +0200
+Message-ID: <20250811101128.17661-1-mcascell@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcascell@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
 X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,25 +82,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When the guest writes to register UEFI_VARS_REG_BUFFER_SIZE, the .write
+callback `uefi_vars_write` is invoked. The function allocates a
+heap buffer without zeroing the memory, leaving the buffer filled with
+residual data from prior allocations. When the guest later reads from
+register UEFI_VARS_REG_PIO_BUFFER_TRANSFER, the .read callback
+`uefi_vars_read` returns leftover metadata or other sensitive process
+memory from the previously allocated buffer, leading to an information
+disclosure vulnerability.
 
-> We'd like to remove the assert_hvf_ok() calls, so adding more isn't
-> really helping. Anyhow,
->=20
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Tested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Fixes: CVE-2025-8860
+Fixes: 90ca4e03c27d ("hw/uefi: add var-service-core.c")
+Reported-by: ZDI <zdi-disclosures@trendmicro.com>
+Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
+Signed-off-by: Mauro Matteo Cascella <mcascell@redhat.com>
+---
+ hw/uefi/var-service-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-What is the preferred method going forward?
+diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
+index feec5a5958..6ab8df091a 100644
+--- a/hw/uefi/var-service-core.c
++++ b/hw/uefi/var-service-core.c
+@@ -259,8 +259,8 @@ static void uefi_vars_write(void *opaque, hwaddr addr, uint64_t val, unsigned si
+         uv->buf_size = val;
+         g_free(uv->buffer);
+         g_free(uv->pio_xfer_buffer);
+-        uv->buffer = g_malloc(uv->buf_size);
+-        uv->pio_xfer_buffer = g_malloc(uv->buf_size);
++        uv->buffer = g_malloc0(uv->buf_size);
++        uv->pio_xfer_buffer = g_malloc0(uv->buf_size);
+         break;
+     case UEFI_VARS_REG_DMA_BUFFER_ADDR_LO:
+         uv->buf_addr_lo = val;
+-- 
+2.50.1
 
-Apple designed the HV API to be able to fail at every function, and it's
-rarely something that can be recovered from.
-
-In [PATCH v4 04/15] of this series, we saw an issue that was hidden
-because the return code was not properly checked (not calling from the
-owning thread). Previously, I submitted a patch (d5bd8d8267) for the
-same issue, because Apple had changed a function's behavior. This was
-caught by an assert_hvf_ok.
-
-I agree with you, that generally adding asserts is a bad design, but at
-the same time, HV is designed in a way, that the code would be littered
-with checks otherwise.=
 
