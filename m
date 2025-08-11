@@ -4,93 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C4D4CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 16:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D8BCA0EC4
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 16:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulVRF-0002Ep-CH; Mon, 11 Aug 2025 12:31:57 -0400
+	id 1ulVTI-0003Wp-39; Mon, 11 Aug 2025 12:34:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulVRB-0002Dj-C3
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 12:31:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ulVTF-0003WB-8Y
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 12:34:01 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulVR6-0003sP-CW
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 12:31:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754929902;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FWLAUcEN9k6urOmsNReqKP6ftsZ+nZMLCMQOBaApZJg=;
- b=Brgd9oHdZGySuLQeN35eKN+s2UKk4VCz4wkY2WUyK3xiQ4dTluZQsTlR8ic7OnefbY5SO+
- V4jtWTO6hv9XhKMfIj296PKX2pQ2e/ABjHXzd/gLyeqTzA8HByz005q+OgC/hJPQAhK1Ki
- 1oVyXmRSfq2e1JFpb+Wl0Eh+AQ+a8GI=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-dYCTkhuqNG2tq8PCPWWXTw-1; Mon, 11 Aug 2025 12:31:41 -0400
-X-MC-Unique: dYCTkhuqNG2tq8PCPWWXTw-1
-X-Mimecast-MFC-AGG-ID: dYCTkhuqNG2tq8PCPWWXTw_1754929901
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-88dc297fe74so945214241.1
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 09:31:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754929901; x=1755534701;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FWLAUcEN9k6urOmsNReqKP6ftsZ+nZMLCMQOBaApZJg=;
- b=iQhcjk/mM9fdiUlMJVtFSyf3RwwL0906wZAmMoSRZk840jRV5R+v4OUM6LSFQ/R0AN
- WdkOJvelgHphUAYtnhziqMahMDx53iwKlAB6OGrDJTyty4tuNKmtnQPNQCy6AqaHeuS3
- aKtOi5hOhsr//AqAJwcDHOyKWkWmKbiLFZWkf1g5hoODhqCvBDKdvOVGSNWLpsheuNE+
- 5G6gAa/8TUEnEdpj0QhF2sz5ZaBRsSXYHXbRcXmbvJoZ2Ww8EwU9BwYdgmlnzGgmTQ7I
- f7KEQRgYW1uZryuMweCnnnBtxWa+fRY+jJsBnUusig7NO8roINqQKqu2B/Lq/v5bnexr
- Fsvg==
-X-Gm-Message-State: AOJu0YxRryJjed9bik2lvfXrAUES2CPIncbRdgHJf//kso128UmxQqi/
- lbERNBJxJ8J8gVp+NSWOzNvi25J4ybOrae1CgsAjK7Yz0QUbJkZbNlEBjNeDlzjyjuYIzD/ZWus
- OjumDuffWkrxi6cZ5Nj+P8DXOq1v4Mj7vGolxJ5dGYdjrQoxpojWeGHOQ
-X-Gm-Gg: ASbGncs10Uwn9/CpC8AJOuYEwFU/oCYiRNNHpTXd002vdUkpogmRbEw4HB0IZP24iTB
- tmQN+Itq9FVUJzBUqKTuVtf2NsjC7DP+E/VGWPdjojoI3TljXLuAgd8K+HdIPCC2mLCXMkHR6cy
- /fPJIFWnzyQIPm0Rs7FRRXLnu+h+TtUqHHb/C8D8QxBo2wYR7mZfbo9K+HXOaxn01p4wpSmdD8K
- 1P7WX649RYigtfWNgaho6LjLrv/2RzC4zy+rBinNr19HN2jGDTg63XJK3r7X6KqBwH1OzmhFXkW
- F6h2695FRgg4MfLd0OQq3qILlKNXJytV
-X-Received: by 2002:a05:6102:8001:b0:4e9:a01a:ed57 with SMTP id
- ada2fe7eead31-50cbf740fc4mr267163137.20.1754929900401; 
- Mon, 11 Aug 2025 09:31:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYRohMlcHY4gPSVhUglLdbV74mAnk5heTWTqVXL3G16YNKZWdF3Z9xLm+LRgfRVxovNE2dYw==
-X-Received: by 2002:a05:6102:8001:b0:4e9:a01a:ed57 with SMTP id
- ada2fe7eead31-50cbf740fc4mr267102137.20.1754929899889; 
- Mon, 11 Aug 2025 09:31:39 -0700 (PDT)
-Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e67f75596dsm1580154385a.76.2025.08.11.09.31.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Aug 2025 09:31:39 -0700 (PDT)
-Date: Mon, 11 Aug 2025 12:31:27 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
- david@redhat.com, philmd@linaro.org, mtosatti@redhat.com
-Subject: Re: [PATCH v3 06/10] introduce cpu_test_interrupt() that will
- replace open coded checks
-Message-ID: <aJoa35wuexHfoCEE@x1.local>
-References: <20250808120137.2208800-1-imammedo@redhat.com>
- <20250808120137.2208800-7-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ulVT2-00047o-V6
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 12:34:00 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c10Sf55gyz6L5Y4;
+ Tue, 12 Aug 2025 00:28:50 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 17C3D140278;
+ Tue, 12 Aug 2025 00:33:38 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 11 Aug
+ 2025 18:33:37 +0200
+Date: Mon, 11 Aug 2025 17:33:36 +0100
+To: Davidlohr Bueso <dave@stgolabs.net>
+CC: <ira.weiny@intel.com>, <alucerop@amd.com>, <a.manzanares@samsung.com>,
+ <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 4/4] hw/cxl: Support type3 HDM-DB
+Message-ID: <20250811173336.00003255@huawei.com>
+In-Reply-To: <20250811033405.332295-5-dave@stgolabs.net>
+References: <20250811033405.332295-1-dave@stgolabs.net>
+ <20250811033405.332295-5-dave@stgolabs.net>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250808120137.2208800-7-imammedo@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,101 +69,382 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 08, 2025 at 02:01:33PM +0200, Igor Mammedov wrote:
-> the helper forms load-acquire/store-release pair with
-> tcg_handle_interrupt/generic_handle_interrupt and can be used
-> for checking interrupts outside of BQL
+On Sun, 10 Aug 2025 20:34:05 -0700
+Davidlohr Bueso <dave@stgolabs.net> wrote:
+
+> Add basic plumbing for memory expander devices that support Back
+> Invalidation. This introduces a 'hdm-db=on|off' parameter and
+> exposes the relevant BI RT/Decoder component cachemem registers.
 > 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> Some noteworthy properties:
+>  - Devices require enabling Flit mode.
+>  - Explicit BI-ID commit is required.
+>  - HDM decoder support both host and dev coherency models.
+> 
+> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Hi Davidlohr,
+
+Ran out of time last week, so didn't get as far on this as I should have done.
+Anyhow, comments follow.
+
 > ---
->  include/hw/core/cpu.h     | 12 ++++++++++++
->  accel/tcg/tcg-accel-ops.c |  3 ++-
->  system/cpus.c             |  3 ++-
->  3 files changed, 16 insertions(+), 2 deletions(-)
+>  docs/system/devices/cxl.rst    |  23 ++++++
+>  hw/cxl/cxl-component-utils.c   | 135 +++++++++++++++++++++++++++++++--
+>  hw/mem/cxl_type3.c             |  14 +++-
+>  include/hw/cxl/cxl_component.h |  54 ++++++++++++-
+>  include/hw/cxl/cxl_device.h    |   3 +
+>  5 files changed, 217 insertions(+), 12 deletions(-)
 > 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 5eaf41a566..d0460c01cf 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -942,6 +942,18 @@ CPUState *cpu_by_arch_id(int64_t id);
+> diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+> index bf7908429af8..4815de0f2dc4 100644
+> --- a/docs/system/devices/cxl.rst
+> +++ b/docs/system/devices/cxl.rst
+> @@ -384,6 +384,29 @@ An example of 4 devices below a switch suitable for 1, 2 or 4 way interleave::
+>    -device cxl-type3,bus=swport3,persistent-memdev=cxl-mem3,lsa=cxl-lsa3,id=cxl-pmem3,sn=0x4 \
+>    -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
 >  
->  void cpu_interrupt(CPUState *cpu, int mask);
+> +An example of 4 type3 devices with volatile memory below a switch. Two of the devices
+> +use HDM-DB for coherence::
+> +
+> +  qemu-system-x86_64 -M q35,cxl=on -m 4G,maxmem=8G,slots=8 -smp 4 \
+> +  ...
+> +  -object memory-backend-file,id=cxl-mem0,share=on,mem-path=/tmp/cxltest.raw,size=256M \
+> +  -object memory-backend-file,id=cxl-mem1,share=on,mem-path=/tmp/cxltest1.raw,size=256M \
+> +  -object memory-backend-file,id=cxl-mem2,share=on,mem-path=/tmp/cxltest2.raw,size=256M \
+> +  -object memory-backend-file,id=cxl-mem3,share=on,mem-path=/tmp/cxltest3.raw,size=256M \
+> +  -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+> +  -device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0 \
+> +  -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1 \
+> +  -device cxl-upstream,bus=root_port0,id=us0,256b-flit=on \
+> +  -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
+> +  -device cxl-type3,bus=swport0,volatile-memdev=cxl-mem0,id=cxl-mem0,sn=0x1,256b-flit=on,hdm-db=on \
+> +  -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
+> +  -device cxl-type3,bus=swport1,volatile-memdev=cxl-mem1,id=cxl-mem1,sn=0x2,256b-flit=on,hdm-db=on \
+> +  -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6 \
+> +  -device cxl-type3,bus=swport2,volatile-memdev=cxl-mem2,id=cxl-mem2,sn=0x3 \
+> +  -device cxl-downstream,port=3,bus=us0,id=swport3,chassis=0,slot=7 \
+> +  -device cxl-type3,bus=swport3,volatile-memdev=cxl-mem3,id=cxl-mem3,sn=0x4 \
+> +  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
+> +
+>  A simple arm/virt example featuring a single direct connected CXL Type 3
+>  Volatile Memory device::
 >  
-> +/**
-> + * cpu_test_interrupt:
-> + * @cpu: The CPU to check interrupt(s) on.
-> + * @mask: The interrupts to check.
-> + *
-> + * Checks if any of interrupts in @mask are pending on @cpu.
-> + */
-> +static inline bool cpu_test_interrupt(CPUState *cpu, int mask)
+> diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+> index a43d227336ca..dfdbf23a427c 100644
+> --- a/hw/cxl/cxl-component-utils.c
+> +++ b/hw/cxl/cxl-component-utils.c
+> @@ -71,10 +71,40 @@ static uint64_t cxl_cache_mem_read_reg(void *opaque, hwaddr offset,
+>      case 4:
+>          if (cregs->special_ops && cregs->special_ops->read) {
+>              return cregs->special_ops->read(cxl_cstate, offset, 4);
+
+I'm not 100% sure we ever used the special_ops->read.  Might be able to just rip that
+out.  
+
+> -        } else {
+> -            QEMU_BUILD_BUG_ON(sizeof(*cregs->cache_mem_registers) != 4);
+> -            return cregs->cache_mem_registers[offset / 4];
+>          }
+> +
+> +        QEMU_BUILD_BUG_ON(sizeof(*cregs->cache_mem_registers) != 4);
+> +
+> +        if (offset == A_CXL_BI_RT_STATUS ||
+> +            offset == A_CXL_BI_DECODER_STATUS) {
+
+I suppose this does exist for all types, so special_ops->read doesn't
+make sense and it indeed belongs in here.
+
+> +            int type;
+> +            uint64_t started;
+> +
+> +            type = (offset == A_CXL_BI_RT_STATUS) ?
+> +                    CXL_BISTATE_RT : CXL_BISTATE_DECODER;
+> +            started = cxl_cstate->bi_state[type].last_commit;
+> +
+> +            if (started) {
+> +                uint32_t val, *cache_mem = cregs->cache_mem_registers;
+
+I'd split
+               uing32_t *cache_mem = cregs->cache_mem_registers;
+               uint32_t val = cache_mem[offset / 4];
+
+> +                uint64_t now;
+> +                int set;
+> +
+> +                val = cregs->cache_mem_registers[offset / 4];
+
+You just added a local variable cache_mem.
+
+> +                now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
+> +                /* arbitrary 100 ms to do the commit */
+> +                set = !!(now >= started + 100);
+> +
+> +                if (offset == A_CXL_BI_RT_STATUS) {
+> +                    val = FIELD_DP32(val, CXL_BI_RT_STATUS, COMMITTED, set);
+> +                } else {
+> +                    val = FIELD_DP32(val, CXL_BI_DECODER_STATUS, COMMITTED,
+> +                                     set);
+> +                }
+> +                stl_le_p((uint8_t *)cache_mem + offset, val);
+> +            }
+> +        }
+> +
+> +        return cregs->cache_mem_registers[offset / 4];
+>      case 8:
+>          qemu_log_mask(LOG_UNIMP,
+>                        "CXL 8 byte cache mem registers not implemented\n");
+> @@ -123,6 +153,47 @@ static void dumb_hdm_handler(CXLComponentState *cxl_cstate, hwaddr offset,
+>      }
+>  }
+>  
+> +static void dumb_bi_handler(CXLComponentState *cxl_cstate, hwaddr offset,
+
+Can probably drop the dumb.  For the HDM decoder one it was
+meant to remind me to come back and add validity checks etc
+(which I haven't done yet!) That will accept parameters that make
+no sense and hence fail in rather hard to debug ways.
+
+I don't think the same applies to this.
+
+> +                            uint32_t value)
 > +{
-> +    return qatomic_load_acquire(&cpu->interrupt_request) & mask;
+> +    ComponentRegisters *cregs = &cxl_cstate->crb;
+> +    uint32_t sts, *cache_mem = cregs->cache_mem_registers;
+> +    bool to_commit = false;
+> +    int type;
+> +
+> +    switch (offset) {
+> +    case A_CXL_BI_RT_CTRL:
+> +        to_commit = FIELD_EX32(value, CXL_BI_RT_CTRL, COMMIT);
+> +        if (to_commit) {
+> +            sts = cxl_cache_mem_read_reg(cxl_cstate,
+> +                                         R_CXL_BI_RT_STATUS, 4);
+> +            sts = FIELD_DP32(sts, CXL_BI_RT_STATUS, COMMITTED, 0);
+> +            stl_le_p((uint8_t *)cache_mem + R_CXL_BI_RT_STATUS, sts);
+> +            type = CXL_BISTATE_RT;
+> +        }
+> +        break;
+> +    case A_CXL_BI_DECODER_CTRL:
+> +        to_commit = FIELD_EX32(value, CXL_BI_DECODER_CTRL, COMMIT);
+> +        if (to_commit) {
+> +            sts = cxl_cache_mem_read_reg(cxl_cstate,
+> +                                         R_CXL_BI_DECODER_STATUS, 4);
+> +            sts = FIELD_DP32(sts, CXL_BI_DECODER_STATUS, COMMITTED, 0);
+> +            stl_le_p((uint8_t *)cache_mem + R_CXL_BI_DECODER_STATUS, sts);
+> +            type = CXL_BISTATE_DECODER;
+> +        }
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+> +    if (to_commit) {
+> +        cxl_cstate->bi_state[type].last_commit =
+> +                qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
+> +    }
+> +
+> +    stl_le_p((uint8_t *)cache_mem + offset, value);
+> +}
+
+> @@ -248,7 +322,7 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
+
+As on later functions I think we need to pass in a separate flag rather than
+using the type (for long term maintenance reasons)
+
+>      ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, INTERLEAVE_4K, 1);
+>      ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
+>                       POISON_ON_ERR_CAP, 0);
+> -    if (type == CXL2_TYPE3_DEVICE) {
+> +    if (type == CXL2_TYPE3_DEVICE || type == CXL3_TYPE3_DEVICE) {
+>          ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 3_6_12_WAY, 1);
+>          ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, 16_WAY, 1);
+>      } else {
+> @@ -260,7 +334,8 @@ static void hdm_init_common(uint32_t *reg_state, uint32_t *write_msk,
+>                       UIO_DECODER_COUNT, 0);
+>      ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, MEMDATA_NXM_CAP, 0);
+>      ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY,
+> -                     SUPPORTED_COHERENCY_MODEL, 0); /* Unknown */
+> +                     SUPPORTED_COHERENCY_MODEL,
+> +                     type == CXL3_TYPE3_DEVICE ? 3:0); /* host+dev or Unknown */
+
+Spaces around the :
+
+>      ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_GLOBAL_CONTROL,
+>                       HDM_DECODER_ENABLE, 0);
+>      write_msk[R_CXL_HDM_DECODER_GLOBAL_CONTROL] = 0x3;
+
+>  
+> +static void bi_rt_init_common(uint32_t *reg_state, uint32_t *write_msk)
+> +{
+> +    /* switch usp must commit the new BI-ID, timeout of 2secs */
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_CAPABILITY, EXPLICIT_COMMIT, 1);
+> +
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_CTRL, COMMIT, 0);
+> +    write_msk[R_CXL_BI_RT_CTRL] = 0xffffffff;
+
+0x1 (See below)
+
+> +
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_STATUS, COMMITTED, 0);
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_STATUS, ERR_NOT_COMMITTED, 0);
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_STATUS, COMMIT_TMO_SCALE, 0x6);
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_RT_STATUS, COMMIT_TMO_BASE, 0x2);
 > +}
 > +
->  /**
->   * cpu_set_pc:
->   * @cpu: The CPU to set the program counter for.
-> diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-> index 3b0d7d298e..02c7600bb7 100644
-> --- a/accel/tcg/tcg-accel-ops.c
-> +++ b/accel/tcg/tcg-accel-ops.c
-> @@ -97,7 +97,8 @@ static void tcg_cpu_reset_hold(CPUState *cpu)
->  /* mask must never be zero, except for A20 change call */
->  void tcg_handle_interrupt(CPUState *cpu, int mask)
->  {
-> -    cpu->interrupt_request |= mask;
-> +    qatomic_store_release(&cpu->interrupt_request,
-> +        cpu->interrupt_request | mask);
+> +static void bi_decoder_init_common(uint32_t *reg_state, uint32_t *write_msk)
+> +{
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CAPABILITY, HDM_D, 0);
+> +    /* switch dsp must commit the new BI-ID, timeout of 2secs */
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CAPABILITY, EXPLICIT_COMMIT, 1);
+
+Reserved for EP and root ports. I think we need to pass type into this function
+so we can set this to 0 for those types and 1 for others.
+
+> +
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CTRL, BI_FW, 0);
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CTRL, BI_ENABLE, 0);
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_CTRL, COMMIT, 0);
+> +    write_msk[R_CXL_BI_DECODER_CTRL] = 0xffffffff;
+
+IIRC should only have the non reserved bits in the write_msk.  So 0x7
+
+> +
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, COMMITTED, 0);
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, ERR_NOT_COMMITTED, 0);
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, COMMIT_TMO_SCALE, 0x6);
+> +    ARRAY_FIELD_DP32(reg_state, CXL_BI_DECODER_STATUS, COMMIT_TMO_BASE, 0x2);
+> +}
+
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index ecd3a7703b35..1e55d13c1e93 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -447,6 +447,7 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+>      CXLComponentState *cxl_cstate = &ct3d->cxl_cstate;
+>      CXLDVSECRegisterLocator *regloc_dvsec;
+>      uint8_t *dvsec;
+> +    uint16_t type = ct3d->hdmdb ? CXL3_TYPE3_DEVICE : CXL2_TYPE3_DEVICE;
+
+Using a type for this feels like something that won't scale as we add
+more features. Perhaps stick to CXL2_TYPE3_DEVICE (perhaps renamed)
+and a separate boolean.
+
+>      uint32_t range1_size_hi = 0, range1_size_lo = 0,
+>               range1_base_hi = 0, range1_base_lo = 0,
+>               range2_size_hi = 0, range2_size_lo = 0,
+> @@ -491,7 +492,7 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+>          .range2_base_hi = range2_base_hi,
+>          .range2_base_lo = range2_base_lo,
+>      };
+> -    cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
+> +    cxl_component_create_dvsec(cxl_cstate, type,
+>                                 PCIE_CXL_DEVICE_DVSEC_LENGTH,
+>                                 PCIE_CXL_DEVICE_DVSEC,
+>                                 PCIE_CXL31_DEVICE_DVSEC_REVID, dvsec);
+> @@ -521,14 +522,14 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+>          },
+>      };
 >  
+> -    cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
+> +    cxl_component_create_dvsec(cxl_cstate, type,
+>                                 REG_LOC_DVSEC_LENGTH, REG_LOC_DVSEC,
+>                                 REG_LOC_DVSEC_REVID, (uint8_t *)regloc_dvsec);
+>      dvsec = (uint8_t *)&(CXLDVSECDeviceGPF){
+>          .phase2_duration = 0x603, /* 3 seconds */
+>          .phase2_power = 0x33, /* 0x33 miliwatts */
+>      };
+> -    cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
+> +    cxl_component_create_dvsec(cxl_cstate, type,
+>                                 GPF_DEVICE_DVSEC_LENGTH, GPF_DEVICE_DVSEC,
+>                                 GPF_DEVICE_DVSEC_REVID, dvsec);
+>  
+> @@ -539,7 +540,7 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+>          .status                  = ct3d->flitmode ? 0x6 : 0x26, /* same */
+>          .rcvd_mod_ts_data_phase1 = 0xef, /* WTF? */
+>      };
+> -    cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
+> +    cxl_component_create_dvsec(cxl_cstate, type,
+>                                 PCIE_CXL3_FLEXBUS_PORT_DVSEC_LENGTH,
+>                                 PCIE_FLEXBUS_PORT_DVSEC,
+>                                 PCIE_CXL3_FLEXBUS_PORT_DVSEC_REVID, dvsec);
+> @@ -969,6 +970,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+>          return false;
+>      }
+>  
+> +    if (!ct3d->flitmode && ct3d->hdmdb) {
+> +        error_setg(errp, "hdm-db requires operating in 256b flit");
+> +        return false;
+> +    }
+> +
+>      if (ct3d->hostvmem) {
+>          MemoryRegion *vmr;
+>          char *v_name;
+> diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+> index cd92cb02532a..acec76152ad0 100644
+> --- a/include/hw/cxl/cxl_component.h
+> +++ b/include/hw/cxl/cxl_component.h
+> @@ -29,6 +29,7 @@ enum reg_type {
+>      CXL2_UPSTREAM_PORT,
+>      CXL2_DOWNSTREAM_PORT,
+>      CXL3_SWITCH_MAILBOX_CCI,
+> +    CXL3_TYPE3_DEVICE, /* hdm-db */
+
+I'm wondering about this - whilst it's true that CXL3 allows
+an hdm-db it also enabled a bunch of other things I don't think
+we want to gate on this.  Could we just pass a separate parameter
+for it?
+
+>  };
+
+
+> +/* to track BI explicit commit handling */
+> +enum {
+> +    CXL_BISTATE_RT = 0, /* switch usp */
+
+Could spell out Route table somewhere. I couldn't remember what
+RT was for.
+
+> +    CXL_BISTATE_DECODER, /* switch dsp */
+
+Also endpoints, root ports etc. 
+
+> +    CXL_BISTATE_MAX
+> +};
+> +
+> +typedef struct bi_state {
+> +    /* last 0->1 transition */
+> +    uint64_t last_commit;
+> +} BIState;
+> +
+>  typedef struct component_registers {
 >      /*
->       * If called from iothread context, wake the target cpu in
-> diff --git a/system/cpus.c b/system/cpus.c
-> index 256723558d..8e543488c3 100644
-> --- a/system/cpus.c
-> +++ b/system/cpus.c
-> @@ -256,7 +256,8 @@ int64_t cpus_get_elapsed_ticks(void)
+>       * Main memory region to be registered with QEMU core.
+> @@ -260,6 +309,7 @@ typedef struct cxl_component {
 >  
->  void generic_handle_interrupt(CPUState *cpu, int mask)
->  {
-> -    cpu->interrupt_request |= mask;
-> +    qatomic_store_release(&cpu->interrupt_request,
-> +        cpu->interrupt_request | mask);
+>      CDATObject cdat;
+>      CXLCompObject compliance;
+> +    BIState bi_state[CXL_BISTATE_MAX];
+>  } CXLComponentState;
 >  
->      if (!qemu_cpu_is_self(cpu)) {
->          qemu_cpu_kick(cpu);
-> -- 
-> 2.47.1
-> 
-
-Besides the two writters mentioned above, I still see some more:
-
-*** accel/tcg/user-exec.c:
-cpu_interrupt[52]              cpu->interrupt_request |= mask;
-*** hw/intc/s390_flic.c:
-qemu_s390_flic_notify[193]     cs->interrupt_request |= CPU_INTERRUPT_HARD;
-*** hw/openrisc/cputimer.c:
-openrisc_timer_cb[108]         cs->interrupt_request |= CPU_INTERRUPT_TIMER;
-*** target/arm/helper.c:
-arm_cpu_do_interrupt[9150]     cs->interrupt_request |= CPU_INTERRUPT_EXITTB;
-*** target/i386/tcg/system/svm_helper.c:
-helper_vmrun[406]              cs->interrupt_request |= CPU_INTERRUPT_VIRQ;
-
-Do they better as well be converted to use store_release too?
-
-The other nitpick is this patch introduces the reader helper but without
-using it.
-
-It can be squashed into the other patch where the reader helper will be
-applied tree-wide.  IMHO that would be better explaining the helper on its
-own.
-
-Thanks,
-
--- 
-Peter Xu
+>  void cxl_component_register_block_init(Object *obj,
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 0abfd678b875..75603b8180b5 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -841,6 +841,9 @@ struct CXLType3Dev {
+>      CXLMemSparingReadAttrs rank_sparing_attrs;
+>      CXLMemSparingWriteAttrs rank_sparing_wr_attrs;
+>  
+> +    /* BI flows */
+> +    bool hdmdb;
+> +
+>      struct dynamic_capacity {
+>          HostMemoryBackend *host_dc;
+>          AddressSpace host_dc_as;
 
 
