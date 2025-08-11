@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C702AC88CB9
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 11:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CA6CC87FDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 11:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulQfY-0002tH-6f; Mon, 11 Aug 2025 07:26:24 -0400
+	id 1ulQfa-0002uf-2o; Mon, 11 Aug 2025 07:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1ulQfW-0002sq-6H; Mon, 11 Aug 2025 07:26:22 -0400
+ id 1ulQfY-0002ta-94; Mon, 11 Aug 2025 07:26:24 -0400
 Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1ulQfP-0004cd-Fl; Mon, 11 Aug 2025 07:26:21 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id DB0657A0083;
- Mon, 11 Aug 2025 07:26:08 -0400 (EDT)
+ id 1ulQfQ-0004eW-Ec; Mon, 11 Aug 2025 07:26:23 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 157997A0081;
+ Mon, 11 Aug 2025 07:26:13 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Mon, 11 Aug 2025 07:26:09 -0400
+ by phl-compute-01.internal (MEProxy); Mon, 11 Aug 2025 07:26:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1754911568; x=
- 1754997968; bh=i/mw+hQG5A6p2/B45mPVdyaSEbYyrQOqN7pCLNhcZvs=; b=D
- 4QLYoFRpX++txeH/Zml4O84wrLZzWmYqlbQb3I/ydrJ8mCwcqxKUJONFInPM+Zks
- 2pupz8g7od9WeA+BGUUfMm4RgpXjsmYPVt31Wkth61JAZswbJxVrGeQA2+hc5ZXj
- 7YN884lT+cS6pzBaHmTPhnCnxMaivRY4Uc3VVhHfTTlzq7dxgjBgpPUSMFMQ5QOL
- WdbxBYJWyO1ep2uRFL370q6MX7gl/8NO7fmvrhZo/78vG+p+JUBv3cdoH9v17qGo
- hLQww1jq3kKBIpHjDSnvQFKznEDm5Bak5fu6W89IhYDKKaG4RFHZsnOTa1WQJtjd
- y0UMhTw4NvxDXCihRZfSw==
+ :reply-to:subject:subject:to:to; s=fm2; t=1754911572; x=
+ 1754997972; bh=mi9pZ3LFQVGMrdUdfVF65b2q7BTmwvZnwSwFJjAwaCc=; b=g
+ VO8dMLaiNQZaDLTBHXJ6x6MvoA7Fh2jS04/jCi8sM2TrvjZmonGwcBzc+PXt/bXy
+ EL9iFO4j1KurjnTygDC9tKC9yu+OnBzJWBweDvfV1+DDSsluGkaX1AEwj8KxAUP8
+ /Eb/KuV2X5H8eaolgY5uLGARuScgyzSKJ92QatnBPfbyLryDATGKBK9XN1c5cEuj
+ hHkvcxteIJUR1F0YRKwxfMjtooQmWo8QuLKth5oKJcqxyVWZz974vHdiny6JMLTi
+ qF4/rQL7Z88pZ+A9/cG/aqOy5FPIIMhYESNqzj4hTjQqYRuqZkhhQOMHuK6cq4fp
+ OW539Z/lec633/mj55KFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1754911568; x=1754997968; bh=i
- /mw+hQG5A6p2/B45mPVdyaSEbYyrQOqN7pCLNhcZvs=; b=GBmb9rVolhfQ47qTq
- MPodGB3xtRMszUQyiQCZV2tA1wDVviKGpyMqelnI4d7GMBhHlKmLRGsAKPpjk1Nr
- GWKXNq4IpUCf0MlcoQ5it8iPzjACNHVdwqYRbDftZX2Y5Zssz2sdiXVJ4hrV5vfK
- mPT4qFAcljEucouSkRufixg9GD0Gu9csb423D+4pHe4EPe99mZUDGwzjVdLfy6tg
- ALAAl+vfa4oULar+JcTwedvFPOBnVOHKfjl6FAUaLErUt41jJkMAHeB6h0RgATfD
- ViuIh8EMcPl5DSw0yw4WC7lkEIIE07kKDXRC0Ks3nQltEZBxIL8uzx0q1Zyw4CBO
- YEf4w==
-X-ME-Sender: <xms:T9OZaNoYEU4nasX9NCqLQGgd01A5hcDyOqGjBb0GNhlDmhi9aBdFEQ>
- <xme:T9OZaHDnm5z0p2x-32ebyd86VHB8aguM3XKH1YfdjBBcZK4cI2rCdpICivmgCi0IG
- SO2tSclwZrhL9l9Rt8>
-X-ME-Received: <xmr:T9OZaPwuXjqeCR9svC5Tg4BY8MlBB0NIk_hL3ZZ8GzvBzZShyY11c5-pzqP5DKYKWLFgELYv1gG3g2rP54DbGX55>
+ :x-me-sender:x-sasl-enc; s=fm3; t=1754911572; x=1754997972; bh=m
+ i9pZ3LFQVGMrdUdfVF65b2q7BTmwvZnwSwFJjAwaCc=; b=VQcKm+r5ses9FD+FO
+ SKb80SuHbyPvCUMlUTCyx7HyhcqcoDZrS4LSNaNdytTU51p72vilR0cKHTICQA3X
+ V6dYJY4VOcGrQ4dQ7mRwpRamJrhSYHfdrncD72+a2rUDzJNeJJde3PNChTuTkQm3
+ VWO0kZ16NHuUVNASrfnImOpJ53yoT11bqVi55n7/ZJJR2IJshPFxTKoO/cheRvwb
+ OTbOlkJm78Fg03gyB+UX52Wp9Oz9j+8w3nzaSPhinqyH/aBt+E4fmHYuywUOhYPJ
+ PzC6gIsALypMUXVvA606zOlPb+kzqtDf5cL3tl51Ix4E5xX2sztfocEo4ncXTUAG
+ g0Tgg==
+X-ME-Sender: <xms:VNOZaAtpxbuw2gtHMIGgJ9Qh7OSylK9yVlIAtJpM19JQYo-kH47UPw>
+ <xme:VNOZaE0Smr0uqUkEaDJmZtVD0HfFZMBjB_Bx6urGpOjOQvw9wdy5OAY5IY_5aayAf
+ JNj0hsZRGDAK23z_PU>
+X-ME-Received: <xmr:VNOZaBX91MoK17U_UA0kXpjRXhsZ0w_f35ZPp-PKa768xqpX6iq6s48FcUgVCkrHPiStigO67ZGnGQt0PFRZxkdR>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufedvfeefucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
  gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghushcu
  lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
- hrnhepfeehteeghefffeegkefghfegieejkeevfffhjeevfeekudeiieevheetledujedu
- necuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhn
- sggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuh
- dquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepphgvthgvrhdrmhgrhigu
- vghllheslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmsh
- hunhhgrdgtohhmpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghp
- thhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehithhssehirh
- hrvghlvghvrghnthdrughkpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhn
- uhdrohhrgh
-X-ME-Proxy: <xmx:T9OZaE1F5DtXd0Vg5YpxOFaUFiCnnQBRfolU8SVCewYzeTuM0jCD8w>
- <xmx:T9OZaPwdIM7yHlS0yRpksQGRM_31pCuqgTb4ugV7ba7cYUePtqFn8g>
- <xmx:T9OZaLEAohJw9skH0iwpHmkb9GVkJjwWRYFrhYl8dByx93AFlO_e5g>
- <xmx:T9OZaCaxEu__7-bwhdR6dbeQuVd6YG4Z--Er0IzgWkrMhXeMUTLcYw>
- <xmx:UNOZaGZNCiUua47D8u0DJl1DcEHZhUS3gOZ9VnkTBEPxK33TzpFH9NtO>
+ hrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudejudeg
+ necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
+ esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhht
+ phhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
+ gtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphht
+ thhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvg
+ hnsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhht
+ rdgukhdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhope
+ hqvghmuhdqsghlohgtkhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:VNOZaPJ7sCgKZNxAYrUwUimsXvdgu7p7HSmNs554_JaePVjR6YdkmQ>
+ <xmx:VNOZaD2gR5DZR8BaBht4Zj6sElFSn83O57A9axumZpEw1ix3NfCoZg>
+ <xmx:VNOZaF7cZq6LndRxVaY2EWOUaw-3LlKr1Fx57MQ1XoaSQeJ-Iuxjrw>
+ <xmx:VNOZaM-nvaig_u4Gq4mulB_3fgNODl4T3YwfkZ3y79JPhPpyvCwq0Q>
+ <xmx:VNOZaHvetKOFEU9bnjmiFNfANWfRYYirafJ81STxa4AG4RxlhoBv_ECN>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Aug 2025 07:26:06 -0400 (EDT)
+ 11 Aug 2025 07:26:11 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>,
- Jesper Wendel Devantier <foss@defmacro.it>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- qemu-block@nongnu.org
-Subject: [PULL 1/3] hw/nvme: fix namespace attachment
-Date: Mon, 11 Aug 2025 13:25:55 +0200
-Message-ID: <20250811112557.521-2-its@irrelevant.dk>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <k.jensen@samsung.com>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: [PULL 3/3] hw/nvme: cap MDTS value for internal limitation
+Date: Mon, 11 Aug 2025 13:25:57 +0200
+Message-ID: <20250811112557.521-4-its@irrelevant.dk>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250811112557.521-1-its@irrelevant.dk>
 References: <20250811112557.521-1-its@irrelevant.dk>
@@ -114,57 +111,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Keith Busch <kbusch@kernel.org>
 
-Commit 6ccca4b6bb9f ("hw/nvme: rework csi handling") introduced a bug in
-Namespace Attachment, causing it to
+The emulated device had let the user set whatever max transfers size
+they wanted, including no limit. However the device does have an
+internal limit of 1024 segments. NVMe doesn't report max segments,
+though. This is implicitly inferred based on the MDTS and MPSMIN values.
 
-  a) not allow a controller to attach namespaces to other controllers
-  b) assert if a valid non-attached namespace is detached
+IOV_MAX is currently 1024 which 4k PRPs can exceed with 2MB transfers.
+Don't allow MDTS values that can exceed this, otherwise users risk
+seeing "internal error" status to their otherwise protocol compliant
+commands.
 
-This fixes both issues.
-
-Fixes: 6ccca4b6bb9f ("hw/nvme: rework csi handling")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2976
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ hw/nvme/ctrl.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e764ec7683ab..6c06d7f8f9dd 100644
+index fa48412ef48e..f5ee6bf260f1 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -6816,7 +6816,7 @@ static uint16_t nvme_ns_attachment(NvmeCtrl *n, NvmeRequest *req)
+@@ -8339,6 +8339,11 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+         host_memory_backend_set_mapped(n->pmr.dev, true);
+     }
  
-         switch (sel) {
-         case NVME_NS_ATTACHMENT_ATTACH:
--            if (nvme_ns(n, nsid)) {
-+            if (nvme_ns(ctrl, nsid)) {
-                 return NVME_NS_ALREADY_ATTACHED | NVME_DNR;
-             }
- 
-@@ -6824,7 +6824,7 @@ static uint16_t nvme_ns_attachment(NvmeCtrl *n, NvmeRequest *req)
-                 return NVME_NS_PRIVATE | NVME_DNR;
-             }
- 
--            if (!nvme_csi_supported(n, ns->csi)) {
-+            if (!nvme_csi_supported(ctrl, ns->csi)) {
-                 return NVME_IOCS_NOT_SUPPORTED | NVME_DNR;
-             }
- 
-@@ -6834,6 +6834,10 @@ static uint16_t nvme_ns_attachment(NvmeCtrl *n, NvmeRequest *req)
-             break;
- 
-         case NVME_NS_ATTACHMENT_DETACH:
-+            if (!nvme_ns(ctrl, nsid)) {
-+                return NVME_NS_NOT_ATTACHED | NVME_DNR;
-+            }
++    if (!n->params.mdts || ((1 << n->params.mdts) + 1) > IOV_MAX) {
++        error_setg(errp, "mdts exceeds IOV_MAX");
++        return false;
++    }
 +
-             nvme_detach_ns(ctrl, ns);
-             nvme_update_dsm_limits(ctrl, NULL);
- 
+     if (n->params.zasl > n->params.mdts) {
+         error_setg(errp, "zoned.zasl (Zone Append Size Limit) must be less "
+                    "than or equal to mdts (Maximum Data Transfer Size)");
 -- 
 2.47.2
 
