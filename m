@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC433C88CB9
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 10:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E96BC87FD2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 10:09:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulPSF-0004mD-8l; Mon, 11 Aug 2025 06:08:35 -0400
+	id 1ulPSR-0004o5-KX; Mon, 11 Aug 2025 06:08:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulPSB-0004le-Nx
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:08:32 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulPS9-0006MI-58
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:08:31 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3b7910123a0so3878790f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 03:08:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754906905; x=1755511705; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kpmDvRWC/brKYpYi3H1Xhgtpr9AfpeYTXO2kVXk6was=;
- b=ViT+0s/9kDQ4QxK4KaRT4b/BW+8B+KS4z+x5WNN9eqCM1PCNdr24Ac0lXOV665vpJC
- lDZZNiOV2/qX23+TOd+FAckhYIP6BLzWVgzqEzfPBXKvtSU9jjyY7hmo271T5F4sf1mO
- G5RxCyvxWfGDRCA+W1LgnzMdNKkOmeBxDnmSLpVUNirU1VUbQhdjmEH5M49tHG3rjT3p
- B+LXl9nXNEMcSu4/ZVdSb6jeN3qdrbDOa7j87wMAGeF7PDnWAxxTyaRHb5N1G25nXAFf
- 0sUOcfAphGdR71v/6xKMb3xmox216dSsNYCtLikjKLFog69Frhy9ssO8+pp62jnZsFqt
- /qGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754906905; x=1755511705;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kpmDvRWC/brKYpYi3H1Xhgtpr9AfpeYTXO2kVXk6was=;
- b=EvlsKKQWrgZ0q4T9N/hL7dES3YNpK9KF5OI2Q6WogUAfHJZHMiJ2d4GVP2mOcCNr4U
- hB2qu/vslkrZds1UwAV6VLT8yfCWBFWpW8NSco7Se0JlJNpdZgn5+JPgTHGt0n2wCIec
- 1idYqOym0N8L0dktOe/rvw6AbVAlNf43xapDqhEg+K4kwpqftvfmMHufHeg7yQ/vmjoR
- UGhj9kTtivlSOxF5FQ11LMpsebpc80S5wjk7rEUxuhhhbYtQqZXUD9wcIoL+rwzJtQfL
- Jg22aowlw/VWsoy01MR6b/dTN6OZnmtpRHe8i7nrovMd9PUQkSf0IOxciuZxPzvXB3Fq
- 2ebA==
-X-Gm-Message-State: AOJu0YzAKxjITC41fMpBLvdPZA1HJ2JnnIE1O4SF3lq6qgb/G7yMETK9
- pcFLXnxtYDcQV3FqguJEMLwuqbqVlaJ3YyMpOK4XrXb+Yio87PWGd/3wB9ocxi2lwtnJyoHj0o2
- updfx
-X-Gm-Gg: ASbGncvI0cuB/KHzI07LaA4PZS5QJvhyvK6fo33arzY4Me76xaT9hrwWXJaRYQG3tvs
- 6CatNvW0TcJe7do4Nz9SReuLkPejCVuHBHnna80MDjVh2jWODDHd+Bxn1ecNbj9BSa7RYIs1WYp
- 3sQPBJx//OUqjFyl0TcxI4piSAySf718TcG2xl8rfw0MnsM88G6WBrhg/p2Oq0SoniEohsMTzPy
- sZxcxgXTnMDRJ2hA8eywwO0sZpCK4C6q9W41gGSf0zUXXQvQrRjch4hbqIyOecJ6uombRZLW7eO
- ly4ln+hsvTvzQzkwEJys01LYdzWFbz+w2GMoA+OQ0fPqUPC1K/rxqaaJOgpdNQwacMwaAzGoYli
- cawjcPefciFkeE3sLwdW9DtrbeMT0I/9ln+LEFl/LUbJI3wu39RYHPbjUtLrJaaLf6P1EWouX
-X-Google-Smtp-Source: AGHT+IFWBUOE8r4jbw7kq6+AI3A7ygVdEHOlwK08NhKgWZhAHgLMHS+8ZyxMP893pdn4RVzWt5eWDA==
-X-Received: by 2002:a05:6000:2207:b0:3b7:93d3:f478 with SMTP id
- ffacd0b85a97d-3b900b8bd5bmr10645435f8f.51.1754906905426; 
- Mon, 11 Aug 2025 03:08:25 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c4a2848sm39534016f8f.71.2025.08.11.03.08.24
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 Aug 2025 03:08:24 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1ulPSN-0004nk-Kc
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:08:43 -0400
+Received: from p-east1-cluster6-host2-snip4-10.eps.apple.com ([57.103.90.151]
+ helo=outbound.ci.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1ulPSF-0006MY-Qz
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:08:43 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-1 (Postfix) with ESMTPS id
+ 7A2E718000B2; Mon, 11 Aug 2025 10:08:27 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
+ bh=yE2Zz5SdXnft02cp3Dzc9pGHcq8QxtyDjTzLPwFNT1c=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=F2fDDGzFurr0iGrFdeVkPTIYPC74IPNZC7ZhxD4ZDTiNC1P5tj/VI0GDE1X1sQXmwwLBKJ9P2qD4uWWMtflUI+HV09bSZzkJwcq0SUEa3my1UdkXnaNQA7Bft1mrbK6mGum683B6+8R4/FY7HfsjG0uTygabdPSNUI4KK0yzzlYnllVEr5RF7V3/pRlA/AhpglbcM0/0oMNlYEITldqYUpKiAlrgoYPHR1tOHMH+6oamTC5HKFjSZlIXdF7lL6iivtZ2zWi1HEjhVtUR68FUq6HNVHqCazcq5/z6bJWDRgpObuLZpqvJpnMkZcdF7Cp/QCW2hpMHl+j+azc9LiwoRw==
+X-Client-IP: 194.62.217.67
+Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
+ [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-1 (Postfix) with ESMTPSA id
+ F0B4718002A2; Mon, 11 Aug 2025 10:08:24 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [PATCH v5 06/13] target/arm: hvf: pass through CNTHCTL_EL2 and
+ MDCCINT_EL1
+From: Mads Ynddal <mads@ynddal.dk>
+In-Reply-To: <d2e93df6-bbb4-427b-828e-b6f5466ae2be@linaro.org>
+Date: Mon, 11 Aug 2025 12:08:13 +0200
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Igor Mammedov <imammedo@redhat.com>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] system/rtc: Silent overflow in qemu_timedate_diff()
-Date: Mon, 11 Aug 2025 12:08:23 +0200
-Message-ID: <20250811100823.94105-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5CB6CE7B-B122-4BE1-B031-EF44D0A79B63@ynddal.dk>
+References: <20250728134114.77545-1-mohamed@unpredictable.fr>
+ <20250728134114.77545-7-mohamed@unpredictable.fr>
+ <d2e93df6-bbb4-427b-828e-b6f5466ae2be@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3826.700.81)
+X-Proofpoint-GUID: hbrtOuySDH8ABkVvJzAr0NRB4ctnHbRA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA2NyBTYWx0ZWRfX8ME59dx4laS0
+ tcQNVsXNLjmmcXcmk2RT6UIeqoRjOWxoHyQHTARtWUaid8hFGm/TO6IuUCcf8T1ASwKmH0aT0We
+ CfYCSDro/LkQ1HNlPiCrEWGADeSMUyuVjIlUfSrLHGmo5hUntFF5gedMej2d1h21QbfFx1c2jO3
+ feLhV06zX2kY0gPTQSsXjAqqzA45uiNgDZAJagDfFAzlsrZwvIgx14IrGvFvqHYpgYBa20cM522
+ aJBdM2YyI/3f6vkYVEpKR2MfvLxQpYmkqscEGAkoKOl5RcX/wOnXqctjZLr182A9+zmh/iYFc=
+X-Proofpoint-ORIG-GUID: hbrtOuySDH8ABkVvJzAr0NRB4ctnHbRA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-11_01,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxlogscore=540 clxscore=1030 mlxscore=0 malwarescore=0 adultscore=0
+ spamscore=0 bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2508110067
+Received-SPF: pass client-ip=57.103.90.151; envelope-from=mads@ynddal.dk;
+ helo=outbound.ci.icloud.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,43 +94,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Per ctime(3) man-page:
 
-  A negative value for tm_isdst causes the mktime() function to
-  attempt to divine whether summer time is in effect for the
-  specified time.  The tm_isdst and tm_gmtoff members are forced
-  to zero by timegm().
+> We'd like to remove the assert_hvf_ok() calls, so adding more isn't
+> really helping. Anyhow,
+>=20
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Tested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-  The mktime() function returns the specified calendar time; if
-  the calendar time cannot be represented, it returns -1;
+What is the preferred method going forward?
 
-Coverity reports (CID 1547724 Overflowed return value) the
-qemu_timedate_diff() method doesn't handle this error path.
+Apple designed the HV API to be able to fail at every function, and it's
+rarely something that can be recovered from.
 
-Since this method was added in commit f650305967f ("Unify RTCs
-that use host time, fix M48t59 alarm") in 2008, and there is no
-open issue related to it, keep ignoring this unlikely case, but
-add an assertion to make Coverity happy.
+In [PATCH v4 04/15] of this series, we saw an issue that was hidden
+because the return code was not properly checked (not calling from the
+owning thread). Previously, I submitted a patch (d5bd8d8267) for the
+same issue, because Apple had changed a function's behavior. This was
+caught by an assert_hvf_ok.
 
-Fixes: CID 1547724
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- system/rtc.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/system/rtc.c b/system/rtc.c
-index 56951288c40..070b99fe6ad 100644
---- a/system/rtc.c
-+++ b/system/rtc.c
-@@ -98,6 +98,7 @@ time_t qemu_timedate_diff(struct tm *tm)
-         struct tm tmp = *tm;
-         tmp.tm_isdst = -1; /* use timezone to figure it out */
-         seconds = mktime(&tmp);
-+        assert(seconds >= 0);
-         break;
-     }
-     default:
--- 
-2.49.0
-
+I agree with you, that generally adding asserts is a bad design, but at
+the same time, HV is designed in a way, that the code would be littered
+with checks otherwise.=
 
