@@ -4,92 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9CC7C87FDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32BEBC87FDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulS4t-00079L-OJ; Mon, 11 Aug 2025 08:56:39 -0400
+	id 1ulS52-0007Dz-Jx; Mon, 11 Aug 2025 08:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ulS4o-00077d-22
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:56:34 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulS4y-0007CI-J7
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:56:45 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ulS4h-0004ls-8D
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:56:33 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3b8d0f1fb49so2578592f8f.2
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:56:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulS4u-0004nl-3o
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:56:43 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4563cfac2d2so36917755e9.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754916984; x=1755521784; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MEwTbiMmgOCDfG4V/dHV2qWA8Co9Gded4SX9LtmBzak=;
- b=ABxAT7cszZM+baLNHhR1cUydBI2E8dWL/c3cpHtT2IddEbLtXUcCgct/PmgUUXgB5T
- WsayxiWzQJjEppu2W8NYt4RAF+Kgu1yaVg3UteyFItBcRBRjdKJOf13NcmVkf1ADW1fn
- wo+qOGERtyJMAT9OfdPrI+Bsdnoj8GOQnVh8Xm2ro+SpPz1mbClK24yrSRTlWJoZDo/W
- gNLVgUfKsktgtt19/6QpGfJMJixio8/ZihDfp4g6vi8ITrx1MStxb4KM3CDLxTCFj4M8
- 8fv1w9Jawf/9Rg4o2filQTN6+GkeerlGhxswtpuTN/3zofSy6zsnTF5nN2se7JI9Sr9c
- VkOg==
+ d=linaro.org; s=google; t=1754916993; x=1755521793; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3IzeKSsDvwcVuxZCnwzdmJmsEOeOgsCi4NHxCboYXTI=;
+ b=vYEt6HhOW6AA44kTiIxZJ02YZhiqAx60kWg/OCgJr+6ie+4bVdrBQd1CkVJWxmtlsH
+ 4jFtwrN3Lz8mBAAvNla5yiotxDLHjZ9MWhJE5CfR8b/tcuHaUq+SGpBNbVZEsGqJzity
+ Gyaai0nu/NCCVQMhUkjLVOF04toZlrASoFtFex32Y5Q3eR2jCWK/A1jkTzO0Xktq5Jpq
+ E1Bf4ZPpe3mq6rMKt3VkE0XD3/OMb4NN3y3YLdgB+EqryHEThQyGjOS8vq5DejUxTt4H
+ tha2J1ko+x6ye8JPHFniCGsWn/rC9rTY7u8SLsQNQ/HQF2jOWcRUWXI740eUT9Ym4F3X
+ pvCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754916984; x=1755521784;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MEwTbiMmgOCDfG4V/dHV2qWA8Co9Gded4SX9LtmBzak=;
- b=hvb3xaPQbmN+U82KJm7MaF54ljjUSXNRwXGSnZrnyHdDvmFSNRzpscy1EqFUfXlfsP
- H+aFbT6YVjN+C2GpFcNj6mboBDiEDVM4cF+UmueAV1or8l54khM12enkE5DI9eWCA54B
- YtcTXiQoGNHjrlRhibGeoffKnLq0nXhTS4lEBkZBgOT5G+9cMjraO2BNWYv12G1Yra79
- +nBSbZXmIJYORPO0et1mGkXGyEhZ5s+UecK0Ug3BFjRGv7xor+pxQQ7AX+5VoD1tqL24
- 771vcHT+2EsLjYkCG/fO+ZFG4cIGy7DDpbmQAe2ubh9s+JW56zrMjMOqnm0bKJXH6vOg
- CWIA==
-X-Gm-Message-State: AOJu0YzNEy+UHB4ABuVtY194Nezq3xYUTAL+0s0c5rUZeSd0TaXqQyNH
- Jjv7oDcvneWznWIYuYAiSWgU+aa8TH7i/hX7LnWaycmYrPS3O1GkumrCJlp2JzaxF9s=
-X-Gm-Gg: ASbGncs3qQHIi0zyztToDAMs9BZyrxc95xdiRtarWxPAOEKP3WjvD++3botGTgopGGn
- ZOVnZ1oVYDu0N2hmKRmIUW/zHk2PJn+DmKG2/IMVmmrhQ7waq0Q3ijd+7GULXkZouMIbmEfzGsT
- 4rCDvzw66PZf3u3MxSMG/318aIN5jF58qzB/ztblCX1rliAeDcwZ3gnw/Gh03s4P3H67Xx/yKDp
- JUkSrX77VyrE7Ie1U/vCWSkTqCeVlaOpdr9jJ+0xyjzWwu8vA5RIcwECvsWpelNJxwpSa8D4fK/
- sGXnPUe1h5Dzto9r4SDT0qeo1GcmdA5TwcpL/gBKJvaI2QWMsbTJzvgf7dmna0w5kgcu3YS/LjF
- 9Ncq+JrcPIOg49WEPdl7wXjA=
-X-Google-Smtp-Source: AGHT+IFsF4fthC2BlqsjDHd8K/DEmwvbkYjoh3s5+jJM7cRyBmdrOIKwNXsjeHU0VUaFW5cfEb3gVg==
-X-Received: by 2002:a05:6000:2482:b0:3b7:90db:aaba with SMTP id
- ffacd0b85a97d-3b90094055dmr10780584f8f.24.1754916983805; 
- Mon, 11 Aug 2025 05:56:23 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3abed3sm40419650f8f.10.2025.08.11.05.56.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Aug 2025 05:56:22 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E6DCA5F834;
- Mon, 11 Aug 2025 13:56:21 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  imammedo@redhat.com,
- richard.henderson@linaro.org,  peterx@redhat.com
-Subject: Re: [PATCH 6/8] cpus: properly kick CPUs out of inner execution loop
-In-Reply-To: <20250808185905.62776-7-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Fri, 8 Aug 2025 20:59:03 +0200")
-References: <20250808185905.62776-1-pbonzini@redhat.com>
- <20250808185905.62776-7-pbonzini@redhat.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 11 Aug 2025 13:56:21 +0100
-Message-ID: <875xeuc8zu.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1754916993; x=1755521793;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3IzeKSsDvwcVuxZCnwzdmJmsEOeOgsCi4NHxCboYXTI=;
+ b=DCJAJkRkMIsRytRS+nnKWjY01JCXqDAd1eqKwKqfKwRlvFCFdJnFXtbVLSUPnSlLCr
+ 3R2ywZI8deDDMbH5+1kIMeOr64B9Exodij2VDcHJOzO1HhTJwdhltWsbp7Gm731sm/9j
+ IEkAgS/8CO+cLYciamEDPiY9oglPBxs6cka19vXzoi23IoSseAxAGXB/M6Qpc2Vz+naa
+ ifKZu2hSmHhvNuYVwznxHsz+HVYBbXR2A4MJA/scKEPzQDXRHdLqBF2jtjuuA5DTlapL
+ QmfLh1sVxMqQq5W7wgA9AwevvzZ9iwawXZsceIRTnaLIjyVhhbE9tmweJ8yIOkcVzZjv
+ ZJPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPJ5ZzKMaZP1vT9AbABZTpasaj+rcmjBtxqyJPw+9GWp1R8GqCfKjE80m8EbJphGPTdsoANdgbrmP0@nongnu.org
+X-Gm-Message-State: AOJu0Ywn09St2v9tLQDJ8qEL/7HigbQy6GIPStX8/hbRrRWawUcDbutu
+ UQRS/o/CA49jFoOfVGv9X48SfPGPucf8sTFmpG6Z67m/+tsDM2a+NvmZjhJIJp7o/tg=
+X-Gm-Gg: ASbGnct/JCBGyh6uJEejj2wcuLraNZZwc9BwlFChs5PvEnMZfmDIQ4SX+VYxzAjjCNT
+ tCq90SFLrXPx364xxvWzPf/wbQldMx8w0Ih6M5Wi277roBhHMaij64Iys5at6W4wtX+eN/xrMLe
+ otdxht66s/JnPrwUeIhjt+fbXkHteaJtq+4i8VVhPBZF17jXMdhrlaeyUjtospkdZIpnNpDsjUr
+ gLvUirMuHirf/7mL6w51AxyeYiDnXI19SA7VPSBYhwWTIXHEepAGVzCCyRC+HT7SKY7Z3uQm1q1
+ lECoMXLG1Rylgn/iHuBd9p1WZe5aFAQyYrzqHNuPVqRNaGxNdxtLMrs43oHzieUKgdozVdNck4s
+ vFK+idf7Xi2OA7Ct2Ec44LhyMqdBsUA/J7nF4jR1E1l69Mpdkyd5du6DSuBGc5mUumg==
+X-Google-Smtp-Source: AGHT+IG9SlNOIjwY5cZoGOORhIC8hUXNVwhDy0Iax/YEo4FVFTRoD+RWxltwR5Zly112FaSmm/lgrw==
+X-Received: by 2002:a05:600c:1d09:b0:456:1bca:7faf with SMTP id
+ 5b1f17b1804b1-459f4f04237mr118065015e9.16.1754916992889; 
+ Mon, 11 Aug 2025 05:56:32 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e58553f8sm269774835e9.14.2025.08.11.05.56.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Aug 2025 05:56:32 -0700 (PDT)
+Message-ID: <caeafe09-4c2c-48bf-9f46-f6e739931b26@linaro.org>
+Date: Mon, 11 Aug 2025 14:56:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 05/13] hw/arm, target/arm: nested virtualisation on HVF
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Igor Mammedov <imammedo@redhat.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>
+References: <20250808070137.48716-1-mohamed@unpredictable.fr>
+ <20250808070137.48716-6-mohamed@unpredictable.fr>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250808070137.48716-6-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,42 +108,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> Now that cpu_exit() actually kicks all accelerators, use it whenever
-> the message to another thread is processed in qemu_wait_io_event()
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-<snip>
-> --- a/hw/ppc/spapr_hcall.c
-> +++ b/hw/ppc/spapr_hcall.c
-> @@ -509,8 +509,8 @@ static target_ulong h_cede(PowerPCCPU *cpu, SpaprMach=
-ineState *spapr,
->      if (!cpu_has_work(cs)) {
->          cs->halted =3D 1;
->          cs->exception_index =3D EXCP_HLT;
-> -        qatomic_set(&cs->exit_request, 1);
->          ppc_maybe_interrupt(env);
-> +        cpu_exit(env);
-
-Should be cs
-
->      }
->=20=20
->      return H_SUCCESS;
-> @@ -531,8 +531,8 @@ static target_ulong h_confer_self(PowerPCCPU *cpu)
->      }
->      cs->halted =3D 1;
->      cs->exception_index =3D EXCP_HALTED;
-> -    qatomic_set(&cs->exit_request, 1);
->      ppc_maybe_interrupt(&cpu->env);
-> +    cpu_exit(&cpu->env);
-
-Should be cs
-
-<snip>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+On 8/8/25 09:01, Mohamed Mediouni wrote:
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   hw/arm/virt.c         |  9 ++++++---
+>   target/arm/hvf-stub.c | 15 +++++++++++++++
+>   target/arm/hvf/hvf.c  | 41 +++++++++++++++++++++++++++++++++++++++--
+>   target/arm/hvf_arm.h  |  3 +++
+>   4 files changed, 63 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 59e6c2b9df..91d8cd9363 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -817,8 +817,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+>           g_assert_not_reached();
+>       }
+>   
+> -    if (kvm_enabled() && vms->virt &&
+> -        (revision != 3 || !kvm_irqchip_in_kernel())) {
+> +    if (kvm_enabled() && vms->virt && (revision != 3 || !kvm_irqchip_in_kernel())) {
+>           error_report("KVM EL2 is only supported with in-kernel GICv3");
+>           exit(1);
+>       }
+> @@ -2281,7 +2280,8 @@ static void machvirt_init(MachineState *machine)
+>           exit(1);
+>       }
+>   
+> -    if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled()) {
+> +    if (vms->virt && !kvm_enabled() && !tcg_enabled()
+> +       && !hvf_enabled() && !qtest_enabled()) {
+>           error_report("mach-virt: %s does not support providing "
+>                        "Virtualization extensions to the guest CPU",
+>                        current_accel_name());
+> @@ -2553,6 +2553,9 @@ static void virt_set_virt(Object *obj, bool value, Error **errp)
+>       VirtMachineState *vms = VIRT_MACHINE(obj);
+>   
+>       vms->virt = value;
+> +#if defined(CONFIG_HVF) && defined(__aarch64__)
+> +    hvf_arm_el2_enable(value);
+> +#endif
+>   }
+We don't have hvf_arm_el1_enable(). I think we just want to always
+provide the most performant configuration to users.
+IOW, we don't need hvf_arm_el2_enable(). I'd just always enable EL2
+(if supported) in hvf_arm_get_host_cpu_features().
 
