@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBB8DCA0EDA
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 17:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE76CA0EDD
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 17:08:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulVyt-0004pF-Sq; Mon, 11 Aug 2025 13:06:43 -0400
+	id 1ulVzM-0004yD-PC; Mon, 11 Aug 2025 13:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulVyr-0004oJ-Gs
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:06:41 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulVzB-0004vm-R1
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:07:01 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulVye-0001lD-KC
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:06:40 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-459ddf9019cso15114945e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 10:06:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulVz5-0001qM-VR
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:07:01 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-459e210bd2dso16542745e9.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 10:06:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754931985; x=1755536785; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754932012; x=1755536812; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sTgiDxRSLxB+/Dn7RyfAMOT6DRpkQW6SJaCX0ndx+MI=;
- b=IsG+H3GntxmqMDHatqDlOp4fADROO4cmTatuD85H1Ia5zoobIbN2UcqFuMP9/hQz2d
- 1I1tKglOMF7CQ/VA0pbmUPNZEtw9AhFmi1GszImwP0rCTIiwZ95GUdsY3SXg4IkAq5TE
- fPJcBhC5fDtvEdllGMdSeRgyfa6wb8ZhnzBRHBT9TouLnqGPvXeIafuQX5VjHGS5WF3l
- 1W3nbmtuSUjXoCjRhUekdH5OHmB2QL91b/c2RPBrLly3MYTU/4iQsbKEp5aRkbEIk+Yy
- ipuThvPF7TVLfgsaLMnbdfZYlHIJiBadZQ7Izk4fhm/hxZyYtkUSH5F61fuDnKo4wSzM
- zuAw==
+ bh=Xy66U/Y+GsoS7WvoAHDCbL+/HfooWzRIS+dCFcyd4Uo=;
+ b=AI94lzQNdEppdkJ/fqjRpRDYdE7rrP3xT+FLCtZu99BYl94DH9/fLGoGD2OHi9ZNMI
+ cF8l9xgShIwNhbeGFWdxV6E0tpKpGadIbvgNdPt1dXxpY0Jts6b7Zz7IS9wGoTrPj7rA
+ cJPlJqBje2DvekR5jGjQbpHfxsCSry2oWGQmMyqGD2s6wTXrLwq3BuwE34EFA0AaHWfv
+ cXWKq3XnH1C/xccR3l/gcGb3Ihusj1JgecksBc6RKWOK5X95RXzLy84i4gmSFyvzI5Jx
+ 1jJgh33jTX+LJJR5QO0z0AcM5HfTYLkO/QmKQnCcL7OL3brsMmQp4qcIEqdrH/NFriHt
+ kWyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754931985; x=1755536785;
+ d=1e100.net; s=20230601; t=1754932012; x=1755536812;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sTgiDxRSLxB+/Dn7RyfAMOT6DRpkQW6SJaCX0ndx+MI=;
- b=srTDxfIMuqAk1z9q2lp2TOim6e83p6pevr8m8xTd8TE5ceo1+KPO4ILrC1ku7cXy7/
- HyIA3OpU7fmXHseAv3ICrr68WRtArIHRFrS4i1N/zpJeuhA8c2jMB+0tldAUDONT3MfL
- q6Fso/93UrP+T+zF0IN9UxsPiJA5Bz7VTWRKbIfVLDZE9shujqvWUi7UMcLcHgSK/qMT
- INKeVxNuLMg3HdRkjC/JACMKuIemOm5XK+m1IQVMS5+YlTzIHdqUBmo19ULfIkWLRYa0
- /7gjMtwPme30shNtHKPLzeXt6/v92ant7jfmxjD0oUxYcNizLKKFRRMUXVUq9Xztt2zi
- pI5w==
-X-Gm-Message-State: AOJu0Yw/enqSFfrHgvRDPKKVGTyfphlOuoUSvf2U332AhRsw7h73Yx6F
- jciLB9jVsnvul3FcjxBjAGiaENLW1OL7g+ehMCIgmncM8nJIXucLQaKQRm4Ap0VG+CuVO6FLwe8
- fNpYf
-X-Gm-Gg: ASbGncvSuoBIfmDrFaVhSoAab8/Z7W9du9Kg0RjUkYJRaewQBIbkoDjUPUOiRxlyg5o
- bURrS4N8gXaQ+vIXmBDKNvF7R8VDTb6HS+ZwmGznkEspbqgy1//W6TEaJuQBun5hDBjSLgpt2nW
- 6+QLDN+K5ehreuraKYb6BYs7rh0+q/G/WnVqBF2U6TlFssbR8HzQY+HuXjisvzdkxa2GAMDPic+
- U5dP24aN3fI+FPWAvchX2LRMewsZ3xNhH9sBtUuMnbto6cHrByHg3lhMaHsR8xrovhw9dfKJQuu
- AgLU7n07+c0+QI7y7Slqe+Ennwz94Gt7MwqcGTfQetQbB06FkDA6BA5iIn4+9bX3Kkuo53p+0sF
- +jwA7qxmFwhy4Y64/2shB0DL0nhTWmj1vFR5c/074xetH9/UT6qI+RYY9yZljmkH9mUTJdME1
-X-Google-Smtp-Source: AGHT+IHmKFWh0EX5W4UrlAuaShc8z5HGaqyl6BzhAlbha6mdD4im91lzcojjBo1X/5DvQMYjrTsAeg==
-X-Received: by 2002:a05:600c:3b89:b0:459:ea5d:418b with SMTP id
- 5b1f17b1804b1-45a10f58f2amr1775565e9.9.1754931985104; 
- Mon, 11 Aug 2025 10:06:25 -0700 (PDT)
+ bh=Xy66U/Y+GsoS7WvoAHDCbL+/HfooWzRIS+dCFcyd4Uo=;
+ b=EYB9guEvyETdUUwyak1Ug4WQXp7Fhnf1pCLmX68sHEf0vytPKWFSDLM6KEtZqFotMs
+ m22xkGPNHi0YWXQmd7wEBgZ9+uKsjP+7+jygVaHp2a5Nz8NtKBogdAB6BLETRU/l/dpe
+ wz7aLbKo1o6xSc9XL0zUhfwNFPjTzctfSrV1OgLHLfRZFNqrLeBzNIBbceuC+KKkEfTC
+ i0QJutkhxSYiwHW/6LBXAinh0RpyXmJYBfhDdroZsy/f0qpWHEQVBaPT3ig0gsoiA+jd
+ XQXctMSOu+VMgLmAEC+L0QTDE8M/o2sJaLuvfbVPrn0Fw+l7Imdq/+6IDqrP0j9r3Yoh
+ ch1A==
+X-Gm-Message-State: AOJu0YwiPfjnZUwuXrgsJnsaVwpqjO1zeESsp9pZnMB4zf5DVk25WrNP
+ nB0DlTnEqodZy10HrVaJWGM9E7NsCMr6pGyz96cHuARhrOwMEA/8xhXgvYsJNg05E3Nswm07l6Y
+ x6v7J
+X-Gm-Gg: ASbGncvz8kBZD6tA/nlPoYhpldhIfChNlC+RvlRAxLU2Pc7kW2TkRoyMuyZ8PqmGzqU
+ Yc6Iq+U/f6/XPorM4+MRUWC5ZBivfsaR4x1BKBIAuFp60ZTbdL/XeYK4ds4j8zOzSbf6MNyp6sJ
+ zMN/LgKlfnCNsesss+XtqzRqV4/KsOCcK51a13mElutZSP7ZCAX768uMKlCmp7E62rOKJ2crZ9X
+ RCJB/1VTSBPYmcUjNrzxHIBiDDGzbg47a81J7EWBOBffydioltP5EXFpyuxItHswZVz6cgRp9cd
+ bSmIqpgn2SmNawF0M4xuYJCpCXIJBiDvzKuYzmQG6Rs6HrfybgB20FDc/I0ul3Y3N7Xq8/dZqBr
+ 6j7BUgbcNqnCFLuPymhgwmc63Vqi/XSQtrTQKpIcreiIE8q1kaaDh3awEgJfL1skkfaV4avz9
+X-Google-Smtp-Source: AGHT+IGmfphj2mVyIXTj/0jyub2rh0Wyucghu5fqob5NYPlURmtsCqqH6Zi92+hXGXffCLSOUjqF9w==
+X-Received: by 2002:a05:600c:1c27:b0:458:bd08:72a8 with SMTP id
+ 5b1f17b1804b1-45a10dac800mr3454185e9.13.1754932011892; 
+ Mon, 11 Aug 2025 10:06:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b8e0683045sm32464335f8f.41.2025.08.11.10.06.23
+ ffacd0b85a97d-3b79c453aeasm42842421f8f.40.2025.08.11.10.06.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 Aug 2025 10:06:24 -0700 (PDT)
+ Mon, 11 Aug 2025 10:06:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Miguel Luis <miguel.luis@oracle.com>,
@@ -75,27 +75,26 @@ Cc: Miguel Luis <miguel.luis@oracle.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mads Ynddal <mads@ynddal.dk>, Eric Auger <eric.auger@redhat.com>,
  qemu-arm@nongnu.org, Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [RFC PATCH 02/11] target/arm: Use generic hwaccel_enabled() to check
- 'host' cpu type
-Date: Mon, 11 Aug 2025 19:06:02 +0200
-Message-ID: <20250811170611.37482-3-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH 07/11] target/arm: Replace kvm_arm_pmu_supported by
+ host_cpu_feature_supported
+Date: Mon, 11 Aug 2025 19:06:07 +0200
+Message-ID: <20250811170611.37482-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250811170611.37482-1-philmd@linaro.org>
 References: <20250811170611.37482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,102 +110,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We should be able to use the 'host' CPU with any hardware accelerator.
+Use the generic host_cpu_feature_supported() helper to
+check for the PMU feature support. This will allow to
+expand to non-KVM accelerators such HVF.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/arm-qmp-cmds.c |  5 +++--
- target/arm/cpu.c          |  5 +++--
- target/arm/cpu64.c        | 11 ++++++-----
- 3 files changed, 12 insertions(+), 9 deletions(-)
+ target/arm/kvm_arm.h  | 13 -------------
+ target/arm/cpu.c      |  4 ++--
+ target/arm/kvm-stub.c |  5 -----
+ target/arm/kvm.c      |  9 ++-------
+ 4 files changed, 4 insertions(+), 27 deletions(-)
 
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index d292c974c44..1142e28cb76 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -31,6 +31,7 @@
- #include "qapi/qapi-commands-misc-arm.h"
- #include "qobject/qdict.h"
- #include "qom/qom-qobject.h"
-+#include "system/hw_accel.h"
- #include "cpu.h"
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 6a9b6374a6d..364578c50d6 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -177,14 +177,6 @@ void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp);
+  */
+ bool kvm_arm_aarch32_supported(void);
  
- static GICCapability *gic_cap_new(int version)
-@@ -117,8 +118,8 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-         return NULL;
-     }
+-/**
+- * kvm_arm_pmu_supported:
+- *
+- * Returns: true if KVM can enable the PMU
+- * and false otherwise.
+- */
+-bool kvm_arm_pmu_supported(void);
+-
+ /**
+  * kvm_arm_sve_supported:
+  *
+@@ -212,11 +204,6 @@ static inline bool kvm_arm_aarch32_supported(void)
+     return false;
+ }
  
--    if (!kvm_enabled() && !strcmp(model->name, "host")) {
--        error_setg(errp, "The CPU type '%s' requires KVM", model->name);
-+    if (!hwaccel_enabled() && !strcmp(model->name, "host")) {
-+        error_setg(errp, "The CPU type 'host' requires hardware accelerator");
-         return NULL;
-     }
- 
+-static inline bool kvm_arm_pmu_supported(void)
+-{
+-    return false;
+-}
+-
+ static inline bool kvm_arm_sve_supported(void)
+ {
+     return false;
 diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index e2b2337399c..d9a8f62934d 100644
+index 1dc2a8330d8..c78a3c9cda8 100644
 --- a/target/arm/cpu.c
 +++ b/target/arm/cpu.c
-@@ -1984,8 +1984,9 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-      * this is the first point where we can report it.
-      */
-     if (cpu->host_cpu_probe_failed) {
--        if (!kvm_enabled() && !hvf_enabled()) {
--            error_setg(errp, "The 'host' CPU type can only be used with KVM or HVF");
-+        if (!hwaccel_enabled()) {
-+            error_setg(errp, "The 'host' CPU type can only be used with "
-+                             "hardware accelator such KVM/HVF");
-         } else {
-             error_setg(errp, "Failed to retrieve host CPU features");
+@@ -1564,8 +1564,8 @@ static void arm_set_pmu(Object *obj, bool value, Error **errp)
+     ARMCPU *cpu = ARM_CPU(obj);
+ 
+     if (value) {
+-        if (kvm_enabled() && !kvm_arm_pmu_supported()) {
+-            error_setg(errp, "'pmu' feature not supported by KVM on this host");
++        if (host_cpu_feature_supported(ARM_FEATURE_PMU, false)) {
++            error_setg(errp, "'pmu' feature not supported by this host accelerator");
+             return;
          }
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 26cf7e6dfa2..034bbc504cd 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -26,6 +26,7 @@
- #include "qemu/units.h"
- #include "system/kvm.h"
- #include "system/hvf.h"
-+#include "system/hw_accel.h"
- #include "system/qtest.h"
- #include "system/tcg.h"
- #include "kvm_arm.h"
-@@ -522,7 +523,7 @@ void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
-     isar2 = FIELD_DP64(isar2, ID_AA64ISAR2, APA3, 0);
-     isar2 = FIELD_DP64(isar2, ID_AA64ISAR2, GPA3, 0);
+         set_feature(&cpu->env, ARM_FEATURE_PMU);
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index c93462c5b9b..3beb336416d 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -32,11 +32,6 @@ bool kvm_arm_aarch32_supported(void)
+     return false;
+ }
  
--    if (kvm_enabled() || hvf_enabled()) {
-+    if (hwaccel_enabled()) {
-         /*
-          * Exit early if PAuth is enabled and fall through to disable it.
-          * The algorithm selection properties are not present.
-@@ -599,10 +600,10 @@ void aarch64_add_pauth_properties(Object *obj)
- 
-     /* Default to PAUTH on, with the architected algorithm on TCG. */
-     qdev_property_add_static(DEVICE(obj), &arm_cpu_pauth_property);
--    if (kvm_enabled() || hvf_enabled()) {
-+    if (hwaccel_enabled()) {
-         /*
-          * Mirror PAuth support from the probed sysregs back into the
--         * property for KVM or hvf. Is it just a bit backward? Yes it is!
-+         * property for HW accel. Is it just a bit backward? Yes it is!
-          * Note that prop_pauth is true whether the host CPU supports the
-          * architected QARMA5 algorithm or the IMPDEF one. We don't
-          * provide the separate pauth-impdef property for KVM or hvf,
-@@ -780,8 +781,8 @@ static void aarch64_host_initfn(Object *obj)
- 
- static void aarch64_max_initfn(Object *obj)
+-bool kvm_arm_pmu_supported(void)
+-{
+-    return false;
+-}
+-
+ bool kvm_arm_sve_supported(void)
  {
--    if (kvm_enabled() || hvf_enabled()) {
--        /* With KVM or HVF, '-cpu max' is identical to '-cpu host' */
-+    if (hwaccel_enabled()) {
-+        /* When hardware acceleration enabled, '-cpu max' is identical to '-cpu host' */
-         aarch64_host_initfn(obj);
-         return;
+     return false;
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 82853e68d8d..0fe0f89f931 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -288,7 +288,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+                              1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
      }
+ 
+-    if (kvm_arm_pmu_supported()) {
++    if (host_cpu_feature_supported(ARM_FEATURE_PMU, false)) {
+         init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+         pmu_supported = true;
+         features |= 1ULL << ARM_FEATURE_PMU;
+@@ -506,11 +506,6 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+                                     "Set off to disable KVM steal time.");
+ }
+ 
+-bool kvm_arm_pmu_supported(void)
+-{
+-    return kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
+-}
+-
+ int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
+ {
+     KVMState *s = KVM_STATE(ms->accelerator);
+@@ -1783,7 +1778,7 @@ bool arm_hw_accel_cpu_feature_supported(enum arm_features feat, bool can_emulate
+     case ARM_FEATURE_GENERIC_TIMER:
+         return true;
+     case ARM_FEATURE_PMU:
+-        return kvm_arm_pmu_supported();
++        return kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
+     case ARM_FEATURE_EL2:
+         return kvm_arm_el2_supported();
+     case ARM_FEATURE_EL3:
 -- 
 2.49.0
 
