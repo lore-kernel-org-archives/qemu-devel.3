@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A62C87FDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA112C87FDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulRVW-0007cE-Vd; Mon, 11 Aug 2025 08:20:07 -0400
+	id 1ulRVu-0007n6-7Q; Mon, 11 Aug 2025 08:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRVU-0007bU-Eb
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:20:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRVs-0007jR-AG
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:20:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRVQ-0005zC-Tu
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:20:04 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRVn-0006Ex-Uj
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:20:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754914797;
+ s=mimecast20190719; t=1754914822;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=N2iF3K9vbqI2DeY2rjL9F3Icnajd/CBvYoImHTEZ07M=;
- b=MWIYb2WUb5/w8AahmXPfOqa0NiZwc4doH7YzGfgTTGLFcePNLd0kGYvOPXcWQucLPUNUYp
- 9JdT7nAzeC0wKZRWq60vyfuogTmp+QLRZC9uM6CJo8VRiRDba56C+Wh5SEgAVhLPnwu2Jg
- JeK5iR87ucITb2fpbezifxHr5MtqKLs=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OABkDX/B/nJ4F8u+LUAvZtrLRd/t0gPeOfA5m6it2cs=;
+ b=Wm9yJpquvKHS+smO1hUXRcJUj1iQSe/WUloxUdzYMRrwBlURQbH+y+mlXRNCw6kAgtv6y7
+ tna8Fy56M55wbR8Yfk8qlbC+/dpLCYaiYGzSFzs251naOqDPbC80WeDuOjtyLN1rTU1JVL
+ BWj+bHM3LZg+dSWdKD/QQyFYo5xn7HY=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-VQMkpW-bPcGdYGehfDjINw-1; Mon, 11 Aug 2025 08:19:56 -0400
-X-MC-Unique: VQMkpW-bPcGdYGehfDjINw-1
-X-Mimecast-MFC-AGG-ID: VQMkpW-bPcGdYGehfDjINw_1754914796
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4af1a20cbcfso113769101cf.3
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:19:56 -0700 (PDT)
+ us-mta-130-EqF4wZbYO7W0BP-6tas6Uw-1; Mon, 11 Aug 2025 08:20:20 -0400
+X-MC-Unique: EqF4wZbYO7W0BP-6tas6Uw-1
+X-Mimecast-MFC-AGG-ID: EqF4wZbYO7W0BP-6tas6Uw_1754914820
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7e69c14e992so846927785a.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:20:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754914796; x=1755519596;
+ d=1e100.net; s=20230601; t=1754914820; x=1755519620;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N2iF3K9vbqI2DeY2rjL9F3Icnajd/CBvYoImHTEZ07M=;
- b=xBXYo67sSdTd3GbtlEMkMVEX4HEJzp/tPdr8ee8CBkEnFXVPUAtWsTOaO5tFpk93kZ
- B0eSykAmNYBpgJ2f5Ne8I53RxLDiE30AuXsH+uckBgWiVtfY2mZ+qpsS0cHc9+woy9g+
- bLFJMb9iQI86e9N+zJNXcN2HO2yH7U42hnXBEyX8iWohi5ByjSqXQXpwjN4Q0eviWm5l
- otE7+t3otf7WyxT4bhRD2RbbSNKVzEZcTSViUWbKzHDK0y78diB86VuZOTHuuhJ3N00/
- vCPLk0gJxH5T7uI5f+opf10xYNa+HlPNIpxRcaIIzZeeihgJO4tvjyhkbOH+wlovprYc
- BuUQ==
+ bh=OABkDX/B/nJ4F8u+LUAvZtrLRd/t0gPeOfA5m6it2cs=;
+ b=Pc83D5j0/8PLp6hSK6w8KAVkm4JaKawT5qwfuWeiXy80sAlV/x+Ai5N9RSNHEgObTY
+ sJrpDNnTnyTJ+9eYwrLnAq/jUzNI9adJlawUztjQQPHJGSpMDRk/IJOEjB2me2tyUWYv
+ 7bW1EOzG0tLH2nzyFPIrEfBBFJo/dNc7SRziol6ic2ADLXkEDizvn4PNZAAc9rJ9q81Y
+ b/UT3k7JgRd9cbAq5ErIRZKA+EbmkiMotY8VKCm4fKXA/uz10Cxu10w7thpq5Ideh54G
+ b370ckdZt4VB8zbbdiwJOMLxix0+lJwbZtjfOkalChqnG7Nx9TQrEAeZwSmZgcwnnRuI
+ MH8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQQNhHrszI1atFFCBuaY1Zu2UJDS9WgtkAU+d4wWTzPcQ04/TY+h50OnZhWO9694S6Ncld2Igc6nmR@nongnu.org
-X-Gm-Message-State: AOJu0YxQDZs/QMJHCZ1UyPOaNU/BdpaGNvtO154GgQyMUw9AMP8KhDoK
- y45LJ5ZHSvxH29dwPwGJFT2wyXmerQsUpQIMmj3n2Ey8C3tpcPFKQ5nuoQJ3936sbJewrF8bd8h
- Mb9ivC2BM71AsZcU5XaOjTnAhMd/eUEGW1bk2ycbVre9wCX8VBN8SfK6+
-X-Gm-Gg: ASbGncv2TP5SlHo/zba1roLykaFjnv30Vzgmajjfl1VWB3carux3QxZOpBGWc1CxHzc
- i2aIMs/Ncwwyb34KTe29dQ3+aAvqPYj54o5K2zZ/hO/Tmai/FGMdBneBHkDTbi6ZsQrGh/tR9nM
- hWO2SP3Mpumi/xHeIuwaXjmjJHzTkGzJoP4shWl1P7Zat8KgMtixBoPj40fqd8Q6NpqDT4nbkd+
- 9ZSUnztRmnwG5VwDG8cEa+oG87Eo7iujhOcaWXw7geIk/nLTn+05ETyMXJQTlUrmy0ZyTwZDkOd
- M25yx1TynokB3R7RT9c99FkQozm0npeOLxMEsXDPKjo+l9+azwfcIl+A1eKa/1P6v2+8dfpcxcH
- t4w==
-X-Received: by 2002:ac8:5715:0:b0:4b0:61fa:19b4 with SMTP id
- d75a77b69052e-4b0aee19e7emr156578581cf.46.1754914795551; 
- Mon, 11 Aug 2025 05:19:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbR3+L+vQzuGcywJ3/Olrric5mC9tksRuRkRnFE9AhhUG8jjXr5ya3HokvJeylKh6qzN9mvg==
-X-Received: by 2002:ac8:5715:0:b0:4b0:61fa:19b4 with SMTP id
- d75a77b69052e-4b0aee19e7emr156578161cf.46.1754914795055; 
- Mon, 11 Aug 2025 05:19:55 -0700 (PDT)
+ AJvYcCU2gRzfnFbIaqhnKqh+lbmqZJTleZQBVVS9LnuAxbTK5tKZ8ipqPq2IzQdhQmRUFY51fiImWpCPQSmJ@nongnu.org
+X-Gm-Message-State: AOJu0YzmUMueHiTjGHlNeRCvjGvLMzrDBO5r616HZDvLzEOepuWxhUZB
+ t+J5RqhUS6UoMRSWahH6VKBAtHEmItQkV/Peh7xe94gZoCntGACS7ZHi723VehGRAxvfdYZnxoC
+ 2BEWIRmns4ZW+6xp9lu3LwSk2OpSwo8Z1iMkjtJkKMxDIEB19pFGxFreT
+X-Gm-Gg: ASbGncs/cwSPRV3cq049lHOQNFtXe+bOr7IFDGbIQqYbLWlMClaYTp/V4n2VEF+YBhs
+ vPfjQrajwWLN08x7510grZP+tsRu0+sGX3QK5MQmYTI/uajMvG942yftIzKgZmUo2COhhdrbx57
+ oXeqjzBSGLYTGY/lUW+mk0Nx2JzKn2wn+t+urR0ZPDWfyiU5htItqMepPQ8PPX6yPx6hzyMSJ7Z
+ 2WnGRo8bIpkkw4fKq5KrhSAGb/UzxcTzgPOqxoJHz4N3SIyCnRIJuTD4VnUnSRjrvsRACwNrlvA
+ irAJ9kgoy7lpCIR0Mbb+puEkZ4ZMOEf6rpIDGcbHBCdcdIJvFcU12JfATico0EcPn1yzYLtBoii
+ oEQ==
+X-Received: by 2002:a05:6214:19c6:b0:707:2472:dc3b with SMTP id
+ 6a1803df08f44-7099a351fc5mr185697626d6.42.1754914820253; 
+ Mon, 11 Aug 2025 05:20:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMziybW0yYKN9+bPtmdxs+xNdVn2+ufpPX4cHPr1V2OyVUji5Gcu06woUszk+2lp3xm94KKQ==
+X-Received: by 2002:a05:6214:19c6:b0:707:2472:dc3b with SMTP id
+ 6a1803df08f44-7099a351fc5mr185696926d6.42.1754914819636; 
+ Mon, 11 Aug 2025 05:20:19 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b085ad7d08sm83932491cf.53.2025.08.11.05.19.52
+ 6a1803df08f44-709a0d74acfsm45992896d6.58.2025.08.11.05.20.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 05:19:54 -0700 (PDT)
-Message-ID: <cf0a4fb8-de01-45df-b828-150b7ff64f86@redhat.com>
-Date: Mon, 11 Aug 2025 14:19:52 +0200
+ Mon, 11 Aug 2025 05:20:19 -0700 (PDT)
+Message-ID: <67cf5108-c2f7-49bd-a81e-266c7c93631e@redhat.com>
+Date: Mon, 11 Aug 2025 14:20:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/22] hw/vfio/container.c: use QOM casts where appropriate
+Subject: Re: [PATCH 06/22] vfio/spapr.c: use QOM casts where appropriate
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  danielhb413@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
  farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
@@ -87,7 +87,7 @@ To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  tomitamoeko@gmail.com, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
- <20250715093110.107317-5-mark.caveayland@nutanix.com>
+ <20250715093110.107317-7-mark.caveayland@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,10 +133,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250715093110.107317-5-mark.caveayland@nutanix.com>
+In-Reply-To: <20250715093110.107317-7-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -145,7 +145,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,6 +168,7 @@ On 7/15/25 11:25, Mark Cave-Ayland wrote:
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
 
+
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
@@ -176,134 +177,70 @@ C.
 
 
 > ---
->   hw/vfio/container.c | 31 +++++++++++++------------------
->   1 file changed, 13 insertions(+), 18 deletions(-)
+>   hw/vfio/spapr.c | 16 ++++++----------
+>   1 file changed, 6 insertions(+), 10 deletions(-)
 > 
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 3e13feaa74..f4337741b3 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -71,7 +71,7 @@ static int vfio_dma_unmap_bitmap(const VFIOContainer *container,
->                                    hwaddr iova, ram_addr_t size,
->                                    IOMMUTLBEntry *iotlb)
->   {
-> -    const VFIOContainerBase *bcontainer = &container->bcontainer;
-> +    const VFIOContainerBase *bcontainer = VFIO_IOMMU(container);
->       struct vfio_iommu_type1_dma_unmap *unmap;
->       struct vfio_bitmap *bitmap;
->       VFIOBitmap vbmap;
-> @@ -124,8 +124,7 @@ static int vfio_legacy_dma_unmap_one(const VFIOContainerBase *bcontainer,
->                                        hwaddr iova, ram_addr_t size,
->                                        IOMMUTLBEntry *iotlb)
->   {
-> -    const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                                  bcontainer);
-> +    const VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       struct vfio_iommu_type1_dma_unmap unmap = {
->           .argsz = sizeof(unmap),
->           .flags = 0,
-> @@ -213,8 +212,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
->                                  ram_addr_t size, void *vaddr, bool readonly,
->                                  MemoryRegion *mr)
->   {
-> -    const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                                  bcontainer);
-> +    const VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       struct vfio_iommu_type1_dma_map map = {
->           .argsz = sizeof(map),
->           .flags = VFIO_DMA_MAP_FLAG_READ,
-> @@ -246,8 +244,7 @@ static int
->   vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
->                                       bool start, Error **errp)
->   {
-> -    const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                                  bcontainer);
-> +    const VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       int ret;
->       struct vfio_iommu_type1_dirty_bitmap dirty = {
->           .argsz = sizeof(dirty),
-> @@ -272,8 +269,7 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
->   static int vfio_legacy_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->                         VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
->   {
-> -    const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                                  bcontainer);
-> +    const VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       struct vfio_iommu_type1_dirty_bitmap *dbitmap;
->       struct vfio_iommu_type1_dirty_bitmap_get *range;
->       int ret;
-> @@ -495,7 +491,7 @@ static void vfio_get_iommu_info_migration(VFIOContainer *container,
->   {
->       struct vfio_info_cap_header *hdr;
->       struct vfio_iommu_type1_info_cap_migration *cap_mig;
+> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+> index 564b70ef97..c41e4588d6 100644
+> --- a/hw/vfio/spapr.c
+> +++ b/hw/vfio/spapr.c
+> @@ -62,7 +62,7 @@ static void vfio_prereg_listener_region_add(MemoryListener *listener,
+>       VFIOSpaprContainer *scontainer = container_of(listener, VFIOSpaprContainer,
+>                                                     prereg_listener);
+>       VFIOContainer *container = &scontainer->container;
 > -    VFIOContainerBase *bcontainer = &container->bcontainer;
 > +    VFIOContainerBase *bcontainer = VFIO_IOMMU(container);
->   
->       hdr = vfio_get_iommu_info_cap(info, VFIO_IOMMU_TYPE1_INFO_CAP_MIGRATION);
->       if (!hdr) {
-> @@ -518,8 +514,7 @@ static void vfio_get_iommu_info_migration(VFIOContainer *container,
->   
->   static bool vfio_legacy_setup(VFIOContainerBase *bcontainer, Error **errp)
+>       const hwaddr gpa = section->offset_within_address_space;
+>       hwaddr end;
+>       int ret;
+> @@ -244,7 +244,7 @@ static bool vfio_spapr_create_window(VFIOContainer *container,
+>                                       hwaddr *pgsize, Error **errp)
+>   {
+>       int ret = 0;
+> -    VFIOContainerBase *bcontainer = &container->bcontainer;
+> +    VFIOContainerBase *bcontainer = VFIO_IOMMU(container);
+>       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
+>                                                     container);
+>       IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
+> @@ -352,8 +352,7 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
+>                                           MemoryRegionSection *section,
+>                                           Error **errp)
 >   {
 > -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
 > -                                            bcontainer);
 > +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       g_autofree struct vfio_iommu_type1_info *info = NULL;
->       int ret;
->   
-> @@ -634,7 +629,7 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
->   
->       if (!cpr_is_incoming()) {
->           QLIST_FOREACH(bcontainer, &space->containers, next) {
-> -            container = container_of(bcontainer, VFIOContainer, bcontainer);
-> +            container = VFIO_IOMMU_LEGACY(bcontainer);
->               if (!ioctl(group->fd, VFIO_GROUP_SET_CONTAINER, &container->fd)) {
->                   return vfio_container_group_add(container, group, errp);
->               }
-> @@ -652,7 +647,7 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
->            * create the container struct and group list.
->            */
->           QLIST_FOREACH(bcontainer, &space->containers, next) {
-> -            container = container_of(bcontainer, VFIOContainer, bcontainer);
-> +            container = VFIO_IOMMU_LEGACY(bcontainer);
->   
->               if (vfio_cpr_container_match(container, group, fd)) {
->                   return vfio_container_group_add(container, group, errp);
-> @@ -672,7 +667,7 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
->           goto fail;
->       }
->       new_container = true;
-> -    bcontainer = &container->bcontainer;
-> +    bcontainer = VFIO_IOMMU(container);
->   
->       if (!vfio_legacy_cpr_register_container(container, errp)) {
->           goto fail;
-> @@ -735,7 +730,7 @@ fail:
->   static void vfio_container_disconnect(VFIOGroup *group)
+>       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
+>                                                     container);
+>       VFIOHostDMAWindow *hostwin;
+> @@ -443,8 +442,7 @@ static void
+>   vfio_spapr_container_del_section_window(VFIOContainerBase *bcontainer,
+>                                           MemoryRegionSection *section)
 >   {
->       VFIOContainer *container = group->container;
-> -    VFIOContainerBase *bcontainer = &container->bcontainer;
-> +    VFIOContainerBase *bcontainer = VFIO_IOMMU(container);
->       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+> -                                            bcontainer);
+> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
+>       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
+>                                                     container);
 >   
->       QLIST_REMOVE(group, container_next);
-> @@ -781,7 +776,7 @@ static VFIOGroup *vfio_group_get(int groupid, AddressSpace *as, Error **errp)
->       QLIST_FOREACH(group, &vfio_group_list, next) {
->           if (group->groupid == groupid) {
->               /* Found it.  Now is it already in the right context? */
-> -            if (group->container->bcontainer.space->as == as) {
-> +            if (VFIO_IOMMU(group->container)->space->as == as) {
->                   return group;
->               } else {
->                   error_setg(errp, "group %d used in multiple address spaces",
-> @@ -895,7 +890,7 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
->           }
->       }
+> @@ -465,8 +463,7 @@ vfio_spapr_container_del_section_window(VFIOContainerBase *bcontainer,
 >   
-> -    vfio_device_prepare(vbasedev, &group->container->bcontainer, info);
-> +    vfio_device_prepare(vbasedev, VFIO_IOMMU(group->container), info);
->   
->       vbasedev->fd = fd;
->       vbasedev->group = group;
+>   static void vfio_spapr_container_release(VFIOContainerBase *bcontainer)
+>   {
+> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+> -                                            bcontainer);
+> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
+>       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
+>                                                     container);
+>       VFIOHostDMAWindow *hostwin, *next;
+> @@ -484,8 +481,7 @@ static void vfio_spapr_container_release(VFIOContainerBase *bcontainer)
+>   static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+>                                          Error **errp)
+>   {
+> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+> -                                            bcontainer);
+> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
+>       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
+>                                                     container);
+>       struct vfio_iommu_spapr_tce_info info;
 
 
