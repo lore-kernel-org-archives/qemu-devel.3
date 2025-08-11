@@ -4,137 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36115C87FDA
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 07:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16E5C87FD2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 07:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulMcA-0007ZZ-0m; Mon, 11 Aug 2025 03:06:38 -0400
+	id 1ulMwS-0004g2-Bn; Mon, 11 Aug 2025 03:27:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ulMc6-0007Yk-8W
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 03:06:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1ulMwI-0004e7-Ei; Mon, 11 Aug 2025 03:27:26 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ulMby-0003dN-T4
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 03:06:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754895982;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TdMCxZL7eqQn1EimFSLdGW0XVJTz/mwvEabV8Hpj3E0=;
- b=StHMSt6k1BcNTViGcHjlFj00VX8g3oRm2+QkzTnsvHACdxYP6PaBLx+2yxtf1ZCWE4//vw
- +hVMcCqUdNcZiysyHEFD9MsuKL/jM4Dv9RUUGy8Pqoh/3F6azo+p4vyTpsMFm3hB0wkkU0
- 5KUzquDQKE2KeAnRqO160ix3CAT4ou8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-OWNfTFaqOnmnhk4_HDsBrQ-1; Mon, 11 Aug 2025 03:06:21 -0400
-X-MC-Unique: OWNfTFaqOnmnhk4_HDsBrQ-1
-X-Mimecast-MFC-AGG-ID: OWNfTFaqOnmnhk4_HDsBrQ_1754895980
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3b780da0ab6so2039587f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 00:06:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754895980; x=1755500780;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TdMCxZL7eqQn1EimFSLdGW0XVJTz/mwvEabV8Hpj3E0=;
- b=rvtfD46LoG9wKOeMlkQwmIlzihtu22hzIbkldIyt6VP/cqSA3W4fLCwDesgvhbV68K
- SPvrtM5vVqyL6h9EGUjfH+QiyB0/ovS4ZAcrWXr3Bv5YwmlkCOaCJfPRa5x82K2YoOGr
- IyLOXPjc7yB8eM/s+VjAqVTXgoQkVl5N732T1uWgZCGs7GTxeFOY4aGbwRwrexm6u0GN
- QVHVQDUfasXU7EwBKCSGnGQs9cZda1WsUbMA6NKqmIkhxDSROL38DiLRiYJGW8R0Rx+v
- 9lHmbYTNneMjBDRkluKKsLjRhtvoTzfnNLn+m+eVSGPNrJYqt9PF31uQBBnvWm87pW8m
- OeVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1o0naf2qkx5ikpPjKcy0oPf7v1YTU+vo4YQ/xUFM5Y6Pq0tjIGMFoX+F5rS05XJWDmR5CwbV5oIxu@nongnu.org
-X-Gm-Message-State: AOJu0Yx2eBixrByKlhqR7OuD/fLmJIo0AyJng3TImPWmXCKB21JJZWTo
- m3qAjMZaMFo/nay8nNiz/LSUzWWA2Py3qmVJBYMjhqWgU7SPKJeYGCYs0ulpFqfVXoEPjCWxuVN
- +fwgANAAG1BXzIzcts3fWO410hXPNUGem8FLp9U41RDyos64meNpiTtDl
-X-Gm-Gg: ASbGncsH7V9J0D7hcdxx38U3vdtTxreuEIndidEd52FhnCldBPzZO9zJZFH6Xr2TiE2
- pSInirKA0HBogSzQ295tVbFWSFg6aTgEg93/oggPaJOaXEj1Aw93nBN8NX/993j+2liZV42wOyI
- XL6JpCUPdA3C75ndoE+V82uP2POy9jHX5G9Zellh+4voN1hIXjOb9CfcLlfHn8xyCADXIdZrHsv
- ziKKhUWNIWIyslI6vFhmFPvDkmsASCvHxKWtciqnW7So2mmJaSgFxy1Fak6s3M4riofc2VlJkSk
- w4l0RDKwwpW2Lh/iuAofk+ykae4jg9RCWv8cKdVhstv6
-X-Received: by 2002:a05:6000:1886:b0:3a3:7593:818b with SMTP id
- ffacd0b85a97d-3b900b2e15dmr9338787f8f.21.1754895979682; 
- Mon, 11 Aug 2025 00:06:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFXYfrzatD1TrL9MOehcYM+aHU3f9Wegp7baxgpqgG7BLhnSqyfLNSRT1TY93R2JpJC3Ek3Pw==
-X-Received: by 2002:a05:6000:1886:b0:3a3:7593:818b with SMTP id
- ffacd0b85a97d-3b900b2e15dmr9338761f8f.21.1754895979241; 
- Mon, 11 Aug 2025 00:06:19 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.234.144])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3bf970sm39271917f8f.25.2025.08.11.00.06.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 00:06:18 -0700 (PDT)
-Message-ID: <c5dabb13-0817-44c2-838a-e89b380a8861@redhat.com>
-Date: Mon, 11 Aug 2025 09:06:14 +0200
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1ulMwB-0006vs-Px; Mon, 11 Aug 2025 03:27:26 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B4e1vj028345;
+ Mon, 11 Aug 2025 07:27:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=5cZc3REWPGP0iRPWggtcj0VzxwJWZe
+ RahKfWKtHLNqs=; b=osXNST4zt7aUB0AVuYVoKB0dRu8hGf2/e1o+1MDvmKHzdj
+ VBhvlRondRy2qc68NWWf4VCTsgY3Wf8X8tBb09RLp4U5XOJLn5mMRygc9g9znWx1
+ 2Vz/xb9Qsq5F5ykQuqUu+85ttdMfNSv/NREtEBjvTnuq6vNI8UUq2gFN26fMzGbz
+ uhTwuYxtRPQi3f8CVmpJdx68RdKbDbO1jmLVT4Zqi0vjhek2RSWJrQmcweZXh6BE
+ Y+e53kMBN4aHZMjDXVGwoyGEsy94qdcwdGqJFoh+lHSAIrOrZINy4qvbO/5da6fv
+ saF7SkGvcwGdBxM4EK1edS8XAHZPEQRdU8diKfGw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dvrnqx4v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 Aug 2025 07:27:06 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57B7R6RA001665;
+ Mon, 11 Aug 2025 07:27:06 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dvrnqx4r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 Aug 2025 07:27:06 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57B77a7c017600;
+ Mon, 11 Aug 2025 07:27:05 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 48ekc3cgk7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 Aug 2025 07:27:05 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57B7R1fw23069100
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 11 Aug 2025 07:27:01 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 70A4020049;
+ Mon, 11 Aug 2025 07:27:01 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4839020040;
+ Mon, 11 Aug 2025 07:26:59 +0000 (GMT)
+Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com (unknown
+ [9.39.30.61]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 11 Aug 2025 07:26:59 +0000 (GMT)
+Date: Mon, 11 Aug 2025 12:56:53 +0530
+From: Gautam Menghani <gautam@linux.ibm.com>
+To: Miles Glenn <milesg@linux.ibm.com>
+Cc: clg@kaod.org, npiggin@gmail.com, kowal@linux.ibm.com,
+ ganeshgr@linux.ibm.com, harshpb@linux.ibm.com, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] ppc/xive2: Fix integer overflow warning in
+ xive2_redistribute()
+Message-ID: <aJmbPW40BsrmU9Oe@li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com>
+References: <20250808100917.37006-1-gautam@linux.ibm.com>
+ <7fd16019aa7400e024bf1fcbcd1246cc1dbaea1b.camel@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] accel/hvf: check exit_request before running the vCPU
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: imammedo@redhat.com, peterx@redhat.com
-References: <20250808185905.62776-1-pbonzini@redhat.com>
- <20250808185905.62776-3-pbonzini@redhat.com>
- <e3f3a5cc-66aa-4e58-95bf-6f8648bf84ad@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <e3f3a5cc-66aa-4e58-95bf-6f8648bf84ad@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7fd16019aa7400e024bf1fcbcd1246cc1dbaea1b.camel@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA0OCBTYWx0ZWRfX8yiZ2AW7pN/1
+ IMr+0XgBD6w2NOIWQS78lSb5IQOuCBEMhr/enCgIVJh8WIJ6ya9CprgmWoY8jOzQKcLlnYV9p1T
+ FKTCTg4gLzQmUL4EzYtb+6tdwkbGSfzLpVbHqUozRb5u3bTVqkEHqv3MVFcZ91e28dvuVEhlS+6
+ qOS3xAokF9dVRk9y9vhY3RdFD6ygyit4CuIVreiJ1a/uKVOVbDT9BhSDV7fviNTSNbYnT+6ZKff
+ 6cHlUGjKVLmxp2bb+eOqLWnJnkk/bg2TBvif5kXbZTK/WNP1Yqkn5eLiWF99uLslFGaKQTk1Gaf
+ NodVzpsYGCDi1Hjd+WDJ2O9oOfVKT0OMdONJ4Q+cech0T11M77WFr8A3733vTFvIa6PeLIcVxYO
+ OnNVu683xBqzUoM6AVFpyMOd9dj1q39BxOxv5qK4L7Aytn7PTvdq7zF0k5iyZxqyeU19LTfw
+X-Authority-Analysis: v=2.4 cv=GrpC+l1C c=1 sm=1 tr=0 ts=68999b4a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=w3VyHKy07UdvmkvWQnMA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: s6kGlO3n-EUQnbxqRmTaKT3yKoAIWJ52
+X-Proofpoint-ORIG-GUID: m1j0WM5zKA_RL9OUJqLohMBfMVEoa-ma
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-11_01,2025-08-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0 mlxlogscore=999
+ malwarescore=0 clxscore=1015 adultscore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508110048
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=gautam@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,69 +127,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/25 01:09, Richard Henderson wrote:
-> On 8/9/25 04:58, Paolo Bonzini wrote:
->> This is done by all other accelerators, but was missing for
->> Hypervisor.framework.
->>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>   target/arm/hvf/hvf.c  | 4 ++++
->>   target/i386/hvf/hvf.c | 4 ++++
->>   2 files changed, 8 insertions(+)
->>
->> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
->> index b77db99079e..478bc75fee6 100644
->> --- a/target/arm/hvf/hvf.c
->> +++ b/target/arm/hvf/hvf.c
->> @@ -1927,6 +1927,10 @@ int hvf_vcpu_exec(CPUState *cpu)
->>       flush_cpu_state(cpu);
->>       bql_unlock();
->> +    /* Corresponding store-release is in cpu_exit. */
->> +    if (qatomic_load_acquire(&cpu->exit_request)) {
->> +        hv_vcpus_exit(&cpu->accel->fd, 1);
->> +    }
->>       r = hv_vcpu_run(cpu->accel->fd);
+On Fri, Aug 08, 2025 at 11:57:32AM -0500, Miles Glenn wrote:
+> On Fri, 2025-08-08 at 15:39 +0530, Gautam Menghani wrote:
+> > Coverity reported an integer overflow warning in xive2_redistribute()
+> > where the code does a left shift operation "0xffffffff << crowd". Fix the
+> > warning by using a 64 byte integer type. Also refactor the calculation
+> > into dedicated routines.
+> > 
+> > Resolves: Coverity CID 1612608
+> > Fixes: 555e446019f5 ("ppc/xive2: Support redistribution of group interrupts")
+> > Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+> > ---
+> >  hw/intc/xive2.c | 45 +++++++++++++++++++++++++++++++--------------
+> >  1 file changed, 31 insertions(+), 14 deletions(-)
+> > 
+> > diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+> > index ee5fa26178..90fe9c883b 100644
+> > --- a/hw/intc/xive2.c
+> > +++ b/hw/intc/xive2.c
+> > @@ -95,6 +95,35 @@ static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
+> >      }
+> >  }
+> >  
+> > +static inline uint32_t xive2_nvgc_get_idx(uint32_t nvp_idx, uint8_t group)
+> > +{
+> > +    uint32_t nvgc_idx;
+> > +
+> > +    if (group > 0) {
+> > +        nvgc_idx = (nvp_idx & (0xffffffffULL << group)) |
+> > +                   ((1 << (group - 1)) - 1);
+> > +    } else {
+> > +        nvgc_idx = nvp_idx;
+> > +    }
+> > +
+> > +    return nvgc_idx;
+> > +}
+> > +
+> > +static inline uint8_t xive2_nvgc_get_blk(uint8_t nvp_blk, uint8_t crowd)
+> > +{
+> > +    uint8_t nvgc_blk;
+> > +
+> > +    if (crowd > 0) {
+> > +        crowd = (crowd == 3) ? 4 : crowd;
+> > +        nvgc_blk = (nvp_blk & (0xffffffffULL << crowd)) |
+> > +                   ((1 << (crowd - 1)) - 1);
+> > +    } else {
+> > +        nvgc_blk = nvp_blk;
+> > +    }
+> > +
+> > +    return nvgc_blk;
+> > +}
+> > +
+> >  uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
+> >                                           bool crowd,
+> >                                           uint8_t blk, uint32_t idx,
+> > @@ -638,20 +667,8 @@ static void xive2_redistribute(Xive2Router *xrtr, XiveTCTX *tctx, uint8_t ring)
+> >  
+> >      trace_xive_redistribute(tctx->cs->cpu_index, ring, nvp_blk, nvp_idx);
+> >      /* convert crowd/group to blk/idx */
+> > -    if (group > 0) {
+> > -        nvgc_idx = (nvp_idx & (0xffffffff << group)) |
+> > -                   ((1 << (group - 1)) - 1);
+> > -    } else {
+> > -        nvgc_idx = nvp_idx;
+> > -    }
+> > -
+> > -    if (crowd > 0) {
+> > -        crowd = (crowd == 3) ? 4 : crowd;
+> > -        nvgc_blk = (nvp_blk & (0xffffffff << crowd)) |
+> > -                   ((1 << (crowd - 1)) - 1);
+> > -    } else {
+> > -        nvgc_blk = nvp_blk;
+> > -    }
+> > +    nvgc_idx = xive2_nvgc_get_idx(nvp_idx, group);
+> > +    nvgc_blk = xive2_nvgc_get_blk(nvp_blk, crowd);
+> >  
+> >      /* Use blk/idx to retrieve the NVGC */
+> >      if (xive2_router_get_nvgc(xrtr, crowd, nvgc_blk, nvgc_idx, &nvgc)) {
 > 
-> This looks odd.
+> Thanks for fixing that, Gautam!  I was wondering, do we really need the
+> inline keywords here? Maybe it's better to let the compiler decide if
+> they should be inlined (which it probably will since they are only
+> called by a single function in the same file)?
 > 
-> hv_vcpus_exit: "Forces an immediate exit of a set of vCPUs of the VM".
-> 
-> But we know for a fact fd isn't running, because that's to start in the 
-> next line.  I suppose this must set a flag so that the kernel's 
-> hv_vcpu_run exits immediately with CANCELED?
-> 
-> Does executing of hv_vcpu_run buy us anything else?  Is it less 
-> confusing to simply return 0, modulo bql fiddling?
-> 
->> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
->> index 8445cadecec..b7c4b849cdf 100644
->> --- a/target/i386/hvf/hvf.c
->> +++ b/target/i386/hvf/hvf.c
->> @@ -749,6 +749,10 @@ int hvf_vcpu_exec(CPUState *cpu)
->>               return EXCP_HLT;
->>           }
->> +        /* Corresponding store-release is in cpu_exit. */
->> +        if (qatomic_load_acquire(&cpu->exit_request)) {
->> +            hv_vcpu_interrupt(&cpu->accel->fd, 1);
->> +        }
->>           hv_return_t r = hv_vcpu_run_until(cpu->accel->fd, 
->> HV_DEADLINE_FOREVER);
->>           assert_hvf_ok(r);
-> 
-> This, similarly, I guess returns EXCP_INTERRUPT.  Is that better or 
-> worse than 0?
 
-The advantage is that you can reuse the code for when another thread 
-kicks you out of the execution loop.  For x86, for example, the effects 
-of hvf_inject_interrupts() are undone by hv_vcpu_run() + hvf_store_events().
 
-But on second thought this patch is not needed.  The kick is handled 
-completely by Apple code and that's where any synchronization must 
-happen.  In fact, there should be no need for hvf_kick_vcpu_thread() to 
-call cpus_kick_thread() even (though I'd leave it to more HVF-literate 
-people like Phil to do that).
+Sure, thanks for the feedback and RB. I'll send a v2.
 
-Paolo
+> Either way...
+> 
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> 
+> Thanks,
+> 
+> Glenn
+> 
 
+
+Thanks,
+Gautam
 
