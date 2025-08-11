@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1608ECA0ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 17:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1C6CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 18:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulWgy-00050E-Pd; Mon, 11 Aug 2025 13:52:18 -0400
+	id 1ulWoT-0006lR-26; Mon, 11 Aug 2025 14:00:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1ulWgo-0004yo-Lc
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:52:08 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ id 1ulWoN-0006ke-16
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:59:55 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1ulWgg-0001YP-WE
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:52:05 -0400
+ id 1ulWoE-0002kI-2A
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 13:59:53 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 06BBB5C5D52;
- Mon, 11 Aug 2025 17:51:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5544FC4CEF5;
- Mon, 11 Aug 2025 17:51:45 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id A41A4A567DD;
+ Mon, 11 Aug 2025 17:59:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029EBC4CEED;
+ Mon, 11 Aug 2025 17:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1754934705;
- bh=lKNDlQW+qVt75sbDDF/3VmWWnLAPvdijuoipSzE0tyM=;
+ s=k20201202; t=1754935176;
+ bh=405QHhO4NCahEUrGU1Vp03wvAn++1kqDusaMJQHDKK0=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=ig2AYE+l7weOmsqJqLlEOgcOvZLtNiTOvPtwoccvp4D4asXsTfgCM8kyHhNUNH2YZ
- 0P4Z0N5C3bmSdtG+wdpsnH/gMizDfkYVuQzjZwbDEPVuo1LMc0QhCyYDX0ym4LSyGe
- EIOJlGi4WsM3a3JBhkvnJk8hBE1DRU+wx8Ei8XUnUXAplNTU6V1GM8Q5lg6m6YNEA4
- E5/guj1Q+04r+MrLgYIT9f+vfs/D3LUb9CEsw3zLPBUafK9C+HoTZc6xL/XrekJKSB
- j4juTMtRz75Oaabo8TEddOL3Shp8jC5l8YotWo/bscetU+woUVlOcN+GbO2pRgo8YI
- vsGm0+odYWtEw==
-Date: Mon, 11 Aug 2025 17:51:44 +0000
+ b=BuNY51H3xy0Og3cMAatZOKUk1sqiHvL9Q4flts3d5vXxWJhtBKkjUtq8Li0wy/IAE
+ CCXCmporFECcG+iEiO7OappadSvtz/6iFZ8HFa1abWQjb8BIFutx5TmUWu6sIwlmV7
+ gX6BC6iXCIODfxmnXGyVg6c4NwkxC99FQ0zxIcCluMlIi+4+TX4E7gksxMPd753cnl
+ LZfojRFqNTBE/l6rqFzrercbiQv31LdQzQ/5TKElk3ZObOTK3kjDsRxPQr37K/Vw2L
+ SPYE01dd/VVy+ux4CIfzCbBM5h5unmj77dmFLNgyVrEe4LEH0odC0mwIGWxEiHHEyD
+ dqzHGU0yrcPzw==
+Date: Mon, 11 Aug 2025 17:59:34 +0000
 From: Wei Liu <wei.liu@kernel.org>
 To: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
@@ -57,23 +57,24 @@ Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 01/26] accel: Add Meson and config support for MSHV
+Subject: Re: [PATCH v3 00/26] Implementing a MSHV (Microsoft Hypervisor)
  accelerator
-Message-ID: <aJotsJZOsvjXMiel@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+Message-ID: <aJovhrGg6zxQC5V1@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
 References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
- <20250807143951.1154713-2-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250807143951.1154713-2-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=wei.liu@kernel.org; helo=dfw.source.kernel.org
+In-Reply-To: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=wei.liu@kernel.org;
+ helo=nyc.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,23 +90,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 07, 2025 at 04:39:26PM +0200, Magnus Kulke wrote:
-> Introduce a Meson feature option and default-config entry to allow
-> building QEMU with MSHV (Microsoft Hypervisor) acceleration support.
-> 
-> This is the first step toward implementing an MSHV backend in QEMU.
+On Thu, Aug 07, 2025 at 04:39:25PM +0200, Magnus Kulke wrote:
+> Hey all,
 > 
 [...]
->  if get_option('whpx').allowed() and host_os == 'windows'
->    if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
->      error('WHPX requires 64-bit host')
-> @@ -4818,6 +4827,7 @@ if have_system
->    summary_info += {'HVF support':       config_all_accel.has_key('CONFIG_HVF')}
->    summary_info += {'WHPX support':      config_all_accel.has_key('CONFIG_WHPX')}
->    summary_info += {'NVMM support':      config_all_accel.has_key('CONFIG_NVMM')}
-> +  summary_info += {'MSHV support':       config_all_accel.has_key('CONFIG_MSHV')}
+> 
+> - A discrete kernel ioctl "set_immediate_exit" (to avoid a race condition
+>   when handling terminiation signals like ctrl-a x) has been tested and
+>   proven to mitigate the problem. Since other consumers of /dev/mshv have
+>   simular requirements as QEMU, we opted to iterate a bit more on the
+>   respective kernel interface.
+> 
+> Magnus Kulke (25):
+>   accel: Add Meson and config support for MSHV accelerator
+>   target/i386/emulate: Allow instruction decoding from stream
+>   target/i386/mshv: Add x86 decoder/emu implementation
+>   hw/intc: Generalize APIC helper names from kvm_* to accel_*
 
-Minor nit, one space too many here.
+This needs acks from KVM maintainers.
 
+>   include/hw/hyperv: Add MSHV ABI header definitions
+>   linux-headers/linux: Add mshv.h headers
+>   accel/mshv: Add accelerator skeleton
+>   accel/mshv: Register memory region listeners
+>   accel/mshv: Initialize VM partition
+>   accel/mshv: Add vCPU creation and execution loop
+>   accel/mshv: Add vCPU signal handling
+>   target/i386/mshv: Add CPU create and remove logic
+>   target/i386/mshv: Implement mshv_store_regs()
+>   target/i386/mshv: Implement mshv_get_standard_regs()
+>   target/i386/mshv: Implement mshv_get_special_regs()
+>   target/i386/mshv: Implement mshv_arch_put_registers()
+>   target/i386/mshv: Set local interrupt controller state
+>   target/i386/mshv: Register CPUID entries with MSHV
+>   target/i386/mshv: Register MSRs with MSHV
+>   target/i386/mshv: Integrate x86 instruction decoder/emulator
+>   target/i386/mshv: Write MSRs to the hypervisor
+>   target/i386/mshv: Implement mshv_vcpu_run()
+>   accel/mshv: Handle overlapping mem mappings
+
+I only had a cursory look at this. I'm definitively not an expert on
+RCU, so the more reviews we can get the better. To the best of my
+(limited) knowledge, the code looks reasonable.
+
+>   docs: Add mshv to documentation
+>   MAINTAINERS: Add maintainers for mshv accelerator
+> 
+
+The rest looks okay.
+
+> Praveen K Paladugu (1):
+>   qapi/accel: Allow to query mshv capabilities
+> 
+
+This looks problematic and probably needs to be changed.
+
+I really hope that we can commit as many patches as possible to QEMU
+tree, so that we don't need to keep rebasing.
+
+Thanks,
 Wei
 
