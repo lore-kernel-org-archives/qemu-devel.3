@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0241CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 15:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA30CA0EC4
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 15:56:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulUsO-0002oZ-UU; Mon, 11 Aug 2025 11:55:57 -0400
+	id 1ulUsw-0003Hd-QB; Mon, 11 Aug 2025 11:56:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulUsN-0002oA-JM
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 11:55:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulUss-0003HF-P0
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 11:56:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulUsE-0005aK-KJ
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 11:55:53 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulUso-0005d3-Gf
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 11:56:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754927743;
+ s=mimecast20190719; t=1754927779;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=7sR3GB6/Hiz8o4RPLLWcEmgPWUsWJ8UMocbuLxgkzVI=;
- b=Ai/82x4dnZmtBj7c9FsmWVLqYVww3iCJLXzUpRy2buTMath5phnDJQvg2z+9pxpkgisrK/
- Dh7yJ3w7WOhLEnPM+5mcxQXTRsu7a8/n1rlQUOERWNttx92RoQDeZZSJpHo95tUrsdyt+W
- vhhc6rZ7sEGo4w0zwR6hdQkLHhZaHT0=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QnUX4zT8RC8IuEkMjhNgAhmmUKIJkbduq5jYYnBF1wk=;
+ b=Y4QAMHIGNlHKErTGXmMhWZg7bXK5Ywqcne73xAC5Sknnd5pPSZJB+mN0HHY0353AQSnqj5
+ H5M1xbG4ZDGiy6KFGPz1KorkuHpv1yamCn5h5fvJviKEbG1O7B7BvrAdiWiFhnVZFPhXKg
+ RwxyShbvSnbWhJSSU9VKzkhPjcU9p48=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-_sWEyXSQNZ-2IodrxDI0Uw-1; Mon, 11 Aug 2025 11:55:42 -0400
-X-MC-Unique: _sWEyXSQNZ-2IodrxDI0Uw-1
-X-Mimecast-MFC-AGG-ID: _sWEyXSQNZ-2IodrxDI0Uw_1754927741
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4af14c04e5fso171928001cf.0
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 08:55:42 -0700 (PDT)
+ us-mta-513-bkeNWXC9Nky1JkVD5yygZg-1; Mon, 11 Aug 2025 11:56:17 -0400
+X-MC-Unique: bkeNWXC9Nky1JkVD5yygZg-1
+X-Mimecast-MFC-AGG-ID: bkeNWXC9Nky1JkVD5yygZg_1754927777
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7e667b614ecso975670985a.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 08:56:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754927741; x=1755532541;
+ d=1e100.net; s=20230601; t=1754927777; x=1755532577;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7sR3GB6/Hiz8o4RPLLWcEmgPWUsWJ8UMocbuLxgkzVI=;
- b=AVlfftxDKTgwhbwQc3wd1B1RKO6CDcW0vkrh98JbpuicLO0WFXXqmalXXLvmH3bigm
- lzvPnoGKmlEiJWh2hiqi6PzKBJGKhtWAc2Doociiyv6yuUddfRoAPfqQRx8TZHMZ1yMc
- rZMLYES6DkmoY8/vkwEqFaWyWp62dtmrBDOUkkqEZaflzgs3kFpRAfM9v9+a1lWVmFEJ
- 7SZnpPOgM+I04kBi7WWGLHKBGtpWgEL0KtocTlgWXVSFdcc2ZNSSsbONBM+R+I9e4D30
- BoLBOqcZjZ1XAyL/EIOe4g2LVjnDvYXVxlKIcvKCIu7/12adoarGCKHLlPPHCvxd8uDr
- DsgQ==
-X-Gm-Message-State: AOJu0YwcwnpCVWebTk73CwFzSbstUH4Lh088Q0jA4ImRcCzOJxRI4zoz
- lox3zho8CT+iA31T93VGIg59CxNr/brOsX5qX4xsCPc3gARwr6Y1TISbtQ+9nRa1YhY7J1JO7oP
- IDvK/KEoqJPYS1fQSPYMN0y8TGoAvZqrPMEOUlVDwv3st8g0SrXJggdho
-X-Gm-Gg: ASbGncsFPSauM1uCnVAIFC9IUpodcpZ7AjTPhqYX0KdYUgX5Yioz23BJ+hGo5gCELlI
- Lneyi5yLBOq9o5KFbhGisoEIanhZwWnSynbO/0FZO9okaFPdOAoFqrcmhc967vXc9RkOxpWt3Wq
- Sw1GcvnyYalPhWV7To1G9aut1DguqLG8WUNBWVYJwvfQVswpB8N8QNmaYr/53Oaq70igY5PIvcJ
- 0ejEFvflGcFs+9Qne1XO5E+IytfzUd1HWv6ze3ZOUCQvRXFwINaLxyF+8KIL9RQF11iRyYeR4pG
- qCPBgcUmnizG5Q1IEI7dj9R+YbtdQg4Z
-X-Received: by 2002:a05:622a:24a:b0:4b0:9814:e225 with SMTP id
- d75a77b69052e-4b0ecae2b94mr960371cf.0.1754927741357; 
- Mon, 11 Aug 2025 08:55:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdVRZByxt08WQfY8kxEQlFn5x+ocg9nriQOeynwHRd+LppBJIMyXY6kHwZHuAi9A4AW9Ks2g==
-X-Received: by 2002:a05:622a:24a:b0:4b0:9814:e225 with SMTP id
- d75a77b69052e-4b0ecae2b94mr959891cf.0.1754927740852; 
- Mon, 11 Aug 2025 08:55:40 -0700 (PDT)
+ bh=QnUX4zT8RC8IuEkMjhNgAhmmUKIJkbduq5jYYnBF1wk=;
+ b=JNaFTXFamn0ZxNfQrHH879/pOBsAB4zR3pUGHl6ni+ZcHqrgdXqe1SX9GFbqngxCAz
+ tEhQ2E6tu4EoM6odg61xyzCerzEAoFTJzWgwcLnFPqZ3wBf7w6ei0X8MPdSDux3n+Mny
+ rn0ODcGGvIva76h4yBsiNOHtbLy93pzx2U/kLrsDWYmW/rezaGNe08Y1b4C1hMsbqbdp
+ F1ULKZ28UoaPM4/GF98fd66be/drYmm2i1utfKHmL5WIKkWEyrkdiNuYH3qRwc/OAhcq
+ jstQArPsYOpGDhbig8BjmCpC1OG6ER7dyXd9OqmAJsqPcj9HRrpNTecpc2fLQ1pFBfcN
+ e0UA==
+X-Gm-Message-State: AOJu0Yz7IqM1d/rz9of2BKNkgH9hTXzI1mEEzPo9zJJcej3ehBe+bhVX
+ oIKTIo4JdLdsnGi4RkFXMjYC6higLtZYr3DafASOq93HbSW9jNBMAWlfFMN09hajzV1JodfPv6U
+ Eo9mSp98Q9PsSP6bz3+jTLIXwKy90WeanT4s4rj0NqLIfqXCTNfs7/bOb
+X-Gm-Gg: ASbGncuSA5XOOVvBQsqrlfKHLqvhfp0hSbwvsmwJA3UEkMrcZVDMG4Ngdc7cq/zGOic
+ XoTwEnMdD8UbkHO1lJc9BlsqkYZISgu2rdF7fPB5xi458UunDVPxcK375UV9esQ9OGu7+lWdbFA
+ zJWdSQdLe045dVC4T/1ssbmXpXQlujMhjtORDIJQk3x8Kfmn2NgSQ5v9HuyJkTrUkina7yfm2rT
+ yBA2obFMoDjr+ee/9nr//FPoD9NkSAitdfNlJsZmzJwz0fKBEb5aN4goxQwtliL9PxRchrraoGB
+ Bhali5/O617cP3QUL/KTgvbbGxllQgYQ
+X-Received: by 2002:a05:6214:3007:b0:709:6b30:355a with SMTP id
+ 6a1803df08f44-709d5e65ce1mr3766526d6.47.1754927777374; 
+ Mon, 11 Aug 2025 08:56:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHfJklpQPPJSzslzqMFTL2aEN0y7s0/j/dHB3VnJNyfmmzfjER3kNgc1T63cCSCmp1rYekBOA==
+X-Received: by 2002:a05:6214:3007:b0:709:6b30:355a with SMTP id
+ 6a1803df08f44-709d5e65ce1mr3766216d6.47.1754927776796; 
+ Mon, 11 Aug 2025 08:56:16 -0700 (PDT)
 Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b069ca56e5sm104104381cf.40.2025.08.11.08.55.39
+ 6a1803df08f44-7077ce39fb3sm156948796d6.82.2025.08.11.08.56.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Aug 2025 08:55:40 -0700 (PDT)
-Date: Mon, 11 Aug 2025 11:55:28 -0400
+ Mon, 11 Aug 2025 08:56:16 -0700 (PDT)
+Date: Mon, 11 Aug 2025 11:56:04 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
  david@redhat.com, philmd@linaro.org, mtosatti@redhat.com
-Subject: Re: [PATCH v3 02/10] acpi: mark PMTIMER as unlocked
-Message-ID: <aJoScE8-LraMm3TQ@x1.local>
+Subject: Re: [PATCH v3 03/10] hpet: switch to fain-grained device locking
+Message-ID: <aJoSlCDCy5IEZgko@x1.local>
 References: <20250808120137.2208800-1-imammedo@redhat.com>
- <20250808120137.2208800-3-imammedo@redhat.com>
+ <20250808120137.2208800-4-imammedo@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250808120137.2208800-3-imammedo@redhat.com>
+In-Reply-To: <20250808120137.2208800-4-imammedo@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -89,7 +89,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,17 +105,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 08, 2025 at 02:01:29PM +0200, Igor Mammedov wrote:
-> Reading QEMU_CLOCK_VIRTUAL is thread-safe, write access is NOP.
-> 
-> This makes possible to boot Windows with large vCPUs count when
-> hv-time is not used.
-> 
-> Reproducer:
->   -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4 -m 8G WS2025.img
-> fails to boot within 30min.
-> 
-> With this fix it boots within 2-1min.
+On Fri, Aug 08, 2025 at 02:01:30PM +0200, Igor Mammedov wrote:
+> as a step towards lock-less HPET counter read,
+> use per device locking instead of BQL.
 > 
 > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 
