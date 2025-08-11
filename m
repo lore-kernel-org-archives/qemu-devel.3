@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 332DEC87FDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 10:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83C4C87FDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 10:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulPtQ-0007FZ-FN; Mon, 11 Aug 2025 06:36:40 -0400
+	id 1ulPxq-0008RL-Ua; Mon, 11 Aug 2025 06:41:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulPtP-0007FM-Bj
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:36:39 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulPxp-0008QU-6t
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:41:13 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulPtM-0003yP-Ri
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:36:39 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3b8de193b60so2335135f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 03:36:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulPxm-0004rH-1s
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:41:12 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-454f428038eso38399235e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 03:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754908594; x=1755513394; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754908865; x=1755513665; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kdDsJTJgleMiXHv27Bjb4RqFU5padoh0Hu4nYN/RaBs=;
- b=aKJnmWkiB/ZfODfquunHJaW/A5IpKXUm9sgAsIXrLnQx0QuRkzH90ON1EQjZKOktvW
- eoz++Am3GtpJaM8YJ9O0BYtTsZMbDhCRrFX5DOtr4KSstjhz2MGh45F0i77/74v1eJeG
- 8L5k2B2Hc3FG4GcujbpFDvIn4xjYwA0ibIV6SX8IJ6Nlvk0WScFPQOlQ6dhTBWh415Vt
- +G3o7Zf+zAFRvdoopde8zgVFw/vkIYzd+csTV6dc0EnqrNcMiWq/mt5jchKnLUgvwiOQ
- TuiQeCJTbEj10FEhMffW8Il3y5DnmN0LLTh+CGoJ50G+SzYzrpXoa0vEKE3Ydycuu+v1
- utSA==
+ bh=f3242HSrf+maEBiFnxIJjp/97eu1oUsjXSoH1Q/0ZCc=;
+ b=cQIvqt7PAA2gzD+G1SsRFWMses9hLTXZX8LUL3YlhGV4WwqvNj04GVqs2M7I/KwjMA
+ opkznuakxSH1O2Z4rMC9yihlMZIe1RWfgVoNZWJjv7pAX+kIQUWqKLKIJ9edH+ESOP1Q
+ 4bj+QX0ug6IH3erFtXif1G3S7xFxyhICNpRs6Y47RtpUn2YUQYMg+0eruGCkCrkMa6ce
+ OEl1K/IhVW6L2Q0OvPZQ3pDhLJD0KNcNvJqu/lPWww3VBktWMxNAZfRg2iUYmSYnrhL6
+ KffxtR1UMAxYTfntZZAhe+CKG2hkO/mOMVv2r8+tho4T64Tuq2ilw6bWrsUL+8EcmdzM
+ aQzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754908594; x=1755513394;
+ d=1e100.net; s=20230601; t=1754908865; x=1755513665;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kdDsJTJgleMiXHv27Bjb4RqFU5padoh0Hu4nYN/RaBs=;
- b=egvA39vg1zlIOLDAsZJqdTSUtQH4WG8mNgZs17mqVkp9dvcAH7nmoxRRwyYgpxxOfQ
- TzFtdHYO5fDPhogFzXqU0NH5wsv3wJVmJnL37+UmabtTBhJRkpPIbpUO3G6YVwRUFvvt
- lzrnDt2OOiPoT9++5sAwb2UlWQMPlVqOJThSjoH/4FS+5LJEDQ2GhZ+9tQsj8Yn/k4Nq
- boMBdkzhtwIGu964e6/+UHTPxCb1Ypzvr7+dgEWWXiL6cMFChrOkSqmXEBL9VTM0iVM5
- CTZaC/xb7N9zWuTJNkbUKFBHeXE8DnjPSrc2tyor68f+1K+PgxD2VY5qRM58z/ZjHwU2
- nuOA==
+ bh=f3242HSrf+maEBiFnxIJjp/97eu1oUsjXSoH1Q/0ZCc=;
+ b=YERvHxS20rlOH8obBjQBuudXRkqHlbki+2Z3pDSUWsnp/Mv8IbqkG6h49OYVv1Nyxi
+ 3M4aMbFtEY8YC9FI5kcdS5XeYu12zbXZER2mlzVYSAyLQcV5Z8TY1G4AKMs/R9XliljI
+ dmhpMQpt0faL6Da1tiNdBMFUFXRpkRpKG567Ktr2Wis+9EfLu2qr5DfOCdPoVvP1YDWk
+ 21CJJXdYFR7XCKGXnWLzD6i05O5th1Y/eQIkV/WZc4srvS4cnWVxx1Uue0agsIPvQzqO
+ pudQaG4zlmG+d0bof8+dBltCfmNG46bQA/mEOx9thHSlh6CZ3e44jOC79hYwFQw/bWKL
+ w7Tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWwlxaQJQxoU+WTWJEq57OXrypZmleQnNadzPNrdHZBDuLroFyVk4DSddEly2tg0khRyHjSgjvLq35k@nongnu.org
-X-Gm-Message-State: AOJu0YyV/NBX6pm04VZegPIpaGugrbDWFP1T45xrWc1uZzDQ674yec9W
- 9xCd0/LKFnp/8oMWIrb4M1FUQFRrESfeepSDt2IiQuYatm6IlRBNg5mCwbXC8gZbj1WMLuYmp6r
- mMjDJ
-X-Gm-Gg: ASbGnctT0Je5DDiZe0bby8SGPcv5osxV8ep9WbblEGhzQXZRs7uTLKWnbQ0tYfzmR9M
- i+8FdAkN1E9Z0ASzLmCajUAoGNh8FRGVIoaHENGLKiygl4IVyEPnnrbebmf0E5gi/KRBpPZLO3S
- xik/vU7LWvVYbEUSFy10dczH2qxnV+AfMOXJq6KiAGScNBxvbe37F9TyRVBDkY7g54fwJyCpdt9
- WlqMqQKCH83mUhdot1whcIaowzkhIZxSQ1SHmUTpBayc88a6sLc59fwWgoupGcnTxFHs7OISnmA
- Tcj8RINGJ8nfGbNlh3Ka21UnuUVOCc+CPfqyoj8psRedRVxiTjYFu7bZDaQ7gfY/IPjWGBaGCfN
- QGTYKI1emhIELsf9UlAtbmGUrSdNROl0xAfE50sdQMJnTp2erb1uVuN7qrY9+HrkmlQ==
-X-Google-Smtp-Source: AGHT+IE7NSK3IcDsKvgs/lTqux405OnJ5h41TFRzxg9y3Ir0AXK5whQ+TsyBj3jxayYC+aofHtYtQQ==
-X-Received: by 2002:a5d:5886:0:b0:3a4:fbaf:749e with SMTP id
- ffacd0b85a97d-3b900b50a59mr9432627f8f.49.1754908593863; 
- Mon, 11 Aug 2025 03:36:33 -0700 (PDT)
+ AJvYcCU84MXAHhjOmVyXF18Qwe6gN1RNTtzGKBrZ7NW/DEe/e6ftq6miBr9ES2me6qtg9FvtR4MmyzGUR9ea@nongnu.org
+X-Gm-Message-State: AOJu0YwZsEwr0ut7fklfxwQvQGTiMuXgygpsjAR5Yqiw3/y8v1CPlX+9
+ CKdIEfyeTNjURdL53aBjlO9GWN0+uKF0XV0rfG98JyROnewgKD3xIprkDW8KoMVn0eQ=
+X-Gm-Gg: ASbGncum4kQ1VauJzpp8fdayDX1Q9go5CrQdmIhuuKbaSpW7cbu/srPfoTuOPFjDY3S
+ 26yHWCnMQw0ypWtqRPSQ7MjR07S6kDqZvYmTlMkwhAIHYJQloX/WkN4K4sh6Owm0/zB1O6HEg3/
+ jz6XEz1aR0Urjzg1s6fBZyy58/zoOXzthDvOe6sCC1LBUL7VJqCB+9Ty9oZUlsOY9h85b3okwIe
+ VEhjTFP43w3I580dywcuwHWR1OTrFGEiMIUuitdb2CG0OjoPu9Ui+XMuXowtVjSUfwkgT0IAe7Z
+ J8DUV8Fl314iAVxX3818vAE3LnIV1SDK56k7bomi4tf89DZTTJQB1AAHYywxsrfGTo/U3N3YG3m
+ pLT6E2j4cQuBiwXHquvG033K0bJDMKCawUjYKUA0OMseCdNiwC10X247ZK8SklNf1JQ==
+X-Google-Smtp-Source: AGHT+IHDOfv8bk13Er32V5qJi5p0Tev/TKIgt77Rqllo3oJoK7O2WDdGr0qNDpSoeeJ+eeK6nr5wbA==
+X-Received: by 2002:a05:600c:354a:b0:43c:f8fe:dd82 with SMTP id
+ 5b1f17b1804b1-459f4f0f57fmr116790005e9.18.1754908865308; 
+ Mon, 11 Aug 2025 03:41:05 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459ebede65asm201496705e9.8.2025.08.11.03.36.32
+ 5b1f17b1804b1-459e0cd2c90sm296408435e9.17.2025.08.11.03.41.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 03:36:33 -0700 (PDT)
-Message-ID: <09b9cd96-6542-4ef2-8e78-41d70ccf9840@linaro.org>
-Date: Mon, 11 Aug 2025 12:36:32 +0200
+ Mon, 11 Aug 2025 03:41:04 -0700 (PDT)
+Message-ID: <61a78e65-4164-49a2-8ce4-d95730b10eaa@linaro.org>
+Date: Mon, 11 Aug 2025 12:41:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/12] hw/cxl: Convert cxl_fmws_link() to Error
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, marcandre.lureau@redhat.com,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-References: <20250808080823.2638861-1-armbru@redhat.com>
- <20250808080823.2638861-4-armbru@redhat.com>
+Subject: Re: [RFC 05/11] hw/arm/smmuv3: Support secure event queue and error
+ handling
+To: Tao Tang <tangtao1634@phytium.com.cn>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chen Baozi <chenbaozi@phytium.com.cn>
+References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
+ <20250806151134.365755-6-tangtao1634@phytium.com.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250808080823.2638861-4-armbru@redhat.com>
+In-Reply-To: <20250806151134.365755-6-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,26 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 10:08, Markus Armbruster wrote:
-> Functions that use an Error **errp parameter to return errors should
-> not also report them to the user, because reporting is the caller's
-> job.  When the caller does, the error is reported twice.  When it
-> doesn't (because it recovered from the error), there is no error to
-> report, i.e. the report is bogus.
+On 6/8/25 17:11, Tao Tang wrote:
+> Following the implementation of the secure command queue, this commit
+> introduces the infrastructure for reporting faults and events back to
+> secure software.
 > 
-> cxl_fmws_link_targets() violates this principle: it calls
-> error_setg(&error_fatal, ...) via cxl_fmws_link().  Goes back to
-> commit 584f722eb3ab (hw/cxl: Make the CXL fixed memory windows
-> devices.)  Currently harmless, because cxl_fmws_link_targets()'s
-> callers always pass &error_fatal.  Clean this up by converting
-> cxl_fmws_link() to Error.
+> The secure event queue is now enabled, serving as the primary mechanism
+> for the SMMU to report translation faults and other architected events.
 > 
-> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> For more critical failures, such as an abort on an event queue write,
+> the SMMU_S_GERROR registers are also added. Finally, SMMU_S_IRQ_CTRL
+> is wired up to control interrupt notifications for both the event
+> queue and these global errors.
+> 
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
->   hw/cxl/cxl-host.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
+>   hw/arm/smmuv3-internal.h | 38 ++++++++++++++-----
+>   hw/arm/smmuv3.c          | 82 +++++++++++++++++++++++++---------------
+>   hw/arm/trace-events      |  2 +-
+>   3 files changed, 81 insertions(+), 41 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> -static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s)
+> +static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s, bool is_secure)
+>   {
+> -    return FIELD_EX32(s->irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
+> +    if (is_secure) {
+> +        return FIELD_EX32(s->secure_irq_ctrl, S_IRQ_CTRL, EVENTQ_IRQEN);
+> +    } else {
+> +        return FIELD_EX32(s->irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
+> +    }
+>   }
+
+Or using bank as suggested in patch #1:
+
+    static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s,
+                                                 unsigned idx)
+    {
+        return FIELD_EX32(s->bank[idx].irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
+    }
+
 
 
