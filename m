@@ -4,122 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44DB7CA0ECD
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 15:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3304CA0ECD
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 15:44:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulUHP-0000lA-8t; Mon, 11 Aug 2025 11:17:43 -0400
+	id 1ulUgP-0006iU-HM; Mon, 11 Aug 2025 11:43:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ulUHF-0000jf-Jz; Mon, 11 Aug 2025 11:17:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1ulUHC-0007gf-LF; Mon, 11 Aug 2025 11:17:33 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57B95vKL023799;
- Mon, 11 Aug 2025 15:17:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=a4V/h7w5IGRNK+00AdBSa7FEIxAE53em51iG0G00REk=; b=PgFH30+oH70p
- P6t6uTCST3t/2fFcLk/803poMHwsKLgg0R1pRWCVYbe6Zk+rktGTOrsCbljSjNOi
- HcKH/8Qy3eVheRbzPrUEZv6ix8IP77wa/EUGX0il4yzE352yXWPNtEaRPjj5Hgwl
- r61q62yWBO3ZRHfiyRciEuU7alpI5peNrPB5LJQVq/HgYW4JRTSt9eWmUvdwX56x
- cIU8U4nRwIIVbTwa7a52p+4Wx5lKUAt93s/bkXluUR8Y8ynarOpeBt8pVpHNa3aC
- 6hNjQVVahIBKJHJJTZmSQ2ahbwJpYSYhgpaXrYI5F9WeytTWk0TCyA/6JuuIO0ie
- fPt9pmZAPA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dvrnsu3q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Aug 2025 15:17:10 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57BFGbRn020180;
- Mon, 11 Aug 2025 15:17:09 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dvrnsu3k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Aug 2025 15:17:09 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57BEU6o0020615;
- Mon, 11 Aug 2025 15:17:08 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48ehnppcts-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Aug 2025 15:17:08 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57BFH77Q5964318
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 Aug 2025 15:17:07 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 66C7258067;
- Mon, 11 Aug 2025 15:17:07 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E81C15805E;
- Mon, 11 Aug 2025 15:17:06 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 11 Aug 2025 15:17:06 +0000 (GMT)
-Message-ID: <145a086f73ac33d11bbeb51157de3f14a6982f2b.camel@linux.ibm.com>
-Subject: Re: Access to remote XIVE2 units (was Re: [PATCH v9 0/7] Power11
- support for QEMU [PowerNV])
-From: Miles Glenn <milesg@linux.ibm.com>
-To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, Aditya Gupta
- <adityag@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, Harsh Prateek Bora
- <harshpb@linux.ibm.com>, Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, gautam@linux.ibm.com, kowal@linux.ibm.com
-Date: Mon, 11 Aug 2025 10:17:06 -0500
-In-Reply-To: <04eb08b6-b787-47f3-86b7-b2d3a0f50ed6@redhat.com>
-References: <20250808115929.1073910-1-adityag@linux.ibm.com>
- <baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com>
- <yo6uk5z6dlq4jlk5hsaoyhymozdpo6ijpq5bz4fipkf5ftws4b@um57vsttgf65>
- <wdkarichs5jrmpz3k4gxosw42dt6qxwodnc6t6tcuecsmxgqcd@km4q644fiixb>
- <04eb08b6-b787-47f3-86b7-b2d3a0f50ed6@redhat.com>
-Organization: IBM
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1ulUgN-0006ho-Lg
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 11:43:31 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1ulUgH-0003Uk-65
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 11:43:31 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-6157c81ff9eso6874265a12.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 08:43:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1754927001; x=1755531801; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=qmN1qsKAFo4bJ21o8YBT6ZRNkg/AYUdzkGNlVV8ejKU=;
+ b=FuCWzORHY4z9hf+aZ5pr3haWh5FK6UsDNv6+y5XqqwjdnOmZ0qtOELGscvkHKQV/o3
+ AOe1i48Yc01cOpaUvRpby/aL1Z970E4mPjgCb3oxDf1O1Yml59KiL8M21pBI5Vs5kzcr
+ N6MXLZ001Vft4Q3FCyXyNU6J69AadQzW1ZC5G2m5o3wQvyK537D9xtMq2480nFNDIfXP
+ hf83eh8iRync36yFZxAp97j0F65XHvxx68YqfiPO05zrhLtKF7u6niaNl51B3oubZBgH
+ rg2pN40M3iXO/gLc6/KUHkuX/f2E+DPcwX48JYT/sy3Glo6KBPeAL3cTxkN0dDKV7ro6
+ R1eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754927001; x=1755531801;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qmN1qsKAFo4bJ21o8YBT6ZRNkg/AYUdzkGNlVV8ejKU=;
+ b=IGJYoWmvTi4IX9CtaFXz26HnrcqFFsu1l1LzJicJ+SsGmYNocy6IRInhQoV7fDNRtW
+ gc8cfsyz++QL5RxV5OXUoa9/qTac/TBBy3pPY0n7bJ2n9V8EJJq0eGKjQdTei4SFtOW/
+ /qf9/RA+lOBzHUi86YkRux+9DBHiOtNWlPm+Cj3l9q3cM3DRIZ5rr7dC8Ofg1NfnDN+L
+ ho+XwvTOL7kc6JLkPVXFHIebns1Qi8dsClbvwUU1uVZanhFvkr6LFnka0OOaQWLFVWNS
+ kjE4EZH9vbkh5ORBVDtgKn2GhmI4K6dNnZN1jhoH4g5Jgute/ytuxCpJlD9loor3Mmet
+ d8XQ==
+X-Gm-Message-State: AOJu0YyL0aThwHO3yqhV/dRESBbsFVWGppmrcC6O++BSnIo7cYxwpNFg
+ WfmglE4S7UruaOT+gA+bY2r+nsxqntFCvWPrk22xV7RdOWMBSsZRDxSx0orT6TLHAFcfqSG/gV4
+ XT7fVoW/pdsL3jvcS3hVDW6QJwOfCAf4=
+X-Gm-Gg: ASbGncu6Q2vzcTlhV77Y6E7hqOU/hy+9ffT8+QBN9/Mha3Vvdu7IHHPYORBYpEpcZoH
+ 4NMwr4BgVRqikAMLGJ6oqnuhkfVr5/uM2g/viaa8kg7mpBdNNAfKyCAw80zAFSZ74LhKSYZUkd/
+ kAdGdP4mqeoSjuJTxjpgtxK26f3mx1q292JHdQHeimEaFIq9oEix1GchRAceQA8BJhqeQzhcGwP
+ qlQMQ==
+X-Google-Smtp-Source: AGHT+IHewPeFz2Y7vDOb0QUflhm5LCRnNMZ2ndcyGH5LOi2awTLhITF2qiwYhEl3EcbaCsoyH8Rg1/jq5kiAU/LRsTc=
+X-Received: by 2002:a17:907:6d22:b0:ae0:d332:f637 with SMTP id
+ a640c23a62f3a-af9c64bede8mr1359349466b.31.1754927001107; Mon, 11 Aug 2025
+ 08:43:21 -0700 (PDT)
+MIME-Version: 1.0
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 11 Aug 2025 11:43:09 -0400
+X-Gm-Features: Ac12FXwQQIDgx_O9KJ9KqlO4k89sEjL3jEcNBkkxJ3whbgIhztVG0c87obfXrk0
+Message-ID: <CAJSP0QUgej+GPQAcot0H19hGvuAwtA1DXmbRScSXw=h3+vOHGw@mail.gmail.com>
+Subject: [QEMU v10.1 blocker] PCI hotplug test for aarch64 broken
+To: Gustavo Romero <gustavo.romero@linaro.org>,
+ Alex Bennee <alex.bennee@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA5NSBTYWx0ZWRfX5ao2nUwJS+m+
- gflM7W46/nr+I9pdUxxLSV0IuwDilHorbBQqTsmfQksTXVWrgml4DVCcBpNkMFUSSMmZPEbsFq5
- uBjSsGrC9GgL24Z1EKld2/yDt0Q4URVjBRCIomN2HRME5S3cZv3R7p8Qxo0P7xdG7rkdi/JRaDo
- Vn8uKnu2m0vWoF40Rfg6RDd8kswF5PZy6q+YiqL3WDe0An8ZMD6Zo8wzcuRqhNKMVoqc0UiY17H
- wWvUtcHrihgDrwHmETgNaoDn/A0cay2NkWoLKYSnGm9s/rJIQYVs4MrGNW2RR7WsstbrUzDoRpT
- B2HzFGz96Lgv+ccMDgrJbrbyKF+YEvMSoue5saKWYugu83R99CfIVLt+27rAK30TyNIuePpKj8b
- 9q+9FRGDTJszqpE3tErlk/DgywmEe8mGRqj1a7Y7DDAtT22/mwJlYwfreqsqGpvVcCxs7kMg
-X-Authority-Analysis: v=2.4 cv=GrpC+l1C c=1 sm=1 tr=0 ts=689a0976 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=GckNcg_KGMA48mpdwiYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: gq7kTDOWNnb6P-zSx7pDVPLiWf_mGSiP
-X-Proofpoint-ORIG-GUID: I4LkSQwGlpqC6uY_ACMBnASwe4zSNWCq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-11_03,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0 mlxlogscore=999
- malwarescore=0 clxscore=1015 adultscore=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508110095
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,88 +87,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Mike Kowal
+Hi Gustavo and Alex,
+The PCI hotplug test for aarch64 is no longer working because the
+Debian installer URL is 404:
+https://gitlab.com/qemu-project/qemu/-/jobs/10981291922#L1129
 
-On Sun, 2025-08-10 at 14:46 +0200, Cédric Le Goater wrote:
-> + Glenn
-> + Gautam
-> 
-> On 8/10/25 12:45, Aditya Gupta wrote:
-> > On 25/08/10 12:26PM, Aditya Gupta wrote:
-> > > > <...snip...>
-> > > 
-> > > About the error, seems xive2 always expecting powernv10 chip, I will
-> > > have to rethink how should I use the same xive2 for powernv11.
-> > > 
-> > 
-> > There's a type cast to Pnv10Chip in 'pnv_xive2_get_remote'.
-> > The cast is only temporarily used to get the 'PnvXive2' object in the
-> > Pnv10Chip.
-> > It's the only place in hw/intc/pnv_xive2.c assuming Pnv10Chip object.
-> > 
-> > Thinking to have a helper function to just return the 'PnvXive2' object
-> > inside the chip, given a 'PnvChip'.
-> > 
-> > Or the below change where we are adding another pointer in PnvChipClass:
-> > 
-> >      diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-> >      index e019cad5c14c..9832be5fd297 100644
-> >      --- a/hw/intc/pnv_xive2.c
-> >      +++ b/hw/intc/pnv_xive2.c
-> >      @@ -110,8 +110,8 @@ static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
-> >           int i;
-> >       
-> >           for (i = 0; i < pnv->num_chips; i++) {
-> >      -        Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
-> >      -        PnvXive2 *xive = &chip10->xive;
-> >      +        PnvChipClass *k = PNV_CHIP_GET_CLASS(pnv->chips[i]);
-> >      +        PnvXive2 *xive = k->intc_get(pnv->chips[i]);
-> >       
-> >               /*
-> >                * Is this the XIVE matching the forwarded VSD address is for this
-> > 
-> > Which one do you suggest ? Or should I look for another way ?
-> > 
-> > I am preferring the first way to have a helper, but both ways look hacky.
-> 
-> Any call to qdev_get_machine() in device model is at best
-> a modeling shortcut, most likely it is a hack :
-> 
->    /*
->     * Remote access to INT controllers. HW uses MMIOs(?). For now, a simple
->     * scan of all the chips INT controller is good enough.
->     */
-> 
-> So all these calls are suspicious :
-> 
->    $ git grep qdev_get_machine hw/*/*pnv*
->    hw/intc/pnv_xive2.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->    hw/pci-host/pnv_phb.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->    hw/pci-host/pnv_phb3.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->    hw/ppc/pnv.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->    hw/ppc/pnv.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->    hw/ppc/pnv_chiptod.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->    hw/ppc/pnv_chiptod.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
->    hw/ppc/pnv_lpc.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-> 
-> In the particular case of XIVE2, the solution is to rework
-> pnv_xive2_get_remote() like it was for P9. See b68147b7a5bf
-> ("ppc/xive: Add support for the PC MMIOs").
-> 
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> 
-> 
-> 
-> 
-> 
+QEMU v10.1.0-rc3 will be tagged tomorrow and this may be the final
+release candidate. Please send a patch with a working Debian installer
+URL so the QEMU test suite passes.
 
+If no permalink exists then I will revert commit 374a245573b8
+("tests/functional: Add PCI hotplug test for aarch64") for QEMU
+v10.1.0-rc3 and a long-term solution can be found during the 10.2
+development cycle.
+
+I have created a GitLab issue to track this release blocker:
+https://gitlab.com/qemu-project/qemu/-/issues/3073
+
+Thanks for your help!
+
+Stefan
 
