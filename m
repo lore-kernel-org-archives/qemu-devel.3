@@ -4,59 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A23FC87FD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 14:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F45CC87FDB
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 14:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulTfo-0005XU-9F; Mon, 11 Aug 2025 10:38:52 -0400
+	id 1ulTpy-0000mA-TS; Mon, 11 Aug 2025 10:49:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ulTfl-0005XI-Ur
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 10:38:49 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ulTfc-0000H1-US
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 10:38:49 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c0xyM6SHkz6L5cs;
- Mon, 11 Aug 2025 22:35:55 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 775781402EF;
- Mon, 11 Aug 2025 22:38:30 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 11 Aug
- 2025 16:38:30 +0200
-Date: Mon, 11 Aug 2025 15:38:28 +0100
-To: <shiju.jose@huawei.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, <armbru@redhat.com>, 
- <dave@stgolabs.net>, <linuxarm@huawei.com>
-Subject: Re: [PATCH v6 8/8] hw/cxl: Add emulation for memory sparing control
- feature
-Message-ID: <20250811153828.00003283@huawei.com>
-In-Reply-To: <20250811085530.2263-9-shiju.jose@huawei.com>
-References: <20250811085530.2263-1-shiju.jose@huawei.com>
- <20250811085530.2263-9-shiju.jose@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ulTpw-0000ld-OE
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 10:49:20 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ulTpu-0002K4-JD
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 10:49:20 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-459ddb41539so14487305e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 07:49:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754923754; x=1755528554; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QlnwM1s2LkmZdHuBiI3g4Df8D/rN/BVg3y9iRwVJsP8=;
+ b=Yn4Ha9OcACAY5ToX2Fx6bGiFZQSSM4myz6E8EwGm8gwb4tiryx98k75qMUbs7VntSB
+ qJYAQlj51GlEFcOj6Vfmm6RfwjEzDNGUV1Uvtxl5FiaokIflz2eiNzp6cNk26ofdvZzg
+ 4I5Cp6p7uJqClWju1NJGkdxc4wKJOaMcr7gVbFTOCoPE6zVtuXy+kWNcqFIucCB5E9yh
+ NVqPkSgg1qvYybeUAd8YOpWukkqClBs+y/2/ZZNhQmsVSqq/4dCFiIaTFOt8vgbQjsp/
+ nyojSw08eevMPLCqOEv8Z61XIHiRyrRn2+J4Iigv2XpWJmNYxC4dqFQzwgZZIb52tT9l
+ nIjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754923754; x=1755528554;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QlnwM1s2LkmZdHuBiI3g4Df8D/rN/BVg3y9iRwVJsP8=;
+ b=Xb/LHY2y1e67IkHwI55+IKtt4coT8fPf5UPlvZjJbtfP8KK3d81Y6VSWcd3GDvRCrO
+ 3NZXpJ4dwUwBDvSZz6YSuAoLA9UUGS3lluy9fDfw5NdjckfvOzbZtIWNr5YH/IVSvt7K
+ OA+nmyu63qJTcysCc5DkBCsx0u5iOHcwuZwb15P/zFy20IdpOnuVqKv0JsMFcJzIMskZ
+ UkgWrAp83L4TNu32sKLgt+631gshJGDIwLCnLYN7kAZnovTCNziw+lOyFXMGTIW7Xuob
+ 7vEAEA8cd/eLaUDfEFALJZ7WtB3g1khamp4a8g0ii5lw9gFR1edhcDQ5w3vsq3Mu0DSU
+ ESNA==
+X-Gm-Message-State: AOJu0YxmFZ8V57rH47jiLS9iXFnNmItdIryskbVQTt2QWv2o/x0+B8rL
+ gBj4VDOyYR6PE2uPUfSN/4a/9wHOKrplHb3mHgNpJgwXxrPPbg7z6cjP55oirS9P+vA=
+X-Gm-Gg: ASbGncuY6gqgkbEEW0RSyK1KLTrKiLejoUR2OF0sZi7d87SNIv6ZovVifopQgx1SqOl
+ KRvATRr6cCTTj1ddLQUb4W61ZhSc+FidM5AQBTozVxK9+tm0tv82bBfzALLFuqEO1o4XSFxcq/c
+ VPPqvwbvSDg2iM3W6e2FObSDS5xpqb/nQbNPv2FK0fv53KVKigXE3nEsEbYrCmLbmgGVmwBwwf8
+ FJP7MGlmZ5Fn5aB1Da8QURnOZeP95GOPy1YlCl1SReUT5yKyheANBFvyn5QcQN1pV5RcOgHMch+
+ QTHfptqbP2I2P+BTbU9wc4KR3CyMxHzjmA2QzF+fsn13mF79duX7Q4GXSqsI3kN1ZxmKg8AH7JP
+ VWDTjyWYuwdTiffRY2/FeJeo=
+X-Google-Smtp-Source: AGHT+IEgCrDPw6rvywmS8o19SYjMMTNe8gUAjuMIiimXLsyGYkaWcvlHchBvOzq5ft/eCER/2KDOEg==
+X-Received: by 2002:a05:600c:c1d7:20b0:459:e440:61c7 with SMTP id
+ 5b1f17b1804b1-459f4f3b4b1mr83385375e9.31.1754923754466; 
+ Mon, 11 Aug 2025 07:49:14 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e0cd2c90sm306189205e9.17.2025.08.11.07.49.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Aug 2025 07:49:13 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B9AF75F834;
+ Mon, 11 Aug 2025 15:49:12 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  imammedo@redhat.com,
+ richard.henderson@linaro.org,  peterx@redhat.com
+Subject: Re: [PATCH 3/8] accel: use atomic accesses for exit_request
+In-Reply-To: <20250808185905.62776-4-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Fri, 8 Aug 2025 20:59:00 +0200")
+References: <20250808185905.62776-1-pbonzini@redhat.com>
+ <20250808185905.62776-4-pbonzini@redhat.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Mon, 11 Aug 2025 15:49:12 +0100
+Message-ID: <87zfc5c3rr.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,142 +102,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Aug 2025 09:55:30 +0100
-<shiju.jose@huawei.com> wrote:
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> From: Shiju Jose <shiju.jose@huawei.com>
-> 
-> Memory sparing is defined as a repair function that replaces a portion of
-> memory with a portion of functional memory at that same DPA. The
-> subclasses for this operation vary in terms of the scope of the sparing
-> being performed. The Cacheline sparing subclass refers to a sparing
-> action that can replace a full cacheline. Row sparing is provided as an
-> alternative to PPR sparing functions and its scope is that of a single
-> DDR row. Bank sparing allows an entire bank to be replaced. Rank sparing
-> is defined as an operation in which an entire DDR rank is replaced.
-> 
-> Memory sparing maintenance operations may be supported by CXL devices
-> that implement CXL.mem protocol. A sparing maintenance operation requests
-> the CXL device to perform a repair operation on its media.
-> For example, a CXL device with DRAM components that support memory sparing
-> features may implement sparing Maintenance operations.
-> 
-> The host may issue a query command by setting Query Resources flag in the
-> Input Payload (CXL Spec 3.2 Table 8-120) to determine availability of
-> sparing resources for a given address. In response to a query request,
-> the device shall report the resource availability by producing the Memory
-> Sparing Event Record (CXL Spec 3.2 Table 8-60) in which the Channel, Rank,
-> Nibble Mask, Bank Group, Bank, Row, Column, Sub-Channel fields are a copy
-> of the values specified in the request.
-> 
-> During the execution of a sparing maintenance operation, a CXL memory
-> device:
-> - May or may not retain data
-> - May or may not be able to process CXL.mem requests correctly.
-> These CXL memory device capabilities are specified by restriction flags
-> in the memory sparing feature readable attributes.
-> 
-> When a CXL device identifies error on a memory component, the device
-> may inform the host about the need for a memory sparing maintenance
-> operation by using DRAM event record, where the 'maintenance needed' flag
-> may set. The event record contains some of the DPA, Channel, Rank,
-> Nibble Mask, Bank Group, Bank, Row, Column, Sub-Channel fields that
-> should be repaired. The userspace tool requests for maintenance operation
-> if the 'maintenance needed' flag set in the CXL DRAM error record.
-> 
-> CXL spec 3.2 section 8.2.10.7.2.3 describes the memory sparing feature
-> discovery and configuration.
-> 
-> CXL spec 3.2 section 8.2.10.7.1.4 describes the device's memory sparing
-> maintenance operation feature.
-> 
-> Add emulation for CXL memory device memory sparing control feature
-> and memory sparing maintenance operation command.
-> 
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Hi Shiju,
-
-A few comments inline.  I'll fix up whilst applying to the CXL staging tree.
-
+> CPU threads write exit_request as a "note to self" that they need to
+> go out to a slow path.  This write happens out of the BQL and can be
+> a data race with another threads' cpu_exit(); use atomic accesses
+> consistently.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/cxl/cxl-mailbox-utils.c  | 317 +++++++++++++++++++++++++++++++++++-
->  hw/mem/cxl_type3.c          |  44 +++++
->  include/hw/cxl/cxl_device.h |  33 ++++
->  include/hw/cxl/cxl_events.h |   5 +
->  4 files changed, 395 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 254154ceda..a3ab3b48f2 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
+>  accel/tcg/tcg-accel-ops-mttcg.c   | 2 +-
+>  accel/tcg/tcg-accel-ops-rr.c      | 4 ++--
+>  hw/ppc/spapr_hcall.c              | 6 +++---
+>  target/i386/kvm/kvm.c             | 2 +-
+>  target/i386/nvmm/nvmm-accel-ops.c | 2 +-
+>  target/i386/nvmm/nvmm-all.c       | 2 +-
+>  target/i386/whpx/whpx-all.c       | 6 +++---
+>  7 files changed, 12 insertions(+), 12 deletions(-)
 
-> +static void cxl_create_mem_sparing_event_records(CXLType3Dev *ct3d,
->                              uint8_t maint_op_class, uint8_t maint_op_sub_class,
-> -                            CXLMaintenance *ent)
-> +                            CXLMaintenance *ent,
-> +                            CXLMemSparingMaintInPayload *sparing_pi)
->  {
->      CXLEventSparing event_rec = {};
->  
-> @@ -1615,6 +1852,31 @@ static void cxl_mbox_create_mem_sparing_event_records(CXLType3Dev *ct3d,
->              strncpy((char *)event_rec.component_id, (char *)ent->component_id,
->                      sizeof(event_rec.component_id));
->          }
-> +    } else if (sparing_pi) {
-> +        event_rec.flags = CXL_MSER_FLAGS_QUERY_RESOURCES;
-> +        event_rec.result = 0;
-> +        event_rec.validity_flags = CXL_MSER_VALID_CHANNEL |
-> +                                   CXL_MSER_VALID_RANK |
-> +                                   CXL_MSER_VALID_NIB_MASK |
-> +                                   CXL_MSER_VALID_BANK_GROUP |
-> +                                   CXL_MSER_VALID_BANK |
-> +                                   CXL_MSER_VALID_ROW |
-> +                                   CXL_MSER_VALID_COLUMN;
-> +        event_rec.res_avail = 1;
-> +        event_rec.channel = sparing_pi->channel;
-> +        event_rec.rank = sparing_pi->rank;
-> +        if (sparing_pi->flags & CXL_MEM_SPARING_FLAGS_NIB_MASK_VALID) {
-> +            __builtin_memcpy(event_rec.nibble_mask, sparing_pi->nibble_mask,
+Could you please update include/hw/core/cpu.h with a doc patch to
+describe exit_request and note it should be read/written with qatomic
+primitives please.
 
-Why not memcpy()?
-Also, wrong size - should be sizeof(sparing_pi->nibble_mask);
-
-
-> +                             sizeof(uint32_t));
-> +        }
-> +        event_rec.bank_group = sparing_pi->bank_group;
-> +        event_rec.bank = sparing_pi->bank;
-> +        event_rec.column = sparing_pi->column;
-> +        __builtin_memcpy(event_rec.row, sparing_pi->row, sizeof(uint32_t));
-
-As above.
-
-> +        if (sparing_pi->flags & CXL_MEM_SPARING_FLAGS_SUB_CHANNEL_VALID) {
-> +            event_rec.sub_channel = sparing_pi->sub_channel;
-> +            event_rec.validity_flags |= CXL_MSER_VALID_SUB_CHANNEL;
-> +        }
->      } else {
->          return;
->      }
-
-
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index 959049aa46..59f8fa7c24 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-
-> +#define CXL_MEMDEV_SPARING_GET_FEATURE_VERSION    0x01
-> +#define CXL_MEMDEV_SPARING_SET_FEATURE_VERSION    0x01
-> +#define CXL_MEMDEV_SPARING_SAFE_IN_USE_FLAG    BIT(0)
-> +#define CXL_MEMDEV_HARD_SPARING_SUPPORT_FLAG    BIT(1)
-> +#define CXL_MEMDEV_SOFT_SPARING_SUPPORT_FLAG    BIT(2)
-Odd alignment. If going for aligned values, make sure they all
-align fully.  This seems to be 4 spaces, which doesn't relaly
-help anything.
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
