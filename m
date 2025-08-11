@@ -4,100 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23342CA0EC0
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 08:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9459CA0EC1
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 08:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulO5E-0001Kp-Eb; Mon, 11 Aug 2025 04:40:44 -0400
+	id 1ulOKL-00045H-8K; Mon, 11 Aug 2025 04:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulO5B-0001J5-Ax
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 04:40:41 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulO56-0001NY-W5
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 04:40:40 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3b79bddd604so2338160f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 01:40:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754901633; x=1755506433; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ffjF7I2ZBv2NWGWQJc47leyaSP9XZxx8N0jxMVN2420=;
- b=t69e0AjTvZDmYfHcIqKgJ9XH0rbkCy02HzA/uNJfKrVl+4czfVIbyn93Mi76WjuTAZ
- omkh/wfgcPb7zyVHmjrBDqiNXrHwhhoW9zweYZ4gQUEx8KpYEYWj5u2xqIJMtll+FLdJ
- FjV0S6UiyxU2tDixNxgdDacqACS7OUcdTVohRvHB87zji7F/jg74MbyoBpaheeFelH8E
- n3sUo0qCxjNEe09JcfH2JEfUA+SJlNqq3YyceTXxp8jUDyHz4F4Ed1h1kJoGtSE6ADlN
- tzr03+zSQ0YUlWVj50nkljQcBaYUnkNwfiOqlDVgIvriO6T2NiE2jPN8LwjGbW8J8JLC
- qhcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754901633; x=1755506433;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ffjF7I2ZBv2NWGWQJc47leyaSP9XZxx8N0jxMVN2420=;
- b=qqkrdXj2gg2wr61RdY5+4/X7zn6uVzKkWCF0Fn44oeUri8VijpDIaE5GwzGHTkIOom
- Q1+JHMR8RdisO2Cwo6OpsQLLkZewhIqKq24HYl1+3lYPxlM8n/FdsAg8Tu9yOCzqWjym
- aQwysaGZTkVsWKEmQucX85+8Ou5ar6ipwL0/vH4XaLubbj55cZYKEcCfbKt9w1DLuPFx
- bXZQWCBreMQMf66kiz3bZR2tfTb7Xs3DXy+LIzGgm9UZCh7NXl1FgEdhLwUrtz2j+GVW
- FpL2SRh7IJjb2m8PoG0xd6KdD/TI2QAG/DuqPpP/JSZ/jRjXehubpoAThJP3OavVz/HD
- Zp5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvSy54u3ys9uhhqPWBHxyc5m1ggOTL7NFKMc66gu77zh8ZQRY24UVvwrCjvzrgljxC9AfjaIMI3eIY@nongnu.org
-X-Gm-Message-State: AOJu0Yz+VYTM16R99cB3MQ8kCLafvlr75X+4EXS0469PYLHSap5nvaNx
- jESN80LhDk+wFxODJ2x/YJSMtGx+woDkVTbyTbK6jXcHDsDhfG4w2Js9mhSg+hV5ECc=
-X-Gm-Gg: ASbGnctttF4BRzi0G4LzEK/oDOjcjI6DPQEhnbkTamv8p4QnHy86iGFoFFsuJ+vNAjo
- MdUyitkk0GYgyczD8377eVuW17P02IY/YDoiv1VEgetjwpSNJ5x2kjYabZywqToz2RfApeQ2fmj
- nNEoIpfaoDAXyXrfS6GGa1ah6PyOfOQVXL77izU8yCn9Az8iVZHkS2kCY7/gyG6HIx7GB+2WYVS
- rxAuAlpGBHwsyjDvw7/NQqXd1bek3Ugaf/HDfOBnZiiACiluk8SqrV2lNoBMYqL7nR2JZu1JAf/
- 2FSG2SVyS5yqTEMRyS79JXIxdmPWaYqGMuAK4jnApdqLG5AtAi1MgC/RkIJjEHl9kieIDSdcPdx
- mjVEe3eOmsFTsr/nLZHa2YGSiPs0HBFAn3CSke3DPsqT09OQLOLG0p/guYnEwpzDvdw==
-X-Google-Smtp-Source: AGHT+IEn/keD64Z17y9MYNcD0QqzOspdSRYW4o82xV3Rbi0I9jAv5eEJs8cJH+BEzcKzfm9xqCpd/A==
-X-Received: by 2002:adf:fc8f:0:b0:3b7:99a8:bf6e with SMTP id
- ffacd0b85a97d-3b900b6ac09mr7725190f8f.51.1754901632834; 
- Mon, 11 Aug 2025 01:40:32 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b8f5d7deaasm18943913f8f.65.2025.08.11.01.40.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 01:40:32 -0700 (PDT)
-Message-ID: <4dbb1946-9b01-4b66-a0e4-f49bcd19df42@linaro.org>
-Date: Mon, 11 Aug 2025 10:40:30 +0200
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1ulOKG-00044Q-2a
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 04:56:17 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1ulOK8-0003Vu-Ip
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 04:56:14 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c0pJT6vR7z6L5ST;
+ Mon, 11 Aug 2025 16:51:05 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6C2AD1402F3;
+ Mon, 11 Aug 2025 16:55:52 +0800 (CST)
+Received: from P_UKIT01-A7bmah.china.huawei.com (10.48.146.213) by
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 11 Aug 2025 10:55:51 +0200
+To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, <armbru@redhat.com>, 
+ <jonathan.cameron@huawei.com>, <dave@stgolabs.net>
+CC: <linuxarm@huawei.com>, <shiju.jose@huawei.com>
+Subject: [PATCH v6 6/8] hw/cxl/cxl-mailbox-utils: Move declaration of scrub
+ and ECS feature attributes in cmd_features_set_feature()
+Date: Mon, 11 Aug 2025 09:55:28 +0100
+Message-ID: <20250811085530.2263-7-shiju.jose@huawei.com>
+X-Mailer: git-send-email 2.43.0.windows.1
+In-Reply-To: <20250811085530.2263-1-shiju.jose@huawei.com>
+References: <20250811085530.2263-1-shiju.jose@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/ppc: Add stub for pnv_chip_find_core()
-To: Aditya Gupta <adityag@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
- Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20250526112346.48744-1-philmd@linaro.org>
- <20250526112346.48744-4-philmd@linaro.org>
- <eff37ca7-d977-450e-85e0-ca8e4f6f3d5a@redhat.com>
- <ba766eae-e8e0-436a-ad30-625744b872e4@linaro.org>
- <7a537212-3634-4fe4-b574-b9287c75cb2c@linux.ibm.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <7a537212-3634-4fe4-b574-b9287c75cb2c@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.48.146.213]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ frapeml500007.china.huawei.com (7.182.85.172)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,76 +69,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  <shiju.jose@huawei.com>
+From: shiju.jose--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/7/25 20:04, Aditya Gupta wrote:
-> Hi Cédric and Philippe,
-> 
-> 
-> On 26/05/25 17:21, Philippe Mathieu-Daudé wrote:
->> On 26/5/25 13:48, Cédric Le Goater wrote:
->>> On 5/26/25 13:23, Philippe Mathieu-Daudé wrote:
->>>> Since commit 9808ce6d5cb, building QEMU configured with
->>>> '--without-default-devices' fails:
->>>>
->>>>    Undefined symbols for architecture arm64:
->>>>      "_pnv_chip_find_core", referenced from:
->>>>          _helper_load_sprd in target_ppc_misc_helper.c.o
->>>>          _helper_store_sprd in target_ppc_misc_helper.c.o
->>>>    ld: symbol(s) not found for architecture arm64
->>>>    clang: error: linker command failed with exit code 1
->>>> > Fix by adding a stub when CONFIG_POWERNV is not available.
->>>
->>> The fix would be to add an abstract handler to implement SPRD accesses
->>> on the PowerNV machine.
-> 
-> 
-> Is this what you meant by an abstract handler ?
-> https://github.com/adi-g15-ibm/qemu/ 
-> commit/0abac37032a5ef66d64a649ce04f24876bf9007d
+From: Shiju Jose <shiju.jose@huawei.com>
 
-I think so.
+Move the declaration of scrub and ECS feature attributes in
+cmd_features_set_feature() to the local scope where they are used.
 
-Avoid using target_ulong if possible (I suppose SPRD only exists on
-64-bit CPUs so can be uint64_t).
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+---
+ hw/cxl/cxl-mailbox-utils.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-> 
-> 
-> The thing done, is just to introduce a function pointer in 
-> 'PowerPCCPUClass',
-> namely 'handle_sprd_store' and 'handle_sprd_load'
-> 
-> 
-> These will be set in the PNV chip realize path, so now the SPRD code in
-> target/ppc, will only call this for PowerNV.
-> 
-> Separated the powernv specific code, so target/ppc code doesn't depend
-> on pnv calls now.
-> 
-> 
-> Not well tested, will try somethings.
-> 
-> 
-> Thanks,
-> 
-> Aditya Gupta
-> 
-> 
->>
->> I don't know what "SPRD" is so I'll let someone more familiar with
->> this area do the proper cleanup.
->>
->> Regards,
->>
->> Phil.
->>
->>>
->>> Thanks,
->>>
->>> C.
->>
->>
-
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 8f62ea9b54..ce02ae8528 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1350,10 +1350,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+                                            CXLCCI *cci)
+ {
+     CXLSetFeatureInHeader *hdr = (void *)payload_in;
+-    CXLMemPatrolScrubWriteAttrs *ps_write_attrs;
+-    CXLMemPatrolScrubSetFeature *ps_set_feature;
+-    CXLMemECSWriteAttrs *ecs_write_attrs;
+-    CXLMemECSSetFeature *ecs_set_feature;
+     CXLSetFeatureInfo *set_feat_info;
+     uint16_t bytes_to_copy = 0;
+     uint8_t data_transfer_flag;
+@@ -1395,13 +1391,14 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+     }
+ 
+     if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
++        CXLMemPatrolScrubSetFeature *ps_set_feature = (void *)payload_in;
++        CXLMemPatrolScrubWriteAttrs *ps_write_attrs =
++                                &ps_set_feature->feat_data;
++
+         if (hdr->version != CXL_MEMDEV_PS_SET_FEATURE_VERSION) {
+             return CXL_MBOX_UNSUPPORTED;
+         }
+ 
+-        ps_set_feature = (void *)payload_in;
+-        ps_write_attrs = &ps_set_feature->feat_data;
+-
+         if ((uint32_t)hdr->offset + bytes_to_copy >
+             sizeof(ct3d->patrol_scrub_wr_attrs)) {
+             return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+@@ -1422,13 +1419,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         }
+     } else if (qemu_uuid_is_equal(&hdr->uuid,
+                                   &ecs_uuid)) {
++        CXLMemECSSetFeature *ecs_set_feature = (void *)payload_in;
++        CXLMemECSWriteAttrs *ecs_write_attrs = ecs_set_feature->feat_data;
++
+         if (hdr->version != CXL_ECS_SET_FEATURE_VERSION) {
+             return CXL_MBOX_UNSUPPORTED;
+         }
+ 
+-        ecs_set_feature = (void *)payload_in;
+-        ecs_write_attrs = ecs_set_feature->feat_data;
+-
+         if ((uint32_t)hdr->offset + bytes_to_copy >
+             sizeof(ct3d->ecs_wr_attrs)) {
+             return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+-- 
+2.43.0
 
 
