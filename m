@@ -4,84 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1884CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 20:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DF8CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 20:50:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulZPE-0000hJ-DN; Mon, 11 Aug 2025 16:46:08 -0400
+	id 1ulZSf-00026N-3l; Mon, 11 Aug 2025 16:49:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1ulZPC-0000b4-9q; Mon, 11 Aug 2025 16:46:06 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1ulZP4-0007ng-Rj; Mon, 11 Aug 2025 16:46:05 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-61813e2fc73so3729610a12.0; 
- Mon, 11 Aug 2025 13:45:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1754945149; x=1755549949; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tLfl/wDNQKUH1jBMtnf+lOEzYOlhTB6w+Ki1awZSPm4=;
- b=hjsVYZCmSNnNWG0JSZPs9g0yCX7YKLHpPlDaTp0yATnmqXGyYDV9IL2VubmlVz10nh
- KfQAi4PdtoQ8VAURljisIPxBKvjtuqcDaBq6IFOVw/pBxiEmuQZjlav+TVfm6bTUAxb4
- fkIe7VprCsjR0lQQD58IszWyw1ExeUh2xiEhBcuTDx2JXytTRQQVzfeVQCZK3u7nom5y
- ochqjcng323xqfiCjRAU8JMEC3OSt0Z5OvmY6HpamZiR6GmZ6PDm5lJf+JJ6ZBx0Jo6E
- v++0rHpH6DA+UdEFvc9DCYNatcuD3SjfosvsdcrzNsJ2Bx76IB79Hkb+61e/YHZ2Na6z
- Lc4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754945149; x=1755549949;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tLfl/wDNQKUH1jBMtnf+lOEzYOlhTB6w+Ki1awZSPm4=;
- b=FhSawV+6AOoaQZ417Wzu/d4XuSygCB8eIGVo8E+x/z5H3It6kkdxDsjQRjikexGHMR
- OkCDl1NzvmepfghD09l/Rye4uV6ewWbEG0ubWNDMsL0T6vPKiYjSljkP2KQqWy00c3SL
- lO/Gw26xE3jDugyaNWd94Godj+1144zpizeK81T+qnk56CAPrFDGrWjS4ULkXXht2dF+
- Y26q6T6OYVEExOlQjk7QxQYXnFnNnnmdCaOHw/7rx8LbQ3RdkGv1GTWorF2aF57RSN6O
- n7vXhffHr/IFfpRRNMY5J76Md2Xwg9KYl8d8XP8rvoIp55+qkbtMl2+XL+57G0KkKQDq
- QWhA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUkHCzj8bfAopbb1EL6+e5on98hAAYU2RM4WKVx1pItbj+dgoVCdlbzgugXYQ6VaDTQz6fygG+flA==@nongnu.org
-X-Gm-Message-State: AOJu0YzzsEYCrBnGgWNnKbt1R1p11V4Xt96Wq7SHvN78/Unkz+QZIk1y
- 5eAn/I3ulvAqAqN38xlpZ9ceya4kfRZS32pBa7vviPvz1AbdNfcDXc/+L/pqDe9xd6PdUFvo0xC
- 18VyO4Fj3iPs4sXUKA6DaZp38Sf9KV08=
-X-Gm-Gg: ASbGnctcPoV3lO2pYnl6YB0o7Eiz3pw6Q9xXs21qHRQDPlFI5OfMaaTUqHKtR9InP/E
- cfGnnnzxv+SvbjT6pyCRiDHnCiUh6G4paZfEosWLtLbV3uW46Mk6aiicohlMFEAxbC8iIwFHpFa
- AW7kQqcratYpJjC2+ibRex6NIEhzwRnD67gp6A8KzLQUdxaJEQnUn4ZG1Qtd4RQ+5LRO9NA6ZSa
- kN35g==
-X-Google-Smtp-Source: AGHT+IG3R/VcNlv5Ekuq1OKa3qi/RIq/2YfFZ87ucDKX5aohcviFjAmUmPyLrAhBfsHIZgq/6ut4mFLvRoX5bTNnmiM=
-X-Received: by 2002:a05:6402:3489:b0:618:1554:a6bc with SMTP id
- 4fb4d7f45d1cf-6184ea115e5mr561669a12.3.1754945148990; Mon, 11 Aug 2025
- 13:45:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ulZSd-00025m-Ab
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 16:49:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1ulZSX-0008V2-Jr
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 16:49:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1754945366;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=CQbe91S3uYByF6cPyraY71e5cBELSRKSscwlqRZokVA=;
+ b=hsdyRLhCCi3Mr3Pr9MaYkyEfjSK2MpiIKHf07JNIqnCC/vHF7zUguzHjPa2nt5rGtSmGm9
+ l2eELZNaE0PmKmG4yDn+t3Tcx1SD9VU6ClWsnC8dMg16VMYT4e87AypnN8huX0YX3Icofq
+ KDbCi9dyuh6h0ANyftipeuSIB4HY4bM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-7EhFESGmMC-2UMNpAXX3-w-1; Mon,
+ 11 Aug 2025 16:49:24 -0400
+X-MC-Unique: 7EhFESGmMC-2UMNpAXX3-w-1
+X-Mimecast-MFC-AGG-ID: 7EhFESGmMC-2UMNpAXX3-w_1754945363
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EA76180044F; Mon, 11 Aug 2025 20:49:22 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.164])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 49F051955F16; Mon, 11 Aug 2025 20:49:19 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH] mkvenv: support pip 25.2; prefer packaging over distlib
+Date: Mon, 11 Aug 2025 16:49:18 -0400
+Message-ID: <20250811204918.260524-1-jsnow@redhat.com>
 MIME-Version: 1.0
-References: <20250811162315.59997-1-stefanha@redhat.com>
-In-Reply-To: <20250811162315.59997-1-stefanha@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 11 Aug 2025 16:45:37 -0400
-X-Gm-Features: Ac12FXwryuHCHbB-O7WJH1_qES1xALMDX9i37hw-nbc20S53ufvhrQGVwT7OAso
-Message-ID: <CAJSP0QUYLbBuk+Kc-Y3K9sC6GmutBcQ-Rbrxd7dbO2RcCkz9TQ@mail.gmail.com>
-Subject: Re: [PATCH] tests/functional: fix URLs in PCI hotplug test for aarch64
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>,
- qemu-arm@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,59 +79,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 11, 2025 at 12:24=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
-om> wrote:
->
-> Debian trixie has been released. The "stable" alias no longer refers to
-> the Debian bookworm release, so URLs referring to bookworm artifacts via
-> the "stable" alias no longer work.
->
-> Switch to explicit release naming ("bookworm") to make a permalink so
-> the test passes again.
->
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Fixes: 374a245573b8 ("tests/functional: Add PCI hotplug test for aarch64"=
-)
-> Resolves: #3073 ("PCI hotplug test for aarch64 fails due to broken Debian=
- installer URL")
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  tests/functional/test_aarch64_hotplug_pci.py | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+Stop using distlib LegacyVersion parsing and begin using `packaging`
+version parsing instead.
 
-Applied to master.
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ python/scripts/mkvenv.py | 39 +++++++++++++++++++++++++++++++++------
+ 1 file changed, 33 insertions(+), 6 deletions(-)
 
->
-> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functio=
-nal/test_aarch64_hotplug_pci.py
-> index c9bb7f1d97..0c67991b89 100755
-> --- a/tests/functional/test_aarch64_hotplug_pci.py
-> +++ b/tests/functional/test_aarch64_hotplug_pci.py
-> @@ -15,12 +15,12 @@
->  class HotplugPCI(LinuxKernelTest):
->
->      ASSET_KERNEL =3D Asset(
-> -        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
-4/'
-> +        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-ar=
-m64/'
->           '20230607+deb12u11/images/netboot/debian-installer/arm64/linux'=
-),
->           'd92a60392ce1e379ca198a1a820899f8f0d39a62d047c41ab79492f81541a9=
-d9')
->
->      ASSET_INITRD =3D Asset(
-> -        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm6=
-4/'
-> +        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-ar=
-m64/'
->           '20230607+deb12u11/images/netboot/debian-installer/arm64/initrd=
-.gz'),
->           '9f817f76951f3237bca8216bee35267bfb826815687f4b2fcdd5e6c2a91779=
-0c')
->
-> --
-> 2.50.1
->
->
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index 8ac5b0b2a05..1aa9fc7badb 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -94,17 +94,32 @@
+ HAVE_DISTLIB = True
+ try:
+     import distlib.scripts
+-    import distlib.version
+ except ImportError:
+     try:
+         # Reach into pip's cookie jar.  pylint and flake8 don't understand
+         # that these imports will be used via distlib.xxx.
+         from pip._vendor import distlib
+         import pip._vendor.distlib.scripts  # noqa, pylint: disable=unused-import
+-        import pip._vendor.distlib.version  # noqa, pylint: disable=unused-import
+     except ImportError:
+         HAVE_DISTLIB = False
+ 
++
++HAVE_PACKAGING = True
++try:
++    import packaging.requirements  # type: ignore
++    import packaging.version  # type: ignore
++except ImportError:
++    try:
++        # Reach into pip's cookie jar yet again.
++        # Shush all the tools rightly telling us this is a bad idea.
++        # pylint: disable=ungrouped-imports, unused-import
++        from pip._vendor import packaging  # type: ignore
++        import pip._vendor.packaging.requirements
++        import pip._vendor.packaging.version  # noqa
++    except ImportError:
++        HAVE_PACKAGING = False
++
++
+ # Try to load tomllib, with a fallback to tomli.
+ # HAVE_TOMLLIB is checked below, just-in-time, so that mkvenv does not fail
+ # outside the venv or before a potential call to ensurepip in checkpip().
+@@ -669,12 +684,22 @@ def _do_ensure(
+     canary = None
+     for name, info in group.items():
+         constraint = _make_version_constraint(info, False)
+-        matcher = distlib.version.LegacyMatcher(name + constraint)
+-        print(f"mkvenv: checking for {matcher}", file=sys.stderr)
++        req = packaging.requirements.Requirement(name + constraint)
++
++        def _match(
++            req: 'packaging.requirements.Requirement',
++            version_str: str
++        ) -> bool:
++            return bool(req.specifier.contains(
++                packaging.version.Version(version_str),
++                prereleases=True
++            ))
++
++        print(f"mkvenv: checking for {req}", file=sys.stderr)
+ 
+         dist: Optional[Distribution] = None
+         try:
+-            dist = distribution(matcher.name)
++            dist = distribution(req.name)
+         except PackageNotFoundError:
+             pass
+ 
+@@ -683,7 +708,7 @@ def _do_ensure(
+             # Always pass installed package to pip, so that they can be
+             # updated if the requested version changes
+             or not _is_system_package(dist)
+-            or not matcher.match(distlib.version.LegacyVersion(dist.version))
++            or not _match(req, dist.version)
+         ):
+             absent.append(name + _make_version_constraint(info, True))
+             if len(absent) == 1:
+@@ -753,6 +778,8 @@ def ensure_group(
+ 
+     if not HAVE_DISTLIB:
+         raise Ouch("found no usable distlib, please install it")
++    if not HAVE_PACKAGING:
++        raise Ouch("found no usable packaging lib, please install it")
+ 
+     parsed_deps = _parse_groups(file)
+ 
+-- 
+2.50.1
+
 
