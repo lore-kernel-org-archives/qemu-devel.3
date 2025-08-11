@@ -4,58 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3826C87FD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 08:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E239C87FD2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 09:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulOKN-00045o-8G; Mon, 11 Aug 2025 04:56:23 -0400
+	id 1ulOT8-0000yv-NE; Mon, 11 Aug 2025 05:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1ulOKJ-000457-DM
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 04:56:19 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1ulOKA-0003VX-F2
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 04:56:18 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c0pMk35hJz6M584;
- Mon, 11 Aug 2025 16:53:54 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id EF661140121;
- Mon, 11 Aug 2025 16:55:48 +0800 (CST)
-Received: from P_UKIT01-A7bmah.china.huawei.com (10.48.146.213) by
- frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 11 Aug 2025 10:55:48 +0200
-To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>, <armbru@redhat.com>, 
- <jonathan.cameron@huawei.com>, <dave@stgolabs.net>
-CC: <linuxarm@huawei.com>, <shiju.jose@huawei.com>
-Subject: [PATCH v6 1/8] qapi: cxl: Refactor CXL event injection for common
- commands arguments
-Date: Mon, 11 Aug 2025 09:55:23 +0100
-Message-ID: <20250811085530.2263-2-shiju.jose@huawei.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20250811085530.2263-1-shiju.jose@huawei.com>
-References: <20250811085530.2263-1-shiju.jose@huawei.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ulOT6-0000yQ-8Z
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 05:05:24 -0400
+Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ulOT4-00054s-55
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 05:05:23 -0400
+Received: by mail-yb1-xb32.google.com with SMTP id
+ 3f1490d57ef6-e9028e13bb4so3319919276.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 02:05:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754903120; x=1755507920; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fl2vmmq+v9DGeZx45O5Nw0hoNQ8t026OH3kktP1HWdc=;
+ b=IStGxRbK8ugICODG0tjFhJjWS+IgjfWxEv6XWyTKQA8TbKrisSgRYuXBSx5e5MpqZ8
+ 0DODSpTvPYKc2XZS56417XdYv21teN06ADwpO+FMELu+B+HvES8/JBtutGKhtEplXVnb
+ oaSFYETGziObHkwRVGaV9Pdy8vo6yCkLPhDYAilNRxRkSYhBbZy2m6g4G5xotiBvMI7w
+ U1BqQUboN8Vx/Vr3PFuqILkBMpPEKhKVBKAcGQuz2cwfsbUJoa9g7s5GEQG9l3M1UTQY
+ VVwLUoNtBl0iyAQcyeYCGzMpa0pIAJbR9rW5mcojdNec68x4MVYfqXGj1EGkzVyb/KKq
+ YYYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754903120; x=1755507920;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Fl2vmmq+v9DGeZx45O5Nw0hoNQ8t026OH3kktP1HWdc=;
+ b=hre0Uicg2+y5w4ewy7mnYQeS1W/9LMv6JFY5bWRQPJgFfL4rX047ii55deWSlPdr8f
+ uNIOn0GXs6ZNcmjKUt0dtvXmjZA00r4EsTXYMelBQfj4cF1Kf1B9Osl/4VimlDS1uQ9A
+ UTlxeiq5UCUCAKSBFrz5lD90HnmO0zTKv0kZSPwAMxo2Y0Wmh8jMIZJDJxlGwxRqlcZh
+ i0mjaEhopiMiLrF6wBQGc3c/rkHWatPZ80JU9u1LfQgkXx56elr7ff8Kmqo+B8Uzx58F
+ rhEYUWfWWUg4zATQctdbt4lIq2uWq/Md5eFi2r+5PuXQr/yiUPiJZSDrd6H/RxnFIP6q
+ MTGg==
+X-Gm-Message-State: AOJu0YxFzUNETSSRz9Xe2AcCiG5OqRz/ZLRVfx0tAwVtktHQ8v9RR3V8
+ OBJXDZtyHbael9Kgw99jLULRjYUsybxKJ0yBh7vldQh+W9Oe976sN0q+sPYgMOSfjYNmO6yJ4Df
+ GChhrb3CujUT8RphChgAfZKhcVQrfWzPdDkl23WvVvXORShrOScjg
+X-Gm-Gg: ASbGncs+0ermfeeyFCCYaH3KSHUtisjRZyTH2/B1cfUyxVHL4LDSfYkwk1r3JvNa9wf
+ /nemljr18iJAJNALbtKAbyco0eHGcmKWXAPb/m8OsyYTew0e071GOkhg/tRxNu7xigczEdRSrGY
+ X2AuBY837jt/U3y9vSQvRmZuv0peiKhUMmUnZKAMuo8YCN+QNegzjCbNLLxn6I3mS7JerI70F1M
+ enZtIEH
+X-Google-Smtp-Source: AGHT+IHDBFZnMy7v0k33Ovf1KNbBXMto2W1HY1iMlHnBfhjSZUf3usobT3QGRoiLOB+TYqlpN6bMRQQRFq4pCmjUna4=
+X-Received: by 2002:a05:690c:62c1:b0:71b:6d47:8c59 with SMTP id
+ 00721157ae682-71bf0cbaff4mr160469207b3.2.1754903119802; Mon, 11 Aug 2025
+ 02:05:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.48.146.213]
-X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
- frapeml500007.china.huawei.com (7.182.85.172)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+References: <bf6e627f-b2dc-4776-ba30-cc7670dde685@tls.msk.ru>
+In-Reply-To: <bf6e627f-b2dc-4776-ba30-cc7670dde685@tls.msk.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 11 Aug 2025 10:05:06 +0100
+X-Gm-Features: Ac12FXwBpL2QHvHege0ppNFHnq6SjKGnlcDcqj7dwXi52p-5o4rUpD7YbNDxH1A
+Message-ID: <CAFEAcA-DqPtnYVvvNyEN5OGxuaMBU+6E0RQaKObVetdUufZvkA@mail.gmail.com>
+Subject: Re: using qemu linux-user with setuid applications (C binfmt flag)
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: QEMU Development <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,177 +89,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  <shiju.jose@huawei.com>
-From: shiju.jose--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shiju Jose <shiju.jose@huawei.com>
+On Mon, 11 Aug 2025 at 08:57, Michael Tokarev <mjt@tls.msk.ru> wrote:
+> It's been quite some time since many distributions enabled the C
+> (credentials) flag when using qemu-user binfmt_misc emulation.
+> This means that qemu-user executable is used to run setuid binaries,
+> usually with elevated privileges.  The binary itself might be suited
+> well for security-sensitive and probably hostile environment, but
+> qemu-user binary is definitely not, - it is a quite complex piece
+> of software with a lot of possible attack vectors.
+>
+> To me it looks like a Very Bad Idea (tm) to enable the C flag in
+> this case.  But maybe it's not *that* bad because the administrator
+> is the one who controls *which* setuid binaries are present on the
+> system.
+>
+> What's the qemu project view on this?
 
-Refactor CXL event injection to use struct for common command
-arguments.
+We treat all code-emulation use cases as "not security sensitive"
+(i.e. there might be containment-escape bugs in parts of the
+codebase not used in KVM VMs; we don't have the resources to
+audit). For linux-user, we further assume that the executing
+code already has the privilege of the QEMU process -- I'm
+pretty sure there are things you can get it to do that
+will make it fall over that we don't care about on that basis
+(notably, all of QEMU's internals are shared with the guest
+process, with no memory separation, so the guest can just
+write x86 executable code and arrange for QEMU to jump/return
+to it if it likes).
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
----
- qapi/cxl.json | 89 +++++++++++++++++++++++++++++++++------------------
- 1 file changed, 58 insertions(+), 31 deletions(-)
+Whether any of those things in QEMU would be exploitable via
+controlling the input to a trustworthy setuid binary I have
+no idea (though obviously if you could get the binary to
+do an "arbitrary write to memory" that would be a problem
+in the non-emulation case too)...
 
-diff --git a/qapi/cxl.json b/qapi/cxl.json
-index 8f2e9237b1..0dabf07536 100644
---- a/qapi/cxl.json
-+++ b/qapi/cxl.json
-@@ -29,11 +29,10 @@
-  }
- 
- ##
--# @cxl-inject-general-media-event:
-+# @CXLCommonEventBase:
- #
--# Inject an event record for a General Media Event (CXL r3.0
--# 8.2.9.2.1.1).  This event type is reported via one of the event logs
--# specified via the log parameter.
-+# Common event base for a CXL Event (CXL r3.0 8.2.9.2.1
-+# Table 8-42 Common Event Record Format).
- #
- # @path: CXL type 3 device canonical QOM path
- #
-@@ -42,6 +41,16 @@
- # @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
- #     Record Format, Event Record Flags for subfield definitions.
- #
-+# Since: 8.1
-+##
-+{ 'struct': 'CXLCommonEventBase',
-+  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8' } }
-+
-+##
-+# @CXLGeneralMediaEvent:
-+#
-+# Event record for a General Media Event (CXL r3.0 8.2.9.2.1.1).
-+#
- # @dpa: Device Physical Address (relative to @path device).  Note
- #     lower bits include some flags.  See CXL r3.0 Table 8-43 General
- #     Media Event Record, Physical Address.
-@@ -72,26 +81,29 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-general-media-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
--            'dpa': 'uint64', 'descriptor': 'uint8',
-+{ 'struct': 'CXLGeneralMediaEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
-             'type': 'uint8', 'transaction-type': 'uint8',
-             '*channel': 'uint8', '*rank': 'uint8',
-             '*device': 'uint32', '*component-id': 'str' } }
- 
- ##
--# @cxl-inject-dram-event:
--#
--# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
--# This event type is reported via one of the event logs specified via
--# the log parameter.
-+# @cxl-inject-general-media-event:
- #
--# @path: CXL type 3 device canonical QOM path
-+# Inject an event record for a General Media Event (CXL r3.0
-+# 8.2.9.2.1.1).  This event type is reported via one of the event
-+# logs specified via the log parameter.
- #
--# @log: Event log to add the event to
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-general-media-event',
-+  'data': 'CXLGeneralMediaEvent' }
-+
-+##
-+# @CXLDRAMEvent:
- #
--# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
--#     Record Format, Event Record Flags for subfield definitions.
-+# Event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
- #
- # @dpa: Device Physical Address (relative to @path device).  Note
- #     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
-@@ -131,9 +143,9 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-dram-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
--            'dpa': 'uint64', 'descriptor': 'uint8',
-+{ 'struct': 'CXLDRAMEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
-             'type': 'uint8', 'transaction-type': 'uint8',
-             '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint32',
-             '*bank-group': 'uint8', '*bank': 'uint8', '*row': 'uint32',
-@@ -141,18 +153,21 @@
-            }}
- 
- ##
--# @cxl-inject-memory-module-event:
-+# @cxl-inject-dram-event:
- #
--# Inject an event record for a Memory Module Event (CXL r3.0
--# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
--# at the time of the event.
-+# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.2).
-+# This event type is reported via one of the event logs
-+# specified via the log parameter.
- #
--# @path: CXL type 3 device canonical QOM path
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-dram-event',
-+  'data': 'CXLDRAMEvent' }
-+
-+##
-+# @CXLMemModuleEvent:
- #
--# @log: Event Log to add the event to
--#
--# @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
--#     Record Format, Event Record Flags for subfield definitions.
-+# Event record for a Memory Module Event (CXL r3.0 8.2.9.2.1.3).
- #
- # @type: Device Event Type.  See CXL r3.0 Table 8-45 Memory Module
- #     Event Record for bit definitions for bit definiions.
-@@ -183,9 +198,9 @@
- #
- # Since: 8.1
- ##
--{ 'command': 'cxl-inject-memory-module-event',
--  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags' : 'uint8',
--            'type': 'uint8', 'health-status': 'uint8',
-+{ 'struct': 'CXLMemModuleEvent',
-+  'base': 'CXLCommonEventBase',
-+  'data': { 'type': 'uint8', 'health-status': 'uint8',
-             'media-status': 'uint8', 'additional-status': 'uint8',
-             'life-used': 'uint8', 'temperature' : 'int16',
-             'dirty-shutdown-count': 'uint32',
-@@ -193,6 +208,18 @@
-             'corrected-persistent-error-count': 'uint32'
-             }}
- 
-+##
-+# @cxl-inject-memory-module-event:
-+#
-+# Inject an event record for a DRAM Event (CXL r3.0 8.2.9.2.1.3)
-+# This event type is reported via one of the event logs
-+# specified via the log parameter.
-+#
-+# Since: 8.1
-+##
-+{ 'command': 'cxl-inject-memory-module-event',
-+  'data': 'CXLMemModuleEvent' }
-+
- ##
- # @cxl-inject-poison:
- #
--- 
-2.43.0
-
+-- PMM
 
