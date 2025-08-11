@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA112C87FDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8140DC87FD2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:21:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulRVu-0007n6-7Q; Mon, 11 Aug 2025 08:20:31 -0400
+	id 1ulRVb-0007fb-Es; Mon, 11 Aug 2025 08:20:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRVs-0007jR-AG
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:20:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRVY-0007ec-NI
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:20:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRVn-0006Ex-Uj
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:20:27 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRVN-0005yJ-6m
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:20:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754914822;
+ s=mimecast20190719; t=1754914791;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OABkDX/B/nJ4F8u+LUAvZtrLRd/t0gPeOfA5m6it2cs=;
- b=Wm9yJpquvKHS+smO1hUXRcJUj1iQSe/WUloxUdzYMRrwBlURQbH+y+mlXRNCw6kAgtv6y7
- tna8Fy56M55wbR8Yfk8qlbC+/dpLCYaiYGzSFzs251naOqDPbC80WeDuOjtyLN1rTU1JVL
- BWj+bHM3LZg+dSWdKD/QQyFYo5xn7HY=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gZP0ezekiADeo7N0/2cco6PxDYGjeD1W8uTnzIIHNqo=;
+ b=QTE/OWARXQh9vykUe1yw/64ijox+BnI7yfh8mm0VekUVBVGBBF2TgGZtTkIDVvY79Mwsyj
+ N0bJMfcRU9kHz1zq1dFDt5hZjWs3SXSgq8KNfQpPdjF8HZcRJ0mwHno715s8w/ekhId2Ma
+ wVUO9nVXkZiIyeaS9w4+rMu1Jo6gWow=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-130-EqF4wZbYO7W0BP-6tas6Uw-1; Mon, 11 Aug 2025 08:20:20 -0400
-X-MC-Unique: EqF4wZbYO7W0BP-6tas6Uw-1
-X-Mimecast-MFC-AGG-ID: EqF4wZbYO7W0BP-6tas6Uw_1754914820
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7e69c14e992so846927785a.3
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:20:20 -0700 (PDT)
+ us-mta-677-Yjt_c7exMWiLyknrpQvCHw-1; Mon, 11 Aug 2025 08:19:50 -0400
+X-MC-Unique: Yjt_c7exMWiLyknrpQvCHw-1
+X-Mimecast-MFC-AGG-ID: Yjt_c7exMWiLyknrpQvCHw_1754914790
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4b0791a8e8dso124024511cf.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:19:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754914820; x=1755519620;
+ d=1e100.net; s=20230601; t=1754914789; x=1755519589;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OABkDX/B/nJ4F8u+LUAvZtrLRd/t0gPeOfA5m6it2cs=;
- b=Pc83D5j0/8PLp6hSK6w8KAVkm4JaKawT5qwfuWeiXy80sAlV/x+Ai5N9RSNHEgObTY
- sJrpDNnTnyTJ+9eYwrLnAq/jUzNI9adJlawUztjQQPHJGSpMDRk/IJOEjB2me2tyUWYv
- 7bW1EOzG0tLH2nzyFPIrEfBBFJo/dNc7SRziol6ic2ADLXkEDizvn4PNZAAc9rJ9q81Y
- b/UT3k7JgRd9cbAq5ErIRZKA+EbmkiMotY8VKCm4fKXA/uz10Cxu10w7thpq5Ideh54G
- b370ckdZt4VB8zbbdiwJOMLxix0+lJwbZtjfOkalChqnG7Nx9TQrEAeZwSmZgcwnnRuI
- MH8A==
+ bh=gZP0ezekiADeo7N0/2cco6PxDYGjeD1W8uTnzIIHNqo=;
+ b=MIsqRc9dRxQngYQaOg1ZMKsVfo4PybnfKK9mveAVHjuGR4Q0KxBFeh/z2dCOFujUrG
+ QUQTR8PfUYNweVVDky29Q746Jn4PM/XQZc+ZhzIWp/LbYh2d6wKrn0678AAoLnsXxffe
+ 87D7stCa4coQ2CSk2EnSYKPSBVT7NOcOLJIDIEoRlKN7NFq7JkAwJqrUHWbp/FmoWIFP
+ 1ucXe8Ytr46RMh6SY0CsEMa+5gub7yk9XzL2Vy+8+nHe4tlh5FLqO6cGuY617rnGGPOR
+ oeQSnD9lS5meMMHvJ0fG3P/+NrY4hOgE8AchEsMaRKbPWBjNSRtv7T9g4b0F3K8cS0cn
+ YXRA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2gRzfnFbIaqhnKqh+lbmqZJTleZQBVVS9LnuAxbTK5tKZ8ipqPq2IzQdhQmRUFY51fiImWpCPQSmJ@nongnu.org
-X-Gm-Message-State: AOJu0YzmUMueHiTjGHlNeRCvjGvLMzrDBO5r616HZDvLzEOepuWxhUZB
- t+J5RqhUS6UoMRSWahH6VKBAtHEmItQkV/Peh7xe94gZoCntGACS7ZHi723VehGRAxvfdYZnxoC
- 2BEWIRmns4ZW+6xp9lu3LwSk2OpSwo8Z1iMkjtJkKMxDIEB19pFGxFreT
-X-Gm-Gg: ASbGncs/cwSPRV3cq049lHOQNFtXe+bOr7IFDGbIQqYbLWlMClaYTp/V4n2VEF+YBhs
- vPfjQrajwWLN08x7510grZP+tsRu0+sGX3QK5MQmYTI/uajMvG942yftIzKgZmUo2COhhdrbx57
- oXeqjzBSGLYTGY/lUW+mk0Nx2JzKn2wn+t+urR0ZPDWfyiU5htItqMepPQ8PPX6yPx6hzyMSJ7Z
- 2WnGRo8bIpkkw4fKq5KrhSAGb/UzxcTzgPOqxoJHz4N3SIyCnRIJuTD4VnUnSRjrvsRACwNrlvA
- irAJ9kgoy7lpCIR0Mbb+puEkZ4ZMOEf6rpIDGcbHBCdcdIJvFcU12JfATico0EcPn1yzYLtBoii
- oEQ==
-X-Received: by 2002:a05:6214:19c6:b0:707:2472:dc3b with SMTP id
- 6a1803df08f44-7099a351fc5mr185697626d6.42.1754914820253; 
- Mon, 11 Aug 2025 05:20:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMziybW0yYKN9+bPtmdxs+xNdVn2+ufpPX4cHPr1V2OyVUji5Gcu06woUszk+2lp3xm94KKQ==
-X-Received: by 2002:a05:6214:19c6:b0:707:2472:dc3b with SMTP id
- 6a1803df08f44-7099a351fc5mr185696926d6.42.1754914819636; 
- Mon, 11 Aug 2025 05:20:19 -0700 (PDT)
+ AJvYcCXQPfdY9U5cokeAThvnqEdDNcMUOOFwEQrYfo3Rvs8wTJLf557CLYe+M340MM3ZPYJfR2KC5/7viwsz@nongnu.org
+X-Gm-Message-State: AOJu0YwNbZ4Mu3fVXdxTZWGrNgnvqxHcNhtz0FjuCti+v15MPuliGExD
+ 20+qyaDv/bJBLETMILt1jV3f6OsJZXZaw73cdedekihOS9bKuO+meV6i7/3ItiQa5o85kRHNxS2
+ c+YbyjgMsHT4ZWA1vspRtaI/sR0xSGDz17LqPoDynu5I4C9bTXByZBqqq
+X-Gm-Gg: ASbGncs+PMpjL69zvM6Q1zvUoH7hUDgURgfYSCc6eqDZeVxQCpyUUpoB7lDbs+QVt43
+ W2GajPTgzrXLgfZExH8qSyFmmlHZ9B2UF9qlaUpGT72ig0wZWhSuwWMs/a6Fik7hr6UJ/wQSrvR
+ NJ2QNrD7rCQ46xBRrtwxLFsqa2S69i9XuEa0j6z6sOaZcQR17QjxmfoveBfzNEyTrHHvG4dwqNH
+ FpS5uCF/3imwCJ4C8ab2t7gDIQ4MYB5Iz6LanAyDcokAUkDkQ711V/2gOqvOP5LHLDBp73c/Srx
+ jvbJuZ/toU6YC1TIQib3qJPLAP83y7T75p5JsAIVl0eE8cxcSBCpDxlcZ0w6xXk+ZxxABfiJv9V
+ evA==
+X-Received: by 2002:a05:622a:34e:b0:4b0:7021:50f with SMTP id
+ d75a77b69052e-4b0aed15ef5mr185672111cf.33.1754914789513; 
+ Mon, 11 Aug 2025 05:19:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGhpQaTQsGagWWAH7vq9sSRJxS/ieJOgPa6XSmpTw4xYeTw6CsM9vTsWfDz9+9UFSjh2N7GHA==
+X-Received: by 2002:a05:622a:34e:b0:4b0:7021:50f with SMTP id
+ d75a77b69052e-4b0aed15ef5mr185671611cf.33.1754914789064; 
+ Mon, 11 Aug 2025 05:19:49 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-709a0d74acfsm45992896d6.58.2025.08.11.05.20.16
+ d75a77b69052e-4b085ad7d08sm83932491cf.53.2025.08.11.05.19.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 05:20:19 -0700 (PDT)
-Message-ID: <67cf5108-c2f7-49bd-a81e-266c7c93631e@redhat.com>
-Date: Mon, 11 Aug 2025 14:20:15 +0200
+ Mon, 11 Aug 2025 05:19:46 -0700 (PDT)
+Message-ID: <3ee8708f-abe6-472e-98ce-4fc008176eb5@redhat.com>
+Date: Mon, 11 Aug 2025 14:19:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/22] vfio/spapr.c: use QOM casts where appropriate
+Subject: Re: [PATCH 05/22] ppc/spapr_pci_vfio.c: use QOM casts where
+ appropriate
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  danielhb413@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
  farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
@@ -87,7 +88,7 @@ To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  tomitamoeko@gmail.com, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
- <20250715093110.107317-7-mark.caveayland@nutanix.com>
+ <20250715093110.107317-6-mark.caveayland@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,10 +134,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250715093110.107317-7-mark.caveayland@nutanix.com>
+In-Reply-To: <20250715093110.107317-6-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -145,7 +146,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,12 +164,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/15/25 11:25, Mark Cave-Ayland wrote:
-> Use QOM casts to convert between VFIOContainer and VFIOContainerBase instead
-> of accessing bcontainer directly.
+> Use a QOM cast to convert to VFIOContainer instead of accessing bcontainer
+> directly.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-
-
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -177,70 +177,21 @@ C.
 
 
 > ---
->   hw/vfio/spapr.c | 16 ++++++----------
->   1 file changed, 6 insertions(+), 10 deletions(-)
+>   hw/ppc/spapr_pci_vfio.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-> index 564b70ef97..c41e4588d6 100644
-> --- a/hw/vfio/spapr.c
-> +++ b/hw/vfio/spapr.c
-> @@ -62,7 +62,7 @@ static void vfio_prereg_listener_region_add(MemoryListener *listener,
->       VFIOSpaprContainer *scontainer = container_of(listener, VFIOSpaprContainer,
->                                                     prereg_listener);
->       VFIOContainer *container = &scontainer->container;
-> -    VFIOContainerBase *bcontainer = &container->bcontainer;
-> +    VFIOContainerBase *bcontainer = VFIO_IOMMU(container);
->       const hwaddr gpa = section->offset_within_address_space;
->       hwaddr end;
->       int ret;
-> @@ -244,7 +244,7 @@ static bool vfio_spapr_create_window(VFIOContainer *container,
->                                       hwaddr *pgsize, Error **errp)
->   {
->       int ret = 0;
-> -    VFIOContainerBase *bcontainer = &container->bcontainer;
-> +    VFIOContainerBase *bcontainer = VFIO_IOMMU(container);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->       IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
-> @@ -352,8 +352,7 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
->                                           MemoryRegionSection *section,
->                                           Error **errp)
->   {
-> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                            bcontainer);
-> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->       VFIOHostDMAWindow *hostwin;
-> @@ -443,8 +442,7 @@ static void
->   vfio_spapr_container_del_section_window(VFIOContainerBase *bcontainer,
->                                           MemoryRegionSection *section)
->   {
-> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                            bcontainer);
-> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
+> diff --git a/hw/ppc/spapr_pci_vfio.c b/hw/ppc/spapr_pci_vfio.c
+> index e318d0d912..7e1c71ef59 100644
+> --- a/hw/ppc/spapr_pci_vfio.c
+> +++ b/hw/ppc/spapr_pci_vfio.c
+> @@ -106,7 +106,7 @@ static VFIOContainer *vfio_eeh_as_container(AddressSpace *as)
 >   
-> @@ -465,8 +463,7 @@ vfio_spapr_container_del_section_window(VFIOContainerBase *bcontainer,
+>   out:
+>       vfio_address_space_put(space);
+> -    return container_of(bcontainer, VFIOContainer, bcontainer);
+> +    return VFIO_IOMMU_LEGACY(bcontainer);
+>   }
 >   
->   static void vfio_spapr_container_release(VFIOContainerBase *bcontainer)
->   {
-> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                            bcontainer);
-> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->       VFIOHostDMAWindow *hostwin, *next;
-> @@ -484,8 +481,7 @@ static void vfio_spapr_container_release(VFIOContainerBase *bcontainer)
->   static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
->                                          Error **errp)
->   {
-> -    VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-> -                                            bcontainer);
-> +    VFIOContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
->       VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
->                                                     container);
->       struct vfio_iommu_spapr_tce_info info;
+>   static bool vfio_eeh_as_ok(AddressSpace *as)
 
 
