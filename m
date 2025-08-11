@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C95DC87FD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E622C87FD2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulRaD-0003QT-N1; Mon, 11 Aug 2025 08:24:58 -0400
+	id 1ulRar-0004bo-Fq; Mon, 11 Aug 2025 08:25:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRa0-00038s-Md
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:24:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRam-0004Wl-DL
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:25:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRZq-00074Q-Vn
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:24:44 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRah-0007NU-Nd
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:25:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754915066;
+ s=mimecast20190719; t=1754915124;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZNDNwdUBEdA+RwgREB/qeqZvHlrty3zXHwgfYyraMis=;
- b=YXtv3ZQY+I5kj9skp8uFIMtG61iQGwBrvLorEF3OKBN52E1qE6m5j77yeafHULJBl1YzAs
- 9d2mbVcmos4VmCfntE+PFtf5o4Gr1RecmNt9cdbSSQmw2PJX2DkfG6pSLNQxYlTiXAvTfv
- 5AF20ubHP3OZ+O7uUhlsYeSHBXOAGio=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nZADfM4Rk6lSK14WufsCDxXHPLCoOT6oqTcdsPglMpA=;
+ b=HCQVa/GZM3pTbNI/SVEeBQrNwwyk7mLEJmkM2nBxsb8AesKaJYzkvHxS3/4Uc99PhRcEle
+ hS+CQ1p97AAQESZPUPs4EckJJdXooHENLo5Ji4KbYZnl+a42v08cpBNNYDS+NAtOMsiwH4
+ PzvCSBkX+pPZ5uw3mW1mr5Kr1AC++dI=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-riNfy6FYMSq2__uG_qhBSA-1; Mon, 11 Aug 2025 08:24:25 -0400
-X-MC-Unique: riNfy6FYMSq2__uG_qhBSA-1
-X-Mimecast-MFC-AGG-ID: riNfy6FYMSq2__uG_qhBSA_1754915065
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-7074f138855so79633046d6.1
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:24:25 -0700 (PDT)
+ us-mta-533-a2otsQZnMdme66d9kys9Bg-1; Mon, 11 Aug 2025 08:25:23 -0400
+X-MC-Unique: a2otsQZnMdme66d9kys9Bg-1
+X-Mimecast-MFC-AGG-ID: a2otsQZnMdme66d9kys9Bg_1754915123
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7e7f74baf26so1008066085a.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:25:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754915065; x=1755519865;
+ d=1e100.net; s=20230601; t=1754915123; x=1755519923;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZNDNwdUBEdA+RwgREB/qeqZvHlrty3zXHwgfYyraMis=;
- b=Jxkwwyey+5h+EeEukXR5dIAD+6kaHYOKCGTIzkgL5qHobiabTrhiYS/kOxXAfwOT94
- 0d7uEaR+RNwopxg0RUoSRJcxPAZZ5JnD6irrfsZmgU2hyFjh0weIxPw5t63ZwsmmI4LC
- J2kGWpS/1wihbT/9RJw9sF8N8MVaRTCxzNvbZlMkekmV/YmVE3drgkDtxw4OuBqc4vBU
- nV4BeFbj+YOxiDsNrNmj9eFxJAo/nI6VfLi2y/FuPaM2EAaDxzLyE+VW6Hd4ImsIhOHb
- wP/bWgtewoTjgjflpfVp1sgKbaNbwX6cIOAC91yepi+WMOrAfyhzkSoFMqd3cHP28EC+
- Ffqg==
+ bh=nZADfM4Rk6lSK14WufsCDxXHPLCoOT6oqTcdsPglMpA=;
+ b=ckL+yBvwaYzJCMJQyRaHW0mPXaW2prxrjGR8yMPfE9/Y47q3yfpijrT2YfDLSDAI48
+ 8HQGRQ623WEEx9NJtGpD9HFPpWpXPr0jD8h9KUlzto7KRi7KXqhqj4+06uw9/B7UU8dy
+ dT3UFtEJ6p9M1kalnV5APp+ltNyYmREybrCnphb/hxxC/hZvBJKTJrdwQSb1SB9KLiOT
+ JnK4EAN2UOib1Zj9MbBTn6nmGJm7kb6Hs/Tq8FG3J26ObOM52fRFyOFInIczv+FSpei8
+ a1pMwtJc2O48d28g1iLU5+s9xu2f319OCkorHcyciFH4YpYjP/Bt4hCylA/8scSzpXEJ
+ ND3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXp2eiIaPEF3HUxTL8Ph+bc+f3zU527qnTbM02c9H4TAKp0oz5Ut+rfUIZxL4spTDNIJuPEZhIFv+6N@nongnu.org
-X-Gm-Message-State: AOJu0Yzj2fbs+xCVYn4Ux3u0BWc1g7nJIKze3qYZ880eTcdke2Y8XVgZ
- bwAGLOffyl3vRHZ78HZz5etIM0hirQq0CoYYIfRmZoFMLZpb/1nNVAicUgxKWhEpsW3QbWCRWW+
- yMrwRSnSwT+836ho/1LpcLAg3Suht5XpMagUUlQ2LpWvHwC0MNGzRC5kX
-X-Gm-Gg: ASbGncuLmSbcP4hl62tS+ahJnBxz66ShYChaQb7LLL6/VZERyQvbsELQnS5hTgj2Vjc
- Yxe8S0prFDWO106fKshaMRWAUvxlePXya6sVQaKb4DGgfaRo5HDPYL8xdYamIi5Nnt+2lrr2hvJ
- ni/PvQLVAp/lnnD5KrnF+wSnRKzi61Ogcv2Cv6RVTqstyPFLu6del2O5v9yiVpffOQWN/xcyG06
- lOOhWEbADTEsh1BEI1F5xrdlo7LLhWSR7RakPmOXwTqEsEKPuaSP6aW92kkEbac2TUnAI8j0iuJ
- ZG5QR2oBBWdmQpeZGAtvIGq6R1aoCl7XHlTzJNszujafbpq83yn2Ip98oqiJr6MxCdn50YFOrIl
- lig==
-X-Received: by 2002:a05:6214:5c82:b0:709:9e64:93f5 with SMTP id
- 6a1803df08f44-7099e64973amr133467616d6.41.1754915065179; 
- Mon, 11 Aug 2025 05:24:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNZW5ImDKv49ImmOs2lVgJaMJlwCkygyTQIbuLUPRtpaE1lCTtPFwHyt+K6OZtQ/1ljfiBow==
-X-Received: by 2002:a05:6214:5c82:b0:709:9e64:93f5 with SMTP id
- 6a1803df08f44-7099e64973amr133467306d6.41.1754915064836; 
- Mon, 11 Aug 2025 05:24:24 -0700 (PDT)
+ AJvYcCV6+Rhu0U9kYyesSfk/JEQanf3LiKkQo63gdc49bmGFU3RxFntHjAGEZHBqoxvq7vS7eQbIeK8h/mU9@nongnu.org
+X-Gm-Message-State: AOJu0YzCfPbTAdoLVZCboWPvnCDRsuwhZRIGfhe0TsHz6pBcp2zjjs1i
+ 28ObP/AEPRcwXau8uNiIkmGQu6J3vCyMmd8YevJ9jxUTBLG20k6Xaq9CDhKsdVMfhKGCoVeEve9
+ sw7uNC3PWOm3S6kKRRVmXKetqUL2t29AO93+1Z2dEP1QoOSqSbWCwnh/k
+X-Gm-Gg: ASbGncv3g5feK4TferTRrRT4bgKqMD/Ou2+GGNrVkSxdlrxTCyxSNnqUefr0R2RsHxh
+ Ca/ZAwtvuVLU7l/ssB4dXKZwf4BrKvUfzlvP3QTJtZ/iItyPRmC8a6JfHqYxomK8yKhITYS1jDu
+ VSiCszFSfwa8QSnK8bYhQVD6Cl5REo7vQgI1W7RJV1A6meJPyyiAL0d4jJHpurw8UojcO39bxth
+ mT6PeGlEx1JO+GXwxqQkgmTDMxaCVrg62kPrfj+1esfJ6oQjhv3zudPcPyhb7N92ZNAw3d2EhJN
+ HBjn5YkD1rc0zGRHP02QQbFS1wDUbXhE7Vbq5/8UYxrhFUPg0MM42Kt5Uw/Q9WAC3atnqZWSPXh
+ NCQ==
+X-Received: by 2002:a05:620a:2343:b0:7e8:6cf:5fe5 with SMTP id
+ af79cd13be357-7e82c79c248mr1445809385a.65.1754915122770; 
+ Mon, 11 Aug 2025 05:25:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJt4Y1zsJXvt8PL0nh2Puqy0Ms84/vjgKyryYFTHnCiM35jbsQC/3efeiTJm79yyPnvhF5qQ==
+X-Received: by 2002:a05:620a:2343:b0:7e8:6cf:5fe5 with SMTP id
+ af79cd13be357-7e82c79c248mr1445804185a.65.1754915122119; 
+ Mon, 11 Aug 2025 05:25:22 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077c9d6d6csm154710566d6.4.2025.08.11.05.24.22
+ af79cd13be357-7e818bd06c9sm780823185a.34.2025.08.11.05.25.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 05:24:24 -0700 (PDT)
-Message-ID: <d1ed13f8-fcbf-43b5-a01f-0ac9e64d5cde@redhat.com>
-Date: Mon, 11 Aug 2025 14:24:20 +0200
+ Mon, 11 Aug 2025 05:25:21 -0700 (PDT)
+Message-ID: <546c76c8-4416-4a93-a17b-7abf677f0380@redhat.com>
+Date: Mon, 11 Aug 2025 14:25:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/22] vfio-user/pci.c: update VFIOUserPCIDevice
- declaration
+Subject: Re: [PATCH 13/22] vfio-user/pci.c: rename VFIOUserPCIDevice device
+ field to parent_obj
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  danielhb413@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
  farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
@@ -88,7 +88,7 @@ To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  tomitamoeko@gmail.com, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
- <20250715093110.107317-12-mark.caveayland@nutanix.com>
+ <20250715093110.107317-14-mark.caveayland@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -134,10 +134,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250715093110.107317-12-mark.caveayland@nutanix.com>
+In-Reply-To: <20250715093110.107317-14-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -146,8 +146,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,8 +163,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/15/25 11:25, Mark Cave-Ayland wrote:
-> Update the VFIOUserPCIDevice declaration so that it is closer to our coding
-> guidelines: add a blank line after the parent object.
+> Now that nothing accesses the device field directly, rename device to
+> parent_obj as per our current coding guidelines.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
@@ -178,20 +177,21 @@ C.
 
 
 > ---
->   hw/vfio-user/pci.c | 1 +
->   1 file changed, 1 insertion(+)
+>   hw/vfio-user/pci.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-> index be71c77729..da6fe51809 100644
+> index e23a941605..9380766548 100644
 > --- a/hw/vfio-user/pci.c
 > +++ b/hw/vfio-user/pci.c
-> @@ -21,6 +21,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
+> @@ -20,7 +20,7 @@
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
 >   
 >   struct VFIOUserPCIDevice {
->       VFIOPCIDevice device;
-> +
+> -    VFIOPCIDevice device;
+> +    VFIOPCIDevice parent_obj;
+>   
 >       SocketAddress *socket;
 >       bool send_queued;   /* all sends are queued */
->       uint32_t wait_time; /* timeout for message replies */
 
 
