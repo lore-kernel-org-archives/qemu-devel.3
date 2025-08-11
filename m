@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 350D7C87FD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C95DC87FD2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 12:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulRZR-00027o-7A; Mon, 11 Aug 2025 08:24:12 -0400
+	id 1ulRaD-0003QT-N1; Mon, 11 Aug 2025 08:24:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRZO-00020p-Bb
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:24:06 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRa0-00038s-Md
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:24:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRZH-0006vV-Tf
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:24:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulRZq-00074Q-Vn
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 08:24:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754915038;
+ s=mimecast20190719; t=1754915066;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=K2c3rB3E78TyUjkmd32xBgL03GaOaqi4F9ltdgBh1BI=;
- b=Fb+71pCCjbAG9AyfRqDZA2/j5+vtmEylDXBIT7KDZa3ha7+eGy4S/+aU3EYIS5463rMAba
- GXRZ+xSKBEoomLeZQ5giHlXlXe6d0oYyruIfBNADkETAsYeRt/fxbbQjl4OcIplbXk1bnq
- OgZOJQvUlEdFguX9Fc1P2xEynIcpI1g=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZNDNwdUBEdA+RwgREB/qeqZvHlrty3zXHwgfYyraMis=;
+ b=YXtv3ZQY+I5kj9skp8uFIMtG61iQGwBrvLorEF3OKBN52E1qE6m5j77yeafHULJBl1YzAs
+ 9d2mbVcmos4VmCfntE+PFtf5o4Gr1RecmNt9cdbSSQmw2PJX2DkfG6pSLNQxYlTiXAvTfv
+ 5AF20ubHP3OZ+O7uUhlsYeSHBXOAGio=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-74-pmkjEhzhOAC5ADfU37_vlQ-1; Mon, 11 Aug 2025 08:23:56 -0400
-X-MC-Unique: pmkjEhzhOAC5ADfU37_vlQ-1
-X-Mimecast-MFC-AGG-ID: pmkjEhzhOAC5ADfU37_vlQ_1754915036
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7e8100bef92so982047885a.2
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:23:56 -0700 (PDT)
+ us-mta-484-riNfy6FYMSq2__uG_qhBSA-1; Mon, 11 Aug 2025 08:24:25 -0400
+X-MC-Unique: riNfy6FYMSq2__uG_qhBSA-1
+X-Mimecast-MFC-AGG-ID: riNfy6FYMSq2__uG_qhBSA_1754915065
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-7074f138855so79633046d6.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 05:24:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754915036; x=1755519836;
+ d=1e100.net; s=20230601; t=1754915065; x=1755519865;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K2c3rB3E78TyUjkmd32xBgL03GaOaqi4F9ltdgBh1BI=;
- b=tTVuZKaLWlQX2Ep2yS773usO7uBJz/LQnqQQfes2TzO2XcTfLVm/EoJImdXK6uXxQz
- Lisafay/2RbM9nl3K+8eD66DtuTagD/54PHG7HfN7eCOH+UVq11SGn/NCJfPXPeFZIDV
- SjdjI9q+fpA7H5rYF46kAq1jQsrVv3N9bePPaJk7IxIJYuoUl9WU9OkVFX/cGoSDxoSl
- gUGcCPuDHUN2Q/ZiKIjdadbxl8iyHtjSpjktaI/KMijv7uldoD1DD5peLIxbxW2coRmD
- zld2thiYf0TmepXc6voffhQ3J0cEJ/oxZwiWpuX0nxeTSY5IDgqlZtw+khb+uX5x5Nzq
- NguA==
+ bh=ZNDNwdUBEdA+RwgREB/qeqZvHlrty3zXHwgfYyraMis=;
+ b=Jxkwwyey+5h+EeEukXR5dIAD+6kaHYOKCGTIzkgL5qHobiabTrhiYS/kOxXAfwOT94
+ 0d7uEaR+RNwopxg0RUoSRJcxPAZZ5JnD6irrfsZmgU2hyFjh0weIxPw5t63ZwsmmI4LC
+ J2kGWpS/1wihbT/9RJw9sF8N8MVaRTCxzNvbZlMkekmV/YmVE3drgkDtxw4OuBqc4vBU
+ nV4BeFbj+YOxiDsNrNmj9eFxJAo/nI6VfLi2y/FuPaM2EAaDxzLyE+VW6Hd4ImsIhOHb
+ wP/bWgtewoTjgjflpfVp1sgKbaNbwX6cIOAC91yepi+WMOrAfyhzkSoFMqd3cHP28EC+
+ Ffqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhtsO/Wm9Uvskhr3vL/B0JAb2EJhi90hE+MtVHNMajIqp/cjUOApyXw1o98+PeUwU/ca/qGsxEJlg/@nongnu.org
-X-Gm-Message-State: AOJu0Yy8zlZmVsptoJdIeIxmHVTke6CKYSkp6xVJeRkJbar0cIFdUHmp
- /rbPrFMwMcOiGEV8BHG4v9tAK5F5w4mYJVFsUtvYpdDu7m+kJKVeahkWUOV7CD0uhAJrOYUyFFD
- kNb3hVa+xxj0vhJ8JWjO8RxQMwA84AEu/FgLHvOD/KQQrwIK+zAYXNJSi
-X-Gm-Gg: ASbGncsxw98TFK2duov1ps9deK5Zp/Tf1jwf43uhoQMqlvwI6GP33MAo2LicRd2hgsR
- 7vsv6+Ln81OWWjMuzdktgWf3NF/XbM2ewkGHhSzLLYjNsb+TV3yLa7ep/LxXrwArK9lIspYPHrM
- tq5+XVGZEqmXyXUa+690PZM3916NNruGU4uegWnKQMkgH5hyZvNSCjyT5CCAF8NXb3YQ6s5rsIL
- l2WNFYHlV8/hwTWqJLgCCOxmFzGqEhtTV94xFE6xDPskKZdgfhs6TDKRGA4dSMX+0RVWKf2XUNb
- i5g17v4gjb7byrXE1eSS+/KgURtWum8hAiN7o0h195dtF/rfF0CR0O72BHEuQGGWBZjRM9/oETg
- RkA==
-X-Received: by 2002:a05:620a:1aa1:b0:7e8:3d43:1661 with SMTP id
- af79cd13be357-7e83d43173cmr1037271185a.63.1754915035896; 
- Mon, 11 Aug 2025 05:23:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTxEciyQV5erlVMvrb0uNrUeGr7aYUqlzbJSYEtE/7SYf4N1q+N3Jq5TGeHZJVIDMuQF2/Nw==
-X-Received: by 2002:a05:620a:1aa1:b0:7e8:3d43:1661 with SMTP id
- af79cd13be357-7e83d43173cmr1037265585a.63.1754915035267; 
- Mon, 11 Aug 2025 05:23:55 -0700 (PDT)
+ AJvYcCXp2eiIaPEF3HUxTL8Ph+bc+f3zU527qnTbM02c9H4TAKp0oz5Ut+rfUIZxL4spTDNIJuPEZhIFv+6N@nongnu.org
+X-Gm-Message-State: AOJu0Yzj2fbs+xCVYn4Ux3u0BWc1g7nJIKze3qYZ880eTcdke2Y8XVgZ
+ bwAGLOffyl3vRHZ78HZz5etIM0hirQq0CoYYIfRmZoFMLZpb/1nNVAicUgxKWhEpsW3QbWCRWW+
+ yMrwRSnSwT+836ho/1LpcLAg3Suht5XpMagUUlQ2LpWvHwC0MNGzRC5kX
+X-Gm-Gg: ASbGncuLmSbcP4hl62tS+ahJnBxz66ShYChaQb7LLL6/VZERyQvbsELQnS5hTgj2Vjc
+ Yxe8S0prFDWO106fKshaMRWAUvxlePXya6sVQaKb4DGgfaRo5HDPYL8xdYamIi5Nnt+2lrr2hvJ
+ ni/PvQLVAp/lnnD5KrnF+wSnRKzi61Ogcv2Cv6RVTqstyPFLu6del2O5v9yiVpffOQWN/xcyG06
+ lOOhWEbADTEsh1BEI1F5xrdlo7LLhWSR7RakPmOXwTqEsEKPuaSP6aW92kkEbac2TUnAI8j0iuJ
+ ZG5QR2oBBWdmQpeZGAtvIGq6R1aoCl7XHlTzJNszujafbpq83yn2Ip98oqiJr6MxCdn50YFOrIl
+ lig==
+X-Received: by 2002:a05:6214:5c82:b0:709:9e64:93f5 with SMTP id
+ 6a1803df08f44-7099e64973amr133467616d6.41.1754915065179; 
+ Mon, 11 Aug 2025 05:24:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNZW5ImDKv49ImmOs2lVgJaMJlwCkygyTQIbuLUPRtpaE1lCTtPFwHyt+K6OZtQ/1ljfiBow==
+X-Received: by 2002:a05:6214:5c82:b0:709:9e64:93f5 with SMTP id
+ 6a1803df08f44-7099e64973amr133467306d6.41.1754915064836; 
+ Mon, 11 Aug 2025 05:24:24 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e80b9ed261sm967981785a.53.2025.08.11.05.23.52
+ 6a1803df08f44-7077c9d6d6csm154710566d6.4.2025.08.11.05.24.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 05:23:54 -0700 (PDT)
-Message-ID: <19b50be7-5009-4a33-8f92-fae052d37a58@redhat.com>
-Date: Mon, 11 Aug 2025 14:23:51 +0200
+ Mon, 11 Aug 2025 05:24:24 -0700 (PDT)
+Message-ID: <d1ed13f8-fcbf-43b5-a01f-0ac9e64d5cde@redhat.com>
+Date: Mon, 11 Aug 2025 14:24:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/22] vfio-user/container.h: rename VFIOUserContainer
- bcontainer field to parent_obj
+Subject: Re: [PATCH 11/22] vfio-user/pci.c: update VFIOUserPCIDevice
+ declaration
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  danielhb413@gmail.com, harshpb@linux.ibm.com, mjrosato@linux.ibm.com,
  farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
@@ -88,7 +88,7 @@ To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, npiggin@gmail.com,
  tomitamoeko@gmail.com, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
- <20250715093110.107317-11-mark.caveayland@nutanix.com>
+ <20250715093110.107317-12-mark.caveayland@nutanix.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -134,7 +134,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250715093110.107317-11-mark.caveayland@nutanix.com>
+In-Reply-To: <20250715093110.107317-12-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -146,7 +146,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,8 +164,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/15/25 11:25, Mark Cave-Ayland wrote:
-> Now that nothing accesses the bcontainer field directly, rename bcontainer to
-> parent_obj as per our current coding guidelines.
+> Update the VFIOUserPCIDevice declaration so that it is closer to our coding
+> guidelines: add a blank line after the parent object.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
@@ -177,21 +178,20 @@ C.
 
 
 > ---
->   hw/vfio-user/container.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/vfio-user/pci.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/vfio-user/container.h b/hw/vfio-user/container.h
-> index d5d2275af7..96aa6785d9 100644
-> --- a/hw/vfio-user/container.h
-> +++ b/hw/vfio-user/container.h
-> @@ -14,7 +14,7 @@
+> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+> index be71c77729..da6fe51809 100644
+> --- a/hw/vfio-user/pci.c
+> +++ b/hw/vfio-user/pci.c
+> @@ -21,6 +21,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
 >   
->   /* MMU container sub-class for vfio-user. */
->   struct VFIOUserContainer {
-> -    VFIOContainerBase bcontainer;
-> +    VFIOContainerBase parent_obj;
->   
->       VFIOUserProxy *proxy;
->   };
+>   struct VFIOUserPCIDevice {
+>       VFIOPCIDevice device;
+> +
+>       SocketAddress *socket;
+>       bool send_queued;   /* all sends are queued */
+>       uint32_t wait_time; /* timeout for message replies */
 
 
