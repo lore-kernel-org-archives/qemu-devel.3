@@ -4,64 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28633C87FDA
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 03:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C3CC87FD2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 03:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulJeW-00034H-Nz; Sun, 10 Aug 2025 23:56:52 -0400
+	id 1ulJgE-0004AJ-HZ; Sun, 10 Aug 2025 23:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
- id 1ulJeS-00033d-OC; Sun, 10 Aug 2025 23:56:48 -0400
-Received: from mail-m16.yeah.net ([1.95.21.14])
+ id 1ulJg6-00046X-EA; Sun, 10 Aug 2025 23:58:31 -0400
+Received: from mail-m16.yeah.net ([220.197.32.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <z_bajeer@yeah.net>)
- id 1ulJeG-0007Hz-NG; Sun, 10 Aug 2025 23:56:47 -0400
+ id 1ulJfz-0007RB-Jl; Sun, 10 Aug 2025 23:58:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
- s=s110527; h=From:To:Subject:Date:Message-ID:Content-Type:
- MIME-Version; bh=pNy36qnADJdi/OTXXH0uJot0CjBtgTJCXTs3njtaOE0=;
- b=f1G0osN10QcoNeK2mIGx0QfBQD8y9wCqPZkhXTBK861bzqnnj4+2Ks6Iv4ER9O
- VduHbsquQ9zbdS4pQi+rhNPZiMMra023yVBCYkMpBoDrbsIOvKOrz/aord3c44i2
- rzJ7D1hDPgiJY9TogKZNQwYO5vqQumKPZrB4Z64j5akNc=
-Received: from OS3PR01MB7756.jpnprd01.prod.outlook.com (unknown [])
- by gzsmtp2 (Coremail) with SMTP id Ms8vCgDX_yC4aZloz2VuAg--.51059S2;
- Mon, 11 Aug 2025 11:55:38 +0800 (CST)
-From: "z_bajeer@yeah.net" <z_bajeer@yeah.net>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-CC: "yangjialong@rvcore.com" <yangjialong@rvcore.com>, "qemu-riscv@nongnu.org"
- <qemu-riscv@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- Anup Patel <apatel@ventanamicro.com>
-Subject: =?utf-8?B?5Zue5aSNOiBbUEFUQ0hdIGFwbGljOiBmaXggbWFzayBmb3Igc21zaWFkZHJj?=
- =?utf-8?Q?fgh?=
-Thread-Topic: [PATCH] aplic: fix mask for smsiaddrcfgh
-Thread-Index: AXJfMS4wF+90RIIgOM3NZD4W960JKTBlMjQ30dNZUZ8=
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Mon, 11 Aug 2025 03:55:34 +0000
-Message-ID: <OS3PR01MB7756D332D424A17A553B2D75F528A@OS3PR01MB7756.jpnprd01.prod.outlook.com>
-References: <20250807082346.3752212-1-z_bajeer@yeah.net>
- <5a03a487-cd96-480c-b420-2ebfe4e15550@ventanamicro.com>
-In-Reply-To: <5a03a487-cd96-480c-b420-2ebfe4e15550@ventanamicro.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator: 
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-msip_labels: 
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=uB
+ koBmcdvuPo7oUAhA1VSaTg/FGyWr70u9Y0O+L5rOk=; b=p44bNTjm3Hdy/k9Tib
+ uuJzPGIMbDNuLW0QrupjviVeuSetc4h2eDJ5FMFMpepxUqXZXwxAcdZAZ1hbESmr
+ OebTOk/UNV+mLhqkGrvkKIqxuoVZprBluAUu5gynMZ6qlKl28PP/8UzmF/SdJlA0
+ PG9wQrDT5MjdP+ap+6sxbFZjQ=
+Received: from vcore-181.. (unknown [])
+ by gzsmtp1 (Coremail) with SMTP id Mc8vCgD3n90vaplo2XtlAg--.61904S2;
+ Mon, 11 Aug 2025 11:57:37 +0800 (CST)
+From: Yang Jialong <z_bajeer@yeah.net>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: yangjialong@rvcore.com, Yang Jialong <z_bajeer@yeah.net>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v2] aplic: fix mask for smsiaddrcfgh
+Date: Mon, 11 Aug 2025 11:44:53 +0800
+Message-Id: <20250811034454.189208-1-z_bajeer@yeah.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-CM-TRANSID: Ms8vCgDX_yC4aZloz2VuAg--.51059S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3Ar1ruFyfKFWDWF17tw1DWrg_yoWxCr4rpr
- 4kKFyUJrW5Jr18Ka1rK3WUXryUJryDAa4DGr1kWa4UtF18Jr1qgrs09r1j9r1UJrWrGr15
- Jr1jqr1UZF47J3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRJrchUUUUU=
-X-Originating-IP: [2603:1046:c0a:2099::5]
-X-CM-SenderInfo: p2betyxhhuq5hhdkh0dhw/1tbiNRsJLGiZabvvLAAA3r
-Received-SPF: pass client-ip=1.95.21.14; envelope-from=z_bajeer@yeah.net;
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: Mc8vCgD3n90vaplo2XtlAg--.61904S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxZF1UGryrZw13Cr4kZw1fZwb_yoW5uF1xpF
+ 4kGwsxKF45Jr1xKanay3WxJry3JrykC3sFyr1DW3409F4kZrs0934kKr4q9ry5JryfCr15
+ Aw4Fq3WDWFsxA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UeBT5UUUUU=
+X-Originating-IP: [49.7.252.142]
+X-CM-SenderInfo: p2betyxhhuq5hhdkh0dhw/1tbiBBOmI2iZJXrFQgAAs7
+Received-SPF: pass client-ip=220.197.32.17; envelope-from=z_bajeer@yeah.net;
  helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,117 +73,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiBDQ2luZyBBbnVwCj4gCj4gT24gOC83LzI1IDU6MjMgQU0sIFlhbmcgSmlhbG9uZyB3cm90ZToK
-PiA+IDQuNS40LiBTdXBlcnZpc29yIE1TSSBhZGRyZXNzIGNvbmZpZ3VyYXRpb24gKHNtc2lhZGRy
-Y2ZnIGFuZAo+ID7CoMKgwqAgc21zaWFkZHJjZmdoKQo+ID4gc21zaWFkZHJjZmdoOgo+ID7CoMKg
-wqDCoMKgwqDCoCBiaXRzIDIyOjIwIExIWFMoV0FSTCkKPiA+wqDCoMKgwqDCoMKgwqAgYml0cyAx
-MTowwqAgSGlnaCBCYXNlIFBQTihXQVJMKQo+ID4gCj4gPiBTaWduZWQtb2ZmLWJ5OiBZYW5nIEpp
-YWxvbmcgPHpfYmFqZWVyQHllYWgubmV0Pgo+ID4gLS0tCj4gCj4gVGhpcyBwYXRjaCBpcyBjYXVz
-aW5nIGJvb3Qgc2xvd2Rvd25zIGluIGEgc2V0dXAgSSBoYXZlIHdpdGggVWJ1bnR1IDI1LjA0IGFu
-ZAo+IGlvbW11IGVuYWJsZWQuIFRoaXMgaXMgdGhlIGNvbW1hbmQgbGluZSBJJ20gdXNpbmc6Cj4g
-Cj4gcWVtdS1zeXN0ZW0tcmlzY3Y2NCBcCj4gwqDCoMKgwqDCoMKgwqAgLW1hY2hpbmUgdmlydCxp
-b21tdS1zeXM9b24sYWlhPWFwbGljLWltc2ljLGFpYS1ndWVzdHM9NSAtbm9ncmFwaGljIC1tIDhH
-IC1zbXAgOCBcCj4gwqDCoMKgwqDCoMKgwqAgLWNwdSBydjY0IFwKPiDCoMKgwqDCoMKgwqDCoCAt
-a2VybmVsIHUtYm9vdCBcCj4gwqDCoMKgwqDCoMKgwqDCoCAtbmV0ZGV2IGJyaWRnZSxpZD1icmlk
-Z2UxLGJyPXZpcmJyMCAtZGV2aWNlIHZpcnRpby1uZXQtcGNpLG5ldGRldj1icmlkZ2UxIFwKPiDC
-oMKgwqDCoMKgwqDCoMKgIC1kZXZpY2UgdmlydGlvLXJuZy1wY2kgXAo+IMKgwqDCoMKgwqDCoMKg
-wqAgLWRyaXZlIGZpbGU9dWJ1bnR1LTI1LjA0LXByZWluc3RhbGxlZC1zZXJ2ZXItcmlzY3Y2NC5p
-bWcsZm9ybWF0PXJhdyxpZj12aXJ0aW8gXAo+IMKgwqDCoMKgwqDCoMKgIC1uZXRkZXYgdXNlcixp
-ZD1uZXQxLG5ldD0xMC4wLjIuMC8yNCBcCj4gwqDCoMKgwqDCoMKgwqAgLWRldmljZSBlMTAwMGUs
-bmV0ZGV2PW5ldDEKPiAKPiBBIHJlZ3VsYXIgYm9vdCBvZiB0aGlzIHNldHVwLCB3aXRob3V0IHRo
-aXMgcGF0Y2gsIGZpbmlzaGVzIGFyb3VuZCB+MzAgc2Vjb25kczoKPiAKPiAKPiAoLi4uKQo+IFvC
-oMKgIDI5LjgzMTMzNl0gc2hbNzk4XTogQ29tcGxldGVkIHNvY2tldCBpbnRlcmFjdGlvbiBmb3Ig
-Ym9vdCBzdGFnZSBmaW5hbAo+IAo+IFVidW50dSAyNS4wNCB1YnVudHUgdHR5UzAKPiAKPiB1YnVu
-dHUgbG9naW46Cj4gCj4gCj4gV2l0aCB0aGlzIHBhdGNoIEkgYW0gZXhwZXJpZW5jaW5nIGEgYm9v
-dCBzbG93ZG93bi4gTm90ZSB0aGUgJ2RtZXNnJyB0aW1lc3RhbXBzOgo+IAo+ICguLi4pCj4gW8Kg
-wqDCoCA4LjE2NzYzOV0gRVhUNC1mcyAodmRhMSk6IG1vdW50ZWQgZmlsZXN5c3RlbSBmYjgwNGUz
-Zi1mNTljLTQxZDctYWI0OC0yMGMyYWY3MWFkMWEgcm8gd2l0aCBvcmRlcmVkIGRhdGEgbW9kZS4g
-UXVvdGEgbW9kZTogZGlzYWJsZWQuCj4gW8KgwqAgNzAuNjYyNjQ4XSBzeXN0ZW1kWzFdOiBzeXN0
-ZW1kIDI1Ny40LTF1YnVudHUzLjEgcnVubmluZyBpbiBzeXN0ZW0gbW9kZSAoK1BBTSArQVVESVQg
-K1NFTElOVVggK0FQUEFSTU9SICtJTUEgK0lQRSArU01BQ0sgK1NFQ0NPTVAgK0dDUllQVCAtR05V
-VExTICtPUEVOU1NMICtBQ0wgK0JMS0lEICtDVVJMICtFTEZVVElMUyArRklETzIgK0lETjIgLUlE
-TiArSVBUQyArS01PRCArTElCQ1JZUFRTRVRVUCArTElCQ1JZUFRTRVRVUF9QTFVHSU5TICtMSUJG
-RElTSyArUENSRTIgK1BXUVVBTElUWSArUDExS0lUICtRUkVOQ09ERSArVFBNMiArQlpJUDIgK0xa
-NCArWFogK1pMSUIgK1pTVEQgLUJQRl9GUkFNRVdPUksgLUJURiAtWEtCQ09NTU9OIC1VVE1QICtT
-WVNWSU5JVCArTElCQVJDSElWRSkKPiBbwqDCoCA3MC42NjUwNDFdIHN5c3RlbWRbMV06IERldGVj
-dGVkIHZpcnR1YWxpemF0aW9uIHFlbXUuCj4gW8KgwqAgNzAuNjY1NTgxXSBzeXN0ZW1kWzFdOiBE
-ZXRlY3RlZCBhcmNoaXRlY3R1cmUgcmlzY3Y2NC4KPiBbwqAgMTAxLjM4NDM0OF0gc3lzdGVtZFsx
-XTogSG9zdG5hbWUgc2V0IHRvIDx1YnVudHU+Lgo+IFvCoCAxMzMuNDY3MDEyXSBzeXN0ZW1kWzFd
-OiBRdWV1ZWQgc3RhcnQgam9iIGZvciBkZWZhdWx0IHRhcmdldCBncmFwaGljYWwudGFyZ2V0Lgo+
-IFvCoCAxMzMuNTczNzk3XSBzeXN0ZW1kWzFdOiBDcmVhdGVkIHNsaWNlIHN5c3RlbS1tb2Rwcm9i
-ZS5zbGljZSAtIFNsaWNlIC9zeXN0ZW0vbW9kcHJvYmUuCj4gW8KgIDE2NC44ODk4MzddIHN5c3Rl
-bWRbMV06IENyZWF0ZWQgc2xpY2Ugc3lzdGVtLXNlcmlhbFx4MmRnZXR0eS5zbGljZSAtIFNsaWNl
-IC9zeXN0ZW0vc2VyaWFsLWdldHR5Lgo+IFvCoCAxOTUuNjA4NDEzXSBzeXN0ZW1kWzFdOiBDcmVh
-dGVkIHNsaWNlIHN5c3RlbS1zeXN0ZW1kXHgyZGZzY2suc2xpY2UgLSBTbGljZSAvc3lzdGVtL3N5
-c3RlbWQtZnNjay4KPiBbwqAgMjI2LjMyNjc2NF0gc3lzdGVtZFsxXTogQ3JlYXRlZCBzbGljZSB1
-c2VyLnNsaWNlIC0gVXNlciBhbmQgU2Vzc2lvbiBTbGljZS4KPiBbwqAgMjU3LjA0NDY4NF0gc3lz
-dGVtZFsxXTogU3RhcnRlZCBzeXN0ZW1kLWFzay1wYXNzd29yZC13YWxsLnBhdGggLSBGb3J3YXJk
-IFBhc3N3b3JkIFJlcXVlc3RzIHRvIFdhbGwgRGlyZWN0b3J5IFdhdGNoLgo+IFvCoCAyODcuNzY0
-NTQxXSBzeXN0ZW1kWzFdOiBwcm9jLXN5cy1mcy1iaW5mbXRfbWlzYy5hdXRvbW91bnQgLSBBcmJp
-dHJhcnkgRXhlY3V0YWJsZSBGaWxlIEZvcm1hdHMgRmlsZSBTeXN0ZW0gQXV0b21vdW50IFBvaW50
-IHdhcyBza2lwcGVkIGJlY2F1c2Ugb2YgYW4gdW5tZXQgY29uZGl0aW9uIGNoZWNrIChDb25kaXRp
-b25QYXRoRXhpc3RzPS9wcm9jL3N5cy9mcy9iaW5mbXRfbWlzYykuCj4gW8KgIDI4Ny43Njc0MThd
-IHN5c3RlbWRbMV06IEV4cGVjdGluZyBkZXZpY2UgZGV2LWRpc2stYnlceDJkbGFiZWwtVUVGSS5k
-ZXZpY2UgLSAvZGV2L2Rpc2svYnktbGFiZWwvVUVGSS4uLgo+ICguLi4pCj4gCj4gCj4gSSBoYXZl
-bid0IHdhaXRlZCB0byBzZWUgaG93IGxvbmcgdGhlIGxvZ2luIHByb21wdCB3b3VsZCB0YWtlLgo+
-IAo+IFRoZSB0d28gY29kZWJhc2VzICh3aXRoIGFuZCB3aXRob3V0IHRoaXMgcGF0Y2gpIHdlcmUg
-dGVzdGVkIGFyb3VuZCAxMCB0aW1lcyBlYWNoIHRvIHNlZSBpZgo+IHRoZSBzbG93ZG93bnMgd2Vy
-ZSBhbiBlbXVsYXRpb24gdmFyaWFuY2UgYW5kIHNvIG9uLiBUaGlzIGJlaGF2aW9yIGlzIGNvbnNp
-c3RlbnQuCj4gCj4gQW51cCBpcyBDQydlZCBpbiBjYXNlIGhlIGhhcyBzb21ldGhpbmcgdG8gYWRk
-LiBUaGlzIHBhdGNoIGlzIGVpdGhlciBpbmNvcnJlY3Qgb3IgTGludXgKPiBpc24ndCBwbGF5aW5n
-IHdlbGwgd2l0aCBpdCwgYnV0IGVpdGhlciB3YXkgd2UgY2FuJ3QgdGFrZSB0aGUgcmlzayBvZiBi
-cmVha2luZyBMaW51eC4KPiAKClRoZSByZWFzb24gaXMgdGhhdCB0aGUgTVNJIGFkZHJlc3MgaXMg
-Y2FsY3VsYXRlZCB3cm9uZ2x5IG5vdy4KSSBkb24ndCBrbm93biB3aHkgdGhlIGltcGxlbWVudGF0
-aW9uIG9mIG9wZW5zYmkgYW5kIHFlbXUgaGF2ZSBkaWZmZXJlbmNlIGluIHRoZSBzbXNpY2ZnYWRk
-ckggcmVnaXN0ZXIgd2l0aCBTUEVDLgpUaGUgYmVsb3cgcGF0Y2ggaXMgZm9yIG9wZW5zYmkuIEkg
-d3JpdGUgdGhlIFVSTCBoZXJlIGZvciByZWZlcmVuY2UuCmh0dHA6Ly9saXN0cy5pbmZyYWRlYWQu
-b3JnL3BpcGVybWFpbC9vcGVuc2JpLzIwMjUtQXVndXN0LzAwODcyMS5odG1sCgpJIHdpbGwgZml4
-IHRoZSBzbG93IGluIHBhdGNoIFYyLiBJdCdzIHNvIGdvb2QgdG8gdGVzdCBvdXQgdGhlIHF1ZXN0
-aW9uLgoKVGhhbmtzLAoKeWpsb29uZwoKPiAKPiBUaGFua3MsCj4gCj4gRGFuaWVsCj4gCj4gCj4g
-PsKgwqAgaHcvaW50Yy9yaXNjdl9hcGxpYy5jIHwgMTAgKysrKysrKy0tLQo+ID7CoMKgIDEgZmls
-ZSBjaGFuZ2VkLCA3IGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pCj4gPiAKPiA+IGRpZmYg
-LS1naXQgYS9ody9pbnRjL3Jpc2N2X2FwbGljLmMgYi9ody9pbnRjL3Jpc2N2X2FwbGljLmMKPiA+
-IGluZGV4IGExZDlmYTUwODUuLjE3NGNjYjNhNjQgMTAwNjQ0Cj4gPiAtLS0gYS9ody9pbnRjL3Jp
-c2N2X2FwbGljLmMKPiA+ICsrKyBiL2h3L2ludGMvcmlzY3ZfYXBsaWMuYwo+ID4gQEAgLTk2LDcg
-Kzk2LDcgQEAKPiA+wqDCoMKgwqDCoMKgIChBUExJQ194TVNJQ0ZHQUREUl9QUE5fSEhYX01BU0so
-X19oaHh3KSA8PCBcCj4gPsKgwqDCoMKgwqDCoMKgIEFQTElDX3hNU0lDRkdBRERSX1BQTl9ISFhf
-U0hJRlQoX19oaHhzKSkKPiA+wqDCoCAKPiA+IC0jZGVmaW5lIEFQTElDX3hNU0lDRkdBRERSSF9W
-QUxJRF9NQVNLwqDCoCBcCj4gPiArI2RlZmluZSBBUExJQ19NTVNJQ0ZHQUREUkhfVkFMSURfTUFT
-S8KgwqAgXAo+ID7CoMKgwqDCoMKgwqAgKEFQTElDX3hNU0lDRkdBRERSSF9MIHwgXAo+ID7CoMKg
-wqDCoMKgwqDCoCAoQVBMSUNfeE1TSUNGR0FERFJIX0hIWFNfTUFTSyA8PCBBUExJQ194TVNJQ0ZH
-QUREUkhfSEhYU19TSElGVCkgfCBcCj4gPsKgwqDCoMKgwqDCoMKgIChBUExJQ194TVNJQ0ZHQURE
-UkhfTEhYU19NQVNLIDw8IEFQTElDX3hNU0lDRkdBRERSSF9MSFhTX1NISUZUKSB8IFwKPiA+IEBA
-IC0xMDQsNiArMTA0LDEwIEBACj4gPsKgwqDCoMKgwqDCoMKgIChBUExJQ194TVNJQ0ZHQUREUkhf
-TEhYV19NQVNLIDw8IEFQTElDX3hNU0lDRkdBRERSSF9MSFhXX1NISUZUKSB8IFwKPiA+wqDCoMKg
-wqDCoMKgwqAgQVBMSUNfeE1TSUNGR0FERFJIX0JBUFBOX01BU0spCj4gPsKgwqAgCj4gPiArI2Rl
-ZmluZSBBUExJQ19TTVNJQ0ZHQUREUkhfVkFMSURfTUFTS8KgwqAgXAo+ID4gK8KgwqDCoCAoKEFQ
-TElDX3hNU0lDRkdBRERSSF9MSFhTX01BU0sgPDwgQVBMSUNfeE1TSUNGR0FERFJIX0xIWFNfU0hJ
-RlQpIHwgXAo+ID4gK8KgwqDCoMKgIEFQTElDX3hNU0lDRkdBRERSSF9CQVBQTl9NQVNLKQo+ID4g
-Kwo+ID7CoMKgICNkZWZpbmUgQVBMSUNfU0VUSVBfQkFTRcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgMHgxYzAwCj4gPsKgwqAgI2RlZmluZSBBUExJQ19TRVRJUE5VTcKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIDB4MWNkYwo+ID7CoMKgIAo+ID4gQEAgLTc3MSw3ICs3NzUsNyBA
-QCBzdGF0aWMgdm9pZCByaXNjdl9hcGxpY193cml0ZSh2b2lkICpvcGFxdWUsIGh3YWRkciBhZGRy
-LCB1aW50NjRfdCB2YWx1ZSwKPiA+wqDCoMKgwqDCoMKgIH0gZWxzZSBpZiAoYXBsaWMtPm1tb2Rl
-ICYmIGFwbGljLT5tc2ltb2RlICYmCj4gPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgKGFkZHIgPT0gQVBMSUNfTU1TSUNGR0FERFJIKSkgewo+ID7CoMKgwqDCoMKgwqDCoMKgwqDC
-oCBpZiAoIShhcGxpYy0+bW1zaWNmZ2FkZHJIICYgQVBMSUNfeE1TSUNGR0FERFJIX0wpKSB7Cj4g
-PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBhcGxpYy0+bW1zaWNmZ2FkZHJIID0gdmFsdWUgJiBB
-UExJQ194TVNJQ0ZHQUREUkhfVkFMSURfTUFTSzsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IGFwbGljLT5tbXNpY2ZnYWRkckggPSB2YWx1ZSAmIEFQTElDX01NU0lDRkdBRERSSF9WQUxJRF9N
-QVNLOwo+ID7CoMKgwqDCoMKgwqDCoMKgwqDCoCB9Cj4gPsKgwqDCoMKgwqDCoCB9IGVsc2UgaWYg
-KGFwbGljLT5tbW9kZSAmJiBhcGxpYy0+bXNpbW9kZSAmJgo+ID7CoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIChhZGRyID09IEFQTElDX1NNU0lDRkdBRERSKSkgewo+ID4gQEAgLTc5
-Miw3ICs3OTYsNyBAQCBzdGF0aWMgdm9pZCByaXNjdl9hcGxpY193cml0ZSh2b2lkICpvcGFxdWUs
-IGh3YWRkciBhZGRyLCB1aW50NjRfdCB2YWx1ZSwKPiA+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCAoYWRkciA9PSBBUExJQ19TTVNJQ0ZHQUREUkgpKSB7Cj4gPsKgwqDCoMKgwqDC
-oMKgwqDCoMKgIGlmIChhcGxpYy0+bnVtX2NoaWxkcmVuICYmCj4gPsKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgIShhcGxpYy0+bW1zaWNmZ2FkZHJIICYgQVBMSUNfeE1TSUNGR0FERFJIX0wp
-KSB7Cj4gPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBhcGxpYy0+c21zaWNmZ2FkZHJIID0gdmFs
-dWUgJiBBUExJQ194TVNJQ0ZHQUREUkhfVkFMSURfTUFTSzsKPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIGFwbGljLT5zbXNpY2ZnYWRkckggPSB2YWx1ZSAmIEFQTElDX1NNU0lDRkdBRERSSF9W
-QUxJRF9NQVNLOwo+ID7CoMKgwqDCoMKgwqDCoMKgwqDCoCB9Cj4gPsKgwqDCoMKgwqDCoCB9IGVs
-c2UgaWYgKChBUExJQ19TRVRJUF9CQVNFIDw9IGFkZHIpICYmCj4gPsKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgKGFkZHIgPCAoQVBMSUNfU0VUSVBfQkFTRSArIGFwbGljLT5iaXRmaWVsZF93
-b3JkcyAqIDQpKSkgewo=
+4.5.4. Supervisor MSI address configuration (smsiaddrcfg and
+  smsiaddrcfgh)
+smsiaddrcfgh:
+        bits 22:20 LHXS(WARL)
+        bits 11:0  High Base PPN(WARL)
+
+Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
+---
+ hw/intc/riscv_aplic.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
+
+v1 --> v2:
+- fix calculation of MSI address.
+- In Supervisor mode, lhxw/hhxs/hhxw fields are in mmsiaddrcfgh register.
+- And lhxs field is in smsiaddrcfgh.
+
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index a1d9fa5085..2dd54cafaa 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -96,7 +96,7 @@
+     (APLIC_xMSICFGADDR_PPN_HHX_MASK(__hhxw) << \
+      APLIC_xMSICFGADDR_PPN_HHX_SHIFT(__hhxs))
+ 
+-#define APLIC_xMSICFGADDRH_VALID_MASK   \
++#define APLIC_MMSICFGADDRH_VALID_MASK   \
+     (APLIC_xMSICFGADDRH_L | \
+      (APLIC_xMSICFGADDRH_HHXS_MASK << APLIC_xMSICFGADDRH_HHXS_SHIFT) | \
+      (APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
+@@ -104,6 +104,10 @@
+      (APLIC_xMSICFGADDRH_LHXW_MASK << APLIC_xMSICFGADDRH_LHXW_SHIFT) | \
+      APLIC_xMSICFGADDRH_BAPPN_MASK)
+ 
++#define APLIC_SMSICFGADDRH_VALID_MASK   \
++    ((APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
++     APLIC_xMSICFGADDRH_BAPPN_MASK)
++
+ #define APLIC_SETIP_BASE               0x1c00
+ #define APLIC_SETIPNUM                 0x1cdc
+ 
+@@ -409,13 +413,8 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
+         msicfgaddr = aplic->kvm_msicfgaddr;
+         msicfgaddrH = ((uint64_t)aplic->kvm_msicfgaddrH << 32);
+     } else {
+-        if (aplic->mmode) {
+-            msicfgaddr = aplic_m->mmsicfgaddr;
+-            msicfgaddrH = aplic_m->mmsicfgaddrH;
+-        } else {
+-            msicfgaddr = aplic_m->smsicfgaddr;
+-            msicfgaddrH = aplic_m->smsicfgaddrH;
+-        }
++        msicfgaddr = aplic_m->mmsicfgaddr;
++        msicfgaddrH = aplic_m->mmsicfgaddrH;
+     }
+ 
+     lhxs = (msicfgaddrH >> APLIC_xMSICFGADDRH_LHXS_SHIFT) &
+@@ -427,6 +426,14 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
+     hhxw = (msicfgaddrH >> APLIC_xMSICFGADDRH_HHXW_SHIFT) &
+             APLIC_xMSICFGADDRH_HHXW_MASK;
+ 
++    if (!aplic->kvm_splitmode && !aplic->mmode) {
++        msicfgaddrH = aplic_m->smsicfgaddrH;
++        msicfgaddr = aplic_m->smsicfgaddr;
++
++        lhxs = (msicfgaddrH >> APLIC_xMSICFGADDRH_LHXS_SHIFT) &
++            APLIC_xMSICFGADDRH_LHXS_MASK;
++    }
++
+     group_idx = hart_idx >> lhxw;
+ 
+     addr = msicfgaddr;
+@@ -771,7 +778,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_MMSICFGADDRH)) {
+         if (!(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
+-            aplic->mmsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
++            aplic->mmsicfgaddrH = value & APLIC_MMSICFGADDRH_VALID_MASK;
+         }
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_SMSICFGADDR)) {
+@@ -792,7 +799,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+                (addr == APLIC_SMSICFGADDRH)) {
+         if (aplic->num_children &&
+             !(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
+-            aplic->smsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
++            aplic->smsicfgaddrH = value & APLIC_SMSICFGADDRH_VALID_MASK;
+         }
+     } else if ((APLIC_SETIP_BASE <= addr) &&
+             (addr < (APLIC_SETIP_BASE + aplic->bitfield_words * 4))) {
+-- 
+2.34.1
 
 
