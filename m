@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFECC87FDB
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 10:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC433C88CB9
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Aug 2025 10:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulPKj-0002vN-Ig; Mon, 11 Aug 2025 06:00:49 -0400
+	id 1ulPSF-0004mD-8l; Mon, 11 Aug 2025 06:08:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ulPKb-0002uS-Qu
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:00:44 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulPSB-0004le-Nx
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:08:32 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ulPKW-0005I7-NL
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:00:41 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-71a38e35674so24703297b3.3
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 03:00:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulPS9-0006MI-58
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 06:08:31 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3b7910123a0so3878790f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 03:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754906434; x=1755511234; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bsPQh2cLC7nXcV2D6WOVMEq6geO8j4x4Y22KNmkTKiY=;
- b=Nb13zDJhuf+v8q5lHP7TgTFAJBMa3iA9wtcZJwywTpdbOahXNNcZX0Rn68sg8x7sC+
- UGorPjypPgVnADSe+aaeaDRrcAec8WN9TuIOx2Y3rpL5XpQrTgMr4LEof0FOP32D+fQU
- 1TVJXEftWyFt7xwmNIlNKd+jq9nYKnqWawKy+fjtsijL6SEWL5tF4SsHejF3t6zvY3rm
- 8Jc5mMr0FPKIyc8vKz92zvlcTNe+hX5+qx0HH42rY9sD355fc/nng01Ys7OAzb0Y/DSa
- pbHWlud++GWGeUt0Ze4lpMEkv81MAYWNFSxNmWmJTQFcFcopOJfTflNn4tcMG+XDDUWI
- +/tw==
+ d=linaro.org; s=google; t=1754906905; x=1755511705; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kpmDvRWC/brKYpYi3H1Xhgtpr9AfpeYTXO2kVXk6was=;
+ b=ViT+0s/9kDQ4QxK4KaRT4b/BW+8B+KS4z+x5WNN9eqCM1PCNdr24Ac0lXOV665vpJC
+ lDZZNiOV2/qX23+TOd+FAckhYIP6BLzWVgzqEzfPBXKvtSU9jjyY7hmo271T5F4sf1mO
+ G5RxCyvxWfGDRCA+W1LgnzMdNKkOmeBxDnmSLpVUNirU1VUbQhdjmEH5M49tHG3rjT3p
+ B+LXl9nXNEMcSu4/ZVdSb6jeN3qdrbDOa7j87wMAGeF7PDnWAxxTyaRHb5N1G25nXAFf
+ 0sUOcfAphGdR71v/6xKMb3xmox216dSsNYCtLikjKLFog69Frhy9ssO8+pp62jnZsFqt
+ /qGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754906434; x=1755511234;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bsPQh2cLC7nXcV2D6WOVMEq6geO8j4x4Y22KNmkTKiY=;
- b=SzprzvdCRJh9q5Xwd66ZdKt2lDUMZ6g8gIVKWXMyv7R3LBok0LMTnhVvSABOczckGv
- rI0MKs+Ca0p8W79QY1aZWmHG18Ga4HBk6XY6CVLtBaxp3r9nYHO4IkWBDjN0s6Bwc6s1
- WbaovUDlg/6+ERUPeVY3boJONYLrbvi5+9yMyvlnLtkxoK2pTZ/ox8vRYq4f+J6GUobc
- YsEhtgs70PWcY5KxuUkxiDyyvWAZ+BQBEeRtuTfS2OpfTfY2ZKDtYsdMLo6GW4vijRoq
- pDQS1OoKl8bMtrJJOUIw63/19elUZMyClOITMEpTmCy8YD50RCVtKG7tj2NNnlWe2Cp7
- N6mw==
-X-Gm-Message-State: AOJu0YwUz88Ni/Rmfi/WyBEPVcO5chxhTxtawzWnGt8bSQaaE/vv/YlO
- 5CIuQuu3efB3qJ+OQZSbE2gk7KfGoAWVCPdQUHpMQiehV+ZwDDzKUAyBtCiZq8b5yVZ+ujaujRB
- HdmXVju5O5Z/V9Nk+LwZCkZqhueBdLhPHB05E8wu4eA==
-X-Gm-Gg: ASbGncv2QDYmQ7ZWpnFMJ8VnGjMlh3/RWhbagLoDGrD7jZJqwANfBdxExBahKqdDHZM
- 647oZ09cmuyW2VcS+BwafaDKFy9A7OZhRNnKQv1PE5vkpvOkwpaXJNCTNoP1rNJ1wf+3zPZCUQM
- 6+M3EErCs0VI7pnUlo6xGYMDxbMmCmPPJWkodGRBHMFDvqWieMbqPHDEhBoRJIagbbOsuVh8xsh
- KfFTLZU
-X-Google-Smtp-Source: AGHT+IEIOb47crAn/VZ+BErJh+f89CI3UdkmsOCT5/S9l1Cacl3+hjjlLzuT5+sdwb6pXZ9pF+vCNn8vNANlcldyHQg=
-X-Received: by 2002:a05:690c:4d03:b0:71c:530:146a with SMTP id
- 00721157ae682-71c0530176amr121489907b3.24.1754906433546; Mon, 11 Aug 2025
- 03:00:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1754906905; x=1755511705;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kpmDvRWC/brKYpYi3H1Xhgtpr9AfpeYTXO2kVXk6was=;
+ b=EvlsKKQWrgZ0q4T9N/hL7dES3YNpK9KF5OI2Q6WogUAfHJZHMiJ2d4GVP2mOcCNr4U
+ hB2qu/vslkrZds1UwAV6VLT8yfCWBFWpW8NSco7Se0JlJNpdZgn5+JPgTHGt0n2wCIec
+ 1idYqOym0N8L0dktOe/rvw6AbVAlNf43xapDqhEg+K4kwpqftvfmMHufHeg7yQ/vmjoR
+ UGhj9kTtivlSOxF5FQ11LMpsebpc80S5wjk7rEUxuhhhbYtQqZXUD9wcIoL+rwzJtQfL
+ Jg22aowlw/VWsoy01MR6b/dTN6OZnmtpRHe8i7nrovMd9PUQkSf0IOxciuZxPzvXB3Fq
+ 2ebA==
+X-Gm-Message-State: AOJu0YzAKxjITC41fMpBLvdPZA1HJ2JnnIE1O4SF3lq6qgb/G7yMETK9
+ pcFLXnxtYDcQV3FqguJEMLwuqbqVlaJ3YyMpOK4XrXb+Yio87PWGd/3wB9ocxi2lwtnJyoHj0o2
+ updfx
+X-Gm-Gg: ASbGncvI0cuB/KHzI07LaA4PZS5QJvhyvK6fo33arzY4Me76xaT9hrwWXJaRYQG3tvs
+ 6CatNvW0TcJe7do4Nz9SReuLkPejCVuHBHnna80MDjVh2jWODDHd+Bxn1ecNbj9BSa7RYIs1WYp
+ 3sQPBJx//OUqjFyl0TcxI4piSAySf718TcG2xl8rfw0MnsM88G6WBrhg/p2Oq0SoniEohsMTzPy
+ sZxcxgXTnMDRJ2hA8eywwO0sZpCK4C6q9W41gGSf0zUXXQvQrRjch4hbqIyOecJ6uombRZLW7eO
+ ly4ln+hsvTvzQzkwEJys01LYdzWFbz+w2GMoA+OQ0fPqUPC1K/rxqaaJOgpdNQwacMwaAzGoYli
+ cawjcPefciFkeE3sLwdW9DtrbeMT0I/9ln+LEFl/LUbJI3wu39RYHPbjUtLrJaaLf6P1EWouX
+X-Google-Smtp-Source: AGHT+IFWBUOE8r4jbw7kq6+AI3A7ygVdEHOlwK08NhKgWZhAHgLMHS+8ZyxMP893pdn4RVzWt5eWDA==
+X-Received: by 2002:a05:6000:2207:b0:3b7:93d3:f478 with SMTP id
+ ffacd0b85a97d-3b900b8bd5bmr10645435f8f.51.1754906905426; 
+ Mon, 11 Aug 2025 03:08:25 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b79c4a2848sm39534016f8f.71.2025.08.11.03.08.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 11 Aug 2025 03:08:24 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] system/rtc: Silent overflow in qemu_timedate_diff()
+Date: Mon, 11 Aug 2025 12:08:23 +0200
+Message-ID: <20250811100823.94105-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-References: <20250811094341.91597-1-philmd@linaro.org>
-In-Reply-To: <20250811094341.91597-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 11 Aug 2025 11:00:21 +0100
-X-Gm-Features: Ac12FXxr5-m5BYrlnSjMEXK2tCrjUkDyyxDJnkbYEINa1Q6xnUWSpQYVDmQRIVE
-Message-ID: <CAFEAcA8ccVxecxNd3fLiT-bNoWT-cUBJSQA1WfMr2OpWva4xoA@mail.gmail.com>
-Subject: Re: [PATCH] scripts/coverity-scan/COMPONENTS.md: Add a 'plugins'
- category
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,41 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Aug 2025 at 10:43, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Cover the TCG plugins files under their own Coverity category.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  scripts/coverity-scan/COMPONENTS.md | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/=
-COMPONENTS.md
-> index 72995903ff9..95805b536bc 100644
-> --- a/scripts/coverity-scan/COMPONENTS.md
-> +++ b/scripts/coverity-scan/COMPONENTS.md
-> @@ -147,6 +147,9 @@ tcg
->  system
->    ~ .*/qemu(/system/.*|/accel/.*)
->
-> +plugins
-> +  ~ .*/qemu(/contrib|/tests/tcg)?/plugins/.*
-> +
->  (headers)
->    ~ .*/qemu(/include/.*)
+Per ctime(3) man-page:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+  A negative value for tm_isdst causes the mktime() function to
+  attempt to divine whether summer time is in effect for the
+  specified time.  The tm_isdst and tm_gmtoff members are forced
+  to zero by timegm().
 
-This reminded me to check if we'd missed putting any other
-COMPONENTS updates into the coverity website. The only
-missing one is the deletion of the "cris" component last year;
-I just made that change.
+  The mktime() function returns the specified calendar time; if
+  the calendar time cannot be represented, it returns -1;
 
-(It is a pity that coverity scan does not have an
-"upload components file" feature, only a GUI for
-making changes.)
+Coverity reports (CID 1547724 Overflowed return value) the
+qemu_timedate_diff() method doesn't handle this error path.
 
--- PMM
+Since this method was added in commit f650305967f ("Unify RTCs
+that use host time, fix M48t59 alarm") in 2008, and there is no
+open issue related to it, keep ignoring this unlikely case, but
+add an assertion to make Coverity happy.
+
+Fixes: CID 1547724
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ system/rtc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/system/rtc.c b/system/rtc.c
+index 56951288c40..070b99fe6ad 100644
+--- a/system/rtc.c
++++ b/system/rtc.c
+@@ -98,6 +98,7 @@ time_t qemu_timedate_diff(struct tm *tm)
+         struct tm tmp = *tm;
+         tmp.tm_isdst = -1; /* use timezone to figure it out */
+         seconds = mktime(&tmp);
++        assert(seconds >= 0);
+         break;
+     }
+     default:
+-- 
+2.49.0
+
 
