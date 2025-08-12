@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F5FC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 15:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9267DC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 15:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulqux-0003bB-AY; Tue, 12 Aug 2025 11:28:03 -0400
+	id 1ulr1N-00054K-Ue; Tue, 12 Aug 2025 11:34:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulquv-0003at-I8
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:28:01 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulquo-000342-Fq
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:28:01 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CFC54141933;
- Tue, 12 Aug 2025 18:27:11 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 152E225E517;
- Tue, 12 Aug 2025 18:27:46 +0300 (MSK)
-Message-ID: <3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru>
-Date: Tue, 12 Aug 2025 18:27:45 +0300
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ulr1D-00053m-7h
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:34:33 -0400
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ulr14-00044J-7Y
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:34:30 -0400
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-2430c3684d1so53185ad.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 08:34:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755012855; x=1755617655; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Dpdxy2ZTSYgoW5/IzqwEyu/cYYWBjWQnFzB0uOBTZUY=;
+ b=wq7F2TT5wZKu4T+7mqXwJrTVhuFnevayitv2EfI4WzQMxgazSib7K5YEbzdH3vFIu4
+ UimEBEOSdl0fGtco0MwH3M/UJ1lbLOio66EIbPAZ7ZJZ5YYMTs8iZp4wukKGV9YQ67JJ
+ 6dQEGN8bqPxl3IvZyiyrK8zdYxjr2y9JgpRKSfydU/VUnJtMtaNWqMfWGhc57x7sV9uZ
+ 7KHH3FTQgT+IGFvyGdRe5u+UqsY+zpBW23ClsWd/LgvqfFRrI0pKZWKTY1vwBoNCyTwh
+ 9Jbi+VTaY7H7rrZZgZz+BMHA6hI7yDLzLVobVdECo/0EfnO+3gkNHaklF9brU9jUnbYh
+ fyjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755012855; x=1755617655;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dpdxy2ZTSYgoW5/IzqwEyu/cYYWBjWQnFzB0uOBTZUY=;
+ b=ccLik8tQM4g4+QsdIBjimEHmNXt3ZbbMCBsI0YkD2CjWi0q/TBLRJ+rGyXzIFcCwdG
+ dYF84jtH6urHjgeFvX9zbmJKVUXnWChx6zrpvusZ+sRLLXhI6l/XWQDyfJkzHcMSJNj8
+ vjLZQ7QfqdxXpMEvXayzgbT8LPzSQwqcPFjtdbiFT81hIy2k+2YmKERxHXbAc32EipaW
+ XgkV+tFoihw1OZ1CevRef6sL/Z8dZ9AtEmuCnEZ0ddZgLaT8b5EEvHm4SANtzwXJpO25
+ 3BPXd6NtoHIrOI4hoe+AIgwc3qvckxQ2ziXocbSmqSPvC58VQlBK9NbH7CP9tW9Prd2o
+ M50w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3G8dgfCpTwqSunkE8gdAtknZfQoqulZxy9j0twM4QLwb8HQfvHbz36Z901OT00Os2h8kZK9nZ3WYd@nongnu.org
+X-Gm-Message-State: AOJu0Yz88kB3LLPwx9bt5TRryiM2DMqi8a2P9VPi1Fzid50huFVqtF+V
+ lHyYqwLK7pddrDu4iwP41nlrjm7N2y7tuJZuW8V70FkMC1C0d4xg673g4yXqgB89ltAMbRvRppj
+ /45I91PE8PA==
+X-Gm-Gg: ASbGncuqiH87OiQ79x87KJ8AAwU4AlPisYoH7n2FX1qz/++9x7h7bLrnwrU3fNI8jY5
+ 1yq+ciXhEsm+dTl5x2Z7kqQQh+DeT5WhmqDTMRwOge7KpO84merpadHCp3eFel9UiGSLSo7g1Td
+ Be4VptUnuYQ2GSU3TGD9liEA9xtjyEV0SAM6/lc5o0EnBzA1jUOKlH7mQwA1dyHOGU0a6cubljy
+ 7iyXlqLn/aVpz6PJcY9w1pYm+m7r2cSPcHFJgELg2oR1MpsbZzH17AVJ1t0c7E8iHFIiizRyu6x
+ nvXl3dYfr31Dd55YpLFJixZn4GftP6FYVp5Z9mO9Hr2UMS5wx57Ok9eI5yz0W5yepakKscTQkfD
+ 9LXXL8x3DqsaEGziQzyNwjcN6P7rS5l7yVDk=
+X-Google-Smtp-Source: AGHT+IH9jdsY+JAwXvfpp7egiTeIclVxD+gi6agb07w9LJLCAUCfn2pSsUavE8Iyz8A0LgPDF5Nysg==
+X-Received: by 2002:a17:902:ce92:b0:237:f757:9ad8 with SMTP id
+ d9443c01a7336-242fc2a526emr63624615ad.1.1755012855255; 
+ Tue, 12 Aug 2025 08:34:15 -0700 (PDT)
+Received: from [192.168.0.102] ([152.250.234.19])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-241e899a917sm305400515ad.116.2025.08.12.08.34.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Aug 2025 08:34:14 -0700 (PDT)
+Message-ID: <5740a0e1-0c2f-433a-ba40-acf43adbaa37@linaro.org>
+Date: Tue, 12 Aug 2025 12:35:15 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 30/63] q35: Introduce smm_ranges property for q35-pci-host
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Isaku Yamahata <isaku.yamahata@linux.intel.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Michael Roth <michael.roth@amd.com>
-References: <20240423150951.41600-1-pbonzini@redhat.com>
- <20240423150951.41600-31-pbonzini@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20240423150951.41600-31-pbonzini@redhat.com>
+Subject: Re: [PATCH-for-10.1 RESEND RESEND v2 2/3] tests/functional: Test
+ SPI-SD adapter without SD card connected
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Guenter Roeck <linux@roeck-us.net>
+References: <20250812140415.70153-1-philmd@linaro.org>
+ <20250812140415.70153-3-philmd@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20250812140415.70153-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x644.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,80 +108,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.04.2024 18:09, Paolo Bonzini wrote:
-> From: Isaku Yamahata <isaku.yamahata@linux.intel.com>
+Hi Phil,
+
+On 8/12/25 11:04, Philippe Mathieu-Daudé wrote:
+> SPI-SD adapter should be usable, even without any SD card
+> wired. Refactor test_riscv64_sifive_u_mmc_spi() to make it
+> more generic and add another test, inspired by this report:
+> https://lore.kernel.org/qemu-devel/5b2dc427-f0db-4332-a997-fe0c82415acd@roeck-us.net/
 > 
-> Add a q35 property to check whether or not SMM ranges, e.g. SMRAM, TSEG,
-> etc... exist for the target platform.  TDX doesn't support SMM and doesn't
-> play nice with QEMU modifying related guest memory ranges.
-
-So, as I wrote in another email, this broke video (screen is blank) for
-
-  qemu-system-x86_64 -machine q35,accel=kvm,smm=off
-
-before this commit, there are usual seabios messages (and even messages
-from qemu before it loads seabios), and after this commit, the screen
-stays blank.
-
-
-> @@ -578,6 +590,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
->                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
->       }
+> Inspired-by: Guenter Roeck <linux@roeck-us.net>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   tests/functional/test_riscv64_sifive_u.py | 22 +++++++++++++++++-----
+>   1 file changed, 17 insertions(+), 5 deletions(-)
+> 
+> diff --git a/tests/functional/test_riscv64_sifive_u.py b/tests/functional/test_riscv64_sifive_u.py
+> index dc4cb8a4a96..ca4c3ba6e12 100755
+> --- a/tests/functional/test_riscv64_sifive_u.py
+> +++ b/tests/functional/test_riscv64_sifive_u.py
+> @@ -27,25 +27,37 @@ class SifiveU(LinuxKernelTest):
+>            'rootfs.ext2.gz'),
+>           'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
 >   
-> +    if (!mch->has_smm_ranges) {
-> +        return;
-> +    }
+> -    def test_riscv64_sifive_u_mmc_spi(self):
+> +    def do_test_riscv64_sifive_u_mmc_spi(self, connect_card):
+>           self.set_machine('sifive_u')
+>           kernel_path = self.ASSET_KERNEL.fetch()
+>           rootfs_path = self.uncompress(self.ASSET_ROOTFS)
+>   
+>           self.vm.set_console()
+>           kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+> -                               'root=/dev/mmcblk0 rootwait '
+>                                  'earlycon=sbi console=ttySIF0 '
+> -                               'panic=-1 noreboot')
+> +                               'root=/dev/mmcblk0 ')
+>           self.vm.add_args('-kernel', kernel_path,
+> -                         '-drive', f'file={rootfs_path},if=sd,format=raw',
+>                            '-append', kernel_command_line,
+>                            '-no-reboot')
+> +        if connect_card:
+> +            self.vm.add_args('-drive', f'file={rootfs_path},if=sd,format=raw')
+> +            kernel_command_line += 'panic=-1 noreboot rootwait '
+
+I would put kernel_command_line before add_args just to follow the order above,
+but really it's a nit and for sure not worth a v3, but mentioning it just in
+case there will be a v3 and you want to change it.
+
+
+> +            pattern = 'Boot successful.'
+> +        else:
+> +            kernel_command_line += 'panic=0 noreboot '
+> +            pattern = 'Cannot open root device "mmcblk0" or unknown-block(0,0)'
 > +
->       /* if *disabled* show SMRAM to all CPUs */
->       memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
->                                mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+>           self.vm.launch()
+> -        self.wait_for_console_pattern('Boot successful.')
+> +        self.wait_for_console_pattern(pattern)
+>   
+>           os.remove(rootfs_path)
+>   
+> +    def test_riscv64_sifive_u_nommc_spi(self):
+> +        self.do_test_riscv64_sifive_u_mmc_spi(False)
+> +
+> +    def test_riscv64_sifive_u_mmc_spi(self):
+> +        self.do_test_riscv64_sifive_u_mmc_spi(True)
+> +
+>   
+>   if __name__ == '__main__':
+>       LinuxKernelTest.main()
 
-Moving this if..return block right below this smram-region init fixes
-the problem with the video:
-
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index 0b6cbaed7e..aa8c4a273a 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -589,20 +589,20 @@ static void mch_realize(PCIDevice *d, Error **errp)
-                   mch->system_memory, mch->pci_address_space,
-                   PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
-      }
-
--    if (!mch->has_smm_ranges) {
--        return;
--    }
--
-      /* if *disabled* show SMRAM to all CPUs */
-      memory_region_init_alias(&mch->smram_region, OBJECT(mch), 
-"smram-region",
-                               mch->pci_address_space, 
-MCH_HOST_BRIDGE_SMRAM_C_BASE,
-                               MCH_HOST_BRIDGE_SMRAM_C_SIZE);
-      memory_region_add_subregion_overlap(mch->system_memory, 
-MCH_HOST_BRIDGE_SMRAM_C_BASE,
-                                          &mch->smram_region, 1);
-      memory_region_set_enabled(&mch->smram_region, true);
-
-+    if (!mch->has_smm_ranges) {
-+        return;
-+    }
-+
-      memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), 
-"smram-open-high",
-                               mch->ram_memory, 
-MCH_HOST_BRIDGE_SMRAM_C_BASE,
-                               MCH_HOST_BRIDGE_SMRAM_C_SIZE);
-      memory_region_add_subregion_overlap(mch->system_memory, 0xfeda0000,
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
 
-I've no idea what else might be missing here.
-
-Overall, adding an early return this way is a recipe for disaster
-to happen - if not now then later.  Here, and in mch_write_config().
-
-Thanks,
-
-/mjt
-
+Cheers,
+Gustavo
 
