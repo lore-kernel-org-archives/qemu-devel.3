@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CA7CA0EC4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0BEAC87FCB
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 12:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulo8l-00080W-Vn; Tue, 12 Aug 2025 08:30:08 -0400
+	id 1ulo8I-0007vz-MV; Tue, 12 Aug 2025 08:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1ulo8k-0007z7-Ur; Tue, 12 Aug 2025 08:30:06 -0400
+ id 1ulo8E-0007vM-Ro; Tue, 12 Aug 2025 08:29:35 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1ulo8W-00072H-Ft; Tue, 12 Aug 2025 08:30:06 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c1W4532kYz6M4K8;
- Tue, 12 Aug 2025 20:27:49 +0800 (CST)
+ id 1ulo88-0006yN-QJ; Tue, 12 Aug 2025 08:29:33 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c1W3R22b5z6M4KD;
+ Tue, 12 Aug 2025 20:27:15 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id A85E01402ED;
- Tue, 12 Aug 2025 20:29:45 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 7D05E140371;
+ Tue, 12 Aug 2025 20:29:11 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.47.65.66) by
  frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 12 Aug 2025 14:29:44 +0200
+ 15.1.2507.39; Tue, 12 Aug 2025 14:29:10 +0200
 To: <qemu-devel@nongnu.org>
 CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
  <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
@@ -38,9 +38,9 @@ CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
  <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
  <shameerali.kolothum.thodi@huawei.com>, <shannon.zhaosl@gmail.com>,
  <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
-Subject: [PATCH v15 2/8] hw/core/machine: topology functions capabilities added
-Date: Tue, 12 Aug 2025 13:28:23 +0100
-Message-ID: <20250812122829.204-3-alireza.sanaee@huawei.com>
+Subject: [PATCH v15 1/8] target/arm/tcg: increase cache level for cpu=max
+Date: Tue, 12 Aug 2025 13:28:22 +0100
+Message-ID: <20250812122829.204-2-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250812122829.204-1-alireza.sanaee@huawei.com>
 References: <20250812122829.204-1-alireza.sanaee@huawei.com>
@@ -57,6 +57,7 @@ X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
 X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -77,96 +78,40 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add two functions one of which finds the lowest level cache defined in
-the cache description input, and the other checks if caches are defined
-at a particular level.
+This patch addresses cache description in the `aarch64_max_tcg_initfn`
+function for cpu=max. It introduces three layers of caches and modifies
+the cache description registers accordingly.
 
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 ---
- hw/core/machine-smp.c | 56 +++++++++++++++++++++++++++++++++++++++++++
- include/hw/boards.h   |  5 ++++
- 2 files changed, 61 insertions(+)
+ target/arm/tcg/cpu64.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index 0be0ac044c..32f3e7d6c9 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -406,3 +406,59 @@ bool machine_check_smp_cache(const MachineState *ms, Error **errp)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 35cddbafa4..bf1372ecdf 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1093,6 +1093,19 @@ void aarch64_max_tcg_initfn(Object *obj)
+     uint64_t t;
+     uint32_t u;
  
-     return true;
- }
++    /*
++     * Expanded cache set
++     */
++    SET_IDREG(isar, CLIDR, 0x8200123); /* 4 4 3 in 3 bit fields */
++    /* 64KB L1 dcache */
++    cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
++    /* 64KB L1 icache */
++    cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 2);
++    /* 1MB L2 unified cache */
++    cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 1 * MiB, 7);
++    /* 2MB L3 unified cache */
++    cpu->ccsidr[4] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 8, 64, 2 * MiB, 7);
 +
-+/*
-+ * This function assumes l3 and l2 have unified cache and l1 is split l1d and
-+ * l1i.
-+ */
-+bool machine_find_lowest_level_cache_at_topo_level(const MachineState *ms,
-+                                                   int *level_found,
-+                                                   CpuTopologyLevel topo_level)
-+{
-+
-+    CpuTopologyLevel level;
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I);
-+    if (level == topo_level) {
-+        *level_found = 1;
-+        return true;
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D);
-+    if (level == topo_level) {
-+        *level_found = 1;
-+        return true;
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2);
-+    if (level == topo_level) {
-+        *level_found = 2;
-+        return true;
-+    }
-+
-+    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3);
-+    if (level == topo_level) {
-+        *level_found = 3;
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+/*
-+ * Check if there are caches defined at a particular level. It supports only
-+ * L1, L2 and L3 caches, but this can be extended to more levels as needed.
-+ *
-+ * Return True on success, False otherwise.
-+ */
-+bool machine_defines_cache_at_topo_level(const MachineState *ms,
-+                                       CpuTopologyLevel level)
-+{
-+    if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3) == level ||
-+        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2) == level ||
-+        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I) == level ||
-+        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D) == level) {
-+        return true;
-+    }
-+    return false;
-+}
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index f94713e6e2..3c1a999791 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -55,6 +55,11 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
-                                   CpuTopologyLevel level);
- bool machine_check_smp_cache(const MachineState *ms, Error **errp);
- void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
-+bool machine_defines_cache_at_topo_level(const MachineState *ms,
-+                                       CpuTopologyLevel level);
-+bool machine_find_lowest_level_cache_at_topo_level(const MachineState *ms,
-+                                                   int *level_found,
-+                                                   CpuTopologyLevel topo_level);
- 
- /**
-  * machine_class_allow_dynamic_sysbus_dev: Add type to list of valid devices
+     /*
+      * Unset ARM_FEATURE_BACKCOMPAT_CNTFRQ, which we would otherwise default
+      * to because we started with aarch64_a57_initfn(). A 'max' CPU might
 -- 
 2.43.0
 
