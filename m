@@ -4,95 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9267DC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 15:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 512A7C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 15:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulr1N-00054K-Ue; Tue, 12 Aug 2025 11:34:41 -0400
+	id 1ulr2m-0005R6-2T; Tue, 12 Aug 2025 11:36:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ulr1D-00053m-7h
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:34:33 -0400
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ulr14-00044J-7Y
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:34:30 -0400
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-2430c3684d1so53185ad.0
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 08:34:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755012855; x=1755617655; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Dpdxy2ZTSYgoW5/IzqwEyu/cYYWBjWQnFzB0uOBTZUY=;
- b=wq7F2TT5wZKu4T+7mqXwJrTVhuFnevayitv2EfI4WzQMxgazSib7K5YEbzdH3vFIu4
- UimEBEOSdl0fGtco0MwH3M/UJ1lbLOio66EIbPAZ7ZJZ5YYMTs8iZp4wukKGV9YQ67JJ
- 6dQEGN8bqPxl3IvZyiyrK8zdYxjr2y9JgpRKSfydU/VUnJtMtaNWqMfWGhc57x7sV9uZ
- 7KHH3FTQgT+IGFvyGdRe5u+UqsY+zpBW23ClsWd/LgvqfFRrI0pKZWKTY1vwBoNCyTwh
- 9Jbi+VTaY7H7rrZZgZz+BMHA6hI7yDLzLVobVdECo/0EfnO+3gkNHaklF9brU9jUnbYh
- fyjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755012855; x=1755617655;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Dpdxy2ZTSYgoW5/IzqwEyu/cYYWBjWQnFzB0uOBTZUY=;
- b=ccLik8tQM4g4+QsdIBjimEHmNXt3ZbbMCBsI0YkD2CjWi0q/TBLRJ+rGyXzIFcCwdG
- dYF84jtH6urHjgeFvX9zbmJKVUXnWChx6zrpvusZ+sRLLXhI6l/XWQDyfJkzHcMSJNj8
- vjLZQ7QfqdxXpMEvXayzgbT8LPzSQwqcPFjtdbiFT81hIy2k+2YmKERxHXbAc32EipaW
- XgkV+tFoihw1OZ1CevRef6sL/Z8dZ9AtEmuCnEZ0ddZgLaT8b5EEvHm4SANtzwXJpO25
- 3BPXd6NtoHIrOI4hoe+AIgwc3qvckxQ2ziXocbSmqSPvC58VQlBK9NbH7CP9tW9Prd2o
- M50w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV3G8dgfCpTwqSunkE8gdAtknZfQoqulZxy9j0twM4QLwb8HQfvHbz36Z901OT00Os2h8kZK9nZ3WYd@nongnu.org
-X-Gm-Message-State: AOJu0Yz88kB3LLPwx9bt5TRryiM2DMqi8a2P9VPi1Fzid50huFVqtF+V
- lHyYqwLK7pddrDu4iwP41nlrjm7N2y7tuJZuW8V70FkMC1C0d4xg673g4yXqgB89ltAMbRvRppj
- /45I91PE8PA==
-X-Gm-Gg: ASbGncuqiH87OiQ79x87KJ8AAwU4AlPisYoH7n2FX1qz/++9x7h7bLrnwrU3fNI8jY5
- 1yq+ciXhEsm+dTl5x2Z7kqQQh+DeT5WhmqDTMRwOge7KpO84merpadHCp3eFel9UiGSLSo7g1Td
- Be4VptUnuYQ2GSU3TGD9liEA9xtjyEV0SAM6/lc5o0EnBzA1jUOKlH7mQwA1dyHOGU0a6cubljy
- 7iyXlqLn/aVpz6PJcY9w1pYm+m7r2cSPcHFJgELg2oR1MpsbZzH17AVJ1t0c7E8iHFIiizRyu6x
- nvXl3dYfr31Dd55YpLFJixZn4GftP6FYVp5Z9mO9Hr2UMS5wx57Ok9eI5yz0W5yepakKscTQkfD
- 9LXXL8x3DqsaEGziQzyNwjcN6P7rS5l7yVDk=
-X-Google-Smtp-Source: AGHT+IH9jdsY+JAwXvfpp7egiTeIclVxD+gi6agb07w9LJLCAUCfn2pSsUavE8Iyz8A0LgPDF5Nysg==
-X-Received: by 2002:a17:902:ce92:b0:237:f757:9ad8 with SMTP id
- d9443c01a7336-242fc2a526emr63624615ad.1.1755012855255; 
- Tue, 12 Aug 2025 08:34:15 -0700 (PDT)
-Received: from [192.168.0.102] ([152.250.234.19])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e899a917sm305400515ad.116.2025.08.12.08.34.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 08:34:14 -0700 (PDT)
-Message-ID: <5740a0e1-0c2f-433a-ba40-acf43adbaa37@linaro.org>
-Date: Tue, 12 Aug 2025 12:35:15 -0300
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ulr2i-0005Nt-0H
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:36:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1ulr2Y-0004Zb-LV
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:36:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755012949;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RdbFae0a7i+vYfkxG1F8H0ckQQcLNnNJoBFXlpG8kqI=;
+ b=Af5wi0317JtwtDjIN06+tVTQG7YXtTwhZJF9VX9+UGeh3RcyEovcw8xFFxmAYEPe9t+PGo
+ aAqGdBe8RhRZ+jFdaKw5S00ybIupzyRXyhyM1mazP2m+dOT83FhRu5CVIqe4a0hZ9jcK5T
+ usY4dfk+KTnJCciF9mm6GK/ljCn8AeQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-177-n9Djet4POMmFjz1TpflV_Q-1; Tue,
+ 12 Aug 2025 11:35:48 -0400
+X-MC-Unique: n9Djet4POMmFjz1TpflV_Q-1
+X-Mimecast-MFC-AGG-ID: n9Djet4POMmFjz1TpflV_Q_1755012947
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E449719560B6; Tue, 12 Aug 2025 15:35:46 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.181])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2291F1800290; Tue, 12 Aug 2025 15:35:42 +0000 (UTC)
+Date: Tue, 12 Aug 2025 17:35:40 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Martin Kletzander <mkletzan@redhat.com>
+Cc: "Dr. Werner Fink" <werner@suse.de>, Fabiano Rosas <farosas@suse.de>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH 2/2] tests/qemu-iotests: Indent expected error messages
+Message-ID: <aJtfTBrqAd7x-q7k@redhat.com>
+References: <cover.1754060086.git.mkletzan@redhat.com>
+ <f5be6d407c105fa199d10867f5de48bbd25c008c.1754060086.git.mkletzan@redhat.com>
+ <aIzhtcg-TNZE0zH8@redhat.com> <87v7n63lld.fsf@suse.de>
+ <aJCaoULvGgKjEL16@redhat.com>
+ <aJL8RH8ePPNEteMg@boole.nue2.suse.org>
+ <aJmyZjo0ridS7XXz@wheatley.k8r.cz>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 RESEND RESEND v2 2/3] tests/functional: Test
- SPI-SD adapter without SD card connected
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>
-References: <20250812140415.70153-1-philmd@linaro.org>
- <20250812140415.70153-3-philmd@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250812140415.70153-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x644.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="BwU4UP9CK+8Knz70"
+Content-Disposition: inline
+In-Reply-To: <aJmyZjo0ridS7XXz@wheatley.k8r.cz>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,77 +92,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
 
-On 8/12/25 11:04, Philippe Mathieu-Daudé wrote:
-> SPI-SD adapter should be usable, even without any SD card
-> wired. Refactor test_riscv64_sifive_u_mmc_spi() to make it
-> more generic and add another test, inspired by this report:
-> https://lore.kernel.org/qemu-devel/5b2dc427-f0db-4332-a997-fe0c82415acd@roeck-us.net/
-> 
-> Inspired-by: Guenter Roeck <linux@roeck-us.net>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   tests/functional/test_riscv64_sifive_u.py | 22 +++++++++++++++++-----
->   1 file changed, 17 insertions(+), 5 deletions(-)
-> 
-> diff --git a/tests/functional/test_riscv64_sifive_u.py b/tests/functional/test_riscv64_sifive_u.py
-> index dc4cb8a4a96..ca4c3ba6e12 100755
-> --- a/tests/functional/test_riscv64_sifive_u.py
-> +++ b/tests/functional/test_riscv64_sifive_u.py
-> @@ -27,25 +27,37 @@ class SifiveU(LinuxKernelTest):
->            'rootfs.ext2.gz'),
->           'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
->   
-> -    def test_riscv64_sifive_u_mmc_spi(self):
-> +    def do_test_riscv64_sifive_u_mmc_spi(self, connect_card):
->           self.set_machine('sifive_u')
->           kernel_path = self.ASSET_KERNEL.fetch()
->           rootfs_path = self.uncompress(self.ASSET_ROOTFS)
->   
->           self.vm.set_console()
->           kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-> -                               'root=/dev/mmcblk0 rootwait '
->                                  'earlycon=sbi console=ttySIF0 '
-> -                               'panic=-1 noreboot')
-> +                               'root=/dev/mmcblk0 ')
->           self.vm.add_args('-kernel', kernel_path,
-> -                         '-drive', f'file={rootfs_path},if=sd,format=raw',
->                            '-append', kernel_command_line,
->                            '-no-reboot')
-> +        if connect_card:
-> +            self.vm.add_args('-drive', f'file={rootfs_path},if=sd,format=raw')
-> +            kernel_command_line += 'panic=-1 noreboot rootwait '
+--BwU4UP9CK+8Knz70
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I would put kernel_command_line before add_args just to follow the order above,
-but really it's a nit and for sure not worth a v3, but mentioning it just in
-case there will be a v3 and you want to change it.
+Am 11.08.2025 um 11:05 hat Martin Kletzander geschrieben:
+> On Wed, Aug 06, 2025 at 08:54:51AM +0200, Dr. Werner Fink wrote:
+> > On 2025/08/04 13:33:53 +0200, Kevin Wolf wrote:
+> > > Am 01.08.2025 um 21:09 hat Fabiano Rosas geschrieben:
+> > > > Daniel P. Berrang=E9 <berrange@redhat.com> writes:
+> > > >
+> > > > > On Fri, Aug 01, 2025 at 04:59:50PM +0200, Martin Kletzander wrote:
+> > > > >> From: Martin Kletzander <mkletzan@redhat.com>
+> > > > >>
+> > > > >> When running all tests the expected "killed" messages are indent=
+ed
+> > > > >> differently than the actual ones, by three more spaces.  Change =
+it so
+> > > > >> that the messages match and tests pass.
+> > > > >
+> > > > > This would break the tests on my system and CI too.
+> > > > >
+> > > > > What distro are you seeing this on ?
+> > > > >
+> > > > > I'm guessing this is a different in either valgrind or C library ?
+> > > >
+> > > > It's bash, we have an open issue about it:
+> > > >
+> > > > https://gitlab.com/qemu-project/qemu/-/issues/3050
+> > >=20
+> > > I see a patch has been posted to that bug, the most important part of
+> > > which is this added filtering:
+> > >=20
+> > > --- a/tests/qemu-iotests/common.filter
+> > > +++ b/tests/qemu-iotests/common.filter  2025-07-25 11:39:22.419665788=
+ +0000
+> > > @@ -75,7 +75,7 @@ _filter_qemu_io()
+> > >      _filter_win32 | \
+> > >      gsed -e "s/[0-9]* ops\; [0-9/:. sec]* ([0-9/.inf]* [EPTGMKiBbyte=
+s]*\/sec and [0-9/.inf]* ops\/sec)/X ops\; XX:XX:XX.X (XXX YYY\/sec and XXX=
+ ops\/sec)/" \
+> > >          -e "s/: line [0-9][0-9]*:  *[0-9][0-9]*\( Aborted\| Killed\)=
+/:\1/" \
+> > > -        -e "s/qemu-io> //g"
+> > > +        -e "s/qemu-io> //g" -e '/Killed/{ s/ \{2,\}/ /}'
+> > >  }
+> > >=20
+> > >  # replace occurrences of QEMU_PROG with "qemu"
+> > >=20
+> > > This approach makes sense to me, though I would have kept each sed
+> > > expression on a separate line.
+> > >=20
+> > > And given that the context line above includes "Aborted" as well, may=
+be
+> > > have it here, too, though none of the actual test outputs have an
+> > > Aborted message any more since commit 3f39447. Or we could have a
+> > > cleanup patch first that removes the unused "Abort" above, just to ke=
+ep
+> > > things consistent.
+> > >=20
+> > > Either way, please post this as a proper patch on the mailing list.
+> >=20
+> > Just next try in tha attached patch with a fixed version of
+> > the sed command.
+> >=20
+> > Werner
+> >=20
+> > --=20
+> >  "Having a smoking section in a restaurant is like having
+> >          a peeing section in a swimming pool." -- Edward Burr
+>=20
+> > From: Werner Fink <werner@suse.de>
+> > Date: Fri, 08 Aug 06:41:23 +0000
+> > Subject: [PATCH 1/1] Avoid dependency on padding on signal messages
+> >=20
+> > New bash 5.3 uses a different padding for reporting job status.
+> >=20
+> > Resolves: boo#1246830
+>=20
+> Not sure you meant that or
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3050
 
+I just updated the commit message to contain both.
 
-> +            pattern = 'Boot successful.'
-> +        else:
-> +            kernel_command_line += 'panic=0 noreboot '
-> +            pattern = 'Cannot open root device "mmcblk0" or unknown-block(0,0)'
-> +
->           self.vm.launch()
-> -        self.wait_for_console_pattern('Boot successful.')
-> +        self.wait_for_console_pattern(pattern)
->   
->           os.remove(rootfs_path)
->   
-> +    def test_riscv64_sifive_u_nommc_spi(self):
-> +        self.do_test_riscv64_sifive_u_mmc_spi(False)
-> +
-> +    def test_riscv64_sifive_u_mmc_spi(self):
-> +        self.do_test_riscv64_sifive_u_mmc_spi(True)
-> +
->   
->   if __name__ == '__main__':
->       LinuxKernelTest.main()
+> > Signed-off-by: Werner Fink <werner@suse.de>
+>=20
+> but, FWIW, if that makes any difference,
+>=20
+> Tested-by: Martin Kletzander <mkletzan@redhat.com>
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Thanks, applied to the block branch.
 
+Kevin
 
-Cheers,
-Gustavo
+--BwU4UP9CK+8Knz70
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmibX0wACgkQfwmycsiP
+L9Y0ABAAtfaqDF2JvURfP8yGFY0mkupg3mkgypPOLLjkGuuWUOaEVO4q35qNeMRJ
+sltBSD7NENYDhjoA7C7HP6P3rRvyzDYaeJuIa/B0YYhut1v8zihg65uhlzfHfjDe
+y09bccFBE4wLEQg6zYSfxBvmK2yLfZcM6wqcnr8pUjXbsUDQThAst3HndvnKxml3
+Kt9UF/mi1NmtQgUqynbynNmhGnf88U0HGzapBthW+jldiHlIyFndJmWIt+vgAuSN
+wzNtdQebN8pcDWlOcE2XsB2BRbUpydh+3Gbpm8hIb9mejP21FMmcho8Fcrm4T7z5
+jkSmjcRzsyVppA6pXesIEtdCQw0MUJtjUvXHUXk+X42IsObBwiuuYTpXqzUYdStO
+F4r/2ZF3nL/DbpZWp3P/B2R4OCmq0hUVsvaSS9AXVATxtSUSLRA3tA0InPOkhyA3
+Fu1ZekqSI7+H1I5L/wOgm9f7mjZ1RDNlIpapm+r8uL4yJq6mDj9VLl8ZBuFxfImb
+FqJhRZHzav96ove0QHKiPh0mrsECkuym7yxuZW1xKX2WrxUolo2VkM+AjLrHmXSW
+lLuhoF1A4TV3eQ11q26yiZwzGg3mfzriJsYsj3REscCQOPAhlCrI6u38YELs9Rg5
+sJrmZfu6K5yMAzmVZtbuKyFPEyy/AYb/dOjmzu/YMKPIn8SIxo0=
+=PtQ3
+-----END PGP SIGNATURE-----
+
+--BwU4UP9CK+8Knz70--
+
 
