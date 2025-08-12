@@ -4,92 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8BDACA0EDB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 18:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C67FCA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 19:25:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ultxw-0003WK-4Q; Tue, 12 Aug 2025 14:43:20 -0400
+	id 1ulubk-0002Yk-Rc; Tue, 12 Aug 2025 15:24:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ultxv-0003WA-0l
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:43:19 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ultxp-0005KT-1W
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:43:18 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-71a38e35674so40182857b3.3
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 11:43:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755024188; x=1755628988; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ASu/EcgNo0PPrgDbUsAm/4oXgjrYVlPdG6h39Z6aCtc=;
- b=U9ptFhqjZiBMZ5BD0rG8fSaZnFvDWfWQPHD/OIHcULo/rCCSXJ0IXY2J3q/hz+kecT
- J7R245QhTwC9URp3N6spFkBJiBHTkIkavEOBga6gyRNkc9n1hTa+MPIEZl/mqRWLTjWk
- 0LGeGATXD7JBDZ6g8pq3lhgvrk8hjhGLvBQg4mXCuDDlHwucIFY33FY/KzJoiKlJCoP1
- HbwcNQyu1Dp3TGDaCHb6JE+/Wi15mzkl6VFkf1agic2VsIhtDbssS1Q6Ea7PKLHXwmLg
- h2GyliZtJjV00JyhhsXFm3aHuU0/13WzwskjJuRoVkEOwZh3Yt0nTEUINT2oNc/OzvGs
- 94aw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ulubj-0002Y5-DD
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 15:24:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ulubc-0002Cc-Rh
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 15:24:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755026654;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HKImHrP7rJsm3IdCfU6xDEZyNnefYkvDAGCXiHl9c+o=;
+ b=UBHdEz6Gk9Px2jmE/+7nTZ8jpdYY0KZZslGh9FUEz2e36UvtciII2S184LijQeuevkYuOt
+ HjaAnsL9KJZuunnBf4dymV8mrnr5l59++/fVun450xbcBNWCq9+xZeEHLEclAjcUIvslmZ
+ 1vjPtL8nfrlZ6CGYfHHFT8+uj+3aZJc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-302-CdI3ibNZPOqiLQWRYnPe6A-1; Tue, 12 Aug 2025 15:24:11 -0400
+X-MC-Unique: CdI3ibNZPOqiLQWRYnPe6A-1
+X-Mimecast-MFC-AGG-ID: CdI3ibNZPOqiLQWRYnPe6A_1755026651
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-451ecc3be97so30174105e9.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 12:24:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755024188; x=1755628988;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ASu/EcgNo0PPrgDbUsAm/4oXgjrYVlPdG6h39Z6aCtc=;
- b=o6axqhNZYk4l0Hp3Kjt0K7cc4rnWulb5YwQoPCShK/zMPTbcr9z+gkU1RGonz9M3tm
- VVPakBJbAoIZZYh8bzxUvZq5/VgE8IlOVDcVzcRw10qOvxgAif2gcwchIOl2yzwzQEkD
- FzRQuB2ql0Q5HC6bQ6ZqGXK48lLRTpqF5JWdYMcbAuW9xtRHv0M0N/4vp+BO74HLQaM+
- z1LWALD/fnErnSsgDgq8+6sY99ye++YC7IEQKBG/Yi6DXRInI9EP9ruGUznYCSfQ1dEw
- mvmso7+9mzf5LMfJP+pRQynWRJtDRemEQ2U0RGmvFK6J2WsV1eyO3z6LKr+quxiMPFjv
- 8sxg==
+ d=1e100.net; s=20230601; t=1755026650; x=1755631450;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HKImHrP7rJsm3IdCfU6xDEZyNnefYkvDAGCXiHl9c+o=;
+ b=xCdMPK1hDZ+9v74+UmJG0e5IuKmUlUmjEh7klEjsmNEE/6qeQx3zsDDLXe7ZqpzXTP
+ 9lJpmqDrRxzPaMFRRh1XikMlzPB2iv3BV2IfNlsTbp/uBp1y2jjTGY4fw9YXi5BwgnJe
+ Jx3Seuh6cYWpYkNSGInDFLxvFRjnJhF50XkUHCCN75hMx8z0WUimx8hhB9Hh/CJNmjKK
+ 8NihytolWNSlZzIKnSXdWrizvwGJ92tOCG4Unk35AQDnwyv9VLbbty/Lxslwkuep8/cn
+ gMhfEl5R6OHt3GT5+y8RUHbYzLLMxTmC0M1u+joztLnHdPSnzlvQKgm7AWlOQUFbwKV5
+ HCKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdSw0M1pIIAh3VgYFk6T53lnr0I7VZaDxuolg5LZyOovXdilVGPUzNF7+EoTxFoO5FeQk4vpAvSxCD@nongnu.org
-X-Gm-Message-State: AOJu0Yw5OjhfjIbGev/GFStZhrFivNluwmDu00w9r1whbXYO/O+aIJkd
- iTBMBFhSwhumY8Cw73wsBfPBPzMQ803snY9Adhx8fBdVTr3fgntjuhHljq43/mbfvKOvEEbUe2p
- sN4IO00qYY7CB41WUFYlZ9/qDvRR5gNpUeT3D7iTpXg==
-X-Gm-Gg: ASbGncsUzIVyfsXZnWfK73muX6eMBPq4xj4v7IuqNiLYjePp0zvfUqHwWXUCxYON9pX
- DmiQxVGIcq1IcWdEQZo9e0gvWz17X2DUnbOwecdFQ3CpZm77whLj1JWk9Mb/bWzveW7pnPvjOCL
- PeibNWTCzBell0tBh1RBuS9CUM2dLjo0Cy4bqYjt7EpBNfh5y8R+16TaHqoBvbqdnPLpQ2kEEKr
- UtogszP
-X-Google-Smtp-Source: AGHT+IG5fBhgDj5GIBdKf+D3E62Fl95jLpMspYa6rd2qzXdpmJcf7yc/UCkF4Z3tKKo1N6qdZGLrURE3Lg47X4iUOqs=
-X-Received: by 2002:a05:690c:64c9:b0:71c:1142:f9ba with SMTP id
- 00721157ae682-71d4e3f3955mr2813937b3.4.1755024188350; Tue, 12 Aug 2025
- 11:43:08 -0700 (PDT)
+ AJvYcCWFus6qGwggQCn8nmUFs0YjJ7+bbikSHV7jUDEpER51uCSzUKEVjqX7XFh+arLSmRgNl+p7xv2ig8qy@nongnu.org
+X-Gm-Message-State: AOJu0Yw0K/GC2WalATLPk7uphoreE3/8tZIeVyJvMSxXRCw7MKCK3gDj
+ 6SsiQEnMA8+1Ae45y3EN3c5D1etp2UMnpn7Z4JQDzrRGE9ouBcf2Th7TUZ80TK932VryEuOBqgE
+ PRal3xbfQzXRfnd1p8EGLqI4GHYkdQZzkPHFjlmrIoaAgfZZtcmJVwWJmuU69dAMBSuIvysIMw0
+ mE7x8b5jsKXgw51JoY97u6QgqB2l+q9PY=
+X-Gm-Gg: ASbGncvA8Lc7+zUxlHjlF8N+GAWYNl+9cM2x0LXkQILGy+T0wTmNV+JZBf8XHR0HKlv
+ roHhsUqp0JajX7mIdKvntwriiqhu3X8whRENecG5numygD+fpzV1Ml/ghdikVFWMQDPopVLcPFK
+ Zv+ePSXHwUr654Ks7E56MFSg==
+X-Received: by 2002:a05:600c:4746:b0:456:1d61:b0f2 with SMTP id
+ 5b1f17b1804b1-45a1660068fmr2672165e9.30.1755026650507; 
+ Tue, 12 Aug 2025 12:24:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1jz+Gs9cTkQHn3w8eWB+GSgavy76XzmVv1poh3fJoc8yjkRQiFqifKvz4tWc1p4avESqcBynJJc1+euAnhoc=
+X-Received: by 2002:a05:600c:4746:b0:456:1d61:b0f2 with SMTP id
+ 5b1f17b1804b1-45a1660068fmr2671915e9.30.1755026650106; Tue, 12 Aug 2025
+ 12:24:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
- <20250806151134.365755-5-tangtao1634@phytium.com.cn>
- <0b38d386-9d8b-46bd-a981-718cc7281eb6@linaro.org>
- <f74b4d64-893f-4b39-aa95-4e9ff52edebd@phytium.com.cn>
- <4ff26d30-3b0d-4392-8bac-698ecb0fbdde@linaro.org>
-In-Reply-To: <4ff26d30-3b0d-4392-8bac-698ecb0fbdde@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Aug 2025 19:42:57 +0100
-X-Gm-Features: Ac12FXw8S2eKy3NNE7LqpBxSg8Fp_hjo_dW78xP0Okb2fZqEX_H-WlwB-wpsGsg
-Message-ID: <CAFEAcA-imgF9NLPWeXfE1JRL0gaKpVyfbbNKxojHDVz0t7EBKw@mail.gmail.com>
-Subject: Re: [RFC 04/11] hw/arm/smmuv3: Enable command processing for the
- Secure state
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Tao Tang <tangtao1634@phytium.com.cn>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, 
- Eric Auger <eric.auger@redhat.com>, Chen Baozi <chenbaozi@phytium.com.cn>,
- smostafa@google.com, jean-philippe@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+References: <20250807123027.2910950-1-zhao1.liu@intel.com>
+ <20250807123027.2910950-17-zhao1.liu@intel.com>
+ <beab841b-9c69-43d2-b996-879eee9e1120@redhat.com> <aJtgIBgl8JzDsJ1O@intel.com>
+In-Reply-To: <aJtgIBgl8JzDsJ1O@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 12 Aug 2025 21:23:59 +0200
+X-Gm-Features: Ac12FXy_mKOymcpLosPXpTz7lTsTXHpqKWrXESR-lD6McOr3oVD2bJNVqEdDYK4
+Message-ID: <CABgObfbgX3yiBkyc0aH-6WXLf4bdEOgvY=m2AcPQXAXdruSkNQ@mail.gmail.com>
+Subject: Re: [RFC 16/26] memory: Make flatview_do_translate() return a pointer
+ to MemoryRegionSection
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
+ Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Chuanxiao Dong <chuanxiao.dong@intel.com>
+Content-Type: multipart/alternative; boundary="0000000000000d1ed2063c2ffc3e"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,109 +113,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Aug 2025 at 11:34, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+--0000000000000d1ed2063c2ffc3e
+Content-Type: text/plain; charset="UTF-8"
+
+Il mar 12 ago 2025, 17:17 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+
+> But look closer to Opaque<>, it has 2 safe methods: as_mut_ptr() &
+> raw_get().
 >
-> Hi,
+> These 2 methods indicate that the T pointed by Qpaque<T> is mutable,
+> which has the conflict with the original `*const
+> bindings::MemoryRegionSection`.
 >
-> On 10/8/25 18:59, Tao Tang wrote:
-> > On 2025/8/7 05:55, Pierrick Bouvier wrote:
-> >> On 8/6/25 8:11 AM, Tao Tang wrote:
-> >>> This patch enables the secure command queue, providing a dedicated
-> >>> interface for secure software to issue commands to the SMMU. Based on
-> >>> the SMMU_S_CMDQ_BASE configuration, the SMMU now fetches command
-> >>> entries directly from the Secure PA space so that we need to pass the
-> >>> memory transaction attributes when reading the command queue.
-> >>>
-> >>> This provides a parallel command mechanism to the non-secure world.
-> >>>
-> >>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> >>> ---
-> >>>   hw/arm/smmuv3-internal.h |  8 ++++--
-> >>>   hw/arm/smmuv3.c          | 55 +++++++++++++++++++++++++------------=
----
-> >>>   hw/arm/trace-events      |  2 +-
-> >>>   3 files changed, 41 insertions(+), 24 deletions(-)
-> >>>
-> >>> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-> >>> index 1a8b1cb204..5b2ca00832 100644
-> >>> --- a/hw/arm/smmuv3-internal.h
-> >>> +++ b/hw/arm/smmuv3-internal.h
-> >>> @@ -319,9 +319,13 @@ static inline void queue_cons_incr(SMMUQueue *q)
-> >>>       q->cons =3D deposit32(q->cons, 0, q->log2size + 1, q->cons + 1)=
-;
-> >>>   }
-> >>>   -static inline bool smmuv3_cmdq_enabled(SMMUv3State *s)
-> >>> +static inline bool smmuv3_cmdq_enabled(SMMUv3State *s, bool is_secur=
-e)
-> >>>   {
-> >>> -    return FIELD_EX32(s->cr[0], CR0, CMDQEN);
-> >>> +    if (is_secure) {
-> >>> +        return FIELD_EX32(s->secure_cr[0], S_CR0, CMDQEN);
-> >>> +    } else {
-> >>> +        return FIELD_EX32(s->cr[0], CR0, CMDQEN);
-> >>> +    }
-> >>>   }
+> So from this point, it seems unsafe to use Qpaque<> on this case.
+>
+
+Yes, it's similar to NonNull<>. I am not sure that you need Opaque<> here;
+since the pointer is const, maybe you can just dereference it to a
+&bindings::MemoryRegionSection. Is it useful to have the Opaque<> wrapper
+here?
+
+To address this, I think we need:
+>  - rich comments about this MemoryRegionSection is actually immuatble.
+>  - modify other C functions to accept `const *MemoryRegionSection` as
+>    argument.
+>
+
+Yes, adding const is useful in this case.
+
+Paolo
+
+What do you think?
+>
+> Thanks,
+> Zhao
 >
 >
-> >> This looks like a reasonable and readable approach to support secure
-> >> and non secure accesses.
-> >
-> > Hi Pierrick,
-> >
-> > Thank you so much for taking the time to review and for the very
-> > positive feedback.
-> >
-> > I'm very relieved to hear you find the approach "reasonable and
-> > readable". I was hoping that explicitly passing the parameter was the
-> > right way to avoid issues with global state or code duplication, and
-> > your confirmation is the best encouragement I could ask for.
->
-> An alternative (also suggested in patch #1) is to use index for banked
-> registers.
 
-This is often how we handle S/NS banked registers, yes.
-Other examples:
+--0000000000000d1ed2063c2ffc3e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-include/hw/intc/arm_gicv3_common.h: the S/NS banked registers
-ICC_CTLR_EL1, GICD_STATUSR, GICR_STATUSR are implemented as
-uint32_t icc_ctlr_el1[2] etc. (The GICv3 also has some
-group-related registers which is why it also has 3-element arrays)
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 12 ago 2025, 17:17 Zhao L=
+iu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; h=
+a scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">But l=
+ook closer to Opaque&lt;&gt;, it has 2 safe methods: as_mut_ptr() &amp;<br>
+raw_get().<br>
+<br>
+These 2 methods indicate that the T pointed by Qpaque&lt;T&gt; is mutable,<=
+br>
+which has the conflict with the original `*const bindings::MemoryRegionSect=
+ion`.<br>
+<br>
+So from this point, it seems unsafe to use Qpaque&lt;&gt; on this case.<br>=
+</blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Yes,=
+ it&#39;s similar to NonNull&lt;&gt;. I am not sure that you need Opaque&lt=
+;&gt; here; since the pointer is const, maybe you can just dereference it t=
+o a &amp;bindings::MemoryRegionSection. Is it useful to have the Opaque&lt;=
+&gt; wrapper here?</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div =
+class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">
+To address this, I think we need:<br>
+=C2=A0- rich comments about this MemoryRegionSection is actually immuatble.=
+<br>
+=C2=A0- modify other C functions to accept `const *MemoryRegionSection` as<=
+br>
+=C2=A0 =C2=A0argument.<br></blockquote></div></div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">Yes, adding const is useful in this case.</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></=
+div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex">
+What do you think?<br>
+<br>
+Thanks,<br>
+Zhao<br>
+<br>
+</blockquote></div></div></div>
 
-The banked AArch32 system registers in cpu.h are a bit
-more complicated, and there we have some macros
-A32_BANKED_REG_GET/SET which access the right fields.
-This lets us define the mapping between the NS and S
-registers and the AArch32 ELx views. (I'm not sure I'd
-go down this path again if we did it now: our AArch32
-design here pre-dates AArch64. The AArch64 views use
-an array that they index by EL.)
+--0000000000000d1ed2063c2ffc3e--
 
-Sometimes when there are only a few registers that need
-to be banked S/NS we give them names, as with the
-GICv2 where we have separate apr[][] and nsapr[][] arrays.
-
-I think I would say that it depends mostly on how many
-registers there are, and whether you wind up wanting to do
-a lot of "the logic is the same for both S and NS, it
-just operates on the other register in the bank". It
-can make the code a lot easier to read in that case if
-you have functions that take the is_secure parameter
-and just use it all the way through to index into the
-register array. Even in the simple example above of
-smmuv3_cmdq_enabled(), you can see that
-
-  return FIELD_EX32(s->cr[is_secure][0], CR0, CMDQEN);
-
-is more succinct than the if-else version.
-
-I have not looked closely enough the SMMUv3 code or spec to
-be certain which side of the line it falls, but a glance
-at the register overview does suggest that the design
-has registers for all of normal, secure, realm and root.
-Using an array will probably make our lives easier
-if/when we have to implement the RME support in the SMMU.
-
-thanks
--- PMM
 
