@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE215CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 00:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D58CA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 00:49:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uld8R-0005X9-MN; Mon, 11 Aug 2025 20:45:03 -0400
+	id 1uldCS-0006bL-3c; Mon, 11 Aug 2025 20:49:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uld8Q-0005Wl-0x
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 20:45:02 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1uldCF-0006aj-Kn
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 20:49:01 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uld8N-0001uO-IO
- for qemu-devel@nongnu.org; Mon, 11 Aug 2025 20:45:01 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-76b8d289f73so4602460b3a.1
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 17:44:57 -0700 (PDT)
+ id 1uldC8-0002ha-3w
+ for qemu-devel@nongnu.org; Mon, 11 Aug 2025 20:48:58 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2429d9d3755so46647255ad.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 17:48:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754959494; x=1755564294; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754959726; x=1755564526; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0wjTdEInx1voNPyBP+vwOL72UeL9nC/yJM0MnsyYCxo=;
- b=cBZoprV6sMA/t84OK1bPOHQmsxKkLA1LcKWlCdlhQd84XaM2ya0dmQd3QxFv1ySB7J
- DILX8lubCiuecxIRz+pBaFkP+ybKk8B3hJWOmh8c+HlCpuWqXZScmItnyi3sPj7bPHH3
- LhKhbvTd4TaWuJJrzvpQR5l68TXGQZmGTAZjIGrMjc2BCay4uFJSBj1bQOG2LWEX5qdK
- SR1zn4K223A6o7+qLhU1gs/vLToyJ9w7xGyvq22EfLZGtbKtYv0Ap2bcKIUhq986RoBC
- EybqBW9YeFiCYJOghS+M0MtEwnp+/NpR7mHizyCbtN8CtsRjFzjGtpv/tVwxznot7zFx
- ygwQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=surpJ98tRaESk7K6ewenyJUSlUpmPKhBVFvRz3srkwU=;
+ b=a+y9mFI5FOWO2I/iYq3cp3T/Bzq9fQPJhGQbfBwSaVw7WiYbsgLh+GYVSeXckEJtfJ
+ eqhxwhBRJPs8i94er9VH/jDNJMRWsfhcXB6NZFt8QiwrHNwCl5VZywHFQcTZ6Gz9gd1N
+ YS5l9Qjq61cCDd9oho6r1R3qKO9/57yuo13ovR+/jt+LyzhtR1g2jKPWR+XPrlAcewOp
+ VWxoQ13qMLflk26ibc3C7C5b4ZQSuHVGAvlt6gt0dmWiSUbgh+bXIzVq2l7KHZX8f9Px
+ Lylrup3nwnr6RwDXDm+CWUTkvm/300yV24DzsIHEIbAOWV6ydZGIMVkcz5tTz/dKieye
+ M1tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754959494; x=1755564294;
+ d=1e100.net; s=20230601; t=1754959726; x=1755564526;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0wjTdEInx1voNPyBP+vwOL72UeL9nC/yJM0MnsyYCxo=;
- b=pmCelOnwbE1rDa5id6j46DD9FoI3Qkt3IQfsa1F0kfv3aonGex0ZBQ5H/JHFW7818b
- 75y3LVht1rL6xqzWzF9Yd8Bl698BXzlrZhy/P4p4VsO2frq7Wt5Ow58eTpZ2HATuRsmV
- yTsJUg65f6GVpCqCa2Y7WffeSyglRhxXak8+xdBXHDzVHwk9FYeueM1BaAiY5zwtKRgF
- yOWHg7ENgMXInomd19VVIL1Xf9BsAi0fJ5DE53za0HpkKRtyiuxBlOhkQ18Zw3/w9RK8
- 7PJnFKhfpu9Pk/iiy+ZmyQisUHbg9espoQIvRxyailC/O0LujO6BlbLnW7HwBma1kYK+
- PyxA==
+ bh=surpJ98tRaESk7K6ewenyJUSlUpmPKhBVFvRz3srkwU=;
+ b=Ijq/quDPPTwtuAmg1It7C4OsI+XLlgcE/91LFy088fO+OHGM3IZz1bPZe/vWkB+OTj
+ ZtsQNkWGIN1dBjA+w6FOhYX5k4g/F6Mm1fkaZ+zCy6AnYrCv6vJo1omYO4cSJmqLwZqz
+ uKifWttxRPv/fXoNF2A+BypeWMQwslNIF/kSweAESW9UXFQ13u4/nyIqvAZWJGkFcKsr
+ tdIGYiIzhX8uBRO8XBjz7QWULanPd76F/LYXTgyKTLhA963RsqAvNoZpirzAcVjWteOT
+ /lX01TCOUrb8I6tzyw1UXfjw7ay+Y6tziK0J7VfstxfSI18qAUrqvRBgfW2jZc3xhxdY
+ IC3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEFDFpDGqKHsOGUis+Pqyr17yerVjaZ7U2vVC3R+//UOhopfnxvq7LGuJbOMIHNrG3vs4xzhafBUI/@nongnu.org
-X-Gm-Message-State: AOJu0YyCRkpJ+b4rEcGKmBxjPOJXMsjhKmVCcwwYRVCCtkYjVG911azS
- 92tjvyEbCEXB0HsvaJ5Tjkk+dKDatjZHszQAGT4FryChN4/BnfXJ18bjAF7yRmjYquOb7f/5RyS
- 28pGvRnU=
-X-Gm-Gg: ASbGncs8B4zm6wvC+fFqISi0ugYdi/wqTwF/ErWzff5pD4dtw9XfMxbEmuQfXeN0eDX
- PtPPQE99jKXfU6/Y+8Asm27tm0834as2u3DO0yIHuqYITgnhFGvcUcqmklNO2yFF6cc23sw5lWz
- HYtt4aO0+NbTAX2wIeBqG6/KP/hSLhlJqg11kz0D+JyHFtpW9BDnBaJhq2A2f3oSEa5rZQAIAxe
- 4eyZagmB1gpuPt/i74P26ujCWXR4EAAlmC8YrTz2IJUSk/t2dcxqA7PcAZ+klc9RVZuVnCan7vO
- eHRdrWogxE/YyY5xwVaZWfg6zN89Eu95YyHP8TfKKQ+DLiX95jzfOB70o0Jjg3kW+7kJKmBA+Pj
- LYv9dp4zqOy/SvFqamIDJOiSQQvIvFuLXxzyyfWc39A==
-X-Google-Smtp-Source: AGHT+IHSqmeE3bmr8Zn1t1wPPiFWzysP8jzm17DBzK9jGkXPGOVovCR8K361L5iTfQ2CbHmVk1GMfQ==
-X-Received: by 2002:a05:6a20:7494:b0:220:9545:2c96 with SMTP id
- adf61e73a8af0-2409a8915f7mr2440330637.1.1754959494149; 
- Mon, 11 Aug 2025 17:44:54 -0700 (PDT)
+ AJvYcCU9MvhaXu6SWJttPD/ktRzI1BJZsZGbCrVU20dFNaty+9+cwpFQZloiKf9myHBjMWB3AzYxXjKEVrCT@nongnu.org
+X-Gm-Message-State: AOJu0Yx7BedTXwMYufZFDEJgHUAUE7Tb6EJ9DdC6PIwODSdOMhAdnrE3
+ Pwd13IzxnrXHaYqKd72DCyQBesy6AqENS+2LPMRNpyzHgQY/qe3YWMSFkEuzAW2DWcU=
+X-Gm-Gg: ASbGncvNRnm6I6hKbEoHN4k88cxDD+87WFUEd5OlVNZ3DaR56rCGnT1dXACMSdMCGKi
+ 1clf7JgB8jCKpN/hAnkSpNHc3xCO5MK7tYaIjzSBmmnuys2fqbkoRHtYubwCwaywJ7MKynuvzOn
+ bk/14DLIOrnlVp/Z8X1JFvybHMTK1HNnPy7E5s2VojtpNViZIoAs6hlh+lZoIhKPCLO93bbHvwl
+ KYnnpqvI0i4xnAyi16zLBAU2v5elW5gR/YgHIJ8bn/WlLvDUV3Wod25q9Vu1tT57cg88VcJH/Xx
+ PbM8gtkcAYKa6Z+P3TMidMvID8X30I3PdC9kEZt54j6ygv8cnEtb8rm1UiCBAq8EROoMQsN+yvy
+ aQ0bGjCqQiBpbiS/5/cWH58QaIjNtvZLdRuegKMZKkw==
+X-Google-Smtp-Source: AGHT+IH36nv5aftkZHvXUnHZVxdwgQ0piS8gs8U6mo1ksuQEVDfYmd+B+94Lg+Gbueb2VGnIBsgn6Q==
+X-Received: by 2002:a17:903:1aac:b0:235:6aa:1675 with SMTP id
+ d9443c01a7336-242fc371057mr20701975ad.52.1754959726287; 
+ Mon, 11 Aug 2025 17:48:46 -0700 (PDT)
 Received: from [192.168.10.140] ([180.233.125.160])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b423d2f5035sm22229159a12.39.2025.08.11.17.44.52
+ d9443c01a7336-241e8aab53dsm283244775ad.170.2025.08.11.17.48.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 17:44:53 -0700 (PDT)
-Message-ID: <34cb2f32-1cc9-40af-803d-78f5d995dd5f@linaro.org>
-Date: Tue, 12 Aug 2025 10:44:44 +1000
+ Mon, 11 Aug 2025 17:48:45 -0700 (PDT)
+Message-ID: <8efcc809-f548-4383-b742-e435d622da73@linaro.org>
+Date: Tue, 12 Aug 2025 10:48:37 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 06/11] target/arm: Introduce
- host_cpu_feature_supported()
+Subject: Re: [RFC PATCH 07/11] target/arm: Replace kvm_arm_pmu_supported by
+ host_cpu_feature_supported
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
+Cc: Miguel Luis <miguel.luis@oracle.com>, kvm@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Haibo Xu <haibo.xu@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Mark Burton <mburton@qti.qualcomm.com>, Alexander Graf <agraf@csgraf.de>,
+ Claudio Fontana <cfontana@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
+ Eric Auger <eric.auger@redhat.com>, qemu-arm@nongnu.org,
+ Cameron Esfahani <dirty@apple.com>
 References: <20250811170611.37482-1-philmd@linaro.org>
- <20250811170611.37482-7-philmd@linaro.org>
+ <20250811170611.37482-8-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250811170611.37482-7-philmd@linaro.org>
+In-Reply-To: <20250811170611.37482-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -107,25 +115,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/12/25 03:06, Philippe Mathieu-Daudé wrote:
-> +bool host_cpu_feature_supported(enum arm_features feat, bool can_emulate)
-> +{
-> +#if defined(CONFIG_KVM) || defined(CONFIG_HVF)
-> +    static enum { F_UNKN, F_SUPP, F_UNSUPP } supported[64] = { };
-> +
-> +    assert(feat < ARRAY_SIZE(supported));
-> +    if (supported[feat] == F_UNKN) {
-> +        supported[feat] = arm_hw_accel_cpu_feature_supported(feat, can_emulate);
-> +    }
-> +    return supported[feat] == F_SUPP;
-> +#elif defined(CONFIG_TCG)
-> +    return can_emulate;
-> +#else
-> +#error
-> +#endif
-> +}
+> +++ b/target/arm/kvm.c
+> @@ -288,7 +288,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>                                1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+>       }
+>   
+> -    if (kvm_arm_pmu_supported()) {
+> +    if (host_cpu_feature_supported(ARM_FEATURE_PMU, false)) {
 
-How much startup time is saved by this cache?
-This feels like premature optimization.
+Why is false correct here?  Alternately, in the next patch, why is it correct to pass true 
+for the EL2 test?
+
+What is the purpose of the can_emulate parameter at all?
+
 
 r~
 
