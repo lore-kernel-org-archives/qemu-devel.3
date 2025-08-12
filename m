@@ -4,92 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB106CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 14:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A0AC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 14:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulqGE-0002Kr-VQ; Tue, 12 Aug 2025 10:45:59 -0400
+	id 1ulqQu-0005Fv-Sc; Tue, 12 Aug 2025 10:57:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulqGC-0002KF-QM
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:45:56 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulqG5-00056n-2U
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:45:55 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-459ddf9019cso18584025e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 07:45:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755009942; x=1755614742; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XRrRHxmU33XQKErKqkHz1sj1wYaipvAcia+2cknIU7E=;
- b=W41k7RAs7/HMlEfqr0ExsItzbS4RlLf9Mp5qa9/dB3Sdw/YPkwctEvwRF+2pON41M8
- W+th6gb4W0XQrxpSjLIv8QEp8DEV6BhUCxFR91VEm9gkD3ROekcBCpl3p0U0MS5yILpU
- 9u+8ffSMdI8nGiXJygu037uVACd1Ie/QbYPynIjIcUtGYq/Kr+Se4+KWK2ItSQVIOhKR
- RbvzHvtC0qnzmoMs+UK2xM9g5heEfm7RIjn8oJtnCDRhkrLs2uu6lA5IQsva7Mkz0aG9
- SpGoUPs9c+nvLGiUtNBQ8fJMU+AoYCYOdAAMGp+LJF+hmv4rZhGLttzy24NOcBYRjllt
- kQbA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulqQp-0005Fl-Po
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:56:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ulqQf-0006NR-3z
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:56:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755010597;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=HPVOIfTAgDtIBQ0XZVeGui2p5hA3M1GqY+xjrokESos=;
+ b=AGKX2MUybIJX5AQOAP/vX03I5AC5ChvZIvW+OrKk4O3GPX1cb0hYUfP/munncQJ+C9hrBR
+ NMVx+2UsZKPdNviwKR2WSk+zgYkiK7W12KUo0IfzhP+/K0xLczOnPBWIvSa/E7NbqhLvcW
+ Oo4v9JaWvRGoG36G9NyzxZ6ph7uXe5I=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-475-qzT26DO1OBSKLhYyPz-aGw-1; Tue, 12 Aug 2025 10:56:36 -0400
+X-MC-Unique: qzT26DO1OBSKLhYyPz-aGw-1
+X-Mimecast-MFC-AGG-ID: qzT26DO1OBSKLhYyPz-aGw_1755010596
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7e8100bef92so1219055985a.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 07:56:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755009942; x=1755614742;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XRrRHxmU33XQKErKqkHz1sj1wYaipvAcia+2cknIU7E=;
- b=GPBkXVJf69Jm7gZyWqKpYMQYYKFB/oFYEvKMt2snER4JHCwupMYguRIIHmvnLXajWg
- BGqQpSeXKhMlI1tg43G7NWplLpIwwniaB/LS/D8wkab2MUWZRtFdr8BMG7AbKeAVsi+S
- zRS+/rA9wu+iP8kJFWE3LAK1lt6BP932GicMMkQG2X9plQGMQqRT1QGuMtrCgsllDvV2
- /3RN2G6oRDRcLKrHdaTA4XWEq4AAWXeXMDGFcChrylVQSw+LiZ1XBAS0X+9YNAwlo85S
- Io5JX6+S6whv/wOB4sigHF8OMp3Ic2LDu6OtkSo/HEPz3wllJLsvXW7YSyzSITHKQaqS
- uu/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZ5FEtB6uCZxPDrRIQIwzfIlsOjQVA40QUntBF5PqSL7/p2fx6tfZ7LUFDprgjDoY6BkBXKLaghPwB@nongnu.org
-X-Gm-Message-State: AOJu0YzmEWX00Z52tnf2SNFR1reS1AKKShkHnwQpLuuY805kxm6lyMIY
- zDDf1473RtZpJERySIuAQWMH08Nm2jKmryEFm4viiNw7RzLqn4DBOEyMSaUdow7v1Q8=
-X-Gm-Gg: ASbGncuLlkgGzYDUxoQLNn0viVmHvmlIFjL0rOKN17nydfwfCe+0Ox+aD1mb3B6oJDr
- lAcc7PDKVw3yza3J60FsdBG1yy1hBQKaMkOk1nGofr0vObSUE/8UxPP+PfcNW1ip3DNYxUyWCE5
- vjpVInN8YgNfD2Qht786LlFs0YMTYpuIJWIR9/To2myFmBlQyUsj9YgPhaI+jJHvBoTaYUMmDjm
- MN6b+msyN4Hyxk5Hq+l6cbBSyGTJDTmeTUpSldP0HCVto7o/mVvyW9Ho7zxMCiApfGElkJL+beO
- gjuQZ8nF844naVKpwZj30QMndRFwxy5Pq9Ale1OMaMWo+xgfPKrxE3LCPA15jKAQN7fwM5zP8pT
- 4SEtxVFL34N5wcDga/CquWXnppc4/7yo855u1PuquZH+yT1tFutHeAoPU8oI1TtiUDQ==
-X-Google-Smtp-Source: AGHT+IEH6oo9mX6vRSD6h/GRf6uQOnLcDRp0WiFK8YarJ2BuIL/y8ILOPNWXxg0WG/I8gYnEPn9G0g==
-X-Received: by 2002:a05:600c:8010:b0:458:a850:f857 with SMTP id
- 5b1f17b1804b1-45a15b55e88mr680535e9.31.1755009942446; 
- Tue, 12 Aug 2025 07:45:42 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e5868fd7sm322000925e9.18.2025.08.12.07.45.41
+ d=1e100.net; s=20230601; t=1755010595; x=1755615395;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HPVOIfTAgDtIBQ0XZVeGui2p5hA3M1GqY+xjrokESos=;
+ b=jnBla+lGQa5k/NLxtqeHyLpQHCAsCwQmzKB2d8zogBmXqmeX1Nx0nAPoeQQqnQSrWy
+ OZqDbcvKhxIe22cfkCFmD6Iq35pSQKLql/WfJ6j0hXNuUflYxHF4ups7+Y/nZg7S8ocj
+ GE5vktUq8evOlwMQcHO2vllbIZQIeImVlZOwpfDBpx/WRABbr9BeeD3ZI9Ea/b+cnwH8
+ ++dwmX2L3QvtuwxkIdFNgYKUfON790M+Rs56cR4zLO2hGt9/hJ8DNcZN2heMebhBeKfb
+ bxVcjzyPtaVmMvJsB1bvgYwgHkeS1FBzDkC6a73SRIOI+tkUot56KrWikhAQNYSThhAI
+ bzTA==
+X-Gm-Message-State: AOJu0YwOvJqp1XONF5WlgMpr8utAPhTCbAyVKA0RHyUP3pVvp/1hotMk
+ gYM4F7CdtCM6n0Lc7aveukSQo8rMBdifOQeqLiqDilzX0HtrU5q+Rbo/WoMOXFnSc9trmvvPa2A
+ e4HwrN0kw3wclXfohqLsHBTKp5wH64fKj9I0Dl03DhQWhWITbOthrttGxJwhIUzed
+X-Gm-Gg: ASbGncuhvZVhdwI9Rwfzep/vEQpT5xy7lkoP1RHqoUi+SS5kktNUjlTnqJ0wfJQKZ/z
+ LVIqmyM5/z7j2miWM5pokK2Ia+LxtAhxwd/6MArn0JodZ+IXwTUrmpTb2aUOt5ex5B6rdhq8IJz
+ E16+eYXkqft10nPSMxEcYx0TxxKM6VZgwOvuyMaW6aTk1Cfp4TKdfhschDefPJ0hv6HguVRIoD+
+ W5ERgt1U2QD908WYvnHn9qoRS5JEIs4zKt4qC+biu0jzgI2wTlkih/7ym/w3bhvxjoI2luNKE6e
+ TN0C+G3i+X+zgc52dSKBOscZt1IiWHt46yb3Ty2Ssm7xmT9sajmdURf1KQYV/uvwpQv0auZXVA0
+ EwQ==
+X-Received: by 2002:a05:620a:2147:b0:7e3:477d:53b5 with SMTP id
+ af79cd13be357-7e86446673fmr468085a.13.1755010595442; 
+ Tue, 12 Aug 2025 07:56:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGybWucUVIyijX8SuiHLjDTwglw66S733txzW75VIGFms4ploITvEa3o9goT9cGv4LpMf8J1A==
+X-Received: by 2002:a05:620a:2147:b0:7e3:477d:53b5 with SMTP id
+ af79cd13be357-7e86446673fmr463885a.13.1755010594969; 
+ Tue, 12 Aug 2025 07:56:34 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e822b6c47esm906825785a.39.2025.08.12.07.56.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 07:45:41 -0700 (PDT)
-Message-ID: <20db3b4a-d16a-421d-9d78-567d08a52b06@linaro.org>
-Date: Tue, 12 Aug 2025 16:45:40 +0200
+ Tue, 12 Aug 2025 07:56:34 -0700 (PDT)
+Message-ID: <f6165e17-a926-4a59-9b59-2dd6853f20a6@redhat.com>
+Date: Tue, 12 Aug 2025 16:56:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 30/63] q35: Introduce smm_ranges property for q35-pci-host
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Cc: Isaku Yamahata <isaku.yamahata@linux.intel.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Michael Roth <michael.roth@amd.com>
-References: <20240423150951.41600-1-pbonzini@redhat.com>
- <20240423150951.41600-31-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240423150951.41600-31-pbonzini@redhat.com>
+Subject: Re: [Question] VFIO migration will not be aborted in a corner scenario
+To: Avihai Horon <avihaih@nvidia.com>, Kunkun Jiang <jiangkunkun@huawei.com>, 
+ Alex Williamson <alex.williamson@redhat.com>,
+ Yishai Hadas <yishaih@nvidia.com>
+Cc: "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ wanghaibin.wang@huawei.com, Zenghui Yu <yuzenghui@huawei.com>
+References: <6f64724d-7869-1283-bb75-193c7fba5576@huawei.com>
+ <f6c1cff4-a0ca-436a-b8d7-3d19ce49e848@redhat.com>
+ <506cab2c-35aa-4c68-ba94-b26ba1b315bc@nvidia.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <506cab2c-35aa-4c68-ba94-b26ba1b315bc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,42 +158,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/4/24 17:09, Paolo Bonzini wrote:
-> From: Isaku Yamahata <isaku.yamahata@linux.intel.com>
+On 8/12/25 16:08, Avihai Horon wrote:
 > 
-> Add a q35 property to check whether or not SMM ranges, e.g. SMRAM, TSEG,
-> etc... exist for the target platform.  TDX doesn't support SMM and doesn't
-> play nice with QEMU modifying related guest memory ranges.
+> On 11/08/2025 19:34, Cédric Le Goater wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> Hello,
+>>
+>> + Avihai
+>>
+>> On 8/11/25 18:02, Kunkun Jiang wrote:
+>>> Hi all,
+>>>
+>>> While testing VFIO migration, I encountered an corner scenario case:
+>>> VFIO migration will not be aborted when the vfio device of dst-vm fails to transition from RESUMING to RUNNING state in vfio_vmstate_change.
+>>>
+>>> I saw the comments in the vfio_vmstate_change but I don't understand why no action is taken for this situation.
+>>
+>> There is error handling in vfio_vmstate_change() :
+>>
+>>         /*
+>>          * Migration should be aborted in this case, but vm_state_notify()
+>>          * currently does not support reporting failures.
+>>          */
+>>         migration_file_set_error(ret, local_err);
 > 
-> Signed-off-by: Isaku Yamahata <isaku.yamahata@linux.intel.com>
-> Co-developed-by: Sean Christopherson <sean.j.christopherson@intel.com>
-> Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
-> Message-ID: <20240320083945.991426-19-michael.roth@amd.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   include/hw/i386/pc.h      |  1 +
->   include/hw/pci-host/q35.h |  1 +
->   hw/i386/pc_q35.c          |  2 ++
->   hw/pci-host/q35.c         | 42 +++++++++++++++++++++++++++------------
->   4 files changed, 33 insertions(+), 13 deletions(-)
+> Hmm, I think this only sets the error on src. On dst we don't have MigrationState->to_dst_file, so we end up just reporting the error.
+> But even if we did set it, no one is checking if there is a migration error after vm_start() is called in process_incoming_migration_bh().
+> 
+>>
+>>> Allowing the live migration process to continue could cause unrecoverable damage to the VM.
+> 
+> What do you mean by unrecoverable damage to the VM?
+> If RESUMING->RUNNING transition fails, would a VFIO reset recover the device and allow the VM to continue operation with damage limited only to the VFIO device?
+> 
+>>> In this case, can we directly exit the dst-vm? Through the return-path mechanism, the src-vm can continue to run.
+>>>
+>>> Looking forward to your reply.
+>>
+> The straightforward solution, as you suggested, is to exit dst upon error in RESUMING->RUNNING transition and notify about it to src through the return-path.
+> However, I am not sure if failing the migration after vm_start() on dst is a bit late (as we start vCPUs and do migration_block_activate, etc.).
+> 
+> But I can think of another way to solve this, hopefully simpler.
+> According to VFIO migration uAPI [1]:
+>   * RESUMING -> STOP
+>   *   Leaving RESUMING terminates a data transfer session and indicates the
+>   *   device should complete processing of the data delivered by write(). The
+>   *   kernel migration driver should complete the incorporation of data written
+>   *   to the data transfer FD into the device internal state and perform
+>   *   final validity and consistency checking of the new device state. If the
+>   *   user provided data is found to be incomplete, inconsistent, or otherwise
+>   *   invalid, the migration driver must fail the SET_STATE ioctl and
+>   *   optionally go to the ERROR state as described below.
+> 
+> So, IIUC, we can add an explicit RESUMING->STOP transition [2] after the device config is loaded (which is the last data the device is expected to receive).
+> If this transition fails, it means something was wrong with migration, and we can send src an error msg via return-path (and not continue to vm_start()).
+> 
+> Maybe this approach is less complicated than the first one, and it will also work if src VM was paused prior migration.
+> I already tested some POC and it seems to be working (at least with an artificial error i injected in RESUMING->STOP transition).
+> Kunkun, can you apply the following diff [3] and check if this solves the issue?
+> 
+> And in general, what do you think? Should we go with this approach or do you have other ideas?
+> 
+> Thanks.
+> 
+> [1] https://elixir.bootlin.com/linux/v6.16/source/include/uapi/linux/vfio.h#L1099
+> [2] Today RESUMING->STOP is done implicitly by the VFIO driver as part of RESUMING->RUNNING transition.
+> [3]
+
+Avihai,
+
+Could you please send an RFC patch with Peter and Fabiano in cc: ?
+This will help to discuss the proposal and keep track of the issue.
 
 
-> @@ -578,6 +590,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
->                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
->       }
->   
-> +    if (!mch->has_smm_ranges) {
-> +        return;
+Kunkun Jiang,
 
-Are we sure we are not skipping something unrelated to SMM like the
-"QEMU specific hack" with the tseg-blackhole region?
+Could you please share details on your environment ?
 
-> +    }
-> +
->       /* if *disabled* show SMRAM to all CPUs */
->       memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
->                                mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+Thanks,
+
+C.
 
 
