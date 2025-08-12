@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A97D7CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 04:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38C8C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 04:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulgxe-00035e-Kn; Tue, 12 Aug 2025 00:50:10 -0400
+	id 1ulh5t-0004xq-Fp; Tue, 12 Aug 2025 00:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulgxZ-00035H-Ue
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 00:50:06 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulh5r-0004xQ-0y
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 00:58:39 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulgxV-0004Wf-0h
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 00:50:04 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3b7823559a5so2354614f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 21:49:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulh5l-00064k-EP
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 00:58:37 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3b913b7dbe3so29312f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 21:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1754974191; x=1755578991; darn=nongnu.org;
+ d=linaro.org; s=google; t=1754974706; x=1755579506; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nKO/btB8sgwjdTI9Kz/mOI1judsHVR/Ol8FXze9Q5lQ=;
- b=qJdaOUDl0ELw6B00Rm2nPVjEC+K9lm14uLC9qQ3tBgLTG4YCui++kTa+9Vufmoc9Y/
- z/drFNPVfolLfGpntsOZbzNTVEvM+OeyN5Xh8M+HigEUZdo7w9JERIntzz2fQwWv12hd
- iOKXR3iFt5cRwLiwyFv9qNyC+OnHnSdHIMmee/cti3XItoUWvV0B5ZYwNX6m9ZcdF9B0
- ACKLTyiChkBQjH00XQtHu+fDgKCOF6PlC1Y3XpZ8z9roN3LhkebNh/fxr/InWOSlyHMU
- B1xbJXZ4JLhdO6L5e258TlZvRz1+sJ8j9zB+Zj4diy11OoG74F6kwkqgxm40r64SabvV
- 6jgg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XtV47jOYd0pfwJ02xLr5PUN1R1ZRoqD2/4YJUm5Fnpw=;
+ b=g834SnXvGFqNfcc6zFVD0EoUeSGy1jk23mnlan0tQgDXB3S6c5t6zwO61iOxBLv7gX
+ u73OPZswdO5zl+wAqfYvYTx8JDBaPpev6Nt+lt+iaMu9cxqkwZvrLfimbNLEBQFXBBYQ
+ LNI/fz91YTOt1vqPr1l2bxw0DiZDmbJYPg13gIeLTu3Rz/YEcFLFy7ED7oS8c9ss6ArC
+ AGlTArW38p/DhG2wQBWSmgYN/gRqs/2q7GyAsld9XfQAfQvOsiQfBVKXdDl8p9TPY5N0
+ DutaPTV8UompSWyAHvej46oH83zK29tZqG1CoRH5WadAocYYpYAjP9mj6hNukJOfQKpu
+ ZBhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754974191; x=1755578991;
+ d=1e100.net; s=20230601; t=1754974706; x=1755579506;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nKO/btB8sgwjdTI9Kz/mOI1judsHVR/Ol8FXze9Q5lQ=;
- b=EEu3nY24SheuQEZ3bcOJsiyVCEjFugnHWrOyBCTo2jGm83Ed/k/ZMLkOGrFAD2wXqn
- ICWgB8cvbcw4Wmdm1itcQNghbG2Q+hP8LAyHkCsWzHKEYMaeaPTAUSWpeamTiFISN5Vz
- aNokGEjDq0f0QC2TvFZmpP5Ng5AFPxky4C+x2QagMieDOYVmUDI4n9t6TSgEv3JV/mBs
- htpUP4+HFO34Kp1Rme+/kptZ0uzm80pn/X5KA448L5C4hAYqHk9uQucwJ1tTrLCYT+r5
- CURWixousrni1H3SVBXlrPR84ImMyOOrW9XT21zWcMTzRjaUZLDIgMizlITnjBZvbpmZ
- wHZg==
+ bh=XtV47jOYd0pfwJ02xLr5PUN1R1ZRoqD2/4YJUm5Fnpw=;
+ b=osmRRd0qsjHm4MPP4N/zypO6vm1Sievwlgr/9LGaz5d+NHNGdDHEBBfA0F+LyPc4Zo
+ GpstSevomrsVJ1JAFr1IcghQl/XYjuSoiU1+C616/3PUSJxHJNeaSmlqRncEpzG0V1iR
+ iG0NPcbh27GRkE/7Ut8UiQox9Lwc8XnxmwH86aipnmxO99qZNnh9mi5sLcJa6Qt0ipZa
+ E77vT5WppL8XJF9RF+m1ZDGi5qaRRlrUytHujvgu2k2gUtyB3dx7osm5YLNIoqwhwLlO
+ 1op594I6Fo4B2KF2kcnXzUJKXD8FpX7/z5AUiH5hqxcdWaufWOa/DotLUqeji9p9PpYn
+ ZE5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+FCbi2M1ti7Gaxgjs6si3ALiycF+MRJSFDUw6UPfb3qwEsvJu93mLr9FpS6J1DNqmDVHLBlnkT0jx@nongnu.org
-X-Gm-Message-State: AOJu0YyEva5paLrrZbBfn8DYH/zz65LYgb+awW4hmbyPOEgk+UWHef7O
- rRFVqjMoUhQnpe1I3tM7+7Ac+mNaXQT4VQizE8ZjtSjvNPNLkET5ecrQXJNUmi7LNc4=
-X-Gm-Gg: ASbGncv89wxLoiNiwuE2KL97CVChtSWb1ex3RuYxzlk5yiHrMAaJsWNmWUU48uOG0Vw
- iBS4pvGE4vgLzqGJu8uEpK5vODQLZSyI2JILGFwkUvDQxqQbVMnrUM4IVK5jC9AsqcmG4MekDWb
- geby7k+fzxeaOaw9B+w23RPk2h9Gxa9QNo9WZacYdw5LMeQ8qRxmIiGjVZYsdnvO+++rUncfDEJ
- BQNJmFV48MlpMp1f5Q9sU1BKomwN7BFvy7uTtLmoJbiBEPADO8L1p37wY2mM2tZfdnhXi/qnyjE
- kxJGAUiHkkBVclIcUXJgDIwhUQ1v3xjfnrRRwBL9jxJPwhnSeYs7MUG9gQAJ77ig0/pMNE589DC
- soZG3NNi3GNzLttCQmoZwk0+O/LGBemcJBrdfFQMMMgMrH4MisAovTuo3O6MpAHilmTr+dKuOZN
- 80
-X-Google-Smtp-Source: AGHT+IFzSLCrFfOChpFZBEIxi3PmTUayS0Ee8wnnNgXG4m8ADogf3URL6YowrkJcbp3tQmtBfLy4LA==
-X-Received: by 2002:a05:6000:2010:b0:3b7:95bc:a7ea with SMTP id
- ffacd0b85a97d-3b910fd9b71mr1537054f8f.22.1754974191512; 
- Mon, 11 Aug 2025 21:49:51 -0700 (PDT)
+ AJvYcCU3TSTOvWP8QW6gL6NUost32z6NMkhnJuL3gYpU3SlMDUR+hPqjPlllSc/d2p53+zpjyXYcypOFu8bc@nongnu.org
+X-Gm-Message-State: AOJu0YzHcxdWfCzZ0uNecWsuLi+RhwBDoEz8V7JDDwBD5iTWy/0J4YQ4
+ Abukgcu4iX68cgOABTmLPd3QvsamGKu23PEf9c+V8Tb7EfgzrGs6ro24jJUMSzi6WjnZSqO4+Bc
+ HKhxB
+X-Gm-Gg: ASbGncsf3c9jE5hA5mwwQ8pb32Vatl8XA8YTk/TO3CdInFEVKzgPtWg/MuYk+aGzVYJ
+ kbROAgod8/UnUTrXbvLKzuRfyUpWI76VQqa09durXowUh5iYsl9WRixLqTyuKfj63iz2NqCdHk0
+ GcmhXxcuppfKMmppnEoP6OI+TmV59/S2yjCL2Z3jf+L4mQehqxFrbIYWP3jY/gWLULgCciBx5Gs
+ X5vtKM7ODpfO+2p5Iwbdi8Y3B7hHcKIj+0LkEwxBND2v4NHfF22C7blWQpKp3aQo97lZ1WL5AEl
+ MejEAp7yO/Ept8916FUtLZVNJl8yJ0M+i2g93UCbJxMZrH71Ve8r/XS1th/izA9sqn1FxkMSE+d
+ 3dU+jhJpFYWBS1KEIRz1igSVxCCPkkWaxmNjVfmk7/uJ4VcjzFbKWL05eED2cJ3jLTg==
+X-Google-Smtp-Source: AGHT+IFZbBwticS4mpRf5MkGiv95D/0ePz44UTHQTw1jWed+ABPpoHQKqNvwHI2Tl6mCChv7aypyYA==
+X-Received: by 2002:a05:6000:188f:b0:3b8:d3cc:8dc with SMTP id
+ ffacd0b85a97d-3b900b5040amr12186888f8f.28.1754974705912; 
+ Mon, 11 Aug 2025 21:58:25 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-459e58400f5sm274704575e9.2.2025.08.11.21.49.50
+ ffacd0b85a97d-3b911469bffsm1753439f8f.36.2025.08.11.21.58.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Aug 2025 21:49:50 -0700 (PDT)
-Message-ID: <14d7d948-e840-4ae7-ae93-122755d6a421@linaro.org>
-Date: Tue, 12 Aug 2025 06:49:49 +0200
+ Mon, 11 Aug 2025 21:58:25 -0700 (PDT)
+Message-ID: <2cc56fd3-7992-4c06-bed2-353aa15ba5b5@linaro.org>
+Date: Tue, 12 Aug 2025 06:58:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 07/11] target/arm: Replace kvm_arm_pmu_supported by
- host_cpu_feature_supported
+Subject: Re: [RFC PATCH 05/11] target/arm: Introduce
+ arm_hw_accel_cpu_feature_supported()
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Miguel Luis <miguel.luis@oracle.com>, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Haibo Xu <haibo.xu@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Mark Burton <mburton@qti.qualcomm.com>, Alexander Graf <agraf@csgraf.de>,
- Claudio Fontana <cfontana@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
- Eric Auger <eric.auger@redhat.com>, qemu-arm@nongnu.org,
- Cameron Esfahani <dirty@apple.com>
 References: <20250811170611.37482-1-philmd@linaro.org>
- <20250811170611.37482-8-philmd@linaro.org>
- <8efcc809-f548-4383-b742-e435d622da73@linaro.org>
+ <20250811170611.37482-6-philmd@linaro.org>
+ <2e5d40ac-927f-4109-b285-c0635b959066@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8efcc809-f548-4383-b742-e435d622da73@linaro.org>
+In-Reply-To: <2e5d40ac-927f-4109-b285-c0635b959066@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,30 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/8/25 02:48, Richard Henderson wrote:
+On 12/8/25 02:35, Richard Henderson wrote:
 > On 8/12/25 03:06, Philippe Mathieu-Daudé wrote:
->> +++ b/target/arm/kvm.c
->> @@ -288,7 +288,7 @@ static bool 
->> kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->>                                1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
->>       }
->> -    if (kvm_arm_pmu_supported()) {
->> +    if (host_cpu_feature_supported(ARM_FEATURE_PMU, false)) {
+>> Introduce arm_hw_accel_cpu_feature_supported() helper,
+>> an accelerator implementation to return whether a ARM
+>> feature is supported by host hardware. Allow optional
+>> fallback on emulation.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/arm/cpu.h     | 12 ++++++++++++
+>>   target/arm/hvf/hvf.c | 20 ++++++++++++++++++++
+>>   target/arm/kvm.c     | 22 ++++++++++++++++++++++
+>>   3 files changed, 54 insertions(+)
+>>
+>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+>> index dc9b6dce4c9..5136c4caabf 100644
+>> --- a/target/arm/cpu.h
+>> +++ b/target/arm/cpu.h
+>> @@ -2507,6 +2507,18 @@ static inline ARMSecuritySpace 
+>> arm_secure_to_space(bool secure)
+>>   }
+>>   #if !defined(CONFIG_USER_ONLY)
+>> +
+>> +/**
+>> + * arm_hw_accel_cpu_feature_supported:
+>> + * @feat: Feature to test for support
+>> + * @can_emulate: Whether Allow to fall back to emulation if @feat is not
+>> + *               supported by hardware accelerator
+>> + *
+>> + * Hardware accelerator implementation of cpu_feature_supported().
+>> + */
+>> +bool arm_hw_accel_cpu_feature_supported(enum arm_features feat,
+>> +                                        bool can_emulate);
 > 
-> Why is false correct here?  Alternately, in the next patch, why is it 
-> correct to pass true for the EL2 test?
+> internals.h.
 
-I think I copied to KVM the HVF use, adapted on top of:
-https://lore.kernel.org/qemu-devel/20250808070137.48716-12-mohamed@unpredictable.fr/
-
-> 
-> What is the purpose of the can_emulate parameter at all?
-
-When using split-accel on pre-M3, we might emulate EL2:
-
-        |   feat            |    can_emulate   |    retval
-        +   ----            +      -----       +     ----M1/M2  | 
-ARM_FEATURE_EL2         false            false
-M1/M2  |  ARM_FEATURE_EL2         true             true
-M3/M4  |  ARM_FEATURE_EL2         any              true
+OK, but since hw/intc/arm_gicv3_hvf.c calls host_cpu_feature_supported,
+the other one has to stay in "cpu.h" (see
+https://lore.kernel.org/qemu-devel/20250808070137.48716-5-mohamed@unpredictable.fr/).
 
