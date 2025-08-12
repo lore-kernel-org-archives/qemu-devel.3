@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32B77CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 09:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B19CA0EDA
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 09:44:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ullVY-0007wE-4h; Tue, 12 Aug 2025 05:41:28 -0400
+	id 1ullVQ-0007ee-Gh; Tue, 12 Aug 2025 05:41:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1ullVS-0007mC-7K; Tue, 12 Aug 2025 05:41:22 -0400
+ id 1ullUw-0007SE-R5; Tue, 12 Aug 2025 05:40:51 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1ullVO-0000lv-6y; Tue, 12 Aug 2025 05:41:21 -0400
+ id 1ullUu-0000Yh-9V; Tue, 12 Aug 2025 05:40:50 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 12 Aug
- 2025 17:40:15 +0800
+ 2025 17:40:13 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 12 Aug 2025 17:40:15 +0800
+ Transport; Tue, 12 Aug 2025 17:40:13 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
  <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v5 08/10] hw/misc/aspeed_sbc: Handle OTP write command for
- voltage mode registers
-Date: Tue, 12 Aug 2025 17:40:05 +0800
-Message-ID: <20250812094011.2617526-9-kane_chen@aspeedtech.com>
+CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v5 04/10] hw/nvram/aspeed_otp: Add 'drive' property to support
+ block backend
+Date: Tue, 12 Aug 2025 17:40:01 +0800
+Message-ID: <20250812094011.2617526-5-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250812094011.2617526-1-kane_chen@aspeedtech.com>
 References: <20250812094011.2617526-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -69,102 +70,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Extend OTP command handling to recognize specific voltage mode register
-addresses and emulate the expected hardware behavior. Without this
-change, legitimate voltage mode change requests would be incorrectly
-reported as "Unknown command" and logged as an error.
+This patch introduces a 'drive' property to the Aspeed OTP device,
+allowing it to be backed by a block device. Users can now preload
+OTP data via QEMU CLI using a block backend.
 
-This implementation does not perform actual mode changes, but ensures
-that valid requests are accepted and ignored as per hardware behavior.
+Example usage:
+  ./qemu-system-arm \
+    -blockdev driver=file,filename=otpmem.img,node-name=otp \
+    -global aspeed-otp.drive=otp \
+    ...
+
+If the drive is provided, its content will be loaded as the initial OTP
+state. Otherwise, an internal memory buffer will be used.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/misc/aspeed_sbc.c | 41 +++++++++++++++++++++++++++++++++++++++++
- hw/misc/trace-events |  1 +
- 2 files changed, 42 insertions(+)
+ hw/nvram/aspeed_otp.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-index 787e2d0489..2fc5db749d 100644
---- a/hw/misc/aspeed_sbc.c
-+++ b/hw/misc/aspeed_sbc.c
-@@ -49,10 +49,17 @@
- #define OTP_MEMORY_SIZE 0x4000
- /* OTP command */
- #define SBC_OTP_CMD_READ 0x23b1e361
-+#define SBC_OTP_CMD_WRITE 0x23b1e362
- #define SBC_OTP_CMD_PROG 0x23b1e364
- 
- #define OTP_DATA_DWORD_COUNT        (0x800)
- #define OTP_TOTAL_DWORD_COUNT       (0x1000)
-+
-+/* Voltage mode */
-+#define MODE_REGISTER               (0x1000)
-+#define MODE_REGISTER_A             (0x3000)
-+#define MODE_REGISTER_B             (0x5000)
-+
- static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
+diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
+index e5b7ca9676..abb3731823 100644
+--- a/hw/nvram/aspeed_otp.c
++++ b/hw/nvram/aspeed_otp.c
+@@ -35,13 +35,25 @@ static bool aspeed_otp_init_storage(AspeedOTPState *s, Error **errp)
  {
-     AspeedSBCState *s = ASPEED_SBC(opaque);
-@@ -115,6 +122,37 @@ static bool aspeed_sbc_otp_read(AspeedSBCState *s,
+     uint32_t *p;
+     int i, num;
++    uint64_t perm;
+ 
++    if (s->blk) {
++        perm = BLK_PERM_CONSISTENT_READ |
++               (blk_supports_write_perm(s->blk) ? BLK_PERM_WRITE : 0);
++        if (blk_set_perm(s->blk, perm, BLK_PERM_ALL, errp) < 0) {
++            return false;
++        }
++        if (blk_pread(s->blk, 0, s->size, s->storage, 0) < 0) {
++            error_setg(errp, "Failed to read the initial flash content");
++            return false;
++        }
++    } else {
+         num = s->size / sizeof(uint32_t);
+         p = (uint32_t *)s->storage;
+         for (i = 0; i < num; i++) {
+             p[i] = (i % 2 == 0) ? 0x00000000 : 0xFFFFFFFF;
+         }
+-
++    }
      return true;
  }
  
-+static bool mode_handler(uint32_t otp_addr)
-+{
-+    switch (otp_addr) {
-+    case MODE_REGISTER:
-+    case MODE_REGISTER_A:
-+    case MODE_REGISTER_B:
-+        /* HW behavior, do nothing here */
-+        return true;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Unsupported address 0x%x\n",
-+                      otp_addr);
-+        return false;
-+    }
-+}
-+
-+static bool aspeed_sbc_otp_write(AspeedSBCState *s,
-+                                    uint32_t otp_addr)
-+{
-+    if (otp_addr == 0) {
-+        trace_aspeed_sbc_ignore_cmd(otp_addr);
-+        return true;
-+    } else {
-+        if (mode_handler(otp_addr) == false) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
- static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
-                                    uint32_t otp_addr)
- {
-@@ -157,6 +195,9 @@ static void aspeed_sbc_handle_command(void *opaque, uint32_t cmd)
-     case SBC_OTP_CMD_READ:
-         ret = aspeed_sbc_otp_read(s, otp_addr);
-         break;
-+    case SBC_OTP_CMD_WRITE:
-+        ret = aspeed_sbc_otp_write(s, otp_addr);
-+        break;
-     case SBC_OTP_CMD_PROG:
-         ret = aspeed_sbc_otp_prog(s, otp_addr);
-         break;
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 9e05b82f37..eeb9243898 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -91,6 +91,7 @@ slavio_led_mem_writew(uint32_t val) "Write diagnostic LED 0x%04x"
- slavio_led_mem_readw(uint32_t ret) "Read diagnostic LED 0x%04x"
+@@ -75,6 +87,7 @@ static void aspeed_otp_realize(DeviceState *dev, Error **errp)
  
- # aspeed_sbc.c
-+aspeed_sbc_ignore_cmd(uint32_t cmd) "Ignoring command 0x%" PRIx32
- aspeed_sbc_handle_cmd(uint32_t cmd, uint32_t addr, bool ret) "Handling command 0x%" PRIx32 " for OTP addr 0x%" PRIx32 " Result: %d"
- aspeed_sbc_otp_read(uint32_t addr, uint32_t value) "OTP Memory read: addr 0x%" PRIx32 " value 0x%" PRIx32
- aspeed_sbc_otp_prog(uint32_t addr, uint32_t value) "OTP Memory write: addr 0x%" PRIx32 " value 0x%" PRIx32
+ static const Property aspeed_otp_properties[] = {
+     DEFINE_PROP_UINT64("size", AspeedOTPState, size, 0),
++    DEFINE_PROP_DRIVE("drive", AspeedOTPState, blk),
+ };
+ 
+ static void aspeed_otp_class_init(ObjectClass *klass, const void *data)
 -- 
 2.43.0
 
