@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E07D9CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 15:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 968C7C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 16:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulrMM-0003am-8I; Tue, 12 Aug 2025 11:56:22 -0400
+	id 1ulraO-0007Jj-7h; Tue, 12 Aug 2025 12:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ulrMG-0003aT-HB
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:56:16 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ulrM7-0007VQ-Cz
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:56:15 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2430926b53eso3181615ad.0
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 08:56:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755014161; x=1755618961; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lu6vYlvzgZcFmF9V/g3X2T+BLyYHi3bpCviyyFwy4Tc=;
- b=hfIT+7jmGarAQ5FXquFUBtxQRtl+nR+y3wWWlVOlXHqfqL7BAWnK43JDsQNMBQ7Btz
- XRDtY4w3HM3cw7kb8TjYZWvGb53D/TKvnYeWIjaWO6K6zRGD/Bj9VhUOhN2n9Ih8bv2r
- AboybYeAL/2jL3BtUxD8+iL16WU9fNGX/51UMpXtu18pdv9DgIV09QtJHLPyVXEiXaQM
- 3y0X3R0CVNjZK00LAOTon2d2NO9D/8Yt8ztxanbCoBbQvzXfbwHeRq7rAg6NLssjqZuC
- 2Tx/Bt7C9c0cKMf/Z04jNNKldQctLdqZkaB1uKohcaWjxNiAqBaqWBG/DXTeJ2cJoeY7
- vHYg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulraJ-0007J1-GU
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 12:10:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulra9-0000qi-GR
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 12:10:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755015028;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3wXAEwvZZeH7scqiHIpNbw4AJCYmwzSokFT1MH2U1Qg=;
+ b=Doi4zg7Tu1DOSzz1ZQkckprQFqmp2v/mEybMR+cyXJiBw1VI2MXkn22ULgW0h13GsJ6XlS
+ E37tjQlESjQHGx5YFWMANtIB404R3DmIHNtxNoBXU9qwjtLVffDCDpdYN1xfQcgsh8kmOW
+ e0a8cCS2KefwCZ8xDIZTDxbbIKz2VaI=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-245-S-p-wT5VMfuGDto64mpD_A-1; Tue, 12 Aug 2025 12:10:25 -0400
+X-MC-Unique: S-p-wT5VMfuGDto64mpD_A-1
+X-Mimecast-MFC-AGG-ID: S-p-wT5VMfuGDto64mpD_A_1755015025
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7e84d132874so660567785a.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 09:10:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755014161; x=1755618961;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lu6vYlvzgZcFmF9V/g3X2T+BLyYHi3bpCviyyFwy4Tc=;
- b=un5E5+E7bz08AG9cY0lCcy0werQYoYyObr2Mhw1VYyxFlBRA4OodiAPquqcGi4OSO3
- 44tGgwHL00BRmLtGBu+DCrSXr9Z/0sqNIMKCRE9kF5cEoMEAxq00pbbEq6IivnuSELKp
- V3XEBX5T+mXm0EfAxbnal5vDxTTPx+4SlpI4yjiyi5CWOyL83pXn8YxuXuu3zVqnUOVe
- mTRt+7u7HtvOhi/uHglRfRFqYF7LBs7QBOxGxQb8Flr7Vz17S29sbKSNjOJNUmqcOoRp
- wmCqCbgYKsFL0qzvdf6kU+n9Tzxx7/vRoumeC93Zpub/f5Vi0S5vpJDPccqDZx21KuzQ
- kaJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkCH7T0V080JArFgoyVihILtod/C4rbs30hhLLcjVZigMgugJf/uNcMUNUhd5OAOAeAhRcmd2KBw/i@nongnu.org
-X-Gm-Message-State: AOJu0YwoEzf69A059Ln4DTxZqbiEOTMW9n+TNAA7gXUuniAUURV8Ch9R
- t92dSl9Fj1tid0EtqTXjLwHxkpV1WTWbyqz3G/sk3I2F8Phx65fAlSacHXSOUiAf3oW2brlO+01
- 2IS0BGqc=
-X-Gm-Gg: ASbGnctefXE+JAGnL7C86GnJkCAADR5RFYpfYeGb1EX9sGm6hQpMQ6g5DZIwosSP7NY
- zM7UfXbhrjjZyXGnKzmBSae0fhfePuJyHZTLAImZFLVn1je+0Ywm7GEl10gHyV7EAWlXsIBRgEY
- fFPa8Rgi801DKTx5UdX3G3QFcwpazYRJOPbDerJKsKW6p4Dy11/h4vzPQ63jDATPi1kshr4//P7
- a01NISrZ/lzgiGoG2lf2sGMV6Kp78sR26YjCzmIlBtKgYJp5j2Yxyg/n94da2EQXfrjRsEVZXKA
- Xi2YGcA71xQ9rSYjkc/EmrW3INS/vY7D1XxfCqLHl/4yeW8TZvY1i7YzUtprX7+WosSCTgSy/lo
- gCXundGQc1EzscOq3TyUWEmiBwpBoM5Z2lP0ymFolwEhSiw==
-X-Google-Smtp-Source: AGHT+IG5DYLefrzZeEL434MS8l+fE6D9WJhpiFNdWClxXJTynd+0wwxZdA+jvxLU/rpFR9PvbFUwtQ==
-X-Received: by 2002:a17:903:32cc:b0:240:a53:dd37 with SMTP id
- d9443c01a7336-2430c050be4mr3382545ad.21.1755014161483; 
- Tue, 12 Aug 2025 08:56:01 -0700 (PDT)
-Received: from [192.168.0.102] ([152.250.234.19])
+ d=1e100.net; s=20230601; t=1755015025; x=1755619825;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3wXAEwvZZeH7scqiHIpNbw4AJCYmwzSokFT1MH2U1Qg=;
+ b=m6EhJgTEW/chfggPRuBlKnE4xx1nAp2zmCota9vSRj5CS+4A14wBM6vWyX7pgZuwak
+ BH6hce7CDJ/xJ5vQtKFHEHsXhoP9me+0WixWi6GGO/q4euyObdyhEN1l/vvnYBSwNMhU
+ uy0aKyl6i/lKEvhqrxCkmAgcojDkaMf5KrSEMBytWKDF7U3vro+qi9DJAALh+FGNAFu/
+ Opa/ohxVxbOCV/FbSxv5uTAYK6G5yws/a469rDKlkoywchJoPayrPAROteoczzu7T2y/
+ cs3ex7t1y2/fuPerI5BpxJugL1f0lMSu8YpsZhUPEsHEwnYgoCYP6IIvMimpj4jmJis0
+ XRZw==
+X-Gm-Message-State: AOJu0YynLGPQnMZ1mlAXOAjT36w88ItgDIgiflZ9/XH0o0BBExMnsJrk
+ RqsEnL7/7kY09rfH7d4WmhmpFM9xWTHjTu6g/A8QvFVDmY8/BgFKVnBJAigEVFQz+b3B8iKEVfL
+ FmDnOmHy0Xqn8T4hIFYq6WoPaL6Fa4GZWL+xmxWmJASgLhFITeOk0w/+i
+X-Gm-Gg: ASbGnctuB325hXazT+xkgorXkFaQSZye8GlxDpvnr6QlxhApHxhp857b/gebgXRyGqn
+ XHgL4p+QgLqL+vqC7mulwP42ZHlslnjaSRPonniOcdv4yZpf9DaYPbgAQtHERNJ/ATHZmTjADeD
+ teMvbCIo3qV4hH6Ijvtq8OaRErSzRNvebn/+csoMXEhGPNbrYaDjCwpCmjbuF7jQorjkvP000Nq
+ tzCb0YO7q3onmLpv9MgZOdty2nZpiCfXWQrh+1YIIYw4QyyOu/M9TWH24epBvMIEiuDc8hyvsnP
+ GAGFEMC2ytK5ZIV2Ti6VDzaXpB0ylZxmgtH6fXDGEeaQoB6njOlRG6OxABzNmRmj6/wT7ghZ6em
+ O3yHvkTzZZ/JSUpJgGlJSgw==
+X-Received: by 2002:a05:620a:aa16:b0:7e8:2226:5e82 with SMTP id
+ af79cd13be357-7e864636fbfmr32304185a.57.1755015024619; 
+ Tue, 12 Aug 2025 09:10:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAZbM3OQAM2E1FiTv/a1EQs9KkGvK8Xy+SkgHrqcGaunvQ8dbqRK4DjT9QNCeA6H/33YTHXg==
+X-Received: by 2002:a05:620a:aa16:b0:7e8:2226:5e82 with SMTP id
+ af79cd13be357-7e864636fbfmr32298485a.57.1755015024008; 
+ Tue, 12 Aug 2025 09:10:24 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-171.dsl.bell.ca. [174.89.135.171])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241d1ef6e45sm301947105ad.22.2025.08.12.08.55.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 08:56:00 -0700 (PDT)
-Message-ID: <88492bf4-f690-4429-98d7-c3293459db5b@linaro.org>
-Date: Tue, 12 Aug 2025 12:57:01 -0300
+ af79cd13be357-7e8079cfcfesm1266559585a.35.2025.08.12.09.10.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Aug 2025 09:10:23 -0700 (PDT)
+Date: Tue, 12 Aug 2025 12:10:21 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
+ david@redhat.com, philmd@linaro.org, mtosatti@redhat.com,
+ Stafford Horne <shorne@gmail.com>, richard.henderson@linaro.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 06/10] introduce cpu_test_interrupt() that will
+ replace open coded checks
+Message-ID: <aJtnbZfBHcO9yhrK@x1.local>
+References: <20250808120137.2208800-1-imammedo@redhat.com>
+ <20250808120137.2208800-7-imammedo@redhat.com>
+ <aJoa35wuexHfoCEE@x1.local> <20250812170035.609ce5c1@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 RESEND RESEND v2 1/3] hw/sd/ssi-sd: Return noise
- (dummy byte) when no card connected
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>
-References: <20250812140415.70153-1-philmd@linaro.org>
- <20250812140415.70153-2-philmd@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250812140415.70153-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250812170035.609ce5c1@fedora>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,45 +113,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
-
-On 8/12/25 11:04, Philippe Mathieu-Daudé wrote:
-> Commit 1585ab9f1ba ("hw/sd/sdcard: Fill SPI response bits in card
-> code") exposed a bug in the SPI adapter: if no SD card is plugged,
-> we are returning "there is a card with an error". This is wrong,
-> we shouldn't return any particular packet response, but the noise
-> shifted on the MISO line. Return the dummy byte, otherwise we get:
+On Tue, Aug 12, 2025 at 05:00:35PM +0200, Igor Mammedov wrote:
+> > Do they better as well be converted to use store_release too?
 > 
->    qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion `s->arglen > 0' failed.
+> alternatively, for consistency sake we can add a helper to set interrupt
+> with store_release included and do a blanket tree wide change like with
+> cpu_test_interrupt().
+
+Yep, that sounds like the simplest. Unless there's any concern on possible
+performance regressions due to the rest conversions on store_release, those
+can be special treated with open-code, tagged with reasoning as comment.
+
+>  
+> > The other nitpick is this patch introduces the reader helper but without
+> > using it.
+> > 
+> > It can be squashed into the other patch where the reader helper will be
+> > applied tree-wide.  IMHO that would be better explaining the helper on its
+> > own.
 > 
-> Reported-by: Guenter Roeck <linux@roeck-us.net>
-> Fixes: 775616c3ae8 ("Partial SD card SPI mode support")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Tested-by: Guenter Roeck <linux@roeck-us.net>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   hw/sd/ssi-sd.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/hw/sd/ssi-sd.c b/hw/sd/ssi-sd.c
-> index 594dead19ee..3aacbd03871 100644
-> --- a/hw/sd/ssi-sd.c
-> +++ b/hw/sd/ssi-sd.c
-> @@ -89,6 +89,10 @@ static uint32_t ssi_sd_transfer(SSIPeripheral *dev, uint32_t val)
->       SDRequest request;
->       uint8_t longresp[5];
->   
-> +    if (!sdbus_get_inserted(&s->sdbus)) {
-> +        return SSI_DUMMY;
-> +    }
-> +
->       /*
->        * Special case: allow CMD12 (STOP TRANSMISSION) while reading data.
->        *
+> I can merge it with 7/10 that adds 1st user for the helper in kvm/i386 code.
+> That has less chances for the store/acquire change to be drowned in
+> tree wide patch (9/10)
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+For mem barrier changes, IMHO the two sides are better in one patch, hence
+the two helpers need better to appear in one patch to show the pairing of
+them.  That's what this patche does.
 
+Then, from any helper POV it's better one helper introduced together in the
+patch where it will be used to justify the helper with the applicable context.
 
-Cheers,
-Gustavo
+From that POV, the clean way, IMHO, should be that we have one prior patch
+introducing the reader/writter helpers, together using it globally with
+existing users.  Then the kvm patch can use the new helpers.
+
+No strong opinion here, though..
+
+Thanks,
+
+-- 
+Peter Xu
+
 
