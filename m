@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9F5C87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 05:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFF9C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 05:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulhti-0005jh-Dz; Tue, 12 Aug 2025 01:50:13 -0400
+	id 1ulhzG-0007Fd-Er; Tue, 12 Aug 2025 01:55:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ulhtP-0005fY-2N; Tue, 12 Aug 2025 01:49:51 -0400
+ id 1ulhzD-0007FG-39; Tue, 12 Aug 2025 01:55:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1ulhtI-0007A6-A7; Tue, 12 Aug 2025 01:49:50 -0400
+ id 1ulhyz-0008EJ-5p; Tue, 12 Aug 2025 01:55:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 68D4E1415E7;
- Tue, 12 Aug 2025 08:49:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D77BF1415EB;
+ Tue, 12 Aug 2025 08:54:57 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F167325E1AF;
- Tue, 12 Aug 2025 08:49:33 +0300 (MSK)
-Message-ID: <986bb1ea-b889-4c06-a2fd-92c76496e0f1@tls.msk.ru>
-Date: Tue, 12 Aug 2025 08:49:33 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 665EB25E1BB;
+ Tue, 12 Aug 2025 08:55:31 +0300 (MSK)
+Message-ID: <82cbd755-e949-4215-a150-441553a1c3bd@tls.msk.ru>
+Date: Tue, 12 Aug 2025 08:55:31 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/3] nvme fixes
-To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250811112557.521-1-its@irrelevant.dk>
+Subject: Re: [PULL 0/3] vfio queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+References: <20250810160118.450430-1-clg@redhat.com>
 Content-Language: en-US, ru-RU
+Cc: qemu-stable <qemu-stable@nongnu.org>,
+ Steven Sistare <steven.sistare@oracle.com>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
@@ -78,9 +78,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250811112557.521-1-its@irrelevant.dk>
+In-Reply-To: <20250810160118.450430-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -88,7 +88,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,22 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.08.2025 14:25, Klaus Jensen wrote:
+On 10.08.2025 19:01, Cédric Le Goater wrote:
 
-> Keith Busch (1):
->        hw/nvme: cap MDTS value for internal limitation
+> vfio queue:
 > 
-> Klaus Jensen (2):
->        hw/nvme: fix namespace attachment
->        hw/nvme: revert CMIC behavior
+> * Add documentation for the use-legacy-x86-rom property
+> * Preserve pending VFIO interrupts during CPR
 > 
->   hw/nvme/ctrl.c | 43 ++++++++++++++++++++++++++++---------------
->   1 file changed, 28 insertions(+), 15 deletions(-)
+> ----------------------------------------------------------------
+> Cédric Le Goater (1):
+>        vfio: Document 'use-legacy-x86-rom' property
+> 
+> Steve Sistare (2):
+>        vfio/pci: augment set_handler
+>        vfio/pci: preserve pending interrupts
 
-Is there anything there which should be applied to qemu stable
-series?  Or *not* to be applied? :)
+It looks like 'preserve pending interrupts' is a good candidate for
+qemu-stable series (10.0.x), but the patch is rather large.  Should
+I pick it up?
 
-(current relevant stable series is 10.0, which is supposed to be LTS).
+(FTR, it doesn't apply to 10.0 due to other changes in this area,
+and looking at these other changes, maybe we should pick up some
+more fixes?)
 
 Thanks,
 
