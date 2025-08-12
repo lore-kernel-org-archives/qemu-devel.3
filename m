@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38493CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 09:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B911CA0EDA
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 09:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ullVf-00084f-DZ; Tue, 12 Aug 2025 05:41:35 -0400
+	id 1ullVb-0007zp-FV; Tue, 12 Aug 2025 05:41:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1ullVd-00082g-UK; Tue, 12 Aug 2025 05:41:33 -0400
+ id 1ullVZ-0007yE-LW; Tue, 12 Aug 2025 05:41:29 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1ullVa-0000lv-UW; Tue, 12 Aug 2025 05:41:33 -0400
+ id 1ullVT-0000lv-BE; Tue, 12 Aug 2025 05:41:29 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 12 Aug
@@ -32,9 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v5 10/10] docs/system/arm/aspeed: Document OTP memory options
-Date: Tue, 12 Aug 2025 17:40:07 +0800
-Message-ID: <20250812094011.2617526-11-kane_chen@aspeedtech.com>
+Subject: [PATCH v5 09/10] tests/function/aspeed: Add OTP functional test
+Date: Tue, 12 Aug 2025 17:40:06 +0800
+Message-ID: <20250812094011.2617526-10-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250812094011.2617526-1-kane_chen@aspeedtech.com>
 References: <20250812094011.2617526-1-kane_chen@aspeedtech.com>
@@ -68,58 +68,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Add documentation for the OTP memory module used by AST2600 and AST1030
-SoCs, and describe options for using a pre-generated image or an
-internal buffer. Include example commands for configuration and image
-generation.
+On boot, the SoC firmware reads data from the OTP region to obtain the
+chip ID and default settings. This change adds test cases to verify
+that the firmware can boot correctly with a pre-configured OTP image.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
- docs/system/arm/aspeed.rst | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ tests/functional/meson.build            |  2 +
+ tests/functional/test_arm_aspeed_otp.py | 55 +++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+)
+ create mode 100644 tests/functional/test_arm_aspeed_otp.py
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index bf18c56347..6317c0e910 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -243,6 +243,37 @@ under Linux), use :
- 
-   -M ast2500-evb,bmc-console=uart3
- 
-+OTP Option
-+^^^^^^^^^^
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 311c6f1806..c731b779dd 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -34,6 +34,7 @@ test_timeouts = {
+   'arm_aspeed_bletchley' : 480,
+   'arm_aspeed_catalina' : 480,
+   'arm_aspeed_gb200nvl_bmc' : 480,
++  'arm_aspeed_otp': 1200,
+   'arm_aspeed_rainier' : 480,
+   'arm_bpim2u' : 500,
+   'arm_collie' : 180,
+@@ -132,6 +133,7 @@ tests_arm_system_thorough = [
+   'arm_aspeed_bletchley',
+   'arm_aspeed_catalina',
+   'arm_aspeed_gb200nvl_bmc',
++  'arm_aspeed_otp',
+   'arm_aspeed_rainier',
+   'arm_bpim2u',
+   'arm_canona1100',
+diff --git a/tests/functional/test_arm_aspeed_otp.py b/tests/functional/test_arm_aspeed_otp.py
+new file mode 100644
+index 0000000000..48c7cad3f3
+--- /dev/null
++++ b/tests/functional/test_arm_aspeed_otp.py
+@@ -0,0 +1,55 @@
++import os
++import time
++import tempfile
++import subprocess
 +
-+Both the AST2600 and AST1030 chips use the same One Time Programmable
-+(OTP) memory module, which is utilized for configuration, key storage,
-+and storing user-programmable data. This OTP memory module is managed
-+by the Secure Boot Controller (SBC). The following options can be
-+specified or omitted based on your needs.
++from qemu_test import LinuxKernelTest, Asset
++from aspeed import AspeedTest
++from qemu_test import exec_command_and_wait_for_pattern, skipIfMissingCommands
 +
-+  * When the options are specified, the pre-generated configuration
-+    file will be used as the OTP memory storage.
++class AspeedOtpMemoryTest(AspeedTest):
++    # AST2600 SDK image
++    ASSET_SDK_V907_AST2600 = Asset(
++        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.07/ast2600-default-obmc.tar.gz',
++        'cb6c08595bcbba1672ce716b068ba4e48eda1ed9abe78a07b30392ba2278feba')
 +
-+  * When the options are omitted, an internal memory buffer will be
-+    used to store the OTP memory data.
++    # AST1030 Zephyr image
++    ASSET_ZEPHYR_3_02 = Asset(
++        'https://github.com/AspeedTech-BMC/zephyr/releases/download/v00.03.02/ast1030-evb-demo.zip',
++        '1ec83caab3ddd5d09481772801be7210e222cb015ce22ec6fffb8a76956dcd4f')
 +
-+.. code-block:: bash
++    def generate_otpmem_image(self):
++        path = self.scratch_file("otpmem.img")
++        pattern = b'\x00\x00\x00\x00\xff\xff\xff\xff' * (16 * 1024 // 8)
++        with open(path, "wb") as f:
++            f.write(pattern)
++        return path
 +
-+  -blockdev driver=file,filename=otpmem.img,node-name=otp \
-+  -global aspeed-otp.drive=otp \
++    def test_ast2600_otp_blockdev_device(self):
++        image_path = self.archive_extract(self.ASSET_SDK_V907_AST2600)
++        otp_img = self.generate_otpmem_image()
++        self.vm.set_machine("ast2600-evb")
++        self.vm.set_console()
++        self.vm.add_args(
++            "-blockdev", f"driver=file,filename={otp_img},node-name=otp",
++            "-global", "aspeed-otp.drive=otp",
++        )
++        self.do_test_arm_aspeed_sdk_start(self.scratch_file("ast2600-default", "image-bmc"))
++        self.wait_for_console_pattern("ast2600-default login:")
 +
-+The following bash command can be used to generate a default
-+configuration file for OTP memory:
++    def test_ast1030_otp_blockdev_device(self):
++        kernel_name = "ast1030-evb-demo-3/zephyr.elf"
++        kernel_file = self.archive_extract(self.ASSET_ZEPHYR_3_02, member=kernel_name)
++        otp_img = self.generate_otpmem_image()
++        self.vm.set_machine("ast1030-evb")
++        self.vm.set_console()
++        self.vm.add_args(
++            "-kernel", kernel_file,
++            "-blockdev", f"driver=file,filename={otp_img},node-name=otp",
++            "-global", "aspeed-otp.drive=otp",
++        )
++        self.vm.launch()
++        self.wait_for_console_pattern("Booting Zephyr OS")
 +
-+.. code-block:: bash
-+
-+  if [ ! -f otpmem.img ]; then
-+    for i in $(seq 1 2048); do
-+      printf '\x00\x00\x00\x00\xff\xff\xff\xff'
-+    done > otpmem.img
-+  fi
-+
- Aspeed 2700 family boards (``ast2700-evb``)
- ==================================================================
- 
++if __name__ == '__main__':
++    AspeedTest.main()
 -- 
 2.43.0
 
