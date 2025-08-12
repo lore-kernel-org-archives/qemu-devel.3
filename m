@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481A0C87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 12:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E2C7CA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 12:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uloXg-0002l9-Vk; Tue, 12 Aug 2025 08:55:54 -0400
+	id 1uloZM-00046S-2w; Tue, 12 Aug 2025 08:57:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uloXP-0002gq-3l
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 08:55:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uloZJ-00046A-GT
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 08:57:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uloXH-0003K3-M0
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 08:55:34 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uloZB-0003YH-5s
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 08:57:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755003321;
+ s=mimecast20190719; t=1755003438;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vXRTlNDyHwKIVTVW08XMGJ5v3zI3hp4OX/dLZM9Xuqk=;
- b=R20zwXueWwssP9OAA7sPUTY+dRgyAKvoXf69Jv+3uvBN7SqOpLtna4bHAzatTyy/OMfvem
- ROsYhcN3A8AVae9dWnBMzckBopSXnFHQUwkreQSC1EmUl/oPAC3Ohil94gzKISxoENwxMO
- T+fEivZ3TI2fzP+I2pudPL6bjJQ4d5Y=
+ bh=9iNa96K1rabLNX47958kYkEO+RGHNx8CYIS7IVHq8Po=;
+ b=dbzmVvfwppD5yKvrq+Q5n8ohCfcJtuhUMSXU7dh9nkQvh3JCYDakitDd6i0BV8RyIG2Pgr
+ i/E6agZzXtkQaE/1QWKbkgavLwCkASeUV660CvCNevZFovxINfvDeDtet1hqWVrdVpTppN
+ bxKuk/MkGFWwawJGtILJGk8qSTiGlHM=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-532-rRzk_sTWOOWO0M1Erdoa6A-1; Tue,
- 12 Aug 2025 08:55:18 -0400
-X-MC-Unique: rRzk_sTWOOWO0M1Erdoa6A-1
-X-Mimecast-MFC-AGG-ID: rRzk_sTWOOWO0M1Erdoa6A_1755003317
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-xJvcaxJBOMymfxS8upKhvA-1; Tue,
+ 12 Aug 2025 08:57:15 -0400
+X-MC-Unique: xJvcaxJBOMymfxS8upKhvA-1
+X-Mimecast-MFC-AGG-ID: xJvcaxJBOMymfxS8upKhvA_1755003434
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9CA5D1955F2A; Tue, 12 Aug 2025 12:55:16 +0000 (UTC)
+ id 7CB0A19560B1; Tue, 12 Aug 2025 12:57:14 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.33.181])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0950180047F; Tue, 12 Aug 2025 12:55:13 +0000 (UTC)
-Date: Tue, 12 Aug 2025 14:55:10 +0200
+ id BBAF6180028E; Tue, 12 Aug 2025 12:57:12 +0000 (UTC)
+Date: Tue, 12 Aug 2025 14:57:10 +0200
 From: Kevin Wolf <kwolf@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, idryomov@gmail.com, pl@dlhnet.de,
- eblake@redhat.com, armbru@redhat.com, oro@il.ibm.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH] rbd: Fix .bdrv_get_specific_info implementation
-Message-ID: <aJs5rrQn1vxdfk_-@redhat.com>
-References: <20250811134010.81787-1-kwolf@redhat.com>
- <4f382d55-553e-45b3-8a66-9729f43daef1@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH] configure: Don't disable Rust for too old meson version
+Message-ID: <aJs6JkGsa414_4I7@redhat.com>
+References: <20250811142923.89983-1-kwolf@redhat.com>
+ <f85bd476-501a-4693-b830-6ab7a7168d94@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4f382d55-553e-45b3-8a66-9729f43daef1@redhat.com>
+In-Reply-To: <f85bd476-501a-4693-b830-6ab7a7168d94@redhat.com>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,8 +66,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,170 +82,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.08.2025 um 09:46 hat Hanna Czenczek geschrieben:
-> On 11.08.25 15:40, Kevin Wolf wrote:
-> > qemu_rbd_get_specific_info() has at least two problems:
+Am 12.08.2025 um 08:41 hat Paolo Bonzini geschrieben:
+> On 8/11/25 16:29, Kevin Wolf wrote:
+> > If the user explicitly specified --enable-rust, don't just fail if meson
+> > is too old for Rust support, but do the same thing as if meson was too
+> > old for the C code: Just download a newer one.
 > > 
-> > The first is that it issues a blocking rbd_read() call in order to probe
-> > the encryption format for the image while querying the node. This means
-> > that if the connection to the server goes down, not only I/O is stuck
-> > (which is unavoidable), but query-names-block-nodes will actually make
-> > the whole QEMU instance unresponsive. .bdrv_get_specific_info
-> > implementations shouldn't perform blocking operations, but only return
-> > what is already known.
+> > In order to avoid the additional download for people who aren't
+> > intentionally opting in to Rust, keep the automatic disabling based on
+> > the meson version as the default if neither --enable-rust nor
+> > --disable-rust were given.
 > 
-> Maybe we should put a “must not block” warning on
-> BlockDriver.bdrv_get_specific_info()?
+> Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+> 
+> Are you going to submit the patch yourself?
 
-I'm not sure. In theory, nothing that is called from the main loop may
-block. We're violating this all the time, of course, but it has the same
-effects as violating it here. I expect that doing blockdev-add for a
-server that just doesn't respond will hang QEMU the exact same way.
-
-So making .bdrv_get_specific_info implementations not block may be
-easier, but I don't know if I want to make a distinction that would
-basically imply that blocking in .bdrv_open is not a longstanding
-problem, but actually fine.
-
-> > The second is that the information returned isn't even correct. If the
-> > image is already opened with encryption enabled at the RBD level, we'll
-> > probe for "double encryption", i.e. if the encrypted data contains
-> > another encryption header. If it doesn't (which is the normal case), we
-> > won't return the encryption format. If it does, we return misleading
-> > information because it looks like we're talking about the outer level
-> > (the encryption format of the image itself) while the information is
-> > about an encryption header in the guest data.
-> > 
-> > Fix this by storing the encryption format in BDRVRBDState when the image
-> > is opened (and we do blocking operations anyway) and returning only the
-> > stored information in qemu_rbd_get_specific_info().
-> > 
-> > The information we'll store is either the actual encryption format that
-> > we enabled on the RBD level, or if the image is unencrypted, the result
-> > of the same probing as we previously did when querying the node. Probing
-> > image formats based on content that can be modified by the guest has
-> > long been known as problematic, but as long as we only output it to the
-> > user instead of making decisions based on it, it should be okay. It is
-> > undoubtedly useful in the context of 'qemu-img info' when you're trying
-> > to figure out which encryption options you have to use to open the
-> > image successfully.
-> > 
-> > Fixes: 42e4ac9ef5a6 ("block/rbd: Add support for rbd image encryption")
-> > Buglink: https://issues.redhat.com/browse/RHEL-105440
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > ---
-> >   qapi/block-core.json |   9 +++-
-> >   block/rbd.c          | 103 ++++++++++++++++++++++++++++---------------
-> >   2 files changed, 75 insertions(+), 37 deletions(-)
-> 
-> Looks good to me, just found two spelling/wording nits below.  With those
-> fixed:
-> 
-> Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-> 
-> (I think the .bdrv_get_specific_info() warning would be nice, but optional.)
-> 
-> > diff --git a/qapi/block-core.json b/qapi/block-core.json
-> > index ebbe95b3d8..cbd2bc84fe 100644
-> > --- a/qapi/block-core.json
-> > +++ b/qapi/block-core.json
-> > @@ -159,7 +159,14 @@
-> >   ##
-> >   # @ImageInfoSpecificRbd:
-> >   #
-> > -# @encryption-format: Image encryption format
-> > +# @encryption-format: Image encryption format. If encryption is enabled for the
-> > +#     image (see encrpyted in BlockNodeInfo), this is the actual format in which the
-> 
-> *encrypted
-> 
-> > +#     image is accessed. If encryption is not enabled, this is the result of
-> > +#     probing when the image was opened, to give a suggestion which encryption
-> > +#     format could be enabled. Note that probing results can be changed by the
-> > +#     guest by writing a (possibly partial) encryption format header to the
-> > +#     image, so don't treat this information as trusted if the guest is not
-> > +#     trusted.
-> >   #
-> >   # Since: 6.1
-> >   ##
-> > diff --git a/block/rbd.c b/block/rbd.c
-> > index 951cd63f9a..8582bc8360 100644
-> > --- a/block/rbd.c
-> > +++ b/block/rbd.c
-> > @@ -99,6 +99,14 @@ typedef struct BDRVRBDState {
-> >       char *namespace;
-> >       uint64_t image_size;
-> >       uint64_t object_size;
-> > +
-> > +    /*
-> > +     * If @bs->encrypted is true, this is the encryption format actually loaded
-> > +     * at the librbd level. If it is false, it is the result of probing.
-> > +     * RBD_IMAGE_ENCRYPTION_FORMAT__MAX means that encryption is not enabled and
-> > +     * probing didn't find any known encryption header either.
-> > +     */
-> > +    RbdImageEncryptionFormat encryption_format;
-> >   } BDRVRBDState;
-> >   typedef struct RBDTask {
-> > @@ -470,10 +478,12 @@ static int qemu_rbd_encryption_format(rbd_image_t image,
-> >       return 0;
-> >   }
-> > -static int qemu_rbd_encryption_load(rbd_image_t image,
-> > +static int qemu_rbd_encryption_load(BlockDriverState *bs,
-> > +                                    rbd_image_t image,
-> >                                       RbdEncryptionOptions *encrypt,
-> >                                       Error **errp)
-> >   {
-> > +    BDRVRBDState *s = bs->opaque;
-> >       int r = 0;
-> >       g_autofree char *passphrase = NULL;
-> >       rbd_encryption_luks1_format_options_t luks_opts;
-> > @@ -544,15 +554,19 @@ static int qemu_rbd_encryption_load(rbd_image_t image,
-> >           error_setg_errno(errp, -r, "encryption load fail");
-> >           return r;
-> >       }
-> > +    bs->encrypted = true;
-> > +    s->encryption_format = encrypt->format;
-> >       return 0;
-> >   }
-> >   #ifdef LIBRBD_SUPPORTS_ENCRYPTION_LOAD2
-> > -static int qemu_rbd_encryption_load2(rbd_image_t image,
-> > +static int qemu_rbd_encryption_load2(BlockDriverState *bs,
-> > +                                     rbd_image_t image,
-> >                                        RbdEncryptionOptions *encrypt,
-> >                                        Error **errp)
-> >   {
-> > +    BDRVRBDState *s = bs->opaque;
-> >       int r = 0;
-> >       int encrypt_count = 1;
-> >       int i;
-> > @@ -638,6 +652,8 @@ static int qemu_rbd_encryption_load2(rbd_image_t image,
-> >           error_setg_errno(errp, -r, "layered encryption load fail");
-> >           goto exit;
-> >       }
-> > +    bs->encrypted = true;
-> > +    s->encryption_format = encrypt->format;
-> >   exit:
-> >       for (i = 0; i < encrypt_count; ++i) {
-> > @@ -671,6 +687,44 @@ exit:
-> >   #endif
-> >   #endif
-> > +/*
-> > + * For an image without encryption enabled on the rbd layer, probe the start of
-> > + * the image if it could be opened as an encrypted image so that we can display
-> > + * it when the user queries the node (most importantly in qemu-img).
-> > + *
-> > + * If the guest writes an encryption header to its disk after this probing, but
-> 
-> Either there’s something missing after the comma (e.g. “it wouldn’t be
-> reflected when queried”), or the “but” is too much.
-
-I think I had the longer version in mind, I'll add it while applying.
-Thanks for catching this.
-
-> > + * that's okay. There is no reason why the user should want to apply encryption
-> > + * at the rbd level while the image is still in use. This is just guest data.
-> > + */
-> > +static void qemu_rbd_encryption_probe(BlockDriverState *bs)
+If we want to have it in 10.1 (I don't see why not?), I'm going to send
+a pull request today, so I could include it.
 
 Kevin
 
