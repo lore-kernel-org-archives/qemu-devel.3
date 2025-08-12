@@ -4,63 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D78FCA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 12:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A074C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 12:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uloAQ-00015r-7T; Tue, 12 Aug 2025 08:31:53 -0400
+	id 1uloBK-0002Gh-WF; Tue, 12 Aug 2025 08:32:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uloAG-0000uG-Ow; Tue, 12 Aug 2025 08:31:40 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1uloB8-0001zs-5d; Tue, 12 Aug 2025 08:32:35 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uloAC-0007RJ-D3; Tue, 12 Aug 2025 08:31:40 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c1W5G6dQfz6L5N7;
- Tue, 12 Aug 2025 20:28:50 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 76EB914038F;
- Tue, 12 Aug 2025 20:31:28 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.47.65.66) by
- frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 12 Aug 2025 14:31:27 +0200
-To: <qemu-devel@nongnu.org>
-CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
- <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
- <farman@linux.ibm.com>, <gustavo.romero@linaro.org>, <imammedo@redhat.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <maobibo@loongson.cn>, <mst@redhat.com>,
- <mtosatti@redhat.com>, <peter.maydell@linaro.org>, <philmd@linaro.org>,
- <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
- <shameerali.kolothum.thodi@huawei.com>, <shannon.zhaosl@gmail.com>,
- <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
-Subject: [PATCH v15 5/8] acpi: add caches to ACPI build_pptt table function
-Date: Tue, 12 Aug 2025 13:28:26 +0100
-Message-ID: <20250812122829.204-6-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250812122829.204-1-alireza.sanaee@huawei.com>
-References: <20250812122829.204-1-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1uloAz-0007Sd-7p; Tue, 12 Aug 2025 08:32:33 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57CAjRrt014766;
+ Tue, 12 Aug 2025 12:31:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=h48j8FAfIr0CZrrU9Lg8q8WzJiHZXXkgxdj1Mpj3Y
+ lY=; b=CaYNYTda7R4jDGebWxKsJKzofJ+E9IENSqfTN4KMSEBrHdIwgs8TAHzkv
+ VFzfKexYLXyu71JZeCM9QU84AFWGlcy5/FeHzWHWXuGY3Pvl4NtHZZiZSO3/hGKB
+ nqXRicJ81YcXAZUUACWUlR32s+fAl4HsyCnmebtguv+ESiTDpiwBciYLw7654nPy
+ WZOmtpVT6QAbNaoQTgK9mdkQpU5UPPoqdTb9vlzhNEmSL0U/DFaj9iNKlNQA6I6b
+ 4cSj6b/1AP31sx/FClsMYvTv3Cd0fvm+Wh+76I8qiGGz6XJJT6cbZsnaK6z7U0+q
+ FXvxjV/B+11aLmk843eQzD+LE4MoA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48dx14e9ju-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Aug 2025 12:31:38 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57CA2kKk028585;
+ Tue, 12 Aug 2025 12:31:37 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48ej5n27w9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Aug 2025 12:31:36 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57CCVXeU52953526
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Aug 2025 12:31:33 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1234D2004E;
+ Tue, 12 Aug 2025 12:31:33 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E36F22004B;
+ Tue, 12 Aug 2025 12:31:32 +0000 (GMT)
+Received: from a46lp68.lnxne.boe (unknown [9.152.108.100])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Aug 2025 12:31:32 +0000 (GMT)
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: qemu-s390x mailing list <qemu-s390x@nongnu.org>,
+ Thomas Huth <thuth@redhat.com>
+Cc: Daniel Berrange <berrange@redhat.com>,
+ qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+Subject: [PATCH RFC] tests/functional: add tests for SCLP event CPI
+Date: Tue, 12 Aug 2025 14:31:24 +0200
+Message-ID: <20250812123124.382696-1-shalini@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.47.65.66]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- frapeml500003.china.huawei.com (7.182.85.28)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 2upH50nkezd9_8nZGkDiVGV_7FCdYBkF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEyMDExOCBTYWx0ZWRfXz8HTBb5mnMgU
+ yeqYGmK7e9r50Qe2ZkILQKaput+JRrPmk5I3rUccxqUyXtSqHHVdnY9vnVzSBYDjIAgsMLE/xcq
+ CmaCnKw9LUQ9i83XunT69faMaYGJjqTM3VizcjZtzNtACSPnuYqoAYOKheDEe/Txqe9g7gfLQol
+ LnJRRISGYAMBMKjSyJ7XfCFNbC9zzeu5BSSMAWYuDv01Cw9gwzEw2qLE8iCmZUkJmMy9thRGg+O
+ RdQ10GsCOlZwhigC+6Xk6zkaO5HnsIehplycctMRCZgXLNM7EwQSwkUdlh0Pm5COQt6bjNZX5zt
+ nOsf3uwQ3MiMDzCCail/9v605KqbYLOG6XK9Pdf2MAU/uqbBPVp5loKuwu4ISYecHtx8zmqhemN
+ Jy4PkqrT+b2iifsQc3NxZARC3tB20WWLRQtqGmxJiumDLJZ3UyQ5fkjc/MFmvfgLl767JWij
+X-Proofpoint-GUID: 2upH50nkezd9_8nZGkDiVGV_7FCdYBkF
+X-Authority-Analysis: v=2.4 cv=fLg53Yae c=1 sm=1 tr=0 ts=689b342a cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=WP5zsaevAAAA:8
+ a=PjYKRGzYlDL-BbGx_40A:9 a=t8Kx07QrZZTALmIZmm-o:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-12_06,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0
+ mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2507300000
+ definitions=main-2508120118
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,87 +116,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add caches to build_pptt table function in ACPI for both ARM and
-Loongarch.
+Add tests for SCLP event type Control-Program Identification
+(CPI) to s390x CCW virtio tests.
 
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Please note that these tests are skipped as the guest OS does not
+trigger the SCLP event type CPI when the command
+'echo 1 > /sys/firmware/cpi/set' is executed in the guest. I
+believe that the guest OS must to be updated to support the SCLP
+event type CPI.
+
+Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+Suggested-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/acpi/aml-build.c            | 3 ++-
- hw/arm/virt-acpi-build.c       | 2 +-
- hw/loongarch/virt-acpi-build.c | 4 ++--
- include/hw/acpi/aml-build.h    | 4 +++-
- 4 files changed, 8 insertions(+), 5 deletions(-)
+ tests/functional/test_s390x_ccw_virtio.py | 24 +++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 1e685f982f..e854f14565 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2145,7 +2145,8 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-  * 5.2.29 Processor Properties Topology Table (PPTT)
-  */
- void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
--                const char *oem_id, const char *oem_table_id)
-+                const char *oem_id, const char *oem_table_id,
-+                int num_caches, CPUCoreCaches *caches)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     CPUArchIdList *cpus = ms->possible_cpus;
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index b01fc4f8ef..a6115f2f80 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -1044,7 +1044,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     if (!vmc->no_cpu_topology) {
-         acpi_add_table(table_offsets, tables_blob);
-         build_pptt(tables_blob, tables->linker, ms,
--                   vms->oem_id, vms->oem_table_id);
-+                   vms->oem_id, vms->oem_table_id, 0, NULL);
-     }
+diff --git a/tests/functional/test_s390x_ccw_virtio.py b/tests/functional/test_s390x_ccw_virtio.py
+index 453711aa0f..c14379cbaa 100755
+--- a/tests/functional/test_s390x_ccw_virtio.py
++++ b/tests/functional/test_s390x_ccw_virtio.py
+@@ -15,6 +15,7 @@
+ import tempfile
  
-     acpi_add_table(table_offsets, tables_blob);
-diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-index 8c2228a772..e7bbc40e27 100644
---- a/hw/loongarch/virt-acpi-build.c
-+++ b/hw/loongarch/virt-acpi-build.c
-@@ -551,8 +551,8 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-     build_madt(tables_blob, tables->linker, lvms);
+ from qemu_test import QemuSystemTest, Asset
++from qemu_test import exec_command
+ from qemu_test import exec_command_and_wait_for_pattern
+ from qemu_test import wait_for_console_pattern
  
-     acpi_add_table(table_offsets, tables_blob);
--    build_pptt(tables_blob, tables->linker, machine,
--               lvms->oem_id, lvms->oem_table_id);
-+    build_pptt(tables_blob, tables->linker, machine, lvms->oem_id,
-+               lvms->oem_table_id, 0, NULL);
+@@ -270,5 +271,28 @@ def test_s390x_fedora(self):
+                         'while ! (dmesg -c | grep Start.virtcrypto_remove) ; do'
+                         ' sleep 1 ; done', 'Start virtcrypto_remove.')
  
-     acpi_add_table(table_offsets, tables_blob);
-     build_srat(tables_blob, tables->linker, machine);
-diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-index c18f681342..01e11c093e 100644
---- a/include/hw/acpi/aml-build.h
-+++ b/include/hw/acpi/aml-build.h
-@@ -3,6 +3,7 @@
- 
- #include "hw/acpi/acpi-defs.h"
- #include "hw/acpi/bios-linker-loader.h"
-+#include "hw/core/cpu.h"
- 
- #define ACPI_BUILD_APPNAME6 "BOCHS "
- #define ACPI_BUILD_APPNAME8 "BXPC    "
-@@ -497,7 +498,8 @@ void build_slit(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-                 const char *oem_id, const char *oem_table_id);
- 
- void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
--                const char *oem_id, const char *oem_table_id);
-+                const char *oem_id, const char *oem_table_id,
-+                int num_caches, CPUCoreCaches *caches);
- 
- void build_fadt(GArray *tbl, BIOSLinker *linker, const AcpiFadtData *f,
-                 const char *oem_id, const char *oem_table_id);
++        # Test SCLP event Control-Program Identification (CPI)
++        cpi = '/sys/firmware/cpi/'
++        sclpcpi = '/machine/sclp/s390-sclp-event-facility/sclpcpi'
++        self.log.info("Test SCLP event CPI")
++        exec_command(self, 'echo TESTVM > ' + cpi + 'system_name')
++        exec_command(self, 'echo LINUX > ' + cpi + 'system_type')
++        exec_command(self, 'echo TESTPLEX > ' + cpi + 'sysplex_name')
++        exec_command(self, 'echo 1 > ' + cpi + 'set')
++        try:
++            event = self.vm.event_wait('SCLP_EVENT_CTRL_PGM_ID')
++        except TimeoutError:
++            self.skipTest('SCLP Event type CPI is not supported by guest OS')
++        ts = self.vm.cmd('qom-get', path=sclpcpi, property='timestamp')
++        self.assertNotEqual(int(ts), 0)
++        name = self.vm.cmd('qom-get', path=sclpcpi, property='system_name')
++        self.assertEqual(name, 'TESTVM')
++        typ = self.vm.cmd('qom-get', path=sclpcpi, property='system_type')
++        self.assertEqual(typ, 'LINUX')
++        sysplex = self.vm.cmd('qom-get', path=sclpcpi, property='sysplex_name')
++        self.assertEqual(sysplex, 'TESTPLEX')
++        level = self.vm.cmd('qom-get', path=sclpcpi, property='system_level')
++        self.assertNotEqual(int(level), 0)
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
-2.43.0
+2.49.0
 
 
