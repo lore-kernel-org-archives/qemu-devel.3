@@ -4,69 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7C8CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 06:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB46FCA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 07:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulirq-0000nk-B3; Tue, 12 Aug 2025 02:52:18 -0400
+	id 1ulj7v-0003Ig-Lt; Tue, 12 Aug 2025 03:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smail.aider@huawei.com>)
- id 1ulirn-0000nK-Fh
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 02:52:15 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulj7t-0003I1-N0
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 03:08:53 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smail.aider@huawei.com>)
- id 1ulirh-0003Ua-A3
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 02:52:15 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c1MYY75dqz6H6mh;
- Tue, 12 Aug 2025 14:49:21 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id C9D0B140278;
- Tue, 12 Aug 2025 14:51:58 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 12 Aug 2025 08:51:58 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Tue, 12 Aug 2025 08:51:58 +0200
-To: Michael Tokarev <mjt@tls.msk.ru>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Subject: RE: [PATCH v3 1/1] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
-Thread-Topic: [PATCH v3 1/1] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
-Thread-Index: AQHcCrIoROzGXl5jCUm9VOEblJ0G6bRdQfOAgAAvcRD//+QbgIAAAJUAgAE+rpA=
-Date: Tue, 12 Aug 2025 06:51:58 +0000
-Message-ID: <dcc6e55ab8f44bc89623073ed6a8c065@huawei.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulj7q-0005ns-2c
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 03:08:52 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C3217141680;
+ Tue, 12 Aug 2025 10:08:09 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 70C3E25E20A;
+ Tue, 12 Aug 2025 10:08:43 +0300 (MSK)
+Message-ID: <123ed0df-67c8-4a68-bbbe-2a4055767649@tls.msk.ru>
+Date: Tue, 12 Aug 2025 10:08:43 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
+To: Smail AIDER <smail.aider@huawei.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250811112143.1577055-1-smail.aider@huawei.com>
  <20250811112143.1577055-2-smail.aider@huawei.com>
  <7402c0f3-326b-4a98-bd62-b8da998b4401@linaro.org>
  <a8245ecc1e614beaa66f16dcb20d7dc1@huawei.com>
  <00bb0213-e4b3-457b-b5df-f575865b91ff@linaro.org>
  <38aeddc3-e5bc-4c7a-9a94-20090406d891@tls.msk.ru>
-In-Reply-To: <38aeddc3-e5bc-4c7a-9a94-20090406d891@tls.msk.ru>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.206.134.11]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=smail.aider@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ <dcc6e55ab8f44bc89623073ed6a8c065@huawei.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <dcc6e55ab8f44bc89623073ed6a8c065@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,26 +107,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Smail AIDER <smail.aider@huawei.com>
-From:  Smail AIDER via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTWljaGFlbCwNCg0KQ291bGQgeW91IHBsZWFzZSByZW1vdmUgInZpYSIgZnJvbSB0aGUgYXV0
-aG9yIG5hbWUsIGl0J3Mgbm90IHBhcnQgb2YgbXkgbmFtZSA6ICkgSSBndWVzcyBpdCB3YXMganVz
-dCBhIHR5cG8uDQoNClRoYW5rIHlvdS4NCg0KLS0NCkJlc3QgUmVnYXJkcywNClNtYWlsIEFJREVS
-DQpFLU1haWw6IHNtYWlsLmFpZGVyQGh1YXdlaS5jb20NCk9wZXJhdGluZyBTeXN0ZW0gUmVzZWFy
-Y2hlci9EZXZlbG9wZXINCkRyZXNkZW4gUmVzZWFyY2ggQ2VudGVyLCBPUyBLZXJuZWwgTGFiDQpI
-dWF3ZWkgVGVjaG5vbG9naWVzIENvLiwgTHRkDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0t
-DQpGcm9tOiBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PiANClNlbnQ6IE1vbmRheSwg
-QXVndXN0IDExLCAyMDI1IDM6NDggUE0NClRvOiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhp
-bG1kQGxpbmFyby5vcmc+OyBTbWFpbCBBSURFUiA8c21haWwuYWlkZXJAaHVhd2VpLmNvbT47IHFl
-bXUtZGV2ZWxAbm9uZ251Lm9yZw0KQ2M6IHFlbXUtYXJtQG5vbmdudS5vcmcNClN1YmplY3Q6IFJl
-OiBbUEFUQ0ggdjMgMS8xXSB0YXJnZXQvYXJtOiBUcmFwIFBNQ1Igd2hlbiBNRENSX0VMMi5UUE1D
-UiBpcyBzZXQNCg0KT24gMTEuMDguMjAyNSAxNjo0NSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kg
-d3JvdGU6DQo+IE9uIDExLzgvMjUgMTU6MzMsIFNtYWlsIEFJREVSIHdyb3RlOg0KDQo+IFRoZW4g
-cGxlYXNlIGFkZCBhIENjIHRhZyAobWFpbnRhaW5lciBjYW4gZG8gaXQgaWYgdGhpcyB2MyBpcyBP
-Sywgbm8gbmVlZCANCj4gZm9yIHY0KToNCj4gDQo+IENjOiBxZW11LXN0YWJsZUBub25nbnUub3Jn
-DQoNCkknbSBwaWNraW5nIGl0IHVwIGFscmVhZHkgLSBpdCdzIG9uIG15IHdhdGNoIGxpc3Qgc2lu
-Y2UgdGhlIHYxIDopDQoNCi9tanQNCg==
+On 12.08.2025 09:51, Smail AIDER wrote:
+> Hi Michael,
+> 
+> Could you please remove "via" from the author name, it's not part of my name : ) I guess it was just a typo.
+
+I'm not the one to do this and there's nothing to remove really -
+it is the mailing list who does it, replacing From with
+the mailing list itself.  It will be done by whomever
+applies the patch to the master branch.  Don't worry
+about it.
+
+Thanks,
+
+/mjt
 
