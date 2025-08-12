@@ -4,94 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B55CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 12:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CA7CA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 12:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulnvH-0005Lv-Ov; Tue, 12 Aug 2025 08:16:11 -0400
+	id 1ulo8l-00080W-Vn; Tue, 12 Aug 2025 08:30:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ulnvE-0005Kc-6V
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 08:16:08 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ulnuP-0004Ff-RQ
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 08:15:31 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b3bdab4bf19so4350735a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 05:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755000911; x=1755605711; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/Bxrg56B2/1q5rYYI/G2b6ZimfDVJ2Y7Pz0uWdUj5Bg=;
- b=GVsUaD9TEisCJuuJ5Tv1ZGgMnXWcwlBtAy3VaDNqrfvWW8cNNmSmMoqD0N4gtZNZHW
- VsnVR4k1DnDRzoJZ2n6mPzyWiJ90XJLeHB9U+hooMJtbIDlSSmE0y9JBpKUDqcRAsHbL
- WURXKrGX9A2sRVKEX4dmLnQqJSCU24rA+UwU0tgxpPrNhxe0xiKNh4i/y3NsC2lVhYFS
- 8GOqGVPh5KdY5W7TCUy8xgkFHlvVUUQss1U81SGJ+J/879XuR37E9QzTROEcRO+KfDiZ
- xpkNUtW9taJW1CcDeHAK1IhJFxAvJ7L28BgB+C5ROg/a+LjgKA74TLgnhziHT6PZ2QA/
- nB6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755000911; x=1755605711;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/Bxrg56B2/1q5rYYI/G2b6ZimfDVJ2Y7Pz0uWdUj5Bg=;
- b=HpI54GMve9CgTXy9K3K3NuVx+H/upqO9v7IfJP5/HHfTdKoZpqa3obiSugkbePSDX9
- gBGTNjCFwtCMuKJJDNhDgO4VVZEfeWSNHfWN3hJUxGGOXzuSxC3PCGCwR7uyamKXbzF5
- 9Bn9LWE/PRii5wex/dT9+TdtlnXeGphmoDKdtQhH37PpvUqZO+R7b7orN/EbmDM1FJ76
- aYyG59uUUvRdAE9idnupR8JI60wCrm6gvAneYvPlP0wTn0m6SIeaVpaYi+oCAv+kZEpj
- yQGJV90Pxk20koG2QuE/afnZ222pvOnYWY4z17xAP8+oECgsuZhb7yrGCUyVgtC6rcDZ
- dHXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXEnvls8lVfxVKwgmhYKfnyWUcXM74FYNG7oQ2CAVWAvF+JxmKRYpWpOlEmJTCpqpZSJz3lJgoK09kL@nongnu.org
-X-Gm-Message-State: AOJu0Yy9umFy9FV58aOWdTYMw1OhLuG1dOMJtmHZbAa/2LL+7F/cTuWw
- IQBzlzhqryo1/LALDztaJehpUKmp1qIyFSOgij6HNjXRxPHvvDSsvB0tgZwf6ZEvyjE=
-X-Gm-Gg: ASbGncvRV78wvJJMGqxEYQZ0YoOT6Vc3z1s0QmxUPOkPKtHOZ+w+UrEzLSFhdQcI0Bf
- IsjDe8TiUBAP9NhiZF4xfd8y0iSxdOjxIJkld8dn4BAx/Ij/rHitEQfE52BkIE6ybHIQAJwyV35
- 1WA5HiFLm4EvmBax2C5xu5tx1v4ktq8vPC84ldCi3iMMSq0MyVbkEFswpXOnhVtRyW6zkJ9gFTJ
- 61c45Ykg+Qn/vE+Qkzefa3qEfhix3M4bIVa6O+h94xetVPvEulqVUf3RjuDSXA1afTaUo5KNDB6
- 9wPbO+Mvy9dPF5++GDZgxxVbumIDCek4/ItIDq6vse7EPwhq4DMVzla1jacuHB8tEELL6EA1zkh
- kzAswX2ZXtH0Hh0wJy4y/U5kyOapH9rJFjmAgr+tg
-X-Google-Smtp-Source: AGHT+IFgEEPe1PYImXF6BdjNXMF+vuKs+96kB+FXLsF9hCy3+s8nYPHK1OoZI08fRo0TXTkFhTwKaQ==
-X-Received: by 2002:a17:902:f78b:b0:240:66ff:b276 with SMTP id
- d9443c01a7336-242fc315e6amr49899765ad.31.1755000911106; 
- Tue, 12 Aug 2025 05:15:11 -0700 (PDT)
-Received: from [192.168.4.112] ([168.140.255.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-241e8976a48sm297685785ad.104.2025.08.12.05.15.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 05:15:10 -0700 (PDT)
-Message-ID: <d7e55a44-03ef-4d13-9705-a743921138be@linaro.org>
-Date: Tue, 12 Aug 2025 22:15:05 +1000
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1ulo8k-0007z7-Ur; Tue, 12 Aug 2025 08:30:06 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1ulo8W-00072H-Ft; Tue, 12 Aug 2025 08:30:06 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c1W4532kYz6M4K8;
+ Tue, 12 Aug 2025 20:27:49 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id A85E01402ED;
+ Tue, 12 Aug 2025 20:29:45 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.47.65.66) by
+ frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 12 Aug 2025 14:29:44 +0200
+To: <qemu-devel@nongnu.org>
+CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
+ <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
+ <farman@linux.ibm.com>, <gustavo.romero@linaro.org>, <imammedo@redhat.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <linuxarm@huawei.com>, <maobibo@loongson.cn>, <mst@redhat.com>,
+ <mtosatti@redhat.com>, <peter.maydell@linaro.org>, <philmd@linaro.org>,
+ <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
+ <shameerali.kolothum.thodi@huawei.com>, <shannon.zhaosl@gmail.com>,
+ <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
+Subject: [PATCH v15 2/8] hw/core/machine: topology functions capabilities added
+Date: Tue, 12 Aug 2025 13:28:23 +0100
+Message-ID: <20250812122829.204-3-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250812122829.204-1-alireza.sanaee@huawei.com>
+References: <20250812122829.204-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/85] target/arm: Expand syndrome parameter to
- raise_exception*
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250802232953.413294-1-richard.henderson@linaro.org>
- <20250802232953.413294-24-richard.henderson@linaro.org>
- <3abbb8de-bbe6-4404-9714-50b487c46a8d@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <3abbb8de-bbe6-4404-9714-50b487c46a8d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.47.65.66]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,29 +72,102 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/25 16:26, Philippe Mathieu-Daudé wrote:
-> On 3/8/25 01:28, Richard Henderson wrote:
->> Prepare for raising exceptions with 64-bit syndromes.
->>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/internals.h     | 6 +++---
->>   target/arm/tcg-stubs.c     | 2 +-
->>   target/arm/tcg/op_helper.c | 4 ++--
->>   3 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> Maybe re-order with previous patch?
+Add two functions one of which finds the lowest level cache defined in
+the cache description input, and the other checks if caches are defined
+at a particular level.
 
-No.  With this order, the destination is never smaller than the source.
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+---
+ hw/core/machine-smp.c | 56 +++++++++++++++++++++++++++++++++++++++++++
+ include/hw/boards.h   |  5 ++++
+ 2 files changed, 61 insertions(+)
 
-(1) Widen env->exception.syndrome
-(2) Widen raise_exception syndrome
-(3) Generate a 64-bit syndrome during translate.
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 0be0ac044c..32f3e7d6c9 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -406,3 +406,59 @@ bool machine_check_smp_cache(const MachineState *ms, Error **errp)
+ 
+     return true;
+ }
++
++/*
++ * This function assumes l3 and l2 have unified cache and l1 is split l1d and
++ * l1i.
++ */
++bool machine_find_lowest_level_cache_at_topo_level(const MachineState *ms,
++                                                   int *level_found,
++                                                   CpuTopologyLevel topo_level)
++{
++
++    CpuTopologyLevel level;
++
++    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I);
++    if (level == topo_level) {
++        *level_found = 1;
++        return true;
++    }
++
++    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D);
++    if (level == topo_level) {
++        *level_found = 1;
++        return true;
++    }
++
++    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2);
++    if (level == topo_level) {
++        *level_found = 2;
++        return true;
++    }
++
++    level = machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3);
++    if (level == topo_level) {
++        *level_found = 3;
++        return true;
++    }
++
++    return false;
++}
++
++/*
++ * Check if there are caches defined at a particular level. It supports only
++ * L1, L2 and L3 caches, but this can be extended to more levels as needed.
++ *
++ * Return True on success, False otherwise.
++ */
++bool machine_defines_cache_at_topo_level(const MachineState *ms,
++                                       CpuTopologyLevel level)
++{
++    if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3) == level ||
++        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2) == level ||
++        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I) == level ||
++        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D) == level) {
++        return true;
++    }
++    return false;
++}
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index f94713e6e2..3c1a999791 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -55,6 +55,11 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
+                                   CpuTopologyLevel level);
+ bool machine_check_smp_cache(const MachineState *ms, Error **errp);
+ void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
++bool machine_defines_cache_at_topo_level(const MachineState *ms,
++                                       CpuTopologyLevel level);
++bool machine_find_lowest_level_cache_at_topo_level(const MachineState *ms,
++                                                   int *level_found,
++                                                   CpuTopologyLevel topo_level);
+ 
+ /**
+  * machine_class_allow_dynamic_sysbus_dev: Add type to list of valid devices
+-- 
+2.43.0
 
-
-r~
 
