@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9ACEC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 05:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9F5C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 05:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulhr2-0004zW-5K; Tue, 12 Aug 2025 01:47:24 -0400
+	id 1ulhti-0005jh-Dz; Tue, 12 Aug 2025 01:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulhqx-0004xw-Nh
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 01:47:20 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ulhtP-0005fY-2N; Tue, 12 Aug 2025 01:49:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulhqu-0006nE-C8
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 01:47:19 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1ulhtI-0007A6-A7; Tue, 12 Aug 2025 01:49:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CEACF1415E5;
- Tue, 12 Aug 2025 08:46:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 68D4E1415E7;
+ Tue, 12 Aug 2025 08:49:00 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5DF7925E1AE;
- Tue, 12 Aug 2025 08:47:09 +0300 (MSK)
-Message-ID: <6ef750a2-915f-4fc5-8b50-f92712fa800f@tls.msk.ru>
-Date: Tue, 12 Aug 2025 08:47:09 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id F167325E1AF;
+ Tue, 12 Aug 2025 08:49:33 +0300 (MSK)
+Message-ID: <986bb1ea-b889-4c06-a2fd-92c76496e0f1@tls.msk.ru>
+Date: Tue, 12 Aug 2025 08:49:33 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mkvenv: Support pip 25.2
-To: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Cleber Rosa <crosa@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, "Sv. Lockal" <lockalsash@gmail.com>
-References: <20250811190159.237321-1-jsnow@redhat.com>
- <CABgObfZ5izVnO1ZNGEstr55Lko0P4vzuOjaC=Ddy-xgh_hhRwA@mail.gmail.com>
+Subject: Re: [PULL 0/3] nvme fixes
+To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Klaus Jensen <k.jensen@samsung.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250811112557.521-1-its@irrelevant.dk>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,7 +78,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <CABgObfZ5izVnO1ZNGEstr55Lko0P4vzuOjaC=Ddy-xgh_hhRwA@mail.gmail.com>
+In-Reply-To: <20250811112557.521-1-its@irrelevant.dk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -89,7 +88,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,78 +104,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.08.2025 00:59, Paolo Bonzini wrote:
+On 11.08.2025 14:25, Klaus Jensen wrote:
+
+> Keith Busch (1):
+>        hw/nvme: cap MDTS value for internal limitation
 > 
+> Klaus Jensen (2):
+>        hw/nvme: fix namespace attachment
+>        hw/nvme: revert CMIC behavior
 > 
-> Il lun 11 ago 2025, 21:02 John Snow <jsnow@redhat.com 
-> <mailto:jsnow@redhat.com>> ha scritto:
-> 
->     From: "Sv. Lockal" <lockalsash@gmail.com <mailto:lockalsash@gmail.com>>
-> 
->     Fix compilation with pip-25.2 due to missing distlib.version
-> 
-> 
-> Stupid question: can we just say that, starting with 10.1, people have 
-> to install distlib to build QEMU?
+>   hw/nvme/ctrl.c | 43 ++++++++++++++++++++++++++++---------------
+>   1 file changed, 28 insertions(+), 15 deletions(-)
 
-There's nothing changed in this regard on the qemu side, - distlib has
-always been required.  The change is on the python side, not on qemu.
-The same fix is needed for all previous qemu releases.  Or to install
-distlib.
+Is there anything there which should be applied to qemu stable
+series?  Or *not* to be applied? :)
 
-> We're bending over backwards just because the Python developers on one 
-> hand keep shipping pip while saying that "no, pip is absolutely not 
-> special"; and on the other hand keep *not* shipping packaging and 
-> distlib while complaining that people don't use them.
-
-This is a bit backwards, it looks like, and a bit too gross.
-
-First, pip vendors a few crate^Wlibs for internal use, but these libs
-had never been public, - that's why distlib is imported from
-pip._vendor.  We used this hack in qemu to simplify bootstrap, but
-it was never the intended usage in pip, and hence there's no backwards
-compatibility break here from the pip side.
-
-Second, which is a continuation of the first, strictly speaking it
-is our fault that we use distlib without depending on it.
-
-And 3rd, it seems like Current Way (tm) is to use "packaging" library
-instead of distlib.  And packaging library is shipped within pip for
-a decade or so already - the same way as distlib.  This is why I
-wrote "backwards" above - by requiring distlib, we seems to work
-backwards, because current python way - which's been this way for
-years - is to use packaging, not distlib.  But I'm not someone
-involved in python, - I don't even know python language enough to
-write a minimal hello,world! program :)  -- so I might be
-misunderstanding something here.
-
-In debian, I just added a build dependency on distlib for qemu -
-in addition to venv, so it's definitely not a big deal.
-
-But ok.  To sum it up:
-
-right now, with introduction of pip 25.2, qemu can't be built anymore
-without installing additional deps.  So far, qemu had worked around
-missing python deps automatically, shipping everyhing it needs (except
-of the python itself) in the source tarball.   We can continue to try
-to be friendly to the target environment and require nothing, - if we
-do, we have to adjust.
-
-If we require some python library to be present, we as well can just
-list everything we need and stop jumping through hoops entirely in
-mkvenv.py (and elsewhere), and just use things directly, assuming
-they're installed.  This simplifies our bootstrap, - but I don't
-think this is actually necessary, bootstrap is not the most complicated
-thing in qemu.
-
-And whenever to embed/require distlib or to switch to packaging is an
-orthogonal question, - it looks like "packaging" is the way to go now,
-with switching other distlib usage(s) to it.  But I'm definitely not
-the one to judge here.
-
-Either way, we're at rc3 now, and have to do some quick fix, - this fix
-(or similar one which prefers packaging over distlib) seems to be the
-best quick solution.
+(current relevant stable series is 10.0, which is supposed to be LTS).
 
 Thanks,
 
