@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1EBECA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 13:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 608CCCA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 13:35:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulp3k-0005OY-KD; Tue, 12 Aug 2025 09:29:00 -0400
+	id 1ulp9I-0006zK-Ga; Tue, 12 Aug 2025 09:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulp3j-0005ON-Of
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 09:28:59 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulp3V-00015l-Pw
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 09:28:59 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-459d4d7c745so49957785e9.1
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 06:28:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755005321; x=1755610121; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9/hzcU+ZtuPzfrVepFsWSd7nGBb2dO+zRh6r8pCwa/I=;
- b=FRNcNB0qSYCz1RYoGfDE6n8qXcWAmxOpt2So4KOhVP3oTw2XTkIPikJ02bGNEJLyM1
- QO7NM7Y89ijJR4WuTNjPeAGWTDkqMKSMChHOA9VeXLKc+cBc8WNbWWY/ikkHjJje+hN1
- /Ao46Yi3+LzHgeixjtnIdoK1wkA5HiHb12rBw1lP4nmGmEwHfP7sfxqllRBQd7C58Crn
- O0NH89tDTBvtaK7zSL3JVxA2mepD/P8Z3y0JnDyE1tzHge6oYg0gVxXz0O1hnrkgokU/
- 9WgGwiixMtA1zBFZ7ToD4xC8ZLdTpAQ3sA10u5birrp5u+dg/HLJr0qIZ/djIGbkg7qy
- Hktg==
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1ulp9G-0006yv-5r
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 09:34:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1ulp9A-00026K-Bv
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 09:34:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755005673;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=woQEfNyuSW23CY6khUq7amK3Pty9M/RWYtqG5o2DGzY=;
+ b=F5A9bduXQCAiM7hTalfac+RLygEf7LbF5GxK17mHueUf8d1uyqxuflJpmDgA3wObFa74AV
+ toKhuSkDBUzu0L3yiXBxAyu0nvbLecebjBkzbGDa49kYaOvSEjumWZsphyqv13G/QeKKtE
+ jcgiGADVYvKYFwka889eaAxyBhcMAPM=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-402-9yrf1jC6OI2J_sWzecmByg-1; Tue, 12 Aug 2025 09:34:32 -0400
+X-MC-Unique: 9yrf1jC6OI2J_sWzecmByg-1
+X-Mimecast-MFC-AGG-ID: 9yrf1jC6OI2J_sWzecmByg_1755005672
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4aedcff08fdso104235671cf.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 06:34:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755005321; x=1755610121;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9/hzcU+ZtuPzfrVepFsWSd7nGBb2dO+zRh6r8pCwa/I=;
- b=Vn1n75hXMqKWMzHqJGy7W6/LgOeMk6yXzT52M8BgAUfhIlP676ISa1E/2Tc9z8Hy/C
- RrTSU2Rzub07wS8F1ZayTpOOZUvH+trzdMYKTqccETgods7xMqOsrZc1pMjn3vSX9oPa
- MXeaR7clOpJ5e046J2PjIfzcmlY69CJfuA3fyidPhG369t2aBQGlCMGuDG4a3IugejiI
- wtF61ExARcHuAaD2FqrhZVnphx4yM6DrHeW8PNC/8DboYh8Ls/CKw/6eZqREe+ta56UC
- UhL3VmO+y+EsZR4SnJ1jnc2SBHnCplCympLUyrDnLL7DCOS4Z/q1y4WFCJGUnnaM3LsU
- aitg==
-X-Gm-Message-State: AOJu0YxPCpf0hf6BdNQuki1++FykbgDidBYKMAcBiN4ETaXUbF3zXvIY
- 0RDVeHWzcpGrAO22UB/zwUD5c4e5Db4a3fV00hcANJZOMDlTOG70PEijdBiMIdidyLQ=
-X-Gm-Gg: ASbGncvoZ2a69tLSgr+ERF6b6sTmmmELzGOSFD43xW7UtWONWFnujfyug4KqeL+eU+X
- cA/kxOEjN6sSSw7SvoKkzzjK24Rc0PwtM7r34FkPc+AqZJg6l0CBglI74E1fMl6D314M4vJ98pn
- IFWlj676jpM7dhszUGFB9q5xPQwy4sbGoq1WhBQIGka6o4P8scm2nCtK+YCMN0LxMTunkzBb7S+
- Byil6lnW8k3cajJBGUETPSFapTYMiVbF80rCWAqtYpvZ1FOXMwyK2hu2e/dOHDPowMeorJpp3tD
- 2/P4ahe19FWeA92MlO8JWlRpz+YOjUAo2HwTTYz4MyptTp4j8lNTXGjnaJacGOPnXUgYvu4/YrC
- IRuOgO+aapROG20o3n46thSMGp72iw6yYPvFY/ZBdpUBmge6COm9Ft4ycMKhZakxvGw==
-X-Google-Smtp-Source: AGHT+IEOtvnCP47zR2T7hlfGqvGwD3Xox5T7DTFI4sO+/1BM4D6d4mitGVGqm6V0yovVOt8pCQt5iw==
-X-Received: by 2002:adf:c744:0:b0:3b9:12d5:168f with SMTP id
- ffacd0b85a97d-3b912d51cd7mr1326168f8f.30.1755005320852; 
- Tue, 12 Aug 2025 06:28:40 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b916394937sm218003f8f.6.2025.08.12.06.28.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 06:28:40 -0700 (PDT)
-Message-ID: <25f71d42-86e0-41c0-84a8-71edc9211ee5@linaro.org>
-Date: Tue, 12 Aug 2025 15:28:39 +0200
+ d=1e100.net; s=20230601; t=1755005672; x=1755610472;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=woQEfNyuSW23CY6khUq7amK3Pty9M/RWYtqG5o2DGzY=;
+ b=BBRQNxrI6Jk3cfRCOteDCR+s1hIobR8WGJ54yG8lWVMvG1tPS6/Ef770UQ6DNcAXoW
+ qzdurlN1NDXadMVG9vSN5WnXIJRsZpxeB1EkHaZ1nJ/oCWoLHL8E4Mx7Fx6S3ngCZJgr
+ u9zksD8rcM0KJE5s3rCj0L03ifTIUzb6pLbL50TDzq+fijao/H1EpKrcNYH/jbquuWex
+ zgTmZ/m3QmnhtAleDKl0/Ex7hopmq5mgFYEinH2HZVYNPcfrF54DQCbzDeJpG3oqBdO5
+ Sw9562a3XBrJki2fCgbYatR/IwNW6MJ0C3CNHnuqmIhl6xPOZInmYAKNABg7vuQims7M
+ SdVQ==
+X-Gm-Message-State: AOJu0YwrV+Ga492qjvnxOgs8oyuZAzLrBXYsSzWSMZGWClEtQt1vfBYx
+ 02Kaau4w/8v9lZ4J9lEe+qetCtIglV4ih1fDww63sNbmvGeCOG2PL76tda8alUD0IuZuiyY+BpN
+ 47WjQzDR+czpUepAYGM6O/YW7acBZqRZi/4NhSb7cDxeYQceW0u5wabKWF/z7uMHBNvg=
+X-Gm-Gg: ASbGnctL5fEX9s3N5fIBTk5RHeBy4OpEHjiOPD+TwcFo4rNWz9TzsX2TN8FqUnUH2N0
+ LUabBfr4DFs6XurTRE5BzOWmjkF+q2B2Sbo+qhUCOLS1y16dnfiNPGaL59kXqcJCjwUhd9Q9/aG
+ C+q3Gi6ehnBOmcwgHFrpod16I4FGhGJzS45S74lcOCtHXvsKg7z9Lmlk7SxENJxsOxBNtclV6Ti
+ McH0x9zi1IuZxHmmeDrdPBqGMYsps9E9DwgN0NWHMD6WmA20H09HmrfAHB3da7/wAxpHylXLwHw
+ oZNlinqYulKsIOZql1EQtEZ0BgsK
+X-Received: by 2002:a05:622a:1353:b0:4af:322:346a with SMTP id
+ d75a77b69052e-4b0ecc5bdcdmr45323891cf.37.1755005671575; 
+ Tue, 12 Aug 2025 06:34:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNNw6GXDVzy59dFQqjAXlqf303UxTP0IZYBV/LgrWebm73ojnHjfgRI5OkVx82V05rQ4CjMg==
+X-Received: by 2002:a05:622a:1353:b0:4af:322:346a with SMTP id
+ d75a77b69052e-4b0ecc5bdcdmr45323321cf.37.1755005670985; 
+ Tue, 12 Aug 2025 06:34:30 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b06a395932sm120672371cf.38.2025.08.12.06.34.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Aug 2025 06:34:30 -0700 (PDT)
+Date: Tue, 12 Aug 2025 15:34:26 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>, 
+ Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH 0/4] migration: Introduce postcopy-setup capability
+ and state
+Message-ID: <xfzgjwld4ba7mymu3xhkxdwpeie7bbjnbei2xchkqncamktk3g@rbafrorlpvcv>
+References: <20250807114922.1013286-1-jmarcin@redhat.com>
+ <aJoEJhJw-_rGVBbA@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 2/2] tests/functional: Test SPI-SD adapter
- without SD card connected
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Guenter Roeck <linux@roeck-us.net>,
- qemu-riscv@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-block@nongnu.org
-References: <20250808135115.77310-1-philmd@linaro.org>
- <20250808135115.77310-3-philmd@linaro.org> <87ikisad0u.fsf@draig.linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87ikisad0u.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJoEJhJw-_rGVBbA@x1.local>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,74 +109,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/8/25 15:24, Alex Bennée wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->> SPI-SD adapter should be usable, even without any SD card
->> wired. Refactor test_riscv64_sifive_u_mmc_spi() to make it
->> more generic and add another test, inspired by this report:
->> https://lore.kernel.org/qemu-devel/5b2dc427-f0db-4332-a997-fe0c82415acd@roeck-us.net/
->>
->> Inspired-by: Guenter Roeck <linux@roeck-us.net>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tests/functional/test_riscv64_sifive_u.py | 22 +++++++++++++++++-----
->>   1 file changed, 17 insertions(+), 5 deletions(-)
->>
->> diff --git a/tests/functional/test_riscv64_sifive_u.py b/tests/functional/test_riscv64_sifive_u.py
->> index dc4cb8a4a96..f7ab1abfd56 100755
->> --- a/tests/functional/test_riscv64_sifive_u.py
->> +++ b/tests/functional/test_riscv64_sifive_u.py
->> @@ -27,25 +27,37 @@ class SifiveU(LinuxKernelTest):
->>            'rootfs.ext2.gz'),
->>           'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
->>   
->> -    def test_riscv64_sifive_u_mmc_spi(self):
->> +    def do_test_riscv64_sifive_u_mmc_spi(self, connect_card):
->>           self.set_machine('sifive_u')
->>           kernel_path = self.ASSET_KERNEL.fetch()
->>           rootfs_path = self.uncompress(self.ASSET_ROOTFS)
->>   
->>           self.vm.set_console()
->>           kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
->> -                               'root=/dev/mmcblk0 rootwait '
->>                                  'earlycon=sbi console=ttySIF0 '
->> -                               'panic=-1 noreboot')
->> +                               'root=/dev/mmcblk0 ')
->>           self.vm.add_args('-kernel', kernel_path,
->> -                         '-drive', f'file={rootfs_path},if=sd,format=raw',
->>                            '-append', kernel_command_line,
->>                            '-no-reboot')
->> +        if connect_card:
->> +            self.vm.add_args('-drive', f'file={rootfs_path},if=sd,format=raw')
->> +            kernel_command_line += 'panic=-1 noreboot rootwait '
->> +            pattern = 'Boot successful.'
->> +        else:
->> +            kernel_command_line += 'panic=0 noreboot '
->> +            pattern = 'Cannot open root device "mmcblk0" or unknown-block(0,0)'
->> +
->>           self.vm.launch()
->> -        self.wait_for_console_pattern('Boot successful.')
->> +        self.wait_for_console_pattern(pattern)
->>   
->>           os.remove(rootfs_path)
->>   
->> +    def _test_riscv64_sifive_u_nommc_spi(self):
->> +        self.do_test_riscv64_sifive_u_mmc_spi(False)
-> 
-> This test won't run because of the leading _
+Hi Peter
 
-Oops, I was carefully testing one case after each other and missed
-to remove this leading char!
+On 2025-08-11 10:54, Peter Xu wrote:
+> [Sorry to respond late on the real meat of this series..]
+> 
+> On Thu, Aug 07, 2025 at 01:49:08PM +0200, Juraj Marcin wrote:
+> > When postcopy migration starts, the source side sends all
+> > non-postcopiable device data in one package command and immediately
+> > transitions to a "postcopy-active" state. However, if the destination
+> > side fails to load the device data or crashes during it, the source side
+> > stays paused indefinitely with no way of recovery.
+> > 
+> > This series introduces a new "postcopy-setup" state during which the
+> > destination side is guaranteed to not been started yet and, the source
+> > side can recover and resume and the destination side gracefully exit.
+> > 
+> > Key element of this feature is isolating the postcopy-run command from
+> > non-postcopiable data and sending it only after the destination side
+> > acknowledges, that it has loaded all devices and is ready to be started.
+> > This is necessary, as once the postcopy-run command is sent, the source
+> > side cannot be sure if the destination is running or not and if it can
+> > safely resume in case of a failure.
+> > 
+> > Reusing existing ping/pong messages was also considered, PING 3 is right
+> > before the postcopy-run command, but there are two reasons why the PING
+> > 3 message might not be delivered to the source side:
+> > 
+> > 1. destination machine failed, it is not running, and the source side
+> >    can resume,
+> > 2. there is a network failure, so PING 3 delivery fails, but until until
+> >    TCP or other transport times out, the destination could process the
+> >    postcopy-run command and start, in which case the source side cannot
+> >    resume.
+> > 
+> > Furthermore, this series contains two more patches required for the
+> > implementation of this feature, that make the listen thread joinable for
+> > graceful cleanup and detach it explicitly otherwise, and one patch
+> > fixing state transitions inside postcopy_start().
+> > 
+> > Such (or similar) feature could be potentially useful also for normal
+> > (only precopy) migration with return-path, to prevent issues when
+> > network failure happens just as the destination side shuts the
+> > return-path. When I tested such scenario (by filtering out the SHUT
+> > command), the destination started and reported successful migration,
+> > while the source side reported failed migration and tried to resume, but
+> > exited as it failed to gain disk image file lock.
+> > 
+> > Another suggestion from Peter, that I would like to discuss, is that
+> > instead of introducing a new state, we could move the boundary between
+> > "device" and "postcopy-active" states to when the postcopy-run command
+> > is actually sent (in this series boundary of "postcopy-setup" and
+> > "postcopy-active"), however, I am not sure if such change would not have
+> > any unwanted implications.
+> 
+> Yeah, after reading patch 4, I still want to check with you on whether this
+> is possible, on a simpler version of such soluion.
+> 
+> As we discussed offlist, looks like there's no perfect solution for
+> synchronizing between src <-> dst on this matter.  No matter what is the
+> last message to be sent, either precopy has RP_SHUT, or relying on 3rd/4th
+> PONG, or RUN_ACK, it might get lost in a network failure.
+> 
+> IIUC it means we need to face the situation of split brain. The link can
+> simply be broken at any time.  The ultimate result is still better when two
+> VMs will be halted when split brain, but then IMHO we'll need to justify
+> whether that complexity would be worthwhile for changing "both sides
+> active" -> "both sides halted" when it happened.
+
+Yes, a network failure can indeed happen at any time, but that's the
+decision we need to make if we can allow the possibility of two machines
+running at the same time. And depending on that, one solution is more
+complex than the other.
+
+Right now if the network fails during the device load and the
+destination reaches 3rd ping and postcopy-run, the machine would start,
+but the source wouldn't. So to me, it looks a bit like a regression, if
+we introduce a possibility of two machines trying to start.
 
 > 
->> +
->> +    def test_riscv64_sifive_u_mmc_spi(self):
->> +        self.do_test_riscv64_sifive_u_mmc_spi(True)
->> +
->>   
->>   if __name__ == '__main__':
->>       LinuxKernelTest.main()
+> If we go back to the original request of why we decided to work on this: it
+> was more or less a feature parity request on postcopy against precopy, so
+> that when device states loading failed during switchover, postcopy can also
+> properly get cancelled rather than hanging.  Precopy can do that, we wished
+> postcopy can do at least the same.
+> 
+> Could we still explore the simpler idea and understand better on the gap
+> between the two?  E.g. relying on the 3rd/4th PONG returned from the dest
+> QEMU to be the ACK message.
+> 
+> Something like:
+> 
+>   - Start postcopy...
+> 
+>   - Send the postcopy wholesale package (which includes e.g. whole device
+>     states dump, PING-3, RUN), as before.
+> 
+>   - Instead of going directly POSTCOPY_ACTIVE, we stay in DEVICE, but we
+>     start to allow iterations to resolve page faults while keep moving
+>     pages.
+> 
+>   - If...
+> 
+>     - we received the 3rd PONG, we _assume_ the device states are loaded
+>       successfully and the RUN must be processed, src QEMU moves to
+>       POSTCOPY_ACTIVE.
+> 
+>     - we noticed network failure before 3rd PONG, we _assume_ destination
+>       failed to load or crashed, src QEMU fails the migration (DEVICE ->
+>       FAILED) and try to restart VM on src.
+> 
+> This might be a much smaller change, and it might not need any change from
+> dest qemu or stream protocol.
+
+I can test this idea, but I think it should be working and there should
+be no problems if there are no network issues. However, then there's
+also a question if we want the destination side to exit gracefully if
+there is some issue during device load that doesn't cause immediate
+crash. IUUC it would switch to POSTCOPY_PAUSED and then the management
+application would need to kill it and restart the migration.
+
+> 
+> It means, if it works (even if imperfect) it'll start to work for old VMs
+> too as long as they got migrated to the new QEMU, and we get this postcopy
+> parity feature asap instead of requesting user to cold-restart the VM with
+> a newer machine type.
+
+But are migration capabilities limited to machine types?
+
+My understanding is that once VM is migrated to the new QEMU it can
+start using the capability even if it uses older machine type. Then we
+would be in the same situation, that the feature is usable once we are
+migrating from a newer QEMU instance.
+
+> 
+> Would this be a better possible trade-off?
+
+So, while yes, such solution would require fewer changes, but to me, it
+feels like introducing a known regression if the network would fail
+before the destination reaches 3rd ping message while processing the
+packaged command. But in case the probability of such failure is so
+slim, that it's not worth to have the more complex solution, I can move
+on with the simpler one.
+
+Thanks,
+
+Juraj Marcin
+
+> 
+> Thanks,
+> 
+> -- 
+> Peter Xu
 > 
 
 
