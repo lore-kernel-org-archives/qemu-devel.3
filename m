@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F33C87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 14:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9ABCA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 14:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulpcF-0007Vr-J7; Tue, 12 Aug 2025 10:04:39 -0400
+	id 1ulpcI-0007X6-Cd; Tue, 12 Aug 2025 10:04:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulpcC-0007U2-RX
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:04:36 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulpcG-0007WP-S7
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:04:40 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulpc9-0007k3-8Y
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:04:36 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3b8de193b60so3121927f8f.0
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 07:04:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ulpcB-0007kY-UG
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:04:40 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-459ebb6bbdfso34684785e9.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 07:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755007467; x=1755612267; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755007472; x=1755612272; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f93tv/vnA/xMKC2H8Wzbvol4EZUoCD7p17vWtC4FtnY=;
- b=vxLtc4ClBBCAbLbliwO474bDs7e+Nws+R/O2QjUw/tFTym8hgK27XomsK/vVyvBQac
- FqJ8V4am/HsKvlY9meMyHlvFu0QP0jpBNfVaPQere6EFnl1qe+zmFIC4h2i5azVhM/xd
- 2CJYYP+ma0EbPBTDRq/yR2FMoQ5RNsNCSZwtYQKMbTaJ1N+2WHxLo7V6+3ANt3vj8qUB
- p7zp+xnTtK4oi27+7EsVACZXCgtqmW4JXNHH/k8pM1eXWKa5zFJs1Lwq8PrY/cFdzHCA
- L1MvlOMRfEjDtoXIe/Ai6/w88duncMADka3sUfZhv3Qmhzsg1S2YfOhximhUdcQHOqC9
- IIuw==
+ bh=LjNdH5Wyoh4MqiPJIO2aI8sd0ovUKaYmzU8biN1Y86k=;
+ b=vbAIkIckyMWFoO8keKgKE+Vfx8ws0nj7ywuZCNDFi0xveWfbRveLPN7CYwWxNYvSgK
+ fDCIayS9vuTwfAYo/iBbaZl86rXpPhpe37Ev2tcUpiH0Eod1jPA93T2mPxPR8qXKkhlP
+ K4n9LhBSNu4yPozJXWVIIo/eO3Og9dKvOyetMV0hweINRAc4yH5KXxXmnvvWxmkJOzJV
+ SYx75fO6EQIMZhyltli24CpbJ1adOXvK95/5P7kURByooIH28LwcGblhuYNS6/745Kni
+ ZcU8HjE3kcCmCJQPlhiRBQYWCJMohmoQehFX7MlwpD8zcVdrWpoTgMABgAslaPnq3W9k
+ +B8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755007467; x=1755612267;
+ d=1e100.net; s=20230601; t=1755007472; x=1755612272;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f93tv/vnA/xMKC2H8Wzbvol4EZUoCD7p17vWtC4FtnY=;
- b=hecCEz8eoVTnxfLGxYiIfa+zGXVDIeQsKuDu/AoPjHClGU6MxdL0r6qGvFwKS38t1S
- ugz6P38qiIdtEEQYmgwEgEjEx7euGKM6a8/qpoz5l+o6ctAotbCTv8Tl4zbT/ci8e1Db
- yO9soFXNmzX5O9++tWLhMoEob5yhqYJRniqpd1TwFx/9vQYFW4PAw8FW9A8fj4EkVjVP
- vx7PrRosivyq1FGFwAXSV+EE2mAcefXh4khXyramrYnUbRHm4AOJfwgy19kkdSHHYYcM
- 0p6RSGQd6hk/3+itW0a25nx9wqXhjc5nds4vg6ISqpR+EWi4Pybr6/Y6gacfKzjVC3IY
- E/AA==
-X-Gm-Message-State: AOJu0YwPzQEjisiDjJL+gU7u3MrDQv0SahRvXQHoqEjE3TVDyuln2S5i
- G2kKehqmzSMoXlFHrFHi2368K9ghsTKVrOeeAhGaaQ7BneXAlSJnQwAUUkzPtndqMk842JW4sYt
- nqYxa
-X-Gm-Gg: ASbGncuQMOMLbsLJaftbZdpWfr+g7sI4nP1PYos428dFIvrob/N+SndzHYXF1zVQlFO
- aKYpfQ8TJDfUVwGY1oSERlVcJnYtqyheeWOnaHiDh1u/hoMQSmqzjqqONayIX09SvMXaxhxuHlZ
- cb+dJQdL/VRNqFbImAbHcjzanjHwh/pkb320Yph6ex0V/zG0+TR/Rw78IOP9mKd4ASkk/9FnM0Z
- tdpsZe7kZS8AiSHoK/hAC8jYxdvqCpdAfFYqnuykgRTb40LKiK5R+UDuWXICMvR5XUF2/2acpgp
- aeFOEKtEIp7xwlsLl/OJgPsQlYzMhY21Y9hg8AmVow1NH81U+NpGtPOo1Bv8KCy/TTUXCVZ9SaP
- zqq2dxBw7mYJtqoFATy53ZieY9tqEP8batUgm0+c8M9zBPyO8W5jxo92lnBPMS3LQj6R+R+01
-X-Google-Smtp-Source: AGHT+IFwaqA8DGx2N7QECxFWYEBb2K+QjE1qQT79J/Fzs77ogahZmTVE3Xvo4xLzF78FRFwBM+4RsQ==
-X-Received: by 2002:a05:6000:2304:b0:3b9:10af:59f2 with SMTP id
- ffacd0b85a97d-3b911014ba4mr3054328f8f.28.1755007467124; 
- Tue, 12 Aug 2025 07:04:27 -0700 (PDT)
+ bh=LjNdH5Wyoh4MqiPJIO2aI8sd0ovUKaYmzU8biN1Y86k=;
+ b=bLN0eIKTwZbGKblYkqMUOQsu+59I5g5EJr5l4L1b7VCFwu+dL0PhtaewWI/n5RJefz
+ oFm3VZc3KrlKU43II6+rETM5ZvT/LVQs9syPPQKdWTVzImfi++rFU3DpCKcG88V/b0Zt
+ tjNkkpKYhGd9X7iQb8Zh//U6J8L8pYXkXBa0wiU+F9zNvXGr66fOlHbB279yOtpCPBpH
+ AOlL+KdCk1Fw7PIfpv/qStIwaTDxYI45O1Q1fvX5SnfoOkULBY+pxhKWVL4Sp7YjcmMV
+ HfEpbxnXlRScSvjeh9KkT9TRjITQMdBTvI6O6Nnv5ojhBHdZOsnkjI1Q4gd9TfIjDKHC
+ QXJA==
+X-Gm-Message-State: AOJu0YxVSymoabnw2cYdDJr/qFl8KiPw2cadM4TBd89/cPp54VGUCuKC
+ QuxmnZ3J0tilnLeiMi2J180s1iGuHsUljNB851eELEz1TwVThjsCxKgYQi+EJdLzsSLpVAthfQq
+ yOQb0
+X-Gm-Gg: ASbGncveZh2vN1nk1OfCm8Xzmi9slMzZnfHytN5slqx06DKxJqtlxQ9XRs4tojeIhMS
+ OFOHGng2kqGzPBaJP4LPoiN9rujsudKck3BNdrdiZroWDY/Rg1Zs9+mrJoTCFH7FTUWhLxsqMbT
+ 3waiY8Jm/N0YuKtyU4XM8Q34ZYV298KVW9hutQ/5Rr5D+qJpSIxhJyRQ4ulL3ByrjIVOlsQpXPy
+ kfDtlgSjfrPUtBm+qHLz5E+M/cvSRmewdFfDm9gjZ6pdA2vFTursdLHsO8d38D8KncasU552+I7
+ NKiZ0JfSGrBAhQbY6Ed3D3bdjQRD5XsOnATkWZtJnb1rYpLngN6s7Ng+pYmZv9CyNMwVTtSVwkJ
+ SlH3TLG7QNnvSSr9jvrtTG3w8KJKwbjCnnr+j/G5o9GQjHIdV+12qaJbIRILKeWPOgAZlwQqi
+X-Google-Smtp-Source: AGHT+IFL6WbcU2qAox8o9N+QNZjCqE+/L5nwIOJ0X2mUCixfX42bGyAcx0gQoImpf/ZpP1dTrs+pgw==
+X-Received: by 2002:a05:600c:1709:b0:458:be62:dcd3 with SMTP id
+ 5b1f17b1804b1-45a10d258eamr23743945e9.17.1755007471795; 
+ Tue, 12 Aug 2025 07:04:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c453333sm45923437f8f.45.2025.08.12.07.04.26
+ 5b1f17b1804b1-459e5853104sm299223425e9.8.2025.08.12.07.04.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 12 Aug 2025 07:04:26 -0700 (PDT)
+ Tue, 12 Aug 2025 07:04:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH-for-10.1 RESEND RESEND v2 2/3] tests/functional: Test SPI-SD
- adapter without SD card connected
-Date: Tue, 12 Aug 2025 16:04:14 +0200
-Message-ID: <20250812140415.70153-3-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.1 RESEND RESEND v2 3/3] hw/ssi: Document ssi_transfer()
+ method
+Date: Tue, 12 Aug 2025 16:04:15 +0200
+Message-ID: <20250812140415.70153-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250812140415.70153-1-philmd@linaro.org>
 References: <20250812140415.70153-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,64 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SPI-SD adapter should be usable, even without any SD card
-wired. Refactor test_riscv64_sifive_u_mmc_spi() to make it
-more generic and add another test, inspired by this report:
-https://lore.kernel.org/qemu-devel/5b2dc427-f0db-4332-a997-fe0c82415acd@roeck-us.net/
+A SPI transaction consists of shifting bit in sync with the CLK
+line, writing on the MOSI (output) line / and reading MISO (input)
+line.
 
-Inspired-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/functional/test_riscv64_sifive_u.py | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ include/hw/ssi/ssi.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/tests/functional/test_riscv64_sifive_u.py b/tests/functional/test_riscv64_sifive_u.py
-index dc4cb8a4a96..ca4c3ba6e12 100755
---- a/tests/functional/test_riscv64_sifive_u.py
-+++ b/tests/functional/test_riscv64_sifive_u.py
-@@ -27,25 +27,37 @@ class SifiveU(LinuxKernelTest):
-          'rootfs.ext2.gz'),
-         'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28b')
+diff --git a/include/hw/ssi/ssi.h b/include/hw/ssi/ssi.h
+index 3cdcbd53904..2ad8033d8f5 100644
+--- a/include/hw/ssi/ssi.h
++++ b/include/hw/ssi/ssi.h
+@@ -38,6 +38,7 @@ struct SSIPeripheralClass {
  
--    def test_riscv64_sifive_u_mmc_spi(self):
-+    def do_test_riscv64_sifive_u_mmc_spi(self, connect_card):
-         self.set_machine('sifive_u')
-         kernel_path = self.ASSET_KERNEL.fetch()
-         rootfs_path = self.uncompress(self.ASSET_ROOTFS)
+     /* if you have standard or no CS behaviour, just override transfer.
+      * This is called when the device cs is active (true by default).
++     * See ssi_transfer().
+      */
+     uint32_t (*transfer)(SSIPeripheral *dev, uint32_t val);
+     /* called when the CS line changes. Optional, devices only need to implement
+@@ -52,6 +53,7 @@ struct SSIPeripheralClass {
+      * of the CS behaviour at the device level. transfer, set_cs, and
+      * cs_polarity are unused if this is overwritten. Transfer_raw will
+      * always be called for the device for every txrx access to the parent bus
++     * See ssi_transfer().
+      */
+     uint32_t (*transfer_raw)(SSIPeripheral *dev, uint32_t val);
+ };
+@@ -110,6 +112,18 @@ bool ssi_realize_and_unref(DeviceState *dev, SSIBus *bus, Error **errp);
+ /* Master interface.  */
+ SSIBus *ssi_create_bus(DeviceState *parent, const char *name);
  
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               'root=/dev/mmcblk0 rootwait '
-                                'earlycon=sbi console=ttySIF0 '
--                               'panic=-1 noreboot')
-+                               'root=/dev/mmcblk0 ')
-         self.vm.add_args('-kernel', kernel_path,
--                         '-drive', f'file={rootfs_path},if=sd,format=raw',
-                          '-append', kernel_command_line,
-                          '-no-reboot')
-+        if connect_card:
-+            self.vm.add_args('-drive', f'file={rootfs_path},if=sd,format=raw')
-+            kernel_command_line += 'panic=-1 noreboot rootwait '
-+            pattern = 'Boot successful.'
-+        else:
-+            kernel_command_line += 'panic=0 noreboot '
-+            pattern = 'Cannot open root device "mmcblk0" or unknown-block(0,0)'
-+
-         self.vm.launch()
--        self.wait_for_console_pattern('Boot successful.')
-+        self.wait_for_console_pattern(pattern)
++/**
++ * Transfer a word on a SSI bus
++ * @bus: SSI bus
++ * @val: word to transmit
++ *
++ * At the same time, read a word and write the @val one on the SSI bus.
++ *
++ * SSI words might vary between 8 and 32 bits. The same number of bits
++ * written is received.
++ *
++ * Return: word value received
++ */
+ uint32_t ssi_transfer(SSIBus *bus, uint32_t val);
  
-         os.remove(rootfs_path)
- 
-+    def test_riscv64_sifive_u_nommc_spi(self):
-+        self.do_test_riscv64_sifive_u_mmc_spi(False)
-+
-+    def test_riscv64_sifive_u_mmc_spi(self):
-+        self.do_test_riscv64_sifive_u_mmc_spi(True)
-+
- 
- if __name__ == '__main__':
-     LinuxKernelTest.main()
+ DeviceState *ssi_get_cs(SSIBus *bus, uint8_t cs_index);
 -- 
 2.49.0
 
