@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CBAFCA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 14:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 501FFC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 15:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulqSx-00060W-5v; Tue, 12 Aug 2025 10:59:07 -0400
+	id 1ulqUv-0006fB-JJ; Tue, 12 Aug 2025 11:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulqSt-0005yF-95
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:59:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ulqUk-0006eV-4U
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:00:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ulqSi-0006YC-U7
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 10:59:03 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ulqUc-0006r9-Nq
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:00:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755010729;
+ s=mimecast20190719; t=1755010845;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x+hfjC43nxMoh1wbqcKM7ui7pRzg0d5VNKYjbmjlDx8=;
- b=DdZ9QZ+XKq0d9wV8cIdFjm4XF7DSPPzNCBek/S0lOT17yonFK4kqcqIctWBCgdnA/uD9JQ
- Pw6FaqY6nWzuTzRcqxOwhK0jGnsg4RKWba8PYqFuXMkbMbFC1uUNZYpK0pk8ne0RbZ8zUF
- 2bqjnNkSocIbIfdZmE7nmpkdBQgirUo=
+ bh=+hdYQTj6K8rLJvmUmvHO5gkHnZfbIMkP/mN/S4QTXBU=;
+ b=DLKr7jwkDaqyUtEqHOyI/erdqIGCbcqc985erZHqtgpVCOwJiDhauutM411EWdvCXCvjgl
+ ZTab+JzpJwPI89SbSdhSs/t7r3EOAgSV7CQfMhiXYJEMDxEkF0lw07EeuJfSsFo9olSzEV
+ LHx5cgAYjxnfPTahoZMpAydsGVThlto=
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
  [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-92-15ByGu5sPt2f3VqL92cx-w-1; Tue, 12 Aug 2025 10:58:47 -0400
-X-MC-Unique: 15ByGu5sPt2f3VqL92cx-w-1
-X-Mimecast-MFC-AGG-ID: 15ByGu5sPt2f3VqL92cx-w_1755010727
+ us-mta-363-3yoQJWUpMuiuSJCA7oOP3Q-1; Tue, 12 Aug 2025 11:00:41 -0400
+X-MC-Unique: 3yoQJWUpMuiuSJCA7oOP3Q-1
+X-Mimecast-MFC-AGG-ID: 3yoQJWUpMuiuSJCA7oOP3Q_1755010841
 Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7e826e0d7abso1142816485a.0
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 07:58:47 -0700 (PDT)
+ af79cd13be357-7e36e20d700so1124713385a.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 08:00:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755010727; x=1755615527;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x+hfjC43nxMoh1wbqcKM7ui7pRzg0d5VNKYjbmjlDx8=;
- b=vyGdJynkxETdOGJlxeUBVBiT9xjEgQUPmf7sJFJzJxuTP/Kh1aRCEUsmq0E67N3vWY
- wi24EQVraKs9k36kVa9zeVJENELMjxuGx+xFSHWq4cEofyicWOleSFsAXabDaHCG85oC
- 7gZZknLbtUJMHXSx47N6YjFtDNVodXNB5FAVaBSHO10UtySwYOLWbX0vXZldS93ADc2E
- nCKsOpXg2XUcpBVKM/kaCou6Ykqy6g6CallLHl6OfRvHGZUk9E+MHFAdG4l6TrmPanYZ
- Uuh2TN51NkTHvHYnZBMYzKX1hsyZi+dVFebkzEc8GUU1rWN9Ybfq2LRoLUcX4FNFevf1
- Xi+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoSQROp7Ko0+KitXVEIgzKE5GC6MpOTbFKe9yfr3eeNfNvr3zPtepKispyDrp10sQRf1JLT4GTrDR7@nongnu.org
-X-Gm-Message-State: AOJu0YxMm2xf2MjH69fiyVBCfz0o3EVH27/Tl5VBhE+x8851ozYu4sMb
- fZvgycLGQgevFLaaL7Uzoo/PG4LjqvyLXDmPnPewEtHejRwU6Npw1qdjlrTwA58pyvxMSlchujz
- B7adnxlc7UkM2D9shKFfMOlVqljZDyqYq6WjsrTEzZUWiSV/kr6tx1G2t
-X-Gm-Gg: ASbGncu+bTuu1q9rRUv2rRBwrMrmyGkoWuDZ8t1igSEuxqZ7DKfTsn/S6RaLJ82l5Xi
- lBMvDnpLbGN0OHfYGDHyEwJyOjSebMljrc3eJJRHWu8WU8IB0pIUN4NiwF8hf1LbRDwZgebkLdz
- ZMzPg8lvEYFnupsAbCswoS/8CFTof5zu53+tmw2uCpKUUW+OWIEvxsb0H8RUPl7M3sOr4J273XM
- MM7iUhUCGs3Dt4o4lh/+SJxjdjwhhZ/xEJWQrdgGd6HQueafxRj+Pd1Y/rT9zRVfZy3sM1UBErg
- vempTViYb/NJrc/XnNtaHm9yLkPgbx3E
-X-Received: by 2002:a05:620a:ac07:b0:7e3:417a:9609 with SMTP id
- af79cd13be357-7e864355f84mr7297885a.0.1755010726703; 
- Tue, 12 Aug 2025 07:58:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElTQiVwn+GJleP7ZddwbxISo/lPwi0wwRAzi996qvVgKDguaBldLmIgQThb2HUpayCkB50qg==
-X-Received: by 2002:a05:620a:ac07:b0:7e3:417a:9609 with SMTP id
- af79cd13be357-7e864355f84mr7291885a.0.1755010726102; 
- Tue, 12 Aug 2025 07:58:46 -0700 (PDT)
-Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e67f597fd2sm1771034185a.14.2025.08.12.07.58.44
+ d=1e100.net; s=20230601; t=1755010841; x=1755615641;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+hdYQTj6K8rLJvmUmvHO5gkHnZfbIMkP/mN/S4QTXBU=;
+ b=OrVYZ1hGKo++smo0kl29jfxzxTuiXulHIWKr9b7qlM+qM0r8jyYaZ4R2odUgotP3n5
+ hDw/f1aKQM/Ow3IZeUsARaSEcLNlwg6O3CrcDaO8J9cXLhpj/e7+Xn0VQVTZsf12EsBC
+ snbaPr/IXZ3zJyRpFUJ5bmDtOA8omlbcEH7Y5pNeFsVqBv1NdchX9lgF+K6NOqa0Mdy9
+ 05alBY8RcHAEnfjrQ+LAAa08JHN4C5OrkTlHA08/UXBaXTxt0sERF6ggvDX9etJF/QSM
+ KAwuhgqjZlxPxywA6EEPneQbJrwu4bd1h24xiXd78idTzzG23YeGnvGPX7BG/xo5LWjd
+ 7Jhw==
+X-Gm-Message-State: AOJu0YxWjgbD4l7pfZUjf9LX+hGJB6N3TmKbcFzCNylrgmbW3M7ns9Lw
+ HCps2Poes/vsHuHUmc58K5CpiCPUtMqG9Nk4H0Hb5eNhyPYUJyzI+eoxETWiCUu8/+zXjXj7uXw
+ aoaQjCWRqfB3Ja0LHe5i+v14srPQkwBwTh9kluT+b1P0ITzQhN7Dvs4Z8
+X-Gm-Gg: ASbGncvbkUXyWh41il2j/GC+NUDnQl1CkPSV1/QryfOvoO/nTZI/y6YAojvYIeo8I23
+ KqGlEImkkWHT2o2WG8warZreayw8OEQpgrZgoo5YFHgJRJdCHLSJwsXbJshzwxPKSxSLjXQsC5s
+ VlRWBHCf/nmnQfP97pE3E3efQMwaklms2rO6uJ6W8eAnXRVDjbPFI4Bqy+4YXsX2xQ20xP6rGNf
+ B+juOTGX/6dOk5/LfXL7bdEZDMzZTbYB06G+k6jM2ML65uKkFvwgCNKnicpHxy/ORk8rdGgjTQA
+ W+6xv5/6dAEtvJtF7nQAUG/UeH89wA==
+X-Received: by 2002:a05:620a:28c1:b0:7e6:9dee:2130 with SMTP id
+ af79cd13be357-7e858dafa51mr443279085a.9.1755010840397; 
+ Tue, 12 Aug 2025 08:00:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9SBym0T4JwMHL8OAxP2DMs3NYND/5708TW3vRGJaNpxhq/I9ngHHiDYXCRG/u3R46scFekQ==
+X-Received: by 2002:a05:620a:28c1:b0:7e6:9dee:2130 with SMTP id
+ af79cd13be357-7e858dafa51mr443266685a.9.1755010839421; 
+ Tue, 12 Aug 2025 08:00:39 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e67f72b045sm1767690485a.60.2025.08.12.08.00.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Aug 2025 07:58:45 -0700 (PDT)
-Date: Tue, 12 Aug 2025 10:58:33 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, Kunkun Jiang <jiangkunkun@huawei.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Yishai Hadas <yishaih@nvidia.com>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- wanghaibin.wang@huawei.com, Zenghui Yu <yuzenghui@huawei.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [Question] VFIO migration will not be aborted in a corner scenario
-Message-ID: <aJtWmb28Gkoeno1m@x1.local>
-References: <6f64724d-7869-1283-bb75-193c7fba5576@huawei.com>
- <f6c1cff4-a0ca-436a-b8d7-3d19ce49e848@redhat.com>
- <506cab2c-35aa-4c68-ba94-b26ba1b315bc@nvidia.com>
- <c2ace9fd-e61f-4449-b41e-ef01bf8d4481@redhat.com>
+ Tue, 12 Aug 2025 08:00:38 -0700 (PDT)
+Date: Tue, 12 Aug 2025 17:00:35 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
+ david@redhat.com, philmd@linaro.org, mtosatti@redhat.com, David Hildenbrand
+ <david@redhat.com>, Stafford Horne <shorne@gmail.com>,
+ richard.henderson@linaro.org, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Alex =?UTF-8?B?QmVubsOpZQ==?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 06/10] introduce cpu_test_interrupt() that will
+ replace open coded checks
+Message-ID: <20250812170035.609ce5c1@fedora>
+In-Reply-To: <aJoa35wuexHfoCEE@x1.local>
+References: <20250808120137.2208800-1-imammedo@redhat.com>
+ <20250808120137.2208800-7-imammedo@redhat.com>
+ <aJoa35wuexHfoCEE@x1.local>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c2ace9fd-e61f-4449-b41e-ef01bf8d4481@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -99,7 +99,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,250 +115,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 12, 2025 at 04:34:34PM +0200, Cédric Le Goater wrote:
-> +peter
-> +fabiano
-> 
-> On 8/12/25 16:08, Avihai Horon wrote:
+On Mon, 11 Aug 2025 12:31:27 -0400
+Peter Xu <peterx@redhat.com> wrote:
+
+> On Fri, Aug 08, 2025 at 02:01:33PM +0200, Igor Mammedov wrote:
+> > the helper forms load-acquire/store-release pair with
+> > tcg_handle_interrupt/generic_handle_interrupt and can be used
+> > for checking interrupts outside of BQL
 > > 
-> > On 11/08/2025 19:34, Cédric Le Goater wrote:
-> > > External email: Use caution opening links or attachments
-> > > 
-> > > 
-> > > Hello,
-> > > 
-> > > + Avihai
-> > > 
-> > > On 8/11/25 18:02, Kunkun Jiang wrote:
-> > > > Hi all,
-> > > > 
-> > > > While testing VFIO migration, I encountered an corner scenario case:
-> > > > VFIO migration will not be aborted when the vfio device of dst-vm fails to transition from RESUMING to RUNNING state in vfio_vmstate_change.
-> > > > 
-> > > > I saw the comments in the vfio_vmstate_change but I don't understand why no action is taken for this situation.
-> > > 
-> > > There is error handling in vfio_vmstate_change() :
-> > > 
-> > >         /*
-> > >          * Migration should be aborted in this case, but vm_state_notify()
-> > >          * currently does not support reporting failures.
-> > >          */
-> > >         migration_file_set_error(ret, local_err);
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > ---
+> >  include/hw/core/cpu.h     | 12 ++++++++++++
+> >  accel/tcg/tcg-accel-ops.c |  3 ++-
+> >  system/cpus.c             |  3 ++-
+> >  3 files changed, 16 insertions(+), 2 deletions(-)
 > > 
-> > Hmm, I think this only sets the error on src. On dst we don't have MigrationState->to_dst_file, so we end up just reporting the error.
-> > But even if we did set it, no one is checking if there is a migration error after vm_start() is called in process_incoming_migration_bh().
-> > 
-> > > 
-> > > > Allowing the live migration process to continue could cause unrecoverable damage to the VM.
-> > 
-> > What do you mean by unrecoverable damage to the VM?
-> > If RESUMING->RUNNING transition fails, would a VFIO reset recover the device and allow the VM to continue operation with damage limited only to the VFIO device?
-> > 
-> > > > In this case, can we directly exit the dst-vm? Through the return-path mechanism, the src-vm can continue to run.
-> > > > 
-> > > > Looking forward to your reply.
-> > > 
-> > The straightforward solution, as you suggested, is to exit dst upon error in RESUMING->RUNNING transition and notify about it to src through the return-path.
-> > However, I am not sure if failing the migration after vm_start() on dst is a bit late (as we start vCPUs and do migration_block_activate, etc.).
-> > 
-> > But I can think of another way to solve this, hopefully simpler.
-> > According to VFIO migration uAPI [1]:
-> >   * RESUMING -> STOP
-> >   *   Leaving RESUMING terminates a data transfer session and indicates the
-> >   *   device should complete processing of the data delivered by write(). The
-> >   *   kernel migration driver should complete the incorporation of data written
-> >   *   to the data transfer FD into the device internal state and perform
-> >   *   final validity and consistency checking of the new device state. If the
-> >   *   user provided data is found to be incomplete, inconsistent, or otherwise
-> >   *   invalid, the migration driver must fail the SET_STATE ioctl and
-> >   *   optionally go to the ERROR state as described below.
-> > 
-> > So, IIUC, we can add an explicit RESUMING->STOP transition [2] after the device config is loaded (which is the last data the device is expected to receive).
-> > If this transition fails, it means something was wrong with migration, and we can send src an error msg via return-path (and not continue to vm_start()).
-> > 
-> > Maybe this approach is less complicated than the first one, and it will also work if src VM was paused prior migration.
-> > I already tested some POC and it seems to be working (at least with an artificial error i injected in RESUMING->STOP transition).
-> > Kunkun, can you apply the following diff [3] and check if this solves the issue?
-> > 
-> > And in general, what do you think? Should we go with this approach or do you have other ideas?
-> > 
-> > Thanks.
-> > 
-> > [1] https://elixir.bootlin.com/linux/v6.16/source/include/uapi/linux/vfio.h#L1099
-> > [2] Today RESUMING->STOP is done implicitly by the VFIO driver as part of RESUMING->RUNNING transition.
-> > [3]
-> > 
-> > diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-> > index e4785031a7..66f8461f02 100644
-> > --- a/hw/vfio/migration-multifd.c
-> > +++ b/hw/vfio/migration-multifd.c
-> > @@ -267,6 +267,12 @@ static bool vfio_load_bufs_thread_load_config(VFIODevice *vbasedev,
-> >       ret = vfio_load_device_config_state(f_in, vbasedev);
-> >       bql_unlock();
-> > 
-> > +    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP,
-> > +                                   VFIO_DEVICE_STATE_ERROR, errp);
-> > +    if (ret) {
-> > +        return false;
-> > +    }
-> > +
-> >       if (ret < 0) {
-> >           error_setg(errp, "%s: vfio_load_device_config_state() failed: %d",
-> >                      vbasedev->name, ret);
-> > 
-> > diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> > index 4c06e3db93..a707d17a5b 100644
-> > --- a/hw/vfio/migration.c
-> > +++ b/hw/vfio/migration.c
-> > @@ -737,6 +737,8 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
-> >           switch (data) {
-> >           case VFIO_MIG_FLAG_DEV_CONFIG_STATE:
-> >           {
-> > +            Error *local_err = NULL;
-> > +
-> >               if (vfio_multifd_transfer_enabled(vbasedev)) {
-> >                   error_report("%s: got DEV_CONFIG_STATE in main migration "
-> >                                "channel but doing multifd transfer",
-> > @@ -744,7 +746,19 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
-> >                   return -EINVAL;
-> >               }
-> > 
-> > -            return vfio_load_device_config_state(f, opaque);
-> > +            ret = vfio_load_device_config_state(f, opaque);
-> > +            if (ret) {
-> > +                return ret;
-> > +            }
-> > +
-> > +            ret = vfio_migration_set_state_or_reset(
-> > +                vbasedev, VFIO_DEVICE_STATE_STOP, &local_err);
-> > +            if (ret) {
-> > +                error_report_err(local_err);
-> > +                return ret;
-> > +            }
-> > +
-> > +            return 0;
-> >           }
-> >           case VFIO_MIG_FLAG_DEV_SETUP_STATE:
-> >           {
-> > 
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 10c216d25d..fd498c864d 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -91,6 +91,7 @@ enum mig_rp_message_type {
-> >       MIG_RP_MSG_RECV_BITMAP,  /* send recved_bitmap back to source */
-> >       MIG_RP_MSG_RESUME_ACK,   /* tell source that we are ready to resume */
-> >       MIG_RP_MSG_SWITCHOVER_ACK, /* Tell source it's OK to do switchover */
-> > +    MIG_RP_MSG_ERROR, /* Tell source that destination encountered an error */
-> > 
-> >       MIG_RP_MSG_MAX
-> >   };
-> > @@ -884,6 +885,11 @@ process_incoming_migration_co(void *opaque)
-> >       ret = qemu_loadvm_state(mis->from_src_file);
-> >       mis->loadvm_co = NULL;
-> > 
-> > +    if (ret) {
-> > +        migrate_send_rp_error(mis);
-> > +        error_report("SENT RP ERROR");
-> > +    }
-> > +
-> >   trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
-> > 
-> >       ps = postcopy_state_get();
-> > @@ -1126,6 +1132,11 @@ bool migration_has_all_channels(void)
-> >       return true;
-> >   }
-> > +int migrate_send_rp_error(MigrationIncomingState *mis)
+> > diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> > index 5eaf41a566..d0460c01cf 100644
+> > --- a/include/hw/core/cpu.h
+> > +++ b/include/hw/core/cpu.h
+> > @@ -942,6 +942,18 @@ CPUState *cpu_by_arch_id(int64_t id);
+> >  
+> >  void cpu_interrupt(CPUState *cpu, int mask);
+> >  
+> > +/**
+> > + * cpu_test_interrupt:
+> > + * @cpu: The CPU to check interrupt(s) on.
+> > + * @mask: The interrupts to check.
+> > + *
+> > + * Checks if any of interrupts in @mask are pending on @cpu.
+> > + */
+> > +static inline bool cpu_test_interrupt(CPUState *cpu, int mask)
 > > +{
-> > +    return migrate_send_rp_message(mis, MIG_RP_MSG_ERROR, 0, NULL);
+> > +    return qatomic_load_acquire(&cpu->interrupt_request) & mask;
 > > +}
 > > +
-> >   int migrate_send_rp_switchover_ack(MigrationIncomingState *mis)
-> >   {
-> >       return migrate_send_rp_message(mis, MIG_RP_MSG_SWITCHOVER_ACK, 0, NULL);
-> > @@ -2614,6 +2625,10 @@ static void *source_return_path_thread(void *opaque)
-> >               trace_source_return_path_thread_switchover_acked();
-> >               break;
-> > 
-> > +        case MIG_RP_MSG_ERROR:
-> > +            error_setg(&err, "DST indicated error");
-> > +            goto out;
-
-If this is only a boolean, we can reuse RP_SHUT.  Likely we could pass in
-an error to migration_incoming_state_destroy():
-
-diff --git a/migration/migration.c b/migration/migration.c
-index 42a2a6e8f2..2ebba7838a 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -441,7 +441,7 @@ void migration_incoming_transport_cleanup(MigrationIncomingState *mis)
-     }
- }
- 
--void migration_incoming_state_destroy(void)
-+void migration_incoming_state_destroy(bool has_error)
- {
-     struct MigrationIncomingState *mis = migration_incoming_get_current();
- 
-@@ -466,8 +466,11 @@ void migration_incoming_state_destroy(void)
-     qemu_loadvm_state_cleanup(mis);
- 
-     if (mis->to_src_file) {
--        /* Tell source that we are done */
--        migrate_send_rp_shut(mis, qemu_file_get_error(mis->from_src_file) != 0);
-+        /* Tell source whether load succeeded */
-+        if (!has_error) {
-+            has_error = qemu_file_get_error(mis->from_src_file) != 0;
-+        }
-+        migrate_send_rp_shut(mis, has_error);
-         qemu_fclose(mis->to_src_file);
-         mis->to_src_file = NULL;
-     }
-
-Maybe it'll even work as late as process_incoming_migration_bh(), where
-vm_start() could fail - right now it couldn't, but if there'll be an error
-message reported upward then logically it can also set has_error=1 for the
-RP_SHUT message.  Src QEMU relies on RP_SHUT message and retval=0 to quit
-src QEMU, otherwise QEMU should fail the migration and restart VM on src.
-
-> > +
-> >           default:
-> >               break;
-> >           }
-> > diff --git a/migration/migration.h b/migration/migration.h
-> > index 01329bf824..f11ff7a199 100644
-> > --- a/migration/migration.h
-> > +++ b/migration/migration.h
-> > @@ -553,6 +553,7 @@ void migrate_send_rp_recv_bitmap(MigrationIncomingState *mis,
-> >                                    char *block_name);
-> >   void migrate_send_rp_resume_ack(MigrationIncomingState *mis, uint32_t value);
-> >   int migrate_send_rp_switchover_ack(MigrationIncomingState *mis);
-> > +int migrate_send_rp_error(MigrationIncomingState *mis);
-> > 
-> >   void dirty_bitmap_mig_before_vm_start(void);
-> >   void dirty_bitmap_mig_cancel_outgoing(void);
-> > 
-> > > I suggest you open an issue on :
-> > > 
-> > >   https://gitlab.com/qemu-project/qemu/-/issues/
-> > > 
-> > > with a detailed description of your environment :
-> > > 
-> > >   Host HW, Host OS, QEMU version, QEMU command line, Guest OS, etc.
-> > > 
-> > > A template is provided when a new issue is created.
-> > > 
-> > > 
-> > > Thanks,
-> > > 
-> > > C.
-> > > 
-> > > 
-> > > 
-> > 
+> >  /**
+> >   * cpu_set_pc:
+> >   * @cpu: The CPU to set the program counter for.
+> > diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+> > index 3b0d7d298e..02c7600bb7 100644
+> > --- a/accel/tcg/tcg-accel-ops.c
+> > +++ b/accel/tcg/tcg-accel-ops.c
+> > @@ -97,7 +97,8 @@ static void tcg_cpu_reset_hold(CPUState *cpu)
+> >  /* mask must never be zero, except for A20 change call */
+> >  void tcg_handle_interrupt(CPUState *cpu, int mask)
+> >  {
+> > -    cpu->interrupt_request |= mask;
+> > +    qatomic_store_release(&cpu->interrupt_request,
+> > +        cpu->interrupt_request | mask);
+> >  
+> >      /*
+> >       * If called from iothread context, wake the target cpu in
+> > diff --git a/system/cpus.c b/system/cpus.c
+> > index 256723558d..8e543488c3 100644
+> > --- a/system/cpus.c
+> > +++ b/system/cpus.c
+> > @@ -256,7 +256,8 @@ int64_t cpus_get_elapsed_ticks(void)
+> >  
+> >  void generic_handle_interrupt(CPUState *cpu, int mask)
+> >  {
+> > -    cpu->interrupt_request |= mask;
+> > +    qatomic_store_release(&cpu->interrupt_request,
+> > +        cpu->interrupt_request | mask);
+> >  
+> >      if (!qemu_cpu_is_self(cpu)) {
+> >          qemu_cpu_kick(cpu);
+> > -- 
+> > 2.47.1
+> >   
 > 
+> Besides the two writters mentioned above, I still see some more:
+> 
+> *** accel/tcg/user-exec.c:
+> cpu_interrupt[52]              cpu->interrupt_request |= mask;
 
--- 
-Peter Xu
+I don't know if external interrupts can happen in user mode,
+for same thread(self) exceptions we don't really need it.
+
+> *** hw/intc/s390_flic.c:
+> qemu_s390_flic_notify[193]     cs->interrupt_request |= CPU_INTERRUPT_HARD;
+
+later on the function, for cpus it deemed not to ignore,
+explicitly calls cpu_interrupt() which will do store_release.
+I'd tentatively would say we don't need explicit store_release here
+
+Anyways CCing David, perhaps he would recall why it's setting interrupt for all
+but ignores to actually rise it for some.
+
+> *** hw/openrisc/cputimer.c:
+> openrisc_timer_cb[108]         cs->interrupt_request |= CPU_INTERRUPT_TIMER;
+
+this one seems to be similar to generic_handle_interrupt(),
+interrupt request from external thread, so I'd add store_release here.
+
+Arguably, it should be calling cpu_interrupt() instead of opencoding it.
+(the questionable part is that it set interrupt conditionally but
+kicks vccpu always - is this really necessary?)
+
+
+> *** target/arm/helper.c:
+> arm_cpu_do_interrupt[9150]     cs->interrupt_request |= CPU_INTERRUPT_EXITTB;
+on kvm it can be reached via main thread or vcpu(self) thread.
+so tentatively we need it here.
+
+(ps: kvm_arch_on_sigbus_vcpu()->arm_cpu_do_interrupt() is called under BQL
+while kvm_on_sigbus() is called without one from signal handler,
+which theoretically might trample on the thread running the 1st vcpu)
+
+> *** target/i386/tcg/system/svm_helper.c:
+> helper_vmrun[406]              cs->interrupt_request |= CPU_INTERRUPT_VIRQ;
+this one seems to be self targeted (i.e. same thread),
+perhaps TCG experts can comment on it.
+
+CCing TCG folks as series touches a few TCG bits anyway
+
+
+> Do they better as well be converted to use store_release too?
+
+alternatively, for consistency sake we can add a helper to set interrupt
+with store_release included and do a blanket tree wide change like with
+cpu_test_interrupt().
+ 
+> The other nitpick is this patch introduces the reader helper but without
+> using it.
+> 
+> It can be squashed into the other patch where the reader helper will be
+> applied tree-wide.  IMHO that would be better explaining the helper on its
+> own.
+
+I can merge it with 7/10 that adds 1st user for the helper in kvm/i386 code.
+That has less chances for the store/acquire change to be drowned in
+tree wide patch (9/10)
+
+> 
+> Thanks,
+> 
 
 
