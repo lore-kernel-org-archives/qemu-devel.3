@@ -4,77 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E738CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 15:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F5FC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 15:29:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulqlH-0001HD-E7; Tue, 12 Aug 2025 11:18:07 -0400
+	id 1ulqux-0003bB-AY; Tue, 12 Aug 2025 11:28:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ulql7-0001Fp-QV; Tue, 12 Aug 2025 11:17:55 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulquv-0003at-I8
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:28:01 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ulqkx-0001Sy-As; Tue, 12 Aug 2025 11:17:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1755011863; x=1786547863;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=3uVy5fm0KqGsfq4C65CV/shj9B2bZzaaYfgbLDrDKd4=;
- b=b4WTyg77FRB3mdODjRTTy3Mjvwl5KM7yccnhwCW4UT+1+rZActfDtUmk
- c+DDWNs72jJYnwZNJDGbkuz4OMV/Q5pHXP474AZgmZ3LuhDHOUKXU75en
- j4hGBFURZ6z+qQBQRLe7UWIo+ozGut73rHYtWqBisWk3SDCn/dx3SMbgK
- LSW0SAk02IYQyy/d3nBj7OrwB9M85X+xtnfZ9R7+mCpzO2dx3BViKv9nV
- 6WvMyyrG5RqzQP0uafUCNKk6Bi8Riqxmr1+/2J92I6ND3H4ahUeftaGZd
- 3sY4JSYpPuPP+O6K+j1mJYBD53vbm4X9j4EKas0k8TrWDXb+v6wkJdAdY g==;
-X-CSE-ConnectionGUID: MEJXTqZSRuWYAlbqgUV+2A==
-X-CSE-MsgGUID: k7EOh7dWRrCUJoMAdtdqcA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11520"; a="74870784"
-X-IronPort-AV: E=Sophos;i="6.17,284,1747724400"; d="scan'208";a="74870784"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Aug 2025 08:17:34 -0700
-X-CSE-ConnectionGUID: Fh55jcrgR36fEdysJB96RQ==
-X-CSE-MsgGUID: Sgv1v1ZFScKU4cHjz+EOvQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,284,1747724400"; d="scan'208";a="171552087"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 12 Aug 2025 08:17:31 -0700
-Date: Tue, 12 Aug 2025 23:39:12 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Dapeng Mi <dapeng1.mi@linux.intel.com>,
- Chuanxiao Dong <chuanxiao.dong@intel.com>
-Subject: Re: [RFC 16/26] memory: Make flatview_do_translate() return a
- pointer to MemoryRegionSection
-Message-ID: <aJtgIBgl8JzDsJ1O@intel.com>
-References: <20250807123027.2910950-1-zhao1.liu@intel.com>
- <20250807123027.2910950-17-zhao1.liu@intel.com>
- <beab841b-9c69-43d2-b996-879eee9e1120@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulquo-000342-Fq
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 11:28:01 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id CFC54141933;
+ Tue, 12 Aug 2025 18:27:11 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 152E225E517;
+ Tue, 12 Aug 2025 18:27:46 +0300 (MSK)
+Message-ID: <3458e5b7-b53e-4057-baea-03a729452255@tls.msk.ru>
+Date: Tue, 12 Aug 2025 18:27:45 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <beab841b-9c69-43d2-b996-879eee9e1120@redhat.com>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 30/63] q35: Introduce smm_ranges property for q35-pci-host
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Isaku Yamahata <isaku.yamahata@linux.intel.com>,
+ Sean Christopherson <sean.j.christopherson@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Michael Roth <michael.roth@amd.com>
+References: <20240423150951.41600-1-pbonzini@redhat.com>
+ <20240423150951.41600-31-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20240423150951.41600-31-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,78 +106,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 07, 2025 at 03:57:17PM +0200, Paolo Bonzini wrote:
-> Date: Thu, 7 Aug 2025 15:57:17 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [RFC 16/26] memory: Make flatview_do_translate() return a
->  pointer to MemoryRegionSection
+On 23.04.2024 18:09, Paolo Bonzini wrote:
+> From: Isaku Yamahata <isaku.yamahata@linux.intel.com>
 > 
-> On 8/7/25 14:30, Zhao Liu wrote:
-> > Rust side will use cell::Opaque<> to hide details of C structure, and
-> > this could help avoid the direct operation on C memory from Rust side.
-> > 
-> > Therefore, it's necessary to wrap a translation binding and make it only
-> > return the pointer to MemoryRegionSection, instead of the copy.
-> > 
-> > As the first step, make flatview_do_translate return a pointer to
-> > MemoryRegionSection, so that we can build a wrapper based on it.
-> 
-> Independent of Rust, doing the copy as late as possible is good, but make it
-> return a "const MemoryRegionSection*" so that there's no risk of overwriting
-> data.
+> Add a q35 property to check whether or not SMM ranges, e.g. SMRAM, TSEG,
+> etc... exist for the target platform.  TDX doesn't support SMM and doesn't
+> play nice with QEMU modifying related guest memory ranges.
 
-Yes, const MemoryRegionSection* is helpful...
+So, as I wrote in another email, this broke video (screen is blank) for
 
-> Hopefully this does not show a bigger problem!
+  qemu-system-x86_64 -machine q35,accel=kvm,smm=off
 
-...then we will get `*const bindings::MemoryRegionSection` from
-flatview_translate_section().
+before this commit, there are usual seabios messages (and even messages
+from qemu before it loads seabios), and after this commit, the screen
+stays blank.
 
-This is mainly about how to construct Opaque<T> from `*cont T`:
 
-impl FlatView {
-    fn translate(
-        &self,
-        addr: GuestAddress,
-        len: GuestUsize,
-        is_write: bool,
-    ) -> Option<(&MemoryRegionSection, MemoryRegionAddress, GuestUsize)> {
-        ...
-        let ptr = unsafe {
-            flatview_translate_section(
-                self.as_mut_ptr(),
-                addr.raw_value(),
-                &mut raw_addr,
-                &mut remain,
-                is_write,
-                MEMTXATTRS_UNSPECIFIED,
-            )
-        };
+> @@ -578,6 +590,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+>                    PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+>       }
+>   
+> +    if (!mch->has_smm_ranges) {
+> +        return;
+> +    }
+> +
+>       /* if *disabled* show SMRAM to all CPUs */
+>       memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+>                                mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
 
-        ...
+Moving this if..return block right below this smram-region init fixes
+the problem with the video:
 
-------> // Note here, Opaque<>::from_raw() requires *mut T.
-	// And we can definitely convert *cont T to *mut T!
-        let s = unsafe { <FlatView as GuestMemory>::R::from_raw(ptr as *mut _) };
-        ...
-    }
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 0b6cbaed7e..aa8c4a273a 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -589,20 +589,20 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                   mch->system_memory, mch->pci_address_space,
+                   PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+      }
 
-But look closer to Opaque<>, it has 2 safe methods: as_mut_ptr() &
-raw_get().
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
+      /* if *disabled* show SMRAM to all CPUs */
+      memory_region_init_alias(&mch->smram_region, OBJECT(mch), 
+"smram-region",
+                               mch->pci_address_space, 
+MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                               MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+      memory_region_add_subregion_overlap(mch->system_memory, 
+MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                                          &mch->smram_region, 1);
+      memory_region_set_enabled(&mch->smram_region, true);
 
-These 2 methods indicate that the T pointed by Qpaque<T> is mutable,
-which has the conflict with the original `*const bindings::MemoryRegionSection`.
++    if (!mch->has_smm_ranges) {
++        return;
++    }
++
+      memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), 
+"smram-open-high",
+                               mch->ram_memory, 
+MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                               MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+      memory_region_add_subregion_overlap(mch->system_memory, 0xfeda0000,
 
-So from this point, it seems unsafe to use Qpaque<> on this case.
 
-To address this, I think we need:
- - rich comments about this MemoryRegionSection is actually immuatble.
- - modify other C functions to accept `const *MemoryRegionSection` as
-   argument.
+I've no idea what else might be missing here.
 
-What do you think?
+Overall, adding an early return this way is a recipe for disaster
+to happen - if not now then later.  Here, and in mch_write_config().
 
 Thanks,
-Zhao
+
+/mjt
 
 
