@@ -4,97 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB46FCA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 07:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0029DCA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 07:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulj7v-0003Ig-Lt; Tue, 12 Aug 2025 03:08:56 -0400
+	id 1uljVu-0006u3-I0; Tue, 12 Aug 2025 03:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulj7t-0003I1-N0
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 03:08:53 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1ulj7q-0005ns-2c
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 03:08:52 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C3217141680;
- Tue, 12 Aug 2025 10:08:09 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 70C3E25E20A;
- Tue, 12 Aug 2025 10:08:43 +0300 (MSK)
-Message-ID: <123ed0df-67c8-4a68-bbbe-2a4055767649@tls.msk.ru>
-Date: Tue, 12 Aug 2025 10:08:43 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uljVe-0006tP-NU
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 03:33:28 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uljVT-0001iX-Rz
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 03:33:24 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-459d7726ee6so26210115e9.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 00:33:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754983992; x=1755588792; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=U46tZm3WdCz9s6+s67rjcVFpZgOy6vILPUGATvBzyns=;
+ b=e5HVMp37XQymM6wOUuhjfg611WecI3nOVYItTEUisMnuIuCTrV3MHJcv6U3BtGZ3Kl
+ lhduFwdCFZrcb8SHsnjvENAK9tV7PJs1lhhdrVoAR62cC8zBCveVTUC+zjKlwR7lVYpp
+ MZuSxjYNr9yQ2NBntrNWT/7MSZ/k/MX8hQTLg04cpDEftEdj6bwpTuJUhiOpSoT6X5qQ
+ 7yr621/xWH1jVoAqAGqA+LaeZGB8aA5I5KHAhnwDL7P3eRt71eizTrVxjvNCZsVy17YR
+ qMstJOJ76zhTmvHebixL9E5zRFzIJ4gzN/GqKHTD2o4y/+eUrHuIjVsDd1pwh1LUaL0W
+ R7Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1754983992; x=1755588792;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U46tZm3WdCz9s6+s67rjcVFpZgOy6vILPUGATvBzyns=;
+ b=EXLyPP/iCTSJeaR0OmW+Cw9cnRTXCdqHhVhSN+m3DlrkGPjtFBMGCDLnD7PcH5kBNR
+ BGi01cguNUTVQGuqO/GOhpytgYelpEpHchEQnKruYV5Cr/LEdqLoWuDrB0AVkOQXcKqo
+ JmignYCJsHfCPa/pDUmsyM+/pB9EdEytjTdXfyS+MqbtC5kUnViJ2F926UiguLtnwLBB
+ HUHQOHdgWVtvuw8lte08TbC/qISQUKtA0E8qpMNj/HDlnH/P4ojle7xg8vIduadMni8G
+ xAD0QD+WjJCBp9v9wGOT8UKEbn1hOPmszIKgJ5xZCG7fqcDBW5UogjD+uYhx+QqWRjmt
+ QW5Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX/+4QHeQkCPlKXjeNXcN7QeJeChmYjM9y9jU6LzNoP9fnAl/ptJUdV9nyNoNb+UipOC34rUkIYyc5l@nongnu.org
+X-Gm-Message-State: AOJu0Yylj6mBEPk/FiAojiaSVkT12Al6MaxBCkxgOcHjGjeBEcZCBqgJ
+ suTF90qChY/zVqDiVVd3xIhrdsIRHuAmi7qxUsDYPCLlKWoS456klIa4MhaJMtSBYuQ=
+X-Gm-Gg: ASbGnctDe8tUsdbBcgKKGQLhYKhlrBeeF1h6Plmayrsvbutne32AeecJwAn4I3m3wdF
+ G5T7q2JkfU45QrmLh0X89qNqyDVXYBavyT47+EudhhzmhyJg+GTmtnuwmPqvZxGpWKz3o4jcujZ
+ p8c5pAGx5386RBXicIMgn7W3NhEPt4Y7tAS+dfszLaNCV5eP983lIaqIGmzE4frbgi8Uz0scBPp
+ Wd8pDSDKJgH0S9mX5F3eFNr+UigPf69f5Y/gcqj24al4qDdXaYzGHSUnhdqYNkNruvJKJp/Qt08
+ q0uG5mrPKdZsUp0umDLyyxcoo2rxduHyZxRylxMAF13SK0BGhuP0++/nvVJYCT8TMRHm/8rzsGv
+ ln+9hQgUuM3Kel7UOi1QrsNTBMO7m+GHbwiMXVr7nwQNgZaHBk2K43ODLbrfw7AnOtY47TZg=
+X-Google-Smtp-Source: AGHT+IFenbOYBYYL8rtdP5NhvlPx6gH97dvDDxCUDEfprak8jMg7i9COL3O/U+STX2Nwjj//F6/Vtw==
+X-Received: by 2002:a05:600c:4e46:b0:456:173c:8a53 with SMTP id
+ 5b1f17b1804b1-45a10e135b6mr21112745e9.2.1754983992162; 
+ Tue, 12 Aug 2025 00:33:12 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-458953eb7acsm525015225e9.28.2025.08.12.00.33.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Aug 2025 00:33:11 -0700 (PDT)
+Message-ID: <cb6e02cc-1959-419a-bafa-5bb43818c159@linaro.org>
+Date: Tue, 12 Aug 2025 09:33:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
-To: Smail AIDER <smail.aider@huawei.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250811112143.1577055-1-smail.aider@huawei.com>
- <20250811112143.1577055-2-smail.aider@huawei.com>
- <7402c0f3-326b-4a98-bd62-b8da998b4401@linaro.org>
- <a8245ecc1e614beaa66f16dcb20d7dc1@huawei.com>
- <00bb0213-e4b3-457b-b5df-f575865b91ff@linaro.org>
- <38aeddc3-e5bc-4c7a-9a94-20090406d891@tls.msk.ru>
- <dcc6e55ab8f44bc89623073ed6a8c065@huawei.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <dcc6e55ab8f44bc89623073ed6a8c065@huawei.com>
+Subject: Re: [RFC PATCH 07/11] target/arm: Replace kvm_arm_pmu_supported by
+ host_cpu_feature_supported
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Miguel Luis <miguel.luis@oracle.com>, kvm@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Haibo Xu <haibo.xu@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Mark Burton <mburton@qti.qualcomm.com>, Alexander Graf <agraf@csgraf.de>,
+ Claudio Fontana <cfontana@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
+ Eric Auger <eric.auger@redhat.com>, qemu-arm@nongnu.org,
+ Cameron Esfahani <dirty@apple.com>
+References: <20250811170611.37482-1-philmd@linaro.org>
+ <20250811170611.37482-8-philmd@linaro.org>
+ <8efcc809-f548-4383-b742-e435d622da73@linaro.org>
+ <14d7d948-e840-4ae7-ae93-122755d6a421@linaro.org>
+ <3d88ea9c-9cfe-4cd4-a282-2f467f2a502f@linaro.org>
+Content-Language: en-US
+In-Reply-To: <3d88ea9c-9cfe-4cd4-a282-2f467f2a502f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,18 +114,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.08.2025 09:51, Smail AIDER wrote:
-> Hi Michael,
+On 12/8/25 08:03, Philippe Mathieu-Daudé wrote:
+> On 12/8/25 06:49, Philippe Mathieu-Daudé wrote:
+>> On 12/8/25 02:48, Richard Henderson wrote:
+>>> On 8/12/25 03:06, Philippe Mathieu-Daudé wrote:
+>>>> +++ b/target/arm/kvm.c
+>>>> @@ -288,7 +288,7 @@ static bool 
+>>>> kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>>>>                                1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+>>>>       }
+>>>> -    if (kvm_arm_pmu_supported()) {
+>>>> +    if (host_cpu_feature_supported(ARM_FEATURE_PMU, false)) {
+>>>
+>>> Why is false correct here?  Alternately, in the next patch, why is it 
+>>> correct to pass true for the EL2 test?
+>>
+>> I think I copied to KVM the HVF use, adapted on top of:
+>> https://lore.kernel.org/qemu-devel/20250808070137.48716-12- 
+>> mohamed@unpredictable.fr/
+>>
+>>>
+>>> What is the purpose of the can_emulate parameter at all?
+>>
+>> When using split-accel on pre-M3, we might emulate EL2:
+>>
+>>         |   feat            |    can_emulate   |    retval
+>>         +   ----            +      -----       +     ----
+>  > M1/M2  |  ARM_FEATURE_EL2         false            false> M1/M2  | 
+> ARM_FEATURE_EL2         true             true
+>> M3/M4  |  ARM_FEATURE_EL2         any              true
 > 
-> Could you please remove "via" from the author name, it's not part of my name : ) I guess it was just a typo.
+> For example in hvf.c:
+> 
+> static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+> {
+>      ...
+>      if (host_cpu_feature_supported(ARM_FEATURE_EL2, true)) {
+>          ahcf->features |= 1ULL << ARM_FEATURE_EL2;
+>      }
+> 
+> and then only when split-accel is not enabled:
+> 
+> hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+> {
+>      ...
+>      if (host_cpu_feature_supported(ARM_FEATURE_EL2, false)) {
+>          ret = hv_vm_config_set_el2_enabled(config, true);
+>          if (ret != HV_SUCCESS) {
+>              goto cleanup;
+>          }
+>      }
+> 
 
-I'm not the one to do this and there's nothing to remove really -
-it is the mailing list who does it, replacing From with
-the mailing list itself.  It will be done by whomever
-applies the patch to the master branch.  Don't worry
-about it.
+What I'm looking for:
 
-Thanks,
+- Is this feature supported BY HW?
 
-/mjt
+   -> hw_init_feature
+
+- Is this feature supported BY SW?
+
+   -> sw_init_feature
+
+- Is this feature supported BY ANY?
+
+   -> do smth with feature
+
+With split-accel, this isn't specific to HVF/ARM.
+
+I can use a tri-state enum { ANY, HW, SW }.
 
