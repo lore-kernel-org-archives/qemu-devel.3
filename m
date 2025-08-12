@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A04EC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 13:15:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CE6C87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 13:22:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uloqO-0001HH-Ft; Tue, 12 Aug 2025 09:15:13 -0400
+	id 1ulow0-0002eg-E4; Tue, 12 Aug 2025 09:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uloqJ-0001Gl-8h
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 09:15:07 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ulovy-0002eI-9Q
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 09:20:58 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uloq1-0006sG-Cu
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 09:15:06 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3b788feab29so3363608f8f.2
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 06:14:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ulovr-00085i-99
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 09:20:57 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3b9141866dcso306247f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 06:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755004487; x=1755609287; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yMQUthE/7r3UTpNjP8p4UhkJxaTvamD1kv5+fu88bM8=;
- b=cA+8wb2ulH1KiRU+I0LzpAmYxtFwwrU0mSC/kP1WXZDBk5yedxu1ZLj1oDAjLOTt7z
- iBNvMBLlSuRSY4CdcJpe+AsYRg2YD0bvDk3lqwqFMEuTIOIuspL1OJ+dQa3BGycTNs9Q
- miV058DyH2IFIFafufVk3qLaFoL+cVLLG4Y+kAfnmoYVJ3p6Z6l3wSbYtJE4FZpBdvTw
- mc6ILq6ne6/fYRWZUbTvuxtEXTJTlcCzMUgnneEqukvJ2m0+bSbXadRERWm9HTMcM4A9
- b8LM49x78/b/XTpd5y8Sc8K7/zu5uqCOIlHlJdxPe2zxf2nmUFzQHn2eBHQMidXLbULT
- CfmQ==
+ d=linaro.org; s=google; t=1755004847; x=1755609647; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6Fka+pEH0bFL/6o9XACC3eJoAEPxoWE5u3buW5u6ZS4=;
+ b=DjAYQKTBz6T5i8kzr4b8lRo7sR0K0dBxNulVumgqMFKkd3F7y5RfwaNYUGFh5GjhWz
+ L8GvTh/o4N9lrbPKQuQsEBAN7aCg2ejv33xTjhG20jg3aVvgnQySoSbLsRXmu2GsAxyE
+ VcVyNYg/ZhgIaOyqWpXmesTVLnreNB7/309ETVL1i5NC1IpoQsIGCLmBToJn1GGZE1+c
+ ttAPrbiPufv+xBihqZZ2O6Ck+MD5/9aA9lUiW8h65Z/KW3JhAF3U+NjVFOHM1+hZWER7
+ 76hPPQldXC5ZRozbJIQcf4drWxfM/DIY2C3kWu9UumEeRFSnvuJhYdrlFB3+tVsLulOd
+ L04g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755004487; x=1755609287;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yMQUthE/7r3UTpNjP8p4UhkJxaTvamD1kv5+fu88bM8=;
- b=Y1UOSpqf3sdd8pdP8cSIvwddATkv+Kv1B0iCUz/MLlHubFLrr9W2Ar1sJh51QfXcWJ
- em7DSuRSiIYLphMTYZ6NIBHDVFkxfOLRMvY4WR4J3t2h7DswByKJZvFF4MH9IA4ZLg7Y
- 28g26QXsl2Oa+JLOtHeLKFqvRzClldq6uGZF/JZqdvRHmn1izP8sWcUq3EspFnduCMOy
- AANn3yM1Byk6IbcLRMIagkbdqvIIekPXQPGqz3Nlt6Efaa16i5rCEwL91HdUVe5tdqCb
- RuQPvgsD9aIlkiYAI5ML/A0awng/xG2UInfdiB1d7F3KjHBXIes2fN9oyUcL+Ro08sHo
- Ad3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9xVNvINLjddhNKcQZypXZB03i8jGLIUYnSDfzYsQWo9Tcm90rAJZEm2Dt5ja3b0c+NfrCO6G27oeM@nongnu.org
-X-Gm-Message-State: AOJu0Yxve8xb2D7tKogVt5p5JcNJdmoC7Rch/fvUOboIX0gBexCstOml
- If3F/c2I3P6W9BaHRXHEl1n1/C01b6BwqZsX1SLIjyCMAsBe0j/Ef8yLEr4hT5IxWGk=
-X-Gm-Gg: ASbGncsIY0OqqE8eHbitqxqxkMAfeqHGhc+KTEc3rsuHVSfWFOT17S6fzmq5LXqFGA2
- OHkU1gh0Bg9Pv7LxYqRRl0jKgDn+LhYBkUbiTr2F/01UROCLYWlMnu/QKADB3BGgG2OgouxLueo
- 74IWVcpUXMveJ6NCOUzlfkO5eEWc8FBMZno6kL5s7DMNQB6NPBgUaZZbb9GvWPXVfaY7e3SDwM2
- 9Gfca9hWG08WP0Z20xB9q/H8IfRqHn9/mKg069q+/K3zZEkE1JNXv4NXMReMN9BzToVPbd5Pd+A
- BAhdbW6gnehuW9TOzkqRLcRNn/lDWamYGxqeCdbHDOOGx8eeU+j0LNa7ZJ3lSk3at156axekt7R
- 0DgWKYAU0HvaxP6QjW3A3+An3jqTTamj8XwoHiW/wg5xtE5ypC+4dsA+R72bNdbehwQ==
-X-Google-Smtp-Source: AGHT+IGU8Xejv3T7WgQTjxCBNaK8sVXxoCKGsF8YnLsLBOF8+kjiEEPV0mG6An9GCW2DdcbIbbqiNA==
-X-Received: by 2002:a05:6000:40cb:b0:3b8:f318:dc61 with SMTP id
- ffacd0b85a97d-3b911010b31mr3308029f8f.40.1755004486644; 
- Tue, 12 Aug 2025 06:14:46 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3ac51asm45255181f8f.1.2025.08.12.06.14.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 06:14:46 -0700 (PDT)
-Message-ID: <9de81169-5abe-4fd7-8a34-444361294954@linaro.org>
-Date: Tue, 12 Aug 2025 15:14:45 +0200
+ d=1e100.net; s=20230601; t=1755004847; x=1755609647;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6Fka+pEH0bFL/6o9XACC3eJoAEPxoWE5u3buW5u6ZS4=;
+ b=ooyWQGHmMkhV9wk905wQFU25r2GEKYLhpVfehgmXXWEcqYwpFJf9TscRt5kOCg8oBy
+ YMWT69hxaCOFblsQjEPm1G/8Fg90Bh5D1pt81ZDga20D81LXZ513hUg1fY0fUhWr7KC1
+ gznvGHGJceEJ/PtEDkrC32ewGbBawBAe3Tjfop5iE55Dq4taIx4CHjqPzSSHYWnRB1W3
+ AgSx+cgkrnmUTjrTx8pn2cTHXpRHCOcU/3Pb0vjOOi4kT5OX6mQYlyQfFqGEw4DNt0vX
+ bL8dqEZYssbNTuqgWtL8Ssuk8ygH/BQh8VvSWHxKd/tHGZhopjBJybfH79yMoVUWUf6n
+ PeGA==
+X-Gm-Message-State: AOJu0YxabAp7uLUYIeJsdBq7P3MfGBvucvgDyk5VIw6FrRlMUFyPbCbu
+ hFgc/ahNJNge7rV5l70oENvTJxCaVKXrH6YkqtdlpPnv2z02i+F1XV0nzx8Z125UdIY=
+X-Gm-Gg: ASbGncuIy8HJZEqJqG2AT8qlVUMzJvVUzgc5ssFTTD4NBVeXd/RL8DpMauUNzS5ajzO
+ M23snQpdfTZH60paDQWm02IvjIiMDyQBF0MoCGvCu4X4I7ezNVIaXtTag2JFpLfZg7VNCK8K2lc
+ ihvi780/JA5x8diaDfxWylpDqbObQmE/vN54N0W1kzXQrnzOpqTqQFlzaJzvO8EDnwIP1FEOSTB
+ 12sC1zYVx70sAlvenfm1fidlv7jRQJeLDYbfafckg9NqOCa0huvoJfIo3nnHl4mqZopBDS6Zkw6
+ 1y6lquyFvNCR7JWGdBFsRjkqn7VHOsHOrVS/yf5M7n1otvwa6eNivE0kaNwZwZMZEJibyBAStY6
+ jUu3ksuBHytRXPqpa7gFAHp8=
+X-Google-Smtp-Source: AGHT+IEBMW1zfuGSVJtypG++212xFeeZkBRVDK4LXgtIiEBpOlqz1PU/5Am5CcqwB6hdLY1EmeiUSQ==
+X-Received: by 2002:a05:6000:40cc:b0:3b7:905e:2a32 with SMTP id
+ ffacd0b85a97d-3b910fce9b3mr2884710f8f.12.1755004847396; 
+ Tue, 12 Aug 2025 06:20:47 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b79c338c7dsm44490718f8f.0.2025.08.12.06.20.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Aug 2025 06:20:46 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9AA775F7F3;
+ Tue, 12 Aug 2025 14:20:45 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Guenter Roeck <linux@roeck-us.net>,
+ qemu-riscv@nongnu.org,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,  Bin
+ Meng <bmeng.cn@gmail.com>,  Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>,  Alistair Francis <Alistair.Francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH-for-10.1 1/2] hw/sd/ssi-sd: Return noise (dummy byte)
+ when no card connected
+In-Reply-To: <20250808135115.77310-2-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 8 Aug 2025 15:51:14
+ +0200")
+References: <20250808135115.77310-1-philmd@linaro.org>
+ <20250808135115.77310-2-philmd@linaro.org>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Tue, 12 Aug 2025 14:20:45 +0100
+Message-ID: <87o6skad76.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/85] target/arm: Expand syndrome parameter to
- raise_exception*
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250802232953.413294-1-richard.henderson@linaro.org>
- <20250802232953.413294-24-richard.henderson@linaro.org>
- <3abbb8de-bbe6-4404-9714-50b487c46a8d@linaro.org>
- <d7e55a44-03ef-4d13-9705-a743921138be@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d7e55a44-03ef-4d13-9705-a743921138be@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,27 +111,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/8/25 14:15, Richard Henderson wrote:
-> On 8/12/25 16:26, Philippe Mathieu-Daudé wrote:
->> On 3/8/25 01:28, Richard Henderson wrote:
->>> Prepare for raising exceptions with 64-bit syndromes.
->>>
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   target/arm/internals.h     | 6 +++---
->>>   target/arm/tcg-stubs.c     | 2 +-
->>>   target/arm/tcg/op_helper.c | 4 ++--
->>>   3 files changed, 6 insertions(+), 6 deletions(-)
->>
->> Maybe re-order with previous patch?
-> 
-> No.  With this order, the destination is never smaller than the source.
-> 
-> (1) Widen env->exception.syndrome
-> (2) Widen raise_exception syndrome
-> (3) Generate a 64-bit syndrome during translate.
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Right. I was reading the series backwards 🤦
+> Commit 1585ab9f1ba ("hw/sd/sdcard: Fill SPI response bits in card
+> code") exposed a bug in the SPI adapter: if no SD card is plugged,
+> we shouldn't return any particular packet response, but the noise
+> shifted on the MISO line. Return the dummy byte, otherwise we get:
+>
+>   qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion =
+`s->arglen > 0' failed.
+>
+> Reported-by: Guenter Roeck <linux@roeck-us.net>
+> Fixes: 775616c3ae8 ("Partial SD card SPI mode support")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/sd/ssi-sd.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/hw/sd/ssi-sd.c b/hw/sd/ssi-sd.c
+> index 594dead19ee..3aacbd03871 100644
+> --- a/hw/sd/ssi-sd.c
+> +++ b/hw/sd/ssi-sd.c
+> @@ -89,6 +89,10 @@ static uint32_t ssi_sd_transfer(SSIPeripheral *dev, ui=
+nt32_t val)
+>      SDRequest request;
+>      uint8_t longresp[5];
+>=20=20
+> +    if (!sdbus_get_inserted(&s->sdbus)) {
+> +        return SSI_DUMMY;
+> +    }
+> +
 
+Seems fair although it's hard to track what is consuming this value. I
+think we end up in ssi_transfer() which a surprising number of calls
+don't even bother checking the return value, other just seem to | the
+result when iterating across devices.
+
+We should probably improve on the definitions of transfer/transfer_raw
+and explain what the return value is.
+
+Anyway:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+
+>      /*
+>       * Special case: allow CMD12 (STOP TRANSMISSION) while reading data.
+>       *
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
