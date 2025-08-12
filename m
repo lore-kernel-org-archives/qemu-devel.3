@@ -4,100 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5736DC87FCB
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 07:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EADACA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 08:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uljj2-0001Kb-Mu; Tue, 12 Aug 2025 03:47:16 -0400
+	id 1uljz4-0004s4-Fl; Tue, 12 Aug 2025 04:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uljj1-0001KT-QJ
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 03:47:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uljyy-0004rg-Gn
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 04:03:44 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uljix-0004R7-3s
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 03:47:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754984825;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Z34ecAj3l3I8IZj7j0RpdYP/xVlmTdrSBON8jV1PIbg=;
- b=bQTAQmGtOZlHNPFuKNHhDznbcgKjPtvxXbCFmfZEbDS5CES7bbO7Cz2BchcjAg0eMRdJkw
- Tqwf6s+SUR0vrykZWMP7Y+toM7DULiKPsyPP0zPxmNOKVngypOxt7f8Bi3uXQ/3SIXWoRI
- EDudoRinrao4b+XFeOWX5DckDdunppE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-120-eKHJD7pfOUe9HGRW8RriaQ-1; Tue, 12 Aug 2025 03:47:04 -0400
-X-MC-Unique: eKHJD7pfOUe9HGRW8RriaQ-1
-X-Mimecast-MFC-AGG-ID: eKHJD7pfOUe9HGRW8RriaQ_1754984823
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3b7882c0992so2856397f8f.0
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 00:47:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754984822; x=1755589622;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Z34ecAj3l3I8IZj7j0RpdYP/xVlmTdrSBON8jV1PIbg=;
- b=hpwX6dfznIlzzMNnDviN5/riaK1D1+SYp85bvKitH/wv1FHUr0Y1PQFIsfP36li7xz
- +2J9I3Z0AJ5Jhk7foFdaEW9a4/1dLU/mD4RNXo/d7ZaFHhDOkfpGJGCsmxtXym686gTi
- vZwDqBDXxB4uMreN3mz5JIoz6PSlm3DfPPNKIpvaq3mCYHfwSjpDY+bC5VcWrvZozlIu
- dqGwsufPpIRmG64MbdMBCWOVwYfgg5E9O3kzyjV3rwn81Y5en5vnbGW+lqv68Zod4tNn
- btDdFBZAotbL/CeBJhVjfGIhMX22keyj9xBdYi76a8GDow35kcIRVvdExUUDtcrPycxy
- 8HrQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU99UiSEUzRllJHp2DCDogfYutvBGN9YoLf8RMDE9HPy8qKA4J0srsL6J5kIR/WJeSLiiWnoRC+lwUi@nongnu.org
-X-Gm-Message-State: AOJu0Yx5gz/EJHVa/8jH0dJ1Mt/POWEBCNJogHjoeBu7X7OdCT2Am4kA
- Gf1FEgnQMVQP9Vkn0ruldWieWONwiapxlzxRPg1dOkHgRol5RkhK6Dxl2+8Zil9OAg7NzP4giv2
- RShG3j3NaYQ+8pzEfm5DjLjycU5UUUVyRJ6iLbWqHo9RvWw6KklW7Lxnx9WiIGZaa
-X-Gm-Gg: ASbGncuhQzIew7zf+B7bj4aI2Li3naQzsFt0R5uNUlzj18LjNSY5saD71wspo88Vhfr
- pvSGbMczSWj19e3L2JgXizgnzqkV1Sph+At0DWz7hXYxdJ+IAUN6jzz11t9WcQbYmA09tAL3u2M
- rav0717PrXjclMOV6tRZd7jB7zJcEB/Iu9EJOOxuEz6ioZKIxO21kDRwK8pXFpitS9/jy0ndB6r
- VRIBlB53cM1lX0nXzbnd4Ue2401x6oyus/WMYH3VYgGGLqoZANIOx16Fb2K+DedTciunt5TZ4hk
- W/6Dpkfx4hC3R9qbFOhQz4cmO4LtEBj/7xHnBbv//lJ+khbmAz9ivnXiuXAskYwW9+bbLLGIW1B
- pan05L0AUd/AKjp0GlF5JlnMHPoIwA2WQFxWw7IjBiZrt0iqFcC58JIOrUEVfgGhgj7Nc
-X-Received: by 2002:a05:6000:24c6:b0:3b8:d900:fa79 with SMTP id
- ffacd0b85a97d-3b90092cacbmr14011092f8f.5.1754984821129; 
- Tue, 12 Aug 2025 00:47:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGN/KDgXirnddmzRQ8zdvPdiULOEWw5e0ANGMYWKMpOtaEhhq3U1Qh7Q18yltHhzgX70axKyQ==
-X-Received: by 2002:a05:6000:24c6:b0:3b8:d900:fa79 with SMTP id
- ffacd0b85a97d-3b90092cacbmr14011052f8f.5.1754984820601; 
- Tue, 12 Aug 2025 00:47:00 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d715:6837:b828:a358:d573:e3a8?
- (p200300cfd7156837b828a358d573e3a8.dip0.t-ipconnect.de.
- [2003:cf:d715:6837:b828:a358:d573:e3a8])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c3b9eddsm43353249f8f.22.2025.08.12.00.46.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 00:46:59 -0700 (PDT)
-Message-ID: <4f382d55-553e-45b3-8a66-9729f43daef1@redhat.com>
-Date: Tue, 12 Aug 2025 09:46:57 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uljyr-0007Xn-V1
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 04:03:43 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 57C837HU039654
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 12 Aug 2025 17:03:08 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=fobMO+6ZpTZRyA8dW9KsHL3gX7arwI/uxdtBgJRXnPU=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1754985788; v=1;
+ b=pMvUhXq+sSilCmtfppQGNaX+ToODC8wFSpMppztJryozg3E11xUCpyyvFok7kGcG
+ lsHAoTSAXrkOYFwoy2qLt/ujHYSTvfprthaKWPAhlWaSirq/nDhZA2YJVdED54iG
+ 3U7z69hJ9J9gwxEpZ6/ZK6Ck54HeccC6GGPbioIqUZGHy+cJG6PdE76FE60fcpru
+ 3B+gC2w/bR1Lv95lROXT0SrqMJuzbR+GaiF3CQtf6ce8OdhJG3Tmg0oSZIQy+L8T
+ HiwbPs53gJwmmq5Sncw0cu0TQrWjRwCy6BANh9EO84aEf/GGwZEIXwrNCEAa81j3
+ I4wML4a8CS/+ipVBRjneKw==
+Message-ID: <73f8b2dc-d5ad-43b7-834f-6322bfe617af@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 12 Aug 2025 17:03:07 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rbd: Fix .bdrv_get_specific_info implementation
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: idryomov@gmail.com, pl@dlhnet.de, eblake@redhat.com, armbru@redhat.com,
- oro@il.ibm.com, qemu-devel@nongnu.org
-References: <20250811134010.81787-1-kwolf@redhat.com>
+Subject: Re: [RFC PATCH v4 07/14] virtio-pci: implement support for extended
+ features
+To: Jason Wang <jasowang@redhat.com>, Paolo Abeni <pabeni@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Luigi Rizzo <lrizzo@google.com>,
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
+ Vincenzo Maffione <v.maffione@gmail.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <cover.1753297661.git.pabeni@redhat.com>
+ <8e8a91adcbf4e37c7a5e086780e1000d3b3298d3.1753297661.git.pabeni@redhat.com>
+ <de3c69a8-d874-44a3-bd47-91b6b298e184@rsg.ci.i.u-tokyo.ac.jp>
+ <7c7c3f2c-e643-46ad-810c-aefdd486ad78@redhat.com>
+ <8e3c5aa3-3180-4df2-b378-18e3e91d3f80@rsg.ci.i.u-tokyo.ac.jp>
+ <CACGkMEse8cM8=8y4JwBdVQi23buz1OCzhQmVxvsRJGdQ9tgaWA@mail.gmail.com>
 Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20250811134010.81787-1-kwolf@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <CACGkMEse8cM8=8y4JwBdVQi23buz1OCzhQmVxvsRJGdQ9tgaWA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,275 +87,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.08.25 15:40, Kevin Wolf wrote:
-> qemu_rbd_get_specific_info() has at least two problems:
->
-> The first is that it issues a blocking rbd_read() call in order to probe
-> the encryption format for the image while querying the node. This means
-> that if the connection to the server goes down, not only I/O is stuck
-> (which is unavoidable), but query-names-block-nodes will actually make
-> the whole QEMU instance unresponsive. .bdrv_get_specific_info
-> implementations shouldn't perform blocking operations, but only return
-> what is already known.
+On 2025/08/12 13:01, Jason Wang wrote:
+> On Fri, Aug 8, 2025 at 12:55 PM Akihiko Odaki
+> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>
+>> On 2025/08/08 5:18, Paolo Abeni wrote:
+>>> On 7/26/25 1:52 PM, Akihiko Odaki wrote:
+>>>> On 2025/07/24 4:31, Paolo Abeni wrote:
+>>>>> @@ -1477,6 +1509,13 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy,
+>>>>>         return virtio_pci_add_mem_cap(proxy, &cap.cap);
+>>>>>     }
+>>>>>
+>>>>> +static int virtio_pci_select_max(const VirtIODevice *vdev)
+>>>>> +{
+>>>>> +    return virtio_features_use_ex(vdev->host_features_ex) ?
+>>>>> +           VIRTIO_FEATURES_NU32S :
+>>>>> +           2;
+>>>>
+>>>> This function could be simplified by replacing VIRTIO_FEATURES_NU32S
+>>>> without any functional difference:
+> 
+> Did you mean using VIRTIO_FEATURES_NU32S instead?
+> 
+>>>>
+>>>> 1. For writes: virtio_set_features_ex() already ignores extended
+>>>> features when !virtio_features_use_ex(vdev->host_features_ex)
+>>>> 2. For reads: When !virtio_features_use_ex(vdev->host_features_ex), the
+>>>> upper bits of host_features_ex are zero, and guest_features upper bits
+>>>> remain zero (since they can't be set per point 1)
+> 
+> I think it depends on the compatibility work which hasn't been done in
+> this series.
+> 
+>>>>
+>>>> So the conditional logic is redundant here.
+> 
+> See below
+> 
+>>>
+>>> This is to satisfy a request from Jason:
+>>>
+>>> https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05291.html
+>>> https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05423.html
+>>>
+>>> I agree there will not be functional differences always accessing the
+>>> full space, but the guest could still be able to notice, i.e. the
+>>> extended space will be zeroed on read with that patched qemu and
+>>> untouched by the current code and this patch. To be on the safe side I
+>>> think it would be better to avoid such difference, as suggested by Jason.
+>>>
+>>> Does the above make sense to you?
+>>
+>> By functional, I meant the functionality of QEMU, visible to the guest,
+>> rather than the whole system including the guest, visible to the end
+>> user. The guest cannot notice the difference because the extended space
+>> is zero on read even without the conditional, which is described as
+>> point 2 in the previous email.
+> 
+> I'm not sure I understand this correctly. But it doesn't harm here consider:
+> 
+> 1) it's the entry point from the guest, checking and failing early is
+> better than depending on the low layer functions
+> 2) we have checks in several layers (both virtio-pci and virtio core).
+> 
+> And it looks like a must for at least GF:
+> 
+>      case VIRTIO_PCI_COMMON_GF:
+>          if (proxy->gfselect < virtio_pci_select_max(vdev)) {
+>              uint64_t features[VIRTIO_FEATURES_NU64S];
+>              int i;
+> 
+>              proxy->guest_features[proxy->gfselect] = val;
 
-Maybe we should put a “must not block” warning on 
-BlockDriver.bdrv_get_specific_info()?
+I missed proxy->guest_features. Indeed it makes a difference.
 
-> The second is that the information returned isn't even correct. If the
-> image is already opened with encryption enabled at the RBD level, we'll
-> probe for "double encryption", i.e. if the encrypted data contains
-> another encryption header. If it doesn't (which is the normal case), we
-> won't return the encryption format. If it does, we return misleading
-> information because it looks like we're talking about the outer level
-> (the encryption format of the image itself) while the information is
-> about an encryption header in the guest data.
->
-> Fix this by storing the encryption format in BDRVRBDState when the image
-> is opened (and we do blocking operations anyway) and returning only the
-> stored information in qemu_rbd_get_specific_info().
->
-> The information we'll store is either the actual encryption format that
-> we enabled on the RBD level, or if the image is unencrypted, the result
-> of the same probing as we previously did when querying the node. Probing
-> image formats based on content that can be modified by the guest has
-> long been known as problematic, but as long as we only output it to the
-> user instead of making decisions based on it, it should be okay. It is
-> undoubtedly useful in the context of 'qemu-img info' when you're trying
-> to figure out which encryption options you have to use to open the
-> image successfully.
->
-> Fixes: 42e4ac9ef5a6 ("block/rbd: Add support for rbd image encryption")
-> Buglink: https://issues.redhat.com/browse/RHEL-105440
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   qapi/block-core.json |   9 +++-
->   block/rbd.c          | 103 ++++++++++++++++++++++++++++---------------
->   2 files changed, 75 insertions(+), 37 deletions(-)
+Now I have another concern with virtio_pci_select_max(). If the feature 
+set grows again, virtio_pci_select_max() will return the grown size for 
+the devices that have [127:64] bits, which will be a breaking change. In 
+this sense, VIRTIO_FEATURES_NU32S, which will grow along with the 
+feature set, is not appropriate here.
 
-Looks good to me, just found two spelling/wording nits below.  With 
-those fixed:
+Hardcoding 4 ensures such a breaking change will not happen at least.
 
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+Perhaps QEMU_BUILD_BUG_ON() may be placed here to tell it needs to be 
+updated when the feature set grows, but I don't require that since there 
+is QEMU_BUILD_BUG_ON() before vmstate_virtio_pci_modern_state_sub. It 
+may be a good idea to move this function somewhere close to 
+QEMU_BUILD_BUG_ON().
 
-(I think the .bdrv_get_specific_info() warning would be nice, but optional.)
+Alternatively the function may compute the value to return by finding 
+the last non-zero element in vdev->host_features_ex and multiplying by 
+2. It will probably work even if the feature set grows again in the future.
 
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index ebbe95b3d8..cbd2bc84fe 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -159,7 +159,14 @@
->   ##
->   # @ImageInfoSpecificRbd:
->   #
-> -# @encryption-format: Image encryption format
-> +# @encryption-format: Image encryption format. If encryption is enabled for the
-> +#     image (see encrpyted in BlockNodeInfo), this is the actual format in which the
-
-*encrypted
-
-> +#     image is accessed. If encryption is not enabled, this is the result of
-> +#     probing when the image was opened, to give a suggestion which encryption
-> +#     format could be enabled. Note that probing results can be changed by the
-> +#     guest by writing a (possibly partial) encryption format header to the
-> +#     image, so don't treat this information as trusted if the guest is not
-> +#     trusted.
->   #
->   # Since: 6.1
->   ##
-> diff --git a/block/rbd.c b/block/rbd.c
-> index 951cd63f9a..8582bc8360 100644
-> --- a/block/rbd.c
-> +++ b/block/rbd.c
-> @@ -99,6 +99,14 @@ typedef struct BDRVRBDState {
->       char *namespace;
->       uint64_t image_size;
->       uint64_t object_size;
-> +
-> +    /*
-> +     * If @bs->encrypted is true, this is the encryption format actually loaded
-> +     * at the librbd level. If it is false, it is the result of probing.
-> +     * RBD_IMAGE_ENCRYPTION_FORMAT__MAX means that encryption is not enabled and
-> +     * probing didn't find any known encryption header either.
-> +     */
-> +    RbdImageEncryptionFormat encryption_format;
->   } BDRVRBDState;
->   
->   typedef struct RBDTask {
-> @@ -470,10 +478,12 @@ static int qemu_rbd_encryption_format(rbd_image_t image,
->       return 0;
->   }
->   
-> -static int qemu_rbd_encryption_load(rbd_image_t image,
-> +static int qemu_rbd_encryption_load(BlockDriverState *bs,
-> +                                    rbd_image_t image,
->                                       RbdEncryptionOptions *encrypt,
->                                       Error **errp)
->   {
-> +    BDRVRBDState *s = bs->opaque;
->       int r = 0;
->       g_autofree char *passphrase = NULL;
->       rbd_encryption_luks1_format_options_t luks_opts;
-> @@ -544,15 +554,19 @@ static int qemu_rbd_encryption_load(rbd_image_t image,
->           error_setg_errno(errp, -r, "encryption load fail");
->           return r;
->       }
-> +    bs->encrypted = true;
-> +    s->encryption_format = encrypt->format;
->   
->       return 0;
->   }
->   
->   #ifdef LIBRBD_SUPPORTS_ENCRYPTION_LOAD2
-> -static int qemu_rbd_encryption_load2(rbd_image_t image,
-> +static int qemu_rbd_encryption_load2(BlockDriverState *bs,
-> +                                     rbd_image_t image,
->                                        RbdEncryptionOptions *encrypt,
->                                        Error **errp)
->   {
-> +    BDRVRBDState *s = bs->opaque;
->       int r = 0;
->       int encrypt_count = 1;
->       int i;
-> @@ -638,6 +652,8 @@ static int qemu_rbd_encryption_load2(rbd_image_t image,
->           error_setg_errno(errp, -r, "layered encryption load fail");
->           goto exit;
->       }
-> +    bs->encrypted = true;
-> +    s->encryption_format = encrypt->format;
->   
->   exit:
->       for (i = 0; i < encrypt_count; ++i) {
-> @@ -671,6 +687,44 @@ exit:
->   #endif
->   #endif
->   
-> +/*
-> + * For an image without encryption enabled on the rbd layer, probe the start of
-> + * the image if it could be opened as an encrypted image so that we can display
-> + * it when the user queries the node (most importantly in qemu-img).
-> + *
-> + * If the guest writes an encryption header to its disk after this probing, but
-
-Either there’s something missing after the comma (e.g. “it wouldn’t be 
-reflected when queried”), or the “but” is too much.
-
-> + * that's okay. There is no reason why the user should want to apply encryption
-> + * at the rbd level while the image is still in use. This is just guest data.
-> + */
-> +static void qemu_rbd_encryption_probe(BlockDriverState *bs)
-> +{
-> +    BDRVRBDState *s = bs->opaque;
-> +    char buf[RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN] = {0};
-> +    int r;
-> +
-> +    assert(s->encryption_format == RBD_IMAGE_ENCRYPTION_FORMAT__MAX);
-> +
-> +    r = rbd_read(s->image, 0,
-> +                 RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN, buf);
-> +    if (r < RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) {
-> +        return;
-> +    }
-> +
-> +    if (memcmp(buf, rbd_luks_header_verification,
-> +               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
-> +        s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT_LUKS;
-> +    } else if (memcmp(buf, rbd_luks2_header_verification,
-> +               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
-> +        s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT_LUKS2;
-> +    } else if (memcmp(buf, rbd_layered_luks_header_verification,
-> +               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
-> +        s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT_LUKS;
-> +    } else if (memcmp(buf, rbd_layered_luks2_header_verification,
-> +               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
-> +        s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT_LUKS2;
-> +    }
-> +}
-> +
->   /* FIXME Deprecate and remove keypairs or make it available in QMP. */
->   static int qemu_rbd_do_create(BlockdevCreateOptions *options,
->                                 const char *keypairs, const char *password_secret,
-> @@ -1133,17 +1187,18 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags,
->           goto failed_open;
->       }
->   
-> +    s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT__MAX;
->       if (opts->encrypt) {
->   #ifdef LIBRBD_SUPPORTS_ENCRYPTION
->           if (opts->encrypt->parent) {
->   #ifdef LIBRBD_SUPPORTS_ENCRYPTION_LOAD2
-> -            r = qemu_rbd_encryption_load2(s->image, opts->encrypt, errp);
-> +            r = qemu_rbd_encryption_load2(bs, s->image, opts->encrypt, errp);
->   #else
->               r = -ENOTSUP;
->               error_setg(errp, "RBD library does not support layered encryption");
->   #endif
->           } else {
-> -            r = qemu_rbd_encryption_load(s->image, opts->encrypt, errp);
-> +            r = qemu_rbd_encryption_load(bs, s->image, opts->encrypt, errp);
->           }
->           if (r < 0) {
->               goto failed_post_open;
-> @@ -1153,6 +1208,8 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags,
->           error_setg(errp, "RBD library does not support image encryption");
->           goto failed_post_open;
->   #endif
-> +    } else {
-> +        qemu_rbd_encryption_probe(bs);
->       }
->   
->       r = rbd_stat(s->image, &info, sizeof(info));
-> @@ -1412,17 +1469,6 @@ static ImageInfoSpecific *qemu_rbd_get_specific_info(BlockDriverState *bs,
->   {
->       BDRVRBDState *s = bs->opaque;
->       ImageInfoSpecific *spec_info;
-> -    char buf[RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN] = {0};
-> -    int r;
-> -
-> -    if (s->image_size >= RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) {
-> -        r = rbd_read(s->image, 0,
-> -                     RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN, buf);
-> -        if (r < 0) {
-> -            error_setg_errno(errp, -r, "cannot read image start for probe");
-> -            return NULL;
-> -        }
-> -    }
->   
->       spec_info = g_new(ImageInfoSpecific, 1);
->       *spec_info = (ImageInfoSpecific){
-> @@ -1430,28 +1476,13 @@ static ImageInfoSpecific *qemu_rbd_get_specific_info(BlockDriverState *bs,
->           .u.rbd.data = g_new0(ImageInfoSpecificRbd, 1),
->       };
->   
-> -    if (memcmp(buf, rbd_luks_header_verification,
-> -               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
-> -        spec_info->u.rbd.data->encryption_format =
-> -                RBD_IMAGE_ENCRYPTION_FORMAT_LUKS;
-> -        spec_info->u.rbd.data->has_encryption_format = true;
-> -    } else if (memcmp(buf, rbd_luks2_header_verification,
-> -               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
-> -        spec_info->u.rbd.data->encryption_format =
-> -                RBD_IMAGE_ENCRYPTION_FORMAT_LUKS2;
-> -        spec_info->u.rbd.data->has_encryption_format = true;
-> -    } else if (memcmp(buf, rbd_layered_luks_header_verification,
-> -               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
-> -        spec_info->u.rbd.data->encryption_format =
-> -                RBD_IMAGE_ENCRYPTION_FORMAT_LUKS;
-> -        spec_info->u.rbd.data->has_encryption_format = true;
-> -    } else if (memcmp(buf, rbd_layered_luks2_header_verification,
-> -               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
-> -        spec_info->u.rbd.data->encryption_format =
-> -                RBD_IMAGE_ENCRYPTION_FORMAT_LUKS2;
-> -        spec_info->u.rbd.data->has_encryption_format = true;
-> +    if (s->encryption_format == RBD_IMAGE_ENCRYPTION_FORMAT__MAX) {
-> +        assert(!bs->encrypted);
->       } else {
-> -        spec_info->u.rbd.data->has_encryption_format = false;
-> +        ImageInfoSpecificRbd *rbd_info = spec_info->u.rbd.data;
-> +
-> +        rbd_info->has_encryption_format = true;
-> +        rbd_info->encryption_format = s->encryption_format;
->       }
->   
->       return spec_info;
-
+Regards,
+Akihiko Odaki
 
