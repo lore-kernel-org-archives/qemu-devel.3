@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60346CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 18:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8BDACA0EDB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 18:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ultTU-0005KZ-Lh; Tue, 12 Aug 2025 14:11:53 -0400
+	id 1ultxw-0003WK-4Q; Tue, 12 Aug 2025 14:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ultTQ-0005JR-6q
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:11:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ultTJ-0001OJ-VR
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:11:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755022296;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jvantC9dptGQv+KLO5vBkgTqqNEYgjZbMxvKoSj+TMk=;
- b=O5V/fof7n3zZsCOFFKTcVLkFEqGljEwy1rNI7vxFuKMmIWgXM7qzUEATEhZS/7rgaqoB+B
- Zp0FreWNZnP/ychgIY9ebVHR12DVU4N9FU2J21ERqed8WGdud5G1EVqJWAYi3q9YNK+XGt
- DnzA0s8McMus+CTdtwcgP0RLd1KDpqI=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-VEIyn5kQOIynXvqFYqztzA-1; Tue, 12 Aug 2025 14:11:34 -0400
-X-MC-Unique: VEIyn5kQOIynXvqFYqztzA-1
-X-Mimecast-MFC-AGG-ID: VEIyn5kQOIynXvqFYqztzA_1755022294
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7e86499748cso28269385a.1
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 11:11:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ultxv-0003WA-0l
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:43:19 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ultxp-0005KT-1W
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:43:18 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-71a38e35674so40182857b3.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 11:43:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755024188; x=1755628988; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ASu/EcgNo0PPrgDbUsAm/4oXgjrYVlPdG6h39Z6aCtc=;
+ b=U9ptFhqjZiBMZ5BD0rG8fSaZnFvDWfWQPHD/OIHcULo/rCCSXJ0IXY2J3q/hz+kecT
+ J7R245QhTwC9URp3N6spFkBJiBHTkIkavEOBga6gyRNkc9n1hTa+MPIEZl/mqRWLTjWk
+ 0LGeGATXD7JBDZ6g8pq3lhgvrk8hjhGLvBQg4mXCuDDlHwucIFY33FY/KzJoiKlJCoP1
+ HbwcNQyu1Dp3TGDaCHb6JE+/Wi15mzkl6VFkf1agic2VsIhtDbssS1Q6Ea7PKLHXwmLg
+ h2GyliZtJjV00JyhhsXFm3aHuU0/13WzwskjJuRoVkEOwZh3Yt0nTEUINT2oNc/OzvGs
+ 94aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755022294; x=1755627094;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jvantC9dptGQv+KLO5vBkgTqqNEYgjZbMxvKoSj+TMk=;
- b=EXU65R/9b6qik/HrqMKaeCNJgr5KeidGxrj6RNnCKQsuIfXlLVi1/7i8b/QRCHRfxz
- tG3RCLsnYaMSuLuWGgiz/j5h+s3AYXRn2DStI+HEBw1nX/QIWBoz5XQsB0s1DDG8H+Jy
- b1Khp5KTYdHd/SIVG54jzy5aN1wWojtR58QcNosziw2w29zlFrrj9gQ38XcBlg/jX6G7
- D402C4fo7Jw6Ng6kXssfhveLNQwwvrSJZqrEsIpYUiZLECuVv+/Ptwd818OL4UUg+YD2
- W3Z5KxuosObI9knMvxDOqGz2KA8h1yAkD1y3hWoCCtrXMsulW953MWAL6nLGUedHpztf
- SDeQ==
+ d=1e100.net; s=20230601; t=1755024188; x=1755628988;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ASu/EcgNo0PPrgDbUsAm/4oXgjrYVlPdG6h39Z6aCtc=;
+ b=o6axqhNZYk4l0Hp3Kjt0K7cc4rnWulb5YwQoPCShK/zMPTbcr9z+gkU1RGonz9M3tm
+ VVPakBJbAoIZZYh8bzxUvZq5/VgE8IlOVDcVzcRw10qOvxgAif2gcwchIOl2yzwzQEkD
+ FzRQuB2ql0Q5HC6bQ6ZqGXK48lLRTpqF5JWdYMcbAuW9xtRHv0M0N/4vp+BO74HLQaM+
+ z1LWALD/fnErnSsgDgq8+6sY99ye++YC7IEQKBG/Yi6DXRInI9EP9ruGUznYCSfQ1dEw
+ mvmso7+9mzf5LMfJP+pRQynWRJtDRemEQ2U0RGmvFK6J2WsV1eyO3z6LKr+quxiMPFjv
+ 8sxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXKeJtapVZ6oKZ89PQDORr9LMFL99vWkuI9DGis0uobrI6WTHsSWprCWw5rySs/8Hfws3rBoO6uIdc@nongnu.org
-X-Gm-Message-State: AOJu0YwItUxd6PaeBTwWhKUTSTCJOZnNribfNisZfRt4MX//fe9n0Y+T
- AMYTbDAuWVFAm4SMrl9M8eSeqRCXP1sSw2qLFY7y0DdLy195rPTXtG6SmcziwDDm4HXLXIkRsTe
- E4SKAAhNCYwQgTR+87p6YbBmt9K6a9L6uNylLmk1BWTOUtRC2UE2n/5Rq
-X-Gm-Gg: ASbGncsVwN2V2M7sYELvA7sUI+iw72H7gW0htwKv3ymvE97uOWPhlB+nCIm5x+3kDmC
- AD+4ot0k2w8j5ifoT7YnmQQ9Uv4JCxjS2j3Z/ndMIY3eH3ewXlvw3gs/quGSaxz5bHDtFLc01Iz
- 3eaNCzZqcdnM+UNMowORfbMfqsp27PU21TMcpWA8iqB6mIm3cu6iAt2IDUVVqcTaBmX3POHhOUt
- 0JvXEkUZqa+p9AOHdF4tJadFSBDKRdosFZLbZ836MpFQ+TN04HCLE0YnPef1+lRpLsC8UZ6nAL6
- tQYG/0bl7oNYyVJjfqZqqtpZZRBszC8Ll6gXIhdtOF2ss4CHI35P49KL6XlFTeoH4SJDomA49jo
- ESAle6Y7Sdzg=
-X-Received: by 2002:a05:620a:1919:b0:7e8:161:e633 with SMTP id
- af79cd13be357-7e864ab92a3mr59121685a.5.1755022294170; 
- Tue, 12 Aug 2025 11:11:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvZTpvPOyqK3fI3rXoL9ASFeWp0ZWgnWKF/CSbIUc1Ouwd8CMpj8hOhpC3/YYW7ISTz00G7g==
-X-Received: by 2002:a05:620a:1919:b0:7e8:161:e633 with SMTP id
- af79cd13be357-7e864ab92a3mr59118485a.5.1755022293697; 
- Tue, 12 Aug 2025 11:11:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e7fc4db4bdsm1396500385a.28.2025.08.12.11.11.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 11:11:33 -0700 (PDT)
-Message-ID: <88812eea-08e3-48f5-b2f8-75ab0fff573b@redhat.com>
-Date: Tue, 12 Aug 2025 20:11:31 +0200
+ AJvYcCVdSw0M1pIIAh3VgYFk6T53lnr0I7VZaDxuolg5LZyOovXdilVGPUzNF7+EoTxFoO5FeQk4vpAvSxCD@nongnu.org
+X-Gm-Message-State: AOJu0Yw5OjhfjIbGev/GFStZhrFivNluwmDu00w9r1whbXYO/O+aIJkd
+ iTBMBFhSwhumY8Cw73wsBfPBPzMQ803snY9Adhx8fBdVTr3fgntjuhHljq43/mbfvKOvEEbUe2p
+ sN4IO00qYY7CB41WUFYlZ9/qDvRR5gNpUeT3D7iTpXg==
+X-Gm-Gg: ASbGncsUzIVyfsXZnWfK73muX6eMBPq4xj4v7IuqNiLYjePp0zvfUqHwWXUCxYON9pX
+ DmiQxVGIcq1IcWdEQZo9e0gvWz17X2DUnbOwecdFQ3CpZm77whLj1JWk9Mb/bWzveW7pnPvjOCL
+ PeibNWTCzBell0tBh1RBuS9CUM2dLjo0Cy4bqYjt7EpBNfh5y8R+16TaHqoBvbqdnPLpQ2kEEKr
+ UtogszP
+X-Google-Smtp-Source: AGHT+IG5fBhgDj5GIBdKf+D3E62Fl95jLpMspYa6rd2qzXdpmJcf7yc/UCkF4Z3tKKo1N6qdZGLrURE3Lg47X4iUOqs=
+X-Received: by 2002:a05:690c:64c9:b0:71c:1142:f9ba with SMTP id
+ 00721157ae682-71d4e3f3955mr2813937b3.4.1755024188350; Tue, 12 Aug 2025
+ 11:43:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] arm/kvm: report registers we failed to set
-Content-Language: en-US
-To: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <20250721161932.548668-1-cohuck@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250721161932.548668-1-cohuck@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
+ <20250806151134.365755-5-tangtao1634@phytium.com.cn>
+ <0b38d386-9d8b-46bd-a981-718cc7281eb6@linaro.org>
+ <f74b4d64-893f-4b39-aa95-4e9ff52edebd@phytium.com.cn>
+ <4ff26d30-3b0d-4392-8bac-698ecb0fbdde@linaro.org>
+In-Reply-To: <4ff26d30-3b0d-4392-8bac-698ecb0fbdde@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 12 Aug 2025 19:42:57 +0100
+X-Gm-Features: Ac12FXw8S2eKy3NNE7LqpBxSg8Fp_hjo_dW78xP0Okb2fZqEX_H-WlwB-wpsGsg
+Message-ID: <CAFEAcA-imgF9NLPWeXfE1JRL0gaKpVyfbbNKxojHDVz0t7EBKw@mail.gmail.com>
+Subject: Re: [RFC 04/11] hw/arm/smmuv3: Enable command processing for the
+ Secure state
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Tao Tang <tangtao1634@phytium.com.cn>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, 
+ Eric Auger <eric.auger@redhat.com>, Chen Baozi <chenbaozi@phytium.com.cn>,
+ smostafa@google.com, jean-philippe@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,138 +102,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Connie,
+On Mon, 11 Aug 2025 at 11:34, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Hi,
+>
+> On 10/8/25 18:59, Tao Tang wrote:
+> > On 2025/8/7 05:55, Pierrick Bouvier wrote:
+> >> On 8/6/25 8:11 AM, Tao Tang wrote:
+> >>> This patch enables the secure command queue, providing a dedicated
+> >>> interface for secure software to issue commands to the SMMU. Based on
+> >>> the SMMU_S_CMDQ_BASE configuration, the SMMU now fetches command
+> >>> entries directly from the Secure PA space so that we need to pass the
+> >>> memory transaction attributes when reading the command queue.
+> >>>
+> >>> This provides a parallel command mechanism to the non-secure world.
+> >>>
+> >>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> >>> ---
+> >>>   hw/arm/smmuv3-internal.h |  8 ++++--
+> >>>   hw/arm/smmuv3.c          | 55 +++++++++++++++++++++++++------------=
+---
+> >>>   hw/arm/trace-events      |  2 +-
+> >>>   3 files changed, 41 insertions(+), 24 deletions(-)
+> >>>
+> >>> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> >>> index 1a8b1cb204..5b2ca00832 100644
+> >>> --- a/hw/arm/smmuv3-internal.h
+> >>> +++ b/hw/arm/smmuv3-internal.h
+> >>> @@ -319,9 +319,13 @@ static inline void queue_cons_incr(SMMUQueue *q)
+> >>>       q->cons =3D deposit32(q->cons, 0, q->log2size + 1, q->cons + 1)=
+;
+> >>>   }
+> >>>   -static inline bool smmuv3_cmdq_enabled(SMMUv3State *s)
+> >>> +static inline bool smmuv3_cmdq_enabled(SMMUv3State *s, bool is_secur=
+e)
+> >>>   {
+> >>> -    return FIELD_EX32(s->cr[0], CR0, CMDQEN);
+> >>> +    if (is_secure) {
+> >>> +        return FIELD_EX32(s->secure_cr[0], S_CR0, CMDQEN);
+> >>> +    } else {
+> >>> +        return FIELD_EX32(s->cr[0], CR0, CMDQEN);
+> >>> +    }
+> >>>   }
+>
+>
+> >> This looks like a reasonable and readable approach to support secure
+> >> and non secure accesses.
+> >
+> > Hi Pierrick,
+> >
+> > Thank you so much for taking the time to review and for the very
+> > positive feedback.
+> >
+> > I'm very relieved to hear you find the approach "reasonable and
+> > readable". I was hoping that explicitly passing the parameter was the
+> > right way to avoid issues with global state or code duplication, and
+> > your confirmation is the best encouragement I could ask for.
+>
+> An alternative (also suggested in patch #1) is to use index for banked
+> registers.
 
-On 7/21/25 6:19 PM, Cornelia Huck wrote:
-> If we fail migration because of a mismatch of some registers between
-> source and destination, the error message is not very informative:
->
-> qemu-system-aarch64: error while loading state for instance 0x0 ofdevice 'cpu'
-> qemu-system-aarch64: Failed to put registers after init: Invalid argument
->
-> At least try to give the user a hint which registers had a problem,
-> even if they cannot really do anything about it right now.
->
-> Sample output:
->
-> Could not set register op0:3 op1:0 crn:0 crm:0 op2:0 to c00fac31 (is 413fd0c1)
->
-> We could be even more helpful once we support writable ID registers,
-> at which point the user might actually be able to configure something
-> that is migratable.
->
-> Suggested-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->
-> Notes:
-> - This currently prints the list of failing registers for every call to
->   write_list_to_kvmstate(), in particular for every cpu -- we might want
->   to reduce that.
-> - If the macros aren't too ugly (or we manage to improve them), there
->   might be other places where they could be useful.
->
-> ---
->  target/arm/kvm.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 53 insertions(+)
->
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 667234485547..ac6502e0c78f 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -900,6 +900,24 @@ bool write_kvmstate_to_list(ARMCPU *cpu)
->      return ok;
->  }
->  
-> +/* pretty-print a KVM register */
-> +#define CP_REG_ARM64_SYSREG_OP(_reg, _op)                       \
-> +    ((uint8_t)((_reg & CP_REG_ARM64_SYSREG_ ## _op ## _MASK) >> \
-> +               CP_REG_ARM64_SYSREG_ ## _op ## _SHIFT))
-> +
-> +#define PRI_CP_REG_ARM64_SYSREG(_reg)                    \
-> +    ({                                                   \
-> +        char _out[32];                                   \
-> +        snprintf(_out, sizeof(_out),                     \
-> +                 "op0:%d op1:%d crn:%d crm:%d op2:%d",   \
-> +                 CP_REG_ARM64_SYSREG_OP(_reg, OP0),      \
-> +                 CP_REG_ARM64_SYSREG_OP(_reg, OP1),      \
-> +                 CP_REG_ARM64_SYSREG_OP(_reg, CRN),      \
-> +                 CP_REG_ARM64_SYSREG_OP(_reg, CRM),      \
-> +                 CP_REG_ARM64_SYSREG_OP(_reg, OP2));     \
-> +        _out;                                            \
-> +    })
-> +
-I am afraid this is too simplistic.
-Refering to linux/Documentation/virt/kvm/api.rst 4.68 KVM_SET_ONE_REG
-ARM registers section
-there are different groups of registers (upper 16b) and not all regs are
-further identified by op0-2, crn, crm.
-I think it would be valuable to output the group type and then the
-formatted lower 16b, depending on the group type.
+This is often how we handle S/NS banked registers, yes.
+Other examples:
 
-For instance 64b ARM FW pseudo reg is formatted as
-0x6030 0000 0014 <regno:16>
+include/hw/intc/arm_gicv3_common.h: the S/NS banked registers
+ICC_CTLR_EL1, GICD_STATUSR, GICR_STATUSR are implemented as
+uint32_t icc_ctlr_el1[2] etc. (The GICv3 also has some
+group-related registers which is why it also has 3-element arrays)
 
-a diff on reg 0 results in
-qemu-system-aarch64: Could not set register op0:0 op1:0 crn:0 crm:0
-op2:0 to 10003 (is 10001)
-qemu-system-aarch64: error while loading state for instance 0x0 of
-device 'cpu'
-qemu-system-aarch64: Could not set register op0:0 op1:0 crn:0 crm:0
-op2:0 to 10003 (is 10001)
-qemu-system-aarch64: Failed to put registers after init: Invalid argument
+The banked AArch32 system registers in cpu.h are a bit
+more complicated, and there we have some macros
+A32_BANKED_REG_GET/SET which access the right fields.
+This lets us define the mapping between the NS and S
+registers and the AArch32 ELx views. (I'm not sure I'd
+go down this path again if we did it now: our AArch32
+design here pre-dates AArch64. The AArch64 views use
+an array that they index by EL.)
 
-Thanks
+Sometimes when there are only a few registers that need
+to be banked S/NS we give them names, as with the
+GICv2 where we have separate apr[][] and nsapr[][] arrays.
 
-Eric
->  bool write_list_to_kvmstate(ARMCPU *cpu, int level)
->  {
->      CPUState *cs = CPU(cpu);
-> @@ -932,6 +950,41 @@ bool write_list_to_kvmstate(ARMCPU *cpu, int level)
->               * a different value from what it actually contains".
->               */
->              ok = false;
-> +            switch (ret) {
-> +            case -ENOENT:
-> +                error_report("Could not set register %s: unknown to KVM",
-> +                             PRI_CP_REG_ARM64_SYSREG(regidx));
-> +                break;
-> +            case -EINVAL:
-> +                if ((regidx & KVM_REG_SIZE_MASK) == KVM_REG_SIZE_U32) {
-> +                    if (!kvm_get_one_reg(cs, regidx, &v32)) {
-> +                        error_report("Could not set register %s to %x (is %x)",
-> +                                     PRI_CP_REG_ARM64_SYSREG(regidx),
-> +                                     (uint32_t)cpu->cpreg_values[i], v32);
-> +                    } else {
-> +                        error_report("Could not set register %s to %x",
-> +                                     PRI_CP_REG_ARM64_SYSREG(regidx),
-> +                                     (uint32_t)cpu->cpreg_values[i]);
-> +                    }
-> +                } else /* U64 */ {
-> +                    uint64_t v64;
-> +
-> +                    if (!kvm_get_one_reg(cs, regidx, &v64)) {
-> +                        error_report("Could not set register %s to %lx (is %lx)",
-> +                                     PRI_CP_REG_ARM64_SYSREG(regidx),
-> +                                     cpu->cpreg_values[i], v64);
-> +                    } else {
-> +                        error_report("Could not set register %s to %lx",
-> +                                     PRI_CP_REG_ARM64_SYSREG(regidx),
-> +                                     cpu->cpreg_values[i]);
-> +                    }
-> +                }
-> +                break;
-> +            default:
-> +                error_report("Could not set register %s: %s",
-> +                             PRI_CP_REG_ARM64_SYSREG(regidx),
-> +                             strerror(-ret));
-> +            }
->          }
->      }
->      return ok;
+I think I would say that it depends mostly on how many
+registers there are, and whether you wind up wanting to do
+a lot of "the logic is the same for both S and NS, it
+just operates on the other register in the bank". It
+can make the code a lot easier to read in that case if
+you have functions that take the is_secure parameter
+and just use it all the way through to index into the
+register array. Even in the simple example above of
+smmuv3_cmdq_enabled(), you can see that
 
+  return FIELD_EX32(s->cr[is_secure][0], CR0, CMDQEN);
+
+is more succinct than the if-else version.
+
+I have not looked closely enough the SMMUv3 code or spec to
+be certain which side of the line it falls, but a glance
+at the register overview does suggest that the design
+has registers for all of normal, secure, realm and root.
+Using an array will probably make our lives easier
+if/when we have to implement the RME support in the SMMU.
+
+thanks
+-- PMM
 
