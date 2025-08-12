@@ -4,96 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36A83CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 18:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60346CA0EC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 18:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ultMH-00036b-Pr; Tue, 12 Aug 2025 14:04:25 -0400
+	id 1ultTU-0005KZ-Lh; Tue, 12 Aug 2025 14:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ultME-00035y-4T
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:04:22 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1ultM9-0000Hv-1N
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:04:21 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-b34a8f69862so4349942a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 11:04:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755021853; x=1755626653; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7/gSRppnirG3P42CH6t/aeDpchyaRHzJmZFb7xB9suA=;
- b=giNukbF+Gwn04Y1ZEjSDYJUkwnd30qmZk4VMlXeJKlDCc70bo2CLt6LKqczSIpRfSo
- nN+T5hd0xjZVD5sC88NwaMlQzmWshcgj/56yaM04FYTAfxUMeu8aaMAzkyCMeyPR+s5I
- Srbp8tDrHgMlHv8JBe7YlPmjLRAil2ksZgy1kOlvuE4FlasSjF8RAginhz0W+ZVqCins
- IGjszEurbOBQdWpCvKwdIc+O2XaDRKGKfp+AnTV3kksq5D00RVbaje6PY6sDbx1Xcirr
- snsxuVnuIq56MRofkIOZABRZQsBBWqQoTLhLo86O8ZJhJfW4k6lSXDMuaAsWzKKTUi47
- 6GMw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1ultTQ-0005JR-6q
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:11:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1ultTJ-0001OJ-VR
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 14:11:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755022296;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jvantC9dptGQv+KLO5vBkgTqqNEYgjZbMxvKoSj+TMk=;
+ b=O5V/fof7n3zZsCOFFKTcVLkFEqGljEwy1rNI7vxFuKMmIWgXM7qzUEATEhZS/7rgaqoB+B
+ Zp0FreWNZnP/ychgIY9ebVHR12DVU4N9FU2J21ERqed8WGdud5G1EVqJWAYi3q9YNK+XGt
+ DnzA0s8McMus+CTdtwcgP0RLd1KDpqI=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-464-VEIyn5kQOIynXvqFYqztzA-1; Tue, 12 Aug 2025 14:11:34 -0400
+X-MC-Unique: VEIyn5kQOIynXvqFYqztzA-1
+X-Mimecast-MFC-AGG-ID: VEIyn5kQOIynXvqFYqztzA_1755022294
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7e86499748cso28269385a.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 11:11:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755021853; x=1755626653;
+ d=1e100.net; s=20230601; t=1755022294; x=1755627094;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7/gSRppnirG3P42CH6t/aeDpchyaRHzJmZFb7xB9suA=;
- b=P1GuEzsLsIhUegcgPZMtJReuvoe965y92hlEpqPij+pz78ui0Mg3J8BhKEMQqyRRbh
- 5VoOqmTxJc/YfaLNEcdsytCE9TTBsKakWIKfgKKF51iCL4R6b3wsYVi4SPJI3/i+plOD
- hRtRcmdCeNJCo81I41w1XGBdB0K+40DeuqWs1nesCeERIYFtlpPBKaazhJIH+52pf6w2
- 70lixnGO0uA/5cFEFAOEYRNfvGjZDnEAb/kXY43tc6EP53+iJEnTlQpLciHuoQjiqwJ3
- L8gv53XOndc13L3kFEyZXNJ1+p7Tcbr5NnyzCa4EYoWfmykrbEfw4rdt46fcGzwDaNVN
- BZ4g==
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jvantC9dptGQv+KLO5vBkgTqqNEYgjZbMxvKoSj+TMk=;
+ b=EXU65R/9b6qik/HrqMKaeCNJgr5KeidGxrj6RNnCKQsuIfXlLVi1/7i8b/QRCHRfxz
+ tG3RCLsnYaMSuLuWGgiz/j5h+s3AYXRn2DStI+HEBw1nX/QIWBoz5XQsB0s1DDG8H+Jy
+ b1Khp5KTYdHd/SIVG54jzy5aN1wWojtR58QcNosziw2w29zlFrrj9gQ38XcBlg/jX6G7
+ D402C4fo7Jw6Ng6kXssfhveLNQwwvrSJZqrEsIpYUiZLECuVv+/Ptwd818OL4UUg+YD2
+ W3Z5KxuosObI9knMvxDOqGz2KA8h1yAkD1y3hWoCCtrXMsulW953MWAL6nLGUedHpztf
+ SDeQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlu5AgWXTPPkmaFbqoVdxsmXGujnzmoqSi1Qidj3Dfuv4HGNrmIvYkH1FYsRxTN3nd8DQWYhsNqlZZ@nongnu.org
-X-Gm-Message-State: AOJu0YxJNVoMBTcycIPBHW1XQ6kgy0VWSS7JbOoKUwGt/PSOWH2sZkGZ
- 8kg7p1/6WvC7T9KDpkqmM5Qcl1VXZoCi2rGn8lt2R9lPn2h+enFAPagPk9ki2aOheRk=
-X-Gm-Gg: ASbGncsj2bXR65aFG67al2W6rXp4Arb6EIdqs3QKZqAI49/PEStvmGRrVNeHAKO79SO
- +kFwHUqs5jjXwX5p64xPFhXbYBFxUDHj8ynTqZc0jZ14f5vsp0UWy/EGZzFKyYlVrA6jPpwF7l8
- ZPMvMkt5xaeEqZNk5z7/KNm7ImTROrZECH2WSoJ1QiBtD4l+Bbimas1civBQ8VkRlljPzQfQqzc
- 6Gpgzi6uqukH0Dc//UiSyl09uEQyjdWDpzCy7RmYm4vyhqgdfW4fuM4a3IycAp855Tssl1LKV8O
- Urw6XVCUybh8TZ+jniCrTmgL3F6CYs5+m1uRbNRDGr63WtX/Zu3WLXOI4kbExyxV5YpMXGMS+Aa
- LV9IRMsFZwrOZ7OSndIfqj6woYEm98aCM7YH+8U5K9TFI0w==
-X-Google-Smtp-Source: AGHT+IFNZ8KegwiiDxgBgnLSz8mvCHczFEevnaSBjtDuLJiirEeOfUMiU4PA9c3vgcf7PK4SgO13Ig==
-X-Received: by 2002:a17:903:3c4d:b0:243:3da:17bb with SMTP id
- d9443c01a7336-2430d1ccb42mr2088505ad.32.1755021852561; 
- Tue, 12 Aug 2025 11:04:12 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCXXKeJtapVZ6oKZ89PQDORr9LMFL99vWkuI9DGis0uobrI6WTHsSWprCWw5rySs/8Hfws3rBoO6uIdc@nongnu.org
+X-Gm-Message-State: AOJu0YwItUxd6PaeBTwWhKUTSTCJOZnNribfNisZfRt4MX//fe9n0Y+T
+ AMYTbDAuWVFAm4SMrl9M8eSeqRCXP1sSw2qLFY7y0DdLy195rPTXtG6SmcziwDDm4HXLXIkRsTe
+ E4SKAAhNCYwQgTR+87p6YbBmt9K6a9L6uNylLmk1BWTOUtRC2UE2n/5Rq
+X-Gm-Gg: ASbGncsVwN2V2M7sYELvA7sUI+iw72H7gW0htwKv3ymvE97uOWPhlB+nCIm5x+3kDmC
+ AD+4ot0k2w8j5ifoT7YnmQQ9Uv4JCxjS2j3Z/ndMIY3eH3ewXlvw3gs/quGSaxz5bHDtFLc01Iz
+ 3eaNCzZqcdnM+UNMowORfbMfqsp27PU21TMcpWA8iqB6mIm3cu6iAt2IDUVVqcTaBmX3POHhOUt
+ 0JvXEkUZqa+p9AOHdF4tJadFSBDKRdosFZLbZ836MpFQ+TN04HCLE0YnPef1+lRpLsC8UZ6nAL6
+ tQYG/0bl7oNYyVJjfqZqqtpZZRBszC8Ll6gXIhdtOF2ss4CHI35P49KL6XlFTeoH4SJDomA49jo
+ ESAle6Y7Sdzg=
+X-Received: by 2002:a05:620a:1919:b0:7e8:161:e633 with SMTP id
+ af79cd13be357-7e864ab92a3mr59121685a.5.1755022294170; 
+ Tue, 12 Aug 2025 11:11:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvZTpvPOyqK3fI3rXoL9ASFeWp0ZWgnWKF/CSbIUc1Ouwd8CMpj8hOhpC3/YYW7ISTz00G7g==
+X-Received: by 2002:a05:620a:1919:b0:7e8:161:e633 with SMTP id
+ af79cd13be357-7e864ab92a3mr59118485a.5.1755022293697; 
+ Tue, 12 Aug 2025 11:11:33 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-242bc894dc8sm123129685ad.72.2025.08.12.11.04.11
+ af79cd13be357-7e7fc4db4bdsm1396500385a.28.2025.08.12.11.11.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Aug 2025 11:04:12 -0700 (PDT)
-Message-ID: <8b5cbf44-02a1-45f0-8a59-3cb7b762ad0a@linaro.org>
-Date: Tue, 12 Aug 2025 11:04:11 -0700
+ Tue, 12 Aug 2025 11:11:33 -0700 (PDT)
+Message-ID: <88812eea-08e3-48f5-b2f8-75ab0fff573b@redhat.com>
+Date: Tue, 12 Aug 2025 20:11:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 00/11] hw/arm/smmuv3: Add initial support for Secure State
+Subject: Re: [PATCH RFC] arm/kvm: report registers we failed to set
 Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>, qemu-arm@nongnu.org,
+To: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chen Baozi <chenbaozi@phytium.com.cn>, smostafa@google.com,
- jean-philippe@linaro.org
-References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
- <d4fcf3a2-6789-4926-882e-1abac4c07843@linaro.org>
- <2169e4b1-97d1-43c9-a512-5e6e25a562ad@phytium.com.cn>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <2169e4b1-97d1-43c9-a512-5e6e25a562ad@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20250721161932.548668-1-cohuck@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250721161932.548668-1-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,200 +113,138 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/25 9:11 AM, Tao Tang wrote:
-> 
-> On 2025/8/7 05:28, Pierrick Bouvier wrote:
->> On 8/6/25 8:11 AM, Tao Tang wrote:
->>> Hi all,
->>>
->>> This patch series introduces initial support for emulating the Arm
->>> SMMUv3
->>> Secure State.
->>>
->>> As Pierrick pointed out in a previous discussion [1], full Secure SMMUv3
->>> emulation is a notable missing piece in QEMU. While the FVP model has
->>> some support, its limited PCIe capabilities make it challenging for
->>> complex use cases. The ability to properly manage device DMA from a
->>> secure context is a critical prerequisite for enabling device assignment
->>> (passthrough) for confidential computing solutions like Arm CCA and
->>> related research such as virtCCA [2]. This series aims to build that
->>> foundational support in QEMU.
->>>
->>
->> Thanks for posting this series, it's definitely an important piece
->> missing for emulating newer SMMU versions.
->>
->>> This work is being proposed as an RFC. It introduces a significant
->>> amount
->>> of new logic, including the core concept of modeling parallel secure and
->>> non-secure contexts within a single SMMUv3 device. I am seeking feedback
->>> on the overall approach, the core refactoring, and the implementation
->>> details before proceeding further.
->>>
->>> The series begins by implementing the components of the secure
->>> programming
->>> interface, then progressively refactors the core SMMU logic to handle
->>> secure and non-secure contexts in parallel.
->>>
->>> Secure Interface Implementation: The initial patches add the
->>> secure-side registers, implement their read/write logic, and enable
->>> the secure command and event queues. This includes the S_INIT
->>> mechanism and the new secure TLB invalidation commands.
->>>
->>> Core Logic Refactoring: The next set of patches makes the core SMMU
->>> functions security-state aware. This involves plumbing an is_secure
->>> context flag through the main code paths and adding logic to route
->>> SMMU-originated memory accesses to the correct (Secure or Non-secure)
->>> address space.
->>>
->>> Cache Isolation: With the core logic now aware of security states,
->>> the following patches refactor the configuration and translation
->>> lookup caches. The cache keys are modified to include the security
->>> context, ensuring that secure and non-secure entries for the same
->>> device or address are properly isolated and preventing aliasing.
->>>
->>> Framework Integration: The final patch connects the SMMU's internal
->>> security context to the generic QEMU IOMMU framework by using the
->>> iommu_index to represent the architectural SEC_SID.
->>>
->>> To validate this work, I performed the following tests:
->>>
->>> Non-Secure Regression: To ensure that existing functionality remains
->>> intact, I ran a nested virtualization test. A TCG guest was created on
->>> the host, with iommu=smmuv3 and with an emulated PCIe NVMe device
->>> assigned.
->>> Command line of TCG VM is below:
->>>
->>> qemu-system-aarch64 \
->>> -machine virt,virtualization=on,gic-version=3,iommu=smmuv3 \
->>> -cpu max -smp 1 -m 4080M \
->>> -accel tcg,thread=single,tb-size=512 \
->>> -kernel Image \
->>> -append 'nokaslr root=/dev/vda rw rootfstype=ext4
->>> iommu.passthrough=on' \
->>> -device
->>> pcie-root-port,bus=pcie.0,id=rp0,addr=0x4.0,chassis=1,port=0x10 \
->>> -device
->>> pcie-root-port,bus=pcie.0,id=rp1,addr=0x5.0,chassis=2,port=0x11 \
->>> -drive if=none,file=u2204fs.img.qcow2,format=qcow2,id=hd0 \
->>> -device virtio-blk-device,drive=hd0 \
->>> -qmp unix:/tmp/qmp-sock12,server=on,wait=off \
->>> -netdev user,id=eth0,hostfwd=tcp::10022-:22,hostfwd=tcp::59922-:5922 \
->>> -device virtio-net-device,netdev=eth0 \
->>> -drive if=none,file=nvme.img,format=raw,id=nvme0 \
->>> -device nvme,drive=nvme0,serial=deadbeef \
->>> -d unimp,guest_errors -trace events=smmu-events.txt -D qemu.log
->>> -nographic
->>>
->>> Inside this TCG VM, a KVM guest was launched, and the same NVMe
->>> device was
->>> re-assigned to it via VFIO.
->>> Command line of KVM VM inside TCG VM is below:
->>>
->>> sudo qemu-system-aarch64  \
->>> -enable-kvm  -m 1024  -cpu host  -M virt \
->>> -machine virt,gic-version=3 \
->>> -cpu max -append "nokaslr" -smp 1 \
->>> -monitor stdio \
->>> -kernel 5.15.Image \
->>> -initrd rootfs.cpio.gz \
->>> -display vnc=:22,id=primary \
->>> -device vfio-pci,host=00:01.0
->>>
->>> The KVM guest was able to perform I/O on the device
->>> correctly, confirming that the non-secure path is not broken.
->>>
->>> Secure Register/Command Interface: I set up an OP-TEE + Hafnium
->>> environment. Hafnium's smmuv3_driver_init function was used to test
->>> the secure register I/O and command queue functionality (excluding
->>> translation). As Hafnium assumes larger queue and StreamID sizes than
->>> are practical without TTST support, I temporarily patched Hafnium to
->>> use smaller values, allowing its driver to initialize the emulated
->>> secure SMMU successfully.
->>>
->>
->> Would that be possible to share your changes, and build instructions
->> for this? While working on SMMU emulation, we finally left this on the
->> side due to lack of a software stack being able to use secure SMMU, as
->> we were not aware that Hafnium + op-tee could make use of it.
->>
-> Hi Pierrick,
-> 
-> Thanks for your interest! I'm very happy to share my work on this. I've
-> documented the setup process, including our code modifications and the
-> step-by-step build instructions in  this link:
-> 
-> https://hnusdr.github.io/2025/08/09/Test-Secure-SMMU-with-Hafnium-ENG
+Hi Connie,
+
+On 7/21/25 6:19 PM, Cornelia Huck wrote:
+> If we fail migration because of a mismatch of some registers between
+> source and destination, the error message is not very informative:
 >
-
-Thanks for taking the time to assemble all this in a comprehensible 
-post, I'll give it a try when I have some spare time.
-
-> 
-> The core point of these changes is to enable the SMMUv3 feature in
-> Hafnium. This leads to numerous read/write operations on SMMUv3 secure
-> registers and various queue manipulations within the smmuv3_driver_init
-> function in Hafnium.
-> 
-> However, it's important to note that this initialization process itself
-> does not initiate any DMA memory access that would trigger the
-> smmuv3_translate flow.
+> qemu-system-aarch64: error while loading state for instance 0x0 ofdevice 'cpu'
+> qemu-system-aarch64: Failed to put registers after init: Invalid argument
 >
-
-I understand the difference. It can be tricky to generate specific 
-translation scenarios, which is where a custom test device can really help.
-
-> Even so, we've devised a method to test the subsequent Secure
-> Translation Path by leveraging the smmuv3-test platform device. This
-> approach allows us to verify the entire SMMUv3 flow, from initialization
-> to translation.
+> At least try to give the user a hint which registers had a problem,
+> even if they cannot really do anything about it right now.
 >
-
-Does it rely on a custom driver integration into an existing firmware or 
-the kernel?
-
-> 
->>> Secure Translation Path: Since the TF-A SMMUv3 Test Engine does not
->>> support QEMU, and no secure device assignment feature exists yet, I
->>> created a custom platform device to test the secure translation flow.
->>> To trigger the translation logic, I initiated MMIO writes to this
->>> device from within Hafnium. The device's MMIO callback handler then
->>> performed DMA accesses via its IOMMU region, exercising the secure
->>> translation path. While SMMUv3 is typically used for PCIe on
->>> physical SoCs, the architecture allows its use with platform devices
->>> via a stream-id binding in the device tree. The test harness
->>> required some non-standard modifications to decouple the SMMU from
->>> its tight integration with PCIe. The code for this test device is
->>> available for review at [3]. README.md with detailed instructions is
->>> also provided.
->>>
->>
->> I am not sure about the current policy in QEMU for test oriented
->> devices, but it would be really useful to have something similar
->> upstream (Note: it's out of the scope of this series).
->> One challenge working with SMMU emulation is that reproducing setups
->> and triggering specific code paths is hard to achieve, due to the
->> indirect use of SMMU feature (through DMA) and the complex software
->> stack usually involved.
->> Having something upstream available to work on SMMU emulation, at
->> least on device side, would be a great addition.
->>
->> Eric, Peter, is this something that would be acceptable to merge?
->>
-> 
-> Looking ahead, my plan is to refactor the smmuv3-test platform device.
-> The goal is to make it self-contained within QEMU, removing the current
-> dependency on Hafnium to trigger its operations. I plan to submit this
-> as a separate RFC patch series in the next few days.
+> Sample output:
 >
+> Could not set register op0:3 op1:0 crn:0 crm:0 op2:0 to c00fac31 (is 413fd0c1)
+>
+> We could be even more helpful once we support writable ID registers,
+> at which point the user might actually be able to configure something
+> that is migratable.
+>
+> Suggested-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>
+> Notes:
+> - This currently prints the list of failing registers for every call to
+>   write_list_to_kvmstate(), in particular for every cpu -- we might want
+>   to reduce that.
+> - If the macros aren't too ugly (or we manage to improve them), there
+>   might be other places where they could be useful.
+>
+> ---
+>  target/arm/kvm.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 667234485547..ac6502e0c78f 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -900,6 +900,24 @@ bool write_kvmstate_to_list(ARMCPU *cpu)
+>      return ok;
+>  }
+>  
+> +/* pretty-print a KVM register */
+> +#define CP_REG_ARM64_SYSREG_OP(_reg, _op)                       \
+> +    ((uint8_t)((_reg & CP_REG_ARM64_SYSREG_ ## _op ## _MASK) >> \
+> +               CP_REG_ARM64_SYSREG_ ## _op ## _SHIFT))
+> +
+> +#define PRI_CP_REG_ARM64_SYSREG(_reg)                    \
+> +    ({                                                   \
+> +        char _out[32];                                   \
+> +        snprintf(_out, sizeof(_out),                     \
+> +                 "op0:%d op1:%d crn:%d crm:%d op2:%d",   \
+> +                 CP_REG_ARM64_SYSREG_OP(_reg, OP0),      \
+> +                 CP_REG_ARM64_SYSREG_OP(_reg, OP1),      \
+> +                 CP_REG_ARM64_SYSREG_OP(_reg, CRN),      \
+> +                 CP_REG_ARM64_SYSREG_OP(_reg, CRM),      \
+> +                 CP_REG_ARM64_SYSREG_OP(_reg, OP2));     \
+> +        _out;                                            \
+> +    })
+> +
+I am afraid this is too simplistic.
+Refering to linux/Documentation/virt/kvm/api.rst 4.68 KVM_SET_ONE_REG
+ARM registers section
+there are different groups of registers (upper 16b) and not all regs are
+further identified by op0-2, crn, crm.
+I think it would be valuable to output the group type and then the
+formatted lower 16b, depending on the group type.
 
-This is very welcome. Once this is in place, it would be great to add a 
-new test to make sure things don't regress, and from where we can iterate.
-By self-contained within QEMU, do you mean a QTest based test?
+For instance 64b ARM FW pseudo reg is formatted as
+0x6030 0000 0014 <regno:16>
 
-Regards,
-Pierrick
+a diff on reg 0 results in
+qemu-system-aarch64: Could not set register op0:0 op1:0 crn:0 crm:0
+op2:0 to 10003 (is 10001)
+qemu-system-aarch64: error while loading state for instance 0x0 of
+device 'cpu'
+qemu-system-aarch64: Could not set register op0:0 op1:0 crn:0 crm:0
+op2:0 to 10003 (is 10001)
+qemu-system-aarch64: Failed to put registers after init: Invalid argument
+
+Thanks
+
+Eric
+>  bool write_list_to_kvmstate(ARMCPU *cpu, int level)
+>  {
+>      CPUState *cs = CPU(cpu);
+> @@ -932,6 +950,41 @@ bool write_list_to_kvmstate(ARMCPU *cpu, int level)
+>               * a different value from what it actually contains".
+>               */
+>              ok = false;
+> +            switch (ret) {
+> +            case -ENOENT:
+> +                error_report("Could not set register %s: unknown to KVM",
+> +                             PRI_CP_REG_ARM64_SYSREG(regidx));
+> +                break;
+> +            case -EINVAL:
+> +                if ((regidx & KVM_REG_SIZE_MASK) == KVM_REG_SIZE_U32) {
+> +                    if (!kvm_get_one_reg(cs, regidx, &v32)) {
+> +                        error_report("Could not set register %s to %x (is %x)",
+> +                                     PRI_CP_REG_ARM64_SYSREG(regidx),
+> +                                     (uint32_t)cpu->cpreg_values[i], v32);
+> +                    } else {
+> +                        error_report("Could not set register %s to %x",
+> +                                     PRI_CP_REG_ARM64_SYSREG(regidx),
+> +                                     (uint32_t)cpu->cpreg_values[i]);
+> +                    }
+> +                } else /* U64 */ {
+> +                    uint64_t v64;
+> +
+> +                    if (!kvm_get_one_reg(cs, regidx, &v64)) {
+> +                        error_report("Could not set register %s to %lx (is %lx)",
+> +                                     PRI_CP_REG_ARM64_SYSREG(regidx),
+> +                                     cpu->cpreg_values[i], v64);
+> +                    } else {
+> +                        error_report("Could not set register %s to %lx",
+> +                                     PRI_CP_REG_ARM64_SYSREG(regidx),
+> +                                     cpu->cpreg_values[i]);
+> +                    }
+> +                }
+> +                break;
+> +            default:
+> +                error_report("Could not set register %s: %s",
+> +                             PRI_CP_REG_ARM64_SYSREG(regidx),
+> +                             strerror(-ret));
+> +            }
+>          }
+>      }
+>      return ok;
+
 
