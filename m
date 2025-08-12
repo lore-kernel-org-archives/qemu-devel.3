@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC366CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 06:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 294CFC87FCB
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 06:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uliJp-0000se-Fx; Tue, 12 Aug 2025 02:17:09 -0400
+	id 1uliK7-00026l-R8; Tue, 12 Aug 2025 02:17:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uliJJ-0008SY-Au
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 02:16:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uliJF-00053Z-0L
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 02:16:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1754979386;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ls3mZEixJglTtJfcXdPDiePRuTtqbFD6CoBnDwtFEzo=;
- b=FabFLqLvb4EGBowY5FTOSnm5BsdtVGzFxohKKcEfjg6mAKv7P4f803cD09wVYa7c6zinLk
- 4XfA0P0n2CHpj1mXgV8n+GsMT2g5IFSsa+teGzLEw59VG/mFUWFssOeyF+RJvruWTWrm8y
- 8BFE4fRNcHUsGj/zl/MQxO4ijUf39OU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-bQVZ_GqMNcKcqEgoydP5zA-1; Tue, 12 Aug 2025 02:16:25 -0400
-X-MC-Unique: bQVZ_GqMNcKcqEgoydP5zA-1
-X-Mimecast-MFC-AGG-ID: bQVZ_GqMNcKcqEgoydP5zA_1754979384
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-459d5f50a07so28792175e9.3
- for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 23:16:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uliK4-0001xZ-Eo
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 02:17:24 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uliJy-0005At-4Q
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 02:17:24 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-458bc3ce3beso30674845e9.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Aug 2025 23:17:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1754979435; x=1755584235; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0aaJFF9ub0BrIDT3m2SLdCBFzXbPk99xPmToZgy/WAM=;
+ b=VmRBucVHsQC+O2BOyDsDkj8Oy+GH2ZdwKn7utX3Yf1R+Q4HgRiSJ4sAV+2528AprTB
+ swc8orl5i4js2udTuIBqYdljNu5APN9D7hMjlYZRDsA5lUnXbE7s4NNi7NVWC5wruV0R
+ 8lh5CTAjqgUcFjduG9YzUJ+rgVBt6MIBig5jZmYLC2yPrUFCBkJLsfbh1KhTsuM3x+vV
+ iPLGPIPaexDUmyhZsHEhd7uh2Oh46Y2OsHhZ/F/viTei6vbs8oFqyYU5KFUztgwU2IFC
+ KdzCsvecmHIjo/Y23aYrJH3LojZUGUJIZSVFz2hNOAlr1yXhXEaIQfwBlJUkhqGmyV5a
+ CpKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1754979384; x=1755584184;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ls3mZEixJglTtJfcXdPDiePRuTtqbFD6CoBnDwtFEzo=;
- b=j9LPSCtPcUo2btQkCx8c4ZdnyCoLMhfZkAZc1a5+MDCu23ilA5g8wTB1ekYdFsVFkm
- 752FPy7dOIhNuf4Aax9Qw0Rhugw9B4MNOh/Ba/1igq/pUKEuJEmrNvx1vXpfTZgG4/D7
- Iq2rMvI0t1ItPH7ndi4cOh1Wxjab1Dfu52D/N57a0SJdi+Lv1sJvQxQLkdS/VPbtFzdr
- idSUMB96F01ZP1o266Xk/jgdL/z5k+IINyDsHsaRMBvjCwDFN2Tr2+FGmHnsDfHORAGx
- 0tW7sfdoOgow2d284PXyrmrWB/1GUn1w+lX9Ljht+MfwbxKWnmFduxnYxvyXoI1PSWmv
- kQMQ==
+ d=1e100.net; s=20230601; t=1754979435; x=1755584235;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0aaJFF9ub0BrIDT3m2SLdCBFzXbPk99xPmToZgy/WAM=;
+ b=f+GMjYiK5jidvNOKDEypwgIn24eXJ3uvhv3yjpsRf7cF+rjCfciGEunek9rRsp7BKk
+ pkC/SM/X2VCz1knDiwyMWiRSJ4NX10KLcMPtynzpDYUETNZRI2zJERfFID4NhUE+OkUM
+ WW7+KiJV+EDrwMLPjYqrNQOmSKCyj3WKWcWMiS5PjyrGgdVqpyyhiyQKBLoW4E2Ipat4
+ L7hKVmy/xUFuEzMa8QG1gEw+MhRoHpk9qpd68mKQOyPoWvhnfuXfl6HSt7M9CiKW0QXV
+ vvR9NHoRp3ZsDRCg5W1kmTiMibgmYKvX7iUV288TcxeMRRRnxGoHeyP9fSvb859PGbj/
+ c1jg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUD60Jtm7aQQozmzmqSgfshu5rQqQ9f4EtOYw3XwWnwGrPZ9whBNkpXN4nQIG9cx1rhcYd9zwu6A3uk@nongnu.org
-X-Gm-Message-State: AOJu0YxMXn08GsJFSD/8Evk6RLw8W/P5B156W+CMrIPuMcKd0d8synWF
- RhFazOwD74zMN0hQ0YACbxC5TAzIFr8gSZ9EnGGnbGQAPoYZl1cF8kq3kHKV+CSuOrwTkGxmSCc
- BWgYooTCgMuYauionV04b6A+IJXVxN54iSI108xoyGwUeY7JqXYSUl5SF1Rkvx9VHV8MoRyqXKP
- ui1aefmStRXNyCNfJ3hfNVxoxWYhs5mjk=
-X-Gm-Gg: ASbGnctydi8rA/XvxK5pKMMQLKiGAMq2pIG9WLLe287hjdPEc5z8LnsIlcBgM1/n9fS
- PfsGeE2KWTuTCi32hHicfGGc72htkPQFrKbeBJxp+noq7kMviijpOLDwL0vdWLzg+9WkGe6zBLm
- Z5pSOHScE+RfXlnQ7ynvduag==
-X-Received: by 2002:a05:600c:314f:b0:456:1d61:b0f2 with SMTP id
- 5b1f17b1804b1-45a10c127fbmr19004025e9.30.1754979383734; 
- Mon, 11 Aug 2025 23:16:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGz3gAfdH8TbXWssiDNwp3FAN1P6uOafQ1JN9/jj6Os7NYWAubwA9sT06VKnHgGwThG7YKsv23Q6Yza6yZ7La0=
-X-Received: by 2002:a05:600c:314f:b0:456:1d61:b0f2 with SMTP id
- 5b1f17b1804b1-45a10c127fbmr19003775e9.30.1754979383305; Mon, 11 Aug 2025
- 23:16:23 -0700 (PDT)
+ AJvYcCX6PPfGEBHVKAS7a3XlO97q62PEVL3a/qQjMe61zulIaCWwr6Mg39zhUp/uTCC/i6t8n8yU6bgD/vUu@nongnu.org
+X-Gm-Message-State: AOJu0Yy0zp9zv9ifY6ybvdMxthkPzfPyB6T32Ip5U7ioIcn60TyCrhAh
+ OU86iKzkubRDxrLcca3wQ4AqNPKT4eGImLPx51aY61C8OFRyf8/qq8hvU4uwSspMseg=
+X-Gm-Gg: ASbGncvJL5JBrz+J7xxJhKH9NeQoSWhN+unvpP5v1YcWTZzLg3TnDheKYOvvM8RMhzO
+ +lIz5Be+ccWKoCAutDrcHB2YP1o98DQHtx6lJVxo5zBL+pjOhU0y3f+Ee4j8haPhoDJ8UXVSdBG
+ FfAT3wEPkTctaZomiTlx2mxhdan4RPbpvA0gxWblxuFTutRXqXErCIQGMJVdEVwpw2HpeHuou/i
+ DksuY8KM6P0MkNuTGgZb9kFMoOco41EBmmS3r5AlEE82MajQL0Y7HbOlmewpJhWuJa2vDcBLSbJ
+ A31xWP/1UBr+DeMNFASf2o1MdkXGfboEpY3EQ+xGjU2wfm5UZRL0d0hc9J+Nl4DFWmMiicuCA0H
+ wlYLKcsF5W2XjdnSATeKdKHa/wOOBe3QtO8tjJ11xXUWK/m1EHHWKf6J5i2rqQ96thQ==
+X-Google-Smtp-Source: AGHT+IEz8/ZP+sBRhuzJdAS7ObfoRFYXnes6/p4pL/dEU/HJljpRKs8lqG2vak5hi+9mGjEh9RucuQ==
+X-Received: by 2002:a05:600c:4446:b0:456:25aa:e9c0 with SMTP id
+ 5b1f17b1804b1-459f4ecfb3amr147385125e9.14.1754979435228; 
+ Mon, 11 Aug 2025 23:17:15 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-459e583f9fcsm276171115e9.4.2025.08.11.23.17.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Aug 2025 23:17:14 -0700 (PDT)
+Message-ID: <df4fecb5-a709-47ef-918e-2c163d17dd80@linaro.org>
+Date: Tue, 12 Aug 2025 08:17:14 +0200
 MIME-Version: 1.0
-References: <20250811190159.237321-1-jsnow@redhat.com>
- <CABgObfZ5izVnO1ZNGEstr55Lko0P4vzuOjaC=Ddy-xgh_hhRwA@mail.gmail.com>
- <6ef750a2-915f-4fc5-8b50-f92712fa800f@tls.msk.ru>
-In-Reply-To: <6ef750a2-915f-4fc5-8b50-f92712fa800f@tls.msk.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 12 Aug 2025 08:16:11 +0200
-X-Gm-Features: Ac12FXwvwG_tPHVFNA2YP0C8zC5lwSJxBb0Lavjy2wmfyP2JWvDz_lVbucacch4
-Message-ID: <CABgObfYkZaWuPPXrUoSw+c9o5SmG1hnkKVE29KcH_0-njHQrCw@mail.gmail.com>
-Subject: Re: [PATCH] mkvenv: Support pip 25.2
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: John Snow <jsnow@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- "Sv. Lockal" <lockalsash@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000bafcf7063c24fa1f"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 32/85] target/arm: Split out mmuidx.h from cpu.h
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250802232953.413294-1-richard.henderson@linaro.org>
+ <20250802232953.413294-33-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250802232953.413294-33-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,120 +102,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bafcf7063c24fa1f
-Content-Type: text/plain; charset="UTF-8"
+On 3/8/25 01:29, Richard Henderson wrote:
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/cpu.h    | 207 +-----------------------------------------
 
-Il mar 12 ago 2025, 07:47 Michael Tokarev <mjt@tls.msk.ru> ha scritto:
+Cool.
 
-> > We're bending over backwards just because the Python developers on one
-> > hand keep shipping pip while saying that "no, pip is absolutely not
-> > special"; and on the other hand keep *not* shipping packaging and
-> > distlib while complaining that people don't use them.
->
-> This is a bit backwards, it looks like, and a bit too gross.
->
-> First, pip vendors a few crate^Wlibs for internal use, but these libs
-> had never been public, - that's why distlib is imported from
-> pip._vendor.  We used this hack in qemu to simplify bootstrap, but
-> it was never the intended usage in pip, and hence there's no backwards
-> compatibility break here from the pip side.
->
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Yes, absolutely. We were doing something gross as a convenience, but never
-documented that it's just that, a convenience.
-
-Second, which is a continuation of the first, strictly speaking it
-> is our fault that we use distlib without depending on it.
->
-
-Agreed, hence my suggestion to just require distlib.
-
-And 3rd, it seems like Current Way (tm) is to use "packaging" library
-> instead of distlib.  And packaging library is shipped within pip for
-> a decade or so already - the same way as distlib.  This is why I
-> wrote "backwards" above - by requiring distlib, we seems to work
-> backwards, because current python way - which's been this way for
-> years - is to use packaging, not distlib.
-
-
-They are different libraries and both have their role. pip used
-distlib.scripts but not distlib.version, and therefore decided to stop
-shipping what it doesn't use
-
-https://github.com/pypa/pip/pull/13337
-https://github.com/pypa/pip/pull/13342
-
-Using distlib is not going backwards, especially considering that we have
-no other use for "packaging" in QEMU. There's no replacement for
-distlib.scripts in the "packaging" library, and no official deprecation of
-distlib.version. All that we would get from doing version matching with
-"packaging" is requiring two dependencies instead of one (which is why John
-kept the possibility to use an installed distlib).
-
-Paolo
-
---000000000000bafcf7063c24fa1f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 12 ago 2025, 07:47 Michae=
-l Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru">mjt@tls.msk.ru</a>&gt; ha s=
-critto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">&gt; We&=
-#39;re bending over backwards just because the Python developers on one <br=
->
-&gt; hand keep shipping pip while saying that &quot;no, pip is absolutely n=
-ot <br>
-&gt; special&quot;; and on the other hand keep *not* shipping packaging and=
- <br>
-&gt; distlib while complaining that people don&#39;t use them.<br>
-<br>
-This is a bit backwards, it looks like, and a bit too gross.<br>
-<br>
-First, pip vendors a few crate^Wlibs for internal use, but these libs<br>
-had never been public, - that&#39;s why distlib is imported from<br>
-pip._vendor.=C2=A0 We used this hack in qemu to simplify bootstrap, but<br>
-it was never the intended usage in pip, and hence there&#39;s no backwards<=
-br>
-compatibility break here from the pip side.<br></blockquote></div></div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">Yes, absolutely. We were doing s=
-omething gross as a convenience, but never documented that it&#39;s just th=
-at, a convenience.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div =
-class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">
-Second, which is a continuation of the first, strictly speaking it<br>
-is our fault that we use distlib without depending on it.<br></blockquote><=
-/div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Agreed, hence my s=
-uggestion to just require distlib.</div><div dir=3D"auto"><br></div><div di=
-r=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">
-And 3rd, it seems like Current Way (tm) is to use &quot;packaging&quot; lib=
-rary<br>
-instead of distlib.=C2=A0 And packaging library is shipped within pip for<b=
-r>
-a decade or so already - the same way as distlib.=C2=A0 This is why I<br>
-wrote &quot;backwards&quot; above - by requiring distlib, we seems to work<=
-br>
-backwards, because current python way - which&#39;s been this way for<br>
-years - is to use packaging, not distlib.</blockquote></div></div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">They are different libraries and both=
- have their role. pip used distlib.scripts but not distlib.version, and the=
-refore decided to stop shipping what it doesn&#39;t use</div><div dir=3D"au=
-to"><br></div><div dir=3D"auto"><a href=3D"https://github.com/pypa/pip/pull=
-/13337">https://github.com/pypa/pip/pull/13337</a></div><div dir=3D"auto"><=
-a href=3D"https://github.com/pypa/pip/pull/13342">https://github.com/pypa/p=
-ip/pull/13342</a></div><div dir=3D"auto"><br></div><div dir=3D"auto">Using =
-distlib is not going backwards, especially considering that we have no othe=
-r use for &quot;packaging&quot; in QEMU. There&#39;s no replacement for dis=
-tlib.scripts in the &quot;packaging&quot; library, and no official deprecat=
-ion of distlib.version. All that we would get from doing version matching w=
-ith &quot;packaging&quot; is requiring two dependencies instead of one (whi=
-ch is why John kept the possibility to use an installed distlib).</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
-
---000000000000bafcf7063c24fa1f--
+>   target/arm/mmuidx.h | 216 ++++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 217 insertions(+), 206 deletions(-)
+>   create mode 100644 target/arm/mmuidx.h
 
 
