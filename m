@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EF72CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 05:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED84CCA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 06:09:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1um4Sm-0001Qz-GG; Wed, 13 Aug 2025 01:55:52 -0400
+	id 1um4fF-0004Mj-Aa; Wed, 13 Aug 2025 02:08:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1um4Sk-0001Pc-IQ
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 01:55:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1um4Sg-0003mw-1Z
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 01:55:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755064541;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kjqQs2AsOARtKdNaZ0RfCrCBBvpwLBEMnrTctguUF/Y=;
- b=Ekswwm60EY+1k1SIHdxnHhGhYjeOTgDawuIEyl5g4bnwoIJeknbbUEY5hdVn5/hM31euvy
- oxdIbwXX8Xkm+MFYxrmCGQypn02Oycxg2CFDWnxrn3jNMJZDUnel+q+leG3DCG1kxLZTVe
- r+mikogx02EwQvHbd2KcEP8LR3rA+yM=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-BdiGPL-OOfS8VGKGLMHUjA-1; Wed, 13 Aug 2025 01:55:39 -0400
-X-MC-Unique: BdiGPL-OOfS8VGKGLMHUjA-1
-X-Mimecast-MFC-AGG-ID: BdiGPL-OOfS8VGKGLMHUjA_1755064538
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-23fe26e5a33so94663375ad.3
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 22:55:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um4f4-0004LY-1k
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 02:08:34 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um4f0-0004wQ-77
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 02:08:33 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-45a0dc77a15so15956195e9.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 23:08:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755065305; x=1755670105; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ENCAYDjp+PDVl2IS5ZyULDrTb1pibqqvUg9qN9kQHUE=;
+ b=gxsSo0+m92Fy9nxFTG5lwOdtVMNAvo4cyz/HkLXg4XiYWqXp2VEWZIn65l13ZBZCRC
+ N+eBdZENNiesUv+XRpGMwH5HyAroMebkUTQA+UEDR2GFIfFvNIYpH8eCk71vL1+rYDhd
+ hf+uVAGMcxn/06UHv0ypzkeCnS7WVuZjhTUzb+nRHJr9VBk1IGSsLQlwVQsaSMz/J5ve
+ Te/HQy0wonxsoXjtPoTiuxrPGHy4RZqQa2YTha9PbY4b25P3yGd/r8+Be8EGAxCpVhJj
+ RrxZv2jjkSkFwV4lQXkujeJN1oy1igrTF+FPbRg1gWOZ4fen8yTeDibToEWpvih9/2G/
+ S7UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755064538; x=1755669338;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kjqQs2AsOARtKdNaZ0RfCrCBBvpwLBEMnrTctguUF/Y=;
- b=QcSQtGSB3bMgVDfm3/uVZ4UmjTxcTbs3NOtLXhOK2kjobTKhsdNgqraXWCGB7ny7zB
- gVzqcFortI+nUN2Z8MjtKyB7c4uUUfmWcCiyShKZA63myCxooo+KrR5uaTIXZXKSoud2
- XINXi5FIqHNG65kQsBgyazG8tmIo0157Pf2vetniW9srLmZZTem02pRiXi0hvvB6hAtJ
- GpdORdLAGL+HLGKw+UIs1OVcNwLY3zlGbRnI2XtLUEvEhZKMQeGejvfFqqoL8DyDOqYs
- YqMqhpiwUVKjd1mlQn0gXS4eFDaR3m2AEc/4Ju23LuSkfDbC7r+8MiQHnrIt7CB+6bCR
- EKdQ==
+ d=1e100.net; s=20230601; t=1755065305; x=1755670105;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ENCAYDjp+PDVl2IS5ZyULDrTb1pibqqvUg9qN9kQHUE=;
+ b=upjbBiqL31eECjZ6bKLW95m8eeV56Y4I9dSCYk9iujXy81GwoEU4XVgkPHm/3IAjjw
+ X4z92g5hlJZn2bj+OMVmiGyldhhvEnGw54sPWh0hc8rEMgVUHC1IV6ZB1WDduskANWsW
+ kthjmaR6Jxnuigc37JCJH6a71rcPKx419XJjevGtmld6tw0nz8wiC+Uvz0BuYyIz37qV
+ sPLFDNoNT02dTQXgw0ADHHFHoXL2gbB/Uz43G5GXhwIpDYPiNxqfIK/M8EvgOX6/SN59
+ KWhwJZJDFzUyQTZ7j65CT72lSPdvOdEZfQU/gJIY23MKv9SO4BecUiCa7sGUHp5piAG8
+ aW7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXI4leH/Pht9VvoSdmK5T+iUtdnD+ruLyDviZPgGXKIebFNbLNagV54OflD5wcjJeqeNQ+SKN2lJKqD@nongnu.org
-X-Gm-Message-State: AOJu0Yxma/+UJMP3KQD8aJ3ECqXpGcF5BCfq7s6G08jEcZdSb5/TSVea
- t6LdeT0RFv35uSJne64OjRVxJ+IEVYrYTb731V1hFVjJ7jNXfC+BArEh5idtfVKtnk3vJ31z62f
- rVr0fwAbRNn5r1etUPaU1Vn18POx9VvLGDSqgjxy4BauixweFawjQVol2//Npmcjk5z21U4+qT4
- Mb2eopGL+ICCp8CdEC6BpxIOh+6JCYjE8=
-X-Gm-Gg: ASbGncv+xDz4U8Fa6epkiF98WVfbSocSBRe0+TYvqvp2QFBPA0rfLNPbktp7uVs8DxX
- wFq6kLUKXHfckPt58hv/7WEb3H4uDTT/1OjGQTmBe2o7Ohx3cBcnxy2fF5DiWyLLi+UxL86I+A/
- R1ZGRzLLporW+MCTxXWzE=
-X-Received: by 2002:a17:902:f611:b0:234:a139:11f0 with SMTP id
- d9443c01a7336-2430d0b2a80mr27380035ad.7.1755064538414; 
- Tue, 12 Aug 2025 22:55:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMWTqo6oS+jAMq93plCzQIEJZYNL2yyGfwXxDKaUvhx6I+H+C74sCSubQE3MQIEjWOeofeYzNIWs6CxuuE5tU=
-X-Received: by 2002:a17:902:f611:b0:234:a139:11f0 with SMTP id
- d9443c01a7336-2430d0b2a80mr27379525ad.7.1755064537586; Tue, 12 Aug 2025
- 22:55:37 -0700 (PDT)
+ AJvYcCVO+gzFBgJalwe0bjcmTJjXk4UrcmYHP9kfu4G5qWcDsxrs7SZyBIBuVhmSmYPAznJyicXyF3zFaCAi@nongnu.org
+X-Gm-Message-State: AOJu0YwI7S9ViBlGfOtuDqkymMdB+vNEcBjY2Hqe+TbvvkkKy7yxKMcw
+ 7Zm7nX6ZB91oU5Ilnuz/ZJn3f+JD4x4NXrCapdguPs0RZehEpcshQttpQVXT2VpwRoo=
+X-Gm-Gg: ASbGncsv8F9tqv2/VhR0tt5gMV8wh7ivE0CSYA1vZ9/d8hKE5VjIcQI7pMH+WjNm1O2
+ TQwQ3S4AOZZYt49tLP/Yz7t9oRKzsaKOIQPehvvxbRRZqcDZqlYX4EoK58ypr6DJp8v6ZwMCC4F
+ CDP0g6/2CkCyWdWu+edAtL4/7K9b6ArO9LIBxwfiLUggKZKpyoHZEGdFeh0y40qDWmx0z3bQu7f
+ 5WN3db712s3EJnaQAJgAfKVXF3zCgRLWGiq0OEP3qUWIzHMfTkDtVd0L6z9vUjb+lpaREq+38yo
+ tMFShPC3kgS2PrjRlfYpajVUKunLcph1ix/0wEjs2rE93lxqq6uNK2hsfT3MaU/yxAUKrDn3tR+
+ 1ZMuHNBMdHK6BznImWvV4Ka3ciWXo5D6JsVqK8TbvF/hZ5nZMWJzgdhVekihh+8BX7g==
+X-Google-Smtp-Source: AGHT+IHzQ3oLJbqTSsMpPUo6kC3QugKU5mh7FKOHW4U/GkUtNxh7gsuihOvDbOJw6sz0S0LgnFWb2Q==
+X-Received: by 2002:a05:600c:4710:b0:456:8eb:a36a with SMTP id
+ 5b1f17b1804b1-45a165a7cfamr13840175e9.13.1755065305114; 
+ Tue, 12 Aug 2025 23:08:25 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3b79c485444sm47072038f8f.66.2025.08.12.23.08.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Aug 2025 23:08:24 -0700 (PDT)
+Message-ID: <e5bc7985-ceda-4bbd-b1ca-130f9e6dc370@linaro.org>
+Date: Wed, 13 Aug 2025 08:08:23 +0200
 MIME-Version: 1.0
-References: <cover.1753297661.git.pabeni@redhat.com>
- <8e8a91adcbf4e37c7a5e086780e1000d3b3298d3.1753297661.git.pabeni@redhat.com>
- <de3c69a8-d874-44a3-bd47-91b6b298e184@rsg.ci.i.u-tokyo.ac.jp>
- <7c7c3f2c-e643-46ad-810c-aefdd486ad78@redhat.com>
- <8e3c5aa3-3180-4df2-b378-18e3e91d3f80@rsg.ci.i.u-tokyo.ac.jp>
- <CACGkMEse8cM8=8y4JwBdVQi23buz1OCzhQmVxvsRJGdQ9tgaWA@mail.gmail.com>
- <73f8b2dc-d5ad-43b7-834f-6322bfe617af@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <73f8b2dc-d5ad-43b7-834f-6322bfe617af@rsg.ci.i.u-tokyo.ac.jp>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 13 Aug 2025 13:55:25 +0800
-X-Gm-Features: Ac12FXyKTyrL_PSA-pUjz3hNkcxglZRRqMNsYefOdKovHTosAnIe1ny8Mi690F4
-Message-ID: <CACGkMEuP10o6dBGpyrNuLamKmd+OLiadp2TQKSkdG-Zr-2kk0A@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 07/14] virtio-pci: implement support for extended
- features
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, 
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,
- Vincenzo Maffione <v.maffione@gmail.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 10/10] target/arm/hvf: Allow EL2/EL3 emulation on
+ Silicon M1 / M2
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20250812172823.86329-1-philmd@linaro.org>
+ <20250812173234.86970-1-philmd@linaro.org>
+ <2f3cd701-6051-46e0-b7e2-e807b29afa28@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2f3cd701-6051-46e0-b7e2-e807b29afa28@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,123 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 12, 2025 at 4:03=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2025/08/12 13:01, Jason Wang wrote:
-> > On Fri, Aug 8, 2025 at 12:55=E2=80=AFPM Akihiko Odaki
-> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> >>
-> >> On 2025/08/08 5:18, Paolo Abeni wrote:
-> >>> On 7/26/25 1:52 PM, Akihiko Odaki wrote:
-> >>>> On 2025/07/24 4:31, Paolo Abeni wrote:
-> >>>>> @@ -1477,6 +1509,13 @@ int virtio_pci_add_shm_cap(VirtIOPCIProxy *p=
-roxy,
-> >>>>>         return virtio_pci_add_mem_cap(proxy, &cap.cap);
-> >>>>>     }
-> >>>>>
-> >>>>> +static int virtio_pci_select_max(const VirtIODevice *vdev)
-> >>>>> +{
-> >>>>> +    return virtio_features_use_ex(vdev->host_features_ex) ?
-> >>>>> +           VIRTIO_FEATURES_NU32S :
-> >>>>> +           2;
-> >>>>
-> >>>> This function could be simplified by replacing VIRTIO_FEATURES_NU32S
-> >>>> without any functional difference:
-> >
-> > Did you mean using VIRTIO_FEATURES_NU32S instead?
-> >
-> >>>>
-> >>>> 1. For writes: virtio_set_features_ex() already ignores extended
-> >>>> features when !virtio_features_use_ex(vdev->host_features_ex)
-> >>>> 2. For reads: When !virtio_features_use_ex(vdev->host_features_ex), =
-the
-> >>>> upper bits of host_features_ex are zero, and guest_features upper bi=
-ts
-> >>>> remain zero (since they can't be set per point 1)
-> >
-> > I think it depends on the compatibility work which hasn't been done in
-> > this series.
-> >
-> >>>>
-> >>>> So the conditional logic is redundant here.
-> >
-> > See below
-> >
-> >>>
-> >>> This is to satisfy a request from Jason:
-> >>>
-> >>> https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05291.html
-> >>> https://lists.gnu.org/archive/html/qemu-devel/2025-07/msg05423.html
-> >>>
-> >>> I agree there will not be functional differences always accessing the
-> >>> full space, but the guest could still be able to notice, i.e. the
-> >>> extended space will be zeroed on read with that patched qemu and
-> >>> untouched by the current code and this patch. To be on the safe side =
-I
-> >>> think it would be better to avoid such difference, as suggested by Ja=
-son.
-> >>>
-> >>> Does the above make sense to you?
-> >>
-> >> By functional, I meant the functionality of QEMU, visible to the guest=
-,
-> >> rather than the whole system including the guest, visible to the end
-> >> user. The guest cannot notice the difference because the extended spac=
-e
-> >> is zero on read even without the conditional, which is described as
-> >> point 2 in the previous email.
-> >
-> > I'm not sure I understand this correctly. But it doesn't harm here cons=
-ider:
-> >
-> > 1) it's the entry point from the guest, checking and failing early is
-> > better than depending on the low layer functions
-> > 2) we have checks in several layers (both virtio-pci and virtio core).
-> >
-> > And it looks like a must for at least GF:
-> >
-> >      case VIRTIO_PCI_COMMON_GF:
-> >          if (proxy->gfselect < virtio_pci_select_max(vdev)) {
-> >              uint64_t features[VIRTIO_FEATURES_NU64S];
-> >              int i;
-> >
-> >              proxy->guest_features[proxy->gfselect] =3D val;
->
-> I missed proxy->guest_features. Indeed it makes a difference.
->
-> Now I have another concern with virtio_pci_select_max(). If the feature
-> set grows again, virtio_pci_select_max() will return the grown size for
-> the devices that have [127:64] bits, which will be a breaking change. In
-> this sense, VIRTIO_FEATURES_NU32S, which will grow along with the
-> feature set, is not appropriate here.
+On 13/8/25 00:34, Richard Henderson wrote:
+> On 8/13/25 03:32, Philippe Mathieu-Daudé wrote:
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> Another API PoC.
+>> ---
+>>   target/arm/hvf/hvf.c | 6 +++++-
+>>   1 file changed, 5 insertions(+), 1 deletion(-)
+>>
+> 
+> I imagine this waits until accel/split is present?
 
-Things will be fine if we do the compatibility work correctly, so host
-"host_features_ex_ex" won't contain anything for the legacy machine
-types.
+Clearly, but I wanted to get host_cpu_feature_supported() right
+first, to not keep rebasing / reposting 183 patches...
 
-But I'm not sure it's worth worrying about it now considering we take
-years to reach 64.
+>  If so,
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->
-> Hardcoding 4 ensures such a breaking change will not happen at least.
->
-> Perhaps QEMU_BUILD_BUG_ON() may be placed here to tell it needs to be
-> updated when the feature set grows, but I don't require that since there
-> is QEMU_BUILD_BUG_ON() before vmstate_virtio_pci_modern_state_sub. It
-> may be a good idea to move this function somewhere close to
-> QEMU_BUILD_BUG_ON().
->
-> Alternatively the function may compute the value to return by finding
-> the last non-zero element in vdev->host_features_ex and multiplying by
-> 2. It will probably work even if the feature set grows again in the futur=
-e.
->
-> Regards,
-> Akihiko Odaki
-
-Thanks
-
->
+Thanks!
 
 
