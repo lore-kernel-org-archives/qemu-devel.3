@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E5B6CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Aug 2025 23:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1A5CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 00:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulycg-0006yJ-TC; Tue, 12 Aug 2025 19:41:43 -0400
+	id 1ulzVD-0000of-9L; Tue, 12 Aug 2025 20:38:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1ulyce-0006xK-Bk
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 19:41:40 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1ulycT-00087i-UO
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 19:41:39 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6154d14d6f6so7025331a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 Aug 2025 16:41:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755042085; x=1755646885; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hNp9R9/dnBd/hRC+QUiGRCKNYQmASo17Z8cMOF0g+Fc=;
- b=Z12xdZdn6XhwPtvevVWGzTJnnauC33kPKir8QXrrF3v5ZS8ZMK2F9wjE+ZGZ5iuwZ8
- AhlJGj43COK/jX3Cpo72PI4Klg2oQpHZTIaRNB95T6h/yDDHmb1kVj+wQdVTGv78Ivqy
- Vet5IXKnTeHrT8gvlojBKE4NmlqsJmtD98sBaTcsXmzWBH9Vp+BuLsGmA/6HGhLeHC2P
- 1ocePCgW0Rl9zIIBdJ+NAiflCVJyiBixFxiYLwMmj3u4eVYQcTPh3qUrtCPCENE29CBv
- vT5oZJ2ai5c5HcdDUwk67yJ2uafn1UMzEuM5EUcDPx/1AJAbRac+/1XrviS0ElON/iHj
- vHyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755042085; x=1755646885;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hNp9R9/dnBd/hRC+QUiGRCKNYQmASo17Z8cMOF0g+Fc=;
- b=jRixEym4u6h34cwT0X59sD/S3VrtqwuDM+H7IJ9rxob3IOxNq+2ZRVwJoMXbeehBES
- hFB1EFGcFL3AtXLXTSCCEBftvsYSN3rJCffMN2JfhlcCNBxvxLMphoh/j/ve3v2qWWrz
- 9ArAKZ02mkk1DTS6kX5civXMZKwHmzXPT+ea+Ekp8EPl4hgpoMOcewj/ZndivxaHjnM7
- BcGBrAeAzJlPdBKfdDGVSvrb3ibi+h9PDbSqk7Qi3Qb7T8Z7VuJxiKdM2a2CUmyGQbCj
- OEM5KpmYwXm3uqPT/qB1ykG/x6qqgLGSwd9TxwplV9I0iEJV/0tv9Fzu6osb/MXlvKdv
- NCVA==
-X-Gm-Message-State: AOJu0YyAMuqncxqDSqGPTb/6nmNH/ky3qFRw6Rkv/demVtvRv2Hd4PxX
- y1px4nScNR/r49AJKueJc2aA7QexkR07q54FADf3o71n7YGo+P9iG/tmx+M15lsPCUGEDbnP5LA
- n/b4ZKK6dDZmWwLYjkGziPt8GdD1dKo9ghw==
-X-Gm-Gg: ASbGncsxJVbNJUhjUUvhrRahEJYZG8YBN0UIZHYDcXAS513iHVKE9BSR0rK291nY1do
- NZJVQZSPYQZATWD2sSlx+HBtxuKNm91de2SMOb+MA1bWFJtIndh5FlFCiviEzteY3L2jqg+0n+9
- rBUisGWVjt+kzhM43qSyGyXNVIjUO2aHYevpARnvG1/ZNa8Hs+enLwR7QO3Pn/cJyTjRzPeoFSn
- YT5MXA3f5Dd/O3p
-X-Google-Smtp-Source: AGHT+IHhPYil7S8XyBmLQi88jQtxorgAz9a/1m7sLLKMjGQugHc05kVrbfdeCS0EKjuveKOBY81fZti1gsN74azgl5g=
-X-Received: by 2002:a05:6402:26c1:b0:615:97fe:54c7 with SMTP id
- 4fb4d7f45d1cf-6186b99a0b6mr614014a12.14.1755042085270; Tue, 12 Aug 2025
- 16:41:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1ulzV8-0000na-Rx
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 20:37:59 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1ulzV1-0000YB-MV
+ for qemu-devel@nongnu.org; Tue, 12 Aug 2025 20:37:58 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 438785C5B82;
+ Wed, 13 Aug 2025 00:37:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17669C4CEF0;
+ Wed, 13 Aug 2025 00:37:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1755045454;
+ bh=voc944dZi3/cVYFMpCgCr3K9WlBxgWTIehbZk/dV7Bw=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=j5dlsuaYg/5idKN+HZuBkXktYWUqAmtyGG069OvbJEwEb9Q5vSzmdbNHAeWMhsJkI
+ STPcST/ssuUqrGR2vQY59WVZG8qfZzVaGtkvVQBYFWN3PTsqYXDm37ZVQH3kgvut+D
+ 2ZU5+LqlFyf/UU17hVvWNKZUR99EqOS+5LfyMA/KJaQrlmnsvrwMEh5/IW0Y4WM825
+ 7cZyZcOxHEsU8uKNqZJu36c7AyU55T8t4kfoAjYc0oS4BOcPMbIMZItb3syBrV6ssa
+ IH6Eo9Wh6FrzGSaddIG6bHE36BzP8UTT9Ze3HhP7fSnSqUSSyW38qbEqHFgEFTXPcc
+ gNDPHgJkjsb3g==
+Date: Wed, 13 Aug 2025 00:37:32 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>, prapal@linux.microsoft.com
+Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Magnus Kulke <magnus.kulke@microsoft.com>,
+ Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
+ Wei Liu <liuwe@microsoft.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 26/26] qapi/accel: Allow to query mshv capabilities
+Message-ID: <aJveTB0fc--hG_zR@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
+ <20250807143951.1154713-27-magnuskulke@linux.microsoft.com>
+ <aJT87brzXBy89lfV@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
 MIME-Version: 1.0
-References: <20250718234039.2266704-1-vivek.kasireddy@intel.com>
-In-Reply-To: <20250718234039.2266704-1-vivek.kasireddy@intel.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 12 Aug 2025 19:41:12 -0400
-X-Gm-Features: Ac12FXxlmgQBTsW6AWTjO3pNYPmFRAR0_hoNqDsLrlV4hb5j-juULIoznXSrqDI
-Message-ID: <CAJSP0QVpgFVRspVsNKvktebLpfziDaO8dPaGVPgDR9eViYMzZQ@mail.gmail.com>
-Subject: Re: [PATCH] ui/spice: Destroy the temporary egl fb after the blit is
- submitted
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJT87brzXBy89lfV@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=wei.liu@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -70
+X-Spam_score: -7.1
+X-Spam_bar: -------
+X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,77 +91,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 18, 2025 at 7:42=E2=80=AFPM Vivek Kasireddy
-<vivek.kasireddy@intel.com> wrote:
->
-> The temporary egl fb scanout_tex_fb is only needed to facilitate the
-> blit to the display surface's texture (ssd->ds->texture). Therefore,
-> destroy it after the blit is submitted. And, also make sure that it
-> is empty initialized before it is actually used.
->
-> Fixes: f851cd65 ("ui/spice: Blit the scanout texture if its memory layout=
- is not linear")
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> ---
-> v2:
-> - Make scanout_tex_fb local to spice_gl_blit_scanout_texture() since
->   it is not used outside of it (Peter)
-> ---
->  ui/spice-display.c | 14 ++++++--------
->  1 file changed, 6 insertions(+), 8 deletions(-)
+On Thu, Aug 07, 2025 at 07:22:21PM +0000, Wei Liu wrote:
+> On Thu, Aug 07, 2025 at 04:39:51PM +0200, Magnus Kulke wrote:
+> > From: Praveen K Paladugu <prapal@microsoft.com>
+> > 
+> > Allow to query mshv capabilities via query-mshv QMP command.
+> > 
+> > Signed-off-by: Praveen K Paladugu <prapal@linux.microsoft.com>
+> > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> > ---
+> >  hw/core/machine-qmp-cmds.c | 14 ++++++++++++++
+> >  qapi/accelerator.json      | 29 +++++++++++++++++++++++++++++
+> >  2 files changed, 43 insertions(+)
+> > 
+> > diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+> > index 6aca1a626e..024ddb8d2d 100644
+> > --- a/hw/core/machine-qmp-cmds.c
+> > +++ b/hw/core/machine-qmp-cmds.c
+> > @@ -28,6 +28,20 @@
+> >  #include "system/runstate.h"
+> >  #include "system/system.h"
+> >  #include "hw/s390x/storage-keys.h"
+> > +#include <sys/stat.h>
+> > +
+> > +/*
+> > + * QMP query for MSHV
+> > + */
+> > +MshvInfo *qmp_query_mshv(Error **errp)
+> > +{
+> > +    MshvInfo *info = g_malloc0(sizeof(*info));
+> > +    struct stat st;
+> > +
+> > +    info->present = accel_find("mshv");
+> > +    info->enabled = (stat("/dev/mshv", &st) == 0);
+> 
+> I don't think this is the right way to check if MSHV is _enabled_. The
+> device node being around doesn't necessarily mean that QEMU is using it.
+> 
+> You can refer to kvm_enabled() to see how it is implemented.
+> 
+> Some functions that are of interest:
+>    do_configure_accelerator
+>    accel_init_machine
 
-Applied for QEMU v10.1.0-rc3. Thanks!
+This is likely as simple as squashing in the following diff.
 
-Stefan
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 024ddb8d2d7c..1b520599972a 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -39,7 +39,7 @@ MshvInfo *qmp_query_mshv(Error **errp)
+     struct stat st;
 
-> diff --git a/ui/spice-display.c b/ui/spice-display.c
-> index 9ce622cefc..669832c561 100644
-> --- a/ui/spice-display.c
-> +++ b/ui/spice-display.c
-> @@ -1183,20 +1183,20 @@ static void qemu_spice_gl_release_dmabuf(DisplayC=
-hangeListener *dcl,
->      egl_dmabuf_release_texture(dmabuf);
->  }
->
-> -static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd,
-> -                                          egl_fb *scanout_tex_fb)
-> +static bool spice_gl_blit_scanout_texture(SimpleSpiceDisplay *ssd)
->  {
->      uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_PLANES];
->      int fds[DMABUF_MAX_PLANES], num_planes, fourcc;
-> +    egl_fb scanout_tex_fb =3D {};
->      uint64_t modifier;
->      bool ret;
->
-> -    egl_fb_destroy(scanout_tex_fb);
-> -    egl_fb_setup_for_tex(scanout_tex_fb,
-> +    egl_fb_setup_for_tex(&scanout_tex_fb,
->                           surface_width(ssd->ds), surface_height(ssd->ds)=
-,
->                           ssd->ds->texture, false);
-> -    egl_fb_blit(scanout_tex_fb, &ssd->guest_fb, false);
-> +    egl_fb_blit(&scanout_tex_fb, &ssd->guest_fb, false);
->      glFlush();
-> +    egl_fb_destroy(&scanout_tex_fb);
->
->      if (!ssd->new_scanout_texture) {
->          return true;
-> @@ -1330,9 +1330,7 @@ static void qemu_spice_gl_update(DisplayChangeListe=
-ner *dcl,
->      }
->
->      if (spice_remote_client && ssd->blit_scanout_texture) {
-> -        egl_fb scanout_tex_fb;
-> -
-> -        ret =3D spice_gl_blit_scanout_texture(ssd, &scanout_tex_fb);
-> +        ret =3D spice_gl_blit_scanout_texture(ssd);
->          if (!ret) {
->              return;
->          }
-> --
-> 2.49.0
->
->
+     info->present = accel_find("mshv");
+-    info->enabled = (stat("/dev/mshv", &st) == 0);
++    info->enabled = mshv_enabled();
+     return info;
+ }
 
