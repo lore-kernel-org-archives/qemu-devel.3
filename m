@@ -4,98 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95494CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 13:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449D3CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umBjP-00008z-Br; Wed, 13 Aug 2025 09:41:31 -0400
+	id 1umC8E-0004md-08; Wed, 13 Aug 2025 10:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naresh.kamboju@linaro.org>)
- id 1umBjN-00008g-GY
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 09:41:29 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <naresh.kamboju@linaro.org>)
- id 1umBjF-0008B7-Rr
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 09:41:28 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b3226307787so5376460a12.1
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 06:41:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755092477; x=1755697277; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BuoYHGYkCh033zSzlMciRVTnS9J8QMWvk5NZ+OdGx/A=;
- b=OaMqg3sHXqvPzjyUAreZu6q8Mk+v9dZnDELwGvj6v0BgdK2aXhwPWiN1Gfy8M2eGsJ
- MiMP+KG8Aw/HHAjE6zhPBY3dRB3yQ0XK1VyPOTVmqczH1KqVRPDjJVukP0WC7Txf3Y5H
- 8/QDb5wAsZiyawX/P4mtE/9Mq1GCXoJyCNxsBxjwry3rqagzlVRWIfYdZRiyFsQatThg
- QfvSESXdUckrfRGX+crE3L7ikx1hXI2d1ZRAhRmN0p1OSCKYADBiNZM6dgn538rCsSVE
- 07mvicCL5oo/9+n5j5N2wDvJIS0Q30WMm5mj/cdvXtJ6L5ZjwWnj9NbvdqRYnsFc9zXf
- e6Dw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umC8B-0004mH-4b
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:07:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umC7x-0002tI-7M
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:07:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755094010;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QvwL+w9McJxSQWjFczCDpZv2chRH3XYcq/HP9T4vWQU=;
+ b=BhV0O/UassisUf7B7qEetxyDdodFCbigmqsn0MXuh6f4sbHS156ubMDbdcIhMJIKQ2YbLJ
+ GWZQK/CGcxu6QBKCBZeG2xe2wAwgHLQNot1HLph/dkGr/NnQ5jsSIL9Z9hNBXFOqv2TbJ6
+ DFwXSlqEdFfTLUYDeBVUPG7J1RsShno=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-182-wFn0g-j-OXa2wGMWhF5MFg-1; Wed, 13 Aug 2025 10:06:49 -0400
+X-MC-Unique: wFn0g-j-OXa2wGMWhF5MFg-1
+X-Mimecast-MFC-AGG-ID: wFn0g-j-OXa2wGMWhF5MFg_1755094009
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-70738c24c4fso61121906d6.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 07:06:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755092477; x=1755697277;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ d=1e100.net; s=20230601; t=1755094008; x=1755698808;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BuoYHGYkCh033zSzlMciRVTnS9J8QMWvk5NZ+OdGx/A=;
- b=pFErXk9Bc/6qrQFV9PEqkUHg1VIWgpqKWtmNWi+GsUEVlzdpgnJvNjLsWwyMrL3VT/
- hma2450WgEHmDC8vj1H81oAHnedqRYsJn3UjPBdsvTrJ99wgioY7jmqxktjl1eyiBoUH
- RH/bxJ7p9v07XIiiC65xWMQ+bcZh3M9gcYgQSNJc7u4JOnOLqoXNV7/pIZXi+4KVYxtI
- BkDShgMD/ilr4etsGG9Dx6rctXiObJoZMYaGNWRXm4FGRQE9BtILoicBXH2/Wa/f2b0t
- +sjZWUwKD1ITekOs5dkzz8OgONFrrlZQbmNpXCgIXvzOX3E/kSfPjdyog6AyFr8FMKzu
- DOWQ==
+ bh=QvwL+w9McJxSQWjFczCDpZv2chRH3XYcq/HP9T4vWQU=;
+ b=A8tCgdITIsN2kHYCYTu4PrBmSRTlRAT0FLxLQxZWvcAPQbgpJUmAP0qHuxyjmNRVcE
+ hqIJ2HySaZl1/a9hZw+pxqVEgv6PQntIT7yh+Az6AsiCGN7lJAsTIvRonnBItqDlqsx+
+ VdzPhjlNSBr5kl6nvdHorfx9OPR1vJDuE4chkEb/I6kAAHb8Jaolf9RP+gj+pxforGyS
+ YkRGZyOQqbTqF/RZui9SoipLBiBsp6oL3NJFpwnGh7WTIoNF+KBJmKut4Spb2Avrldlt
+ yXiWxMqouVWBLtov/7r3sGklG0WN6FHHOnTlwoqDZlVTb2yUd9o0/LlnuFQrTA3jyOEn
+ /2eA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0Eub98f6yxWvqTbxYfKJcHqVCH7JdgAvMPgd0fx4mWe/D3f0a+nQ4kG0olnDBicsBoKou0KiDzFjr@nongnu.org
-X-Gm-Message-State: AOJu0YwKW6JwuuxwdBWO985w5d8ZxgJeL8oz9HaHMZCN4LbPBkvWzv9e
- 9UB5hnB2M+YFQJvAU/lWkrYgOAMJa7Uldl/t6FWMi+L8N1GEUeI/rqbFja8nlgJMUo+kMt01+jR
- ISNYS3AsEjvGNLViL7cnXOq+bhV+yQbk0+UvtwpSiSQ==
-X-Gm-Gg: ASbGncuLNxiiFt+rwxxblwgHAao7kmsdtXW22H05vKMzmUWM1jvJPb6F1WenDjq6vsR
- 76EngyBnuhrZrA+ZfSLW5yDr5OR+Ft+ktY6QmCUWnpMflJpPpx3En0b9f19+J3FH7QXWeDr6XAU
- kjUMci3xyKfml3SYyB+qtqlacFE0wEA1+TlMVqvI43tA1FFD1Ral3+NkU2LZyyPc8aqQuHE1Ji7
- 58RqDbPumDUhIrpnmrS69+G+g0YP+zyQ38j5G8Q
-X-Google-Smtp-Source: AGHT+IHJ5NorMBOk/mMmvjq4NxC90d+IjwHZjpyxn70pQloc6AgGTp1y/wa+zMeluJYPNCBvRdh21gvKSjV030UR2Pk=
-X-Received: by 2002:a17:902:f785:b0:23f:e51b:2189 with SMTP id
- d9443c01a7336-2430d0f9a4bmr54705775ad.17.1755092476818; Wed, 13 Aug 2025
- 06:41:16 -0700 (PDT)
+ AJvYcCVBEKwbpfZXddWAVw5eIX6l1G7Hl4lUDAUhW2MtAfgN87XiUKBA7KozXwmytsqLE59NBQDZIiBGvkdN@nongnu.org
+X-Gm-Message-State: AOJu0YyEyhNmIVjAwlGR48NAS1td0nAVeS7cNbUHU7x8PFvXPm0R55zn
+ 7Qr1v81CQMk2oOXjxBY/DGqZrUKwGtCcFCcwR0TyRn0wQ2qvNlonQhdjK8ULjEWAdIr4s+h05A6
+ 2aewghiCdFrP8/20FHxw4XjYdjQ7gL/0J7+mHe5Mmd5ycu9J3HBIt1YN8+rH52XX3
+X-Gm-Gg: ASbGnctppuzWb4JXuQgF6uGt3vdnYM/TR7cxri4XnedtAQVKDS9CUpfo78GBw6xva4B
+ aslrvZuNAyM0IpSaWhgXCdihI0PmQZomVgC+cpJjc88qy/S/Argn1IM0WN43J+X9Ua0FQbciCGs
+ SytQUytMAb0rCvFXxdxXab9+ifVU/PBvMjSNe2J651sjqLMRaEYfavosjH5e14kwM6x6a1l2dRS
+ 6seAtCQkvRF3l5M+s2a1Y+lV+hXpgAZ6g0Z/+QnMD/cP529zUhv8jouHZiUq6Cv+AviaDTYbizE
+ SI7VC7dRdloGq/KyI/OZEC4DonjQBQnP
+X-Received: by 2002:a05:6214:500d:b0:709:e60f:6618 with SMTP id
+ 6a1803df08f44-709e89a59a3mr31429236d6.33.1755094008021; 
+ Wed, 13 Aug 2025 07:06:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFI2f2aZ0SaA8UG9bM0wpIrmM85YbNryPIvTOfiJ3T4ueZXTzB7eBzhIax0hfeav4/eyFK/EQ==
+X-Received: by 2002:a05:6214:500d:b0:709:e60f:6618 with SMTP id
+ 6a1803df08f44-709e89a59a3mr31428666d6.33.1755094007444; 
+ Wed, 13 Aug 2025 07:06:47 -0700 (PDT)
+Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-7077e263efcsm195229386d6.85.2025.08.13.07.06.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Aug 2025 07:06:46 -0700 (PDT)
+Date: Wed, 13 Aug 2025 10:06:34 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
+ farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ jasowang@redhat.com, mst@redhat.com, si-wei.liu@oracle.com,
+ boris.ostrovsky@oracle.com
+Subject: Re: [RFC 5/6] virtio,virtio-net: skip consistency check in
+ virtio_load for iterative migration
+Message-ID: <aJyb6n9Vf4BhHqpb@x1.local>
+References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+ <20250722124127.2497406-6-jonah.palmer@oracle.com>
+ <aJOCiUPp0dckmgAn@x1.local>
+ <5e276607-cd86-4a1d-99f3-47dd2f0f3bc0@oracle.com>
+ <aJTU641465aGKWRU@x1.local>
+ <0cf99747-443e-4a29-a0da-64012548a994@oracle.com>
+ <aJnydjxFzKwVzi7Y@x1.local>
+ <eafcf9ca-f23f-42d5-b8c2-69f81a395d11@oracle.com>
+ <aJpm4-JfmevsI7Ei@x1.local>
+ <CAJaqyWfAnH-Lca3zmQTiR2wtaryKUo2KDKa=s5pcuAO9E6Efsw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <bf9ccc7d-036d-46eb-85a1-b46317e2d556@sirena.org.uk>
-In-Reply-To: <bf9ccc7d-036d-46eb-85a1-b46317e2d556@sirena.org.uk>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 13 Aug 2025 19:11:05 +0530
-X-Gm-Features: Ac12FXxKeYVh06szquTrecWrS7rqGYyi8ckXtXfcapehmWdAEuqul8ZUWvjf2tw
-Message-ID: <CA+G9fYtjAWpeFfb3DesEY8y6aOefkLOVBE=zxsROWLzP_V_iDg@mail.gmail.com>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Naresh Kamboju <naresh.kamboju@linaro.org>, 
- stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
- torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
- shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
- pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
- conor@kernel.org, hargar@microsoft.com, achill@achill.org, 
- qemu-devel@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>, 
- Anders Roxell <anders.roxell@linaro.org>,
- Ben Copeland <benjamin.copeland@linaro.org>, 
- LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
- Petr Vorel <pvorel@suse.cz>, 
- Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org, 
- Zhang Yi <yi.zhang@huaweicloud.com>, Joseph Qi <jiangqi903@gmail.com>,
- Jan Kara <jack@suse.cz>, 
- linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=naresh.kamboju@linaro.org; helo=mail-pg1-x52e.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJaqyWfAnH-Lca3zmQTiR2wtaryKUo2KDKa=s5pcuAO9E6Efsw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,61 +120,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 13 Aug 2025 at 18:21, Mark Brown <broonie@kernel.org> wrote:
->
-> On Wed, Aug 13, 2025 at 05:46:26PM +0530, Naresh Kamboju wrote:
-> > On Tue, 12 Aug 2025 at 23:57, Greg Kroah-Hartman
->
-> > The following list of LTP syscalls failure noticed on qemu-arm64 with
-> > stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
+On Wed, Aug 13, 2025 at 11:25:00AM +0200, Eugenio Perez Martin wrote:
+> On Mon, Aug 11, 2025 at 11:56 PM Peter Xu <peterx@redhat.com> wrote:
 > >
-> > Most failures report ENOSPC (28) or mkswap errors, which may be related
-> > to disk space handling in the 64K page configuration on qemu-arm64.
+> > On Mon, Aug 11, 2025 at 05:26:05PM -0400, Jonah Palmer wrote:
+> > > This effort was started to reduce the guest visible downtime by
+> > > virtio-net/vhost-net/vhost-vDPA during live migration, especially
+> > > vhost-vDPA.
+> > >
+> > > The downtime contributed by vhost-vDPA, for example, is not from having to
+> > > migrate a lot of state but rather expensive backend control-plane latency
+> > > like CVQ configurations (e.g. MQ queue pairs, RSS, MAC/VLAN filters, offload
+> > > settings, MTU, etc.). Doing this requires kernel/HW NIC operations which
+> > > dominates its downtime.
+> > >
+> > > In other words, by migrating the state of virtio-net early (before the
+> > > stop-and-copy phase), we can also start staging backend configurations,
+> > > which is the main contributor of downtime when migrating a vhost-vDPA
+> > > device.
+> > >
+> > > I apologize if this series gives the impression that we're migrating a lot
+> > > of data here. It's more along the lines of moving control-plane latency out
+> > > of the stop-and-copy phase.
 > >
-> > The issue is reproducible on multiple runs.
+> > I see, thanks.
 > >
-> > * qemu-arm64, ltp-syscalls - 64K page size test failures list,
+> > Please add these into the cover letter of the next post.  IMHO it's
+> > extremely important information to explain the real goal of this work.  I
+> > bet it is not expected for most people when reading the current cover
+> > letter.
 > >
-> >   - fallocate04
-> >   - fallocate05
-> >   - fdatasync03
-> >   - fsync01
-> >   - fsync04
-> >   - ioctl_fiemap01
-> >   - swapoff01
-> >   - swapoff02
-> >   - swapon01
-> >   - swapon02
-> >   - swapon03
-> >   - sync01
-> >   - sync_file_range02
-> >   - syncfs01
+> > Then it could have nothing to do with iterative phase, am I right?
+> >
+> > What are the data needed for the dest QEMU to start staging backend
+> > configurations to the HWs underneath?  Does dest QEMU already have them in
+> > the cmdlines?
+> >
+> > Asking this because I want to know whether it can be done completely
+> > without src QEMU at all, e.g. when dest QEMU starts.
+> >
+> > If src QEMU's data is still needed, please also first consider providing
+> > such facility using an "early VMSD" if it is ever possible: feel free to
+> > refer to commit 3b95a71b22827d26178.
+> >
+> 
+> While it works for this series, it does not allow to resend the state
+> when the src device changes. For example, if the number of virtqueues
+> is modified.
 
-These test failures are not seen on Linus tree v6.16 or v6.15.
+Some explanation on "how sync number of vqueues helps downtime" would help.
+Not "it might preheat things", but exactly why, and how that differs when
+it's pure software, and when hardware will be involved.
 
->
-> I'm also seeing epoll_ctl04 failing on Raspberry Pi 4, there's a bisect
-> still running but I suspect given the error message:
+If it's only about pre-heat, could dest qemu preheat with max num of
+vqueues?  Is it the same cost of downtime when growing num of queues,
+v.s. shrinking num of queues?
 
-Right !
-LTP syscalls epoll_ctl04 test is failing on Linux mainline as well
-with this error on LKFT CI system on several platforms.
+For softwares, is it about memory transaction updates due to the vqueues?
+If so, have we investigated a more generic approach on memory side, likely
+some form of continuation from Chuang's work I previously mentioned?
 
->
-> epoll_ctl04.c:59: TFAIL: epoll_ctl(..., EPOLL_CTL_ADD, ...) with number of nesting is 5 expected EINVAL: ELOOP (40)
->
-> that it might be:
->
-> # bad: [b47ce23d38c737a2f84af2b18c5e6b6e09e4932d] eventpoll: Fix semi-unbounded recursion
->
-> which already got tested, or something adjacent.
+-- 
+Peter Xu
 
-A patch has been proposed to update the LTP test case to align with
-recent changes in the Linux kernel code.
-
-[LTP] [PATCH] syscalls/epoll_ctl04: add ELOOP to expected errnos
-
--https://lore.kernel.org/ltp/39ee7abdee12e22074b40d46775d69d37725b932.1754386027.git.jstancek@redhat.com/
-
-- Naresh
 
