@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9522CCA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 21:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED3C3CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 21:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umIj0-0005HY-M5; Wed, 13 Aug 2025 17:09:34 -0400
+	id 1umJ0Y-0007jG-Jl; Wed, 13 Aug 2025 17:27:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umIiw-0005GW-Dd
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 17:09:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umJ0U-0007iq-6b
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 17:27:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umIif-0000nc-PL
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 17:09:28 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umJ0P-0002yd-L0
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 17:27:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755119349;
+ s=mimecast20190719; t=1755120448;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NRb4wJavwjmDTtSO4J6bU+q6gCyy/O7M1H4pbTMS+bw=;
- b=DzxZ/tFhjzNYdIWFEF/QpL2Q4s21MQ/vXRY/aW/1xYN6p1xoIYwtiCacA6JkSsZuUxPNXu
- pGpkrvz9VXlCDB3HmbD7cvQpPT6vR07VFGueFb6gIzcz5OQAZgPWPvj8OWaAM4VSx341l7
- 0qr4p34tn4aG7+XI588l2hSJGmKyupI=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e2QoPzkI8jZlwWI7YhZmznhkU6Aeeiud9IZh/yc+Pak=;
+ b=Doyed1TlbMZnCCkiiZwszvFk9zyKbMITxlRTcNN6Oa20fLeockEIqMs1IQA2Eq4p5omuLM
+ +jKZQzXcgeFvmG4xi/fdfI2NtcWu6de5tm+R/4yoSd3th7NuubRZu6O3sJ2ZrawWAFMKmT
+ R9YHRUZV9tNdoK6sHO1AvS3u4REllLw=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-474-qfIR42clMJimPK1nDB9Xwg-1; Wed, 13 Aug 2025 17:09:08 -0400
-X-MC-Unique: qfIR42clMJimPK1nDB9Xwg-1
-X-Mimecast-MFC-AGG-ID: qfIR42clMJimPK1nDB9Xwg_1755119347
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-71d603b2fa1so4471697b3.1
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 14:09:08 -0700 (PDT)
+ us-mta-41-Z_TLAAZ7OkSIV0PRPmhpyQ-1; Wed, 13 Aug 2025 17:27:27 -0400
+X-MC-Unique: Z_TLAAZ7OkSIV0PRPmhpyQ-1
+X-Mimecast-MFC-AGG-ID: Z_TLAAZ7OkSIV0PRPmhpyQ_1755120446
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-71d604dcc4dso4535227b3.2
+ for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 14:27:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755119347; x=1755724147;
+ d=1e100.net; s=20230601; t=1755120446; x=1755725246;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NRb4wJavwjmDTtSO4J6bU+q6gCyy/O7M1H4pbTMS+bw=;
- b=WHrSQSZziOTJQFi2lnMo+yX+2sGH1ygrbGA4owRBJjAjTzpY3DpoedDHgZbq/kDW+J
- LZhJjvv2vEn96Bgc2aOOh8OpsNnJ7ZZfU3yYfQXwEzQHegaZOS4H//bad5vJqGAroY+8
- OuA7kZ2bUj2S4qwOCliw8+/woCEyF/Yw3GbRQP7gEjcqihzT9ZPpyef75zY8ZQ2WC1KP
- 8sUQRmXg/Pom/0Bp4bvflBPwmX3ft8p5Z5MA4glmXeMdUwpjkPENLS+SZMPOdK8i/Dlo
- 4Ez06Gk5mSogL2qMvJgd8UBEttgkSvEwSh+mDIYB+PCTsJdeOq67mC9WzHM24d8+bCoF
- Q4uw==
-X-Gm-Message-State: AOJu0Yz8U0Ozh2FOISO77Fp9n5T3troJjG7v+oUKQzxpY6kKu2Yq7E6D
- RRPlt1TEsoAIkLkuH18HfV6fuIoa17fXBqJ8nSw8yDSgSXYNRq2WoFU9Qbnd/CzplNbDuEonvdl
- LI0l2ww116uCUS7Wd3ZrAJ3cfPvp1s5Eu+WcHe6tOHIpy7jEcXUnbj0GA
-X-Gm-Gg: ASbGnctsaVWTCTd7ny6K0we3Nnx8vbJKWqX9I77RVV2pzxs3xwSt/enPdEwBliJ5AF2
- REcnRU8V1wQvmzlFVGCBtNo5UrgIF1jq9xYSfYTcfkOzyWa/zCUwI8eFkKuAlnMbL973Vu92s08
- JWKI1oft3u9RvaJcCvdBjruPIag95w7P94Wu0N8d9juSg2X+ETeU1HX+87c8smgQJiWtvvD7rXc
- Aj+zzGADwBuTIsXMifM6RsEdHd9x2zl5T33MlZDR/+N2fQJ1eCOGC8rbmSRq+Fu5f/Yle0ajqCa
- zMWQiqtrr1faKs547sMco5bFjYmLDNEU0sb6i51w1kc8FfYZ+wSD905d6WgSK+m8DUptqKA475L
- m7tF3At+nM2oXcMh9INWNPQ==
-X-Received: by 2002:a05:690c:6f01:b0:71b:8cc6:6d41 with SMTP id
- 00721157ae682-71d634851e3mr5772157b3.17.1755119347593; 
- Wed, 13 Aug 2025 14:09:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERtzf4prJmujhGeudvdwLh/C0RLrXwIHNd1i4rT+q66uWvFwabUJTHPxwi1lv+X5BCtitXYw==
-X-Received: by 2002:a05:690c:6f01:b0:71b:8cc6:6d41 with SMTP id
- 00721157ae682-71d634851e3mr5771907b3.17.1755119347302; 
- Wed, 13 Aug 2025 14:09:07 -0700 (PDT)
+ bh=e2QoPzkI8jZlwWI7YhZmznhkU6Aeeiud9IZh/yc+Pak=;
+ b=GarOVdKCf+jvKmfLFfPkRK5ix9HGifLou4bdzew952vb9vzyo28iWYKFxcwnHizo16
+ wOp3lsdwgGElw/pFw+suw+36pYqKqRTYKdAoxAxeuS0QxKg/yrZIAkHItNi9YX80fDd5
+ VbgD1jCanyBIrLOp0AVzhYLryTBmhzeoNvFTb9ASBQ0GZVd34D/fmSQUTcfO8+1A6zFU
+ xS/Jb8+I+SRjVZiWtNaktWPVyUb6CcAZjDLAmYHNscNZRpu1LAHC1MZKr4HfIcUlfCw9
+ TeAAykQXnc+/bGjlsK7EViplebmRWtJTGuryIZ3JZiggcJ5ofmAPxQwZbZht0KLtYuT8
+ sUhA==
+X-Gm-Message-State: AOJu0YzjAEiUFf4IGJx+eC+WhM4ejIOs93WKEhlr6r26ne1G98B2TbpZ
+ barOoav1hTcrsSX55g4fZQ2kMLGm+BM4Smqn1tXcLkhad1aVaY9B6/1RzPEjWFnm62jtHJVnOid
+ s+iBqKOucY1iQJ78Dej+0OKKR00k2LYuwbWrlRhFvk6ShrykSmpnRWyOx
+X-Gm-Gg: ASbGncsnIKb6ZozJ2Co+ewBy0fC3jsXfGMlNBkl8Fsk28TXl1w7s5O3B4YqEY3L+T7J
+ Sq7vieiI23Ks5KdSUXEEC6G/357GbMDql5S18DcOvbsJM8bdvWmCQ7WcmlOKOK0UHeONoJweTk3
+ bwObkn5W+51vH9vgSrLwimaxE9/2dVIcykKquZTQOawSIudEU5mY40gN/kOhjIZHsQBBaddOnG0
+ U4nT+t/9lgnYRsofbjxD7NSDbpEgnS+2A0Jc9yGyOSu75IOOZdQODSS2mlzY+V6ijSptHqote0f
+ lFf8XQnmHAQYK+708qQD3XHIQSoBnpZkXjNhhDTP3JoZloUW7M+FzWuFZZc02tRZ7gZVeX6+CPW
+ nHrU480tn66CR7ZcrAXffug==
+X-Received: by 2002:a05:690c:45c5:b0:71b:f7b5:8979 with SMTP id
+ 00721157ae682-71d635fe804mr5624947b3.37.1755120446416; 
+ Wed, 13 Aug 2025 14:27:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESUVY2r1KAiNnyxq9NiD44Yge5c6qDzOhxQ2kQHbZGXpN037Wy/w0M+rNLkRZ3Rd1q65TfGw==
+X-Received: by 2002:a05:690c:45c5:b0:71b:f7b5:8979 with SMTP id
+ 00721157ae682-71d635fe804mr5624697b3.37.1755120446082; 
+ Wed, 13 Aug 2025 14:27:26 -0700 (PDT)
 Received: from x1.local
  (bras-base-aurron9134w-grc-11-174-89-135-171.dsl.bell.ca. [174.89.135.171])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-71d6107e85csm1613637b3.83.2025.08.13.14.09.06
+ 00721157ae682-71d60db58f0sm1817617b3.32.2025.08.13.14.27.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Aug 2025 14:09:06 -0700 (PDT)
-Date: Wed, 13 Aug 2025 17:09:03 -0400
+ Wed, 13 Aug 2025 14:27:25 -0700 (PDT)
+Date: Wed, 13 Aug 2025 17:27:23 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH v2 19/24] migration: Store the initial values used for
- s->parameters
-Message-ID: <aJz-78rQmEgrjcCR@x1.local>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 20/24] migration: Allow migrate commands to provide
+ the migration config
+Message-ID: <aJ0DO-cJdPEne7Tr@x1.local>
 References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-20-farosas@suse.de>
+ <20250630195913.28033-21-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250630195913.28033-20-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20250630195913.28033-21-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,16 +109,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 30, 2025 at 04:59:08PM -0300, Fabiano Rosas wrote:
-> Each migration parameters has a default value, store them for later
-> use in resetting s->parameters. Values overridden via the command line
-> with the debugging option -global migration.<param> will be included.
+On Mon, Jun 30, 2025 at 04:59:09PM -0300, Fabiano Rosas wrote:
+> Allow the migrate and migrate_incoming commands to pass the migration
+> configuration options all at once, dispensing the use of
+> migrate-set-parameters and migrate-set-capabilities.
 > 
-> Make the structure const and change the appropriate signatures to make
-> sure its values are not changed by accident. Some functions take two
-> MigrationParameters pointers and it's easy to confuse them.
+> The motivation of this is to simplify the interface with the
+> management layer and avoid the usage of several command invocations to
+> configure a migration. It also avoids stale parameters from a previous
+> migration to influence the current migration.
+> 
+> The options that are changed during the migration can still be set
+> with the existing commands.
+> 
+> The order of precedence is:
+> 
+> 'config' argument > -global migration cmdline > migrate-set-parameters
+> > defaults (migration_properties)
+
+Did you make the 2nd/3rd the wrong way?
+
+  config > migrate-set-parameters > -global cmdlines > defaults
+
+> 
+> I.e. the config takes precedence over all, values not present in the
+> config assume the default values. The -global migration command line
+> option allows the defaults to be overridden for debug.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+
+Other than that:
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 
