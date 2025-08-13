@@ -4,78 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1A5CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 00:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D095CA0EC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 03:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ulzVD-0000of-9L; Tue, 12 Aug 2025 20:38:03 -0400
+	id 1um1sC-0001YX-U7; Tue, 12 Aug 2025 23:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1ulzV8-0000na-Rx
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 20:37:59 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>)
+ id 1um1sA-0001Xu-9q; Tue, 12 Aug 2025 23:09:55 -0400
+Received: from mail-m16.yeah.net ([220.197.32.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1ulzV1-0000YB-MV
- for qemu-devel@nongnu.org; Tue, 12 Aug 2025 20:37:58 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 438785C5B82;
- Wed, 13 Aug 2025 00:37:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17669C4CEF0;
- Wed, 13 Aug 2025 00:37:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1755045454;
- bh=voc944dZi3/cVYFMpCgCr3K9WlBxgWTIehbZk/dV7Bw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=j5dlsuaYg/5idKN+HZuBkXktYWUqAmtyGG069OvbJEwEb9Q5vSzmdbNHAeWMhsJkI
- STPcST/ssuUqrGR2vQY59WVZG8qfZzVaGtkvVQBYFWN3PTsqYXDm37ZVQH3kgvut+D
- 2ZU5+LqlFyf/UU17hVvWNKZUR99EqOS+5LfyMA/KJaQrlmnsvrwMEh5/IW0Y4WM825
- 7cZyZcOxHEsU8uKNqZJu36c7AyU55T8t4kfoAjYc0oS4BOcPMbIMZItb3syBrV6ssa
- IH6Eo9Wh6FrzGSaddIG6bHE36BzP8UTT9Ze3HhP7fSnSqUSSyW38qbEqHFgEFTXPcc
- gNDPHgJkjsb3g==
-Date: Wed, 13 Aug 2025 00:37:32 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, prapal@linux.microsoft.com
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Magnus Kulke <magnus.kulke@microsoft.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 26/26] qapi/accel: Allow to query mshv capabilities
-Message-ID: <aJveTB0fc--hG_zR@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
-References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
- <20250807143951.1154713-27-magnuskulke@linux.microsoft.com>
- <aJT87brzXBy89lfV@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>)
+ id 1um1rc-0001RB-AR; Tue, 12 Aug 2025 23:09:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+ s=s110527; h=Message-ID:Date:MIME-Version:To:Subject:From:
+ Content-Type; bh=0i4t+iVXztnfd6PoyjrMxbBDXos5ErwkV1LUwMLvQSE=;
+ b=HNx0DCgAPN/H7hnrzwKjp1fjJbggmgLbD7UcacDs3qVqXa+qBWqdhk64+ctOLh
+ ZBGJtwL8D0N1KcXpw+XiMYdJogdD0UvuMHjB8S96LQXq43DdvZdT3kCp9SvIeFdL
+ Sp6BHHPv1+OkbPDay6W7kD1eK208NA6jtl7PcK0jE/QLQ=
+Received: from [192.168.71.3] (unknown [])
+ by gzsmtp2 (Coremail) with SMTP id Ms8vCgD3dyBiAZxo_heOAg--.18116S2;
+ Wed, 13 Aug 2025 11:07:16 +0800 (CST)
+Message-ID: <4d658cff-d8ab-4d95-b340-c6b7b5375395@yeah.net>
+Date: Wed, 13 Aug 2025 11:07:12 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aJT87brzXBy89lfV@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=wei.liu@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -70
-X-Spam_score: -7.1
-X-Spam_bar: -------
-X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+User-Agent: Mozilla Thunderbird
+To: jim.shu@sifive.com, dbarboza@ventanamicro.com
+Cc: alistair.francis@wdc.com, arikalo@gmail.com, atar4qemu@gmail.com,
+ aurelien@aurel32.net, david@redhat.com, deller@gmx.de,
+ edgar.iglesias@gmail.com, eduardo@habkost.net, gaosong@loongson.cn,
+ iii@linux.ibm.com, jcmvbkbc@gmail.com, jiaxun.yang@flygoat.com,
+ kbastian@mail.uni-paderborn.de, laurent@vivier.eu, liwei1518@gmail.com,
+ marcel.apfelbaum@gmail.com, mark.cave-ayland@ilande.co.uk,
+ mrolnik@gmail.com, npiggin@gmail.com, palmer@dabbelt.com,
+ pbonzini@redhat.com, peterx@redhat.com, philmd@linaro.org,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, richard.henderson@linaro.org, shorne@gmail.com,
+ thuth@redhat.com, wangyanan55@huawei.com, zhao1.liu@intel.com,
+ zhiwei_liu@linux.alibaba.com
+References: <20701dc8-d156-4ad9-8945-282321c15527@ventanamicro.com>
+Subject: Re: [PATCH v2 13/18] hw/misc: riscv_worldguard: Add API to enable WG
+ extension of CPU
+From: Chao Liu <chao.liu@yeah.net>
+In-Reply-To: <20701dc8-d156-4ad9-8945-282321c15527@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: Ms8vCgD3dyBiAZxo_heOAg--.18116S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxAw4fAw1fWw4DGw4DKry5XFb_yoW7Jw47pr
+ 4rCF4aqr1DWry3J3W3XryxJF1Sg3s5Wr15Cws7Aa4fCwsFvFWxArn0k3y2kFn7XFs3Zr1F
+ vFy2grWUua1SvFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jq6wAUUUUU=
+X-Originating-IP: [114.88.98.193]
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiNQSawmicAWRjqQAA3y
+Received-SPF: pass client-ip=220.197.32.19; envelope-from=chao.liu@yeah.net;
+ helo=mail-m16.yeah.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,61 +83,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 07, 2025 at 07:22:21PM +0000, Wei Liu wrote:
-> On Thu, Aug 07, 2025 at 04:39:51PM +0200, Magnus Kulke wrote:
-> > From: Praveen K Paladugu <prapal@microsoft.com>
+> On 4/17/25 7:52 AM, Jim Shu wrote:
+> > riscv_worldguard_apply_cpu() could enable WG CPU extension and set WG
+> > callback to CPUs. It is used by machine code after realizing global WG
+> > device.
 > > 
-> > Allow to query mshv capabilities via query-mshv QMP command.
-> > 
-> > Signed-off-by: Praveen K Paladugu <prapal@linux.microsoft.com>
-> > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> > Signed-off-by: Jim Shu <jim.shu@sifive.com>
 > > ---
-> >  hw/core/machine-qmp-cmds.c | 14 ++++++++++++++
-> >  qapi/accelerator.json      | 29 +++++++++++++++++++++++++++++
-> >  2 files changed, 43 insertions(+)
+> >   hw/misc/riscv_worldguard.c         | 87 ++++++++++++++++++++++++++++++
+> >   include/hw/misc/riscv_worldguard.h |  1 +
+> >   2 files changed, 88 insertions(+)
 > > 
-> > diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-> > index 6aca1a626e..024ddb8d2d 100644
-> > --- a/hw/core/machine-qmp-cmds.c
-> > +++ b/hw/core/machine-qmp-cmds.c
-> > @@ -28,6 +28,20 @@
-> >  #include "system/runstate.h"
-> >  #include "system/system.h"
-> >  #include "hw/s390x/storage-keys.h"
-> > +#include <sys/stat.h>
+> > diff --git a/hw/misc/riscv_worldguard.c b/hw/misc/riscv_worldguard.c
+> > index b02bd28d02..1a910f4cf3 100644
+> > --- a/hw/misc/riscv_worldguard.c
+> > +++ b/hw/misc/riscv_worldguard.c
+> > @@ -92,6 +92,93 @@ uint32_t mem_attrs_to_wid(MemTxAttrs attrs)
+> >       }
+> >   }
+> >   
+> > +static void riscv_cpu_wg_reset(CPURISCVState *env)
+> > +{
+> > +    CPUState *cs = env_cpu(env);
+> > +    RISCVCPU *cpu = RISCV_CPU(cs);
+> > +    uint32_t mlwid, slwid, mwiddeleg;
+> > +    uint32_t trustedwid;
+> > +
+> > +    if (!riscv_cpu_cfg(env)->ext_smwg) {
+> > +        return;
+> > +    }
+> > +
+> > +    if (worldguard_config == NULL) {
+> > +        /*
+> > +         * Note: This reset is dummy now and WG CSRs will be reset again
+> > +         * after worldguard_config is realized.
+> > +         */
+> > +        return;
+> > +    }
+> > +
+> > +    trustedwid = worldguard_config->trustedwid;
+> > +    if (trustedwid == NO_TRUSTEDWID) {
+> > +        trustedwid = worldguard_config->nworlds - 1;
+> > +    }
+> > +
+> > +    /* Reset mlwid, slwid, mwiddeleg CSRs */
+> > +    if (worldguard_config->hw_bypass) {
+> > +        /* HW bypass mode */
+> > +        mlwid = trustedwid;
+> > +    } else {
+> > +        mlwid = 0;
+> > +    }
+> > +    slwid = 0;
+> > +    mwiddeleg = 0;
+> > +
+> > +    env->mlwid = mlwid;
+> > +    if (riscv_cpu_cfg(env)->ext_sswg) {
+> > +        env->slwid = slwid;
+> > +        env->mwiddeleg = mwiddeleg;
+> > +    }
+> > +
+> > +    /* Check mwid, mwidlist config */
+> > +    if (worldguard_config != NULL) {
+> > +        uint32_t valid_widlist = MAKE_64BIT_MASK(0, worldguard_config->nworlds);
+> > +
+> > +        /* CPU use default mwid / mwidlist config if not set */
+> > +        if (cpu->cfg.mwidlist == UINT32_MAX) {
+> > +            /* mwidlist contains all WIDs */
+> > +            cpu->cfg.mwidlist = valid_widlist;
+> > +        }
+> > +        if (cpu->cfg.mwid == UINT32_MAX) {
+> > +            cpu->cfg.mwid = trustedwid;
+> > +        }
+> > +
+> > +        /* Check if mwid/mwidlist HW config is valid in NWorld. */
+> > +        g_assert((cpu->cfg.mwidlist & ~valid_widlist) == 0);
+> > +        g_assert(cpu->cfg.mwid < worldguard_config->nworlds);
+> > +    }
+> > +}
 > > +
 > > +/*
-> > + * QMP query for MSHV
+> > + * riscv_worldguard_apply_cpu - Enable WG extension of CPU
+> > + *
+> > + * Note: This API should be used after global WG device is created
+> > + * (riscv_worldguard_realize()).
 > > + */
-> > +MshvInfo *qmp_query_mshv(Error **errp)
+> > +void riscv_worldguard_apply_cpu(uint32_t hartid)
 > > +{
-> > +    MshvInfo *info = g_malloc0(sizeof(*info));
-> > +    struct stat st;
+> > +    /* WG global config should exist */
+> > +    g_assert(worldguard_config);
+> 
+> We usually add g_asserts() after the variable declarations.
+> 
 > > +
-> > +    info->present = accel_find("mshv");
-> > +    info->enabled = (stat("/dev/mshv", &st) == 0);
-> 
-> I don't think this is the right way to check if MSHV is _enabled_. The
-> device node being around doesn't necessarily mean that QEMU is using it.
-> 
-> You can refer to kvm_enabled() to see how it is implemented.
-> 
-> Some functions that are of interest:
->    do_configure_accelerator
->    accel_init_machine
+> > +    CPUState *cpu = qemu_get_cpu(hartid);
 
-This is likely as simple as squashing in the following diff.
+arm_get_cpu() uses CPUState::cpu_index to obtain the corresponding CPUState pointer.
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 024ddb8d2d7c..1b520599972a 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -39,7 +39,7 @@ MshvInfo *qmp_query_mshv(Error **errp)
-     struct stat st;
+However, CPUState::cpu_index and the RISC-V HART index are not necessarily strictly
+one-to-one (for instance, when the hartid base is non-zero or when hartids are
+discontinuous).
 
-     info->present = accel_find("mshv");
--    info->enabled = (stat("/dev/mshv", &st) == 0);
-+    info->enabled = mshv_enabled();
-     return info;
- }
+Typically, we use arm_get_cpu() at the accelerators, rather than in hw/code.
+
+A better approach is to use cpu_by_arch_id() instead of qemu_get_cpu(),
+in RISC-V cpu_by_arch_id() uses the hartid.
+
+e.g.
+
+     CPUState *cpu = cpu_by_arch_id(hartid);
+
+
+Thanks,
+
+Chao
+
+> > +    RISCVCPU *rcpu = RISCV_CPU(cpu);
+> > +    CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
+> > +
+> > +    rcpu->cfg.ext_smwg = true;
+> > +    if (riscv_has_ext(env, RVS) && riscv_has_ext(env, RVU)) {
+> > +        rcpu->cfg.ext_sswg = true;
+> > +    }
+> 
+> riscv_has_ext() will segfault if env == NULL, and you're creating a code
+> path where this might happen:
+> 
+> > +    CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
+> 
+> In fact, cpu == NULL will explode on you earlier via this macro:
+> 
+> > +    RISCVCPU *rcpu = RISCV_CPU(cpu);
+> 
+> You can either handle cpu == NULL with a clean exit before using 'cpu' to assign
+> stuff or g_assert(cpu != NULL) for a more rude exit. But with this code as is
+> you're gambling with segfaults.
+> 
+> 
+> Thanks,
+> 
+> Daniel
+> 
+> 
+> > +
+> > +    /* Set machine specific WorldGuard callback */
+> > +    env->wg_reset = riscv_cpu_wg_reset;
+> > +    env->wid_to_mem_attrs = wid_to_mem_attrs;
+> > +
+> > +    /* Reset WG CSRs in CPU */
+> > +    env->wg_reset(env);
+> > +}
+> > +
+> >   bool could_access_wgblocks(MemTxAttrs attrs, const char *wgblock)
+> >   {
+> >       uint32_t wid = mem_attrs_to_wid(attrs);
+> > diff --git a/include/hw/misc/riscv_worldguard.h b/include/hw/misc/riscv_worldguard.h
+> > index 8a533a0517..211a72e438 100644
+> > --- a/include/hw/misc/riscv_worldguard.h
+> > +++ b/include/hw/misc/riscv_worldguard.h
+> > @@ -48,6 +48,7 @@ extern struct RISCVWorldGuardState *worldguard_config;
+> >   
+> >   DeviceState *riscv_worldguard_create(uint32_t nworlds, uint32_t trustedwid,
+> >                                        bool hw_bypass, bool tz_compat);
+> > +void riscv_worldguard_apply_cpu(uint32_t hartid);
+> >   
+> >   uint32_t mem_attrs_to_wid(MemTxAttrs attrs);
+> >   bool could_access_wgblocks(MemTxAttrs attrs, const char *wgblock);
+> 
+
 
