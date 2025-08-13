@@ -4,107 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449D3CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B55CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umC8E-0004md-08; Wed, 13 Aug 2025 10:07:10 -0400
+	id 1umCIk-00074o-6T; Wed, 13 Aug 2025 10:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umC8B-0004mH-4b
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:07:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1umCIg-00074P-Tv
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:17:59 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umC7x-0002tI-7M
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:07:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755094010;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QvwL+w9McJxSQWjFczCDpZv2chRH3XYcq/HP9T4vWQU=;
- b=BhV0O/UassisUf7B7qEetxyDdodFCbigmqsn0MXuh6f4sbHS156ubMDbdcIhMJIKQ2YbLJ
- GWZQK/CGcxu6QBKCBZeG2xe2wAwgHLQNot1HLph/dkGr/NnQ5jsSIL9Z9hNBXFOqv2TbJ6
- DFwXSlqEdFfTLUYDeBVUPG7J1RsShno=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-182-wFn0g-j-OXa2wGMWhF5MFg-1; Wed, 13 Aug 2025 10:06:49 -0400
-X-MC-Unique: wFn0g-j-OXa2wGMWhF5MFg-1
-X-Mimecast-MFC-AGG-ID: wFn0g-j-OXa2wGMWhF5MFg_1755094009
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-70738c24c4fso61121906d6.1
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 07:06:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755094008; x=1755698808;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QvwL+w9McJxSQWjFczCDpZv2chRH3XYcq/HP9T4vWQU=;
- b=A8tCgdITIsN2kHYCYTu4PrBmSRTlRAT0FLxLQxZWvcAPQbgpJUmAP0qHuxyjmNRVcE
- hqIJ2HySaZl1/a9hZw+pxqVEgv6PQntIT7yh+Az6AsiCGN7lJAsTIvRonnBItqDlqsx+
- VdzPhjlNSBr5kl6nvdHorfx9OPR1vJDuE4chkEb/I6kAAHb8Jaolf9RP+gj+pxforGyS
- YkRGZyOQqbTqF/RZui9SoipLBiBsp6oL3NJFpwnGh7WTIoNF+KBJmKut4Spb2Avrldlt
- yXiWxMqouVWBLtov/7r3sGklG0WN6FHHOnTlwoqDZlVTb2yUd9o0/LlnuFQrTA3jyOEn
- /2eA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBEKwbpfZXddWAVw5eIX6l1G7Hl4lUDAUhW2MtAfgN87XiUKBA7KozXwmytsqLE59NBQDZIiBGvkdN@nongnu.org
-X-Gm-Message-State: AOJu0YyEyhNmIVjAwlGR48NAS1td0nAVeS7cNbUHU7x8PFvXPm0R55zn
- 7Qr1v81CQMk2oOXjxBY/DGqZrUKwGtCcFCcwR0TyRn0wQ2qvNlonQhdjK8ULjEWAdIr4s+h05A6
- 2aewghiCdFrP8/20FHxw4XjYdjQ7gL/0J7+mHe5Mmd5ycu9J3HBIt1YN8+rH52XX3
-X-Gm-Gg: ASbGnctppuzWb4JXuQgF6uGt3vdnYM/TR7cxri4XnedtAQVKDS9CUpfo78GBw6xva4B
- aslrvZuNAyM0IpSaWhgXCdihI0PmQZomVgC+cpJjc88qy/S/Argn1IM0WN43J+X9Ua0FQbciCGs
- SytQUytMAb0rCvFXxdxXab9+ifVU/PBvMjSNe2J651sjqLMRaEYfavosjH5e14kwM6x6a1l2dRS
- 6seAtCQkvRF3l5M+s2a1Y+lV+hXpgAZ6g0Z/+QnMD/cP529zUhv8jouHZiUq6Cv+AviaDTYbizE
- SI7VC7dRdloGq/KyI/OZEC4DonjQBQnP
-X-Received: by 2002:a05:6214:500d:b0:709:e60f:6618 with SMTP id
- 6a1803df08f44-709e89a59a3mr31429236d6.33.1755094008021; 
- Wed, 13 Aug 2025 07:06:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFI2f2aZ0SaA8UG9bM0wpIrmM85YbNryPIvTOfiJ3T4ueZXTzB7eBzhIax0hfeav4/eyFK/EQ==
-X-Received: by 2002:a05:6214:500d:b0:709:e60f:6618 with SMTP id
- 6a1803df08f44-709e89a59a3mr31428666d6.33.1755094007444; 
- Wed, 13 Aug 2025 07:06:47 -0700 (PDT)
-Received: from x1.local ([174.89.135.171]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-7077e263efcsm195229386d6.85.2025.08.13.07.06.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Aug 2025 07:06:46 -0700 (PDT)
-Date: Wed, 13 Aug 2025 10:06:34 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
- farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
- jasowang@redhat.com, mst@redhat.com, si-wei.liu@oracle.com,
- boris.ostrovsky@oracle.com
-Subject: Re: [RFC 5/6] virtio,virtio-net: skip consistency check in
- virtio_load for iterative migration
-Message-ID: <aJyb6n9Vf4BhHqpb@x1.local>
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <20250722124127.2497406-6-jonah.palmer@oracle.com>
- <aJOCiUPp0dckmgAn@x1.local>
- <5e276607-cd86-4a1d-99f3-47dd2f0f3bc0@oracle.com>
- <aJTU641465aGKWRU@x1.local>
- <0cf99747-443e-4a29-a0da-64012548a994@oracle.com>
- <aJnydjxFzKwVzi7Y@x1.local>
- <eafcf9ca-f23f-42d5-b8c2-69f81a395d11@oracle.com>
- <aJpm4-JfmevsI7Ei@x1.local>
- <CAJaqyWfAnH-Lca3zmQTiR2wtaryKUo2KDKa=s5pcuAO9E6Efsw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1umCIc-0004RV-5R
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:17:57 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DDNBwa019317;
+ Wed, 13 Aug 2025 14:17:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=corp-2025-04-25; bh=tiz7JBsgDCVRtx4s
+ iVe9ub1AXjNEw9e0D816QLfv/9U=; b=mSDYzKGTPPMQFh9+AVoozulmrAQPkZ3S
+ /hyiFfx893YrgK/j6SRoG2JOw6Ti94bAUYYp3kmRzGLWHMHtRqpucOvBe8iEvrRk
+ wVNgQ3x/+d0kBfUakGcejh4harWfZWQLmdneqMXNx+/md05e+qj0WocUHD3AiYlP
+ OZDwyf0Rnl6TQQZJSyLuZEVw/fP62OTMbR83TiPOYnJELqHbwEN8/OOBR7Shvsvt
+ n9/UvnhT0Y5HoHarX8Wa6DFqUu1aoreLkwnRmO8hTjXwhqReOLx7twMajvE0no3k
+ H7sKRuGqGlHjsAKKBwkbPwmP8WorTFt6iycl/nVAG//bf6jX6ZOMqQ==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48dw8efnbm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Aug 2025 14:17:49 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 57DCeLZ4017389; Wed, 13 Aug 2025 14:17:49 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 48dvsbf8e4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Aug 2025 14:17:48 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57DEHmhU018173;
+ Wed, 13 Aug 2025 14:17:48 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 48dvsbf8dn-1; Wed, 13 Aug 2025 14:17:48 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH] vfio/container: set error on cpr failure
+Date: Wed, 13 Aug 2025 07:17:47 -0700
+Message-Id: <1755094667-281419-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJaqyWfAnH-Lca3zmQTiR2wtaryKUo2KDKa=s5pcuAO9E6Efsw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ malwarescore=0 bulkscore=0
+ phishscore=0 suspectscore=0 mlxlogscore=999 adultscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2507300000
+ definitions=main-2508130134
+X-Proofpoint-GUID: hHUTqb1fsNEM9VOrwa3WASwMapJ3TM8U
+X-Proofpoint-ORIG-GUID: hHUTqb1fsNEM9VOrwa3WASwMapJ3TM8U
+X-Authority-Analysis: v=2.4 cv=ePQTjGp1 c=1 sm=1 tr=0 ts=689c9e8d b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117
+ a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8
+ a=RJe6Pf5eNMpdvKrrBVoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=CKOJFrdQhwIypUwta_Sj:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEzMDEzNCBTYWx0ZWRfX3XZFf5B42Cuu
+ s6fy+If6pW1NEAUuwP2eFICfiPsFG4cZr9mGvJoRNzuinLl04vtfsyKWyH6BJy71kvhaqoTvPCF
+ Ez1g5fcrYwO419Wz/KzBuqUab5+oHELZt5REf1gg8WvcWELxVFbtX0LdlGtOLJaJ4ondfY3Ur+0
+ 5cmAy2Tsu/obFD6goPPHz+BVwZ1AxjUNBrcqRcrd1mtbt2Vup3rXNdPaaJS2PmHzqCrEcKgO7vi
+ OHLlp66oZ49VToxdvYjFg+ssNqbX6mN0tAHHaesjKs5QL0zCb/14OUyWQyAiEDveS2Q6z7E9qqN
+ af7ueXkl7MeBjr4jkAyN2/oh9pMcyFts9SRTUgT2RIrSlNyWtljxlLknVOG87AEloBOczURZ7Jz
+ 2LnEiXWetJHtYp9rVlPbH7Z/KxCFaR0UsZCa0/lNJvuhehOHkR5ICA2vIVkzuHU/GFS9i7lZ
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.299,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,67 +114,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 13, 2025 at 11:25:00AM +0200, Eugenio Perez Martin wrote:
-> On Mon, Aug 11, 2025 at 11:56 PM Peter Xu <peterx@redhat.com> wrote:
-> >
-> > On Mon, Aug 11, 2025 at 05:26:05PM -0400, Jonah Palmer wrote:
-> > > This effort was started to reduce the guest visible downtime by
-> > > virtio-net/vhost-net/vhost-vDPA during live migration, especially
-> > > vhost-vDPA.
-> > >
-> > > The downtime contributed by vhost-vDPA, for example, is not from having to
-> > > migrate a lot of state but rather expensive backend control-plane latency
-> > > like CVQ configurations (e.g. MQ queue pairs, RSS, MAC/VLAN filters, offload
-> > > settings, MTU, etc.). Doing this requires kernel/HW NIC operations which
-> > > dominates its downtime.
-> > >
-> > > In other words, by migrating the state of virtio-net early (before the
-> > > stop-and-copy phase), we can also start staging backend configurations,
-> > > which is the main contributor of downtime when migrating a vhost-vDPA
-> > > device.
-> > >
-> > > I apologize if this series gives the impression that we're migrating a lot
-> > > of data here. It's more along the lines of moving control-plane latency out
-> > > of the stop-and-copy phase.
-> >
-> > I see, thanks.
-> >
-> > Please add these into the cover letter of the next post.  IMHO it's
-> > extremely important information to explain the real goal of this work.  I
-> > bet it is not expected for most people when reading the current cover
-> > letter.
-> >
-> > Then it could have nothing to do with iterative phase, am I right?
-> >
-> > What are the data needed for the dest QEMU to start staging backend
-> > configurations to the HWs underneath?  Does dest QEMU already have them in
-> > the cmdlines?
-> >
-> > Asking this because I want to know whether it can be done completely
-> > without src QEMU at all, e.g. when dest QEMU starts.
-> >
-> > If src QEMU's data is still needed, please also first consider providing
-> > such facility using an "early VMSD" if it is ever possible: feel free to
-> > refer to commit 3b95a71b22827d26178.
-> >
-> 
-> While it works for this series, it does not allow to resend the state
-> when the src device changes. For example, if the number of virtqueues
-> is modified.
+Set an error message if vfio_cpr_ram_discard_register_listener fails so
+the fail label gets a valid error object.
 
-Some explanation on "how sync number of vqueues helps downtime" would help.
-Not "it might preheat things", but exactly why, and how that differs when
-it's pure software, and when hardware will be involved.
+Reported-by: Cédric Le Goater <clg@redhat.com>
+Fixes: eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr failure")
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ hw/vfio/listener.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-If it's only about pre-heat, could dest qemu preheat with max num of
-vqueues?  Is it the same cost of downtime when growing num of queues,
-v.s. shrinking num of queues?
-
-For softwares, is it about memory transaction updates due to the vqueues?
-If so, have we investigated a more generic approach on memory side, likely
-some form of continuation from Chuang's work I previously mentioned?
-
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index f498e23..5ebafaa 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -574,6 +574,9 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
+             vfio_ram_discard_register_listener(bcontainer, section);
+         } else if (!vfio_cpr_ram_discard_register_listener(bcontainer,
+                                                            section)) {
++            error_setg(&err,
++                       "vfio_cpr_ram_discard_register_listener for %s failed",
++                       memory_region_name(section->mr));
+             goto fail;
+         }
+         return;
 -- 
-Peter Xu
+1.8.3.1
 
 
