@@ -4,101 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33EA0C87FCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F73CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:36:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umCWh-0002xV-Uo; Wed, 13 Aug 2025 10:32:27 -0400
+	id 1umCZZ-00040Q-8l; Wed, 13 Aug 2025 10:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naresh.kamboju@linaro.org>)
- id 1umCWZ-0002x7-0S
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:32:19 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <naresh.kamboju@linaro.org>)
- id 1umCWP-0006bE-Mi
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:32:17 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-32128c1bf32so8582217a91.2
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 07:32:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755095525; x=1755700325; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SdEySWA9pjFNhAetIdOe+TeBj+YFSkBbS61Z6xuGeG0=;
- b=qImzVuuOa7cjXZW8Rn9QbrW1wbmj43TraabuE/zqI3Vt69964cfXWy0D2mkBMCFl2K
- cTDxuXmjg3NrqdSHpUC5XHTOcIAGnPpLCXp+ztzsauGz8QZDWvFgbXC7Rh79HbAze/7L
- 8pRsDJL8OWCrulOKEE9BATRx1FcgJKS6zs81oPwvWvrvvAW2tBTgjf+XJ8enA/Zeacx0
- FybZdlSmiqzvbLF2fa041+tGRuoVZJ5kMODA7ok1daId5fAKInN8CZ48tfKbJNje6DYQ
- a7XAAnY1QIrTumztkMTgOozHUdqMGSho+JXIRoYB/G9lFxCGswxOLG3YIDxNfIltes/G
- 81+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755095525; x=1755700325;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SdEySWA9pjFNhAetIdOe+TeBj+YFSkBbS61Z6xuGeG0=;
- b=XC5tM0S3lOuzU695Cv4MH3MEKq6x2KawpVtCHlGUZYd1HMTGRCufMZ1PYOLPwn98GR
- uhacHwPg4m12TYTLeAEsm7MXIpXcWIRyVjGYO3uyAbcAYl/E+lAhxpJA+cODtwTy+q9m
- npmnZ1ixKYbRxKvSQqFXT3PtlCUraW0vvbCdc3+NB0bgqNpAZLAvQxmv0JHC2ya4rnL3
- xJmc0ut+PzfhYRYSkHv8qlqJh3irayvHQFB7nsLhkyl3zG8wNmHArqG9fDIVmA+6yBBM
- y4ONOAj/HqEQilr/Ovm/dO6xX46fegAmf5wtB8f9Jgg2qPHPeRB4tVSOz/38MY3KH7Pm
- 7G/g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjKxiLenJwmVJj+vzFboMqu4Sa+PmMoDsZD1wSB2eDCvP73n9EP2hFbtGMufQCpgVn54EA/+2sC2ec@nongnu.org
-X-Gm-Message-State: AOJu0Yz4OfZEjsmhG0wcvUQaNYoSoXxBTw0CIu6wfIyqvLaKS+xwKljN
- E2HhRhUdn63kCfOaMsjWH1zW+EZmYN9625e6K34eXzVHv84rN3htB2tQYABrdKdPKEmEmrw+pHi
- eV8qUOVIcBMsK1HPmQo3fOHDWGlFbRK2HqyqM+0IvfQ==
-X-Gm-Gg: ASbGncukIoj6zPJUouXJ5hLVrN81K3UFU6jFtVzIbMeyobFl1pifbXWfz6zP3x+s2lz
- YCGtNO9jnf0tr9oOBwP69yHKUkt774zl0O2UpbO6KsHiC0dQpHb/ZQWQqOP2jGuN6CStAReps5w
- WpnseGHuve3WhF3lQEuYA6T8heIhUcvqWXhfIgmAW6GT2gqMjAMkWIewOTg2hg9HphT4vxlaKRG
- TZ1jQUEHnubhGzS+e6NTkr813R2eKAMkuSfe/KBtcBCY1dXOiYw0QUM4gq75w==
-X-Google-Smtp-Source: AGHT+IFzsa7z2LB/NwMV+7ODMzwtQZ5c6SDjL/beKBH/4CiDe3n9MltwqzwrpDodhDWNKfzJI3ZmU6XpdnvXzSkeC14=
-X-Received: by 2002:a17:90b:39c7:b0:321:cfbf:cbd6 with SMTP id
- 98e67ed59e1d1-321d0d6912bmr4596811a91.6.1755095524619; Wed, 13 Aug 2025
- 07:32:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1umCZO-0003zG-3S; Wed, 13 Aug 2025 10:35:14 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1umCZD-0006w1-1a; Wed, 13 Aug 2025 10:35:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1755095703; x=1786631703;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=GNjxa60oAcKUTX1ZgUGGqg5+CZgABow7Yu0WYKieG04=;
+ b=aIm0EOyerxyrCb1taT6X6f1ZbPjJ6nHfm+U31s+H9BUcREjGusKYTq3X
+ l7IZzPD0liuvPcN0NB7iul8jpCcFjKkvdebuYbbDBKE7opygn/k0fmoLp
+ YaM1G58dVqCfxmvbBuhEi1USsOoucuIikbpeS1OrW6GmcJEAXkyxSWcFp
+ 5o/1PZHQqzfftBqYj6ITfeYXOGjPFYXv8uukP5vB16kMV2T6jt1Eea5S1
+ nsEMyv3PhKvyOlbAUhZV7HccQS/7+wNWGdQpt20Y0s33IpDjrBcXjZXCl
+ 54lMe6AUq4wHSbjI6RaDRTexw+oDhlUfrXOtMBZzeCE1qM1Xzfn+TYn5Y Q==;
+X-CSE-ConnectionGUID: oHzUjE4ARm+RQ/wHE6xxeA==
+X-CSE-MsgGUID: ecZzSuQaTr6s/+GHslbWKA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11520"; a="60014627"
+X-IronPort-AV: E=Sophos;i="6.17,285,1747724400"; d="scan'208";a="60014627"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Aug 2025 07:34:58 -0700
+X-CSE-ConnectionGUID: 4ikoYzVoQHqqA/4ZfP2Jpg==
+X-CSE-MsgGUID: L8ndYinvRDitUjqs9UKp9Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,285,1747724400"; d="scan'208";a="171815249"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa005.jf.intel.com with ESMTP; 13 Aug 2025 07:34:56 -0700
+Date: Wed, 13 Aug 2025 22:56:36 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org, Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ Chuanxiao Dong <chuanxiao.dong@intel.com>
+Subject: Re: [RFC 00/26] rust/memory: Integrate the vm-memory API from rust-vmm
+Message-ID: <aJynpEWNfbrTeirQ@intel.com>
+References: <20250807123027.2910950-1-zhao1.liu@intel.com>
+ <a3272f93-8766-46a0-bda2-ddea777ef79c@redhat.com>
 MIME-Version: 1.0
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <2025081300-frown-sketch-f5bd@gregkh>
-In-Reply-To: <2025081300-frown-sketch-f5bd@gregkh>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 13 Aug 2025 20:01:51 +0530
-X-Gm-Features: Ac12FXzTlKbJUDUafTa4ZlpVkqfN8sdY7Wfx9w4NKXTaujZ4mJCVSf-u4y5vZP8
-Message-ID: <CA+G9fYuEb7Y__CVHxZ8VkWGqfA4imWzXsBhPdn05GhOandg0Yw@mail.gmail.com>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
- broonie@kernel.org, achill@achill.org, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>, 
- Anders Roxell <anders.roxell@linaro.org>,
- Ben Copeland <benjamin.copeland@linaro.org>, 
- LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
- Petr Vorel <pvorel@suse.cz>, 
- Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org, 
- Zhang Yi <yi.zhang@huaweicloud.com>, Joseph Qi <jiangqi903@gmail.com>,
- Jan Kara <jack@suse.cz>, 
- linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>, 
- Zhang Yi <yi.zhang@huawei.com>, "Theodore Ts'o" <tytso@mit.edu>,
- Baokun Li <libaokun1@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=naresh.kamboju@linaro.org; helo=mail-pj1-x1035.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a3272f93-8766-46a0-bda2-ddea777ef79c@redhat.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,56 +87,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Greg,
+On Thu, Aug 07, 2025 at 04:13:00PM +0200, Paolo Bonzini wrote:
+> Date: Thu, 7 Aug 2025 16:13:00 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [RFC 00/26] rust/memory: Integrate the vm-memory API from
+>  rust-vmm
+> 
+> [Adding Hanna who's been working on vm-memory]
+> 
+> On 8/7/25 14:30, Zhao Liu wrote:
+> > Hi,
+> > 
+> > This RFC series explores integrating the vm-memory API into QEMU's
+> > rust/memory bindings.
+> > 
+> > Thanks to Paolo and Manos's many suggestions and feedback, I have
+> > resolved many issues over the past few months, but there are still
+> > some open issues that I would like to discuss.
+> > 
+> > This series finally provides the following safe interfaces in Rust:
+> >   * AddressSpace::write in Rust <=> address_space_write in C
+> >     - **but only** supports MEMTXATTRS_UNSPECIFIED
+> > 
+> >   * AddressSpace::read in Rust <=> address_space_read_full in C
+> >     - **but only** supports MEMTXATTRS_UNSPECIFIED.
+> > 
+> >   * AddressSpace::store in Rust <=> address_space_st{size} in C
+> >     - **but only** supports MEMTXATTRS_UNSPECIFIED and native endian.
+> > 
+> >   * AddressSpace::load in Rust <=> address_space_ld{size} in C
+> >     - **but only** supports MEMTXATTRS_UNSPECIFIED and native endian.
+> 
+> Endianness can be handled by BeNN and LeNN.
 
-> > 2)
-> >
-> > The following list of LTP syscalls failure noticed on qemu-arm64 with
-> > stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
-> >
-> > Most failures report ENOSPC (28) or mkswap errors, which may be related
-> > to disk space handling in the 64K page configuration on qemu-arm64.
-> >
-> > The issue is reproducible on multiple runs.
-> >
-> > * qemu-arm64, ltp-syscalls - 64K page size test failures list,
-> >
-> >   - fallocate04
-> >   - fallocate05
-> >   - fdatasync03
-> >   - fsync01
-> >   - fsync04
-> >   - ioctl_fiemap01
-> >   - swapoff01
-> >   - swapoff02
-> >   - swapon01
-> >   - swapon02
-> >   - swapon03
-> >   - sync01
-> >   - sync_file_range02
-> >   - syncfs01
-> >
-> > Reproducibility:
-> >  - 64K config above listed test fails
-> >  - 4K config above listed test pass.
-> >
-> > Regression Analysis:
-> > - New regression? yes
->
-> Regression from 6.16?  Or just from 6.15.y?
+About Endianness, I have more thoughts in the reply of patch 24.
 
-Based on available data, the issue is not present in v6.16 or v6.15.
+> For MemTxAttrs we can use
+> Bytes<(GuestAddress, MemTxAttrs)> (a variant on something you mention
+> below).
+> 
+> Thinking out loud: maybe if we do our implementation in Bytes<(GuestAddress,
+> MemTxAttrs)>, and Bytes<GuestAddress>::try_access wraps Bytes<(GuestAddress,
+> MemTxAttrs)>, your downstream-only changes are not needed anymore?
 
-Anders, bisected this regression and found,
+with iommu support, the downstream patches are not necessary :-).
 
-  ext4: correct the reserved credits for extent conversion
-    [ Upstream commit 95ad8ee45cdbc321c135a2db895d48b374ef0f87 ]
+> > And this series involves changes mainly to these three parts:
+> >   * NEW QEMU memory APIs wrapper at C side.
+> >   * Extra changes for vm-memory (downstream for now).
+> >   * NEW QEMU memory bindings/APIs based on vm-memory at Rust side.
+> > 
+> > Although the number of line changes appears to be significant, more
+> > than half of them are documentation and comments.
+> Yep, thanks for writing them.
+> 
+> This is a good RFC, it's complete enough to show the challenges and the
+> things that are missing stand up easily.
 
-Report lore link,
+Thank you for your quick feedback.
 
-https://lore.kernel.org/stable/CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com/
+> I'll look into what vm-memory is missing so that we can simplify QEMU's code
+> further, but the basic traits match which is nice.  And the final outcome,
+> which is essentially:
+> 
+>     let (addr, value) = (GuestAddress(self.fsb >> 32),
+>                          Le32(self.fsb as u32));
+>     ADDRESS_SPACE_MEMORY.memory().store(addr, value);
+> 
+> is as clean as it can be, if anything a bit wordy due to the GuestAddress
+> "newtype" wrapper.  (If we decide it's too bad, the convenience methods in
+> AddressSpace can automatically do the GuestAddress conversion...)
 
---
-Linaro LKFT
-https://lkft.linaro.org
+Yes! For such a single function, there're lots of changes.
+
+Thanks,
+Zhao
+
 
