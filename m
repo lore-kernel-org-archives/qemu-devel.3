@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F93BCA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B044CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umEg5-00038p-0y; Wed, 13 Aug 2025 12:50:17 -0400
+	id 1umEft-0002w3-Vn; Wed, 13 Aug 2025 12:50:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umEfw-00030Y-OM; Wed, 13 Aug 2025 12:50:08 -0400
+ id 1umEfL-0002eA-Nt; Wed, 13 Aug 2025 12:49:33 -0400
 Received: from forwardcorp1d.mail.yandex.net
  ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umEfk-0007tu-Hi; Wed, 13 Aug 2025 12:50:07 -0400
+ id 1umEf8-0007ni-LT; Wed, 13 Aug 2025 12:49:30 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id BD302813EE;
- Wed, 13 Aug 2025 19:49:27 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4BE9580758;
+ Wed, 13 Aug 2025 19:49:09 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:167::1:21])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id wmOQI00FoSw0-tyTiIsXB; Wed, 13 Aug 2025 19:49:27 +0300
+ ESMTPSA id wmOQI00FoSw0-VIYARLUk; Wed, 13 Aug 2025 19:49:08 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755103767;
- bh=ySTklhZeyl9879IHDj6pOytJKMMT2EjW0woilwTiBYw=;
+ s=default; t=1755103748;
+ bh=nqWXIsmLLn9rg1IFHTsU/Prs4niyPIFMdRUQOysIsTY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=VUWTwCtS6WZ5e6lVny+K3mw/0Dr11WoxdBM0KS3vtRM80sB1mSpcT5Vqacgkbnb8H
- Dt/vscMqWcgJKsEjnUxvnP+l/FskCQYTcKKND2VrWfSOyM/X0EPp2R6vuI+XUpjlbt
- fRNwXnbNHPJWRuvtKJIapP6p5+Yd2eTOwWDfoUKs=
+ b=AMi0yGUazKFMSkOwSImea/bfdQrJFaJbK+rui7VjrkjTHJnDeHH3qvItjXki/nlxj
+ WGh7+XM6c1oikWWk7HeLTVX+rqQAJPHVdJBzZosyAgYrDYQ9PJzMdZCsGVVWKXjY2M
+ Voz8M92T+dq0ohR87LS2K/HwCGnKWfa0z91RZ1so=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,9 +44,10 @@ Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
  eblake@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org,
  qemu-block@nongnu.org, steven.sistare@oracle.com,
  den-plotnikov@yandex-team.ru, vsementsov@yandex-team.ru
-Subject: [PATCH 31/33] vhost-user-blk: support vhost backend migration
-Date: Wed, 13 Aug 2025 19:48:52 +0300
-Message-ID: <20250813164856.950363-32-vsementsov@yandex-team.ru>
+Subject: [PATCH 07/33] virtio: move common part of _set_guest_notifier to
+ generic code
+Date: Wed, 13 Aug 2025 19:48:28 +0300
+Message-ID: <20250813164856.950363-8-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250813164856.950363-1-vsementsov@yandex-team.ru>
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
@@ -75,403 +76,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Opt-out backend initialization code, and instead get the state
-from migration channel (including inflight region).
+virtio-pci and virtio-mmiio handle config notifier equally but
+with different code (mmio adds a separate function, when pci
+use common function). Let's chose the more compact way (pci)
+and reuse it for mmio.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/block/vhost-user-blk.c          | 185 +++++++++++++++++++++++------
- include/hw/virtio/vhost-user-blk.h |   2 +
- migration/options.c                |   7 ++
- migration/options.h                |   1 +
- qapi/migration.json                |  15 ++-
- 5 files changed, 169 insertions(+), 41 deletions(-)
+ hw/virtio/virtio-mmio.c        | 41 +++++------------------------
+ hw/virtio/virtio-pci.c         | 34 +++---------------------
+ hw/virtio/virtio.c             | 48 +++++++++++++++++++++++++++++++---
+ include/hw/virtio/virtio-pci.h |  3 ---
+ include/hw/virtio/virtio.h     |  7 +++--
+ 5 files changed, 58 insertions(+), 75 deletions(-)
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index c8bc2c78e6..2e6ef6477e 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -17,6 +17,7 @@
-  */
+diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
+index 532c67107b..18afa1c0d0 100644
+--- a/hw/virtio/virtio-mmio.c
++++ b/hw/virtio/virtio-mmio.c
+@@ -658,18 +658,11 @@ static int virtio_mmio_set_guest_notifier(DeviceState *d, int n, bool assign,
+     VirtIOMMIOProxy *proxy = VIRTIO_MMIO(d);
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+-    VirtQueue *vq = virtio_get_queue(vdev, n);
+-    EventNotifier *notifier = virtio_queue_get_guest_notifier(vq);
++    int r;
  
- #include "qemu/osdep.h"
-+#include "qapi-types-run-state.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/cutils.h"
-@@ -32,6 +33,11 @@
- #include "system/system.h"
- #include "system/runstate.h"
- #include "trace.h"
-+#include "migration/qemu-file.h"
-+#include "migration/migration.h"
-+#include "migration/options.h"
-+#include "qemu/event_notifier.h"
-+#include <sys/mman.h>
- 
- static const int user_feature_bits[] = {
-     VIRTIO_BLK_F_SIZE_MAX,
-@@ -159,32 +165,35 @@ static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
- 
-     s->dev.acked_features = vdev->guest_features;
- 
--    ret = vhost_dev_prepare_inflight(&s->dev, vdev);
--    if (ret < 0) {
--        error_setg_errno(errp, -ret, "Error setting inflight format");
--        goto err_guest_notifiers;
--    }
--
--    if (!s->inflight->addr) {
--        ret = vhost_dev_get_inflight(&s->dev, s->queue_size, s->inflight);
-+    if (!s->dev.migrating_backend) {
-+        ret = vhost_dev_prepare_inflight(&s->dev, vdev);
-         if (ret < 0) {
--            error_setg_errno(errp, -ret, "Error getting inflight");
-+            error_setg_errno(errp, -ret, "Error setting inflight format");
-             goto err_guest_notifiers;
-         }
--    }
- 
--    ret = vhost_dev_set_inflight(&s->dev, s->inflight);
--    if (ret < 0) {
--        error_setg_errno(errp, -ret, "Error setting inflight");
--        goto err_guest_notifiers;
--    }
-+        if (!s->inflight->addr) {
-+            ret = vhost_dev_get_inflight(&s->dev, s->queue_size, s->inflight);
-+            if (ret < 0) {
-+                error_setg_errno(errp, -ret, "Error getting inflight");
-+                goto err_guest_notifiers;
-+            }
-+        }
- 
--    /* guest_notifier_mask/pending not used yet, so just unmask
--     * everything here. virtio-pci will do the right thing by
--     * enabling/disabling irqfd.
--     */
--    for (i = 0; i < s->dev.nvqs; i++) {
--        vhost_virtqueue_mask(&s->dev, vdev, i, false);
-+        ret = vhost_dev_set_inflight(&s->dev, s->inflight);
-+        if (ret < 0) {
-+            error_setg_errno(errp, -ret, "Error setting inflight");
-+            goto err_guest_notifiers;
-+        }
-+
-+        /*
-+         * guest_notifier_mask/pending not used yet, so just unmask
-+         * everything here. virtio-pci will do the right thing by
-+         * enabling/disabling irqfd.
-+         */
-+        for (i = 0; i < s->dev.nvqs; i++) {
-+            vhost_virtqueue_mask(&s->dev, vdev, i, false);
-+        }
+-    if (assign) {
+-        int r = event_notifier_init(notifier, 0);
+-        if (r < 0) {
+-            return r;
+-        }
+-        virtio_queue_set_guest_notifier_fd_handler(vq, true, with_irqfd);
+-    } else {
+-        virtio_queue_set_guest_notifier_fd_handler(vq, false, with_irqfd);
+-        event_notifier_cleanup(notifier);
++    r = virtio_queue_set_guest_notifier(vdev, n, assign, with_irqfd);
++    if (r < 0) {
++        return r;
      }
  
-     s->dev.vq_index_end = s->dev.nvqs;
-@@ -231,6 +240,10 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
-     force_stop = s->skip_get_vring_base_on_force_shutdown &&
-                  qemu_force_shutdown_requested();
- 
-+    s->dev.migrating_backend = s->dev.migrating_backend ||
-+        (runstate_check(RUN_STATE_FINISH_MIGRATE) &&
-+         migrate_local_vhost_user_blk());
-+
-     ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
-                        vhost_dev_stop(&s->dev, vdev, true);
- 
-@@ -343,7 +356,9 @@ static void vhost_user_blk_reset(VirtIODevice *vdev)
-     vhost_dev_free_inflight(s->inflight);
- }
- 
--static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-+static int vhost_user_blk_connect(DeviceState *dev,
-+                                  bool migrating_backend,
-+                                  Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostUserBlk *s = VHOST_USER_BLK(vdev);
-@@ -359,6 +374,7 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-     s->dev.nvqs = s->num_queues;
-     s->dev.vqs = s->vhost_vqs;
-     s->dev.vq_index = 0;
-+    s->dev.migrating_backend = migrating_backend;
- 
-     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
- 
-@@ -409,7 +425,7 @@ static void vhost_user_blk_event(void *opaque, QEMUChrEvent event)
- 
-     switch (event) {
-     case CHR_EVENT_OPENED:
--        if (vhost_user_blk_connect(dev, &local_err) < 0) {
-+        if (vhost_user_blk_connect(dev, false, &local_err) < 0) {
-             error_report_err(local_err);
-             qemu_chr_fe_disconnect(&s->chardev);
-             return;
-@@ -428,31 +444,37 @@ static void vhost_user_blk_event(void *opaque, QEMUChrEvent event)
-     }
- }
- 
--static int vhost_user_blk_realize_connect(VHostUserBlk *s, Error **errp)
-+static int vhost_user_blk_realize_connect(VHostUserBlk *s,
-+                                          bool migrating_backend,
-+                                          Error **errp)
- {
-     DeviceState *dev = DEVICE(s);
-     int ret;
- 
-     s->connected = false;
- 
--    ret = qemu_chr_fe_wait_connected(&s->chardev, errp);
--    if (ret < 0) {
--        return ret;
-+    if (!migrating_backend) {
-+        ret = qemu_chr_fe_wait_connected(&s->chardev, errp);
-+        if (ret < 0) {
-+            return ret;
-+        }
-     }
- 
--    ret = vhost_user_blk_connect(dev, errp);
-+    ret = vhost_user_blk_connect(dev, migrating_backend, errp);
-     if (ret < 0) {
-         qemu_chr_fe_disconnect(&s->chardev);
-         return ret;
-     }
-     assert(s->connected);
- 
--    ret = vhost_dev_get_config(&s->dev, (uint8_t *)&s->blkcfg,
--                               VIRTIO_DEVICE(s)->config_len, errp);
--    if (ret < 0) {
--        qemu_chr_fe_disconnect(&s->chardev);
--        vhost_dev_cleanup(&s->dev);
--        return ret;
-+    if (!migrating_backend) {
-+        ret = vhost_dev_get_config(&s->dev, (uint8_t *)&s->blkcfg,
-+                                   VIRTIO_DEVICE(s)->config_len, errp);
-+        if (ret < 0) {
-+            qemu_chr_fe_disconnect(&s->chardev);
-+            vhost_dev_cleanup(&s->dev);
-+            return ret;
-+        }
-     }
+     if (vdc->guest_notifier_mask && vdev->use_guest_notifier_mask) {
+@@ -678,30 +671,7 @@ static int virtio_mmio_set_guest_notifier(DeviceState *d, int n, bool assign,
  
      return 0;
-@@ -469,6 +491,11 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+ }
+-static int virtio_mmio_set_config_guest_notifier(DeviceState *d, bool assign,
+-                                                 bool with_irqfd)
+-{
+-    VirtIOMMIOProxy *proxy = VIRTIO_MMIO(d);
+-    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+-    VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+-    EventNotifier *notifier = virtio_config_get_guest_notifier(vdev);
+-    int r = 0;
  
-     trace_vhost_user_blk_device_realize();
- 
-+    if (s->incoming_backend && !runstate_check(RUN_STATE_INMIGRATE)) {
-+        error_setg(errp, "__yc_local-incoming can be used "
-+                   "only for incoming migration");
-+    }
-+
-     if (!s->chardev.chr) {
-         error_setg(errp, "chardev is mandatory");
-         return;
-@@ -517,7 +544,7 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
-             error_report_err(*errp);
-             *errp = NULL;
+-    if (assign) {
+-        r = event_notifier_init(notifier, 0);
+-        if (r < 0) {
+-            return r;
+-        }
+-        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
+-    } else {
+-        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
+-        event_notifier_cleanup(notifier);
+-    }
+-    if (vdc->guest_notifier_mask && vdev->use_guest_notifier_mask) {
+-        vdc->guest_notifier_mask(vdev, VIRTIO_CONFIG_IRQ_IDX, !assign);
+-    }
+-    return r;
+-}
+ static int virtio_mmio_set_guest_notifiers(DeviceState *d, int nvqs,
+                                            bool assign)
+ {
+@@ -723,7 +693,8 @@ static int virtio_mmio_set_guest_notifiers(DeviceState *d, int nvqs,
+             goto assign_error;
          }
--        ret = vhost_user_blk_realize_connect(s, errp);
-+        ret = vhost_user_blk_realize_connect(s, s->incoming_backend, errp);
-     } while (ret < 0 && retries--);
+     }
+-    r = virtio_mmio_set_config_guest_notifier(d, assign, with_irqfd);
++    r = virtio_mmio_set_guest_notifier(d, VIRTIO_CONFIG_IRQ_IDX, assign,
++                                       with_irqfd);
+     if (r < 0) {
+         goto assign_error;
+     }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 767216d795..3eca3fe2c8 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -1163,43 +1163,17 @@ static void virtio_pci_vector_poll(PCIDevice *dev,
+     }
+ }
  
-     if (ret < 0) {
-@@ -525,9 +552,12 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+-void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev, VirtQueue *vq,
+-                                              int n, bool assign,
+-                                              bool with_irqfd)
+-{
+-    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+-        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
+-    } else {
+-        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
+-    }
+-}
+-
+ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
+                                          bool with_irqfd)
+ {
+     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+-    VirtQueue *vq = NULL;
+-    EventNotifier *notifier = NULL;
++    int r;
+ 
+-    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+-        notifier = virtio_config_get_guest_notifier(vdev);
+-    } else {
+-        vq = virtio_get_queue(vdev, n);
+-        notifier = virtio_queue_get_guest_notifier(vq);
+-    }
+-
+-    if (assign) {
+-        int r = event_notifier_init(notifier, 0);
+-        if (r < 0) {
+-            return r;
+-        }
+-        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, true, with_irqfd);
+-    } else {
+-        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, false,
+-                                                 with_irqfd);
+-        event_notifier_cleanup(notifier);
++    r = virtio_queue_set_guest_notifier(vdev, n, assign, with_irqfd);
++    if (r < 0) {
++        return r;
      }
  
-     /* we're fully initialized, now we can operate, so add the handler */
--    qemu_chr_fe_set_handlers(&s->chardev,  NULL, NULL,
--                             vhost_user_blk_event, NULL, (void *)dev,
--                             NULL, true);
-+    if (!s->incoming_backend) {
-+        qemu_chr_fe_set_handlers(&s->chardev,  NULL, NULL,
-+                                 vhost_user_blk_event, NULL, (void *)dev,
-+                                 NULL, true);
-+    }
-+
-     trace_vhost_user_blk_device_realize_finish();
-     return;
- 
-@@ -592,6 +622,79 @@ static const VMStateDescription vmstate_vhost_user_blk = {
-     },
- };
- 
-+static void vhost_user_blk_save(VirtIODevice *vdev, QEMUFile *f)
-+{
-+    VHostUserBlk *s = VHOST_USER_BLK(vdev);
-+    struct vhost_dev *hdev = vhost_user_blk_get_vhost(vdev);
-+
-+    if (!hdev->migrating_backend) {
-+        return;
-+    }
-+
-+    qemu_file_put_fd(f, s->inflight->fd);
-+    qemu_put_be64(f, s->inflight->size);
-+    qemu_put_be64(f, s->inflight->offset);
-+    qemu_put_be16(f, s->inflight->queue_size);
-+
-+    vhost_save_backend(hdev, f);
-+}
-+
-+static int vhost_user_blk_load(VirtIODevice *vdev, QEMUFile *f,
-+                                      int version_id)
-+{
-+    VHostUserBlk *s = VHOST_USER_BLK(vdev);
-+    struct vhost_dev *hdev = vhost_user_blk_get_vhost(vdev);
-+
-+    if (!hdev->migrating_backend) {
-+        return 0;
-+    }
-+
-+    s->inflight->fd = qemu_file_get_fd(f);
-+    qemu_get_be64s(f, &s->inflight->size);
-+    qemu_get_be64s(f, &s->inflight->offset);
-+    qemu_get_be16s(f, &s->inflight->queue_size);
-+
-+    s->inflight->addr = mmap(0, s->inflight->size, PROT_READ | PROT_WRITE,
-+                             MAP_SHARED, s->inflight->fd, s->inflight->offset);
-+    if (s->inflight->addr == MAP_FAILED) {
-+        return -EINVAL;
-+    }
-+
-+    vhost_load_backend(hdev, f);
-+
-+    return 0;
-+}
-+
-+static int vhost_user_blk_post_load(VirtIODevice *vdev)
-+{
-+    VHostUserBlk *s = VHOST_USER_BLK(vdev);
-+    struct vhost_dev *hdev = vhost_user_blk_get_vhost(vdev);
-+    DeviceState *dev = &s->parent_obj.parent_obj;
-+
-+    if (!hdev->migrating_backend) {
-+        return 0;
-+    }
-+
-+    memcpy(&s->blkcfg, vdev->config, vdev->config_len);
-+
-+    /* we're fully initialized, now we can operate, so add the handler */
-+    qemu_chr_fe_set_handlers(&s->chardev,  NULL, NULL,
-+                             vhost_user_blk_event, NULL, (void *)dev,
-+                             NULL, true);
-+
-+    return 0;
-+}
-+
-+static bool vhost_user_blk_skip_migration_log(VirtIODevice *vdev)
-+{
-+    /*
-+     * Note that hdev->migrating_backend is false at this moment,
-+     * as logging is being setup during outging migration setup stage,
-+     * which is far before vm stop.
-+     */
-+    return migrate_local_vhost_user_blk();
-+}
-+
- static const Property vhost_user_blk_properties[] = {
-     DEFINE_PROP_CHR("chardev", VHostUserBlk, chardev),
-     DEFINE_PROP_UINT16("num-queues", VHostUserBlk, num_queues,
-@@ -605,6 +708,8 @@ static const Property vhost_user_blk_properties[] = {
-                       VIRTIO_BLK_F_WRITE_ZEROES, true),
-     DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
-                      skip_get_vring_base_on_force_shutdown, false),
-+    DEFINE_PROP_BOOL("local-incoming", VHostUserBlk,
-+                     incoming_backend, false),
- };
- 
- static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
-@@ -624,6 +729,10 @@ static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
-     vdc->set_status = vhost_user_blk_set_status;
-     vdc->reset = vhost_user_blk_reset;
-     vdc->get_vhost = vhost_user_blk_get_vhost;
-+    vdc->save = vhost_user_blk_save;
-+    vdc->load = vhost_user_blk_load;
-+    vdc->post_load = vhost_user_blk_post_load,
-+    vdc->skip_vhost_migration_log = vhost_user_blk_skip_migration_log;
+     if (!msix_enabled(&proxy->pci_dev) &&
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 9a81ad912e..7880c3bcd9 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3750,8 +3750,10 @@ static void virtio_config_guest_notifier_read(EventNotifier *n)
+         virtio_notify_config(vdev);
+     }
  }
- 
- static const TypeInfo vhost_user_blk_info = {
-diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost-user-blk.h
-index a10f785672..b06f55fd6f 100644
---- a/include/hw/virtio/vhost-user-blk.h
-+++ b/include/hw/virtio/vhost-user-blk.h
-@@ -52,6 +52,8 @@ struct VHostUserBlk {
-     bool started_vu;
- 
-     bool skip_get_vring_base_on_force_shutdown;
+-void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq, bool assign,
+-                                                bool with_irqfd)
 +
-+    bool incoming_backend;
- };
- 
- #endif
-diff --git a/migration/options.c b/migration/options.c
-index dffb6910f4..11b719c81b 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -269,6 +269,13 @@ bool migrate_local_char_socket(void)
-     return s->capabilities[MIGRATION_CAPABILITY_LOCAL_CHAR_SOCKET];
- }
- 
-+bool migrate_local_vhost_user_blk(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+
-+    return s->capabilities[MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK];
-+}
-+
- bool migrate_ignore_shared(void)
++static void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq,
++                                                       bool assign,
++                                                       bool with_irqfd)
  {
-     MigrationState *s = migrate_get_current();
-diff --git a/migration/options.h b/migration/options.h
-index 40971f0aa0..5a40ac073d 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -31,6 +31,7 @@ bool migrate_dirty_bitmaps(void);
- bool migrate_events(void);
- bool migrate_mapped_ram(void);
- bool migrate_local_char_socket(void);
-+bool migrate_local_vhost_user_blk(void);
- bool migrate_ignore_shared(void);
- bool migrate_late_block_activate(void);
- bool migrate_multifd(void);
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 4f282d168e..ead7f4d17c 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -520,11 +520,19 @@
- # @local-char-socket: Migrate socket chardevs open file descriptors.
- #     Only may be used when migration channel is unix socket. Only
- #     involves socket chardevs with "support-local-migration" option
--#     enabled.  (since 10.2)
-+#     enabled. For target device also @local-incoming option must
-+#     be specified (since 10.2)
-+#
-+# @local-vhost-user-blk: Migrate vhost-user-blk locally, keeping
-+#     backend alive. Open file descriptors and backend-related state are
-+#     migrated. Only may be used when migration channel is unix socket.
-+#     For target device also @local-incoming option must be specified
-+#     (since 10.2)
- #
- # Features:
- #
--# @unstable: Members @x-colo and @x-ignore-shared are experimental.
-+# @unstable: Members @x-colo, @x-ignore-shared, @local-char-socket,
-+#     @local-vhost-user-blk are experimental.
- # @deprecated: Member @zero-blocks is deprecated as being part of
- #     block migration which was already removed.
- #
-@@ -542,7 +550,8 @@
-            'validate-uuid', 'background-snapshot',
-            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
-            'dirty-limit', 'mapped-ram',
--           { 'name': 'local-char-socket', 'features': [ 'unstable' ] } ] }
-+           { 'name': 'local-char-socket', 'features': [ 'unstable' ] },
-+           { 'name': 'local-vhost-user-blk', 'features': [ 'unstable' ] } ] }
+     if (assign && !with_irqfd) {
+         event_notifier_set_handler(&vq->guest_notifier,
+@@ -3766,7 +3768,7 @@ void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq, bool assign,
+     }
+ }
  
- ##
- # @MigrationCapabilityStatus:
+-void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
++static void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+                                                  bool assign, bool with_irqfd)
+ {
+     EventNotifier *n;
+@@ -3783,6 +3785,46 @@ void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+     }
+ }
+ 
++static void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev,
++                                                     VirtQueue *vq,
++                                                     int n, bool assign,
++                                                     bool with_irqfd)
++{
++    if (n == VIRTIO_CONFIG_IRQ_IDX) {
++        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
++    } else {
++        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
++    }
++}
++
++int virtio_queue_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
++                                    bool with_irqfd)
++{
++    VirtQueue *vq = NULL;
++    EventNotifier *notifier = NULL;
++
++    if (n == VIRTIO_CONFIG_IRQ_IDX) {
++        notifier = virtio_config_get_guest_notifier(vdev);
++    } else {
++        vq = virtio_get_queue(vdev, n);
++        notifier = virtio_queue_get_guest_notifier(vq);
++    }
++
++    if (assign) {
++        int r = event_notifier_init(notifier, 0);
++        if (r < 0) {
++            return r;
++        }
++        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, true, with_irqfd);
++    } else {
++        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, false,
++                                                 with_irqfd);
++        event_notifier_cleanup(notifier);
++    }
++
++    return 0;
++}
++
+ EventNotifier *virtio_queue_get_guest_notifier(VirtQueue *vq)
+ {
+     return &vq->guest_notifier;
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index eab5394898..02c2dfb3c6 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -263,9 +263,6 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t);
+  * @fixed_queues.
+  */
+ unsigned virtio_pci_optimal_num_queues(unsigned fixed_queues);
+-void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev, VirtQueue *vq,
+-                                              int n, bool assign,
+-                                              bool with_irqfd);
+ 
+ int virtio_pci_add_shm_cap(VirtIOPCIProxy *proxy, uint8_t bar, uint64_t offset,
+                            uint64_t length, uint8_t id);
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index c594764f23..8b9db08ddf 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -416,8 +416,6 @@ void virtio_queue_update_used_idx(VirtIODevice *vdev, int n);
+ VirtQueue *virtio_get_queue(VirtIODevice *vdev, int n);
+ uint16_t virtio_get_queue_index(VirtQueue *vq);
+ EventNotifier *virtio_queue_get_guest_notifier(VirtQueue *vq);
+-void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq, bool assign,
+-                                                bool with_irqfd);
+ int virtio_device_start_ioeventfd(VirtIODevice *vdev);
+ int virtio_device_grab_ioeventfd(VirtIODevice *vdev);
+ void virtio_device_release_ioeventfd(VirtIODevice *vdev);
+@@ -431,8 +429,9 @@ void virtio_queue_aio_detach_host_notifier(VirtQueue *vq, AioContext *ctx);
+ VirtQueue *virtio_vector_first_queue(VirtIODevice *vdev, uint16_t vector);
+ VirtQueue *virtio_vector_next_queue(VirtQueue *vq);
+ EventNotifier *virtio_config_get_guest_notifier(VirtIODevice *vdev);
+-void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+-                                                 bool assign, bool with_irqfd);
++
++int virtio_queue_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
++                                    bool with_irqfd);
+ 
+ static inline void virtio_add_feature(uint64_t *features, unsigned int fbit)
+ {
 -- 
 2.48.1
 
