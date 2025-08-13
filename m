@@ -4,109 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49053CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C8E4CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umDsg-00086R-DH; Wed, 13 Aug 2025 11:59:14 -0400
+	id 1umDyq-0003Hy-Mx; Wed, 13 Aug 2025 12:05:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan.carpenter@linaro.org>)
- id 1umDse-000855-4E
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 11:59:12 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1umDym-0003HZ-8s
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 12:05:32 -0400
+Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dan.carpenter@linaro.org>)
- id 1umDsU-0001NQ-LA
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 11:59:10 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3b78a034f17so5158962f8f.2
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 08:58:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1umDyj-0002KF-Ng
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 12:05:31 -0400
+Received: by mail-pf1-x444.google.com with SMTP id
+ d2e1a72fcca58-76e2eb6d07bso63611b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 09:05:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755100733; x=1755705533; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Cp6XeG0MyOuXPRX2EUNgzHzmYyd18LTitGQ6mKDCv5k=;
- b=HWiRPA1+3NF5zE51+U9ZIBHoOHIJSBS703O6TBdZlrS4gg+l2i/eGCRm7hmm0U9g8+
- vqw+arHy/mA64RVFeKYIeJzt94cboWYnb/2dCcjzEGhtp8BkPyTQ7/qwUk47rltECqol
- S4N5zzeWq39W6j3CRA6azDFBHyMsPjabMba/T9Ed40vZyEo/M2j3dSerXlhr5z2ps9tf
- IQ6NgXTp3vVQ6WIUaQO1gqYYkrLeWMSEd+fJCLgnBtU7wfRKSlSrBnzhFy+C7RySyooz
- wOmdcxhUjbrZts8fCX2PwTVJb478CA1pOc0Wus9T/ceoJtAa9W3Pt25ftOXDtm9TSyWr
- yIYg==
+ d=gmail.com; s=20230601; t=1755101124; x=1755705924; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9t1oRq+SXOT3f3RHyYT8hdlEbqhnbm0bWNtPjxBUx3k=;
+ b=X9JkiT08gq7eVe3GvILv8Pn2BKvn3n5jR+YJ2bqpUJ9E9tb33jnPNgP6HmzPmF/LNc
+ 2kjNmtpQwhiskbeuSG9ObpVNElpAgM2s7uJa0naNgMv4Xb8QowHBHL140P2D9wN7152t
+ 0HPQrib0eMp5XSi6zIQnh9IRVpk+AkejVD7reOrMMiQ94547/IRv0Nswv4LmKVAmpttg
+ +/PSSHZUfuom2KAcvUi0+n76MkVFKgDm5Iy4SAsrSyE8QtCRvwckLPIIxPuTLvH4umE/
+ oRpV/zX2DTv+LtzQ47B5vrq52lqBlmYA7Y3nVMIWD2lg9H+geiuc7o5Doy/bFS7fcX68
+ WkkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755100733; x=1755705533;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Cp6XeG0MyOuXPRX2EUNgzHzmYyd18LTitGQ6mKDCv5k=;
- b=TyzudYseQSvp8tyZEnB7E0Zok2G/ei6MCETQHUnhZ04k2YlG6Gxhtzu0S5rnuRPfmg
- H7xWE4oZ7TkbwXJEMnoh2L0AfZ2u41rUrwv8bCI+Z/YakLyF3kENxKlM9/NkMRBqGdxg
- Oo5XNEHbKxZ72p1dyQKLGBCaBHdMFpRGzBYj74pEueNzdACliu4jsd8Q0siwhb3WZrqd
- FN3wuetCYSG4hqw14/29ew93WOI3Lpo5hU7+P/POe8f6Z1w8L2AuVh86zR6Xd02YvZZd
- dTD6E5PxF9GePswKgjCMaDkux8cizpl0amw0gWKoe+tj+DzPEXDio7iUyHxscEL/JBpX
- pY7A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUTRe5YrQ21aKiZ2IKPwyzveqgxOi5hNx/VQTQ5gOA9Dqt9G+cUvKR/1iMLyHtZgFmEqm8EA/O6LQcN@nongnu.org
-X-Gm-Message-State: AOJu0YwG0bpb6KjWK+rEZge/mPaqJ4SL47BCjvYX+dB+OQHUZHvC+dcK
- 3Z1pyVaGckAtPgtdLXVjp7/RwMAVdsAWBVTNb61og7WitkSbk7vv7/n7llHc87mLyEE=
-X-Gm-Gg: ASbGnctRQ4Gf8Kixv8i38wP7BN4I9X9d/VnsXTApCIiPhvwKi+0RhSwPGJXLwX307z2
- NZJy4DNopvI+unNXXV4Bk/TJyofSdwdjFG4iqTO5lUy5HeNsQgDzslLO5a3rQc1c2yePO2LxbNL
- jn7IPmXLjwoz0zWIUhkfgQu+oHxiyiEBquLSmTDS6AmU6t4in0pkxQ2mhM4F8ulLxt2EQ0GRjoa
- mAwR7EtyzLgqf76jDHdUZBmdHLvciUoC0TdVLyr8q9EDDF+obhySFjwovWziWPBSjoNBrWxG5Ht
- mJ7/opX2X2aopOIqznfqA69YOgrprq92vyCpf1jjX/HaEcVWS+lvvWAm7x1EM31QDoln5M8rzRA
- jPw/kH0Z947DqxOjNoi9ZA31FirICTNcUt6FHmz+zkrI=
-X-Google-Smtp-Source: AGHT+IFmDnHCSl5CKkyh/D1IvMDkhgbQzh6CQ86Hu6D5gyD/dtG5m2liXMYcw3pmw6tZ+PFrvCebxA==
-X-Received: by 2002:a5d:5f95:0:b0:3b7:8dd7:55ad with SMTP id
- ffacd0b85a97d-3b917f14804mr2882432f8f.39.1755100733462; 
- Wed, 13 Aug 2025 08:58:53 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
- by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-3b91b05b28fsm1789186f8f.21.2025.08.13.08.58.52
+ d=1e100.net; s=20230601; t=1755101124; x=1755705924;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9t1oRq+SXOT3f3RHyYT8hdlEbqhnbm0bWNtPjxBUx3k=;
+ b=gf5Or3pPmPZ2WUw3zihyOMvGu2OMBwmZCr22vi6RrtMG+u3nx4OqfLz9b7MzeC5tJ3
+ bOGs1bDOit8D7J3CLFgm2Q3y8g1Y6/IcVd66SaIOJVECWyuYNuZP5ZPmwqqiPg16d0lc
+ sTgGpnrVcMKJby411BlFTazOLAQoYT4szRR+86fuJL000zz0mYqX7J8uCqRhaHTcxwkg
+ g0A9nlvWKijRJSUHZq7G9pYk5s181pNqZhKKkIDZMHlzJ6iMS0Hf5Jnj9rzfJN74RqQK
+ wK4qH03DtXjTorLvc0g/85riqc+UrzKzZQuehMSFrb+a3Lkj7AmxAWhE3zf/xa7Xbufl
+ DhEA==
+X-Gm-Message-State: AOJu0YzCzbBTPnLOH3twhNLybBc2jpeFmbip4F/GKObmCep7avV3KHYX
+ ajOO/GRM2a62wpsVKlUNTUD25Bk63K8OVYK5aAwCdosedCbReJ79WlxvngW/nKFZKQ==
+X-Gm-Gg: ASbGncuFIXJJaMJpAvQgQJkGptpXs3KazUw0aH93XpFgJ3PTnz1NsttdJ1Z3gG086xH
+ 2T8WAa5YFYwkah7b74U/XaO0VnBZvuQz+w89b/1vZcE4NVHOCNjfhNEs9esJjjSYKQmgdmI1QJZ
+ OmVzE0dJQFqoZ11kXpZELs6O3jPTY0lHT4dhuiZDFYfTUrZ8enqe6c0rZK8zIFhDgQw1JA19nmJ
+ RGFjxI+7/DQ3OQR81cIjkSdhl48AWFyRtIc3iyMO3DzAzmPGOFZlMyEG437GdpiZJjT3rXUCbW3
+ wOENlsza17BGN+quM+eMo3SGukjyjwXl5R4hQDleZWZhv4DwhLkq2WTSNtzRE85PqK67ws57zaK
+ 149pvOy5orXmve4wHZpyEtXrwHjZ66aEZ9zd6QQ==
+X-Google-Smtp-Source: AGHT+IEBzlkJne3GbD02fpiJfbcO/Jola+fVbZCa1VigrRcD2e2aXSC4b/Dk87C9VVZ41dPQ0vu4Mg==
+X-Received: by 2002:a05:6a00:a0b:b0:76b:fe65:71d2 with SMTP id
+ d2e1a72fcca58-76e20d06586mr4970988b3a.10.1755101123768; 
+ Wed, 13 Aug 2025 09:05:23 -0700 (PDT)
+Received: from kotori-desktop ([139.227.17.249])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76c5f493178sm11779459b3a.49.2025.08.13.09.05.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Aug 2025 08:58:53 -0700 (PDT)
-Date: Wed, 13 Aug 2025 18:58:49 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, Anders Roxell <anders.roxell@linaro.org>,
- Ben Copeland <benjamin.copeland@linaro.org>,
- LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
- Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
- linux-perf-users@vger.kernel.org, Zhang Yi <yi.zhang@huaweicloud.com>,
- Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
- linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>,
- Zhang Yi <yi.zhang@huawei.com>, Theodore Ts'o <tytso@mit.edu>,
- Baokun Li <libaokun1@huawei.com>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-Message-ID: <aJy2OVhg4RUYbHHR@stanley.mountain>
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <2025081300-frown-sketch-f5bd@gregkh>
- <CA+G9fYuEb7Y__CVHxZ8VkWGqfA4imWzXsBhPdn05GhOandg0Yw@mail.gmail.com>
- <2025081311-purifier-reviver-aeb2@gregkh>
+ Wed, 13 Aug 2025 09:05:23 -0700 (PDT)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] vfio/igd: Enable quirks when IGD is not the primary display
+Date: Thu, 14 Aug 2025 00:05:10 +0800
+Message-ID: <20250813160510.23553-1-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025081311-purifier-reviver-aeb2@gregkh>
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=dan.carpenter@linaro.org; helo=mail-wr1-x432.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pf1-x444.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,63 +98,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 13, 2025 at 04:53:37PM +0200, Greg Kroah-Hartman wrote:
-> On Wed, Aug 13, 2025 at 08:01:51PM +0530, Naresh Kamboju wrote:
-> > Hi Greg,
-> > 
-> > > > 2)
-> > > >
-> > > > The following list of LTP syscalls failure noticed on qemu-arm64 with
-> > > > stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
-> > > >
-> > > > Most failures report ENOSPC (28) or mkswap errors, which may be related
-> > > > to disk space handling in the 64K page configuration on qemu-arm64.
-> > > >
-> > > > The issue is reproducible on multiple runs.
-> > > >
-> > > > * qemu-arm64, ltp-syscalls - 64K page size test failures list,
-> > > >
-> > > >   - fallocate04
-> > > >   - fallocate05
-> > > >   - fdatasync03
-> > > >   - fsync01
-> > > >   - fsync04
-> > > >   - ioctl_fiemap01
-> > > >   - swapoff01
-> > > >   - swapoff02
-> > > >   - swapon01
-> > > >   - swapon02
-> > > >   - swapon03
-> > > >   - sync01
-> > > >   - sync_file_range02
-> > > >   - syncfs01
-> > > >
-> > > > Reproducibility:
-> > > >  - 64K config above listed test fails
-> > > >  - 4K config above listed test pass.
-> > > >
-> > > > Regression Analysis:
-> > > > - New regression? yes
-> > >
-> > > Regression from 6.16?  Or just from 6.15.y?
-> > 
-> > Based on available data, the issue is not present in v6.16 or v6.15.
-> > 
-> > Anders, bisected this regression and found,
-> > 
-> >   ext4: correct the reserved credits for extent conversion
-> >     [ Upstream commit 95ad8ee45cdbc321c135a2db895d48b374ef0f87 ]
-> > 
-> > Report lore link,
-> > 
-> > https://lore.kernel.org/stable/CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com/
-> 
-> Great, and that's also affecting 6.17-rc1 so we are "bug compatible"?
-> :)
+Since linux 6.15, commit 41112160ca87 ("vfio/pci: match IGD devices in
+display controller class"), IGD related regions are also exposed when
+IGD is not primary display (device class is Display controller).
 
-Lol.
+Allow IGD quirks to be enabled in this configuration so that guests can
+have display output on IGD when it is not the primary display.
 
-regards,
-dan carpenter
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+ hw/vfio/igd.c | 7 ++++---
+ hw/vfio/pci.h | 5 +++++
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index ee0767b0b8..f116c40ccd 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -460,7 +460,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+     int gen;
+ 
+     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+-        !vfio_is_vga(vdev) || nr != 0) {
++        !vfio_is_base_display(vdev) || nr != 0) {
+         return;
+     }
+ 
+@@ -518,7 +518,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+     Error *err = NULL;
+ 
+     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+-        !vfio_is_vga(vdev)) {
++        !vfio_is_base_display(vdev)) {
+         return true;
+     }
+ 
+@@ -534,12 +534,13 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+     /*
+      * For backward compatibility, enable legacy mode when
+      * - Device geneation is 6 to 9 (including both)
+-     * - IGD claims VGA cycles on host
++     * - IGD exposes itself as VGA controller and claims VGA cycles on host
+      * - Machine type is i440fx (pc_piix)
+      * - IGD device is at guest BDF 00:02.0
+      * - Not manually disabled by x-igd-legacy-mode=off
+      */
+     if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
++        vfio_is_vga(vdev) &&
+         (gen >= 6 && gen <= 9) &&
+         !(gmch & IGD_GMCH_VGA_DISABLE) &&
+         !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 810a842f4a..923cf9c2f7 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -203,6 +203,11 @@ static inline bool vfio_is_vga(VFIOPCIDevice *vdev)
+     return (vdev->class_code >> 8) == PCI_CLASS_DISPLAY_VGA;
+ }
+ 
++static inline bool vfio_is_base_display(VFIOPCIDevice *vdev)
++{
++    return (vdev->class_code >> 16) == PCI_BASE_CLASS_DISPLAY;
++}
++
+ /* MSI/MSI-X/INTx */
+ void vfio_pci_vector_init(VFIOPCIDevice *vdev, int nr);
+ void vfio_pci_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+-- 
+2.50.1
 
 
