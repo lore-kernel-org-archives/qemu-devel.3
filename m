@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B08FCA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64FC8CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umCrN-0000y2-Ff; Wed, 13 Aug 2025 10:53:49 -0400
+	id 1umCvJ-0002Bt-11; Wed, 13 Aug 2025 10:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1umCrM-0000xg-0b
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:53:48 -0400
-Received: from nyc.source.kernel.org ([147.75.193.91])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1umCrH-0001Mg-QS
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:53:47 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 81448A57250;
- Wed, 13 Aug 2025 14:53:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933ADC4CEEB;
- Wed, 13 Aug 2025 14:53:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1755096820;
- bh=qsIzK3FQVmuwp376IvkIc7QaQl0+eKfxluiwZGuycJo=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=h9Z1b9DhPWIV6cS+bkMlZk/eNbU+HdGphYtWJcvDnCd4mHNW6LGz0PAzq4S3sz/bQ
- Qu6Q/zr1uSLN9QG07lhIO8zKvSK3b5B2d7wMCY+FxzL+PtVIheklfnv+CxHDBiqwKK
- HH28jaOUNKO4S5N8tA/MsLvV3/5lSRVuQ5L0TQBQ=
-Date: Wed, 13 Aug 2025 16:53:37 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>,
- Ben Copeland <benjamin.copeland@linaro.org>,
- LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
- Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
- linux-perf-users@vger.kernel.org, Zhang Yi <yi.zhang@huaweicloud.com>,
- Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
- linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>,
- Zhang Yi <yi.zhang@huawei.com>, Theodore Ts'o <tytso@mit.edu>,
- Baokun Li <libaokun1@huawei.com>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-Message-ID: <2025081311-purifier-reviver-aeb2@gregkh>
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <2025081300-frown-sketch-f5bd@gregkh>
- <CA+G9fYuEb7Y__CVHxZ8VkWGqfA4imWzXsBhPdn05GhOandg0Yw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1umCvG-0002Bl-Vw
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:57:51 -0400
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1umCvC-0001o9-Gw
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 10:57:50 -0400
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e8e0aa2e3f9so6912953276.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 07:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755097062; x=1755701862; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y0wu/At/kBcWjIRC+i+xv5zTAJOsdYekZtKqMaZ3/HY=;
+ b=nm4TsglQZrOLT0uq0uD+WIf3BOzIBmMvvcRiIdKB52+jjN/ruZDnF27Zb034Ht43yn
+ PgRcRt2wZJ0GOze6wXBrwHGg4Et1alhKFfCyQbSQy5XPw8k7cnqhcfzrUpmhEXwnx1Sd
+ QmtE8ON+JMKSEYtU27Rm1foYiiop2fwrqigPyKpW85AEqYX2vrD3BxwIwuCNPXm1N8ja
+ R495bBReWZxl3W+usLah826RZyjnrHDhPRUlVm/h9GjceGYENCT/PMvOhRvOypV77PE2
+ WNhsEhHeiEMpT2fUDiRvNpELnmvl6vzGyteQX3MENx7MoxQQfRZlYgxHfXy4JaFGCV9r
+ TDRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755097062; x=1755701862;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y0wu/At/kBcWjIRC+i+xv5zTAJOsdYekZtKqMaZ3/HY=;
+ b=FZfnYabjzxiW4eILc/Xk51AO/PYkE3JhHfcfjfp0ja0pHA+zJF5uyq14BiwdrN1n3b
+ +w//ux8ItJmoeCvYPJ5nxoxtkmlEC13hDfhviMKpymNjIhf1Hgf0d2u6frB7plcxvJHo
+ t0wnHBNONY8lyyibiwcRJP/3UQ1kAVx3RHDMeNBNgx1amakPkz9jAwnZvvcDZX5EMLRh
+ N0yil9gu+DyZvqFtZjd+He+nrrF8qxVuxI2gpvSTKEwnQY4ebxWg1rdnRVmUnVh2dCD2
+ VwABmPpuwlX25I5cqT3CMIzzvK5P7+eOKdFqaYnhpvJITlUnTNileIjceYI8aSk4uwFi
+ nylg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2n2Rxu3qi/bNezkFKX+m6P74BxF2eWoSBkkc9JHqJGgmBLgTys0vPtVlIJ5B09aU4iGfCLtlrgXrX@nongnu.org
+X-Gm-Message-State: AOJu0YxES1jykkqG9j/CWNCMZOORMyxLsc4Ewx9hetv5jK3Dv1dBiY8S
+ 2fJn9fGC+vOaY3meTgZYymJ+UU/mBqbY6pmygE7OwuBRcP06980GgKvT8S4ZurCdsYeZv6OGe+k
+ rTFVW9xKHVw20n5YyZVMhP/Ov0+qHDJ1K7VCR2lUGvA==
+X-Gm-Gg: ASbGncuPtLKmZsZtE5T/oTetQxWdT1MNtPrZr35ERiYHnbyC/2ZZryYOGFHWAxUEXpj
+ NCKMSvoBXKNJitXNKLsSup/MDJMzuBm3gsDG26cXRzc69XHvWXdRQC2s736XdbZieT3TAuI5TOc
+ yv6o7QOFNmQJgkw0lncOcNF8z0ay8NlBoJSWnajRevyE/jdZAzQR0Drw/81c5vSePr74b2t/NJI
+ pdaoLRn
+X-Google-Smtp-Source: AGHT+IHW9fA8tztfa6r4pPVge+R9CG2houI5yJ9hElNGQzLcoo72hyc9SvxfBDDPN2hJsKgewLWhRaB+f5xocADpylo=
+X-Received: by 2002:a05:6902:620e:b0:e8e:1e32:c2ac with SMTP id
+ 3f1490d57ef6-e930bf0bccbmr3643200276.16.1755097062153; Wed, 13 Aug 2025
+ 07:57:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYuEb7Y__CVHxZ8VkWGqfA4imWzXsBhPdn05GhOandg0Yw@mail.gmail.com>
-Received-SPF: pass client-ip=147.75.193.91;
- envelope-from=gregkh@linuxfoundation.org; helo=nyc.source.kernel.org
+References: <1754936384-278328-1-git-send-email-steven.sistare@oracle.com>
+ <ad82545e-702b-4127-a339-680d52065ae1@oracle.com>
+In-Reply-To: <ad82545e-702b-4127-a339-680d52065ae1@oracle.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 13 Aug 2025 15:57:29 +0100
+X-Gm-Features: Ac12FXz7xKGvqrIw-k4a67Krpx9UiejEAEXo9VYdVlxCP41UAMMIwtR6PVGni4o
+Message-ID: <CAFEAcA8sfzSSRBgJjAF0gZqkK_CGwZyJU5qmja2cjpmVhnuj6g@mail.gmail.com>
+Subject: Re: [PATCH V3 1/1] hw/intc/arm_gicv3_kvm: preserve pending interrupts
+ during cpr
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Cedric Le Goater <clg@redhat.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,60 +98,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 13, 2025 at 08:01:51PM +0530, Naresh Kamboju wrote:
-> Hi Greg,
-> 
-> > > 2)
-> > >
-> > > The following list of LTP syscalls failure noticed on qemu-arm64 with
-> > > stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
-> > >
-> > > Most failures report ENOSPC (28) or mkswap errors, which may be related
-> > > to disk space handling in the 64K page configuration on qemu-arm64.
-> > >
-> > > The issue is reproducible on multiple runs.
-> > >
-> > > * qemu-arm64, ltp-syscalls - 64K page size test failures list,
-> > >
-> > >   - fallocate04
-> > >   - fallocate05
-> > >   - fdatasync03
-> > >   - fsync01
-> > >   - fsync04
-> > >   - ioctl_fiemap01
-> > >   - swapoff01
-> > >   - swapoff02
-> > >   - swapon01
-> > >   - swapon02
-> > >   - swapon03
-> > >   - sync01
-> > >   - sync_file_range02
-> > >   - syncfs01
-> > >
-> > > Reproducibility:
-> > >  - 64K config above listed test fails
-> > >  - 4K config above listed test pass.
-> > >
-> > > Regression Analysis:
-> > > - New regression? yes
-> >
-> > Regression from 6.16?  Or just from 6.15.y?
-> 
-> Based on available data, the issue is not present in v6.16 or v6.15.
-> 
-> Anders, bisected this regression and found,
-> 
->   ext4: correct the reserved credits for extent conversion
->     [ Upstream commit 95ad8ee45cdbc321c135a2db895d48b374ef0f87 ]
-> 
-> Report lore link,
-> 
-> https://lore.kernel.org/stable/CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com/
+On Wed, 13 Aug 2025 at 14:32, Steven Sistare <steven.sistare@oracle.com> wrote:
+>
+> Peter previously said "looks good" but wanted a sanity check from a
+> live update maintainer, which Fabiano provided.
+>
+> So, which maintainer will pull this for 10.1?
 
-Great, and that's also affecting 6.17-rc1 so we are "bug compatible"?
-:)
+It's not going into 10.1 (it has missed that boat, I'm afraid);
+it's on my list to look at and apply after we release.
 
 thanks
-
-greg k-h
+-- PMM
 
