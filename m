@@ -4,69 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C135BCA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 09:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6FBCA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 09:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1um7Lx-0007DF-2R; Wed, 13 Aug 2025 05:01:01 -0400
+	id 1um7iT-0003X7-QA; Wed, 13 Aug 2025 05:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1um7Lo-0007B9-Tu
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 05:00:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
+ id 1um7iS-0003Wy-4v
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 05:24:16 -0400
+Received: from mail-bn7nam10on2075.outbound.protection.outlook.com
+ ([40.107.92.75] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1um7Li-0005vx-UL
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 05:00:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755075644;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xzut1+MCg+ehy7Oid7ZMIhCxvguCVXvLcHTMsdLjTds=;
- b=AkMWsD0F+eota7AcDXTmRW7XW4mo52ZS8Mj5m/YYdJb2NTDgdXTqbtqUxoKrBkbSbms/tK
- UT/FYTubvtksz4Sg3PBV+I/9ckagA9XzJ3oqDJFTZt8XnDENMjJkITGAZ/g/Copqz4bXFN
- v6r3YNaUs4/VUr8zy2nE9+eTYsE9tfM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-_BRWYxSPPBKoQ0dVk7u9TA-1; Wed,
- 13 Aug 2025 05:00:42 -0400
-X-MC-Unique: _BRWYxSPPBKoQ0dVk7u9TA-1
-X-Mimecast-MFC-AGG-ID: _BRWYxSPPBKoQ0dVk7u9TA_1755075641
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59B7D195609E; Wed, 13 Aug 2025 09:00:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.202])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07FD91800446; Wed, 13 Aug 2025 09:00:37 +0000 (UTC)
-Date: Wed, 13 Aug 2025 11:00:35 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-block@nongnu.org, stefanha@redhat.com, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PULL 2/3] rbd: Fix .bdrv_get_specific_info implementation
-Message-ID: <aJxUM-ciwAUzgHYQ@redhat.com>
-References: <20250812195901.305895-1-kwolf@redhat.com>
- <20250812195901.305895-3-kwolf@redhat.com>
- <30ecd389-fc8f-49e7-affa-99787f11d322@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
+ id 1um7iL-0000Ao-1j
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 05:24:15 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iTSXf0+Lh+M+e+f+r7P9rW8zoAFQfJjdgcB2btH2KMbGPOBPKTMyTzQt5hflkhRsa8d+9qRa0FLZ4ztapyHQgaDKjh7xR+MS9aC1m9icTquuJq8FyybDdHo8E6hiSoGKP97ZDx1GZMHfgBiwsGHV4rAWe7kF6wnQJbeswLDW4rChatebSSoLFLYibeGJLKVlHOk7Ve2rG8Ms+cTvhf+p7p3v0HU1gVUQ/+xMiJc+Pyl8kVXDQBpGP7fdJwJgIPPBfGImjUH/R7xqMCHNdApmBxcspREupWYe2f0EF0zPZqbBdbm2sZZBpbYu4qwaSFeiUVY+X4NAgjcLbEZgPo2yyQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/lQ9dzf8rYdUCoX94aGGsbp77KaV73w46ptia5m19/E=;
+ b=np8RrBM6VltBlMhaB9LJRO1kR+8GRc48RuogLxoDqosGtgQu1SpYYldy9qjvvnTcDIb92AovSFRs1cYl7ziItQGVTneH4BfcPCivT9JrfF4Fp5h9NmhhrILiE6Z2/q2tlhEtvrljFMjAHjJ9ead5cX+y06C4MWAyg4fXoVS5yNME5DK4wEe4Y3dwDu2+xEmsPUmxwQjwoxUbgdIrY3ratMu/WM89+Yo4yQTmvtZ/QK18w1giIqGvotlBAqXXjjYY+I/DrtyVe063OT+FqcFuhlkJ3Z3JSwNa091uOdPNyZ0vngsoEtpYCP3fSKAre3PsQwZpxNHPfaGLclLvA4+tBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/lQ9dzf8rYdUCoX94aGGsbp77KaV73w46ptia5m19/E=;
+ b=urJ8vcrx4MVzA0yYPiHfnflmuiUamqiMSlf72VBwu6dwWtQlTbxtWBwy38im7kNOC9Jv2Zqe1YZplnZpU+xteenPUPkgF4mz5u/JGUNGMLBueVDRVI9KgChMRf2Ev98GB6bu0gJ8xqARRuY48sJOpo8q7lzLTkVQmDZ3unfyklc=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com (2603:10b6:510:1e3::13)
+ by BL3PR12MB6474.namprd12.prod.outlook.com (2603:10b6:208:3ba::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.21; Wed, 13 Aug
+ 2025 09:19:00 +0000
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::2efc:dc9f:3ba8:3291]) by PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::2efc:dc9f:3ba8:3291%4]) with mapi id 15.20.9009.021; Wed, 13 Aug 2025
+ 09:19:00 +0000
+Message-ID: <a51fc2fa-5fc5-4e63-ba53-575ef143d062@amd.com>
+Date: Wed, 13 Aug 2025 14:48:47 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 5/9] target/i386/kvm: rename architectural PMU variables
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
+ groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com
+References: <20250624074421.40429-1-dongli.zhang@oracle.com>
+ <20250624074421.40429-6-dongli.zhang@oracle.com>
+Content-Language: en-US
+From: Sandipan Das <sandipan.das@amd.com>
+In-Reply-To: <20250624074421.40429-6-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BMXP287CA0023.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:b00:2c::36) To PH7PR12MB5712.namprd12.prod.outlook.com
+ (2603:10b6:510:1e3::13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <30ecd389-fc8f-49e7-affa-99787f11d322@tls.msk.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5712:EE_|BL3PR12MB6474:EE_
+X-MS-Office365-Filtering-Correlation-Id: cc612fae-507d-423f-1ac8-08ddda4a7037
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|7416014|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eXVJdW0vbmhncUhiRjBFUDQyR1o1Yzlwckd5d1NKWnhuL1lNYjlFb0g0b0s1?=
+ =?utf-8?B?MzdIS0w2SkdUZXlmZi8yblVzUmRWUWdUYnpNWWpVS1lWQkh2NWJDck5vcU1O?=
+ =?utf-8?B?N3R0WmZWV3AyZkFkWUFvQXdENlZzd3NXZm5uWjh4UDFQY05zNDYwUkhRZ1hQ?=
+ =?utf-8?B?UmtvaHVQZkJaWVljQ2hPRWtwZGxTMHdIK0xldlNlZjB3dklpbDdUYkE3bzY1?=
+ =?utf-8?B?d2tZNEFZc1BCaWhYQWRsZVlpQzVrcjZtSUpSRmluNzlnem1waWNxcHkzSHBV?=
+ =?utf-8?B?M1F4MTV5Sk55YTRzNGRmcG00Tk1SeFVUWldYdEx5bytNK3ZtSW4zVkNVWUg3?=
+ =?utf-8?B?VVZ1R1NQMDQyRXJucks3alJVa0VyR0h3T1ROYmpCclZBa1RoeDJYYXRxYy9I?=
+ =?utf-8?B?MFlRQk5rczI1bElrWTJ5UkR2RURDK0hVYkdvMHE4dGI3Z0lGKy9uZmtZd1Jt?=
+ =?utf-8?B?RXhiUDF5N0JiYTg0Zi9DMW1La1lUZ1Jzc3BxdldBMUVqWVNwcnhqajBuQWRl?=
+ =?utf-8?B?Z1J1eVBQMEtXT0xwamk3ZWJla3JIcmthaEhqT2dDcTE0VGdydzVMVUc5cTJZ?=
+ =?utf-8?B?bmgzdnZZeGR1c2pMTmN5ZHozOXFTVTJHU3NSUEdRanJEeGtwbWxOK205ajA4?=
+ =?utf-8?B?OHpHRGNyUGFtYkIyd0ZmZFpIekk0VUVVaGx5Mk5DSzNzeVBMSEp1b1FkQThv?=
+ =?utf-8?B?blpMakF6RFh6bS9wWmxEUGdUNjVUVUh6RldXUWdnVDVmd05vNTFCM0MwbWdN?=
+ =?utf-8?B?RVkxZjM5VGNYRUw5Y0h6OTU1SUxwV0xMeEgyQ2R1R1JoTDVGZG1wTHZqVkZ2?=
+ =?utf-8?B?V0ZFNkpMaVdKTHRweEt2WHZQWE15dVo2cm1uN212SlU5cnd2TTJ1dFdpbkln?=
+ =?utf-8?B?NVpNTkhHNDNycUN2a3BFUjQ2VWxxQ3hZazVvQWhkMkNaLzlxT2UyZ1g5WmNp?=
+ =?utf-8?B?U0x6ZEtuUUVqemVZbm5NZnFDeTdQdlRCdGVSU25Jb2ZFMldWMExFRERzcDR1?=
+ =?utf-8?B?a2FNdE1oamswbHFnQWVTb3ZMNTlmVnZtYVR1VDhuNUlQVk92UDFmUldnOFJP?=
+ =?utf-8?B?SjNaOW1uN3VpYUJPcXN3aXZGdzIvNnQwcncvVnJ2K0Yra21MRHN3WVZPUVRq?=
+ =?utf-8?B?RW1xMW92SEJ4dkFZbXZoSlBQUERkZ1RWcDFQN2x6MEI3aFdSUjdhdlN4Q0c1?=
+ =?utf-8?B?MzU2U2hFQ252SExodGhlZlFxeW4yL2EzcGNRWFVtRFVNNUNMTm5BL1FjZEQx?=
+ =?utf-8?B?TC9jcmlYMmJaeCtZbDlaaUtTcWh0MG1ZaVdtT1d5cy9pcWFmRDNVay84ZHRh?=
+ =?utf-8?B?bDJxWVQyQVA1bjNRa3ZiNkhHRXhuSmIxMU1tNTRSVnV6cUZPRWc5ZFRpTlMz?=
+ =?utf-8?B?QklpcmpPdjVxQmMydDRCRFZBTTVUb3NTOTR2TVdYd0pnOUVWeTRGenYyVVZI?=
+ =?utf-8?B?b1VMQmdVanhnWWhKbTc1VHdDWlY2MWMvbHVDMkVudFJPZVNUS1BsRkZSYW40?=
+ =?utf-8?B?OHhFRnc4SFU0WFc2SG5sNVJBOTlhRDdmVEdKbWttZzVXbjRHa2lmVDlWRVZa?=
+ =?utf-8?B?LzZJNDEwaFV3ZyswZzR0cE56dFhqeU9kWEpoRmxkNE4zUFVPay9nMlBEbnRQ?=
+ =?utf-8?B?M29PYU5oR004Y0JGay9RQWNWU3hubjF6bWxtbHltN3o0ZW0yU2QzUVQ5YzlP?=
+ =?utf-8?B?UkxuQUVESnZNWXpmOVpyRlFObFArVFdFZnF0cjgzV1p3SVpYa0p1T3pXOEF2?=
+ =?utf-8?B?dEFxbWF3WjFLbENxSVUzTFR1Q3BDTGlIZVpQWmIyWHV5eDZuR2JYdlNuaXlt?=
+ =?utf-8?B?QXA2Q0V5RHlPcXRNOU1DNjliYndjQkcyZzdsMGVxajhQRVlRczQvanduWlpR?=
+ =?utf-8?B?MVRyRFMvOWxDTXJQb01ROGVXS1IyRzk2eXlYcHUwV1gweHVoZW1ZMTVHdGRO?=
+ =?utf-8?Q?NMSmDeA8Ljo=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR12MB5712.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QzhyYTBEMER2T08zVmQyTHBMNUJHZG1hbmFvSjNuNVBqWHdBbEpVcnhjdWNC?=
+ =?utf-8?B?RlhiNnhqbkdzc2hCWnFoaUFwRkJSM3BVNHl4bGpDcWZWV2lRNFBqWnhDZ0tO?=
+ =?utf-8?B?SEpQREpLS0FIVVZlRFVkdTNPdTUybGo3bUo3eTY1bUk4Z1RNVXZOb2xOMi80?=
+ =?utf-8?B?K0pGTU5pSUVuZ2VVbWZPVkNkeDFURVRyQ21mWlBUdU1GcXdEdFdibERCVkVx?=
+ =?utf-8?B?UHFKRnRCVE1uN29INjQvVnZjYStRWWZsMUY5NlFXSVI2QUhMcTJsVUlzSDRv?=
+ =?utf-8?B?bGZmdXNic0RwY2pveGpQV0JkcFRtcVo0ZzZUV0gxMXM2R3pmdDY2ekNaVmR2?=
+ =?utf-8?B?RkJvWlZFSDBzZ2s4aWJFZU10V09Ic0Fjdjd2MTlnNlhKVTFVYkp4WDJXSjc5?=
+ =?utf-8?B?aFlHc3lRZTdFa1ArZkhqeUJBMFoyLzI1VXdVZ0l0Y2NPdWZMUzh4NTFOYlZk?=
+ =?utf-8?B?UkRSeFlQOVE4ZWR4dkJ3dHcwNXI4NC9MSTVEeHMrd2psd1Z6a2Z1cDVJY3Rh?=
+ =?utf-8?B?OXFqU0kxSVVtMVBQNUlkc3dQWEhBV2VBaE9PUytvUVVBVTJjdEZyajhmUnJs?=
+ =?utf-8?B?QUQ3bU9PUVc5ZGp4TjArYlRVZ2JPeFExRWczTW5INUdrRlJhdlhKY043cDVm?=
+ =?utf-8?B?MUZiN1NDM0VMcGxpYkZ1Wm1QMmRkaHNncG9JTGlwVk9MTVE2QWlTZ3FydUdq?=
+ =?utf-8?B?Wk56b3lxbzA2cnlHV3ZxRDdyOEkwUmd6UmpGOTBkRkg0ZEJaYm9OTXpmeURt?=
+ =?utf-8?B?b1I3WkxYK3hjMGo5Um1WVGQzbEZkVk5hM2ZlRG14b256MDBWVVlZaHM2MWt5?=
+ =?utf-8?B?NVFEbEhGWlNJV0pYODRWWGc4Mzk0ZEJFbG96L0pPWFR3dkI0MHFTRVJwZnNL?=
+ =?utf-8?B?eThtMFR3NGF3Tlh2ZEhieTFaaURZZHBiYVNIQVNpZUR5K1ZqVXFvUFFEUjR2?=
+ =?utf-8?B?c3NONkhBd2o1SStuaWVNR1pXSmFBQmVET0ZiQytsWTRrZEJsYW5uYUNBS2FB?=
+ =?utf-8?B?Zm9lczIvdEJaRE50VGRtQ1J3T085WVcwdFQwYi91ak1wNEsreUFhYXdyMG8v?=
+ =?utf-8?B?VFo4WndYRkFYTnVScm1SbjhHdnViZ1o2cXQwNkdUS0ZFZTZGM1QvOFVlaVlV?=
+ =?utf-8?B?R3RCQmFmb2ZoRkFqSm0xRktFd0JRVVMrMTYyaUk4ZFNTLzZ3REVQejh4NVZ1?=
+ =?utf-8?B?dmJOK3cxcmhES2cvN3NsRmpJNW5HTTVSN0tzT0hNei9ldjZ5MHRVNHRwMkpZ?=
+ =?utf-8?B?VTRjN29FR1J1NFJMWHUzdkNueHZUTnZPQjdhMlZQeGJyV0hqRytab0FsdlRO?=
+ =?utf-8?B?VXpJTVNYMUdkSXExQ0hIS3JJVWxXcGF0WHVvRGVVL1Y3YlcveDFMOUJhbEkr?=
+ =?utf-8?B?cFg4K0l3RjJZckVBOGJ6RW0wbi9CNmxCR3dyNDR6WFY2d2RORkV4ZEdjWHJt?=
+ =?utf-8?B?VHd1RG4yclhXeDVVVWozTnpqVW5wZzVkV3dITSsxaGdkOEtIa2F6c2g5bHdx?=
+ =?utf-8?B?Ky9uSVpEdXh6ZWNSSnZmZUJJd1pXdU5lWlp4T2E4Qk91SXJHUmJ1S1h1TFpz?=
+ =?utf-8?B?SWxDYTk3QVhUTCt4Zm54Ky85YUIxWmJSWVVTNVVCV3REY3Z2My9iQU1aUFZ2?=
+ =?utf-8?B?MXB6c29oTStUSk8yRXFxdU1VZnJ4NFZYR0FRRERiR2lUbXZLV1U0N3VxZld3?=
+ =?utf-8?B?SWVsd2lhK1hiY1lreThZWGZ2TXZEOVJsMGMwQWVrQVdnQjFWdmFOTExoYnVK?=
+ =?utf-8?B?QndyaFNLc0ZHN29mNnNiZG05N3RHcm56K3lMTVN2MlhMQW9vcWI5SjA0VHk1?=
+ =?utf-8?B?MWs3ZVV4OUVQaXZ3RW00L3lEUG5vYnFhRVJudW1YWEQ2Sjl4TXNFOTl4WmJF?=
+ =?utf-8?B?cTludG1BVUJRaWREVTJYMmhjdzlrWnppaGJYSW1FN3BZYVh2RVZiQmtZbjZ0?=
+ =?utf-8?B?RnVITnpSMVFkcjh5cXdMbWgvbEhFeXR3VGptNUlwWkM4aGxOWjMxNmV1TEtR?=
+ =?utf-8?B?ZDIyL1FnZWQxaGZxU0VrODJ2d1ZudjRGUXkxZURRNHRmU0U4cEZJSGowc2xO?=
+ =?utf-8?B?VjZoK1ZWeTB3Y053dkhTUWFqTEFZaDlCZUJBRkZucU83M090cWkyNnNTdVRs?=
+ =?utf-8?Q?bGK0Y0apyj7zuUIAiCahz2VDO?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc612fae-507d-423f-1ac8-08ddda4a7037
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2025 09:19:00.6500 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: r8FrfSp8LyPpUJMHMdR8ZdfuBfrRl6vg4rE0HAO37J8PBaJ+qPV2H7vm3ZSP/0H2TK2aK4qrhoIFKJpULL+l4g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6474
+Received-SPF: permerror client-ip=40.107.92.75;
+ envelope-from=Sandipan.Das@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,59 +186,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 13.08.2025 um 08:12 hat Michael Tokarev geschrieben:
-> On 12.08.2025 22:59, Kevin Wolf wrote:
-> > qemu_rbd_get_specific_info() has at least two problems:
-> > 
-> > The first is that it issues a blocking rbd_read() call in order to probe
-> > the encryption format for the image while querying the node. This means
-> > that if the connection to the server goes down, not only I/O is stuck
-> > (which is unavoidable), but query-names-block-nodes will actually make
-> > the whole QEMU instance unresponsive. .bdrv_get_specific_info
-> > implementations shouldn't perform blocking operations, but only return
-> > what is already known.
-> > 
-> > The second is that the information returned isn't even correct. If the
-> > image is already opened with encryption enabled at the RBD level, we'll
-> > probe for "double encryption", i.e. if the encrypted data contains
-> > another encryption header. If it doesn't (which is the normal case), we
-> > won't return the encryption format. If it does, we return misleading
-> > information because it looks like we're talking about the outer level
-> > (the encryption format of the image itself) while the information is
-> > about an encryption header in the guest data.
-> > 
-> > Fix this by storing the encryption format in BDRVRBDState when the image
-> > is opened (and we do blocking operations anyway) and returning only the
-> > stored information in qemu_rbd_get_specific_info().
-> > 
-> > The information we'll store is either the actual encryption format that
-> > we enabled on the RBD level, or if the image is unencrypted, the result
-> > of the same probing as we previously did when querying the node. Probing
-> > image formats based on content that can be modified by the guest has
-> > long been known as problematic, but as long as we only output it to the
-> > user instead of making decisions based on it, it should be okay. It is
-> > undoubtedly useful in the context of 'qemu-img info' when you're trying
-> > to figure out which encryption options you have to use to open the
-> > image successfully.
-> > 
-> > Fixes: 42e4ac9ef5a6 ("block/rbd: Add support for rbd image encryption")
-> > Buglink: https://issues.redhat.com/browse/RHEL-105440
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > Message-ID: <20250811134010.81787-1-kwolf@redhat.com>
-> > Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+On 24-06-2025 13:13, Dongli Zhang wrote:
+> AMD does not have what is commonly referred to as an architectural PMU.
+> Therefore, we need to rename the following variables to be applicable for
+> both Intel and AMD:
 > 
-> This looks like a qemu-stable material (10.0).  Please let me know
-> if it is not.
+> - has_architectural_pmu_version
+> - num_architectural_pmu_gp_counters
+> - num_architectural_pmu_fixed_counters
+> 
+> For Intel processors, the meaning of pmu_version remains unchanged.
+> 
+> For AMD processors:
+> 
+> pmu_version == 1 corresponds to versions before AMD PerfMonV2.
+> pmu_version == 2 corresponds to AMD PerfMonV2.
+> 
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changed since v2:
+>   - Change has_pmu_version to pmu_version.
+>   - Add Reviewed-by since the change is minor.
+>   - As a reminder, there are some contextual change due to PATCH 05,
+>     i.e., c->edx vs. edx.
+> 
+>  target/i386/kvm/kvm.c | 49 ++++++++++++++++++++++++-------------------
+>  1 file changed, 28 insertions(+), 21 deletions(-)
+> 
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 4baaa069b8..824148688d 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -166,9 +166,16 @@ static bool has_msr_perf_capabs;
+>  static bool has_msr_pkrs;
+>  static bool has_msr_hwcr;
+>  
+> -static uint32_t has_architectural_pmu_version;
+> -static uint32_t num_architectural_pmu_gp_counters;
+> -static uint32_t num_architectural_pmu_fixed_counters;
+> +/*
+> + * For Intel processors, the meaning is the architectural PMU version
+> + * number.
+> + *
+> + * For AMD processors: 1 corresponds to the prior versions, and 2
+> + * corresponds to AMD PerfMonV2.
+> + */
+> +static uint32_t pmu_version;
+> +static uint32_t num_pmu_gp_counters;
+> +static uint32_t num_pmu_fixed_counters;
+>  
+>  static int has_xsave2;
+>  static int has_xcrs;
+> @@ -2081,24 +2088,24 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid)
+>          return;
+>      }
+>  
+> -    has_architectural_pmu_version = c->eax & 0xff;
+> -    if (has_architectural_pmu_version > 0) {
+> -        num_architectural_pmu_gp_counters = (c->eax & 0xff00) >> 8;
+> +    pmu_version = c->eax & 0xff;
+> +    if (pmu_version > 0) {
+> +        num_pmu_gp_counters = (c->eax & 0xff00) >> 8;
+>  
+>          /*
+>           * Shouldn't be more than 32, since that's the number of bits
+>           * available in EBX to tell us _which_ counters are available.
+>           * Play it safe.
+>           */
+> -        if (num_architectural_pmu_gp_counters > MAX_GP_COUNTERS) {
+> -            num_architectural_pmu_gp_counters = MAX_GP_COUNTERS;
+> +        if (num_pmu_gp_counters > MAX_GP_COUNTERS) {
+> +            num_pmu_gp_counters = MAX_GP_COUNTERS;
+>          }
+>  
+> -        if (has_architectural_pmu_version > 1) {
+> -            num_architectural_pmu_fixed_counters = c->edx & 0x1f;
+> +        if (pmu_version > 1) {
+> +            num_pmu_fixed_counters = c->edx & 0x1f;
+>  
+> -            if (num_architectural_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
+> -                num_architectural_pmu_fixed_counters = MAX_FIXED_COUNTERS;
+> +            if (num_pmu_fixed_counters > MAX_FIXED_COUNTERS) {
+> +                num_pmu_fixed_counters = MAX_FIXED_COUNTERS;
+>              }
+>          }
+>      }
+> @@ -4051,25 +4058,25 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+>              kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
+>          }
+>  
+> -        if (has_architectural_pmu_version > 0) {
+> -            if (has_architectural_pmu_version > 1) {
+> +        if (pmu_version > 0) {
+> +            if (pmu_version > 1) {
+>                  /* Stop the counter.  */
+>                  kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+>                  kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+>              }
+>  
+>              /* Set the counter values.  */
+> -            for (i = 0; i < num_architectural_pmu_fixed_counters; i++) {
+> +            for (i = 0; i < num_pmu_fixed_counters; i++) {
+>                  kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i,
+>                                    env->msr_fixed_counters[i]);
+>              }
+> -            for (i = 0; i < num_architectural_pmu_gp_counters; i++) {
+> +            for (i = 0; i < num_pmu_gp_counters; i++) {
+>                  kvm_msr_entry_add(cpu, MSR_P6_PERFCTR0 + i,
+>                                    env->msr_gp_counters[i]);
+>                  kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i,
+>                                    env->msr_gp_evtsel[i]);
+>              }
+> -            if (has_architectural_pmu_version > 1) {
+> +            if (pmu_version > 1) {
+>                  kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_STATUS,
+>                                    env->msr_global_status);
+>                  kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_OVF_CTRL,
+> @@ -4529,17 +4536,17 @@ static int kvm_get_msrs(X86CPU *cpu)
+>      if (env->features[FEAT_KVM] & CPUID_KVM_POLL_CONTROL) {
+>          kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
+>      }
+> -    if (has_architectural_pmu_version > 0) {
+> -        if (has_architectural_pmu_version > 1) {
+> +    if (pmu_version > 0) {
+> +        if (pmu_version > 1) {
+>              kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+>              kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+>              kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_STATUS, 0);
+>              kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_OVF_CTRL, 0);
+>          }
+> -        for (i = 0; i < num_architectural_pmu_fixed_counters; i++) {
+> +        for (i = 0; i < num_pmu_fixed_counters; i++) {
+>              kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i, 0);
+>          }
+> -        for (i = 0; i < num_architectural_pmu_gp_counters; i++) {
+> +        for (i = 0; i < num_pmu_gp_counters; i++) {
+>              kvm_msr_entry_add(cpu, MSR_P6_PERFCTR0 + i, 0);
+>              kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i, 0);
+>          }
 
-I was on the verge of adding Cc: qemu-stable for it, but then decided
-against it because it does subtly change behaviour in the common case
-where the connection doesn't go down. On second thoughts, the common use
-case is 'qemu-img info' where the image isn't opened encrypted (because
-we're only trying to find out which encryption format it has), and that
-output stays the same. So taking it into stable might still be
-reasonable enough.
-
-Kevin
+Reviewed-by: Sandipan Das <sandipan.das@amd.com>
 
 
