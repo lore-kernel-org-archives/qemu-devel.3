@@ -4,84 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C8E4CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75CDACA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umDyq-0003Hy-Mx; Wed, 13 Aug 2025 12:05:37 -0400
+	id 1umEfY-0002hf-S8; Wed, 13 Aug 2025 12:49:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1umDym-0003HZ-8s
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 12:05:32 -0400
-Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1umDyj-0002KF-Ng
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 12:05:31 -0400
-Received: by mail-pf1-x444.google.com with SMTP id
- d2e1a72fcca58-76e2eb6d07bso63611b3a.3
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 09:05:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755101124; x=1755705924; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9t1oRq+SXOT3f3RHyYT8hdlEbqhnbm0bWNtPjxBUx3k=;
- b=X9JkiT08gq7eVe3GvILv8Pn2BKvn3n5jR+YJ2bqpUJ9E9tb33jnPNgP6HmzPmF/LNc
- 2kjNmtpQwhiskbeuSG9ObpVNElpAgM2s7uJa0naNgMv4Xb8QowHBHL140P2D9wN7152t
- 0HPQrib0eMp5XSi6zIQnh9IRVpk+AkejVD7reOrMMiQ94547/IRv0Nswv4LmKVAmpttg
- +/PSSHZUfuom2KAcvUi0+n76MkVFKgDm5Iy4SAsrSyE8QtCRvwckLPIIxPuTLvH4umE/
- oRpV/zX2DTv+LtzQ47B5vrq52lqBlmYA7Y3nVMIWD2lg9H+geiuc7o5Doy/bFS7fcX68
- WkkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755101124; x=1755705924;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9t1oRq+SXOT3f3RHyYT8hdlEbqhnbm0bWNtPjxBUx3k=;
- b=gf5Or3pPmPZ2WUw3zihyOMvGu2OMBwmZCr22vi6RrtMG+u3nx4OqfLz9b7MzeC5tJ3
- bOGs1bDOit8D7J3CLFgm2Q3y8g1Y6/IcVd66SaIOJVECWyuYNuZP5ZPmwqqiPg16d0lc
- sTgGpnrVcMKJby411BlFTazOLAQoYT4szRR+86fuJL000zz0mYqX7J8uCqRhaHTcxwkg
- g0A9nlvWKijRJSUHZq7G9pYk5s181pNqZhKKkIDZMHlzJ6iMS0Hf5Jnj9rzfJN74RqQK
- wK4qH03DtXjTorLvc0g/85riqc+UrzKzZQuehMSFrb+a3Lkj7AmxAWhE3zf/xa7Xbufl
- DhEA==
-X-Gm-Message-State: AOJu0YzCzbBTPnLOH3twhNLybBc2jpeFmbip4F/GKObmCep7avV3KHYX
- ajOO/GRM2a62wpsVKlUNTUD25Bk63K8OVYK5aAwCdosedCbReJ79WlxvngW/nKFZKQ==
-X-Gm-Gg: ASbGncuFIXJJaMJpAvQgQJkGptpXs3KazUw0aH93XpFgJ3PTnz1NsttdJ1Z3gG086xH
- 2T8WAa5YFYwkah7b74U/XaO0VnBZvuQz+w89b/1vZcE4NVHOCNjfhNEs9esJjjSYKQmgdmI1QJZ
- OmVzE0dJQFqoZ11kXpZELs6O3jPTY0lHT4dhuiZDFYfTUrZ8enqe6c0rZK8zIFhDgQw1JA19nmJ
- RGFjxI+7/DQ3OQR81cIjkSdhl48AWFyRtIc3iyMO3DzAzmPGOFZlMyEG437GdpiZJjT3rXUCbW3
- wOENlsza17BGN+quM+eMo3SGukjyjwXl5R4hQDleZWZhv4DwhLkq2WTSNtzRE85PqK67ws57zaK
- 149pvOy5orXmve4wHZpyEtXrwHjZ66aEZ9zd6QQ==
-X-Google-Smtp-Source: AGHT+IEBzlkJne3GbD02fpiJfbcO/Jola+fVbZCa1VigrRcD2e2aXSC4b/Dk87C9VVZ41dPQ0vu4Mg==
-X-Received: by 2002:a05:6a00:a0b:b0:76b:fe65:71d2 with SMTP id
- d2e1a72fcca58-76e20d06586mr4970988b3a.10.1755101123768; 
- Wed, 13 Aug 2025 09:05:23 -0700 (PDT)
-Received: from kotori-desktop ([139.227.17.249])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76c5f493178sm11779459b3a.49.2025.08.13.09.05.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Aug 2025 09:05:23 -0700 (PDT)
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] vfio/igd: Enable quirks when IGD is not the primary display
-Date: Thu, 14 Aug 2025 00:05:10 +0800
-Message-ID: <20250813160510.23553-1-tomitamoeko@gmail.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1umEfC-0002cl-Ou; Wed, 13 Aug 2025 12:49:23 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1umEf3-0007mt-8i; Wed, 13 Aug 2025 12:49:22 -0400
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id BC2BB8077A;
+ Wed, 13 Aug 2025 19:49:04 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:167::1:21])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id wmOQI00FoSw0-tCxjbg1q; Wed, 13 Aug 2025 19:49:04 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1755103744;
+ bh=uxJY0zvUL1mJYTBT5mOxxRPsBPkedva7aliCeP7nSZo=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=LONP4XWS49yeJu4Xk+myRH1qJxjr/QsmVLCe4oRXigyjihD/qx4SPv3Q5wCFMjb/A
+ NZDZuN5uLSw6aZJCQyIu+K6tH5OLzyVLNeMsOVxSBQDgEtui/BRUItRPxySMu+beII
+ fPFc3pyRtBedgwSDRAey3xcPKMT+dZrbzN1UiBQM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net
+Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
+ kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, steven.sistare@oracle.com,
+ den-plotnikov@yandex-team.ru, vsementsov@yandex-team.ru
+Subject: [PATCH 03/33] vhost-user: introduce vhost_user_has_prot() helper
+Date: Wed, 13 Aug 2025 19:48:24 +0300
+Message-ID: <20250813164856.950363-4-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pf1-x444.google.com
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,73 +76,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since linux 6.15, commit 41112160ca87 ("vfio/pci: match IGD devices in
-display controller class"), IGD related regions are also exposed when
-IGD is not primary display (device class is Display controller).
+Make all protocol feature checks in the same way.
 
-Allow IGD quirks to be enabled in this configuration so that guests can
-have display output on IGD when it is not the primary display.
-
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/vfio/igd.c | 7 ++++---
- hw/vfio/pci.h | 5 +++++
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ hw/virtio/vhost-user.c | 102 ++++++++++++++++++-----------------------
+ 1 file changed, 44 insertions(+), 58 deletions(-)
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index ee0767b0b8..f116c40ccd 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -460,7 +460,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-     int gen;
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index cf6f53801d..6fa5b8a8bd 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -272,6 +272,11 @@ struct scrub_regions {
+     int fd_idx;
+ };
  
-     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
--        !vfio_is_vga(vdev) || nr != 0) {
-+        !vfio_is_base_display(vdev) || nr != 0) {
++static bool vhost_user_has_prot(struct vhost_dev *dev, uint64_t feature)
++{
++    return virtio_has_feature(dev->protocol_features, feature);
++}
++
+ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
+ {
+     struct vhost_user *u = dev->opaque;
+@@ -435,8 +440,7 @@ static int vhost_user_set_log_base(struct vhost_dev *dev, uint64_t base,
+ {
+     int fds[VHOST_USER_MAX_RAM_SLOTS];
+     size_t fd_num = 0;
+-    bool shmfd = virtio_has_feature(dev->protocol_features,
+-                                    VHOST_USER_PROTOCOL_F_LOG_SHMFD);
++    bool shmfd = vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_LOG_SHMFD);
+     int ret;
+     VhostUserMsg msg = {
+         .hdr.request = VHOST_USER_SET_LOG_BASE,
+@@ -1006,11 +1010,10 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+     int fds[VHOST_MEMORY_BASELINE_NREGIONS];
+     size_t fd_num = 0;
+     bool do_postcopy = u->postcopy_listen && u->postcopy_fd.handler;
+-    bool reply_supported = virtio_has_feature(dev->protocol_features,
+-                                              VHOST_USER_PROTOCOL_F_REPLY_ACK);
++    bool reply_supported =
++        vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
+     bool config_mem_slots =
+-        virtio_has_feature(dev->protocol_features,
+-                           VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS);
++        vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS);
+     int ret;
+ 
+     if (do_postcopy) {
+@@ -1058,8 +1061,8 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+ static int vhost_user_set_vring_endian(struct vhost_dev *dev,
+                                        struct vhost_vring_state *ring)
+ {
+-    bool cross_endian = virtio_has_feature(dev->protocol_features,
+-                                           VHOST_USER_PROTOCOL_F_CROSS_ENDIAN);
++    bool cross_endian =
++        vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_CROSS_ENDIAN);
+     VhostUserMsg msg = {
+         .hdr.request = VHOST_USER_SET_VRING_ENDIAN,
+         .hdr.flags = VHOST_USER_VERSION,
+@@ -1129,8 +1132,8 @@ static int vhost_user_write_sync(struct vhost_dev *dev, VhostUserMsg *msg,
+     int ret;
+ 
+     if (wait_for_reply) {
+-        bool reply_supported = virtio_has_feature(dev->protocol_features,
+-                                          VHOST_USER_PROTOCOL_F_REPLY_ACK);
++        bool reply_supported =
++            vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
+         if (reply_supported) {
+             msg->hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
+         }
+@@ -1459,8 +1462,7 @@ static int vhost_user_set_features(struct vhost_dev *dev,
+     ret = vhost_user_set_u64(dev, VHOST_USER_SET_FEATURES, features,
+                              log_enabled);
+ 
+-    if (virtio_has_feature(dev->protocol_features,
+-                           VHOST_USER_PROTOCOL_F_STATUS)) {
++    if (vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_STATUS)) {
+         if (!ret) {
+             return vhost_user_add_status(dev, VIRTIO_CONFIG_S_FEATURES_OK);
+         }
+@@ -1514,8 +1516,7 @@ static int vhost_user_reset_device(struct vhost_dev *dev)
+      * Historically, reset was not implemented so only reset devices
+      * that are expecting it.
+      */
+-    if (!virtio_has_feature(dev->protocol_features,
+-                            VHOST_USER_PROTOCOL_F_RESET_DEVICE)) {
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_RESET_DEVICE)) {
+         return -ENOSYS;
+     }
+ 
+@@ -1572,8 +1573,7 @@ static int vhost_user_backend_handle_vring_host_notifier(struct vhost_dev *dev,
+     void *addr;
+     char *name;
+ 
+-    if (!virtio_has_feature(dev->protocol_features,
+-                            VHOST_USER_PROTOCOL_F_HOST_NOTIFIER) ||
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_HOST_NOTIFIER) ||
+         vdev == NULL || queue_idx >= virtio_get_num_queues(vdev)) {
+         return -EINVAL;
+     }
+@@ -1885,13 +1885,12 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
+     };
+     struct vhost_user *u = dev->opaque;
+     int sv[2], ret = 0;
+-    bool reply_supported = virtio_has_feature(dev->protocol_features,
+-                                              VHOST_USER_PROTOCOL_F_REPLY_ACK);
++    bool reply_supported =
++        vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
+     Error *local_err = NULL;
+     QIOChannel *ioc;
+ 
+-    if (!virtio_has_feature(dev->protocol_features,
+-                            VHOST_USER_PROTOCOL_F_BACKEND_REQ)) {
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_BACKEND_REQ)) {
+         return 0;
+     }
+ 
+@@ -2136,8 +2135,7 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
+ 
+     switch (pnd->reason) {
+     case POSTCOPY_NOTIFY_PROBE:
+-        if (!virtio_has_feature(dev->protocol_features,
+-                                VHOST_USER_PROTOCOL_F_PAGEFAULT)) {
++        if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_PAGEFAULT)) {
+             /* TODO: Get the device name into this error somehow */
+             error_setg(errp,
+                        "vhost-user backend not capable of postcopy");
+@@ -2228,7 +2226,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+         }
+ 
+         /* query the max queues we support if backend supports Multiple Queue */
+-        if (dev->protocol_features & (1ULL << VHOST_USER_PROTOCOL_F_MQ)) {
++        if (vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_MQ)) {
+             err = vhost_user_get_u64(dev, VHOST_USER_GET_QUEUE_NUM,
+                                      &dev->max_queues);
+             if (err < 0) {
+@@ -2246,18 +2244,16 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+         }
+ 
+         if (virtio_has_feature(features, VIRTIO_F_IOMMU_PLATFORM) &&
+-                !(virtio_has_feature(dev->protocol_features,
+-                    VHOST_USER_PROTOCOL_F_BACKEND_REQ) &&
+-                 virtio_has_feature(dev->protocol_features,
+-                    VHOST_USER_PROTOCOL_F_REPLY_ACK))) {
++                !(vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_BACKEND_REQ) &&
++                 vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK))) {
+             error_setg(errp, "IOMMU support requires reply-ack and "
+                        "backend-req protocol features.");
+             return -EINVAL;
+         }
+ 
+         /* get max memory regions if backend supports configurable RAM slots */
+-        if (!virtio_has_feature(dev->protocol_features,
+-                                VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS)) {
++        if (!vhost_user_has_prot(dev,
++                                 VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS)) {
+             u->user->memory_slots = VHOST_MEMORY_BASELINE_NREGIONS;
+         } else {
+             err = vhost_user_get_max_memslots(dev, &ram_slots);
+@@ -2279,8 +2275,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
+     }
+ 
+     if (dev->migration_blocker == NULL &&
+-        !virtio_has_feature(dev->protocol_features,
+-                            VHOST_USER_PROTOCOL_F_LOG_SHMFD)) {
++        !vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_LOG_SHMFD)) {
+         error_setg(&dev->migration_blocker,
+                    "Migration disabled: vhost-user backend lacks "
+                    "VHOST_USER_PROTOCOL_F_LOG_SHMFD feature.");
+@@ -2349,8 +2344,7 @@ static bool vhost_user_requires_shm_log(struct vhost_dev *dev)
+ {
+     assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER);
+ 
+-    return virtio_has_feature(dev->protocol_features,
+-                              VHOST_USER_PROTOCOL_F_LOG_SHMFD);
++    return vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_LOG_SHMFD);
+ }
+ 
+ static int vhost_user_migration_done(struct vhost_dev *dev, char* mac_addr)
+@@ -2365,8 +2359,7 @@ static int vhost_user_migration_done(struct vhost_dev *dev, char* mac_addr)
+     }
+ 
+     /* if backend supports VHOST_USER_PROTOCOL_F_RARP ask it to send the RARP */
+-    if (virtio_has_feature(dev->protocol_features,
+-                           VHOST_USER_PROTOCOL_F_RARP)) {
++    if (vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_RARP)) {
+         msg.hdr.request = VHOST_USER_SEND_RARP;
+         msg.hdr.flags = VHOST_USER_VERSION;
+         memcpy((char *)&msg.payload.u64, mac_addr, 6);
+@@ -2380,11 +2373,11 @@ static int vhost_user_migration_done(struct vhost_dev *dev, char* mac_addr)
+ static int vhost_user_net_set_mtu(struct vhost_dev *dev, uint16_t mtu)
+ {
+     VhostUserMsg msg;
+-    bool reply_supported = virtio_has_feature(dev->protocol_features,
+-                                              VHOST_USER_PROTOCOL_F_REPLY_ACK);
++    bool reply_supported =
++        vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
+     int ret;
+ 
+-    if (!(dev->protocol_features & (1ULL << VHOST_USER_PROTOCOL_F_NET_MTU))) {
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_NET_MTU)) {
+         return 0;
+     }
+ 
+@@ -2444,8 +2437,7 @@ static int vhost_user_get_config(struct vhost_dev *dev, uint8_t *config,
+         .hdr.size = VHOST_USER_CONFIG_HDR_SIZE + config_len,
+     };
+ 
+-    if (!virtio_has_feature(dev->protocol_features,
+-                VHOST_USER_PROTOCOL_F_CONFIG)) {
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_CONFIG)) {
+         error_setg(errp, "VHOST_USER_PROTOCOL_F_CONFIG not supported");
+         return -EINVAL;
+     }
+@@ -2488,8 +2480,8 @@ static int vhost_user_set_config(struct vhost_dev *dev, const uint8_t *data,
+ {
+     int ret;
+     uint8_t *p;
+-    bool reply_supported = virtio_has_feature(dev->protocol_features,
+-                                              VHOST_USER_PROTOCOL_F_REPLY_ACK);
++    bool reply_supported =
++        vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
+ 
+     VhostUserMsg msg = {
+         .hdr.request = VHOST_USER_SET_CONFIG,
+@@ -2497,8 +2489,7 @@ static int vhost_user_set_config(struct vhost_dev *dev, const uint8_t *data,
+         .hdr.size = VHOST_USER_CONFIG_HDR_SIZE + size,
+     };
+ 
+-    if (!virtio_has_feature(dev->protocol_features,
+-                VHOST_USER_PROTOCOL_F_CONFIG)) {
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_CONFIG)) {
+         return -ENOTSUP;
+     }
+ 
+@@ -2533,8 +2524,8 @@ static int vhost_user_crypto_create_session(struct vhost_dev *dev,
+                                             uint64_t *session_id)
+ {
+     int ret;
+-    bool crypto_session = virtio_has_feature(dev->protocol_features,
+-                                       VHOST_USER_PROTOCOL_F_CRYPTO_SESSION);
++    bool crypto_session =
++        vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_CRYPTO_SESSION);
+     CryptoDevBackendSessionInfo *backend_info = session_info;
+     VhostUserMsg msg = {
+         .hdr.request = VHOST_USER_CREATE_CRYPTO_SESSION,
+@@ -2635,8 +2626,8 @@ static int
+ vhost_user_crypto_close_session(struct vhost_dev *dev, uint64_t session_id)
+ {
+     int ret;
+-    bool crypto_session = virtio_has_feature(dev->protocol_features,
+-                                       VHOST_USER_PROTOCOL_F_CRYPTO_SESSION);
++    bool crypto_session =
++        vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_CRYPTO_SESSION);
+     VhostUserMsg msg = {
+         .hdr.request = VHOST_USER_CLOSE_CRYPTO_SESSION,
+         .hdr.flags = VHOST_USER_VERSION,
+@@ -2681,8 +2672,7 @@ static int vhost_user_get_inflight_fd(struct vhost_dev *dev,
+         .hdr.size = sizeof(msg.payload.inflight),
+     };
+ 
+-    if (!virtio_has_feature(dev->protocol_features,
+-                            VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+         return 0;
+     }
+ 
+@@ -2749,8 +2739,7 @@ static int vhost_user_set_inflight_fd(struct vhost_dev *dev,
+         .hdr.size = sizeof(msg.payload.inflight),
+     };
+ 
+-    if (!virtio_has_feature(dev->protocol_features,
+-                            VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+         return 0;
+     }
+ 
+@@ -2849,8 +2838,7 @@ void vhost_user_async_close(DeviceState *d,
+ 
+ static int vhost_user_dev_start(struct vhost_dev *dev, bool started)
+ {
+-    if (!virtio_has_feature(dev->protocol_features,
+-                            VHOST_USER_PROTOCOL_F_STATUS)) {
++    if (!vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_STATUS)) {
+         return 0;
+     }
+ 
+@@ -2875,16 +2863,14 @@ static void vhost_user_reset_status(struct vhost_dev *dev)
          return;
      }
  
-@@ -518,7 +518,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-     Error *err = NULL;
- 
-     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
--        !vfio_is_vga(vdev)) {
-+        !vfio_is_base_display(vdev)) {
-         return true;
+-    if (virtio_has_feature(dev->protocol_features,
+-                           VHOST_USER_PROTOCOL_F_STATUS)) {
++    if (vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_STATUS)) {
+         vhost_user_set_status(dev, 0);
      }
- 
-@@ -534,12 +534,13 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-     /*
-      * For backward compatibility, enable legacy mode when
-      * - Device geneation is 6 to 9 (including both)
--     * - IGD claims VGA cycles on host
-+     * - IGD exposes itself as VGA controller and claims VGA cycles on host
-      * - Machine type is i440fx (pc_piix)
-      * - IGD device is at guest BDF 00:02.0
-      * - Not manually disabled by x-igd-legacy-mode=off
-      */
-     if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
-+        vfio_is_vga(vdev) &&
-         (gen >= 6 && gen <= 9) &&
-         !(gmch & IGD_GMCH_VGA_DISABLE) &&
-         !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 810a842f4a..923cf9c2f7 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -203,6 +203,11 @@ static inline bool vfio_is_vga(VFIOPCIDevice *vdev)
-     return (vdev->class_code >> 8) == PCI_CLASS_DISPLAY_VGA;
  }
  
-+static inline bool vfio_is_base_display(VFIOPCIDevice *vdev)
-+{
-+    return (vdev->class_code >> 16) == PCI_BASE_CLASS_DISPLAY;
-+}
-+
- /* MSI/MSI-X/INTx */
- void vfio_pci_vector_init(VFIOPCIDevice *vdev, int nr);
- void vfio_pci_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+ static bool vhost_user_supports_device_state(struct vhost_dev *dev)
+ {
+-    return virtio_has_feature(dev->protocol_features,
+-                              VHOST_USER_PROTOCOL_F_DEVICE_STATE);
++    return vhost_user_has_prot(dev, VHOST_USER_PROTOCOL_F_DEVICE_STATE);
+ }
+ 
+ static int vhost_user_set_device_state_fd(struct vhost_dev *dev,
 -- 
-2.50.1
+2.48.1
 
 
