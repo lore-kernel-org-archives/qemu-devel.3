@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B44CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 12:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AD0CA0EE5
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 12:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umAIU-0001Wp-4o; Wed, 13 Aug 2025 08:09:38 -0400
+	id 1umAIR-0001VX-Bp; Wed, 13 Aug 2025 08:09:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1um54G-0007mS-13
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1um54F-0007mR-W0
  for qemu-devel@nongnu.org; Wed, 13 Aug 2025 02:34:36 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1um547-0007sK-VD
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1um548-0007sH-1W
  for qemu-devel@nongnu.org; Wed, 13 Aug 2025 02:34:34 -0400
-DKIM-Signature: a=rsa-sha256; bh=xxKj4TOvFOZFX6/ej7ZAYlJchHepX4BzMPjaosHHXYA=; 
+DKIM-Signature: a=rsa-sha256; bh=l2XRd5mWoVKbDszSTWuPXeHpeeUG9cQZa7vxPy3C8lU=; 
  c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1755066860; v=1;
- b=pF9xoB8++h+GL+9IXZ3dWx7BMkdtvzOuCBwlZrMQs582bgCYbyX4Ybb1ccqzAH0AQItWWSF7
- SdcmSKh++TN9evSA1uSm0KPKZkLXWA6emqDemxbm/LnFr2+90VwTIpcjeAvJx2qFyMX+QL1UQGK
- JduOJkMKR2re9b2V8CfV5XJOuYjBZXxjprQJW0Yq274aljiJK63agzTHSEKTQZ7dFNP2H1EoGyF
- 0OCXGVjO3C+96K938bL6kH4bqfrPiOHAwT7Qu9SixzaOY4Pw4QEbYALCoZ/GaFr09An83hCJ6Si
- yKOfQqYRRvmcQaqs+pBLTC2a+kvsZmKS4C2Vj3YXjM5qw==
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1755066860; v=1;
+ b=fcj96hOEzRraYFIV1VJw24AyOWpaMX7Zl5REZVEb6RGFrzy8fiJlGPWlE1RYmS46FBFT+i5P
+ QDQYtDr15xkKtl3TLQjM2bn00cHWsZ82BSo6Nipj7UMTnQIibcqSqtaW+G4abii0Yz4XgjaFl1a
+ 8F7EtVfQdlb6JTw9J3GNY37JN0tpApvYfINtppFsF5da+SsMrZW4ECKIPttBlrIWM0JNyjDgJNd
+ HMyVDM+aDaU4xkYaa93jqUdB0f/FcKQJtLuuEefRn5uI5EEA9mgU3J9sAltvoaou89kmW11gkYS
+ CIdeyObH/7jTKX+16RUcfBTTtuPZva8Xzw2KGQ4Juqn2A==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id AC34C22F05;
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 564B122EFF;
  Wed, 13 Aug 2025 06:34:20 +0000 (UTC)
 From: ~myrslint <myrslint@git.sr.ht>
-Date: Wed, 13 Aug 2025 06:23:24 +0000
-Subject: [PATCH qemu 1/1] Default disable ignore guest PAT quirk
-Message-ID: <175506686028.15648.7602021948044277748-1@git.sr.ht>
+Date: Wed, 13 Aug 2025 06:34:20 +0000
+Subject: [PATCH qemu 0/1] A small patch to address Issue #2943
+MIME-Version: 1.0
+Message-ID: <175506686028.15648.7602021948044277748-0@git.sr.ht>
 X-Mailer: git.sr.ht
-In-Reply-To: <175506686028.15648.7602021948044277748-0@git.sr.ht>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-MIME-Version: 1.0
 Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
  helo=mail-a.sr.ht
 X-Spam_score_int: -16
@@ -67,54 +66,21 @@ Reply-To: ~myrslint <myrskylintu@proton.me>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: myrslint <qemu.haziness801@passinbox.com>
+Details of the issue can be found at: https://gitlab.com/qemu-
+project/qemu/-/issues/2943
 
-Addresses this issue: https://gitlab.com/qemu-project/qemu/-/issues/2943
+This patch by default disables the KVM_X86_QUIRK_IGNORE_GUEST_PAT quirk
+because most Intel CPUs in current use do not need it. The bochs video
+driver bug which required it has been fixed as well.
 
-Most Intel CPUs in current use have self-snoop. The few added lines of
-code also check for availability of the quirk disablement option so if
-some CPU does not have this feature no change of behavior will occur.
----
+The end result is that guest PAT is honored.
+
+myrslint (1):
+  Default disable ignore guest PAT quirk
+
  accel/kvm/kvm-all.c | 26 ++++++++++++++++++++++++++
  1 file changed, 26 insertions(+)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 890d5ea9f8..c3d06ae2f8 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2682,6 +2682,32 @@ static int kvm_init(AccelState *as, MachineState *ms)
- 
-     s->vmfd = ret;
- 
-+/* if target platform has no notion of this or kernel version does
-+ * not have it there is no use for compiling this in */
-+#ifdef KVM_X86_QUIRK_IGNORE_GUEST_PAT
-+    /* first check for modifiable quirks bitmask */
-+    ret = kvm_check_extension(s, KVM_CAP_DISABLE_QUIRKS2);
-+    /* next make sure disabling it is allowed */
-+    if (ret & KVM_X86_QUIRK_IGNORE_GUEST_PAT) {
-+        struct kvm_enable_cap *cap;
-+        cap = calloc(1, sizeof(struct kvm_enable_cap));
-+        if (cap) {
-+            cap->cap = KVM_CAP_DISABLE_QUIRKS2;
-+            cap->args[0] = KVM_X86_QUIRK_IGNORE_GUEST_PAT;
-+            /* if intel cpu does not support self-snoop this is a nop */
-+            ret = kvm_vm_ioctl(s, KVM_ENABLE_CAP, cap);
-+            if (ret < 0) {
-+                error_printf("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
-+                             "modifiable but we failed to disable it\n");
-+            }
-+            free(cap);
-+        } else {
-+            error_printf("KVM_X86_QUIRK_IGNORE_GUEST_PAT: could not "
-+                         "allocate memory\n");
-+        }
-+    }
-+#endif
-+
-     s->nr_as = kvm_vm_check_extension(s, KVM_CAP_MULTI_ADDRESS_SPACE);
-     if (s->nr_as <= 1) {
-         s->nr_as = 1;
 -- 
 2.49.1
 
