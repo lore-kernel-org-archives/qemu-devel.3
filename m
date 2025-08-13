@@ -4,63 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74798CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 17:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A52C87FCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 17:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umEg3-00037F-Dq; Wed, 13 Aug 2025 12:50:15 -0400
+	id 1umFUJ-0003wf-1c; Wed, 13 Aug 2025 13:42:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umEfm-0002pC-Vs; Wed, 13 Aug 2025 12:49:59 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1umFUE-0003uf-Fv; Wed, 13 Aug 2025 13:42:06 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umEfN-0007sY-SQ; Wed, 13 Aug 2025 12:49:58 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 2AAFB81392;
- Wed, 13 Aug 2025 19:49:22 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:167::1:21])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id wmOQI00FoSw0-zEYONDc4; Wed, 13 Aug 2025 19:49:21 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755103761;
- bh=Wp+4GceFeTBXu9j82YWHNLbIdiUNa1OHM2J6/qAbIfM=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=yDnKq5SbtdknzNvdH+vl1dfbw6wNj2qtOHpMuFuKbD0x8LsES4qPZLDeQovwlFv31
- C6OahqMKQDRHOQlSLpnR3/44OXJOsIhHT/3HPfOjytsNJ+tNF2JZ3AeiS+KNms/quq
- lZVW3q8vbm5iZRSIV2t+xsuoWTAioWf4WZRGkLkk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net
-Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
- kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com,
- eblake@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, steven.sistare@oracle.com,
- den-plotnikov@yandex-team.ru, vsementsov@yandex-team.ru,
- Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 24/33] chardev-add: support local migration
-Date: Wed, 13 Aug 2025 19:48:45 +0300
-Message-ID: <20250813164856.950363-25-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250813164856.950363-1-vsementsov@yandex-team.ru>
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1umFUB-0006Zx-Jx; Wed, 13 Aug 2025 13:42:06 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57DBZ5Uj025676;
+ Wed, 13 Aug 2025 17:41:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=QZla6X8ncR2XNnKnb
+ A92sFJoa3p4OKGXOP85ivV1B8Y=; b=sSE4C2E98vSP3PwubjLkd63YMs1Q8bDrG
+ DRvfvd8SN93gvleUxpv+eFfbfZMVNXKp9ZBCRWS1+58MtjrragP7WrjBoDGxT29x
+ MmufuhqaMEr/H2p+CIYKZXBIEjB8syPmMmqZ4GjempvMWjTaXKDLrdE2UcALdEif
+ FuWLlMbRKz7F4CJLIHinJD+CYhlVXDd8IXY6L00xzGKTv8GM1QtoKbRKCUOg/9N5
+ NJzXL5sn6H28VPsxYkiUw6G3n/fk/zOCm9T4YLuAxD4Szh17s2ztdcPbqlOySu6g
+ PZAElBfO0bQFwAwSBj1KTs4VO4ot+kkwQDmkDWmNEzrPDqgFkaaYQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48ehaaa59x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 Aug 2025 17:41:58 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57DGNZDh025628;
+ Wed, 13 Aug 2025 17:41:57 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 48ejvmg77p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 Aug 2025 17:41:57 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57DHftKh35324370
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Aug 2025 17:41:55 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3BA6C5805E;
+ Wed, 13 Aug 2025 17:41:55 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC9335805A;
+ Wed, 13 Aug 2025 17:41:54 +0000 (GMT)
+Received: from IBM-D32RQW3.ibm.com (unknown [9.61.255.61])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 13 Aug 2025 17:41:54 +0000 (GMT)
+From: Farhan Ali <alifm@linux.ibm.com>
+To: qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com, thuth@redhat.com,
+ alex.williamson@redhat.com, clg@redhat.com, alifm@linux.ibm.com
+Subject: [PATCH v1 3/4] s390x/pci: Add PCI error handling for vfio pci devices
+Date: Wed, 13 Aug 2025 10:41:50 -0700
+Message-ID: <20250813174152.1238-4-alifm@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250813174152.1238-1-alifm@linux.ibm.com>
+References: <20250813174152.1238-1-alifm@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=KPRaDEFo c=1 sm=1 tr=0 ts=689cce66 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=jSCLr9NRB7a5bD1T82IA:9
+X-Proofpoint-ORIG-GUID: hMhGZDT-KMItolRM8y46Pynv_wI8VIxW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODEyMDIyNCBTYWx0ZWRfX2pAl4eqD6vRd
+ 0fYtqVYto4CfCbx8Ggh6kdpVcfpKbUiVOAsOjq+aoViWYwzFzNLu6v8CYfzcoOy3M5mdTmdPMqi
+ 5bWrPtqmCLTZTIpRgMCofgg91M4z44fOiMgdNtWepADgrLUwwYF/chlIiR6Bnr8qVojdJMusd6y
+ on2zoIXCkR0MnRje+MoXJm7mwfWMvLMTn2vQx+z1NDSzWfKRjaUW3MHNAHKP5oLfndanvCorCtY
+ pttrwMF51SMIvajAx1R1EW7EMzpMz/13VJavi8tbVAcrkEF9N/B97PVicKO91lcktni2PozQQ1F
+ 2Kb+ahr4CApa9QlMAHb0Cy8te7B2qedj2PC91goX1SXo7wp143KvqtKO3pWFJnspqPnDkJOmCvD
+ L3H+lnU4
+X-Proofpoint-GUID: hMhGZDT-KMItolRM8y46Pynv_wI8VIxW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_01,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508120224
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,435 +115,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit introduces a possibility to migrate open chardev
-socket fd through migration channel without reconnecting.
+Add an s390x specific callback for vfio error handling.
+For s390x pci devices, we have platform specific error
+information. We need to retrieve this error information
+for passthrough devices. This is done via a memory region
+which exposes that information.
 
-For this, user should:
- - enable new migration capability local-char-socket
- - mark the socket by an option support-local-migration=true
- - on target add local-incoming=true option to the socket
+Once this error information is retrieved we can then
+inject an error into the guest, and let the guest drive
+the recovery.
 
-Motivation for the API:
-
-1. We don't want to migrate all sockets. For example, QMP-connection is
-   bad candidate, as it is separate on source and target. So, we need
-   @support-local-migration option to mark sockets, which we want to
-   migrate (after this series, we'll want to migrate chardev used to
-   connect with vhost-user-server).
-
-2. Still, for remote migration, we can't migrate any sockets, so, we
-   need a capability, to enable/disable the whole feature.
-
-3. And finally, we need a sign for the socket to not open a connection
-   on initialization, but wait for incoming migration. We can't use
-   @support-local-migration option for it, as it may be enabled, but we
-   are in incoming-remote migration. Also, we can't rely on the
-   migration capability, as user is free to setup capabilities before or
-   after chardev creation, and it would be a bad precedent to create
-   relations here.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 ---
- chardev/char-socket.c         | 101 +++++++++++++++++++++++++++++++++-
- include/chardev/char-socket.h |   3 +
- migration/options.c           |   7 +++
- migration/options.h           |   1 +
- qapi/char.json                |  16 +++++-
- qapi/migration.json           |   8 ++-
- stubs/meson.build             |   1 +
- stubs/qemu_file.c             |  15 +++++
- stubs/vmstate.c               |   6 ++
- tests/qtest/meson.build       |   2 +-
- tests/unit/meson.build        |   4 +-
- 11 files changed, 158 insertions(+), 6 deletions(-)
- create mode 100644 stubs/qemu_file.c
+ hw/s390x/s390-pci-bus.c          |  5 ++
+ hw/s390x/s390-pci-vfio.c         | 82 ++++++++++++++++++++++++++++++++
+ include/hw/s390x/s390-pci-bus.h  |  1 +
+ include/hw/s390x/s390-pci-vfio.h |  2 +
+ 4 files changed, 90 insertions(+)
 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 1e8313915b..db6616e2f2 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -24,6 +24,7 @@
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index f87d2748b6..af42eb9938 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -158,6 +158,8 @@ static void s390_pci_perform_unplug(S390PCIBusDevice *pbdev)
+ {
+     HotplugHandler *hotplug_ctrl;
+ 
++    qemu_mutex_destroy(&pbdev->err_handler_lock);
++
+     if (pbdev->pft == ZPCI_PFT_ISM) {
+         notifier_remove(&pbdev->shutdown_notifier);
+     }
+@@ -1140,6 +1142,7 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         pbdev->iommu->pbdev = pbdev;
+         pbdev->state = ZPCI_FS_DISABLED;
+         set_pbdev_info(pbdev);
++        qemu_mutex_init(&pbdev->err_handler_lock);
+ 
+         if (object_dynamic_cast(OBJECT(dev), "vfio-pci")) {
+             /*
+@@ -1164,6 +1167,8 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+             pbdev->iommu->dma_limit = s390_pci_start_dma_count(s, pbdev);
+             /* Fill in CLP information passed via the vfio region */
+             s390_pci_get_clp_info(pbdev);
++            /* Setup error handler for error recovery */
++            s390_pci_setup_err_handler(pbdev);
+             if (!pbdev->interp) {
+                 /* Do vfio passthrough but intercept for I/O */
+                 pbdev->fh |= FH_SHM_VFIO;
+diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+index aaf91319b4..ceee342f4a 100644
+--- a/hw/s390x/s390-pci-vfio.c
++++ b/hw/s390x/s390-pci-vfio.c
+@@ -10,6 +10,7 @@
+  */
  
  #include "qemu/osdep.h"
- #include "chardev/char.h"
-+#include "qapi-types-char.h"
- #include "io/channel-socket.h"
- #include "io/channel-websock.h"
- #include "qemu/error-report.h"
-@@ -34,6 +35,10 @@
- #include "qapi/qapi-visit-sockets.h"
- #include "qemu/yank.h"
- #include "trace.h"
-+#include "migration/vmstate.h"
-+#include "migration/qemu-file.h"
-+#include "migration/migration.h"
-+#include "hw/vmstate-if.h"
++#include "qemu/error-report.h"
  
- #include "chardev/char-io.h"
- #include "chardev/char-socket.h"
-@@ -1118,6 +1123,7 @@ static void char_socket_finalize(Object *obj)
-         object_unref(OBJECT(s->tls_creds));
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
+@@ -103,6 +104,70 @@ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt)
      }
-     g_free(s->tls_authz);
-+    g_free(s->vmstate_name);
-     if (s->registered_yank) {
-         /*
-          * In the chardev-change special-case, we shouldn't unregister the yank
-@@ -1276,8 +1282,15 @@ static int qmp_chardev_open_socket_client(Chardev *chr,
- {
-     SocketChardev *s = SOCKET_CHARDEV(chr);
- 
-+    s->reconnect_time_ms = reconnect_ms;
-+
-+    if (s->local_incoming) {
-+        /* We'll get fd at migreation load. This field works once */
-+        s->local_incoming = false;
-+        return 0;
-+    }
-+
-     if (reconnect_ms > 0) {
--        s->reconnect_time_ms = reconnect_ms;
-         tcp_chr_connect_client_async(chr);
-         return 0;
-     } else {
-@@ -1367,6 +1380,52 @@ static bool qmp_chardev_validate_socket(ChardevSocket *sock,
-     return true;
  }
  
-+static int char_socket_save(QEMUFile *f, void *opaque, size_t size,
-+                           const VMStateField *field, JSONWriter *vmdesc)
++static int s390_pci_read_error_region(VFIOPCIDevice *vfio_pci,
++                                      struct vfio_device_zpci_err_region *err)
 +{
-+    SocketChardev *s = opaque;
++    struct vfio_region_info *region = NULL;
++    g_autofree void *buf;
++    int ret;
 +
-+    warn_report("%s", __func__);
-+    return qemu_file_put_fd(f, s->sioc->fd);
-+}
++    ret = vfio_device_get_region_info_type(&vfio_pci->vbasedev,
++                    VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_IBM,
++                    VFIO_REGION_SUBTYPE_IBM_ZPCI_ERROR_REGION, &region);
 +
-+static int char_socket_load(QEMUFile *f, void *opaque, size_t size,
-+                           const VMStateField *field)
-+{
-+    Chardev *chr = opaque;
-+
-+    int fd = qemu_file_get_fd(f);
-+    warn_report("%s %d", __func__, fd);
-+    if (fd < 0) {
-+        return fd;
++    if (ret) {
++        error_report("Failed to get the region info for passthrough device"
++                    " (rc=%d)", ret);
++        return ret;
 +    }
-+    return tcp_chr_add_client(chr, fd);
++
++    buf = g_malloc0(region->size);
++
++    if (!buf) {
++        error_report("Failed to allocate memory for error region");
++        return -ENOMEM;
++    }
++
++    ret = pread(vfio_pci->vbasedev.fd, buf, region->size, region->offset);
++    if (ret != region->size) {
++        error_report("Failed to read vfio zpci error region");
++        return -EINVAL;
++    }
++
++    memcpy(err, (struct vfio_device_zpci_err_region *) buf,
++            sizeof(struct vfio_device_zpci_err_region));
++    return 0;
 +}
 +
-+static bool char_socket_needed(void *opaque)
++static void s390_pci_err_handler(VFIOPCIDevice *vfio_pci)
 +{
-+    SocketChardev *s = opaque;
++    S390PCIBusDevice *pbdev;
++    struct vfio_device_zpci_err_region err;
++    int ret;
 +
-+    return !!s->vmstate_name;
-+}
++    pbdev = s390_pci_find_dev_by_target(s390_get_phb(),
++                                        DEVICE(&vfio_pci->pdev)->id);
 +
-+const VMStateDescription vmstate_char_socket = {
-+    .name = "char_socket",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = char_socket_needed,
-+    .fields = (VMStateField[]) {
-+        {
-+            .name = "fd",
-+            .info = &(const VMStateInfo) {
-+                .name = "fd",
-+                .get = char_socket_load,
-+                .put = char_socket_save,
-+            },
-+        },
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
- 
- static void qmp_chardev_open_socket(Chardev *chr,
-                                     ChardevBackend *backend,
-@@ -1381,14 +1440,36 @@ static void qmp_chardev_open_socket(Chardev *chr,
-     bool is_tn3270      = sock->has_tn3270  ? sock->tn3270  : false;
-     bool is_waitconnect = sock->has_wait    ? sock->wait    : false;
-     bool is_websock     = sock->has_websocket ? sock->websocket : false;
-+    bool support_local_mig = sock->has_support_local_migration
-+                                 ? sock->support_local_migration
-+                                 : false;
-+    bool local_incoming = sock->local_incoming;
-     int64_t reconnect_ms = 0;
-     SocketAddress *addr;
- 
-+    if (support_local_mig && is_listen) {
-+        error_setg(errp,
-+                   "local migration is not supported for listening sockets");
++    QEMU_LOCK_GUARD(&pbdev->err_handler_lock);
++
++    ret = s390_pci_read_error_region(vfio_pci, &err);
++    if (ret) {
 +        return;
 +    }
 +
-+    if (support_local_mig && !(chr->label && chr->label[0])) {
-+        error_setg(errp,
-+                   "local migration is not supported for unnamed chardevs");
++    pbdev->state = ZPCI_FS_ERROR;
++    s390_pci_generate_error_event(err.pec, pbdev->fh, pbdev->fid, 0, 0);
++
++    while (err.pending_errors) {
++        ret = s390_pci_read_error_region(vfio_pci, &err);
++        if (ret) {
++            return;
++        }
++        s390_pci_generate_error_event(err.pec, pbdev->fh, pbdev->fid, 0, 0);
++    }
++    return;
++}
++
+ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+                                struct vfio_device_info *info)
+ {
+@@ -369,3 +434,20 @@ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
+     s390_pci_read_util(pbdev, info);
+     s390_pci_read_pfip(pbdev, info);
+ }
++
++void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev)
++{
++    int ret;
++    struct vfio_region_info *region = NULL;
++    VFIOPCIDevice *vdev =  container_of(pbdev->pdev, VFIOPCIDevice, pdev);
++
++    ret = vfio_device_get_region_info_type(&vdev->vbasedev,
++                    VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_IBM,
++                    VFIO_REGION_SUBTYPE_IBM_ZPCI_ERROR_REGION, &region);
++
++    if (ret) {
++        info_report("Automated error recovery not available for passthrough device");
 +        return;
 +    }
-+
-     s->is_listen = is_listen;
-     s->is_telnet = is_telnet;
-     s->is_tn3270 = is_tn3270;
-     s->is_websock = is_websock;
-     s->do_nodelay = do_nodelay;
-+    s->local_incoming = local_incoming;
-+
-+    if (support_local_mig) {
-+        s->vmstate_name = g_strdup_printf("__yc-chardev-%s", chr->label);
-+    }
-+
-     if (sock->tls_creds) {
-         Object *creds;
-         creds = object_resolve_path_component(
-@@ -1448,6 +1529,7 @@ static void qmp_chardev_open_socket(Chardev *chr,
-     update_disconnected_filename(s);
- 
-     if (s->is_listen) {
-+        assert(!s->vmstate_name);
-         if (qmp_chardev_open_socket_server(chr, is_telnet || is_tn3270,
-                                            is_waitconnect, errp) < 0) {
-             return;
-@@ -1463,6 +1545,8 @@ static void qmp_chardev_open_socket(Chardev *chr,
-             return;
-         }
-     }
-+
-+    vmstate_register(VMSTATE_IF(s), -1, &vmstate_char_socket, s);
- }
- 
- static void qemu_chr_parse_socket(QemuOpts *opts, ChardevBackend *backend,
-@@ -1581,9 +1665,20 @@ char_socket_get_connected(Object *obj, Error **errp)
-     return s->state == TCP_CHARDEV_STATE_CONNECTED;
- }
- 
-+static char *
-+char_socket_if_get_id(VMStateIf *obj)
-+{
-+    SocketChardev *s = SOCKET_CHARDEV(obj);
-+
-+    return s->vmstate_name;
++    vdev->arch_err_handler = s390_pci_err_handler;
 +}
-+
- static void char_socket_class_init(ObjectClass *oc, const void *data)
- {
-     ChardevClass *cc = CHARDEV_CLASS(oc);
-+    VMStateIfClass *vc = VMSTATE_IF_CLASS(oc);
-+
-+    vc->get_id = char_socket_if_get_id;
- 
-     cc->supports_yank = true;
- 
-@@ -1613,6 +1708,10 @@ static const TypeInfo char_socket_type_info = {
-     .instance_size = sizeof(SocketChardev),
-     .instance_finalize = char_socket_finalize,
-     .class_init = char_socket_class_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_VMSTATE_IF },
-+        { }
-+    }
+diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
+index 04944d4fed..3795e0bbfc 100644
+--- a/include/hw/s390x/s390-pci-bus.h
++++ b/include/hw/s390x/s390-pci-bus.h
+@@ -364,6 +364,7 @@ struct S390PCIBusDevice {
+     bool forwarding_assist;
+     bool aif;
+     bool rtr_avail;
++    QemuMutex err_handler_lock;
+     QTAILQ_ENTRY(S390PCIBusDevice) link;
  };
  
- static void register_types(void)
-diff --git a/include/chardev/char-socket.h b/include/chardev/char-socket.h
-index d6d13ad37f..69b9609215 100644
---- a/include/chardev/char-socket.h
-+++ b/include/chardev/char-socket.h
-@@ -78,6 +78,9 @@ struct SocketChardev {
-     bool connect_err_reported;
- 
-     QIOTask *connect_task;
-+
-+    char *vmstate_name;
-+    bool local_incoming;
- };
- typedef struct SocketChardev SocketChardev;
- 
-diff --git a/migration/options.c b/migration/options.c
-index 4e923a2e07..dffb6910f4 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -262,6 +262,13 @@ bool migrate_mapped_ram(void)
-     return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
- }
- 
-+bool migrate_local_char_socket(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+
-+    return s->capabilities[MIGRATION_CAPABILITY_LOCAL_CHAR_SOCKET];
-+}
-+
- bool migrate_ignore_shared(void)
+diff --git a/include/hw/s390x/s390-pci-vfio.h b/include/hw/s390x/s390-pci-vfio.h
+index ae1b126ff7..66b274293c 100644
+--- a/include/hw/s390x/s390-pci-vfio.h
++++ b/include/hw/s390x/s390-pci-vfio.h
+@@ -22,6 +22,7 @@ S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
+ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
+ bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
+ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
++void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev);
+ #else
+ static inline bool s390_pci_update_dma_avail(int fd, unsigned int *avail)
  {
-     MigrationState *s = migrate_get_current();
-diff --git a/migration/options.h b/migration/options.h
-index 82d839709e..40971f0aa0 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -30,6 +30,7 @@ bool migrate_colo(void);
- bool migrate_dirty_bitmaps(void);
- bool migrate_events(void);
- bool migrate_mapped_ram(void);
-+bool migrate_local_char_socket(void);
- bool migrate_ignore_shared(void);
- bool migrate_late_block_activate(void);
- bool migrate_multifd(void);
-diff --git a/qapi/char.json b/qapi/char.json
-index f0a53f742c..5b535c196a 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -280,11 +280,23 @@
- #     mutually exclusive with @reconnect.
- #     (default: 0) (Since: 9.2)
- #
-+# @support-local-migration: The socket open file descriptor will
-+#     migrate if this field is true and local-char-socket migration
-+#     capability enabled (default: false) (Since: 10.2)
-+#
-+# @local-incoming: Do load open file descriptor for the socket
-+#     on incoming migration. May be used only if QEMU is started
-+#     for incoming migration and only together with local-char-socket
-+#     migration capability (default: false) (Since: 10.2)
-+#
- # Features:
- #
- # @deprecated: Member @reconnect is deprecated.  Use @reconnect-ms
- #     instead.
- #
-+# @unstable: Members @support-local-migration and @local-incoming
-+#            are experimental
-+#
- # Since: 1.4
- ##
- { 'struct': 'ChardevSocket',
-@@ -298,7 +310,9 @@
-             '*tn3270': 'bool',
-             '*websocket': 'bool',
-             '*reconnect': { 'type': 'int', 'features': [ 'deprecated' ] },
--            '*reconnect-ms': 'int' },
-+            '*reconnect-ms': 'int',
-+            '*support-local-migration': { 'type': 'bool', 'features': [ 'unstable' ] },
-+            '*local-incoming': { 'type': 'bool', 'features': [ 'unstable' ] } },
-   'base': 'ChardevCommon' }
- 
- ##
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 2387c21e9c..4f282d168e 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -517,6 +517,11 @@
- #     each RAM page.  Requires a migration URI that supports seeking,
- #     such as a file.  (since 9.0)
- #
-+# @local-char-socket: Migrate socket chardevs open file descriptors.
-+#     Only may be used when migration channel is unix socket. Only
-+#     involves socket chardevs with "support-local-migration" option
-+#     enabled.  (since 10.2)
-+#
- # Features:
- #
- # @unstable: Members @x-colo and @x-ignore-shared are experimental.
-@@ -536,7 +541,8 @@
-            { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
-            'validate-uuid', 'background-snapshot',
-            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
--           'dirty-limit', 'mapped-ram'] }
-+           'dirty-limit', 'mapped-ram',
-+           { 'name': 'local-char-socket', 'features': [ 'unstable' ] } ] }
- 
- ##
- # @MigrationCapabilityStatus:
-diff --git a/stubs/meson.build b/stubs/meson.build
-index cef046e685..7855483639 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -50,6 +50,7 @@ if have_block or have_user
-   stub_ss.add(files('qtest.c'))
-   stub_ss.add(files('vm-stop.c'))
-   stub_ss.add(files('vmstate.c'))
-+  stub_ss.add(files('qemu_file.c'))
- endif
- 
- if have_user
-diff --git a/stubs/qemu_file.c b/stubs/qemu_file.c
-new file mode 100644
-index 0000000000..854d4c13cd
---- /dev/null
-+++ b/stubs/qemu_file.c
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "migration/qemu-file.h"
-+
-+
-+int qemu_file_get_fd(QEMUFile *f)
-+{
-+    return -1;
-+}
-+
-+int qemu_file_put_fd(QEMUFile *f, int fd)
-+{
-+    return -1;
-+}
-diff --git a/stubs/vmstate.c b/stubs/vmstate.c
-index c190762d7c..f345edf3c9 100644
---- a/stubs/vmstate.c
-+++ b/stubs/vmstate.c
-@@ -2,6 +2,7 @@
- #include "migration/vmstate.h"
- #include "qapi/qapi-types-migration.h"
- #include "migration/client-options.h"
-+#include "migration/options.h"
- 
- int vmstate_register_with_alias_id(VMStateIf *obj,
-                                    uint32_t instance_id,
-@@ -28,3 +29,8 @@ MigMode migrate_mode(void)
- {
-     return MIG_MODE_NORMAL;
+@@ -39,6 +40,7 @@ static inline bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh)
+     return false;
  }
-+
-+bool migrate_local_char_socket(void)
-+{
-+    return false;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 669d07c06b..8be0c1dc7c 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -381,7 +381,7 @@ qtests = {
-   'pxe-test': files('boot-sector.c'),
-   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
-                           'pnv-xive2-nvpg_bar.c'),
--  'qos-test': [chardev, io, qos_test_ss.apply({}).sources()],
-+  'qos-test': [chardev, io, qos_test_ss.apply({}).sources(), '../../hw/core/vmstate-if.c'],
-   'tpm-crb-swtpm-test': [io, tpmemu_files],
-   'tpm-crb-test': [io, tpmemu_files],
-   'tpm-tis-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index d5248ae51d..b96f4dcabe 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -139,7 +139,7 @@ if have_system
-     'test-bufferiszero': [],
-     'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c'],
-     'test-vmstate': [migration, io],
--    'test-yank': ['socket-helpers.c', qom, io, chardev]
-+    'test-yank': ['socket-helpers.c', qom, io, chardev, '../../hw/core/vmstate-if.c']
-   }
-   if config_host_data.get('CONFIG_INOTIFY1')
-     tests += {'test-util-filemonitor': []}
-@@ -151,7 +151,7 @@ if have_system
-   if not get_option('tsan')
-     if host_os != 'windows'
-         tests += {
--          'test-char': ['socket-helpers.c', qom, io, chardev]
-+          'test-char': ['socket-helpers.c', qom, io, chardev, '../../hw/core/vmstate-if.c']
-         }
-     endif
+ static inline void s390_pci_get_clp_info(S390PCIBusDevice *pbdev) { }
++static inline void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev) { }
+ #endif
  
+ #endif
 -- 
-2.48.1
+2.43.0
 
 
