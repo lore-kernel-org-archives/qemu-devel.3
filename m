@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D422CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55897CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umEg9-0003Bh-IW; Wed, 13 Aug 2025 12:50:21 -0400
+	id 1umEg5-00038w-4I; Wed, 13 Aug 2025 12:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umEfo-0002q3-JE; Wed, 13 Aug 2025 12:50:00 -0400
+ id 1umEfo-0002pt-7x; Wed, 13 Aug 2025 12:50:00 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umEfk-0007tP-77; Wed, 13 Aug 2025 12:50:00 -0400
+ id 1umEfg-0007sW-0x; Wed, 13 Aug 2025 12:49:59 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 9CAD381397;
- Wed, 13 Aug 2025 19:49:23 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 040F681120;
+ Wed, 13 Aug 2025 19:49:20 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:167::1:21])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id wmOQI00FoSw0-6QpLxnRE; Wed, 13 Aug 2025 19:49:23 +0300
+ ESMTPSA id wmOQI00FoSw0-r37fMOkh; Wed, 13 Aug 2025 19:49:19 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755103763;
- bh=xvfsbTtoNa6txz9pDWOU7s8gMBMfz7afPsycmey1QP0=;
+ s=default; t=1755103759;
+ bh=RVMjTVzFKCrR8tcU9nJeNLV2M5Rh2vtB7v608WCFWz8=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=Pb7sGPsu/zEU/ogwFSulZ6rY7olIH3GJgwgVbQbSJDI0UoS2AkpWB5aGvmFpssdsc
- iE418Gx98MF3egceYMLuarQNjfcVj+u1DC5aafzWVDkPblDddFSx72lrl05ijpsBy7
- DwYMhg3W34mLXJo5MiybgrsGD7KnSLXHVx5CBLWw=
+ b=mv/YQw7zHXyLg8O9kapWcCGLgHZUnr59AWTb9LtZg+QDjuX9Q8dk/vKFxeOJrIAEF
+ ZYqX0MNVZJbwlNWtXWf6TRyZZ4lDJyWcMEw3QHsdA/4pxmT22AOm7KC3aP8Bryivzu
+ ryfSqfED1jc3vhL0ev2i85cbxcu4EtcTYAcE7TKo=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -43,10 +43,9 @@ Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
  eblake@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org,
  qemu-block@nongnu.org, steven.sistare@oracle.com,
  den-plotnikov@yandex-team.ru, vsementsov@yandex-team.ru
-Subject: [PATCH 26/33] io/channel-socket: introduce
- qio_channel_socket_keep_nonblock()
-Date: Wed, 13 Aug 2025 19:48:47 +0300
-Message-ID: <20250813164856.950363-27-vsementsov@yandex-team.ru>
+Subject: [PATCH 22/33] vhost-user-blk: add some useful trace-points
+Date: Wed, 13 Aug 2025 19:48:43 +0300
+Message-ID: <20250813164856.950363-23-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250813164856.950363-1-vsementsov@yandex-team.ru>
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
@@ -77,78 +76,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a possibility to keep socket non-block status when passing
-through qio channel. We need this to support migration of open
-fds through migration channel.
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- include/io/channel-socket.h |  3 +++
- io/channel-socket.c         | 16 ++++++++++++----
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ hw/block/trace-events     | 10 ++++++++++
+ hw/block/vhost-user-blk.c | 15 +++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
-index a88cf8b3a9..0a4327d745 100644
---- a/include/io/channel-socket.h
-+++ b/include/io/channel-socket.h
-@@ -49,6 +49,7 @@ struct QIOChannelSocket {
-     socklen_t remoteAddrLen;
-     ssize_t zero_copy_queued;
-     ssize_t zero_copy_sent;
-+    bool keep_nonblock;
- };
+diff --git a/hw/block/trace-events b/hw/block/trace-events
+index cc9a9f2460..3b5fd2a599 100644
+--- a/hw/block/trace-events
++++ b/hw/block/trace-events
+@@ -58,6 +58,16 @@ virtio_blk_handle_zone_mgmt(void *vdev, void *req, uint8_t op, int64_t sector, i
+ virtio_blk_handle_zone_reset_all(void *vdev, void *req, int64_t sector, int64_t len) "vdev %p req %p sector 0x%" PRIx64 " cap 0x%" PRIx64 ""
+ virtio_blk_handle_zone_append(void *vdev, void *req, int64_t sector) "vdev %p req %p, append sector 0x%" PRIx64 ""
  
- 
-@@ -275,4 +276,6 @@ int qio_channel_socket_set_send_buffer(QIOChannelSocket *ioc,
-                                        size_t size,
-                                        Error **errp);
- 
-+void qio_channel_socket_keep_nonblock(QIOChannel *ioc);
++# vhost-user-blk.c
++vhost_user_blk_start(void) ""
++vhost_user_blk_start_finish(void) ""
++vhost_user_blk_stop(void) ""
++vhost_user_blk_stop_finish(void) ""
++vhost_user_blk_connect(void) ""
++vhost_user_blk_connect_finish(void) ""
++vhost_user_blk_device_realize(void) ""
++vhost_user_blk_device_realize_finish(void) ""
 +
- #endif /* QIO_CHANNEL_SOCKET_H */
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 3b7ca924ff..cd93d7f180 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -462,9 +462,16 @@ static void qio_channel_socket_finalize(Object *obj)
+ # hd-geometry.c
+ hd_geometry_lchs_guess(void *blk, int cyls, int heads, int secs) "blk %p LCHS %d %d %d"
+ hd_geometry_guess(void *blk, uint32_t cyls, uint32_t heads, uint32_t secs, int trans) "blk %p CHS %u %u %u trans %d"
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index de7a810c93..c8bc2c78e6 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -31,6 +31,7 @@
+ #include "hw/virtio/virtio-access.h"
+ #include "system/system.h"
+ #include "system/runstate.h"
++#include "trace.h"
+ 
+ static const int user_feature_bits[] = {
+     VIRTIO_BLK_F_SIZE_MAX,
+@@ -137,6 +138,8 @@ static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+     int i, ret;
+ 
++    trace_vhost_user_blk_start();
++
+     if (!k->set_guest_notifiers) {
+         error_setg(errp, "binding does not support guest notifiers");
+         return -ENOSYS;
+@@ -192,6 +195,8 @@ static int vhost_user_blk_start(VirtIODevice *vdev, Error **errp)
+     }
+     s->started_vu = true;
+ 
++    trace_vhost_user_blk_start_finish();
++
+     return ret;
+ 
+ err_guest_notifiers:
+@@ -212,6 +217,8 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+     int ret;
+     bool force_stop = false;
+ 
++    trace_vhost_user_blk_stop();
++
+     if (!s->started_vu) {
+         return 0;
+     }
+@@ -233,6 +240,8 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+     }
+ 
+     vhost_dev_disable_notifiers(&s->dev, vdev);
++
++    trace_vhost_user_blk_stop_finish();
+     return ret;
  }
  
+@@ -340,6 +349,8 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+     VHostUserBlk *s = VHOST_USER_BLK(vdev);
+     int ret = 0;
  
-+void qio_channel_socket_keep_nonblock(QIOChannel *ioc)
-+{
-+    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
-+    sioc->keep_nonblock = true;
-+}
++    trace_vhost_user_blk_connect();
 +
-+
- #ifndef WIN32
- static void qio_channel_socket_copy_fds(struct msghdr *msg,
--                                        int **fds, size_t *nfds)
-+                                        int **fds, size_t *nfds, bool set_block)
- {
-     struct cmsghdr *cmsg;
- 
-@@ -497,8 +504,9 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
-                 continue;
-             }
- 
--            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
--            qemu_socket_set_block(fd);
-+            if (set_block) {
-+                qemu_socket_set_block(fd);
-+            }
- 
- #ifndef MSG_CMSG_CLOEXEC
-             qemu_set_cloexec(fd);
-@@ -556,7 +564,7 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
+     if (s->connected) {
+         return 0;
+     }
+@@ -365,6 +376,7 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
+         ret = vhost_user_blk_start(vdev, errp);
      }
  
-     if (fds && nfds) {
--        qio_channel_socket_copy_fds(&msg, fds, nfds);
-+        qio_channel_socket_copy_fds(&msg, fds, nfds, !sioc->keep_nonblock);
-     }
- 
++    trace_vhost_user_blk_connect_finish();
      return ret;
+ }
+ 
+@@ -455,6 +467,8 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+     int retries;
+     int i, ret;
+ 
++    trace_vhost_user_blk_device_realize();
++
+     if (!s->chardev.chr) {
+         error_setg(errp, "chardev is mandatory");
+         return;
+@@ -514,6 +528,7 @@ static void vhost_user_blk_device_realize(DeviceState *dev, Error **errp)
+     qemu_chr_fe_set_handlers(&s->chardev,  NULL, NULL,
+                              vhost_user_blk_event, NULL, (void *)dev,
+                              NULL, true);
++    trace_vhost_user_blk_device_realize_finish();
+     return;
+ 
+ virtio_err:
 -- 
 2.48.1
 
