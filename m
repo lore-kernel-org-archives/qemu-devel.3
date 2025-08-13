@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F005FC87FCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C17C87FCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 14:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umCmr-00074X-8v; Wed, 13 Aug 2025 10:49:09 -0400
+	id 1umCp7-00085G-IU; Wed, 13 Aug 2025 10:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1umCmo-00073v-LY; Wed, 13 Aug 2025 10:49:06 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ id 1umCon-0007sK-K2; Wed, 13 Aug 2025 10:51:12 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1umCme-0000du-QY; Wed, 13 Aug 2025 10:49:03 -0400
+ id 1umCoi-0001AL-NC; Wed, 13 Aug 2025 10:51:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1755096537; x=1786632537;
+ t=1755096665; x=1786632665;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=tIvV3E8n44J30cLpFV7os3SlUAlAuiUq0ZShXd5t0f0=;
- b=NG+oPkFwcZ/2GuRoshqE8nG3baxeHAPEWX0anprp1mihKdNi8N3NH04Z
- ykGHqZmyFJrv3nLrB7gfpx7kfZJvVzWFXAmtG2PBDAiVnPv//gPojUzNp
- oZZYjlctL19x+6u0kpw2oI+XwZ4BqMQIQIuS8o8bFieYG42N0UR1xUjTi
- KrT5kb7OgeCByQSDmXubwjLx06hsADc+54oLyVrBQPdBy3OfolbW4V9c5
- vbnpXswqQ8hr2biUBPet+T6PwAiJhi7UDPMv6G9m0U0KAD64IFo0udJ34
- QfFrICG22lPooiUJeu/ToCr4cnKpjZyIs+4/kcq+s5hIECUoPLBO/DZM8 w==;
-X-CSE-ConnectionGUID: frwVyH/nTKKLieqcCGipIQ==
-X-CSE-MsgGUID: 8ZexVYWCTJuPZplGO6KFPQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11520"; a="44972098"
-X-IronPort-AV: E=Sophos;i="6.17,285,1747724400"; d="scan'208";a="44972098"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Aug 2025 07:48:48 -0700
-X-CSE-ConnectionGUID: 9E34JwdMRbyyStpiqebsVQ==
-X-CSE-MsgGUID: yPXXwx5ISa2JjdsT7RHFnw==
+ bh=gvTBCTKZO2MqsAwy/vVLHs8YYKd5LMpW7mE5be4HA6M=;
+ b=cu7bC9oc5A45YZvHhbkjynSoDwztcfGobGmWcXNzMrEDZJKLMvfGpbS+
+ GGyi8OzK6m7TrlhhAmlhOSZiz5CdF/pc70aDBlOT73xi3sIH7xJ4WMqkU
+ o+sPapCy+zzYp8MRa4Ec02ZhrM0zwlvBkpMkbhLuQN1o7dSD8CHTxgSAH
+ Dxkro0TlSEw1fc5AXamBZfXQ+e0EE79r4EXfj4KhuIVyhfsBP+JxVFmnz
+ FPlq3lfOfMxHtCa4b4Lmlpr5me1f62flNHgkWUncfeUc9KcY4T56Exsv5
+ wLZM3r2daJU1ZTIJD/xXOCYSo5tg99/NfWEcT+omDy4K2u4M7MKIQeADb g==;
+X-CSE-ConnectionGUID: TzUMNncuQJKD89xPoBszjg==
+X-CSE-MsgGUID: qGBi/NcLQcONC3onV/wrUA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11520"; a="56417912"
+X-IronPort-AV: E=Sophos;i="6.17,285,1747724400"; d="scan'208";a="56417912"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Aug 2025 07:51:00 -0700
+X-CSE-ConnectionGUID: ZLLK08pcQg22lyNTe6Zhgw==
+X-CSE-MsgGUID: CpjqAvpJTOGKp+fRVfosSg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,285,1747724400"; d="scan'208";a="171735616"
+X-IronPort-AV: E=Sophos;i="6.17,285,1747724400"; d="scan'208";a="166858511"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 13 Aug 2025 07:48:46 -0700
-Date: Wed, 13 Aug 2025 23:10:27 +0800
+ by fmviesa008.fm.intel.com with ESMTP; 13 Aug 2025 07:50:56 -0700
+Date: Wed, 13 Aug 2025 23:12:38 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Junjie Mao <junjie.mao@hotmail.com>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
- Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ "open list:ARM SMMU <qemu-arm@nongnu.org>," <qemu-devel@nongnu.org>,
+ qemu-rust@nongnu.org, Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Chuanxiao Dong <chuanxiao.dong@intel.com>
 Subject: Re: [RFC 16/26] memory: Make flatview_do_translate() return a
  pointer to MemoryRegionSection
-Message-ID: <aJyq4396vM2c+5qQ@intel.com>
+Message-ID: <aJyrZi6Vlwe5RYMb@intel.com>
 References: <20250807123027.2910950-1-zhao1.liu@intel.com>
  <20250807123027.2910950-17-zhao1.liu@intel.com>
  <beab841b-9c69-43d2-b996-879eee9e1120@redhat.com>
  <aJtgIBgl8JzDsJ1O@intel.com>
- <CABgObfbgX3yiBkyc0aH-6WXLf4bdEOgvY=m2AcPQXAXdruSkNQ@mail.gmail.com>
+ <CAAjaMXaHQs=oKGRGDwpvVCmRH0xLNZZCTvEaeWJ8x0znBCiY7A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABgObfbgX3yiBkyc0aH-6WXLf4bdEOgvY=m2AcPQXAXdruSkNQ@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <CAAjaMXaHQs=oKGRGDwpvVCmRH0xLNZZCTvEaeWJ8x0znBCiY7A@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -92,42 +92,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 12, 2025 at 09:23:59PM +0200, Paolo Bonzini wrote:
-> Date: Tue, 12 Aug 2025 21:23:59 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [RFC 16/26] memory: Make flatview_do_translate() return a
->  pointer to MemoryRegionSection
+> Yes, the usual approach is to have a Ref and a RefMut type e.g. Opaque and
+> OpaqueMut, and the OpaqueMut type can dereference immutably as an Opaque.
 > 
-> Il mar 12 ago 2025, 17:17 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+> See std::cell::{Ref, RefMut} for inspiration.
 > 
-> > But look closer to Opaque<>, it has 2 safe methods: as_mut_ptr() &
-> > raw_get().
-> >
-> > These 2 methods indicate that the T pointed by Qpaque<T> is mutable,
-> > which has the conflict with the original `*const
-> > bindings::MemoryRegionSection`.
-> >
-> > So from this point, it seems unsafe to use Qpaque<> on this case.
-> >
-> 
-> Yes, it's similar to NonNull<>. I am not sure that you need Opaque<> here;
-> since the pointer is const, maybe you can just dereference it to a
-> &bindings::MemoryRegionSection. Is it useful to have the Opaque<> wrapper
-> here?
 
-I agree. Opaque<> is not necessary here. We can have a simple wrapper:
+Thanks! I'll dorp Opaque directly for this case. If there're more similar
+cases, then we can have a OpaqueRef<>.
 
-pub struct MemoryRegionSection(*const bindings::MemoryRegionSection)
-
-or
-
-pub struct MemoryRegionSection(NonNull<bindings::MemoryRegionSection>)
-with immutable only use.
-
-In future, if there're more similar case, then we can have a OpaqueRef<>
-like Manos suggested.
-
-Thanks,
+Regards,
 Zhao
 
 
