@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94D3C87FCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 10:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9260CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 10:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1um8kI-0008NK-5U; Wed, 13 Aug 2025 06:30:14 -0400
+	id 1um8kN-00005H-Of; Wed, 13 Aug 2025 06:30:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1um8kG-0008LD-NY
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 06:30:12 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1um8kM-0008VQ-2A
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 06:30:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1um8kA-0007rX-7R
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 06:30:12 -0400
+ (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1um8kE-0007s5-Cr
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 06:30:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755081004;
+ s=mimecast20190719; t=1755081008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9YdYYrgl8h0ZA+6IqV7j4vwtegOU3nog9+eLo3T5ZeE=;
- b=bXe2m3g5+YYHfrhl5PXYM/l2XS3gF+QzXO6CZO2mi/R4X/GVvtKjPVUXil/l5DIeFG5iCB
- fYLnwg1wLAbxtlT+aWg4zC9D0mO4nqs+3Lb8Q1msAc5TaxSD/CiGx5+PiRv8t4yHXtSxGG
- uNUrQsXf0l06IM9vUhdZB/mGt6jfqP0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PHPIfm2gD5x7SK9k9ayiZrFhwzAZ5Cctq1V4SO+lO4I=;
+ b=gTxAglf5YyVU7wwsyZZndf66Bs7HlcCkHTaYxI8prF9StQuPDL6IgBgC9q8IL3hHLxQX7d
+ +vJWhtoBnMS9a2RcmjpMR4oJ0JhSxzDaLnpWYSPJ3T+mS3mvVq9tZvDJ0vWSMYM5lh5b7L
+ M2KeWnUfhsS8/I75mUwGy2isbdSN7q8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-453-1L5O2OdVMtGUbu9zgCV0yw-1; Wed,
- 13 Aug 2025 06:30:03 -0400
-X-MC-Unique: 1L5O2OdVMtGUbu9zgCV0yw-1
-X-Mimecast-MFC-AGG-ID: 1L5O2OdVMtGUbu9zgCV0yw_1755081002
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-ApQgirF1OHaP6FvjmWhUUw-1; Wed,
+ 13 Aug 2025 06:30:07 -0400
+X-MC-Unique: ApQgirF1OHaP6FvjmWhUUw-1
+X-Mimecast-MFC-AGG-ID: ApQgirF1OHaP6FvjmWhUUw_1755081006
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 693371800296; Wed, 13 Aug 2025 10:30:02 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F7911800345; Wed, 13 Aug 2025 10:30:06 +0000 (UTC)
 Received: from gerbillo.redhat.com (unknown [10.45.224.219])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E140619560AB; Wed, 13 Aug 2025 10:29:58 +0000 (UTC)
+ id EAED51955E88; Wed, 13 Aug 2025 10:30:02 +0000 (UTC)
 From: Paolo Abeni <pabeni@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -53,10 +53,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v5 08/13] qmp: update virtio features map to support extended
- features
-Date: Wed, 13 Aug 2025 12:28:21 +0200
-Message-ID: <91ad4a0f8c1372b6c9405b5b861ce3e86b5d975a.1755080614.git.pabeni@redhat.com>
+Subject: [PATCH v5 09/13] vhost-backend: implement extended features support
+Date: Wed, 13 Aug 2025 12:28:22 +0200
+Message-ID: <4361056cae3adf74132d6d24a4b8afe895e2f31a.1755080614.git.pabeni@redhat.com>
 In-Reply-To: <cover.1755080613.git.pabeni@redhat.com>
 References: <cover.1755080613.git.pabeni@redhat.com>
 MIME-Version: 1.0
@@ -87,320 +86,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the VirtioDeviceFeatures struct with an additional u64
-to track unknown features in the 64-127 bit range and decode
-the full virtio features spaces for vhost and virtio devices.
+Leverage the kernel extended features manipulation ioctls(), if
+available, and fallback to old ops otherwise. Error out when setting
+extended features but kernel support is not available.
 
-Also add entries for the soon-to-be-supported virtio net GSO over
-UDP features.
+Note that extended support for get/set backend features is not needed,
+as the only feature that can be changed belongs to the 64 bit range.
 
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 ---
 v3 -> v4:
-  - cleanup unknown features init
-  - update QMP example and doc accordingly
   - use new virtio_features macro names
 
-v2 -> v3:
-  - unknown-dev-features-dword2 -> unknown-dev-features2
-  - _array -> _ex
-  - fixed typos in entries description
-
 v1 -> v2:
-  - uint128_t -> uint64_t[]
+  - synced with kernel ioctl changes
 ---
- hw/virtio/virtio-hmp-cmds.c |  3 +-
- hw/virtio/virtio-qmp.c      | 91 +++++++++++++++++++++++++------------
- hw/virtio/virtio-qmp.h      |  3 +-
- qapi/virtio.json            |  9 +++-
- 4 files changed, 74 insertions(+), 32 deletions(-)
+ hw/virtio/vhost-backend.c | 62 ++++++++++++++++++++++++++++++++-------
+ 1 file changed, 51 insertions(+), 11 deletions(-)
 
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index 7d8677bcf0..1daae482d3 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -74,7 +74,8 @@ static void hmp_virtio_dump_features(Monitor *mon,
-     }
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
+index 833804dd40..4367db0d95 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-backend.c
+@@ -20,6 +20,11 @@
+ #include <linux/vhost.h>
+ #include <sys/ioctl.h>
  
-     if (features->has_unknown_dev_features) {
--        monitor_printf(mon, "  unknown-features(0x%016"PRIx64")\n",
-+        monitor_printf(mon, "  unknown-features(0x%016"PRIx64"%016"PRIx64")\n",
-+                       features->unknown_dev_features2,
-                        features->unknown_dev_features);
-     }
- }
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 3b6377cf0d..502c9ae930 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -325,6 +325,20 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
-     FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
-             "VHOST_USER_F_PROTOCOL_FEATURES: Vhost-user protocol features "
-             "negotiation supported"),
-+    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO, \
-+            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
-+            "UDP tunnel packets"),
-+    FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, \
-+            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
-+            "UDP tunnel packets requiring checksum offload for the outer "
-+            "header"),
-+    FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, \
-+            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO: Device can receive GSO over "
-+            "UDP tunnel packets"),
-+    FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO_CSUM, \
-+            "VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO: Device can receive GSO over "
-+            "UDP tunnel packets requiring checksum offload for the outer "
-+            "header"),
-     { -1, "" }
- };
- #endif
-@@ -510,6 +524,24 @@ static const qmp_virtio_feature_map_t virtio_gpio_feature_map[] = {
-         list;                                            \
-     })
- 
-+#define CONVERT_FEATURES_EX(type, map, bitmap)           \
-+    ({                                                   \
-+        type *list = NULL;                               \
-+        type *node;                                      \
-+        for (i = 0; map[i].virtio_bit != -1; i++) {      \
-+            bit = map[i].virtio_bit;                     \
-+            if (!virtio_has_feature_ex(bitmap, bit)) {   \
-+                continue;                                \
-+            }                                            \
-+            node = g_new0(type, 1);                      \
-+            node->value = g_strdup(map[i].feature_desc); \
-+            node->next = list;                           \
-+            list = node;                                 \
-+            virtio_clear_feature_ex(bitmap, bit);        \
-+        }                                                \
-+        list;                                            \
-+    })
++struct vhost_features {
++    uint64_t count;
++    uint64_t features[VIRTIO_FEATURES_NU64S];
++};
 +
- VirtioDeviceStatus *qmp_decode_status(uint8_t bitmap)
+ static int vhost_kernel_call(struct vhost_dev *dev, unsigned long int request,
+                              void *arg)
  {
-     VirtioDeviceStatus *status;
-@@ -545,109 +577,112 @@ VhostDeviceProtocols *qmp_decode_protocols(uint64_t bitmap)
-     return vhu_protocols;
+@@ -182,12 +187,6 @@ static int vhost_kernel_get_vring_worker(struct vhost_dev *dev,
+     return vhost_kernel_call(dev, VHOST_GET_VRING_WORKER, worker);
  }
  
--VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap)
-+VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
-+                                          const uint64_t *bmap)
+-static int vhost_kernel_set_features(struct vhost_dev *dev,
+-                                     uint64_t features)
+-{
+-    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &features);
+-}
+-
+ static int vhost_kernel_set_backend_cap(struct vhost_dev *dev)
  {
-+    uint64_t bitmap[VIRTIO_FEATURES_NU64S];
-     VirtioDeviceFeatures *features;
-     uint64_t bit;
-     int i;
- 
-+    virtio_features_copy(bitmap, bmap);
-     features = g_new0(VirtioDeviceFeatures, 1);
-     features->has_dev_features = true;
- 
-     /* transport features */
--    features->transports = CONVERT_FEATURES(strList, virtio_transport_map, 0,
--                                            bitmap);
-+    features->transports = CONVERT_FEATURES_EX(strList, virtio_transport_map,
-+                                               bitmap);
- 
-     /* device features */
-     switch (device_id) {
- #ifdef CONFIG_VIRTIO_SERIAL
-     case VIRTIO_ID_CONSOLE:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_serial_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_serial_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_BLK
-     case VIRTIO_ID_BLOCK:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_blk_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_blk_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_GPU
-     case VIRTIO_ID_GPU:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_gpu_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_gpu_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_NET
-     case VIRTIO_ID_NET:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_net_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_net_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_SCSI
-     case VIRTIO_ID_SCSI:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_scsi_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_scsi_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_BALLOON
-     case VIRTIO_ID_BALLOON:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_balloon_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_balloon_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_IOMMU
-     case VIRTIO_ID_IOMMU:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_iommu_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_iommu_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_INPUT
-     case VIRTIO_ID_INPUT:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_input_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_input_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VHOST_USER_FS
-     case VIRTIO_ID_FS:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_fs_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_fs_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VHOST_VSOCK
-     case VIRTIO_ID_VSOCK:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_vsock_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_vsock_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_CRYPTO
-     case VIRTIO_ID_CRYPTO:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_crypto_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_crypto_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_MEM
-     case VIRTIO_ID_MEM:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_mem_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_mem_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_I2C_ADAPTER
-     case VIRTIO_ID_I2C_ADAPTER:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_i2c_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_i2c_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VIRTIO_RNG
-     case VIRTIO_ID_RNG:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_rng_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_rng_feature_map, bitmap);
-         break;
- #endif
- #ifdef CONFIG_VHOST_USER_GPIO
-     case VIRTIO_ID_GPIO:
-         features->dev_features =
--            CONVERT_FEATURES(strList, virtio_gpio_feature_map, 0, bitmap);
-+            CONVERT_FEATURES_EX(strList, virtio_gpio_feature_map, bitmap);
-         break;
- #endif
-     /* No features */
-@@ -680,10 +715,9 @@ VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap)
-         g_assert_not_reached();
-     }
- 
--    features->has_unknown_dev_features = bitmap != 0;
--    if (features->has_unknown_dev_features) {
--        features->unknown_dev_features = bitmap;
--    }
-+    features->has_unknown_dev_features = !virtio_features_empty(bitmap);
-+    features->unknown_dev_features = bitmap[0];
-+    features->unknown_dev_features2 = bitmap[1];
- 
-     return features;
+     uint64_t features;
+@@ -210,10 +209,51 @@ static int vhost_kernel_set_backend_cap(struct vhost_dev *dev)
+     return 0;
  }
-@@ -743,11 +777,11 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-     status->device_id = vdev->device_id;
-     status->vhost_started = vdev->vhost_started;
-     status->guest_features = qmp_decode_features(vdev->device_id,
--                                                 vdev->guest_features);
-+                                                 vdev->guest_features_ex);
-     status->host_features = qmp_decode_features(vdev->device_id,
--                                                vdev->host_features);
-+                                                vdev->host_features_ex);
-     status->backend_features = qmp_decode_features(vdev->device_id,
--                                                   vdev->backend_features);
-+                                                 vdev->backend_features_ex);
  
-     switch (vdev->device_endian) {
-     case VIRTIO_DEVICE_ENDIAN_LITTLE:
-@@ -785,11 +819,12 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-         status->vhost_dev->nvqs = hdev->nvqs;
-         status->vhost_dev->vq_index = hdev->vq_index;
-         status->vhost_dev->features =
--            qmp_decode_features(vdev->device_id, hdev->features);
-+            qmp_decode_features(vdev->device_id, hdev->features_ex);
-         status->vhost_dev->acked_features =
--            qmp_decode_features(vdev->device_id, hdev->acked_features);
-+            qmp_decode_features(vdev->device_id, hdev->acked_features_ex);
-         status->vhost_dev->backend_features =
--            qmp_decode_features(vdev->device_id, hdev->backend_features);
-+            qmp_decode_features(vdev->device_id, hdev->backend_features_ex);
+-static int vhost_kernel_get_features(struct vhost_dev *dev,
+-                                     uint64_t *features)
++static int vhost_kernel_set_features(struct vhost_dev *dev,
++                                     const uint64_t *features)
+ {
+-    return vhost_kernel_call(dev, VHOST_GET_FEATURES, features);
++    struct vhost_features farray;
++    bool extended_in_use;
++    int r;
 +
-         status->vhost_dev->protocol_features =
-             qmp_decode_protocols(hdev->protocol_features);
-         status->vhost_dev->max_queues = hdev->max_queues;
-diff --git a/hw/virtio/virtio-qmp.h b/hw/virtio/virtio-qmp.h
-index 245a446a56..e0a1e49035 100644
---- a/hw/virtio/virtio-qmp.h
-+++ b/hw/virtio/virtio-qmp.h
-@@ -18,6 +18,7 @@
- VirtIODevice *qmp_find_virtio_device(const char *path);
- VirtioDeviceStatus *qmp_decode_status(uint8_t bitmap);
- VhostDeviceProtocols *qmp_decode_protocols(uint64_t bitmap);
--VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id, uint64_t bitmap);
-+VirtioDeviceFeatures *qmp_decode_features(uint16_t device_id,
-+                                          const uint64_t *bitmap);
++    farray.count = VIRTIO_FEATURES_NU64S;
++    virtio_features_copy(farray.features, features);
++    extended_in_use = virtio_features_use_ex(farray.features);
++
++    /*
++     * Can't check for ENOTTY: for unknown ioctls the kernel interprets
++     * the argument as a virtio queue id and most likely errors out validating
++     * such id, instead of reporting an unknown operation.
++     */
++    r = vhost_kernel_call(dev, VHOST_SET_FEATURES_ARRAY, &farray);
++    if (!r) {
++        return 0;
++    }
++
++    if (extended_in_use) {
++        error_report("Trying to set extended features without kernel support");
++        return -EINVAL;
++    }
++    return vhost_kernel_call(dev, VHOST_SET_FEATURES, &farray.features[0]);
++}
++
++static int vhost_kernel_get_features(struct vhost_dev *dev, uint64_t *features)
++{
++    struct vhost_features farray;
++    int r;
++
++    farray.count = VIRTIO_FEATURES_NU64S;
++    r = vhost_kernel_call(dev, VHOST_GET_FEATURES_ARRAY, &farray);
++    if (r) {
++        memset(&farray, 0, sizeof(farray));
++        r = vhost_kernel_call(dev, VHOST_GET_FEATURES, &farray.features[0]);
++    }
++    if (r) {
++        return r;
++    }
++
++    virtio_features_copy(features, farray.features);
++    return 0;
+ }
  
- #endif
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 9d652fe4a8..05295ab665 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -247,6 +247,7 @@
- #              },
- #              "host-features": {
- #                  "unknown-dev-features": 1073741824,
-+#                  "unknown-dev-features2": 0,
- #                  "dev-features": [],
- #                  "transports": [
- #                      "VIRTIO_RING_F_EVENT_IDX: Used & avail. event fields enabled",
-@@ -490,14 +491,18 @@
- #     unique features)
- #
- # @unknown-dev-features: Virtio device features bitmap that have not
--#     been decoded
-+#     been decoded (bits 0-63)
-+#
-+# @unknown-dev-features2: Virtio device features bitmap that have not
-+#     been decoded (bits 64-127) (since 10.2)
- #
- # Since: 7.2
- ##
- { 'struct': 'VirtioDeviceFeatures',
-   'data': { 'transports': [ 'str' ],
-             '*dev-features': [ 'str' ],
--            '*unknown-dev-features': 'uint64' } }
-+            '*unknown-dev-features': 'uint64',
-+            '*unknown-dev-features2': 'uint64' } }
- 
- ##
- # @VirtQueueStatus:
+ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+@@ -341,8 +381,8 @@ const VhostOps kernel_ops = {
+         .vhost_attach_vring_worker = vhost_kernel_attach_vring_worker,
+         .vhost_new_worker = vhost_kernel_new_worker,
+         .vhost_free_worker = vhost_kernel_free_worker,
+-        .vhost_set_features = vhost_kernel_set_features,
+-        .vhost_get_features = vhost_kernel_get_features,
++        .vhost_set_features_ex = vhost_kernel_set_features,
++        .vhost_get_features_ex = vhost_kernel_get_features,
+         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+         .vhost_set_owner = vhost_kernel_set_owner,
+         .vhost_get_vq_index = vhost_kernel_get_vq_index,
 -- 
 2.50.1
 
