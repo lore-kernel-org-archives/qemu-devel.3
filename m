@@ -4,92 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D68A1CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 15:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49053CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:00:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umD2l-0004PX-53; Wed, 13 Aug 2025 11:05:35 -0400
+	id 1umDsg-00086R-DH; Wed, 13 Aug 2025 11:59:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umD2j-0004Ow-2M
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 11:05:33 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <dan.carpenter@linaro.org>)
+ id 1umDse-000855-4E
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 11:59:12 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umD2f-0002yo-Pw
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 11:05:31 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45a15fd04d9so7685305e9.1
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 08:05:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dan.carpenter@linaro.org>)
+ id 1umDsU-0001NQ-LA
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 11:59:10 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3b78a034f17so5158962f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 08:58:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755097524; x=1755702324; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8zFqV9YfUCTYdu44lZXIcCqfnefFSaIKoC3NkPezqGE=;
- b=TkqFZZUIfKCZ//o0i0UXnZ4VRpIK6ExzOIPYWWQiam38xg22tc8VE+EJUbark7zlQU
- h1vmS5Oy8KyetjBs8hs7mmhc2/mYB2XUBH75cS9sbQLxDO2dLc5BK9RIgiiqMCaugPt4
- OEd/WiEjo2GUi4R+tGq/522jK3Sn1Q4xnD4cPiA80hOhxku7UVqao/Gw2XhixFPaCEw7
- UJkvzdPNSy3CGpPS1+2kmG5kar+s84XOtUrALwI53sB2K3YdVq3O9sSjDFeoZSMmDhyV
- xLJbXC2jE4hx4kInIbdB+E4AWVEMWGvMp/x8ghRVJdu8GfhcB/o1NYJc49qZoOE6AHe7
- XyqA==
+ d=linaro.org; s=google; t=1755100733; x=1755705533; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cp6XeG0MyOuXPRX2EUNgzHzmYyd18LTitGQ6mKDCv5k=;
+ b=HWiRPA1+3NF5zE51+U9ZIBHoOHIJSBS703O6TBdZlrS4gg+l2i/eGCRm7hmm0U9g8+
+ vqw+arHy/mA64RVFeKYIeJzt94cboWYnb/2dCcjzEGhtp8BkPyTQ7/qwUk47rltECqol
+ S4N5zzeWq39W6j3CRA6azDFBHyMsPjabMba/T9Ed40vZyEo/M2j3dSerXlhr5z2ps9tf
+ IQ6NgXTp3vVQ6WIUaQO1gqYYkrLeWMSEd+fJCLgnBtU7wfRKSlSrBnzhFy+C7RySyooz
+ wOmdcxhUjbrZts8fCX2PwTVJb478CA1pOc0Wus9T/ceoJtAa9W3Pt25ftOXDtm9TSyWr
+ yIYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755097524; x=1755702324;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8zFqV9YfUCTYdu44lZXIcCqfnefFSaIKoC3NkPezqGE=;
- b=R41OE7WujfSY84mJWx2bFpux515eOLE6XBPrgbj2//JaKTQIvGAvBcYzFr/Z6LQPwu
- wl7jxAxsvYgbBCsTnaVRcA4/tuI83m89pVwRvGqHVIFdt3OYJ2qj+xuJaQzVF8j2Z5zQ
- tt9MiTZFL4PczyzEaE88jo+yKyhk8knW/kESPGq3U5eD4Abc5JwTsvvqowKuns/KOh+D
- v0WvSW4Ve2IlVC5IHJdYKt/NOQXJy48wPF11plNUzFiYvFE3Pc2nMwewasNipbjFwu5W
- OyyrkOKzHqd3uYbxJD1YU6B6Sm3/Ap7KHHL7Wf3t718jZoMruA3+0xQ8Io9pBIYHA3XK
- V8GQ==
-X-Gm-Message-State: AOJu0Yx4jyMURvGR8lOjY/ZJdcS0xpr3QWBpbuN/NgOQU5faUzIhEwUA
- k2Jtt/AsNvDRkOsh0uVJN9fOvw5DNHab5SVVA93dPfnISzvBhHlRb0bFI8wdXdPsbxZBz4ajFB1
- 1OUZS
-X-Gm-Gg: ASbGncuN8fi2Ekyn4YSndzkfVkkjMOPuYuAcyxzVY1iAjUQQfDQ+hP6VH1nj8/721MI
- PN6q1mEPxT4JO9TskOReg53iAzLya7N6jifBd3UaMiB0ZMBZBGM0KP4DzlJAJs6Vl4hkQfpWI5z
- Am51uiEjWnqknVWWAYNkQ0yNIOfLo3Ljp7ZcKiO/0WhfuX+6i3L0WNd3UZBYby65CKUrSZUHdFc
- SV8db//aJezoJzEECgz4zlS7mEJ5fNXTTg6OsdlXRBmS8/0l7ZUdR+uXBJdP0HUAXlHkeYRlpi9
- 7r9SSRstXO0pYqYcSmjG9Lifgw856DiPiaak9wsSY9Vh7D+0exGpVzju6pooK7MNLvCDlSK2mC3
- YjxgUorpUcv7Vn/D85OPYDxca+ritJuo4FTL+sZUbUd5k2SLOING2WJONWVQ4SEnfJA==
-X-Google-Smtp-Source: AGHT+IF8XHg5TZlOM5SAMjEcxXUwrVfHdTZWgpjN6hlCDNihp0uNjx7LYZCG4mmjSm93J0SJKDzjEA==
-X-Received: by 2002:a05:600c:1c9a:b0:456:189e:223a with SMTP id
- 5b1f17b1804b1-45a19ad8354mr11567255e9.10.1755097523905; 
- Wed, 13 Aug 2025 08:05:23 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45a1a50b9e6sm6768665e9.6.2025.08.13.08.05.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Aug 2025 08:05:23 -0700 (PDT)
-Message-ID: <a57b581b-6cd7-478c-ab2c-59111515c1da@linaro.org>
-Date: Wed, 13 Aug 2025 17:05:22 +0200
+ d=1e100.net; s=20230601; t=1755100733; x=1755705533;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Cp6XeG0MyOuXPRX2EUNgzHzmYyd18LTitGQ6mKDCv5k=;
+ b=TyzudYseQSvp8tyZEnB7E0Zok2G/ei6MCETQHUnhZ04k2YlG6Gxhtzu0S5rnuRPfmg
+ H7xWE4oZ7TkbwXJEMnoh2L0AfZ2u41rUrwv8bCI+Z/YakLyF3kENxKlM9/NkMRBqGdxg
+ Oo5XNEHbKxZ72p1dyQKLGBCaBHdMFpRGzBYj74pEueNzdACliu4jsd8Q0siwhb3WZrqd
+ FN3wuetCYSG4hqw14/29ew93WOI3Lpo5hU7+P/POe8f6Z1w8L2AuVh86zR6Xd02YvZZd
+ dTD6E5PxF9GePswKgjCMaDkux8cizpl0amw0gWKoe+tj+DzPEXDio7iUyHxscEL/JBpX
+ pY7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTRe5YrQ21aKiZ2IKPwyzveqgxOi5hNx/VQTQ5gOA9Dqt9G+cUvKR/1iMLyHtZgFmEqm8EA/O6LQcN@nongnu.org
+X-Gm-Message-State: AOJu0YwG0bpb6KjWK+rEZge/mPaqJ4SL47BCjvYX+dB+OQHUZHvC+dcK
+ 3Z1pyVaGckAtPgtdLXVjp7/RwMAVdsAWBVTNb61og7WitkSbk7vv7/n7llHc87mLyEE=
+X-Gm-Gg: ASbGnctRQ4Gf8Kixv8i38wP7BN4I9X9d/VnsXTApCIiPhvwKi+0RhSwPGJXLwX307z2
+ NZJy4DNopvI+unNXXV4Bk/TJyofSdwdjFG4iqTO5lUy5HeNsQgDzslLO5a3rQc1c2yePO2LxbNL
+ jn7IPmXLjwoz0zWIUhkfgQu+oHxiyiEBquLSmTDS6AmU6t4in0pkxQ2mhM4F8ulLxt2EQ0GRjoa
+ mAwR7EtyzLgqf76jDHdUZBmdHLvciUoC0TdVLyr8q9EDDF+obhySFjwovWziWPBSjoNBrWxG5Ht
+ mJ7/opX2X2aopOIqznfqA69YOgrprq92vyCpf1jjX/HaEcVWS+lvvWAm7x1EM31QDoln5M8rzRA
+ jPw/kH0Z947DqxOjNoi9ZA31FirICTNcUt6FHmz+zkrI=
+X-Google-Smtp-Source: AGHT+IFmDnHCSl5CKkyh/D1IvMDkhgbQzh6CQ86Hu6D5gyD/dtG5m2liXMYcw3pmw6tZ+PFrvCebxA==
+X-Received: by 2002:a5d:5f95:0:b0:3b7:8dd7:55ad with SMTP id
+ ffacd0b85a97d-3b917f14804mr2882432f8f.39.1755100733462; 
+ Wed, 13 Aug 2025 08:58:53 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+ by smtp.gmail.com with UTF8SMTPSA id
+ ffacd0b85a97d-3b91b05b28fsm1789186f8f.21.2025.08.13.08.58.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Aug 2025 08:58:53 -0700 (PDT)
+Date: Wed, 13 Aug 2025 18:58:49 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>, Anders Roxell <anders.roxell@linaro.org>,
+ Ben Copeland <benjamin.copeland@linaro.org>,
+ LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
+ Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
+ linux-perf-users@vger.kernel.org, Zhang Yi <yi.zhang@huaweicloud.com>,
+ Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
+ linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>,
+ Zhang Yi <yi.zhang@huawei.com>, Theodore Ts'o <tytso@mit.edu>,
+ Baokun Li <libaokun1@huawei.com>
+Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
+Message-ID: <aJy2OVhg4RUYbHHR@stanley.mountain>
+References: <20250812173419.303046420@linuxfoundation.org>
+ <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
+ <2025081300-frown-sketch-f5bd@gregkh>
+ <CA+G9fYuEb7Y__CVHxZ8VkWGqfA4imWzXsBhPdn05GhOandg0Yw@mail.gmail.com>
+ <2025081311-purifier-reviver-aeb2@gregkh>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/container: set error on cpr failure
-To: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Zhenzhong Duan
- <zhenzhong.duan@intel.com>, Peter Xu <peterx@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-References: <1755094667-281419-1-git-send-email-steven.sistare@oracle.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1755094667-281419-1-git-send-email-steven.sistare@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2025081311-purifier-reviver-aeb2@gregkh>
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=dan.carpenter@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,53 +122,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/8/25 16:17, Steve Sistare wrote:
-> Set an error message if vfio_cpr_ram_discard_register_listener fails so
-> the fail label gets a valid error object.
+On Wed, Aug 13, 2025 at 04:53:37PM +0200, Greg Kroah-Hartman wrote:
+> On Wed, Aug 13, 2025 at 08:01:51PM +0530, Naresh Kamboju wrote:
+> > Hi Greg,
+> > 
+> > > > 2)
+> > > >
+> > > > The following list of LTP syscalls failure noticed on qemu-arm64 with
+> > > > stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
+> > > >
+> > > > Most failures report ENOSPC (28) or mkswap errors, which may be related
+> > > > to disk space handling in the 64K page configuration on qemu-arm64.
+> > > >
+> > > > The issue is reproducible on multiple runs.
+> > > >
+> > > > * qemu-arm64, ltp-syscalls - 64K page size test failures list,
+> > > >
+> > > >   - fallocate04
+> > > >   - fallocate05
+> > > >   - fdatasync03
+> > > >   - fsync01
+> > > >   - fsync04
+> > > >   - ioctl_fiemap01
+> > > >   - swapoff01
+> > > >   - swapoff02
+> > > >   - swapon01
+> > > >   - swapon02
+> > > >   - swapon03
+> > > >   - sync01
+> > > >   - sync_file_range02
+> > > >   - syncfs01
+> > > >
+> > > > Reproducibility:
+> > > >  - 64K config above listed test fails
+> > > >  - 4K config above listed test pass.
+> > > >
+> > > > Regression Analysis:
+> > > > - New regression? yes
+> > >
+> > > Regression from 6.16?  Or just from 6.15.y?
+> > 
+> > Based on available data, the issue is not present in v6.16 or v6.15.
+> > 
+> > Anders, bisected this regression and found,
+> > 
+> >   ext4: correct the reserved credits for extent conversion
+> >     [ Upstream commit 95ad8ee45cdbc321c135a2db895d48b374ef0f87 ]
+> > 
+> > Report lore link,
+> > 
+> > https://lore.kernel.org/stable/CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com/
 > 
-> Reported-by: Cédric Le Goater <clg@redhat.com>
-> Fixes: eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr failure")
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->   hw/vfio/listener.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index f498e23..5ebafaa 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -574,6 +574,9 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
->               vfio_ram_discard_register_listener(bcontainer, section);
->           } else if (!vfio_cpr_ram_discard_register_listener(bcontainer,
->                                                              section)) {
+> Great, and that's also affecting 6.17-rc1 so we are "bug compatible"?
+> :)
 
-Looking at commit 8947d7fc4e7 ("memory: Introduce RamDiscardManager for
-RAM memory regions"):
+Lol.
 
-     typedef int (*NotifyRamPopulate)(RamDiscardListener *rdl,
-                                      MemoryRegionSection *section);
+regards,
+dan carpenter
 
-     /*
-      * @notify_populate:
-      *
-      * Notification that previously discarded memory is about to get
-      * populated.
-      * Listeners are able to object. If any listener objects, already
-      * successfully notified listeners are notified about a discard
-      * again.
-      *
-      * @rdl: the #RamDiscardListener getting notified
-      * @section: the #MemoryRegionSection to get populated. The section
-      *           is aligned within the memory region to the minimum
-      *           granularity unless it would exceed the registered
-      *           section.
-      *
-      * Returns 0 on success. If the notification is rejected by the
-      * listener, an error is returned.
-      */
-     NotifyRamPopulate notify_populate;
-
-Not sure what error is returned by this prototype (errno?), but if what
-error is not relevant, maybe it should take an Error** parameter and
-return a boolean value instead.
 
