@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA149CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 07:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D99CA0EC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 07:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1um5mn-0000Mh-Ld; Wed, 13 Aug 2025 03:20:37 -0400
+	id 1um5nE-0000Wk-RF; Wed, 13 Aug 2025 03:21:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um5mg-0000LR-Nz
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 03:20:31 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um5n2-0000VK-83
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 03:20:53 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um5mU-0005IM-Ol
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 03:20:27 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3b792b0b829so6171976f8f.3
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 00:20:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um5mz-0005QH-Vi
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 03:20:51 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-458b885d6eeso40146375e9.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 00:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755069610; x=1755674410; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755069648; x=1755674448; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WQTtxtQdlX1t1TsEgSAiwwjV/2WtLrcIDCPiTf8TT00=;
- b=CfncDKN/x8F1qHQm9Q8AZOiviQJ2VdsPip7uTsI2WWLARZ7r0M9X8ho0sqB1L0KFNb
- x1PaaBz71RbwXM+scoaokFEFVSAOCieZShWLW4AMZCKwG/7RvNpX3zZ3yg716K5wFj44
- TPmcv+lAFMGhH8Foxi4fs6/vKweQSxO2C6epCfrX0F69b6zol+H4Pfu+Sb0bKEQ9tiC+
- /Fx1LTxMvPi/p76boSn6X+cbEV47eA7I53cH4ydYNAYPuDNxVQdXJk7rVFvmmrWaQ5sT
- 5++Q7bu/91MCtqjuhtNbD/4i+nsCdE7qs8tQ9f5WzaWg8UbQVgygXjgddvaPkDJwuIJ9
- +cHA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2Zhj4lI0OABTDGI89H8lBd5DvpZBOYeRtqOec8Dl59M=;
+ b=m1wvpmDIKxCgxo9EkeOPLrXi9t3yJuqlJip24yKfTLxQy4PJLflJ364Ux+hkAL4R3E
+ RDXoXeI+yrTGp6r1rlrqo3pc3kRYa6GvafaWDuscwZ1WwFe16HN/epv6Hl7nij59rKKP
+ 4pQT2+nsdzj3d1FkXwwdMiBBzXaUNm0oy39ULDoFTkAwauJUFkn50BWlKBu08NCKHaKS
+ 5iyHRNl7jvkGF06MkVKFAJvPyb5cKnSXO+MV6nPyWOiLaMTCps5Z3VJCfCK22ORNeHMi
+ grjsydZgN0paAnBCZNSTwcjziFVUXtcn5QmG/X847n+buytteCobqo6MO5td+i1b7Mku
+ vQiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755069610; x=1755674410;
+ d=1e100.net; s=20230601; t=1755069648; x=1755674448;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WQTtxtQdlX1t1TsEgSAiwwjV/2WtLrcIDCPiTf8TT00=;
- b=uXaEsgqB2NIPdyvcIFUR/dVypaCGiOLIQ3Zzupq1B0ZFYcCazBz+axoqGeIAcnnO0T
- iZ8Y3kGAUZIhIrCPdzytL97VaIY5KMxKYHijp8fvz7H3WGoA9IULvVSyLdPIBpB9pXuh
- bLYKUGbSR1U4Z3A2FpRo2xb7HIiHqGYPIkRFAkiIk1H1cj4BpYvkUrVEdAtiW9auJBob
- ImKW2ZSE06DXStcsAPayzXdc9xlosf3qKbHfJ6+GnuHxbckpxsM4eKl9l0IQ2a7oE5fA
- FY/t4CuqRnmMlHAkKWEEI8nsd4chyI5x+cJmQEwFTiBfs6xQxkQrw0PkU3WsF6eyPSPV
- 7B9A==
+ bh=2Zhj4lI0OABTDGI89H8lBd5DvpZBOYeRtqOec8Dl59M=;
+ b=rj7gxR0JPZGI4su27tTAoJov9eOY2zNZ7seePSivKBabxcwHcnuQjFPLg3aSIXWF/j
+ vSp+IutYpE4V0S1dyYuY4kjEEqR7pxu8dZdx8ur0LOkm2uxcy4VcjUtLjyxiS/2hHDax
+ DBe7jFFKb5ge0OuYuRSQrQGDI41DXYnLu+AsFLzCFiplagLEgw7E4pwr/AncWD3OlDRz
+ 5HmArFtjjjzf2ghhsNKMk+t/lzffXcdChUbzZaT0Aq1x+sTAsKnPNhpdTsypy59RtpRc
+ Bth8SmHf/EL3PFbH5Gn4ux+0hSShKOUAOKn4b7h2myMqqxFJ23SOL0KurSRGHp1TAp4m
+ +C3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXu33tkqDH5XoQlNHHse9OVX4b7oDWPJPAeMiW/8J7vu1RY5STxSLxc8MC/mjrKPbYeXVsPzwbeKRzU@nongnu.org
-X-Gm-Message-State: AOJu0YwORrQxai0pIZvOzm6uhaOiOIzvlgY/7VZ4mVqyDnHvy7oOQTxw
- dutEQWfY+om2xzQxOLsUkfeDiNw0MeQfGhH0HdGYGWCaPtJH0TYpxglQGOVTYnsHI84=
-X-Gm-Gg: ASbGncuq7ILPP+YG9Nc6XOBl0pEr1DuM6LWrcpef2S7Zzz7yz2OHdMsA3dPGAZ6N1Io
- eb04VbbNLKILTkWW1IZoLBuEs4RBZkFtCNo98sB29EC5vvvE2e973NhYA30O3gfPn1vkTsHjzVH
- dTku5n0DR4bDUAfFLvSWtobnrkaQifKZ2weBKaP7x+XELNeWNVdX0CA/61c97+uoiu32oQ7eviu
- p4CCN1XpPdSA9H7/Ptn5FZcIRhgCEMVBcZUGt70hcD0JQ6+Eyu4DdztfAiB5hIHYDLEZIuADYSp
- XphqbLg60TaGeiy2OZbc39b6iE7fRsVk7vYskSSaL0AgZHisMgnjoIX48+pXS0hEpK4kyuz57Dm
- D1kEcwSRYCKJ4GK+bc1ZWndvCCPGjxytbf40M/RZPAU054K1wFd3aVV0KoFxVGqPScQ==
-X-Google-Smtp-Source: AGHT+IEnFvesOVp/yx5bxq+58jLQX7eMBUkTUcXy6Mb+9tN9E9pkeyh7rVw3I+FuPgioRBGLkYy/PQ==
-X-Received: by 2002:a5d:5f82:0:b0:3b8:f8e5:f6be with SMTP id
- ffacd0b85a97d-3b917e76db5mr1179495f8f.4.1755069609648; 
- Wed, 13 Aug 2025 00:20:09 -0700 (PDT)
+ AJvYcCUOiJ0uaGUxxB9IoAnpnU/Ow4zfnZLz9NCVG94itTJTCIpXsEu8H+obmQIE3SQVYcrREJYlk7+Mwc8z@nongnu.org
+X-Gm-Message-State: AOJu0YwDk/zFIhI6XOsX1GZJj6jBtw4j64N0dIuCrbG0jbKPa8WUq5+S
+ v0/kDGLiL2qd+1OYAZurM+AupkkC3ctBdtvDCvxkWq3MfoXcZAiqAoEn490LVHYsi5T9Qq+743W
+ YYtUh
+X-Gm-Gg: ASbGncu1LdiIymeP5nHGTEnH3Mxbq5jho8Vi+m36aGWhxp10VH/RYEyRl1GbGjvDiC6
+ TMrqowsVw/Zqcg0EprenOhjfpL2H+pl6ddZm8kbxa709VsDuwSopXwRgk7bsxfcZVhozHMghC7p
+ DEuQkXxSjk+U1ta9C3cmRHMAhjo5lxNIaStmi/bG2mJ91wewup1F2ErWeQ1rlptxhLupXK/cCuF
+ IcfYHEY/J4f+Fd9HCyr9z2lPZmOsYua91y56W1uqn3q9V0SGn+n/R3gy/ddIMRdn4sBiCLF9toG
+ i/J/PKKS6DG9Ku7VLWoQtA6hYBftdpSwyZYwFhWI7SpUwnaeuEz+s80LA9ITUBpvF2ax04wpsgC
+ 5hWtwCoJBg+NwLsUYy73uG17o58Gt/ftnpn5uCvVkMHSuriQDUpnwhVWn6VtWfNe7zg==
+X-Google-Smtp-Source: AGHT+IHk+eEhrh+zwmlck/MikMNtCePcL6bxysClBPzCIpwCiTDu77+jUALk/a07ZqghpNnp7bBM6w==
+X-Received: by 2002:a05:6000:2c01:b0:3b9:10c5:bd7d with SMTP id
+ ffacd0b85a97d-3b917d1e304mr1327118f8f.10.1755069647803; 
+ Wed, 13 Aug 2025 00:20:47 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c4534b3sm46619890f8f.47.2025.08.13.00.20.08
+ ffacd0b85a97d-3b79c4a2848sm45965548f8f.71.2025.08.13.00.20.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Aug 2025 00:20:09 -0700 (PDT)
-Message-ID: <08f2c3ff-a509-4a96-a515-b3ceae2ea9ea@linaro.org>
-Date: Wed, 13 Aug 2025 09:20:08 +0200
+ Wed, 13 Aug 2025 00:20:47 -0700 (PDT)
+Message-ID: <94eab92c-9b55-404f-8e61-f9e80dc49703@linaro.org>
+Date: Wed, 13 Aug 2025 09:20:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 09/11] target/arm/hvf: Sync registers used at EL2
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250811170611.37482-1-philmd@linaro.org>
- <20250811170611.37482-10-philmd@linaro.org>
- <ce436008-3a53-4e31-a563-188cb3b1654d@linaro.org>
+Subject: Re: [RFC PATCH v2 08/10] target/arm/hvf: Sync registers used at EL2
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+References: <20250812172823.86329-1-philmd@linaro.org>
+ <20250812173157.86934-1-philmd@linaro.org>
+ <30f26e53-9976-4826-a25c-9cb7bb551280@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ce436008-3a53-4e31-a563-188cb3b1654d@linaro.org>
+In-Reply-To: <30f26e53-9976-4826-a25c-9cb7bb551280@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,40 +106,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/8/25 02:20, Richard Henderson wrote:
-> On 8/12/25 03:06, Philippe Mathieu-Daudé wrote:
->> From: Mohamed Mediouni <mohamed@unpredictable.fr>
->>
->> When starting up the VM at EL2, more sysregs are available. Sync the 
->> state of those.
->>
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> [PMD: Adapted to host_cpu_feature_supported() API]
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/arm/hvf/hvf.c | 34 ++++++++++++++++++++++++++++++++++
->>   1 file changed, 34 insertions(+)
->>
->> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
->> index 5174973991f..778dc3cedf7 100644
->> --- a/target/arm/hvf/hvf.c
->> +++ b/target/arm/hvf/hvf.c
->> @@ -400,6 +400,7 @@ static const struct hvf_reg_match 
->> hvf_fpreg_match[] = {
->>   struct hvf_sreg_match {
->>       int reg;
->>       uint32_t key;
->> +    bool el2;
->>       uint32_t cp_idx;
->>   };
->> @@ -545,6 +546,27 @@ static struct hvf_sreg_match hvf_sreg_match[] = {
->>       { HV_SYS_REG_CNTV_CTL_EL0, HVF_SYSREG(14, 3, 3, 3, 1) },
->>       { HV_SYS_REG_CNTV_CVAL_EL0, HVF_SYSREG(14, 3, 3, 3, 2) },
->>       { HV_SYS_REG_SP_EL1, HVF_SYSREG(4, 1, 3, 4, 0) },
-
-[*]
-
->> +    /* EL2 */
+On 13/8/25 00:31, Richard Henderson wrote:
+> On 8/13/25 03:31, Philippe Mathieu-Daudé wrote:
 >> +    { HV_SYS_REG_CPTR_EL2, HVF_SYSREG(1, 1, 3, 4, 2), .el2 = true },
 >> +    { HV_SYS_REG_ELR_EL2, HVF_SYSREG(4, 0, 3, 4, 1), .el2 = true },
 >> +    { HV_SYS_REG_ESR_EL2, HVF_SYSREG(5, 2, 3, 4, 0), .el2 = true },
@@ -159,79 +129,24 @@ On 12/8/25 02:20, Richard Henderson wrote:
 >> +    { HV_SYS_REG_VTCR_EL2, HVF_SYSREG(2, 1, 3, 4, 2), .el2 = true },
 >> +    { HV_SYS_REG_VTTBR_EL2, HVF_SYSREG(2, 1, 3, 4, 0), .el2 = true },
 > 
-> Note that el2 == opc1 in {4,5}.
+> Again, el2 = op2 == 4.
 
-Does this also work with HV_SYS_REG_SP_EL1 (see [*])?
-I suppose so, after reading commit 67d10fc4737 ("target/arm: Trap
-sysreg accesses for FEAT_NV") addition:
+Sorry I forgot about this :/
 
-/**
-  * arm_cpreg_trap_in_nv: Return true if cpreg traps in nested
-  * virtualization
-  *
-  * Return true if this cpreg is one which should be trapped to EL2
-  * if it is executed at EL1 when nested virtualization is enabled
-  * via HCR_EL2.NV.
-  */
-static inline bool arm_cpreg_traps_in_nv(const ARMCPRegInfo *ri)
-{
-     /*
-      * The Arm ARM defines the registers to be trapped in terms of
-      * their names (I_TZTZL). However the underlying principle is "if
-      * it would UNDEF at EL1 but work at EL2 then it should trap", and
-      * the way the encoding of sysregs and system instructions is done
-      * means that the right set of registers is exactly those where
-      * the opc1 field is 4 or 5. (You can see this also in the assert
-      * we do that the opc1 field and the permissions mask line up in
-      * define_one_arm_cp_reg_with_opaque().)
-      * Checking the opc1 field is easier for us and avoids the problem
-      * that we do not consistently use the right architectural names
-      * for all sysregs, since we treat the name field as largely for
-      * debug.
-      *
-      * However we do this check, it is going to be at least potentially
-      * fragile to future new sysregs, but this seems the least likely
-      * to break.
-      *
-      * In particular, note that the released sysreg XML defines that
-      * the FEAT_MEC sysregs and instructions do not follow this FEAT_NV
-      * trapping rule, so we will need to add an ARM_CP_* flag to
-      * indicate "register does not trap on NV" to handle those if/when
-      * we implement FEAT_MEC.
-      */
-     return ri->opc1 == 4 || ri->opc1 == 5;
-}
+> 
+>> @@ -608,6 +630,11 @@ int hvf_get_registers(CPUState *cpu)
+>>               continue;
+>>           }
+>> +        if (hvf_sreg_match[i].el2
+>> +            && !host_cpu_feature_supported(ARM_FEATURE_EL2)) {
+>> +            continue;
+>> +        }
+> 
+> I thought you were going to change this to arm_feature(&cpu->env, 
+> ARM_FEATURE_EL2).
 
- From v2:
+Replied in v1:
+https://lore.kernel.org/qemu-devel/08f2c3ff-a509-4a96-a515-b3ceae2ea9ea@linaro.org/
 
- >> @@ -608,6 +630,11 @@ int hvf_get_registers(CPUState *cpu)
- >>               continue;
- >>           }
- >> +        if (hvf_sreg_match[i].el2
- >> +            && !host_cpu_feature_supported(ARM_FEATURE_EL2)) {
- >> +            continue;
- >> +        }
- >
- > I thought you were going to change this to arm_feature(&cpu->env,
- > ARM_FEATURE_EL2).
-
-We want to use HVF to get these registers on M3 / M4, but not on
-M1 / M2 when split-accel in use where we emulate them.
-
-Expected logic:
-
-     if (
-         // this is an EL2 register ...
-         hvf_reg_traps_in_nv(i)
-         // ... and CPU doesn't provide EL2 ...
-         && (!arm_feature(&cpu->env, ARM_FEATURE_EL2)
-             // ... or we are emulating EL2 (split-accel) ...
-             || tcg_enabled())
-     ) {
-         // ... then do not get the register with the HVF API ...
-         continue;
-     }
-     // ... otherwise by default use HVF.
-     hv_vcpu_get_sys_reg(cpu->accel->fd, hvf_sreg_match[i].reg, &val);
 
 
