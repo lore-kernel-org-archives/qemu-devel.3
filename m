@@ -4,141 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29274CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 12:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B44CA0EE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 12:10:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umAIR-0001W5-MH; Wed, 13 Aug 2025 08:09:35 -0400
+	id 1umAIU-0001Wp-4o; Wed, 13 Aug 2025 08:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tzimmermann@suse.de>)
- id 1um7RA-0008VP-U1
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 05:06:24 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tzimmermann@suse.de>)
- id 1um7R8-0006Wq-Dd
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 05:06:24 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D11E1219BE;
- Wed, 13 Aug 2025 09:06:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755075979; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wzPfss0Yx81jm9T9+iN5ZthUeT7U2XD4wjBOjc1Dsnw=;
- b=Gw4A60S0hTXkXfeFH2xcZAMc40qN3iZr9CcHEx9ycD3OnUKHU4DmqHwHcy4aP6CurW/uMK
- CGpS4frnBZxw5OFue9T7hgZjGoxPCKloSdhn9rkQ9hPnJgtBrrrKSUGAPo4wDi/50F1/g6
- aD8K/qYaU3fgaM5zkrzcUfStMbv0XcY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755075979;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wzPfss0Yx81jm9T9+iN5ZthUeT7U2XD4wjBOjc1Dsnw=;
- b=RVhlVVVYaOE6dzETfyqdm4YXHqLJWpSw2caDrnnYjJ9+Jn4w3H6fwWiOLLo3Sz05YdhXxM
- G5NJ+Htttui+sVCw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755075978; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wzPfss0Yx81jm9T9+iN5ZthUeT7U2XD4wjBOjc1Dsnw=;
- b=topybgz3V4ZL1tf3jXFyvDYIqy+rSBo669MRUOv4KK6GRFVqMTsY2NFBMZBgjYWk8EuxH2
- Gg304KAH1NouwSpMtAd+5VH72pAgYxePiUrhdo1p5nlKmmfi6/muFt63+6kskkLkrDfUfY
- i9kspoWq+tUsAFeAYz0LQu0moijhTQM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755075978;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wzPfss0Yx81jm9T9+iN5ZthUeT7U2XD4wjBOjc1Dsnw=;
- b=9B5FwsJlCcAx0wZ1G7OnXQAFvXyQ1xD8YM0oj6V7YHq+sM1HVRqCBS4nVL1r4Bvig8fO7m
- VRxjDReqRvc50kBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 780A113479;
- Wed, 13 Aug 2025 09:06:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id NVOzG4pVnGhEFAAAD6G6ig
- (envelope-from <tzimmermann@suse.de>); Wed, 13 Aug 2025 09:06:18 +0000
-Message-ID: <a0325fe4-90ce-45d4-91ad-881c7900a7d5@suse.de>
-Date: Wed, 13 Aug 2025 11:06:18 +0200
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1um54G-0007mS-13
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 02:34:36 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1um547-0007sK-VD
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 02:34:34 -0400
+DKIM-Signature: a=rsa-sha256; bh=xxKj4TOvFOZFX6/ej7ZAYlJchHepX4BzMPjaosHHXYA=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
+ t=1755066860; v=1;
+ b=pF9xoB8++h+GL+9IXZ3dWx7BMkdtvzOuCBwlZrMQs582bgCYbyX4Ybb1ccqzAH0AQItWWSF7
+ SdcmSKh++TN9evSA1uSm0KPKZkLXWA6emqDemxbm/LnFr2+90VwTIpcjeAvJx2qFyMX+QL1UQGK
+ JduOJkMKR2re9b2V8CfV5XJOuYjBZXxjprQJW0Yq274aljiJK63agzTHSEKTQZ7dFNP2H1EoGyF
+ 0OCXGVjO3C+96K938bL6kH4bqfrPiOHAwT7Qu9SixzaOY4Pw4QEbYALCoZ/GaFr09An83hCJ6Si
+ yKOfQqYRRvmcQaqs+pBLTC2a+kvsZmKS4C2Vj3YXjM5qw==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id AC34C22F05;
+ Wed, 13 Aug 2025 06:34:20 +0000 (UTC)
+From: ~myrslint <myrslint@git.sr.ht>
+Date: Wed, 13 Aug 2025 06:23:24 +0000
+Subject: [PATCH qemu 1/1] Default disable ignore guest PAT quirk
+Message-ID: <175506686028.15648.7602021948044277748-1@git.sr.ht>
+X-Mailer: git.sr.ht
+In-Reply-To: <175506686028.15648.7602021948044277748-0@git.sr.ht>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [REGRESSION][BISECTED] kernel panic is not displayed correctly in
- qemu (CONFIG_DRM_BOCHS)
-To: Askar Safin <safinaskar@zohomail.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Noralf_Tr=C3=B8nnes?=
- <noralf@tronnes.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>,
- virtualization <virtualization@lists.linux.dev>,
- ryasuoka <ryasuoka@redhat.com>, dri-devel <dri-devel@lists.freedesktop.org>,
- qemu-devel <qemu-devel@nongnu.org>, regressions
- <regressions@lists.linux.dev>, Ben Hutchings <benh@debian.org>
-References: <197f290e30b.eaadc7bc7913.7315623184036672946@zohomail.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <197f290e30b.eaadc7bc7913.7315623184036672946@zohomail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_COUNT_TWO(0.00)[2];
- RCPT_COUNT_SEVEN(0.00)[11]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=tzimmermann@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 13 Aug 2025 08:09:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,149 +63,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~myrslint <myrskylintu@proton.me>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+From: myrslint <qemu.haziness801@passinbox.com>
 
-Am 10.07.25 um 06:21 schrieb Askar Safin:
-> Steps to reproduce:
->
-> - Build Linux v6.16-rc5 so:
->
-> $ cat mini
-> CONFIG_64BIT=y
->
-> CONFIG_EXPERT=y
-> CONFIG_EMBEDDED=y
->
-> CONFIG_PRINTK=y
-> CONFIG_PRINTK_TIME=y
->
-> CONFIG_PCI=y
->
-> CONFIG_TTY=y
-> CONFIG_VT=y
-> CONFIG_VT_CONSOLE=y
-> CONFIG_DRM=y
-> CONFIG_DRM_FBDEV_EMULATION=y
-> CONFIG_DRM_BOCHS=y
-> CONFIG_FRAMEBUFFER_CONSOLE=y
-> CONFIG_PROC_FS=y
-> $ make KCONFIG_ALLCONFIG=mini allnoconfig
-> $ make
->
-> - Then boot this Linux image in Qemu so:
->
-> $ qemu-system-x86_64 -enable-kvm -m 1024 -daemonize -kernel arch/x86_64/boot/bzImage
->
-> Kernel will (predictably) panic (because it has no initramfs, nor real disk), but actual panic message will not be shown!
->
-> Last shown line is "Run /bin/sh as init process"
->
-> My host OS is Debian Trixie. "uname -a":
->
-> Linux receipt 6.12.33+deb13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.33-1 (2025-06-19) x86_64 GNU/Linux
->
-> Qemu version is:
->
-> QEMU emulator version 10.0.2 (Debian 1:10.0.2+ds-1)
->
-> Guest kernel is v6.16-rc5 x86_64.
->
-> The problem doesn't reproduce on old guest kernels. I. e. old guest kernels actually show panic message.
->
-> I did bisect, and bisect showed the following two commits:
->
-> ===
->
-> commit a6c3464f69cf5a8a31eb31cc436e7dbd325b8ff9
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
-> Date:   Thu Jun 13 09:30:33 2019 +0200
->
->      drm/gem-vram: Support pinning buffers to current location
->      
->      Pinning a buffer prevents it from being moved to a different memory
->      location. For some operations, such as buffer updates, it is not
->      important where the buffer is located. Setting the pin function's
->      pl_flag argument to 0 will pin the buffer to whereever it is stored.
->      
->      v2:
->              * document pin flags in PRIME pin helper
->      
->      Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->      Acked-by: Gerd Hoffmann <kraxel@redhat.com>
->      Link: https://patchwork.freedesktop.org/patch/msgid/20190613073041.29350-2-tzimmermann@suse.de
->
-> commit 58540594570778fd149cd8c9b2bff61f2cefa8c9
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
-> Date:   Wed Jul 3 09:58:34 2019 +0200
->
->      drm/bochs: Use shadow buffer for bochs framebuffer console
->      
->      The bochs driver (and virtual hardware) requires buffer objects to
->      reside in video ram to display them to the screen. So it can not
->      display the framebuffer console because the respective buffer object
->      is permanently pinned in system memory.
->      
->      Using a shadow buffer for the console solves this problem. The console
->      emulation will pin the buffer object only during updates from the shadow
->      buffer. Otherwise, the bochs driver can freely relocated the buffer
->      between system memory and video ram.
->      
->      v2:
->              * select shadow FB via struct drm_mode_config.prefer_shadow_fbdev
->      
->      Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->      Acked-by: Noralf Trønnes <noralf@tronnes.org>
->      Link: https://patchwork.freedesktop.org/patch/315833/
->      Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->
-> ===
->
-> Commit a6c3464f69cf5a8a31e changed good behavior to absolutely wrong: after a6c3464f69cf5a8a31e I see just black screen.
-> Then (after many commits) 58540594570778fd149 made screen working again, but now panics are not shown.
->
-> So, result: all commits in range a6c3464f69cf5a8a31e .. 58540594570778fd149 are not testable (black screen), all commits before a6c3464f69cf5a8a31e
-> are "good" (panic is shown) and all commits after 58540594570778fd149 (inclusive) (including v6.16-rc5) are "bad" (panic is not shown).
+Addresses this issue: https://gitlab.com/qemu-project/qemu/-/issues/2943
 
-The bochs driver uses a shadow framebuffer. It's apparently not being 
-flushed to VRAM on kernel panics. You could try the new DRM panic screen 
-to make that happen.
+Most Intel CPUs in current use have self-snoop. The few added lines of
+code also check for availability of the quirk disablement option so if
+some CPU does not have this feature no change of behavior will occur.
+---
+ accel/kvm/kvm-all.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-Best regards
-Thomas
-
->
-> The next commit after 58540594570778fd149 is 5fd5d2b7c53de5a1290d82, thus correct regzbot instruction is:
->
-> #regzbot introduced: a6c3464f69cf5a8a31e..5fd5d2b7c53de5a1290d82
->
-> Config above is not special. It is result of minimizing standard Debian config.
->
-> The bug is reproducible with standard Debian kernels (if we use them as guests).
->
-> Reproduction steps are so:
-> - Install Debian Trixie to Qemu VM
-> - Boot it with "init=/bin/true" added (to cause kernel panic)
->
-> You will not see panic message.
->
-> I minimized this Debian bug to small config shown in the beginning of this letter.
->
-> --
-> Askar Safin
-> https://types.pl/@safinaskar
->
-
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 890d5ea9f8..c3d06ae2f8 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2682,6 +2682,32 @@ static int kvm_init(AccelState *as, MachineState *ms)
+ 
+     s->vmfd = ret;
+ 
++/* if target platform has no notion of this or kernel version does
++ * not have it there is no use for compiling this in */
++#ifdef KVM_X86_QUIRK_IGNORE_GUEST_PAT
++    /* first check for modifiable quirks bitmask */
++    ret = kvm_check_extension(s, KVM_CAP_DISABLE_QUIRKS2);
++    /* next make sure disabling it is allowed */
++    if (ret & KVM_X86_QUIRK_IGNORE_GUEST_PAT) {
++        struct kvm_enable_cap *cap;
++        cap = calloc(1, sizeof(struct kvm_enable_cap));
++        if (cap) {
++            cap->cap = KVM_CAP_DISABLE_QUIRKS2;
++            cap->args[0] = KVM_X86_QUIRK_IGNORE_GUEST_PAT;
++            /* if intel cpu does not support self-snoop this is a nop */
++            ret = kvm_vm_ioctl(s, KVM_ENABLE_CAP, cap);
++            if (ret < 0) {
++                error_printf("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
++                             "modifiable but we failed to disable it\n");
++            }
++            free(cap);
++        } else {
++            error_printf("KVM_X86_QUIRK_IGNORE_GUEST_PAT: could not "
++                         "allocate memory\n");
++        }
++    }
++#endif
++
+     s->nr_as = kvm_vm_check_extension(s, KVM_CAP_MULTI_ADDRESS_SPACE);
+     if (s->nr_as <= 1) {
+         s->nr_as = 1;
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-HRB 36809 (AG Nuernberg)
-
-
+2.49.1
 
