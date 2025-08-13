@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA55C87FCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 16:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4408BCA0EE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 17:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umEfi-0002lp-40; Wed, 13 Aug 2025 12:49:54 -0400
+	id 1umEfy-00031P-B8; Wed, 13 Aug 2025 12:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umEfL-0002eB-OF; Wed, 13 Aug 2025 12:49:33 -0400
+ id 1umEfX-0002ht-Bz; Wed, 13 Aug 2025 12:49:44 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umEf3-0007ns-Ty; Wed, 13 Aug 2025 12:49:30 -0400
+ id 1umEfG-0007r7-B2; Wed, 13 Aug 2025 12:49:43 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cf2d:0:640:140f:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4B6F380CA1;
- Wed, 13 Aug 2025 19:49:10 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 35BDA8126C;
+ Wed, 13 Aug 2025 19:49:17 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:167::1:21])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id wmOQI00FoSw0-Gs3p36ve; Wed, 13 Aug 2025 19:49:09 +0300
+ ESMTPSA id wmOQI00FoSw0-pC4CY3Sq; Wed, 13 Aug 2025 19:49:16 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755103749;
- bh=tyMQQBv7HuIlj77+PJGdzsTa2G/0zTifnDsW8oG5mSs=;
+ s=default; t=1755103756;
+ bh=6mQD+E56AliUFR85mWNTx1RcVkaifnsIXZcOryL08do=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=b0izT8ht/kTvbNp4llLrUKrD2d9f0BMuXHb0evKBqdwlFjkNPWPWgCCuahkZJ4Q1q
- T7ClyTgPB3Kxj0NewQJuS+cWlANA7iEO9Z2nnZvmct5UmUyk+5+fRYLWgabkDisQNU
- IY8TtJd7JRE7MkHZqgBem19ePdG11+gq1NxuKJGo=
+ b=QMU/bscdy7Wbc4jjTwkYSVHiah6+xtqFIJxlFwAwrmsKpZwztpygzQvhKq6e5EofY
+ YyS8ss3aF+zVmZNCX2SFfIP5N+VE94ADKGV9LXL2lYTAvc3er4763Cv6skfd9Fj0Vg
+ XSd63L9EzGdpJDfA8P/lQeHDthv0X7zjWHYg3h0w=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -43,9 +43,9 @@ Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
  eblake@redhat.com, armbru@redhat.com, qemu-devel@nongnu.org,
  qemu-block@nongnu.org, steven.sistare@oracle.com,
  den-plotnikov@yandex-team.ru, vsementsov@yandex-team.ru
-Subject: [PATCH 08/33] virtio: drop *_set_guest_notifier_fd_handler() helpers
-Date: Wed, 13 Aug 2025 19:48:29 +0300
-Message-ID: <20250813164856.950363-9-vsementsov@yandex-team.ru>
+Subject: [PATCH 18/33] vhost: introduce check_memslots() helper
+Date: Wed, 13 Aug 2025 19:48:39 +0300
+Message-ID: <20250813164856.950363-19-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250813164856.950363-1-vsementsov@yandex-team.ru>
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
@@ -59,8 +59,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,110 +76,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now they don't make code more readable. Let's better put the whole
-logic into virtio_queue_set_guest_notifier().
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/virtio.c | 76 +++++++++++-----------------------------------
- 1 file changed, 17 insertions(+), 59 deletions(-)
+ hw/virtio/vhost.c | 71 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 40 insertions(+), 31 deletions(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 7880c3bcd9..10891f0e0c 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3751,74 +3751,32 @@ static void virtio_config_guest_notifier_read(EventNotifier *n)
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index a8f8b85012..f9163ba895 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1553,11 +1553,49 @@ static void vhost_virtqueue_cleanup(struct vhost_virtqueue *vq)
      }
  }
  
--static void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq,
--                                                       bool assign,
--                                                       bool with_irqfd)
--{
--    if (assign && !with_irqfd) {
--        event_notifier_set_handler(&vq->guest_notifier,
--                                   virtio_queue_guest_notifier_read);
--    } else {
--        event_notifier_set_handler(&vq->guest_notifier, NULL);
--    }
--    if (!assign) {
--        /* Test and clear notifier before closing it,
--         * in case poll callback didn't have time to run. */
--        virtio_queue_guest_notifier_read(&vq->guest_notifier);
--    }
--}
--
--static void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
--                                                 bool assign, bool with_irqfd)
--{
--    EventNotifier *n;
--    n = &vdev->config_notifier;
--    if (assign && !with_irqfd) {
--        event_notifier_set_handler(n, virtio_config_guest_notifier_read);
--    } else {
--        event_notifier_set_handler(n, NULL);
--    }
--    if (!assign) {
--        /* Test and clear notifier before closing it,*/
--        /* in case poll callback didn't have time to run. */
--        virtio_config_guest_notifier_read(n);
--    }
--}
--
--static void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev,
--                                                     VirtQueue *vq,
--                                                     int n, bool assign,
--                                                     bool with_irqfd)
--{
--    if (n == VIRTIO_CONFIG_IRQ_IDX) {
--        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
--    } else {
--        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
--    }
--}
--
- int virtio_queue_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
-                                     bool with_irqfd)
- {
--    VirtQueue *vq = NULL;
--    EventNotifier *notifier = NULL;
--
--    if (n == VIRTIO_CONFIG_IRQ_IDX) {
--        notifier = virtio_config_get_guest_notifier(vdev);
--    } else {
--        vq = virtio_get_queue(vdev, n);
--        notifier = virtio_queue_get_guest_notifier(vq);
--    }
-+    bool is_config = n == VIRTIO_CONFIG_IRQ_IDX;
-+    VirtQueue *vq = is_config ? NULL : virtio_get_queue(vdev, n);
-+    EventNotifier *notifier = is_config ?
-+        virtio_config_get_guest_notifier(vdev) :
-+        virtio_queue_get_guest_notifier(vq);
-+    EventNotifierHandler *read_fn = is_config ?
-+        virtio_config_guest_notifier_read :
-+        virtio_queue_guest_notifier_read;
- 
-     if (assign) {
-         int r = event_notifier_init(notifier, 0);
-         if (r < 0) {
-             return r;
-         }
--        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, true, with_irqfd);
--    } else {
--        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, false,
--                                                 with_irqfd);
++static bool check_memslots(struct vhost_dev *hdev, Error **errp)
++{
++    unsigned int used, reserved, limit;
++
++    limit = hdev->vhost_ops->vhost_backend_memslots_limit(hdev);
++    if (limit < MEMORY_DEVICES_SAFE_MAX_MEMSLOTS &&
++        memory_devices_memslot_auto_decision_active()) {
++        error_setg(errp, "some memory device (like virtio-mem)"
++            " decided how many memory slots to use based on the overall"
++            " number of memory slots; this vhost backend would further"
++            " restricts the overall number of memory slots");
++        error_append_hint(errp, "Try plugging this vhost backend before"
++            " plugging such memory devices.\n");
++        return false;
 +    }
 +
-+    event_notifier_set_handler(notifier,
-+                               (assign && !with_irqfd) ? read_fn : NULL);
++    /*
++     * The listener we registered properly setup the number of required
++     * memslots in vhost_commit().
++     */
++    used = hdev->mem->nregions;
 +
-+    if (!assign) {
-+        /* Test and clear notifier before closing it,*/
-+        /* in case poll callback didn't have time to run. */
-+        read_fn(notifier);
-         event_notifier_cleanup(notifier);
++    /*
++     * We assume that all reserved memslots actually require a real memslot
++     * in our vhost backend. This might not be true, for example, if the
++     * memslot would be ROM. If ever relevant, we can optimize for that --
++     * but we'll need additional information about the reservations.
++     */
++    reserved = memory_devices_get_reserved_memslots();
++    if (used + reserved > limit) {
++        error_setg(errp, "vhost backend memory slots limit (%d) is less"
++                   " than current number of used (%d) and reserved (%d)"
++                   " memory slots for memory devices.", limit, used, reserved);
++        return false;
++    }
++
++    return true;
++}
++
+ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type, uint32_t busyloop_timeout,
+                    Error **errp)
+ {
+-    unsigned int used, reserved, limit;
+     uint64_t features;
+     int i, r, n_initialized_vqs = 0;
+ 
+@@ -1584,19 +1622,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+         goto fail;
      }
  
+-    limit = hdev->vhost_ops->vhost_backend_memslots_limit(hdev);
+-    if (limit < MEMORY_DEVICES_SAFE_MAX_MEMSLOTS &&
+-        memory_devices_memslot_auto_decision_active()) {
+-        error_setg(errp, "some memory device (like virtio-mem)"
+-            " decided how many memory slots to use based on the overall"
+-            " number of memory slots; this vhost backend would further"
+-            " restricts the overall number of memory slots");
+-        error_append_hint(errp, "Try plugging this vhost backend before"
+-            " plugging such memory devices.\n");
+-        r = -EINVAL;
+-        goto fail;
+-    }
+-
+     for (i = 0; i < hdev->nvqs; ++i, ++n_initialized_vqs) {
+         r = vhost_virtqueue_init(hdev, hdev->vqs + i, hdev->vq_index + i,
+                                  busyloop_timeout);
+@@ -1655,23 +1680,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     memory_listener_register(&hdev->memory_listener, &address_space_memory);
+     QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+ 
+-    /*
+-     * The listener we registered properly setup the number of required
+-     * memslots in vhost_commit().
+-     */
+-    used = hdev->mem->nregions;
+-
+-    /*
+-     * We assume that all reserved memslots actually require a real memslot
+-     * in our vhost backend. This might not be true, for example, if the
+-     * memslot would be ROM. If ever relevant, we can optimize for that --
+-     * but we'll need additional information about the reservations.
+-     */
+-    reserved = memory_devices_get_reserved_memslots();
+-    if (used + reserved > limit) {
+-        error_setg(errp, "vhost backend memory slots limit (%d) is less"
+-                   " than current number of used (%d) and reserved (%d)"
+-                   " memory slots for memory devices.", limit, used, reserved);
++    if (!check_memslots(hdev, errp)) {
+         r = -EINVAL;
+         goto fail;
+     }
 -- 
 2.48.1
 
