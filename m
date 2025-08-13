@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D99CA0EC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 07:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CB4C87FCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 07:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1um5nE-0000Wk-RF; Wed, 13 Aug 2025 03:21:06 -0400
+	id 1um5p3-0001xJ-Oe; Wed, 13 Aug 2025 03:22:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um5n2-0000VK-83
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 03:20:53 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um5og-0001uS-Ht
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 03:22:35 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um5mz-0005QH-Vi
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 03:20:51 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-458b885d6eeso40146375e9.3
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 00:20:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1um5oY-0005ee-DD
+ for qemu-devel@nongnu.org; Wed, 13 Aug 2025 03:22:32 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-459eb4ae596so56795605e9.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 00:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755069648; x=1755674448; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755069743; x=1755674543; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2Zhj4lI0OABTDGI89H8lBd5DvpZBOYeRtqOec8Dl59M=;
- b=m1wvpmDIKxCgxo9EkeOPLrXi9t3yJuqlJip24yKfTLxQy4PJLflJ364Ux+hkAL4R3E
- RDXoXeI+yrTGp6r1rlrqo3pc3kRYa6GvafaWDuscwZ1WwFe16HN/epv6Hl7nij59rKKP
- 4pQT2+nsdzj3d1FkXwwdMiBBzXaUNm0oy39ULDoFTkAwauJUFkn50BWlKBu08NCKHaKS
- 5iyHRNl7jvkGF06MkVKFAJvPyb5cKnSXO+MV6nPyWOiLaMTCps5Z3VJCfCK22ORNeHMi
- grjsydZgN0paAnBCZNSTwcjziFVUXtcn5QmG/X847n+buytteCobqo6MO5td+i1b7Mku
- vQiw==
+ bh=7rwFIJFWEw1JqoHi0jsToh6aXNoS+t1RMBGkKnJaj4I=;
+ b=v0hIdO82CbEMINuuREglZ+ldFwyhQoPBulN7PtF1AfgYccpToD4/xzImQAV6KN/WgY
+ c/RcjrE2m2GZmOAHbvaFd/WKEFb2Qua0TGySTODebEYWguTzbIfqrdn3OdmsU4tY/WMq
+ F+2zCWfXyM38LB2puPSxyft/gipXt8hAR1AuXkopBt1EkAH/mapGSnQYkSWzkvWe3Xyw
+ 5YfLm8z9Y3LKluE+pbW8Op+YrZpHmmp8k8Ae/Z02/TyS6MtMgZaTmG2fVR3pRSEw4gnN
+ Zl2OdaRPhf7kvUx6gWEdjiU/dk/XnAB/GBBzF2ybFNIieMKPku7SmIoGl3uEFDHk+6bs
+ xZEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755069648; x=1755674448;
+ d=1e100.net; s=20230601; t=1755069743; x=1755674543;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2Zhj4lI0OABTDGI89H8lBd5DvpZBOYeRtqOec8Dl59M=;
- b=rj7gxR0JPZGI4su27tTAoJov9eOY2zNZ7seePSivKBabxcwHcnuQjFPLg3aSIXWF/j
- vSp+IutYpE4V0S1dyYuY4kjEEqR7pxu8dZdx8ur0LOkm2uxcy4VcjUtLjyxiS/2hHDax
- DBe7jFFKb5ge0OuYuRSQrQGDI41DXYnLu+AsFLzCFiplagLEgw7E4pwr/AncWD3OlDRz
- 5HmArFtjjjzf2ghhsNKMk+t/lzffXcdChUbzZaT0Aq1x+sTAsKnPNhpdTsypy59RtpRc
- Bth8SmHf/EL3PFbH5Gn4ux+0hSShKOUAOKn4b7h2myMqqxFJ23SOL0KurSRGHp1TAp4m
- +C3A==
+ bh=7rwFIJFWEw1JqoHi0jsToh6aXNoS+t1RMBGkKnJaj4I=;
+ b=cI4wgpFBehzDfZ085IdzTQRLS94ZazyAuPXwTu8sOWD7d8eDZe7Kbqs0aHVbQVSDhR
+ W0k0azLvbiKHij0vZQ9fHm4eRvBRcL5sLw/lv+zB0IqW8zsbCFuVLHLnqk8Zoj+31hej
+ Hg8bZohVwztWzCq952EzPQc4FaJa+ymhJav1Ju/6qVFwr/L2pcju688231DF2js0oXtG
+ 6GV2dffxvUGFB41X5QRJyySjsSsCtFt4uocSL9ldUWH1+szU08NoxR6CKkkuJVpzkWK6
+ 0OzjqdTmVcyG/nTBkXJgfM2L4yKJNuuczF5LRJvT2fwTjAcEp5pWVC1QKEt+36F8Alrv
+ JGcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUOiJ0uaGUxxB9IoAnpnU/Ow4zfnZLz9NCVG94itTJTCIpXsEu8H+obmQIE3SQVYcrREJYlk7+Mwc8z@nongnu.org
-X-Gm-Message-State: AOJu0YwDk/zFIhI6XOsX1GZJj6jBtw4j64N0dIuCrbG0jbKPa8WUq5+S
- v0/kDGLiL2qd+1OYAZurM+AupkkC3ctBdtvDCvxkWq3MfoXcZAiqAoEn490LVHYsi5T9Qq+743W
- YYtUh
-X-Gm-Gg: ASbGncu1LdiIymeP5nHGTEnH3Mxbq5jho8Vi+m36aGWhxp10VH/RYEyRl1GbGjvDiC6
- TMrqowsVw/Zqcg0EprenOhjfpL2H+pl6ddZm8kbxa709VsDuwSopXwRgk7bsxfcZVhozHMghC7p
- DEuQkXxSjk+U1ta9C3cmRHMAhjo5lxNIaStmi/bG2mJ91wewup1F2ErWeQ1rlptxhLupXK/cCuF
- IcfYHEY/J4f+Fd9HCyr9z2lPZmOsYua91y56W1uqn3q9V0SGn+n/R3gy/ddIMRdn4sBiCLF9toG
- i/J/PKKS6DG9Ku7VLWoQtA6hYBftdpSwyZYwFhWI7SpUwnaeuEz+s80LA9ITUBpvF2ax04wpsgC
- 5hWtwCoJBg+NwLsUYy73uG17o58Gt/ftnpn5uCvVkMHSuriQDUpnwhVWn6VtWfNe7zg==
-X-Google-Smtp-Source: AGHT+IHk+eEhrh+zwmlck/MikMNtCePcL6bxysClBPzCIpwCiTDu77+jUALk/a07ZqghpNnp7bBM6w==
-X-Received: by 2002:a05:6000:2c01:b0:3b9:10c5:bd7d with SMTP id
- ffacd0b85a97d-3b917d1e304mr1327118f8f.10.1755069647803; 
- Wed, 13 Aug 2025 00:20:47 -0700 (PDT)
+ AJvYcCUJdguC0Fi0kFSvDukYg8b8lJjdB38DRCIoqlFPflBtY2y+stIkQBP0he5utSfQ+QZpT3fVM4lJUbun@nongnu.org
+X-Gm-Message-State: AOJu0YxerPv3w1HWI1x6qomSuh1dg7iXznulGzgOeWp4unCVJAOqYucZ
+ RM8trU9pwh561F5Q9lkZxiChusEcZJGESj2Mg9U9EDowOYLm0U5yzRbXJThPcoChe0Y=
+X-Gm-Gg: ASbGnctvLA2bH8EcFoik54H7jejpPMJi93Om8cd2p8CLhCbU6HIwaoVn9RLDFANkX9b
+ o/UpvVYSp4XZ32P0thhlFFborHwtaF2K2S+pLVowFdq1RaWXmtDgpODBSCwU3/OVtRBhykmjMkC
+ TAtmr70yXbufTA8Z3ZAkdkGqRaB06a8JMCqF/jNezouUO57QVmBX2lUGDAE9tE4rxxjIYnYnCcs
+ O6LU9Jbu2hWcfr7lhIn8sEbNu4dKvY2KmivhfkJ2pAlQ2dnZC2aTcR1tNpC01TiuTmDaVbLvmy+
+ d2MM2IejjkpDuKkvfUNLQhfceEYYs5WLyISIoBC7cp85rfRcdlwOVYzVxWJobhbpD9OSwPIV7PV
+ cF9kbNU1o4x4fVF0sulL1CY2PM0vgasdnktnsKgefp5mOA3pK2IEuhNXbO9QMdA8fAA==
+X-Google-Smtp-Source: AGHT+IFAn7ETOWdX9OHpHoSSKcmgnGVRDEJAMf8iJ+WZqvKtQB0VAGIKQjsa/ewcbuLXr41MSeLkxQ==
+X-Received: by 2002:a05:600c:46c9:b0:459:e048:af42 with SMTP id
+ 5b1f17b1804b1-45a1660b46bmr14169505e9.24.1755069743204; 
+ Wed, 13 Aug 2025 00:22:23 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c4a2848sm45965548f8f.71.2025.08.13.00.20.46
+ ffacd0b85a97d-3b8e009e465sm38426660f8f.43.2025.08.13.00.22.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Aug 2025 00:20:47 -0700 (PDT)
-Message-ID: <94eab92c-9b55-404f-8e61-f9e80dc49703@linaro.org>
-Date: Wed, 13 Aug 2025 09:20:46 +0200
+ Wed, 13 Aug 2025 00:22:22 -0700 (PDT)
+Message-ID: <90f3ed96-fd24-4d51-a9af-cc6dd3f0a058@linaro.org>
+Date: Wed, 13 Aug 2025 09:22:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 08/10] target/arm/hvf: Sync registers used at EL2
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20250812172823.86329-1-philmd@linaro.org>
- <20250812173157.86934-1-philmd@linaro.org>
- <30f26e53-9976-4826-a25c-9cb7bb551280@linaro.org>
+Subject: Re: [PULL 1/2] hw/sd/ssi-sd: Return noise (dummy byte) when no card
+ connected
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Guenter Roeck <linux@roeck-us.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250812165642.81157-1-philmd@linaro.org>
+ <20250812165642.81157-2-philmd@linaro.org>
+ <92ee0558-81c6-45dc-8942-f344a279d637@tls.msk.ru>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <30f26e53-9976-4826-a25c-9cb7bb551280@linaro.org>
+In-Reply-To: <92ee0558-81c6-45dc-8942-f344a279d637@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,47 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/8/25 00:31, Richard Henderson wrote:
-> On 8/13/25 03:31, Philippe Mathieu-Daudé wrote:
->> +    { HV_SYS_REG_CPTR_EL2, HVF_SYSREG(1, 1, 3, 4, 2), .el2 = true },
->> +    { HV_SYS_REG_ELR_EL2, HVF_SYSREG(4, 0, 3, 4, 1), .el2 = true },
->> +    { HV_SYS_REG_ESR_EL2, HVF_SYSREG(5, 2, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_FAR_EL2, HVF_SYSREG(6, 0, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_HCR_EL2, HVF_SYSREG(1, 1, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_HPFAR_EL2, HVF_SYSREG(6, 0, 3, 4, 4), .el2 = true },
->> +    { HV_SYS_REG_MAIR_EL2, HVF_SYSREG(10, 2, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_MDCR_EL2, HVF_SYSREG(1, 1, 3, 4, 1), .el2 = true },
->> +    { HV_SYS_REG_SCTLR_EL2, HVF_SYSREG(1, 0, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_SPSR_EL2, HVF_SYSREG(4, 0, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_SP_EL2, HVF_SYSREG(4, 1, 3, 6, 0), .el2 = true},
->> +    { HV_SYS_REG_TCR_EL2, HVF_SYSREG(2, 0, 3, 4, 2), .el2 = true },
->> +    { HV_SYS_REG_TPIDR_EL2, HVF_SYSREG(13, 0, 3, 4, 2), .el2 = true },
->> +    { HV_SYS_REG_TTBR0_EL2, HVF_SYSREG(2, 0, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_TTBR1_EL2, HVF_SYSREG(2, 0, 3, 4, 1), .el2 = true },
->> +    { HV_SYS_REG_VBAR_EL2, HVF_SYSREG(12, 0, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_VMPIDR_EL2, HVF_SYSREG(0, 0, 3, 4, 5), .el2 = true },
->> +    { HV_SYS_REG_VPIDR_EL2, HVF_SYSREG(0, 0, 3, 4, 0), .el2 = true },
->> +    { HV_SYS_REG_VTCR_EL2, HVF_SYSREG(2, 1, 3, 4, 2), .el2 = true },
->> +    { HV_SYS_REG_VTTBR_EL2, HVF_SYSREG(2, 1, 3, 4, 0), .el2 = true },
+On 13/8/25 08:16, Michael Tokarev wrote:
+> On 12.08.2025 19:56, Philippe Mathieu-Daudé wrote:
+>> Commit 1585ab9f1ba ("hw/sd/sdcard: Fill SPI response bits in card
+>> code") exposed a bug in the SPI adapter: if no SD card is plugged,
+>> we are returning "there is a card with an error". This is wrong,
+>> we shouldn't return any particular packet response, but the noise
+>> shifted on the MISO line. Return the dummy byte, otherwise we get:
+>>
+>>    qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: 
+>> Assertion `s->arglen > 0' failed.
+>>
+>> Reported-by: Guenter Roeck <linux@roeck-us.net>
+>> Fixes: 775616c3ae8 ("Partial SD card SPI mode support")
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Tested-by: Guenter Roeck <linux@roeck-us.net>
+>> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+>> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> Tested-by: Alex Bennée <alex.bennee@linaro.org>
 > 
-> Again, el2 = op2 == 4.
+> While the commit which exposed the bug is in 10.1, it looks to me like
+> this is a qemu-stable material (7.2 & 10.0), because the bug is there,
+> it just does not result in qemu assertion failure.  Please let me know
+> if it is not.
 
-Sorry I forgot about this :/
-
-> 
->> @@ -608,6 +630,11 @@ int hvf_get_registers(CPUState *cpu)
->>               continue;
->>           }
->> +        if (hvf_sreg_match[i].el2
->> +            && !host_cpu_feature_supported(ARM_FEATURE_EL2)) {
->> +            continue;
->> +        }
-> 
-> I thought you were going to change this to arm_feature(&cpu->env, 
-> ARM_FEATURE_EL2).
-
-Replied in v1:
-https://lore.kernel.org/qemu-devel/08f2c3ff-a509-4a96-a515-b3ceae2ea9ea@linaro.org/
-
+You are correct!
 
 
