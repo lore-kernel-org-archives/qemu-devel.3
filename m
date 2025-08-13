@@ -4,36 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 919F2CA0EE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 06:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6501C87FCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Aug 2025 06:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1um4j2-0006GG-2A; Wed, 13 Aug 2025 02:12:40 -0400
+	id 1um4nW-0001dy-Bm; Wed, 13 Aug 2025 02:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1um4iz-00067F-18; Wed, 13 Aug 2025 02:12:37 -0400
+ id 1um4nF-0001Vu-LE; Wed, 13 Aug 2025 02:17:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1um4is-0005Vm-Jz; Wed, 13 Aug 2025 02:12:36 -0400
+ id 1um4n9-00068d-4f; Wed, 13 Aug 2025 02:16:58 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C4361142E6E;
- Wed, 13 Aug 2025 09:12:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 98F66142E72;
+ Wed, 13 Aug 2025 09:16:47 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 42D1525FF76;
- Wed, 13 Aug 2025 09:12:24 +0300 (MSK)
-Message-ID: <30ecd389-fc8f-49e7-affa-99787f11d322@tls.msk.ru>
-Date: Wed, 13 Aug 2025 09:12:24 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 191C525FF7B;
+ Wed, 13 Aug 2025 09:16:49 +0300 (MSK)
+Message-ID: <92ee0558-81c6-45dc-8942-f344a279d637@tls.msk.ru>
+Date: Wed, 13 Aug 2025 09:16:48 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/3] rbd: Fix .bdrv_get_specific_info implementation
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: stefanha@redhat.com, qemu-devel@nongnu.org,
+Subject: Re: [PULL 1/2] hw/sd/ssi-sd: Return noise (dummy byte) when no card
+ connected
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Guenter Roeck <linux@roeck-us.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20250812195901.305895-1-kwolf@redhat.com>
- <20250812195901.305895-3-kwolf@redhat.com>
+References: <20250812165642.81157-1-philmd@linaro.org>
+ <20250812165642.81157-2-philmd@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,9 +83,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250812195901.305895-3-kwolf@redhat.com>
+In-Reply-To: <20250812165642.81157-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -89,7 +93,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,51 +109,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.08.2025 22:59, Kevin Wolf wrote:
-> qemu_rbd_get_specific_info() has at least two problems:
+On 12.08.2025 19:56, Philippe Mathieu-Daudé wrote:
+> Commit 1585ab9f1ba ("hw/sd/sdcard: Fill SPI response bits in card
+> code") exposed a bug in the SPI adapter: if no SD card is plugged,
+> we are returning "there is a card with an error". This is wrong,
+> we shouldn't return any particular packet response, but the noise
+> shifted on the MISO line. Return the dummy byte, otherwise we get:
 > 
-> The first is that it issues a blocking rbd_read() call in order to probe
-> the encryption format for the image while querying the node. This means
-> that if the connection to the server goes down, not only I/O is stuck
-> (which is unavoidable), but query-names-block-nodes will actually make
-> the whole QEMU instance unresponsive. .bdrv_get_specific_info
-> implementations shouldn't perform blocking operations, but only return
-> what is already known.
+>    qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion `s->arglen > 0' failed.
 > 
-> The second is that the information returned isn't even correct. If the
-> image is already opened with encryption enabled at the RBD level, we'll
-> probe for "double encryption", i.e. if the encrypted data contains
-> another encryption header. If it doesn't (which is the normal case), we
-> won't return the encryption format. If it does, we return misleading
-> information because it looks like we're talking about the outer level
-> (the encryption format of the image itself) while the information is
-> about an encryption header in the guest data.
-> 
-> Fix this by storing the encryption format in BDRVRBDState when the image
-> is opened (and we do blocking operations anyway) and returning only the
-> stored information in qemu_rbd_get_specific_info().
-> 
-> The information we'll store is either the actual encryption format that
-> we enabled on the RBD level, or if the image is unencrypted, the result
-> of the same probing as we previously did when querying the node. Probing
-> image formats based on content that can be modified by the guest has
-> long been known as problematic, but as long as we only output it to the
-> user instead of making decisions based on it, it should be okay. It is
-> undoubtedly useful in the context of 'qemu-img info' when you're trying
-> to figure out which encryption options you have to use to open the
-> image successfully.
-> 
-> Fixes: 42e4ac9ef5a6 ("block/rbd: Add support for rbd image encryption")
-> Buglink: https://issues.redhat.com/browse/RHEL-105440
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> Message-ID: <20250811134010.81787-1-kwolf@redhat.com>
-> Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> Reported-by: Guenter Roeck <linux@roeck-us.net>
+> Fixes: 775616c3ae8 ("Partial SD card SPI mode support")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Guenter Roeck <linux@roeck-us.net>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Tested-by: Alex Bennée <alex.bennee@linaro.org>
 
-This looks like a qemu-stable material (10.0).  Please let me know
+While the commit which exposed the bug is in 10.1, it looks to me like
+this is a qemu-stable material (7.2 & 10.0), because the bug is there,
+it just does not result in qemu assertion failure.  Please let me know
 if it is not.
-
-(For 7.2, it is probably not worth the effort).
 
 Thanks,
 
