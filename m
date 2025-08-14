@@ -4,79 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75012CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B898FCA0EE6
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXiU-0003C0-LM; Thu, 14 Aug 2025 09:10:03 -0400
+	id 1umXdv-0003Ln-RO; Thu, 14 Aug 2025 09:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1umXiO-00035D-HF
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:09:57 -0400
-Received: from p-east1-cluster3-host6-snip4-10.eps.apple.com ([57.103.91.191]
- helo=outbound.ci.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1umXiH-00067L-1V
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:09:56 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-20-percent-1 (Postfix) with ESMTPS id
- AFE411800195; Thu, 14 Aug 2025 13:09:40 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=w2CjkhliRfAUzMGtjsGF2RwoF2pCByth6J1Vhgg6ddo=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=jT3Whi09pKUZydcLOnzwiDB+3KcKr0WrS+MDq7cHXqM9qVIjLSjt+CVFwjueZ9/a4RlGAwFF3j9o3GGCDf6i/kvHloawSsa+ygL5PNN+FHFXC79RMbltzcK1VN+1lzq3999Qntekw7YsxwLQXsrvUC4ug64Lqq2YD2wQlqlxGqBMC33RcXls+COuGPieahGqApNdhJKNCZX0CNAqKVqTop9+QhDjEsSsmiCmY98pDN3JqFGCrnHzvTvtprLbL9BAI+llu/cGn++xJaA3n6A3QOGQzalo6oUKQpa5x0I3dgXvt1i+rSXdNpo/yIx54wJkW/UbFgP7Qm469+hK1yg0Cg==
-X-Client-IP: 212.60.126.184
-Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
- [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-20-percent-1 (Postfix) with ESMTPSA id
- 3BF1B1804E16; Thu, 14 Aug 2025 13:06:56 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH v6 12/13] target/arm: hvf: instantiate GIC early
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250808070137.48716-13-mohamed@unpredictable.fr>
-Date: Thu, 14 Aug 2025 15:06:44 +0200
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
- Cameron Esfahani <dirty@apple.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <FB7A9640-30C1-47FD-A1B7-73A7333BDB23@ynddal.dk>
-References: <20250808070137.48716-1-mohamed@unpredictable.fr>
- <20250808070137.48716-13-mohamed@unpredictable.fr>
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-X-Mailer: Apple Mail (2.3826.700.81)
-X-Proofpoint-GUID: XVFlJKab-qIt-4RmFc5HXcLpoDqQ8vvL
-X-Proofpoint-ORIG-GUID: XVFlJKab-qIt-4RmFc5HXcLpoDqQ8vvL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE0MDExMCBTYWx0ZWRfX2LZeA7mRVYqs
- 5mfFKvnu4hE3q3/NF7ybH4bpLlEb1dxehlZWtIESXwauW3WxmoULO1wmZKDUyKaidEKxf3kp2Mk
- F6oL6oBpp0ncpFqDrEV6FutpsNlhRMStC5uNeAZaqJRa0+YZ+vcJMtapqLNp1IDmQokIn1SGxKh
- BgdAKUQfXqa3xsf6l7gAqO1EOv87CXbQQVYO7kMNQuZzfg9fMqGcAP/NV5ozMn6Tvy9v67sKKVX
- f7thq9g5rVOWtC8SMQBitY1D4NkSdgQIdQByz3huLbyzl/9pxnNFPvpzVt9LDwBBRu4Yo3noQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-13_02,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=892
- malwarescore=0 mlxscore=0 spamscore=0
- suspectscore=0 clxscore=1030
- phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508140110
-Received-SPF: pass client-ip=57.103.91.191; envelope-from=mads@ynddal.dk;
- helo=outbound.ci.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1umXd2-0002PM-KR
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:26 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1umXcx-0005C5-9m
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:24 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-76e2eb6d07bso918512b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:04:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755176653; x=1755781453; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NHjAyHFO49Xnsrf4XYBbOWKhIj7dGvot2d9bfnaFFuQ=;
+ b=xSFtLu1fYuvWJtGQTx6g51ffCylKokfKa+akYiBujK70ISy5vYowH5w7y87mw0It1K
+ zyAimLWb20a+Zqh+tiMta3dQjpR939wfngBOOuakBmBfzJu4fDweivjpDShKIZ/yi54e
+ yXMECYOCeq+nt6/jJZ0C89SyDpaXDWhz9wra4UpV4NY/LCh5QtJ/7mwxg+9uPMfIANId
+ L8f875R1XItjqIlc02EP1CMBpl6/b3edp2kgRQSNUO5yKNKR4CuQ5nIDvGo8t+AxJttT
+ IMA7AsDdaZ1mjzZhMbp9BeoyR2MOsNoJgocmjyg61ucya11o7yaY9bEFFiAnl8wCfu3B
+ gkEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755176653; x=1755781453;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NHjAyHFO49Xnsrf4XYBbOWKhIj7dGvot2d9bfnaFFuQ=;
+ b=SqIECqy9Jjuo6m9vZfX3BTsp5uy/PebauGn+poPD5/0b+y1FgUaE0EvXgHnWfxKvds
+ yMKqlDuZmcVq6xsBhJDvH6l2fy3b/ISjs7STKh7RYCILyhBoRA9bf4on5jMk4ecvrEYS
+ g9euTdOoGpBBvFdoKAoNOVQ1Nz46gmiev2P46bkA6hDDlNaI5XDfUNSBGrWUtZYZLI3C
+ 3nOXh5fMR5hrDoXoN13Qhr9gYncw2h0+oiBl9eI/iW5GBGPD/XLnTiwRQ5ZcN63BJAkc
+ IA2bus+UOSK4NxcCoActDqnLjUXzx8F3LN5bvxRUxSz7fhhU7CLK8eU3ZPFbX51cn/9P
+ +9rw==
+X-Gm-Message-State: AOJu0YwSQUL+7VsDHM6RvrgIGHWV5i9TwHma68f7miuOMqt83hPc0Ab+
+ ls8TeZmlFzw8mOzMJ7WI48L7HBF3RA8iZVZlnnIVXFUS6AN/izhU/tkd6MNo6cLAb7C5BLLLhpf
+ H06xa5Kc=
+X-Gm-Gg: ASbGncstzleCaLLVbxeN0deb2e7+Wfbt88RRLXMBrlpe3ffKQu0Xa7SnkJAX795Op7U
+ EzMZeqPURWpLdl0LxpgIgVlBHZhPms2zaDmddTXoMWHNcIMt83yoTOyruQZXuRkNFyt2N5K3rUq
+ 5weWLXbUyN1rMBq3GCUy21Wt9BcnLp+l951ur7iIF/cp4MSa7Q32y8pvalNLxJo/1lKxj6GgWNF
+ D/nZzVwgiP3Vi/k8/nZqxfhSI5pXa8xOxUvKRRXI4jGYulX1VIH0m87APKDYweE9gJwQoMGkGp+
+ OAxGZ6ff5mXQdg/KQtgaghylRW+V6fzhvq5V5OKFpMEtNW7cKMC6/RuUD0l0xoroPXTSC8WJe9O
+ lCiV1YBR3dWrHO7xGk3BTLlGGO84bTgNod4Re6a5Hbgsov+I=
+X-Google-Smtp-Source: AGHT+IEvfvwkn3SJsnKBE8qpJUlA0Chrb3qugGLDUvIlAaAfKfoCZICZxRPH/UFwIPHFp3W0xhAWug==
+X-Received: by 2002:a05:6a00:23c4:b0:76b:ec81:bcc9 with SMTP id
+ d2e1a72fcca58-76e2fb2f79emr4054458b3a.21.1755176653245; 
+ Thu, 14 Aug 2025 06:04:13 -0700 (PDT)
+Received: from localhost.localdomain ([206.83.105.236])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.04.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Aug 2025 06:04:12 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 57/85] target/arm: Implement GCSSTR, GCSSTTR
+Date: Thu, 14 Aug 2025 22:57:24 +1000
+Message-ID: <20250814125752.164107-58-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
+References: <20250814125752.164107-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,58 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Note that CreateAccDescGCS() does not enable tagchecked,
+and Data Aborts from GCS instructions do not set iss.isv.
 
-> On 8 Aug 2025, at 09.01, Mohamed Mediouni <mohamed@unpredictable.fr> =
-wrote:
->=20
-> While figuring out a better spot for it, put it in =
-hv_arch_vm_create().
->=20
-> After hv_vcpu_create is documented as too late, and deferring
-> vCPU initialization isn't enough either.
->=20
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
-> target/arm/hvf/hvf.c | 15 +++++++++++++++
-> 1 file changed, 15 insertions(+)
->=20
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index 6da636724b..bb7b84ff35 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -1084,6 +1084,21 @@ hv_return_t hvf_arch_vm_create(MachineState =
-*ms, uint32_t pa_range)
->     }
->=20
->     ret =3D hv_vm_create(config);
-> +    if (hvf_irqchip_in_kernel()) {
-> +        /*
-> +         * Instantiate GIC.
-> +         * This must be done prior to the creation of any vCPU
-> +         * but past hv_vm_create()
-> +         */
-> +        hv_gic_config_t cfg =3D hv_gic_config_create();
-> +        hv_gic_config_set_distributor_base(cfg, 0x08000000);
-> +        hv_gic_config_set_redistributor_base(cfg, 0x080A0000);
-> +        hv_return_t err =3D hv_gic_create(cfg);
-> +        if (err !=3D HV_SUCCESS) {
-> +            error_report("error creating platform VGIC");
-> +            goto cleanup;
-> +         }
-> +    }
->=20
-> cleanup:
->     os_release(config);
-> --=20
-> 2.39.5 (Apple Git-154)
->=20
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 42 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/a64.decode      |  3 +++
+ 2 files changed, 45 insertions(+)
 
-It is difficult to find a place to initialize the GIC config, so I don't
-know if it gets better than this.
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index d803c10ac7..e0548f7180 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -139,6 +139,12 @@ static int core_user_mem_index(DisasContext *s, bool unpriv)
+     return arm_to_core_mmu_idx(arm_user_mem_index(s, unpriv));
+ }
+ 
++/* For a given translation regime, return the core mmu_idx for gcs access. */
++static int core_gcs_mem_index(ARMMMUIdx armidx)
++{
++    return arm_to_core_mmu_idx(regime_to_gcs(armidx));
++}
++
+ static void set_btype_raw(int val)
+ {
+     tcg_gen_st_i32(tcg_constant_i32(val), tcg_env,
+@@ -3902,6 +3908,42 @@ static bool trans_STLR_i(DisasContext *s, arg_ldapr_stlr_i *a)
+     return true;
+ }
+ 
++static bool trans_GCSSTR(DisasContext *s, arg_GCSSTR *a)
++{
++    ARMMMUIdx armidx;
++
++    if (!dc_isar_feature(aa64_gcs, s)) {
++        return false;
++    }
++
++    /*
++     * The pseudocode for GCSSTTR is
++     *
++     *   effective_el = AArch64.IsUnprivAccessPriv() ? PSTATE.EL : EL0;
++     *   if (effective_el == PSTATE.EL) CheckGCSSTREnabled();
++     *
++     * We have cached the result of IsUnprivAccessPriv in DisasContext,
++     * but since we need the result of arm_user_mem_index anyway, use
++     * the mmu_idx test as a proxy for the effective_el test.
++     */
++    armidx = arm_user_mem_index(s, a->unpriv);
++    if (armidx == s->mmu_idx && s->gcsstr_el != 0) {
++        gen_exception_insn_el(s, 0, EXCP_UDEF,
++                              syn_gcs_gcsstr(a->rn, a->rt),
++                              s->gcsstr_el);
++        return true;
++    }
++
++    if (a->rn == 31) {
++        gen_check_sp_alignment(s);
++    }
++    tcg_gen_qemu_st_i64(cpu_reg(s, a->rt),
++                        clean_data_tbi(s, cpu_reg_sp(s, a->rn)),
++                        core_gcs_mem_index(armidx),
++                        finalize_memop(s, MO_64 | MO_ALIGN));
++    return true;
++}
++
+ static bool trans_LD_mult(DisasContext *s, arg_ldst_mult *a)
+ {
+     TCGv_i64 clean_addr, tcg_rn, tcg_ebytes;
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 4315ed8dab..d034d96b37 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -554,6 +554,9 @@ LDAPR_i         10 011001 10 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext
+ LDAPR_i         00 011001 11 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext=1 sz=0
+ LDAPR_i         01 011001 11 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext=1 sz=1
+ 
++# GCSSTR, GCSSTTR
++GCSSTR          11011001 000 11111 000 unpriv:1 11 rn:5 rt:5
++
+ # Load/store multiple structures
+ # The 4-bit opcode in [15:12] encodes repeat count and structure elements
+ &ldst_mult      rm rn rt sz q p rpt selem
+-- 
+2.43.0
 
-Should the values 0x08000000 and 0x080A0000 be defined somewhere, or
-found through a look up? I see hw/arm/virt.c has them in the
-base_memmap.
-
-You can do os_release(cfg) after hv_gic_create.=
 
