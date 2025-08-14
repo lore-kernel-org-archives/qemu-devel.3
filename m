@@ -4,102 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F13CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 15:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74785CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 15:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umZuE-0006lZ-5i; Thu, 14 Aug 2025 11:30:18 -0400
+	id 1umZuw-0006tV-HC; Thu, 14 Aug 2025 11:31:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1umZuB-0006lL-T7
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 11:30:15 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1umZu2-0006sX-La
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 11:30:14 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 30BA1218B1;
- Thu, 14 Aug 2025 15:30:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755185404; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PIyEiLE1okx8zAk3546uq0Icnw9RVQzI3ZCARaNcYOg=;
- b=W6NxDmZEEGYQNafO2s/aT3eVyYcnAcuSndx1tShjAowwq7dBDIIJHrlmT40ojhykUpbIgG
- GcBP+FqaRT+yw+BxVytQ9oGLEniJj+aa2eTtK76jTztma/ZE+cKuuf8T6xajxewTkNkQ6Z
- m1lyvUS+CJ9gVte/ipFggVDW3Zlu1ns=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755185404;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PIyEiLE1okx8zAk3546uq0Icnw9RVQzI3ZCARaNcYOg=;
- b=2ruEQ6Aq+mmi1cRvNzuje6Qjb32dxUliMrXr8kXbtHB5wdmxMArSVR08HS/sUDVhFrlvHh
- rdpPMXpdc7WCOCCA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755185404; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PIyEiLE1okx8zAk3546uq0Icnw9RVQzI3ZCARaNcYOg=;
- b=W6NxDmZEEGYQNafO2s/aT3eVyYcnAcuSndx1tShjAowwq7dBDIIJHrlmT40ojhykUpbIgG
- GcBP+FqaRT+yw+BxVytQ9oGLEniJj+aa2eTtK76jTztma/ZE+cKuuf8T6xajxewTkNkQ6Z
- m1lyvUS+CJ9gVte/ipFggVDW3Zlu1ns=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755185404;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PIyEiLE1okx8zAk3546uq0Icnw9RVQzI3ZCARaNcYOg=;
- b=2ruEQ6Aq+mmi1cRvNzuje6Qjb32dxUliMrXr8kXbtHB5wdmxMArSVR08HS/sUDVhFrlvHh
- rdpPMXpdc7WCOCCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 980E413995;
- Thu, 14 Aug 2025 15:30:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 1Kk0FfsAnmhlDwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 14 Aug 2025 15:30:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 24/24] tests/qtest/migration: Pass the migration
- config to file tests
-In-Reply-To: <aJ3xuGRnd0mHSlxp@x1.local>
-References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-25-farosas@suse.de> <aJ3xuGRnd0mHSlxp@x1.local>
-Date: Thu, 14 Aug 2025 12:30:00 -0300
-Message-ID: <87tt29zzt3.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
+ id 1umZuu-0006sv-6B
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 11:31:00 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
+ id 1umZuo-0006yj-V0
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 11:30:58 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 8B0775C5575;
+ Thu, 14 Aug 2025 15:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51789C4CEED;
+ Thu, 14 Aug 2025 15:30:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1755185450;
+ bh=cvTYcOO2SFOCDjwerP1KEOTUieXi4c8bDV0Z2qhr2s4=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=jTOR52cELhkyDE+NrphwZYdLWf4cfJAMhSsdNkjjGXFVbnh3vqBpW91wVEGUkEYtJ
+ JRwUwCFEaf4x+OyYrdf0R9Ua1H5/GNFbwLX4h6vwnDEiIka6iFvJzrjB6meClf4B8X
+ WkXh/Yp7lXXwYtX1kgmHJ7Jz6UEKqS9UWLtHT8Mc=
+Date: Thu, 14 Aug 2025 17:30:46 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Zhang Yi <yi.zhang@huaweicloud.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>,
+ Anders Roxell <anders.roxell@linaro.org>,
+ Ben Copeland <benjamin.copeland@linaro.org>,
+ LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
+ Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
+ linux-perf-users@vger.kernel.org, Joseph Qi <jiangqi903@gmail.com>,
+ Jan Kara <jack@suse.cz>, linux-fsdevel@vger.kernel.org,
+ linux-ext4 <linux-ext4@vger.kernel.org>,
+ Zhang Yi <yi.zhang@huawei.com>, Theodore Ts'o <tytso@mit.edu>,
+ Baokun Li <libaokun1@huawei.com>
+Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
+Message-ID: <2025081436-upchuck-shush-adba@gregkh>
+References: <20250812173419.303046420@linuxfoundation.org>
+ <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
+ <2025081300-frown-sketch-f5bd@gregkh>
+ <CA+G9fYuEb7Y__CVHxZ8VkWGqfA4imWzXsBhPdn05GhOandg0Yw@mail.gmail.com>
+ <2025081311-purifier-reviver-aeb2@gregkh>
+ <42aace87-1b89-4b17-96f1-3efbabc4acf3@huaweicloud.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <42aace87-1b89-4b17-96f1-3efbabc4acf3@huaweicloud.com>
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=gregkh@linuxfoundation.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,255 +90,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Thu, Aug 14, 2025 at 09:27:49AM +0800, Zhang Yi wrote:
+> On 2025/8/13 22:53, Greg Kroah-Hartman wrote:
+> > On Wed, Aug 13, 2025 at 08:01:51PM +0530, Naresh Kamboju wrote:
+> >> Hi Greg,
+> >>
+> >>>> 2)
+> >>>>
+> >>>> The following list of LTP syscalls failure noticed on qemu-arm64 with
+> >>>> stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
+> >>>>
+> >>>> Most failures report ENOSPC (28) or mkswap errors, which may be related
+> >>>> to disk space handling in the 64K page configuration on qemu-arm64.
+> >>>>
+> >>>> The issue is reproducible on multiple runs.
+> >>>>
+> >>>> * qemu-arm64, ltp-syscalls - 64K page size test failures list,
+> >>>>
+> >>>>   - fallocate04
+> >>>>   - fallocate05
+> >>>>   - fdatasync03
+> >>>>   - fsync01
+> >>>>   - fsync04
+> >>>>   - ioctl_fiemap01
+> >>>>   - swapoff01
+> >>>>   - swapoff02
+> >>>>   - swapon01
+> >>>>   - swapon02
+> >>>>   - swapon03
+> >>>>   - sync01
+> >>>>   - sync_file_range02
+> >>>>   - syncfs01
+> >>>>
+> >>>> Reproducibility:
+> >>>>  - 64K config above listed test fails
+> >>>>  - 4K config above listed test pass.
+> >>>>
+> >>>> Regression Analysis:
+> >>>> - New regression? yes
+> >>>
+> >>> Regression from 6.16?  Or just from 6.15.y?
+> >>
+> >> Based on available data, the issue is not present in v6.16 or v6.15.
+> >>
+> >> Anders, bisected this regression and found,
+> >>
+> >>   ext4: correct the reserved credits for extent conversion
+> >>     [ Upstream commit 95ad8ee45cdbc321c135a2db895d48b374ef0f87 ]
+> >>
+> >> Report lore link,
+> >>
+> >> https://lore.kernel.org/stable/CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com/
+> > 
+> > Great, and that's also affecting 6.17-rc1 so we are "bug compatible"?
+> > :)
+> > 
+> 
+> Hi,
+> 
+> This issue has already fixed in 6.17-rc1 through this series:
+> 
+> https://lore.kernel.org/linux-ext4/20250707140814.542883-1-yi.zhang@huaweicloud.com/
+> 
+> 
+> To fix this issue in 6.16, it's necessary to backport the whole series
+> instead of just pick 5137d6c8906b ("ext4: fix insufficient credits
+> calculation in ext4_meta_trans_blocks()") and 95ad8ee45cdb {"ext4: correct
+> the reserved credits for extent conversion").  Otherwise, this will make
+> the problem more likely to occur.
 
-> On Mon, Jun 30, 2025 at 04:59:13PM -0300, Fabiano Rosas wrote:
->> Use the existing file tests to test the new way of passing parameters
->> to the migration via the config argument to qmp_migrate*.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  tests/qtest/migration/file-tests.c    | 68 +++++++++++----------------
->>  tests/qtest/migration/framework.c     |  9 ++--
->>  tests/qtest/migration/precopy-tests.c |  1 +
->>  3 files changed, 34 insertions(+), 44 deletions(-)
->> 
->> diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
->> index 4d78ce0855..656d6527e8 100644
->> --- a/tests/qtest/migration/file-tests.c
->> +++ b/tests/qtest/migration/file-tests.c
->> @@ -27,6 +27,7 @@ static void test_precopy_file(void)
->>      MigrateCommon args = {
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->> +        .start.config = qdict_new(),
->>      };
->>  
->>      test_file_common(&args, true);
->> @@ -74,6 +75,7 @@ static void test_precopy_file_offset_fdset(void)
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->>          .start_hook = migrate_hook_start_file_offset_fdset,
->> +        .start.config = qdict_new(),
->>      };
->>  
->>      test_file_common(&args, false);
->> @@ -88,6 +90,7 @@ static void test_precopy_file_offset(void)
->>      MigrateCommon args = {
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->> +        .start.config = qdict_new(),
->>      };
->>  
->>      test_file_common(&args, false);
->> @@ -102,6 +105,7 @@ static void test_precopy_file_offset_bad(void)
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->>          .result = MIG_TEST_QMP_ERROR,
->> +        .start.config = qdict_new(),
->>      };
->>  
->>      test_file_common(&args, false);
->> @@ -114,11 +118,10 @@ static void test_precopy_file_mapped_ram_live(void)
->>      MigrateCommon args = {
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->> -        .start = {
->> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
->> -        },
->> +        .start.config = qdict_new(),
->>      };
->>  
->> +    qdict_put_bool(args.start.config, "mapped-ram", true);
->>      test_file_common(&args, false);
->>  }
->>  
->> @@ -129,11 +132,9 @@ static void test_precopy_file_mapped_ram(void)
->>      MigrateCommon args = {
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->> -        .start = {
->> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
->> -        },
->> +        .start.config = qdict_new(),
->>      };
->> -
->> +    qdict_put_bool(args.start.config, "mapped-ram", true);
->>      test_file_common(&args, true);
->>  }
->>  
->> @@ -144,12 +145,11 @@ static void test_multifd_file_mapped_ram_live(void)
->>      MigrateCommon args = {
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->> -        .start = {
->> -            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
->> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
->> -        },
->> +        .start.config = qdict_new(),
->>      };
->>  
->> +    qdict_put_bool(args.start.config, "mapped-ram", true);
->> +    qdict_put_bool(args.start.config, "multifd", true);
->>      test_file_common(&args, false);
->>  }
->>  
->> @@ -160,24 +160,13 @@ static void test_multifd_file_mapped_ram(void)
->>      MigrateCommon args = {
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->> -        .start = {
->> -            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
->> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
->> -        },
->> +        .start.config = qdict_new(),
->>      };
->> -
->> +    qdict_put_bool(args.start.config, "mapped-ram", true);
->> +    qdict_put_bool(args.start.config, "multifd", true);
->>      test_file_common(&args, true);
->>  }
->>  
->> -static void *migrate_hook_start_multifd_mapped_ram_dio(QTestState *from,
->> -                                                       QTestState *to)
->> -{
->> -    migrate_set_parameter_bool(from, "direct-io", true);
->> -    migrate_set_parameter_bool(to, "direct-io", true);
->> -
->> -    return NULL;
->> -}
->> -
->>  static void test_multifd_file_mapped_ram_dio(void)
->>  {
->>      g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
->> @@ -185,13 +174,13 @@ static void test_multifd_file_mapped_ram_dio(void)
->>      MigrateCommon args = {
->>          .connect_uri = uri,
->>          .listen_uri = "defer",
->> -        .start_hook = migrate_hook_start_multifd_mapped_ram_dio,
->> -        .start = {
->> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
->> -            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
->> -        },
->> +        .start.config = qdict_new(),
->>      };
->>  
->> +    qdict_put_bool(args.start.config, "direct-io", true);
->
-> So the start_hook doesn't take args so we need to duplicate all these
-> direct-io setups in each test.. I assume not a big deal so it's fine, but
-> this is slightly going backward for sure..
->
+Thanks, I'll just postpone this one for now.
 
-I'm not sure it is. Having to go follow the hooks is confusing,
-specially when hook names start to get similar. Having the test provide
-everything it needs right here is clearer. Also, maintenance of the
-hooks is a pain when it comes to code conflicts. I'd like to see less
-hooks overall.
-
-> What's your plan in mind on the tests?  Looks like you want to keep both
-> ways in tests/, only use it in some tests to cover both paths (and you
-> chose file-tests to start testing config)?  Or is this only an example and
-> you plan to convert more?
->
-
-Yes the idea is to cover both paths and I chose file-tests for config
-arbitrarily.
-
-
->
-> +    qdict_put_bool(args.start.config, "mapped-ram", true);
->> +    qdict_put_bool(args.start.config, "multifd", true);
->> +
->>      if (!probe_o_direct_support(tmpfs)) {
->>          g_test_skip("Filesystem does not support O_DIRECT");
->>          return;
->> @@ -235,9 +224,6 @@ static void *migrate_hook_start_multifd_mapped_ram_fdset_dio(QTestState *from,
->>      fdset_add_fds(from, file, O_WRONLY, 2, true);
->>      fdset_add_fds(to, file, O_RDONLY, 2, true);
->>  
->> -    migrate_set_parameter_bool(from, "direct-io", true);
->> -    migrate_set_parameter_bool(to, "direct-io", true);
->> -
->>      return NULL;
->>  }
->>  
->> @@ -261,12 +247,11 @@ static void test_multifd_file_mapped_ram_fdset(void)
->>          .listen_uri = "defer",
->>          .start_hook = migrate_hook_start_multifd_mapped_ram_fdset,
->>          .end_hook = migrate_hook_end_multifd_mapped_ram_fdset,
->> -        .start = {
->> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
->> -            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
->> -        },
->> +        .start.config = qdict_new(),
->>      };
->>  
->> +    qdict_put_bool(args.start.config, "mapped-ram", true);
->> +    qdict_put_bool(args.start.config, "multifd", true);
->>      test_file_common(&args, true);
->>  }
->>  
->> @@ -279,12 +264,13 @@ static void test_multifd_file_mapped_ram_fdset_dio(void)
->>          .listen_uri = "defer",
->>          .start_hook = migrate_hook_start_multifd_mapped_ram_fdset_dio,
->>          .end_hook = migrate_hook_end_multifd_mapped_ram_fdset,
->> -        .start = {
->> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
->> -            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
->> -        },
->> +        .start.config = qdict_new(),
->>      };
->>  
->> +    qdict_put_bool(args.start.config, "direct-io", true);
->> +    qdict_put_bool(args.start.config, "mapped-ram", true);
->> +    qdict_put_bool(args.start.config, "multifd", true);
->> +
->>      if (!probe_o_direct_support(tmpfs)) {
->>          g_test_skip("Filesystem does not support O_DIRECT");
->>          return;
->> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
->> index 5025299d6a..37c5c884af 100644
->> --- a/tests/qtest/migration/framework.c
->> +++ b/tests/qtest/migration/framework.c
->> @@ -974,18 +974,21 @@ void test_file_common(MigrateCommon *args, bool stop_src)
->>      }
->>  
->>      if (args->result == MIG_TEST_QMP_ERROR) {
->> -        migrate_qmp_fail(from, args->connect_uri, NULL, "{}");
->> +        migrate_qmp_fail(from, args->connect_uri, NULL, "{ 'config': %p }",
->> +                         args->start.config);
->>          goto finish;
->>      }
->>  
->> -    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
->> +    migrate_qmp(from, to, args->connect_uri, NULL, "{ 'config': %p }",
->> +                args->start.config);
->>      wait_for_migration_complete(from);
->>  
->>      /*
->>       * We need to wait for the source to finish before starting the
->>       * destination.
->>       */
->> -    migrate_incoming_qmp(to, args->connect_uri, NULL, "{}");
->> +    migrate_incoming_qmp(to, args->connect_uri, NULL, "{ 'config': %p }",
->> +                         args->start.config);
->>      wait_for_migration_complete(to);
->>  
->>      if (stop_src) {
->> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
->> index 35d4274c69..9606dc1d02 100644
->> --- a/tests/qtest/migration/precopy-tests.c
->> +++ b/tests/qtest/migration/precopy-tests.c
->> @@ -338,6 +338,7 @@ static void test_precopy_fd_file(void)
->>          .connect_uri = "fd:fd-mig",
->>          .start_hook = migrate_hook_start_precopy_fd_file,
->>          .end_hook = migrate_hook_end_fd,
->> +        .start.config = qdict_new(),
->>      };
->>      test_file_common(&args, true);
->>  }
->> -- 
->> 2.35.3
->> 
+greg k-h
 
