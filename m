@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B898FCA0EE6
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A74D2CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:19:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXdv-0003Ln-RO; Thu, 14 Aug 2025 09:05:20 -0400
+	id 1umXcZ-0001zs-Kx; Thu, 14 Aug 2025 09:03:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXd2-0002PM-KR
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:26 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1umXcM-0001nF-Kh
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:03:42 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXcx-0005C5-9m
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:24 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-76e2eb6d07bso918512b3a.3
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:04:15 -0700 (PDT)
+ id 1umXcK-00055I-7E
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:03:42 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-76e2e618a98so723933b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:03:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755176653; x=1755781453; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755176615; x=1755781415; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NHjAyHFO49Xnsrf4XYBbOWKhIj7dGvot2d9bfnaFFuQ=;
- b=xSFtLu1fYuvWJtGQTx6g51ffCylKokfKa+akYiBujK70ISy5vYowH5w7y87mw0It1K
- zyAimLWb20a+Zqh+tiMta3dQjpR939wfngBOOuakBmBfzJu4fDweivjpDShKIZ/yi54e
- yXMECYOCeq+nt6/jJZ0C89SyDpaXDWhz9wra4UpV4NY/LCh5QtJ/7mwxg+9uPMfIANId
- L8f875R1XItjqIlc02EP1CMBpl6/b3edp2kgRQSNUO5yKNKR4CuQ5nIDvGo8t+AxJttT
- IMA7AsDdaZ1mjzZhMbp9BeoyR2MOsNoJgocmjyg61ucya11o7yaY9bEFFiAnl8wCfu3B
- gkEw==
+ bh=6yp6GjOVr5sFSu+DGzVCc+heSPSS1fAAC7M3WZ7lFas=;
+ b=PrSW7HjfMN8woCbZ/B3ORMCGhXyNHIu0BJ5uXGqokPIDsgs/iTxywq6hlbaZ7NOOsE
+ KnmDr7ojpXkn3wOXtJRR6XX7vDuKAcPENZo6R/fb6hZ+OuIhyqqvZSxGxAnjEGSrBaxE
+ iijivDnvOKoMmowY2p+HoBbl0uVHqnP2u5BQrxR4zNRf9Wa5yEWrteGaGw+E3IYa5r4Z
+ EFV5Fv1Nrvt6Ai/WE+NXmkTtBLUUuMZAbPv2QlSCbKmE8Ez8EgfA+qzAuPWNMZKaO1Mu
+ 0j8wK3IYnrEYSWBZfFKleBhfb0MMHSsnnFm7wzaEOitw9QGr8K6TFZglDWmTdYnEHLVn
+ oRIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755176653; x=1755781453;
+ d=1e100.net; s=20230601; t=1755176615; x=1755781415;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NHjAyHFO49Xnsrf4XYBbOWKhIj7dGvot2d9bfnaFFuQ=;
- b=SqIECqy9Jjuo6m9vZfX3BTsp5uy/PebauGn+poPD5/0b+y1FgUaE0EvXgHnWfxKvds
- yMKqlDuZmcVq6xsBhJDvH6l2fy3b/ISjs7STKh7RYCILyhBoRA9bf4on5jMk4ecvrEYS
- g9euTdOoGpBBvFdoKAoNOVQ1Nz46gmiev2P46bkA6hDDlNaI5XDfUNSBGrWUtZYZLI3C
- 3nOXh5fMR5hrDoXoN13Qhr9gYncw2h0+oiBl9eI/iW5GBGPD/XLnTiwRQ5ZcN63BJAkc
- IA2bus+UOSK4NxcCoActDqnLjUXzx8F3LN5bvxRUxSz7fhhU7CLK8eU3ZPFbX51cn/9P
- +9rw==
-X-Gm-Message-State: AOJu0YwSQUL+7VsDHM6RvrgIGHWV5i9TwHma68f7miuOMqt83hPc0Ab+
- ls8TeZmlFzw8mOzMJ7WI48L7HBF3RA8iZVZlnnIVXFUS6AN/izhU/tkd6MNo6cLAb7C5BLLLhpf
- H06xa5Kc=
-X-Gm-Gg: ASbGncstzleCaLLVbxeN0deb2e7+Wfbt88RRLXMBrlpe3ffKQu0Xa7SnkJAX795Op7U
- EzMZeqPURWpLdl0LxpgIgVlBHZhPms2zaDmddTXoMWHNcIMt83yoTOyruQZXuRkNFyt2N5K3rUq
- 5weWLXbUyN1rMBq3GCUy21Wt9BcnLp+l951ur7iIF/cp4MSa7Q32y8pvalNLxJo/1lKxj6GgWNF
- D/nZzVwgiP3Vi/k8/nZqxfhSI5pXa8xOxUvKRRXI4jGYulX1VIH0m87APKDYweE9gJwQoMGkGp+
- OAxGZ6ff5mXQdg/KQtgaghylRW+V6fzhvq5V5OKFpMEtNW7cKMC6/RuUD0l0xoroPXTSC8WJe9O
- lCiV1YBR3dWrHO7xGk3BTLlGGO84bTgNod4Re6a5Hbgsov+I=
-X-Google-Smtp-Source: AGHT+IEvfvwkn3SJsnKBE8qpJUlA0Chrb3qugGLDUvIlAaAfKfoCZICZxRPH/UFwIPHFp3W0xhAWug==
-X-Received: by 2002:a05:6a00:23c4:b0:76b:ec81:bcc9 with SMTP id
- d2e1a72fcca58-76e2fb2f79emr4054458b3a.21.1755176653245; 
- Thu, 14 Aug 2025 06:04:13 -0700 (PDT)
+ bh=6yp6GjOVr5sFSu+DGzVCc+heSPSS1fAAC7M3WZ7lFas=;
+ b=jnzTWtRT94gUyvS3zGxljFOUD8qCuOmBSblcfwB+VU6qVEZQ0FD9bZ+B2+Y1//gAbt
+ AxPaY0QQhduNYh3Z7kg6IRVvdTCfjDP5tQwbSXZucix7t6vOeFA5X/4NjEUrPLe9uzmx
+ zMqGRfAFIi9xtmQW3pIlCaoiMMNaSko59dNC0RvG7Fyiyu4jP5HUxI0id8fLxEjyqHDv
+ JKxyN5krar8SIZ6HFMJmpzy9Laq+pv5NO3BhvyZ7MEvorMBLRvgYN7Cw7uQ5WQDCfkFv
+ GQMpamLS7WNRWnR0xq+F0vz5I1nlp6VGV5J2g/lsaSw/qEIw0RK/KjX2vcDzVDg66k/6
+ Dxaw==
+X-Gm-Message-State: AOJu0Yzs5FxObtZJbjM+T7LBKU3xFs8CqA4/h+OjEoU25mZY7XIL1AVC
+ ciu7HJCIe8pHZ0m94+9hcfac8WLeN7W+Z8g0IA7xwoFwTiZyXlmSYEIMywW1fWcyM+bFbhMWr6S
+ 53oWPKg4=
+X-Gm-Gg: ASbGncvOP2nTmxSWabfpZKxBksJmENlA5/xsY6O59SDWo55WOo1jxDtiAV/J6R9yBCi
+ Nbf+0SNRMHj6IoiDWtXR03uhWFa+yNKmpA5oUlXmjISLudfkqpKlI2uRAGWbqQ547baMZavWkNZ
+ s2EwVEyLj1PLRNEFpdtgCwhOTxy5/grQ17jMWM6lTD9fLtqC29ZRIk5fDAFRHzRdjE4NolCvyEu
+ yy4MHu1I+epmdqLlDNI2a6Ir3PXqkxSxH7Pgw/W3gTmbVzpnMcin94gqdhmGFRIDThbFC5c3y36
+ gcte57jPBj438DuFxonTp6BWRGWuHgI8uF8DxBuLvKCtZmxTG8ookegT72fUe1lxgHsOn7ZVgJj
+ PIU/olOyyldWrHJmTIaq9woM+R0MvAkFJ2wpchh/szNV8EXw=
+X-Google-Smtp-Source: AGHT+IFOC0GrVvjWN9ArDtg6B4W1m8X3ZTuXEPQhDMMDlj2ImnQHbJKuKAvBLAvloAAY6281VHG0Nw==
+X-Received: by 2002:a05:6a21:6d95:b0:220:7cd5:e803 with SMTP id
+ adf61e73a8af0-240bd220406mr4524143637.21.1755176614440; 
+ Thu, 14 Aug 2025 06:03:34 -0700 (PDT)
 Received: from localhost.localdomain ([206.83.105.236])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.04.10
+ d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.03.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 06:04:12 -0700 (PDT)
+ Thu, 14 Aug 2025 06:03:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 57/85] target/arm: Implement GCSSTR, GCSSTTR
-Date: Thu, 14 Aug 2025 22:57:24 +1000
-Message-ID: <20250814125752.164107-58-richard.henderson@linaro.org>
+Subject: [PATCH v3 45/85] target/arm: Support page protections for GCS mmu
+ indexes
+Date: Thu, 14 Aug 2025 22:57:12 +1000
+Message-ID: <20250814125752.164107-46-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
 References: <20250814125752.164107-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,90 +102,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Note that CreateAccDescGCS() does not enable tagchecked,
-and Data Aborts from GCS instructions do not set iss.isv.
+Take read and write from the s1perms.gcs bit computed
+by the Arm pseudocode.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 42 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/a64.decode      |  3 +++
- 2 files changed, 45 insertions(+)
+ target/arm/ptw.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index d803c10ac7..e0548f7180 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -139,6 +139,12 @@ static int core_user_mem_index(DisasContext *s, bool unpriv)
-     return arm_to_core_mmu_idx(arm_user_mem_index(s, unpriv));
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index ee887d9a02..3c84f0f024 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1584,12 +1584,16 @@ static int get_S1prot_indirect(CPUARMState *env, S1Translate *ptw,
+         }
+     }
+ 
+-    if (perm & PAGE_WXN) {
++    if (regime_is_gcs(mmu_idx)) {
++        /*
++         * Note that the one s1perms.gcs bit controls both read and write
++         * access via AccessType_GCS.  See AArch64.S1CheckPermissions.
++         */
++        perm = (perm & PAGE_GCS ? PAGE_READ | PAGE_WRITE : 0);
++    } else if (perm & PAGE_WXN) {
+         perm &= ~PAGE_EXEC;
+     }
+ 
+-    /* TODO: FEAT_GCS */
+-
+     return perm & PAGE_RWX;
  }
  
-+/* For a given translation regime, return the core mmu_idx for gcs access. */
-+static int core_gcs_mem_index(ARMMMUIdx armidx)
-+{
-+    return arm_to_core_mmu_idx(regime_to_gcs(armidx));
-+}
-+
- static void set_btype_raw(int val)
- {
-     tcg_gen_st_i32(tcg_constant_i32(val), tcg_env,
-@@ -3902,6 +3908,42 @@ static bool trans_STLR_i(DisasContext *s, arg_ldapr_stlr_i *a)
-     return true;
- }
- 
-+static bool trans_GCSSTR(DisasContext *s, arg_GCSSTR *a)
-+{
-+    ARMMMUIdx armidx;
-+
-+    if (!dc_isar_feature(aa64_gcs, s)) {
-+        return false;
-+    }
-+
-+    /*
-+     * The pseudocode for GCSSTTR is
-+     *
-+     *   effective_el = AArch64.IsUnprivAccessPriv() ? PSTATE.EL : EL0;
-+     *   if (effective_el == PSTATE.EL) CheckGCSSTREnabled();
-+     *
-+     * We have cached the result of IsUnprivAccessPriv in DisasContext,
-+     * but since we need the result of arm_user_mem_index anyway, use
-+     * the mmu_idx test as a proxy for the effective_el test.
-+     */
-+    armidx = arm_user_mem_index(s, a->unpriv);
-+    if (armidx == s->mmu_idx && s->gcsstr_el != 0) {
-+        gen_exception_insn_el(s, 0, EXCP_UDEF,
-+                              syn_gcs_gcsstr(a->rn, a->rt),
-+                              s->gcsstr_el);
-+        return true;
-+    }
-+
-+    if (a->rn == 31) {
-+        gen_check_sp_alignment(s);
-+    }
-+    tcg_gen_qemu_st_i64(cpu_reg(s, a->rt),
-+                        clean_data_tbi(s, cpu_reg_sp(s, a->rn)),
-+                        core_gcs_mem_index(armidx),
-+                        finalize_memop(s, MO_64 | MO_ALIGN));
-+    return true;
-+}
-+
- static bool trans_LD_mult(DisasContext *s, arg_ldst_mult *a)
- {
-     TCGv_i64 clean_addr, tcg_rn, tcg_ebytes;
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 4315ed8dab..d034d96b37 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -554,6 +554,9 @@ LDAPR_i         10 011001 10 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext
- LDAPR_i         00 011001 11 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext=1 sz=0
- LDAPR_i         01 011001 11 0 ......... 00 ..... ..... @ldapr_stlr_i sign=1 ext=1 sz=1
- 
-+# GCSSTR, GCSSTTR
-+GCSSTR          11011001 000 11111 000 unpriv:1 11 rn:5 rt:5
-+
- # Load/store multiple structures
- # The 4-bit opcode in [15:12] encodes repeat count and structure elements
- &ldst_mult      rm rn rt sz q p rpt selem
+@@ -2236,6 +2240,13 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+              */
+             prot = get_S1prot_indirect(env, ptw, mmu_idx, pi, po,
+                                        result->f.attrs.space, out_space);
++        } else if (regime_is_gcs(mmu_idx)) {
++            /*
++             * While one must use indirect permissions to successfully
++             * use GCS instructions, AArch64.S1DirectBasePermissions
++             * faithfully supplies s1perms.gcs = 0, Just In Case.
++             */
++            prot = 0;
+         } else {
+             int xn = extract64(attrs, 54, 1);
+             int pxn = extract64(attrs, 53, 1);
 -- 
 2.43.0
 
