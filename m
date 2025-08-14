@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E608ECA0EE6
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB9BBCA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:12:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXef-0004Pw-AW; Thu, 14 Aug 2025 09:06:05 -0400
+	id 1umXYY-0002N8-GG; Thu, 14 Aug 2025 08:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXda-00036a-TY
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:05:03 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1umXYM-00021f-07
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:59:37 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXdO-0005Ih-Ue
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:55 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-76e2ebe86ecso1165065b3a.3
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:04:45 -0700 (PDT)
+ id 1umXYD-0004Me-MK
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:59:32 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-76e2ea6ccb7so683529b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 05:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755176684; x=1755781484; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755176362; x=1755781162; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zUATJGpL2aZmNHvgdIJrCiimV4Ex+T+dDBuXOQXlrRM=;
- b=VQCW5FfuPuK1puZq4Wmpa0JrLyZJVHMGOt2MhX77FgFoOzgsmD11+1bMgbhs02qgx2
- e1BDpMtIspILdedS0f3Y5EhLIVjYEIivGRLK+cTnnBlDrjWZLRNm6XPdTfYQFQjgAgoT
- DU4egfwaIgn3Ne8rl0YbvThgrniz4ksAZMPlyi7p+NWM3lkP3upvVQ+kPflZepvitC74
- 6o/WztHlfdkTo6sSmJKfjq+RjZjr8G6fYficBJo/kpOkAHJVE882Wk3W4NK67jQOn+pk
- v94g8niIUhoPIXhZ9dAcCksmnVRFAQ8o+o1vUjAhuRp2ktHKXl/itrovPBy7iv4BsN1r
- A3Pw==
+ bh=80S2/0N0JL09bgOILR4cEYvK2n2zuzmPlht61UmRSoo=;
+ b=LOYregu/nFrdvOixy2X3yi8KHvJvSGSE3cM4BIhx55RM5e5fm+Fw4NW1zgyE0fSPSi
+ 1bT8t9PDxrOVo04do9B4SYDEBohvUx/OVPxmxsWzZEPnObgHesputwhy9ZCmLkUv4WhC
+ dEuxNygA516wWNrvIzj7Zu7VxceRMQPczeUtu5QsExqLHE9DAxGydRkWNkkg8GkLWlG2
+ Cv7Yj5w97eJg+6zLBQeCrfrBeDJX0mLkuHkYLdJLF+SVvvRj4BlzbbOQEB6vKHYZji4V
+ nfY+TQsSivG1om5OmHnl5FRKvpdPhtcVfdKZzxgBDs0rOrf4M64Q6ANHQ9H5d9ZudgbE
+ RZOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755176684; x=1755781484;
+ d=1e100.net; s=20230601; t=1755176362; x=1755781162;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zUATJGpL2aZmNHvgdIJrCiimV4Ex+T+dDBuXOQXlrRM=;
- b=vK7m42xzsXp7APJwp2wtDFkHwyysmjXTkLWpMgrDiec+ZVcejvIlM9Toenw6+KDyAU
- LZsa56qJoXfQOOYjxluDmfZEJZcbtNOdEErP2TSuX5VdR42HCZtn2u0E8lZdOOhLhc+N
- aWUYfCm5UyafsM1uFnUjA6jWtE1TWwZfmXhXoIF+HrW/hdXUzkO4+2lv3eY+Jx+f0+IW
- jQq/NmnnPOsTbbgBSbR/lIf1bfnQCOPHLe0O7jmusFusfburAKYfMauSddn7r1t4mENq
- 5M237NXT5nRhe4uG2vKf5jJw2VkIz21nOBtNw56SXjZSEmzlSHQzmoYZDX63RgT1JGG8
- ZJ/A==
-X-Gm-Message-State: AOJu0Yz80746fxdgzI97RdhLECBYXCLbcnC4DinLIKLHS8gVv/jkNIaA
- VciUjxa8fRNHB32eO3azTr0PJ25YqrSh4cjGoXSQ/3fjbg424Ta8NR6tS8EihjwjNVpVNR8FN70
- TVLHctTc=
-X-Gm-Gg: ASbGncu4dQFtH2KxUwzFhLlPqofxAPstR8Jau+kriaVMa3UHi4wGzAp9M6HJWIBDS77
- zWKtpXJkdINPaWk+L/GoA47YjeQTTIA5jaaKIm5TF6SxiSaFfC8pQ1fKHeW7M7IY6nZ81WFUlrx
- lWineBxTCqgi6ybQ4Q0LiWmyB/v7aKKmST2AYyKp1vWZ+vq5pS4PTa2MVfcKfnDIMDEYuF6X+uS
- LOnBtic9Hn780nQLCr92SLFwHIhSJvJgAM4ELdAeQ5BPdRYzot3WG4gTo/ERANohIHJlCuyWKn+
- oEua9B5N8rJOTy7OP7jakL60trWFw9jtnZJWyuiS5mP0YuozUPkQU8R0MtuP19I3HMQX0AQ78yK
- hzJ/I1kk+8YXC46higsa0T5j8v2pF3OL1mjTzk90sOuHEREI=
-X-Google-Smtp-Source: AGHT+IFV3CkynLpXycITZt6NVyg51oEddwnNqu2toXxNeMuBwWdA0u6guxJHRV/xtjr/9f+zeag0Ug==
-X-Received: by 2002:a05:6a00:7095:b0:76b:caa5:9a32 with SMTP id
- d2e1a72fcca58-76e2fb315b1mr4497765b3a.11.1755176683611; 
- Thu, 14 Aug 2025 06:04:43 -0700 (PDT)
+ bh=80S2/0N0JL09bgOILR4cEYvK2n2zuzmPlht61UmRSoo=;
+ b=HbtxNlTUEC7U/qNNPYPf8OGLgqQ+ZDwDpWDn3MPm7tuWMB4JyE1M38//R562Nqqupy
+ jnkwgks7WuekKBCkNGnY/s9DTfhmBKG2uAbqCOZuSzJw1uxU3f1a9NW1eMfQdVA8Gjhx
+ wLhQON81Tc2WjJOTym/nRqr9YGOLETxiNvEmqgkJVTXQ+xMwV+9JF+uCnMYp9WviHOK1
+ G58cBCJoWCozsDVbzjD98DWaoByc58O78C5L8zXXx/Dm71VljrAZrRCiq3HUPU1q0cCW
+ C4kE68l7wAr39DdwZVGr+tnXr4W0KpmgU295q2znyt4FK09/ULgjbdUJXJl2jrU7wAkD
+ Vdqg==
+X-Gm-Message-State: AOJu0YzTLsuTTaanC7FUavptm0DLR5F3xg+zlVRE+W9wt1cT8JXr6FTD
+ mBsRGLwTN/ILoDd81IvcHgHFBYuQIg0mYcQmvfz4iSm7i2R1SVFMp227EywfPQi72Zevsq3AZjl
+ yWnp2gVQ=
+X-Gm-Gg: ASbGncsZhdO22wV3Nhm42KeOVvTq+opgxHqaMlBAVRW+hFp8vyh3LtqKY2zPKcfamKW
+ NkY7PwKo/RwopiaBQBYZRXPoYOgtGXofncCkHVx2y6npMQBmbxMcQO44LXAK/ty85VZ7BbrzXg/
+ PKLbEsLlpewusPNAtu8l30OIzqNTFdVITHvId38oIvJTdfol3zw05DbkSRVMCdGatkZTJvx1MYa
+ Ph+b1N4hJK0UVvS0v3w5U5j2Yl8Rg4PquyunCtb9mpTEm57onm0lYwLRG6xlhZpoolv4kZjO0vr
+ vs2gU4kTmzf+VzsAUf1BtPY3J8u8cPS0St5TezZfQJf5NZm3m2gDOgrCKwgssJtVXIUppLX8pmV
+ WMhpGMYWcQiv/RO9zve/mq1QUUlltTiqq9tkLipm4fbp3Q/A=
+X-Google-Smtp-Source: AGHT+IHhYC0xNlnUEaGC2fWjEHijjpRhl8GIo8wE01KmXFl0fmZtqNNfvsrhGALl8yukwaPyVTdD0A==
+X-Received: by 2002:a17:902:c410:b0:242:a0b0:3c28 with SMTP id
+ d9443c01a7336-24458b9cd96mr46529665ad.51.1755176361692; 
+ Thu, 14 Aug 2025 05:59:21 -0700 (PDT)
 Received: from localhost.localdomain ([206.83.105.236])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.04.41
+ 98e67ed59e1d1-3233100c994sm1766256a91.21.2025.08.14.05.59.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 06:04:43 -0700 (PDT)
+ Thu, 14 Aug 2025 05:59:21 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 67/85] target/arm: Add gcs record for BLR
-Date: Thu, 14 Aug 2025 22:57:34 +1000
-Message-ID: <20250814125752.164107-68-richard.henderson@linaro.org>
+Subject: [PATCH v3 25/85] target/arm: Enable FEAT_S1PIE and FEAT_S2PIE on -cpu
+ max
+Date: Thu, 14 Aug 2025 22:56:52 +1000
+Message-ID: <20250814125752.164107-26-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
 References: <20250814125752.164107-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,37 +105,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ target/arm/tcg/cpu64.c        | 2 ++
+ docs/system/arm/emulation.rst | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 957ec232a8..62cc565229 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1782,15 +1782,15 @@ static bool trans_BR(DisasContext *s, arg_r *a)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 22ccc4f697..f4a41c854f 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1253,6 +1253,8 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64MMFR3, SCTLRX, 1);     /* FEAT_SCTLR2 */
+     t = FIELD_DP64(t, ID_AA64MMFR3, MEC, 1);        /* FEAT_MEC */
+     t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
++    t = FIELD_DP64(t, ID_AA64MMFR3, S1PIE, 1);    /* FEAT_S1PIE */
++    t = FIELD_DP64(t, ID_AA64MMFR3, S2PIE, 1);    /* FEAT_S2PIE */
+     SET_IDREG(isar, ID_AA64MMFR3, t);
  
- static bool trans_BLR(DisasContext *s, arg_r *a)
- {
--    TCGv_i64 dst = cpu_reg(s, a->rn);
--    TCGv_i64 lr = cpu_reg(s, 30);
--    if (dst == lr) {
--        TCGv_i64 tmp = tcg_temp_new_i64();
--        tcg_gen_mov_i64(tmp, dst);
--        dst = tmp;
-+    TCGv_i64 link = tcg_temp_new_i64();
-+
-+    gen_pc_plus_diff(s, link, 4);
-+    if (s->gcs_en) {
-+        gen_add_gcs_record(s, link);
-     }
--    gen_pc_plus_diff(s, lr, curr_insn_len(s));
--    gen_a64_set_pc(s, dst);
-+    gen_a64_set_pc(s, cpu_reg(s, a->rn));
-+    tcg_gen_mov_i64(cpu_reg(s, 30), link);
-+
-     set_btype_for_blr(s);
-     s->base.is_jmp = DISAS_JUMP;
-     return true;
+     t = GET_IDREG(isar, ID_AA64ZFR0);
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 1489c262b8..6ebf9c9ce9 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -123,6 +123,8 @@ the following architecture extensions:
+ - FEAT_RME (Realm Management Extension) (NB: support status in QEMU is experimental)
+ - FEAT_RNG (Random number generator)
+ - FEAT_RPRES (Increased precision of FRECPE and FRSQRTE)
++- FEAT_S1PIE (Stage 1 permission indirections)
++- FEAT_S2PIE (Stage 2 permission indirections)
+ - FEAT_S2FWB (Stage 2 forced Write-Back)
+ - FEAT_SB (Speculation Barrier)
+ - FEAT_SCTLR2 (Extension to SCTLR_ELx)
 -- 
 2.43.0
 
