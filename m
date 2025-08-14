@@ -4,96 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E811CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 05:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF17CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 05:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umQ5X-0001Qh-9K; Thu, 14 Aug 2025 01:01:19 -0400
+	id 1umQJn-0004vb-S4; Thu, 14 Aug 2025 01:16:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umQ5U-0001Pu-UK
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 01:01:16 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umQ5S-0004Sa-CJ
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 01:01:16 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45a1ac7c066so3543855e9.1
- for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 22:01:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755147671; x=1755752471; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hGZOY7Xy+gz59SCRsDC8nGqZPo2X4D5xAdde61ajILE=;
- b=I8hLCU2s5UuoIq/VC3PQ0Gg9oaODZF7DwtwQEeDSGGH82wzDILtw3LDe9mpY/EJS11
- 9sRAwi9kRGsB1I5qlBe+oCKzS2NdRHwNqKRUZVUc9Zb+TJ5evil4N2lgaiNpdtbeTrS5
- i7yGmSp2tk/unk5IVyuT1pGzg9QobOc2gAG+ylkTrWFfqzfo5wmZ/nKv1vwVy/I42GD9
- X4V2jjc8A8AaskfjMF1O56rsmYWGfcN9d0maemqrKcCPdTYLfWphC+42P2URVsvj3Goq
- sx8pz5+Llfi9mcPh13X17+GQflf5eSPqh1S8/nj38tWplMeRo1V63XYphGb3zHLSOjiI
- 5MxQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1umQJk-0004uq-Vo
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 01:16:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1umQJh-0005vH-Em
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 01:15:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755148554;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tI7aHbAb1gTNUc/3WBn/ieZtyz4DWS2spgmyYThPDCU=;
+ b=Hor70C5kcN3tQT7gKXbWysgIJr57aDGLXC/24sfazBO9kU87T0LRMOlv5vw1800caAIFsW
+ idrApzOGJQndRjJQr8dt9AjbggoXd2+h1Yzt6eZrcWQDeF9+DHQKeLPeBudLqBeUEwIL+E
+ h+4/8/FzxPI6MPfrt+ux51+RxeTCMhA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-422-fd4oir8FMomcAdGWVC7aTA-1; Thu, 14 Aug 2025 01:15:46 -0400
+X-MC-Unique: fd4oir8FMomcAdGWVC7aTA-1
+X-Mimecast-MFC-AGG-ID: fd4oir8FMomcAdGWVC7aTA_1755148545
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3b9edf332faso146352f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Aug 2025 22:15:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755147671; x=1755752471;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hGZOY7Xy+gz59SCRsDC8nGqZPo2X4D5xAdde61ajILE=;
- b=Wyk1sh5M11e74cT4XLqbZ5P0Rv5aOjiWEcwZ+uUM20tqE4dxIN+/khVxjrC128bmaX
- YyqfVaUHW+vhiDpOfLkkF83LNYbVSWBzsUVTl1bmiJ55epPqpFUCOmDlzQsVJRBnSXT9
- ZIQX38b/5fBQPD4LojoH1xOB6OLdIV53NhWm4KUThdQOYTInCv4QgvEvWSdFtiGokL/8
- 7/6yaxYLtmR0IPsl4tNF+P06mm4591CLe78ea0fJHPYbm9akeizKGyxpmHe4BbBEK09S
- dYDpymzz4hgXSXelVh0iyKO1ICdpXV+eOL1u5YvOCEWqvlllko7lpi8sR3qKm9/VFl/B
- RZdA==
+ d=1e100.net; s=20230601; t=1755148545; x=1755753345;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tI7aHbAb1gTNUc/3WBn/ieZtyz4DWS2spgmyYThPDCU=;
+ b=jArTAjwQUxut8P/dlWGLwi1AvdvQ/TlpYIPcDo0Bmn9TbOdrYzNAtfNUZjXJNe8cUC
+ jKvksqe5cCrb+5CyDWjhiTHujKmdvWS2jjtTidEcRmfl/CR2p00Tr+TYDzRu8X8zKx3V
+ WZtu9zJZF+3poI3p7j5gCzQa4rOfPghIPGdAC/nQcQEwr4QOz/XrY6geAbh5j8nlCkzz
+ LgK+HdWmrb2PAMx03QgW96Vim1ybAlzjrFvEnRE3gafS1MGwBHOOIexc4SbQuYO37rJb
+ gWc8ABTwkfQBqf33pcoGS/JGTBHrXWx+0WITZYeM7yKVxrV5NdnXNpqrZVw8tsz9XrAJ
+ J1yA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWu/7ruUnabBYJQUWPFsk+n2QqwCw/JDZm1XaWlo4y7BuuUx9MEXriGrTfPo9EbHE6E9Iz0ICUN1o/A@nongnu.org
-X-Gm-Message-State: AOJu0Yzuff6/SRWu5YjJ87ql98hBb2v3ij6Y4w708j8py5n9I5iTBwLd
- YjJXfuHA5KY1FUPz8RiwHWRXzjVOkYqZ/pZys4b7/arhIBvPhfxkH/6DB+y3A79bWWc=
-X-Gm-Gg: ASbGncufnFn+GxlQA8HsgXW4+4FZuM24qPLTjRBYiTCoOfGiOKJX2gO37BHFinmKvYn
- fvzYen9bDF4seecc4k09a8fIjFLsU8/UrdaN7Y2MBVdf9xK4NTSrK3DYB082HD2s8Nlnhs49gCi
- sfBRjOsEquQ3xb0zmgSm8xNnLmk3lcxAzd0M37Gc2wStAypkt0gvPEsXY8YgbSvpfpn47hAQLF7
- HPBRpIkzuwJlDyJ9v5Oy5MYsrel3P9TR1fy5bbQ1ZbLAWI4X8XCoD0apFZT0OjOBp106ULtzxC1
- +vjYhVVW1MD95+OzPDMAC9qaIMmjp7kUoYptdlnDs3LsGhrqMv69+antU2S/lzGz8XpcJeAqf19
- 7Tx/r+83aId6+/ng3ir+02V0UKUYA/SiEVOwDh48zpzyjz8ygxvDUmpiJkFEsuTwoDZ2QYxxCxq
- Nn
-X-Google-Smtp-Source: AGHT+IFi6qc0pPUKO+qZqo0OonpuM6qkpkwthhk4P3xB6lRnLJikhZuWNblrczgWNcb7QHC/kGs9CQ==
-X-Received: by 2002:a05:600c:46ca:b0:458:d289:3e26 with SMTP id
- 5b1f17b1804b1-45a1b78c070mr8855035e9.2.1755147671014; 
- Wed, 13 Aug 2025 22:01:11 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b8e0683045sm41234913f8f.41.2025.08.13.22.01.09
+ AJvYcCWSHGpDgj2asaJmv2/P3QEd13GePOKrpvDz11au9P0UNarbYQV5231nt20bw5ZP3DEmR8i2Hx6yNwIA@nongnu.org
+X-Gm-Message-State: AOJu0YwuQfkYFx065Be+OApJoqA3AdPblzkcoI7qOT2OI6ckpP81yRK7
+ U0LYYRy86jlxzNmIlEWplk2dgjFDoMlHqRQ0fgvks36ZS+JLj46jn3yUt+Gx1atlYcPmB6C8ufF
+ Hnjw5QTCzXgNVcatSTse3jrTQhcDwD2Nncq4OQ8BEjUAj3cIe68mspDPo
+X-Gm-Gg: ASbGncuuMq+8jwP49J1O3SEBo6yqTGbZkcqhmbtUIeNZthU1YSNukaRDwWF4X8YTkN+
+ FJVwKNh35/Os6uQewAAuTzdRYekPqoSnFcr4jnHC0M1Y9FZ/UJQp/bhrqG5GHz8P0QBHqXTjZx9
+ xwRN+bQ/eBkp2Y7GbW7SoiyN5Gld22Ivjsill8bHiGBXxoGcH0NMExeQ0fDWf5YNZMyYbVAWJgz
+ TRFfpZcRuI59xizaOx9d6SuM951zs3xy4VlqbVoCNEd7MbtpvoPBttHd4s5doP81E4UCWBOG+fc
+ XSE125u3W6HOd3q+HihxmlpBjD/O8IdDTg9HZAx8p9qp
+X-Received: by 2002:a05:6000:1ac7:b0:3b7:9c28:f856 with SMTP id
+ ffacd0b85a97d-3b9fc345ab3mr1317660f8f.48.1755148545259; 
+ Wed, 13 Aug 2025 22:15:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsdRXh13rrLRAUtJN1pazI2ik838nzVBKO/ev76TG7RnLecBichlOMw1xPCbYcn1K2omwN6Q==
+X-Received: by 2002:a05:6000:1ac7:b0:3b7:9c28:f856 with SMTP id
+ ffacd0b85a97d-3b9fc345ab3mr1317643f8f.48.1755148544890; 
+ Wed, 13 Aug 2025 22:15:44 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.234.144])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-45a1c71068csm6559585e9.29.2025.08.13.22.15.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Aug 2025 22:01:10 -0700 (PDT)
-Message-ID: <27aea1ad-9e5f-4e53-a3d1-8b279a241bcc@linaro.org>
-Date: Thu, 14 Aug 2025 07:01:09 +0200
+ Wed, 13 Aug 2025 22:15:44 -0700 (PDT)
+Message-ID: <ef55eda3-fc4f-45dc-9f35-6502efeec381@redhat.com>
+Date: Thu, 14 Aug 2025 07:15:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 32/33] test/functional: exec_command_and_wait_for_pattern:
- add vm arg
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, mst@redhat.com, 
- peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net
-Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
- kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com,
- armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
- steven.sistare@oracle.com, den-plotnikov@yandex-team.ru,
- Thomas Huth <thuth@redhat.com>
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-33-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH v2 0/3] DTB build housekeeping
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250708204806.1898-1-shentey@gmail.com>
+ <87c791c8-accb-40de-9ed8-d86bd179dd47@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250813164856.950363-33-vsementsov@yandex-team.ru>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <87c791c8-accb-40de-9ed8-d86bd179dd47@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,14 +152,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/8/25 18:48, Vladimir Sementsov-Ogievskiy wrote:
-> Allow to specify non default vm for the command.
+On 7/15/25 08:06, Philippe Mathieu-Daudé wrote:
+> On 8/7/25 22:48, Bernhard Beschow wrote:
+>> This series removes the bundled device tree blobs from the repository 
+>> which are
+>> redundant to the bundled device tree sources. To make this work, the 
+>> device tree
+>> compiler 'dtc' is now required whenever libfdt is used. Furthermore, 
+>> dtc can now
+>> be built from the bundled libfdt if needed.
+>>
+>> v2:
+>> * Allow building dtc from bundled libfdt (Paolo)
+>> * Find dtc iff libfdt is used (Paolo)
+>> * Remove dtc configure option (now obsolete)
+>>
+>> Bernhard Beschow (3):
+>>    hw/microblaze: Add missing FDT dependency
+>>    configure: Ensure existance of dtc when libfdt is used
+>>    pc-bios/dtb: Remove device tree blobs
+>>
+>>   MAINTAINERS                                   |   2 +-
+>>   meson.build                                   |  16 +++--
+>>   hw/microblaze/Kconfig                         |   4 +-
+>>   pc-bios/dtb/bamboo.dtb                        | Bin 3211 -> 0 bytes
+>>   pc-bios/dtb/canyonlands.dtb                   | Bin 9779 -> 0 bytes
+>>   pc-bios/dtb/meson.build                       |  17 ++---
+>>   pc-bios/dtb/petalogix-ml605.dtb               | Bin 9882 -> 0 bytes
+>>   pc-bios/dtb/petalogix-s3adsp1800.dtb          | Bin 8161 -> 0 bytes
+>>   subprojects/dtc.wrap                          |   1 +
+>>   .../packagefiles/dtc-meson-override.patch     |  62 ++++++++++++++++++
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->   tests/functional/qemu_test/cmd.py | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+> Being not familiar enough with this meson fu, I'm only queuing the
+> first patch, being a good fix in its own.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I queued the rest for 10.2.
+
+Paolo
 
 
