@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F819CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE9BCA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umYDX-0001R4-05; Thu, 14 Aug 2025 09:42:07 -0400
+	id 1umYEV-00022u-Az; Thu, 14 Aug 2025 09:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1umYDV-0001Qw-Cj
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:42:05 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1umYET-000224-Up
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:43:05 -0400
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1umYDT-0003hV-1j
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:42:05 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3b9e4148134so494743f8f.2
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:42:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1umYES-0003lJ-2Z
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:43:05 -0400
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e931cc09dd0so953886276.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:43:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755178919; x=1755783719; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1755178982; x=1755783782; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hd/dAHsFKKllARD+HySmsZSjKbhQHRFypNDcOl/ri9I=;
- b=kxcMqGdnZmuwz63GIzK/7Z+hIPA4LtsOqnLJ8dp0eP7pgJ0rzpv5q8sUa/sI2xCb5h
- 3N2jLi/gdDIXEEUdkumddqfCecTYfww/di0l94+hGctiOdBPVB+cyc+HawkV28doWJVG
- fvoBJhJHVLW45qWCRQwBisxZivrshAO7fPbbY7a8SqlYgPFpzVL7RsyRQOp/auuZs3DV
- 8Zq1aFxuLn40MWfHjSITYDCQUUFUfGg5R1ffnj7RVctWu8zy4fvEqbdWpf8wXdV6llC3
- DHprMs7uoIly2SWRS+hP5k8+4jBvqpmr2noSP+KCz1Pv+19Qj22DycU1h7GbRnpefbvZ
- PbTQ==
+ bh=HMNOg1SLD7diA9u08byvth+NkQBp5w8d/N2urYdNriY=;
+ b=vZ/TCM6OIKFqqG8mXTOaxhYf1JNUOfgbS/BguOaH1VQuMguu3UIxKK514E4LMZ9STf
+ wCgGB6NSuGfoKpxn+9/Ol2tP6jxZ9NA4qyM0V5tAnivK0IypBJvfFLZkAx245Q9vQYyL
+ CFAlAF1+A/0XdxwX3AYCG1VCgb+/PcKUfqhCvFHFT/QOl0OYMVpNLEzn6kGnFvJSUegi
+ YkxYMUWKdxYU4DmAWImfYfdyfq7grt88wlK2rMYuWglCFuzKLQtLGvBKGa/GRUvYVONA
+ x/cpFE4N5XVFftrjOYv/0EeLkn5srQBuFbZnIzosQQT2WuzX9h213Dv3xereT8tnaPL3
+ jsJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755178919; x=1755783719;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Hd/dAHsFKKllARD+HySmsZSjKbhQHRFypNDcOl/ri9I=;
- b=C6qpwwrGm6iGqvOsqQ9bfVhk8Qxt5qgNKEFXSSEpeTAlDiNcgdjBLchTwLl11gVUHj
- zYT+9FV1Ztxp+k0Uwnj/Ne8u0muuL7LMGlb2LFNzdZHOAbG1wdnaYNMGVMyIPOPCLboc
- HmAQmwyWPI5LaP4Z0fjorQKhOYVK3ersmhuJTtL7ntg+t9uRs8PwDcHTcDem1MEYan1B
- HBktIq5BvdBzwZMeRN+eLx5sszExGcBEhN4+OKn21xjC8XkUYZ4MDKEyEWxpSUe6rkQT
- CnM0ipa+dQmRFMbzO8suaP4ZmPSMAnBvnM+TJWnbpzN9Twciew6NYiaiV2ongVzzlwn8
- PtaA==
-X-Gm-Message-State: AOJu0YxXyx1OkAizLQbc5hBgC02RGiShys1ZJcpUIoZB13AUK7PEM8Hj
- NJqRmMWlkZhRmlguBMkiPPCwMWWh1NBRElbImbB9ikkIspKoP47s9HxhvgmERBmTs4w=
-X-Gm-Gg: ASbGnct0ffN9ClVEbUDk6XhvBtpV4x8oGgx7T4Oseu0qT7rDZd9TPw9IyychmyKd8Qt
- mRwcMqudxYwm7y9QgwujuEndymab/Xw/b5jJ7bYTErLe8PWeynXFJZGIvCrKkZQ6V8ytRBCBxq+
- 5qGEemcvKicXLNuPG5+KqhCmilQgQf/XvkO6zOlzsGHKKXiw0lpYN/E4vzHSe/4onhr5t9pVHQq
- Hhnn9BL5VLp06TOJ6tA2HoE/VQ3mfvwFSYMqdz+YybqQ/kHMjDr9BJy8KeM5wBklK7MiBwI1EJc
- dzRutpaC8eyLm+D9PcXZtq48DLmClVia5iXy8YY0PuJ5+auoYwihplZCuHzIShA76GdDB8RQFXs
- BZzZ1DXe6wF0xovFX2m+zNO4=
-X-Google-Smtp-Source: AGHT+IHIaox0UKCIZtqxNesAbupfvnd5vuoWkmoE4/OYiac2694qe1LaHlVoL06WSJFWouC1r8q8uA==
-X-Received: by 2002:a5d:5c84:0:b0:3b9:13d6:cb4a with SMTP id
- ffacd0b85a97d-3b9fc36466bmr2635956f8f.59.1755178919053; 
- Thu, 14 Aug 2025 06:41:59 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c46ee84sm49611830f8f.57.2025.08.14.06.41.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 06:41:58 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EE4BB5F7F9;
- Thu, 14 Aug 2025 14:41:56 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: ~myrslint <myrslint@git.sr.ht>
-Cc: qemu-devel@nongnu.org,  ~myrslint <myrskylintu@proton.me>,  Paolo
- Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH qemu v2 1/1] Default disable ignore guest PAT quirk
- (second revision)
-In-Reply-To: <175510851329.15645.802219111760057966-1@git.sr.ht>
- (myrslint@git.sr.ht's message of "Wed, 13 Aug 2025 17:53:59 +0000")
-References: <175510851329.15645.802219111760057966-1@git.sr.ht>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Thu, 14 Aug 2025 14:41:56 +0100
-Message-ID: <87plcy3tqz.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1755178982; x=1755783782;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HMNOg1SLD7diA9u08byvth+NkQBp5w8d/N2urYdNriY=;
+ b=ELOH47G2zTVwY6NmfzL+gWm0iYDgll9fcnr2UdtLWbWvg9sakSNZJ0GLmePR1MJP2A
+ IAYal3Azt01iBLCw14HvhPr2Oviu4e+iboBxoGHakh4LWfQ/3t+MfAwfOUoV8zc1Bkfz
+ so6V/W3xuXeJTE7NPgNvhhSvGlJV5q5SzvWZLeJl9YBdAbelcXVWEGDSoRSb/Q4LLxIV
+ 13tjSFPImwLS4bq/nNS7D6miM4GPMzdCS3EDRyQhlfeKoybwVC2E5WF/BYTk2Djcj9SJ
+ 0mjs77koUWhKzuF4FA62VGlDbLIkE6fUzZiSA9ythb9csNioV0WkLeOEawOlxkwjkcwp
+ kK1w==
+X-Gm-Message-State: AOJu0YxivgyJmLPuWfYlG92jo/72bFSw1E0TnZ2V/NK1eNBBOV0e1YXP
+ FdSXQMF7oC+PLMSyipUlGeUbr4dcAFgLB2VN3VUY1sc4WaVKNVnz3S9FwcbYxWAr3tl6ia0uIn0
+ KDzKWhmD54e1j/A1OeOtc/FtiqcZ4sbqBSCMwhSVwIw==
+X-Gm-Gg: ASbGncu2zabChFVtArnhH9jSHC62u6iMbbcr6arhJiMUCx/TQ7wpkDbtDKNtXNRtrya
+ rrHbxkr7G1bZ54RkFhl+rT5XoIhujmntM7TZV+OlbGmIUpyBt8rWrM4g267XL6aNa3/GK7wqdML
+ YcUA6WAMb/jyBr/aH24oIKnaE9roTYhRQ7CASGeBBMEcxjzh61SorAnQxf5ith2rfACXHGLhY5y
+ d86Mofx
+X-Google-Smtp-Source: AGHT+IFXUn6mO+CyqXSPxaT3L5nuqo1DDeIg/Wd25Yy9HT792PEMk2ymxa5MztJ9w+HW88erijvvAW+d0wt04o7JSqg=
+X-Received: by 2002:a05:6902:124b:b0:e90:6ea3:1e0f with SMTP id
+ 3f1490d57ef6-e931e14cc6fmr3856417276.7.1755178981276; Thu, 14 Aug 2025
+ 06:43:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250814070650.78657-1-philmd@linaro.org>
+In-Reply-To: <20250814070650.78657-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 14 Aug 2025 14:42:49 +0100
+X-Gm-Features: Ac12FXxRMIgxaezeWzacIbP88V9KdSvswihqUB4XMnklT9kCNUkvKylYZ4x-5v0
+Message-ID: <CAFEAcA9Htm9sRpxGCD_Dye=vxtXvR4tW-SmOedR4b5aCMEExwQ@mail.gmail.com>
+Subject: Re: [PATCH-for-10.1? 0/3] linux-user: Select default CPUs for
+ MicroMIPS and MIPS16e ASEs
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,93 +96,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-~myrslint <myrslint@git.sr.ht> writes:
-
-> From: myrslint <qemu.haziness801@passinbox.com>
+On Thu, 14 Aug 2025 at 08:07, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> Thanks to Alex Benn=C3=A9e <alex.bennee@linaro.org> for the kind code rev=
-iew
-> and helpful guidance.
-
-This doesn't belong in the commit message, you can add it bellow the ---
-if you want to track the changes while iterating a patch:
-
-  https://qemu.readthedocs.io/en/master/devel/submitting-a-patch.html#id21
-
-> This is a second attempt at addressing this issue:
-> https://gitlab.com/qemu-project/qemu/-/issues/2943
-
-This should be a trailer:
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2943
-
-bellow your signed-of-by.
-
-> Most Intel CPUs in current use have self-snoop. The few added lines of
-> code also check for availability of the quirk disablement option so if
-> some CPU does not have this feature no change of behavior will occur.
+> We weren't parsing MIPS ASE in the ELF header, so couldn't
+> automatically pick an appropriate CPU.
 >
-> Signed-off-by: Myrsky Lintu <qemu.haziness801@passinbox.com>
-> ---
-> Hopefully, I have improved the patch based on kindly provided code
-> review.
->
-> The only point of divergence is that per
->
-> https://www.kernel.org/doc/html/latest/virt/kvm/api.html
->
-> this is a VM capability (section 7), not a VCPU one, so a call is made
-> to kvm_vm_enable_cap() rather than kvm_vcpu_enable_cap().
->
->  target/i386/kvm/kvm.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
->
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 369626f8c8..124818bf94 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -16,6 +16,7 @@
->  #include "qapi/qapi-events-run-state.h"
->  #include "qapi/error.h"
->  #include "qapi/visitor.h"
-> +#include <asm-x86/kvm.h>
->  #include <math.h>
->  #include <sys/ioctl.h>
->  #include <sys/utsname.h>
-> @@ -3367,6 +3368,24 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->          }
->      }
->=20=20
-> +/* if kernel version does not have it there is no point compiling this i=
-n */
-> +#ifdef KVM_X86_QUIRK_IGNORE_GUEST_PAT
-> +    /* rationale: most x86 cpus in current use have self-snoop so honori=
-ng
-> +     * guest pat is preferrable. as well, the bochs video driver bug whi=
-ch
-> +     * motivated making this a default enabled quirk in kvm was fixed lo=
-ng ago
-> +     * */
-> +    /* check if disabling this quirk is feasible and allowed */
-> +    ret =3D kvm_check_extension(s, KVM_CAP_DISABLE_QUIRKS2);
-> +    if (ret & KVM_X86_QUIRK_IGNORE_GUEST_PAT) {
-> +        ret =3D kvm_vm_enable_cap(s, KVM_CAP_DISABLE_QUIRKS2, 0, \
-> +                                KVM_X86_QUIRK_IGNORE_GUEST_PAT);
-> +        if (ret < 0) {
-> +            error_report("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
-> +                         "modifiable but we failed to disable it\n");
-> +        }
-> +    }
-> +#endif
+> Since we'll have a rc4, I propose these sensible patches
+> for 10.1, but both ASEs are available since 15 years in QEMU,
+> so this isn't something broken since the latest release, and
+> I don't mind holding it for 10.2.
 
-This looks good now, I'll leave it to the x86 maintainers to decide on
-the automatic enabling of this feature.
+If this is a long-standing bug then I think it's best
+held for 10.2.
 
-> +
->      return 0;
->  }
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
