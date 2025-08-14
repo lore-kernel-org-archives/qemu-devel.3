@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD10CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 10:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E408CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 10:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umVSf-0003FM-I4; Thu, 14 Aug 2025 06:45:33 -0400
+	id 1umVWO-0004dm-5G; Thu, 14 Aug 2025 06:49:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1umVSc-0003Eq-JQ
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 06:45:30 -0400
+ id 1umVWK-0004Yw-RS
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 06:49:22 -0400
 Received: from air.basealt.ru ([193.43.8.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1umVSW-0008Ti-8G
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 06:45:30 -0400
+ id 1umVWI-0000R2-Bd
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 06:49:20 -0400
 Received: from boringlust.malta.altlinux.ru (obninsk.basealt.ru
  [217.15.195.17]) (Authenticated sender: rastyoginds)
- by air.basealt.ru (Postfix) with ESMTPSA id 89F06233B2;
- Thu, 14 Aug 2025 13:45:13 +0300 (MSK)
+ by air.basealt.ru (Postfix) with ESMTPSA id 9E06F233B2;
+ Thu, 14 Aug 2025 13:49:16 +0300 (MSK)
 From: gerben@altlinux.org
 To: qemu-devel@nongnu.org,
-	richard.henderson@linaro.org
+	philmd@linaro.org
 Cc: sdl.qemu@linuxtesting.org
-Subject: [PATCH] target/hppa: prevent overflow in BTLB entry size calculation
-Date: Thu, 14 Aug 2025 13:43:22 +0300
-Message-ID: <20250814104511.12823-1-gerben@altlinux.org>
+Subject: [PATCH v2] target/mips: fix TLB huge page check to use 64-bit shift
+Date: Thu, 14 Aug 2025 13:48:32 +0300
+Message-ID: <20250814104914.13101-1-gerben@altlinux.org>
 X-Mailer: git-send-email 2.42.2
-In-Reply-To: <5ab2be93-2551-4c82-886d-3cdf47360322@linaro.org>
-References: <5ab2be93-2551-4c82-886d-3cdf47360322@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=y
 Content-Transfer-Encoding: 8bit
@@ -44,7 +42,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,22 +58,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1) I’m not entirely sure why using long long is considered “always wrong,”
-especially since just a few lines above there’s a similar usage here:
+From: Denis Rastyogin <gerben@altlinux.org>
 
-qemu_log_mask(CPU_LOG_MMU, "PDC_BLOCK_TLB: PDC_BTLB_INSERT "
-                    "0x%08llx-0x%08llx: vpage 0x%llx for phys page 0x%04x len %d "
-                    "into slot %d\n",
-                    (long long) virt_page << TARGET_PAGE_BITS,
-                    (long long) (virt_page + len) << TARGET_PAGE_BITS,
-                    (long long) virt_page, phys_page, len, slot);
+Use extract64(entry, psn, 1) instead of (entry & (1 << psn)) to avoid
+undefined behavior for shifts by 32–63 and to make bit extraction intent explicit.
 
-That said, I do agree that using long long here might not be the best approach, and I’ll fix it.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-2) If len can approach INT32_MAX, why wouldn’t the calculation len * TARGET_PAGE_SIZE cause an overflow?
-This operation is done between an unsigned int and a constant, and uses 32-bit arithmetic.
-I agree this patch likely doesn’t affect real scenarios — when running the Debian image
-I saw only values where len <= 2048 and TARGET_PAGE_SIZE = 4096, so no overflow would occur.
-However, as I understand it, these values come from outside and are not validated anywhere,
-so theoretically they could be arbitrary.
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+---
+ target/mips/tcg/system/tlb_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index eccaf3624c..1e8901556d 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -652,7 +652,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
+         return 0;
+     }
+ 
+-    if ((entry & (1 << psn)) && hugepg) {
++    if (extract64(entry, psn, 1) && hugepg) {
+         *huge_page = true;
+         *hgpg_directory_hit = true;
+         entry = get_tlb_entry_layout(env, entry, leaf_mop, pf_ptew);
+-- 
+2.42.2
+
 
