@@ -4,142 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C04FCA0EE6
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 18:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FA4CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 19:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umcPX-0003Xz-BG; Thu, 14 Aug 2025 14:10:47 -0400
+	id 1umdHS-0005ot-Es; Thu, 14 Aug 2025 15:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1umcPV-0003X4-Hx
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 14:10:45 -0400
-Received: from mail-dm6nam11on20621.outbound.protection.outlook.com
- ([2a01:111:f403:2415::621]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdHP-0005ns-0T
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:06:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1umcPN-0003tE-Pl
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 14:10:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gJiMXi1K5gJ/0z+cDGRx4wgqwozL0UJBs2RLAHhG0GU1JFKwR44eHk1Da35vMER35QxD4XMKySNS3pgZaVyP+6NAQoGskSkEpdWVXyJo+rSsJbY7bJ95bVDSeCuLjRJ0gcWOioKavPYFsvJial5urti/U8OU4rsdZd07vBfLBAlswjZUN1WsLJcKrd8hgLOs/7QKX7Zf3FGeP/AF2BvfppjMTkNzRkyY2EFSMXCkYI1X+eosYyYmqSaQ04vGzhvZYdzIGl06zsG9ziz0r28+62C6H3GOY6qDdmkMfW4Yvuy6GKhOySntJGWBjtUMi3Dj+ZVwldPApu5LLaOwaG0+kA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vdDNh2OMDJDW4/2nZySW7W2x6nkB+7RJC3UJog2Wle0=;
- b=ft5aILCOuZFa8p1yRQSxz/LfOOlorciQWSzrki6p1GveWQhW8DHsdp+At+iWWwqZCkso2fhdmERfPK4+qau+ESQwFT4FjO2ZHWxA7/pb3ylaCQQPYzt/lwF5EZzU6JWVLwu6YtObEOw1vHOVyJ1g1Is3F6xbx4EEmvDsrbvPuhcflaqx/dZjOpxChmKl5iGUSU9elWtncS03Gct788LGolLHeFLWY5ST6hmt7RrUpRJTNXlOCl+mk41sQPPMsTMTo7QvL8BWvrIf9Cjpu1diqWnO02ensbKDfzYo7gmAa4ith8WfgiCnGNIlKwja7MGlfxkjaxHXf3+xyB8ByApQDA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vdDNh2OMDJDW4/2nZySW7W2x6nkB+7RJC3UJog2Wle0=;
- b=QKXJtjw0cOMuxelHryfp1tywu46G9dXUHo3JEa+mrgUZcSAd7CTFYeuq5bLr+4r9RCccXhFLa/ZvT5z+TfY0CBETUgWSt8Yg63xYWJkSAC3Gu3a4Bo7NHaQxVA50S4KsxvoGq+NTjUrGJ9epKaLrqqxMWuJ6mHpdtpSA+uaHfmY=
-Received: from BN9PR03CA0139.namprd03.prod.outlook.com (2603:10b6:408:fe::24)
- by DS7PR12MB6045.namprd12.prod.outlook.com (2603:10b6:8:86::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.15; Thu, 14 Aug
- 2025 18:10:26 +0000
-Received: from BN3PEPF0000B06B.namprd21.prod.outlook.com
- (2603:10b6:408:fe:cafe::3f) by BN9PR03CA0139.outlook.office365.com
- (2603:10b6:408:fe::24) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9031.18 via Frontend Transport; Thu,
- 14 Aug 2025 18:10:26 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B06B.mail.protection.outlook.com (10.167.243.70) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.9052.0 via Frontend Transport; Thu, 14 Aug 2025 18:10:26 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 14 Aug
- 2025 13:10:25 -0500
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdHM-0004jN-Of
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:06:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755198382;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uUL1Eo9mLwPqwkgmqo5zZ4C3h62UuS5naws4XvSgNGI=;
+ b=KF8h++2utZz+OqCxPWuxXyfOhJRai3Eq6CHjc3xUR1lcDWiCLCF0svyP1I2yYUztXeXoat
+ 4bcbPN/CR55G9LFJmoPPfmAQbEmo0K7LRu9SexszP+hQ+89BNvn07MyuYbBlFsaNbip9pX
+ YGkePls/vegdh3/QH0Gntqq5+TD9Ryg=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-302-wri46Wp0MVaK9L5ZWJWa6g-1; Thu, 14 Aug 2025 15:06:16 -0400
+X-MC-Unique: wri46Wp0MVaK9L5ZWJWa6g-1
+X-Mimecast-MFC-AGG-ID: wri46Wp0MVaK9L5ZWJWa6g_1755198375
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-e9321ed5e3eso1192942276.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 12:06:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755198375; x=1755803175;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uUL1Eo9mLwPqwkgmqo5zZ4C3h62UuS5naws4XvSgNGI=;
+ b=Zcj9mXaKOe1l0f0Dcv7I72YwHSILkiN97MvTwUvP6Z65ZKFwNLQ+HrJME9+bgylYOp
+ RNyI61IYKUldyEGdh9uIdXxD3rPpjsmEMN408ECJFNv92hkJPcQU2tCFZ+aHJ+q2p3PN
+ 9Y1vgi36DUZ6U5Ptf3StJTqPb7UgExupW/VEtPe3kfqxqooPCZ8rYLQyAHz6B0tu0i1A
+ WtlAEV7uiErkwh0BnCGCRrpde0HmaV1oXpGQnoMLRosNvYa2j/0SaoXQv0emhC6irjB9
+ jlBjJAVk6RJJ5dYW8QLamhp9RRArx0G5/8E0nnYySVWssIwJloSziPxxwJ2fsI47GMAZ
+ h9UA==
+X-Gm-Message-State: AOJu0YwIKaWsDb9uZfdc5PPz5/5TOfPNJLyvAYuGaSM7KPozv+dhebww
+ LPoydWa3+6YosUT4Z/32cNqwGizmt4ot8zH9JQCFyA7kbePgOLceDMGzLtRiVPEUnzPASLCpvg4
+ Pm22a6gjLKAbVHau6j4RSVdqjbEHXcg08wy7xtZAC7MHCNA7Z24XFbNDZ
+X-Gm-Gg: ASbGncvuEfPRvqSQIReL7Q0Ch+pGmdeVznwhlOwkwVVUK6hmViBPs3IDMH3vpXUUjcu
+ 6cai7rKBfrZIFAnC8CvKYfP+iMroy6bT/Zfykb4xEtTbjpqhoFiH8EJtEsfdEmJF8Jw9LgrYXvG
+ gu/eN3pwyjP5xeD3+e3crQ51Saeus0Dgwf9Qcdk9D744V+Z1oFme1/6VUlPlVmn+cXN6PrkUEv1
+ K0XiEUt5mEuja/rvhhfwv5R89zIsEkvQrKMzSs/O6yO6nyCvuX8vmvtaHB4PqZLwGMU0b0rEIqm
+ SROeH38tqNxGYSb648J8Ydps310NLekC
+X-Received: by 2002:a05:6902:5401:b0:e93:1316:449f with SMTP id
+ 3f1490d57ef6-e931e620294mr5175088276.24.1755198375531; 
+ Thu, 14 Aug 2025 12:06:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFWSylGlXB+4yX0jjnA5ldgXe6qTeXZTpRlSX1jx3VBlDy8OLCSinQsVjTQDRvFTbzBghOOA==
+X-Received: by 2002:a05:6902:5401:b0:e93:1316:449f with SMTP id
+ 3f1490d57ef6-e931e620294mr5175050276.24.1755198375140; 
+ Thu, 14 Aug 2025 12:06:15 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-71d60fe17e2sm7960967b3.40.2025.08.14.12.06.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Aug 2025 12:06:14 -0700 (PDT)
+Date: Thu, 14 Aug 2025 15:05:59 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, mtosatti@redhat.com,
+ richard.henderson@linaro.org, riku.voipio@iki.fi, thuth@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, david@redhat.com,
+ jjherne@linux.ibm.com, shorne@gmail.com, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com,
+ peter.maydell@linaro.org, agraf@csgraf.de, mads@ynddal.dk,
+ mrolnik@gmail.com, deller@gmx.de, dirty@apple.com,
+ rbolshakov@ddn.com, phil@philjordan.eu, reinoud@netbsd.org,
+ sunilmut@microsoft.com, gaosong@loongson.cn, laurent@vivier.eu,
+ edgar.iglesias@gmail.com, aurelien@aurel32.net,
+ jiaxun.yang@flygoat.com, arikalo@gmail.com, chenhuacai@kernel.org,
+ npiggin@gmail.com, rathc@linux.ibm.com, harshpb@linux.ibm.com,
+ yoshinori.sato@nifty.com, iii@linux.ibm.com,
+ mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com,
+ qemu-s390x@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v4 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
+ helpers and use them tree wide
+Message-ID: <aJ4zl2-wSq8pm-Q6@x1.local>
+References: <20250814160600.2327672-1-imammedo@redhat.com>
+ <20250814160600.2327672-7-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <be12d3b1-6cbf-48fd-8266-4425dc1cfb43@tls.msk.ru>
-References: <175511889543.3775407.17880470159729384156@amd.com>
- <be12d3b1-6cbf-48fd-8266-4425dc1cfb43@tls.msk.ru>
-Subject: Re: [ANNOUNCE] QEMU 10.1.0-rc3 is now available
-From: Michael Roth <michael.roth@amd.com>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>, <qemu-devel@nongnu.org>
-Date: Thu, 14 Aug 2025 13:10:11 -0500
-Message-ID: <175519501110.3816551.1519037375023535616@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B06B:EE_|DS7PR12MB6045:EE_
-X-MS-Office365-Filtering-Correlation-Id: f8a206e6-65e7-4fd1-50ce-08dddb5dd84e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?T0k5Y1doRGFoT3JWZ2JKaWo1alM3bTB1bklRVGdQRmI2aW93d2VtN0F2M2tS?=
- =?utf-8?B?RFhYNldDRUs4VjVQemNPeVlISjBlaWJJVkV1b2U4TXVNbS8vVmdNWS9QT21m?=
- =?utf-8?B?YysyTDZMTnptL1FsYzM4Uzlka1Zuek90SjF5dWRMRXdhZlhVY0lUYkZ2dFRG?=
- =?utf-8?B?RGlwOERjNmJYWmFlc2RBa1JSaklJZVFIdCthWUZENmYza1dJZGhlZkoxYnBx?=
- =?utf-8?B?cmFZYUtvcWRhWG53akJNWWZWS2JhL29VVXlrWlF6bFhHeDN0QlREOWpFb0hB?=
- =?utf-8?B?OGN1cVdWL3cvRTJwa0N4TDExaml5Mlc3YkJtOWplWFoybEFYMkZkTGV5VnVT?=
- =?utf-8?B?Nmp5ZEo0Vm5PUUQ4a0h0bHlUMlZLcllBZXVHVTRBV2gwYzVEYm5nTGdLa0FV?=
- =?utf-8?B?MEtHbTZmN2Z4N2FmdXU1clRFcERMK2hTcm54Rk9ML0swUnFCOStrRUllVXdM?=
- =?utf-8?B?cDY1ZGJ1c3ovejRQb3E0NE5mMElGYStKQ0tkanJ4WUVpSzBkRS96YzU0K0xl?=
- =?utf-8?B?elg5MWpPSjFlSWRkQ2dNNlNDMXZrOVVtVVpQOXg3NkoxNU9RVnRza2dlSjRB?=
- =?utf-8?B?Z2FKZ29VdEh5dE5nSDBSejZOVERPb2Exdk0zTWU3US82MGdtbVhQNG9SNDlG?=
- =?utf-8?B?end2c3RrVnhabW5hQlh2M1hvZnJ1NlJPR1l4alJyeXEwaW5ydjIySm5hSmd3?=
- =?utf-8?B?STFYdWdCSXlZalhrSVl6NzBlUk4zeDdkQ0hBS2tNOEhzSEovcUFUMmZBcWJh?=
- =?utf-8?B?RmlSK2ducVBWcjNsK2diNm9HME1BYXdROUgvTGh2cjl0WU8vTkZndEgxeTVB?=
- =?utf-8?B?ZDFRU3BMc0RBRGZpQzNHNStZek50cUdlV0NtOGxIOTgxZCtOYzhNaTVsSWJU?=
- =?utf-8?B?djh3WGplUDJvNW5BV3p0UDNERGxtQWt3bUwwY05rNVEySTM5eWtLZmdsb2N3?=
- =?utf-8?B?ditVUEJZMldrVm40UmFEVmZ2KzE2aVBYSUlmc25ia1JPYS81ZzVPZkcveWtZ?=
- =?utf-8?B?T3R3VmlyQlpFS1psaW5CMWcyL2xwZ3cxRUl0U1R5VFdSUDZTeFhIM3ErLzRy?=
- =?utf-8?B?TjZiK3h6S1huNGoyL21EMWlYUjZHWUFmbHNWb2pJNE9WYkpxMmFsTmFrQkI2?=
- =?utf-8?B?ejQ4UzZ0M2N6SXpiRnpEYjJRZWJMalcxRGpKK2tUVDZNTVI4UFZFYmhEL3Ir?=
- =?utf-8?B?OHNLanV5VXRtdWF6UkJ4Sm50enovN29XWndoYjNGbzZvTTRWRmdBNGFLN3dY?=
- =?utf-8?B?QTh1VTBCZGdXaHBEcGttMXh5cSszN0JOZ293cFFYNlFNZlNKamk4QjhiMnVv?=
- =?utf-8?B?b3NzTTdtRmZaSTJBM3lEb3d3SWl0a0o0M2R0eURyUnllcFRnUWhkcThZQlRz?=
- =?utf-8?B?aXRHTllicEt5OHY4dXlTd0ZDaDJaay9pWmV6d0lRN2xINVg3bERkNjN6MVQ3?=
- =?utf-8?B?U29rUDI3c2tDeHlMQnhoVld4ZXNaWklIbVJac1VCOW1UamNyZnA1OWpMZ2dD?=
- =?utf-8?B?eWNZV3JkRGErSXNmTU0zK0dXd2R6MDk1RnpNVHErZ1dMU0J5QmJZWENPQ3Bj?=
- =?utf-8?B?YzhaQWMrOVlQVHBkZFhOTTJZc2c2UndacXJVVmxxN0VNeHljOGlhVzBWSnBs?=
- =?utf-8?B?T1hMclE2c3FUa3VXN3diakxNVXVYdzJjTWhWZ3o4aG5abjRnOS9QRWQ1Ni85?=
- =?utf-8?B?ZzUrQWFNbkJOU2o3NXI0M2xvMjZJOVYxcFBUZ1QvU1dMSWtBZmY1OFBPR2dv?=
- =?utf-8?B?MXE3TnJFb2xHRSttWEQ0OCsxSzNHTmNmQjd5cVBIU2YxTXZuVHRVTHpNell5?=
- =?utf-8?B?MkFTUHhQRUVnemhpMzgwc2hJa05RMVhIa29JV2VURGpKOTNsekhnRGVoR3Fh?=
- =?utf-8?B?aDBHRUNQNkR4RHdiYWl0UU5LVE5uSnB3bkovSFNvSTJEb01BbWQrQXlFcTk4?=
- =?utf-8?Q?bEC9cng8ENI=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2025 18:10:26.3502 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f8a206e6-65e7-4fd1-50ce-08dddb5dd84e
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B06B.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6045
-Received-SPF: permerror client-ip=2a01:111:f403:2415::621;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250814160600.2327672-7-imammedo@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,76 +121,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Quoting Michael Tokarev (2025-08-14 01:24:00)
-> On 14.08.2025 00:01, Michael Roth wrote:
-> > Hello,
-> >=20
-> > On behalf of the QEMU Team, I'd like to announce the availability of the
-> > fourth release candidate for the QEMU 10.1 release. This release is mea=
-nt
-> > for testing purposes and should not be used in a production environment.
-> >=20
-> >    http://download.qemu.org/qemu-10.1.0-rc3.tar.xz
-> >    http://download.qemu.org/qemu-10.1.0-rc3.tar.xz.sig
->=20
-> Hi Michael!
+On Thu, Aug 14, 2025 at 06:05:58PM +0200, Igor Mammedov wrote:
+> the helpers form load-acquire/store-release pair and use them to replace
+> open-coded checkers/setters consistently across the code, which
+> ensures that appropriate barriers are in place in case checks happen
+> outside of BQL.
+> 
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 
-Hi Michael,
-
-Thanks for catching this!
-
->=20
-> This file (qemu-10.1.0-rc3.tar.xz) is incomplete - xz does not
-> uncompress it.  But the signature is ok.  Something went wrong
-> in the release process.
->=20
-> The .bz2 one seems to be okay though.
->=20
-> If there's some error checking missing (like we don't check for
-> errors from tar - which might as well be the case in make-release.sh),
-> we can fix it.. But if it were make-release.sh, it'd fail earlier
-> and bz2 were bad too.
-
-It looks like make-release.sh did its job okay and this is a PEBKAC
-situation. =3D\
-
->=20
-> How do you make the releases?
-
-Roughly:
-
-  pushd $build_dir
-  $src_dir/configure --extra-cflags=3D-Wall
-  make qemu-10.1.0-rc3.tar.xz
-  popd
-
-Then I decompress/build the tarball and run through 'make check' and
-iotests on the resulting build to sanity-check the tarball, and that all
-was okay.
-
-However, I then copy the tarballs to a separate system to do the signing
-and upload to hosting site. I saw the bz2 tarball transfer okay, but
-stepped away once xz transfer started and didn't notice that it errored
-due to running out of disk space. Subsequently, the bz2 signing was
-successful, but xz signed also trigger ENOSPC, so that was
-noticed/fixed, but not the fact that xz upload had also failed prior to
-that due to ENOSPC, so that's why it's signed okay but the xz is
-corrupted.
-
-I'll add more error handling and an final md5 check before signing to close
-up that gap in testing/publishing, and hopefully that should avoid similar
-issues in the future.
-
-I've reuploaded the tarball as 10.1.0-rc3-reupload to avoid conflicts
-with CDN-caching, which is how we've handled reuploads in the past.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 Thanks,
 
-Mike
+-- 
+Peter Xu
 
->=20
-> Thanks,
->=20
-> /mjt
->
 
