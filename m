@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF9F9CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 17:18:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D60ACA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 17:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umbaB-0005X7-7R; Thu, 14 Aug 2025 13:17:43 -0400
+	id 1umbaC-0005aN-HR; Thu, 14 Aug 2025 13:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1umbaA-0005Vq-0J
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 13:17:42 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1umba9-0005Uy-4q
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 13:17:41 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1umba7-0002rL-E4
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 13:17:41 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57ECg2W3020129;
- Thu, 14 Aug 2025 17:17:37 GMT
+ id 1umba0-0002pG-OQ
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 13:17:40 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57ECgDhC028780;
+ Thu, 14 Aug 2025 17:17:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=h4XrkcKhSJInpvoA+ypikKSHM433+/9u2Pw/jSXyyr4=; b=
- L/iphArO9+4zdQRk+HrMtpFVkRDmMbzibtQv5gDFAxc68+/LAoMkcKDfSd1NwlmD
- hxDB2Cs/5nJfoNtXS9fypvbpBdpJo1CC5JtnlcEobvXYnBE0mc9LaagUKJj1xYgc
- wrZuGJ3nXecFera1Fa3qQ7iD2wHgi0EhQIPigX19evn8BHktzy+7bAx3eqxd/VQZ
- 8TvpwyX7/TIdPcCEICXxTYRGYCiSWb47cEcTAKtVwa6ak9V3NCxpdpM+g5CIQdrt
- I48R50XqDtRofnkIAv45CUNrokEfRi6FJwz/z1doQseomwiya+SSK+q6LvG8zI86
- xp54pBwHiD3jtt1hDXsKCA==
+ corp-2025-04-25; bh=TEFoIPikc0HL819wjayDhp6+RMMXJYnYxFwcfyldD6M=; b=
+ Uym8Gmkd+p+VfYa50V0tHRF6jvwGBIQKwMMwsu55DIf+n5/DHcwOxTuHJlNpikCb
+ swSxMKIoAPRYYIOCekeEekO1PRNyOavX14UXqGVRe70dIEhAB1SDHHZVYTakuoKH
+ uFM0QRI28n2iK/Kh2NN7OSXKx6hTFRZui3NwSzfwRFH5UekP3HsabJQDNE8fFo5z
+ oShJwEh+UKZ1u8gYnySVFbwWeUChpTPqbt2omAzD5llU1qFsKmBBP2J3rqAHpTRm
+ vKZJ0Lhn8Xo2oxE1Gy0vcRQLDtwBnz8UknlvTllKAUJtUTDJwEUCZwvKFy10K8xZ
+ 1NzFYV7q3qXCHroVoUyEbw==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48dvx4jhar-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48guchayy8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Aug 2025 17:17:37 +0000 (GMT)
+ Thu, 14 Aug 2025 17:17:29 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 57EH1epn009691; Thu, 14 Aug 2025 17:17:36 GMT
+ with ESMTP id 57EGloDs009881; Thu, 14 Aug 2025 17:17:28 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 48dvskbs3w-1
+ 48dvskbryr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Aug 2025 17:17:35 +0000
+ Thu, 14 Aug 2025 17:17:28 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57EHGwuO038225;
- Thu, 14 Aug 2025 17:17:35 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57EHGwuA038225;
+ Thu, 14 Aug 2025 17:17:27 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 48dvskbrx5-10; Thu, 14 Aug 2025 17:17:35 +0000
+ ESMTP id 48dvskbrx5-3; Thu, 14 Aug 2025 17:17:27 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
@@ -60,9 +60,9 @@ Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 9/9] vfio: cpr-exec mode
-Date: Thu, 14 Aug 2025 10:17:23 -0700
-Message-Id: <1755191843-283480-10-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V3 2/9] migration: add cpr_walk_fd
+Date: Thu, 14 Aug 2025 10:17:16 -0700
+Message-Id: <1755191843-283480-3-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
 References: <1755191843-283480-1-git-send-email-steven.sistare@oracle.com>
@@ -74,22 +74,22 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  adultscore=0 mlxscore=0 phishscore=0 spamscore=0 suspectscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2507300000 definitions=main-2508140147
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE0MDE0OCBTYWx0ZWRfX4Cu8YJVeBv+V
- P6qA6ONr3JUs9VJaXgLtoNU25bJRzc1fdVEZZ/t5QyVy9jqzGxKyvrHjOz+8Yoo4cV2ZrPBVxsw
- zjcrHQLrNk5bAITazr+eU94YW/XLuF+PMPe5MhF9DILQYV09nWGaSf7g1VthIGI/Bcv/5lj9LQS
- NjYgg4l8U6kNRP/03moh0sH/yQsEgpySArIMrz/4lELg+MCm7bCNMVLybJYzY6ZG69X9YJNGEAG
- bTxifmLDuzoWsusmWuWBJsgQJberazj5Ke5DX/KpkGuBHZ95GcXEml3VWt05cHv5VS6MEFgnz7T
- 0HroTi+Dun/8Gkgsu2LUGiq80mrw+02+v3cIMNQzDMTScN0kzfQpfA4AI+GXaIm9BJFYDE+REDN
- a4swJwAbfv9uVHlqOE8UPqkHly5crwrxB6dLlB0LT8l+9CYYVSOJ5tgVB+dUpttB9O3u0eYw
-X-Authority-Analysis: v=2.4 cv=eIsTjGp1 c=1 sm=1 tr=0 ts=689e1a31 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=Eo/SrTcA c=1 sm=1 tr=0 ts=689e1a29 b=1 cx=c_pps
  a=zPCbziy225d3KhSqZt3L1A==:117
  a=zPCbziy225d3KhSqZt3L1A==:17
- a=2OwXVqhp2XgA:10 a=yPCof4ZbAAAA:8 a=V7xkzyaGXGj9tJ5OYwUA:9 cc=ntf
+ a=2OwXVqhp2XgA:10 a=yPCof4ZbAAAA:8 a=QEhf6t8kAlL4CJLHOQYA:9 cc=ntf
  awl=host:12069
-X-Proofpoint-GUID: IZH-R1vqt2FN-ygYx45DO59_nguYSEGR
-X-Proofpoint-ORIG-GUID: IZH-R1vqt2FN-ygYx45DO59_nguYSEGR
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-ORIG-GUID: WqILoSJiVpnsdwItSFkMli_snv3Plrnc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE0MDE0OCBTYWx0ZWRfX6ohaAYeXwf3H
+ y3V8cea34Q1i98qZ1/ZsEeNiiQvH4poyy8k59MTy9pU32UTl/zhKJ3DQy7wwOVvzPGUs/91Hq70
+ zOFEQddR8oj3ZqGWLwo8+1pRxW42MgbSF6OMuxQN3F2KaglqwN0dXgVwbNksn8vVxSyu17v6VeP
+ TeljaTy7D+TFC3fCUm1ON8SS6WyPfD1jondiKWp+Y16u0lqH2OAHfCYWz4ED2SeLWMw+flMlFO6
+ woC0kJlgrIe4Kpiqk5lmJN9HLoNMCZphFZSh33y32fiOdreY9oMIV9AjhuNPioxSqFdyurheASf
+ 9h/8CYCn3kWATD5GiYTYxNnfiJNh5FuUyqxyj9N0KMC3yBxtGzhDv+VNTnkv2HAiIFFigyf+xug
+ H47abFgLR4vEA6zYG/RsqPfduEu4SJpRPMW1zDaIvKYmdyheDdePn9ajqcGCRN850l9AR0iP
+X-Proofpoint-GUID: WqILoSJiVpnsdwItSFkMli_snv3Plrnc
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -113,101 +113,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All blockers and notifiers for cpr-transfer mode also apply to cpr-exec.
+Add a helper to walk all CPR fd's and run a callback for each.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/vfio/container.c   |  3 ++-
- hw/vfio/cpr-iommufd.c |  3 ++-
- hw/vfio/cpr-legacy.c  |  9 +++++----
- hw/vfio/cpr.c         | 13 +++++++------
- 4 files changed, 16 insertions(+), 12 deletions(-)
+ include/migration/cpr.h |  3 +++
+ migration/cpr.c         | 13 +++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 3e13fea..735b769 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -993,7 +993,8 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
-         error_setg(&vbasedev->cpr.mdev_blocker,
-                    "CPR does not support vfio mdev %s", vbasedev->name);
-         if (migrate_add_blocker_modes(&vbasedev->cpr.mdev_blocker, errp,
--                                      MIG_MODE_CPR_TRANSFER, -1) < 0) {
-+                                      MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC,
-+                                      -1) < 0) {
-             goto hiod_unref_exit;
-         }
-     }
-diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
-index 148a06d..e1f1854 100644
---- a/hw/vfio/cpr-iommufd.c
-+++ b/hw/vfio/cpr-iommufd.c
-@@ -159,7 +159,8 @@ bool vfio_iommufd_cpr_register_iommufd(IOMMUFDBackend *be, Error **errp)
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index baff57f..f4fc5ca 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -35,6 +35,9 @@ void cpr_resave_fd(const char *name, int id, int fd);
+ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+                 Error **errp);
  
-     if (!vfio_cpr_supported(be, cpr_blocker)) {
-         return migrate_add_blocker_modes(cpr_blocker, errp,
--                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
-+                                         MIG_MODE_CPR_TRANSFER,
-+                                         MIG_MODE_CPR_EXEC, -1) == 0;
-     }
- 
-     vmstate_register(NULL, -1, &iommufd_cpr_vmstate, be);
-diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-index 553b203..7c73439 100644
---- a/hw/vfio/cpr-legacy.c
-+++ b/hw/vfio/cpr-legacy.c
-@@ -176,16 +176,17 @@ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
- 
-     if (!vfio_cpr_supported(container, cpr_blocker)) {
-         return migrate_add_blocker_modes(cpr_blocker, errp,
--                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
-+                                         MIG_MODE_CPR_TRANSFER,
-+                                         MIG_MODE_CPR_EXEC, -1) == 0;
-     }
- 
-     vfio_cpr_add_kvm_notifier();
- 
-     vmstate_register(NULL, -1, &vfio_container_vmstate, container);
- 
--    migration_add_notifier_mode(&container->cpr.transfer_notifier,
--                                vfio_cpr_fail_notifier,
--                                MIG_MODE_CPR_TRANSFER);
-+    migration_add_notifier_modes(&container->cpr.transfer_notifier,
-+                                 vfio_cpr_fail_notifier,
-+                                 MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC, -1);
-     return true;
++typedef bool (*cpr_walk_fd_cb)(int fd);
++bool cpr_walk_fd(cpr_walk_fd_cb cb);
++
+ MigMode cpr_get_incoming_mode(void);
+ void cpr_set_incoming_mode(MigMode mode);
+ bool cpr_is_incoming(void);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index 6d01b8c..021bd6a 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -134,6 +134,19 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+     return fd;
  }
  
-diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-index a831243..a176971 100644
---- a/hw/vfio/cpr.c
-+++ b/hw/vfio/cpr.c
-@@ -195,9 +195,10 @@ static int vfio_cpr_kvm_close_notifier(NotifierWithReturn *notifier,
- void vfio_cpr_add_kvm_notifier(void)
- {
-     if (!kvm_close_notifier.notify) {
--        migration_add_notifier_mode(&kvm_close_notifier,
--                                    vfio_cpr_kvm_close_notifier,
--                                    MIG_MODE_CPR_TRANSFER);
-+        migration_add_notifier_modes(&kvm_close_notifier,
-+                                     vfio_cpr_kvm_close_notifier,
-+                                     MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC,
-+                                     -1);
-     }
- }
- 
-@@ -282,9 +283,9 @@ static int vfio_cpr_pci_notifier(NotifierWithReturn *notifier,
- 
- void vfio_cpr_pci_register_device(VFIOPCIDevice *vdev)
- {
--    migration_add_notifier_mode(&vdev->cpr.transfer_notifier,
--                                vfio_cpr_pci_notifier,
--                                MIG_MODE_CPR_TRANSFER);
-+    migration_add_notifier_modes(&vdev->cpr.transfer_notifier,
-+                                 vfio_cpr_pci_notifier,
-+                                 MIG_MODE_CPR_TRANSFER, MIG_MODE_CPR_EXEC, -1);
- }
- 
- void vfio_cpr_pci_unregister_device(VFIOPCIDevice *vdev)
++bool cpr_walk_fd(cpr_walk_fd_cb cb)
++{
++    CprFd *elem;
++
++    QLIST_FOREACH(elem, &cpr_state.fds, next) {
++        g_assert(elem->fd >= 0);
++        if (!cb(elem->fd)) {
++            return false;
++        }
++    }
++    return true;
++}
++
+ /*************************************************************************/
+ static const VMStateDescription vmstate_cpr_state = {
+     .name = CPR_STATE,
 -- 
 1.8.3.1
 
