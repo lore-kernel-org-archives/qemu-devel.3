@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36194CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75012CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXgV-0008HG-B0; Thu, 14 Aug 2025 09:07:59 -0400
+	id 1umXiU-0003C0-LM; Thu, 14 Aug 2025 09:10:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1umXgP-0008Dl-De
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:07:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1umXiO-00035D-HF
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:09:57 -0400
+Received: from p-east1-cluster3-host6-snip4-10.eps.apple.com ([57.103.91.191]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1umXgK-0005qj-05
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:07:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755176862;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GLj1nQQEEcSjdonhvjhdb+8hgcWqHVO2AEzJvBFfDy8=;
- b=bFeFSo2Kg54qjn9vTcDim1KxxNX2gLgAAdeWgEpZMoXxNulX6RCHgfRSIUr0GRBSe5cDEh
- N+nPwSLeCBjc2iSjwLKvPyDNi19RcAddHD+Paqh+BkRd5YanvCwrBLQ2x7RZC76rWXrz5l
- MlKJKfTK24Wg/YJX2dmhgMQ69VMfBaM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-74-nEcFsDFXNUKxdsB36M8TJA-1; Thu, 14 Aug 2025 09:07:41 -0400
-X-MC-Unique: nEcFsDFXNUKxdsB36M8TJA-1
-X-Mimecast-MFC-AGG-ID: nEcFsDFXNUKxdsB36M8TJA_1755176855
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3b9edf5b346so525898f8f.3
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:07:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755176855; x=1755781655;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GLj1nQQEEcSjdonhvjhdb+8hgcWqHVO2AEzJvBFfDy8=;
- b=c38ckQDYrJnwPdOe33mdxTLm9U40/ZT0Hh+u2UShVstSkps11a4PiF2Zm8S+E4V1OO
- B0hPDGyjYTlWPlI22PRi5HqfveHTvvtCDWghJyN0SKg6UY5t3UEg6wW38jB3XAlFNcst
- lUJ+StIY97UK2HOaFRU/+ilw0v3S+OQAuM0m3bikMeVHy0xj520PdpwaloA1CYwq2BGM
- AERcqC4xhUYQ9DAFapJ47F99uz2ZRl36oVXMZMXpytu4i4VGNwMg+//MZqy9I4FiycrN
- vp0Ea3TBoOA+jgvGifClvXKSqBkGbQ9qCKjXAckMpFw9oLGaVA3+AsjoVi/+veBu1Ik6
- MAkg==
-X-Gm-Message-State: AOJu0YxtcFVycZgZus+HJZYr5o3ZHChQWTNBdReBUmh9Kzb/CR1B1H1Q
- +55GdyU2KlMrdgYgQloR4MbMU3r8pR/JZOmDoQDKPKT5+u6RNUnrtmxtNRtUkTVS0rzvMh1hrmV
- 5P5LZXwSZ0o651ZOkgY7UGKPi/heOEIE/EGJJUHKDfk+rYENQM9yp3ut9
-X-Gm-Gg: ASbGnct2UGcucZUA1HwZrmKjBBusT59WjmxYatim+TDp1a9FhdMLCG2phRugA2DfMGu
- wW1jqfic5BKaTBlDI2Vp6o4JJip5uqn+irgitG9HR3KucNM8Eqkrfy+VdA3jEiHdYTG8KE6vF+r
- 6TVp424IsPzNBqDnael9mm5Xxr8019lI/0b64aPNR0PF9PRNHa3f9PcGBIavK3NhUeJmdXmBGNh
- T9suYse6HS5BJsEltDLgWKywYEONztdD5Bd0V53PBowf4fEzNzds8SnZHkAyU9QdT2sPowWzuCD
- 53WRN/HYPqz93jPqZhhcNt66mC3sLJHDKvk=
-X-Received: by 2002:a05:6000:26d0:b0:3b8:d672:3cf8 with SMTP id
- ffacd0b85a97d-3b9fc36b10cmr2491294f8f.43.1755176855339; 
- Thu, 14 Aug 2025 06:07:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8nWGrmfDMMbw5aUkZX0JbD7ZF70D1ILjgi3TDGW0ayStGsMyCZOjothuyvo+CakT7v+9LDw==
-X-Received: by 2002:a05:6000:26d0:b0:3b8:d672:3cf8 with SMTP id
- ffacd0b85a97d-3b9fc36b10cmr2491270f8f.43.1755176854881; 
- Thu, 14 Aug 2025 06:07:34 -0700 (PDT)
-Received: from redhat.com ([2a06:c701:73d6:5500:f926:f5f2:d44c:9bbf])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b911469bffsm9739677f8f.36.2025.08.14.06.07.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 06:07:34 -0700 (PDT)
-Date: Thu, 14 Aug 2025 09:07:32 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: gerben@altlinux.org
-Cc: qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
-Subject: Re: [PATCH] hw/virtio/virtio-pci: add defensive check for vector_irqfd
-Message-ID: <20250814090615-mutt-send-email-mst@kernel.org>
-References: <20250814110830.14660-1-gerben@altlinux.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250814110830.14660-1-gerben@altlinux.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1umXiH-00067L-1V
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:09:56 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-20-percent-1 (Postfix) with ESMTPS id
+ AFE411800195; Thu, 14 Aug 2025 13:09:40 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
+ bh=w2CjkhliRfAUzMGtjsGF2RwoF2pCByth6J1Vhgg6ddo=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=jT3Whi09pKUZydcLOnzwiDB+3KcKr0WrS+MDq7cHXqM9qVIjLSjt+CVFwjueZ9/a4RlGAwFF3j9o3GGCDf6i/kvHloawSsa+ygL5PNN+FHFXC79RMbltzcK1VN+1lzq3999Qntekw7YsxwLQXsrvUC4ug64Lqq2YD2wQlqlxGqBMC33RcXls+COuGPieahGqApNdhJKNCZX0CNAqKVqTop9+QhDjEsSsmiCmY98pDN3JqFGCrnHzvTvtprLbL9BAI+llu/cGn++xJaA3n6A3QOGQzalo6oUKQpa5x0I3dgXvt1i+rSXdNpo/yIx54wJkW/UbFgP7Qm469+hK1yg0Cg==
+X-Client-IP: 212.60.126.184
+Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
+ [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-20-percent-1 (Postfix) with ESMTPSA id
+ 3BF1B1804E16; Thu, 14 Aug 2025 13:06:56 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Subject: Re: [PATCH v6 12/13] target/arm: hvf: instantiate GIC early
+From: Mads Ynddal <mads@ynddal.dk>
+In-Reply-To: <20250808070137.48716-13-mohamed@unpredictable.fr>
+Date: Thu, 14 Aug 2025 15:06:44 +0200
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
+ Cameron Esfahani <dirty@apple.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <FB7A9640-30C1-47FD-A1B7-73A7333BDB23@ynddal.dk>
+References: <20250808070137.48716-1-mohamed@unpredictable.fr>
+ <20250808070137.48716-13-mohamed@unpredictable.fr>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+X-Mailer: Apple Mail (2.3826.700.81)
+X-Proofpoint-GUID: XVFlJKab-qIt-4RmFc5HXcLpoDqQ8vvL
+X-Proofpoint-ORIG-GUID: XVFlJKab-qIt-4RmFc5HXcLpoDqQ8vvL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE0MDExMCBTYWx0ZWRfX2LZeA7mRVYqs
+ 5mfFKvnu4hE3q3/NF7ybH4bpLlEb1dxehlZWtIESXwauW3WxmoULO1wmZKDUyKaidEKxf3kp2Mk
+ F6oL6oBpp0ncpFqDrEV6FutpsNlhRMStC5uNeAZaqJRa0+YZ+vcJMtapqLNp1IDmQokIn1SGxKh
+ BgdAKUQfXqa3xsf6l7gAqO1EOv87CXbQQVYO7kMNQuZzfg9fMqGcAP/NV5ozMn6Tvy9v67sKKVX
+ f7thq9g5rVOWtC8SMQBitY1D4NkSdgQIdQByz3huLbyzl/9pxnNFPvpzVt9LDwBBRu4Yo3noQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-13_02,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=892
+ malwarescore=0 mlxscore=0 spamscore=0
+ suspectscore=0 clxscore=1030
+ phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2506270000 definitions=main-2508140110
+Received-SPF: pass client-ip=57.103.91.191; envelope-from=mads@ynddal.dk;
+ helo=outbound.ci.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,47 +92,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 14, 2025 at 02:08:08PM +0300, gerben@altlinux.org wrote:
-> From: Denis Rastyogin <gerben@altlinux.org>
-> 
-> Add a NULL check for proxy->vector_irqfd in
-> virtio_pci_one_vector_unmask() before taking the irqfd path.
-> This prevents potential access to uninitialized state if
-> vector_irqfd is absent.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Reported-by: Alexey Appolonov <alexey@altlinux.org>
-> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
 
-
-I don't really understand what this description means. defensive against
-what?  found in what sense? what is the uninitialized state accessed?
-when is the potential for this access?
-
-
+> On 8 Aug 2025, at 09.01, Mohamed Mediouni <mohamed@unpredictable.fr> =
+wrote:
+>=20
+> While figuring out a better spot for it, put it in =
+hv_arch_vm_create().
+>=20
+> After hv_vcpu_create is documented as too late, and deferring
+> vCPU initialization isn't enough either.
+>=20
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->  hw/virtio/virtio-pci.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 767216d795..07904f6f9b 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -1015,7 +1015,11 @@ static int virtio_pci_one_vector_unmask(VirtIOPCIProxy *proxy,
->              event_notifier_set(n);
->          }
->      } else {
-> -        ret = kvm_virtio_pci_irqfd_use(proxy, n, vector);
-> +        if (proxy->vector_irqfd) {
-> +            ret = kvm_virtio_pci_irqfd_use(proxy, n, vector);
-> +        } else {
-> +            ret = -EFAULT;
-> +        }
->      }
->      return ret;
->  }
-> -- 
-> 2.42.2
+> target/arm/hvf/hvf.c | 15 +++++++++++++++
+> 1 file changed, 15 insertions(+)
+>=20
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 6da636724b..bb7b84ff35 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -1084,6 +1084,21 @@ hv_return_t hvf_arch_vm_create(MachineState =
+*ms, uint32_t pa_range)
+>     }
+>=20
+>     ret =3D hv_vm_create(config);
+> +    if (hvf_irqchip_in_kernel()) {
+> +        /*
+> +         * Instantiate GIC.
+> +         * This must be done prior to the creation of any vCPU
+> +         * but past hv_vm_create()
+> +         */
+> +        hv_gic_config_t cfg =3D hv_gic_config_create();
+> +        hv_gic_config_set_distributor_base(cfg, 0x08000000);
+> +        hv_gic_config_set_redistributor_base(cfg, 0x080A0000);
+> +        hv_return_t err =3D hv_gic_create(cfg);
+> +        if (err !=3D HV_SUCCESS) {
+> +            error_report("error creating platform VGIC");
+> +            goto cleanup;
+> +         }
+> +    }
+>=20
+> cleanup:
+>     os_release(config);
+> --=20
+> 2.39.5 (Apple Git-154)
+>=20
 
+It is difficult to find a place to initialize the GIC config, so I don't
+know if it gets better than this.
+
+Should the values 0x08000000 and 0x080A0000 be defined somewhere, or
+found through a look up? I see hw/arm/virt.c has them in the
+base_memmap.
+
+You can do os_release(cfg) after hv_gic_create.=
 
