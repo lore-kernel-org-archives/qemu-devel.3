@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C1FCCA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 11:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A65CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 11:16:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umVuh-00031c-4c; Thu, 14 Aug 2025 07:14:31 -0400
+	id 1umVvb-0003EE-QW; Thu, 14 Aug 2025 07:15:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umVue-00031B-F3; Thu, 14 Aug 2025 07:14:28 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1umVvY-0003CE-TV; Thu, 14 Aug 2025 07:15:25 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1umVua-0004rT-Bo; Thu, 14 Aug 2025 07:14:28 -0400
+ id 1umVvS-0005FK-NA; Thu, 14 Aug 2025 07:15:23 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:3c8c:0:640:20c:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0431A8062A;
- Thu, 14 Aug 2025 14:14:15 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 1F25280748;
+ Thu, 14 Aug 2025 14:15:13 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:422::1:1d] (unknown
  [2a02:6bf:8080:422::1:1d])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id CEKnEM0G2Sw0-EJNd2Hz7; Thu, 14 Aug 2025 14:14:14 +0300
+ ESMTPSA id CFKBGM0GwiE0-jpMcvwSS; Thu, 14 Aug 2025 14:15:12 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755170054;
- bh=NlMDsY3QhJScTm+yyDQeJ17DxZmXn6K4UfV2U8A8xdw=;
+ s=default; t=1755170112;
+ bh=fpbCBEG5Elsv7xiiDvFAh5J0IDN8ckiiTb2DvT1Slhc=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=jgqAJ6F/Rgi3rwFPPyqeXbxJ+gZ3FCsMKCAsKpW9/xPO0l3LVKPLVoAOdjBKypwQS
- oecdItJaVIldNvWXnXsfHNqEDlPiiY9/3sf6ntMihnILTaUKB5jcdjPByKL8O8tohi
- vVFUbiKbXDVfroxpfy1QDFSUR/73roGy/f1C6DH4=
+ b=Zrv/wyzB+5ttOTc7ceq9UUz15mPJCa8DNdkQzEwJV1yoTYwTpBpFMp5X/jXLgDLBa
+ VpurKhavWjIKuaD2Q14QLbAIVNKEweJ3MCsa1m0p/QHVaazW1bxPv4BvKQkHBQ/g/4
+ yJ21bK1kyxRel86vxZ01jC0C5jpFbOWhqXKXUB1A=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <fb84a195-4442-4a8d-a2c5-0b5177fabf69@yandex-team.ru>
-Date: Thu, 14 Aug 2025 14:14:12 +0300
+Message-ID: <75dcff77-7bc8-4103-b6a5-f0b564c8c317@yandex-team.ru>
+Date: Thu, 14 Aug 2025 14:15:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/33] vhost-user-blk: add some useful trace-points
+Subject: Re: [PATCH 07/33] virtio: move common part of _set_guest_notifier to
+ generic code
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  mst@redhat.com, peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net
 Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
@@ -49,23 +50,22 @@ Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
  armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
  steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
 References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-23-vsementsov@yandex-team.ru>
- <f3637a8d-04ae-4d46-b5c6-5022f5a4c865@linaro.org>
+ <20250813164856.950363-8-vsementsov@yandex-team.ru>
+ <8b2cd3c9-4795-47fc-a4ab-3c854c42b99d@linaro.org>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <f3637a8d-04ae-4d46-b5c6-5022f5a4c865@linaro.org>
+In-Reply-To: <8b2cd3c9-4795-47fc-a4ab-3c854c42b99d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,33 +81,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.08.25 07:58, Philippe Mathieu-Daudé wrote:
+On 14.08.25 07:53, Philippe Mathieu-Daudé wrote:
+> Hi Vladimir,
+> 
 > On 13/8/25 18:48, Vladimir Sementsov-Ogievskiy wrote:
+>> virtio-pci and virtio-mmiio handle config notifier equally but
+> 
+> Typo virtio-mmio.
+> 
+>> with different code (mmio adds a separate function, when pci
+>> use common function). Let's chose the more compact way (pci)
+>> and reuse it for mmio.
+>>
 >> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 >> ---
->>   hw/block/trace-events     | 10 ++++++++++
->>   hw/block/vhost-user-blk.c | 15 +++++++++++++++
->>   2 files changed, 25 insertions(+)
->>
->> diff --git a/hw/block/trace-events b/hw/block/trace-events
->> index cc9a9f2460..3b5fd2a599 100644
->> --- a/hw/block/trace-events
->> +++ b/hw/block/trace-events
+>>   hw/virtio/virtio-mmio.c        | 41 +++++------------------------
+>>   hw/virtio/virtio-pci.c         | 34 +++---------------------
+>>   hw/virtio/virtio.c             | 48 +++++++++++++++++++++++++++++++---
+>>   include/hw/virtio/virtio-pci.h |  3 ---
+>>   include/hw/virtio/virtio.h     |  7 +++--
+>>   5 files changed, 58 insertions(+), 75 deletions(-)
 > 
 > 
->> +# vhost-user-blk.c
->> +vhost_user_blk_start(void) ""
->> +vhost_user_blk_start_finish(void) ""
->> +vhost_user_blk_stop(void) ""
->> +vhost_user_blk_stop_finish(void) ""
->> +vhost_user_blk_connect(void) ""
->> +vhost_user_blk_connect_finish(void) ""
->> +vhost_user_blk_device_realize(void) ""
->> +vhost_user_blk_device_realize_finish(void) ""
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index 9a81ad912e..7880c3bcd9 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
 > 
-> Maybe use _in / _out suffixes? Naming is hard...
+> 
+>> +static void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+>> +                                                     VirtQueue *vq,
+>> +                                                     int n, bool assign,
+>> +                                                     bool with_irqfd)
+>> +{
+>> +    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+>> +        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
+>> +    } else {
+>> +        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
+>> +    }
+>> +}
+>> +
+>> +int virtio_queue_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
+>> +                                    bool with_irqfd)
+>> +{
+>> +    VirtQueue *vq = NULL;
+>> +    EventNotifier *notifier = NULL;
+>> +
+>> +    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+>> +        notifier = virtio_config_get_guest_notifier(vdev);
+>> +    } else {
+>> +        vq = virtio_get_queue(vdev, n);
+>> +        notifier = virtio_queue_get_guest_notifier(vq);
+>> +    }
+>> +
+>> +    if (assign) {
+>> +        int r = event_notifier_init(notifier, 0);
+>> +        if (r < 0) {
+>> +            return r;
+>> +        }
+>> +        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, true, with_irqfd);
+>> +    } else {
+>> +        virtio_pci_set_guest_notifier_fd_handler(vdev, vq, n, false,
+>> +                                                 with_irqfd);
+>> +        event_notifier_cleanup(notifier);
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+> 
+> 
+>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>> index c594764f23..8b9db08ddf 100644
+>> --- a/include/hw/virtio/virtio.h
+>> +++ b/include/hw/virtio/virtio.h
+> 
+> 
+>> -void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+>> -                                                 bool assign, bool with_irqfd);
+>> +
+>> +int virtio_queue_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
+>> +                                    bool with_irqfd);
+> 
+> Please add a @docstring to document (@n in particular).
+> 
+> Thanks,
+> 
+> Phil.
 
-Agree, will change.
+Will do. Thanks for reviewing!
+
+
 
 -- 
 Best regards,
