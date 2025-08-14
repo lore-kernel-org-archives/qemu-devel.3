@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 113A0CA0EE6
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD673CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXeH-0003tO-Rs; Thu, 14 Aug 2025 09:05:42 -0400
+	id 1umXZE-0003LY-Eq; Thu, 14 Aug 2025 09:00:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXd5-0002RE-Na
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:28 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1umXYY-0002N9-29
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:59:46 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXcx-0005Co-7r
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:25 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-76e2e8e54f8so765996b3a.1
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:04:18 -0700 (PDT)
+ id 1umXYS-0004On-Hq
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:59:45 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-323267b7dfcso895477a91.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 05:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755176657; x=1755781457; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755176375; x=1755781175; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xwpjIKFwZpPOs1MrHyzWBavKC4efZpu/4iinDNh8yuo=;
- b=usTz9fTXBVkMY4ZuWxXPeIDns5tFcjOoXg2m6H9Q3ImOlj8xyYMooTEzGVC2aOjD+l
- 4lU6orl+cKpllZUvmwbZefGBrtunmwzHAabhYbr9Y0NPa437q9sLqzS36H+TAD1tdPQl
- D5pQDB5xu0lH61R7n+R9yLics7C/4jHhhSr1wKIl14Dp8WJxispdxMuZjSNwGNIL5mdr
- HsMPfUvNRP36eTagr3U3cESLG+oEuVl6ClUi/O70T+Bb9bJ8rsT15WQTDEAv19rsIRSW
- ggwwZwXqe7+trqyuAhFtW4I937NNnV4/uthDNsQ+Fn/AhCumPbRYpLTSspTMtk7/Gvoi
- zC3w==
+ bh=UkNyZZYFhHeil9ygYrAE1UXkAwT1+GtqIOD2Xj8zAVs=;
+ b=fIGz5x0vwJL7x1qrsVTbKMi4nhNND2CkaP43gdrCzKowXxXGXno1TP/AGo6/7a4z5U
+ i9bqcF+csbeLEQzi3G5sBW2C7CjiXITXsD/HW09+I4WnHhFjbL+JT0wU9GtL4x/SORvG
+ +WZTSKf4UvK+RqpmUowIACR6Eh6NiaGuMyU8vDMdXg9DG8OiIAcg1Ln+Ldacx8OxNYmW
+ og4q1Cq+Y5/n2hsfsr48H/f/q/3Vki3hfOOUeIynd+FAW3bRTIgK94PL4Z2y4qFeLXSQ
+ 1aqSiq1s+TRtge9VLT4yf9Ko8qD325y42ZFuRQcqA8YwI9vv2Z3Qfb+b8qw2UcWxiddM
+ ELnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755176657; x=1755781457;
+ d=1e100.net; s=20230601; t=1755176375; x=1755781175;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xwpjIKFwZpPOs1MrHyzWBavKC4efZpu/4iinDNh8yuo=;
- b=smEQVVUcY+d2iALOOMA20YMS0LB+jH/xZFWeIgNJdRb0HO7x0OafnDRfCQ5Uyt919Q
- 1kapuS3DLHsByLab1tymvLzPHBY98L47vb6usDpo7X9tiRQRLGdZfA1JC5nvOISVuv/I
- ypTqDKT8wsfi8OrYnb5xh9CPd0eAkX1k+TE+071jvppdt5YBnDFDFBfTvUeVws66N4z3
- ckv1eO++Um+FZftYUYcelRBCuxm7FLv/D8GgTh9ke9MD8CY893KwrqHAVxqc44syxcAV
- I0PhIpjC4dgaG4nisq06Y6ATVFhRAC7Hzmd+V7xpgOzK8PIEG0Dvjm6bxe+YhHj2/PrY
- 4MMA==
-X-Gm-Message-State: AOJu0Yzu1DsNcry/t8Pc/aauPVXZjeCyJKdV49DAgsmNE78DI2LKv5wn
- T11HBnMPws4L30fpHKBEhab5OsIAGq3E7Y4Paawj13M7aCNofEhq61GluYuZvECaJU8hSRs6P80
- 8lRuCdAI=
-X-Gm-Gg: ASbGncvRIq42hOQ3Vz8I5iDz1KsahykrCasPP5oXQwdjymrvIwj12CBZY+PiWEUw65j
- i+7OEZ/N1ceIpIJt/fNSue6I7YKyg7ZbUdQkOCbAvLQj/rck2Csgu1c0CFlBawmd/XikLbr1+W7
- a5ab7S98Us9hJ1RXVtffTRS2EfytthGR3/4xRj9P/tULVmvY9pj2962xvhoKUzhCz85sAqXaURJ
- obenptZW2XwdYzxviMpWvE4abeMIngK3KBNa65cdptywyMznLQarf4aN/9Az0/LjjkFOoSMRXAo
- 0gKEE6wzx0zMtNSw/UpEqT66qg41M5i31WUiLqIWhZlO7/YHJMeJO8G0Fx/SRxPgyW9QK+lvmGr
- y4dKQW3r75advOkw2H3B625nvqYdsjdlsDb2SPT+oVAaNjHM=
-X-Google-Smtp-Source: AGHT+IGi4STbiXxqX7ydKBk1Eo4SwY7tndTuha0jz1nEHtSfIrUp90SXc6DtzkroqEInQgPbtarhgA==
-X-Received: by 2002:a05:6a00:3d4b:b0:748:e9e4:d970 with SMTP id
- d2e1a72fcca58-76e2f8ce77bmr4073627b3a.1.1755176656425; 
- Thu, 14 Aug 2025 06:04:16 -0700 (PDT)
+ bh=UkNyZZYFhHeil9ygYrAE1UXkAwT1+GtqIOD2Xj8zAVs=;
+ b=NLtwbTgGYLgAhQgnFwIFg9txEv1P8r1dS6IkObeYeErIODpl0C4Zx/Y0Jt7D07zsuK
+ OejeZOUheMBdglIKb3Fq2MX/IR3+sozFMefrG7Iq6uv/XYI+6FRJD/j69c6JLADswSTU
+ cmoMluMw3pZoN+E11gQgTYqJKmSneovYyotKnA8jIJ4I7Kn4ez5LPKJ9G/RefrAFPTvZ
+ 1uSqI030aR50TYOJsZeZLqY3UJ2gzPAiRbxi1AYyB9ckp1kOLSzuHMS92CaMWdnN+ZRU
+ pJIdJ+WuieLq9lbFZaTGnho9TU3sBJKZVyNRkM14z0aqP3/Glpg3eVyX0kf+1ZqiUtH7
+ dP0A==
+X-Gm-Message-State: AOJu0YwpYk752GqxXHT5RB4Fj8pyi8tb6QMNU+ICZK7CF5qLgC4cdAM+
+ 2Cv1GU/EkZ1ewviPxOsNh4mOuTJ1zP9JAxBWl2hGg3tPQDbre0bosiMOyK7cdsCDCMdDcZtxtQD
+ d8KwaZZs=
+X-Gm-Gg: ASbGncvonKVOZflX5m47FBRjc3r6H3Vxsjsgywy/G8n3VmK1QyUVAcVldDjJkjQuYw0
+ GHD8il9AoOcaoBr09ofoO8k7pXSmLE/U7DgHaxq9eJosdSwSXx8KhYBzU2NOH/KD8jlUEnQCZth
+ SQTPNqlT/YEXxNsnJeQ9PQ8tldQqwNvkH+BWl8HHs5aAAY3dFgQsb6IG1U6qgUaqW8qITqqqwkq
+ QYF7s98pju/EwK/JbC8U/JFFRgjDtbeCV1Y3Op9SRA2JUZhcoJGTjKX2uKju4aqKai3uO7VErbI
+ gE3QzqsfHhnBLz7lSvTPySVx9dgqZ2gIRwt+wPWyfz9pLVZzmaYS4QghlG0OtnH3IKMZYPqoG7G
+ B92vKkJiykX8LnyuKhJ97xKaU+N3DLfc4rVeoOIERagpCg0TAPnOqSFKEHw==
+X-Google-Smtp-Source: AGHT+IFz/etwsmckVxbDZJDwvEZMxWQ3BURMk1QYcQ6O9jYPl1e3MgJcOCrqFTVKHMHeVp6GgzkaSA==
+X-Received: by 2002:a17:90b:5107:b0:321:9366:5865 with SMTP id
+ 98e67ed59e1d1-32327aa63bemr5106483a91.33.1755176375579; 
+ Thu, 14 Aug 2025 05:59:35 -0700 (PDT)
 Received: from localhost.localdomain ([206.83.105.236])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.04.13
+ 98e67ed59e1d1-3233100c994sm1766256a91.21.2025.08.14.05.59.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 06:04:16 -0700 (PDT)
+ Thu, 14 Aug 2025 05:59:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 58/85] target/arm: Implement GCSB
-Date: Thu, 14 Aug 2025 22:57:25 +1000
-Message-ID: <20250814125752.164107-59-richard.henderson@linaro.org>
+Subject: [PATCH v3 29/85] target/hppa: Adjust mmu indexes to begin with 0
+Date: Thu, 14 Aug 2025 22:56:56 +1000
+Message-ID: <20250814125752.164107-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
 References: <20250814125752.164107-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,44 +101,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is a logical reversion of 2ad04500543, though
+there have been additions to the set of mmu indexes
+since then.  The impetus to that original patch,
+"9-15 will use shorter assembler instructions when
+run on a x86-64 host" is now handled generically.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 8 ++++++++
- target/arm/tcg/a64.decode      | 1 +
- 2 files changed, 9 insertions(+)
+ target/hppa/cpu.h | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index e0548f7180..45ff7bb0b2 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2072,6 +2072,14 @@ static bool trans_ESB(DisasContext *s, arg_ESB *a)
-     return true;
- }
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 11d59d11ca..672ab3750c 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -29,21 +29,21 @@
+ #include "qemu/interval-tree.h"
+ #include "hw/registerfields.h"
  
-+static bool trans_GCSB(DisasContext *s, arg_GCSB *a)
-+{
-+    if (dc_isar_feature(aa64_gcs, s)) {
-+        tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
-+    }
-+    return true;
-+}
-+
- static bool trans_PACIAZ(DisasContext *s, arg_PACIAZ *a)
- {
-     if (s->pauth_active) {
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index d034d96b37..e8b0ef07eb 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -238,6 +238,7 @@ ERETA           1101011 0100 11111 00001 m:1 11111 11111 &reta  # ERETAA, ERETAB
-     AUTIA1716   1101 0101 0000 0011 0010 0001 100 11111
-     AUTIB1716   1101 0101 0000 0011 0010 0001 110 11111
-     ESB         1101 0101 0000 0011 0010 0010 000 11111
-+    GCSB        1101 0101 0000 0011 0010 0010 011 11111
-     PACIAZ      1101 0101 0000 0011 0010 0011 000 11111
-     PACIASP     1101 0101 0000 0011 0010 0011 001 11111
-     PACIBZ      1101 0101 0000 0011 0010 0011 010 11111
+-#define MMU_ABS_W_IDX     6
+-#define MMU_ABS_IDX       7
+-#define MMU_KERNEL_IDX    8
+-#define MMU_KERNEL_P_IDX  9
+-#define MMU_PL1_IDX       10
+-#define MMU_PL1_P_IDX     11
+-#define MMU_PL2_IDX       12
+-#define MMU_PL2_P_IDX     13
+-#define MMU_USER_IDX      14
+-#define MMU_USER_P_IDX    15
++#define MMU_KERNEL_IDX    0
++#define MMU_KERNEL_P_IDX  1
++#define MMU_PL1_IDX       2
++#define MMU_PL1_P_IDX     3
++#define MMU_PL2_IDX       4
++#define MMU_PL2_P_IDX     5
++#define MMU_USER_IDX      6
++#define MMU_USER_P_IDX    7
++#define MMU_ABS_IDX       8
++#define MMU_ABS_W_IDX     9
+ 
+-#define MMU_IDX_MMU_DISABLED(MIDX)  ((MIDX) < MMU_KERNEL_IDX)
+-#define MMU_IDX_TO_PRIV(MIDX)       (((MIDX) - MMU_KERNEL_IDX) / 2)
+-#define MMU_IDX_TO_P(MIDX)          (((MIDX) - MMU_KERNEL_IDX) & 1)
+-#define PRIV_P_TO_MMU_IDX(PRIV, P)  ((PRIV) * 2 + !!(P) + MMU_KERNEL_IDX)
++#define MMU_IDX_MMU_DISABLED(MIDX)  ((MIDX) >= MMU_ABS_IDX)
++#define MMU_IDX_TO_PRIV(MIDX)       ((MIDX) / 2)
++#define MMU_IDX_TO_P(MIDX)          ((MIDX) & 1)
++#define PRIV_P_TO_MMU_IDX(PRIV, P)  ((PRIV) * 2 + !!(P))
+ 
+ #define PRIV_KERNEL       0
+ #define PRIV_USER         3
 -- 
 2.43.0
 
