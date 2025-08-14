@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDF3CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 10:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D88EDCA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 10:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umVZo-00063O-Ca; Thu, 14 Aug 2025 06:52:56 -0400
+	id 1umVdo-000713-KA; Thu, 14 Aug 2025 06:57:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1umVZm-000632-O6
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 06:52:54 -0400
+ id 1umVdk-00070j-PT
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 06:57:00 -0400
 Received: from air.basealt.ru ([193.43.8.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1umVZc-0000ru-OC
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 06:52:54 -0400
+ id 1umVdh-0001cg-6t
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 06:57:00 -0400
 Received: from boringlust.malta.altlinux.ru (obninsk.basealt.ru
  [217.15.195.17]) (Authenticated sender: rastyoginds)
- by air.basealt.ru (Postfix) with ESMTPSA id 6395E233B3;
- Thu, 14 Aug 2025 13:52:41 +0300 (MSK)
+ by air.basealt.ru (Postfix) with ESMTPSA id 14FE1233B2;
+ Thu, 14 Aug 2025 13:56:53 +0300 (MSK)
 From: gerben@altlinux.org
 To: qemu-devel@nongnu.org, richard.henderson@linaro.org,
  peter.maydell@linaro.org
 Cc: sdl.qemu@linuxtesting.org
-Subject: [PATCH] linux-user: prevent NULL dereference in
+Subject: [PATCH v2] linux-user: prevent NULL dereference in
  do_sendrecvmsg_locked()
-Date: Thu, 14 Aug 2025 13:52:08 +0300
-Message-ID: <20250814105236.13344-1-gerben@altlinux.org>
+Date: Thu, 14 Aug 2025 13:56:01 +0300
+Message-ID: <20250814105649.13521-1-gerben@altlinux.org>
 X-Mailer: git-send-email 2.42.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -42,7 +42,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,7 +82,7 @@ index 59b2080b98..c7e6c53f08 100644
  
      if (send) {
 -        if (fd_trans_target_to_host_data(fd)) {
-+        if (fd_trans_target_to_host_data(fd) && msg.msg_iov->iov_len) {
++        if (fd_trans_target_to_host_data(fd) && msg.msg_iov) {
              void *host_msg;
  
              host_msg = g_malloc(msg.msg_iov->iov_len);
