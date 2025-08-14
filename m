@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2976ECA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 07:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF78CA0EE3
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 07:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umS3L-0007m7-Ci; Thu, 14 Aug 2025 03:07:11 -0400
+	id 1umS3H-0007ki-9L; Thu, 14 Aug 2025 03:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3I-0007l6-9n
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:08 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3C-0007jd-ML
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:03 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3F-00041o-Ri
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:07 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3b9e4148134so292336f8f.2
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 00:07:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS38-0003ze-1j
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:01 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45a1b065d58so3776995e9.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 00:06:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755155221; x=1755760021; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5JW+/0ItkEipJlqLSPg29sThOTAq485WSDBW9nj3d0k=;
- b=IIRbsEtIsi4TBPlNJXn2Vw+M1JByU6ldRzeCvdA+/GCprzSbGckJ7tlDpwmNdvTVtu
- 4aGBGHoTWGy146vpmPJG0lZayZQndbysP19O1OzCiatyU/1olcpNAePuOVSM/KzbXl8h
- dMKNj7pqjINaT1h+AuFDn9XusqPj6kuFpbYTgsgC1N+Xqw4wk28qJcJ89f+6HW4zudDr
- kwiH7SOJGAbA5G4AU6B+YI7cT2x/YRSsfUgLVwKMZkLN7KKgzFoJ1Z0OWaUQ6sLd8PnH
- cnP23+HAGsufUz92k1dwgMKU7V1Z5MadQTTgKOe/v78AIG3Tt5CusUAI1oKwoAWqNeSB
- reGQ==
+ d=linaro.org; s=google; t=1755155212; x=1755760012; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=e59BaxHwubmbKhg2MtSdXVTimX1acxMLoXeo1of+jh4=;
+ b=NJUrcH22M0Kp4fQ32jNVNKKzQznQC8byjaiF35GpFyejTcaNEpxe8BnGgeeJrGmjRa
+ oYZE4qIhzSXuPHljfuC4sDAEJRBvOIyhdspu9BNsu0XgGCxsI1aICwLx6gkGNIiUaIRc
+ 3Cg2kcTW8m0TaDECWUKvJO8skk2ENnKb5SNJPD/MTNRn2Ultnd6TOAkDzJOe5gtPxAOZ
+ j884Psj31qWZV7LvscVDhsjmrRgY8GdKLfTYM8YNZ6elpZNISaVMkDbNlZVRBw6V1kJz
+ 8PfUz5ZALGvNAuMbAX5l41kQX7pINLEdzlFDEfRfdJl6Et70Hmjtl+bcnqIu0wi6PLu3
+ C1Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755155221; x=1755760021;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5JW+/0ItkEipJlqLSPg29sThOTAq485WSDBW9nj3d0k=;
- b=YA+c4ngCWE8+gpE0XAXLHgz8fY7KYqQIpyvvctgnOgjg9Yq9pE9dRuMwcYJTclHn01
- iOZeQeHJlV9w7NMzNbjuReIPu8QqupTfyrs9BwAAx+XI+3OCbvXsEBaw9XeXjGVfMAFH
- gSzZQUmyARYh0kGOaP9rDF4n5iu/5E2qFtBO1h5t3eCrc6nKs47Rp7BGFCnGPFgbOcCd
- j7vF7KE7dX3xZPF0Zp9pgdqcDeGwa6bdJNt/6+2xKdmjWVnJmYF/N+jhTzYApbVMHbp7
- 6kuIB7Hl6kAKcUV3zEAQbjgh237Iqx5mVYBuMwa4Ry2LFccHZM4/GY61EtnFo58GDsUM
- 7QTg==
-X-Gm-Message-State: AOJu0Yxzb/b7NsSFLYCUqTlBu+RdI8yeGsfYWnkJSQv/01Ld1cUu6e2V
- lB36L8+hxIxnTgnQsQwQt/s5laMSGsWecdSYtLdA36DWkkFklsOz7tWjoU0MJAScFcU9Q5Jdjf8
- ngx0n
-X-Gm-Gg: ASbGncvvYsgTiBCHBpPSgJEeffIQHPg8amn4+X2eaLfM2/fQ9E/JxR2qCrCj3rIT86B
- LL6B1zkNAkd2YDv+GF18XNiHR0FASzfeUVo58tNE2k/ud5hOVW4yYxl2CWreZZyyyfm/HZcN3iJ
- hj/gyhwvIp+J5AOAxATb4lJItU6x9AqBTEYvx3WWeTW3ltitLnA8R01/4F46vD5wuoEzUr+/M6L
- YIamMA8iTCIORlo5+RiQp4Va0Beowjn8jQDSHqk7Pp8BMEGihetQM9Xcu0vEoyP8sNmWyrenqNK
- LfAcwOO4eXF5REeox8dPu1p/z+MYLxQBVbQdnFePcsGExwkZzqNOoE7iByGIPjtQTNgk0D59hgY
- SKd5S5D9iIT4h8HGV4h430t1zper/IINGWCzCS4pCrZQusl2mksQVc8x6FSIweuUzCgzeVnghlp
- SHkg==
-X-Google-Smtp-Source: AGHT+IEHUUk5S9DDVcjkfWJATnf2kgCHWy8qgjco54AwiGxXQbCcYlw4nA0WQq2Ea4V28zkkypx+pw==
-X-Received: by 2002:a05:6000:2510:b0:3a4:d6ed:8df8 with SMTP id
- ffacd0b85a97d-3b9fc340f86mr1460034f8f.39.1755155221425; 
- Thu, 14 Aug 2025 00:07:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1755155212; x=1755760012;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=e59BaxHwubmbKhg2MtSdXVTimX1acxMLoXeo1of+jh4=;
+ b=QVKfQ/q7zCAOfdBtLrHJhQDqRC7vyHi2vm06DTStCR/akfnuW6cG1gILoF8lI2S3lT
+ qPycowJOAPdqtkdibH3kN3sjKKL5vIyAIArIoa618az+/p44OiPLBr1Jx7elaJTVw1Nf
+ 3MGRg3gbXiuPBktjvxM0fMyIIVMYyVEU+gWJ2XCx7JCKIdnK/wuOuCECDrkCQpTimdGN
+ IWPSXPZJU59dRrUdQQFx/TGKl6ML4tKOsW5HR+eYYiYEzajEO1l6OKNHZDvMoN635/UO
+ JimQYOhYKGdKeAbGUCJHrt6FrokTd0o1iGIfD2DeIXfM77QDQM7hTnJd1FmVvX+AdzgW
+ Zp0A==
+X-Gm-Message-State: AOJu0Yy3PcL4g/u8ix+/udT/q3DBdAqMFzgFG607t3sBknVfSTQSjngN
+ yChz7f1XMDo7iL8Qvg/6JpysWpxbGqWkhB65xU+gUw5PvigevZPaB1OI4+dwZ09gz9nKRFxzq2Q
+ roUA6
+X-Gm-Gg: ASbGncv9QGzl9z9k+f2GsuIEfb+hK4XsBZkWEJWxDYiAkl2CxHCge7P8Pm+jNdoC5Un
+ tsQDfCVIpGaGutONMg4mpughdCm1t7W3bVB89PZgTBtFqKpxRNoBGWZTXsy9yqDTFO895+Itr+x
+ lF3pclhtw+TYbQCY+8iQFyqa/jz8itxNXPI1VavZFHQUPTKQd8RF0/kfaH06pR3BOpiIwyhGtnb
+ zevMiRo2lDaOzIYGZckLyLVULiU9J5JaaBqYKiyFIK7PGlvBsascGkRC0wXcX+XwpQMUQZYpARR
+ JM7xvFTA4hFS9OIVvBKfb94rxPiQz7JleuUH2/VOt1iK5nalMv3MDUwW2CdaqD7YaB/PRVffuie
+ PmUg8rNZEX+M0PIiOiFGQe4Xz49mYAAa0zyVsFa0VUL1gOPRRJUctpXu7PtxrcE8hYfn2iu2URe
+ QKsg==
+X-Google-Smtp-Source: AGHT+IH/mFU61Di3WC8xQgH6rPurg1C5x9q8btrdDcNw7Tjkt/guFWZ5989SF8ZwxaQhBYlqtcepKg==
+X-Received: by 2002:a05:600c:3b11:b0:459:10de:551e with SMTP id
+ 5b1f17b1804b1-45a1b6556b9mr12212945e9.27.1755155212031; 
+ Thu, 14 Aug 2025 00:06:52 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45a1c6dbb51sm9964065e9.14.2025.08.14.00.07.00
+ 5b1f17b1804b1-45a1c78b33csm9885825e9.25.2025.08.14.00.06.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 14 Aug 2025 00:07:00 -0700 (PDT)
+ Thu, 14 Aug 2025 00:06:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-stable@nongnu.org, Justin Applegate <justink.applegate@gmail.com>
-Subject: [PATCH-for-10.1? 2/3] linux-user/mips: Select 74Kf CPU to run MIPS16e
- binaries
-Date: Thu, 14 Aug 2025 09:06:49 +0200
-Message-ID: <20250814070650.78657-3-philmd@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH-for-10.1? 0/3] linux-user: Select default CPUs for MicroMIPS
+ and MIPS16e ASEs
+Date: Thu, 14 Aug 2025 09:06:47 +0200
+Message-ID: <20250814070650.78657-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250814070650.78657-1-philmd@linaro.org>
-References: <20250814070650.78657-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,31 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 74Kf is our latest CPU supporting MIPS16e ASE.
+We weren't parsing MIPS ASE in the ELF header, so couldn't
+automatically pick an appropriate CPU.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 6ea219d0196..d19954f46df ("target-mips: MIPS16 support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3054
-Reported-by: Justin Applegate <justink.applegate@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- linux-user/mips/target_elf.h | 3 +++
- 1 file changed, 3 insertions(+)
+Since we'll have a rc4, I propose these sensible patches
+for 10.1, but both ASEs are available since 15 years in QEMU,
+so this isn't something broken since the latest release, and
+I don't mind holding it for 10.2.
 
-diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
-index 71a32315a85..cd8622ce283 100644
---- a/linux-user/mips/target_elf.h
-+++ b/linux-user/mips/target_elf.h
-@@ -12,6 +12,9 @@ static inline const char *cpu_get_model(uint32_t eflags)
-     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_32R6) {
-         return "mips32r6-generic";
-     }
-+    if ((eflags & EF_MIPS_ARCH_ASE) == EF_MIPS_ARCH_ASE_M16) {
-+        return "74Kf";
-+    }
-     if (eflags & EF_MIPS_NAN2008) {
-         return "P5600";
-     }
+Regards,
+
+Phil.
+
+Philippe Mathieu-Daudé (3):
+  elf: Add EF_MIPS_ARCH_ASE definitions
+  linux-user/mips: Select 74Kf CPU to run MIPS16e binaries
+  linux-user/mips: Select M14Kc CPU to run microMIPS binaries
+
+ include/elf.h                | 7 +++++++
+ linux-user/mips/target_elf.h | 6 ++++++
+ 2 files changed, 13 insertions(+)
+
 -- 
 2.49.0
 
