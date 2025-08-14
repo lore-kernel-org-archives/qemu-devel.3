@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD673CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E950FCA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXZE-0003LY-Eq; Thu, 14 Aug 2025 09:00:28 -0400
+	id 1umXel-0004Ws-4z; Thu, 14 Aug 2025 09:06:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXYY-0002N9-29
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:59:46 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1umXeA-0003Yg-9O
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:05:34 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXYS-0004On-Hq
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:59:45 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-323267b7dfcso895477a91.1
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 05:59:38 -0700 (PDT)
+ id 1umXdv-0005cZ-UP
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:05:33 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-76e2e614b83so720798b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755176375; x=1755781175; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755176718; x=1755781518; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UkNyZZYFhHeil9ygYrAE1UXkAwT1+GtqIOD2Xj8zAVs=;
- b=fIGz5x0vwJL7x1qrsVTbKMi4nhNND2CkaP43gdrCzKowXxXGXno1TP/AGo6/7a4z5U
- i9bqcF+csbeLEQzi3G5sBW2C7CjiXITXsD/HW09+I4WnHhFjbL+JT0wU9GtL4x/SORvG
- +WZTSKf4UvK+RqpmUowIACR6Eh6NiaGuMyU8vDMdXg9DG8OiIAcg1Ln+Ldacx8OxNYmW
- og4q1Cq+Y5/n2hsfsr48H/f/q/3Vki3hfOOUeIynd+FAW3bRTIgK94PL4Z2y4qFeLXSQ
- 1aqSiq1s+TRtge9VLT4yf9Ko8qD325y42ZFuRQcqA8YwI9vv2Z3Qfb+b8qw2UcWxiddM
- ELnQ==
+ bh=ZELB4+c17Zgz1LBTVaRPLkTpYEUU2ZnNce3ABKyIZzo=;
+ b=emdcfISw+ZyZWZ+mIrPdgDHF1qM2bwpq8q8V3lR3cby+WI1DXyT/L5M5LT3KMSjofR
+ 82puxP4gVWW1PLJS3DujIMAR2+DVKUMSzh1MAPY6UitKUidxqnZ70y4tHB5nsVqNx1M4
+ Ts4aV/kjnA4lLoQbLsiYec3LNSg2W33KmVWY/lysAgGNF9y9ivQQaguvszkZXXaZYdkT
+ aNZoMjDB9yCDE+Bt+7G5JJEsv+svIkR6DPh1kmg06cUnZ+fDMp1ckdu4c8OkoCZ5BPZf
+ vGd/3apxJIEIg6xSy0peVpBEIFTMXqb0toywM81GHCpDvj8Vdqrk7MCZLETImB8O22Uu
+ ZALQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755176375; x=1755781175;
+ d=1e100.net; s=20230601; t=1755176718; x=1755781518;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UkNyZZYFhHeil9ygYrAE1UXkAwT1+GtqIOD2Xj8zAVs=;
- b=NLtwbTgGYLgAhQgnFwIFg9txEv1P8r1dS6IkObeYeErIODpl0C4Zx/Y0Jt7D07zsuK
- OejeZOUheMBdglIKb3Fq2MX/IR3+sozFMefrG7Iq6uv/XYI+6FRJD/j69c6JLADswSTU
- cmoMluMw3pZoN+E11gQgTYqJKmSneovYyotKnA8jIJ4I7Kn4ez5LPKJ9G/RefrAFPTvZ
- 1uSqI030aR50TYOJsZeZLqY3UJ2gzPAiRbxi1AYyB9ckp1kOLSzuHMS92CaMWdnN+ZRU
- pJIdJ+WuieLq9lbFZaTGnho9TU3sBJKZVyNRkM14z0aqP3/Glpg3eVyX0kf+1ZqiUtH7
- dP0A==
-X-Gm-Message-State: AOJu0YwpYk752GqxXHT5RB4Fj8pyi8tb6QMNU+ICZK7CF5qLgC4cdAM+
- 2Cv1GU/EkZ1ewviPxOsNh4mOuTJ1zP9JAxBWl2hGg3tPQDbre0bosiMOyK7cdsCDCMdDcZtxtQD
- d8KwaZZs=
-X-Gm-Gg: ASbGncvonKVOZflX5m47FBRjc3r6H3Vxsjsgywy/G8n3VmK1QyUVAcVldDjJkjQuYw0
- GHD8il9AoOcaoBr09ofoO8k7pXSmLE/U7DgHaxq9eJosdSwSXx8KhYBzU2NOH/KD8jlUEnQCZth
- SQTPNqlT/YEXxNsnJeQ9PQ8tldQqwNvkH+BWl8HHs5aAAY3dFgQsb6IG1U6qgUaqW8qITqqqwkq
- QYF7s98pju/EwK/JbC8U/JFFRgjDtbeCV1Y3Op9SRA2JUZhcoJGTjKX2uKju4aqKai3uO7VErbI
- gE3QzqsfHhnBLz7lSvTPySVx9dgqZ2gIRwt+wPWyfz9pLVZzmaYS4QghlG0OtnH3IKMZYPqoG7G
- B92vKkJiykX8LnyuKhJ97xKaU+N3DLfc4rVeoOIERagpCg0TAPnOqSFKEHw==
-X-Google-Smtp-Source: AGHT+IFz/etwsmckVxbDZJDwvEZMxWQ3BURMk1QYcQ6O9jYPl1e3MgJcOCrqFTVKHMHeVp6GgzkaSA==
-X-Received: by 2002:a17:90b:5107:b0:321:9366:5865 with SMTP id
- 98e67ed59e1d1-32327aa63bemr5106483a91.33.1755176375579; 
- Thu, 14 Aug 2025 05:59:35 -0700 (PDT)
+ bh=ZELB4+c17Zgz1LBTVaRPLkTpYEUU2ZnNce3ABKyIZzo=;
+ b=dhOJ2rVBQIs3Tcaf3IO3ySWp2qOf0ARUdI/JRcHnk0PTV4p2UYEZ9MAKLa9e4Xj0FE
+ FUtLjGt8FPpnxxNYm+4mwIxX4nMYCk/7PX4DAygQ1T3se13H2xCVcSVWipVLNNrON1ve
+ 7JHkeAZ1Zxm69W9BFaVu+IdOTNwLvYY4C2aiMcjYV0rP7kGndwIUv8ByVRoqXZbnDvfb
+ 9/a/jOmuaWNXbSJv3mBQYyXDqEBOUh8U/ugdkq2GRrHTf1iQP7Mc5EjLEF9AGsH9LYKJ
+ SUHpi8V9Pm4ObdQY6rtk4WE5SMXSYuZQ3wp9weGarF0tls9x62BOZEpFS8fMjs1Rw1CL
+ pKZA==
+X-Gm-Message-State: AOJu0YzEnB/ZVtRonV/e5IEzji+nQcDI90vaYR1lcjG/EOlZVJ1a3nrV
+ lxZSO0XV1HqfH4HHMli0qkBn0UxGdVuS5oH9kfZbmjH/Vb/aC9oExKBs7q8yJHShJZUUdWzxbjP
+ JJ+bBbxE=
+X-Gm-Gg: ASbGncusJcSHxMQZpl5XZZoC/pBoFgUAC0ko87o0Kyxsnas7Ck7wc64gQQUU/LZswbv
+ leg/7bQDbJUbP8gdcj3n08HN0I7/kUAKB6rxKFv6NOuLWu7OCBc/jCOOnz8FiFYnRKUOim7yDzS
+ dxxNa4WWywP6wqhwHPPJW/0AQbksmKo0jtKWapfObkj6JqM7wh7h6i+ckowpHBONh63vlK4R9An
+ ELledBkDvcbxBSWtYtfNe6An11PUBLToKvRWe1Rw66e4lpanaKPSp5DKduXRIQfvw+vzY7g0ASo
+ gPBbrwTB5DbuI005Y/z1s3l+TSi66di9Cn5xdj4AF/YVmMiBbXXOf/yT2jUyBecnfnFV2St1NBu
+ Mvn7swDyS/zsbqA6Zep/pMIhawjVm/lnLDowPxgcMY2O5k8L5cGaOcdnsHQ==
+X-Google-Smtp-Source: AGHT+IFJO4feDKk0LaggKzdPc3UD+mX3IYfxkI84XpcnCfxFsBphVVMP61Cmxa4qIqRC9lPaqCe59Q==
+X-Received: by 2002:a05:6a20:4324:b0:240:265f:4eca with SMTP id
+ adf61e73a8af0-240bd325a85mr4140446637.36.1755176717833; 
+ Thu, 14 Aug 2025 06:05:17 -0700 (PDT)
 Received: from localhost.localdomain ([206.83.105.236])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3233100c994sm1766256a91.21.2025.08.14.05.59.33
+ d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.05.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 05:59:35 -0700 (PDT)
+ Thu, 14 Aug 2025 06:05:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 29/85] target/hppa: Adjust mmu indexes to begin with 0
-Date: Thu, 14 Aug 2025 22:56:56 +1000
-Message-ID: <20250814125752.164107-30-richard.henderson@linaro.org>
+Subject: [PATCH v3 78/85] target/arm: Enable GCSPR_EL0 for read in user-mode
+Date: Thu, 14 Aug 2025 22:57:45 +1000
+Message-ID: <20250814125752.164107-79-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
 References: <20250814125752.164107-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,58 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a logical reversion of 2ad04500543, though
-there have been additions to the set of mmu indexes
-since then.  The impetus to that original patch,
-"9-15 will use shorter assembler instructions when
-run on a x86-64 host" is now handled generically.
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/cpu.h | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ target/arm/cpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 11d59d11ca..672ab3750c 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -29,21 +29,21 @@
- #include "qemu/interval-tree.h"
- #include "hw/registerfields.h"
- 
--#define MMU_ABS_W_IDX     6
--#define MMU_ABS_IDX       7
--#define MMU_KERNEL_IDX    8
--#define MMU_KERNEL_P_IDX  9
--#define MMU_PL1_IDX       10
--#define MMU_PL1_P_IDX     11
--#define MMU_PL2_IDX       12
--#define MMU_PL2_P_IDX     13
--#define MMU_USER_IDX      14
--#define MMU_USER_P_IDX    15
-+#define MMU_KERNEL_IDX    0
-+#define MMU_KERNEL_P_IDX  1
-+#define MMU_PL1_IDX       2
-+#define MMU_PL1_P_IDX     3
-+#define MMU_PL2_IDX       4
-+#define MMU_PL2_P_IDX     5
-+#define MMU_USER_IDX      6
-+#define MMU_USER_P_IDX    7
-+#define MMU_ABS_IDX       8
-+#define MMU_ABS_W_IDX     9
- 
--#define MMU_IDX_MMU_DISABLED(MIDX)  ((MIDX) < MMU_KERNEL_IDX)
--#define MMU_IDX_TO_PRIV(MIDX)       (((MIDX) - MMU_KERNEL_IDX) / 2)
--#define MMU_IDX_TO_P(MIDX)          (((MIDX) - MMU_KERNEL_IDX) & 1)
--#define PRIV_P_TO_MMU_IDX(PRIV, P)  ((PRIV) * 2 + !!(P) + MMU_KERNEL_IDX)
-+#define MMU_IDX_MMU_DISABLED(MIDX)  ((MIDX) >= MMU_ABS_IDX)
-+#define MMU_IDX_TO_PRIV(MIDX)       ((MIDX) / 2)
-+#define MMU_IDX_TO_P(MIDX)          ((MIDX) & 1)
-+#define PRIV_P_TO_MMU_IDX(PRIV, P)  ((PRIV) * 2 + !!(P))
- 
- #define PRIV_KERNEL       0
- #define PRIV_USER         3
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index ec63297165..284d1870ec 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -317,6 +317,10 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+         env->cp15.mdscr_el1 |= 1 << 12;
+         /* Enable FEAT_MOPS */
+         env->cp15.sctlr_el[1] |= SCTLR_MSCEN;
++        /* For Linux, GCSPR_EL0 is always readable. */
++        if (cpu_isar_feature(aa64_gcs, cpu)) {
++            env->cp15.gcscr_el[0] = GCSCRE0_NTR;
++        }
+ #else
+         /* Reset into the highest available EL */
+         if (arm_feature(env, ARM_FEATURE_EL3)) {
 -- 
 2.43.0
 
