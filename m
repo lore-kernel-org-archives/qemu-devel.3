@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F471CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 19:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A356DCA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 19:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umdoH-00032y-Rv; Thu, 14 Aug 2025 15:40:25 -0400
+	id 1umdtG-0004Fb-8M; Thu, 14 Aug 2025 15:45:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdoF-00032I-F8
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:40:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdtE-0004FT-Ud
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:45:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdoC-0003ap-Je
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:40:23 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdtB-0004GL-S2
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:45:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755200417;
+ s=mimecast20190719; t=1755200726;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=aFACkOcF2p/DSpurtoj+eFrLFIp6qRkt+3Kvgz65B48=;
- b=AKQJuCw1P3Fe4KDNZp5vrFy1R0+2sFjowXII0Fz6lH7aH7QhogGBBnVbMGthBeZYabqukK
- 24QqSV2+YREUBriPvYTbeRkmwI5u+2PAirdXX8cJUmnq7hAENUBAVnANz+Lx61OuVQSplt
- Gr/7RuMqMtuWxp04QvoOf1ZcIEMd3Pk=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SnTT0nA75EVP9VpV0XHR7um59ojRdJub7KbGoLuxAR4=;
+ b=KB2c5RVJzpQgBT8SU4eKtxYOMEqpic0gDsQ93DzcBhDhBJ4lNM4+w27wZ0MkMgYqKuGZ/K
+ p5JDfys1I25RujLQBSr7HUL8ofd+Gu9kqYX4eHTqgSBKKj1gqCqwHai5mcEo0mPmy/Nk5v
+ Xsxa8hddcoXFzq1tFlNfKsBcyawAhRo=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-wxpy2zAmPfmiDYI1r5pw4g-1; Thu, 14 Aug 2025 15:40:15 -0400
-X-MC-Unique: wxpy2zAmPfmiDYI1r5pw4g-1
-X-Mimecast-MFC-AGG-ID: wxpy2zAmPfmiDYI1r5pw4g_1755200415
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-70a928135f0so27546306d6.1
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 12:40:15 -0700 (PDT)
+ us-mta-434-GTmjRWAIONCFlSXMZKOSbw-1; Thu, 14 Aug 2025 15:45:24 -0400
+X-MC-Unique: GTmjRWAIONCFlSXMZKOSbw-1
+X-Mimecast-MFC-AGG-ID: GTmjRWAIONCFlSXMZKOSbw_1755200724
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-e932cbe5410so352466276.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 12:45:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755200415; x=1755805215;
+ d=1e100.net; s=20230601; t=1755200724; x=1755805524;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aFACkOcF2p/DSpurtoj+eFrLFIp6qRkt+3Kvgz65B48=;
- b=TERNSFI9IgN3bP9770632tHoeDqHZ+6niUIb+pvtxaCLqsE4b5PRjNjR2ZYuX+vD4E
- zSKaceit/NyplV4uB4AGQmulesrISnaN/dswFyZVGegN411EwzVY6CXVzrQMuzcuKAYL
- HIMzEXvKnHzS9NShggq9shY/v/9YVMHKWTwToXb8EbgIZYewPvHz0HPR+FiKT6cKUgNb
- 8gtAMqPGFvAPkVS1JJ/2fkvDtAUPe63BAsSsoi2tuPAd6yKETD3q62D8S5jhgLmQvfzq
- LKuFWoTG0wX45C87rtAjqYlYFZnrRgNcT37u96EBmVZLsV+0Dl3OCN8JGD4z6zGVXnXr
- 2Hsg==
-X-Gm-Message-State: AOJu0YxNQZklzLn9T3s+x/r7KyOOv0gahFO6TZGf13FnyRYuhmbXQVDN
- N6I+QurZnDDCwpzUAmtQ70HgtK26n+Q7SHbiKINGr5s7T2zb7H80yA9tLEMEpzBcJcTEQSmRTSU
- oE+l9YhS7isq2MTAH1LyxKqdY4CVexSk1d2QMDcO8ps8Yu8BXx97469In
-X-Gm-Gg: ASbGncu9JTBwpmU2mYwbN1HQcI2vJseUbvUTRS5NZhkWa62Wd+9+c4QgXxnw/hJlmZP
- M3jdMkhc4QOS5byxQeRcyDN2LKzGRlmKvK/Mg/ArFX9Pa6Wf3eBfMohadbsAQDBUM6eBarWKd3b
- 1M8V3bW+azT6CKGW8KfZMsyWV/7f9UY0bDuy9djMj1yFqjJE57dTBc9ooLk+aVgSawV1Nlw7Coz
- AEojnWWupY+jiA1dmGmbtBKvOzISxL8Ah8GVoNmCVblzSiNpboZK9cLSTFgywDI2fj9sCo/Gia5
- HOCNbn8wSIpptTRkRd2+UKftAnxL4Ifl
-X-Received: by 2002:ad4:5967:0:b0:707:5974:388d with SMTP id
- 6a1803df08f44-70ba471e24amr1751946d6.8.1755200414580; 
- Thu, 14 Aug 2025 12:40:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHEldpG0Md01FIVHPVLMB1rqwZ3fmYnwaT+tslhbNRtasWhrcwuN6h04MyDMLVRQ6jy/NfOBw==
-X-Received: by 2002:ad4:5967:0:b0:707:5974:388d with SMTP id
- 6a1803df08f44-70ba471e24amr1750406d6.8.1755200414004; 
- Thu, 14 Aug 2025 12:40:14 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70af5b82985sm16961896d6.65.2025.08.14.12.40.12
+ bh=SnTT0nA75EVP9VpV0XHR7um59ojRdJub7KbGoLuxAR4=;
+ b=qne0papR7My210JorSA/NvskqumWHGpQ5mAQPZaw2/A9toWPXmhORuGTzPZs4uO9eN
+ EZmgN7aiM+MvJJBvmNXz4uwOYeAyaywbGBhGT3/TYX9FthaZ93HyvgCLH6B4droMfF9G
+ IC+EtmcLLKDeM2ueZGiqBuBZQxQ6N6qctO9dGX9CAlWnh8BAoHfJvyfiKkMccVBWGkbX
+ MwYCAtg29EFz5nk91Yoz2TdnVnk/Sel7SRRhYr3N4rEKt1C0ojKptfJJ/ciBKkw0pvz5
+ XaKZkzpgPmXSrySussFJoUCQQOckXGTmouY2JWtqOSrh6vCF9+Mejnu+dzHfRElFsl7W
+ vKMA==
+X-Gm-Message-State: AOJu0Yxz+zkH3XCuZfU5VNOimn254nbJPKgTxKbUDd2o+Kd/SDylCeyC
+ Tkn0CxQlmhwlU2Is6uka4nfgDo+/yA+4+SN9Uti3QVoOJKzkdsFn87Nx4mDiQUntWugQsuXcpff
+ QXYPNO9tM/xs0efNI7lyEcd1kGe7xA1x60UMCidVns0JB5Hh1LHURmyny
+X-Gm-Gg: ASbGncvnrNeXlrOLIl1JlT2waci4DlMWj+lE4X9VaW1mEC+BVwx3NFiJ/Pa+mcrolt6
+ 52sNLaMJ/FDstozO3cLriap/SJf0L2YZKCn7DtfsIdJTzVxHV+Y2K3kuGncA692SY6OfRynxfEF
+ 1dFqTIhvZqlWuK+NNJfwcd+CsbyiHoviBHVWbkxUt1v1OT1tLyOtcdCYSt7qc2Mbfthg6odW7NL
+ l6qvusPclX7l26F00CDnSgL1I/z7ro49gbRdC4hg3BNP7jr5FYwxyEb7BG6pXJfdnKEfEt/gzDP
+ GbdhPIToaTdMqQEv2bvVplo00gmdA2h1WocBa2onyTGHijgHaajiKrlKLt4PQ5redOqOpm/aCy1
+ k2rw9VStcR1+AfSkKDJxKzg==
+X-Received: by 2002:a05:6902:6c02:b0:e90:58b3:640c with SMTP id
+ 3f1490d57ef6-e931e14cc85mr4756601276.11.1755200724022; 
+ Thu, 14 Aug 2025 12:45:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXJlXUrpjtoZUR5GexO271ZHMR/xFdyPvucUVnVdCKV4h1292UmAhwulkR3m0ZA84MchAR/g==
+X-Received: by 2002:a05:6902:6c02:b0:e90:58b3:640c with SMTP id
+ 3f1490d57ef6-e931e14cc85mr4756577276.11.1755200723613; 
+ Thu, 14 Aug 2025 12:45:23 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ 3f1490d57ef6-e931d41e903sm866622276.7.2025.08.14.12.45.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 12:40:13 -0700 (PDT)
-Date: Thu, 14 Aug 2025 15:40:00 -0400
+ Thu, 14 Aug 2025 12:45:22 -0700 (PDT)
+Date: Thu, 14 Aug 2025 15:45:14 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH v2 14/24] migration: Use visitors in
- migrate_params_test_apply
-Message-ID: <aJ47kLZWhma1aOzw@x1.local>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 24/24] tests/qtest/migration: Pass the migration
+ config to file tests
+Message-ID: <aJ48ygDqoxFImt_M@x1.local>
 References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-15-farosas@suse.de>
- <aJzv8hm87PVIOSLj@x1.local> <871ppe0wja.fsf@suse.de>
+ <20250630195913.28033-25-farosas@suse.de>
+ <aJ3xuGRnd0mHSlxp@x1.local> <87tt29zzt3.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <871ppe0wja.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <87tt29zzt3.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,37 +110,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 14, 2025 at 12:10:01PM -0300, Fabiano Rosas wrote:
-> > IIUC this is essential the trick we used to play before QAPI_CLONE, before
-> > commit a15fcc3cf69e.
+On Thu, Aug 14, 2025 at 12:30:00PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Mon, Jun 30, 2025 at 04:59:13PM -0300, Fabiano Rosas wrote:
+> >> Use the existing file tests to test the new way of passing parameters
+> >> to the migration via the config argument to qmp_migrate*.
+> >> 
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >>  tests/qtest/migration/file-tests.c    | 68 +++++++++++----------------
+> >>  tests/qtest/migration/framework.c     |  9 ++--
+> >>  tests/qtest/migration/precopy-tests.c |  1 +
+> >>  3 files changed, 34 insertions(+), 44 deletions(-)
+> >> 
+> >> diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
+> >> index 4d78ce0855..656d6527e8 100644
+> >> --- a/tests/qtest/migration/file-tests.c
+> >> +++ b/tests/qtest/migration/file-tests.c
+> >> @@ -27,6 +27,7 @@ static void test_precopy_file(void)
+> >>      MigrateCommon args = {
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >>  
+> >>      test_file_common(&args, true);
+> >> @@ -74,6 +75,7 @@ static void test_precopy_file_offset_fdset(void)
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >>          .start_hook = migrate_hook_start_file_offset_fdset,
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >>  
+> >>      test_file_common(&args, false);
+> >> @@ -88,6 +90,7 @@ static void test_precopy_file_offset(void)
+> >>      MigrateCommon args = {
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >>  
+> >>      test_file_common(&args, false);
+> >> @@ -102,6 +105,7 @@ static void test_precopy_file_offset_bad(void)
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >>          .result = MIG_TEST_QMP_ERROR,
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >>  
+> >>      test_file_common(&args, false);
+> >> @@ -114,11 +118,10 @@ static void test_precopy_file_mapped_ram_live(void)
+> >>      MigrateCommon args = {
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >> -        .start = {
+> >> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
+> >> -        },
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >>  
+> >> +    qdict_put_bool(args.start.config, "mapped-ram", true);
+> >>      test_file_common(&args, false);
+> >>  }
+> >>  
+> >> @@ -129,11 +132,9 @@ static void test_precopy_file_mapped_ram(void)
+> >>      MigrateCommon args = {
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >> -        .start = {
+> >> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
+> >> -        },
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >> -
+> >> +    qdict_put_bool(args.start.config, "mapped-ram", true);
+> >>      test_file_common(&args, true);
+> >>  }
+> >>  
+> >> @@ -144,12 +145,11 @@ static void test_multifd_file_mapped_ram_live(void)
+> >>      MigrateCommon args = {
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >> -        .start = {
+> >> -            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
+> >> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
+> >> -        },
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >>  
+> >> +    qdict_put_bool(args.start.config, "mapped-ram", true);
+> >> +    qdict_put_bool(args.start.config, "multifd", true);
+> >>      test_file_common(&args, false);
+> >>  }
+> >>  
+> >> @@ -160,24 +160,13 @@ static void test_multifd_file_mapped_ram(void)
+> >>      MigrateCommon args = {
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >> -        .start = {
+> >> -            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
+> >> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
+> >> -        },
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >> -
+> >> +    qdict_put_bool(args.start.config, "mapped-ram", true);
+> >> +    qdict_put_bool(args.start.config, "multifd", true);
+> >>      test_file_common(&args, true);
+> >>  }
+> >>  
+> >> -static void *migrate_hook_start_multifd_mapped_ram_dio(QTestState *from,
+> >> -                                                       QTestState *to)
+> >> -{
+> >> -    migrate_set_parameter_bool(from, "direct-io", true);
+> >> -    migrate_set_parameter_bool(to, "direct-io", true);
+> >> -
+> >> -    return NULL;
+> >> -}
+> >> -
+> >>  static void test_multifd_file_mapped_ram_dio(void)
+> >>  {
+> >>      g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
+> >> @@ -185,13 +174,13 @@ static void test_multifd_file_mapped_ram_dio(void)
+> >>      MigrateCommon args = {
+> >>          .connect_uri = uri,
+> >>          .listen_uri = "defer",
+> >> -        .start_hook = migrate_hook_start_multifd_mapped_ram_dio,
+> >> -        .start = {
+> >> -            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
+> >> -            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
+> >> -        },
+> >> +        .start.config = qdict_new(),
+> >>      };
+> >>  
+> >> +    qdict_put_bool(args.start.config, "direct-io", true);
 > >
-> > https://lore.kernel.org/all/1465490926-28625-15-git-send-email-eblake@redhat.com/
-> >
-> > Yes, looks similar..
-> >
-> > QAPI_CLONE_MEMBERS() will copy everything, which we do not want here. We
-> > only want to copy where has_* is set.  So it's indeed a sligntly different
-> > request versus the current clone API.
-> >
-> > IIUC that can be implemented using a similar qapi clone visitor, however
-> > instead of g_memdup() on the structs/lists first (or in the case of
-> > QAPI_CLONE_MEMBERS, we did *dst=*src), we lazy copy all the fields.
-> >
-> > I wished this is a generic API we could use.  I think it means we'll
-> > maintain this ourselves.  Maybe it's OK.
+> > So the start_hook doesn't take args so we need to duplicate all these
+> > direct-io setups in each test.. I assume not a big deal so it's fine, but
+> > this is slightly going backward for sure..
 > >
 > 
-> I'm not sure how easy it is to provide a generic API for this. I don't
-> think there's much space for this code to change anyway, so is fine to
-> keep it in migration. I'll try to implement a
-> QAPI_CLONE_PRESENT_MEMBERS, let's see.
+> I'm not sure it is. Having to go follow the hooks is confusing,
+> specially when hook names start to get similar. Having the test provide
+> everything it needs right here is clearer. Also, maintenance of the
+> hooks is a pain when it comes to code conflicts. I'd like to see less
+> hooks overall.
 
-The new visitor will slightly improve readability on what this code is
-doing. But yeah, feel free to choose whatever you see fit when repost (and
-if the code will be kept as-is, please consider adding some comments to
-help future readers).
+IMHO it depends.  If a hook can greatly dedup code, then I'll go for it.
 
-Thanks,
+This one only contains a dio setup, definitely not a huge deal.
+
+> 
+> > What's your plan in mind on the tests?  Looks like you want to keep both
+> > ways in tests/, only use it in some tests to cover both paths (and you
+> > chose file-tests to start testing config)?  Or is this only an example and
+> > you plan to convert more?
+> >
+> 
+> Yes the idea is to cover both paths and I chose file-tests for config
+> arbitrarily.
+
+But then file-tests lose the old coverage on using migrate-set-*.
+
+IMHO, we could choose one that will be the officially suggested way, then
+let all tests to use it.  With that, we can duplicate one or a few tests to
+cover the not-suggested way.
+
+So if "config" is the suggested way, we could make all tests moving over to
+"config", then add only one or a few tests to cover migrate-set-parameters?
 
 -- 
 Peter Xu
