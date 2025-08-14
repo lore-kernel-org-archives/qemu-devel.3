@@ -4,88 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D55CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 07:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE2BCA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 07:37:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umS3H-0007kl-S3; Thu, 14 Aug 2025 03:07:07 -0400
+	id 1umSW0-0006w7-OA; Thu, 14 Aug 2025 03:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3F-0007kI-4c
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:05 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3C-00040m-LJ
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:04 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3b9e415a68eso279931f8f.2
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 00:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755155217; x=1755760017; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=roJhrLABrYMM3hT1Qlu1BPFfo21rWtltlN3F1VmKs60=;
- b=wfUIyUoTZY4Ch5ORw+aoEK0WjeZhJBJQAr3THji0Cz9VAjzWn27gUyD/2+SyHJCku5
- Wsm8s/8++1nJEMNei5T5AM/6hJ7hlxHHGZTAtmSdjNtjiNBJj/LcQS9ZB24IaXcQUEDm
- jWhi8dHyTD0sBGoOlSWOtT5sQoPnaQdPEnkLa3OgyM1Rc0pNsFi2PZB1VohCi4Gp2WZN
- ozMkKUfyxmpcjU5oii/slQBoa5gLUA/4Shgx+kqnbqkUvYXdI5/4y58BKdhOGgyocDP0
- LqFbyk1KnsRP9/xJes9cphO34+blGLjDblEN5l6Hv86TsbwjvB2Bfrp/d/ygWT8m8kmX
- wn/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755155217; x=1755760017;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=roJhrLABrYMM3hT1Qlu1BPFfo21rWtltlN3F1VmKs60=;
- b=LselyOmmNOmRxEP0tnDbPuC6Ne/aSwRweBG+wGB5nOmu4uKruvVVHBcLdmbHjL40Rx
- K57k8Gst00KWDWCKRPssEGOcuhRJG3xE5im3O7QAoRsak3yXG4RRZlELmXO0baOt4kIr
- pFUifpC1wJZQ+w0SocDhMXTs4Kt5rqu6SZ87m5jFBlQRyhgkUf/NrdFNstitNlr4n6Bp
- RhCdWZxjTncFTa0UmjstioBMnrXucSZpjbtgl1z0DJ4/k8rR3iyy+L/RfbKVfsOWq1K7
- n9u8zVMFL9Y1Spdljncql9FPqtWIfoJDzqhnD89ZILkaChtskCbY1Otq/5xleK+pdFcS
- uAVg==
-X-Gm-Message-State: AOJu0YyhDW5kk1KGDKCZS9tqqmF87QF1gZsz5z3AFR/j0SXywgnIRM1Q
- QkpDnh2phPsOwF/9G75a/F7wIuaGoAOjYr8roJnfsf4kWpB2dku7ePziOnayDCbzKpzACWMPZfd
- Q+PRg
-X-Gm-Gg: ASbGncsKfnVWFWUvVL5ubcRqeelI5RMY9Puo5ZQNSPFQ4ybsymXQBYpY9G1/a37kwGy
- k1sp/x2E0xlH53MGD3gfmxVTLPhcNZH5XGP+SIJSDjFyTR3jg9PIYh/knZFoZAqGrgoiFjNiA/T
- LjPr+EoqmZVTtmiJBn78u5Is+WZGeMoMqe2MgZ3wQjy84oyru3yJ8oPbAu1FVCLq5LRlaqBjHvY
- XAZNp3MMslYt3rGvAc14iheGoBRVpKxcBMdMNVyvhT+LFe/9NJ3fPmFoSR+Phjv3nLwWbK3+Y+N
- ZyYOaYywdDWOojnM1DrR148P39C3DAfKpdE8Ucq+5Xo12MAlU4vny2v5jzC4MAt8opdNJlPgTLs
- 01YrlCpUKE+VX0u0IsbY/MfXlNuXUmGFjnutYSfTHhPVDMhYmb4MUcuWoHqCa6+U/DlZiVxjU/v
- 0yaQ==
-X-Google-Smtp-Source: AGHT+IHoYuta4w6XKVGSYZTDITw2WNNCDcU7iRZHrorEqnx0IgXHqhjuxm3hUq4zwvBY8zJfL2n3Fw==
-X-Received: by 2002:a05:6000:290d:b0:3a4:eb80:762d with SMTP id
- ffacd0b85a97d-3b9edf7ddb4mr1504720f8f.56.1755155216707; 
- Thu, 14 Aug 2025 00:06:56 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3b79c47c516sm50277956f8f.62.2025.08.14.00.06.55
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 14 Aug 2025 00:06:56 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH-for-10.1? 1/3] elf: Add EF_MIPS_ARCH_ASE definitions
-Date: Thu, 14 Aug 2025 09:06:48 +0200
-Message-ID: <20250814070650.78657-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250814070650.78657-1-philmd@linaro.org>
-References: <20250814070650.78657-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1umSVq-0006sr-92
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:36:38 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1umSVm-0004RH-B9
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:36:37 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8DxQK_6kZ1oCKs_AQ--.20598S3;
+ Thu, 14 Aug 2025 15:36:26 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJCxM+T4kZ1oM9xKAA--.22944S7;
+ Thu, 14 Aug 2025 15:36:25 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 5/9] target/loongarch: Add common function
+ get_tlb_random_index()
+Date: Thu, 14 Aug 2025 15:36:20 +0800
+Message-Id: <20250814073624.430928-6-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250814073624.430928-1-maobibo@loongson.cn>
+References: <20250814073624.430928-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJCxM+T4kZ1oM9xKAA--.22944S7
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,33 +67,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Include MIPS ASE ELF definitions from binutils:
-https://sourceware.org/git/?p=binutils-gdb.git;a=blob;f=include/elf/mips.h;h=4fc190f404d828ded84e621bfcece5fa9f9c23c8;hb=HEAD#l210
+With software PTW system, tlb index is calculated randomly when new
+TLB entry is added. For hardware PTW, it is the same logic to add
+new TLB entry.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Here common function get_tlb_random_index() is added to get random
+tlb index when adding new TLB entry.
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- include/elf.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ target/loongarch/tcg/tlb_helper.c | 39 +++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 15 deletions(-)
 
-diff --git a/include/elf.h b/include/elf.h
-index e7259ec366f..bbfac055de4 100644
---- a/include/elf.h
-+++ b/include/elf.h
-@@ -56,6 +56,13 @@ typedef int64_t  Elf64_Sxword;
- #define EF_MIPS_ARCH_32R6     0x90000000      /* MIPS32r6 code.  */
- #define EF_MIPS_ARCH_64R6     0xa0000000      /* MIPS64r6 code.  */
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index fa216b92fd..67b8f95849 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -390,31 +390,21 @@ void helper_tlbwr(CPULoongArchState *env)
+     old->tlb_entry1 = new.tlb_entry1;
+ }
  
-+/* MIPS Architectural Extensions. */
-+#define EF_MIPS_ARCH_ASE      0x0f000000
+-void helper_tlbfill(CPULoongArchState *env)
++static int get_tlb_random_index(CPULoongArchState *env, vaddr addr, int ps)
+ {
+-    uint64_t address, entryhi;
++    vaddr address;
+     int index, set, i, stlb_idx;
+-    uint16_t pagesize, stlb_ps;
++    uint16_t stlb_ps;
+     uint16_t asid, tlb_asid;
+     LoongArchTLB *tlb;
+     uint8_t tlb_e;
+ 
+-    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
+-        entryhi = env->CSR_TLBREHI;
+-        /* Validity of pagesize is checked in helper_ldpte() */
+-        pagesize = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
+-    } else {
+-        entryhi = env->CSR_TLBEHI;
+-        /* Validity of pagesize is checked in helper_tlbrd() */
+-        pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
+-    }
+-
+     /* Validity of stlb_ps is checked in helper_csrwr_stlbps() */
+     stlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+     asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+-    if (pagesize == stlb_ps) {
++    if (ps == stlb_ps) {
+         /* Only write into STLB bits [47:13] */
+-        address = entryhi & ~MAKE_64BIT_MASK(0, R_CSR_TLBEHI_64_VPPN_SHIFT);
++        address = addr & ~MAKE_64BIT_MASK(0, R_CSR_TLBEHI_64_VPPN_SHIFT);
+         set = -1;
+         stlb_idx = (address >> (stlb_ps + 1)) & 0xff; /* [0,255] */
+         for (i = 0; i < 8; ++i) {
+@@ -459,6 +449,25 @@ void helper_tlbfill(CPULoongArchState *env)
+         }
+     }
+ 
++    return index;
++}
 +
-+#define EF_MIPS_ARCH_ASE_MICROMIPS 0x02000000
-+#define EF_MIPS_ARCH_ASE_M16  0x04000000
-+#define EF_MIPS_ARCH_ASE_MDMX 0x08000000
++void helper_tlbfill(CPULoongArchState *env)
++{
++    uint64_t entryhi;
++    int index, pagesize;
 +
- /* The ABI of a file. */
- #define EF_MIPS_ABI_O32       0x00001000      /* O32 ABI.  */
- #define EF_MIPS_ABI_O64       0x00002000      /* O32 extended for 64 bit.  */
++    if (FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR)) {
++        entryhi = env->CSR_TLBREHI;
++        /* Validity of pagesize is checked in helper_ldpte() */
++        pagesize = FIELD_EX64(env->CSR_TLBREHI, CSR_TLBREHI, PS);
++    } else {
++        entryhi = env->CSR_TLBEHI;
++        /* Validity of pagesize is checked in helper_tlbrd() */
++        pagesize = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, PS);
++    }
++
++    index = get_tlb_random_index(env, entryhi, pagesize);
+     invalidate_tlb(env, index);
+     fill_tlb_entry(env, env->tlb + index);
+ }
 -- 
-2.49.0
+2.39.3
 
 
