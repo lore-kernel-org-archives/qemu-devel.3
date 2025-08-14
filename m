@@ -4,94 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1F7CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 864E4CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXiO-0002qJ-Cp; Thu, 14 Aug 2025 09:09:57 -0400
+	id 1umXi0-0002NX-3C; Thu, 14 Aug 2025 09:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.zhang@huaweicloud.com>)
- id 1umMlU-0003XF-DE
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 21:28:25 -0400
-Received: from dggsgout11.his.huawei.com ([45.249.212.51])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.zhang@huaweicloud.com>)
- id 1umMlM-00062W-Qs
- for qemu-devel@nongnu.org; Wed, 13 Aug 2025 21:28:24 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.235])
- by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4c2SKl4B24zYQtxZ
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 09:27:55 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
- by mail.maildlp.com (Postfix) with ESMTP id 320361A058E
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 09:27:54 +0800 (CST)
-Received: from [10.174.179.80] (unknown [10.174.179.80])
- by APP4 (Coremail) with SMTP id gCh0CgAHgxOVO51oPzBtDg--.8664S3;
- Thu, 14 Aug 2025 09:27:52 +0800 (CST)
-Message-ID: <42aace87-1b89-4b17-96f1-3efbabc4acf3@huaweicloud.com>
-Date: Thu, 14 Aug 2025 09:27:49 +0800
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1umXhT-0001KE-BG
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:09:02 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1umXhO-0005yn-9R
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:08:59 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-b47174beb13so576439a12.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:08:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755176923; x=1755781723; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L1ak1ZU/AR0+1y4HNoJj/qDB25/smzJJgjU2bzP6iSw=;
+ b=y0ycavbTbeHBg24zlS/TfS1/itLrBDtb5K8r8Y9PPei7DNSi4yhu4aEClep5wRlOFF
+ IwmiJdftAhTsZ1ST36YKnrwzqmG9ckQVTb1/jjugS+weN2ILyWppIvsSR0gMxlZ34Azv
+ Qu6nzhWGK1oSaJ0WmR2Dgq3h+B9JKA6Yu92ESulzvncP3cMRMtRANkwEEshHm33aN12E
+ MOwWkjfpNQStrv9mm9CkSNs4t9XijFPXIkEZXGe3ggdjMvjtMqzDf+TkMQI4+8Y2kqD3
+ pIns4yeZWO6FSPVsnvuCs7fuzzoOfxwQchwlm6gkNMJbSVW9fjn9/3FlkmMVyzk6iSeC
+ cq2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755176923; x=1755781723;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=L1ak1ZU/AR0+1y4HNoJj/qDB25/smzJJgjU2bzP6iSw=;
+ b=FBBQW8wfjMSgBnX1ejdQm4BkcU74V+Sy/MkrZkfOyzQt8ue8mGDOWoAVnOAZE6+l7O
+ FV0Oc+knxbEi3lquozX1KXkWv/Q1UWUTd23I0doW6rS6mhhorydfWNY/KwLKh9LKTzUY
+ LGU2LAftIJEz8j36gBs2QBapkrI+cBrqtuJ7jojNrcZBQfJLyro5W8BfPjGvnn2Qgppy
+ +r+J++g+jEBAIC3xEwOYBAzzufuTM3v/7f3zsf3jGb/7iO4NDuAIDp9cIb9FbfJg962d
+ bE5Pj3dcr+KwF2gzXqVoHOa1ggFzB1DvOVR8/0IugVZ+DtWPCSrmTLmgeU8g5GkCg4hj
+ JBFA==
+X-Gm-Message-State: AOJu0Yx/OT8rdGCQiLAJWgrwOKPXuj7uhINiOIy+eQlBYP8Qqyha0Gv4
+ 3FiQ4HrIoVAIE8aZkSGUrPqVvYazKefPBLqgpIhZcRVu/w3lPlyuf4bZLv21TrFSppjiQ0fXCZ8
+ wNCpDZu0=
+X-Gm-Gg: ASbGncsrVNiaSjxKhg9EwvKrSdtZlo2h/R1FmcGAwvXOxI0iDRMUzSCfQR0TSg4kGXH
+ fJHTPzy7X8zp/xP5O90RExfrxX4YKcA97ntETVr+S6OPQ4hqRhEmbOk9s6XE+/owIHUa4ZrR/wd
+ tgR7NlDAOleWVsGfOZ0PqOjkrn92aQJhIZ8jNV6hhzUM49SScFRs5sRP/wL6nxPwctJr60CocSq
+ 9YKci8DgwvCjnNXYg8luaWYPbzzOVWw8KS1x4fKfERXjxLrNZQsMzMq5qPunelmL6RgsvCHRCFb
+ q+a75C5Xe/IvBG/znx6+0low1wsWY4PUlt1/medT8ns2hAdMrTeHnY1loCZaIuepNo34rBsJM/z
+ dIblYMtpK/uIrt1MKU83MuqqtLrlGR+RYmlQTKpJhN/+gdoQ=
+X-Google-Smtp-Source: AGHT+IG/dkbB6uvMypOJlf2Fesz59oY3wr5wGmYP0fPlPty09Gplf1zoGQfiwLuUwQe3Z84A+u++UQ==
+X-Received: by 2002:a17:903:2285:b0:240:cd3e:d860 with SMTP id
+ d9443c01a7336-24458b5546bmr39662555ad.41.1755176923376; 
+ Thu, 14 Aug 2025 06:08:43 -0700 (PDT)
+Received: from localhost.localdomain ([206.83.105.236])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-24304c2943asm64438335ad.30.2025.08.14.06.08.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Aug 2025 06:08:43 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 85/85] tests/tcg/aarch64: Add gcsss
+Date: Thu, 14 Aug 2025 22:57:52 +1000
+Message-ID: <20250814125752.164107-86-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
+References: <20250814125752.164107-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
- Dan Carpenter <dan.carpenter@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>,
- Ben Copeland <benjamin.copeland@linaro.org>, LTP List <ltp@lists.linux.it>,
- chrubis <chrubis@suse.cz>, Petr Vorel <pvorel@suse.cz>,
- Ian Rogers <irogers@google.com>, linux-perf-users@vger.kernel.org,
- Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
- linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>,
- Zhang Yi <yi.zhang@huawei.com>, Theodore Ts'o <tytso@mit.edu>,
- Baokun Li <libaokun1@huawei.com>
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <2025081300-frown-sketch-f5bd@gregkh>
- <CA+G9fYuEb7Y__CVHxZ8VkWGqfA4imWzXsBhPdn05GhOandg0Yw@mail.gmail.com>
- <2025081311-purifier-reviver-aeb2@gregkh>
-Content-Language: en-US
-From: Zhang Yi <yi.zhang@huaweicloud.com>
-In-Reply-To: <2025081311-purifier-reviver-aeb2@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: gCh0CgAHgxOVO51oPzBtDg--.8664S3
-X-Coremail-Antispam: 1UD129KBjvJXoW7KF1fAFW7tF4UtrWrWr1DGFg_yoW8Zw4xpF
- WrCF98tr45X345ArsFvw4IgFyUtrZ8Krn5Wr1rtw17C39IkryDZF4SgF1Y9F97Jr4DCFyr
- ZrsFv3sIyryDAaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
- 6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
- vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7Cj
- xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x
- 0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
- 6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
- Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS
- 14v26rWY6Fy7MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
- 8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWrXVW8
- Jr1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7
- CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v2
- 6r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07
- j6a0PUUUUU=
-X-CM-SenderInfo: d1lo6xhdqjqx5xdzvxpfor3voofrz/
-Received-SPF: pass client-ip=45.249.212.51;
- envelope-from=yi.zhang@huaweicloud.com; helo=dggsgout11.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 14 Aug 2025 09:09:24 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,75 +100,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/8/13 22:53, Greg Kroah-Hartman wrote:
-> On Wed, Aug 13, 2025 at 08:01:51PM +0530, Naresh Kamboju wrote:
->> Hi Greg,
->>
->>>> 2)
->>>>
->>>> The following list of LTP syscalls failure noticed on qemu-arm64 with
->>>> stable-rc 6.16.1-rc1 with CONFIG_ARM64_64K_PAGES=y build configuration.
->>>>
->>>> Most failures report ENOSPC (28) or mkswap errors, which may be related
->>>> to disk space handling in the 64K page configuration on qemu-arm64.
->>>>
->>>> The issue is reproducible on multiple runs.
->>>>
->>>> * qemu-arm64, ltp-syscalls - 64K page size test failures list,
->>>>
->>>>   - fallocate04
->>>>   - fallocate05
->>>>   - fdatasync03
->>>>   - fsync01
->>>>   - fsync04
->>>>   - ioctl_fiemap01
->>>>   - swapoff01
->>>>   - swapoff02
->>>>   - swapon01
->>>>   - swapon02
->>>>   - swapon03
->>>>   - sync01
->>>>   - sync_file_range02
->>>>   - syncfs01
->>>>
->>>> Reproducibility:
->>>>  - 64K config above listed test fails
->>>>  - 4K config above listed test pass.
->>>>
->>>> Regression Analysis:
->>>> - New regression? yes
->>>
->>> Regression from 6.16?  Or just from 6.15.y?
->>
->> Based on available data, the issue is not present in v6.16 or v6.15.
->>
->> Anders, bisected this regression and found,
->>
->>   ext4: correct the reserved credits for extent conversion
->>     [ Upstream commit 95ad8ee45cdbc321c135a2db895d48b374ef0f87 ]
->>
->> Report lore link,
->>
->> https://lore.kernel.org/stable/CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com/
-> 
-> Great, and that's also affecting 6.17-rc1 so we are "bug compatible"?
-> :)
-> 
+Validate stack switching and recursion depth.
 
-Hi,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tests/tcg/aarch64/gcs.h           |  9 ++++
+ tests/tcg/aarch64/gcsss.c         | 74 +++++++++++++++++++++++++++++++
+ tests/tcg/aarch64/Makefile.target |  2 +-
+ 3 files changed, 84 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/aarch64/gcsss.c
 
-This issue has already fixed in 6.17-rc1 through this series:
-
-https://lore.kernel.org/linux-ext4/20250707140814.542883-1-yi.zhang@huaweicloud.com/
-
-
-To fix this issue in 6.16, it's necessary to backport the whole series
-instead of just pick 5137d6c8906b ("ext4: fix insufficient credits
-calculation in ext4_meta_trans_blocks()") and 95ad8ee45cdb {"ext4: correct
-the reserved credits for extent conversion").  Otherwise, this will make
-the problem more likely to occur.
-
-Thanks,
-Yi.
+diff --git a/tests/tcg/aarch64/gcs.h b/tests/tcg/aarch64/gcs.h
+index 99cb4d4e38..e821963cb8 100644
+--- a/tests/tcg/aarch64/gcs.h
++++ b/tests/tcg/aarch64/gcs.h
+@@ -69,3 +69,12 @@
+ 
+ #define gcspr() \
+     ({ uint64_t *r; asm volatile("mrs %0, s3_3_c2_c5_1" : "=r"(r)); r; })
++
++#define gcsss1(val) \
++    do {                                                                     \
++        asm volatile("sys #3, c7, c7, #2, %0" : : "r"(val) : "memory");      \
++    } while (0)
++
++#define gcsss2() \
++    ({ uint64_t *r;                                                          \
++       asm volatile("sysl %0, #3, c7, c7, #3" : "=r"(r) : : "memory"); r; })
+diff --git a/tests/tcg/aarch64/gcsss.c b/tests/tcg/aarch64/gcsss.c
+new file mode 100644
+index 0000000000..9550c68e7e
+--- /dev/null
++++ b/tests/tcg/aarch64/gcsss.c
+@@ -0,0 +1,74 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "gcs.h"
++
++#define IN_PROGRESS(X)  ((uint64_t)(X) | 5)
++#define CAP(X)          (((uint64_t)(X) & ~0xfff) + 1)
++
++static uint64_t * __attribute__((noinline)) recurse(size_t index)
++{
++    if (index == 0) {
++        return gcspr();
++    }
++    return recurse(index - 1);
++}
++
++int main()
++{
++    void *tmp;
++    uint64_t *alt_stack, *alt_cap;
++    uint64_t *orig_pr, *orig_cap;
++    uint64_t *bottom;
++    size_t pagesize = getpagesize();
++    size_t words;
++
++    enable_gcs(0);
++    orig_pr = gcspr();
++
++    /* Allocate a guard page before and after. */
++    tmp = mmap(0, 3 * pagesize, PROT_NONE, MAP_ANON | MAP_PRIVATE, -1, 0);
++    assert(tmp != MAP_FAILED);
++
++    /* map_shadow_stack won't replace existing mappings */
++    munmap(tmp + pagesize, pagesize);
++
++    /* Allocate a new stack between the guards. */
++    alt_stack = (uint64_t *)
++        syscall(__NR_map_shadow_stack, tmp + pagesize, pagesize,
++                SHADOW_STACK_SET_TOKEN);
++    assert(alt_stack == tmp + pagesize);
++
++    words = pagesize / 8;
++    alt_cap = alt_stack + words - 1;
++
++    /* SHADOW_STACK_SET_TOKEN set the cap. */
++    assert(*alt_cap == CAP(alt_cap));
++
++    /* Swap to the alt stack, one step at a time. */
++    gcsss1(alt_cap);
++
++    assert(gcspr() == alt_cap);
++    assert(*alt_cap == IN_PROGRESS(orig_pr));
++
++    orig_cap = gcsss2();
++
++    assert(orig_cap == orig_pr - 1);
++    assert(*orig_cap == CAP(orig_cap));
++    assert(gcspr() == alt_stack + words);
++
++    /* We should be able to use the whole stack. */
++    bottom = recurse(words - 1);
++    assert(bottom == alt_stack);
++
++    /* We should be back where we started. */
++    assert(gcspr() == alt_stack + words);
++
++    /* Swap back to the original stack. */
++    gcsss1(orig_cap);
++    tmp = gcsss2();
++
++    assert(gcspr() == orig_pr);
++    assert(tmp == alt_cap);
++
++    exit(0);
++}
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index c6f401c317..b858f8692e 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -76,7 +76,7 @@ $(SME_TESTS): CFLAGS += $(CROSS_AS_HAS_ARMV9_SME)
+ endif
+ 
+ # GCS Tests
+-GCS_TESTS += gcsstr gcspushm
++GCS_TESTS += gcsstr gcspushm gcsss
+ AARCH64_TESTS += $(GCS_TESTS)
+ $(GCS_TESTS): gcs.h
+ 
+-- 
+2.43.0
 
 
