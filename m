@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C331CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 08:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE0BCA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 08:40:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umTU3-0007N2-6C; Thu, 14 Aug 2025 04:38:51 -0400
+	id 1umTUD-0007Ng-FE; Thu, 14 Aug 2025 04:39:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1umTU0-0007MX-EB
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 04:38:49 -0400
+ id 1umTUB-0007NR-Kj
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 04:38:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1umTTy-00068m-8j
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 04:38:47 -0400
+ id 1umTU8-0006Bf-MX
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 04:38:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755160725;
+ s=mimecast20190719; t=1755160735;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4hVX23j1qg89GM2XTJ2f9M0XbvXysR1u9GM3HK6Mb+g=;
- b=iOo7PDFns0desVfxxq0bM0GcWXoOPjd6yNRp80jy9sqQ9U45U2nNzspY26qtXUPV/2aNOk
- HYq8anEflEZtiziy5WHeU86UcaEqFRL4b6/W0rNMjoEfMSrVG6JQKPsLPfV6UuflMN7IiG
- T0BO640UOAaYMBkVCmIlG74kb8qvQrc=
+ bh=FXG6nBRyssLRsnDK38URuLwEwpEb4ieR4NV7wjgJN8Q=;
+ b=WJR21Hv0vV/JVYgvq4uYqkGoKZZSs20ciS9EVIZzDeXU3QC4RWa0otEy2MfHFVRJN36zxi
+ dhJR4z6qtZj/gC8R6kpONR60coNJVs+utyddslxLINxwxzno4THJ5rlPgze4kgZ8a116ej
+ du/V0B4Xrph05Bx+caDqCrZn6HSwiqg=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-PbSvs82kMruTOxxJGv_jUA-1; Thu,
- 14 Aug 2025 04:38:42 -0400
-X-MC-Unique: PbSvs82kMruTOxxJGv_jUA-1
-X-Mimecast-MFC-AGG-ID: PbSvs82kMruTOxxJGv_jUA_1755160721
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-fKUfvU3XN7GFiBOuVWv6RA-1; Thu,
+ 14 Aug 2025 04:38:54 -0400
+X-MC-Unique: fKUfvU3XN7GFiBOuVWv6RA-1
+X-Mimecast-MFC-AGG-ID: fKUfvU3XN7GFiBOuVWv6RA_1755160733
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BAB701954B13; Thu, 14 Aug 2025 08:38:40 +0000 (UTC)
+ id 040731955D69; Thu, 14 Aug 2025 08:38:53 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.45.225.203])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3987818003FC; Thu, 14 Aug 2025 08:38:33 +0000 (UTC)
+ id B4CA3180044F; Thu, 14 Aug 2025 08:38:47 +0000 (UTC)
 From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -56,9 +56,9 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, david@redhat.com, jasowang@redhat.com,
  stefanha@redhat.com, dbassey@redhat.com, stevensd@chromium.org,
  Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH v6 5/8] vhost_user.rst: Add GET_SHMEM_CONFIG message
-Date: Thu, 14 Aug 2025 10:37:46 +0200
-Message-ID: <20250814083749.1317197-6-aesteve@redhat.com>
+Subject: [PATCH v6 7/8] qmp: add shmem feature map
+Date: Thu, 14 Aug 2025 10:37:48 +0200
+Message-ID: <20250814083749.1317197-8-aesteve@redhat.com>
 In-Reply-To: <20250814083749.1317197-1-aesteve@redhat.com>
 References: <20250814083749.1317197-1-aesteve@redhat.com>
 MIME-Version: 1.0
@@ -89,79 +89,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GET_SHMEM_CONFIG vhost-user frontend
-message to the spec documentation.
+Add new vhost-user protocol
+VHOST_USER_PROTOCOL_F_SHMEM feature to
+feature map.
 
-Reviewed-by: Alyssa Ross <hi@alyssa.is>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Albert Esteve <aesteve@redhat.com>
 ---
- docs/interop/vhost-user.rst | 39 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ hw/virtio/virtio-qmp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index dab9f3af42..54d64ae75f 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -371,6 +371,20 @@ MMAP request
-   - 0: Pages are mapped read-only
-   - 1: Pages are mapped read-write
- 
-+VIRTIO Shared Memory Region configuration
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-++-------------+---------+------------+----+--------------+
-+| num regions | padding | mem size 0 | .. | mem size 255 |
-++-------------+---------+------------+----+--------------+
-+
-+:num regions: a 32-bit number of regions
-+
-+:padding: 32-bit
-+
-+:mem size: contains ``num regions`` 64-bit fields representing the size of each
-+           VIRTIO Shared Memory Region
-+
- C structure
- -----------
- 
-@@ -397,6 +411,7 @@ In QEMU the vhost-user message is implemented with the following struct:
-           VhostUserShared object;
-           VhostUserTransferDeviceState transfer_state;
-           VhostUserMMap mmap;
-+          VhostUserShMemConfig shmem;
-       };
-   } QEMU_PACKED VhostUserMsg;
- 
-@@ -1754,6 +1769,30 @@ Front-end message types
-   Using this function requires prior negotiation of the
-   ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
- 
-+``VHOST_USER_GET_SHMEM_CONFIG``
-+  :id: 44
-+  :equivalent ioctl: N/A
-+  :request payload: N/A
-+  :reply payload: ``struct VhostUserShMemConfig``
-+
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the front-end
-+  to gather the VIRTIO Shared Memory Region configuration. The back-end will
-+  respond with the number of VIRTIO Shared Memory Regions it requires, and
-+  each shared memory region size in an array. The shared memory IDs are
-+  represented by the array index. The information returned shall comply
-+  with the following rules:
-+
-+  * The shared information will remain valid and unchanged for the entire
-+    lifetime of the connection.
-+
-+  * The Shared Memory Region size must be a multiple of the page size
-+    supported by mmap(2).
-+
-+  * The size may be 0 if the region is unused. This can happen when the
-+    device does not support an optional feature but does support a feature
-+    that uses a higher shmid.
-+
- Back-end message types
- ----------------------
+diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+index 3b6377cf0d..8c2cfd0916 100644
+--- a/hw/virtio/virtio-qmp.c
++++ b/hw/virtio/virtio-qmp.c
+@@ -127,6 +127,9 @@ static const qmp_virtio_feature_map_t vhost_user_protocol_map[] = {
+     FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_DEVICE_STATE, \
+             "VHOST_USER_PROTOCOL_F_DEVICE_STATE: Backend device state transfer "
+             "supported"),
++    FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_SHMEM, \
++                "VHOST_USER_PROTOCOL_F_SHMEM: Backend shared memory mapping "
++                "supported"),
+     { -1, "" }
+ };
  
 -- 
 2.49.0
