@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A762CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 09:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14886CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 09:58:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umUa1-0000ve-84; Thu, 14 Aug 2025 05:49:05 -0400
+	id 1umUiM-0002Vi-U0; Thu, 14 Aug 2025 05:57:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umUZx-0000vU-Fg
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 05:49:01 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1umUiJ-0002VP-7P
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 05:57:39 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umUZv-0008Hd-7D
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 05:49:01 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-76e2ea94c7cso725881b3a.2
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 02:48:58 -0700 (PDT)
+ id 1umUiH-0001JG-8W
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 05:57:38 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b471746a879so421417a12.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 02:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755164936; x=1755769736; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755165454; x=1755770254; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UhXQ8ClAZyC6ZwPBAtm9gjqUVvPh4kKwbXv0Fn9fBm8=;
- b=cxvhg5D8WpPVGxWkJ5zU2aNkTY7yb7kTPLxCxI5Xly1JgRuqfpQ2hY4YyeSikqGdoj
- lJwGkba701zV6fc5aAelePKe7JcbGfRQiWcEafZXZKamZYrynnsHnkNIsq96G1kypxEV
- 1NWsUbIpgMuIgoIKm6o0hE9/YzJFeZNN6aeOy/yyNrlI2t1mgyfhF5e9UA2F3fpScMEn
- AGuPE0mTVL+dmaQasNgq+bs5ad8diZC9gNyduC9/B/CCJaxtaX76gginQdvAGpgFTSMQ
- OSvP6EEa4YSZ/obqphTvVzseY6N/xanyqvJhX5m+mKE6F8SeyH2G10D7zJXhxbeuAzkO
- 1zwQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2CecmyLvApD+cI95csrHAn+C/vC7pTWdJq16QdlJzQY=;
+ b=V8BAPl350KPsdD8eUFwStrq2OqUk1FDbaesxgAbEfrt9wRStjWhlGH91HCIKbvbUJB
+ RdL+IGwbPEsfMuSjLkutfL77QGuKuzSlYpew8AzGM5ApnliVomXHvpBlfPM2zNGsPR9a
+ 4Y/cc8rx4dL6Y4zx6+pYNVHZuy+CJMqMg7+s8NDOusCwjfOxLp8R76u/pVik8bI9aPGr
+ JKcSbwexijQB7PxZzjaXHMhU7sWKnpQjPTZwRoEv3STnE3NWdNL95SQP4y51o9TZOpq4
+ zoUEFDxMyyK+A71whksR9PeZzCdGuoCrmw5SzVJ05yG86FinSQD1TMEtvrujttKtwPa7
+ 5uHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755164936; x=1755769736;
+ d=1e100.net; s=20230601; t=1755165454; x=1755770254;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UhXQ8ClAZyC6ZwPBAtm9gjqUVvPh4kKwbXv0Fn9fBm8=;
- b=ITbPldNcmYRdzpmhbqH5lEcNlZXhknEYPLPMsxWkti1uQEB+1BDZqyYDlmgrBP7w7l
- Q9VgynTrFCSHWPL+B3EHd6yY1AA5VFaJUPclbSfZYfOUbw2QxxIVvUhIMazHzsfoc3R5
- Fni6jwhVlSQ5QcSr76FB/kYXhWfW31wWczEPBFWZez0YTGdgg+JaTUIGM8H8Ezl5kviW
- qQAfKqCkoYlrFmUd0+LUppwyJ7tU+LG0z7hS1Rqv/GfXomdLJK0rZo4fpi+0eOx2JtZZ
- IVfLRFSnFS3ANYRuSgzX9999YU1IFpB4iVOXEHOYNWLTl4XX7TCaWbkfAqlEOLZaFHrj
- 7/6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVeA/WRdSR5MABTWGnGgA7LLAw+4yhZ5Ja7ddDntkt67ygYw3PkZ9KBpniwtbQ7D7EbjfOIO8lOAME5@nongnu.org
-X-Gm-Message-State: AOJu0YxzoMzK+HJidHFIYdYs9g0AXtcSN21+o09UfN6Z/X+QGdPis+64
- wTIcN2DStDWy7TLU/IUDKz3N9+nC1uGx4RCOlgltTEAkKtwdFulUBk1Gv3kSH2lGrak=
-X-Gm-Gg: ASbGncvn5Y26WyzHIsI8kPoumh6ew0oudvEUD6UWC6T6zFcdW0crWczxUEHBnGr89zF
- 2C/e/HVmltnNyYkMfW1LRJHWyV8l2MgE/6LwKHem7CMvQU069/wqXKW4iOCrB1+Cjl1tpOUvfym
- k3E6gmocI+TpQ7HPaEpX2m8uZmnJNF4XQ6X7WJ4+Fq1Ch4QInhqL2/vpy6l7BeAhnzaqEUPS9oa
- 19z6rTyVj/lWgDlAhfjExfqwLnquTwnn100/JWXjVjD0o5ChLZ8nhyTIm8ZHwVXbXQ7QV765TF1
- 7JQfUiqGFFLNKZlWZbk/a8BuzII9SWyTdHvb2oX6aRInCGmECSE4ovjW7oMK/1HsM+bijOvg4V7
- ZKVDMshMmt0rx/A4CQ7J1P+s2gQ1HFZl387ByewGRV3B/P0inWMWaBZIh+PCYPerxWpDVcHSlDi
- FEAA4AwNXoHKGygsRg8Fiv4sKW/aCvEJHY7fzaJ2VGZaAfwLUsQNUVTwNvH9iGLBwe
-X-Google-Smtp-Source: AGHT+IHj3MwSb3JWcBhyoOovn8dGlEB/uRNYUIfQ0xd1gbq/JeWWUz0xFadXXnz/eyXHwR6A1K6geg==
-X-Received: by 2002:a05:6a21:6da6:b0:240:20d:47ca with SMTP id
- adf61e73a8af0-240bd019e6cmr3470292637.10.1755164936214; 
- Thu, 14 Aug 2025 02:48:56 -0700 (PDT)
+ bh=2CecmyLvApD+cI95csrHAn+C/vC7pTWdJq16QdlJzQY=;
+ b=sg/KD4aIRIQmHfGROGa/2GYY/yNq6BuJy41PnCpfmobeQsY06R60Cvh2ejro/zvxSt
+ tC7HlvIPoPoffIxvEXkQ4iK2HfZ9uzqQ186mbTWA6H3BgBhdcj0hsX37gqj9sjxIaVqu
+ HxQ6g/8jX6T4Y8fReHP0ePfD3Qfbd8hBNYzb9VcmNFwQS+eTFwMHft/qACxuobgppdyo
+ wmDP3Qkwu3wjZKspAAtskMtaW3qovaY4LtfDAscw7DIkDKfJGjX7R5DhaiyAYs5RQl0q
+ 8mk+aDzlBSdccOl5UMpRmnV+2DvNLbkPkuW6pX5aS52wOf6vN9snxHjVAGSyrVQxLSjN
+ OxbQ==
+X-Gm-Message-State: AOJu0YwiATw4k8jKHsv8jRcX+Ko7Vm5x1DraBAmY7q8G/wE4iv3ACt3R
+ awYLNmCAPw20H47R9HBW2L4Hq4aNcSIXmlbUXpiOqBdyxQ6YLqsIE6Ys7NZXyYq1gDdmd5Y5QYM
+ oUkB/yBg=
+X-Gm-Gg: ASbGncsRghuIBGM+jpUpufaIAT0lUCukwlxL21esu7iGa+aZCyOhOm9EfZEXZEqWQMb
+ lZgP+m6UlxhCUQ8Il0m3Q38ORqQHM2w6sCwfG0jCigUWUbk6BRhi/umGCnpWPh9EG63HLYb2JQk
+ 7TnB2IQ+XeZXUHGVmFYhH0nan1rAauJjrtjtZi9Io6/rMsMA3FBnrvPg2NyqH+hUMjx01C/3pv3
+ FmRs0o70VFi1X7XNWu4027IlJv623MWYxBJ5JqisBuZXJTOFGUUAZib+jG6VRcu0aZ8QwNAhxkp
+ F7mMLHrxee05jKp5IrMfSnbPCYHzZ98TED7SM0j6KVp1FzDDxo4N3JqDOnVDJq+1/od8TgBnWQo
+ 4QP0rPuj0nOzIkZbEZmDONBvKiM3jZ32oZP4RJzSVW+v/4e2avJN4ldjcXzEXDF0Q56EsT29htP
+ YCTX/QlNewAw6uzfDOLcnw93p8xc1Y23iydV89zxjnZR6/u1XeOm+mg8vXem8V2Lbu
+X-Google-Smtp-Source: AGHT+IFDWDgdrkCh9bQpyXofdUi4bdfP6XPmhd4PsYD3hdQCqoFfnA3plwX9/BMUOIk/AIkxLmXvtA==
+X-Received: by 2002:a17:90b:3d8c:b0:316:3972:b9d0 with SMTP id
+ 98e67ed59e1d1-3232787da7bmr3887215a91.0.1755165454219; 
+ Thu, 14 Aug 2025 02:57:34 -0700 (PDT)
 Received: from ?IPV6:2401:d006:5c08:e100:bc49:5c3a:83c2:8ce7?
  (19r3hzjy9klp0jf5b7z5.ipv6.originbroadband.com.au.
  [2401:d006:5c08:e100:bc49:5c3a:83c2:8ce7])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b470fd547d0sm2562644a12.4.2025.08.14.02.48.53
+ 98e67ed59e1d1-3233100bbb9sm1298749a91.15.2025.08.14.02.57.32
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Aug 2025 02:48:55 -0700 (PDT)
-Message-ID: <80d7478a-bed3-4e6f-9241-2c4b54c62929@linaro.org>
-Date: Thu, 14 Aug 2025 19:48:49 +1000
+ Thu, 14 Aug 2025 02:57:33 -0700 (PDT)
+Message-ID: <bc3d404d-1c93-4799-b4bf-b4c05f1ac2fa@linaro.org>
+Date: Thu, 14 Aug 2025 19:57:24 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: KVM sysreg ids for FEAT_SYSREG128
-To: Marc Zyngier <maz@kernel.org>
-Cc: kvmarm@lists.linux.dev, qemu-devel <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Oliver Upton <oliver.upton@linux.dev>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <1c6b4f19-6cb2-4da0-9acc-d63307880de1@linaro.org>
- <86cy8y8grv.wl-maz@kernel.org>
+Subject: Re: [PATCH-for-10.1? 0/3] linux-user: Select default CPUs for
+ MicroMIPS and MIPS16e ASEs
+To: qemu-devel@nongnu.org
+References: <20250814070650.78657-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <86cy8y8grv.wl-maz@kernel.org>
+In-Reply-To: <20250814070650.78657-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,62 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/14/25 18:11, Marc Zyngier wrote:
-> Hi Richard,
+On 8/14/25 17:06, Philippe Mathieu-Daudé wrote:
+> We weren't parsing MIPS ASE in the ELF header, so couldn't
+> automatically pick an appropriate CPU.
 > 
-> Thanks for bringing this up. FEAT_D128 is not on anyone's radar on the
-> KVM side (I really don't fancy having to write another set of page
-> table walkers), but it doesn't hurt to be prepared.
+> Since we'll have a rc4, I propose these sensible patches
+> for 10.1, but both ASEs are available since 15 years in QEMU,
+> so this isn't something broken since the latest release, and
+> I don't mind holding it for 10.2.
 > 
-> On Thu, 14 Aug 2025 00:27:25 +0100,
-> Richard Henderson <richard.henderson@linaro.org> wrote:
->>
->> Hiya,
->>
->> QEMU (ab)uses the kvm encoding of system register ids in the migration
->> stream.  As we implement support for FEAT_D128, it would be good to
->> agree on an encoding for the 128-bit registers so that we can avoid
->> complications with migration later.
->>
->> I don't think this is terribly complicated.  Simply adjust the value
->> in the KVM_REG_SIZE_MASK field from U64 to U128.  E.g.
->>
->> PAR_EL1 (64-bit)	(__ARM64_SYS_REG(3, 0, 7, 4, 0) | KVM_REG_SIZE_U64)
->> PAR_EL1 (128-bit)	(__ARM64_SYS_REG(3, 0, 7, 4, 0) | KVM_REG_SIZE_U128)
->>
->> This will currently be cleanly rejected by index_to_params, resulting
->> in ENOENT for the ioctl.  When KVM grows support for D128 guests,
->> kvm_sys_reg_{get,set}_user can select the read/write code path based
->> on reg->id & KVM_REG_SIZE_MASK.
->>
->> Comments?
+> Regards,
 > 
-> The encoding of the register, as described above, is absolutely fine.
+> Phil.
 > 
-> But since you brought the subject, I'd like to align on a bit more
-> than the encoding.
+> Philippe Mathieu-Daudé (3):
+>    elf: Add EF_MIPS_ARCH_ASE definitions
+>    linux-user/mips: Select 74Kf CPU to run MIPS16e binaries
+>    linux-user/mips: Select M14Kc CPU to run microMIPS binaries
 > 
-> The way I see imagine it after two cups of coffee (which clearly isn't
-> enough) is to have a feature bit provided at VM creation time,
-> enabling D128 support, HW support allowing.
+>   include/elf.h                | 7 +++++++
+>   linux-user/mips/target_elf.h | 6 ++++++
+>   2 files changed, 13 insertions(+)
 > 
-> At that point, querying the list of supported sysregs would report the
-> 128bit versions of TTBR{0,1}_EL{1,2}, VTTBR_EL2, and PAR_EL1 (ignoring
-> things we are unlikely to ever support, such as FEAT_THE). The 64bit
-> versions of these registers would not be reported.
-> 
-> Does that align with what QEMU would do internally?
 
-Yes.
+Does mips16 or micromips apply to mips64 as well?
+If so, we're missing changes to linux-user/mips64/target_elf.h.
 
-After selecting the feature set for the cpu, we register the system registers that 
-correspond to each feature.  During registration, we select the size of each register 
-(more specifically, the canonical definition is maximal, and 128-bit registers are 
-squashed back down to a 64-bit registers when FEAT_SYSREG128 is not enabled).
-
-We always require the same cpu model during migration, and the choice of register size is 
-tied to the cpu model, so there shouldn't be any migration issues.  With -cpu max, we 
-explicitly don't support migration between qemu versions.
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
