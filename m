@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E534CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 17:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3183ECA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 17:15:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umbWA-0008KX-RU; Thu, 14 Aug 2025 13:13:34 -0400
+	id 1umbWD-0008LF-Jy; Thu, 14 Aug 2025 13:13:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umbW9-0008Jp-1u
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 13:13:33 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1umbWA-0008Kc-Rq
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 13:13:34 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umbW6-0001ny-Oo
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 13:13:32 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-45a1b065d59so6342465e9.1
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 10:13:28 -0700 (PDT)
+ id 1umbW8-0001oX-GW
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 13:13:34 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45a1b00a65fso6104125e9.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 10:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755191607; x=1755796407; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755191610; x=1755796410; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mTW8JUKYJrzyjOYJQzVwpdJf42zS48hJmAThckQDc8A=;
- b=O6X4IK5XeyPBUIXSF9Ov6gcgNFMr4/JcP3lK6PuftB6ibp6NF5K7bx8OWozioL9nFK
- ApgPryMmId0Kjfm9ME62NEgBzZIXGUUkdjl76WvteXrg+uWZD9Xy0xssQhq81p7Skp16
- Wdmy5A8HttAzsch4e053Cf4w4dbtrEivD16SeckoNI6Wjn7se6O0Bs9zswHww2j5tOLD
- T1AIfjsSqKg6DEq8ZLak4bdWyHVTt9ne5TELTzmmG1a6t0sylLGTmI1tgcgaprcNYs5M
- 73+3/qwPY9SoshgBojajRIBLBhwBNZKUhorC7/8IR4r4OLOIftHoy1i5HHavcGaQ39WP
- V68A==
+ bh=Neh9mAADoZDyd4Cs2hypuhX5IvgeEVyNjiT+RnLWFZY=;
+ b=C9ETrMLNqzGwF1FYdjGsfP5JjTP3E7Pf1Y5cWJMQTc5qrG4gAiEQPCWDtcfO2J1v+r
+ Ziy1GCudwvnGhQhWaLmd+Has9F61ZqPQrFxLNn3339o8IP3gQIMyiOLbLqxx1m+hEgZr
+ GbpBegQnAq6hahvEWqdT4NldS6wniC+Wk5XcbgN/uI3jaOLbi8eCa118K75sfzfZhuY7
+ loWZMtGoVfCbtDUwCC9ed1zYSDzq2/0SVC6YI1tucmmC+MgenyMXb+uuLw9vXv/q+UJm
+ /xCRRZlQfS6f4zgPZw+Z8sC1UKxQsmu73q3jLzvshxV4VnrJgyelEOTwnM7AP4Endz8B
+ jUtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755191607; x=1755796407;
+ d=1e100.net; s=20230601; t=1755191610; x=1755796410;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mTW8JUKYJrzyjOYJQzVwpdJf42zS48hJmAThckQDc8A=;
- b=RBra4F1aVC0i4FzGB7/2cBbg7FFwFRUdZhZY9Lh69N+lirMtbd/yokzKaCDpTzI5xM
- 7L79QE0lYMcLpSyMXLHiVxr/8jN2QtznvkYnkDolPVOWpgMurJdi27IbLXXv7GfYWFKz
- KRsOI93F/7ioFI2vVm7NkzSEPzpG5CMATAYdLqzfYMYCaOIjCs0Oq29+w6Q/lLzODE/P
- wUIIqJHa9HnslGL/tPQ6DdLVAU03R8iEwEOsT0vizy/jHr/nBplyKjzO/vS1hFHVF+Lo
- 7iNhGI65juexYIWTOaUKI5Ars6qwzpqPNcidXlbUoK5Z5XoR00yietujPFJSOBtKjvvL
- o0KA==
-X-Gm-Message-State: AOJu0YyDzU2gSL8W4XfEJH080mtNccD9U0KeXgVRpMfREnaY+6ktIaFN
- KRVH92M5FO7EOY9gBlDErNf4z85PKnm2TcrH+Q814Q1+H1MyQ71riFjLKpCXhsWDlFwb8HG52um
- VTJGB
-X-Gm-Gg: ASbGncteeG1cwoI1kdTRyaZ/YuXF14K96HCrlYVMP66wi66JftmdTzscGNCVv2aSq/L
- PwGT0GUIYwzJnQYKZpY5bGtUVMhzHDDAzmLrvInioeddYu+3txqBSUi7RgZUXWnyHuUjgR2bUFO
- fI/iYN1s+hnNZGgIyC3N+N9ynud47UTTMJ0Tm1FCGHUVkBIMcOQ/oC/FBWPxn4lW/WKG5Ud82Mt
- 2cwa4Q8JMXTqw1UiUzdp61UscZ1HTAg0Ut54G+IwPY+QuD7AAddbR+Cxx7dyVH7nzyVZ0Eg4TgF
- gta9WFLPJdw9DUX6O1PfuatrcP5CKKbPxmx937Zgv9jQVdSLk3TRDlUKbrfg5qyy0Rxkr9wrvki
- Pld0xIsBKUto8SJho58ehClDJjknw
-X-Google-Smtp-Source: AGHT+IGSYI/ZYJNVuLFZVuG7TzXgclSacAgto5mgDCp5Qd/MD/u//hHKjkBeRBwcocHrRDQkDS3N2A==
-X-Received: by 2002:a05:600c:1c1b:b0:453:5c30:a1fd with SMTP id
- 5b1f17b1804b1-45a1b61e3a5mr28262765e9.8.1755191607227; 
- Thu, 14 Aug 2025 10:13:27 -0700 (PDT)
+ bh=Neh9mAADoZDyd4Cs2hypuhX5IvgeEVyNjiT+RnLWFZY=;
+ b=oRXlMyqbpFmmfVOsNXfCoYfZeRE4WPJuyU3+i352QCYoWvn92uqQYnIQZL9qjeJmcb
+ rl9neMcb7gBbKlq3g4SKOy9NgaQJt0Ta1ZJyKGze/wYaBN53bwi0TVwzxXsaga/auNUi
+ BRNqn3AJjmdHh1bcGlSCbhvQmu31nYNYP6jmTLdOIpeY+kqehZDTiRN5UHHqc4BDAW59
+ 8idduw/BvnG5kdVC7MMJ2oKFxZRlAqAzLpcQAo5289PPOy5MsJnMPC1G73w5vEOMfJ9R
+ /Xu62LeIrXZ12kKgtOhMqK2hFI/BN2rXgbkEOEOgJ4vmPGrbbDz6Y9Hw55PcnYyZGvG+
+ wriQ==
+X-Gm-Message-State: AOJu0YwCxKBwUdMOWvXrpJoxQ7sR/kbnpjTgoajhoP3xRCX7MhRqf3kb
+ s452uKhjanYTgARg4L9fdod9v00xedauWbZk++pYxUd7M12EZSYdj4i1zBOtiKJLIwdtjjgA9eB
+ 50Y0e
+X-Gm-Gg: ASbGncu3knelOZ+8QdI+oYwp3B+2ng9PagnrfCdgIPBGxhuwojZ74mL5fTr7q/RAnJT
+ h5pWbEAMUVl8HpzE0oCgzISLEa2K2mHaRjlstgnGtV6uvm+AxuyGeLUz2w4cBa0f3NCoyaufWnp
+ dNFjsgw9ofeEiFcJ+DofWddTXecSm4y6+dOY+QrjJZmYfVW6GociVearbD1Mwu0dPOv+BlFMxYI
+ hqgl3ZYtJTJm2RqMpKXwpnTDkdEjFf8oU1wuiiVBGcGj628ZxQQZFuuIqprMeq92akFuDviU0MG
+ K4znN+p6VCsmiKUf7Y7k0abK6xJBqD3IHUhoj7ugPteoHAjo/EkY2XQfvdenSE8TMgEDmKRRshr
+ trJBXem0b9HDWQrvNu8hfdw/AEAhe
+X-Google-Smtp-Source: AGHT+IGEzDHY9svbzgmFQm54ULenG4qYfSCxDV8gFj7YnQ5URQKfmLK9U7hz9MhNtpzVk8wx4TtkdA==
+X-Received: by 2002:a05:600c:5486:b0:456:f00:4b5d with SMTP id
+ 5b1f17b1804b1-45a1b649a68mr29197455e9.22.1755191610368; 
+ Thu, 14 Aug 2025 10:13:30 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45a1c76e9basm29489165e9.21.2025.08.14.10.13.26
+ 5b1f17b1804b1-45a1c76e9basm29489165e9.21.2025.08.14.10.13.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 10:13:26 -0700 (PDT)
+ Thu, 14 Aug 2025 10:13:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
 	John Snow <jsnow@redhat.com>
-Subject: [PATCH for-10.2 1/8] docs/sphinx/kerneldoc.py: Handle new LINENO
- syntax
-Date: Thu, 14 Aug 2025 18:13:16 +0100
-Message-ID: <20250814171324.1614516-2-peter.maydell@linaro.org>
+Subject: [PATCH for-10.2 4/8] scripts/kernel-doc: strip QEMU_ from function
+ definitions
+Date: Thu, 14 Aug 2025 18:13:19 +0100
+Message-ID: <20250814171324.1614516-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250814171324.1614516-1-peter.maydell@linaro.org>
 References: <20250814171324.1614516-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,34 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The new upstream kernel-doc that we plan to update to uses a different
-syntax for the LINENO directives that the Sphinx extension parses:
-instead of
-  #define LINENO 86
-it has
-  .. LINENO 86
+This commit is the Python version of our older commit
+b30df2751e5 ("scripts/kernel-doc: strip QEMU_ from function definitions").
 
-Update the kerneldoc.py extension to handle both syntaxes, so
-that it will work with both the old and the new kernel-doc.
+Some versions of Sphinx get confused if function attributes are
+left on the C code from kernel-doc; strip out any QEMU_* prefixes
+from function prototypes.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/sphinx/kerneldoc.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/lib/kdoc/kdoc_parser.py | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/docs/sphinx/kerneldoc.py b/docs/sphinx/kerneldoc.py
-index 3aa972f2e89..30bb3431983 100644
---- a/docs/sphinx/kerneldoc.py
-+++ b/docs/sphinx/kerneldoc.py
-@@ -127,7 +127,7 @@ def run(self):
-             result = ViewList()
- 
-             lineoffset = 0;
--            line_regex = re.compile("^#define LINENO ([0-9]+)$")
-+            line_regex = re.compile(r"^(?:\.\.|#define) LINENO ([0-9]+)$")
-             for line in lines:
-                 match = line_regex.search(line)
-                 if match:
+diff --git a/scripts/lib/kdoc/kdoc_parser.py b/scripts/lib/kdoc/kdoc_parser.py
+index fe730099eca..32b43562929 100644
+--- a/scripts/lib/kdoc/kdoc_parser.py
++++ b/scripts/lib/kdoc/kdoc_parser.py
+@@ -907,6 +907,7 @@ def dump_function(self, ln, prototype):
+             (r"^__always_inline +", "", 0),
+             (r"^noinline +", "", 0),
+             (r"^__FORTIFY_INLINE +", "", 0),
++            (r"QEMU_[A-Z_]+ +", "", 0),
+             (r"__init +", "", 0),
+             (r"__init_or_module +", "", 0),
+             (r"__deprecated +", "", 0),
 -- 
 2.43.0
 
