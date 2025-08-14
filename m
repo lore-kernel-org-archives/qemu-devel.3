@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5919ECA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 19:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F471CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 19:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umdZV-0000IE-KA; Thu, 14 Aug 2025 15:25:09 -0400
+	id 1umdoH-00032y-Rv; Thu, 14 Aug 2025 15:40:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdZS-0000DT-KF
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:25:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdoF-00032I-F8
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:40:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdZP-0000y7-Up
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:25:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdoC-0003ap-Je
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:40:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755199500;
+ s=mimecast20190719; t=1755200417;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=fywHM0eSqmH3qGVIIfRHLgpyT8XlnnlYD1jBOq3gVBM=;
- b=JMhIQ/hBk2IUSX6lL/4jIA0qyntGUBGDgLCgS2rmnBeVvJobXxRS7SBr6ICZKD0f+fj1BF
- J5jPszSdws4cdQEcm4vJ3IENjkoW8YbrThs5HFpzveurJb7QLmGs0Aa2b9tkpZpEEN2mu6
- rkt5u/QGzRrY1qqHBxSa9qNMgBXmmOg=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aFACkOcF2p/DSpurtoj+eFrLFIp6qRkt+3Kvgz65B48=;
+ b=AKQJuCw1P3Fe4KDNZp5vrFy1R0+2sFjowXII0Fz6lH7aH7QhogGBBnVbMGthBeZYabqukK
+ 24QqSV2+YREUBriPvYTbeRkmwI5u+2PAirdXX8cJUmnq7hAENUBAVnANz+Lx61OuVQSplt
+ Gr/7RuMqMtuWxp04QvoOf1ZcIEMd3Pk=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-G5Qc3hKWNE2KSn_fbJ8HTQ-1; Thu, 14 Aug 2025 15:24:59 -0400
-X-MC-Unique: G5Qc3hKWNE2KSn_fbJ8HTQ-1
-X-Mimecast-MFC-AGG-ID: G5Qc3hKWNE2KSn_fbJ8HTQ_1755199499
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-71d603b2fa1so17048587b3.1
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 12:24:59 -0700 (PDT)
+ us-mta-147-wxpy2zAmPfmiDYI1r5pw4g-1; Thu, 14 Aug 2025 15:40:15 -0400
+X-MC-Unique: wxpy2zAmPfmiDYI1r5pw4g-1
+X-Mimecast-MFC-AGG-ID: wxpy2zAmPfmiDYI1r5pw4g_1755200415
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-70a928135f0so27546306d6.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 12:40:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755199499; x=1755804299;
+ d=1e100.net; s=20230601; t=1755200415; x=1755805215;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fywHM0eSqmH3qGVIIfRHLgpyT8XlnnlYD1jBOq3gVBM=;
- b=ek6ykgmDm6jb8EIJVzXXUwCcwjBhn/eTlk0Jfav6Du96xvb7WrAC1pl/h7ER7oYxQZ
- wlj0xzSkgMmyN2oOvFIgEEriWbz5Iy+eUBzj19leYShYTVdTB9A6qYRZH/t4Gj2jXHdR
- yMbVgIc1b+7rYLLOpGA7qa9hMCh0k5wkWTdmw5h+mE/lZkZ+6nL/enTVvSpwmCpdXbis
- 9aoFailQ+TEfo99z97kdrhhXcy+MZGLbdTeQ+hrJPtOS1KVwm5YZTLg8rPSUU2+iugtM
- SsCsn46ilu7CEHZeLv8KIv1gVMw+/lCH9rHTWRXXL6NZN5a902pUZxRuFA2OcjdZ83UP
- ptfQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXiFtLXrZtDL2xfF5fYZD1O+3ROP2Kswrc3y6h+wl7vOkuRdBmswdSqmSgXXWoozUBGE6PTIPsFEwLK@nongnu.org
-X-Gm-Message-State: AOJu0YwjL7EUkCwv49p6X34jGOHkYPr6lf/P4mm3U0Gve0zF5OKN/PnZ
- kl3MjMgO9NOMUMKVNNi7tLDuvb09vMWDf0AQXyXE5ef5edSidc4ktJoVCVxjIfprSC/Oz//RUFf
- s/J9PeWvHCsGO+blxGbPyS6paeAM9DKWeKspjYP3tuNJRB7wGJQrJYnxT
-X-Gm-Gg: ASbGncuC486j51GcX3rXrLskxGnmbEBAKtZQi5qNW34pb3ZUuG4AxEQDQCvJ6VOrDTo
- U2sjLMLr6Ee028JfPZmE6iNHPDOHChlBZ3NZm7urd76Mc0dfXBqheaMdAMNt3DgKuruYYfIBHxK
- nJnsVmy9tvfeKr7gxqFwm6MkoS9TgHQv4HbTOM/HH2tCdmjJ4dZAalNY67z3qKSs/OzUwZDa9xP
- 2Br6Cuap9xiNl/+A2ZHea/mW6o/z4McikHD/bRgcA+2vrlsNHvSdgJig7KixnWF/w+hRXczQMxl
- Fnh9NZoy90LBD7l5xbL6ILQNHSbHbnEt
-X-Received: by 2002:a05:690c:6c8d:b0:71c:403d:421d with SMTP id
- 00721157ae682-71e47962730mr1976157b3.24.1755199498695; 
- Thu, 14 Aug 2025 12:24:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFfm/23QAl2GFoPog+BKFa9D+80FpJn+PYiNPDmcgMYav2TX1PPRCOh2wAwxBDaTmQfzt72ag==
-X-Received: by 2002:a05:690c:6c8d:b0:71c:403d:421d with SMTP id
- 00721157ae682-71e47962730mr1975907b3.24.1755199498312; 
- Thu, 14 Aug 2025 12:24:58 -0700 (PDT)
+ bh=aFACkOcF2p/DSpurtoj+eFrLFIp6qRkt+3Kvgz65B48=;
+ b=TERNSFI9IgN3bP9770632tHoeDqHZ+6niUIb+pvtxaCLqsE4b5PRjNjR2ZYuX+vD4E
+ zSKaceit/NyplV4uB4AGQmulesrISnaN/dswFyZVGegN411EwzVY6CXVzrQMuzcuKAYL
+ HIMzEXvKnHzS9NShggq9shY/v/9YVMHKWTwToXb8EbgIZYewPvHz0HPR+FiKT6cKUgNb
+ 8gtAMqPGFvAPkVS1JJ/2fkvDtAUPe63BAsSsoi2tuPAd6yKETD3q62D8S5jhgLmQvfzq
+ LKuFWoTG0wX45C87rtAjqYlYFZnrRgNcT37u96EBmVZLsV+0Dl3OCN8JGD4z6zGVXnXr
+ 2Hsg==
+X-Gm-Message-State: AOJu0YxNQZklzLn9T3s+x/r7KyOOv0gahFO6TZGf13FnyRYuhmbXQVDN
+ N6I+QurZnDDCwpzUAmtQ70HgtK26n+Q7SHbiKINGr5s7T2zb7H80yA9tLEMEpzBcJcTEQSmRTSU
+ oE+l9YhS7isq2MTAH1LyxKqdY4CVexSk1d2QMDcO8ps8Yu8BXx97469In
+X-Gm-Gg: ASbGncu9JTBwpmU2mYwbN1HQcI2vJseUbvUTRS5NZhkWa62Wd+9+c4QgXxnw/hJlmZP
+ M3jdMkhc4QOS5byxQeRcyDN2LKzGRlmKvK/Mg/ArFX9Pa6Wf3eBfMohadbsAQDBUM6eBarWKd3b
+ 1M8V3bW+azT6CKGW8KfZMsyWV/7f9UY0bDuy9djMj1yFqjJE57dTBc9ooLk+aVgSawV1Nlw7Coz
+ AEojnWWupY+jiA1dmGmbtBKvOzISxL8Ah8GVoNmCVblzSiNpboZK9cLSTFgywDI2fj9sCo/Gia5
+ HOCNbn8wSIpptTRkRd2+UKftAnxL4Ifl
+X-Received: by 2002:ad4:5967:0:b0:707:5974:388d with SMTP id
+ 6a1803df08f44-70ba471e24amr1751946d6.8.1755200414580; 
+ Thu, 14 Aug 2025 12:40:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHEldpG0Md01FIVHPVLMB1rqwZ3fmYnwaT+tslhbNRtasWhrcwuN6h04MyDMLVRQ6jy/NfOBw==
+X-Received: by 2002:ad4:5967:0:b0:707:5974:388d with SMTP id
+ 6a1803df08f44-70ba471e24amr1750406d6.8.1755200414004; 
+ Thu, 14 Aug 2025 12:40:14 -0700 (PDT)
 Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-71d60d4fb3bsm8134327b3.8.2025.08.14.12.24.57
+ 6a1803df08f44-70af5b82985sm16961896d6.65.2025.08.14.12.40.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 12:24:57 -0700 (PDT)
-Date: Thu, 14 Aug 2025 15:24:44 -0400
+ Thu, 14 Aug 2025 12:40:13 -0700 (PDT)
+Date: Thu, 14 Aug 2025 15:40:00 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: Jiri Denemark <jdenemar@redhat.com>, qemu-devel@nongnu.org,
- Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [RFC PATCH 0/4] migration: Introduce postcopy-setup capability
- and state
-Message-ID: <aJ43_JQct45mnVgV@x1.local>
-References: <20250807114922.1013286-1-jmarcin@redhat.com>
- <aJoEJhJw-_rGVBbA@x1.local>
- <xfzgjwld4ba7mymu3xhkxdwpeie7bbjnbei2xchkqncamktk3g@rbafrorlpvcv>
- <aJzOo7P8aA64AfY_@x1.local>
- <xbqqss2yshtjkew5cirlp2bx3dkumxg3grwpduol5ucpx3leqq@irqeo2csi2vg>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com
+Subject: Re: [PATCH v2 14/24] migration: Use visitors in
+ migrate_params_test_apply
+Message-ID: <aJ47kLZWhma1aOzw@x1.local>
+References: <20250630195913.28033-1-farosas@suse.de>
+ <20250630195913.28033-15-farosas@suse.de>
+ <aJzv8hm87PVIOSLj@x1.local> <871ppe0wja.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xbqqss2yshtjkew5cirlp2bx3dkumxg3grwpduol5ucpx3leqq@irqeo2csi2vg>
+In-Reply-To: <871ppe0wja.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -112,43 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 14, 2025 at 05:42:23PM +0200, Juraj Marcin wrote:
-> Fair point, I'll then continue with the PING/PONG solution, the first
-> implementation I have seems to be working to resolve Issue 1.
+On Thu, Aug 14, 2025 at 12:10:01PM -0300, Fabiano Rosas wrote:
+> > IIUC this is essential the trick we used to play before QAPI_CLONE, before
+> > commit a15fcc3cf69e.
+> >
+> > https://lore.kernel.org/all/1465490926-28625-15-git-send-email-eblake@redhat.com/
+> >
+> > Yes, looks similar..
+> >
+> > QAPI_CLONE_MEMBERS() will copy everything, which we do not want here. We
+> > only want to copy where has_* is set.  So it's indeed a sligntly different
+> > request versus the current clone API.
+> >
+> > IIUC that can be implemented using a similar qapi clone visitor, however
+> > instead of g_memdup() on the structs/lists first (or in the case of
+> > QAPI_CLONE_MEMBERS, we did *dst=*src), we lazy copy all the fields.
+> >
+> > I wished this is a generic API we could use.  I think it means we'll
+> > maintain this ourselves.  Maybe it's OK.
+> >
 > 
-> For rarer split brain, we'll rely on block device locks/mgmt to resolve
-> and change the failure handling, so it registers errors from disk
-> activation.
-> 
-> As tested, there should be no problems with the destination
-> transitioning to POSTCOPY_PAUSED, since the VM was not started yet.
-> 
-> However, to prevent the source side from transitioning to
-> POSTCOPY_PAUSED, I think adding a new state is still the best option.
-> 
-> I tried keeping the migration states as they are now and just rely on an
-> attribute of MigrationState if 3rd PONG was received, however, this
-> collides with (at least) migrate_pause tests, that are waiting for
-> POSTCOPY_ACTIVE, and then pause the migration triggering the source to
-> resume. We could maybe work around it by waiting for the 3rd pong
-> instead, but I am not sure if it is possible from tests, or by not
-> resuming if migrate_pause command is executed?
-> 
-> I also tried extending the span of the DEVICE state, but some functions
-> behave differently depending on if they are in postcopy or not, using
-> the migration_in_postcopy() function, but adding the DEVICE there isn't
-> working either. And treating the DEVICE state sometimes as postcopy and
-> sometimes as not seems just too messy, if it would even be possible.
+> I'm not sure how easy it is to provide a generic API for this. I don't
+> think there's much space for this code to change anyway, so is fine to
+> keep it in migration. I'll try to implement a
+> QAPI_CLONE_PRESENT_MEMBERS, let's see.
 
-Yeah, it might indeed be a bit messy.
-
-Is it possible to find a middle ground?  E.g. add postcopy-setup status,
-but without any new knob to enable it?  Just to describe the period of time
-where dest QEMU haven't started running but started loading device states.
-
-The hope is libvirt (which, AFAIU, always enables the "events" capability)
-can ignore the new postcopy-setup status transition, then maybe we can also
-introduce the postcopy-setup and make it always appear.
+The new visitor will slightly improve readability on what this code is
+doing. But yeah, feel free to choose whatever you see fit when repost (and
+if the code will be kept as-is, please consider adding some comments to
+help future readers).
 
 Thanks,
 
