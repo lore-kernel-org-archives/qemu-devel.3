@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DB58CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24A60CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXdZ-00030N-3B; Thu, 14 Aug 2025 09:04:58 -0400
+	id 1umXeC-0003hp-GM; Thu, 14 Aug 2025 09:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXcr-0002H2-Ay
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:15 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1umXd6-0002SA-13
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:28 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXcj-00059j-GZ
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:12 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-76e2ebe86ecso1164279b3a.3
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:04:04 -0700 (PDT)
+ id 1umXd1-0005DX-An
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:04:27 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-76e1fc69f86so1525288b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755176643; x=1755781443; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755176659; x=1755781459; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AlJgHJEmHUYZe6YiGfVDRPRDT1LVN/rOSO+BbVvbmBY=;
- b=ouu7aC72THOs+DwBpub2fCgKW55+N/ig/vNByebe1Hj1YfZ+cI9YOogLmqxS2jKLQJ
- 6ypOy1JWY2VOzBLY4dsdBniGz0iqG9g6j5E84vkaXwvl/qVjSCaaNsC1oKzJmDYFUmwn
- X8CFnQttZdxHYBrL245sZDxYTjb4S5teIwpDWlwgGV1nYcyHJLo7smHg9dkR8crGbFUi
- INe8xCqwqMAJQ+jjAvi4fVuzMRCGx+vJdEYseJZCstKoMc8qBuvqFpS9vndAOTNtl8f6
- k6RmlYfJwv+3NAaxlftSbI+dKTlUr45IREs8C1G2LyeeMfWh4+Ufh9fTEfo7cVBnqI98
- NzUQ==
+ bh=ry0ZsXjHszKipidyoRWNoHHhZAabsET+1FA/mv45g1c=;
+ b=PL8v9ZUCMtpYMeclbrcetE3gygjgd2cxLLttp45cdTW/mBYoM+lSrEPOULPDgSXXu8
+ dZDCtBcKmCNZoEtJrKingU7vrgXs5SKN6z1gF52t+J08ZItfh73VBXakBWYc4tUxPv0a
+ FvObcCLVrbibeYglYmDp3vD3KFRzL6Ff5KDnPpaUEQxGRpmkSMK5C+giiG3jq9Tf18ag
+ vQjC7ybwHwGw1E11cqmQ9w1Xqe7WBBPKqZIbB308ylKjUwX6Huaz6wdZdJK33M0Be+6W
+ 8HyOHlltF2KNHWEuO+IKDIy2a4UsE6U04zN7upOxOlWLJmlEiZQD6QCbWz8EgDmYS9SU
+ d8ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755176643; x=1755781443;
+ d=1e100.net; s=20230601; t=1755176659; x=1755781459;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AlJgHJEmHUYZe6YiGfVDRPRDT1LVN/rOSO+BbVvbmBY=;
- b=re/vozfIFVhO6IGLVWznLdQens+bIjT3+xS5AWCmYp9V1W01McmgnBtpW2fBlB4xbt
- iSU6x8+JkCsDCf3G4rEwVrvclbxHW9LpUKx+BGTTgWl0TYQicOLH52iwC6B0ARJO58uY
- fRv5vy3kfAZ+agDLLG3icYl8YtRf3CrU8SsLcjzp5P3MCsaR2XauEL2/h748XGJqsekK
- wjV9kDuuy3wRcif/Y+i9WxBADK2/nYUQULgDfF1vPLkCiK3Q/vE45ESZwwi/E27cXLvt
- oFrMKIDZJOulrXXaXjVSUSa2FizPFXMvNd8MlQs95kbeNS9nja+cZSE7fLXWi8j09GMw
- K1ng==
-X-Gm-Message-State: AOJu0Yzw+jiBiCSeAyKFXfOaFBa0yTkCMMS5XOdFXH63Udx25qKjNXEg
- Rte1BQ8bB/c6Oh9K3M1DvWNG7In+VBSrDVs1g3ylIhZkmVIjkf2B/6kAmla4ACX1NkoSA/MLHLg
- sUmAXMx0=
-X-Gm-Gg: ASbGncv5kt6q5QJDmvlr1m7tqnAjkK/i+TKWEIvel3p/O3TPT3Tqdxr3DS3uhC95DUR
- TPXuRXR+gLrEivI6WcBxLIo1t5yZ7o7LmCVls9un2rziaetFDVbA5V44PSo+eTN8ylc5tPtddg6
- kXrEDkmnlVKzhCUaAduJScjISdSvma+20glZkwm7e7jAyLw0JAwu3hq9T1/6nAkNtyHrxMHE8f2
- deFryqLRD99RiMPdMOibOibajtkYrGXItbRhq65WPnBPZfqePIZnwqSPVY3BqMOPA87KG5uYgP0
- 7ApV22kMDhZ7zOECBqUF14edL894i6C/1qg4QtmBfnyDmaEsYol42XTPnHxX3sWFhyC0qEdCvmd
- hB4+gST5dwDEcZkf+1cx+jwclMkSVCeK6+fbm2LqkYHCuW0U=
-X-Google-Smtp-Source: AGHT+IHdz9z1AZIeiDbiBCSmPdmb0jtoHHdcEc3qz3/8wn3c7fQHIDhM8/3vpLiahSc5ynZHBl5SCw==
-X-Received: by 2002:a05:6a20:939e:b0:23f:f96c:1197 with SMTP id
- adf61e73a8af0-240bd23bd4cmr5262022637.24.1755176643328; 
- Thu, 14 Aug 2025 06:04:03 -0700 (PDT)
+ bh=ry0ZsXjHszKipidyoRWNoHHhZAabsET+1FA/mv45g1c=;
+ b=rLUEdh7DqBpayW5Ak3rTBQHVuhvC3/iayp1DUyhjk2wYuZ6bpVDRxyNZ0VW2Qowtab
+ yUsYVlTh9T4Yy/Xxp3Ai4g/mXfsNO4AentQynJFYk0QD7YEkjP8D9aX9S165RU5HmEG1
+ q45Qb5u3FiCZ0AXk+NyWn34znpDK44ssgH30cacNKKub9J5f2Ba6UV+pU3AyowM03icL
+ i7ft1gkrWhFbeBzgmSzm0O8L7+KxyqvTE4XXO0/QHWVwFYSr8Tl2ouYbWaBudbqyG1Rc
+ xKgSQxNTBRefGXN7EuYbDxTaSqPuUfGc/1ht7MNwkaYawdVaicuuFbJBM9ok6Uv6p9Nk
+ M1Ig==
+X-Gm-Message-State: AOJu0Yz58w0iW8IwgovEApe1fYMMwJxxyyuVrsiTf26OXeOEAr2aYIJz
+ oRLr+zTfNtZsjYyPMIMGmAfaGjcJ7e/vNtuPEduV1yi267l3r4VAmSajC1BFpoBv0B0yDVUnLKO
+ J47SCs0o=
+X-Gm-Gg: ASbGnct6hmDPKUrOaq58us9xmBtgqSzuJyfBr43s7wlhOaiM4D+4Oxg+Rq7jVH4uAjP
+ qrqD4ixo8C+ZkrqYVYG5bVR4lwnjRRzFwqlanEqZuspIU3o0Wqh3d3V8nO5LW3pfL3FT0PLf2QD
+ SurEI8MgG8/bn08PvoPalXfwLwdsyNZK0/9P+rBwAYlizdpIrNVyn7hOCoKYX9/Wdq7fYWWrthQ
+ WAlQKXQAi/m+AaVaklp/D15BrTV/59VlGmsQfff7Dc0MlwTkGYpckNAIgRStzM3mUHCGrluSne0
+ QNGqmugklmezd78B9NnT3UYQMleMsbnKRHfpzRBPVzylSb0JiJOhTYiMyGWd7hTfArR+MwAzX7W
+ iQP4wsORBrC3IzU5LPV2vwxOfValHqYO9JyrefFaInFILWVo=
+X-Google-Smtp-Source: AGHT+IHcUiiGTiysj4DynzgleZ5bTP7cBa2fpAenTIDd1mKdI7UGnsVF2PmBzHEPTB7JGW7tEdHBjQ==
+X-Received: by 2002:a05:6a20:914d:b0:240:177:e820 with SMTP id
+ adf61e73a8af0-240bdfad251mr4230479637.13.1755176659166; 
+ Thu, 14 Aug 2025 06:04:19 -0700 (PDT)
 Received: from localhost.localdomain ([206.83.105.236])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.04.00
+ d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.04.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 06:04:02 -0700 (PDT)
+ Thu, 14 Aug 2025 06:04:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 54/85] target/arm: Introduce delay_exception{_el}
-Date: Thu, 14 Aug 2025 22:57:21 +1000
-Message-ID: <20250814125752.164107-55-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v3 59/85] target/arm: Implement GCSPUSHM
+Date: Thu, 14 Aug 2025 22:57:26 +1000
+Message-ID: <20250814125752.164107-60-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
 References: <20250814125752.164107-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,141 +100,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add infrastructure to raise an exception out of line.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate.h     | 20 +++++++++++++
- target/arm/tcg/translate-a64.c |  2 ++
- target/arm/tcg/translate.c     | 53 ++++++++++++++++++++++++++++++++++
- 3 files changed, 75 insertions(+)
+ target/arm/cpregs.h            |  3 +++
+ target/arm/cpregs-gcs.c        | 15 +++++++++++++++
+ target/arm/tcg/translate-a64.c | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 47 insertions(+)
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 1479f5bf74..a40cbd4479 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -21,9 +21,25 @@ typedef struct DisasLabel {
-     target_ulong pc_save;
- } DisasLabel;
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 15894332b2..93358e6123 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -46,6 +46,8 @@ enum {
+     ARM_CP_DC_ZVA                = 0x0005,
+     ARM_CP_DC_GVA                = 0x0006,
+     ARM_CP_DC_GZVA               = 0x0007,
++    /* Special: gcs instructions */
++    ARM_CP_GCSPUSHM              = 0x0008,
  
-+/*
-+ * Emit an exception call out of line.
-+ */
-+typedef struct DisasDelayException {
-+    struct DisasDelayException *next;
-+    TCGLabel *lab;
-+    target_long pc_curr;
-+    target_long pc_save;
-+    int condexec_mask;
-+    int condexec_cond;
-+    uint32_t excp;
-+    uint32_t syn;
-+    uint32_t target_el;
-+} DisasDelayException;
+     /* Flag: reads produce resetvalue; writes ignored. */
+     ARM_CP_CONST                 = 1 << 4,
+@@ -861,6 +863,7 @@ typedef enum FGTBit {
+     DO_BIT(HFGITR, DVPRCTX),
+     DO_BIT(HFGITR, CPPRCTX),
+     DO_BIT(HFGITR, DCCVAC),
++    DO_REV_BIT(HFGITR, NGCSPUSHM_EL1),
+     DO_BIT(HFGITR, ATS1E1A),
+ } FGTBit;
+ 
+diff --git a/target/arm/cpregs-gcs.c b/target/arm/cpregs-gcs.c
+index 1a64acd584..d17c17dcb7 100644
+--- a/target/arm/cpregs-gcs.c
++++ b/target/arm/cpregs-gcs.c
+@@ -43,6 +43,16 @@ static void gcspr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     raw_write(env, ri, value & ~7);
+ }
+ 
++static CPAccessResult access_gcspushm(CPUARMState *env, const ARMCPRegInfo *ri,
++                                      bool isread)
++{
++    int el = arm_current_el(env);
++    if (!(env->cp15.gcscr_el[el] & GCSCR_PUSHMEN)) {
++        return CP_ACCESS_TRAP_BIT | (el ? el : 1);
++    }
++    return CP_ACCESS_OK;
++}
 +
- typedef struct DisasContext {
-     DisasContextBase base;
-     const ARMISARegisters *isar;
-+    DisasDelayException *delay_excp_list;
+ static const ARMCPRegInfo gcs_reginfo[] = {
+     { .name = "GCSCRE0_EL1", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 5, .opc2 = 2,
+@@ -81,6 +91,11 @@ static const ARMCPRegInfo gcs_reginfo[] = {
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 5, .opc2 = 1,
+       .access = PL3_RW, .writefn = gcspr_write,
+       .fieldoffset = offsetof(CPUARMState, cp15.gcspr_el[2]) },
++
++    { .name = "GCSPUSHM", .state = ARM_CP_STATE_AA64,
++      .opc0 = 1, .opc1 = 3, .crn = 7, .crm = 7, .opc2 = 0,
++      .access = PL0_W, .accessfn = access_gcspushm,
++      .fgt = FGT_NGCSPUSHM_EL1, .type = ARM_CP_GCSPUSHM },
+ };
  
-     /* The address of the current instruction being translated. */
-     target_ulong pc_curr;
-@@ -365,6 +381,10 @@ void gen_exception_insn_el(DisasContext *s, target_long pc_diff, int excp,
-                            uint32_t syn, uint32_t target_el);
- void gen_exception_insn(DisasContext *s, target_long pc_diff,
-                         int excp, uint32_t syn);
-+TCGLabel *delay_exception_el(DisasContext *s, int excp,
-+                             uint32_t syn, uint32_t target_el);
-+TCGLabel *delay_exception(DisasContext *s, int excp, uint32_t syn);
-+void emit_delayed_exceptions(DisasContext *s);
- 
- /* Return state of Alternate Half-precision flag, caller frees result */
- static inline TCGv_i32 get_ahp_flag(void)
+ void define_gcs_cpregs(ARMCPU *cpu)
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index eaeafdf138..d803c10ac7 100644
+index 45ff7bb0b2..39b91eac6d 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -10411,6 +10411,8 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-             break;
-         }
-     }
-+
-+    emit_delayed_exceptions(dc);
- }
+@@ -26,6 +26,7 @@
+ #include "cpregs.h"
  
- const TranslatorOps aarch64_translator_ops = {
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index f7d6d8ce19..c4dd3a747c 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -1090,6 +1090,57 @@ void gen_exception_insn(DisasContext *s, target_long pc_diff,
-     s->base.is_jmp = DISAS_NORETURN;
- }
+ static TCGv_i64 cpu_X[32];
++static TCGv_i64 cpu_gcspr[32];
+ static TCGv_i64 cpu_pc;
  
-+TCGLabel *delay_exception_el(DisasContext *s, int excp,
-+                             uint32_t syn, uint32_t target_el)
-+{
-+    /* Use tcg_malloc for automatic release on longjmp out of translation. */
-+    DisasDelayException *e = tcg_malloc(sizeof(DisasDelayException));
-+
-+    memset(e, 0, sizeof(*e));
-+
-+    /* Save enough of the current state to satisfy gen_exception_insn. */
-+    e->pc_curr = s->pc_curr;
-+    e->pc_save = s->pc_save;
-+    if (!s->aarch64) {
-+        e->condexec_cond = s->condexec_cond;
-+        e->condexec_mask = s->condexec_mask;
-+    }
-+
-+    e->excp = excp;
-+    e->syn = syn;
-+    e->target_el = target_el;
-+
-+    e->next = s->delay_excp_list;
-+    s->delay_excp_list = e;
-+
-+    e->lab = gen_new_label();
-+    return e->lab;
-+}
-+
-+TCGLabel *delay_exception(DisasContext *s, int excp, uint32_t syn)
-+{
-+    return delay_exception_el(s, excp, syn, 0);
-+}
-+
-+void emit_delayed_exceptions(DisasContext *s)
-+{
-+    for (DisasDelayException *e = s->delay_excp_list; e ; e = e->next) {
-+        gen_set_label(e->lab);
-+
-+        /* Restore the insn state to satisfy gen_exception_insn. */
-+        s->pc_curr = e->pc_curr;
-+        s->pc_save = e->pc_save;
-+        s->condexec_cond = e->condexec_cond;
-+        s->condexec_mask = e->condexec_mask;
-+
-+        if (e->target_el) {
-+            gen_exception_insn_el(s, 0, e->excp, e->syn, e->target_el);
-+        } else {
-+            gen_exception_insn(s, 0, e->excp, e->syn);
-+        }
-+    }
-+}
-+
- static void gen_exception_bkpt_insn(DisasContext *s, uint32_t syn)
+ /* Load/store exclusive handling */
+@@ -77,6 +78,10 @@ static int scale_by_log2_tag_granule(DisasContext *s, int x)
+ /* initialize TCG globals.  */
+ void a64_translate_init(void)
  {
-     gen_set_condexec(s);
-@@ -8107,6 +8158,8 @@ static void arm_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-             gen_goto_tb(dc, 1, curr_insn_len(dc));
-         }
-     }
++    static const char gcspr_names[4][12] = {
++        "gcspr_el0", "gcspr_el1", "gcspr_el2", "gcspr_el3"
++    };
 +
-+    emit_delayed_exceptions(dc);
+     int i;
+ 
+     cpu_pc = tcg_global_mem_new_i64(tcg_env,
+@@ -90,6 +95,13 @@ void a64_translate_init(void)
+ 
+     cpu_exclusive_high = tcg_global_mem_new_i64(tcg_env,
+         offsetof(CPUARMState, exclusive_high), "exclusive_high");
++
++    for (i = 0; i < 4; i++) {
++        cpu_gcspr[i] =
++            tcg_global_mem_new_i64(tcg_env,
++                                   offsetof(CPUARMState, cp15.gcspr_el[i]),
++                                   gcspr_names[i]);
++    }
  }
  
- static const TranslatorOps arm_translator_ops = {
+ /*
+@@ -420,6 +432,18 @@ static MemOp check_ordered_align(DisasContext *s, int rn, int imm,
+     return finalize_memop(s, mop);
+ }
+ 
++static void gen_add_gcs_record(DisasContext *s, TCGv_i64 value)
++{
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv_i64 gcspr = cpu_gcspr[s->current_el];
++    int mmuidx = core_gcs_mem_index(s->mmu_idx);
++    MemOp mop = finalize_memop(s, MO_64 | MO_ALIGN);
++
++    tcg_gen_addi_i64(addr, gcspr, -8);
++    tcg_gen_qemu_st_i64(value, clean_data_tbi(s, addr), mmuidx, mop);
++    tcg_gen_mov_i64(gcspr, addr);
++}
++
+ typedef struct DisasCompare64 {
+     TCGCond cond;
+     TCGv_i64 value;
+@@ -2765,6 +2789,11 @@ static void handle_sys(DisasContext *s, bool isread,
+             }
+         }
+         return;
++    case ARM_CP_GCSPUSHM:
++        if (s->gcs_en) {
++            gen_add_gcs_record(s, cpu_reg(s, rt));
++        }
++        return;
+     default:
+         g_assert_not_reached();
+     }
 -- 
 2.43.0
 
