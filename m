@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E62ACA0ED1
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 06:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC9BCA0ED1
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 06:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umREl-0001z3-Jn; Thu, 14 Aug 2025 02:14:56 -0400
+	id 1umRNq-0005Iv-4B; Thu, 14 Aug 2025 02:24:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1umREh-0001yG-Fm; Thu, 14 Aug 2025 02:14:51 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1umRNo-0005Ie-97
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 02:24:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1umREd-0004Uf-6A; Thu, 14 Aug 2025 02:14:50 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1umRNk-0005fM-Lw
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 02:24:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5EB11143806;
- Thu, 14 Aug 2025 09:14:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A3D2F143812;
+ Thu, 14 Aug 2025 09:23:57 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id ACEC8260B70;
- Thu, 14 Aug 2025 09:14:28 +0300 (MSK)
-Message-ID: <bbd826d3-fa8e-49cb-becc-ebc66955264f@tls.msk.ru>
-Date: Thu, 14 Aug 2025 09:14:28 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id F23EF260B7A;
+ Thu, 14 Aug 2025 09:24:00 +0300 (MSK)
+Message-ID: <be12d3b1-6cbf-48fd-8266-4425dc1cfb43@tls.msk.ru>
+Date: Thu, 14 Aug 2025 09:24:00 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/4] Uefi 20250812 patches
-To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
-References: <20250812100111.1520917-1-kraxel@redhat.com>
+Subject: Re: [ANNOUNCE] QEMU 10.1.0-rc3 is now available
+To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+References: <175511889543.3775407.17880470159729384156@amd.com>
 Content-Language: en-US, ru-RU
-Cc: qemu-stable <qemu-stable@nongnu.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
@@ -77,7 +77,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250812100111.1520917-1-kraxel@redhat.com>
+In-Reply-To: <175511889543.3775407.17880470159729384156@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -103,22 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.08.2025 13:01, Gerd Hoffmann wrote:
+On 14.08.2025 00:01, Michael Roth wrote:
+> Hello,
+> 
+> On behalf of the QEMU Team, I'd like to announce the availability of the
+> fourth release candidate for the QEMU 10.1 release. This release is meant
+> for testing purposes and should not be used in a production environment.
+> 
+>    http://download.qemu.org/qemu-10.1.0-rc3.tar.xz
+>    http://download.qemu.org/qemu-10.1.0-rc3.tar.xz.sig
 
-> hw/uefi: last-minute bug fixes for the uefi variable store [for 10.1]
-> 
-> ----------------------------------------------------------------
-> 
-> Gerd Hoffmann (3):
->    hw/uefi: return success for notifications
->    hw/uefi: check access for first variable
->    hw/uefi: open json file in binary mode
-> 
-> Mauro Matteo Cascella (1):
->    hw/uefi: clear uefi-vars buffer in uefi_vars_write callback
+Hi Michael!
 
-I'm picking this whole lot to stable-10.0 branch as well.
-Please let me know if I shouldn't.
+This file (qemu-10.1.0-rc3.tar.xz) is incomplete - xz does not
+uncompress it.  But the signature is ok.  Something went wrong
+in the release process.
+
+The .bz2 one seems to be okay though.
+
+If there's some error checking missing (like we don't check for
+errors from tar - which might as well be the case in make-release.sh),
+we can fix it.. But if it were make-release.sh, it'd fail earlier
+and bz2 were bad too.
+
+How do you make the releases?
 
 Thanks,
 
