@@ -4,60 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A90DFCA0ED1
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 09:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10EC6CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 09:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umUJ8-0005hc-Km; Thu, 14 Aug 2025 05:31:39 -0400
+	id 1umUWn-0008T4-FT; Thu, 14 Aug 2025 05:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1umUJ0-0005fC-9S
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 05:31:30 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ id 1umUWT-0008PH-GL
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 05:45:25 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1umUIw-0005cm-3J
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 05:31:30 -0400
+ id 1umUWQ-0007qM-4j
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 05:45:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1755163886; x=1786699886;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=yzIv7cwvl1h1a/yjaMmqlXDHmUv8r3RwUYDOXEzx164=;
- b=PbltGF3RxdGIvk/DXp8lANEzstN403HnoS3N7ins1oNL6xoZmvYYFyQD
- iFSFcK83dCinc0tkiG9RZUcyUP1u+LTuEv5VDnUo9asiTi/ufiNi7jqol
- xyfBSrVGqIPivAxtSueIt5oiFtVREMSbFinxba6p1Hf6y/jFX4RZWJpjy
- pF6jQsRaISOKRK2vn1VX/CYazvEFSIo7JgOZXX2IDpVggJ+PwYt9JPQ3P
- zkGVbLoH1ljadcm4XQHXtmRnqPDvHbOeKE+KoIoxTTKZdXVL7mQPu2suc
- Zm9VmO/Mv7AORyqzGgTEsIVuhJlMNtsssh5jzRdWGtlIe6h7uhe/7/jnH w==;
-X-CSE-ConnectionGUID: jcphP1XTQoWr4oWGnPfETQ==
-X-CSE-MsgGUID: aHzDwDjXRs60xOLAEo6J4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11520"; a="80051540"
-X-IronPort-AV: E=Sophos;i="6.17,287,1747724400"; d="scan'208";a="80051540"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Aug 2025 02:31:22 -0700
-X-CSE-ConnectionGUID: H7aSUVi4SKGbB820VqDinw==
-X-CSE-MsgGUID: gCXg0xkQQNGCDxwP6Qw+6g==
+ t=1755164722; x=1786700722;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=1lE5dlS6y19eRj9nrgov7ltMSa/n7xbClcD8csxw44E=;
+ b=jOJEgPi3LUE9096JJB2m4vOSmjjNeG3ZldRabIByrUBqRN7aL/GZuCdU
+ JCOYqDVVYQwCCzOTmunbpisiC8souX/19WRX2/c9ygB/VUKoBdl9zmEYD
+ Jkil8XiXNVzQfsWCIBmcffE7GxM1lPwWFRuBh8WYN6TyimH5B7UhBf+lS
+ Us9h3u403/ePn8XvehmF82Ro4KjRIn/3n0jqPlm5CYYXLpbSi94djy31h
+ lBPdDp/hhx0EB9U9n3wJabDFSuE/K31d+AKLZO/G/8cKlNMujn9gcS9Wz
+ qLx/SgE2CJZ1Z3gEaMT+5Xscr/jNuWcJKpKU7OLJLfpKh08HSVmJ2snxJ Q==;
+X-CSE-ConnectionGUID: /RITMuvhQza9fswrpPuYZw==
+X-CSE-MsgGUID: HCuoKtGgSTyOxO0uoInNvQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11520"; a="56684657"
+X-IronPort-AV: E=Sophos;i="6.17,287,1747724400"; d="scan'208";a="56684657"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Aug 2025 02:45:18 -0700
+X-CSE-ConnectionGUID: AXtxbNQvTvmcKbsudZBBcg==
+X-CSE-MsgGUID: 8IVLkszuSZSo8U0mVOnc/w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,287,1747724400"; d="scan'208";a="167517411"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa010.fm.intel.com with ESMTP; 14 Aug 2025 02:30:50 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Vikrant Garg <vikrant1garg@gmail.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH] x86/loader: Don't update kernel header for CoCo VMs
-Date: Thu, 14 Aug 2025 17:21:11 +0800
-Message-ID: <20250814092111.2353598-1-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.43.0
+X-IronPort-AV: E=Sophos;i="6.17,287,1747724400"; d="scan'208";a="171952371"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Aug 2025 02:45:17 -0700
+Message-ID: <f38c961d-9c5a-4e45-a42e-fbafb7e5e88b@intel.com>
+Date: Thu, 14 Aug 2025 17:45:14 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=xiaoyao.li@intel.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hostmem/shm: Allow shm memory backend serve as shared
+ memory for coco-VMs
+To: David Hildenbrand <david@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>
+References: <20250721065220.895606-1-xiaoyao.li@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250721065220.895606-1-xiaoyao.li@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -82,34 +87,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the header makes it different from the original kernel that user
-provides via "-kernel", which leads to a different hash and breaks the
-attestation, e.g., for TDX.
+On 7/21/2025 2:52 PM, Xiaoyao Li wrote:
+> shm can surely serve as the shared memory for coco-VMs. But currently it
+> doesn't check the backend->guest_memfd to pass down the RAM_GUEST_MEMFD
+> flag. It leads to failure when creating coco-VMs (e.g., TDX guest) which
+> require private mmeory.
+> 
+> Set and pass down RAM_GUEST_MEMFD when backend->guest_memfd is true, to
+> allow shm memory backend serve as shared memory for coco-VMs.
 
-We already skip it for SEV VMs. Instead of adding another check of
-is_tdx_vm() to cover the TDX case, check machine->cgs to cover all the
-confidential computing case for x86.
+ping...
 
-Reported-by: Vikrant Garg <vikrant1garg@gmail.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
- hw/i386/x86-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Paolo, will you merge it for QEMU 10.1? I think it's worth it.
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index b1b5f11e7396..7512be64d67b 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -952,7 +952,7 @@ void x86_load_linux(X86MachineState *x86ms,
-      * kernel on the other side of the fw_cfg interface matches the hash of the
-      * file the user passed in.
-      */
--    if (!sev_enabled() && protocol > 0) {
-+    if (!MACHINE(x86ms)->cgs && protocol > 0) {
-         memcpy(setup, header, MIN(sizeof(header), setup_size));
-     }
- 
--- 
-2.43.0
+> cc: Stefano Garzarella <sgarzare@redhat.com>
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>   backends/hostmem-shm.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
+> index f66211a2ec92..806e2670e039 100644
+> --- a/backends/hostmem-shm.c
+> +++ b/backends/hostmem-shm.c
+> @@ -54,6 +54,7 @@ have_fd:
+>       /* Let's do the same as memory-backend-ram,share=on would do. */
+>       ram_flags = RAM_SHARED;
+>       ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
+> +    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+>   
+>       return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend),
+>                                                 backend_name, backend->size,
 
 
