@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E615CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 07:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D55CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 07:08:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umS3S-0007nE-9Y; Thu, 14 Aug 2025 03:07:18 -0400
+	id 1umS3H-0007kl-S3; Thu, 14 Aug 2025 03:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3N-0007mm-Ic
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:13 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3F-0007kI-4c
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:05 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3L-000441-BF
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:13 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45a1b05d252so3490185e9.1
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 00:07:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1umS3C-00040m-LJ
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 03:07:04 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3b9e415a68eso279931f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 00:06:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755155226; x=1755760026; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755155217; x=1755760017; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i4y63sBgCu89vCOom/Py382syDpCGytaJlBl7QZatZ4=;
- b=ar2d1NrOJzQQTT6qNXYCvXRWO7bzqTo+3OwjL4joaDAzjVmu51NH49gjF0bhP+tqzO
- tm8sEiV8DXVD7mDBWgn1ZxEMUblf8uLfmhjrDS410J5N9xz5TcfXfygHtblyDKYz17rj
- kewrYbDHAPCWi/frzbLfEK4fKiaicpsZmjrG7dgVNx/R4VA1ngLrDedeExT4KK5CvRvf
- 2SNmqr10rDmCr2R5wLuUeyQwoQq5IZ9PaNW8pSFIzPjZjMhRPO9kL4eGQuwDaXWc2xES
- yOL1ALQ4rwY9CJoH44oBkIpjVq3vrn44guFykJDMv/+dadOOsTqvpJ+ucMPeixWyu+M/
- CRSQ==
+ bh=roJhrLABrYMM3hT1Qlu1BPFfo21rWtltlN3F1VmKs60=;
+ b=wfUIyUoTZY4Ch5ORw+aoEK0WjeZhJBJQAr3THji0Cz9VAjzWn27gUyD/2+SyHJCku5
+ Wsm8s/8++1nJEMNei5T5AM/6hJ7hlxHHGZTAtmSdjNtjiNBJj/LcQS9ZB24IaXcQUEDm
+ jWhi8dHyTD0sBGoOlSWOtT5sQoPnaQdPEnkLa3OgyM1Rc0pNsFi2PZB1VohCi4Gp2WZN
+ ozMkKUfyxmpcjU5oii/slQBoa5gLUA/4Shgx+kqnbqkUvYXdI5/4y58BKdhOGgyocDP0
+ LqFbyk1KnsRP9/xJes9cphO34+blGLjDblEN5l6Hv86TsbwjvB2Bfrp/d/ygWT8m8kmX
+ wn/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755155226; x=1755760026;
+ d=1e100.net; s=20230601; t=1755155217; x=1755760017;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i4y63sBgCu89vCOom/Py382syDpCGytaJlBl7QZatZ4=;
- b=FgzJHNKYzJWYtK1hk1Y6zbOoAcZh6LDnM3wn0BF7NYlD/TGt5t75Y7ZuplfKVPiqk9
- blzNkIVLEffIGgN7fLJaqSz5gzXiUr6QpzYJT2xn4cQyLhleFXxSQl9alU+z/kpr5fSv
- b5jzct49vzUOwwYPYYPk9WFv6wJGQyDYV6dp81xStPcAw/pO2j3yWO6BNDfL25N5M1WN
- 2aLNc4nLQX/Y40kcZLYovKUUaX1WcCvbgXfuhC7+voJFyLRllCkHlRhjw4XaqmUzhzu5
- jyE/KSQW8B2EAdSlk48JIY7zBXjrZAQzrrPnTQDV3WIDePtp7UCd+LPXdsN7MzYYaamV
- yLNw==
-X-Gm-Message-State: AOJu0Yy9JVhPRrGOaemiMcAvLSTLbwYzjdWP9rY93v5Qou9P8lkSVl1b
- 7L94qKgLDXfjBhIQJDC4fCjOyYvDqgeoQntRvtJHEVGpd682xqCZ22+jHGHILvS0s7iFS9BGQmZ
- eFJIa
-X-Gm-Gg: ASbGncvW2aaIwZuY1369NZ0ml3EGsVoGW2bhTHU7wvoRWFEBBwQWDHczwleY/rJWpWA
- LGvVx+2iWw3EAShgHaaPCnqT3QzBBgecp8WkftBqHbs06iqwoQ7N+ZdX/DUEJIjMpMZ4U7fVml9
- qhOP2JeJdQ5+ObdKGZaXYYCUx94FHmJujAXG216lvDip520p3EQTGlNwVR7IMFnkpefx0vOCGzc
- SeDWGKXy2I150HDY0tLUQwHtXyZc85TE0pZ4rwTQDJ1brR/44ci7GHcvpOGj3aMo6ZGjtqCwnm4
- KFhZ9RFEiADqi/L/sGToFtXoTMX5rb/Xz6z/aiVt3QnQpBipjtEP8wZ+oODPHZ3njZ4BUEHynVo
- 4BamFLQ18GtyAa2thfA3xZitHcp+f6Icc3L3LuWMzT0VJYiXjT/KNv+XeXZGWyerv1IpBLdNUN+
- DTTg==
-X-Google-Smtp-Source: AGHT+IFKXJIz5zcyL4jaE8iInG6mZfVeUvQpw491v8UPaUFnbdvUEQi/FZA/txeKOwoXC/O7r2xMFA==
-X-Received: by 2002:a05:600c:b95:b0:456:11cc:360d with SMTP id
- 5b1f17b1804b1-45a1b61b6a2mr12995335e9.9.1755155226162; 
- Thu, 14 Aug 2025 00:07:06 -0700 (PDT)
+ bh=roJhrLABrYMM3hT1Qlu1BPFfo21rWtltlN3F1VmKs60=;
+ b=LselyOmmNOmRxEP0tnDbPuC6Ne/aSwRweBG+wGB5nOmu4uKruvVVHBcLdmbHjL40Rx
+ K57k8Gst00KWDWCKRPssEGOcuhRJG3xE5im3O7QAoRsak3yXG4RRZlELmXO0baOt4kIr
+ pFUifpC1wJZQ+w0SocDhMXTs4Kt5rqu6SZ87m5jFBlQRyhgkUf/NrdFNstitNlr4n6Bp
+ RhCdWZxjTncFTa0UmjstioBMnrXucSZpjbtgl1z0DJ4/k8rR3iyy+L/RfbKVfsOWq1K7
+ n9u8zVMFL9Y1Spdljncql9FPqtWIfoJDzqhnD89ZILkaChtskCbY1Otq/5xleK+pdFcS
+ uAVg==
+X-Gm-Message-State: AOJu0YyhDW5kk1KGDKCZS9tqqmF87QF1gZsz5z3AFR/j0SXywgnIRM1Q
+ QkpDnh2phPsOwF/9G75a/F7wIuaGoAOjYr8roJnfsf4kWpB2dku7ePziOnayDCbzKpzACWMPZfd
+ Q+PRg
+X-Gm-Gg: ASbGncsKfnVWFWUvVL5ubcRqeelI5RMY9Puo5ZQNSPFQ4ybsymXQBYpY9G1/a37kwGy
+ k1sp/x2E0xlH53MGD3gfmxVTLPhcNZH5XGP+SIJSDjFyTR3jg9PIYh/knZFoZAqGrgoiFjNiA/T
+ LjPr+EoqmZVTtmiJBn78u5Is+WZGeMoMqe2MgZ3wQjy84oyru3yJ8oPbAu1FVCLq5LRlaqBjHvY
+ XAZNp3MMslYt3rGvAc14iheGoBRVpKxcBMdMNVyvhT+LFe/9NJ3fPmFoSR+Phjv3nLwWbK3+Y+N
+ ZyYOaYywdDWOojnM1DrR148P39C3DAfKpdE8Ucq+5Xo12MAlU4vny2v5jzC4MAt8opdNJlPgTLs
+ 01YrlCpUKE+VX0u0IsbY/MfXlNuXUmGFjnutYSfTHhPVDMhYmb4MUcuWoHqCa6+U/DlZiVxjU/v
+ 0yaQ==
+X-Google-Smtp-Source: AGHT+IHoYuta4w6XKVGSYZTDITw2WNNCDcU7iRZHrorEqnx0IgXHqhjuxm3hUq4zwvBY8zJfL2n3Fw==
+X-Received: by 2002:a05:6000:290d:b0:3a4:eb80:762d with SMTP id
+ ffacd0b85a97d-3b9edf7ddb4mr1504720f8f.56.1755155216707; 
+ Thu, 14 Aug 2025 00:06:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45a1c70cb83sm9638845e9.27.2025.08.14.00.07.05
+ ffacd0b85a97d-3b79c47c516sm50277956f8f.62.2025.08.14.00.06.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 14 Aug 2025 00:07:05 -0700 (PDT)
+ Thu, 14 Aug 2025 00:06:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-stable@nongnu.org, Justin Applegate <justink.applegate@gmail.com>
-Subject: [PATCH-for-10.1? 3/3] linux-user/mips: Select M14Kc CPU to run
- microMIPS binaries
-Date: Thu, 14 Aug 2025 09:06:50 +0200
-Message-ID: <20250814070650.78657-4-philmd@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH-for-10.1? 1/3] elf: Add EF_MIPS_ARCH_ASE definitions
+Date: Thu, 14 Aug 2025 09:06:48 +0200
+Message-ID: <20250814070650.78657-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250814070650.78657-1-philmd@linaro.org>
 References: <20250814070650.78657-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,31 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The M14Kc is our latest CPU supporting the microMIPS ASE.
+Include MIPS ASE ELF definitions from binutils:
+https://sourceware.org/git/?p=binutils-gdb.git;a=blob;f=include/elf/mips.h;h=4fc190f404d828ded84e621bfcece5fa9f9c23c8;hb=HEAD#l210
 
-Cc: qemu-stable@nongnu.org
-Fixes: 3c824109da0 ("target-mips: microMIPS ASE support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3054
-Reported-by: Justin Applegate <justink.applegate@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- linux-user/mips/target_elf.h | 3 +++
- 1 file changed, 3 insertions(+)
+ include/elf.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
-index cd8622ce283..d20c6080cc8 100644
---- a/linux-user/mips/target_elf.h
-+++ b/linux-user/mips/target_elf.h
-@@ -12,6 +12,9 @@ static inline const char *cpu_get_model(uint32_t eflags)
-     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_32R6) {
-         return "mips32r6-generic";
-     }
-+    if ((eflags & EF_MIPS_ARCH_ASE) == EF_MIPS_ARCH_ASE_MICROMIPS) {
-+        return "M14Kc";
-+    }
-     if ((eflags & EF_MIPS_ARCH_ASE) == EF_MIPS_ARCH_ASE_M16) {
-         return "74Kf";
-     }
+diff --git a/include/elf.h b/include/elf.h
+index e7259ec366f..bbfac055de4 100644
+--- a/include/elf.h
++++ b/include/elf.h
+@@ -56,6 +56,13 @@ typedef int64_t  Elf64_Sxword;
+ #define EF_MIPS_ARCH_32R6     0x90000000      /* MIPS32r6 code.  */
+ #define EF_MIPS_ARCH_64R6     0xa0000000      /* MIPS64r6 code.  */
+ 
++/* MIPS Architectural Extensions. */
++#define EF_MIPS_ARCH_ASE      0x0f000000
++
++#define EF_MIPS_ARCH_ASE_MICROMIPS 0x02000000
++#define EF_MIPS_ARCH_ASE_M16  0x04000000
++#define EF_MIPS_ARCH_ASE_MDMX 0x08000000
++
+ /* The ABI of a file. */
+ #define EF_MIPS_ABI_O32       0x00001000      /* O32 ABI.  */
+ #define EF_MIPS_ABI_O64       0x00002000      /* O32 extended for 64 bit.  */
 -- 
 2.49.0
 
