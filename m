@@ -4,99 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FA4CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 19:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5919ECA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 19:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umdHS-0005ot-Es; Thu, 14 Aug 2025 15:06:30 -0400
+	id 1umdZV-0000IE-KA; Thu, 14 Aug 2025 15:25:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdHP-0005ns-0T
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:06:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdZS-0000DT-KF
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:25:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdHM-0004jN-Of
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:06:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1umdZP-0000y7-Up
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 15:25:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755198382;
+ s=mimecast20190719; t=1755199500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uUL1Eo9mLwPqwkgmqo5zZ4C3h62UuS5naws4XvSgNGI=;
- b=KF8h++2utZz+OqCxPWuxXyfOhJRai3Eq6CHjc3xUR1lcDWiCLCF0svyP1I2yYUztXeXoat
- 4bcbPN/CR55G9LFJmoPPfmAQbEmo0K7LRu9SexszP+hQ+89BNvn07MyuYbBlFsaNbip9pX
- YGkePls/vegdh3/QH0Gntqq5+TD9Ryg=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fywHM0eSqmH3qGVIIfRHLgpyT8XlnnlYD1jBOq3gVBM=;
+ b=JMhIQ/hBk2IUSX6lL/4jIA0qyntGUBGDgLCgS2rmnBeVvJobXxRS7SBr6ICZKD0f+fj1BF
+ J5jPszSdws4cdQEcm4vJ3IENjkoW8YbrThs5HFpzveurJb7QLmGs0Aa2b9tkpZpEEN2mu6
+ rkt5u/QGzRrY1qqHBxSa9qNMgBXmmOg=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-302-wri46Wp0MVaK9L5ZWJWa6g-1; Thu, 14 Aug 2025 15:06:16 -0400
-X-MC-Unique: wri46Wp0MVaK9L5ZWJWa6g-1
-X-Mimecast-MFC-AGG-ID: wri46Wp0MVaK9L5ZWJWa6g_1755198375
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-e9321ed5e3eso1192942276.3
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 12:06:16 -0700 (PDT)
+ us-mta-447-G5Qc3hKWNE2KSn_fbJ8HTQ-1; Thu, 14 Aug 2025 15:24:59 -0400
+X-MC-Unique: G5Qc3hKWNE2KSn_fbJ8HTQ-1
+X-Mimecast-MFC-AGG-ID: G5Qc3hKWNE2KSn_fbJ8HTQ_1755199499
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-71d603b2fa1so17048587b3.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 12:24:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755198375; x=1755803175;
+ d=1e100.net; s=20230601; t=1755199499; x=1755804299;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uUL1Eo9mLwPqwkgmqo5zZ4C3h62UuS5naws4XvSgNGI=;
- b=Zcj9mXaKOe1l0f0Dcv7I72YwHSILkiN97MvTwUvP6Z65ZKFwNLQ+HrJME9+bgylYOp
- RNyI61IYKUldyEGdh9uIdXxD3rPpjsmEMN408ECJFNv92hkJPcQU2tCFZ+aHJ+q2p3PN
- 9Y1vgi36DUZ6U5Ptf3StJTqPb7UgExupW/VEtPe3kfqxqooPCZ8rYLQyAHz6B0tu0i1A
- WtlAEV7uiErkwh0BnCGCRrpde0HmaV1oXpGQnoMLRosNvYa2j/0SaoXQv0emhC6irjB9
- jlBjJAVk6RJJ5dYW8QLamhp9RRArx0G5/8E0nnYySVWssIwJloSziPxxwJ2fsI47GMAZ
- h9UA==
-X-Gm-Message-State: AOJu0YwIKaWsDb9uZfdc5PPz5/5TOfPNJLyvAYuGaSM7KPozv+dhebww
- LPoydWa3+6YosUT4Z/32cNqwGizmt4ot8zH9JQCFyA7kbePgOLceDMGzLtRiVPEUnzPASLCpvg4
- Pm22a6gjLKAbVHau6j4RSVdqjbEHXcg08wy7xtZAC7MHCNA7Z24XFbNDZ
-X-Gm-Gg: ASbGncvuEfPRvqSQIReL7Q0Ch+pGmdeVznwhlOwkwVVUK6hmViBPs3IDMH3vpXUUjcu
- 6cai7rKBfrZIFAnC8CvKYfP+iMroy6bT/Zfykb4xEtTbjpqhoFiH8EJtEsfdEmJF8Jw9LgrYXvG
- gu/eN3pwyjP5xeD3+e3crQ51Saeus0Dgwf9Qcdk9D744V+Z1oFme1/6VUlPlVmn+cXN6PrkUEv1
- K0XiEUt5mEuja/rvhhfwv5R89zIsEkvQrKMzSs/O6yO6nyCvuX8vmvtaHB4PqZLwGMU0b0rEIqm
- SROeH38tqNxGYSb648J8Ydps310NLekC
-X-Received: by 2002:a05:6902:5401:b0:e93:1316:449f with SMTP id
- 3f1490d57ef6-e931e620294mr5175088276.24.1755198375531; 
- Thu, 14 Aug 2025 12:06:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFWSylGlXB+4yX0jjnA5ldgXe6qTeXZTpRlSX1jx3VBlDy8OLCSinQsVjTQDRvFTbzBghOOA==
-X-Received: by 2002:a05:6902:5401:b0:e93:1316:449f with SMTP id
- 3f1490d57ef6-e931e620294mr5175050276.24.1755198375140; 
- Thu, 14 Aug 2025 12:06:15 -0700 (PDT)
+ bh=fywHM0eSqmH3qGVIIfRHLgpyT8XlnnlYD1jBOq3gVBM=;
+ b=ek6ykgmDm6jb8EIJVzXXUwCcwjBhn/eTlk0Jfav6Du96xvb7WrAC1pl/h7ER7oYxQZ
+ wlj0xzSkgMmyN2oOvFIgEEriWbz5Iy+eUBzj19leYShYTVdTB9A6qYRZH/t4Gj2jXHdR
+ yMbVgIc1b+7rYLLOpGA7qa9hMCh0k5wkWTdmw5h+mE/lZkZ+6nL/enTVvSpwmCpdXbis
+ 9aoFailQ+TEfo99z97kdrhhXcy+MZGLbdTeQ+hrJPtOS1KVwm5YZTLg8rPSUU2+iugtM
+ SsCsn46ilu7CEHZeLv8KIv1gVMw+/lCH9rHTWRXXL6NZN5a902pUZxRuFA2OcjdZ83UP
+ ptfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXiFtLXrZtDL2xfF5fYZD1O+3ROP2Kswrc3y6h+wl7vOkuRdBmswdSqmSgXXWoozUBGE6PTIPsFEwLK@nongnu.org
+X-Gm-Message-State: AOJu0YwjL7EUkCwv49p6X34jGOHkYPr6lf/P4mm3U0Gve0zF5OKN/PnZ
+ kl3MjMgO9NOMUMKVNNi7tLDuvb09vMWDf0AQXyXE5ef5edSidc4ktJoVCVxjIfprSC/Oz//RUFf
+ s/J9PeWvHCsGO+blxGbPyS6paeAM9DKWeKspjYP3tuNJRB7wGJQrJYnxT
+X-Gm-Gg: ASbGncuC486j51GcX3rXrLskxGnmbEBAKtZQi5qNW34pb3ZUuG4AxEQDQCvJ6VOrDTo
+ U2sjLMLr6Ee028JfPZmE6iNHPDOHChlBZ3NZm7urd76Mc0dfXBqheaMdAMNt3DgKuruYYfIBHxK
+ nJnsVmy9tvfeKr7gxqFwm6MkoS9TgHQv4HbTOM/HH2tCdmjJ4dZAalNY67z3qKSs/OzUwZDa9xP
+ 2Br6Cuap9xiNl/+A2ZHea/mW6o/z4McikHD/bRgcA+2vrlsNHvSdgJig7KixnWF/w+hRXczQMxl
+ Fnh9NZoy90LBD7l5xbL6ILQNHSbHbnEt
+X-Received: by 2002:a05:690c:6c8d:b0:71c:403d:421d with SMTP id
+ 00721157ae682-71e47962730mr1976157b3.24.1755199498695; 
+ Thu, 14 Aug 2025 12:24:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFfm/23QAl2GFoPog+BKFa9D+80FpJn+PYiNPDmcgMYav2TX1PPRCOh2wAwxBDaTmQfzt72ag==
+X-Received: by 2002:a05:690c:6c8d:b0:71c:403d:421d with SMTP id
+ 00721157ae682-71e47962730mr1975907b3.24.1755199498312; 
+ Thu, 14 Aug 2025 12:24:58 -0700 (PDT)
 Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-71d60fe17e2sm7960967b3.40.2025.08.14.12.06.11
+ 00721157ae682-71d60d4fb3bsm8134327b3.8.2025.08.14.12.24.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 12:06:14 -0700 (PDT)
-Date: Thu, 14 Aug 2025 15:05:59 -0400
+ Thu, 14 Aug 2025 12:24:57 -0700 (PDT)
+Date: Thu, 14 Aug 2025 15:24:44 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, mtosatti@redhat.com,
- richard.henderson@linaro.org, riku.voipio@iki.fi, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, david@redhat.com,
- jjherne@linux.ibm.com, shorne@gmail.com, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com,
- peter.maydell@linaro.org, agraf@csgraf.de, mads@ynddal.dk,
- mrolnik@gmail.com, deller@gmx.de, dirty@apple.com,
- rbolshakov@ddn.com, phil@philjordan.eu, reinoud@netbsd.org,
- sunilmut@microsoft.com, gaosong@loongson.cn, laurent@vivier.eu,
- edgar.iglesias@gmail.com, aurelien@aurel32.net,
- jiaxun.yang@flygoat.com, arikalo@gmail.com, chenhuacai@kernel.org,
- npiggin@gmail.com, rathc@linux.ibm.com, harshpb@linux.ibm.com,
- yoshinori.sato@nifty.com, iii@linux.ibm.com,
- mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com,
- qemu-s390x@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v4 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
- helpers and use them tree wide
-Message-ID: <aJ4zl2-wSq8pm-Q6@x1.local>
-References: <20250814160600.2327672-1-imammedo@redhat.com>
- <20250814160600.2327672-7-imammedo@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: Jiri Denemark <jdenemar@redhat.com>, qemu-devel@nongnu.org,
+ Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH 0/4] migration: Introduce postcopy-setup capability
+ and state
+Message-ID: <aJ43_JQct45mnVgV@x1.local>
+References: <20250807114922.1013286-1-jmarcin@redhat.com>
+ <aJoEJhJw-_rGVBbA@x1.local>
+ <xfzgjwld4ba7mymu3xhkxdwpeie7bbjnbei2xchkqncamktk3g@rbafrorlpvcv>
+ <aJzOo7P8aA64AfY_@x1.local>
+ <xbqqss2yshtjkew5cirlp2bx3dkumxg3grwpduol5ucpx3leqq@irqeo2csi2vg>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250814160600.2327672-7-imammedo@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <xbqqss2yshtjkew5cirlp2bx3dkumxg3grwpduol5ucpx3leqq@irqeo2csi2vg>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -121,15 +112,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 14, 2025 at 06:05:58PM +0200, Igor Mammedov wrote:
-> the helpers form load-acquire/store-release pair and use them to replace
-> open-coded checkers/setters consistently across the code, which
-> ensures that appropriate barriers are in place in case checks happen
-> outside of BQL.
+On Thu, Aug 14, 2025 at 05:42:23PM +0200, Juraj Marcin wrote:
+> Fair point, I'll then continue with the PING/PONG solution, the first
+> implementation I have seems to be working to resolve Issue 1.
 > 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> For rarer split brain, we'll rely on block device locks/mgmt to resolve
+> and change the failure handling, so it registers errors from disk
+> activation.
+> 
+> As tested, there should be no problems with the destination
+> transitioning to POSTCOPY_PAUSED, since the VM was not started yet.
+> 
+> However, to prevent the source side from transitioning to
+> POSTCOPY_PAUSED, I think adding a new state is still the best option.
+> 
+> I tried keeping the migration states as they are now and just rely on an
+> attribute of MigrationState if 3rd PONG was received, however, this
+> collides with (at least) migrate_pause tests, that are waiting for
+> POSTCOPY_ACTIVE, and then pause the migration triggering the source to
+> resume. We could maybe work around it by waiting for the 3rd pong
+> instead, but I am not sure if it is possible from tests, or by not
+> resuming if migrate_pause command is executed?
+> 
+> I also tried extending the span of the DEVICE state, but some functions
+> behave differently depending on if they are in postcopy or not, using
+> the migration_in_postcopy() function, but adding the DEVICE there isn't
+> working either. And treating the DEVICE state sometimes as postcopy and
+> sometimes as not seems just too messy, if it would even be possible.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Yeah, it might indeed be a bit messy.
+
+Is it possible to find a middle ground?  E.g. add postcopy-setup status,
+but without any new knob to enable it?  Just to describe the period of time
+where dest QEMU haven't started running but started loading device states.
+
+The hope is libvirt (which, AFAIU, always enables the "events" capability)
+can ignore the new postcopy-setup status transition, then maybe we can also
+introduce the postcopy-setup and make it always appear.
 
 Thanks,
 
