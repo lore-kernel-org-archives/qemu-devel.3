@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38D91CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37094CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXcF-0001Pg-3Y; Thu, 14 Aug 2025 09:03:35 -0400
+	id 1umXhS-00014u-CH; Thu, 14 Aug 2025 09:09:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXcC-0001Ce-2g
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:03:32 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1umXhD-0000jx-Gx
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:08:45 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXc5-00052q-L0
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:03:30 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-76e2ea79219so1116224b3a.2
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:03:25 -0700 (PDT)
+ id 1umXh6-0005x7-Mj
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:08:43 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b4717563599so693923a12.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755176601; x=1755781401; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755176912; x=1755781712; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ufhXOkFFiQ9xg40jDZ1CMA8qL889kDviEVXXcrUgfT0=;
- b=BUyUOkOPLXTJ3rY5Z/f5iGEb42YeZWbwOncEfoYcbYBcI0P++30m1tW2KJvyH0Gxv8
- Z/qKmHJIUW6oXXVrKf/P64i7Rnhq0chpdD5pxwZ4Vq2Kt5CbLNW7s6qqFE/7+RtstJ+P
- 0VG9Wv9b+ENEkCZ+iN5ha40yEglu5y9XOLF4ks1AlS0E6yzOGMryUvvFfVVbnCO/qVu7
- BoYKpdEE9nHKf2KsAHfIXJ0m+UnFojcgIM4j90cKrZ7zeboCLUyogpEDrY4oeFk7G3mF
- bZAiby0mqciWVknHzvq0DhsC9Co2PAAFCdNMTTnwP3R8O8PZdOkEg14eiHQZeigC3lr5
- fgSA==
+ bh=/Xz5ywrXRvUgKRNtpJyxz8fg1SwzzhmCjpXpAJaxAoA=;
+ b=LJ32U4ureI3Wb33fNOmeFtzovz99Q/CUhH6St/XgkUOdhhXCBgeuZk/fxzYE6ewUtv
+ c/SB/HvIWLQnPf5eLzNmTQNc+DjUnbo4A9jz3+RLkhb3RzPHFFiuTwYLAjmZId279wsy
+ cOBjrdvMo1CdI2JkQGBpkiSWVMPBizftCbCfhQLa4xDznV2O67HXah9xwvJEiL+vCNR4
+ qhV4m/Zc39frMcN/Fd3zyXDcv6mlssGd0mMKRV8KX7lut+FyrssyT+4W8eByU8NsmZIl
+ lj9rDxpXQhDPdEeSOw9kXEVlAPkde5UnexnGhKRax+sbuLod0KvJYz5E3x/3UEytSpYU
+ B53g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755176601; x=1755781401;
+ d=1e100.net; s=20230601; t=1755176912; x=1755781712;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ufhXOkFFiQ9xg40jDZ1CMA8qL889kDviEVXXcrUgfT0=;
- b=w1YExkvPaD+a95W3bueKOBRtcXJryHOLOQf5NJFbAGIncPBSgM6xs7fWBovQ8QROFl
- j9aAbEjnz+T1nh0zpD0Pio/aRdsGn9usH35dpOqOsfDuSBdqdYUqFDdsUINOtPW5USsO
- cCQPUMwSPxQzeAXBsk5Ext/ls4Ax/zDBDU1kj/kpFrshVvVkGF+aZaTLc59OZdZxPhER
- n+BAbNLxum4xp8I0rijr6X+jcjPld8iJbTT4joczH5yCLLyiNIcN1u7k1AUv3eYcDztI
- BeVUm+6Vcc0b84Hia3R2OkMZ8yHWbkkI0Q4vHJ6qwGRSUR1wGxPCCsZJCZNWeSRBq8Ls
- y/hw==
-X-Gm-Message-State: AOJu0YzUkjB8DSyrbkf7wxZXXcID0EQTVFUnrHd+AecF9wf/DrXZL6Hf
- 0GCuEz2ZVfsKzTj80rj1U5oZO6NlZWB07CjvzttKEge7Hr2JrAMsjGRuic3fFNpMRy+7dUnfij7
- voyG8LFg=
-X-Gm-Gg: ASbGncuX/vvoje6zugnzOhLkCJ5wTy/AtAGSw6FYjCu2DjtJYvaeWcPXYRIgBXMcuWP
- /M0pkFBUaGq4kQ+jX99Wp0l+MTfd6b9SYytxtM76qhIZkHxbutbwGZvUp8GLI6RKMyag/eHNI8i
- LDrCwWRd+pDSmf/Q1qDJuWELRxADgn/NSl+XtgZZab7F6oU/jYbwlLBTrjOtFiX+DBA0IK8D1nn
- jfIQuuC5KDi3JUTJW2BbQZvGk0KijDoaC2ZZ44VkQ1lVQSpVbBao184ArOc+P11kj6EJjq3Go9h
- lqWK/7/c0mLBnQslPBRduryiQBI075y4rN1PBkrMW/kskLoD0GmmMO4zK6IUkJkhrHvp6ammK+Z
- 4kQNEQQV1PrXWcQjFP7e410n3s4BS1QZOck7Tj/9COzi4U+s=
-X-Google-Smtp-Source: AGHT+IFmDrAyz88bKgSQd69skwtjmu65pDol5AX9IISn7CYdR34qURYraJqH1MtuX1XvsnU1COb+qg==
-X-Received: by 2002:a05:6a00:180e:b0:736:2a73:6756 with SMTP id
- d2e1a72fcca58-76e2fdcf721mr3909277b3a.21.1755176600777; 
- Thu, 14 Aug 2025 06:03:20 -0700 (PDT)
+ bh=/Xz5ywrXRvUgKRNtpJyxz8fg1SwzzhmCjpXpAJaxAoA=;
+ b=deEOKOo11vh+238uf6dD4d/APQ9RODe2ypLgNqohD7GQvoOJEXhSwCuGNp3Vww90fr
+ UVnkj3V5JuoKpEexC+X7lmmaBzMWpv1pV6yw0BVePoWmpT+cR8UCE9N8R9ve3ASnM9oE
+ V/VqB7W+h22LWiAXPX5/TfKqT5IFEPLSUHjfHdKEThey6Z62H+zcQQW/9uIjIlpt0jMs
+ 25hcoGa8A0x5paf01QnNjNAmxMUtIAuxlOX6MX3YhF0VLWkIiWCsBQLbfeZEvvo2oFlq
+ w77Twzij4a1zMRmqiZMEbXZX5yByHhWtDv41VT1giyhSBu7015yLm7gol3zwud4rZNBW
+ sHVA==
+X-Gm-Message-State: AOJu0YxFFTEncEDgNs4Nu/b1sk4n4JHigSOmfqNqr0QzKti0WTzInoDF
+ +l5YAPHmtHzl5rb81HKwZnnEcpedGSsxZ0F3v0qEZHkYNJiy8wiakJHm0uETezyZb5Q4fYg94Iu
+ Zv3rkS+Q=
+X-Gm-Gg: ASbGnct8Dk5rdQBXMTV1X63+RnV4l+r28d5j4vXnEX6TvgssVf3NGK06RdgfsAJ1XtV
+ ba7q0JnY6hOhWyqr3d88FVkJoASZlqnojkAOAFO+VYPZx6E2bZWWPHLuzoeQROhrkIRK/hHeR5r
+ AcaVsuGmIy5HnNE9SC7hyAYoeZto4educ1QdF71n7Kr4lhB6OgR40l4n2Ie3uk7AcS03NkXhmwn
+ hvt7EQ5CeuqktX4Bpe7Z0K/lbYyaCXMAVjsFO1c4T3HUZhQqD8M/aaKX8eoTvoS2yuGmXXZl4lB
+ 6YzYFO7uBhPuvPrqys0NSyhACztLnKMFb7ZQnQccDXAM6lRkjgkrdkruKAfTTGCP3G0XlEtRWkE
+ ERMcKqKiusrykDnN7xCeGVtZoPSM1Lcv0iAZUcyvA9BugxGQ=
+X-Google-Smtp-Source: AGHT+IH8wCgRgx1Gxdk7EVHy9Jg2RPrVCUOg3vltmvLYl/U/TpbZyCpBsGuNGBEXDGi1bMcyO7flzA==
+X-Received: by 2002:a17:903:228a:b0:242:9bbc:c775 with SMTP id
+ d9443c01a7336-2445871c7d3mr43166585ad.56.1755176911664; 
+ Thu, 14 Aug 2025 06:08:31 -0700 (PDT)
 Received: from localhost.localdomain ([206.83.105.236])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.03.17
+ d9443c01a7336-24304c2943asm64438335ad.30.2025.08.14.06.08.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 06:03:20 -0700 (PDT)
+ Thu, 14 Aug 2025 06:08:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 41/85] target/arm: Convert arm_mmu_idx_is_stage1_of_2 from
- switch to table
-Date: Thu, 14 Aug 2025 22:57:08 +1000
-Message-ID: <20250814125752.164107-42-richard.henderson@linaro.org>
+Subject: [PATCH v3 81/85] linux-user: Change exported get_elf_hwcap to
+ abi_ulong
+Date: Thu, 14 Aug 2025 22:57:48 +1000
+Message-ID: <20250814125752.164107-82-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
 References: <20250814125752.164107-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,94 +104,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+AArch64 is about to add the first 64-bit hwcap bit, so we
+have to expand the return type.  Since the only user
+assigns this to a abi_ulong, match that type.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h       | 19 -------------------
- target/arm/mmuidx-internal.h |  8 ++++++++
- target/arm/mmuidx.c          |  7 ++++---
- 3 files changed, 12 insertions(+), 22 deletions(-)
+ linux-user/loader.h  |  2 +-
+ linux-user/elfload.c | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index c6f3ae470b..4f99ec69f8 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1282,25 +1282,6 @@ ARMMMUIdx stage_1_mmu_idx(ARMMMUIdx mmu_idx);
- ARMMMUIdx arm_stage1_mmu_idx(CPUARMState *env);
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index e102e6f410..e1badd4393 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -99,7 +99,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src,
+ extern unsigned long guest_stack_size;
+ 
+ #if defined(TARGET_S390X) || defined(TARGET_AARCH64) || defined(TARGET_ARM)
+-uint32_t get_elf_hwcap(void);
++abi_ulong get_elf_hwcap(void);
+ const char *elf_hwcap_str(uint32_t bit);
  #endif
+ #if defined(TARGET_AARCH64) || defined(TARGET_ARM)
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index ea214105ff..d87d1a16e0 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -511,10 +511,10 @@ static bool init_guest_commpage(void)
+ #define ELF_HWCAP get_elf_hwcap()
+ #define ELF_HWCAP2 get_elf_hwcap2()
  
--/**
-- * arm_mmu_idx_is_stage1_of_2:
-- * @mmu_idx: The ARMMMUIdx to test
-- *
-- * Return true if @mmu_idx is a NOTLB mmu_idx that is the
-- * first stage of a two stage regime.
-- */
--static inline bool arm_mmu_idx_is_stage1_of_2(ARMMMUIdx mmu_idx)
--{
--    switch (mmu_idx) {
--    case ARMMMUIdx_Stage1_E0:
--    case ARMMMUIdx_Stage1_E1:
--    case ARMMMUIdx_Stage1_E1_PAN:
--        return true;
--    default:
--        return false;
--    }
--}
--
- static inline uint32_t aarch32_cpsr_valid_mask(uint64_t features,
-                                                const ARMISARegisters *id)
+-uint32_t get_elf_hwcap(void)
++abi_ulong get_elf_hwcap(void)
  {
-diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
-index 3e51c0f579..55fba4aae2 100644
---- a/target/arm/mmuidx-internal.h
-+++ b/target/arm/mmuidx-internal.h
-@@ -18,6 +18,7 @@ FIELD(MMUIDXINFO, RELVALID, 5, 1)
- FIELD(MMUIDXINFO, 2RANGES, 6, 1)
- FIELD(MMUIDXINFO, PAN, 7, 1)
- FIELD(MMUIDXINFO, USER, 8, 1)
-+FIELD(MMUIDXINFO, STAGE1, 9, 1)
+     ARMCPU *cpu = ARM_CPU(thread_cpu);
+-    uint32_t hwcaps = 0;
++    abi_ulong hwcaps = 0;
  
- extern const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8];
+     hwcaps |= ARM_HWCAP_ARM_SWP;
+     hwcaps |= ARM_HWCAP_ARM_HALF;
+@@ -841,10 +841,10 @@ enum {
+ #define GET_FEATURE_ID(feat, hwcap) \
+     do { if (cpu_isar_feature(feat, cpu)) { hwcaps |= hwcap; } } while (0)
  
-@@ -76,4 +77,11 @@ static inline bool regime_is_user(ARMMMUIdx idx)
-     return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, USER);
- }
+-uint32_t get_elf_hwcap(void)
++abi_ulong get_elf_hwcap(void)
+ {
+     ARMCPU *cpu = ARM_CPU(thread_cpu);
+-    uint32_t hwcaps = 0;
++    abi_ulong hwcaps = 0;
  
-+/* Return true if this mmu index is stage 1 of a 2-stage translation. */
-+static inline bool arm_mmu_idx_is_stage1_of_2(ARMMMUIdx idx)
-+{
-+    tcg_debug_assert(arm_mmuidx_is_valid(idx));
-+    return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, STAGE1);
-+}
-+
- #endif /* TARGET_ARM_MMUIDX_INTERNAL_H */
-diff --git a/target/arm/mmuidx.c b/target/arm/mmuidx.c
-index 1c1e062bfe..c5b43a5932 100644
---- a/target/arm/mmuidx.c
-+++ b/target/arm/mmuidx.c
-@@ -13,6 +13,7 @@
- #define R2     R_MMUIDXINFO_2RANGES_MASK
- #define PAN    R_MMUIDXINFO_PAN_MASK
- #define USER   R_MMUIDXINFO_USER_MASK
-+#define S1     R_MMUIDXINFO_STAGE1_MASK
+     hwcaps |= ARM_HWCAP_A64_FP;
+     hwcaps |= ARM_HWCAP_A64_ASIMD;
+@@ -1824,7 +1824,7 @@ static inline void init_thread(struct target_pt_regs *regs,
+ #define GET_FEATURE(_feat, _hwcap) \
+     do { if (s390_has_feat(_feat)) { hwcap |= _hwcap; } } while (0)
  
- const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+-uint32_t get_elf_hwcap(void)
++abi_ulong get_elf_hwcap(void)
+ {
      /*
-@@ -35,9 +36,9 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
-     [ARMMMUIdx_Stage2_S]        = REL(2),
-     [ARMMMUIdx_Stage2]          = REL(2),
- 
--    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | USER,
--    [ARMMMUIdx_Stage1_E1]       = REL(1) | R2,
--    [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | PAN,
-+    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | S1 | USER,
-+    [ARMMMUIdx_Stage1_E1]       = REL(1) | R2 | S1,
-+    [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | S1 | PAN,
- 
-     /*
-      * M-profile.
+      * Let's assume we always have esan3 and zarch.
 -- 
 2.43.0
 
