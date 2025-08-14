@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FA1CCA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0423CCA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXWy-0001A1-1B; Thu, 14 Aug 2025 08:58:08 -0400
+	id 1umXcC-0001HB-Tp; Thu, 14 Aug 2025 09:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1umXWu-00019r-CH
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:58:04 -0400
-Received: from p-west2-cluster4-host11-snip4-10.eps.apple.com ([57.103.69.141]
- helo=outbound.mr.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1umXWq-00045M-Dv
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:58:03 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
- 97F711800212; Thu, 14 Aug 2025 12:57:34 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=HNADxR8s6utf4HepPrVf3YVfoL+tnSikU2SoCAMdg6c=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=G4ijT7JK+SNLJlO033yfz9QhvC6JW57Noji1ZasNyvlYEPlGYn8NZgOGECv+xrOmZ5BT/kJGF8tiKywZX+FqwKippy2C69p2APwb9Y/w3sQsNW6iIMatqXTatx1W+xIdxcIoz2psJTLWQto4dF9qduVzYyYh5vvWhKQDHhaakB3Z8J3TbiOK7BZUve0D5uyXSxFb0Nrg0QZTcV45dFpgFUGVdEth2gD4tOl1/lMF92d6S1Izs0KgVVARrFJ1ko+29QWRf9yzcIg1FPIdJrqMXF/R8Wft41OMom8QA3vuDpWccwdeBePs6HXj8Pbb3fDsyLhsXNOxCHxLagznVLfOXQ==
-X-Client-IP: 212.60.126.184
-Received: from smtpclient.apple (mr-asmtp-me-k8s.p00.prod.me.com
- [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
- D2BAF18000A6; Thu, 14 Aug 2025 12:57:31 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH v6 04/13] hw/intc: Add hvf vGIC interrupt controller
- support
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250808070137.48716-5-mohamed@unpredictable.fr>
-Date: Thu, 14 Aug 2025 14:57:18 +0200
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
- Cameron Esfahani <dirty@apple.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <40259CA2-A38D-41C1-A726-5144FB9EA166@ynddal.dk>
-References: <20250808070137.48716-1-mohamed@unpredictable.fr>
- <20250808070137.48716-5-mohamed@unpredictable.fr>
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-X-Mailer: Apple Mail (2.3826.700.81)
-X-Proofpoint-GUID: Q69cHdScBdiRdeFfgLPgif6LY_VO_RjW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE0MDEwOCBTYWx0ZWRfX1x7hYDt4nmNi
- XEvr2JlGqD/E1Tl5gEKUmlmNrHjZkz4XKlLG7wIk4iLh/8l/XfjIPVoMOak4nLy9YpcDFfL0srb
- 81+gqnWHV2oIN6RU8A0QDX1wYMdLpb/mf4BhyBa+B0YOOaawkKNDMZ11RHmUtWdqj1k9zpMtqPY
- +oksTp1OINeevt35p/ZEgoQA8bBAOmsTtyjqo7cVmCWLYaLSKbLW8GcjDpNQPM2XyRJf4al7vLT
- 4EG1dmhuBkY9f1pvfoB5e87f3Bj2gf4HR5lCnx0szW9cBdgUfz2auyXrLokVEHeohFNND1VBg=
-X-Proofpoint-ORIG-GUID: Q69cHdScBdiRdeFfgLPgif6LY_VO_RjW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-13_02,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- bulkscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0 phishscore=0
- suspectscore=0 spamscore=0 clxscore=1030 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508140108
-Received-SPF: pass client-ip=57.103.69.141; envelope-from=mads@ynddal.dk;
- helo=outbound.mr.icloud.com
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1umXc9-000196-5J
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:03:29 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1umXc1-00051u-F2
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:03:28 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-76e2e88c6a6so863427b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:03:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755176597; x=1755781397; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+pIUQoqIgDqvDhrh04QrLTmJNySBZbca5o7+NnmcCMU=;
+ b=u9FM4XTHlW/SsDwTk6H2ECKaVd+GHWNHqumi/nbbSzEuKoiNKj6JW9HdWdcObGK1Zw
+ cb38RjE31zfiO832tybvNuqPIWOCIkSnKpohGcdTUw4O5IQcGoc3svnWjhiI4fGm1xtj
+ LefUT2Dfp1lbMthe6dxPWt/k7viU33kCzLJx0pyVduqXUjTHvRiGqXyCKZW6Ki0/YqRh
+ vPXKY6dvSpx8CUvySlhPRoA84u7kJE+zxhpET0wiNIpfE9nUI5rOo141zlNnh+4IP6BQ
+ Wc9omnIZU2k+SLChO3mWr+X9m/vyYcbWxIssiBqXhTLZQSn1Imv2JYkrI3OWRm89UnDQ
+ kzxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755176597; x=1755781397;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+pIUQoqIgDqvDhrh04QrLTmJNySBZbca5o7+NnmcCMU=;
+ b=DzHCxnAwJRuUIybls7UsihMLsizy/DiPIHoMxXJCt5FTso9MBpKS5zpqtik6OkPn4W
+ sMvp8/+t/64/2Vs9/7WZrzheeHGD9mhz+C9BivcHOe/vQNKk+P2z50qBLrhNrEKslBOZ
+ M/6rDsnj+bzfCEhDUwQdtBwpd75j4P0lkXN9t56D+X+J/5My30hn4oMIkn1RD+1FMFiA
+ YPvk2snjIYLfIwFMhH5DANeBJeOxx4ozAl5CeyXscz04iUSQA4CYfR7ARpKY3rzk29IC
+ Oo1OxxDc+SHxOqMV7laugZ5lMwCexUQCYSh9na5VA/rfsPB+JR5Zz4yaXS9a7XWAAju0
+ ezfw==
+X-Gm-Message-State: AOJu0YyPZsTEdxvD80MaIxK2RevDbjiEOwVaHIOWvjhinQSmnlLHQdrK
+ VngaHlVv/x20eSvT9sr2djQsarbkDIwDeA3yLJVqrm+89zDVfqNwwD5k03wJULnlZdNL+UhxwZL
+ rIrbPNJM=
+X-Gm-Gg: ASbGncunlneis7iJ8TpLjCND8JX3PjqS7jQhhzCRM/TcS/d3bXEV0lh+BAU/z0wiygy
+ VodeqFtgD2Vdvnn2XvrHJ4P2/mkmpsPG8AZfp9ODt+z9jMzkzXZIGeFMwDa1mJAzNFcWBTKr3hf
+ J55Pz3bPhSRg9A/nZgc9ggBHUa5JIwp6PwJmDHXKF3DvUoVWGpTpASRBta50lmUlcV9Vr7vuKC2
+ Gkck9QrXMTJjHCpD+bWriCdqxpspm4Yc/xtKcRARwhs0Q76b3Mo+m583ImxiK5zeGkgO0KwWm+v
+ QJOQOD82LGho2tTO3I/RPNUCTI+JPUO08gNFJPefwGpJ16WjzXBmgf8TOW2vWRzsjnBMQM4bmBq
+ LV1wiGqotsh2+HTgoHMFRHyjrA5rmvIcJ07po7U6Q2FvNBAE=
+X-Google-Smtp-Source: AGHT+IERID6z8JeVXdbJdrFkGDYo1qDrLz1HxbvTDZ6AFlzHYl+QLndd1KLK9PP4ClqTHOH3ZFLVPw==
+X-Received: by 2002:a05:6a00:1a89:b0:76b:ed75:81a with SMTP id
+ d2e1a72fcca58-76e2fbe363cmr3510973b3a.5.1755176596922; 
+ Thu, 14 Aug 2025 06:03:16 -0700 (PDT)
+Received: from localhost.localdomain ([206.83.105.236])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.03.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Aug 2025 06:03:16 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 40/85] target/arm: Convert regime_is_user from switch to
+ table
+Date: Thu, 14 Aug 2025 22:57:07 +1000
+Message-ID: <20250814125752.164107-41-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
+References: <20250814125752.164107-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,27 +103,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/internals.h       | 17 -----------------
+ target/arm/mmuidx-internal.h | 12 ++++++++++++
+ target/arm/mmuidx.c          |  6 ++++--
+ 3 files changed, 16 insertions(+), 19 deletions(-)
 
-> +static void hvf_gicv3_put(GICv3State *s)
-> +{
-> +    uint32_t reg;
-> +    uint64_t redist_typer;
-> +    int ncpu, i;
-> +
-> +    hvf_gicv3_check(s);
-> +
-> +    hv_vcpu_t vcpu0 =3D s->cpu[0].cpu->accel->fd;
-> +    hv_gic_get_redistributor_reg(vcpu0, =
-HV_GIC_REDISTRIBUTOR_REG_GICR_TYPER
-> +        , &redist_typer);
-> +
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index ea210c7179..c6f3ae470b 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1034,23 +1034,6 @@ static inline bool regime_is_stage2(ARMMMUIdx mmu_idx)
+     return mmu_idx == ARMMMUIdx_Stage2 || mmu_idx == ARMMMUIdx_Stage2_S;
+ }
+ 
+-static inline bool regime_is_user(ARMMMUIdx mmu_idx)
+-{
+-    switch (mmu_idx) {
+-    case ARMMMUIdx_E10_0:
+-    case ARMMMUIdx_E20_0:
+-    case ARMMMUIdx_E30_0:
+-    case ARMMMUIdx_Stage1_E0:
+-    case ARMMMUIdx_MUser:
+-    case ARMMMUIdx_MSUser:
+-    case ARMMMUIdx_MUserNegPri:
+-    case ARMMMUIdx_MSUserNegPri:
+-        return true;
+-    default:
+-        return false;
+-    }
+-}
+-
+ /* Return the SCTLR value which controls this address translation regime */
+ static inline uint64_t regime_sctlr(CPUARMState *env, ARMMMUIdx mmu_idx)
+ {
+diff --git a/target/arm/mmuidx-internal.h b/target/arm/mmuidx-internal.h
+index 41baf1a003..3e51c0f579 100644
+--- a/target/arm/mmuidx-internal.h
++++ b/target/arm/mmuidx-internal.h
+@@ -17,6 +17,7 @@ FIELD(MMUIDXINFO, REL, 3, 2)
+ FIELD(MMUIDXINFO, RELVALID, 5, 1)
+ FIELD(MMUIDXINFO, 2RANGES, 6, 1)
+ FIELD(MMUIDXINFO, PAN, 7, 1)
++FIELD(MMUIDXINFO, USER, 8, 1)
+ 
+ extern const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8];
+ 
+@@ -64,4 +65,15 @@ static inline bool regime_is_pan(ARMMMUIdx idx)
+     return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, PAN);
+ }
+ 
++/*
++ * Return true if the exception level associated with this mmu index is 0.
++ * Differs from arm_mmu_idx_to_el(idx) == 0 in that this allows querying
++ * Stage1 and Stage2 mmu indexes.
++ */
++static inline bool regime_is_user(ARMMMUIdx idx)
++{
++    tcg_debug_assert(arm_mmuidx_is_valid(idx));
++    return FIELD_EX32(arm_mmuidx_table[idx], MMUIDXINFO, USER);
++}
++
+ #endif /* TARGET_ARM_MMUIDX_INTERNAL_H */
+diff --git a/target/arm/mmuidx.c b/target/arm/mmuidx.c
+index 98db02b8e5..1c1e062bfe 100644
+--- a/target/arm/mmuidx.c
++++ b/target/arm/mmuidx.c
+@@ -7,10 +7,12 @@
+ #include "mmuidx-internal.h"
+ 
+ 
+-#define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK)
++#define EL(X)  ((X << R_MMUIDXINFO_EL_SHIFT) | R_MMUIDXINFO_ELVALID_MASK | \
++                ((X == 0) << R_MMUIDXINFO_USER_SHIFT))
+ #define REL(X) ((X << R_MMUIDXINFO_REL_SHIFT) | R_MMUIDXINFO_RELVALID_MASK)
+ #define R2     R_MMUIDXINFO_2RANGES_MASK
+ #define PAN    R_MMUIDXINFO_PAN_MASK
++#define USER   R_MMUIDXINFO_USER_MASK
+ 
+ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     /*
+@@ -33,7 +35,7 @@ const uint32_t arm_mmuidx_table[ARM_MMU_IDX_M + 8] = {
+     [ARMMMUIdx_Stage2_S]        = REL(2),
+     [ARMMMUIdx_Stage2]          = REL(2),
+ 
+-    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2,
++    [ARMMMUIdx_Stage1_E0]       = REL(1) | R2 | USER,
+     [ARMMMUIdx_Stage1_E1]       = REL(1) | R2,
+     [ARMMMUIdx_Stage1_E1_PAN]   = REL(1) | R2 | PAN,
+ 
+-- 
+2.43.0
 
-I think you should go through all your "hv_" calls and do error handling
-where it's possible, and if not, at least check it with assert_hvf_ok.
-This call to hv_gic_get_redistributor_reg is failing on my setup. I
-don't know if there could be others.
-
-I've configured my VM like this:
--machine virt,kernel-irqchip=3Don,its=3Doff
--boot menu=3Don,splash-time=3D0=
 
