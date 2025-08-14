@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E297ECA0EE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDD6CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Aug 2025 13:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umXY2-0001dG-W6; Thu, 14 Aug 2025 08:59:17 -0400
+	id 1umXek-0004V1-2W; Thu, 14 Aug 2025 09:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXXt-0001a6-OX
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:59:06 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1umXds-0003LD-AU
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:05:17 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umXXr-0004Ie-5u
- for qemu-devel@nongnu.org; Thu, 14 Aug 2025 08:59:05 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-24456f3f669so9876725ad.1
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 05:59:00 -0700 (PDT)
+ id 1umXdf-0005NO-QV
+ for qemu-devel@nongnu.org; Thu, 14 Aug 2025 09:05:16 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-76e2e8bb2e5so1141811b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 06:05:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755176339; x=1755781139; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755176699; x=1755781499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qRRS/gV/szOXu7puF9a2nCAqRylQ06iARqw+VOh+yuA=;
- b=vHDy5ow/CC+HMQjhna1u4+gZgzwxnZs6a4Yoz1tqP+qleVduYkxL3H5sG/6pHdvJtQ
- pU/Tm2sfxBGvav7sybGgaP+kVNKu279KbZLjaZBzgCD3eMhEZqEB1xYvxWvXjngidvZb
- GvyWWYFGXVMwbaLtXefh4CisMosXkrt+v0NJxDgJliNcCdwe7nkZRjbaLVHEakGNi9kr
- DolY9oMJSrKIiDfG5LmfIHmM4QRAwYwGlfXT54QOc2oRmndLFJIosrhDQXO9ZJvDyeqv
- cEyNiOuO+Y8mw+NyZywmBnVQ8mfCSqSu1p5SAI8NLi3O9GlxR2ev1NGLQivP/EkT760l
- k1UQ==
+ bh=52VfTzYDSgjyTkCxi2KMOJnfbsQ5A6/k4xx3za3L80c=;
+ b=ZhubJs+/BwZY0lumJQn1nYBtM6oFZcZw1e21YQxrqPynYS3xH+lF7arO5BrxUi0Exc
+ pok/qVjqrc5q57UrQE4Ye0lRtM0D806uPuZNC2isd3t+kFFZE38utXgd7M2GP8AyeFYd
+ twSLzlW78rJ7LqLqJywsRCYfZ5txIRB4OE15oW+uICyp7RvlezWh0rk7ct4yTrQiheFY
+ wIg0q2UEHlzldck6H/eQFzSh7Y7VCiiDuW03HWEdsJG6WCCW2VufvimFTnFcUNhBJWsg
+ 78Az97GpdYh5vQCVefeboaSzom/v3jp6AJeDMIgW/+8GVKhgYins1/0DCButtlniidJL
+ gtfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755176339; x=1755781139;
+ d=1e100.net; s=20230601; t=1755176699; x=1755781499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qRRS/gV/szOXu7puF9a2nCAqRylQ06iARqw+VOh+yuA=;
- b=E7UUSiDZ9R5g853OlaC7edLU9bmhJJFC21GsFAdbLm2mDE+7ynRAeJYOVqBYkarNTv
- x+pi4cA8Yq7pSNJ/U/ge9LtiyFoAluukR21SFYXaFWxqqpnKC6hor50q3Q5xLMa0IQHV
- N8J+pDW62UuoKEkQJZz3U6wWMoPV6sLb/JStEb4PCWVysVDfR2YRkpgxGRm1VUAFWKQS
- T1W1vpDUpsioHUZBQSvFM+aOG8cVN1ZPu3hkZeXrgYlMiCAEZUQrp+0XsYK8vpEPYb6Y
- 5Oy/XOohJ8l3RLpkulRcYxCXTyd0L5fmwOXtVxdjAAd7C64PXYMaTNfpFg36qCqUMZIm
- 075A==
-X-Gm-Message-State: AOJu0YyBillMbxhIAJTZIaOBp+Fkd3bDvIy1489Jo6tEYdnihQDo5oFn
- BEOhePYFj8uL6KF4A6SfzakTCY/BKCGo9oGfsh/FyzOaU1vxjfRRPMH818p9BEahvYAu3+YDvBD
- 6GRWfxq8=
-X-Gm-Gg: ASbGnct9bhp3R58SAWz5/0kZPIeY4M/9g+Cy0mNez+C5ciH0TubFH6mWaKT+n+Hx3KI
- xXkejlwNfsckorH5HPSz9sYOi7c3mtv+9/KFB5hETGoK5cV0ykg5XBQB7hQMYxF6WFWeTp6KcLO
- Wg7MBCbtih3QBZnHDuR5clrd1yynrBdqNR36iK5GzLn3dN6fFGK9RAsHqYm8jIjPG4JR5vfMjci
- d0qqi2tfhmd76Zkw7dj76u3wWC+E9ee14t3LlsLfXo7P9dP6Y05GEH3wWR1QNgg4ckwdtphisy7
- TY1DoZ2vcE9mZpeXTt+v/t9hUJI4+/+gzNwnSC3EtZ+ZkwGw91sJdMuJkIHvu5z/duUir+1GXGf
- Tkr6WC3GlbWn+r3U+ZBtvHPXpveqejAjQof5BL7PrIJTGG7I=
-X-Google-Smtp-Source: AGHT+IH/+tUVIaRxwAwWnYd269nYTRMP6TwFO0dpa4n+F/O0bDEX9Cg2IYQRZU0PJ/WQXdwEnqeaEA==
-X-Received: by 2002:a17:902:ecd2:b0:23f:fa47:f933 with SMTP id
- d9443c01a7336-244594c7a4amr40027455ad.8.1755176339131; 
- Thu, 14 Aug 2025 05:58:59 -0700 (PDT)
+ bh=52VfTzYDSgjyTkCxi2KMOJnfbsQ5A6/k4xx3za3L80c=;
+ b=byVgX+fSi46eyklVMOydu5Plovh97vo4qn3v5jx4avlnrui4foYwvIqH+cOiGnVpGX
+ zKlUwH1UQ8GAOMfzTBBiPqAFZXTLo2KnHhHWTRp1wBy/lxIdnvOkWABlgzU7mVdBi/NT
+ qQD9ta+pyv0QmHwS7J1T3aGMAGwLdC/G6QUaaxA/zkGMMOSIsn7gGXWVg/Cwgwx7Ne5d
+ pJgbnmp1jAMyUv4Z5TaY9smG+tBjiOzI8TXUosaDD9U8xEUUAnKwACav8b1DC46VhLl1
+ aMPRVZsl3H4uLs43xgze61iq6IqZFYSlz7/NdaVwvfBkl6e0jG+raoUHfG2AJap87z4M
+ LMfA==
+X-Gm-Message-State: AOJu0YwYLH3Jr4tEvAAhWmpMNPD5c7ofU7cF0n4sWm4+hoSrpJ0ZKqQA
+ uYpQdMBEELxEN70UR2DdYjraS5aUR/rnOOLDA2NkbXhXLw9nTuoZ+SYVY6FnpfgMSC+3zd3+6ok
+ S9Q8Ep6k=
+X-Gm-Gg: ASbGncvhkYv0LOjyeNqXXPinp7Xrku9KFwKbNzpv6h32GsROEXoDf4/qTTaOKZhPYwD
+ cO/IR24Y7NODSe9GYNjbOTheXpX+cryAk2atquGlpwEVpZeXW99guSStZvGMb+KoVCYKotuMmvO
+ m3Lrz/tsc66A3kLu3NVsLUl9x944VelkQWEQFjrmdSqY3NDuGD/3nrIEC/TPopX/8aumX+FGjkc
+ JMGXGU+Y9+RvzFdUD/XdqBdbGX/Bb3tmoPqwOF/CqDU+rNJVVRCs9TPybw90bqP4eZosRuQe0Yg
+ JTQJGBeaRDQOKNoE4S/AXdskizFUDA99mw0KoFDjU3hjMCoLpnLHq/iFvdxsl0vF0nApVxUMzI5
+ pfJq6O+ryf969745OjeHnJxYHsXx0iSvMe1Cnzgu3Ytend5I=
+X-Google-Smtp-Source: AGHT+IFYy6VeKxegeUXeSlAob6/MtLuOQ3HsrHHD3yLrNCg8ojehEmagSqWqjoHYpFGC42rI/oGmkA==
+X-Received: by 2002:a05:6a20:728e:b0:240:c3d:2449 with SMTP id
+ adf61e73a8af0-240bd2b465emr4986051637.42.1755176699035; 
+ Thu, 14 Aug 2025 06:04:59 -0700 (PDT)
 Received: from localhost.localdomain ([206.83.105.236])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3233100c994sm1766256a91.21.2025.08.14.05.58.56
+ d2e1a72fcca58-76bcce6f6fesm34480631b3a.26.2025.08.14.06.04.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Aug 2025 05:58:58 -0700 (PDT)
+ Thu, 14 Aug 2025 06:04:58 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 18/85] target/arm: Populate PIE in aa64_va_parameters
-Date: Thu, 14 Aug 2025 22:56:45 +1000
-Message-ID: <20250814125752.164107-19-richard.henderson@linaro.org>
+Subject: [PATCH v3 72/85] target/arm: Implement EXLOCK check during exception
+ return
+Date: Thu, 14 Aug 2025 22:57:39 +1000
+Message-ID: <20250814125752.164107-73-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250814125752.164107-1-richard.henderson@linaro.org>
 References: <20250814125752.164107-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,95 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Select the PIE bit for the translation regime.
-With PIE, the PTE layout changes, forcing HPD.
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h |  3 ++-
- target/arm/helper.c    | 19 ++++++++++++++++++-
- 2 files changed, 20 insertions(+), 2 deletions(-)
+ target/arm/tcg/helper-a64.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 0dd1b214c8..d5f501bb30 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1488,7 +1488,7 @@ static inline int arm_granule_bits(ARMGranuleSize gran)
- 
- /*
-  * Parameters of a given virtual address, as extracted from the
-- * translation control register (TCR) for a given regime.
-+ * translation controls for a given regime.
-  */
- typedef struct ARMVAParameters {
-     unsigned tsz    : 8;
-@@ -1503,6 +1503,7 @@ typedef struct ARMVAParameters {
-     bool ha         : 1;
-     bool hd         : 1;
-     ARMGranuleSize gran : 2;
-+    bool pie        : 1;
- } ARMVAParameters;
- 
- /**
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index a6130f7dcd..168557b08f 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9628,11 +9628,12 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-                                    bool el1_is_aa32)
- {
-     uint64_t tcr = regime_tcr(env, mmu_idx);
--    bool epd, hpd, tsz_oob, ds, ha, hd;
-+    bool epd, hpd, tsz_oob, ds, ha, hd, pie = false;
-     int select, tsz, tbi, max_tsz, min_tsz, ps, sh;
-     ARMGranuleSize gran;
-     ARMCPU *cpu = env_archcpu(env);
-     bool stage2 = regime_is_stage2(mmu_idx);
-+    int r_el = regime_el(env, mmu_idx);
- 
-     if (!regime_has_2_ranges(mmu_idx)) {
-         select = 0;
-@@ -9644,8 +9645,17 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-              * Thus disabling them makes things easier during ptw.
-              */
-             hpd = true;
-+            pie = extract64(tcr, 36, 1) && cpu_isar_feature(aa64_s2pie, cpu);
-         } else {
-             hpd = extract32(tcr, 24, 1);
-+            if (r_el == 3) {
-+                pie = (extract64(tcr, 35, 1)
-+                       && cpu_isar_feature(aa64_s1pie, cpu));
-+            } else {
-+                pie = ((env->cp15.tcr2_el[2] & TCR2_PIE)
-+                       && (!arm_feature(env, ARM_FEATURE_EL3)
-+                           || (env->cp15.scr_el3 & SCR_TCR2EN)));
-+            }
-         }
-         epd = false;
-         sh = extract32(tcr, 12, 2);
-@@ -9685,7 +9695,13 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-             regime_is_user(env, mmu_idx)) {
-             epd = true;
-         }
-+
-+        pie = ((env->cp15.tcr2_el[r_el] & TCR2_PIE)
-+               && (!arm_feature(env, ARM_FEATURE_EL3)
-+                   || (env->cp15.scr_el3 & SCR_TCR2EN))
-+               && (r_el == 2 || (arm_hcrx_el2_eff(env) & HCRX_TCR2EN)));
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index f61adf1f80..7ab7ddf7c4 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -694,6 +694,17 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+         goto illegal_return;
      }
-+    hpd |= pie;
  
-     gran = sanitize_gran_size(cpu, gran, stage2);
- 
-@@ -9764,6 +9780,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         .ha = ha,
-         .hd = ha && hd,
-         .gran = gran,
-+        .pie = pie,
-     };
- }
- 
++    /*
++     * If GetCurrentEXLOCKEN, the exception return path must use GCSPOPCX,
++     * which will set PSTATE.EXLOCK.  We need not explicitly check FEAT_GCS,
++     * because GCSCR_ELx cannot be set without it.
++     */
++    if (new_el == cur_el &&
++        (env->cp15.gcscr_el[cur_el] & GCSCR_EXLOCKEN) &&
++        !(env->pstate & PSTATE_EXLOCK)) {
++        goto illegal_return;
++    }
++
+     bql_lock();
+     arm_call_pre_el_change_hook(cpu);
+     bql_unlock();
 -- 
 2.43.0
 
