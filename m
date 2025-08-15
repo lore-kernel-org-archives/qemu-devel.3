@@ -4,91 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA46ECA0EE0
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 06:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD24CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 06:37:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umnrJ-0007qT-JW; Fri, 15 Aug 2025 02:24:13 -0400
+	id 1umo2z-0002PI-3Z; Fri, 15 Aug 2025 02:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umnrH-0007q9-Vq
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 02:24:12 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umnrG-00048v-7a
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 02:24:11 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-b472da8ff0eso91404a12.3
- for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 23:24:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755239048; x=1755843848; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FskWgedQMwIjQLSn2I4gWdMD5wPPB5Uw2SpTiRgRz/Y=;
- b=oeTbbL+a+wjmJiFMCEIDUsAf4zUm7moZFASNpIs99G6c9clmprGf6E5Ru05fnDH5kn
- uASiW7NW3Acntfoie+aNlMnMCcpCn6TDipYL1XupTOcoMQcC71oE4yHtedd5BVDYK3gL
- G/xQOyKLkp+xTtXzHxJ4iL/XHef1NuO5osomQBTggHXPAIcBrQLAkx1bH9FUVRr4F3E+
- hRmyNIcJ5gIrCfhuZd+fDrrPwX9f5dtITUMAUIdZ3F05ULzo+9BpQ/ir6zNlTpx/RTbD
- qGf2hlexra7ul7yiTq0p6WkoGG4I2yR2kvMIZzv/huFABP7vTjT/0NiITH5xhZfelWIs
- ZKXg==
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1umo2v-0002O2-LI
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 02:36:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1umo2r-0005YG-4F
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 02:36:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755239765;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CQ7u8ptFVYEeGxObkw79wV/aZgWqhIMf01aobj6ObJY=;
+ b=V3y3ULyrdu2JutBByOKk8WT/enqkyvZfT8YuDpx58HnP7GeM+BNNQ17n2d18DdLDY0HU6Z
+ rfldAq5uJnf7jg6nCX6ZEsRU9rioeQ9KfJaVvFaO+Rr/rE5ha3TivQC3o8GBwcK2LZJjrW
+ q2kJYb+2JBb30Pafv9xmCRUM5mw6r98=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-367-ikS531ELNfiZJeo_e8eZHQ-1; Fri, 15 Aug 2025 02:36:02 -0400
+X-MC-Unique: ikS531ELNfiZJeo_e8eZHQ-1
+X-Mimecast-MFC-AGG-ID: ikS531ELNfiZJeo_e8eZHQ_1755239762
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-70a94f3bbdbso35565236d6.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Aug 2025 23:36:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755239048; x=1755843848;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FskWgedQMwIjQLSn2I4gWdMD5wPPB5Uw2SpTiRgRz/Y=;
- b=GfaWyOY/ubtYiOkRhTmIji7VLetquM8raldd837WeuOrBN1Iy3wEeU0DKHlD4lq7JO
- LDMfKWqaOgdrRCgnqVvvxHxIrXc6V4hU1qWku8CagRTEGRrEhx7UKc0xYVvQI3+7rcfh
- T8xbjVRRoaKdDeiNVpiWSCpNoNf5Tg2gyrKaN+lAGwZ2sz/Dbpe6rEJfuRDs/+pwYFRy
- 9Tkyle13r64ldmGbd27PjxooRuamMpOzBfCW5GMlHRn4sPbc0A0lrgq+hdzopx+1HQxi
- Pz3tPgQERzGdzIOTT4CmlzbXHiL3PA5GpCEQAWSUfbJtJiYG0roY2sAIwcs52uUu4OmW
- 4u7w==
+ d=1e100.net; s=20230601; t=1755239762; x=1755844562;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CQ7u8ptFVYEeGxObkw79wV/aZgWqhIMf01aobj6ObJY=;
+ b=nick3Vl9k8veGxXlQ6FZ1Hx5p3baLQC8PsJmnXKbYUFy7G57wQGAkWl4KIs5ac/3zH
+ fdTQZLaa8Iv3vjD8Rj8NWNyxhLNmNAQV4Fum5YvbkdMq4tlaAJA+iyWfN8Ai0Zk3Vd/M
+ 8BFdlfmBvyicnRY2sps6//68kRMGc604qdiSHmtmRUwJjIQ3oN6HnrMwXqA0tLjgeHgC
+ lvwDMz8VaNDpPjtxs1BmtO8ERlbKOdSWconJIi/nW1mXGOvSUPpU1ySF2QPA4z8LzIDf
+ iCCF3WrWl/QAQiJnkUmlM+KzxslSgRxaS9Rp32283sb6Nt7BsqmXvRQ7hy47j2j858FU
+ enQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZZOS1KWhIKSrJiZSjPZWdZGUDhDgp6L1VO6HiiTo03HqMHTsWmciu7/XisnNmxSOECR0ZeV/2ham5@nongnu.org
-X-Gm-Message-State: AOJu0YxNbh9pN0Vgrv5BcHuAogMNZjlLtJvqLwNeHYIsO9onnwDc82zp
- au4va8EjwOpJSyJ74RRlbA4bPIodV7FzJcpciTA66BIC5gZoqiPYnu0g5Eg7d1i1NWs=
-X-Gm-Gg: ASbGncui8c9Te+InrRtPdL6QmLK2u77mP4nhnSkzVj+s19XIAAUCrS1lHFW845maXqF
- VOGIG2gl6Z6kbZDxSMfMs2dsQodWC5ItNDmezh5USn38VTh1+y3LwdWpRXnMKysCb6e1WIqsAeT
- NipBZGF4cpHfT7IGmEy3tKhr0E6ungJ1svIsVuRerhLVhtJkV0j5/F+A7+ekG34jPosv+3pRjij
- lBDRVrnf0OV+FYWbN3hqvSoxsIMMLAk+K3mwhWDZRZA2gZ3WU7xoE/VQ7FIhk6tqpr06ozOIBai
- mMG1rHl8PLSx714nDBdXwsR/xR7dzl4Ehn4VmGzJzoFLMX/E1r1fw9PTVnXjPXrBLqw7ryJmz1Z
- 9MXUMHHIMcdMw8DbxGpzBXc32bSjzzeFILd2XwNA=
-X-Google-Smtp-Source: AGHT+IHVFl4Kj2QNdtIdOlLMy7ekNRtlzsuwoey+jMec9PqBBBCK98thjJibLHmmJPKg7NxVmELe6A==
-X-Received: by 2002:a17:902:c94a:b0:240:9a45:26e6 with SMTP id
- d9443c01a7336-2446d6e8a61mr14127065ad.10.1755239048290; 
- Thu, 14 Aug 2025 23:24:08 -0700 (PDT)
-Received: from [192.168.4.112] ([206.83.105.236])
+ AJvYcCUNCGCO/xN8WL9HKfMS3cpyHRkCQEgwFGJA1VzNTC6wTR9wC/1kQ/bZ4lGiExWz8CgvGN2uSBAbXgmj@nongnu.org
+X-Gm-Message-State: AOJu0YwEPBw4K1eDErcZ16q1qfdJmtrmWk48J6aLHuP9h/3bYMMAzYyo
+ dd+czli5pP1yQ2FZyTOxOKI6cdmsr1WkKV2v5cFUKa5kiCQmFt/B7y5wt8fygUZS0qc0vpKPSVz
+ lawJqnGGgkmcgmHxk8NHFYzPArpZTZdZYIKCk2fOm+QjfJw1Dcpx/9gA4
+X-Gm-Gg: ASbGnctHFIcgYcONI27BHbfOmPCQYnFiNli4dHMA3qlKKHatoxQ9+qORIjg/xmE7mfd
+ fqGLVhlKbdEGU2CR4s7VTD5+4Iltf0yY9VOCE0Rz3vS4O7+NOYxpAdHcKW6Oe6giNbJa12f9QKs
+ xylG7AUx0cZkIN1dajmAMcDuvl2j6woyVkccyJx4Pw/M9fptKzVTc3aS/7atoNuMeG8XobqM/3C
+ T8NOj8it3l+bXhGZsL5VXaJ4VE2+TrJcYRtCpTJSAxsoNBW7CgOFBRrdSt9QB3izE9ozoM7D2+t
+ X+ADmBriUXa0FUH8/JjFQNn0TyS4wmtzm9aruzkcVDWt+2JGpe0OT+F4Zw==
+X-Received: by 2002:a05:622a:292:b0:4aa:d487:594b with SMTP id
+ d75a77b69052e-4b11e23d22amr9826111cf.35.1755239762119; 
+ Thu, 14 Aug 2025 23:36:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCGOqGagId87ZwbY/DhdDX3wujhM7FQvObe4w0DB2k0nF6Thk/y/NBg0MRb0MQPWRYkM2ZeA==
+X-Received: by 2002:a05:622a:292:b0:4aa:d487:594b with SMTP id
+ d75a77b69052e-4b11e23d22amr9825961cf.35.1755239761739; 
+ Thu, 14 Aug 2025 23:36:01 -0700 (PDT)
+Received: from fedora (78-80-81-60.customers.tmcz.cz. [78.80.81.60])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2446ca9e000sm6904455ad.27.2025.08.14.23.24.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Aug 2025 23:24:07 -0700 (PDT)
-Message-ID: <ee8abdcb-de14-4ff5-b454-b60a454c4740@linaro.org>
-Date: Fri, 15 Aug 2025 16:24:01 +1000
+ d75a77b69052e-4b11dc188desm5034291cf.2.2025.08.14.23.35.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Aug 2025 23:36:00 -0700 (PDT)
+Date: Fri, 15 Aug 2025 08:35:57 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Jiri Denemark <jdenemar@redhat.com>, qemu-devel@nongnu.org, 
+ Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH 0/4] migration: Introduce postcopy-setup capability
+ and state
+Message-ID: <dmjzaklp5wclm2huqz6hxla4otwleuyigygkwl4d66x55fwse3@lrhj5wnifc6n>
+References: <20250807114922.1013286-1-jmarcin@redhat.com>
+ <aJoEJhJw-_rGVBbA@x1.local>
+ <xfzgjwld4ba7mymu3xhkxdwpeie7bbjnbei2xchkqncamktk3g@rbafrorlpvcv>
+ <aJzOo7P8aA64AfY_@x1.local>
+ <xbqqss2yshtjkew5cirlp2bx3dkumxg3grwpduol5ucpx3leqq@irqeo2csi2vg>
+ <aJ43_JQct45mnVgV@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] kvm/kvm-all: declare kvm_park_vcpu static and make it
- local to kvm-all.c
-To: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20250815053021.31427-1-anisinha@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250815053021.31427-1-anisinha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aJ43_JQct45mnVgV@x1.local>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,30 +116,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/15/25 15:30, Ani Sinha wrote:
-> kvm_park_vcpu() is only used in kvm-all.c. Declare it static, remove it from
-> common header file and make it local to kvm-all.c
+On 2025-08-14 15:24, Peter Xu wrote:
+> On Thu, Aug 14, 2025 at 05:42:23PM +0200, Juraj Marcin wrote:
+> > Fair point, I'll then continue with the PING/PONG solution, the first
+> > implementation I have seems to be working to resolve Issue 1.
+> > 
+> > For rarer split brain, we'll rely on block device locks/mgmt to resolve
+> > and change the failure handling, so it registers errors from disk
+> > activation.
+> > 
+> > As tested, there should be no problems with the destination
+> > transitioning to POSTCOPY_PAUSED, since the VM was not started yet.
+> > 
+> > However, to prevent the source side from transitioning to
+> > POSTCOPY_PAUSED, I think adding a new state is still the best option.
+> > 
+> > I tried keeping the migration states as they are now and just rely on an
+> > attribute of MigrationState if 3rd PONG was received, however, this
+> > collides with (at least) migrate_pause tests, that are waiting for
+> > POSTCOPY_ACTIVE, and then pause the migration triggering the source to
+> > resume. We could maybe work around it by waiting for the 3rd pong
+> > instead, but I am not sure if it is possible from tests, or by not
+> > resuming if migrate_pause command is executed?
+> > 
+> > I also tried extending the span of the DEVICE state, but some functions
+> > behave differently depending on if they are in postcopy or not, using
+> > the migration_in_postcopy() function, but adding the DEVICE there isn't
+> > working either. And treating the DEVICE state sometimes as postcopy and
+> > sometimes as not seems just too messy, if it would even be possible.
 > 
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
->   accel/kvm/kvm-all.c  | 3 ++-
->   include/system/kvm.h | 8 --------
->   2 files changed, 2 insertions(+), 9 deletions(-)
+> Yeah, it might indeed be a bit messy.
 > 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 890d5ea9f8..41cf606ca8 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -141,6 +141,7 @@ static QemuMutex kml_slots_lock;
->   #define kvm_slots_unlock()  qemu_mutex_unlock(&kml_slots_lock)
->   
->   static void kvm_slot_init_dirty_bitmap(KVMSlot *mem);
-> +static void kvm_park_vcpu(CPUState *cpu);
->   
+> Is it possible to find a middle ground?  E.g. add postcopy-setup status,
+> but without any new knob to enable it?  Just to describe the period of time
+> where dest QEMU haven't started running but started loading device states.
 
-No need for this, since the definition precedes all uses.
-You can also unexport kvm_unpark_vcpu.
+Yes, as the ping/pong solution doesn't require any changes in the
+protocol, there's no need for a new capability and the new state can be
+always used.
 
+> 
+> The hope is libvirt (which, AFAIU, always enables the "events" capability)
+> can ignore the new postcopy-setup status transition, then maybe we can also
+> introduce the postcopy-setup and make it always appear.
+> 
+> Thanks,
+> 
+> -- 
+> Peter Xu
+> 
 
-r~
 
