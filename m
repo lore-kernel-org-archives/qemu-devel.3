@@ -4,71 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51469CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 05:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D5ECA0EE0
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 05:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umn4b-0004XZ-Rk; Fri, 15 Aug 2025 01:33:53 -0400
+	id 1umnKM-0006Y9-OT; Fri, 15 Aug 2025 01:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1umn4Z-0004XG-Cm
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 01:33:51 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gregkh@linuxfoundation.org>)
- id 1umn4X-0002BM-Jg
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 01:33:51 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 5D52B4593C;
- Fri, 15 Aug 2025 05:33:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923C0C4CEF4;
- Fri, 15 Aug 2025 05:33:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1755236026;
- bh=5pmEnpk4P+ndbonyan2VBiYanHohRCT0mNUzn8ef6Jw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=1acX8gnFQCkziGbYVwXTdj9BgkJt06DgtflG9KQNRnqNIt+UE43nvvq7RtqS8j+TO
- DIT37U+VhXVk1Tmo2KjQJ/IaQC3QxZHPJnNumrOKk9NIFQf1jf3eWt9D8ct/fb16Pq
- xhXRyIEUjs6wiBS4B4K5vjigRUpIaLwvw1zT2g0k=
-Date: Fri, 15 Aug 2025 07:33:41 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Namhyung Kim <namhyung@kernel.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>,
- Ben Copeland <benjamin.copeland@linaro.org>,
- LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
- Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
- linux-perf-users@vger.kernel.org, Zhang Yi <yi.zhang@huaweicloud.com>,
- Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
- linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-Message-ID: <2025081536-resonate-wafer-6699@gregkh>
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <2025081300-frown-sketch-f5bd@gregkh> <aJ5EupUV9t0jToY3@google.com>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1umnKJ-0006Xf-DH; Fri, 15 Aug 2025 01:50:07 -0400
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1umnKD-0006Jg-57; Fri, 15 Aug 2025 01:50:07 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBXXj57yp5oezi9Bg--.1034S2;
+ Fri, 15 Aug 2025 13:49:47 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwC3Pwdjyp5oqVATAA--.24706S2;
+ Fri, 15 Aug 2025 13:49:39 +0800 (CST)
+Message-ID: <75da1d95-df58-4f85-b668-7bdfb0ecf743@phytium.com.cn>
+Date: Fri, 15 Aug 2025 13:49:14 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aJ5EupUV9t0jToY3@google.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=gregkh@linuxfoundation.org; helo=sea.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 00/11] hw/arm/smmuv3: Add initial support for Secure State
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chen Baozi <chenbaozi@phytium.com.cn>, smostafa@google.com,
+ jean-philippe@linaro.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
+ <d4fcf3a2-6789-4926-882e-1abac4c07843@linaro.org>
+ <2169e4b1-97d1-43c9-a512-5e6e25a562ad@phytium.com.cn>
+ <8b5cbf44-02a1-45f0-8a59-3cb7b762ad0a@linaro.org>
+Content-Language: en-US
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <8b5cbf44-02a1-45f0-8a59-3cb7b762ad0a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwC3Pwdjyp5oqVATAA--.24706S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQADBWieOgABnAAEsS
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3Jw4kGFW7AryDWw43GFWfKrg_yoWxXw4UpF
+ W3Ka47KF4DJF1UAw12qw48ZF1ak395Cr43Grn8Gwn5C3s0kr97tF1UtFyF9F97WrZ7Xa4j
+ vFWjvrWxXr4DZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,43 +78,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 14, 2025 at 01:19:06PM -0700, Namhyung Kim wrote:
-> Hello,
-> 
-> Thanks for the report!
-> 
-> On Wed, Aug 13, 2025 at 02:50:49PM +0200, Greg Kroah-Hartman wrote:
-> > On Wed, Aug 13, 2025 at 05:46:26PM +0530, Naresh Kamboju wrote:
-> > > Long story:
-> > > 1)
-> > > The perf gcc-13 build failed on x86_64 and i386.
-> > > 
-> > > Build regression: qemu-arm64 ARM64_64K_PAGES ltp syscalls swap fsync
-> > > fallocate failed.
-> > > 
-> > > > Ian Rogers <irogers@google.com>
-> > > >     perf topdown: Use attribute to see an event is a topdown metic or slots
-> > > 
-> > > Build error:
-> > > 
-> > > arch/x86/tests/topdown.c: In function 'event_cb':
-> > > arch/x86/tests/topdown.c:53:25: error: implicit declaration of
-> > > function 'pr_debug' [-Werror=implicit-function-declaration]
-> > >    53 |                         pr_debug("Broken topdown information
-> > > for '%s'\n", evsel__name(evsel));
-> > >       |                         ^~~~~~~~
-> > > cc1: all warnings being treated as errors
-> > 
-> > Already fixed.
-> 
-> Are you sure?  I'm not seeing the fix.  Can you share the commit id?
 
-I dropped the offending perf patch:
-	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=4199b872a5585e025f62886724f4f9ae80e014ae
+On 2025/8/13 02:04, Pierrick Bouvier wrote:
+> On 8/10/25 9:11 AM, Tao Tang wrote:
+>>
+>> On 2025/8/7 05:28, Pierrick Bouvier wrote:
+>>> On 8/6/25 8:11 AM, Tao Tang wrote:
+>>>> Hi all,
+>>>>
+>>>> This patch series introduces initial support for emulating the Arm
+>>>> SMMUv3
+>>>> Secure State.
+>>>> ------------------------------<snip>------------------------------
+>>>>
+>>>>
+>>>> ------------------------------<snip>------------------------------
+>>>> Secure Register/Command Interface: I set up an OP-TEE + Hafnium
+>>>> environment. Hafnium's smmuv3_driver_init function was used to test
+>>>> the secure register I/O and command queue functionality (excluding
+>>>> translation). As Hafnium assumes larger queue and StreamID sizes than
+>>>> are practical without TTST support, I temporarily patched Hafnium to
+>>>> use smaller values, allowing its driver to initialize the emulated
+>>>> secure SMMU successfully.
+>>>>
+>>>
+>>> Would that be possible to share your changes, and build instructions
+>>> for this? While working on SMMU emulation, we finally left this on the
+>>> side due to lack of a software stack being able to use secure SMMU, as
+>>> we were not aware that Hafnium + op-tee could make use of it.
+>>>
+>> Hi Pierrick,
+>>
+>> Thanks for your interest! I'm very happy to share my work on this. I've
+>> documented the setup process, including our code modifications and the
+>> step-by-step build instructions in  this link:
+>>
+>> https://hnusdr.github.io/2025/08/09/Test-Secure-SMMU-with-Hafnium-ENG
+>>
+>
+> Thanks for taking the time to assemble all this in a comprehensible 
+> post, I'll give it a try when I have some spare time.
 
-Did that not work for you?
+Hi Pierrick,
 
-thanks,
+You're welcome, and please feel free to let me know if you run into any 
+issues.
 
-greg k-h
+
+>
+>>
+>> The core point of these changes is to enable the SMMUv3 feature in
+>> Hafnium. This leads to numerous read/write operations on SMMUv3 secure
+>> registers and various queue manipulations within the smmuv3_driver_init
+>> function in Hafnium.
+>>
+>> However, it's important to note that this initialization process itself
+>> does not initiate any DMA memory access that would trigger the
+>> smmuv3_translate flow.
+>>
+>
+> I understand the difference. It can be tricky to generate specific 
+> translation scenarios, which is where a custom test device can really 
+> help.
+>
+>> Even so, we've devised a method to test the subsequent Secure
+>> Translation Path by leveraging the smmuv3-test platform device. This
+>> approach allows us to verify the entire SMMUv3 flow, from initialization
+>> to translation.
+>>
+>
+> Does it rely on a custom driver integration into an existing firmware 
+> or the kernel?
+>
+>>
+>>>> Secure Translation Path: Since the TF-A SMMUv3 Test Engine does not
+>>>> support QEMU, and no secure device assignment feature exists yet, I
+>>>> created a custom platform device to test the secure translation flow.
+>>>> To trigger the translation logic, I initiated MMIO writes to this
+>>>> device from within Hafnium. The device's MMIO callback handler then
+>>>> performed DMA accesses via its IOMMU region, exercising the secure
+>>>> translation path. While SMMUv3 is typically used for PCIe on
+>>>> physical SoCs, the architecture allows its use with platform devices
+>>>> via a stream-id binding in the device tree. The test harness
+>>>> required some non-standard modifications to decouple the SMMU from
+>>>> its tight integration with PCIe. The code for this test device is
+>>>> available for review at [3]. README.md with detailed instructions is
+>>>> also provided.
+>>>>
+>>>
+>>> I am not sure about the current policy in QEMU for test oriented
+>>> devices, but it would be really useful to have something similar
+>>> upstream (Note: it's out of the scope of this series).
+>>> One challenge working with SMMU emulation is that reproducing setups
+>>> and triggering specific code paths is hard to achieve, due to the
+>>> indirect use of SMMU feature (through DMA) and the complex software
+>>> stack usually involved.
+>>> Having something upstream available to work on SMMU emulation, at
+>>> least on device side, would be a great addition.
+>>>
+>>> Eric, Peter, is this something that would be acceptable to merge?
+>>>
+>>
+>> Looking ahead, my plan is to refactor the smmuv3-test platform device.
+>> The goal is to make it self-contained within QEMU, removing the current
+>> dependency on Hafnium to trigger its operations. I plan to submit this
+>> as a separate RFC patch series in the next few days.
+>>
+>
+> This is very welcome. Once this is in place, it would be great to add 
+> a new test to make sure things don't regress, and from where we can 
+> iterate.
+> By self-contained within QEMU, do you mean a QTest based test?
+>
+> Regards,
+> Pierrick
+
+
+Thanks for the follow-up and the great questions.
+
+To answer your question about the custom test driver: yes, the current 
+implementation of the smmuv3-test device relies on integration with 
+Hafnium to be triggered.
+
+The test flow is initiated when Hafnium performs an mmio_write32 to the 
+smmuv3-test device's MMIO space. This triggers the device's read/write 
+callback in QEMU. Inside this callback, I use address_space_write/read 
+to first populate the necessary SMMU structures (STEs, CDs, PTEs) in 
+guest secure memory, and then perform another address_space_write/read 
+to an IOMMU-protected region of smmuv3-test. It is this final access 
+that exercises the full secure translation path. So for now, it is 
+indeed dependent on the Hafnium firmware for debugging.
+
+That brings me to your next point about making the test 
+"self-contained". My goal is exactly to remove this dependency. I'm 
+currently exploring ways to achieve this within QEMU—for instance, by 
+using QMP commands or another monitor interface to replace the 
+mmio_write32 action that Hafnium currently provides. This is what I 
+meant by "self-contained": allowing us to test the entire SMMUv3 
+translation flow relying only on the QEMU emulator itself, without any 
+specific guest firmware or kernel.
+
+This leads perfectly to your question about QTest. I'm not very familiar 
+with it, so your suggestion is very helpful. Is QTest the standard or 
+required framework for implementing this kind of self-contained test 
+device? I would appreciate any guidance or pointers you could provide on 
+this topic.
+
+Thanks again for the valuable discussion.
+
+Best regards,
+
+Tao
+
 
