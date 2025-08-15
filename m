@@ -4,77 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28E2CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 16:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E56CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 16:30:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umxDv-0007ny-Ma; Fri, 15 Aug 2025 12:24:11 -0400
+	id 1umxJZ-0000bk-08; Fri, 15 Aug 2025 12:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <namhyung@kernel.org>)
- id 1umxDt-0007nU-PC
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 12:24:09 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <namhyung@kernel.org>)
- id 1umxDr-0006mS-Pv
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 12:24:09 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 212E1419C9;
- Fri, 15 Aug 2025 16:24:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B60C4CEEB;
- Fri, 15 Aug 2025 16:24:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1755275045;
- bh=4W3MexmDLIj0LLuVBsUoXVIfys/oLMGtURiFQUEH13U=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=nUphFxrWKV+6n7KpkD3VVRbo27xzyyN/vWebfUiwoAS3RvQSWcpYef5mbG32vq0xD
- Hj0/e3bePcSFamI9nK1ma1Z1tJgmnKrGZNeX7nNEd7c2k/TECv6Usta5G6k2J1kTXq
- LsLm0KSBqNf5NIpDJGBe/pMGF4IRBd7RfiQ0AFAHXmAiB/AdFCFFEAZWTG5KJ1UEeH
- gx7uzJLw+iJTkPJ6nbo75iUvpli22kP4Ea4eVzyFa0QL+rwrRi3uUMsyrZOzUynbnX
- vzx4mQ8pLbKA4C23C8MVuQVsKobT/zIxnc9HN1TNS3GmfWQ6VfTQjsBHkx+jBmRUuP
- bmqcMI4Wr142Q==
-Date: Fri, 15 Aug 2025 09:24:01 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>,
- Ben Copeland <benjamin.copeland@linaro.org>,
- LTP List <ltp@lists.linux.it>, chrubis <chrubis@suse.cz>,
- Petr Vorel <pvorel@suse.cz>, Ian Rogers <irogers@google.com>,
- linux-perf-users@vger.kernel.org, Zhang Yi <yi.zhang@huaweicloud.com>,
- Joseph Qi <jiangqi903@gmail.com>, Jan Kara <jack@suse.cz>,
- linux-fsdevel@vger.kernel.org, linux-ext4 <linux-ext4@vger.kernel.org>
-Subject: Re: [PATCH 6.16 000/627] 6.16.1-rc1 review
-Message-ID: <aJ9fIUkM04HhRgSR@google.com>
-References: <20250812173419.303046420@linuxfoundation.org>
- <CA+G9fYtBnCSa2zkaCn-oZKYz8jz5FZj0HS7DjSfMeamq3AXqNg@mail.gmail.com>
- <2025081300-frown-sketch-f5bd@gregkh> <aJ5EupUV9t0jToY3@google.com>
- <2025081536-resonate-wafer-6699@gregkh>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1umxJX-0000av-7Z
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 12:29:59 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1umxJV-00082U-JO
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 12:29:59 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3b9dc5cd4cbso1621629f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 09:29:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755275395; x=1755880195; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aUgZ+KVuNdEYqt+yAn3+wWUDhlf1k1kEZldqgXlJQhE=;
+ b=xsrNxJXPWr8tBeJ0K/GyVNj3bpurfA1PKPkMsIJcEP5PHjEo4SGOeUeqd49ktntLIT
+ FQimC4DtuQjg6EKoj/OkpZX+bRmwZC6dPsec3oY0M7WNaa/xlmAeZ2iQ6C5pw719h9zt
+ F/DYYfh6xXOBg50LP2rOMuztjv7aI9MPJa2CJ5FnqsInzoYKQq0ioW8jjDUFH8XLtkDs
+ drO0DkIKdmNiwVn+2fF6lM2QmZFKbwD7o4aGwmciLEbwkgOvy+2HEoCgfHgBcoqEVe64
+ MVwhWUBzfj94KNz7Qz7jVBT3DbFC3vQtKhWmmCuXM05R5NGckKXbYzJVTTKoBlFdlIJI
+ VJIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755275395; x=1755880195;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aUgZ+KVuNdEYqt+yAn3+wWUDhlf1k1kEZldqgXlJQhE=;
+ b=suuZdtww/TtdA7BLKFZfTdLfOgx4dhE1qpyrjhJmHtA6nEWFjl8XSyShjfZu3ZxbUM
+ j+mDxHyn9WR3sLnDtgsaF3tO630g3kGBszN4dypYwqQ9seSRY2h/DvrJTrH3fRDopi3c
+ ROQFRNj5bMhJKFJ5zhgPTjseWUkty8+iIs5L8k0WyOp1wRHPGMwLkJBE2Uno+cH++mSl
+ J6EwfmsAOfoNlfl3Ii5ksTUEtIKt+jrKSiiTaV2ZZa8lnk72Yqpmq0CMFj7VIhzvLCIg
+ uRqXPEiQY4xPycjNUku9AP2nU/QhmJ3Uqnhu6FuKBc5DMIF9FgcVcoxetpFNBpquypJx
+ wD2Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJMaCLGtK3ITPcJiAnGpr8nL5YzNQodSS9YKFvbQfsybnaO0vNps/MssLhmplplQ5xSSyYxZ+U7m/e@nongnu.org
+X-Gm-Message-State: AOJu0YwaMZa4XIMkNhwiF0en1D3B8PPV+lVCfj5yyAWXDv2omSGXe9no
+ KtgJiBUMJgExBLKj5HLRFtjZUEBjClMLlQYdvYruntCq8rEKKoROfAHlQWieSSElowQ=
+X-Gm-Gg: ASbGncv8UuFvpTYRndNsMwMdBw7dPZxXgMtcCovpetjBKMxaaHdhmeiSs80lga7ja9c
+ kRrlBZVVbvKL6xge7MI4muuCnGrEbl7p4V/jjca3a4NJrmXeTlaEhtp70LuIZMXaFEaWzQv5UQv
+ Wj0edCqixRAhT9uLKLlDU3rqHTtUp7Xcw6WplLGq45U/6B93rjPos89QEExgKPnwOAJ5GxyDbU7
+ +RBTv108QqBDg7Ki+bmcc+IKIHFhPk/lyqWmrAv/mmLcIQ1m1yV36bo+/RFM2Q5nA++K7g3RUz1
+ qxeVgqX8OMTwcaRtxWgkujOCDZqz7+kb3gH4x7Hs7S6rdB252n25AlivAfpYLjRMJ3LKGgcnka2
+ +aIyxe4LiQEcu8/FOAfuFqC4=
+X-Google-Smtp-Source: AGHT+IFAPKe6AQobJBZXbYdwy17crM6EayxdzUF1PXqkuLLrb9Q5eqs2zR8Gx9g8juDGcuYfX1z6Xw==
+X-Received: by 2002:a05:6000:24c4:b0:3b7:e3c3:fbb6 with SMTP id
+ ffacd0b85a97d-3bb689218e2mr2404622f8f.31.1755275395233; 
+ Fri, 15 Aug 2025 09:29:55 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3bb64d307cfsm2418326f8f.18.2025.08.15.09.29.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Aug 2025 09:29:53 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 012775F80F;
+ Fri, 15 Aug 2025 17:29:53 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v9 2/6] tests/functional/test_aarch64_rme: update image
+In-Reply-To: <CAFEAcA_ZQ13qMRUQsieJiEPV=ULrDbz8=EJaW4_kw=yEysob0w@mail.gmail.com>
+ (Peter Maydell's message of "Fri, 15 Aug 2025 17:08:16 +0100")
+References: <20250727074202.83141-1-richard.henderson@linaro.org>
+ <20250727074202.83141-3-richard.henderson@linaro.org>
+ <CAFEAcA_ZQ13qMRUQsieJiEPV=ULrDbz8=EJaW4_kw=yEysob0w@mail.gmail.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Fri, 15 Aug 2025 17:29:52 +0100
+Message-ID: <87349s4kfz.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2025081536-resonate-wafer-6699@gregkh>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=namhyung@kernel.org;
- helo=sea.source.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,46 +109,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 15, 2025 at 07:33:41AM +0200, Greg Kroah-Hartman wrote:
-> On Thu, Aug 14, 2025 at 01:19:06PM -0700, Namhyung Kim wrote:
-> > Hello,
-> > 
-> > Thanks for the report!
-> > 
-> > On Wed, Aug 13, 2025 at 02:50:49PM +0200, Greg Kroah-Hartman wrote:
-> > > On Wed, Aug 13, 2025 at 05:46:26PM +0530, Naresh Kamboju wrote:
-> > > > Long story:
-> > > > 1)
-> > > > The perf gcc-13 build failed on x86_64 and i386.
-> > > > 
-> > > > Build regression: qemu-arm64 ARM64_64K_PAGES ltp syscalls swap fsync
-> > > > fallocate failed.
-> > > > 
-> > > > > Ian Rogers <irogers@google.com>
-> > > > >     perf topdown: Use attribute to see an event is a topdown metic or slots
-> > > > 
-> > > > Build error:
-> > > > 
-> > > > arch/x86/tests/topdown.c: In function 'event_cb':
-> > > > arch/x86/tests/topdown.c:53:25: error: implicit declaration of
-> > > > function 'pr_debug' [-Werror=implicit-function-declaration]
-> > > >    53 |                         pr_debug("Broken topdown information
-> > > > for '%s'\n", evsel__name(evsel));
-> > > >       |                         ^~~~~~~~
-> > > > cc1: all warnings being treated as errors
-> > > 
-> > > Already fixed.
-> > 
-> > Are you sure?  I'm not seeing the fix.  Can you share the commit id?
-> 
-> I dropped the offending perf patch:
-> 	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=4199b872a5585e025f62886724f4f9ae80e014ae
-> 
-> Did that not work for you?
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Oh sorry, I misunderstood you.  I thought you have a fix.
+> On Sun, 27 Jul 2025 at 08:42, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> TF-A needs to be patched to enable support for FEAT_TCR2 and
+>> FEAT_SCTLR2. This new image contains updated firmware.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> Message-ID: <20250719035838.2284029-3-pierrick.bouvier@linaro.org>
+>
+> I see this test failing in local runs of 'make check-functional'
+> sometimes, complaining that it can't create the scratch/out/EFI
+> directory because it already exists:
+>
+> stderr:
+> Traceback (most recent call last):
+>   File "/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/tests/functional/test_=
+aarch64_rme_sbsaref.py",
+> line 49, in test_aarch64_rme_sbsaref
+>     os.mkdir(efi)
 
-Thanks,
-Namhyung
+  os.makedirs(efi, exist_ok=3DTrue)
 
+would solve that.
+
+> FileExistsError: [Errno 17] File exists:
+> '/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/tests/functio=
+nal/aarch64/test_aarch64_rme_sbsaref.Aarch64RMESbsaRefMachine.test_aarch64_=
+rme_sbsaref/scratch/out/EFI'
+>
+> More information on
+> test_aarch64_rme_sbsaref.Aarch64RMESbsaRefMachine.test_aarch64_rme_sbsaref
+> could be found here:
+>  /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/tests/functio=
+nal/aarch64/test_aarch64_rme_sbsaref.Aarch64RMESbsaRefMachine.test_aarch64_=
+rme_sbsaref/base.log
+>  /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/tests/functio=
+nal/aarch64/test_aarch64_rme_sbsaref.Aarch64RMESbsaRefMachine.test_aarch64_=
+rme_sbsaref/console.log
+>
+> (test program exited with status code 1)
+>
+>
+> Is this something where we need to blow away any old output
+> directory for robustness ?
+
+Generally scratch is cleaned out once a test finishes (unless you
+preserve it via QEMU_TEST_KEEP_SCRATCH=3D1). But I guess there may be
+cases when it isn't cleaned out properly - does Ctrl-c get caught?
+
+>
+> thanks
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
