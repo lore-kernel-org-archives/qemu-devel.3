@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41D7CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 17:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C43CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 17:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umybV-0001Qn-4N; Fri, 15 Aug 2025 13:52:37 -0400
+	id 1umyf6-0002Vm-LB; Fri, 15 Aug 2025 13:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umybT-0001Pt-0Y
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:52:35 -0400
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ id 1umyf4-0002VI-HC
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:56:18 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umybR-0006Yd-6o
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:52:34 -0400
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e9321ed5e5eso1436290276.3
- for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 10:52:32 -0700 (PDT)
+ id 1umyf2-00074N-7y
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:56:17 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e9321ed5e5eso1438681276.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 10:56:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755280352; x=1755885152; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755280574; x=1755885374; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=fi7shiYLvJG0+/qUk2deweHPZvlFGqQeZ4n9FR5jQNU=;
- b=TgBzBiQwqlJOla2G5Nb/Hx1/Aeg8vhgLpo0vZ68/UMMKKrtaEgYEszpCVIlmzut/Nc
- 2I6cW4IJ59rktyrbogbe+RLdKMV0lUvmuaD00I8V6m4F0z+wP9ps0FaUZvXdatSuHxpx
- TZaN2u20dMe4r/exesyAEXKjzRMVU05rq990D/x0Y7uXHXtp4BYT7NWDlThzQyf5P0xo
- rsGkcAbuNVmFIaCl3jTDvt6+4tJNbtq7Q5WFK1imdl5lMVd4LJmWJpla7fGk4ZvdwSpA
- Z5c+uSRfQuLGXrZMS4cOTmJ4rf4bhsbStKdyxTBFS90a7HgMr6FYaAzUt6VYsayJEoG3
- d91Q==
+ bh=EUv6WNMhAWGqe25yhZcpcBNXuFlzNFTDYjQBZ6rbxs0=;
+ b=TllUdNkZ8oOmpSep5iJskH6wcLtG3Esdzn8B5h/nmXOXIS1HAD+cyi2/oS/WRdweyi
+ x1ZsmXqQhWRVl6hkGNDVyw2ovahzhE1xOA4OUIknmh4KJesWwy472+bLkpDeXnREsynp
+ 4j6hm7eJFjdbT/8pdN7a90m9Bucb5A4SX317twiJkO1znDTlJSJGj0oG6fnfNBUNbgrH
+ qgM9MLGF3XX4eeXqvh6ef+kyoiXRbMH7MTF2/JUlkZ+t6OBeEOKEeB9LG9mDbAFUOfbB
+ wMATxiaoEJkbKsQ868QRY0NUsMuCartb32CsupDcXMa8HsceXwTsJZ978hQncdNQyLbE
+ 8bzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755280352; x=1755885152;
+ d=1e100.net; s=20230601; t=1755280574; x=1755885374;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fi7shiYLvJG0+/qUk2deweHPZvlFGqQeZ4n9FR5jQNU=;
- b=ehKpjbr27IPPFV9cYsRs7vjlBYvBC5GxljSHOV3tD3Eg4qFyl1tCgZ+LaAt7pctmul
- xvHlUyiz433UGOqCao3wH3cyIhsktqVKT5uUyy1jaGe2hkSIX63TSKhxrudwx48gL/ql
- INiYKtWMRLjWUSAhxFI4n4C7qN6UTR7SP8v9E6dd/9GHVKMewoO9AChkQDI7JhFrfJ2N
- 6rc+tRe3SnYcO4njDHlWwAuXlEyr1wf4zksq5qWdcE2ByhibRj031hNf/WtaFSPpl8JM
- psLAt3CfD8lIzYyDjDiuj0+A+Rf84oAT9pfrX0CpR5MX85eesy2cMOU4iSSqkdbeDWuX
- J8/Q==
-X-Gm-Message-State: AOJu0YwPpTo9Q6Cz7Vqnad29WDKa+N6tbItfP5597WeqVzolkHHR5YcH
- exEGcqB4b4/oIEjMrcsx72IoRW57ibU4e7sxMTVx04xTPFUPJ1mxuI38HMo66VDMGzpSvGjrJHR
- oicy0a/SQxg3MMah9vPwEJyfLEZ1JgyViNzowlvRkCQ==
-X-Gm-Gg: ASbGncvQQuwa/d2T8Z70deda6iH7IO38E5+k2V0PURnJ9pOMy1ZiWXiI4VWz5oqn8If
- R7ndh/N7A/1WJw8XXWrzFI7WHBmcTpL9/acZYO7cuMPLhplNDZIjAhfJO56KM5vsPpU/4T/1VL9
- Dll7FqIsVyu5E0lF3prIJsv4XcQrcJBpZf60xUYh4fy6AgdIyeQOhcwe/k7NxmAzyi6YAJ/xwaw
- 3sKFh8yk4Sujv/MOss=
-X-Google-Smtp-Source: AGHT+IFjpl6m1jaIeHTjlF56vf6akmXx7NzDGQ74+Z6jKG/7KN881ftEHOTe6qYrzyWWrD2mdeJGNKSivbStXQ1FRoc=
-X-Received: by 2002:a05:6902:2304:b0:e8f:e24f:b80e with SMTP id
- 3f1490d57ef6-e93323c3a84mr3943233276.11.1755280351604; Fri, 15 Aug 2025
- 10:52:31 -0700 (PDT)
+ bh=EUv6WNMhAWGqe25yhZcpcBNXuFlzNFTDYjQBZ6rbxs0=;
+ b=VFLicUdaMWxZmMXuoDksqf6wFcwq4RqLAo2HgmtzFjpVhUAxO9uqta0yMrUsyyklB1
+ OEFMonevDjbCNkBQPqkou9SuqYuaOhkOF81ZqmkPS+mF9y01nxOujedyOAYj5MR3gQop
+ hSTgLV8RVHhssXpP59NuujuT8NVWm4MnEvMZDkFL5+AXJdOe51Q0DY3PUiLR/EVuGX6C
+ TQS6o/PfFQPyqoSXcMlXykGU/ov8WPT5SSgYvn8Q2MitaG9QwW605VzNmoN7gPVCaEFF
+ yvhrG7bsFsCcF2tqMy/ut9kWmU0l+onJiycThIiOCL7aYyLf31nNdTeQzBVk8QSMPix6
+ lifg==
+X-Gm-Message-State: AOJu0YwDbb+TX125QUvf2YAFlvunODUjal/jsnOQZ/U2K4+q5Zb8++iC
+ xBk5nzKwcR87UyypO3xVBFf1/hDnjixektlWyAbSbsbit7erGxBtY7t0hHaYr41blBbOXXA/O1T
+ iOmjz6bpljOOMzPr9KeFqIW6UkolYnerLFMkYJ+VznbZ40vnTS5aZ
+X-Gm-Gg: ASbGncucm14y6i9RgGYg8qtV6vbAm4v9ymoPR1M2MDi8GFnE7oq9iqrgtAFmnbxkuXu
+ wojioK9jtMNLysjmXWdHmQ9S4g06GuUZJfBWhHqn55eBaSISJhngNGx89yXDZlvxru42rE7jimp
+ KnuyeLvWlzDK/tsJY/UOpgCIgUVasKFWa7POxlop0XQE5baQZqODwlHkW/40jZicEef318jxqkk
+ ch15YsE
+X-Google-Smtp-Source: AGHT+IGyCen5iSn7dkV0K51mLkOxngm4EgLLP5wfryHo++ErsO8oki13MF85FEJ2ZSmWU1TKrEwRaK3gOEZd8NtQrOQ=
+X-Received: by 2002:a05:690c:6e08:b0:719:61b8:ffd2 with SMTP id
+ 00721157ae682-71e6dd8815emr38220157b3.1.1755280574469; Fri, 15 Aug 2025
+ 10:56:14 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250721201134.13270-1-fanyihao@rt-thread.org>
- <20250721201134.13270-3-fanyihao@rt-thread.org>
-In-Reply-To: <20250721201134.13270-3-fanyihao@rt-thread.org>
+ <20250721201134.13270-2-fanyihao@rt-thread.org>
+In-Reply-To: <20250721201134.13270-2-fanyihao@rt-thread.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Aug 2025 18:52:19 +0100
-X-Gm-Features: Ac12FXxq-hLO9e9NM3tVNqpznv2BSycgPK4I8QXflJSo2Jm7nbSEymDoYyIOUL8
-Message-ID: <CAFEAcA_BGuq5Eqwz6sX7STzsgY1jVOQ=hFyb6gQBvdT3vpTuQw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] Add the STM32F4spark Machine
+Date: Fri, 15 Aug 2025 18:56:02 +0100
+X-Gm-Features: Ac12FXzbB8nj-Ht_0R5t1lh5ryffBdC3Fc2LfL2DlngkX70lTLwQD_YomGGcb8A
+Message-ID: <CAFEAcA8Dq_Pm8tVZP9VS-oJnO2VVgsFyqrj4vn0AdMcCqz9zWw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] Add-the-stm32f407-SoC
 To: fanyihao@rt-thread.org
-Cc: qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair@alistair23.me>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,79 +97,27 @@ On Mon, 21 Jul 2025 at 21:11, <fanyihao@rt-thread.org> wrote:
 >
 > From: Yihao Fan <fanyihao@rt-thread.org>
 >
-> Add the STM32F4spark machine model using the STM32F407 SoC.
->
-> Signed-off-by: Yihao Fan <fanyihao@rt-thread.org>
-> ---
->  MAINTAINERS           |  7 +++++++
->  hw/arm/Kconfig        |  6 ++++++
->  hw/arm/meson.build    |  1 +
->  hw/arm/stm32f4spark.c | 48 +++++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 62 insertions(+)
->  create mode 100644 hw/arm/stm32f4spark.c
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 2744639a8b..0dc7c7bf60 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1030,6 +1030,13 @@ S: Maintained
->  F: hw/arm/stm32vldiscovery.c
->  F: docs/system/arm/stm32.rst
->
-> +STM32F4SPARK
-> +M: yanl1229 <yanl1229@rt-thread.org>
-> +M: Yihao Fan <fanyihao@rt-thread.org>
-> +L: qemu-arm@nongnu.org
-> +S: Maintained
-> +F: hw/arm/stm32f4spark.c
-> +
->  Versatile Express
->  M: Peter Maydell <peter.maydell@linaro.org>
->  L: qemu-arm@nongnu.org
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index 4b2f71e6e1..3706a65286 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -234,6 +234,12 @@ config STM32VLDISCOVERY
->      depends on TCG && ARM
->      select STM32F100_SOC
->
-> +config STM32F4SPARK
-> +    bool
-> +    default y
-> +    depends on TCG && ARM
-> +    select STM32F407_SOC
-> +
->  config STRONGARM
->      bool
->      select PXA2XX_TIMER
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 31621060ba..ec63ed7373 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -17,6 +17,7 @@ arm_common_ss.add(when: 'CONFIG_REALVIEW', if_true: files('realview.c'))
->  arm_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa-ref.c'))
->  arm_common_ss.add(when: 'CONFIG_STELLARIS', if_true: files('stellaris.c'))
->  arm_common_ss.add(when: 'CONFIG_STM32VLDISCOVERY', if_true: files('stm32vldiscovery.c'))
-> +arm_common_ss.add(when: 'CONFIG_STM32F4SPARK', if_true: files('stm32f4spark.c'))
->  arm_common_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xilinx_zynq.c'))
->  arm_common_ss.add(when: 'CONFIG_SABRELITE', if_true: files('sabrelite.c'))
->
-> diff --git a/hw/arm/stm32f4spark.c b/hw/arm/stm32f4spark.c
+> This patch introduces a new QEMU machine type for the STM32F407 SoC featuring a Cortex-M4 core.
+> This will be used by the RT-Spark to create a machine.
+
+
+The Subject line of this patch seems to have hyphens
+instead of spaces. A "hw/arm:" prefix would also be helpful.
+
+> diff --git a/hw/arm/stm32f407_soc.c b/hw/arm/stm32f407_soc.c
 > new file mode 100644
-> index 0000000000..e1d656a3f9
+> index 0000000000..0a91d4bb10
 > --- /dev/null
-> +++ b/hw/arm/stm32f4spark.c
-> @@ -0,0 +1,48 @@
+> +++ b/hw/arm/stm32f407_soc.c
+> @@ -0,0 +1,130 @@
 > +/* SPDX-License-Identifier: GPL-2.0-or-later */
 
-Generally files should have something more than just the SPDX
-tag in their opening comment. Usually that is a statement
-of what the file contains. This is also a good place to put
-a URL to the datasheet/reference manual/etc for the hardware
-being modelled.
+This seems very similar to the existing stm32f05_soc.c.
+How different are these two SoCs? Would it make sense
+to share code?
 
-Otherwise this patch looks OK.
+I've cc'd Alistair as the maintainer of the stm32f05.
 
+thanks
 -- PMM
 
