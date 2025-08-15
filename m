@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52B0CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 13:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B07FCA0ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 13:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umuBY-00069v-L2; Fri, 15 Aug 2025 09:09:32 -0400
+	id 1umuCJ-0006g4-Jj; Fri, 15 Aug 2025 09:10:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umuBW-00069V-6w
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 09:09:30 -0400
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ id 1umuCH-0006aR-Gb
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 09:10:17 -0400
+Received: from mail-yb1-xb2d.google.com ([2607:f8b0:4864:20::b2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umuBT-0002of-OA
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 09:09:29 -0400
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e933af9f8b5so108739276.0
- for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 06:09:27 -0700 (PDT)
+ id 1umuCG-00035e-3n
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 09:10:17 -0400
+Received: by mail-yb1-xb2d.google.com with SMTP id
+ 3f1490d57ef6-e931c85710aso2010056276.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 06:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755263366; x=1755868166; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755263415; x=1755868215; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eNnnnAKQC3kbe0z20XYAbU8h7BreX6jnZJOpX4WVIi0=;
- b=dBgwdTy82x9WDNYkFkoKOhXKeb4/9EJWaTSLBwnbQpSHstw4mQTzC2R0ScPaPuVjpX
- ree7IaBX3gOGtv/WmxmoG5nJ+MgHjqI7L3PPppHKDXonB2A3WgHrtvugubmv2tcru4H4
- ixX7+1BZNRlu9o81CdZEnFKm9dtTRkbqedHTMEWQz2oGFd9PgfywMcmIb0qTc1nY7m6L
- dWneQjPE6dmUgwObZqzLUKqLpLuBH6U7OEz7wW1EA/285ZQeSr4/FovBWEF5ab3WG8lN
- v4J6WYInMSiMGyfahEtZkRDD5cfWtr3NFKIXeA5vqrGSUgfUkQDVNRaigLlgJ6sOOYuQ
- J8Jw==
+ bh=5u0lCipA4X+GACjgF7Ot4lRwzxPciMAuQVdFOtkb0Nk=;
+ b=MuxfAe7V8GjqVyIcjiz7rJKkztooDXThHUAcIgO57lMlNjXr5l363xv/RQQnRxA+F4
+ UCuX/9oYpNkcr8OCsj1PLEASFlM0oqKtKPtR17ISkepf0cG5tkWdJwfjjgh7qMYOV0CG
+ +Fq3MD/CHlnjEpR+zMRvgH8HxU3Gt5Yt0OeWeOMJcUxuc+t8oKNtIXVEuiIL5WaiKEi5
+ qQlbIlFRyOEbS6H/CUUQa+HDFPVxf7q6mGqn83INGMjYFmByVwgyvgv9JkcAjNX55e0q
+ 58utb3RUg2YGPRg+3gCIEXc5H3RC+ko75QURw6wZ/m0W1Eta1tTwemtYjbHwDTlpq8Zl
+ quMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755263366; x=1755868166;
+ d=1e100.net; s=20230601; t=1755263415; x=1755868215;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eNnnnAKQC3kbe0z20XYAbU8h7BreX6jnZJOpX4WVIi0=;
- b=D2uuzN19cJZNgMYD2CJwd38juUAEpoJ8vyFOSGV2ZweesSsuBhIXgzInXuRSuc6qY9
- JRktfgZOL4q6sYG+Iv5Z7MrW45ejJ1VFrwlyX0Wyzgz8smc0KVohSyFBi3icGEdVL0CD
- R9lDwkjxFX2eeIlwR08WSxV99vHSoNjOj/cAqQkIKB7xzVLg/sR26cedUzJvjciqem67
- x7e+bRw468wIrn2sUOwpinwpwfHo5FnoKcG5s5YLfslQ9j3ZoCQtc8Jy00oGZUD+fbOw
- +sg18bPGdRP7BbCmW4wdZKQjKFYl9PCxeZu6VmXA9dr8xPD9CHtcTuIVcQAVvKpTRvpZ
- G+1Q==
-X-Gm-Message-State: AOJu0Yzdm2+6rlRqq6+XRgXVPyvm9BpbhiQo2AoE4ErvMVPkC7XK/OQ5
- jCAjcCPET9AxoqWy3CQ5Pe+96gsH/NKy8qxiooo4pH8FIEmpDCP5HD2jsKYIUbQ4PrgbG+kYVBn
- nM6gWUENik44T9GhJf/cLp43Ted+QXVWpPyRv7dnPKg==
-X-Gm-Gg: ASbGncvKAunKAM+cqnjPfNY6kyCwRnx4HQQASkYZLwyaYAn1/nMiiSACxne25EctNUS
- JHil41WUZbWqAjcOvRNZ2l042jKR2omDvW84h5O0yrsosLVnJX0PzDYXfPbg5IItbnf58efciTo
- x2ngo+0caGTuK6I8d+8pwKbbZeZMFbA7/b1nsdpmMhzJaCNcbhJ6090OEtrF/50q1gTj65tRXlo
- /aC+3et
-X-Google-Smtp-Source: AGHT+IFcHyJy/F9bQKIEMST3bfgy2Ezn9plUC+TFKkh9vPSFE6OrJ6Z0C3p7rSGRXepIDgu+VrCV0BAW4hWaCCnPsqs=
-X-Received: by 2002:a05:6902:102d:b0:e91:d090:8250 with SMTP id
- 3f1490d57ef6-e93323d602amr2642509276.7.1755263366212; Fri, 15 Aug 2025
- 06:09:26 -0700 (PDT)
+ bh=5u0lCipA4X+GACjgF7Ot4lRwzxPciMAuQVdFOtkb0Nk=;
+ b=Nu7V3K7jf+CmYqDzQ3Lh+bsTMoZlc+IK5DUbpqpeMGXjBuotsukGzDMj1WNIedff65
+ aZvR5SZ8HA2zQSLZU1Xe94LhFeFTAzrWbCPQcO4/1QQjA2yoPmBuVOUc3U42/WLQn4PC
+ 3XsB2YNOQdA4oXGuI46RVPuZ6t9ae3CXxvLTqE+eIoP7TIAllZvd13Mb6Nh7DV7NRs6j
+ 8EpfUFuNTNkzlL7XznLfQRMG65LxVT3HneKcIlW7NGqhj+KlAGtluttW9SiaA1yYYzWn
+ BKYPmpNuJS0QwWU+IVEihOTTGYAIch190Jah2XMbtD6jGSnVVMjiiCHbBH4Hdj9/l4fI
+ 3v1w==
+X-Gm-Message-State: AOJu0Yy2139eSaVjpctVu3xgdZ9OQ3LAxJIBz4P3oTz9k8pEhzKprFdv
+ GHepXoxVRskSMbCe4dPkwCW0PZL4btr0XGS4jX1sxIYLDMSwhKa8vfvjJyQdGpOd/RXJhhXE58r
+ YM6fKSdR5WTkhEDKYNg6ILkb+EHA/xOaYBT445wvqliOq/gP1f4HL
+X-Gm-Gg: ASbGncurWpYXZ0HMlaGQMkkWHN+ptmxBc7Ry3i71bRVvAixTAbu9+oJ8n55muOqXeP6
+ dkYEKW4ihdcvnQ86Khy35Rp5nZJA+FOKS/w+c73cOAt2gptx/GSj9Ki8/GOpQrGp4p7L5EYUQdm
+ tKnyOPIez7JDdVJZhYz3808uqn1JudKXNgY1bpJ58pjh9ErsVRWGn1PD6g+69PgkScpSppPb+Aw
+ Cc1354E
+X-Google-Smtp-Source: AGHT+IFGOjnGrQjo9yDoRhI8Vswbe/TGu1kpN2dSYRSeUdFrMzqa3gYfcNivclhFP3Fp2y5t/ph6Sc0ecmROjxLk0yo=
+X-Received: by 2002:a05:6902:161d:b0:e90:5bf0:12bc with SMTP id
+ 3f1490d57ef6-e9332502088mr2624587276.41.1755263414659; Fri, 15 Aug 2025
+ 06:10:14 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250803014019.416797-1-richard.henderson@linaro.org>
- <20250803014019.416797-5-richard.henderson@linaro.org>
-In-Reply-To: <20250803014019.416797-5-richard.henderson@linaro.org>
+ <20250803014019.416797-7-richard.henderson@linaro.org>
+In-Reply-To: <20250803014019.416797-7-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Aug 2025 14:09:13 +0100
-X-Gm-Features: Ac12FXx43hKic7iXid1o2BczbfgDd5c0e5gvEQa8e7enoBdeGX0BzUwXZhg4am4
-Message-ID: <CAFEAcA_qMsMonkx0Kwkuk+S8p7vcSQo2AeWGKB4zKtUMTP8Qew@mail.gmail.com>
-Subject: Re: [PATCH 04/11] target/arm: Split out gen_wrap2_i32 helper
+Date: Fri, 15 Aug 2025 14:10:03 +0100
+X-Gm-Features: Ac12FXy4mweU9aRbT7i8qM0Ol7pmx-VAU6gaBMz_GR76JK-8nEAst9LJrqH6D3c
+Message-ID: <CAFEAcA8dpPXVWib-0v-tn8QL7QXfyiGJqhvbykcp1YWOgUE=2g@mail.gmail.com>
+Subject: Re: [PATCH 06/11] target/arm: Enable FEAT_CSSC for -cpu max
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,43 +93,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 3 Aug 2025 at 02:42, Richard Henderson
+On Sun, 3 Aug 2025 at 02:41, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Wrapper to extract the low 32 bits, perform an operation,
-> and zero-extend back to 64 bits.
->
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-a64.c | 21 +++++++++++----------
->  1 file changed, 11 insertions(+), 10 deletions(-)
->
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index bb92bdc296..64a845d5fb 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -8231,13 +8231,18 @@ static bool gen_rr(DisasContext *s, int rd, int rn, ArithOneOp fn)
->      return true;
->  }
->
 
-A brief comment here would help:
-
-  /*
-   * Perform 32-bit operation fn on the low half of n;
-   * the high half of the output is zeroed.
-   */
-> +static void gen_wrap2_i32(TCGv_i64 d, TCGv_i64 n, NeonGenOneOpFn fn)
-> +{
-> +    TCGv_i32 t = tcg_temp_new_i32();
-> +
-> +    tcg_gen_extrl_i64_i32(t, n);
-> +    fn(t, t);
-> +    tcg_gen_extu_i32_i64(d, t);
-> +}
-> +
-
-Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
