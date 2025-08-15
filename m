@@ -4,137 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D9ECA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 19:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5DDCA0ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 19:38:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1un0FP-0002Bw-PW; Fri, 15 Aug 2025 15:37:55 -0400
+	id 1un0Fu-0002Ni-6h; Fri, 15 Aug 2025 15:38:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1un0FK-0002BH-8n
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 15:37:51 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1un0FH-0005vC-S8
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 15:37:50 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1919A218E5;
- Fri, 15 Aug 2025 19:37:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755286665; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p2BF51zTaTn0nQsNGpB5EX/faj6jKaLhugGuHHdmw5A=;
- b=OfyoFmatspmbEvQQA+cxUxkWG1EfsdpU/XOo5Ngg56abiRptvIAZvBhkgyW+a4Ruhr+d8u
- 6f8NEVfBm2a/puo5lvIkuENLmFWS/Dlc76aFH3GdXGBmZVYBFvd9oL023rNBJYIXh4IpYg
- +WudvRk66iolBkMV2PctPyM6XmafmpM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755286665;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p2BF51zTaTn0nQsNGpB5EX/faj6jKaLhugGuHHdmw5A=;
- b=H39acyvKBZePfU9I0xCdb7XZ9D4EMiLt9AYSOepzlVUKdooxR26HZ2GfBQCXCO9j1lapH3
- 2ON20UgZ51rPN9Bg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=OfyoFmat;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=H39acyvK
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755286665; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p2BF51zTaTn0nQsNGpB5EX/faj6jKaLhugGuHHdmw5A=;
- b=OfyoFmatspmbEvQQA+cxUxkWG1EfsdpU/XOo5Ngg56abiRptvIAZvBhkgyW+a4Ruhr+d8u
- 6f8NEVfBm2a/puo5lvIkuENLmFWS/Dlc76aFH3GdXGBmZVYBFvd9oL023rNBJYIXh4IpYg
- +WudvRk66iolBkMV2PctPyM6XmafmpM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755286665;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p2BF51zTaTn0nQsNGpB5EX/faj6jKaLhugGuHHdmw5A=;
- b=H39acyvKBZePfU9I0xCdb7XZ9D4EMiLt9AYSOepzlVUKdooxR26HZ2GfBQCXCO9j1lapH3
- 2ON20UgZ51rPN9Bg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4B4331368C;
- Fri, 15 Aug 2025 19:37:44 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2PwXEoiMn2i9VwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 15 Aug 2025 19:37:44 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Cornelia Huck
- <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, Eric Farman
- <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, Richard Henderson
- <richard.henderson@linaro.org>, David Hildenbrand <david@redhat.com>, Ilya
- Leoshkevich <iii@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, Alex Williamson
- <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>, Steve
- Sistare <steven.sistare@oracle.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- Hailiang Zhang <zhanghailiang@xfusion.com>, Stefan Berger
- <stefanb@linux.vnet.ibm.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Arun Menon <armenon@redhat.com>
-Subject: Re: [PATCH v11 14/27] migration: push Error **errp into
- ram_postcopy_incoming_init()
-In-Reply-To: <20250813-propagate_tpm_error-v11-14-b470a374b42d@redhat.com>
-References: <20250813-propagate_tpm_error-v11-0-b470a374b42d@redhat.com>
- <20250813-propagate_tpm_error-v11-14-b470a374b42d@redhat.com>
-Date: Fri, 15 Aug 2025 16:37:41 -0300
-Message-ID: <87v7moxtoa.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>)
+ id 1un0Fs-0002Lj-CA; Fri, 15 Aug 2025 15:38:24 -0400
+Received: from mail-m16.yeah.net ([220.197.32.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>)
+ id 1un0Fo-0005xy-BA; Fri, 15 Aug 2025 15:38:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=PN
+ g+wTrmTTLoLgU6tKSOWk/nt3Gsu/A6S6G6VoF0+Lw=; b=ht2yBPHvshOBFbcwKl
+ vI8R9XzRvEz1ELGzaqnH++EuOlVcBP3uHhAjYqDIT+19i+3f6558ZWyyS4ntG4Fa
+ Rfzq7Lc/WFE1wZCMw7xoBusddiSXtTm+Z9uphCM6BuGUKopAhgar9AKG4fvK2MCZ
+ KZQp69fdqQfsjwlawNbVWM6Eg=
+Received: from ZEVORN-PC (unknown [])
+ by gzsmtp2 (Coremail) with SMTP id Ms8vCgBHf_eFjJ9oXmS4Ag--.35272S4;
+ Sat, 16 Aug 2025 03:37:43 +0800 (CST)
+From: Chao Liu <chao.liu@yeah.net>
+To: paolo.savini@embecosm.com, dbarboza@ventanamicro.com, ebiggers@kernel.org,
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Chao Liu <chao.liu@yeah.net>
+Subject: [PATCH v1 2/2] tests/tcg/riscv64: Add test for vlsseg8e32 instruction
+Date: Sat, 16 Aug 2025 03:37:35 +0800
+Message-ID: <9f9171bf03fb15c4caa9196dd7d3b240d9d76785.1755286233.git.chao.liu@yeah.net>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <cover.1755286233.git.chao.liu@yeah.net>
+References: <cover.1755286233.git.chao.liu@yeah.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCPT_COUNT_TWELVE(0.00)[32]; MIME_TRACE(0.00)[0:+];
- FREEMAIL_CC(0.00)[redhat.com,linaro.org,rsg.ci.i.u-tokyo.ac.jp,collabora.com,gmail.com,linux.ibm.com,euphon.net,oracle.com,nongnu.org,xfusion.com,linux.vnet.ibm.com];
- DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- R_RATELIMIT(0.00)[to_ip_from(RLzasi9boc9ahn35s1z6tc8qwy)];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email]
-X-Rspamd-Queue-Id: 1919A218E5
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: Ms8vCgBHf_eFjJ9oXmS4Ag--.35272S4
+X-Coremail-Antispam: 1Uf129KBjvJXoWxWr4DXr1UXr1xWF1UCr4rXwb_yoW5urW3pr
+ 15Gw4qkr4vq343Ka43GF1UuFyrWr4F9F1UXFy8K3W09rW8ZFZruF4ktFWUtFyrAw4UCr13
+ uFnYqF1rKanxA3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07Uf9NsUUUUU=
+X-Originating-IP: [240e:b8f:29d6:3800:f820:962e:d888:73d]
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiBAyqKGifE7XlUgAAss
+Received-SPF: pass client-ip=220.197.32.18; envelope-from=chao.liu@yeah.net;
+ helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,16 +72,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Arun Menon <armenon@redhat.com> writes:
+This case, it copied 64 bytes from a0 to a1 with vlsseg8e32.
 
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> It is ensured that ram_postcopy_incoming_init() must report an error
-> in errp, in case of failure.
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Arun Menon <armenon@redhat.com>
+Signed-off-by: Chao Liu <chao.liu@yeah.net>
+---
+ tests/tcg/riscv64/Makefile.softmmu-target |   8 +-
+ tests/tcg/riscv64/test-vlsseg8e32.S       | 108 ++++++++++++++++++++++
+ 2 files changed, 114 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-vlsseg8e32.S
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 7c1d44d3f4..c3c5b66713 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -7,18 +7,22 @@ VPATH += $(TEST_SRC)
+ 
+ LINK_SCRIPT = $(TEST_SRC)/semihost.ld
+ LDFLAGS = -T $(LINK_SCRIPT)
+-CFLAGS += -g -Og
++CFLAGS += -march=rv64gcv -mabi=lp64d -g -Og
+ 
+ %.o: %.S
+ 	$(CC) $(CFLAGS) $< -Wa,--noexecstack -c -o $@
+ %: %.o $(LINK_SCRIPT)
+ 	$(LD) $(LDFLAGS) $< -o $@
+ 
+-QEMU_OPTS += -M virt -display none -semihosting -device loader,file=
++QEMU_OPTS += -M virt -cpu rv64,v=true -display none -semihosting -device loader,file=
+ 
+ EXTRA_RUNS += run-issue1060
+ run-issue1060: issue1060
+ 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-vlsseg8e32
++run-vlsseg8e32: test-vlsseg8e32
++	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-vlsseg8e32.S b/tests/tcg/riscv64/test-vlsseg8e32.S
+new file mode 100644
+index 0000000000..2861ff3702
+--- /dev/null
++++ b/tests/tcg/riscv64/test-vlsseg8e32.S
+@@ -0,0 +1,108 @@
++#
++# QEMU RISC-V Vector Strided Load Instruction testcase
++#
++# Copyright (c) 2025 Chao Liu chao.liu@yeah.net
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++
++	.option	norvc
++
++	.section .data
++	.align 4
++source_data:
++	.asciz "Test the vlsseg8e32 insn by copy 64b and verifying correctness."
++	.equ source_len, 64
++
++	.text
++	.global _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++
++enable_rvv:
++
++	li	x15, 0x800000000024112d
++	csrw	0x301, x15
++	li	x1, 0x2200
++	csrr	x2, mstatus
++	or	x2, x2, x1
++	csrw	mstatus, x2
++
++rvv_test_func:
++	la	a0, source_data
++	li	a1, 0x80020000
++	vsetivli	zero, 1, e32, m1, ta, ma
++	li	t0, 64
++
++	vlsseg8e32.v	v0, (a0), t0
++	addi	a0, a0, 32
++	vlsseg8e32.v	v8, (a0), t0
++
++	vssseg8e32.v	v0, (a1), t0
++	addi	a1, a1, 32
++	vssseg8e32.v	v8, (a1), t0
++
++compare_start:
++	la	a0, source_data
++	li	a1, 0x80020000
++	li	t0, 0
++	li	t1, source_len
++
++compare_loop:
++	# when t0 >= len, compare end
++	bge	 t0, t1, compare_done
++
++	lb	t2, 0(a0)
++	lb	t3, 0(a1)
++	bne	t2, t3, compare_fail
++
++	addi	a0, a0, 1
++	addi	a1, a1, 1
++	addi	t0, t0, 1
++	j	compare_loop
++
++compare_done:
++	# compare ok, return 0
++	li	a0, 0
++	j	_exit
++
++compare_fail:
++	# compare failed, return 2
++	li	a0, 2
++	j	_exit
++
++trap:
++	# When an instruction traps, compare it to the insn in memory.
++	csrr	t0, mepc
++	csrr	t1, mtval
++	lwu	t2, 0(t0)
++	bne	t1, t2, fail
++
++	# Skip the insn and continue.
++	addi	t0, t0, 4
++	csrw	mepc, t0
++	mret
++
++fail:
++	li	a0, 1
++
++# Exit code in a0
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+-- 
+2.50.1
+
 
