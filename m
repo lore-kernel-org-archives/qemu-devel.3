@@ -4,53 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8CFCA0EEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 17:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B141CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 17:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umxn3-00079T-Ib; Fri, 15 Aug 2025 13:00:29 -0400
+	id 1umyVU-0007v8-Dn; Fri, 15 Aug 2025 13:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1umxn1-000795-BN
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:00:27 -0400
-Received: from mail-a.sr.ht ([46.23.81.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1umxmv-00017T-QY
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:00:27 -0400
-DKIM-Signature: a=rsa-sha256; bh=zDPqldTnfSbcDiXc33QPJwBpwqkxMBuyVd45rzAlBZg=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1755277216; v=1;
- b=RIfXYZ/EFF2liIy2HZ8bpebsQcY4pItEia2mz0sNNSXXwMt2czkQTqhteBgAFOTksrx0tx+3
- 1xw/EpdD4h9mGvuk8+B+1WVAuJ8AykriN1NOOdjshuuyD9FB8FoavrZclXx5wAL7gdUvY+CKwfP
- WX6299ClXBA9JROB/C9Fsz/+EFvx8J9ANgmJCaBwvwbwN1KkLEefQpldHJD5tmi/oqW3GrEOzbJ
- ZUZQVR9CsAQV93oSj7cwWny28EWfTg26YRD9ML0iNaBqfUj6Fnad//zGsrUahuD0ZtP+UVABJ3j
- mgRETV3GRHnAe77+PWXdxRYs4q85QOtCtondk6jSrtsuA==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id CF50522F01;
- Fri, 15 Aug 2025 17:00:16 +0000 (UTC)
-From: ~myrslint <myrslint@git.sr.ht>
-Date: Fri, 15 Aug 2025 16:53:09 +0000
-Subject: [PATCH qemu v4 1/1] Default disable ignore guest PAT quirk
-Message-ID: <175527721636.15451.4393515241478547957-1@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <175527721636.15451.4393515241478547957-0@git.sr.ht>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1umyVS-0007ui-7f
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:46:22 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1umyVQ-0004UP-NT
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:46:21 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e931c866031so2272368276.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 10:46:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755279979; x=1755884779; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=c0OAUuDxPH4t0qR8Ah82zH2za1yyknDhnYxTZY6+ByU=;
+ b=pjrVFn+AAEg7OqO1oFX/faQJAhVuKq9o6o/ZR9BXaNJayzV2IUjNTCp2TdwcEYYlGT
+ IUBg6sKp0cQifkWQ9zwNeIGHiOJcY3PNvQcLwkQlVE2hB92fhib2B7htUio/bz0SBrKj
+ 8PdLOniNfMcJXk4UMBkf3HGaZqpEJ7K8WoLbJoZDhjF+/TOsLNO/EqcJWBQ1HF8o/siY
+ I9QdMzRk5y5sBYJugY79JIZt4RKva7Xl5/IEQaljO6Q+vaYp+b2wi8z/cPIlmGkZW8Ft
+ 1evZl/PUlw7e+YN4LKfTPI9Is4faSj09yDRvP8+Af9Ubowfb3uWxhAag4Whkjpawn8vI
+ aqEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755279979; x=1755884779;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=c0OAUuDxPH4t0qR8Ah82zH2za1yyknDhnYxTZY6+ByU=;
+ b=ipqoSS8mvy6b1bExvyYVpsTQj31Or+X04yvEWYn6Eo5in3HUuKPAz07T4M8E5e1+Nq
+ 4EsF3yuN1+OfAX12WtpuYgXLtIhpcvVJ/F1ZhX7JyJFZoiDoa0Z/5BOaDmaFoSFqpc0l
+ KUbI427de/pbLVIl0/i28mH6oiKhkdHqeDOyErMIqa9bVsMmA2dQ70MNzBqaiU5PyuGU
+ tpe24IIO5C1rO8htxWPEMJQosBFdVlU7Wu9BTIRms2resXhkj0SamEkNlc9jf/W/od26
+ FeEdWoQ4IrI4SsD5+5yTDJtJUI5Nw8+Yfs6+zI868bYcdF4LLL/2Oteg20olAGCsGr3J
+ 6RRg==
+X-Gm-Message-State: AOJu0Yw/Z25nRwo4v7oeklbXynrlHeHMjJJU9AxdvGeDehG6ugOCEorZ
+ NDPGDkcN5jjpsAhGjeHYTteQiFhplPm2kDLgU6JPj4aQl9gTIOjgDMz25ZmPnASrp6C0pdCcN7U
+ DaA8a7Tl8AeOamKY63Y5Qn+46H5NBrd7EdWtKuIHiCGMqo/KLEepW
+X-Gm-Gg: ASbGncudg4mJzH1iw32b5mg2/q62JW1PwIStWpqJgJ6bIRsZNRqahSwzdI/qbofms/r
+ RbJ4lDYpdNkU6n33hplUlRpGXDzOPm5IidavQ23Ht7Pno6HGZzD+yNzicY1QJ00LhemUP/bZ0F2
+ tUpPHprBeLvUY6DdjRlcKLreD6aJU1mhqw0nM2S/QBs2lW+qcRZ9iujErzLRNzFIVc85zCyIHkl
+ GyXomvl
+X-Google-Smtp-Source: AGHT+IE1n0iaqgI/LgKD1cC8BTk9wxxOa0RRgbpxojJ51e6+TcUdXYdFO/v1RiIasF6I33MnkBYPSVFZlQFl/T1bkpk=
+X-Received: by 2002:a05:6902:6006:b0:e8d:7b84:cb46 with SMTP id
+ 3f1490d57ef6-e93324a0758mr3559892276.32.1755279978864; Fri, 15 Aug 2025
+ 10:46:18 -0700 (PDT)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250721201134.13270-1-fanyihao@rt-thread.org>
+ <20250721201134.13270-4-fanyihao@rt-thread.org>
+In-Reply-To: <20250721201134.13270-4-fanyihao@rt-thread.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 15 Aug 2025 18:46:06 +0100
+X-Gm-Features: Ac12FXxFHdUVPitcGHoqof8MxPArvutbVzl9jyo_PvMEABN1ZKe6JlCIcbNJZfE
+Message-ID: <CAFEAcA82eVxnvGomgzSegXBBqcc3_wtPQhV3b4cLcxikfTK13w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] Add STM32F4xx USART device model
+To: fanyihao@rt-thread.org
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,58 +90,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~myrslint <myrskylintu@proton.me>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: myrslint <qemu.haziness801@passinbox.com>
+On Mon, 21 Jul 2025 at 21:11, <fanyihao@rt-thread.org> wrote:
+>
+> From: Yihao Fan <fanyihao@rt-thread.org>
+>
+> This patch adds support for the STM32F407 USART controllers device model.
+>
+> Signed-off-by: Yihao Fan <fanyihao@rt-thread.org>
+> ---
+>  MAINTAINERS                       |   2 +
+>  hw/arm/Kconfig                    |   1 +
+>  hw/arm/stm32f407_soc.c            |  25 +++
+>  hw/char/Kconfig                   |   3 +
+>  hw/char/meson.build               |   1 +
+>  hw/char/stm32f4xx_usart.c         | 236 ++++++++++++++++++++++++++++++
+>  include/hw/arm/stm32f407_soc.h    |   8 +
+>  include/hw/char/stm32f4xx_usart.h |  60 ++++++++
 
-Most Intel CPUs in current use have self-snoop. The few added lines of
-code also check for availability of the quirk disablement option so if
-some CPU does not have this feature no change of behavior will occur.
+We generally prefer two separate patches for this:
+(1) implementation of the new device
+(2) add the new device to the SoC
 
-Signed-off-by: Myrsky Lintu <qemu.haziness801@passinbox.com>
+> --- /dev/null
+> +++ b/hw/char/stm32f4xx_usart.c
+> @@ -0,0 +1,236 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +#include "qemu/osdep.h"
+> +#include "hw/char/stm32f4xx_usart.h"
+> +#include "qemu/log.h"
+> +#include "hw/irq.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/qdev-properties-system.h"
+> +#include "qemu/module.h"
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2943
----
- target/i386/kvm/kvm.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+This looks very similar to the existing stm32f2xx USART.
+How different are these two devices? Could we share
+code by having them be two child classes which adjust
+what features the device exposes?
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 369626f8c8..1102866a89 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -16,6 +16,7 @@
- #include "qapi/qapi-events-run-state.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
-+#include <asm-x86/kvm.h>
- #include <math.h>
- #include <sys/ioctl.h>
- #include <sys/utsname.h>
-@@ -3367,6 +3368,21 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         }
-     }
-=20
-+    /* rationale: most x86 cpus in current use have self-snoop so honoring
-+     * guest pat is preferrable. as well, the bochs video driver bug which
-+     * motivated making this a default enabled quirk in kvm was fixed long a=
-go
-+     * */
-+    /* check if disabling this quirk is feasible and allowed */
-+    ret =3D kvm_check_extension(s, KVM_CAP_DISABLE_QUIRKS2);
-+    if (ret & KVM_X86_QUIRK_IGNORE_GUEST_PAT) {
-+        ret =3D kvm_vm_enable_cap(s, KVM_CAP_DISABLE_QUIRKS2, 0, \
-+                                KVM_X86_QUIRK_IGNORE_GUEST_PAT);
-+        if (ret < 0) {
-+            error_report("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
-+                         "modifiable but we failed to disable it\n");
-+        }
-+    }
-+
-     return 0;
- }
-=20
---=20
-2.49.1
+thanks
+- PMM
 
