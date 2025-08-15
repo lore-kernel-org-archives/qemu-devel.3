@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C43CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 17:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C17CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 18:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umyf6-0002Vm-LB; Fri, 15 Aug 2025 13:56:20 -0400
+	id 1umypX-0004nm-Ti; Fri, 15 Aug 2025 14:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umyf4-0002VI-HC
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:56:18 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ id 1umypW-0004mh-2o
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 14:07:06 -0400
+Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umyf2-00074N-7y
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 13:56:17 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e9321ed5e5eso1438681276.3
- for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 10:56:15 -0700 (PDT)
+ id 1umypU-0000lw-8E
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 14:07:05 -0400
+Received: by mail-yb1-xb36.google.com with SMTP id
+ 3f1490d57ef6-e9321ed5e5eso1447326276.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 11:07:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755280574; x=1755885374; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=EUv6WNMhAWGqe25yhZcpcBNXuFlzNFTDYjQBZ6rbxs0=;
- b=TllUdNkZ8oOmpSep5iJskH6wcLtG3Esdzn8B5h/nmXOXIS1HAD+cyi2/oS/WRdweyi
- x1ZsmXqQhWRVl6hkGNDVyw2ovahzhE1xOA4OUIknmh4KJesWwy472+bLkpDeXnREsynp
- 4j6hm7eJFjdbT/8pdN7a90m9Bucb5A4SX317twiJkO1znDTlJSJGj0oG6fnfNBUNbgrH
- qgM9MLGF3XX4eeXqvh6ef+kyoiXRbMH7MTF2/JUlkZ+t6OBeEOKEeB9LG9mDbAFUOfbB
- wMATxiaoEJkbKsQ868QRY0NUsMuCartb32CsupDcXMa8HsceXwTsJZ978hQncdNQyLbE
- 8bzQ==
+ d=linaro.org; s=google; t=1755281222; x=1755886022; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RhikmQwDDIYVmPEkyOKvfVc6L9/rN3K5YGSsXvDjuO4=;
+ b=csyXDIUemcLS+LKb41mAXFIfDg9ZwzUsd2L+TaBL7jkjRUc5B0VJF5Hw2/d0CO/eHZ
+ WPnc6da6o0lEmuGQN/VaWjEMwyzR9d5ExmToJ4KuZo5k3b2Elw16vcyS9jqDv8c93ybe
+ mTSDtzMl3xWd1K9c8dA6fphnrx0YR+JCUXpk/9pzOh/uBY674td4Ckeyngj6vXC71s1B
+ Yv7lUPuuNwkenUZpQ7qi7GxRfX2MIpNfKA+vi+yBCQ8sf0rChUKzhyX2il4XybkdxCTx
+ mrxKbYTe8ZG8gc3esPAw+wJ89/jbLH7xosjXp2Dzs6sOxpBFDcL4Bq3g8meny37W++JW
+ rYCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755280574; x=1755885374;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EUv6WNMhAWGqe25yhZcpcBNXuFlzNFTDYjQBZ6rbxs0=;
- b=VFLicUdaMWxZmMXuoDksqf6wFcwq4RqLAo2HgmtzFjpVhUAxO9uqta0yMrUsyyklB1
- OEFMonevDjbCNkBQPqkou9SuqYuaOhkOF81ZqmkPS+mF9y01nxOujedyOAYj5MR3gQop
- hSTgLV8RVHhssXpP59NuujuT8NVWm4MnEvMZDkFL5+AXJdOe51Q0DY3PUiLR/EVuGX6C
- TQS6o/PfFQPyqoSXcMlXykGU/ov8WPT5SSgYvn8Q2MitaG9QwW605VzNmoN7gPVCaEFF
- yvhrG7bsFsCcF2tqMy/ut9kWmU0l+onJiycThIiOCL7aYyLf31nNdTeQzBVk8QSMPix6
- lifg==
-X-Gm-Message-State: AOJu0YwDbb+TX125QUvf2YAFlvunODUjal/jsnOQZ/U2K4+q5Zb8++iC
- xBk5nzKwcR87UyypO3xVBFf1/hDnjixektlWyAbSbsbit7erGxBtY7t0hHaYr41blBbOXXA/O1T
- iOmjz6bpljOOMzPr9KeFqIW6UkolYnerLFMkYJ+VznbZ40vnTS5aZ
-X-Gm-Gg: ASbGncucm14y6i9RgGYg8qtV6vbAm4v9ymoPR1M2MDi8GFnE7oq9iqrgtAFmnbxkuXu
- wojioK9jtMNLysjmXWdHmQ9S4g06GuUZJfBWhHqn55eBaSISJhngNGx89yXDZlvxru42rE7jimp
- KnuyeLvWlzDK/tsJY/UOpgCIgUVasKFWa7POxlop0XQE5baQZqODwlHkW/40jZicEef318jxqkk
- ch15YsE
-X-Google-Smtp-Source: AGHT+IGyCen5iSn7dkV0K51mLkOxngm4EgLLP5wfryHo++ErsO8oki13MF85FEJ2ZSmWU1TKrEwRaK3gOEZd8NtQrOQ=
-X-Received: by 2002:a05:690c:6e08:b0:719:61b8:ffd2 with SMTP id
- 00721157ae682-71e6dd8815emr38220157b3.1.1755280574469; Fri, 15 Aug 2025
- 10:56:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1755281222; x=1755886022;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RhikmQwDDIYVmPEkyOKvfVc6L9/rN3K5YGSsXvDjuO4=;
+ b=u4/36fpRkaSHPFz8ef0Wb5ugwdonKJ5mk1rqOyQtEORLr+o6EXedwswISeWBE2SqEr
+ ctvO2a9QrpZGqAwr14dFM3uvc72WVKVVF4tHRe8GKSAbwS7Kw34Tt9G/4bosHXQq8X6A
+ doBqRiA0VFH/kzdP0oW6oAtzlfcGve0ryTWLULtYLCs/hzQ7DQxKWignWDoIxS9Omd9w
+ pHg9F9n5asSpDLJwdCyK52cbXYKvosxFZXr9p19024pwNiuawVUWZ7ikNs0L+LR+HRTG
+ P1dgw2mqyQ5D/2zzq5ne77p3Xb6Tp6UGmVa2g+qucdEB+OrifEv/azODM3En/nac062Q
+ Ebzw==
+X-Gm-Message-State: AOJu0YzyODAjub+HR78vKpfANMbqJsW2isYz8nS1EBxkqhjD8XWqSASW
+ YZ3GjXZ93Xe+EdAc9EYmikXR51QWR4RqTVGickpQxMMTYvPFRc2nvkwSw9awk8TfBhKoWZOFPx8
+ uYqwSKO2ausnDP94asMNMV5OkzEbInJodh0gu4AaNZA==
+X-Gm-Gg: ASbGncuH/GCcHO5PfTgJ8tyah2ov+RxD7lJf5dKHTXB/YhR8BiZ1W3ZiRXdDpdFHT1I
+ ovuePBX3g68TeA7sr1gXHgKid+8blrL8Cl8JdyZG8c4pT7WeOrdmpqPK2byGA3buu34vCKQ3Tl+
+ sZNWrpr9AqeJmBjaXzqGG2qRvvE2apQl7PSBa+q22x2u9gwSEF893fGZQ2Anj0mu5xBSM1akGP+
+ Oi9g9I2x35PReQnib8=
+X-Google-Smtp-Source: AGHT+IHSLxPf5G+GX0YzK3h0logrDUGBXlfy1J6opL/BLqAumjqi38vuYsIeWB5oK+MLptsdRyXw+QMvpvwUkx1dGV0=
+X-Received: by 2002:a05:6902:188c:b0:e93:37a0:dca3 with SMTP id
+ 3f1490d57ef6-e9337a0e5d8mr3152534276.47.1755281222556; Fri, 15 Aug 2025
+ 11:07:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250721201134.13270-1-fanyihao@rt-thread.org>
- <20250721201134.13270-2-fanyihao@rt-thread.org>
-In-Reply-To: <20250721201134.13270-2-fanyihao@rt-thread.org>
+References: <20250815090113.141641-1-corvin.koehne@gmail.com>
+In-Reply-To: <20250815090113.141641-1-corvin.koehne@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Aug 2025 18:56:02 +0100
-X-Gm-Features: Ac12FXzbB8nj-Ht_0R5t1lh5ryffBdC3Fc2LfL2DlngkX70lTLwQD_YomGGcb8A
-Message-ID: <CAFEAcA8Dq_Pm8tVZP9VS-oJnO2VVgsFyqrj4vn0AdMcCqz9zWw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] Add-the-stm32f407-SoC
-To: fanyihao@rt-thread.org
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair@alistair23.me>
+Date: Fri, 15 Aug 2025 19:06:50 +0100
+X-Gm-Features: Ac12FXzTal8gWfbDSF2X4HwabUYteAr0EMiFM8Qq2yetuJFIvP3UuLIRS4HoetA
+Message-ID: <CAFEAcA9y-0-Oe5beVObe+SZqmByRSOYkCaKM1FDjeo0jdxjjCQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/14] hw/arm: add Beckhoff CX7200 board
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
+ qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,30 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 21 Jul 2025 at 21:11, <fanyihao@rt-thread.org> wrote:
+On Fri, 15 Aug 2025 at 10:01, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
+rote:
 >
-> From: Yihao Fan <fanyihao@rt-thread.org>
+> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
 >
-> This patch introduces a new QEMU machine type for the STM32F407 SoC featuring a Cortex-M4 core.
-> This will be used by the RT-Spark to create a machine.
+> Hi,
+>
+> Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
+> platform. This commit series adds the Beckhoff CX7200 as new board varian=
+t to
+> QEMU.
+>
+> The emulation is able to successfully boot an CX7200 image. The image inc=
+ludes
+> some self tests executed on every boot. Only the cache self test fails du=
+e to
+> QEMU emulating the cache as always being coherent. The self tests include=
+ f.e.:
+>
+> * Network
+> * Flash
+> * CCAT DMA + EEPROM [1]
+> * TwinCAT (Beckhoff's automation control software [2])
+>
+> [1] https://github.com/beckhoff/ccat
+> [2] https://www.beckhoff.com/en-us/products/automation/
+>
+> YannickV (14):
+>   hw/timer: Make frequency configurable
+>   hw/timer: Make PERIPHCLK period configurable
+>   hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
+>   hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
+>   hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
+>     user mode
+>   hw/dma/zynq-devcfg: Simulate dummy PL reset
+>   hw/dma/zynq-devcfg: Indicate power-up status of PL
+>   hw/dma/zynq-devcfg: Fix register memory
+>   hw/misc: Add dummy ZYNQ DDR controller
+>   hw/misc/zynq_slcr: Add logic for DCI configuration
+>   hw/misc: Add Beckhoff CCAT device
+>   hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+>   hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
+>   docs/system/arm: Add support for Beckhoff CX7200
 
-
-The Subject line of this patch seems to have hyphens
-instead of spaces. A "hw/arm:" prefix would also be helpful.
-
-> diff --git a/hw/arm/stm32f407_soc.c b/hw/arm/stm32f407_soc.c
-> new file mode 100644
-> index 0000000000..0a91d4bb10
-> --- /dev/null
-> +++ b/hw/arm/stm32f407_soc.c
-> @@ -0,0 +1,130 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-
-This seems very similar to the existing stm32f05_soc.c.
-How different are these two SoCs? Would it make sense
-to share code?
-
-I've cc'd Alistair as the maintainer of the stm32f05.
+This patchset is on my list to review. As an initial request,
+for a new board could we have a test in tests/functional/
+please? This is basically a simple test that downloads
+a guest image from some public stable URL, runs it on QEMU,
+and checks for some output on the UART that indicates
+that it succeeded. (You can do more complex things like
+sending commands to the guest if you want/need to, but
+"does it basically boot" is the minimum bar here.)
+The other files in tests/functional/ should hopefully
+serve as examples you can pattern your test on.
 
 thanks
 -- PMM
