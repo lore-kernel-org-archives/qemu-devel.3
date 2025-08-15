@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B045DCA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 19:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42EBCA0ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 19:56:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1un0XK-0003yW-Fm; Fri, 15 Aug 2025 15:56:26 -0400
+	id 1un0XN-0003zx-0i; Fri, 15 Aug 2025 15:56:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>)
- id 1un0XJ-0003yC-7H; Fri, 15 Aug 2025 15:56:25 -0400
-Received: from mail-m16.yeah.net ([220.197.32.16])
+ id 1un0XK-0003yf-FS; Fri, 15 Aug 2025 15:56:26 -0400
+Received: from mail-m16.yeah.net ([1.95.21.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>)
- id 1un0XF-0004r9-7n; Fri, 15 Aug 2025 15:56:24 -0400
+ id 1un0XF-0004r8-K0; Fri, 15 Aug 2025 15:56:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version:
- Content-Type; bh=1fiKA4dy0xdL90wRaaFduyn2+bDZ4La+jQDUFpYQD/Q=;
- b=HXldxkWnkTwEQQmjteNJMWWTwuPpZnzK3zaG2HnaZU9l00jyP9Rwp+YghF4Dlf
- 08D6/IFbQ5/o9IHYPvUnCCzKCqqj6G0s3YfG0v7G/yHCTZcgVEL6ZPf4Cme5Fnxw
- H1OnWsiANXe6dAF+vFjP7lI64cf4c5sIX2cgyOGL70ciM=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=PN
+ g+wTrmTTLoLgU6tKSOWk/nt3Gsu/A6S6G6VoF0+Lw=; b=FO11YaTxhZbz4eogeZ
+ G/RYWJR0y0HDQ1xxoYnGFQpRmwlDPWLKeuwvL/b8tV3qgnZfP7+7W8SL33c0OkLa
+ 0McW/hHBwHqZDcNP8+LFroegct5v7epR+yiEHZ6+KaGvMpHkAXm4SnwIlpq+UFAc
+ s8/Nq/DMC38E2eBFGAzfozQ74=
 Received: from ZEVORN-PC (unknown [])
- by gzsmtp1 (Coremail) with SMTP id Mc8vCgCHtrLGkJ9ocCKuAg--.20443S3;
- Sat, 16 Aug 2025 03:55:51 +0800 (CST)
+ by gzsmtp1 (Coremail) with SMTP id Mc8vCgCHtrLGkJ9ocCKuAg--.20443S4;
+ Sat, 16 Aug 2025 03:55:52 +0800 (CST)
 From: Chao Liu <chao.liu@yeah.net>
 To: paolo.savini@embecosm.com, dbarboza@ventanamicro.com, ebiggers@kernel.org,
  palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Chao Liu <chao.liu@yeah.net>
-Subject: [PATCH v2 1/2] target/riscv: fix vector register address calculation
- in strided LD/ST
-Date: Sat, 16 Aug 2025 03:55:40 +0800
-Message-ID: <ee461421503da741d4cf6d2486b8596862fc0b7f.1755287531.git.chao.liu@yeah.net>
+Subject: [PATCH v2 2/2] tests/tcg/riscv64: Add test for vlsseg8e32 instruction
+Date: Sat, 16 Aug 2025 03:55:41 +0800
+Message-ID: <5c9df353c77f6eec479975f41efc3de6e17a47c3.1755287531.git.chao.liu@yeah.net>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1755287531.git.chao.liu@yeah.net>
 References: <cover.1755287531.git.chao.liu@yeah.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: Mc8vCgCHtrLGkJ9ocCKuAg--.20443S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw1UuF1xtr1DGFW5Xr13Jwb_yoW8ZFyrpr
- sYkry7Kr45WFWfZFZ2yr48JryYqayFgr4jkw4qgwn8XFW5Xr47tF4vga42kF18JrWxur12
- 9ayUuay5uw13uFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UaD73UUUUU=
+X-CM-TRANSID: Mc8vCgCHtrLGkJ9ocCKuAg--.20443S4
+X-Coremail-Antispam: 1Uf129KBjvJXoWxWr4DXr1UXr1xWF1UCr4rXwb_yoW5urW3pr
+ 15Gw4qkr4vq343Ka43GF1UuFyrWr4F9F1UXFy8K3W09rW8ZFZruF4ktFWUtFyrAw4UCr13
+ uFnYqF1rKanxA3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07Uf9NsUUUUU=
 X-Originating-IP: [240e:b8f:29d6:3800:f820:962e:d888:73d]
-X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiIghYgGifkMgwkgAA3-
-Received-SPF: pass client-ip=220.197.32.16; envelope-from=chao.liu@yeah.net;
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiIghYgGifkMgwlAAA35
+Received-SPF: pass client-ip=1.95.21.14; envelope-from=chao.liu@yeah.net;
  helo=mail-m16.yeah.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -74,88 +72,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch fixes a critical bug in the RISC-V vector instruction
-translation that caused incorrect data handling in strided load
-operations (e.g., vlsseg8e32).
-
-Problem Description:
-
-The `get_log2` function in `trans_rvv.c.inc` returned a value 1 higher
-than the actual log2 value. For example, get_log2(4) incorrectly
-returned 3 instead of 2.
-
-This led to erroneous vector register offset calculations, resulting in
-data overlap where bytes 32-47 were incorrectly copied to positions
-16-31 in ChaCha20 encryption code.
-
-rvv_test_func:
-    vsetivli    zero, 1, e32, m1, ta, ma
-    li          t0, 64
-
-    vlsseg8e32.v v0, (a0), t0
-    addi        a0, a0, 32
-    vlsseg8e32.v v8, (a0), t0
-
-    vssseg8e32.v v0, (a1), t0
-    addi        a1, a1, 32
-    vssseg8e32.v v8, (a1), t0
-    ret
-
-Analysis:
-
-The original implementation counted the number of right shifts until
-zero, including the final shift that reduced the value to zero:
-
-static inline uint32_t get_log2(uint32_t a)
-{
-    uint32_t i = 0;
-    for (; a > 0;) {
-        a >>= 1;
-        i++;
-    }
-    return i; // Returns 3 for a=4 (0b100 → 0b10 → 0b1 → 0b0)
-}
-
-Fix:
-
-The corrected function stops shifting when only the highest bit remains
-and handles the special case of a=0:
-
-static inline uint32_t get_log2(uint32_t a)
-{
-    uint32_t i = 0;
-    if (a == 0) {
-        return i; // Handle edge case
-    }
-    for (; a > 1; a >>= 1) {
-        i++;
-    }
-    return i; // Now returns 2 for a=4
-}
-
-Fixes: 28c12c1f2f ("Generate strided vector loads/stores with tcg nodes.")
+This case, it copied 64 bytes from a0 to a1 with vlsseg8e32.
 
 Signed-off-by: Chao Liu <chao.liu@yeah.net>
 ---
- target/riscv/insn_trans/trans_rvv.c.inc | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tests/tcg/riscv64/Makefile.softmmu-target |   8 +-
+ tests/tcg/riscv64/test-vlsseg8e32.S       | 108 ++++++++++++++++++++++
+ 2 files changed, 114 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-vlsseg8e32.S
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2b6077ac06..f50b62b1d8 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -877,7 +877,10 @@ static inline uint32_t MAXSZ(DisasContext *s)
- static inline uint32_t get_log2(uint32_t a)
- {
-     uint32_t i = 0;
--    for (; a > 0;) {
-+    if (a == 0) {
-+        return i;
-+    }
-+    for (; a > 1;) {
-         a >>= 1;
-         i++;
-     }
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 7c1d44d3f4..c3c5b66713 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -7,18 +7,22 @@ VPATH += $(TEST_SRC)
+ 
+ LINK_SCRIPT = $(TEST_SRC)/semihost.ld
+ LDFLAGS = -T $(LINK_SCRIPT)
+-CFLAGS += -g -Og
++CFLAGS += -march=rv64gcv -mabi=lp64d -g -Og
+ 
+ %.o: %.S
+ 	$(CC) $(CFLAGS) $< -Wa,--noexecstack -c -o $@
+ %: %.o $(LINK_SCRIPT)
+ 	$(LD) $(LDFLAGS) $< -o $@
+ 
+-QEMU_OPTS += -M virt -display none -semihosting -device loader,file=
++QEMU_OPTS += -M virt -cpu rv64,v=true -display none -semihosting -device loader,file=
+ 
+ EXTRA_RUNS += run-issue1060
+ run-issue1060: issue1060
+ 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-vlsseg8e32
++run-vlsseg8e32: test-vlsseg8e32
++	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-vlsseg8e32.S b/tests/tcg/riscv64/test-vlsseg8e32.S
+new file mode 100644
+index 0000000000..2861ff3702
+--- /dev/null
++++ b/tests/tcg/riscv64/test-vlsseg8e32.S
+@@ -0,0 +1,108 @@
++#
++# QEMU RISC-V Vector Strided Load Instruction testcase
++#
++# Copyright (c) 2025 Chao Liu chao.liu@yeah.net
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++
++	.option	norvc
++
++	.section .data
++	.align 4
++source_data:
++	.asciz "Test the vlsseg8e32 insn by copy 64b and verifying correctness."
++	.equ source_len, 64
++
++	.text
++	.global _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++
++enable_rvv:
++
++	li	x15, 0x800000000024112d
++	csrw	0x301, x15
++	li	x1, 0x2200
++	csrr	x2, mstatus
++	or	x2, x2, x1
++	csrw	mstatus, x2
++
++rvv_test_func:
++	la	a0, source_data
++	li	a1, 0x80020000
++	vsetivli	zero, 1, e32, m1, ta, ma
++	li	t0, 64
++
++	vlsseg8e32.v	v0, (a0), t0
++	addi	a0, a0, 32
++	vlsseg8e32.v	v8, (a0), t0
++
++	vssseg8e32.v	v0, (a1), t0
++	addi	a1, a1, 32
++	vssseg8e32.v	v8, (a1), t0
++
++compare_start:
++	la	a0, source_data
++	li	a1, 0x80020000
++	li	t0, 0
++	li	t1, source_len
++
++compare_loop:
++	# when t0 >= len, compare end
++	bge	 t0, t1, compare_done
++
++	lb	t2, 0(a0)
++	lb	t3, 0(a1)
++	bne	t2, t3, compare_fail
++
++	addi	a0, a0, 1
++	addi	a1, a1, 1
++	addi	t0, t0, 1
++	j	compare_loop
++
++compare_done:
++	# compare ok, return 0
++	li	a0, 0
++	j	_exit
++
++compare_fail:
++	# compare failed, return 2
++	li	a0, 2
++	j	_exit
++
++trap:
++	# When an instruction traps, compare it to the insn in memory.
++	csrr	t0, mepc
++	csrr	t1, mtval
++	lwu	t2, 0(t0)
++	bne	t1, t2, fail
++
++	# Skip the insn and continue.
++	addi	t0, t0, 4
++	csrw	mepc, t0
++	mret
++
++fail:
++	li	a0, 1
++
++# Exit code in a0
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
 2.50.1
 
