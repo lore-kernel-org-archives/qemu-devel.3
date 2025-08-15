@@ -4,87 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C17CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 18:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E198CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 18:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umypX-0004nm-Ti; Fri, 15 Aug 2025 14:07:07 -0400
+	id 1umzHO-0004b4-Lk; Fri, 15 Aug 2025 14:35:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umypW-0004mh-2o
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 14:07:06 -0400
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1umzHM-0004Yh-5Q
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 14:35:52 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umypU-0000lw-8E
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 14:07:05 -0400
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-e9321ed5e5eso1447326276.3
- for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 11:07:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755281222; x=1755886022; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RhikmQwDDIYVmPEkyOKvfVc6L9/rN3K5YGSsXvDjuO4=;
- b=csyXDIUemcLS+LKb41mAXFIfDg9ZwzUsd2L+TaBL7jkjRUc5B0VJF5Hw2/d0CO/eHZ
- WPnc6da6o0lEmuGQN/VaWjEMwyzR9d5ExmToJ4KuZo5k3b2Elw16vcyS9jqDv8c93ybe
- mTSDtzMl3xWd1K9c8dA6fphnrx0YR+JCUXpk/9pzOh/uBY674td4Ckeyngj6vXC71s1B
- Yv7lUPuuNwkenUZpQ7qi7GxRfX2MIpNfKA+vi+yBCQ8sf0rChUKzhyX2il4XybkdxCTx
- mrxKbYTe8ZG8gc3esPAw+wJ89/jbLH7xosjXp2Dzs6sOxpBFDcL4Bq3g8meny37W++JW
- rYCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755281222; x=1755886022;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RhikmQwDDIYVmPEkyOKvfVc6L9/rN3K5YGSsXvDjuO4=;
- b=u4/36fpRkaSHPFz8ef0Wb5ugwdonKJ5mk1rqOyQtEORLr+o6EXedwswISeWBE2SqEr
- ctvO2a9QrpZGqAwr14dFM3uvc72WVKVVF4tHRe8GKSAbwS7Kw34Tt9G/4bosHXQq8X6A
- doBqRiA0VFH/kzdP0oW6oAtzlfcGve0ryTWLULtYLCs/hzQ7DQxKWignWDoIxS9Omd9w
- pHg9F9n5asSpDLJwdCyK52cbXYKvosxFZXr9p19024pwNiuawVUWZ7ikNs0L+LR+HRTG
- P1dgw2mqyQ5D/2zzq5ne77p3Xb6Tp6UGmVa2g+qucdEB+OrifEv/azODM3En/nac062Q
- Ebzw==
-X-Gm-Message-State: AOJu0YzyODAjub+HR78vKpfANMbqJsW2isYz8nS1EBxkqhjD8XWqSASW
- YZ3GjXZ93Xe+EdAc9EYmikXR51QWR4RqTVGickpQxMMTYvPFRc2nvkwSw9awk8TfBhKoWZOFPx8
- uYqwSKO2ausnDP94asMNMV5OkzEbInJodh0gu4AaNZA==
-X-Gm-Gg: ASbGncuH/GCcHO5PfTgJ8tyah2ov+RxD7lJf5dKHTXB/YhR8BiZ1W3ZiRXdDpdFHT1I
- ovuePBX3g68TeA7sr1gXHgKid+8blrL8Cl8JdyZG8c4pT7WeOrdmpqPK2byGA3buu34vCKQ3Tl+
- sZNWrpr9AqeJmBjaXzqGG2qRvvE2apQl7PSBa+q22x2u9gwSEF893fGZQ2Anj0mu5xBSM1akGP+
- Oi9g9I2x35PReQnib8=
-X-Google-Smtp-Source: AGHT+IHSLxPf5G+GX0YzK3h0logrDUGBXlfy1J6opL/BLqAumjqi38vuYsIeWB5oK+MLptsdRyXw+QMvpvwUkx1dGV0=
-X-Received: by 2002:a05:6902:188c:b0:e93:37a0:dca3 with SMTP id
- 3f1490d57ef6-e9337a0e5d8mr3152534276.47.1755281222556; Fri, 15 Aug 2025
- 11:07:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1umzHI-0001vg-G3
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 14:35:51 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4B80A211B0;
+ Fri, 15 Aug 2025 18:35:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1755282943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SnU//gsmJV6nYhqrYYl/MMhX9oE5wwD59sKBz7ms9og=;
+ b=AXvygzX+YjfHZZg6ZkJ5ORJMhYuukUVf0E8ho+M3V+01/LNRO9xsJtWJ+wxDd45gmTAj/9
+ VldMA0YT8Om4dCGLJNmyj1h8am5OsmNk9QQ58H1kZAy596tusLgPHAZVAT+f5fl9Xpuogt
+ 5Y1fzNYwzQ7prKOF+CIR+6d54aHaVko=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1755282943;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SnU//gsmJV6nYhqrYYl/MMhX9oE5wwD59sKBz7ms9og=;
+ b=fuW9h3/Hj/yEHkrXPvcDNyaVYp4UJkhJM9sCsoQXR6kplc8h2IAvSoZ33+SBlYsKpvKfJb
+ rQ9Gt9sy84zyDbAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=AXvygzX+;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="fuW9h3/H"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1755282943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SnU//gsmJV6nYhqrYYl/MMhX9oE5wwD59sKBz7ms9og=;
+ b=AXvygzX+YjfHZZg6ZkJ5ORJMhYuukUVf0E8ho+M3V+01/LNRO9xsJtWJ+wxDd45gmTAj/9
+ VldMA0YT8Om4dCGLJNmyj1h8am5OsmNk9QQ58H1kZAy596tusLgPHAZVAT+f5fl9Xpuogt
+ 5Y1fzNYwzQ7prKOF+CIR+6d54aHaVko=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1755282943;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SnU//gsmJV6nYhqrYYl/MMhX9oE5wwD59sKBz7ms9og=;
+ b=fuW9h3/Hj/yEHkrXPvcDNyaVYp4UJkhJM9sCsoQXR6kplc8h2IAvSoZ33+SBlYsKpvKfJb
+ rQ9Gt9sy84zyDbAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7E5F713876;
+ Fri, 15 Aug 2025 18:35:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id DKGTHv59n2h8RwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 15 Aug 2025 18:35:42 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Cornelia Huck
+ <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, Eric Farman
+ <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, Richard Henderson
+ <richard.henderson@linaro.org>, David Hildenbrand <david@redhat.com>, Ilya
+ Leoshkevich <iii@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, Alex Williamson
+ <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>, Steve
+ Sistare <steven.sistare@oracle.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Hailiang Zhang <zhanghailiang@xfusion.com>, Stefan Berger
+ <stefanb@linux.vnet.ibm.com>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org, Arun Menon <armenon@redhat.com>
+Subject: Re: [PATCH v11 05/27] migration: push Error **errp into
+ loadvm_process_command()
+In-Reply-To: <20250813-propagate_tpm_error-v11-5-b470a374b42d@redhat.com>
+References: <20250813-propagate_tpm_error-v11-0-b470a374b42d@redhat.com>
+ <20250813-propagate_tpm_error-v11-5-b470a374b42d@redhat.com>
+Date: Fri, 15 Aug 2025 15:35:40 -0300
+Message-ID: <87frdszb43.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250815090113.141641-1-corvin.koehne@gmail.com>
-In-Reply-To: <20250815090113.141641-1-corvin.koehne@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Aug 2025 19:06:50 +0100
-X-Gm-Features: Ac12FXzTal8gWfbDSF2X4HwabUYteAr0EMiFM8Qq2yetuJFIvP3UuLIRS4HoetA
-Message-ID: <CAFEAcA9y-0-Oe5beVObe+SZqmByRSOYkCaKM1FDjeo0jdxjjCQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/14] hw/arm: add Beckhoff CX7200 board
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
- qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, 
- =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
+X-Rspamd-Queue-Id: 4B80A211B0
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCPT_COUNT_TWELVE(0.00)[32]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_CC(0.00)[redhat.com,linaro.org,rsg.ci.i.u-tokyo.ac.jp,collabora.com,gmail.com,linux.ibm.com,euphon.net,oracle.com,nongnu.org,xfusion.com,linux.vnet.ibm.com];
+ DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
+ R_RATELIMIT(0.00)[to_ip_from(RLzasi9boc9ahn35s1z6tc8qwy)];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,61 +150,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 15 Aug 2025 at 10:01, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
-rote:
->
-> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
->
-> Hi,
->
-> Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
-> platform. This commit series adds the Beckhoff CX7200 as new board varian=
-t to
-> QEMU.
->
-> The emulation is able to successfully boot an CX7200 image. The image inc=
-ludes
-> some self tests executed on every boot. Only the cache self test fails du=
-e to
-> QEMU emulating the cache as always being coherent. The self tests include=
- f.e.:
->
-> * Network
-> * Flash
-> * CCAT DMA + EEPROM [1]
-> * TwinCAT (Beckhoff's automation control software [2])
->
-> [1] https://github.com/beckhoff/ccat
-> [2] https://www.beckhoff.com/en-us/products/automation/
->
-> YannickV (14):
->   hw/timer: Make frequency configurable
->   hw/timer: Make PERIPHCLK period configurable
->   hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
->   hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
->   hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
->     user mode
->   hw/dma/zynq-devcfg: Simulate dummy PL reset
->   hw/dma/zynq-devcfg: Indicate power-up status of PL
->   hw/dma/zynq-devcfg: Fix register memory
->   hw/misc: Add dummy ZYNQ DDR controller
->   hw/misc/zynq_slcr: Add logic for DCI configuration
->   hw/misc: Add Beckhoff CCAT device
->   hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
->   hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
->   docs/system/arm: Add support for Beckhoff CX7200
+Arun Menon <armenon@redhat.com> writes:
 
-This patchset is on my list to review. As an initial request,
-for a new board could we have a test in tests/functional/
-please? This is basically a simple test that downloads
-a guest image from some public stable URL, runs it on QEMU,
-and checks for some output on the UART that indicates
-that it succeeded. (You can do more complex things like
-sending commands to the guest if you want/need to, but
-"does it basically boot" is the minimum bar here.)
-The other files in tests/functional/ should hopefully
-serve as examples you can pattern your test on.
+> This is an incremental step in converting vmstate loading
+> code to report error via Error objects instead of directly
+> printing it to console/monitor.
+> It is ensured that loadvm_process_command() must report an error
+> in errp, in case of failure.
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>  migration/savevm.c | 82 +++++++++++++++++++++++++++++++++++++++---------=
+------
+>  1 file changed, 60 insertions(+), 22 deletions(-)
+>
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 7f79461844105bf672314c3325caee9cdb654c27..715cc35394cac5fe225ef88cf=
+448714a02321bd7 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2546,32 +2546,35 @@ static int loadvm_postcopy_handle_switchover_star=
+t(void)
+>   * LOADVM_QUIT All good, but exit the loop
+>   * <0          Error
+>   */
+> -static int loadvm_process_command(QEMUFile *f)
+> +static int loadvm_process_command(QEMUFile *f, Error **errp)
+>  {
+>      MigrationIncomingState *mis =3D migration_incoming_get_current();
+>      uint16_t cmd;
+>      uint16_t len;
+>      uint32_t tmp32;
+> +    int ret;
+>=20=20
+>      cmd =3D qemu_get_be16(f);
+>      len =3D qemu_get_be16(f);
+>=20=20
+>      /* Check validity before continue processing of cmds */
+> -    if (qemu_file_get_error(f)) {
+> -        return qemu_file_get_error(f);
+> +    ret =3D qemu_file_get_error(f);
+> +    if (ret) {
+> +        error_setg(errp, "Failed to load VM process command: %d", ret);
 
-thanks
--- PMM
+"Failed to process command: stream error: %d"
+
+> +        return ret;
+>      }
+>=20=20
+>      if (cmd >=3D MIG_CMD_MAX || cmd =3D=3D MIG_CMD_INVALID) {
+> -        error_report("MIG_CMD 0x%x unknown (len 0x%x)", cmd, len);
+> +        error_setg(errp, "MIG_CMD 0x%x unknown (len 0x%x)", cmd, len);
+>          return -EINVAL;
+>      }
+>=20=20
+>      trace_loadvm_process_command(mig_cmd_args[cmd].name, len);
+>=20=20
+>      if (mig_cmd_args[cmd].len !=3D -1 && mig_cmd_args[cmd].len !=3D len)=
+ {
+> -        error_report("%s received with bad length - expecting %zu, got %=
+d",
+> -                     mig_cmd_args[cmd].name,
+> -                     (size_t)mig_cmd_args[cmd].len, len);
+> +        error_setg(errp, "%s received with bad length - expecting %zu, g=
+ot %d",
+> +                   mig_cmd_args[cmd].name,
+> +                   (size_t)mig_cmd_args[cmd].len, len);
+>          return -ERANGE;
+>      }
+>=20=20
+
+Where's MIG_CMD_OPEN_RETURN_PATH?
+
+> @@ -2594,11 +2597,10 @@ static int loadvm_process_command(QEMUFile *f)
+>           * been created.
+>           */
+>          if (migrate_switchover_ack() && !mis->switchover_ack_pending_num=
+) {
+> -            int ret =3D migrate_send_rp_switchover_ack(mis);
+> +            ret =3D migrate_send_rp_switchover_ack(mis);
+>              if (ret) {
+> -                error_report(
+> -                    "Could not send switchover ack RP MSG, err %d (%s)",=
+ ret,
+> -                    strerror(-ret));
+> +                error_setg_errno(errp, -ret,
+> +                                 "Could not send switchover ack RP MSG");
+>                  return ret;
+>              }
+>          }
+> @@ -2608,39 +2610,71 @@ static int loadvm_process_command(QEMUFile *f)
+>          tmp32 =3D qemu_get_be32(f);
+>          trace_loadvm_process_command_ping(tmp32);
+>          if (!mis->to_src_file) {
+> -            error_report("CMD_PING (0x%x) received with no return path",
+> -                         tmp32);
+> +            error_setg(errp, "CMD_PING (0x%x) received with no return pa=
+th",
+> +                       tmp32);
+>              return -1;
+>          }
+>          migrate_send_rp_pong(mis, tmp32);
+>          break;
+>=20=20
+>      case MIG_CMD_PACKAGED:
+> -        return loadvm_handle_cmd_packaged(mis);
+> +        ret =3D loadvm_handle_cmd_packaged(mis);
+
+I missed a lot of the discussion in this series, but I assume there's a
+good reason to not put the conversion of each command first in the
+series, so there's no need for temporary code in this patch.
+
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to load device state command: %d", =
+ret);
+> +        }
+> +        return ret;
+>=20=20
+>      case MIG_CMD_POSTCOPY_ADVISE:
+> -        return loadvm_postcopy_handle_advise(mis, len);
+> +        ret =3D loadvm_postcopy_handle_advise(mis, len);
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to load device state command: %d", =
+ret);
+> +        }
+> +        return ret;
+>=20=20
+>      case MIG_CMD_POSTCOPY_LISTEN:
+> -        return loadvm_postcopy_handle_listen(mis);
+> +        ret =3D loadvm_postcopy_handle_listen(mis);
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to load device state command: %d", =
+ret);
+> +        }
+> +        return ret;
+>=20=20
+>      case MIG_CMD_POSTCOPY_RUN:
+> -        return loadvm_postcopy_handle_run(mis);
+> +        ret =3D loadvm_postcopy_handle_run(mis);
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to load device state command: %d", =
+ret);
+> +        }
+> +        return ret;
+>=20=20
+>      case MIG_CMD_POSTCOPY_RAM_DISCARD:
+> -        return loadvm_postcopy_ram_handle_discard(mis, len);
+> +        ret =3D loadvm_postcopy_ram_handle_discard(mis, len);
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to load device state command: %d", =
+ret);
+> +        }
+> +        return ret;
+>=20=20
+>      case MIG_CMD_POSTCOPY_RESUME:
+>          return loadvm_postcopy_handle_resume(mis);
+>=20=20
+>      case MIG_CMD_RECV_BITMAP:
+> -        return loadvm_handle_recv_bitmap(mis, len);
+> +        ret =3D loadvm_handle_recv_bitmap(mis, len);
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to load device state command: %d", =
+ret);
+> +        }
+> +        return ret;
+>=20=20
+>      case MIG_CMD_ENABLE_COLO:
+> -        return loadvm_process_enable_colo(mis);
+> +        ret =3D loadvm_process_enable_colo(mis);
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to load device state command: %d", =
+ret);
+> +        }
+> +        return ret;
+>=20=20
+>      case MIG_CMD_SWITCHOVER_START:
+> -        return loadvm_postcopy_handle_switchover_start();
+> +        ret =3D loadvm_postcopy_handle_switchover_start();
+> +        if (ret < 0) {
+> +            error_setg(errp, "Failed to load device state command: %d", =
+ret);
+> +        }
+> +        return ret;
+>      }
+>=20=20
+>      return 0;
+> @@ -3051,6 +3085,7 @@ int qemu_loadvm_state_main(QEMUFile *f, MigrationIn=
+comingState *mis)
+>  {
+>      uint8_t section_type;
+>      int ret =3D 0;
+> +    Error *local_err =3D NULL;
+>=20=20
+>  retry:
+>      while (true) {
+> @@ -3078,7 +3113,10 @@ retry:
+>              }
+>              break;
+>          case QEMU_VM_COMMAND:
+> -            ret =3D loadvm_process_command(f);
+> +            ret =3D loadvm_process_command(f, &local_err);
+> +            if (ret < 0) {
+> +                warn_report_err(local_err);
+
+Again, some throwaway code here. Commit message could have made this
+clear: "For now, report the error with warn_report until all callers
+have been converted to pass errp".
+
+> +            }
+>              trace_qemu_loadvm_state_section_command(ret);
+>              if ((ret < 0) || (ret =3D=3D LOADVM_QUIT)) {
+>                  goto out;
 
