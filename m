@@ -4,73 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCA2CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 19:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5C8CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 19:52:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1un0Jy-0006sn-PA; Fri, 15 Aug 2025 15:42:38 -0400
+	id 1un0Si-0000PO-AO; Fri, 15 Aug 2025 15:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1un0Jw-0006rE-5O
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 15:42:36 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1un0Sg-0000O9-KR
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 15:51:38 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1un0Jt-0006bm-Av
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 15:42:35 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1un0Sf-0002ux-8s
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 15:51:38 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D4F152174A;
- Fri, 15 Aug 2025 19:42:31 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id F2DDE1F83E;
+ Fri, 15 Aug 2025 19:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755286952; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1755287496; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XjSdna22ewJq+OemP53+vu5KKGkywff13jLRegwHPRA=;
- b=aDdz/0ftAYHlov2AMBP2UJYpzhFiz6aFaJeYk6KiknSMGP7XkOlKGP8IfsnlqhNlEAgerS
- dNG6aZBbhr7H/Vq1SgYNMdJo/U/deC6RiG7NhGnbx2Jk1DY4jiHHik8cWlDHyqAlIqiHCg
- d5P5vs6Pvd0y9i98Km+82fK7Haz++j8=
+ bh=FHZ260QsHXv1NaqZqHDmqROM/6FQOqeSQawgfdhejPw=;
+ b=ChH8OlBY2lc1sJoBSl0+RA+tfr5dp3f+533fLfRbmpTsGsYO6MtCldkuM/oD0Q9IyCNO+o
+ +ksjdwl61VEFhVk716Y2z48XxA7B+bV6rSHX1I5YdHbZ8mVLRyxzc4qsbAoDlH1ngkk7nI
+ 9zlxTTcBCOLkQqmmReSUwLFig5vBLGo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755286952;
+ s=susede2_ed25519; t=1755287496;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XjSdna22ewJq+OemP53+vu5KKGkywff13jLRegwHPRA=;
- b=raANWXQftZB56mD+CeSA25rkpkUIVcmcpjZge2UexJqBL0gJdsoh5L9+tO08AC9sG1EAWG
- AfEY1GYkrTwq+/BA==
-Authentication-Results: smtp-out1.suse.de;
+ bh=FHZ260QsHXv1NaqZqHDmqROM/6FQOqeSQawgfdhejPw=;
+ b=A3p0BLSp3GRlnGQOUQnipIPdunB8bu/o9vevxOHh7TeMV6GYVAtuUd/sh3+VqQWKzbbW/B
+ HAdPFX/AZ2KXyyAA==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755286951; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1755287496; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XjSdna22ewJq+OemP53+vu5KKGkywff13jLRegwHPRA=;
- b=k3zODpcT5H6YwX2XahzSCPk23I0gCNSy54hA2VrZgt/8GZgwxhNTfZCxRn3oh5SG9ZNWp8
- PFQcZeuDS4kr1i2hBgUZnRLVeinb+5kjxvBWxvAiUm7NcTVQNLOH0rtGjjO12UdtPHa9ji
- n8159v/ghM9ereboU9MiZgrO9sSA2Fk=
+ bh=FHZ260QsHXv1NaqZqHDmqROM/6FQOqeSQawgfdhejPw=;
+ b=ChH8OlBY2lc1sJoBSl0+RA+tfr5dp3f+533fLfRbmpTsGsYO6MtCldkuM/oD0Q9IyCNO+o
+ +ksjdwl61VEFhVk716Y2z48XxA7B+bV6rSHX1I5YdHbZ8mVLRyxzc4qsbAoDlH1ngkk7nI
+ 9zlxTTcBCOLkQqmmReSUwLFig5vBLGo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755286951;
+ s=susede2_ed25519; t=1755287496;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XjSdna22ewJq+OemP53+vu5KKGkywff13jLRegwHPRA=;
- b=3DZBI6V4KBJURJtKBbkU+KPKebcM+Y6bC3mYOSTAXq8RHP2OVizzRP3rFEw6OULyBcNIr3
- CVYCMrEPLwNYpnCQ==
+ bh=FHZ260QsHXv1NaqZqHDmqROM/6FQOqeSQawgfdhejPw=;
+ b=A3p0BLSp3GRlnGQOUQnipIPdunB8bu/o9vevxOHh7TeMV6GYVAtuUd/sh3+VqQWKzbbW/B
+ HAdPFX/AZ2KXyyAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 180EA1368C;
- Fri, 15 Aug 2025 19:42:31 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 315DF13876;
+ Fri, 15 Aug 2025 19:51:35 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id o5/MBaeNn2jNWAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 15 Aug 2025 19:42:31 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CZH2C8ePn2j6WgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 15 Aug 2025 19:51:35 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
@@ -93,16 +89,15 @@ Cc: Peter Xu <peterx@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
  Hailiang Zhang <zhanghailiang@xfusion.com>, Stefan Berger
  <stefanb@linux.vnet.ibm.com>, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, Arun Menon <armenon@redhat.com>
-Subject: Re: [PATCH v11 18/27] migration: push Error **errp into
- loadvm_postcopy_ram_handle_discard()
-In-Reply-To: <20250813-propagate_tpm_error-v11-18-b470a374b42d@redhat.com>
+Subject: Re: [PATCH v11 20/27] migration: Return -1 on memory allocation
+ failure in ram.c
+In-Reply-To: <20250813-propagate_tpm_error-v11-20-b470a374b42d@redhat.com>
 References: <20250813-propagate_tpm_error-v11-0-b470a374b42d@redhat.com>
- <20250813-propagate_tpm_error-v11-18-b470a374b42d@redhat.com>
-Date: Fri, 15 Aug 2025 16:42:28 -0300
-Message-ID: <87jz34xtgb.fsf@suse.de>
+ <20250813-propagate_tpm_error-v11-20-b470a374b42d@redhat.com>
+Date: Fri, 15 Aug 2025 16:51:32 -0300
+Message-ID: <87ectcxt17.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
@@ -119,14 +114,15 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
  imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,14 +140,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Arun Menon <armenon@redhat.com> writes:
 
-> This is an incremental step in converting vmstate loading
-> code to report error via Error objects instead of directly
-> printing it to console/monitor.
-> It is ensured that loadvm_postcopy_ram_handle_discard() must report an er=
-ror
-> in errp, in case of failure.
+> The function colo_init_ram_cache() currently returns -errno if
+> qemu_anon_ram_alloc() fails. However, the subsequent cleanup loop that
+> calls qemu_anon_ram_free() could potentially alter the value of errno.
+> This would cause the function to return a value that does not accurately
+> represent the original allocation failure.
 >
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> This commit changes the return value to -1 on memory allocation failure.
+> This ensures that the return value is consistent and is not affected by
+> any errno changes that may occur during the free process.
+>
 > Signed-off-by: Arun Menon <armenon@redhat.com>
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
