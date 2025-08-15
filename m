@@ -4,92 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D1DCA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 21:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80805CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 22:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1un1iP-0006Lv-Hr; Fri, 15 Aug 2025 17:11:57 -0400
+	id 1un2aH-0006w6-GV; Fri, 15 Aug 2025 18:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1un1iO-0006LQ-1N
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 17:11:56 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1un1iM-0000Yb-4Q
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 17:11:55 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-32326e5f058so1878154a91.3
- for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 14:11:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1755292312; x=1755897112; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/5HWQziECJRtdMVOtPPlR/b7wS4brht4dv5dM0Wb5PE=;
- b=kSZ8ew1gQNimadpweQmRP2hlkRETgmSNaCCVk3MrS1yMo4wlMJQiDw+yrY3PT1YFTv
- p5IVf1QXHz79TLK848WEUvCk3266X1J6p3vkICyXHfoWc5fcZPhO3EBeHvXlevAVO5lX
- N7DIe5fsuvdA/I1c70C+CWW4EG9I7z2ee9Udpi9bwOlTBrHWkIWpPCVIu/dE6xfv5uJf
- RMd23xVrTbAbEv8iCoF/UnGQCXLPDNPI+YDhVMjR2xlcGPcve5nmVQ0FMz9a8dUdW/3C
- xefLiFvN7vm5Kb55ixMkHEu19Lp8i3kXXirJqzMQ3vUePEIQloa+M2g6diUIRN8NQQ+E
- ukaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755292312; x=1755897112;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/5HWQziECJRtdMVOtPPlR/b7wS4brht4dv5dM0Wb5PE=;
- b=jtDEgQZDXPw9ahYWBC6OunXs65DBGpghX0xHmXS+3oIIA3WydJEJT7SdZ0Eyaht9YV
- dwD1zg7gb/1UvFURSuoWvjlOn6BDUJBFikHm9EJvY9OE4dZ4kcuv6cqXPTIDY+KZa37o
- bqfIA1ZEQHw/KdFWWDQ6iX18XNBfrG4F2f9q75N/83snNLt/gqaAukb5nRo2Btyf4ojc
- v/QoZ+/q0x/DBF0qEYB7fdROR/l6vCC/DYdVhq05LEdXSKrcSfPybPSBS9VaBIBR02PL
- XD549oWzogqhxNAXG0a0x6G2nqTDXqLMssg+Qf0NeXnoOEpg2Lj7+esmOq2JBodjXoUR
- IMKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQWzy4c0GeGH1DRX+mmG/vJ22/eyCXHjMdByTtoRs8NKWq7IjXEB/3PvItpE3r+9bhJpUqPzo1tzfV@nongnu.org
-X-Gm-Message-State: AOJu0YyFARhhiobae25GECIxg/x5YZdhfebCZ4bXlRQIAz3Km+yJLTPj
- eTV50SPMwOHSojYN2cC2J+0h6nNPkMIKnA+6JVcqfGQDbGRqSf0sVA5t6A/4iLgxCPk=
-X-Gm-Gg: ASbGnctmRF0Ebfv02L9fizAAWJzoU6X7/8zrFKVwHET4twVmlRGQk/cvxfjtPEQnYtK
- CSMutw4oXanPD8M9OOiO06b8kZkXcvqTeAHvZIW0TY/HiC4KpEfllO/UhFvBzJqrJhokpt4aIP4
- 6xfG1VbUu5aJcsXu+woDaNnUzuTHM6sCDU46i0sLpUBzPp+GBWZ8+aFzEefhpNvpWi4ZiHOoLAP
- wmfFVz7ZPP6uykvPF9rM5UdHc9iENogUTIKUGckzOFB/tF2q5opAEp8zdZLDnJKLNnJf0brpe04
- WpIUbcfwqTLsiLL51ar8TEsNSZZ8JnDt3q4sqO2w4uh3gdPcKobcXn9Z7Ad+LnzI7v6TUOQDXnx
- TQlXu1WhEDPNb/J8cYivaqOhU/+uyg73FOPo=
-X-Google-Smtp-Source: AGHT+IGHzw04imB332ZpKqEA8xkfrnZaEIo6ytQ3eK/yhTBnYD0V9Dvd8u9SV7dUxtG2ePX8DHVu8A==
-X-Received: by 2002:a17:90b:4b4f:b0:311:ef19:824d with SMTP id
- 98e67ed59e1d1-32342163f5cmr5472025a91.2.1755292311692; 
- Fri, 15 Aug 2025 14:11:51 -0700 (PDT)
-Received: from [192.168.68.110] ([189.38.141.25])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b472d5d73b0sm2085957a12.17.2025.08.15.14.11.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Aug 2025 14:11:51 -0700 (PDT)
-Message-ID: <4dc77180-a923-449c-b053-f46e592b74f2@ventanamicro.com>
-Date: Fri, 15 Aug 2025 18:11:46 -0300
+ (Exim 4.90_1) (envelope-from <ebiggers@kernel.org>)
+ id 1un2aF-0006vh-OY; Fri, 15 Aug 2025 18:07:35 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ebiggers@kernel.org>)
+ id 1un2aE-0005Pi-6I; Fri, 15 Aug 2025 18:07:35 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 460745C69B1;
+ Fri, 15 Aug 2025 22:07:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928D1C4CEEB;
+ Fri, 15 Aug 2025 22:07:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1755295649;
+ bh=KkPwkM14ax0TYQfRPch1GnAGK4jNiOfCdjxeAx33u8M=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=nDjKLM8jXCa1RupeHk715wefofBb/Xmk8iTIvDxcRoeNZ9QC2lCQvpzM7/dONsMP1
+ R2SIeSbJyD9Bl6lbix9MBLlbggGczJrIzjCO7i2bNAnaoug5C1UKBv58wFHAOJc3h8
+ 6f+X8ReS70v6+FVzYdgkYukfbxL4auDtVU3E6LJj9glZoAO9DogkM8Ii1YJ9THQWSc
+ lVFq15PUEbV0MW3Wz3XUd7dAPWOiq3dci407U6EeT0pCfBmI9JcX94KydWiRwOWV+k
+ 1J7JV6S/a4JXsoD0dLH7gQcW7/rB7nW+X3biKlc4vkDndRj1bnP1T9hp6sBoP8dtV6
+ GSEcB0clKcj5g==
+Date: Fri, 15 Aug 2025 15:07:27 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Chao Liu <chao.liu@yeah.net>
+Cc: paolo.savini@embecosm.com, dbarboza@ventanamicro.com,
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 1/2] target/riscv: fix vector register address
+ calculation in strided LD/ST
+Message-ID: <20250815220727.GB2041@quark>
+References: <cover.1755287531.git.chao.liu@yeah.net>
+ <ee461421503da741d4cf6d2486b8596862fc0b7f.1755287531.git.chao.liu@yeah.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] aplic: fix mask for smsiaddrcfgh
-To: Yang Jialong <z_bajeer@yeah.net>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: yangjialong@rvcore.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20250811034454.189208-1-z_bajeer@yeah.net>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20250811034454.189208-1-z_bajeer@yeah.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1031.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ee461421503da741d4cf6d2486b8596862fc0b7f.1755287531.git.chao.liu@yeah.net>
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=ebiggers@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,108 +72,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LGTM. Tested in an Ubuntu 25 RISC-V emulated host (virt board, iommu-sys),
-  with IOMMU enabled and a kernel that has VFIO support. Passed through
-an e1000 card to a KVM guest, everything works as expected.
-
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-
-
-Thanks,
-
-Daniel
-
-On 8/11/25 12:44 AM, Yang Jialong wrote:
-> 4.5.4. Supervisor MSI address configuration (smsiaddrcfg and
->    smsiaddrcfgh)
-> smsiaddrcfgh:
->          bits 22:20 LHXS(WARL)
->          bits 11:0  High Base PPN(WARL)
+On Sat, Aug 16, 2025 at 03:55:40AM +0800, Chao Liu wrote:
+> This patch fixes a critical bug in the RISC-V vector instruction
+> translation that caused incorrect data handling in strided load
+> operations (e.g., vlsseg8e32).
 > 
-> Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
+> Problem Description:
+> 
+> The `get_log2` function in `trans_rvv.c.inc` returned a value 1 higher
+> than the actual log2 value. For example, get_log2(4) incorrectly
+> returned 3 instead of 2.
+> 
+> This led to erroneous vector register offset calculations, resulting in
+> data overlap where bytes 32-47 were incorrectly copied to positions
+> 16-31 in ChaCha20 encryption code.
+> 
+> rvv_test_func:
+>     vsetivli    zero, 1, e32, m1, ta, ma
+>     li          t0, 64
+> 
+>     vlsseg8e32.v v0, (a0), t0
+>     addi        a0, a0, 32
+>     vlsseg8e32.v v8, (a0), t0
+> 
+>     vssseg8e32.v v0, (a1), t0
+>     addi        a1, a1, 32
+>     vssseg8e32.v v8, (a1), t0
+>     ret
+> 
+> Analysis:
+> 
+> The original implementation counted the number of right shifts until
+> zero, including the final shift that reduced the value to zero:
+> 
+> static inline uint32_t get_log2(uint32_t a)
+> {
+>     uint32_t i = 0;
+>     for (; a > 0;) {
+>         a >>= 1;
+>         i++;
+>     }
+>     return i; // Returns 3 for a=4 (0b100 → 0b10 → 0b1 → 0b0)
+> }
+> 
+> Fix:
+> 
+> The corrected function stops shifting when only the highest bit remains
+> and handles the special case of a=0:
+> 
+> static inline uint32_t get_log2(uint32_t a)
+> {
+>     uint32_t i = 0;
+>     if (a == 0) {
+>         return i; // Handle edge case
+>     }
+>     for (; a > 1; a >>= 1) {
+>         i++;
+>     }
+>     return i; // Now returns 2 for a=4
+> }
+> 
+> Fixes: 28c12c1f2f ("Generate strided vector loads/stores with tcg nodes.")
+> 
+> Signed-off-by: Chao Liu <chao.liu@yeah.net>
 > ---
->   hw/intc/riscv_aplic.c | 27 +++++++++++++++++----------
->   1 file changed, 17 insertions(+), 10 deletions(-)
+>  target/riscv/insn_trans/trans_rvv.c.inc | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
-> v1 --> v2:
-> - fix calculation of MSI address.
-> - In Supervisor mode, lhxw/hhxs/hhxw fields are in mmsiaddrcfgh register.
-> - And lhxs field is in smsiaddrcfgh.
-> 
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index a1d9fa5085..2dd54cafaa 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -96,7 +96,7 @@
->       (APLIC_xMSICFGADDR_PPN_HHX_MASK(__hhxw) << \
->        APLIC_xMSICFGADDR_PPN_HHX_SHIFT(__hhxs))
->   
-> -#define APLIC_xMSICFGADDRH_VALID_MASK   \
-> +#define APLIC_MMSICFGADDRH_VALID_MASK   \
->       (APLIC_xMSICFGADDRH_L | \
->        (APLIC_xMSICFGADDRH_HHXS_MASK << APLIC_xMSICFGADDRH_HHXS_SHIFT) | \
->        (APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
-> @@ -104,6 +104,10 @@
->        (APLIC_xMSICFGADDRH_LHXW_MASK << APLIC_xMSICFGADDRH_LHXW_SHIFT) | \
->        APLIC_xMSICFGADDRH_BAPPN_MASK)
->   
-> +#define APLIC_SMSICFGADDRH_VALID_MASK   \
-> +    ((APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
-> +     APLIC_xMSICFGADDRH_BAPPN_MASK)
-> +
->   #define APLIC_SETIP_BASE               0x1c00
->   #define APLIC_SETIPNUM                 0x1cdc
->   
-> @@ -409,13 +413,8 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
->           msicfgaddr = aplic->kvm_msicfgaddr;
->           msicfgaddrH = ((uint64_t)aplic->kvm_msicfgaddrH << 32);
->       } else {
-> -        if (aplic->mmode) {
-> -            msicfgaddr = aplic_m->mmsicfgaddr;
-> -            msicfgaddrH = aplic_m->mmsicfgaddrH;
-> -        } else {
-> -            msicfgaddr = aplic_m->smsicfgaddr;
-> -            msicfgaddrH = aplic_m->smsicfgaddrH;
-> -        }
-> +        msicfgaddr = aplic_m->mmsicfgaddr;
-> +        msicfgaddrH = aplic_m->mmsicfgaddrH;
->       }
->   
->       lhxs = (msicfgaddrH >> APLIC_xMSICFGADDRH_LHXS_SHIFT) &
-> @@ -427,6 +426,14 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
->       hhxw = (msicfgaddrH >> APLIC_xMSICFGADDRH_HHXW_SHIFT) &
->               APLIC_xMSICFGADDRH_HHXW_MASK;
->   
-> +    if (!aplic->kvm_splitmode && !aplic->mmode) {
-> +        msicfgaddrH = aplic_m->smsicfgaddrH;
-> +        msicfgaddr = aplic_m->smsicfgaddr;
-> +
-> +        lhxs = (msicfgaddrH >> APLIC_xMSICFGADDRH_LHXS_SHIFT) &
-> +            APLIC_xMSICFGADDRH_LHXS_MASK;
-> +    }
-> +
->       group_idx = hart_idx >> lhxw;
->   
->       addr = msicfgaddr;
-> @@ -771,7 +778,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
->       } else if (aplic->mmode && aplic->msimode &&
->                  (addr == APLIC_MMSICFGADDRH)) {
->           if (!(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
-> -            aplic->mmsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
-> +            aplic->mmsicfgaddrH = value & APLIC_MMSICFGADDRH_VALID_MASK;
->           }
->       } else if (aplic->mmode && aplic->msimode &&
->                  (addr == APLIC_SMSICFGADDR)) {
-> @@ -792,7 +799,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
->                  (addr == APLIC_SMSICFGADDRH)) {
->           if (aplic->num_children &&
->               !(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
-> -            aplic->smsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
-> +            aplic->smsicfgaddrH = value & APLIC_SMSICFGADDRH_VALID_MASK;
->           }
->       } else if ((APLIC_SETIP_BASE <= addr) &&
->               (addr < (APLIC_SETIP_BASE + aplic->bitfield_words * 4))) {
 
+Tested-by: Eric Biggers <ebiggers@kernel.org>
+
+But, to get this to apply I had to re-apply the fixed commit (which was
+reverted), then resolve a conflict.  You'll need to send out a new
+series which applies to the latest master branch.
+
+- Eric
 
