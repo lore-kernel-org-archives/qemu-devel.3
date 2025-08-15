@@ -4,96 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A71CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 09:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 308E3CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 09:12:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umqJg-0003jG-NQ; Fri, 15 Aug 2025 05:01:41 -0400
+	id 1umqTG-0005Or-Ms; Fri, 15 Aug 2025 05:11:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1umqJa-0003fl-42; Fri, 15 Aug 2025 05:01:34 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1umqJU-0005qJ-Sa; Fri, 15 Aug 2025 05:01:32 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45a1b00f187so7769325e9.0; 
- Fri, 15 Aug 2025 02:01:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755248485; x=1755853285; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ORCK8wDL9qL9Qs1vQVfRjr3y0Ht8jjsxyMkyEMii9Oc=;
- b=S4FsiNTt/9hYpKFaGk8GAc1dtJJT/OsbP4KIiD8QBCSpRxxTTzUr9C6gkgeAqmcp6l
- lw4iLXEpNbDzRfp1XA8inOjW0lDMcvKOICNmdp0qiO2EMv6kBfhV3iPIR5TajV/IKpjz
- TdHVQEjm/sV0at0R5Oub4yoD13gCU+8E+me6vV7PCp3bUjjvSCAcZfupJVJLg9/WNCRz
- xyXi/Ddt1Ukj94bZU2F0oZ8Dl/M5tzi0GNVZwa81b16XEH/13TT1VIL6jbWl2zwm3d3h
- UP993uGI6yKd826d/zTvcUHRlXKrDaw+2SO+Ym0+7WrX2pw/TaLPdNxK3nzIODTeVMUT
- Bo6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755248485; x=1755853285;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ORCK8wDL9qL9Qs1vQVfRjr3y0Ht8jjsxyMkyEMii9Oc=;
- b=CseLkTavcjTzrH4JWNWN3zMNz6dvHTkst4KPSHWolIatbHv5xR16wSg+gb9ugFCx/l
- oEZd1gzwqYcS8RTm0CF6pBd9j2/a2LhpUj10mJwQaiwjk5ykx3sI1n9RSxhztly5MAq5
- 2G67X08EAA1UMa1fu1v3YM7lLSVwucHxA9oVi9sOtw3Pjs89ldBlCJ8NmYlHvH1CGimR
- 9ytCVULVwmkzbbmaPQQjvbfS3CKTCzynBHSa3Lp9/dj1djR2AC8G/imBrFT0wUAcyoFx
- VEJNXDvECxUemNtC7wnf8VpSOKATmjAvPwsc549dFbtNBNAzlcf2mfcIPzz7As19FBCe
- XEDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUAxz/CE3XCJYO5a8WZLCdf4bfsQlkfUbYI88X6kFIHxdVEHOO71nBFjMxitxe47/tsxBGTGhForA==@nongnu.org,
- AJvYcCVk4733uUoK3DFjp2EQPVIX1tGeIzcBcXJn8C4eJgwFij4W5E0CL6/kPw2UkemBj9l3s8dX+yAaHAq+8A==@nongnu.org
-X-Gm-Message-State: AOJu0Yyu+bJr3wD2alKytQ17lvXeVZiXpGzHme44kQrdaIEhBk9oHwCm
- tbM665sB3aD8tHYtf9xUWTHisnnk1B6HUJLigf5+BLBmRnO4yt78195TKRrsHkyW
-X-Gm-Gg: ASbGncseuOUlJl8nTB/uytutaQXI3Y3eAzCEJhGD5o5n4lZnaX+hDYcTQM7PQyz3i7t
- O1atRXjusj6IS3oNIQurnoIuypke2SJlh7QquXEVdcnRoPUY/wr7CeyAG2Vl/IXP5qB5Ru+nRpb
- aFbqXjIlabcs9xwVnZP3KOB2oSC2QJDVzDqma6u+bCF2honGvguKaQ/J4Lp8byd+UCDXxhnAwUQ
- dJQ7Bz+hzCR4kZlkl83Ss1c8Vn1MTgCdOODGnASC55Qj56De2yVhID9Q1FAPeAggih5dSlwQtBx
- Mrttbti2AKNNBw1UF3dnviepv8TmXndJ3dpyogQwQLMFO7HYfhEb3JFThHowV9ExpoFp40029fu
- gIyaQevssYKSu+ZghtAG3aLaQN/WJpnm5Jz3ysREHF61UGQ==
-X-Google-Smtp-Source: AGHT+IFtiV5Lg6am4L3eP2/evLc4rmW0TjOLM/dkmnUMkWAYPoGHifKpiBWSduoCRE4pyN79tj/hfQ==
-X-Received: by 2002:a05:600c:3510:b0:456:12ad:ec30 with SMTP id
- 5b1f17b1804b1-45a217f5367mr12790155e9.13.1755248484978; 
- Fri, 15 Aug 2025 02:01:24 -0700 (PDT)
-Received: from corvink-nb.beckhoff.com
- ([2001:9e8:dc31:6500:43b3:5eac:8d91:b512])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45a22321a54sm10964045e9.18.2025.08.15.02.01.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Aug 2025 02:01:24 -0700 (PDT)
-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH v2 11/14] hw/misc: Add Beckhoff CCAT device
-Date: Fri, 15 Aug 2025 11:01:09 +0200
-Message-ID: <20250815090113.141641-12-corvin.koehne@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250815090113.141641-1-corvin.koehne@gmail.com>
-References: <20250815090113.141641-1-corvin.koehne@gmail.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1umqTD-0005OA-G9
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 05:11:31 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1umqTA-0001Ze-1N
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 05:11:31 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4c3GS62Dt7z6L5MF;
+ Fri, 15 Aug 2025 17:06:14 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 31041140279;
+ Fri, 15 Aug 2025 17:11:12 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 15 Aug
+ 2025 11:11:11 +0200
+Date: Fri, 15 Aug 2025 10:11:09 +0100
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>, John Snow
+ <jsnow@redhat.com>, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: Re: [PATCH for-10.2 0/8] docs: Update our kernel-doc script to the
+ kernel's new Python one
+Message-ID: <20250815101109.00006bcd@huawei.com>
+In-Reply-To: <20250814171324.1614516-1-peter.maydell@linaro.org>
+References: <20250814171324.1614516-1-peter.maydell@linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,425 +69,151 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+On Thu, 14 Aug 2025 18:13:15 +0100
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-This adds the Beckhoff Communication Controller (CCAT). The information
-block, EEPROM interface and DMA controller are currently  implemented.
+> Earlier this year, the Linux kernel's kernel-doc script was rewritten
+> from the old Perl version into a shiny and hopefully more maintainable
+> Python version. This commit series updates our copy of this script
+> to the latest kernel version. I have tested it by comparing the
+> generated HTML documentation and checking that there are no
+> unexpected changes.
+> 
+> Luckily we are carrying very few local modifications to the Perl
+> script, so this is fairly straightforward. The structure of the
+> patchset is:
+>  * a minor update to the kerneldoc.py Sphinx extension so it
+>    will work with both old and new kernel-doc script output
+>  * a fix to a doc comment markup error that I noticed while comparing
+>    the HTML output from the two versions of the script
+>  * import the new Python script, unmodified from the kernel's version
+>    (conveniently the kernel calls it kernel-doc.py, so it doesn't
+>    clash with the existing script)
+>  * make the changes to that library code that correspond to the
+>    two local QEMU-specific changes we carry
+>  * tell sphinx to use the Python version
+>  * delete the Perl script (I have put a diff of our local mods
+>    to the Perl script in the commit message of this commit, for
+>    posterity)
+> 
+> The diffstat looks big, but almost all of it is "import the
+> kernel's new script that we trust and don't need to review in
+> detail" and "delete the old script".
 
-The EEPROM provides production information for Beckhoff Devices.
-An EEPORM binary must therefor be handed over. It should be aligned to
-a power of two. If no EEPROM binary is handed over an empty EEPROM of
-size 4096 is initialized.
+Given Mauro is somewhat active in qemu as well, +CC for information
+if nothing else.
 
-This device is needed for the Beckhoff CX7200 board emulation.
+Jonathan
 
-Signed-off-by: Yannick Voßen <y.vossen@beckhoff.com>
----
- hw/misc/Kconfig         |   3 +
- hw/misc/beckhoff_ccat.c | 365 ++++++++++++++++++++++++++++++++++++++++
- hw/misc/meson.build     |   1 +
- 3 files changed, 369 insertions(+)
- create mode 100644 hw/misc/beckhoff_ccat.c
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 99548e146f..f3a2efa350 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -223,4 +223,7 @@ config XLNX_VERSAL_TRNG
- config XLNX_ZYNQ_DDRC
-     bool
- 
-+config BECKHOFF_CCAT
-+    bool
-+
- source macio/Kconfig
-diff --git a/hw/misc/beckhoff_ccat.c b/hw/misc/beckhoff_ccat.c
-new file mode 100644
-index 0000000000..0e21962a98
---- /dev/null
-+++ b/hw/misc/beckhoff_ccat.c
-@@ -0,0 +1,365 @@
-+/*
-+ * Beckhoff Communication Controller Emulation
-+ *
-+ * Copyright (c) Beckhoff Automation GmbH. & Co. KG
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/sysbus.h"
-+#include "hw/register.h"
-+#include "qemu/bitops.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "system/block-backend.h"
-+#include "exec/address-spaces.h"
-+#include "exec/memory.h"
-+#include "system/dma.h"
-+#include "qemu/error-report.h"
-+#include "block/block.h"
-+#include "block/block_int.h"
-+#include "block/qdict.h"
-+#include "hw/block/block.h"
-+
-+#ifndef CCAT_ERR_DEBUG
-+#define CCAT_ERR_DEBUG 0
-+#endif
-+
-+#define DB_PRINT_L(level, ...) do { \
-+    if (CCAT_ERR_DEBUG > (level)) { \
-+        fprintf(stderr,  ": %s: ", __func__); \
-+        fprintf(stderr, ## __VA_ARGS__); \
-+    } \
-+} while (0)
-+
-+#define DB_PRINT(...) DB_PRINT_L(0, ## __VA_ARGS__)
-+
-+#define TYPE_BECKHOFF_CCAT "beckhoff-ccat"
-+#define BECKHOFF_CCAT(obj) \
-+    OBJECT_CHECK(BeckhoffCcat, (obj), TYPE_BECKHOFF_CCAT)
-+
-+#define MAX_NUM_SLOTS 32
-+
-+#define CCAT_EEPROM_OFFSET 0x100
-+#define CCAT_DMA_OFFSET 0x8000
-+
-+#define CCAT_MEM_SIZE 0xFFFF
-+#define CCAT_DMA_SIZE 0x800
-+#define CCAT_EEPROM_SIZE 0x20
-+
-+#define EEPROM_MEMORY_SIZE 0x1000
-+
-+#define EEPROM_CMD_OFFSET (CCAT_EEPROM_OFFSET + 0x00)
-+    #define EEPROM_CMD_WRITE_MASK 0x2
-+    #define EEPROM_CMD_READ_MASK 0x1
-+#define EEPROM_ADR_OFFSET (CCAT_EEPROM_OFFSET + 0x04)
-+#define EEPROM_DATA_OFFSET (CCAT_EEPROM_OFFSET + 0x08)
-+
-+#define DMA_BUFFER_OFFSET (CCAT_DMA_OFFSET + 0x00)
-+#define DMA_DIRECTION_OFFSET (CCAT_DMA_OFFSET + 0x7c0)
-+    #define DMA_DIRECTION_MASK 1
-+#define DMA_TRANSFER_OFFSET (CCAT_DMA_OFFSET + 0x7c4)
-+#define DMA_HOST_ADR_OFFSET (CCAT_DMA_OFFSET + 0x7c8)
-+#define DMA_TRANSFER_LENGTH_OFFSET (CCAT_DMA_OFFSET + 0x7cc)
-+
-+/*
-+ * The informationblock  is always located at address 0x0.
-+ * Address and size are therefor replaced by two identifiers.
-+ * The Parameter give information about the maximal number of
-+ * function slots and the creation date (in this case 01.01.2001)
-+ */
-+#define CCAT_ID_1 0x88a4
-+#define CCAT_ID_2 0x54414343
-+#define CCAT_INFO_BLOCK_PARAMS (MAX_NUM_SLOTS << 0) | (0x1 << 8) | \
-+                              (0x1 << 16) | (0x1 << 24)
-+
-+#define CCAT_FUN_TYPE_ENTRY 0x0001
-+#define CCAT_FUN_TYPE_EEPROM 0x0012
-+#define CCAT_FUN_TYPE_DMA 0x0013
-+
-+typedef struct BeckhoffCcat {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+
-+    uint8_t mem[CCAT_MEM_SIZE];
-+
-+    BlockBackend *eeprom_blk;
-+    uint8_t *eeprom_storage;
-+    int64_t eeprom_size;
-+} BeckhoffCcat;
-+
-+typedef struct __attribute__((packed)) CcatFunctionBlock {
-+    uint16_t type;
-+    uint16_t revision;
-+    uint32_t parameter;
-+    uint32_t address_offset;
-+    uint32_t size;
-+} CcatFunctionBlock;
-+
-+static void sync_eeprom(BeckhoffCcat *s)
-+{
-+    if (!s->eeprom_blk) {
-+        return;
-+    }
-+    blk_pwrite(s->eeprom_blk, 0, s->eeprom_size, s->eeprom_storage, 0);
-+}
-+
-+static uint64_t beckhoff_ccat_eeprom_read(void *opaque, hwaddr addr,
-+                                          unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    uint64_t val = 0;
-+    memcpy(&val, &s->mem[addr], size);
-+    return val;
-+}
-+
-+static void beckhoff_ccat_eeprom_write(void *opaque, hwaddr addr, uint64_t val,
-+                              unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    uint64_t eeprom_adr;
-+    switch (addr) {
-+    case EEPROM_CMD_OFFSET:
-+        eeprom_adr = *(uint32_t *)&s->mem[EEPROM_ADR_OFFSET];
-+        eeprom_adr = (eeprom_adr * 2) % s->eeprom_size;
-+        if (val & EEPROM_CMD_READ_MASK) {
-+            uint64_t buf = 0;
-+            uint32_t bytes_to_read = 8;
-+            if (eeprom_adr > s->eeprom_size - 8) {
-+                bytes_to_read = s->eeprom_size - eeprom_adr;
-+            }
-+            memcpy(&buf, s->eeprom_storage + eeprom_adr, bytes_to_read);
-+            *(uint64_t *)&s->mem[EEPROM_DATA_OFFSET] = buf;
-+
-+        } else if (val & EEPROM_CMD_WRITE_MASK) {
-+            uint32_t buf = *(uint32_t *)&s->mem[EEPROM_DATA_OFFSET];
-+            memcpy(s->eeprom_storage + eeprom_adr, &buf, 2);
-+            sync_eeprom(s);
-+        }
-+        break;
-+    default:
-+            memcpy(&s->mem[addr], &val, size);
-+    }
-+}
-+
-+static uint64_t beckhoff_ccat_dma_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    uint64_t val = 0;
-+
-+    switch (addr) {
-+    case DMA_TRANSFER_OFFSET:
-+        if (s->mem[DMA_TRANSFER_OFFSET] & 0x1) {
-+            DB_PRINT("DMA transfer finished\n");
-+            s->mem[DMA_TRANSFER_OFFSET] = 0;
-+        }
-+        break;
-+    }
-+    memcpy(&val, &s->mem[addr], size);
-+    return val;
-+}
-+
-+static void beckhoff_ccat_dma_write(void *opaque, hwaddr addr, uint64_t val,
-+                           unsigned size)
-+{
-+    BeckhoffCcat *s = opaque;
-+    switch (addr) {
-+    case DMA_TRANSFER_OFFSET:
-+        uint8_t len = s->mem[DMA_TRANSFER_LENGTH_OFFSET];
-+        uint8_t *mem_buf = &s->mem[DMA_BUFFER_OFFSET];
-+
-+        if (s->mem[DMA_DIRECTION_OFFSET] & DMA_DIRECTION_MASK) {
-+            dma_addr_t dmaAddr = *(uint32_t *)&s->mem[DMA_HOST_ADR_OFFSET];
-+            dma_memory_read(&address_space_memory, dmaAddr,
-+                            mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED);
-+        } else {
-+            dma_addr_t dmaAddr = *(uint32_t *)&s->mem[DMA_HOST_ADR_OFFSET];
-+            dma_memory_write(&address_space_memory, dmaAddr + 8,
-+                                mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED);
-+        }
-+        break;
-+    }
-+    memcpy(&s->mem[addr], &val, size);
-+}
-+static uint64_t beckhoff_ccat_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    DB_PRINT("CCAT_READ addr=0x%lx size=%u\n", addr, size);
-+
-+    BeckhoffCcat *s = opaque;
-+    uint64_t val = 0;
-+
-+    if (addr > CCAT_MEM_SIZE - size) {
-+        error_report("Overflow. Address or size is too large.\n");
-+        exit(1);
-+    }
-+
-+    if (addr >= CCAT_EEPROM_OFFSET &&
-+                        addr <= CCAT_EEPROM_OFFSET + s->eeprom_size) {
-+        return beckhoff_ccat_eeprom_read(opaque, addr, size);
-+    } else if (addr >= CCAT_DMA_OFFSET &&
-+                        addr <= CCAT_DMA_OFFSET + CCAT_DMA_SIZE) {
-+        return beckhoff_ccat_dma_read(opaque, addr, size);
-+    } else {
-+        memcpy(&val, &s->mem[addr], size);
-+    }
-+
-+    return val;
-+}
-+
-+static void beckhoff_ccat_write(void *opaque, hwaddr addr, uint64_t val,
-+                                unsigned size)
-+{
-+    DB_PRINT("CCAT_WRITE addr=0x%lx size=%u val=0x%lx\n", addr, size, val);
-+
-+    BeckhoffCcat *s = opaque;
-+
-+    if (addr > CCAT_MEM_SIZE - size) {
-+        error_report("Overflow. Address or size is too large.\n");
-+        exit(1);
-+    }
-+
-+    if (addr >= CCAT_EEPROM_OFFSET &&
-+                        addr <= CCAT_EEPROM_OFFSET + s->eeprom_size) {
-+        beckhoff_ccat_eeprom_write(opaque, addr, val, size);
-+    } else if (addr >= CCAT_DMA_OFFSET &&
-+                        addr <= CCAT_DMA_OFFSET + CCAT_DMA_SIZE) {
-+        beckhoff_ccat_dma_write(opaque, addr, val, size);
-+    } else {
-+        memcpy(&s->mem[addr], &val, size);
-+    }
-+}
-+
-+static const MemoryRegionOps beckhoff_ccat_ops = {
-+    .read = beckhoff_ccat_read,
-+    .write = beckhoff_ccat_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
-+
-+static void beckhoff_ccat_reset(DeviceState *dev)
-+{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(dev);
-+
-+    CcatFunctionBlock function_blocks[MAX_NUM_SLOTS] = {0};
-+
-+    CcatFunctionBlock info_block = {
-+        .type = CCAT_FUN_TYPE_ENTRY,
-+        .revision = 0x0001,
-+        .parameter = CCAT_INFO_BLOCK_PARAMS,
-+        .address_offset = CCAT_ID_1,
-+        .size = CCAT_ID_2
-+    };
-+    CcatFunctionBlock eeprom_block = {
-+        .type = CCAT_FUN_TYPE_EEPROM,
-+        .revision = 0x0001,
-+        .parameter = 0,
-+        .address_offset = CCAT_EEPROM_OFFSET,
-+        .size = CCAT_EEPROM_SIZE
-+    };
-+    CcatFunctionBlock dma_block = {
-+        .type = CCAT_FUN_TYPE_DMA,
-+        .revision = 0x0000,
-+        .parameter = 0,
-+        .address_offset = CCAT_DMA_OFFSET,
-+        .size = CCAT_DMA_SIZE
-+    };
-+
-+    /*
-+     * The EEPROM interface is usually at function slot 11.
-+     * The DMA controller is usually at function slot 15.
-+     */
-+    function_blocks[0] = info_block;
-+    function_blocks[11] = eeprom_block;
-+    function_blocks[15] = dma_block;
-+
-+    memcpy(&s->mem[0], function_blocks, sizeof(function_blocks));
-+}
-+
-+static void beckhoff_ccat_realize(DeviceState *dev, Error **errp)
-+{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(dev);
-+    BlockBackend *blk;
-+
-+    blk = blk_by_name("ccat-eeprom");
-+
-+    if (blk) {
-+        uint64_t blk_size = blk_getlength(blk);
-+        if (!is_power_of_2(blk_size)) {
-+            error_report("Blockend size is not a power of two.");
-+        }
-+
-+        if (blk_size < 512) {
-+            error_report("Blockend size is too small. Using backup.");
-+            s->eeprom_size = EEPROM_MEMORY_SIZE;
-+            s->eeprom_storage = blk_blockalign(NULL, s->eeprom_size);
-+            memset(s->eeprom_storage, 0x00, s->eeprom_size);
-+        } else {
-+            DB_PRINT("EEPROM block backend found\n");
-+            blk_set_perm(blk, BLK_PERM_WRITE, BLK_PERM_ALL, errp);
-+
-+            s->eeprom_size = blk_size;
-+            s->eeprom_blk = blk;
-+            s->eeprom_storage = blk_blockalign(s->eeprom_blk, s->eeprom_size);
-+
-+            if (!blk_check_size_and_read_all(s->eeprom_blk, DEVICE(s),
-+                                             s->eeprom_storage, s->eeprom_size,
-+                                             errp)) {
-+                exit(1);
-+            }
-+        }
-+    } else {
-+        s->eeprom_size = EEPROM_MEMORY_SIZE;
-+        s->eeprom_storage = blk_blockalign(NULL, s->eeprom_size);
-+        memset(s->eeprom_storage, 0x00, s->eeprom_size);
-+    }
-+
-+    beckhoff_ccat_reset(dev);
-+}
-+
-+static void beckhoff_ccat_init(Object *obj)
-+{
-+    BeckhoffCcat *s = BECKHOFF_CCAT(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &beckhoff_ccat_ops, s,
-+                          TYPE_BECKHOFF_CCAT, CCAT_MEM_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+}
-+
-+static void beckhoff_ccat_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = beckhoff_ccat_realize;
-+}
-+
-+static const TypeInfo beckhoff_ccat_info = {
-+ .name = TYPE_BECKHOFF_CCAT,
-+ .parent = TYPE_SYS_BUS_DEVICE,
-+ .instance_size = sizeof(BeckhoffCcat),
-+ .class_init = beckhoff_ccat_class_init,
-+ .instance_init = beckhoff_ccat_init,
-+};
-+
-+static void beckhoff_ccat_register_types(void)
-+{
-+    type_register_static(&beckhoff_ccat_info);
-+}
-+
-+type_init(beckhoff_ccat_register_types)
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 6ee7b6c71d..1fc1468464 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -14,6 +14,7 @@ system_ss.add(when: 'CONFIG_PL310', if_true: files('arm_l2x0.c'))
- system_ss.add(when: 'CONFIG_INTEGRATOR_DEBUG', if_true: files('arm_integrator_debug.c'))
- system_ss.add(when: 'CONFIG_A9SCU', if_true: files('a9scu.c'))
- system_ss.add(when: 'CONFIG_ARM11SCU', if_true: files('arm11scu.c'))
-+system_ss.add(when: 'CONFIG_BECKHOFF_CCAT', if_true: files('beckhoff_ccat.c'))
- 
- system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_ras.c'))
- 
--- 
-2.50.1
+
+> 
+> My immediate motivation for doing this update is that I noticed
+> that the submitter of https://gitlab.com/qemu-project/qemu/-/issues/3077
+> is using a Perl that complains about a construct in the perl script,
+> which prompted me to check if the kernel folks had already fixed
+> it, which it turned out that they had, by rewriting the whole thing :-)
+> More generally, if we don't do this update, then we're effectively
+> going to drift down the same path we did with checkpatch.pl, where
+> we have our own version that diverges from the kernel's version
+> and we have to maintain it ourselves.
+> 
+> We should also update the Sphinx plugin itself (i.e.
+> docs/sphinx/kerneldoc.py), but because I did not need to do
+> that to update the main kernel-doc script, I have left that as
+> a separate todo item.
+> 
+> Testing
+> -------
+> 
+> I looked at the HTML output of the old kernel-doc script versus the
+> new one, using the following diff command which mechanically excludes
+> a couple of "same minor change" everywhere diffs, and eyeballing the
+> resulting ~150 lines of diff.
+> 
+> diff -w  -I '^<div class="kernelindent docutils container">$' -I '^</div>$' -I '^<p><strong>Definition</strong>' -r -u -x searchindex.js build/x86/docs-old-kerneldoc/manual build/x86/docs/manual
+> 
+> The HTML changes are:
+> 
+> (1) some paras now have ID tags, eg:
+> -<p><strong>Functions operating on arrays of bits</strong></p>
+> +<p id="functions-operating-on-arrays-of-bits"><strong>Functions operating on arrays of bits</strong></p>
+> 
+> (2) Some extra named <div>s, eg:
+> +<div class="kernelindent docutils container">
+>  <p><strong>Parameters</strong></p>
+>  <dl class="simple">
+>  <dt><code class="docutils literal notranslate"><span class="pre">long</span> <span class="pre">nr</span></code></dt><dd><p>the bit to set</p>
+> @@ -144,12 +145,14 @@
+>  <dt><code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">*addr</span></code></dt><dd><p>the address to start counting from</p>
+>  </dd>
+>  </dl>
+> +</div>
+> 
+> (3) The new version correctly parses the multi-line Return: block for
+> the memory_translate_iotlb() doc comment. You can see that the
+> old HTML here had dt/dd markup, and it mis-renders in the HTML at
+> https://www.qemu.org/docs/master/devel/memory.html#c.memory_translate_iotlb
+> 
+>  <p><strong>Return</strong></p>
+> -<dl class="simple">
+> -<dt>On success, return the MemoryRegion containing the <strong>iotlb</strong> translated</dt><dd><p>addr.  The MemoryRegion must not be
+>  accessed after rcu_read_unlock.
+> +<p>On success, return the MemoryRegion containing the <strong>iotlb</strong> translated
+> +addr.  The MemoryRegion must not be accessed after rcu_read_unlock.
+>  On failure, return NULL, setting <strong>errp</strong> with error.</p>
+> -</dd>
+> -</dl>
+> +</div>
+> 
+> "Definition" sections now get output with a trailing colon:
+> 
+> -<p><strong>Definition</strong></p>
+> +<div class="kernelindent docutils container">
+> +<p><strong>Definition</strong>:</p>
+> 
+> This seems like it might be a bug in kernel-doc since the Parameters,
+> Return, etc sections don't get the trailing colon. I don't think it's
+> important enough to worry about.
+> 
+> thanks
+> -- PMM
+> 
+> Peter Maydell (8):
+>   docs/sphinx/kerneldoc.py: Handle new LINENO syntax
+>   tests/qtest/libqtest.h: Remove stray space from doc comment
+>   scripts: Import Python kerneldoc from Linux kernel
+>   scripts/kernel-doc: strip QEMU_ from function definitions
+>   scripts/kernel-doc: tweak for QEMU coding standards
+>   scripts/kerneldoc: Switch to the Python kernel-doc script
+>   scripts/kernel-doc: Delete the old Perl kernel-doc script
+>   MAINTAINERS: Put kernel-doc under the "docs build machinery" section
+> 
+>  MAINTAINERS                     |    2 +
+>  docs/conf.py                    |    4 +-
+>  docs/sphinx/kerneldoc.py        |    7 +-
+>  tests/qtest/libqtest.h          |    2 +-
+>  .editorconfig                   |    2 +-
+>  scripts/kernel-doc              | 2442 -------------------------------
+>  scripts/kernel-doc.py           |  325 ++++
+>  scripts/lib/kdoc/kdoc_files.py  |  291 ++++
+>  scripts/lib/kdoc/kdoc_item.py   |   42 +
+>  scripts/lib/kdoc/kdoc_output.py |  749 ++++++++++
+>  scripts/lib/kdoc/kdoc_parser.py | 1670 +++++++++++++++++++++
+>  scripts/lib/kdoc/kdoc_re.py     |  270 ++++
+>  12 files changed, 3355 insertions(+), 2451 deletions(-)
+>  delete mode 100755 scripts/kernel-doc
+>  create mode 100755 scripts/kernel-doc.py
+>  create mode 100644 scripts/lib/kdoc/kdoc_files.py
+>  create mode 100644 scripts/lib/kdoc/kdoc_item.py
+>  create mode 100644 scripts/lib/kdoc/kdoc_output.py
+>  create mode 100644 scripts/lib/kdoc/kdoc_parser.py
+>  create mode 100644 scripts/lib/kdoc/kdoc_re.py
+> 
 
 
