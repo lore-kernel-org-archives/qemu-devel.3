@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73CACA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 12:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35147CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 12:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umtWT-00013I-9g; Fri, 15 Aug 2025 08:27:05 -0400
+	id 1umtWx-00018G-Jj; Fri, 15 Aug 2025 08:27:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umtWS-000135-CG
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 08:27:04 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1umtWd-00015H-R2
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 08:27:16 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1umtWQ-0007Ww-HH
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 08:27:04 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-76e2ea933b7so1830242b3a.1
- for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 05:27:01 -0700 (PDT)
+ id 1umtWb-0007YW-KW
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 08:27:15 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-76e39ec6e05so984832b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 05:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755260820; x=1755865620; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=GUnYPPDFj9Hqb/UePFns6E5LrvTEacHi8jyYmNkofOg=;
- b=Cis1F7Tcf5CaiSUbmqwiBk5LIpAsJZDrc1b0hjC+OU8vLbBVuVshmy5lBablG2I/KE
- OVUC1jNJ4kpFZxEJ9vhSfN6f8Xh30VJKyLDQT2rmhu5YrNafMF7XonBROVadrz8u/RSY
- kw5FXiJ+xG1tSGqNx9FbMS0NFZYRCbx+MaOLUUzm60/2Ra1l6NmH07MHDv80mtHdNGiH
- R0eeTbXvjfS8737K3cNpxiVH5D1gRA6dE9eA4tP8+XDyoHPaC+mF7St6YNK/M/ebW0fA
- Cj1tkz+Yn02fa19/AP82ZSzgLtg6u9t1o4pZ1ndeGGbyUJhMInvtNplg/lGIUVACZcf8
- draQ==
+ d=linaro.org; s=google; t=1755260832; x=1755865632; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=FXjkQXdB1cnyWfZEPDVzu1UrhqtJ/eTeah1TtiZRU90=;
+ b=LMMghVizyXkvNyZwbawBZ53hWrR8FtZ3hEL5DbiueazekpY3NqUrTBA88Dbvta6INx
+ xTgJa6dsh4dxkXJjuFqFCj92W3B9ejahcf97flKo6grWAxKSrZCN+cNwx8ES5xgI+NzH
+ k6YKfqROBCUX+RQJITwNnTHg7GXwa90E8Kyn1VBVMbhIF6NDFybm9TPa1r6orbrsp/Yh
+ wUBf74kMpc0okxdVkMDJ+LhXGGtxPitYGPXfzY4CaE11xIdJuVx3KjrStNXihBhKwvGq
+ 6cEyt9Kue4U4+woxw2dMScJx/t+HN2eagfdYgql+LDy5bbtZf6tN9UxlNDI2q60DLXIC
+ sDRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755260820; x=1755865620;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GUnYPPDFj9Hqb/UePFns6E5LrvTEacHi8jyYmNkofOg=;
- b=aC2B+gughQOKHIeDAd6TXES0b78GRuoyevGHDQend9du8asvqtGdYdeenkjiMAS3ue
- sO1noh7eb8/EFvior29/23Dex1jX7HrFYUH3ys2w6/XYwG2UKIkG4XQQnLQ/izqKwY7H
- 8ThFcaAGmXHLX7Eb1zAxztwDj+6J8Arv++drlM65g0qwTYNZzjkDL6tss2IFq6pgLc62
- gX0/CciTqZ3V4m9oJ9y19fDaq8zQkWIyRVhdxwE6kryGqaKfSCdt4efCkK4RI9MqEJBP
- 8QCzPLeo76LWENx2bNLJq4kcgt7EOW3cBDfsK3AXeDoXZzOFayuUynooqn5CrGELX/fL
- e7sA==
-X-Gm-Message-State: AOJu0YzxQseb8bdApU7KCEJgRvkGWuk395Ib8JHE1YTQ2Yb/XPppatBj
- j5EAbZoRQ6ifVCX0romsOaylYzESaqyC0tYZ9NRK1h0DUgLQAcqI2w8jJVrWmid8W5vY4zo8Nlr
- tdkc8iGM=
-X-Gm-Gg: ASbGnctugzjiqIxyb9Ro3fs5fomf73X2E8GJ1p7IT6PoyhZJdp3QgM1D4JvV04SChYR
- O0Qtwq1Ua6tzC1N5ZNqNgRPewhnYeItytWRWTaisVmrnjxbLs52ezc0mSVtzQ1fEfXc72EFjqjW
- UMkmlaXvlNj/gaAgFej9Yf6Ju8GfnLfs+dWvJb7NC39cPfGDhCeIuPYumY1VdkqXsp5gv2wXxmF
- EMM0HQgkldsSKMdk83msSP77nDVoJD8al/X7q1tYdUhwUPXSfHogUX79wdHqUVw9xjwAMoACUe9
- p6OJ96GqyBQ4luJOLv0ehE+GzapGZCUcyEDQ0gs1DbVf5dFXet6EA59Q9MDKZNKjNrXN+Rp+bLQ
- KStzTkXLN/rTEsWAMfjd6afZA5x3Kuc6sPMXJ5otXs9WeJBg=
-X-Google-Smtp-Source: AGHT+IH61x7z9bMb0rsJFLFymw5NrMf+2hFNXsyuf9BBL4xJgq9sVPkqTt+IC0O/xFdUjJqAcUkktA==
-X-Received: by 2002:a05:6a20:2451:b0:222:ca3f:199 with SMTP id
- adf61e73a8af0-240d297f5c3mr3266838637.18.1755260820194; 
- Fri, 15 Aug 2025 05:27:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1755260832; x=1755865632;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FXjkQXdB1cnyWfZEPDVzu1UrhqtJ/eTeah1TtiZRU90=;
+ b=HivOkOXuG9XPaZkTRYjKHcFw5wRSqpDEraWoSNzwloBIFatDhpt5TEcjBJPipg2URk
+ CjaoZNCaTjOUL0Dfvy3FZufe9ZzQP42skapifldsVt9bxknPgRe5+bgCxs9qolPXbpRu
+ SUc33c4MrmnCat70NL/v8st+A6HoBk13jtYYoB16lreqB6yYwd+QuFuW1FJaqOTpgnxI
+ kDGVXw8T8EkHrG7GFrVlQSCQ4nNkmYox7I9S8317XfXNvHc9isY29DeSmyAjuG6ouN6L
+ +g7cefnMsVzv5NbGP83cLkIYPaOhZhD24MLVpnYwFsEK9KBEoe2lPry066j89I2KDF6Q
+ BhwA==
+X-Gm-Message-State: AOJu0Yx1lXWFjnj9YRat4JYu4PhZqLbxTsHysN26w37OWNpVvk69A2nJ
+ lNp+N8AAUTrdk5DnB6l9DRQEQYC5qUZwAg1JriBVRTZ4W6kvmIIZHYNAbciVX0n9pbKQBqYYQjV
+ eI+/tS90=
+X-Gm-Gg: ASbGncvPdPtjZMDobNajWMpkXaJdY5iaHIPdAU5/hYSL1bVaWsDX7ZGEqin9pX8sbjU
+ ye6KZWaVRS8E6kuE+FzQh4MsnXn4+baVJzq+Uc694tZo8h1sqxDY+YGTOGESPEsIqTpNeBGruv8
+ n9fHMrslNjdMviqVYmkAuW/B7PBSIk1LAAq+9KNEFRGr/KFy/UZEQd941ZkYGhKBWl8g92r/8Iq
+ iDgd8tXD+385FKSvYch95BfQpk3Sir9inyAigV5SqbHhh1WqnyIWkpm3UsDmxK159Op725sJOOl
+ waleckRaaDxFnpIJ0pzzw72g95KpQcMgDWHk46Ta4Gz8Abpz21a+bAj/zcZ7noz4Yd0q7kMZbLQ
+ FATv0x7rfq8PpuIKIyTN6jKw9t7N5c8D/VJAZUBuv9W6vrkE=
+X-Google-Smtp-Source: AGHT+IHJlxynQAfzlFLMK7JnTwv38RazmkxXnPZakLvFfdjC1wafSR0T0XR/alMAfGA2+b/DeIfKYA==
+X-Received: by 2002:a05:6a00:b84:b0:76b:f063:a3cb with SMTP id
+ d2e1a72fcca58-76e44818e50mr2591486b3a.19.1755260831797; 
+ Fri, 15 Aug 2025 05:27:11 -0700 (PDT)
 Received: from localhost.localdomain ([206.83.105.236])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76e45292c86sm1053475b3a.48.2025.08.15.05.26.58
+ d2e1a72fcca58-76e45292c86sm1053475b3a.48.2025.08.15.05.27.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Aug 2025 05:26:59 -0700 (PDT)
+ Fri, 15 Aug 2025 05:27:11 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/7] target/arm: Implement FEAT_LSE128
-Date: Fri, 15 Aug 2025 22:26:46 +1000
-Message-ID: <20250815122653.701782-1-richard.henderson@linaro.org>
+Subject: [PATCH 5/7] target/arm: Rename isar_feature_aa64_atomics
+Date: Fri, 15 Aug 2025 22:26:51 +1000
+Message-ID: <20250815122653.701782-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250815122653.701782-1-richard.henderson@linaro.org>
+References: <20250815122653.701782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,47 +99,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This extension has instructions for atomic 128-bit swap, fetch-and,
-and fetch-or.  This is fairly easy to implement with existing host
-support for 128-bit compare-and-swap.
+This is FEAT_LSE -- rename the predicate to match.
 
-Unlike for 64-bit operations, I did not implement the multitude of
-atomic fetch-op and op-fetch functions.  Those can wait until there
-is a need for them.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/cpu-features.h      |  2 +-
+ linux-user/elfload.c           |  2 +-
+ target/arm/tcg/translate-a64.c | 24 ++++++++++++------------
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-
-r~
-
-
-Richard Henderson (7):
-  qemu/atomic: Finish renaming atomic128-cas.h headers
-  qemu/atomic: Add atomic16 primitives for xchg, fetch_and, fetch_or
-  accel/tcg: Add cpu_atomic_*_mmu for 16-byte xchg, fetch_and, fetch_or
-  tcg: Add tcg_gen_atomic_{xchg,fetch_and,fetch_or}_i128
-  target/arm: Rename isar_feature_aa64_atomics
-  target/arm: Implement FEAT_LSE128
-  target/arm: Enable FEAT_LSE128 for -cpu max
-
- accel/tcg/atomic_template.h                   |  80 +++++++++++++-
- accel/tcg/tcg-runtime.h                       |  12 +++
- host/include/aarch64/host/atomic128-cas.h     |  45 --------
- include/accel/tcg/cpu-ldst-common.h           |  13 ++-
- include/tcg/tcg-op-common.h                   |   7 ++
- include/tcg/tcg-op.h                          |   3 +
- target/arm/cpu-features.h                     |   7 +-
- linux-user/elfload.c                          |   3 +-
- target/arm/tcg/cpu64.c                        |   2 +-
- target/arm/tcg/translate-a64.c                |  73 ++++++++++---
- tcg/tcg-op-ldst.c                             |  97 ++++++++++++++++-
- accel/tcg/atomic_common.c.inc                 |   9 ++
- docs/system/arm/emulation.rst                 |   1 +
- host/include/aarch64/host/atomic128-cas.h.inc | 102 ++++++++++++++++++
- host/include/generic/host/atomic128-cas.h.inc |  96 +++++++++++++++++
- target/arm/tcg/a64.decode                     |   7 ++
- 16 files changed, 487 insertions(+), 70 deletions(-)
- delete mode 100644 host/include/aarch64/host/atomic128-cas.h
- create mode 100644 host/include/aarch64/host/atomic128-cas.h.inc
-
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 5876162428..e3d4c3d382 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -406,7 +406,7 @@ static inline bool isar_feature_aa64_crc32(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64ISAR0, CRC32) != 0;
+ }
+ 
+-static inline bool isar_feature_aa64_atomics(const ARMISARegisters *id)
++static inline bool isar_feature_aa64_lse(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64ISAR0, ATOMIC) != 0;
+ }
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index ea214105ff..9f36ec06a4 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -862,7 +862,7 @@ uint32_t get_elf_hwcap(void)
+     GET_FEATURE_ID(aa64_sm3, ARM_HWCAP_A64_SM3);
+     GET_FEATURE_ID(aa64_sm4, ARM_HWCAP_A64_SM4);
+     GET_FEATURE_ID(aa64_fp16, ARM_HWCAP_A64_FPHP | ARM_HWCAP_A64_ASIMDHP);
+-    GET_FEATURE_ID(aa64_atomics, ARM_HWCAP_A64_ATOMICS);
++    GET_FEATURE_ID(aa64_lse, ARM_HWCAP_A64_ATOMICS);
+     GET_FEATURE_ID(aa64_lse2, ARM_HWCAP_A64_USCAT);
+     GET_FEATURE_ID(aa64_rdm, ARM_HWCAP_A64_ASIMDRDM);
+     GET_FEATURE_ID(aa64_dp, ARM_HWCAP_A64_ASIMDDP);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index dbf47595db..d0639e29cf 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -3237,7 +3237,7 @@ static bool trans_LDXP(DisasContext *s, arg_stxr *a)
+ 
+ static bool trans_CASP(DisasContext *s, arg_CASP *a)
+ {
+-    if (!dc_isar_feature(aa64_atomics, s)) {
++    if (!dc_isar_feature(aa64_lse, s)) {
+         return false;
+     }
+     if (((a->rt | a->rs) & 1) != 0) {
+@@ -3250,7 +3250,7 @@ static bool trans_CASP(DisasContext *s, arg_CASP *a)
+ 
+ static bool trans_CAS(DisasContext *s, arg_CAS *a)
+ {
+-    if (!dc_isar_feature(aa64_atomics, s)) {
++    if (!dc_isar_feature(aa64_lse, s)) {
+         return false;
+     }
+     gen_compare_and_swap(s, a->rs, a->rt, a->rn, a->sz);
+@@ -3743,15 +3743,15 @@ static bool do_atomic_ld(DisasContext *s, arg_atomic *a, AtomicThreeOpFn *fn,
+     return true;
+ }
+ 
+-TRANS_FEAT(LDADD, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_fetch_add_i64, 0, false)
+-TRANS_FEAT(LDCLR, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_fetch_and_i64, 0, true)
+-TRANS_FEAT(LDEOR, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_fetch_xor_i64, 0, false)
+-TRANS_FEAT(LDSET, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_fetch_or_i64, 0, false)
+-TRANS_FEAT(LDSMAX, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_fetch_smax_i64, MO_SIGN, false)
+-TRANS_FEAT(LDSMIN, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_fetch_smin_i64, MO_SIGN, false)
+-TRANS_FEAT(LDUMAX, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_fetch_umax_i64, 0, false)
+-TRANS_FEAT(LDUMIN, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_fetch_umin_i64, 0, false)
+-TRANS_FEAT(SWP, aa64_atomics, do_atomic_ld, a, tcg_gen_atomic_xchg_i64, 0, false)
++TRANS_FEAT(LDADD, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_fetch_add_i64, 0, false)
++TRANS_FEAT(LDCLR, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_fetch_and_i64, 0, true)
++TRANS_FEAT(LDEOR, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_fetch_xor_i64, 0, false)
++TRANS_FEAT(LDSET, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_fetch_or_i64, 0, false)
++TRANS_FEAT(LDSMAX, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_fetch_smax_i64, MO_SIGN, false)
++TRANS_FEAT(LDSMIN, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_fetch_smin_i64, MO_SIGN, false)
++TRANS_FEAT(LDUMAX, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_fetch_umax_i64, 0, false)
++TRANS_FEAT(LDUMIN, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_fetch_umin_i64, 0, false)
++TRANS_FEAT(SWP, aa64_lse, do_atomic_ld, a, tcg_gen_atomic_xchg_i64, 0, false)
+ 
+ static bool trans_LDAPR(DisasContext *s, arg_LDAPR *a)
+ {
+@@ -3759,7 +3759,7 @@ static bool trans_LDAPR(DisasContext *s, arg_LDAPR *a)
+     TCGv_i64 clean_addr;
+     MemOp mop;
+ 
+-    if (!dc_isar_feature(aa64_atomics, s) ||
++    if (!dc_isar_feature(aa64_lse, s) ||
+         !dc_isar_feature(aa64_rcpc_8_3, s)) {
+         return false;
+     }
 -- 
 2.43.0
 
