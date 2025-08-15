@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0AB0CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 13:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD1DBCA0ED1
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 13:03:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umu2U-0002W4-AT; Fri, 15 Aug 2025 09:00:10 -0400
+	id 1umu59-0003nF-S0; Fri, 15 Aug 2025 09:02:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umu2P-0002VF-5u
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 09:00:05 -0400
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
+ id 1umu57-0003mC-FW
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 09:02:53 -0400
+Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1umu2M-00008e-Es
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 09:00:04 -0400
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-e931c741d7fso1902026276.0
- for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 06:00:01 -0700 (PDT)
+ id 1umu54-0001bb-OS
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 09:02:53 -0400
+Received: by mail-yb1-xb29.google.com with SMTP id
+ 3f1490d57ef6-e931cb606ebso1313286276.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 06:02:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755262800; x=1755867600; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755262969; x=1755867769; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Vc4REYiH1a1+7FzI5isYOyDl7VDN6ZSbRgdajw/Zpqc=;
- b=uFG5VRAV3UDxD/HK/WnV/sdb3+mXbo2acjt8hit6Ots/kUbtzj7SNw0oqabyniDSxi
- 47i1BWJBSKsdqNKfwqmfLbgRrj/cW4RQ8aUNnaIQ2RGfiAP4fbGEvb4wncxSzN8UbhGu
- jaIUUvLuMUdxfq/WGgqAc3mPp4Hv4AAIN7Z2/eortxWkiSRUdMizXJ1d+BKcEvBzXZUU
- pTRULhPPCi09k+O5jPUFrd2md8oqB8YrEi8Yq4xU+UHn1btz1OG//gQ8b/z8yvm0x74d
- nLc/+s/TW4vV49D5pMTWqc2Cip2Gn+VKqluo+A7IFAdw834Q4NmBK1Dh6mgZEhFNZP9J
- 8EBQ==
+ bh=w22re+Hoza2Gbca7r8hleQFVG9f15iQIH9TKnxlpBto=;
+ b=TvMTD+OUpe+roL06L0ITg7H7ATU/UG+NWUt5zcELV31oNc2szfLfj3vRnF8Fhuh0gv
+ 4gA27AZEhCC7eX7k7kc8YxupVjvtwggeRL3UY74KDiF8qWLyL1SwsDIMUJZI81oFaajT
+ kpKalT9Q/8QDi9MkuKr6qjAGxR5wS0eesDBYr4BsorY29cfWNJgiTWWnEJBOLK9ARQ1P
+ MYW9KfhXxp9Nvx+Wk9QFSDpjmxhtqRYHMXI9M945nOf/vhLP0u/9Tm4pX0/1LDxMO6XX
+ RJg98Guk4NDGrc6ZMZG1UCYzRd9Zz5XFXpABxb7Dm6aQY/FIOLPlFy5Lj8GlhUqz5L8d
+ S8zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755262800; x=1755867600;
+ d=1e100.net; s=20230601; t=1755262969; x=1755867769;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Vc4REYiH1a1+7FzI5isYOyDl7VDN6ZSbRgdajw/Zpqc=;
- b=dxouRyzxw3VQKAKK9K/41mom179qx347PiPWZFuETa++eaivMXanZgBXsxs0fRLQeC
- WS7UxzWOVVmsfZyCWWlw0TejEjiiouga1I2VabT+qautItFjKukXEAOlrkSN3nWwnlBc
- 5inc5YI6pbg6sW0FVhDD3dnWtlgKSW8v+NF5Y984Iv/FMVGWeL5j1ox7Cd2ElJjX5kdb
- om53ArSO3LdnxF9pw6XVvrOpexHbkrDukMwcd6XeYdo1+1VneKH9ITjWq5d4yRhVFKSR
- ca6nu0bbPqPi3DPHSn+lcJJNJxUIHg8iOqLhSTXZQmEhV0LFNloEkb8U+f8ErJR5b3Ey
- 6ORA==
-X-Gm-Message-State: AOJu0YyofVMT4o2pYYq+kl20vUbbV+GLQT5F8XbIc+bRLe1t9asJsz/h
- d9TjONCcLY77tJ2oq0TuWl8wm+WFAUHNBv3q8AEAkt9133SYA/CXYaXe9vTuS2hnX0vjW9n9MsI
- nySJaamM6UDogAPUxJyom4IZ+5OTkQOO+A73JbiSfgA==
-X-Gm-Gg: ASbGnctmSUWU6SyZvxjWVBgNbhI3Y6hcdoKt6lAg3p1f77eeylhe5E8DFt+LO0U3MJV
- fVIy1pjX05TXEfTDxoK8ysdWjE3elkSi056TfbdPhJ/hfsmrw9NkohV6JSoVomxpf26Qznn47+l
- Q/KgRt2yHVz5H6eIs+TmwWF3CbUkAeLc853ItA9aZE6TucFBe5IyFg7eaKmtQSZJjhiJoXJGGfK
- C7Zuv3o
-X-Google-Smtp-Source: AGHT+IGFIMKiRZXEeB9ezsWDZWRBtt5jtewhONLj55QuXA6jljJTYcOf+tK8Y9E1x6owISmLe3dOYEhMZJT0ZRsRafo=
-X-Received: by 2002:a05:6902:2b07:b0:e90:5a2b:ebdc with SMTP id
- 3f1490d57ef6-e933253d0ddmr2279023276.47.1755262800225; Fri, 15 Aug 2025
- 06:00:00 -0700 (PDT)
+ bh=w22re+Hoza2Gbca7r8hleQFVG9f15iQIH9TKnxlpBto=;
+ b=fRkZVx6nfZm//PJ3HA17k2rRryJdBFrB8YfEvscAMWp+OcPbxzhZgZCrQD7o91ZM88
+ pBTcMIrxnaOKRUthoSsW0R8HVRMe56Q3mHqUxRPe88b4VODa0MMnJqKvGsApLV7SL7P4
+ HUzUnsjFpwhj67TKURVm7b0abLxgSMjVlWYz6fzvZqKnXlI48sr17y5zMzVQ3ygz5hrM
+ 0vyFBGP9F97ZEQc3Kzw2K+WP5fFwo+Cw0WEQfz9HoLXsx+FzfvYnZeBTouHINWZVKtSW
+ K7wnOdSrzL2c7zhj4V5OJY6SgQnIAEWcirYyw9k8p+zfde9oQBjuTaUZhFdAO/Nt+wz1
+ p2Bw==
+X-Gm-Message-State: AOJu0YzIdoZB/UvOdkmEwQYvvyXtSXCX3kbSVzfi7FvhJ1aXtKwM3Yjs
+ iptmy1Z0ckVzEAPHz2Q4ApXjYA7Rh3lv9YJsq/uoeJtgTdr035L4rVqKE0wot9CahRMb9X0LSUx
+ 8Mpuc1XyIoIa8G256D1MwYKY5Th0DFYL+60IchzVkFA==
+X-Gm-Gg: ASbGncsinS6VUQirgR4HPMS8W/BlffEluAk1a4+AG4PrA6TFO5AWMaBKe1Pa4mtpBN7
+ Tc+VCH6McA22H+DVsm+TFkXzetw+XclaYVJUcxbbNKzutllMq+6/b5yy250wJanS94VGZzov0AO
+ ExQAVf4fcOzG2eZ78MjhkiTLj/RFaTgHlSgF2lEG77K7vYc3RRv6CLOA8xGnamlTE5c7N0jxnxM
+ SJUu2yv
+X-Google-Smtp-Source: AGHT+IFgPmLvToHU6DKeXyQm40TtbpFKIkTWnMVfABEkfFWSd212vdbuZDFvl/0Rvb2cYEaI94WxOTPdwbZ+gpNYNqE=
+X-Received: by 2002:a05:6902:300c:b0:e92:3380:3151 with SMTP id
+ 3f1490d57ef6-e93324dee4emr2513604276.24.1755262968614; Fri, 15 Aug 2025
+ 06:02:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <1754936384-278328-1-git-send-email-steven.sistare@oracle.com>
-In-Reply-To: <1754936384-278328-1-git-send-email-steven.sistare@oracle.com>
+References: <20250811112143.1577055-1-smail.aider@huawei.com>
+In-Reply-To: <20250811112143.1577055-1-smail.aider@huawei.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 Aug 2025 13:59:48 +0100
-X-Gm-Features: Ac12FXwFkNezNFzgK9edmE1qo9zifzDymOAZaTDFSrWBeZXIc1IL1-eZ-tRAY0w
-Message-ID: <CAFEAcA_7cxuKbgpygGyexL3k_jPt=1O_v8V3ir5KKMnXVT6oHA@mail.gmail.com>
-Subject: Re: [PATCH V3 1/1] hw/intc/arm_gicv3_kvm: preserve pending interrupts
- during cpr
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Cedric Le Goater <clg@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>, 
- Alex Williamson <alex.williamson@redhat.com>
+Date: Fri, 15 Aug 2025 14:02:36 +0100
+X-Gm-Features: Ac12FXz6iEn2eELmNR_d_sp_macSV45u-KqfnyiPvsDOQ6hyyvP6lL6ZB_ylNaI
+Message-ID: <CAFEAcA9nwajcS_MQ9wN8AOWNhS_3Ch9gRHF0hbB2AdGqXpQXuQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/1] ARM_PMU: Trap PMCR when MDCR_EL2.TPMCR is set
+To: Smail AIDER <smail.aider@huawei.com>
+Cc: qemu-devel@nongnu.org, alexander.spyridakis@huawei.com, 
+ zhangyue165@huawei.com, liuyutao2@huawei.com, mjt@tls.msk.ru, 
+ qemu-stable@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,27 +94,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Aug 2025 at 19:19, Steve Sistare <steven.sistare@oracle.com> wrote:
+On Mon, 11 Aug 2025 at 12:21, Smail AIDER <smail.aider@huawei.com> wrote:
 >
-> Close a race condition that causes cpr-transfer to lose VFIO
-> interrupts on ARM.
+> Trap PMCR_EL0 or PMCR accesses to EL2 when MDCR_EL2.TPMCR is set.
+> Similar to MDCR_EL2.TPM, MDCR_EL2.TPMCR allows trapping EL0 and EL1
+> accesses to the PMCR register to EL2.
 >
-> CPR stops VCPUs but does not disable VFIO interrupts, which may continue
-> to arrive throughout the transition to new QEMU.
+> Changes from v2:
+> - Squashed patches, no other changes.
 >
-> CPR calls kvm_irqchip_remove_irqfd_notifier_gsi in old QEMU to force
-> future interrupts to the producer eventfd, where they are preserved.
-> Old QEMU then destroys the old KVM instance.  However, interrupts may
-> already be pending in KVM state.  To preserve them, call ioctl
-> KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES to flush them to guest RAM, where
-> they will be picked up when the new KVM+VCPU instance is created.
+> Changes from v1:
+> - Some refactoring to simplify code.
 >
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> ---
+> Smail AIDER (1):
+>   target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
 
 
-Applied to target-arm.next for 10.2, thanks. I added a cc:stable tag.
+
+Applied to target-arm.next for 10.2, thanks.
+
+PS: a cover letter is not necessary for a single patch,
+only for multiple patch series.
 
 -- PMM
 
