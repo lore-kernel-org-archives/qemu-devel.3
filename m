@@ -4,68 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F23CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 11:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 492E5CA0EE8
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Aug 2025 12:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1umsU2-0005Me-Q9; Fri, 15 Aug 2025 07:20:30 -0400
+	id 1umtWm-00015G-Bc; Fri, 15 Aug 2025 08:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1umsU0-0005LN-RT
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 07:20:28 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1umsTx-00055Z-Qk
- for qemu-devel@nongnu.org; Fri, 15 Aug 2025 07:20:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1755256811; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=NEH1gClwHKfn1nKP4/D3em2TxlcitZnlWfbnrbNNVBrgw9WFv46V+BIJzkZ9ybZz4Ry7HQpWQUszhGbatkFnRANQacaA21x0OnZ9ZJ4lzj4qzO0q/kxVK1TWO/mF1ZYwxdujmSlN9f+g5r0viG2xxgMvo05QvmoA7ZV4qwPg5ZU=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1755256811;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=x59mXNqTHH6DndKIEW6RkrV13w99ed2Gs1dTb8diOMU=; 
- b=HsZ7CZQ21wDpaJBM57/hIPviPM5n2nyBiWgHfgPSLT+7VdmpZ7B6cij0cF9HdMOsFHhbZoEJO/hrP+VK5NlK3kU1e/k73Q7ghhBiu62Voh3cFpnVdTg4b9PBS0L45eUkLLlgymYtAmMaXf0W6Ortm3qXRT2zrN5ByBl9BskDfb4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1755256811; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=x59mXNqTHH6DndKIEW6RkrV13w99ed2Gs1dTb8diOMU=;
- b=Ad+ASycalJid+4Q9rM9rRhPuQD+I0CRVWcXrQ9k8vF8/MKRbdq4kR2uGvOjl8DBQ
- PaBlPfYkfS/psexLgmhn5if8cYH1N0/V26JdA86ZR/quQ58I9Io5lBVDHTrKfpWl+pK
- rNeq1urDJjiXICUW5PnzqcROFfE2NxyKLLBqdS1E=
-Received: by mx.zohomail.com with SMTPS id 1755256809896175.31540564798138;
- Fri, 15 Aug 2025 04:20:09 -0700 (PDT)
-Message-ID: <6efb8907-72bf-406a-9975-84f85b37c7cc@collabora.com>
-Date: Fri, 15 Aug 2025 14:20:07 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1umtWY-00014P-Fu
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 08:27:11 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1umtWW-0007Xq-Fy
+ for qemu-devel@nongnu.org; Fri, 15 Aug 2025 08:27:10 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-76e2eb6ce24so1957267b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 05:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755260827; x=1755865627; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=87lrvQbpY4bv9joZLCnkKnHCeKplsEyfo+kz4OC+lZ8=;
+ b=KxzcjYMKlk31kzzjFnPnzp0mp0HbLKF1aUSO5wlAXncIthGH6+rBtmjfkTQm2GRTG8
+ UTnfb3GSLAUoJjuBb06g3F36KpOvlAIoUWRpQOd09mHzSc4/rNmuIMHoHqjqiWViX5h3
+ O5cXSS1l6h5OOKZhzcwzVuToWtpK81SJ4kKjC80CvDtjOwn7/hu7aphAMuenHPzFSZt8
+ IDVaZoR9QX9m3KRAH/5qjl59qvWCmc+dv8i7jZbYzHWlkXCldBAynbBUQ40zzV/tN83+
+ i3BItG3lSrEQOEarq6v3Q7PbxSjkQY62VJVh4wCKt/L+zocAIAuhVasV6dFwROY0+GbF
+ 5icw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755260827; x=1755865627;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=87lrvQbpY4bv9joZLCnkKnHCeKplsEyfo+kz4OC+lZ8=;
+ b=I2WxXE+H9C8Kgh1EMgkLZdK5GeHLpxzcWw2DU07Lj0T9WmnUoP2ZaI7jx7l3fJwUy/
+ 5xz6v9b14HfjNPt65cAQZXzIrfUA2is7/WONpSKgJsPHH5dGAUaaRtqyL9VG2zb1C4FG
+ ES0rfv2jRL0r+vr5Mfo+3YN9MPU9rnmi4CPPcJ+fl2AdQpRRil7bGX5iC9tdNxgWpaoA
+ 7DyYFn2wJEY/dLkz5djoip5SnPQEG9QvOLP9Na6XabfKNDvanNNhXPQeqiCEQEWrLyrb
+ oUKTHmD8vx1/3JT42gxnQq6LQtIv8kD+Vn8bhlls1fwv3DpkrtJcmlY3y7eQbCFNMm0N
+ 2LmQ==
+X-Gm-Message-State: AOJu0YymrMQQA5JuYdlUECQOos4Q4E/0HLaIu9ke6f5UUMh/EKWQAt6J
+ Ie6zVZIq0vLYYMmj567uWs8g4Dkgh8ESrDR+ExuarJfJPYWgzF3FP8Fi0C+rx17dloTHQzAtVcO
+ WOQawfjQ=
+X-Gm-Gg: ASbGncs0BOorvMXkBMZM3AG/7wPvJRXNDEasouS3AP5RD9mOt+7nYpiTXnVhUK52s9g
+ /p5mp4JSHgz3ZIJe8Yiuz9+YVe4cVMrJkABtpiG1Rm8qk22lm1jdF8UrMHlIjQpQxZGNJ/2q832
+ CaeWirzvCsO4H8NsLCRFgJOC4/aL8wFvIHwHkz2myokDiP0S0HQ8AIRfULc4xNkmJJ6pJbE6ChQ
+ M7N/L6Z582HTJY77ygtmF3i69EopbHHeoiROoRcqkU9fWINsK03IGS0fefPpEUW4Z2eAix8f5k/
+ SkLUWeTx4iOFqLJmtxQb5jyKm0W1q9SCbLQmwKRocMtx1iDxqvxj9srKGxHo9k+jvMKbZvs5phZ
+ 4wkZEjJYDBLV2mXVU5jjEbPRDroMUXeXYvEbd+4/hnKh/4y0=
+X-Google-Smtp-Source: AGHT+IFkfZarQyGhpWT4nrnG16vb6Yh04P01ib4eJV6rygPD+PKzQJXerGeZqShosxw9AOak8MGjeA==
+X-Received: by 2002:a05:6a00:3997:b0:76b:f1c0:224b with SMTP id
+ d2e1a72fcca58-76e4485ae74mr2436132b3a.23.1755260827013; 
+ Fri, 15 Aug 2025 05:27:07 -0700 (PDT)
+Received: from localhost.localdomain ([206.83.105.236])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-76e45292c86sm1053475b3a.48.2025.08.15.05.27.05
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Aug 2025 05:27:06 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 3/7] accel/tcg: Add cpu_atomic_*_mmu for 16-byte xchg,
+ fetch_and, fetch_or
+Date: Fri, 15 Aug 2025 22:26:49 +1000
+Message-ID: <20250815122653.701782-4-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250815122653.701782-1-richard.henderson@linaro.org>
+References: <20250815122653.701782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH qemu v3 1/1] Default disable ignore guest PAT quirk
- (second revision)
-To: ~myrslint <myrskylintu@proton.me>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <175519305258.21579.8228319741764786681-1@git.sr.ht>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <175519305258.21579.8228319741764786681-1@git.sr.ht>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,47 +100,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/25 20:53, ~myrslint wrote:
-> From: myrslint <qemu.haziness801@passinbox.com>
-> 
-> Most Intel CPUs in current use have self-snoop. The few added lines of
-> code also check for availability of the quirk disablement option so if
-> some CPU does not have this feature no change of behavior will occur.
-> 
-> Signed-off-by: Myrsky Lintu <qemu.haziness801@passinbox.com>
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2943
-> ---
-> Thanks to Alex Bennée <alex.bennee@linaro.org> for the kind code review
-> and helpful guidance.
-> 
->  target/i386/kvm/kvm.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 369626f8c8..124818bf94 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -16,6 +16,7 @@
->  #include "qapi/qapi-events-run-state.h"
->  #include "qapi/error.h"
->  #include "qapi/visitor.h"
-> +#include <asm-x86/kvm.h>
->  #include <math.h>
->  #include <sys/ioctl.h>
->  #include <sys/utsname.h>
-> @@ -3367,6 +3368,24 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->          }
->      }
->  
-> +/* if kernel version does not have it there is no point compiling this in */
-> +#ifdef KVM_X86_QUIRK_IGNORE_GUEST_PAT
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ accel/tcg/atomic_template.h         | 80 +++++++++++++++++++++++++++--
+ include/accel/tcg/cpu-ldst-common.h | 13 +++--
+ 2 files changed, 86 insertions(+), 7 deletions(-)
 
-QEMU uses own copy of kernel headers, I expect this define should be
-always available.
-
+diff --git a/accel/tcg/atomic_template.h b/accel/tcg/atomic_template.h
+index 08a475c10c..ae5203b439 100644
+--- a/accel/tcg/atomic_template.h
++++ b/accel/tcg/atomic_template.h
+@@ -100,7 +100,6 @@ ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, vaddr addr,
+     return ret;
+ }
+ 
+-#if DATA_SIZE < 16
+ ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, vaddr addr, ABI_TYPE val,
+                            MemOpIdx oi, uintptr_t retaddr)
+ {
+@@ -108,7 +107,11 @@ ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, vaddr addr, ABI_TYPE val,
+                                          DATA_SIZE, retaddr);
+     DATA_TYPE ret;
+ 
++#if DATA_SIZE == 16
++    ret = atomic16_xchg(haddr, val);
++#else
+     ret = qatomic_xchg__nocheck(haddr, val);
++#endif
+     ATOMIC_MMU_CLEANUP;
+     atomic_trace_rmw_post(env, addr,
+                           VALUE_LOW(ret),
+@@ -119,6 +122,39 @@ ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, vaddr addr, ABI_TYPE val,
+     return ret;
+ }
+ 
++#if DATA_SIZE == 16
++ABI_TYPE ATOMIC_NAME(fetch_and)(CPUArchState *env, vaddr addr, ABI_TYPE val,
++                                MemOpIdx oi, uintptr_t retaddr)
++{
++    DATA_TYPE *haddr = atomic_mmu_lookup(env_cpu(env), addr, oi,
++                                         DATA_SIZE, retaddr);
++    DATA_TYPE ret = atomic16_fetch_and(haddr, val);
++    ATOMIC_MMU_CLEANUP;
++    atomic_trace_rmw_post(env, addr,
++                          VALUE_LOW(ret),
++                          VALUE_HIGH(ret),
++                          VALUE_LOW(val),
++                          VALUE_HIGH(val),
++                          oi);
++    return ret;
++}
++
++ABI_TYPE ATOMIC_NAME(fetch_or)(CPUArchState *env, vaddr addr, ABI_TYPE val,
++                               MemOpIdx oi, uintptr_t retaddr)
++{
++    DATA_TYPE *haddr = atomic_mmu_lookup(env_cpu(env), addr, oi,
++                                         DATA_SIZE, retaddr);
++    DATA_TYPE ret = atomic16_fetch_or(haddr, val);
++    ATOMIC_MMU_CLEANUP;
++    atomic_trace_rmw_post(env, addr,
++                          VALUE_LOW(ret),
++                          VALUE_HIGH(ret),
++                          VALUE_LOW(val),
++                          VALUE_HIGH(val),
++                          oi);
++    return ret;
++}
++#else
+ #define GEN_ATOMIC_HELPER(X)                                        \
+ ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, vaddr addr,              \
+                         ABI_TYPE val, MemOpIdx oi, uintptr_t retaddr) \
+@@ -188,7 +224,7 @@ GEN_ATOMIC_HELPER_FN(smax_fetch, MAX, SDATA_TYPE, new)
+ GEN_ATOMIC_HELPER_FN(umax_fetch, MAX,  DATA_TYPE, new)
+ 
+ #undef GEN_ATOMIC_HELPER_FN
+-#endif /* DATA SIZE < 16 */
++#endif /* DATA SIZE == 16 */
+ 
+ #undef END
+ 
+@@ -225,7 +261,6 @@ ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, vaddr addr,
+     return BSWAP(ret);
+ }
+ 
+-#if DATA_SIZE < 16
+ ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, vaddr addr, ABI_TYPE val,
+                            MemOpIdx oi, uintptr_t retaddr)
+ {
+@@ -233,7 +268,11 @@ ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, vaddr addr, ABI_TYPE val,
+                                          DATA_SIZE, retaddr);
+     ABI_TYPE ret;
+ 
++#if DATA_SIZE == 16
++    ret = atomic16_xchg(haddr, BSWAP(val));
++#else
+     ret = qatomic_xchg__nocheck(haddr, BSWAP(val));
++#endif
+     ATOMIC_MMU_CLEANUP;
+     atomic_trace_rmw_post(env, addr,
+                           VALUE_LOW(ret),
+@@ -244,6 +283,39 @@ ABI_TYPE ATOMIC_NAME(xchg)(CPUArchState *env, vaddr addr, ABI_TYPE val,
+     return BSWAP(ret);
+ }
+ 
++#if DATA_SIZE == 16
++ABI_TYPE ATOMIC_NAME(fetch_and)(CPUArchState *env, vaddr addr, ABI_TYPE val,
++                                MemOpIdx oi, uintptr_t retaddr)
++{
++    DATA_TYPE *haddr = atomic_mmu_lookup(env_cpu(env), addr, oi,
++                                         DATA_SIZE, retaddr);
++    DATA_TYPE ret = atomic16_fetch_and(haddr, BSWAP(val));
++    ATOMIC_MMU_CLEANUP;
++    atomic_trace_rmw_post(env, addr,
++                          VALUE_LOW(ret),
++                          VALUE_HIGH(ret),
++                          VALUE_LOW(val),
++                          VALUE_HIGH(val),
++                          oi);
++    return BSWAP(ret);
++}
++
++ABI_TYPE ATOMIC_NAME(fetch_or)(CPUArchState *env, vaddr addr, ABI_TYPE val,
++                               MemOpIdx oi, uintptr_t retaddr)
++{
++    DATA_TYPE *haddr = atomic_mmu_lookup(env_cpu(env), addr, oi,
++                                         DATA_SIZE, retaddr);
++    DATA_TYPE ret = atomic16_fetch_or(haddr, BSWAP(val));
++    ATOMIC_MMU_CLEANUP;
++    atomic_trace_rmw_post(env, addr,
++                          VALUE_LOW(ret),
++                          VALUE_HIGH(ret),
++                          VALUE_LOW(val),
++                          VALUE_HIGH(val),
++                          oi);
++    return BSWAP(ret);
++}
++#else
+ #define GEN_ATOMIC_HELPER(X)                                        \
+ ABI_TYPE ATOMIC_NAME(X)(CPUArchState *env, vaddr addr,              \
+                         ABI_TYPE val, MemOpIdx oi, uintptr_t retaddr) \
+@@ -317,7 +389,7 @@ GEN_ATOMIC_HELPER_FN(add_fetch, ADD, DATA_TYPE, new)
+ #undef ADD
+ 
+ #undef GEN_ATOMIC_HELPER_FN
+-#endif /* DATA_SIZE < 16 */
++#endif /* DATA_SIZE == 16 */
+ 
+ #undef END
+ #endif /* DATA_SIZE > 1 */
+diff --git a/include/accel/tcg/cpu-ldst-common.h b/include/accel/tcg/cpu-ldst-common.h
+index 8bf17c2fab..17a3250ded 100644
+--- a/include/accel/tcg/cpu-ldst-common.h
++++ b/include/accel/tcg/cpu-ldst-common.h
+@@ -100,9 +100,6 @@ GEN_ATOMIC_HELPER_ALL(umax_fetch)
+ 
+ GEN_ATOMIC_HELPER_ALL(xchg)
+ 
+-#undef GEN_ATOMIC_HELPER_ALL
+-#undef GEN_ATOMIC_HELPER
+-
+ Int128 cpu_atomic_cmpxchgo_le_mmu(CPUArchState *env, vaddr addr,
+                                   Int128 cmpv, Int128 newv,
+                                   MemOpIdx oi, uintptr_t retaddr);
+@@ -110,6 +107,16 @@ Int128 cpu_atomic_cmpxchgo_be_mmu(CPUArchState *env, vaddr addr,
+                                   Int128 cmpv, Int128 newv,
+                                   MemOpIdx oi, uintptr_t retaddr);
+ 
++GEN_ATOMIC_HELPER(xchg, Int128, o_le)
++GEN_ATOMIC_HELPER(xchg, Int128, o_be)
++GEN_ATOMIC_HELPER(fetch_and, Int128, o_le)
++GEN_ATOMIC_HELPER(fetch_and, Int128, o_be)
++GEN_ATOMIC_HELPER(fetch_or, Int128, o_le)
++GEN_ATOMIC_HELPER(fetch_or, Int128, o_be)
++
++#undef GEN_ATOMIC_HELPER_ALL
++#undef GEN_ATOMIC_HELPER
++
+ uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
+                          MemOpIdx oi, uintptr_t ra);
+ uint16_t cpu_ldw_code_mmu(CPUArchState *env, vaddr addr,
 -- 
-Best regards,
-Dmitry
+2.43.0
 
 
