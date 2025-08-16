@@ -4,94 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D20CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 Aug 2025 06:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48BCDCA0EE6
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Aug 2025 08:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1unAmP-0007nL-3n; Sat, 16 Aug 2025 02:52:41 -0400
+	id 1unBvG-0004Jm-8X; Sat, 16 Aug 2025 04:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1unAmN-0007mg-LH
- for qemu-devel@nongnu.org; Sat, 16 Aug 2025 02:52:39 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1unAmL-0005ht-3E
- for qemu-devel@nongnu.org; Sat, 16 Aug 2025 02:52:39 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-b471aaa085aso1480284a12.0
- for <qemu-devel@nongnu.org>; Fri, 15 Aug 2025 23:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755327155; x=1755931955; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0OD9oeY5L+nYXG7tp0X7jN4JIDWCrJcneEM93YTaA+k=;
- b=PXPBdFH+POKxRG3COZ1N++4Bb2Dpqi6OsG6mThSOjNAM0S1LI0VWFgpb34jCcNBQ9c
- Omx8ouK1uvUTvgMg7fonvVRa28HyWB3LT7vtyLmZkf7CMyJefTDfpZaeE6CJ7IM3sF/n
- 9pp8E59Cq7DVLTKtrbmeWDZd08rAiUssI7jfKC/LDY14VZcWT4L0cIdIuVGbWfFUyeks
- 4Iw3BKtdgYoo78yJRQU0PuW0/cDgw+78TaVUF6GAq5gfaF0oRPHPNM9RgDAlmSTr30Me
- hMowccdxcziZGyXzsY7UUCR+RPcPk6TsnhYq5jRxHfwwqOGOb9c2S0j3OAFkmLdzrvYs
- v7dg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1unBvD-0004Ja-Tc
+ for qemu-devel@nongnu.org; Sat, 16 Aug 2025 04:05:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1unBvA-0001ZB-RR
+ for qemu-devel@nongnu.org; Sat, 16 Aug 2025 04:05:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755331546;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=vbHvXGC+RfUnaSd9ye/zy56zPGb6I01VrbXEkgDsHOA=;
+ b=i1qqS0e/SILlEaLdEQz4TY81RyRVfU9jePl20h3GkoEdF/N5wEq5O0M2Dc1voeveViOZ3L
+ HyoBtOlAHcdRJdqcJqPxe3y6KAX+AKTLuezoK5vxjOb2SWO58TWJDftzYMFIJjgrKRI3NH
+ 0ety8NM5Xlsh59433Ysbs15puaqLW7I=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-473-vFWqugb7NC6C2Q2ZiWa3jw-1; Sat, 16 Aug 2025 04:05:43 -0400
+X-MC-Unique: vFWqugb7NC6C2Q2ZiWa3jw-1
+X-Mimecast-MFC-AGG-ID: vFWqugb7NC6C2Q2ZiWa3jw_1755331543
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3b9edf2d82dso1341601f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 16 Aug 2025 01:05:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755327155; x=1755931955;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0OD9oeY5L+nYXG7tp0X7jN4JIDWCrJcneEM93YTaA+k=;
- b=fT3nv4ANQ9C787Hur3E5rHiYLduYkyrTMr/VGZHx+RKmpY1d5k3T+nBjtozIizCV8B
- LLoFw1sdSLtHpamxLY4sAaHXAMRqJa/RDlJnijgiJXFUI2zBxe63I0PulVvzKMHoGyc8
- CVPMankX9mNNlBw0pjhPdPStFqF2PL3FaSLJJ3jdPOsG6XYV158t9qZG2XYCSFAXSq9M
- EgQ+xBmfHWS7dizvR6N8DED86BNJwhE+VUrBtkNQsVOXwgA5pWxIDy/nO9WymiNxASR1
- P4pRnjc8QW07anfRxQHIPIenei4zAxpjmCrGWey50QDNwT80KNDEPpG2S9m6+HvouVE1
- UZXg==
+ d=1e100.net; s=20230601; t=1755331543; x=1755936343;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vbHvXGC+RfUnaSd9ye/zy56zPGb6I01VrbXEkgDsHOA=;
+ b=V0hhslkewNI8E9JkewB6H7146IQfLx6YzELzyZTKAqA416f73ikE9AmY23RmYuQdVu
+ h1XYNhsnffL62zh42JsW7v3KsGPnsVcJO578+XgY8rcUNhsYQwu1GX9tbAri6qVxqEqB
+ vAs+c9icD50A/C8MoTqMzwaOVgq++N9bqkaxkvycjZbBJLHmT8Pnq8ChTkIuvcZ1ErjV
+ n8n7FQRbSt7j1UmO8AX+v5buqc04/cqQ3GGw3XUOAM6WCBmMNqiNI0lonndjwi03fy/E
+ C/Rn7I0tVMCMFcz9GWfiB44v18s5kwaXzI/iWMBuiksrJKzrvSjiTHVzfyZeMQYgX7Td
+ GA5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgGj7lzhNVog8/buwWxmyLc5BwXMhvPwpe9Sm1YEicgSnHX7jWwmr4KJIZ6LCeew2/Wey7vyofE6ZN@nongnu.org
-X-Gm-Message-State: AOJu0YxS4T27vWU3uGZTovmm51KiHdxX8zH92yXKnvI+ETs3trdHyOY0
- 1bvHRTSg1fJ4bjJ6azbJ2E9jRxB1DGRQQ2eSFcm4aG63Jl9heaaADJ2OWdnQBy95z2c=
-X-Gm-Gg: ASbGncsCyUZfM5oBRvi18r8GnySeZ1iBk/+tPxhBBjdDqUv1VoBLJNZwyQVm75cDZUD
- KjKTQ9xD7Px74ld4NS1U2de+yU6hLUd0tXatShWNuesKFCJjW4m8k7m4DNzFnYj7gU/kuGTsGKt
- vsvZ0WRloFFeo64ZzUmRJH/a2iKOAXtEmqN6LqNVfM8fYL9El5y9uUtu5ddtzI6FYfwOGALQdsa
- ncK2b5KTkNu9P+Np5Y5xLlF3bZrSnWRVdu8LJ2jp61LOiyuTKa5nG6IOP15M0cdlxrcws5tiXaL
- 0rc0G+IEBcRGfQcfmRV0EcuPiSZAo78MkjlqtxMZwJonMiCcSF7wgoJD/Oq8AvA2g6AGAefUjVc
- nze1efYLYvmdHDBBShW6HnUL5oiChYW3riivp1aA=
-X-Google-Smtp-Source: AGHT+IFQxYv/cqPFCkxwf4tVNMu0iX/fEQF0C7yZgeP0FNv9lrz5j4J4KJP9Ct5nIs39wAFnJrO9Iw==
-X-Received: by 2002:a17:902:c40f:b0:235:efbb:9537 with SMTP id
- d9443c01a7336-2445948669amr140205075ad.3.1755327155061; 
- Fri, 15 Aug 2025 23:52:35 -0700 (PDT)
-Received: from [192.168.4.112] ([206.83.122.207])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2446d58b80asm28797055ad.160.2025.08.15.23.52.30
+ AJvYcCWHs7vbjUXSwAXj2T7KT4LR5VmhIhoiPOhtH/nOqJ0iyZ26vtSkCCDMUvG26FakPJ3lPvR3xs0bkzyG@nongnu.org
+X-Gm-Message-State: AOJu0Yx75LkoIyzxT2sMDvUzviHhRf6cKQxf7of0gJV0Q3KGOyPOl4A1
+ hDTyiIeANaiPSKH1cGd6TqUdn18yqWWkiGg+gN6fa4xRnV1IZmeYr9e2fXKtT+sP0LFDymqYOjS
+ 1VArC1ETC2mUR9uEElqpl8kKYG4pIHnVkSTLrt3m0MYpZ/euSiz0os9h7
+X-Gm-Gg: ASbGnctbwmln/reE3naNnnAmDQGDquL4UBjbIZ09vUKRXBuRas8fisqMg0XccjiMbxn
+ agbWbjF/Gx3VvsI9QB06fyMmeVsl4uCIcjTqIC+bsKqHRVuhHJ1266vFnY4Kmghw2YPm18vRYmy
+ J88OX1Nt4yYwIwgo/5HzPrtnNLastml61k2c8IqLM22eIC3guKxk3pPNrFutMPvJCKWdi4lXOiY
+ ReOVtQnzCoyEI1vVyojFK2QuCm7Hk72mQ+XCgT3BA9t5MtVjwV538krzqR59T93n7PXtJfc+R8S
+ 5j4HFqBthWF4W09qPlz1WLTGrVzI5/D8hd8RCMfdOULj
+X-Received: by 2002:a05:6000:2012:b0:3b8:d16a:a4b1 with SMTP id
+ ffacd0b85a97d-3bb6969a801mr3446047f8f.58.1755331542697; 
+ Sat, 16 Aug 2025 01:05:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5NHlMGlNhYlBmryFLBRXLScY4f+/QftcTYwht+BoY9SwTeTioAesZhwLdsSxP9mg0sJREdQ==
+X-Received: by 2002:a05:6000:2012:b0:3b8:d16a:a4b1 with SMTP id
+ ffacd0b85a97d-3bb6969a801mr3446023f8f.58.1755331542216; 
+ Sat, 16 Aug 2025 01:05:42 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.234.144])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-3bb64d29a70sm4876544f8f.17.2025.08.16.01.05.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Aug 2025 23:52:34 -0700 (PDT)
-Message-ID: <43454225-4239-4f44-a210-b0bb31818213@linaro.org>
-Date: Sat, 16 Aug 2025 16:52:27 +1000
+ Sat, 16 Aug 2025 01:05:41 -0700 (PDT)
+Message-ID: <9351d1d2-d487-45fe-8251-16c6c6ad5976@redhat.com>
+Date: Sat, 16 Aug 2025 10:05:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] Generate strided vector loads/stores with tcg
- nodes.
-To: Chao Liu <chao.liu@yeah.net>, paolo.savini@embecosm.com,
- ebiggers@kernel.org, dbarboza@ventanamicro.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <cover.1755305184.git.chao.liu@yeah.net>
- <468515337182030ddf6b05ec5eec7b6af9d43153.1755305184.git.chao.liu@yeah.net>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH qemu v4 1/1] Default disable ignore guest PAT quirk
+To: ~myrslint <myrskylintu@proton.me>, qemu-devel@nongnu.org
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <175527721636.15451.4393515241478547957-1@git.sr.ht>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-In-Reply-To: <468515337182030ddf6b05ec5eec7b6af9d43153.1755305184.git.chao.liu@yeah.net>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <175527721636.15451.4393515241478547957-1@git.sr.ht>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,410 +147,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/16/25 10:56, Chao Liu wrote:
-> This commit improves the performance of QEMU when emulating strided vector
-> loads and stores by substituting the call for the helper function with the
-> generation of equivalent TCG operations.
+On 8/15/25 18:53, ~myrslint wrote:
+> From: myrslint <qemu.haziness801@passinbox.com>
 > 
-> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
-> Signed-off-by: Chao Liu <chao.liu@yeah.net>
-> Tested-by: Eric Biggers <ebiggers@kernel.org>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Most Intel CPUs in current use have self-snoop. The few added lines of
+> code also check for availability of the quirk disablement option so if
+> some CPU does not have this feature no change of behavior will occur.
+> 
+> Signed-off-by: Myrsky Lintu <qemu.haziness801@passinbox.com>
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2943
 > ---
->   target/riscv/insn_trans/trans_rvv.c.inc | 326 ++++++++++++++++++++----
->   1 file changed, 276 insertions(+), 50 deletions(-)
+>   target/i386/kvm/kvm.c | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
 > 
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-> index 71f98fb350..b5d74b0ec9 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -864,32 +864,289 @@ GEN_VEXT_TRANS(vlm_v, MO_8, vlm_v, ld_us_mask_op, ld_us_mask_check)
->   GEN_VEXT_TRANS(vsm_v, MO_8, vsm_v, st_us_mask_op, st_us_mask_check)
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 369626f8c8..1102866a89 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -16,6 +16,7 @@
+>   #include "qapi/qapi-events-run-state.h"
+>   #include "qapi/error.h"
+>   #include "qapi/visitor.h"
+> +#include <asm-x86/kvm.h>
+>   #include <math.h>
+>   #include <sys/ioctl.h>
+>   #include <sys/utsname.h>
+> @@ -3367,6 +3368,21 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>           }
+>       }
 >   
->   /*
-> - *** stride load and store
-> + * MAXSZ returns the maximum vector size can be operated in bytes,
-> + * which is used in GVEC IR when vl_eq_vlmax flag is set to true
-> + * to accelerate vector operation.
-> + */
-> +static inline uint32_t MAXSZ(DisasContext *s)
-> +{
-> +    int max_sz = s->cfg_ptr->vlenb << 3;
-> +    return max_sz >> (3 - s->lmul);
-> +}
-> +
-> +static inline uint32_t get_log2(uint32_t a)
-> +{
-> +    uint32_t i = 0;
-> +    if (a == 0) {
-> +        return i;
-> +    }
-> +    for (; a > 1;) {
-> +        a >>= 1;
-> +        i++;
-> +    }
-> +    return i;
-> +}
+> +    /* rationale: most x86 cpus in current use have self-snoop so honoring
+> +     * guest pat is preferrable.
 
-Since I didn't see v3 had been posted before I replied to v2, I'll repeat my suggestion of
+More precisely, KVM will not expose KVM_X86_QUIRK_IGNORE_GUEST_PAT if
+the CPU doesn't have self snoop:
 
-	assert(is_power_of_2(a));
-	return ctz32(a);
-
-as a better implementation of this function.
+         if (!static_cpu_has(X86_FEATURE_SELFSNOOP))
+                 kvm_caps.supported_quirks &= ~KVM_X86_QUIRK_IGNORE_GUEST_PAT;
 
 
-r~
+> +     * as well, the bochs video driver bug which
+> +     * motivated making this a default enabled quirk in kvm was fixed long ago
+> +     * */
+Unfortunately, "less than one year" is not long ago. :(  Maybe it can be
+done in a machine-init-done notifier, and only if a bochs-drm device has
+not been added?  You can add a function call
+
+	kvm_hack_do_not_enable_guest_pat();
+
+to bochs_display_realize(), and something like this to target/i386/kvm/kvm.c:
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index f9c63c422f0..0b51457e605 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2696,13 +2696,13 @@ static bool kvm_rdmsr_pkg_energy_status(X86CPU *cpu,
+      return true;
+  }
+  
+-static Notifier smram_machine_done;
++static Notifier kvm_machine_done;
+  static KVMMemoryListener smram_listener;
+  static AddressSpace smram_address_space;
+  static MemoryRegion smram_as_root;
+  static MemoryRegion smram_as_mem;
+  
+-static void register_smram_listener(Notifier *n, void *unused)
++static void register_smram_listener(void)
+  {
+      MemoryRegion *smram =
+          (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
+@@ -2730,6 +2730,18 @@ static void register_smram_listener(Notifier *n, void *unused)
+                                   &smram_address_space, 1, "kvm-smram");
+  }
+  
++static void kvm_machine_done(Notifier *n, void *unused)
++{
++    if (kvm_check_extension(s, KVM_CAP_X86_SMM) &&
++        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
++        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
++        register_smram_listener();
++    }
++    if (!kvm_got_bochs_drm) {
++        disable_ignore_guest_pat_quirk();
++    }
++}
++
+  static void *kvm_msr_energy_thread(void *data)
+  {
+      KVMState *s = data;
+@@ -3310,12 +3322,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+          return ret;
+      }
+  
+-    if (kvm_check_extension(s, KVM_CAP_X86_SMM) &&
+-        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
+-        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
+-        smram_machine_done.notify = register_smram_listener;
+-        qemu_add_machine_init_done_notifier(&smram_machine_done);
+-    }
++    smram_machine_done.notify = kvm_machine_done;
++    qemu_add_machine_init_done_notifier(&smram_machine_done);
+  
+      if (enable_cpu_pm) {
+          ret = kvm_vm_enable_disable_exits(s);
 
 
-> +
-> +typedef void gen_tl_ldst(TCGv, TCGv_ptr, tcg_target_long);
-> +
-> +/*
-> + * Simulate the strided load/store main loop:
-> + *
-> + * for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-> + *     k = 0;
-> + *     while (k < nf) {
-> + *         if (!vm && !vext_elem_mask(v0, i)) {
-> + *             vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
-> + *                               (i + k * max_elems + 1) * esz);
-> + *             k++;
-> + *             continue;
-> + *         }
-> + *         target_ulong addr = base + stride * i + (k << log2_esz);
-> + *         ldst(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
-> + *         k++;
-> + *     }
-> + * }
-> + */
-> +static void gen_ldst_stride_main_loop(DisasContext *s, TCGv dest, uint32_t rs1,
-> +                                      uint32_t rs2, uint32_t vm, uint32_t nf,
-> +                                      gen_tl_ldst *ld_fn, gen_tl_ldst *st_fn,
-> +                                      bool is_load)
-> +{
-> +    TCGv addr = tcg_temp_new();
-> +    TCGv base = get_gpr(s, rs1, EXT_NONE);
-> +    TCGv stride = get_gpr(s, rs2, EXT_NONE);
-> +
-> +    TCGv i = tcg_temp_new();
-> +    TCGv i_esz = tcg_temp_new();
-> +    TCGv k = tcg_temp_new();
-> +    TCGv k_esz = tcg_temp_new();
-> +    TCGv k_max = tcg_temp_new();
-> +    TCGv mask = tcg_temp_new();
-> +    TCGv mask_offs = tcg_temp_new();
-> +    TCGv mask_offs_64 = tcg_temp_new();
-> +    TCGv mask_elem = tcg_temp_new();
-> +    TCGv mask_offs_rem = tcg_temp_new();
-> +    TCGv vreg = tcg_temp_new();
-> +    TCGv dest_offs = tcg_temp_new();
-> +    TCGv stride_offs = tcg_temp_new();
-> +
-> +    uint32_t max_elems = MAXSZ(s) >> s->sew;
-> +
-> +    TCGLabel *start = gen_new_label();
-> +    TCGLabel *end = gen_new_label();
-> +    TCGLabel *start_k = gen_new_label();
-> +    TCGLabel *inc_k = gen_new_label();
-> +    TCGLabel *end_k = gen_new_label();
-> +
-> +    MemOp atomicity = MO_ATOM_NONE;
-> +    if (s->sew == 0) {
-> +        atomicity = MO_ATOM_NONE;
-> +    } else {
-> +        atomicity = MO_ATOM_IFALIGN_PAIR;
-> +    }
-> +
-> +    mark_vs_dirty(s);
-> +
-> +    tcg_gen_addi_tl(mask, (TCGv)tcg_env, vreg_ofs(s, 0));
-> +
-> +    /* Start of outer loop. */
-> +    tcg_gen_mov_tl(i, cpu_vstart);
-> +    gen_set_label(start);
-> +    tcg_gen_brcond_tl(TCG_COND_GE, i, cpu_vl, end);
-> +    tcg_gen_shli_tl(i_esz, i, s->sew);
-> +    /* Start of inner loop. */
-> +    tcg_gen_movi_tl(k, 0);
-> +    gen_set_label(start_k);
-> +    tcg_gen_brcond_tl(TCG_COND_GE, k, tcg_constant_tl(nf), end_k);
-> +    /*
-> +     * If we are in mask agnostic regime and the operation is not unmasked we
-> +     * set the inactive elements to 1.
-> +     */
-> +    if (!vm && s->vma) {
-> +        TCGLabel *active_element = gen_new_label();
-> +        /* (i + k * max_elems) * esz */
-> +        tcg_gen_shli_tl(mask_offs, k, get_log2(max_elems << s->sew));
-> +        tcg_gen_add_tl(mask_offs, mask_offs, i_esz);
-> +
-> +        /*
-> +         * Check whether the i bit of the mask is 0 or 1.
-> +         *
-> +         * static inline int vext_elem_mask(void *v0, int index)
-> +         * {
-> +         *     int idx = index / 64;
-> +         *     int pos = index  % 64;
-> +         *     return (((uint64_t *)v0)[idx] >> pos) & 1;
-> +         * }
-> +         */
-> +        tcg_gen_shri_tl(mask_offs_64, mask_offs, 3);
-> +        tcg_gen_add_tl(mask_offs_64, mask_offs_64, mask);
-> +        tcg_gen_ld_i64((TCGv_i64)mask_elem, (TCGv_ptr)mask_offs_64, 0);
-> +        tcg_gen_rem_tl(mask_offs_rem, mask_offs, tcg_constant_tl(8));
-> +        tcg_gen_shr_tl(mask_elem, mask_elem, mask_offs_rem);
-> +        tcg_gen_andi_tl(mask_elem, mask_elem, 1);
-> +        tcg_gen_brcond_tl(TCG_COND_NE, mask_elem, tcg_constant_tl(0),
-> +                          active_element);
-> +        /*
-> +         * Set masked-off elements in the destination vector register to 1s.
-> +         * Store instructions simply skip this bit as memory ops access memory
-> +         * only for active elements.
-> +         */
-> +        if (is_load) {
-> +            tcg_gen_shli_tl(mask_offs, mask_offs, s->sew);
-> +            tcg_gen_add_tl(mask_offs, mask_offs, dest);
-> +            st_fn(tcg_constant_tl(-1), (TCGv_ptr)mask_offs, 0);
-> +        }
-> +        tcg_gen_br(inc_k);
-> +        gen_set_label(active_element);
-> +    }
-> +    /*
-> +     * The element is active, calculate the address with stride:
-> +     * target_ulong addr = base + stride * i + (k << log2_esz);
-> +     */
-> +    tcg_gen_mul_tl(stride_offs, stride, i);
-> +    tcg_gen_shli_tl(k_esz, k, s->sew);
-> +    tcg_gen_add_tl(stride_offs, stride_offs, k_esz);
-> +    tcg_gen_add_tl(addr, base, stride_offs);
-> +    /* Calculate the offset in the dst/src vector register. */
-> +    tcg_gen_shli_tl(k_max, k, get_log2(max_elems));
-> +    tcg_gen_add_tl(dest_offs, i, k_max);
-> +    tcg_gen_shli_tl(dest_offs, dest_offs, s->sew);
-> +    tcg_gen_add_tl(dest_offs, dest_offs, dest);
-> +    if (is_load) {
-> +        tcg_gen_qemu_ld_tl(vreg, addr, s->mem_idx, MO_LE | s->sew | atomicity);
-> +        st_fn((TCGv)vreg, (TCGv_ptr)dest_offs, 0);
-> +    } else {
-> +        ld_fn((TCGv)vreg, (TCGv_ptr)dest_offs, 0);
-> +        tcg_gen_qemu_st_tl(vreg, addr, s->mem_idx, MO_LE | s->sew | atomicity);
-> +    }
-> +    /*
-> +     * We don't execute the load/store above if the element was inactive.
-> +     * We jump instead directly to incrementing k and continuing the loop.
-> +     */
-> +    if (!vm && s->vma) {
-> +        gen_set_label(inc_k);
-> +    }
-> +    tcg_gen_addi_tl(k, k, 1);
-> +    tcg_gen_br(start_k);
-> +    /* End of the inner loop. */
-> +    gen_set_label(end_k);
-> +
-> +    tcg_gen_addi_tl(i, i, 1);
-> +    tcg_gen_mov_tl(cpu_vstart, i);
-> +    tcg_gen_br(start);
-> +
-> +    /* End of the outer loop. */
-> +    gen_set_label(end);
-> +
-> +    return;
-> +}
-> +
-> +
-> +/*
-> + * Set the tail bytes of the strided loads/stores to 1:
-> + *
-> + * for (k = 0; k < nf; ++k) {
-> + *     cnt = (k * max_elems + vl) * esz;
-> + *     tot = (k * max_elems + max_elems) * esz;
-> + *     for (i = cnt; i < tot; i += esz) {
-> + *         store_1s(-1, vd[vl+i]);
-> + *     }
-> + * }
->    */
-> -typedef void gen_helper_ldst_stride(TCGv_ptr, TCGv_ptr, TCGv,
-> -                                    TCGv, TCGv_env, TCGv_i32);
-> +static void gen_ldst_stride_tail_loop(DisasContext *s, TCGv dest, uint32_t nf,
-> +                                      gen_tl_ldst *st_fn)
-> +{
-> +    TCGv i = tcg_temp_new();
-> +    TCGv k = tcg_temp_new();
-> +    TCGv tail_cnt = tcg_temp_new();
-> +    TCGv tail_tot = tcg_temp_new();
-> +    TCGv tail_addr = tcg_temp_new();
-> +
-> +    TCGLabel *start = gen_new_label();
-> +    TCGLabel *end = gen_new_label();
-> +    TCGLabel *start_i = gen_new_label();
-> +    TCGLabel *end_i = gen_new_label();
-> +
-> +    uint32_t max_elems_b = MAXSZ(s);
-> +    uint32_t esz = 1 << s->sew;
-> +
-> +    /* Start of the outer loop. */
-> +    tcg_gen_movi_tl(k, 0);
-> +    tcg_gen_shli_tl(tail_cnt, cpu_vl, s->sew);
-> +    tcg_gen_movi_tl(tail_tot, max_elems_b);
-> +    tcg_gen_add_tl(tail_addr, dest, tail_cnt);
-> +    gen_set_label(start);
-> +    tcg_gen_brcond_tl(TCG_COND_GE, k, tcg_constant_tl(nf), end);
-> +    /* Start of the inner loop. */
-> +    tcg_gen_mov_tl(i, tail_cnt);
-> +    gen_set_label(start_i);
-> +    tcg_gen_brcond_tl(TCG_COND_GE, i, tail_tot, end_i);
-> +    /* store_1s(-1, vd[vl+i]); */
-> +    st_fn(tcg_constant_tl(-1), (TCGv_ptr)tail_addr, 0);
-> +    tcg_gen_addi_tl(tail_addr, tail_addr, esz);
-> +    tcg_gen_addi_tl(i, i, esz);
-> +    tcg_gen_br(start_i);
-> +    /* End of the inner loop. */
-> +    gen_set_label(end_i);
-> +    /* Update the counts */
-> +    tcg_gen_addi_tl(tail_cnt, tail_cnt, max_elems_b);
-> +    tcg_gen_addi_tl(tail_tot, tail_cnt, max_elems_b);
-> +    tcg_gen_addi_tl(k, k, 1);
-> +    tcg_gen_br(start);
-> +    /* End of the outer loop. */
-> +    gen_set_label(end);
-> +
-> +    return;
-> +}
->   
->   static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
-> -                              uint32_t data, gen_helper_ldst_stride *fn,
-> -                              DisasContext *s)
-> +                              uint32_t data, DisasContext *s, bool is_load)
->   {
-> -    TCGv_ptr dest, mask;
-> -    TCGv base, stride;
-> -    TCGv_i32 desc;
-> +    if (!s->vstart_eq_zero) {
-> +        return false;
-> +    }
->   
-> -    dest = tcg_temp_new_ptr();
-> -    mask = tcg_temp_new_ptr();
-> -    base = get_gpr(s, rs1, EXT_NONE);
-> -    stride = get_gpr(s, rs2, EXT_NONE);
-> -    desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
-> -                                      s->cfg_ptr->vlenb, data));
-> +    TCGv dest = tcg_temp_new();
->   
-> -    tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
-> -    tcg_gen_addi_ptr(mask, tcg_env, vreg_ofs(s, 0));
-> +    uint32_t nf = FIELD_EX32(data, VDATA, NF);
-> +    uint32_t vm = FIELD_EX32(data, VDATA, VM);
-> +
-> +    /* Destination register and mask register */
-> +    tcg_gen_addi_tl(dest, (TCGv)tcg_env, vreg_ofs(s, vd));
-> +
-> +    /*
-> +     * Select the appropriate load/tore to retrieve data from the vector
-> +     * register given a specific sew.
-> +     */
-> +    static gen_tl_ldst * const ld_fns[4] = {
-> +        tcg_gen_ld8u_tl, tcg_gen_ld16u_tl,
-> +        tcg_gen_ld32u_tl, tcg_gen_ld_tl
-> +    };
-> +
-> +    static gen_tl_ldst * const st_fns[4] = {
-> +        tcg_gen_st8_tl, tcg_gen_st16_tl,
-> +        tcg_gen_st32_tl, tcg_gen_st_tl
-> +    };
-> +
-> +    gen_tl_ldst *ld_fn = ld_fns[s->sew];
-> +    gen_tl_ldst *st_fn = st_fns[s->sew];
-> +
-> +    if (ld_fn == NULL || st_fn == NULL) {
-> +        return false;
-> +    }
->   
->       mark_vs_dirty(s);
->   
-> -    fn(dest, mask, base, stride, tcg_env, desc);
-> +    gen_ldst_stride_main_loop(s, dest, rs1, rs2, vm, nf, ld_fn, st_fn, is_load);
-> +
-> +    tcg_gen_movi_tl(cpu_vstart, 0);
-> +
-> +    /*
-> +     * Set the tail bytes to 1 if tail agnostic:
-> +     */
-> +    if (s->vta != 0 && is_load) {
-> +        gen_ldst_stride_tail_loop(s, dest, nf, st_fn);
-> +    }
->   
->       finalize_rvv_inst(s);
->       return true;
-> @@ -898,16 +1155,6 @@ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
->   static bool ld_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
->   {
->       uint32_t data = 0;
-> -    gen_helper_ldst_stride *fn;
-> -    static gen_helper_ldst_stride * const fns[4] = {
-> -        gen_helper_vlse8_v, gen_helper_vlse16_v,
-> -        gen_helper_vlse32_v, gen_helper_vlse64_v
-> -    };
-> -
-> -    fn = fns[eew];
-> -    if (fn == NULL) {
-> -        return false;
-> -    }
->   
->       uint8_t emul = vext_get_emul(s, eew);
->       data = FIELD_DP32(data, VDATA, VM, a->vm);
-> @@ -915,7 +1162,7 @@ static bool ld_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
->       data = FIELD_DP32(data, VDATA, NF, a->nf);
->       data = FIELD_DP32(data, VDATA, VTA, s->vta);
->       data = FIELD_DP32(data, VDATA, VMA, s->vma);
-> -    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
-> +    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, s, true);
->   }
->   
->   static bool ld_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-> @@ -933,23 +1180,13 @@ GEN_VEXT_TRANS(vlse64_v, MO_64, rnfvm, ld_stride_op, ld_stride_check)
->   static bool st_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
->   {
->       uint32_t data = 0;
-> -    gen_helper_ldst_stride *fn;
-> -    static gen_helper_ldst_stride * const fns[4] = {
-> -        /* masked stride store */
-> -        gen_helper_vsse8_v,  gen_helper_vsse16_v,
-> -        gen_helper_vsse32_v,  gen_helper_vsse64_v
-> -    };
->   
->       uint8_t emul = vext_get_emul(s, eew);
->       data = FIELD_DP32(data, VDATA, VM, a->vm);
->       data = FIELD_DP32(data, VDATA, LMUL, emul);
->       data = FIELD_DP32(data, VDATA, NF, a->nf);
-> -    fn = fns[eew];
-> -    if (fn == NULL) {
-> -        return false;
-> -    }
->   
-> -    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
-> +    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, s, false);
->   }
->   
->   static bool st_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-> @@ -1300,17 +1537,6 @@ GEN_LDST_WHOLE_TRANS(vs8r_v, int8_t, 8, false)
->    *** Vector Integer Arithmetic Instructions
->    */
->   
-> -/*
-> - * MAXSZ returns the maximum vector size can be operated in bytes,
-> - * which is used in GVEC IR when vl_eq_vlmax flag is set to true
-> - * to accelerate vector operation.
-> - */
-> -static inline uint32_t MAXSZ(DisasContext *s)
-> -{
-> -    int max_sz = s->cfg_ptr->vlenb * 8;
-> -    return max_sz >> (3 - s->lmul);
-> -}
-> -
->   static bool opivv_check(DisasContext *s, arg_rmrr *a)
->   {
->       return require_rvv(s) &&
+Check out how kvm_arm_supports_user_irq() is done, for an example
+of adding KVM hooks/hacks to commoncode.
+
+Paolo
 
 
