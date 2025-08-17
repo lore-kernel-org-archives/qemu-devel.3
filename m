@@ -4,52 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 336A2CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Aug 2025 05:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30206CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Aug 2025 13:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1unWMs-00045G-08; Sun, 17 Aug 2025 01:55:46 -0400
+	id 1undTp-0001I0-CE; Sun, 17 Aug 2025 09:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1unWMq-00044q-28
- for qemu-devel@nongnu.org; Sun, 17 Aug 2025 01:55:44 -0400
-Received: from mail-a.sr.ht ([46.23.81.152])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1undTn-0001Hs-Be
+ for qemu-devel@nongnu.org; Sun, 17 Aug 2025 09:31:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1unWMm-0006yW-P0
- for qemu-devel@nongnu.org; Sun, 17 Aug 2025 01:55:43 -0400
-DKIM-Signature: a=rsa-sha256; bh=BBmV2/9+3dABu7WeQUe72uY88hv6kSb52F83d9BRCq0=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To:Cc; q=dns/txt; s=20240113;
- t=1755410136; v=1;
- b=kA2/lf06gqt4SGMrpjpqlHm8twCmOQkW8OIUhcoxPBiS2KI7VvxilVUvHR4ti+Hb+BvFHw4Y
- 1i0uzbOF9z697hI5bmsY1+pqfiiUl7dBOWlfpJpVadtr6Z6JgR1gNaGn7+vh9ibrNh7Nhh5xMja
- YB6ETHFV8nbel8ueoQVX5Iovq8mRI+7p/ofDsknAGEpjmp+qmob7t/m4irbpNRwCAygrxQZXA/c
- M7TH9XLMwhRyzgVwIULx52SfC5xNU2gDQmPIX2hAMelFUTnBEaKcjxm7J6UW4aaCRlfBElKTeId
- w2i9DL7D17xlImpS/zgEUDJmBQwcj37JWdV13Uwma7+gQ==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 5594523036;
- Sun, 17 Aug 2025 05:55:36 +0000 (UTC)
-From: ~myrslint <myrslint@git.sr.ht>
-Date: Sun, 17 Aug 2025 05:37:34 +0000
-Subject: [PATCH qemu v5 1/1] Honor guest PAT on x86, absent Bochs display
-Message-ID: <175541013614.15277.14412479690071783636-1@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <175541013614.15277.14412479690071783636-0@git.sr.ht>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1undTi-0005IZ-Ki
+ for qemu-devel@nongnu.org; Sun, 17 Aug 2025 09:31:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755437475;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NdUgV+Om+7kKKcml77EkHFe+tBzMSY0Zl9CAWFTba7Y=;
+ b=aL/Jcb7FNsF6YWbntFqNCphDrLattUWkRfhpg47c94JTrQUL3wMDZJD18UJtukuPzC7DFC
+ wUSSuVKKSE1B8DeH9nfC7s5gO4hR4F6vqf/b84wEqBdmhlHww//lTivYQ69uk0OfwzWZVH
+ B3Imj0Vm6xAi8OPjCBIUwpIkzF+2hrw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-30-2nNEvL2lNMiK5Y-pKfUSaQ-1; Sun,
+ 17 Aug 2025 09:31:08 -0400
+X-MC-Unique: 2nNEvL2lNMiK5Y-pKfUSaQ-1
+X-Mimecast-MFC-AGG-ID: 2nNEvL2lNMiK5Y-pKfUSaQ_1755437467
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 88CA2180047F; Sun, 17 Aug 2025 13:31:07 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.33])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B2DC81800446; Sun, 17 Aug 2025 13:31:06 +0000 (UTC)
+Date: Sun, 17 Aug 2025 09:31:05 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: Re: [PATCH-for-10.1? 0/3] linux-user: Select default CPUs for
+ MicroMIPS and MIPS16e ASEs
+Message-ID: <20250817133105.GA320336@fedora>
+References: <20250814070650.78657-1-philmd@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="qeFv8pXADlVwLoeV"
+Content-Disposition: inline
+In-Reply-To: <20250814070650.78657-1-philmd@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,155 +83,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~myrslint <myrskylintu@proton.me>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: myrslint <qemu.haziness801@passinbox.com>
 
-On x86_64, where most CPUs support self-snoop, it is preferrable to
-always honor guest PAT. Not doing so is a quirk. There is a default
-enabled KVM quirk flag which enforces not doing so due to a former bug
-in Bochs display driver.
+--qeFv8pXADlVwLoeV
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The bug has been fixed but not enough has yet passed since so we only
-disable said quirk flag if a Bochs display is not configured for the
-virtual machine.
+On Thu, Aug 14, 2025 at 09:06:47AM +0200, Philippe Mathieu-Daud=E9 wrote:
+> We weren't parsing MIPS ASE in the ELF header, so couldn't
+> automatically pick an appropriate CPU.
+>=20
+> Since we'll have a rc4, I propose these sensible patches
+> for 10.1, but both ASEs are available since 15 years in QEMU,
+> so this isn't something broken since the latest release, and
+> I don't mind holding it for 10.2.
 
-This commit also moves around a bit of code that would be called when
-the initialization of a VM is done.
----
- hw/display/bochs-display.c |  4 +++
- include/system/kvm.h       |  1 +
- target/i386/kvm/kvm.c      | 52 ++++++++++++++++++++++++++++++++------
- 3 files changed, 49 insertions(+), 8 deletions(-)
+Starting from -rc3 onwards I prefer to merge only release blockers.
+Other bug fixes should wait for the next release because non-essential
+fixes might introduce issues that cause the release schedule to slip.
 
-diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
-index ad2821c974..4059373df3 100644
---- a/hw/display/bochs-display.c
-+++ b/hw/display/bochs-display.c
-@@ -20,6 +20,8 @@
- #include "ui/qemu-pixman.h"
- #include "qom/object.h"
-=20
-+#include "system/kvm.h"
-+
- typedef struct BochsDisplayMode {
-     pixman_format_code_t format;
-     uint32_t             bytepp;
-@@ -309,6 +311,8 @@ static void bochs_display_realize(PCIDevice *dev, Error *=
-*errp)
-     }
-=20
-     memory_region_set_log(&s->vram, true, DIRTY_MEMORY_VGA);
-+
-+    kvm_hack_do_not_enable_guest_pat();
- }
-=20
- static bool bochs_display_get_big_endian_fb(Object *obj, Error **errp)
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 3c7d314736..c6ba3905dc 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -208,6 +208,7 @@ void kvm_close(void);
-  */
- bool kvm_arm_supports_user_irq(void);
-=20
-+void kvm_hack_do_not_enable_guest_pat(void);
-=20
- int kvm_on_sigbus_vcpu(CPUState *cpu, int code, void *addr);
- int kvm_on_sigbus(int code, void *addr);
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 369626f8c8..0f8af92962 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -188,6 +188,8 @@ static KVMMSRHandlers msr_handlers[KVM_MSR_FILTER_MAX_RAN=
-GES];
- static RateLimit bus_lock_ratelimit_ctrl;
- static int kvm_get_one_msr(X86CPU *cpu, int index, uint64_t *value);
-=20
-+bool kvm_has_bochs_drm =3D false;
-+
- static const char *vm_type_name[] =3D {
-     [KVM_X86_DEFAULT_VM] =3D "default",
-     [KVM_X86_SEV_VM] =3D "SEV",
-@@ -2696,13 +2698,13 @@ static bool kvm_rdmsr_pkg_energy_status(X86CPU *cpu,
-     return true;
- }
-=20
--static Notifier smram_machine_done;
-+static Notifier kvm_machine_done;
- static KVMMemoryListener smram_listener;
- static AddressSpace smram_address_space;
- static MemoryRegion smram_as_root;
- static MemoryRegion smram_as_mem;
-=20
--static void register_smram_listener(Notifier *n, void *unused)
-+static void register_smram_listener(void)
- {
-     MemoryRegion *smram =3D
-         (MemoryRegion *) object_resolve_path("/machine/smram", NULL);
-@@ -2730,6 +2732,44 @@ static void register_smram_listener(Notifier *n, void =
-*unused)
-                                  &smram_address_space, 1, "kvm-smram");
- }
-=20
-+void kvm_hack_do_not_enable_guest_pat(void)
-+{
-+    kvm_has_bochs_drm =3D true;
-+}
-+
-+static bool kvm_x86_smm_enabled(void)
-+{
-+    return kvm_has_smm() &&
-+        object_dynamic_cast(OBJECT(current_machine), TYPE_X86_MACHINE) &&
-+        x86_machine_is_smm_enabled(X86_MACHINE(current_machine));
-+}
-+
-+static int kvm_x86_disable_quirsk2_mask(void)
-+{
-+    return kvm_check_extension(kvm_state, KVM_CAP_DISABLE_QUIRKS2);
-+}
-+
-+static int kvm_disable_ignore_guest_pat(void)
-+{
-+    return kvm_vm_enable_cap(kvm_state, KVM_CAP_DISABLE_QUIRKS2, 0, \
-+                             KVM_X86_QUIRK_IGNORE_GUEST_PAT);
-+}
-+
-+static void handle_machine_done(Notifier *n, void *unused)
-+{
-+    if (kvm_x86_smm_enabled()) {
-+        register_smram_listener();
-+    }
-+    if (!kvm_has_bochs_drm && \
-+        (kvm_x86_disable_quirsk2_mask() & KVM_X86_QUIRK_IGNORE_GUEST_PAT)) {
-+        if (kvm_disable_ignore_guest_pat()) {
-+            error_report("KVM_X86_QUIRK_IGNORE_GUEST_PAT available and "
-+                         "modifiable but we failed to disable it\n");
-+        }
-+    }
-+}
-+
-+
- static void *kvm_msr_energy_thread(void *data)
- {
-     KVMState *s =3D data;
-@@ -3310,12 +3350,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return ret;
-     }
-=20
--    if (kvm_check_extension(s, KVM_CAP_X86_SMM) &&
--        object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
--        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
--        smram_machine_done.notify =3D register_smram_listener;
--        qemu_add_machine_init_done_notifier(&smram_machine_done);
--    }
-+    kvm_machine_done.notify =3D handle_machine_done;
-+    qemu_add_machine_init_done_notifier(&kvm_machine_done);
-=20
-     if (enable_cpu_pm) {
-         ret =3D kvm_vm_enable_disable_exits(s);
---=20
-2.49.1
+Thanks,
+Stefan
+
+>=20
+> Regards,
+>=20
+> Phil.
+>=20
+> Philippe Mathieu-Daud=E9 (3):
+>   elf: Add EF_MIPS_ARCH_ASE definitions
+>   linux-user/mips: Select 74Kf CPU to run MIPS16e binaries
+>   linux-user/mips: Select M14Kc CPU to run microMIPS binaries
+>=20
+>  include/elf.h                | 7 +++++++
+>  linux-user/mips/target_elf.h | 6 ++++++
+>  2 files changed, 13 insertions(+)
+>=20
+> --=20
+> 2.49.0
+>=20
+>=20
+
+--qeFv8pXADlVwLoeV
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmih2ZkACgkQnKSrs4Gr
+c8hDTQgAmYKbJ1jcIwY+/mX3spOY5wmo+noo64nCnfvSGCJFYrrreBzBGiVZR4cC
+NjvRUPx7OdKm2zXacb+9Du6Xk9k2V8Qb7YyuladiQiIV5y1fxnVYpu1cLOYm58O3
+YyziIRwnm9zt5dEui5kb9zgi3aUnF6G5nIgzgNaWzesh1MlKPHaSA6fsJb/MPKTT
+Uh6CVk3SKlMJ0eXQAYU9LRrnyXTGOmr2SMAJ6cYf5mDhdTy6iM0cWQgt9feg7ELG
+wEI29cpN1g1ZhmevHr218vEXwvIKJcIaDTO00QZH+liQDo4NK/UoJeD71KdUxh+H
+iQH8NPDmrPGKUzQaOMbgrTl7xhpmkA==
+=0Zfu
+-----END PGP SIGNATURE-----
+
+--qeFv8pXADlVwLoeV--
+
 
