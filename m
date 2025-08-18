@@ -4,93 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78FC3CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 14:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BAE0CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 15:03:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uo1Hs-0000wB-KW; Mon, 18 Aug 2025 10:56:40 -0400
+	id 1uo1Ng-0002QX-Dh; Mon, 18 Aug 2025 11:02:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uo1Hq-0000vx-9Z
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:56:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uo1Nd-0002Q9-UL; Mon, 18 Aug 2025 11:02:37 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uo1Hm-00089c-BY
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:56:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755528989;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qfEhMGQXJHC+wHqOvJebKpsirKO1fnxTDrsuU//G4vY=;
- b=LyVhHOuY3hqMoEO98vLd2Zcw8LzfaAmttP8UUP4z87rrMVMmSWm+PFQMqr+1hGvFXG3W2x
- L/3D884Txx3qtdHGssOmAJApbDG3r/gAWuXRUtQ3U8vN6sUjY8+sVnuMZZ35ca2HkNfQhU
- CzhUcjm9Y66ZzXKS8FYKeLcBXHgRcOE=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-501-TOZw6wWmN5GZ9uNFqZGE0w-1; Mon, 18 Aug 2025 10:56:28 -0400
-X-MC-Unique: TOZw6wWmN5GZ9uNFqZGE0w-1
-X-Mimecast-MFC-AGG-ID: TOZw6wWmN5GZ9uNFqZGE0w_1755528987
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-70a9f55836dso103192596d6.3
- for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 07:56:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755528987; x=1756133787;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qfEhMGQXJHC+wHqOvJebKpsirKO1fnxTDrsuU//G4vY=;
- b=MgID7i8/xK5zp2wAT9qkS9NgdG/HxrbNk8vlAm3vwqN2SauZj3UdJ+TMumNdeyStxz
- bFH6/xWZZ+mWdxR3CpLYW7ipKxg9P0Dgq89gwWBZfEbj3lJgjz/LHBEJTxfw3jiPDlWB
- shinp5pO2SekORMYPc95cBbG6M2nifJ9+SV1EgO0aM7H46hTkWybfOxd8Hq0YG4RzZH1
- gClDWypMwBNC+h1gPYHJe2bl98tzC1XXyjR0zwYVXlQt6ldks8fJ5rBhRr9YDZMS2HQJ
- 3HBZ2+J1q6OlePmUiE2QDHwsNlG/EEe604JUBeNWXM0vj/An5iw28jieHsGd1W1eR4jl
- 8/fQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3xG/OUsIvGh5x6zzHbWryIFQ1qDV0THaBqVHe65lw6NindEV82LiWcII3/OYAEUwrefDEFCkWGUAF@nongnu.org
-X-Gm-Message-State: AOJu0YwKEaJ19nPPpmKwIr91cWhDkgF+fzSSkV4Vk9E71tNNgpM6LFIU
- QNBz0GgFQrYlI0fMj6fdlci/R2aEZflauQR0BQkrLNWH7QFOyZMcdpMC0Sz0nyPQ0aDbq5m8+Dd
- h7cYDYZzUGgKpiLxso4cjLpPvNoNUDDYUdGAJDBY7XAYhyoG6yn3EOZZR
-X-Gm-Gg: ASbGncuamHi0baf+Xep+p9aAs913mNS/t4HWsAdPTys/RCn1TyX+tqCPQTVPW8W+eMr
- qIVp5TtJy/452NHy6XyivmL43j71G6qXqLx14KJGcUMiq6geryxKqpCDyhzIofKZLwgCce2HDY4
- 6Et6hmIrz+O9vsYwELGbfxj/fKLfKtrULRuINfwXESoBMvuZljhzPEDeVx0B5Xw6pBX2XfcIH70
- PYx78Tvvq2D/e0eqogLpkEla5MokiCyNEv1JUHOI7NXN5s5jSD6mSjz62bCV7ey9Irf5RHGETBm
- uGavsK2quDKVVNptPNTPNnwqXipiQeUh
-X-Received: by 2002:a05:6214:ccd:b0:70b:7076:cd13 with SMTP id
- 6a1803df08f44-70ba7a5e5c8mr173302096d6.2.1755528987426; 
- Mon, 18 Aug 2025 07:56:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoZ3hB1wSgivgF7pRUOr9KwdHLk4zhvgRrpmrU9kew3jmUl0h44Zsm9UviKrfyhuR8F78ndw==
-X-Received: by 2002:a05:6214:ccd:b0:70b:7076:cd13 with SMTP id
- 6a1803df08f44-70ba7a5e5c8mr173301706d6.2.1755528986839; 
- Mon, 18 Aug 2025 07:56:26 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70ba9380eaasm53841346d6.62.2025.08.18.07.56.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Aug 2025 07:56:24 -0700 (PDT)
-Date: Mon, 18 Aug 2025 10:56:11 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yanfei Xu <yanfei.xu@bytedance.com>
-Cc: mst@redhat.com, pbonzini@redhat.com, farosas@suse.de,
- qemu-devel@nongnu.org, shenyicong.1023@bytedance.com
-Subject: Re: [PATCH] migration: ensure APIC is loaded prior to VFIO PCI devices
-Message-ID: <aKM_CwdEa_VlAAaO@x1.local>
-References: <20250818131127.1021648-1-yanfei.xu@bytedance.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250818131127.1021648-1-yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uo1Nb-0000Er-Bb; Mon, 18 Aug 2025 11:02:37 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57IBDG4x004808;
+ Mon, 18 Aug 2025 15:02:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=RD8q5PubOWEBbkBZOk/N9/kLD17r45VxzPz1ileX7Y0=; b=QYlVENw6EYj6
+ wSSFCBBiPgxcRUhg3hUTZO8XnJoGLoYJl1spyCQ7JBjcHq53dYmkYB4M2n9pkghH
+ 5qxWrTjFOesO/lxiuS3ubmi0vHn7/NvCNVF/YXGdKCWKT6pLFWPQVp/zuhNFPpNj
+ DHlzW92wMPblGZ9S0bGE1jodfxWj9PiDkfimnLC3bVvg2z5KI9l5BOAjgl2AiaY2
+ Y6vd0qBsw94N1g3346zLvYFyeCn2Aiy4/gga/26GdlX9cGzANR68+nXlCWUN+muJ
+ 1F1Uu2tfdK8OKueIAXCEtXjLzI6MGtJG/RCKx9gBBBsWWO2eJ6jhoH49vZzrLncH
+ Gi9M0IkVfg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jhn3sn0m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Aug 2025 15:02:31 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57IEpDc7012957;
+ Mon, 18 Aug 2025 15:02:30 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jhn3sn0h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Aug 2025 15:02:30 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57IEpsM3014715;
+ Mon, 18 Aug 2025 15:02:30 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48k5tmp7th-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Aug 2025 15:02:30 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57IF2TW830868100
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Aug 2025 15:02:29 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4B2B058054;
+ Mon, 18 Aug 2025 15:02:29 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B04995805C;
+ Mon, 18 Aug 2025 15:02:28 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Aug 2025 15:02:28 +0000 (GMT)
+Message-ID: <018ca7f3da5e0d95f175291bf1825b3991d792a7.camel@linux.ibm.com>
+Subject: Re: [RFC 0/3] Add IBM PPE42 support
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@redhat.com, npiggin@gmail.com,
+ harshpb@linux.ibm.com
+Date: Mon, 18 Aug 2025 10:02:28 -0500
+In-Reply-To: <fe4e09ca-52bb-4af9-9a0b-49aac54d2a37@redhat.com>
+References: <20250814223741.29433-1-milesg@linux.ibm.com>
+ <fe4e09ca-52bb-4af9-9a0b-49aac54d2a37@redhat.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 3Z1eIL7Q_5MLYadHeJX4u12lTR_aKv4T
+X-Authority-Analysis: v=2.4 cv=L6wdQ/T8 c=1 sm=1 tr=0 ts=68a34087 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=NEAV23lmAAAA:8 a=lvhskjxYYig5buZalUYA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: P4L6WpizyMHm4NKc_cLXySH_LxT9ScrR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAyNyBTYWx0ZWRfX7KpSSeP/3OGt
+ 1ZlpFLvb3ZxrdCEEKAvJZi0PQMAyBw090LVu6p1beyblEtTXdLU1CzmI9UMd7iD1x/X0FTBPH1V
+ x4aZ2B+b07yNEdZvKNExSEtl/PmtVEDoQQ9L8wT/ZIx5JFfIfkDwEE87pmepRVaxstWDhyjfzVD
+ rsc9zvN7Zw5SfR3RHByQ2gWhRL7Xqz9L7Tb6N3MKO3kfGlEdgWusr7rkMwV8c6+ffu7uyaaCwPY
+ um89IByK/wE8HuS/CNY3b6mphJzu1lScPwWDUqzPuUXzSRDAPu+sN9q0733605WvUcWbWE6JH/O
+ dp+1eww5VwEcbPj9DSS+w3098QxxMd7JgrpJ/tqH0sBySYpRinuujA97DzoNHT/ShhBCX6/Heu1
+ wLki7MfJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-18_05,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 clxscore=1011 phishscore=0 suspectscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160027
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,71 +124,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 18, 2025 at 09:11:27PM +0800, Yanfei Xu wrote:
-> The load procedure of VFIO PCI devices involves setting up IRT
-> for each VFIO PCI devices. This requires determining whether an
-> interrupt is single-destination interrupt to decide between
-> Posted Interrupt(PI) or remapping mode for the IRTE. However,
-> determining this may require accessing the VM's APIC registers.
+On Mon, 2025-08-18 at 09:48 +0200, Thomas Huth wrote:
+> On 15/08/2025 00.37, Glenn Miles wrote:
+> ...
+> > I have some code that tests the instructions that are
+> > specific to the PPE42.  It is a very basic test written
+> > in assembly.  This can be found at:
+> > 
+> > https://github.com/milesg-github/ppe42-tests
+> > 
+> > There is also a prebuilt image there in the images
+> > folder.
+> > 
+> > Building the image requires a forked version of an old
+> > version of GCC, which can be found here:
+> > 
+> > https://github.com/open-power/ppe42-gcc
+> > 
+> > Even though everything that is necessary to build the
+> > image is publicly available, it is not a simple task.
+> > This is why I think it would be best to just use the
+> > prebuilt image available on github instead of trying to
+> > build it.
 > 
-> For example:
-> ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irqs)
->   ...
->     kvm_arch_irq_bypass_add_producer
->       kvm_x86_call(pi_update_irte)
->         vmx_pi_update_irte
->           kvm_intr_is_single_vcpu
+> With the compiler being not available in the major distros, the idea with 
+> the prebuilt image is better indeed.
 > 
-> If the LAPIC has not been loaded yet, interrupts will use remapping
-> mode. To prevent the fallback of interrupt mode, keep APIC is always
-> loaded prior to VFIO PCI devices.
+> > Also, there is currently no support for having console
+> > output (this is also not supported in the actual HW).
+> > All logging on actual hardware is done using in-memory
+> > trace buffers that requires a special tool for translation
+> > to a human readable format. Because of this, I'm thinking
+> > this is not a good candidate for using the QEMU
+> > "tests/functional" framework, which seems to rely a lot
+> > on console output.
+> > 
+> > I do think it would be possible to use the qtest framework
+> > to load the image and run it.
+> > 
+> > The existing test will cause a checkstop if it fails.
+> > This leads to dumping the cpu registers, which aids in
+> > debug.  There is currently no way to tell that the
+> > test completed, other than checking the NIP address,
+> > but this could be easily remedied by having the guest
+> > code write some status to a fixed memory address and
+> > then having the qtest code poll that memory address
+> > to determine that the test completed within some reasonable
+> > timeout period.
+> > 
+> > The one thing that I'm not sure about with using the
+> > qtest framework is how to retrieve the image. If anyone
+> > has suggestions or examples of that being done for a qtest,
+> > please do share!
 > 
-> Signed-off-by: Yicong Shen <shenyicong.1023@bytedance.com>
-> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
-> ---
->  hw/intc/apic_common.c       | 1 +
->  include/migration/vmstate.h | 1 +
->  2 files changed, 2 insertions(+)
+> The qtest framework does not have any support for downloading images. I 
+> think you're way better off using the functional framework for this. The 
+> console output is just optional there, so if your image does not have any 
+> serial console output, there are still other means of checking for success.
 > 
-> diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-> index 37a7a7019d..394fe02013 100644
-> --- a/hw/intc/apic_common.c
-> +++ b/hw/intc/apic_common.c
-> @@ -379,6 +379,7 @@ static const VMStateDescription vmstate_apic_common = {
->      .pre_load = apic_pre_load,
->      .pre_save = apic_dispatch_pre_save,
->      .post_load = apic_dispatch_post_load,
-> +    .priority = MIG_PRI_APIC,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINT32(apicbase, APICCommonState),
->          VMSTATE_UINT8(id, APICCommonState),
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index 1ff7bd9ac4..22e988c5db 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -163,6 +163,7 @@ typedef enum {
->      MIG_PRI_IOMMU,              /* Must happen before PCI devices */
->      MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
->      MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
-> +    MIG_PRI_APIC,               /* Must happen before PCI devices */
+> For example, if you can be sure that a successful test always ends up with a 
+> certain NIP, you could use
+> 
+>   output = vm.cmd('human-monitor-command', command_line='info registers')
+> 
+> to check the current status of the registers and check the NIP there.
+> 
+> And assuming that a checkstop will cause a QMP event, you could likely also 
+> use one of the event functions from python/qemu/machine/machine.py to check 
+> for a failure while waiting for the right NIP.
+> 
+>   HTH,
+>    Thomas
+> 
 
-As the list grows, maybe it's a good idea we start to document exactly the
-reasons inline into the enum.  Can sure be done on top.  This patch alone
-looks like stable material..
+Thanks for the tip, Thomas!  I will give that a try.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
->      MIG_PRI_GICV3_ITS,          /* Must happen before PCI devices */
->      MIG_PRI_GICV3,              /* Must happen before the ITS */
->      MIG_PRI_MAX,
-> -- 
-> 2.20.1
-> 
-
--- 
-Peter Xu
+Glenn
 
 
