@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EFDACA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 02:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA13CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 04:15:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1unpIk-00086d-As; Sun, 17 Aug 2025 22:08:46 -0400
+	id 1unrGg-0005vm-P0; Mon, 18 Aug 2025 00:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1unpIh-00086S-8a
- for qemu-devel@nongnu.org; Sun, 17 Aug 2025 22:08:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1unpIe-000502-5s
- for qemu-devel@nongnu.org; Sun, 17 Aug 2025 22:08:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755482915;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oz31gaDXvGkc7O76/EwnAq2QwdqCXXtDb5HWo4gWZTg=;
- b=eaNcOebojJ1SOPIYsAYdfMEYk6XMzhTEcv2wXNOTtHc0uDbF0/KSbnPyD6rnewlNdX/7d6
- 44dimp9WelPuaRJzw00JqeNqD1GpWZyyzE04Sc0syiuS6nhEgYr5Z3PGYfBr9WCYj2dvOv
- QoFkORJhePiWQpob8mRfHqg2qdEtees=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-5RD3wXjqMEaM6Q2VYSDtWQ-1; Sun, 17 Aug 2025 22:08:34 -0400
-X-MC-Unique: 5RD3wXjqMEaM6Q2VYSDtWQ-1
-X-Mimecast-MFC-AGG-ID: 5RD3wXjqMEaM6Q2VYSDtWQ_1755482913
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-32326de9d22so3519096a91.1
- for <qemu-devel@nongnu.org>; Sun, 17 Aug 2025 19:08:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1unrGQ-0005qM-0Y
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 00:14:33 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1unrGK-0002DV-4S
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 00:14:28 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-24458242b33so33018905ad.3
+ for <qemu-devel@nongnu.org>; Sun, 17 Aug 2025 21:14:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755490463; x=1756095263; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9aps/5dRSIQxJoI5rTRRJw0UjbyCrM2YzxlFedWAMQo=;
+ b=M1RkWEg+NQxV2M+5B0iFclZhH55b1nF/vSJYCI6c1BEgiGjVZ9ZovdUFcPZLYWzt/V
+ RA9ewTayK73CHKHOT3pXeN/70ppIs6K5ZGjdyzrhIp06nTvWmC27dqXBx4TXyDkxMvqo
+ l+vEjBhW2f0y9NrmqUueQnCmMBU9jujg3bahpxhOT3YyMycEx9DcpyrMA7eSpq7Q/gGf
+ T2VIi8H/TXJ8jjKAV4g9Q6ONmVEu7IBtmB05sYVEH1EqRCtMDsFIkjBrDBQNalEtKXeh
+ k34rVZAXX09n346PFNPu4ggbC4P/MmQc4NvOMSwsPl+p+Swm7gcrrzyd0PZX71sXq1MT
+ qWVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755482913; x=1756087713;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1755490463; x=1756095263;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oz31gaDXvGkc7O76/EwnAq2QwdqCXXtDb5HWo4gWZTg=;
- b=q0gfNPDEKZ50Zg6MZUzliAxkZ/de30gfrlC5LntvzzRme6x/QxpeqsyCT4f31BmR5y
- JlNhseHzaARDlkts0aJGt0QdkfDVNjDFG0wCychHWXXemXuW9pyWdT+mT/miRY8GSLP5
- tba6Z3/Ts5y3frMfpdc1rpE+w8M31QPci8MW2NsXj9ILXO9wNREy24WHEI4ntofKqM8A
- GhBFb7E1PzYvD/aK+oIdSmc3lgP8ZJaKfidU9/VvN5j2fAw5PeJtJ84AlxPeF5gU9yqP
- J9TxkEDeUUkuuQJExWB8PRyLC7dbm7RFGjf4UDDiVXt/pj3QVDQcA2s09LAUS6sW8yTI
- jLqA==
-X-Gm-Message-State: AOJu0YzdDN1TLL7Ssr5eyC+B0mfJjlm5YAWWmBoGH7WxoW8NeXlg3/z8
- Dx2T0oQwaazZxypiDungwn7IvTuXy4xVrKpDBD2GklQmrofZy2ZTzFE7PMVYmSWz0OmgysbgH44
- LLilAtmifS703wuhuYWfziKqyta2lsLWFk4JvM/+L5KAKhpbtfnLBFtCObNhRW2CN9OS6L8YAFg
- 0RS+KLossuz9jLi7m0Z4b6bwB24WB1wT4=
-X-Gm-Gg: ASbGncv9Z1jk5oK5xsUjd8Ckm7MbxPeETgGqiMRqTNI4sxMhigzAgweZJX4LDaZFgEw
- pUv/o8EAw6BPh6wruP78i3syYZvy80TK4svFujgpBxrz6ovQVNokzPFJ/pP6pkRAKM4XUskIus0
- fjAX1dezq0bA8US87Hp+KC4kw=
-X-Received: by 2002:a17:90b:3b4d:b0:321:1348:4438 with SMTP id
- 98e67ed59e1d1-323296d963bmr19271621a91.7.1755482913062; 
- Sun, 17 Aug 2025 19:08:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGw8vEE5l3SgNtNHWkrDIEh0+sLzZg3+Ue7vNh050ScuN6/NrhgRFXceYdNHLVBMs8VR8RTJqucpVpxtJDlwrA=
-X-Received: by 2002:a17:90b:3b4d:b0:321:1348:4438 with SMTP id
- 98e67ed59e1d1-323296d963bmr19271598a91.7.1755482912612; Sun, 17 Aug 2025
- 19:08:32 -0700 (PDT)
+ bh=9aps/5dRSIQxJoI5rTRRJw0UjbyCrM2YzxlFedWAMQo=;
+ b=X4ixoZkGUNGp+3YsRp5QNU7k7toMgUIXF8dQ0WZEm4UwkuD5qVlhc/R2YUdxyHN6nW
+ MoCU375ec3DFZ7e0s+DUVjxBW/LCaK5Hyp/YjsNOLiB+87Nzjg0nkDpsbIfpaAxCHyEz
+ bgBbZt/3VVBrdusLNFCvtxcLQduo/Qaggt3Yk02MvH94kM2xxd/fLDVgtjH4+KXGdlhe
+ Sa+FMj48FFAA6VlLKrmrzmDIgu4L1Wfax+0EVoFwLRCUDiHH0uCHlw48z8YRPxc+NfoD
+ 6+oMAD1J6Dx0tZIShCS16jXkpcViiDaxs57nKTsWqJRDnF2MZdht+YBOFKdZKdhm80Ix
+ 838A==
+X-Gm-Message-State: AOJu0YzklZLGd6AC4O3obk+xPcNPlm9zhMSk8+eIbRCqBllh90vVEmNx
+ fpTBf/YA8jl3qyxQyjmzCXk10wLBZgVMvQQq2PmghxVg26rbrdnjGDr8xVSch2WfGuxwwoxrKgp
+ 9BwgdhwA=
+X-Gm-Gg: ASbGncuurJVmHutzFAhSvsUNRJZTHlZwL5b8k0IsZm1swHCBJwirF/cjKrhkgMUwDEx
+ d33MDIzjIKiXk30/1Y4oL5sSCJyw8ibX8hJ5WPQxPQGKA4QNV5lkQ5Now02BW3FFcPS6KaGlBN5
+ 8gr1PnvhQ8N5qs7AulH4qw1r+1j49t7llhjtpDIhCz6khKV9nONxxHLIWDmcMD8oinX/oLlQqzT
+ 82L3MoV6KFtLF6CoWy+wtY6MGF99E1HdQvB0oJgRgnKUOBGSkq84lxvMGXzTgVSj3NPJGYFn0/w
+ bNlaWxhSB+S08kI7378ZYYqJCHGmw7R4ncTOJaUkpH/6b3JsAtFD5q8Yx9yvYblLcYK0855rHQD
+ YRQVxaTJqqPB3uxTr1LbqQbHaX9OGS6uX+hzAIxhOnWWuxf8=
+X-Google-Smtp-Source: AGHT+IHRZPC5BhM2arAFIalGfuOd77Sp7F7bnkxw6nT0FDuoL8H4HFBxT7rzNXnbUqNWH9VtzLk1cg==
+X-Received: by 2002:a17:902:fc48:b0:240:125:1010 with SMTP id
+ d9443c01a7336-2446d738cbcmr137235825ad.14.1755490462705; 
+ Sun, 17 Aug 2025 21:14:22 -0700 (PDT)
+Received: from localhost.localdomain ([206.83.122.207])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3232f8c8e4bsm5498344a91.2.2025.08.17.21.14.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 17 Aug 2025 21:14:22 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mads@ynddal.dk, agraf@csgraf.de, qemu-arm@nongnu.org, philmd@linaro.org
+Subject: [PATCH 5/7] target/arm/hvf: Remove hvf_sreg_match.key
+Date: Mon, 18 Aug 2025 14:13:52 +1000
+Message-ID: <20250818041354.2393041-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250818041354.2393041-1-richard.henderson@linaro.org>
+References: <20250818041354.2393041-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250807110806.409065-1-lvivier@redhat.com>
-In-Reply-To: <20250807110806.409065-1-lvivier@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 18 Aug 2025 10:08:18 +0800
-X-Gm-Features: Ac12FXxWXOdH_odxGzdo-vVXqbS72n9bDwNBq7dCnRxnjcQ9Cb5Li9KMb4nWp9Y
-Message-ID: <CACGkMEsYDPjPBNmAd=AmZQ2AY46weFC_u8PK=+CSCuUD6W9zYg@mail.gmail.com>
-Subject: Re: [PATCH v2] e1000e: Prevent crash from legacy interrupt firing
- after MSI-X enable
-To: Stefan Hajnoczi <stefanha@redhat.com>, Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Laurent Vivier <lvivier@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,39 +100,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 7, 2025 at 7:08=E2=80=AFPM Laurent Vivier <lvivier@redhat.com> =
-wrote:
->
-> A race condition between guest driver actions and QEMU timers can lead
-> to an assertion failure when the guest switches the e1000e from legacy
-> interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
-> RDTR) is active, but the guest enables MSI-X before the timer fires,
-> the pending interrupt cause can trigger an assert in
-> e1000e_intmgr_collect_delayed_causes().
->
-> This patch removes the assertion and executes the code that clears the
-> pending legacy causes. This change is safe and introduces no unintended
-> behavioral side effects, as it only alters a state that previously led
-> to termination.
->
-> - when core->delayed_causes =3D=3D 0 the function was already a no-op and
->   remains so.
->
-> - when core->delayed_causes !=3D 0 the function would previously
->   crash due to the assertion failure. The patch now defines a safe
->   outcome by clearing the cause and returning. Since behavior after
->   the assertion never existed, this simply corrects the crash.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
-> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> ---
+Use conversion functions instead of table lookup.
 
-Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/hvf/hvf.c | 35 +++++++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-Consider rc3 is out. Can this be applied directly by maintainers or a
-PULL request is expected?
-
-Thanks
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 2577dc1c0c..46e52e8d34 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -152,9 +152,6 @@ void hvf_arm_init_debug(void)
+         g_array_sized_new(true, true, sizeof(HWWatchpoint), max_hw_wps);
+ }
+ 
+-#define HVF_SYSREG(crn, crm, op0, op1, op2) \
+-        ENCODE_AA64_CP_REG(CP_REG_ARM64_SYSREG_CP, crn, crm, op0, op1, op2)
+-
+ #define SYSREG_OP0_SHIFT      20
+ #define SYSREG_OP0_MASK       0x3
+ #define SYSREG_OP0(sysreg)    ((sysreg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK)
+@@ -399,7 +396,6 @@ static const struct hvf_reg_match hvf_fpreg_match[] = {
+ 
+ struct hvf_sreg_match {
+     int reg;
+-    uint32_t key;
+     uint32_t cp_idx;
+ };
+ 
+@@ -423,8 +419,7 @@ struct hvf_sreg_match {
+ 
+ #undef DEF_SYSREG
+ 
+-#define DEF_SYSREG(HVF_ID, crn, crm, op0, op1, op2) \
+-    { HVF_ID, HVF_SYSREG(crn, crm, op0, op1, op2) },
++#define DEF_SYSREG(HVF_ID, crn, crm, op0, op1, op2)  { HVF_ID },
+ 
+ static struct hvf_sreg_match hvf_sreg_match[] = {
+ #include "sysreg.c.inc"
+@@ -469,13 +464,16 @@ int hvf_get_registers(CPUState *cpu)
+     pstate_write(env, val);
+ 
+     for (i = 0; i < ARRAY_SIZE(hvf_sreg_match); i++) {
++        int hvf_id = hvf_sreg_match[i].reg;
++        uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
++
+         if (hvf_sreg_match[i].cp_idx == -1) {
+             continue;
+         }
+ 
+         if (cpu->accel->guest_debug_enabled) {
+             /* Handle debug registers */
+-            switch (hvf_sreg_match[i].reg) {
++            switch (hvf_id) {
+             case HV_SYS_REG_DBGBVR0_EL1:
+             case HV_SYS_REG_DBGBCR0_EL1:
+             case HV_SYS_REG_DBGWVR0_EL1:
+@@ -549,8 +547,10 @@ int hvf_get_registers(CPUState *cpu)
+                  * vCPU but simply keep the values from the previous
+                  * environment.
+                  */
+-                const ARMCPRegInfo *ri;
+-                ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_sreg_match[i].key);
++                uint32_t key = kvm_to_cpreg_id(kvm_id);
++                const ARMCPRegInfo *ri =
++                    get_arm_cp_reginfo(arm_cpu->cp_regs, key);
++
+                 val = read_raw_cp_reg(env, ri);
+ 
+                 arm_cpu->cpreg_values[hvf_sreg_match[i].cp_idx] = val;
+@@ -559,7 +559,7 @@ int hvf_get_registers(CPUState *cpu)
+             }
+         }
+ 
+-        ret = hv_vcpu_get_sys_reg(cpu->accel->fd, hvf_sreg_match[i].reg, &val);
++        ret = hv_vcpu_get_sys_reg(cpu->accel->fd, hvf_id, &val);
+         assert_hvf_ok(ret);
+ 
+         arm_cpu->cpreg_values[hvf_sreg_match[i].cp_idx] = val;
+@@ -606,13 +606,15 @@ int hvf_put_registers(CPUState *cpu)
+ 
+     assert(write_cpustate_to_list(arm_cpu, false));
+     for (i = 0; i < ARRAY_SIZE(hvf_sreg_match); i++) {
++        int hvf_id = hvf_sreg_match[i].reg;
++
+         if (hvf_sreg_match[i].cp_idx == -1) {
+             continue;
+         }
+ 
+         if (cpu->accel->guest_debug_enabled) {
+             /* Handle debug registers */
+-            switch (hvf_sreg_match[i].reg) {
++            switch (hvf_id) {
+             case HV_SYS_REG_DBGBVR0_EL1:
+             case HV_SYS_REG_DBGBCR0_EL1:
+             case HV_SYS_REG_DBGWVR0_EL1:
+@@ -687,7 +689,7 @@ int hvf_put_registers(CPUState *cpu)
+         }
+ 
+         val = arm_cpu->cpreg_values[hvf_sreg_match[i].cp_idx];
+-        ret = hv_vcpu_set_sys_reg(cpu->accel->fd, hvf_sreg_match[i].reg, val);
++        ret = hv_vcpu_set_sys_reg(cpu->accel->fd, hvf_id, val);
+         assert_hvf_ok(ret);
+     }
+ 
+@@ -922,14 +924,15 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+ 
+     /* Populate cp list for all known sysregs */
+     for (i = 0; i < sregs_match_len; i++) {
+-        const ARMCPRegInfo *ri;
+-        uint32_t key = hvf_sreg_match[i].key;
++        int hvf_id = hvf_sreg_match[i].reg;
++        uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
++        uint32_t key = kvm_to_cpreg_id(kvm_id);
++        const ARMCPRegInfo *ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
+ 
+-        ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
+         if (ri) {
+             assert(!(ri->type & ARM_CP_NO_RAW));
+             hvf_sreg_match[i].cp_idx = sregs_cnt;
+-            arm_cpu->cpreg_indexes[sregs_cnt++] = cpreg_to_kvm_id(key);
++            arm_cpu->cpreg_indexes[sregs_cnt++] = kvm_id;
+         } else {
+             hvf_sreg_match[i].cp_idx = -1;
+         }
+-- 
+2.43.0
 
 
