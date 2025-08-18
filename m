@@ -4,67 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBFF3CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 09:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A21CA0EC0
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 10:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1unwJh-0000j3-Dt; Mon, 18 Aug 2025 05:38:13 -0400
+	id 1unwj6-00048y-Q3; Mon, 18 Aug 2025 06:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stdcalllevi@yandex-team.ru>)
- id 1unwJg-0000ih-6g
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 05:38:12 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1unwj5-00048p-4g
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 06:04:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stdcalllevi@yandex-team.ru>)
- id 1unwJc-0000EZ-Dc
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 05:38:11 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c23:36c1:0:640:5f85:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0CFFB80832;
- Mon, 18 Aug 2025 12:38:00 +0300 (MSK)
-Received: from smtpclient.apple (unknown [2a02:6bf:8080:41c::1:15])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id wbMVKP0GkKo0-cBE0NjYi; Mon, 18 Aug 2025 12:37:59 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755509879;
- bh=w1fd9EqwoiAMY/qoHprGievSwm7Qkod026M8CmAx120=;
- h=References:To:Cc:In-Reply-To:Date:From:Message-Id:Subject;
- b=bB/6MxcGc0NFBQS6BtCMAjUMGrPV86Z5hPTi0OFkUJaAKDxfL7YZoqu2SbP7THgEM
- sM+kcitLWokxk5+SI458S+lfD5hqXRXN+x/nNolUpTaHSkj/yY1UFw/xaOuuXBut76
- hPEaWgcpJtMG5Vn6mrFBzGPM0T7spRfYW9eAk6m4=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Kirill Martynov <stdcalllevi@yandex-team.ru>
-Message-Id: <A73BFF41-0C1D-40E4-87E1-1DE5A86B83EA@yandex-team.ru>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_C2135662-E16C-4991-996A-F30BE93F23D3"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH 1/2] i386/cpu: Enable SMM cpu addressspace
-Date: Mon, 18 Aug 2025 12:37:48 +0300
-In-Reply-To: <aIro0jw/CjMssy/v@intel.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-To: Zhao Liu <zhao1.liu@intel.com>
-References: <20250729054023.1668443-1-xiaoyao.li@intel.com>
- <20250729054023.1668443-2-xiaoyao.li@intel.com> <aInTujVM5hr6/cJw@intel.com>
- <75a28dcb-88b2-4a7e-a782-a06d915e1654@intel.com> <aIo4MxukAiY0OSGE@intel.com>
- <e5bde045-01b6-4f81-bc25-fd4312de7fe8@intel.com> <aIro0jw/CjMssy/v@intel.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=stdcalllevi@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1unwj3-0002rE-EG
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 06:04:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755511464;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=56lEYxdS9u2mMEy3cKp25B8ggHhbMd+3/bl921MPr9g=;
+ b=REft1Sav0tKnhIpNj96DWSdjElq8ciiiPYDVOJCYn1jGhaBexcwTKJhqty63/u66m4aAnP
+ KGZY4es+w+6MWT/J+KO/rCTTamVSDUjhnIAjdWAgLQEXVYAEvQ7xmSSyBhTHOPMCBoVxdh
+ QNztxfD0o3dWWIRAjdV6UP663UTxqPQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-Lcq5wbobM2Wc0n-Ep941KQ-1; Mon,
+ 18 Aug 2025 06:04:23 -0400
+X-MC-Unique: Lcq5wbobM2Wc0n-Ep941KQ-1
+X-Mimecast-MFC-AGG-ID: Lcq5wbobM2Wc0n-Ep941KQ_1755511461
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C8261954B19; Mon, 18 Aug 2025 10:04:21 +0000 (UTC)
+Received: from fedora.redhat.com (unknown [10.45.225.45])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2555C1800280; Mon, 18 Aug 2025 10:04:14 +0000 (UTC)
+From: Albert Esteve <aesteve@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: david@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>, hi@alyssa.is,
+ jasowang@redhat.com, Laurent Vivier <lvivier@redhat.com>,
+ dbassey@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, stefanha@redhat.com,
+ stevensd@chromium.org, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, slp@redhat.com,
+ Albert Esteve <aesteve@redhat.com>
+Subject: [PATCH v7 3/8] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+Date: Mon, 18 Aug 2025 12:03:48 +0200
+Message-ID: <20250818100353.1560655-4-aesteve@redhat.com>
+In-Reply-To: <20250818100353.1560655-1-aesteve@redhat.com>
+References: <20250818100353.1560655-1-aesteve@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,327 +89,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add SHMEM_MAP/_UNMAP request to the vhost-user
+spec documentation.
 
---Apple-Mail=_C2135662-E16C-4991-996A-F30BE93F23D3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
+---
+ docs/interop/vhost-user.rst | 58 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
-Hi Paolo,
-Would you have time to share your thoughts about this set of patches?
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index 436a94c0ee..dab9f3af42 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -350,6 +350,27 @@ Device state transfer parameters
+   In the future, additional phases might be added e.g. to allow
+   iterative migration while the device is running.
+ 
++MMAP request
++^^^^^^^^^^^^
++
+++-------+---------+-----------+------------+-----+-------+
++| shmid | padding | fd_offset | shm_offset | len | flags |
+++-------+---------+-----------+------------+-----+-------+
++
++:shmid: a 8-bit shared memory region identifier
++
++:fd_offset: a 64-bit offset of this area from the start
++            of the supplied file descriptor
++
++:shm_offset: a 64-bit offset from the start of the
++             pointed shared memory region
++
++:len: a 64-bit size of the memory to map
++
++:flags: a 64-bit value:
++  - 0: Pages are mapped read-only
++  - 1: Pages are mapped read-write
++
+ C structure
+ -----------
+ 
+@@ -375,6 +396,7 @@ In QEMU the vhost-user message is implemented with the following struct:
+           VhostUserInflight inflight;
+           VhostUserShared object;
+           VhostUserTransferDeviceState transfer_state;
++          VhostUserMMap mmap;
+       };
+   } QEMU_PACKED VhostUserMsg;
+ 
+@@ -1057,6 +1079,7 @@ Protocol features
+   #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
+   #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
+   #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
++  #define VHOST_USER_PROTOCOL_F_SHMEM                20
+ 
+ Front-end message types
+ -----------------------
+@@ -1865,6 +1888,41 @@ is sent by the front-end.
+   when the operation is successful, or non-zero otherwise. Note that if the
+   operation fails, no fd is sent to the backend.
+ 
++``VHOST_USER_BACKEND_SHMEM_MAP``
++  :id: 9
++  :equivalent ioctl: N/A
++  :request payload: fd and ``struct VhostUserMMap``
++  :reply payload: N/A
++
++  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
++  successfully negotiated, this message can be submitted by the backends to
++  advertise a new mapping to be made in a given VIRTIO Shared Memory Region.
++  Upon receiving the message, the front-end will mmap the given fd into the
++  VIRTIO Shared Memory Region with the requested ``shmid``.
++  If``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
++  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
++  must respond with zero when operation is successfully completed,
++  or non-zero otherwise.
++
++  Mapping over an already existing map is not allowed and requests shall fail.
++  Therefore, the memory range in the request must correspond with a valid,
++  free region of the VIRTIO Shared Memory Region. Also, note that mappings
++  consume resources and that the request can fail when there are no resources
++  available.
++
++``VHOST_USER_BACKEND_SHMEM_UNMAP``
++  :id: 10
++  :equivalent ioctl: N/A
++  :request payload: ``struct VhostUserMMap``
++  :reply payload: N/A
++
++  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
++  successfully negotiated, this message can be submitted by the backends so
++  that the front-end un-mmaps a given range (``shm_offset``, ``len``) in the
++  VIRTIO Shared Memory Region with the requested ``shmid``. Note that the
++  given range shall correspond to the entirety of a valid mapped region.
++  A reply is generated indicating whether unmapping succeeded.
++
+ .. _reply_ack:
+ 
+ VHOST_USER_PROTOCOL_F_REPLY_ACK
+-- 
+2.49.0
 
-> On 31 Jul 2025, at 06:53, Zhao Liu <zhao1.liu@intel.com> wrote:
->=20
-> On Thu, Jul 31, 2025 at 12:11:41AM +0800, Xiaoyao Li wrote:
->> Date: Thu, 31 Jul 2025 00:11:41 +0800
->> From: Xiaoyao Li <xiaoyao.li@intel.com>
->> Subject: Re: [PATCH 1/2] i386/cpu: Enable SMM cpu addressspace
->>=20
->> On 7/30/2025 11:20 PM, Zhao Liu wrote:
->>>>>> +        cpu_address_space_init(cpu, 1, "cpu-smm", =
-&smram_as_root);
->>>>>=20
->>>>> It is worth mentioning in the commit message that directly sharing
->>>>> MemoryRegion in CPUAddressSpace is safe.
->>>>=20
->>>> It's unnecessary to me. It's common that different Address space =
-share the
->>>> same (root) memory region. e.g., for address space 0 for the cpu, =
-though
->>>> what passed in is cpu->memory, they all point to system_memory.
->>>=20
->>> For cpu->memory, there's the "object_ref(OBJECT(cpu->memory))" in
->>> cpu_exec_initfn().
->>>=20
->>> But this case doesn't need to increase ref count like cpu->memory, =
-since
->>> memory_region_ref() provides protection and it's enough.
->>>=20
->>> This is the difference.
->>>=20
->>> So it sounds like now it's more necessary to clarify this, no?
->>>=20
->>=20
->> clarify why smram_as_root doesn't need to be object_ref()'ed =
-explicitly like
->> what cpu_exec_initfn() does for cpu->memory?
->=20
-> When you're referring cpu->memory, you should aware where's the
-> difference and why you don't need do the same thing.
->=20
-> This is necessary for a clear commit message, and it also allows more
-> eyes to check whether it is correct and whether there are any =
-potential
-> problems. Providing details is always beneficial.
->=20
->> As you saide,
->>=20
->> cpu_address_space_init()
->>  -> address_space_init()
->>     -> memory_region_ref()
->>=20
->> it already ensures the ref count is increased.
->=20
-> Yes, this is what I mean.
->=20
->> Why cpu_exec_initfn() increases the refcount of cpu->memory, is
->> totally unrelated to cpu_address_space_init().
->  ^^^^^^^^^^^^^^^^^
->=20
-> The validity of cpu->memory must be guaranteed, as this is a =
-prerequisite
-> for everything else. And isn't it mainly related with the CPU address
-> space??
->=20
-> It can be said that because the pointer to system_memory needs to be
-> cached in CPUState, such a ref is useful, thereby ensuring the safety
-> of the next address space stuff.
-
-
---Apple-Mail=_C2135662-E16C-4991-996A-F30BE93F23D3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=us-ascii
-
-<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
-charset=3Dus-ascii"></head><body style=3D"overflow-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;">Hi =
-Paolo,<div>Would you have time to share your thoughts about this set of =
-patches?<br id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 31 Jul 2025, at 06:53, Zhao Liu =
-&lt;zhao1.liu@intel.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">On Thu, Jul 31, 2025 at 12:11:41AM +0800, =
-Xiaoyao Li wrote:</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><blockquote type=3D"cite" style=3D"font-family: =
-Helvetica; font-size: 16px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: auto; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;">Date: Thu, 31 Jul 2025 00:11:41 +0800<br>From: =
-Xiaoyao Li &lt;xiaoyao.li@intel.com&gt;<br>Subject: Re: [PATCH 1/2] =
-i386/cpu: Enable SMM cpu addressspace<br><br>On 7/30/2025 11:20 PM, Zhao =
-Liu wrote:<br><blockquote type=3D"cite"><blockquote =
-type=3D"cite"><blockquote type=3D"cite"><blockquote type=3D"cite">+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpu_address_space_init(cpu, 1, =
-"cpu-smm", &amp;smram_as_root);<br></blockquote><br>It is worth =
-mentioning in the commit message that directly sharing<br>MemoryRegion =
-in CPUAddressSpace is safe.<br></blockquote><br>It's unnecessary to me. =
-It's common that different Address space share the<br>same (root) memory =
-region. e.g., for address space 0 for the cpu, though<br>what passed in =
-is cpu-&gt;memory, they all point to =
-system_memory.<br></blockquote><br>For cpu-&gt;memory, there's the =
-"object_ref(OBJECT(cpu-&gt;memory))" in<br>cpu_exec_initfn().<br><br>But =
-this case doesn't need to increase ref count like cpu-&gt;memory, =
-since<br>memory_region_ref() provides protection and it's =
-enough.<br><br>This is the difference.<br><br>So it sounds like now it's =
-more necessary to clarify this, no?<br><br></blockquote><br>clarify why =
-smram_as_root doesn't need to be object_ref()'ed explicitly like<br>what =
-cpu_exec_initfn() does for cpu-&gt;memory?<br></blockquote><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">When you're referring cpu-&gt;memory, you =
-should aware where's the</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline =
-!important;">difference and why you don't need do the same =
-thing.</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 16px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 16px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 16px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none; float: none; display: inline !important;">This is necessary for a =
-clear commit message, and it also allows more</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">eyes to check whether it is correct and =
-whether there are any potential</span><br style=3D"caret-color: rgb(0, =
-0, 0); font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline =
-!important;">problems. Providing details is always beneficial.</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><blockquote =
-type=3D"cite" style=3D"font-family: Helvetica; font-size: 16px; =
-font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: auto; text-align: start; text-indent: =
-0px; text-transform: none; white-space: normal; widows: auto; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;">As you saide,<br><br>cpu_address_space_init()<br>&nbsp;-&gt; =
-address_space_init()<br>&nbsp;&nbsp;&nbsp;&nbsp;-&gt; =
-memory_region_ref()<br><br>it already ensures the ref count is =
-increased.<br></blockquote><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">Yes, =
-this is what I mean.</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><blockquote type=3D"cite" style=3D"font-family: =
-Helvetica; font-size: 16px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: auto; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;">Why cpu_exec_initfn() increases the refcount of =
-cpu-&gt;memory, is<br>totally unrelated to =
-cpu_address_space_init().<br></blockquote><span style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 16px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline =
-!important;">&nbsp;^^^^^^^^^^^^^^^^^</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 16px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">The =
-validity of cpu-&gt;memory must be guaranteed, as this is a =
-prerequisite</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 16px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 16px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none; float: none; display: inline !important;">for everything else. And =
-isn't it mainly related with the CPU address</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">space??</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 16px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">It can =
-be said that because the pointer to system_memory needs to be</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-16px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">cached in CPUState, such a ref is useful, =
-thereby ensuring the safety</span><br style=3D"caret-color: rgb(0, 0, =
-0); font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 16px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">of the =
-next address space =
-stuff.</span></div></blockquote></div><br></div></body></html>=
-
---Apple-Mail=_C2135662-E16C-4991-996A-F30BE93F23D3--
 
