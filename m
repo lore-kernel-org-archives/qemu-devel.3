@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7A4CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 22:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89B2CA0EF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 00:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uo8Pc-0007VF-Ga; Mon, 18 Aug 2025 18:33:08 -0400
+	id 1uoAY5-00083U-Ue; Mon, 18 Aug 2025 20:50:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uo8Pb-0007UX-87
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 18:33:07 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uo8PZ-0001Xj-NO
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 18:33:07 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-32326e05b3eso3284292a91.2
- for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 15:33:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755556384; x=1756161184; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Yl8vkr5/29swFnBO4u1rw7RwOH6ITTINekQuf8D1fPg=;
- b=No7EsimtevQYnjutPpxeVJ2ZvIzzEX8mY0UIhtG1FGeh5eGQRB3XjgEBbCeGnN550T
- +1sQT5ymx+byyDnm6xVHXuAKKaKTTgmTQAVOYNgacnn4MWvUiu6MWXiVVsKmP7YQFTsN
- MwiA2qn9rTYORHb6tRaZiB7b9oFf5c3pAQDUvVvpT0V9U7GHJBowDXS52FNsDdttg8yU
- 3RvPFxFGZ/A1ocJMghc2MmklHqp4ePFnalud025YaPN/YkjlcvUh5S1aWpqdK9JgFmyZ
- GqdSLV+5E5Bm+oHpE2KvUDyyfMrk3VVF1T1p71SyWux4zpRunBHVY63sCxGWVj1vlFi3
- Npcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755556384; x=1756161184;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Yl8vkr5/29swFnBO4u1rw7RwOH6ITTINekQuf8D1fPg=;
- b=f+1YceNGKxPLzXXyVuwydYSnzEXDzvukiUgA/CKmXE2rJis7BhhVXDWoq5InT/JOJ5
- BOBMB3AT664m3T62QKQH8ShTOd+D8F/rzT8BNMJy6b9XYK4lY0f8MoPXfWNJWVrwFKKE
- 5+qQCOkIGgS3JKY+EDif2v6FqZ5Obq6UNGq9tKYlCBpnK54UePUOF0VOAEhi2d0J0VCp
- j00F6jA3cTSZwGq18S0yCBMQtAgnhuP7oKaWXhlMHxHjt0Q0SdFTgt22VKhDeMonWltI
- c8BF2rM7lP20IAYcDpagvA8nvf6wftF9iMjXJuCMD5a+3VsufVCaAgz6QEVfsZWd3Px2
- ijTQ==
-X-Gm-Message-State: AOJu0YyVMrxLzoEVMsDfGBEg6koAXsYBXbBROsTMl2Y8bbwVC52k5Lv1
- Z4M6f+sEmU5kXnlwGw8TvvShgNhjOOG8yvy9gyDSIS2UvNqLWCPT+sW7f8u5jRmBKVc=
-X-Gm-Gg: ASbGncvWslHI+Dqag/LqdhNqfZuqBURoqBpkPFADEgCVtznxr5haMH7EjsKzpaKnh7Q
- xcER45g3MeMQEsdtJ+7MCmRsSDaqOdNOnciIs6um7xIpLJR39f2WwP1oXHiCcq6SI1qDhcMbkTo
- D50POBcpQLJBvPkZkKxk3QJCpN4E4NIrDnvQeDVPNV5d2RHqZNQv0DwXmaz3u/pVTe7jvbSKAoE
- 5IV7Skorexs9XwjdaS5z5sFsH5mNNZ85LZID9c1oXo3A71a+pC9o6j7IG0vL3dbR1GgAd0OsVBq
- uoTK4gZCNzW6Vc9BjV2ZjPhmH/D91S2PshgxXMDGCZ9VC2gR6X/yJq5j7EQw5fTQzNE1a3jlr1L
- lf8T8wRnOHY0ybI3tk7O5CMOBgtc4SdJ+30PP/iU=
-X-Google-Smtp-Source: AGHT+IEy2K5Q75oswKdjgisJo1gd32HWHveSg/63LZgJ0e69BW6pKF1C+L9RbZtkCpqhyjhZ5t1B0A==
-X-Received: by 2002:a17:90b:4c02:b0:323:7e80:881a with SMTP id
- 98e67ed59e1d1-32476abd6b1mr710766a91.37.1755556383833; 
- Mon, 18 Aug 2025 15:33:03 -0700 (PDT)
-Received: from [192.168.1.104] ([206.83.122.207])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b472d735e83sm9076624a12.33.2025.08.18.15.33.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Aug 2025 15:33:03 -0700 (PDT)
-Message-ID: <a535b980-153f-4329-b0e4-b255a6b858fd@linaro.org>
-Date: Tue, 19 Aug 2025 08:32:57 +1000
+ (Exim 4.90_1) (envelope-from <bernd@bsbernd.com>)
+ id 1uo8kh-0002rB-EM; Mon, 18 Aug 2025 18:54:55 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bernd@bsbernd.com>)
+ id 1uo8kf-0003pr-Au; Mon, 18 Aug 2025 18:54:55 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfout.phl.internal (Postfix) with ESMTP id 2C4F6EC085F;
+ Mon, 18 Aug 2025 18:54:50 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-03.internal (MEProxy); Mon, 18 Aug 2025 18:54:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bsbernd.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1755557690;
+ x=1755644090; bh=EC5uivRIWkXk1oTvFdHFsOxYCuh7stVexQ3xJ9xmwB4=; b=
+ ABhZR4MOAhYQG/80WZX4CBNrMLaepdABIWVVJB6AcxRifG6icNYtNnhb3JlIdH0t
+ J+SMln/aF2s0WClZkRpxFAMXtcdpSpgMJxcSsrCMEeL+JEcI0V3ycqLrCnezgD35
+ 2C6sbNRcRuXjT4q+mH55oks0oU2pihv88FT2qh4oQ2Yuig8ZmCs/b2Nz8Fd/7AVU
+ n/+/89K9JgtFY4a3lj2EXYjFKQ8cZq8q0W47gTts9c8bIjfN+32j+5dyH9tvsaC7
+ rW1Qk2IwjFdNbRcNACrioNBGnW/yBaydU7NJv1b0bTU3yrAuwpQsjnyutDsdMOSK
+ QvbtysdAdvJLXBOEdJ6jYw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1755557690; x=
+ 1755644090; bh=EC5uivRIWkXk1oTvFdHFsOxYCuh7stVexQ3xJ9xmwB4=; b=R
+ GvCqI56uy6T4/rt/iihB7zyr557iyB+bE/CPDErYsz49aokDyGB+AEk4d3ilxECW
+ mDM4TPC22SU++vUhH2xzvedvy8u6pWoqZonbxfXETcXDlSQGdORKsBwuMXjLtRPj
+ bfaHZrtSd2ZbRCU+CS+aZtqeR9UMiYUd0gP7MKLIhRxKTRKhq06hnp88UT6WM/RG
+ mwDMsuZxegq8xxvs30uj0iy03/0MF7uIWE+rH89h9RIxI/ttk8MTCUN6UmDACj5s
+ Jcf6GcRGt0wCzYk5DRe4KNrk3WRPOjDyml/Gsp/OqUEdWLbL/06q1bIfgGuCYn30
+ H56hEtV4fDlTOGUsshTvA==
+X-ME-Sender: <xms:Oa-jaA3tUasxsZyu9pxBHyrLNtYR2w77cQACN_zX8TtUz7iRarOkEw>
+ <xme:Oa-jaCv4sc7H6LMR4cnbAcFTxpmX93AUk7nL5ONNKpGZFDqi6ysYK7AjpXEauYSoX
+ uWz7L8k4PFJ3ff2>
+X-ME-Received: <xmr:Oa-jaGhHyoZ-wIgbhYBmzGHe17hNpmSYPwxoErm0FVpJ3ge1AWx3w4RyUzmaO7w2vda5uPQtjjc-ev08gIvqVXZSbvTbtHUc1chFUd027Rfhb4xhr9EK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheefkeeiucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpeeuvghrnhgu
+ ucfutghhuhgsvghrthcuoegsvghrnhgusegsshgsvghrnhgurdgtohhmqeenucggtffrrg
+ htthgvrhhnpedtgefhgfeuuddvueeuuddtudfhveetieeihfdtvdeufffhvefffeeiueeh
+ udekvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhthhhusgdrtghomhenuc
+ evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsvghrnhgu
+ segsshgsvghrnhgurdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpoh
+ huthdprhgtphhtthhopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpthht
+ ohephhhisghrihgrnhhsohhnghesghhmrghilhdrtghomhdprhgtphhtthhopehqvghmuh
+ dqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghl
+ sehnohhnghhnuhdrohhrghdprhgtphhtthhopegrrhhmsghruhesrhgvughhrghtrdgtoh
+ hmpdhrtghpthhtohepfhgrmhesvghuphhhohhnrdhnvghtpdhrtghpthhtohephhhrvghi
+ thiisehrvgguhhgrthdrtghomhdprhgtphhtthhopehkfiholhhfsehrvgguhhgrthdrtg
+ homh
+X-ME-Proxy: <xmx:Oa-jaD-VtLcSkXoPLSoHd-4ZFUJG1nRXQasJEJrGqU3onhCr7PH-_Q>
+ <xmx:Oa-jaJtD9yKC2gZJa_DYD1pq7CJuNaK0P4R4rnQpA-xEqFtZ4kPkxA>
+ <xmx:Oa-jaHqZJ-9F9C9h1hiybBsaJRJ0kKs0TQ1-aMx8WBknmiBQ6s4L3g>
+ <xmx:Oa-jaNry75B7Z6zsnzKr9n7Ab051LpgMK9ihvLjRsjxWDJKlpVeOlw>
+ <xmx:Oq-jaE_hOiPWYoWAYSvCmcLZk56fvJZLNHZeCb6qpvwzEfdc01LEyZUn>
+Feedback-ID: i5c2e48a5:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 18 Aug 2025 18:54:48 -0400 (EDT)
+Message-ID: <a30f7931-b20c-4a5f-846f-62de61545942@bsbernd.com>
+Date: Tue, 19 Aug 2025 00:54:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 6/6] target/arm: Enable FEAT_MEC in -cpu max
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Gustavo Romero <gustavo.romero@linaro.org>
-References: <20250727074202.83141-1-richard.henderson@linaro.org>
- <20250727074202.83141-7-richard.henderson@linaro.org>
- <CAFEAcA8ez8XW9xn+Q=XwCFf+LObEZN9yQSEmEcy3hXTwYe2tCw@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA8ez8XW9xn+Q=XwCFf+LObEZN9yQSEmEcy3hXTwYe2tCw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [RFC PATCH 0/3] block/export: Add FUSE-over-io_uring for Storage
+ Exports
+To: Stefan Hajnoczi <stefanha@redhat.com>, Zhi Song <hibriansong@gmail.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+References: <20250815034619.51980-1-hizhisong@gmail.com>
+ <20250817134527.GA321129@fedora>
+From: Bernd Schubert <bernd@bsbernd.com>
+Content-Language: en-US, de-DE, fr
+In-Reply-To: <20250817134527.GA321129@fedora>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=bernd@bsbernd.com;
+ helo=fout-a1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 18 Aug 2025 20:50:00 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,17 +117,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/25 23:42, Peter Maydell wrote:
-> Looking at this again, I don't think we should set
-> ID_AA64MMFR3_EL1.MEC if RME is not enabled.
+
+
+On 8/17/25 15:45, Stefan Hajnoczi wrote:
+> On Thu, Aug 14, 2025 at 11:46:16PM -0400, Zhi Song wrote:
+>> Due to kernel limitations, when the FUSE-over-io_uring option is
+>> enabled,
+>> you must create and assign nr_cpu IOThreads. For example:
 > 
-> I guess the way to do this that fits in with how we
-> already handle "user-facing property disabled feature X
-> and that means we should also disable feature Y" is
-> to put a check in arm_cpu_realizefn() for "if RME
-> disabled then squash ID_AA64MMFR3.MEC to 0" ?
+> While it would be nice for the kernel to support a more flexible queue
+> mapping policy, userspace can work around this.
+> 
+> I think Kevin suggested creating the number of FUSE queues required by
+> the kernel and configuring them across the user's IOThreads. That way
+> the number of IOThreads can be smaller than the number of FUSE queues.
 
-Agreed.
+Sorry, had been another week off last week and I'm only slowly catching
+up.
 
-r~
+Regarding more flexible queues, see here
+
+https://lore.kernel.org/r/20250722-reduced-nr-ring-queues_3-v1-0-aa8e37ae97e6@ddn.com
+
+And actually forgot to mention the corresponding libfuse branch for that:
+https://github.com/bsbernd/libfuse/tree/uring-reduce-nr-queues
+
+
+Bernd
 
