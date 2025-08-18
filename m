@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 146A6CA0ED1
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 21:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66030CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 21:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uo7eT-0001w7-S2; Mon, 18 Aug 2025 17:44:26 -0400
+	id 1uo7dn-0001f0-10; Mon, 18 Aug 2025 17:43:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uo7eF-0001ot-HJ; Mon, 18 Aug 2025 17:44:14 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1uo7dg-0001c1-Dg; Mon, 18 Aug 2025 17:43:36 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uo7dq-0003md-5d; Mon, 18 Aug 2025 17:43:52 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57IBbanp031118;
- Mon, 18 Aug 2025 21:43:44 GMT
+ id 1uo7dd-0003jd-LY; Mon, 18 Aug 2025 17:43:36 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57IBk1wA006715;
+ Mon, 18 Aug 2025 21:43:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=h/9gLqKZ2pwi+5jMe
- zmd7tVq/SfgaUSCgXtI9/dn5jE=; b=gIqEGzGj5bi4RwtBhKLIpcVc/LbsF/0Nh
- MUo7Ch88AMeo0n22sJEOeZXfUDy6015ewNTNvPHvqRJD/NMEe2Mfx9QbjSBl5jsI
- 9aMSrOaFDwouXV/i1BAJXO7Qa4VRU4qltXZlU5IxpRxUwxf1q7UqE8AxUKxSo9KE
- xrHoUS59p2hikt99f4I69JZjwwqR3XKsWFEhgWbqdj6Z2f/ycG+s1P+3Np4tB+So
- WBGlw+VOIObCYs2FaXvpsY4NIPnppl0mB8x9M05mj3JSAHFUmnhycP1yaYuzUZHE
- NMcEtpNWpjhg+We1z3oWiorPDeA3ecYJSMBzrGAarg2Swm2WNA3ng==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jfdrujja-1
+ :mime-version:references:subject:to; s=pp1; bh=Tc6gtpCISL/AyOlr9
+ M1U/DjVwlLpl3G1fQU1fpsiGVs=; b=WT8oL++ujq1puYoLRXm3gRx1tetRGMCK1
+ pVMJlJsPl2Msx6T27Ttf+Gi3tnNBd/9fvuC4YeXtqT8NAGlU3LJW3cqWYafOEybu
+ AJ6hTs0CdgTFYO9qBSxQ3QjngNqxZvuLPy6wgqGi3EiRyRGtzIErW5jrC4tzfkwf
+ GHWyK4f9lI65+clz+bjVf3VmA05T8Lgkbsu924mtlVRv0Dt2NlP33vWwWqVeUT1a
+ y84kbBFOVmzfaz8ED4Ggdz+lawsF5JWe7coxrlR23yi6o3/WCw6eHnyZTwMmoGfo
+ u5+deVVmcgpbSRx4/xsssC70iH5mre5kuMsgZvhEYcPrOiLJe3nPw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jhny3gea-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Aug 2025 21:43:44 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57IJ9QTF014728;
- Mon, 18 Aug 2025 21:43:44 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48k5tmqgns-1
+ Mon, 18 Aug 2025 21:43:31 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57IHC6Dq010675;
+ Mon, 18 Aug 2025 21:43:30 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48k4au7r84-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Aug 2025 21:43:44 +0000
+ Mon, 18 Aug 2025 21:43:30 +0000
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57ILhYqP21955174
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57ILhSMa6357672
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 18 Aug 2025 21:43:34 GMT
+ Mon, 18 Aug 2025 21:43:28 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 68DCA58059;
- Mon, 18 Aug 2025 21:43:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 37C5F58058;
+ Mon, 18 Aug 2025 21:43:28 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 67DC858058;
- Mon, 18 Aug 2025 21:43:41 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2379A58057;
+ Mon, 18 Aug 2025 21:43:27 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.98.172])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 18 Aug 2025 21:43:41 +0000 (GMT)
+ Mon, 18 Aug 2025 21:43:27 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
  david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
@@ -65,38 +65,38 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, alifm@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v5 14/29] pc-bios/s390-ccw: Define memory for IPLB and convert
- IPLB to pointers
-Date: Mon, 18 Aug 2025 17:43:07 -0400
-Message-ID: <20250818214323.529501-15-zycai@linux.ibm.com>
+Subject: [PATCH v5 03/29] crypto/x509-utils: Add helper functions for
+ certificate store
+Date: Mon, 18 Aug 2025 17:42:56 -0400
+Message-ID: <20250818214323.529501-4-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250818214323.529501-1-zycai@linux.ibm.com>
 References: <20250818214323.529501-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 5C_WkDAQMnpc2iufOlCi2H6GIICQJ4li
-X-Proofpoint-GUID: 5C_WkDAQMnpc2iufOlCi2H6GIICQJ4li
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAwMSBTYWx0ZWRfX6ibOmCuavB2V
- 8+Qj/Aj//QT0LiCaa5S3jf+84cuKsTNBVZBAX3OXPfzH52KAXZdXsB91lPuw79cLcQS0t56V8Xp
- dl68LRE5Ji94ddLSCsMTv6NzVQ77tOhyhwkOL2MKotn7A09nUhpH1LcCEZfZVWqKiCIXDWbO2HB
- bD53zvp16i0XaFbfScO5RBb8dAfKjXD1kckHH/F0ODSDFllq5ul0mPAeekeYUHcutqxrb2GaOGD
- 8q4hiOlPb6afsrGzvE3UvbYiPnXRkiyzgCVFmjoUFiMo26qMqzQlgTg/KO9V65cGgsPm7KGqItd
- 6OCxKiRgTWd9zvvPk/V9JEyNFx/Jr90vA+Wjh4gmPey8w50fVR4ACpKebeyVc20g20jcQj0p2eb
- 7xFzD8lq
-X-Authority-Analysis: v=2.4 cv=GotC+l1C c=1 sm=1 tr=0 ts=68a39e90 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=_GZQR2ZoBes7ElOevS0A:9
+X-Authority-Analysis: v=2.4 cv=XbqJzJ55 c=1 sm=1 tr=0 ts=68a39e83 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=rS3Z-B4KkOQ9K9HQ9W4A:9
+X-Proofpoint-ORIG-GUID: Uvab926dsOxwk8URBrMmG9jU8QEMZk6v
+X-Proofpoint-GUID: Uvab926dsOxwk8URBrMmG9jU8QEMZk6v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAyNyBTYWx0ZWRfX3p5430nAxM1C
+ 8BTMnnsIHjKGD1bSDtuMGFk+Atct60kRH9aPxfiPc1YIvso6Bz7b6dikI+QP93zo+cF3DrXg9Yw
+ 9y5YoggSjmujeLJIDY5Vu58sq21xmI41gKqY1btpRPuoPTFzCQxXx8YNSYxvXJmI1VYNQF+ximL
+ kHBuFQNzdl/b7/RLG3yAk3m5GT2ynNhKzm6ONeK/Juw8UZMj2qWg+pCNg15lvu6wMy8mMkXWj20
+ qmpHLu3KA69BTWTErPZEwgz2R1hQhCQDJexrF/kJtFLz6/cqSYQpCSCUG9rhVD5RRMXtpPZMCiz
+ ZBFo3j7AvW3Lp8dSPGYCMMbUg43aqXhceh/tJrGsGhdCVGeyquzZAHh9BOyXwU4JGVjp6VSNk/H
+ zyPctRud
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-18_06,2025-08-14_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 adultscore=0 suspectscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 bulkscore=0 phishscore=0
+ phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
+ clxscore=1015 malwarescore=0 spamscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160001
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160027
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -120,186 +120,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define a memory space for both IPL Parameter Block (IPLB) and
-IPL Information Report Block (IIRB) since IIRB is stored immediately
-following IPLB.
+Introduce new helper functions for x509 certificate, which will be used
+by the certificate store:
 
-Convert IPLB to pointer and it points to the start of the defined memory space.
-IIRB points to the end of IPLB.
+qcrypto_x509_convert_cert_der() - converts a certificate from PEM to DER format
+
+These functions provide support for certificate format conversion.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- pc-bios/s390-ccw/iplb.h     | 12 ++++++++++--
- pc-bios/s390-ccw/jump2ipl.c |  6 +++---
- pc-bios/s390-ccw/main.c     | 34 +++++++++++++++++++---------------
- pc-bios/s390-ccw/netmain.c  |  8 ++++----
- 4 files changed, 36 insertions(+), 24 deletions(-)
+ crypto/x509-utils.c         | 51 +++++++++++++++++++++++++++++++++++++
+ include/crypto/x509-utils.h | 20 +++++++++++++++
+ 2 files changed, 71 insertions(+)
 
-diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-index bdbc733e16..11302e004d 100644
---- a/pc-bios/s390-ccw/iplb.h
-+++ b/pc-bios/s390-ccw/iplb.h
-@@ -20,7 +20,7 @@
- #include <string.h>
- 
- extern QemuIplParameters qipl;
--extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
-+extern IplParameterBlock *iplb;
- extern bool have_iplb;
- 
- struct IplInfoReportBlockHeader {
-@@ -85,6 +85,14 @@ struct IplInfoReportBlock {
- } __attribute__ ((packed));
- typedef struct IplInfoReportBlock IplInfoReportBlock;
- 
-+struct IplBlocks {
-+    IplParameterBlock   iplb;
-+    IplInfoReportBlock  iirb;
-+} __attribute__ ((packed));
-+typedef struct IplBlocks IplBlocks;
-+
-+extern IplBlocks ipl_data __attribute__((__aligned__(PAGE_SIZE)));
-+
- #define S390_IPL_TYPE_FCP 0x00
- #define S390_IPL_TYPE_CCW 0x02
- #define S390_IPL_TYPE_QEMU_SCSI 0xff
-@@ -127,7 +135,7 @@ static inline bool load_next_iplb(void)
- 
-     qipl.index++;
-     next_iplb = (IplParameterBlock *) qipl.next_iplb;
--    memcpy(&iplb, next_iplb, sizeof(IplParameterBlock));
-+    memcpy(iplb, next_iplb, sizeof(IplParameterBlock));
- 
-     qipl.chain_len--;
-     qipl.next_iplb = qipl.next_iplb + sizeof(IplParameterBlock);
-diff --git a/pc-bios/s390-ccw/jump2ipl.c b/pc-bios/s390-ccw/jump2ipl.c
-index 86321d0f46..fa2ca5cbe1 100644
---- a/pc-bios/s390-ccw/jump2ipl.c
-+++ b/pc-bios/s390-ccw/jump2ipl.c
-@@ -43,11 +43,11 @@ int jump_to_IPL_code(uint64_t address)
-      * The IPLB for QEMU SCSI type devices must be rebuilt during re-ipl. The
-      * iplb.devno is set to the boot position of the target SCSI device.
-      */
--    if (iplb.pbt == S390_IPL_TYPE_QEMU_SCSI) {
--        iplb.devno = qipl.index;
-+    if (iplb->pbt == S390_IPL_TYPE_QEMU_SCSI) {
-+        iplb->devno = qipl.index;
-     }
- 
--    if (have_iplb && !set_iplb(&iplb)) {
-+    if (have_iplb && !set_iplb(iplb)) {
-         panic("Failed to set IPLB");
-     }
- 
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 76bf743900..c9328f1c51 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -22,7 +22,9 @@
- static SubChannelId blk_schid = { .one = 1 };
- static char loadparm_str[LOADPARM_LEN + 1];
- QemuIplParameters qipl;
--IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
-+/* Ensure that IPLB and IIRB are page aligned and sequential in memory */
-+IplBlocks ipl_data;
-+IplParameterBlock *iplb;
- bool have_iplb;
- static uint16_t cutype;
- LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
-@@ -51,7 +53,7 @@ void write_subsystem_identification(void)
- void write_iplb_location(void)
- {
-     if (cutype == CU_TYPE_VIRTIO && virtio_get_device_type() != VIRTIO_ID_NET) {
--        lowcore->ptr_iplb = ptr2u32(&iplb);
-+        lowcore->ptr_iplb = ptr2u32(iplb);
-     }
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 6176a88653..29d5146bb2 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -81,6 +81,48 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     return ret;
  }
  
-@@ -162,7 +164,7 @@ static void menu_setup(void)
-         return;
-     }
- 
--    switch (iplb.pbt) {
-+    switch (iplb->pbt) {
-     case S390_IPL_TYPE_CCW:
-     case S390_IPL_TYPE_QEMU_SCSI:
-         menu_set_parms(qipl.qipl_flags & BOOT_MENU_FLAG_MASK,
-@@ -191,8 +193,8 @@ static void boot_setup(void)
- {
-     char lpmsg[] = "LOADPARM=[________]\n";
- 
--    if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
--        ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
-+    if (have_iplb && memcmp(iplb->loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
-+        ebcdic_to_ascii((char *) iplb->loadparm, loadparm_str, LOADPARM_LEN);
-     } else {
-         sclp_get_loadparm_ascii(loadparm_str);
-     }
-@@ -216,21 +218,21 @@ static bool find_boot_device(void)
-     VDev *vdev = virtio_get_device();
-     bool found = false;
- 
--    switch (iplb.pbt) {
-+    switch (iplb->pbt) {
-     case S390_IPL_TYPE_CCW:
-         vdev->scsi_device_selected = false;
--        debug_print_int("device no. ", iplb.ccw.devno);
--        blk_schid.ssid = iplb.ccw.ssid & 0x3;
-+        debug_print_int("device no. ", iplb->ccw.devno);
-+        blk_schid.ssid = iplb->ccw.ssid & 0x3;
-         debug_print_int("ssid ", blk_schid.ssid);
--        found = find_subch(iplb.ccw.devno);
-+        found = find_subch(iplb->ccw.devno);
-         break;
-     case S390_IPL_TYPE_QEMU_SCSI:
-         vdev->scsi_device_selected = true;
--        vdev->selected_scsi_device.channel = iplb.scsi.channel;
--        vdev->selected_scsi_device.target = iplb.scsi.target;
--        vdev->selected_scsi_device.lun = iplb.scsi.lun;
--        blk_schid.ssid = iplb.scsi.ssid & 0x3;
--        found = find_subch(iplb.scsi.devno);
-+        vdev->selected_scsi_device.channel = iplb->scsi.channel;
-+        vdev->selected_scsi_device.target = iplb->scsi.target;
-+        vdev->selected_scsi_device.lun = iplb->scsi.lun;
-+        blk_schid.ssid = iplb->scsi.ssid & 0x3;
-+        found = find_subch(iplb->scsi.devno);
-         break;
-     default:
-         puts("Unsupported IPLB");
-@@ -311,10 +313,12 @@ static void probe_boot_device(void)
- 
- void main(void)
- {
-+    iplb = &ipl_data.iplb;
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result, size_t *resultlen,
++                                  Error **errp)
++{
++    int ret = -1;
++    int rc;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
 +
-     copy_qipl();
-     sclp_setup();
-     css_setup();
--    have_iplb = store_iplb(&iplb);
-+    have_iplb = store_iplb(iplb);
-     if (!have_iplb) {
-         boot_setup();
-         probe_boot_device();
-diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
-index a9521dff41..457fbc3095 100644
---- a/pc-bios/s390-ccw/netmain.c
-+++ b/pc-bios/s390-ccw/netmain.c
-@@ -528,11 +528,11 @@ static bool virtio_setup(void)
-      */
-     enable_mss_facility();
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    if (*resultlen == 0) {
++        error_setg(errp, "Invalid buffer size");
++        goto cleanup;
++    }
++
++    *result = g_malloc0(*resultlen);
++    rc = gnutls_x509_crt_export(crt, GNUTLS_X509_FMT_DER, *result, resultlen);
++    if (rc != 0) {
++        error_setg(errp, "Failed to convert certificate to DER format: %s",
++                   gnutls_strerror(rc));
++        g_clear_pointer(result, g_free);
++        goto cleanup;
++    }
++
++    ret = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    return ret;
++}
++
+ #else /* ! CONFIG_GNUTLS */
  
--    if (have_iplb || store_iplb(&iplb)) {
--        IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
--        dev_no = iplb.ccw.devno;
-+    if (have_iplb || store_iplb(iplb)) {
-+        IPL_assert(iplb->pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
-+        dev_no = iplb->ccw.devno;
-         debug_print_int("device no. ", dev_no);
--        net_schid.ssid = iplb.ccw.ssid & 0x3;
-+        net_schid.ssid = iplb->ccw.ssid & 0x3;
-         debug_print_int("ssid ", net_schid.ssid);
-         found = find_net_dev(&schib, dev_no);
-     } else {
+ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+@@ -93,4 +135,13 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     return -1;
+ }
+ 
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp)
++{
++    error_setg(errp, "GNUTLS is required to export X.509 certificate");
++    return -1;
++}
++
+ #endif /* ! CONFIG_GNUTLS */
+diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+index 1e99661a71..4239e3e55a 100644
+--- a/include/crypto/x509-utils.h
++++ b/include/crypto/x509-utils.h
+@@ -19,4 +19,24 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+                                       size_t *resultlen,
+                                       Error **errp);
+ 
++/**
++ * qcrypto_x509_convert_cert_der
++ * @cert: pointer to the raw certificate data in PEM format
++ * @size: size of the certificate
++ * @result: output location for the allocated buffer for the certificate in DER format
++            (the function allocates memory which must be freed by the caller)
++ * @resultlen: pointer to the size of the buffer
++               (will be updated with the actual size of the DER-encoded certificate)
++ * @errp: error pointer
++ *
++ * Convert the given @cert from PEM to DER format.
++ *
++ * Returns: 0 on success,
++ *         -1 on error.
++ */
++int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp);
++
+ #endif
 -- 
 2.50.1
 
