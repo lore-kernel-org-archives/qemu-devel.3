@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A011CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 14:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A71BCA0EE4
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 14:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uo0Vs-0001Vi-Cg; Mon, 18 Aug 2025 10:07:04 -0400
+	id 1uo0Vq-0001OF-6U; Mon, 18 Aug 2025 10:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uo0Vo-0001M3-7U
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:07:00 -0400
+ id 1uo0Vn-0001Lp-Pg
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:06:59 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uo0Vm-0002D0-Ca
+ id 1uo0Vl-0002CZ-SN
  for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:06:59 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0F404807D4;
- Mon, 18 Aug 2025 17:06:53 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 86D8A807CE;
+ Mon, 18 Aug 2025 17:06:51 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b25::1:17])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id k6RC4003YeA0-5EGxGFFS; Mon, 18 Aug 2025 17:06:52 +0300
+ ESMTPSA id k6RC4003YeA0-QlqtVJKk; Mon, 18 Aug 2025 17:06:51 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755526012;
- bh=9wuLPwnwcSfjr1aFoafDNTap3QiKA6TtzHXQ+dAcJoo=;
+ s=default; t=1755526011;
+ bh=zxe/Qn8qaUIKSb9GVBdarhgmP62+YL/GaisgtgQiiKc=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=klaD5lk5UfDDy9SRPAR/RMSTzkkosuNmwhtRbI2eIpQ0rQQd3s7BWpZsCir0IU0m9
- lsBgCbadCzHZOQFiIF+yDW9sBpya1CWaCfQQXT/xupni8JI39BkCVxokTSsWjuSThP
- m5q25lWzj+mE1UF5MUJLfG5tu/rOkliMsapEbJa8=
+ b=wEBWPy/OsvKi1AjPLCwJ/9et6xBBjtjv3gB6ghUfXYRSpCPM1N6VAmrM0/TVtN0yq
+ Z3KpgWiWkDKIshqLz5QHOyXUlCDXwMTq6Be6QqOsp/3PC4tTVdQAYrnL7UkgghKFv6
+ VTATcsTH1xQRU2T+MUhBSi60d/CEvtj0vKTGlo+M=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org,
 	vsementsov@yandex-team.ru
-Subject: [PATCH 16/19] net/tap: introduce net_tap_fd_init_external()
-Date: Mon, 18 Aug 2025 17:06:42 +0300
-Message-ID: <20250818140645.27904-17-vsementsov@yandex-team.ru>
+Subject: [PATCH 12/19] net/tap: net_init_tap_one(): support bridge
+Date: Mon, 18 Aug 2025 17:06:38 +0300
+Message-ID: <20250818140645.27904-13-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250818140645.27904-1-vsementsov@yandex-team.ru>
 References: <20250818140645.27904-1-vsementsov@yandex-team.ru>
@@ -74,148 +74,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper that covers logic for initializing fds, given from monitor
-or helper.
+Use net_init_tap_one() in net_init_bridge().
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 90 ++++++++++++++++++++++---------------------------------
- 1 file changed, 36 insertions(+), 54 deletions(-)
+ net/tap.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index ddee655f60..09c1343ccc 100644
+index 468dae7004..5acfb128a1 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -627,13 +627,40 @@ static bool set_fd_nonblocking(int fd, const char *note, Error **errp)
-     return ok;
- }
+@@ -88,6 +88,12 @@ static void launch_script(const char *setup_script, const char *ifname,
+ static void tap_send(void *opaque);
+ static void tap_writable(void *opaque);
  
-+static int net_tap_fd_init_external(const Netdev *netdev, NetClientState *peer,
-+                                    const char *model, const char *name,
-+                                    const char *vhostfdname,
-+                                    int *pvnet_hdr, int fd, Error **errp)
-+{
-+    int vnet_hdr;
++static int net_init_tap_one(const Netdev *netdev, NetClientState *peer,
++                            const char *model, const char *name,
++                            const char *ifname, const char *script,
++                            const char *downscript, const char *vhostfdname,
++                            int vnet_hdr, int fd, Error **errp);
 +
-+    if (!set_fd_nonblocking(fd, name, errp)) {
-+        return -1;
-+    }
-+
-+    vnet_hdr = tap_probe_vnet_hdr(fd, errp);
-+    if (pvnet_hdr) {
-+        if (*pvnet_hdr < 0) {
-+            *pvnet_hdr = vnet_hdr;
-+        } else if (vnet_hdr != *pvnet_hdr) {
-+            error_setg(errp,
-+                       "vnet_hdr not consistent across given tap fds");
-+            return -1;
-+        }
-+    }
-+
-+    return net_init_tap_one(netdev, peer, model, name,
-+                            NULL, NULL, NULL,
-+                            vhostfdname, vnet_hdr, fd, errp);
-+}
-+
- int net_init_bridge(const Netdev *netdev, const char *name,
-                     NetClientState *peer, Error **errp)
+ static void tap_update_fd_handler(TAPState *s)
  {
-     const NetdevTapOptions *tap = NULL;
-     const NetdevBridgeOptions *bridge = NULL;
+     qemu_set_fd_handler(s->fd,
+@@ -626,8 +632,7 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+ {
+     const NetdevBridgeOptions *bridge;
      const char *helper, *br;
--    int fd, vnet_hdr, ret;
-+    int fd;
+-    TAPState *s;
+-    int fd, vnet_hdr;
++    int fd, vnet_hdr, ret;
  
-     if (netdev->type == NET_CLIENT_DRIVER_BRIDGE) {
-         bridge = &netdev->u.bridge;
-@@ -652,26 +679,8 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+     assert(netdev->type == NET_CLIENT_DRIVER_BRIDGE);
+     bridge = &netdev->u.bridge;
+@@ -648,9 +653,14 @@ int net_init_bridge(const Netdev *netdev, const char *name,
+         close(fd);
          return -1;
      }
+-    s = net_tap_fd_init(peer, "bridge", name, fd, vnet_hdr);
  
--    if (!set_fd_nonblocking(fd, name, errp)) {
--        return -1;
--    }
--
--    vnet_hdr = tap_probe_vnet_hdr(fd, errp);
--    if (vnet_hdr < 0) {
--        close(fd);
--        return -1;
--    }
--
--    ret = net_init_tap_one(netdev, peer, "bridge", name,
--                           NULL, NULL, NULL,
--                           tap ? tap->vhostfd : NULL,
--                           vnet_hdr, fd, errp);
--    if (ret < 0) {
--        close(fd);
--        return -1;
--    }
--
--    return 0;
-+    return net_tap_fd_init_external(netdev, peer, "bridge", name,
-+                                    tap ? tap->vhostfd : NULL, NULL, fd, errp);
+-    qemu_set_info_str(&s->nc, "helper=%s,br=%s", helper, br);
++    ret = net_init_tap_one(netdev, peer, "bridge", name,
++                           NULL, NULL, NULL,
++                           NULL, vnet_hdr, fd, errp);
++    if (ret < 0) {
++        close(fd);
++        return -1;
++    }
+ 
+     return 0;
  }
+@@ -698,11 +708,19 @@ static int net_init_tap_one(const Netdev *netdev, NetClientState *peer,
+                             const char *downscript, const char *vhostfdname,
+                             int vnet_hdr, int fd, Error **errp)
+ {
+-    const NetdevTapOptions *tap = &netdev->u.tap;
++    const NetdevTapOptions *tap;
+     TAPState *s = net_tap_fd_init(peer, model, name, fd, vnet_hdr);
+     int vhostfd;
  
- static int net_tap_open_one(const Netdev *netdev,
-@@ -902,20 +911,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             return -1;
-         }
++    if (netdev->type == NET_CLIENT_DRIVER_BRIDGE) {
++        const NetdevBridgeOptions *bridge = &netdev->u.bridge;
++        qemu_set_info_str(&s->nc, "helper=%s,br=%s",
++                          bridge->helper, bridge->br);
++        return 0;
++    }
++
+     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
++    tap = &netdev->u.tap;
  
--        if (!set_fd_nonblocking(fd, tap->fd, errp)) {
--            close(fd);
--            return -1;
--        }
--
--        vnet_hdr = tap_probe_vnet_hdr(fd, errp);
--        if (vnet_hdr < 0) {
--            close(fd);
--            return -1;
--        }
--
--        ret = net_init_tap_one(netdev, peer, "tap", name, NULL,
--                               NULL, NULL,
--                               tap->vhostfd, vnet_hdr, fd, errp);
-+        ret = net_tap_fd_init_external(netdev, peer, "tap", name,
-+                                       tap->vhostfd, NULL, fd, errp);
-         if (ret < 0) {
-             return -1;
-         }
-@@ -941,31 +938,16 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             }
-         }
- 
-+        vnet_hdr = -1;
-         for (i = 0; i < nfds; i++) {
-             fd = monitor_fd_param(monitor_cur(), fds[i], errp);
-             if (fd == -1) {
-                 return -1;
-             }
- 
--            if (!set_fd_nonblocking(fd, fds[i], errp)) {
--                return -1;
--            }
--
--            if (i == 0) {
--                vnet_hdr = tap_probe_vnet_hdr(fd, errp);
--                if (vnet_hdr < 0) {
--                    return -1;
--                }
--            } else if (vnet_hdr != tap_probe_vnet_hdr(fd, NULL)) {
--                error_setg(errp,
--                           "vnet_hdr not consistent across given tap fds");
--                return -1;
--            }
--
--            ret = net_init_tap_one(netdev, peer, "tap", name, NULL,
--                                   NULL, NULL,
--                                   vhost_fds ? vhost_fds[i] : NULL,
--                                   vnet_hdr, fd, errp);
-+            ret = net_tap_fd_init_external(netdev, peer, "tap", name,
-+                                           vhost_fds ? vhost_fds[i] : NULL,
-+                                           &vnet_hdr, fd, errp);
-             if (ret < 0) {
-                 return -1;
-             }
+     if (tap_set_sndbuf(s->fd, tap, errp) < 0) {
+         goto failed;
 -- 
 2.48.1
 
