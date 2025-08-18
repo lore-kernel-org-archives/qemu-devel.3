@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8F4DCA0EC0
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 10:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E39CCA0EC6
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 10:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1unwjK-0004Ag-FV; Mon, 18 Aug 2025 06:04:42 -0400
+	id 1unwjP-0004BP-1A; Mon, 18 Aug 2025 06:04:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1unwjJ-0004AW-4S
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 06:04:41 -0400
+ id 1unwjN-0004Ax-8i
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 06:04:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1unwjH-0002s8-Fz
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 06:04:40 -0400
+ id 1unwjL-0002sI-Ez
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 06:04:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755511478;
+ s=mimecast20190719; t=1755511482;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4hVX23j1qg89GM2XTJ2f9M0XbvXysR1u9GM3HK6Mb+g=;
- b=LqjVa5hdvVEVj71frxPxkt0HIoIVfT5JFwcNo8TaAglCwwS+By9VYu2SZm0k9TIvuzJYJu
- sfhUhQxwG0LmK/ubfhlmwBzJjgaEgTVHmj3VgYub+iMLrdxdkzA46xjIwjC5P9WEa3C++H
- VmFUf3VWGyCWbTOzeGz86J0prCqqlas=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VcgyWEw0UZlhydwF41sGf+kzWAR2qTmet/4n/K4pS3U=;
+ b=VNaobZXR23TvSRZ1b1GyTVr1P8qmO8Uh4QLTztfh0cr1HKcMO3N026dPr1gIHo6mutD9TI
+ +V+FbDXzAG4TRbqMdcehdEg0pKBy6jk4k+cqoXbt+lQJXH3XE2aJIjrIAqniwrO9k5MY5z
+ R3sD2PHhaCewlYhMgAE5/BnDfF+CHyc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-8i6lietbNsSNtOYsaam89w-1; Mon,
- 18 Aug 2025 06:04:35 -0400
-X-MC-Unique: 8i6lietbNsSNtOYsaam89w-1
-X-Mimecast-MFC-AGG-ID: 8i6lietbNsSNtOYsaam89w_1755511474
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-U4RiXNvvOGKFyRsKb3ZIvQ-1; Mon,
+ 18 Aug 2025 06:04:41 -0400
+X-MC-Unique: U4RiXNvvOGKFyRsKb3ZIvQ-1
+X-Mimecast-MFC-AGG-ID: U4RiXNvvOGKFyRsKb3ZIvQ_1755511480
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22C6A195F165; Mon, 18 Aug 2025 10:04:34 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A8B61956086; Mon, 18 Aug 2025 10:04:40 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.45.225.45])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6C5A8180047F; Mon, 18 Aug 2025 10:04:28 +0000 (UTC)
+ id ADDAC180047F; Mon, 18 Aug 2025 10:04:34 +0000 (UTC)
 From: Albert Esteve <aesteve@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: david@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>, hi@alyssa.is,
@@ -56,9 +56,9 @@ Cc: david@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>, hi@alyssa.is,
  stevensd@chromium.org, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>, slp@redhat.com,
  Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH v7 5/8] vhost_user.rst: Add GET_SHMEM_CONFIG message
-Date: Mon, 18 Aug 2025 12:03:50 +0200
-Message-ID: <20250818100353.1560655-6-aesteve@redhat.com>
+Subject: [PATCH v7 6/8] tests/qtest: Add GET_SHMEM validation test
+Date: Mon, 18 Aug 2025 12:03:51 +0200
+Message-ID: <20250818100353.1560655-7-aesteve@redhat.com>
 In-Reply-To: <20250818100353.1560655-1-aesteve@redhat.com>
 References: <20250818100353.1560655-1-aesteve@redhat.com>
 MIME-Version: 1.0
@@ -89,79 +89,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GET_SHMEM_CONFIG vhost-user frontend
-message to the spec documentation.
+Improve vhost-user-test to properly validate
+VHOST_USER_GET_SHMEM_CONFIG message handling by
+directly simulating the message exchange.
 
-Reviewed-by: Alyssa Ross <hi@alyssa.is>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+The test manually triggers the
+VHOST_USER_GET_SHMEM_CONFIG message by calling
+chr_read() with a crafted VhostUserMsg, allowing direct
+validation of the shmem configuration response handler.
+
+Added TestServerShmem structure to track shmem
+configuration state, including nregions_sent and
+sizes_sent arrays for comprehensive validation.
+The test verifies that the response contains the expected
+number of shared memory regions and their corresponding
+sizes.
+
 Signed-off-by: Albert Esteve <aesteve@redhat.com>
 ---
- docs/interop/vhost-user.rst | 39 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ tests/qtest/vhost-user-test.c | 91 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index dab9f3af42..54d64ae75f 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -371,6 +371,20 @@ MMAP request
-   - 0: Pages are mapped read-only
-   - 1: Pages are mapped read-write
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index 75cb3e44b2..44a5e90b2e 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -88,6 +88,7 @@ typedef enum VhostUserRequest {
+     VHOST_USER_SET_VRING_ENABLE = 18,
+     VHOST_USER_GET_CONFIG = 24,
+     VHOST_USER_SET_CONFIG = 25,
++    VHOST_USER_GET_SHMEM_CONFIG = 44,
+     VHOST_USER_MAX
+ } VhostUserRequest;
  
-+VIRTIO Shared Memory Region configuration
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-++-------------+---------+------------+----+--------------+
-+| num regions | padding | mem size 0 | .. | mem size 255 |
-++-------------+---------+------------+----+--------------+
-+
-+:num regions: a 32-bit number of regions
-+
-+:padding: 32-bit
-+
-+:mem size: contains ``num regions`` 64-bit fields representing the size of each
-+           VIRTIO Shared Memory Region
-+
- C structure
- -----------
+@@ -109,6 +110,20 @@ typedef struct VhostUserLog {
+     uint64_t mmap_offset;
+ } VhostUserLog;
  
-@@ -397,6 +411,7 @@ In QEMU the vhost-user message is implemented with the following struct:
-           VhostUserShared object;
-           VhostUserTransferDeviceState transfer_state;
-           VhostUserMMap mmap;
-+          VhostUserShMemConfig shmem;
-       };
-   } QEMU_PACKED VhostUserMsg;
++#define VIRTIO_MAX_SHMEM_REGIONS 256
++
++typedef struct VhostUserShMemConfig {
++    uint32_t nregions;
++    uint32_t padding;
++    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
++} VhostUserShMemConfig;
++
++typedef struct TestServerShmem {
++    bool test_enabled;
++    uint32_t nregions_sent;
++    uint64_t sizes_sent[VIRTIO_MAX_SHMEM_REGIONS];
++} TestServerShmem;
++
+ typedef struct VhostUserMsg {
+     VhostUserRequest request;
  
-@@ -1754,6 +1769,30 @@ Front-end message types
-   Using this function requires prior negotiation of the
-   ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
+@@ -124,6 +139,7 @@ typedef struct VhostUserMsg {
+         struct vhost_vring_addr addr;
+         VhostUserMemory memory;
+         VhostUserLog log;
++        VhostUserShMemConfig shmem;
+     } payload;
+ } QEMU_PACKED VhostUserMsg;
  
-+``VHOST_USER_GET_SHMEM_CONFIG``
-+  :id: 44
-+  :equivalent ioctl: N/A
-+  :request payload: N/A
-+  :reply payload: ``struct VhostUserShMemConfig``
+@@ -170,6 +186,7 @@ typedef struct TestServer {
+     bool test_fail;
+     int test_flags;
+     int queues;
++    TestServerShmem shmem;
+     struct vhost_user_ops *vu_ops;
+ } TestServer;
+ 
+@@ -513,6 +530,31 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
+         qos_printf("set_vring(%d)=%s\n", msg.payload.state.index,
+                    msg.payload.state.num ? "enabled" : "disabled");
+         break;
++    
++    case VHOST_USER_GET_SHMEM_CONFIG:
++        if (!s->shmem.test_enabled) {
++            /* Reply with error if shmem feature not enabled */
++            msg.flags |= VHOST_USER_REPLY_MASK;
++            msg.size = sizeof(uint64_t);
++            msg.payload.u64 = -1; /* Error */
++            qemu_chr_fe_write_all(chr, (uint8_t *) &msg, VHOST_USER_HDR_SIZE + msg.size);
++        } else {
++            /* Reply with test shmem configuration */
++            msg.flags |= VHOST_USER_REPLY_MASK;
++            msg.size = sizeof(VhostUserShMemConfig);
++            msg.payload.shmem.nregions = 2; /* Test with 2 regions */
++            msg.payload.shmem.padding = 0;
++            msg.payload.shmem.memory_sizes[0] = 0x100000; /* 1MB */
++            msg.payload.shmem.memory_sizes[1] = 0x200000; /* 2MB */
++            
++            /* Record what we're sending for test validation */
++            s->shmem.nregions_sent = msg.payload.shmem.nregions;
++            s->shmem.sizes_sent[0] = msg.payload.shmem.memory_sizes[0];
++            s->shmem.sizes_sent[1] = msg.payload.shmem.memory_sizes[1];
++            
++            qemu_chr_fe_write_all(chr, (uint8_t *) &msg, VHOST_USER_HDR_SIZE + msg.size);
++        }
++        break;
+ 
+     default:
+         qos_printf("vhost-user: un-handled message: %d\n", msg.request);
+@@ -809,6 +851,22 @@ static void *vhost_user_test_setup_shm(GString *cmd_line, void *arg)
+     return server;
+ }
+ 
++static void *vhost_user_test_setup_shmem_config(GString *cmd_line, void *arg)
++{
++    TestServer *server = test_server_new("vhost-user-test", arg);
++    test_server_listen(server);
 +
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the front-end
-+  to gather the VIRTIO Shared Memory Region configuration. The back-end will
-+  respond with the number of VIRTIO Shared Memory Regions it requires, and
-+  each shared memory region size in an array. The shared memory IDs are
-+  represented by the array index. The information returned shall comply
-+  with the following rules:
++    /* Enable shmem testing for this server */
++    server->shmem.test_enabled = true;
 +
-+  * The shared information will remain valid and unchanged for the entire
-+    lifetime of the connection.
++    append_mem_opts(server, cmd_line, 256, TEST_MEMFD_SHM);
++    server->vu_ops->append_opts(server, cmd_line, "");
 +
-+  * The Shared Memory Region size must be a multiple of the page size
-+    supported by mmap(2).
++    g_test_queue_destroy(vhost_user_test_cleanup, server);
 +
-+  * The size may be 0 if the region is unused. This can happen when the
-+    device does not support an optional feature but does support a feature
-+    that uses a higher shmid.
++    return server;
++}
 +
- Back-end message types
- ----------------------
+ static void test_read_guest_mem(void *obj, void *arg, QGuestAllocator *alloc)
+ {
+     TestServer *server = arg;
+@@ -1089,6 +1147,33 @@ static struct vhost_user_ops g_vu_net_ops = {
+     .get_protocol_features = vu_net_get_protocol_features,
+ };
+ 
++/* Test function for VHOST_USER_GET_SHMEM_CONFIG message */
++static void test_shmem_config(void *obj, void *arg, QGuestAllocator *alloc)
++{
++    TestServer *s = arg;
++    
++    g_assert_true(s->shmem.test_enabled);
++    
++    g_mutex_lock(&s->data_mutex);
++    s->shmem.nregions_sent = 0;
++    s->shmem.sizes_sent[0] = 0;
++    s->shmem.sizes_sent[1] = 0;
++    g_mutex_unlock(&s->data_mutex);
++    
++    VhostUserMsg msg = {
++        .request = VHOST_USER_GET_SHMEM_CONFIG,
++        .flags = VHOST_USER_VERSION,
++        .size = 0,
++    };
++    chr_read(s, (uint8_t *) &msg, VHOST_USER_HDR_SIZE);
++
++    g_mutex_lock(&s->data_mutex);
++    g_assert_cmpint(s->shmem.nregions_sent, ==, 2);
++    g_assert_cmpint(s->shmem.sizes_sent[0], ==, 0x100000); /* 1MB */
++    g_assert_cmpint(s->shmem.sizes_sent[1], ==, 0x200000); /* 2MB */
++    g_mutex_unlock(&s->data_mutex);
++}
++
+ static void register_vhost_user_test(void)
+ {
+     QOSGraphTestOptions opts = {
+@@ -1136,6 +1221,12 @@ static void register_vhost_user_test(void)
+     qos_add_test("vhost-user/multiqueue",
+                  "virtio-net",
+                  test_multiqueue, &opts);
++    
++    opts.before = vhost_user_test_setup_shmem_config;
++    opts.edge.extra_device_opts = "";
++    qos_add_test("vhost-user/shmem-config",
++                 "virtio-net",
++                 test_shmem_config, &opts);
+ }
+ libqos_init(register_vhost_user_test);
  
 -- 
 2.49.0
