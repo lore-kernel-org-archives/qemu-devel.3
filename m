@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38BFBCA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 12:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39277CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 13:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1unzBX-00023V-Ke; Mon, 18 Aug 2025 08:41:59 -0400
+	id 1unzea-0005iT-AM; Mon, 18 Aug 2025 09:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1unzBU-00022d-Ge
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 08:41:56 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
+ id 1unzeW-0005iC-LY
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 09:11:57 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1unzBS-0007Lo-Pd
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 08:41:56 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45a1b0b2d21so18880405e9.2
- for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 05:41:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
+ id 1unzeR-0002uq-Na
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 09:11:56 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-323266d2d9eso3032184a91.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 06:11:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755520912; x=1756125712; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sfmz8/qz9rOuua160TKAH+wxpmWn0p2f1SV2GlUzMOM=;
- b=tqb+TSZxrLjN8cK3UyUxOTC2UoQNYoUQE49BKIbS/U0t4RrcApqbwATZS3zu4O8sPh
- 9VMRcR6Ez2tj1EbtBdBQFdH2Ype0BMr+PDAgJvzOk3I90XzwRb2VUY0Gxmph5G/fjCo9
- fJJXbOvd68IXgGL6Gk+PjosceqPW3oAjEVst4I4QzCf//TbVZvOlX1CcYpFbXbqEsYem
- jk8obhT+Ynu/FXziQccTJtbIZENuyfAdeRMRXQi+E2yzznrkNl5H4v21dj347+7gUOJG
- ycnEUhH6HbxxpWNrji3xIleVCO7F3AGMLOwM7i6Hx7lfxbZ626epU62lPaOQcX5cPypp
- nOgA==
+ d=bytedance.com; s=google; t=1755522696; x=1756127496; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FbgFlks82+K7QdkLz2cY3GBIQNowq51x6EYWWVh6KVQ=;
+ b=kq5yMzZZpOx8fSg6Ld0miH9R3XXpEzW7vH2D3+vDJg7jRNHzjLAQv1TvQxYdKt+2p3
+ H7WPajnz55pvO5RsgGzzGHrKcf/Zk7kPWa9f4erXbElgx3pLj2sd6RMuHQ30VyG+FRYt
+ OERwIzl3/9mRLSWUHbLFz8jsDBXIiWZtMlqc5CWhtyvOiInOaRofubWPNY23AVZBaPHS
+ jf7jRc8O8p10soLDWP3Zu8gtK6WRhthMq536486cF5n7E+/ZeVliSXBVgsKgPY+bfK58
+ Z8nRbH/k7/K4KdqQUQ237mXOWTc96+QOoMjyvspWsR/A1bOSqPV3lawbsMgp4h+BDigI
+ iyqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755520912; x=1756125712;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sfmz8/qz9rOuua160TKAH+wxpmWn0p2f1SV2GlUzMOM=;
- b=Ko1mm1RSFaBmonMo75nURMGvWH4NUH47xOhV3qBSSY4Gne0UDIUixTw0GdJCjJ1OUf
- rMkiNcOuvHXJWlfRl6rDi/WWmk2zej4TPmlMY9dPpw1Ki2sLdyDsEmfDCwj4snJkI/sQ
- NVeeEin7O9dP63NdkrqytvOy4GDisXsbgrzSJAzZCmFcRwZS3sYWyjpwcMy6gs5tzEXc
- BJSKatZdXp5E+Iit7voc7xOJpV76/9oZTpQ/VRnkCPQ4870ptBk8Hc/dUgB9LzPnejFX
- KYN18oZuv6ZEpvu4gPi9PlDKJLT1wYwI7TPGMuJaNeNGvrimonKLA/bfPWUUB0rTQCjQ
- hZEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXgCATIIdwgZW+zvwxpi5/jRC7YdwUI4NlXVVzrY6Oj2qMV3LM9Fb/QKMWgb9foa5Q7RavZKc/veTrT@nongnu.org
-X-Gm-Message-State: AOJu0Yyw5HdKioUsgZkjRJ7Qeo8nalmEhiyC4w2jD9vcHH8ILzlWAX6A
- tUKdCGMPJfoEuDlll+Yy2ABhCGJtJ74wyrK0uVWqCIsbQYSXV/Ps54qvhH9Zlxm46Ek=
-X-Gm-Gg: ASbGncuNKlLqxzh1Ez9mthZEb+CgLzzp3LwQz1KjDbP1YXvbeSGtCuKWe2lC23KYBsJ
- CWMf1PC0R/14lLKOZsQ3HnH6sVwAYChC6956QEZbJDBjZ3+cniJZN2TNnE63fvDQrve2h4MdTh+
- p9YL6D3vu57NgpD/Bp+OvpfRWQmX9IwfNddO/s5lk7XNWOVkX+dXk57EJrT+6h3sFNSdoWje++V
- kACjaZddd2L+7mdwT+12rRk4uu9IZrrPHpXD+qUDakTd4/7nbt5bQ4le+4n/7fVJTsJRi2SwJPT
- KxthSjP85ecgZDkAPklf+1FUJdhn7feNIYHCnGm45k9R9pR76YstaOpRfFb+r5glq3aHKlZjwEz
- WGQLJJsNhIHPvB/obT1FRitxkUUJerOIIvT+i8ZrIQUZTcwarQjLoD4kR7Qi3ku5TRA==
-X-Google-Smtp-Source: AGHT+IEdhUp2jriuW2WAGDRYRtqF2H2q7Kq1eGp1q/cgBRLgytXcKpPAKPCDCcf+61dwh7mxAfOHkA==
-X-Received: by 2002:a05:600c:b8d:b0:458:bd31:2c27 with SMTP id
- 5b1f17b1804b1-45a21848eb0mr69192395e9.23.1755520912337; 
- Mon, 18 Aug 2025 05:41:52 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45a22211395sm131539055e9.4.2025.08.18.05.41.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Aug 2025 05:41:51 -0700 (PDT)
-Message-ID: <4312974c-9b7e-48c2-a190-071ea72da33f@linaro.org>
-Date: Mon, 18 Aug 2025 14:41:51 +0200
+ d=1e100.net; s=20230601; t=1755522696; x=1756127496;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FbgFlks82+K7QdkLz2cY3GBIQNowq51x6EYWWVh6KVQ=;
+ b=Nkw2C/4tUPKEFw9SzXPU0u75v7xr2w2Bx9KiyCdho3LYbND3Db3AGWXRUFP4a3avtZ
+ +K3s+Z94l3i2+PAp6PphcQditJfIlFC+IV5Mawru28oKn5w2YJh3dd4uvROYh1ukRn5g
+ jhjhxROU8kkUEEm8GVHQRsxO1dTvfTcfzp81FIc4OrMsG2wKp8/c7V+NZHwtCloinsJf
+ KlFXXJs4UK2+8Ow3TZa0aaTRw/2CaFs/fPbNrjBcx4R32F0PLGfduRFuHVOpmnBUHOYF
+ bWM+5sI5LyuOnYsYrSMRwD+qmFeOHibNlIcPmLqMw7h6HxJ3JdzVqKn6/JoXg6kvZ9qu
+ Mvdw==
+X-Gm-Message-State: AOJu0YziL22nNTcQ6u4AT2CZi3HR9zgWxGxKijTMbmfCePgGO6yVNhJA
+ f1xyghE5iCCpNQfooxNN/nNORX/rHLfM48khqbtZXeEcoAsUS2APfPvbgzO7XqRo/BE=
+X-Gm-Gg: ASbGncu0hLsmzexp31IsxLC73xeC9KXLMYtO1k/2PU0gym/ni3a/cq30QU+4n2bFlt3
+ ZHEHD7fzbTpiRfKCh8nnQlmYBIkzlG+mr3WKYEMTcnxtEYyUCVa2fz61gGarf3zFSFPvNezadiP
+ fSrS20XWLPpTrPhaj0ctfut6xKpkA/QuiboYBHv4NBTc8MWMy2LoW+MBSe886g0/0oEWrYm8ish
+ gdaVes4SvOL15pnGy3rFVoU7N27Lq8AC+AturXbJp+tW4E6eDUYirx2pxHyh8KrakNc0gj0iWP5
+ keaLiPWWOZGtW7QjA1B8GK15J7ScOdh+4dgZInnGj0u12a/jJb+rSz1Ylw7Zcau5Ku23sgmhM9b
+ /spN1I0/taw37DDjdQ0Gfmzeq3cDe5zA5kiez8EXv
+X-Google-Smtp-Source: AGHT+IHdNJj8/I49cpTlgjsAOvF69TOVtCpzK37YO7N22KsOOcNT32Wf8xaun2npqt8zIy8Dkuv9iw==
+X-Received: by 2002:a17:90b:5101:b0:31f:6682:bd28 with SMTP id
+ 98e67ed59e1d1-3234dc3b9a3mr15381331a91.16.1755522695910; 
+ Mon, 18 Aug 2025 06:11:35 -0700 (PDT)
+Received: from n37-071-053.byted.org ([115.190.40.12])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3232a7b890asm5596361a91.4.2025.08.18.06.11.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Aug 2025 06:11:35 -0700 (PDT)
+From: Yanfei Xu <yanfei.xu@bytedance.com>
+To: mst@redhat.com, pbonzini@redhat.com, peterx@redhat.com, farosas@suse.de
+Cc: qemu-devel@nongnu.org, yanfei.xu@bytedance.com,
+ shenyicong.1023@bytedance.com
+Subject: [PATCH] migration: ensure APIC is loaded prior to VFIO PCI devices
+Date: Mon, 18 Aug 2025 21:11:27 +0800
+Message-Id: <20250818131127.1021648-1-yanfei.xu@bytedance.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: mads@ynddal.dk, agraf@csgraf.de, qemu-arm@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-References: <20250818041354.2393041-1-richard.henderson@linaro.org>
- <20250818041354.2393041-5-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250818041354.2393041-5-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=yanfei.xu@bytedance.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,87 +97,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/8/25 06:13, Richard Henderson wrote:
-> Conversion between KVM system registers ids and the HVF system
-> register ids is trivial.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/hvf/hvf.c | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
-> 
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index f0e4b75e6a..2577dc1c0c 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -403,6 +403,26 @@ struct hvf_sreg_match {
->       uint32_t cp_idx;
->   };
->   
-> +/*
-> + * QEMU uses KVM system register ids in the migration format.
-> + * Conveniently, HVF uses the same encoding of the op* and cr* parameters
-> + * within the low 16 bits of the ids.  Thus conversion between the
-> + * formats is trivial.
-> + */
-> +
-> +#define KVMID_TO_HVF(KVM)  ((KVM) & 0xffff)
-> +#define HVF_TO_KVMID(HVF)  \
-> +    (CP_REG_ARM64 | CP_REG_SIZE_U64 | CP_REG_ARM64_SYSREG | (HVF))
-> +
-> +/* Verify this at compile-time. */
-> +
-> +#define DEF_SYSREG(HVF_ID, ...) \
-> +  QEMU_BUILD_BUG_ON(HVF_ID != KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
+The load procedure of VFIO PCI devices involves setting up IRT
+for each VFIO PCI devices. This requires determining whether an
+interrupt is single-destination interrupt to decide between
+Posted Interrupt(PI) or remapping mode for the IRTE. However,
+determining this may require accessing the VM's APIC registers.
 
-Rebasing Mohamed's work I'm getting:
+For example:
+ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irqs)
+  ...
+    kvm_arch_irq_bypass_add_producer
+      kvm_x86_call(pi_update_irte)
+        vmx_pi_update_irte
+          kvm_intr_is_single_vcpu
 
-In file included from ../../target/arm/hvf/hvf.c:413:
-../../target/arm/hvf/sysreg.c.inc:156:1: error: static assertion failed 
-due to requirement '!(HV_SYS_REG_MDCR_EL2 != (((((1 << 28) | (19 << 16) 
-| ((3) << 14) | ((4) << 11) | ((1) << 7) | ((1) << 3) | ((1) << 0)) | 
-13510798882111488ULL)) & 65535))': not expecting: HV_SYS_REG_MDCR_EL2 != 
-KVMID_TO_HVF(KVMID_AA64_SYS_REG64(1, 1, 3, 4, 1))
-   156 | DEF_SYSREG(HV_SYS_REG_MDCR_EL2, 1, 1, 3, 4, 1)
-       | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If the LAPIC has not been loaded yet, interrupts will use remapping
+mode. To prevent the fallback of interrupt mode, keep APIC is always
+loaded prior to VFIO PCI devices.
 
-Having in <Hypervisor.h> -> <Hypervisor/hv_vcpu_types.h>:
-     // Exception Level 2 (EL2) registers.
-     // These registers are only available if EL2 was enabled in the VM 
-configuration.
-     HV_SYS_REG_CNTHCTL_EL2 = 0xe708,
-     HV_SYS_REG_CNTHP_CTL_EL2 = 0xe711,
-     HV_SYS_REG_CNTHP_CVAL_EL2 = 0xe712,
-     HV_SYS_REG_CNTHP_TVAL_EL2 = 0xe710,
-     HV_SYS_REG_CNTVOFF_EL2 = 0xe703,
-     HV_SYS_REG_CPTR_EL2 = 0xe08a,
-     HV_SYS_REG_ELR_EL2 = 0xe201,
-     HV_SYS_REG_ESR_EL2 = 0xe290,
-     HV_SYS_REG_FAR_EL2 = 0xe300,
-     HV_SYS_REG_HCR_EL2 = 0xe088,
-     HV_SYS_REG_HPFAR_EL2 = 0xe304,
-     HV_SYS_REG_MAIR_EL2 = 0xe510,
-     HV_SYS_REG_MDCR_EL2 = 0xe019,   <----
-     HV_SYS_REG_SCTLR_EL2 = 0xe080,
-     HV_SYS_REG_SPSR_EL2 = 0xe200,
-     HV_SYS_REG_SP_EL2 = 0xf208,
-     HV_SYS_REG_TCR_EL2 = 0xe102,
-     HV_SYS_REG_TPIDR_EL2 = 0xe682,
-     HV_SYS_REG_TTBR0_EL2 = 0xe100,
-     HV_SYS_REG_TTBR1_EL2 = 0xe101,
-     HV_SYS_REG_VBAR_EL2 = 0xe600,
-     HV_SYS_REG_VMPIDR_EL2 = 0xe005,
-     HV_SYS_REG_VPIDR_EL2 = 0xe000,
-     HV_SYS_REG_VTCR_EL2 = 0xe10a,
-     HV_SYS_REG_VTTBR_EL2 = 0xe108,
+Signed-off-by: Yicong Shen <shenyicong.1023@bytedance.com>
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+---
+ hw/intc/apic_common.c       | 1 +
+ include/migration/vmstate.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-> +
-> +#include "sysreg.c.inc"
-> +
-> +#undef DEF_SYSREG
-> +
->   #define DEF_SYSREG(HVF_ID, crn, crm, op0, op1, op2) \
->       { HVF_ID, HVF_SYSREG(crn, crm, op0, op1, op2) },
->   
+diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
+index 37a7a7019d..394fe02013 100644
+--- a/hw/intc/apic_common.c
++++ b/hw/intc/apic_common.c
+@@ -379,6 +379,7 @@ static const VMStateDescription vmstate_apic_common = {
+     .pre_load = apic_pre_load,
+     .pre_save = apic_dispatch_pre_save,
+     .post_load = apic_dispatch_post_load,
++    .priority = MIG_PRI_APIC,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(apicbase, APICCommonState),
+         VMSTATE_UINT8(id, APICCommonState),
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 1ff7bd9ac4..22e988c5db 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -163,6 +163,7 @@ typedef enum {
+     MIG_PRI_IOMMU,              /* Must happen before PCI devices */
+     MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
+     MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
++    MIG_PRI_APIC,               /* Must happen before PCI devices */
+     MIG_PRI_GICV3_ITS,          /* Must happen before PCI devices */
+     MIG_PRI_GICV3,              /* Must happen before the ITS */
+     MIG_PRI_MAX,
+-- 
+2.20.1
 
 
