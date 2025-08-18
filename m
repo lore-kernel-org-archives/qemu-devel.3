@@ -4,80 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B519CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 08:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6510ECA0EE4
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 08:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1unuqL-0006OF-VZ; Mon, 18 Aug 2025 04:03:49 -0400
+	id 1unurO-0006m3-2S; Mon, 18 Aug 2025 04:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zero.tangptr@gmail.com>)
- id 1unuqK-0006NQ-2f
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 04:03:48 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zero.tangptr@gmail.com>)
- id 1unuqI-0003JQ-6U
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 04:03:47 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3b9e4148134so1844406f8f.2
- for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 01:03:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755504223; x=1756109023; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/p3WKBhx8t2zKoh6VUTPyCzQxr3ulgkU2ZFP5VimQMg=;
- b=OwI95ZNiu1Cmw1CTqTXDQIVUkly9jHF0mADYnh1Cm4LRgRv6H7Mu40+aPXABlKWGe0
- Vfg2MdwD/Fov9hduhy5ddD+4fTDoK4JgJNjFddEQGmO5BKRm5OBrjnrTkhxO5PcKoyiT
- 75KtGkI2OZJs93LMmw+y17BQ82S0rlq9iqZtUw6LCBzcqlirms7QTOsIOQnIPqW/IgGe
- fFY26sNg0+dhm0jJIfFTIf6PskkhgFYsXykxG6E5DWdd9tHtoYZu/X2nUu/1TSGroJLj
- nuXucPh0bCEgjqo0u/ThW7xxwbB/lTtnU0FjV9jeQlISwFWszsnLZ1sldRT3D8r6czQV
- EdxQ==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1unurL-0006gC-4r
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 04:04:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1unurH-0003MI-TY
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 04:04:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755504286;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MwORgzzmWBA7UmQWcYtfZdg8hAIXxj9acEXhafy5P/o=;
+ b=jMlwB92w2XFafgQ65+gkGR/D5t2Q1PC9QVgtqz6Wra/XYRk31VKeDdNoAZk1VCgi9KsLe1
+ hUvVemTrPHMjdGkfVSOqgY3SMgZyQtVUKACwRg2tE9hxugJoB2g65pCFHfduaZOYR5sLnX
+ oGzRlcWlKQgLkuCbeWWIn3MCw1ogVkc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-92-q3LkiBgnN2GNHIPhEf0r_g-1; Mon, 18 Aug 2025 04:04:44 -0400
+X-MC-Unique: q3LkiBgnN2GNHIPhEf0r_g-1
+X-Mimecast-MFC-AGG-ID: q3LkiBgnN2GNHIPhEf0r_g_1755504284
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7e87069063aso1782130685a.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 01:04:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755504223; x=1756109023;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1755504284; x=1756109084;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/p3WKBhx8t2zKoh6VUTPyCzQxr3ulgkU2ZFP5VimQMg=;
- b=czD5cquH5uWM+R2WIGQcadafn5AZkk91WAlnxOTYFxmJn3yHym2dyAOZmJgACnq17h
- eWfTHQHN3vzp4tAWoCLRPf+qiiAq4B/4f+6cw8LTfLOTJfhkiU/JdKYUHVa0pH16WtQA
- utlRSR3c44Kq/RMXvGwOpzLVB6gSeq+xYA6jqc3ibxsbDaVJWYa9VxutXoSYZhds8viD
- jk9E2CCKZpQgJpjSk6XyO18+jsGe2ry8W4KsjeU4eur96IrF8FUiMgDWsh9fnumlzg7d
- EqI5v4CHKlrkw44oL34HBWUTf37ur7/FMhq+JcOIeq/+3Axr6dRFqi9k86UrmluCntPd
- F80w==
-X-Gm-Message-State: AOJu0YzPlvbMdaFPm7wfGjhLxxKpDRS3DbOMzwtCtlDjnmw5hRWvUty1
- cs2JWPVTh3OUTsoU9Fjb0+XiSgZehCP/KWJr/J3uo/HsFZSResdTKPEedTUxFZWmcUuviME4q09
- 8oN3eDdv0eAi57QHlbQoxJYwGC/5EKgSgpWVc7BI=
-X-Gm-Gg: ASbGnctsHiiludqTiDrmjnD/ZE02RDnwAtx0wAMjHI91us8vzMFVTJrrO01cKM9vuhS
- Dah/d6jh6JoVbXpMFY93U15q4PETzNlDibpHqevYh0ZmkBkUAiEnSQXyUwomM2YZ9Ul4UCJSos3
- qJAlaFsDBAuHVQM63xDBj535tOz3GbR975c6qrrnJFPB5lqqNQexjGWyuUDipsIbF9kQgGsGKRb
- e0v49Ho
-X-Google-Smtp-Source: AGHT+IFB5WE8Wjvfeb5mTeHqn5nNXFVyp6/i4DjbFvDlt8tVXwjQSIbtiVTHlT3mTDu5+xX4p0LEnsUQVhjEixyI04s=
-X-Received: by 2002:a05:6000:2dc8:b0:3b7:7c3b:1073 with SMTP id
- ffacd0b85a97d-3bb692bd8c8mr7723112f8f.52.1755504223247; Mon, 18 Aug 2025
- 01:03:43 -0700 (PDT)
+ bh=MwORgzzmWBA7UmQWcYtfZdg8hAIXxj9acEXhafy5P/o=;
+ b=hj0oCLK4zyuH8T2lBItY768Atb62BU2xXg8IX6v+FTlMSqy9+ZZrPvViZ3NYw6saDw
+ 47tTwkICXkPD2D8o5I3n+7y0+qFpZnvzYT3f9CPFoJCG1nu5w2fp46mc6QWXWtwS1qeU
+ g86+G++rSXIcYdQ+ckvyJMOo+wbr9l0IUIOGvC/SQ+9p4E2wdEI2Q1oHl4A5O52bVoYf
+ PoS9UJb5fbeJYVVX4qrb0IfMUML4Mc/PmM9MEPd0U18JwKEBzMxa35NwLjBEC3RCT7Jb
+ FHPCIu/OlVmBk1SXem0cjnlAiwYJl2ld4Nm63qbTub17MdBmJSPbXaLpICAd3z3www7I
+ ciog==
+X-Gm-Message-State: AOJu0Yx9YqRyiPDRm1DW9QlPzB6Uj8OUUwYbymTWzACf6suc1i2+miME
+ 0cNgwDoV/dhaYUWK4duq7oOHQ4bfiDAUdPTtRjKiyhlYAcxFIQ4NOtEayo4M3bWCnv3RHDQkRSt
+ tj1igbi8y6Owmjc9RwoSuRZYEE1n2SjRJ6N6bIE8l6DXjOH8dgsBs1r1+
+X-Gm-Gg: ASbGnct2Kwc+2bseBmgNHeJANX2UvZCIgVfMuNOKkeZW6U3m7fu5U9ym1XNHhXH7RP4
+ 9+uonPfuEagTI40/lST/Xi1pc0Yobuk1rGpkK0x7HTIZXgl1imehiJAxaAI4f9IP9BAcsbibsO7
+ /skJbiD4hKZCOhsjBiekvhXdCdWBlgbfJsOIDmX6IEqlceQ2hPCNqoIa971J05NDAIh0ih9lxSd
+ BVQh2BR1zzHnD6kckHJbeccP8FnN4+p+CpliGsBURUZ0L+t1Xkyplu3J6BR7M7QQlkVWV5pNzDV
+ 7PwiPtnlCx0uPvOeCE1CJnwPOuWM4XckYDCvQtfqd+lUhqmj5hxEdc/rNJECyH638KRn4O7Pqp/
+ lLAA=
+X-Received: by 2002:a05:620a:2802:b0:7d3:8ca0:65c6 with SMTP id
+ af79cd13be357-7e87e0222e5mr1524354785a.20.1755504283968; 
+ Mon, 18 Aug 2025 01:04:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6lTY1Bz3cAa0YEfRqEi1APJt89eWncdQhk6qgQY+wfC+euGhYcb75FFxUZIH7+ZsAKCmsMQ==
+X-Received: by 2002:a05:620a:2802:b0:7d3:8ca0:65c6 with SMTP id
+ af79cd13be357-7e87e0222e5mr1524351585a.20.1755504283442; 
+ Mon, 18 Aug 2025 01:04:43 -0700 (PDT)
+Received: from [192.168.0.6] (ltea-047-064-113-055.pools.arcor-ip.net.
+ [47.64.113.55]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e87e027290sm558956785a.5.2025.08.18.01.04.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Aug 2025 01:04:43 -0700 (PDT)
+Message-ID: <d1e64b7c-79cf-4a0b-8166-819c05c23111@redhat.com>
+Date: Mon, 18 Aug 2025 10:04:39 +0200
 MIME-Version: 1.0
-References: <CAAXNugBwiRuwiNHeuBV5U+HyrSisPSN-HL_7n6Pqc7oAOTX6Pw@mail.gmail.com>
-In-Reply-To: <CAAXNugBwiRuwiNHeuBV5U+HyrSisPSN-HL_7n6Pqc7oAOTX6Pw@mail.gmail.com>
-From: Zero Tang <zero.tangptr@gmail.com>
-Date: Mon, 18 Aug 2025 16:02:00 +0800
-X-Gm-Features: Ac12FXydMZwSwKBYL5wusdJzDEyyG-wFzRiuciE6GuWI96rpoz20bn18fiX1QgM
-Message-ID: <CAAXNugCc6oQ3Py83bCKL8ksMziAmr+TQHbfUCC6wcgqMas31ng@mail.gmail.com>
-Subject: Re: [PATCH] i386/tcg/svm: fix incorrect canonicalization
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net
-Content-Type: multipart/alternative; boundary="000000000000a0f6e0063c9f2d3e"
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=zero.tangptr@gmail.com; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-10.1] meson: Fix brlapi compile test for Windows builds
+To: Stefan Weil <sw@weilnetz.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+References: <20250806204624.510091-1-sw@weilnetz.de>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250806204624.510091-1-sw@weilnetz.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,119 +155,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a0f6e0063c9f2d3e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 06/08/2025 22.45, Stefan Weil via wrote:
+> brlapi__openConnection returns a brlapi_fileDescriptor which is a pointer
+> for Windows builds.
+> 
+> The test for brlapi fails with cross builds on Debian trixie
+> (x86_64-w64-mingw32-gcc (GCC) 14-win32):
+> 
+> testfile.c:4:30: error: returning 'brlapi_fileDescriptor' {aka 'void *'} from a function with return type 'int' makes integer from pointer without a cast [-Wint-conversion]
+>      4 |      int main(void) { return brlapi__openConnection (NULL, NULL, NULL); }
+>        |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> -----------
+> ../../../meson.build:1607: WARNING: could not link brlapi, disabling
+> 
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
+> ---
+> 
+> I think that this patch is trivial because it does not change
+> anything for Linux.
+> 
+> Note that this patch only fixes the configure test and allows builds
+> with the Braille API for Windows.
+> 
+> A similar change can be applied to chardev/baum.c and will be sent
+> separately because it is not required for 10.1.
+> 
+> Note that for 64 bit Windows there is an issue because brlapi_fileDescriptor
+> is a 64 bit pointer while QEMU assumes int for file descriptors. But the
+> good news is that the resulting code seems to work nevertheless – at least
+> the people who asked me for Braille support on Windows are satisfied as
+> far as I know.
+> 
+> Regards,
+> Stefan W.
+> 
+> 
+>   meson.build | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index e53cd5b413..d6abe1917e 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1586,9 +1586,11 @@ if not get_option('brlapi').auto() or have_system
+>     brlapi = cc.find_library('brlapi', has_headers: ['brlapi.h'],
+>                            required: get_option('brlapi'))
+>     if brlapi.found() and not cc.links('''
+> -     #include <brlapi.h>
+> -     #include <stddef.h>
+> -     int main(void) { return brlapi__openConnection (NULL, NULL, NULL); }''', dependencies: brlapi)
+> +    #include <brlapi.h>
+> +    #include <stddef.h>
+> +    int main(void) {
+> +      return brlapi__openConnection(NULL, NULL, NULL) == BRLAPI_INVALID_FILE_DESCRIPTOR;
+> +    }''', dependencies: brlapi)
+>       brlapi = not_found
+>       if get_option('brlapi').enabled()
+>         error('could not link brlapi')
 
-Hello,
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-I'd like to PING this patch in that it's been two weeks since I sent the
-patch.
-
-Kind regards,
-Zero Tang
-
-On Wed, Aug 6, 2025 at 3:58=E2=80=AFPM Zero Tang <zero.tangptr@gmail.com> w=
-rote:
-
->  Replaces "long" with "int64_t" during canonicalization.
->
->  ---
->  In Linux GCC, "long" has 8 bytes. However, in msys2 GCC, "long" has 4
->  bytes. In this case, canonicalization would set all high bits to 1 when
->  the segment base is bigger than 0x7FFF (assuming 48-bit linear address).
->
->  This is why QEMU-TCG in Windows cannot boot a bluepill-like hypervisor
->  in UEFI, in that the guest IDT and GDT bases are above 0x7FFF, thereby
->  resulting in incorrect bases. When an interrupt arrives, it would
->  trigger a #PF exception; the #PF would trigger again, resulting in a #DF
->  exception; the #PF would trigger for the third time, resulting in
->  triple-fault, and eventually causes the shutdown VM-Exit to the
->  bluepill hypervisor right after it boots.
->
->  In summary, this patch replaces "long" with "int64_t" in order to enforc=
-e
->  the canonicalization with 64-bit signed integers.
->
->  Signed-off-by: Zero Tang <zero.tangptr@gmail.com>
->  ---
->   target/i386/tcg/system/svm_helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
->  diff --git a/target/i386/tcg/system/svm_helper.c
-> b/target/i386/tcg/system/svm_helper.c
->  index b27049b9ed..1ccfccf419 100644
->  --- a/target/i386/tcg/system/svm_helper.c
->  +++ b/target/i386/tcg/system/svm_helper.c
->  @@ -49,7 +49,7 @@ static void svm_save_seg(CPUX86State *env, int mmu_idx=
-,
-> hwaddr addr,
->   static inline void svm_canonicalization(CPUX86State *env, target_ulong
-> *seg_base)
->   {
->       uint16_t shift_amt =3D 64 - cpu_x86_virtual_addr_width(env);
->  -    *seg_base =3D ((((long) *seg_base) << shift_amt) >> shift_amt);
->  +    *seg_base =3D ((((int64_t) *seg_base) << shift_amt) >> shift_amt);
->   }
->
->   static void svm_load_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
->
->  ---
->  base-commit: e0006a86615baa70bc9d8b183e528aed91c1ac90
->  change-id: 20250806-fix-tcg-svm-canon-adbea9508073
->
->  Best regards,
->  --
->  Zero Tang <zero.tangptr@gmail.com>
->
-
---000000000000a0f6e0063c9f2d3e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello,<div><br></div><div>I&#39;d like to PING this patch =
-in that it&#39;s been two weeks since I sent the patch.</div><div><br></div=
-><div>Kind regards,</div><div>Zero Tang</div></div><br><div class=3D"gmail_=
-quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Aug 6, 2025 at 3:58=E2=
-=80=AFPM Zero Tang &lt;<a href=3D"mailto:zero.tangptr@gmail.com" target=3D"=
-_blank">zero.tangptr@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D=
-"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
-04,204,204);padding-left:1ex"><div dir=3D"ltr">=C2=A0Replaces &quot;long&qu=
-ot; with &quot;int64_t&quot; during canonicalization.<br>=C2=A0<br>=C2=A0--=
--<br>=C2=A0In Linux GCC, &quot;long&quot; has 8 bytes. However, in msys2 GC=
-C, &quot;long&quot; has 4<br>=C2=A0bytes. In this case, canonicalization wo=
-uld set all high bits to 1 when<br>=C2=A0the segment base is bigger than 0x=
-7FFF (assuming 48-bit linear address).<br>=C2=A0<br>=C2=A0This is why QEMU-=
-TCG in Windows cannot boot a bluepill-like hypervisor<br>=C2=A0in UEFI, in =
-that the guest IDT and GDT bases are above 0x7FFF, thereby<br>=C2=A0resulti=
-ng in incorrect bases. When an interrupt arrives, it would<br>=C2=A0trigger=
- a #PF exception; the #PF would trigger again, resulting in a #DF<br>=C2=A0=
-exception; the #PF would trigger for the third time, resulting in<br>=C2=A0=
-triple-fault, and eventually causes the shutdown VM-Exit to the<br>=C2=A0bl=
-uepill hypervisor right after it boots.<br>=C2=A0<br>=C2=A0In summary, this=
- patch replaces &quot;long&quot; with &quot;int64_t&quot; in order to enfor=
-ce<br>=C2=A0the canonicalization with 64-bit signed integers.<br>=C2=A0<br>=
-=C2=A0Signed-off-by: Zero Tang &lt;<a href=3D"mailto:zero.tangptr@gmail.com=
-" target=3D"_blank">zero.tangptr@gmail.com</a>&gt;<br><font face=3D"monospa=
-ce">=C2=A0---<br>=C2=A0 target/i386/tcg/system/svm_helper.c | 2 +-<br>=C2=
-=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>=C2=A0<br>=C2=A0diff -=
--git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_hel=
-per.c<br>=C2=A0index b27049b9ed..1ccfccf419 100644<br>=C2=A0--- a/target/i3=
-86/tcg/system/svm_helper.c<br>=C2=A0+++ b/target/i386/tcg/system/svm_helper=
-.c<br>=C2=A0@@ -49,7 +49,7 @@ static void svm_save_seg(CPUX86State *env, in=
-t mmu_idx, hwaddr addr,<br>=C2=A0 static inline void svm_canonicalization(C=
-PUX86State *env, target_ulong *seg_base)<br>=C2=A0 {<br>=C2=A0 =C2=A0 =C2=
-=A0 uint16_t shift_amt =3D 64 - cpu_x86_virtual_addr_width(env);<br>=C2=A0-=
- =C2=A0 =C2=A0*seg_base =3D ((((long) *seg_base) &lt;&lt; shift_amt) &gt;&g=
-t; shift_amt);<br>=C2=A0+ =C2=A0 =C2=A0*seg_base =3D ((((int64_t) *seg_base=
-) &lt;&lt; shift_amt) &gt;&gt; shift_amt);<br>=C2=A0 }<br>=C2=A0 <br>=C2=A0=
- static void svm_load_seg(CPUX86State *env, int mmu_idx, hwaddr addr,<br>=
-=C2=A0<br>=C2=A0---<br>=C2=A0base-commit: e0006a86615baa70bc9d8b183e528aed9=
-1c1ac90<br>=C2=A0change-id: 20250806-fix-tcg-svm-canon-adbea9508073</font><=
-br>=C2=A0<br>=C2=A0Best regards,<br>=C2=A0-- <br>=C2=A0Zero Tang &lt;<a hre=
-f=3D"mailto:zero.tangptr@gmail.com" target=3D"_blank">zero.tangptr@gmail.co=
-m</a>&gt;</div>
-</blockquote></div>
-
---000000000000a0f6e0063c9f2d3e--
 
