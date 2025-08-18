@@ -4,147 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94667CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 06:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 626BACA0ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 07:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1untmM-0001oq-Nc; Mon, 18 Aug 2025 02:55:38 -0400
+	id 1untsw-00053Z-8V; Mon, 18 Aug 2025 03:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1untmK-0001nx-Ha
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 02:55:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1untmG-0002tk-Es
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 02:55:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755500130;
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1untsl-00050f-F7
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 03:02:22 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1untsi-0003je-HL
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 03:02:15 -0400
+Received: from [192.168.2.158] (pd9f54c2d.dip0.t-ipconnect.de [217.245.76.45])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id A4455DA0430;
+ Mon, 18 Aug 2025 09:02:07 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1755500527;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dunrkIlhdVhj0/xgpf9Ljz9afxpZ8M27hBG8QS54l84=;
- b=Kn2sj5sG39TI83jqDUD3ATtV9Yhw9hlASt2de3o7L/+4NsYi9+6dUaRPBbGGV27t1msZUd
- AwBBsp+98mlmL+/WPF6C7n4nIDQ6HXYAF1V74oezN/fzdczEV92WTxvS9bPsTE+lPgQv1W
- Iqc8xb55nB4uVXyFr5cPEbzNO73xNHI=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-O7jnaJqlNYWoQSlF7mJ9lQ-1; Mon, 18 Aug 2025 02:55:28 -0400
-X-MC-Unique: O7jnaJqlNYWoQSlF7mJ9lQ-1
-X-Mimecast-MFC-AGG-ID: O7jnaJqlNYWoQSlF7mJ9lQ_1755500128
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7e870627e34so1824471685a.2
- for <qemu-devel@nongnu.org>; Sun, 17 Aug 2025 23:55:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755500128; x=1756104928;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dunrkIlhdVhj0/xgpf9Ljz9afxpZ8M27hBG8QS54l84=;
- b=wxcuwBQENuLydr41sWYAAePAsKQ+sMW2cYjiWfmKNI774OkerNzWWAVVodemCg57sH
- 0uSdJCcWzpuD61/vYHrG/FVlrWR2NzeULSrnLaZrhTFyuKqjeHaxad+ISPJoxyLZzJCY
- toFPIqoESwJ8Ky4u5FgjPihUaRwCHKiYsvEm9eUC340w/o8vWBTXAj4asNg3ypp724Fg
- OSkHLSTsHmu/lJo8pN9Jn0rrs3+cjyL7B1UM+G2kv5yfeKQ3tz8qiwo40qG3ZMLPZPeb
- vm7tRDUeKPx2QV2OGejrQZ+HCSM+dx44OrmjWLZRp4QggCdDfOANeHLAHmwZjjHJfCxl
- 8FPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYbLMC5y5UNQlSRRazZv1se7N6r12hJ5++5VQeF3ZlAybIoWAs/OAtMP1zTFj9V+344AH3v/k0mVF/@nongnu.org
-X-Gm-Message-State: AOJu0YwBzuQO+A8MDI+uLwNoHwrkW/bc4B16RtGCRskArGEESb5VXqFy
- iVbbbMgqfoZ5zHRxUrPIuOO67GqKRNStoqXkZvu9LX49dGEXah/XXHThAHcC/rVDAiiZGrL5VFq
- U8vMhDMbNAFsEYB6em0NlnwvaCnOA6gVQUBbKM23QWBYuBmN0o3e2s6Q0
-X-Gm-Gg: ASbGncsc2xk86rI6Ma6xZeo1NNou1wbNGCyAgp+9l5tRZ20heTXMtbIwg6Xn6As0nTK
- 7wHkZ1eSVaUFUCktNPww1209FmKnyeTy/gY+r99ebourngXN88fEr2xmIizq2ito9psvOhNP0Kt
- KDOrjDMFjw4Z6vVRoMxYtIqO3yMMfwqO/PJlxhms326MJtkDCXnPeW8d058K9DfSDEMMn5907zz
- 06iaP0hmbUwnFg5UGV3whpG4Dyzm6hIJi6UmX6S+8rPegkwK6gdbapaRsbIpMj3X7t+pgVBBEyC
- glF4TBmB+lDPTicA/s6KbDmkCns/8wKZyQ1pDKt6V/a9pSNfamWf2N+WJODFxY8GysM4ESNCaif
- 6IhQ=
-X-Received: by 2002:a05:620a:450c:b0:7db:9b82:1276 with SMTP id
- af79cd13be357-7e87e0233e6mr1223453785a.22.1755500128183; 
- Sun, 17 Aug 2025 23:55:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZ3SjzeMwAvvVFblk38TVE1P2ZPULZmTUiQN9O3hAz8FTuHKcrwjIA/BAkd4GAJ9z7RfDovA==
-X-Received: by 2002:a05:620a:450c:b0:7db:9b82:1276 with SMTP id
- af79cd13be357-7e87e0233e6mr1223452385a.22.1755500127835; 
- Sun, 17 Aug 2025 23:55:27 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-113-055.pools.arcor-ip.net.
- [47.64.113.55]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70ba92f870dsm48092116d6.39.2025.08.17.23.55.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 17 Aug 2025 23:55:27 -0700 (PDT)
-Message-ID: <0ef6ac8c-06d6-4e65-b7ee-ef8bdd22ceb7@redhat.com>
-Date: Mon, 18 Aug 2025 08:55:21 +0200
+ bh=tY6eRWlgG6HVaKlByu51WRsVLmOQDvLRFyk16UrcB8g=;
+ b=LNJfsq6h/hN8t6QakQsHw7MYUyLrDg9X1MnI4DK8ooRjs24l+VzDaY7TG7W83Om8L0GRvx
+ AHpq/p3ZWyBZocAKBS0pkLOX57Sdl7YAsOX/XvKOUyfERxom20fE+tMGJ+F8IBGUhVBpzx
+ BJ3wgG1rauM8fllHCJQALqyJKX2bOcg=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
+Message-ID: <cc8db062-a467-4b56-9ca7-c2da9890ec74@weilnetz.de>
+Date: Mon, 18 Aug 2025 09:02:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 32/33] test/functional: exec_command_and_wait_for_pattern:
- add vm arg
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, mst@redhat.com, 
- peterx@redhat.com, farosas@suse.de, raphael@enfabrica.net
-Cc: sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
- kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, eblake@redhat.com,
- armbru@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org,
- steven.sistare@oracle.com, den-plotnikov@yandex-team.ru,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-33-vsementsov@yandex-team.ru>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250813164856.950363-33-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH for-10.1] CI: Use mingw-w64-x86_64-curl-winssl instead of
+ mingw-w64-x86_64-curl for Windows build
+To: Thomas Huth <thuth@redhat.com>
+References: <c4bcc116-bd15-4c86-9e7b-3bf33b31e792@weilnetz.de>
+ <e2efea97-9cdb-4dac-bf9b-324e77a2817f@redhat.com>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+Cc: qemu-devel <qemu-devel@nongnu.org>
+In-Reply-To: <e2efea97-9cdb-4dac-bf9b-324e77a2817f@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: A4455DA0430
+X-Spamd-Bar: ---
+X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[99.99%];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_ZERO(0.00)[0];
+ MID_RHS_MATCH_FROM(0.00)[]; ARC_NA(0.00)[];
+ ASN(0.00)[asn:3320, ipnet:217.224.0.0/11, country:DE];
+ RCPT_COUNT_TWO(0.00)[2]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1];
+ FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[weilnetz.de:mid]
+X-Rspamd-Action: no action
+X-Rspamd-Server: v2201612906741603
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,45 +126,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/08/2025 18.48, Vladimir Sementsov-Ogievskiy wrote:
-> Allow to specify non default vm for the command.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->   tests/functional/qemu_test/cmd.py | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-> index dc5f422b77..28b36a3a54 100644
-> --- a/tests/functional/qemu_test/cmd.py
-> +++ b/tests/functional/qemu_test/cmd.py
-> @@ -172,7 +172,8 @@ def exec_command(test, command):
->       _console_interaction(test, None, None, command + '\r')
->   
->   def exec_command_and_wait_for_pattern(test, command,
-> -                                      success_message, failure_message=None):
-> +                                      success_message, failure_message=None,
-> +                                      vm=None):
->       """
->       Send a command to a console (appending CRLF characters), then wait
->       for success_message to appear on the console, while logging the.
-> @@ -184,9 +185,11 @@ def exec_command_and_wait_for_pattern(test, command,
->       :param command: the command to send
->       :param success_message: if this message appears, test succeeds
->       :param failure_message: if this message appears, test fails
-> +    :param vm: the VM to use (defaults to test.vm if None)
->       """
->       assert success_message
-> -    _console_interaction(test, success_message, failure_message, command + '\r')
-> +    _console_interaction(test, success_message, failure_message, command + '\r',
-> +                         vm=vm)
->   
->   def get_qemu_img(test):
->       test.log.debug('Looking for and selecting a qemu-img binary')
+Am 18.08.25 um 07:49 schrieb Thomas Huth:
+> I'll queue your patch for my next pull request ... just wondering: Did 
+> you run into any real issue here? AFAIK we're not running any related 
+> test on Windows in the CI, so there should not be any big difference?
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Hi,
+
+HTTPS connections don't work unless the server certificate can be 
+validated. Binaries with mingw-w64-x86_64-curl won't find the common CA 
+certificates, so server certificates cannot be validated and HTTPS 
+connections fail. With mingw-w64-x86_64-curl-winssl, the installed CA 
+certificates from Windows are used and HTTPS works fine.
+
+The difference is therefore for any protocol which uses SSL. I assume 
+that there is no difference for other protocols which are supported by 
+curl, but did not test this.
+
+Stefan
 
 
