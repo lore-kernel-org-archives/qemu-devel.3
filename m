@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B62CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 04:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A52AECA0ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 06:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1unrRc-0000WT-OW; Mon, 18 Aug 2025 00:26:04 -0400
+	id 1unt6z-0005gK-0D; Mon, 18 Aug 2025 02:12:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1unrG3-0005nC-ND
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 00:14:07 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1unt6x-0005fO-7k
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 02:12:51 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1unrG1-0002Bk-Ul
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 00:14:07 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-32326e7baa1so2886362a91.3
- for <qemu-devel@nongnu.org>; Sun, 17 Aug 2025 21:14:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1unt6v-0006tc-NY
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 02:12:51 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3b9d41c1963so1773543f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 17 Aug 2025 23:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755490443; x=1756095243; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=o7DezmuwfjbPRIU2hYkSmLkMWVfXQ4fggw3uYW+YQzI=;
- b=PqBztlNuM9xlaawq8px0u+vIMpvcys4JF5NhbyOrE/IuFTUV61qIJlavq9l2LTA0MH
- cKNDWMIx+l3zX3wPhcm7Fp9bFLAzz9s1Tb/IQA9lXSMG266doMQa1epdLq8HacjlYHkl
- Lk+k/gwlpAudkiol6TloXaQ+KxlCEOOhcYw1/xCnHbQ1kkFxzVpN9QhGbHn8FRGCpEfX
- piW6urKQkhDeeqTSnGbe8wJx/Ir1wDPgXkWgdMvqLfPfPKiwhmrPq+/ag2ds6XF96gRt
- UawRRHGC/SpWXA7jGPhcI1DY12XWVovSSozniTw9AlSOC1FQ/ZI88RuSajVmO9Vn/sUs
- K9Ag==
+ d=linaro.org; s=google; t=1755497566; x=1756102366; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=D3eQF8SZr8WFsPmUilUd6zztEOJgHBCpwO4YPtgjJDQ=;
+ b=SXSrMzomy8kMs7DhxpwYppsA03GavIvI+lay6cXRDReIrQrz6JviJRdj46tpSWiZGr
+ 82uQg3bFxVPlue0zXqQaL7AbqSWOKstleE9kwJ9/BzKd/Ma1ZDz5ogZb2OCfUyRCcN7C
+ 42rPfBH2xhLMQCPbXqVe7e2bolWSid/IP8aHNc47QbiZlIrbUpW9mgvP13cM6AdE5VpF
+ B+Tjm7USOMc52SOj2JPkIXWLXkC+Got3DBIEJs+HAlWNclNnuvUT8D/3f7sdtzuGhC5l
+ djwq7kJ5qunwNut8zxFhxLSOv0YL4+OrVP9U1DcLBjyxVuA6306yNBycs1Acv2HneJea
+ 3yig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755490443; x=1756095243;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=o7DezmuwfjbPRIU2hYkSmLkMWVfXQ4fggw3uYW+YQzI=;
- b=qjL7z76woUqTDgAJmBqrHN2iZ7BNEsBIkWAqNd7FsRhGmDCG/aG3LodGLizi4qRf7r
- jkrpjJamxCnX5+aJXoTUWnstzoa8KAwaLRVZz5PeNbhT79aiW7mUeNpmwPnxPxt/I2Q0
- 8wFZ8e62anc0+Q5VShchhVSkNOkcDfJv9RmGHvAPcBeiv7jGeK5BYYel7Ytw8ajNunFC
- e7opNlHrXeDpC/UVxmBgPmM3mPkvhCIfbazCOGLdLjEVrw88Fr9YPLr7q99aAfFxSV1w
- E9nT68tLzi50UzyrwOjS1o2FzDEh53Rf86qd9b5nc0XlaNmKMvL1eB5ss8Z8eQFeVD7c
- mhFQ==
-X-Gm-Message-State: AOJu0YyyFfky60czws76rlRMF7N3aRhSzc71z6nF0as7WreiHw1pIXhP
- yVaAvsIYGKE918ZJV+r5asidoFyOjdcNyHII2LgCxTkgIHj3qdY6I7d8IH05Qdlil6xWOtufK9J
- M8eIK2gE=
-X-Gm-Gg: ASbGncs9vfKHWYjLEASLXWfhy+B4s5Eyee5Ll5+slSyyuwZvo2Fy4XxF8RtpdwkMc8r
- /7tYB4AS5sctbEA5ClH9LbEGJiepm0l3lf/JQy6H4oQeoFI7MOJjJbk3i/CM7Oy97PEXABAgihq
- 1jaYx7rXt4hvg6tvnV9yMTCadojkXFuwtHNKydMi3ijVK3ApgOY5h7FlckBTtrZ9TjqHg9hll4c
- tuHThD5kBxkVH1doBpn2p6pTvFqQXCYMfp6saF52X+4W420Y1MnC/aQn/C28/zlCZpnsox2p7/5
- PpO0xfe9lln88jgGXivnyE/uudQAmkhsaDVWTeSV87W4JVBPVbOe548LvIcFKk5/Jjva7VLyPsv
- WXf9i8dYjJf6rbMGqiela5u/qAJ4jyN+DClbsbfDf3in4OJ0=
-X-Google-Smtp-Source: AGHT+IGKjweePcn2HRKhrvWC2ZYQ1F5nagLzSElu/nDR/LZ6sLs3vN7iobRQjB/d/VBXNMWx3ikMFA==
-X-Received: by 2002:a17:90b:180f:b0:321:c567:44bf with SMTP id
- 98e67ed59e1d1-323421849b3mr14035859a91.29.1755490442670; 
- Sun, 17 Aug 2025 21:14:02 -0700 (PDT)
-Received: from localhost.localdomain ([206.83.122.207])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3232f8c8e4bsm5498344a91.2.2025.08.17.21.13.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 Aug 2025 21:14:02 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mads@ynddal.dk, agraf@csgraf.de, qemu-arm@nongnu.org, philmd@linaro.org
-Subject: [PATCH 0/7] target/arm/hvf cleanups
-Date: Mon, 18 Aug 2025 14:13:47 +1000
-Message-ID: <20250818041354.2393041-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1755497566; x=1756102366;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=D3eQF8SZr8WFsPmUilUd6zztEOJgHBCpwO4YPtgjJDQ=;
+ b=aFubZQAtjb0YnQRZ5ShIAZcEyqoZS3kt0fSWUUo736ta2Qsx1aKfa0quUelNq4po/F
+ 14ijMdtlfzcRn+WRFmCZFZy9WIM8BaMO/Ou16THV5o0UoEIC9lVbgejnqEZjD2Xo+mEp
+ cZXzCzodHWEwSQsUBKHH04qCU8I1X3im8bFzSQ/UupRuTRIosEZ44rf12Hf7YTHQx9MG
+ 3ffx7S78A9tVhReP9aAFPTvvLfD7lh+8ELLt+IYs5c/UufzfVIDRmDeSkNVZJdc533Jp
+ PWZAgB88fhRULDsj1poMLNehhLX/hvHpUbjwtQXtNJwmD41FQcUSswDAQU3Y/QeX6Bzf
+ vp9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9TivawUJ4VcIznvcg3yShQEGAw9HgFm3jPVKmkRt+sduE1KvAWOv+eXizg7o7oKPutxQ4suJvmjMt@nongnu.org
+X-Gm-Message-State: AOJu0YwmNBLXoUsQEHXgpqkghxYYAAmbNegm2S2yOjGnOfho76k9YqSb
+ SeLHLgMOHkPVBN6xt8uJEJ/AhqWA94u775/exnLKNI6BBiaIzLnBS87ZOyrYeBuZxOU=
+X-Gm-Gg: ASbGncuiZSYpfXD2Ge2lpIS5W/gpcgYfkgqnKav4AKtoiQDGtqAiw49rAn1jPUuRR1b
+ 2phIJ7wR+LULYITajK8o+a1ZY7I5u9hZo2vmncNm43dPVrqyOJ8V8nFxnDriEnV6BSVImImrmXL
+ pwSILAjf2X1EURcfi+HIPX6Po+uLTNqwPzS4NZBmLxIRPzQe72dKqjA+A2LU/gnNsSP2WLY+syM
+ HKzUayNnuxUoO/8TFVEhDy8qq+HmZ2yJEm1o9Pxh6FkpBtBl7OGndcTVtHUkc7FAg+BjJf04SZM
+ A9DdXeT3n7GQ5onRWvQY03FPJJOYgQIqMM74YP+5Kgl324ZotdXM3ofva0u8VK3H+oWQEI1JnEB
+ ciG7m1oXQm0fXgyshpzgEpv4l/qdwH+VFiJi/vXt7vYD3j29QE66Rvgguo8rNedq/mg==
+X-Google-Smtp-Source: AGHT+IGcTJOP6SNO6AnqsZENiK4LbOgYyJUHS2CxGHzgSAn6vuZbd3OK7w1zcaPV/KXI3YHNJ0FovA==
+X-Received: by 2002:a05:6000:2008:b0:3b7:970d:a565 with SMTP id
+ ffacd0b85a97d-3bc6aa27b1cmr5015801f8f.46.1755497566274; 
+ Sun, 17 Aug 2025 23:12:46 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3bb676c9a72sm11420701f8f.34.2025.08.17.23.12.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 17 Aug 2025 23:12:45 -0700 (PDT)
+Message-ID: <0e92ebdd-a62a-433c-9fa4-8ba0678cfa74@linaro.org>
+Date: Mon, 18 Aug 2025 08:12:44 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] target/arm: Move compare_u64 to helper.c
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mads@ynddal.dk, agraf@csgraf.de, qemu-arm@nongnu.org
+References: <20250818041354.2393041-1-richard.henderson@linaro.org>
+ <20250818041354.2393041-3-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250818041354.2393041-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,36 +102,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While working on other things cpregs related, I noticed that
-target/arm/hvf failed to produce a sorted cpreg_indexes[].
+On 18/8/25 06:13, Richard Henderson wrote:
+> We will use this function beyond kvm.c.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/cpregs.h |  3 +++
+>   target/arm/helper.c | 11 +++++++++++
+>   target/arm/kvm.c    | 11 -----------
+>   3 files changed, 14 insertions(+), 11 deletions(-)
 
-I wondered if that explained the migration-test failure that
-we have, but no such luck.  (I have no idea how to debug that
-test, btw; so far it is still just a mysterious SIGSEGV.)
-
-
-r~
-
-
-Richard Henderson (7):
-  target/arm: Introduce KVMID_AA64_SYS_REG64
-  target/arm: Move compare_u64 to helper.c
-  target/arm/hvf: Split out sysreg.c.inc
-  target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
-  target/arm/hvf: Remove hvf_sreg_match.key
-  target/arm/hvf: Replace hvf_sreg_match with hvf_sreg_list
-  target/arm/hvf: Sort the cpreg_indexes array
-
- target/arm/cpregs.h         |   3 +
- target/arm/kvm-consts.h     |  11 ++
- target/arm/helper.c         |  11 ++
- target/arm/hvf/hvf.c        | 230 +++++++++---------------------------
- target/arm/kvm.c            |  11 --
- target/arm/hvf/sysreg.c.inc | 146 +++++++++++++++++++++++
- 6 files changed, 224 insertions(+), 188 deletions(-)
- create mode 100644 target/arm/hvf/sysreg.c.inc
-
--- 
-2.43.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
