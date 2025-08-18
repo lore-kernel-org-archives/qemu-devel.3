@@ -4,82 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E18CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 15:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711B0CA0ED1
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 15:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uo22K-0005FC-BX; Mon, 18 Aug 2025 11:44:40 -0400
+	id 1uo246-0005xp-5z; Mon, 18 Aug 2025 11:46:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zero.tangptr@gmail.com>)
- id 1uo22J-0005Ee-3Q
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 11:44:39 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uo243-0005xG-TN
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 11:46:28 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zero.tangptr@gmail.com>)
- id 1uo22H-0005hM-Ft
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 11:44:38 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-45a28ff47a0so7673895e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 08:44:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uo242-00064V-6o
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 11:46:27 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3b9dc5c8ee7so2743208f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 08:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755531875; x=1756136675; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=53pY2YEAtY8HvvohLk0U/sgRS3vn1wH8FzoLbtoiGC0=;
- b=FZ2biWLTwQwf2avTWZPZEUT6q4urVtbfDcxnhFrJTYxnOAlID2fNM0M5JI9j3jJVYs
- KPVTTcTXFN5lyVlkad3FwHraAvezyaGpmcRIBQaZ4UnJzdg3SqTINi/YmuEvpXcnf/6H
- 4pnK5Ymj2nRCwRbg+F/8ZFRcs13GT4voxAAYO/pwUZBXxrsz14fNS/NBSw7UZbMg+Ckm
- uA6/HQDcX5HsdILzuVWTDUhpi0y376BYGUMgC6vij9dMGHhEkpbAlZIN/bRkAKETgJdt
- dPJLDX3OWH1T5ZWHmK94jk5lImeKMvsfjDiTN22/KQJKvGlNpI7s90/FG3kRcJ4g/1dM
- wlQg==
+ d=linaro.org; s=google; t=1755531984; x=1756136784; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Dds0tn6MRRRHYDemz5yb23FIvqxeCiaggXHXIfIXy/w=;
+ b=zZ052KzHOJHnT4RI27AheL7I43aSGoP/rgyaj/wREbxyLi30eHx3yer6b/w5+yBHjV
+ GlJIx7/TF6nzyk94ba1u73eKd5j0MJ6b3XiK1lPu0eUbXdomd4z/7GIoW0h8LfHEbjFQ
+ pn9rqZraXTKWLlKZ8bfdPTO8tkOPpeLf5cf/2SpZ9LiEi7Vu94fCWNi6VCP+n/8P4IMI
+ r4MpkJZcdDXCPAuJMoaMrRhkOLOVAyVIf1C8FxHwufI9da+1Op0ujF1zjMT9x1lS1V6U
+ PyM/ZcZufNzhy+Ymp4qrDNY0Wu33BiwFX5JwMCGIcLH8Vsbl6DlxOw7agdTMQHTyUVIi
+ YPMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755531875; x=1756136675;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=53pY2YEAtY8HvvohLk0U/sgRS3vn1wH8FzoLbtoiGC0=;
- b=FM0p3gI1XcloCqEbmF0TEpTKoUQJ/MRO2+hxmFpVyq/5QvmGgw1Vr8ZwFkyjpF62+d
- cJwheCyOhnAX0OeSaeJbyF2hr768XMcgyXnJRszer2jyBWsxPgvHi4clcUI3DLw21CwF
- jjzyeTih3FBoTwkR5x7w7wrALrnquVWj4pKIjpP/v7f9exZvBhDUDk1BRoN7dbeu0fug
- U29QLORXIo0dAeDOLuyOZxj4Q8YSI/tYq864Amqk3g9hyPlMDHuxRdvy+vNchLfEqvxF
- q4xDQi8NqeMHXxZRNchFF2oO8zmM9+ab8eMAtMk9ertJ4cHGzYOFih5FNPhyRkhRAEW7
- xeew==
-X-Gm-Message-State: AOJu0Yx0B6i2EQ7Uf7TpLJVemb2rpXQzAm72OobQ6NTMeIIVp0eX3Fc1
- gC5fiH3N2cC+4lU47uHtww4AFhrlx/5wZj9Rfb7cotklOJ564jwOW0CX7A7ZF6++TOa+4J4Xmfx
- NAwerSxcl1K8t2QnSZ55zn6QGfy9tyXQ=
-X-Gm-Gg: ASbGncsTLuODGeKYmBwH9uAEVvCmSkv58ud2vLwbI7Jfq+PBeYOvz7oqbnoFiENauNt
- iVcddYjxzdT/qLYMvbjqPCcj17F1fQHzP4rzRGZxiW0rAeGiEG8VyXssIN6pJn8olT0JLjL4HP/
- wkM5Exz+H9IJJW4BaB7D2Jj0YD6IL5vpi3hXcWPYcvGFGX43fIUyl/E/rUwhc0qHGSpKr9shHwH
- Gx5cgnf
-X-Google-Smtp-Source: AGHT+IEZYiYp/cpmi9hcK48VN2AInup+xILDPnLCT+IWYcUDNb3eywjoGjVV4z4KICgqgrT1nGCdP8SCvn81kQJB8Zc=
-X-Received: by 2002:a05:6000:40c7:b0:3b8:d1a4:bab9 with SMTP id
- ffacd0b85a97d-3bb68ee7120mr9449808f8f.45.1755531874605; Mon, 18 Aug 2025
- 08:44:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1755531984; x=1756136784;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dds0tn6MRRRHYDemz5yb23FIvqxeCiaggXHXIfIXy/w=;
+ b=iB+ctuO9jCkD6lFgTwg/v0aoyf9levOLlUpOfiG89samn4ErRMZNZneHiXy519CfJE
+ G+kr7TgY0Zz5cFJjM4VQd+ijtsXzsT5nuDqbpVRdO9YBAyUZE3ou61PPO910/AqYTw2Y
+ uJyR4Xzsp6Ojs3S5XiS0PgMBy9JmHVluHLWEsvBn3k/cNXFUfXCh5pSkuJUVEdxizXVv
+ +7WdMqRe1IsqJyP2tOdJX0TuXfhD6gxXTZO2KI2DFk6fAKosX3WlaHYaNKn09kShBJ2h
+ 2f4wKeRVFKWcFIEmiIIgA65ggnvaB8512O59prmTQNbSKJdPX+GOgrnX1pIk3ahpscND
+ b75g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXp5zxLnkZRcMWol0iB5hAMYfXDWGSwIuqVvyINIWA6Xaf/mTcGd0p0z9003+0paIzWY92gMFlDbPIF@nongnu.org
+X-Gm-Message-State: AOJu0YxsoUwsdJvlhPVJ3OO8U+4pRtUusYANS8VXt0Pe3X3KeFpcmYso
+ NfSH9S6cpP86QaduZiBpx+SEAujBP2MjOkTMWesjosO7c+IYF3nYYFzcqGqPX1WugCE=
+X-Gm-Gg: ASbGncv9/jnClm7fySEmaRa7yYAaEcnt9v8E9B/abfxYAQREvFNRzOjK3MWOON2ZhUX
+ z2ZfjXlfb1Jz4y6ArgZ0q9GiQiVmQFGxLOuhrgX6E+RQdwDMrH7/6SLzCAa9xeYaABgC+cBPhSY
+ 6tNh3XYEYGE7kEd+kBwNb5Gnh4yjG0TE70EcGzfEdBl2H2cdCiAGw4RzbtcyOib4/RMTYnJybsS
+ seJMkIj7n6pkcCuOTOduaeUCPEVGvGNWOQ0G4ZCixTvUHENfeVmIHRLi8qwA3v1MQ2YoHCnVYyB
+ 9ZkiexkfiIVnJsqvJu47Ozn4YRptuMmex+R/37TQNPBIILvclU/lvOpaCqJP4yIqD86cP2BZLF9
+ 40mPTooEHGb342OjxT3Xmedlhm2bjDmIAVmtc3TtyDVtLH2HBGvfAK4Q9eIx9McJgLA==
+X-Google-Smtp-Source: AGHT+IElxPhcBMub/KW7iLfcciicK1l0BKF/LNK+x+gtk96LRLCdB7szCsRnVi9zWAl+VQUUGSiFrA==
+X-Received: by 2002:a05:6000:4383:b0:3b8:dabe:bd8b with SMTP id
+ ffacd0b85a97d-3bb68a185bdmr10218004f8f.27.1755531984285; 
+ Mon, 18 Aug 2025 08:46:24 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3c074d43bc6sm21410f8f.25.2025.08.18.08.46.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Aug 2025 08:46:23 -0700 (PDT)
+Message-ID: <a4a4c7a8-df35-4bd3-9de1-b22ca7bcca22@linaro.org>
+Date: Mon, 18 Aug 2025 17:46:21 +0200
 MIME-Version: 1.0
-References: <CAAXNugBwiRuwiNHeuBV5U+HyrSisPSN-HL_7n6Pqc7oAOTX6Pw@mail.gmail.com>
- <c92d983d-0b89-467b-b5e2-b09fe61ff5b9@linaro.org>
-In-Reply-To: <c92d983d-0b89-467b-b5e2-b09fe61ff5b9@linaro.org>
-From: Zero Tang <zero.tangptr@gmail.com>
-Date: Mon, 18 Aug 2025 23:44:20 +0800
-X-Gm-Features: Ac12FXy7mPIw0Pfj55CBKkQTIHBKPMVMYAPflMZ8ZMSIr1DyNu64EvyigB7sVA4
-Message-ID: <CAAXNugAJAD=2aBenCJWR-xYt2HszJjEAguxfDBE=hNYZ+osu4w@mail.gmail.com>
-Subject: Re: [PATCH] i386/tcg/svm: fix incorrect canonicalization
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org, 
- eduardo@habkost.net, Lara Lazier <laramglazier@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000c7244e063ca59dcd"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=zero.tangptr@gmail.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, HTML_MESSAGE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mads@ynddal.dk, agraf@csgraf.de, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Danny Canter <danny_canter@apple.com>, Cameron Esfahani <dirty@apple.com>,
+ Akihiko Odaki <akihiko.odaki@gmail.com>
+References: <20250818041354.2393041-1-richard.henderson@linaro.org>
+ <20250818041354.2393041-5-richard.henderson@linaro.org>
+ <4312974c-9b7e-48c2-a190-071ea72da33f@linaro.org>
+ <5b9e5f5a-b434-479c-8840-dbb4cda1365c@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5b9e5f5a-b434-479c-8840-dbb4cda1365c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,184 +107,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c7244e063ca59dcd
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc'ing Apple folks hoping they can forward or directly help :)
 
-Hi Philippe,
+On 18/8/25 15:21, Richard Henderson wrote:
+> On 8/18/25 22:41, Philippe Mathieu-Daudé wrote:
+>> Rebasing Mohamed's work I'm getting:
+>>
+>> In file included from ../../target/arm/hvf/hvf.c:413:
+>> ../../target/arm/hvf/sysreg.c.inc:156:1: error: static assertion 
+>> failed due to requirement '!(HV_SYS_REG_MDCR_EL2 != (((((1 << 28) | 
+>> (19 << 16) | ((3) << 14) | ((4) << 11) | ((1) << 7) | ((1) << 3) | 
+>> ((1) << 0)) | 13510798882111488ULL)) & 65535))': not expecting: 
+>> HV_SYS_REG_MDCR_EL2 != KVMID_TO_HVF(KVMID_AA64_SYS_REG64(1, 1, 3, 4, 1))
+>>    156 | DEF_SYSREG(HV_SYS_REG_MDCR_EL2, 1, 1, 3, 4, 1)
+>>        | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> 
+>>      HV_SYS_REG_MDCR_EL2 = 0xe019,   <----
+> 
+> How odd.  It should be e089, if it were encoded like all the others.
+> 
+> I wonder if this is a manual typo that's now baked into the api, or if 
+> it's an OS bug.
+> 
+> 
+> r~
+> 
 
-Thanks for your review comment! But if the patch is already
-queued, is it too late to apply it?
-
-Kind regards,
-Zero Tang
-
-On Mon, Aug 18, 2025 at 8:16=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
-
-> Hi Zero,
->
-> On 6/8/25 09:58, Zero Tang wrote:
-> >   Replaces "long" with "int64_t" during canonicalization.
-> >
-> >   ---
-> >   In Linux GCC, "long" has 8 bytes. However, in msys2 GCC, "long" has 4
-> >   bytes. In this case, canonicalization would set all high bits to 1 wh=
-en
-> >   the segment base is bigger than 0x7FFF (assuming 48-bit linear
-> address).
-> >
-> >   This is why QEMU-TCG in Windows cannot boot a bluepill-like hyperviso=
-r
-> >   in UEFI, in that the guest IDT and GDT bases are above 0x7FFF, thereb=
-y
-> >   resulting in incorrect bases. When an interrupt arrives, it would
-> >   trigger a #PF exception; the #PF would trigger again, resulting in a
-> #DF
-> >   exception; the #PF would trigger for the third time, resulting in
-> >   triple-fault, and eventually causes the shutdown VM-Exit to the
-> >   bluepill hypervisor right after it boots.
-> >
-> >   In summary, this patch replaces "long" with "int64_t" in order to
-> enforce
-> >   the canonicalization with 64-bit signed integers.
-> >
-> >   Signed-off-by: Zero Tang <zero.tangptr@gmail.com
-> > <mailto:zero.tangptr@gmail.com>>
-> >   ---
-> >    target/i386/tcg/system/svm_helper.c | 2 +-
-> >    1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> >   diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/
-> > system/svm_helper.c
-> >   index b27049b9ed..1ccfccf419 100644
-> >   --- a/target/i386/tcg/system/svm_helper.c
-> >   +++ b/target/i386/tcg/system/svm_helper.c
-> >   @@ -49,7 +49,7 @@ static void svm_save_seg(CPUX86State *env, int
-> > mmu_idx, hwaddr addr,
-> >    static inline void svm_canonicalization(CPUX86State *env,
-> > target_ulong *seg_base)
-> >    {
-> >        uint16_t shift_amt =3D 64 - cpu_x86_virtual_addr_width(env);
-> >   -    *seg_base =3D ((((long) *seg_base) << shift_amt) >> shift_amt);
-> >   +    *seg_base =3D ((((int64_t) *seg_base) << shift_amt) >> shift_amt=
-);\
->
-> Alternatively:
->
->           *seg_base =3D sextract64(*seg_base, 0, 64 -
-> cpu_x86_virtual_addr_width(env));
->
-> >    }
-> >
-> >    static void svm_load_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
-> >
-> >   ---
-> >   base-commit: e0006a86615baa70bc9d8b183e528aed91c1ac90
-> >   change-id: 20250806-fix-tcg-svm-canon-adbea9508073
-> >
-> >   Best regards,
-> >   --
-> >   Zero Tang <zero.tangptr@gmail.com <mailto:zero.tangptr@gmail.com>>
->
->
-
---000000000000c7244e063ca59dcd
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Philippe,<div><br></div><div>Thanks for your review com=
-ment! But if the patch is already</div><div>queued, is it too late to apply=
- it?</div><div><br></div><div>Kind regards,</div><div>Zero Tang</div></div>=
-<br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Mon, Aug 18, 2025 at 8:16=E2=80=AFPM Philippe Mathieu-Da=
-ud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt;=
- wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Zero,=
-<br>
-<br>
-On 6/8/25 09:58, Zero Tang wrote:<br>
-&gt;=C2=A0 =C2=A0Replaces &quot;long&quot; with &quot;int64_t&quot; during =
-canonicalization.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0---<br>
-&gt;=C2=A0 =C2=A0In Linux GCC, &quot;long&quot; has 8 bytes. However, in ms=
-ys2 GCC, &quot;long&quot; has 4<br>
-&gt;=C2=A0 =C2=A0bytes. In this case, canonicalization would set all high b=
-its to 1 when<br>
-&gt;=C2=A0 =C2=A0the segment base is bigger than 0x7FFF (assuming 48-bit li=
-near address).<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0This is why QEMU-TCG in Windows cannot boot a bluepill-lik=
-e hypervisor<br>
-&gt;=C2=A0 =C2=A0in UEFI, in that the guest IDT and GDT bases are above 0x7=
-FFF, thereby<br>
-&gt;=C2=A0 =C2=A0resulting in incorrect bases. When an interrupt arrives, i=
-t would<br>
-&gt;=C2=A0 =C2=A0trigger a #PF exception; the #PF would trigger again, resu=
-lting in a #DF<br>
-&gt;=C2=A0 =C2=A0exception; the #PF would trigger for the third time, resul=
-ting in<br>
-&gt;=C2=A0 =C2=A0triple-fault, and eventually causes the shutdown VM-Exit t=
-o the<br>
-&gt;=C2=A0 =C2=A0bluepill hypervisor right after it boots.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0In summary, this patch replaces &quot;long&quot; with &quo=
-t;int64_t&quot; in order to enforce<br>
-&gt;=C2=A0 =C2=A0the canonicalization with 64-bit signed integers.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0Signed-off-by: Zero Tang &lt;<a href=3D"mailto:zero.tangpt=
-r@gmail.com" target=3D"_blank">zero.tangptr@gmail.com</a> <br>
-&gt; &lt;mailto:<a href=3D"mailto:zero.tangptr@gmail.com" target=3D"_blank"=
->zero.tangptr@gmail.com</a>&gt;&gt;<br>
-&gt;=C2=A0 =C2=A0---<br>
-&gt;=C2=A0 =C2=A0 target/i386/tcg/system/svm_helper.c | 2 +-<br>
-&gt;=C2=A0 =C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0diff --git a/target/i386/tcg/system/svm_helper.c b/target/=
-i386/tcg/ <br>
-&gt; system/svm_helper.c<br>
-&gt;=C2=A0 =C2=A0index b27049b9ed..1ccfccf419 100644<br>
-&gt;=C2=A0 =C2=A0--- a/target/i386/tcg/system/svm_helper.c<br>
-&gt;=C2=A0 =C2=A0+++ b/target/i386/tcg/system/svm_helper.c<br>
-&gt;=C2=A0 =C2=A0@@ -49,7 +49,7 @@ static void svm_save_seg(CPUX86State *en=
-v, int <br>
-&gt; mmu_idx, hwaddr addr,<br>
-&gt;=C2=A0 =C2=A0 static inline void svm_canonicalization(CPUX86State *env,=
- <br>
-&gt; target_ulong *seg_base)<br>
-&gt;=C2=A0 =C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint16_t shift_amt =3D 64 - cpu_x86_virtual=
-_addr_width(env);<br>
-&gt;=C2=A0 =C2=A0- =C2=A0 =C2=A0*seg_base =3D ((((long) *seg_base) &lt;&lt;=
- shift_amt) &gt;&gt; shift_amt);<br>
-&gt;=C2=A0 =C2=A0+ =C2=A0 =C2=A0*seg_base =3D ((((int64_t) *seg_base) &lt;&=
-lt; shift_amt) &gt;&gt; shift_amt);\<br>
-<br>
-Alternatively:<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *seg_base =3D sextract64(*seg_base, 0, 6=
-4 - <br>
-cpu_x86_virtual_addr_width(env));<br>
-<br>
-&gt;=C2=A0 =C2=A0 }<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 static void svm_load_seg(CPUX86State *env, int mmu_idx, h=
-waddr addr,<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0---<br>
-&gt;=C2=A0 =C2=A0base-commit: e0006a86615baa70bc9d8b183e528aed91c1ac90<br>
-&gt;=C2=A0 =C2=A0change-id: 20250806-fix-tcg-svm-canon-adbea9508073<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0Best regards,<br>
-&gt;=C2=A0 =C2=A0--<br>
-&gt;=C2=A0 =C2=A0Zero Tang &lt;<a href=3D"mailto:zero.tangptr@gmail.com" ta=
-rget=3D"_blank">zero.tangptr@gmail.com</a> &lt;mailto:<a href=3D"mailto:zer=
-o.tangptr@gmail.com" target=3D"_blank">zero.tangptr@gmail.com</a>&gt;&gt;<b=
-r>
-<br>
-</blockquote></div>
-
---000000000000c7244e063ca59dcd--
 
