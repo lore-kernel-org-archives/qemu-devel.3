@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477C1CA0EE4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF293CA0EEB
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Aug 2025 14:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uo0Vm-0001Kh-QU; Mon, 18 Aug 2025 10:06:58 -0400
+	id 1uo0Vq-0001Oe-6Z; Mon, 18 Aug 2025 10:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uo0Vj-0001JX-Nf
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:06:55 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1uo0Vm-0001Kk-5Q
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:06:58 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uo0Vh-0002B5-BN
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:06:55 -0400
+ id 1uo0Vh-0002B8-DQ
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 10:06:57 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 857A6807B1;
- Mon, 18 Aug 2025 17:06:47 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id DA0C0807AB;
+ Mon, 18 Aug 2025 17:06:48 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b25::1:17])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id k6RC4003YeA0-69eZFfBK; Mon, 18 Aug 2025 17:06:47 +0300
+ ESMTPSA id k6RC4003YeA0-cztzgLN8; Mon, 18 Aug 2025 17:06:48 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755526007;
- bh=KA33589QmHph33pd7g5bbngUdZzm4Gu2kQ67TDP+FEU=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=rLH2rsrHob2weQOJOh7PByKONqNFwcEfzzFpQ5QOK0fa8EbXeJnRrmQv/0hq/r8Uq
- WKFGqXzLVtjbteoOIXcoPYayS6Jdl8w+7pOAXH6zdBiqo8BlXqh6YTEgMvis/WuXhl
- oF1mQAkET/M8+fgHvwKswOgQHJRwqw9BBs3p51CI=
+ s=default; t=1755526008;
+ bh=mGSpVxvJRA2C4GRlukYvMe4WDcL+rqbKh6znjwet/FA=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=g/g2x38m8Ig09WxYwnOgqzbW1CtLcHu/JGOYIoza6//dpJtJXzp/PhwAMHTIr9esj
+ 4oX2CSG2K/vEtThilnKwzIqLoAQqfnfFIvm4FThIs8O6lxsSXNweQa1vNmlJ9kJTsn
+ Tjc0KwpF4cHsoW6WPC6ip6qy5F6hR+nOfMEYStr8=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org,
 	vsementsov@yandex-team.ru
-Subject: [PATCH 00/19] TAP initialization refactoring
-Date: Mon, 18 Aug 2025 17:06:26 +0300
-Message-ID: <20250818140645.27904-1-vsementsov@yandex-team.ru>
+Subject: [PATCH 04/19] net/tap: net_init_tap_one(): drop extra error
+ propagation
+Date: Mon, 18 Aug 2025 17:06:30 +0300
+Message-ID: <20250818140645.27904-5-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250818140645.27904-1-vsementsov@yandex-team.ru>
+References: <20250818140645.27904-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,148 +75,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all!
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ net/tap.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-As preparation for further development of TAP live local migration
-(passing open fds through unix socket), here is a refactoring
-of initialization code, to improve its readability and get rid
-of duplication.
-
-Below are the initialization flow diagrams showing the changes.
-
-BEFORE REFACTORING:
-==================
-
-```
-net_init_tap()
-    |
-    +-- if (tap->fd)
-    |   +-- duplicated logic*
-    |   +-- net_init_tap_one()
-    |
-    +-- else if (tap->fds)
-    |   +-- for each fd:
-    |       +-- duplicated logic*
-    |       +-- net_init_tap_one()
-    |
-    +-- else if (tap->helper)
-    |   +-- duplicated logic*
-    |   +-- net_init_bridge()
-    |
-    +-- else (normal case)
-        +-- for each queue:
-            +-- net_tap_init()
-            +-- net_init_tap_one()
-
-net_init_bridge()
-    |
-    +-- duplicated logic*
-    +-- net_tap_fd_init()
-
-net_init_tap_one()
-    |
-    +-- net_tap_fd_init()
-
-net_tap_init()
-    |
-    +-- tap_open()
-
-net_tap_fd_init()
-    |
-    +-- qemu_new_net_client()
-    +-- Initialize TAPState
-
-* duplicated logic: set fd nonblocking + probe vnet_hdr
-```
-
-AFTER REFACTORING:
-=================
-
-```
-net_init_tap()
-    |
-    +-- if (tap->fd)
-    |   +-- net_tap_from_monitor_fd()
-    |
-    +-- else if (tap->fds)
-    |   +-- for each fd:
-    |       +-- net_tap_from_monitor_fd()
-    |
-    +-- else if (tap->helper)
-    |   +-- net_init_bridge()
-    |
-    +-- else (normal case)
-        +-- net_tap_open()
-
-net_tap_open()
-    |
-    +-- for each queue:
-        +-- net_tap_open_one()
-
-net_tap_open_one()
-    |
-    +-- tap_open()
-    +-- net_tap_fd_init_common()
-
-net_tap_from_monitor_fd()
-    |
-    +-- net_tap_fd_init_external()
-
-net_tap_fd_init_external()
-    |
-    +-- net_tap_fd_init_common()
-
-net_init_bridge()
-    |
-    +-- net_tap_fd_init_external()
-
-net_tap_fd_init_common()
-    |
-    +-- qemu_new_net_client()
-    +-- Initialize TAPState
-```
-
-Solved problems:
-
-- duplicated logic to handle external
-  file descriptors (set nonblocking, probe vnet_hdr)
-
-- duplication between tap/helper case in
-  net_init_tap() and net_init_bridge()
-
-- confusing naming and functionality spread between functions (we had
-  net_init_tap(), together with net_tap_init(); also main central
-  function was net_init_tap_one(), and part of its logic (not clear
-  why) moved to separate net_tap_fd_init()),
-
-
-Vladimir Sementsov-Ogievskiy (19):
-  net/tap: net_init_tap_one(): add return value
-  net/tap: add set_fd_nonblocking() helper
-  net/tap: tap_set_sndbuf(): add return value
-  net/tap: net_init_tap_one(): drop extra error propagation
-  net/tap: net_init_tap_one(): move parameter checking earlier
-  net/tap: net_init_tap(): refactor parameter checking
-  net/tap: net_init_tap(): drop extra variable vhostfdname
-  net/tap: move local variables related to the latter case to else
-    branch
-  net/tap: use glib strings vector and g_strsplit for fds case
-  net/tap: drop extra tap_fd_get_ifname() call
-  net/tap: net_init_tap_one(): refactor to use netdev as first arg
-  net/tap: net_init_tap_one(): support bridge
-  net/tap: net_init_bridge(): support tap
-  net/tap: refactor net_tap_init() into net_tap_open_one()
-  net/tap: introduce net_tap_open()
-  net/tap: introduce net_tap_fd_init_external()
-  net/tap: introduce net_tap_from_monitor_fd() helper
-  net/tap: split net_tap_setup_vhost() separate function
-  net/tap: drop net_tap_fd_init()
-
- net/tap-linux.c |   5 +-
- net/tap.c       | 548 ++++++++++++++++++++++--------------------------
- net/tap_int.h   |   2 +-
- 3 files changed, 256 insertions(+), 299 deletions(-)
-
+diff --git a/net/tap.c b/net/tap.c
+index 0258ac8574..58c3318b1c 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -698,7 +698,6 @@ static int net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                             const char *downscript, const char *vhostfdname,
+                             int vnet_hdr, int fd, Error **errp)
+ {
+-    Error *err = NULL;
+     TAPState *s = net_tap_fd_init(peer, model, name, fd, vnet_hdr);
+     int vhostfd;
+ 
+@@ -734,9 +733,8 @@ static int net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
+ 
+         if (vhostfdname) {
+-            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, &err);
++            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
+             if (vhostfd == -1) {
+-                error_propagate(errp, err);
+                 goto failed;
+             }
+             if (!set_fd_nonblocking(vhostfd, vhostfdname, errp)) {
 -- 
 2.48.1
 
