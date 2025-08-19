@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B02CA0EEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54639CA0EF7
 	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 16:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoOvf-0003UY-O2; Tue, 19 Aug 2025 12:11:19 -0400
+	id 1uoOvf-0003UP-HN; Tue, 19 Aug 2025 12:11:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoOvd-0003U7-TJ
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:11:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uoOvW-0003QK-An
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:11:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoOvb-00084D-EH
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:11:17 -0400
+ id 1uoOvU-00081T-VQ
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:11:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755619874;
+ s=mimecast20190719; t=1755619867;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hHs+hHYo/xLY+4MU0oASHn2bhQTN83ylRBWL8k5ZkUw=;
- b=MjLu0piQ9R82qWfrchRkMzSOhRwLtINoWIPjSnPo6idIrPHQw+5jnqnisDenCK3Lr/+nAK
- QhLMblFHUJZAwWNYIdQZlbjBwhAtf0tAVii/angwHFrSzZVgV1bYd4ZU4GpvSmJznynQZS
- rqjG8nL+YT3VkTYOxlHz37ZfkQUqETQ=
+ bh=7RWBUfu5W9z1AudyptNoJ4jHN7HEmGhrE9TGjrb6MAk=;
+ b=Bwr03y1hFYwITyZMuGBmhQ/xVgp/Ts6JHitwByHKdRK66hHftWQGqABYY2jIvgn6ldIZQo
+ YxhDhGMcNSdEow0TKNoikpr4g1YLVFUpXVmDsk3x4PZ6XJwx7d0zIvvSPGYpPRxZnY3cQl
+ ohITP4j+0vBr5lEoS8ACQPr0QnGcNTw=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-6E5WyvEEM_aITwXE5IVdgg-1; Tue,
- 19 Aug 2025 12:11:11 -0400
-X-MC-Unique: 6E5WyvEEM_aITwXE5IVdgg-1
-X-Mimecast-MFC-AGG-ID: 6E5WyvEEM_aITwXE5IVdgg_1755619870
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-0OwJrP-cNoyDR0Uureeshw-1; Tue,
+ 19 Aug 2025 12:11:03 -0400
+X-MC-Unique: 0OwJrP-cNoyDR0Uureeshw-1
+X-Mimecast-MFC-AGG-ID: 0OwJrP-cNoyDR0Uureeshw_1755619862
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 033E21800345; Tue, 19 Aug 2025 16:11:10 +0000 (UTC)
+ id 393F61800446; Tue, 19 Aug 2025 16:11:02 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.237])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D9FB8180047F; Tue, 19 Aug 2025 16:11:06 +0000 (UTC)
+ id 0918D180028A; Tue, 19 Aug 2025 16:10:58 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -56,16 +56,16 @@ Cc: Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 3/7] tracetool: avoid space after "*" in arg types
-Date: Tue, 19 Aug 2025 17:10:49 +0100
-Message-ID: <20250819161053.464641-4-berrange@redhat.com>
+Subject: [PATCH v4 1/7] checkpatch: cull trailing '*/' in SPDX check
+Date: Tue, 19 Aug 2025 17:10:47 +0100
+Message-ID: <20250819161053.464641-2-berrange@redhat.com>
 In-Reply-To: <20250819161053.464641-1-berrange@redhat.com>
 References: <20250819161053.464641-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,39 +90,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU code style is to have no whitespace between "*" and the
-arg name. Since generated trace code will soon be added to
-git, make it comply with code style.
+Sometimes SPDX expressions appear inside C comments, and this
+confuses checkpatch.pl. Drop the closing C comment characters
+to avoid this.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/tracetool/__init__.py | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ scripts/checkpatch.pl | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index 2ae2e562d6..0f33758870 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -170,10 +170,16 @@ def __len__(self):
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 833f20f555..91616c974f 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1368,6 +1368,9 @@ sub checkspdx {
+     $expr =~ s/^\s*//g;
+     $expr =~ s/\s*$//g;
  
-     def __str__(self):
-         """String suitable for declaring function arguments."""
-+        def onearg(t, n):
-+            if t[-1] == '*':
-+                return "".join([t, n])
-+            else:
-+                return " ".join([t, n])
++    # Cull C comment end
++    $expr =~ s/\*\/.*//;
 +
-         if len(self._args) == 0:
-             return "void"
-         else:
--            return ", ".join([ " ".join([t, n]) for t,n in self._args ])
-+            return ", ".join([ onearg(t, n) for t,n in self._args ])
+     my @bits = split / +/, $expr;
  
-     def __repr__(self):
-         """Evaluable string representation for this object."""
+     my $prefer = "GPL-2.0-or-later";
 -- 
 2.50.1
 
