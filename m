@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D26CA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 11:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 782BDCA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 11:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoKSc-0003Vr-4A; Tue, 19 Aug 2025 07:25:03 -0400
+	id 1uoKSR-0003LR-B9; Tue, 19 Aug 2025 07:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKSY-0003RL-VH
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:24:59 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKSP-0003L7-BP
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:24:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKSW-0007EX-M9
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:24:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKSN-0007DT-Ja
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:24:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755602695;
+ s=mimecast20190719; t=1755602686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oL2R7NlE9PC+z/oRLGq9wFgRlFZKI/wxUtHa2VcOn6Y=;
- b=cRq7ivEb+vP5o8ZBcGMy8JxdVpEROakvZ7tIxbnK6b/wyhokKFJCIbk5UasXjNo27uAFOs
- DhAHN36KOfNcEeXit4RjmFme5KtIq9FXO6cM57PlL79eiWLxNW/qGb6+JSSxV126Z42qT8
- KxvI0pbBCaq6CNAGxxr9IJMoJDjKbek=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=37f/MBwp4xYxV9/nxTWENZ/sCx/KB8pbU1hl/skyZfM=;
+ b=GSAAb4OS16CrNVWIc/PoO7a9KrPol7Gdm48J+4hublMKIYoLKPbAiT2cG5SGPpK9OZJqFF
+ RzYM7twqxi2M1InDIQEy21+bL3qnjzom2lXAgETfSn7memJRiTkKl7jHRFek7Kv6vUo0Ji
+ MQj3C2cJsx5DEBxyMtfwxp93v96yn9I=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-n_GIyUH0NRCDQBTvSWiL1A-1; Tue,
- 19 Aug 2025 07:24:52 -0400
-X-MC-Unique: n_GIyUH0NRCDQBTvSWiL1A-1
-X-Mimecast-MFC-AGG-ID: n_GIyUH0NRCDQBTvSWiL1A_1755602691
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-218-uR4wor8ON_2WeLf0vU4qug-1; Tue,
+ 19 Aug 2025 07:24:43 -0400
+X-MC-Unique: uR4wor8ON_2WeLf0vU4qug-1
+X-Mimecast-MFC-AGG-ID: uR4wor8ON_2WeLf0vU4qug_1755602682
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 494F018004A7; Tue, 19 Aug 2025 11:24:51 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8212E1800289; Tue, 19 Aug 2025 11:24:42 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.251])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D048F30001A8; Tue, 19 Aug 2025 11:24:48 +0000 (UTC)
+ id E49DB30001A8; Tue, 19 Aug 2025 11:24:39 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 14/25] tests/functional: Move mips tests into
- target-specific folders
-Date: Tue, 19 Aug 2025 13:23:51 +0200
-Message-ID: <20250819112403.432587-15-thuth@redhat.com>
+Subject: [PATCH v2 11/25] tests/functional: Move loongarch64 tests into
+ architecture specific folder
+Date: Tue, 19 Aug 2025 13:23:48 +0200
+Message-ID: <20250819112403.432587-12-thuth@redhat.com>
 In-Reply-To: <20250819112403.432587-1-thuth@redhat.com>
 References: <20250819112403.432587-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,319 +88,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Thomas Huth <thuth@redhat.com>
 
 The tests/functional folder has become quite crowded, thus move the
-mips tests into a target-specific subfolder.
+loongarch64 tests into a target-specific subfolder.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   |  8 ++--
- tests/functional/meson.build                  | 47 ++-----------------
- tests/functional/mips/meson.build             | 11 +++++
- .../test_malta.py}                            |  0
- .../test_replay.py}                           |  0
- .../test_tuxrun.py}                           |  0
- tests/functional/mips64/meson.build           | 10 ++++
- .../test_malta.py}                            |  2 +-
- .../test_tuxrun.py}                           |  0
- tests/functional/mips64el/meson.build         | 14 ++++++
- .../test_fuloong2e.py}                        |  0
- .../test_loongson3v.py}                       |  0
- .../test_malta.py}                            |  4 +-
- .../test_replay.py}                           |  0
- .../test_tuxrun.py}                           |  0
- tests/functional/mipsel/meson.build           | 12 +++++
- .../test_malta.py}                            |  2 +-
- .../test_replay.py}                           |  0
- .../test_tuxrun.py}                           |  0
- 19 files changed, 59 insertions(+), 51 deletions(-)
- create mode 100644 tests/functional/mips/meson.build
- rename tests/functional/{test_mips_malta.py => mips/test_malta.py} (100%)
- rename tests/functional/{test_mips_replay.py => mips/test_replay.py} (100%)
- rename tests/functional/{test_mips_tuxrun.py => mips/test_tuxrun.py} (100%)
- create mode 100644 tests/functional/mips64/meson.build
- rename tests/functional/{test_mips64_malta.py => mips64/test_malta.py} (96%)
- rename tests/functional/{test_mips64_tuxrun.py => mips64/test_tuxrun.py} (100%)
- create mode 100644 tests/functional/mips64el/meson.build
- rename tests/functional/{test_mips64el_fuloong2e.py => mips64el/test_fuloong2e.py} (100%)
- rename tests/functional/{test_mips64el_loongson3v.py => mips64el/test_loongson3v.py} (100%)
- rename tests/functional/{test_mips64el_malta.py => mips64el/test_malta.py} (98%)
- rename tests/functional/{test_mips64el_replay.py => mips64el/test_replay.py} (100%)
- rename tests/functional/{test_mips64el_tuxrun.py => mips64el/test_tuxrun.py} (100%)
- create mode 100644 tests/functional/mipsel/meson.build
- rename tests/functional/{test_mipsel_malta.py => mipsel/test_malta.py} (98%)
- rename tests/functional/{test_mipsel_replay.py => mipsel/test_replay.py} (100%)
- mode change 100644 => 100755
- rename tests/functional/{test_mipsel_tuxrun.py => mipsel/test_tuxrun.py} (100%)
+ MAINTAINERS                                                  | 2 +-
+ tests/functional/loongarch64/meson.build                     | 5 +++++
+ .../{test_loongarch64_virt.py => loongarch64/test_virt.py}   | 0
+ tests/functional/meson.build                                 | 5 +----
+ 4 files changed, 7 insertions(+), 5 deletions(-)
+ create mode 100644 tests/functional/loongarch64/meson.build
+ rename tests/functional/{test_loongarch64_virt.py => loongarch64/test_virt.py} (100%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index b6a835777bb..b8f0ce33605 100644
+index 2b109ecc18c..716127e831d 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1406,8 +1406,8 @@ F: hw/acpi/piix4.c
- F: hw/mips/malta.c
- F: hw/pci-host/gt64120.c
- F: include/hw/southbridge/piix.h
--F: tests/functional/test_mips*_malta.py
--F: tests/functional/test_mips*_tuxrun.py
-+F: tests/functional/mips*/test_malta.py
-+F: tests/functional/mips*/test_tuxrun.py
+@@ -258,7 +258,7 @@ M: Song Gao <gaosong@loongson.cn>
+ S: Maintained
+ F: target/loongarch/
+ F: tests/tcg/loongarch64/
+-F: tests/functional/test_loongarch64_virt.py
++F: tests/functional/loongarch64/test_virt.py
  
- Mipssim
- R: Aleksandar Rikalo <arikalo@gmail.com>
-@@ -1423,7 +1423,7 @@ S: Odd Fixes
- F: hw/mips/fuloong2e.c
- F: hw/pci-host/bonito.c
- F: include/hw/pci-host/bonito.h
--F: tests/functional/test_mips64el_fuloong2e.py
-+F: tests/functional/mips64el/test_fuloong2e.py
- 
- Loongson-3 virtual platforms
- M: Huacai Chen <chenhuacai@kernel.org>
-@@ -1438,7 +1438,7 @@ F: hw/mips/loongson3_virt.c
- F: include/hw/intc/loongson_ipi_common.h
- F: include/hw/intc/loongson_ipi.h
- F: include/hw/intc/loongson_liointc.h
--F: tests/functional/test_mips64el_loongson3v.py
-+F: tests/functional/mips64el/test_loongson3v.py
- 
- Boston
- M: Paul Burton <paulburton@kernel.org>
+ M68K TCG CPUs
+ M: Laurent Vivier <laurent@vivier.eu>
+diff --git a/tests/functional/loongarch64/meson.build b/tests/functional/loongarch64/meson.build
+new file mode 100644
+index 00000000000..d1687176a3d
+--- /dev/null
++++ b/tests/functional/loongarch64/meson.build
+@@ -0,0 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++tests_loongarch64_system_thorough = [
++  'virt',
++]
+diff --git a/tests/functional/test_loongarch64_virt.py b/tests/functional/loongarch64/test_virt.py
+similarity index 100%
+rename from tests/functional/test_loongarch64_virt.py
+rename to tests/functional/loongarch64/test_virt.py
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index fee68056145..52969a3ff87 100644
+index f1fc01717c3..e2e66dcf523 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -19,24 +19,10 @@ subdir('loongarch64')
- subdir('m68k')
- subdir('microblaze')
- subdir('microblazeel')
--
--test_mips_timeouts = {
--  'mips_malta' : 480,
--}
--
--test_mipsel_timeouts = {
--  'mipsel_malta' : 420,
--  'mipsel_replay' : 480,
--}
--
--test_mips64_timeouts = {
--  'mips64_malta' : 240,
--}
--
--test_mips64el_timeouts = {
--  'mips64el_malta' : 420,
--  'mips64el_replay' : 180,
--}
-+subdir('mips')
-+subdir('mipsel')
-+subdir('mips64')
-+subdir('mips64el')
+@@ -15,6 +15,7 @@ subdir('arm')
+ subdir('avr')
+ subdir('hppa')
+ subdir('i386')
++subdir('loongarch64')
  
- test_ppc_timeouts = {
-   'ppc_40p' : 240,
-@@ -84,31 +70,6 @@ tests_generic_linuxuser = [
+ test_mips_timeouts = {
+   'mips_malta' : 480,
+@@ -80,10 +81,6 @@ tests_generic_linuxuser = [
  tests_generic_bsduser = [
  ]
  
--tests_mips_system_thorough = [
--  'mips_malta',
--  'mips_replay',
--  'mips_tuxrun',
+-tests_loongarch64_system_thorough = [
+-  'loongarch64_virt',
 -]
 -
--tests_mipsel_system_thorough = [
--  'mipsel_malta',
--  'mipsel_replay',
--  'mipsel_tuxrun',
--]
--
--tests_mips64_system_thorough = [
--  'mips64_malta',
--  'mips64_tuxrun',
--]
--
--tests_mips64el_system_thorough = [
--  'mips64el_fuloong2e',
--  'mips64el_loongson3v',
--  'mips64el_malta',
--  'mips64el_replay',
--  'mips64el_tuxrun',
--]
--
- tests_or1k_system_thorough = [
-   'or1k_replay',
-   'or1k_sim',
-diff --git a/tests/functional/mips/meson.build b/tests/functional/mips/meson.build
-new file mode 100644
-index 00000000000..49aaf53b02d
---- /dev/null
-+++ b/tests/functional/mips/meson.build
-@@ -0,0 +1,11 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+test_mips_timeouts = {
-+  'malta' : 480,
-+}
-+
-+tests_mips_system_thorough = [
-+  'malta',
-+  'replay',
-+  'tuxrun',
-+]
-diff --git a/tests/functional/test_mips_malta.py b/tests/functional/mips/test_malta.py
-similarity index 100%
-rename from tests/functional/test_mips_malta.py
-rename to tests/functional/mips/test_malta.py
-diff --git a/tests/functional/test_mips_replay.py b/tests/functional/mips/test_replay.py
-similarity index 100%
-rename from tests/functional/test_mips_replay.py
-rename to tests/functional/mips/test_replay.py
-diff --git a/tests/functional/test_mips_tuxrun.py b/tests/functional/mips/test_tuxrun.py
-similarity index 100%
-rename from tests/functional/test_mips_tuxrun.py
-rename to tests/functional/mips/test_tuxrun.py
-diff --git a/tests/functional/mips64/meson.build b/tests/functional/mips64/meson.build
-new file mode 100644
-index 00000000000..3ff21189879
---- /dev/null
-+++ b/tests/functional/mips64/meson.build
-@@ -0,0 +1,10 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+test_mips64_timeouts = {
-+  'malta' : 240,
-+}
-+
-+tests_mips64_system_thorough = [
-+  'malta',
-+  'tuxrun',
-+]
-diff --git a/tests/functional/test_mips64_malta.py b/tests/functional/mips64/test_malta.py
-similarity index 96%
-rename from tests/functional/test_mips64_malta.py
-rename to tests/functional/mips64/test_malta.py
-index 53c3e0c1221..a553d3c5bc7 100755
---- a/tests/functional/test_mips64_malta.py
-+++ b/tests/functional/mips64/test_malta.py
-@@ -5,7 +5,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
--from test_mips_malta import mips_check_wheezy
-+from mips.test_malta import mips_check_wheezy
- 
- 
- class MaltaMachineConsole(LinuxKernelTest):
-diff --git a/tests/functional/test_mips64_tuxrun.py b/tests/functional/mips64/test_tuxrun.py
-similarity index 100%
-rename from tests/functional/test_mips64_tuxrun.py
-rename to tests/functional/mips64/test_tuxrun.py
-diff --git a/tests/functional/mips64el/meson.build b/tests/functional/mips64el/meson.build
-new file mode 100644
-index 00000000000..69ec50174c4
---- /dev/null
-+++ b/tests/functional/mips64el/meson.build
-@@ -0,0 +1,14 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+test_mips64el_timeouts = {
-+  'malta' : 420,
-+  'replay' : 180,
-+}
-+
-+tests_mips64el_system_thorough = [
-+  'fuloong2e',
-+  'loongson3v',
-+  'malta',
-+  'replay',
-+  'tuxrun',
-+]
-diff --git a/tests/functional/test_mips64el_fuloong2e.py b/tests/functional/mips64el/test_fuloong2e.py
-similarity index 100%
-rename from tests/functional/test_mips64el_fuloong2e.py
-rename to tests/functional/mips64el/test_fuloong2e.py
-diff --git a/tests/functional/test_mips64el_loongson3v.py b/tests/functional/mips64el/test_loongson3v.py
-similarity index 100%
-rename from tests/functional/test_mips64el_loongson3v.py
-rename to tests/functional/mips64el/test_loongson3v.py
-diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/mips64el/test_malta.py
-similarity index 98%
-rename from tests/functional/test_mips64el_malta.py
-rename to tests/functional/mips64el/test_malta.py
-index 3cc79b74c18..8fdc49b3005 100755
---- a/tests/functional/test_mips64el_malta.py
-+++ b/tests/functional/mips64el/test_malta.py
-@@ -16,7 +16,7 @@
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
- 
--from test_mips_malta import mips_check_wheezy
-+from mips.test_malta import mips_check_wheezy
- 
- 
- class MaltaMachineConsole(LinuxKernelTest):
-@@ -191,7 +191,7 @@ def test_mips_malta_i6400_framebuffer_logo_8cores(self):
-         self.do_test_i6400_framebuffer_logo(8)
- 
- 
--from test_mipsel_malta import MaltaMachineYAMON
-+from mipsel.test_malta import MaltaMachineYAMON
- 
- if __name__ == '__main__':
-     LinuxKernelTest.main()
-diff --git a/tests/functional/test_mips64el_replay.py b/tests/functional/mips64el/test_replay.py
-similarity index 100%
-rename from tests/functional/test_mips64el_replay.py
-rename to tests/functional/mips64el/test_replay.py
-diff --git a/tests/functional/test_mips64el_tuxrun.py b/tests/functional/mips64el/test_tuxrun.py
-similarity index 100%
-rename from tests/functional/test_mips64el_tuxrun.py
-rename to tests/functional/mips64el/test_tuxrun.py
-diff --git a/tests/functional/mipsel/meson.build b/tests/functional/mipsel/meson.build
-new file mode 100644
-index 00000000000..8bfdf0649b5
---- /dev/null
-+++ b/tests/functional/mipsel/meson.build
-@@ -0,0 +1,12 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+test_mipsel_timeouts = {
-+  'malta' : 420,
-+  'replay' : 480,
-+}
-+
-+tests_mipsel_system_thorough = [
-+  'malta',
-+  'replay',
-+  'tuxrun',
-+]
-diff --git a/tests/functional/test_mipsel_malta.py b/tests/functional/mipsel/test_malta.py
-similarity index 98%
-rename from tests/functional/test_mipsel_malta.py
-rename to tests/functional/mipsel/test_malta.py
-index 9ee2884da8e..427e163d19d 100755
---- a/tests/functional/test_mipsel_malta.py
-+++ b/tests/functional/mipsel/test_malta.py
-@@ -13,7 +13,7 @@
- from qemu_test import interrupt_interactive_console_until_pattern
- from qemu_test import wait_for_console_pattern
- 
--from test_mips_malta import mips_check_wheezy
-+from mips.test_malta import mips_check_wheezy
- 
- 
- class MaltaMachineConsole(LinuxKernelTest):
-diff --git a/tests/functional/test_mipsel_replay.py b/tests/functional/mipsel/test_replay.py
-old mode 100644
-new mode 100755
-similarity index 100%
-rename from tests/functional/test_mipsel_replay.py
-rename to tests/functional/mipsel/test_replay.py
-diff --git a/tests/functional/test_mipsel_tuxrun.py b/tests/functional/mipsel/test_tuxrun.py
-similarity index 100%
-rename from tests/functional/test_mipsel_tuxrun.py
-rename to tests/functional/mipsel/test_tuxrun.py
+ tests_m68k_system_thorough = [
+   'm68k_mcf5208evb',
+   'm68k_nextcube',
 -- 
 2.50.1
 
