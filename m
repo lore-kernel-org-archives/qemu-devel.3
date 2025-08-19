@@ -4,76 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD356CA0EED
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 10:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCC4CA0EED
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 10:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoJRm-0000Jb-ID; Tue, 19 Aug 2025 06:20:06 -0400
+	id 1uoJVq-0001Ml-Cr; Tue, 19 Aug 2025 06:24:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoJRk-0000JL-L8
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 06:20:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoJRi-0005Pc-J7
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 06:20:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755598799;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qMVJQ8febb+4kkzdiFSniE4sAG9wLuK4b6UaiUczzow=;
- b=JrbIB3RUMNhYsEdsTvJ7+tHVd6OCyyr20PdMI49LcsCUAE+b4D/xyyd5XOrM7dKrhF+rtm
- vzQSjNvhjZ4G3jls6s4rqs6DPQKLJeTIzo9Ez7uRaHDiR2lQ5YEqVPoSHcZdytyfc9gWLt
- p3YFT2aCM8RvHbqIRd7sTsdNUSeDMzk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-Vdva1_SDOa2kX_JEw0yTmQ-1; Tue,
- 19 Aug 2025 06:19:57 -0400
-X-MC-Unique: Vdva1_SDOa2kX_JEw0yTmQ-1
-X-Mimecast-MFC-AGG-ID: Vdva1_SDOa2kX_JEw0yTmQ_1755598796
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF9C0180034B; Tue, 19 Aug 2025 10:19:55 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.237])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD6E81955F24; Tue, 19 Aug 2025 10:19:53 +0000 (UTC)
-Date: Tue, 19 Aug 2025 11:19:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: yong.huang@smartx.com
-Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] multifd: Make the main thread yield periodically to the
- main loop
-Message-ID: <aKRPxaHPY37Vh6zp@redhat.com>
-References: <5512220e1005ae2bc7357b2def32639d164e84eb.1754534263.git.yong.huang@smartx.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoJVp-0001Mc-Gc
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 06:24:17 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoJVn-0006PB-5d
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 06:24:17 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45a1b00797dso34214105e9.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 03:24:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755599052; x=1756203852; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D9qnMtEWxDnol/yTO5+KE2jWpCXB4W0LlhbHWnzYIJs=;
+ b=NBSp48NxLGL0oWC3K8v8ywf19+6hRJ3kY/X2b3a+jhUPsR3NzE5RHJ106GuhbsVqCi
+ ucEuMje9YyQsQHIpaLUgMpMri7jvXtYXEfYTnpqiB5oDUlLosRIpgrA5ZZivrHtFN9D8
+ oiVaS7Q1nKC49CDusbWfOfkRL/ySspHOxemvF6ufpOE0J2xX94iaF2+6SpBRIG4ASjrF
+ NlboImqM0+Q8PTZ31H75rDBGYPb4YROrSQnn//VOqg73TG6LH6WalsgwymYHlaDo7Wum
+ Bc6WBLvsIPzQS1oIeF7GvB7zh8worl4JxJLSK20aK3VInwaURnH0ilxlmkoQVJl7a6M/
+ BZSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755599052; x=1756203852;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=D9qnMtEWxDnol/yTO5+KE2jWpCXB4W0LlhbHWnzYIJs=;
+ b=Tp5Y+g3cm33W+5tfmYzSqIl3bofOJI0oGWPX3091ULEw9FCLDXHMd+TK47AS8SZuUp
+ 5m+AYxFmzHzupS3lb+hp2ufaMigc1TN91TTtJZHl7cSXprNHmuK+6hxCjgT+UxSGNjeg
+ vnQMqaKVA1DXUT9zlCPai3qqzZigSkjWVW9HOu2ACB5zs6g+F6nCOtqF1X7UR2D46lML
+ 99kr1MZfuaINqs6AXtDcRCAcqQMsfcIJ9jMURymTVCYAImjsvOa5xpzOvHaIitNz/R+K
+ XEOTSRIZQVAEG7wH//8BOASrOR70wm8J2qVg+9fTqzjKnjUM9aAmDLvJnpbjmeFGg8rc
+ a7Ow==
+X-Gm-Message-State: AOJu0Yxl1sB9DB1hyK8CETISvUu7bf51k5YBMIqWzfyH/4HCfaYtm1HJ
+ HS++1PbEbxCZ6hCWttNp6OH1T0bz3oLEi9AZ4tLgEUPDnn3IWuHIJiKAxBhcDa1yWlRShDEkN0H
+ Bh76E
+X-Gm-Gg: ASbGnctxORUwza9iPx6zzGK9bi4lkJpPfuqXkRbT0sZpGHWwDah2VzZMkyAp8RmG8mL
+ vC4f56FW5DIIEG5mE6YTs+UlRHwitsEtTc3xIIIgpsXsloZg1kBaRkGwIB/yEEZs2ShrueCL7b3
+ bfNVSG57wRLiHlOTIWqEkROET5VzmA5oe4B2kRycwWkyB+c07edeU2Pftzcc4S12WoJuFk6nOCy
+ eW7YFpPXMFiGlNyeVZ65kPVlV4hSgOyGlZ6GxpK8JqRSD0sVQa2v24gJey98gZlOqr3kyb9s5+8
+ FkmfkgJoEUa4Qdw396ooWK7Pyhz4AUUWI/ArEmnyf7tzoouPP1Aa2txC8BG1qXxYBxsZnCZKPxt
+ 97aVyYK1HVsaC3dnykEGRTwh8Peuu
+X-Google-Smtp-Source: AGHT+IHZYHAegUy89ACpQLxNF1T1x62a1shaZXFZJQ0+oVhC9FhU8La/WuybH8b/3tEYl7147gjA2A==
+X-Received: by 2002:a05:600c:3d97:b0:459:d9a2:e952 with SMTP id
+ 5b1f17b1804b1-45b461465acmr4272965e9.1.1755599052231; 
+ Tue, 19 Aug 2025 03:24:12 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b42a908d3sm37101355e9.22.2025.08.19.03.24.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Aug 2025 03:24:11 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] tests, scripts: Don't import print_function from __future__
+Date: Tue, 19 Aug 2025 11:24:09 +0100
+Message-ID: <20250819102409.2117969-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5512220e1005ae2bc7357b2def32639d164e84eb.1754534263.git.yong.huang@smartx.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,110 +96,184 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 07, 2025 at 10:41:17AM +0800, yong.huang@smartx.com wrote:
-> From: Hyman Huang <yong.huang@smartx.com>
-> 
-> When there are network issues like missing TCP ACKs on the send
-> side during the multifd live migration. At the send side, the error
-> "Connection timed out" is thrown out and source QEMU process stop
-> sending data, at the receive side, The IO-channels may be blocked
-> at recvmsg() and thus the main loop gets stuck and fails to respond
-> to QMP commands consequently.
+Some of our Python scripts still include the line
+  from __future__ import print_function
 
-The core contract of the main event loop thread is that *NOTHING*
-must ever go into a blocking sleep/wait state, precisely because
-this breaks other functionality using the event loop such as QMP.
+which is intended to allow a Python 2 to handle the Python 3 print()
+syntax. This particular part of the future arrived many years ago,
+and our minimum Python version is 3.9, so we don't need to keep
+this line around.
 
-> The QEMU backtrace at the receive side with the main thread and two
-> multi-channel threads is displayed as follows:
+NB: the scripts in tests/tcg/*/gdbstub/ are run with whatever Python
+gdb was built against, but we can safely assume that that was a
+Python 3 because our supported distros are all on Python 3.  In any
+case these are only run as part of "make check-tcg", not by
+end-users.
 
-snip
+Commit created with:
 
-> main thread:
-> Thread 1 (Thread 0x7fd45f1fbe40 (LWP 1413088)):
-> 0  0x00007fd46066b616 in futex_abstimed_wait_cancelable (private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5556d7604e80) at ../sysdeps/unix/sysv/linux/futex-internal.h:216
-> 1  do_futex_wait (sem=sem@entry=0x5556d7604e80, abstime=0x0) at sem_waitcommon.c:111
-> 2  0x00007fd46066b708 in __new_sem_wait_slow (sem=sem@entry=0x5556d7604e80, abstime=0x0) at sem_waitcommon.c:183
-> 3  0x00007fd46066b779 in __new_sem_wait (sem=sem@entry=0x5556d7604e80) at sem_wait.c:42
-> 4  0x00005556d5415524 in qemu_sem_wait (sem=0x5556d7604e80) at ../util/qemu-thread-posix.c:358
-> 5  0x00005556d4fa5e99 in multifd_recv_sync_main () at ../migration/multifd.c:1052
-> 6  0x00005556d521ed65 in ram_load_precopy (f=f@entry=0x5556d75dfb90) at ../migration/ram.c:4446
-> 7  0x00005556d521f1dd in ram_load (f=0x5556d75dfb90, opaque=<optimized out>, version_id=4) at ../migration/ram.c:4495
-> 8  0x00005556d4faa3e7 in vmstate_load (f=f@entry=0x5556d75dfb90, se=se@entry=0x5556d6083070) at ../migration/savevm.c:909
-> 9  0x00005556d4fae7a0 in qemu_loadvm_section_part_end (mis=0x5556d6082cc0, f=0x5556d75dfb90) at ../migration/savevm.c:2475
-> 10 qemu_loadvm_state_main (f=f@entry=0x5556d75dfb90, mis=mis@entry=0x5556d6082cc0) at ../migration/savevm.c:2634
-> 11 0x00005556d4fafbd5 in qemu_loadvm_state (f=0x5556d75dfb90) at ../migration/savevm.c:2706
-> 12 0x00005556d4f9ebdb in process_incoming_migration_co (opaque=<optimized out>) at ../migration/migration.c:561
-> 13 0x00005556d542513b in coroutine_trampoline (i0=<optimized out>, i1=<optimized out>) at ../util/coroutine-ucontext.c:186
-> 14 0x00007fd4604ef970 in ?? () from target:/lib64/libc.so.6
+ sed -i -e '/import print_function/d' $(git grep -l 'from __future__')
 
-Here we see the main event thread is running a migration
-coroutine, and the migration code has gone into a blocking
-sleep via qemu_sem_wait, which is a violation of the main
-event thread contract.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ scripts/userfaultfd-wrlat.py                           | 1 -
+ tests/guest-debug/test_gdbstub.py                      | 1 -
+ tests/tcg/aarch64/gdbstub/test-mte.py                  | 1 -
+ tests/tcg/aarch64/gdbstub/test-sve-ioctl.py            | 1 -
+ tests/tcg/aarch64/gdbstub/test-sve.py                  | 1 -
+ tests/tcg/multiarch/gdbstub/interrupt.py               | 1 -
+ tests/tcg/multiarch/gdbstub/memory.py                  | 1 -
+ tests/tcg/multiarch/gdbstub/sha1.py                    | 1 -
+ tests/tcg/multiarch/gdbstub/test-proc-mappings.py      | 1 -
+ tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py    | 1 -
+ tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py | 1 -
+ tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py  | 1 -
+ tests/tcg/s390x/gdbstub/test-signals-s390x.py          | 1 -
+ tests/tcg/s390x/gdbstub/test-svc.py                    | 1 -
+ 14 files changed, 14 deletions(-)
 
-> 
-> Once the QEMU process falls into the above state in the presence of
-> the network errors, live migration cannot be canceled gracefully,
-> leaving the destination VM in the "paused" state, since the QEMU
-> process on the destination side doesn't respond to the QMP command
-> "migrate_cancel".
-> 
-> To fix that, make the main thread yield to the main loop after waiting
-> too long for the multi-channels to finish receiving data during one
-> iteration. 10 seconds is a sufficient timeout period to set.
-> 
-> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> ---
->  migration/multifd.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index b255778855..aca0aeb341 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -1228,6 +1228,16 @@ void multifd_recv_sync_main(void)
->              }
->          }
->          trace_multifd_recv_sync_main_signal(p->id);
-> +        do {
-> +            if (qemu_sem_timedwait(&multifd_recv_state->sem_sync, 10000) == 0) {
-> +                break;
-> +            }
-> +            if (qemu_in_coroutine()) {
-> +                aio_co_schedule(qemu_get_current_aio_context(),
-> +                                qemu_coroutine_self());
-> +                qemu_coroutine_yield();
-> +            }
-> +        } while (1);
-
-This tries to workaround the violation of the event loop contract using
-short timeouts for the semaphore wait, but IMHO that is just papering
-over the design flaw.
-
-The migration code should not be using semaphores at all for sync purposes
-if it wants to be running in a coroutine from the event loop thread. It
-either needs to use some synchronization mechanism that can be polled by
-the event thread in a non-blocking manner, or this code needs to move to
-a background thread instead of a coroutine.
-
->          qemu_sem_post(&p->sem_sync);
->      }
->      trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
-> -- 
-> 2.27.0
-> 
-> 
-
-With regards,
-Daniel
+diff --git a/scripts/userfaultfd-wrlat.py b/scripts/userfaultfd-wrlat.py
+index 0684be4e044..a61a9abbfcb 100755
+--- a/scripts/userfaultfd-wrlat.py
++++ b/scripts/userfaultfd-wrlat.py
+@@ -17,7 +17,6 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-from __future__ import print_function
+ from bcc import BPF
+ from ctypes import c_ushort, c_int, c_ulonglong
+ from time import sleep
+diff --git a/tests/guest-debug/test_gdbstub.py b/tests/guest-debug/test_gdbstub.py
+index 4f08089e6a9..e017ccb55d7 100644
+--- a/tests/guest-debug/test_gdbstub.py
++++ b/tests/guest-debug/test_gdbstub.py
+@@ -1,7 +1,6 @@
+ """Helper functions for gdbstub testing
+ 
+ """
+-from __future__ import print_function
+ import argparse
+ import gdb
+ import os
+diff --git a/tests/tcg/aarch64/gdbstub/test-mte.py b/tests/tcg/aarch64/gdbstub/test-mte.py
+index 9ad98e7a54c..f4a7d7b4465 100644
+--- a/tests/tcg/aarch64/gdbstub/test-mte.py
++++ b/tests/tcg/aarch64/gdbstub/test-mte.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # Test GDB memory-tag commands that exercise the stubs for the qIsAddressTagged,
+ # qMemTag, and QMemTag packets, which are used for manipulating allocation tags.
+diff --git a/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py b/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py
+index a78a3a2514d..2c5c2180319 100644
+--- a/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py
++++ b/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # Test the SVE ZReg reports the right amount of data. It uses the
+ # sve-ioctl test and examines the register data each time the
+diff --git a/tests/tcg/aarch64/gdbstub/test-sve.py b/tests/tcg/aarch64/gdbstub/test-sve.py
+index 84cdcd4a32e..7b0489a622b 100644
+--- a/tests/tcg/aarch64/gdbstub/test-sve.py
++++ b/tests/tcg/aarch64/gdbstub/test-sve.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # Test the SVE registers are visible and changeable via gdbstub
+ #
+diff --git a/tests/tcg/multiarch/gdbstub/interrupt.py b/tests/tcg/multiarch/gdbstub/interrupt.py
+index 2d5654d1540..4eccdb41b97 100644
+--- a/tests/tcg/multiarch/gdbstub/interrupt.py
++++ b/tests/tcg/multiarch/gdbstub/interrupt.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # Test some of the system debug features with the multiarch memory
+ # test. It is a port of the original vmlinux focused test case but
+diff --git a/tests/tcg/multiarch/gdbstub/memory.py b/tests/tcg/multiarch/gdbstub/memory.py
+index 532b92e7fb3..76d75e52512 100644
+--- a/tests/tcg/multiarch/gdbstub/memory.py
++++ b/tests/tcg/multiarch/gdbstub/memory.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # Test some of the system debug features with the multiarch memory
+ # test. It is a port of the original vmlinux focused test case but
+diff --git a/tests/tcg/multiarch/gdbstub/sha1.py b/tests/tcg/multiarch/gdbstub/sha1.py
+index 1ce711a402c..3403b82fd4a 100644
+--- a/tests/tcg/multiarch/gdbstub/sha1.py
++++ b/tests/tcg/multiarch/gdbstub/sha1.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # A very simple smoke test for debugging the SHA1 userspace test on
+ # each target.
+diff --git a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
+index 6eb6ebf7b17..796dca75f0c 100644
+--- a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
++++ b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
+@@ -1,7 +1,6 @@
+ """Test that gdbstub has access to proc mappings.
+ 
+ This runs as a sourced script (via -x, via run-test.py)."""
+-from __future__ import print_function
+ import gdb
+ from test_gdbstub import gdb_exit, main, report
+ 
+diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py b/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
+index 00c26ab4a95..fa36c943d66 100644
+--- a/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
++++ b/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # Test auxiliary vector is loaded via gdbstub
+ #
+diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+index 862596b07a7..b18fa1234fb 100644
+--- a/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
++++ b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # Test gdbstub Xfer:siginfo:read stub.
+ #
+diff --git a/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py b/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py
+index 4d6b6b9fbe7..49cbc3548f6 100644
+--- a/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py
++++ b/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ #
+ # Test auxiliary vector is loaded via gdbstub
+ #
+diff --git a/tests/tcg/s390x/gdbstub/test-signals-s390x.py b/tests/tcg/s390x/gdbstub/test-signals-s390x.py
+index b6b7b39fc46..398ad534ebf 100644
+--- a/tests/tcg/s390x/gdbstub/test-signals-s390x.py
++++ b/tests/tcg/s390x/gdbstub/test-signals-s390x.py
+@@ -1,4 +1,3 @@
+-from __future__ import print_function
+ 
+ #
+ # Test that signals and debugging mix well together on s390x.
+diff --git a/tests/tcg/s390x/gdbstub/test-svc.py b/tests/tcg/s390x/gdbstub/test-svc.py
+index 17210b4e020..29a0aa0ede4 100644
+--- a/tests/tcg/s390x/gdbstub/test-svc.py
++++ b/tests/tcg/s390x/gdbstub/test-svc.py
+@@ -1,7 +1,6 @@
+ """Test single-stepping SVC.
+ 
+ This runs as a sourced script (via -x, via run-test.py)."""
+-from __future__ import print_function
+ import gdb
+ from test_gdbstub import main, report
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
