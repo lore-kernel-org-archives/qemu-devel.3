@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E4A3CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E8C8CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoSvX-0003wy-5I; Tue, 19 Aug 2025 16:27:27 -0400
+	id 1uoSvn-000449-B2; Tue, 19 Aug 2025 16:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoSvV-0003vR-19
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uoSvl-00043f-Gm
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoSvS-0006Pa-VA
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:24 -0400
+ id 1uoSvk-0006Rv-34
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755635242;
+ s=mimecast20190719; t=1755635259;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nCbGcsiVAJlNscguLMny9mM9bwo/qEQWFgH5PtIu/kE=;
- b=HnbDnlUxjjgURfRBabkyqMUoIojqkGEKghKgJbyIdebSs5pwxxw2rofat0LImIuisI3g2y
- AyU884OLkf8EsUHVfoxMtKvSzQ3TE/4yw6djtlqcze+HClV2h92Dv0Df/MlKDS7yrHCtS9
- 2uM1MtzxqiTRiPH0slTXHoMHPb8DLSo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HzSH5386A2ciXWk609Dzo5lu5Yf4nIt0Y0Ov5liK81E=;
+ b=Tz6Sn73vQikqKGFm9wh7W9G/XMWJHlZuKSrNA4c45TQnHey3I2bYRXHqZfOuMtdtWO1U8n
+ EHWgDMx/kAh8zGiAfhnM86YM3EgqCniGSVYRba/m7B4p/g5qANVE7mCo5rK0qKsjOcRliB
+ eI7YonmMKWTQx/JkOPpQ+GPQRqZCDNQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-R9LRBD62Pxyghvs8Exh5lA-1; Tue,
- 19 Aug 2025 16:27:20 -0400
-X-MC-Unique: R9LRBD62Pxyghvs8Exh5lA-1
-X-Mimecast-MFC-AGG-ID: R9LRBD62Pxyghvs8Exh5lA_1755635239
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-HwxLKlNCOpGoWXPUnMxXuA-1; Tue,
+ 19 Aug 2025 16:27:35 -0400
+X-MC-Unique: HwxLKlNCOpGoWXPUnMxXuA-1
+X-Mimecast-MFC-AGG-ID: HwxLKlNCOpGoWXPUnMxXuA_1755635254
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E57621955D48; Tue, 19 Aug 2025 20:27:18 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE71F19775AD; Tue, 19 Aug 2025 20:27:33 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.237])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7D51419560B4; Tue, 19 Aug 2025 20:27:14 +0000 (UTC)
+ id A504F19560B0; Tue, 19 Aug 2025 20:27:29 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -58,16 +58,16 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 01/12] include: define constant for early constructor priority
-Date: Tue, 19 Aug 2025 21:26:57 +0100
-Message-ID: <20250819202708.1185594-2-berrange@redhat.com>
+Subject: [PATCH 04/12] util: set the name for the 'main' thread
+Date: Tue, 19 Aug 2025 21:27:00 +0100
+Message-ID: <20250819202708.1185594-5-berrange@redhat.com>
 In-Reply-To: <20250819202708.1185594-1-berrange@redhat.com>
 References: <20250819202708.1185594-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -92,47 +92,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Functions marked with __attribute__((__constructor__)) will be
-invoked in linker order. In theory this is well defined, but
-in practice, it is hard to determine what this order will be
-with the layers of indirection through meson, ninja and the
-static libraries QEMU builds.
-
-Notably, the order currently appears different between Linux
-and Windows (as tested with Wine on Linux). This can cause
-problems when certain QEMU constructors have a dependancy on
-other QEMU constructors.
-
-To address this define a QEMU_CONSTRUCTOR_EARLY constant which
-provides a priority value that will run before other default
-constructors. This is to be used for QEMU constructors that
-are themselves self-contained, but may be relied upon by other
-constructors.
+The default main thread name is undefined, so use a constructor to
+explicitly set it to 'main'. This constructor is marked to run early
+as the thread name is intended to be used in error reporting / logs
+which may be triggered very early in QEMU execution.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/compiler.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ util/qemu-thread-posix.c | 12 ++++++++++++
+ util/qemu-thread-win32.c |  6 ++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index 1c2b673c05..4c49f52eb0 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -194,6 +194,14 @@
- # define QEMU_USED
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index 7c985b5d38..121d7ed69b 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -22,6 +22,18 @@
+ #include <pthread_np.h>
  #endif
  
-+/*
-+ * A priority for __attribute__((constructor(...))) that
-+ * will run earlier than the default constructors. Must
-+ * only be used for functions that have no dependency
-+ * on global initialization of other QEMU subsystems.
-+ */
-+#define QEMU_CONSTRUCTOR_EARLY 101
++static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
++qemu_thread_init(void)
++{
++# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
++    pthread_setname_np(pthread_self(), "main");
++# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
++    pthread_setname_np("main");
++# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
++    pthread_set_name_np(pthread_self(), "main");
++# endif
++}
 +
- /*
-  * Disable -ftrivial-auto-var-init on a local variable.
-  *
+ static void error_exit(int err, const char *msg)
+ {
+     fprintf(stderr, "qemu: %s: %s\n", msg, strerror(err));
+diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+index 9595a5b090..5e6ca0c12f 100644
+--- a/util/qemu-thread-win32.c
++++ b/util/qemu-thread-win32.c
+@@ -332,6 +332,12 @@ static void set_thread_description(HANDLE h, const char *name)
+     SetThreadDescriptionFunc(h, namew);
+ }
+ 
++static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
++qemu_thread_init(void)
++{
++    set_thread_description(GetCurrentThread(), "main");
++}
++
+ void qemu_thread_create(QemuThread *thread, const char *name,
+                        void *(*start_routine)(void *),
+                        void *arg, int mode)
 -- 
 2.50.1
 
