@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D337CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 16:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 690FCCA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 16:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoOtx-0001Qs-Fa; Tue, 19 Aug 2025 12:09:33 -0400
+	id 1uoOvb-0003Sx-HT; Tue, 19 Aug 2025 12:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoOtv-0001PT-6z
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:09:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uoOvV-0003Q4-81
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:11:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoOts-0007Sl-El
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:09:30 -0400
+ id 1uoOvS-00080o-5g
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:11:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755619767;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wo19OtTHfNkdqWouRXbpPNrN+plTPrwR4vS72ckNPCs=;
- b=V6O5Cth3a+3b6CBU7seW2EMXT8agwIkIKcmqJVIYuKiW/aijxi5AqtRurfUkTOumtCK5g+
- S6WrV4FKoJG7zTLh2eY2mQ9LoCyH8j6wgSRkMedrG7Jp8AkXuqHtGl2IA71jM0HD65JgbL
- v/5KaQFyClus+J9ulnm7f2umVJFDh2Q=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1755619863;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=f76GXYC3FIrjBGGqNOGDIgKcuddooQ3uT1XbwZDVf/g=;
+ b=I9nzV7PIBrRnwS4s5Sxoc0ekEKHlkB4w+RJ/3Xqfx+90ZFDkfjOMGJvZ+GmYrJcR4EMzp7
+ d0KYchz1ulJjuEj/iPqtFMC3S9YkC+mTLWDjuG++avu7lvDDsDWWTUoWQn5dwJ9gUePRzD
+ s7otCfOCmgN/ZBpjvk3PclxfCT8NvZQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-Vn65R4LVNg21-8jD-T0nLg-1; Tue,
- 19 Aug 2025 12:09:18 -0400
-X-MC-Unique: Vn65R4LVNg21-8jD-T0nLg-1
-X-Mimecast-MFC-AGG-ID: Vn65R4LVNg21-8jD-T0nLg_1755619750
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-kj2cydF0PtO-gL0kt6Jq-Q-1; Tue,
+ 19 Aug 2025 12:10:59 -0400
+X-MC-Unique: kj2cydF0PtO-gL0kt6Jq-Q-1
+X-Mimecast-MFC-AGG-ID: kj2cydF0PtO-gL0kt6Jq-Q_1755619858
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 910E1195FCEB; Tue, 19 Aug 2025 16:09:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.237])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E3211800447; Tue, 19 Aug 2025 16:09:01 +0000 (UTC)
-Date: Tue, 19 Aug 2025 17:08:57 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PATCH v5 15/18] whpx: arm64: implement -cpu host
-Message-ID: <aKShmdP3Pdn-wYgY@redhat.com>
-References: <20250808065419.47415-1-mohamed@unpredictable.fr>
- <20250808065419.47415-16-mohamed@unpredictable.fr>
- <CAFEAcA9iQnrKWXPXw2wG3c6gmevOMFQtt48HsJdx8GZz2sd+4Q@mail.gmail.com>
- <8e64fd77-9969-42b3-bbcd-1ed8de910ff9@linaro.org>
- <CAFEAcA9OXu3=HuA9n+Oo0C5K5hTG+kLr9xsM=geBJ_UtCi4_-w@mail.gmail.com>
- <aKSUS2-JrMBX7JXo@redhat.com>
- <1396c8cf-fb2c-4b39-811a-7152bdbe976f@linaro.org>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D3FF1800299; Tue, 19 Aug 2025 16:10:58 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.237])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6F316180028A; Tue, 19 Aug 2025 16:10:55 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 0/7] tracetool: add test suite to improve reviewability
+Date: Tue, 19 Aug 2025 17:10:46 +0100
+Message-ID: <20250819161053.464641-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1396c8cf-fb2c-4b39-811a-7152bdbe976f@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,108 +84,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 19, 2025 at 08:48:16AM -0700, Pierrick Bouvier wrote:
-> On 8/19/25 8:12 AM, Daniel P. Berrangé wrote:
-> > On Tue, Aug 19, 2025 at 04:06:45PM +0100, Peter Maydell wrote:
-> > > On Tue, 19 Aug 2025 at 16:04, Pierrick Bouvier
-> > > <pierrick.bouvier@linaro.org> wrote:
-> > > > 
-> > > > On 8/19/25 6:24 AM, Peter Maydell wrote:
-> > > > > On Fri, 8 Aug 2025 at 07:55, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
-> > > > > Can you follow the QEMU coding style, please (here and elsewhere)?
-> > > > > Variables and function names should be all lower case,
-> > > > > and variable declarations go at the start of a C code
-> > > > > block, not in the middle of one.
-> > > > > 
-> > > > 
-> > > > In some cases, including in this function, I feel that the rule to
-> > > > declare variables at the start of a block is not really helpful, and is
-> > > > more related to legacy C than a real point nowadays.
-> > > > As well, it sometimes forces to reuse some variables between various sub
-> > > > blocks, which definitely can create bugs.
-> > > > 
-> > > > Anyway, I'm not discussing the existing QEMU coding style, but just
-> > > > asking if for the current context, is it really a problem to declare
-> > > > variable here?
-> > > 
-> > > The point of a coding style is to aim for consistency. QEMU
-> > > is pretty terrible at being consistent, but we should try.
-> > > The rule about variables at start of block is not because
-> > > some compilers fail to compile it, but because we think
-> > > it's overall more readable that way.
-> > 
-> > There are also potential[1] functional problems with not declaring
-> > at the start of block, because if you have a "goto cleanup" which
-> > jumps over the line of the declaration, the variable will have
-> > undefined state when the 'cleanup:' block is running. This is
-> > something which is very subtle and easily missed when reading the
-> > code flow.
-> > 
-> 
-> This has nothing to do with where variables are declared, but where they are
-> assigned. The same issue can happen whether or not it's declared at the
-> start of a block.
-> 
-> I suspect we use -ftrivial-auto-var-init precisely because we force
-> variables to be declared at start of the scope, i.e. where they don't have
-> any value yet. So, instead of forcing an explicit initialization or rely on
-> compiler warnings for uninitialized values, it was decided to initialize
-> them to 0 by default.
-> 
-> If we declared them at the point where they have a defined semantic value,
-> this problem would not exist anyway, out of the goto_cleanup situation,
-> which has the same fundamental issue in both cases.
+To repeat the start of the commit message in patch 5....
 
-It really isn't the same issue when you compare
+When reviewing tracetool patches it is often very unclear what the
+expected output will be for the generated backends. Compounding
+this is that a default build will only enable the 'log' trace
+backend, so developers won't see generated code for other backends
+without making a special effort. Some backends are also platform
+specific, so can't be enabled in QEMU builds, even though tracetool
+could generate the code.
 
-  void bar(void) {
-    char *foo = NULL;
+To address this, introduce a test suite for tracetool which is
+conceptually similar to the qapi-schema test. It is a simple
+python program that runs tracetool and compares the actual output
+to historical reference output kept in git.
 
-    if (blah)
-       goto cleanup:
+This was inspired by noticing the now pointless "__nocheck__"
+method wrapping in the inline probe functions.
 
-  cleanup:
-    if (foo)
-       ....
-  }
+Changed in v4:
 
-vs
+ - Drop patch adding '-' as an output filename for tracetool
+ - Rewrite test to always use relative filenames for both
+   inputs and outputs
+ - Pass python code through 'black'
+ - Minor docs punctuation tweak
+ - Drop unused python method
 
-  void bar(void) {
-    if (blah)
-       goto cleanup:
+Changed in v3:
 
-    char *foo = NULL;
+ - Also modify the QAPI schema test to use QEMU_TEST_REGENERATE=1
+   env & document / hint this
+ - Make tracetool accept '-' as shorthand for stdout to
+   avoid relative paths in the reference output
 
-    ...some code...
+Changed in v2:
 
-  cleanup:
-    if (foo)
-       ....
-  }
+ - Add tracetool info to docs/devel/testing.rst
 
-The late declaration of 'foo' is outright misleading to reviewers.
+Daniel P. Berrangé (7):
+  checkpatch: cull trailing '*/' in SPDX check
+  tracetool: eliminate trailing whitespace in C format
+  tracetool: avoid space after "*" in arg types
+  tracetool: include SPDX-License-Identifier in generated files
+  tracetool: add test suite for tracetool with reference output
+  tracetool: drop the probe "__nocheck__" wrapping
+  qapi: switch to use QEMU_TEST_REGENERATE env var
 
-Its initialization at time of declaration gives the impression
-that 'foo' has well defined value in the 'cleanup' block, when
-that is not actually true. In big methods it is very easy to
-overlook an earlier 'goto' that jumps across a variable declaration
-and initialization.
+ MAINTAINERS                                  |   1 +
+ docs/devel/testing/main.rst                  |  40 +++++++
+ scripts/checkpatch.pl                        |   3 +
+ scripts/tracetool/__init__.py                |   9 +-
+ scripts/tracetool/format/c.py                |   3 +-
+ scripts/tracetool/format/d.py                |   3 +-
+ scripts/tracetool/format/h.py                |  17 +--
+ scripts/tracetool/format/log_stap.py         |   1 +
+ scripts/tracetool/format/simpletrace_stap.py |   1 +
+ scripts/tracetool/format/stap.py             |   1 +
+ scripts/tracetool/format/ust_events_c.py     |   1 +
+ scripts/tracetool/format/ust_events_h.py     |   1 +
+ tests/Makefile.include                       |   1 +
+ tests/meson.build                            |   1 +
+ tests/qapi-schema/test-qapi.py               |   7 +-
+ tests/tracetool/dtrace.c                     |  32 ++++++
+ tests/tracetool/dtrace.d                     |  10 ++
+ tests/tracetool/dtrace.h                     |  45 ++++++++
+ tests/tracetool/dtrace.log-stap              |  15 +++
+ tests/tracetool/dtrace.simpletrace-stap      |  16 +++
+ tests/tracetool/dtrace.stap                  |  14 +++
+ tests/tracetool/ftrace.c                     |  32 ++++++
+ tests/tracetool/ftrace.h                     |  59 +++++++++++
+ tests/tracetool/log.c                        |  32 ++++++
+ tests/tracetool/log.h                        |  43 ++++++++
+ tests/tracetool/meson.build                  |  25 +++++
+ tests/tracetool/simple.c                     |  61 +++++++++++
+ tests/tracetool/simple.h                     |  40 +++++++
+ tests/tracetool/syslog.c                     |  32 ++++++
+ tests/tracetool/syslog.h                     |  43 ++++++++
+ tests/tracetool/trace-events                 |   5 +
+ tests/tracetool/tracetool-test.py            | 105 +++++++++++++++++++
+ tests/tracetool/ust.c                        |  32 ++++++
+ tests/tracetool/ust.h                        |  41 ++++++++
+ tests/tracetool/ust.ust-events-c             |  14 +++
+ tests/tracetool/ust.ust-events-h             |  56 ++++++++++
+ 36 files changed, 821 insertions(+), 21 deletions(-)
+ create mode 100644 tests/tracetool/dtrace.c
+ create mode 100644 tests/tracetool/dtrace.d
+ create mode 100644 tests/tracetool/dtrace.h
+ create mode 100644 tests/tracetool/dtrace.log-stap
+ create mode 100644 tests/tracetool/dtrace.simpletrace-stap
+ create mode 100644 tests/tracetool/dtrace.stap
+ create mode 100644 tests/tracetool/ftrace.c
+ create mode 100644 tests/tracetool/ftrace.h
+ create mode 100644 tests/tracetool/log.c
+ create mode 100644 tests/tracetool/log.h
+ create mode 100644 tests/tracetool/meson.build
+ create mode 100644 tests/tracetool/simple.c
+ create mode 100644 tests/tracetool/simple.h
+ create mode 100644 tests/tracetool/syslog.c
+ create mode 100644 tests/tracetool/syslog.h
+ create mode 100644 tests/tracetool/trace-events
+ create mode 100755 tests/tracetool/tracetool-test.py
+ create mode 100644 tests/tracetool/ust.c
+ create mode 100644 tests/tracetool/ust.h
+ create mode 100644 tests/tracetool/ust.ust-events-c
+ create mode 100644 tests/tracetool/ust.ust-events-h
 
-Even if not all methods have this problem, the coding standards
-guide us into the habit of writing code that is immune from this
-kind of problem. That habit only forms reliably if we apply the
-coding standards unconditionally, rather than selectively.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.50.1
 
 
