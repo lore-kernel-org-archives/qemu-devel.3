@@ -4,91 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484A4CA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 21:31:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605BCCA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 21:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoTv8-00016Q-Mf; Tue, 19 Aug 2025 17:31:06 -0400
+	id 1uoTty-0007Qu-IT; Tue, 19 Aug 2025 17:29:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoTv5-0000zb-RP
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 17:31:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uoTtx-0007QJ-AH; Tue, 19 Aug 2025 17:29:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoTuz-000778-V6
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 17:31:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755639054;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Z6ngWuAj4uC2iChQyAjmuht1AtGU8sgIEG/lqjJRWqw=;
- b=ALReXaEUyxfuK9Sm9ONAfHST1Sid9Sr2kSBOm3vwG63An4/PewPViUAOwXfEyxnqOBkneR
- hIWaCrLiZeiBGIXA+PdpUvNXmmOxPAvw0xTQbLH5P0vOrIXqVWnTCOkL7qjltiXI/tUdoj
- mniv25Om4kgQpy39a40cRUBk5MzrihE=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-178--poaVHqwPw-qv03loc1UaA-1; Tue, 19 Aug 2025 17:30:52 -0400
-X-MC-Unique: -poaVHqwPw-qv03loc1UaA-1
-X-Mimecast-MFC-AGG-ID: -poaVHqwPw-qv03loc1UaA_1755639052
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-244581ce13aso117620765ad.2
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 14:30:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755639051; x=1756243851;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Z6ngWuAj4uC2iChQyAjmuht1AtGU8sgIEG/lqjJRWqw=;
- b=BzVIsT7Yuj2OJEzoUGriCqRsCwQ5TWv7TvyUdNTWZ5Gmv/EDlU5FYTpEp7CzA2ryql
- cCtqtCihoH+mXFfwgL21RCv7LhJgwaXFju73lh3d3N2on8QvumOqXjO+ur6hXwccyENM
- yiTZPJxm0GEaJT4djKXctfmNowv4w81fiSrNSjrpQcHEt7uakRpLk4Ul3IwWj+zF247P
- 8kG7MqhbCr1kP6uZ6a6RH6ElVjWJQm3c841+WGIFD7CWeY+MPKje9JbaLEcXFuF0cprc
- TFQBXvnj4Y/kgfHc7RBv6UdrOORSaiAetBC0YQhGn1Je1t9Z1vZlQDie7iIfJA0o+xtS
- AJGg==
-X-Gm-Message-State: AOJu0YwlMAqGuE+W03JU0WdoEQvgLhjx/KsE9W4A8eB8wdMlKy/YTskO
- 7Ol3+xQUHdVQAkC4j6ziLR2Go789l/tuAy9uUvrL+57BViKjAx/Qn6Ck7J+shHB7DX+/h1gQKWc
- G9AhpyFpvTdTtb4FsIfF0ahMrtv5gtltzRO+ONGKO6d8IwRfvO62AMlKS7c+c2X6KylHzlOeK+I
- QMRPG1NGFlkJefLVfCgET12ZhrXPkg5hZk3K9wEOY=
-X-Gm-Gg: ASbGnctr6XCKGn0aL7iAl08OfzTiTicrJV1UKX1RG7q4uRziuSLhGn6wbcNEuYiwBsO
- 7D6iroYv2bHBZdeXyh90imVKBazfACRV7rh3h2qYg3jNTnd8hJuOKVV/Sz+H4PMCGHY3b9dNFKk
- yNYcsZiTgJDUyfpg6iF4gErtZWWOW0wXVhRf50WY1tbc5wwj3wq1/i
-X-Received: by 2002:a17:902:d512:b0:224:910:23f0 with SMTP id
- d9443c01a7336-245ef26d2acmr6158385ad.49.1755639050995; 
- Tue, 19 Aug 2025 14:30:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFc54VJvAjhLQIZtnzcheXUlpO2ek9jwP/6zdB4T50+dD5VxxhRRGRfGcwkgvtMlxX+9ux1RK+ZFKeqv+sWjiU=
-X-Received: by 2002:a17:902:d512:b0:224:910:23f0 with SMTP id
- d9443c01a7336-245ef26d2acmr6157915ad.49.1755639050333; Tue, 19 Aug 2025
- 14:30:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uoTtv-0006pk-KN; Tue, 19 Aug 2025 17:29:53 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57JLIHBZ014523;
+ Tue, 19 Aug 2025 21:29:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=F6msv1cPb6ggL+C6G
+ 0VWSwBOirJ0oTMBqDxuAz9Aybs=; b=r62kEYs/+m1wnIWRsQTV3E+2Y3S5IMOLf
+ 2mkvldsg3/Tg5l3CfWrZCLemB3RKIpKLSGZWW9Oeqxzhiq4wuv8ii2H8YwCEuhSy
+ /DAU6IMk9Jdaq2JQMmGc1nXIC69vYFn6kB8LFo8VVdJ7BGjqjbol1//Pda5pw4W4
+ GNze4AOHY1Rnw7AN+b5W5eIc2dqel8TSroohnmKa5fmskStB8LVG4PXrY5evHxMo
+ ngYaUz5Cm/PP/zlXh/OFYxtj6bLtWBfXi3ckivGin1CUJIibCsbRzHiuKFOgASQc
+ igeTAXhk8vGDmiSosMKPz1SB2w/oA5jB3uubGAmtQcGuHbBb9FCdg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n12ng17w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 21:29:49 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57JLTngt004222;
+ Tue, 19 Aug 2025 21:29:49 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n12ng17v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 21:29:49 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57JJ70gP027184;
+ Tue, 19 Aug 2025 21:29:48 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48my4w0egv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 21:29:48 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57JLTlTo20316724
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 19 Aug 2025 21:29:47 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 06BFB5804E;
+ Tue, 19 Aug 2025 21:29:47 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 37B785803F;
+ Tue, 19 Aug 2025 21:29:46 +0000 (GMT)
+Received: from mglenn-KVM.. (unknown [9.10.239.198])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 19 Aug 2025 21:29:46 +0000 (GMT)
+From: Glenn Miles <milesg@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-ppc@nongnu.org, clg@redhat.com,
+ npiggin@gmail.com, harshpb@linux.ibm.com, thuth@redhat.com,
+ rathc@linux.ibm.com, richard.henderson@linaro.org
+Subject: [PATCH 3/4] hw/ppc: Add a test machine for the IBM PPE42 CPU
+Date: Tue, 19 Aug 2025 16:28:47 -0500
+Message-ID: <20250819212856.219932-4-milesg@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250819212856.219932-1-milesg@linux.ibm.com>
+References: <20250819212856.219932-1-milesg@linux.ibm.com>
 MIME-Version: 1.0
-References: <20250819102409.2117969-1-peter.maydell@linaro.org>
-In-Reply-To: <20250819102409.2117969-1-peter.maydell@linaro.org>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 19 Aug 2025 17:30:38 -0400
-X-Gm-Features: Ac12FXz30ZAK7JBRkzkOS-JRrMZRem2wwy0hyTwPdIyp1SuQBIIQY9HLcg8WIKo
-Message-ID: <CAFn=p-Y_-HEKWDrZeZjG5GLaM6dk6fRFHqGr9KCiL1ri+TaCnA@mail.gmail.com>
-Subject: Re: [PATCH] tests,
- scripts: Don't import print_function from __future__
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDE5OCBTYWx0ZWRfXywAOLgHv4bBx
+ BlKDOgBq2Bo9WztWMOwOmLaVgcad4SnJgRo5x4NzJdUb+CdGibRaFVUNbdo6juey9gQCr+N3XXi
+ UFgzBo/E3vSQrUzf6yKfPnQlcL6TB+a+7XzuTnlPJbbDLM8zp62vUGeaZ86Y4glRklcOfump+/T
+ g1+wNlLfFh88+PhHo03N6MbtuGAvBiQu5Xpr0pAav3qf1W9YoUMboGNxGB7qjbMmfaiLJ2KTWzQ
+ Nz1X5d2+seWTa4oLivpx3nlw3VkAvTP0wzAAIMvk94xojZkw5eS+MG8nZC6+1LF3TQDmVjsHthy
+ jl+MBfiuj5LlrgNqqDYMhNFuC73nXKoPdQPiDu0ZjHdcAVINZVM2KayOnVCKsnsSENGvaLBmBgF
+ blQx/6Zgm6nvXzuyfCK+FEyrGvSVoA==
+X-Authority-Analysis: v=2.4 cv=H7+CA+Yi c=1 sm=1 tr=0 ts=68a4eccd cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=evqTDFjjXuFHBGdgQ8UA:9
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: xUfq9Atc8Iq36n4Et50ptnz8t7fhs5SU
+X-Proofpoint-GUID: SHib10qWZZ9PXuY7yVWkM-rp3teRgfpw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-19_03,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1011 malwarescore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508190198
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,203 +124,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 19, 2025 at 6:24=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> Some of our Python scripts still include the line
->   from __future__ import print_function
->
-> which is intended to allow a Python 2 to handle the Python 3 print()
-> syntax. This particular part of the future arrived many years ago,
-> and our minimum Python version is 3.9, so we don't need to keep
-> this line around.
->
-> NB: the scripts in tests/tcg/*/gdbstub/ are run with whatever Python
-> gdb was built against, but we can safely assume that that was a
-> Python 3 because our supported distros are all on Python 3.  In any
-> case these are only run as part of "make check-tcg", not by
-> end-users.
->
-> Commit created with:
->
->  sed -i -e '/import print_function/d' $(git grep -l 'from __future__')
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Adds a test machine for the IBM PPE42 processor, including a
+DEC, FIT, WDT and 1MB of ram.
 
-Reviewed-by: John Snow <jsnow@redhat.com>
+The purpose of this machine is only to provide a generic platform
+for testing instructions of the recently  added PPE42 processor
+model which is used extensively in the IBM Power9, Power10 and
+future Power server processors.
 
-> ---
->  scripts/userfaultfd-wrlat.py                           | 1 -
->  tests/guest-debug/test_gdbstub.py                      | 1 -
->  tests/tcg/aarch64/gdbstub/test-mte.py                  | 1 -
->  tests/tcg/aarch64/gdbstub/test-sve-ioctl.py            | 1 -
->  tests/tcg/aarch64/gdbstub/test-sve.py                  | 1 -
->  tests/tcg/multiarch/gdbstub/interrupt.py               | 1 -
->  tests/tcg/multiarch/gdbstub/memory.py                  | 1 -
->  tests/tcg/multiarch/gdbstub/sha1.py                    | 1 -
->  tests/tcg/multiarch/gdbstub/test-proc-mappings.py      | 1 -
->  tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py    | 1 -
->  tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py | 1 -
->  tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py  | 1 -
->  tests/tcg/s390x/gdbstub/test-signals-s390x.py          | 1 -
->  tests/tcg/s390x/gdbstub/test-svc.py                    | 1 -
->  14 files changed, 14 deletions(-)
->
-> diff --git a/scripts/userfaultfd-wrlat.py b/scripts/userfaultfd-wrlat.py
-> index 0684be4e044..a61a9abbfcb 100755
-> --- a/scripts/userfaultfd-wrlat.py
-> +++ b/scripts/userfaultfd-wrlat.py
-> @@ -17,7 +17,6 @@
->  # This work is licensed under the terms of the GNU GPL, version 2 or
->  # later.  See the COPYING file in the top-level directory.
->
-> -from __future__ import print_function
->  from bcc import BPF
->  from ctypes import c_ushort, c_int, c_ulonglong
->  from time import sleep
-> diff --git a/tests/guest-debug/test_gdbstub.py b/tests/guest-debug/test_g=
-dbstub.py
-> index 4f08089e6a9..e017ccb55d7 100644
-> --- a/tests/guest-debug/test_gdbstub.py
-> +++ b/tests/guest-debug/test_gdbstub.py
-> @@ -1,7 +1,6 @@
->  """Helper functions for gdbstub testing
->
->  """
-> -from __future__ import print_function
->  import argparse
->  import gdb
->  import os
-> diff --git a/tests/tcg/aarch64/gdbstub/test-mte.py b/tests/tcg/aarch64/gd=
-bstub/test-mte.py
-> index 9ad98e7a54c..f4a7d7b4465 100644
-> --- a/tests/tcg/aarch64/gdbstub/test-mte.py
-> +++ b/tests/tcg/aarch64/gdbstub/test-mte.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # Test GDB memory-tag commands that exercise the stubs for the qIsAddres=
-sTagged,
->  # qMemTag, and QMemTag packets, which are used for manipulating allocati=
-on tags.
-> diff --git a/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py b/tests/tcg/aarc=
-h64/gdbstub/test-sve-ioctl.py
-> index a78a3a2514d..2c5c2180319 100644
-> --- a/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py
-> +++ b/tests/tcg/aarch64/gdbstub/test-sve-ioctl.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # Test the SVE ZReg reports the right amount of data. It uses the
->  # sve-ioctl test and examines the register data each time the
-> diff --git a/tests/tcg/aarch64/gdbstub/test-sve.py b/tests/tcg/aarch64/gd=
-bstub/test-sve.py
-> index 84cdcd4a32e..7b0489a622b 100644
-> --- a/tests/tcg/aarch64/gdbstub/test-sve.py
-> +++ b/tests/tcg/aarch64/gdbstub/test-sve.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # Test the SVE registers are visible and changeable via gdbstub
->  #
-> diff --git a/tests/tcg/multiarch/gdbstub/interrupt.py b/tests/tcg/multiar=
-ch/gdbstub/interrupt.py
-> index 2d5654d1540..4eccdb41b97 100644
-> --- a/tests/tcg/multiarch/gdbstub/interrupt.py
-> +++ b/tests/tcg/multiarch/gdbstub/interrupt.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # Test some of the system debug features with the multiarch memory
->  # test. It is a port of the original vmlinux focused test case but
-> diff --git a/tests/tcg/multiarch/gdbstub/memory.py b/tests/tcg/multiarch/=
-gdbstub/memory.py
-> index 532b92e7fb3..76d75e52512 100644
-> --- a/tests/tcg/multiarch/gdbstub/memory.py
-> +++ b/tests/tcg/multiarch/gdbstub/memory.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # Test some of the system debug features with the multiarch memory
->  # test. It is a port of the original vmlinux focused test case but
-> diff --git a/tests/tcg/multiarch/gdbstub/sha1.py b/tests/tcg/multiarch/gd=
-bstub/sha1.py
-> index 1ce711a402c..3403b82fd4a 100644
-> --- a/tests/tcg/multiarch/gdbstub/sha1.py
-> +++ b/tests/tcg/multiarch/gdbstub/sha1.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # A very simple smoke test for debugging the SHA1 userspace test on
->  # each target.
-> diff --git a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py b/tests/tc=
-g/multiarch/gdbstub/test-proc-mappings.py
-> index 6eb6ebf7b17..796dca75f0c 100644
-> --- a/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
-> +++ b/tests/tcg/multiarch/gdbstub/test-proc-mappings.py
-> @@ -1,7 +1,6 @@
->  """Test that gdbstub has access to proc mappings.
->
->  This runs as a sourced script (via -x, via run-test.py)."""
-> -from __future__ import print_function
->  import gdb
->  from test_gdbstub import gdb_exit, main, report
->
-> diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py b/tests/=
-tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
-> index 00c26ab4a95..fa36c943d66 100644
-> --- a/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
-> +++ b/tests/tcg/multiarch/gdbstub/test-qxfer-auxv-read.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # Test auxiliary vector is loaded via gdbstub
->  #
-> diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py b/tes=
-ts/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
-> index 862596b07a7..b18fa1234fb 100644
-> --- a/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
-> +++ b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # Test gdbstub Xfer:siginfo:read stub.
->  #
-> diff --git a/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py b/test=
-s/tcg/multiarch/gdbstub/test-thread-breakpoint.py
-> index 4d6b6b9fbe7..49cbc3548f6 100644
-> --- a/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py
-> +++ b/tests/tcg/multiarch/gdbstub/test-thread-breakpoint.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->  #
->  # Test auxiliary vector is loaded via gdbstub
->  #
-> diff --git a/tests/tcg/s390x/gdbstub/test-signals-s390x.py b/tests/tcg/s3=
-90x/gdbstub/test-signals-s390x.py
-> index b6b7b39fc46..398ad534ebf 100644
-> --- a/tests/tcg/s390x/gdbstub/test-signals-s390x.py
-> +++ b/tests/tcg/s390x/gdbstub/test-signals-s390x.py
-> @@ -1,4 +1,3 @@
-> -from __future__ import print_function
->
->  #
->  # Test that signals and debugging mix well together on s390x.
-> diff --git a/tests/tcg/s390x/gdbstub/test-svc.py b/tests/tcg/s390x/gdbstu=
-b/test-svc.py
-> index 17210b4e020..29a0aa0ede4 100644
-> --- a/tests/tcg/s390x/gdbstub/test-svc.py
-> +++ b/tests/tcg/s390x/gdbstub/test-svc.py
-> @@ -1,7 +1,6 @@
->  """Test single-stepping SVC.
->
->  This runs as a sourced script (via -x, via run-test.py)."""
-> -from __future__ import print_function
->  import gdb
->  from test_gdbstub import main, report
->
-> --
-> 2.43.0
->
+Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+---
+ hw/ppc/Kconfig         |  9 ++++++
+ hw/ppc/meson.build     |  2 ++
+ hw/ppc/ppc_booke.c     |  7 ++++-
+ hw/ppc/ppe42_machine.c | 69 ++++++++++++++++++++++++++++++++++++++++++
+ include/hw/ppc/ppc.h   |  1 +
+ 5 files changed, 87 insertions(+), 1 deletion(-)
+ create mode 100644 hw/ppc/ppe42_machine.c
+
+diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+index ced6bbc740..3fdea5919c 100644
+--- a/hw/ppc/Kconfig
++++ b/hw/ppc/Kconfig
+@@ -44,6 +44,15 @@ config POWERNV
+     select SSI_M25P80
+     select PNV_SPI
+ 
++config PPC405
++    bool
++    default y
++    depends on PPC
++    select M48T59
++    select PFLASH_CFI02
++    select PPC4XX
++    select SERIAL
++
+ config PPC440
+     bool
+     default y
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index 9893f8adeb..170b90ae7d 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -57,6 +57,8 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+   'pnv_n1_chiplet.c',
+ ))
+ # PowerPC 4xx boards
++ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
++  'ppe42_machine.c'))
+ ppc_ss.add(when: 'CONFIG_PPC440', if_true: files(
+   'ppc440_bamboo.c',
+   'ppc440_uc.c'))
+diff --git a/hw/ppc/ppc_booke.c b/hw/ppc/ppc_booke.c
+index 3872ae2822..13403a56b1 100644
+--- a/hw/ppc/ppc_booke.c
++++ b/hw/ppc/ppc_booke.c
+@@ -352,7 +352,12 @@ void ppc_booke_timers_init(PowerPCCPU *cpu, uint32_t freq, uint32_t flags)
+     booke_timer = g_new0(booke_timer_t, 1);
+ 
+     cpu->env.tb_env = tb_env;
+-    tb_env->flags = flags | PPC_TIMER_BOOKE | PPC_DECR_ZERO_TRIGGERED;
++    if (flags & PPC_TIMER_PPE) {
++        /* PPE's use a modified version of the booke behavior */
++        tb_env->flags = flags | PPC_DECR_UNDERFLOW_TRIGGERED;
++    } else {
++        tb_env->flags = flags | PPC_TIMER_BOOKE | PPC_DECR_ZERO_TRIGGERED;
++    }
+ 
+     tb_env->tb_freq    = freq;
+     tb_env->decr_freq  = freq;
+diff --git a/hw/ppc/ppe42_machine.c b/hw/ppc/ppe42_machine.c
+new file mode 100644
+index 0000000000..0bc295da28
+--- /dev/null
++++ b/hw/ppc/ppe42_machine.c
+@@ -0,0 +1,69 @@
++
++/*
++ * Test Machine for the IBM PPE42 processor
++ *
++ * Copyright (c) 2025, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qemu/error-report.h"
++#include "system/address-spaces.h"
++#include "hw/boards.h"
++#include "hw/ppc/ppc.h"
++#include "system/system.h"
++#include "system/reset.h"
++#include "system/kvm.h"
++
++static void main_cpu_reset(void *opaque)
++{
++    PowerPCCPU *cpu = opaque;
++
++    cpu_reset(CPU(cpu));
++}
++
++static void ppe42_machine_init(MachineState *machine)
++{
++    PowerPCCPU *cpu;
++    CPUPPCState *env;
++
++    if (kvm_enabled()) {
++        error_report("machine %s does not support the KVM accelerator",
++                     MACHINE_GET_CLASS(machine)->name);
++        exit(EXIT_FAILURE);
++    }
++
++    /* init CPU */
++    cpu = POWERPC_CPU(cpu_create(machine->cpu_type));
++    env = &cpu->env;
++    if (PPC_INPUT(env) != PPC_FLAGS_INPUT_PPE42) {
++        error_report("Incompatible CPU, only PPE42 bus supported");
++        exit(1);
++    }
++
++    qemu_register_reset(main_cpu_reset, cpu);
++
++    /* This sets the decrementer timebase */
++    ppc_booke_timers_init(cpu, 37500000, PPC_TIMER_PPE);
++
++    /* RAM */
++    if (machine->ram_size > 2 * GiB) {
++        error_report("RAM size more than 2 GiB is not supported");
++        exit(1);
++    }
++    memory_region_add_subregion(get_system_memory(), 0xfff80000, machine->ram);
++}
++
++
++static void ppe42_machine_class_init(MachineClass *mc)
++{
++    mc->desc = "PPE42 Test Machine";
++    mc->init = ppe42_machine_init;
++    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("PPE42XM");
++    mc->default_ram_id = "ram";
++    mc->default_ram_size = 1 * MiB;
++}
++
++DEFINE_MACHINE("ppe42_machine", ppe42_machine_class_init)
+diff --git a/include/hw/ppc/ppc.h b/include/hw/ppc/ppc.h
+index 8a14d623f8..cb51d704c6 100644
+--- a/include/hw/ppc/ppc.h
++++ b/include/hw/ppc/ppc.h
+@@ -52,6 +52,7 @@ struct ppc_tb_t {
+ #define PPC_DECR_UNDERFLOW_LEVEL     (1 << 4) /* Decr interrupt active when
+                                                * the most significant bit is 1.
+                                                */
++#define PPC_TIMER_PPE                (1 << 5) /* Enable PPE support */
+ 
+ uint64_t cpu_ppc_get_tb(ppc_tb_t *tb_env, uint64_t vmclk, int64_t tb_offset);
+ void cpu_ppc_tb_init(CPUPPCState *env, uint32_t freq);
+-- 
+2.43.0
 
 
