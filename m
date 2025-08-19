@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F377FCA0EF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDB2CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoSvj-00043B-0G; Tue, 19 Aug 2025 16:27:39 -0400
+	id 1uoSwA-0004GW-SZ; Tue, 19 Aug 2025 16:28:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoSvh-00041Z-4e
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uoSw6-0004F0-OW
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:28:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoSvf-0006RN-6p
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:36 -0400
+ id 1uoSw5-0006Ua-3k
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:28:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755635254;
+ s=mimecast20190719; t=1755635280;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KDvem1vGil1OZCITRTEEqpQe+PsbTDB2zBp3Eqvr5/M=;
- b=CUCbcWzViNYp1TmRvpM97KPRpOtkXccliGm5Y9L/DP5iGK6q5rYJqu8ETA3DAMPb35jzn4
- 5lcZJ3dh6yGJQG2q/DRbhOtH8vB3xBZGKp0Xqby9rutCZk8kZ4cSzWXmGbvRQvAlSWZUY1
- q0Ld2AoQe/53S/Ev8tKzsQc9RVZ/K60=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Sr0g1DAUgTZ2GH3ea4vJsvzbH2d1880lt804xDUQbFY=;
+ b=ifRv4MpfGwNz0w+FbdvtRa+4XUS6m/Jnpt31Y7bKwueoD5Py2cchZPUHp6hDbyUvjI+QDT
+ sxfbIoUgt07R40m2/5VGxCxD+06k8i/JVD5od/dDm+X2FdLE8zsM4nrQ6RFa3Yftm6lobS
+ mTvQuzzLyJcOS8o3wByTvMvepLsyQTE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-gj7bLjmINACSF4bTtEv2VQ-1; Tue,
- 19 Aug 2025 16:27:30 -0400
-X-MC-Unique: gj7bLjmINACSF4bTtEv2VQ-1
-X-Mimecast-MFC-AGG-ID: gj7bLjmINACSF4bTtEv2VQ_1755635249
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-6e53m47ePea-7CBTb8Fw4w-1; Tue,
+ 19 Aug 2025 16:27:56 -0400
+X-MC-Unique: 6e53m47ePea-7CBTb8Fw4w-1
+X-Mimecast-MFC-AGG-ID: 6e53m47ePea-7CBTb8Fw4w_1755635274
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4525519775A6; Tue, 19 Aug 2025 20:27:29 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8BED01800446; Tue, 19 Aug 2025 20:27:54 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.237])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6C74D19560B0; Tue, 19 Aug 2025 20:27:24 +0000 (UTC)
+ id 3C52D19560B0; Tue, 19 Aug 2025 20:27:49 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -58,16 +58,17 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 03/12] system: unconditionally enable thread naming
-Date: Tue, 19 Aug 2025 21:26:59 +0100
-Message-ID: <20250819202708.1185594-4-berrange@redhat.com>
+Subject: [PATCH 08/12] util: convert error-report & log to message API for
+ timestamp
+Date: Tue, 19 Aug 2025 21:27:04 +0100
+Message-ID: <20250819202708.1185594-9-berrange@redhat.com>
 In-Reply-To: <20250819202708.1185594-1-berrange@redhat.com>
 References: <20250819202708.1185594-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -76,7 +77,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,211 +93,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When thread naming was introduced years ago, it was disabled by
-default and put behind a command line flag:
+Both the error-report and log APIs can optional emit a timestamp
+as a prefix on messages, with the '-msg timestamp=on' command
+line flag is set.
 
-  commit 8f480de0c91a18d550721f8d9af969ebfbda0793
-  Author: Dr. David Alan Gilbert <dgilbert@redhat.com>
-  Date:   Thu Jan 30 10:20:31 2014 +0000
+Convert them to the new message API for formatting the context
+prefix, guaranteeign they will have matching behaviour going
+forward.
 
-    Add 'debug-threads' suboption to --name
-
-This was done based on a concern that something might depend
-on the historical thread naming. Thread names, however, were
-never promised to be part of QEMU's public API. The defaults
-will vary across platforms, so no assumptions should ever be
-made about naming.
-
-An opt-in behaviour is also unfortunately incompatible with
-RCU which creates its thread from an constructor function
-which is run before command line args are parsed. Thus the
-RCU thread lacks any name.
-
-libvirt has unconditionally enabled debug-threads=yes on all
-VMs it creates for 10 years. Interestingly this DID expose a
-bug in libvirt, as it parsed /proc/$PID/stat and could not
-cope with a space in the thread name. This was a latent
-pre-existing bug in libvirt though, and not a part of QEMU's
-API.
-
-Having thread names always available, will allow thread names
-to be included in error reports and log messags QEMU prints
-by default, which will improve ability to triage QEMU bugs.
+There is no change in output format for either logs or errors
+with this conversion.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/about/deprecated.rst |  7 +++++++
- include/qemu/thread.h     |  1 -
- system/vl.c               | 11 ++++++-----
- util/qemu-thread-posix.c  | 18 +-----------------
- util/qemu-thread-win32.c  | 27 ++++++---------------------
- 5 files changed, 20 insertions(+), 44 deletions(-)
+ include/qemu/error-report.h    |  1 -
+ system/vl.c                    |  7 ++++++-
+ tests/unit/test-error-report.c |  3 ++-
+ util/error-report.c            | 18 +++---------------
+ util/log.c                     | 20 +++++++-------------
+ 5 files changed, 18 insertions(+), 31 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index d50645a071..bd6f865558 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -81,6 +81,13 @@ kernel since 2001. None of the board types QEMU supports need
- ``param_struct`` support, so this option has been deprecated and will
- be removed in a future QEMU version.
+diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
+index 3ae2357fda..c8000778ec 100644
+--- a/include/qemu/error-report.h
++++ b/include/qemu/error-report.h
+@@ -70,7 +70,6 @@ void error_init(const char *argv0);
+                               fmt, ##__VA_ARGS__);      \
+     })
  
-+``debug-threads`` option for ``-name``
-+''''''''''''''''''''''''''''''''''''''
-+
-+Thread ``debug-threads`` option for the ``-name`` argument is now
-+ignored. Thread naming is unconditionally enabled for all platforms
-+where it is supported.
-+
- User-mode emulator command line arguments
- -----------------------------------------
+-extern bool message_with_timestamp;
+ extern bool error_with_guestname;
+ extern const char *error_guest_name;
  
-diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-index f0302ed01f..3a286bb3ef 100644
---- a/include/qemu/thread.h
-+++ b/include/qemu/thread.h
-@@ -215,7 +215,6 @@ void *qemu_thread_join(QemuThread *thread);
- void qemu_thread_get_self(QemuThread *thread);
- bool qemu_thread_is_self(QemuThread *thread);
- G_NORETURN void qemu_thread_exit(void *retval);
--void qemu_thread_naming(bool enable);
- 
- struct Notifier;
- /**
 diff --git a/system/vl.c b/system/vl.c
-index 3b7057e6c6..a64fd90d4a 100644
+index a64fd90d4a..696dd92669 100644
 --- a/system/vl.c
 +++ b/system/vl.c
-@@ -403,9 +403,7 @@ static QemuOptsList qemu_name_opts = {
-         }, {
-             .name = "debug-threads",
-             .type = QEMU_OPT_BOOL,
--            .help = "When enabled, name the individual threads; defaults off.\n"
--                    "NOTE: The thread names are for debugging and not a\n"
--                    "stable API.",
-+            .help = "DEPRECATED: thread names are always set where supported",
-         },
-         { /* End of list */ }
-     },
-@@ -554,9 +552,12 @@ static int parse_name(void *opaque, QemuOpts *opts, Error **errp)
+@@ -26,6 +26,7 @@
+ #include "qemu/help-texts.h"
+ #include "qemu/datadir.h"
+ #include "qemu/units.h"
++#include "qemu/message.h"
+ #include "qemu/module.h"
+ #include "qemu/target-info.h"
+ #include "exec/cpu-common.h"
+@@ -813,8 +814,12 @@ static void realtime_init(void)
+ 
+ static void configure_msg(QemuOpts *opts)
  {
-     const char *proc_name;
+-    message_with_timestamp = qemu_opt_get_bool(opts, "timestamp", false);
++    int flags = 0;
++    if (qemu_opt_get_bool(opts, "timestamp", false)) {
++        flags |= QMESSAGE_FORMAT_TIMESTAMP;
++    }
+     error_with_guestname = qemu_opt_get_bool(opts, "guest-name", false);
++    qmessage_set_format(flags);
+ }
  
--    if (qemu_opt_get(opts, "debug-threads")) {
--        qemu_thread_naming(qemu_opt_get_bool(opts, "debug-threads", false));
-+    if (qemu_opt_get(opts, "debug-threads") &&
-+        !qemu_opt_get_bool(opts, "debug-threads", false)) {
-+        fprintf(stderr, "Ignoring deprecated 'debug-threads=no' option, " \
-+                "thread naming is unconditionally enabled\n");
+ 
+diff --git a/tests/unit/test-error-report.c b/tests/unit/test-error-report.c
+index 54319c86c9..78f8b57660 100644
+--- a/tests/unit/test-error-report.c
++++ b/tests/unit/test-error-report.c
+@@ -13,6 +13,7 @@
+ 
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "qemu/message.h"
+ 
+ static void
+ test_error_report_simple(void)
+@@ -90,7 +91,7 @@ static void
+ test_error_report_timestamp(void)
+ {
+     if (g_test_subprocess()) {
+-        message_with_timestamp = true;
++        qmessage_set_format(QMESSAGE_FORMAT_TIMESTAMP);
+         warn_report("warn");
+         error_report("err");
+         return;
+diff --git a/util/error-report.c b/util/error-report.c
+index 1b17c11de1..932af5d9f5 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -13,6 +13,7 @@
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
+ #include "qemu/error-report.h"
++#include "qemu/message.h"
+ 
+ /*
+  * @report_type is the type of message: error, warning or
+@@ -24,8 +25,6 @@ typedef enum {
+     REPORT_TYPE_INFO,
+ } report_type;
+ 
+-/* Prepend timestamp to messages */
+-bool message_with_timestamp;
+ bool error_with_guestname;
+ const char *error_guest_name;
+ 
+@@ -169,13 +168,6 @@ static void print_loc(void)
      }
-+
-     qemu_name = qemu_opt_get(opts, "guest");
+ }
  
-     proc_name = qemu_opt_get(opts, "process");
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index ba725444ba..7c985b5d38 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -22,22 +22,6 @@
- #include <pthread_np.h>
- #endif
- 
--static bool name_threads;
--
--void qemu_thread_naming(bool enable)
+-static char *
+-real_time_iso8601(void)
 -{
--    name_threads = enable;
--
--#if !defined CONFIG_PTHREAD_SETNAME_NP_W_TID && \
--    !defined CONFIG_PTHREAD_SETNAME_NP_WO_TID && \
--    !defined CONFIG_PTHREAD_SET_NAME_NP
--    /* This is a debugging option, not fatal */
--    if (enable) {
--        fprintf(stderr, "qemu: thread naming not supported on this host\n");
--    }
--#endif
+-    g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+-    return g_date_time_format_iso8601(dt);
 -}
 -
- static void error_exit(int err, const char *msg)
+ /*
+  * Print a message to current monitor if we have one, else to stderr.
+  * @report_type is the type of message: error, warning or informational.
+@@ -186,13 +178,9 @@ real_time_iso8601(void)
+ G_GNUC_PRINTF(2, 0)
+ static void vreport(report_type type, const char *fmt, va_list ap)
  {
-     fprintf(stderr, "qemu: %s: %s\n", msg, strerror(err));
-@@ -361,7 +345,7 @@ static void *qemu_thread_start(void *args)
-     /* Attempt to set the threads name; note that this is for debug, so
-      * we're not going to fail if we can't set it.
+-    gchar *timestr;
++    g_autofree gchar *context = qmessage_context(QMESSAGE_CONTEXT_SKIP_MONITOR);
+ 
+-    if (message_with_timestamp && !monitor_cur()) {
+-        timestr = real_time_iso8601();
+-        error_printf("%s ", timestr);
+-        g_free(timestr);
+-    }
++    error_printf("%s", context);
+ 
+     /* Only prepend guest name if -msg guest-name and -name guest=... are set */
+     if (error_with_guestname && error_guest_name && !monitor_cur()) {
+diff --git a/util/log.c b/util/log.c
+index abdcb6b311..435d1c7135 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -22,6 +22,7 @@
+ #include "qemu/range.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "qemu/message.h"
+ #include "qemu/cutils.h"
+ #include "trace/control.h"
+ #include "qemu/thread.h"
+@@ -146,26 +147,19 @@ void qemu_log_unlock(FILE *logfile)
+ void qemu_log(const char *fmt, ...)
+ {
+     FILE *f;
+-    g_autofree const char *timestr = NULL;
+-
+     /*
+-     * Prepare the timestamp *outside* the logging
+-     * lock so it better reflects when the message
+-     * was emitted if we are delayed acquiring the
+-     * mutex
++     * Prepare the context *outside* the logging
++     * lock so any timestamp better reflects when
++     * the message was emitted if we are delayed
++     * acquiring the mutex
       */
--    if (name_threads && qemu_thread_args->name) {
-+    if (qemu_thread_args->name) {
- # if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-         pthread_setname_np(pthread_self(), qemu_thread_args->name);
- # elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index ca2e0b512e..9595a5b090 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -17,8 +17,6 @@
- #include "qemu-thread-common.h"
- #include <process.h>
- 
--static bool name_threads;
--
- typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
-                                                  PCWSTR lpThreadDescription);
- static pSetThreadDescription SetThreadDescriptionFunc;
-@@ -44,16 +42,6 @@ static bool load_set_thread_description(void)
-     return !!SetThreadDescriptionFunc;
- }
- 
--void qemu_thread_naming(bool enable)
--{
--    name_threads = enable;
--
--    if (enable && !load_set_thread_description()) {
--        fprintf(stderr, "qemu: thread naming not supported on this host\n");
--        name_threads = false;
+-    if (message_with_timestamp) {
+-        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+-        timestr = g_date_time_format_iso8601(dt);
 -    }
--}
--
- static void error_exit(int err, const char *msg)
- {
-     char *pstr;
-@@ -328,23 +316,20 @@ void *qemu_thread_join(QemuThread *thread)
-     return ret;
- }
++    g_autofree const char *context = qmessage_context(0);
  
--static bool set_thread_description(HANDLE h, const char *name)
-+static void set_thread_description(HANDLE h, const char *name)
- {
--    HRESULT hr;
-     g_autofree wchar_t *namew = NULL;
+     f = qemu_log_trylock();
+     if (f) {
+         va_list ap;
  
-     if (!load_set_thread_description()) {
--        return false;
-+        return;
-     }
+-        if (timestr) {
+-            fprintf(f, "%s ", timestr);
+-        }
++        fwrite(context, 1, strlen(context), f);
  
-     namew = g_utf8_to_utf16(name, -1, NULL, NULL, NULL);
-     if (!namew) {
--        return false;
-+        return;
-     }
- 
--    hr = SetThreadDescriptionFunc(h, namew);
--
--    return SUCCEEDED(hr);
-+    SetThreadDescriptionFunc(h, namew);
- }
- 
- void qemu_thread_create(QemuThread *thread, const char *name,
-@@ -370,8 +355,8 @@ void qemu_thread_create(QemuThread *thread, const char *name,
-     if (!hThread) {
-         error_exit(GetLastError(), __func__);
-     }
--    if (name_threads && name && !set_thread_description(hThread, name)) {
--        fprintf(stderr, "qemu: failed to set thread description: %s\n", name);
-+    if (name) {
-+        set_thread_description(hThread, name);
-     }
-     CloseHandle(hThread);
- 
+         va_start(ap, fmt);
+         vfprintf(f, fmt, ap);
 -- 
 2.50.1
 
