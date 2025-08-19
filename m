@@ -4,90 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8291DCA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 22:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5DEDCA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 22:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoUPQ-00039a-NN; Tue, 19 Aug 2025 18:02:24 -0400
+	id 1uoUfq-0006wS-GG; Tue, 19 Aug 2025 18:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uoUPO-000395-6G
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 18:02:22 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1uoUfo-0006vG-6W
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 18:19:20 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uoUPM-0002LT-LW
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 18:02:21 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2445824dc27so54575765ad.3
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 15:02:19 -0700 (PDT)
+ id 1uoUfl-0004sk-8h
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 18:19:19 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-32326de9cb4so4459980a91.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 15:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755640939; x=1756245739; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755641955; x=1756246755; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=TDPALxuPdrr0bb6NHBl0g3Q9dLIBp9r5Q23mx3aKyz8=;
- b=wRwkfUNsKFXDeYkUKXeKi+YZvdLb7foU8XmGJnbFNVO/7/sD/BQnOZsrIgkvzJxeI7
- al3EUmapsp7e35XzfLi4vdM1EapK8a2PZvaxBag+V4Cn+6P73nV9WgNx29fJT4iP2fHH
- uFgyUtH/w1ivGtCl+272nzBtSHq4+KSjB55Z9UGADQDw0YXRoUzpb1eKJJeo93fuCJS9
- YAeJUZiPAee3Gv3SWp0ivAoSJrDB1dskyK0hJpbiwDuFHl0WkcHtPg6s1V2ozk2/Ec9i
- ymU/epKw4icrzKeb2St1oA1a1KWFQzSnlXXuqblpywfB2ie77rBXYuaFOaB9QyZlycRC
- P4qQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=n5hxrXAjf61iNW1Ll31DQuEb03MvcLYfvlT+/iSK8KA=;
+ b=P1mi+VzZoskqqC75cMoLluC+eHenRsN6Q0S5GISQRaZ3YRiPZIctOfI5d/TUkcWZfj
+ KHODlvR+v86Z6RQtWASvZ05f1ROlO66pUsrDFYDy8HYRov2VJAB/5WEhOXdUfV7h4Qv0
+ drb9lbbSAK2v6C1TVZuE/iusOEBq+K4DChuhznfT318G+noKSNwSjGqsissPbIR9I/vS
+ 8zNe1ZKYdYrujaV4Cpg+L6TnBBQuwSJDznYT9tSoDmA07RUt+3ylllSDayBVkQA2i5WB
+ Za30tsYH08YVDSbP9LotFHQB0tAwOKAuFpbJFaDtf+Tf7+atFiZAGEt/mQDrMnASaPkG
+ bVGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755640939; x=1756245739;
+ d=1e100.net; s=20230601; t=1755641955; x=1756246755;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TDPALxuPdrr0bb6NHBl0g3Q9dLIBp9r5Q23mx3aKyz8=;
- b=SAENicCMBMzH9AshNfiI/URjdTC23F0sGwXSEktwaqlKkWsGQxMjC/92oNYhlOBf15
- SU4OQOgsGtGyuONno9OBaXj8vub1C5MwDxQjt8o1Ih7ZrdhhCxLa0Ic/Hb8wGPtgW7GA
- r8NIVmfcH512JhaS+JaXPaG7+3CaCbnYfJqshlif0CbZSj0XL+/KB9rqBPrmKjXGZH4t
- S7JNuyQVLqciXrXwugWOe/Tx4+gWozI91mJIX3uvsB+/LyRSGb38dbza1s+a8NeFQb0M
- hWsnCnTaHtgoyZ4B4SZ2dyC10KKEFwZG4Pzt5Wq1QjoidSybcQD0/GOsDIxG1KMZIFn6
- K9uw==
-X-Gm-Message-State: AOJu0YyCmo0kjWLRhCkGqTIWncAt67QCIdCC+2mO1RlNU0xJZmeHeSLs
- LYbOggp+tKkrfJ4LxkppD/HBMcUmD5xJrqN9KdMoBggbxxlTa9ujH9FIyNqG/OzRaa5SBHtcyNC
- Nc3eNJ9s=
-X-Gm-Gg: ASbGncuOUVgTMXTJteLjRApbs4zH9oWLzbgyhCwJtspxMYOcxmO6/6cDDkxIW9qMjQi
- a+8j689QwIBWlGFpTUDvvtojjQy/y9pLP5JJsgBbXAOBPqvnzkORs1VTy3RqCdbJNQdfNp2XXoJ
- 9dL/dCtd095XIBIoANrv4kIVyvXhR8hf8ebV5L9Eu8a1TgJWGpoRqby0anpN065OsFfieehlnSe
- R8f+d5spLWXsJG41MDyNiQw0ypoVF5dvkI+lgL7Dtir4T+8MSa2tLU4Q/VCeSGY/iB02kYpyGuv
- qCAAYLpR8REA6Tzf8PCYLiGMuZYdVsvioI4S8/9UKyv5kuhaGmzqE14QrEHB5nZRJhMWmA4bpji
- VLtvVXe1aTuokdRizsVetQYtc8XzuWaXXEQ==
-X-Google-Smtp-Source: AGHT+IFARLPxtZW2319jaF9AoyXdCarGsoAb6WifuJMjYUUu+vLbHSA+vf5qMCxXBwaWL8IMswTX2A==
-X-Received: by 2002:a17:902:da8c:b0:243:12d5:db5f with SMTP id
- d9443c01a7336-245ef23c2eemr6932595ad.48.1755640938559; 
- Tue, 19 Aug 2025 15:02:18 -0700 (PDT)
+ bh=n5hxrXAjf61iNW1Ll31DQuEb03MvcLYfvlT+/iSK8KA=;
+ b=jUQWZc/8fFnXRUwacBKWtpn1XMN6Wl0b120Z5OMeHg2LfcZ9+ayd4G3C+iVSSszbvL
+ faYASGywnsrAaLyR9baak6wAuihnLk0kiO95ZLjTXaQK/67VNOYjFd+hpGe8K90Mx7sB
+ E2MO4tE0Jd0VtQVkqvjIp90GEGGBD902srhWc9oX1Yukwde+Gq/jUY96sBehtf0tYt1a
+ EoyFWQfFv4KNBcph1iiA13ylWuLU0AYx4zCMS6fbhqpkEPWPV+8jrqarttzzgmHqJNNM
+ qqOIoc8Yi1H7PKiFliDI5sKHKA7QDvDys9/gl1dNrkB6MecL6sVaolcq7vglpPcUZWVu
+ os7w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWA1cDwzGZipV++hJqFU14w2w1v6cnHGx8eYORiB+yjYJFjNlqINclGFjQ0vxdH8b2dwVOBcaXe+MuS@nongnu.org
+X-Gm-Message-State: AOJu0Ywe3mWhKW5/DHygV3Pvp85g561drJufJ5ybBRaFvUReJXMgwqWE
+ X5aKZHrj1BnfvRUaqwL5oWFwTsjdBhpXNFZ/cqDN44bWuG0CrSI6JXUn+z2FPIOzNw8=
+X-Gm-Gg: ASbGncvPCX9Zf8Qk8P57G5U4Bl7qTWrt27VYNC0crFmcnhpbJDyO8RDwoEKfizuq/KH
+ Esq1JCogT+PcqEVLJSOiuDmOfkFzzIc8+H5nCHhSjgmFYS48iQDyVwWAvOFV2/oWoQOHlBW16Sk
+ 87Qpquml8MGsvH4u57+0P+Tp3aKKHwJ3TKj0KSBVJci6/xuI2/rbVQo5ZNQ4OOiG6bQV82BNTZp
+ iMjT6apdCgbw5FcGfL/rHm7I9N6c8A3E6CuzhF3DldbHfO53BqjkjPh0Ne07eFc44YvuwgGbWMw
+ lnMWOyuBGH0mjW35epvbpG7vcLKYB1U62TNo0LqP6JPw4RbKuAXMlOiI1CUZYeGQsohwqBNA04d
+ MSPTIbBnjhkMWSkxNfTDkByLuVbdB9XAC+Q==
+X-Google-Smtp-Source: AGHT+IEb8E1VqWUBJJgZFNZYPmcIhZjMlmLLtOvK9pLf8/m8D8vXmlH+qAFh+KFYh9lxoqwhbpkn9w==
+X-Received: by 2002:a17:90b:51c1:b0:31e:beae:2934 with SMTP id
+ 98e67ed59e1d1-324e1423f88mr967743a91.18.1755641955176; 
+ Tue, 19 Aug 2025 15:19:15 -0700 (PDT)
 Received: from [10.0.0.90] ([120.159.20.238]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed50129dsm6729775ad.129.2025.08.19.15.02.16
- for <qemu-devel@nongnu.org>
+ 98e67ed59e1d1-324e258cb88sm211008a91.28.2025.08.19.15.19.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Aug 2025 15:02:17 -0700 (PDT)
-Message-ID: <ac90c3c6-64ae-4abf-a850-59c862400b89@linaro.org>
-Date: Wed, 20 Aug 2025 08:02:14 +1000
+ Tue, 19 Aug 2025 15:19:14 -0700 (PDT)
+Message-ID: <fa2566d9-0102-4de0-aa33-18154c623d56@linaro.org>
+Date: Wed, 20 Aug 2025 08:19:04 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/12] util: convert error-report & log to message API for
- timestamp
-To: qemu-devel@nongnu.org
-References: <20250819202708.1185594-1-berrange@redhat.com>
- <20250819202708.1185594-9-berrange@redhat.com>
+Subject: Re: [PATCH 05/35] tcg: Fork TCI for wasm backend
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <cover.1755623521.git.ktokunaga.mail@gmail.com>
+ <630c91852939acf3c7fdd95c37b363fa5d4e60fd.1755623521.git.ktokunaga.mail@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250819202708.1185594-9-berrange@redhat.com>
+In-Reply-To: <630c91852939acf3c7fdd95c37b363fa5d4e60fd.1755623521.git.ktokunaga.mail@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,33 +114,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/20/25 06:27, Daniel P. Berrangé wrote:
->   void qemu_log(const char *fmt, ...)
->   {
->       FILE *f;
-> -    g_autofree const char *timestr = NULL;
-> -
->       /*
-> -     * Prepare the timestamp*outside* the logging
-> -     * lock so it better reflects when the message
-> -     * was emitted if we are delayed acquiring the
-> -     * mutex
-> +     * Prepare the context*outside* the logging
-> +     * lock so any timestamp better reflects when
-> +     * the message was emitted if we are delayed
-> +     * acquiring the mutex
->        */
-> -    if (message_with_timestamp) {
-> -        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
-> -        timestr = g_date_time_format_iso8601(dt);
-> -    }
+On 8/20/25 04:21, Kohei Tokunaga wrote:
+> The Wasm backend is implemented based on the forked TCI backend with
+> utilizing the TCI interpreter to execute TBs.
+> 
+> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
-Something that really ought to be handled better is that we currently use qemu_log to 
-print pieces of a larger message.  E.g. looping over the general registers to print the 
-whole cpu state.
+This is the wrong way to go about things.
 
-(1) We don't want timestamps in the middle, and
-(2) we don't want unnecessary memory allocation in the middle.
+Don't copy the tci backend and replace it piece by piece.
+Start with a clean slate and add the pieces one at a time.
 
 
 r~
