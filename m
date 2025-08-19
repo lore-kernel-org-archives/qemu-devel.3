@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB26CA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12276CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:29:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoSvs-00046A-F1; Tue, 19 Aug 2025 16:27:48 -0400
+	id 1uoSvW-0003wV-Mz; Tue, 19 Aug 2025 16:27:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoSvq-00045l-LH
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:46 -0400
+ id 1uoSvV-0003vZ-D5
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoSvp-0006Sb-Az
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:46 -0400
+ id 1uoSvS-0006PT-0z
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:27:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755635264;
+ s=mimecast20190719; t=1755635241;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KWv1LCGb2luSLYjm34xdKBp0Idn163q/hiK8ciVEkk4=;
- b=RI+sm+7My4Flt7IZCQMpgeR+jAH947UbwMORIDDAJLg6LFclKcC/XMvO0CSmx8dI43m47o
- ulOu3hBgCWlIPgq2h0GyCr+YPc1H8bQJJPzyn9lKsmBXMrSRscrQseysTICiQcwvKnxJc1
- sIZUDga5aBIjUtqwKCJogpcuz9Hemfg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NilJ6MEPI25XTGInaoAYGovN3ut+wa4IIXZII1mTO+Q=;
+ b=KOXMq7RP0ma8c7LDM7SjhHK5qMcGYtfG2EUylnbv7Yci4t2baIZgknBMdiqCdMwq3bRcck
+ u8cv2SbZT9r98Ee1nl7CnLcrDiVgMOeNiBTXbScQrGup0nvEK+NPbeEtENPUKrx4mDImx8
+ wTvm+XTzQprP6QAljtt8G5cr6nR5zfY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-382-puUrYAy2PeaF1LFbMOBsxQ-1; Tue,
- 19 Aug 2025 16:27:40 -0400
-X-MC-Unique: puUrYAy2PeaF1LFbMOBsxQ-1
-X-Mimecast-MFC-AGG-ID: puUrYAy2PeaF1LFbMOBsxQ_1755635259
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-UBODzNi7Mh-kef6v_us3SA-1; Tue,
+ 19 Aug 2025 16:27:16 -0400
+X-MC-Unique: UBODzNi7Mh-kef6v_us3SA-1
+X-Mimecast-MFC-AGG-ID: UBODzNi7Mh-kef6v_us3SA_1755635234
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E25E41956095; Tue, 19 Aug 2025 20:27:38 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E189B180028D; Tue, 19 Aug 2025 20:27:13 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.237])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 738AF19560B0; Tue, 19 Aug 2025 20:27:34 +0000 (UTC)
+ id C597619560B2; Tue, 19 Aug 2025 20:27:09 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
@@ -58,13 +57,11 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 05/12] util: add API to fetch the current thread id
-Date: Tue, 19 Aug 2025 21:27:01 +0100
-Message-ID: <20250819202708.1185594-6-berrange@redhat.com>
-In-Reply-To: <20250819202708.1185594-1-berrange@redhat.com>
-References: <20250819202708.1185594-1-berrange@redhat.com>
+Subject: [PATCH 00/12] util: sync error_report & qemu_log output more closely
+Date: Tue, 19 Aug 2025 21:26:56 +0100
+Message-ID: <20250819202708.1185594-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -92,62 +89,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For logging it is useful to include the current thread id. On
-POSIX there is no standard API for this, so try the Linux gettid()
-syscall preferentially, otherwise fallback to casting the result
-of thread_self() to an integer.
+This series is a tangent that came out of discussion in
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/qemu/thread.h    |  1 +
- util/qemu-thread-posix.c | 11 +++++++++++
- util/qemu-thread-win32.c |  5 +++++
- 3 files changed, 17 insertions(+)
+   https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00903.html
 
-diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-index 3a286bb3ef..96eee82679 100644
---- a/include/qemu/thread.h
-+++ b/include/qemu/thread.h
-@@ -215,6 +215,7 @@ void *qemu_thread_join(QemuThread *thread);
- void qemu_thread_get_self(QemuThread *thread);
- bool qemu_thread_is_self(QemuThread *thread);
- G_NORETURN void qemu_thread_exit(void *retval);
-+uint64_t qemu_thread_get_id(void);
- 
- struct Notifier;
- /**
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index 121d7ed69b..f240a93632 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -532,3 +532,14 @@ void *qemu_thread_join(QemuThread *thread)
-     }
-     return ret;
- }
-+
-+uint64_t qemu_thread_get_id(void)
-+{
-+#ifdef CONFIG_GETTID
-+    return (uint64_t)gettid();
-+#elif defined(SYS_gettid)
-+    return (uint64_t)syscall(SYS_gettid);
-+#else
-+    return (uint64_t)pthread_self();
-+#endif
-+}
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index 5e6ca0c12f..f6956717b2 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -412,3 +412,8 @@ bool qemu_thread_is_self(QemuThread *thread)
- {
-     return GetCurrentThreadId() == thread->tid;
- }
-+
-+uint64_t qemu_thread_get_id(void)
-+{
-+    return (uint64_t)GetCurrentThreadId();
-+}
+In thinking about adding thread info to error_report, I came
+to realize we should likely make qemu_log behave consistently
+with error_report & friends more generally. We already honour
+'-msg timestamp=on' in both (with duplicated code), and qemu_log
+doesn't honour the '-msg guest-name=on' parameter, nor will it
+include the binary name.
+
+This series shouldn't be considered mutually exclusive with
+Manos' backtrace suggestion above - it is complementary &
+each proposal can be evaluated independently. 
+
+
+As an example of the current state, consider mixing error and
+log output today:
+
+- Default context:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish \
+                       -d 'trace:qcrypto*'
+  qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55ac6d97f700 dir=fish
+  qcrypto_tls_creds_get_path TLS creds path creds=0x55ac6d97f700 filename=ca-cert.pem path=<none>
+  qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+- Full context:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish \
+                       -d 'trace:qcrypto*' \
+                       -msg guest-name=on,timestamp=on \
+                       -name "fish food"
+  2025-08-19T20:14:16.791413Z qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55e9a3458d10 dir=fish
+  2025-08-19T20:14:16.791429Z qcrypto_tls_creds_get_path TLS creds path creds=0x55e9a3458d10 filename=ca-cert.pem path=<none>
+  2025-08-19T20:14:16.791433Z fish food qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+And after this series is complete:
+
+- Default context:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish \
+                      -d 'trace:qcrypto*'
+  qemu-system-x86_64(1184284:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55a24ad5cb30 dir=fish
+  qemu-system-x86_64(1184284:main): qcrypto_tls_creds_get_path TLS creds path creds=0x55a24ad5cb30 filename=ca-cert.pem path=<none>
+  qemu-system-x86_64(1184284:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+- Full context:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish \
+                      -d 'trace:qcrypto*' \
+                      -msg guest-name=on,timestamp=on \
+                      -name "fish food"
+  2025-08-19T20:12:50.211823Z [fish food] qemu-system-x86_64(1168876:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5582183d8760 dir=fish
+  2025-08-19T20:12:50.211842Z [fish food] qemu-system-x86_64(1168876:main): qcrypto_tls_creds_get_path TLS creds path creds=0x5582183d8760 filename=ca-cert.pem path=<none>
+  2025-08-19T20:12:50.211846Z [fish food] qemu-system-x86_64(1168876:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+The main things to note:
+
+ * error_report/warn_report/qemu_log share the same
+   output format and -msg applies to both
+
+ * -msg debug-threads=on is now unconditionally enabled
+   and thus the param is deprecated & ignored
+
+ * Thread ID and name are unconditionally enabled
+
+ * Guest name is surrounded in [...] brackets
+
+ * The default output lines are typically 15 chars
+   wider given that we always include the thread
+   ID + name now
+
+ * This takes the liberty of assigning the new file
+   to the existing error-report.c maintainer (Markus)
+   Since splitting it off into message.c instead of
+   putting it all in error-report.c felt slightly
+   nicer.
+
+One thing I didn't tackle is making the location
+info get reported for qemu_log. This is used to
+give context for error messages when parsing some
+CLI args, and could be interesting for log messages
+associated with those same CLI args.
+
+I'm not too happy with the constructor priority
+logic, but I don't see a better option, as I don't
+think it is practical to order .o files passed to
+the linker in a way that nicely guarantees the order
+of constructor execution.
+
+Daniel P. Berrangé (12):
+  include: define constant for early constructor priority
+  monitor: initialize global data from a constructor
+  system: unconditionally enable thread naming
+  util: set the name for the 'main' thread
+  util: add API to fetch the current thread id
+  util: add API to fetch the current thread name
+  util: introduce common helper for error-report & log code
+  util: convert error-report & log to message API for timestamp
+  util: add support for formatting a workload name in messages
+  util: add support for formatting a program name in messages
+  util: add support for formatting thread info in messages
+  util: add brackets around guest name in message context
+
+ MAINTAINERS                          |  2 +
+ docs/about/deprecated.rst            |  7 +++
+ include/qemu/compiler.h              |  8 +++
+ include/qemu/error-report.h          |  4 --
+ include/qemu/message.h               | 52 +++++++++++++++++
+ include/qemu/thread.h                |  3 +-
+ meson.build                          | 21 +++++++
+ monitor/monitor.c                    | 14 +++--
+ storage-daemon/qemu-storage-daemon.c |  6 ++
+ system/vl.c                          | 30 +++++++---
+ tests/qemu-iotests/041               |  2 +-
+ tests/qemu-iotests/common.filter     |  2 +-
+ tests/unit/test-error-report.c       |  6 +-
+ util/error-report.c                  | 29 +---------
+ util/log.c                           | 20 +++----
+ util/meson.build                     |  1 +
+ util/message.c                       | 69 ++++++++++++++++++++++
+ util/qemu-thread-posix.c             | 60 ++++++++++++++-----
+ util/qemu-thread-win32.c             | 86 ++++++++++++++++++++--------
+ 19 files changed, 321 insertions(+), 101 deletions(-)
+ create mode 100644 include/qemu/message.h
+ create mode 100644 util/message.c
+
 -- 
 2.50.1
 
