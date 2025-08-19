@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAAA6CA0EED
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 11:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D501CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 11:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoKS3-0003Fb-I7; Tue, 19 Aug 2025 07:24:27 -0400
+	id 1uoKSX-0003Pq-6V; Tue, 19 Aug 2025 07:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKS1-0003El-Kv
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:24:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKSV-0003Nv-2B
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:24:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKRz-0007Av-VJ
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:24:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKSR-0007Du-Fm
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:24:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755602663;
+ s=mimecast20190719; t=1755602690;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dh0Zy25mJ/Z3CZswGi+44lW+YlmrL9WzQGlooeugvc8=;
- b=eSw/K4ZUgQ0ruqU7ENvL2PM5EqRw57YlZYRMaHfjttde/hZMlzam1IYGuJzGGJJefUPkxE
- c9ZEqDLazLxPJcmZUxFeZgAAqjdupw2EGJZn9Bb0Mrskx0e35h0SCh++GWFuPUX7Bh1sYl
- 7PHzhtMX92xKvP7EoZo/JdC70ZaZBiY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=FVdJJ1AvdcUfocTDevJ8KZ/rsNZ89fUNpetyyw4eVy0=;
+ b=RlDCrHuiYn3Uth7j/h//b0LXHQPcGNF+etX/Y9GfepCpaFLi28Tt07gFgHZUdVvCGCkkhv
+ 6aehO9iE1EAiNXTkoJDvbzcXhj6xujxK/wIjL3L5aInjL9qMxb9rRHm/0Sb43bLiKAWAqJ
+ HwkzzKOU/zgGPEw9yRotELQOuWUhS1M=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-gktDDjKOPfilHjd29zVsLg-1; Tue,
- 19 Aug 2025 07:24:22 -0400
-X-MC-Unique: gktDDjKOPfilHjd29zVsLg-1
-X-Mimecast-MFC-AGG-ID: gktDDjKOPfilHjd29zVsLg_1755602661
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-A49LNdOhMxWrJ8B8-wWxYQ-1; Tue,
+ 19 Aug 2025 07:24:49 -0400
+X-MC-Unique: A49LNdOhMxWrJ8B8-wWxYQ-1
+X-Mimecast-MFC-AGG-ID: A49LNdOhMxWrJ8B8-wWxYQ_1755602688
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F25641955D61; Tue, 19 Aug 2025 11:24:20 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1ACD918002CC; Tue, 19 Aug 2025 11:24:48 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.251])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C067930001A8; Tue, 19 Aug 2025 11:24:18 +0000 (UTC)
+ id 07FED30001A8; Tue, 19 Aug 2025 11:24:45 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 04/25] tests/functional/meson.build: Allow tests to reside
- in subfolders
-Date: Tue, 19 Aug 2025 13:23:41 +0200
-Message-ID: <20250819112403.432587-5-thuth@redhat.com>
+Subject: [PATCH v2 13/25] tests/functional: Move microblaze tests into
+ architecture specific folder
+Date: Tue, 19 Aug 2025 13:23:50 +0200
+Message-ID: <20250819112403.432587-14-thuth@redhat.com>
 In-Reply-To: <20250819112403.432587-1-thuth@redhat.com>
 References: <20250819112403.432587-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,35 +87,116 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-We are going to move target-specific tests to subfolders that are
-named after the target (and generic tests will be put into a "generic"
-folder), so prepare the meson.build file to allow such locations, too.
+The tests/functional folder has become quite crowded, thus move the
+microblaze tests into a target-specific subfolder.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/meson.build | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ MAINTAINERS                                           |  2 +-
+ tests/functional/meson.build                          | 11 ++---------
+ tests/functional/microblaze/meson.build               |  6 ++++++
+ .../test_replay.py}                                   |  0
+ .../test_s3adsp1800.py}                               |  0
+ tests/functional/microblazeel/meson.build             |  5 +++++
+ .../test_s3adsp1800.py}                               |  2 +-
+ 7 files changed, 15 insertions(+), 11 deletions(-)
+ create mode 100644 tests/functional/microblaze/meson.build
+ rename tests/functional/{test_microblaze_replay.py => microblaze/test_replay.py} (100%)
+ rename tests/functional/{test_microblaze_s3adsp1800.py => microblaze/test_s3adsp1800.py} (100%)
+ create mode 100644 tests/functional/microblazeel/meson.build
+ rename tests/functional/{test_microblazeel_s3adsp1800.py => microblazeel/test_s3adsp1800.py} (92%)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e188de813fb..b6a835777bb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1370,7 +1370,7 @@ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+ S: Maintained
+ F: hw/microblaze/petalogix_s3adsp1800_mmu.c
+ F: include/hw/char/xilinx_uartlite.h
+-F: tests/functional/test_microblaze*.py
++F: tests/functional/microblaze*/test_s3adsp1800.py
+ 
+ petalogix_ml605
+ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 356aad12dee..8c24ac1cc2d 100644
+index d32dd4a371f..fee68056145 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -423,7 +423,13 @@ foreach speed : ['quick', 'thorough']
+@@ -17,6 +17,8 @@ subdir('hppa')
+ subdir('i386')
+ subdir('loongarch64')
+ subdir('m68k')
++subdir('microblaze')
++subdir('microblazeel')
  
-     foreach test : target_tests
-       testname = '@0@-@1@'.format(target_base, test)
--      testfile = 'test_' + test + '.py'
-+      if fs.exists('test_' + test + '.py')
-+        testfile = 'test_' + test + '.py'
-+      elif fs.exists('generic' / 'test_' + test + '.py')
-+        testfile = 'generic' / 'test_' + test + '.py'
-+      else
-+        testfile = target_base / 'test_' + test + '.py'
-+      endif
-       testpath = meson.current_source_dir() / testfile
-       teststamp = testname + '.tstamp'
-       test_precache_env = environment()
+ test_mips_timeouts = {
+   'mips_malta' : 480,
+@@ -82,15 +84,6 @@ tests_generic_linuxuser = [
+ tests_generic_bsduser = [
+ ]
+ 
+-tests_microblaze_system_thorough = [
+-  'microblaze_replay',
+-  'microblaze_s3adsp1800'
+-]
+-
+-tests_microblazeel_system_thorough = [
+-  'microblazeel_s3adsp1800'
+-]
+-
+ tests_mips_system_thorough = [
+   'mips_malta',
+   'mips_replay',
+diff --git a/tests/functional/microblaze/meson.build b/tests/functional/microblaze/meson.build
+new file mode 100644
+index 00000000000..8069ca9be60
+--- /dev/null
++++ b/tests/functional/microblaze/meson.build
+@@ -0,0 +1,6 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++tests_microblaze_system_thorough = [
++  'replay',
++  's3adsp1800'
++]
+diff --git a/tests/functional/test_microblaze_replay.py b/tests/functional/microblaze/test_replay.py
+similarity index 100%
+rename from tests/functional/test_microblaze_replay.py
+rename to tests/functional/microblaze/test_replay.py
+diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/microblaze/test_s3adsp1800.py
+similarity index 100%
+rename from tests/functional/test_microblaze_s3adsp1800.py
+rename to tests/functional/microblaze/test_s3adsp1800.py
+diff --git a/tests/functional/microblazeel/meson.build b/tests/functional/microblazeel/meson.build
+new file mode 100644
+index 00000000000..27619dc5a9a
+--- /dev/null
++++ b/tests/functional/microblazeel/meson.build
+@@ -0,0 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++tests_microblazeel_system_thorough = [
++  's3adsp1800'
++]
+diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/microblazeel/test_s3adsp1800.py
+similarity index 92%
+rename from tests/functional/test_microblazeel_s3adsp1800.py
+rename to tests/functional/microblazeel/test_s3adsp1800.py
+index 915902d48bd..75ce8856ed1 100755
+--- a/tests/functional/test_microblazeel_s3adsp1800.py
++++ b/tests/functional/microblazeel/test_s3adsp1800.py
+@@ -7,7 +7,7 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later. See the COPYING file in the top-level directory.
+ 
+-from test_microblaze_s3adsp1800 import MicroblazeMachine
++from microblaze.test_s3adsp1800 import MicroblazeMachine
+ 
+ 
+ class MicroblazeLittleEndianMachine(MicroblazeMachine):
 -- 
 2.50.1
 
