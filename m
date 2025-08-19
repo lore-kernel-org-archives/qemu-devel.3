@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCCECA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 11:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C986CCA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 11:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoKTE-00051H-1C; Tue, 19 Aug 2025 07:25:40 -0400
+	id 1uoKSl-0003qz-4U; Tue, 19 Aug 2025 07:25:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKTA-0004kV-Tb
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:25:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKSj-0003pT-9I
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:25:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKT7-0007U8-Rb
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:25:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoKSf-0007QH-09
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 07:25:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755602732;
+ s=mimecast20190719; t=1755602704;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k2qn3LNqthmGNPcPSg+0OC3ezywDDfR/XxGsimjVh2g=;
- b=UClHexdJM5rJJBaaKabTQYhxkLl+Zoq7bOsdV7qhCw9OEPxe2jXKHlLuulKgKmmmXnEjGO
- qB/p7mgvyWhCD7DirFTsVPGXUYW5lv2zJSxFFyp3uY8+IlIGrQn6a9WAIbQ3QXNqfgDfpq
- BMyrCphfj4Ii8YI2djodJ3jT0S2Cg2A=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=yV7H2eibK7Yw4yxGpBlTuc71jMSab2gB4V/jnrxS/64=;
+ b=VHNixJ9N446gpM/NZ5zgls/hb9Osctv/B5Rn+t3wxYZ/d4pdzLWmztmudm3P3qrn+eqLC1
+ 1tt5EOdVUiWOQicVs1DIlZjj82djAwX7/OA2hXY2gda/4B4xBy116YtWJkdmDSTgsVCXYr
+ Apu/k0076RDdYKqS3v9rFKTGJOgAboc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-sp8LXZGDMp-VKdJFxTuxgQ-1; Tue,
- 19 Aug 2025 07:24:12 -0400
-X-MC-Unique: sp8LXZGDMp-VKdJFxTuxgQ-1
-X-Mimecast-MFC-AGG-ID: sp8LXZGDMp-VKdJFxTuxgQ_1755602651
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-QZ1PnMZZOoiQOnSRDiJsXg-1; Tue,
+ 19 Aug 2025 07:25:00 -0400
+X-MC-Unique: QZ1PnMZZOoiQOnSRDiJsXg-1
+X-Mimecast-MFC-AGG-ID: QZ1PnMZZOoiQOnSRDiJsXg_1755602700
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EB8E180048E; Tue, 19 Aug 2025 11:24:11 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F16411800359; Tue, 19 Aug 2025 11:24:59 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.251])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C08B330001B5; Tue, 19 Aug 2025 11:24:09 +0000 (UTC)
+ id 8B03330001B5; Tue, 19 Aug 2025 11:24:57 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 01/25] tests/functional: Rework the migration test to have
- target-specific files
-Date: Tue, 19 Aug 2025 13:23:38 +0200
-Message-ID: <20250819112403.432587-2-thuth@redhat.com>
+Subject: [PATCH v2 17/25] tests/functional: Move riscv32/riscv64 tests into
+ target-specific folders
+Date: Tue, 19 Aug 2025 13:23:54 +0200
+Message-ID: <20250819112403.432587-18-thuth@redhat.com>
 In-Reply-To: <20250819112403.432587-1-thuth@redhat.com>
 References: <20250819112403.432587-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -86,593 +87,164 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-We are going to move the tests for each target into separate subdirectories.
-The migration test does not fit quite into this scheme, since it works
-for multiple targets, but not all. Rework the test to have a common
-test class, and target specific files with a target specific class, so
-that this will fit better into the new scheme.
+The opensbi test is used for both, riscv32 and riscv64. Copy the main
+test to the riscv64 folder and add a simple wrapper to the riscv32
+folder to be able to run it for that target, too.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   |  2 +-
- tests/functional/meson.build                  | 22 ++++++------
- .../{test_migration.py => migration.py}       | 35 +++++--------------
- tests/functional/test_aarch64_migration.py    | 26 ++++++++++++++
- tests/functional/test_alpha_migration.py      | 26 ++++++++++++++
- tests/functional/test_arm_migration.py        | 26 ++++++++++++++
- tests/functional/test_i386_migration.py       | 26 ++++++++++++++
- tests/functional/test_ppc64_migration.py      | 26 ++++++++++++++
- tests/functional/test_ppc_migration.py        | 26 ++++++++++++++
- tests/functional/test_riscv32_migration.py    | 26 ++++++++++++++
- tests/functional/test_riscv64_migration.py    | 26 ++++++++++++++
- tests/functional/test_sparc64_migration.py    | 26 ++++++++++++++
- tests/functional/test_sparc_migration.py      | 26 ++++++++++++++
- tests/functional/test_x86_64_migration.py     | 26 ++++++++++++++
- 14 files changed, 306 insertions(+), 39 deletions(-)
- rename tests/functional/{test_migration.py => migration.py} (74%)
- mode change 100755 => 100644
- create mode 100755 tests/functional/test_aarch64_migration.py
- create mode 100755 tests/functional/test_alpha_migration.py
- create mode 100755 tests/functional/test_arm_migration.py
- create mode 100755 tests/functional/test_i386_migration.py
- create mode 100755 tests/functional/test_ppc64_migration.py
- create mode 100755 tests/functional/test_ppc_migration.py
- create mode 100755 tests/functional/test_riscv32_migration.py
- create mode 100755 tests/functional/test_riscv64_migration.py
- create mode 100755 tests/functional/test_sparc64_migration.py
- create mode 100755 tests/functional/test_sparc_migration.py
- create mode 100755 tests/functional/test_x86_64_migration.py
+ MAINTAINERS                                   |  3 ++-
+ tests/functional/meson.build                  | 25 ++-----------------
+ tests/functional/riscv32/meson.build          | 10 ++++++++
+ .../test_migration.py}                        |  0
+ tests/functional/riscv32/test_opensbi.py      | 10 ++++++++
+ .../test_tuxrun.py}                           |  0
+ tests/functional/riscv64/meson.build          | 15 +++++++++++
+ .../test_migration.py}                        |  0
+ .../test_opensbi.py}                          |  0
+ .../test_tuxrun.py}                           |  0
+ 10 files changed, 39 insertions(+), 24 deletions(-)
+ create mode 100644 tests/functional/riscv32/meson.build
+ rename tests/functional/{test_riscv32_migration.py => riscv32/test_migration.py} (100%)
+ create mode 100755 tests/functional/riscv32/test_opensbi.py
+ rename tests/functional/{test_riscv32_tuxrun.py => riscv32/test_tuxrun.py} (100%)
+ create mode 100644 tests/functional/riscv64/meson.build
+ rename tests/functional/{test_riscv64_migration.py => riscv64/test_migration.py} (100%)
+ rename tests/functional/{test_riscv_opensbi.py => riscv64/test_opensbi.py} (100%)
+ rename tests/functional/{test_riscv64_tuxrun.py => riscv64/test_tuxrun.py} (100%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index a07086ed762..56c1fe67690 100644
+index b0d440cf751..81262546c4b 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3597,7 +3597,7 @@ F: include/migration/
- F: include/qemu/userfaultfd.h
- F: migration/
- F: scripts/vmstate-static-checker.py
--F: tests/functional/test_migration.py
-+F: tests/functional/*migration.py
- F: tests/vmstate-static-checker-data/
- F: tests/qtest/migration/
- F: tests/qtest/migration-*
+@@ -332,7 +332,8 @@ F: include/hw/riscv/
+ F: linux-user/host/riscv32/
+ F: linux-user/host/riscv64/
+ F: common-user/host/riscv*
+-F: tests/functional/test_riscv*
++F: tests/functional/riscv32
++F: tests/functional/riscv64
+ F: tests/tcg/riscv64/
+ 
+ RISC-V XThead* extensions
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 311c6f18065..c32436d99ad 100644
+index 3caeea5ebdd..2d8f67fd94f 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -80,7 +80,7 @@ tests_generic_bsduser = [
- ]
- 
- tests_aarch64_system_quick = [
--  'migration',
-+  'aarch64_migration',
- ]
- 
- tests_aarch64_system_thorough = [
-@@ -110,7 +110,7 @@ tests_aarch64_system_thorough = [
- ]
- 
- tests_alpha_system_quick = [
--  'migration',
-+  'alpha_migration',
- ]
- 
- tests_alpha_system_thorough = [
-@@ -119,7 +119,7 @@ tests_alpha_system_thorough = [
- ]
- 
- tests_arm_system_quick = [
--  'migration',
-+  'arm_migration',
- ]
- 
- tests_arm_system_thorough = [
-@@ -168,7 +168,7 @@ tests_hppa_system_quick = [
- ]
- 
- tests_i386_system_quick = [
--  'migration',
-+  'i386_migration',
- ]
- 
- tests_i386_system_thorough = [
-@@ -228,7 +228,7 @@ tests_or1k_system_thorough = [
- ]
- 
- tests_ppc_system_quick = [
--  'migration',
-+  'ppc_migration',
-   'ppc_74xx',
- ]
- 
-@@ -245,7 +245,7 @@ tests_ppc_system_thorough = [
- ]
- 
- tests_ppc64_system_quick = [
--  'migration',
-+  'ppc64_migration',
- ]
- 
- tests_ppc64_system_thorough = [
-@@ -260,7 +260,7 @@ tests_ppc64_system_thorough = [
- ]
- 
- tests_riscv32_system_quick = [
--  'migration',
-+  'riscv32_migration',
-   'riscv_opensbi',
- ]
- 
-@@ -269,7 +269,7 @@ tests_riscv32_system_thorough = [
- ]
- 
- tests_riscv64_system_quick = [
--  'migration',
-+  'riscv64_migration',
-   'riscv_opensbi',
- ]
- 
-@@ -300,7 +300,7 @@ tests_sh4eb_system_thorough = [
- ]
- 
- tests_sparc_system_quick = [
--  'migration',
-+  'sparc_migration',
- ]
- 
- tests_sparc_system_thorough = [
-@@ -309,7 +309,7 @@ tests_sparc_system_thorough = [
- ]
- 
- tests_sparc64_system_quick = [
--  'migration',
-+  'sparc64_migration',
- ]
- 
- tests_sparc64_system_thorough = [
-@@ -320,7 +320,7 @@ tests_sparc64_system_thorough = [
- tests_x86_64_system_quick = [
-   'cpu_queries',
-   'mem_addr_space',
--  'migration',
-+  'x86_64_migration',
-   'pc_cpu_hotplug_props',
-   'virtio_version',
-   'x86_cpu_model_versions',
-diff --git a/tests/functional/test_migration.py b/tests/functional/migration.py
-old mode 100755
-new mode 100644
-similarity index 74%
-rename from tests/functional/test_migration.py
-rename to tests/functional/migration.py
-index c4393c35434..07395544832
---- a/tests/functional/test_migration.py
-+++ b/tests/functional/migration.py
-@@ -1,6 +1,6 @@
--#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0-or-later
- #
--# Migration test
-+# Migration test base class
- #
- # Copyright (c) 2019 Red Hat, Inc.
- #
-@@ -14,7 +14,7 @@
- import tempfile
- import time
- 
--from qemu_test import QemuSystemTest, skipIfMissingCommands
-+from qemu_test import QemuSystemTest, which
- from qemu_test.ports import Ports
- 
- 
-@@ -41,24 +41,7 @@ def assert_migration(self, src_vm, dst_vm):
-         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
- 
--    def select_machine(self):
--        target_machine = {
--            'aarch64': 'quanta-gsj',
--            'alpha': 'clipper',
--            'arm': 'npcm750-evb',
--            'i386': 'isapc',
--            'ppc': 'sam460ex',
--            'ppc64': 'mac99',
--            'riscv32': 'spike',
--            'riscv64': 'virt',
--            'sparc': 'SS-4',
--            'sparc64': 'sun4u',
--            'x86_64': 'microvm',
--        }
--        self.set_machine(target_machine[self.arch])
+@@ -26,10 +26,8 @@ subdir('mips64el')
+ subdir('or1k')
+ subdir('ppc')
+ subdir('ppc64')
 -
-     def do_migrate(self, dest_uri, src_uri=None):
--        self.select_machine()
-         dest_vm = self.get_vm('-incoming', dest_uri, name="dest-qemu")
-         dest_vm.add_args('-nodefaults')
-         dest_vm.launch()
-@@ -76,23 +59,21 @@ def _get_free_port(self, ports):
-             self.skipTest('Failed to find a free port')
-         return port
+-test_riscv64_timeouts = {
+-  'riscv64_tuxrun' : 120,
+-}
++subdir('riscv32')
++subdir('riscv64')
  
--    def test_migration_with_tcp_localhost(self):
-+    def migration_with_tcp_localhost(self):
-         with Ports() as ports:
-             dest_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
-             self.do_migrate(dest_uri)
+ test_s390x_timeouts = {
+   's390x_ccw_virtio' : 420,
+@@ -60,25 +58,6 @@ tests_generic_linuxuser = [
+ tests_generic_bsduser = [
+ ]
  
--    def test_migration_with_unix(self):
-+    def migration_with_unix(self):
-         with tempfile.TemporaryDirectory(prefix='socket_') as socket_path:
-             dest_uri = 'unix:%s/qemu-test.sock' % socket_path
-             self.do_migrate(dest_uri)
- 
--    @skipIfMissingCommands('ncat')
--    def test_migration_with_exec(self):
-+    def migration_with_exec(self):
-+        if not which('ncat'):
-+            self.skipTest('ncat is not available')
-         with Ports() as ports:
-             free_port = self._get_free_port(ports)
-             dest_uri = 'exec:ncat -l localhost %u' % free_port
-             src_uri = 'exec:ncat localhost %u' % free_port
-             self.do_migrate(dest_uri, src_uri)
+-tests_riscv32_system_quick = [
+-  'riscv32_migration',
+-  'riscv_opensbi',
+-]
 -
--if __name__ == '__main__':
--    QemuSystemTest.main()
-diff --git a/tests/functional/test_aarch64_migration.py b/tests/functional/test_aarch64_migration.py
-new file mode 100755
-index 00000000000..70267e756d9
+-tests_riscv32_system_thorough = [
+-  'riscv32_tuxrun',
+-]
+-
+-tests_riscv64_system_quick = [
+-  'riscv64_migration',
+-  'riscv_opensbi',
+-]
+-
+-tests_riscv64_system_thorough = [
+-  'riscv64_sifive_u',
+-  'riscv64_tuxrun',
+-]
+-
+ tests_rx_system_thorough = [
+   'rx_gdbsim',
+ ]
+diff --git a/tests/functional/riscv32/meson.build b/tests/functional/riscv32/meson.build
+new file mode 100644
+index 00000000000..f3ebbb8db5d
 --- /dev/null
-+++ b/tests/functional/test_aarch64_migration.py
-@@ -0,0 +1,26 @@
++++ b/tests/functional/riscv32/meson.build
+@@ -0,0 +1,10 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++tests_riscv32_system_quick = [
++  'migration',
++  'opensbi',
++]
++
++tests_riscv32_system_thorough = [
++  'tuxrun',
++]
+diff --git a/tests/functional/test_riscv32_migration.py b/tests/functional/riscv32/test_migration.py
+similarity index 100%
+rename from tests/functional/test_riscv32_migration.py
+rename to tests/functional/riscv32/test_migration.py
+diff --git a/tests/functional/riscv32/test_opensbi.py b/tests/functional/riscv32/test_opensbi.py
+new file mode 100755
+index 00000000000..d1ac706f0bb
+--- /dev/null
++++ b/tests/functional/riscv32/test_opensbi.py
+@@ -0,0 +1,10 @@
 +#!/usr/bin/env python3
 +#
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +#
-+# aarch64 migration test
++# Reuse the 64-bit OpenSBI test for RISC-V 32-bit machines
 +
-+from migration import MigrationTest
-+
-+
-+class Aarch64MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('quanta-gsj')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('quanta-gsj')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('quanta-gsj')
-+        self.migration_with_exec()
-+
++from riscv64.test_opensbi import RiscvOpenSBI
 +
 +if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_alpha_migration.py b/tests/functional/test_alpha_migration.py
-new file mode 100755
-index 00000000000..f11b523ec9e
++    RiscvOpenSBI.main()
+diff --git a/tests/functional/test_riscv32_tuxrun.py b/tests/functional/riscv32/test_tuxrun.py
+similarity index 100%
+rename from tests/functional/test_riscv32_tuxrun.py
+rename to tests/functional/riscv32/test_tuxrun.py
+diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+new file mode 100644
+index 00000000000..c1704d92751
 --- /dev/null
-+++ b/tests/functional/test_alpha_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
++++ b/tests/functional/riscv64/meson.build
+@@ -0,0 +1,15 @@
 +# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Alpha migration test
 +
-+from migration import MigrationTest
-+
-+
-+class AlphaMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('clipper')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('clipper')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('clipper')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_arm_migration.py b/tests/functional/test_arm_migration.py
-new file mode 100755
-index 00000000000..0aa89f4f61a
---- /dev/null
-+++ b/tests/functional/test_arm_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# arm migration test
-+
-+from migration import MigrationTest
-+
-+
-+class ArmMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('npcm750-evb')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('npcm750-evb')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('npcm750-evb')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_i386_migration.py b/tests/functional/test_i386_migration.py
-new file mode 100755
-index 00000000000..a57f3164044
---- /dev/null
-+++ b/tests/functional/test_i386_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# i386 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class I386MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('isapc')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('isapc')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('isapc')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_ppc64_migration.py b/tests/functional/test_ppc64_migration.py
-new file mode 100755
-index 00000000000..5dfdaaf709a
---- /dev/null
-+++ b/tests/functional/test_ppc64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# ppc migration test
-+
-+from migration import MigrationTest
-+
-+
-+class PpcMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('mac99')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('mac99')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('mac99')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_ppc_migration.py b/tests/functional/test_ppc_migration.py
-new file mode 100755
-index 00000000000..a8692826d35
---- /dev/null
-+++ b/tests/functional/test_ppc_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# ppc migration test
-+
-+from migration import MigrationTest
-+
-+
-+class PpcMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('sam460ex')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('sam460ex')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('sam460ex')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_riscv32_migration.py b/tests/functional/test_riscv32_migration.py
-new file mode 100755
-index 00000000000..30acbbe69f9
---- /dev/null
-+++ b/tests/functional/test_riscv32_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# riscv32 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class Rv32MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('spike')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('virt')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('spike')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_riscv64_migration.py b/tests/functional/test_riscv64_migration.py
-new file mode 100755
-index 00000000000..2d613a29ec4
---- /dev/null
-+++ b/tests/functional/test_riscv64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# riscv64 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class Rv64MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('virt')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('spike')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('virt')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_sparc64_migration.py b/tests/functional/test_sparc64_migration.py
-new file mode 100755
-index 00000000000..a8a6c73c354
---- /dev/null
-+++ b/tests/functional/test_sparc64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Sparc64 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class Sparc64MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('sun4u')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('sun4u')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('sun4u')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_sparc_migration.py b/tests/functional/test_sparc_migration.py
-new file mode 100755
-index 00000000000..dd6d5783b11
---- /dev/null
-+++ b/tests/functional/test_sparc_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Sparc migration test
-+
-+from migration import MigrationTest
-+
-+
-+class SparcMigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('SS-4')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('SS-5')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('SS-4')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
-diff --git a/tests/functional/test_x86_64_migration.py b/tests/functional/test_x86_64_migration.py
-new file mode 100755
-index 00000000000..f3a517ae1f6
---- /dev/null
-+++ b/tests/functional/test_x86_64_migration.py
-@@ -0,0 +1,26 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# x86_64 migration test
-+
-+from migration import MigrationTest
-+
-+
-+class X8664MigrationTest(MigrationTest):
-+
-+    def test_migration_with_tcp_localhost(self):
-+        self.set_machine('microvm')
-+        self.migration_with_tcp_localhost()
-+
-+    def test_migration_with_unix(self):
-+        self.set_machine('microvm')
-+        self.migration_with_unix()
-+
-+    def test_migration_with_exec(self):
-+        self.set_machine('microvm')
-+        self.migration_with_exec()
-+
-+
-+if __name__ == '__main__':
-+    MigrationTest.main()
++test_riscv64_timeouts = {
++  'tuxrun' : 120,
++}
++
++tests_riscv64_system_quick = [
++  'migration',
++  'opensbi',
++]
++
++tests_riscv64_system_thorough = [
++  'sifive_u',
++  'tuxrun',
++]
+diff --git a/tests/functional/test_riscv64_migration.py b/tests/functional/riscv64/test_migration.py
+similarity index 100%
+rename from tests/functional/test_riscv64_migration.py
+rename to tests/functional/riscv64/test_migration.py
+diff --git a/tests/functional/test_riscv_opensbi.py b/tests/functional/riscv64/test_opensbi.py
+similarity index 100%
+rename from tests/functional/test_riscv_opensbi.py
+rename to tests/functional/riscv64/test_opensbi.py
+diff --git a/tests/functional/test_riscv64_tuxrun.py b/tests/functional/riscv64/test_tuxrun.py
+similarity index 100%
+rename from tests/functional/test_riscv64_tuxrun.py
+rename to tests/functional/riscv64/test_tuxrun.py
 -- 
 2.50.1
 
