@@ -4,77 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46341CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 15:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC64ECA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 15:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoNtV-0002le-MU; Tue, 19 Aug 2025 11:05:01 -0400
+	id 1uoNvc-0004RE-Lu; Tue, 19 Aug 2025 11:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoNtP-0002cD-O7
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:04:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoNtM-0003NT-IR
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:04:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755615891;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lJVaPLaMgBW+iLFaW02IKkVA5Wl2P39O12xOf81eP1k=;
- b=Nxi0yHvWn9KZstM0/e/a7+mbG55PlAWrRcXGGpBAtjqljuFeXzcCXDnm63E4+pZgtnx8i9
- O0qGWVswLYHpUvqan+DbAbFUi1+FGK2cXL5GEsUvPCqlKMYYvBbh3LFlD/Hi3PdkcqHJDh
- wYrkgswV86yXSA/9Lt88eJTKrYBvJ8U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-qY9wa5LiMQepK5lCbjWXuA-1; Tue,
- 19 Aug 2025 11:04:49 -0400
-X-MC-Unique: qY9wa5LiMQepK5lCbjWXuA-1
-X-Mimecast-MFC-AGG-ID: qY9wa5LiMQepK5lCbjWXuA_1755615888
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4AEAB1800293; Tue, 19 Aug 2025 15:04:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.237])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1CC9B19A4CA1; Tue, 19 Aug 2025 15:04:45 +0000 (UTC)
-Date: Tue, 19 Aug 2025 16:04:42 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com,
- "Christian A. Ehrhardt" <christian.ehrhardt@canonical.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: Re: [PATCH 10.1?] Revert "i386/cpu: Warn about why CPUID_EXT_PDCM is
- not available"
-Message-ID: <aKSSitJ-jeV8K7Ux@redhat.com>
-References: <20250819150235.785559-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoNvT-0004PX-DL
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:07:03 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoNvQ-0003ue-0r
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:07:02 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e934c8f9751so2553723276.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 08:06:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755616018; x=1756220818; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lGjB2DDXN91rgRPxeWknxQ33rBHPgYOM1OJPngJJmUI=;
+ b=gfgJkUaKPyFbJ3Bxmm2RRijkKHC+50Hz2+2++ek3csaIj0givjGREfrrhzczLnYAyk
+ Mhdx+oUwcRozrPLIK2qcXyfslEJhWBXk4xyzhziu+o6WuNA0Re1tgu91f9VIAiUjxMrF
+ FwhQQdVkKMwCVCuWztFUy9sS0RE/xtl2DN/wwkSYh9Sedtm3QAQxwPIM9eb2erPrwGop
+ uYkQqcWXzC4zwf4fmOQFVU6YqK9AcNl/goFryyxe/EkKwdNMc0gV15jrUvs73CQEWzRc
+ ru9TUbqC+qKS9qNA+llIJjB4B53oQua+JnxDa2UDrfDeevEik1xiqvBd3kzqNN5U3TNP
+ sfpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755616018; x=1756220818;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lGjB2DDXN91rgRPxeWknxQ33rBHPgYOM1OJPngJJmUI=;
+ b=Cjibl6lCux6RO7IFbXQLJvf4bEw4f6B2LZQjamU4XsNSvw61q948tm9UpjhucNxup/
+ EBtkFuZX4edk4B6JeDvlPYkYHfwWesPCL3Y1SHmPwG442/EgapRiFPZU68EcM/HLQny4
+ gLRSRSKswK+AvHzro7dyrHMRLneMsfQl8caafkBxRMXs9FoM2PZjG6falc0vqCe68HMA
+ NMfCQ5wchp4RRiGyK1fjI4cnQusPhGyw+TMzHbD4uTfNvGxcpgzLFR7dhNCl9OUzVB5A
+ gfvWBmKGwffcC9cEASdo8UxdQ5Y1NcCuH28UrW/Sy1H+4xxX0Gc1/h74N3zpuvJeZSYW
+ axZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXnj8QuydWKb/ZL74gxguYoTKrE7/XQgtdOy/sAygRcpz7R9vKj/807NStzN/CrAV5viMyMfSZ85eMR@nongnu.org
+X-Gm-Message-State: AOJu0YwIxycHlvpQTq1gwIphjIHszSYWLCgpDUPSfKsnslwuJ05CR7B6
+ fOJ6/MiHSGMYQgjENfm2pdCFqDZRcd4h8V8yIO2+Sus7t1zOmd7NO8yp2SepwFgc4y35R+Nzq0z
+ rcyqCpGEAWqV1UtDASt/vzKCj9jnZVdfoi184HossEQ==
+X-Gm-Gg: ASbGncsmAe30LjAg1GO0v+1SI+SDkSxSpXq6LxtPZ1hEVGu8yN6VzEwtzWQv8EMsSGJ
+ Jb7A0eyltUeIO17tteqq1J2YnHazkj08JFvJe28a+O8rfcyvU0aa5sLUpN19piNXnLMykDaEOuw
+ J1qqYiDbmv6hymZoKi47Pd4jaHmDIe1uysq/ywq4Mg2tCI2ZVp0jSr8vqRIwNvG1nYhEZq93hZ3
+ T+9U3Eq
+X-Google-Smtp-Source: AGHT+IFEacLfEpsLPwL8RpIQaBKhz9WKuYQrybbHLgsUXEGDBbIpJ6uSC03YG2N60vf9y/Ix/KB5hHQFI6/31aN1lA4=
+X-Received: by 2002:a05:6902:4308:b0:e93:480b:5356 with SMTP id
+ 3f1490d57ef6-e94e632528fmr2971984276.47.1755616017889; Tue, 19 Aug 2025
+ 08:06:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250819150235.785559-1-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250808065419.47415-1-mohamed@unpredictable.fr>
+ <20250808065419.47415-16-mohamed@unpredictable.fr>
+ <CAFEAcA9iQnrKWXPXw2wG3c6gmevOMFQtt48HsJdx8GZz2sd+4Q@mail.gmail.com>
+ <8e64fd77-9969-42b3-bbcd-1ed8de910ff9@linaro.org>
+In-Reply-To: <8e64fd77-9969-42b3-bbcd-1ed8de910ff9@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 19 Aug 2025 16:06:45 +0100
+X-Gm-Features: Ac12FXy5JRRiJ81OjIWr7z9p2uyQ9l0Cz-RNNmpcll_HRaXOsoA8AhnGYU96-BU
+Message-ID: <CAFEAcA9OXu3=HuA9n+Oo0C5K5hTG+kLr9xsM=geBJ_UtCi4_-w@mail.gmail.com>
+Subject: Re: [PATCH v5 15/18] whpx: arm64: implement -cpu host
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Ani Sinha <anisinha@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <mads@ynddal.dk>, 
+ Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org, 
+ Yanan Wang <wangyanan55@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,54 +109,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 19, 2025 at 05:02:35PM +0200, Paolo Bonzini wrote:
-> This reverts commit 00268e00027459abede448662f8794d78eb4b0a4.
-> (The only conflict is in the !is_tdx_vm() part of the condition,
-> which is safe to keep).
-> 
-> mark_unavailable_features() actively blocks usage of the feature,
-> so it is a functional change, not merely a emitting warning.
-> The commit was intended to merely warn if PDCM was enabled when
-> the performance counters are not, so revert it.
-> 
-> Reported-by: Christian A. Ehrhardt <christian.ehrhardt@canonical.com>
-> Analyzed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Analyzed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/cpu.c | 3 ---
->  1 file changed, 3 deletions(-)
+On Tue, 19 Aug 2025 at 16:04, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 8/19/25 6:24 AM, Peter Maydell wrote:
+> > On Fri, 8 Aug 2025 at 07:55, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+> > Can you follow the QEMU coding style, please (here and elsewhere)?
+> > Variables and function names should be all lower case,
+> > and variable declarations go at the start of a C code
+> > block, not in the middle of one.
+> >
+>
+> In some cases, including in this function, I feel that the rule to
+> declare variables at the start of a block is not really helpful, and is
+> more related to legacy C than a real point nowadays.
+> As well, it sometimes forces to reuse some variables between various sub
+> blocks, which definitely can create bugs.
+>
+> Anyway, I'm not discussing the existing QEMU coding style, but just
+> asking if for the current context, is it really a problem to declare
+> variable here?
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+The point of a coding style is to aim for consistency. QEMU
+is pretty terrible at being consistent, but we should try.
+The rule about variables at start of block is not because
+some compilers fail to compile it, but because we think
+it's overall more readable that way.
 
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 673f8583c80..6d85149e6e1 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -8946,9 +8946,6 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
->  
->      /* PDCM is fixed1 bit for TDX */
->      if (!cpu->enable_pmu && !is_tdx_vm()) {
-> -        mark_unavailable_features(cpu, FEAT_1_ECX,
-> -                                  env->user_features[FEAT_1_ECX] & CPUID_EXT_PDCM,
-> -                                  "This feature is not available due to PMU being disabled");
->          env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
->      }
->  
-> -- 
-> 2.50.1
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
