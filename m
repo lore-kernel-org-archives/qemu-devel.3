@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89148CA0EF5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75ECCA0EED
 	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 09:03:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoIEJ-0005SB-CR; Tue, 19 Aug 2025 05:02:09 -0400
+	id 1uoIES-0005Ws-OS; Tue, 19 Aug 2025 05:02:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uoIE9-0005Pk-15; Tue, 19 Aug 2025 05:01:57 -0400
+ id 1uoIED-0005Qm-CE; Tue, 19 Aug 2025 05:02:02 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uoIE6-0003YB-U2; Tue, 19 Aug 2025 05:01:56 -0400
+ id 1uoIEA-0003YB-HZ; Tue, 19 Aug 2025 05:02:01 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 19 Aug
- 2025 17:01:41 +0800
+ 2025 17:01:42 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 19 Aug 2025 17:01:41 +0800
+ Transport; Tue, 19 Aug 2025 17:01:42 +0800
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -35,15 +35,15 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>
-Subject: [PATCH v1 01/11] hw/pci/pci_ids Add PCI vendor ID for ASPEED
-Date: Tue, 19 Aug 2025 17:01:22 +0800
-Message-ID: <20250819090141.3949136-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 02/11] hw/pci-host/aspeed: Add AST2600 PCIe PHY model
+Date: Tue, 19 Aug 2025 17:01:23 +0800
+Message-ID: <20250819090141.3949136-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250819090141.3949136-1-jamin_lin@aspeedtech.com>
 References: <20250819090141.3949136-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -69,22 +69,328 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This patch introduces an initial ASPEED PCIe PHY/host controller model to
+support the AST2600 SoC. It provides a simple register block with MMIO
+read/write callbacks, integration into the build system, and trace events
+for debugging.
+
+Key changes:
+
+1. PCIe PHY MMIO read/write callbacks
+   Implemented aspeed_pcie_phy_read() and aspeed_pcie_phy_write() to
+   handle 32-bit register accesses.
+
+2. Build system and Kconfig integration
+   Added CONFIG_PCI_EXPRESS_ASPEED in hw/pci-host/Kconfig and meson
+   rules.
+   Updated ASPEED_SOC in hw/arm/Kconfig to imply PCI_DEVICES and select
+   PCI_EXPRESS_ASPEED.
+
+3. Trace events for debug
+   New tracepoints aspeed_pcie_phy_read and aspeed_pcie_phy_write allow
+   monitoring MMIO accesses.
+
+4. Register space and defaults (AST2600 reference)
+   Expose a 0x100 register space, as documented in the AST2600 datasheet.
+   On reset, set default values:
+   PEHR_ID: Vendor ID = ASPEED, Device ID = 0x1150
+   PEHR_CLASS_CODE = 0x06040006
+   PEHR_DATALINK = 0xD7040022
+   PEHR_LINK: bit[5] set to 1 to indicate link up.
+
+This provides a skeleton device for the AST2600 platform. It enables
+firmware to detect the PCIe link as up by default and allows future
+extension.
+
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/pci/pci_ids.h | 2 ++
- 1 file changed, 2 insertions(+)
+ include/hw/pci-host/aspeed_pcie.h |  44 +++++++++
+ hw/pci-host/aspeed_pcie.c         | 159 ++++++++++++++++++++++++++++++
+ hw/arm/Kconfig                    |   3 +
+ hw/pci-host/Kconfig               |   4 +
+ hw/pci-host/meson.build           |   1 +
+ hw/pci-host/trace-events          |   4 +
+ 6 files changed, 215 insertions(+)
+ create mode 100644 include/hw/pci-host/aspeed_pcie.h
+ create mode 100644 hw/pci-host/aspeed_pcie.c
 
-diff --git a/include/hw/pci/pci_ids.h b/include/hw/pci/pci_ids.h
-index 33e2898be9..16034aaa2c 100644
---- a/include/hw/pci/pci_ids.h
-+++ b/include/hw/pci/pci_ids.h
-@@ -291,4 +291,6 @@
- 
- #define PCI_VENDOR_ID_NVIDIA             0x10de
- 
-+#define PCI_VENDOR_ID_ASPEED             0x1A03
+diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
+new file mode 100644
+index 0000000000..aef2e7bed5
+--- /dev/null
++++ b/include/hw/pci-host/aspeed_pcie.h
+@@ -0,0 +1,44 @@
++/*
++ * ASPEED PCIe Host Controller
++ *
++ * Copyright (C) 2025 ASPEED Technology Inc.
++ * Copyright (c) 2022 Cédric Le Goater <clg@kaod.org>
++ *
++ * Jamin Lin <jamin_lin@aspeedtech.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This file is based on Cédric Le Goater's patch:
++ * "pci: Add Aspeed host bridge (WIP)"
++ * https://github.com/legoater/qemu/commit/d1b97b0c7844219d847122410dc189854f9d26df
++ *
++ * Modifications have been made to support the Aspeed AST2600 and AST2700
++ * platforms.
++ */
 +
- #endif
++#ifndef ASPEED_PCIE_H
++#define ASPEED_PCIE_H
++
++#include "hw/sysbus.h"
++#include "hw/pci/pci_bridge.h"
++#include "hw/pci/pcie_host.h"
++#include "qom/object.h"
++
++#define TYPE_ASPEED_PCIE_PHY "aspeed.pcie-phy"
++OBJECT_DECLARE_TYPE(AspeedPCIEPhyState, AspeedPCIEPhyClass, ASPEED_PCIE_PHY);
++
++struct AspeedPCIEPhyState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mmio;
++    uint32_t *regs;
++    uint32_t id;
++};
++
++struct AspeedPCIEPhyClass {
++    SysBusDeviceClass parent_class;
++
++    uint64_t nr_regs;
++};
++
++#endif /* ASPEED_PCIE_H */
+diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
+new file mode 100644
+index 0000000000..5eeac13ab5
+--- /dev/null
++++ b/hw/pci-host/aspeed_pcie.c
+@@ -0,0 +1,159 @@
++/*
++ * ASPEED PCIe Host Controller
++ *
++ * Copyright (C) 2025 ASPEED Technology Inc.
++ * Copyright (c) 2022 Cédric Le Goater <clg@kaod.org>
++ *
++ * Jamin Lin <jamin_lin@aspeedtech.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This file is based on Cédric Le Goater's patch:
++ * "pci: Add Aspeed host bridge (WIP)"
++ * https://github.com/legoater/qemu/commit/d1b97b0c7844219d847122410dc189854f9d26df
++ *
++ * Modifications have been made to support the Aspeed AST2600 and AST2700
++ * platforms.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "hw/qdev-properties.h"
++#include "hw/registerfields.h"
++#include "hw/irq.h"
++#include "hw/pci/pci_host.h"
++#include "hw/pci-host/aspeed_pcie.h"
++#include "hw/pci/msi.h"
++#include "trace.h"
++
++/*
++ * PCIe PHY
++ *
++ * PCIe Host Controller (PCIEH)
++ */
++
++/* AST2600 */
++REG32(PEHR_ID,     0x00)
++    FIELD(PEHR_ID, DEV, 16, 16)
++REG32(PEHR_CLASS_CODE,  0x04)
++REG32(PEHR_DATALINK,    0x10)
++REG32(PEHR_PROTECT,     0x7C)
++    FIELD(PEHR_PROTECT, LOCK, 0, 8)
++REG32(PEHR_LINK,        0xC0)
++    FIELD(PEHR_LINK, STS, 5, 1)
++
++#define ASPEED_PCIE_PHY_UNLOCK  0xA8
++
++static uint64_t aspeed_pcie_phy_read(void *opaque, hwaddr addr,
++                                     unsigned int size)
++{
++    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(opaque);
++    uint32_t reg = addr >> 2;
++    uint32_t value = 0;
++
++    value = s->regs[reg];
++
++    trace_aspeed_pcie_phy_read(s->id, addr, value);
++
++    return value;
++}
++
++static void aspeed_pcie_phy_write(void *opaque, hwaddr addr, uint64_t data,
++                                  unsigned int size)
++{
++    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(opaque);
++    uint32_t reg = addr >> 2;
++
++    trace_aspeed_pcie_phy_write(s->id, addr, data);
++
++    switch (reg) {
++    case R_PEHR_PROTECT:
++        data &= R_PEHR_PROTECT_LOCK_MASK;
++        s->regs[reg] = !!(data == ASPEED_PCIE_PHY_UNLOCK);
++        break;
++    default:
++        s->regs[reg] = data;
++        break;
++    }
++}
++
++static const MemoryRegionOps aspeed_pcie_phy_ops = {
++    .read = aspeed_pcie_phy_read,
++    .write = aspeed_pcie_phy_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static void aspeed_pcie_phy_reset(DeviceState *dev)
++{
++    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(dev);
++    AspeedPCIEPhyClass *apc = ASPEED_PCIE_PHY_GET_CLASS(s);
++
++    memset(s->regs, 0, apc->nr_regs << 2);
++
++    s->regs[R_PEHR_ID] =
++        (0x1150 << R_PEHR_ID_DEV_SHIFT) | PCI_VENDOR_ID_ASPEED;
++    s->regs[R_PEHR_CLASS_CODE] = 0x06040006;
++    s->regs[R_PEHR_DATALINK] = 0xD7040022;
++    s->regs[R_PEHR_LINK] = R_PEHR_LINK_STS_MASK;
++}
++
++static void aspeed_pcie_phy_realize(DeviceState *dev, Error **errp)
++{
++    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(dev);
++    AspeedPCIEPhyClass *apc = ASPEED_PCIE_PHY_GET_CLASS(s);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    g_autofree char *name;
++
++    s->regs = g_new(uint32_t, apc->nr_regs);
++    name = g_strdup_printf(TYPE_ASPEED_PCIE_PHY ".regs.%d", s->id);
++    memory_region_init_io(&s->mmio, OBJECT(s), &aspeed_pcie_phy_ops, s, name,
++                          apc->nr_regs << 2);
++    sysbus_init_mmio(sbd, &s->mmio);
++}
++
++static void aspeed_pcie_phy_unrealize(DeviceState *dev)
++{
++    AspeedPCIEPhyState *s = ASPEED_PCIE_PHY(dev);
++
++    g_free(s->regs);
++    s->regs = NULL;
++}
++
++static const Property aspeed_pcie_phy_props[] = {
++    DEFINE_PROP_UINT32("id", AspeedPCIEPhyState, id, 0),
++};
++
++static void aspeed_pcie_phy_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedPCIEPhyClass *apc = ASPEED_PCIE_PHY_CLASS(klass);
++
++    dc->desc = "ASPEED PCIe Phy";
++    dc->realize = aspeed_pcie_phy_realize;
++    dc->unrealize = aspeed_pcie_phy_unrealize;
++    device_class_set_legacy_reset(dc, aspeed_pcie_phy_reset);
++    device_class_set_props(dc, aspeed_pcie_phy_props);
++
++    apc->nr_regs = 0x100 >> 2;
++}
++
++static const TypeInfo aspeed_pcie_phy_info = {
++    .name       = TYPE_ASPEED_PCIE_PHY,
++    .parent     = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(AspeedPCIEPhyState),
++    .class_init = aspeed_pcie_phy_class_init,
++    .class_size = sizeof(AspeedPCIEPhyClass),
++};
++
++static void aspeed_pcie_register_types(void)
++{
++    type_register_static(&aspeed_pcie_phy_info);
++}
++
++type_init(aspeed_pcie_register_types);
++
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 2aa4b5d778..83d2676f6c 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -544,6 +544,7 @@ config ASPEED_SOC
+     bool
+     default y
+     depends on TCG && ARM
++    imply PCI_DEVICES
+     select DS1338
+     select FTGMAC100
+     select I2C
+@@ -564,6 +565,8 @@ config ASPEED_SOC
+     select MAX31785
+     select FSI_APB2OPB_ASPEED
+     select AT24C
++    select PCI_EXPRESS
++    select PCI_EXPRESS_ASPEED
+ 
+ config MPS2
+     bool
+diff --git a/hw/pci-host/Kconfig b/hw/pci-host/Kconfig
+index 9824fa188d..8cbb8304a3 100644
+--- a/hw/pci-host/Kconfig
++++ b/hw/pci-host/Kconfig
+@@ -46,6 +46,10 @@ config PCI_I440FX
+     select PCI
+     select PAM
+ 
++config PCI_EXPRESS_ASPEED
++    bool
++    select PCI_EXPRESS
++
+ config PCI_EXPRESS_Q35
+     bool
+     select PCI_EXPRESS
+diff --git a/hw/pci-host/meson.build b/hw/pci-host/meson.build
+index 937a0f72ac..86b754d0b0 100644
+--- a/hw/pci-host/meson.build
++++ b/hw/pci-host/meson.build
+@@ -2,6 +2,7 @@ pci_ss = ss.source_set()
+ pci_ss.add(when: 'CONFIG_PAM', if_true: files('pam.c'))
+ pci_ss.add(when: 'CONFIG_PCI_BONITO', if_true: files('bonito.c'))
+ pci_ss.add(when: 'CONFIG_GT64120', if_true: files('gt64120.c'))
++pci_ss.add(when: 'CONFIG_PCI_EXPRESS_ASPEED', if_true: files('aspeed_pcie.c'))
+ pci_ss.add(when: 'CONFIG_PCI_EXPRESS_DESIGNWARE', if_true: files('designware.c'))
+ pci_ss.add(when: 'CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', if_true: files('gpex.c'))
+ pci_ss.add(when: ['CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', 'CONFIG_ACPI'], if_true: files('gpex-acpi.c'))
+diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
+index 0a816b9aa1..3438516756 100644
+--- a/hw/pci-host/trace-events
++++ b/hw/pci-host/trace-events
+@@ -1,5 +1,9 @@
+ # See docs/devel/tracing.rst for syntax documentation.
+ 
++# aspeed_pcie.c
++aspeed_pcie_phy_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
++aspeed_pcie_phy_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
++
+ # bonito.c
+ bonito_spciconf_small_access(uint64_t addr, unsigned size) "PCI config address is smaller then 32-bit, addr: 0x%"PRIx64", size: %u"
+ 
 -- 
 2.43.0
 
