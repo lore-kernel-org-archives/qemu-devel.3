@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6661CA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B19CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoSZD-00061p-7Q; Tue, 19 Aug 2025 16:04:23 -0400
+	id 1uoSdz-0007f2-0p; Tue, 19 Aug 2025 16:09:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSZA-0005yZ-Ey
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:04:20 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSdt-0007eC-0q
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:09:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSZ9-0003hT-0F
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:04:20 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSdq-0004F9-OY
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:09:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755633858;
+ s=mimecast20190719; t=1755634149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xomHNblM5I4WzgqJ2lk8kqNs6YIItYB36HH3WLutV/Y=;
- b=XLZCYlzTGnjldZjGj+aek3/LIs4T9fEtdUVYwHYe62yQot8MIzlrZsR5B+uO3voxLecOrV
- XMbcdVKBlcPsFeWqFOIh0Ydh/qjv2DREX4kmChdybaHxyVf9ihNUSj8TdwJHJtfwz55/iL
- 9YHXxyMkdMr1HTLfq6IESsZy9oicKyA=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mI2kca8nW62KXaJ/RZLWjNR3KNUZQNRZ+7RcDP8+avI=;
+ b=PGK90ek1vb4++LxPKfM8LTVx06DxRxYIvYmfpLO9Nqu5C58yDgeMeoWheBihKD6ucO0/Th
+ UoYObNCmCO7i3TdJI1ao2gjkGKUJWM0/iIw8pYOG2sET75aiHAf5ICHiuE1xJO0Zndqo5g
+ fdJMseAH73Cz5gmj5OdFku/oLCaD8Jc=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-217-MPog7P63NZqs_RXRZ6Wfiw-1; Tue, 19 Aug 2025 16:04:16 -0400
-X-MC-Unique: MPog7P63NZqs_RXRZ6Wfiw-1
-X-Mimecast-MFC-AGG-ID: MPog7P63NZqs_RXRZ6Wfiw_1755633855
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2445806eab4so59750825ad.1
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 13:04:16 -0700 (PDT)
+ us-mta-79-Nxsnr2PeNHuXJSx-DYO7Pg-1; Tue, 19 Aug 2025 16:09:07 -0400
+X-MC-Unique: Nxsnr2PeNHuXJSx-DYO7Pg-1
+X-Mimecast-MFC-AGG-ID: Nxsnr2PeNHuXJSx-DYO7Pg_1755634147
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-244581ce388so129579085ad.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 13:09:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755633855; x=1756238655;
+ d=1e100.net; s=20230601; t=1755634147; x=1756238947;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xomHNblM5I4WzgqJ2lk8kqNs6YIItYB36HH3WLutV/Y=;
- b=wtcAMyKepfkSsx6RelA6EHX3i0TftZlXusojlQsNaRq8lTzlP7kL9p4qxXJeoLldCb
- jzMkaYh49mlGPlppvD7vyyv3d+JQCwDRCFXY2bvyymgnH9H0SeZ1HzEMPkPZioRWxuaI
- fdTfjLgdBH1ZhHAZFnYzsy3NwryOFjwy5Czrup97isClDS10LhN5PjKq/oCjACK7z5kX
- yQ28sG7KXdjF1FBY36k/vXrFLF+VW+F4qqA0uUBNqJkWTZSQ+oZJh41Gfn+IPy7qH5Iv
- TdVWIoeRXqgWO7t+t6tk4vkv+44ay65szmhtFCLuHVuTvKVcSKRRAf1zY9HOnZU2ZLzW
- N7Lw==
-X-Gm-Message-State: AOJu0YxMRLgbrZrbHJ3eFna6Xusnr+EMpaJfZ6YOI4kM/P0C13hxfAZq
- fTEdfxC6+n7zUj/iMmiHK0m203W3vMapzqs299enW8G6alnTBZKfAYLBLfbmDDq+U9OsdZxSesW
- TpfNW3hLw9X13dbDjF53UgcNFnu6Ho6wZE9jUEe65Sv0KDh0f+wgcFSjdnC59rCJpWzWFV5s3qR
- ltjf1h9811GMHuaXsVFrTxR40D/Eo+T5k=
-X-Gm-Gg: ASbGncsXU35VHJmGFQpAPJwZg/Xt7XqjfPFSPAwZpfKHo5li1jXhS3+AXSSx2c/1nN9
- DkKkUYR0Iq+wq5On0xWW76hnzsiV5CoO5fN7G1a+d0zhKy987/Rb+X3hKX+vELCkeIP9+XDFp7A
- Ae8T6i0w7qzbXtn34fBNbEkwUn3M1i0gA0Vbpx7BDQV1XuMA6fwITV
-X-Received: by 2002:a17:903:2342:b0:240:468c:83e7 with SMTP id
- d9443c01a7336-245ef10425emr2881225ad.3.1755633855377; 
- Tue, 19 Aug 2025 13:04:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEu4YnCvOOeYV4CQISeuvlbMwdY2fh4VTrL/lpE+b9E47YZJa+JARxokKnZXh0CVvWiC6E9kgDbEhdL0Me41Q0=
-X-Received: by 2002:a17:903:2342:b0:240:468c:83e7 with SMTP id
- d9443c01a7336-245ef10425emr2880875ad.3.1755633855008; Tue, 19 Aug 2025
- 13:04:15 -0700 (PDT)
+ bh=mI2kca8nW62KXaJ/RZLWjNR3KNUZQNRZ+7RcDP8+avI=;
+ b=GUS43KmUaz5Q9XJAawtavSvwmhNcyRchbDTCOpUnx1a+tEBDc89vczF/eJcnkxQUG2
+ cSrwfbxw/Eew1i8e2+txdg4dWKh2kUNOnQLuq+ZOciXjebkSK0h1nQ/S26ZB1yijZLIb
+ OHb2Gb7DWm1+SL4F7Hoc0Blj8gcDS5QNyWMchtrre5bB2xRUe8Z+MP18wjNKVkAlQBHs
+ FglBMlvAeirblgcVkXNYiOLanhlWLrVDk29T7gsFHVOgzKDKHkxbnHBmG0i5nPJI7SXv
+ uebXv9kvH6tQh8mGjTZOJAXHn4ZC/5qbe8f4RafBNlRVLKBkTYYqAQ8fUtIjw3kzyJMT
+ RocQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDwTzsRnTvdmVnnUjGzzEmJFSKOqK0BP0ssZm27z1qTey0oiO4ywGFOXbzin02CXAR0O8teeuS7BHb@nongnu.org
+X-Gm-Message-State: AOJu0YyD3xvKZGDole0lx69m1q0RQtZafutGy9xD0SwROrZ9wrxeYF6B
+ bgwCGxq5SdVMU4T0m7fQzDGBY4nzafuU1A0UriuklUE14fzfHRphuYGFTiO8dbAVbSmY8j/CP9q
+ pFBtJ79E7hgNy6xe+ik2FNIKmeVm2AViJHZI557yq+z9LcqvGkCXRHZze3o0YN1mumHZo6tJqje
+ ZWxvPWXbBkuLe0f1IX2vr9jRNo0tZ/WYs=
+X-Gm-Gg: ASbGncs7lV393qbHmOEV5m5DCIUgZ4e8u9eMOhxCX4py+ElHWLwQQ42TWbv/J+tnHEu
+ m9bvaAv1lecXL93zVha6lWB3lhb07eLFvZcy/+W9efKZwtnR8Yvo1zL08bcJSQVC36J/JTWgWxA
+ 9WEYRYRjU3Y2e+XByuPm6rAhM9AACaTI3jJ0gd6VgKONYNHx0UaJKZ
+X-Received: by 2002:a17:903:4b24:b0:240:1850:cb18 with SMTP id
+ d9443c01a7336-245ef286179mr2246515ad.53.1755634146707; 
+ Tue, 19 Aug 2025 13:09:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1gU11wY8kYvzq6LbFbKxhO44a1oB+j0XbXoOR2NcnWz2J04l+Zk7nei6ltkIKMtmylRe7qCuHyH7gkLGVqZQ=
+X-Received: by 2002:a17:903:4b24:b0:240:1850:cb18 with SMTP id
+ d9443c01a7336-245ef286179mr2246335ad.53.1755634146411; Tue, 19 Aug 2025
+ 13:09:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250715143023.1851000-1-berrange@redhat.com>
- <20250715143023.1851000-8-berrange@redhat.com>
-In-Reply-To: <20250715143023.1851000-8-berrange@redhat.com>
+ <20250715143023.1851000-11-berrange@redhat.com>
+ <05525b99-030b-4e6e-a7b2-c2086a799d33@redhat.com>
+In-Reply-To: <05525b99-030b-4e6e-a7b2-c2086a799d33@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Tue, 19 Aug 2025 16:04:03 -0400
-X-Gm-Features: Ac12FXx0MAfgjSL3-jKBXzN300C9q_UZwJBLf1y7rLvlkRCOjztdFwHQj5YC4vM
-Message-ID: <CAFn=p-ad+Bv7-LUUOn_YdZF9qhW_OyHku+HRc7P=WgorSqVv9w@mail.gmail.com>
-Subject: Re: [PATCH 07/14] iotests: drop compat for old version context manager
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
+Date: Tue, 19 Aug 2025 16:08:54 -0400
+X-Gm-Features: Ac12FXzxGQ8gOSXv3QKTL8qcENxxxd174Oc_Du4gZekd38YUgyQOFtfkPGBZxMw
+Message-ID: <CAFn=p-bQmkd5-mqK5eyJ3z1vsBLtz=w=kwy2-m_gM-15sxk9-g@mail.gmail.com>
+Subject: Re: [PATCH 10/14] functional: always enable all python warnings
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
  Jagannathan Raman <jag.raman@oracle.com>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, Thomas Huth <thuth@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, Cleber Rosa <crosa@redhat.com>,
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
@@ -106,14 +109,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 15, 2025 at 10:31=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
+On Tue, Jul 15, 2025 at 11:15=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
+te:
 >
-> Our minimum python is now 3.9, so back compat with prior
-> python versions is no longer required.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> On 15/07/2025 16.30, Daniel P. Berrang=C3=A9 wrote:
+> > Of most importance is that this gives us a heads-up if anything
+> > we rely on has been deprecated. The default python behaviour
+> > only emits a warning if triggered from __main__ which is very
+> > limited.
+> >
+> > Setting the env variable further ensures that any python child
+> > processes will also display warnings.
+> >
+> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Reviewed-by: John Snow <jsnow@redhat.com>
+Looks like 8, 9, 10 already got merged; skipping.
+
+> > ---
+> >   tests/functional/qemu_test/testcase.py | 4 ++++
+> >   1 file changed, 4 insertions(+)
+> >
+> > diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/=
+qemu_test/testcase.py
+> > index 71c7160adc..2a78e735f1 100644
+> > --- a/tests/functional/qemu_test/testcase.py
+> > +++ b/tests/functional/qemu_test/testcase.py
+> > @@ -19,6 +19,7 @@
+> >   from subprocess import run
+> >   import sys
+> >   import tempfile
+> > +import warnings
+> >   import unittest
+> >   import uuid
+> >
+> > @@ -235,6 +236,9 @@ def tearDown(self):
+> >           self._log_fh.close()
+> >
+> >       def main():
+> > +        warnings.simplefilter("default")
+> > +        os.environ["PYTHONWARNINGS"] =3D "default"
+> > +
+> >           path =3D os.path.basename(sys.argv[0])[:-3]
+> >
+> >           cache =3D os.environ.get("QEMU_TEST_PRECACHE", None)
+>
+> Acked-by: Thomas Huth <thuth@redhat.com>
+>
 
 
