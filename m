@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B57BACA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 16:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC59CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 16:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoPO2-0007th-Do; Tue, 19 Aug 2025 12:40:38 -0400
+	id 1uoPO1-0007rr-EN; Tue, 19 Aug 2025 12:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoPNy-0007ma-Dx
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:40:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoPNt-0004yq-Ok
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:40:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755621627;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1YagodV53+AdjklXybjHmRZ9SKmTgl1GE5aZGYsqiQU=;
- b=US7eGLeCvquxMsxivka7KvzSaBrbFe1AGrpn4TqoYNfvL+UICWe13hOzpr55uRY6xgpzMu
- Ebh6c65qo+h5IeyXJqFVWhXWuY4kBpaCmqSl8LUls2FUaJg1ZvfTmS0GbwefeLrVIgTNK3
- rZ3XwScnqNXKidyLnJx8DbwusOM4qN4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-FlhcWOSKPKylmpCUMAO_vw-1; Tue,
- 19 Aug 2025 12:40:24 -0400
-X-MC-Unique: FlhcWOSKPKylmpCUMAO_vw-1
-X-Mimecast-MFC-AGG-ID: FlhcWOSKPKylmpCUMAO_vw_1755621622
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0F1C1956086; Tue, 19 Aug 2025 16:40:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.237])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE6F6180044F; Tue, 19 Aug 2025 16:40:12 +0000 (UTC)
-Date: Tue, 19 Aug 2025 17:40:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Cameron Esfahani <dirty@apple.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PATCH v5 15/18] whpx: arm64: implement -cpu host
-Message-ID: <aKSo6aHNkUWwqock@redhat.com>
-References: <20250808065419.47415-1-mohamed@unpredictable.fr>
- <20250808065419.47415-16-mohamed@unpredictable.fr>
- <CAFEAcA9iQnrKWXPXw2wG3c6gmevOMFQtt48HsJdx8GZz2sd+4Q@mail.gmail.com>
- <8e64fd77-9969-42b3-bbcd-1ed8de910ff9@linaro.org>
- <CAFEAcA9OXu3=HuA9n+Oo0C5K5hTG+kLr9xsM=geBJ_UtCi4_-w@mail.gmail.com>
- <aKSUS2-JrMBX7JXo@redhat.com>
- <1396c8cf-fb2c-4b39-811a-7152bdbe976f@linaro.org>
- <aKShmdP3Pdn-wYgY@redhat.com>
- <3eefa4f1-56ae-40ed-9317-2a3e4e6983ea@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoPNw-0007kM-0I
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:40:32 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoPNs-0004yk-LX
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:40:31 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e94dfbf7ba1so1411817276.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 09:40:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755621627; x=1756226427; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ijuv8WGHvrkf1N2aB2jxp8BO6m4HBaAKWnu2Iui5e/c=;
+ b=diw/J7S1Lta3zlivhK+7UmW4QtFiwZBVnuKRC4EY1S00BRHXkX5PAAXQhYjOhEZA1t
+ JRsC/Cvwd9CA+aYn8Q4SKmTGlaP7c3+OS9QxjkgZx5m5JqgQrXt8GlVqgMTGSb+/J+1r
+ C8obtHYBynoHHfkAfMvTt/mntVoM0NfAcqB977NHt9sUZ4arxH127p7ibwphGxePe30m
+ Zx0k+yhgigSLaVp6dN9JwygQ2iODzrjtdqCJ6+8sLKB8IsfbGZgI0pM4yqJYIbMpe26b
+ 3IbaUk8Tt7VMO1hbNWOSWPkCRqeB7J8fDAvJtAM/WL8FyDM8sl5uob7NZx/QRafSId0x
+ 9n7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755621627; x=1756226427;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ijuv8WGHvrkf1N2aB2jxp8BO6m4HBaAKWnu2Iui5e/c=;
+ b=Z9tNFasfHFucwl1ubLlGI469wP3Ac46mx0Xikq+zJjTch6IxTrahDrm6BVtgaDiMDV
+ G7Ydm1y6eVaxu5hBLQAc1LzACwQDT8DNcDfMncH3dGALChsOQJVEjb0vE47qMpaf+nAu
+ +/LpNTlnDD/gw+5ROtQMxpHMBCBQeTcdM19YD96pYqhX9RZ7QpPhyUAsh4GQboCdonV7
+ FGE7sKE+1+olq2QTmJ1u/94b++9iY80AMl6wLPnk+tzsnxbPzuOKZTMmZ3eyUq9NjfWo
+ D7gtEkjG78IPi1Zn8twDfKKdT+bpD8L8UIjr5go/YqQPam6jpjyA8ts77CtOoSLpmc+D
+ OTHA==
+X-Gm-Message-State: AOJu0YznLR6o83eUqq/Qi2PHnSARSg8g+fKwUQc6zqrjjGyohUnKeiDx
+ 1Ca5TNmBs83bA4Pz17XlPhTeHcyYu5fe++srHUCKi2QtCUukasRFzDH5czCOAsH9M3rXmk/dp3L
+ EtQa4rpn/1TotDhiK/1p/Hw3v+WutWGHycTWrddkQnA==
+X-Gm-Gg: ASbGncvmMR4/toBg7cqrLqXnX2HhtyxhobTCfcj27DpSi0tr3F91u7uDjX+zvZjUiTI
+ 0Cqd+dSncBbZsKoFH3WKoT6WSBgoD5+/0gH0PPjPlke1pqvHMhSHYj1oEHXyIXG3URwMc+zWN/B
+ FdrdwG6I7AeHs0eJIk7bRg+yNNSHot3hLRl+X+TCc2mLcnuayi1194NZgzEuQh4RN5SOgCp5U7S
+ VtuqD2R
+X-Google-Smtp-Source: AGHT+IGBno/ga5KM6GI9OGS8rJD6fHPfe47e81Cw3HCxAVUO9wpM8ACrMYaUvUd3WW4ilY+DOU5TmLE79hjhBi7PuIM=
+X-Received: by 2002:a05:6902:1382:b0:e8e:26bb:2452 with SMTP id
+ 3f1490d57ef6-e94e61779f1mr2938118276.8.1755621627215; Tue, 19 Aug 2025
+ 09:40:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3eefa4f1-56ae-40ed-9317-2a3e4e6983ea@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250815090113.141641-1-corvin.koehne@gmail.com>
+ <CAFEAcA9y-0-Oe5beVObe+SZqmByRSOYkCaKM1FDjeo0jdxjjCQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9y-0-Oe5beVObe+SZqmByRSOYkCaKM1FDjeo0jdxjjCQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 19 Aug 2025 17:40:14 +0100
+X-Gm-Features: Ac12FXwriZGoD17SKJqW1wcUPS4OwzK155aLpA1SeWBIOOkwshbwM8-yUmrgC1o
+Message-ID: <CAFEAcA8bFFB9CxCoVi+YVcJpwcQeEn4RkALVXDzwOH930WsGMw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/14] hw/arm: add Beckhoff CX7200 board
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
+ qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,141 +99,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 19, 2025 at 09:25:22AM -0700, Pierrick Bouvier wrote:
-> On 8/19/25 9:08 AM, Daniel P. Berrangé wrote:
-> > On Tue, Aug 19, 2025 at 08:48:16AM -0700, Pierrick Bouvier wrote:
-> > > On 8/19/25 8:12 AM, Daniel P. Berrangé wrote:
-> > > > On Tue, Aug 19, 2025 at 04:06:45PM +0100, Peter Maydell wrote:
-> > > > > On Tue, 19 Aug 2025 at 16:04, Pierrick Bouvier
-> > > > > <pierrick.bouvier@linaro.org> wrote:
-> > > > > > 
-> > > > > > On 8/19/25 6:24 AM, Peter Maydell wrote:
-> > > > > > > On Fri, 8 Aug 2025 at 07:55, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
-> > > > > > > Can you follow the QEMU coding style, please (here and elsewhere)?
-> > > > > > > Variables and function names should be all lower case,
-> > > > > > > and variable declarations go at the start of a C code
-> > > > > > > block, not in the middle of one.
-> > > > > > > 
-> > > > > > 
-> > > > > > In some cases, including in this function, I feel that the rule to
-> > > > > > declare variables at the start of a block is not really helpful, and is
-> > > > > > more related to legacy C than a real point nowadays.
-> > > > > > As well, it sometimes forces to reuse some variables between various sub
-> > > > > > blocks, which definitely can create bugs.
-> > > > > > 
-> > > > > > Anyway, I'm not discussing the existing QEMU coding style, but just
-> > > > > > asking if for the current context, is it really a problem to declare
-> > > > > > variable here?
-> > > > > 
-> > > > > The point of a coding style is to aim for consistency. QEMU
-> > > > > is pretty terrible at being consistent, but we should try.
-> > > > > The rule about variables at start of block is not because
-> > > > > some compilers fail to compile it, but because we think
-> > > > > it's overall more readable that way.
-> > > > 
-> > > > There are also potential[1] functional problems with not declaring
-> > > > at the start of block, because if you have a "goto cleanup" which
-> > > > jumps over the line of the declaration, the variable will have
-> > > > undefined state when the 'cleanup:' block is running. This is
-> > > > something which is very subtle and easily missed when reading the
-> > > > code flow.
-> > > > 
-> > > 
-> > > This has nothing to do with where variables are declared, but where they are
-> > > assigned. The same issue can happen whether or not it's declared at the
-> > > start of a block.
-> > > 
-> > > I suspect we use -ftrivial-auto-var-init precisely because we force
-> > > variables to be declared at start of the scope, i.e. where they don't have
-> > > any value yet. So, instead of forcing an explicit initialization or rely on
-> > > compiler warnings for uninitialized values, it was decided to initialize
-> > > them to 0 by default.
-> > > 
-> > > If we declared them at the point where they have a defined semantic value,
-> > > this problem would not exist anyway, out of the goto_cleanup situation,
-> > > which has the same fundamental issue in both cases.
-> > 
-> > It really isn't the same issue when you compare
-> > 
-> >    void bar(void) {
-> >      char *foo = NULL;
-> > 
-> >      if (blah)
-> >         goto cleanup:
-> > 
-> >    cleanup:
-> >      if (foo)
-> >         ....
-> >    }
-> > 
-> > vs
-> > 
-> >    void bar(void) {
-> >      if (blah)
-> >         goto cleanup:
-> > 
-> >      char *foo = NULL;
-> > 
-> >      ...some code...
-> > 
-> >    cleanup:>      if (foo)
-> >         ....
-> >    }
-> > 
-> > The late declaration of 'foo' is outright misleading to reviewers.
-> > 
-> > Its initialization at time of declaration gives the impression
-> > that 'foo' has well defined value in the 'cleanup' block, when
-> > that is not actually true. In big methods it is very easy to
-> > overlook an earlier 'goto' that jumps across a variable declaration
-> > and initialization.
-> > 
-> 
-> "Big" method is probably the issue there. If it's not possible to follow
-> control flow in a given function, it's a strong hint there is a problem with
-> its size, independently of any standard.
+On Fri, 15 Aug 2025 at 19:06, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Fri, 15 Aug 2025 at 10:01, Corvin K=C3=B6hne <corvin.koehne@gmail.com>=
+ wrote:
+> >
+> > From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+> >
+> > Hi,
+> >
+> > Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
+> > platform. This commit series adds the Beckhoff CX7200 as new board vari=
+ant to
+> > QEMU.
+> >
+> > The emulation is able to successfully boot an CX7200 image. The image i=
+ncludes
+> > some self tests executed on every boot. Only the cache self test fails =
+due to
+> > QEMU emulating the cache as always being coherent. The self tests inclu=
+de f.e.:
+> >
+> > * Network
+> > * Flash
+> > * CCAT DMA + EEPROM [1]
+> > * TwinCAT (Beckhoff's automation control software [2])
+> >
+> > [1] https://github.com/beckhoff/ccat
+> > [2] https://www.beckhoff.com/en-us/products/automation/
+> >
+> > YannickV (14):
+> >   hw/timer: Make frequency configurable
+> >   hw/timer: Make PERIPHCLK period configurable
+> >   hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
+> >   hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
+> >   hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
+> >     user mode
+> >   hw/dma/zynq-devcfg: Simulate dummy PL reset
+> >   hw/dma/zynq-devcfg: Indicate power-up status of PL
+> >   hw/dma/zynq-devcfg: Fix register memory
+> >   hw/misc: Add dummy ZYNQ DDR controller
+> >   hw/misc/zynq_slcr: Add logic for DCI configuration
+> >   hw/misc: Add Beckhoff CCAT device
+> >   hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+> >   hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
+> >   docs/system/arm: Add support for Beckhoff CX7200
+>
+> This patchset is on my list to review. As an initial request,
+> for a new board could we have a test in tests/functional/
+> please?
 
-Certainly some methods are too big & deserve refactoring, but that's a
-non-trivial investment, and it isn't always a clearcut win to split
-code out into a bunch of arbitrarily short methods. You may solve the
-goto/initialization problem, but make other things harder as you often
-still have to fully page all the code into mind to understand it.
+I've also now reviewed the two initial generic-arm patches
+and the ones where you add new device models. I had a
+quick scan through the bug fix patches to the existing
+zynq devices but I'd appreciate it if the Xilinx folks
+could review those ones.
 
-> > Even if not all methods have this problem, the coding standards
-> > guide us into the habit of writing code that is immune from this
-> > kind of problem. That habit only forms reliably if we apply the
-> > coding standards unconditionally, rather than selectively.
-> > 
-> 
-> That's right, but humanly enforced coding standard are usually a waste of
-> time for everyone (reviewers and developers).
-
-Human enforced standards are absolutely better than a free-for-all. Over
-time contributors will gain familiarity with the project standards and
-largely comply without enforcement being required. If contributors
-repeatedly ignore coding standards, it will disincentivise reviewers
-from looking at their patches.
-
-> How many messages and exchanges on the mailing list could we save by using
-> something like clang-format on the codebase, and force it to be "clean" as
-> part of the CI? There would be no more discussion, as there would be only
-> one single and objective source of truth.
-
-I would really love if it we could apply clang-format to everything, but
-that has a non-trivial impact on maint when done on a large pre-existing
-codebase like QEMU. Cherry-picking to upstream stable or distros would
-be immensely painful, verging on impossible, after a bulk reformat. For
-any new codebase I'd go for clang-format every time.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
