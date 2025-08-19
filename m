@@ -4,46 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 548BACA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 16:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43735CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 16:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoOwu-0005ys-Ur; Tue, 19 Aug 2025 12:12:37 -0400
+	id 1uoOw5-0003qP-Pr; Tue, 19 Aug 2025 12:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1uoMSi-0001EB-0T; Tue, 19 Aug 2025 09:33:16 -0400
-Received: from [115.124.28.78] (helo=out28-78.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uoOvp-0003XM-Ke
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:11:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1uoMSc-00025b-Dz; Tue, 19 Aug 2025 09:33:15 -0400
-Received: from ZEVORN-PC(mailfrom:chao.liu@zevorn.cn
- fp:SMTPD_---.eJvbAWP_1755609823 cluster:ay29) by smtp.aliyun-inc.com;
- Tue, 19 Aug 2025 21:23:44 +0800
-From: Chao Liu <chao.liu@zevorn.cn>
-To: richard.henderson@linaro.org, paolo.savini@embecosm.com,
- ebiggers@kernel.org, dbarboza@ventanamicro.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Chao Liu <chao.liu@zevorn.cn>
-Subject: [PATCH v5 0/2] target/riscv: Generate strided vector ld/st with tcg
-Date: Tue, 19 Aug 2025 21:23:38 +0800
-Message-ID: <cover.1755609029.git.chao.liu@zevorn.cn>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uoOvn-00087n-5C
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:11:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755619886;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lpiTVYz0eoKojOalj0JpSKuMxAYnIQ/fb99UweHqZPY=;
+ b=GMD8C57qqyenDJYwvzoiaXs5LlvDUMMFuxh8VNrxHEsjsfbdOI3Ygbdi9VLSZib0gwHa95
+ u2W0fI/F0kPW4wi2UH3WynSJDIoHI7I824LPw00nJqyGJINuzcHEMQilV3Woa+uevT1UIa
+ k7JfYNf8vyIoiNoNfgQZbouAFoKt5nk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-CHk6D3pdO6qBJEdkT-GhjA-1; Tue,
+ 19 Aug 2025 12:11:23 -0400
+X-MC-Unique: CHk6D3pdO6qBJEdkT-GhjA-1
+X-Mimecast-MFC-AGG-ID: CHk6D3pdO6qBJEdkT-GhjA_1755619882
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1500B1800294; Tue, 19 Aug 2025 16:11:22 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.237])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AD50B180028A; Tue, 19 Aug 2025 16:11:18 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 6/7] tracetool: drop the probe "__nocheck__" wrapping
+Date: Tue, 19 Aug 2025 17:10:52 +0100
+Message-ID: <20250819161053.464641-7-berrange@redhat.com>
+In-Reply-To: <20250819161053.464641-1-berrange@redhat.com>
+References: <20250819161053.464641-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.78 (deferred)
-Received-SPF: pass client-ip=115.124.28.78; envelope-from=chao.liu@zevorn.cn;
- helo=out28-78.mail.aliyun.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 19 Aug 2025 12:12:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,63 +90,361 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+Every generated inline probe function is wrapped with a
+trivial caller that has a hard-coded condition test:
 
-In this patch (v5), I've removed the redundant call to mark_vs_dirty(s)
-within the gen_ldst_stride_main_loop() function.
+  static inline void _nocheck__trace_test_wibble(void * context, int value)
+  {
+      tracepoint(qemu, test_wibble, context, value);
+  }
 
-The reason for this change is that mark_vs_dirty(s) is already being called
-at a higher level, making the call inside gen_ldst_stride_main_loop()
-unnecessary.
+  static inline void trace_test_wibble(void * context, int value)
+  {
+    if (true) {
+        _nocheck__trace_test_wibble(context, value);
+    }
+  }
 
+This was introduced for TCG probes back in
 
- static void gen_ldst_stride_main_loop(...)
+  864a2178: trace: [tcg] Do not generate TCG code to trace dynamically-disabled events
+
+but is obsolete since
+
+  126d4123 tracing: excise the tcg related from tracetool
+
+This commit removes the wrapping such that we have
+
+  static inline void trace_test_wibble(void * context, int value)
+  {
+      tracepoint(qemu, test_wibble, context, value);
+  }
+
+The default build of qemu-system-x86_64 on Fedora with the
+'log' backend, has its size reduced by 1 MB
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/tracetool/__init__.py |  1 -
+ scripts/tracetool/format/h.py | 16 +---------------
+ tests/tracetool/dtrace.h      | 18 ++----------------
+ tests/tracetool/ftrace.h      | 20 +++-----------------
+ tests/tracetool/log.h         | 20 +++-----------------
+ tests/tracetool/simple.h      | 18 ++----------------
+ tests/tracetool/syslog.h      | 20 +++-----------------
+ tests/tracetool/ust.h         | 18 ++----------------
+ 8 files changed, 16 insertions(+), 115 deletions(-)
+
+diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+index 0f33758870..1d5238a084 100644
+--- a/scripts/tracetool/__init__.py
++++ b/scripts/tracetool/__init__.py
+@@ -338,7 +338,6 @@ def formats(self):
+         return self._FMT.findall(self.fmt)
+ 
+     QEMU_TRACE               = "trace_%(name)s"
+-    QEMU_TRACE_NOCHECK       = "_nocheck__" + QEMU_TRACE
+     QEMU_TRACE_TCG           = QEMU_TRACE + "_tcg"
+     QEMU_DSTATE              = "_TRACE_%(NAME)s_DSTATE"
+     QEMU_BACKEND_DSTATE      = "TRACE_%(NAME)s_BACKEND_DSTATE"
+diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
+index a00ae475f7..b42a8268a8 100644
+--- a/scripts/tracetool/format/h.py
++++ b/scripts/tracetool/format/h.py
+@@ -64,7 +64,7 @@ def generate(events, backend, group):
+         out('',
+             'static inline void %(api)s(%(args)s)',
+             '{',
+-            api=e.api(e.QEMU_TRACE_NOCHECK),
++            api=e.api(),
+             args=e.args)
+ 
+         if "disable" not in e.properties:
+@@ -72,20 +72,6 @@ def generate(events, backend, group):
+ 
+         out('}')
+ 
+-        cond = "true"
+-
+-        out('',
+-            'static inline void %(api)s(%(args)s)',
+-            '{',
+-            '    if (%(cond)s) {',
+-            '        %(api_nocheck)s(%(names)s);',
+-            '    }',
+-            '}',
+-            api=e.api(),
+-            api_nocheck=e.api(e.QEMU_TRACE_NOCHECK),
+-            args=e.args,
+-            names=", ".join(e.args.names()),
+-            cond=cond)
+ 
+     backend.generate_end(events, group)
+ 
+diff --git a/tests/tracetool/dtrace.h b/tests/tracetool/dtrace.h
+index c2e5110672..c8931a8d7b 100644
+--- a/tests/tracetool/dtrace.h
++++ b/tests/tracetool/dtrace.h
+@@ -29,31 +29,17 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     QEMU_TEST_BLAH_ENABLED() || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
+-{
+-    QEMU_TEST_BLAH(context, filename);
+-}
+-
+ static inline void trace_test_blah(void *context, const char *filename)
  {
-      ...
--     mark_vs_dirty(s);
-      ...
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
++    QEMU_TEST_BLAH(context, filename);
  }
-
- static bool ldst_stride_trans(...)
+ 
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     QEMU_TEST_WIBBLE_ENABLED() || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
+-{
+-    QEMU_TEST_WIBBLE(context, value);
+-}
+-
+ static inline void trace_test_wibble(void *context, int value)
  {
-     ....
-     mark_vs_dirty(s);
-
-     gen_ldst_stride_main_loop(s, dest, rs1, rs2, vm, nf, ld_fn, st_fn, is_load);
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
+-    }
++    QEMU_TEST_WIBBLE(context, value);
  }
-
-
-patch v4 changes:
-- Use ctz32() replace to for-loop
-  https://lore.kernel.org/qemu-devel/cover.1755333616.git.chao.liu@yeah.net/
-
-patch v3 changes:
-- Fix the get_log2() function:
-  https://lore.kernel.org/qemu-riscv/cover.1755287531.git.chao.liu@yeah.net/T/#t
-- Add test for vlsseg8e32 instruction.
-- Rebase on top of the latest master.
-
-patch v2 changes:
-- Split the TCG node emulation of the complex strided load/store operation into
-  two separate functions to simplify the implementation:
-  https://lore.kernel.org/qemu-riscv/20250312155547.289642-1-paolo.savini@embecosm.com/
-
-
-Best regards,
-
-Chao
-
-
-Chao Liu (2):
-  Generate strided vector loads/stores with tcg nodes.
-  tests/tcg/riscv64: Add test for vlsseg8e32 instruction
-
- target/riscv/insn_trans/trans_rvv.c.inc   | 317 ++++++++++++++++++----
- tests/tcg/riscv64/Makefile.softmmu-target |   8 +-
- tests/tcg/riscv64/test-vlsseg8e32.S       | 107 ++++++++
- 3 files changed, 380 insertions(+), 52 deletions(-)
- create mode 100644 tests/tcg/riscv64/test-vlsseg8e32.S
-
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
+index f1ff3b0a62..fe22ea0f09 100644
+--- a/tests/tracetool/ftrace.h
++++ b/tests/tracetool/ftrace.h
+@@ -19,7 +19,7 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
++static inline void trace_test_blah(void *context, const char *filename)
+ {
+     {
+         char ftrace_buf[MAX_TRACE_STRLEN];
+@@ -36,18 +36,11 @@ static inline void _nocheck__trace_test_blah(void *context, const char *filename
+     }
+ }
+ 
+-static inline void trace_test_blah(void *context, const char *filename)
+-{
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
+-}
+-
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
++static inline void trace_test_wibble(void *context, int value)
+ {
+     {
+         char ftrace_buf[MAX_TRACE_STRLEN];
+@@ -57,17 +50,10 @@ static inline void _nocheck__trace_test_wibble(void *context, int value)
+ #line 5 "trace-events"
+             trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
+                              "test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
+-#line 61 "ftrace.h"
++#line 54 "ftrace.h"
+             trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
+             unused = write(trace_marker_fd, ftrace_buf, trlen);
+         }
+     }
+ }
+-
+-static inline void trace_test_wibble(void *context, int value)
+-{
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
+-    }
+-}
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/log.h b/tests/tracetool/log.h
+index 4293f1010e..edcc7f9d47 100644
+--- a/tests/tracetool/log.h
++++ b/tests/tracetool/log.h
+@@ -19,7 +19,7 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
++static inline void trace_test_blah(void *context, const char *filename)
+ {
+     if (trace_event_get_state(TRACE_TEST_BLAH) && qemu_loglevel_mask(LOG_TRACE)) {
+ #line 4 "trace-events"
+@@ -28,30 +28,16 @@ static inline void _nocheck__trace_test_blah(void *context, const char *filename
+     }
+ }
+ 
+-static inline void trace_test_blah(void *context, const char *filename)
+-{
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
+-}
+-
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
++static inline void trace_test_wibble(void *context, int value)
+ {
+     if (trace_event_get_state(TRACE_TEST_WIBBLE) && qemu_loglevel_mask(LOG_TRACE)) {
+ #line 5 "trace-events"
+         qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
+-#line 48 "log.h"
+-    }
+-}
+-
+-static inline void trace_test_wibble(void *context, int value)
+-{
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
++#line 41 "log.h"
+     }
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/simple.h b/tests/tracetool/simple.h
+index 3c9de68c43..ec6fcb22c3 100644
+--- a/tests/tracetool/simple.h
++++ b/tests/tracetool/simple.h
+@@ -20,35 +20,21 @@ void _simple_trace_test_wibble(void *context, int value);
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
++static inline void trace_test_blah(void *context, const char *filename)
+ {
+     if (trace_event_get_state(TRACE_TEST_BLAH)) {
+         _simple_trace_test_blah(context, filename);
+     }
+ }
+ 
+-static inline void trace_test_blah(void *context, const char *filename)
+-{
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
+-}
+-
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
++static inline void trace_test_wibble(void *context, int value)
+ {
+     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
+         _simple_trace_test_wibble(context, value);
+     }
+ }
+-
+-static inline void trace_test_wibble(void *context, int value)
+-{
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
+-    }
+-}
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/syslog.h b/tests/tracetool/syslog.h
+index 498bbfb99e..ed4305554c 100644
+--- a/tests/tracetool/syslog.h
++++ b/tests/tracetool/syslog.h
+@@ -19,7 +19,7 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_BLAH) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
++static inline void trace_test_blah(void *context, const char *filename)
+ {
+     if (trace_event_get_state(TRACE_TEST_BLAH)) {
+ #line 4 "trace-events"
+@@ -28,30 +28,16 @@ static inline void _nocheck__trace_test_blah(void *context, const char *filename
+     }
+ }
+ 
+-static inline void trace_test_blah(void *context, const char *filename)
+-{
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
+-}
+-
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     trace_event_get_state_dynamic_by_id(TRACE_TEST_WIBBLE) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
++static inline void trace_test_wibble(void *context, int value)
+ {
+     if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
+ #line 5 "trace-events"
+         syslog(LOG_INFO, "test_wibble " "Wibble context=%p value=%d" , context, value);
+-#line 48 "syslog.h"
+-    }
+-}
+-
+-static inline void trace_test_wibble(void *context, int value)
+-{
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
++#line 41 "syslog.h"
+     }
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/tests/tracetool/ust.h b/tests/tracetool/ust.h
+index 1184ddd870..b7acd0c39b 100644
+--- a/tests/tracetool/ust.h
++++ b/tests/tracetool/ust.h
+@@ -25,31 +25,17 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
+     tracepoint_enabled(qemu, test_blah) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_blah(void *context, const char *filename)
+-{
+-    tracepoint(qemu, test_blah, context, filename);
+-}
+-
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    if (true) {
+-        _nocheck__trace_test_blah(context, filename);
+-    }
++    tracepoint(qemu, test_blah, context, filename);
+ }
+ 
+ #define TRACE_TEST_WIBBLE_BACKEND_DSTATE() ( \
+     tracepoint_enabled(qemu, test_wibble) || \
+     false)
+ 
+-static inline void _nocheck__trace_test_wibble(void *context, int value)
+-{
+-    tracepoint(qemu, test_wibble, context, value);
+-}
+-
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    if (true) {
+-        _nocheck__trace_test_wibble(context, value);
+-    }
++    tracepoint(qemu, test_wibble, context, value);
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
 -- 
 2.50.1
 
