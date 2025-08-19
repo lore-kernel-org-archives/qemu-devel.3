@@ -4,141 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB38CA0EED
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 09:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD356CA0EED
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 10:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoIYn-0000ou-Fd; Tue, 19 Aug 2025 05:23:17 -0400
+	id 1uoJRm-0000Jb-ID; Tue, 19 Aug 2025 06:20:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uoIYl-0000oY-RA
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 05:23:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uoJRk-0000JL-L8
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 06:20:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uoIYj-0006TM-3Z
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 05:23:15 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uoJRi-0005Pc-J7
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 06:20:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755595387;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1755598799;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xBcXX6og9tYcPyrAzUBTB+eoBsY0fFhXf8lmvu8EFfw=;
- b=dHMbrfeXUQwAhXzwpUpzfIi4s1GWpvqZQqWMvMR8tP16FM4BS99lwqmlKj1xCADqX0BvVj
- 9H3RmlEkVrnyfEqCU1hmwoKEAlG692brh/QPn9SB47A+b/Va4OeJkWnxNzHHEh7NpWMOHk
- FMh5Tr4xTjtxU8BJslAv2WEVSDSNuZU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-ICZlxFIfM2az8C-RUpHV_Q-1; Tue, 19 Aug 2025 05:23:03 -0400
-X-MC-Unique: ICZlxFIfM2az8C-RUpHV_Q-1
-X-Mimecast-MFC-AGG-ID: ICZlxFIfM2az8C-RUpHV_Q_1755595381
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45a1b0cc989so29545855e9.3
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 02:23:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755595381; x=1756200181;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xBcXX6og9tYcPyrAzUBTB+eoBsY0fFhXf8lmvu8EFfw=;
- b=ZNKiGqnhEGp4YON8pAnwYmnJPoCaFYdkIXlRE+x7veFc4gv6HDTbuiHOZdAEBx/knt
- XjDqu+SWWTzDV1TgnA7SNuEIKSzhQ+/8n/AE+5YoNL9350YKH13qa+iO8xx7y+Tjkq4d
- R4dhkGUQMEV4lKpjsUeXtikJEGernI+otw/gWF1JXWaort0rxJHqn1+J0+PRtKW6goZ1
- guAe/C7dWoi0m5V0MkPuJSlYGaxBwRGaiMiyTuiPJWcFyg06/z/F/GxEt3HzR82z5wYa
- jsMfhrljlS+/Lx5t3TlB5BknBY3XOaAqasL17p3fHiSMkfDzVXdzlZBhyKrmVOjkIE+e
- 3lJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVp5yf70/2n10yKXTq38f2lTi7HUJpOULbUb4uiCVzU4FWhgvWn6IcMPfL4W8sjLfuwhOduyYLTbr2m@nongnu.org
-X-Gm-Message-State: AOJu0YyPEMdjcfWYfTbpQZA71H/MHLbQTHg/qn626R1M29K2/ofxukqF
- AOsLBnw6oQhMrUs/Xmf57fgb8puuYySzLBOnQ4PNbeWrcu1PlgUTI4yIJBQjyJ+lBm1zcMs6WJt
- Ge0zh+kYYfq91F+EJQjxdTfiDmL+vcXo7j5wvUunhGK9szJyfa65Y+Yci
-X-Gm-Gg: ASbGncvoMBhbhRJU6rljYA99Ldj9ArzT37EwKDXhhUTCTKMHybLQWG0ItrHIDJcYQEn
- BocyTIhWVo12XC86s4BC+9jPEiMuZ8BXdi8XJU/YZjI3PuTfTm9y+k9KkYafszBOj7+fq7MT05e
- X5h4WmhPuY2gqioX8coCu8us9GOqJYfZ0P4KtFI5wjyceho1ZVJWLRooQw3ED/C9Jd6JsNrSW6E
- XB9PVg8acr1LQBQ/GJ5CMUSuEHuaw//NX6a/nPoAlD+lgpsSL6SkHXUxDNLm70ALZh5In5PyIAR
- pJozsPoCiW+84pCQsefIdmbln7XPO0DaR0F39oPb6a+yLUOzpruil3IHxUx4lt6TBPHQgZpcl7B
- iBDf10qWyUsLdl3JnelzU4NjQV95GVnipP4b3fSDXE1fLRvDQMb/Ykkzs6EwIskhKCAk=
-X-Received: by 2002:a5d:5f50:0:b0:3b8:d138:41d3 with SMTP id
- ffacd0b85a97d-3c0ec7566b9mr1344386f8f.56.1755595380839; 
- Tue, 19 Aug 2025 02:23:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGEdEMSRo6MLpqy/PDBVt9NPFyP/aLZs5Nq8qRrF7RPRKAQDrGs915Tr/0Tb3KyRZGS0t/IHA==
-X-Received: by 2002:a5d:5f50:0:b0:3b8:d138:41d3 with SMTP id
- ffacd0b85a97d-3c0ec7566b9mr1344354f8f.56.1755595380408; 
- Tue, 19 Aug 2025 02:23:00 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f07:8700:71be:5385:87b8:5a98?
- (p200300d82f07870071be538587b85a98.dip0.t-ipconnect.de.
- [2003:d8:2f07:8700:71be:5385:87b8:5a98])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c074d43ba5sm2994305f8f.22.2025.08.19.02.22.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Aug 2025 02:22:59 -0700 (PDT)
-Message-ID: <dab1805a-aea6-42a5-bdbf-a58a0b87d868@redhat.com>
-Date: Tue, 19 Aug 2025 11:22:58 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=qMVJQ8febb+4kkzdiFSniE4sAG9wLuK4b6UaiUczzow=;
+ b=JrbIB3RUMNhYsEdsTvJ7+tHVd6OCyyr20PdMI49LcsCUAE+b4D/xyyd5XOrM7dKrhF+rtm
+ vzQSjNvhjZ4G3jls6s4rqs6DPQKLJeTIzo9Ez7uRaHDiR2lQ5YEqVPoSHcZdytyfc9gWLt
+ p3YFT2aCM8RvHbqIRd7sTsdNUSeDMzk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-Vdva1_SDOa2kX_JEw0yTmQ-1; Tue,
+ 19 Aug 2025 06:19:57 -0400
+X-MC-Unique: Vdva1_SDOa2kX_JEw0yTmQ-1
+X-Mimecast-MFC-AGG-ID: Vdva1_SDOa2kX_JEw0yTmQ_1755598796
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF9C0180034B; Tue, 19 Aug 2025 10:19:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.237])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD6E81955F24; Tue, 19 Aug 2025 10:19:53 +0000 (UTC)
+Date: Tue, 19 Aug 2025 11:19:49 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: yong.huang@smartx.com
+Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] multifd: Make the main thread yield periodically to the
+ main loop
+Message-ID: <aKRPxaHPY37Vh6zp@redhat.com>
+References: <5512220e1005ae2bc7357b2def32639d164e84eb.1754534263.git.yong.huang@smartx.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/8] vhost-user: Add VirtIO Shared Memory map request
-To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, hi@alyssa.is, jasowang@redhat.com, 
- Laurent Vivier <lvivier@redhat.com>, dbassey@redhat.com,
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, stefanha@redhat.com, stevensd@chromium.org,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, slp@redhat.com
-References: <20250818100353.1560655-1-aesteve@redhat.com>
- <20250818100353.1560655-2-aesteve@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20250818100353.1560655-2-aesteve@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5512220e1005ae2bc7357b2def32639d164e84eb.1754534263.git.yong.huang@smartx.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -160,54 +86,110 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.08.25 12:03, Albert Esteve wrote:
-> Add SHMEM_MAP/UNMAP requests to vhost-user for
-> dynamic management of VIRTIO Shared Memory mappings.
+On Thu, Aug 07, 2025 at 10:41:17AM +0800, yong.huang@smartx.com wrote:
+> From: Hyman Huang <yong.huang@smartx.com>
 > 
-> This implementation introduces VhostUserShmemObject
-> as an intermediate QOM parent for MemoryRegions
-> created for SHMEM_MAP requests. This object
-> provides reference-counted lifecycle management
-> with automatic cleanup.
-> 
-> This request allows backends to dynamically map
-> file descriptors into a VIRTIO Shared Memory
-> Regions identified by their shmid. Maps are created
-> using memory_region_init_ram_device_ptr() with
-> configurable read/write permissions, and the resulting
-> MemoryRegions are added as subregions to the shmem
-> container region. The mapped memory is then advertised
-> to the guest VIRTIO drivers as a base address plus
-> offset for reading and writting according
-> to the requested mmap flags.
-> 
-> The backend can unmap memory ranges within a given
-> VIRTIO Shared Memory Region to free resources.
-> Upon receiving this message, the frontend removes
-> the MemoryRegion as a subregion and automatically
-> unreferences the associated VhostUserShmemObject,
-> triggering cleanup if no other references exist.
-> 
-> Error handling has been improved to ensure consistent
-> behavior across handlers that manage their own
-> vhost_user_send_resp() calls. Since these handlers
-> clear the VHOST_USER_NEED_REPLY_MASK flag, explicit
-> error checking ensures proper connection closure on
-> failures, maintaining the expected error flow.
-> 
-> Note the memory region commit for these
-> operations needs to be delayed until after we
-> respond to the backend to avoid deadlocks.
+> When there are network issues like missing TCP ACKs on the send
+> side during the multifd live migration. At the send side, the error
+> "Connection timed out" is thrown out and source QEMU process stop
+> sending data, at the receive side, The IO-channels may be blocked
+> at recvmsg() and thus the main loop gets stuck and fails to respond
+> to QMP commands consequently.
 
-Just a general comment: feel free to use up to 72 chars per line. 
-Currently you're just a bit over 50.
+The core contract of the main event loop thread is that *NOTHING*
+must ever go into a blocking sleep/wait state, precisely because
+this breaks other functionality using the event loop such as QMP.
 
+> The QEMU backtrace at the receive side with the main thread and two
+> multi-channel threads is displayed as follows:
+
+snip
+
+> main thread:
+> Thread 1 (Thread 0x7fd45f1fbe40 (LWP 1413088)):
+> 0  0x00007fd46066b616 in futex_abstimed_wait_cancelable (private=0, abstime=0x0, clockid=0, expected=0, futex_word=0x5556d7604e80) at ../sysdeps/unix/sysv/linux/futex-internal.h:216
+> 1  do_futex_wait (sem=sem@entry=0x5556d7604e80, abstime=0x0) at sem_waitcommon.c:111
+> 2  0x00007fd46066b708 in __new_sem_wait_slow (sem=sem@entry=0x5556d7604e80, abstime=0x0) at sem_waitcommon.c:183
+> 3  0x00007fd46066b779 in __new_sem_wait (sem=sem@entry=0x5556d7604e80) at sem_wait.c:42
+> 4  0x00005556d5415524 in qemu_sem_wait (sem=0x5556d7604e80) at ../util/qemu-thread-posix.c:358
+> 5  0x00005556d4fa5e99 in multifd_recv_sync_main () at ../migration/multifd.c:1052
+> 6  0x00005556d521ed65 in ram_load_precopy (f=f@entry=0x5556d75dfb90) at ../migration/ram.c:4446
+> 7  0x00005556d521f1dd in ram_load (f=0x5556d75dfb90, opaque=<optimized out>, version_id=4) at ../migration/ram.c:4495
+> 8  0x00005556d4faa3e7 in vmstate_load (f=f@entry=0x5556d75dfb90, se=se@entry=0x5556d6083070) at ../migration/savevm.c:909
+> 9  0x00005556d4fae7a0 in qemu_loadvm_section_part_end (mis=0x5556d6082cc0, f=0x5556d75dfb90) at ../migration/savevm.c:2475
+> 10 qemu_loadvm_state_main (f=f@entry=0x5556d75dfb90, mis=mis@entry=0x5556d6082cc0) at ../migration/savevm.c:2634
+> 11 0x00005556d4fafbd5 in qemu_loadvm_state (f=0x5556d75dfb90) at ../migration/savevm.c:2706
+> 12 0x00005556d4f9ebdb in process_incoming_migration_co (opaque=<optimized out>) at ../migration/migration.c:561
+> 13 0x00005556d542513b in coroutine_trampoline (i0=<optimized out>, i1=<optimized out>) at ../util/coroutine-ucontext.c:186
+> 14 0x00007fd4604ef970 in ?? () from target:/lib64/libc.so.6
+
+Here we see the main event thread is running a migration
+coroutine, and the migration code has gone into a blocking
+sleep via qemu_sem_wait, which is a violation of the main
+event thread contract.
+
+> 
+> Once the QEMU process falls into the above state in the presence of
+> the network errors, live migration cannot be canceled gracefully,
+> leaving the destination VM in the "paused" state, since the QEMU
+> process on the destination side doesn't respond to the QMP command
+> "migrate_cancel".
+> 
+> To fix that, make the main thread yield to the main loop after waiting
+> too long for the multi-channels to finish receiving data during one
+> iteration. 10 seconds is a sufficient timeout period to set.
+> 
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> ---
+>  migration/multifd.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index b255778855..aca0aeb341 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -1228,6 +1228,16 @@ void multifd_recv_sync_main(void)
+>              }
+>          }
+>          trace_multifd_recv_sync_main_signal(p->id);
+> +        do {
+> +            if (qemu_sem_timedwait(&multifd_recv_state->sem_sync, 10000) == 0) {
+> +                break;
+> +            }
+> +            if (qemu_in_coroutine()) {
+> +                aio_co_schedule(qemu_get_current_aio_context(),
+> +                                qemu_coroutine_self());
+> +                qemu_coroutine_yield();
+> +            }
+> +        } while (1);
+
+This tries to workaround the violation of the event loop contract using
+short timeouts for the semaphore wait, but IMHO that is just papering
+over the design flaw.
+
+The migration code should not be using semaphores at all for sync purposes
+if it wants to be running in a coroutine from the event loop thread. It
+either needs to use some synchronization mechanism that can be polled by
+the event thread in a non-blocking manner, or this code needs to move to
+a background thread instead of a coroutine.
+
+>          qemu_sem_post(&p->sem_sync);
+>      }
+>      trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
+> -- 
+> 2.27.0
+> 
+> 
+
+With regards,
+Daniel
 -- 
-Cheers
-
-David / dhildenb
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
