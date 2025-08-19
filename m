@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F55CA0EF5
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 09:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF700CA0EED
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 09:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoIEc-0005ce-Dy; Tue, 19 Aug 2025 05:02:26 -0400
+	id 1uoIEc-0005cS-5Z; Tue, 19 Aug 2025 05:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uoIET-0005XX-AF; Tue, 19 Aug 2025 05:02:18 -0400
+ id 1uoIEP-0005Vj-Un; Tue, 19 Aug 2025 05:02:14 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uoIER-0003YB-4c; Tue, 19 Aug 2025 05:02:17 -0400
+ id 1uoIEO-0003YB-1b; Tue, 19 Aug 2025 05:02:13 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 19 Aug
- 2025 17:01:44 +0800
+ 2025 17:01:43 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 19 Aug 2025 17:01:44 +0800
+ Transport; Tue, 19 Aug 2025 17:01:43 +0800
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -35,16 +35,16 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>
-Subject: [PATCH v1 07/11] tests/functional/test_arm_aspeed_ast2600: Add PCIe
- test via root port and e1000e
-Date: Tue, 19 Aug 2025 17:01:28 +0800
-Message-ID: <20250819090141.3949136-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 06/11] hw/arm/aspeed_ast2600: Add PCIe RC support (RC_H
+ only)
+Date: Tue, 19 Aug 2025 17:01:27 +0800
+Message-ID: <20250819090141.3949136-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250819090141.3949136-1-jamin_lin@aspeedtech.com>
 References: <20250819090141.3949136-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -70,67 +70,156 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a functional test that exercises the AST2600 PCIe RC_H by creating a
-root port and an e1000e endpoint behind it. The AST2600/ASPEED driver
-treats root bus 0x80 specially: only two device addresses are usable on
-the root bus, addr 0 (ASPEED host bridge) and addr 8. To attach endpoints
-without code changes, the test places a QEMU PCIe root port at 0x80:08.0
-and hangs e1000e behind it so the endpoint enumerates on bus 0x81.
+Wire up the PCIe Root Complex in the AST2600 SoC model.
 
-The test appends:
--device pcie-root-port,id=root_port0,slot=1,addr=8,bus=pcie.0
--device e1000e,netdev=net0,bus=root_port0
--netdev user,id=net0
+According to the AST2600 firmware driver, only the RC_H controller is
+supported. RC_H uses PCIe PHY1 at 0x1e6ed200 and the PCIe config (H2X)
+register block at 0x1e770000. The RC_H MMIO window is mapped at
+0x70000000–0x80000000. RC_L is not modeled. The RC_H interrupt is
+wired to IRQ 168. Only RC_H is realized and connected to the SoC
+interrupt controller.
 
-It then verifies enumeration with lspci:
-0001:80:00.0 Host bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
-0001:80:08.0 PCI bridge: Red Hat, Inc. QEMU PCIe Root port
-0001:81:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network
-Connection
+The SoC integration initializes PCIe PHY1, instantiates a single RC
+instance, wires its MMIO regions, and connects its interrupt. An alias
+region is added to map the RC MMIO space into the guest physical address
+space.
 
-This is a temporary solution that allows attaching multiple PCIe
-devices while the ASPEED drivers does not support placing endpoints directly
-on bus numbers 0x80.
-
-Reference:
-https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/drivers/pci/controller/pcie-aspeed.c#L309
+This provides enough functionality for firmware and guest drivers to
+discover and use the AST2600 RC_H Root Complex while leaving RC_L
+unimplemented.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/functional/test_arm_aspeed_ast2600.py | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ hw/arm/aspeed_ast2600.c | 69 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 66 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/test_arm_aspeed_ast2600.py
-index fdae4c939d..9ffcef513d 100755
---- a/tests/functional/test_arm_aspeed_ast2600.py
-+++ b/tests/functional/test_arm_aspeed_ast2600.py
-@@ -110,6 +110,10 @@ def test_arm_ast2600_evb_sdk(self):
-             'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test')
-         self.vm.add_args('-device',
-             'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
-+        self.vm.add_args('-device',
-+            'pcie-root-port,id=root_port0,slot=1,addr=8,bus=pcie.0')
-+        self.vm.add_args('-device', 'e1000e,netdev=net0,bus=root_port0')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-         self.do_test_arm_aspeed_sdk_start(
-             self.scratch_file("ast2600-default", "image-bmc"))
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index d12707f0ab..d521a1b4f0 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -48,11 +48,13 @@ static const hwaddr aspeed_soc_ast2600_memmap[] = {
+     [ASPEED_DEV_XDMA]      = 0x1E6E7000,
+     [ASPEED_DEV_ADC]       = 0x1E6E9000,
+     [ASPEED_DEV_DP]        = 0x1E6EB000,
++    [ASPEED_DEV_PCIE_PHY1] = 0x1E6ED200,
+     [ASPEED_DEV_SBC]       = 0x1E6F2000,
+     [ASPEED_DEV_EMMC_BC]   = 0x1E6f5000,
+     [ASPEED_DEV_VIDEO]     = 0x1E700000,
+     [ASPEED_DEV_SDHCI]     = 0x1E740000,
+     [ASPEED_DEV_EMMC]      = 0x1E750000,
++    [ASPEED_DEV_PCIE0]     = 0x1E770000,
+     [ASPEED_DEV_GPIO]      = 0x1E780000,
+     [ASPEED_DEV_GPIO_1_8V] = 0x1E780800,
+     [ASPEED_DEV_RTC]       = 0x1E781000,
+@@ -79,6 +81,7 @@ static const hwaddr aspeed_soc_ast2600_memmap[] = {
+     [ASPEED_DEV_FSI1]      = 0x1E79B000,
+     [ASPEED_DEV_FSI2]      = 0x1E79B100,
+     [ASPEED_DEV_I3C]       = 0x1E7A0000,
++    [ASPEED_DEV_PCIE_MMIO1] = 0x70000000,
+     [ASPEED_DEV_SDRAM]     = 0x80000000,
+ };
  
-@@ -136,5 +140,15 @@ def test_arm_ast2600_evb_sdk(self):
-         exec_command_and_wait_for_pattern(self,
-              '/sbin/hwclock -f /dev/rtc1', year)
+@@ -127,6 +130,7 @@ static const int aspeed_soc_ast2600_irqmap[] = {
+     [ASPEED_DEV_LPC]       = 35,
+     [ASPEED_DEV_IBT]       = 143,
+     [ASPEED_DEV_I2C]       = 110,   /* 110 -> 125 */
++    [ASPEED_DEV_PCIE0]     = 168,
+     [ASPEED_DEV_PECI]      = 38,
+     [ASPEED_DEV_ETH1]      = 2,
+     [ASPEED_DEV_ETH2]      = 3,
+@@ -191,6 +195,10 @@ static void aspeed_soc_ast2600_init(Object *obj)
+     snprintf(typename, sizeof(typename), "aspeed.i2c-%s", socname);
+     object_initialize_child(obj, "i2c", &s->i2c, typename);
  
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0001:80:00.0',
-+            '0001:80:00.0 Host bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0001:80:08.0',
-+            '0001:80:08.0 PCI bridge: Red Hat, Inc. QEMU PCIe Root port')
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0001:81:00.0',
-+            '0001:81:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection')
++    object_initialize_child(obj, "pcie-cfg", &s->pcie[0], TYPE_ASPEED_PCIE_CFG);
++    object_initialize_child(obj, "pcie-phy[*]", &s->pcie_phy[0],
++                            TYPE_ASPEED_PCIE_PHY);
 +
- if __name__ == '__main__':
-     AspeedTest.main()
+     object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);
+ 
+     snprintf(typename, sizeof(typename), "aspeed.fmc-%s", socname);
+@@ -292,7 +300,9 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+     AspeedSoCState *s = ASPEED_SOC(dev);
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+     qemu_irq irq;
+-    g_autofree char *sram_name = NULL;
++    g_autofree char *name = NULL;
++    MemoryRegion *mmio_alias;
++    MemoryRegion *mmio_mr;
+ 
+     /* Default boot region (SPI memory or ROMs) */
+     memory_region_init(&s->spi_boot_container, OBJECT(s),
+@@ -362,8 +372,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     /* SRAM */
+-    sram_name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
+-    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
++    name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
++    if (!memory_region_init_ram(&s->sram, OBJECT(s), name, sc->sram_size,
+                                 errp)) {
+         return;
+     }
+@@ -438,6 +448,59 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peci), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_PECI));
+ 
++    /*
++     * PCIe Root Complex (RC)
++     *
++     * H2X register space (single block 0x00-0xFF):
++     *   0x00-0x7F : shared by RC_L (PCIe0) and RC_H (PCIe1)
++     *   0x80-0xBF : RC_L only
++     *   0xC0-0xFF : RC_H only
++     *
++     * Model scope / limitations:
++     *   - Firmware supports RC_H only; this QEMU model does not support RC_L.
++     *   - RC_H uses PHY1 and the MMIO window [0x70000000, 0x80000000]
++     *     (aka MMIO1).
++     *
++     * Indexing convention (this model):
++     *   - Expose a single logical instance at index 0.
++     *   - pcie[0] -> hardware RC_H (PCIe1)
++     *   - phy[0]  -> hardware PHY1
++     *   - mmio.0 -> guest address range MMIO1: 0x70000000-0x80000000
++     *   - RC_L / PCIe0 is not created and mapped.
++     */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie_phy[0]), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->pcie_phy[0]), 0,
++                    sc->memmap[ASPEED_DEV_PCIE_PHY1]);
++
++    object_property_set_int(OBJECT(&s->pcie[0]), "dram-base",
++                            sc->memmap[ASPEED_DEV_SDRAM],
++                            &error_abort);
++    object_property_set_link(OBJECT(&s->pcie[0]), "dram", OBJECT(s->dram_mr),
++                             &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie[0]), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->pcie[0]), 0,
++                    sc->memmap[ASPEED_DEV_PCIE0]);
++
++    irq = qdev_get_gpio_in(DEVICE(&a->a7mpcore),
++                           sc->irqmap[ASPEED_DEV_PCIE0]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pcie[0].rc), 0, irq);
++
++    name = g_strdup_printf("aspeed.pcie-mmio.0");
++
++    mmio_alias = g_new0(MemoryRegion, 1);
++    mmio_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->pcie[0].rc), 1);
++
++    memory_region_init_alias(mmio_alias, OBJECT(&s->pcie[0].rc), name,
++                             mmio_mr, sc->memmap[ASPEED_DEV_PCIE_MMIO1],
++                             0x10000000);
++    memory_region_add_subregion(s->memory,
++                                sc->memmap[ASPEED_DEV_PCIE_MMIO1],
++                                mmio_alias);
++
+     /* FMC, The number of CS is set at the board level */
+     object_property_set_link(OBJECT(&s->fmc), "dram", OBJECT(s->dram_mr),
+                              &error_abort);
 -- 
 2.43.0
 
