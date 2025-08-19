@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8489FCA0EED
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 09:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD537CA0EED
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 09:04:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoIEl-0005gt-B1; Tue, 19 Aug 2025 05:02:35 -0400
+	id 1uoIEX-0005ZO-NW; Tue, 19 Aug 2025 05:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uoIEj-0005g4-Bt; Tue, 19 Aug 2025 05:02:33 -0400
+ id 1uoIEN-0005U4-8t; Tue, 19 Aug 2025 05:02:11 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uoIEg-0003f4-FT; Tue, 19 Aug 2025 05:02:32 -0400
+ id 1uoIEL-0003YB-LG; Tue, 19 Aug 2025 05:02:11 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 19 Aug
- 2025 17:01:45 +0800
+ 2025 17:01:43 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 19 Aug 2025 17:01:45 +0800
+ Transport; Tue, 19 Aug 2025 17:01:43 +0800
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -35,9 +35,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>
-Subject: [PATCH v1 11/11] tests/functional: Add PCIe presence test for AST2700
-Date: Tue, 19 Aug 2025 17:01:32 +0800
-Message-ID: <20250819090141.3949136-12-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 05/11] hw/arm/aspeed: Wire up PCIe devices in SoC model
+Date: Tue, 19 Aug 2025 17:01:26 +0800
+Message-ID: <20250819090141.3949136-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250819090141.3949136-1-jamin_lin@aspeedtech.com>
 References: <20250819090141.3949136-1-jamin_lin@aspeedtech.com>
@@ -69,86 +69,65 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a basic functional test for the AST2700 PCIe Root Complex.
-The test runs "lspci" to verify that the internal host bridge is
-enumerated at BDF 0002:00:00.0.
+Add PCIe controller and PHY instances to the Aspeed SoC state and device
+enum. This prepares the SoC model to host PCIe Root Complexes and their
+associated PHYs.
 
-Note: the ASPEED PCIe driver only supports bus 0 with a single
-device at slot 0, which is reserved for the internal bridge.
-All endpoint devices must reside on bus 1 to be discovered.
-As a result, this test only checks that the internal bridge
-is visible. Attaching pcie-root-port and e1000e devices is
-not possible without driver changes.
-
-This is a temporary solution. See the ASPEED PCIe driver
-implementation for details:
-https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/drivers/pci/controller/pcie-aspeed.c#L512
-
-Additionally, the ASPEED SDK by default enables only PCIe RC2,
-so the test covers RC2 only.
+Although the AST2600 supports only a single Root Complex, the AST2700
+provides three Root Complexes. For this reason, the model defines arrays
+of three PCIe config/PHY objects and enumerates three PCIe device IDs so
+that both SoCs can be represented consistently.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/functional/test_aarch64_aspeed_ast2700.py   | 7 +++++++
- tests/functional/test_aarch64_aspeed_ast2700fc.py | 6 ++++++
- 2 files changed, 13 insertions(+)
+ include/hw/arm/aspeed_soc.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tests/functional/test_aarch64_aspeed_ast2700.py b/tests/functional/test_aarch64_aspeed_ast2700.py
-index d02dc7991c..49f81db86c 100755
---- a/tests/functional/test_aarch64_aspeed_ast2700.py
-+++ b/tests/functional/test_aarch64_aspeed_ast2700.py
-@@ -65,6 +65,11 @@ def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 217ef0eafd..79fe353f83 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -37,6 +37,7 @@
+ #include "qom/object.h"
+ #include "hw/misc/aspeed_lpc.h"
+ #include "hw/misc/unimp.h"
++#include "hw/pci-host/aspeed_pcie.h"
+ #include "hw/misc/aspeed_peci.h"
+ #include "hw/fsi/aspeed_apb2opb.h"
+ #include "hw/char/serial-mm.h"
+@@ -49,6 +50,7 @@
+ #define ASPEED_MACS_NUM  4
+ #define ASPEED_UARTS_NUM 13
+ #define ASPEED_JTAG_NUM  2
++#define ASPEED_PCIE_NUM  3
  
-+    def do_ast2700_pcie_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:00:00.0',
-+            '0002:00:00.0 Host bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
-+
-     def start_ast2700_test(self, name):
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -126,6 +131,7 @@ def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
-         self.start_ast2700_test('ast2700-default')
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
- 
-     def test_aarch64_ast2700a1_evb_sdk_vbootrom_v09_06(self):
-         self.set_machine('ast2700a1-evb')
-@@ -135,6 +141,7 @@ def test_aarch64_ast2700a1_evb_sdk_vbootrom_v09_06(self):
-         self.verify_vbootrom_firmware_flow()
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
- 
- if __name__ == '__main__':
-     QemuSystemTest.main()
-diff --git a/tests/functional/test_aarch64_aspeed_ast2700fc.py b/tests/functional/test_aarch64_aspeed_ast2700fc.py
-index b85370e182..b52ced345f 100755
---- a/tests/functional/test_aarch64_aspeed_ast2700fc.py
-+++ b/tests/functional/test_aarch64_aspeed_ast2700fc.py
-@@ -49,6 +49,11 @@ def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
- 
-+    def do_ast2700_pcie_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'lspci -s 0002:00:00.0',
-+            '0002:00:00.0 Host bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
-+
-     def do_ast2700fc_ssp_test(self):
-         self.vm.shutdown()
-         self.vm.set_console(console_index=1)
-@@ -128,6 +133,7 @@ def test_aarch64_ast2700fc_sdk_v09_06(self):
-         self.start_ast2700fc_test('ast2700-default')
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
-+        self.do_ast2700_pcie_test()
-         self.do_ast2700fc_ssp_test()
-         self.do_ast2700fc_tsp_test()
- 
+ struct AspeedSoCState {
+     DeviceState parent;
+@@ -87,6 +89,8 @@ struct AspeedSoCState {
+     AspeedSDHCIState sdhci;
+     AspeedSDHCIState emmc;
+     AspeedLPCState lpc;
++    AspeedPCIECfgState pcie[ASPEED_PCIE_NUM];
++    AspeedPCIEPhyState pcie_phy[ASPEED_PCIE_NUM];
+     AspeedPECIState peci;
+     SerialMM uart[ASPEED_UARTS_NUM];
+     Clock *sysclk;
+@@ -254,6 +258,15 @@ enum {
+     ASPEED_DEV_LPC,
+     ASPEED_DEV_IBT,
+     ASPEED_DEV_I2C,
++    ASPEED_DEV_PCIE0,
++    ASPEED_DEV_PCIE1,
++    ASPEED_DEV_PCIE2,
++    ASPEED_DEV_PCIE_PHY0,
++    ASPEED_DEV_PCIE_PHY1,
++    ASPEED_DEV_PCIE_PHY2,
++    ASPEED_DEV_PCIE_MMIO0,
++    ASPEED_DEV_PCIE_MMIO1,
++    ASPEED_DEV_PCIE_MMIO2,
+     ASPEED_DEV_PECI,
+     ASPEED_DEV_ETH1,
+     ASPEED_DEV_ETH2,
 -- 
 2.43.0
 
