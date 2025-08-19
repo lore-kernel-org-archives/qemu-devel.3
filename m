@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69433CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 19:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F351CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoST3-0002NS-Br; Tue, 19 Aug 2025 15:58:01 -0400
+	id 1uoSVi-0004N9-Ap; Tue, 19 Aug 2025 16:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoST1-0002Mu-K4
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 15:57:59 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSVg-0004MK-3k
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:00:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSSz-0002oh-OQ
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 15:57:59 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSVe-0003TC-4F
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:00:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755633476;
+ s=mimecast20190719; t=1755633640;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gq96lR5vYhO7HGalNgZ3oAeKWVJ9Z/TMOofTkUhHSqc=;
- b=K8ELJRFzEZ4HJwpkK9dunSvcQBJOFajVyMA9FWMPIUAccb0YF0n+k+2zwNtfpgqMnpkq9/
- w2+ZemhhxiGIrFo3hOHySIstHNx8ejSM6qPdSPjZzN3ZoCLgATKdrPQ3LOODMgwVXMwnms
- OCVDK5epfnjTwa66Y0HntzLSq4cwKCQ=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cFd3aWVwcM/rDlUsUh8JiGdxZkagq4FNwJdyt4cerRA=;
+ b=RL/JSRegG1ajpbgPzPebW7Bq4D+NcOyZAvm9rfiy2GwZmrYtKfdfpMrt2HgqgjPvnLOG2E
+ pFPtTfNomS29WKFGpCXjU0NtOPIWUsPM6K4aHwvmEQ18c9AyoUeYkUiRCePvnwhw8Z9+dM
+ myvH+92LLl20XM+aTaAkqV/ZBVnxZR8=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-pqoxkrLyORidM22vL8TE6Q-1; Tue, 19 Aug 2025 15:57:55 -0400
-X-MC-Unique: pqoxkrLyORidM22vL8TE6Q-1
-X-Mimecast-MFC-AGG-ID: pqoxkrLyORidM22vL8TE6Q_1755633474
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-24457f440f0so62566085ad.0
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 12:57:55 -0700 (PDT)
+ us-mta-693-7huPk9siNiGaqtZPU5uhTg-1; Tue, 19 Aug 2025 16:00:38 -0400
+X-MC-Unique: 7huPk9siNiGaqtZPU5uhTg-1
+X-Mimecast-MFC-AGG-ID: 7huPk9siNiGaqtZPU5uhTg_1755633638
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2445806eab4so59708255ad.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 13:00:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755633474; x=1756238274;
+ d=1e100.net; s=20230601; t=1755633638; x=1756238438;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gq96lR5vYhO7HGalNgZ3oAeKWVJ9Z/TMOofTkUhHSqc=;
- b=GUEhQF1a9G66dWf1IglTdQexw4K2KpsPBclugNGikVZcZ7SN6Kgo5Sv9YqkBVTyhqW
- xM1stcN/F0DZVGb4VIfOYDpxLfYkp0GTvh7l2PVCpMYDd1xkTNmwhDbVz8uurmOb8QuV
- gsoRSnx1xtJxoXBDOctZ4YZ8g2ckbsNCtnx6sD+2KQDNK3bKvYZPPoCM+C/L8AncxwBL
- eucOOgKcKbeu4MJsnF4JQm6NNwljPt9dI0Nm5Cut8Ir+PBFdBQV6+jXwqR7XDar6eqNh
- evty7U4yPnCvO/HJm3xzRnD2Rsiqn+m2H0H7i7nFtXBDxkFIP6YTJvccd9IAPDr2KIzS
- DUzg==
-X-Gm-Message-State: AOJu0YzxIoCqegkpkW8tDBcrGDrXx+ncDGbImff53PjH+1oA4KsnsavS
- afuzPhklpMd+XflKlfdNJ6vIaR72ynj4+y/pwT649UekIqGhHyKK0buyC3lEgVp/XbtjsFwMKQs
- oJI3lSKVpF8s4onICgl41lAVF9d3KCD/uGC09gZHHhkLYoarj3Kpayp1DQBPzboIsrZHz8YVZdb
- 3AgM4GULC6ZZtK6he8bjnQFrR+BGNVMqM=
-X-Gm-Gg: ASbGncsxq/JA2vTr+LG/pYeAbWcBrIdvV1QLjhkTTazFq0ys9GknvJLrob7dk4j/Dfw
- Lm0mm6KHRXvNQtm27nhWgBinROhHgrtv6d9ExbLc9vcMEbmqynGJtIw29ZedVSEpi+jIyDkagt9
- w7ufrHTVtvQ36UhBn0W11T76pKFDMvg5Wzs+/XzH+ia/IjDA1XRBAW
-X-Received: by 2002:a17:902:ce8b:b0:23f:d861:bd4a with SMTP id
- d9443c01a7336-245ef2275f5mr2290045ad.27.1755633474136; 
- Tue, 19 Aug 2025 12:57:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6Uw0lapekeIo4Xub/1nomUoPuJnJDhOBgjZRKq9hIhrzRtnNU6ayhdYUj7uVBvS+zE+SGVCZLPfn9m0p6mhw=
-X-Received: by 2002:a17:902:ce8b:b0:23f:d861:bd4a with SMTP id
- d9443c01a7336-245ef2275f5mr2289755ad.27.1755633473708; Tue, 19 Aug 2025
- 12:57:53 -0700 (PDT)
+ bh=cFd3aWVwcM/rDlUsUh8JiGdxZkagq4FNwJdyt4cerRA=;
+ b=h4cvOUvPspqxA3aOXojHhlCkHpbMjGaTW7ikHwqudLz33FRonWwiCvzNmCrIgxkGBz
+ k5j13kV9Az2Omqqq5V7DD9wq2zLFJ6oMveoqusXnWqvvI8+O4bEvi+RGp7TsrajmbWUu
+ f6XO4b4N1UqJ5gfC1cdEkhfD4hXqsyebHsR0ejPhnUfl4dxaRAFA67Kmv2U9wZHoeubj
+ ISF8OD2PHkALxTHh9n/EvQn8xb2r5bGcP7CmPh97MO1mlYnRq/cUoq/m11iZbRRtXY7y
+ urlZFHm0F/AIZ3+f3f+B+Ngz7pxVDW9OxI0wsuggp0zshQ/xu/vwtBMLLF5riCtFxKCb
+ 6Szw==
+X-Gm-Message-State: AOJu0Yz0sFcbogJEbMFKM5JPGKx3UIkOPkB41caRsBMRjwzq8+1FMGT/
+ fa59NGiTh2RI7vlTnz8nEExE8RJRqd40Qoe7pvVpxBiZ+e7tvlzD2Z51spsvOdguurl34uK93KZ
+ islY8NR7u6b+DJ1TgO+RkLgfwOuMZH7ATPCB2GuIRXVvqhUBxAUbx9N3/utxuRoekc6lXOgCUtn
+ YxBIgYhcMBeLHiAY4BMbZkQPkoKEXNNqc=
+X-Gm-Gg: ASbGnctjRFhoYnyPNjWNl6wu6ypVpltQixSh5xz0LB32XX6MuJzBYb89kL/KCUXY+gV
+ wUFQBedFOxRPKH/F5RUiezoFc2f/jdQf8c1JByRA58rRIZXm7fbgMaVdoRckUdwONAy3lMH6vG9
+ 6W4nMOxCjkTk1aZcpNI3HSib+BVcGfaRXH/lrLxxu0bXuqv8G0B9wY
+X-Received: by 2002:a17:903:1b07:b0:235:eb8d:7fff with SMTP id
+ d9443c01a7336-245ef225a57mr2321345ad.28.1755633637614; 
+ Tue, 19 Aug 2025 13:00:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEi43KE3jBPXjnEmVZscHnfruj46CzaZj+vfG6iCW6pDmjjdPO4XWHxLfvevmiO1CN202a+tlAbpHE+GUzUkc4=
+X-Received: by 2002:a17:903:1b07:b0:235:eb8d:7fff with SMTP id
+ d9443c01a7336-245ef225a57mr2320975ad.28.1755633637136; Tue, 19 Aug 2025
+ 13:00:37 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250715143023.1851000-1-berrange@redhat.com>
- <20250715143023.1851000-7-berrange@redhat.com>
-In-Reply-To: <20250715143023.1851000-7-berrange@redhat.com>
+ <20250715143023.1851000-2-berrange@redhat.com>
+ <CAFn=p-bVmn_N4hWBnYtNhhdHHYEh4j0zVBHnXFtJVQK5GDRaJw@mail.gmail.com>
+ <aKTVpwZjz_GQuteM@redhat.com>
+In-Reply-To: <aKTVpwZjz_GQuteM@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Tue, 19 Aug 2025 15:57:42 -0400
-X-Gm-Features: Ac12FXzffvKjAypuhyiTz2cvY4s8Fs0-kgsxBv_N-k53Cq9K3BwhXY3F5sZdAE8
-Message-ID: <CAFn=p-bshSJOs=6jGvG8c561bdHPc2CSRo2t98EUZq+K9kt=HA@mail.gmail.com>
-Subject: Re: [PATCH 06/14] python: drop 'create_task' back compat helper
+Date: Tue, 19 Aug 2025 16:00:23 -0400
+X-Gm-Features: Ac12FXy3Qwm2EfdV89ArlYsmClzfQFqomN0GyMO7w2f3Jbw5ZJXN7KNHTfOl_kw
+Message-ID: <CAFn=p-aXcUMmFsw1zwWSO67VYDuKU7i6JRLuCqBUUm9xRwgsfw@mail.gmail.com>
+Subject: Re: [PATCH 01/14] python: Replace asyncio.get_event_loop for Python
+ 3.14
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
  Jagannathan Raman <jag.raman@oracle.com>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Elena Ufimtseva <elena.ufimtseva@oracle.com>, Thomas Huth <thuth@redhat.com>, 
  Cleber Rosa <crosa@redhat.com>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, "Richard W.M. Jones" <rjones@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
@@ -106,193 +109,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 15, 2025 at 10:31=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
+On Tue, Aug 19, 2025 at 3:51=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
 >
-> Our minimum python is now 3.9, so back compat with python
-> 3.6 is no longer required.
+> On Tue, Aug 19, 2025 at 03:47:50PM -0400, John Snow wrote:
+> > On Tue, Jul 15, 2025 at 10:30=E2=80=AFAM Daniel P. Berrang=C3=A9 <berra=
+nge@redhat.com> wrote:
+> > >
+> > > From: Richard W.M. Jones <rjones@redhat.com>
+> > >
+> > > In Python 3.14, no asyncio event loop gets generated automatically.
+> > > Instead create one when we need it.  This should work with Python 3.1=
+3
+> > > as well.  This change was suggested here:
+> > >
+> > > https://bugzilla.redhat.com/show_bug.cgi?id=3D2375004#c4
+> > >
+> > > See-also: https://docs.python.org/3.14/whatsnew/3.14.html#id7
+> > > Thanks: Miro Hron=C4=8Dok, Daniel P. Berrang=C3=A9
+> > > Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+> >
+> > Reviewed-by: John Snow <jsnow@redhat.com>
+> >
+> > We fixed this in the standalone tree, but I hadn't synchronized the
+> > changes over yet. Shall we take your patches first, and then I'll
+> > worry about synchronizing later?
 >
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> This really needs to be in 10.1.0, because tests crash and
+> burn under python 3.14 without this - we're applying this
+> in Fedora builds locally to deal with the brokeness.
 
-Reviewed-by: John Snow <jsnow@redhat.com>
+Urk. I didn't realize we were waiting on this; please include it with
+my blessings and apologies.
 
-> ---
->  python/qemu/qmp/protocol.py |  7 +++----
->  python/qemu/qmp/qmp_tui.py  |  8 ++++----
->  python/qemu/qmp/util.py     | 33 +--------------------------------
->  python/tests/protocol.py    |  7 +++----
->  4 files changed, 11 insertions(+), 44 deletions(-)
 >
-> diff --git a/python/qemu/qmp/protocol.py b/python/qemu/qmp/protocol.py
-> index deb6b20d29..4aff0ea423 100644
-> --- a/python/qemu/qmp/protocol.py
-> +++ b/python/qemu/qmp/protocol.py
-> @@ -36,7 +36,6 @@
->  from .error import QMPError
->  from .util import (
->      bottom_half,
-> -    create_task,
->      exception_summary,
->      flush,
->      pretty_traceback,
-> @@ -661,8 +660,8 @@ async def _establish_session(self) -> None:
->          reader_coro =3D self._bh_loop_forever(self._bh_recv_message, 'Re=
-ader')
->          writer_coro =3D self._bh_loop_forever(self._bh_send_message, 'Wr=
-iter')
+> > (I desperately need to drop this code from the qemu.git tree, urgh.)
 >
-> -        self._reader_task =3D create_task(reader_coro)
-> -        self._writer_task =3D create_task(writer_coro)
-> +        self._reader_task =3D asyncio.create_task(reader_coro)
-> +        self._writer_task =3D asyncio.create_task(writer_coro)
+> IMHO qemu.git should be considered authoritative right now because
+> that's what we're actually shipping & thus take priority for merge.
+
+Yup, you're right. I just mean I need to stop the duplication, because
+stuff like this happens.
+
 >
->          self._bh_tasks =3D asyncio.gather(
->              self._reader_task,
-> @@ -687,7 +686,7 @@ def _schedule_disconnect(self) -> None:
->          if not self._dc_task:
->              self._set_state(Runstate.DISCONNECTING)
->              self.logger.debug("Scheduling disconnect.")
-> -            self._dc_task =3D create_task(self._bh_disconnect())
-> +            self._dc_task =3D asyncio.create_task(self._bh_disconnect())
->
->      @upper_half
->      async def _wait_disconnect(self) -> None:
-> diff --git a/python/qemu/qmp/qmp_tui.py b/python/qemu/qmp/qmp_tui.py
-> index 7dfb03c9ad..61e8b3773c 100644
-> --- a/python/qemu/qmp/qmp_tui.py
-> +++ b/python/qemu/qmp/qmp_tui.py
-> @@ -40,7 +40,7 @@
->  from .message import DeserializationError, Message, UnexpectedTypeError
->  from .protocol import ConnectError, Runstate
->  from .qmp_client import ExecInterruptedError, QMPClient
-> -from .util import create_task, pretty_traceback
-> +from .util import pretty_traceback
->
->
->  # The name of the signal that is used to update the history list
-> @@ -225,7 +225,7 @@ def cb_send_to_server(self, raw_msg: str) -> None:
->          """
->          try:
->              msg =3D Message(bytes(raw_msg, encoding=3D'utf-8'))
-> -            create_task(self._send_to_server(msg))
-> +            asyncio.create_task(self._send_to_server(msg))
->          except (DeserializationError, UnexpectedTypeError) as err:
->              raw_msg =3D format_json(raw_msg)
->              logging.info('Invalid message: %s', err.error_message)
-> @@ -246,7 +246,7 @@ def kill_app(self) -> None:
->          Initiates killing of app. A bridge between asynchronous and sync=
-hronous
->          code.
->          """
-> -        create_task(self._kill_app())
-> +        asyncio.create_task(self._kill_app())
->
->      async def _kill_app(self) -> None:
->          """
-> @@ -393,7 +393,7 @@ def run(self, debug: bool =3D False) -> None:
->                                     handle_mouse=3DTrue,
->                                     event_loop=3Devent_loop)
->
-> -        create_task(self.manage_connection(), self.aloop)
-> +        self.aloop.create_task(self.manage_connection())
->          try:
->              main_loop.run()
->          except Exception as err:
-> diff --git a/python/qemu/qmp/util.py b/python/qemu/qmp/util.py
-> index 7f9e718154..c44a5aacbc 100644
-> --- a/python/qemu/qmp/util.py
-> +++ b/python/qemu/qmp/util.py
-> @@ -13,13 +13,7 @@
->  import asyncio
->  import sys
->  import traceback
-> -from typing import (
-> -    Any,
-> -    Coroutine,
-> -    Optional,
-> -    TypeVar,
-> -    cast,
-> -)
-> +from typing import TypeVar, cast
->
->
->  T =3D TypeVar('T')
-> @@ -79,31 +73,6 @@ def bottom_half(func: T) -> T:
->      return func
->
->
-> -# -------------------------------
-> -# Section: Compatibility Wrappers
-> -# -------------------------------
-> -
-> -
-> -def create_task(coro: Coroutine[Any, Any, T],
-> -                loop: Optional[asyncio.AbstractEventLoop] =3D None
-> -                ) -> 'asyncio.Future[T]':
-> -    """
-> -    Python 3.6-compatible `asyncio.create_task` wrapper.
-> -
-> -    :param coro: The coroutine to execute in a task.
-> -    :param loop: Optionally, the loop to create the task in.
-> -
-> -    :return: An `asyncio.Future` object.
-> -    """
-> -    if sys.version_info >=3D (3, 7):
-> -        if loop is not None:
-> -            return loop.create_task(coro)
-> -        return asyncio.create_task(coro)  # pylint: disable=3Dno-member
-> -
-> -    # Python 3.6:
-> -    return asyncio.ensure_future(coro, loop=3Dloop)
-> -
-> -
->  # ----------------------------
->  # Section: Logging & Debugging
->  # ----------------------------
-> diff --git a/python/tests/protocol.py b/python/tests/protocol.py
-> index 4a0ee94727..9bb23b6a7b 100644
-> --- a/python/tests/protocol.py
-> +++ b/python/tests/protocol.py
-> @@ -8,7 +8,6 @@
->
->  from qemu.qmp import ConnectError, Runstate
->  from qemu.qmp.protocol import AsyncProtocol, StateError
-> -from qemu.qmp.util import create_task
->
->
->  class NullProtocol(AsyncProtocol[None]):
-> @@ -124,7 +123,7 @@ async def _runner():
->              if allow_cancellation:
->                  return
->              raise
-> -    return create_task(_runner())
-> +    return asyncio.create_task(_runner())
->
->
->  @contextmanager
-> @@ -271,7 +270,7 @@ async def _watcher():
->                      msg=3Df"Expected state '{state.name}'",
->                  )
->
-> -        self.runstate_watcher =3D create_task(_watcher())
-> +        self.runstate_watcher =3D asyncio.create_task(_watcher())
->          # Kick the loop and force the task to block on the event.
->          await asyncio.sleep(0)
->
-> @@ -589,7 +588,7 @@ async def _asyncTearDown(self):
->      async def testSmoke(self):
->          with TemporaryDirectory(suffix=3D'.qmp') as tmpdir:
->              sock =3D os.path.join(tmpdir, type(self.proto).__name__ + ".=
-sock")
-> -            server_task =3D create_task(self.server.start_server_and_acc=
-ept(sock))
-> +            server_task =3D asyncio.create_task(self.server.start_server=
-_and_accept(sock))
->
->              # give the server a chance to start listening [...]
->              await asyncio.sleep(0)
+> With regards,
+> Daniel
 > --
-> 2.49.0
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
 >
 
 
