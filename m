@@ -4,81 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C548CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 13:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C3FCA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 13:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoMI1-0005XR-Vj; Tue, 19 Aug 2025 09:22:14 -0400
+	id 1uoMKO-0006Qt-S4; Tue, 19 Aug 2025 09:24:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uoMHu-0005Wc-Iy
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 09:22:08 -0400
-Received: from p-east1-cluster3-host9-snip4-3.eps.apple.com ([57.103.91.214]
- helo=outbound.ci.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uoMHs-0000nG-Sr
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 09:22:06 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-20-percent-1 (Postfix) with ESMTPS id
- 46CDA1800223; Tue, 19 Aug 2025 13:22:01 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=CdhKC+5IRorrZAK3611ZzOgZ9jDP7nS5VaEZFEuI+BM=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=YZ0V7Ixwb5sdfiCl9nr8HlkD9+EM93geY+ALsxyaIzklyPNC81a4RhXpAkCUn5birHKfE1ZmIJhWc8rYOLWQzfFqlIYztmcvrgP0W+VXePz1UlWv9GDDFXHucEGVe0b/3Nq5C7OUd9XtrScpU7RLbkoY5VHd3DXe2VggoC5iLbCz44tUOI3IN290jK2XUurHg1icFc2R5LkKZhek19G9oXLeZLI1W64sXn9R01Aj56GPALfk391hjZCYSoPFlUG+DRBPI6JwQgNPIITekigXvZj7NFe/UQzAX4YMWhprppCKExzFStHsMWZRmIXhLEZsePxZvrwiHhZ2FK6O9Xb0ag==
-X-Client-IP: 194.62.217.67
-Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
- [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-20-percent-1 (Postfix) with ESMTPSA id
- 4AE941801308; Tue, 19 Aug 2025 13:21:59 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH v6 04/13] hw/intc: Add hvf vGIC interrupt controller
- support
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20832F49-1F5C-4023-9E0C-0D51A87A1770@unpredictable.fr>
-Date: Tue, 19 Aug 2025 15:21:47 +0200
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Igor Mammedov <imammedo@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
- Cameron Esfahani <dirty@apple.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <62C5CA36-E0DB-48DA-96D9-74EA5794ACC8@ynddal.dk>
-References: <20250808070137.48716-1-mohamed@unpredictable.fr>
- <20250808070137.48716-5-mohamed@unpredictable.fr>
- <40259CA2-A38D-41C1-A726-5144FB9EA166@ynddal.dk>
- <20832F49-1F5C-4023-9E0C-0D51A87A1770@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoMK8-0006PZ-Gl
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 09:24:25 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoMK5-0001A4-IE
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 09:24:23 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e94eec0de32so317201276.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 06:24:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755609859; x=1756214659; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LMinEjCbiigB/Wv0BKtvA8XYhpLXZtX+Rgam8GgX/kE=;
+ b=BosDZxKRVInUU9y+5GeWcfesizZWOQkLl7VEIehuP3hntHKlrPPaKPG38c8fZmqSaL
+ vvrH+FLnn6bC0f2rUQec0uEJ5OVOWe/pzWCbywzPoga9pi46EN0MO8RKpAoLuh3oJNWE
+ EAgOdcWrWLPdle//7aErP4SQ5PnD2jbRuAjSrsJJ2wo9XqNzHhFdWzvV/fan4e/yyB1l
+ spIZEwXdEJp32ql308NVq1CspJhIwKps9P/SM1oNHp9PHH/+3pcbwgtT02fdKoBmludO
+ eyPrxn7dP9kcWF77up302zHuI5LsY03Va7eEZ0ji5XtZ19RiGWGI2wgouLhlSjlrsOij
+ lCAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755609859; x=1756214659;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LMinEjCbiigB/Wv0BKtvA8XYhpLXZtX+Rgam8GgX/kE=;
+ b=rW/WR3lgAER1vWCjpqnsthwf5jlSFD2ePJARBkAw1nn7wsZrsdJhGhpL2eCHjFwxgQ
+ 3Fa5+j6XkqtXD/UARx0JTg6D4Az6MlmLp+VrGmxxcXjHxFuUv85X1uSQ7E45hWxBBAsc
+ lE+3Egbt30g5oLr/EFfRXlqUrkYKY5Wb2zgBkhzcy4yvCb/q3p/VVvS89dZd8yN8ao9M
+ SIHH3DLHIbsBxljYh2TGE+n2hhZOO2RJxJyDr5T9vx8gmAjlC9VwVWfi1dVwZ0pmFy9o
+ rPH8HQ7rM+y1+1oihgOTpAJ4EqNzxc7pcJY2oDinZsLSA94xGl9VY8zMI9ltipQci2rb
+ IvAQ==
+X-Gm-Message-State: AOJu0Yx43B8qa+JYEA8G7ioC3Qek8C6+q1fL2DVebab1BhjRDXRmHIyV
+ ReKNZJgXg5vUzRVGOGawx8Hhj9hU/KoSielA1lcpZ87aaqXDje2na7be0breOlH0wEZVYgtLK6j
+ JJGb4R9l3bm2DISMPFkhkoHutIRSpAw0+48BbFIoH8A==
+X-Gm-Gg: ASbGncuhicMbjEI3mxQnkG3gt1qct6OY7AzKcDUxN3EzZ1BLuVDVeZIl6dMpZcY26D8
+ fMPKQH6OO5hJ1Kcal24bIyvlJQivXGyOXqzYqjCLbigDExDUe5/A/HiesQFawy+7zKi12yzONaz
+ ZvgrULuY1IU5NWzmZSoXfOb+/u3afIqu9lw/G8PNE5KpIlrjEX+WdvHyyeZW07YE5I7BBUi1vI0
+ wO//5Ejak2nj/6IBEw=
+X-Google-Smtp-Source: AGHT+IHji7XyJ4OvwbYw1BL2nsbRVYRNV54vGoPjANdobtK7tAAHvelLrFU0o9gRQ5y3QWVBlPE440BViy5VF11ZPFQ=
+X-Received: by 2002:a05:6902:318a:b0:e93:3f08:86e6 with SMTP id
+ 3f1490d57ef6-e94e6108048mr3116783276.5.1755609859234; Tue, 19 Aug 2025
+ 06:24:19 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250808065419.47415-1-mohamed@unpredictable.fr>
+ <20250808065419.47415-16-mohamed@unpredictable.fr>
+In-Reply-To: <20250808065419.47415-16-mohamed@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 19 Aug 2025 14:24:07 +0100
+X-Gm-Features: Ac12FXws_rBETXjrcWqjmDL6MGULYbrN9gXbrfcfhBvnHNbO1IbmgxOG8yS-K-M
+Message-ID: <CAFEAcA9iQnrKWXPXw2wG3c6gmevOMFQtt48HsJdx8GZz2sd+4Q@mail.gmail.com>
+Subject: Re: [PATCH v5 15/18] whpx: arm64: implement -cpu host
 To: Mohamed Mediouni <mohamed@unpredictable.fr>
-X-Mailer: Apple Mail (2.3826.700.81)
-X-Proofpoint-ORIG-GUID: pnrck2MjLpoiauWvjBIGs-jqP5Cxhh4n
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDEyNSBTYWx0ZWRfX/JCEZUd98/qx
- jdUPqNLzDMOAPstZjE4lrzDN3+z/ttJTwAO8brRqML/fIXFExBGikpltQbKFV+gsu3KczCRW5D2
- s4GVUnpk6r3vKNc7i/U3PB15rtCGsiop3QBrUDHUKosjU+0wgpocMHBK1XUj6lqDw1R9Ai2RJbW
- 4bcEYv7RDUUjhBWFakTG65MgBZrmKtYJBOm0mgOJCHeImojF8GA38jPdqTvSfzRLrLSatFf92qJ
- 3Mzc3sHD+/6nquDv8ORYNBOrN9hieX6rQWAQKJYSYHFpGHUkRxwU1wlywdRBik0QZsloHy5n4=
-X-Proofpoint-GUID: pnrck2MjLpoiauWvjBIGs-jqP5Cxhh4n
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-19_02,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- suspectscore=0 phishscore=0 malwarescore=0 spamscore=0 mlxlogscore=860
- adultscore=0 clxscore=1030 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506270000 definitions=main-2508190125
-X-JNJ: AAAAAAAB9p+5CO/Av3JkYhTudQ3GjXQADrQApyG5uXnEQX5uRS8nzy2yGJw4iBaX2zurYkujfquG5tELRT44AG54nqBSYniTttGm4qJ8TivUy72YD+ZSb8DDQ9Z3Vt65ilZqX5Pn96aa17Qr241kopsu0MgZRKTKu/M+opZ5qwOQgVDHG+IJObei7pKmjcx6u/tkkQO+K77lc4wX720AdRzUSMuZz6ANUgYJYWX2KLs49sf3WjXdNvAeyLp4NfW2D4XkFiSvVRAAYLpT31qf2WRhBkZ1BqhfdaGY2vwXaxG1QlgVI4Jp7XEm79c10tjnbg87oMWdZ+oWsfQ/Ry/+/Ts3uJhRmK8y59d3TDL7eEtpNAq7px0EYkAa8dZIilEUirZpvQvwI4AbbAbBSY1mxthq/B3RpfVRSW9D6LMyhelzLmcj5zjYPb88U3DuIkbSOM7JT7CIs4a8gTS6IHL5Sql++I+7VaBKs5NG5YU2104oMpMmZJKwKnk5+l4wD2UjvZEaX+aSj4JY76FBok3Ms/znfR0qtdD4nDNAAGiIU0zJ2PG3rlKIpmEPfBiBGjpfLy9vlpagPrXOjuZPsD6JqF6jekqlWQ==
-Received-SPF: pass client-ip=57.103.91.214; envelope-from=mads@ynddal.dk;
- helo=outbound.ci.icloud.com
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Ani Sinha <anisinha@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <mads@ynddal.dk>, 
+ Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org, 
+ Yanan Wang <wangyanan55@huawei.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,8 +109,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 8 Aug 2025 at 07:55, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>
+> OpenProcessorKey and ReadRegU64 adapted from:
+> https://github.com/FEX-Emu/FEX/blob/e6de17e72ef03aa88ba14fa0ec13163061608c74/Source/Windows/Common/CPUFeatures.cpp#L62
+>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-> On which chip/macOS release did you see this failure?
+> +    /*
+> +     * MIDR_EL1 is not a global register on WHPX
+> +     * As such, read the CPU0 from the registry to get a consistent value.
+> +     * Otherwise, on heterogenous systems, you'll get variance between CPUs.
+> +     */
+> +    HKEY ProcessorKey = OpenProcessorKey();
 
-This was on Apple M3 Pro. Must have been macOS 15.6.
+
+Can you follow the QEMU coding style, please (here and elsewhere)?
+Variables and function names should be all lower case,
+and variable declarations go at the start of a C code
+block, not in the middle of one.
+
+thanks
+-- PMM
 
