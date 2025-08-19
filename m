@@ -4,99 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC64ECA0EE6
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 15:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B348CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 15:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoNvc-0004RE-Lu; Tue, 19 Aug 2025 11:07:12 -0400
+	id 1uoNw8-0004n6-Qm; Tue, 19 Aug 2025 11:07:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uoNvT-0004PX-DL
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:07:03 -0400
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uoNvQ-0003ue-0r
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:07:02 -0400
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e934c8f9751so2553723276.2
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 08:06:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755616018; x=1756220818; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lGjB2DDXN91rgRPxeWknxQ33rBHPgYOM1OJPngJJmUI=;
- b=gfgJkUaKPyFbJ3Bxmm2RRijkKHC+50Hz2+2++ek3csaIj0givjGREfrrhzczLnYAyk
- Mhdx+oUwcRozrPLIK2qcXyfslEJhWBXk4xyzhziu+o6WuNA0Re1tgu91f9VIAiUjxMrF
- FwhQQdVkKMwCVCuWztFUy9sS0RE/xtl2DN/wwkSYh9Sedtm3QAQxwPIM9eb2erPrwGop
- uYkQqcWXzC4zwf4fmOQFVU6YqK9AcNl/goFryyxe/EkKwdNMc0gV15jrUvs73CQEWzRc
- ru9TUbqC+qKS9qNA+llIJjB4B53oQua+JnxDa2UDrfDeevEik1xiqvBd3kzqNN5U3TNP
- sfpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755616018; x=1756220818;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lGjB2DDXN91rgRPxeWknxQ33rBHPgYOM1OJPngJJmUI=;
- b=Cjibl6lCux6RO7IFbXQLJvf4bEw4f6B2LZQjamU4XsNSvw61q948tm9UpjhucNxup/
- EBtkFuZX4edk4B6JeDvlPYkYHfwWesPCL3Y1SHmPwG442/EgapRiFPZU68EcM/HLQny4
- gLRSRSKswK+AvHzro7dyrHMRLneMsfQl8caafkBxRMXs9FoM2PZjG6falc0vqCe68HMA
- NMfCQ5wchp4RRiGyK1fjI4cnQusPhGyw+TMzHbD4uTfNvGxcpgzLFR7dhNCl9OUzVB5A
- gfvWBmKGwffcC9cEASdo8UxdQ5Y1NcCuH28UrW/Sy1H+4xxX0Gc1/h74N3zpuvJeZSYW
- axZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXnj8QuydWKb/ZL74gxguYoTKrE7/XQgtdOy/sAygRcpz7R9vKj/807NStzN/CrAV5viMyMfSZ85eMR@nongnu.org
-X-Gm-Message-State: AOJu0YwIxycHlvpQTq1gwIphjIHszSYWLCgpDUPSfKsnslwuJ05CR7B6
- fOJ6/MiHSGMYQgjENfm2pdCFqDZRcd4h8V8yIO2+Sus7t1zOmd7NO8yp2SepwFgc4y35R+Nzq0z
- rcyqCpGEAWqV1UtDASt/vzKCj9jnZVdfoi184HossEQ==
-X-Gm-Gg: ASbGncsmAe30LjAg1GO0v+1SI+SDkSxSpXq6LxtPZ1hEVGu8yN6VzEwtzWQv8EMsSGJ
- Jb7A0eyltUeIO17tteqq1J2YnHazkj08JFvJe28a+O8rfcyvU0aa5sLUpN19piNXnLMykDaEOuw
- J1qqYiDbmv6hymZoKi47Pd4jaHmDIe1uysq/ywq4Mg2tCI2ZVp0jSr8vqRIwNvG1nYhEZq93hZ3
- T+9U3Eq
-X-Google-Smtp-Source: AGHT+IFEacLfEpsLPwL8RpIQaBKhz9WKuYQrybbHLgsUXEGDBbIpJ6uSC03YG2N60vf9y/Ix/KB5hHQFI6/31aN1lA4=
-X-Received: by 2002:a05:6902:4308:b0:e93:480b:5356 with SMTP id
- 3f1490d57ef6-e94e632528fmr2971984276.47.1755616017889; Tue, 19 Aug 2025
- 08:06:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250808065419.47415-1-mohamed@unpredictable.fr>
- <20250808065419.47415-16-mohamed@unpredictable.fr>
- <CAFEAcA9iQnrKWXPXw2wG3c6gmevOMFQtt48HsJdx8GZz2sd+4Q@mail.gmail.com>
- <8e64fd77-9969-42b3-bbcd-1ed8de910ff9@linaro.org>
-In-Reply-To: <8e64fd77-9969-42b3-bbcd-1ed8de910ff9@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Aug 2025 16:06:45 +0100
-X-Gm-Features: Ac12FXy5JRRiJ81OjIWr7z9p2uyQ9l0Cz-RNNmpcll_HRaXOsoA8AhnGYU96-BU
-Message-ID: <CAFEAcA9OXu3=HuA9n+Oo0C5K5hTG+kLr9xsM=geBJ_UtCi4_-w@mail.gmail.com>
-Subject: Re: [PATCH v5 15/18] whpx: arm64: implement -cpu host
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Ani Sinha <anisinha@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Mads Ynddal <mads@ynddal.dk>, 
- Sunil Muthuswamy <sunilmut@microsoft.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org, 
- Yanan Wang <wangyanan55@huawei.com>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uoNw5-0004j5-3O; Tue, 19 Aug 2025 11:07:41 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1uoNw1-0003xy-Ag; Tue, 19 Aug 2025 11:07:40 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57J8Mx3i015661;
+ Tue, 19 Aug 2025 15:07:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=S5I/6C1HAFKIEnq9hndP5H8fxT/ik0FcZWGESTdW6RA=; b=eWvC7/ME4ExX
+ snK/7g8wcXVl66apm2+hsKqCSYhFTrvEa/Y4tlb7Di8nZO+UBvxq6vCMB9Qb+xnB
+ 1W26TvFFtadiYRv1Uonhu1AU8pxweciqnysut839I0grBPPYQU9HxEqgXE0Gl93A
+ 6GLBhid77HZP54H+UazVfg3akPaZnZD0WwOTIgUNVY11nRPZr8/RTbbmBqS/AkrB
+ GPMZBKi04i09B/Lr8EaE0VmlvsqqW5l+A8lKX91FXGif2RXq6hY8UKWS1VE84jZ6
+ U6f3V36mP46SrnH9yGFFwj9oHvHGXOjEN/kMvqjvVCSjgAWuFn1o7OktR6NDmOow
+ 1nhKOCJ1jA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jhq9yk5p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 15:07:32 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57JEsmjT004488;
+ Tue, 19 Aug 2025 15:07:31 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jhq9yk5j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 15:07:31 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57JDKQBS011713;
+ Tue, 19 Aug 2025 15:07:30 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48k4auawu5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 15:07:30 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57JF7TL432244432
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 19 Aug 2025 15:07:29 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C8F3558063;
+ Tue, 19 Aug 2025 15:07:29 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5A5B65806A;
+ Tue, 19 Aug 2025 15:07:29 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 19 Aug 2025 15:07:29 +0000 (GMT)
+Message-ID: <8c8ba4ac9f817d0d1a51684a8742627cdb4bc3c9.camel@linux.ibm.com>
+Subject: Re: [PATCH] hw/intc/xics: Add missing call to register
+ vmstate_icp_server
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, Fabiano Rosas
+ <farosas@suse.de>, Fabian Vogt <fvogt@suse.de>, Gautam Menghani
+ <gautam@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ qemu-devel@nongnu.org, peterx@redhat.com
+Date: Tue, 19 Aug 2025 10:07:29 -0500
+In-Reply-To: <fc6a4a14-1336-4b18-97fd-6426bb3a0960@linux.ibm.com>
+References: <6187781.lOV4Wx5bFT@fvogt-thinkpad> <87zfbwvx39.fsf@suse.de>
+ <fc6a4a14-1336-4b18-97fd-6426bb3a0960@linux.ibm.com>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=N50pF39B c=1 sm=1 tr=0 ts=68a49334 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=69wJf7TsAAAA:8 a=t45X9u2Y8yns0VHvUQsA:9
+ a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAyNyBTYWx0ZWRfXxmCFB09/0yU4
+ /REv4Rdb0bbSvjRzAuHqdCBXkPCG+5yk4KP2uU1NxQz8NFEVtCixLZiwqyH0jKbgZg82lWSDYcu
+ cpKkjn7GhQ3nMiEpjw31PHro70GxTUM9czLR+Vv9PPc+8KE9/3wgNaIYmQ91vnwh7bNMYgfdCtW
+ 2fJ7F3nOyCx7wcuZ/Kvr7zdDG71/qidnYZUtW7Qg7feemptroCeKeXx0ZiI5G3bUrJyF4KQyZWK
+ jcMRLz2s6Cmof2UvErC7gJ7vDNgw1WqwcAicd0SXZDg9ovSa7XzBEoSotltN+kDOz6DVXqvJKNv
+ 2Z9juZVNz0hVUk2fqHAcJpTCVvz/Lun8SLq4FHt7AMc+aGHNm7zOqzc+SZ0sId+CPxmtRVLvNDG
+ RWmHFYVJ
+X-Proofpoint-GUID: J3tbuF98jFxECi6NQbqDTTGR2tHMf9rq
+X-Proofpoint-ORIG-GUID: jbrwBbjSlxtGtCjN6lCYzpq2j212Ak26
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-19_02,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 suspectscore=0 impostorscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160027
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,36 +127,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 Aug 2025 at 16:04, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 8/19/25 6:24 AM, Peter Maydell wrote:
-> > On Fri, 8 Aug 2025 at 07:55, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
-> > Can you follow the QEMU coding style, please (here and elsewhere)?
-> > Variables and function names should be all lower case,
-> > and variable declarations go at the start of a C code
-> > block, not in the middle of one.
-> >
->
-> In some cases, including in this function, I feel that the rule to
-> declare variables at the start of a block is not really helpful, and is
-> more related to legacy C than a real point nowadays.
-> As well, it sometimes forces to reuse some variables between various sub
-> blocks, which definitely can create bugs.
->
-> Anyway, I'm not discussing the existing QEMU coding style, but just
-> asking if for the current context, is it really a problem to declare
-> variable here?
+On Tue, 2025-08-19 at 12:59 +0530, Harsh Prateek Bora wrote:
+> + Gautam, Glenn
+> 
+> Hi Fabian,
+> 
+> 
+> On 8/19/25 08:25, Fabiano Rosas wrote:
+> > Fabian Vogt <fvogt@suse.de> writes:
+> > 
+> > +CC Peter
+> > 
+> > > An obsolete wrapper function with a workaround was removed entirely,
+> > > without restoring the call it wrapped.
+> > > 
+> > > Without this, the guest is stuck after savevm/loadvm.
+> > > 
+> > 
+> > I'd note that this only affects guests that have actually negotiated
+> > XICS, so guests using ic-mode=xive are safe.
+> 
+> Since this affected only guests using XICS, would it be a better idea to 
+> mention this explicitly in commit log as well (?
+> 
+> > With this patch, backward migration to QEMU versions >= 9.2 is
+> > broken. Which I can only assume is ok, since the hard break (vmstate
+> > gets rejected) is better than weird post-migration hangs.
+> > 
+> > If the PPC folks can spot a scenario where migration would provide
+> > reasonable results even without the emulated interrupt controller state
+> > being migrated, then we'll need a compat property for this.
+> > 
 
-The point of a coding style is to aim for consistency. QEMU
-is pretty terrible at being consistent, but we should try.
-The rule about variables at start of block is not because
-some compilers fail to compile it, but because we think
-it's overall more readable that way.
+I don't know much about the XICS controller, but migration without
+restoring the interrupt controller state seems pretty risky to me.  I
+wouldn't recommend it.
 
-thanks
--- PMM
+Glenn
+
+> > Also, a 9.2 guest cannot move to a more recent QEMU version without a
+> > reboot. If this is an important scenario, then the new QEMU needs to
+> > provide some compatibility knob.
+> 
+> Gautam, Glenn - thoughts on above comments?
+> 
+> Thanks for the patch.
+> 
+> regards,
+> Harsh
+> 
+> > Otherwise:
+> > 
+> > Acked-by: Fabiano Rosas <farosas@suse.de>
+> > Cc: qemu-stable@nongnu.org
+
 
