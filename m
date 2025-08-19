@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB77CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 15:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D55CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 15:44:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoOUI-0006tE-5S; Tue, 19 Aug 2025 11:43:03 -0400
+	id 1uoOVO-0007ZJ-GI; Tue, 19 Aug 2025 11:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uoOU4-0006qx-Mq
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:42:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uoOU0-0002au-PK
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:42:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755618162;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=WNe1cb9MIP8S4WGdq0zxRIQB8fmZFCra4KLixtAZLRY=;
- b=S9TSFZeMEPPhTzdF4d6ynhnZkSwrq4KUGIkShI2hHs9BSvsuI4P5JEkYOMduaJfmbprWFW
- XXZ9BtD/QCrfT/cgpAe4itTiUwpMtiIDSphzL/WHMLxhhtVJpBzH0NfTJHJWoYFljlYT1M
- uTfLnjZMn3NwoIZq1WtVm3bNpu5mKXE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-QBsSITJIMK6xV5zESkDUgg-1; Tue, 19 Aug 2025 11:42:41 -0400
-X-MC-Unique: QBsSITJIMK6xV5zESkDUgg-1
-X-Mimecast-MFC-AGG-ID: QBsSITJIMK6xV5zESkDUgg_1755618160
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3b9dc553704so3654751f8f.1
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 08:42:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoOVN-0007Vb-2D
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:44:09 -0400
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uoOVK-0002sc-F4
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:44:08 -0400
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e94d86cae3aso1655393276.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 08:44:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755618245; x=1756223045; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rSwH9TFUa1ySF0QKmDlMGXX9kVKy+ZxCiks3DHJtt/U=;
+ b=OWoyXG1ynLC3UL0Qnk/iwsaZkNktfokb6wnIRatvl++zWfNvBI488+7bBXyHffLYOK
+ 1aCtEQgVD4AOOUGnO/8FZS4O4AE2oQbTnrDpbc+piJ8UYzLeYqD1jAp2bJan6HUVGnLj
+ +clgzlERO+ApRa1hEHyzWyl02JefayQ2dsiTn6S163YeVom/fTr8AxcDQLn8bt9uV2+A
+ b4lIjHG7aPNN5FABrJASqRDyE/puTmZDoUje/WfA9zFWixTgBS8mBScm/PLSjv8SnZHJ
+ 66SW7dy4Os832vTTEjN2ttn6u+hm1KghV1S647s3AVV5vjYj9hOuYVfCfnV6UN212KOZ
+ 69Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755618159; x=1756222959;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WNe1cb9MIP8S4WGdq0zxRIQB8fmZFCra4KLixtAZLRY=;
- b=LMVSdj8NwvhsZUoqnsInF3BrPUYqrHpd4WHw1jicWevVJLEim0qWBfncZj99OXxgkW
- Dod64xoYFtJxY7rau+2ilr37EZc0apNgeJ/9CDdiXEmrxuKu4p7TUMiK5ypn6gPLti7F
- hLDUI1z36E2PeU9yxUrH2Uby8K/7oSEGmYSERA2wCHHmEwMUd75Yl2APOfdgsIgTqHrC
- KfrkzXqdFL7obJApiA7s7cMnshILREgJAcAb+Qux9us7HyXJ2As6lJ/u077+ImxrrjoV
- gTctwAKtJ/KXMH1I7zbhvJx4p7ChtHiW6jAXwnRi3vyqOHnhrXcnBnhT43RvvQfny0ja
- JmRg==
-X-Gm-Message-State: AOJu0YzQv3v7V4hQbHjHTtN6AbcchbyogNTcI/i8aWjYOBbPMwkqeRcR
- 90R9jGw2zcOxG7s/+CMdbdwZKnumhctUMOafIQm+a7s7hqAui4BNICKDCZBT+TZnR39VKD/I9OS
- 0ZYviwNAcoZhAaY0HLBrYpzSVhI64X7o9rc0qjbGGmwC5cOBoyqW12MEAykm60JLAwmbxehf2QC
- J+wyu9+uz11f9u7FardVqLVwfvshEr/NX8vm5/WUjG
-X-Gm-Gg: ASbGncviOkpnzy+mYs8sMzqVXFYIa9w1lMyM1RIgtVeZWGmJYvUoLPxBKThOTCMQWF8
- 7E8UrTodowgh+1GkXEbGuqzBVlza1WqqEzr9eM5Olq8NqR2vdT8/xVcN4FSFAyB0J5TQeiy6hMn
- GsIlHr/YateWpAiTGJTHpND+xmdLosGJF+YF9g4VMLcTV7v1HzfwIpsTXea0N4icnwXzoBeqjpn
- oz2sKecRvpGRe3paNiG2Wy4R8AtI13383UAvayrAumrOuGFZM32nIO/qMGPipVNILnv2dfo+p90
- 0c+XSmb/OZ8unL0/gjsuQzKR4W6/8qXCKL7w4WjQ7g==
-X-Received: by 2002:a5d:5d87:0:b0:3b4:9dbd:eee9 with SMTP id
- ffacd0b85a97d-3c0ec09e41amr2616737f8f.36.1755618159608; 
- Tue, 19 Aug 2025 08:42:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3xXhOVB01WpZaN7OcJ0S2hf2XXEpobCz42I8MqSGxjp6M9zCraliA3z2GULPYm/c4yrslIQ==
-X-Received: by 2002:a5d:5d87:0:b0:3b4:9dbd:eee9 with SMTP id
- ffacd0b85a97d-3c0ec09e41amr2616700f8f.36.1755618158957; 
- Tue, 19 Aug 2025 08:42:38 -0700 (PDT)
-Received: from [192.168.10.3] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c077788df7sm4190961f8f.48.2025.08.19.08.42.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Aug 2025 08:42:38 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com,
-	alex.bennee@linaro.org
-Subject: [PATCH] MAINTAINERS: add a few more files to "Top Level Makefile and
- configure"
-Date: Tue, 19 Aug 2025 17:42:37 +0200
-Message-ID: <20250819154237.793315-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.1
+ d=1e100.net; s=20230601; t=1755618245; x=1756223045;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rSwH9TFUa1ySF0QKmDlMGXX9kVKy+ZxCiks3DHJtt/U=;
+ b=QtGb8bsVUtBqot+/piYkQoImm59v/Bv1qqZn4hLIF8265xu8XPgEWqhNezqY19MTqw
+ ZVx8q/t33HCYsEQet1AbZa6reDhx0vw4xvaYMOzJg+NjSc0wQZutw5iNzxHc9f9gH4uR
+ GUIrzV3k5COcblW1gSAHf+ql0tPgMfxkUgITTKZQAGdw396UltkCJpxJEdzg7I55QGDt
+ R+I+EOcKsYmQVsRqC0q7qtp/87F/22OObQ31CFGwcqViQ8IEe9lgjJ+0VAUh0gZ1pJMz
+ Fh0W/8LuTEBFOnaz9PduzEedGhX94yYosb2yxvYJq1KIMzkhspxkbC7Yu4P5UnS0Z1eo
+ +ghw==
+X-Gm-Message-State: AOJu0YyZW4z9alLfYI1o7D33QlZSCkRp+J2KC1tLP+EMSya8L5cHDsn7
+ aiyZSZ7s8z5NzgAAqNOhi1hIPrLx4d/y0016FuojhnilxnrRIIj+JetHgsGb7ktFXfpUd6UW4a3
+ z5X2/iknAsg7aa27UnExLUpG27ZqHL9CN94eiRpzIEw==
+X-Gm-Gg: ASbGnctKCh/ImShHwBWKQ1EBQFp1yFh9UmGcrEgGJob1Jh7ER1VNLeJh4qVJQANgfvh
+ VfB1YCUC0dhtMmQUUt/P53Qp1gY75XvllcJ+zaZ0TbkO589zEzZPVv+CqdHokXo417qxTbNd8ht
+ 4QOWXuOfjXPMWdB5zJzNjua+OzrwFUkQwnR+oHLVvkooAJPyenr3J/AnZq89NJqAi29bVU6qKlM
+ nHkw38t
+X-Google-Smtp-Source: AGHT+IEOzFm3e8ljQCWbVbH/3dQsdJS0F1jOYtJGOdPJmMkwBopzbtASQ6cMRfa+oslsbdAX6bniGil03D4SfCPYcMI=
+X-Received: by 2002:a05:6902:1888:b0:e93:3d8b:4e5f with SMTP id
+ 3f1490d57ef6-e94e5f4a590mr3647487276.0.1755618245039; Tue, 19 Aug 2025
+ 08:44:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250815090113.141641-1-corvin.koehne@gmail.com>
+ <20250815090113.141641-10-corvin.koehne@gmail.com>
+In-Reply-To: <20250815090113.141641-10-corvin.koehne@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 19 Aug 2025 16:43:52 +0100
+X-Gm-Features: Ac12FXwKja-SnBY13NJ1bTLfweL6EDRt_uOQjtmsrDjBh7KP9_vPM7fp4eNmpNk
+Message-ID: <CAFEAcA-mTTLEtE72W=-R9O=m7zSUiL5bGf7TMXoFP=Xqvmq2OA@mail.gmail.com>
+Subject: Re: [PATCH v2 09/14] hw/misc: Add dummy ZYNQ DDR controller
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
+ qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,30 +102,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few files in scripts, and the list of packages in pythondeps.toml, are
-strictly related to the toplevel build scripts.  Add them to the
-MAINTAINERS file stanza.
+On Fri, 15 Aug 2025 at 10:01, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
+rote:
+>
+> From: YannickV <Y.Vossen@beckhoff.com>
+>
+> A dummy DDR controller for ZYNQ has been added. While all registers are p=
+resent,
+> not all are functional. Read and write access is validated, and the user =
+mode
+> can be set. This provides a basic DDR controller initialization, preventi=
+ng
+> system hangs due to endless polling or similar issues.
+>
+> Signed-off-by: Yannick Vo=C3=9Fen <y.vossen@beckhoff.com>
+> ---
+>  hw/misc/Kconfig                  |   3 +
+>  hw/misc/meson.build              |   1 +
+>  hw/misc/xlnx-zynq-ddrc.c         | 393 +++++++++++++++++++++++++++++++
+>  include/hw/misc/xlnx-zynq-ddrc.h | 140 +++++++++++
+>  4 files changed, 537 insertions(+)
+>  create mode 100644 hw/misc/xlnx-zynq-ddrc.c
+>  create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
+>
+> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> index 8f9ce2f68c..99548e146f 100644
+> --- a/hw/misc/Kconfig
+> +++ b/hw/misc/Kconfig
+> @@ -220,4 +220,7 @@ config IOSB
+>  config XLNX_VERSAL_TRNG
+>      bool
+>
+> +config XLNX_ZYNQ_DDRC
+> +    bool
+> +
+>  source macio/Kconfig
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index 55f493521b..6ee7b6c71d 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -89,6 +89,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+>  ))
+>  system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
+>  system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
+> +system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xlnx-zynq-ddrc.c'))
+>  system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqm=
+p-crf.c'))
+>  system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqm=
+p-apu-ctrl.c'))
+>  system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files(
+> diff --git a/hw/misc/xlnx-zynq-ddrc.c b/hw/misc/xlnx-zynq-ddrc.c
+> new file mode 100644
+> index 0000000000..8151a0e3ee
+> --- /dev/null
+> +++ b/hw/misc/xlnx-zynq-ddrc.c
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- MAINTAINERS | 3 +++
- 1 file changed, 3 insertions(+)
+All new files must start with a comment which at least
+(a) says what the file is for and (b) has the SPDX
+license indicator. You can optionally also add an authorship
+or copyright line here if you/your employer need that.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a07086ed762..3979cffb042 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4403,6 +4403,9 @@ R: Thomas Huth <thuth@redhat.com>
- S: Maintained
- F: Makefile
- F: configure
-+F: pythondeps.toml
-+F: scripts/git-submodule.sh
-+F: scripts/meson-buildoptions.py
- F: scripts/mtest2make.py
- F: tests/Makefile.include
- 
--- 
-2.50.1
+Same applies to the .h file.
 
+> +static void zynq_ddrctrl_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +
+> +    device_class_set_legacy_reset(dc, zynq_ddrctrl_reset);
+> +}
+
+This looks like it's missing registration of a vmstate
+struct for state save/load.
+
+thanks
+-- PMM
 
