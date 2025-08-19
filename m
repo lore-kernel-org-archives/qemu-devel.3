@@ -4,111 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE344CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 17:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8432FCA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 18:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoPfg-0004KE-Dy; Tue, 19 Aug 2025 12:58:52 -0400
+	id 1uoQyk-0004p2-Rw; Tue, 19 Aug 2025 14:22:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uoPfe-0004Jh-8h
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:58:50 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1uoQyi-0004oc-Hz; Tue, 19 Aug 2025 14:22:36 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uoPfc-0007jd-8t
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:58:50 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-24458195495so35610235ad.2
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 09:58:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1uoQyf-0003ju-KL; Tue, 19 Aug 2025 14:22:36 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-24458194d83so41695985ad.2; 
+ Tue, 19 Aug 2025 11:22:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755622726; x=1756227526; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LPjrAY+Xgo/RW0b6jwoHl/sfMChofkYDsp/7Kp6nPyk=;
- b=sL78Aoth/eimpqd7EY+tBAmxtAz1yJ9Av7RjrZN24tq8zu5QcvcmU5Ig0fti/Sp2cM
- QvRscpa8GrWF0SyKQx+QiYKVyWLfmQCGt3B5aDaUPhZHyz4Pe30VzeN8GZLJlBtDPMxV
- GsyNt8N7FHMlJEsqvo6mYdYTp8qncFT8lFLi7LJg7yqq3/bHdKgtlL8bopwHNzQaKUBL
- jPGqUVOxnG/LcFxnqhqVXVN0d39dC+L6B+yqIrCkZj5zL7PgJHqScopSq/guQjc1UGVP
- 2Y2M4VTlSUZS1vcpR7OhMd9jh5YH2EzRLIdg6nd6WnY7DcULtCUqumRZnrYlEm8sYuCS
- fpJw==
+ d=gmail.com; s=20230601; t=1755627749; x=1756232549; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=92TETm6+waoLP9/8MAcz9xIrPcM6NwvuenQZi4Cum9g=;
+ b=mxYoteychs3kac9Dd6fJugblH9R2kF5/LPY9egkinlgdND9FLt2du5QFV+ZkCyRtok
+ KrpIOqp73ZU+JJLXlL3BFPoT8N0UjDL4tJdJ7ZPnj7R8vouvql3szP1YfFVHACre7Yfm
+ 6osp48no1xHRXhq3k2VzyMTY5PC1DTJGuimeLSxjj6/GxWszKyy+N78kmF+70Oin/DBT
+ YKfelMaRt+rMM1RFydIfCv/w6xRBxsxB913kHanAloD1Brjcj47Y60P5G5+Hq9cWyOQw
+ 1c9+AeprVadN7X/UfS7QeqA8el/2Vum7BEFs1GNY8Q4SLODYrIKn1ohP/hFjA//044H/
+ n8JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755622726; x=1756227526;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LPjrAY+Xgo/RW0b6jwoHl/sfMChofkYDsp/7Kp6nPyk=;
- b=Uw07piHSlQuGJwsWFHhNuUurDsnG0H2RPqQfUSG22H8Kux+cDmnnpqtgsFS3cEcbdj
- A4bBr4fYeYWIrZbS/ru3A4uwGKz5I0Oy1nWWiycUaGa9OuYPw2OYrnAnMZ22D17X/hyG
- Rtl35n9r8IKwRT/sygficyl7BodFWsG0/kHETa9ofNcTk9Co9ZPU9K3iuuNK4bZWgO5d
- 7KG0zfi7SyQI9ig37vpiWDnG47C4XCtKVkVA5MMmRZWuCL70kGG6mw+qU9guMJp+kIS/
- Qtoq6eRTM0V20b4/IC4upU+40XLFd7F/evqa3BhjF9YCb9vD1d409AaUu9da0OXX1k5a
- KUsQ==
+ d=1e100.net; s=20230601; t=1755627749; x=1756232549;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=92TETm6+waoLP9/8MAcz9xIrPcM6NwvuenQZi4Cum9g=;
+ b=OpV60onPw+msZskR+Eh/Y1y6MNI7wb8yx3LEHr8mUETduSQm2OH/S6JeYpq/e/k1Fo
+ fy0EwVVBCVAMXJP/h7WUMxMNnNLD0u/3yqHqb9noowDSPQa0tCPzZsyHjwFdGnGRxNkN
+ qbMVVdtccmwnDC1EYn3ZQoh77Of1RopKzE477fXEGqqd4yEQlZh0+ZWrSpNCM+DWG2D0
+ WxOPrSPVIB1JKJlmPDBZ3XCEURCGd+Jz+0ZnP0vJ2/G5BAP0/ADDqmO0kBUaPzqLDPTF
+ fyYi8jOK2GjagPVZ0X7h928jufV9eDDx1FVQjmNRgpHdh7qLZe8Ig3ZBm/txgQP0Sm14
+ /hUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0gtBGtzTXchQWU2gVvvfn++/5tBK1JfUzZiALWes65cXC4LQzPKwt+s6z2cfH9KYfXEg9a22fCPWS@nongnu.org
-X-Gm-Message-State: AOJu0YxsUF3Cgl+hoRyDfLMp537RLcdPwL1kc0zjCtUa3t1OO1/Gv2Zp
- H8JQbPbLvRhU33mEIGd+XdwuM7bQvfBC94yRCR4JK/yhb8rqZ3rgz32vUYf3pBN61kA=
-X-Gm-Gg: ASbGncufd1faPHhnEXFWsH+/dg2cQZT2uDszq7WbGQOiVPJo7uEU51hNkz8xOFkBDpt
- gr+buyTV3ctO3KM7KPxzuWxf/0hKfb6v4uPjaug17LP24+qccH6PmfkLN670O7vagAfRxgnePkj
- kUs+EFnsjquhdV/6rEVh39WTqPUa3dIe7oecHuP68Rm0kNnpIoTo41JZbmrjE3mDxX37cybX/lp
- +/r1KEVHlCdEAQRA89UJXBCnpFBNUfN3j6RjWGXehJNBLu4M/9aJ1nQknoWSlXsSb2qBCL48rl4
- EXkCHDTBa8n0RyHGUae8N+GaG73S2GDD4h9USzaBnd5oAZK63smgI53q5f5or3SKDHhKauBygnv
- ualuC59vl4cVEFiM22VZkyCrdCkbsV+6vjls=
-X-Google-Smtp-Source: AGHT+IHVlyp3A/azBmmg2yeQdAmw4SUp1PrqgkmNj+tG+CPVq92F9GsjaUnpinBqavb4VT0aJbBnMQ==
-X-Received: by 2002:a17:903:2308:b0:242:a0b0:3c11 with SMTP id
- d9443c01a7336-245e049b90fmr43918295ad.31.1755622726215; 
- Tue, 19 Aug 2025 09:58:46 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCUm9Hij5FzU8/b6+Nio5hgDjROdzIH9TZ2xgfGggJ4CjIMmx2Ze39/Xpnc5YQXXRkYieYf5xysaX9NCIA==@nongnu.org,
+ AJvYcCVEFnvqVTRLZzxki2cfgTy1juHshKpYr/WrVbzOhxsPfml8lpMJUALjfxK/K/PtPjcLLOymMLr/hw==@nongnu.org
+X-Gm-Message-State: AOJu0YyRpyBA2IPm1AwwpAeUnzJX1gSyLiWUns9zyYPXkP7sNsQzTSz4
+ f7QAgnz/prhku2ZsHsS9X0CXtD0rKqrCSL9jaEFABUQ74L0NCBUz5JK4nW49l3wI
+X-Gm-Gg: ASbGncsrMUfFd/EOUSzVq/eboSlNwtegc9TqsdywqwVQLe4LTdIf20PDpCpaIPzdbvk
+ OWnYPimvTJJiCzcAoswRoQJ/BzRzv11zfIf1MYhJlQE3/4DOuPwI2FaCfPxDSRZW6IcCLk7vG3f
+ bCXtW9D1Sr/twQzGCGkNlkqKr+AClhRvb4DKK47XxGuH5DQ/oYqKoV5XVZZtfgsSCrcJs+Z5Kz3
+ BH1bgR75LShEAVwggNEG+or3CRva+B5PTgHA2/TaePlLVarRp5zpzDQCsg8r2+1uXhxwcWuXhYr
+ LlZzD2+Hl3pAcKe7iL8zv618KtYHB4l/+wRuHUbGa/McyVZt7LgKf0ogl6dGpfX2yaUJHktDhiV
+ sbD71yfN/nWBl1Sx9Hfgc8nUgguKpsGO4
+X-Google-Smtp-Source: AGHT+IFF2BsKR17wRFLvZ3ojMw+l1L135a/YraV++ORd2vjqBm5EvfBHx/Yiq16Tq8Bh+hdab+Ah+g==
+X-Received: by 2002:a17:903:2d0:b0:240:981d:a4f5 with SMTP id
+ d9443c01a7336-245e056dbd5mr34318285ad.42.1755627749014; 
+ Tue, 19 Aug 2025 11:22:29 -0700 (PDT)
+Received: from ktock.. ([240d:1a:3b6:8b00:29ce:ef58:c2c9:e52f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed4ec174sm1971095ad.109.2025.08.19.09.58.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Aug 2025 09:58:45 -0700 (PDT)
-Message-ID: <bb46e699-cf29-4c61-ab7c-bd25338e4289@linaro.org>
-Date: Tue, 19 Aug 2025 09:58:44 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/18] whpx: arm64: implement -cpu host
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
+ d9443c01a7336-245ed33b4c2sm3725125ad.25.2025.08.19.11.22.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Aug 2025 11:22:28 -0700 (PDT)
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
- <phil@philjordan.eu>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Mads Ynddal <mads@ynddal.dk>, Sunil Muthuswamy <sunilmut@microsoft.com>,
- Zhao Liu <zhao1.liu@intel.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
- Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- Yanan Wang <wangyanan55@huawei.com>
-References: <20250808065419.47415-1-mohamed@unpredictable.fr>
- <20250808065419.47415-16-mohamed@unpredictable.fr>
- <CAFEAcA9iQnrKWXPXw2wG3c6gmevOMFQtt48HsJdx8GZz2sd+4Q@mail.gmail.com>
- <8e64fd77-9969-42b3-bbcd-1ed8de910ff9@linaro.org>
- <CAFEAcA9OXu3=HuA9n+Oo0C5K5hTG+kLr9xsM=geBJ_UtCi4_-w@mail.gmail.com>
- <aKSUS2-JrMBX7JXo@redhat.com>
- <1396c8cf-fb2c-4b39-811a-7152bdbe976f@linaro.org>
- <aKShmdP3Pdn-wYgY@redhat.com>
- <3eefa4f1-56ae-40ed-9317-2a3e4e6983ea@linaro.org>
- <aKSo6aHNkUWwqock@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <aKSo6aHNkUWwqock@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
+Subject: [PATCH 00/35] wasm: Add Wasm TCG backend based on wasm64
+Date: Wed, 20 Aug 2025 03:21:29 +0900
+Message-ID: <cover.1755623521.git.ktokunaga.mail@gmail.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,164 +110,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/19/25 9:40 AM, Daniel P. Berrangé wrote:
-> On Tue, Aug 19, 2025 at 09:25:22AM -0700, Pierrick Bouvier wrote:
->> On 8/19/25 9:08 AM, Daniel P. Berrangé wrote:
->>> On Tue, Aug 19, 2025 at 08:48:16AM -0700, Pierrick Bouvier wrote:
->>>> On 8/19/25 8:12 AM, Daniel P. Berrangé wrote:
->>>>> On Tue, Aug 19, 2025 at 04:06:45PM +0100, Peter Maydell wrote:
->>>>>> On Tue, 19 Aug 2025 at 16:04, Pierrick Bouvier
->>>>>> <pierrick.bouvier@linaro.org> wrote:
->>>>>>>
->>>>>>> On 8/19/25 6:24 AM, Peter Maydell wrote:
->>>>>>>> On Fri, 8 Aug 2025 at 07:55, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->>>>>>>> Can you follow the QEMU coding style, please (here and elsewhere)?
->>>>>>>> Variables and function names should be all lower case,
->>>>>>>> and variable declarations go at the start of a C code
->>>>>>>> block, not in the middle of one.
->>>>>>>>
->>>>>>>
->>>>>>> In some cases, including in this function, I feel that the rule to
->>>>>>> declare variables at the start of a block is not really helpful, and is
->>>>>>> more related to legacy C than a real point nowadays.
->>>>>>> As well, it sometimes forces to reuse some variables between various sub
->>>>>>> blocks, which definitely can create bugs.
->>>>>>>
->>>>>>> Anyway, I'm not discussing the existing QEMU coding style, but just
->>>>>>> asking if for the current context, is it really a problem to declare
->>>>>>> variable here?
->>>>>>
->>>>>> The point of a coding style is to aim for consistency. QEMU
->>>>>> is pretty terrible at being consistent, but we should try.
->>>>>> The rule about variables at start of block is not because
->>>>>> some compilers fail to compile it, but because we think
->>>>>> it's overall more readable that way.
->>>>>
->>>>> There are also potential[1] functional problems with not declaring
->>>>> at the start of block, because if you have a "goto cleanup" which
->>>>> jumps over the line of the declaration, the variable will have
->>>>> undefined state when the 'cleanup:' block is running. This is
->>>>> something which is very subtle and easily missed when reading the
->>>>> code flow.
->>>>>
->>>>
->>>> This has nothing to do with where variables are declared, but where they are
->>>> assigned. The same issue can happen whether or not it's declared at the
->>>> start of a block.
->>>>
->>>> I suspect we use -ftrivial-auto-var-init precisely because we force
->>>> variables to be declared at start of the scope, i.e. where they don't have
->>>> any value yet. So, instead of forcing an explicit initialization or rely on
->>>> compiler warnings for uninitialized values, it was decided to initialize
->>>> them to 0 by default.
->>>>
->>>> If we declared them at the point where they have a defined semantic value,
->>>> this problem would not exist anyway, out of the goto_cleanup situation,
->>>> which has the same fundamental issue in both cases.
->>>
->>> It really isn't the same issue when you compare
->>>
->>>     void bar(void) {
->>>       char *foo = NULL;
->>>
->>>       if (blah)
->>>          goto cleanup:
->>>
->>>     cleanup:
->>>       if (foo)
->>>          ....
->>>     }
->>>
->>> vs
->>>
->>>     void bar(void) {
->>>       if (blah)
->>>          goto cleanup:
->>>
->>>       char *foo = NULL;
->>>
->>>       ...some code...
->>>
->>>     cleanup:>      if (foo)
->>>          ....
->>>     }
->>>
->>> The late declaration of 'foo' is outright misleading to reviewers.
->>>
->>> Its initialization at time of declaration gives the impression
->>> that 'foo' has well defined value in the 'cleanup' block, when
->>> that is not actually true. In big methods it is very easy to
->>> overlook an earlier 'goto' that jumps across a variable declaration
->>> and initialization.
->>>
->>
->> "Big" method is probably the issue there. If it's not possible to follow
->> control flow in a given function, it's a strong hint there is a problem with
->> its size, independently of any standard.
-> 
-> Certainly some methods are too big & deserve refactoring, but that's a
-> non-trivial investment, and it isn't always a clearcut win to split
-> code out into a bunch of arbitrarily short methods. You may solve the
-> goto/initialization problem, but make other things harder as you often
-> still have to fully page all the code into mind to understand it.
->
+This patch series adds a TCG backend for WebAssembly. Unlike eariler
+attempts [1], it is implemented using Emscripten's wasm64 target to support
+64bit guests.
 
-I am still looking for an example of where breaking down a big function 
-in smaller logical chunks has reduced the readability for anyone, but I 
-never met one so far in my professional life.
-Usually it comes with the additional benefit that you need to *name* 
-things explicitely, which is usually better than add a comment about them.
-The point of breaking down code is explicitely to remove the need to 
-keep things in mind and assume functions do what they are named for.
+The first four commits are temporarily imported from a separated patch
+series which enables 64bit guests using wasm64 [2]. These commits are under
+review in that series and are included here only to allow subsequent patches
+to build. Please ignore them when reviewing this series.
 
-I respect the difference about tastes concerning readability and code 
-structure, and I know the context and era from which QEMU codebase comes 
-from.
+# New TCG Backend for Browsers
 
-However, arguing that variables should be at the start of a block 
-because of a potential goto_cleanup situation is not a good argument.
+A new TCG backend translates IR instructions into Wasm instructions and runs
+them using the browser's WebAssembly APIs (WebAssembly.Module and
+WebAssembly.instantiate). To minimize compilation overhead and avoid hitting
+the browser's limitation of the number of instances, this backend integrates
+a forked TCI. TBs run on TCI by default, with frequently executed TBs
+compiled into WebAssembly.
 
->>> Even if not all methods have this problem, the coding standards
->>> guide us into the habit of writing code that is immune from this
->>> kind of problem. That habit only forms reliably if we apply the
->>> coding standards unconditionally, rather than selectively.
->>>
->>
->> That's right, but humanly enforced coding standard are usually a waste of
->> time for everyone (reviewers and developers).
-> 
-> Human enforced standards are absolutely better than a free-for-all. Over
-> time contributors will gain familiarity with the project standards and
-> largely comply without enforcement being required. If contributors
-> repeatedly ignore coding standards, it will disincentivise reviewers
-> from looking at their patches.
->
+# 64bit guests support by wasm64
 
-Sure.
-As well, incessant pushbacks and nitpicking from those same reviewers 
-can disincentivise people to send any patch.
-But maybe the whole point is simply to keep people out of their lawn, or 
-reduce the amount of patches they need to process daily, who knows.
+Support for 64bit guests is being reviewed in a separated patch series [2],
+which enables QEMU to use 64bit pointers by compiling with the --cpu=wasm64
+flag. The Wasm TCG backend is based on this feature and also requires
+--cpu=wasm64.
 
->> How many messages and exchanges on the mailing list could we save by using
->> something like clang-format on the codebase, and force it to be "clean" as
->> part of the CI? There would be no more discussion, as there would be only
->> one single and objective source of truth.
-> 
-> I would really love if it we could apply clang-format to everything, but
-> that has a non-trivial impact on maint when done on a large pre-existing
-> codebase like QEMU. Cherry-picking to upstream stable or distros would
-> be immensely painful, verging on impossible, after a bulk reformat. For
-> any new codebase I'd go for clang-format every time.
->
+QEMU compiled with --cpu=wasm64 runs on wasm64-capable engines. To support
+engines which don't support wasm64 (e.g. Safari), the Wasm backend can use
+the compatibility flag "--enable-wasm64-32bit-address-limit" also introduced
+in [2]. This flag enables 64bit pointers in the C code while Emscripten
+lowers the output binary to wasm32 and limits the maximum memory size to
+4GB. As a result, the Wasm backend can run on wasm32 engiens while
+supporting 64bit guests.
 
-Maybe we could organize a conversation about this, because the benefits 
-are worth making cherry-picking a little bit harder. In this case, all 
-the community benefits from this, while blocking this penalizes everyone 
-except the stable maintenance part and downstream forks.
-As well, it would be a once in a lifetime price to pay.
+Note: The flag was originally named --wasm64-32bit-address-limit but this
+patch series moved it from the configure script into meson_options.txt. To
+follow Meson's naming conventions, it was renamed to
+--enable-wasm64-32bit-address-limit.
 
-> With regards,
-> Daniel
+# Overview of build process
+
+To compile QEMU with Emscripten, the following dependencies are required.
+The emsdk-wasm-cross.docker environment includes all necessary components
+and can be used as the build environment:
+
+- Emscripten SDK (emsdk) v4.0.10
+- Libraries cross-compiled with Emscripten (please see also
+  emsdk-wasm-cross.docker for build steps)
+  - GLib v2.84.0
+  - zlib v1.3.1
+  - libffi v3.5.2
+  - Pixman v0.44.2
+
+The configure script supports --cpu=wasm64 flag to compile QEMU with 64bit
+pointer support.
+
+emconfigure ./configure --cpu=wasm64 \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu
+emmake make -j$(nproc)
+
+If the output needs to run on wasm32 engines, use
+"--enable-wasm64-32bit-address-limit" flag.
+
+emconfigure ./configure --cpu=wasm64 --enable-wasm64-32bit-address-limit \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu
+emmake make -j$(nproc)
+
+Either of the above commands generates the following files:
+
+- qemu-system-x86_64.js
+- qemu-system-x86_64.wasm
+
+Guest images can be packaged using Emscripten's file_packager.py tool.
+For example, if the images are stored in a directory named "pack", the
+following command packages them, allowing QEMU to access them through
+Emscripten's virtual filesystem:
+
+/path/to/file_packager.py qemu-system-x86_64.data --preload pack > load.js
+
+This process generates the following files:
+
+- qemu-system-x86_64.data
+- load.js
+
+Emscripten allows passing arguments to the QEMU command via the Module
+object in JavaScript:
+
+Module['arguments'] = [
+    '-nographic', '-m', '512M',
+    '-L', 'pack/',
+    '-drive', 'if=virtio,format=raw,file=pack/rootfs.bin',
+    '-kernel', 'pack/bzImage',
+    '-append', 'earlyprintk=ttyS0 console=ttyS0 root=/dev/vda loglevel=7',
+];
+
+The sample repository [3] (tcgdev64 branch) provides a complete setup,
+including an HTML file that implements a terminal UI.
+
+[1] https://patchew.org/QEMU/cover.1747744132.git.ktokunaga.mail@gmail.com/
+[2] https://patchew.org/QEMU/cover.1754534225.git.ktokunaga.mail@gmail.com/
+[3] https://github.com/ktock/qemu-wasm-sample/tree/tcgdev64
+
+Kohei Tokunaga (35):
+  meson: Add wasm64 support to the --cpu flag
+  configure: Enable to propagate -sMEMORY64 flag to Emscripten
+  dockerfiles: Add support for wasm64 to the wasm Dockerfile
+  .gitlab-ci.d: Add build tests for wasm64
+  tcg: Fork TCI for wasm backend
+  tcg/wasm: Do not use TCI disassembler in Wasm backend
+  tcg/wasm: Set TCG_TARGET_REG_BITS to 64
+  meson: Enable to build wasm backend
+  tcg/wasm: Set TCG_TARGET_INSN_UNIT_SIZE to 1
+  tcg/wasm: Add and/or/xor instructions
+  tcg/wasm: Add add/sub/mul instructions
+  tcg/wasm: Add shl/shr/sar instructions
+  tcg/wasm: Add setcond/negsetcond/movcond instructions
+  tcg/wasm: Add deposit/sextract/extract instrcutions
+  tcg/wasm: Add load and store instructions
+  tcg/wasm: Add mov/movi instructions
+  tcg/wasm: Add ext instructions
+  tcg/wasm: Add bswap instructions
+  tcg/wasm: Add rem/div instructions
+  tcg/wasm: Add andc/orc/eqv/nand/nor instructions
+  tcg/wasm: Add neg/not/ctpop instructions
+  tcg/wasm: Add rot/clz/ctz instructions
+  tcg/wasm: Add br/brcond instructions
+  tcg/wasm: Add exit_tb/goto_tb/goto_ptr instructions
+  tcg/wasm: Add call instruction
+  tcg/wasm: Add qemu_ld/qemu_st instructions
+  tcg/wasm: Mark unimplemented instructions as C_NotImplemented
+  tcg/wasm: Add initialization of fundamental registers
+  tcg/wasm: Write wasm binary to TB
+  tcg/wasm: Implement instantiation of Wasm binary
+  tcg/wasm: Allow switching coroutine from a helper
+  tcg/wasm: Enable instantiation of TBs executed many times
+  tcg/wasm: Enable TLB lookup
+  meson: Propagate optimization flag for linking on Emscripten
+  .gitlab-ci.d: build wasm backend in CI
+
+ .gitlab-ci.d/buildtest.yml                    |   26 +-
+ .gitlab-ci.d/container-cross.yml              |   20 +-
+ .gitlab-ci.d/container-template.yml           |    4 +-
+ MAINTAINERS                                   |    9 +-
+ configure                                     |   14 +-
+ include/accel/tcg/getpc.h                     |    2 +-
+ include/tcg/helper-info.h                     |    4 +-
+ include/tcg/tcg.h                             |    2 +-
+ meson.build                                   |   14 +-
+ meson_options.txt                             |    3 +
+ scripts/meson-buildoptions.sh                 |    5 +
+ tcg/aarch64/tcg-target.c.inc                  |   11 +
+ tcg/arm/tcg-target.c.inc                      |   11 +
+ tcg/i386/tcg-target.c.inc                     |   11 +
+ tcg/loongarch64/tcg-target.c.inc              |   11 +
+ tcg/meson.build                               |    5 +
+ tcg/mips/tcg-target.c.inc                     |   11 +
+ tcg/ppc/tcg-target.c.inc                      |   11 +
+ tcg/region.c                                  |   10 +-
+ tcg/riscv/tcg-target.c.inc                    |   11 +
+ tcg/s390x/tcg-target.c.inc                    |   11 +
+ tcg/sparc64/tcg-target.c.inc                  |   11 +
+ tcg/tcg.c                                     |   23 +-
+ tcg/tci/tcg-target.c.inc                      |   11 +
+ tcg/wasm.c                                    | 1112 ++++++
+ tcg/wasm.h                                    |  119 +
+ tcg/wasm/tcg-target-con-set.h                 |   21 +
+ tcg/wasm/tcg-target-con-str.h                 |   11 +
+ tcg/wasm/tcg-target-has.h                     |   22 +
+ tcg/wasm/tcg-target-mo.h                      |   17 +
+ tcg/wasm/tcg-target-opc.h.inc                 |   15 +
+ tcg/wasm/tcg-target-reg-bits.h                |   15 +
+ tcg/wasm/tcg-target.c.inc                     | 3167 +++++++++++++++++
+ tcg/wasm/tcg-target.h                         |   77 +
+ ...2-cross.docker => emsdk-wasm-cross.docker} |   29 +-
+ 35 files changed, 4822 insertions(+), 34 deletions(-)
+ create mode 100644 tcg/wasm.c
+ create mode 100644 tcg/wasm.h
+ create mode 100644 tcg/wasm/tcg-target-con-set.h
+ create mode 100644 tcg/wasm/tcg-target-con-str.h
+ create mode 100644 tcg/wasm/tcg-target-has.h
+ create mode 100644 tcg/wasm/tcg-target-mo.h
+ create mode 100644 tcg/wasm/tcg-target-opc.h.inc
+ create mode 100644 tcg/wasm/tcg-target-reg-bits.h
+ create mode 100644 tcg/wasm/tcg-target.c.inc
+ create mode 100644 tcg/wasm/tcg-target.h
+ rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
+
+-- 
+2.43.0
 
 
