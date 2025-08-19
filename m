@@ -4,114 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB0FCA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 02:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA47ECA0EE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 06:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoCW9-0002Kx-95; Mon, 18 Aug 2025 22:56:09 -0400
+	id 1uoGBV-0006Vk-C8; Tue, 19 Aug 2025 02:51:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uoCW8-0002KT-1x
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 22:56:08 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uoCW1-0004aP-Jo
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 22:56:07 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8057B2126B;
- Tue, 19 Aug 2025 02:55:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755572158; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LXnGRtwLJIDeCaqnhbqQv8+gi7GpC5ekmTCS2N9rWck=;
- b=zQ5gQXMU1HVUBd2Nv1oWsYGR/H/+/KeNgOTD4l8S5rHin3n24AAizNgDuOGujQbZdW6qDk
- 0L2lh70vh9NVBlKlMdlBWoF4WcC0f0OQoMsmVXaRzFnXzv1BTPJzJNmN6dRcJBunC+AWgw
- /MexzhD69EYDrPEOE3d+vTTCUByWINQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755572158;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LXnGRtwLJIDeCaqnhbqQv8+gi7GpC5ekmTCS2N9rWck=;
- b=XBdbF0KZ7TuxfRw5Qc5QVKFJzpqpJNwdXk9l6lDZF7crkhCC7Qw6tJ/ji0Vtv4dE8lWC7z
- HKtd546IvC9wrzDg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=nECcT0fT;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bKxqp0JN
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755572157; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LXnGRtwLJIDeCaqnhbqQv8+gi7GpC5ekmTCS2N9rWck=;
- b=nECcT0fTlmS30bl7ErVFZPfvi7y0y7ru5TvHEkjOvuvspeOHCuQrkWnfHC8NHc6+1hlLSw
- HJwbIZFew2zdP2l3+gIYo+b47Bo76deSarCM1Qi8umQF9ePpPgflkzUakMgfaGn+nnu1Hj
- dNAHpkST4qF5nSFaiIFB24RzIm+ZK2Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755572157;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LXnGRtwLJIDeCaqnhbqQv8+gi7GpC5ekmTCS2N9rWck=;
- b=bKxqp0JNI1wqMWj1LpqkwV3/g4tdyAToAEqzY7k1N+sVYfkcwcSpc785F//O5WpUqMk87h
- RMZ4KKNPXvJhdQDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E8B2A13686;
- Tue, 19 Aug 2025 02:55:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id AuNMKbzno2jpXgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 19 Aug 2025 02:55:56 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Fabian Vogt <fvogt@suse.de>, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- qemu-devel@nongnu.org, peterx@redhat.com
-Subject: Re: [PATCH] hw/intc/xics: Add missing call to register
- vmstate_icp_server
-In-Reply-To: <6187781.lOV4Wx5bFT@fvogt-thinkpad>
-References: <6187781.lOV4Wx5bFT@fvogt-thinkpad>
-Date: Mon, 18 Aug 2025 23:55:54 -0300
-Message-ID: <87zfbwvx39.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1uoGBQ-0006VJ-FZ; Tue, 19 Aug 2025 02:51:01 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1uoGBN-0002yF-Og; Tue, 19 Aug 2025 02:50:59 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57ILM1iq007399;
+ Tue, 19 Aug 2025 06:50:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=iRV+W6QThysfrvizo3/8uV92ybjKwP
+ HoJJoCE2aPg3A=; b=KW/L5a+B//T54gIoa2AwzE51GHJWR+/t4BNzO3fs65qtTS
+ oiuh2L6dPVPjDBZvLcqvvbEeKYCLxZbv4DU6CUrB8KxETE/L+0Y5fRcL5s1zolzj
+ LBAtKSGoU43J8wzCEdOJtP29ZfDHj0D80UXtW4e9J1CO5qldqpggGVj2QIsfS+Bv
+ xCK5IrVj01LP12L+Unl2JQsMGTbF+InHuuiV68RSrnd/Y9YiBxCB16sngPZCOsWr
+ cQLwEQLm5XmYPo2OVfbYZVWd7sD89KjBYTYJtKMy7jaCI56Ll05CGrLVirsYtD6Z
+ azst833QA+QuCKhkepMahOznvKDffTWwKUkrMAJg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jge3w1xs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 06:50:54 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57J6kUln006346;
+ Tue, 19 Aug 2025 06:50:54 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jge3w1xp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 06:50:54 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57J6WVYB002381;
+ Tue, 19 Aug 2025 06:50:53 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 48k7130ttt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 Aug 2025 06:50:53 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57J6onpG15860042
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 19 Aug 2025 06:50:49 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A091D2004B;
+ Tue, 19 Aug 2025 06:50:49 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 683742004D;
+ Tue, 19 Aug 2025 06:50:47 +0000 (GMT)
+Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com (unknown
+ [9.204.207.58])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 19 Aug 2025 06:50:47 +0000 (GMT)
+Date: Tue, 19 Aug 2025 12:20:43 +0530
+From: Gautam Menghani <gautam@linux.ibm.com>
+To: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com,
+ pbonzini@redhat.com
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ vaibhav@linux.ibm.com, nicholas@linux.ibm.com
+Subject: Re: [PATCH v2] hw/ppc/spapr_hcall: Return host mitigation
+ characteristics in KVM mode
+Message-ID: <aKQew7Qh9Zog5V3N@li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com>
+References: <20250417111907.258723-1-gautam@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- URIBL_BLOCKED(0.00)[nongnu.org:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[nongnu.org,gmail.com,redhat.com];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]
-X-Rspamd-Queue-Id: 8057B2126B
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250417111907.258723-1-gautam@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FcM3xI+6 c=1 sm=1 tr=0 ts=68a41ece cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=KCARQexVgrCxVkT0HaQA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: pCL6XuMGsFdL9rSV4hKe_Zt_e9CgYx8V
+X-Proofpoint-ORIG-GUID: ld_xxx9nNh7kqZXUdmB7ysp6gQMDzNJE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAxMSBTYWx0ZWRfX35XdXQksfCYQ
+ uUhFqrsssBaRz5d6AKDvoq4OUj8C7TOtbZcLA9LlJgu5bH18rIdhiHb6l+pVE1MmI1sXXBfSzTa
+ 4oXfNmnpOp+NyoJbA+4sftk66PVqFuWXM5kHOpPDUPInEGYcvAttG3lPhqHtJ6ADvynD8N7M3Rk
+ V5pPasVFXdxvrAVYo3gPr397Jvdx6HEdd/JCP8GaLmjwZtpDIBF8VUf4cK7YsOkDxFNGS27SA/b
+ EyyQVHw8CTaWdhmdFuE9jSwqtD6XyAlhF3aERRD0OwFD8D6FW/Pin3nWEbS0ivQdGkGb9Jd9TCf
+ GXj6ye64wayb2zU94B8ALZtfjCvngPfiFtObO1m5qp2Waz+5X/SD1OdPvSSztH/FjD6Ryu9EtM9
+ qJr4rcqZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-19_01,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ phishscore=0 clxscore=1011 impostorscore=0 spamscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508160011
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=gautam@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,33 +126,5 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabian Vogt <fvogt@suse.de> writes:
-
-+CC Peter
-
-> An obsolete wrapper function with a workaround was removed entirely,
-> without restoring the call it wrapped.
->
-> Without this, the guest is stuck after savevm/loadvm.
->
-
-I'd note that this only affects guests that have actually negotiated
-XICS, so guests using ic-mode=xive are safe.
-
-With this patch, backward migration to QEMU versions >= 9.2 is
-broken. Which I can only assume is ok, since the hard break (vmstate
-gets rejected) is better than weird post-migration hangs.
-
-If the PPC folks can spot a scenario where migration would provide
-reasonable results even without the emulated interrupt controller state
-being migrated, then we'll need a compat property for this.
-
-Also, a 9.2 guest cannot move to a more recent QEMU version without a
-reboot. If this is an important scenario, then the new QEMU needs to
-provide some compatibility knob.
-
-Otherwise:
-
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-stable@nongnu.org
++ Nicholas
 
