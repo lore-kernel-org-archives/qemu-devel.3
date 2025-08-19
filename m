@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F927CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2744CCA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 20:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoSyE-0002hu-Sw; Tue, 19 Aug 2025 16:30:15 -0400
+	id 1uoTOT-0000sR-Ie; Tue, 19 Aug 2025 16:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoSxq-0002Rb-9K
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:29:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoSxo-0006cv-DS
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:29:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755635387;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PtUjZaGETAdcn0kL+nTJyqu1DbHoW27/fXa9xQDQ7OA=;
- b=dafue79uXIOfrAuLzBdFCBDkx8ziN18Rrlq4Oev9XU/oZkXj2Vrk/JbHcrUyfpkjwtRmtN
- n55KRZW0YEGDeJ1MTtq0R4lE6ouq1njRSYg68MGaVOVUFsMiLZqq2IHyeBQuGL4WONCXBx
- tp6YVLPN8aKIp2iO0e4bTARzK1Ez2m4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-fIGLAviZNAau1Go8grU8Sg-1; Tue,
- 19 Aug 2025 16:29:43 -0400
-X-MC-Unique: fIGLAviZNAau1Go8grU8Sg-1
-X-Mimecast-MFC-AGG-ID: fIGLAviZNAau1Go8grU8Sg_1755635382
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A7B71800359; Tue, 19 Aug 2025 20:29:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.237])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14FCD19560B2; Tue, 19 Aug 2025 20:29:38 +0000 (UTC)
-Date: Tue, 19 Aug 2025 21:29:35 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH 11/14] python: ensure QEMUQtestProtocol closes its socket
-Message-ID: <aKTer5GCwiEqNObW@redhat.com>
-References: <20250715143023.1851000-1-berrange@redhat.com>
- <20250715143023.1851000-12-berrange@redhat.com>
- <CAFn=p-YmCbBi_puVXV-0iEoFixuGvyfGcKB6EMkWWNjcxczvRg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uoTOQ-0000rj-Vu
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:57:19 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uoTOP-0001lr-2H
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 16:57:18 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-4b1098d1bbaso4373111cf.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 13:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755637035; x=1756241835; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IRHqFtuAaiwQtsxeI4JfWKl4QUfmjBlgFn2CP+SXme8=;
+ b=OK0VGlmGM2VXY6m7cHHOKMngNYNYEBBj8x9HY/geKCZa7ydtZIcyq61eSJUsj/dcf6
+ L3k071oF6X42biUa9WVmCpc+h983gsjMBYvspoKHs/N3Pl+1ocUPUSjQTsMO2faGgPMn
+ EF4Ck/0V8N8QjRXPwpxoo/Uo+bbIJz+oIDIHd3FkjZ2FZtur12+0RchduNpOZV/e4RdN
+ ykI3zZ9uLHI95ix/qsCghXVu2m3Of2zb5KibnjdLMyxQBJONki0rD5Zhs+v32QAWV1cj
+ 6/gey6K7tPG1Z6nQv+CHAXtAGZb/JfNBsn1mNrpO0ldx5oyPP+pCGE1QzmFoncn4QNZW
+ LhHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755637035; x=1756241835;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IRHqFtuAaiwQtsxeI4JfWKl4QUfmjBlgFn2CP+SXme8=;
+ b=P1r0i8aKbFJ50KHrrz23KWYfcmCznIZI9rfgljI1kkW+QGYriUgAJgvMN8P4w/HFv+
+ NZb9sJXKo4klbGl3x9vaJxTiiRMsZl92s4tvH1TqOFduc92Q7NBkm+40K3BxEm1s2rLp
+ B3xFmGtt10d/BAfoXAUEZY0FDYwnvBBZWiSJPBmlBApiTl0M7SjVzcxYJeFXBErQxKQg
+ I6pQEn1unbvc0opBzuqOCL2zFTjcBAB+/CLOJ75V75FSGA7+3Ydhhg/0aAVfrMB5rrWR
+ dR0VEsCj1LTsPPDzxYYr9R6bH1QZ2xoxnhpITEAXaa/AgEzvwajkBd21+oglXj58d4tP
+ OuOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrdPswe5Mv1WN3zlX+ufUReIzMYmNHBecVIKIUN8H0m6Qpak3VWVOJ2b/Fy+nJqdxMhbOvusO9EZsV@nongnu.org
+X-Gm-Message-State: AOJu0YwAC+TkoEjWaw5oc9zzCE12KB+wgNDLZyCDf/IOdDuRFImy/8Xx
+ Tr958N/9PHZX02M1QbnSV24J7A7LLgzxCTKYj2lb+w7ZLQyuKf4MFZ2pU27732tvLrk=
+X-Gm-Gg: ASbGncsVIEAgAWSx5b8HsvJTn/8leAngSI53L/6NCIWq//eJeDgWEA6LylvNZP42tCe
+ pWya3V6kFtWNVRRAkcufy6XYrgpvlbACqQ1C8gHQBR93V6ATP52MwOlUTDK/LjDqAhKGNvY4RSu
+ S1/EpFvbw+cWGEWXoxUe7jL4oBzUjKIfh6gnhrw4fJ9iF6kJZsa5EMAqNfal1xM3ziU6RNnc4gC
+ 4DgiwEz3mrBHU5P4Eq5rnqwameehLSDOwGWIkxxiOU6p2b7xHIiuxF5q3xcDQLM32WmBQP0ex/8
+ O/z5u+cD9M5ZDv6w7ulrQm2biimSlaaWPwfrOhGpaMqaJQS3uC7UPp8MBXZObGTgLSIvG26NIS7
+ vpwL9gdygRziJbyzh4Ae/p1fSH8lYYPVpliqV4jQsd3STMLzb
+X-Google-Smtp-Source: AGHT+IHmvnuQsyppVq+Deo6XAftxNII5VX+pozDEg9VhVgdL2AfwrhzQF1nd5WjwEbpWbFCKvdJfPw==
+X-Received: by 2002:ac8:7f53:0:b0:4b0:ca36:90 with SMTP id
+ d75a77b69052e-4b29119eaa7mr10495291cf.8.1755637035044; 
+ Tue, 19 Aug 2025 13:57:15 -0700 (PDT)
+Received: from [10.225.235.227] ([172.56.183.187])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b155b5baf4sm47202391cf.0.2025.08.19.13.57.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Aug 2025 13:57:14 -0700 (PDT)
+Message-ID: <119375c1-fd2b-440a-9f9a-73ecda93f3c1@linaro.org>
+Date: Wed, 20 Aug 2025 06:57:06 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFn=p-YmCbBi_puVXV-0iEoFixuGvyfGcKB6EMkWWNjcxczvRg@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Correct condition of aa64_atomics feature
+ function
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250819145659.2165160-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250819145659.2165160-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82e.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,58 +101,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 19, 2025 at 04:12:12PM -0400, John Snow wrote:
-> On Tue, Jul 15, 2025 at 10:32 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > While QEMUQtestMachine closes the socket that was passed to
-> > QEMUQtestProtocol, the python resource leak manager still
-> > believes that the copy QEMUQtestProtocol holds is open. We
-> > must explicitly call close to avoid this leak warnnig.
+On 8/20/25 00:56, Peter Maydell wrote:
+> The ARMv8.1-Atomics feature (renamed FEAT_LSE in more modern versions
+> of the Arm ARM) has always ben indicated by ID_AA64ISAR0.ATOMIC being
+> 0b0010 or greater; 0b0001 is a reserved unused value.
 > 
-> Huh. I wonder if that's a false positive, or if it's actually true?
+> We were incorrectly checking for != 0; this had no harmful effects
+> because all the CPUs set their value for this field to either 0
+> (for not having the feature) or 2 (if they do have it), but it's
+> better to match what the architecture specifies here.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I think it makes more sense to fix the condition first and rename
+> the feature second, though there's not much difference in it.
+> I'm happy to fix up the trivial conflict in target-arm.next.
+> 
+>   target/arm/cpu-features.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index 5876162428a..a4d00a001d3 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -408,7 +408,7 @@ static inline bool isar_feature_aa64_crc32(const ARMISARegisters *id)
+>   
+>   static inline bool isar_feature_aa64_atomics(const ARMISARegisters *id)
+>   {
+> -    return FIELD_EX64_IDREG(id, ID_AA64ISAR0, ATOMIC) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64ISAR0, ATOMIC) >= 2;
+>   }
+>   
+>   static inline bool isar_feature_aa64_rdm(const ARMISARegisters *id)
 
-I'm  not sure to be honest, but the extra close doesn't seem
-to cause any ill effects.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> 
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> Well, either way...
-> 
-> Reviewed-by: John Snow <jsnow@redhat.com>
-> 
-> > ---
-> >  python/qemu/machine/qtest.py | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/python/qemu/machine/qtest.py b/python/qemu/machine/qtest.py
-> > index 4f5ede85b2..781f674ffa 100644
-> > --- a/python/qemu/machine/qtest.py
-> > +++ b/python/qemu/machine/qtest.py
-> > @@ -177,6 +177,8 @@ def _post_shutdown(self) -> None:
-> >              self._qtest_sock_pair[0].close()
-> >              self._qtest_sock_pair[1].close()
-> >              self._qtest_sock_pair = None
-> > +        if self._qtest is not None:
-> > +            self._qtest.close()
-> >          super()._post_shutdown()
-> >
-> >      def qtest(self, cmd: str) -> str:
-> > --
-> > 2.49.0
-> >
-> 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
