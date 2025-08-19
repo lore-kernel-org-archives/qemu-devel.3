@@ -4,89 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42E2CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 16:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE344CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 17:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoPOu-0000te-JI; Tue, 19 Aug 2025 12:41:32 -0400
+	id 1uoPfg-0004KE-Dy; Tue, 19 Aug 2025 12:58:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uoPOq-0000qH-TK
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:41:30 -0400
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uoPfe-0004Jh-8h
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:58:50 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uoPOo-000545-4w
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:41:28 -0400
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-e931cad1fd8so5640214276.1
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 09:41:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uoPfc-0007jd-8t
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 12:58:50 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-24458195495so35610235ad.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 09:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755621684; x=1756226484; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GiIqO8Y15LCBDs0lMCOxPe6ZN5Oep/dNFqGsKEBNDpE=;
- b=mT3CoO0pZMWscZyGTykjJ3n2krZuWmzA9iJjNgzOjh2ICpp2psKcel+BEUZzgrr6U0
- EQRBiCWzA0RRgja1F9/6zp9MCGK+YGL5aH6M/r07D5I+iBjkfDOkzTbZ1+LTSdNp9gMo
- U7uvh9mW3hyWf06OcXIzGBYYvR8rPseava8B6MzB4HQhiObGBcmVzCZoyYQtCZ7EciAz
- xdgZBSmYJvo2UiCcebU6ACfvM8bjsLdXdz4Dgs4jXX10p3RzGLLum2zBw7pekwKgkCAm
- kGn2cVWN0EDh91IJZyS6jM8WoVRzZaimhdL0bgWPA+8Elq3ZM36w0C9vd5JhGSV0cJ08
- SMLg==
+ d=linaro.org; s=google; t=1755622726; x=1756227526; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LPjrAY+Xgo/RW0b6jwoHl/sfMChofkYDsp/7Kp6nPyk=;
+ b=sL78Aoth/eimpqd7EY+tBAmxtAz1yJ9Av7RjrZN24tq8zu5QcvcmU5Ig0fti/Sp2cM
+ QvRscpa8GrWF0SyKQx+QiYKVyWLfmQCGt3B5aDaUPhZHyz4Pe30VzeN8GZLJlBtDPMxV
+ GsyNt8N7FHMlJEsqvo6mYdYTp8qncFT8lFLi7LJg7yqq3/bHdKgtlL8bopwHNzQaKUBL
+ jPGqUVOxnG/LcFxnqhqVXVN0d39dC+L6B+yqIrCkZj5zL7PgJHqScopSq/guQjc1UGVP
+ 2Y2M4VTlSUZS1vcpR7OhMd9jh5YH2EzRLIdg6nd6WnY7DcULtCUqumRZnrYlEm8sYuCS
+ fpJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755621684; x=1756226484;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GiIqO8Y15LCBDs0lMCOxPe6ZN5Oep/dNFqGsKEBNDpE=;
- b=VeCirD7eemcBl7by5sImbYXvp+Nqvm3xBCw47pYE+oQ/U1nLlNWsAYiBcLurVw7vp+
- R3mzgmtG36jz4u57PCcZfzvBXh/JBtjQQ2LuPFYQEbwXWDG/jtqT5QHvH775EtXIs9rB
- ND60pBgg5nVLKWigUKXg27lIatJYrRbrB2Y+8t036Mz31VxJErXjP/6PhkLYP7rYYvc6
- xoDP/+gp0L1k2tVsjQ8B/o0gc2TNnUL8GfiEXTxaXtSQhTLBcDiAB4P8ynylcWxBzBI1
- U3kpjenHjnB/av69t4rOHNgZTwN0bZqGprkwnchjtHqQ/KAzaAqCxfdTBSDMtpIYjgmE
- PHoA==
-X-Gm-Message-State: AOJu0YxWPv9K89oa5ks7JJEUNiuGwKsc2pggy//Z/xwckSyngKcgoiVj
- gA/fak6du3YG0iaHwe/Qhr8PBABG4hgoDg6QBZ/V9jtNbxchYP2CO+XLU+Znt9RViNt6rBKjeNm
- 5D3jJTFsE0EuEi5eP+by6FcLAoyes1o8EOFyXKuCNaQ==
-X-Gm-Gg: ASbGncvsIyUTHupAs5ysOC7n7/Ihns4fTprKw4HHKNsWSYHusdf2ZXLrzCnMkcslJMT
- 1YysZiJZ7Rq7m4wH0i4QiRYR8YwY+jbU9Ac1dO7OQA45Uku4BQvayETGG5tspTXcQqT3M3DNxdv
- SPcX3z0WHBmQl66HUtVpDjLIRlBjASbKWbmiLcvWQ9pGNuIVaTn0BzjNpdGdOIgE7YATdWhKsEL
- EYkZ3VB
-X-Google-Smtp-Source: AGHT+IFBKSmKfq3bO7E8/WN4Yysbn2OVXEu5/Y/HzccGqU3UG4ujnaS+fV2vevliVqq9orT9wzH4jC65J17HxnxQFR8=
-X-Received: by 2002:a05:6902:6b05:b0:e90:6a88:ea9a with SMTP id
- 3f1490d57ef6-e94e62ed1a4mr3301889276.25.1755621683825; Tue, 19 Aug 2025
- 09:41:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1755622726; x=1756227526;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LPjrAY+Xgo/RW0b6jwoHl/sfMChofkYDsp/7Kp6nPyk=;
+ b=Uw07piHSlQuGJwsWFHhNuUurDsnG0H2RPqQfUSG22H8Kux+cDmnnpqtgsFS3cEcbdj
+ A4bBr4fYeYWIrZbS/ru3A4uwGKz5I0Oy1nWWiycUaGa9OuYPw2OYrnAnMZ22D17X/hyG
+ Rtl35n9r8IKwRT/sygficyl7BodFWsG0/kHETa9ofNcTk9Co9ZPU9K3iuuNK4bZWgO5d
+ 7KG0zfi7SyQI9ig37vpiWDnG47C4XCtKVkVA5MMmRZWuCL70kGG6mw+qU9guMJp+kIS/
+ Qtoq6eRTM0V20b4/IC4upU+40XLFd7F/evqa3BhjF9YCb9vD1d409AaUu9da0OXX1k5a
+ KUsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0gtBGtzTXchQWU2gVvvfn++/5tBK1JfUzZiALWes65cXC4LQzPKwt+s6z2cfH9KYfXEg9a22fCPWS@nongnu.org
+X-Gm-Message-State: AOJu0YxsUF3Cgl+hoRyDfLMp537RLcdPwL1kc0zjCtUa3t1OO1/Gv2Zp
+ H8JQbPbLvRhU33mEIGd+XdwuM7bQvfBC94yRCR4JK/yhb8rqZ3rgz32vUYf3pBN61kA=
+X-Gm-Gg: ASbGncufd1faPHhnEXFWsH+/dg2cQZT2uDszq7WbGQOiVPJo7uEU51hNkz8xOFkBDpt
+ gr+buyTV3ctO3KM7KPxzuWxf/0hKfb6v4uPjaug17LP24+qccH6PmfkLN670O7vagAfRxgnePkj
+ kUs+EFnsjquhdV/6rEVh39WTqPUa3dIe7oecHuP68Rm0kNnpIoTo41JZbmrjE3mDxX37cybX/lp
+ +/r1KEVHlCdEAQRA89UJXBCnpFBNUfN3j6RjWGXehJNBLu4M/9aJ1nQknoWSlXsSb2qBCL48rl4
+ EXkCHDTBa8n0RyHGUae8N+GaG73S2GDD4h9USzaBnd5oAZK63smgI53q5f5or3SKDHhKauBygnv
+ ualuC59vl4cVEFiM22VZkyCrdCkbsV+6vjls=
+X-Google-Smtp-Source: AGHT+IHVlyp3A/azBmmg2yeQdAmw4SUp1PrqgkmNj+tG+CPVq92F9GsjaUnpinBqavb4VT0aJbBnMQ==
+X-Received: by 2002:a17:903:2308:b0:242:a0b0:3c11 with SMTP id
+ d9443c01a7336-245e049b90fmr43918295ad.31.1755622726215; 
+ Tue, 19 Aug 2025 09:58:46 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-245ed4ec174sm1971095ad.109.2025.08.19.09.58.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Aug 2025 09:58:45 -0700 (PDT)
+Message-ID: <bb46e699-cf29-4c61-ab7c-bd25338e4289@linaro.org>
+Date: Tue, 19 Aug 2025 09:58:44 -0700
 MIME-Version: 1.0
-References: <20250815090113.141641-1-corvin.koehne@gmail.com>
- <20250815090113.141641-2-corvin.koehne@gmail.com>
-In-Reply-To: <20250815090113.141641-2-corvin.koehne@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Aug 2025 17:41:11 +0100
-X-Gm-Features: Ac12FXzy_SG5iiFJQHz3gV0BJ8U6QwAgKSpDqJMi-lGemZgHqUeb9vAuewxkpzE
-Message-ID: <CAFEAcA-m0nqON13BMWMSy6xrR7F3wRLXOTNvavRun5iGvOxFnQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/14] hw/timer: Make frequency configurable
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
- qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, 
- =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 15/18] whpx: arm64: implement -cpu host
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Ani Sinha <anisinha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <mads@ynddal.dk>, Sunil Muthuswamy <sunilmut@microsoft.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Cameron Esfahani <dirty@apple.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <20250808065419.47415-1-mohamed@unpredictable.fr>
+ <20250808065419.47415-16-mohamed@unpredictable.fr>
+ <CAFEAcA9iQnrKWXPXw2wG3c6gmevOMFQtt48HsJdx8GZz2sd+4Q@mail.gmail.com>
+ <8e64fd77-9969-42b3-bbcd-1ed8de910ff9@linaro.org>
+ <CAFEAcA9OXu3=HuA9n+Oo0C5K5hTG+kLr9xsM=geBJ_UtCi4_-w@mail.gmail.com>
+ <aKSUS2-JrMBX7JXo@redhat.com>
+ <1396c8cf-fb2c-4b39-811a-7152bdbe976f@linaro.org>
+ <aKShmdP3Pdn-wYgY@redhat.com>
+ <3eefa4f1-56ae-40ed-9317-2a3e4e6983ea@linaro.org>
+ <aKSo6aHNkUWwqock@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <aKSo6aHNkUWwqock@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,16 +126,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 15 Aug 2025 at 10:01, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
-rote:
+On 8/19/25 9:40 AM, Daniel P. Berrangé wrote:
+> On Tue, Aug 19, 2025 at 09:25:22AM -0700, Pierrick Bouvier wrote:
+>> On 8/19/25 9:08 AM, Daniel P. Berrangé wrote:
+>>> On Tue, Aug 19, 2025 at 08:48:16AM -0700, Pierrick Bouvier wrote:
+>>>> On 8/19/25 8:12 AM, Daniel P. Berrangé wrote:
+>>>>> On Tue, Aug 19, 2025 at 04:06:45PM +0100, Peter Maydell wrote:
+>>>>>> On Tue, 19 Aug 2025 at 16:04, Pierrick Bouvier
+>>>>>> <pierrick.bouvier@linaro.org> wrote:
+>>>>>>>
+>>>>>>> On 8/19/25 6:24 AM, Peter Maydell wrote:
+>>>>>>>> On Fri, 8 Aug 2025 at 07:55, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>>>>>>>> Can you follow the QEMU coding style, please (here and elsewhere)?
+>>>>>>>> Variables and function names should be all lower case,
+>>>>>>>> and variable declarations go at the start of a C code
+>>>>>>>> block, not in the middle of one.
+>>>>>>>>
+>>>>>>>
+>>>>>>> In some cases, including in this function, I feel that the rule to
+>>>>>>> declare variables at the start of a block is not really helpful, and is
+>>>>>>> more related to legacy C than a real point nowadays.
+>>>>>>> As well, it sometimes forces to reuse some variables between various sub
+>>>>>>> blocks, which definitely can create bugs.
+>>>>>>>
+>>>>>>> Anyway, I'm not discussing the existing QEMU coding style, but just
+>>>>>>> asking if for the current context, is it really a problem to declare
+>>>>>>> variable here?
+>>>>>>
+>>>>>> The point of a coding style is to aim for consistency. QEMU
+>>>>>> is pretty terrible at being consistent, but we should try.
+>>>>>> The rule about variables at start of block is not because
+>>>>>> some compilers fail to compile it, but because we think
+>>>>>> it's overall more readable that way.
+>>>>>
+>>>>> There are also potential[1] functional problems with not declaring
+>>>>> at the start of block, because if you have a "goto cleanup" which
+>>>>> jumps over the line of the declaration, the variable will have
+>>>>> undefined state when the 'cleanup:' block is running. This is
+>>>>> something which is very subtle and easily missed when reading the
+>>>>> code flow.
+>>>>>
+>>>>
+>>>> This has nothing to do with where variables are declared, but where they are
+>>>> assigned. The same issue can happen whether or not it's declared at the
+>>>> start of a block.
+>>>>
+>>>> I suspect we use -ftrivial-auto-var-init precisely because we force
+>>>> variables to be declared at start of the scope, i.e. where they don't have
+>>>> any value yet. So, instead of forcing an explicit initialization or rely on
+>>>> compiler warnings for uninitialized values, it was decided to initialize
+>>>> them to 0 by default.
+>>>>
+>>>> If we declared them at the point where they have a defined semantic value,
+>>>> this problem would not exist anyway, out of the goto_cleanup situation,
+>>>> which has the same fundamental issue in both cases.
+>>>
+>>> It really isn't the same issue when you compare
+>>>
+>>>     void bar(void) {
+>>>       char *foo = NULL;
+>>>
+>>>       if (blah)
+>>>          goto cleanup:
+>>>
+>>>     cleanup:
+>>>       if (foo)
+>>>          ....
+>>>     }
+>>>
+>>> vs
+>>>
+>>>     void bar(void) {
+>>>       if (blah)
+>>>          goto cleanup:
+>>>
+>>>       char *foo = NULL;
+>>>
+>>>       ...some code...
+>>>
+>>>     cleanup:>      if (foo)
+>>>          ....
+>>>     }
+>>>
+>>> The late declaration of 'foo' is outright misleading to reviewers.
+>>>
+>>> Its initialization at time of declaration gives the impression
+>>> that 'foo' has well defined value in the 'cleanup' block, when
+>>> that is not actually true. In big methods it is very easy to
+>>> overlook an earlier 'goto' that jumps across a variable declaration
+>>> and initialization.
+>>>
+>>
+>> "Big" method is probably the issue there. If it's not possible to follow
+>> control flow in a given function, it's a strong hint there is a problem with
+>> its size, independently of any standard.
+> 
+> Certainly some methods are too big & deserve refactoring, but that's a
+> non-trivial investment, and it isn't always a clearcut win to split
+> code out into a bunch of arbitrarily short methods. You may solve the
+> goto/initialization problem, but make other things harder as you often
+> still have to fully page all the code into mind to understand it.
 >
-> From: YannickV <Y.Vossen@beckhoff.com>
 
-> Signed-off-by: Yannick Vo=C3=9Fen <y.vossen@beckhoff.com>
+I am still looking for an example of where breaking down a big function 
+in smaller logical chunks has reduced the readability for anyone, but I 
+never met one so far in my professional life.
+Usually it comes with the additional benefit that you need to *name* 
+things explicitely, which is usually better than add a comment about them.
+The point of breaking down code is explicitely to remove the need to 
+keep things in mind and assume functions do what they are named for.
 
-Is it intentional that the names in the From and
-the Signed-off-by: are different ?
+I respect the difference about tastes concerning readability and code 
+structure, and I know the context and era from which QEMU codebase comes 
+from.
 
-thanks
--- PMM
+However, arguing that variables should be at the start of a block 
+because of a potential goto_cleanup situation is not a good argument.
+
+>>> Even if not all methods have this problem, the coding standards
+>>> guide us into the habit of writing code that is immune from this
+>>> kind of problem. That habit only forms reliably if we apply the
+>>> coding standards unconditionally, rather than selectively.
+>>>
+>>
+>> That's right, but humanly enforced coding standard are usually a waste of
+>> time for everyone (reviewers and developers).
+> 
+> Human enforced standards are absolutely better than a free-for-all. Over
+> time contributors will gain familiarity with the project standards and
+> largely comply without enforcement being required. If contributors
+> repeatedly ignore coding standards, it will disincentivise reviewers
+> from looking at their patches.
+>
+
+Sure.
+As well, incessant pushbacks and nitpicking from those same reviewers 
+can disincentivise people to send any patch.
+But maybe the whole point is simply to keep people out of their lawn, or 
+reduce the amount of patches they need to process daily, who knows.
+
+>> How many messages and exchanges on the mailing list could we save by using
+>> something like clang-format on the codebase, and force it to be "clean" as
+>> part of the CI? There would be no more discussion, as there would be only
+>> one single and objective source of truth.
+> 
+> I would really love if it we could apply clang-format to everything, but
+> that has a non-trivial impact on maint when done on a large pre-existing
+> codebase like QEMU. Cherry-picking to upstream stable or distros would
+> be immensely painful, verging on impossible, after a bulk reformat. For
+> any new codebase I'd go for clang-format every time.
+>
+
+Maybe we could organize a conversation about this, because the benefits 
+are worth making cherry-picking a little bit harder. In this case, all 
+the community benefits from this, while blocking this penalizes everyone 
+except the stable maintenance part and downstream forks.
+As well, it would be a once in a lifetime price to pay.
+
+> With regards,
+> Daniel
+
 
