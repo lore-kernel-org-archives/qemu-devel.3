@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF55CA0EF8
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 09:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F55CA0EF5
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 09:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoIEZ-0005ZS-Il; Tue, 19 Aug 2025 05:02:23 -0400
+	id 1uoIEc-0005ce-Dy; Tue, 19 Aug 2025 05:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uoIEK-0005Si-Lp; Tue, 19 Aug 2025 05:02:09 -0400
+ id 1uoIET-0005XX-AF; Tue, 19 Aug 2025 05:02:18 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uoIEI-0003YB-Di; Tue, 19 Aug 2025 05:02:08 -0400
+ id 1uoIER-0003YB-4c; Tue, 19 Aug 2025 05:02:17 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 19 Aug
- 2025 17:01:42 +0800
+ 2025 17:01:44 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 19 Aug 2025 17:01:42 +0800
+ Transport; Tue, 19 Aug 2025 17:01:44 +0800
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -35,10 +35,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>, <wuhaotsh@google.com>, <titusr@google.com>
-Subject: [PATCH v1 04/11] hw/pci-host/aspeed: Add MSI support and per-RC IOMMU
- address space
-Date: Tue, 19 Aug 2025 17:01:25 +0800
-Message-ID: <20250819090141.3949136-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 07/11] tests/functional/test_arm_aspeed_ast2600: Add PCIe
+ test via root port and e1000e
+Date: Tue, 19 Aug 2025 17:01:28 +0800
+Message-ID: <20250819090141.3949136-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250819090141.3949136-1-jamin_lin@aspeedtech.com>
 References: <20250819090141.3949136-1-jamin_lin@aspeedtech.com>
@@ -70,293 +70,67 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add MSI support to the ASPEED PCIe RC/Config model and introduce a per-RC
-"IOMMU root" address space to correctly route MSI writes.
+Add a functional test that exercises the AST2600 PCIe RC_H by creating a
+root port and an e1000e endpoint behind it. The AST2600/ASPEED driver
+treats root bus 0x80 specially: only two device addresses are usable on
+the root bus, addr 0 (ASPEED host bridge) and addr 8. To attach endpoints
+without code changes, the test places a QEMU PCIe root port at 0x80:08.0
+and hangs e1000e behind it so the endpoint enumerates on bus 0x81.
 
-On AST2700 all RCs use the same MSI address, and the MSI target is PCI
-system memory (not normal DRAM). If the MSI window were mapped into real
-system RAM, an endpoint's write could be observed by other RCs and
-spuriously trigger their interrupts. To avoid this, each RC now owns an
-isolated IOMMU root AddressSpace that contains a small MSI window and a
-DRAM alias region for normal DMA.
+The test appends:
+-device pcie-root-port,id=root_port0,slot=1,addr=8,bus=pcie.0
+-device e1000e,netdev=net0,bus=root_port0
+-netdev user,id=net0
 
-The MSI window captures writes and asserts the RC IRQ. MSI status bits
-are tracked in new H2X RC_H registers (R_H2X_RC_H_MSI_EN{0,1} and
-R_H2X_RC_H_MSI_STS{0,1}). Clearing all status bits drops the IRQ. The
-default MSI address is set to 0x1e77005c and can be overridden via the
-msi-addr property.
+It then verifies enumeration with lspci:
+0001:80:00.0 Host bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
+0001:80:08.0 PCI bridge: Red Hat, Inc. QEMU PCIe Root port
+0001:81:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network
+Connection
 
-This keeps MSI traffic contained within each RC while preserving normal
-DMA to system DRAM. It enables correct MSI/MSI-X interrupt delivery when
-multiple RCs use the same MSI target address.
+This is a temporary solution that allows attaching multiple PCIe
+devices while the ASPEED drivers does not support placing endpoints directly
+on bus numbers 0x80.
+
+Reference:
+https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/drivers/pci/controller/pcie-aspeed.c#L309
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/pci-host/aspeed_pcie.h |  10 +++
- hw/pci-host/aspeed_pcie.c         | 132 ++++++++++++++++++++++++++++++
- hw/pci-host/trace-events          |   3 +
- 3 files changed, 145 insertions(+)
+ tests/functional/test_arm_aspeed_ast2600.py | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
-index 8da9537207..6bc54659ee 100644
---- a/include/hw/pci-host/aspeed_pcie.h
-+++ b/include/hw/pci-host/aspeed_pcie.h
-@@ -36,6 +36,8 @@ typedef struct AspeedPCIECfgTxDesc {
- typedef struct AspeedPCIERcRegs {
-     uint32_t int_en_reg;
-     uint32_t int_sts_reg;
-+    uint32_t msi_sts0_reg;
-+    uint32_t msi_sts1_reg;
- } AspeedPCIERcRegs;
+diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/test_arm_aspeed_ast2600.py
+index fdae4c939d..9ffcef513d 100755
+--- a/tests/functional/test_arm_aspeed_ast2600.py
++++ b/tests/functional/test_arm_aspeed_ast2600.py
+@@ -110,6 +110,10 @@ def test_arm_ast2600_evb_sdk(self):
+             'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test')
+         self.vm.add_args('-device',
+             'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
++        self.vm.add_args('-device',
++            'pcie-root-port,id=root_port0,slot=1,addr=8,bus=pcie.0')
++        self.vm.add_args('-device', 'e1000e,netdev=net0,bus=root_port0')
++        self.vm.add_args('-netdev', 'user,id=net0')
+         self.do_test_arm_aspeed_sdk_start(
+             self.scratch_file("ast2600-default", "image-bmc"))
  
- typedef struct AspeedPCIERegMap {
-@@ -55,11 +57,18 @@ OBJECT_DECLARE_SIMPLE_TYPE(AspeedPCIERcState, ASPEED_PCIE_RC);
- struct AspeedPCIERcState {
-     PCIExpressHost parent_obj;
+@@ -136,5 +140,15 @@ def test_arm_ast2600_evb_sdk(self):
+         exec_command_and_wait_for_pattern(self,
+              '/sbin/hwclock -f /dev/rtc1', year)
  
-+    MemoryRegion iommu_root;
-+    AddressSpace iommu_as;
-+    MemoryRegion dram_alias;
-+    MemoryRegion *dram_mr;
-     MemoryRegion mmio_window;
-+    MemoryRegion msi_window;
-     MemoryRegion io_window;
-     MemoryRegion mmio;
-     MemoryRegion io;
- 
-+    uint64_t dram_base;
-+    uint32_t msi_addr;
-     uint32_t bus_nr;
-     char name[16];
-     qemu_irq irq;
-@@ -87,6 +96,7 @@ struct AspeedPCIECfgClass {
-     const AspeedPCIERegMap *reg_map;
-     const MemoryRegionOps *reg_ops;
- 
-+    uint32_t rc_msi_addr;
-     uint64_t rc_bus_nr;
-     uint64_t nr_regs;
- };
-diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-index b095375c7d..566feaebc7 100644
---- a/hw/pci-host/aspeed_pcie.c
-+++ b/hw/pci-host/aspeed_pcie.c
-@@ -65,6 +65,8 @@ static const TypeInfo aspeed_pcie_root_info = {
-  * PCIe Root Complex (RC)
-  */
- 
-+#define ASPEED_PCIE_CFG_RC_MAX_MSI 64
++        exec_command_and_wait_for_pattern(self,
++            'lspci -s 0001:80:00.0',
++            '0001:80:00.0 Host bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge')
++        exec_command_and_wait_for_pattern(self,
++            'lspci -s 0001:80:08.0',
++            '0001:80:08.0 PCI bridge: Red Hat, Inc. QEMU PCIe Root port')
++        exec_command_and_wait_for_pattern(self,
++            'lspci -s 0001:81:00.0',
++            '0001:81:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection')
 +
- static void aspeed_pcie_rc_set_irq(void *opaque, int irq, int level)
- {
-     AspeedPCIERcState *rc = (AspeedPCIERcState *) opaque;
-@@ -94,6 +96,61 @@ static int aspeed_pcie_rc_map_irq(PCIDevice *pci_dev, int irq_num)
-     return irq_num % PCI_NUM_PINS;
- }
- 
-+static void aspeed_pcie_rc_msi_notify(AspeedPCIERcState *rc, uint64_t data)
-+{
-+    AspeedPCIECfgState *cfg =
-+           container_of(rc, AspeedPCIECfgState, rc);
-+    AspeedPCIECfgClass *apc = ASPEED_PCIE_CFG_GET_CLASS(cfg);
-+    const AspeedPCIERcRegs *rc_regs;
-+    uint32_t reg;
-+
-+    /* Written data is the HW IRQ number */
-+    assert(data < ASPEED_PCIE_CFG_RC_MAX_MSI);
-+
-+    rc_regs = &apc->reg_map->rc;
-+
-+    reg = (data < 32) ? rc_regs->msi_sts0_reg : rc_regs->msi_sts1_reg;
-+    cfg->regs[reg] |= BIT(data % 32);
-+
-+    trace_aspeed_pcie_rc_msi_set_irq(cfg->id, data, 1);
-+    qemu_set_irq(rc->irq, 1);
-+}
-+
-+static void aspeed_pcie_rc_msi_write(void *opaque, hwaddr addr, uint64_t data,
-+                                     unsigned int size)
-+{
-+    AspeedPCIERcState *rc = ASPEED_PCIE_RC(opaque);
-+    AspeedPCIECfgState *cfg =
-+           container_of(rc, AspeedPCIECfgState, rc);
-+
-+    trace_aspeed_pcie_rc_msi_notify(cfg->id, addr + rc->msi_addr, data);
-+    aspeed_pcie_rc_msi_notify(rc, data);
-+}
-+
-+static const MemoryRegionOps aspeed_pcie_rc_msi_ops = {
-+    .write = aspeed_pcie_rc_msi_write,
-+    .read = NULL,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static AddressSpace *aspeed_pcie_rc_get_as(PCIBus *bus, void *opaque, int devfn)
-+{
-+    AspeedPCIERcState *rc = ASPEED_PCIE_RC(opaque);
-+    return &rc->iommu_as;
-+}
-+
-+static const PCIIOMMUOps aspeed_pcie_rc_iommu_ops = {
-+    .get_address_space = aspeed_pcie_rc_get_as,
-+};
-+
- static void aspeed_pcie_rc_realize(DeviceState *dev, Error **errp)
- {
-     PCIExpressHost *pex = PCIE_HOST_BRIDGE(dev);
-@@ -130,6 +187,42 @@ static void aspeed_pcie_rc_realize(DeviceState *dev, Error **errp)
-                                      &rc->io, 0, 4, TYPE_PCIE_BUS);
-     pci->bus->flags |= PCI_BUS_EXTENDED_CONFIG_SPACE;
- 
-+   /*
-+    * PCIe memory view setup
-+    *
-+    * Background:
-+    * - On AST2700, all Root Complexes use the same MSI address. This MSI
-+    *   address is not normal system RAM - it is a PCI system memory address.
-+    *   If we map the MSI/MSI-X window into real system memory, a write from
-+    *   one EP can be seen by all RCs and wrongly trigger interrupts on them.
-+    *
-+    * Design:
-+    * - MSI/MSI-X here is just a placeholder address so RC and EP can talk.
-+    *   We make a separate MMIO space (iommu_root) for the MSI window so the
-+    *   writes stay local to each RC.
-+    *
-+    * DMA:
-+    * - EPs still need access to real system memory for DMA. We add a DRAM
-+    *   alias in the PCI space so DMA works as expected.
-+    */
-+    name = g_strdup_printf("pcie.%d.iommu_root", cfg->id);
-+    memory_region_init(&rc->iommu_root, OBJECT(rc), name, UINT64_MAX);
-+    address_space_init(&rc->iommu_as, &rc->iommu_root, name);
-+    /* setup MSI */
-+    memory_region_init_io(&rc->msi_window, OBJECT(rc),
-+                          &aspeed_pcie_rc_msi_ops, rc,
-+                          "msi_window", 4);
-+    memory_region_add_subregion(&rc->iommu_root, rc->msi_addr,
-+                                &rc->msi_window);
-+    /* setup DRAM for DMA */
-+    assert(rc->dram_mr != NULL);
-+    name = g_strdup_printf("pcie.%d.dram_alias", cfg->id);
-+    memory_region_init_alias(&rc->dram_alias, OBJECT(rc), name, rc->dram_mr,
-+                             0, memory_region_size(rc->dram_mr));
-+    memory_region_add_subregion(&rc->iommu_root, rc->dram_base,
-+                                &rc->dram_alias);
-+    pci_setup_iommu(pci->bus, &aspeed_pcie_rc_iommu_ops, rc);
-+
-     qdev_realize(DEVICE(&rc->root), BUS(pci->bus), &error_fatal);
- }
- 
-@@ -155,6 +248,10 @@ static void aspeed_pcie_rc_instance_init(Object *obj)
- 
- static const Property aspeed_pcie_rc_props[] = {
-     DEFINE_PROP_UINT32("bus-nr", AspeedPCIERcState, bus_nr, 0),
-+    DEFINE_PROP_UINT32("msi-addr", AspeedPCIERcState, msi_addr, 0),
-+    DEFINE_PROP_UINT64("dram-base", AspeedPCIERcState, dram_base, 0),
-+    DEFINE_PROP_LINK("dram", AspeedPCIERcState, dram_mr, TYPE_MEMORY_REGION,
-+                     MemoryRegion *),
- };
- 
- static void aspeed_pcie_rc_class_init(ObjectClass *klass, const void *data)
-@@ -215,6 +312,10 @@ REG32(H2X_RC_H_INT_STS,     0xC8)
-     SHARED_FIELD(H2X_RC_INT_INTDONE, 4, 1)
-     SHARED_FIELD(H2X_RC_INT_INTX, 0, 4)
- REG32(H2X_RC_H_RDATA,       0xCC)
-+REG32(H2X_RC_H_MSI_EN0,     0xE0)
-+REG32(H2X_RC_H_MSI_EN1,     0xE4)
-+REG32(H2X_RC_H_MSI_STS0,    0xE8)
-+REG32(H2X_RC_H_MSI_STS1,    0xEC)
- 
- #define TLP_FMTTYPE_CFGRD0  0x04 /* Configuration Read  Type 0 */
- #define TLP_FMTTYPE_CFGWR0  0x44 /* Configuration Write Type 0 */
-@@ -228,6 +329,8 @@ static const AspeedPCIERegMap aspeed_regmap = {
-     .rc = {
-         .int_en_reg     = R_H2X_RC_H_INT_EN,
-         .int_sts_reg    = R_H2X_RC_H_INT_STS,
-+        .msi_sts0_reg   = R_H2X_RC_H_MSI_STS0,
-+        .msi_sts1_reg   = R_H2X_RC_H_MSI_STS1,
-     },
- };
- 
-@@ -399,6 +502,29 @@ static void aspeed_pcie_cfg_write(void *opaque, hwaddr addr, uint64_t data,
-         }
-         s->regs[reg] &= ~data | H2X_RC_INT_INTX_MASK;
-         break;
-+    /*
-+     * These status registers are used for notify sources ISR are executed.
-+     * If one source ISR is executed, it will clear one bit.
-+     * If it clear all bits, it means to initialize this register status
-+     * rather than sources ISR are executed.
-+     */
-+    case R_H2X_RC_H_MSI_STS0:
-+    case R_H2X_RC_H_MSI_STS1:
-+        if (data == 0) {
-+            return ;
-+        }
-+
-+        s->regs[reg] &= ~data;
-+        if (data == 0xffffffff) {
-+            return;
-+        }
-+
-+        if (!s->regs[R_H2X_RC_H_MSI_STS0] &&
-+            !s->regs[R_H2X_RC_H_MSI_STS1]) {
-+            trace_aspeed_pcie_rc_msi_clear_irq(s->id, 0);
-+            qemu_set_irq(s->rc.irq, 0);
-+        }
-+        break;
-     default:
-         s->regs[reg] = data;
-         break;
-@@ -420,6 +546,8 @@ static void aspeed_pcie_cfg_instance_init(Object *obj)
-     AspeedPCIECfgState *s = ASPEED_PCIE_CFG(obj);
- 
-     object_initialize_child(obj, "rc", &s->rc, TYPE_ASPEED_PCIE_RC);
-+    object_property_add_alias(obj, "dram", OBJECT(&s->rc), "dram");
-+    object_property_add_alias(obj, "dram-base", OBJECT(&s->rc), "dram-base");
- 
-     return;
- }
-@@ -448,6 +576,9 @@ static void aspeed_pcie_cfg_realize(DeviceState *dev, Error **errp)
-     object_property_set_int(OBJECT(&s->rc), "bus-nr",
-                             apc->rc_bus_nr,
-                             &error_abort);
-+    object_property_set_int(OBJECT(&s->rc), "msi-addr",
-+                            apc->rc_msi_addr,
-+                            &error_abort);
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->rc), errp)) {
-         return;
-     }
-@@ -479,6 +610,7 @@ static void aspeed_pcie_cfg_class_init(ObjectClass *klass, const void *data)
-     apc->reg_ops = &aspeed_pcie_cfg_ops;
-     apc->reg_map = &aspeed_regmap;
-     apc->nr_regs = 0x100 >> 2;
-+    apc->rc_msi_addr = 0x1e77005C;
-     apc->rc_bus_nr = 0x80;
- }
- 
-diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
-index 2584ea56e2..a6fd88c2c4 100644
---- a/hw/pci-host/trace-events
-+++ b/hw/pci-host/trace-events
-@@ -2,6 +2,9 @@
- 
- # aspeed_pcie.c
- aspeed_pcie_rc_intx_set_irq(uint32_t id, int num, int level) "%d: num %d set IRQ leve %d"
-+aspeed_pcie_rc_msi_notify(uint32_t id, uint64_t addr, uint64_t data) "%d: 0x%" PRIx64 " data 0x%" PRIx64
-+aspeed_pcie_rc_msi_set_irq(uint32_t id, uint64_t unm, int level) "%d: num 0x%" PRIx64 " set IRQ level %d"
-+aspeed_pcie_rc_msi_clear_irq(uint32_t id, int level) "%d: clear IRQ level %d"
- aspeed_pcie_cfg_read(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
- aspeed_pcie_cfg_write(uint32_t id, uint64_t addr, uint32_t value) "%d: addr 0x%" PRIx64 " value 0x%" PRIx32
- aspeed_pcie_cfg_rw(uint32_t id, const char *dir, uint8_t bus, uint8_t devfn, uint64_t addr, uint64_t data) "%d: %s bus:0x%x devfn:0x%x addr 0x%" PRIx64 " data 0x%" PRIx64
+ if __name__ == '__main__':
+     AspeedTest.main()
 -- 
 2.43.0
 
