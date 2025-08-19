@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B34CCA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 02:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5BF1CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 02:46:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoCM6-0008WS-Gy; Mon, 18 Aug 2025 22:45:46 -0400
+	id 1uoCMs-00007t-F2; Mon, 18 Aug 2025 22:46:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1uoCM4-0008W4-QY
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 22:45:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uoCMq-00007l-Gk
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 22:46:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1uoCM2-0003Uw-Rv
- for qemu-devel@nongnu.org; Mon, 18 Aug 2025 22:45:44 -0400
+ id 1uoCMo-0003ia-Id
+ for qemu-devel@nongnu.org; Mon, 18 Aug 2025 22:46:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755571538;
+ s=mimecast20190719; t=1755571589;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tHKZkz5SM8be58wZf5eHOjciNJIxtJr9tDIA2DZa9YM=;
- b=FuByg68BtyFqTU+doM1vbgShARp6eyZq2DBHi160SSKtTC3cvzfmVY6p7Adiqph1O7x8Xq
- yl6IZHoAtmgdwGdWyQh4RsDPFCwYPLPPRbrqg5Lb4TbaDavo7v1Y8YpKu6ItNEtNXYhkDw
- Lk/NGBstq+TYVkN0xsZy3ojpbOFqeMw=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1SzH2dqtKBNK5uBN+aBeGCoirbYgWR4RJCafY7K0qmY=;
+ b=OcGejPF73ANhF5chtCfZQYLOQgcGiLXnJqzDsPmu84aakz5QK7ZS6n1S9saBpRlQ7VrcC1
+ gSzp/VofRamDROboGFHZd5EL6w83NYpJV84Rvm1AumQ2qKMunIlvW1pDej7rua1lzDKItx
+ +YW143hTyRFy9Bzt/B9WCO0rPWfkgXs=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-332-45ZhKrZSNtq98ES0EiBqAw-1; Mon, 18 Aug 2025 22:45:36 -0400
-X-MC-Unique: 45ZhKrZSNtq98ES0EiBqAw-1
-X-Mimecast-MFC-AGG-ID: 45ZhKrZSNtq98ES0EiBqAw_1755571535
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-323267bcee2so4542590a91.1
- for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 19:45:36 -0700 (PDT)
+ us-mta-481--Nq5sZVYOEy08EksGR4Ykg-1; Mon, 18 Aug 2025 22:46:27 -0400
+X-MC-Unique: -Nq5sZVYOEy08EksGR4Ykg-1
+X-Mimecast-MFC-AGG-ID: -Nq5sZVYOEy08EksGR4Ykg_1755571586
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-76e2eaecf8dso3660909b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Aug 2025 19:46:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755571535; x=1756176335;
+ d=1e100.net; s=20230601; t=1755571586; x=1756176386;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tHKZkz5SM8be58wZf5eHOjciNJIxtJr9tDIA2DZa9YM=;
- b=q5QkcBzhCDkAUM3MOWBM1JbNptYkA5kFD08Ya9fqnji2ejb+T7yZTzkd1FngzKipDY
- OdYnnC0OAzIH7kftHXFDjpLeJ9hX4puDRAQVtuSejl2tJZIwG1xy0JSWveSiSWELlksP
- sWJn0oxc8FXNPgtU1L9TNwvA/c2EbzxlL3LY7Td1Wp9kNAG+BJ/qv67bJV91L+Jx0zfP
- 1Gjvm8r1pzCtgOA5KSJQpJU/bwEykLb2XzGcOQoTg/drwcZD5bpSpxg85KYxPocZkMK+
- V1IONszYbxALSiCDadnTxMPXI6dIm3YOE2CyYERwby4J0WFOqPTEEyDmh4s9lrXi6gjY
- gmJg==
-X-Gm-Message-State: AOJu0YxUnMt2qj4DaVxfF4C7TzV32NYDPq+e8K8p4Y+tKEOeBliSokFR
- wDBo3bzXTd49aF9Q0+0xE+z1SZqFOEzx2nkTK9zoNRIO+ASR2oASYTG0LdBj9G0e0h4eK2jYxSD
- k7tCAbKdGyinEflgQfKiHXwh6qJ081GcQ3jCGC/d1C7D4ABI9JKmEdoQ9SdM2bwIIlzmvH7ooYY
- DVlDjR8roNegOAZveXk8qSxs8oFbeytxg=
-X-Gm-Gg: ASbGncsUuh3xYaLFOjV8ozRlQ4puKATz++k9cK63U0DSfYkErjE6mBbiew+6v9jW2Ar
- 3uNZbuHIhD2k8SlBBQ9NjfjfMel1edG1EQpbJhHlxaxvBjXqzeBp1h4Ne2/LdfgwAcIS2uSOb49
- AMtw2Dc9ZYI3kLlhqB+AF9VYc=
-X-Received: by 2002:a17:903:388b:b0:243:80d:c513 with SMTP id
- d9443c01a7336-245e02b9f53mr11887255ad.4.1755571535390; 
- Mon, 18 Aug 2025 19:45:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHcJ/O5MPkJamCb6REebNYiu6FRF3kV78yfqw98JmrTwXvG/cZjC22WvuNppzKjUWGN6ZIaw5zYx3QY95qCjKU=
-X-Received: by 2002:a17:903:388b:b0:243:80d:c513 with SMTP id
- d9443c01a7336-245e02b9f53mr11887025ad.4.1755571534889; Mon, 18 Aug 2025
- 19:45:34 -0700 (PDT)
+ bh=1SzH2dqtKBNK5uBN+aBeGCoirbYgWR4RJCafY7K0qmY=;
+ b=Ir+RZY88KrQetQDJpIGJwm1nkfEYgrH/q08SrqCsAHnO/kD+cLYnjoPgCsDz5ZIzlx
+ hceJyeWioRO5zH4IJUi+mPBk1j69f3+8y8YMdKqgvgud/SIbnEQu/kL7/+mn2tAmg2zk
+ plZ0V6TS0AEz7l71SArjq9F3PTcBUOnL23cbJRCuUvFCfLyXAtgRfvgtnNSA5oX0EmpW
+ vS1pvQLWyFM1ovngG3DgPyAPUbUfDmeaKEJNfnGiVvf6Qj02YglKGLK5S5dhRIivLP7M
+ 8woQXydJmnSSqqIoUTQ8XMF0rVY+kltZFPb4FC+A3H+QOCBSCCbh9BiWvs5x6vfoL6Kx
+ HDDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3hgW/nojJPU6LX3iTgc/i9PtA/bbf6QiUzE8bEKyP8RY6rvguWLXd8Q6yjpQqyswy8RANbYO1A+Vi@nongnu.org
+X-Gm-Message-State: AOJu0YwO4sh4VkdBISJK44J1tqNhmiQw5aEkwpSeukyQF6DMA2xE2jav
+ Xg0GPJFfAg1KWZeghbSXZbreZIAn2egb797/Y2mG2D4l7Bd74Z/ZV7UbDOG+jBLiUyMD+XHNRKH
+ fOsHAtN2xnfi8dLsL2cv9nPArdFDhGgpwaqLJhNbWWvTVxEw+hxKqNcnoxbwW4Ftki8mh61EjEa
+ /Ibu2oqktkVuQFbkoVBgHFSn/qJCi9O2U=
+X-Gm-Gg: ASbGncsz81TztX02PTGKw+UE2bp0DWBP1OjJInBnEEW7D6+2CJvzmtBAl1nxF8z9ePd
+ 4/Kn+Ei1snLzTobJR6J6Vl+YvKnCwLWUTxw8258CI4bBYqbIZojdqsH+3v4CMY0VaoGJym/cJDh
+ 7ziPvOUL6SDLTT93brdrCwdPA=
+X-Received: by 2002:a05:6a21:6da5:b0:23f:f934:19b9 with SMTP id
+ adf61e73a8af0-2430d39522fmr1290821637.14.1755571586068; 
+ Mon, 18 Aug 2025 19:46:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFOoAjrU93+D/5e17Mpvox1qXmmqftwtj5QLMePuS37r2pupujDSQdvt+wKrJSE5rrhxCuj/Cl/VFkyS4IZxhc=
+X-Received: by 2002:a05:6a21:6da5:b0:23f:f934:19b9 with SMTP id
+ adf61e73a8af0-2430d39522fmr1290763637.14.1755571585179; Mon, 18 Aug 2025
+ 19:46:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250818140645.27904-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20250818140645.27904-1-vsementsov@yandex-team.ru>
+References: <20250807110806.409065-1-lvivier@redhat.com>
+ <CACGkMEsYDPjPBNmAd=AmZQ2AY46weFC_u8PK=+CSCuUD6W9zYg@mail.gmail.com>
+ <20250818140313.GA7391@fedora>
+In-Reply-To: <20250818140313.GA7391@fedora>
 From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 19 Aug 2025 10:45:21 +0800
-X-Gm-Features: Ac12FXwXte1-Xu1RTDLTyZI7jzomOu13Ni0mfNyvqR2S394aPW8l4YW7lHxULRQ
-Message-ID: <CACGkMEvHXy0=vwAGS+2S7jCa5TjLxOso-SYb15TTE5q=VtPA2A@mail.gmail.com>
-Subject: Re: [PATCH 00/19] TAP initialization refactoring
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org
+Date: Tue, 19 Aug 2025 10:46:11 +0800
+X-Gm-Features: Ac12FXwHeRGdBF72Vs06A0d8yjqKePthJfirsBvi2bXYkG8EJtybbRYG8KUe4OU
+Message-ID: <CACGkMEvUq4ugS6PQ=mRH5Kx+rnDda5Wq3K8hSVrehv3=n5xk4Q@mail.gmail.com>
+Subject: Re: [PATCH v2] e1000e: Prevent crash from legacy interrupt firing
+ after MSI-X enable
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Laurent Vivier <lvivier@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,17 +110,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 18, 2025 at 10:06=E2=80=AFPM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
+On Mon, Aug 18, 2025 at 10:03=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
+om> wrote:
 >
-> Hi all!
+> On Mon, Aug 18, 2025 at 10:08:18AM +0800, Jason Wang wrote:
+> > On Thu, Aug 7, 2025 at 7:08=E2=80=AFPM Laurent Vivier <lvivier@redhat.c=
+om> wrote:
+> > >
+> > > A race condition between guest driver actions and QEMU timers can lea=
+d
+> > > to an assertion failure when the guest switches the e1000e from legac=
+y
+> > > interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
+> > > RDTR) is active, but the guest enables MSI-X before the timer fires,
+> > > the pending interrupt cause can trigger an assert in
+> > > e1000e_intmgr_collect_delayed_causes().
+> > >
+> > > This patch removes the assertion and executes the code that clears th=
+e
+> > > pending legacy causes. This change is safe and introduces no unintend=
+ed
+> > > behavioral side effects, as it only alters a state that previously le=
+d
+> > > to termination.
+> > >
+> > > - when core->delayed_causes =3D=3D 0 the function was already a no-op=
+ and
+> > >   remains so.
+> > >
+> > > - when core->delayed_causes !=3D 0 the function would previously
+> > >   crash due to the assertion failure. The patch now defines a safe
+> > >   outcome by clearing the cause and returning. Since behavior after
+> > >   the assertion never existed, this simply corrects the crash.
+> > >
+> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
+> > > Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> > > ---
+> >
+> > Acked-by: Jason Wang <jasowang@redhat.com>
+> >
+> > Consider rc3 is out. Can this be applied directly by maintainers or a
+> > PULL request is expected?
 >
-> As preparation for further development of TAP live local migration
-> (passing open fds through unix socket),
+> The commit description doesn't mention whether this fixes a regression
+> introduced since QEMU 10.0, whether there is a security impact, etc.
+> In the absence of more information, this looks like a regular bug fix
+> that does not need to be merged for -rc4.
+>
+> Only release blockers will be merged for -rc4 (Tue 19 Aug). Please
+> provide a justification if this commit is a release blocker. Reasoning:
+> - From -rc3 onwards the goal is to make the final release and adding
+>   additional patches risks introducing new issues that will delay the
+>   release further.
+> - Commits should include enough information to make the decision to
+>   merge easy and documented in git-log(1). Don't rely on me to judge the
+>   severity in areas of the codebase I'm not an expert in.
 
-I'm not sure I understand this, but I think it has been supported now,
-or anything I miss?
+I see, I think it's not a release blocker so we can defer this to the
+next release.
 
 Thanks
+
+>
+> Thanks!
+>
+> Stefan
 
 
