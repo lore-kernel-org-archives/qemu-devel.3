@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DD7CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 18:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 860FBCA0EEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 18:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoR1z-000382-Q0; Tue, 19 Aug 2025 14:26:00 -0400
+	id 1uoR2B-0004M0-L0; Tue, 19 Aug 2025 14:26:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uoR1I-0001dY-Jv; Tue, 19 Aug 2025 14:25:20 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uoR1s-0002SG-14; Tue, 19 Aug 2025 14:25:52 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uoR1G-0004QX-Rj; Tue, 19 Aug 2025 14:25:16 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-244581cc971so66763425ad.2; 
- Tue, 19 Aug 2025 11:25:13 -0700 (PDT)
+ id 1uoR1o-0004kT-TC; Tue, 19 Aug 2025 14:25:51 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b4717330f9eso4046105a12.1; 
+ Tue, 19 Aug 2025 11:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755627913; x=1756232713; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1755627947; x=1756232747; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i6T+1QDRLYXTheY8fOoVhm2NDU4PgwoPKgJ7RKVMPII=;
- b=Zg/PuwNgFdWRD/7iAO/3qscjyKLlIUu1Y3RR1KJYoBRv8uaoppJtdRWGnxll1p0no1
- fRP+uRG+X5TbjP60Llmx7EXMwYxgshWX9z1OQDnnbRmZS3H3c1zlTqvZYqvCL/292VK6
- s4CXkYtp1izzpTdh54wRCTldeaUGuUDJfV6TaCWukKilJQ90zUJMcBHv9cxDMPvp03Mm
- +a0nllMUMo1lwO3TIEmBF/w7r3Jd8XYE4dKB2vnLEpigdxHZuAaax0Ozm5zxhwsTT2la
- HlkanryGzyyGyxyFLr0U5ezXkNXTDfEPjmZIZ9tgHgIaMzaIWQ66QB0chY9Ry0dciewM
- FKeA==
+ bh=D0ZS0eANdrz5r5AN9KWFnrb1+idZJ7pMgAy4XohkPPI=;
+ b=fR25nJV+LVNK5NvOKdzdH0WETCqKRxngqeVOBXHsnzsy1VXQCVGyiT97emZ4nvlfHe
+ uaAmTSXy6k52saaINFg4QKbZPy+/+584veFendIme/z7IYqefoFM8LNyE9t6q5ALlBy+
+ ug/Bctajcb7DpJW+F0lQM+iC/LXpmoax2MsfZqfQj2CF61fSXr7cBqXV6CgzMMb9xWL2
+ NwYvCvTp4WA9pxVxSDmUpEO/Aj8pO8nresnhcG8URYU+2Ixm5iWjss/JwUGDhLUXgHcT
+ /fnE6xhTjK6wFHKsKl/jhzAN0Han/OeU8UcsZE8eFqpp88m7Y1x9R87sPwxlegybUh1t
+ rNUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755627913; x=1756232713;
+ d=1e100.net; s=20230601; t=1755627947; x=1756232747;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i6T+1QDRLYXTheY8fOoVhm2NDU4PgwoPKgJ7RKVMPII=;
- b=UQ+hhk/Lj6vBw4PjIQ8E3Uyz5YRxlhS/zo9rXtqjZK50Xv87u5AcxbZu0Mh4w3ixRL
- TWsT7EC1Y1NYBxWG8M+4phBIFbSOhzUnMWjJQQAp7WnxOaT2qg6ip+1E8JfsLReQiEVR
- BptPZhSOBaJAZWPLSha3QtxSp7kZo33VkZVTkK7UqXBaxzv8poxhOnEF3qv5As3wivmr
- KaN3ra3N5uNR8HU5O1jh+hAn+dGYw9Ix9amEZjUNVZSEcQTydWSMLQoiwow3H4JW/ssB
- pw5oviZyczYa8mMZI72o8YlhSe6E5ECOwOpjkAGa8786dkcNaQ7WL9nBDUg/RDU6B+4j
- pQAg==
+ bh=D0ZS0eANdrz5r5AN9KWFnrb1+idZJ7pMgAy4XohkPPI=;
+ b=XLmL+aVbN1ZKxXmS16BzYumiUqtopHHC5UxFp89jJNMjVhAJ5snijoZQKRsXiUTlAr
+ OFy9sBq86efezDsPX5U44aolwTQ6qjkhsv4OEqxYJrx2D8HmN615eu+XwwgMJsSj3uwn
+ ZWp3emxbReRHpmbFi4aSlvDHK7+N6sHL2u5YHgVKHDi18+JbN8xn5yfPRTMENDEKVNF9
+ sBe+cMpMgT8MTWeAPUHz+HStAYA5rJhu6W63+PS4iA3nMGGid77smMsW7cot/EpsiFZi
+ SURIpzAyWj+PkEFqPowsBVSrin0UIQEixOik4cDskEFPKVkyjZRcusmeMVK7r8I4QI45
+ YENg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUK5xLdR7rw9bqurKzff8Pab0rS0VNPjeJ/1P26cdNS3gYHF7vZBUzzOAQfDuyrwKDw3aU7xcKYRsoeUQ==@nongnu.org,
- AJvYcCXqiN5P33ciGkDT9I2rE0Fsri+MqBrPYAU04fwvmmycr6Z1fFGqyqpM96eo+OuMJoEAtWX6OuRxRw==@nongnu.org
-X-Gm-Message-State: AOJu0YzTlQu3AiiDHzuvq9jZ3dD1STRSguZ1ciWk3xhejbVs9U6JYUzs
- qZTyMbcsQDKj+ULTcLEUSDLYYFMogIgEIrEJ9/EPg6Y/pCqQ3PA6A2IK1udk1g==
-X-Gm-Gg: ASbGncvj3K1gMWY/JNQgIuBixaeUuLh6n6APve5zDs7IODxdSNLDG9Dz7m5Q6PChDvx
- 6rgfdzvQyN4vl499DkJ/JPxhq8knd/BCO13VEyzpPXHDecM87De4LMM4I7KZixFF37Hp7SWe1zW
- rQ9O4NR+//gKtRtdnDRdX00CgkXRm1y1XlhCUO+JPrFBCtbkfq74vxP+mSgnqpXipVKVgwP5+25
- GYj+K8SlCeoZv2inbn3bnoQj6s9f31ZYpldnPk4VCUeA5zdCjFJ4X2pP7vd+oFjqAs7WWRERF4R
- O+YJBlXJfwzaOVh2iwgaOf8dFCrlQzjLmcGopB8sL0I8Ijan25fGYVK+leiwgLLA86LlvLFAiBm
- ro/rfdMd/BX+1KqGSx03Xng==
-X-Google-Smtp-Source: AGHT+IF4it6/RPjibYLZoKOzO6MtaQFbtQBalU0FKjcuo3N6I392a8XCOhA6Nk4m/QRx3UV+6X38XQ==
-X-Received: by 2002:a17:903:fab:b0:240:1f25:d443 with SMTP id
- d9443c01a7336-245e047f53bmr49652015ad.30.1755627912677; 
- Tue, 19 Aug 2025 11:25:12 -0700 (PDT)
+ AJvYcCU41Wo3dS2iyendSCsD+Op27FvE6+553yG286RpA9xUXcTgRiLP51oYlri2emJYBkKjrAAw3BvJmA==@nongnu.org,
+ AJvYcCUPxE0kSMa51zyxLvo7iKRzAShYi5CHpinCLt2Bwp1FtUB6keDYUYd/YI2qHA2jc1BlZZquNYNM+nYwtw==@nongnu.org
+X-Gm-Message-State: AOJu0YwioIgypGZ70982ovWGL2+0Rf/QzUzW2hawgc26KErEp1694O/a
+ sNE7BOggi0E7xu8gZ3cLRje508rBwtzYGp1vxxQIzoSpyfa4B/L6j9s6R6kwyg==
+X-Gm-Gg: ASbGnctc5/6qFq23KpeZoGu1EXWlSyNc4c2rP6mEeivS4jTrqM3Kcl1aVp7O+xFhejm
+ 4bczX90GW9NCwWOOJjLyzND9mI0O7dI3pc6OIJxXFATrkgOkJZaGLa98WefFEjIDFKvGafz21vL
+ w0jsryOg7F1W29/NlLFf0McYw6yVboMqpceA5cUqIhDa8XQD0MEp1fcq9TaFzbYCBfJ9QX7JxEZ
+ sLnQiE1OBm3QHlP05Iq+Uj9EVmgP1+qDBGmLcmaV1FyYmP0Wem3zHZXwRunbap0W+4+f3DOV1RM
+ GGBgWWs8dNJ44Cql0VTI428eLqruLRtKU7cB9UkFhtN75tNkcGQVPa3KgFZ3SX6RRv4S96jG5px
+ TKcPmizW3i/3n8snQMwZjkg==
+X-Google-Smtp-Source: AGHT+IHWOvZcNEk7FSavWVndeZWYqWhy5js2qNQ/82vDiEuhfJ4Ba51BpMgeRVwrF5FC0XW1ixu/BQ==
+X-Received: by 2002:a17:902:cf4a:b0:235:e1d6:4e22 with SMTP id
+ d9443c01a7336-245e02dc4afmr44719865ad.18.1755627946786; 
+ Tue, 19 Aug 2025 11:25:46 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:29ce:ef58:c2c9:e52f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed33b4c2sm3725125ad.25.2025.08.19.11.25.07
+ d9443c01a7336-245ed33b4c2sm3725125ad.25.2025.08.19.11.25.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Aug 2025 11:25:12 -0700 (PDT)
+ Tue, 19 Aug 2025 11:25:46 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -80,16 +80,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH 28/35] tcg/wasm: Add initialization of fundamental registers
-Date: Wed, 20 Aug 2025 03:21:57 +0900
-Message-ID: <2e9d7dfd8cc6bf87295714e926561c8a1d0705cc.1755623522.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 34/35] meson: Propagate optimization flag for linking on
+ Emscripten
+Date: Wed, 20 Aug 2025 03:22:03 +0900
+Message-ID: <07548c6633e8f6be080a988a9e60c3c2beee6eec.1755623522.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1755623521.git.ktokunaga.mail@gmail.com>
 References: <cover.1755623521.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,73 +113,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds initialization of TCG_AREG0 and TCG_REG_CALL_STACK at the
-beginning of each TB. The CPUArchState struct and the stack array are passed
-from the caller via the WasmContext structure. The BLOCK_IDX variable is
-initialized to 0 as TB execution begins at the first block.
+Emscripten uses the optimization flag at the link time to enable
+optimizations via Binaryen [1]. While meson.build currently recognizes the
+-Doptimization option, it does not propagate it to the linking. This commit
+updates meson.build to propagate the optimization flag to the linking when
+targeting WebAssembly.
+
+[1] https://emscripten.org/docs/optimizing/Optimizing-Code.html#how-emscripten-optimizes
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- tcg/wasm.h                | 10 ++++++++++
- tcg/wasm/tcg-target.c.inc | 19 +++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ meson.build | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tcg/wasm.h b/tcg/wasm.h
-index fba8b16503..91567bb964 100644
---- a/tcg/wasm.h
-+++ b/tcg/wasm.h
-@@ -22,6 +22,16 @@ struct WasmContext {
-      * Buffer to store 128bit return value on call.
-      */
-     void *buf128;
-+
-+    /*
-+     * Pointer to the CPUArchState struct.
-+     */
-+    CPUArchState *env;
-+
-+    /*
-+     * Pointer to a stack array.
-+     */
-+    uint64_t *stack;
- };
+diff --git a/meson.build b/meson.build
+index 5fee61a256..a98b9f836c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -878,6 +878,12 @@ elif host_os == 'openbsd'
+     # Disable OpenBSD W^X if available
+     emulator_link_args = cc.get_supported_link_arguments('-Wl,-z,wxneeded')
+   endif
++elif host_os == 'emscripten'
++  # Emscripten uses the optimization flag also during the link time.
++  # https://emscripten.org/docs/optimizing/Optimizing-Code.html#how-emscripten-optimizes
++  if get_option('optimization') != 'plain'
++    emulator_link_args += ['-O' + get_option('optimization')]
++  endif
+ endif
  
- #endif
-diff --git a/tcg/wasm/tcg-target.c.inc b/tcg/wasm/tcg-target.c.inc
-index 6b8df4e9d7..0182d072ca 100644
---- a/tcg/wasm/tcg-target.c.inc
-+++ b/tcg/wasm/tcg-target.c.inc
-@@ -2419,11 +2419,30 @@ static inline void tcg_target_qemu_prologue(TCGContext *s)
- 
- static void tcg_out_tb_start(TCGContext *s)
- {
-+    intptr_t ofs;
-+
-     init_sub_buf();
-     init_blocks();
-     init_label_info();
-     init_helpers();
- 
-+    /* Initialize fundamental registers */
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(TCG_AREG0));
-+    tcg_wasm_out_op(s, OPC_I64_EQZ);
-+    tcg_wasm_out_op_block(s, OPC_IF, BLOCK_NORET);
-+
-+    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(env));
-+    tcg_wasm_out_op_ldst(s, OPC_I64_LOAD, 0, ofs);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(TCG_AREG0));
-+
-+    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(stack));
-+    tcg_wasm_out_op_ldst(s, OPC_I64_LOAD, 0, ofs);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(TCG_REG_CALL_STACK));
-+    tcg_wasm_out_op(s, OPC_END);
-+
-+    tcg_wasm_out_op_const(s, OPC_I64_CONST, 0);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+
-     tcg_wasm_out_op_block(s, OPC_LOOP, BLOCK_NORET);
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, BLOCK_IDX);
-     tcg_wasm_out_op(s, OPC_I64_EQZ);
+ ###############################################
 -- 
 2.43.0
 
