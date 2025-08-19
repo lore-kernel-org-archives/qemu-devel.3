@@ -4,113 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E7BCA0EE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 06:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAE9CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 07:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoGGD-0007WD-64; Tue, 19 Aug 2025 02:55:57 -0400
+	id 1uoGVJ-0001r9-SJ; Tue, 19 Aug 2025 03:11:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1uoGG7-0007Uk-EO; Tue, 19 Aug 2025 02:55:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1uoGVG-0001qT-56
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 03:11:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1uoGG5-0003Zk-CE; Tue, 19 Aug 2025 02:55:51 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57IN8bdu009937;
- Tue, 19 Aug 2025 06:55:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=ZL9I3dAeUBwSSmd2Mm3A1/nztviYjj
- 4MAp6ZmZRWY+U=; b=IgGViYQVGZ6HylRIhF4KhwrVKkHoBBajEoRpPNLgHQU/VX
- S+tsuJuLChOQU0dnN+UuX3/GO3qHY2EInirL8PMMK+arM1VCeRPoOMZFNo6GNDYx
- FkzBr35MImRlO5uDQh3Vd9TvrG5rGeQRbZQ66511UdW6lKeEdg063f9gtSL5BpzF
- 4D6GD6IwW21CVfvDywYX97zB4QgowzMSRrchv13niSEMfLKmt7S/rukWDJpoXPpy
- 5ElkUO+ujRb/Q2utBMrRS/BRuDKZgaAzZN5i4i+oALP56GrCDHkiMKEfBm24DRU1
- IFAFHmvU8WXpQHZcV1aZA/e0pbDbr2McmMw1bs8Q==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jhny5a5e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 19 Aug 2025 06:55:46 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57J6egom006442;
- Tue, 19 Aug 2025 06:55:45 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48jhny5a4w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 19 Aug 2025 06:55:45 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57J6HaEn003162;
- Tue, 19 Aug 2025 06:55:44 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 48k6hm8x4y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 19 Aug 2025 06:55:44 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57J6teqe19005850
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 19 Aug 2025 06:55:40 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BEFFE20043;
- Tue, 19 Aug 2025 06:55:40 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 810CB20040;
- Tue, 19 Aug 2025 06:55:38 +0000 (GMT)
-Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com (unknown
- [9.204.207.58])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 19 Aug 2025 06:55:38 +0000 (GMT)
-Date: Tue, 19 Aug 2025 12:25:33 +0530
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com,
- pbonzini@redhat.com
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- vaibhav@linux.ibm.com, nicholas@linux.ibm.com
-Subject: Re: [PATCH v2] hw/ppc/spapr_hcall: Return host mitigation
- characteristics in KVM mode
-Message-ID: <aKQf5dYMEsjfPaXa@li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com>
-References: <20250417111907.258723-1-gautam@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1uoGVC-0005Z9-7l
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 03:11:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755587469;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=edX/q2IUy4kBZZpgrgMxLBqi9yg8QZ0gzoc4NpqGp2U=;
+ b=gVE31RIyVdgERoYIpM+vG/c0B40lQ9V0AjxFHgsnj9XbGadDKccpbnUT4ReeDw7aRdxwvO
+ iLstFrwlIjQF117sk+WTlWTNSL6hPG9ckc+PcDgiQbsxtj7X1Qsl4RBP9n7Gm4x+/+zOpf
+ howtpCqS3X2hGX2WWqFcqp/LMnMMjNw=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-369-Rlyh_CglP0iBteGtrMb-pw-1; Tue, 19 Aug 2025 03:11:07 -0400
+X-MC-Unique: Rlyh_CglP0iBteGtrMb-pw-1
+X-Mimecast-MFC-AGG-ID: Rlyh_CglP0iBteGtrMb-pw_1755587466
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3235e45b815so2371852a91.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 00:11:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755587466; x=1756192266;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=edX/q2IUy4kBZZpgrgMxLBqi9yg8QZ0gzoc4NpqGp2U=;
+ b=mt/uNNMqeDXAtyzXpWMEklDhEaYd+6RoK3BAmiyhby6/WHgs5WVDf8vqxgh5XBYhhx
+ m/KYcqo/oDVBr80EQQvHRGpN2wW3g5EgT76KRyhwF8EopVdZnPEg9KNZuASJXU/rL5G1
+ Aqk2ORd4XkBJgIS3/QAdVjadOx7NyQclnTON4KDLVpD0e1PssYLOb0yPopA3dgJ1q6lU
+ x89wl7Mi/dCoU4k2nHZ7AokXDpnBM813r2/gH97TNAd7VoMBNAb8rNYf/Q83p0Xju2BS
+ O8YsO8sfFGP7r7qeQUiqZ+URJdn+ZqYo3GhZmkvpKTqmkMzwofqPvLcA32Ua+ASm+H0O
+ 1E9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUY1MLi1qaH1O7E4hDKwm8bd/YVpCyqcKr/X54Ul05vqgzyxHKnvUKJuh+OsKp7WeYZp/aRV7KD2BKe@nongnu.org
+X-Gm-Message-State: AOJu0YxWDCxGBBdOLB6JujsV/euekcKr7Q+4nQ8PnG08oP00Ku8bkHG5
+ FqFEHhBq90/yEV3HKf+T9orifXh6O4FMc5MrzslLR0YpY/lacU348VySm+9B8YG3opXLmvu9uy4
+ nRYJFkAUcJRfxbO/XzNDloV4lXNjkflL0v7BnyGLMCBQhtUYG70BCCPt4b9viN94N6nGweIEtDQ
+ f05543EY1en1usHCjFznncmJ46M05guEU=
+X-Gm-Gg: ASbGncsvIGpndYToZFxGfJd+HtBz85OumD8OyUG6n4k0pS0jTD24GisMvYC3yQelvab
+ UM6Y/kHNvPyhV1rcvCH8W12siiEIQzf2yqLbMSTdBtAOxa3H2XvvF0uePbZUj9LX2RtgNXRP5bR
+ 4myEWiGtCwOnkaxRUHz86X
+X-Received: by 2002:a17:90b:3ecb:b0:312:f0d0:bb0 with SMTP id
+ 98e67ed59e1d1-3245e5924bemr2607882a91.12.1755587466241; 
+ Tue, 19 Aug 2025 00:11:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNafbHN9sjw3TASuKduKDwND0bZ3c57wQ/DjDlhhiRdYYM4cG1Gn047lbSkmqqDOk3JW0wbbTorJPLhgzkKbc=
+X-Received: by 2002:a17:90b:3ecb:b0:312:f0d0:bb0 with SMTP id
+ 98e67ed59e1d1-3245e5924bemr2607841a91.12.1755587465677; Tue, 19 Aug 2025
+ 00:11:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250417111907.258723-1-gautam@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XbqJzJ55 c=1 sm=1 tr=0 ts=68a41ff2 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=voM4FWlXAAAA:8 a=VnNF1IyMAAAA:8
- a=WI5HHvvhWpJfBEWMsrIA:9 a=CjuIK1q_8ugA:10 a=IC2XNlieTeVoXbcui8wp:22
-X-Proofpoint-ORIG-GUID: f1CBjWWrY0tXtanfq553VbP_n2cSEyTQ
-X-Proofpoint-GUID: sS8IRelWu9tR4f4aR83vp9FLpt8r9YfJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDAyNyBTYWx0ZWRfX8cy78OUZ2VTx
- VAZ9IhW5ZalLrFw1x7mYWtZvNMrzQEQ3INs4F0IZmweG+p+mErnosEsia+iUTJHfAiuwBdxpAHR
- BMhHWQ5r07MHzCJX+H6RifvZ34Qp1lWTQAYLfcYAcvOmpZGYcSjZxnpCDgwbDhuB+/7p2Vl6oio
- 03H9r5HnxpI3aHFy23PcK6Pg2clnF8N2mdOjiruC8UPJsJxK05sK24qsX7gyXyB1SHvsXrkccXF
- GTkywvqCAObHAxMvBbZTHnW4Af0U3vlRKQUOPnqqsjuLP6e8aa1kdw9oROeTykB9bQGDLu0+1lD
- epXZ05MzVPtSThvc4chPbu2rfECYVQuwSU7kzIl8yX8QWwSjie+hGuvKkjztm6cqzODwfCxU7Rk
- kGhS5gh7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-19_01,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501 bulkscore=0
- clxscore=1015 malwarescore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508160027
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=gautam@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+ <20250722124127.2497406-6-jonah.palmer@oracle.com> <aJOCiUPp0dckmgAn@x1.local>
+ <5e276607-cd86-4a1d-99f3-47dd2f0f3bc0@oracle.com> <aJTU641465aGKWRU@x1.local>
+ <0cf99747-443e-4a29-a0da-64012548a994@oracle.com> <aJnydjxFzKwVzi7Y@x1.local>
+ <eafcf9ca-f23f-42d5-b8c2-69f81a395d11@oracle.com> <aJpm4-JfmevsI7Ei@x1.local>
+ <CAJaqyWfAnH-Lca3zmQTiR2wtaryKUo2KDKa=s5pcuAO9E6Efsw@mail.gmail.com>
+ <aJyb6n9Vf4BhHqpb@x1.local>
+ <CAJaqyWdUutZrAWKy9d=ip+h+y3BnptUrcL8Xj06XfizNxPtfpw@mail.gmail.com>
+ <59317419-e832-4590-ad4f-cfe7d21e8fd4@oracle.com>
+ <CAJaqyWfc3G5NLnxqXvZFxw2aRnVvOcZbLds5LHzcdoLjVGmOsw@mail.gmail.com>
+ <c5b97e10-a8bb-4d59-b509-734eab7d5be3@oracle.com>
+In-Reply-To: <c5b97e10-a8bb-4d59-b509-734eab7d5be3@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 19 Aug 2025 09:10:29 +0200
+X-Gm-Features: Ac12FXz19iMm6gHAuQ0wzCajOMtfNs9Pvdc6PPktYsR-mp2a999GP83CcmPaKis
+Message-ID: <CAJaqyWc-vKsqs2boiktJn_cO3fSVk=-EfP3G8QN-z=n59VCoHA@mail.gmail.com>
+Subject: Re: [RFC 5/6] virtio,virtio-net: skip consistency check in
+ virtio_load for iterative migration
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, farosas@suse.de, 
+ eblake@redhat.com, armbru@redhat.com, jasowang@redhat.com, mst@redhat.com, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, 
+ Dragos Tatulea DE <dtatulea@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,116 +118,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Aug 18, 2025 at 4:46=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
+>
+>
+>
+> On 8/18/25 2:51 AM, Eugenio Perez Martin wrote:
+> > On Fri, Aug 15, 2025 at 4:50=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
+le.com> wrote:
+> >>
+> >>
+> >>
+> >> On 8/14/25 5:28 AM, Eugenio Perez Martin wrote:
+> >>> On Wed, Aug 13, 2025 at 4:06=E2=80=AFPM Peter Xu <peterx@redhat.com> =
+wrote:
+> >>>>
+> >>>> On Wed, Aug 13, 2025 at 11:25:00AM +0200, Eugenio Perez Martin wrote=
+:
+> >>>>> On Mon, Aug 11, 2025 at 11:56=E2=80=AFPM Peter Xu <peterx@redhat.co=
+m> wrote:
+> >>>>>>
+> >>>>>> On Mon, Aug 11, 2025 at 05:26:05PM -0400, Jonah Palmer wrote:
+> >>>>>>> This effort was started to reduce the guest visible downtime by
+> >>>>>>> virtio-net/vhost-net/vhost-vDPA during live migration, especially
+> >>>>>>> vhost-vDPA.
+> >>>>>>>
+> >>>>>>> The downtime contributed by vhost-vDPA, for example, is not from =
+having to
+> >>>>>>> migrate a lot of state but rather expensive backend control-plane=
+ latency
+> >>>>>>> like CVQ configurations (e.g. MQ queue pairs, RSS, MAC/VLAN filte=
+rs, offload
+> >>>>>>> settings, MTU, etc.). Doing this requires kernel/HW NIC operation=
+s which
+> >>>>>>> dominates its downtime.
+> >>>>>>>
+> >>>>>>> In other words, by migrating the state of virtio-net early (befor=
+e the
+> >>>>>>> stop-and-copy phase), we can also start staging backend configura=
+tions,
+> >>>>>>> which is the main contributor of downtime when migrating a vhost-=
+vDPA
+> >>>>>>> device.
+> >>>>>>>
+> >>>>>>> I apologize if this series gives the impression that we're migrat=
+ing a lot
+> >>>>>>> of data here. It's more along the lines of moving control-plane l=
+atency out
+> >>>>>>> of the stop-and-copy phase.
+> >>>>>>
+> >>>>>> I see, thanks.
+> >>>>>>
+> >>>>>> Please add these into the cover letter of the next post.  IMHO it'=
+s
+> >>>>>> extremely important information to explain the real goal of this w=
+ork.  I
+> >>>>>> bet it is not expected for most people when reading the current co=
+ver
+> >>>>>> letter.
+> >>>>>>
+> >>>>>> Then it could have nothing to do with iterative phase, am I right?
+> >>>>>>
+> >>>>>> What are the data needed for the dest QEMU to start staging backen=
+d
+> >>>>>> configurations to the HWs underneath?  Does dest QEMU already have=
+ them in
+> >>>>>> the cmdlines?
+> >>>>>>
+> >>>>>> Asking this because I want to know whether it can be done complete=
+ly
+> >>>>>> without src QEMU at all, e.g. when dest QEMU starts.
+> >>>>>>
+> >>>>>> If src QEMU's data is still needed, please also first consider pro=
+viding
+> >>>>>> such facility using an "early VMSD" if it is ever possible: feel f=
+ree to
+> >>>>>> refer to commit 3b95a71b22827d26178.
+> >>>>>>
+> >>>>>
+> >>>>> While it works for this series, it does not allow to resend the sta=
+te
+> >>>>> when the src device changes. For example, if the number of virtqueu=
+es
+> >>>>> is modified.
+> >>>>
+> >>>> Some explanation on "how sync number of vqueues helps downtime" woul=
+d help.
+> >>>> Not "it might preheat things", but exactly why, and how that differs=
+ when
+> >>>> it's pure software, and when hardware will be involved.
+> >>>>
+> >>>
+> >>> By nvidia engineers to configure vqs (number, size, RSS, etc) takes
+> >>> about ~200ms:
+> >>> https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/6c8ebb=
+97-d546-3f1c-4cdd-54e23a566f61@nvidia.com/T/__;!!ACWV5N9M2RV99hQ!OQdf7sGaBl=
+bXhcFHX7AC7HgYxvFljgwWlIgJCvMgWwFvPqMrAMbWqf0862zV5shIjaUvlrk54fLTK6uo2pA$
+> >>>
+> >>> Adding Dragos here in case he can provide more details. Maybe the
+> >>> numbers have changed though.
+> >>>
+> >>> And I guess the difference with pure SW will always come down to PCI
+> >>> communications, which assume it is slower than configuring the host S=
+W
+> >>> device in RAM or even CPU cache. But I admin that proper profiling is
+> >>> needed before making those claims.
+> >>>
+> >>> Jonah, can you print the time it takes to configure the vDPA device
+> >>> with traces vs the time it takes to enable the dataplane of the
+> >>> device? So we can get an idea of how much time we save with this.
+> >>>
+> >>
+> >> Let me know if this isn't what you're looking for.
+> >>
+> >> I'm assuming by "configuration time" you mean:
+> >>    - Time from device startup (entry to vhost_vdpa_dev_start()) to rig=
+ht
+> >>      before we start enabling the vrings (e.g.
+> >>      VHOST_VDPA_SET_VRING_ENABLE in vhost_vdpa_net_cvq_load()).
+> >>
+> >> And by "time taken to enable the dataplane" I'm assuming you mean:
+> >>    - Time right before we start enabling the vrings (see above) to rig=
+ht
+> >>      after we enable the last vring (at the end of
+> >>      vhost_vdpa_net_cvq_load())
+> >>
+> >> Guest specs: 128G Mem, SVQ=3Don, CVQ=3Don, 8 queue pairs:
+> >>
+> >> -netdev type=3Dvhost-vdpa,vhostdev=3D$VHOST_VDPA_0,id=3Dvhost-vdpa0,
+> >>           queues=3D8,x-svq=3Don
+> >>
+> >> -device virtio-net-pci,netdev=3Dvhost-vdpa0,id=3Dvdpa0,bootindex=3D-1,
+> >>           romfile=3D,page-per-vq=3Don,mac=3D$VF1_MAC,ctrl_vq=3Don,mq=
+=3Don,
+> >>           ctrl_vlan=3Doff,vectors=3D18,host_mtu=3D9000,
+> >>           disable-legacy=3Don,disable-modern=3Doff
+> >>
+> >> ---
+> >>
+> >> Configuration time:    ~31s
+> >> Dataplane enable time: ~0.14ms
+> >>
+> >
+> > I was vague, but yes, that's representative enough! It would be more
+> > accurate if the configuration time ends by the time QEMU enables the
+> > first queue of the dataplane though.
+> >
+> > As Si-Wei mentions, is v->shared->listener_registered =3D=3D true at th=
+e
+> > beginning of vhost_vdpa_dev_start?
+> >
+>
+> Ah, I also realized that Qemu I was using for measurements was using a
+> version before the listener_registered member was introduced.
+>
+> I retested with the latest changes in Qemu and set x-svq=3Doff, e.g.:
+> guest specs: 128G Mem, SVQ=3Doff, CVQ=3Don, 8 queue pairs. I ran testing =
+3
+> times for measurements.
+>
+> v->shared->listener_registered =3D=3D false at the beginning of
+> vhost_vdpa_dev_start().
+>
 
-+ Nicholas M (Forgot to include the text in the prev mail, please ignore
-that)
+Let's move out the effect of the mem pinning from the downtime by
+registering the listener before the migration. Can you check why is it
+not registered at vhost_vdpa_set_owner?
 
-On Thu, Apr 17, 2025 at 04:49:03PM +0530, Gautam Menghani wrote:
-> Currently, on a P10 KVM guest, the mitigations seen in the output of
-> "lscpu" command are different from the host. The reason for this
-> behaviour is that when the KVM guest makes the "h_get_cpu_characteristics"
-> hcall, QEMU does not consider the data it received from the host via the
-> KVM_PPC_GET_CPU_CHAR ioctl, and just uses the values present in
-> spapr->eff.caps[], which in turn just contain the default values set in
-> spapr_machine_class_init().
-> 
-> Fix this behaviour by making sure that h_get_cpu_characteristics()
-> returns the data received from the KVM ioctl for a KVM guest.
-> 
-> Perf impact:
-> With null syscall benchmark[1], ~45% improvement is observed.
-> 
-> 1. Vanilla QEMU
-> $ ./null_syscall
-> 132.19 ns     456.54 cycles
-> 
-> 2. With this patch
-> $ ./null_syscall
-> 91.18 ns     314.57 cycles
-> 
-> [1]: https://ozlabs.org/~anton/junkcode/null_syscall.c
-> 
-> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
 > ---
-> v1 -> v2:
-> Handle the case where KVM_PPC_GET_CPU_CHAR ioctl fails
-> 
->  hw/ppc/spapr_hcall.c   |  6 ++++++
->  include/hw/ppc/spapr.h |  1 +
->  target/ppc/kvm.c       | 13 ++++++++++---
->  3 files changed, 17 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> index 5e1d020e3d..d6db1bdab8 100644
-> --- a/hw/ppc/spapr_hcall.c
-> +++ b/hw/ppc/spapr_hcall.c
-> @@ -1402,6 +1402,12 @@ static target_ulong h_get_cpu_characteristics(PowerPCCPU *cpu,
->      uint8_t count_cache_flush_assist = spapr_get_cap(spapr,
->                                                       SPAPR_CAP_CCF_ASSIST);
->  
-> +    if (kvm_enabled() && spapr->chars.character) {
-> +        args[0] = spapr->chars.character;
-> +        args[1] = spapr->chars.behaviour;
-> +        return H_SUCCESS;
-> +    }
-> +
->      switch (safe_cache) {
->      case SPAPR_CAP_WORKAROUND:
->          characteristics |= H_CPU_CHAR_L1D_FLUSH_ORI30;
-> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-> index af4aa1cb0f..c41da8cb82 100644
-> --- a/include/hw/ppc/spapr.h
-> +++ b/include/hw/ppc/spapr.h
-> @@ -280,6 +280,7 @@ struct SpaprMachineState {
->      Error *fwnmi_migration_blocker;
->  
->      SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
-> +    struct kvm_ppc_cpu_char chars;
->  };
->  
->  #define H_SUCCESS         0
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 3efc28f18b..fec7bcc347 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -2499,7 +2499,8 @@ bool kvmppc_has_cap_xive(void)
->  
->  static void kvmppc_get_cpu_characteristics(KVMState *s)
->  {
-> -    struct kvm_ppc_cpu_char c;
-> +    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
-> +    struct kvm_ppc_cpu_char c = {0};
->      int ret;
->  
->      /* Assume broken */
-> @@ -2509,18 +2510,24 @@ static void kvmppc_get_cpu_characteristics(KVMState *s)
->  
->      ret = kvm_vm_check_extension(s, KVM_CAP_PPC_GET_CPU_CHAR);
->      if (!ret) {
-> -        return;
-> +        goto err;
->      }
->      ret = kvm_vm_ioctl(s, KVM_PPC_GET_CPU_CHAR, &c);
->      if (ret < 0) {
-> -        return;
-> +        goto err;
->      }
->  
-> +    spapr->chars = c;
->      cap_ppc_safe_cache = parse_cap_ppc_safe_cache(c);
->      cap_ppc_safe_bounds_check = parse_cap_ppc_safe_bounds_check(c);
->      cap_ppc_safe_indirect_branch = parse_cap_ppc_safe_indirect_branch(c);
->      cap_ppc_count_cache_flush_assist =
->          parse_cap_ppc_count_cache_flush_assist(c);
-> +
-> +    return;
-> +
-> +err:
-> +    memset(&(spapr->chars), 0, sizeof(struct kvm_ppc_cpu_char));
->  }
->  
->  int kvmppc_get_cap_safe_cache(void)
-> -- 
-> 2.49.0
-> 
+>
+> Configuration time: Time from first entry into vhost_vdpa_dev_start() to
+> right after Qemu enables the first VQ.
+>   - 26.947s, 26.606s, 27.326s
+>
+> Enable dataplane: Time from right after first VQ is enabled to right
+> after the last VQ is enabled.
+>   - 0.081ms, 0.081ms, 0.079ms
+>
+
 
