@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49631CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 19:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E84A2CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 19:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoSRs-0000bG-Pw; Tue, 19 Aug 2025 15:56:48 -0400
+	id 1uoSSF-0000hY-II; Tue, 19 Aug 2025 15:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSRp-0000aT-9s
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 15:56:45 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSSD-0000gt-Lf
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 15:57:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSRl-0002hh-VD
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 15:56:45 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uoSSC-0002k4-89
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 15:57:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755633400;
+ s=mimecast20190719; t=1755633427;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/khvpbR7kYmNIAaBiW0dqJZTcljVEEG0pES9seVMIGY=;
- b=HO+5RJwoI2H0Dtpq97jEjKabpbauggQq7rlkY9qTKbl9reX9QbXuJjOqkzn9LmnaaqUZPp
- kSpuJCN0FskaNGrj9iAmYj0WcZMpE3bXLTdukBhzT/+oPaS8S9/xoCmA6JYdJBC9LtvBn1
- jvyVsdLJdB0spD0R8CcCHLjwzpB81jw=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ni9q+m5r0WcKIq2sN6jx7/okelCYncGdS78W6UOKOYU=;
+ b=I00egdlzj7whp3yIEGfHAV2/PxufNSxYMkvsFzOqXHY/cP1t3VXDpj7cizZ5eA1yIXZtWT
+ jycD52tW6wMdbp9+5/X1wo0fDBcFmP8zUX9t5fsd+vyl8pv5blHAshrZyNUXjj9Ds21lz7
+ UNxKMvP/f2/C+KMqnQUN5jVezNPZkHg=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-UN_ALLdINmu0wOpGongbhw-1; Tue, 19 Aug 2025 15:56:39 -0400
-X-MC-Unique: UN_ALLdINmu0wOpGongbhw-1
-X-Mimecast-MFC-AGG-ID: UN_ALLdINmu0wOpGongbhw_1755633398
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-24458297be0so130540155ad.3
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 12:56:38 -0700 (PDT)
+ us-mta-85-PGWxSYGhNCO3QT76jWKhvA-1; Tue, 19 Aug 2025 15:57:05 -0400
+X-MC-Unique: PGWxSYGhNCO3QT76jWKhvA-1
+X-Mimecast-MFC-AGG-ID: PGWxSYGhNCO3QT76jWKhvA_1755633423
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-24458121274so69093275ad.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 12:57:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755633396; x=1756238196;
+ d=1e100.net; s=20230601; t=1755633423; x=1756238223;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/khvpbR7kYmNIAaBiW0dqJZTcljVEEG0pES9seVMIGY=;
- b=ojpnvT8xEHY+f/mxaipBJJTBDI50u7aIpAGE1Hw+O3+/u2mPUBt+zjr4XlnFyXpfEd
- x9v3j7URhNaJVZ/vahTwDvrhlstvug+vSEpeK4mkQO5NTwwvurAh3IzdeHicfUuHqFHP
- Nd415HdLKl7ntBUU048Ft9CClpaNvq3mVackQpDygaSUrRqn/XMZ4BnPp1OBtCYaGurN
- J7aGQXnV9dtZtnYUnv7cHbJQJgP1OuITjAA7oyA7563jwSWxpGZ5kDk9TQX2Z45HKGBv
- ab9on9g+ekepXkd8hEwkb+d6Se2whY25L+/L5yZWK4ptBTM2wovhaoJJzdykiA6TphDz
- cLqA==
-X-Gm-Message-State: AOJu0YzDmieA4BoJhHyMKJR1/YkvxU2wEymZXAF5xGdbz5HFB7Ug0skJ
- 9JT5S4U57Zigxe/ecCMIgnM0SI7IP2sNcULoT2SeeaJjQibLmw3O/4YW4Ktkd1kQdxrRm+YQne9
- 00H5jiXMqIwjjxP4U/mlfJqF8IxueI/2KtWayGEaTaj1MI/DVl97W7MQnw2Y3o0I4cXkzYOZVxK
- yy+9jHCK+6LAtwJ89aL0+nhgaEcJkhb9lIlbdDGoc=
-X-Gm-Gg: ASbGncthXCA2pLHNtisIWjJmJUmFwMoXar72JvZmuowXVfoprzQi5wDhxnxnc+sM10f
- SdSqQkxbyq1g3CSMshIHhYQ95rXSp/FG4t5J5H4BjhnXELQU4mJUikRPVD/7EZAQgq7suvalqxp
- WHGGaNXdGseK/DJJvROdjq9uOfQA2Izah/Djok/9GHbhohPSQAGusR
-X-Received: by 2002:a17:903:1b48:b0:243:926:b1f3 with SMTP id
- d9443c01a7336-245ef1728b2mr2841035ad.24.1755633396304; 
- Tue, 19 Aug 2025 12:56:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGt8vgs24I0tD+15AE/ZD0Z0GenQB1zR5t4yFrhHIIvABJuGuEvH5LorH0g4WuW9b62MDHyHfHzo2Pvcp63asw=
-X-Received: by 2002:a17:903:1b48:b0:243:926:b1f3 with SMTP id
- d9443c01a7336-245ef1728b2mr2840725ad.24.1755633395947; Tue, 19 Aug 2025
- 12:56:35 -0700 (PDT)
+ bh=Ni9q+m5r0WcKIq2sN6jx7/okelCYncGdS78W6UOKOYU=;
+ b=pBtlRwCvimiwcE6eU7DZ83+IsEzcxVZ7bEQ2RDa+68LOnInpRzQUGhwhbIshUhvWQe
+ Z/gFkMjQRQmO2/UwKU0Y7QsbUnkDEBiO08cv4AsY+VmIALrq2hjIIiyWBPQoICkWWten
+ Kxldz9x8Qj4ruus03pqKfvRRYbbCBVHQ26NjXCrHL/mdAxUbz4/s7DvU0UT0sEiObgSp
+ r/DKcC9ukq4sMf65pMHXIm/XulFEbZc0PL9Sq13KcHmvsULezPhCXu7jG2oakwQUYozI
+ K9AJhW2Rv9cw4OjYQlOpShqxyCNtmDgBgpIMPyChTZ7mHpxxVBlPq2oKmvyRkHdNkmxw
+ NbKg==
+X-Gm-Message-State: AOJu0Yz8vNhL5Z1hwtzmYVaKdJ9w7YoS0SyRHxHz4KJxzh0t5U97+ubi
+ yEaXYAe+l3JWmjjF77cd4F5LnMA9qKS2LRUFRE5Dy4boeLWhABLnT5QMUcYWFDx0JMTmiRcAQIN
+ Y2KvZIjbUwiNidL5pQR7cpow+hsvjEHjvTb4dzk7Oue/pEM/BxL5DJP0CyU6A3yRfMzk4Az+Rs/
+ otCUkL0HnI/XjGr/Iaj+UPPrtwaWmOchE=
+X-Gm-Gg: ASbGncsyOeZGJ5a8nT6yzogeW9PDO+dpiLRCQaO8hJr7PLjRI1Oo40ULDUqnaqfMkkO
+ 7iakdroJecsocm9wegAPdMd26CqjhNH/sOMby6Feox+y/8sp8f6sXRc9ogAv62vMEu6yjvVeL8h
+ KkyremuUMN1M8/+9S61vewLKkvOVKxy29LvFfJJwlJoT8CVnitqG0y
+X-Received: by 2002:a17:902:d2c5:b0:240:125:1010 with SMTP id
+ d9443c01a7336-245ef14c05cmr2544845ad.14.1755633423486; 
+ Tue, 19 Aug 2025 12:57:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHeEpjNFYuDCbAYZTD/16aQ3Lx/PLAKhNwbPDsgWv55m+ubqO2wHq6VTgoICtrqjPFmIWuA1MzXT/E/lUl3F4=
+X-Received: by 2002:a17:902:d2c5:b0:240:125:1010 with SMTP id
+ d9443c01a7336-245ef14c05cmr2544635ad.14.1755633423120; Tue, 19 Aug 2025
+ 12:57:03 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250715143023.1851000-1-berrange@redhat.com>
- <20250715143023.1851000-4-berrange@redhat.com>
-In-Reply-To: <20250715143023.1851000-4-berrange@redhat.com>
+ <20250715143023.1851000-5-berrange@redhat.com>
+In-Reply-To: <20250715143023.1851000-5-berrange@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Tue, 19 Aug 2025 15:56:23 -0400
-X-Gm-Features: Ac12FXyCXhiQcZdxYEu5OE_sbkZj1-mlrTtKwTr8T_d_3rPyQoyQpaBWRqVhxzU
-Message-ID: <CAFn=p-ZChaXSJsuq3_RxmRMddvoTCZ0cOnBCkznVXGuvYOxqxg@mail.gmail.com>
-Subject: Re: [PATCH 03/14] python: drop 'is_closing' back compat helper
+Date: Tue, 19 Aug 2025 15:56:50 -0400
+X-Gm-Features: Ac12FXzQ8OUYQOb-lmiACxCDk2UX7zs_MNHYqzw100ahoUvkA_ArGNRauxUFFxk
+Message-ID: <CAFn=p-a0x=LqudNBXYxRGM2W8Ecnap8qf8oUku9_mkte+-2vYQ@mail.gmail.com>
+Subject: Re: [PATCH 04/14] python: drop 'wait_closed' back compat helper
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
  Jagannathan Raman <jag.raman@oracle.com>,
@@ -116,63 +116,74 @@ redhat.com> wrote:
 
 Reviewed-by: John Snow <jsnow@redhat.com>
 
-Another thing that happened in the standalone tree, but not in
-qemu.git. Ditto patches 4, 5, 6.
-
 > ---
 >  python/qemu/qmp/protocol.py |  3 +--
->  python/qemu/qmp/util.py     | 16 ----------------
->  2 files changed, 1 insertion(+), 18 deletions(-)
+>  python/qemu/qmp/util.py     | 29 -----------------------------
+>  2 files changed, 1 insertion(+), 31 deletions(-)
 >
 > diff --git a/python/qemu/qmp/protocol.py b/python/qemu/qmp/protocol.py
-> index a4ffdfad51..9a7ada4a1e 100644
+> index 9a7ada4a1e..deb6b20d29 100644
 > --- a/python/qemu/qmp/protocol.py
 > +++ b/python/qemu/qmp/protocol.py
-> @@ -39,7 +39,6 @@
->      create_task,
->      exception_summary,
+> @@ -41,7 +41,6 @@
 >      flush,
-> -    is_closing,
 >      pretty_traceback,
 >      upper_half,
->      wait_closed,
-> @@ -825,7 +824,7 @@ async def _bh_close_stream(self, error_pathway: bool =
+> -    wait_closed,
+>  )
+>
+>
+> @@ -830,7 +829,7 @@ async def _bh_close_stream(self, error_pathway: bool =
 =3D False) -> None:
->          if not self._writer:
->              return
 >
-> -        if not is_closing(self._writer):
-> +        if not self._writer.is_closing():
->              self.logger.debug("Closing StreamWriter.")
->              self._writer.close()
->
+>          self.logger.debug("Waiting for StreamWriter to close ...")
+>          try:
+> -            await wait_closed(self._writer)
+> +            await self._writer.wait_closed()
+>          except Exception:  # pylint: disable=3Dbroad-except
+>              # It's hard to tell if the Stream is already closed or
+>              # not. Even if one of the tasks has failed, it may have
 > diff --git a/python/qemu/qmp/util.py b/python/qemu/qmp/util.py
-> index ca6225e9cd..39fc341f2f 100644
+> index 39fc341f2f..b5e9750576 100644
 > --- a/python/qemu/qmp/util.py
 > +++ b/python/qemu/qmp/util.py
-> @@ -104,22 +104,6 @@ def create_task(coro: Coroutine[Any, Any, T],
+> @@ -104,35 +104,6 @@ def create_task(coro: Coroutine[Any, Any, T],
 >      return asyncio.ensure_future(coro, loop=3Dloop)
 >
 >
-> -def is_closing(writer: asyncio.StreamWriter) -> bool:
+> -async def wait_closed(writer: asyncio.StreamWriter) -> None:
 > -    """
-> -    Python 3.6-compatible `asyncio.StreamWriter.is_closing` wrapper.
+> -    Python 3.6-compatible `asyncio.StreamWriter.wait_closed` wrapper.
 > -
-> -    :param writer: The `asyncio.StreamWriter` object.
-> -    :return: `True` if the writer is closing, or closed.
+> -    :param writer: The `asyncio.StreamWriter` to wait on.
 > -    """
 > -    if sys.version_info >=3D (3, 7):
-> -        return writer.is_closing()
+> -        await writer.wait_closed()
+> -        return
 > -
-> -    # Python 3.6:
+> -    # Python 3.6
 > -    transport =3D writer.transport
 > -    assert isinstance(transport, asyncio.WriteTransport)
-> -    return transport.is_closing()
+> -
+> -    while not transport.is_closing():
+> -        await asyncio.sleep(0)
+> -
+> -    # This is an ugly workaround, but it's the best I can come up with.
+> -    sock =3D transport.get_extra_info('socket')
+> -
+> -    if sock is None:
+> -        # Our transport doesn't have a socket? ...
+> -        # Nothing we can reasonably do.
+> -        return
+> -
+> -    while sock.fileno() !=3D -1:
+> -        await asyncio.sleep(0)
 > -
 > -
->  async def wait_closed(writer: asyncio.StreamWriter) -> None:
+>  def asyncio_run(coro: Coroutine[Any, Any, T], *, debug: bool =3D False) =
+-> T:
 >      """
->      Python 3.6-compatible `asyncio.StreamWriter.wait_closed` wrapper.
+>      Python 3.6-compatible `asyncio.run` wrapper.
 > --
 > 2.49.0
 >
