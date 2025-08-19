@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D847CCA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 15:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 310DCCA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 15:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoODw-0002Eg-Cg; Tue, 19 Aug 2025 11:26:08 -0400
+	id 1uoOLa-0004In-37; Tue, 19 Aug 2025 11:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uoODu-0002E7-FJ
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:26:06 -0400
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uoODs-0007bo-Fb
- for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:26:05 -0400
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e933a69651dso3168608276.1
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 08:26:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755617163; x=1756221963; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=r2QXCMIO4z0sNO0fyaO/mu9Yn7X4g6WvSYCK977bQks=;
- b=RKyY5humEKDrfJ2wJnJUpUnhtAZLYjAm9KXewqEXn5TfnjJzxPqLT4UCBieVFrhKXn
- d4lbIRTTHTGITl2qVD5RPO02WfbhGFEWqR9Irc0X1QBHKPzzJFJqaLKZ5W/bpVHWy6ip
- i0FL27cDbCr9hdb30d57/kKLpyn4/ngmc/zKF8PIuc1G9oMIqIHZ/ak1Vlz4zPAQ1qAR
- 9wi9TbntzdGud/KPxhjoorEjUK36flC4uT44PoMbju+PJsFugrR2pbe6MLrZY3+/oL5o
- 9v2ADFypmiN4257B7zvWLDTdTMSugLvIvbVpzjkJdkwvtanpIandDJAsMxDqbpdJ8ISN
- mcnw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uoOLW-0004IR-LR
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:33:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uoOLT-0000K7-Sy
+ for qemu-devel@nongnu.org; Tue, 19 Aug 2025 11:33:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755617634;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uWsHmwgZGCCReftr/hSFmw4uLov4g/bvVqu1H4Uip0o=;
+ b=Uk44tC/G8g4erFi5kcGBep7ycY0nJdWOqJ1iN7DXtTsSmB7dny3nzUCU76Vkj8Rl7JU5gL
+ pdpuuvbSCn0i/Hfs3o4Z5gW6NLIr+QunOwHMpcDl6JVXM1e003ea48KwMQPTEKvJe1xujk
+ sgdbxnh6RqV5APtOWzCpZsnTB8+Zy9I=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-70-texerqpKO32bzAt6DT3rAw-1; Tue, 19 Aug 2025 11:30:52 -0400
+X-MC-Unique: texerqpKO32bzAt6DT3rAw-1
+X-Mimecast-MFC-AGG-ID: texerqpKO32bzAt6DT3rAw_1755617451
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b467f5173so2383295e9.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 08:30:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755617163; x=1756221963;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r2QXCMIO4z0sNO0fyaO/mu9Yn7X4g6WvSYCK977bQks=;
- b=May/ys2TP75qXC3wfm94f4/y8ra2Wwmn+NFXPToqgAY9Q7lF+wNW614yzkSOuXaxBs
- Ukw/SmpbO4HFo/Gvep/gTFmbGamCIlr3g/k6SQUJd2JmALhV+a6F+RYBbgtPtNu72DoJ
- PXu956Dqn2wL+Zs+tNMX93y9h0NDEM2pS+B6xNwclomQPfNnpYNikovyTD8/fWNHMNT5
- s7Pr0zMs1TebHzhnzmTMYzKA90NGxVZ/MnoiyVvmQNqeRZ6ZUOxIXJ14ZZKyZNUlG0ku
- W6iBrFbpjfaZsJuGYes3JW1wp2cKjXOGqzLr9OpFphvQx69lVgDe2GbGDmUwTaYOvm+/
- G/iw==
-X-Gm-Message-State: AOJu0Yw9de89oIiriHPYf6Lfh9a5bvykGumtT+RCCjc7bN3n8rwrV66c
- WwiU6B5b+nwQaAmMwOjVm3/p068O1ttAWaOBhTVYi+kknX+uubdRQ6scqaBG6tnhUsVkLbbtitb
- F0VAoeVkPM/SdecURcQLNxfo3lFEhXgRuYqpM1qdr7Q==
-X-Gm-Gg: ASbGnctjg6q1kt/B+uEiQekkfOhgr0le9DFjpEiQR4N6JPkfB+CMJMSZoDQKVfafZCz
- e3iv4Pd73eYyyF6yQXWNDgYHlkwu9yp29TSTdD8Q9SW/2LPjOO8CHt5Gs2Z1nUYvYBbj7pOJkzs
- kZrFPmyg/YLFS4LabDvQ5bsXmFynlNpt2wTjUapqT+GLIbSyR6A7xRTG6YP/Ejs7563azKGEYVN
- /vf0CIq
-X-Google-Smtp-Source: AGHT+IEt3XagP2Oi5KUl6Ld6I0idSNtE/A6jnBOP2p4uhrPCVpm8tIN1WrhebB4VD5E+HZMK5dFWt60K2lmADRjaV9s=
-X-Received: by 2002:a05:6902:6005:b0:e90:2ed6:3dd7 with SMTP id
- 3f1490d57ef6-e94e61bc94emr3303743276.17.1755617160608; Tue, 19 Aug 2025
- 08:26:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1755617450; x=1756222250;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uWsHmwgZGCCReftr/hSFmw4uLov4g/bvVqu1H4Uip0o=;
+ b=cecr9oGCv6i22zE1q/qtae7NRsQQh7yepC5TaII4FPeQ01UR4AvyWIaOyB+kjXsKdM
+ AsOykPTYL92w9AIC1t4ytQ0sKIoQ3dEVrVahgJRFOAViGuPVmhISEUd1ArVG1kNeViwe
+ 4Oc9KHL3uBPIBl6SVlI3alARzso23VJhiNhp1ySk3zWygDUvIW5Tzjq+dkSxvJbCjXVR
+ ENI1Zd22fgpFN1KBiFLljNRg507enuTXBXNVEPo4JPtiwol0GOM5KMu6zkN1JqSobLQE
+ NAKNGBN8HQuAA6UyS+TTTMSPqn1+Iqkex64zqAPfEwt4ub34EdyBDhufi4rPBoIe2wsM
+ CM0g==
+X-Gm-Message-State: AOJu0YwF965UWqVYnD1983MXPhoYO6Gx58DPCcP0n39K7E8sVBz9pEtp
+ 0qSYiJO7CTzHHZz0WCVoJQoWEl/ohQ5yFCeec0Ss8lrYgEzZX7uVQC+G+PaI/XUazbTpKMXIjRl
+ 1uL4CL+xStqJiThbYe9VdSzeyT8lHk5v/vaAAe20FQN65epHJSReCFng95DHx1jszMBVvdisVeJ
+ qLkiVBixCEZdnJKRP+JUoKnBZZ6c2jNx+mE82DjVjy
+X-Gm-Gg: ASbGnctz1FanluWP1pmccw6lb/xzWcOJM3f9l44P6ykcK0U75UQqTZS7Ov+i2Ib/tM0
+ Pu8F4q+CsXWK6czMObhinYMSCnqAx0Ydk3iNaDCdNvYx+G1CkQx3+tPbbHH1mx2SuD6V1FJXLKT
+ rATt3+4i3IbGcBz+fDpf9+In47E/N5A1m9o2PsnPC746IPvzJ3rRdV0/2zF/mKzSTec43iJMjZY
+ 7GAdQyvhXEaGQpQGk4ZwzkzC79li/GVc3lx+HQYSEMyHrUtYblRZQax9vvXTvw6J3z5G+mjtfCT
+ y3+y5JLn1j6uuLxdsp6h3GntAPIsCqm4ieM6JdUBdw==
+X-Received: by 2002:a05:600c:3505:b0:459:d3d0:650e with SMTP id
+ 5b1f17b1804b1-45b46cf0388mr4576785e9.13.1755617450130; 
+ Tue, 19 Aug 2025 08:30:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE4nkoaIPCDs+gl6L95jqyq5x0fW1aXXnik9aoZztPeBEJ+IM/tvfbUbGA0+CGb/h9puSRBHg==
+X-Received: by 2002:a05:600c:3505:b0:459:d3d0:650e with SMTP id
+ 5b1f17b1804b1-45b46cf0388mr4576425e9.13.1755617449651; 
+ Tue, 19 Aug 2025 08:30:49 -0700 (PDT)
+Received: from [192.168.10.3] ([151.95.56.250])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b42a7756asm44385545e9.11.2025.08.19.08.30.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Aug 2025 08:30:49 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Wang Xin via <qemu-devel@nongnu.org>
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, weidong.huang@huawei.com,
+ WangXin <wangxinxin.wang@huawei.com>, Tuo Xie <xietuo@huawei.com>
+Subject: Re: [PATCH] target/i386: Add support save/load exception error_code
+Date: Tue, 19 Aug 2025 17:28:18 +0200
+Message-ID: <20250819152817.789959-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250819145834.3998-1-wangxinxin.wang@huawei.com>
+References: 
 MIME-Version: 1.0
-References: <20250716095432.81923-1-luc.michel@amd.com>
- <20250716095432.81923-14-luc.michel@amd.com>
- <CAFEAcA-x_CYWPM2TeGSTLjCj==3JY_uyvfFmR=nLi4pRLw-P2Q@mail.gmail.com>
- <aKMrBdNhtqHVHRYw@XFR-LUMICHEL-L2.amd.com>
-In-Reply-To: <aKMrBdNhtqHVHRYw@XFR-LUMICHEL-L2.amd.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Aug 2025 16:25:48 +0100
-X-Gm-Features: Ac12FXwJcpCimU7_fBUTUlYbs3nMnxybwgP6YJH5S2_zc_mChZM0PFguK1x88SU
-Message-ID: <CAFEAcA8eop95ojfZw3YbDrWfrv1fZ5QYSmwx_oDThxMCiMMeDg@mail.gmail.com>
-Subject: Re: [PATCH 13/48] hw/arm/xlnx-versal: VersalMap: add support for
- OR'ed IRQs
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>, 
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,68 +109,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Aug 2025 at 14:30, Luc Michel <luc.michel@amd.com> wrote:
->
-> Hi Peter,
->
-> On 13:24 Mon 04 Aug     , Peter Maydell wrote:
-> > On Wed, 16 Jul 2025 at 10:55, Luc Michel <luc.michel@amd.com> wrote:
-> > >
-> > > +static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
-> > > +                                          qemu_irq target_irq)
-> > > +{
-> > > +    Object *container = versal_get_child(s, "irq-or-gates");
-> > > +    DeviceState *dev;
-> > > +    g_autofree char *name;
-> > > +    int idx, or_idx;
-> > > +
-> > > +    idx = FIELD_EX32(irq_idx, VERSAL_IRQ, IRQ);
-> > > +    or_idx = FIELD_EX32(irq_idx, VERSAL_IRQ, OR_IDX);
-> > > +
-> > > +    name = g_strdup_printf("irq[%d]", idx);
-> > > +    dev = DEVICE(object_resolve_path_at(container, name));
-> > > +
-> > > +    if (dev == NULL) {
-> > > +        dev = qdev_new(TYPE_OR_IRQ);
-> >
-> > Here we create a device...
-> >
-> > > +        object_property_add_child(container, name, OBJECT(dev));
-> > > +        qdev_prop_set_uint16(dev, "num-lines", 1 << R_VERSAL_IRQ_OR_IDX_LENGTH);
-> > > +        qdev_realize_and_unref(dev, NULL, &error_abort);
-> > > +        qdev_connect_gpio_out(dev, 0, target_irq);
-> > > +    }
-> > > +
-> > > +    return qdev_get_gpio_in(dev, or_idx);
-> >
-> > ...but then we don't save the pointer to it, so the only
-> > thing still hanging onto it is the QOM tree.
-> >
-> > If you want to change "embedded device struct" into
-> > "allocate memory to create devices" that's fine, but the
-> > SoC should still keep track of everything it's creating,
-> > so that (at least in theory) it could clean it up on
-> > unrealize.
->
-> I'm not sure I fully understand your point:
->
->    - The OR gate device is parented to the "irq-or-gates" container,
->      which is itself parented to the SoC. So finalizing (freeing) the
->      SoC would trigger a cascade of free calls to the children,
->      including those objects right?
+Queued, thanks.  But please let me know what's the correct signed off by chain;
+either Tuo created the patch, and then you should have "--author" for him and
+his SoB first; or you did, and then Tuo's SoB is unnecessary.
 
-Ah, I hadn't noticed that we add the object as a QOM child
-of the SoC here.
+Paolo
 
-It does mean you can't ever get back to the OR gate object
-except by walking the QOM tree, but I suppose that's OK.
-
-It would be helpful if you could run "make check" under
-the clang leak sanitizer with your patches added, to see
-if it complains about anything. (Unfortunately it will
-definitely complain about at least some pre-existing
-leaks, I suspect.)
-
-thanks
--- PMM
 
