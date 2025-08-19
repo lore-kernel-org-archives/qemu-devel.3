@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 860FBCA0EEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927EFCA0EF7
 	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 18:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoR2B-0004M0-L0; Tue, 19 Aug 2025 14:26:11 -0400
+	id 1uoQyx-0004sG-5z; Tue, 19 Aug 2025 14:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uoR1s-0002SG-14; Tue, 19 Aug 2025 14:25:52 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1uoQyw-0004rx-6F; Tue, 19 Aug 2025 14:22:50 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uoR1o-0004kT-TC; Tue, 19 Aug 2025 14:25:51 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-b4717330f9eso4046105a12.1; 
- Tue, 19 Aug 2025 11:25:47 -0700 (PDT)
+ id 1uoQyu-0003lR-7t; Tue, 19 Aug 2025 14:22:49 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-244581cc971so66734785ad.2; 
+ Tue, 19 Aug 2025 11:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755627947; x=1756232747; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1755627766; x=1756232566; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D0ZS0eANdrz5r5AN9KWFnrb1+idZJ7pMgAy4XohkPPI=;
- b=fR25nJV+LVNK5NvOKdzdH0WETCqKRxngqeVOBXHsnzsy1VXQCVGyiT97emZ4nvlfHe
- uaAmTSXy6k52saaINFg4QKbZPy+/+584veFendIme/z7IYqefoFM8LNyE9t6q5ALlBy+
- ug/Bctajcb7DpJW+F0lQM+iC/LXpmoax2MsfZqfQj2CF61fSXr7cBqXV6CgzMMb9xWL2
- NwYvCvTp4WA9pxVxSDmUpEO/Aj8pO8nresnhcG8URYU+2Ixm5iWjss/JwUGDhLUXgHcT
- /fnE6xhTjK6wFHKsKl/jhzAN0Han/OeU8UcsZE8eFqpp88m7Y1x9R87sPwxlegybUh1t
- rNUg==
+ bh=zvwZVYkwT7L+29JJJedvOVMf75yz0b8pNBu4QKDuOyI=;
+ b=cgHyR3ezyAIJu7KHaR4zlNK8BomaDoWXQzVUIF+/oLM8Mn8ZTnrhdyqu1Rot3KdFvQ
+ LEgSd8SddgMIOxxe5ApLKFhxbDmVWcu5hXRyw4Q7ygiydarURg8GnQU7B/UaahYf6Mef
+ 69OeM5RO4kcHJiR0eK/hDiOo6jWbr22ohrsqIVed5j9LWvpy4i7+GlKN2SgO8dlPZ0z8
+ SYDEJ/vSZ1ftGIpQefo1UC6BL9OtqwgUFV6vccpbgJ0FeKBrRGUITU01lL9QvzYNjfFn
+ ENHfwtzD7vgB2mzdEsFAwDE+hmX/pBbN25Tb036NUB2s0517IXuSi3IiItJxY2eCHa1G
+ iJcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755627947; x=1756232747;
+ d=1e100.net; s=20230601; t=1755627766; x=1756232566;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D0ZS0eANdrz5r5AN9KWFnrb1+idZJ7pMgAy4XohkPPI=;
- b=XLmL+aVbN1ZKxXmS16BzYumiUqtopHHC5UxFp89jJNMjVhAJ5snijoZQKRsXiUTlAr
- OFy9sBq86efezDsPX5U44aolwTQ6qjkhsv4OEqxYJrx2D8HmN615eu+XwwgMJsSj3uwn
- ZWp3emxbReRHpmbFi4aSlvDHK7+N6sHL2u5YHgVKHDi18+JbN8xn5yfPRTMENDEKVNF9
- sBe+cMpMgT8MTWeAPUHz+HStAYA5rJhu6W63+PS4iA3nMGGid77smMsW7cot/EpsiFZi
- SURIpzAyWj+PkEFqPowsBVSrin0UIQEixOik4cDskEFPKVkyjZRcusmeMVK7r8I4QI45
- YENg==
+ bh=zvwZVYkwT7L+29JJJedvOVMf75yz0b8pNBu4QKDuOyI=;
+ b=w1bLX9+X73SAtJ2tjmiyqpNW9Mg807RVOby75Qb92XW83EsfQJLnG/DfsUErBeEmEr
+ /8I/oOdzCmWlooJNF9JGGnFbJUZkETdRk8ZG7RE2EN78KtgQ/mnOt6AygF6B+EMi+ml6
+ 3bgPeGXu7B2KOZXWOSvzdV/icoc2jogIUwn8hE1u4D840I4mdsaoZotsaR38vsxgUlhg
+ NXbxIYqPQdj0kGVbabQ2UyEoRmVEWARNGaTsV4bClJ44RRvw5nJhN3S5UkzbxLlDO/G0
+ 6tiyDnHMsm00UGXqH8pfIuJfVVC1KNHSW45tbaIsTZuMGvh/3u9Yc5pNH7ZG/UV4dpD2
+ 2heg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU41Wo3dS2iyendSCsD+Op27FvE6+553yG286RpA9xUXcTgRiLP51oYlri2emJYBkKjrAAw3BvJmA==@nongnu.org,
- AJvYcCUPxE0kSMa51zyxLvo7iKRzAShYi5CHpinCLt2Bwp1FtUB6keDYUYd/YI2qHA2jc1BlZZquNYNM+nYwtw==@nongnu.org
-X-Gm-Message-State: AOJu0YwioIgypGZ70982ovWGL2+0Rf/QzUzW2hawgc26KErEp1694O/a
- sNE7BOggi0E7xu8gZ3cLRje508rBwtzYGp1vxxQIzoSpyfa4B/L6j9s6R6kwyg==
-X-Gm-Gg: ASbGnctc5/6qFq23KpeZoGu1EXWlSyNc4c2rP6mEeivS4jTrqM3Kcl1aVp7O+xFhejm
- 4bczX90GW9NCwWOOJjLyzND9mI0O7dI3pc6OIJxXFATrkgOkJZaGLa98WefFEjIDFKvGafz21vL
- w0jsryOg7F1W29/NlLFf0McYw6yVboMqpceA5cUqIhDa8XQD0MEp1fcq9TaFzbYCBfJ9QX7JxEZ
- sLnQiE1OBm3QHlP05Iq+Uj9EVmgP1+qDBGmLcmaV1FyYmP0Wem3zHZXwRunbap0W+4+f3DOV1RM
- GGBgWWs8dNJ44Cql0VTI428eLqruLRtKU7cB9UkFhtN75tNkcGQVPa3KgFZ3SX6RRv4S96jG5px
- TKcPmizW3i/3n8snQMwZjkg==
-X-Google-Smtp-Source: AGHT+IHWOvZcNEk7FSavWVndeZWYqWhy5js2qNQ/82vDiEuhfJ4Ba51BpMgeRVwrF5FC0XW1ixu/BQ==
-X-Received: by 2002:a17:902:cf4a:b0:235:e1d6:4e22 with SMTP id
- d9443c01a7336-245e02dc4afmr44719865ad.18.1755627946786; 
- Tue, 19 Aug 2025 11:25:46 -0700 (PDT)
+ AJvYcCWDo0zkCLNYU3t4EPBGznu9+rrZAOSRL90xNKZoiA+jZD1QzJELQ+l/wZJat5pFk1BUkszStUPdtQ==@nongnu.org,
+ AJvYcCXnr1eCxmyB2C/hfNLi4uG0Z1RYZtQY4dxUwHC4u5YR4udf9M2zbCAMMDSt9IvOgzlZhxlGdMH2lhz+PQ==@nongnu.org
+X-Gm-Message-State: AOJu0Yzmbv2PBPGLEMfm0dJHEXHhQ5Xyj2Pulbu5jv4U3UjNbKrGT+3F
+ iMGoVdzBQbtBHTjr7PUz4QlawrWBKf4D1x2GU9L9rgQSzhRodly+lVgZw1kazE2n
+X-Gm-Gg: ASbGncuOyaDUZd/II1Mk4wIdN1SHLKnLif1BY/0QLejenW/WfHX6H3pIeahaJGGHc9w
+ +n2bpjvDimeksD3938Y8XSxNcF5BdYGJ3lKbo5jC6vs1yiWiVmUub7j531q3rG/W+HIjIyRJzAj
+ sR8K3FlotQbWri+w3hrOz5Pr+9Pw/kGiiWz5MwkAXVkgxe4sFPXKEigzn2C5irYWbMF+ZKIO0b5
+ arcTd6rXls5/InpxqtVjcrPkkDNy73VPvOidis4eAU/cdvm2RzhFiQW8CKC+7GKcpkMoSbkY/gi
+ u+Br8sSM9rOL+wVn5vyXkTp6p4VpLUnL3H6xV8ilMHkafmBdbJaBpDGVx/EFzB99B+n6n01XriQ
+ toS4JSC26ZBBc7rF0xv6n8Q==
+X-Google-Smtp-Source: AGHT+IEnH7r5HCtDn1tBZq14+QqiRFSdewNpZPU4arw+CqSkaiw8ixeWuTyGfm0qKedCQAY0kVuU1A==
+X-Received: by 2002:a17:902:f682:b0:23f:df36:5f0c with SMTP id
+ d9443c01a7336-245e047d995mr51450535ad.29.1755627766028; 
+ Tue, 19 Aug 2025 11:22:46 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:29ce:ef58:c2c9:e52f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed33b4c2sm3725125ad.25.2025.08.19.11.25.41
+ d9443c01a7336-245ed33b4c2sm3725125ad.25.2025.08.19.11.22.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Aug 2025 11:25:46 -0700 (PDT)
+ Tue, 19 Aug 2025 11:22:45 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -80,17 +80,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH 34/35] meson: Propagate optimization flag for linking on
+Subject: [PATCH 02/35] configure: Enable to propagate -sMEMORY64 flag to
  Emscripten
-Date: Wed, 20 Aug 2025 03:22:03 +0900
-Message-ID: <07548c6633e8f6be080a988a9e60c3c2beee6eec.1755623522.git.ktokunaga.mail@gmail.com>
+Date: Wed, 20 Aug 2025 03:21:31 +0900
+Message-ID: <574dee5a5cb19d15dbfbe94cea31de23189596a9.1755623521.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1755623521.git.ktokunaga.mail@gmail.com>
 References: <cover.1755623521.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,36 +114,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emscripten uses the optimization flag at the link time to enable
-optimizations via Binaryen [1]. While meson.build currently recognizes the
--Doptimization option, it does not propagate it to the linking. This commit
-updates meson.build to propagate the optimization flag to the linking when
-targeting WebAssembly.
+Currently there are some engines that don't support wasm64 (e.g. unsupported
+on Safari[1]). To mitigate this issue, the configure script allows the user
+to use Emscripten's compatibility feature, "-sMEMORY64=2" flag[2].
 
-[1] https://emscripten.org/docs/optimizing/Optimizing-Code.html#how-emscripten-optimizes
+Emscripten's "-sMEMORY64=2" flag still enables 64bit pointers in C code. But
+this flag lowers the output binary into wasm32, with limiting the maximum
+memory size to 4GB. So QEMU can run on wasm32 engines.
+
+[1] https://webassembly.org/features/
+[2] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 6 ++++++
- 1 file changed, 6 insertions(+)
+ configure | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 5fee61a256..a98b9f836c 100644
---- a/meson.build
-+++ b/meson.build
-@@ -878,6 +878,12 @@ elif host_os == 'openbsd'
-     # Disable OpenBSD W^X if available
-     emulator_link_args = cc.get_supported_link_arguments('-Wl,-z,wxneeded')
-   endif
-+elif host_os == 'emscripten'
-+  # Emscripten uses the optimization flag also during the link time.
-+  # https://emscripten.org/docs/optimizing/Optimizing-Code.html#how-emscripten-optimizes
-+  if get_option('optimization') != 'plain'
-+    emulator_link_args += ['-O' + get_option('optimization')]
-+  endif
- endif
+V1:
+- This commit is under review in another patch series so please ignore it
+  here.
+
+diff --git a/configure b/configure
+index 7f3893a42f..0587577da9 100755
+--- a/configure
++++ b/configure
+@@ -182,6 +182,10 @@ EXTRA_CXXFLAGS=""
+ EXTRA_OBJCFLAGS=""
+ EXTRA_LDFLAGS=""
  
- ###############################################
++# The value is propagated to Emscripten's "-sMEMORY64" flag.
++# https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
++wasm64_memory64=1
++
+ # Default value for a variable defining feature "foo".
+ #  * foo="no"  feature will only be used if --enable-foo arg is given
+ #  * foo=""    feature will be searched for, and if found, will be used
+@@ -239,6 +243,8 @@ for opt do
+   ;;
+   --without-default-features) default_feature="no"
+   ;;
++  --wasm64-32bit-address-limit) wasm64_memory64="2"
++  ;;
+   esac
+ done
+ 
+@@ -537,7 +543,7 @@ case "$cpu" in
+     CPU_CFLAGS="-m32"
+     ;;
+   wasm64)
+-    CPU_CFLAGS="-m64 -sMEMORY64=1"
++    CPU_CFLAGS="-m64 -sMEMORY64=$wasm64_memory64"
+     ;;
+ esac
+ 
+@@ -795,6 +801,8 @@ for opt do
+   ;;
+   --disable-rust) rust=disabled
+   ;;
++  --wasm64-32bit-address-limit)
++  ;;
+   # everything else has the same name in configure and meson
+   --*) meson_option_parse "$opt" "$optarg"
+   ;;
+@@ -920,6 +928,8 @@ Advanced options (experts only):
+   --disable-containers     don't use containers for cross-building
+   --container-engine=TYPE  which container engine to use [$container_engine]
+   --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
++  --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (default
++                               is to use the whole 64-bit range).
+ EOF
+   meson_options_help
+ cat << EOF
 -- 
 2.43.0
 
