@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8432FCA0EEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 18:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E3F1CA0EE6
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Aug 2025 18:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoQyk-0004p2-Rw; Tue, 19 Aug 2025 14:22:38 -0400
+	id 1uoQz7-0004w1-V2; Tue, 19 Aug 2025 14:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uoQyi-0004oc-Hz; Tue, 19 Aug 2025 14:22:36 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uoQz7-0004vT-Cc; Tue, 19 Aug 2025 14:23:01 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uoQyf-0003ju-KL; Tue, 19 Aug 2025 14:22:36 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-24458194d83so41695985ad.2; 
- Tue, 19 Aug 2025 11:22:30 -0700 (PDT)
+ id 1uoQz5-0003mh-Hy; Tue, 19 Aug 2025 14:23:01 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-24458263458so45862225ad.3; 
+ Tue, 19 Aug 2025 11:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755627749; x=1756232549; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=92TETm6+waoLP9/8MAcz9xIrPcM6NwvuenQZi4Cum9g=;
- b=mxYoteychs3kac9Dd6fJugblH9R2kF5/LPY9egkinlgdND9FLt2du5QFV+ZkCyRtok
- KrpIOqp73ZU+JJLXlL3BFPoT8N0UjDL4tJdJ7ZPnj7R8vouvql3szP1YfFVHACre7Yfm
- 6osp48no1xHRXhq3k2VzyMTY5PC1DTJGuimeLSxjj6/GxWszKyy+N78kmF+70Oin/DBT
- YKfelMaRt+rMM1RFydIfCv/w6xRBxsxB913kHanAloD1Brjcj47Y60P5G5+Hq9cWyOQw
- 1c9+AeprVadN7X/UfS7QeqA8el/2Vum7BEFs1GNY8Q4SLODYrIKn1ohP/hFjA//044H/
- n8JA==
+ d=gmail.com; s=20230601; t=1755627777; x=1756232577; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mnwM1NKHDi9Rdp/eRcwiDwz6kKklNhllSveakiPYS/g=;
+ b=SuZiL/le0pNdXBCetxuteCOVM6vTSzqw2E8XMe0czcxaONhP1eftGMZE7cnufhH/fj
+ okP2Ltl34SIqrG1jELFtf1aeKLhk3aCX4cRiyM8GSyeSkyF+wmtdC5tp44u/0zePaovT
+ HsY4mnJZwMuFcwuigEseYZ1xuT08vBwojNUGck1Ldtm95wz844uq78PQFnK/m5cv7a8x
+ LXyAOCl6IzLSpc36gfTw0w4L4retHR14EeJ9gWujK8pKaLJx167JAdawvxx9qtKjrMVW
+ HpnI2Ps7F8WQUYgbNLqrhroZJ+WR84/yzAPUyrJXi7E7PvdnywMh14Hn/STIwYIqS7LR
+ 09lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755627749; x=1756232549;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=92TETm6+waoLP9/8MAcz9xIrPcM6NwvuenQZi4Cum9g=;
- b=OpV60onPw+msZskR+Eh/Y1y6MNI7wb8yx3LEHr8mUETduSQm2OH/S6JeYpq/e/k1Fo
- fy0EwVVBCVAMXJP/h7WUMxMNnNLD0u/3yqHqb9noowDSPQa0tCPzZsyHjwFdGnGRxNkN
- qbMVVdtccmwnDC1EYn3ZQoh77Of1RopKzE477fXEGqqd4yEQlZh0+ZWrSpNCM+DWG2D0
- WxOPrSPVIB1JKJlmPDBZ3XCEURCGd+Jz+0ZnP0vJ2/G5BAP0/ADDqmO0kBUaPzqLDPTF
- fyYi8jOK2GjagPVZ0X7h928jufV9eDDx1FVQjmNRgpHdh7qLZe8Ig3ZBm/txgQP0Sm14
- /hUw==
+ d=1e100.net; s=20230601; t=1755627777; x=1756232577;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mnwM1NKHDi9Rdp/eRcwiDwz6kKklNhllSveakiPYS/g=;
+ b=BCXlVG2FL0dVSMKDNlLHgfg/NRKQmQDqohN2n0qxlSM7XXDgb67FhYaxs4g0woBGpB
+ MtDPQCszFdMZN5rMlG4FWKgsVnsNNMcF7tRMbW5lpZJzKGATVFmslBNZruqBEHXGRE8A
+ VOxp5z2IqUzWYCNk9tSHNYuLZ6u9PyB5sbNSdrn8thIvIrsnncpkPBfNK0FupRmVqbDz
+ 9bp0NLz2NduzfalTL/f0DQdsme4MGr/nd2unPyXY11nZaS9GJxXZyS8kwLR2d/GY/74z
+ WbEsYDOuEryYrvdYdKNtGB3bmvuxHwBhf2LU/mBD9kyJ7hxfbC3NarDadDVt2UwANCfk
+ pIhw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUm9Hij5FzU8/b6+Nio5hgDjROdzIH9TZ2xgfGggJ4CjIMmx2Ze39/Xpnc5YQXXRkYieYf5xysaX9NCIA==@nongnu.org,
- AJvYcCVEFnvqVTRLZzxki2cfgTy1juHshKpYr/WrVbzOhxsPfml8lpMJUALjfxK/K/PtPjcLLOymMLr/hw==@nongnu.org
-X-Gm-Message-State: AOJu0YyRpyBA2IPm1AwwpAeUnzJX1gSyLiWUns9zyYPXkP7sNsQzTSz4
- f7QAgnz/prhku2ZsHsS9X0CXtD0rKqrCSL9jaEFABUQ74L0NCBUz5JK4nW49l3wI
-X-Gm-Gg: ASbGncsrMUfFd/EOUSzVq/eboSlNwtegc9TqsdywqwVQLe4LTdIf20PDpCpaIPzdbvk
- OWnYPimvTJJiCzcAoswRoQJ/BzRzv11zfIf1MYhJlQE3/4DOuPwI2FaCfPxDSRZW6IcCLk7vG3f
- bCXtW9D1Sr/twQzGCGkNlkqKr+AClhRvb4DKK47XxGuH5DQ/oYqKoV5XVZZtfgsSCrcJs+Z5Kz3
- BH1bgR75LShEAVwggNEG+or3CRva+B5PTgHA2/TaePlLVarRp5zpzDQCsg8r2+1uXhxwcWuXhYr
- LlZzD2+Hl3pAcKe7iL8zv618KtYHB4l/+wRuHUbGa/McyVZt7LgKf0ogl6dGpfX2yaUJHktDhiV
- sbD71yfN/nWBl1Sx9Hfgc8nUgguKpsGO4
-X-Google-Smtp-Source: AGHT+IFF2BsKR17wRFLvZ3ojMw+l1L135a/YraV++ORd2vjqBm5EvfBHx/Yiq16Tq8Bh+hdab+Ah+g==
-X-Received: by 2002:a17:903:2d0:b0:240:981d:a4f5 with SMTP id
- d9443c01a7336-245e056dbd5mr34318285ad.42.1755627749014; 
- Tue, 19 Aug 2025 11:22:29 -0700 (PDT)
+ AJvYcCV/jvv7JRIgTihAh6PnPCRJc2nNMe7sL212WfqFMO4BF8dcU5/y+4HMdCveQt+hQFYqZMiZdB2rc7pY2g==@nongnu.org,
+ AJvYcCWPrxLi490RVTBnw0T1dzinetmNkWo4aA9+H0wkUkBnm0bbOeWQSHOyPgodmS92qyPq3k4UcYoK0A==@nongnu.org
+X-Gm-Message-State: AOJu0Yx2mziGM+TMAPbdOd8vxvYCZs54d/qUtfMnUuTYuw9MJWw91ykh
+ UPgYmTMOCe1Tim6N12CokMQIxsx22CZXQGBPI5dbUkBa0ISSNKyDVxiWc0QLD6tL
+X-Gm-Gg: ASbGncvMo7nM//NhFMQRe/nfwh/22oco7pv9vCA2/uZBaKFgyqwPgtm5v1AsxhxC4mG
+ UfDKgsQor+bNN6snDCClULITMFA/Z3OVLe+yJBud80xvH0WNpu6GZbev6GRhrLNNGz1s3Map/9n
+ k1z24mlePLsS8LCcBjrlUkjDB1eBEqmFBDJEoQrvbTtB40WlMf9hYzacgkODzQ/t2w/vu4kzLq0
+ lWe13abepJMvFDkeYZEq0Ke8T4MQTKefh+M7Ot3wI1UEMgagqTuusTRUOhwK5OjSpa199tiwCzq
+ 3I3lG7SrAmvM15swlB2lhHTaZmjOw0KmjzTlSsj80iKvHLi2r/ZewuXddgTDgYknPbHe2y/sq9n
+ Ktgf9kxCaTJESNtYyIlaXfqsvmgY9UvIp
+X-Google-Smtp-Source: AGHT+IFBsiEtnYUR+SskuxqrM1PYZdjvBSImy/uoMDx63y0gSjeoy+527k5Zq5vjFVAwnR57bFS7YA==
+X-Received: by 2002:a17:903:2ac5:b0:234:9656:7db9 with SMTP id
+ d9443c01a7336-245e04866a6mr49403075ad.32.1755627777331; 
+ Tue, 19 Aug 2025 11:22:57 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:29ce:ef58:c2c9:e52f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed33b4c2sm3725125ad.25.2025.08.19.11.22.23
+ d9443c01a7336-245ed33b4c2sm3725125ad.25.2025.08.19.11.22.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Aug 2025 11:22:28 -0700 (PDT)
+ Tue, 19 Aug 2025 11:22:56 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -79,15 +80,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH 00/35] wasm: Add Wasm TCG backend based on wasm64
-Date: Wed, 20 Aug 2025 03:21:29 +0900
-Message-ID: <cover.1755623521.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 04/35] .gitlab-ci.d: Add build tests for wasm64
+Date: Wed, 20 Aug 2025 03:21:33 +0900
+Message-ID: <85c09a7c387d8fb9bbcd5b887c3d219c59a0807b.1755623521.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1755623521.git.ktokunaga.mail@gmail.com>
+References: <cover.1755623521.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,194 +112,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series adds a TCG backend for WebAssembly. Unlike eariler
-attempts [1], it is implemented using Emscripten's wasm64 target to support
-64bit guests.
+The wasm builds are tested for 3 targets: wasm32, wasm64(-sMEMORY64=1) and
+wasm64(-sMEMORY64=2). The CI builds the containers using the same Dockerfile
+(emsdk-wasm-cross.docker) with different build args.
 
-The first four commits are temporarily imported from a separated patch
-series which enables 64bit guests using wasm64 [2]. These commits are under
-review in that series and are included here only to allow subsequent patches
-to build. Please ignore them when reviewing this series.
+Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+---
+ .gitlab-ci.d/buildtest.yml          | 26 ++++++++++++++++++++++----
+ .gitlab-ci.d/container-cross.yml    | 20 ++++++++++++++++++--
+ .gitlab-ci.d/container-template.yml |  4 +++-
+ 3 files changed, 43 insertions(+), 7 deletions(-)
 
-# New TCG Backend for Browsers
+V1:
+- This commit is under review in another patch series so please ignore it
+  here.
 
-A new TCG backend translates IR instructions into Wasm instructions and runs
-them using the browser's WebAssembly APIs (WebAssembly.Module and
-WebAssembly.instantiate). To minimize compilation overhead and avoid hitting
-the browser's limitation of the number of instances, this backend integrates
-a forked TCI. TBs run on TCI by default, with frequently executed TBs
-compiled into WebAssembly.
-
-# 64bit guests support by wasm64
-
-Support for 64bit guests is being reviewed in a separated patch series [2],
-which enables QEMU to use 64bit pointers by compiling with the --cpu=wasm64
-flag. The Wasm TCG backend is based on this feature and also requires
---cpu=wasm64.
-
-QEMU compiled with --cpu=wasm64 runs on wasm64-capable engines. To support
-engines which don't support wasm64 (e.g. Safari), the Wasm backend can use
-the compatibility flag "--enable-wasm64-32bit-address-limit" also introduced
-in [2]. This flag enables 64bit pointers in the C code while Emscripten
-lowers the output binary to wasm32 and limits the maximum memory size to
-4GB. As a result, the Wasm backend can run on wasm32 engiens while
-supporting 64bit guests.
-
-Note: The flag was originally named --wasm64-32bit-address-limit but this
-patch series moved it from the configure script into meson_options.txt. To
-follow Meson's naming conventions, it was renamed to
---enable-wasm64-32bit-address-limit.
-
-# Overview of build process
-
-To compile QEMU with Emscripten, the following dependencies are required.
-The emsdk-wasm-cross.docker environment includes all necessary components
-and can be used as the build environment:
-
-- Emscripten SDK (emsdk) v4.0.10
-- Libraries cross-compiled with Emscripten (please see also
-  emsdk-wasm-cross.docker for build steps)
-  - GLib v2.84.0
-  - zlib v1.3.1
-  - libffi v3.5.2
-  - Pixman v0.44.2
-
-The configure script supports --cpu=wasm64 flag to compile QEMU with 64bit
-pointer support.
-
-emconfigure ./configure --cpu=wasm64 \
-                        --static --disable-tools \
-                        --target-list=x86_64-softmmu
-emmake make -j$(nproc)
-
-If the output needs to run on wasm32 engines, use
-"--enable-wasm64-32bit-address-limit" flag.
-
-emconfigure ./configure --cpu=wasm64 --enable-wasm64-32bit-address-limit \
-                        --static --disable-tools \
-                        --target-list=x86_64-softmmu
-emmake make -j$(nproc)
-
-Either of the above commands generates the following files:
-
-- qemu-system-x86_64.js
-- qemu-system-x86_64.wasm
-
-Guest images can be packaged using Emscripten's file_packager.py tool.
-For example, if the images are stored in a directory named "pack", the
-following command packages them, allowing QEMU to access them through
-Emscripten's virtual filesystem:
-
-/path/to/file_packager.py qemu-system-x86_64.data --preload pack > load.js
-
-This process generates the following files:
-
-- qemu-system-x86_64.data
-- load.js
-
-Emscripten allows passing arguments to the QEMU command via the Module
-object in JavaScript:
-
-Module['arguments'] = [
-    '-nographic', '-m', '512M',
-    '-L', 'pack/',
-    '-drive', 'if=virtio,format=raw,file=pack/rootfs.bin',
-    '-kernel', 'pack/bzImage',
-    '-append', 'earlyprintk=ttyS0 console=ttyS0 root=/dev/vda loglevel=7',
-];
-
-The sample repository [3] (tcgdev64 branch) provides a complete setup,
-including an HTML file that implements a terminal UI.
-
-[1] https://patchew.org/QEMU/cover.1747744132.git.ktokunaga.mail@gmail.com/
-[2] https://patchew.org/QEMU/cover.1754534225.git.ktokunaga.mail@gmail.com/
-[3] https://github.com/ktock/qemu-wasm-sample/tree/tcgdev64
-
-Kohei Tokunaga (35):
-  meson: Add wasm64 support to the --cpu flag
-  configure: Enable to propagate -sMEMORY64 flag to Emscripten
-  dockerfiles: Add support for wasm64 to the wasm Dockerfile
-  .gitlab-ci.d: Add build tests for wasm64
-  tcg: Fork TCI for wasm backend
-  tcg/wasm: Do not use TCI disassembler in Wasm backend
-  tcg/wasm: Set TCG_TARGET_REG_BITS to 64
-  meson: Enable to build wasm backend
-  tcg/wasm: Set TCG_TARGET_INSN_UNIT_SIZE to 1
-  tcg/wasm: Add and/or/xor instructions
-  tcg/wasm: Add add/sub/mul instructions
-  tcg/wasm: Add shl/shr/sar instructions
-  tcg/wasm: Add setcond/negsetcond/movcond instructions
-  tcg/wasm: Add deposit/sextract/extract instrcutions
-  tcg/wasm: Add load and store instructions
-  tcg/wasm: Add mov/movi instructions
-  tcg/wasm: Add ext instructions
-  tcg/wasm: Add bswap instructions
-  tcg/wasm: Add rem/div instructions
-  tcg/wasm: Add andc/orc/eqv/nand/nor instructions
-  tcg/wasm: Add neg/not/ctpop instructions
-  tcg/wasm: Add rot/clz/ctz instructions
-  tcg/wasm: Add br/brcond instructions
-  tcg/wasm: Add exit_tb/goto_tb/goto_ptr instructions
-  tcg/wasm: Add call instruction
-  tcg/wasm: Add qemu_ld/qemu_st instructions
-  tcg/wasm: Mark unimplemented instructions as C_NotImplemented
-  tcg/wasm: Add initialization of fundamental registers
-  tcg/wasm: Write wasm binary to TB
-  tcg/wasm: Implement instantiation of Wasm binary
-  tcg/wasm: Allow switching coroutine from a helper
-  tcg/wasm: Enable instantiation of TBs executed many times
-  tcg/wasm: Enable TLB lookup
-  meson: Propagate optimization flag for linking on Emscripten
-  .gitlab-ci.d: build wasm backend in CI
-
- .gitlab-ci.d/buildtest.yml                    |   26 +-
- .gitlab-ci.d/container-cross.yml              |   20 +-
- .gitlab-ci.d/container-template.yml           |    4 +-
- MAINTAINERS                                   |    9 +-
- configure                                     |   14 +-
- include/accel/tcg/getpc.h                     |    2 +-
- include/tcg/helper-info.h                     |    4 +-
- include/tcg/tcg.h                             |    2 +-
- meson.build                                   |   14 +-
- meson_options.txt                             |    3 +
- scripts/meson-buildoptions.sh                 |    5 +
- tcg/aarch64/tcg-target.c.inc                  |   11 +
- tcg/arm/tcg-target.c.inc                      |   11 +
- tcg/i386/tcg-target.c.inc                     |   11 +
- tcg/loongarch64/tcg-target.c.inc              |   11 +
- tcg/meson.build                               |    5 +
- tcg/mips/tcg-target.c.inc                     |   11 +
- tcg/ppc/tcg-target.c.inc                      |   11 +
- tcg/region.c                                  |   10 +-
- tcg/riscv/tcg-target.c.inc                    |   11 +
- tcg/s390x/tcg-target.c.inc                    |   11 +
- tcg/sparc64/tcg-target.c.inc                  |   11 +
- tcg/tcg.c                                     |   23 +-
- tcg/tci/tcg-target.c.inc                      |   11 +
- tcg/wasm.c                                    | 1112 ++++++
- tcg/wasm.h                                    |  119 +
- tcg/wasm/tcg-target-con-set.h                 |   21 +
- tcg/wasm/tcg-target-con-str.h                 |   11 +
- tcg/wasm/tcg-target-has.h                     |   22 +
- tcg/wasm/tcg-target-mo.h                      |   17 +
- tcg/wasm/tcg-target-opc.h.inc                 |   15 +
- tcg/wasm/tcg-target-reg-bits.h                |   15 +
- tcg/wasm/tcg-target.c.inc                     | 3167 +++++++++++++++++
- tcg/wasm/tcg-target.h                         |   77 +
- ...2-cross.docker => emsdk-wasm-cross.docker} |   29 +-
- 35 files changed, 4822 insertions(+), 34 deletions(-)
- create mode 100644 tcg/wasm.c
- create mode 100644 tcg/wasm.h
- create mode 100644 tcg/wasm/tcg-target-con-set.h
- create mode 100644 tcg/wasm/tcg-target-con-str.h
- create mode 100644 tcg/wasm/tcg-target-has.h
- create mode 100644 tcg/wasm/tcg-target-mo.h
- create mode 100644 tcg/wasm/tcg-target-opc.h.inc
- create mode 100644 tcg/wasm/tcg-target-reg-bits.h
- create mode 100644 tcg/wasm/tcg-target.c.inc
- create mode 100644 tcg/wasm/tcg-target.h
- rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
-
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index d888a60063..77ae8f8281 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -787,11 +787,29 @@ coverity:
+     # Always manual on forks even if $QEMU_CI == "2"
+     - when: manual
+ 
+-build-wasm:
++build-wasm32-32bit:
+   extends: .wasm_build_job_template
+   timeout: 2h
+   needs:
+-    job: wasm-emsdk-cross-container
++    job: wasm32-32bit-emsdk-cross-container
+   variables:
+-    IMAGE: emsdk-wasm32-cross
+-    CONFIGURE_ARGS: --static --disable-tools --enable-debug --enable-tcg-interpreter
++    IMAGE: emsdk-wasm32-32bit-cross
++    CONFIGURE_ARGS: --static --cpu=wasm32 --disable-tools --enable-debug --enable-tcg-interpreter
++
++build-wasm64-64bit:
++  extends: .wasm_build_job_template
++  timeout: 2h
++  needs:
++    job: wasm64-64bit-emsdk-cross-container
++  variables:
++    IMAGE: emsdk-wasm64-64bit-cross
++    CONFIGURE_ARGS: --static --cpu=wasm64 --disable-tools --enable-debug --enable-tcg-interpreter
++
++build-wasm64-32bit:
++  extends: .wasm_build_job_template
++  timeout: 2h
++  needs:
++    job: wasm64-32bit-emsdk-cross-container
++  variables:
++    IMAGE: emsdk-wasm64-32bit-cross
++    CONFIGURE_ARGS: --static --cpu=wasm64 --wasm64-32bit-address-limit --disable-tools --enable-debug --enable-tcg-interpreter
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index 8d3be53b75..84c4be49f4 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -92,7 +92,23 @@ win64-fedora-cross-container:
+   variables:
+     NAME: fedora-win64-cross
+ 
+-wasm-emsdk-cross-container:
++wasm32-32bit-emsdk-cross-container:
+   extends: .container_job_template
+   variables:
+-    NAME: emsdk-wasm32-cross
++    NAME: emsdk-wasm32-32bit-cross
++    BUILD_ARGS: --build-arg TARGET_CPU=wasm32
++    DOCKERFILE: emsdk-wasm-cross
++
++wasm64-64bit-emsdk-cross-container:
++  extends: .container_job_template
++  variables:
++    NAME: emsdk-wasm64-64bit-cross
++    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg WASM64_MEMORY64=1
++    DOCKERFILE: emsdk-wasm-cross
++
++wasm64-32bit-emsdk-cross-container:
++  extends: .container_job_template
++  variables:
++    NAME: emsdk-wasm64-32bit-cross
++    BUILD_ARGS: --build-arg TARGET_CPU=wasm64 --build-arg WASM64_MEMORY64=2
++    DOCKERFILE: emsdk-wasm-cross
+diff --git a/.gitlab-ci.d/container-template.yml b/.gitlab-ci.d/container-template.yml
+index 4eec72f383..01ca840413 100644
+--- a/.gitlab-ci.d/container-template.yml
++++ b/.gitlab-ci.d/container-template.yml
+@@ -10,12 +10,14 @@
+     - export COMMON_TAG="$CI_REGISTRY/qemu-project/qemu/qemu/$NAME:latest"
+     - docker login $CI_REGISTRY -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+     - until docker info; do sleep 1; done
++    - export DOCKERFILE_NAME=${DOCKERFILE:-$NAME}
+   script:
+     - echo "TAG:$TAG"
+     - echo "COMMON_TAG:$COMMON_TAG"
+     - docker build --tag "$TAG" --cache-from "$TAG" --cache-from "$COMMON_TAG"
+       --build-arg BUILDKIT_INLINE_CACHE=1
+-      -f "tests/docker/dockerfiles/$NAME.docker" "."
++      $BUILD_ARGS
++      -f "tests/docker/dockerfiles/$DOCKERFILE_NAME.docker" "."
+     - docker push "$TAG"
+   after_script:
+     - docker logout
 -- 
 2.43.0
 
