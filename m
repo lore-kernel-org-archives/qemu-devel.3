@@ -4,99 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05292CA0EF5
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 05:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C59CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 05:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uob74-0007K6-1o; Wed, 20 Aug 2025 01:11:54 -0400
+	id 1uob81-0007eC-Qm; Wed, 20 Aug 2025 01:12:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
- id 1uob6t-0007In-2A
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 01:11:43 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
- id 1uob6q-0001MO-NB
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 01:11:42 -0400
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id B50C63F717
- for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 05:11:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1755666694;
- bh=QwTFEpm4P4dCmD9wR1yT5/c4y/9enMIXxCUes5ENVC4=;
- h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
- To:Cc:Content-Type;
- b=dCMzCKIt32c4GYd7z+dnpdT67Hjng2rydhqU3mKJEggpV2CHoRc3ZsRKem7JF8Td9
- emTxqFYxQKdU8FvxV4zNIVPwOnSsacDz+OZQq5t8FZue00MDX/x1XxUf4ZSvBcas2h
- eaLBpn5jL35joX5jlrWkmdp7I290e5qETx6zG7WyXE7kZUadaohyFC2xDUCLXK3UJw
- joboXknpE1ZwjU+EK6SIFfG/mdAV4Gw7XHZlS/COxzJZlGH586cw7FiUqKTZgJztFT
- D/IsFhxoxfaS08iHqAmJ5m2cuNvZpcYw+zGJkzLd7XqVUdcGY9pZkrOL2ae5tYR4wJ
- 3MJ9nTGCEzVZA==
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-618b3c750baso4470593a12.1
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 22:11:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eschwartz93@gmail.com>)
+ id 1uob7t-0007ac-Mw; Wed, 20 Aug 2025 01:12:46 -0400
+Received: from mail-qv1-xf2b.google.com ([2607:f8b0:4864:20::f2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <eschwartz93@gmail.com>)
+ id 1uob7r-0001QR-JT; Wed, 20 Aug 2025 01:12:45 -0400
+Received: by mail-qv1-xf2b.google.com with SMTP id
+ 6a1803df08f44-70a9f5d4d97so63747006d6.3; 
+ Tue, 19 Aug 2025 22:12:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1755666761; x=1756271561; darn=nongnu.org;
+ h=in-reply-to:autocrypt:from:content-language:references:cc:to
+ :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=K5leS3AmeiUGKi+9R+Z+vWRMvBAefDpHyYO8FUVdYgs=;
+ b=Zx6CbEtRhVt4hMwfDI2cLk5lP253X4f7Tq7GxpaOyo01gCkXqW2H1g9nUz6nFgxA1x
+ HTfyNz4KSEiXr+0t5Fyhsu3O2Ob7mA3mTrVf5UD67oTH9hIJo5+FisNI1/GojeAZgrb/
+ CXfTN0ul9fK+eIvkGsYK2fmZabVbplcFaT3DvvgNA1HOEM/R/bR5EUMuPSdqZxNsyJM9
+ fpJsviSe66VVt8oCADQY41A/YttgGjhGJCR5tDCDharJ9iNDsCfQSgX9gJnF9eoj+zSn
+ C+v4EbYLbkRUS92LHCUGetAW1hS8t3nwoU9tiUd2Y+gQ/7kLZ6nzqP2reT4kZZAU4QRD
+ jm8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755666694; x=1756271494;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QwTFEpm4P4dCmD9wR1yT5/c4y/9enMIXxCUes5ENVC4=;
- b=PRROqFiyLupviQHUajQh2Ne6Zs0JHIDgsje2B6l5UzuMw5Oe7d7/aCUCtkytMuvXc/
- kHb1oJH0vLbBDN0EXk1K/nImXSz4YXw2gxG75R5qBdgF1b3te31uo6PJI/r0XJ04Z6mB
- Hrk3L3bbvdUct7AmpgHC4JvPfui1avUQ/e8lO7CsQiMLSQQKBnMAdVzo2MhlHvrMMHEy
- om78GJVxUSc/6pbUu/7NrSlzKnPS9A41Kx+hqzgWtSKIXCCVS2DisGM2IzdK5tv4YS+I
- fI7rHQE7Xe0TR8Y+2Snyz6HzbJb6LGZB/7ZNzg30S6ONbLt+x3QWPGvpxH+dGqT5/JOJ
- TWtw==
+ d=1e100.net; s=20230601; t=1755666761; x=1756271561;
+ h=in-reply-to:autocrypt:from:content-language:references:cc:to
+ :subject:user-agent:mime-version:date:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K5leS3AmeiUGKi+9R+Z+vWRMvBAefDpHyYO8FUVdYgs=;
+ b=xCVY85lhB1sFVUFP0dwvfR6nT4IEU15xU7Nh2ay2gaC+z/mKXx6mg/tyYx8GHeNPxf
+ eQaa7Sl8K3GwvASwxaOJHthE19z5K312ISilV+o5dk3+NPe7BThU/1+0c6KbjT2I6ZYq
+ umhtOJ7A5S/uErEObojB886R/Trgreno000WHXLTTZN50SqTUgZhaEdfKoHa2DwHOAV4
+ 9Yd0f5jjEBXQeIpzayrcJHTlCkRO5jh4EC2dzyBX1clafkyJVc5iZuOD/HzbaJ7zo/o2
+ PoN18mSVm6kl6Js8oX9kv5gW/vOWUDvEX0Mr9DY4P9cBGtlxcp3lnaXhzhVmVOJEF16t
+ wA/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNSYUdgBBvfTFdidaomX8b907FmyP2srkWf1cdkn/o59MmbbBvyF8uFXmpF0yNatH7cq9By5pE2vI3@nongnu.org
-X-Gm-Message-State: AOJu0Yw9OdxK+YkoLq2M/9JempHholCtEE1jd5g3HG+Y/2sBTL0zRXZH
- PYKT3zXV7zw8M+sU0gMAarkd3Z1lubzYc9wX+Qm7N547rV8ENgRLpatOKIr1F3ViL1cz3MLiPcF
- cre2aHBJVlv/tQPvpUnAeUug6eJXdBOtMlDrTvVYXQQC7p16aid6VpkSv9tr+zOXwKSzOOD8M/H
- n41xEUKfllrQ6zTipEKfQXzn2bZ2Wo6T++rMmwlsxZ+cuaKME=
-X-Gm-Gg: ASbGnct1ziG4+X/Bq2ZHtUNbYjC7TIKJMF6noHTbjlkSD3323nlmCzF1plaGr9G1mMl
- jrpsHRJJnD1UeCa6zWfbTTfouVFG5Qg2PDb5/Cdpr30k0hr8G1+833mg1MhuNFviP0lcjl40d4p
- EI0tj7kp7VC59Uu6xFSVM0
-X-Received: by 2002:a05:6402:27ce:b0:612:bd30:d326 with SMTP id
- 4fb4d7f45d1cf-61a976285a5mr1218330a12.22.1755666694180; 
- Tue, 19 Aug 2025 22:11:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRdRiG9OJr8Ar2767yiqw2hcEAHZiJ3JLlUAf2lbIOPD1RvsElgDnP43/4jFeFjPpTkn52MBMF7Re9axRg03o=
-X-Received: by 2002:a05:6402:27ce:b0:612:bd30:d326 with SMTP id
- 4fb4d7f45d1cf-61a976285a5mr1218315a12.22.1755666693734; Tue, 19 Aug 2025
- 22:11:33 -0700 (PDT)
+ AJvYcCWrRDh8bLLZtsvCcjx1p8FGnxRYvMudVQq/Cnmx1I9QO3ai/eWVY8FiWIh0/RdVdASUUx698urJb0s=@nongnu.org
+X-Gm-Message-State: AOJu0Yy3kbaIR+Eq6xIcoOh6AsXcPBA0kr0wZqaAD1khcAosc/NBkYv1
+ RvW5Z9W5SjDmYXxisdZPsFQ5tuw5bRzS1PkKrrc+VhFe+fw3u7oZce9J
+X-Gm-Gg: ASbGncso9wmG3gDpVrA88S8YjDOTAy+b85qz3AidSTcTsUlFxDZWhCxdNPo31QNmJtR
+ xrjnLE4LpdlxGHAoIeLqKqBWVw9FDADDryWegKQb1adATKPeN9EmES3m5xSE1GJYpXT3/RbNKUW
+ bCcCEGEpH3dE+wlbuzELkAhpW7vkIvQaKIpXy0jPLIXjIuQSpBnVcX5azLmA7wpm9XnWvktkor+
+ 5v4Mub/0LccdxJFrvzGozc2hGYZWqQiuoCJgoZ8G1hA41kp0ZFL97XZ3gN9f+CEgh3jruUkXBge
+ 3HljCDDS8oBniC5KeunPfSJlpSPExgm3uJlOd9V71mwTjgSDch41rUuNvsx18NnRbCKNFNT2e3b
+ 8jw29Lss/ss1+2s1FIs3ixWQGvTq19CXwsIX4
+X-Google-Smtp-Source: AGHT+IHwGupkBy5ZEBt+Tae+7V3tY2FTXXwuhgldvuHMwBA1tNZcNmLY6airHRc/K6s9NGaF3L2dIA==
+X-Received: by 2002:a05:6214:c4b:b0:707:70b7:376d with SMTP id
+ 6a1803df08f44-70d76f1c5f3mr17892686d6.1.1755666760923; 
+ Tue, 19 Aug 2025 22:12:40 -0700 (PDT)
+Received: from ?IPV6:2603:6011:3f0:cf90::12ac? ([2603:6011:3f0:cf90::12ac])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-70ba902f4e2sm82199026d6.7.2025.08.19.22.12.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Aug 2025 22:12:40 -0700 (PDT)
+Message-ID: <eda4ade9-ba07-4e6e-adf8-e308a9ec3435@gmail.com>
+Date: Wed, 20 Aug 2025 01:12:35 -0400
 MIME-Version: 1.0
-References: <CAATJJ0+Qq3ksRmNRDrGQLVHQ=XnsnFHxCNxUhjJfNfgwUKkDPQ@mail.gmail.com>
- <aJNDxxjeqkOLAO2r@redhat.com>
- <CAATJJ0L-E=JsKOX_E=jqraeK__jLF851DDbEx5psVkTMSppKXw@mail.gmail.com>
- <aJOqmxTimJ_mFCqp@redhat.com>
- <ccabd72c-6f48-4be2-8bbd-44f28eb2cfd1@redhat.com>
-In-Reply-To: <ccabd72c-6f48-4be2-8bbd-44f28eb2cfd1@redhat.com>
-From: Christian Ehrhardt <christian.ehrhardt@canonical.com>
-Date: Wed, 20 Aug 2025 07:11:07 +0200
-X-Gm-Features: Ac12FXzoef3wnW5LXqOK3Nr3rz_Dvnut5kgqtjidsWqho30l3xvDWV7FrFEE9-Q
-Message-ID: <CAATJJ0KZDHqMHmpmfFySJjreqPMTHDiJLJM_zBdcr5CrzOL2tg@mail.gmail.com>
-Subject: Re: Issues with pdcm in qemu 10.1-rc on migration and save/restore
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=christian.ehrhardt@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson: set test programs to not build by default
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:Rust-related patc..." <qemu-rust@nongnu.org>
+References: <20250819154940.2137965-1-eschwartz@gentoo.org>
+ <aKSmyWRB_Gi3kru_@redhat.com>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz93@gmail.com>
+Autocrypt: addr=eschwartz93@gmail.com; keydata=
+ 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
+In-Reply-To: <aKSmyWRB_Gi3kru_@redhat.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------0FJm7ihbLgSDXxnT1NeOLQVG"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2b;
+ envelope-from=eschwartz93@gmail.com; helo=mail-qv1-xf2b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,167 +155,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 19, 2025 at 4:51=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> On 8/6/25 21:18, Daniel P. Berrang=C3=A9 wrote:
-> > On Wed, Aug 06, 2025 at 07:57:34PM +0200, Christian Ehrhardt wrote:
-> >> On Wed, Aug 6, 2025 at 2:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> >>>
-> >>> On Wed, Aug 06, 2025 at 01:52:17PM +0200, Christian Ehrhardt wrote:
-> >>>> Hi,
-> >>>> I was unsure if this would be better sent to libvirt or qemu - the
-> >>>> issue is somewhere between libvirt modelling CPUs and qemu 10.1
-> >>>> behaving differently. I did not want to double post and gladly most =
-of
-> >>>> the people are on both lists - since the switch in/out of the proble=
-m
-> >>>> is qemu 10.0 <-> 10.1 let me start here. I beg your pardon for not y=
-et
-> >>>> having all the answers, I'm sure I could find more with debugging, b=
-ut
-> >>>> I also wanted to report early for your awareness while we are still =
-in
-> >>>> the RC phase.
-> >>>>
-> >>>>
-> >>>> # Problem
-> >>>>
-> >>>> What I found when testing migrations in Ubuntu with qemu 10.1-rc1 wa=
-s:
-> >>>>    error: operation failed: guest CPU doesn't match specification:
-> >>>> missing features: pdcm
-> >>>>
-> >>>> This is behaving the same with libvirt 11.4 or the more recent 11.6.
-> >>>> But switching back to qemu 10.0 confirmed that this behavior is new
-> >>>> with qemu 10.1-rc.
-> >>>
-> >>>
-> >>>> Without yet having any hard evidence against them I found a few pdcm
-> >>>> related commits between 10.0 and 10.1-rc1:
-> >>>>    7ff24fb65 i386/tdx: Don't mask off CPUID_EXT_PDCM
-> >>>>    00268e000 i386/cpu: Warn about why CPUID_EXT_PDCM is not availabl=
-e
-> >>>>    e68ec2980 i386/cpu: Move adjustment of CPUID_EXT_PDCM before
-> >>>> feature_dependencies[] check
-> >>>>    0ba06e46d i386/tdx: Add TDX fixed1 bits to supported CPUIDs
-> >>>>
-> >>>>
-> >>>> # Caveat
-> >>>>
-> >>>> My test environment is in LXD system containers, that gives me issue=
-s
-> >>>> in the power management detection
-> >>>>    libvirtd[406]: error from service: GDBus.Error:System.Error.EROFS=
-:
-> >>>> Read-only file system
-> >>>>    libvirtd[406]: Failed to get host power management capabilities
-> >>>
-> >>> That's harmless.
-> >>
-> >> Yeah, it always was for me - thanks for confirming.
-> >>
-> >>>> And the resulting host-model on a  rather old test server will there=
-fore have:
-> >>>>    <cpu mode=3D'custom' match=3D'exact' check=3D'full'>
-> >>>>      <model fallback=3D'forbid'>Haswell-noTSX-IBRS</model>
-> >>>>      <vendor>Intel</vendor>
-> >>>>      <feature policy=3D'require' name=3D'vmx'/>
-> >>>>      <feature policy=3D'disable' name=3D'pdcm'/>
-> >>>>       ...
-> >>>>
-> >>>> But that was fine in the past, and the behavior started to break
-> >>>> save/restore or migrations just now with the new qemu 10.1-rc.
-> >>>>
-> >>>> # Next steps
-> >>>>
-> >>>> I'm soon overwhelmed by meetings for the rest of the day, but would =
-be
-> >>>> curious if one has a suggestion about what to look at next for
-> >>>> debugging or a theory about what might go wrong. If nothing else com=
-es
-> >>>> up I'll try to set up a bisect run tomorrow.
-> >>>
-> >>> Yeah, git bisect is what I'd start with.
-> >>
-> >> Bisect complete, identified this commit
-> >>
-> >> commit 00268e00027459abede448662f8794d78eb4b0a4
-> >> Author: Xiaoyao Li <xiaoyao.li@intel.com>
-> >> Date:   Tue Mar 4 00:24:50 2025 -0500
-> >>
-> >>      i386/cpu: Warn about why CPUID_EXT_PDCM is not available
-> >>
-> >>      When user requests PDCM explicitly via "+pdcm" without PMU enable=
-d, emit
-> >>      a warning to inform the user.
-> >>
-> >>      Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> >>      Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> >>      Link: https://lore.kernel.org/r/20250304052450.465445-3-xiaoyao.l=
-i@intel.com
-> >>      Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> >>
-> >>   target/i386/cpu.c | 3 +++
-> >>   1 file changed, 3 insertions(+)
-> >>
-> >>
-> >>
-> >> Which is odd as it should only add a warning right?
-> >
-> > No, that commit message is misleading.
-> >
-> > IIUC mark_unavailable_features() actively blocks usage of the feature,
-> > so it is a functional change, not merely a emitting warning.
-> >
-> > It makes me wonder if that commit was actually intended to block the
-> > feature or not, vs merely warning ?  CC'ing those involved in the
-> > commit.
-> We can revert the commit.  I'll send the revert to Stefan and let him
-> decide whether to include it in 10.1-rc4 or delay to 10.2 and 10.1.1.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------0FJm7ihbLgSDXxnT1NeOLQVG
+Content-Type: multipart/mixed; boundary="------------Xfk6eFVdTsXcNgZhIK4uhfyg";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz93@gmail.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:Rust-related patc..." <qemu-rust@nongnu.org>
+Message-ID: <eda4ade9-ba07-4e6e-adf8-e308a9ec3435@gmail.com>
+Subject: Re: [PATCH] meson: set test programs to not build by default
+References: <20250819154940.2137965-1-eschwartz@gentoo.org>
+ <aKSmyWRB_Gi3kru_@redhat.com>
+In-Reply-To: <aKSmyWRB_Gi3kru_@redhat.com>
 
-Thanks Paolo for considering that.
+--------------Xfk6eFVdTsXcNgZhIK4uhfyg
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-My steps to reproduce seemed really clear and are 100% reproducible
-for me, but no one so far said "yeah they see it too", so I'm getting
-unsure if it was not tried by anyone else or if there is more to it
-than we yet know.
-Further I tested more with the commit reverted, and found that at
-least cross version migrations (9.2 -> 10.1) still have issues that
-seem related - complaining about pdcm as missing feature.
-But that was in a log of a test system that went away and ... you know
-how these things can sometimes be, that new result is not yet very
-reliable.
+On 8/19/25 12:31 PM, Daniel P. Berrang=C3=A9 wrote:
+> On Tue, Aug 19, 2025 at 11:49:40AM -0400, Eli Schwartz wrote:
+>> Rather, they are built when running `meson test`. This change is inert=
 
-I intended to check the following matrix more deeply again with and
-without the reverted change and then come back to this thread:
+>> unless building with meson 1.7, as previous versions of meson build al=
+l
+>> `meson test` dependencies as part of `ninja all` as well.
+>>
+>> See:
+>> https://mesonbuild.com/Release-notes-for-1-7-0.html#test-targets-no-lo=
+nger-built-by-default
+>>
+>> An existing comment references this meson issue, with an included bug
+>> reference, but was written before meson 1.7 fixed the bug. Update the
+>> comment to change the advice from "if the bug gets fixed" to "when
+>> bumping the minimum meson version".
+>=20
+> I am very much not a fan of projects that do not build test
+> programs by default.
+>=20
+> If a dev is changing code and running 'ninja'/'make' everything
+> that is affected should be rebuilt to identify any build failures
+> that may have introduced immediately. This should include all
+> test binaries, regardless of whether the dev is intending to run
+> the tests at that time or not.
+>=20
+> We already have too many occassions when contributors submit
+> patches that have tests which fail to pass & this will expand
+> that problem with contributors submitting patches that fail
+> to even pass compilation of the tests.
 
-#1 Compare platforms
-- Migrating between non containerized hosts to verify if they are
-affected as well
-- Power management explicitly switched off/on (vs the auto detect of
-host-model) in the guest XML
-#2 Retest the different Use-cases I've seen this pop up
-- 10.1 managed save (broken unless reverting the commit that was identified=
-)
-- 9.2 -> 10.1 migration (seems broken even with the revert)
 
-The hope was that these will help to further identify what is going
-on, but despite the urgency of the release being imminent I have not
-yet managed to find the time in the last two days :-/
+I don't really understand this division between people who submit broken
+untested patches and people who submit broken untested patches. You do
+still need to test the patches and reject them for not passing the tests
+so no time is really saved. It strikes me as some kind of confusing
+optics-based objection, like this is about the exact embarrassment level
+of a broken patch.
 
-> Sorry for the delay in answering (and thanks Daniel for bringing this to
-> my attention).
->
-> Thanks,
->
-> Paolo
->
+But your proposal runs counter to existing code already in qemu's build
+system, i.e. the comment I've updated. So I don't think it's entirely
+fair to raise an objection to my patch at all -- better you should raise
+a meta-discussion about this to discuss changing the existing
+build_by_defaults.
+
+
+> If we want the ability to opt-out of building tests by default
+> so reduce build time, IMHO that should be behind a 'configure'
+> flag / meson_options.txt setting.
+
+
+There is anyways no point in this being a meson_options.txt setting and
+complexifying all test programs via conditionals. As explained in my
+link, you can have Makefile itself read a configure option and run:
+
+`ninja all meson-test-prereq`
+
+instead of
+
+`ninja all`
+
+In fact users submitting patches could as well -- but then too, they
+could simply run tests for code they touched.
+
+Either way it is definitely of interest to users running a build +
+install of a tagged release, to skip building tests they won't run. e.g.
+many linux distros make the test phase of packaging be optional.
+
+Automake works the same way -- tests can be excluded from `make && make
+install`, but get built on demand by `make check`.
 
 
 --=20
-Christian Ehrhardt
-Director of Engineering, Ubuntu Server
-Canonical Ltd
+Eli Schwartz
+
+--------------Xfk6eFVdTsXcNgZhIK4uhfyg--
+
+--------------0FJm7ihbLgSDXxnT1NeOLQVG
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAEBCgB9FiEEYEETBMCdNmKDQO7/zrFn77VyK9YFAmilWURfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDYw
+NDExMzA0QzA5RDM2NjI4MzQwRUVGRkNFQjE2N0VGQjU3MjJCRDYACgkQzrFn77Vy
+K9a5IBAAnATPyNHRYFQZNRh92z5Jioxiw9GGDEBOd8w1zUHFFE1V2IQvUWjWWkaH
+rwI5FjF5SNpezhq0mHQvVljSDanMrZK9cDfhcU+gTcZlQP3Klxb3Qu0jLfvCHsCy
+2vsrjJjuFVoFvm/KoRCFsHv6W/CDvg72B3U6nomGgZ2US5IGKnO9SlJ8q/8hvU34
+bCzSvVCjzIlwK2cYpCeHJmQekDcAWkp0H0qsRSOO/i9wcw7V+FlCrmO/8rPIMA+M
+Eb9QG5L9Tv5lEpW8D9O0obC5y+X6imfAi7nhq5qIXtr0SjBuO7C5jlk+l3avrdRT
+KrJZffYMwCbBw05zEhtkSFk4VB1RcwU+OMff4hz7wmYZBhSV0+AUX0tbk1rzNxnI
+zFrLWfcW2di5MwaG6H0pZDklmccOV3TqGUQMpdewm/gmY1/Gl9vLxVcTPGBrTz7s
+5dblDSGrv+0YUxlYNdOW2JtTzHUSOc1j1mI2WFlr59yC2FPIZyMKdraMrbgPTyU4
+U2hLB5r8N6V/S9fQsfexT3X2iDc8jq3xo02SUxlCA1jPJtZg9o77r25vvvMV6Clc
+42ANzyMfWf+B8tgDwZxHfGQUHTtDEac8Mc88dwCzqYn1x/vlUYZDusRiBsz/Irpf
+I57/uvlcdEWnA892FTqXpa1KLpM39dFgpusVqeMiqC1BK0itqEU=
+=6I8R
+-----END PGP SIGNATURE-----
+
+--------------0FJm7ihbLgSDXxnT1NeOLQVG--
 
