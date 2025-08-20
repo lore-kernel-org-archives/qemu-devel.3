@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE51CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 13:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7529CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 13:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoiwy-0000e3-TA; Wed, 20 Aug 2025 09:34:00 -0400
+	id 1uoj16-0002TB-8v; Wed, 20 Aug 2025 09:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoiwx-0000dM-TB
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:33:59 -0400
+ id 1uoj12-0002Ru-N5
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:38:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uoiwu-0005Ou-Ez
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:33:59 -0400
+ id 1uoj10-0006K4-1N
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:38:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755696834;
+ s=mimecast20190719; t=1755697088;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LkHaAWokt3SG+lmggr9/bgCZDZNGB6MpymynMjKSjis=;
- b=aObg2nbWaKw+9HGqIs9UZQK1z944u2guUQjunxWom0xGPu8yrGniFwsH/BJE4kaXZa3Cqm
- d/y0FSr3+zu1nbbLGVaVF4f3iG9Vkp6w5bSU0UeMmPHA8X4H1OD/tS/2A3KxnFCt9EVFza
- /QE2TNh7LK5weYYtinQ1QAx6xPQ8hFg=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=r1GwC7tJv2Nbxmn2fWGnei7GIgFmVAmfUSzW0NWAD7Y=;
+ b=DZ3wUzQi1nJspWUiPysDLwBoNQXEwDQhDE8xS/ompDNkiGOsyihICSNoQzjWFA8LNxmFga
+ H3xmc78P3c7FaCd7ZbW43P4JVlySZazKchbEJaK6lbJ4GArG1pzmBN6yk/OY2FNa4eJfc2
+ BtRoLgCNWRtmUo8N13Mdm3D6Ra/KZoQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-lWv8fvdQP5OtnhfMaLLmXg-1; Wed,
- 20 Aug 2025 09:33:51 -0400
-X-MC-Unique: lWv8fvdQP5OtnhfMaLLmXg-1
-X-Mimecast-MFC-AGG-ID: lWv8fvdQP5OtnhfMaLLmXg_1755696830
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-Cge1CnKyNEmJuZQeWSkShg-1; Wed,
+ 20 Aug 2025 09:38:05 -0400
+X-MC-Unique: Cge1CnKyNEmJuZQeWSkShg-1
+X-Mimecast-MFC-AGG-ID: Cge1CnKyNEmJuZQeWSkShg_1755697084
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33CF31954B13; Wed, 20 Aug 2025 13:33:50 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8757A1800285; Wed, 20 Aug 2025 13:38:03 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.164])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E64CC180044F; Wed, 20 Aug 2025 13:33:47 +0000 (UTC)
-Date: Wed, 20 Aug 2025 14:33:44 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7149C19A4C99; Wed, 20 Aug 2025 13:37:57 +0000 (UTC)
+Date: Wed, 20 Aug 2025 14:37:54 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PULL 0/2] Python patches
-Message-ID: <aKXOuFYHLi_I1KLB@redhat.com>
-References: <20250820045816.1142190-1-jsnow@redhat.com>
- <CAFn=p-bSh9kr2OOv0vq8H+quuUSww5NeV8LYBy2MKr-b82P2kA@mail.gmail.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael@enfabrica.net, sgarzare@redhat.com,
+ marcandre.lureau@redhat.com, pbonzini@redhat.com, kwolf@redhat.com,
+ hreitz@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
+Subject: Re: [PATCH 26/33] io/channel-socket: introduce
+ qio_channel_socket_keep_nonblock()
+Message-ID: <aKXPsvfldHD1RYhS@redhat.com>
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-27-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFn=p-bSh9kr2OOv0vq8H+quuUSww5NeV8LYBy2MKr-b82P2kA@mail.gmail.com>
+In-Reply-To: <20250813164856.950363-27-vsementsov@yandex-team.ru>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,52 +92,85 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 20, 2025 at 01:01:06AM -0400, John Snow wrote:
-> On Wed, Aug 20, 2025 at 12:58 AM John Snow <jsnow@redhat.com> wrote:
-> >
-> > The following changes since commit 5836af0783213b9355a6bbf85d9e6bc4c9c9363f:
-> >
-> >   Merge tag 'uefi-20250812-pull-request' of https://gitlab.com/kraxel/qemu into staging (2025-08-13 15:19:29 -0400)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/jsnow/qemu.git tags/python-pull-request
-> >
-> > for you to fetch changes up to 16398e73cd13c7d9f284d8ec4a440778fc2e3f9a:
-> >
-> >   python: avoid deprecation warning with get_event_loop (2025-08-20 00:55:27 -0400)
-> >
-> > ----------------------------------------------------------------
-> > Python pull request
-> >
-> > Necessary for Python 3.14 support for iotests, releasing October 7th
-> >
-> > ----------------------------------------------------------------
-> >
-> > Daniel P. Berrangé (1):
-> >   python: avoid deprecation warning with get_event_loop
-> >
-> > Richard W.M. Jones (1):
-> >   python: Replace asyncio.get_event_loop for Python 3.14
-> >
-> >  python/qemu/qmp/legacy.py  | 10 +++++++++-
-> >  python/qemu/qmp/qmp_tui.py |  2 +-
-> >  python/tests/protocol.py   |  2 +-
-> >  3 files changed, 11 insertions(+), 3 deletions(-)
-> >
-> > --
-> > 2.50.1
-> >
+On Wed, Aug 13, 2025 at 07:48:47PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Add a possibility to keep socket non-block status when passing
+> through qio channel. We need this to support migration of open
+> fds through migration channel.
 > 
-> Dan: I wasn't sure if you were suggesting these to be pulled *right
-> away*, but just in case that is what you meant, I sent this PR for
-> what I think is the minimum necessary to avoid iotests croaking when
-> 3.14 drops in October. Let me know if we need to make any other
-> adjustments here and I will follow up in the morning.
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  include/io/channel-socket.h |  3 +++
+>  io/channel-socket.c         | 16 ++++++++++++----
+>  2 files changed, 15 insertions(+), 4 deletions(-)
+> 
+> diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
+> index a88cf8b3a9..0a4327d745 100644
+> --- a/include/io/channel-socket.h
+> +++ b/include/io/channel-socket.h
+> @@ -49,6 +49,7 @@ struct QIOChannelSocket {
+>      socklen_t remoteAddrLen;
+>      ssize_t zero_copy_queued;
+>      ssize_t zero_copy_sent;
+> +    bool keep_nonblock;
+>  };
+>  
+>  
+> @@ -275,4 +276,6 @@ int qio_channel_socket_set_send_buffer(QIOChannelSocket *ioc,
+>                                         size_t size,
+>                                         Error **errp);
+>  
+> +void qio_channel_socket_keep_nonblock(QIOChannel *ioc);
+> +
+>  #endif /* QIO_CHANNEL_SOCKET_H */
+> diff --git a/io/channel-socket.c b/io/channel-socket.c
+> index 3b7ca924ff..cd93d7f180 100644
+> --- a/io/channel-socket.c
+> +++ b/io/channel-socket.c
+> @@ -462,9 +462,16 @@ static void qio_channel_socket_finalize(Object *obj)
+>  }
+>  
+>  
+> +void qio_channel_socket_keep_nonblock(QIOChannel *ioc)
+> +{
+> +    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+> +    sioc->keep_nonblock = true;
+> +}
+> +
+> +
+>  #ifndef WIN32
+>  static void qio_channel_socket_copy_fds(struct msghdr *msg,
+> -                                        int **fds, size_t *nfds)
+> +                                        int **fds, size_t *nfds, bool set_block)
+>  {
+>      struct cmsghdr *cmsg;
+>  
+> @@ -497,8 +504,9 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+>                  continue;
+>              }
+>  
+> -            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+> -            qemu_socket_set_block(fd);
+> +            if (set_block) {
+> +                qemu_socket_set_block(fd);
+> +            }
+>  
+>  #ifndef MSG_CMSG_CLOEXEC
+>              qemu_set_cloexec(fd);
+> @@ -556,7 +564,7 @@ static ssize_t qio_channel_socket_readv(QIOChannel *ioc,
+>      }
+>  
+>      if (fds && nfds) {
+> -        qio_channel_socket_copy_fds(&msg, fds, nfds);
+> +        qio_channel_socket_copy_fds(&msg, fds, nfds, !sioc->keep_nonblock);
+>      }
+>  
+>      return ret;
 
-Only the 1st patch is important for the 10.1.0 release - the 2nd patch
-doesn't take effect until the rest of my py series that explicitly
-turns on warnings for iotests/functional tests.
+If this is needed, then it should be done by defining another flag
+constant to be passed to qio_channel_read*, not via a new API
+
+ QIO_CHANNEL_READ_FLAG_FD_PRESERVE_NONBLOCKING
+
 
 With regards,
 Daniel
