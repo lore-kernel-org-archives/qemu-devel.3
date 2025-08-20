@@ -4,145 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE752CA0EED
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 07:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94862CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 08:01:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uod6D-0004Pq-Cq; Wed, 20 Aug 2025 03:19:09 -0400
+	id 1uodkH-0004AP-1L; Wed, 20 Aug 2025 04:00:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1uod6B-0004Pd-Gv; Wed, 20 Aug 2025 03:19:07 -0400
-Received: from mail-bn8nam12on2062c.outbound.protection.outlook.com
- ([2a01:111:f403:2418::62c]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1uodkB-00048d-To
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 04:00:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1uod68-0000zf-Ih; Wed, 20 Aug 2025 03:19:07 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JCbA/ke6YlZT2AM6ZTuWLtl/uUFbb02NwDm2DIurqDIGec+GmTBAHlUNvGKEUIk+aTBGvZHdpN9vJC4BQcziCaCC15OOb2Z+Z2cfRQqsVfvx/onEyUMIkjsr86SnzVfswwgN98XJ28vhLyeCBh+rXa0Jzpj0whbne8pxsrUPqbV3e9I8xeT3xPlSU4yp33WZabN4mN355HdtlHWXyRCbDiSuim4YAUO1+AthIz0zHFd19SVRKqIggJ/MOaCf2g8Xfu40gYfmiCNCSHdZyYNm02DGqIWnmtSDQOKiYMhFasoaxQqaIMfHWhD6hVsBGLW4AmkSVUT0Ntc/gd3KSUDgqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/sQ0f+CJlFWVdvfk3U9YHHrK1XgNvtqFqlNtv0aOcag=;
- b=XwOwZT9DqgbolQDakN7VGidOlOFZe5NaiFjzjBZNWy5SKQz5fxNWokTGuU/20m01wUlj7d3J7ezC+XEZzgG1VYH9sSceAEis/aj/BptEa03mVzutVQWlc39gqgMHblKaaT/TM4s2EYhoIDEJJuYdtsT8l5LNDtKEarnaBRawHN4Oi3JYWMvasTnxi6lGkldQKd6jwZT0sufFTnkwndJ6rv4OI4Up7sR2GsAUmXnDCbkuXU/0oDYwsh2KUSXqEho7jcXF1FsIAqkLrPQNXHY5VgoAD64km3G/FgQWgsIdBkHVXHBPdlyxvVEDegu6EIV9E2H+vjz5VPxUZ+8V5EOjfw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/sQ0f+CJlFWVdvfk3U9YHHrK1XgNvtqFqlNtv0aOcag=;
- b=4UjU/5bimo8saHARznfYF2ChVu1F290o/oaRWzcYG0r5TvAQFeqGKOa3R1xgm2VamFHrHGYxE2QJOqvDpdpcAoiFFJV1qX642h9DUaRVmpxIP2Kovj+nAnmJ1BNG44p4fxo1JbuSuY9brkLdvLPVbK/CjGGHmhUfOLy07mQD2l8=
-Received: from CH2PR05CA0003.namprd05.prod.outlook.com (2603:10b6:610::16) by
- CH3PR12MB9147.namprd12.prod.outlook.com (2603:10b6:610:19a::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9031.18; Wed, 20 Aug 2025 07:18:54 +0000
-Received: from CH2PEPF00000143.namprd02.prod.outlook.com
- (2603:10b6:610:0:cafe::af) by CH2PR05CA0003.outlook.office365.com
- (2603:10b6:610::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.13 via Frontend Transport; Wed,
- 20 Aug 2025 07:18:54 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CH2PEPF00000143.mail.protection.outlook.com (10.167.244.100) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.9052.8 via Frontend Transport; Wed, 20 Aug 2025 07:18:54 +0000
-Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 20 Aug
- 2025 02:18:54 -0500
-Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB06.amd.com
- (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 20 Aug
- 2025 02:18:53 -0500
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39 via Frontend
- Transport; Wed, 20 Aug 2025 02:18:52 -0500
-Date: Wed, 20 Aug 2025 09:18:45 +0200
-From: Luc Michel <luc.michel@amd.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, Francisco Iglesias
- <francisco.iglesias@amd.com>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Alistair Francis
- <alistair@alistair23.me>, Frederic Konrad <frederic.konrad@amd.com>, "Sai
- Pavan Boddu" <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH 13/48] hw/arm/xlnx-versal: VersalMap: add support for
- OR'ed IRQs
-Message-ID: <aKV21WpfZ8u054zc@XFR-LUMICHEL-L2.amd.com>
-References: <20250716095432.81923-1-luc.michel@amd.com>
- <20250716095432.81923-14-luc.michel@amd.com>
- <CAFEAcA-x_CYWPM2TeGSTLjCj==3JY_uyvfFmR=nLi4pRLw-P2Q@mail.gmail.com>
- <aKMrBdNhtqHVHRYw@XFR-LUMICHEL-L2.amd.com>
- <CAFEAcA8eop95ojfZw3YbDrWfrv1fZ5QYSmwx_oDThxMCiMMeDg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1uodk6-0005kp-0u
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 04:00:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755676819;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bY2nucKB88klRZpRVml9fDFbBTzbcGqopnve3SC+IuE=;
+ b=BK3GP5fTbN/heCNBl97Kk69o4oLaRVRul5dQgse74ugIu4lmnui9cHpJYXAnD2b1nWpyIz
+ wvZTZZg4Ht7rkqwy+mPCOcCbcCcnr5UrFaXjFOOpb7qr5cyTTx0C8qGdjIKH5g5+VgCnik
+ 5ueEuSqexVZVVbUqBZ9jQnuThwr9tdM=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-132-zuuOh5B_NqW-n191KCgATg-1; Wed, 20 Aug 2025 04:00:16 -0400
+X-MC-Unique: zuuOh5B_NqW-n191KCgATg-1
+X-Mimecast-MFC-AGG-ID: zuuOh5B_NqW-n191KCgATg_1755676816
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-323267c0292so5912801a91.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 01:00:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755676815; x=1756281615;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bY2nucKB88klRZpRVml9fDFbBTzbcGqopnve3SC+IuE=;
+ b=YyJjKuH188g6DrEpca7vc05c5B91nSkACIHkju1i8Uiqf03awnr9jsf3Q1VAZk/IYF
+ viKn9+gS84Fxr2D8Y7o833/kWX6wDKUYLekxu67a+Rn1P6gx1pYYWOH9rBl+qOup01id
+ J125nsY9XRkbq6lwQKApbg1BzwPCldQlxdZ0EUXLNnGacyc4EpWc9pJTx4z9bUaV/Van
+ maaV3ZuMmeC2fZ/9Xppi2euM2lb/dC9tVu6IE4BAUi4rzdcOOlxvgCWieeK0lPo0qCUr
+ fyKcynjSzwIKgzh0i29EQrqIkWLdiJE7XZFi2ye7ziJJ09ELSfZYOZxvykWjqzAdpxm9
+ ud4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXYz7iafhE3NkjJumohzkZ3BPqn5JLDhbOaVfAH4Fm1ygSRKxgP8DtX+ihDmEyyAVkLIKhIPJteBjqG@nongnu.org
+X-Gm-Message-State: AOJu0Yzp7dAZEvZ9zfunHNW+nTd1ZzAqkCU/NGlR3A0JFsY59qoOLTaT
+ zyaiPDJhiEioVwfVKwxoNiG5LyjTC/nHHT4bR8jEHE7EnAyDAxrI8gKZXvxi0dv5YakCeAW52YP
+ SIViBfkmlqFHfAImTW5/2Uau6Ex5Lo62zdse7gKPWMitZrZ/0Wi5REQ98muwFLg0xmjbD+DPf+8
+ Z6gk4r6dyN0+4tRvaD/kZONTtM2GlLg5w=
+X-Gm-Gg: ASbGnct/Rn3ZdIO+Imenluq1eAtSWRRVxe+AmVxXLY3mTkOm8z3SEt2RfkDozqPIKl/
+ +4e1pM22PPFKUczCCj3EA+LyfGUQ5zQT8VGL9JWWUkw926p4ZBVP8eT8dq+udoe7J6w2Tr/VYve
+ 92Aidq+Va6021/ZGumWJU=
+X-Received: by 2002:a17:90b:2888:b0:321:9536:4b69 with SMTP id
+ 98e67ed59e1d1-324e144792amr2977817a91.27.1755676815284; 
+ Wed, 20 Aug 2025 01:00:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG51+Mjg7qW7ytVbcGOUY5JD9e9ANEJoqF1nttWDFTKD8xh7qdXdJlLPdc2+3fsfpgukXQiXrB8K5zQTu53vCU=
+X-Received: by 2002:a17:90b:2888:b0:321:9536:4b69 with SMTP id
+ 98e67ed59e1d1-324e144792amr2977776a91.27.1755676814701; Wed, 20 Aug 2025
+ 01:00:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA8eop95ojfZw3YbDrWfrv1fZ5QYSmwx_oDThxMCiMMeDg@mail.gmail.com>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF00000143:EE_|CH3PR12MB9147:EE_
-X-MS-Office365-Filtering-Correlation-Id: 76dc5fe2-fba5-4340-3c75-08dddfb9d227
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?i5XuAQ0IiIihAOvqd+1ICLToP97ZhgA8KCyUNzEeNgs/wtx6AJSw6DfcY/II?=
- =?us-ascii?Q?Z0GYQyNl2BjlvBQ/XynypDBtCyTy7fQBIr5BOESeUnO1D3vC2GgiCGTuQ95/?=
- =?us-ascii?Q?WdjIfa1oC2mHia5It9a+iunnkjRx0nzvo7AMtyGEnWEN05pziRWTAtIhbTQQ?=
- =?us-ascii?Q?qPFyiBPVnbdZEPSBaNeP8Wh1SuXqdcrIqvCO3Av0CO7nFB29+fNbLOXX3F6x?=
- =?us-ascii?Q?MAeemKLprd3bMwSsP2/Fb7+hxTNAruKc0AKiPIeSa8Fw0awt7QGb3qxcMXhW?=
- =?us-ascii?Q?XRUWosSQYLiioPdW8O6KPbh3XN/tU9Rbx/nxy4PIQfxZmtGBEfltKsvuSar2?=
- =?us-ascii?Q?D78CyLsisvCFftLcjJREb6goC3MIjrYZ5nkZ9Fk+mXiB8C/zK1NmcJsEOdUs?=
- =?us-ascii?Q?Y2JIND/AAlEFUIQKLb6QEn9Sz01pgPKup+8OGbgUyQh6SV0qmrNAsKa75whf?=
- =?us-ascii?Q?WoCWLn1td6APBDdCP/N1w7ywBYBpc4k5ZBJs3D63pnxNOtsmVU/GprP4Qbrk?=
- =?us-ascii?Q?oHFfsI4ag9CaikdzQ7Kmr8/cQ2vicOACYUZlfaWEKMJ6YgrNuDP61lFIJPYf?=
- =?us-ascii?Q?Su2PHkugQKUtdPbixRFqV1ryBHgq8kZvWFykpMUzFdC6Fg1dZdoTgp43KIDC?=
- =?us-ascii?Q?OM/Nx7rttBnO2HCLAEjjuNWUO5fZfflCFwYZreBbfMnCdcqEDXl4JDopMx72?=
- =?us-ascii?Q?rOIv+G7fR5/drR1F88ffCLGoAlnsb40q7X5k4XbobOg2j3EEg02y55kEFp81?=
- =?us-ascii?Q?ug/N0TP8JwLczZlNjsw53SF5uaFAFSpFvvmCsN8U2ZBQ/AWC/TvwwBqrSZia?=
- =?us-ascii?Q?VqwkpuIGd7rrdAgZKQG212RpVXHNBRC+mLTw6GNLq8iqst+AKw9i2qyKWyGP?=
- =?us-ascii?Q?unxmDAst93PHms/vRIrtX1W2ZMvAW4XFjMhF3TK6fxIgVa2EFmgm8FOa5qrD?=
- =?us-ascii?Q?4VELQeI5kLHpqPKlx5zGR6iYlGUBdqp6ZkeEYZBXR6a1780C1T76Pz8jyfne?=
- =?us-ascii?Q?J9P7LZhCccYbUdp6bCEJk/YwmjeFLDxwrgX8JxONOyNN2GbnrDIRyN2JPNMP?=
- =?us-ascii?Q?TyHU/VOSBK1ALKSlfs1YnMtVvLKzPf6j2smju9kTuRGFQHjpQJY/sm88WFoU?=
- =?us-ascii?Q?9l8BQ5Y3MCJBSxqa4QUDPEJK+f5MRXZFNJsmzgLrPfy0BonJCPw+G7xxPNts?=
- =?us-ascii?Q?aV+7JYX///pk9n67sMUYUF6ycMbPe9K0C2iqBI6pJFJ5AKKALZ+ZWJuCXFfc?=
- =?us-ascii?Q?56NS199s3R0ULWp4RP/Xcz9EkbszzC7MxR/skIR3hCeWG1moeODEZlvrbuK4?=
- =?us-ascii?Q?adnB/06xfB9fY1UkXmDqjbmtUN0VC9mYSR9DPTrvLyS+RiVebwDdoAiisjCY?=
- =?us-ascii?Q?KKnwwPS/JIlsQyQOwTjTy0sTOySo4lfXDNP5F050Z77MNFhpzWZ5yVjjaIhp?=
- =?us-ascii?Q?Z7bxgDYhlSe7ToS5b7cfaJcsZaZRoUsXCpBgStW4tE+U1SjvIBsVwnGqlAx3?=
- =?us-ascii?Q?3ys2+gLrQNhEMEvU9ZlidtR9dyICHbtifIc3?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2025 07:18:54.3676 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 76dc5fe2-fba5-4340-3c75-08dddfb9d227
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000143.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9147
-Received-SPF: permerror client-ip=2a01:111:f403:2418::62c;
- envelope-from=Luc.Michel@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
+References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+ <20250722124127.2497406-6-jonah.palmer@oracle.com> <aJOCiUPp0dckmgAn@x1.local>
+ <5e276607-cd86-4a1d-99f3-47dd2f0f3bc0@oracle.com> <aJTU641465aGKWRU@x1.local>
+ <0cf99747-443e-4a29-a0da-64012548a994@oracle.com> <aJnydjxFzKwVzi7Y@x1.local>
+ <eafcf9ca-f23f-42d5-b8c2-69f81a395d11@oracle.com> <aJpm4-JfmevsI7Ei@x1.local>
+ <CAJaqyWfAnH-Lca3zmQTiR2wtaryKUo2KDKa=s5pcuAO9E6Efsw@mail.gmail.com>
+ <aJyb6n9Vf4BhHqpb@x1.local>
+ <CAJaqyWdUutZrAWKy9d=ip+h+y3BnptUrcL8Xj06XfizNxPtfpw@mail.gmail.com>
+ <59317419-e832-4590-ad4f-cfe7d21e8fd4@oracle.com>
+ <CAJaqyWfc3G5NLnxqXvZFxw2aRnVvOcZbLds5LHzcdoLjVGmOsw@mail.gmail.com>
+ <c5b97e10-a8bb-4d59-b509-734eab7d5be3@oracle.com>
+ <CAJaqyWc-vKsqs2boiktJn_cO3fSVk=-EfP3G8QN-z=n59VCoHA@mail.gmail.com>
+ <4f067326-6c80-4768-886b-2b819e7184d3@oracle.com>
+In-Reply-To: <4f067326-6c80-4768-886b-2b819e7184d3@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Wed, 20 Aug 2025 09:59:38 +0200
+X-Gm-Features: Ac12FXw_ZWi0T19hsvXpTlnnPVzTe-Zq8N1EBG4EkgyMviQhWOK9NUtfg_HOSRA
+Message-ID: <CAJaqyWcNdPyrAmRMBgdEk3o4AR1kK6ZiHWdY6q4MuwvGgjub8Q@mail.gmail.com>
+Subject: Re: [RFC 5/6] virtio,virtio-net: skip consistency check in
+ virtio_load for iterative migration
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, farosas@suse.de, 
+ eblake@redhat.com, armbru@redhat.com, jasowang@redhat.com, mst@redhat.com, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, 
+ Dragos Tatulea DE <dtatulea@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,75 +120,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16:25 Tue 19 Aug     , Peter Maydell wrote:
-> On Mon, 18 Aug 2025 at 14:30, Luc Michel <luc.michel@amd.com> wrote:
+On Tue, Aug 19, 2025 at 5:11=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
+>
+>
+>
+> On 8/19/25 3:10 AM, Eugenio Perez Martin wrote:
+> > On Mon, Aug 18, 2025 at 4:46=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
+le.com> wrote:
+> >>
+> >>
+> >>
+> >> On 8/18/25 2:51 AM, Eugenio Perez Martin wrote:
+> >>> On Fri, Aug 15, 2025 at 4:50=E2=80=AFPM Jonah Palmer <jonah.palmer@or=
+acle.com> wrote:
+> >>>>
+> >>>>
+> >>>>
+> >>>> On 8/14/25 5:28 AM, Eugenio Perez Martin wrote:
+> >>>>> On Wed, Aug 13, 2025 at 4:06=E2=80=AFPM Peter Xu <peterx@redhat.com=
+> wrote:
+> >>>>>>
+> >>>>>> On Wed, Aug 13, 2025 at 11:25:00AM +0200, Eugenio Perez Martin wro=
+te:
+> >>>>>>> On Mon, Aug 11, 2025 at 11:56=E2=80=AFPM Peter Xu <peterx@redhat.=
+com> wrote:
+> >>>>>>>>
+> >>>>>>>> On Mon, Aug 11, 2025 at 05:26:05PM -0400, Jonah Palmer wrote:
+> >>>>>>>>> This effort was started to reduce the guest visible downtime by
+> >>>>>>>>> virtio-net/vhost-net/vhost-vDPA during live migration, especial=
+ly
+> >>>>>>>>> vhost-vDPA.
+> >>>>>>>>>
+> >>>>>>>>> The downtime contributed by vhost-vDPA, for example, is not fro=
+m having to
+> >>>>>>>>> migrate a lot of state but rather expensive backend control-pla=
+ne latency
+> >>>>>>>>> like CVQ configurations (e.g. MQ queue pairs, RSS, MAC/VLAN fil=
+ters, offload
+> >>>>>>>>> settings, MTU, etc.). Doing this requires kernel/HW NIC operati=
+ons which
+> >>>>>>>>> dominates its downtime.
+> >>>>>>>>>
+> >>>>>>>>> In other words, by migrating the state of virtio-net early (bef=
+ore the
+> >>>>>>>>> stop-and-copy phase), we can also start staging backend configu=
+rations,
+> >>>>>>>>> which is the main contributor of downtime when migrating a vhos=
+t-vDPA
+> >>>>>>>>> device.
+> >>>>>>>>>
+> >>>>>>>>> I apologize if this series gives the impression that we're migr=
+ating a lot
+> >>>>>>>>> of data here. It's more along the lines of moving control-plane=
+ latency out
+> >>>>>>>>> of the stop-and-copy phase.
+> >>>>>>>>
+> >>>>>>>> I see, thanks.
+> >>>>>>>>
+> >>>>>>>> Please add these into the cover letter of the next post.  IMHO i=
+t's
+> >>>>>>>> extremely important information to explain the real goal of this=
+ work.  I
+> >>>>>>>> bet it is not expected for most people when reading the current =
+cover
+> >>>>>>>> letter.
+> >>>>>>>>
+> >>>>>>>> Then it could have nothing to do with iterative phase, am I righ=
+t?
+> >>>>>>>>
+> >>>>>>>> What are the data needed for the dest QEMU to start staging back=
+end
+> >>>>>>>> configurations to the HWs underneath?  Does dest QEMU already ha=
+ve them in
+> >>>>>>>> the cmdlines?
+> >>>>>>>>
+> >>>>>>>> Asking this because I want to know whether it can be done comple=
+tely
+> >>>>>>>> without src QEMU at all, e.g. when dest QEMU starts.
+> >>>>>>>>
+> >>>>>>>> If src QEMU's data is still needed, please also first consider p=
+roviding
+> >>>>>>>> such facility using an "early VMSD" if it is ever possible: feel=
+ free to
+> >>>>>>>> refer to commit 3b95a71b22827d26178.
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>> While it works for this series, it does not allow to resend the s=
+tate
+> >>>>>>> when the src device changes. For example, if the number of virtqu=
+eues
+> >>>>>>> is modified.
+> >>>>>>
+> >>>>>> Some explanation on "how sync number of vqueues helps downtime" wo=
+uld help.
+> >>>>>> Not "it might preheat things", but exactly why, and how that diffe=
+rs when
+> >>>>>> it's pure software, and when hardware will be involved.
+> >>>>>>
+> >>>>>
+> >>>>> By nvidia engineers to configure vqs (number, size, RSS, etc) takes
+> >>>>> about ~200ms:
+> >>>>> https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/6c8e=
+bb97-d546-3f1c-4cdd-54e23a566f61@nvidia.com/T/__;!!ACWV5N9M2RV99hQ!OQdf7sGa=
+BlbXhcFHX7AC7HgYxvFljgwWlIgJCvMgWwFvPqMrAMbWqf0862zV5shIjaUvlrk54fLTK6uo2pA=
+$
+> >>>>>
+> >>>>> Adding Dragos here in case he can provide more details. Maybe the
+> >>>>> numbers have changed though.
+> >>>>>
+> >>>>> And I guess the difference with pure SW will always come down to PC=
+I
+> >>>>> communications, which assume it is slower than configuring the host=
+ SW
+> >>>>> device in RAM or even CPU cache. But I admin that proper profiling =
+is
+> >>>>> needed before making those claims.
+> >>>>>
+> >>>>> Jonah, can you print the time it takes to configure the vDPA device
+> >>>>> with traces vs the time it takes to enable the dataplane of the
+> >>>>> device? So we can get an idea of how much time we save with this.
+> >>>>>
+> >>>>
+> >>>> Let me know if this isn't what you're looking for.
+> >>>>
+> >>>> I'm assuming by "configuration time" you mean:
+> >>>>     - Time from device startup (entry to vhost_vdpa_dev_start()) to =
+right
+> >>>>       before we start enabling the vrings (e.g.
+> >>>>       VHOST_VDPA_SET_VRING_ENABLE in vhost_vdpa_net_cvq_load()).
+> >>>>
+> >>>> And by "time taken to enable the dataplane" I'm assuming you mean:
+> >>>>     - Time right before we start enabling the vrings (see above) to =
+right
+> >>>>       after we enable the last vring (at the end of
+> >>>>       vhost_vdpa_net_cvq_load())
+> >>>>
+> >>>> Guest specs: 128G Mem, SVQ=3Don, CVQ=3Don, 8 queue pairs:
+> >>>>
+> >>>> -netdev type=3Dvhost-vdpa,vhostdev=3D$VHOST_VDPA_0,id=3Dvhost-vdpa0,
+> >>>>            queues=3D8,x-svq=3Don
+> >>>>
+> >>>> -device virtio-net-pci,netdev=3Dvhost-vdpa0,id=3Dvdpa0,bootindex=3D-=
+1,
+> >>>>            romfile=3D,page-per-vq=3Don,mac=3D$VF1_MAC,ctrl_vq=3Don,m=
+q=3Don,
+> >>>>            ctrl_vlan=3Doff,vectors=3D18,host_mtu=3D9000,
+> >>>>            disable-legacy=3Don,disable-modern=3Doff
+> >>>>
+> >>>> ---
+> >>>>
+> >>>> Configuration time:    ~31s
+> >>>> Dataplane enable time: ~0.14ms
+> >>>>
+> >>>
+> >>> I was vague, but yes, that's representative enough! It would be more
+> >>> accurate if the configuration time ends by the time QEMU enables the
+> >>> first queue of the dataplane though.
+> >>>
+> >>> As Si-Wei mentions, is v->shared->listener_registered =3D=3D true at =
+the
+> >>> beginning of vhost_vdpa_dev_start?
+> >>>
+> >>
+> >> Ah, I also realized that Qemu I was using for measurements was using a
+> >> version before the listener_registered member was introduced.
+> >>
+> >> I retested with the latest changes in Qemu and set x-svq=3Doff, e.g.:
+> >> guest specs: 128G Mem, SVQ=3Doff, CVQ=3Don, 8 queue pairs. I ran testi=
+ng 3
+> >> times for measurements.
+> >>
+> >> v->shared->listener_registered =3D=3D false at the beginning of
+> >> vhost_vdpa_dev_start().
+> >>
 > >
-> > Hi Peter,
+> > Let's move out the effect of the mem pinning from the downtime by
+> > registering the listener before the migration. Can you check why is it
+> > not registered at vhost_vdpa_set_owner?
 > >
-> > On 13:24 Mon 04 Aug     , Peter Maydell wrote:
-> > > On Wed, 16 Jul 2025 at 10:55, Luc Michel <luc.michel@amd.com> wrote:
-> > > >
-> > > > +static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
-> > > > +                                          qemu_irq target_irq)
-> > > > +{
-> > > > +    Object *container = versal_get_child(s, "irq-or-gates");
-> > > > +    DeviceState *dev;
-> > > > +    g_autofree char *name;
-> > > > +    int idx, or_idx;
-> > > > +
-> > > > +    idx = FIELD_EX32(irq_idx, VERSAL_IRQ, IRQ);
-> > > > +    or_idx = FIELD_EX32(irq_idx, VERSAL_IRQ, OR_IDX);
-> > > > +
-> > > > +    name = g_strdup_printf("irq[%d]", idx);
-> > > > +    dev = DEVICE(object_resolve_path_at(container, name));
-> > > > +
-> > > > +    if (dev == NULL) {
-> > > > +        dev = qdev_new(TYPE_OR_IRQ);
-> > >
-> > > Here we create a device...
-> > >
-> > > > +        object_property_add_child(container, name, OBJECT(dev));
-> > > > +        qdev_prop_set_uint16(dev, "num-lines", 1 << R_VERSAL_IRQ_OR_IDX_LENGTH);
-> > > > +        qdev_realize_and_unref(dev, NULL, &error_abort);
-> > > > +        qdev_connect_gpio_out(dev, 0, target_irq);
-> > > > +    }
-> > > > +
-> > > > +    return qdev_get_gpio_in(dev, or_idx);
-> > >
-> > > ...but then we don't save the pointer to it, so the only
-> > > thing still hanging onto it is the QOM tree.
-> > >
-> > > If you want to change "embedded device struct" into
-> > > "allocate memory to create devices" that's fine, but the
-> > > SoC should still keep track of everything it's creating,
-> > > so that (at least in theory) it could clean it up on
-> > > unrealize.
-> >
-> > I'm not sure I fully understand your point:
-> >
-> >    - The OR gate device is parented to the "irq-or-gates" container,
-> >      which is itself parented to the SoC. So finalizing (freeing) the
-> >      SoC would trigger a cascade of free calls to the children,
-> >      including those objects right?
-> 
-> Ah, I hadn't noticed that we add the object as a QOM child
-> of the SoC here.
-> 
-> It does mean you can't ever get back to the OR gate object
-> except by walking the QOM tree, but I suppose that's OK.
-> 
-> It would be helpful if you could run "make check" under
-> the clang leak sanitizer with your patches added, to see
-> if it complains about anything. (Unfortunately it will
-> definitely complain about at least some pre-existing
-> leaks, I suspect.)
-Yes I did that before sending my series and fixed all my leaks. As you
-say there are some existing ones, mainly in the register API (IIRC it
-does create an object that is not correctly parented).
+>
+> Sorry I was profiling improperly. The listener is registered at
+> vhost_vdpa_set_owner initially and v->shared->listener_registered is set
+> to true, but once we reach the first vhost_vdpa_dev_start call, it shows
+> as false and is re-registered later in the function.
+>
+> Should we always expect listener_registered =3D=3D true at every
+> vhost_vdpa_dev_start call during startup?
 
-I'll send v2 with your other remarks addressed then.
+Yes, that leaves all the memory pinning time out of the downtime.
 
-Thanks
+> This is what I traced during
+> startup of a single guest (no migration).
 
-Luc
+We can trace the destination's QEMU to be more accurate, but probably
+it makes no difference.
+
+> Tracepoint is right at the
+> start of the vhost_vdpa_dev_start function:
+>
+> vhost_vdpa_set_owner() - register memory listener
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+
+This is surprising. Can you trace how listener_registered goes to 0 again?
+
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 0, started =
+=3D 1
+> ...
+> * VQs are now being enabled *
+>
+> I'm also seeing that when the guest is being shutdown,
+> dev->vhost_ops->vhost_get_vring_base() is failing in
+> do_vhost_virtqueue_stop():
+>
+> ...
+> [  114.718429] systemd-shutdown[1]: Syncing filesystems and block devices=
+.
+> [  114.719255] systemd-shutdown[1]: Powering off.
+> [  114.719916] sd 0:0:0:0: [sda] Synchronizing SCSI cache
+> [  114.724826] ACPI: PM: Preparing to enter system sleep state S5
+> [  114.725593] reboot: Power down
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> qemu-system-x86_64: vhost VQ 2 ring restore failed: -1: Operation not
+> permitted (1)
+> qemu-system-x86_64: vhost VQ 3 ring restore failed: -1: Operation not
+> permitted (1)
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> qemu-system-x86_64: vhost VQ 4 ring restore failed: -1: Operation not
+> permitted (1)
+> qemu-system-x86_64: vhost VQ 5 ring restore failed: -1: Operation not
+> permitted (1)
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> qemu-system-x86_64: vhost VQ 6 ring restore failed: -1: Operation not
+> permitted (1)
+> qemu-system-x86_64: vhost VQ 7 ring restore failed: -1: Operation not
+> permitted (1)
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> qemu-system-x86_64: vhost VQ 8 ring restore failed: -1: Operation not
+> permitted (1)
+> qemu-system-x86_64: vhost VQ 9 ring restore failed: -1: Operation not
+> permitted (1)
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> qemu-system-x86_64: vhost VQ 10 ring restore failed: -1: Operation not
+> permitted (1)
+> qemu-system-x86_64: vhost VQ 11 ring restore failed: -1: Operation not
+> permitted (1)
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> qemu-system-x86_64: vhost VQ 12 ring restore failed: -1: Operation not
+> permitted (1)
+> qemu-system-x86_64: vhost VQ 13 ring restore failed: -1: Operation not
+> permitted (1)
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+> qemu-system-x86_64: vhost VQ 14 ring restore failed: -1: Operation not
+> permitted (1)
+> qemu-system-x86_64: vhost VQ 15 ring restore failed: -1: Operation not
+> permitted (1)
+> vhost_vdpa_dev_start() - v->shared->listener_registered =3D 1, started =
+=3D 0
+>
+> However when x-svq=3Don, I don't see these errors on shutdown.
+>
+
+SVQ can mask this error as it does not need to forward the ring
+restore message to the device. It can just start with 0 and convert
+indexes.
+
+Let's focus on listened_registered first :).
+
+> >> ---
+> >>
+> >> Configuration time: Time from first entry into vhost_vdpa_dev_start() =
+to
+> >> right after Qemu enables the first VQ.
+> >>    - 26.947s, 26.606s, 27.326s
+> >>
+> >> Enable dataplane: Time from right after first VQ is enabled to right
+> >> after the last VQ is enabled.
+> >>    - 0.081ms, 0.081ms, 0.079ms
+> >>
+> >
+>
+
 
