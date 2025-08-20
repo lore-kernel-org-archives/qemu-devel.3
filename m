@@ -4,72 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E8D3CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 11:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8501CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 12:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uohN6-0005fw-Rj; Wed, 20 Aug 2025 07:52:53 -0400
+	id 1uohij-0002C4-3V; Wed, 20 Aug 2025 08:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uohN3-0005em-KG
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 07:52:49 -0400
-Received: from p-east1-cluster2-host2-snip4-7.eps.apple.com ([57.103.88.148]
- helo=outbound.ci.icloud.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uohiT-0002AH-T2
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 08:15:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uohN1-0005qx-LZ
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 07:52:49 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-7 (Postfix) with ESMTPS id
- AD61918001B3; Wed, 20 Aug 2025 11:52:43 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=Zy09phtL1II7k91Wj0EsJXfyA2sIe9h8kaT5cZNKO8s=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=nbxJEqUgFtoQZcHd8SokwHggou9CdsBaJng+4iSD5+UONB21uaCC8XvaE3I+HX4yOE33g0qpUoGp3G6IRI1zGm1fR8gyh1166U4+io5cfIyLtG/TZUZblq2ASQ7+7lvb8VpdTSgHp5N8ODJsSnMypCqO+selcAwR/i3TKDjEeihT6VizNsdY8MHMp1Ml6LewV3Ho23jt+n8CxXIGciE8oYZ/bmStvVfIgJFZB394BG1npFjjj4AkD0cg3OLgZVNRMbu4XjL6SMkxnEJoZqSvRbU9iZtLtMox/gS3nt5ij/xXmNbxVddetQ1dKoDjLj3y273lv3zTUtGzqjrvsAEMFQ==
-X-Client-IP: 194.62.217.67
-Received: from smtpclient.apple (ci-asmtp-me-k8s.p00.prod.me.com
- [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-7 (Postfix) with ESMTPSA id
- 400471800B82; Wed, 20 Aug 2025 11:52:42 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH 0/7] target/arm/hvf cleanups
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250818041354.2393041-1-richard.henderson@linaro.org>
-Date: Wed, 20 Aug 2025 13:52:30 +0200
-Cc: qemu-devel@nongnu.org, agraf@csgraf.de, qemu-arm@nongnu.org,
- philmd@linaro.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <A75918AC-58FA-467B-95A0-E5D54F68434F@ynddal.dk>
-References: <20250818041354.2393041-1-richard.henderson@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-X-Mailer: Apple Mail (2.3826.700.81)
-X-Proofpoint-GUID: 3AAM5PxQeJG-jdVyDpzU4wpL6qf_g_9R
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDEwNSBTYWx0ZWRfX4Vadqmy63LlG
- rG0PSv5NS4j2iIOP4AcLbF0628aoNlymP5VqcsXJHX6awvsfFH/jhtSXKAZ4P3/30zDstyYHK+r
- LH24qARNrp9o4KkVEYukH458l0h7qQlWYcWBA1Kg+wnLraOTSIgXI4S4zt86ioO0HjpLXlT26hV
- JHkVx1tOS4LIIRVcfIPa8m3Z35CQxwTx4k0tYCCD03bWxpud3hCH8YzgwTiNKGS30BX4jhpQ4eY
- jKQlCONUptqA16r/gLRWBhwT7Qs1JPR3d33QBPT8TRLlt2nSZL1Pu6PEzQRZrl1qCmTcViKls=
-X-Proofpoint-ORIG-GUID: 3AAM5PxQeJG-jdVyDpzU4wpL6qf_g_9R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-20_03,2025-08-20_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=868
- clxscore=1030 bulkscore=0 phishscore=0 spamscore=0
- mlxscore=0 malwarescore=0
- suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.22.0-2506270000 definitions=main-2508200105
-X-JNJ: AAAAAAABKAGIFYIcWJ36QY5FV9Bn7+/3cbTdnbYVUzJbAbe9DrutZsQAzrPey9PNVgkqIuxhCzKGrK3LYoDt4lvSbQtok4xjSlNQtRk7MUmhO8b2TLgtW23Z7at/zcoTXLz2W+R9KE0Yas7rV55mqPNIcpwFtP1v0MmCXq97WgVSJUQd9bqGaDtnOBVlSGtCdvM9xSj6a3ZTpj9PlP6T7Dv1aRcO0MTXOI0eJLwapsYdlBC1pEDBhr4Ky5TWTHDaz47o2zEo9VdNVOZJfaVxWjCFTcYpMb65TIGCMJp3Wt8KA7hvvtAAtysjmrklGjUf4VXbb1ANthFsPoqVARvUsqYAeXleb5kTnCTh2hERm96hWpUz0aJAKn8xRfqqevrRX8eT7BUi7VOyZoUdHih1cg/5fQFkxwGMk2qX4zL8v6GQ54DEdOE+kk+7dGe8FB7qktXCwqc=
-Received-SPF: pass client-ip=57.103.88.148; envelope-from=mads@ynddal.dk;
- helo=outbound.ci.icloud.com
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uohiQ-0000pM-HO
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 08:14:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755692092;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kP64gk8SOdqT/LFxqY0iDJBiyivIT295bgTsypE1PP8=;
+ b=KC56J2ReObkMb1bQUCFRv/Pu5YnMc1YEp+le0q6p2Wpo203+CSLSHV53Vpr345psjCDfVS
+ nc3XD4YrQ48XLgKoInXiX1kUWUocaFMELvFsSK+U12FMMt+II8wezNrZlKwJ+KDVvvvysJ
+ IwAvzGJesTz4uFKY+11u1p2uPKqnqS8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-Go_jOvwdOveEy8hNE-tXLQ-1; Wed,
+ 20 Aug 2025 08:14:50 -0400
+X-MC-Unique: Go_jOvwdOveEy8hNE-tXLQ-1
+X-Mimecast-MFC-AGG-ID: Go_jOvwdOveEy8hNE-tXLQ_1755692090
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A453C197753E; Wed, 20 Aug 2025 12:14:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.164])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC55519560B0; Wed, 20 Aug 2025 12:14:47 +0000 (UTC)
+Date: Wed, 20 Aug 2025 13:14:44 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Tanish Desai <tanishdesai37@gmail.com>, qemu-devel@nongnu.org,
+ Mads Ynddal <mads@ynddal.dk>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v2 1/2] tracetool: add CHECK_TRACE_EVENT_GET_STATE
+Message-ID: <aKW8NABFH8g-NCkx@redhat.com>
+References: <20250806150539.2871-1-tanishdesai37@gmail.com>
+ <20250806150539.2871-2-tanishdesai37@gmail.com>
+ <aJOpG5XuWHYZUQ4c@redhat.com>
+ <46c5fbcb-9aec-4f9e-984a-b2f255210007@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <46c5fbcb-9aec-4f9e-984a-b2f255210007@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,50 +88,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Aug 07, 2025 at 12:35:39PM +0200, Paolo Bonzini wrote:
+> On 8/6/25 21:13, Daniel P. Berrangé wrote:
+> > It is best to have new functionality added in a separate commit
+> > from the removal of obsolete code.
+> 
+> My mistake - when Tanish and I "un-rebased" these patches from on top of
+> yours, we placed the removal of the "nocheck" functions in patch 1 instead
+> of patch 2 where it made more sense.
+> 
+> > I've co-incidentally got removal of this obsolete code in the
+> > tracing test suite series I posted, so one will need to be
+> > rebased on top of the other, depending on what order Stefan
+> > wants to take the patches.
+> 
+> If the main blocker (the /dev/stdout issue) is fixed quickly, your patches
+> should go in first because they aid in reviewing this one.
 
-> On 18 Aug 2025, at 06.13, Richard Henderson =
-<richard.henderson@linaro.org> wrote:
->=20
-> While working on other things cpregs related, I noticed that
-> target/arm/hvf failed to produce a sorted cpreg_indexes[].
->=20
-> I wondered if that explained the migration-test failure that
-> we have, but no such luck.  (I have no idea how to debug that
-> test, btw; so far it is still just a mysterious SIGSEGV.)
->=20
->=20
-> r~
->=20
->=20
-> Richard Henderson (7):
->  target/arm: Introduce KVMID_AA64_SYS_REG64
->  target/arm: Move compare_u64 to helper.c
->  target/arm/hvf: Split out sysreg.c.inc
->  target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
->  target/arm/hvf: Remove hvf_sreg_match.key
->  target/arm/hvf: Replace hvf_sreg_match with hvf_sreg_list
->  target/arm/hvf: Sort the cpreg_indexes array
->=20
-> target/arm/cpregs.h         |   3 +
-> target/arm/kvm-consts.h     |  11 ++
-> target/arm/helper.c         |  11 ++
-> target/arm/hvf/hvf.c        | 230 +++++++++---------------------------
-> target/arm/kvm.c            |  11 --
-> target/arm/hvf/sysreg.c.inc | 146 +++++++++++++++++++++++
-> 6 files changed, 224 insertions(+), 188 deletions(-)
-> create mode 100644 target/arm/hvf/sysreg.c.inc
->=20
-> --=20
-> 2.43.0
->=20
+I posted a new version that drops the stdout patch
 
-I noted the issue with HV_SYS_REG_MDCR_EL2, but assume we'll fix it down
-the line.
+  https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg02716.html
 
-For the series:
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>=
 
