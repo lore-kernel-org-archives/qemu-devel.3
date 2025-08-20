@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 304DFCA0EFC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55EBECA0FE1
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 21:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoqDt-0005Hm-N4; Wed, 20 Aug 2025 17:19:57 -0400
+	id 1uoqDx-0005Ko-9X; Wed, 20 Aug 2025 17:20:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uoqDq-0005G1-BU; Wed, 20 Aug 2025 17:19:54 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1uoqDu-0005IZ-RG; Wed, 20 Aug 2025 17:19:58 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uoqDm-0004zr-Pt; Wed, 20 Aug 2025 17:19:53 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-61a8b640e34so692206a12.1; 
- Wed, 20 Aug 2025 14:19:49 -0700 (PDT)
+ id 1uoqDt-00050u-0G; Wed, 20 Aug 2025 17:19:58 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-afcb7a3ee3cso47694566b.2; 
+ Wed, 20 Aug 2025 14:19:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755724787; x=1756329587; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iTwLwKM/0oxk203muiX5V18KN2PyquNc0IkpBqSWFbw=;
- b=m4QZy8CXTdI6S4eRlAFPgN6/aQa3c7p00hWfFEgJX40oUHvVYxNHd4i1r9orrWNV46
- n70Ha6vJSPWyGf3FMby4IVtBkbpaUS6aQBrAsUHZXagTg1ysCU+chlL0+jJEd2NQXOB7
- ZgLQMScHiEpHtwt2X3mvb2FIJDgKcyWGpasoN26MTw1DDvNc+M7TYORPV/SjEMESo8Y0
- 3s7i13y/IxqYPj1PEKoOGWObSAnxrRQbiHXFL2LXGJ++Hwwz+SLL+pSoounDdtVNdFaC
- tl86eSbuxMwHjkE1E29l0gdv6BYBfdSaaRJEK2OSM+Xe22u7StFSscWOQ4DP2z38MCHn
- 6BHg==
+ d=gmail.com; s=20230601; t=1755724794; x=1756329594; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lYVlm45QQ3i2G9+d7L5TMWVG0rHC31MFiYi6MByt5lI=;
+ b=WApl8whV3ThW48xD93M5HDy8yQWfU3v2vkcrwBiSIeco7cUjT1MYefped2NMd9J4dZ
+ quHt2yZ2PSoevkb9ZKpGB4ebRXd0cTvbggAwmZJeqnp1cbNtzTdsikVByW1N35Ea8XSZ
+ N/cVvW/UkqWGRjhX+vLXl3/XR9afVeMtD/vyO0EkkzwvOtJWX76XHqkFMv+9stKliJrv
+ GEbeYq9EqzdBEMZbtNX+CC0Xr7E/nrcJiwZFd18cMY+Cu7VZ20G9F90uPgzXfeHoxxev
+ hcpoWG8ok2Tdjp5xVqLjSkcqEcNq0CJ8c14E4B59cxLSt+/dmrALnQds2kxIai7shYFL
+ RfyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755724787; x=1756329587;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iTwLwKM/0oxk203muiX5V18KN2PyquNc0IkpBqSWFbw=;
- b=JhgvmEfnilmjZtCyGZJV7WVZGGytWGwuvx0pYQkLJ9God+HOSFTpclaMfq/KEwlzI+
- 2vXUZjyPgk/ADHgGQQbXseVd2mOqSJLSITpa9rQAfI9W1irUVOPXxQBM6ZRmX7YkMDLo
- F+nFm8a9jkuI/60cplWoLLiHwxvGPZthgR0FofmCKdcqw6FxJcTvoxcDCYF5BFH/gubp
- N0mKzVkQtLJLm8eVmksb+7/Oasx6Ly/bZ5ZDYwyLt/1T5uRascsulwdBeK0hWmmoSAWZ
- uDIEP+2JglVS99NYL4cNraS6ZNQ68agXDP88Q/5KC+hjoPE4U/kz0VTiXuIsrJEctXhh
- VXdA==
+ d=1e100.net; s=20230601; t=1755724794; x=1756329594;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lYVlm45QQ3i2G9+d7L5TMWVG0rHC31MFiYi6MByt5lI=;
+ b=lFPJ4613Cx+ErsWKCSUEIaNw8pYw8CEmf+1qeXeDaFIqe5VweBk4Bdo1dsMBDGl6ac
+ RpHC8JwUQAAb6SOuwB4NbnHyvTbxJCKtvfKDo+DYbGSj/dmGbXjm2L7qNmAPegrN+I8j
+ 5OMs/mXf2VN9GM+ETW7EI9D3cPRDVWWBaC1VVnc83qeOkoDZOGNzo3QSuQtGwfO1WRdg
+ i63hAfW3lNVBVz1gymASQGbjRjm36aeB7HQcyuYuoE3lQWjPYVxii14UaV9MKcGkAxcD
+ V5B1gfPq6eTE9gutf6YGNC1tbrb62WGIxCzfQfY3OMlD/iyDDzFQH9uo4rH8YHJySM/2
+ gX1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHj1ENRPCHeR1vxUIaodtF6st9xoHvX6tjGlL/h/rNL4K1SEFWnrkymQpab7MwwCwMmNasa7NQPQ==@nongnu.org
-X-Gm-Message-State: AOJu0YyPzlMmxfcbO+dOSIGN7Q75v4d8QWgQ924XuHnlFgum+5r8TfsT
- p1KkH6tgYfZFSgqwN42GTyyEU4PD440aitmQUa8d4GsGObUa/fvrNNX+hmfYQw==
-X-Gm-Gg: ASbGncsIOMfPI4SHitwhnrEXu48dJJe67seIv6Rq+hE7iycihSVN8nFBfYRyPA4QaoQ
- 64A5zsThO4sS+Mu6IwrQYuZgNFD64wrpp9ieMdPJuwf8Lxh4qThhwqaGcXGungXOj9StmfjLph5
- QIgD+geVTeL3Wl9t3hK1bDP7GwDAf/1mSTGwsgqqqywzmY5HA9vblq7OPLeXqlmDXvhgpZKpLmU
- 0swgkWVrPQ0krLpVu2guQyNKO/tvWv+zZiTu4PG2/X5FQ2O8BDkp6iP7VqrTG0A9BGriYysM1fs
- 8KL567Jtphr+FtoHFg4cu+Z0T9s/NSYK1Sw8JlgINJUzlaSXH3n6zhGCPP+Ab9+U4HCGHeC7Uk/
- CnC/nEMKEUklICOeu7Af3eE65+BMn+7aJwarSSazxI0G8+hy6mE78IWA0T1auUph/+khXJ1WaIP
- +FiBPTDTiPY68xnpDxwgaD+45C0tHNZnuczvy+8GgGxKI=
-X-Google-Smtp-Source: AGHT+IE4pvRhgUJeHgpn6z1UC7EZeyAwfFJL/LmNCaaYZrdx7BLyI/O9LxZviA0p13RgiNzd8P/KPw==
-X-Received: by 2002:a05:6402:280c:b0:615:8bee:56b6 with SMTP id
- 4fb4d7f45d1cf-61bf87478efmr119557a12.34.1755724787165; 
- Wed, 20 Aug 2025 14:19:47 -0700 (PDT)
+ AJvYcCVQWO5Rjxnr6zXUGB/k4wclOhjJatlBiazHvZ4wH9UdwRJ5Z6fg0KIzzquVtKJ3b+So9qlgf1QvOA==@nongnu.org
+X-Gm-Message-State: AOJu0Yy4e03mQEIFVXNTAYRWTkNa16CqRsSstkK/DV7rAxVTyqFYeV0y
+ ooiirR2tT0lTJ0nS0vUEqkd7J62GHHBheIlQFsBF4qqJCXXIXSFrgBthpU5u8uSo
+X-Gm-Gg: ASbGncttaXO1mlckjPzeBq8HbgHCDR704AdaGx8q4HIhGaEIrhrBCq+LLbsQcx+KQsX
+ Kyj1f784dx6+9nnEuC1G0BmG1lM9UzWn39m8PcriBNco9OF8FywJlSVcNcQqq0FWs5zttnqRXIJ
+ JVTweaH78Ww5rz0QaNqH+H81gQ2cvm7Iw5raCCipHtgDvo/llJqKgD1EkvgDHL2lUz0RgNG5nuv
+ vODrrYqWLZ/MEdZF1ov+LdQHfGsQQg2fdYeBRW2FpQlACFxXLg52L4kmUYL1Cyv0iOSHQ57tZM0
+ HrRUgrDP/xfV2UqxtTd21n8+z2EXdhiJX9yKx5QttQ6sLlMG/jt+OtHT76VgCA6oKd17kLSTl58
+ tS3Eclrc/1Z47riDiwKAqk6iqpN66NE1gVqf0dSrd4GqJy7EjQVDLbl8h+FxAqjI0mTCrp+y37/
+ Bpl2sMwEUkwnMFbkp6QmzTFbOIJL1hUUSPS7/LWIOhVu4=
+X-Google-Smtp-Source: AGHT+IHQNonhEgilS57+dK9QsUv61vNu8G75Wnu7JcFl9Yvskq0GZBts/p1M7CkrjuqYkfXEQjtw/Q==
+X-Received: by 2002:a17:907:9726:b0:af9:5366:b42c with SMTP id
+ a640c23a62f3a-afe07d4c190mr19252366b.59.1755724794237; 
+ Wed, 20 Aug 2025 14:19:54 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-249c-be00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:249c:be00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61a755d9cfasm4161182a12.9.2025.08.20.14.19.46
+ 4fb4d7f45d1cf-61a755d9cfasm4161182a12.9.2025.08.20.14.19.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Aug 2025 14:19:46 -0700 (PDT)
+ Wed, 20 Aug 2025 14:19:53 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
  Bernhard Beschow <shentey@gmail.com>, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 00/10] Designware PCIe host fixes
-Date: Wed, 20 Aug 2025 23:19:22 +0200
-Message-ID: <20250820211932.27302-1-shentey@gmail.com>
+Subject: [PATCH 06/10] hw/pci-host/designware: Fix I/O range
+Date: Wed, 20 Aug 2025 23:19:28 +0200
+Message-ID: <20250820211932.27302-7-shentey@gmail.com>
 X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250820211932.27302-1-shentey@gmail.com>
+References: <20250820211932.27302-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,42 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes the Designware PCIe host to work with cards other than
-virio-net-pci, e.g. e1000. It was tested on the imx8mp-evk machine.
+Fix the size of the I/O space to be 64KiB, as defined by the PCI
+specification. This fixes illegal memory access by guests in the
+imx8mp-evk machine such that the FSL_IMX8MP_PCIE1_MEM unimplemented
+region can be omitted there.
 
-The series is structured as follows: The first part refactors the device
-model to create memory regions for inbound/outbound PCI mappings on demand
-rather than upfront since this approach doesn't scale for adding I/O space
-support. The second part consists of fixing the memory mapping by adding I/O
-space support and fixing default inbound viewport mapping. The third part
-concludes the series by implementing device reset and cleaning up the imx8mp SoC
-implementation.
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/pci-host/designware.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Testing done:
-* Boot imx8mp-evk machine with Buildroot while having an e1000 card attached.
-Observe that it gets an IP address via DHCP and allows for downloading an HTML
-file via HTTP.
-
-Bernhard Beschow (10):
-  hw/pci-host/designware: Eliminate some helper variables
-  hw/pci-host/designware: Create viewport memory regions on demand
-  hw/pci-host/designware: Determine PCIDevice of configuration region
-    once
-  hw/pci-host/designware: Distinguish stronger between viewport memory
-    types
-  hw/pci-host/designware: Implement I/O space
-  hw/pci-host/designware: Fix I/O range
-  hw/pci-host/designware: Don't map PCI memory space into PCI inbound
-    window
-  hw/pci-host/designware: Fix default inbound viewport mapping
-  hw/pci-host/designware: Implement device reset
-  hw/arm/fsl-imx8mp: Do not map PCI window as unimplemented
-
- include/hw/pci-host/designware.h |   5 +-
- hw/arm/fsl-imx8mp.c              |   1 +
- hw/pci-host/designware.c         | 284 ++++++++++++++++---------------
- 3 files changed, 151 insertions(+), 139 deletions(-)
-
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index 7342207eb3..1e29b7e6be 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -684,7 +684,7 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
+                           "pcie.reg", 4 * 1024);
+     sysbus_init_mmio(sbd, &s->mmio);
+ 
+-    memory_region_init(&s->pci.io, OBJECT(s), "pcie-pio", 16);
++    memory_region_init(&s->pci.io, OBJECT(s), "pcie-pio", UINT16_MAX);
+     memory_region_init(&s->pci.memory, OBJECT(s),
+                        "pcie-bus-memory",
+                        UINT64_MAX);
 -- 
 2.50.1
 
