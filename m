@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55EBECA0FE1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A60DCA0EFF
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 21:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoqDx-0005Ko-9X; Wed, 20 Aug 2025 17:20:01 -0400
+	id 1uoqDz-0005MS-PP; Wed, 20 Aug 2025 17:20:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uoqDu-0005IZ-RG; Wed, 20 Aug 2025 17:19:58 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1uoqDx-0005L0-Eu; Wed, 20 Aug 2025 17:20:01 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uoqDt-00050u-0G; Wed, 20 Aug 2025 17:19:58 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-afcb7a3ee3cso47694566b.2; 
- Wed, 20 Aug 2025 14:19:56 -0700 (PDT)
+ id 1uoqDv-00051X-LV; Wed, 20 Aug 2025 17:20:01 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6188b7550c0so522348a12.2; 
+ Wed, 20 Aug 2025 14:19:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755724794; x=1756329594; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1755724797; x=1756329597; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lYVlm45QQ3i2G9+d7L5TMWVG0rHC31MFiYi6MByt5lI=;
- b=WApl8whV3ThW48xD93M5HDy8yQWfU3v2vkcrwBiSIeco7cUjT1MYefped2NMd9J4dZ
- quHt2yZ2PSoevkb9ZKpGB4ebRXd0cTvbggAwmZJeqnp1cbNtzTdsikVByW1N35Ea8XSZ
- N/cVvW/UkqWGRjhX+vLXl3/XR9afVeMtD/vyO0EkkzwvOtJWX76XHqkFMv+9stKliJrv
- GEbeYq9EqzdBEMZbtNX+CC0Xr7E/nrcJiwZFd18cMY+Cu7VZ20G9F90uPgzXfeHoxxev
- hcpoWG8ok2Tdjp5xVqLjSkcqEcNq0CJ8c14E4B59cxLSt+/dmrALnQds2kxIai7shYFL
- RfyA==
+ bh=erIPPZ0BDsRCUdIVCLWmsfKr2++tLsVOASTjdmVI5yc=;
+ b=YBbOKNpfp9LF6wqvn8eZ0U6NThkb4auFhWQa0diYcc6jTN2llYT2v7DLeS//0PvqFT
+ J4q1CSk6lFTj7bfXBwZfzzJfIHU/HpMyRRr607nBQkuaK9EjrQQpONo83L7h1q+gZzn1
+ fL4muHTpWvhao6RHxJIel5GbQuD4NO/FXb7JuwRkth881mufst5w2swGDrmkmLTcMclK
+ VpDMKa6QswZdUbJ69euMGN9R5Al9Iq89olYNb0g29dRKH2f8i7YoLM6cdvWDwiY25+sh
+ Ql8nikAPKADNOGKezyWVkyb93RXLY7IMBNsuiFZEMlla3MqZHv//PgRM/3WGVTxV8PxX
+ G8rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755724794; x=1756329594;
+ d=1e100.net; s=20230601; t=1755724797; x=1756329597;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lYVlm45QQ3i2G9+d7L5TMWVG0rHC31MFiYi6MByt5lI=;
- b=lFPJ4613Cx+ErsWKCSUEIaNw8pYw8CEmf+1qeXeDaFIqe5VweBk4Bdo1dsMBDGl6ac
- RpHC8JwUQAAb6SOuwB4NbnHyvTbxJCKtvfKDo+DYbGSj/dmGbXjm2L7qNmAPegrN+I8j
- 5OMs/mXf2VN9GM+ETW7EI9D3cPRDVWWBaC1VVnc83qeOkoDZOGNzo3QSuQtGwfO1WRdg
- i63hAfW3lNVBVz1gymASQGbjRjm36aeB7HQcyuYuoE3lQWjPYVxii14UaV9MKcGkAxcD
- V5B1gfPq6eTE9gutf6YGNC1tbrb62WGIxCzfQfY3OMlD/iyDDzFQH9uo4rH8YHJySM/2
- gX1A==
+ bh=erIPPZ0BDsRCUdIVCLWmsfKr2++tLsVOASTjdmVI5yc=;
+ b=pAQejMq1UvzZWmKo+u65m8ysvCn1rVj0T8t2sm+6/rC/HbXQtE754NK3LNGmRMbNKG
+ K0Uz8N3ov3+RJ1hw2igK13T5h+m17qUsk1x6dd3yvxYEgiaeMnH5OpVp0JX4NOsgr9i3
+ 48Fm6TjQ9YvoBqI2/I2dTuJ+YrxHTM6E3DJeCPfH57bUBt7wKo+E9YZQy113P6MoBW1e
+ XvBKDpMud2UzC1oj1T3SGO2y6eWDf8VtEdFGgKZStrqR+vtM/8m9L6LV2YRONoLcvesU
+ WA/Jswez/4kesTYCpdzM0j+AbLaR+e/jDtNA1z+WBvTY1i/yluRVpGIb22ne1ZCwXUcI
+ +VdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQWO5Rjxnr6zXUGB/k4wclOhjJatlBiazHvZ4wH9UdwRJ5Z6fg0KIzzquVtKJ3b+So9qlgf1QvOA==@nongnu.org
-X-Gm-Message-State: AOJu0Yy4e03mQEIFVXNTAYRWTkNa16CqRsSstkK/DV7rAxVTyqFYeV0y
- ooiirR2tT0lTJ0nS0vUEqkd7J62GHHBheIlQFsBF4qqJCXXIXSFrgBthpU5u8uSo
-X-Gm-Gg: ASbGncttaXO1mlckjPzeBq8HbgHCDR704AdaGx8q4HIhGaEIrhrBCq+LLbsQcx+KQsX
- Kyj1f784dx6+9nnEuC1G0BmG1lM9UzWn39m8PcriBNco9OF8FywJlSVcNcQqq0FWs5zttnqRXIJ
- JVTweaH78Ww5rz0QaNqH+H81gQ2cvm7Iw5raCCipHtgDvo/llJqKgD1EkvgDHL2lUz0RgNG5nuv
- vODrrYqWLZ/MEdZF1ov+LdQHfGsQQg2fdYeBRW2FpQlACFxXLg52L4kmUYL1Cyv0iOSHQ57tZM0
- HrRUgrDP/xfV2UqxtTd21n8+z2EXdhiJX9yKx5QttQ6sLlMG/jt+OtHT76VgCA6oKd17kLSTl58
- tS3Eclrc/1Z47riDiwKAqk6iqpN66NE1gVqf0dSrd4GqJy7EjQVDLbl8h+FxAqjI0mTCrp+y37/
- Bpl2sMwEUkwnMFbkp6QmzTFbOIJL1hUUSPS7/LWIOhVu4=
-X-Google-Smtp-Source: AGHT+IHQNonhEgilS57+dK9QsUv61vNu8G75Wnu7JcFl9Yvskq0GZBts/p1M7CkrjuqYkfXEQjtw/Q==
-X-Received: by 2002:a17:907:9726:b0:af9:5366:b42c with SMTP id
- a640c23a62f3a-afe07d4c190mr19252366b.59.1755724794237; 
- Wed, 20 Aug 2025 14:19:54 -0700 (PDT)
+ AJvYcCVWw5u5I1Sg3KYhM4Fwpfsqm9cs9AovOET0LuS7nHvZs0DgSpJhYXlNePAYOEliDk8Gs0KXg6aUVw==@nongnu.org
+X-Gm-Message-State: AOJu0YzcO57cTz1tRc90onBgWx1GFkpjnBaUfwsCayiCHsjMcj9DcgJI
+ 5c7BGnJkvUgu+tmNj+RvYDW51FCtpK9xDJuw/nDPyv624s2GjhxTY0SFq7j2W1Fy
+X-Gm-Gg: ASbGncvg0SDI7/xsxXbftAky4HOUA/G+R5+YA7YxX2oyt4tInuNBTB3wWt5bokwEioG
+ klcGvw1sNPk2oNqQihoxPf49v/CRVzuHTz8VSJOjauK4Jjc5tRoWF0keTIqOYr2lx1e4Ng9ZzF6
+ 4bofroO+Xoh0UGcKbFql6ow0zoby3yKXrCWWCVRDI5+IcfSNrtgpOrwkBK30RC4wLP11a6stWDb
+ pBnbrdQTBIitmtL04v+FH04nWXsVNOed6H1rw0Hhj/ndb2+zGTikXH+6EvTM4FlXdL72VPN8H8D
+ FPFsluNy0UWckFEDBms9PggMsPvwa/hrv7Ghpm4lN6a2+0QoIiSftPBk/hUPtYqk3NjXaiNl0P8
+ tdZH5jaPg2bsPFlX/7JlPaWw1TP008FmhRmHgOwx2KZt/ZggQzrv2/e8gs2jE3Qe5Z0QMvuY4eM
+ FBQ5a2mp2n0MpB2l/fbxrRAUnjlBKN3ML8NiQZe8VXGnw=
+X-Google-Smtp-Source: AGHT+IES/X3jCpVFBPW5Fsn92ctVYmmPEMPSTxTY0WFkFFZKPEj8f2/e09b38dVW/YzW7cnyR8Jyqg==
+X-Received: by 2002:a05:6402:2749:b0:615:6a10:f048 with SMTP id
+ 4fb4d7f45d1cf-61bf88481dfmr122754a12.33.1755724797160; 
+ Wed, 20 Aug 2025 14:19:57 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-249c-be00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:249c:be00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61a755d9cfasm4161182a12.9.2025.08.20.14.19.53
+ 4fb4d7f45d1cf-61a755d9cfasm4161182a12.9.2025.08.20.14.19.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Aug 2025 14:19:53 -0700 (PDT)
+ Wed, 20 Aug 2025 14:19:56 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
  Bernhard Beschow <shentey@gmail.com>, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 06/10] hw/pci-host/designware: Fix I/O range
-Date: Wed, 20 Aug 2025 23:19:28 +0200
-Message-ID: <20250820211932.27302-7-shentey@gmail.com>
+Subject: [PATCH 08/10] hw/pci-host/designware: Fix default inbound viewport
+ mapping
+Date: Wed, 20 Aug 2025 23:19:30 +0200
+Message-ID: <20250820211932.27302-9-shentey@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250820211932.27302-1-shentey@gmail.com>
 References: <20250820211932.27302-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,29 +105,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix the size of the I/O space to be 64KiB, as defined by the PCI
-specification. This fixes illegal memory access by guests in the
-imx8mp-evk machine such that the FSL_IMX8MP_PCIE1_MEM unimplemented
-region can be omitted there.
+Linux clears all inbound viewport mappings which results in the default mapping
+set up during realize() to be cleared. Fix that by introducing a fallback
+memory region which gets enabled if no inbound viewports are configured, as the
+real HW would do.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/pci-host/designware.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/pci-host/designware.h |  1 +
+ hw/pci-host/designware.c         | 30 +++++++++++++++++-------------
+ 2 files changed, 18 insertions(+), 13 deletions(-)
 
+diff --git a/include/hw/pci-host/designware.h b/include/hw/pci-host/designware.h
+index 34beee1285..342b09fd08 100644
+--- a/include/hw/pci-host/designware.h
++++ b/include/hw/pci-host/designware.h
+@@ -86,6 +86,7 @@ struct DesignwarePCIEHost {
+     struct {
+         AddressSpace address_space;
+         MemoryRegion address_space_root;
++        MemoryRegion address_space_root_default;
+ 
+         MemoryRegion memory;
+         MemoryRegion io;
 diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index 7342207eb3..1e29b7e6be 100644
+index 2fd60a4817..d71133a456 100644
 --- a/hw/pci-host/designware.c
 +++ b/hw/pci-host/designware.c
-@@ -684,7 +684,7 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
-                           "pcie.reg", 4 * 1024);
-     sysbus_init_mmio(sbd, &s->mmio);
+@@ -347,6 +347,17 @@ static void designware_pcie_update_viewport(DesignwarePCIERoot *root,
+             break;
+         }
+     }
++
++    bool one_mapped = false;
++    for (int j = 0; j < DESIGNWARE_PCIE_NUM_VIEWPORTS; j++) {
++        one_mapped |= memory_region_is_mapped(&root->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][j].mem);
++    }
++
++    /*
++     * If no inbound iATU windows are configured, HW defaults to
++     * letting inbound TLPs to pass in.
++     */
++    memory_region_set_enabled(&host->pci.address_space_root_default, !one_mapped);
+ }
  
--    memory_region_init(&s->pci.io, OBJECT(s), "pcie-pio", 16);
-+    memory_region_init(&s->pci.io, OBJECT(s), "pcie-pio", UINT16_MAX);
-     memory_region_init(&s->pci.memory, OBJECT(s),
-                        "pcie-bus-memory",
-                        UINT64_MAX);
+ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
+@@ -477,19 +488,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
+             viewport->target  = 0x0000000000000000ULL;
+             viewport->limit   = UINT32_MAX;
+             viewport->cr[0]   = DESIGNWARE_PCIE_ATU_TYPE_MEM;
+-
+-            /*
+-             * If no inbound iATU windows are configured, HW defaults to
+-             * letting inbound TLPs to pass in. We emulate that by explicitly
+-             * configuring first inbound window to cover all of target's
+-             * address space.
+-             *
+-             * NOTE: This will not work correctly for the case when first
+-             * configured inbound window is window 0
+-             */
+-            viewport->cr[1]   = (viewport->inbound && j == 0)
+-                                  ? DESIGNWARE_PCIE_ATU_ENABLE
+-                                  : 0;
++            viewport->cr[1]   = 0;
+ 
+             designware_pcie_update_viewport(root, viewport);
+         }
+@@ -706,6 +705,11 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
+     address_space_init(&s->pci.address_space,
+                        &s->pci.address_space_root,
+                        "pcie-bus-address-space");
++    memory_region_init_alias(&s->pci.address_space_root_default, OBJECT(s),
++                             "pcie-bus-inbound-default", get_system_memory(),
++                             0, UINT32_MAX);
++    memory_region_add_subregion_overlap(&s->pci.address_space_root, 0,
++                                        &s->pci.address_space_root_default, -10);
+     pci_setup_iommu(pci->bus, &designware_iommu_ops, s);
+ 
+     qdev_realize(DEVICE(&s->root), BUS(pci->bus), &error_fatal);
 -- 
 2.50.1
 
