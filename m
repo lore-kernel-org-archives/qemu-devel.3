@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CAB7CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 19:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1599CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 20:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoovV-00011X-24; Wed, 20 Aug 2025 15:56:53 -0400
+	id 1uopVV-0000QU-Lh; Wed, 20 Aug 2025 16:34:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uoovO-00011B-5J
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 15:56:47 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uoovM-0001iY-3b
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 15:56:45 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3b9edf0e4efso169563f8f.2
- for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 12:56:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755719802; x=1756324602; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SUCwqd44Qvcng06lI8Kd9VZpkd8nFai0eG7YBGJxu6A=;
- b=MyblF2NpFzY7QPxhUgHdRefPS15iKAjSIlujE5P8cNrej/BGpy4iQ66ng6SjhZEZ7e
- Q9ncLYvJFil1b9Wh8Dk9gJE6yXcOv0JG2Z93VLZA0HDTdhCGDpVwIkW1Y0R3VWada3Kp
- JDsrUf+GIMwXOLva/0/bWFdO2f70ixbtcI8CO5YjOWI0npVReEEx/BqwRCIAntC/YyTD
- lTxSGU7w3n3ns2gH0IC/HPj0CxWnv6C5sMhiSwK0BfvZNU06fDZkPfpAU4iJgzgo8Uzf
- Ym9yZd3uYHx5D05pyp/Cg5QxQ5ksrfIJKBAt5418rb133LJ2pS6x2OxoIIcUQ3kPL5Mk
- mpxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755719802; x=1756324602;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SUCwqd44Qvcng06lI8Kd9VZpkd8nFai0eG7YBGJxu6A=;
- b=DrSgRMEC2MkX/3faoJERL90w7vScREhDYL4rD08NrD5qhHxF3n2uuFdQBWbJcicRn5
- 6QwbnpIFh3xyIw14T27hAxVSSMMwGwV4kEOW3aYxZ5XJBbN+NtjEEVThhKtNGY16fFlJ
- Knggej/p0GN/BS/9aFKgrVDmIVc948PVlT+G1E590pcF1qJTGaQPtPIwaw5OwS+vxeZK
- zFhSDuyb6tLyXPCg8b294T+NG/7Fdj8t+QWUwSsel5Gb7edLPJJ79Xo2FW6B156pfQpm
- z+kOMykhjUQ7IEnJR2Uul7kcsCGv+I2AIY5qCGGlHLK86N0yLLDCwXbhqAhQfM/PBCif
- Ex1w==
-X-Gm-Message-State: AOJu0YyguynDw4HNzau7+IdgkQ2JWr+hqlZQlNRjvaVZY+ZVX1JIw1r7
- 28QYp8byPvjzhospFR+5JMks908HWusvY2ZgGYGmukF1t5TpT4gKt2T1QnbiakIe0nY=
-X-Gm-Gg: ASbGncvVXKZI/ZjuLzFqIopXTxAljEMnM3j5I5lauVX3tzIaiV87deO0oFjALwMlQHj
- VDZU6gVvvL/npE1MH9CRC9xPUStjxMSQVJrItbtHGZyJreWA+sCX8nfM3Plnv2ZGEYxnB5HA5S0
- b+CIZNwMUEsOTIXxEcS6pXQazcRP6J9k1ZSvqLF7AReXA8aBVRwbkib0QBSl+KvOB832B+uqJmI
- At32ZnGZA43pzmUfIZ5rwyCoREY84MZxZT+gpar1E4ajK9fUI4GG9t8suK0W0JaLpV5A43ItxRN
- 3QwQUFB9wWjjcW2ZSntc+HojFtpchk7lD8Y/VkLCa+PPHl+g20jbfErm8hg8T42obj8kLhTNwsm
- KmbVnAe22YxYB6/92eYBXDLs=
-X-Google-Smtp-Source: AGHT+IGDZdZRUFWjAgiYhJvErSFqRNbD927CciZx5N8I4uk6mZtPvymlkqA/n3K4NN5aSwJ2gCm6fQ==
-X-Received: by 2002:a05:6000:290d:b0:3b7:9ae1:eb9 with SMTP id
- ffacd0b85a97d-3c4953a804cmr61327f8f.23.1755719801761; 
- Wed, 20 Aug 2025 12:56:41 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c074d439adsm8950064f8f.21.2025.08.20.12.56.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Aug 2025 12:56:40 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1C2CC5F898;
- Wed, 20 Aug 2025 20:56:40 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC PATCH] hw/virtio: rename vhost-user-device and make user
- creatable
-Date: Wed, 20 Aug 2025 20:56:32 +0100
-Message-ID: <20250820195632.1956795-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.2
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uopVT-0000Q6-P4
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:34:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uopVP-0007Cn-9o
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:34:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755722037;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jovcwANNoyjMqJxEjSq/7M8PDmUHrLrsGlVQN6jkfOs=;
+ b=SWGEH4dUSTZ6c7Q6ax8Me5VSEz4fvbhLAQ3yjITWHukPxN8UkSUn7G2mIbvHm9+M/6nk2k
+ WsM/Ubbv5uKwmtXmIO7Q/MsHQUe3jMLv34T0hqwOiA5KbREGkLes1OkTWSC/lnyTGiTwlq
+ lhRy5qX0nft6uoa/CniIIgcSmkDbwEk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-YIDE4Ha5ODWVWCiEiOGh4g-1; Wed,
+ 20 Aug 2025 16:33:53 -0400
+X-MC-Unique: YIDE4Ha5ODWVWCiEiOGh4g-1
+X-Mimecast-MFC-AGG-ID: YIDE4Ha5ODWVWCiEiOGh4g_1755722032
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35C87180035D; Wed, 20 Aug 2025 20:33:52 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.103])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 261361800447; Wed, 20 Aug 2025 20:33:49 +0000 (UTC)
+Date: Wed, 20 Aug 2025 16:33:48 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, david@redhat.com,
+ "Michael S. Tsirkin" <mst@redhat.com>, hi@alyssa.is,
+ jasowang@redhat.com, Laurent Vivier <lvivier@redhat.com>,
+ dbassey@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, stevensd@chromium.org,
+ Fabiano Rosas <farosas@suse.de>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, slp@redhat.com
+Subject: Re: [PATCH v7 6/8] tests/qtest: Add GET_SHMEM validation test
+Message-ID: <20250820203348.GA131468@fedora>
+References: <20250818100353.1560655-1-aesteve@redhat.com>
+ <20250818100353.1560655-7-aesteve@redhat.com>
+ <20250818231438.GA30271@fedora>
+ <CADSE00J61r4Wt94s6OfCqt9V8sVaisgDajvKEYFmG1FJKdVfng@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="fwNPydEZ8IKHHnmi"
+Content-Disposition: inline
+In-Reply-To: <CADSE00J61r4Wt94s6OfCqt9V8sVaisgDajvKEYFmG1FJKdVfng@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,206 +93,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We didn't make the device user creatable in the first place because we
-were worried users might get confused. Rename the device to make its
-nature as a test device even more explicit. While we are at it add a
-Kconfig variable so it can be skipped for those that want to thin out
-their build configuration even further.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/system/devices/vhost-user.rst            | 20 +++++++------------
- include/hw/virtio/vhost-user-base.h           |  2 +-
- ...ice-pci.c => vhost-user-test-device-pci.c} | 17 +++++++---------
- ...user-device.c => vhost-user-test-device.c} |  9 +++------
- hw/virtio/Kconfig                             |  5 +++++
- hw/virtio/meson.build                         |  5 +++--
- 6 files changed, 26 insertions(+), 32 deletions(-)
- rename hw/virtio/{vhost-user-device-pci.c => vhost-user-test-device-pci.c} (77%)
- rename hw/virtio/{vhost-user-device.c => vhost-user-test-device.c} (87%)
+--fwNPydEZ8IKHHnmi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vhost-user.rst
-index 35259d8ec7c..bddf8df5ed5 100644
---- a/docs/system/devices/vhost-user.rst
-+++ b/docs/system/devices/vhost-user.rst
-@@ -62,26 +62,20 @@ platform details for what sort of virtio bus to use.
- The referenced *daemons* are not exhaustive, any conforming backend
- implementing the device and using the vhost-user protocol should work.
- 
--vhost-user-device
--^^^^^^^^^^^^^^^^^
-+vhost-user-test-device
-+^^^^^^^^^^^^^^^^^^^^^^
- 
--The vhost-user-device is a generic development device intended for
--expert use while developing new backends. The user needs to specify
--all the required parameters including:
-+The vhost-user-test-device is a generic development device intended
-+for expert use while developing new backends. The user needs to
-+specify all the required parameters including:
- 
-   - Device ``virtio-id``
-   - The ``num_vqs`` it needs and their ``vq_size``
-   - The ``config_size`` if needed
- 
- .. note::
--  To prevent user confusion you cannot currently instantiate
--  vhost-user-device without first patching out::
--
--    /* Reason: stop inexperienced users confusing themselves */
--    dc->user_creatable = false;
--
--  in ``vhost-user-device.c`` and ``vhost-user-device-pci.c`` file and
--  rebuilding.
-+  While this is a useful device for development it is not recommended
-+  for production use.
- 
- vhost-user daemon
- =================
-diff --git a/include/hw/virtio/vhost-user-base.h b/include/hw/virtio/vhost-user-base.h
-index 51d0968b893..387e434b804 100644
---- a/include/hw/virtio/vhost-user-base.h
-+++ b/include/hw/virtio/vhost-user-base.h
-@@ -44,6 +44,6 @@ struct VHostUserBaseClass {
- };
- 
- 
--#define TYPE_VHOST_USER_DEVICE "vhost-user-device"
-+#define TYPE_VHOST_USER_TEST_DEVICE "vhost-user-test-device"
- 
- #endif /* QEMU_VHOST_USER_BASE_H */
-diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-test-device-pci.c
-similarity index 77%
-rename from hw/virtio/vhost-user-device-pci.c
-rename to hw/virtio/vhost-user-test-device-pci.c
-index f10bac874e7..d6a9ca2101d 100644
---- a/hw/virtio/vhost-user-device-pci.c
-+++ b/hw/virtio/vhost-user-test-device-pci.c
-@@ -18,13 +18,13 @@ struct VHostUserDevicePCI {
-     VHostUserBase vub;
- };
- 
--#define TYPE_VHOST_USER_DEVICE_PCI "vhost-user-device-pci-base"
-+#define TYPE_VHOST_USER_TEST_DEVICE_PCI "vhost-user-test-device-pci"
- 
--OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST_USER_DEVICE_PCI)
-+OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST_USER_TEST_DEVICE_PCI)
- 
- static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
- {
--    VHostUserDevicePCI *dev = VHOST_USER_DEVICE_PCI(vpci_dev);
-+    VHostUserDevicePCI *dev = VHOST_USER_TEST_DEVICE_PCI(vpci_dev);
-     DeviceState *vdev = DEVICE(&dev->vub);
- 
-     vpci_dev->nvectors = 1;
-@@ -38,9 +38,6 @@ static void vhost_user_device_pci_class_init(ObjectClass *klass,
-     VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
-     PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
- 
--    /* Reason: stop users confusing themselves */
--    dc->user_creatable = false;
--
-     k->realize = vhost_user_device_pci_realize;
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-     pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
-@@ -51,15 +48,15 @@ static void vhost_user_device_pci_class_init(ObjectClass *klass,
- 
- static void vhost_user_device_pci_instance_init(Object *obj)
- {
--    VHostUserDevicePCI *dev = VHOST_USER_DEVICE_PCI(obj);
-+    VHostUserDevicePCI *dev = VHOST_USER_TEST_DEVICE_PCI(obj);
- 
-     virtio_instance_init_common(obj, &dev->vub, sizeof(dev->vub),
--                                TYPE_VHOST_USER_DEVICE);
-+                                TYPE_VHOST_USER_TEST_DEVICE);
- }
- 
- static const VirtioPCIDeviceTypeInfo vhost_user_device_pci_info = {
--    .base_name = TYPE_VHOST_USER_DEVICE_PCI,
--    .non_transitional_name = "vhost-user-device-pci",
-+    .base_name = TYPE_VHOST_USER_TEST_DEVICE_PCI,
-+    .non_transitional_name = "vhost-user-test-device-pci",
-     .instance_size = sizeof(VHostUserDevicePCI),
-     .instance_init = vhost_user_device_pci_instance_init,
-     .class_init = vhost_user_device_pci_class_init,
-diff --git a/hw/virtio/vhost-user-device.c b/hw/virtio/vhost-user-test-device.c
-similarity index 87%
-rename from hw/virtio/vhost-user-device.c
-rename to hw/virtio/vhost-user-test-device.c
-index 3939bdf7552..1b98ea3e488 100644
---- a/hw/virtio/vhost-user-device.c
-+++ b/hw/virtio/vhost-user-test-device.c
-@@ -1,5 +1,5 @@
- /*
-- * Generic vhost-user-device implementation for any vhost-user-backend
-+ * Generic vhost-user-test-device implementation for any vhost-user-backend
-  *
-  * This is a concrete implementation of vhost-user-base which can be
-  * configured via properties. It is useful for development and
-@@ -25,7 +25,7 @@
-  */
- 
- static const VMStateDescription vud_vmstate = {
--    .name = "vhost-user-device",
-+    .name = "vhost-user-test-device",
-     .unmigratable = 1,
- };
- 
-@@ -41,16 +41,13 @@ static void vud_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    /* Reason: stop inexperienced users confusing themselves */
--    dc->user_creatable = false;
--
-     device_class_set_props(dc, vud_properties);
-     dc->vmsd = &vud_vmstate;
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
- }
- 
- static const TypeInfo vud_info = {
--    .name = TYPE_VHOST_USER_DEVICE,
-+    .name = TYPE_VHOST_USER_TEST_DEVICE,
-     .parent = TYPE_VHOST_USER_BASE,
-     .class_init = vud_class_init,
- };
-diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-index 7648a2d68da..10f5c53ac09 100644
---- a/hw/virtio/Kconfig
-+++ b/hw/virtio/Kconfig
-@@ -126,3 +126,8 @@ config VHOST_USER_SCMI
-     bool
-     default y
-     depends on VIRTIO && VHOST_USER && ARM
-+
-+config VHOST_USER_TEST
-+    bool
-+    default y
-+    depends on VIRTIO && VHOST_USER
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index 3ea7b3cec83..48b9fedfa56 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -22,7 +22,7 @@ if have_vhost
-     system_virtio_ss.add(files('vhost-user-base.c'))
- 
-     # MMIO Stubs
--    system_virtio_ss.add(files('vhost-user-device.c'))
-+    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_TEST', if_true: files('vhost-user-test-device.c'))
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_GPIO', if_true: files('vhost-user-gpio.c'))
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_I2C', if_true: files('vhost-user-i2c.c'))
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('vhost-user-rng.c'))
-@@ -30,7 +30,8 @@ if have_vhost
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files('vhost-user-input.c'))
- 
-     # PCI Stubs
--    system_virtio_ss.add(when: 'CONFIG_VIRTIO_PCI', if_true: files('vhost-user-device-pci.c'))
-+    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_TEST'],
-+                         if_true: files('vhost-user-test-device-pci.c'))
-     system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_GPIO'],
-                          if_true: files('vhost-user-gpio-pci.c'))
-     system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_I2C'],
--- 
-2.47.2
+On Tue, Aug 19, 2025 at 02:16:47PM +0200, Albert Esteve wrote:
+> On Tue, Aug 19, 2025 at 12:42=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat=
+=2Ecom> wrote:
+> >
+> > On Mon, Aug 18, 2025 at 12:03:51PM +0200, Albert Esteve wrote:
+> > > Improve vhost-user-test to properly validate
+> > > VHOST_USER_GET_SHMEM_CONFIG message handling by
+> > > directly simulating the message exchange.
+> > >
+> > > The test manually triggers the
+> > > VHOST_USER_GET_SHMEM_CONFIG message by calling
+> > > chr_read() with a crafted VhostUserMsg, allowing direct
+> > > validation of the shmem configuration response handler.
+> >
+> > It looks like this test case invokes its own chr_read() function without
+> > going through QEMU, so I don't understand what this is testing?
+>=20
+> I spent some time trying to test it, but in the end I could not
+> instatiate vhost-user-device because it is non user_creatable. I did
+> not find any test for vhost-user-device anywhere else either. But I
+> had already added most of the infrastructure here so I fallback to
+> chr_read() communication to avoid having to delete everything. My
+> though was that once we have other devices that use shared memory,
+> they could tweak the test to instantiate the proper device and test
+> this and the map/unmap operations.
+>=20
+> Although after writing this, I think other devices will actually a
+> specific layout for their shared memory. So
+> VHOST_USER_GET_SHMEM_CONFIG is only ever going to be used by
+> vhost-user-device.
+>=20
+> In general, trying to test this patch series has been a headache other
+> than trying with external device code I have. If you have an idea that
+> I could try to test this, I can try. Otherwise, probably is best to
+> remove this commit from the series and wait for another vhost-user
+> device that uses map/unmap to land to be able to test it.
+
+Alex Bennee has renamed vhost-user-device to vhost-user-test-device and
+set user_creatable =3D true:
+https://lore.kernel.org/qemu-devel/20250820195632.1956795-1-alex.bennee@lin=
+aro.org/T/#t
+
+>=20
+>=20
+>=20
+> >
+> > >
+> > > Added TestServerShmem structure to track shmem
+> > > configuration state, including nregions_sent and
+> > > sizes_sent arrays for comprehensive validation.
+> > > The test verifies that the response contains the expected
+> > > number of shared memory regions and their corresponding
+> > > sizes.
+> > >
+> > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > > ---
+> > >  tests/qtest/vhost-user-test.c | 91 +++++++++++++++++++++++++++++++++=
+++
+> > >  1 file changed, 91 insertions(+)
+> > >
+> > > diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-t=
+est.c
+> > > index 75cb3e44b2..44a5e90b2e 100644
+> > > --- a/tests/qtest/vhost-user-test.c
+> > > +++ b/tests/qtest/vhost-user-test.c
+> > > @@ -88,6 +88,7 @@ typedef enum VhostUserRequest {
+> > >      VHOST_USER_SET_VRING_ENABLE =3D 18,
+> > >      VHOST_USER_GET_CONFIG =3D 24,
+> > >      VHOST_USER_SET_CONFIG =3D 25,
+> > > +    VHOST_USER_GET_SHMEM_CONFIG =3D 44,
+> > >      VHOST_USER_MAX
+> > >  } VhostUserRequest;
+> > >
+> > > @@ -109,6 +110,20 @@ typedef struct VhostUserLog {
+> > >      uint64_t mmap_offset;
+> > >  } VhostUserLog;
+> > >
+> > > +#define VIRTIO_MAX_SHMEM_REGIONS 256
+> > > +
+> > > +typedef struct VhostUserShMemConfig {
+> > > +    uint32_t nregions;
+> > > +    uint32_t padding;
+> > > +    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+> > > +} VhostUserShMemConfig;
+> > > +
+> > > +typedef struct TestServerShmem {
+> > > +    bool test_enabled;
+> > > +    uint32_t nregions_sent;
+> > > +    uint64_t sizes_sent[VIRTIO_MAX_SHMEM_REGIONS];
+> > > +} TestServerShmem;
+> > > +
+> > >  typedef struct VhostUserMsg {
+> > >      VhostUserRequest request;
+> > >
+> > > @@ -124,6 +139,7 @@ typedef struct VhostUserMsg {
+> > >          struct vhost_vring_addr addr;
+> > >          VhostUserMemory memory;
+> > >          VhostUserLog log;
+> > > +        VhostUserShMemConfig shmem;
+> > >      } payload;
+> > >  } QEMU_PACKED VhostUserMsg;
+> > >
+> > > @@ -170,6 +186,7 @@ typedef struct TestServer {
+> > >      bool test_fail;
+> > >      int test_flags;
+> > >      int queues;
+> > > +    TestServerShmem shmem;
+> > >      struct vhost_user_ops *vu_ops;
+> > >  } TestServer;
+> > >
+> > > @@ -513,6 +530,31 @@ static void chr_read(void *opaque, const uint8_t=
+ *buf, int size)
+> > >          qos_printf("set_vring(%d)=3D%s\n", msg.payload.state.index,
+> > >                     msg.payload.state.num ? "enabled" : "disabled");
+> > >          break;
+> > > +
+> > > +    case VHOST_USER_GET_SHMEM_CONFIG:
+> > > +        if (!s->shmem.test_enabled) {
+> > > +            /* Reply with error if shmem feature not enabled */
+> > > +            msg.flags |=3D VHOST_USER_REPLY_MASK;
+> > > +            msg.size =3D sizeof(uint64_t);
+> > > +            msg.payload.u64 =3D -1; /* Error */
+> > > +            qemu_chr_fe_write_all(chr, (uint8_t *) &msg, VHOST_USER_=
+HDR_SIZE + msg.size);
+> > > +        } else {
+> > > +            /* Reply with test shmem configuration */
+> > > +            msg.flags |=3D VHOST_USER_REPLY_MASK;
+> > > +            msg.size =3D sizeof(VhostUserShMemConfig);
+> > > +            msg.payload.shmem.nregions =3D 2; /* Test with 2 regions=
+ */
+> > > +            msg.payload.shmem.padding =3D 0;
+> > > +            msg.payload.shmem.memory_sizes[0] =3D 0x100000; /* 1MB */
+> > > +            msg.payload.shmem.memory_sizes[1] =3D 0x200000; /* 2MB */
+> > > +
+> > > +            /* Record what we're sending for test validation */
+> > > +            s->shmem.nregions_sent =3D msg.payload.shmem.nregions;
+> > > +            s->shmem.sizes_sent[0] =3D msg.payload.shmem.memory_size=
+s[0];
+> > > +            s->shmem.sizes_sent[1] =3D msg.payload.shmem.memory_size=
+s[1];
+> > > +
+> > > +            qemu_chr_fe_write_all(chr, (uint8_t *) &msg, VHOST_USER_=
+HDR_SIZE + msg.size);
+> > > +        }
+> > > +        break;
+> > >
+> > >      default:
+> > >          qos_printf("vhost-user: un-handled message: %d\n", msg.reque=
+st);
+> > > @@ -809,6 +851,22 @@ static void *vhost_user_test_setup_shm(GString *=
+cmd_line, void *arg)
+> > >      return server;
+> > >  }
+> > >
+> > > +static void *vhost_user_test_setup_shmem_config(GString *cmd_line, v=
+oid *arg)
+> > > +{
+> > > +    TestServer *server =3D test_server_new("vhost-user-test", arg);
+> > > +    test_server_listen(server);
+> > > +
+> > > +    /* Enable shmem testing for this server */
+> > > +    server->shmem.test_enabled =3D true;
+> > > +
+> > > +    append_mem_opts(server, cmd_line, 256, TEST_MEMFD_SHM);
+> > > +    server->vu_ops->append_opts(server, cmd_line, "");
+> > > +
+> > > +    g_test_queue_destroy(vhost_user_test_cleanup, server);
+> > > +
+> > > +    return server;
+> > > +}
+> > > +
+> > >  static void test_read_guest_mem(void *obj, void *arg, QGuestAllocato=
+r *alloc)
+> > >  {
+> > >      TestServer *server =3D arg;
+> > > @@ -1089,6 +1147,33 @@ static struct vhost_user_ops g_vu_net_ops =3D {
+> > >      .get_protocol_features =3D vu_net_get_protocol_features,
+> > >  };
+> > >
+> > > +/* Test function for VHOST_USER_GET_SHMEM_CONFIG message */
+> > > +static void test_shmem_config(void *obj, void *arg, QGuestAllocator =
+*alloc)
+> > > +{
+> > > +    TestServer *s =3D arg;
+> > > +
+> > > +    g_assert_true(s->shmem.test_enabled);
+> > > +
+> > > +    g_mutex_lock(&s->data_mutex);
+> > > +    s->shmem.nregions_sent =3D 0;
+> > > +    s->shmem.sizes_sent[0] =3D 0;
+> > > +    s->shmem.sizes_sent[1] =3D 0;
+> > > +    g_mutex_unlock(&s->data_mutex);
+> > > +
+> > > +    VhostUserMsg msg =3D {
+> > > +        .request =3D VHOST_USER_GET_SHMEM_CONFIG,
+> > > +        .flags =3D VHOST_USER_VERSION,
+> > > +        .size =3D 0,
+> > > +    };
+> > > +    chr_read(s, (uint8_t *) &msg, VHOST_USER_HDR_SIZE);
+> > > +
+> > > +    g_mutex_lock(&s->data_mutex);
+> > > +    g_assert_cmpint(s->shmem.nregions_sent, =3D=3D, 2);
+> > > +    g_assert_cmpint(s->shmem.sizes_sent[0], =3D=3D, 0x100000); /* 1M=
+B */
+> > > +    g_assert_cmpint(s->shmem.sizes_sent[1], =3D=3D, 0x200000); /* 2M=
+B */
+> > > +    g_mutex_unlock(&s->data_mutex);
+> > > +}
+> > > +
+> > >  static void register_vhost_user_test(void)
+> > >  {
+> > >      QOSGraphTestOptions opts =3D {
+> > > @@ -1136,6 +1221,12 @@ static void register_vhost_user_test(void)
+> > >      qos_add_test("vhost-user/multiqueue",
+> > >                   "virtio-net",
+> > >                   test_multiqueue, &opts);
+> > > +
+> > > +    opts.before =3D vhost_user_test_setup_shmem_config;
+> > > +    opts.edge.extra_device_opts =3D "";
+> > > +    qos_add_test("vhost-user/shmem-config",
+> > > +                 "virtio-net",
+> > > +                 test_shmem_config, &opts);
+> > >  }
+> > >  libqos_init(register_vhost_user_test);
+> > >
+> > > --
+> > > 2.49.0
+> > >
+>=20
+
+--fwNPydEZ8IKHHnmi
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmimMSwACgkQnKSrs4Gr
+c8iAywf/QRHoKpH5gqmuSD3yLkeJMy0pIeDKDdkyScbVgCr3Z7pDDQap1PMg8zwK
+JY7iJY8vchxmevY0ma6MjzgE8UqiJ0NibE2A6OaUSCc64ZktYLOhLzhXJSjiT7uU
+mcd6DvLWO7CZSpHTUUrN0q6zrb69iL/5h/3NmD9RC0RqUe/yG5mUTXpWgTDbmLiC
+J3KmiijryQiRCgEz8FY9FfFzUDJFGrazgM8WkgDXPBvygzWlak85ukDdBntCvUKq
+YOUngLTyNRepQQBaB2gdTbn4sECLM/FMuKuTMi6hj7ky4jvUQr/bHnwby+/poYy/
+xoB3tX+BEiDpQh2soTk68hme404SKg==
+=p0jQ
+-----END PGP SIGNATURE-----
+
+--fwNPydEZ8IKHHnmi--
 
 
