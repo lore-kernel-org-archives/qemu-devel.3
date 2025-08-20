@@ -4,114 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65829CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 20:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E68CA0EF8
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 20:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uopdO-0003EP-D8; Wed, 20 Aug 2025 16:42:14 -0400
+	id 1uopjA-0006cm-9x; Wed, 20 Aug 2025 16:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uopdK-0003CV-77
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:42:10 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uopdI-0000Bz-MM
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:42:09 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-afcb7aea37cso40115866b.3
- for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 13:42:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755722525; x=1756327325; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0OxLqEEJqYAqri093pp4yMwxSVTDwskPahJePkHdh4Q=;
- b=esyM4q43a15A6C9AMgVYhmiWLHjqqhFmgmNHqTpPnBor0k16wrKzDUUeQGPSLxi8/N
- xvt84Glbnb7sal4nRDAooUmWqs2b7dCPW/o3OpzQI/v2u6A7c3APBSilljZ/I/a5slFM
- a3O8UYk8MrqawDVL8LBmDESxFJBatK7wgNYdYHR3DFJF08Oi/IiUWs5G7h+pPm5XWLZs
- pEp5yYW21YpTG969KWfwy4EH/idcMqneYvjXnG768msmz6glh4TqIy8reSJa2C1b0VG8
- Si4nMv8mYwa4eMAN1j9QQ+DDFkwSFekmTfk8A9tyFwi0KMjnodnxuIz8Rim76CHwOk8i
- Vk/g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uopj8-0006cV-GM
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:48:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uopj5-0000yx-Tn
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:48:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755722885;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=GW20dLEGR68H+oApIwT1Y+Q6vkZKpumVQvcyFCuE82YSVipBG6WIaWO2CvQKcXsIYeUkMm
+ 0rtEfSmOXS3y7H1S5iRaD0ZydCEmppZclZ/tAvf+sOzN4h4YkR7bEi0Nh2J6lY3oYOQUqt
+ tXvkceT7as1T5UGNu7D++c6hlBbtUUg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-434-0wX9rhrnMcGYXBXEMcAS0A-1; Wed, 20 Aug 2025 16:48:03 -0400
+X-MC-Unique: 0wX9rhrnMcGYXBXEMcAS0A-1
+X-Mimecast-MFC-AGG-ID: 0wX9rhrnMcGYXBXEMcAS0A_1755722882
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45b467f5173so1525405e9.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 13:48:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755722525; x=1756327325;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0OxLqEEJqYAqri093pp4yMwxSVTDwskPahJePkHdh4Q=;
- b=gWAjf+27lhyn87HezxqPRXhOdn4ibWTDZ4WWo5SP+WK1OKhs63X8Kf4gA+b3ajfWgz
- Y+V4bAsLGWsw5vGabKFMD/w8O0eL9lu5KAifBb8EyhCH+GWVu+f0SdLgqRBZ/l3JxUbO
- XdzF9ONoP3d9QaliWUkqUf123I8YJrIBE2zZVcHG/5c0Ys4krHqQclQ9nHGQL06IyKpP
- FjU5Q9tW6ycp9I8HV6OOEIkmkhmaWyV8SCpgAbA/tDEkWyBM4jNBcb53s4JZ9CuNhDY6
- mdtwCyxUFIIpWgqqjtXnQJ3pbvAVS37PQEDxv0Qulbz0zJGHhoKyFNeLGrNvyvhpvm+b
- RphQ==
-X-Gm-Message-State: AOJu0Yx3EpZ9Ur3OAtvQvW3SlmTf/cEHXjtySxc3O+UxrKNx2QsoBPbQ
- YtGDtKvCZ8e2uBU/7LUDjj+u/l6c9lNmvbgSO6xnNdTWTB6Lt2TvqwAMJ6nlFN62KJYh0K6vb5v
- NhJvyVko=
-X-Gm-Gg: ASbGncuSWcb76Jg85YtWOt4psqkC8r23nL8VGeHiBLMJjZ6/CUSXk0J2USO78hDY7XH
- QzVOAUIWZ6FrRW6yrDcKh2+UxxXf2hICYVtIBhgDNAS/ns2YWUcv2woQNxR91+5Klyzn8Vme8Wg
- 1YyjC326obTY45hSITvvC2364jdGyRbkyE1h6K11IB/tWq1pJYCQlIvp3IVd8WkxWGLFXvRJ6nw
- +wyi0d2M1MH6Ivz36lKNQRLtG1OkVUs2MXZnmRAQemR6Pf8G/WpJ0kOqymwNIpqGpWdZJQHR0KB
- GmHJcfqFM3LhV3FvilET04dMh86nCcJO0FuFfbMDQH5Xm3yIZxOJsFO/QteM7i1IdtYB6Xq8hx2
- nrtxbJQ+Z+GjBlLVjWoBI6cFhea9NOhE/fpfsTlymzXmLtRMYzl2btynp/D6me959BIzswtXBSD
- oFaTY=
-X-Google-Smtp-Source: AGHT+IGLPHvES/xrLt2Wz1HHF2m0q065bIj64zByM9mMhbjWrSTD4pJ/DRheMjS3/kqSkWkcnRvhqw==
-X-Received: by 2002:a17:907:72d4:b0:af9:406d:f0a8 with SMTP id
- a640c23a62f3a-afe07a1f90emr17495266b.23.1755722524774; 
- Wed, 20 Aug 2025 13:42:04 -0700 (PDT)
-Received: from [127.0.1.1] (athedsl-4441256.home.otenet.gr. [79.129.180.152])
+ d=1e100.net; s=20230601; t=1755722882; x=1756327682;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=WYshrg9IXHrGbEXCXg2arfzjvxN4jG51IKQcJf2VS+LY8INEQdlui/MXbzVky+v/Es
+ Mg6azfiP9k6W9KLjdNFsldWY1U6lGV9PGdHV+me1Qii2dmrNtR2RLSFYM4d38DTN3N95
+ VhBdcPvimEnowLSuOpdosdiUz5Uz/6A/Nm6fXI69tl+Xbetg4Lut3tBJy1Q8OTcYOvSk
+ GnYCq22SIyIQ+e9TZ9lo62324z9607jRBoH0MEHvFbapj0f6ULxz1EBHVgXbU6oiqgfh
+ r1S4kfLLoEwy5PgtS4cvEUeCsSxFBBMgUdFPyLM52Syz1XxC40mmXwwUiw/0mGpq85WW
+ zFqw==
+X-Gm-Message-State: AOJu0YzbmgddyxmeHqFSvYhPZ5EJp1Cj/skCA5uKA16XgctP8JZiCcrc
+ AOePtlpWGRJuD0s1sa5gKrVOUrU+sZ73EYnNQTykL4lBWv5EIRTG1/TxAZILrPHBDiP3CrU+Mhc
+ nZfvBdLsxiBxyOp+TzUqoxqs1WoqfgoZ6ye4/o8ZqIc1vAQ/9MT9GwVd0
+X-Gm-Gg: ASbGnct+L3+JCjyoO5gRCGXRRsd2JG1pFMFg+5hiXhXkjPmpe9CbSLutUwYCAq9WeK4
+ WthZOquVrgSRYjOICNqVWVbtDLD5hx050p/FiTXFveoXkBh4VZFQiANsGeyZ1nVPEe16oPO9R8S
+ YrD/T5+TJi9e77dZFvyqjITu0+NkIId+PcCmn+iX1/acPaTIc52m6HevTnXPbJolAKjYf0mkjLU
+ bnMOKnGHR0xAsuhfz3EzOtLx+b88aHLGr2yC0yueSshVat6R4RjMF4B6dk+IgZOkK4UTlT+Ryl7
+ qlM7q+AR76+HaW7f9mSZipJHeMO9Mqcm9QDQiCLr9A==
+X-Received: by 2002:a05:600c:b86:b0:459:d9a2:e927 with SMTP id
+ 5b1f17b1804b1-45b4acff99cmr28162215e9.5.1755722881855; 
+ Wed, 20 Aug 2025 13:48:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHuoAewrBNnzGm2hSCaUriZzqV+MiOKLl9SnHfqKG67YGuNoXbAEvkG4lp6WKECmF7YjR/3XA==
+X-Received: by 2002:a05:600c:b86:b0:459:d9a2:e927 with SMTP id
+ 5b1f17b1804b1-45b4acff99cmr28162105e9.5.1755722881497; 
+ Wed, 20 Aug 2025 13:48:01 -0700 (PDT)
+Received: from [192.168.10.3] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-afded5353cdsm246888166b.106.2025.08.20.13.42.03
+ 5b1f17b1804b1-45b47c310efsm50431555e9.7.2025.08.20.13.48.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Aug 2025 13:42:04 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH 0/2] Two minor minikconf.py fixes
-Date: Wed, 20 Aug 2025 23:41:55 +0300
-Message-Id: <20250820-scripts-minikconf-fixes-v1-0-252041a9125e@linaro.org>
+ Wed, 20 Aug 2025 13:48:00 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: Re: [PATCH 0/2] Two minor minikconf.py fixes
+Date: Wed, 20 Aug 2025 22:47:56 +0200
+Message-ID: <20250820204756.1039443-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250820-scripts-minikconf-fixes-v1-0-252041a9125e@linaro.org>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIABMzpmgC/x3L0QpAQBBA0V/RPJta0xJ+RR60ZplkaUdSm3+3e
- TzdbgLlKKzQFwki36JyhIyqLMCtU1gYZc4GMlSblgyqi3JeirsE2dwRPHp5WJEbmshY6nxtId9
- n5D/keRjf9wOVh4SKaQAAAA==
-X-Change-ID: 20250820-scripts-minikconf-fixes-e62a20429f54
-To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=629;
- i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=Ib/3u1w1IUYsgmigAHwnxjaHBX7yBqQ9/naW04suRvQ=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9wak1iNzRDWTYwc2VDZmZxaW9WV0MrQWVuM0o5CjJUZ3F1clZpdUg4YXF6Rll5
- SktKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUtZekd3QUt
- DUkIzS2Nkd2YzNEowQnpIRC8wVU9QZUpITWJrczZNZlpJQVhwNHVXMS80ZVBrOXRWUllsKy9QVA
- pMYkRsYlVDaDR2MWdScEFIREZmVHVMRVlpemJWQ3JQRzJQRHd5SldjakwrTEtCL1dyWXBad0R5T
- y9XWVh5MG1FCjBqcnRHaG5FcHUrNU15ZXpweUEwdEc5TzV1Z3hmOTBmUUY4WWRGRGVMRmIycFhz
- elEraHRna2YxczBDZ0ZCS28KQzRzV2x2WHQwcTNob05ySmV6UVA3cDBxTlh5SGhreE1sMXFFM1N
- GUVpkcVpIakc1bFd5NFd4RDF4UTQ2Kzk4WQpQUStFQllxM1VUdEw0Wnp2b3I3ZlIwUGtrT1BmRE
- 5kMjBydWRlK3FLOElnUXRzSWk3M1VYUGl6QjhYYXZidVc2Cmwxc1BzV1dGYTJqU0tXYVMvcGlJb
- m5UWXZ5Q2VaYmMyU1hORFZ6T2lEbVJzeWpCbmM1VExIOTE5VGZmS3F5dFUKYzMxRG9uVlIzQWVO
- bS9CcHZ6blFvZ0ludVFQckZCalF2eWROcjFrdlZKcXlZOW9kdmRJdGdkZFM3eUZEQlIrWQp2Vy9
- nbXF5QVI0VlFMRXhxR2lFZm9pWC8rKzA4WXFoazZnZWZjS1BaUGZidmI1dUpiK3k3bXhCNUdhb0
- dyWHZtCndrZnZ0bGE4YWlOSEc5elJEWG41ZGZlK1RxUytRVFZCR2JMbHRieDhMbVVqVFRYVDUzY
- W1LdHpRUFJHYkVOS2EKblBYRGt6Y2tmcTVUTG1HSlVVUVV6ellQSStSN2ZDOUVsd2k0dks5Qklq
- dUcrcXl4Vyt6emVxRVhtUkE5NFV1egpRVFYvbE9yWnN5YU9xUmZIYW5Xbk5nZHE1VmFDV0hnajZ
- zVnJJeGN0ZTZNYWlNNnBVako2RW0rbnlwK0t2R1RYCjJLRWlndz09Cj1Id2ZnCi0tLS0tRU5EIF
- BHUCBNRVNTQUdFLS0tLS0K
-X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
- fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,24 +108,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes for two minor errors found randomly while running `ty check scripts/*.py`.
+Queued, thanks.
 
-Since both seem to be 6 years old, they must be very hard to trigger in
-practice.
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
-Manos Pitsidianakis (2):
-      scripts/minikconf.py: fix invalid attribute access
-      scripts/minikconf.py: s/Error/KconfigParserError
-
- scripts/minikconf.py | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
----
-base-commit: 88f72048d2f5835a1b9eaba690c7861393aef283
-change-id: 20250820-scripts-minikconf-fixes-e62a20429f54
-
---
-γαῖα πυρί μιχθήτω
+Paolo
 
 
