@@ -4,89 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF0BCA0EE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 13:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE51CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 13:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoite-0007Yd-GA; Wed, 20 Aug 2025 09:30:34 -0400
+	id 1uoiwy-0000e3-TA; Wed, 20 Aug 2025 09:34:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uoitc-0007WD-FC
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:30:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uoiwx-0000dM-TB
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:33:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uoitZ-0004vv-DL
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:30:32 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uoiwu-0005Ou-Ez
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:33:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755696627;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1755696834;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+jnpaJWaa05lLjx/GprTcC4HHfELwj7ENiYWQAagekk=;
- b=TII2FKH58cv1P3lNhihl2V7mMB696M6320MuEBg1llRSCZ+n4EgGZs/MYPRqrheENKvDNP
- om4o+84aKBSLHHdKVUoWcesPHYOIGnKnXxXa7AzacUWIxs7jTnttKA3prgpXy9fV489SIY
- WahxlOyHCZyEe/FAB32Z/hTOzSpurZs=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-PpsdAQY3Mc68fR55e8CcBA-1; Wed, 20 Aug 2025 09:30:25 -0400
-X-MC-Unique: PpsdAQY3Mc68fR55e8CcBA-1
-X-Mimecast-MFC-AGG-ID: PpsdAQY3Mc68fR55e8CcBA_1755696625
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7e8704e0264so1805490985a.1
- for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 06:30:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755696625; x=1756301425;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+jnpaJWaa05lLjx/GprTcC4HHfELwj7ENiYWQAagekk=;
- b=FzTkxfdVsOfQupd3KeRrEBIsVQC2mpWFXwWgl1belh0gBmadPJ0nhWaN5WWsiHFDcy
- M1RyL8ClLZZL6P97evBuPf+BwGqEU7Koq035aUF3Z+g6H/RSx57FrwDFvM2s7go9KwyL
- ym1oK2renP/1/1IzLOKLhzwaZP/R/zxIsxzKcENWO6n9ykM/waM3DpLxGE4y8mm8wRW8
- iFFTPCOY2cLpZ0WF/AT0YvDCVLPG/p3d659CrPY0Oql59OKnPPmJUyU6OFRn3hEzzhqC
- 0FZqkXf7e9i5g3M8sQpuI/xxbvWMc94VG/hRRIXp2W9I+Vc/llpGQ+G5GNF50fYuDU1M
- 6uMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJ7fC4QyOOUjdOGlbJg633e+0jdbsChGqQ7YijdTvZDTRDsYorjGKJCzUuWF1xz1NrI5ZCgoNTC82i@nongnu.org
-X-Gm-Message-State: AOJu0YyJdyrIjKNN2sa5V0S0Ejbhn/mSaIqyt9o3OK9AnvduxQQBSB0Y
- O4lAOPOMy8+kx1D5dKda577pJ4Aaxb2ZYv2Y69UHb7xWeIy+825EpJBEsky+z17s/xq5Pe7w4Br
- Q8vKWpAchGU5M7UyxGS8lA0ENIPERlgUTYUOtuFhfgFOGDTq86UGc5X85
-X-Gm-Gg: ASbGnctFlSKzLGXozJpI8BEkHPD/GK4tWsdcvvEgmhb+HC3KsnW3xDfdFMgg4BFRKXE
- 1DdCX+vKJKLElAq/khP8syEf0lCqBmci5J/Yli21NeYZGGWOeE/lDgfkdlh18txbEx3qzlM2niT
- ChViJRHOktYFCoOwObuoQQCSTVRrmpqSPAbS1B7Ug2MllQb2lEocXsZbPk4gobK/bg4pnDC7Rc9
- /OBmwZxH5SoLxhxOKjBdLSLw63PllC9yZoR5VVOZteUXujbrUnfxp7os6HDQDp1S1BxIgmViwsc
- KC6/w5KPP++OIVdzvYjLd4wTVvz3wK+G
-X-Received: by 2002:a05:620a:4410:b0:7e1:5efc:6f6 with SMTP id
- af79cd13be357-7e9fcb78b2cmr304958085a.47.1755696625016; 
- Wed, 20 Aug 2025 06:30:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH6gtish0a/RzCHEJINWFpiq7cN1Z9YEuOC5DDyTSSEGrvAgh59UNzGypZCSBczD9L/12/vUA==
-X-Received: by 2002:a05:620a:4410:b0:7e1:5efc:6f6 with SMTP id
- af79cd13be357-7e9fcb78b2cmr304954185a.47.1755696624563; 
- Wed, 20 Aug 2025 06:30:24 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e87e070b0csm931081185a.35.2025.08.20.06.30.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Aug 2025 06:30:23 -0700 (PDT)
-Date: Wed, 20 Aug 2025 09:30:09 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: mst@redhat.com, farosas@suse.de, raphael@enfabrica.net,
- sgarzare@redhat.com, marcandre.lureau@redhat.com,
- pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, eblake@redhat.com, armbru@redhat.com,
- qemu-devel@nongnu.org, qemu-block@nongnu.org,
- steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
-Subject: Re: [PATCH 27/33] migration/socket: keep fds non-block
-Message-ID: <aKXN4bykrOFE6_cX@x1.local>
-References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
- <20250813164856.950363-28-vsementsov@yandex-team.ru>
+ bh=LkHaAWokt3SG+lmggr9/bgCZDZNGB6MpymynMjKSjis=;
+ b=aObg2nbWaKw+9HGqIs9UZQK1z944u2guUQjunxWom0xGPu8yrGniFwsH/BJE4kaXZa3Cqm
+ d/y0FSr3+zu1nbbLGVaVF4f3iG9Vkp6w5bSU0UeMmPHA8X4H1OD/tS/2A3KxnFCt9EVFza
+ /QE2TNh7LK5weYYtinQ1QAx6xPQ8hFg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-lWv8fvdQP5OtnhfMaLLmXg-1; Wed,
+ 20 Aug 2025 09:33:51 -0400
+X-MC-Unique: lWv8fvdQP5OtnhfMaLLmXg-1
+X-Mimecast-MFC-AGG-ID: lWv8fvdQP5OtnhfMaLLmXg_1755696830
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 33CF31954B13; Wed, 20 Aug 2025 13:33:50 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.164])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E64CC180044F; Wed, 20 Aug 2025 13:33:47 +0000 (UTC)
+Date: Wed, 20 Aug 2025 14:33:44 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PULL 0/2] Python patches
+Message-ID: <aKXOuFYHLi_I1KLB@redhat.com>
+References: <20250820045816.1142190-1-jsnow@redhat.com>
+ <CAFn=p-bSh9kr2OOv0vq8H+quuUSww5NeV8LYBy2MKr-b82P2kA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250813164856.950363-28-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFn=p-bSh9kr2OOv0vq8H+quuUSww5NeV8LYBy2MKr-b82P2kA@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -95,7 +74,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,48 +87,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 13, 2025 at 07:48:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> For migration channel keep fds non-blocking property as is.
-> It's needed for future local migration of fds.
-
-It is pretty risky.  This changes the attribute for all the iochannels that
-migration incoming side uses, including multifd / postcopy / ...
-
-I left comment in previous patch as a pure question trying to understand
-whether the feature is needed.  If it is, here it might still be good to:
-
-  - Above the line add a comment explaning why
-  - Only apply it to whatever channel that matters.  In this case, IIUC
-    only the main channel matters
-
-Thanks,
-
+On Wed, Aug 20, 2025 at 01:01:06AM -0400, John Snow wrote:
+> On Wed, Aug 20, 2025 at 12:58 AM John Snow <jsnow@redhat.com> wrote:
+> >
+> > The following changes since commit 5836af0783213b9355a6bbf85d9e6bc4c9c9363f:
+> >
+> >   Merge tag 'uefi-20250812-pull-request' of https://gitlab.com/kraxel/qemu into staging (2025-08-13 15:19:29 -0400)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/jsnow/qemu.git tags/python-pull-request
+> >
+> > for you to fetch changes up to 16398e73cd13c7d9f284d8ec4a440778fc2e3f9a:
+> >
+> >   python: avoid deprecation warning with get_event_loop (2025-08-20 00:55:27 -0400)
+> >
+> > ----------------------------------------------------------------
+> > Python pull request
+> >
+> > Necessary for Python 3.14 support for iotests, releasing October 7th
+> >
+> > ----------------------------------------------------------------
+> >
+> > Daniel P. Berrangé (1):
+> >   python: avoid deprecation warning with get_event_loop
+> >
+> > Richard W.M. Jones (1):
+> >   python: Replace asyncio.get_event_loop for Python 3.14
+> >
+> >  python/qemu/qmp/legacy.py  | 10 +++++++++-
+> >  python/qemu/qmp/qmp_tui.py |  2 +-
+> >  python/tests/protocol.py   |  2 +-
+> >  3 files changed, 11 insertions(+), 3 deletions(-)
+> >
+> > --
+> > 2.50.1
+> >
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  migration/socket.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/migration/socket.c b/migration/socket.c
-> index 5ec65b8c03..9f7b6919cf 100644
-> --- a/migration/socket.c
-> +++ b/migration/socket.c
-> @@ -129,6 +129,7 @@ static void socket_accept_incoming_migration(QIONetListener *listener,
->      }
->  
->      qio_channel_set_name(QIO_CHANNEL(cioc), "migration-socket-incoming");
-> +    qio_channel_socket_keep_nonblock(QIO_CHANNEL(cioc));
->      migration_channel_process_incoming(QIO_CHANNEL(cioc));
->  }
->  
-> -- 
-> 2.48.1
-> 
+> Dan: I wasn't sure if you were suggesting these to be pulled *right
+> away*, but just in case that is what you meant, I sent this PR for
+> what I think is the minimum necessary to avoid iotests croaking when
+> 3.14 drops in October. Let me know if we need to make any other
+> adjustments here and I will follow up in the morning.
 
+Only the 1st patch is important for the 10.1.0 release - the 2nd patch
+doesn't take effect until the rest of my py series that explicitly
+turns on warnings for iotests/functional tests.
+
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
