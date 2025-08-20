@@ -4,175 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42AD5CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 08:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B88CA0EF8
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 08:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoeO9-00027U-D4; Wed, 20 Aug 2025 04:41:45 -0400
+	id 1uoeUG-000350-Kz; Wed, 20 Aug 2025 04:48:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1uoeO7-00027F-3A
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 04:41:43 -0400
-Received: from smarthost3.eviden.com ([80.78.11.84])
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1uoeUD-00034c-MW
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 04:48:02 -0400
+Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1uoeO3-00031u-PV
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 04:41:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1755679299; x=1787215299;
- h=from:to:cc:subject:date:message-id:
- content-transfer-encoding:mime-version;
- bh=kh3Pzgsi0SFbM2GfshWB499cPkxT2rDkp0CG5lJIxW4=;
- b=Tpg1jrOjQNCw4Vqv/054Ao4KVDyvp1DMrahdKLbtifZkgik8vXAnpRUc
- VEV5TPODB6PhpRq/+x0+uloIA50O6vAPhzz5Kju4qEqv+lLpyUBpuvf8V
- VG4/VDW4YNcWRazXArQanJBv8NJG0X4xeX2CxxPiaT7PDq04ianfcVxDv
- AJHACCysMX5HTf1GgHwAnGi9/8/kF0ypu5dUL7YdwbegemCuSS5MJnyuP
- oArBbHKYiaBU+TMvsgsenlMrKl3T6SCWpxrn9eVW8T/kh7OFbJ7eDl1bx
- JeNMl8DqXQPMK7FC5mdf2UvTUfBrWT5DaCqH/CzF6S+vmdDnV/gw2qxnx Q==;
-X-CSE-ConnectionGUID: RLRKRsIAQjugziqlgK1/5A==
-X-CSE-MsgGUID: FWzKBrU+SgmX1onnqgo/nA==
-X-IronPort-AV: E=Sophos;i="6.17,302,1747692000"; d="scan'208";a="41721279"
-X-MGA-submission: =?us-ascii?q?MDHHwnvadPkysQOfKjjV636VrQY2Wb1hc9nvWI?=
- =?us-ascii?q?vERUxxdYZq8hdDcbeBQdYkolXF23zvi0NRFcsZBSLzibhrcxrIBOTTEi?=
- =?us-ascii?q?prLb/hSirXbbBn7njhD1LEBhMj2R6oXINqQL9VrkyIlde1qKRwK910um?=
- =?us-ascii?q?JOCeu/mvsWHB9aW5EUsrTXnA=3D=3D?=
-Received: from mail-westeuropeazon11013007.outbound.protection.outlook.com
- (HELO AM0PR02CU008.outbound.protection.outlook.com) ([52.101.72.7])
- by smarthost3.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 20 Aug 2025 10:41:34 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=T0/pIgiRKE0WNeDMrC9rvs5D3O58p8fQ8VP3yFQWBYAu6mUZ/qqwH+BzmTSfWCYU0DxG3TUqbbcO+tes42XZp1U7jGLYXJyk/ZCMC7c79Ly0imyPvP9z1d6NUy3M1zj7EMvQu9Qpk8L8NpRU/3Nj+dxYiC8ZXKmrsdIDk0al5cETNhRjMiZxBkQPVB1jsP4AdKbH/nhKFTGFnQ3AwyadaVbZwh6Lpq65c+FlNbaTdaWOCxfyCJow7cvpdn9efSK/Dh8USBM65U5BJpnQ5jDYsSMOMWNYzvREUNftMNkRTKf2IDtMVsGZ1Hx9MMF3KVf3MzS4pMgeTj9+B9bz+pQ0Cw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xkCv+caLGoqk1cjAgXiNHJGjGzWVGfTGr65CykplT0E=;
- b=C5q4YbExcbroteevusq2UTXkRln1EZCUvUKk39vd/BSFVcyZH8ihKAe8BWK3+DKDk4wABcCjGhZpzKRDxt+SZFkFlvMJE7k8zMgRVVEXX+1duA4WLFXHWDMIvaplslJ6P8BfiCoLB1DmYfmUOHwFX4hiAtNdr1NuYQHjHvf6YU8V6EqT4gdelbm3twrmTFXdz/TEhY6Mc5QmDvdfVYN8hLW9DFIDzw5T6+3Vp3RHuqhpk6uqAIChdKDPs8tqt0DvY+Lgl6HAKVt7OaKoi3ApesUNTTDbPe7RU/d6JZjoOL+5ILnUcXFHOUiackZviPgBAAgu5X/tswfGz7QRBzekGQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
- dkim=pass header.d=eviden.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xkCv+caLGoqk1cjAgXiNHJGjGzWVGfTGr65CykplT0E=;
- b=V+WNUQBYyhdo17W0v7iLJts/sGWuC+Yn1KSIaCkE6EmmUh884X80wBU53EVE3jItKv/vovzaNlbDjBRNkGwpveiDJy5bsbKiYNI9+QN0NT06OSmdDBw+2SQB6dW3Zu6PEGDM9SKpDjZTMdBl/4VHhw+AWrCcKNxawPa0zQbyXR+PDoC+wsH6c1fBFSUiCCcN2BxRjz5I3I+9jRN+coOSYlQRQn6cVNHNJFqnqxltKi0u147+NmQKXOFARdICoTkin2tEQuwjlfGmH3JNPOe3JpxHHuqrLknTZpg1f6Zf0J1nYNrZopeBCt16sN4NKnhD7hreSl1GffYPgPdO3VXFeg==
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by DU0PR07MB10702.eurprd07.prod.outlook.com (2603:10a6:10:5c9::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Wed, 20 Aug
- 2025 08:41:33 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d%6]) with mapi id 15.20.9031.024; Wed, 20 Aug 2025
- 08:41:33 +0000
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "mst@redhat.com" <mst@redhat.com>, "marcel.apfelbaum@gmail.com"
- <marcel.apfelbaum@gmail.com>, "odaki@rsg.ci.i.u-tokyo.ac.jp"
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, "sriram.yagnaraman@ericsson.com"
- <sriram.yagnaraman@ericsson.com>, DAMIEN BERGAMINI
- <damien.bergamini@eviden.com>, CLEMENT MATHIEU--DRIF
- <clement.mathieu--drif@eviden.com>
-Subject: [PATCH] pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
-Thread-Topic: [PATCH] pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
-Thread-Index: AQHcEa47CsbyPv83lkeRMpZl7TSUYQ==
-Date: Wed, 20 Aug 2025 08:41:33 +0000
-Message-ID: <20250820083953.439635-1-clement.mathieu--drif@eviden.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=eviden.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|DU0PR07MB10702:EE_
-x-ms-office365-filtering-correlation-id: 7470084d-1224-4f84-0a28-08dddfc55dbb
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?OXagh3bxCNj4oaWCAs1uTPgB80R4fte0i0eDMWNFdGUynvawwrlkOACzg4?=
- =?iso-8859-1?Q?dzJLLrnKttbzDSyUIoMRVlwHraniNkh6uUBv893XgFTuqhH4nvEGbE04cX?=
- =?iso-8859-1?Q?F6jIIhSFvbuzDJ2wZz655jwkjrxE13OQQBCrKK0H5TnyIiHmeFBxothN8g?=
- =?iso-8859-1?Q?MX6CuDC/qSw00EL3ZbbE7Rs4K8abXb8zlqTtvhQR2kAnd8fz4waee7pnKc?=
- =?iso-8859-1?Q?6Rft4Av0Ynp6ywk4sgD0PNKGOMW0sbRgcNMYQic4yrzt3+KeEZSlOxSuMV?=
- =?iso-8859-1?Q?K7KCxEWkKcsiRm0tfMyaK3su62T2vtdp1ZxR0eYv+TqEI82CbuWpNERv5s?=
- =?iso-8859-1?Q?zFhvY7f2OnzfFCJ7y4kXMhfCNO3e4GmeIpAEtsWLXxtTpAu2clf5pu7VH/?=
- =?iso-8859-1?Q?Aj4kO5gjvRc6xhWzK+ewZwgKwg8FUdUoXNS1oyx6Cj53EkK7C7I49vo87N?=
- =?iso-8859-1?Q?h3pUt93mchyAEgg/l1oOPRCrmRTwJbutd/qqkuC8xCF4ZuqPmVW3DDxlet?=
- =?iso-8859-1?Q?iyXl2My7tdJ+Hz2gVhizbGoW/aElabKdqHmzCeoEoX4Qy0mpBbEJ3ZTEz/?=
- =?iso-8859-1?Q?0KyTwMOOXHFPRhhPLpc8rQOIkBDxAnVtdQgTn+ZNBRn1A+rclcj4j+1Ijb?=
- =?iso-8859-1?Q?fSJsSqmQ8gedmK7oAtPHLMA+qLjjelqjTolCJ8kOkvJL4ICM0lB3OYxuxR?=
- =?iso-8859-1?Q?XtFrARcJgexF03Y1hIbndTMOG/rHfFWtSzY+MBKr9T/JwW0dkGnY+GfOhc?=
- =?iso-8859-1?Q?XTSKVh6HQXhwa9qbn8jGoqflH1gQ20EW1hxk+RtphPIKp0AHfPoe4CK8Jb?=
- =?iso-8859-1?Q?RlWcyMZAnpRsJng8Pz/skqTtCWd1XuxbsOEAxNf/Axo7I4FxF4gDi/UyDR?=
- =?iso-8859-1?Q?kHr2NXNUZaMeyuBbTkkXdqy3rlMqhWAunQEzlhyMC3D4Af47+9GfTtMCxZ?=
- =?iso-8859-1?Q?dntNOrBTIoX6qz9ob0Mx/pEvrGFjVbBvo/f3X7MVVEYI7rEFq34JK7AWYH?=
- =?iso-8859-1?Q?ju1JvmvgDKlJ3WzxiEZhx4jX1u9SN38xNPCKFQL942J2tgi8GV4k6v8qIL?=
- =?iso-8859-1?Q?q9KHHIxr3wu/zb+TzVYzFaVMIsvKL8ksmL7ltimqGp3gqyCTJAJ/80X+mb?=
- =?iso-8859-1?Q?ideKKonU2DJzA03n2eN7WV4yDKbky5yVU3uUumlndT6mQsKBy/LXGg3Jok?=
- =?iso-8859-1?Q?GkgjXP3OskdvpkKN/FeUqEDu7HEnRSYd95hXUwLQFkWoi2J7pYUH1byNS5?=
- =?iso-8859-1?Q?So5Bwqutc8sbSTOeE91TP7kT0K38oqqzwgzdD9IlZD8Tqj+bL/4sbRx5sK?=
- =?iso-8859-1?Q?cAD2U15Da9BaNxJAwnfM7/7kpXdTq06qfO00iDZPJM8s2fiq8VITL7Dmg8?=
- =?iso-8859-1?Q?eorpKbGa6XhJKENLESe8Xnd4rM3KMFuUTMtrAhH0kUnBNMX6VgudYNi3wn?=
- =?iso-8859-1?Q?ZEhNztdTFR7RVN87OPixRhA85qVyNXp+ZG5o4S2gxIR/TtVkQQUObv4hLC?=
- =?iso-8859-1?Q?LlRqseQynv5WaUH4B47a82A+Atfn2cnKdTnDYZjXf9fw=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Tu/a7Fv01EuDb+NINei5LCUfq+mX87Ub9iace9m4bJKmutGKLydh5GSBpd?=
- =?iso-8859-1?Q?ADMBM6Dd5tyK/CTVQh3sT5tzZOqu9oB1YV86ugeccSmwlTbtmc7JMWDnz0?=
- =?iso-8859-1?Q?XD6U768ONZrojzhfmXSS804NMkERgTdpBToLAr+bRPy6D70FCDfPzB49m3?=
- =?iso-8859-1?Q?9+3GvLujRNDOmKiuMP57tgdb8aXYkQqP9o4BEBKgscjyYw0ob1scCkg1a8?=
- =?iso-8859-1?Q?9ebon9PfWXUg462Wt/0AfP0lXNneko5KSVEkT10WgO/jbHrhdckfeba04x?=
- =?iso-8859-1?Q?Mvv68U8J9hT2NzfRY6Aq31XIUR2TernWKYAnbgUwHUZGjs1Zb6wuHSGKcP?=
- =?iso-8859-1?Q?LzgqCKK+WhZ4F/F7h9TwuWekIFwihssqz+h95XE1tUMJEFZQk0PfhDQq/X?=
- =?iso-8859-1?Q?VqLWuUPCc+wvYpLGCqtE6FHXAjWbITrHAQokNqXIdS2O/nR0wZ7+53llx1?=
- =?iso-8859-1?Q?wM7tn+1fgiygJTew1IVbQigHzFd6yJBHyNhv+Evt7C1/qPoEs05QDwa4Y/?=
- =?iso-8859-1?Q?vW7z9z1vRLOr2sddZGFwglKGZzK6eFpi+HUP5a9LNFg1UYx2hMO9lEHROj?=
- =?iso-8859-1?Q?dsJ89luO+OnFzIBdk3ZRVPSv2BQ6nxAY0zkntcIHp6wGWExbtv64p7cau+?=
- =?iso-8859-1?Q?+hEY5pJS4QD5U5tiarz6Eb1vv4S69CqW0YgpZuFqArBkEqq9YSMThS2oyg?=
- =?iso-8859-1?Q?sVUUW8vK9yd4EGEju1z3rM3hjNZXWXsPgjIPRnbS5ggn1IYz4WgnRvJTPG?=
- =?iso-8859-1?Q?vS56MOfaXO2zmhfN2bIREg25wegCzEFzqvEGg/YdxbtPt6+aL0JhIkRnbI?=
- =?iso-8859-1?Q?GWSCglPZn6U/cEiArQhW14H5RpLuXjugSSH2ZXAChWtEA0QV3ySkHVvcpU?=
- =?iso-8859-1?Q?C5veuD5PCkaB6MNnkaWcbd1waFxMBGKyDYEvu4Qn7/Kh5dwlcmIioHpXzS?=
- =?iso-8859-1?Q?8VWKdcbcFG2V2BJrZTUaFoAUX0c5fp3VoWD0hLpZ0StAV//WSB2PBSWHJ4?=
- =?iso-8859-1?Q?R3Z7FiwVzoJMAnJYH8mW1RtvMUQnYwGe70LVrjnADNH3Y05FWlfqOqpkA5?=
- =?iso-8859-1?Q?iRmAMPp36aUHuyvMjCk0EbnY6ZIUPlzYHyOqQdYLAANM/+tyqxY1B3mXHZ?=
- =?iso-8859-1?Q?/KXnZKn3I9A68dxU/maXyxBVwSYyaD9XQWoAbZvAdnDJDExxPzk4AjRkvd?=
- =?iso-8859-1?Q?3t2DMHZfVzGz+YEVJFiwuQHCkBObyrNjTd4NaM/wzYbHIunprKLas9snci?=
- =?iso-8859-1?Q?FFNNYJVlfbgV5oewjqNKkU5VBwM6brM0TkOuzJ/sQ0x3J0evEmdGekwcvC?=
- =?iso-8859-1?Q?BZ5qNZQPqIuw7V+O3ORVseKRHvBa71a65vgzegxIUTJeP0b2JsXgCZv2ND?=
- =?iso-8859-1?Q?87Zjh/E621Oh0gKgnarnKDB3pSpsqQdxYyPfPCVHSnUl/uHYZJaHGwcc+S?=
- =?iso-8859-1?Q?wfQfkCRnA7wYZPOzW8jMjCD7od4H4UqszRR0xuBveAoXU40Avcb6dAtxDk?=
- =?iso-8859-1?Q?mimw6GJ5m1LLrccQk9b9OINJvW36LERRy3OMxipgy7NJwcny0PCcSkRmQO?=
- =?iso-8859-1?Q?AbdoGuN2OJuvshPcln5ojNurwKvNn85s+ywbERZonXQYXSJ6pDhqgsh8dv?=
- =?iso-8859-1?Q?xV9ATgcbhSK9QbcCD2BWAhPk/Mkp2zuilYW+vH6/mypzbSQm0mUftj3vDd?=
- =?iso-8859-1?Q?Z1BkPzr8WDVgqVOEry0=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1uoeUA-0003ot-KC
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 04:48:01 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.stl.internal (Postfix) with ESMTP id 1BC3E1D0019D;
+ Wed, 20 Aug 2025 04:47:55 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Wed, 20 Aug 2025 04:47:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
+ :cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm2; t=1755679674; x=1755766074; bh=fdd6qstluf
+ OR1IR3ecGHK1Iit+V07tWQ/FnYjEopR9A=; b=ccjezI8fAUYQXXams+vl7RoTkH
+ lvD8jY+sHGbewQtJR1UYnSsJG6r1IKBkXUieCI7s/OJQ5+1Gq5VF96Y0297zvoFn
+ Kdy62yFKDbZcaqwsUNOk0YkZOhu+GjIw97bQpvQcKthL75pRmCFiySsJNrSJ7uQw
+ fRaIMoBDnZe5nXDcqXF5DvNyOW14dj7hPyh1vchgbo9MVADXiTIRpYw9pfl0R/Hj
+ AGwSP5qdFOke18wHr0oIFuPl5daGVaa57untiZzHS/3i5QhX8vjwo010/Z23fKfr
+ RqM9axXx5fQhDC9HVJu6AhQ1hBPBcFwMMUHqvJ103g3LFFctbVAVLaxsjVXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1755679674; x=1755766074; bh=fdd6qstlufOR1IR3ecGHK1Iit+V07tWQ/Fn
+ YjEopR9A=; b=B/jVcldoahcp0HAMlMCSzfVku4rS8CSwxbM4bjjS8cKRT86nCpe
+ 48ihUeOSlymubaVB/ZAuWKKYDo44kGJd7kduOueIZ0Nk4GY4MoomCjoHtU1Q5fzB
+ MdxlGMywTVAzSW4d40iy0x7V8dQ8mfthbiGq0zdbVq3oS187W2gj/IqC/GKsTRrT
+ 3muf8NV6uHg80bAIQQDKch9KxAOEA0pMiDDCWZouHDpwSz8s571jYj7AS4bkNvKD
+ 4h9qj0dIw3qaAkydo2o8l+T3rN/T+ke54gWPufxx8MoKC+BDXwqUtwwVbhcXXrzZ
+ A21stnv4TQfZN89PVIwM6R6SaA3Wxc0FnAQ==
+X-ME-Sender: <xms:uoulaGDveWasqO7olDATFPjk7OyjMshCXS5a4Rh-SagXm9BIv9_U-A>
+ <xme:uoulaOAOaZVCLUmN0V1wHdyPSopmxwHmuMuxIT9Y2jGMgbcTr7n3wk4TwnBQyrDf1
+ Z3tLacGpM1npA-nrg>
+X-ME-Received: <xmr:uoulaMOIXpVAXHAYMGi4UJY20I6rZI-7ssVhZlJXrP-S3rMg9YRst33ka118hHsB>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduheejledvucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhephffvvefujghffffkgggtsehgtderredttdejnecuhfhrohhmpeetlhihshhsrgcu
+ tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpefhteeigf
+ fgkefhteejkeffvdegvdeghfeitdeilefgudejfedtteevffdvleefueenucffohhmrghi
+ nhepshhpvggtthhruhhmqdhoshdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+ grrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrdhishdpnhgspghrtghpthht
+ ohepudegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsthgvvhgvnhhsugestg
+ hhrhhomhhiuhhmrdhorhhgpdhrtghpthhtoheprghlvgigrdgsvghnnhgvvgeslhhinhgr
+ rhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
+ dprhgtphhtthhopegrvghsthgvvhgvsehrvgguhhgrthdrtghomhdprhgtphhtthhopegu
+ rghvihgusehrvgguhhgrthdrtghomhdprhgtphhtthhopegusggrshhsvgihsehrvgguhh
+ grthdrtghomhdprhgtphhtthhopehjrghsohifrghnghesrhgvughhrghtrdgtohhmpdhr
+ tghpthhtoheplhhvihhvihgvrhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepmhhsth
+ esrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:uoulaKO6Wn3AthfSj5QaN91XpDLfDpr5Cj0HFznYj3ic1OdtMdQXaA>
+ <xmx:uoulaOIwFHzIJh5Scv-ZHiiun657FdeK2BTJsbW-pYCgdfD_egc5XA>
+ <xmx:uoulaEpkRiSWkOpujkjvtWoCroBl81-rchDpsERkLY8SEIizUQmbKw>
+ <xmx:uoulaKNuae5an5FY9s25b_Xkg2LJzjwAZ10Ez5fHuakP6RY1Bo-0qQ>
+ <xmx:uoulaIoiZ06Jroofd1a4zsTW3D6rzGV9oCHQYIUPNqCUZWnWwUDSegaF>
+Feedback-ID: i12284293:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 20 Aug 2025 04:47:54 -0400 (EDT)
+Received: by mbp.qyliss.net (Postfix, from userid 1000)
+ id 48BC214409BB; Wed, 20 Aug 2025 10:47:48 +0200 (CEST)
+From: Alyssa Ross <hi@alyssa.is>
+To: Albert Esteve <aesteve@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, david@redhat.com, "Michael S. Tsirkin"
+ <mst@redhat.com>, jasowang@redhat.com, Laurent Vivier
+ <lvivier@redhat.com>, dbassey@redhat.com, Stefano Garzarella
+ <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ stevensd@chromium.org, Fabiano Rosas <farosas@suse.de>, Alex =?utf-8?Q?Be?=
+ =?utf-8?Q?nn=C3=A9e?= <alex.bennee@linaro.org>, slp@redhat.com
+Subject: Re: [PATCH v7 6/8] tests/qtest: Add GET_SHMEM validation test
+In-Reply-To: <CADSE00J61r4Wt94s6OfCqt9V8sVaisgDajvKEYFmG1FJKdVfng@mail.gmail.com>
+References: <20250818100353.1560655-1-aesteve@redhat.com>
+ <20250818100353.1560655-7-aesteve@redhat.com>
+ <20250818231438.GA30271@fedora>
+ <CADSE00J61r4Wt94s6OfCqt9V8sVaisgDajvKEYFmG1FJKdVfng@mail.gmail.com>
+Date: Wed, 20 Aug 2025 10:47:45 +0200
+Message-ID: <87zfbunzv2.fsf@alyssa.is>
 MIME-Version: 1.0
-X-OriginatorOrg: eviden.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7470084d-1224-4f84-0a28-08dddfc55dbb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2025 08:41:33.0472 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fagkuj0cCd2T2FXFz1ZcQ/Ojd1vDDtNVT5AbLZs416q+lkeDLjtMLpuWr+kJKQdEWYTfj9C5/3oiM5WZrVQ2ZU0aBhQ/EUcYkvYuksnSsEXwWrGP7zz+IG/v1Ej8m7Ze
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR07MB10702
-Received-SPF: pass client-ip=80.78.11.84;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost3.eviden.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Received-SPF: pass client-ip=202.12.124.149; envelope-from=hi@alyssa.is;
+ helo=fout-b6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,160 +119,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Damien Bergamini <damien.bergamini@eviden.com>
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Starting with commit cab1398a60eb, SR-IOV VFs are realized as soon as
-pcie_sriov_pf_init() is called.  Because pcie_sriov_pf_init() must be
-called before pcie_sriov_pf_init_vf_bar(), the VF BARs types won't be
-known when the VF realize function calls pcie_sriov_vf_register_bar().
+Albert Esteve <aesteve@redhat.com> writes:
 
-This breaks the memory regions of the VFs (for instance with igbvf):
+> On Tue, Aug 19, 2025 at 12:42=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat=
+.com> wrote:
+>>
+>> On Mon, Aug 18, 2025 at 12:03:51PM +0200, Albert Esteve wrote:
+>> > Improve vhost-user-test to properly validate
+>> > VHOST_USER_GET_SHMEM_CONFIG message handling by
+>> > directly simulating the message exchange.
+>> >
+>> > The test manually triggers the
+>> > VHOST_USER_GET_SHMEM_CONFIG message by calling
+>> > chr_read() with a crafted VhostUserMsg, allowing direct
+>> > validation of the shmem configuration response handler.
+>>
+>> It looks like this test case invokes its own chr_read() function without
+>> going through QEMU, so I don't understand what this is testing?
+>
+> I spent some time trying to test it, but in the end I could not
+> instatiate vhost-user-device because it is non user_creatable. I did
+> not find any test for vhost-user-device anywhere else either. But I
+> had already added most of the infrastructure here so I fallback to
+> chr_read() communication to avoid having to delete everything. My
+> though was that once we have other devices that use shared memory,
+> they could tweak the test to instantiate the proper device and test
+> this and the map/unmap operations.
+>
+> Although after writing this, I think other devices will actually a
+> specific layout for their shared memory. So
+> VHOST_USER_GET_SHMEM_CONFIG is only ever going to be used by
+> vhost-user-device.
 
-$ lspci
-...
-    Region 0: Memory at 281a00000 (64-bit, prefetchable) [virtual] [size=3D=
-16K]
-    Region 3: Memory at 281a20000 (64-bit, prefetchable) [virtual] [size=3D=
-16K]
+FWIW: I'm not so sure =E2=80=94 my non-upstream Cloud Hypervisor frontend f=
+or
+the crosvm vhost-user GPU device[1] uses the equivalent of
+VHOST_USER_GET_SHMEM_CONFIG to allow the backend to choose the size of
+the shared memory region, and I could imagine that being something other
+devices might want to do too?
 
-$ info mtree
-...
-address-space: pci_bridge_pci_mem
-  0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
-    0000000081a00000-0000000081a03fff (prio 1, i/o): igbvf-mmio
-    0000000081a20000-0000000081a23fff (prio 1, i/o): igbvf-msix
+[1]: https://spectrum-os.org/software/cloud-hypervisor/
 
-and causes MMIO accesses to fail:
+> In general, trying to test this patch series has been a headache other
+> than trying with external device code I have. If you have an idea that
+> I could try to test this, I can try. Otherwise, probably is best to
+> remove this commit from the series and wait for another vhost-user
+> device that uses map/unmap to land to be able to test it.
 
-    Invalid write at addr 0x281A01520, size 4, region '(null)', reason: rej=
-ected
-    Invalid read at addr 0x281A00C40, size 4, region '(null)', reason: reje=
-cted
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-To fix this, a type parameter is added to pcie_sriov_vf_register_bar()
-to indicate the BAR type. It should be set to the same value as in the
-pcie_sriov_pf_init_vf_bar() call.
+-----BEGIN PGP SIGNATURE-----
 
-Fixes: cab1398a60eb ("pcie_sriov: Reuse SR-IOV VF device instances")
-Signed-off-by: Damien Bergamini <damien.bergamini@eviden.com>
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
----
- docs/pcie_sriov.txt         | 2 +-
- hw/net/igbvf.c              | 8 ++++++--
- hw/nvme/ctrl.c              | 4 +++-
- hw/pci/pci.c                | 3 ---
- hw/pci/pcie_sriov.c         | 6 ++----
- include/hw/pci/pcie_sriov.h | 2 +-
- 6 files changed, 13 insertions(+), 12 deletions(-)
-
-diff --git a/docs/pcie_sriov.txt b/docs/pcie_sriov.txt
-index ab2142807f..77d618b36f 100644
---- a/docs/pcie_sriov.txt
-+++ b/docs/pcie_sriov.txt
-@@ -83,7 +83,7 @@ setting up a BAR for a VF.
-       pcie_ari_init(d, 0x100);
-       ...
-       memory_region_init(mr, ... )
--      pcie_sriov_vf_register_bar(d, bar_nr, mr);
-+      pcie_sriov_vf_register_bar(d, bar_nr, bar_type, mr);
-       ...
-    }
-=20
-diff --git a/hw/net/igbvf.c b/hw/net/igbvf.c
-index 31d72c4977..88dd8fb516 100644
---- a/hw/net/igbvf.c
-+++ b/hw/net/igbvf.c
-@@ -251,10 +251,14 @@ static void igbvf_pci_realize(PCIDevice *dev, Error *=
-*errp)
-=20
-     memory_region_init_io(&s->mmio, OBJECT(dev), &mmio_ops, s, "igbvf-mmio=
-",
-         IGBVF_MMIO_SIZE);
--    pcie_sriov_vf_register_bar(dev, IGBVF_MMIO_BAR_IDX, &s->mmio);
-+    pcie_sriov_vf_register_bar(dev, IGBVF_MMIO_BAR_IDX,
-+                               PCI_BASE_ADDRESS_MEM_TYPE_64 |
-+                               PCI_BASE_ADDRESS_MEM_PREFETCH, &s->mmio);
-=20
-     memory_region_init(&s->msix, OBJECT(dev), "igbvf-msix", IGBVF_MSIX_SIZ=
-E);
--    pcie_sriov_vf_register_bar(dev, IGBVF_MSIX_BAR_IDX, &s->msix);
-+    pcie_sriov_vf_register_bar(dev, IGBVF_MSIX_BAR_IDX,
-+                               PCI_BASE_ADDRESS_MEM_TYPE_64 |
-+                               PCI_BASE_ADDRESS_MEM_PREFETCH, &s->msix);
-=20
-     ret =3D msix_init(dev, IGBVF_MSIX_VEC_NUM, &s->msix, IGBVF_MSIX_BAR_ID=
-X, 0,
-         &s->msix, IGBVF_MSIX_BAR_IDX, 0x2000, 0x70, errp);
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index f5ee6bf260..35a82d2037 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8709,7 +8709,9 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci=
-_dev, Error **errp)
-         memory_region_add_subregion(&n->bar0, 0, &n->iomem);
-=20
-         if (pci_is_vf(pci_dev)) {
--            pcie_sriov_vf_register_bar(pci_dev, 0, &n->bar0);
-+            pcie_sriov_vf_register_bar(pci_dev, 0,
-+                                       PCI_BASE_ADDRESS_SPACE_MEMORY |
-+                                       PCI_BASE_ADDRESS_MEM_TYPE_64, &n->b=
-ar0);
-         } else {
-             pci_register_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
-                              PCI_BASE_ADDRESS_MEM_TYPE_64, &n->bar0);
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index c70b5ceeba..4fe2626f9e 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1490,9 +1490,6 @@ void pci_register_bar(PCIDevice *pci_dev, int region_=
-num,
-                         : pci_get_bus(pci_dev)->address_space_mem;
-=20
-     if (pci_is_vf(pci_dev)) {
--        PCIDevice *pf =3D pci_dev->exp.sriov_vf.pf;
--        assert(!pf || type =3D=3D pf->exp.sriov_pf.vf_bar_type[region_num]=
-);
--
-         r->addr =3D pci_bar_address(pci_dev, region_num, r->type, r->size)=
-;
-         if (r->addr !=3D PCI_BAR_UNMAPPED) {
-             memory_region_add_subregion_overlap(r->address_space,
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 8a4bf0d6f7..eedce6be1d 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -242,13 +242,11 @@ void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int re=
-gion_num,
-     dev->exp.sriov_pf.vf_bar_type[region_num] =3D type;
- }
-=20
-+/* `type` must match the type passed to pcie_sriov_pf_init_vf_bar() */
- void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
--                                MemoryRegion *memory)
-+                                uint8_t type, MemoryRegion *memory)
- {
--    uint8_t type;
--
-     assert(dev->exp.sriov_vf.pf);
--    type =3D dev->exp.sriov_vf.pf->exp.sriov_pf.vf_bar_type[region_num];
-=20
-     return pci_register_bar(dev, region_num, type, memory);
- }
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index aeaa38cf34..b67449f8ba 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -39,7 +39,7 @@ void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region=
-_num,
-=20
- /* Instantiate a bar for a VF */
- void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
--                                MemoryRegion *memory);
-+                                uint8_t type, MemoryRegion *memory);
-=20
- /**
-  * pcie_sriov_pf_init_from_user_created_vfs() - Initialize PF with user-cr=
-eated
---=20
-2.50.1
+iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaKWLsQAKCRBbRZGEIw/w
+olLzAQCxMThzx6fqf2Is6ur3DX7n4Jj7UT0XUYLDZyzm4W+V3wD+IaPXPbAzD5Mv
+L7TinRw6T2ORv4exHBgH1XXATq0H4wY=
+=lvbI
+-----END PGP SIGNATURE-----
+--=-=-=--
 
