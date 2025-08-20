@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C285ECA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 20:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5233FCA0EF8
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 20:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uopm5-0007ox-6Q; Wed, 20 Aug 2025 16:51:13 -0400
+	id 1uoppB-0000W9-Vb; Wed, 20 Aug 2025 16:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uopm3-0007oh-1c
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:51:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uopm1-0001da-BM
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:51:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755723068;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=IRC0nGkCk8ki5GSJSzFl5yax48hZFIql2OHvwhdQRck=;
- b=gh4maqsLJRU+jGBbtn57Gs8mMtFbq+DnTSqQocoQ9TvzScZvTuoaGdvr+VOlj0dQgGGDY1
- hgMRVOR81p4MwYmjgr1J9L4WL35j8d/Jb6dkZvvNuBUGA0cIgqUGSQgbYz7Qc1e2TF0S2m
- LR75qNsKhEwWrkiO5FXDOQfZFikavfE=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-b2nj0-kgPGaCNoSIiVfRmg-1; Wed, 20 Aug 2025 16:51:07 -0400
-X-MC-Unique: b2nj0-kgPGaCNoSIiVfRmg-1
-X-Mimecast-MFC-AGG-ID: b2nj0-kgPGaCNoSIiVfRmg_1755723066
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-e950984545fso106434276.0
- for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 13:51:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uopp8-0000Vh-OZ
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:54:22 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uopp6-0001pa-Fq
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:54:22 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-61868d83059so2405360a12.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 13:54:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755723258; x=1756328058; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k/7ZIznsp4+zzPNuB98P2wZda4folxrfP1xoYrA30R0=;
+ b=G3iG7il2xYptZQUIZnZq3o7t5M3Y8Jsw8s5bR99bq8TeT/EwKdUnaIG4NDUT8y0HDa
+ BlIj1Yb8XADVXGJ6XSRVwW1vR1ByaFYMfmzI75uqn1eMs20WhyS8S415u1oTp04XK2gT
+ vUnK8J5D6zj/TvnE3XQfm/QfJE2sMozb/EgEeFVpzj2jergYcRej7kXiAcYsjye5sVkg
+ 9F33ElXyRNSsjonfRvn/ajfVflsJT0pOrKDbKD3DQXyFuvqvA3KXWVfpq+3+2YevjmZJ
+ nkQd+qA+S75YdgMWErm4Tsjiv3fuqQtDAJbyMs5jec336xa0nobtozAg8yGyAb14kC0B
+ rQzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755723066; x=1756327866;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IRC0nGkCk8ki5GSJSzFl5yax48hZFIql2OHvwhdQRck=;
- b=j98SnFJfNNOD7jCCeXD1k+8tVFU+ltTD1RIjmBlX57IFABbVN8puseaMmJ9yyNz85F
- ltZ7UZajaMSlUCJcVt+Icwz2Rq+CkF2cD4t3DnkLMw8MA6bx7KYC9rrbWruY+kob9nsL
- nWTW4vYr9sGmPsRHPbKAVPlGtS36G4GbQd2QYRp3uDeHD6haJ2O4y6drj2+bt7HTWT8G
- ZKvwx1uCZh16Nfpqna6WYVQQ0LIQxBvImA9O3R4TxTjwL923GW7OM58/ZSNlmPYsleox
- hV1mNLSbSlSRaQGojqdgFcbZhK+aOsDA6eIx7wtLtSc88hj4elub0XVvJzTYi9k1NA/J
- iY2w==
-X-Gm-Message-State: AOJu0YydMMBMBL7874TAb57I5yidpeFgzC4ldh+HTO1aY7Z2tw4VyhB7
- ywkb1ZxC7rEBNM1+pQmayhGryDS3OhG1ZqVQnYzNA7urdBK51dOrLULCZ+DCoxpT39lU3fxJnSK
- WBaYRvAxIKgbYt5s6CdibgadIzD66kgXW/IzpfNyPT+zrrwXx5TmkrkZaNVoxP3729ZNJr1yeXZ
- hZmIU7PXhhuoNcGLS1DmQn6imAZcmkp28Hm/7A8g==
-X-Gm-Gg: ASbGnctvyew13d7w5Sz95v9ohoyFWfZGEZMpF5WWaesSmrkEVGTrA+DPpjUYQLwOvzq
- VG+k7DcnLhjZo+L7bTdpkj65HjUkpBeW7glWqOP8avGO33rlanTur+ryMYZ0eqw+fZLwCfyKujw
- R1XJrH018EKqKqwL79GEKQy7Cm5CgkeqepgjwYNLXlgoU6M7ghLNQ+EsaFHE33mHoIKknFaZBmQ
- AUNe7xFPc3vA4kvlXEJ1X3quO+M6eNf/PET8hspxr/t9KX3C+H2LMa5FazYU88gL/IEXx3oXsLY
- w3Ui0zL6WE3Y1nuCrpUEoohhGjRUNw==
-X-Received: by 2002:a05:6902:188d:b0:e90:5a65:24b7 with SMTP id
- 3f1490d57ef6-e95088c5419mr267428276.11.1755723065877; 
- Wed, 20 Aug 2025 13:51:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuhAFxthbbcI8o73XucTNLQZxnpD1nmw/aOVfCptlcfw76djej1VHDVTsyWKEgI0K1y6Qrag==
-X-Received: by 2002:a05:6902:188d:b0:e90:5a65:24b7 with SMTP id
- 3f1490d57ef6-e95088c5419mr267376276.11.1755723065282; 
- Wed, 20 Aug 2025 13:51:05 -0700 (PDT)
-Received: from x1.com ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 3f1490d57ef6-e94ee7b9ec3sm1566404276.17.2025.08.20.13.51.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Aug 2025 13:51:04 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH RFC] bql: Fix bql_locked status with condvar APIs
-Date: Wed, 20 Aug 2025 16:50:51 -0400
-Message-ID: <20250820205051.24424-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
+ d=1e100.net; s=20230601; t=1755723258; x=1756328058;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=k/7ZIznsp4+zzPNuB98P2wZda4folxrfP1xoYrA30R0=;
+ b=sZIzWOaOy582Z/yxZwx5XDmci7zA8ZJzANAmoIslFLloN81dUKG03XwINkwWgMyggc
+ ce6HYzshM7+N3CaV37WopPcyNElELaZEm26VA6gIg6GxrdIgNmvjere6qJOkjT8bH5Zw
+ /QEAGDVMrFQmh/vQ39sjGCwrlYOaH8e9MCnahF+dyaWSLzHOo9TAaD6+xVB/6Yux39hu
+ v558jXuH6yJ1YrXlHNTPldfI3bipV2LpWZfVbx/LKSg/SMosbUDVr7ylQUDgqmZRd15+
+ N9wY/wuZ3yDhFPTGQRkE2Caljd+nTNoEwNssW6yrvUZ2Kl5RbuGQerXs37xg+E9OzR8k
+ 1MoA==
+X-Gm-Message-State: AOJu0YwR5YMFOgFwIz12mf2JKsMhCxl9mkyRUig5sozyzczNqPnzWfCz
+ 8jWLmWDLrERFgKJeBxqCbuqC9W+KN2rF4PK5EPYpIUVGNMO32H6Qyu/lOSMcMkmQkJ1NnIvGOTE
+ Yr8CGVGZ07XTOnArcGeS2Tfc16zPG47XcyaF1VXlO3Q==
+X-Gm-Gg: ASbGncsZR/KYfCozX3uEjZMQE0uePZZMkwl4CuC7Ts1Cn5dcJaICjvD2xGgGplmnOBf
+ aMmpaZZ54eiAW1yNMgqGh8XjEx5pLbJt02kZcVS70AScz6cwpPvTEVfpeT7QlhBJ/G6xanrbIQM
+ FV2h7oZbr4F0Hu5HV7e2riIqP67cgN1xcgYrQijYtNuATEPx4b1XBJbTxZXLt4u/6jzYZwbB8xE
+ 49lndXH
+X-Google-Smtp-Source: AGHT+IEuQJwIZMoc/DE7+0lSf9X32N/VJk7jKe26HQqE4hIyvCvD+NEFuTvBQGgn0AH+xw035fogur1gFnvCrMvc2Vo=
+X-Received: by 2002:a17:906:d542:b0:afd:f9a7:418f with SMTP id
+ a640c23a62f3a-afe02a85682mr69031466b.1.1755723258221; Wed, 20 Aug 2025
+ 13:54:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250820195632.1956795-1-alex.bennee@linaro.org>
+In-Reply-To: <20250820195632.1956795-1-alex.bennee@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 20 Aug 2025 23:53:52 +0300
+X-Gm-Features: Ac12FXzHCUsI4DmAJTGxIQ01eqT1VrDhIfB6fhkDEPkggXzlNhj_gu2T1SJkcpI
+Message-ID: <CAAjaMXZf6t6RSa_3xbL2LLbH30wc4WTWCYztJwHpFwAW-WirpQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] hw/virtio: rename vhost-user-device and make user
+ creatable
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,151 +96,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU has a per-thread "bql_locked" variable stored in TLS section, showing
-whether the current thread is holding the BQL lock.
+On Wed, Aug 20, 2025 at 10:57=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
+>
+> We didn't make the device user creatable in the first place because we
+> were worried users might get confused. Rename the device to make its
+> nature as a test device even more explicit. While we are at it add a
+> Kconfig variable so it can be skipped for those that want to thin out
+> their build configuration even further.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
 
-It's a pretty handy variable.  Function-wise, QEMU have codes trying to
-conditionally take bql, relying on the var reflecting the locking status
-(e.g. BQL_LOCK_GUARD), or in a GDB debugging session, we could also look at
-the variable (in reality, co_tls_bql_locked), to see which thread is
-currently holding the bql.
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-When using that as a debugging facility, sometimes we can observe multiple
-threads holding bql at the same time. It's because QEMU's condvar APIs
-bypassed the bql_*() API, hence they do not update bql_locked even if they
-have released the mutex while waiting.
+>  docs/system/devices/vhost-user.rst            | 20 +++++++------------
+>  include/hw/virtio/vhost-user-base.h           |  2 +-
+>  ...ice-pci.c =3D> vhost-user-test-device-pci.c} | 17 +++++++---------
+>  ...user-device.c =3D> vhost-user-test-device.c} |  9 +++------
+>  hw/virtio/Kconfig                             |  5 +++++
+>  hw/virtio/meson.build                         |  5 +++--
+>  6 files changed, 26 insertions(+), 32 deletions(-)
+>  rename hw/virtio/{vhost-user-device-pci.c =3D> vhost-user-test-device-pc=
+i.c} (77%)
+>  rename hw/virtio/{vhost-user-device.c =3D> vhost-user-test-device.c} (87=
+%)
+>
+> diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vho=
+st-user.rst
+> index 35259d8ec7c..bddf8df5ed5 100644
+> --- a/docs/system/devices/vhost-user.rst
+> +++ b/docs/system/devices/vhost-user.rst
+> @@ -62,26 +62,20 @@ platform details for what sort of virtio bus to use.
+>  The referenced *daemons* are not exhaustive, any conforming backend
+>  implementing the device and using the vhost-user protocol should work.
+>
+> -vhost-user-device
+> -^^^^^^^^^^^^^^^^^
+> +vhost-user-test-device
+> +^^^^^^^^^^^^^^^^^^^^^^
+>
+> -The vhost-user-device is a generic development device intended for
+> -expert use while developing new backends. The user needs to specify
+> -all the required parameters including:
+> +The vhost-user-test-device is a generic development device intended
+> +for expert use while developing new backends. The user needs to
+> +specify all the required parameters including:
+>
+>    - Device ``virtio-id``
+>    - The ``num_vqs`` it needs and their ``vq_size``
+>    - The ``config_size`` if needed
+>
+>  .. note::
+> -  To prevent user confusion you cannot currently instantiate
+> -  vhost-user-device without first patching out::
+> -
+> -    /* Reason: stop inexperienced users confusing themselves */
+> -    dc->user_creatable =3D false;
+> -
+> -  in ``vhost-user-device.c`` and ``vhost-user-device-pci.c`` file and
+> -  rebuilding.
+> +  While this is a useful device for development it is not recommended
+> +  for production use.
+>
+>  vhost-user daemon
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> diff --git a/include/hw/virtio/vhost-user-base.h b/include/hw/virtio/vhos=
+t-user-base.h
+> index 51d0968b893..387e434b804 100644
+> --- a/include/hw/virtio/vhost-user-base.h
+> +++ b/include/hw/virtio/vhost-user-base.h
+> @@ -44,6 +44,6 @@ struct VHostUserBaseClass {
+>  };
+>
+>
+> -#define TYPE_VHOST_USER_DEVICE "vhost-user-device"
+> +#define TYPE_VHOST_USER_TEST_DEVICE "vhost-user-test-device"
+>
+>  #endif /* QEMU_VHOST_USER_BASE_H */
+> diff --git a/hw/virtio/vhost-user-device-pci.c b/hw/virtio/vhost-user-tes=
+t-device-pci.c
+> similarity index 77%
+> rename from hw/virtio/vhost-user-device-pci.c
+> rename to hw/virtio/vhost-user-test-device-pci.c
+> index f10bac874e7..d6a9ca2101d 100644
+> --- a/hw/virtio/vhost-user-device-pci.c
+> +++ b/hw/virtio/vhost-user-test-device-pci.c
+> @@ -18,13 +18,13 @@ struct VHostUserDevicePCI {
+>      VHostUserBase vub;
+>  };
+>
+> -#define TYPE_VHOST_USER_DEVICE_PCI "vhost-user-device-pci-base"
+> +#define TYPE_VHOST_USER_TEST_DEVICE_PCI "vhost-user-test-device-pci"
+>
+> -OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST_USER_DEVICE_PCI)
+> +OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST_USER_TEST_DEVICE_PC=
+I)
+>
+>  static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, Erro=
+r **errp)
+>  {
+> -    VHostUserDevicePCI *dev =3D VHOST_USER_DEVICE_PCI(vpci_dev);
+> +    VHostUserDevicePCI *dev =3D VHOST_USER_TEST_DEVICE_PCI(vpci_dev);
+>      DeviceState *vdev =3D DEVICE(&dev->vub);
+>
+>      vpci_dev->nvectors =3D 1;
+> @@ -38,9 +38,6 @@ static void vhost_user_device_pci_class_init(ObjectClas=
+s *klass,
+>      VirtioPCIClass *k =3D VIRTIO_PCI_CLASS(klass);
+>      PCIDeviceClass *pcidev_k =3D PCI_DEVICE_CLASS(klass);
+>
+> -    /* Reason: stop users confusing themselves */
+> -    dc->user_creatable =3D false;
+> -
+>      k->realize =3D vhost_user_device_pci_realize;
+>      set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+>      pcidev_k->vendor_id =3D PCI_VENDOR_ID_REDHAT_QUMRANET;
+> @@ -51,15 +48,15 @@ static void vhost_user_device_pci_class_init(ObjectCl=
+ass *klass,
+>
+>  static void vhost_user_device_pci_instance_init(Object *obj)
+>  {
+> -    VHostUserDevicePCI *dev =3D VHOST_USER_DEVICE_PCI(obj);
+> +    VHostUserDevicePCI *dev =3D VHOST_USER_TEST_DEVICE_PCI(obj);
+>
+>      virtio_instance_init_common(obj, &dev->vub, sizeof(dev->vub),
+> -                                TYPE_VHOST_USER_DEVICE);
+> +                                TYPE_VHOST_USER_TEST_DEVICE);
+>  }
+>
+>  static const VirtioPCIDeviceTypeInfo vhost_user_device_pci_info =3D {
+> -    .base_name =3D TYPE_VHOST_USER_DEVICE_PCI,
+> -    .non_transitional_name =3D "vhost-user-device-pci",
+> +    .base_name =3D TYPE_VHOST_USER_TEST_DEVICE_PCI,
+> +    .non_transitional_name =3D "vhost-user-test-device-pci",
+>      .instance_size =3D sizeof(VHostUserDevicePCI),
+>      .instance_init =3D vhost_user_device_pci_instance_init,
+>      .class_init =3D vhost_user_device_pci_class_init,
+> diff --git a/hw/virtio/vhost-user-device.c b/hw/virtio/vhost-user-test-de=
+vice.c
+> similarity index 87%
+> rename from hw/virtio/vhost-user-device.c
+> rename to hw/virtio/vhost-user-test-device.c
+> index 3939bdf7552..1b98ea3e488 100644
+> --- a/hw/virtio/vhost-user-device.c
+> +++ b/hw/virtio/vhost-user-test-device.c
+> @@ -1,5 +1,5 @@
+>  /*
+> - * Generic vhost-user-device implementation for any vhost-user-backend
+> + * Generic vhost-user-test-device implementation for any vhost-user-back=
+end
+>   *
+>   * This is a concrete implementation of vhost-user-base which can be
+>   * configured via properties. It is useful for development and
+> @@ -25,7 +25,7 @@
+>   */
+>
+>  static const VMStateDescription vud_vmstate =3D {
+> -    .name =3D "vhost-user-device",
+> +    .name =3D "vhost-user-test-device",
+>      .unmigratable =3D 1,
+>  };
+>
+> @@ -41,16 +41,13 @@ static void vud_class_init(ObjectClass *klass, const =
+void *data)
+>  {
+>      DeviceClass *dc =3D DEVICE_CLASS(klass);
+>
+> -    /* Reason: stop inexperienced users confusing themselves */
+> -    dc->user_creatable =3D false;
+> -
+>      device_class_set_props(dc, vud_properties);
+>      dc->vmsd =3D &vud_vmstate;
+>      set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+>  }
+>
+>  static const TypeInfo vud_info =3D {
+> -    .name =3D TYPE_VHOST_USER_DEVICE,
+> +    .name =3D TYPE_VHOST_USER_TEST_DEVICE,
+>      .parent =3D TYPE_VHOST_USER_BASE,
+>      .class_init =3D vud_class_init,
+>  };
+> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+> index 7648a2d68da..10f5c53ac09 100644
+> --- a/hw/virtio/Kconfig
+> +++ b/hw/virtio/Kconfig
+> @@ -126,3 +126,8 @@ config VHOST_USER_SCMI
+>      bool
+>      default y
+>      depends on VIRTIO && VHOST_USER && ARM
+> +
+> +config VHOST_USER_TEST
+> +    bool
+> +    default y
+> +    depends on VIRTIO && VHOST_USER
+> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+> index 3ea7b3cec83..48b9fedfa56 100644
+> --- a/hw/virtio/meson.build
+> +++ b/hw/virtio/meson.build
+> @@ -22,7 +22,7 @@ if have_vhost
+>      system_virtio_ss.add(files('vhost-user-base.c'))
+>
+>      # MMIO Stubs
+> -    system_virtio_ss.add(files('vhost-user-device.c'))
+> +    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_TEST', if_true: files(=
+'vhost-user-test-device.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_GPIO', if_true: files(=
+'vhost-user-gpio.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_I2C', if_true: files('=
+vhost-user-i2c.c'))
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('=
+vhost-user-rng.c'))
+> @@ -30,7 +30,8 @@ if have_vhost
+>      system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files=
+('vhost-user-input.c'))
+>
+>      # PCI Stubs
+> -    system_virtio_ss.add(when: 'CONFIG_VIRTIO_PCI', if_true: files('vhos=
+t-user-device-pci.c'))
+> +    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+TEST'],
+> +                         if_true: files('vhost-user-test-device-pci.c'))
+>      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+GPIO'],
+>                           if_true: files('vhost-user-gpio-pci.c'))
+>      system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_=
+I2C'],
+> --
+> 2.47.2
+>
+>
 
-It can cause confusion if one does "thread apply all p co_tls_bql_locked"
-and see multiple threads reporting true.
-
-Fix this by moving the bql status updates into the mutex debug hooks.  Now
-the variable should always reflect the reality.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- include/qemu/main-loop.h  | 18 ++++++++++++++++++
- util/qemu-thread-common.h |  7 +++++++
- stubs/iothread-lock.c     |  9 +++++++++
- system/cpus.c             | 14 ++++++++++++--
- 4 files changed, 46 insertions(+), 2 deletions(-)
-
-diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
-index 4e2436b196..44fb430f5b 100644
---- a/include/qemu/main-loop.h
-+++ b/include/qemu/main-loop.h
-@@ -270,6 +270,24 @@ void rust_bql_mock_lock(void);
-  */
- bool bql_locked(void);
- 
-+/**
-+ * mutex_is_bql:
-+ *
-+ * @mutex: the mutex pointer
-+ *
-+ * Returns whether the mutex is the BQL.
-+ */
-+bool mutex_is_bql(QemuMutex *mutex);
-+
-+/**
-+ * set_bql_locked:
-+ *
-+ * @locked: update status on whether the BQL is locked
-+ *
-+ * NOTE: this should normally only be invoked when the status changed.
-+ */
-+void bql_update_status(bool locked);
-+
- /**
-  * bql_block: Allow/deny releasing the BQL
-  *
-diff --git a/util/qemu-thread-common.h b/util/qemu-thread-common.h
-index 2af6b12085..09331843ba 100644
---- a/util/qemu-thread-common.h
-+++ b/util/qemu-thread-common.h
-@@ -14,6 +14,7 @@
- #define QEMU_THREAD_COMMON_H
- 
- #include "qemu/thread.h"
-+#include "qemu/main-loop.h"
- #include "trace.h"
- 
- static inline void qemu_mutex_post_init(QemuMutex *mutex)
-@@ -39,6 +40,9 @@ static inline void qemu_mutex_post_lock(QemuMutex *mutex,
-     mutex->line = line;
- #endif
-     trace_qemu_mutex_locked(mutex, file, line);
-+    if (mutex_is_bql(mutex)) {
-+        bql_update_status(true);
-+    }
- }
- 
- static inline void qemu_mutex_pre_unlock(QemuMutex *mutex,
-@@ -49,6 +53,9 @@ static inline void qemu_mutex_pre_unlock(QemuMutex *mutex,
-     mutex->line = 0;
- #endif
-     trace_qemu_mutex_unlock(mutex, file, line);
-+    if (mutex_is_bql(mutex)) {
-+        bql_update_status(false);
-+    }
- }
- 
- #endif
-diff --git a/stubs/iothread-lock.c b/stubs/iothread-lock.c
-index 6050c081f5..c89c9c7228 100644
---- a/stubs/iothread-lock.c
-+++ b/stubs/iothread-lock.c
-@@ -34,3 +34,12 @@ void bql_block_unlock(bool increase)
-     assert((new_value > bql_unlock_blocked) == increase);
-     bql_unlock_blocked = new_value;
- }
-+
-+bool mutex_is_bql(QemuMutex *mutex)
-+{
-+    return false;
-+}
-+
-+void bql_update_status(bool locked)
-+{
-+}
-diff --git a/system/cpus.c b/system/cpus.c
-index 256723558d..0bf677c4a2 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -517,6 +517,18 @@ bool qemu_in_vcpu_thread(void)
- 
- QEMU_DEFINE_STATIC_CO_TLS(bool, bql_locked)
- 
-+bool mutex_is_bql(QemuMutex *mutex)
-+{
-+    return mutex == &bql;
-+}
-+
-+void bql_update_status(bool locked)
-+{
-+    /* This function should only be used when an update happened.. */
-+    assert(bql_locked() != locked);
-+    set_bql_locked(locked);
-+}
-+
- static uint32_t bql_unlock_blocked;
- 
- void bql_block_unlock(bool increase)
-@@ -557,14 +569,12 @@ void bql_lock_impl(const char *file, int line)
- 
-     g_assert(!bql_locked());
-     bql_lock_fn(&bql, file, line);
--    set_bql_locked(true);
- }
- 
- void bql_unlock(void)
- {
-     g_assert(bql_locked());
-     g_assert(!bql_unlock_blocked);
--    set_bql_locked(false);
-     qemu_mutex_unlock(&bql);
- }
- 
--- 
-2.50.1
-
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
