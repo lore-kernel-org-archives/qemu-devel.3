@@ -4,95 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B882CCA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 12:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFFDDCA0EE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 12:26:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uohrH-0006au-4T; Wed, 20 Aug 2025 08:24:03 -0400
+	id 1uohtF-0007Ya-F6; Wed, 20 Aug 2025 08:26:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uohrB-0006aN-Ri
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 08:23:58 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uohrA-00020U-2o
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 08:23:57 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45a1abf5466so5775985e9.0
- for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 05:23:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755692634; x=1756297434; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8HeI1uRcU/esmaTJY9hjzK554PMX4M+9+ftf1EGxeME=;
- b=kl2zBosiA9K5eLnMhFpNHGvYXBRfuV1cr3C+pXr8bquujqdlrZO7i6pGtAZD6lPReH
- 48Ygg/vXlarzZzUGrOdYRqkAtfG+RJ/Nb4lpCeJctX+Aj6/iN6+Pc367hhAbr2ilO4aP
- BgEv5/ynaB1iljvueTTS1t4GqJoZJ3mGCZUHSIBPF0OgLLBllJWo1QaDZ0wc93ilbOeP
- CYccddmGp/+sYVpzliKZY5mH8Y6sbZav/qc9wyWXMCTVbx4Of3l2wXO3jd/rjCoMCjLY
- G70t8/ul4CxYGRoa1GXfyqib80PDwp4YtA2+kRu2i4bvOMv6ZcwnaVWm3fSvxVa6UiY4
- jrlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755692634; x=1756297434;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8HeI1uRcU/esmaTJY9hjzK554PMX4M+9+ftf1EGxeME=;
- b=T0VLyvpH9GbnF6ckR0pJcbJHujc9y3sXLzcogiLKjQJUHUI3V6Wrry2F18qDBAMTrO
- u7NWKEHyYxJpRh6I/hzhJRW4bvrVKUrkKFzYEbqBgrBN6r3D51X4x3IxRiUNYBMVvAIA
- nWtc8RH6ebi1H9XCk9gq2atw/YnpDsJmSJF/YqtCzOpXRNyHEVeuOMjneLveeyNXqbNW
- n4EENV7int/VFBucN/ZOWxml2aHZCsvk3p4umOEnItceFkyKLXxCRgZSwyeOfGm3dKFw
- y8U4CJg1Xw0JPH7omPigR27Zn2zVdaE6dDhEuw4NBBt3zP1tTfFZspg/0TwCADansm4P
- FFLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCWwARqPPNsF2kV669LmfuxpT65K2KO6pJJps0Xrq6zPqNgEAeAB/3HVdU6JoRKDf7pgOmU7jTc8gI@nongnu.org
-X-Gm-Message-State: AOJu0YxbM6J1giMoIQyieN6vyMrWeDAqijpbmcOOMSyWxmDM8giB90aX
- Ym2IU6wSYxN3y7iQCxSv81/DDVt5o1U+362/Q9Zb2Dfa/kX6ekCA+APvkzu+eB8kz4A=
-X-Gm-Gg: ASbGnctvK0BD68TyhQfx0gQ+OAgQ9d8aksng+UGn+4awwV5oTus+5a5BzKjm2c4IcZQ
- zyYf381EqiFj+KHw2iGkrhADXry7aVCmqnTM2wf+8Sq/4faaKislaAvMIzHlLOBbWZwAtGZKNcn
- sfZQl1cZa3gzKFfeU+64O6ykBFeeyRin2D8BypLwICIJxRl44khP5UuQxBGhFSH7So4V7nb5Gdz
- elGIVGByAl3LQQLVs0WVfmClwIuzgoQJMU50+JbIqPFcyOd9MjWADLfffk3npJ+i1U7TYOF20GE
- T0Jwo7MVqu46J60rQEN36+pCn8EedAmYfI5u32SjFebYn07UIeBKQjXSh2zY7szXdJ1a2HVsX07
- 9URJXH/37m3v2E11NpTalVzfD4eWp84wNJhKpNEyLPDReek1ZJaXI5HMJcQ/Y75UyYbUexiM=
-X-Google-Smtp-Source: AGHT+IGgPaxUHS+/LmoVQEweQHbJnnVyEhrOvNLz9iMHIeceRnv3Af1NP9JgI0S/ppmL69brV7F47g==
-X-Received: by 2002:a05:600c:3f16:b0:456:1146:5c01 with SMTP id
- 5b1f17b1804b1-45b43e972abmr58129315e9.12.1755692634173; 
- Wed, 20 Aug 2025 05:23:54 -0700 (PDT)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c0777884e8sm8201592f8f.45.2025.08.20.05.23.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Aug 2025 05:23:53 -0700 (PDT)
-Message-ID: <5f62e29c-ad26-43d5-a479-c862862e95be@linaro.org>
-Date: Wed, 20 Aug 2025 14:23:52 +0200
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1uohtA-0007Xl-VW; Wed, 20 Aug 2025 08:26:00 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1uoht8-0002JQ-3E; Wed, 20 Aug 2025 08:26:00 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KC2C9D001831;
+ Wed, 20 Aug 2025 12:25:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=bKOzUNNY+VD8OkIEvDBz8PxQQSkp
+ /oo9keJUowhsYW4=; b=kURmiLt87QAWeN4Ig7AdxpbpUU2rkf+/D2FTsRLgBsoG
+ GhsmS3ysNZptsBS51NgOjO8k35ey259Ndevj+NRaKNzl7zeQKooTHM0bEAP4wXPs
+ 15RieFsWQCYAvSb8v3x3wuvsBswOk5WpkqXGEvyc2Fb50tU0qNHFi99g5zL+1fkY
+ tc6IfUqLwHcTV4s6hZMs+rM6YOHA87Q0h7q4hCfaIRzen1+1hc6ldFDy+gazwjMr
+ jBQN3eBeObNJJclAbnN8CM43MLZRJF0GPg1yr0KKeaVtlfIsIeZ7tVRHFLQZtw4h
+ WuM5oDdNxU4fA2yu2mUR24FvhLtuVGi3LtdSYsYm5g==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38w2q6b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Aug 2025 12:25:55 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57KCORhB023630;
+ Wed, 20 Aug 2025 12:25:54 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38w2q65-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Aug 2025 12:25:54 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57K9WqFN031994;
+ Wed, 20 Aug 2025 12:25:54 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 48my5y36tj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Aug 2025 12:25:53 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57KCPoMR43057654
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 Aug 2025 12:25:50 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3D6E020043;
+ Wed, 20 Aug 2025 12:25:50 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E3DA20040;
+ Wed, 20 Aug 2025 12:25:47 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.39.18.124]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 20 Aug 2025 12:25:47 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] fix: Fix build error with CONFIG_POWERNV disabled
+Date: Wed, 20 Aug 2025 17:55:17 +0530
+Message-ID: <20250820122516.949766-2-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 34/47] hw/arm/xlnx-versal: use hw/arm/bsa.h for timer
- IRQ indices
-To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-References: <20250820082549.69724-1-luc.michel@amd.com>
- <20250820082549.69724-35-luc.michel@amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250820082549.69724-35-luc.michel@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDIyMiBTYWx0ZWRfX1uogxLt/oL3i
+ 16w7KJCBZXrFPRC/ve7D4+K5KNo5il3S/aNPaNgHfctoAvThIdutsYBhgdeqm6mkjgpaU1o3rqZ
+ pEME5FQuba5q5sj40Gv8fOQ7coSAZHMQqosh0AXv+FJwVbqsfDtg6/YImlYdC8BJaFzWPkMyEd7
+ A0fI8aUQi9/xFvwdLi92tUa1cqX9sbhyTl690KSrZXYpDnJ1ES3wuBpC+xew05dBkCrr6vnleoG
+ 3foWKFv+jWLzzi/hGhHwIoGRasiuHg0bYBAsqbKOcDQTtn6+s+qNh6kPHt2zSYWx8xYADPUtHTi
+ RZjStW+w6SsiSmejbseCyQ8cMJjugM5gdTufwcnyxbYJQ+jgtsmNHIsqcbP6S/KowX7ruvlV5xQ
+ aHZzw6jlPAGRvduWUo+sfzgK3LloVg==
+X-Authority-Analysis: v=2.4 cv=H62CA+Yi c=1 sm=1 tr=0 ts=68a5bed3 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=C3vVYmK1WFFpptpIGSsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: TmU1JGELO-Ztf3VbhkEoBORv0_1qmV8W
+X-Proofpoint-GUID: 6deFOvo-gGUV9gw3qDmNyzkEIknPmWE_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-20_04,2025-08-20_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2508110000
+ definitions=main-2508190222
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,17 +129,275 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/8/25 10:25, Luc Michel wrote:
-> Use the bsa.h header for ARM timer and maintainance IRQ indices instead
-> of redefining our owns.
-> 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-> ---
->   include/hw/arm/xlnx-versal.h |  6 ------
->   hw/arm/xlnx-versal.c         | 28 +++++++++++++++++-----------
->   2 files changed, 17 insertions(+), 17 deletions(-)
+Currently when CONFIG_POWERNV is not enabled, the build fails, such as
+with --without-default-devices:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+    $ ./configure --without-default-devices
+    $ make
+
+    [281/283] Linking target qemu-system-ppc64
+    FAILED: qemu-system-ppc64
+    cc -m64 @qemu-system-ppc64.rsp
+    /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_load_sprd':
+    .../target/ppc/misc_helper.c:335:(.text+0xcdc): undefined reference to `pnv_chip_find_core'
+    /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_store_sprd':
+    .../target/ppc/misc_helper.c:375:(.text+0xdf4): undefined reference to `pnv_chip_find_core'
+    collect2: error: ld returned 1 exit status
+    ...
+
+This is since target/ppc/misc_helper.c references PowerNV specific
+'pnv_chip_find_core' call.
+
+Split the PowerNV specific SPRD code out of the generic PowerPC code, by
+moving the SPRD code to pnv.c
+
+Fixes: 9808ce6d5cb ("target/ppc: Big-core scratch register fix")
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reported-by: Thomas Huth <thuth@redhat.com>
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+Note that while moving the code, the 'target_ulong' type for sprc has been
+modified to 'uint64_t'.
+
+Based on the discussion happened on [1].
+Requires patch 1 and patch 2 of [1] to be applied, to fix the build.
+
+[1]: https://lore.kernel.org/qemu-devel/20250526112346.48744-1-philmd@linaro.org/
+---
+---
+ hw/ppc/pnv.c             | 86 ++++++++++++++++++++++++++++++++++++++++
+ target/ppc/cpu.h         |  4 ++
+ target/ppc/misc_helper.c | 59 +++------------------------
+ 3 files changed, 96 insertions(+), 53 deletions(-)
+
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index d84c9067edb3..9c74f46091a7 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -21,6 +21,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/datadir.h"
++#include "qemu/log.h"
+ #include "qemu/units.h"
+ #include "qemu/cutils.h"
+ #include "qapi/error.h"
+@@ -1794,12 +1795,83 @@ static void pnv_chip_power9_pec_realize(PnvChip *chip, Error **errp)
+     }
+ }
+ 
++static uint64_t pnv_handle_sprd_load(CPUPPCState *env)
++{
++    PowerPCCPU *cpu = env_archcpu(env);
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
++    uint64_t sprc = env->spr[SPR_POWER_SPRC];
++
++    if (pc->big_core) {
++        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
++    }
++
++    switch (sprc & 0x3e0) {
++    case 0: /* SCRATCH0-3 */
++    case 1: /* SCRATCH4-7 */
++        return pc->scratch[(sprc >> 3) & 0x7];
++
++    case 0x1e0: /* core thread state */
++        if (env->excp_model == POWERPC_EXCP_POWER9) {
++            /*
++             * Only implement for POWER9 because skiboot uses it to check
++             * big-core mode. Other bits are unimplemented so we would
++             * prefer to get unimplemented message on POWER10 if it were
++             * used anywhere.
++             */
++            if (pc->big_core) {
++                return PPC_BIT(63);
++            } else {
++                return 0;
++            }
++        }
++        /* fallthru */
++
++    default:
++        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
++                                  TARGET_FMT_lx"\n", sprc);
++        break;
++    }
++    return 0;
++}
++
++static void pnv_handle_sprd_store(CPUPPCState *env, uint64_t val)
++{
++    PowerPCCPU *cpu = env_archcpu(env);
++    uint64_t sprc = env->spr[SPR_POWER_SPRC];
++    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
++    int nr;
++
++    if (pc->big_core) {
++        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
++    }
++
++    switch (sprc & 0x3e0) {
++    case 0: /* SCRATCH0-3 */
++    case 1: /* SCRATCH4-7 */
++        /*
++         * Log stores to SCRATCH, because some firmware uses these for
++         * debugging and logging, but they would normally be read by the BMC,
++         * which is not implemented in QEMU yet. This gives a way to get at the
++         * information. Could also dump these upon checkstop.
++         */
++        nr = (sprc >> 3) & 0x7;
++        pc->scratch[nr] = val;
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
++                                  TARGET_FMT_lx"\n", sprc);
++        break;
++    }
++}
++
+ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+ {
+     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(dev);
+     Pnv9Chip *chip9 = PNV9_CHIP(dev);
+     PnvChip *chip = PNV_CHIP(dev);
+     Pnv9Psi *psi9 = &chip9->psi;
++    PowerPCCPU *cpu;
++    PowerPCCPUClass *cpu_class;
+     Error *local_err = NULL;
+     int i;
+ 
+@@ -1827,6 +1899,12 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    /* Set handlers for Special registers, such as SPRD */
++    cpu = chip->cores[0]->threads[0];
++    cpu_class = POWERPC_CPU_GET_CLASS(cpu);
++    cpu_class->load_sprd = pnv_handle_sprd_load;
++    cpu_class->store_sprd = pnv_handle_sprd_store;
++
+     /* XIVE interrupt controller (POWER9) */
+     object_property_set_int(OBJECT(&chip9->xive), "ic-bar",
+                             PNV9_XIVE_IC_BASE(chip), &error_fatal);
+@@ -2078,6 +2156,8 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(dev);
+     PnvChip *chip = PNV_CHIP(dev);
+     Pnv10Chip *chip10 = PNV10_CHIP(dev);
++    PowerPCCPU *cpu;
++    PowerPCCPUClass *cpu_class;
+     Error *local_err = NULL;
+     int i;
+ 
+@@ -2105,6 +2185,12 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    /* Set handlers for Special registers, such as SPRD */
++    cpu = chip->cores[0]->threads[0];
++    cpu_class = POWERPC_CPU_GET_CLASS(cpu);
++    cpu_class->load_sprd = pnv_handle_sprd_load;
++    cpu_class->store_sprd = pnv_handle_sprd_store;
++
+     /* XIVE2 interrupt controller (POWER10) */
+     object_property_set_int(OBJECT(&chip10->xive), "ic-bar",
+                             PNV10_XIVE2_IC_BASE(chip), &error_fatal);
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 6b90543811f0..0e26e4343de7 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1522,6 +1522,10 @@ struct PowerPCCPUClass {
+     void (*init_proc)(CPUPPCState *env);
+     int  (*check_pow)(CPUPPCState *env);
+     int  (*check_attn)(CPUPPCState *env);
++
++    /* Handlers to be set by the machine initialising the chips */
++    uint64_t (*load_sprd)(CPUPPCState *env);
++    void (*store_sprd)(CPUPPCState *env, uint64_t val);
+ };
+ 
+ static inline bool ppc_cpu_core_single_threaded(CPUState *cs)
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index e7d94625185c..0e625cbb704d 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -328,69 +328,22 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+      * accessed by powernv machines.
+      */
+     PowerPCCPU *cpu = env_archcpu(env);
+-    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+-    target_ulong sprc = env->spr[SPR_POWER_SPRC];
++    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
+ 
+-    if (pc->big_core) {
+-        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
++    if (pcc->load_sprd) {
++        return pcc->load_sprd(env);
+     }
+ 
+-    switch (sprc & 0x3e0) {
+-    case 0: /* SCRATCH0-3 */
+-    case 1: /* SCRATCH4-7 */
+-        return pc->scratch[(sprc >> 3) & 0x7];
+-
+-    case 0x1e0: /* core thread state */
+-        if (env->excp_model == POWERPC_EXCP_POWER9) {
+-            /*
+-             * Only implement for POWER9 because skiboot uses it to check
+-             * big-core mode. Other bits are unimplemented so we would
+-             * prefer to get unimplemented message on POWER10 if it were
+-             * used anywhere.
+-             */
+-            if (pc->big_core) {
+-                return PPC_BIT(63);
+-            } else {
+-                return 0;
+-            }
+-        }
+-        /* fallthru */
+-
+-    default:
+-        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
+-                                  TARGET_FMT_lx"\n", sprc);
+-        break;
+-    }
+     return 0;
+ }
+ 
+ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+ {
+-    target_ulong sprc = env->spr[SPR_POWER_SPRC];
+     PowerPCCPU *cpu = env_archcpu(env);
+-    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+-    int nr;
+-
+-    if (pc->big_core) {
+-        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
+-    }
++    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
+ 
+-    switch (sprc & 0x3e0) {
+-    case 0: /* SCRATCH0-3 */
+-    case 1: /* SCRATCH4-7 */
+-        /*
+-         * Log stores to SCRATCH, because some firmware uses these for
+-         * debugging and logging, but they would normally be read by the BMC,
+-         * which is not implemented in QEMU yet. This gives a way to get at the
+-         * information. Could also dump these upon checkstop.
+-         */
+-        nr = (sprc >> 3) & 0x7;
+-        pc->scratch[nr] = val;
+-        break;
+-    default:
+-        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
+-                                  TARGET_FMT_lx"\n", sprc);
+-        break;
++    if (pcc->store_sprd) {
++        return pcc->store_sprd(env, val);
+     }
+ }
+ 
+-- 
+2.50.1
 
 
