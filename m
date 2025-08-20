@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FAFCA0EF8
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 11:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127C1CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 11:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uogZ2-0001sL-0d; Wed, 20 Aug 2025 07:01:08 -0400
+	id 1uogkD-0004y5-9U; Wed, 20 Aug 2025 07:12:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uogYw-0001rp-FL
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 07:01:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uogk9-0004xY-Tm
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 07:12:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uogYp-0006hm-Jc
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 07:01:00 -0400
+ id 1uogk7-0000eC-3m
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 07:12:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755687651;
+ s=mimecast20190719; t=1755688351;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q64uwQsFmlhB36xU+cKKx7TpMfUZ417PuFvOivLM6Pg=;
- b=Mxhk0GiGrMAY8T5E+n2iClWgCpI8Cne8iAp2fxl2rvAWVy/vKh5MyPE//KvAg8qqkvkLMa
- w5WZrlpM+iEris+PP/Z0SmsRrcpq2VWsLGFuc+aDL3qvukL0bvDjupswh7IaewXo8cR9It
- pUztN5jZ+EMcQufymZ2kxoDrMiljH6c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KItwXQGBngwiBsV5NFrGzwH4Wlt+6Q/lLle1noSPPb0=;
+ b=f6gUXjE2EyjnyHbPLtX+bOkhbnRd7ZSdkSziZCE/3NUvl4gYHVgL4L6/fb39chhSbofjFl
+ BHMsBv6okTUGTgHoM0R9gu4FHdUb6iHXpbyDc0U83TUlZAm/uV3myxqNGq9lJBXOVUmMQh
+ ZJEdgzg9+Y4YR5kmV41kav84lEVuQpM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-fVw3SK3_OSS7Ye-xyuLo_w-1; Wed,
- 20 Aug 2025 07:00:49 -0400
-X-MC-Unique: fVw3SK3_OSS7Ye-xyuLo_w-1
-X-Mimecast-MFC-AGG-ID: fVw3SK3_OSS7Ye-xyuLo_w_1755687648
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-191-egURKCgsOB2o-LdgPgisoA-1; Wed,
+ 20 Aug 2025 07:12:27 -0400
+X-MC-Unique: egURKCgsOB2o-LdgPgisoA-1
+X-Mimecast-MFC-AGG-ID: egURKCgsOB2o-LdgPgisoA_1755688346
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCD1E1800370; Wed, 20 Aug 2025 11:00:47 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A3B6A180035C; Wed, 20 Aug 2025 11:12:26 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.164])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A53719560B2; Wed, 20 Aug 2025 11:00:45 +0000 (UTC)
-Date: Wed, 20 Aug 2025 12:00:42 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 772BC1800294; Wed, 20 Aug 2025 11:12:25 +0000 (UTC)
+Date: Wed, 20 Aug 2025 12:12:21 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 07/12] util: introduce common helper for error-report &
- log code
-Message-ID: <aKWq2uiCTN-Eo4ye@redhat.com>
+Subject: Re: [PATCH 08/12] util: convert error-report & log to message API
+ for timestamp
+Message-ID: <aKWtleZB4fqAzuhc@redhat.com>
 References: <20250819202708.1185594-1-berrange@redhat.com>
- <20250819202708.1185594-8-berrange@redhat.com>
- <bc2a7355-355f-4207-a0de-5a7b75fe3da9@linaro.org>
+ <20250819202708.1185594-9-berrange@redhat.com>
+ <ac90c3c6-64ae-4abf-a850-59c862400b89@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <bc2a7355-355f-4207-a0de-5a7b75fe3da9@linaro.org>
+In-Reply-To: <ac90c3c6-64ae-4abf-a850-59c862400b89@linaro.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,40 +91,40 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 20, 2025 at 07:57:47AM +1000, Richard Henderson wrote:
+On Wed, Aug 20, 2025 at 08:02:14AM +1000, Richard Henderson wrote:
 > On 8/20/25 06:27, Daniel P. Berrangé wrote:
-> > +char *qmessage_context(int flags)
-> > +{
-> > +    g_autofree char *timestr = NULL;
-> > +
-> > +    if ((flags & QMESSAGE_CONTEXT_SKIP_MONITOR) &&
-> > +        monitor_cur()) {
-> > +        return g_strdup("");
+> >   void qemu_log(const char *fmt, ...)
+> >   {
+> >       FILE *f;
+> > -    g_autofree const char *timestr = NULL;
+> > -
+> >       /*
+> > -     * Prepare the timestamp*outside* the logging
+> > -     * lock so it better reflects when the message
+> > -     * was emitted if we are delayed acquiring the
+> > -     * mutex
+> > +     * Prepare the context*outside* the logging
+> > +     * lock so any timestamp better reflects when
+> > +     * the message was emitted if we are delayed
+> > +     * acquiring the mutex
+> >        */
+> > -    if (message_with_timestamp) {
+> > -        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+> > -        timestr = g_date_time_format_iso8601(dt);
+> > -    }
 > 
-> In the event we want no context, we really should avoid memory allocation too.
-
-Yes, won't not be too hard to check for NULL in the caller.
-
-> > +    }
-> > +
-> > +    if (message_format & QMESSAGE_FORMAT_TIMESTAMP) {
-> > +        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
-> > +        timestr = g_date_time_format_iso8601(dt);
-> > +    }
-> > +
-> > +    return g_strdup_printf("%s%s",
-> > +                           timestr ? timestr : "",
-> > +                           timestr ? " " : "");
+> Something that really ought to be handled better is that we currently use
+> qemu_log to print pieces of a larger message.  E.g. looping over the general
+> registers to print the whole cpu state.
 > 
-> g_strdup_printf isn't the nicest string concatenation tool.
+> (1) We don't want timestamps in the middle, and
+> (2) we don't want unnecessary memory allocation in the middle.
 
-A GString would make it easier. Though typically that would involve
-an allocation of GSTring struct, I guess we could be sneaky and stack
-allocate the struct.
-
-> And again, there's a no-context path.
-
-
+Interestingly I found that for CPU_LOG_TB_CPU we don't use the qemu_log()
+function at all. TCG calls qemu_log_try_lock() to acquire the raw FILE *
+handle and writes directly to it, so we miss all prefix info entirely.
+If other parts of QEMU that do big multi-line log dumps do the same,
+then we're ok.
 
 With regards,
 Daniel
