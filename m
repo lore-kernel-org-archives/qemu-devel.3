@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D7F4CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 13:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D719CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 14:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uojCE-0006kO-Qt; Wed, 20 Aug 2025 09:49:47 -0400
+	id 1uojhF-00042d-Aa; Wed, 20 Aug 2025 10:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uojCC-0006kB-E9
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:49:44 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uojh0-000425-Fp
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 10:21:36 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uojC9-0008Dt-PX
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 09:49:43 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3bea24519c0so455501f8f.1
- for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 06:49:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uojgf-0006t3-Cr
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 10:21:16 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3b9d41c1149so4710258f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 07:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755697779; x=1756302579; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755699671; x=1756304471; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1JoKi1hqpbrpS2BDqIq6v3JJ/w73UgPs21kYdYCsdHA=;
- b=lN9I8nqb49BA6a+COmcVs2Vhda6bXDOgB5Nd3WA2zvMeEbd9xJKtGYAVbZzeb66O3I
- JhPZq485w+KFZE4+jS2X8IFTiKBOdQKH28lsJKzbAQnfOK7nelywIKNVm+YrWP5YWf7w
- QYTcUegPJPI96o4iyR6EGJT301GlJ7/i8Kv1BwG+ef8vy5PfTBxRgulEEhpTyGswd5LX
- 3rpXvXKpuw/AIE/WkSLdBf5Hxzfv3UuccxAPXd2O2mtbDg7fcwyUuD1TRSpDeWHWwHmP
- AZp81vvUnIjf/IMU1Sn5roySdRRAaZWczWVoRTBOY6UBiMZ10ftjJuH5fFftiJ3kh4P4
- XoJg==
+ bh=bJyjq5AN4uZdrL2V3ky7FnPfnceDnCaVXQL/pvAZwcQ=;
+ b=VhO3Kz1KXf0CAD+eM2yPqNFxkaDMUYgQFzoYXSi99QMplqPe8dXuquhGbBXqptIG7Y
+ 0yF9zuC1wfOmX9ZDAoqIT/kmWuFS3z14xlUGemOXqqNR17KrhwxK9Glyh6yrd3ZP4IA+
+ Q1QonUBuRQ/0MiEc5E+3m0wlqLRq8C3/iY4fGxbLbCke2VSUpyo+Ik9zib1umvOfL8w+
+ HaPL3sCLuZ0zmqeosCQx/fmhmgZ+nCRohmo/z44cFn6rH/0EjeSB3p8/XEKhcz1CbP+j
+ FXqGS8CyxcaYxcDjUdHvSgTM3IWtI6Fu6aUmaGXytgzJHXX7IdykG4fQAzy6V/IdFkfA
+ ASzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755697779; x=1756302579;
+ d=1e100.net; s=20230601; t=1755699671; x=1756304471;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1JoKi1hqpbrpS2BDqIq6v3JJ/w73UgPs21kYdYCsdHA=;
- b=Pk1wOM9k7boOG3qFnTJOITje7TybrU56DkV3O1Imm9kW/k/JQEMDRM3OOIOMTKTBhS
- dLrysenoYEQqODBzE7LRlgSmRQjXWI+L4tl4Fy68Uthw0sw5aHNcP0eKlQI0uVG+yrFl
- 9i5GKKePMU4wgeUOugcrIA1o4DnRnPLeRol1TXViqjBbr9TGs7UDPQp931HoShCAmLV0
- /254NOJAEX/dvFVB2rC+vtzM5ukDz6bUDsqtxz03CnNtEthkvST3lzPf7o5Y2cBKnojW
- gYQ+H2KOFG5HfmDM2p27BsDC1UZQh7aXpnJWcHBx0TCyFJgPHT1oysqFMDcB5R4/kjdR
- PUFg==
-X-Gm-Message-State: AOJu0YwLdiPhDN3OWrMxOThNmjD7yVXaUm54AD/iQxOUUDby1RJ3WpmS
- w6jmZ4QhgtjOjA0XfKZ0vZxZ7U3Nb13zgiWSojffc2+C9UdWgkjf9yFmGqmPQM/yS7AMnevlrT5
- d7S8/
-X-Gm-Gg: ASbGncsjHgLzMQFipUQ618HGNOeGrmIBDDAIc6SV4Qrdz7u2RX1VxPpxcG+hZ3ugmwy
- 6AfF97NxEdEpAZw5eT8wKYy5VWo61Nxk7W9zRbPtwttPa92VTNGgKEK23RbPww+LTQA3dn6FMI8
- DSgEzKh+UGHygXvLyq55+r9XwWTYrXHZ5tIqKNqCfH+VJEc1oX06P0YGS4DwbnTfxwLaycg/Ni/
- J4/nGqIzqdAArOv5Eo4f4BQuyR5xZb7RbysJvz6pU4uhVVBrZeEP3aeIeUydAHJl873pBS40NMB
- LrBDAQeh8IWNOSCH78OMkRz2M/77JaH5si7Oex2EGoHUD+gr8QMt5nA04RRrr8Ver3OITEbVBfI
- tFQQnpLpATHZ5saiM0CwisP72UEbzGjZkDPZZ/aXqWYqauynfHSmfrpPsxvZ8QnVP07Y5FQRSHq
- oCGw==
-X-Google-Smtp-Source: AGHT+IG7caQ641/rsKjQjpMyHFQAp3uSPRaRfIhTbADhiU8hROscCUz1IPM8O9KfZDVTZl11ICBdSg==
-X-Received: by 2002:a5d:5d0d:0:b0:3c2:9d64:125f with SMTP id
- ffacd0b85a97d-3c31553b888mr2886516f8f.28.1755697779151; 
- Wed, 20 Aug 2025 06:49:39 -0700 (PDT)
+ bh=bJyjq5AN4uZdrL2V3ky7FnPfnceDnCaVXQL/pvAZwcQ=;
+ b=h73Bg/WxztwY+DKwJhq7cHTdLAKaY0lxSdwiqUixXS+t6nAczbQML/AsqR/zqsHVsa
+ nyEATyaDeHUcpnThXu9G4bVAxYZ+aGC300TkNWuT/An2X6WDfVstOSPKTkLJLNsrWnTd
+ PnQOXRK+Z1Pm8rUPrkHYPMXJn9DWiopw0+dHi8ew5EFmKBEqdb89i9WcOvKpeMCQqkG0
+ +rPmn/rAB1GMixNRkXEAiNBpdq7XX7LXoxCo0M/xeoUwyZu8fTOSZLROZdi+JGIaFRZz
+ opSLq1FjyghZWXJqqGPA0EswEDuUPdsHJgdguXuh/dSqokBid33Kv07AKnR3PfcXCWJ3
+ Ejhg==
+X-Gm-Message-State: AOJu0YybOhoi5XiCK89DzjYa+H8edsNWBM1uHlfoeewB9tjo2WUoMPH1
+ 1OFT/ZS3JDzM4RHHNhSsEumU7Z7J+Dq8lY9ahokI9k8nfmRnuUWgjAnn3JCyeeQtP/8elaQ3o5E
+ W7Hcv
+X-Gm-Gg: ASbGncu6osTDZZunLQz9F6UFmGeMgk3VUdDUUNJdezUhLM0EvqZ0lbr29Hogw7d8TB8
+ mR7+WjeE6VztwSyL3wo0rbRuVSnzqGXoE+dtEX8W2mldpuDMtK5SK9nsnmqSvoBgMCuLOXJwqVk
+ RBCTRR3HQgqredyzMmINqJzgyf6E0I88xbrdtR4m4ZRk+AF9Ggfp4VcY3YpYm+npoUZCs7mO07p
+ quRnubGxz9ueB/dIVvBgOo8KZCQuZwOyO7ROoj5yKjfs3MfYpEuvtpTfdV6vNB2FYmWTfyQkWj7
+ vD2cygwtRfWC2rRDpwezUYKTLZ+OGEtbGJaxjrmvStfPQCLoHanRAGaJAE9DQ+02ViRQa30fBog
+ 5XDiXvSIomntUx+UbVaz550QbVdlu2XLRUQQuM82oBG1CvcSi/hiytH5g6xT3viVE/UcBP99yhR
+ xoLA==
+X-Google-Smtp-Source: AGHT+IHdS3ACqDuzHXnBgJIfgwPCulYYB0xm51YJRNGezyq6jOLd7dga0MjDiBcv2N4PcLIiXWq27w==
+X-Received: by 2002:a05:6000:438a:b0:3b9:1dac:70e with SMTP id
+ ffacd0b85a97d-3c32eccdbcdmr2116905f8f.55.1755699670588; 
+ Wed, 20 Aug 2025 07:21:10 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c3fab22726sm1094539f8f.37.2025.08.20.06.49.38
+ 5b1f17b1804b1-45b47bb2431sm35298625e9.0.2025.08.20.07.21.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 Aug 2025 06:49:38 -0700 (PDT)
+ Wed, 20 Aug 2025 07:21:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH] tcg: Restrict qemu_ld2 and qemu_st2 opcodes to 32-bit
- hosts
-Date: Wed, 20 Aug 2025 15:49:37 +0200
-Message-ID: <20250820134937.45077-1-philmd@linaro.org>
+Cc: Aleksandar Rikalo <arikalo@gmail.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 0/5] tcg/mips: Remove support for 32-bit hosts
+Date: Wed, 20 Aug 2025 16:21:03 +0200
+Message-ID: <20250820142108.46639-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,84 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_ld2 and qemu_st2 opcodes are band-aid for 32-bit hosts
-and can't be reached on 64-bit ones. See in commit 3bedb9d3e28
-("tcg: Convert qemu_ld{2} to TCGOutOpLoad{2}") and 86fe5c2597c
-("tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}") their constraint
-is C_NotImplemented.
+32-bit hosts are deprecated since v10.0. 2 releases later (as
+of v10.2) we can remove such code. Start with MIPS TCG backend.
+Remove related buildsys and testing.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tcg/tcg.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+Based-on: <20250820134937.45077-1-philmd@linaro.org>
 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index afac55a203a..ff1a8b71789 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1221,9 +1221,7 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
-     OUTOP(INDEX_op_or, TCGOutOpBinary, outop_or),
-     OUTOP(INDEX_op_orc, TCGOutOpBinary, outop_orc),
-     OUTOP(INDEX_op_qemu_ld, TCGOutOpQemuLdSt, outop_qemu_ld),
--    OUTOP(INDEX_op_qemu_ld2, TCGOutOpQemuLdSt2, outop_qemu_ld2),
-     OUTOP(INDEX_op_qemu_st, TCGOutOpQemuLdSt, outop_qemu_st),
--    OUTOP(INDEX_op_qemu_st2, TCGOutOpQemuLdSt2, outop_qemu_st2),
-     OUTOP(INDEX_op_rems, TCGOutOpBinary, outop_rems),
-     OUTOP(INDEX_op_remu, TCGOutOpBinary, outop_remu),
-     OUTOP(INDEX_op_rotl, TCGOutOpBinary, outop_rotl),
-@@ -1248,6 +1246,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
- 
- #if TCG_TARGET_REG_BITS == 32
-     OUTOP(INDEX_op_brcond2_i32, TCGOutOpBrcond2, outop_brcond2),
-+    OUTOP(INDEX_op_qemu_ld2, TCGOutOpQemuLdSt2, outop_qemu_ld2),
-+    OUTOP(INDEX_op_qemu_st2, TCGOutOpQemuLdSt2, outop_qemu_st2),
-     OUTOP(INDEX_op_setcond2_i32, TCGOutOpSetcond2, outop_setcond2),
- #else
-     OUTOP(INDEX_op_bswap64, TCGOutOpUnary, outop_bswap64),
-@@ -5829,17 +5829,6 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-         }
-         break;
- 
--    case INDEX_op_qemu_ld2:
--    case INDEX_op_qemu_st2:
--        {
--            const TCGOutOpQemuLdSt2 *out =
--                container_of(all_outop[op->opc], TCGOutOpQemuLdSt2, base);
--
--            out->out(s, type, new_args[0], new_args[1],
--                     new_args[2], new_args[3]);
--        }
--        break;
--
-     case INDEX_op_brcond:
-         {
-             const TCGOutOpBrcond *out = &outop_brcond;
-@@ -5887,6 +5876,16 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-         break;
- 
- #if TCG_TARGET_REG_BITS == 32
-+    case INDEX_op_qemu_ld2:
-+    case INDEX_op_qemu_st2:
-+        {
-+            const TCGOutOpQemuLdSt2 *out =
-+                container_of(all_outop[op->opc], TCGOutOpQemuLdSt2, base);
-+
-+            out->out(s, type, new_args[0], new_args[1],
-+                     new_args[2], new_args[3]);
-+        }
-+        break;
-     case INDEX_op_brcond2_i32:
-         {
-             const TCGOutOpBrcond2 *out = &outop_brcond2;
-@@ -5912,6 +5911,8 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-         }
-         break;
- #else
-+    case INDEX_op_qemu_ld2:
-+    case INDEX_op_qemu_st2:
-     case INDEX_op_brcond2_i32:
-     case INDEX_op_setcond2_i32:
-         g_assert_not_reached();
+Philippe Mathieu-Daudé (5):
+  docker: Remove 32-bit MIPS toolchain from debian-all-test image
+  gitlab: Stop cross-testing for 32-bit MIPS hosts
+  docker: Stop building 32-bit MIPS images
+  tcg/mips: Check O32/N32/64 ABI definitions actually exist
+  tcg/mips: Remove support for 32-bit hosts
+
+ configure                                     |   2 -
+ tcg/mips/tcg-target-has.h                     |   2 -
+ tcg/mips/tcg-target-reg-bits.h                |   5 +-
+ tcg/mips/tcg-target.c.inc                     | 282 +++---------------
+ .gitlab-ci.d/container-cross.yml              |   6 -
+ .gitlab-ci.d/crossbuilds.yml                  |  14 -
+ common-user/host/mips/safe-syscall.inc.S      |   4 +-
+ tests/docker/Makefile.include                 |   2 +-
+ .../dockerfiles/debian-all-test-cross.docker  |   4 -
+ .../dockerfiles/debian-mipsel-cross.docker    | 180 -----------
+ tests/lcitool/refresh                         |   5 -
+ 11 files changed, 42 insertions(+), 464 deletions(-)
+ delete mode 100644 tests/docker/dockerfiles/debian-mipsel-cross.docker
+
 -- 
 2.51.0
 
