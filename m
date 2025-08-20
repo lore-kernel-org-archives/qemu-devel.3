@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F1C7CA0EE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 20:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65829CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 20:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uopdN-0003EF-WA; Wed, 20 Aug 2025 16:42:14 -0400
+	id 1uopdO-0003EP-D8; Wed, 20 Aug 2025 16:42:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uopdL-0003D3-El
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:42:11 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1uopdK-0003CV-77
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:42:10 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uopdI-0000CC-N6
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:42:11 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-afcb7aea37cso40117366b.3
+ id 1uopdI-0000Bz-MM
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 16:42:09 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-afcb7aea37cso40115866b.3
  for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 13:42:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755722526; x=1756327326; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PavMz00Ukusw4jBxHm90s1aPkYP3XxBI//gRUXS5roQ=;
- b=PEhvcIIGGWwCjI2/tMhxNLvoTamw6FfLYj+wW8Y1xfiv9ycKY6VFe52Ees9YzowLJU
- Icdv+TUffHxAabRY4kMzN6kd+Z9GXhLprGJangrvVJOgrXFF0opKPszcZKMiGQwTBmD9
- zgcHJgfxxxdsYxt3XBpMfi4X0G8307PR7TTIX4JwvZlY+18gpD7ISymyXsGG/Zc4IWZg
- AFrh9UmA/qni4bq9U5qb7hkLGWweTAFGBT360eTI/jbEz7L+n9bx9029x3x7PwdfSPfO
- I58LljTsfg6j3pSuVAmqR43jBQK+fZEXF5CCrDnHvqm+yBbCV5YOjeU0AVuMGeFMkA5v
- m/HA==
+ d=linaro.org; s=google; t=1755722525; x=1756327325; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0OxLqEEJqYAqri093pp4yMwxSVTDwskPahJePkHdh4Q=;
+ b=esyM4q43a15A6C9AMgVYhmiWLHjqqhFmgmNHqTpPnBor0k16wrKzDUUeQGPSLxi8/N
+ xvt84Glbnb7sal4nRDAooUmWqs2b7dCPW/o3OpzQI/v2u6A7c3APBSilljZ/I/a5slFM
+ a3O8UYk8MrqawDVL8LBmDESxFJBatK7wgNYdYHR3DFJF08Oi/IiUWs5G7h+pPm5XWLZs
+ pEp5yYW21YpTG969KWfwy4EH/idcMqneYvjXnG768msmz6glh4TqIy8reSJa2C1b0VG8
+ Si4nMv8mYwa4eMAN1j9QQ+DDFkwSFekmTfk8A9tyFwi0KMjnodnxuIz8Rim76CHwOk8i
+ Vk/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755722526; x=1756327326;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PavMz00Ukusw4jBxHm90s1aPkYP3XxBI//gRUXS5roQ=;
- b=QE5Xk+i16ZlLrCcBDHDMakjN41fvHxDMj27qsemDHs2ew2re5doWH1jQvolYqt1N+N
- yH21uExzQTins0LGcqW9GNSfNxzrOmBM4ns7q+JXp6eK/dDJzheQnJSDwcz5LEZhgeuq
- GKTHRQ5zaW6xliiD5vYWAvkgh926e1Bf2t4j+8gCZDkIPN5rfMX8zckhv49R2cjLA1Ca
- EQUTPeF01LL4gh53qM+XQfBLDzWCInY17zs4iDcXjrSIzLpyB1WRks8SDjeSetHwnxqE
- fo5hezT4Lu9O26omMD2dsC3uTC/iqHF3y33UUV9FDc+AC6vEnpQiu9EfHveoyhXfXtGy
- pWJg==
-X-Gm-Message-State: AOJu0YwMjZSQNsa6IMzmHylfk68KGxgtku2HWg9pCJrIdB0k01CI4WcC
- ecCb3BYB0cZRHlSkhx0QBL+kNUzvQgsHrDr9gep6TbQwl2fahwd+X5CIFEL4mvQeYfZZXAVmSQb
- zzBdmzFI=
-X-Gm-Gg: ASbGncsEFXzMCEisIYiURm4Az0/oGWz+1R8e8NIZzDcC3oYIDpxgkmMJLIOyeobGxeM
- NDY+DFN/ktm5MqjIuH2JPvStjnLweC0RxZLh2DAplwElZ7uGwheiPWcOMIATCzbCcWXpfyxD2mp
- P0eBaQEKSyV/JHOz/CWU0hsQEdWhZr7641El3qbaIFWqszGIOsvlwLP/pU9/5mthuFZo4OTKBpS
- CU4ju9N/BdO/8Ok7WtEgwk38iLl9nxjggHQzLcEa76FvhOnSOU8j0fgZlLPl1VeFF2cfsEDWE54
- 5lBTv8EpJuovnVV8zSVMWjkVtKI90xgqBhacutPEU42+JBA/x7ALuvBKHfUxaex2tE3KRxDlPXU
- uBafyJRwe+KXOlbOJblw5r1nU4yKy/JAydR4jOzIVFYUbS7DhKV7t+GkBksBr8+hBEX7VGk5OkC
- UQ/xc=
-X-Google-Smtp-Source: AGHT+IGm07LcjQeIABiqBE+Se/rkX2ieZkEpjrKc9AaY8GpQk6obXRVRA/RK5HoEKJgJNccJynqidA==
-X-Received: by 2002:a17:907:9726:b0:af9:5366:b42c with SMTP id
- a640c23a62f3a-afe07d4c190mr12832866b.59.1755722525713; 
- Wed, 20 Aug 2025 13:42:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1755722525; x=1756327325;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0OxLqEEJqYAqri093pp4yMwxSVTDwskPahJePkHdh4Q=;
+ b=gWAjf+27lhyn87HezxqPRXhOdn4ibWTDZ4WWo5SP+WK1OKhs63X8Kf4gA+b3ajfWgz
+ Y+V4bAsLGWsw5vGabKFMD/w8O0eL9lu5KAifBb8EyhCH+GWVu+f0SdLgqRBZ/l3JxUbO
+ XdzF9ONoP3d9QaliWUkqUf123I8YJrIBE2zZVcHG/5c0Ys4krHqQclQ9nHGQL06IyKpP
+ FjU5Q9tW6ycp9I8HV6OOEIkmkhmaWyV8SCpgAbA/tDEkWyBM4jNBcb53s4JZ9CuNhDY6
+ mdtwCyxUFIIpWgqqjtXnQJ3pbvAVS37PQEDxv0Qulbz0zJGHhoKyFNeLGrNvyvhpvm+b
+ RphQ==
+X-Gm-Message-State: AOJu0Yx3EpZ9Ur3OAtvQvW3SlmTf/cEHXjtySxc3O+UxrKNx2QsoBPbQ
+ YtGDtKvCZ8e2uBU/7LUDjj+u/l6c9lNmvbgSO6xnNdTWTB6Lt2TvqwAMJ6nlFN62KJYh0K6vb5v
+ NhJvyVko=
+X-Gm-Gg: ASbGncuSWcb76Jg85YtWOt4psqkC8r23nL8VGeHiBLMJjZ6/CUSXk0J2USO78hDY7XH
+ QzVOAUIWZ6FrRW6yrDcKh2+UxxXf2hICYVtIBhgDNAS/ns2YWUcv2woQNxR91+5Klyzn8Vme8Wg
+ 1YyjC326obTY45hSITvvC2364jdGyRbkyE1h6K11IB/tWq1pJYCQlIvp3IVd8WkxWGLFXvRJ6nw
+ +wyi0d2M1MH6Ivz36lKNQRLtG1OkVUs2MXZnmRAQemR6Pf8G/WpJ0kOqymwNIpqGpWdZJQHR0KB
+ GmHJcfqFM3LhV3FvilET04dMh86nCcJO0FuFfbMDQH5Xm3yIZxOJsFO/QteM7i1IdtYB6Xq8hx2
+ nrtxbJQ+Z+GjBlLVjWoBI6cFhea9NOhE/fpfsTlymzXmLtRMYzl2btynp/D6me959BIzswtXBSD
+ oFaTY=
+X-Google-Smtp-Source: AGHT+IGLPHvES/xrLt2Wz1HHF2m0q065bIj64zByM9mMhbjWrSTD4pJ/DRheMjS3/kqSkWkcnRvhqw==
+X-Received: by 2002:a17:907:72d4:b0:af9:406d:f0a8 with SMTP id
+ a640c23a62f3a-afe07a1f90emr17495266b.23.1755722524774; 
+ Wed, 20 Aug 2025 13:42:04 -0700 (PDT)
 Received: from [127.0.1.1] (athedsl-4441256.home.otenet.gr. [79.129.180.152])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-afded5353cdsm246888166b.106.2025.08.20.13.42.04
+ a640c23a62f3a-afded5353cdsm246888166b.106.2025.08.20.13.42.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Aug 2025 13:42:05 -0700 (PDT)
+ Wed, 20 Aug 2025 13:42:04 -0700 (PDT)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 20 Aug 2025 23:41:56 +0300
-Subject: [PATCH 1/2] scripts/minikconf.py: fix invalid attribute access
+Subject: [PATCH 0/2] Two minor minikconf.py fixes
+Date: Wed, 20 Aug 2025 23:41:55 +0300
+Message-Id: <20250820-scripts-minikconf-fixes-v1-0-252041a9125e@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250820-scripts-minikconf-fixes-v1-1-252041a9125e@linaro.org>
-References: <20250820-scripts-minikconf-fixes-v1-0-252041a9125e@linaro.org>
-In-Reply-To: <20250820-scripts-minikconf-fixes-v1-0-252041a9125e@linaro.org>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIABMzpmgC/x3L0QpAQBBA0V/RPJta0xJ+RR60ZplkaUdSm3+3e
+ TzdbgLlKKzQFwki36JyhIyqLMCtU1gYZc4GMlSblgyqi3JeirsE2dwRPHp5WJEbmshY6nxtId9
+ n5D/keRjf9wOVh4SKaQAAAA==
+X-Change-ID: 20250820-scripts-minikconf-fixes-e62a20429f54
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, 
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=907;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=629;
  i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
- bh=uI7P2gs/QiD9gXKg6HW+/la5twJi5HPTzSwCcfxFryU=;
+ bh=Ib/3u1w1IUYsgmigAHwnxjaHBX7yBqQ9/naW04suRvQ=;
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
- 25RQWNzbVlnQm9wak1icFg3cDNQOEt0QmRxS1kzTSt4OWx6UXJQClN0WU5UVnVPcUN2NEJWTDVN
- a3VKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUtZekd3QUt
- DUkIzS2Nkd2YzNEowRWthRC93UFJqcnR4YzcrVEh3Q0dFNE10cnlLMHpCNTh5Q1dKZVNVRkw3bw
- ptUmNQRFYwOHQzSmN4VjRoT2p6VnZxSCtua1ZDT1ZoM1UxOGxkQ2FPTU01aGVrdENCcmJtcFdxc
- 09SUFMwL1l5ClRPa0pLRzh0YmdPQm1UVFFUVkNMZFJ6LzVVdmx0SnAvWGJobFdvTDlpcFNHRWJH
- MW1nL0pLVk5PeDBJSHNlaTcKditSUnFtc0tkZWdRaGp6endCWmVjWEFlYVNjbldOZnh5YTliWW5
- JQUExWW83Qm11cERBdmdlTHlsVUFlRXFYZgoxQW5sQU82TDg2eUszck9aVUZCMkpDM1pnN2tOcU
- Z5OWxTZm1QK3JxQ0F0S1I3VVM2dmlheTRCSXU2NjZOT0N2CnhWTHZUR21WNzNVZTJ6TGxaRnZHd
- 1hZdC9WQkR2T2ZKM1RpcWRQVUdTdmVXbFpRYTFSZGNoamRJaTB5aDFDSzUKYzhLaVZtUHQ4cm9y
- S3lDZS94TjZvZnJIR0xqSjZGN1l2ZjZZbEdoRDJvVkZsOXJxZ2J6YnliRm1hS1p6aE9hTApxcyt
- DNUdyN0lqNzBSUUw5WnhiRUIxT1lIUU1CdG1kZC9Ea203SnhEOWlabDcwdzVVWnorSFdoWm9YRG
- Roa21SCi93SXJMS0NlcTRvZ3BKQzJrbmgzK2NhWVBGYWJDSEZHVHNrNHJVV3dUYW5MZWlUMUVmc
- lVuRFBsTnZvTitCc3QKb2k5VkVWS0xHZVAwY0JMd0tnT05JM0RnN2JPTjZZQS9VRG1hNklCQ3l3
- OGJuZzVLdTM3S2NqalRGZDlydW1WZgpLMytXMWtMVkV0dUFEZWx4TTNia1hsMWxPMXVJSE9oZXo
- 3anJQNjhtRktxM3VqZDNYSHM1dGF1YTNMUFpzMTlrCll6RDlodz09Cj04cDN3Ci0tLS0tRU5EIF
+ 25RQWNzbVlnQm9wak1iNzRDWTYwc2VDZmZxaW9WV0MrQWVuM0o5CjJUZ3F1clZpdUg4YXF6Rll5
+ SktKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYUtZekd3QUt
+ DUkIzS2Nkd2YzNEowQnpIRC8wVU9QZUpITWJrczZNZlpJQVhwNHVXMS80ZVBrOXRWUllsKy9QVA
+ pMYkRsYlVDaDR2MWdScEFIREZmVHVMRVlpemJWQ3JQRzJQRHd5SldjakwrTEtCL1dyWXBad0R5T
+ y9XWVh5MG1FCjBqcnRHaG5FcHUrNU15ZXpweUEwdEc5TzV1Z3hmOTBmUUY4WWRGRGVMRmIycFhz
+ elEraHRna2YxczBDZ0ZCS28KQzRzV2x2WHQwcTNob05ySmV6UVA3cDBxTlh5SGhreE1sMXFFM1N
+ GUVpkcVpIakc1bFd5NFd4RDF4UTQ2Kzk4WQpQUStFQllxM1VUdEw0Wnp2b3I3ZlIwUGtrT1BmRE
+ 5kMjBydWRlK3FLOElnUXRzSWk3M1VYUGl6QjhYYXZidVc2Cmwxc1BzV1dGYTJqU0tXYVMvcGlJb
+ m5UWXZ5Q2VaYmMyU1hORFZ6T2lEbVJzeWpCbmM1VExIOTE5VGZmS3F5dFUKYzMxRG9uVlIzQWVO
+ bS9CcHZ6blFvZ0ludVFQckZCalF2eWROcjFrdlZKcXlZOW9kdmRJdGdkZFM3eUZEQlIrWQp2Vy9
+ nbXF5QVI0VlFMRXhxR2lFZm9pWC8rKzA4WXFoazZnZWZjS1BaUGZidmI1dUpiK3k3bXhCNUdhb0
+ dyWHZtCndrZnZ0bGE4YWlOSEc5elJEWG41ZGZlK1RxUytRVFZCR2JMbHRieDhMbVVqVFRYVDUzY
+ W1LdHpRUFJHYkVOS2EKblBYRGt6Y2tmcTVUTG1HSlVVUVV6ellQSStSN2ZDOUVsd2k0dks5Qklq
+ dUcrcXl4Vyt6emVxRVhtUkE5NFV1egpRVFYvbE9yWnN5YU9xUmZIYW5Xbk5nZHE1VmFDV0hnajZ
+ zVnJJeGN0ZTZNYWlNNnBVako2RW0rbnlwK0t2R1RYCjJLRWlndz09Cj1Id2ZnCi0tLS0tRU5EIF
  BHUCBNRVNTQUdFLS0tLS0K
 X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
  fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,30 +127,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix parse method to use `defconfig` global variable instead of the
-non-existent KconfigParser class attribute
+Fixes for two minor errors found randomly while running `ty check scripts/*.py`.
 
-Fixes: f349474920d80838ecea3d421531fdb0660b8740 ("minikconfig: implement allnoconfig and defconfig modes")
+Since both seem to be 6 years old, they must be very hard to trigger in
+practice.
+
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- scripts/minikconf.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Manos Pitsidianakis (2):
+      scripts/minikconf.py: fix invalid attribute access
+      scripts/minikconf.py: s/Error/KconfigParserError
 
-diff --git a/scripts/minikconf.py b/scripts/minikconf.py
-index 6f7f43b291816d2549eb85c69d253605b83103ee..2a4694fb6a3891e152342d29b37661fe964cea37 100644
---- a/scripts/minikconf.py
-+++ b/scripts/minikconf.py
-@@ -340,7 +340,7 @@ class KconfigParser:
- 
-     @classmethod
-     def parse(self, fp, mode=None):
--        data = KconfigData(mode or KconfigParser.defconfig)
-+        data = KconfigData(mode or defconfig)
-         parser = KconfigParser(data)
-         parser.parse_file(fp)
-         return data
+ scripts/minikconf.py | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+---
+base-commit: 88f72048d2f5835a1b9eaba690c7861393aef283
+change-id: 20250820-scripts-minikconf-fixes-e62a20429f54
 
--- 
-2.47.2
+--
+γαῖα πυρί μιχθήτω
 
 
