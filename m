@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF13CCA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 06:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23ABDCA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 07:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uocjZ-00087q-Sz; Wed, 20 Aug 2025 02:55:45 -0400
+	id 1uocrq-0001Y5-Sn; Wed, 20 Aug 2025 03:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uocjW-00087O-Mm
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 02:55:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uocrk-0001We-Fy
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 03:04:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uocjU-0006TY-7z
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 02:55:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uocrd-0007Ee-7K
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 03:04:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755672938;
+ s=mimecast20190719; t=1755673443;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VAzSEjMqPvW+GIMy73ZFmml1pe0sByp73PgGZQG5KzA=;
- b=QbGdZJD6byKwHrqqEA3IBxbl8zPsf/LQqO0Y6VMuyH/N0aN4GSSycAPJpgpNOrKCUsHrUE
- O6RQFmV2LGqhotT9GLoDug4wb0txOglWJxJRNpBaIWSU5eLAIk/ZcnBMLuksu0hvHU65sd
- GqzpV0jssQ6MWef6dOzSbhvWFBP0hlo=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BMSc/iniHAiKFcplGyvO5dR80G4NSUBLQbcG6dDH4P0=;
+ b=c13KiJ9e2ha20x3TzLj0xS7YYZpY1XX5tw5/l2UHs7FAuw4w7ICDB8mBpHR9mFLDH0PYqT
+ QVTjxztzNHp+sF3hdTj0GwPrGVKT9UEgwk/V01dtg45AJxVTRxtRwU9NoyFgBvam4KRNVo
+ QQOXgJvL3IsFXfyrvk6Z+ip9I6F1sTE=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-340-u2a6yOJCPUCPnG3cpxVf_A-1; Wed, 20 Aug 2025 02:55:37 -0400
-X-MC-Unique: u2a6yOJCPUCPnG3cpxVf_A-1
-X-Mimecast-MFC-AGG-ID: u2a6yOJCPUCPnG3cpxVf_A_1755672936
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7e864817cb8so203819285a.0
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 23:55:37 -0700 (PDT)
+ us-mta-173-CdrDVPkHMoyVfx5Uu96YJQ-1; Wed, 20 Aug 2025 03:04:00 -0400
+X-MC-Unique: CdrDVPkHMoyVfx5Uu96YJQ-1
+X-Mimecast-MFC-AGG-ID: CdrDVPkHMoyVfx5Uu96YJQ_1755673440
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7e870627e34so2750916985a.2
+ for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 00:04:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755672936; x=1756277736;
+ d=1e100.net; s=20230601; t=1755673440; x=1756278240;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VAzSEjMqPvW+GIMy73ZFmml1pe0sByp73PgGZQG5KzA=;
- b=utOTc74FuSmjbxdoS4OFubUa6KY4F+lNNoZh+QHxqv/Yw5I6M/rxQbPX4dGG6vquAN
- 8K7K/ysz7uggQF7WNHoNTWtIjmyVwKWNDIN8ESsqHDl7i4Oi0GtteKDywVMhKmLA8bRN
- 0eLrG6XKBra+Um+2HJbrZKxIlruA9NaWMgSTe/H32t8APSo/f7VL765YwlYuowQyZ8Dh
- TCBdHR6559jgeSotfon2LhJZiA3aOzVeWaGCTeNKlssokVUBOqf9UA4gPk93o7L0+2M4
- yCgaSKVmYWg++7zM6t53+MV0Ir5mDM/bShrG8ekjh8b09uKlUjlZfTL2blJbTfpFwC9S
- vsaA==
+ bh=BMSc/iniHAiKFcplGyvO5dR80G4NSUBLQbcG6dDH4P0=;
+ b=F/H7AcTF/LhlDjDBHG8JhbgJDjyZqmysvmQnxmS0Af61BAlrNfDcLFrhuCU7HAjTzE
+ F6FkB801CpWrKDbRoIW6yAUDAuzvffNUQzUb+MvXtZpdVnA6CkVwTPReUa8xKhhM5aGz
+ I9paxYrtoyksqkzgE/+KXwLXnigKkzUtWZpC9xUKRuXWbAF+1N/LtPuhAUH63r/I2TtJ
+ EOCx22qy1WH7NQ2sjfjlzWi3S8VPf7LBXJmOEIcPOE26S/o6u9MeVss5P49DpVghoPeO
+ b63Re257gNGmYOX5R7Jgl4U1NSuqTlyd3a7TLZhLUpAeMEayTL8wAgKgRJMqAVVBvAq0
+ O4Eg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmh42hk4lyexDrcJeDjrmmjnyHKfjxgRyNQI1iBYklv8Wjtw4jdtFp3cPf7nXbT63ocCsnb5PMj0FB@nongnu.org
-X-Gm-Message-State: AOJu0Yx4fJipUSzFtClFTzh49yA7GPD/caZ+18yHjNhWdCiVYa4wyr6L
- kfmcS5ycraYZFPC9df/Lehp2mEkAgfKQsFXIZWeAgBZYmVxRHT8hHQKwMAYtZS6jFL1t+O2vjP5
- IJ3hZmBvyV1VEf/bhkHnimrESvkOeI7E6hCuvgAdN0NmjXvow+yjYwrt+
-X-Gm-Gg: ASbGncvGyMf5o1Pq1Si09iFLa9+0dWp44p8kEHtSJFFHkvHhOtIHvI5e3tqby3tY3eD
- ZmmCehFClHTvYEpuYlxmHXW8r8Njk/NQG5hHL7wyqeB0WJTVo70UoojHHRTtlT3MU4YKP+m4zcI
- u8lvHQoMacDReMmfgcc1kpJHO4BzwCA1AIEv6Zc3sYwBN1eJHZNiWrfw4dPDc0rHYsFnPZLI0V5
- ePD6Gvdims92pSCi01s0C2DzFXsM/jYXlx/Icn0n4rohKing94NqCsyXm2zPcHBRad8eJhsxDA+
- htf5HOSqwTlGtiiupw5oXt8DiWqCZDWfvbJdYjWO8IedoydaeVvc765ufDR1PJpLSBuMkseHbZO
- 2+pU=
-X-Received: by 2002:ad4:576d:0:b0:70b:ab14:d827 with SMTP id
- 6a1803df08f44-70c5a59d675mr52148286d6.7.1755672936530; 
- Tue, 19 Aug 2025 23:55:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMz31xYK67qkznKSNGSDiF2iRjRWfPqgIR3kjEa08b1WxzcRhnTPT1INR4agLs5ey22adn9g==
-X-Received: by 2002:ad4:576d:0:b0:70b:ab14:d827 with SMTP id
- 6a1803df08f44-70c5a59d675mr52148156d6.7.1755672935992; 
- Tue, 19 Aug 2025 23:55:35 -0700 (PDT)
+ AJvYcCUMnDRwccZgPPb3/picO33MZDOa2UKqrrz6QXFloDSE9KIHrtrUnnRCGJXMDkodr6IcCxzxzAv8tzc6@nongnu.org
+X-Gm-Message-State: AOJu0YyOy83BRCLW5Op042PPSeYF6YhYl6URwP3SXBk3WoawVszrZZb6
+ sdggEXCDQsxaX04OUxg2AsxD13vMNO/Wo+g8QzIfCwiUHCzYeARY0a9lDf9uoXmGVDRwPKHDZ2K
+ hshKresgctPqrrbMwBcHzK7h7QIGQJCaabC6kapZLq7VgqhCikECcEP29
+X-Gm-Gg: ASbGnctCO9p297VTfz8lgkC6RrFETN74F+zgBVIf19jDaNnh9Rys+2h6Qw2uIGHHtdy
+ vc3JgEhSGeHf6sZrtAqIrejuzD4YRHKnk/nUMcuD3k+KwM9j7NSMXpldujbCcURO9Hf+pNQ1N/p
+ LYZpSUAOJXc+BqjaEPLDyw4Km9fOVOkwLgqyhUK7Rl2psw+J3VP0QPUAnwAIrquschQ9m6LzD41
+ o7tEqqRCswnoqTyffz/RfHmbmzoeCz1H6GsYTAGsRxCYS8BPV0QXIiwogi7rbge5UxUWB4D1Oii
+ yItvHViAu5Q48xxW7uTFxjb/7Uf32RGi0R+Q8hRofhTDeGgzKu7zuAcypeBH17xWSuty/Pd837w
+ GXTE=
+X-Received: by 2002:a05:620a:46a8:b0:7e8:7b6c:f2d8 with SMTP id
+ af79cd13be357-7e9fcbae88cmr248155685a.50.1755673440092; 
+ Wed, 20 Aug 2025 00:04:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLjX5U2w9a/NwFnyvpG9ZMGjI3eUtu/zEmcRTAY+VJVhdUXVoJzoySyd9JR3vNV/qGVAilWQ==
+X-Received: by 2002:a05:620a:46a8:b0:7e8:7b6c:f2d8 with SMTP id
+ af79cd13be357-7e9fcbae88cmr248153085a.50.1755673439496; 
+ Wed, 20 Aug 2025 00:03:59 -0700 (PDT)
 Received: from [192.168.0.6] (ltea-047-064-112-073.pools.arcor-ip.net.
  [47.64.112.73]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70ba9077520sm82492986d6.21.2025.08.19.23.55.33
+ af79cd13be357-7e9fd472d07sm86624885a.0.2025.08.20.00.03.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Aug 2025 23:55:35 -0700 (PDT)
-Message-ID: <2556e0cf-ccca-4ac1-8be5-a18163f860d4@redhat.com>
-Date: Wed, 20 Aug 2025 08:55:32 +0200
+ Wed, 20 Aug 2025 00:03:59 -0700 (PDT)
+Message-ID: <8eb9dd92-b33f-41c5-ade1-416f22b215a7@redhat.com>
+Date: Wed, 20 Aug 2025 09:03:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] target/ppc: Fix env->quiesced migration
+Subject: Re: [RFC PATCH 3/4] tests/functional: Add a OS level migration test
+ for pseries
 To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Fabian Vogt <fvogt@suse.de>,
- Peter Xu <peterx@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Chinmay Rath <rathc@linux.ibm.com>
+ Peter Xu <peterx@redhat.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <20250819223905.2247-1-farosas@suse.de>
- <20250819223905.2247-5-farosas@suse.de>
+ <20250819223905.2247-4-farosas@suse.de>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,10 +128,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250819223905.2247-5-farosas@suse.de>
+In-Reply-To: <20250819223905.2247-4-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -160,177 +157,89 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/08/2025 00.39, Fabiano Rosas wrote:
-> The commit referenced (from QEMU 10.0) has changed the way the pseries
-> machine marks a cpu as quiesced. Previously, the cpu->halted value
-> from QEMU common cpu code was (incorrectly) used. With the fix, the
-> env->quiesced variable starts being used, which improves on the
-> original situation, but also causes a side effect after migration:
+> There's currently no OS level test for ppc64le. Add one such test by
+> reusing the boot level tests that are already present.
 > 
-> The env->quiesced is set at reset and never migrated, which causes the
-> destination QEMU to stop delivering interrupts and hang the machine.
+> The test boots the source machine, waits for it to reach a mid-boot
+> message, migrates and checks that the destination has reached the
+> final boot message (VFS error due to no disk).
 > 
-> To fix the issue from this point on, start migrating the env->quiesced
-> value.
-> 
-> For QEMU versions < 10.0, sending the new element on the stream would
-> cause migration to be aborted, so add the appropriate compatibility
-> property to omit the new subsection.
-> 
-> Independently of this patch, all migrations from QEMU versions < 10.0
-> will result in a hang since the older QEMU never migrates
-> env->quiesced. This is bad because it leaves machines already running
-> on the old QEMU without a migration path into newer versions.
-> 
-> As a workaround, clear env->quiesced in the new QEMU whenever
-> cpu->halted is also clear. This assumes rtas_stop_self() always sets
-> both flags at the same time. Migrations during secondaries bringup
-> (i.e. before rtas-start-cpu) will still cause a hang, but those are
-> early enough that requiring reboot would not be unreasonable.
-> 
-> Note that this was tested with -cpu power9 and -machine ic-mode=xive
-> due to another bug affecting migration of XICS guests. Tested both
-> forward and backward migration and savevm/loadvm from 9.2 and 10.0.
-> 
-> Reported-by: Fabian Vogt <fvogt@suse.de>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3079
-> Fixes: fb802acdc8b ("ppc/spapr: Fix RTAS stopped state")
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
-> The choice of PowerPCCPU to hold the compat property is dubious. This
-> only affects pseries, but it seems like a layering violation to access
-> SpaprMachine from target/ppc/, suggestions welcome.
-> ---
->   hw/core/machine.c     |  1 +
->   target/ppc/cpu.h      |  1 +
->   target/ppc/cpu_init.c |  7 +++++++
->   target/ppc/machine.c  | 40 ++++++++++++++++++++++++++++++++++++++++
->   4 files changed, 49 insertions(+)
+>   tests/functional/test_ppc64_pseries.py | 41 ++++++++++++++++++++++++++
+>   1 file changed, 41 insertions(+)
 > 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index bd47527479..ea83c0876b 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -42,6 +42,7 @@ GlobalProperty hw_compat_10_0[] = {
->       { "vfio-pci", "x-migration-load-config-after-iter", "off" },
->       { "ramfb", "use-legacy-x86-rom", "true"},
->       { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
-> +    { "powerpc64-cpu", "rtas-stopped-state", "false" },
+> diff --git a/tests/functional/test_ppc64_pseries.py b/tests/functional/test_ppc64_pseries.py
+> index 67057934e8..7a7e0fe8ae 100755
+> --- a/tests/functional/test_ppc64_pseries.py
+> +++ b/tests/functional/test_ppc64_pseries.py
+> @@ -9,6 +9,8 @@
+>   
+>   from qemu_test import QemuSystemTest, Asset
+>   from qemu_test import wait_for_console_pattern
+> +from qemu_test.migration import Migration
+> +from qemu_test.ports import Ports
+>   
+>   class pseriesMachine(QemuSystemTest):
+>   
+> @@ -87,5 +89,44 @@ def test_ppc64_linux_big_boot(self):
+>           wait_for_console_pattern(self, console_pattern, self.panic_message)
+>           wait_for_console_pattern(self, self.good_message, self.panic_message)
+>   
+> +    def test_ppc64_linux_migration(self):
+> +        with Ports() as ports:
+> +            port = ports.find_free_port()
+> +            if port is None:
+> +                self.skipTest('Failed to find a free port')
+> +        uri = 'tcp:localhost:%u' % port
 
-This is specific to ppc, so it should not go into the generic hw_compat_* array.
+  Hi,
 
-Please define a spapr_compat_10_0 array in 
-spapr_machine_10_0_class_options() and do another compat_props_add() for 
-that array there. (Similar to what is done for TYPE_SPAPR_PCI_HOST_BRIDGE in
-spapr_machine_5_0_class_options() for example)
+this is not how to use the context for Ports: Once the "with" block is left, 
+the locking for the free port will be gone and you're subject to a race 
+condition with other tests running in parallel (see the __enter__ and 
+__exit__ methods in tests/functional/qemu_test/ports.py ... and yes, there 
+should be more documentation for this).
 
-  Thanks,
-   Thomas
+You've got to put everything up to the point where QEMU takes the port into 
+the "with" block, i.e. everything up to including the Migration().migrate() 
+line.
 
+  Thomas
 
->   };
->   const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
->   
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 6b90543811..8ff453024b 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1470,6 +1470,7 @@ struct ArchCPU {
->       void *machine_data;
->       int32_t node_id; /* NUMA node this CPU belongs to */
->       PPCHash64Options *hash64_opts;
-> +    bool rtas_stopped_state;
->   
->       /* Those resources are used only during code translation */
->       /* opcode handlers */
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index a0e77f2673..4380c6eb14 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -55,6 +55,11 @@
->   /* #define PPC_DEBUG_SPR */
->   /* #define USE_APPLE_GDB */
->   
-> +static const Property powerpc_cpu_properties[] = {
-> +    DEFINE_PROP_BOOL("rtas-stopped-state", PowerPCCPU,
-> +                      rtas_stopped_state, true),
-> +};
+> +        kernel_path = self.ASSET_KERNEL.fetch()
+> +        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
 > +
->   static inline void vscr_init(CPUPPCState *env, uint32_t val)
->   {
->       /* Altivec always uses round-to-nearest */
-> @@ -7525,6 +7530,8 @@ static void ppc_cpu_class_init(ObjectClass *oc, const void *data)
->                                         &pcc->parent_unrealize);
->       pcc->pvr_match = ppc_pvr_match_default;
->   
-> +    device_class_set_props(dc, powerpc_cpu_properties);
+> +        self.set_machine('pseries')
 > +
->       resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
->                                          &pcc->parent_phases);
->   
-> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-> index d72e5ecb94..8797233ebe 100644
-> --- a/target/ppc/machine.c
-> +++ b/target/ppc/machine.c
-> @@ -257,6 +257,23 @@ static int cpu_post_load(void *opaque, int version_id)
->           ppc_store_sdr1(env, env->spr[SPR_SDR1]);
->       }
->   
-> +    if (!cpu->rtas_stopped_state) {
-> +        /*
-> +         * The source QEMU doesn't have fb802acdc8 and still uses halt
-> +         * + PM bits in LPCR to implement RTAS stopped state. The new
-> +         * QEMU will have put the newly created vcpus in that state,
-> +         * waiting for the start-cpu RTAS call. Clear the quiesced
-> +         * flag if possible, otherwise the newly-loaded machine will
-> +         * hang indefinitely due to quiesced state ignoring
-> +         * interrupts.
-> +         */
+> +        dest_vm = self.get_vm('-incoming', uri, name="dest-qemu")
+> +        dest_vm.add_args('-smp', '4')
+> +        dest_vm.add_args('-nodefaults')
+> +        dest_vm.add_args('-kernel', kernel_path,
+> +                         '-append', kernel_command_line)
+> +        dest_vm.set_console()
+> +        dest_vm.launch()
 > +
-> +        if (!CPU(cpu)->halted) {
-> +            /* not halted, so definitely not in RTAS stopped state */
-> +            env->quiesced = 0;
-> +        }
-> +    }
+> +        source_vm = self.get_vm(name="source-qemu")
+> +        source_vm.add_args('-smp', '4')
+> +        source_vm.add_args('-nodefaults')
+> +        source_vm.add_args('-kernel', kernel_path,
+> +                           '-append', kernel_command_line)
+> +        source_vm.set_console()
+> +        source_vm.launch()
 > +
->       post_load_update_msr(env);
->   
->       if (tcg_enabled()) {
-> @@ -649,6 +666,28 @@ static const VMStateDescription vmstate_reservation = {
->       }
->   };
->   
-> +static bool rtas_stopped_needed(void *opaque)
-> +{
-> +    PowerPCCPU *cpu = opaque;
+> +        # ensure the boot has reached Linux
+> +        console_pattern = 'smp: Brought up 1 node, 4 CPUs'
+> +        wait_for_console_pattern(self, console_pattern, self.panic_message,
+> +                                 vm=source_vm)
 > +
-> +    return cpu->rtas_stopped_state && !cpu->env.quiesced;
-> +}
+> +        Migration().migrate(self, source_vm, dest_vm, uri, self.timeout)
 > +
-> +static const VMStateDescription vmstate_rtas_stopped = {
-> +    .name = "cpu/rtas_stopped",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = rtas_stopped_needed,
-> +    .fields = (const VMStateField[]) {
-> +        /*
-> +         * "RTAS stopped" state, independent of halted state. For QEMU
-> +         * < 10.0, this is taken from cpu->halted at cpu_post_load()
-> +         */
-> +        VMSTATE_BOOL(env.quiesced, PowerPCCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
+> +        # ensure the boot proceeds after migration
+> +        wait_for_console_pattern(self, self.good_message, self.panic_message,
+> +                                 vm=dest_vm)
 > +
->   #ifdef TARGET_PPC64
->   static bool bhrb_needed(void *opaque)
->   {
-> @@ -715,6 +754,7 @@ const VMStateDescription vmstate_ppc_cpu = {
->           &vmstate_tlbmas,
->           &vmstate_compat,
->           &vmstate_reservation,
-> +        &vmstate_rtas_stopped,
->           NULL
->       }
->   };
+>   if __name__ == '__main__':
+>       QemuSystemTest.main()
 
 
