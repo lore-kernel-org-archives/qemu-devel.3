@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE46CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 16:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DA8CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 16:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uolN3-00079I-9b; Wed, 20 Aug 2025 12:09:05 -0400
+	id 1uolOY-0007tp-7U; Wed, 20 Aug 2025 12:10:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uolN0-00078R-0O
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 12:09:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uolOV-0007t6-LQ
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 12:10:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uolMw-0004g6-1G
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 12:09:01 -0400
+ id 1uolOT-00054L-GJ
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 12:10:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755706135;
+ s=mimecast20190719; t=1755706232;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=+/+qXB8qkWSIK6/+HAhA75b/VcDaIeH93J/rWcGufr4=;
- b=E1LzIFa/m10dodNgdSRW6HTGnvvyfUdAdZuKtQRWkP38EugXlWgKU8PKxQPBOiGpPLNb/g
- I1N6NKA1TwBJGnGMOU/nUStToCAZQcpMlEoECPV9q/+ih8vxXqWw0yb5Mdhge0/a4Y/aZL
- DJmYSpxwp+Pu3+7csHYPuAv6dCURrjo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RbUUhGRndypXIalYGpJnm+tZkp2rjCKggVtDzCinsr4=;
+ b=J+W98Zx4kufPekFhoB/XpsXeoaGWjP8ZyUIWEf08AUQBk76iSnwT0VwqspmZ03HDeikWR7
+ wQUJe5qVpnIHc3otFFCM0xONCSELeXCxOHLMJfeuQUuD91u4auunc8nBG8GxDxcgujxdkT
+ LEzm/BJOZYjhau7a4oTQnDXQfU7kKBs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-jq_EriPkMq60oWJYN8Kl6A-1; Wed,
- 20 Aug 2025 12:08:51 -0400
-X-MC-Unique: jq_EriPkMq60oWJYN8Kl6A-1
-X-Mimecast-MFC-AGG-ID: jq_EriPkMq60oWJYN8Kl6A_1755706130
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-399-3Gl0LjPJOhSJrgQxhUZvZQ-1; Wed,
+ 20 Aug 2025 12:10:28 -0400
+X-MC-Unique: 3Gl0LjPJOhSJrgQxhUZvZQ-1
+X-Mimecast-MFC-AGG-ID: 3Gl0LjPJOhSJrgQxhUZvZQ_1755706227
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFDBC180086E; Wed, 20 Aug 2025 16:08:49 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D9541953941; Wed, 20 Aug 2025 16:10:27 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.164])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEC7C18003FC; Wed, 20 Aug 2025 16:08:47 +0000 (UTC)
-Date: Wed, 20 Aug 2025 17:08:44 +0100
+ id C0FF91800447; Wed, 20 Aug 2025 16:10:24 +0000 (UTC)
+Date: Wed, 20 Aug 2025 17:10:21 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: John Levon <john.levon@nutanix.com>
 Cc: qemu-devel@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
  Thomas Huth <thuth@redhat.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/3] tests/functional: return output from
- exec_command_and_wait_for_pattern()
-Message-ID: <aKXzDGOmwREMZFwc@redhat.com>
+Subject: Re: [PATCH 2/3] tests/functional: add vm param to console routines
+Message-ID: <aKXzbVrHZm0bOhpE@redhat.com>
 References: <20250818110546.2159622-1-john.levon@nutanix.com>
- <20250818110546.2159622-2-john.levon@nutanix.com>
+ <20250818110546.2159622-3-john.levon@nutanix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250818110546.2159622-2-john.levon@nutanix.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250818110546.2159622-3-john.levon@nutanix.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,101 +92,17 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 18, 2025 at 12:05:44PM +0100, John Levon wrote:
-> Tests might want to look at the whole output from a command execution,
-> as well as just logging it. Add support for this.
+On Mon, Aug 18, 2025 at 12:05:45PM +0100, John Levon wrote:
+> Extend the "vm" parameter of wait_for_console_pattern() to all the other
+> utility functions; this allows them to be used on a VM other than
+> test.vm.
 > 
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->  tests/functional/qemu_test/cmd.py | 38 +++++++++++++++++++++++++++----
->  1 file changed, 33 insertions(+), 5 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-> index dc5f422b77..6355b1a683 100644
-> --- a/tests/functional/qemu_test/cmd.py
-> +++ b/tests/functional/qemu_test/cmd.py
-> @@ -45,6 +45,9 @@ def is_readable_executable_file(path):
->  # If end of line is seen, with neither @success or @failure
->  # return False
->  #
-> +# In both cases, also return the contents of the line (in bytes)
-> +# up to that point.
-> +#
->  # If @failure is seen, then mark @test as failed
->  def _console_read_line_until_match(test, vm, success, failure):
->      msg = bytes([])
-> @@ -76,10 +79,23 @@ def _console_read_line_until_match(test, vm, success, failure):
->      except:
->          console_logger.debug(msg)
->  
-> -    return done
-> +    return done, msg
->  
->  def _console_interaction(test, success_message, failure_message,
->                           send_string, keep_sending=False, vm=None):
-> +    """
-> +    Interact with the console until either message is seen.
-> +
-> +    :param success_message: if this message appears, finish interaction
-> +    :param failure_message: if this message appears, test fails
-> +    :param send_string: a string to send to the console before trying
-> +                        to read a new line
-> +    :param keep_sending: keep sending the send string each time
-> +    :param vm: the VM to interact with
-> +
-> +    :return: The collected output (in bytes form).
-> +    """
-> +
->      assert not keep_sending or send_string
->      assert success_message or send_string
->  
-> @@ -101,6 +117,8 @@ def _console_interaction(test, success_message, failure_message,
->      if failure_message is not None:
->          failure_message_b = failure_message.encode()
->  
-> +    out = bytes([])
-> +
->      while True:
->          if send_string:
->              vm.console_socket.sendall(send_string.encode())
-> @@ -113,11 +131,17 @@ def _console_interaction(test, success_message, failure_message,
->                  break
->              continue
->  
-> -        if _console_read_line_until_match(test, vm,
-> -                                          success_message_b,
-> -                                          failure_message_b):
-> +        done, line = _console_read_line_until_match(test, vm,
-> +                                                    success_message_b,
-> +                                                    failure_message_b)
-> +
-> +        out += line
-> +
-> +        if done:
->              break
->  
-> +    return out
-> +
->  def interrupt_interactive_console_until_pattern(test, success_message,
->                                                  failure_message=None,
->                                                  interrupt_string='\r'):
-> @@ -184,9 +208,13 @@ def exec_command_and_wait_for_pattern(test, command,
->      :param command: the command to send
->      :param success_message: if this message appears, test succeeds
->      :param failure_message: if this message appears, test fails
-> +
-> +    :return: The collected output (in bytes form).
->      """
->      assert success_message
-> -    _console_interaction(test, success_message, failure_message, command + '\r')
-> +
-> +    return _console_interaction(test, success_message, failure_message,
-> +                                command + '\r')
+>  tests/functional/qemu_test/cmd.py | 18 ++++++++++++------
+>  1 file changed, 12 insertions(+), 6 deletions(-)
 
-Looks reasonable, but there are a few other methods whjich call
-_console_interaction() - can you make them also return the
-matched bytes for consistency.
-
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 With regards,
 Daniel
