@@ -4,145 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC02CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 06:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A3C7CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 06:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoceZ-0006Jq-PH; Wed, 20 Aug 2025 02:50:35 -0400
+	id 1uochR-00071n-3S; Wed, 20 Aug 2025 02:53:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoceX-0006JY-Ka
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 02:50:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1uoch9-0006zk-V2; Wed, 20 Aug 2025 02:53:19 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoceT-0005p8-Hv
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 02:50:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755672627;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iiH+5G1LrqWTtlUO8i7gFLd6R1eeHFfiUdjOtVkcmGM=;
- b=IhGGuqi0GW7GYyq8V7syIf7k8mFpL6HLEbZvNE3EWvnkQ/GifpkB/Vbgzu3sWHPvRaF7KL
- 1U7bBwr+FikHi255p7aLZ0cHBUretRSQKphhbbSzEab1YWkgmEiYI+eFGCs5CHZonp2C4S
- 4f3MsGSXSdXDbRhEb+iiK7AS/p6fgmQ=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-MHVjJBa1MBSVFrQHhUlPYw-1; Wed, 20 Aug 2025 02:50:24 -0400
-X-MC-Unique: MHVjJBa1MBSVFrQHhUlPYw-1
-X-Mimecast-MFC-AGG-ID: MHVjJBa1MBSVFrQHhUlPYw_1755672624
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7e87068f8afso1743819785a.3
- for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 23:50:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755672624; x=1756277424;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iiH+5G1LrqWTtlUO8i7gFLd6R1eeHFfiUdjOtVkcmGM=;
- b=Y+o1qfWTCNIrZrRKPelBSBf0aiLdG6DeCxjOVfSKvRXCUqz2LSdbJbd8eEokL5L+Io
- L8BPy+/Pv7G1q2qRkfCgXitw7grGq+nznk714xzLYqDytD9Ixia3ALOhcT7K+VjhJ44g
- i7F2BAIQ5wyptG1QFyQMtvkxK1ZEqxReBCJB2eLq5tVVdRDuSkbm8b/8IMKwwR+hal9O
- 7qBxjI2yW7YRlKx5j3HIGxq4GqsO7+sACwjiBFU7TW1bExV+mXKibbN2mX9yKIEeMXyr
- 38h5o5LWhQs9n/KxLxfho7Gxktq/Up//eUut6Q/BtoGWYu6QdeOVj78YNXmu/EjIWdUz
- Qd2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXA/mCmttbxM6Ywtm4VRnE4smILUmfhMzljun00tGCACFv5+Uu5axH+Yk/fkwMhdk0QFLhJREFmZ2y@nongnu.org
-X-Gm-Message-State: AOJu0Yx3T6bCmuYCpbGBrNF5/F//9Pwv6Dn+ZjdcghtxJnUWsT3FS+gJ
- Qr5souRAAlSJRRqj2mwAB8Kz7bvDJmz3JLNa2N0XFi4JBygq5Y3IHGPBAq684BGGhzeaBUcDtC7
- 9reAJwG458naTHZ/GiHJGCtJxCa6bt1m9DoFaECBumCCH1tmDlqhSK6ZB
-X-Gm-Gg: ASbGnct2YfA5Kr2tH3xHmH8ajyjwx+ZSNS77+pfZniw49YEx6SuC3iQFVS3MOXF+YmI
- NGmMxNpuEOxkiglHngpNyEn4ciV8MplqOmLVpFFKS9vO3fqKCEX/LnIimBZKc/eZsYKEKcyQ3bD
- WfVh8Msq6G3mYqLaPb6YIMYXFtTXczdAd0YW077G9uXpBBFXIXiEFjNTerqQipkstjp/i+g+1IS
- iplIBj/c+gdCSx1HElWBhhRldobOVnPl6S3HYZaYvaYivKxxcBsMpQYVY7Htt0reNIrST2rxemm
- uXdPao6PN9VnM5NRO2LEH0Jet8yD4w8mFSlbGT74ZTro5LAQ5x057AzVA4cAY5fom+BU8Dd4a92
- x49s=
-X-Received: by 2002:a05:620a:1908:b0:7e8:63c6:2896 with SMTP id
- af79cd13be357-7e9fcb7871cmr224267185a.44.1755672624355; 
- Tue, 19 Aug 2025 23:50:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQCFTjzycKfJhmnC0bWoV8uNIj622bI+vuz2kjlrVp8QOtdxnFdHIQHO15w5TfrV42XIQZMQ==
-X-Received: by 2002:a05:620a:1908:b0:7e8:63c6:2896 with SMTP id
- af79cd13be357-7e9fcb7871cmr224265885a.44.1755672623996; 
- Tue, 19 Aug 2025 23:50:23 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-112-073.pools.arcor-ip.net.
- [47.64.112.73]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7e87e1e15besm900592285a.72.2025.08.19.23.50.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Aug 2025 23:50:23 -0700 (PDT)
-Message-ID: <f20c54fd-4cc3-4689-8eb8-c934aa462e7f@redhat.com>
-Date: Wed, 20 Aug 2025 08:50:19 +0200
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1uoch7-00068M-QB; Wed, 20 Aug 2025 02:53:15 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57JNoERU019528;
+ Wed, 20 Aug 2025 06:53:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pkuQxT
+ l2S5Zj5QE0iXeHk+YuE/QmW1S3j1GwXOgAu8Y=; b=jSWnlpS1o2HJAd6t02n9Ae
+ MMu/wq6iKw/QIGa9la/lmhTK6Ab62r+T3KouyThWRvEygkBS1E6bcMr+o4G95IWg
+ V22jo/3i+Ljq2KLs3FYkgck86usKLDfPzIJ+JKCkHWoL8mCMCIiKcpq00HVwHJmD
+ XEA6ziMMylXjQOY7t5zJAOnd7vQytk+xkTM8Fm0v3piQ9L/l2x2mGj0PIihwkL8y
+ OLGN5oHz4526+rvNQqtuW1bdYDtaOROC/Lg7KWaGTX0S7K/Tlsfb2fd5qUSL5iVL
+ x40ti8COXT+0A/zElGF9qNMkV6SWnbs4Z3FoEAM8Ubqi+/EskE1hAhso56sqCAMA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38vhemn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Aug 2025 06:53:09 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57K6d5wa014773;
+ Wed, 20 Aug 2025 06:53:08 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38vhemb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Aug 2025 06:53:08 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57K4wJ9q008716;
+ Wed, 20 Aug 2025 06:53:07 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48my42253p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Aug 2025 06:53:07 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57K6r3TP28639604
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 Aug 2025 06:53:03 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5AB752004B;
+ Wed, 20 Aug 2025 06:53:03 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ECDFB20040;
+ Wed, 20 Aug 2025 06:52:58 +0000 (GMT)
+Received: from [9.39.17.140] (unknown [9.39.17.140])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 20 Aug 2025 06:52:58 +0000 (GMT)
+Message-ID: <90b6cc95-ebad-4049-a436-acd005ad504a@linux.ibm.com>
+Date: Wed, 20 Aug 2025 12:22:57 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/4] tests/functional: Extract migration code into a
- new class
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Fabian Vogt <fvogt@suse.de>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250819223905.2247-1-farosas@suse.de>
- <20250819223905.2247-3-farosas@suse.de>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 3/3] hw/ppc: Add stub for pnv_chip_find_core()
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-ppc@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250526112346.48744-1-philmd@linaro.org>
+ <20250526112346.48744-4-philmd@linaro.org>
+ <eff37ca7-d977-450e-85e0-ca8e4f6f3d5a@redhat.com>
+ <ba766eae-e8e0-436a-ad30-625744b872e4@linaro.org>
+ <199516cc-a180-4859-b10f-17590c8c7f19@tls.msk.ru>
+ <1368a4f5-2984-417b-9224-5d6f866ccc85@tls.msk.ru>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250819223905.2247-3-farosas@suse.de>
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <1368a4f5-2984-417b-9224-5d6f866ccc85@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: vSWRmHffL9OjmiclA-EDA4kLJuEcq0Kh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDIyMiBTYWx0ZWRfXzGYXp6e9mwTU
+ g9kVyWtquEYaDwW8Q332UjKTG/x18VKfPL6EbZdM2/h83gK9pPQBBlmZ+7tPqLvH+alElFtmHr5
+ WNF9ViFRl8wvl/gTupeeCAULAcWdpI9PsBc1Q/DRHppAHyqn6LZXDFq15ZLh2Xu0yyjWtNaLKqa
+ 12B/SzTNL8kXbCfSVjX0JS/mSRAma0YvnplmjfRF+4eyzuEhzVePI0pgT2fn5GDBj/2IlNLSoXO
+ QFypIWXo7bbLc+V7QuoOZ1BqHrv9luYGWt4vL75YHk6DPnUAE7c7sLVOxMI4xcVksgbqoJMg7tb
+ G0YiwITz1ShF0G2wRwfoIhjTYOJR5X7CG6YJJPH2hC1xR89GfEvQJEIG7VmSmYvvRJzwR1aXfhg
+ S/rkatgKIWtrwiWjiez7AB9W/nQing==
+X-Proofpoint-GUID: BGHBK46LupuvoiTh5IV4SZ_AyBRI8mLZ
+X-Authority-Analysis: v=2.4 cv=KPwDzFFo c=1 sm=1 tr=0 ts=68a570d5 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=R0I-Ol8fVH3hxnWSoNUA:9
+ a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-20_03,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 suspectscore=0 phishscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508190222
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,119 +138,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/08/2025 00.39, Fabiano Rosas wrote:
-> Move some of the code from test_migration.py to a new class so it can
-> be reused to invoke migrations from other tests.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
-> I see this conflicts with Thomas' series, I'll update accordingly.
-> ---
->   tests/functional/qemu_test/migration.py | 40 +++++++++++++++++++++++++
->   tests/functional/test_migration.py      | 24 ++-------------
->   2 files changed, 43 insertions(+), 21 deletions(-)
->   create mode 100644 tests/functional/qemu_test/migration.py
-> 
-> diff --git a/tests/functional/qemu_test/migration.py b/tests/functional/qemu_test/migration.py
-> new file mode 100644
-> index 0000000000..37988704e8
-> --- /dev/null
-> +++ b/tests/functional/qemu_test/migration.py
-> @@ -0,0 +1,40 @@
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +#
-> +# Migration test
-> +#
-> +# Copyright (c) 2019 Red Hat, Inc.
-> +#
-> +# Authors:
-> +#  Cleber Rosa <crosa@redhat.com>
-> +#  Caio Carrara <ccarrara@redhat.com>
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2 or
-> +# later.  See the COPYING file in the top-level directory.
-> +
-> +import time
-> +
-> +
-> +class Migration():
-> +
-> +    @staticmethod
-> +    def migration_finished(vm):
-> +        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
-> +
-> +    def assert_migration(self, test, src_vm, dst_vm, timeout):
-> +
-> +        end = time.monotonic() + timeout
-> +        while time.monotonic() < end and not self.migration_finished(src_vm):
-> +           time.sleep(0.1)
-> +
-> +        end = time.monotonic() + timeout
-> +        while time.monotonic() < end and not self.migration_finished(dst_vm):
-> +           time.sleep(0.1)
-> +
-> +        test.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-> +        test.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
-> +        test.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-> +        test.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
-> +
-> +    def migrate(self, test, source_vm, dest_vm, src_uri, timeout):
-> +        source_vm.qmp('migrate', uri=src_uri)
-> +        self.assert_migration(test, source_vm, dest_vm, timeout)
-> diff --git a/tests/functional/test_migration.py b/tests/functional/test_migration.py
-> index c4393c3543..1c75a98330 100755
-> --- a/tests/functional/test_migration.py
-> +++ b/tests/functional/test_migration.py
-> @@ -15,6 +15,7 @@
->   import time
 
-I guess you could drop the "import time" here now?
-
-Apart from that:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+On 10/08/25 13:30, Michael Tokarev wrote:
+> On 13.07.2025 14:18, Michael Tokarev wrote:
+>> Hi!
+>>
+>> Has this change been forgotten?
+>
+> Another ping?
+>
+> Or can we assume this change isn't needed anymore? :)
 
 
->   from qemu_test import QemuSystemTest, skipIfMissingCommands
-> +from qemu_test.migration import Migration
->   from qemu_test.ports import Ports
->   
->   
-> @@ -22,25 +23,6 @@ class MigrationTest(QemuSystemTest):
->   
->       timeout = 10
->   
-> -    @staticmethod
-> -    def migration_finished(vm):
-> -        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
-> -
-> -    def assert_migration(self, src_vm, dst_vm):
-> -
-> -        end = time.monotonic() + self.timeout
-> -        while time.monotonic() < end and not self.migration_finished(src_vm):
-> -           time.sleep(0.1)
-> -
-> -        end = time.monotonic() + self.timeout
-> -        while time.monotonic() < end and not self.migration_finished(dst_vm):
-> -           time.sleep(0.1)
-> -
-> -        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
-> -        self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
-> -        self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-> -        self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
-> -
->       def select_machine(self):
->           target_machine = {
->               'aarch64': 'quanta-gsj',
-> @@ -67,8 +49,8 @@ def do_migrate(self, dest_uri, src_uri=None):
->           source_vm = self.get_vm(name="source-qemu")
->           source_vm.add_args('-nodefaults')
->           source_vm.launch()
-> -        source_vm.qmp('migrate', uri=src_uri)
-> -        self.assert_migration(source_vm, dest_vm)
-> +
-> +        Migration().migrate(self, source_vm, dest_vm, src_uri, self.timeout)
->   
->       def _get_free_port(self, ports):
->           port = ports.find_free_port()
+Thanks for the pings Michael.
+
+About the change, we will post a patch-set soon with the suggested 
+change by Cedric.
+
+I was on vacation past week, so couldn't see the mails.
+
+
+Thanks,
+
+- Aditya G
 
 
