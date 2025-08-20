@@ -4,73 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44AD9CA0EED
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 09:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8520CA0EED
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 10:12:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uofWY-0002nw-MQ; Wed, 20 Aug 2025 05:54:30 -0400
+	id 1uofnB-00073J-NN; Wed, 20 Aug 2025 06:11:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uofWX-0002nh-FZ
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 05:54:29 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <hsiangkao@linux.alibaba.com>)
+ id 1uofnA-000738-GT
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 06:11:40 -0400
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uofWT-00051F-MA
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 05:54:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1755683666; x=1787219666;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=wJQmnOq2D2pcZJWZwWK0W5P28bHEmZQwHSq6N8mGZ8w=;
- b=DWD38SEnx7KCBihK7LGBXbXQyzBahGpv2jt7q5mWwRG4mMSxw2qHfUlF
- LviKw9b7d4f77HeQkLsW0MmCjMCfeweHr9mR97vwJsp+DCBODpyx63m2+
- LOFAlDRb9k+tYzN5/hnNWrE1r28A8qPA7YpdigF87hONziqQTnNCAIKdJ
- qLiixYdUZjj2ZJB9o7qP5iS1P9MyTBIewTkGgBs/TsMJW7NhWWcKbJasz
- 1NwuwVTzBn4YapxNDzwuIP6ObcnTlx2AP5ugt2G920mm45Laq7mEFuT+o
- xZlN/Y5lCAH2h3qAc5uuovHmf+TKvCWytHs9AGjk8eAxa3UMuii/dpSEh w==;
-X-CSE-ConnectionGUID: 8Xn98B1lRXKYB5dCwAojKQ==
-X-CSE-MsgGUID: tlRgYK8TTEW7wWc5WUDN+A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11527"; a="80539210"
-X-IronPort-AV: E=Sophos;i="6.17,302,1747724400"; d="scan'208";a="80539210"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Aug 2025 02:54:23 -0700
-X-CSE-ConnectionGUID: LkGHCPLKRaSQB4PteMt8LA==
-X-CSE-MsgGUID: 1pYh0kqtQtG2no3Ul1q74g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,302,1747724400"; d="scan'208";a="191776249"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 20 Aug 2025 02:54:21 -0700
-Date: Wed, 20 Aug 2025 18:16:05 +0800
-From: "zhao1.liu@intel.com" <zhao1.liu@intel.com>
-To: "Wangxin (Alexander)" <wangxinxin.wang@huawei.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Wang Xin via <qemu-devel@nongnu.org>,
- "Huangweidong (C)" <weidong.huang@huawei.com>, xietuo <xietuo@huawei.com>
-Subject: Re: [PATCH] target/i386: Add support save/load exception error_code
-Message-ID: <aKWgZRwKpAx+3o3h@intel.com>
-References: <20250819145834.3998-1-wangxinxin.wang@huawei.com>
- <20250819152817.789959-2-pbonzini@redhat.com>
- <e4018c7b70ef4d81bafcc7395551e735@huawei.com>
+ (Exim 4.90_1) (envelope-from <hsiangkao@linux.alibaba.com>)
+ id 1uofn3-0007WW-0S
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 06:11:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1755684680; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=9D8Zmoi/5arGCXWGuuMT4FXCraGBebx4iC1KItUtxDA=;
+ b=p0NW9MWBjdLS0GwzTP2sxdtM11+mIc+aKv30WRQzxz8wtS9uAeQIfcfXZAEz2z6EM4tUormjD3D58gJVd0WC2OVn1RSO21OLgSsCsx/POM1/N29Lg64sbSWwqg59aC0B1Y0PsbZKLheeKWC03o1KzvqCEkMCGPYcPNN8h+amssM=
+Received: from 30.221.129.108(mailfrom:hsiangkao@linux.alibaba.com
+ fp:SMTPD_---0WmC2Sqt_1755684678 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 20 Aug 2025 18:11:19 +0800
+Message-ID: <44b3d7a7-3f85-4dd1-97e5-9b2c1069c7d9@linux.alibaba.com>
+Date: Wed, 20 Aug 2025 18:11:18 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm: add static NVDIMMs in device tree
+To: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "stefanha@redhat.com" <stefanha@redhat.com>
+References: <20250730-nvdimm_arm64_virt-v1-1-f843596ab995@linaro.org>
+ <20250731110036.00003a0a@huawei.com>
+ <e8203af151ea4f9696b809dd5de6b155@huawei.com>
+ <db65aa49-7323-49f4-8531-7c617e9d8a1b@linux.alibaba.com>
+ <dd4fff02-7c73-412f-bf8c-ee8446cd9b11@linux.alibaba.com>
+ <45c2fe3a-fb71-4cc2-96ff-20612da34627@redhat.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
+In-Reply-To: <45c2fe3a-fb71-4cc2-96ff-20612da34627@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e4018c7b70ef4d81bafcc7395551e735@huawei.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
+ envelope-from=hsiangkao@linux.alibaba.com;
+ helo=out30-111.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,32 +74,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 20, 2025 at 02:18:21AM +0000, Wangxin (Alexander) wrote:
-> Date: Wed, 20 Aug 2025 02:18:21 +0000
-> From: "Wangxin (Alexander)" <wangxinxin.wang@huawei.com>
-> Subject: RE: [PATCH] target/i386: Add support save/load exception error_code
+Hi David,
+
+On 2025/8/20 17:29, David Hildenbrand wrote:
+> On 20.08.25 06:10, Gao Xiang wrote:
+>> (try to Cc David and Paolo for some discussion...)
+>>
+>> Hi David and Paolo,
+>>
 > 
-> > 
-> > Queued, thanks.  But please let me know what's the correct signed off by chain;
-> > either Tuo created the patch, and then you should have "--author" for him and
-> > his SoB first; or you did, and then Tuo's SoB is unnecessary.
-> > 
-> > Paolo
-> > 
+> Hi!
 > 
-> The author is me,
+>> If possible, could you share some thoughts about this, because
+>> currently each `memory-backend-file` has their own page cache
+>> on the host, but if QEMU can provide one nvdimm device backed
+>> by multiple files, so that EROFS can share memory in finer
+>> layer granularity on the host.  (we don't need to attach so
+>> many devices, because some container images can be dozens of
+>> layers.)
+> 
+> Sounds a bit like what virtio-fs does?
 
-But if Tuo co-worked with you, his SoB is also necessary to keep:
+Thanks for your reply!
 
-"git commits will usually be expected to have a ``Signed-off-by``
- line for each contributor involved in creation of the patch."
+ From the use cases themselves, I think it's similar. I also think
+it's even closer to use virtio-blk to pass a golden image to the
+guest: using a memory device to provide a golden image filesystem
+(with many layers) is better for security and data integrity
+checks, especially since the user already has a single secure
+hash (for example, sha256) of the golden image.
 
-In this case, ��Co-developed-by�� is not necessary for now.
+It also avoids certain performance issues, such as unnecessary
+metadata messages and virtio-dax slot reclaim problems.
 
-I think the reason of confusion is, as the person sending the patch,
-you'd have put your SoB on the last line.
+> 
+>>
+>> Without further investigatation, I wonder which direction is
+>> better:
+>>
+>>     1) one memory-backend-file backed by multiple files;
+> 
+> No.
+> 
+>>
+>>     2) nvdimm, virtio-pmem, .. backed by multiple
+>>        `memory-backend-file`s..
+> 
+> Better.
+
+But it sounds like needing a per-device modification...
+
+> 
+>>
+>> Currently I don't have extra slot to look into the QEMU codebase,
+>> but if the idea is acceptable, I will try to work on this later.
+> 
+> But is this really better than just using many devices?
+
+I think hot-plugging too many devices might be a problem (they
+could be many container images in a pod (VM), and each container
+image can have dozons of layers), since I've heard similar
+concerns about block device hot-plugging from our internal virt
+team and folks from other companies, though I haven't looked
+into it myself.
+
+And also I heard PMEM devices needs to be aligned with guest
+sparse memory SECTION_SIZE, it seems it's unfriendly to
+small-size layers, I don't know the latest status and the
+details since I'm not actively working on this stuff.
 
 Thanks,
-Zhao
+Gao Xiang
+
+> 
 
 
