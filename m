@@ -4,101 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B75A5CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 19:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BD9CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 19:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoorf-0007rC-3V; Wed, 20 Aug 2025 15:52:55 -0400
+	id 1uoorg-0007rh-Ca; Wed, 20 Aug 2025 15:52:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aokblast@FreeBSD.org>)
- id 1uolsT-0006Xk-1W
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 12:41:33 -0400
-Received: from mx2.freebsd.org ([96.47.72.81])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aokblast@FreeBSD.org>)
- id 1uolsR-0000VP-Aw
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 12:41:32 -0400
-Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits)
- client-signature RSA-PSS (4096 bits))
- (Client CN "mx1.freebsd.org", Issuer "R10" (verified OK))
- by mx2.freebsd.org (Postfix) with ESMTPS id 4c6XK05YW0z3KZf;
- Wed, 20 Aug 2025 16:41:24 +0000 (UTC)
- (envelope-from aokblast@FreeBSD.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org [96.47.72.83])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
- client-signature RSA-PSS (4096 bits) client-digest SHA256)
- (Client CN "smtp.freebsd.org", Issuer "R11" (verified OK))
- by mx1.freebsd.org (Postfix) with ESMTPS id 4c6XK04TrBz46rt;
- Wed, 20 Aug 2025 16:41:24 +0000 (UTC)
- (envelope-from aokblast@FreeBSD.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
- t=1755708084;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Meg5y5yIO9cA5TOxaGY2rGJmv+4eQqldz+xmooMPcro=;
- b=er+lSG57i8Rc8+hCuaYjANZbvYE+fpgjlzXLXEvQFEQCeFc8kI11irqEz4ov+jLhrNNbyN
- skRuyn4ZIYEG69wu9eRmvVX7pr+Jh4Rfo5kzKvMA1pfEPTvyZ5CQyUGeZ9rqjBoB1aNRhj
- gJ2yT30FSqODQH7k80Yxy3nelhbZRN5vLVmPPG67OGLirmbxXhigEjNkMxqsn1nMmHm6q2
- 59sEBYyVnFLxQ5PVmq9yOAYaZ5Tjwb4tXvFyHDdOQv8cR3vxU0YZKGDZiktlpCcohT5D6l
- jYNFMxQQGmmgdczfOvO+a4ybTHPVkRIiiqIk/gQP/O3lt0zUyr7vzGkvaK1FUQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
- s=dkim; t=1755708084;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Meg5y5yIO9cA5TOxaGY2rGJmv+4eQqldz+xmooMPcro=;
- b=I7IoYHVNjOjiAz/PTFPDxjhshG+q9HJXFzklf2BnaG6idEsRuFqejxq1pHEB/TZyoflWjv
- lE/tMd06gMKF4y4X+fCLXKomUPGaCX78lHD2GQyOwZw5Z8nCNUQ71ILedjHKdCW5lMQs7F
- eMichqFTTBb9/mIa0y7MczhS4+oYhj0G3uQe2ygCteiCouQiQjSBoPjMnhBlRNFdRMtv84
- Yt61wK8s5vdEwNgCviZDbZpTXIWRy/S1s5xYm1pKi+wJf2tNMLidraSh9DL9OqEfv52C6C
- g6YDmWyywrJ6zenfHAbreeXttycWC+36vj+qOK7ZO4cVfMbpgVigeiORpulgvA==
-ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1755708084; a=rsa-sha256; cv=none;
- b=s/Wnd28Z+1CzRB+/Ou8PRJPqXKgCIhJIoF3SOPJnCy4neXDcUXIWTDfQjnKyd86TqtrEC3
- hXYvRgXkiDOHayclv9M9Fbkf1w0wADZtdF7CD7RE1+Oiv3P4ISecKLh+nq4vfaMiO8VXKA
- ngXBmWh5GEsRJGDco/RjnqvLBEvBm4ThaMaQjk++7GP4OO01NTEF9Oz3JX/XOED2u8ned6
- GfGFJ8JB1GfqPEuZ2H5odmU0hbF6/1yqp6jXVpzY9x3ibeUWwGNGPGin2eCOvZHZ/oWW+K
- SQEg+NQ50eH/MsmcytyVU6/jlfR/5qHg7sCFqW4yW8XBfZl07nLEiISBt09Keg==
-ARC-Authentication-Results: i=1;
-	mx1.freebsd.org;
-	none
-Received: from localhost.localdomain
- (2001-b011-3808-3444-a66b-b6ff-fe3d-469a.dynamic-ip6.hinet.net
- [IPv6:2001:b011:3808:3444:a66b:b6ff:fe3d:469a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- (Authenticated sender: aokblast)
- by smtp.freebsd.org (Postfix) with ESMTPSA id 4c6XJy663dzr01;
- Wed, 20 Aug 2025 16:41:22 +0000 (UTC)
- (envelope-from aokblast@FreeBSD.org)
+ (Exim 4.90_1) (envelope-from <blast@llvm>) id 1uolZT-00025p-QI
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 12:21:55 -0400
+Received: from 2001-b011-3808-3444-a66b-b6ff-fe3d-469a.dynamic-ip6.hinet.net
+ ([2001:b011:3808:3444:a66b:b6ff:fe3d:469a] helo=llvm)
+ by eggs.gnu.org with esmtp (Exim 4.90_1) (envelope-from <blast@llvm>)
+ id 1uolZR-0006Fn-VV
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 12:21:55 -0400
+Received: from blast (uid 1001) (envelope-from blast@llvm) id 2abde
+ by llvm (DragonFly Mail Agent v0.13+ on llvm);
+ Wed, 20 Aug 2025 12:16:41 -0400
 From: ShengYi Hung <aokblast@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  ShengYi Hung <aokblast@FreeBSD.org>
-Subject: [PATCH] i6300esb: fix incorrect mask for interrupt type
-Date: Wed, 20 Aug 2025 12:41:05 -0400
-Message-ID: <20250820164105.422-1-aokblast@FreeBSD.org>
+Subject: [PATCH] ii6300esb: fix incorrect mask for interrupt type
+Date: Wed, 20 Aug 2025 12:16:41 -0400
+Message-ID: <20250820161641.25789-1-aokblast@FreeBSD.org>
 X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=96.47.72.81; envelope-from=aokblast@FreeBSD.org;
- helo=mx2.freebsd.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2001:b011:3808:3444:a66b:b6ff:fe3d:469a;
+ envelope-from=blast@llvm; helo=llvm
+X-Spam_score_int: 29
+X-Spam_score: 2.9
+X-Spam_bar: ++
+X-Spam_report: (2.9 / 5.0 requ) BAYES_00=-1.9, FSL_HELO_NON_FQDN_1=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.029, HELO_NO_DOMAIN=0.001,
+ KHOP_HELO_FCRDNS=0.4, RCVD_IN_PBL=3.335, RDNS_DYNAMIC=0.982, SPF_NONE=0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 20 Aug 2025 15:52:53 -0400
+X-Mailman-Approved-At: Wed, 20 Aug 2025 15:52:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
