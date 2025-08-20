@@ -4,95 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D298CA0EED
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 07:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE752CA0EED
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 07:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uod2o-0003iN-BI; Wed, 20 Aug 2025 03:15:38 -0400
+	id 1uod6D-0004Pq-Cq; Wed, 20 Aug 2025 03:19:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1uod2m-0003iC-7v
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 03:15:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1uod6B-0004Pd-Gv; Wed, 20 Aug 2025 03:19:07 -0400
+Received: from mail-bn8nam12on2062c.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::62c]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1uod2j-0000n3-CX
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 03:15:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755674130;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MbU6thMpQGWxh7wRUEqQHqJ2WLq54MSGebbHU77F+0Y=;
- b=a0ghoZ8Y0JTRVWkGYt1rTI69o7qGZ83RRbAafK09Zb13FQI+RdDIZoXvCmNda4jR5oRHEU
- mxPgrOkpcbgRJEvEwtBirRhGLCTjoKP8GL1+YcEvoDIMhAHnia1g47dY77DG2cntX1GLUi
- 0BYKGcPKUCWa2UWbjstD5Qj+jrfVQ/I=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-675-Yf6_JO3qN9Ck0_31Xll5ig-1; Wed, 20 Aug 2025 03:15:28 -0400
-X-MC-Unique: Yf6_JO3qN9Ck0_31Xll5ig-1
-X-Mimecast-MFC-AGG-ID: Yf6_JO3qN9Ck0_31Xll5ig_1755674127
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3232669f95eso6078567a91.0
- for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 00:15:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755674127; x=1756278927;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MbU6thMpQGWxh7wRUEqQHqJ2WLq54MSGebbHU77F+0Y=;
- b=rkt+ay7bsP4nfxvbqLWqO1UkflY2vJ4bOh7vnKzOu6qdUq8TRePMyM3ofgV2dkkMpe
- YSugs2UfSMQN+iiBsN+PIsm42JiVtti9hexvFXQ1jnVQnzZOllRW82QMYS7Gi004ctR8
- 4A6umKiWAKga9jQoahOrlLLgMyxccOmQGSQEnbiawh0jbSg9Un+jQvryx9vwLHt6fNo5
- j8Q4yW7inBjqUWQeewImzeVhNtAm4xhr3fqMcsVDzH3oacB7Q9TXL1DOeWTPJxrkWyuY
- ryfgYnoFsNk2vq8TxCOOvoP2ad3rJ2/Tygm1pl/XPfZ1Kb9QGY+aZd0njYSiH2FgUzsu
- +SzA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNXF3MLUEPm9IsH4+XeNBr3YTO/nMwAYICoU8C0MDcNFGD5rXrUSk689i3gV3P/DgLYLXDEyUB54o8@nongnu.org
-X-Gm-Message-State: AOJu0YzcZ40sbbVOMBzCO9T2UnlSUmyicbMXQxictco68xjY8CSH3zxp
- 6qgVN+5sbgBHKiLXEMm/oLxUjZYTdNILY3fxyvgwXc60YJ5PdeTew2zL3IfWyylo6+v8sXy02d5
- RlgOLQmTR6iHycKWpeDREDxYJpvCbjqPPmx5/GlVktjR+rTbzzhCrfd14KLY3z5oPTdC7QAUBDC
- UDbCvfh6r9xr/DE6qKmQrXQF/lCJsJEFk=
-X-Gm-Gg: ASbGncvlYX3Fhdpo7Eb9b6rXIvO1ru4EpyNTW47pkOrDifJ7jUW89zwpnWWEMhl2ufD
- iF0ySiasPGhnkiwEmmmabtDe6ZavGmAk9l6LAuHkRERSLEopI1xIUvwxJrseSyTTsHM/60soCO3
- sDAhDsVLlLrN3gWLTNIXk=
-X-Received: by 2002:a17:90b:5445:b0:323:28cb:264a with SMTP id
- 98e67ed59e1d1-324e133a28emr2294958a91.13.1755674127208; 
- Wed, 20 Aug 2025 00:15:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgS7YjSGoftFyf29j9I+tXqRDiYFkaSrfgJ2+vtsJTvw7TZ3no3Qcc0qhvNsVSyXI0My1hT09MKKrRPmA+EUE=
-X-Received: by 2002:a17:90b:5445:b0:323:28cb:264a with SMTP id
- 98e67ed59e1d1-324e133a28emr2294939a91.13.1755674126715; Wed, 20 Aug 2025
- 00:15:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1uod68-0000zf-Ih; Wed, 20 Aug 2025 03:19:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JCbA/ke6YlZT2AM6ZTuWLtl/uUFbb02NwDm2DIurqDIGec+GmTBAHlUNvGKEUIk+aTBGvZHdpN9vJC4BQcziCaCC15OOb2Z+Z2cfRQqsVfvx/onEyUMIkjsr86SnzVfswwgN98XJ28vhLyeCBh+rXa0Jzpj0whbne8pxsrUPqbV3e9I8xeT3xPlSU4yp33WZabN4mN355HdtlHWXyRCbDiSuim4YAUO1+AthIz0zHFd19SVRKqIggJ/MOaCf2g8Xfu40gYfmiCNCSHdZyYNm02DGqIWnmtSDQOKiYMhFasoaxQqaIMfHWhD6hVsBGLW4AmkSVUT0Ntc/gd3KSUDgqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/sQ0f+CJlFWVdvfk3U9YHHrK1XgNvtqFqlNtv0aOcag=;
+ b=XwOwZT9DqgbolQDakN7VGidOlOFZe5NaiFjzjBZNWy5SKQz5fxNWokTGuU/20m01wUlj7d3J7ezC+XEZzgG1VYH9sSceAEis/aj/BptEa03mVzutVQWlc39gqgMHblKaaT/TM4s2EYhoIDEJJuYdtsT8l5LNDtKEarnaBRawHN4Oi3JYWMvasTnxi6lGkldQKd6jwZT0sufFTnkwndJ6rv4OI4Up7sR2GsAUmXnDCbkuXU/0oDYwsh2KUSXqEho7jcXF1FsIAqkLrPQNXHY5VgoAD64km3G/FgQWgsIdBkHVXHBPdlyxvVEDegu6EIV9E2H+vjz5VPxUZ+8V5EOjfw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/sQ0f+CJlFWVdvfk3U9YHHrK1XgNvtqFqlNtv0aOcag=;
+ b=4UjU/5bimo8saHARznfYF2ChVu1F290o/oaRWzcYG0r5TvAQFeqGKOa3R1xgm2VamFHrHGYxE2QJOqvDpdpcAoiFFJV1qX642h9DUaRVmpxIP2Kovj+nAnmJ1BNG44p4fxo1JbuSuY9brkLdvLPVbK/CjGGHmhUfOLy07mQD2l8=
+Received: from CH2PR05CA0003.namprd05.prod.outlook.com (2603:10b6:610::16) by
+ CH3PR12MB9147.namprd12.prod.outlook.com (2603:10b6:610:19a::9) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9031.18; Wed, 20 Aug 2025 07:18:54 +0000
+Received: from CH2PEPF00000143.namprd02.prod.outlook.com
+ (2603:10b6:610:0:cafe::af) by CH2PR05CA0003.outlook.office365.com
+ (2603:10b6:610::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.13 via Frontend Transport; Wed,
+ 20 Aug 2025 07:18:54 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CH2PEPF00000143.mail.protection.outlook.com (10.167.244.100) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.9052.8 via Frontend Transport; Wed, 20 Aug 2025 07:18:54 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 20 Aug
+ 2025 02:18:54 -0500
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 20 Aug
+ 2025 02:18:53 -0500
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39 via Frontend
+ Transport; Wed, 20 Aug 2025 02:18:52 -0500
+Date: Wed, 20 Aug 2025 09:18:45 +0200
+From: Luc Michel <luc.michel@amd.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, Francisco Iglesias
+ <francisco.iglesias@amd.com>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Alistair Francis
+ <alistair@alistair23.me>, Frederic Konrad <frederic.konrad@amd.com>, "Sai
+ Pavan Boddu" <sai.pavan.boddu@amd.com>
+Subject: Re: [PATCH 13/48] hw/arm/xlnx-versal: VersalMap: add support for
+ OR'ed IRQs
+Message-ID: <aKV21WpfZ8u054zc@XFR-LUMICHEL-L2.amd.com>
+References: <20250716095432.81923-1-luc.michel@amd.com>
+ <20250716095432.81923-14-luc.michel@amd.com>
+ <CAFEAcA-x_CYWPM2TeGSTLjCj==3JY_uyvfFmR=nLi4pRLw-P2Q@mail.gmail.com>
+ <aKMrBdNhtqHVHRYw@XFR-LUMICHEL-L2.amd.com>
+ <CAFEAcA8eop95ojfZw3YbDrWfrv1fZ5QYSmwx_oDThxMCiMMeDg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20250310122240.2908-1-jasowang@redhat.com>
- <20250310122240.2908-3-jasowang@redhat.com>
- <29e31b2d06036441ede4ccb2d2bd22a6c1ba33ae.camel@infradead.org>
- <CACGkMEsuE8HC=s2HTWj+p=T8haOxHPhSj6w4==k-pvzKjwrKqw@mail.gmail.com>
- <c9524ced9c39e688372c332f909d84c6853e1983.camel@infradead.org>
-In-Reply-To: <c9524ced9c39e688372c332f909d84c6853e1983.camel@infradead.org>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 20 Aug 2025 09:14:50 +0200
-X-Gm-Features: Ac12FXyK-1Iopp1LpK1oT_18CpqWo7bbuTqTrCUPYhFpw-_ZRsO-zPLUzRzN3H4
-Message-ID: <CAJaqyWe0dawXryB+B8HYuQJ9mcDhCT_3H8vkJMwZyjKnLHQouw@mail.gmail.com>
-Subject: Re: [PULL 2/5] net: move backend cleanup to NIC cleanup
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Jason Wang <jasowang@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
- qemu-devel@nongnu.org, Lei Yang <leiyang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8eop95ojfZw3YbDrWfrv1fZ5QYSmwx_oDThxMCiMMeDg@mail.gmail.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000143:EE_|CH3PR12MB9147:EE_
+X-MS-Office365-Filtering-Correlation-Id: 76dc5fe2-fba5-4340-3c75-08dddfb9d227
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|82310400026|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?i5XuAQ0IiIihAOvqd+1ICLToP97ZhgA8KCyUNzEeNgs/wtx6AJSw6DfcY/II?=
+ =?us-ascii?Q?Z0GYQyNl2BjlvBQ/XynypDBtCyTy7fQBIr5BOESeUnO1D3vC2GgiCGTuQ95/?=
+ =?us-ascii?Q?WdjIfa1oC2mHia5It9a+iunnkjRx0nzvo7AMtyGEnWEN05pziRWTAtIhbTQQ?=
+ =?us-ascii?Q?qPFyiBPVnbdZEPSBaNeP8Wh1SuXqdcrIqvCO3Av0CO7nFB29+fNbLOXX3F6x?=
+ =?us-ascii?Q?MAeemKLprd3bMwSsP2/Fb7+hxTNAruKc0AKiPIeSa8Fw0awt7QGb3qxcMXhW?=
+ =?us-ascii?Q?XRUWosSQYLiioPdW8O6KPbh3XN/tU9Rbx/nxy4PIQfxZmtGBEfltKsvuSar2?=
+ =?us-ascii?Q?D78CyLsisvCFftLcjJREb6goC3MIjrYZ5nkZ9Fk+mXiB8C/zK1NmcJsEOdUs?=
+ =?us-ascii?Q?Y2JIND/AAlEFUIQKLb6QEn9Sz01pgPKup+8OGbgUyQh6SV0qmrNAsKa75whf?=
+ =?us-ascii?Q?WoCWLn1td6APBDdCP/N1w7ywBYBpc4k5ZBJs3D63pnxNOtsmVU/GprP4Qbrk?=
+ =?us-ascii?Q?oHFfsI4ag9CaikdzQ7Kmr8/cQ2vicOACYUZlfaWEKMJ6YgrNuDP61lFIJPYf?=
+ =?us-ascii?Q?Su2PHkugQKUtdPbixRFqV1ryBHgq8kZvWFykpMUzFdC6Fg1dZdoTgp43KIDC?=
+ =?us-ascii?Q?OM/Nx7rttBnO2HCLAEjjuNWUO5fZfflCFwYZreBbfMnCdcqEDXl4JDopMx72?=
+ =?us-ascii?Q?rOIv+G7fR5/drR1F88ffCLGoAlnsb40q7X5k4XbobOg2j3EEg02y55kEFp81?=
+ =?us-ascii?Q?ug/N0TP8JwLczZlNjsw53SF5uaFAFSpFvvmCsN8U2ZBQ/AWC/TvwwBqrSZia?=
+ =?us-ascii?Q?VqwkpuIGd7rrdAgZKQG212RpVXHNBRC+mLTw6GNLq8iqst+AKw9i2qyKWyGP?=
+ =?us-ascii?Q?unxmDAst93PHms/vRIrtX1W2ZMvAW4XFjMhF3TK6fxIgVa2EFmgm8FOa5qrD?=
+ =?us-ascii?Q?4VELQeI5kLHpqPKlx5zGR6iYlGUBdqp6ZkeEYZBXR6a1780C1T76Pz8jyfne?=
+ =?us-ascii?Q?J9P7LZhCccYbUdp6bCEJk/YwmjeFLDxwrgX8JxONOyNN2GbnrDIRyN2JPNMP?=
+ =?us-ascii?Q?TyHU/VOSBK1ALKSlfs1YnMtVvLKzPf6j2smju9kTuRGFQHjpQJY/sm88WFoU?=
+ =?us-ascii?Q?9l8BQ5Y3MCJBSxqa4QUDPEJK+f5MRXZFNJsmzgLrPfy0BonJCPw+G7xxPNts?=
+ =?us-ascii?Q?aV+7JYX///pk9n67sMUYUF6ycMbPe9K0C2iqBI6pJFJ5AKKALZ+ZWJuCXFfc?=
+ =?us-ascii?Q?56NS199s3R0ULWp4RP/Xcz9EkbszzC7MxR/skIR3hCeWG1moeODEZlvrbuK4?=
+ =?us-ascii?Q?adnB/06xfB9fY1UkXmDqjbmtUN0VC9mYSR9DPTrvLyS+RiVebwDdoAiisjCY?=
+ =?us-ascii?Q?KKnwwPS/JIlsQyQOwTjTy0sTOySo4lfXDNP5F050Z77MNFhpzWZ5yVjjaIhp?=
+ =?us-ascii?Q?Z7bxgDYhlSe7ToS5b7cfaJcsZaZRoUsXCpBgStW4tE+U1SjvIBsVwnGqlAx3?=
+ =?us-ascii?Q?3ys2+gLrQNhEMEvU9ZlidtR9dyICHbtifIc3?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2025 07:18:54.3676 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76dc5fe2-fba5-4340-3c75-08dddfb9d227
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000143.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9147
+Received-SPF: permerror client-ip=2a01:111:f403:2418::62c;
+ envelope-from=Luc.Michel@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,62 +159,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 20, 2025 at 8:47=E2=80=AFAM David Woodhouse <dwmw2@infradead.or=
-g> wrote:
->
-> On Wed, 2025-08-20 at 10:34 +0800, Jason Wang wrote:
-> > On Wed, Aug 20, 2025 at 12:13=E2=80=AFAM David Woodhouse <dwmw2@infrade=
-ad.org> wrote:
-> > >
-> > > On Mon, 2025-03-10 at 20:22 +0800, Jason Wang wrote:
-> > > > From: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> > > >
-> > > > Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
-> > > > structures if peer nic is present") effectively delayed the backend
-> > > > cleanup, allowing the frontend or the guest to access it resources =
-as
-> > > > long as the frontend is still visible to the guest.
-> > > >
-> > > > However it does not clean up the resources until the qemu process i=
-s
-> > > > over.  This causes an effective leak if the device is deleted with
-> > > > device_del, as there is no way to close the vdpa device.  This make=
-s
-> > > > impossible to re-add that device to this or other QEMU instances un=
-til
-> > > > the first instance of QEMU is finished.
-> > > >
-> > > > Move the cleanup from qemu_cleanup to the NIC deletion and to
-> > > > net_cleanup.
-> > > >
-> > > > Fixes: a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net s=
-tructures if peer nic is present")
-> > > > Reported-by: Lei Yang <leiyang@redhat.com>
-> > > > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> > > > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> > > > Signed-off-by: Jason Wang <jasowang@redhat.com>
-> > >
-> > > This crashes QEMU when I launch an emulated Xen guest with a Xen PV
-> > > NIC, and quit (using Ctrl-A x on the monitor).
+On 16:25 Tue 19 Aug     , Peter Maydell wrote:
+> On Mon, 18 Aug 2025 at 14:30, Luc Michel <luc.michel@amd.com> wrote:
 > >
-> > Eugenio and Jonah, any thoughts on this? It looks like the code
-> > doesn't deal with hub correctly.
->
-> The interesting part about Xen netback is that it does its own teardown
-> from xen_device_unrealize() because in the case of running under true
-> Xen, it needs to clean up XenStore nodes which are externally visible.
-> It doesn't all just go away when QEMU exits.
->
-> We fixed a potentially similar issue in commit 84f85eb95f14a ("net: do
-> not delete nics in net_cleanup()")?
->
+> > Hi Peter,
+> >
+> > On 13:24 Mon 04 Aug     , Peter Maydell wrote:
+> > > On Wed, 16 Jul 2025 at 10:55, Luc Michel <luc.michel@amd.com> wrote:
+> > > >
+> > > > +static qemu_irq versal_get_irq_or_gate_in(Versal *s, int irq_idx,
+> > > > +                                          qemu_irq target_irq)
+> > > > +{
+> > > > +    Object *container = versal_get_child(s, "irq-or-gates");
+> > > > +    DeviceState *dev;
+> > > > +    g_autofree char *name;
+> > > > +    int idx, or_idx;
+> > > > +
+> > > > +    idx = FIELD_EX32(irq_idx, VERSAL_IRQ, IRQ);
+> > > > +    or_idx = FIELD_EX32(irq_idx, VERSAL_IRQ, OR_IDX);
+> > > > +
+> > > > +    name = g_strdup_printf("irq[%d]", idx);
+> > > > +    dev = DEVICE(object_resolve_path_at(container, name));
+> > > > +
+> > > > +    if (dev == NULL) {
+> > > > +        dev = qdev_new(TYPE_OR_IRQ);
+> > >
+> > > Here we create a device...
+> > >
+> > > > +        object_property_add_child(container, name, OBJECT(dev));
+> > > > +        qdev_prop_set_uint16(dev, "num-lines", 1 << R_VERSAL_IRQ_OR_IDX_LENGTH);
+> > > > +        qdev_realize_and_unref(dev, NULL, &error_abort);
+> > > > +        qdev_connect_gpio_out(dev, 0, target_irq);
+> > > > +    }
+> > > > +
+> > > > +    return qdev_get_gpio_in(dev, or_idx);
+> > >
+> > > ...but then we don't save the pointer to it, so the only
+> > > thing still hanging onto it is the QOM tree.
+> > >
+> > > If you want to change "embedded device struct" into
+> > > "allocate memory to create devices" that's fine, but the
+> > > SoC should still keep track of everything it's creating,
+> > > so that (at least in theory) it could clean it up on
+> > > unrealize.
+> >
+> > I'm not sure I fully understand your point:
+> >
+> >    - The OR gate device is parented to the "irq-or-gates" container,
+> >      which is itself parented to the SoC. So finalizing (freeing) the
+> >      SoC would trigger a cascade of free calls to the children,
+> >      including those objects right?
+> 
+> Ah, I hadn't noticed that we add the object as a QOM child
+> of the SoC here.
+> 
+> It does mean you can't ever get back to the OR gate object
+> except by walking the QOM tree, but I suppose that's OK.
+> 
+> It would be helpful if you could run "make check" under
+> the clang leak sanitizer with your patches added, to see
+> if it complains about anything. (Unfortunately it will
+> definitely complain about at least some pre-existing
+> leaks, I suspect.)
+Yes I did that before sending my series and fixed all my leaks. As you
+say there are some existing ones, mainly in the register API (IIRC it
+does create an object that is not correctly parented).
 
-I was not aware of that code to be honest :(.
+I'll send v2 with your other remarks addressed then.
 
-Jonah, could you take a look at this? It should be a matter of
-replicating what the series does in the list on NICs, in this linked
-list.
+Thanks
 
-Thanks!
-
+Luc
 
