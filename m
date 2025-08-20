@@ -4,67 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 629EBCA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 06:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC02CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 06:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uocae-0004vw-RG; Wed, 20 Aug 2025 02:46:33 -0400
+	id 1uoceZ-0006Jq-PH; Wed, 20 Aug 2025 02:50:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+d6f0842bcde9a785871d+8032+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1uocab-0004vm-S9
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 02:46:29 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoceX-0006JY-Ka
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 02:50:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+d6f0842bcde9a785871d+8032+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1uocaX-0005FN-Sd
- for qemu-devel@nongnu.org; Wed, 20 Aug 2025 02:46:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=XwEI5aI1pHHIdibANKF91uzO8DnB8wrZDrMYN4JK6E4=; b=ph0qH1aMxBVnN99N3m5cpryebE
- VlSZyoRQMFuitdIUUpuMm6zJ4PwU1r8u7BSCZGpbxcClrSoAKtjA4avro0TNW4L59txBhtp4sRrcD
- mgx/GCU7VDlkvXdFftBCF2aX7150nhtPg6sKheuKCPoeoX5q/aUxNR0hstBLOK/mwPKELLXpDWxMU
- 8RlUBac87hS1riIhjAoq7NgZ5LqMrITkTHraI/AicRy8pghDfhArgNaNtOyw4z1SP73YNfNlSMuBH
- RCPx6n9JYU7gsou5bEL/15d04b3CA17Gh+BU8VdATKwyqSW1wuGntfM3BUcUh98q/G21VtXS2cL6A
- 7A7eg6vQ==;
-Received: from 54-240-197-234.amazon.com ([54.240.197.234]
- helo=freeip.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
- id 1uocaN-00000001zbn-1Tfs; Wed, 20 Aug 2025 06:46:16 +0000
-Message-ID: <c9524ced9c39e688372c332f909d84c6853e1983.camel@infradead.org>
-Subject: Re: [PULL 2/5] net: move backend cleanup to NIC cleanup
-From: David Woodhouse <dwmw2@infradead.org>
-To: Jason Wang <jasowang@redhat.com>, Eugenio =?ISO-8859-1?Q?P=E9rez?=
- <eperezma@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, Lei Yang <leiyang@redhat.com>
-Date: Wed, 20 Aug 2025 07:46:15 +0100
-In-Reply-To: <CACGkMEsuE8HC=s2HTWj+p=T8haOxHPhSj6w4==k-pvzKjwrKqw@mail.gmail.com>
-References: <20250310122240.2908-1-jasowang@redhat.com>
- <20250310122240.2908-3-jasowang@redhat.com>
- <29e31b2d06036441ede4ccb2d2bd22a6c1ba33ae.camel@infradead.org>
- <CACGkMEsuE8HC=s2HTWj+p=T8haOxHPhSj6w4==k-pvzKjwrKqw@mail.gmail.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-NXmT5LYMnmniAtV3i3O8"
-User-Agent: Evolution 3.52.3-0ubuntu1 
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uoceT-0005p8-Hv
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 02:50:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755672627;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=iiH+5G1LrqWTtlUO8i7gFLd6R1eeHFfiUdjOtVkcmGM=;
+ b=IhGGuqi0GW7GYyq8V7syIf7k8mFpL6HLEbZvNE3EWvnkQ/GifpkB/Vbgzu3sWHPvRaF7KL
+ 1U7bBwr+FikHi255p7aLZ0cHBUretRSQKphhbbSzEab1YWkgmEiYI+eFGCs5CHZonp2C4S
+ 4f3MsGSXSdXDbRhEb+iiK7AS/p6fgmQ=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-356-MHVjJBa1MBSVFrQHhUlPYw-1; Wed, 20 Aug 2025 02:50:24 -0400
+X-MC-Unique: MHVjJBa1MBSVFrQHhUlPYw-1
+X-Mimecast-MFC-AGG-ID: MHVjJBa1MBSVFrQHhUlPYw_1755672624
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7e87068f8afso1743819785a.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Aug 2025 23:50:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755672624; x=1756277424;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iiH+5G1LrqWTtlUO8i7gFLd6R1eeHFfiUdjOtVkcmGM=;
+ b=Y+o1qfWTCNIrZrRKPelBSBf0aiLdG6DeCxjOVfSKvRXCUqz2LSdbJbd8eEokL5L+Io
+ L8BPy+/Pv7G1q2qRkfCgXitw7grGq+nznk714xzLYqDytD9Ixia3ALOhcT7K+VjhJ44g
+ i7F2BAIQ5wyptG1QFyQMtvkxK1ZEqxReBCJB2eLq5tVVdRDuSkbm8b/8IMKwwR+hal9O
+ 7qBxjI2yW7YRlKx5j3HIGxq4GqsO7+sACwjiBFU7TW1bExV+mXKibbN2mX9yKIEeMXyr
+ 38h5o5LWhQs9n/KxLxfho7Gxktq/Up//eUut6Q/BtoGWYu6QdeOVj78YNXmu/EjIWdUz
+ Qd2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUXA/mCmttbxM6Ywtm4VRnE4smILUmfhMzljun00tGCACFv5+Uu5axH+Yk/fkwMhdk0QFLhJREFmZ2y@nongnu.org
+X-Gm-Message-State: AOJu0Yx3T6bCmuYCpbGBrNF5/F//9Pwv6Dn+ZjdcghtxJnUWsT3FS+gJ
+ Qr5souRAAlSJRRqj2mwAB8Kz7bvDJmz3JLNa2N0XFi4JBygq5Y3IHGPBAq684BGGhzeaBUcDtC7
+ 9reAJwG458naTHZ/GiHJGCtJxCa6bt1m9DoFaECBumCCH1tmDlqhSK6ZB
+X-Gm-Gg: ASbGnct2YfA5Kr2tH3xHmH8ajyjwx+ZSNS77+pfZniw49YEx6SuC3iQFVS3MOXF+YmI
+ NGmMxNpuEOxkiglHngpNyEn4ciV8MplqOmLVpFFKS9vO3fqKCEX/LnIimBZKc/eZsYKEKcyQ3bD
+ WfVh8Msq6G3mYqLaPb6YIMYXFtTXczdAd0YW077G9uXpBBFXIXiEFjNTerqQipkstjp/i+g+1IS
+ iplIBj/c+gdCSx1HElWBhhRldobOVnPl6S3HYZaYvaYivKxxcBsMpQYVY7Htt0reNIrST2rxemm
+ uXdPao6PN9VnM5NRO2LEH0Jet8yD4w8mFSlbGT74ZTro5LAQ5x057AzVA4cAY5fom+BU8Dd4a92
+ x49s=
+X-Received: by 2002:a05:620a:1908:b0:7e8:63c6:2896 with SMTP id
+ af79cd13be357-7e9fcb7871cmr224267185a.44.1755672624355; 
+ Tue, 19 Aug 2025 23:50:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQCFTjzycKfJhmnC0bWoV8uNIj622bI+vuz2kjlrVp8QOtdxnFdHIQHO15w5TfrV42XIQZMQ==
+X-Received: by 2002:a05:620a:1908:b0:7e8:63c6:2896 with SMTP id
+ af79cd13be357-7e9fcb7871cmr224265885a.44.1755672623996; 
+ Tue, 19 Aug 2025 23:50:23 -0700 (PDT)
+Received: from [192.168.0.6] (ltea-047-064-112-073.pools.arcor-ip.net.
+ [47.64.112.73]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7e87e1e15besm900592285a.72.2025.08.19.23.50.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Aug 2025 23:50:23 -0700 (PDT)
+Message-ID: <f20c54fd-4cc3-4689-8eb8-c934aa462e7f@redhat.com>
+Date: Wed, 20 Aug 2025 08:50:19 +0200
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+d6f0842bcde9a785871d+8032+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/4] tests/functional: Extract migration code into a
+ new class
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Fabian Vogt <fvogt@suse.de>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250819223905.2247-1-farosas@suse.de>
+ <20250819223905.2247-3-farosas@suse.de>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250819223905.2247-3-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,153 +158,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 20/08/2025 00.39, Fabiano Rosas wrote:
+> Move some of the code from test_migration.py to a new class so it can
+> be reused to invoke migrations from other tests.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+> I see this conflicts with Thomas' series, I'll update accordingly.
+> ---
+>   tests/functional/qemu_test/migration.py | 40 +++++++++++++++++++++++++
+>   tests/functional/test_migration.py      | 24 ++-------------
+>   2 files changed, 43 insertions(+), 21 deletions(-)
+>   create mode 100644 tests/functional/qemu_test/migration.py
+> 
+> diff --git a/tests/functional/qemu_test/migration.py b/tests/functional/qemu_test/migration.py
+> new file mode 100644
+> index 0000000000..37988704e8
+> --- /dev/null
+> +++ b/tests/functional/qemu_test/migration.py
+> @@ -0,0 +1,40 @@
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +# Migration test
+> +#
+> +# Copyright (c) 2019 Red Hat, Inc.
+> +#
+> +# Authors:
+> +#  Cleber Rosa <crosa@redhat.com>
+> +#  Caio Carrara <ccarrara@redhat.com>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +import time
+> +
+> +
+> +class Migration():
+> +
+> +    @staticmethod
+> +    def migration_finished(vm):
+> +        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
+> +
+> +    def assert_migration(self, test, src_vm, dst_vm, timeout):
+> +
+> +        end = time.monotonic() + timeout
+> +        while time.monotonic() < end and not self.migration_finished(src_vm):
+> +           time.sleep(0.1)
+> +
+> +        end = time.monotonic() + timeout
+> +        while time.monotonic() < end and not self.migration_finished(dst_vm):
+> +           time.sleep(0.1)
+> +
+> +        test.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
+> +        test.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
+> +        test.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
+> +        test.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
+> +
+> +    def migrate(self, test, source_vm, dest_vm, src_uri, timeout):
+> +        source_vm.qmp('migrate', uri=src_uri)
+> +        self.assert_migration(test, source_vm, dest_vm, timeout)
+> diff --git a/tests/functional/test_migration.py b/tests/functional/test_migration.py
+> index c4393c3543..1c75a98330 100755
+> --- a/tests/functional/test_migration.py
+> +++ b/tests/functional/test_migration.py
+> @@ -15,6 +15,7 @@
+>   import time
 
---=-NXmT5LYMnmniAtV3i3O8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I guess you could drop the "import time" here now?
 
-On Wed, 2025-08-20 at 10:34 +0800, Jason Wang wrote:
-> On Wed, Aug 20, 2025 at 12:13=E2=80=AFAM David Woodhouse <dwmw2@infradead=
-.org> wrote:
-> >=20
-> > On Mon, 2025-03-10 at 20:22 +0800, Jason Wang wrote:
-> > > From: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> > >=20
-> > > Commit a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net
-> > > structures if peer nic is present") effectively delayed the backend
-> > > cleanup, allowing the frontend or the guest to access it resources as
-> > > long as the frontend is still visible to the guest.
-> > >=20
-> > > However it does not clean up the resources until the qemu process is
-> > > over.=C2=A0 This causes an effective leak if the device is deleted wi=
-th
-> > > device_del, as there is no way to close the vdpa device.=C2=A0 This m=
-akes
-> > > impossible to re-add that device to this or other QEMU instances unti=
-l
-> > > the first instance of QEMU is finished.
-> > >=20
-> > > Move the cleanup from qemu_cleanup to the NIC deletion and to
-> > > net_cleanup.
-> > >=20
-> > > Fixes: a0d7215e33 ("vhost-vdpa: do not cleanup the vdpa/vhost-net str=
-uctures if peer nic is present")
-> > > Reported-by: Lei Yang <leiyang@redhat.com>
-> > > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> > > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> > > Signed-off-by: Jason Wang <jasowang@redhat.com>
-> >=20
-> > This crashes QEMU when I launch an emulated Xen guest with a Xen PV
-> > NIC, and quit (using Ctrl-A x on the monitor).
->=20
-> Eugenio and Jonah, any thoughts on this? It looks like the code
-> doesn't deal with hub correctly.
-
-The interesting part about Xen netback is that it does its own teardown
-from xen_device_unrealize() because in the case of running under true
-Xen, it needs to clean up XenStore nodes which are externally visible.
-It doesn't all just go away when QEMU exits.
-
-We fixed a potentially similar issue in commit 84f85eb95f14a ("net: do
-not delete nics in net_cleanup()")?
-
-I should add a test case for this...
-
---=-NXmT5LYMnmniAtV3i3O8
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
-ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
-MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
-a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
-jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
-GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
-aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
-nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
-8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
-HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
-IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
-KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
-BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
-QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
-QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
-ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
-/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
-uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
-xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
-W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
-c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
-VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
-NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
-DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
-sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
-w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
-i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
-kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
-0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
-ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
-blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
-hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
-VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
-HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
-ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
-AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
-cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
-cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
-AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
-aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
-hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
-iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
-8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
-JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
-xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
-EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
-B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
-MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
-Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
-nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
-WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
-W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
-nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
-g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
-9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
-9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
-sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
-a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
-ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
-AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
-dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
-Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
-YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
-4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
-6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
-QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
-nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
-MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
-VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
-ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI1MDgyMDA2NDYx
-NVowLwYJKoZIhvcNAQkEMSIEIOTy0ZLRX60FHjeH4jNj+SOnHaWfCwS/Z/Az8uXCZl1PMGQGCSsG
-AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
-cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
-VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAmcYNAp4WZt1Q
-FOSdepPQlojAcziydiwTF+80TBklUQ2zRSmHvcz0Qhe7kSQCSbPCMdact3ItI9cEBKzMjhPU08Ae
-ouoyL3QwaUT4uAdc7DLROfbJ/AUtCMAkvh1QbtFU9KrhkWaEtaaF4dIpER0XC9fEYEQGoSW4nMVe
-MltDAgyqHCBJrmIPvem1bne+6qD+2XqMUPrzxMIBchGvuBwYggsh3znoi2EAc4djSAnSO3+TH3r/
-30Psk2sXeKgNyyresTomHbnfxp7PFynFJRiTngIl76tPmwLp+L5NSaBv/QtYEbblDGUidmFXPZb6
-UfNrlVPw1jmsY8+fEMLeVZbq08gHbOwDT+/zdBdK4cH/UE+Uk9NPdoPW7IraOIP29wq5a+fVQHRP
-2r+28bPFDs9dL0ylnqI5crPotz4a6lOpmrddnqyoVugTt6qTMJd9GDOGfRs5gxHtPyuxwB7Cl/JB
-x+3JDs8ORJZRwkSMY8tbVzcoYBPIJABvfmW9MruzMDi8+PfUW0OuvfWf39PYn00zBES8uJU71bDq
-RKX8wHwNks9RuneGYMeMYxmQXFVBZ6MOBTnqyPuI38P9ukBcc1epWQQL4DSQsG/5VVNwLuwGPZy8
-JvCfSDbyzAvWP+Mc8eORNSNFC7rzFtPl4BYzR8ywEYRMEo4iIyydIz82xm+5oagAAAAAAAA=
+Apart from that:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
---=-NXmT5LYMnmniAtV3i3O8--
+>   from qemu_test import QemuSystemTest, skipIfMissingCommands
+> +from qemu_test.migration import Migration
+>   from qemu_test.ports import Ports
+>   
+>   
+> @@ -22,25 +23,6 @@ class MigrationTest(QemuSystemTest):
+>   
+>       timeout = 10
+>   
+> -    @staticmethod
+> -    def migration_finished(vm):
+> -        return vm.cmd('query-migrate')['status'] in ('completed', 'failed')
+> -
+> -    def assert_migration(self, src_vm, dst_vm):
+> -
+> -        end = time.monotonic() + self.timeout
+> -        while time.monotonic() < end and not self.migration_finished(src_vm):
+> -           time.sleep(0.1)
+> -
+> -        end = time.monotonic() + self.timeout
+> -        while time.monotonic() < end and not self.migration_finished(dst_vm):
+> -           time.sleep(0.1)
+> -
+> -        self.assertEqual(src_vm.cmd('query-migrate')['status'], 'completed')
+> -        self.assertEqual(dst_vm.cmd('query-migrate')['status'], 'completed')
+> -        self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
+> -        self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
+> -
+>       def select_machine(self):
+>           target_machine = {
+>               'aarch64': 'quanta-gsj',
+> @@ -67,8 +49,8 @@ def do_migrate(self, dest_uri, src_uri=None):
+>           source_vm = self.get_vm(name="source-qemu")
+>           source_vm.add_args('-nodefaults')
+>           source_vm.launch()
+> -        source_vm.qmp('migrate', uri=src_uri)
+> -        self.assert_migration(source_vm, dest_vm)
+> +
+> +        Migration().migrate(self, source_vm, dest_vm, src_uri, self.timeout)
+>   
+>       def _get_free_port(self, ports):
+>           port = ports.find_free_port()
+
 
