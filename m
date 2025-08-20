@@ -4,94 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32907CA0EDC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 08:36:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9DCECA0EED
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 08:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoeAd-0007Y2-9V; Wed, 20 Aug 2025 04:27:47 -0400
+	id 1uoeA3-00050X-FD; Wed, 20 Aug 2025 04:27:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uoeAS-0006sk-Pt; Wed, 20 Aug 2025 04:27:37 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uoeAN-00016H-1e; Wed, 20 Aug 2025 04:27:36 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-b474a38b25cso2359112a12.0; 
- Wed, 20 Aug 2025 01:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755678448; x=1756283248; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=V7fAKMSbTNa9ntikrP+lYZirQUgGeZAh7FsOcE/UtIs=;
- b=UvfZFgSd9ZSZKG6Lw7T1yJ/3DogMghew1uItLHF0DsTq6CbPMAWnSkdYEqu2ux78Gn
- PJXWwtNXdIp7S99I4b0/V256mjL99rjMSQlmmNLdNTRTYadDG+dsVsIMA/PAXg9n+fZU
- cxSR6HZqaR3Ndx3a4gHxkw7cL2teuHQTP8rx1TWzq64IBMl13OEZ+0eQB1tMCgc8LftI
- wcg3IJbIgJi5kMI/lF1UARs9y+w5eLNKigt37iXK+1fAfQHdXIIp68EEffSqP/+qzW3R
- 4cbquE/MU187RSx/9VYddY+kYpsTzz2r8YsUNTUcn4ZSZ/tZzBthkAyUUhqLan3Fh7sw
- UJTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755678448; x=1756283248;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=V7fAKMSbTNa9ntikrP+lYZirQUgGeZAh7FsOcE/UtIs=;
- b=QL+DiWWK0jHlt5OIdM4NDL9rfr3LcpjGTxChOyiY5IkBJS5PPn51Nne6KjEd4FkSHu
- WeI40Xi6Ez/qUdVmT3M5aEHwOLfUA5DSMNmRAnei/lZxj762h1NMLKYcfbTKt5RcyTSL
- Liolw0SbfLSoFEJXVq6oSUKL9jgN3uuZsEyfGnfWNriLNdcpom71jQ21DhcpoxnaA2uh
- XC8xgVe/W5eIOQQZKUv8WezrkjdnyUQrRUXpBpiEIFDCKyH9wHswfWQSW/3CMZxnIxEw
- 35ylYj3behkvovE4/d41gUaFHEm9nZx3FYxThq+Ca9/QaxPr06Msnj6gRRm7HpbtqHda
- HfIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCPif1UAeoOxvJJG4tTde7ILKEMQsKghD6vw+dmUZnCMzceZUiaNnF5idewu4svGX35OqnRyB+uw==@nongnu.org,
- AJvYcCUkFpmk5xM4bScTbNbgX4J/LYfl2MzM5TYT38dzwdKP7MgHftmKnasy0mEWaLQWvT7ihRdywwB78zj7uA==@nongnu.org,
- AJvYcCXABOxge7rf8Y4KJ1RY8rxzPL/q+bZyL7QhtFqxezLJsp3aZmIh65B9ntj5F4Wtr07D4EsQaqNFHu4LOA==@nongnu.org
-X-Gm-Message-State: AOJu0Yw4XffJ6kBoPz+2HyWxgdIi7qKad4Ursehc6XtRFNyVMUKALiaD
- 00On1qh1srA+8scCMuUK/dCabcybv7nSEzyq5JY9pLepTdQg+7kyGOD/q5Pe/ub0h2gktfZaohA
- KgcYuSw1KENuX2Xl8rmcfeMISqobzMg0=
-X-Gm-Gg: ASbGncuB5wN7RGQxiQXG3LfSmKjMY0Jw6w7vrbsAvebze5tGU8npqowObwVKybfuquG
- wbm23W/4qUIlXP2Ji62BUqP2Ngxvo9buT9V9rZA4ywbuy/lj5lC/qy7cNrK/DuRGM2pvwHNHNxf
- 4UFp5mMbYH9wfiku8hEQhV7Rs4PPWHA0ZxazxSArktVMpytsWFGo4VnfKtXQRrpnmPt3FZ0pMwg
- m3vLkqCfkxxbKB0K1YnZFYNnneMnxOrGJIBXx0F9fbeRWbi
-X-Google-Smtp-Source: AGHT+IH1nsUb28CHqWUeZgZdTKrAL/O6lBCk9HZlgPtf6sIqdp3ca0S9KDAFHYiMQAA/4nlFHO4lvJCuhyOwVO/HCF8=
-X-Received: by 2002:a17:903:228c:b0:23f:df36:5f0c with SMTP id
- d9443c01a7336-245ef22772emr23663335ad.29.1755678447798; Wed, 20 Aug 2025
- 01:27:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1uoeA1-0004ps-00; Wed, 20 Aug 2025 04:27:09 -0400
+Received: from mail-bn8nam04on2060e.outbound.protection.outlook.com
+ ([2a01:111:f403:2408::60e]
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1uoe9y-00014q-Nu; Wed, 20 Aug 2025 04:27:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ToEXj4jPzT4sWZfr1AQYk9Ptymy+vFjJ+kMoviY4YSYTwtvHSUmJyy4YYpGX7Mif7aRYyhDk1b1Coyw7bZn+9ggBLDZeQ7DI5VPENF1xzdlQqlNvyhIz3C6+tsJ0FtZjCDXGBK25aE4UIaDL8iJUOcx8qsxPsH+kFuKKiCRtsYzI2r5et6jw4PIIzGlxASopFvAuAzEqoEGDiwsGq0MCW4wRZZUurJepl75wgUZ4Km3tbDGbXztRWAZSbGwSi7VUVtft35yFu5NW/ahVnyauKtgBOL36IWubNws48SHkozxVEEwfCahQRmlOqntwRrQUc/75dGQaO+OpiB/ZsKwMIA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wv2UYWDpHyav3RMUVeKs/q/GqkzaCxpLVPBwFpd2L10=;
+ b=QKbEFuAfGbZyy+nQgnHFNuT3P1RvYpL/KSNj5ZxaqA46Yi60c6jygqCkyOSKE1C2RxYv73UtbMd3b1+8soxdCqGaZl1EqkEkgqyI1BVLTqjypAt8QhFpkJ9YnAAvxgh1BxtYe1ld4bjG71hiIUT0QI/376xSjQo/5L//yUmKJBFOYV+OCk1oYV89cxXz3En1r/61oKu0bBF2ddCO3U/Hsw/RaQZxuJhuUapgBit08bRkE0//Ho3LJyOzr3LYmnfFPWT3DZTX85BWa0FngNmxl6OjDq7QZt7VSStLtLnpJoqqXcz5xDwflmn+o4XGEBGn8KTQ94IpgWGj6LIJXmXQ7Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wv2UYWDpHyav3RMUVeKs/q/GqkzaCxpLVPBwFpd2L10=;
+ b=dkC20Hi4nHnLcDwgkBTg3H1sEG2Db0/c5QaMq51PQQq2Cili8gmVERKSA6zgF4DU5o4Inwx64zr9jz0jHXzEXDEw9D8hr6RiMKtqLZhUs+pciWz5BJfMWF7nw1k+Amq9sYMFAH6Fk3icomqcX/yD4qSrkXMWf47KuNHJ71gw9Uo=
+Received: from MW3PR06CA0025.namprd06.prod.outlook.com (2603:10b6:303:2a::30)
+ by CH2PR12MB4165.namprd12.prod.outlook.com (2603:10b6:610:a4::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Wed, 20 Aug
+ 2025 08:27:02 +0000
+Received: from CO1PEPF000075F1.namprd03.prod.outlook.com
+ (2603:10b6:303:2a:cafe::a5) by MW3PR06CA0025.outlook.office365.com
+ (2603:10b6:303:2a::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.13 via Frontend Transport; Wed,
+ 20 Aug 2025 08:27:01 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ CO1PEPF000075F1.mail.protection.outlook.com (10.167.249.40) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.9052.8 via Frontend Transport; Wed, 20 Aug 2025 08:27:01 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 20 Aug
+ 2025 03:27:01 -0500
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 20 Aug
+ 2025 03:27:00 -0500
+Received: from XFR-LUMICHEL-L2.xilinx.com (10.180.168.240) by
+ SATLEXMB04.amd.com (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39
+ via Frontend Transport; Wed, 20 Aug 2025 03:26:59 -0500
+From: Luc Michel <luc.michel@amd.com>
+To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: Luc Michel <luc.michel@amd.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>, "Edgar E . Iglesias"
+ <edgar.iglesias@amd.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Alistair Francis <alistair@alistair23.me>, "Frederic
+ Konrad" <frederic.konrad@amd.com>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Subject: [PATCH v2 27/47] hw/arm/xlnx-versal: ocm: refactor creation
+Date: Wed, 20 Aug 2025 10:25:26 +0200
+Message-ID: <20250820082549.69724-28-luc.michel@amd.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250820082549.69724-1-luc.michel@amd.com>
+References: <20250820082549.69724-1-luc.michel@amd.com>
 MIME-Version: 1.0
-References: <cover.1755623521.git.ktokunaga.mail@gmail.com>
- <cf283ca6c957d3c454facb228000129c171c904f.1755623522.git.ktokunaga.mail@gmail.com>
- <ac5ac33d-26a7-4be6-bf02-75fa61d3ad9a@linaro.org>
-In-Reply-To: <ac5ac33d-26a7-4be6-bf02-75fa61d3ad9a@linaro.org>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Wed, 20 Aug 2025 17:27:16 +0900
-X-Gm-Features: Ac12FXzEH5igDaer4Lkq1pe4jEyNIefHUYYyQ9KTo6xtAmGNGg3VVLUN1b2noeQ
-Message-ID: <CAEDrbUZo33Ay4efVr==sYmq+V_ya5NDXs6O9c_dHpLHOnDXc_w@mail.gmail.com>
-Subject: Re: [PATCH 20/35] tcg/wasm: Add andc/orc/eqv/nand/nor instructions
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>, 
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-arm@nongnu.org, 
- qemu-riscv@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000388da6063cc7be76"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x530.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: None (SATLEXMB05.amd.com: luc.michel@amd.com does not designate
+ permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000075F1:EE_|CH2PR12MB4165:EE_
+X-MS-Office365-Filtering-Correlation-Id: a8684141-7909-4f2a-4c28-08dddfc35681
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?oT+ukvE9iw1zLrGsPhoPrtqKy9JKCFoZvKbKfUVlaamI099kgkTitaJ+IGvT?=
+ =?us-ascii?Q?Po4Fk5PLgrU/crs7XeiF9hKYfZMRC4Cz4QHUd2jh5nvvgKfXkAtfLNzd68ob?=
+ =?us-ascii?Q?/YCnyQmE5UDZk3EHZXYq94RKwB1w8Avmqheyt0fE6MI8Db9QTGokzwsDErQr?=
+ =?us-ascii?Q?3cGUmv0MM6o1Z8+VbOYnEoEgSPRh0xgXlPfKnbW4HDsa2fnFC3jksaDq4zmT?=
+ =?us-ascii?Q?MUfYc4V3krVPT37OvVa2eAGyMzLNTB6A21tjI8Pr4DJ4WCLzVCB7qOo8gJ6D?=
+ =?us-ascii?Q?HuhuR9VVBvo5ULvY2hssUxmB4GCZUipk/PLFNZ0fpnzI3LjwlyPmONQsg6nr?=
+ =?us-ascii?Q?81IFS/0ontqWPUU64yESihRhAq5y0GJAZGRbjTAC6R1KGKemiFWiJqcX6lad?=
+ =?us-ascii?Q?ziqF6SjiVcmeWjOaeKeNHLK/vJoPc9jUOZC1wotEnscOh/UI+tHskK/E6oqQ?=
+ =?us-ascii?Q?NHYxCMyTMEMSq9337DT9vfdu4nNiEw+Mw8DOzAhDkADPahoM1PXS9j55YwFH?=
+ =?us-ascii?Q?yOv7XU0194C3Qu3us98He5ODK9sw1JryPUBhny+Ms0J4JDuI0Lko5q8B/PIl?=
+ =?us-ascii?Q?jcxfwHn9girWJ8fqfkP/mn70kMET4wvDCjC9G7vn995PrPZwihwZV/SMl8KJ?=
+ =?us-ascii?Q?Ed3SJQcqUXlm3NvkzcR3eLorS63p7/2JDCEeI3yf4LHiZrvOC2LsxhCViiYB?=
+ =?us-ascii?Q?9TEiYDRaBXm4VDRGvESNwFcIN9ylFR7GYQg4PFLMxilmwFXh09IpgaF5JM0Y?=
+ =?us-ascii?Q?Kto0jld6+EsNmPrPcZYFkbKr7OMBMpFag1WXJs2A0rTaIJjZQsFImYRLfg0i?=
+ =?us-ascii?Q?Fem1oqicKK8qcXfZ9fNivsDPwfyGu27wE6h4cMuVthvG7fNihcbKGSMsNFUk?=
+ =?us-ascii?Q?3cn3+vET4eI/YQjbL8eATFRe1eF5QzSFGGhtyvQLWUeuIwQ63Xbec6wgKKp2?=
+ =?us-ascii?Q?UWuM6DdwPm5ye7V3z5+mWfQmurdz8H2C01jPtIwEP1phuBkqL/QSkN8T3rk1?=
+ =?us-ascii?Q?JTBWpGEeTHoNeFB2MhsBnJpNP3PR1eVbox1FersIcpl2bT0S+L3OdVBiCzfm?=
+ =?us-ascii?Q?FEMK9dFabwoPMVBabeiioOcThm+Eyw/XQ8ytFOiv6XvrM+EUL6pCr4c2yMeD?=
+ =?us-ascii?Q?xAYvhQHNg8sewwSQCClqy83ZFtpo7Bw8UaJi19buIIrWqRWLimJEUgQ6nNgp?=
+ =?us-ascii?Q?q9BcEu/JPscN9trNhE3SFq1TT2JUMXxrqcDXhz+xmvoDeypC0j0WK0/eYDLg?=
+ =?us-ascii?Q?BMLZFDu7p3snJcYr5unQGDplPQwv2ScdvDgY5qhpve11DofDWuKtI0tvIPO4?=
+ =?us-ascii?Q?rbmGZ1dcrSNQJfsLMEZr/tulaDoZYedAlSdAWcf5wLEgceeG6pBOAdVtLFQP?=
+ =?us-ascii?Q?IUbxO0Z8UKZhZ9yWMDRjXR8V93czss+8C8qDT4Oq3uG3OUbqOmgF6hAwZcNV?=
+ =?us-ascii?Q?4X8pqouzykZciD45t0dstHKTumXiJakmiQ0pJWHicQT7OptQKJxrGoDuwRND?=
+ =?us-ascii?Q?eh3hB00DdhGK2HCZTKKabYqyHC5lR9qx2Oyz?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2025 08:27:01.8062 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a8684141-7909-4f2a-4c28-08dddfc35681
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000075F1.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4165
+Received-SPF: permerror client-ip=2a01:111:f403:2408::60e;
+ envelope-from=Luc.Michel@amd.com;
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,75 +156,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000388da6063cc7be76
-Content-Type: text/plain; charset="UTF-8"
+Refactor the OCM creation using the VersalMap structure.
 
-Hi Richard,
+Signed-off-by: Luc Michel <luc.michel@amd.com>
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+---
+ include/hw/arm/xlnx-versal.h |  4 ----
+ hw/arm/xlnx-versal.c         | 20 ++++++++++++++++----
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
-> On 8/20/25 04:21, Kohei Tokunaga wrote:
-> > This commit implements andc, orc, eqv, nand and nor operations using
-Wasm
-> > instructions.
-> >
-> > Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> > ---
-> >   tcg/wasm/tcg-target.c.inc | 55 +++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 55 insertions(+)
-> >
-> > diff --git a/tcg/wasm/tcg-target.c.inc b/tcg/wasm/tcg-target.c.inc
-> > index 01ef7d32f3..3c0374cd01 100644
-> > --- a/tcg/wasm/tcg-target.c.inc
-> > +++ b/tcg/wasm/tcg-target.c.inc
-> > @@ -449,6 +449,56 @@ static void tcg_wasm_out_cond(
-> >       }
-> >   }
-> >
-> > +static void tcg_wasm_out_andc(
-> > +    TCGContext *s, TCGReg ret, TCGReg arg1, TCGReg arg2)
-> > +{
-> > +    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(arg1));
-> > +    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(arg2));
-> > +    tcg_wasm_out_op_not(s);
-> > +    tcg_wasm_out_op(s, OPC_I64_AND);
-> > +    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(ret));
-> > +}
->
-> Don't implement stuff that's not present in the ISA.
-> This will be handled generically.
+diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
+index 62b8d234ecb..7be5a6ccf4d 100644
+--- a/include/hw/arm/xlnx-versal.h
++++ b/include/hw/arm/xlnx-versal.h
+@@ -46,14 +46,10 @@ struct Versal {
+     struct {
+         /* 4 ranges to access DDR.  */
+         MemoryRegion mr_ddr_ranges[4];
+     } noc;
+ 
+-    struct {
+-        MemoryRegion mr_ocm;
+-    } lpd;
+-
+     struct {
+         uint32_t clk_25mhz;
+         uint32_t clk_125mhz;
+         uint32_t gic;
+     } phandle;
+diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
+index 3905549b32e..f46c73ac8e7 100644
+--- a/hw/arm/xlnx-versal.c
++++ b/hw/arm/xlnx-versal.c
+@@ -71,10 +71,15 @@ FIELD(VERSAL_IRQ, OR_IDX, 19, 4) /* input index on the IRQ OR gate */
+ typedef struct VersalSimplePeriphMap {
+     uint64_t addr;
+     int irq;
+ } VersalSimplePeriphMap;
+ 
++typedef struct VersalMemMap {
++    uint64_t addr;
++    uint64_t size;
++} VersalMemMap;
++
+ typedef struct VersalGicMap {
+     int version;
+     uint64_t dist;
+     uint64_t redist;
+     uint64_t cpu_iface;
+@@ -108,10 +113,12 @@ typedef struct VersalCpuClusterMap {
+ 
+     enum StartPoweredOffMode start_powered_off;
+ } VersalCpuClusterMap;
+ 
+ typedef struct VersalMap {
++    VersalMemMap ocm;
++
+     VersalCpuClusterMap apu;
+     VersalCpuClusterMap rpu;
+ 
+     VersalSimplePeriphMap uart[2];
+     size_t num_uart;
+@@ -207,10 +214,15 @@ typedef struct VersalMap {
+         int irq_num;
+     } reserved;
+ } VersalMap;
+ 
+ static const VersalMap VERSAL_MAP = {
++    .ocm = {
++        .addr = 0xfffc0000,
++        .size = 0x40000,
++    },
++
+     .apu = {
+         .name = "apu",
+         .cpu_model = ARM_CPU_TYPE_NAME("cortex-a72"),
+         .num_cluster = 1,
+         .num_core = 2,
+@@ -1605,10 +1617,11 @@ static uint32_t fdt_add_clk_node(Versal *s, const char *name,
+ 
+ static void versal_realize(DeviceState *dev, Error **errp)
+ {
+     Versal *s = XLNX_VERSAL_BASE(dev);
+     DeviceState *slcr, *ospi;
++    MemoryRegion *ocm;
+     Object *container;
+     const VersalMap *map = versal_get_map(s);
+     size_t i;
+ 
+     if (s->cfg.fdt == NULL) {
+@@ -1678,14 +1691,13 @@ static void versal_realize(DeviceState *dev, Error **errp)
+ 
+     versal_map_ddr(s);
+     versal_unimp(s);
+ 
+     /* Create the On Chip Memory (OCM).  */
+-    memory_region_init_ram(&s->lpd.mr_ocm, OBJECT(s), "ocm",
+-                           MM_OCM_SIZE, &error_fatal);
+-
+-    memory_region_add_subregion_overlap(&s->mr_ps, MM_OCM, &s->lpd.mr_ocm, 0);
++    ocm = g_new(MemoryRegion, 1);
++    memory_region_init_ram(ocm, OBJECT(s), "ocm", map->ocm.size, &error_fatal);
++    memory_region_add_subregion_overlap(&s->mr_ps, map->ocm.addr, ocm, 0);
+ }
+ 
+ void versal_sdhci_plug_card(Versal *s, int sd_idx, BlockBackend *blk)
+ {
+     DeviceState *sdhci, *card;
+-- 
+2.50.1
 
-Thank you for the feedback. I'll remove them and rely on the default
-expansion.
-
-Regards,
-Kohei
-
---000000000000388da6063cc7be76
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Richard,<br><br>&gt; On 8/20/25 04:21,=
- Kohei Tokunaga wrote:<br>&gt; &gt; This commit implements andc, orc, eqv, =
-nand and nor operations using Wasm<br>&gt; &gt; instructions.<br>&gt; &gt; =
-<br>&gt; &gt; Signed-off-by: Kohei Tokunaga &lt;<a href=3D"mailto:ktokunaga=
-.mail@gmail.com">ktokunaga.mail@gmail.com</a>&gt;<br>&gt; &gt; ---<br>&gt; =
-&gt; =C2=A0 tcg/wasm/tcg-target.c.inc | 55 ++++++++++++++++++++++++++++++++=
-+++++++<br>&gt; &gt; =C2=A0 1 file changed, 55 insertions(+)<br>&gt; &gt; <=
-br>&gt; &gt; diff --git a/tcg/wasm/tcg-target.c.inc b/tcg/wasm/tcg-target.c=
-.inc<br>&gt; &gt; index 01ef7d32f3..3c0374cd01 100644<br>&gt; &gt; --- a/tc=
-g/wasm/tcg-target.c.inc<br>&gt; &gt; +++ b/tcg/wasm/tcg-target.c.inc<br>&gt=
-; &gt; @@ -449,6 +449,56 @@ static void tcg_wasm_out_cond(<br>&gt; &gt; =C2=
-=A0 =C2=A0 =C2=A0 }<br>&gt; &gt; =C2=A0 }<br>&gt; &gt; =C2=A0 <br>&gt; &gt;=
- +static void tcg_wasm_out_andc(<br>&gt; &gt; + =C2=A0 =C2=A0TCGContext *s,=
- TCGReg ret, TCGReg arg1, TCGReg arg2)<br>&gt; &gt; +{<br>&gt; &gt; + =C2=
-=A0 =C2=A0tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(arg1));<br>&gt; &g=
-t; + =C2=A0 =C2=A0tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(arg2));<br=
->&gt; &gt; + =C2=A0 =C2=A0tcg_wasm_out_op_not(s);<br>&gt; &gt; + =C2=A0 =C2=
-=A0tcg_wasm_out_op(s, OPC_I64_AND);<br>&gt; &gt; + =C2=A0 =C2=A0tcg_wasm_ou=
-t_op_idx(s, OPC_GLOBAL_SET, REG_IDX(ret));<br>&gt; &gt; +}<br>&gt; <br>&gt;=
- Don&#39;t implement stuff that&#39;s not present in the ISA.<br>&gt; This =
-will be handled generically.<br><br>Thank you for the feedback. I&#39;ll re=
-move them and rely on the default<br>expansion.<br><br>Regards,<br>Kohei<br=
-><br></div></div>
-
---000000000000388da6063cc7be76--
 
