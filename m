@@ -4,120 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7356ACA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 12:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B49CA0EF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 12:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up4VT-0006cu-75; Thu, 21 Aug 2025 08:35:03 -0400
+	id 1up4b5-0000gv-If; Thu, 21 Aug 2025 08:40:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1up4VQ-0006cf-SW; Thu, 21 Aug 2025 08:35:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1up4VJ-0007fD-Dl; Thu, 21 Aug 2025 08:35:00 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L6a7ge012075;
- Thu, 21 Aug 2025 12:34:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=sGLYd0
- xhBWytqwStUPRUW3yDoDj5fich3tJBPLNXyFE=; b=no8o6UPNCEO6E4VY3cUZfA
- munhgc8NV42NjC/8Gg7gLJwMh+0lmdjOGYCs7Lbt6Kex3orfz8Wj2I6z3fg/Vnve
- TbaksBcxcpsTOEgMKBmUU9Ga+qcm/4XOs2w2GIF65+4KHW+AJ9SW+XhHNM4X/VRO
- iCjs6qrv8f8TNkDDvZVbLg7E7linTkskmFJgT3rItPXNBsl2jmAGcV7NzY7cpGRj
- AjBp6j8+csoi/gBX1VFjEgO+gxUVnHsdVo6CGkgps17d8vN7+TJILjqAL+jdkZlr
- 8FHVHRP92DPkaosSK/710Lfqq/7STS+IO61QkyPzPMLlV54EvErnOOvAmjJiQFBw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38vgmx9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Aug 2025 12:34:45 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57LCYj9L028876;
- Thu, 21 Aug 2025 12:34:45 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38vgmx6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Aug 2025 12:34:45 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57LAo8vg015613;
- Thu, 21 Aug 2025 12:34:44 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48my42893a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Aug 2025 12:34:44 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57LCYeRS43843988
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Aug 2025 12:34:40 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7A0172004B;
- Thu, 21 Aug 2025 12:34:40 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F334020040;
- Thu, 21 Aug 2025 12:34:37 +0000 (GMT)
-Received: from [9.39.19.55] (unknown [9.39.19.55])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 21 Aug 2025 12:34:37 +0000 (GMT)
-Message-ID: <46991b45-3a03-4e66-a28d-f0178b8780fe@linux.ibm.com>
-Date: Thu, 21 Aug 2025 18:04:36 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1up4b2-0000g7-TD
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 08:40:48 -0400
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1up4ax-0000He-5t
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 08:40:48 -0400
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e94e3c3621fso895031276.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 05:40:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755780037; x=1756384837; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=50Xo61dgc01XvULgIJ3q1FeJl2uep3o/+d3L2ggW8Es=;
+ b=BTkSAqFbYfK2yGPD1fOpGn5Yrl4cIYWdlt5UIvg3rO9j6LQv10PAD29qHNmn7gHqML
+ E2wAVtIgRLWZ0LC19wZAAHmnSytYD+hgwpWTerlzbcf2NCmbfiNjdu7qHlpn5e127GTP
+ zuucY8FZ2qRJDETI1wK8IYHwEY7CGe5uviRX+zMtz8XaP2aFhZYJbGarTl1YXSFOFkj/
+ s2dn15KBx2pk0VJvgQEVHK57stQKZzHKWFMdm9zybvHEb0PcKWqtjTQvgtx6UCKC0Kuu
+ VwcxPe6dTMW3zjg8ZoYpyzyUNs3IiE7HJOtRt8mTJCm2kQ6r5poE+lKF1ZftLFAMGdyv
+ AAjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755780037; x=1756384837;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=50Xo61dgc01XvULgIJ3q1FeJl2uep3o/+d3L2ggW8Es=;
+ b=of5Y3OTSndBAUYo2WLDD9t1Ov0KmL/y4UY2CDZOYrMDnwctJqcm5drdic4+uCFjFWa
+ NjNVyu2ECsxmtOopfKqcbFz5iCVFtdh7xgTBqpJ3L5pQkcnj/skrNmsShOrRygQyoTku
+ eOyb6vzOLJrd5x6uo6qKjPy94a+Q0Cf7vQuS7oFuesdmHxukyyBMjz5BMrs6IvaGYcpS
+ RRH8s8fq4HKUxZqrxn5OSA//TaM3ht+yiFIFUEv6JImL6WJVvQVNSz1CXUOHNnc1T9Rv
+ zTFBrVe6fN0Lped/7mEcOffaXIaf3joLBguhO1HyW81KGoSMb/3laTEJCzR8aT455J5U
+ T4TQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+bmLOL5AG+zbZzIB6+hIN7uutC4hZUr0AJrwnq9O0s9UOMmoxf16MViXiZctYptRRt7+GOs2Jym2/@nongnu.org
+X-Gm-Message-State: AOJu0Yyb6q/FNbgraRXXJgbry9+P9emDnERlqfe3m1KyzgwvPLtHtCMt
+ UCwBz0bbkgxNn0IO/8AyEhPJmILYxbQ95qbCeSn+9BGPkbIXcX3W6hO7RfMqf1Evhc8tc21Q94E
+ cf8GaxiYBNA82CZXaHAVtRCF709mYldOAbWMxfDtIMA==
+X-Gm-Gg: ASbGncu8u+aJhY/AUy2jnqpczHXj0D8ehrutcVPWwAUASpVqs5KhZ/ocTfVmhvsdLRu
+ 4bUU3cTp159iGvth8s28bQG7VRn01nZckuJyZ9sIrMhlj0timiXhfJ0YYKDup/XhSBYYltHZM0i
+ U7lBKDRYTGxy5hlggspCTVM2hV5pD/8FQ421hINgtE4NM8bADeuddnUXUavb8mMtDDwdRCnTwCO
+ 2J7jIr3ebFIywlQJz0=
+X-Google-Smtp-Source: AGHT+IEav9r8wP3xvUw8RFtNW6eFrCjxY5M/t4M+xa9U7tq1zp+3ULEMxEw1DlnsEuOyTgl3CGLH60A1So/bTA3kNGI=
+X-Received: by 2002:a05:6902:2d03:b0:e94:f2ff:823 with SMTP id
+ 3f1490d57ef6-e95088e66a8mr2538943276.5.1755780037047; Thu, 21 Aug 2025
+ 05:40:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fix: Fix build error with CONFIG_POWERNV disabled
-To: Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250820122516.949766-2-adityag@linux.ibm.com>
- <3xbdwul3qwdb246pk5xeeduotfvyeyjr6qkozzatb7h2zdrxlb@pcuu3ewglrjj>
- <f7a8b91e-e2df-4c11-818e-f244f8e648ad@redhat.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <f7a8b91e-e2df-4c11-818e-f244f8e648ad@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 0rHnwpmlp8v0e0bAC8fSlWHIYu7EaYZg
-X-Authority-Analysis: v=2.4 cv=IrhHsL/g c=1 sm=1 tr=0 ts=68a71265 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=keK3y0qNwfmjET115iUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDIyMiBTYWx0ZWRfXyaIKYEWePgw/
- QbcHTlGeCbEfOHqPYjmgzJzkMrbLQsiIIBVnAm9zFpBhr9jpttiFt5fsMkYqi3buKH1K4k3KYgg
- LDEZoa43mtyQ7E0grlqL5ntv/g8255NC1J4F193NcdBmNN4n2D1e58cvqoqFrBudTmTo/UPxHRb
- jYczWFM7h1tJ/5slLfdyJ0JtsqRYIc27fOIFk6ylR2G/7d/KXMKkJsOljrBwyQ/438NxoMm/jQ7
- qHlH9+Lkc8JWVfHJst6IuCqDRwxQHAI42r4Y9zO6rRB9VrMzdnrWl7xp3kRg2zGUDBXr3qIwcaD
- reO+CEuUUz2zkf+nGckgCvavsq4e23QS7NQq6TmA6eDjAsv6EPc3XP6C155UMHmnOOLyprl3G3a
- pczS6i7ETFk5ucPWturUm+Fr14KlVw==
-X-Proofpoint-ORIG-GUID: hyxkdMWBW0EpkFU-PKVKiXfXSFUr5gEM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-21_03,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2508110000
- definitions=main-2508190222
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250110-san-v8-0-57a5a1be1bcf@daynix.com>
+ <20250110-san-v8-2-57a5a1be1bcf@daynix.com>
+In-Reply-To: <20250110-san-v8-2-57a5a1be1bcf@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 Aug 2025 13:40:25 +0100
+X-Gm-Features: Ac12FXxOGkEXhmPRt78klbC7I6ZJBZvpsNhkof1rHScwGSrrnkSdIeVkraRKuFE
+Message-ID: <CAFEAcA-aTYebu-5s4AeBfE3oLQfxTwCpeosoj0TU8E_XPu_ZDg@mail.gmail.com>
+Subject: Re: [PATCH v8 2/2] memory: Do not create circular reference with
+ subregion
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
+ devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,73 +112,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
-
-On 21/08/25 17:35, Thomas Huth wrote:
-> On 21/08/2025 12.53, Aditya Gupta wrote:
->> On 25/08/20 05:55PM, Aditya Gupta wrote:
->>> Currently when CONFIG_POWERNV is not enabled, the build fails, such as
->>> with --without-default-devices:
->>>
->>>      $ ./configure --without-default-devices
->>>      $ make
->>>
->>>      [281/283] Linking target qemu-system-ppc64
->>>      FAILED: qemu-system-ppc64
->>>      cc -m64 @qemu-system-ppc64.rsp
->>>      /usr/bin/ld: 
->>> libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function 
->>> `helper_load_sprd':
->>>      .../target/ppc/misc_helper.c:335:(.text+0xcdc): undefined 
->>> reference to `pnv_chip_find_core'
->>>      /usr/bin/ld: 
->>> libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function 
->>> `helper_store_sprd':
->>>      .../target/ppc/misc_helper.c:375:(.text+0xdf4): undefined 
->>> reference to `pnv_chip_find_core'
->>>      collect2: error: ld returned 1 exit status
->>>      ...
->>>
->>>> <...snip...>
->>
->> The following is also sufficient to fix the compilation issue. Wasn't
->> sure if #ifdef POWERNV looks good there:
->>
->>      diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
->>      index e7d94625185c..a8e55b2937c7 100644
->>      --- a/target/ppc/misc_helper.c
->>      +++ b/target/ppc/misc_helper.c
->>      @@ -323,6 +323,7 @@ void helper_store_sprc(CPUPPCState *env, 
->> target_ulong val)
->>             target_ulong helper_load_sprd(CPUPPCState *env)
->>       {
->>      +#ifdef CONFIG_POWERNV
->>           /*
->>            * SPRD is a HV-only register for Power CPUs, so this will 
->> only be
->>            * accessed by powernv machines.
->>      @@ -361,11 +362,14 @@ target_ulong helper_load_sprd(CPUPPCState 
->> *env)
->>                                         TARGET_FMT_lx"\n", sprc);
->>               break;
->>           }
->>      +#endif
+On Fri, 10 Jan 2025 at 09:20, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
-> I don't think this is a good patch, it likely always disables the 
-> code, even if the POWERNV machine is available? At least it lacks the 
-> #include CONFIG_DEVICES that would be required here.
-
-
-Ah, sorry. Agreed it's not fixing the issue then. Thanks for pointing this.
-
-Meanwhile, I will wait for comments on original patch, if not the 
-original one maybe
-an alternate like this is better.
-
-
-- Aditya G
-
+> memory_region_update_container_subregions() used to call
+> memory_region_ref(), which creates a reference to the owner of the
+> subregion, on behalf of the owner of the container. This results in a
+> circular reference if the subregion and container have the same owner.
 >
->  Thomas
+> memory_region_ref() creates a reference to the owner instead of the
+> memory region to match the lifetime of the owner and memory region. We
+> do not need such a hack if the subregion and container have the same
+> owner because the owner will be alive as long as the container is.
+> Therefore, create a reference to the subregion itself instead ot its
+> owner in such a case; the reference to the subregion is still necessary
+> to ensure that the subregion gets finalized after the container.
 >
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+
+Hi; I came back to this patchset because it was never applied,
+and so we still have various leaks of MemoryRegion objects
+in devices which use the "device owns a container MemoryRegion C
+and puts another MemoryRegion X which it owns into that container"
+pattern.
+
+Unfortunately, with this patch applied, I see a segfault when running
+the device-introspect-test for Arm:
+
+$ (cd build/x86 && QTEST_QEMU_BINARY=./qemu-system-arm
+./tests/qtest/device-introspect-test -p
+/arm/device/introspect/concrete/defaults/none)
+[...]
+# Testing device 'imx7.analog'
+Broken pipe
+../../tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from
+signal 11 (Segmentation fault) (core dumped)
+
+Here's a backtrace collected with gdb:
+
+$ (cd build/x86 && QTEST_QEMU_BINARY="xterm -e gdb --tty $(tty) --args
+./qemu-system-arm" ./tests/qtest/device-introspect-test -p
+/arm/device/introspect/concrete/defaults/none)
+[hit 'r' in the gdb prompt in the new window]
+
+Thread 1 "qemu-system-arm" received signal SIGSEGV, Segmentation fault.
+memory_region_unref_subregion (subregion=0x555557d58370) at
+../../system/memory.c:1862
+1862        if (subregion->container->owner == subregion->owner) {
+(gdb) bt
+#0  memory_region_unref_subregion (subregion=0x555557d58370) at
+../../system/memory.c:1862
+#1  0x0000555555d5f97b in memory_region_del_subregion
+(mr=0x555557d58150, subregion=0x555557d58370)
+    at ../../system/memory.c:2705
+#2  0x0000555555d5cc1c in memory_region_finalize (obj=0x555557d58150)
+at ../../system/memory.c:1811
+#3  0x0000555556197595 in object_deinit (obj=0x555557d58150,
+type=0x5555579d2ea0) at ../../qom/object.c:715
+#4  0x0000555556197613 in object_finalize (data=0x555557d58150) at
+../../qom/object.c:729
+#5  0x00005555561988f9 in object_unref (objptr=0x555557d58150) at
+../../qom/object.c:1232
+#6  0x000055555619a3d6 in object_finalize_child_property
+    (obj=0x555557d57e20, name=0x555557c59810 "imx7.analog[0]",
+opaque=0x555557d58150) at ../../qom/object.c:1818
+#7  0x0000555556197344 in object_property_del_all (obj=0x555557d57e20)
+at ../../qom/object.c:667
+#8  0x0000555556197600 in object_finalize (data=0x555557d57e20) at
+../../qom/object.c:728
+#9  0x00005555561988f9 in object_unref (objptr=0x555557d57e20) at
+../../qom/object.c:1232
+#10 0x00005555562f4600 in qmp_device_list_properties
+(typename=0x555557d3ee70 "imx7.analog", errp=0x7fffffffdc00)
+    at ../../qom/qom-qmp-cmds.c:237
+#11 0x00005555563981ba in qmp_marshal_device_list_properties
+(args=0x7fffe00031f0, ret=0x7fffef6afda8, errp=0x7fffef6afda0)
+    at qapi/qapi-commands-qdev.c:65
+#12 0x00005555563bcb53 in do_qmp_dispatch_bh (opaque=0x7fffef6afe40)
+at ../../qapi/qmp-dispatch.c:128
+#13 0x00005555563ed87f in aio_bh_call (bh=0x555557d3f540) at
+../../util/async.c:172
+#14 0x00005555563ed9cb in aio_bh_poll (ctx=0x555557a00770) at
+../../util/async.c:219
+#15 0x00005555563cd517 in aio_dispatch (ctx=0x555557a00770) at
+../../util/aio-posix.c:436
+#16 0x00005555563edebe in aio_ctx_dispatch (source=0x555557a00770,
+callback=0x0, user_data=0x0) at ../../util/async.c:361
+#17 0x00007ffff6e965c5 in ??? () at /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#18 0x00007ffff6e96710 in g_main_context_dispatch () at
+/lib/x86_64-linux-gnu/libglib-2.0.so.0
+#19 0x00005555563ef89e in glib_pollfds_poll () at ../../util/main-loop.c:287
+#20 0x00005555563ef930 in os_host_main_loop_wait (timeout=0) at
+../../util/main-loop.c:310
+#21 0x00005555563efa6b in main_loop_wait (nonblocking=0) at
+../../util/main-loop.c:589
+#22 0x0000555555d7d181 in qemu_main_loop () at ../../system/runstate.c:905
+#23 0x00005555562f94c7 in qemu_default_main (opaque=0x0) at
+../../system/main.c:50
+#24 0x00005555562f9585 in main (argc=18, argv=0x7fffffffe078) at
+../../system/main.c:93
+
+
+In memory_region_unref_subregion(), subregion->container is NULL.
+
+This is because in memory_region_del_subregion() we do:
+
+    subregion->container = NULL;
+
+and then after that we call
+    memory_region_unref_subregion(subregion);
+which dereferences subregion->container.
+
+Won't this always SEGV ?
+
+thanks
+-- PMM
 
