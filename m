@@ -4,82 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AACCA0EDC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 01:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63F0CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 03:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uouAn-0006Rb-92; Wed, 20 Aug 2025 21:33:01 -0400
+	id 1uovjq-0000x5-L6; Wed, 20 Aug 2025 23:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1uouAl-0006RI-53; Wed, 20 Aug 2025 21:32:59 -0400
-Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1uouAj-0006g5-Ha; Wed, 20 Aug 2025 21:32:58 -0400
-Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-435de8160dbso178157b6e.3; 
- Wed, 20 Aug 2025 18:32:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755739976; x=1756344776; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xyczhmlKtv1L17mdAnQ068zuyKUSxYddeRT0besMfbY=;
- b=AsGOL9b4bVHP8k8AO9RVjXc9Pgja/X0sZJTbxZgpqQhdVjjqYU0ysA5xMouKeqzW5+
- f9ews4PrOUU4qMxpYFoAs/nZE4NDlDVQSR1pnJKvZdb9/9E4q0ukRJp3KHZ70xEnGWqx
- OH3P28qlYdCb+eBet4hQklns2BuAbosiJNr2yWcAjPkbRrDhK0DqXM0rhOKR6YxsWwaN
- 6mQgYC0TQ97gmSgrct/HPi1yGbfoOgDR3TzH0ZysOiKM96WUW0MeumpxiedRo41ofz1O
- +wY/9pf3UXHCjVR4HuSrWdCYY+hKaOmIipjFBiQzwI0fD7dGQ2T8axIGEPIEEyz5DTqS
- /xQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755739976; x=1756344776;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xyczhmlKtv1L17mdAnQ068zuyKUSxYddeRT0besMfbY=;
- b=k0MitdkZ0OiTOdQ3dS+mnneoXiGyw+O1dVKqC6sa3KfByX0WvHRUpKXOmFbb6duI6i
- 7tjKkHUM54P1O0XIo4pdGwfMFfOXQ3xBCvWiXwo4CL+AjJgbNLqt4JbzrR9m5pK6XxKE
- QazuZF5cqNz2bUzLvhR9Be65ZnAQZhD77UvY8ktDL7HsTw1xYIstABoL/1oqUeAoq5Im
- iHoO4HM1UZ7ORdNx/zA/0sAllC/qalAhPzLkfSxJQDBPIw9yGaF1gn+gNkU9C8D9jUmU
- w6Zr2qtDmw2G0428LOZTQA//1Dm7d2n9gEk50zBEP5T6efrlA+k59Rl15+XJc5E/3PrS
- P2gw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV6tjDnAY9AMamGQHpcJaWqYuz+TFHvBR1sXA+N7TaNPqyd0aOmpFQ8fW+EJRtxZdZO5jXa0u3dNnlK@nongnu.org
-X-Gm-Message-State: AOJu0YzuB+UK8mIOZfZFzd80Cjp9KQMYF9Y0s5vsh1VwEwG/tDWhp81J
- oGYgQ6txmtdtsl6G15LaKmOC0FcVPeEU0N1cgndbTuGXTBvoJYQgT1DSXStjVl/Al+4s2M26TR7
- EG4HrnBhgUfk/nlHQZN0z8sbPN/CssZM=
-X-Gm-Gg: ASbGncvw7TjExLSd8/ObSo21/rpDL+TTOQ/6254Y2L7uC+hk+eNM9X59fxIwnnAFhuh
- P6dJ8iYCn1LmE9MEW1C5GiaW+O6U3j2/pqxzcyL6egs/jJBxKm8m1kAf2EYFo5jLOc0Zpp8VnhF
- n5HjX8Pia950u3Rn3Mc12POh3rmUMOwgeDlVTOBSB1t814rIfOE7RIBZGyG6DJSTswWxxCErpE9
- N/+Dhw=
-X-Google-Smtp-Source: AGHT+IFzOTtft1JdzUBUOvXtUEMesya16os5JUY6ANeWDOg1jLnVinXbm/2l6khgVaYi/JEecHn7lUFsXPAW39+vABI=
-X-Received: by 2002:a05:6808:2120:b0:41c:95a3:8180 with SMTP id
- 5614622812f47-4377d6f6186mr374691b6e.20.1755739975824; Wed, 20 Aug 2025
- 18:32:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uovjl-0000vy-EA
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 23:13:13 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uovjd-0003Y5-UR
+ for qemu-devel@nongnu.org; Wed, 20 Aug 2025 23:13:13 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8CxK9K6jqZopzoBAA--.1303S3;
+ Thu, 21 Aug 2025 11:12:58 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJDxrcG4jqZodY5cAA--.63748S4;
+ Thu, 21 Aug 2025 11:12:57 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 02/10] target/loongarch: Add CSR_PWCH write helper function
+Date: Thu, 21 Aug 2025 11:12:48 +0800
+Message-Id: <20250821031256.3451168-3-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250821031256.3451168-1-maobibo@loongson.cn>
+References: <20250821031256.3451168-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-References: <20250815034619.51980-1-hizhisong@gmail.com>
- <20250817134527.GA321129@fedora>
-In-Reply-To: <20250817134527.GA321129@fedora>
-From: Brian Song <hibriansong@gmail.com>
-Date: Wed, 20 Aug 2025 21:32:44 -0400
-X-Gm-Features: Ac12FXx17h2LNTHEUntF3wV3aYKqlMKtxxgtKzonv0Ya3p73Ltq9bgAt7ENdcMI
-Message-ID: <CAKWCU7V4+Eu-6iVbjd+xR0yrqNShGf3y2VB_RNqXo-dP7ZMFUg@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/3] block/export: Add FUSE-over-io_uring for Storage
- Exports
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com, 
- bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
- envelope-from=hibriansong@gmail.com; helo=mail-oi1-x232.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxrcG4jqZodY5cAA--.63748S4
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,40 +66,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/17/25 9:45 AM, Stefan Hajnoczi wrote:
-> On Thu, Aug 14, 2025 at 11:46:16PM -0400, Zhi Song wrote:
->> Due to kernel limitations, when the FUSE-over-io_uring option is
->> enabled,
->> you must create and assign nr_cpu IOThreads. For example:
->
-> While it would be nice for the kernel to support a more flexible queue
-> mapping policy, userspace can work around this.
->
-> I think Kevin suggested creating the number of FUSE queues required by
-> the kernel and configuring them across the user's IOThreads. That way
-> the number of IOThreads can be smaller than the number of FUSE queues.
->
-> Stefan
+Bit HPTW_EN in register CSR_PWCH controls enabling hardware page
+table walker feature when PTW feature is enabled. Otherwise it is
+reserved bit.
 
-If we are mapping user specified IOThreads to nr_cpu queues Q, when we
-register entries, we need to think about how many entries in each Q[i]
-go to different IOThreads, and bind the qid when submitting. Once a CQE
-comes back, the corresponding IOThread handles it. Looks like we don't
-really need a round robin for dispatching. The actual question is how
-to split entries in each queue across IOThreads.
+Here add register CSR_PWCH write helper function.
 
-For example, if we split entries evenly:
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu-csr.h                        |  2 ++
+ target/loongarch/tcg/csr_helper.c                 | 15 +++++++++++++++
+ target/loongarch/tcg/helper.h                     |  1 +
+ .../tcg/insn_trans/trans_privileged.c.inc         |  1 +
+ 4 files changed, 19 insertions(+)
 
-USER: define 2 IOThreads to submit and recv ring entries
-NR_CPU: 4
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index 0834e91f30..043b2f14b9 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -103,6 +103,8 @@ FIELD(CSR_PWCH, DIR3_BASE, 0, 6)
+ FIELD(CSR_PWCH, DIR3_WIDTH, 6, 6)
+ FIELD(CSR_PWCH, DIR4_BASE, 12, 6)
+ FIELD(CSR_PWCH, DIR4_WIDTH, 18, 6)
++FIELD(CSR_PWCH, HPTW_EN, 24, 1)
++FIELD(CSR_PWCH, RESERVE, 25, 7)
+ 
+ #define LOONGARCH_CSR_STLBPS         0x1e /* Stlb page size */
+ FIELD(CSR_STLBPS, PS, 0, 5)
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 4433167332..8c7168034e 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -141,3 +141,18 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
+     env->CSR_PWCL = val;
+     return old_v;
+ }
++
++target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
++{
++    uint8_t has_ptw;
++    int64_t old_v = env->CSR_PWCH;
++
++    val = FIELD_DP64(val, CSR_PWCH, RESERVE, 0);
++    has_ptw = FIELD_EX32(env->cpucfg[2], CPUCFG2, HPTW);
++    if (!has_ptw) {
++        val = FIELD_DP64(val, CSR_PWCH, HPTW_EN, 0);
++    }
++
++    env->CSR_PWCH = val;
++    return old_v;
++ }
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 1d5cb0198c..0f62119987 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -106,6 +106,7 @@ DEF_HELPER_2(csrwr_asid, i64, env, tl)
+ DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
+ DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
+ DEF_HELPER_2(csrwr_pwcl, i64, env, tl)
++DEF_HELPER_2(csrwr_pwch, i64, env, tl)
+ DEF_HELPER_2(iocsrrd_b, i64, env, tl)
+ DEF_HELPER_2(iocsrrd_h, i64, env, tl)
+ DEF_HELPER_2(iocsrrd_w, i64, env, tl)
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index ecbfe23b63..224f98c5fb 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -79,6 +79,7 @@ void loongarch_csr_translate_init(void)
+     SET_CSR_FUNC(ASID,  NULL, gen_helper_csrwr_asid);
+     SET_CSR_FUNC(PGD,   gen_helper_csrrd_pgd, NULL);
+     SET_CSR_FUNC(PWCL,  NULL, gen_helper_csrwr_pwcl);
++    SET_CSR_FUNC(PWCH,  NULL, gen_helper_csrwr_pwch);
+     SET_CSR_FUNC(CPUID, gen_helper_csrrd_cpuid, NULL);
+     SET_CSR_FUNC(TCFG,  NULL, gen_helper_csrwr_tcfg);
+     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+-- 
+2.39.3
 
-Q = malloc(sizeof(entry) * 32 * nr_cpu);
-
-IOThread-1:
-Q[0] Q[1] Q[2] Q[3]
-  16   16   16   16
-
-IOThread-2:
-Q[0] Q[1] Q[2] Q[3]
-  16   16   16   16
 
