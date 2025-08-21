@@ -4,110 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 181C8CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 17:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E593CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 17:48:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up8xs-0007ZR-7n; Thu, 21 Aug 2025 13:20:40 -0400
+	id 1up9NH-0007Fv-CV; Thu, 21 Aug 2025 13:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1up8xp-0007Ym-NT
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 13:20:38 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
+ id 1up9NF-0007EE-Hu
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 13:46:53 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1up8xm-0001Ga-6k
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 13:20:36 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B52A6211F4;
- Thu, 21 Aug 2025 17:20:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755796831; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vYy25271PRr19uuE7/womDHn3Kzo+174tzrfPiwp/3M=;
- b=bGCXgzRvqt4Y8j3eaN0pjqeaZpltE35SjuJAaOwJtZSo/czfVFI/viaK1FoK0Nl7zhCu37
- z1sFTOzdRpVWxXN12uNpZ9VknEw4OAHvq1XTy3vfGmPCNIMo3b0KQyNQ73bSRVCLad25I5
- /5As1MXWTmSN+jM8MpSHPQJou9vVpKQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755796831;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vYy25271PRr19uuE7/womDHn3Kzo+174tzrfPiwp/3M=;
- b=lEwF98D//+9dexo7//s2ArSqWgJv648c9hVmzVN9OtIBMt4sM/yfi7ocoCir2FZFkX5j9h
- yg7AIWFehzZ73SAg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=VOmwqS2f;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BL5SFfyo
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1755796830; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vYy25271PRr19uuE7/womDHn3Kzo+174tzrfPiwp/3M=;
- b=VOmwqS2fUyjkUaxLrQ9hF7OA8YkDvVpw/kJEhXneHbCbnNM9Gxc1gWH0YpaRZaR3KBEDdu
- JrNJZSbL9jBsufgOZWqSL+H+QaiQaxxl1Sj4ElfY2g8po1Eel62+N0Laz86Pnksj/Jftqb
- SjcrvkegW0uHAckDavrSnaZV0X+09TY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1755796830;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vYy25271PRr19uuE7/womDHn3Kzo+174tzrfPiwp/3M=;
- b=BL5SFfyozvODyr8HDzH7nFebjhXanJ69sR3BDKHD6UJezUXjD/u+zsmKTe8qRQOZIItOgD
- F1JQFwnQAcgYiECg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 341F6139A8;
- Thu, 21 Aug 2025 17:20:29 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id VP2ZOV1Vp2g5MgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 21 Aug 2025 17:20:29 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 21/24] tests/qtest/migration: Take reference when
- passing %p to qtest_qmp
-In-Reply-To: <aJ0QHowWNp90OnzO@x1.local>
-References: <20250630195913.28033-1-farosas@suse.de>
- <20250630195913.28033-22-farosas@suse.de> <aJ0QHowWNp90OnzO@x1.local>
-Date: Thu, 21 Aug 2025 14:20:27 -0300
-Message-ID: <87a53sd21w.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
+ id 1up9ND-0003mW-6d
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 13:46:53 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-45a1b04f8b5so7679215e9.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 10:46:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1755798408; x=1756403208; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=F3XTh3fVFhgbXUBd3uiI0W181C7Bc1aMSdkuayb4H58=;
+ b=OpxTz2XQeSiJkYpIj2kLOZjABGXBymwdlfdG+hu8n76uLga8Pw+zP0buxJ4cY61pDo
+ qIRxhl8BR4oBwOL83AHOJdeoYvrcA/QpJvPRmEeo5o2alupHHWReuJFxzliTBrzRcis9
+ l4eh5qH5OjoZmIAg2znxLZnCOdNHv5jvtauHvmQLG8Zg+MYYvD6NQhgRpdoQgrAhATZY
+ n2x2dtrpHP9gSEnal0x0ooR7Obd5j/Wq8oSuMxvdtWyU5UhgftL6yrVfrOp44fQCFmcc
+ 3wO5p05wTuYYkCaUdjxwsOMXacfrtxq/4pBbIRPy4mLxkhDWivUhpvfo88BD+6lz4Hvu
+ 2p8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755798408; x=1756403208;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=F3XTh3fVFhgbXUBd3uiI0W181C7Bc1aMSdkuayb4H58=;
+ b=K08C3XkREe9Yxexb/sDr9HG6n25kT1+PV+4wJT8xjn4KK20LVA/itiQ849KIkr5Ntj
+ 5Zy/xGEZC1dMBGhTm3WePyY5ZsvCfdhggQG2Hh8B4r1RPlOdTUGfyD/KgRe7kuQo0ByD
+ kegaf2j4CVGSVubUUc+eckzubUMe5GnlK0fe3Oyal4j/r8A7j0qag1irSLohpn4y8OJp
+ 3OR982qIP09YUhLs5TcnBzwEO8exignfwGoqiPfanson4UBBM/mjyCjJup0d2EOE0+8+
+ 8j1U1kQDUU8NjjaSGo0Q1nA5cipaLvqsq3vG115d2OnyBeb0MT+taaZKpTaEbtxnuTmY
+ 9ApA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRM9NZzJrpGztwCmtETOcl9CT9oE6iYhg0roZgYtIUthIijtvDxJiAt60/KMPmHr3CZM3TwboCqfKF@nongnu.org
+X-Gm-Message-State: AOJu0YxjgWLMQSrlk7uZK0POQmFX3utz4EQstS/bSsMwpKZ2ZBqomToB
+ 1eHxx1utti/kbCd6kcRV8z7V/iz8UY9Ne1NcXmNRcbmqeDdYxDno54n1
+X-Gm-Gg: ASbGncugPEPxWj3T6t0cAS5oKrXdM8IUyy5KM7yg8/SH8Ts5uyilQgpPi+IGe1DC48P
+ wQDJAmHWWcoXbn1hUV2C/eUqUGaQih7a8w2MBNTeAS6rG+5CTnHguYLG9b4dm7+rShHngJYBDi2
+ SGROMKrF9gWJ0uvwSif1/+aDGI0ZdE4WIXKHxFWQvrX0XoFi2qG+v8TN5mumAVuGTMizPUS4jcz
+ xEbNE8F87oEswxpWkQeCwHPIMQkDqW90CIQqzYqNmzqND/Mv3bWXOLJTPBgwsNLjwbPqPTOw5j5
+ hQa3jPImPO4KU1/dZNRg/fMlmq5gTul3GwnU6jZgUpIOn3JplnQYOVDA7LC0BJDEdFBcd6vICrB
+ 4rP32/F0jkkT4Vt4OSTtGmh0Nc+R+tQ3SAvYN8sG40C9rNRqMVwyl9KGf0lBnKAmp80TZ4/pOir
+ U=
+X-Google-Smtp-Source: AGHT+IFrLg1QMSWuCSSJUMem7WDcamvDhoVh9Q/GeVQOGvHaEz+x6TwSGXG3B9VdIYIY5d2s3GiaIg==
+X-Received: by 2002:a05:600c:3592:b0:459:dc99:51bf with SMTP id
+ 5b1f17b1804b1-45b4d858dcdmr26954585e9.25.1755798407610; 
+ Thu, 21 Aug 2025 10:46:47 -0700 (PDT)
+Received: from localhost.localdomain (46-116-237-160.bb.netvision.net.il.
+ [46.116.237.160]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3c074879f5fsm12485360f8f.4.2025.08.21.10.46.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Aug 2025 10:46:47 -0700 (PDT)
+From: Leonid Bloch <lb.workbox@gmail.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <ehabkost@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>
+Cc: Leonid Bloch <lb.workbox@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 0/4] Introduce a battery, AC adapter, and lid button
+Date: Thu, 21 Aug 2025 20:45:48 +0300
+Message-ID: <20250821174554.40607-1-lb.workbox@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: B52A6211F4
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=lb.workbox@gmail.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,84 +108,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+First, I must apologize for the extremely long delay since v1 - it has been
+nearly 4 years, which is unacceptable. Life circumstances intervened.
 
-> On Mon, Jun 30, 2025 at 04:59:10PM -0300, Fabiano Rosas wrote:
->> The documentation of qobject_from_jsonv() states that it takes
->> ownership of any %p arguments passed in.
->> 
->> Next patches will add config-passing to the tests, so take an extra
->> reference in the migrate_qmp* functions to ensure the config is not
->> freed from under us.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  tests/qtest/migration/migration-qmp.c | 8 +++++---
->>  1 file changed, 5 insertions(+), 3 deletions(-)
->> 
->> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
->> index fb59741b2c..d82ac8c750 100644
->> --- a/tests/qtest/migration/migration-qmp.c
->> +++ b/tests/qtest/migration/migration-qmp.c
->> @@ -97,7 +97,8 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
->>      }
->>  
->>      err = qtest_qmp_assert_failure_ref(
->> -        who, "{ 'execute': 'migrate', 'arguments': %p}", args);
->> +        who, "{ 'execute': 'migrate', 'arguments': %p}",
->> +        qdict_clone_shallow(args));
->>  
->>      g_assert(qdict_haskey(err, "desc"));
->>  
->> @@ -136,7 +137,8 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
->>      }
->>  
->>      qtest_qmp_assert_success(who,
->> -                             "{ 'execute': 'migrate', 'arguments': %p}", args);
->> +                             "{ 'execute': 'migrate', 'arguments': %p}",
->> +                             qdict_clone_shallow(args));
->>  }
->>  
->>  void migrate_set_capability(QTestState *who, const char *capability,
->> @@ -174,7 +176,7 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
->>      migrate_set_capability(to, "events", true);
->>  
->>      rsp = qtest_qmp(to, "{ 'execute': 'migrate-incoming', 'arguments': %p}",
->> -                    args);
->> +                    qdict_clone_shallow(args));
->
-> Isn't it intentional to pass over the ownership in the three places here?
-> I don't see otherwise where args got freed.
->
+This series introduces three ACPI devices that are particularly useful
+for laptop/mobile virtualization:
 
-Hmm, I think I remember the issue being that qobject_from_jsonv() freed
-before the object it reached QMP, so indeed this needs to be freed
-before the migrate_qmp functions return.
+* Battery
+* AC adapter
+* Laptop lid button
 
-I don't really understand why ASAN didn't spot it though. I'll fix, thanks!
+Changes in v2:
+--------------
+Based on the feedback from Philippe Mathieu-Daudé and Michael S. Tsirkin:
 
-> OTOH, I saw there're yet another three similar usages of %p in framework.c:
->
-> x1:migration [migration-params-caps-no-config]$ git grep -A1 %p framework.c
-> framework.c:        migrate_qmp_fail(from, args->connect_uri, NULL, "{ 'config': %p }",
-> framework.c-                         args->start.config);
-> --
-> framework.c:    migrate_qmp(from, to, args->connect_uri, NULL, "{ 'config': %p }",
-> framework.c-                args->start.config);
-> --
-> framework.c:    migrate_incoming_qmp(to, args->connect_uri, NULL, "{ 'config': %p }",
-> framework.c-                         args->start.config);
->
-> They seem to be suspecious instead, as they seem to have lost ownership of
-> args->start.config, so args->start.config can start to point to garbage?
->
+* Complete redesign with dual-mode operation:
+  - QMP control mode (default): Devices are controlled via QMP commands,
+    providing deterministic behavior essential for migration and CI/testing
+  - Host mirroring mode (opt-in): Original sysfs/procfs monitoring behavior,
+    now disabled by default
 
+* Migrated to modern QEMU ACPI architecture:
+  - Devices now implement ACPI_DEV_AML_IF interface
+  - AML generation moved from centralized acpi-build.c to device files
 
+* Added a QMP interface:
+  - battery-set-state/query-battery
+  - ac-adapter-set-state/query-ac-adapter
+  - lid-button-set-state/query-lid-button
 
->>  
->>      if (!qdict_haskey(rsp, "return")) {
->>          g_autoptr(GString) s = qobject_to_json_pretty(QOBJECT(rsp), true);
->> -- 
->> 2.35.3
->> 
+* Documentation improvements:
+  - Converted to .rst format
+  - Added examples for both QMP and "fake" sysfs/procfs testing
+
+The dual-mode design ensures these devices are migration-safe and
+deterministic by default, while still allowing host state mirroring
+when explicitly requested for desktop use cases.
+
+Use cases:
+----------
+1. Testing: CI systems can programmatically control power states
+2. Cloud: Expose virtual battery for usage-based resource limiting
+3. Desktop virtualization: Mirror host laptop state to guest (opt-in)
+4. Development: Test power management without physical hardware
+
+Example usage:
+--------------
+# Default QMP-controlled battery
+qemu-system-x86_64 -device battery
+
+# Mirror host battery
+qemu-system-x86_64 -device battery,use-qmp=false,enable-sysfs=true
+
+# Control via QMP
+{"execute": "battery-set-state",
+ "arguments": {"state": {"present": true, "charging": false,
+                         "discharging": true, "charge-percent": 42,
+                         "rate": 500}}}
+
+The series has been tested with Windows and Linux guests, correctly
+showing battery status, AC adapter state, and lid button events in
+guest UIs and triggering appropriate power management actions.
+
+Thanks again for your patience and feedback.
+Leonid.
+
+Leonid Bloch (4):
+  hw/acpi: Increase the number of possible ACPI interrupts
+  hw/acpi: Introduce the QEMU Battery
+  hw/acpi: Introduce the QEMU AC adapter
+  hw/acpi: Introduce the QEMU lid button
+
+ MAINTAINERS                          |  18 +
+ docs/specs/acad.rst                  | 195 +++++++
+ docs/specs/battery.rst               | 225 ++++++++
+ docs/specs/button.rst                | 189 +++++++
+ docs/specs/index.rst                 |   3 +
+ hw/acpi/Kconfig                      |  12 +
+ hw/acpi/acad.c                       | 447 ++++++++++++++++
+ hw/acpi/battery.c                    | 735 +++++++++++++++++++++++++++
+ hw/acpi/button.c                     | 438 ++++++++++++++++
+ hw/acpi/core.c                       |  17 +-
+ hw/acpi/meson.build                  |   3 +
+ hw/acpi/trace-events                 |  15 +
+ hw/i386/Kconfig                      |   3 +
+ hw/i386/acpi-build.c                 |   1 +
+ include/hw/acpi/acad.h               |  27 +
+ include/hw/acpi/acpi_dev_interface.h |   3 +
+ include/hw/acpi/battery.h            |  33 ++
+ include/hw/acpi/button.h             |  25 +
+ qapi/acpi.json                       | 171 +++++++
+ 19 files changed, 2558 insertions(+), 2 deletions(-)
+ create mode 100644 docs/specs/acad.rst
+ create mode 100644 docs/specs/battery.rst
+ create mode 100644 docs/specs/button.rst
+ create mode 100644 hw/acpi/acad.c
+ create mode 100644 hw/acpi/battery.c
+ create mode 100644 hw/acpi/button.c
+ create mode 100644 include/hw/acpi/acad.h
+ create mode 100644 include/hw/acpi/battery.h
+ create mode 100644 include/hw/acpi/button.h
+
+-- 
+2.50.1
+
 
