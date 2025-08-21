@@ -4,85 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2222CA0EF8
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Aug 2025 21:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AACCA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 01:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uoqDu-0005Ia-S8; Wed, 20 Aug 2025 17:19:58 -0400
+	id 1uouAn-0006Rb-92; Wed, 20 Aug 2025 21:33:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uoqDr-0005GX-Q4; Wed, 20 Aug 2025 17:19:55 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uouAl-0006RI-53; Wed, 20 Aug 2025 21:32:59 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uoqDp-00050E-5N; Wed, 20 Aug 2025 17:19:55 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-61a8f452c43so512339a12.0; 
- Wed, 20 Aug 2025 14:19:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uouAj-0006g5-Ha; Wed, 20 Aug 2025 21:32:58 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-435de8160dbso178157b6e.3; 
+ Wed, 20 Aug 2025 18:32:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755724790; x=1756329590; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PV5PRLX0fBzyIDbGMvnzpIIGMqO5fU+XNvrNfSXHklc=;
- b=j+jjt9fff78ItN54mRreGHI+YPSk+0Z7sIfVYOUzhnYT9P6C8whyd0QKzqFB29iqOp
- VqqCcr/6QPscgCmI0yOjx7MOgmMBu6lYlN50oShR+N8U3LtGuBIuPuRO9yTyD00zZTpi
- 01O74rPVkf254mKLfH2bJkkoJV6FcOn/XifwgPHZzA/j+CMeINdkBtmcouW7u2qENieB
- G7HMMsIDq5yRrfVkVAhFXBBTUdFvSnTpXEE0JjcdArxmnDoGRkE8O8aPA6sW0O4xy/Be
- sqP1P9tYHPMi+VDdkS9810w53XWKHU+mr/x3Fr1dl58hx1nPOeOOZfic8R6lWoJ7/ycb
- hsHg==
+ d=gmail.com; s=20230601; t=1755739976; x=1756344776; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xyczhmlKtv1L17mdAnQ068zuyKUSxYddeRT0besMfbY=;
+ b=AsGOL9b4bVHP8k8AO9RVjXc9Pgja/X0sZJTbxZgpqQhdVjjqYU0ysA5xMouKeqzW5+
+ f9ews4PrOUU4qMxpYFoAs/nZE4NDlDVQSR1pnJKvZdb9/9E4q0ukRJp3KHZ70xEnGWqx
+ OH3P28qlYdCb+eBet4hQklns2BuAbosiJNr2yWcAjPkbRrDhK0DqXM0rhOKR6YxsWwaN
+ 6mQgYC0TQ97gmSgrct/HPi1yGbfoOgDR3TzH0ZysOiKM96WUW0MeumpxiedRo41ofz1O
+ +wY/9pf3UXHCjVR4HuSrWdCYY+hKaOmIipjFBiQzwI0fD7dGQ2T8axIGEPIEEyz5DTqS
+ /xQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755724790; x=1756329590;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PV5PRLX0fBzyIDbGMvnzpIIGMqO5fU+XNvrNfSXHklc=;
- b=REl1KULVh25jMLIdIntiMoCxLHTS0sU3hdNrNf2YK1CGq2zD80jhTLy2Mhm8mhZXDH
- dgIZt7eSQN6ldsCFBoHWXufk4jqfpNtasABG6hL/1yrzsT396P2QISoMNqfmbNnj/RE8
- Pel4oZeFjuNOJY4ij3u7g+PdkrqYXNCs9550OVZnWixftULaVjtIdIr3xndXOvGFzWIv
- omzFr6/y14SXFfX45/W+r+2slI4SGPkJAeo8TmfrdQCJxc0y5pQeL/lwuQb+7t+9NOc2
- VBYI7b3s4iTqWOuO03IMUOfTwPI3JDxMsRNqL8f0cZ9+i94VzwR0PAAELh1ACMugDUkJ
- qb+Q==
+ d=1e100.net; s=20230601; t=1755739976; x=1756344776;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xyczhmlKtv1L17mdAnQ068zuyKUSxYddeRT0besMfbY=;
+ b=k0MitdkZ0OiTOdQ3dS+mnneoXiGyw+O1dVKqC6sa3KfByX0WvHRUpKXOmFbb6duI6i
+ 7tjKkHUM54P1O0XIo4pdGwfMFfOXQ3xBCvWiXwo4CL+AjJgbNLqt4JbzrR9m5pK6XxKE
+ QazuZF5cqNz2bUzLvhR9Be65ZnAQZhD77UvY8ktDL7HsTw1xYIstABoL/1oqUeAoq5Im
+ iHoO4HM1UZ7ORdNx/zA/0sAllC/qalAhPzLkfSxJQDBPIw9yGaF1gn+gNkU9C8D9jUmU
+ w6Zr2qtDmw2G0428LOZTQA//1Dm7d2n9gEk50zBEP5T6efrlA+k59Rl15+XJc5E/3PrS
+ P2gw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWb7YGlIm7rvXx+j3EeX8KGok0n6FILIs+qFs1oIGlPP0GXinTvicaaWZ2wLYxUsl6ljIuLj4ML+w==@nongnu.org
-X-Gm-Message-State: AOJu0YzO88wOAEGm+nT5/p/DP1+JNUXBQ3t1TVKY3pNyfTlDdaDoxoZe
- OHwcOZNAKvXYWC2PbsaSdSxSP2JuGGudKToLmaAGfrDoM35VWUtLI3IObFaUjQIu
-X-Gm-Gg: ASbGncu6TDNOXrP4EFS01/chuFnvMFK2YrGSPnpEa0V7UE5tQekLpH3N7UWjTA7rSPL
- LecNHr+PKrkERxL2ZC7/uH0l1KEVAKmdOXkve7qdr3k3PHk51Q6soNzxIX7duVxVx1JIby2SWCm
- HYC4uw8SFOnSCvKYUwJ3yWEoCh2NYoIvOXmKuHPMKFGyMIRK4LHB0QMXpxS9Cw0P0ehV/XYDTKG
- SizyGxn+zOdZVjQBhx9sRodleb47TAgcSG/xeYvHmJqj9f8LGbDwsynEmaRye0cYDba3/FGGcaA
- s03mIezNad4TUsZ5nMXGVHTz9+KwHTVO1yeyVwasyLPQKS25kFERPPlGFq4Oo/NOxTDFa9Vpxbn
- g1ChmXFTFzj3vcFzuocQmUUQES4twLnhH1DZPkRfg8T2ZjvE0VFk+KMdSUscbsm2KA3YL2QOt+/
- Yg1kLJK3Ewl/yoCvGJGDBbaRQp0eWQcfwvBGw90Km5XgY=
-X-Google-Smtp-Source: AGHT+IH0/mg1YQnuKK3R4JPPY9Q3s2DGchgeLtQQIClwTrsYkegLbUNZXCXfuNBfwcf21GHXE5VThw==
-X-Received: by 2002:a05:6402:1e93:b0:613:5257:6cad with SMTP id
- 4fb4d7f45d1cf-61bf98daec0mr18071a12.11.1755724790390; 
- Wed, 20 Aug 2025 14:19:50 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-249c-be00-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:249c:be00:219:99ff:feb2:2458])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61a755d9cfasm4161182a12.9.2025.08.20.14.19.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Aug 2025 14:19:49 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 03/10] hw/pci-host/designware: Determine PCIDevice of
- configuration region once
-Date: Wed, 20 Aug 2025 23:19:25 +0200
-Message-ID: <20250820211932.27302-4-shentey@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250820211932.27302-1-shentey@gmail.com>
-References: <20250820211932.27302-1-shentey@gmail.com>
+ AJvYcCV6tjDnAY9AMamGQHpcJaWqYuz+TFHvBR1sXA+N7TaNPqyd0aOmpFQ8fW+EJRtxZdZO5jXa0u3dNnlK@nongnu.org
+X-Gm-Message-State: AOJu0YzuB+UK8mIOZfZFzd80Cjp9KQMYF9Y0s5vsh1VwEwG/tDWhp81J
+ oGYgQ6txmtdtsl6G15LaKmOC0FcVPeEU0N1cgndbTuGXTBvoJYQgT1DSXStjVl/Al+4s2M26TR7
+ EG4HrnBhgUfk/nlHQZN0z8sbPN/CssZM=
+X-Gm-Gg: ASbGncvw7TjExLSd8/ObSo21/rpDL+TTOQ/6254Y2L7uC+hk+eNM9X59fxIwnnAFhuh
+ P6dJ8iYCn1LmE9MEW1C5GiaW+O6U3j2/pqxzcyL6egs/jJBxKm8m1kAf2EYFo5jLOc0Zpp8VnhF
+ n5HjX8Pia950u3Rn3Mc12POh3rmUMOwgeDlVTOBSB1t814rIfOE7RIBZGyG6DJSTswWxxCErpE9
+ N/+Dhw=
+X-Google-Smtp-Source: AGHT+IFzOTtft1JdzUBUOvXtUEMesya16os5JUY6ANeWDOg1jLnVinXbm/2l6khgVaYi/JEecHn7lUFsXPAW39+vABI=
+X-Received: by 2002:a05:6808:2120:b0:41c:95a3:8180 with SMTP id
+ 5614622812f47-4377d6f6186mr374691b6e.20.1755739975824; Wed, 20 Aug 2025
+ 18:32:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x531.google.com
+References: <20250815034619.51980-1-hizhisong@gmail.com>
+ <20250817134527.GA321129@fedora>
+In-Reply-To: <20250817134527.GA321129@fedora>
+From: Brian Song <hibriansong@gmail.com>
+Date: Wed, 20 Aug 2025 21:32:44 -0400
+X-Gm-Features: Ac12FXx17h2LNTHEUntF3wV3aYKqlMKtxxgtKzonv0Ya3p73Ltq9bgAt7ENdcMI
+Message-ID: <CAKWCU7V4+Eu-6iVbjd+xR0yrqNShGf3y2VB_RNqXo-dP7ZMFUg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/3] block/export: Add FUSE-over-io_uring for Storage
+ Exports
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com, 
+ bernd@bsbernd.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=hibriansong@gmail.com; helo=mail-oi1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,111 +95,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that viewport memory regions are created on demand, the PCIDevice of the
-configuration memory can be determined once upon creation of the memory region
-rather than dynamically resolving it upon each access. This is both more
-efficient at runtime and resolves an attribute. Furthermore, if an invalid PCI
-device is configured, a guest error is now logged since the error is now
-direclty related to a guest action.
+On 8/17/25 9:45 AM, Stefan Hajnoczi wrote:
+> On Thu, Aug 14, 2025 at 11:46:16PM -0400, Zhi Song wrote:
+>> Due to kernel limitations, when the FUSE-over-io_uring option is
+>> enabled,
+>> you must create and assign nr_cpu IOThreads. For example:
+>
+> While it would be nice for the kernel to support a more flexible queue
+> mapping policy, userspace can work around this.
+>
+> I think Kevin suggested creating the number of FUSE queues required by
+> the kernel and configuring them across the user's IOThreads. That way
+> the number of IOThreads can be smaller than the number of FUSE queues.
+>
+> Stefan
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- include/hw/pci-host/designware.h |  1 -
- hw/pci-host/designware.c         | 54 +++++++++++++++++---------------
- 2 files changed, 28 insertions(+), 27 deletions(-)
+If we are mapping user specified IOThreads to nr_cpu queues Q, when we
+register entries, we need to think about how many entries in each Q[i]
+go to different IOThreads, and bind the qid when submitting. Once a CQE
+comes back, the corresponding IOThread handles it. Looks like we don't
+really need a round robin for dispatching. The actual question is how
+to split entries in each queue across IOThreads.
 
-diff --git a/include/hw/pci-host/designware.h b/include/hw/pci-host/designware.h
-index 7dc8af049d..34beee1285 100644
---- a/include/hw/pci-host/designware.h
-+++ b/include/hw/pci-host/designware.h
-@@ -39,7 +39,6 @@ struct DesignwarePCIERootBus {
- };
- 
- typedef struct DesignwarePCIEViewport {
--    DesignwarePCIERoot *root;
-     const char *name;
-     MemoryRegion mem;
- 
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index 7d47d8228f..2a676c65a2 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -222,26 +222,18 @@ designware_pcie_root_config_read(PCIDevice *d, uint32_t address, int len)
- static uint64_t designware_pcie_root_data_access(void *opaque, hwaddr addr,
-                                                  uint64_t *val, unsigned len)
- {
--    DesignwarePCIEViewport *viewport = opaque;
--    DesignwarePCIERoot *root = viewport->root;
--
--    const uint8_t busnum = DESIGNWARE_PCIE_ATU_BUS(viewport->target);
--    const uint8_t devfn  = DESIGNWARE_PCIE_ATU_DEVFN(viewport->target);
--    PCIBus    *pcibus    = pci_get_bus(PCI_DEVICE(root));
--    PCIDevice *pcidev    = pci_find_device(pcibus, busnum, devfn);
--
--    if (pcidev) {
--        addr &= pci_config_size(pcidev) - 1;
--
--        if (val) {
--            pci_host_config_write_common(pcidev, addr,
--                                         pci_config_size(pcidev),
--                                         *val, len);
--        } else {
--            return pci_host_config_read_common(pcidev, addr,
--                                               pci_config_size(pcidev),
--                                               len);
--        }
-+    PCIDevice *pcidev = opaque;
-+
-+    addr &= pci_config_size(pcidev) - 1;
-+
-+    if (val) {
-+        pci_host_config_write_common(pcidev, addr,
-+                                     pci_config_size(pcidev),
-+                                     *val, len);
-+    } else {
-+        return pci_host_config_read_common(pcidev, addr,
-+                                           pci_config_size(pcidev),
-+                                           len);
-     }
- 
-     return UINT64_MAX;
-@@ -312,11 +304,22 @@ static void designware_pcie_update_viewport(DesignwarePCIERoot *root,
-                  * Configure MemoryRegion implementing access to configuration
-                  * space
-                  */
--                memory_region_init_io(&viewport->mem, OBJECT(root),
--                                      &designware_pci_host_conf_ops,
--                                      viewport, viewport->name, size);
--                memory_region_add_subregion(get_system_memory(), base,
--                                            &viewport->mem);
-+                const uint8_t busnum = DESIGNWARE_PCIE_ATU_BUS(viewport->target);
-+                const uint8_t devfn = DESIGNWARE_PCIE_ATU_DEVFN(viewport->target);
-+                PCIBus *pcibus = pci_get_bus(PCI_DEVICE(root));
-+                PCIDevice *pcidev = pci_find_device(pcibus, busnum, devfn);
-+
-+                if (pcidev) {
-+                    memory_region_init_io(&viewport->mem, OBJECT(root),
-+                                          &designware_pci_host_conf_ops,
-+                                          pcidev, viewport->name, size);
-+                    memory_region_add_subregion(get_system_memory(), base,
-+                                                &viewport->mem);
-+                } else {
-+                    qemu_log_mask(LOG_GUEST_ERROR, "%s: No PCI device attached"
-+                                  " under busnum: %d, devfn: %d\n", __func__,
-+                                  (int)busnum, (int)devfn);
-+                }
-             }
-         }
-     }
-@@ -444,7 +447,6 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
- 
-         for (size_t j = 0; j < DESIGNWARE_PCIE_NUM_VIEWPORTS; j++) {
-             DesignwarePCIEViewport *viewport = &root->viewports[i][j];
--            viewport->root    = root;
-             viewport->name    = names[i][j];
-             viewport->inbound = i == DESIGNWARE_PCIE_VIEWPORT_INBOUND;
-             viewport->base    = 0x0000000000000000ULL;
--- 
-2.50.1
+For example, if we split entries evenly:
 
+USER: define 2 IOThreads to submit and recv ring entries
+NR_CPU: 4
+
+Q = malloc(sizeof(entry) * 32 * nr_cpu);
+
+IOThread-1:
+Q[0] Q[1] Q[2] Q[3]
+  16   16   16   16
+
+IOThread-2:
+Q[0] Q[1] Q[2] Q[3]
+  16   16   16   16
 
