@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA95CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 18:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E009CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 20:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upATr-0006st-TB; Thu, 21 Aug 2025 14:57:47 -0400
+	id 1upBsn-0000Kt-CN; Thu, 21 Aug 2025 16:27:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aokblast@FreeBSD.org>)
- id 1upATm-0006r6-Kc
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 14:57:45 -0400
-Received: from mx2.freebsd.org ([2610:1c1:1:606c::19:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aokblast@FreeBSD.org>)
- id 1upATj-0003hz-7z
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 14:57:41 -0400
-Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits)
- client-signature RSA-PSS (4096 bits))
- (Client CN "mx1.freebsd.org", Issuer "R10" (verified OK))
- by mx2.freebsd.org (Postfix) with ESMTPS id 4c7CHZ5wnCz3Shk;
- Thu, 21 Aug 2025 18:57:30 +0000 (UTC)
- (envelope-from aokblast@FreeBSD.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org [96.47.72.83])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
- client-signature RSA-PSS (4096 bits) client-digest SHA256)
- (Client CN "smtp.freebsd.org", Issuer "R13" (verified OK))
- by mx1.freebsd.org (Postfix) with ESMTPS id 4c7CHZ4xN8z3p78;
- Thu, 21 Aug 2025 18:57:30 +0000 (UTC)
- (envelope-from aokblast@FreeBSD.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
- t=1755802650;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=PiR1KOY3L2nM0tOn/LiJOsYc1jlD4RERmlfqalr9+BA=;
- b=F4F1qneHBntj3IJDx4ZhuulfjaSesj42oyNQ5CO0oVRnxMsd/4JzxYfa0cmh23YDQMK36h
- j8iLZaQ+WgwAN+exqsBmUJVlDAtFuCisP57LiakpiZQOAsGteA2q3vnOZ9RfoQA0PRA/Rl
- AGj14GlLbZY4L1n9/Wigof5qMVOlIvPT9jmLv6DsETln0Z7GBMmitSfbT7DJ7Zy3oQLLvS
- YgEw3LZSv9xFxKLhkn4sxZOnUiXa8E1DY5hNq0ERHXccU6koeDMTKlZylfuOFZybLGn8x9
- 43BIkxgYkcJh7yLdtclbE4gH+tASV0FvQ6ENcAfTDkoownwCEZC87anghI+97Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
- s=dkim; t=1755802650;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=PiR1KOY3L2nM0tOn/LiJOsYc1jlD4RERmlfqalr9+BA=;
- b=b1ZyKsCaDX/ECQ3vHVd9069YZP7M8unueZJn7UhciGD0E2lo0tvi/6WqTi58Pg/0FCRAHy
- cziy0qxjlx1zZsJhw01Cx5fa5bLEqb3wlIwNKu8k+GN10SFK4jQDhmV5me+v7OJFy8ZPAh
- Z+lyFMaapRkOSqinVRR8GFHygT5Bu59FOsDM82utap/wPfrPR7lVyI387NMibUgIDBwNpk
- h/hSvihsx2coya8uH/JccmA4VlKHEC244oZlfgaS/GVmBgMx8Z7RtKAPsDIrv7uMcHNkiM
- RH+6a+HaU/oA7W3B+/XOJhGU8ZlsKP+itWI1LaWC905PNDYsBlxHBg0veYKO6g==
-ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1755802650; a=rsa-sha256; cv=none;
- b=i3Axkrte5CSgDYMF2aozLPdKPJKH3pPOh6vtZt1H0CkfM6k/oQUWpPpqwpbegjPNsfUy9r
- oPcmQO8chcGB0CvRgfJY8lplcuBMxQhgQnOyfYLaAFCWMa4je0OKw8swbZzCA7ZuStF+At
- Gk8Pd8jwKElc2funaFZ5TYcAqkIH4H8B4yIIHDn8FrpeSoYHbHAdDCXApd1qdwHgLE13u9
- 9ua0ISlzUJboWRH7gh4PtFYdCCkObD4EIzbaJhjGAnD8TJUHLwXQqxFO0xxnu+tGpAvtLk
- wc9WYnhP+yymDa8gTpjprOo61oUHScuq/wEwbTmOIt6+8bBJ5SHBMZwiu5SM8w==
-ARC-Authentication-Results: i=1;
-	mx1.freebsd.org;
-	none
-Received: from localhost.localdomain
- (2001-b011-3808-3444-a66b-b6ff-fe3d-469a.dynamic-ip6.hinet.net
- [IPv6:2001:b011:3808:3444:a66b:b6ff:fe3d:469a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- (Authenticated sender: aokblast)
- by smtp.freebsd.org (Postfix) with ESMTPSA id 4c7CHY2sDrz80w;
- Thu, 21 Aug 2025 18:57:29 +0000 (UTC)
- (envelope-from aokblast@FreeBSD.org)
-From: ShengYi Hung <aokblast@FreeBSD.org>
-To: qemu-devel@nongnu.org
-Cc: ShengYi Hung <aokblast@FreeBSD.org>
-Subject: [PATCH] hid: fix incorrect return value for hid.
-Date: Thu, 21 Aug 2025 14:57:17 -0400
-Message-ID: <20250821185717.89580-1-aokblast@FreeBSD.org>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1upBsj-0000Iq-N6
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 16:27:34 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1upBsg-0006iv-V1
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 16:27:32 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-76e2ea933b7so1458157b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 13:27:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755808046; x=1756412846; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+s9b8Rj5BbgRxKb7frMiq7GPftdC+wa+Ca7IgD1zeV8=;
+ b=GBfMRupoZVBQ4v7GShcL5w1SB3rp0ze39i7StvOVPkWbCvVHJcoaCrvWmHwHp08oyJ
+ aVWLYbI2fBPMVSY18YZEeNMb0LcblKn7IHx191dEtPUpvMjPj/kNZHYVaBYaPGjDAUnC
+ +5qfHCwhPZPbY46/3BSxvWrKXXyUAj42OoS0vjIT1//BQjQzWy16sG9DsFgjA3Xhgv/c
+ FzG0HgC4KgIxm+iRgTAzCM4CS0lAWgFsHGRjH6bBOI0mUSNhzSGYb74WvJuC5oOVngdU
+ C2Ey3RElL1e3I8R5Yu08RG5uSFSV2fmlETiEjoCEw3mf42hM35L62BJxUKXihiZqcX+h
+ WAuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755808046; x=1756412846;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+s9b8Rj5BbgRxKb7frMiq7GPftdC+wa+Ca7IgD1zeV8=;
+ b=UhmLOMVZ1tlPh/7cEdPJOo2UfJrDFxgzoV2EuS6ITOTwyMuHeLcQhuC6mLHsrdL0t+
+ tMIH3p2W3b6Wwtjc5lL8Q8HEbwPhoC1QMh/ThkPEB22KDrOGTEkCwLl9KX2YbaQpOMGP
+ gsZVlBit8yH2uwY9odLm6S/KZTlExpeRoAYEOlC/VwjHi99uUuC/RPLk341YbUqq2Kr4
+ zjQYLpcDGpaMo70pMjmk/Wb6aQpa3YR/tltx8/D4wamLRtS04+LmrBe9WG5QrLsLLfgx
+ 3n4fJdImrANKO+4AZ2jeKvk8/XkOMier8No31JsRjMQWK8WMnyKirm/n1uZoJ7NfELd9
+ mJgw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXR+WYN2kzl9GytDDfZ2CzPzK+GJ1zi85Dme4ubWG3tJFCjL5zSpB6pFqKtIQALLBSNStH/2jN69Jcy@nongnu.org
+X-Gm-Message-State: AOJu0YztMtRRBqeLDnZR59W0uxGA8//NYMaxuju0UHWgceChXRjtyNXw
+ vjh1FBlNN9CLCX4eBV+UhUIaFUJ6OffdFE3Gvc8RgOaHKhD6iKWtTPfryfkNoLVYugg=
+X-Gm-Gg: ASbGnctpHX2Oq7BBXnehiYB+iyhNFT48h8u0cuoonKaK4rvcAaI7AnuvgSbA3QOmb81
+ ZBZfUI7i5OtTnY7/3g2EyMmn/tAAl0CYbiiFRbIACAV9Y7B9yYrIrS3mfvOVmZd92pYuDLWyjew
+ kFO6zxUPy28PelMfjHo/1iEsTcIZwriPeFyRvyub2Wq7YuuP8yEYeVQYS13pcQWTof9PgKkMCVz
+ kKtKwyxC50a0bWfTfqMR9mP2Uo09Tw4xk4fWFXUKlZKqYiEG2Hbv0fiFWAR+dalK9NfifCmlqEq
+ KacV7QQp2VYH95X5HJqd0QvDQHoVv4X5ew71Ig5WixyIDL1DkunJ/DSgE5rMAr4f65Ml2JMn+TH
+ jpjN/dk9ih7SQZUrB1V01iQ7v28c13pyNBg==
+X-Google-Smtp-Source: AGHT+IFUOtml8f11yUg0UUWTd1SeYVYQbzrAm/GFJLxsJAvVJGKSLAPtFvmw2I7sA17mFWKE60Ev8w==
+X-Received: by 2002:a17:903:3885:b0:246:571:4b51 with SMTP id
+ d9443c01a7336-2463405fde2mr5187295ad.29.1755808046168; 
+ Thu, 21 Aug 2025 13:27:26 -0700 (PDT)
+Received: from [10.0.0.90] ([120.159.20.238]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-245ed361422sm63626825ad.52.2025.08.21.13.27.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 Aug 2025 13:27:25 -0700 (PDT)
+Message-ID: <226ab909-0482-493f-bacf-5d2930d07ad7@linaro.org>
+Date: Fri, 22 Aug 2025 06:27:21 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] tcg: Restrict qemu_ld2 and qemu_st2 opcodes to 32-bit
+ hosts
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250820134937.45077-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250820134937.45077-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2610:1c1:1:606c::19:2;
- envelope-from=aokblast@FreeBSD.org; helo=mx2.freebsd.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,29 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The return value of hid_keyboard_write is used to set the packet's actual_length.
-Therefore, return 1 to indicate a successful transfer or it should be
-considered as a wrong xfer.
+On 8/20/25 23:49, Philippe Mathieu-Daudé wrote:
+> qemu_ld2 and qemu_st2 opcodes are band-aid for 32-bit hosts
+> and can't be reached on 64-bit ones. See in commit 3bedb9d3e28
+> ("tcg: Convert qemu_ld{2} to TCGOutOpLoad{2}") and 86fe5c2597c
+> ("tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}") their constraint
+> is C_NotImplemented.
 
-Signed-off-by: ShengYi Hung <aokblast@FreeBSD.org>
-Sponsored by:   The FreeBSD Foundation
----
- hw/input/hid.c | 1 +
- 1 file changed, 1 insertion(+)
+Not true: ld2/st2 are also used for 128-bit load store.
 
-diff --git a/hw/input/hid.c b/hw/input/hid.c
-index 76bedc1844..5da9fee763 100644
---- a/hw/input/hid.c
-+++ b/hw/input/hid.c
-@@ -478,6 +478,7 @@ int hid_keyboard_write(HIDState *hs, uint8_t *buf, int len)
-             ledstate |= QEMU_CAPS_LOCK_LED;
-         }
-         kbd_put_ledstate(ledstate);
-+        return (1);
-     }
-     return 0;
- }
--- 
-2.50.1
+See: aarch64, x86_64, loongarch64, ppc64, s390x.
 
+
+r~
 
