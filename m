@@ -4,127 +4,198 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D62CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 08:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F30ECA0EFA
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 08:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up0yF-000844-9n; Thu, 21 Aug 2025 04:48:31 -0400
+	id 1up118-0005wK-1L; Thu, 21 Aug 2025 04:51:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1up0we-00041X-Ed
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 04:46:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1up10w-0005jH-Ji
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 04:51:20 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1up0wT-0001Ei-LP
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 04:46:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755765999;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DkIBrmqU3UmVPpuTfGUkQi3Qo/t7acfxhstmxrihGOE=;
- b=YnK3pqpSviEMtMK891a+nlgRJ4kVg6bdRDBRiRJAulpoG7UrdAFBYPyWXJ/dD+t2IqglMN
- cF5vmlRw+chVDjFpRyFTZhVWN5f38wvEHRU9sO7xU5kytOpremn/+83/bQKgwIYnBxo9nb
- X8s3132tbZ+tZYuoPTxqi1xMyDgMPxg=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-99gZgqT6PGSuwo9480K52Q-1; Thu, 21 Aug 2025 04:46:37 -0400
-X-MC-Unique: 99gZgqT6PGSuwo9480K52Q-1
-X-Mimecast-MFC-AGG-ID: 99gZgqT6PGSuwo9480K52Q_1755765996
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2461c537540so668285ad.0
- for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 01:46:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755765996; x=1756370796;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DkIBrmqU3UmVPpuTfGUkQi3Qo/t7acfxhstmxrihGOE=;
- b=KXVeFdXNLdtmryiy9r43/0w0OittoIjVWWC7PjoACtFgqSzZoplQFu4YBXYtnxbgrc
- 3l07JtLqUI8/RALXFA6P4Trm7HCMhPhyhWWeW7/YnGLLOi+pKuClpncE13UX9fhW18Xi
- kpx6UCf5aM45ZG/9XbGW1wB21LHtGLkG1pIciDyz3KdNuE/AytchOl8KQzdjfL8zXnAn
- dnIQpKjDtIh9ewZKIrOLRh+l0pZTkfNrBXr9iCnmK4ghI4ZKGDdn4ojycAbiIESt1k/g
- P374oAZaPc+XBOTk5kPIGTif/1j3QNEda2ZccjcKGnXtKIai20RywvOsr7ZASKS8pne3
- 52yg==
-X-Gm-Message-State: AOJu0YznJ31c5Xfwpe9CUUdU0VjbsPRx/AlHuT4hC5xXeI4cFfk0cQEr
- iFS7yR1hZwYCaVZS7PXoXEgqg74nFLwAzDz7qKWcqX5zcD156T858ytRBKqL12VWZCp+t4Xc19V
- B93Kg6L+Dn67l4zZ7QcNXqpRUYIjMqS65SSgH8wOh758rgMGRM4jh6S4A
-X-Gm-Gg: ASbGnctSNgxBpWb+dxpgWPhuU3Z0A6viUoqNeyZxkKhKtp2VXqxBdLbmK5zQiEObpAt
- c55uM/WnPvqH4WW7IEUUBZ3wUVcJcZFw+iNeZ9K2j/cGIuPcoPXUqD01x9EcJlSq1lfkSJQzyzw
- OzsqwnqGyJ2U68IkuE9dY77JNdxb0B3L0CMA+2jN7jg8nzrj59WkNWvPMB58iYQIdaHosbS73i6
- Uce94FOWY3iPlqIx/zqPlqj2M8XATpPCrQm8biTE5blnBz6EnlNnzMuWgoMttJ4aYdYyB9S6Y3+
- g+fRkrbwB73NzjGTxgW0v4i+mOsFW5HSXVEKJhyn5hiEAlxf5TJq
-X-Received: by 2002:a17:902:e783:b0:246:2e9:dac2 with SMTP id
- d9443c01a7336-24602e9dd52mr21310925ad.1.1755765995742; 
- Thu, 21 Aug 2025 01:46:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHg3tbka06dAd9/eOpFctNaRhInu/oFrGI2JTSXsiQMRwBfOi4gOVGcVXWlNbCnXQM4x6jbcA==
-X-Received: by 2002:a17:902:e783:b0:246:2e9:dac2 with SMTP id
- d9443c01a7336-24602e9dd52mr21310285ad.1.1755765995056; 
- Thu, 21 Aug 2025 01:46:35 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.47.192.65])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed33e05dsm48789985ad.3.2025.08.21.01.46.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Aug 2025 01:46:34 -0700 (PDT)
-From: Arun Menon <armenon@redhat.com>
-Date: Thu, 21 Aug 2025 14:14:05 +0530
-Subject: [PATCH v12 11/27] migration: push Error **errp into
- qemu_loadvm_section_part_end()
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1up10n-0002Dc-1O
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 04:51:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1755766269; x=1787302269;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=PtB2+w0tisebu7vtfjeG/0W0KQkgUYUpKfsZoPfsqRw=;
+ b=Ez8ikQk/VegNAgdI5k9B7XtIkgo6KCx+L+5n4pvyKfxfn+yB5LExePTT
+ 97rMYgCLTOZfb5B8zQbxuQG8YTM9WQpkKVnrZEISIkWPkynb7mWpYi3uP
+ i57LMsthQusm4ehQL1WaiYfQPeQUjikINc7alOH/+2JyQkAeXNJtzCY6R
+ 5FNgl+9ICoHxXarvgPn+on+QeAPgi5jSBC6qJJ5qCYybWhDUFxt2t55Hr
+ XKN+KQ+tEGkjasEFybOZSwc4VdSVWfHFCJDlgqsmCESpUic1m7LbFZhvU
+ nQREBx4WxEJrYV6lDx7qbIBTTyPuNBskf3+rJmHVV0dXrrOektLFGoyYu g==;
+X-CSE-ConnectionGUID: 1D8rFYe3Ty+b3G4W+16SoQ==
+X-CSE-MsgGUID: 8uuFx3K1TCSMyQOgP10vgA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11527"; a="58195256"
+X-IronPort-AV: E=Sophos;i="6.17,306,1747724400"; d="scan'208";a="58195256"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Aug 2025 01:51:01 -0700
+X-CSE-ConnectionGUID: r5dSaoO4SxWqOgiKm0CgQw==
+X-CSE-MsgGUID: dnL6UpFbRjKHWIDB+t1oWA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.17,306,1747724400"; d="scan'208";a="169160789"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Aug 2025 01:51:01 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Thu, 21 Aug 2025 01:51:01 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Thu, 21 Aug 2025 01:51:01 -0700
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (40.107.95.79) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Thu, 21 Aug 2025 01:51:00 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ItLSs2Q6pBPvJtePToGRsmf6JE6q9ajqGRnFc2d3NURf466TBU725qcijfy2pH9Q70bM9P72hFLLN3+xwBQ5V4TpBeG0E4/dUwFxcfeY/SrqDIdLG9+/oDXNdpcbVsd1Ok8YZcVH7v1l8Fhy8rYVETh2KV42bg59rjnWJdrQlTHPkXuqZe8Fd/ezINlom5Gc9m2IKCrDoxs74Q2LhC6I9z1pre7i9wvqF/YaWLwecPyjrAVS2WVlcuJl7MD2xJyfI+WEN6w/VTmL6LR/3u5kfL7CetVVmR4T3BV77vqaPIn7XFo2j94j3fsIOLnEVTqXoMmJNaRMD8GqqDn1A9iUYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PtB2+w0tisebu7vtfjeG/0W0KQkgUYUpKfsZoPfsqRw=;
+ b=WBK/f7KWNvOEabnnKq3h+wHmfERNeIT6RX2XgfureRlK/tf+GEDiMtqFsCJOEDFrxSKvkRb7wxKK23qNK1oOHw7Cp+ieLftBoeZklMrf+zBwV9SYFQpm2Pk20GQDIZUazdGBc2r9GDuOYZoXN/4KlqBsUedStLBEcpDRC/6m/wIyXTIyra3Vm8Zr6oHdt0va2wHXGq+Cx9ASLWz3/R3XV8SqxtsDcFAu3hsYQp8I83XX+YUpd+IozcRKPhW73YGJqpoq+k6SaFGjWbQbiIHIRZpHwCut/XYmVPR+mdcBCw4MaJJ7MnD/v/gvHd/Y679O41oNSvHcTR4uvxokTmNI8w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by CH3PR11MB8382.namprd11.prod.outlook.com (2603:10b6:610:173::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.15; Thu, 21 Aug
+ 2025 08:50:58 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9052.014; Thu, 21 Aug 2025
+ 08:50:58 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: RE: [PATCH v4 00/20] intel_iommu: Enable stage-1 translation for
+ passthrough device
+Thread-Topic: [PATCH v4 00/20] intel_iommu: Enable stage-1 translation for
+ passthrough device
+Thread-Index: AQHcAGod+i7KqE+Pt02Tk9KMC5fQ97Rs1sxggAAZoID///7QAA==
+Date: Thu, 21 Aug 2025 08:50:58 +0000
+Message-ID: <IA3PR11MB913683ADE6EE0BABF0585AF69232A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250729092043.785836-1-zhenzhong.duan@intel.com>
+ <DS4PPF93A1BBECD1D6A6FEA7C800E6EDD069232A@DS4PPF93A1BBECD.namprd11.prod.outlook.com>
+ <5d3d46b3-ce2d-455a-b8bd-57213f9ea093@intel.com>
+In-Reply-To: <5d3d46b3-ce2d-455a-b8bd-57213f9ea093@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CH3PR11MB8382:EE_
+x-ms-office365-filtering-correlation-id: 578bea33-66b1-463f-7c26-08dde08fd900
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|38070700018; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?u69Rd4T9s0f7Y7fexDkLfzcF6S/i15nbvszOP+2ToqGaYLi3d3CDqBgKYyv/?=
+ =?us-ascii?Q?aj1mpmpLg3ssdtQJ2GrEerMdatYg/GfasOe1OdjNBDe68hLnwhaXO/tNVAbu?=
+ =?us-ascii?Q?5jjjpgMxzHn+DGfvI2CvqBaQbqq4yjMLmjsDdgnP2XQ75dESLrc33A0p6CFA?=
+ =?us-ascii?Q?hrrxPceAT6TbarhJ28aExRdw/u6OScGuPHkuXe6fkknGKB5pbK3KWWUt14WV?=
+ =?us-ascii?Q?98gK9ZDkC7jCO/vYaN9er08W96GbZ/m0dbb4hdvV9RibuY6X+r57mevSBAGk?=
+ =?us-ascii?Q?EKfFyPK7UyQOBeuNa3OmP9Mgd/cIR9Crgp+uxHtfwtXRkf99lUC7h27YpYp9?=
+ =?us-ascii?Q?eLbht0KBg8g7q30QGW/AjdzKwY5Ii7Tp16F2mKS83HnO7N2ZhQW2MYYkPSjZ?=
+ =?us-ascii?Q?L8UW4+JBTMV70XSmH1cTzEaF9JHnex8fliH2kTKV5CR1eeTQj6jwZ1fSuGnW?=
+ =?us-ascii?Q?U9XeddrsOGYRKhBQNiv8qxMf7gFcBehiNJTaCCXSpkrlI85fsO2zFnNGZe5u?=
+ =?us-ascii?Q?rfDqfIOGS4So3K/LnzUVUzGpFuBGW18Kl1Gum8DEaAU72p6R0/L+/udEMHVQ?=
+ =?us-ascii?Q?WLTI+SF4QY8+11M0zHCOo6gH0Pva/iku1Y5IBcBNmbHounjb24TKEhAWVp6Q?=
+ =?us-ascii?Q?tBuaghgoJ46lLB9feMUkuxEapl5mMhnFX3P0DkkCEQEkp3Z4um2esoJQb+2C?=
+ =?us-ascii?Q?jvn+0iSDqVX5yGLmVWrLy6wrwoMgN8CM4fwlSYWtCTd5mYSiMnqoj3X03Y6j?=
+ =?us-ascii?Q?x44PxORqJU/DfCRAq10QcGyRKCzRCwdBuJwzD7k/b6rXvTX9nFfGrtdP0KrG?=
+ =?us-ascii?Q?rZwCVApoN129ytwaUaCPQLfX5a/mQaCxJRlpaH1gQ9cyrRoLYRAii8Wevf2W?=
+ =?us-ascii?Q?sX4R/N+EqyQja6XNPj//xxxeiNwcLflW1Frij+E+bYMJ3wZXDXX4gj/sWMEI?=
+ =?us-ascii?Q?+eAbm+7FEeDoJEqsIRvRS/H3c2g1sUiHqzOl+mYTxZtKVkzqdxvtfOHUiNb1?=
+ =?us-ascii?Q?/pA49cCzY7LJ4nfdT2SiiVnbUiwtI/gTCWaA/L5jkEKVsyYnW6v72ACEPyBk?=
+ =?us-ascii?Q?MWUi9kLtcLhhqYZ2I1AybJNe8ARQrdAqouQJwbpHxPGEdWCReM6ZRQ2+ABj1?=
+ =?us-ascii?Q?lMP7uJB63pMbfg//QyHmtrcwz/R/o89PaLuUQc83PnqgEGLRquOS4aDORmxA?=
+ =?us-ascii?Q?H757lTumnkwJ+wF3GHI99l4aHaOq18tXe3uukccd9b/7jZO6dHRmIM4+KVid?=
+ =?us-ascii?Q?1K6N5JkhmwZUN4Pq8veiw0upSyVmQk2cT/SqrKUWVVoJTRWNdtDVbtR3biQn?=
+ =?us-ascii?Q?e+W/jPq20agOBNM5+UCnlmssAnCwGqIZtQx5zZQQdY0c13ywa8ItjKoJzUsJ?=
+ =?us-ascii?Q?+jJ3+h9uDUA10ZcTGu2zrWsYJ9HjOvsxrpLqyR4RtArNzWaLE/ZDLj7HFVnM?=
+ =?us-ascii?Q?SjsawworgtlZZUql4OtWh7VGwARmRstg/PrNioDHPTZTt0yn1rVBA4xowL0V?=
+ =?us-ascii?Q?g85AmFg17zmVeqI=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Tj1o/jyRkvVf7A2hUVOH+FUYBsab5v1XB6O4MeXoMYf3NhD/oZeDovSMYOSK?=
+ =?us-ascii?Q?YcXZfUPx80LAqUA/YaHYgEKu2nm0dfVOI7ky+FwnP3nIDpPDvhG28vqY4n3g?=
+ =?us-ascii?Q?t3NJw+ZxSVr8gs20tqPV12Pcp7I4Ax8T3jqjHbXQpWLwr7taoxGBRiYMUy7L?=
+ =?us-ascii?Q?CBBL2CVcOwf8FSJLf+2P0vL1ZFq0AJSALVSzzbRVrUmUY17Kck0QnwCZGDo0?=
+ =?us-ascii?Q?C266BS6gVjj96V8ZPA43Kvzc76CFRbxdca9l6u649HfLYhPfYrlByprjLSWq?=
+ =?us-ascii?Q?AkVkX60Id4zSNe0U8tb27DFIkZAOk2p81btqEI8wzCiw+YDjfFreyUVFka06?=
+ =?us-ascii?Q?Ncp2aXmF2ROkUNefHS6XtRCuKmduY439Itp38+yaD4tdiwYk1dB6VsT/ci3A?=
+ =?us-ascii?Q?lZmDfAlxEIjuBU3K1rw/fzQasWWO4ojF49w0APjzADiQLoaakNi2/kKspiEf?=
+ =?us-ascii?Q?ZBOHErGHpz6ohvTnlIjz06zR8+pj58bFMxmdZ/SlKNUpODjpytOuJemEaUlG?=
+ =?us-ascii?Q?ejIckAUJ58iNR7ayylLeYYT9/iGmt9P0epkMhT6P7L1z/kqpn/y2iZ8lZm00?=
+ =?us-ascii?Q?4VYBDafRzWrDvbkowM5lKRM8kPE0VJUCTeeOSkkNpR4uIXQbBYR+ZP+bQ2YR?=
+ =?us-ascii?Q?6cCFecEjhOhbRnioOPVgXphxbx9VVKxSwPKmJmohwobpUP1bMjj+YTftoslc?=
+ =?us-ascii?Q?C3O3aQ2A+0XcxIo63jAyAL26FfSGheiv+0DEePKLXpLNXlyvXzD7D/6p+lIO?=
+ =?us-ascii?Q?SGAsf8DZIVvZ0yxc3dNOMiT4DM/T1DApPNuJ919QRNYYwUZb9ohBcFD8oHvS?=
+ =?us-ascii?Q?YbW2fWy6Q5hwY2xpKBs+IqnjiXz/V1SJScKM9E9JZ1nCU14dPXaHZbiX/YdI?=
+ =?us-ascii?Q?2OAtQkR40f1TghZNhh7/bjXSM6qKnljvrkCztIxIyFjkDCCzuWbN96aArnHR?=
+ =?us-ascii?Q?MkGcljdGpjMcKZoOnJPCxydOgnD3YDB8OWplLKFnLZLc88ZykD6BtFkniIjH?=
+ =?us-ascii?Q?WvLP6nml9+NfWuE9/AYW2wfOlqeFqhGsoXqZaUwrLVIn4KWMazT6UAzrLF4S?=
+ =?us-ascii?Q?bL1ahyGG1kXPlvbHlvdxWsFLQgNEPn7yRTtnm1CMGmMgrT2JyDMiPXQ1NlMt?=
+ =?us-ascii?Q?NIH70eZID8tVvkTurPViRu2oNzh15/3t1EsFhlxDnzHS7JTyCgABdCwT3ASJ?=
+ =?us-ascii?Q?HL3deSPOyyZkRgM5oaa7i0hVs7v83sYybIHD3/2SLM8556tQA0qdPo1zFR+C?=
+ =?us-ascii?Q?hnV7jRbVtN2n9Yi7EGQA6GZB1isbc/Lsj/h1hA16qKUfxZ6rp3cBJAPXXlsG?=
+ =?us-ascii?Q?X0rfhlc7vd+bWhuZIG+rIonL+Z3TWq6d9r9v6AuJtoMDCewubDxthQFdR9oy?=
+ =?us-ascii?Q?d9ZS6PIF3/NCv+tQpnacu6q2mK3By90AStaIBildFuVmRbp3YTUGW7pKQvE6?=
+ =?us-ascii?Q?GDCWA7qBFkaHUGYinCC8VhNSGeEpAyVaR/UnzdeOE8FNav6mDQIuNUdocF+4?=
+ =?us-ascii?Q?gM5awWwOusrVWXG9+88ZSry4tGi7xqtCR6RWVf7sSw5SwcyNUYr3Y9y12Jwx?=
+ =?us-ascii?Q?bNoxdqUOVkCP0hlAMO8mHnItLtnWynatKs67kZ9g?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250821-propagate_tpm_error-v12-11-72b803e707dc@redhat.com>
-References: <20250821-propagate_tpm_error-v12-0-72b803e707dc@redhat.com>
-In-Reply-To: <20250821-propagate_tpm_error-v12-0-72b803e707dc@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Steve Sistare <steven.sistare@oracle.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
- Hailiang Zhang <zhanghailiang@xfusion.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Arun Menon <armenon@redhat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3319; i=armenon@redhat.com;
- h=from:subject:message-id; bh=EwE1vk6Jgm3Xnj0Q1uNXL1tpRUqGyiHG8RIWqMlxQcM=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8ayO8nvjLY3PhYqP/Rx6fSeUwZuhxfMtrA98H77oe05+
- vtZ70xJ7yhlYRDjYpAVU2Rp+Bog2xRQGBFp+/I6zBxWJpAhDFycAjARjnJGhukTz65jyrrw2D7n
- 8PQ0oSSB5d8i4w55uXTd/s0VLLLhiikjw9NqT96WTNlz8qcC7k/ZwbvuQdpiUS6GL7WByW3N8Wt
- XsgIA
-X-Developer-Key: i=armenon@redhat.com; a=openpgp;
- fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 578bea33-66b1-463f-7c26-08dde08fd900
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Aug 2025 08:50:58.1827 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9tB5LiPjuHSZsn5QXlniXGAToOW/hO0cGwpkNIk1OBf6XwkHmFX3FhaXlnC5b4RsLSHU018zel2z908pW1wUb6XHwjUjeZTg9a2kCJ0s6cw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8382
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,103 +211,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an incremental step in converting vmstate loading
-code to report error via Error objects instead of directly
-printing it to console/monitor.
-It is ensured that qemu_loadvm_section_part_end() must report an error
-in errp, in case of failure.
-This patch also removes the setting of errp when errp is NULL in the
-out section as it is no longer required in the series.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Arun Menon <armenon@redhat.com>
----
- migration/savevm.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index b55adb7468e5356ecb636734241f1a356a42a284..8e0ee14cc86dfffee86e46e32c7500d23924dc8e 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2803,21 +2803,20 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type, Error **errp)
- }
- 
- static int
--qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-+qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type, Error **errp)
- {
-+    ERRP_GUARD();
-     bool trace_downtime = (type == QEMU_VM_SECTION_END);
-     int64_t start_ts, end_ts;
-     uint32_t section_id;
-     SaveStateEntry *se;
-     int ret;
--    Error *local_err = NULL;
- 
-     section_id = qemu_get_be32(f);
- 
-     ret = qemu_file_get_error(f);
-     if (ret) {
--        error_report("%s: Failed to read section ID: %d",
--                     __func__, ret);
-+        error_setg(errp, "Failed to read section ID: %d", ret);
-         return ret;
-     }
- 
-@@ -2828,7 +2827,7 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-         }
-     }
-     if (se == NULL) {
--        error_report("Unknown savevm section %d", section_id);
-+        error_setg(errp, "Unknown section %d", section_id);
-         return -EINVAL;
-     }
- 
-@@ -2836,11 +2835,10 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-         start_ts = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
-     }
- 
--    ret = vmstate_load(f, se, &local_err);
-+    ret = vmstate_load(f, se, errp);
-     if (ret < 0) {
--        error_report("error while loading state section id %d(%s)",
--                     section_id, se->idstr);
--        warn_report_err(local_err);
-+        error_prepend(errp, "error while loading state section id %d(%s): ",
-+                      section_id, se->idstr);
-         return ret;
-     }
- 
-@@ -2851,6 +2849,8 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-     }
- 
-     if (!check_section_footer(f, se)) {
-+        error_setg(errp, "Section footer error, section_id: %d",
-+                   section_id);
-         return -EINVAL;
-     }
- 
-@@ -3110,7 +3110,7 @@ retry:
-             break;
-         case QEMU_VM_SECTION_PART:
-         case QEMU_VM_SECTION_END:
--            ret = qemu_loadvm_section_part_end(f, section_type);
-+            ret = qemu_loadvm_section_part_end(f, section_type, errp);
-             if (ret < 0) {
-                 goto out;
-             }
-@@ -3134,9 +3134,6 @@ retry:
- 
- out:
-     if (ret < 0) {
--        if (*errp == NULL) {
--            error_setg(errp, "Loading VM state failed: %d", ret);
--        }
-         qemu_file_set_error(f, ret);
- 
-         /* Cancel bitmaps incoming regardless of recovery */
+>-----Original Message-----
+>From: Liu, Yi L <yi.l.liu@intel.com>
+>Subject: Re: [PATCH v4 00/20] intel_iommu: Enable stage-1 translation for
+>passthrough device
+>
+>On 2025/8/21 15:19, Duan, Zhenzhong wrote:
+>> Kindly ping, any more comments?
+>
+>Do you have enough comments for a new version. I plan to have a look
+>either this version or a new version next week. :)
 
--- 
-2.50.1
+That's appreciated, thanks Yi. I think not, there are only a few comments f=
+rom Cedric for VFIO related patches.
 
+Zhenzhong
 
