@@ -4,90 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0749ACA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 10:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A159CA0EF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 10:55:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up2T3-0004dV-Bq; Thu, 21 Aug 2025 06:24:25 -0400
+	id 1up2vw-0000AK-9x; Thu, 21 Aug 2025 06:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1up2T1-0004dI-Dm; Thu, 21 Aug 2025 06:24:23 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1up2Sw-0007Q6-Pf; Thu, 21 Aug 2025 06:24:23 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-afcb78d5dcbso121505666b.1; 
- Thu, 21 Aug 2025 03:24:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755771854; x=1756376654; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=phAvCa2oZ51Xeh+b+QhZckCzQl0Fh/yMSjJEcXhCCnk=;
- b=aveUDwC8qmGgdeJbc/9CfFkwuPK5Cy6W5b/qhg2BXS9RD9Cv4Y55uxb+TcHw83T3Be
- TrD/wOSlrHaWpDsqFJzkOr+/357dwlmRB+Q0+5aEte3gEkmdPPDtpv8YFAG2CcUoaxJC
- IBNegYmrNkun2BdXrTVzt8z7zGFSJjqiSlOREhlk8VLoySaqsw7AoSSJ5jVEbDElPMBg
- 793yoFMpWS7+57JMSknJ4orAcPAYC3yBl2SAFEMGmLRw/4DNj9TrbYbx6wC9ZaZ48h/0
- prej5/zs0z8EiqN9umNyPjNA45fxmraE+q0yrq7p6QkAxevBW6TrUf1afKPpYwgiw8Ir
- tNhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755771854; x=1756376654;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=phAvCa2oZ51Xeh+b+QhZckCzQl0Fh/yMSjJEcXhCCnk=;
- b=MNstXnTYx+JlWHatr/aty3NBvQrRpz/dyBncFRQaUqRTY5MXIyQoVddu33SkyTXasn
- wPNZADXmnapGSkUXl01rpOjUrSHT6EgSxSMqw3dA6Zjt56FhgiXKsiH8jiB6WN8ebCQg
- hmA+inI/QQNqRhIpE2Fd6/VusUl+dukOfGL18ton8mMr27IUQTNJRXsi7BvzUQpNkUqY
- SdPbwMM64T6Zh+hQYUTFH3YSzZ5wXk7WEqROrpcMMajM9JeHuy9p13O/9LPqL/c+XLmd
- LBULVFcHo+hCjLEeytJtB9rlmcB6FKft/n91ckJr/L2FrEOATDtSRs+GXK6DQzuJIsdn
- RNDQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVMzjRvOTUMn0lNdhaSnwBY5NGRdW03fiXGyUQC+WSIyi8oCT+qblbaEdRzpPZorisW8JpV9XsTEZonJQ==@nongnu.org,
- AJvYcCXn/SgjDqA5kFaIEtaCWzj6sk8FHUPIBahlG1Ple3fu5DoqNM7JwME/MNNlz7IIGbtKs1xbPXq5mQ==@nongnu.org
-X-Gm-Message-State: AOJu0YzmSuvucDE9qBMnOIljwxHIGA0c77M8iU+bK28YcSehJXsoLASz
- AhbWN/yMH3e0TQvwIF/M8EEJDsmg6xCbYWsT4QOE8VQPeOFbe/Xjr0B36K9TgA==
-X-Gm-Gg: ASbGncunjMtJ3bA3+cMjmW3Vh+umuhBCegKuo9S6a8mcrnP2ZCF0yCO3+sBrDQd7kg6
- c/4t/1LUt7GWxoCC4q5l6YWIGeOL9Svu8QcZu6x5GsY5MfCXcKZ8ZZpoKK+TDM8cLD4AJ2R2wdd
- mnAPshCPMcE6FNN7hTOXwmNdqlhfkGfZVFtI8X4hJjyWw67xTEXez/IQnhjJ1kgtCuDmWBraL3S
- AonlvmMuPGsKTGsyitSUj8w11sbp6k0UwSXfGt2GiQliJobUeFtexeOJDzAqPrSbE7rCbiZ1uou
- LSW6LlpbG/eX4mF2NTi9yO6bkj2t99JgfBtjQccpzU9xAQxEHoucGQUuCpfUjv3nHK3rX9H69M+
- +HuxO7bzaN/t91QKwr6t/Gty2WNHTzxk5HFs65lQ=
-X-Google-Smtp-Source: AGHT+IE8z6cUjxhXQXNNYzjsgf7hzZRlDizQZBfMhgN0sopmLuChjzbWPqhHcKG7fPQNqh1aWklOYw==
-X-Received: by 2002:a17:907:3f12:b0:af5:3172:ca80 with SMTP id
- a640c23a62f3a-afe07b82fa6mr179802466b.38.1755771853530; 
- Thu, 21 Aug 2025 03:24:13 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([62.214.191.67])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-afded4796ddsm361481066b.55.2025.08.21.03.24.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 03:24:13 -0700 (PDT)
-Date: Thu, 21 Aug 2025 10:24:02 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
-CC: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org
-Subject: Re: [PATCH 00/10] Designware PCIe host fixes
-In-Reply-To: <7804e625-2421-473f-9320-89fa0cc0d085@roeck-us.net>
-References: <20250820211932.27302-1-shentey@gmail.com>
- <7804e625-2421-473f-9320-89fa0cc0d085@roeck-us.net>
-Message-ID: <D1762D97-2253-4503-9BD9-E4BF6BED1EAE@gmail.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1up2vu-0000A7-2m; Thu, 21 Aug 2025 06:54:14 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1up2vm-0002g3-Ui; Thu, 21 Aug 2025 06:54:13 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L0C4nb002157;
+ Thu, 21 Aug 2025 10:54:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=5yHoLeTiaysUGgLWnLEACUyxrZ7A3s
+ RY9tBLnJx6TnY=; b=EVP4Avw0/kgXfWxXDO7JyFNi87RsqHHqPRDzi/Gr+kBal0
+ o3iT6kdUoqPKTKXssXw9PP1IByMqhAx50G0ne7SJqZABWfylmyNVAbMrgN3lSn6r
+ nI0BcyrUyXJaAVnpI86xx0rtzmsDsHg467nrMTMhPzPwqDURmuHyUp22LUue0fwp
+ F7uMb1Ov56A5Yfv7YEB41fk/LUWFC8DXmVYO3zyd8mlZw35Y52HKBBoBFGxDTIWr
+ +UQ90GciL06n7F0/3dl2Jgo9bHiw1pleFUlEaINYhlsmjFSJhe53DV9P2iW2yiny
+ eBL0+n7A4RNp1gQfrNioLcUHjDQr8TZDg11GkLzw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38w82e6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Aug 2025 10:54:00 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57LArxxd006306;
+ Thu, 21 Aug 2025 10:54:00 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38w82e1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Aug 2025 10:53:59 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57L6sKWb024778;
+ Thu, 21 Aug 2025 10:53:59 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48my5vyx1x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Aug 2025 10:53:59 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57LArteg62521812
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 21 Aug 2025 10:53:55 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2AD5220049;
+ Thu, 21 Aug 2025 10:53:55 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9DAF420040;
+ Thu, 21 Aug 2025 10:53:52 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.211.200])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 21 Aug 2025 10:53:52 +0000 (GMT)
+Date: Thu, 21 Aug 2025 16:23:50 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] fix: Fix build error with CONFIG_POWERNV disabled
+Message-ID: <3xbdwul3qwdb246pk5xeeduotfvyeyjr6qkozzatb7h2zdrxlb@pcuu3ewglrjj>
+References: <20250820122516.949766-2-adityag@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250820122516.949766-2-adityag@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDIyMiBTYWx0ZWRfX0FdUNxUd2c49
+ jMM9fW/zXuZmE9xOsWb+zO7Svje2LGZ4FQUMN6fDjXD6JVu+6fgpDNajL/mrfZRFgyCL3E32TTs
+ nzWJXHA7S7YdwHtqP7nmDbMk6YZZAy/gJPNYI352L5Pxly4pYxCimrDk55hjU22GIiXvR/T8XNJ
+ /jpN91pWgOH3y1eKvbnSASZ18eAX4IiSh219bfKh2kIVozKU/n8ftIv9n50JAPeyMwwNpaoh4Vh
+ g1+UeHK/O4sKmPhrf0JNt80bCQOrFln5J0+B5iuyoZpBUdzlgM+pO+bVPOpIYzXJ3R4zLmcO5SW
+ 9Mcm91dm64fstT/84xkNdz5+lyzgz/XokTK3xBx6vZe9qhf0L+gpbqGnHVz8LRh//IZKS36Vbe0
+ cO1GEOPQ0a5hu2kCrmRVfDIENh0hrQ==
+X-Authority-Analysis: v=2.4 cv=H62CA+Yi c=1 sm=1 tr=0 ts=68a6fac8 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=r-MSxGZfJkXS_mSMAKMA:9
+ a=CjuIK1q_8ugA:10 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: pI2M6cQAdNrwlu-K8AdDAQNSkqwXgMNi
+X-Proofpoint-GUID: ZW6SubSS6iyLszio1hObX8VVpqKPJTGk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-21_03,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2508110000
+ definitions=main-2508190222
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,114 +130,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 25/08/20 05:55PM, Aditya Gupta wrote:
+> Currently when CONFIG_POWERNV is not enabled, the build fails, such as
+> with --without-default-devices:
+> 
+>     $ ./configure --without-default-devices
+>     $ make
+> 
+>     [281/283] Linking target qemu-system-ppc64
+>     FAILED: qemu-system-ppc64
+>     cc -m64 @qemu-system-ppc64.rsp
+>     /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_load_sprd':
+>     .../target/ppc/misc_helper.c:335:(.text+0xcdc): undefined reference to `pnv_chip_find_core'
+>     /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_store_sprd':
+>     .../target/ppc/misc_helper.c:375:(.text+0xdf4): undefined reference to `pnv_chip_find_core'
+>     collect2: error: ld returned 1 exit status
+>     ...
+> 
+> > <...snip...>
 
+The following is also sufficient to fix the compilation issue. Wasn't
+sure if #ifdef POWERNV looks good there:
 
-Am 21=2E August 2025 03:36:44 UTC schrieb Guenter Roeck <linux@roeck-us=2E=
-net>:
->On 8/20/25 14:19, Bernhard Beschow wrote:
->> This series fixes the Designware PCIe host to work with cards other tha=
-n
->> virio-net-pci, e=2Eg=2E e1000=2E It was tested on the imx8mp-evk machin=
-e=2E
->>=20
->> The series is structured as follows: The first part refactors the devic=
-e
->> model to create memory regions for inbound/outbound PCI mappings on dem=
-and
->> rather than upfront since this approach doesn't scale for adding I/O sp=
-ace
->> support=2E The second part consists of fixing the memory mapping by add=
-ing I/O
->> space support and fixing default inbound viewport mapping=2E The third =
-part
->> concludes the series by implementing device reset and cleaning up the i=
-mx8mp SoC
->> implementation=2E
->>=20
->> Testing done:
->> * Boot imx8mp-evk machine with Buildroot while having an e1000 card att=
-ached=2E
->> Observe that it gets an IP address via DHCP and allows for downloading =
-an HTML
->> file via HTTP=2E
->>=20
->Crashing for me even if no PCIe card is attached=2E This is with the seri=
-es applied
->on top of 10=2E1=2E0-rc4 or 10=2E0=2E3=2E I have not tried to track down =
-the problem=2E
->
->Guenter
-
-Hi Guenther,
-
-Thanks for testing this series! I can reproduce the issue with Buildroot w=
-hile the functional test passes=2E=2E=2E
-
-I guess that I was too optimistic in having resolved the issue mentioned i=
-n the last patch=2E Does it work for you if you omit it?
-
-Thanks,
-Bernhard
-
->
->---
->Build reference: v6=2E17-rc1-287-g685de850cabf
->Compiler version: aarch64-linux-gcc (GCC) 13=2E4=2E0
->Qemu version: 10=2E0=2E94 (v10=2E1=2E0-rc4-55-g320ed12bd9)
->
->[    7=2E748393] Internal error: synchronous external abort: 000000009600=
-0010 [#1]  SMP
->[    7=2E748917] Modules linked in:
->[    7=2E749533] CPU: 3 UID: 0 PID: 12 Comm: kworker/u16:0 Tainted: G   M=
-             N  6=2E17=2E0-rc2-g685de850cabf #1 PREEMPT
->[    7=2E749689] Tainted: [M]=3DMACHINE_CHECK, [N]=3DTEST
->[    7=2E749745] Hardware name: NXP i=2EMX8MPlus EVK board (DT)
->[    7=2E750118]         ok 1 block_bits=3D10 cluster_bits=3D3 blocks_per=
-_group=3D8192 group_count=3D4 desc_size=3D64
->[    7=2E749922] Workqueue: async async_run_entry_fn
->[    7=2E751174] pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BT=
-YPE=3D--)
->[    7=2E751267] pc : pci_generic_config_read+0x38/0xb8
->[    7=2E751370] lr : pci_generic_config_read+0x24/0xb8
->[    7=2E751474] sp : ffff8000845fb730
->[    7=2E751532] x29: ffff8000845fb730 x28: 00000000000000ff x27: 0000000=
-000000000
->[    7=2E751686] x26: 0000000000000001 x25: ffff80008290c008 x24: ffff800=
-0832cbe80
->[    7=2E751770] x23: 0000000000000000 x22: ffff8000845fb844 x21: ffff000=
-008a73800
->[    7=2E751859] x20: ffff8000845fb7a4 x19: 0000000000000004 x18: 0000000=
-0ffffffff
->[    7=2E751942] x17: ffff800080e2f918 x16: ffff800080e2f7ac x15: ffff800=
-080e2e6d8
->[    7=2E752027] x14: 0000000000000000 x13: 0000000000000000 x12: ffff800=
-08427cab8
->[    7=2E752120] x11: 0000000000000326 x10: 0000000000000326 x9 : 0000000=
-0000c0326
->[    7=2E752225] x8 : 000000006973b6c5 x7 : ffff800085c00000 x6 : 0000000=
-000000000
->[    7=2E752320] x5 : ffff000007cc5080 x4 : 0000000000000000 x3 : 0000000=
-000000000
->[    7=2E752403] x2 : 0000000000000000 x1 : ffff000004bf5680 x0 : ffff800=
-085900000
->[    7=2E752577] Call trace:
->[    7=2E752694]  pci_generic_config_read+0x38/0xb8 (P)
->[    7=2E752794]  dw_pcie_rd_other_conf+0x38/0xb0
->[    7=2E752851]  pci_bus_read_config_dword+0x80/0xe4
->[    7=2E752903]  pci_bus_generic_read_dev_vendor_id+0x30/0x190
->[    7=2E752964]  pci_scan_device+0xdc/0x184
->[    7=2E753010]  pci_scan_slot+0xe0/0x23c
->[    7=2E753056]  pci_scan_child_bus_extend+0x44/0x2cc
->[    7=2E753110]  pci_scan_bridge_extend+0x514/0x598
->[    7=2E753166]  pci_scan_child_bus_extend+0x104/0x2cc
->[    7=2E753220]  pci_scan_root_bus_bridge+0x64/0xd8
->[    7=2E753273]  pci_host_probe+0x34/0x10c
->[    7=2E753328]  dw_pcie_host_init+0x2f0/0x4b0
->[    7=2E753376]  imx_pcie_probe+0x33c/0x70c
->[    7=2E753439]  platform_probe+0x5c/0x9c
->[    7=2E753485]  really_probe+0xc0/0x390
->[    7=2E753530]  __driver_probe_device+0x7c/0x15c
->[    7=2E753581]  driver_probe_device+0x3c/0x110
->[    7=2E753633]  __device_attach_driver+0xbc/0x158
->
+    diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+    index e7d94625185c..a8e55b2937c7 100644
+    --- a/target/ppc/misc_helper.c
+    +++ b/target/ppc/misc_helper.c
+    @@ -323,6 +323,7 @@ void helper_store_sprc(CPUPPCState *env, target_ulong val)
+     
+     target_ulong helper_load_sprd(CPUPPCState *env)
+     {
+    +#ifdef CONFIG_POWERNV
+         /*
+          * SPRD is a HV-only register for Power CPUs, so this will only be
+          * accessed by powernv machines.
+    @@ -361,11 +362,14 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+                                       TARGET_FMT_lx"\n", sprc);
+             break;
+         }
+    +#endif
+    +
+         return 0;
+     }
+     
+     void helper_store_sprd(CPUPPCState *env, target_ulong val)
+     {
+    +#ifdef CONFIG_POWERNV
+         target_ulong sprc = env->spr[SPR_POWER_SPRC];
+         PowerPCCPU *cpu = env_archcpu(env);
+         PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+    @@ -392,6 +396,7 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+                                       TARGET_FMT_lx"\n", sprc);
+             break;
+         }
+    +#endif
+     }
+     
+     target_ulong helper_load_pmsr(CPUPPCState *env)
 
