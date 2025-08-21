@@ -4,136 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F74CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 03:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19295CA0EDC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 06:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uow6h-0003kH-LH; Wed, 20 Aug 2025 23:36:55 -0400
+	id 1uoz8N-0006gx-7Y; Thu, 21 Aug 2025 02:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1uow6e-0003jY-CO; Wed, 20 Aug 2025 23:36:52 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1uow6a-0006hr-QC; Wed, 20 Aug 2025 23:36:51 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b471738daabso440133a12.1; 
- Wed, 20 Aug 2025 20:36:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755747406; x=1756352206; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=Mt2eSjZ4YMd5F1e8HHW7O/OQMcsZveB6rS0vhYKZcW4=;
- b=L837JBIh2Po7ZxQ2dfuJjQH5cCLVPseVl0wI/NLKLGjdJZIcpj7f98LauiM6M5m9tD
- vWC/wb8b0ou7v/+0RYrhdENeLf820a7tPP/dYP52T3uygmRI8CpejDK+42yoML8jlY4f
- 2A8OquiLUVG+1CfnrBPUf57CAEc4f0Jbkf+G5BIiCdaqU4yPVf1/y+1novoKZykFsGb1
- 85wUq4ekNr4YRPh1lgj1wdpzr/8/Dpl1hnDgEj/Og6/NkvKJfdRdgMoVCE2weUM44X31
- qCB+Ovpa/y47DNyiB0sB+eW7j/aYT5vgRXc2dWbt6Tfj4JjT0Jn8a3vlIENp/daXBk1J
- ilnw==
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1uoz8H-0006ga-DU
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 02:50:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1uoz8A-0000Pv-Aq
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 02:50:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755759026;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fkbOPZmqkJeCjXvGOqYe1Q+0Vl+FqixoDUVrb+Tr2ho=;
+ b=OETSCTd2QxPgUelqIOhSkqKRasksM3HWE3Hs+3QJqPdS7F0wqidmR5ewpFsr1K2wR7tP4p
+ esDRPWoTJOflPOIimeWCxZRnJAxKWEX/71fV4hjdUElz+Swfar+QKJUyUSnaS8YXopeY6s
+ uVP6Ynh5bI1LnvpC2qu4xGtGRF6H67c=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-471-WjVr_TsQOhGpVi6jExU6iQ-1; Thu, 21 Aug 2025 02:50:24 -0400
+X-MC-Unique: WjVr_TsQOhGpVi6jExU6iQ-1
+X-Mimecast-MFC-AGG-ID: WjVr_TsQOhGpVi6jExU6iQ_1755759024
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-244581c62faso9358665ad.2
+ for <qemu-devel@nongnu.org>; Wed, 20 Aug 2025 23:50:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755747406; x=1756352206;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Mt2eSjZ4YMd5F1e8HHW7O/OQMcsZveB6rS0vhYKZcW4=;
- b=RpF1cQuYWPb8gbw7+GEfTohkiYLV2TQs9dYoB14eU/0DIUugzmqLCa8JsrwDDYWWQk
- 7iKKbhylgax0B19K22SWC8S7IgyZKgGu2FRa5YeTT3W++Qtejbm1Ai2HQ5VNnlnbDYsQ
- m4UaerS8XGOJ5lyCgofROvaakekicnMTiXVAhjkE+lQs+RUgXwdOtK6sjCYUfbhjQMuA
- xBYz+A/tD/ayiwM4yeNMIia9T0/rWPp//KjzXbA0XHb0Bn8oc14TPcXRXZ+PsOblEtOp
- V1Di9l5rpWWVke9rEbTcr9DWnUvGCJZ5q53F6kQcYSNld/TZyik1nPwNU9cH5CqJ4mSW
- ADBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8y7izqVr842UJgd78kiqb2yOhCZoqHHK0IhpHweJTuDFoo4jRh9xqkjEa8OG5Nvcgsq9KhRcqmg==@nongnu.org,
- AJvYcCXIvF84LI1WrMhUCp1XC17sTlE0Zi0aeTYBdZnp/npr8BuP6sR/mqSjV/82gP7vrI3m2tV3yx27HIipcQ==@nongnu.org
-X-Gm-Message-State: AOJu0Ywh1RX1MxrZD7hV9eFhtoZVgd9PuKA/lZD4gAcph8eQIUJaBUDw
- 2psg1hkzS17Kx4Syi2QLbMArlViV7SBdw/zBmDGjAXwhG5jVR3ID1NnA
-X-Gm-Gg: ASbGnctr/w2/QUz0Op+Febd/ODgNc+CiNxl3FlkhuX4EiVWm20NTPSgW0AwrkCVFDl2
- vLNS5wvuPqDfgEFfEEfmQqsyUZ6kDe/7fx65h6z2As2YFEbRsuLPAcrG+v/W3SoSC7QQsF8mbvU
- fsS70OmRRm1D/zU0GGVQXTX0jYOepf0DfhJdmoaOSGFc/rVe11oIyeGTd8moDkEjFVZ2PUdNseK
- B5uz/hL/ydBi6cyCa/kWEqT/xt6augOlsfYfVCj+SBv18SgrzqnRH96iPChcIX3nGJfZMlWrgNu
- 471w25MariuIBfCHWNDrDVy+dn1Kw7egTOwf8zzsR6YF1KbwpaQAIB0YTJ9SQ1GPP1BabloT4Bz
- s1IXuhAByUTiGbmtFW4xh4nW27sx2+r9ghVREq2cydTorfGgDmGGebC1uDYLYr2k3xROj9Ck=
-X-Google-Smtp-Source: AGHT+IHqYcu7oL9UT9iautL4krPKmixAj5PmT9bePQeQhH76HOPplxa1ZRGz25yscPP7YxBidFZTxQ==
-X-Received: by 2002:a05:6a20:7487:b0:240:2421:b912 with SMTP id
- adf61e73a8af0-24330a4c0ebmr1308135637.37.1755747405951; 
- Wed, 20 Aug 2025 20:36:45 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5?
- ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-76e7d0d22b8sm6942121b3a.4.2025.08.20.20.36.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Aug 2025 20:36:45 -0700 (PDT)
-Message-ID: <7804e625-2421-473f-9320-89fa0cc0d085@roeck-us.net>
-Date: Wed, 20 Aug 2025 20:36:44 -0700
+ d=1e100.net; s=20230601; t=1755759024; x=1756363824;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fkbOPZmqkJeCjXvGOqYe1Q+0Vl+FqixoDUVrb+Tr2ho=;
+ b=S5jQBiRo1OiDljtNmTotRzF/Fy31AgGT6emaFaLqK+x7ujqW8djpNtRCSCKNdxL1Ej
+ S3s9YAkvp1aPsoRWujI5+jgpRFyCqtk26IwWlg1xj5row/jbIkTVlMUJWhNpOQ6uIpba
+ uf0i8/EW4ta/BlYsNcIY/TgTxNQ9MDrIzZxdHN53UUWSnfwBQQ7Tcj3xXdDz5CvgaE4y
+ z6bf/4t2m8MhHKlohvos31j7F+RinZ1H+1ByBBJKA1/8WnCldb7U0CBQ7Kt3FTPwfbfT
+ vB70Cs20Lh+G4n7G3Tfr70npOg1ypTBr/VzyJcZtuL9Z2VW3fRz5p1oBPDkBVQG4hDe9
+ AbKg==
+X-Gm-Message-State: AOJu0Yws4h0JUez2aDm65+aYUCZVhwt2DH2fJ7xI6Jy+KFPcAcDPTcvG
+ 7k6qy+fXF8PPiWD9N2Q8cSdYVvOZ8r2SnkSsnvukSWsahvz1QHKvNMbeDR1mrkOoSlmnDvRuvR/
+ R527AR15/NCw3gkiiaRV3kakrBaXl9gK7s44cXSZf/eZJ6Zc83hbhV2bj/B4EBwxABjmQrpU4CH
+ YpwRPEZcja0nPnmaR4YBed31ALK1kYZRg=
+X-Gm-Gg: ASbGncslc++oOkJSF7aQTHkVSNyru25DAC/dylV9698T7Fk1gA4M0TzUlmsC6gydxHA
+ N93rF39H9bscy7Q0k3SngHxb9ewE5Ga3UFLy7wln+gqMbHXXmQr9OwFgcxOuKqB65945J8atlDZ
+ Z4Pfh4BdWUgwq8dquTO/I6
+X-Received: by 2002:a17:902:ea05:b0:245:f5b8:87ab with SMTP id
+ d9443c01a7336-245febda3demr19343035ad.3.1755759023750; 
+ Wed, 20 Aug 2025 23:50:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHu+a13MHeqvtJ195uirZfpsYRx6GFIpcXVxTpNErs4Blh7L9tqIx9WK7xCLTxxrNuGCW1fExt8bDWevxwMYb4=
+X-Received: by 2002:a17:902:ea05:b0:245:f5b8:87ab with SMTP id
+ d9443c01a7336-245febda3demr19342675ad.3.1755759023259; Wed, 20 Aug 2025
+ 23:50:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/10] Designware PCIe host fixes
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org
-References: <20250820211932.27302-1-shentey@gmail.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20250820211932.27302-1-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=groeck7@gmail.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.029, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250818100353.1560655-1-aesteve@redhat.com>
+ <20250818100353.1560655-7-aesteve@redhat.com>
+ <20250818231438.GA30271@fedora>
+ <CADSE00J61r4Wt94s6OfCqt9V8sVaisgDajvKEYFmG1FJKdVfng@mail.gmail.com>
+ <20250820203348.GA131468@fedora>
+In-Reply-To: <20250820203348.GA131468@fedora>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Thu, 21 Aug 2025 08:50:10 +0200
+X-Gm-Features: Ac12FXxKfsF4rmB0jo6j19HO6Wm08Zj7Lw3BTUO2br7gtKVPmfalEWlKITbAHk4
+Message-ID: <CADSE00LVbpzB9Y1PHyb4HZHE+K1U3gNg4rGST=5FjdYEO0pWzQ@mail.gmail.com>
+Subject: Re: [PATCH v7 6/8] tests/qtest: Add GET_SHMEM validation test
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, david@redhat.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>, hi@alyssa.is, jasowang@redhat.com, 
+ Laurent Vivier <lvivier@redhat.com>, dbassey@redhat.com, 
+ Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ stevensd@chromium.org, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, slp@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,72 +111,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/20/25 14:19, Bernhard Beschow wrote:
-> This series fixes the Designware PCIe host to work with cards other than
-> virio-net-pci, e.g. e1000. It was tested on the imx8mp-evk machine.
-> 
-> The series is structured as follows: The first part refactors the device
-> model to create memory regions for inbound/outbound PCI mappings on demand
-> rather than upfront since this approach doesn't scale for adding I/O space
-> support. The second part consists of fixing the memory mapping by adding I/O
-> space support and fixing default inbound viewport mapping. The third part
-> concludes the series by implementing device reset and cleaning up the imx8mp SoC
-> implementation.
-> 
-> Testing done:
-> * Boot imx8mp-evk machine with Buildroot while having an e1000 card attached.
-> Observe that it gets an IP address via DHCP and allows for downloading an HTML
-> file via HTTP.
-> 
-Crashing for me even if no PCIe card is attached. This is with the series applied
-on top of 10.1.0-rc4 or 10.0.3. I have not tried to track down the problem.
+On Wed, Aug 20, 2025 at 10:33=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
+om> wrote:
+>
+> On Tue, Aug 19, 2025 at 02:16:47PM +0200, Albert Esteve wrote:
+> > On Tue, Aug 19, 2025 at 12:42=E2=80=AFPM Stefan Hajnoczi <stefanha@redh=
+at.com> wrote:
+> > >
+> > > On Mon, Aug 18, 2025 at 12:03:51PM +0200, Albert Esteve wrote:
+> > > > Improve vhost-user-test to properly validate
+> > > > VHOST_USER_GET_SHMEM_CONFIG message handling by
+> > > > directly simulating the message exchange.
+> > > >
+> > > > The test manually triggers the
+> > > > VHOST_USER_GET_SHMEM_CONFIG message by calling
+> > > > chr_read() with a crafted VhostUserMsg, allowing direct
+> > > > validation of the shmem configuration response handler.
+> > >
+> > > It looks like this test case invokes its own chr_read() function with=
+out
+> > > going through QEMU, so I don't understand what this is testing?
+> >
+> > I spent some time trying to test it, but in the end I could not
+> > instatiate vhost-user-device because it is non user_creatable. I did
+> > not find any test for vhost-user-device anywhere else either. But I
+> > had already added most of the infrastructure here so I fallback to
+> > chr_read() communication to avoid having to delete everything. My
+> > though was that once we have other devices that use shared memory,
+> > they could tweak the test to instantiate the proper device and test
+> > this and the map/unmap operations.
+> >
+> > Although after writing this, I think other devices will actually a
+> > specific layout for their shared memory. So
+> > VHOST_USER_GET_SHMEM_CONFIG is only ever going to be used by
+> > vhost-user-device.
+> >
+> > In general, trying to test this patch series has been a headache other
+> > than trying with external device code I have. If you have an idea that
+> > I could try to test this, I can try. Otherwise, probably is best to
+> > remove this commit from the series and wait for another vhost-user
+> > device that uses map/unmap to land to be able to test it.
+>
+> Alex Bennee has renamed vhost-user-device to vhost-user-test-device and
+> set user_creatable =3D true:
+> https://lore.kernel.org/qemu-devel/20250820195632.1956795-1-alex.bennee@l=
+inaro.org/T/#t
 
-Guenter
+Oh, great! Thanks for letting me know.
 
----
-Build reference: v6.17-rc1-287-g685de850cabf
-Compiler version: aarch64-linux-gcc (GCC) 13.4.0
-Qemu version: 10.0.94 (v10.1.0-rc4-55-g320ed12bd9)
+That allows having a QTest with the vhost-user-test-device available
+and run it in piplines if necessary, without manually
+changing/recompiling. I'll try to add it to the test again in this
+commit.
 
-[    7.748393] Internal error: synchronous external abort: 0000000096000010 [#1]  SMP
-[    7.748917] Modules linked in:
-[    7.749533] CPU: 3 UID: 0 PID: 12 Comm: kworker/u16:0 Tainted: G   M             N  6.17.0-rc2-g685de850cabf #1 PREEMPT
-[    7.749689] Tainted: [M]=MACHINE_CHECK, [N]=TEST
-[    7.749745] Hardware name: NXP i.MX8MPlus EVK board (DT)
-[    7.750118]         ok 1 block_bits=10 cluster_bits=3 blocks_per_group=8192 group_count=4 desc_size=64
-[    7.749922] Workqueue: async async_run_entry_fn
-[    7.751174] pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    7.751267] pc : pci_generic_config_read+0x38/0xb8
-[    7.751370] lr : pci_generic_config_read+0x24/0xb8
-[    7.751474] sp : ffff8000845fb730
-[    7.751532] x29: ffff8000845fb730 x28: 00000000000000ff x27: 0000000000000000
-[    7.751686] x26: 0000000000000001 x25: ffff80008290c008 x24: ffff8000832cbe80
-[    7.751770] x23: 0000000000000000 x22: ffff8000845fb844 x21: ffff000008a73800
-[    7.751859] x20: ffff8000845fb7a4 x19: 0000000000000004 x18: 00000000ffffffff
-[    7.751942] x17: ffff800080e2f918 x16: ffff800080e2f7ac x15: ffff800080e2e6d8
-[    7.752027] x14: 0000000000000000 x13: 0000000000000000 x12: ffff80008427cab8
-[    7.752120] x11: 0000000000000326 x10: 0000000000000326 x9 : 00000000000c0326
-[    7.752225] x8 : 000000006973b6c5 x7 : ffff800085c00000 x6 : 0000000000000000
-[    7.752320] x5 : ffff000007cc5080 x4 : 0000000000000000 x3 : 0000000000000000
-[    7.752403] x2 : 0000000000000000 x1 : ffff000004bf5680 x0 : ffff800085900000
-[    7.752577] Call trace:
-[    7.752694]  pci_generic_config_read+0x38/0xb8 (P)
-[    7.752794]  dw_pcie_rd_other_conf+0x38/0xb0
-[    7.752851]  pci_bus_read_config_dword+0x80/0xe4
-[    7.752903]  pci_bus_generic_read_dev_vendor_id+0x30/0x190
-[    7.752964]  pci_scan_device+0xdc/0x184
-[    7.753010]  pci_scan_slot+0xe0/0x23c
-[    7.753056]  pci_scan_child_bus_extend+0x44/0x2cc
-[    7.753110]  pci_scan_bridge_extend+0x514/0x598
-[    7.753166]  pci_scan_child_bus_extend+0x104/0x2cc
-[    7.753220]  pci_scan_root_bus_bridge+0x64/0xd8
-[    7.753273]  pci_host_probe+0x34/0x10c
-[    7.753328]  dw_pcie_host_init+0x2f0/0x4b0
-[    7.753376]  imx_pcie_probe+0x33c/0x70c
-[    7.753439]  platform_probe+0x5c/0x9c
-[    7.753485]  really_probe+0xc0/0x390
-[    7.753530]  __driver_probe_device+0x7c/0x15c
-[    7.753581]  driver_probe_device+0x3c/0x110
-[    7.753633]  __device_attach_driver+0xbc/0x158
+Thank you, Stefan and Alyssa, for the hints.
+
+>
+> >
+> >
+> >
+> > >
+> > > >
+> > > > Added TestServerShmem structure to track shmem
+> > > > configuration state, including nregions_sent and
+> > > > sizes_sent arrays for comprehensive validation.
+> > > > The test verifies that the response contains the expected
+> > > > number of shared memory regions and their corresponding
+> > > > sizes.
+> > > >
+> > > > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > > > ---
+> > > >  tests/qtest/vhost-user-test.c | 91 +++++++++++++++++++++++++++++++=
+++++
+> > > >  1 file changed, 91 insertions(+)
+> > > >
+> > > > diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user=
+-test.c
+> > > > index 75cb3e44b2..44a5e90b2e 100644
+> > > > --- a/tests/qtest/vhost-user-test.c
+> > > > +++ b/tests/qtest/vhost-user-test.c
+> > > > @@ -88,6 +88,7 @@ typedef enum VhostUserRequest {
+> > > >      VHOST_USER_SET_VRING_ENABLE =3D 18,
+> > > >      VHOST_USER_GET_CONFIG =3D 24,
+> > > >      VHOST_USER_SET_CONFIG =3D 25,
+> > > > +    VHOST_USER_GET_SHMEM_CONFIG =3D 44,
+> > > >      VHOST_USER_MAX
+> > > >  } VhostUserRequest;
+> > > >
+> > > > @@ -109,6 +110,20 @@ typedef struct VhostUserLog {
+> > > >      uint64_t mmap_offset;
+> > > >  } VhostUserLog;
+> > > >
+> > > > +#define VIRTIO_MAX_SHMEM_REGIONS 256
+> > > > +
+> > > > +typedef struct VhostUserShMemConfig {
+> > > > +    uint32_t nregions;
+> > > > +    uint32_t padding;
+> > > > +    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+> > > > +} VhostUserShMemConfig;
+> > > > +
+> > > > +typedef struct TestServerShmem {
+> > > > +    bool test_enabled;
+> > > > +    uint32_t nregions_sent;
+> > > > +    uint64_t sizes_sent[VIRTIO_MAX_SHMEM_REGIONS];
+> > > > +} TestServerShmem;
+> > > > +
+> > > >  typedef struct VhostUserMsg {
+> > > >      VhostUserRequest request;
+> > > >
+> > > > @@ -124,6 +139,7 @@ typedef struct VhostUserMsg {
+> > > >          struct vhost_vring_addr addr;
+> > > >          VhostUserMemory memory;
+> > > >          VhostUserLog log;
+> > > > +        VhostUserShMemConfig shmem;
+> > > >      } payload;
+> > > >  } QEMU_PACKED VhostUserMsg;
+> > > >
+> > > > @@ -170,6 +186,7 @@ typedef struct TestServer {
+> > > >      bool test_fail;
+> > > >      int test_flags;
+> > > >      int queues;
+> > > > +    TestServerShmem shmem;
+> > > >      struct vhost_user_ops *vu_ops;
+> > > >  } TestServer;
+> > > >
+> > > > @@ -513,6 +530,31 @@ static void chr_read(void *opaque, const uint8=
+_t *buf, int size)
+> > > >          qos_printf("set_vring(%d)=3D%s\n", msg.payload.state.index=
+,
+> > > >                     msg.payload.state.num ? "enabled" : "disabled")=
+;
+> > > >          break;
+> > > > +
+> > > > +    case VHOST_USER_GET_SHMEM_CONFIG:
+> > > > +        if (!s->shmem.test_enabled) {
+> > > > +            /* Reply with error if shmem feature not enabled */
+> > > > +            msg.flags |=3D VHOST_USER_REPLY_MASK;
+> > > > +            msg.size =3D sizeof(uint64_t);
+> > > > +            msg.payload.u64 =3D -1; /* Error */
+> > > > +            qemu_chr_fe_write_all(chr, (uint8_t *) &msg, VHOST_USE=
+R_HDR_SIZE + msg.size);
+> > > > +        } else {
+> > > > +            /* Reply with test shmem configuration */
+> > > > +            msg.flags |=3D VHOST_USER_REPLY_MASK;
+> > > > +            msg.size =3D sizeof(VhostUserShMemConfig);
+> > > > +            msg.payload.shmem.nregions =3D 2; /* Test with 2 regio=
+ns */
+> > > > +            msg.payload.shmem.padding =3D 0;
+> > > > +            msg.payload.shmem.memory_sizes[0] =3D 0x100000; /* 1MB=
+ */
+> > > > +            msg.payload.shmem.memory_sizes[1] =3D 0x200000; /* 2MB=
+ */
+> > > > +
+> > > > +            /* Record what we're sending for test validation */
+> > > > +            s->shmem.nregions_sent =3D msg.payload.shmem.nregions;
+> > > > +            s->shmem.sizes_sent[0] =3D msg.payload.shmem.memory_si=
+zes[0];
+> > > > +            s->shmem.sizes_sent[1] =3D msg.payload.shmem.memory_si=
+zes[1];
+> > > > +
+> > > > +            qemu_chr_fe_write_all(chr, (uint8_t *) &msg, VHOST_USE=
+R_HDR_SIZE + msg.size);
+> > > > +        }
+> > > > +        break;
+> > > >
+> > > >      default:
+> > > >          qos_printf("vhost-user: un-handled message: %d\n", msg.req=
+uest);
+> > > > @@ -809,6 +851,22 @@ static void *vhost_user_test_setup_shm(GString=
+ *cmd_line, void *arg)
+> > > >      return server;
+> > > >  }
+> > > >
+> > > > +static void *vhost_user_test_setup_shmem_config(GString *cmd_line,=
+ void *arg)
+> > > > +{
+> > > > +    TestServer *server =3D test_server_new("vhost-user-test", arg)=
+;
+> > > > +    test_server_listen(server);
+> > > > +
+> > > > +    /* Enable shmem testing for this server */
+> > > > +    server->shmem.test_enabled =3D true;
+> > > > +
+> > > > +    append_mem_opts(server, cmd_line, 256, TEST_MEMFD_SHM);
+> > > > +    server->vu_ops->append_opts(server, cmd_line, "");
+> > > > +
+> > > > +    g_test_queue_destroy(vhost_user_test_cleanup, server);
+> > > > +
+> > > > +    return server;
+> > > > +}
+> > > > +
+> > > >  static void test_read_guest_mem(void *obj, void *arg, QGuestAlloca=
+tor *alloc)
+> > > >  {
+> > > >      TestServer *server =3D arg;
+> > > > @@ -1089,6 +1147,33 @@ static struct vhost_user_ops g_vu_net_ops =
+=3D {
+> > > >      .get_protocol_features =3D vu_net_get_protocol_features,
+> > > >  };
+> > > >
+> > > > +/* Test function for VHOST_USER_GET_SHMEM_CONFIG message */
+> > > > +static void test_shmem_config(void *obj, void *arg, QGuestAllocato=
+r *alloc)
+> > > > +{
+> > > > +    TestServer *s =3D arg;
+> > > > +
+> > > > +    g_assert_true(s->shmem.test_enabled);
+> > > > +
+> > > > +    g_mutex_lock(&s->data_mutex);
+> > > > +    s->shmem.nregions_sent =3D 0;
+> > > > +    s->shmem.sizes_sent[0] =3D 0;
+> > > > +    s->shmem.sizes_sent[1] =3D 0;
+> > > > +    g_mutex_unlock(&s->data_mutex);
+> > > > +
+> > > > +    VhostUserMsg msg =3D {
+> > > > +        .request =3D VHOST_USER_GET_SHMEM_CONFIG,
+> > > > +        .flags =3D VHOST_USER_VERSION,
+> > > > +        .size =3D 0,
+> > > > +    };
+> > > > +    chr_read(s, (uint8_t *) &msg, VHOST_USER_HDR_SIZE);
+> > > > +
+> > > > +    g_mutex_lock(&s->data_mutex);
+> > > > +    g_assert_cmpint(s->shmem.nregions_sent, =3D=3D, 2);
+> > > > +    g_assert_cmpint(s->shmem.sizes_sent[0], =3D=3D, 0x100000); /* =
+1MB */
+> > > > +    g_assert_cmpint(s->shmem.sizes_sent[1], =3D=3D, 0x200000); /* =
+2MB */
+> > > > +    g_mutex_unlock(&s->data_mutex);
+> > > > +}
+> > > > +
+> > > >  static void register_vhost_user_test(void)
+> > > >  {
+> > > >      QOSGraphTestOptions opts =3D {
+> > > > @@ -1136,6 +1221,12 @@ static void register_vhost_user_test(void)
+> > > >      qos_add_test("vhost-user/multiqueue",
+> > > >                   "virtio-net",
+> > > >                   test_multiqueue, &opts);
+> > > > +
+> > > > +    opts.before =3D vhost_user_test_setup_shmem_config;
+> > > > +    opts.edge.extra_device_opts =3D "";
+> > > > +    qos_add_test("vhost-user/shmem-config",
+> > > > +                 "virtio-net",
+> > > > +                 test_shmem_config, &opts);
+> > > >  }
+> > > >  libqos_init(register_vhost_user_test);
+> > > >
+> > > > --
+> > > > 2.49.0
+> > > >
+> >
 
 
