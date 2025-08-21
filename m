@@ -4,146 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EDE6CA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 12:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C859ECA0EEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 12:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up440-0007gQ-5q; Thu, 21 Aug 2025 08:06:41 -0400
+	id 1up45p-0008G7-Bg; Thu, 21 Aug 2025 08:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1up43m-0007eT-50
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 08:06:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1up45c-0008BS-Jt; Thu, 21 Aug 2025 08:08:22 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1up43Z-0003yG-OK
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 08:06:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755777965;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=W7ePDPZtFOyie7Xoq8Sr/Nyvy229UeRBnB12FjONwrY=;
- b=KvRaLyy+7t/gm/X4tw1rxidFXvosUcBXDNNHfu1Lgob4snc1wSjReh75+KlpClpxrN44Rz
- ajYetYeu16cUVuiTnuJe65irxA4LJxLxyynwO6BXVnbDcyxiTlxmMUk2a79/MldIJ9IR3a
- 7DrrWBFAcu5qtKO2tiyXHSHLwk1uZRY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-194-aiqG6eRuPbq52w7CLCLSoQ-1; Thu, 21 Aug 2025 08:06:03 -0400
-X-MC-Unique: aiqG6eRuPbq52w7CLCLSoQ-1
-X-Mimecast-MFC-AGG-ID: aiqG6eRuPbq52w7CLCLSoQ_1755777963
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-70a94f3bbdbso20196436d6.2
- for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 05:06:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755777963; x=1756382763;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W7ePDPZtFOyie7Xoq8Sr/Nyvy229UeRBnB12FjONwrY=;
- b=svNpLGGX399h2WgfzJpLr9zDJxaZXRaot9BdKnocb/6qZlxK+gfSD2ZEQr5pq1AoSI
- 32DNB1+RbQHdsPAQHcPrXMnilPzHDLFrcHipSPB8MS+UFIR7GLmZj1QFCWjNCnCpCavd
- NVZuvPuMb/LxXNnvc3gIVXyCmNKPNI5GuXDP15PManMkqk8YrgY53Q+2w+d9+qK+AN+r
- LlM0m4VVm2bMmkNnBv5HKyQdEeGHAFAkA15ELJqex5d7rFVt+W3cNR39ZXKD5ZuaW9ws
- Xnmtdf/jKbWJ1penUoYvEcehOn8pE4rhTMtcvClpU2ugsabDv/Tx1LTVx8Lr5gimTSr+
- B1Nw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCz5RcLMeGPNMm3CWn5fv8gaP5dweFb8kJ8hr1oSDOzSY4nFxRuwmeMp56qe36YI1+MH+TS2orcPIk@nongnu.org
-X-Gm-Message-State: AOJu0YyXwnqgzsB1ck+nCF7eWh8AVJ94300nF62eAi7fiJ6W9ltCXFJM
- jU/mjA/yXMyE5ZJRbBjCdHhyQWm+kuJ5Wy2EH3SKgOrMe8O+M1IhdYt4hAtIFv77oHNEhOYkuNf
- MTxAKiTRVZlFbHtg5S/i+UOMjqiHuxz/EILjU27HKm8mIC5E32SECrUEe
-X-Gm-Gg: ASbGncvxYbXHZrALzn2lCvqMTdeOIUW+rUnGfGJRRTSiLqcxWQWduXjtCa16tGhvfMZ
- sBbI2wYT4pIhEFVPVTmazLhVLsaMreizusotVcY6SnWN3BRpIgfNMy7Pr7/UAFx6Eh/ZsBNc4Cs
- KQgWcE3YnAQwGDoNz8KKjZyIryTJGGXt2VUB0EX5xvnaT2wm9sJQHrwKBguJKm9eEdo3758Fc4h
- IDjLY347Yxiq8PMv/xHL8r9fGF6klWFMJ0dDoprq/5XkZvwxgOHVV/GBBRyzKxXuBxwp0Oo+2am
- WLZfhe0TPOfU21plbrBRAC64itgnTz+q5Dkrd/fFwu23nikp+5lgS9TWcYPoJJP/KeoHhM8GIDP
- 073M=
-X-Received: by 2002:ad4:5cec:0:b0:70b:a0c5:5688 with SMTP id
- 6a1803df08f44-70d88e725f3mr23057026d6.8.1755777963195; 
- Thu, 21 Aug 2025 05:06:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGK7674djb/kJDq8AThR2+k5RjpictDvH2XYahN5w3VaUjk3A4G6cjl8kKagcM8yoD78wAGBA==
-X-Received: by 2002:ad4:5cec:0:b0:70b:a0c5:5688 with SMTP id
- 6a1803df08f44-70d88e725f3mr23056266d6.8.1755777962578; 
- Thu, 21 Aug 2025 05:06:02 -0700 (PDT)
-Received: from [192.168.0.6] (ltea-047-064-112-073.pools.arcor-ip.net.
- [47.64.112.73]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70ba959f401sm103670276d6.69.2025.08.21.05.05.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Aug 2025 05:06:02 -0700 (PDT)
-Message-ID: <f7a8b91e-e2df-4c11-818e-f244f8e648ad@redhat.com>
-Date: Thu, 21 Aug 2025 14:05:57 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1up45T-00046G-Tm; Thu, 21 Aug 2025 08:08:18 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:999c:0:640:51a7:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id CB761C018D;
+ Thu, 21 Aug 2025 15:07:58 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b25::1:17] (unknown
+ [2a02:6bf:8080:b25::1:17])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id v7SJr31GsGk0-AHAwoxBJ; Thu, 21 Aug 2025 15:07:58 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1755778078;
+ bh=Vv4jjPQ9IhBWYQ2oHcIsefiA2GShovVU2osacxptJ2M=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=sZLsFy7gR843jQ74GU9oWbYfnO60rrinrogplC0gMjXl75zoB10VsG86o4LW7RM8m
+ F/Emyj8Z8mwOOLxikofonhKWYonj0zk5rua2R1wi2as5g11QWD9QtVQ1qyD7NsDSvQ
+ FR8WFmuRkTB/D4tV4lEiKHj2+N3LMxnPzVWBmKYw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <e3c67e47-8a5e-459f-8d76-a00032b7e013@yandex-team.ru>
+Date: Thu, 21 Aug 2025 15:07:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fix: Fix build error with CONFIG_POWERNV disabled
-To: Aditya Gupta <adityag@linux.ibm.com>, Nicholas Piggin
- <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250820122516.949766-2-adityag@linux.ibm.com>
- <3xbdwul3qwdb246pk5xeeduotfvyeyjr6qkozzatb7h2zdrxlb@pcuu3ewglrjj>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 26/33] io/channel-socket: introduce
+ qio_channel_socket_keep_nonblock()
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Cc: mst@redhat.com, farosas@suse.de, raphael@enfabrica.net,
+ sgarzare@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
+ kwolf@redhat.com, hreitz@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, steven.sistare@oracle.com,
+ den-plotnikov@yandex-team.ru
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-27-vsementsov@yandex-team.ru>
+ <aKXNLfKWzHKUhGaz@x1.local> <aKXRGiDQlyPyhNsh@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <3xbdwul3qwdb246pk5xeeduotfvyeyjr6qkozzatb7h2zdrxlb@pcuu3ewglrjj>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aKXRGiDQlyPyhNsh@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,51 +83,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/08/2025 12.53, Aditya Gupta wrote:
-> On 25/08/20 05:55PM, Aditya Gupta wrote:
->> Currently when CONFIG_POWERNV is not enabled, the build fails, such as
->> with --without-default-devices:
+On 20.08.25 16:43, Daniel P. Berrangé wrote:
+> On Wed, Aug 20, 2025 at 09:27:09AM -0400, Peter Xu wrote:
+>> On Wed, Aug 13, 2025 at 07:48:47PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>> Add a possibility to keep socket non-block status when passing
+>>> through qio channel. We need this to support migration of open
+>>> fds through migration channel.
+>>>
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>> ---
+>>>   include/io/channel-socket.h |  3 +++
+>>>   io/channel-socket.c         | 16 ++++++++++++----
+>>>   2 files changed, 15 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
+>>> index a88cf8b3a9..0a4327d745 100644
+>>> --- a/include/io/channel-socket.h
+>>> +++ b/include/io/channel-socket.h
+>>> @@ -49,6 +49,7 @@ struct QIOChannelSocket {
+>>>       socklen_t remoteAddrLen;
+>>>       ssize_t zero_copy_queued;
+>>>       ssize_t zero_copy_sent;
+>>> +    bool keep_nonblock;
+>>>   };
+>>>   
+>>>   
+>>> @@ -275,4 +276,6 @@ int qio_channel_socket_set_send_buffer(QIOChannelSocket *ioc,
+>>>                                          size_t size,
+>>>                                          Error **errp);
+>>>   
+>>> +void qio_channel_socket_keep_nonblock(QIOChannel *ioc);
+>>> +
+>>>   #endif /* QIO_CHANNEL_SOCKET_H */
+>>> diff --git a/io/channel-socket.c b/io/channel-socket.c
+>>> index 3b7ca924ff..cd93d7f180 100644
+>>> --- a/io/channel-socket.c
+>>> +++ b/io/channel-socket.c
+>>> @@ -462,9 +462,16 @@ static void qio_channel_socket_finalize(Object *obj)
+>>>   }
+>>>   
+>>>   
+>>> +void qio_channel_socket_keep_nonblock(QIOChannel *ioc)
+>>> +{
+>>> +    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+>>> +    sioc->keep_nonblock = true;
+>>> +}
+>>> +
+>>> +
+>>>   #ifndef WIN32
+>>>   static void qio_channel_socket_copy_fds(struct msghdr *msg,
+>>> -                                        int **fds, size_t *nfds)
+>>> +                                        int **fds, size_t *nfds, bool set_block)
+>>>   {
+>>>       struct cmsghdr *cmsg;
+>>>   
+>>> @@ -497,8 +504,9 @@ static void qio_channel_socket_copy_fds(struct msghdr *msg,
+>>>                   continue;
+>>>               }
+>>>   
+>>> -            /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
+>>> -            qemu_socket_set_block(fd);
+>>> +            if (set_block) {
+>>> +                qemu_socket_set_block(fd);
+>>> +            }
 >>
->>      $ ./configure --without-default-devices
->>      $ make
+>> "keep_nonblock" as a feature in iochannel is slightly hard to digest.  It
+>> can also be read as "keep the fd to be always nonblocking".
 >>
->>      [281/283] Linking target qemu-system-ppc64
->>      FAILED: qemu-system-ppc64
->>      cc -m64 @qemu-system-ppc64.rsp
->>      /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_load_sprd':
->>      .../target/ppc/misc_helper.c:335:(.text+0xcdc): undefined reference to `pnv_chip_find_core'
->>      /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_store_sprd':
->>      .../target/ppc/misc_helper.c:375:(.text+0xdf4): undefined reference to `pnv_chip_find_core'
->>      collect2: error: ld returned 1 exit status
->>      ...
->>
->>> <...snip...>
+>> Is this feature required, or can this also be done in a get() or
+>> post_load() on the other side to set nonblock to whatever it should be
+>> (that dest QEMU should be aware of)?
 > 
-> The following is also sufficient to fix the compilation issue. Wasn't
-> sure if #ifdef POWERNV looks good there:
+> Either we preserve state of the flag when receiving the FD,
+> or every QEMU backend that we're receiving FDs on behalf of
+> needs to reset the flag when migration passes over the FD.
 > 
->      diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
->      index e7d94625185c..a8e55b2937c7 100644
->      --- a/target/ppc/misc_helper.c
->      +++ b/target/ppc/misc_helper.c
->      @@ -323,6 +323,7 @@ void helper_store_sprc(CPUPPCState *env, target_ulong val)
->       
->       target_ulong helper_load_sprd(CPUPPCState *env)
->       {
->      +#ifdef CONFIG_POWERNV
->           /*
->            * SPRD is a HV-only register for Power CPUs, so this will only be
->            * accessed by powernv machines.
->      @@ -361,11 +362,14 @@ target_ulong helper_load_sprd(CPUPPCState *env)
->                                         TARGET_FMT_lx"\n", sprc);
->               break;
->           }
->      +#endif
+> The latter might actually be a more robust scheme. If we're
+> migrating across QEMU versions, there is not a strict
+> guarantee that the new QEMU version's backend will want the
+> O_NONBLOCK flag in the same state as the old QEMU version.
+> The code might have been re-written to work in a different
+> way than previously.
+> 
 
-I don't think this is a good patch, it likely always disables the code, even 
-if the POWERNV machine is available? At least it lacks the #include 
-CONFIG_DEVICES that would be required here.
 
-  Thomas
+What I dislike in the way, when we reset to blocking always, and set non-blocking again where needed:
 
+1. Extra fcntl calls for nothing (I think actually, in most cases, for fds passed through migration stream(s) we'll want to keep fd as is)
+
+2. When we reset to blocking on target, it's visible on source and may break things.
+
+In these series it's probably doesn't really matter, as at the time when we get the descriptor on target, it should not be used anymore on source.
+
+But for example, in CPR-transfer, where descriptors are passed in the preliminary stage, and source is running and use the descriptors, we shouldn't change the non-blocking status of fd on target. Probably, CPR-transfer for now only works with fds which are blpcking, so we don't have a problem.
+
+So, I think, that better default is preserve state of the flag for fds passed through migration stream. And backends may modify it if needed (I think, in most cases - they will not need).
+
+
+-- 
+Best regards,
+Vladimir
 
