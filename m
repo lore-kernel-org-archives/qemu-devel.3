@@ -4,66 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1522CCA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 13:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53B5CA0EF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 13:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up5df-0001sZ-HR; Thu, 21 Aug 2025 09:47:35 -0400
+	id 1up5fY-0003Ce-Tj; Thu, 21 Aug 2025 09:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1up5dc-0001sF-Eq
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 09:47:32 -0400
-Received: from mail-m49240.qiye.163.com ([45.254.49.240])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1up5fV-0003B8-WC
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 09:49:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
- id 1up5dY-00015l-Nv
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 09:47:32 -0400
-Content-Type: multipart/alternative;
- BOUNDARY="=_Part_480204_1104934828.1755783917394"
-Message-ID: <APQAPgBCJfJxDC2UBlpf7aoO.3.1755783917394.Hmail.fanyihao@rt-thread.org>
-To: Peter Maydell  <peter.maydell@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Subject: =?UTF-8?B?UmU6IFtQQVRDSCB2MiAwLzNdIEFkZCBTVE0zMkY0IHN1cHBvcnQgYW5kIFVTQVJUIGRldmljZSBtb2RlbA==?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com
- Sirius_WEB_WIN_1.53.1
-X-Originating-IP: 240e:360:931b:aa00:cd61:ec6e:ec87:2cb6
-In-Reply-To: <CAFEAcA8vXBKQ-2LA5-fmmTOz5z8Pbr11QMsNADjrGsETfu0QxA@mail.gmail.com>
-References: <20250721201134.13270-1-fanyihao@rt-thread.org>
- <CAFEAcA8vXBKQ-2LA5-fmmTOz5z8Pbr11QMsNADjrGsETfu0QxA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1up5fT-0001MH-Jn
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 09:49:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755784166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VCuE9avvXSYo5aEE6qxecyDsEbW2wP+S8MoxLSQCKp4=;
+ b=W6Ip5nYFbvOO/GnrGGPHggJcAXXzxDRF2KbI9d/ps5opAvhCIGLKuOL5PnUIRvENpkZz69
+ Lc/+s/wRgc3PhFviQjeyQQAazl3Q89c8OyH264dOXfINfcvfjS2N3fOZaZxj5uB2DTtCrg
+ 8N6nYtwXUa7qsO4VJQMR6HNPxQs1QGo=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-518-VJ5y8KKwOrytFK7CnXnTqA-1; Thu, 21 Aug 2025 09:49:22 -0400
+X-MC-Unique: VJ5y8KKwOrytFK7CnXnTqA-1
+X-Mimecast-MFC-AGG-ID: VJ5y8KKwOrytFK7CnXnTqA_1755784162
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-70a928dc378so23321656d6.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 06:49:22 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755784162; x=1756388962;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VCuE9avvXSYo5aEE6qxecyDsEbW2wP+S8MoxLSQCKp4=;
+ b=PWCfs8r3idO+WtxWvFgaU+OOOIQT6ufFKSTApHHjDL2puJnjpnQIS/rfnatm8a6ptF
+ OJiX9O8DyPj6KYOtBLNda3G+nIe5eBQiayrODG/hIS/m350JoZs1WZsdXkbeO75LfvuX
+ 0937811eM7OXJQHHadUBnCOj0VDXS7ilyw5wcR/0YD7qUWyw1QLJW5ZyrQm65Nwcgxnz
+ CLV61gAGa7w+epXxHTWbiWsq3Qs/iHFT2j++rztvDZcFaXgY1a6R+4IkAtFB03f8W6uP
+ Y3+7zCDFzanSofeA/N0HBfS7m6Sgi++2Z2km5agdsXLIcCXgwqXaDErtt+R/cqxhu6sL
+ 9rhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWflD3SD0159vCYqxR7/6dj+kH9ANsu0Eo54GOj9sFGxqsoBQjKp+LT3r8h3XTN66Rtqtzk5G0hBlNq@nongnu.org
+X-Gm-Message-State: AOJu0YxBhSqqeC6Z7QUkkvqTJcUOBIivXm5B9DbMLM2I6v0x0oLq7qrN
+ Da435+bWgqFOPx4iUUBPR2BXjIfDSE0GrCQggLA7Uk5HnNYHGl+QQfQfHiTa2gN9aiPkXNZbBdt
+ 1rbBLkfVQDjbmSciqSHuQCTOsLA1shnLTer/ms1ooMU7aX3LGP3mjuBrt
+X-Gm-Gg: ASbGncvivQKj+CHAzmN0ac9RGvQT+MZ9+QEyr/i27IQl9oZdDlPJ+GB7EKgKAIh7oc8
+ eZZF4/o6xDiKx9T7K0aCkS+Wr/Au8KlCUwTFnHQlavDUlcZwOTg7pzo5Vxew+TEtu4L896xHKPg
+ kKItOytEuux+fVBAc0g5fOi6yN1Z8BR1yEyblg0fij8V2UbNYkQG/tHM2FMMADDUdKR97GLob5h
+ bmhJaCFkhmGsiIziUYtb/F5Q4KUfo/NJn2V46DTWl5UbTSYpzcThv01PrvY5BDyBJkQK8KtjNWi
+ CcOjKPZoidqzpXMD9XO3e0MPbQlEtkPe
+X-Received: by 2002:a05:6214:5017:b0:704:f396:913a with SMTP id
+ 6a1803df08f44-70d88f6bd8emr24392106d6.42.1755784162206; 
+ Thu, 21 Aug 2025 06:49:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzwOYTFiw7eSMOsDLCyCYu8cDSM5YP43SovTB3WZUuafH6RNFaYSjcWtaKkUYxJMi8MvMYug==
+X-Received: by 2002:a05:6214:5017:b0:704:f396:913a with SMTP id
+ 6a1803df08f44-70d88f6bd8emr24391856d6.42.1755784161804; 
+ Thu, 21 Aug 2025 06:49:21 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-70ba934cf82sm105123186d6.51.2025.08.21.06.49.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Aug 2025 06:49:21 -0700 (PDT)
+Date: Thu, 21 Aug 2025 09:49:09 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, farosas@suse.de, raphael@enfabrica.net,
+ sgarzare@redhat.com, marcandre.lureau@redhat.com,
+ pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
+ berrange@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ steven.sistare@oracle.com, den-plotnikov@yandex-team.ru
+Subject: Re: [PATCH 27/33] migration/socket: keep fds non-block
+Message-ID: <aKcj1coyywvbtW-h@x1.local>
+References: <20250813164856.950363-1-vsementsov@yandex-team.ru>
+ <20250813164856.950363-28-vsementsov@yandex-team.ru>
+ <aKXN4bykrOFE6_cX@x1.local>
+ <f52081b6-bb8b-4d2c-86f4-1c0b1fa5ac57@yandex-team.ru>
 MIME-Version: 1.0
-Received: from fanyihao@rt-thread.org(
- [240e:360:931b:aa00:cd61:ec6e:ec87:2cb6] ) by ajax-webmail ( [127.0.0.1] ) ;
- Thu, 21 Aug 2025 21:45:17 +0800 (GMT+08:00)
-From: =?UTF-8?B?6IyD6Im66LGq?= <fanyihao@rt-thread.org>
-Date: Thu, 21 Aug 2025 21:45:17 +0800 (GMT+08:00)
-X-HM-Tid: 0a98cce06e9402f2kunm928a691d4242f
-X-HM-MType: 1
-X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMYBSeVkCuDgEtMK2I7Iz00qensNJKpr13iP1kR
- QhqmkIB0JsRL95DITp428yHXGpwKLvB4Y+XROSHNZiSvJBimXomaO6MzU8SLOCVGqeUZYWgiotbe
- CQnUdiyJRPdDkDhBLlhtTnQI+wQrlcNIrKIKc=
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
- tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZSEJCVh9KGRlDHUMaQ0saSFYVFAkWGhdVEwETFh
- oSFyQUDg9ZV1kYEgtZQVlJT0seQUhNS0FCSEoZQRoaS0tBGB9NSkEeGE0eQR4YQ0xBSRgZTVlXWR
- YaDxIVHRRZQVlPS0hVQkJJTkpVSktLVUpCS0JZBg++
-DKIM-Signature: a=rsa-sha256;
- b=cfyDPTOeYDipMWNRNUbNBVwfoNPfAdUrIs9nvtld/DR4e3YYjepAWmc9AeU/grIK3pv8UKqZBDMBs1e5rofd560uBZWIbHdGr2GsZWFPT9WLs2NcR1Vv6+nAez9b6+0r+xa9ewkdGm+kIU9Y31m2ws99vXQpYRUGcKd5O2rpcaNvPl42UBXxAZM5UITMPBv3BiTSlb7u/V/5aLjuQGaP6hGKgu6AubtYDjvKigYMAuS+GxmC2z99/MF/je85oEe7tH4lWMIvpR2XCN3uUvcGk/KWybZchMwytpFoSj1LYLCupIlCOaJxcvAUj+1VudH5yU3l0Y0FpSD7TiDHMJV13Q==;
- s=default; c=relaxed/relaxed; d=rt-thread.org; v=1; 
- bh=IgTA8ngCeXjK+M9bX+TBjgTuz3zvrTi8raL5cr+CtAg=;
- h=date:mime-version:subject:message-id:from;
-Received-SPF: pass client-ip=45.254.49.240;
- envelope-from=fanyihao@rt-thread.org; helo=mail-m49240.qiye.163.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f52081b6-bb8b-4d2c-86f4-1c0b1fa5ac57@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,142 +113,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=_Part_480204_1104934828.1755783917394
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+On Thu, Aug 21, 2025 at 03:15:24PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 20.08.25 16:30, Peter Xu wrote:
+> > On Wed, Aug 13, 2025 at 07:48:48PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > For migration channel keep fds non-blocking property as is.
+> > > It's needed for future local migration of fds.
+> > 
+> > It is pretty risky.  This changes the attribute for all the iochannels that
+> > migration incoming side uses, including multifd / postcopy / ...
+> 
+> But for now nobody (except CPR-transfer) really pass fds through migration,
+> and for CPR-transfer it's obviously better to preserve the state by default (see
+> my answer in previous patch).
+> 
+> So I think, we are in a point, where we can chose the good default, and
+> document it.
+> 
+> > 
+> > I left comment in previous patch as a pure question trying to understand
+> > whether the feature is needed.  If it is, here it might still be good to:
+> > 
+> >    - Above the line add a comment explaning why
+> >    - Only apply it to whatever channel that matters.  In this case, IIUC
+> >      only the main channel matters
+> > 
+> 
+> I still think that preserving non-blocking flag "as is" is good default for migration,
+> please look at my answer in previous patch. However, in this series I may adopt
+> to any approach.
 
-SGkgLAoKVGhhbmtzIGZvciB0aGUgcmV2aWV3IGFuZCBoZWxwZnVsIHN1Z2dlc3Rpb25zLgpJIHdp
-bGwgdXBkYXRlIHRoZSBib2FyZCBkb2N1bWVudGF0aW9uIGFuZCBwcm92aWRlIGEgZnVuY3Rpb25h
-bCB0ZXN0IGNhc2UgaW4gdGhlIG5leHQgdmVyc2lvbi4KCkJlc3Qgd2lzaGVzLApZaWhhbyBGYW4K
-CgoKCgoKCgog6IyD6Im66LGqCmZhbnlpaGFvQHJ0LXRocmVhZC5vcmcKCgoKCgoKCgoKCk9yaWdp
-bmFsOgpGcm9t77yaUGV0ZXIgTWF5ZGVsbCA8cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnPkRhdGXv
-vJoyMDI1LTA4LTE2IDAxOjQ5OjM3KOS4reWbvSAoR01UKzA4OjAwKSlUb++8mmZhbnlpaGFvPGZh
-bnlpaGFvQHJ0LXRocmVhZC5vcmc+Q2PvvJpxZW11LWRldmVsPHFlbXUtZGV2ZWxAbm9uZ251Lm9y
-Zz5TdWJqZWN077yaUmU6IFtQQVRDSCB2MiAwLzNdIEFkZCBTVE0zMkY0IHN1cHBvcnQgYW5kIFVT
-QVJUIGRldmljZSBtb2RlbE9uIE1vbiwgMjEgSnVsIDIwMjUgYXQgMjE6MTEsIDxmYW55aWhhb0By
-dC10aHJlYWQub3JnPiB3cm90ZToKPgo+IEZyb206IFlpaGFvIEZhbiA8ZmFueWloYW9AcnQtdGhy
-ZWFkLm9yZz4KPgo+IFRoaXMgcGF0Y2ggc2VyaWVzIGludHJvZHVjZXMgYmFzaWMgc3VwcG9ydCBm
-b3IgdGhlIFNUTTMyRjQwNyBTb0MgYW5kCj4gYSBuZXcgU1RNMzJGNHNwYXJrIG1hY2hpbmUgaW4g
-UUVNVSwgYWxvbmcgd2l0aCBhIFVTQVJUIGRldmljZSBtb2RlbC4KPgo+IFRoaXMgc2VyaWVzIGlu
-Y2x1ZGVzOgo+IC0gQSBuZXcgU29DIG1vZGVsIChTVE0zMkY0MDcpIHdpdGggaW5pdGlhbCBpbnRl
-Z3JhdGlvbi4KPiAtIEEgYm9hcmQgbW9kZWwgY2FsbGVkIFNUTTMyRjRzcGFyayB0byBpbnN0YW50
-aWF0ZSBhbmQgdGVzdCB0aGUgU29DLgo+IC0gQSBVU0FSVCBkZXZpY2UgaW1wbGVtZW50YXRpb24g
-Zm9yIFNUTTMyRjR4eCBmYW1pbHkuCj4KPiBTaWduZWQtb2ZmLWJ5OiBZaWhhbyBGYW4gPGZhbnlp
-aGFvQHJ0LXRocmVhZC5vcmc+Cj4KPiBZaWhhbyBGYW4gKDMpOgo+ICAgQWRkLXRoZS1zdG0zMmY0
-MDctU29DCj4gICBBZGQgdGhlIFNUTTMyRjRzcGFyayBNYWNoaW5lCj4gICBBZGQgU1RNMzJGNHh4
-IFVTQVJUIGRldmljZSBtb2RlbAo+Cj4gIE1BSU5UQUlORVJTICAgICAgICAgICAgICAgICAgICAg
-ICB8ICAxNiArKwo+ICBody9hcm0vS2NvbmZpZyAgICAgICAgICAgICAgICAgICAgfCAgMTMgKysK
-PiAgaHcvYXJtL21lc29uLmJ1aWxkICAgICAgICAgICAgICAgIHwgICAyICsKPiAgaHcvYXJtL3N0
-bTMyZjQwN19zb2MuYyAgICAgICAgICAgIHwgMTU0ICsrKysrKysrKysrKysrKysrKysKPiAgaHcv
-YXJtL3N0bTMyZjRzcGFyay5jICAgICAgICAgICAgIHwgIDQ4ICsrKysrKwo+ICBody9jaGFyL0tj
-b25maWcgICAgICAgICAgICAgICAgICAgfCAgIDMgKwo+ICBody9jaGFyL21lc29uLmJ1aWxkICAg
-ICAgICAgICAgICAgfCAgIDEgKwo+ICBody9jaGFyL3N0bTMyZjR4eF91c2FydC5jICAgICAgICAg
-fCAyMzYgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrCj4gIGluY2x1ZGUvaHcvYXJtL3N0
-bTMyZjQwN19zb2MuaCAgICB8ICA0NyArKysrKysKPiAgaW5jbHVkZS9ody9jaGFyL3N0bTMyZjR4
-eF91c2FydC5oIHwgIDYwICsrKysrKysrCgpGb3IgYSBuZXcgYm9hcmQgbW9kZWwgdGhlcmUgYXJl
-IGEgY291cGxlIG9mIHRoaW5ncyB3ZSdkIGxpa2UKdG8gc2VlIHRoYXQgYXJlbid0IGluIHRoaXMg
-cGF0Y2hzZXQ6CgooMSkgRG9jdW1lbnRhdGlvbi4gVGhpcyBsaXZlcyBpbiBkb2NzL3N5c3RlbS9h
-cm0vLiBGb3IKdGhpcyBib2FyZCB5b3Ugd2FudCB0byBhZGQgaXQgdG8gc3RtMzIucnN0LgoKKDIp
-IEEgdGVzdCBjYXNlIGluIHRlc3RzL2Z1bmN0aW9uYWwvIC0tIGdlbmVyYWxseSB0aGlzIGlzCnNv
-bWV0aGluZyB0aGF0IGRvd25sb2FkcyBhbiBpbWFnZSBmaWxlIGZyb20gYSBwdWJsaWMgc3RhYmxl
-ClVSTCwgcnVucyBpdCBpbiBRRU1VIGFuZCBjaGVja3MgZm9yIHNvbWUgb3V0cHV0IGZyb20gdGhl
-Cmd1ZXN0IG9uIHRoZSBVQVJUIGluZGljYXRpbmcgc3VjY2Vzcy4gTG90cyBvZiBleGFtcGxlcwpp
-biB0aGlzIGRpcmVjdG9yeSB0byBzZWUgaG93IHRvIGRvIGl0LgoKdGhhbmtzCi0tIFBNTQoKCgoK
-DQoNCg==
---=_Part_480204_1104934828.1755783917394
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
+I also commented in the previous patch, let's see whether we can make it
+not only the default for migration, but the default for iochannels (hence,
+any chance to drop the new feature flag completely..).
 
-PGhlYWQ+PC9oZWFkPjxib2R5PjxwPkhpICw8L3A+PHA+PC9wPjxwPlRoYW5rcyBmb3IgdGhlIHJl
-dmlldyBhbmQgaGVscGZ1bCBzdWdnZXN0aW9ucy48L3A+PHA+SSB3aWxsIHVwZGF0ZSB0aGUgYm9h
-cmQgZG9jdW1lbnRhdGlvbiBhbmQgcHJvdmlkZSBhIGZ1bmN0aW9uYWwgdGVzdCBjYXNlIGluIHRo
-ZSBuZXh0IHZlcnNpb24uPC9wPjxwPjwvcD48cD5CZXN0IHdpc2hlcyw8L3A+PHA+WWloYW8gRmFu
-PC9wPjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRw
-eDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICIgZGF0YS1tY2Utc3R5bGU9ImZvbnQtZmFtaWx5OlNv
-dXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICI+PGJy
-PjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6
-MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICIgZGF0YS1tY2Utc3R5bGU9ImZvbnQtZmFtaWx5
-OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICI+
-PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNp
-emU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICIgZGF0YS1tY2Utc3R5bGU9ImZvbnQtZmFt
-aWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAg
-ICI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250
-LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICIgZGF0YS1tY2Utc3R5bGU9ImZvbnQt
-ZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAg
-ICAgICI+PGJyPjwvZGl2PjxkaXYgY2xhc3M9Im1haWwtc2lnbmF0dXJlIj4gICAgIDxkaXYgY2xh
-c3M9Imxpbmd4aS1zaWduYXR1cmUtY29udGFpbmVyIiBzdHlsZT0iZm9udC1mYW1pbHk6IFBpbmdG
-YW5nLFNvdXJjZSBIYW4gU2FucyxzYW5zLXNlcmlmOyI+ICAgICAgICAgIDwhLS0g5qC35byP5LiA
-77yM5a6M5pW054mIIC0tPiAgICAgICAgICA8dGFibGUgc3R5bGU9ImJvcmRlci1jb2xsYXBzZTog
-Y29sbGFwc2U7d2lkdGg6IDEwMCU7dGV4dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRhbnQ7dGFi
-bGUtbGF5b3V0OiBmaXhlZDsiPiAgICAgICAgICAgICAgIDx0Ym9keSBzdHlsZT0idGV4dC1zaXpl
-LWFkanVzdDpub25lICFpbXBvcnRhbnQ7d29yZC13cmFwOmJyZWFrLXdvcmQ7IHdvcmQtYnJlYWs6
-YnJlYWstYWxsOyI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L3Rib2R5PiAg
-ICAgICAgICA8L3RhYmxlPiAgICAgICAgICA8IS0tIOagt+W8j+S6jO+8jOaXoOWktOWDjyAtLT4g
-ICAgICAgICAgPGRpdiBpZD0ibGluZ3hpLXNpZ25hdHVyZS12Mi1ibG9jayIgc3R5bGU9IndpZHRo
-OiAxMDAlO3RleHQtZGVjb3JhdGlvbjogbm9uZTt0ZXh0LXVuZGVybGluZTogbm9uZTsiPiAgICAg
-ICAgICAgICAgIDxkaXYgaWQ9Imxpbmd4aS1zaWduYXR1cmUtdjItY29udGVudCIgaXRlbWlkPSJp
-ZCIgc3R5bGU9Im1heC13aWR0aDogOTUlO2ZvbnQtc2l6ZTogMTRweDtsaW5lLWhlaWdodDogMTZw
-eDtjb2xvcjogIzdBODU5OTtwYWRkaW5nOiAxNnB4IDE2cHggNHB4IDBweDttYXJnaW4tbGVmdDog
-MHB4OyIgaXRlbXByb3A9Ijk4MzAwMDMiPiAgICAgICAgICAgICAgICAgICAgPGRpdiBzdHlsZT0i
-Y29sb3I6ICMyMzJENDc7Ym9yZGVyOiBub25lO21hcmdpbi1ib3R0b206NHB4O2ZvbnQtc2l6ZTog
-MTZweDtsaW5lLWhlaWdodDogMjBweDt0ZXh0LXVuZGVybGluZTogbm9uZTtmb250LXdlaWdodDog
-Ym9sZGVyOyIgaXRlbWlkPSJuYW1lIj7ojIPoibrosao8L2Rpdj4gICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPSJib3Jk
-ZXI6IG5vbmU7bWFyZ2luLWJvdHRvbTo4cHg7dGV4dC11bmRlcmxpbmU6IG5vbmU7Ij5mYW55aWhh
-b0BydC10aHJlYWQub3JnPC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9kaXY+ICAgICAgICAgIDwv
-ZGl2PiAgICAgICAgICA8IS0t5Yqe5YWs5ZOB54mMLS0+ICAgICAgICAgICAgICAgPC9kaXY+PC9k
-aXY+PGRpdiBjbGFzcz0icHJlLW1haWwtY29udGVudCI+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6
-U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIiBk
-YXRhLW1jZS1zdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4
-O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIj48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1mYW1p
-bHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAg
-IiBkYXRhLW1jZS1zdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZTox
-NHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIj48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1m
-YW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAg
-ICAgIiBkYXRhLW1jZS1zdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6
-ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIj48YnI+PC9kaXY+PGRpdiBpZD0iaXNSZXBs
-eUNvbnRlbnQiIHN0eWxlPSJtYXJnaW46IDA7Ij48ZGl2IHN0eWxlPSJjb2xvcjogIzdkODA4NSI+
-T3JpZ2luYWw6PC9kaXY+PHVsIHN0eWxlPSJjb2xvcjogIzdkODA4NTsgZm9udC1zaXplOjEycHg7
-IHBhZGRpbmctbGVmdDogMjBweCI+PGxpPkZyb23vvJpQZXRlciBNYXlkZWxsICZsdDs8YSBocmVm
-PSJtYWlsdG86cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnIj5wZXRlci5tYXlkZWxsQGxpbmFyby5v
-cmc8L2E+Jmd0OzwvbGk+PGxpPkRhdGXvvJoyMDI1LTA4LTE2IDAxOjQ5OjM3KOS4reWbvSAoR01U
-KzA4OjAwKSk8L2xpPjxsaT5Ub++8mmZhbnlpaGFvJmx0OzxhIGhyZWY9Im1haWx0bzpmYW55aWhh
-b0BydC10aHJlYWQub3JnIj5mYW55aWhhb0BydC10aHJlYWQub3JnPC9hPiZndDs8L2xpPjxsaT5D
-Y++8mnFlbXUtZGV2ZWwmbHQ7PGEgaHJlZj0ibWFpbHRvOnFlbXUtZGV2ZWxAbm9uZ251Lm9yZyI+
-cWVtdS1kZXZlbEBub25nbnUub3JnPC9hPiZndDs8L2xpPjxsaT5TdWJqZWN077yaUmU6IFtQQVRD
-SCB2MiAwLzNdIEFkZCBTVE0zMkY0IHN1cHBvcnQgYW5kIFVTQVJUIGRldmljZSBtb2RlbDwvbGk+
-PC91bD48cHJlPk9uIE1vbiwgMjEgSnVsIDIwMjUgYXQgMjE6MTEsICZsdDtmYW55aWhhb0BydC10
-aHJlYWQub3JnJmd0OyB3cm90ZToKJmd0OwomZ3Q7IEZyb206IFlpaGFvIEZhbiAmbHQ7ZmFueWlo
-YW9AcnQtdGhyZWFkLm9yZyZndDsKJmd0OwomZ3Q7IFRoaXMgcGF0Y2ggc2VyaWVzIGludHJvZHVj
-ZXMgYmFzaWMgc3VwcG9ydCBmb3IgdGhlIFNUTTMyRjQwNyBTb0MgYW5kCiZndDsgYSBuZXcgU1RN
-MzJGNHNwYXJrIG1hY2hpbmUgaW4gUUVNVSwgYWxvbmcgd2l0aCBhIFVTQVJUIGRldmljZSBtb2Rl
-bC4KJmd0OwomZ3Q7IFRoaXMgc2VyaWVzIGluY2x1ZGVzOgomZ3Q7IC0gQSBuZXcgU29DIG1vZGVs
-IChTVE0zMkY0MDcpIHdpdGggaW5pdGlhbCBpbnRlZ3JhdGlvbi4KJmd0OyAtIEEgYm9hcmQgbW9k
-ZWwgY2FsbGVkIFNUTTMyRjRzcGFyayB0byBpbnN0YW50aWF0ZSBhbmQgdGVzdCB0aGUgU29DLgom
-Z3Q7IC0gQSBVU0FSVCBkZXZpY2UgaW1wbGVtZW50YXRpb24gZm9yIFNUTTMyRjR4eCBmYW1pbHku
-CiZndDsKJmd0OyBTaWduZWQtb2ZmLWJ5OiBZaWhhbyBGYW4gJmx0O2ZhbnlpaGFvQHJ0LXRocmVh
-ZC5vcmcmZ3Q7CiZndDsKJmd0OyBZaWhhbyBGYW4gKDMpOgomZ3Q7ICAgQWRkLXRoZS1zdG0zMmY0
-MDctU29DCiZndDsgICBBZGQgdGhlIFNUTTMyRjRzcGFyayBNYWNoaW5lCiZndDsgICBBZGQgU1RN
-MzJGNHh4IFVTQVJUIGRldmljZSBtb2RlbAomZ3Q7CiZndDsgIE1BSU5UQUlORVJTICAgICAgICAg
-ICAgICAgICAgICAgICB8ICAxNiArKwomZ3Q7ICBody9hcm0vS2NvbmZpZyAgICAgICAgICAgICAg
-ICAgICAgfCAgMTMgKysKJmd0OyAgaHcvYXJtL21lc29uLmJ1aWxkICAgICAgICAgICAgICAgIHwg
-ICAyICsKJmd0OyAgaHcvYXJtL3N0bTMyZjQwN19zb2MuYyAgICAgICAgICAgIHwgMTU0ICsrKysr
-KysrKysrKysrKysrKysKJmd0OyAgaHcvYXJtL3N0bTMyZjRzcGFyay5jICAgICAgICAgICAgIHwg
-IDQ4ICsrKysrKwomZ3Q7ICBody9jaGFyL0tjb25maWcgICAgICAgICAgICAgICAgICAgfCAgIDMg
-KwomZ3Q7ICBody9jaGFyL21lc29uLmJ1aWxkICAgICAgICAgICAgICAgfCAgIDEgKwomZ3Q7ICBo
-dy9jaGFyL3N0bTMyZjR4eF91c2FydC5jICAgICAgICAgfCAyMzYgKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrCiZndDsgIGluY2x1ZGUvaHcvYXJtL3N0bTMyZjQwN19zb2MuaCAgICB8ICA0
-NyArKysrKysKJmd0OyAgaW5jbHVkZS9ody9jaGFyL3N0bTMyZjR4eF91c2FydC5oIHwgIDYwICsr
-KysrKysrCgpGb3IgYSBuZXcgYm9hcmQgbW9kZWwgdGhlcmUgYXJlIGEgY291cGxlIG9mIHRoaW5n
-cyB3ZSdkIGxpa2UKdG8gc2VlIHRoYXQgYXJlbid0IGluIHRoaXMgcGF0Y2hzZXQ6CgooMSkgRG9j
-dW1lbnRhdGlvbi4gVGhpcyBsaXZlcyBpbiBkb2NzL3N5c3RlbS9hcm0vLiBGb3IKdGhpcyBib2Fy
-ZCB5b3Ugd2FudCB0byBhZGQgaXQgdG8gc3RtMzIucnN0LgoKKDIpIEEgdGVzdCBjYXNlIGluIHRl
-c3RzL2Z1bmN0aW9uYWwvIC0tIGdlbmVyYWxseSB0aGlzIGlzCnNvbWV0aGluZyB0aGF0IGRvd25s
-b2FkcyBhbiBpbWFnZSBmaWxlIGZyb20gYSBwdWJsaWMgc3RhYmxlClVSTCwgcnVucyBpdCBpbiBR
-RU1VIGFuZCBjaGVja3MgZm9yIHNvbWUgb3V0cHV0IGZyb20gdGhlCmd1ZXN0IG9uIHRoZSBVQVJU
-IGluZGljYXRpbmcgc3VjY2Vzcy4gTG90cyBvZiBleGFtcGxlcwppbiB0aGlzIGRpcmVjdG9yeSB0
-byBzZWUgaG93IHRvIGRvIGl0LgoKdGhhbmtzCi0tIFBNTQoKPC9wcmU+PC9kaXY+PC9kaXY+PGJy
-PjwvYm9keT4=
---=_Part_480204_1104934828.1755783917394--
+If that won't fly, I think this is fine.  In that case, please explicitly
+mention that it's intentional to change all iochannels that migration uses
+in the commit message, and we can also add a comment inline explaining why
+we set this default for all migration channels.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
