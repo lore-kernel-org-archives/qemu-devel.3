@@ -4,75 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3BB8CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:31:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D631CCA0EF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up6JK-0008PM-EZ; Thu, 21 Aug 2025 10:30:38 -0400
+	id 1up6Zd-0004dx-2l; Thu, 21 Aug 2025 10:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1up6JJ-0008Ox-Dx
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:30:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1up6JH-00072l-37
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:30:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755786633;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=86xfhadHv62EUAgE1Gfl6cKTiNoha5CSmGLqrUfwdLw=;
- b=K1b9b8NPAaSvWy5fVs86sfpSzpnom64zwACed0abxhU8a3UxbwNOIEIwla0Sq9KYaNRcfW
- RFVZrBt0uCaK7q+N2vJIV967jNmkSuO9b+w7jN4UiTX6Q7JZBaJGiS/AvltvRY5W92hM+W
- cIu4f5B7E1UNzlgMkoq3vc93RTbIRlg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-487-QygswYtoPsa4yCI2o5TrZQ-1; Thu,
- 21 Aug 2025 10:30:31 -0400
-X-MC-Unique: QygswYtoPsa4yCI2o5TrZQ-1
-X-Mimecast-MFC-AGG-ID: QygswYtoPsa4yCI2o5TrZQ_1755786630
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09077195C15A; Thu, 21 Aug 2025 14:29:12 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.124])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 763C81955F24; Thu, 21 Aug 2025 14:29:11 +0000 (UTC)
-Date: Thu, 21 Aug 2025 10:29:10 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v4 0/7] tracetool: add test suite to improve reviewability
-Message-ID: <20250821142910.GD7010@fedora>
-References: <20250819161053.464641-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1up6ZX-0004as-5g
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:47:24 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1up6ZU-0000Qc-3i
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:47:22 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e94e40fd4f1so1084623276.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 07:47:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755787638; x=1756392438; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bvHFQDqOHDR2ImKQftowTJ1dNGFZDFpNaySfWl1A+4w=;
+ b=JWbjs+amOAGXaMe7OCPFX97lDNDuZ+PFrgjt3dwMJiu1idt1yNDOzyC/mk3FGBT+/s
+ FojJXwJz7CH+66vyljpcCSPkwByqwQT3vicP4B7z1erLAGoyrfjG5CC0da8FAEygI61q
+ yA+DmV3mKa6ytVkbiI9b9g7kue7wYffzgLumpE/ExBmkAeEyY8f70OwvK4x6QFexGYqg
+ IBh/StfrvyxJEzcp4pM74aPefOJf05+JGon0N9rwtY3+YK/AbkNOqAEHsCy9EqjYi3yg
+ NSWqg1nP8Nj7XloAIZOiRl20aYScdhp/MfT/GSZe+dv/FJ6mQSHF41E1KVPQT7BaJ6dQ
+ Gr3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755787638; x=1756392438;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bvHFQDqOHDR2ImKQftowTJ1dNGFZDFpNaySfWl1A+4w=;
+ b=L1rRcn/k9Fa0B1ZvcIQHMknl0d5Yf503PvnPDYS+G472sQHPVANFFxK5PsOELcWPgT
+ ulaHJc8XR54JGUpHQt9/8aujuNQ8V8ho8IhmeOkWFiMN/ktv84nq3fzLz7dJi/BGmGeN
+ VBmhymvSyiBXUEx1Y+iN7sVwJNM9sUKm8WDgO2D3/LX3EBuWZ8Uz92lkExaioFWkzXuI
+ UptRi7uiYMM5gszi3DjdUxIzFS2Rmkg4exhvBSlqPZvwH1NM+1pSb5l3kOcNTPAqWDLZ
+ 7zEuRTGLBPQArGUOFhITf4BbFpgr4+Ohd+/cc/eIO5qowJPxfKI6GiDWsvti09PDLKXh
+ ++8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjMSJQJCV5SQYXKEjyCgBVFHhMh86jC1rbEFwK9HuAXUKr8a+MI6nWKUeouF2k3+d8fgAHM8EBX0ji@nongnu.org
+X-Gm-Message-State: AOJu0Yy9XsGJdXIMngwb4jqbR5mGdARaUgHUKKQA7pNm0iIJ/7KmRfxn
+ RCQj3yWfbqWwoc8/Nevm/XS2wYh5RNYwkDLx6YZHMH/Vk9b/5RpKyEoJNjCbxgg4pdt3sCvt7GO
+ wW0vSptBWS8q5jeH40TMJZaqcqHAQVqmHsdjXuSc9Fw==
+X-Gm-Gg: ASbGnctdf8CWzrkhQ8gpvB4BZr9a/o/oJEYaFN0dM72MeElHqAtoBfmUwATJx+9xX+b
+ swAa8gUgHr57BAosUnyzJBWjqjZ/anwj7jPc+AlEln2RVjQ+P6lmz/Y3Yap/m776yXURaNRbEuc
+ YiuDFQXpJDhQg/D2teCapp5W+PFIYSvGF8fxCYqr1/m5nBt4daLMBNZamCDbwTyULyNwMfZNHSn
+ kOVDeB6
+X-Google-Smtp-Source: AGHT+IEQxvug7Y8254CH1eh9VKqmbINJ8ESgNsBpTbzoZQdSGrQwap6M7SQN4SKKmMjLLMM6kJnFCYj/X6rpdt0+ndo=
+X-Received: by 2002:a05:6902:1890:b0:e94:e1e5:377d with SMTP id
+ 3f1490d57ef6-e9509b9f87emr3508019276.51.1755787638120; Thu, 21 Aug 2025
+ 07:47:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="YACCkNcH7AcOjKIe"
-Content-Disposition: inline
-In-Reply-To: <20250819161053.464641-1-berrange@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250110-san-v8-0-57a5a1be1bcf@daynix.com>
+ <20250110-san-v8-2-57a5a1be1bcf@daynix.com>
+ <CAFEAcA-aTYebu-5s4AeBfE3oLQfxTwCpeosoj0TU8E_XPu_ZDg@mail.gmail.com>
+ <CAFEAcA-ygHuA5BH+oftCGDKZOh8CHbiUKE4v=-iXvCaKzG4kHQ@mail.gmail.com>
+ <aKctCjv8newNIX71@x1.local>
+In-Reply-To: <aKctCjv8newNIX71@x1.local>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 Aug 2025 15:47:06 +0100
+X-Gm-Features: Ac12FXzCfTRnLnffB-OdHJs-cXDH3-_5Hq0F0kEeeD52QfMDe1Yeyts9R-0jgPY
+Message-ID: <CAFEAcA8DV40fGsci76r4yeP1P-SP_QjNRDD2OzPxjx5wRs0GEg@mail.gmail.com>
+Subject: Re: [PATCH v8 2/2] memory: Do not create circular reference with
+ subregion
+To: Peter Xu <peterx@redhat.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
+ devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,143 +115,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 21 Aug 2025 at 15:28, Peter Xu <peterx@redhat.com> wrote:
+> > On Thu, 21 Aug 2025 at 13:40, Peter Maydell <peter.maydell@linaro.org> wrote:
+> > > In memory_region_unref_subregion(), subregion->container is NULL.
+> > >
+> > > This is because in memory_region_del_subregion() we do:
+> > >
+> > >     subregion->container = NULL;
+> > >
+> > > and then after that we call
+> > >     memory_region_unref_subregion(subregion);
+> > > which dereferences subregion->container.
+> > >
+> > > Won't this always SEGV ?
 
---YACCkNcH7AcOjKIe
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Peter, could you try the v3 version patch 8/9 instead?
+>
+> https://lore.kernel.org/all/20240708-san-v3-8-b03f671c40c6@daynix.com/
+>
+> I still prefer that one, and I hope that one doesn't have this issue.
 
-On Tue, Aug 19, 2025 at 05:10:46PM +0100, Daniel P. Berrang=E9 wrote:
-> To repeat the start of the commit message in patch 5....
->=20
-> When reviewing tracetool patches it is often very unclear what the
-> expected output will be for the generated backends. Compounding
-> this is that a default build will only enable the 'log' trace
-> backend, so developers won't see generated code for other backends
-> without making a special effort. Some backends are also platform
-> specific, so can't be enabled in QEMU builds, even though tracetool
-> could generate the code.
->=20
-> To address this, introduce a test suite for tracetool which is
-> conceptually similar to the qapi-schema test. It is a simple
-> python program that runs tracetool and compares the actual output
-> to historical reference output kept in git.
->=20
-> This was inspired by noticing the now pointless "__nocheck__"
-> method wrapping in the inline probe functions.
->=20
-> Changed in v4:
->=20
->  - Drop patch adding '-' as an output filename for tracetool
->  - Rewrite test to always use relative filenames for both
->    inputs and outputs
->  - Pass python code through 'black'
->  - Minor docs punctuation tweak
->  - Drop unused python method
->=20
-> Changed in v3:
->=20
->  - Also modify the QAPI schema test to use QEMU_TEST_REGENERATE=3D1
->    env & document / hint this
->  - Make tracetool accept '-' as shorthand for stdout to
->    avoid relative paths in the reference output
->=20
-> Changed in v2:
->=20
->  - Add tracetool info to docs/devel/testing.rst
->=20
-> Daniel P. Berrang=E9 (7):
->   checkpatch: cull trailing '*/' in SPDX check
->   tracetool: eliminate trailing whitespace in C format
->   tracetool: avoid space after "*" in arg types
->   tracetool: include SPDX-License-Identifier in generated files
->   tracetool: add test suite for tracetool with reference output
->   tracetool: drop the probe "__nocheck__" wrapping
->   qapi: switch to use QEMU_TEST_REGENERATE env var
->=20
->  MAINTAINERS                                  |   1 +
->  docs/devel/testing/main.rst                  |  40 +++++++
->  scripts/checkpatch.pl                        |   3 +
->  scripts/tracetool/__init__.py                |   9 +-
->  scripts/tracetool/format/c.py                |   3 +-
->  scripts/tracetool/format/d.py                |   3 +-
->  scripts/tracetool/format/h.py                |  17 +--
->  scripts/tracetool/format/log_stap.py         |   1 +
->  scripts/tracetool/format/simpletrace_stap.py |   1 +
->  scripts/tracetool/format/stap.py             |   1 +
->  scripts/tracetool/format/ust_events_c.py     |   1 +
->  scripts/tracetool/format/ust_events_h.py     |   1 +
->  tests/Makefile.include                       |   1 +
->  tests/meson.build                            |   1 +
->  tests/qapi-schema/test-qapi.py               |   7 +-
->  tests/tracetool/dtrace.c                     |  32 ++++++
->  tests/tracetool/dtrace.d                     |  10 ++
->  tests/tracetool/dtrace.h                     |  45 ++++++++
->  tests/tracetool/dtrace.log-stap              |  15 +++
->  tests/tracetool/dtrace.simpletrace-stap      |  16 +++
->  tests/tracetool/dtrace.stap                  |  14 +++
->  tests/tracetool/ftrace.c                     |  32 ++++++
->  tests/tracetool/ftrace.h                     |  59 +++++++++++
->  tests/tracetool/log.c                        |  32 ++++++
->  tests/tracetool/log.h                        |  43 ++++++++
->  tests/tracetool/meson.build                  |  25 +++++
->  tests/tracetool/simple.c                     |  61 +++++++++++
->  tests/tracetool/simple.h                     |  40 +++++++
->  tests/tracetool/syslog.c                     |  32 ++++++
->  tests/tracetool/syslog.h                     |  43 ++++++++
->  tests/tracetool/trace-events                 |   5 +
->  tests/tracetool/tracetool-test.py            | 105 +++++++++++++++++++
->  tests/tracetool/ust.c                        |  32 ++++++
->  tests/tracetool/ust.h                        |  41 ++++++++
->  tests/tracetool/ust.ust-events-c             |  14 +++
->  tests/tracetool/ust.ust-events-h             |  56 ++++++++++
->  36 files changed, 821 insertions(+), 21 deletions(-)
->  create mode 100644 tests/tracetool/dtrace.c
->  create mode 100644 tests/tracetool/dtrace.d
->  create mode 100644 tests/tracetool/dtrace.h
->  create mode 100644 tests/tracetool/dtrace.log-stap
->  create mode 100644 tests/tracetool/dtrace.simpletrace-stap
->  create mode 100644 tests/tracetool/dtrace.stap
->  create mode 100644 tests/tracetool/ftrace.c
->  create mode 100644 tests/tracetool/ftrace.h
->  create mode 100644 tests/tracetool/log.c
->  create mode 100644 tests/tracetool/log.h
->  create mode 100644 tests/tracetool/meson.build
->  create mode 100644 tests/tracetool/simple.c
->  create mode 100644 tests/tracetool/simple.h
->  create mode 100644 tests/tracetool/syslog.c
->  create mode 100644 tests/tracetool/syslog.h
->  create mode 100644 tests/tracetool/trace-events
->  create mode 100755 tests/tracetool/tracetool-test.py
->  create mode 100644 tests/tracetool/ust.c
->  create mode 100644 tests/tracetool/ust.h
->  create mode 100644 tests/tracetool/ust.ust-events-c
->  create mode 100644 tests/tracetool/ust.ust-events-h
->=20
-> --=20
-> 2.50.1
->=20
+That one fails like this:
+qemu-system-arm: ../../system/memory.c:1799: memory_region_finalize:
+Assertion `!mr->container' failed.
 
-Thanks, applied to my tracing-next tree:
-https://gitlab.com/stefanha/qemu/commits/tracing-next
+See the discussion on v2 (which was the same for this patch):
+https://lore.kernel.org/all/CAFEAcA9KTSjwF1rABpM5nv9UFuKqZZk6+Qo4PEF4+rTirNi5fQ@mail.gmail.com/
 
-Stefan
-
---YACCkNcH7AcOjKIe
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAminLTYACgkQnKSrs4Gr
-c8jAywf/V06t1I4DJPQauTVNa/f2GmZEKY0cDxSfeKzbYHHj8PJUYXR+c5a4qcuD
-QtwOhxgr84HOyuVssHMeKpx7eMLAF46RFSlG5Qwr5VQeee2Rlz7TG8tg8oIHXllM
-eO10yFYMhHn7r2w+ti4NBmGtQ0umAUDuU0NWwjY01vtZ7puVQGPqJjFAACzWhrDM
-Cf69LPITgVibEger2JvY7kxu4imJTg2lTUHlp71YOAdafU9cYQE3NDRdc1KnEyId
-7tswj5hCjpbZXR186e/h7WhvBCaKggl/N16SFhHQU7947yuKlKIZ2vYZeQxjCSQt
-IiIfPD61lDtnyKDn2nv3aODLStzmeg==
-=pt8i
------END PGP SIGNATURE-----
-
---YACCkNcH7AcOjKIe--
-
+thanks
+-- PMM
 
