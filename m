@@ -4,98 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91855CA0EFC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 500A6CA0FE1
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:27:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up6Fx-0004TS-Nx; Thu, 21 Aug 2025 10:27:10 -0400
+	id 1up6Fc-0004IY-Sd; Thu, 21 Aug 2025 10:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1up6Fm-0004Rm-Rr
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:27:00 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1up6FW-0004GS-Sb
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:26:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1up6Fk-0006bf-0R
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:26:58 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57LEBt0W019360;
- Thu, 21 Aug 2025 14:26:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=BfO97+SjLNV5yIjbTFiraK/a36I/H
- SbfhmgM+yH4jec=; b=XnlzwB1qWT2VloAyMauRB0hEFnSnRfMJH+xL4RemzgQJu
- LgNsPkX/CtBZp9cFR5wFrPer7bQbah81BXArXB5ozH/nMEEkDUE88OtwlUV0s3t2
- NQzmT+ZI5lSpuwAWl97hZjPZXnPlkne71EGqsuaoNmOfOe7bHW3ywKwVXjIH/opJ
- VF+yNjwi/lA/mDO8HW2XWsGZW/zshc/6kkZYJhk6TJjfJfBExJFRdCv8tK6Biscz
- rch8E6lCQi8Yx/HZzyHTj0KAq966lhKGlwophGZT6JqJ+JezM/FkJlVsxJLU5y71
- yvUO7gw27KTbry0tZFZYfLumCf6g8Q5L67RZEiHLg==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48n0tr3jwp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Aug 2025 14:26:43 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 57LCn22m026402; Thu, 21 Aug 2025 14:26:43 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 48n3sxm979-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Aug 2025 14:26:42 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57LEPuvK037230;
- Thu, 21 Aug 2025 14:26:42 GMT
-Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
- (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
- [100.100.252.67])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 48n3sxm96t-1; Thu, 21 Aug 2025 14:26:42 +0000
-From: Jonah Palmer <jonah.palmer@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, eperezma@redhat.com, leiyang@redhat.com,
- dwmw2@infradead.org, jonah.palmer@oracle.com
-Subject: [PATCH] net/hub: make net_hub_port_cleanup idempotent
-Date: Thu, 21 Aug 2025 14:26:41 +0000
-Message-ID: <20250821142641.359132-1-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1up6FT-0006Yx-6n
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:26:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755786393;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4O/3j6GfC81y7+lFf2UY1mKCp5mkGQwhBKKa6IDo7d8=;
+ b=CRZebNz/yKiOwp8vqKugjKnXWR7TyticsZ2HgJFWHN7mhGNoSS0IUxdySNJOqAKhSMRtqa
+ Hrkjxe8D6jiWifCCvjnlCibu6BL+F/2nROTJtM/JA1BRP2Elo2t4HUXWBj3unWweoSlZ5f
+ CObIbB39wBIVMNarkiIPDvyzSO/CBso=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-KKdSe4I_M32xhqzUGUh5bg-1; Thu,
+ 21 Aug 2025 10:26:30 -0400
+X-MC-Unique: KKdSe4I_M32xhqzUGUh5bg-1
+X-Mimecast-MFC-AGG-ID: KKdSe4I_M32xhqzUGUh5bg_1755786388
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6E6F195D650; Thu, 21 Aug 2025 14:24:47 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.124])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 67AFB1800447; Thu, 21 Aug 2025 14:24:46 +0000 (UTC)
+Date: Thu, 21 Aug 2025 10:24:45 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH RFC] bql: Fix bql_locked status with condvar APIs
+Message-ID: <20250821142445.GB7010@fedora>
+References: <20250820205051.24424-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-21_03,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 suspectscore=0
- spamscore=0 phishscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
- definitions=main-2508210116
-X-Proofpoint-GUID: i4V5HvB6KQAq6RCHgVhlDRdIMCnZi69t
-X-Authority-Analysis: v=2.4 cv=FY1uBJ+6 c=1 sm=1 tr=0 ts=68a72ca4 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=2OwXVqhp2XgA:10 a=JfrnYn6hAAAA:8 a=yPCof4ZbAAAA:8 a=E34_ZZ7pgZ2hWXAKS8kA:9
- a=1CNFftbPRP8L7MoqJWF3:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: i4V5HvB6KQAq6RCHgVhlDRdIMCnZi69t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDE5NyBTYWx0ZWRfXzEzTd+l3m4A0
- Ha/Lph7Kgp11IEJzll0EYW/2IzylkXfrO3uvc5wpEl9JPTqqSM4jodXd4mMaWgg/3vInP5w7CZc
- Rzh/lPjGl1UBw7sMIIgR5NIVasVjjljW3atpkFMad2H6tlgm4lofcFjFQp8436pRd0kTfOd73X9
- MVP/uPiTlH1jxD73MHuRUN22sJ/cj/b+SPqkD4IYW33nVxdTWsaw1XsZ70Pu8WfPKiT1nKW8klE
- wcF58UZ7MRGltmI8E8xuQx0oIcnRTjLmzc+XFrUjj0E5xBOyth2kLxWFqN8y4gEPhcjA/LqZd7x
- TP/m2zSR6o69OlPB7+Z2U9mBALrw2cuMJVteOeCWgPMXIakK0lOxqRkCrd6hSEOFAfouveH0xqm
- xspsxM9qXXTgQSwv9+Uzd58ADLhAww==
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="WW5ctqpvvABwBlx0"
+Content-Disposition: inline
+In-Reply-To: <20250820205051.24424-1-peterx@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,63 +88,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Makes the net_hub_port_cleanup function idempotent to avoid double
-removals by guarding its QLIST_REMOVE with a flag.
 
-When using a Xen networking device with hubport backends, e.g.:
+--WW5ctqpvvABwBlx0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--accel kvm,xen-version=0x40011
--netdev hubport,...
--device xen-net-device,...
+On Wed, Aug 20, 2025 at 04:50:51PM -0400, Peter Xu wrote:
+> QEMU has a per-thread "bql_locked" variable stored in TLS section, showing
+> whether the current thread is holding the BQL lock.
+>=20
+> It's a pretty handy variable.  Function-wise, QEMU have codes trying to
+> conditionally take bql, relying on the var reflecting the locking status
+> (e.g. BQL_LOCK_GUARD), or in a GDB debugging session, we could also look =
+at
+> the variable (in reality, co_tls_bql_locked), to see which thread is
+> currently holding the bql.
+>=20
+> When using that as a debugging facility, sometimes we can observe multiple
+> threads holding bql at the same time. It's because QEMU's condvar APIs
+> bypassed the bql_*() API, hence they do not update bql_locked even if they
+> have released the mutex while waiting.
+>=20
+> It can cause confusion if one does "thread apply all p co_tls_bql_locked"
+> and see multiple threads reporting true.
+>=20
+> Fix this by moving the bql status updates into the mutex debug hooks.  Now
+> the variable should always reflect the reality.
+>=20
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  include/qemu/main-loop.h  | 18 ++++++++++++++++++
+>  util/qemu-thread-common.h |  7 +++++++
+>  stubs/iothread-lock.c     |  9 +++++++++
+>  system/cpus.c             | 14 ++++++++++++--
+>  4 files changed, 46 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
+> index 4e2436b196..44fb430f5b 100644
+> --- a/include/qemu/main-loop.h
+> +++ b/include/qemu/main-loop.h
+> @@ -270,6 +270,24 @@ void rust_bql_mock_lock(void);
+>   */
+>  bool bql_locked(void);
+> =20
+> +/**
+> + * mutex_is_bql:
+> + *
+> + * @mutex: the mutex pointer
+> + *
+> + * Returns whether the mutex is the BQL.
+> + */
+> +bool mutex_is_bql(QemuMutex *mutex);
+> +
+> +/**
+> + * set_bql_locked:
 
-the shutdown order starts with net_cleanup, which walks the list and
-deletes netdevs (including hubports). Then Xen's xen_device_unrealize is
-called, which eventually leads to a second net_hub_port_cleanup call,
-resulting in a segfault.
+This does not match the actual function name (bql_update_status()).
 
-Fixes: e7891c57 ("net: move backend cleanup to NIC cleanup")
-Reported-by: David Woodhouse <dwmw2@infradead.org>
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
----
- net/hub.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+> + *
+> + * @locked: update status on whether the BQL is locked
+> + *
+> + * NOTE: this should normally only be invoked when the status changed.
+> + */
+> +void bql_update_status(bool locked);
+> +
+>  /**
+>   * bql_block: Allow/deny releasing the BQL
+>   *
+> diff --git a/util/qemu-thread-common.h b/util/qemu-thread-common.h
+> index 2af6b12085..09331843ba 100644
+> --- a/util/qemu-thread-common.h
+> +++ b/util/qemu-thread-common.h
+> @@ -14,6 +14,7 @@
+>  #define QEMU_THREAD_COMMON_H
+> =20
+>  #include "qemu/thread.h"
+> +#include "qemu/main-loop.h"
+>  #include "trace.h"
+> =20
+>  static inline void qemu_mutex_post_init(QemuMutex *mutex)
+> @@ -39,6 +40,9 @@ static inline void qemu_mutex_post_lock(QemuMutex *mute=
+x,
+>      mutex->line =3D line;
+>  #endif
+>      trace_qemu_mutex_locked(mutex, file, line);
+> +    if (mutex_is_bql(mutex)) {
+> +        bql_update_status(true);
+> +    }
+>  }
+> =20
+>  static inline void qemu_mutex_pre_unlock(QemuMutex *mutex,
+> @@ -49,6 +53,9 @@ static inline void qemu_mutex_pre_unlock(QemuMutex *mut=
+ex,
+>      mutex->line =3D 0;
+>  #endif
+>      trace_qemu_mutex_unlock(mutex, file, line);
+> +    if (mutex_is_bql(mutex)) {
+> +        bql_update_status(false);
+> +    }
+>  }
+> =20
+>  #endif
+> diff --git a/stubs/iothread-lock.c b/stubs/iothread-lock.c
+> index 6050c081f5..c89c9c7228 100644
+> --- a/stubs/iothread-lock.c
+> +++ b/stubs/iothread-lock.c
+> @@ -34,3 +34,12 @@ void bql_block_unlock(bool increase)
+>      assert((new_value > bql_unlock_blocked) =3D=3D increase);
+>      bql_unlock_blocked =3D new_value;
+>  }
+> +
+> +bool mutex_is_bql(QemuMutex *mutex)
+> +{
+> +    return false;
+> +}
+> +
+> +void bql_update_status(bool locked)
+> +{
+> +}
+> diff --git a/system/cpus.c b/system/cpus.c
+> index 256723558d..0bf677c4a2 100644
+> --- a/system/cpus.c
+> +++ b/system/cpus.c
+> @@ -517,6 +517,18 @@ bool qemu_in_vcpu_thread(void)
+> =20
+>  QEMU_DEFINE_STATIC_CO_TLS(bool, bql_locked)
+> =20
+> +bool mutex_is_bql(QemuMutex *mutex)
+> +{
+> +    return mutex =3D=3D &bql;
+> +}
+> +
+> +void bql_update_status(bool locked)
+> +{
+> +    /* This function should only be used when an update happened.. */
+> +    assert(bql_locked() !=3D locked);
+> +    set_bql_locked(locked);
+> +}
+> +
+>  static uint32_t bql_unlock_blocked;
+> =20
+>  void bql_block_unlock(bool increase)
+> @@ -557,14 +569,12 @@ void bql_lock_impl(const char *file, int line)
+> =20
+>      g_assert(!bql_locked());
+>      bql_lock_fn(&bql, file, line);
+> -    set_bql_locked(true);
+>  }
+> =20
+>  void bql_unlock(void)
+>  {
+>      g_assert(bql_locked());
+>      g_assert(!bql_unlock_blocked);
+> -    set_bql_locked(false);
+>      qemu_mutex_unlock(&bql);
+>  }
+> =20
+> --=20
+> 2.50.1
+>=20
 
-diff --git a/net/hub.c b/net/hub.c
-index e3b58b1c4f8e..ee5881f6d5cb 100644
---- a/net/hub.c
-+++ b/net/hub.c
-@@ -34,6 +34,7 @@ typedef struct NetHubPort {
-     QLIST_ENTRY(NetHubPort) next;
-     NetHub *hub;
-     int id;
-+    bool listed;
- } NetHubPort;
- 
- struct NetHub {
-@@ -129,7 +130,10 @@ static void net_hub_port_cleanup(NetClientState *nc)
- {
-     NetHubPort *port = DO_UPCAST(NetHubPort, nc, nc);
- 
--    QLIST_REMOVE(port, next);
-+    if (port->listed) {
-+        QLIST_REMOVE(port, next);
-+        port->listed = false;
-+    }
- }
- 
- static NetClientInfo net_hub_port_info = {
-@@ -159,8 +163,10 @@ static NetHubPort *net_hub_port_new(NetHub *hub, const char *name,
-     port = DO_UPCAST(NetHubPort, nc, nc);
-     port->id = id;
-     port->hub = hub;
-+    port->listed = false;
- 
-     QLIST_INSERT_HEAD(&hub->ports, port, next);
-+    port->listed = true;
- 
-     return port;
- }
--- 
-2.47.3
+--WW5ctqpvvABwBlx0
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAminLC0ACgkQnKSrs4Gr
+c8jpmwf/dn/VZJiIOttti4R6v950nzZmGpumi9rP8YRWo663MlEKm6DacG7C5LGo
+hOZ4nO795X1ptXNNVqpy7sGlnyyH5FAdNchcCeZQvMdsCtiyWwW6BO4A5nOc9Lv2
+I/E/VIKtk5RQBhR0WV0vgOXdVSHl4N+yFUYfrwuezL7JtsDs4mpaY1N1Qi5uutnu
+Mxf1THssaIf4r43f93hGf57UUsjKRZrLxjmcP1KKReljT85VJhZUGRYB+NOlqsFw
+oeRw91qaYbUsbLw1Qpnqfh3kRb3sO9EodRfONUUGvGMHHnTZ0tpeJD0GXksM457f
+jjhZ3UKXA96tRo3lh9mqLttFjd2iaA==
+=YbXw
+-----END PGP SIGNATURE-----
+
+--WW5ctqpvvABwBlx0--
 
 
