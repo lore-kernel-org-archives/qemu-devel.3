@@ -4,67 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A44CA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71339CA0EF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 15:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up6dl-0006Tl-TD; Thu, 21 Aug 2025 10:51:45 -0400
+	id 1up6nX-0000nM-Sy; Thu, 21 Aug 2025 11:01:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1up6dj-0006TZ-92
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:51:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
+ id 1up6nV-0000mx-HN
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 11:01:49 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1up6dg-0000oO-MC
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:51:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755787896;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=JGzXuCKcSk6XG7nWQ9phlfBMKI3ZI1XngCb1NSL9y5o=;
- b=OCW/40HqgNbX9+ZqEAibcCDJiD9BR6slf/h7au+WQOjfVp0u4hMIx9pVsj7qI1hfIeMpvd
- JQGjLS6jYWgNzpIXzj9tVG7FQR1wdlC4VhmXQrqinendisnvGcRaz9382oNZ0zx2EZF+rK
- tf2J7uqSJqWoiHp7ZzxUut9WM0Aa/Pk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-IJyaNsyFMIaSrDwBRXXvWA-1; Thu,
- 21 Aug 2025 10:51:34 -0400
-X-MC-Unique: IJyaNsyFMIaSrDwBRXXvWA-1
-X-Mimecast-MFC-AGG-ID: IJyaNsyFMIaSrDwBRXXvWA_1755787894
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (Exim 4.90_1) (envelope-from <christian.ehrhardt@canonical.com>)
+ id 1up6nR-0001s8-9T
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 11:01:48 -0400
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCEBF180034A
- for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 14:51:33 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.226.28])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 54C621977686; Thu, 21 Aug 2025 14:51:31 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] ui/vnc: Fix crash when specifying [vnc] without id in the
- config file
-Date: Thu, 21 Aug 2025 16:51:30 +0200
-Message-ID: <20250821145130.845104-1-thuth@redhat.com>
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 2223E3F7CE
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 15:01:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1755788468;
+ bh=wIDXLb4yiVHHoMi6gEAZIdQ93SCz4Eim2SNd9VhToLA=;
+ h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+ To:Cc:Content-Type;
+ b=EOTvDEVYRMnVdlWfISOM2ZZLUuR/32Z4PwlgLAcMX40g87goJI8i8UHWqSsThD9Um
+ bPqD7xTo3/N0U9ztK5KZoP+86uXxgpyL5jEjmSef7+PscDRpRsuZk5RcsuGBSsUy6Z
+ mvkq9cgrR7VJE+83yz0C9HXeQKajGjgdAmJPOyMRT4wMb5e2naaQGTXikp5NTJHysK
+ eZmNBKp2vVhgyR/fGEEV8atoqeB30RjA6EGiu3AHDokDrStWV/0Izi0u/1f36xHxv4
+ 0ViHfV7CMdQrJaLYgwOjFTOneR5KPonxhbFZxFmavlVOXoZ9DdC1iUHYuQamFKjXJz
+ ItOio6fa2evUw==
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-6188b5dbff5so1098079a12.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 08:01:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755788444; x=1756393244;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wIDXLb4yiVHHoMi6gEAZIdQ93SCz4Eim2SNd9VhToLA=;
+ b=iOP0+SC3Uqnjm26xeBhyTJkeI3vKv0x5Cfnx/Mi0ubSIG+3e+4l5mtXBmZagP200P7
+ 62XdOqp/0eJAiPgmv4JcLLdON7j8oSK4NtvfOL4Rn/L6AH6fQ2QF6avssVgH3OcBnTm8
+ ulJNzlm7K7dX/+ShDYJ4WHk0y1o9l+M8NGajH5SviOPMvEUtuf0UnVzfpOlto0S2z2Ia
+ zJAOQzYqiir+g5h4Qc78vkl0IV+K38NZ1IeoYV+kszV2YJVQyb5ulvrEGL+uALUu5BJA
+ nvnwsWq6NDUnZcHH5gy5bCnHXC4scmD7n6bYYTcJ0uj5hmKfD7UKexKHS5XHOYkDyaGS
+ I86w==
+X-Gm-Message-State: AOJu0Yx9S4aH6YrqVyJcWQ8vi1yhn0P6YDQauMBLXSci7FQO9rigwpvX
+ 6U03SPvT2pmB+6UfAjclfZP1Jjj4TKcGyY9uS7rqxsCEY5/3xwk/cO5gwSqq5sqVCDAzAyXYESV
+ QDDriWKWpBvqQHRC4+sR0iNObQGRGShHTEEQmq6pozd3wfcpR9h9JkkDLkB+7XGmPGkhYyti6QU
+ wA+ZWGAz1WTzklN/wAMOSpFJ2qLDtd/i4tSj+7kGPCEYYTZlc=
+X-Gm-Gg: ASbGncvosd/FJ1mJMsxpOtKWHqEZVUzyjvBIGiRND2vDM8Yq382Vmxl03ey7EX38XSx
+ +2HUELSw9O6iJb74Hi+g8mcMoccrIR1nvH4WrlnoQDz8rBuknRhlGy/veM92WUUtms6+vHqZ3sP
+ cw/zSTQ0BIVEPuOLylwQDJ
+X-Received: by 2002:a05:6402:1d4e:b0:618:3a9d:53da with SMTP id
+ 4fb4d7f45d1cf-61bf8743ba2mr2515719a12.31.1755788444183; 
+ Thu, 21 Aug 2025 08:00:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHo72/F6TZprEMSJRAYGSF+CUBdNAOIu/7sWErrSQrh/DcauK6ixiOjzfXlRSU5KQZw++EwHRfpTcIqJf+X7k=
+X-Received: by 2002:a05:6402:1d4e:b0:618:3a9d:53da with SMTP id
+ 4fb4d7f45d1cf-61bf8743ba2mr2515683a12.31.1755788443659; Thu, 21 Aug 2025
+ 08:00:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <CAATJJ0K6coKjwwmkzaWP7dzQHLsEoL3rkU95T69rxZ6fdbnXqg@mail.gmail.com>
+ <877bywlpzi.fsf@draig.linaro.org>
+In-Reply-To: <877bywlpzi.fsf@draig.linaro.org>
+From: Christian Ehrhardt <christian.ehrhardt@canonical.com>
+Date: Thu, 21 Aug 2025 17:00:16 +0200
+X-Gm-Features: Ac12FXxDQubVF5f36DOwIwyV7EwXMcW8S5vggDYGxvmzICFtbIV6YI8pIkGfC6c
+Message-ID: <CAATJJ0J3w_QbHuyAtCqNN2_TtQPntBPEzOgaNOSq13Jrj0WdKw@mail.gmail.com>
+Subject: Re: snek testsuite breaks in 10.1 for qemu-system-arm on armhf
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=christian.ehrhardt@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,84 +107,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Thu, Aug 21, 2025 at 4:16=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
+>
+> Christian Ehrhardt <christian.ehrhardt@canonical.com> writes:
+>
+> (adding qemu-arm and Richard to the CC)
+>
+> > Hi,
+> > Debian and Ubuntu run the self tests of snek as integration tests like:
+> >
+> > `make SNEK_NATIVE=3D/usr/bin/snek SNEK_ARM=3D/usr/share/snek/snek-arm
+> > SNEK_RISCV=3D/usr/share/snek/snek-riscv -C test check`
+> >
+> > Those tests recently generated signal by failing in the arm emulation
+> > tests with `qemu-system-arm` - full log [1].
+> >
+> > ```
+> > 224s Running test pass-precedence.py.
+> > 224s     pass python3
+> > 224s     pass snek
+> > 224s pass-precedence.py:72 Syntax error at "".
+> > 224s     ***************** snek-arm fail *********************
+> > 224s     pass snek-riscv
+> > ```
+> >
+> > 14 tests failed, but all with quite similar signatures.
+> >
+> > But that only happens when executed on armhf, the other host
+> > architectures are all happy [2].
+> >
+> > I've separated the test and ran a git bisect on qemu 10.0 -> 10.1 as
+> > somewhere here is the trigger.
+> > That worked fine and identified this change [3].
+>
+> This is:
+>
+>   tcg: Convert deposit to TCGOutOpDeposit
+>
+>   Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>   Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>
+> > I must admit, I was able to debug it until here, but I can't see how
+> > these snek test failures could be caused by that change.
+> > And yes - arm emulation on an armhf platform isn't the most common
+> > scenario.
+>
+> Are any of your other hosts 32 bit?
 
-QEMU currently crashes when there is a [vnc] section in the config
-file that does not have an "id = ..." line:
+No, only i386 but that does not have all dependencies and packages to
+execute it.
 
- $ echo "[vnc]" > /tmp/qemu.conf
- $ ./qemu-system-x86_64 -readconfig /tmp/qemu.conf
- qemu-system-x86_64: ../../devel/qemu/ui/vnc.c:4347: vnc_init_func:
-  Assertion `id' failed.
- Aborted (core dumped)
 
-The required "id" is only set up automatically while parsing the command
-line, but not when reading the options from the config file.
-Thus let's move code that automatically adds the id (if it does not
-exist yet) to the init function that needs the id for the first time,
-replacing the assert() statement there.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2836
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- ui/vnc.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 68ca4a68e7a..9054fc81253 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -4309,8 +4309,9 @@ void vnc_display_add_client(const char *id, int csock, bool skipauth)
-     }
- }
- 
--static void vnc_auto_assign_id(QemuOptsList *olist, QemuOpts *opts)
-+static char *vnc_auto_assign_id(QemuOpts *opts)
- {
-+    QemuOptsList *olist = qemu_find_opts("vnc");
-     int i = 2;
-     char *id;
- 
-@@ -4320,23 +4321,18 @@ static void vnc_auto_assign_id(QemuOptsList *olist, QemuOpts *opts)
-         id = g_strdup_printf("vnc%d", i++);
-     }
-     qemu_opts_set_id(opts, id);
-+
-+    return id;
- }
- 
- void vnc_parse(const char *str)
- {
-     QemuOptsList *olist = qemu_find_opts("vnc");
-     QemuOpts *opts = qemu_opts_parse_noisily(olist, str, !is_help_option(str));
--    const char *id;
- 
-     if (!opts) {
-         exit(1);
-     }
--
--    id = qemu_opts_id(opts);
--    if (!id) {
--        /* auto-assign id if not present */
--        vnc_auto_assign_id(olist, opts);
--    }
- }
- 
- int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
-@@ -4344,7 +4340,11 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
-     Error *local_err = NULL;
-     char *id = (char *)qemu_opts_id(opts);
- 
--    assert(id);
-+    if (!id) {
-+        /* auto-assign id if not present */
-+        id = vnc_auto_assign_id(opts);
-+    }
-+
-     vnc_display_init(id, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
--- 
-2.50.1
 
+> >
+> > I can't predict if there is anything wrong in snek which now is
+> > treated differently by qemu to trigger this or if snek is all fine and
+> > qemu broken something - Therefore I've also reported it to snek [4].
+> >
+> > The tracking of the initial finding in Ubuntu is here if you want to
+> > see more about how this commit was identified [5].
+> >
+> > [1]: https://autopkgtest.ubuntu.com/results/autopkgtest-questing/questi=
+ng/armhf/s/snek/20250818_045020_246a4@/log.gz
+> > [2]: https://autopkgtest.ubuntu.com/packages/s/snek
+> > [3]: https://salsa.debian.org/qemu-team/qemu/-/commit/cf4905c03135f1181=
+e86c618426f8d6c703b38c0
+> > [4]: https://github.com/keith-packard/snek/issues/103
+> > [5]: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2121124
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+
+
+
+--=20
+Christian Ehrhardt
+Director of Engineering, Ubuntu Server
+Canonical Ltd
 
