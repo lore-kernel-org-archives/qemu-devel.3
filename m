@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60617CA0EFC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08EDCA0FE7
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 17:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up9Na-0007Kv-BW; Thu, 21 Aug 2025 13:47:14 -0400
+	id 1up9NU-0007Jh-BG; Thu, 21 Aug 2025 13:47:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1up9NM-0007J0-Ax
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 13:47:00 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1up9NJ-0007Hy-Pv
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 13:46:58 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1up9NI-0003n8-QE
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 13:47:00 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-45a1b00a65fso6898895e9.0
- for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 10:46:56 -0700 (PDT)
+ id 1up9NF-0003mi-Em
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 13:46:57 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3b9d41c1963so791080f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 10:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755798415; x=1756403215; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1755798411; x=1756403211; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qzuofo+VxQ2Vqu+msrfT+81t9nCiffS2fcQ5tvevD/U=;
- b=AV6Czbu1CJchkOV1px/NGhRBQBeDeC4cs07MipnrbDI35vALwzOkMllNkPj5sgXibG
- q18mHpRN5o7S+MpO/pm0zEhHAcS8H35VUKrsemPh3hUS3wYOL5e7x7gyU1rUq2LtYQke
- kR9/l3WC6AylKShYdI7q/CfpDXGEkmrljyNjcLO900PqZyKYK2LMAmKwLZOyrj89hFEf
- 9w6LDM1A7AZBXkJjvF2g3ae3PIwOoqEN+cJpSuXT6lCzbwMsbnBTd/Pugi+/uRsL0TCq
- LsMeVUaiB0LI/0fQtIxnv845Lsfdl5jdf2V7+jMxYxb/SLKcNVPTS2cMJW+Lj/AYJVgT
- cipA==
+ bh=L6mZQ5BL7J4y51N0HkeH4ik4Mhv/x5ble9Fy7IdIKGI=;
+ b=QlO5/SR063PN0i0vjG7nTAv6kIei2VRb640Pl2jzF57+Q7OTzUV2vhTAXxjZt9xtCj
+ 5XAf6LrcqnlL7LvqKtkznn4i62mWWto2GnxAvC4+cUdvhoctLVFzoo91e7DFq2xeZVdL
+ IFFfCXt9HZVSETfNd6Dg5e3X1LANBLbEggHr4x/xUJl2AzmsQJAmT6Lw2qbSypwvq8kL
+ 0/uMGdBMfVhhYI1Av5r8JCOJ21LS0FzpxT8Nj1ba8okiqQpFdhJPUt+oLcImNrWYdKi8
+ ByoqZsOQDNoz1eOMmpwGQo1/0Mew9TIENxgeggT9Dy9lGrhRRyny915fLbd6GJiuu086
+ j5GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755798415; x=1756403215;
+ d=1e100.net; s=20230601; t=1755798411; x=1756403211;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qzuofo+VxQ2Vqu+msrfT+81t9nCiffS2fcQ5tvevD/U=;
- b=cs1May89oUxzzZXWo7OI0/B0p8VYaTcYTDaXtc/SANqGEy6joyaSD91us0FTSRLHjo
- l2AYxgrt0dAICLuuSt2H+0trqeIi7bc12r3KEMkfjJ2T8qXrY85b1x6nsMsAZ9X26VbV
- jK6AGtlMm8JW5Zlu9LO0g2MTOPD5GlpoMNB2Z2HQhkOx/rSvbEJFt0B8BH8wrHaHuKaB
- /8XVwJvmqC00UPe2veA94gXRF5zmvHbqVCreRr9BWJCMsE7YJ2BaNyRwDhW1Y3cce9+Y
- SMOVHiVajU44CMDLCYCm4sPz8GSUCnHDd0/8PESlXcUHS8itwJfwo5L39i0hlYWaVm+t
- SPYQ==
+ bh=L6mZQ5BL7J4y51N0HkeH4ik4Mhv/x5ble9Fy7IdIKGI=;
+ b=Fnc/gd5e+/qo8ni4BZzGk1Cgrg/uDqCa6UYfPwetoVjOQee7pmqPCfUDBM2MC5/i+L
+ GPHIeOD7cI+7FVA8qZw+qBRAnwMh0NzgZ/b6oX+JdjkClywWXPKKUMi5GVdOI30PctGM
+ LAG2G56IH2DzlxtcfbFBhrspJRFoyKXt6EIIdO6z7YFVOktQd7ghiAAA8tpqkHHUXyJF
+ 2/Ut/rosN1latV8wsneVjYdwzMhR5ZqrgDfte8GmoihvqQ/r6Omwj5O0eHDYrjuu6oL6
+ /r9r+pUKBBLB7EXOqb8OPOswcnMZ9eQd5UV1RJQ5nLVE1vNj0kVwfn375rhXjrqgzFIj
+ EwCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGKM3zN2bt93zNJt6Dx5n+sbImYN7rnFGVOje+c/CylHwgz8FyFTBjfv9uDpdA12bh/NdrPADCc9UP@nongnu.org
-X-Gm-Message-State: AOJu0Yzg20eWqZuRXr7KG4nr/8asskofOfK3lsDBWsbE4KQdkud7oa1Y
- LhhiWtMKJRRfIXHd3d07ZmmjXCsDKFP+vV4ngpRcWfPWsFo6w3CHnKOW
-X-Gm-Gg: ASbGnctht8cznya+TmWKy3Z0nDkYonykO+5/TbDlbHIxdi3zdIY//L8867YKG5sYbyo
- e3wsveD32kqYi3MLHOuywkgXB6zaNPhmXg0LYUEHw0EsmIwl8vwitbPyUiWcFG9SuQZkGjETOtD
- XWmkQy4NSCUOKQG2Wfk6vwKHqjBHClFyNAKlpB2Mlh+QYqR+wHdeGG0WHvIrpK7CI9lQk3TG0dt
- 4lcXRZdkC9D3EOiuEFalXx4CQ9ZutZ76f6Rlmz+MSKIxKRiGoouGw7SNta+a034IPCFkS6zYAOD
- rrAdxJnm2yzayAzILcV/IPnt7vl3Q8InCpFdNS2GryNwSqVMnKVskdAAJpXmhZ6qw0MUELWgaBH
- b0Tr+a/OdMT498S+dsNZRjldV6RaNIsDi7UtFY4cr8774Rhz098f8TvrEGc6Mwp4aogPKuPX0oj
- 4=
-X-Google-Smtp-Source: AGHT+IHfPwzxbJjFmQRLhCeQF/d11s0oqhhpQx0NeQMCoNc+iqI3Zqe/CfynoQnutdRc0FskaQrrgA==
-X-Received: by 2002:a05:600c:1c1b:b0:456:f00:4b5d with SMTP id
- 5b1f17b1804b1-45b4d8309f3mr27502805e9.22.1755798414864; 
- Thu, 21 Aug 2025 10:46:54 -0700 (PDT)
+ AJvYcCWZZPT09MQeCmqqNiLPBoDMRaavQpo+n6nSbmOr7Izawit2q0kqBxyUh/w7TrJn8dzrZKMf8AbJnRfZ@nongnu.org
+X-Gm-Message-State: AOJu0YzwS8pl2gR+NRTerqcHSXmV5FBR8G4zdjJ28BNAWwpqqXDN6vfL
+ /ZBi5v3pPu4W34p/XRlINS4ewje93iF3dlV6QWN2Wnc1lNs32FlmX2XV68VqAXlt
+X-Gm-Gg: ASbGnctjnZs9Nvp/PUAqXi8RgIPq6BZe0xXCOyL7vYCU1irOuRsDoHijjM/QT7pdDBd
+ DCY0c4yBUuT7fKxCzy1AO41sQRZHXgY7syQZIDOd5Cb6tp2wxa6ogLG/z8oEHtYuU7mL7K5gj1O
+ bNCGyz57COr7VQpYsVUqtbNG19mIjL9En5uf/vIqBq1HCriPEUlGhdrl/QifvO51+SBvTBfDanK
+ 6m3KwS7OlRGXgJllXx3hIUrBu9f5vUcM3aBm2JP57wdXc8H49FgxmtNpT/N3wqt1IEyQFxfq+ke
+ NazDmJJqZoBc8EqYsms9LBzIc30D/NYA1kkzd/pTprDE8kuFkntI2o8KGSphS9w15ZwPPiAI+pd
+ JAjXcgHbb7vX0Y6P6IBBHE/wGsv6o5TNmISSrvCFcmls8u5UCsgtYOyGbPH3X7A0bBJDSPUCdcN
+ g=
+X-Google-Smtp-Source: AGHT+IGeGvRZvRdIBMr+gU9Ve+BW7Vq8/k7I6SWKh3yM126ZHlejSus0uWDYNblWC/+7oE7KlhJTMQ==
+X-Received: by 2002:a5d:5d8a:0:b0:3b9:13e4:99b7 with SMTP id
+ ffacd0b85a97d-3c495d47a7emr2668941f8f.29.1755798411163; 
+ Thu, 21 Aug 2025 10:46:51 -0700 (PDT)
 Received: from localhost.localdomain (46-116-237-160.bb.netvision.net.il.
  [46.116.237.160]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c074879f5fsm12485360f8f.4.2025.08.21.10.46.53
+ ffacd0b85a97d-3c074879f5fsm12485360f8f.4.2025.08.21.10.46.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Aug 2025 10:46:54 -0700 (PDT)
+ Thu, 21 Aug 2025 10:46:50 -0700 (PDT)
 From: Leonid Bloch <lb.workbox@gmail.com>
 To: "Michael S . Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -78,16 +78,17 @@ To: "Michael S . Tsirkin" <mst@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>
 Cc: Leonid Bloch <lb.workbox@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 4/4] hw/acpi: Introduce the QEMU lid button
-Date: Thu, 21 Aug 2025 20:45:52 +0300
-Message-ID: <20250821174554.40607-5-lb.workbox@gmail.com>
+Subject: [PATCH v2 2/4] hw/acpi: Introduce the QEMU Battery
+Date: Thu, 21 Aug 2025 20:45:50 +0300
+Message-ID: <20250821174554.40607-3-lb.workbox@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250821174554.40607-1-lb.workbox@gmail.com>
 References: <20250821174554.40607-1-lb.workbox@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=lb.workbox@gmail.com; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=lb.workbox@gmail.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,211 +111,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The lid button device communicates laptop lid state to the guest via ACPI.
+The battery device communicates battery state to the guest via ACPI.
 It supports two modes of operation:
 
-1. QMP control mode (default): Lid state is controlled programmatically
-   via QMP commands for consistent behavior across environments.
+1. QMP control mode (default): Battery state is controlled programmatically
+   via QMP commands, making the device deterministic and migration-safe.
 
-2. Host mirroring mode (optional): The device reflects the host's lid
-   button state from procfs (/proc/acpi/button/lid/*/state). State
-   changes trigger ACPI notifications to the guest.
+2. Host mirroring mode (optional): The device reflects the host's battery
+   state from sysfs. Probing occurs on guest ACPI requests and at timed
+   intervals (default 2 seconds, configurable via 'probe_interval' property
+   in milliseconds). State changes trigger ACPI notifications to the guest.
 
 Properties:
 - 'use-qmp': Enable QMP control mode (default: true)
-- 'enable-procfs': Enable host lid button mirroring (default: false)
-- 'probe_interval': Probe interval in ms for procfs mode (default: 2000)
-- 'procfs_path': Override default procfs path /proc/acpi/button
+- 'enable-sysfs': Enable host battery mirroring (default: false)
+- 'probe_interval': Probe interval in ms for sysfs mode (default: 2000)
+- 'sysfs_path': Override default sysfs path /sys/class/power_supply/
 
 The device implements the ACPI_DEV_AML_IF interface to generate its
-own AML code, placing the LID0 device directly under \_SB scope.
+own AML code, placing the BAT0 device directly under \_SB scope as
+per ACPI specification.
 
 QMP commands:
-- lid-button-set-state: Set lid open/closed state
-- query-lid-button: Query current lid state
+- battery-set-state: Set battery state (present, charging, capacity, rate)
+- query-battery: Query current battery state
+
+This allows testing without host battery access and provides a stable
+interface for virtualization management systems.
 
 Signed-off-by: Leonid Bloch <lb.workbox@gmail.com>
+Signed-off-by: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 ---
  MAINTAINERS                          |   6 +
- docs/specs/button.rst                | 189 ++++++++++++
+ docs/specs/battery.rst               | 225 ++++++++
  docs/specs/index.rst                 |   1 +
  hw/acpi/Kconfig                      |   4 +
- hw/acpi/button.c                     | 438 +++++++++++++++++++++++++++
+ hw/acpi/battery.c                    | 735 +++++++++++++++++++++++++++
  hw/acpi/meson.build                  |   1 +
  hw/acpi/trace-events                 |   5 +
  hw/i386/Kconfig                      |   1 +
+ hw/i386/acpi-build.c                 |   1 +
  include/hw/acpi/acpi_dev_interface.h |   1 +
- include/hw/acpi/button.h             |  25 ++
- qapi/acpi.json                       |  49 +++
- 11 files changed, 720 insertions(+)
- create mode 100644 docs/specs/button.rst
- create mode 100644 hw/acpi/button.c
- create mode 100644 include/hw/acpi/button.h
+ include/hw/acpi/battery.h            |  33 ++
+ qapi/acpi.json                       |  73 +++
+ 12 files changed, 1086 insertions(+)
+ create mode 100644 docs/specs/battery.rst
+ create mode 100644 hw/acpi/battery.c
+ create mode 100644 include/hw/acpi/battery.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 612efcb686..4d54a2ffb5 100644
+index a07086ed76..51af9b7366 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2933,6 +2933,12 @@ S: Maintained
- F: hw/acpi/acad.*
- F: docs/specs/acad.rst
+@@ -2921,6 +2921,12 @@ F: hw/vmapple/*
+ F: include/hw/vmapple/*
+ F: docs/system/arm/vmapple.rst
  
-+Button
++Battery
 +M: Leonid Bloch <lb.workbox@gmail.com>
 +S: Maintained
-+F: hw/acpi/button.*
-+F: docs/specs/button.rst
++F: hw/acpi/battery.*
++F: docs/specs/battery.rst
 +
  Subsystems
  ----------
  Overall Audio backends
-diff --git a/docs/specs/button.rst b/docs/specs/button.rst
+diff --git a/docs/specs/battery.rst b/docs/specs/battery.rst
 new file mode 100644
-index 0000000000..10a940b9f5
+index 0000000000..e426b91ea5
 --- /dev/null
-+++ b/docs/specs/button.rst
-@@ -0,0 +1,189 @@
++++ b/docs/specs/battery.rst
+@@ -0,0 +1,225 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +
-+========================
-+Laptop Lid Button Device
-+========================
++==============
++Battery Device
++==============
 +
-+The button device provides laptop lid button state information to the guest.
-+It supports two operating modes:
++The battery device provides battery state information to the guest. It supports
++two operating modes:
 +
-+1. **QMP Control Mode** (default): Lid state is controlled via QMP commands,
++1. **QMP Control Mode** (default): Battery state is controlled via QMP commands,
 +   providing deterministic control for testing and migration safety.
-+2. **Procfs Mode**: Lid state mirrors the host's physical lid button, useful
-+   for desktop virtualization where the guest should see the host's lid state.
++2. **Sysfs Mode**: Battery state mirrors the host's physical battery, useful
++   for desktop virtualization where the guest should see the host's battery.
 +
 +Configuration
 +-------------
 +
-+The lid button device is created as an ISA device using ``-device button``.
++The battery device is created as an ISA device using ``-device battery``.
 +
 +Operating Modes
 +~~~~~~~~~~~~~~~
 +
 +**QMP Control Mode** (``use-qmp=true``, default)
-+  Lid state is controlled via QMP commands. This mode is recommended for:
++  Battery state is controlled via QMP commands. This mode is recommended for:
 +
 +  * Production environments requiring migration support
-+  * Testing with predictable lid states
-+  * Environments without host lid button access
++  * Testing with predictable battery states
++  * Environments without host battery access
 +  * Security-sensitive deployments
 +
-+**Procfs Mode** (``enable-procfs=true``)
-+  Lid mirrors the host's physical lid button. This mode is useful for:
++**Sysfs Mode** (``enable-sysfs=true``)
++  Battery mirrors the host's physical battery. This mode is useful for:
 +
 +  * Desktop virtualization on laptops
-+  * Development and testing with real lid button behavior
++  * Development and testing with real battery behavior
 +
-+  Note: Procfs mode reads host files and runs timers, which may impact
++  Note: Sysfs mode reads host files and runs timers, which may impact
 +  security and migration. Use with caution in production.
 +
 +Properties
 +~~~~~~~~~~
 +
-+``ioport`` (default: 0x53d)
-+  I/O port base address for the lid button device register.
++``ioport`` (default: 0x530)
++  I/O port base address for the battery device registers.
 +
 +``use-qmp`` (default: true)
-+  Enable QMP control mode. When true, lid state is controlled via
-+  QMP commands. Cannot be used together with ``enable-procfs=true``.
++  Enable QMP control mode. When true, battery state is controlled via
++  QMP commands. Cannot be used together with ``enable-sysfs=true``.
 +
-+``enable-procfs`` (default: false)
-+  Enable procfs mode to mirror the host's lid button. Cannot be used together
++``enable-sysfs`` (default: false)
++  Enable sysfs mode to mirror the host's battery. Cannot be used together
 +  with ``use-qmp=true``.
 +
 +``probe_interval`` (default: 2000)
-+  Time interval between periodic probes in milliseconds (procfs mode only).
-+  The minimum allowed value is 10ms to prevent excessive polling.
++  Time interval between periodic probes in milliseconds (sysfs mode only).
++  A zero value disables the periodic probes, and makes the battery state
++  updates occur on guest requests only.
 +
-+``procfs_path`` (default: /proc/acpi/button)
-+  Path to the host's lid button procfs directory (procfs mode only). The device
-+  will automatically scan this directory to find the lid state file. Use this
-+  property to specify a different path or to provide a custom location for
-+  testing purposes.
++``sysfs_path`` (default: auto-detected)
++  Path to the host's battery sysfs directory (sysfs mode only). If not
++  specified, the device will automatically detect the battery from
++  ``/sys/class/power_supply/``. This property allows overriding the default
++  path if:
 +
-+Host Lid Button Detection
-+-------------------------
++  * The sysfs path differs from the standard location
++  * A different battery needs to be probed
++  * A "fake" host battery is to be provided for testing
 +
-+The host's lid button information is taken from::
++Host Battery Detection
++----------------------
 +
-+    /proc/acpi/button/lid/*/state
++The host's battery information is taken from the sysfs battery data,
++located in::
 +
-+This file is expected to be formatted as:
++  /sys/class/power_supply/[device of type "Battery"]
 +
-+- ``state:      open`` (if the lid is open)
-+- ``state:      closed`` (if the lid is closed)
-+
-+These formats are based on the Linux 'button' driver.
-+
-+The device automatically scans the ``/proc/acpi/button/lid/`` directory
-+for subdirectories containing a readable ``state`` file. If the procfs path
-+differs, a different lid button needs to be probed, or even if a "fake" host
-+lid button is to be provided, the ``procfs_path`` property allows overriding
-+the default detection.
++The device automatically scans for the first available battery device
++with type "Battery" in the power_supply directory.
 +
 +ACPI Interface
 +--------------
 +
-+The lid button device is exposed to the guest as an ACPI device with:
++The battery device exposes itself as an ACPI battery device with:
 +
-+- **HID**: ``PNP0C0D`` (Lid Device)
-+- **Device Path**: ``\_SB.LID0``
-+- **Notification Values**:
++* **_HID**: ``PNP0C0A`` (Control Method Battery)
++* **Device path**: ``\_SB.BAT0``
 +
-+  - ``0x80``: Status change (lid opened/closed)
++The device implements standard ACPI battery methods:
 +
-+ACPI Methods
-+~~~~~~~~~~~~
++``_STA`` (Status)
++  Returns the battery presence status.
 +
-+``_LID`` (Lid Status)
-+  Returns the current lid state (0 = closed, 1 = open).
++``_BIF`` (Battery Information)
++  Returns static battery information including design capacity,
++  technology, and model information.
++
++``_BST`` (Battery Status)
++  Returns dynamic battery status including current state
++  (charging/discharging), present rate, and remaining capacity.
 +
 +I/O Interface
 +-------------
 +
-+The device uses a single I/O port register:
++The battery device exposes 12 bytes of I/O space at the configured
++I/O port address with the following layout:
 +
-+- **Port**: ``ioport`` property value (default 0x53d)
-+- **Size**: 1 byte
-+- **Access**: Read-only
++* **Bytes 0-3**: Battery state (DWORD)
 +
-+Register Layout
-+~~~~~~~~~~~~~~~
++  * 1 = Discharging
++  * 2 = Charging
 +
-+**LIDS** (offset 0x00, 1 byte)
-+  Current lid state:
++* **Bytes 4-7**: Battery rate (DWORD)
 +
-+  - ``0x00``: Lid closed
-+  - ``0x01``: Lid open
++  Current charge/discharge rate normalized to design capacity.
++
++* **Bytes 8-11**: Battery charge (DWORD)
++
++  Current battery charge level normalized to design capacity.
++
++All values are normalized where the design capacity equals 10000 units.
++Unknown values are represented as 0xFFFFFFFF.
++
++ACPI Notifications
++------------------
++
++The battery device generates ACPI notifications through GPE events:
++
++* **GPE._E07**: Device Check (0x01) - Battery insertion/removal
++* **GPE._E08**: Status Change (0x80) - Battery state change
++* **GPE._E09**: Information Change (0x81) - Battery information update
 +
 +QMP Commands
 +------------
 +
 +When using QMP control mode (default), the following commands are available:
 +
-+``lid-button-set-state``
-+  Set the lid button state.
++``battery-set-state``
++  Set the battery state. Parameters:
 +
-+  * ``open``: Whether the lid is open (boolean)
++  * ``present``: Whether the battery is present (boolean)
++  * ``charging``: Whether the battery is charging (boolean)
++  * ``discharging``: Whether the battery is discharging (boolean)
++  * ``charge-percent``: Battery charge percentage 0-100 (integer)
++  * ``rate``: Charge/discharge rate in mW (optional integer)
 +
 +  Example::
 +
-+    -> { "execute": "lid-button-set-state",
-+         "arguments": { "open": true }}
++    -> { "execute": "battery-set-state",
++         "arguments": { "state": {
++           "present": true,
++           "charging": true,
++           "discharging": false,
++           "charge-percent": 85,
++           "rate": 500
++         }}}
 +    <- { "return": {} }
 +
-+``query-lid-button``
-+  Query the current lid button state.
++``query-battery``
++  Query the current battery state. Returns the same fields as above.
 +
 +  Example::
 +
-+    -> { "execute": "query-lid-button" }
-+    <- { "return": { "open": true }}
++    -> { "execute": "query-battery" }
++    <- { "return": {
++           "present": true,
++           "charging": true,
++           "discharging": false,
++           "charge-percent": 85,
++           "rate": 500,
++           "design-capacity": 10000
++         }}
 +
 +Examples
 +--------
@@ -322,82 +360,85 @@ index 0000000000..10a940b9f5
 +QMP control mode (default - recommended)::
 +
 +  # Start with QMP control
-+  qemu-system-x86_64 -device button -qmp tcp:localhost:4444,server,wait=off
++  qemu-system-x86_64 -device battery -qmp tcp:localhost:4444,server,wait=off
 +
-+  # From another terminal, set lid state via QMP:
++  # From another terminal, set battery state via QMP:
 +  echo '{"execute":"qmp_capabilities"}
-+        {"execute":"lid-button-set-state",
-+         "arguments":{"open":false}}' | \
++        {"execute":"battery-set-state",
++         "arguments":{"state":{"present":true,"charging":false,
++                               "discharging":true,"charge-percent":42,
++                               "rate":500}}}' | \
 +  nc -N localhost 4444
 +
-+Procfs mode (mirror host lid button)::
++Sysfs mode (mirror host battery)::
 +
-+  # Enable procfs mode to mirror host lid button
-+  qemu-system-x86_64 -device button,use-qmp=false,enable-procfs=true
++  # Enable sysfs mode to mirror host battery
++  qemu-system-x86_64 -device battery,use-qmp=false,enable-sysfs=true
 +
 +  # Custom probe interval (5 seconds)
-+  qemu-system-x86_64 -device button,use-qmp=false,enable-procfs=true,probe_interval=5000
++  qemu-system-x86_64 -device battery,use-qmp=false,enable-sysfs=true,probe_interval=5000
 +
-+  # Custom procfs path
-+  qemu-system-x86_64 -device button,use-qmp=false,enable-procfs=true,procfs_path=/custom/path
++  # Specific battery path
++  qemu-system-x86_64 -device battery,use-qmp=false,enable-sysfs=true,sysfs_path=/sys/class/power_supply/BAT1
 +
-+Testing with fake lid button::
++Testing with fake battery::
 +
-+  # Create fake lid button files for testing
-+  mkdir -p /tmp/fake_lid/lid/LID0
-+  echo "state:      open" > /tmp/fake_lid/lid/LID0/state    # Format: "state:      open" or "state:      closed"
++  # Create fake battery files for testing
++  mkdir -p /tmp/fake_battery
++  echo "Battery" > /tmp/fake_battery/type
++  echo "Discharging" > /tmp/fake_battery/status
++  echo "50" > /tmp/fake_battery/capacity
++  echo "1500000" > /tmp/fake_battery/energy_now    # Current energy in μWh
++  echo "3000000" > /tmp/fake_battery/energy_full   # Full capacity in μWh
++  echo "500000" > /tmp/fake_battery/power_now      # Current power in μW
 +
-+  # Use fake lid button in procfs mode
-+  qemu-system-x86_64 -device button,use-qmp=false,enable-procfs=true,procfs_path=/tmp/fake_lid
++  # Use fake battery in sysfs mode
++  qemu-system-x86_64 -device battery,use-qmp=false,enable-sysfs=true,sysfs_path=/tmp/fake_battery
 +
-+  # Update lid state while VM is running (from another terminal)
-+  echo "state:      closed" > /tmp/fake_lid/lid/LID0/state  # Close lid
-+  echo "state:      open" > /tmp/fake_lid/lid/LID0/state    # Open lid
++  # Update battery state while VM is running (from another terminal)
++  # Change to 75% charging:
++  echo "Charging" > /tmp/fake_battery/status
++  echo "75" > /tmp/fake_battery/capacity
++  echo "2250000" > /tmp/fake_battery/energy_now    # 75% of 3000000
++  echo "500000" > /tmp/fake_battery/power_now      # Charging rate (500 mW)
 +
-+Combined with other laptop devices::
-+
-+  # QMP mode (recommended)
-+  qemu-system-x86_64 -device battery -device acad -device button
-+
-+  # Procfs/sysfs mode (desktop virtualization)
-+  qemu-system-x86_64 -device battery,use-qmp=false,enable-sysfs=true \
-+                     -device acad,use-qmp=false,enable-sysfs=true \
-+                     -device button,use-qmp=false,enable-procfs=true
++  # Change to 25% discharging:
++  echo "Discharging" > /tmp/fake_battery/status
++  echo "25" > /tmp/fake_battery/capacity
++  echo "750000" > /tmp/fake_battery/energy_now     # 25% of 3000000
++  echo "300000" > /tmp/fake_battery/power_now      # Discharge rate (300 mW)
 diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index e144afcd90..e1c9b91b7b 100644
+index f19d73c9f6..616e8228cc 100644
 --- a/docs/specs/index.rst
 +++ b/docs/specs/index.rst
-@@ -24,6 +24,7 @@ guest hardware that is specific to QEMU.
+@@ -22,6 +22,7 @@ guest hardware that is specific to QEMU.
+    acpi_pci_hotplug
+    acpi_nvdimm
     acpi_erst
-    acad
-    battery
-+   button
++   battery
     sev-guest-firmware
     fw_cfg
     fsi
 diff --git a/hw/acpi/Kconfig b/hw/acpi/Kconfig
-index 9d28c3addf..6600685855 100644
+index 1d4e9f0845..64403378bd 100644
 --- a/hw/acpi/Kconfig
 +++ b/hw/acpi/Kconfig
-@@ -73,6 +73,10 @@ config AC_ADAPTER
+@@ -83,3 +83,7 @@ config ACPI_ERST
+ config ACPI_CXL
      bool
      depends on ACPI
- 
-+config BUTTON
++
++config BATTERY
 +    bool
 +    depends on ACPI
-+
- config ACPI_HW_REDUCED
-     bool
-     select ACPI
-diff --git a/hw/acpi/button.c b/hw/acpi/button.c
+diff --git a/hw/acpi/battery.c b/hw/acpi/battery.c
 new file mode 100644
-index 0000000000..dfe86af713
+index 0000000000..5ab3ab7472
 --- /dev/null
-+++ b/hw/acpi/button.c
-@@ -0,0 +1,438 @@
++++ b/hw/acpi/battery.c
+@@ -0,0 +1,735 @@
 +/*
-+ * QEMU emulated lid button device
++ * QEMU emulated battery device.
 + *
 + * Copyright (c) 2019 Janus Technologies, Inc. (http://janustech.com)
 + *
@@ -422,152 +463,363 @@ index 0000000000..dfe86af713
 +#include "hw/acpi/acpi_aml_interface.h"
 +#include "qapi/qapi-commands-acpi.h"
 +
-+#include "hw/acpi/button.h"
++#include "hw/acpi/battery.h"
 +
-+#define BUTTON_DEVICE(obj) OBJECT_CHECK(BUTTONState, (obj), \
-+                                        TYPE_BUTTON)
++#define BATTERY_DEVICE(obj) OBJECT_CHECK(BatteryState, (obj), TYPE_BATTERY)
 +
-+#define BUTTON_STA_ADDR            0
++#define BATTERY_DISCHARGING  0x01  /* ACPI _BST bit 0 */
++#define BATTERY_CHARGING     0x02  /* ACPI _BST bit 1 */
++#define BATTERY_CRITICAL     0x04  /* ACPI _BST bit 2 */
 +
-+#define PROCFS_PATH                "/proc/acpi/button"
-+#define LID_DIR                    "lid"
-+#define LID_STATE_FILE             "state"
-+#define MIN_BUTTON_PROBE_INTERVAL  10  /* ms */
-+#define MAX_ALLOWED_LINE_LENGTH    32  /* For convenience when comparing */
++#define SYSFS_PATH       "/sys/class/power_supply"
++#define BATTERY_TYPE     "Battery"
 +
-+enum {
-+    LID_CLOSED = 0,
-+    LID_OPEN = 1,
-+};
++#define MAX_ALLOWED_STATE_LENGTH  32  /* For convinience when comparing */
 +
-+static const char *lid_state[] = { "closed", "open" };
++#define NORMALIZE_BY_FULL(val, full) \
++    ((full == 0) ? BATTERY_VAL_UNKNOWN \
++     : (uint32_t)(val * BATTERY_FULL_CAP / full))
 +
-+typedef struct BUTTONState {
++typedef union bat_metric {
++    uint32_t val;
++    uint8_t acc[4];
++} bat_metric;
++
++typedef struct BatteryState {
 +    ISADevice dev;
 +    MemoryRegion io;
 +    uint16_t ioport;
-+    uint8_t lid_state;
++    bat_metric state;
++    bat_metric rate;
++    bat_metric charge;
++    uint32_t charge_full;
++    int units;  /* 0 - mWh, 1 - mAh */
 +    bool use_qmp_control;
-+    bool qmp_lid_open;
-+    bool enable_procfs;
++    bool qmp_present;
++    bool qmp_charging;
++    bool qmp_discharging;
++    int qmp_charge_percent;
++    int qmp_rate;
++    bool enable_sysfs;
 +
 +    QEMUTimer *probe_state_timer;
 +    uint64_t probe_state_interval;
 +
-+    char *button_path;
-+    char lid_dir[MAX_ALLOWED_LINE_LENGTH];
-+} BUTTONState;
++    char *bat_path;
++} BatteryState;
 +
-+static inline bool button_file_accessible(char *path, const char *dir,
-+                                          char *subdir, const char *file)
++/* Access addresses */
++enum acc_addr {
++    bsta_addr0, bsta_addr1, bsta_addr2, bsta_addr3,
++    brte_addr0, brte_addr1, brte_addr2, brte_addr3,
++    bcrg_addr0, bcrg_addr1, bcrg_addr2, bcrg_addr3
++};
++
++/* Files used when the units are:      mWh             mAh      */
++static const char *full_file[] = { "energy_full", "charge_full" };
++static const char *now_file[]  = { "energy_now",  "charge_now"  };
++static const char *rate_file[] = { "power_now",   "current_now" };
++
++static const char *stat_file = "status";
++static const char *type_file = "type";
++
++static const char *discharging_states[] = { "Discharging", "Not charging" };
++static const char *charging_states[] = { "Charging", "Full", "Unknown" };
++
++static inline bool battery_file_accessible(char *path, const char *file)
 +{
 +    char full_path[PATH_MAX];
 +    int path_len;
 +
-+    path_len = snprintf(full_path, PATH_MAX, "%s/%s/%s/%s", path, dir, subdir,
-+                        file);
++    path_len = snprintf(full_path, PATH_MAX, "%s/%s", path, file);
 +    if (path_len < 0 || path_len >= PATH_MAX) {
 +        return false;
 +    }
-+
 +    if (access(full_path, R_OK) == 0) {
 +        return true;
 +    }
 +    return false;
 +}
 +
-+static void button_get_lid_state(BUTTONState *s)
++static inline int battery_select_file(char *path, const char **file)
++{
++    if (battery_file_accessible(path, file[0])) {
++        return 0;
++    } else if (battery_file_accessible(path, file[1])) {
++        return 1;
++    } else {
++        return -1;
++    }
++}
++
++static void battery_get_full_charge(BatteryState *s, Error **errp)
 +{
 +    char file_path[PATH_MAX];
 +    int path_len;
-+    char line[MAX_ALLOWED_LINE_LENGTH];
++    uint32_t val;
 +    FILE *ff;
 +
-+    path_len = snprintf(file_path, PATH_MAX, "%s/%s/%s/%s", s->button_path,
-+                        LID_DIR, s->lid_dir, LID_STATE_FILE);
++    path_len = snprintf(file_path, PATH_MAX, "%s/%s", s->bat_path,
++                        full_file[s->units]);
 +    if (path_len < 0 || path_len >= PATH_MAX) {
-+        warn_report("Could not read the lid state.");
++        error_setg(errp, "Full capacity file path is inaccessible.");
 +        return;
 +    }
 +
 +    ff = fopen(file_path, "r");
 +    if (ff == NULL) {
-+        warn_report("Could not read the lid state.");
++        error_setg_errno(errp, errno, "Could not read the full charge file.");
 +        return;
 +    }
 +
-+    if (fgets(line, MAX_ALLOWED_LINE_LENGTH, ff) == NULL) {
-+        warn_report("Lid state unreadable.");
++    if (fscanf(ff, "%u", &val) != 1) {
++        error_setg(errp, "Full capacity undetermined.");
++        return;
 +    } else {
-+        if (strstr(line, lid_state[LID_OPEN]) != NULL) {
-+            s->lid_state = LID_OPEN;
-+        } else if (strstr(line, lid_state[LID_CLOSED]) != NULL) {
-+            s->lid_state = LID_CLOSED;
-+        } else {
-+            warn_report("Lid state undetermined.");
-+        }
++        s->charge_full = val;
 +    }
-+
 +    fclose(ff);
 +}
 +
-+static void button_get_dynamic_status(BUTTONState *s)
++static inline bool battery_is_discharging(char *val)
 +{
-+    trace_button_get_dynamic_status();
++    static const int discharging_len = ARRAY_SIZE(discharging_states);
++    int i;
 +
-+    if (s->use_qmp_control) {
-+        s->lid_state = s->qmp_lid_open ? LID_OPEN : LID_CLOSED;
-+    } else if (s->enable_procfs) {
-+        button_get_lid_state(s);
-+    } else {
-+        s->lid_state = LID_CLOSED;
++    for (i = 0; i < discharging_len; i++) {
++        if (!strncmp(val, discharging_states[i], MAX_ALLOWED_STATE_LENGTH)) {
++            return true;
++        }
 +    }
++    return false;
 +}
 +
-+static void button_probe_state(void *opaque)
++static inline bool battery_is_charging(char *val)
 +{
-+    BUTTONState *s = opaque;
++    static const int charging_len = ARRAY_SIZE(charging_states);
++    int i;
 +
-+    uint8_t lid_state_before = s->lid_state;
++    for (i = 0; i < charging_len; i++) {
++        if (!strncmp(val, charging_states[i], MAX_ALLOWED_STATE_LENGTH)) {
++            return true;
++        }
++    }
++    return false;
++}
 +
-+    button_get_dynamic_status(s);
++static void battery_get_state(BatteryState *s)
++{
++    char file_path[PATH_MAX];
++    int path_len;
++    char val[MAX_ALLOWED_STATE_LENGTH];
++    FILE *ff;
 +
-+    if (lid_state_before != s->lid_state) {
++    path_len = snprintf(file_path, PATH_MAX, "%s/%s", s->bat_path, stat_file);
++    if (path_len < 0 || path_len >= PATH_MAX) {
++        warn_report("Could not read the battery state.");
++        return;
++    }
++
++    ff = fopen(file_path, "r");
++    if (ff == NULL) {
++        warn_report("Could not read the battery state.");
++        return;
++    }
++
++    if (fgets(val, MAX_ALLOWED_STATE_LENGTH, ff) == NULL) {
++        warn_report("Battery state unreadable.");
++    } else {
++        val[strcspn(val, "\n")] = 0;
++        if (battery_is_discharging(val)) {
++            s->state.val = BATTERY_DISCHARGING;
++        } else if (battery_is_charging(val)) {
++            s->state.val = BATTERY_CHARGING;
++        } else {
++            s->state.val = 0;
++            warn_report("Battery state undetermined.");
++        }
++    }
++    fclose(ff);
++}
++
++static void battery_get_rate(BatteryState *s)
++{
++    char file_path[PATH_MAX];
++    int path_len;
++    uint64_t val;
++    FILE *ff;
++
++    path_len = snprintf(file_path, PATH_MAX, "%s/%s", s->bat_path,
++                        rate_file[s->units]);
++    if (path_len < 0 || path_len >= PATH_MAX) {
++        warn_report("Could not read the battery rate.");
++        s->rate.val = BATTERY_VAL_UNKNOWN;
++        return;
++    }
++
++    ff = fopen(file_path, "r");
++    if (ff == NULL) {
++        warn_report("Could not read the battery rate.");
++        s->rate.val = BATTERY_VAL_UNKNOWN;
++        return;
++    }
++
++    if (fscanf(ff, "%lu", &val) != 1) {
++        warn_report("Battery rate undetermined.");
++        s->rate.val = BATTERY_VAL_UNKNOWN;
++    } else {
++        s->rate.val = NORMALIZE_BY_FULL(val, s->charge_full);
++    }
++    fclose(ff);
++}
++
++static void battery_get_charge(BatteryState *s)
++{
++    char file_path[PATH_MAX];
++    int path_len;
++    uint64_t val;
++    FILE *ff;
++
++    path_len = snprintf(file_path, PATH_MAX, "%s/%s", s->bat_path,
++                        now_file[s->units]);
++    if (path_len < 0 || path_len >= PATH_MAX) {
++        warn_report("Could not read the battery charge.");
++        s->charge.val = BATTERY_VAL_UNKNOWN;
++        return;
++    }
++
++    ff = fopen(file_path, "r");
++    if (ff == NULL) {
++        warn_report("Could not read the battery charge.");
++        s->charge.val = BATTERY_VAL_UNKNOWN;
++        return;
++    }
++
++    if (fscanf(ff, "%lu", &val) != 1) {
++        warn_report("Battery charge undetermined.");
++        s->charge.val = BATTERY_VAL_UNKNOWN;
++    } else {
++        s->charge.val = NORMALIZE_BY_FULL(val, s->charge_full);
++    }
++    fclose(ff);
++}
++
++static void battery_get_dynamic_status(BatteryState *s)
++{
++    if (s->use_qmp_control) {
++        s->state.val = 0;
++        if (s->qmp_present) {
++            if (s->qmp_charging) {
++                s->state.val |= BATTERY_CHARGING;
++            }
++            if (s->qmp_discharging) {
++                s->state.val |= BATTERY_DISCHARGING;
++            }
++        }
++        s->rate.val = s->qmp_rate;
++        s->charge.val = (s->qmp_charge_percent * BATTERY_FULL_CAP) / 100;
++    } else if (s->enable_sysfs) {
++        battery_get_state(s);
++        battery_get_rate(s);
++        battery_get_charge(s);
++    } else {
++        s->state.val = 0;
++        s->rate.val = 0;
++        s->charge.val = 0;
++    }
++
++    trace_battery_get_dynamic_status(s->state.val, s->rate.val, s->charge.val);
++}
++
++static void battery_probe_state(void *opaque)
++{
++    BatteryState *s = opaque;
++
++    uint32_t state_before = s->state.val;
++    uint32_t rate_before = s->rate.val;
++    uint32_t charge_before = s->charge.val;
++
++    battery_get_dynamic_status(s);
++
++    if (state_before != s->state.val || rate_before != s->rate.val ||
++        charge_before != s->charge.val) {
 +        Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF, NULL);
-+        acpi_send_event(DEVICE(obj), ACPI_BUTTON_CHANGE_STATUS);
++        switch (charge_before) {
++        case 0:
++            break;  /* Avoid marking initiation as an update */
++        default:
++            acpi_send_event(DEVICE(obj), ACPI_BATTERY_CHANGE_STATUS);
++        }
 +    }
 +    timer_mod(s->probe_state_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
 +              s->probe_state_interval);
 +}
 +
-+static void button_probe_state_timer_init(BUTTONState *s)
++static void battery_probe_state_timer_init(BatteryState *s)
 +{
-+    if (s->enable_procfs && s->probe_state_interval > 0) {
++    if (s->enable_sysfs && s->probe_state_interval > 0) {
 +        s->probe_state_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
-+                                            button_probe_state, s);
++                                            battery_probe_state, s);
 +        timer_mod(s->probe_state_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
 +                  s->probe_state_interval);
 +    }
 +}
 +
-+static inline bool button_verify_lid_procfs(char *path, char *lid_subdir)
++static bool battery_verify_sysfs(BatteryState *s, char *path)
 +{
-+    return button_file_accessible(path, LID_DIR, lid_subdir, LID_STATE_FILE);
-+}
-+
-+static bool button_get_lid_dir(BUTTONState *s, char *path)
-+{
-+    DIR *dir;
-+    char lid_path[PATH_MAX];
++    int units;
++    FILE *ff;
++    char type_path[PATH_MAX];
 +    int path_len;
-+    struct dirent *ent;
++    char val[MAX_ALLOWED_STATE_LENGTH];
 +
-+    path_len = snprintf(lid_path, PATH_MAX, "%s/%s", path, LID_DIR);
++    path_len = snprintf(type_path, PATH_MAX, "%s/%s", path, type_file);
 +    if (path_len < 0 || path_len >= PATH_MAX) {
 +        return false;
 +    }
++    ff = fopen(type_path, "r");
++    if (ff == NULL) {
++        return false;
++    }
 +
-+    dir = opendir(lid_path);
++    if (fgets(val, MAX_ALLOWED_STATE_LENGTH, ff) == NULL) {
++        fclose(ff);
++        return false;
++    } else {
++        val[strcspn(val, "\n")] = 0;
++        if (strncmp(val, BATTERY_TYPE, MAX_ALLOWED_STATE_LENGTH)) {
++            fclose(ff);
++            return false;
++        }
++    }
++    fclose(ff);
++
++    units = battery_select_file(path, full_file);
++
++    if (units < 0) {
++        return false;
++    } else {
++        s->units = units;
++    }
++
++    return (battery_file_accessible(path, now_file[s->units])
++            & battery_file_accessible(path, rate_file[s->units])
++            & battery_file_accessible(path, stat_file));
++}
++
++static bool get_battery_path(DeviceState *dev)
++{
++    BatteryState *s = BATTERY_DEVICE(dev);
++    DIR *dir;
++    struct dirent *ent;
++    char bp[PATH_MAX];
++    int path_len;
++
++    if (s->bat_path) {
++        return battery_verify_sysfs(s, s->bat_path);
++    }
++
++    dir = opendir(SYSFS_PATH);
 +    if (dir == NULL) {
 +        return false;
 +    }
@@ -575,12 +827,13 @@ index 0000000000..dfe86af713
 +    ent = readdir(dir);
 +    while (ent != NULL) {
 +        if (ent->d_name[0] != '.') {
-+            if (button_verify_lid_procfs(path, ent->d_name)) {
-+                path_len = snprintf(s->lid_dir, strlen(ent->d_name) + 1, "%s",
-+                                    ent->d_name);
-+                if (path_len < 0 || path_len > strlen(ent->d_name)) {
-+                    return false;
-+                }
++            path_len = snprintf(bp, PATH_MAX, "%s/%s", SYSFS_PATH,
++                                ent->d_name);
++            if (path_len < 0 || path_len >= PATH_MAX) {
++                return false;
++            }
++            if (battery_verify_sysfs(s, bp)) {
++                qdev_prop_set_string(dev, BATTERY_PATH_PROP, bp);
 +                closedir(dir);
 +                return true;
 +            }
@@ -588,309 +841,406 @@ index 0000000000..dfe86af713
 +        ent = readdir(dir);
 +    }
 +    closedir(dir);
-+    return false;
-+}
-+
-+static bool get_button_path(DeviceState *dev)
-+{
-+    BUTTONState *s = BUTTON_DEVICE(dev);
-+    char procfs_path[PATH_MAX];
-+    int path_len;
-+
-+    if (s->button_path) {
-+        path_len = snprintf(procfs_path, strlen(s->button_path) + 1, "%s",
-+                            s->button_path);
-+        if (path_len < 0 || path_len > strlen(s->button_path)) {
-+            return false;
-+        }
-+    } else {
-+        path_len = snprintf(procfs_path, sizeof(PROCFS_PATH), "%s",
-+                            PROCFS_PATH);
-+        if (path_len < 0 || path_len >= sizeof(PROCFS_PATH)) {
-+            return false;
-+        }
-+    }
-+
-+    if (button_get_lid_dir(s, procfs_path)) {
-+        qdev_prop_set_string(dev, BUTTON_PATH_PROP, procfs_path);
-+        return true;
-+    }
 +
 +    return false;
 +}
 +
-+static void button_realize(DeviceState *dev, Error **errp)
++static void battery_realize(DeviceState *dev, Error **errp)
 +{
 +    ISADevice *d = ISA_DEVICE(dev);
-+    BUTTONState *s = BUTTON_DEVICE(dev);
++    BatteryState *s = BATTERY_DEVICE(dev);
 +    FWCfgState *fw_cfg = fw_cfg_find();
-+    uint16_t *button_port;
-+    char err_details[32] = {};
++    uint16_t *battery_port;
++    char err_details[0x20] = {};
 +
-+    trace_button_realize();
++    trace_battery_realize();
 +
-+    if (s->use_qmp_control && s->enable_procfs) {
-+        error_setg(errp, "Cannot enable both QMP control and procfs mode");
++    if (s->use_qmp_control && s->enable_sysfs) {
++        error_setg(errp, "Cannot enable both QMP control and sysfs mode");
 +        return;
 +    }
 +
-+    /* Initialize lid to open by default when in QMP mode */
++    /* Initialize QMP state to sensible defaults when in QMP mode */
 +    if (s->use_qmp_control) {
-+        s->qmp_lid_open = true;
++        s->qmp_present = true;
++        s->qmp_charging = false;
++        s->qmp_discharging = true;
++        s->qmp_charge_percent = 50;
++        s->qmp_rate = 1000;  /* 1000 mW discharge rate */
 +    }
 +
-+    if (s->probe_state_interval < MIN_BUTTON_PROBE_INTERVAL) {
-+        error_setg(errp, "'probe_state_interval' must be greater than %d ms",
-+                   MIN_BUTTON_PROBE_INTERVAL);
-+        return;
-+    }
-+
-+    if (s->enable_procfs) {
-+        if (!s->button_path) {
-+            strcpy(err_details, " Try using 'procfs_path='");
++    if (s->enable_sysfs) {
++        if (!s->bat_path) {
++            strcpy(err_details, " Try using 'sysfs_path='");
 +        }
 +
-+        if (!get_button_path(dev)) {
-+            error_setg(errp, "Button procfs path not found or unreadable.%s",
++        if (!get_battery_path(dev)) {
++            error_setg(errp, "Battery sysfs path not found or unreadable.%s",
 +                       err_details);
 +            return;
 +        }
++        battery_get_full_charge(s, errp);
++    } else {
++        s->charge_full = BATTERY_FULL_CAP;
 +    }
 +
 +    isa_register_ioport(d, &s->io, s->ioport);
 +
-+    button_probe_state_timer_init(s);
++    battery_probe_state_timer_init(s);
 +
 +    if (!fw_cfg) {
 +        return;
 +    }
 +
-+    button_port = g_malloc(sizeof(*button_port));
-+    *button_port = cpu_to_le16(s->ioport);
-+    fw_cfg_add_file(fw_cfg, "etc/button-port", button_port,
-+                    sizeof(*button_port));
++    battery_port = g_malloc(sizeof(*battery_port));
++    *battery_port = cpu_to_le16(s->ioport);
++    fw_cfg_add_file(fw_cfg, "etc/battery-port", battery_port,
++                    sizeof(*battery_port));
 +}
 +
-+static const Property button_device_properties[] = {
-+    DEFINE_PROP_UINT16(BUTTON_IOPORT_PROP, BUTTONState, ioport, 0x53d),
-+    DEFINE_PROP_BOOL("use-qmp", BUTTONState, use_qmp_control, true),
-+    DEFINE_PROP_BOOL("enable-procfs", BUTTONState, enable_procfs, false),
-+    DEFINE_PROP_UINT64(BUTTON_PROBE_STATE_INTERVAL, BUTTONState,
++static const Property battery_device_properties[] = {
++    DEFINE_PROP_UINT16(BATTERY_IOPORT_PROP, BatteryState, ioport, 0x530),
++    DEFINE_PROP_BOOL("use-qmp", BatteryState, use_qmp_control, true),
++    DEFINE_PROP_BOOL("enable-sysfs", BatteryState, enable_sysfs, false),
++    DEFINE_PROP_UINT64(BATTERY_PROBE_STATE_INTERVAL, BatteryState,
 +                       probe_state_interval, 2000),
-+    DEFINE_PROP_STRING(BUTTON_PATH_PROP, BUTTONState, button_path),
++    DEFINE_PROP_STRING(BATTERY_PATH_PROP, BatteryState, bat_path),
 +};
 +
-+static const VMStateDescription button_vmstate = {
-+    .name = "button",
++static const VMStateDescription battery_vmstate = {
++    .name = "battery",
 +    .version_id = 1,
 +    .minimum_version_id = 1,
 +    .fields = (VMStateField[]) {
-+        VMSTATE_UINT16(ioport, BUTTONState),
-+        VMSTATE_UINT64(probe_state_interval, BUTTONState),
++        VMSTATE_UINT16(ioport, BatteryState),
++        VMSTATE_UINT64(probe_state_interval, BatteryState),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static void build_button_aml(AcpiDevAmlIf *adev, Aml *scope)
++static void build_battery_aml(AcpiDevAmlIf *adev, Aml *scope)
 +{
-+    Aml *dev, *field, *method;
-+    Aml *button_state;
++    Aml *dev, *field, *method, *pkg;
++    Aml *bat_state, *bat_rate, *bat_charge;
 +    Aml *sb_scope;
-+    BUTTONState *s = BUTTON_DEVICE(adev);
++    BatteryState *s = BATTERY_DEVICE(adev);
 +
-+    button_state = aml_local(0);
++    bat_state  = aml_local(0);
++    bat_rate   = aml_local(1);
++    bat_charge = aml_local(2);
 +
 +    sb_scope = aml_scope("\\_SB");
-+    dev = aml_device("LID0");
-+    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C0D")));
++    dev = aml_device("BAT0");
++    aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0C0A")));
 +
-+    aml_append(dev, aml_operation_region("LSTA", AML_SYSTEM_IO,
++    method = aml_method("_STA", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_return(aml_int(0x1F)));
++    aml_append(dev, method);
++
++    aml_append(dev, aml_operation_region("DBST", AML_SYSTEM_IO,
 +                                         aml_int(s->ioport),
-+                                         BUTTON_LEN));
-+    field = aml_field("LSTA", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
-+    aml_append(field, aml_named_field("LIDS", 8));
++                                         BATTERY_LEN));
++    field = aml_field("DBST", AML_DWORD_ACC, AML_NOLOCK, AML_PRESERVE);
++    aml_append(field, aml_named_field("BSTA", 32));
++    aml_append(field, aml_named_field("BRTE", 32));
++    aml_append(field, aml_named_field("BCRG", 32));
 +    aml_append(dev, field);
 +
-+    method = aml_method("_LID", 0, AML_NOTSERIALIZED);
-+    aml_append(method, aml_store(aml_name("LIDS"), button_state));
-+    aml_append(method, aml_return(button_state));
++    method = aml_method("_BIF", 0, AML_NOTSERIALIZED);
++    pkg = aml_package(13);
++    /* Power Unit */
++    aml_append(pkg, aml_int(0));             /* mW */
++    /* Design Capacity */
++    aml_append(pkg, aml_int(BATTERY_FULL_CAP));
++    /* Last Full Charge Capacity */
++    aml_append(pkg, aml_int(BATTERY_FULL_CAP));
++    /* Battery Technology */
++    aml_append(pkg, aml_int(1));             /* Secondary */
++    /* Design Voltage */
++    aml_append(pkg, aml_int(BATTERY_VAL_UNKNOWN));
++    /* Design Capacity of Warning */
++    aml_append(pkg, aml_int(BATTERY_CAPACITY_OF_WARNING));
++    /* Design Capacity of Low */
++    aml_append(pkg, aml_int(BATTERY_CAPACITY_OF_LOW));
++    /* Battery Capacity Granularity 1 */
++    aml_append(pkg, aml_int(BATTERY_CAPACITY_GRANULARITY));
++    /* Battery Capacity Granularity 2 */
++    aml_append(pkg, aml_int(BATTERY_CAPACITY_GRANULARITY));
++    /* Model Number */
++    aml_append(pkg, aml_string("QBAT001"));  /* Model Number */
++    /* Serial Number */
++    aml_append(pkg, aml_string("SN00000"));  /* Serial Number */
++    /* Battery Type */
++    aml_append(pkg, aml_string("Virtual"));  /* Battery Type */
++    /* OEM Information */
++    aml_append(pkg, aml_string("QEMU"));     /* OEM Information */
++    aml_append(method, aml_return(pkg));
++    aml_append(dev, method);
++
++    pkg = aml_package(4);
++    /* Battery State */
++    aml_append(pkg, aml_int(0));
++    /* Battery Present Rate */
++    aml_append(pkg, aml_int(BATTERY_VAL_UNKNOWN));
++    /* Battery Remaining Capacity */
++    aml_append(pkg, aml_int(BATTERY_VAL_UNKNOWN));
++    /* Battery Present Voltage */
++    aml_append(pkg, aml_int(BATTERY_VAL_UNKNOWN));
++    aml_append(dev, aml_name_decl("DBPR", pkg));
++
++    method = aml_method("_BST", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_store(aml_name("BSTA"), bat_state));
++    aml_append(method, aml_store(aml_name("BRTE"), bat_rate));
++    aml_append(method, aml_store(aml_name("BCRG"), bat_charge));
++    aml_append(method, aml_store(bat_state,
++                                 aml_index(aml_name("DBPR"), aml_int(0))));
++    aml_append(method, aml_store(bat_rate,
++                                 aml_index(aml_name("DBPR"), aml_int(1))));
++    aml_append(method, aml_store(bat_charge,
++                                 aml_index(aml_name("DBPR"), aml_int(2))));
++    aml_append(method, aml_return(aml_name("DBPR")));
 +    aml_append(dev, method);
 +
 +    aml_append(sb_scope, dev);
 +    aml_append(scope, sb_scope);
 +
++    /* Device Check */
++    method = aml_method("\\_GPE._E07", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_notify(aml_name("\\_SB.BAT0"), aml_int(0x01)));
++    aml_append(scope, method);
++
 +    /* Status Change */
-+    method = aml_method("\\_GPE._E0B", 0, AML_NOTSERIALIZED);
-+    aml_append(method, aml_notify(aml_name("\\_SB.LID0"), aml_int(0x80)));
++    method = aml_method("\\_GPE._E08", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_notify(aml_name("\\_SB.BAT0"), aml_int(0x80)));
++    aml_append(scope, method);
++
++    /* Information Change */
++    method = aml_method("\\_GPE._E09", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_notify(aml_name("\\_SB.BAT0"), aml_int(0x81)));
 +    aml_append(scope, method);
 +}
 +
-+static void button_class_init(ObjectClass *class, const void *data)
++static void battery_class_init(ObjectClass *class, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(class);
 +    AcpiDevAmlIfClass *adevc = ACPI_DEV_AML_IF_CLASS(class);
 +
-+    dc->realize = button_realize;
-+    device_class_set_props(dc, button_device_properties);
-+    dc->vmsd = &button_vmstate;
-+    adevc->build_dev_aml = build_button_aml;
++    dc->realize = battery_realize;
++    device_class_set_props(dc, battery_device_properties);
++    dc->vmsd = &battery_vmstate;
++    adevc->build_dev_aml = build_battery_aml;
 +}
 +
-+static uint64_t button_ioport_read(void *opaque, hwaddr addr, unsigned size)
++static uint64_t battery_ioport_read(void *opaque, hwaddr addr, unsigned size)
 +{
-+    BUTTONState *s = opaque;
++    BatteryState *s = opaque;
 +
-+    button_get_dynamic_status(s);
++    battery_get_dynamic_status(s);
 +
 +    switch (addr) {
-+    case BUTTON_STA_ADDR:
-+        return s->lid_state;
++    case bsta_addr0:
++        return s->state.acc[0];
++    case bsta_addr1:
++        return s->state.acc[1];
++    case bsta_addr2:
++        return s->state.acc[2];
++    case bsta_addr3:
++        return s->state.acc[3];
++    case brte_addr0:
++        return s->rate.acc[0];
++    case brte_addr1:
++        return s->rate.acc[1];
++    case brte_addr2:
++        return s->rate.acc[2];
++    case brte_addr3:
++        return s->rate.acc[3];
++    case bcrg_addr0:
++        return s->charge.acc[0];
++    case bcrg_addr1:
++        return s->charge.acc[1];
++    case bcrg_addr2:
++        return s->charge.acc[2];
++    case bcrg_addr3:
++        return s->charge.acc[3];
 +    default:
-+        warn_report("Button: guest read unknown value.");
-+        trace_button_ioport_read_unknown();
++        warn_report("Battery: guest read unknown value.");
++        trace_battery_ioport_read_unknown();
 +        return 0;
 +    }
 +}
 +
-+static const MemoryRegionOps button_ops = {
-+    .read = button_ioport_read,
++static const MemoryRegionOps battery_ops = {
++    .read = battery_ioport_read,
 +    .impl = {
 +        .min_access_size = 1,
 +        .max_access_size = 1,
 +    },
 +};
 +
-+static void button_instance_init(Object *obj)
++static void battery_instance_init(Object *obj)
 +{
-+    BUTTONState *s = BUTTON_DEVICE(obj);
++    BatteryState *s = BATTERY_DEVICE(obj);
 +
-+    memory_region_init_io(&s->io, obj, &button_ops, s, "button",
-+                          BUTTON_LEN);
++    memory_region_init_io(&s->io, obj, &battery_ops, s, "battery",
++                          BATTERY_LEN);
 +}
 +
-+static const TypeInfo button_info = {
-+    .name          = TYPE_BUTTON,
++static const TypeInfo battery_info = {
++    .name          = TYPE_BATTERY,
 +    .parent        = TYPE_ISA_DEVICE,
-+    .instance_size = sizeof(BUTTONState),
-+    .class_init    = button_class_init,
-+    .instance_init = button_instance_init,
++    .instance_size = sizeof(BatteryState),
++    .class_init    = battery_class_init,
++    .instance_init = battery_instance_init,
 +    .interfaces = (InterfaceInfo[]) {
 +        { TYPE_ACPI_DEV_AML_IF },
 +        { },
 +    },
 +};
 +
-+static BUTTONState *find_button_device(void)
++static BatteryState *find_battery_device(void)
 +{
-+    Object *o = object_resolve_path_type("", TYPE_BUTTON, NULL);
++    Object *o = object_resolve_path_type("", TYPE_BATTERY, NULL);
 +    if (!o) {
 +        return NULL;
 +    }
-+    return BUTTON_DEVICE(o);
++    return BATTERY_DEVICE(o);
 +}
 +
-+void qmp_lid_button_set_state(bool open, Error **errp)
++void qmp_battery_set_state(BatteryInfo *state, Error **errp)
 +{
-+    BUTTONState *s = find_button_device();
++    BatteryState *s = find_battery_device();
 +
 +    if (!s) {
-+        error_setg(errp, "No lid button device found");
++        error_setg(errp, "No battery device found");
 +        return;
 +    }
 +
-+    s->qmp_lid_open = open;
++    s->qmp_present = state->present;
++    s->qmp_charging = state->charging;
++    s->qmp_discharging = state->discharging;
++    s->qmp_charge_percent = state->charge_percent;
++
++    if (state->has_rate) {
++        s->qmp_rate = state->rate;
++    }
 +
 +    Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF, NULL);
 +    if (obj) {
-+        acpi_send_event(DEVICE(obj), ACPI_BUTTON_CHANGE_STATUS);
++        acpi_send_event(DEVICE(obj), ACPI_BATTERY_CHANGE_STATUS);
 +    }
 +}
 +
-+LidButtonInfo *qmp_query_lid_button(Error **errp)
++BatteryInfo *qmp_query_battery(Error **errp)
 +{
-+    BUTTONState *s = find_button_device();
-+    LidButtonInfo *ret;
++    BatteryState *s = find_battery_device();
++    BatteryInfo *ret;
 +
 +    if (!s) {
-+        error_setg(errp, "No lid button device found");
++        error_setg(errp, "No battery device found");
 +        return NULL;
 +    }
 +
-+    ret = g_new0(LidButtonInfo, 1);
++    ret = g_new0(BatteryInfo, 1);
 +
 +    if (s->use_qmp_control) {
-+        ret->open = s->qmp_lid_open;
++        ret->present = s->qmp_present;
++        ret->charging = s->qmp_charging;
++        ret->discharging = s->qmp_discharging;
++        ret->charge_percent = s->qmp_charge_percent;
++        ret->has_rate = true;
++        ret->rate = s->qmp_rate;
 +    } else {
-+        button_get_dynamic_status(s);
-+        ret->open = (s->lid_state == LID_OPEN);
++        battery_get_dynamic_status(s);
++        ret->present = true;
++        ret->charging = !!(s->state.val & BATTERY_CHARGING);
++        ret->discharging = !!(s->state.val & BATTERY_DISCHARGING);
++        ret->charge_percent = (s->charge.val * 100) / BATTERY_FULL_CAP;
++        ret->has_rate = true;
++        ret->rate = s->rate.val;
 +    }
++
++    ret->has_remaining_capacity = false;
++    ret->has_design_capacity = true;
++    ret->design_capacity = BATTERY_FULL_CAP;
 +
 +    return ret;
 +}
 +
-+static void button_register_types(void)
++static void battery_register_types(void)
 +{
-+    type_register_static(&button_info);
++    type_register_static(&battery_info);
 +}
 +
-+type_init(button_register_types)
++type_init(battery_register_types)
 diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index 2b24951f28..94993ecb9a 100644
+index 73f02b9691..10379a7b2c 100644
 --- a/hw/acpi/meson.build
 +++ b/hw/acpi/meson.build
-@@ -33,6 +33,7 @@ if have_tpm
+@@ -31,6 +31,7 @@ acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
+ if have_tpm
+   acpi_ss.add(files('tpm.c'))
  endif
- acpi_ss.add(when: 'CONFIG_BATTERY', if_true: files('battery.c'))
- acpi_ss.add(when: 'CONFIG_AC_ADAPTER', if_true: files('acad.c'))
-+acpi_ss.add(when: 'CONFIG_BUTTON', if_true: files('button.c'))
++acpi_ss.add(when: 'CONFIG_BATTERY', if_true: files('battery.c'))
  system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
  system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
  system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
 diff --git a/hw/acpi/trace-events b/hw/acpi/trace-events
-index 68ac6e9701..816f027bb3 100644
+index edc93e703c..dd3e815482 100644
 --- a/hw/acpi/trace-events
 +++ b/hw/acpi/trace-events
-@@ -97,3 +97,8 @@ battery_ioport_read_unknown(void) "Battery read unknown"
- acad_realize(void) "AC adapter device realize entry"
- acad_get_dynamic_status(uint8_t state) "AC adapter read state: %"PRIu8
- acad_ioport_read_unknown(void) "AC adapter read unknown"
+@@ -87,3 +87,8 @@ acpi_nvdimm_read_io_port(void) "Alert: we never read _DSM IO Port"
+ acpi_nvdimm_dsm_mem_addr(uint64_t dsm_mem_addr) "dsm memory address 0x%" PRIx64
+ acpi_nvdimm_dsm_info(uint32_t revision, uint32_t handle, uint32_t function) "Revision 0x%" PRIx32 " Handle 0x%" PRIx32 " Function 0x%" PRIx32
+ acpi_nvdimm_invalid_revision(uint32_t revision) "Revision 0x%" PRIx32 " is not supported, expect 0x1"
 +
-+# button.c
-+button_realize(void) "Button device realize entry"
-+button_get_dynamic_status(void) "Button read dynamic status entry"
-+button_ioport_read_unknown(void) "Button read unknown"
++# battery.c
++battery_realize(void) "Battery device realize entry"
++battery_get_dynamic_status(uint32_t state, uint32_t rate, uint32_t charge) "Battery read state: 0x%"PRIx32", rate: %"PRIu32", charge: %"PRIu32
++battery_ioport_read_unknown(void) "Battery read unknown"
 diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index baab382a2e..1d2d809028 100644
+index 3a0e2b8ebb..2c878fd112 100644
 --- a/hw/i386/Kconfig
 +++ b/hw/i386/Kconfig
-@@ -41,6 +41,7 @@ config PC
+@@ -39,6 +39,7 @@ config PC
+     imply VIRTIO_VGA
+     imply NVDIMM
      imply FDC_ISA
-     imply BATTERY
-     imply AC_ADAPTER
-+    imply BUTTON
++    imply BATTERY
      select I8259
      select I8254
      select PCKBD
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 423c4959fe..790b16e582 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1248,6 +1248,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+ 
+         aml_append(sb_scope, dev);
+     }
++
+     aml_append(dsdt, sb_scope);
+ 
+     if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
 diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
-index 588fbbd05f..4f5bcc15da 100644
+index 68d9d15f50..3064ef6734 100644
 --- a/include/hw/acpi/acpi_dev_interface.h
 +++ b/include/hw/acpi/acpi_dev_interface.h
-@@ -15,6 +15,7 @@ typedef enum {
+@@ -13,6 +13,7 @@ typedef enum {
+     ACPI_NVDIMM_HOTPLUG_STATUS = 16,
+     ACPI_VMGENID_CHANGE_STATUS = 32,
      ACPI_POWER_DOWN_STATUS = 64,
-     ACPI_BATTERY_CHANGE_STATUS = 128,
-     ACPI_AC_ADAPTER_CHANGE_STATUS = 1024,
-+    ACPI_BUTTON_CHANGE_STATUS = 2048,
++    ACPI_BATTERY_CHANGE_STATUS = 128,
  } AcpiEventStatusBits;
  
  #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
-diff --git a/include/hw/acpi/button.h b/include/hw/acpi/button.h
+diff --git a/include/hw/acpi/battery.h b/include/hw/acpi/battery.h
 new file mode 100644
-index 0000000000..fa5f7001b2
+index 0000000000..5c5e83abfa
 --- /dev/null
-+++ b/include/hw/acpi/button.h
-@@ -0,0 +1,25 @@
++++ b/include/hw/acpi/battery.h
+@@ -0,0 +1,33 @@
 +/*
-+ * QEMU emulated button device.
++ * QEMU emulated battery device.
 + *
 + * Copyright (c) 2019 Janus Technologies, Inc. (http://janustech.com)
 + *
@@ -903,32 +1253,70 @@ index 0000000000..fa5f7001b2
 + *
 + */
 +
-+#ifndef HW_ACPI_BUTTON_H
-+#define HW_ACPI_BUTTON_H
++#ifndef HW_ACPI_BATTERY_H
++#define HW_ACPI_BATTERY_H
 +
-+#define TYPE_BUTTON                  "button"
-+#define BUTTON_IOPORT_PROP           "ioport"
-+#define BUTTON_PATH_PROP             "procfs_path"
-+#define BUTTON_PROBE_STATE_INTERVAL  "probe_interval"
++#define TYPE_BATTERY                  "battery"
++#define BATTERY_IOPORT_PROP           "ioport"
++#define BATTERY_PATH_PROP             "sysfs_path"
++#define BATTERY_PROBE_STATE_INTERVAL  "probe_interval"
 +
-+#define BUTTON_LEN                   1
++#define BATTERY_FULL_CAP     10000  /* mWh */
++
++#define BATTERY_CAPACITY_OF_WARNING   (BATTERY_FULL_CAP /  10)  /* 10% */
++#define BATTERY_CAPACITY_OF_LOW       (BATTERY_FULL_CAP /  25)  /* 4%  */
++#define BATTERY_CAPACITY_GRANULARITY  (BATTERY_FULL_CAP / 100)  /* 1%  */
++
++#define BATTERY_VAL_UNKNOWN  0xFFFFFFFF
++
++#define BATTERY_LEN          0x0C
 +
 +#endif
 diff --git a/qapi/acpi.json b/qapi/acpi.json
-index 52e151f0e6..bcbddbfbd5 100644
+index 906b3687a5..d1ad663bfd 100644
 --- a/qapi/acpi.json
 +++ b/qapi/acpi.json
-@@ -264,3 +264,52 @@
+@@ -142,3 +142,76 @@
  ##
- { 'command': 'query-ac-adapter',
-   'returns': 'AcAdapterInfo' }
+ { 'event': 'ACPI_DEVICE_OST',
+      'data': { 'info': 'ACPIOSTInfo' } }
 +
 +##
-+# @lid-button-set-state:
++# @BatteryInfo:
 +#
-+# Set the state of the emulated laptop lid button device
++# Battery state information
 +#
-+# @open: whether the lid is open
++# @present: whether the battery is present
++#
++# @charging: whether the battery is charging
++#
++# @discharging: whether the battery is discharging
++#
++# @charge-percent: battery charge percentage (0-100)
++#
++# @rate: charge/discharge rate in mW (optional)
++#
++# @remaining-capacity: remaining capacity in mWh (optional)
++#
++# @design-capacity: design capacity in mWh (optional)
++#
++# Since: 10.2
++##
++{ 'struct': 'BatteryInfo',
++  'data': { 'present': 'bool',
++            'charging': 'bool',
++            'discharging': 'bool',
++            'charge-percent': 'int',
++            '*rate': 'int',
++            '*remaining-capacity': 'int',
++            '*design-capacity': 'int' } }
++
++##
++# @battery-set-state:
++#
++# Set the state of the emulated battery device
++#
++# @state: new battery state
 +#
 +
 +#
@@ -936,41 +1324,35 @@ index 52e151f0e6..bcbddbfbd5 100644
 +#
 +# .. qmp-example::
 +#
-+#     -> { "execute": "lid-button-set-state",
-+#          "arguments": { "open": true } }
++#     -> { "execute": "battery-set-state",
++#          "arguments": { "state": { "present": true,
++#                                    "charging": true,
++#                                    "discharging": false,
++#                                    "charge-percent": 85 } } }
 +#     <- { "return": {} }
 +##
-+{ 'command': 'lid-button-set-state',
-+  'data': { 'open': 'bool' } }
++{ 'command': 'battery-set-state',
++  'data': { 'state': 'BatteryInfo' } }
 +
 +##
-+# @LidButtonInfo:
++# @query-battery:
 +#
-+# Lid button state information
++# Query the current state of the emulated battery device
 +#
-+# @open: whether the lid is open
-+#
-+# Since: 10.2
-+##
-+{ 'struct': 'LidButtonInfo',
-+  'data': { 'open': 'bool' } }
-+
-+##
-+# @query-lid-button:
-+#
-+# Query the current state of the emulated laptop lid button device
-+#
-+# Returns: lid button state
++# Returns: current battery state
 +#
 +# Since: 10.2
 +#
 +# .. qmp-example::
 +#
-+#     -> { "execute": "query-lid-button" }
-+#     <- { "return": { "open": true } }
++#     -> { "execute": "query-battery" }
++#     <- { "return": { "present": true,
++#                      "charging": true,
++#                      "discharging": false,
++#                      "charge-percent": 85 } }
 +##
-+{ 'command': 'query-lid-button',
-+  'returns': 'LidButtonInfo' }
++{ 'command': 'query-battery',
++  'returns': 'BatteryInfo' }
 -- 
 2.50.1
 
