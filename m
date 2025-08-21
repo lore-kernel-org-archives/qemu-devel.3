@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B569CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 13:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0023ACA0EEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 13:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up4yP-0001ZS-Un; Thu, 21 Aug 2025 09:04:58 -0400
+	id 1up4yT-0001bL-VZ; Thu, 21 Aug 2025 09:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1up4yH-0001QC-Jd; Thu, 21 Aug 2025 09:04:49 -0400
-Received: from mail-bn7nam10on2060d.outbound.protection.outlook.com
- ([2a01:111:f403:2009::60d]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ id 1up4yI-0001RO-AL; Thu, 21 Aug 2025 09:04:50 -0400
+Received: from mail-bn1nam02on2062e.outbound.protection.outlook.com
+ ([2a01:111:f403:2407::62e]
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1up4yC-0002wd-LK; Thu, 21 Aug 2025 09:04:47 -0400
+ id 1up4y9-0002vh-Jh; Thu, 21 Aug 2025 09:04:49 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mx8sAfxWLq5mgfbQtzP+WpXndjBohE7UO+XqKhi4eb+F5yPQRquv5AKKMoyMP4Yz0hk0TFusCjiIrBAG+4OZcgQD+9T4KQi8xqdQGwXSujVx7br2iX7vcKHObHcTZIniklXORmopvrKV0FLhAiIDp9iSlupT27x/kUczC8LqpDrhZTWuaabCqRvN3OkxTOTEJr0Wk4Juljq8OLfOHvw0tlkhb2ZvEVBwqWl7FIUgJy+FaXBfAEwjtVU0DCApy7SP+Cv1sUZSYC9q61P2TD5K7Pn7EDcsUkKDOVGx7qE7jALBC3UKv7wVXDPh/VQHmQlNINZrw5IaQtIy5UcY8FyFQQ==
+ b=kbnZtD62igWaCIxq2Ins7JuEDNTjG0GcZPoffG/JNoCEiaVyZwaqRegPQ5ai2vmOCqEz8X3OaNS6qAZJy7LKDJ4LpImbRC/PuJ7VcVuJprudtFHjexlLrLnO49m2rsftpTsAxBivAkhvenOqa4vQmxnwvtEhc6H4Zv3rASinF0MS1/3O+qCRRE7NuLfygE9TYES2DFJhSOErhgNXx84KRDx8o0ft4FoR8iRyDzcUbl90JVk/IZe2QWdQoX0v+hq6QtFDVB4BeHUqKyf5GtV24wMxHKlutpu50ZaFKBXOd0Gq/SApgzBoEGbZvZSiFlXHkGteYDh/k/89n4DTQaH3hg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AvBhc1xcchn6NlVjkVJ1U0/AKo5axIcwbDMShqbYs5w=;
- b=UIYHG1Z3fhuD5ETjf+NNWD+Fxoska0Lzcv8dzjyRXXBi0Tmrgb5bbUlZcU9ULVcyc6uT6Ma2KkVjL6zUE7F8HNdhgN7a0leBp8R0UMJUzE1c9q7FBjqVoDcRRax71JUoQohbnV53AWq1RBgctcxzIW99JCaxH0JBo88S6geFtyWDKX9zpQXhoDBa8dGy0FghckGXfj9tcXWCniC8Qg65mU4CGAV0k/WnfOU+UiuBvi+9Onm4ZLMb5E4rU7TbJwKRsPSEEsHntJKytn3F2n0Bvsfx8TGCaM62cQ+bwsrvoZ9G8o9kZO1s9dvAqA3iPgsd3FCsH7qmu7Tx8beYQHElOw==
+ bh=NARjDdovf0Jj/KsWIMIL6ePx1JKBIgQ4PBA+V5kjzZk=;
+ b=CpjtQtel9P1IqLQNgcwsXh+VzcDZtLexvWegrhVDzYQlMUh26pW0ojFZ/FhW0Kezl165kRMpKjFAjqy2rldxAxjP02pkuNoVoeQcjTUo6NoQPvHCkAN17HWBqv+gFngS+u8DOTdmLpT7FaSKShvQi8b5nXXkpPZhQfwPRWm234LrGHesVubEt8GZi4toGAXqGplaKP5DxuFtRmS6qXgGttmtDDv9BgrNjCni5a6J+gDQJGY4ryNvW1DPaRE/ir3ycfonL9DNQb86edoeDn2pb9kek6oRau2irjzzXG9KCWKel4uR2BylFm9g2WrUkuKE3ZjBeInJISg9c+1xEwULog==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AvBhc1xcchn6NlVjkVJ1U0/AKo5axIcwbDMShqbYs5w=;
- b=cbV9VDYEHgv8AZduyvLu68iPROxpbrGLpsQqvOzgXo7Jsh2yBt7o72OkY6C9SGwHJ+POvgZO0r/FM1NTxW4MsY3sRpJbxlbJ59iOFqi2SaRakw0zBep+03Ic7ASRFn4V4/Enhr7XzWZz1Q0rZMKgPwXy8GQqHXBjM2WaxCF8zzU=
-Received: from PH8P221CA0063.NAMP221.PROD.OUTLOOK.COM (2603:10b6:510:349::15)
- by IA1PR12MB6233.namprd12.prod.outlook.com (2603:10b6:208:3e7::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.14; Thu, 21 Aug
- 2025 13:04:37 +0000
+ bh=NARjDdovf0Jj/KsWIMIL6ePx1JKBIgQ4PBA+V5kjzZk=;
+ b=ncRCGWVFc3AY8rHcZNibZ9xZqoVpP6eXGylasThGUSuOaYUZd+KitEZZccPXO9N1uwWfP8cb9RiAJNOBDMnS40y1RSkgp3e+oqgmk6W4PtwkLqoPXjCC5hjzDlenOSQhEdsfhdXFJTlDQQ51KIUx+2QmSuL/x5BS8MUifWZfY+w=
+Received: from PH8P221CA0060.NAMP221.PROD.OUTLOOK.COM (2603:10b6:510:349::9)
+ by CY8PR12MB7361.namprd12.prod.outlook.com (2603:10b6:930:53::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9009.18; Thu, 21 Aug
+ 2025 13:04:35 +0000
 Received: from CO1PEPF000044F6.namprd21.prod.outlook.com
- (2603:10b6:510:349:cafe::29) by PH8P221CA0063.outlook.office365.com
- (2603:10b6:510:349::15) with Microsoft SMTP Server (version=TLS1_3,
+ (2603:10b6:510:349:cafe::d3) by PH8P221CA0060.outlook.office365.com
+ (2603:10b6:510:349::9) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.16 via Frontend Transport; Thu,
- 21 Aug 2025 13:04:37 +0000
+ 21 Aug 2025 13:04:33 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,18 +54,18 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
  CO1PEPF000044F6.mail.protection.outlook.com (10.167.241.196) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.9073.0 via Frontend Transport; Thu, 21 Aug 2025 13:04:37 +0000
-Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB04.amd.com
+ 15.20.9073.0 via Frontend Transport; Thu, 21 Aug 2025 13:04:33 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 21 Aug
- 2025 08:04:36 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB06.amd.com
- (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 21 Aug
- 2025 08:04:36 -0500
+ 2025 08:04:29 -0500
+Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.1748.10; Thu, 21 Aug
+ 2025 06:04:28 -0700
 Received: from XFR-LUMICHEL-L2.xilinx.com (10.180.168.240) by
  SATLEXMB04.amd.com (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39
- via Frontend Transport; Thu, 21 Aug 2025 08:04:34 -0500
+ via Frontend Transport; Thu, 21 Aug 2025 08:04:27 -0500
 From: Luc Michel <luc.michel@amd.com>
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: Luc Michel <luc.michel@amd.com>, Peter Maydell <peter.maydell@linaro.org>, 
@@ -73,9 +73,9 @@ CC: Luc Michel <luc.michel@amd.com>, Peter Maydell <peter.maydell@linaro.org>,
  <edgar.iglesias@amd.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, Alistair Francis <alistair@alistair23.me>, "Frederic
  Konrad" <frederic.konrad@amd.com>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Subject: [PATCH v3 18/47] hw/arm/xlnx-versal: crl: refactor creation
-Date: Thu, 21 Aug 2025 15:03:17 +0200
-Message-ID: <20250821130354.125971-19-luc.michel@amd.com>
+Subject: [PATCH v3 14/47] hw/arm/xlnx-versal: bbram: refactor creation
+Date: Thu, 21 Aug 2025 15:03:13 +0200
+Message-ID: <20250821130354.125971-15-luc.michel@amd.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250821130354.125971-1-luc.michel@amd.com>
 References: <20250821130354.125971-1-luc.michel@amd.com>
@@ -84,55 +84,55 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044F6:EE_|IA1PR12MB6233:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7246212d-767d-42d3-d0ee-08dde0b34866
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044F6:EE_|CY8PR12MB7361:EE_
+X-MS-Office365-Filtering-Correlation-Id: 027ea1aa-9000-4194-a403-08dde0b34636
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|1800799024|82310400026|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?YDYbpbmPZp9IrdvWB828Oyq8iRqjKoeQoj6HnDFQZ9KR5x6smXi7uE8uH3Bj?=
- =?us-ascii?Q?vnxK53VYjK7PzA32XNDrqi7+hE6oY53Uxsdd6QZPI/6z5VfbA+ZRUTsYfIdr?=
- =?us-ascii?Q?qCkkpWRtato5/ekA8RgrzV0v/L8XxsI/r96C33XaQ4JZhu/fn/y5KHQFpFay?=
- =?us-ascii?Q?/CEQmnUao82T9MfHE0s8K8lgyHOYUVSD98g/A9vycKqtOrOJjoNCrWSiKEoh?=
- =?us-ascii?Q?j3TDiL1aXAtEe3XwykR796Zv3rLYLh15QmVHOUSspmdLehg0YU1BG8IrzBhh?=
- =?us-ascii?Q?Ap1tkRG5TGow4HthQWJOlviz7ji94ZDRpqEfqcWeX04/jJw2mdj7SSQlwit+?=
- =?us-ascii?Q?a6WVD48ru4GT+LHsTBBqYK9UbORXwPEu91ClYdXd3+r+FTZVXadOt/Y2507T?=
- =?us-ascii?Q?RZyjiua1YBldr43YFFhHFAAlytgKjIEx31oMEuHCuTyrt/PG1emXtvwylz65?=
- =?us-ascii?Q?hloG/b7qAKD98hZRHwvoIpOXGChuSSS9mx4lres2Hg9QkuwshPoUIRDlIOEk?=
- =?us-ascii?Q?PtAGWupMMg3xalfjqIrm2uZJfCzYkZRx9p7lA2q19NeY9OYvvUkBZFcXXOxi?=
- =?us-ascii?Q?2d/lcwFNVyunW9DmkYB9H9eodQ6XZp102CZEJlNPaJBPQJl5px+85G06A9uF?=
- =?us-ascii?Q?5fa9LdE8DLkxxamqd1qBUGR69deb814XjDQI1pzPiteycTnsmYERF4oSckbb?=
- =?us-ascii?Q?FqSDs1qf9A2p/lw5UQXUMfqa9Ryvq5AIPY69INglSpWwNzYyjlaaWHDD6Ta5?=
- =?us-ascii?Q?DWWx+WE1niYBFjA1GkFLUOhpee97Bbr5fvAv28YEOkgRnK7OxI2ADIeU6NUX?=
- =?us-ascii?Q?KpZjoMDfSwDiRp63UVbHf4j181Ox7DUlThGsex0YLlTpRcmbt13cQqsi0Sst?=
- =?us-ascii?Q?OhGaOxTeI7a2R/gl6276LVjECJ3A1SwU2vVhH35d4gyyOJ6JTCWDFXuD0rlL?=
- =?us-ascii?Q?2q2+flIUFuvbtqHA8vlqfdZCP423dCla7iHlpqTPvLYPxvNz63tO4FxGHJvF?=
- =?us-ascii?Q?hoB7aWgNByov8wCNjywafuveKrjsSVoWRq7iLyVxpoYnuBq4dj3wZA7ek5ZK?=
- =?us-ascii?Q?W7hhnlFiO+nbXOe8ecKOhc2um6GL2vUpatvdccPWqxwlrfncUNRKKsz50XCh?=
- =?us-ascii?Q?Xitje1jgwa1ItIv/Rjl2A/JScMiPHsjnZPtYSQeJ7SKmHMLJ+OIZwFCtqj+S?=
- =?us-ascii?Q?2uNRvso6ULly6EUDM1qaAZGO4PCZ8ZUQj4s6u4fPZghzFQx7ouc6XWKwCpHM?=
- =?us-ascii?Q?fWmsWXuf0TW6s8l2/3KemYf6M2L2r6J7i3PAHX0w3JPT0zCPaTPI9+fAQJBf?=
- =?us-ascii?Q?e0RsDBwUFLMUrOQwSfcxQu9PGD6+cD45AEDkWKWoaCTLBS2AdWcBnU6v1aG/?=
- =?us-ascii?Q?0E3R/yoozQlbqUzz/6i4swZeFWqeh3cdWlHmefyFUje0/ctM96WkK8FZIIAy?=
- =?us-ascii?Q?2kLEKJV/0FsdYfCuMxhg8rNEI6lTbyw0QiGltIX4fnrnO+mV32++sAs/vljY?=
- =?us-ascii?Q?wXTiU6R/RpnolY8=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?aAk2JB0Zw1NUvY2PlXQ2G5B/BO4iJkjzcq7Z2d8Iqgm1L6MHvHikQiyrTmot?=
+ =?us-ascii?Q?PaVOgh/LvhQJRtVTqsrWFDV6obrybAnEal1GSlEowW71plXXQFIhS0Ki6tK1?=
+ =?us-ascii?Q?DJo8GuNdaetoeYQvjCDjpe7xmoeF16TtUWBc6Eq57ITvIFP+Ikdh+Nn99Oq+?=
+ =?us-ascii?Q?59+c8fGGxQFKyjm5FoGW25ZSSWcgBXkg0NNvDoD+vcOnKkJCTGunfy65amfc?=
+ =?us-ascii?Q?3Z+BbZ7aAdHkJAFivZoptautaNV/rqxGcKwYz0E1IIgbxoBHlcsqt4L2cOim?=
+ =?us-ascii?Q?C/GjEyaBICzVgZjVR86E5w6i4k0Qz7R2ap0zpiXo26ivrYsqBq4mlqIM3s9f?=
+ =?us-ascii?Q?6hXt7Vb9/McKI/oNCXVOqFgKhjwsXkPFJRk6k4+aMiQMbS5599UBnQ3r724h?=
+ =?us-ascii?Q?inTUt+d1UnNdwhAlJ0x8e/jESnI9Lu2oLX9E/4eLjxVHQ7aLysNUMU310eQd?=
+ =?us-ascii?Q?bnHjjvq4JzvfjmbHJl0und+/gy/Pv9EZ7YMRV0EwDLPsFC0c9ha8Wmro0m4y?=
+ =?us-ascii?Q?iUsbEiO4L+LOAqCmTAbMAj2YhAlJSUSBN0yJ+hwXNeJsSyX6R1n+YvGns3gg?=
+ =?us-ascii?Q?w+9OkLsBG/0uj+ZHLoPS26KkYAt/EmWs8+LJ650XMkVjbML+r7iKk272CGqW?=
+ =?us-ascii?Q?fXFDzRlk7ZpelnjHY3D5uX2qjsZlEl0MCCpoFyt0oi1yVVSvVixaNDds3Dq1?=
+ =?us-ascii?Q?RqKxPsDLWeuMNnvS/GZT1LQSQhmtR5x++7gJvhnptUEPWb48LyGOThZnCdy4?=
+ =?us-ascii?Q?VgxrKQ9C3KvVJTQLcuqrkdQu99sGwkQrHHmSp2q4e2HA41nULOSFaUHPfuEz?=
+ =?us-ascii?Q?9C7z/WAQBbp+0fF91737oRgmkupI/XnQeJJGkdMgsr/qqcc5QKjydFkW6KBI?=
+ =?us-ascii?Q?yPnujgrZb8ckX69jvvgtJPZ24i2VtLqiTf4unblbEtqe6uuCQ/JTffLMh4Zs?=
+ =?us-ascii?Q?llCXA+IfJQOC+1VKLmZZFzPjBunItOj2Oz+UVcZF+J+U9z8Asxeo12nw3TfP?=
+ =?us-ascii?Q?2yb+31BdJl6+BYA4FlxzsSl8yne2pE9VHqaNXMmR6TaaUPyFwHHv+ImDDvRN?=
+ =?us-ascii?Q?Iz68M4tQJ3TBXFSljMDiaZQILvbgZaOJxgacaQIKb2TLMMyIdc5DdLHS5fGQ?=
+ =?us-ascii?Q?uRPORff5NcV+JY7fXFuo70Qqa2s6nCNHCDYLpH62pHAwcW1FLpHZ+13NSvH/?=
+ =?us-ascii?Q?WJ3tNNUNDTdbdbGSLcYr4mT4Hr+UGuVTR0Wo6MumQrp57WxAqgbSGuQWD3U7?=
+ =?us-ascii?Q?7Dxn9gRoP1eMFvVYLAdlxA/pv11uKLrnjIsMXDXMB0M62THUDBYRWp4AjojM?=
+ =?us-ascii?Q?Gh3ugV8JHV8s6oBvWvnU3dVmIwr1z4qRkJAKn6FtBGtQLu5/k7NrNgiZ8jz/?=
+ =?us-ascii?Q?qva3gMhLoLHJL3h4kaw/WGUkHV2ID55Ne5WRRQqKxn/ncMogBtbOX1Birx4I?=
+ =?us-ascii?Q?LlRE9Vu42YJEegltUvXr+cpFWlkOqrp+3k48zuFvf+09/y3PzUyUyXH1PRCE?=
+ =?us-ascii?Q?1BPh9EYLUXOjzaI=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
  SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2025 13:04:37.3600 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7246212d-767d-42d3-d0ee-08dde0b34866
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2025 13:04:33.6886 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 027ea1aa-9000-4194-a403-08dde0b34636
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F6.namprd21.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6233
-Received-SPF: permerror client-ip=2a01:111:f403:2009::60d;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7361
+Received-SPF: permerror client-ip=2a01:111:f403:2407::62e;
  envelope-from=Luc.Michel@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -154,147 +154,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the CRL device creation using the VersalMap structure. The
-connections to the RPU CPUs are temporarily removed and will be
-reintroduced with next refactoring commits.
+Refactor the BBRAM device creation using the VersalMap structure.
+
+Note that the corresponding FDT node is removed. It does not correspond
+to any real node in standard Versal DTBs. No matching drivers exist for
+it.
 
 Signed-off-by: Luc Michel <luc.michel@amd.com>
 Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
 ---
- include/hw/arm/xlnx-versal.h |  3 ---
- hw/arm/xlnx-versal.c         | 36 +++++++++++++++++++-----------------
- 2 files changed, 19 insertions(+), 20 deletions(-)
+ include/hw/arm/xlnx-versal.h |  3 +--
+ hw/arm/xlnx-versal-virt.c    | 27 +++---------------------
+ hw/arm/xlnx-versal.c         | 41 +++++++++++++++++++++++++-----------
+ 3 files changed, 33 insertions(+), 38 deletions(-)
 
 diff --git a/include/hw/arm/xlnx-versal.h b/include/hw/arm/xlnx-versal.h
-index 5a685aea6d4..d3ce13e69de 100644
+index 78442e6c2c5..9adce02f8a9 100644
 --- a/include/hw/arm/xlnx-versal.h
 +++ b/include/hw/arm/xlnx-versal.h
-@@ -15,11 +15,10 @@
- 
- #include "hw/sysbus.h"
+@@ -17,11 +17,10 @@
  #include "hw/cpu/cluster.h"
+ #include "hw/or-irq.h"
  #include "hw/intc/arm_gicv3.h"
- #include "qom/object.h"
--#include "hw/misc/xlnx-versal-crl.h"
- #include "net/can_emu.h"
- #include "target/arm/cpu.h"
- #include "hw/arm/xlnx-versal-version.h"
- 
- #define TYPE_XLNX_VERSAL_BASE "xlnx-versal-base"
-@@ -69,12 +68,10 @@ struct Versal {
-             MemoryRegion mr_ps_alias;
- 
-             CPUClusterState cluster;
-             ARMCPU cpu[XLNX_VERSAL_NR_RCPUS];
-         } rpu;
--
--        XlnxVersalCRL crl;
-     } lpd;
- 
-     struct {
-         uint32_t clk_25mhz;
-         uint32_t clk_125mhz;
-diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-index 2128dbbad92..ff55ec62301 100644
---- a/hw/arm/xlnx-versal.c
-+++ b/hw/arm/xlnx-versal.c
-@@ -40,10 +40,11 @@
- #include "hw/misc/xlnx-versal-trng.h"
  #include "hw/rtc/xlnx-zynqmp-rtc.h"
+ #include "qom/object.h"
+-#include "hw/nvram/xlnx-bbram.h"
+ #include "hw/misc/xlnx-versal-crl.h"
+ #include "hw/misc/xlnx-versal-trng.h"
+ #include "net/can_emu.h"
  #include "hw/misc/xlnx-versal-cfu.h"
  #include "hw/misc/xlnx-versal-cframe-reg.h"
- #include "hw/or-irq.h"
-+#include "hw/misc/xlnx-versal-crl.h"
+@@ -83,11 +82,10 @@ struct Versal {
+ 
+     /* The Platform Management Controller subsystem.  */
+     struct {
+         XlnxZynqMPRTC rtc;
+         XlnxVersalTRng trng;
+-        XlnxBBRam bbram;
+         XlnxVersalCFUAPB cfu_apb;
+         XlnxVersalCFUFDRO cfu_fdro;
+         XlnxVersalCFUSFR cfu_sfr;
+         XlnxVersalCFrameReg cframe[XLNX_VERSAL_NR_CFRAME];
+         XlnxVersalCFrameBcastReg cframe_bcast;
+@@ -119,10 +117,11 @@ static inline void versal_set_fdt(Versal *s, void *fdt)
+     s->cfg.fdt = fdt;
+ }
+ 
+ void versal_sdhci_plug_card(Versal *s, int sd_idx, BlockBackend *blk);
+ void versal_efuse_attach_drive(Versal *s, BlockBackend *blk);
++void versal_bbram_attach_drive(Versal *s, BlockBackend *blk);
+ void versal_ospi_create_flash(Versal *s, int flash_idx, const char *flash_mdl,
+                               BlockBackend *blk);
+ 
+ int versal_get_num_can(VersalVersion version);
+ int versal_get_num_sdhci(VersalVersion version);
+diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
+index c5dcd57d1dd..3b44d9c5c56 100644
+--- a/hw/arm/xlnx-versal-virt.c
++++ b/hw/arm/xlnx-versal-virt.c
+@@ -170,30 +170,10 @@ static void fdt_add_rtc_node(VersalVirt *s)
+                                  2, MM_PMC_RTC, 2, MM_PMC_RTC_SIZE);
+     qemu_fdt_setprop(s->fdt, name, "compatible", compat, sizeof(compat));
+     g_free(name);
+ }
+ 
+-static void fdt_add_bbram_node(VersalVirt *s)
+-{
+-    const char compat[] = TYPE_XLNX_BBRAM;
+-    const char interrupt_names[] = "bbram-error";
+-    char *name = g_strdup_printf("/bbram@%x", MM_PMC_BBRAM_CTRL);
+-
+-    qemu_fdt_add_subnode(s->fdt, name);
+-
+-    qemu_fdt_setprop_cells(s->fdt, name, "interrupts",
+-                           GIC_FDT_IRQ_TYPE_SPI, VERSAL_PMC_APB_IRQ,
+-                           GIC_FDT_IRQ_FLAGS_LEVEL_HI);
+-    qemu_fdt_setprop(s->fdt, name, "interrupt-names",
+-                     interrupt_names, sizeof(interrupt_names));
+-    qemu_fdt_setprop_sized_cells(s->fdt, name, "reg",
+-                                 2, MM_PMC_BBRAM_CTRL,
+-                                 2, MM_PMC_BBRAM_CTRL_SIZE);
+-    qemu_fdt_setprop(s->fdt, name, "compatible", compat, sizeof(compat));
+-    g_free(name);
+-}
+-
+ static void fdt_nop_memory_nodes(void *fdt, Error **errp)
+ {
+     Error *err = NULL;
+     char **node_path;
+     int n = 0;
+@@ -344,19 +324,19 @@ static void create_virtio_regions(VersalVirt *s)
+         qemu_fdt_setprop_string(s->fdt, name, "compatible", "virtio,mmio");
+         g_free(name);
+     }
+ }
+ 
+-static void bbram_attach_drive(XlnxBBRam *dev)
++static void bbram_attach_drive(VersalVirt *s)
+ {
+     DriveInfo *dinfo;
+     BlockBackend *blk;
+ 
+     dinfo = drive_get_by_index(IF_PFLASH, 0);
+     blk = dinfo ? blk_by_legacy_dinfo(dinfo) : NULL;
+     if (blk) {
+-        qdev_prop_set_drive(DEVICE(dev), "drive", blk);
++        versal_bbram_attach_drive(&s->soc, blk);
+     }
+ }
+ 
+ static void efuse_attach_drive(VersalVirt *s)
+ {
+@@ -442,11 +422,10 @@ static void versal_virt_init(MachineState *machine)
+     fdt_create(s);
+     versal_set_fdt(&s->soc, s->fdt);
+     fdt_add_gic_nodes(s);
+     fdt_add_timer_nodes(s);
+     fdt_add_rtc_node(s);
+-    fdt_add_bbram_node(s);
+     fdt_add_cpu_nodes(s, psci_conduit);
+     fdt_add_clk_node(s, "/old-clk125", 125000000, s->phandle.clk_125Mhz);
+     fdt_add_clk_node(s, "/old-clk25", 25000000, s->phandle.clk_25Mhz);
+ 
+     sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+@@ -456,11 +435,11 @@ static void versal_virt_init(MachineState *machine)
+      * modules unaware of multiple address-spaces.  */
+     memory_region_add_subregion_overlap(get_system_memory(),
+                                         0, &s->soc.fpd.apu.mr, 0);
+ 
+     /* Attach bbram backend, if given */
+-    bbram_attach_drive(&s->soc.pmc.bbram);
++    bbram_attach_drive(s);
+ 
+     /* Attach efuse backend, if given */
+     efuse_attach_drive(s);
+ 
+     /* Plug SD cards */
+diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
+index d34a36e18aa..615eea54372 100644
+--- a/hw/arm/xlnx-versal.c
++++ b/hw/arm/xlnx-versal.c
+@@ -34,10 +34,11 @@
+ #include "hw/misc/xlnx-versal-xramc.h"
+ #include "hw/usb/xlnx-usb-subsystem.h"
+ #include "hw/nvram/xlnx-versal-efuse.h"
+ #include "hw/ssi/xlnx-versal-ospi.h"
+ #include "hw/misc/xlnx-versal-pmc-iou-slcr.h"
++#include "hw/nvram/xlnx-bbram.h"
  
  #define XLNX_VERSAL_ACPU_TYPE ARM_CPU_TYPE_NAME("cortex-a72")
  #define XLNX_VERSAL_RCPU_TYPE ARM_CPU_TYPE_NAME("cortex-r5f")
  #define GEM_REVISION        0x40070106
  
-@@ -149,10 +150,12 @@ typedef struct VersalMap {
-         size_t num_cframe;
-         struct VersalCfuCframeCfg {
-             uint32_t blktype_frames[7];
-         } cframe_cfg[15];
-     } cfu;
-+
-+    VersalSimplePeriphMap crl;
+@@ -117,10 +118,11 @@ typedef struct VersalMap {
+         uint64_t dma_dst;
+         int irq;
+     } ospi;
+ 
+     VersalSimplePeriphMap pmc_iou_slcr;
++    VersalSimplePeriphMap bbram;
  } VersalMap;
  
  static const VersalMap VERSAL_MAP = {
      .uart[0] = { 0xff000000, 18 },
      .uart[1] = { 0xff010000, 19 },
-@@ -213,10 +216,12 @@ static const VersalMap VERSAL_MAP = {
-             { { 38498, 3841, 15361, 13, 7, 3, 1 } },
-             { { 38498, 3841, 15361, 13, 7, 3, 1 } },
-             { { 38498, 3841, 15361, 13, 7, 3, 1 } },
-         },
+@@ -159,10 +161,11 @@ static const VersalMap VERSAL_MAP = {
+         .dma_src = 0xf1011000, .dma_dst = 0xf1011800,
+         .irq = 124,
      },
-+
-+    .crl = { 0xff5e0000, 10 },
+ 
+     .pmc_iou_slcr = { 0xf1060000, OR_IRQ(121, 0) },
++    .bbram = { 0xf11f0000, OR_IRQ(121, 1) },
  };
  
  static const VersalMap *VERSION_TO_MAP[] = {
      [VERSAL_VER_VERSAL] = &VERSAL_MAP,
  };
-@@ -1106,31 +1111,28 @@ static void versal_create_cfu(Versal *s, const struct VersalCfuMap *map)
-     sysbus_realize_and_unref(sbd, &error_fatal);
-     memory_region_add_subregion(&s->mr_ps, map->cfu_sfr,
-                                 sysbus_mmio_get_region(sbd, 0));
+@@ -811,26 +814,25 @@ static void versal_create_xrams(Versal *s, const struct VersalXramMap *map)
+ 
+         sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(or, i));
+     }
  }
  
--static void versal_create_crl(Versal *s, qemu_irq *pic)
-+static inline void versal_create_crl(Versal *s)
+-static void versal_create_bbram(Versal *s, qemu_irq *pic)
++static void versal_create_bbram(Versal *s,
++                                const VersalSimplePeriphMap *map)
  {
--    SysBusDevice *sbd;
--    int i;
-+    const VersalMap *map;
-+    const char *crl_class;
 +    DeviceState *dev;
+     SysBusDevice *sbd;
  
--    object_initialize_child(OBJECT(s), "crl", &s->lpd.crl,
--                            TYPE_XLNX_VERSAL_CRL);
--    sbd = SYS_BUS_DEVICE(&s->lpd.crl);
-+    map = versal_get_map(s);
- 
--    for (i = 0; i < ARRAY_SIZE(s->lpd.rpu.cpu); i++) {
--        g_autofree gchar *name = g_strdup_printf("cpu_r5[%d]", i);
-+    crl_class = TYPE_XLNX_VERSAL_CRL;
-+    dev = qdev_new(crl_class);
-+    object_property_add_child(OBJECT(s), "crl", OBJECT(dev));
- 
--        object_property_set_link(OBJECT(&s->lpd.crl),
--                                 name, OBJECT(&s->lpd.rpu.cpu[i]),
--                                 &error_abort);
--    }
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_abort);
+-    object_initialize_child_with_props(OBJECT(s), "bbram", &s->pmc.bbram,
+-                                       sizeof(s->pmc.bbram), TYPE_XLNX_BBRAM,
+-                                       &error_fatal,
+-                                       "crc-zpads", "0",
+-                                       NULL);
+-    sbd = SYS_BUS_DEVICE(&s->pmc.bbram);
++    dev = qdev_new(TYPE_XLNX_BBRAM);
++    sbd = SYS_BUS_DEVICE(dev);
  
 -    sysbus_realize(sbd, &error_fatal);
--    memory_region_add_subregion(&s->mr_ps, MM_CRL,
--                                sysbus_mmio_get_region(sbd, 0));
--    sysbus_connect_irq(sbd, 0, pic[VERSAL_CRL_IRQ]);
-+    memory_region_add_subregion(&s->mr_ps, map->crl.addr,
-+                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
-+
-+    versal_sysbus_connect_irq(s, SYS_BUS_DEVICE(dev), 0, map->crl.irq);
+-    memory_region_add_subregion(&s->mr_ps, MM_PMC_BBRAM_CTRL,
++    object_property_add_child(OBJECT(s), "bbram", OBJECT(dev));
++    qdev_prop_set_uint32(dev, "crc-zpads", 0);
++    sysbus_realize_and_unref(sbd, &error_abort);
++    memory_region_add_subregion(&s->mr_ps, map->addr,
+                                 sysbus_mmio_get_region(sbd, 0));
+-    sysbus_connect_irq(sbd, 0,
+-                       qdev_get_gpio_in(DEVICE(&s->pmc.apb_irq_orgate), 1));
++    versal_sysbus_connect_irq(s, sbd, 0, map->irq);
  }
  
- /* This takes the board allocated linear DDR memory and creates aliases
-  * for each split DDR range/aperture on the Versal address map.
-  */
-@@ -1327,12 +1329,12 @@ static void versal_realize(DeviceState *dev, Error **errp)
+ static void versal_create_efuse(Versal *s,
+                                 const struct VersalEfuseMap *map)
+ {
+@@ -1323,14 +1325,16 @@ static void versal_realize(DeviceState *dev, Error **errp)
+     slcr = versal_create_pmc_iou_slcr(s, &map->pmc_iou_slcr);
  
-     versal_create_bbram(s, &map->bbram);
-     versal_create_trng(s, &map->trng);
-     versal_create_rtc(s, &map->rtc);
-     versal_create_cfu(s, &map->cfu);
-+    versal_create_crl(s);
- 
--    versal_create_crl(s, pic);
+     qdev_connect_gpio_out_named(slcr, "ospi-mux-sel", 0,
+                                 qdev_get_gpio_in_named(ospi,
+                                                        "ospi-mux-sel", 0));
++
++    versal_create_bbram(s, &map->bbram);
++
+     versal_create_pmc_apb_irq_orgate(s, pic);
+     versal_create_rtc(s, pic);
+     versal_create_trng(s, pic);
+-    versal_create_bbram(s, pic);
+     versal_create_crl(s, pic);
+     versal_create_cfu(s, pic);
      versal_map_ddr(s);
      versal_unimp(s);
  
-     /* Create the On Chip Memory (OCM).  */
-     memory_region_init_ram(&s->lpd.mr_ocm, OBJECT(s), "ocm",
+@@ -1372,10 +1376,23 @@ void versal_efuse_attach_drive(Versal *s, BlockBackend *blk)
+     }
+ 
+     qdev_prop_set_drive(efuse, "drive", blk);
+ }
+ 
++void versal_bbram_attach_drive(Versal *s, BlockBackend *blk)
++{
++    DeviceState *bbram;
++
++    bbram = DEVICE(versal_get_child(s, "bbram"));
++
++    if (bbram == NULL) {
++        return;
++    }
++
++    qdev_prop_set_drive(bbram, "drive", blk);
++}
++
+ void versal_ospi_create_flash(Versal *s, int flash_idx, const char *flash_mdl,
+                               BlockBackend *blk)
+ {
+     BusState *spi_bus;
+     DeviceState *flash, *ospi;
 -- 
 2.50.1
 
