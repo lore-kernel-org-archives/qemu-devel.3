@@ -4,102 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D631CCA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A44CA0EF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up6Zd-0004dx-2l; Thu, 21 Aug 2025 10:47:29 -0400
+	id 1up6dl-0006Tl-TD; Thu, 21 Aug 2025 10:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1up6ZX-0004as-5g
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:47:24 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1up6ZU-0000Qc-3i
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:47:22 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e94e40fd4f1so1084623276.2
- for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 07:47:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755787638; x=1756392438; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bvHFQDqOHDR2ImKQftowTJ1dNGFZDFpNaySfWl1A+4w=;
- b=JWbjs+amOAGXaMe7OCPFX97lDNDuZ+PFrgjt3dwMJiu1idt1yNDOzyC/mk3FGBT+/s
- FojJXwJz7CH+66vyljpcCSPkwByqwQT3vicP4B7z1erLAGoyrfjG5CC0da8FAEygI61q
- yA+DmV3mKa6ytVkbiI9b9g7kue7wYffzgLumpE/ExBmkAeEyY8f70OwvK4x6QFexGYqg
- IBh/StfrvyxJEzcp4pM74aPefOJf05+JGon0N9rwtY3+YK/AbkNOqAEHsCy9EqjYi3yg
- NSWqg1nP8Nj7XloAIZOiRl20aYScdhp/MfT/GSZe+dv/FJ6mQSHF41E1KVPQT7BaJ6dQ
- Gr3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755787638; x=1756392438;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bvHFQDqOHDR2ImKQftowTJ1dNGFZDFpNaySfWl1A+4w=;
- b=L1rRcn/k9Fa0B1ZvcIQHMknl0d5Yf503PvnPDYS+G472sQHPVANFFxK5PsOELcWPgT
- ulaHJc8XR54JGUpHQt9/8aujuNQ8V8ho8IhmeOkWFiMN/ktv84nq3fzLz7dJi/BGmGeN
- VBmhymvSyiBXUEx1Y+iN7sVwJNM9sUKm8WDgO2D3/LX3EBuWZ8Uz92lkExaioFWkzXuI
- UptRi7uiYMM5gszi3DjdUxIzFS2Rmkg4exhvBSlqPZvwH1NM+1pSb5l3kOcNTPAqWDLZ
- 7zEuRTGLBPQArGUOFhITf4BbFpgr4+Ohd+/cc/eIO5qowJPxfKI6GiDWsvti09PDLKXh
- ++8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjMSJQJCV5SQYXKEjyCgBVFHhMh86jC1rbEFwK9HuAXUKr8a+MI6nWKUeouF2k3+d8fgAHM8EBX0ji@nongnu.org
-X-Gm-Message-State: AOJu0Yy9XsGJdXIMngwb4jqbR5mGdARaUgHUKKQA7pNm0iIJ/7KmRfxn
- RCQj3yWfbqWwoc8/Nevm/XS2wYh5RNYwkDLx6YZHMH/Vk9b/5RpKyEoJNjCbxgg4pdt3sCvt7GO
- wW0vSptBWS8q5jeH40TMJZaqcqHAQVqmHsdjXuSc9Fw==
-X-Gm-Gg: ASbGnctdf8CWzrkhQ8gpvB4BZr9a/o/oJEYaFN0dM72MeElHqAtoBfmUwATJx+9xX+b
- swAa8gUgHr57BAosUnyzJBWjqjZ/anwj7jPc+AlEln2RVjQ+P6lmz/Y3Yap/m776yXURaNRbEuc
- YiuDFQXpJDhQg/D2teCapp5W+PFIYSvGF8fxCYqr1/m5nBt4daLMBNZamCDbwTyULyNwMfZNHSn
- kOVDeB6
-X-Google-Smtp-Source: AGHT+IEQxvug7Y8254CH1eh9VKqmbINJ8ESgNsBpTbzoZQdSGrQwap6M7SQN4SKKmMjLLMM6kJnFCYj/X6rpdt0+ndo=
-X-Received: by 2002:a05:6902:1890:b0:e94:e1e5:377d with SMTP id
- 3f1490d57ef6-e9509b9f87emr3508019276.51.1755787638120; Thu, 21 Aug 2025
- 07:47:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1up6dj-0006TZ-92
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:51:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1up6dg-0000oO-MC
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:51:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1755787896;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JGzXuCKcSk6XG7nWQ9phlfBMKI3ZI1XngCb1NSL9y5o=;
+ b=OCW/40HqgNbX9+ZqEAibcCDJiD9BR6slf/h7au+WQOjfVp0u4hMIx9pVsj7qI1hfIeMpvd
+ JQGjLS6jYWgNzpIXzj9tVG7FQR1wdlC4VhmXQrqinendisnvGcRaz9382oNZ0zx2EZF+rK
+ tf2J7uqSJqWoiHp7ZzxUut9WM0Aa/Pk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-IJyaNsyFMIaSrDwBRXXvWA-1; Thu,
+ 21 Aug 2025 10:51:34 -0400
+X-MC-Unique: IJyaNsyFMIaSrDwBRXXvWA-1
+X-Mimecast-MFC-AGG-ID: IJyaNsyFMIaSrDwBRXXvWA_1755787894
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCEBF180034A
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 14:51:33 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.226.28])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 54C621977686; Thu, 21 Aug 2025 14:51:31 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] ui/vnc: Fix crash when specifying [vnc] without id in the
+ config file
+Date: Thu, 21 Aug 2025 16:51:30 +0200
+Message-ID: <20250821145130.845104-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20250110-san-v8-0-57a5a1be1bcf@daynix.com>
- <20250110-san-v8-2-57a5a1be1bcf@daynix.com>
- <CAFEAcA-aTYebu-5s4AeBfE3oLQfxTwCpeosoj0TU8E_XPu_ZDg@mail.gmail.com>
- <CAFEAcA-ygHuA5BH+oftCGDKZOh8CHbiUKE4v=-iXvCaKzG4kHQ@mail.gmail.com>
- <aKctCjv8newNIX71@x1.local>
-In-Reply-To: <aKctCjv8newNIX71@x1.local>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 Aug 2025 15:47:06 +0100
-X-Gm-Features: Ac12FXzCfTRnLnffB-OdHJs-cXDH3-_5Hq0F0kEeeD52QfMDe1Yeyts9R-0jgPY
-Message-ID: <CAFEAcA8DV40fGsci76r4yeP1P-SP_QjNRDD2OzPxjx5wRs0GEg@mail.gmail.com>
-Subject: Re: [PATCH v8 2/2] memory: Do not create circular reference with
- subregion
-To: Peter Xu <peterx@redhat.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, 
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
- devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,33 +80,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 21 Aug 2025 at 15:28, Peter Xu <peterx@redhat.com> wrote:
-> > On Thu, 21 Aug 2025 at 13:40, Peter Maydell <peter.maydell@linaro.org> wrote:
-> > > In memory_region_unref_subregion(), subregion->container is NULL.
-> > >
-> > > This is because in memory_region_del_subregion() we do:
-> > >
-> > >     subregion->container = NULL;
-> > >
-> > > and then after that we call
-> > >     memory_region_unref_subregion(subregion);
-> > > which dereferences subregion->container.
-> > >
-> > > Won't this always SEGV ?
+From: Thomas Huth <thuth@redhat.com>
 
-> Peter, could you try the v3 version patch 8/9 instead?
->
-> https://lore.kernel.org/all/20240708-san-v3-8-b03f671c40c6@daynix.com/
->
-> I still prefer that one, and I hope that one doesn't have this issue.
+QEMU currently crashes when there is a [vnc] section in the config
+file that does not have an "id = ..." line:
 
-That one fails like this:
-qemu-system-arm: ../../system/memory.c:1799: memory_region_finalize:
-Assertion `!mr->container' failed.
+ $ echo "[vnc]" > /tmp/qemu.conf
+ $ ./qemu-system-x86_64 -readconfig /tmp/qemu.conf
+ qemu-system-x86_64: ../../devel/qemu/ui/vnc.c:4347: vnc_init_func:
+  Assertion `id' failed.
+ Aborted (core dumped)
 
-See the discussion on v2 (which was the same for this patch):
-https://lore.kernel.org/all/CAFEAcA9KTSjwF1rABpM5nv9UFuKqZZk6+Qo4PEF4+rTirNi5fQ@mail.gmail.com/
+The required "id" is only set up automatically while parsing the command
+line, but not when reading the options from the config file.
+Thus let's move code that automatically adds the id (if it does not
+exist yet) to the init function that needs the id for the first time,
+replacing the assert() statement there.
 
-thanks
--- PMM
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2836
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ ui/vnc.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 68ca4a68e7a..9054fc81253 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -4309,8 +4309,9 @@ void vnc_display_add_client(const char *id, int csock, bool skipauth)
+     }
+ }
+ 
+-static void vnc_auto_assign_id(QemuOptsList *olist, QemuOpts *opts)
++static char *vnc_auto_assign_id(QemuOpts *opts)
+ {
++    QemuOptsList *olist = qemu_find_opts("vnc");
+     int i = 2;
+     char *id;
+ 
+@@ -4320,23 +4321,18 @@ static void vnc_auto_assign_id(QemuOptsList *olist, QemuOpts *opts)
+         id = g_strdup_printf("vnc%d", i++);
+     }
+     qemu_opts_set_id(opts, id);
++
++    return id;
+ }
+ 
+ void vnc_parse(const char *str)
+ {
+     QemuOptsList *olist = qemu_find_opts("vnc");
+     QemuOpts *opts = qemu_opts_parse_noisily(olist, str, !is_help_option(str));
+-    const char *id;
+ 
+     if (!opts) {
+         exit(1);
+     }
+-
+-    id = qemu_opts_id(opts);
+-    if (!id) {
+-        /* auto-assign id if not present */
+-        vnc_auto_assign_id(olist, opts);
+-    }
+ }
+ 
+ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
+@@ -4344,7 +4340,11 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
+     Error *local_err = NULL;
+     char *id = (char *)qemu_opts_id(opts);
+ 
+-    assert(id);
++    if (!id) {
++        /* auto-assign id if not present */
++        id = vnc_auto_assign_id(opts);
++    }
++
+     vnc_display_init(id, &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+-- 
+2.50.1
+
 
