@@ -4,65 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 949F8CA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 13:27:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45850CA0EF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 13:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up5JH-00010Q-Jd; Thu, 21 Aug 2025 09:26:31 -0400
+	id 1up5Qx-0005vo-R2; Thu, 21 Aug 2025 09:34:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.zhebryakov@yandex.ru>)
- id 1up3YX-000764-Bi; Thu, 21 Aug 2025 07:34:09 -0400
-Received: from forward102b.mail.yandex.net ([2a02:6b8:c02:900:1:45:d181:d102])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.zhebryakov@yandex.ru>)
- id 1up3YQ-0008Kf-L7; Thu, 21 Aug 2025 07:34:09 -0400
-Received: from mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:ba25:0:640:6c71:0])
- by forward102b.mail.yandex.net (Yandex) with ESMTPS id A8B82C0093;
- Thu, 21 Aug 2025 14:33:53 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net
- (smtp/Yandex) with ESMTPSA id mXRF5KIMdSw0-BMapU0UN; 
- Thu, 21 Aug 2025 14:33:53 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
- t=1755776033; bh=GAkEQW9/oBNuV+QIcNUtxT7Jhur2BTbBORvnpc90fP4=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=snyOKz5VqAWrVUt+1cmuDSTg+LzvR903W2VxuVatWTZXzjUBNEAcExnPJi+GrNHhb
- Z0aMzeQ7m6dB+WmpL1RdSBNgzaapvls4ePNlkvIbbGzHZwXf2IzYAZmawUbv8PpKKO
- OVGyq0RhYAgUvPGpEjnNPcyFqHWUx4+FXzVziqKY=
-Authentication-Results: mail-nwsmtp-smtp-production-main-95.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex.ru
-From: Danila Zhebryakov <d.zhebryakov@yandex.ru>
-To: qemu-devel@nongnu.org
-Cc: Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Danila Zhebryakov <d.zhebryakov@yandex.ru>
-Subject: [PATCH 3/3] target/ppc: fix GDB stub to work correctly with LE pages
-Date: Thu, 21 Aug 2025 14:33:47 +0300
-Message-ID: <20250821113348.91339-4-d.zhebryakov@yandex.ru>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250821113348.91339-1-d.zhebryakov@yandex.ru>
-References: <20250821113348.91339-1-d.zhebryakov@yandex.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1up5Qv-0005uc-Kx
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 09:34:25 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1up5Qk-0007WC-PU
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 09:34:23 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e932ded97easo950742276.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 06:34:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755783251; x=1756388051; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NA8UuRK7Z8vFSoVZJv/ETYK9qWmnvctPtmXZp4pFYko=;
+ b=SV7AfYPsZWNw1hDjrrLxHSauDDQOP90yzsNdYMUD8kK2o85bKzT7zpX/ocftIF0X+/
+ EFRVy9JEv95vqdJEw/XoT9cohkDogdhHctzcrLPRm5tBzWxujxNlUvvH/TcsNObdHMLQ
+ WOahVd1kkIWkR6zQPbLlRyOwXCfBXViSXYPKoC0OM6F9AVGqlPxWSgPeLPbdcUCZX10V
+ lU4Np1FvsWdSEJ20VhHPzKkezymMIZL+jIkJqCsfeJoeVh2hKfVDEqf8a5/7nbmOdLW+
+ Vw4u9+zJHM7J3He/tIRVMrRjt9sVrc55DMkdqhTsxnaEBGXIetfaKruj7hWN1LATyMpW
+ fbCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755783251; x=1756388051;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NA8UuRK7Z8vFSoVZJv/ETYK9qWmnvctPtmXZp4pFYko=;
+ b=rgpbyF9ocqK+02lf19IkwPecgaNRY2iHdkVKIPhiafteAV2RJqzLwEwQngVjfHF7E5
+ l2W76/D+J9lWInDIgWDKDzqsg+RThwzEv/HX3+7/Duf0Cz+5/qH026KtYzSGJ4UYdreA
+ DYyTy+acboYe1iDoHrWi1zgO19H4fajOPzOqOLtASQlWgDNLgt943v988a5US+82mTTR
+ UAg4zEoV8tjwAo6yI1nHMLRHhV1eeSoEzA5mNtNTIcCp2fkS4akpXfm8JYEW+ZaGoZu7
+ k/SbHa+x/fiV2jScYnP7XBS9OF7O3wfkY/iD8/vNES800nkMoDDHY+d18y64F08j9QVp
+ +0CQ==
+X-Gm-Message-State: AOJu0Yy0xa7jqOszfm1tJRHtAq43jFgXWucaN84lAFthzAriTb+j2e0L
+ 7bunXt1ap3Vqzn6ZYEB4hmzL0Ozg7LQvT0WSZGqUmnutFYq/lVap0wRXBJzeP3Sxxyxx5dyHOyp
+ BD2+Jdadb5o50a2B5xG97BOZFYecUa3zaN6Xr+7/lRw==
+X-Gm-Gg: ASbGncseB5DQ01S5l1o9pUbOa0azHGXTeyaB7AWOfvTwMclEujsYjgWb+osHljMwaY7
+ bg5eiAFBfuE1IvGl7lNVHX2530ybIW3sVAB5vbVx5jC3G/XdpuQXWDrDfcS9woHuPcqV5P9cV0F
+ 84jmzi2GA9GhbcZo4fJCPGNERKYPA/bdCRz2N5VdG+BqlwpXSSjqBVU68bOodo9Qza0I3/2aFqC
+ iQLE52s
+X-Google-Smtp-Source: AGHT+IFph+fuA14X7mTMyKtF93GC1qA7HNa1A5shgDlsysZ71bYlqOJ2jffoA2ntrPYqjnAiz3D/0KQ7FL9AtLgD/G8=
+X-Received: by 2002:a05:6902:2689:b0:e93:46dc:41f2 with SMTP id
+ 3f1490d57ef6-e9509a831f8mr2776167276.47.1755783250932; Thu, 21 Aug 2025
+ 06:34:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:d102;
- envelope-from=d.zhebryakov@yandex.ru; helo=forward102b.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20240216110313.17039-1-philmd@linaro.org>
+ <20240216110313.17039-17-philmd@linaro.org>
+In-Reply-To: <20240216110313.17039-17-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 21 Aug 2025 14:33:59 +0100
+X-Gm-Features: Ac12FXwGwOTkFp-IDxMtSb_SwGpeJUw61kCK6Ylt6WVhAINpl-CeU5xZrb54e1U
+Message-ID: <CAFEAcA-aR5Hhd5uJUtptBa4wnyLUDPqbwLWdgNMfrGxo-SfDVg@mail.gmail.com>
+Subject: Re: [PATCH 16/21] hw/net/can/versal: Prefer object_initialize_child
+ over object_initialize
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org, 
+ qemu-ppc@nongnu.org, qemu-block@nongnu.org, 
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>, Vikram Garhwal <fnu.vikram@xilinx.com>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 21 Aug 2025 09:26:26 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,49 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GDB is expected to be set to the endianness of the currently running code, which may be in LE page. Bswap the registers accordingly.
+On Fri, 16 Feb 2024 at 11:08, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> When the QOM parent is available, prefer object_initialize_child()
+> over object_initialize(), since it create the parent relationship.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/net/can/xlnx-versal-canfd.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canf=
+d.c
+> index 47a14cfe63..f8e4bd75e4 100644
+> --- a/hw/net/can/xlnx-versal-canfd.c
+> +++ b/hw/net/can/xlnx-versal-canfd.c
+> @@ -1900,7 +1900,7 @@ static int canfd_populate_regarray(XlnxVersalCANFDS=
+tate *s,
+>          int index =3D rae[i].addr / 4;
+>          RegisterInfo *r =3D &s->reg_info[index];
+>
+> -        object_initialize(r, sizeof(*r), TYPE_REGISTER);
+> +        object_initialize_child(OBJECT(s), "reg[*]", r, TYPE_REGISTER);
+>
+>          *r =3D (RegisterInfo) {
+>              .data =3D &s->regs[index],
+> --
 
-Signed-off-by: Danila Zhebryakov <d.zhebryakov@yandex.ru>
----
- target/ppc/gdbstub.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+Hi -- I was just looking at this function since ASAN
+reports a leak in it. I notice that this patch never got
+applied -- any reason why?
 
-diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-index 3b28d4e21c..89c783894c 100644
---- a/target/ppc/gdbstub.c
-+++ b/target/ppc/gdbstub.c
-@@ -19,6 +19,8 @@
-  */
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "accel/tcg/probe.h"
-+#include "exec/tlb-flags.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/helpers.h"
- #include "internal.h"
-@@ -84,7 +86,20 @@ static int ppc_gdb_register_len(int n)
- void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len)
- {
- #ifndef CONFIG_USER_ONLY
--    if (!FIELD_EX64(env->msr, MSR, LE)) {
-+    bool le_page = false;
-+
-+    if (env->mmu_model == POWERPC_MMU_BOOKE206) {
-+        CPUTLBEntryFull *full;
-+        void *host;
-+        int mmu_idx = ppc_env_mmu_index(env, true);
-+
-+        probe_access_full_mmu(env, env->nip, 0, MMU_INST_FETCH, mmu_idx,
-+                              &host, &full);
-+
-+        le_page = full->tlb_fill_flags & TLB_BSWAP;
-+    }
-+
-+    if (!le_page && !FIELD_EX64(env->msr, MSR, LE)) {
-         /* do nothing */
-     } else if (len == 4) {
-         bswap32s((uint32_t *)mem_buf);
--- 
-2.47.2
+Also, though, we call object_initialize(r, ...) and then
+we immediately do "*r =3D { some struct }" which entirely
+overwrites the initialization we just did. I guess that
+should instead be initializing the individual fields...
 
+-- PMM
 
