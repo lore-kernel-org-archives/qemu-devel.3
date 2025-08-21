@@ -4,157 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED75CA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 10:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0749ACA0EF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 10:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up29y-00077B-EU; Thu, 21 Aug 2025 06:04:43 -0400
+	id 1up2T3-0004dV-Bq; Thu, 21 Aug 2025 06:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1up29r-00075t-0c; Thu, 21 Aug 2025 06:04:35 -0400
-Received: from mail-bn7nam10on2053.outbound.protection.outlook.com
- ([40.107.92.53] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1up29h-0004mp-Cq; Thu, 21 Aug 2025 06:04:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=W0rP9GU4Y1omtH0l5XuqB563O2EvDlxgOvUH03vtDiP+DmbYjKXzJ4acZWyQ9CiSc6/SWC4vIGGh74Ot5LrXIEeXLPLK6VIsR55YbUolaTAeLT225xDiq8Ztji8nZ5BXE4T446ge2LQpzYm+7eBbjiz+Fqe6LRilrXBZmHGQt4c4IvfeOSPTUVDhm3/fkyzsbKFl6l0seDfeEkWMsrJLOpRd8RsInladnjI+JdH/Laz5bjLRQoKCW7cXr8uVMEQJTRuDxuutNrCBAw3+zD6lFUJG9WCLemk7mex9hgvRbTHIZkfgroQt5Wsot6c/3cCO0CalIjRj5/0Rkt64Z5+Qtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iKWC10tuHS05jKhd8Oz8Pk7ivIKvwGetZKN7uFZ8tFc=;
- b=PSwFxm+n+4g8K1QpacOUZgiTjmogfY8xCc08TJI/tu8pPMOte6a64/+wmIyppZB2lraIR1+aJjAAg0wyCTEnLb5b5XgHdzOgi0m5C+ZCtF+AO0EVkCyKJQ1mYDlg0NHzn23lwxslhui3niL6QZ4juRAkxoi241K2b05zNUpg3Wgc/SeiikB1Iq+rO4y3Dck9BPd2MChsfvMJCRYIStBgRK8LRd/ES04tBwxx9t/Mih90vOHaqcciCEFXHRc7yghQxXF4l2Cr40D/Ab0mgWYGN7MwqWOwmbnD4yfZNmqLt7/Y83jYsWcyP72b5ovbrcghIq77Vh9O/6XcdjyPqZOxFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iKWC10tuHS05jKhd8Oz8Pk7ivIKvwGetZKN7uFZ8tFc=;
- b=ZuW4V9Fb7w7wBLaeQSgsDhXItu+0IbTdMTX6f346zwvl+gewqfIahDn23i3xNrktxTS27pY65AzyqxIp85Ie4chO4kIaLG5Ur1ZZPqYUXslL8y/tPAUvs+4wBrjZeEw9pmUpev/0cResb9d3cyawo0GxVp0m+gRK3vl45d/lPlM=
-Received: from MN2PR17CA0007.namprd17.prod.outlook.com (2603:10b6:208:15e::20)
- by SA5PPF530AE3851.namprd12.prod.outlook.com
- (2603:10b6:80f:fc04::8c9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Thu, 21 Aug
- 2025 09:59:10 +0000
-Received: from MN1PEPF0000ECDA.namprd02.prod.outlook.com
- (2603:10b6:208:15e:cafe::4f) by MN2PR17CA0007.outlook.office365.com
- (2603:10b6:208:15e::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.15 via Frontend Transport; Thu,
- 21 Aug 2025 09:59:09 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- MN1PEPF0000ECDA.mail.protection.outlook.com (10.167.242.134) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.9052.8 via Frontend Transport; Thu, 21 Aug 2025 09:59:09 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 21 Aug
- 2025 04:59:09 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 21 Aug
- 2025 04:59:08 -0500
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39 via Frontend
- Transport; Thu, 21 Aug 2025 04:59:07 -0500
-Date: Thu, 21 Aug 2025 11:59:07 +0200
-From: Luc Michel <luc.michel@amd.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, Peter Maydell
- <peter.maydell@linaro.org>, Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>, Alistair Francis
- <alistair@alistair23.me>, Frederic Konrad <frederic.konrad@amd.com>, "Sai
- Pavan Boddu" <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH v2 21/47] hw/arm/xlnx-versal: add the mp_affinity
- property to the CPU mapping
-Message-ID: <aKbt6wxvmiq8Ba8m@XFR-LUMICHEL-L2.amd.com>
-References: <20250820082549.69724-1-luc.michel@amd.com>
- <20250820082549.69724-22-luc.michel@amd.com>
- <188d2482-6bbd-432d-8ec3-5864d6c821a6@linaro.org>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1up2T1-0004dI-Dm; Thu, 21 Aug 2025 06:24:23 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1up2Sw-0007Q6-Pf; Thu, 21 Aug 2025 06:24:23 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-afcb78d5dcbso121505666b.1; 
+ Thu, 21 Aug 2025 03:24:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1755771854; x=1756376654; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=phAvCa2oZ51Xeh+b+QhZckCzQl0Fh/yMSjJEcXhCCnk=;
+ b=aveUDwC8qmGgdeJbc/9CfFkwuPK5Cy6W5b/qhg2BXS9RD9Cv4Y55uxb+TcHw83T3Be
+ TrD/wOSlrHaWpDsqFJzkOr+/357dwlmRB+Q0+5aEte3gEkmdPPDtpv8YFAG2CcUoaxJC
+ IBNegYmrNkun2BdXrTVzt8z7zGFSJjqiSlOREhlk8VLoySaqsw7AoSSJ5jVEbDElPMBg
+ 793yoFMpWS7+57JMSknJ4orAcPAYC3yBl2SAFEMGmLRw/4DNj9TrbYbx6wC9ZaZ48h/0
+ prej5/zs0z8EiqN9umNyPjNA45fxmraE+q0yrq7p6QkAxevBW6TrUf1afKPpYwgiw8Ir
+ tNhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755771854; x=1756376654;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=phAvCa2oZ51Xeh+b+QhZckCzQl0Fh/yMSjJEcXhCCnk=;
+ b=MNstXnTYx+JlWHatr/aty3NBvQrRpz/dyBncFRQaUqRTY5MXIyQoVddu33SkyTXasn
+ wPNZADXmnapGSkUXl01rpOjUrSHT6EgSxSMqw3dA6Zjt56FhgiXKsiH8jiB6WN8ebCQg
+ hmA+inI/QQNqRhIpE2Fd6/VusUl+dukOfGL18ton8mMr27IUQTNJRXsi7BvzUQpNkUqY
+ SdPbwMM64T6Zh+hQYUTFH3YSzZ5wXk7WEqROrpcMMajM9JeHuy9p13O/9LPqL/c+XLmd
+ LBULVFcHo+hCjLEeytJtB9rlmcB6FKft/n91ckJr/L2FrEOATDtSRs+GXK6DQzuJIsdn
+ RNDQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMzjRvOTUMn0lNdhaSnwBY5NGRdW03fiXGyUQC+WSIyi8oCT+qblbaEdRzpPZorisW8JpV9XsTEZonJQ==@nongnu.org,
+ AJvYcCXn/SgjDqA5kFaIEtaCWzj6sk8FHUPIBahlG1Ple3fu5DoqNM7JwME/MNNlz7IIGbtKs1xbPXq5mQ==@nongnu.org
+X-Gm-Message-State: AOJu0YzmSuvucDE9qBMnOIljwxHIGA0c77M8iU+bK28YcSehJXsoLASz
+ AhbWN/yMH3e0TQvwIF/M8EEJDsmg6xCbYWsT4QOE8VQPeOFbe/Xjr0B36K9TgA==
+X-Gm-Gg: ASbGncunjMtJ3bA3+cMjmW3Vh+umuhBCegKuo9S6a8mcrnP2ZCF0yCO3+sBrDQd7kg6
+ c/4t/1LUt7GWxoCC4q5l6YWIGeOL9Svu8QcZu6x5GsY5MfCXcKZ8ZZpoKK+TDM8cLD4AJ2R2wdd
+ mnAPshCPMcE6FNN7hTOXwmNdqlhfkGfZVFtI8X4hJjyWw67xTEXez/IQnhjJ1kgtCuDmWBraL3S
+ AonlvmMuPGsKTGsyitSUj8w11sbp6k0UwSXfGt2GiQliJobUeFtexeOJDzAqPrSbE7rCbiZ1uou
+ LSW6LlpbG/eX4mF2NTi9yO6bkj2t99JgfBtjQccpzU9xAQxEHoucGQUuCpfUjv3nHK3rX9H69M+
+ +HuxO7bzaN/t91QKwr6t/Gty2WNHTzxk5HFs65lQ=
+X-Google-Smtp-Source: AGHT+IE8z6cUjxhXQXNNYzjsgf7hzZRlDizQZBfMhgN0sopmLuChjzbWPqhHcKG7fPQNqh1aWklOYw==
+X-Received: by 2002:a17:907:3f12:b0:af5:3172:ca80 with SMTP id
+ a640c23a62f3a-afe07b82fa6mr179802466b.38.1755771853530; 
+ Thu, 21 Aug 2025 03:24:13 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([62.214.191.67])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-afded4796ddsm361481066b.55.2025.08.21.03.24.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 Aug 2025 03:24:13 -0700 (PDT)
+Date: Thu, 21 Aug 2025 10:24:02 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
+CC: Peter Maydell <peter.maydell@linaro.org>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH 00/10] Designware PCIe host fixes
+In-Reply-To: <7804e625-2421-473f-9320-89fa0cc0d085@roeck-us.net>
+References: <20250820211932.27302-1-shentey@gmail.com>
+ <7804e625-2421-473f-9320-89fa0cc0d085@roeck-us.net>
+Message-ID: <D1762D97-2253-4503-9BD9-E4BF6BED1EAE@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <188d2482-6bbd-432d-8ec3-5864d6c821a6@linaro.org>
-Received-SPF: None (SATLEXMB05.amd.com: luc.michel@amd.com does not designate
- permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECDA:EE_|SA5PPF530AE3851:EE_
-X-MS-Office365-Filtering-Correlation-Id: 81e054f7-9921-4488-62b0-08dde0995fab
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?TlNJUkM3MjJyM1ZXdXhzR1g4SWtEQWZoSWhTUFJjMmVRUG1mcTZEcm5zN0Y2?=
- =?utf-8?B?QXlLNjJVOFcvZlhtaFdPNzRPcThLV0ZXZk1MQTNZRFdvQVYyOGhPOVVad2hj?=
- =?utf-8?B?aGkzTVhXM3ZhRFpVYmVGbXdRMnlPWG5OdEV0a0Y0VUZCRkQ2ME5FYVFxYlM4?=
- =?utf-8?B?RTZhajEyTUNTbm9lUUNPOFI3cjNqTDN1VzhXdHFYSEY5NXRPOTBXOEY4V2ZI?=
- =?utf-8?B?djhBSnpvMHpnWVJnOTF4SVRrTytYU3V2Y0Y5cnVmWlREVTFyZjI5bzhialUw?=
- =?utf-8?B?cDFuaU0zZWZkZEQ0QW5UbVNHQU1WNDRySitrdDQ1SWNUQ2w2b0w2VVpvcEli?=
- =?utf-8?B?YXVWWnhzTVBiNFlrTWJKZFgvUEQ3TTV1UFdCa3VvQkZ6dlhiN2hnN2NjNmJr?=
- =?utf-8?B?NzJyckhUQTRQWEdLMTJKT3owVUNQMkxBSjlkbU96RXZMcVRqRHBmNHduYldD?=
- =?utf-8?B?WHNLaDhHOG9BMkdZdmRsSjlsSGc2ZDZORHkzZEFseHJKWUU0OFM0c0o0ZnVx?=
- =?utf-8?B?dzhMSzBORzNZWlVSYnRsYTdMcDJ5V0lqeVRUOHp2YklqUVBOeTdCM1Awb0I0?=
- =?utf-8?B?NFlDZEpjVThWMG1hYkVCWVhVY2xxSWNUTTVnbytWdm5PVFdEaGJHMkJ6c1l5?=
- =?utf-8?B?MmpXbEVZeW9KQ3lJTDFMbmZpL3ViekRjQXlYYXh0ckRVd1NXeVh4Z2VtenNP?=
- =?utf-8?B?QkVWWUdpM2h6Rmk3MXZvS3lROWZJMTJoT3h6MlRGM1JzUTF0bzVNUDNtakxS?=
- =?utf-8?B?SER2SDZaeDlSQzJvTFB5UUcwb0hXTUUzQ0t3VmtTTjdxem5DZ0NSNmN3MTFs?=
- =?utf-8?B?VHV5cU5JMUYvRm1jN1FEVllhNk1oSWR3eTQvNjU0TGV6a2twSG1NZGdweUIr?=
- =?utf-8?B?NUdSdytGWmYrUHlXU3RPUUdUdGhhbzdPbVdWL1k5bVYybDM2WFNvY3Zta0g4?=
- =?utf-8?B?M1VSc3VLRC8wUDFoWlNJYUZsSHUwa3ovZTc3UmFTRytpdGQxcTI0M3FGeUd3?=
- =?utf-8?B?ZVIwKzZQZk1aT0RhTkJqWnlWK3F2UGs3d0E2SjdIUngwRndsRm1OcS9RL0t0?=
- =?utf-8?B?QXAxNGFZYW5OVElBMExoR2lnUzg0bzRSL2xpRFFCb1FCaGNZWUpaYjcwUG9n?=
- =?utf-8?B?SWt6TU9wVVBDQXl2VVR5aDRMVHZ5cm1HL01NYXgwRnl4VS9HeUJXMmZUTVVa?=
- =?utf-8?B?UWx1TVFaUkNKOEJvV0dra3ZLK2s4dlRUSlY0NG14dEVKdTZqNUFSU1RIc0du?=
- =?utf-8?B?R2hwTy9FOFFVWFB6emk4bU95TWJYRUE3T1NIYnVyK1oxcTB0OXFZbG5ra3h6?=
- =?utf-8?B?OVR3T3poRDZsdjFSZkdHSWNJSG5zMVIrY3orNnZzZ1NtdWZMNXRXeUMxUGpH?=
- =?utf-8?B?UDF0Ym9YR3poa3dta2lqNktxWHpTNUp0MThqZUdOVUxySWYxT3RoRzliL0NM?=
- =?utf-8?B?ZVJpNTE0aDd6WXRsL1ZGRUhWRGdCdFVVSXlHR0hYUlNJUzlZckhWMk5rTVBZ?=
- =?utf-8?B?dXdOalVGS1pPUHhzMHpHc1V6QVRZRzQ4QmZRVURuaGtxN3JYWDdKOCtBaXBy?=
- =?utf-8?B?V0s1VEpRa0YxdFd3ZUFvOFQ4OTNldHJ3UTdHMnRHNURJRFJud2NYVERDUVZY?=
- =?utf-8?B?OXVIVEVIV09BYUo5d002NTAxYUc2OENTQ1VudkhTYWRNQTFlRmx4RWZOc1Vk?=
- =?utf-8?B?dkwxeXNKMDVla09DV3U5SGZyZ2pRV3czTG9XTStZdDMxYXh3M2xXUWtHM1F3?=
- =?utf-8?B?Y0xLWHZ3cHh2MVBSbjhGVWlUeURHU0pUSzRzTEcxTmtCUjB6VkJQN2o0R001?=
- =?utf-8?B?VS9XbHREUUkwWlhjcUNZdzhYcGlLdzYyM2VYNkxBUHZWL1RHVUppOUsvRG9i?=
- =?utf-8?B?RFVET21FenBBTGs3UHVicG90TmkraS8reVVMb1d3TUZGcEozSGRTUWE1QXRq?=
- =?utf-8?B?ejFVNE1LamhIWWVQb0F4UlFOWVppaHdDSXh4ZEtQRkFLTm1tNFNTTDMrZWJy?=
- =?utf-8?B?T0xHdUN4OU4rL2NybFZJR1JOYmNhcHhwQUpPdTdtWVY2MTJkVStqelp0Vjh2?=
- =?utf-8?Q?bdzdzZ?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2025 09:59:09.5729 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 81e054f7-9921-4488-62b0-08dde0995fab
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECDA.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF530AE3851
-Received-SPF: permerror client-ip=40.107.92.53;
- envelope-from=Luc.Michel@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,76 +103,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14:18 Wed 20 Aug     , Philippe Mathieu-Daudé wrote:
-> Hi Luc,
-> 
-> On 20/8/25 10:25, Luc Michel wrote:
-> > Add a way to configure the MP affinity value of the CPUs given their
-> > core and cluster IDs. For the Versal APU CPUs, the MP affinity value is
-> > directly given by the core ID.
-> > 
-> > Signed-off-by: Luc Michel <luc.michel@amd.com>
-> > Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-> > ---
-> >   hw/arm/xlnx-versal.c | 21 +++++++++++++++++++++
-> >   1 file changed, 21 insertions(+)
-> > 
-> > diff --git a/hw/arm/xlnx-versal.c b/hw/arm/xlnx-versal.c
-> > index 5a08ad07b28..35c32de0159 100644
-> > --- a/hw/arm/xlnx-versal.c
-> > +++ b/hw/arm/xlnx-versal.c
-> > @@ -88,10 +88,18 @@ typedef struct VersalCpuClusterMap {
-> >       size_t num_core;
-> >       size_t num_cluster;
-> >       uint32_t qemu_cluster_id;
-> >       bool dtb_expose;
-> > 
-> > +    struct {
-> > +        uint64_t base;
-> > +        uint64_t core_mask;
-> > +        uint64_t core_shift;
-> > +        uint64_t cluster_mask;
-> > +        uint64_t cluster_shift;
-> > +    } mp_affinity;
-> 
-> 
-> > @@ -565,23 +578,31 @@ static DeviceState *versal_create_cpu(Versal *s,
-> >                                         size_t core_idx)
-> >   {
-> >       DeviceState *cpu = qdev_new(map->cpu_model);
-> >       ARMCPU *arm_cpu = ARM_CPU(cpu);
-> >       Object *obj = OBJECT(cpu);
-> > +    uint64_t affinity;
-> >       bool start_off;
-> >       size_t idx = cluster_idx * map->num_core + core_idx;
-> >       g_autofree char *name;
-> >       g_autofree char *node = NULL;
-> > 
-> > +    affinity = map->mp_affinity.base;
-> > +    affinity |= (cluster_idx & map->mp_affinity.cluster_mask)
-> > +        << map->mp_affinity.cluster_shift;
-> > +    affinity |= (core_idx & map->mp_affinity.core_mask)
-> > +        << map->mp_affinity.core_shift;
-> 
-> Could we expand/re-use arm_build_mp_affinity() here?
 
-I'm not sure:
-   - versal RPU hardcodes Aff1 to 1,
-   - versal2 APU uses Aff2 for cluster id and Aff1 for core id,
-   - versal2 RPU uses Aff1 for cluster id and Aff0 for core id.
 
-What I can do is use ARM_AFFx_SHIFT defines in my mp_affinity
-description struct, and remove the mask as we probably expect it to be
-0xff all the time. Something like:
+Am 21=2E August 2025 03:36:44 UTC schrieb Guenter Roeck <linux@roeck-us=2E=
+net>:
+>On 8/20/25 14:19, Bernhard Beschow wrote:
+>> This series fixes the Designware PCIe host to work with cards other tha=
+n
+>> virio-net-pci, e=2Eg=2E e1000=2E It was tested on the imx8mp-evk machin=
+e=2E
+>>=20
+>> The series is structured as follows: The first part refactors the devic=
+e
+>> model to create memory regions for inbound/outbound PCI mappings on dem=
+and
+>> rather than upfront since this approach doesn't scale for adding I/O sp=
+ace
+>> support=2E The second part consists of fixing the memory mapping by add=
+ing I/O
+>> space support and fixing default inbound viewport mapping=2E The third =
+part
+>> concludes the series by implementing device reset and cleaning up the i=
+mx8mp SoC
+>> implementation=2E
+>>=20
+>> Testing done:
+>> * Boot imx8mp-evk machine with Buildroot while having an e1000 card att=
+ached=2E
+>> Observe that it gets an IP address via DHCP and allows for downloading =
+an HTML
+>> file via HTTP=2E
+>>=20
+>Crashing for me even if no PCIe card is attached=2E This is with the seri=
+es applied
+>on top of 10=2E1=2E0-rc4 or 10=2E0=2E3=2E I have not tried to track down =
+the problem=2E
+>
+>Guenter
 
-        .mp_affinity = {
-            .base = 0x0,
-            .core_mask = ARM_AFF1_MASK,
-            .cluster_shift = ARM_AFF2_SHIFT,
-        },
+Hi Guenther,
 
-What do you think?
+Thanks for testing this series! I can reproduce the issue with Buildroot w=
+hile the functional test passes=2E=2E=2E
 
--- 
-Luc
+I guess that I was too optimistic in having resolved the issue mentioned i=
+n the last patch=2E Does it work for you if you omit it?
+
+Thanks,
+Bernhard
+
+>
+>---
+>Build reference: v6=2E17-rc1-287-g685de850cabf
+>Compiler version: aarch64-linux-gcc (GCC) 13=2E4=2E0
+>Qemu version: 10=2E0=2E94 (v10=2E1=2E0-rc4-55-g320ed12bd9)
+>
+>[    7=2E748393] Internal error: synchronous external abort: 000000009600=
+0010 [#1]  SMP
+>[    7=2E748917] Modules linked in:
+>[    7=2E749533] CPU: 3 UID: 0 PID: 12 Comm: kworker/u16:0 Tainted: G   M=
+             N  6=2E17=2E0-rc2-g685de850cabf #1 PREEMPT
+>[    7=2E749689] Tainted: [M]=3DMACHINE_CHECK, [N]=3DTEST
+>[    7=2E749745] Hardware name: NXP i=2EMX8MPlus EVK board (DT)
+>[    7=2E750118]         ok 1 block_bits=3D10 cluster_bits=3D3 blocks_per=
+_group=3D8192 group_count=3D4 desc_size=3D64
+>[    7=2E749922] Workqueue: async async_run_entry_fn
+>[    7=2E751174] pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BT=
+YPE=3D--)
+>[    7=2E751267] pc : pci_generic_config_read+0x38/0xb8
+>[    7=2E751370] lr : pci_generic_config_read+0x24/0xb8
+>[    7=2E751474] sp : ffff8000845fb730
+>[    7=2E751532] x29: ffff8000845fb730 x28: 00000000000000ff x27: 0000000=
+000000000
+>[    7=2E751686] x26: 0000000000000001 x25: ffff80008290c008 x24: ffff800=
+0832cbe80
+>[    7=2E751770] x23: 0000000000000000 x22: ffff8000845fb844 x21: ffff000=
+008a73800
+>[    7=2E751859] x20: ffff8000845fb7a4 x19: 0000000000000004 x18: 0000000=
+0ffffffff
+>[    7=2E751942] x17: ffff800080e2f918 x16: ffff800080e2f7ac x15: ffff800=
+080e2e6d8
+>[    7=2E752027] x14: 0000000000000000 x13: 0000000000000000 x12: ffff800=
+08427cab8
+>[    7=2E752120] x11: 0000000000000326 x10: 0000000000000326 x9 : 0000000=
+0000c0326
+>[    7=2E752225] x8 : 000000006973b6c5 x7 : ffff800085c00000 x6 : 0000000=
+000000000
+>[    7=2E752320] x5 : ffff000007cc5080 x4 : 0000000000000000 x3 : 0000000=
+000000000
+>[    7=2E752403] x2 : 0000000000000000 x1 : ffff000004bf5680 x0 : ffff800=
+085900000
+>[    7=2E752577] Call trace:
+>[    7=2E752694]  pci_generic_config_read+0x38/0xb8 (P)
+>[    7=2E752794]  dw_pcie_rd_other_conf+0x38/0xb0
+>[    7=2E752851]  pci_bus_read_config_dword+0x80/0xe4
+>[    7=2E752903]  pci_bus_generic_read_dev_vendor_id+0x30/0x190
+>[    7=2E752964]  pci_scan_device+0xdc/0x184
+>[    7=2E753010]  pci_scan_slot+0xe0/0x23c
+>[    7=2E753056]  pci_scan_child_bus_extend+0x44/0x2cc
+>[    7=2E753110]  pci_scan_bridge_extend+0x514/0x598
+>[    7=2E753166]  pci_scan_child_bus_extend+0x104/0x2cc
+>[    7=2E753220]  pci_scan_root_bus_bridge+0x64/0xd8
+>[    7=2E753273]  pci_host_probe+0x34/0x10c
+>[    7=2E753328]  dw_pcie_host_init+0x2f0/0x4b0
+>[    7=2E753376]  imx_pcie_probe+0x33c/0x70c
+>[    7=2E753439]  platform_probe+0x5c/0x9c
+>[    7=2E753485]  really_probe+0xc0/0x390
+>[    7=2E753530]  __driver_probe_device+0x7c/0x15c
+>[    7=2E753581]  driver_probe_device+0x3c/0x110
+>[    7=2E753633]  __device_attach_driver+0xbc/0x158
+>
 
