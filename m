@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDFB9CA0EF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7945CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 14:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up65d-0007xZ-BY; Thu, 21 Aug 2025 10:16:29 -0400
+	id 1up67S-0000Un-P2; Thu, 21 Aug 2025 10:18:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1up65a-0007wG-DI
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:16:26 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1up65X-0004sb-DQ
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:16:26 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-45b4e5c3d0fso1780705e9.2
- for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 07:16:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755785780; x=1756390580; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oNZ97lk26reFJphw6dWJiEJAcXFPI+x3AOP0qIPfixU=;
- b=iASZqf/J20ysKtfsoxAGE7ybiwxNml94K6/zkSMjavvKTnpig/8VflGU7AwRISdAO2
- 3o+2Jq1PlqQ7Ak1uwV+AnmNm2LevEIxKX5UxnRqweV5dW43Gkzn2IbbpU6TQ82/C13oE
- fEsL5iLWqxvw5P7kQmbbLYeJERx/hmBCAGkdhTX7tp4MKcFiRSbFr1adlNLRhi31wmmv
- k+qdu4Kfvep+RBP6+abN3Cs3/EoowEC98wZxjwJ/tL45F3w6UHcTmzHmHmQte4mIZ69q
- s7NQ2ZB9a+x26Zlmn52U7TxtVNKfvltiRx37yKn+seYlBPoSPmWLfjD1TnfOJlOTU0jb
- YwMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755785780; x=1756390580;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=oNZ97lk26reFJphw6dWJiEJAcXFPI+x3AOP0qIPfixU=;
- b=deEzHw49gC5DBYPHle0yrnGKrH+WyOteOrP09rdT8fBMXK/f8X/1qmwW+vd/sWkGMg
- xa7YEmh9L+ZuvmyTTk1PlnMjan5IcM9WNv4OEmcymYd5Fc8RfZXNkif6zLPVZENmF8ls
- Teu5g3kRls4bUactZRJMwb4c7jZutr2qwjmM2K17AUoNwriA6KytQ76l/b0CHHTVbksk
- fNeT5GUlaZwnv+nid1V02OQ8GOel10a/BbYXsf45mVHS/8Vp+gkTVUvLCQuJCnLvaLnK
- Ff5SXTW/iQqGVt6jpvX66KhqDKnVAMe6z0J/fgxB2BD0yVnwfhPFIOL1QEbtHewnVl7j
- TYoA==
-X-Gm-Message-State: AOJu0YwpyUoDkEhyOjZDWTJFHYou/67sll2HAgAeWIh6Zj+eNmv2lzzg
- I4+XEq3X35h6fXsoElgOys+XsPxYs/yQDQnfFiJli4oIzuj8cN4bjOytDwdMt6EQYq4=
-X-Gm-Gg: ASbGncvZsnrYi0MHlVFlmNxgaoPWksWLmQgmnqJJ5hd64+dQ0JwwqMZBp7yBTJFcyW1
- OA5v3SaFhDdwzkcpHPHY7lKWrqEwka0QrBQtoROdAS7UqIs1ncDMdsCapN1uTE4w/Tkgp7YqhRy
- b4zPjSSnQiVCtncGkkQ76YD8XRsNwcpUPNatJeQEgNdaq5pVjbFe7q9wMZ6oIrk1puB/FTtJkdf
- Qz/4W7LwFYIe5pHv3JJDwTBjT6u6gYlguwFRY3GwyqAcAdEkc4Tp+PKTwiIv3blUl3DzjLvG3uO
- UyD1u5/+vV+WhF+YnjhiKOI8pEFldqs8ZecPcN1lkMrRowf5WRSQG67Xwj3tufgjGz0I+t/curg
- OJ9eslVvS72BKl5ifB07wMog=
-X-Google-Smtp-Source: AGHT+IF3CA7cOZqosBC9SlQFOUGnq02GsB7JvoIT1Y1wd+EQDKWmq+7Bphp+Ph0+BIVquuHquk2uSg==
-X-Received: by 2002:a05:600c:c1d7:20b0:456:fc1:c286 with SMTP id
- 5b1f17b1804b1-45b4e4f57bcmr10626365e9.1.1755785779808; 
- Thu, 21 Aug 2025 07:16:19 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b4db296aasm32863765e9.7.2025.08.21.07.16.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Aug 2025 07:16:19 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0DA435F79F;
- Thu, 21 Aug 2025 15:16:18 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Christian Ehrhardt <christian.ehrhardt@canonical.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: snek testsuite breaks in 10.1 for qemu-system-arm on armhf
-In-Reply-To: <CAATJJ0K6coKjwwmkzaWP7dzQHLsEoL3rkU95T69rxZ6fdbnXqg@mail.gmail.com>
- (Christian Ehrhardt's message of "Thu, 21 Aug 2025 14:52:46 +0200")
-References: <CAATJJ0K6coKjwwmkzaWP7dzQHLsEoL3rkU95T69rxZ6fdbnXqg@mail.gmail.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Thu, 21 Aug 2025 15:16:17 +0100
-Message-ID: <877bywlpzi.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
+ id 1up67N-0000SZ-Qu
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:18:18 -0400
+Received: from mail-m49232.qiye.163.com ([45.254.49.232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fanyihao@rt-thread.org>)
+ id 1up67K-0004qO-Ku
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 10:18:17 -0400
+Content-Type: multipart/alternative;
+ BOUNDARY="=_Part_480692_518683843.1755785764002"
+Message-ID: <AN6AmQDLJZJxtS3pCF4nJapc.3.1755785764002.Hmail.fanyihao@rt-thread.org>
+To: Peter Maydell  <peter.maydell@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Subject: =?UTF-8?B?UmU6IFtQQVRDSCB2MiAzLzNdIEFkZCBTVE0zMkY0eHggVVNBUlQgZGV2aWNlIG1vZGVs?=
+X-Priority: 3
+X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com
+ Sirius_WEB_WIN_1.53.1
+X-Originating-IP: 240e:360:931b:aa00:cd61:ec6e:ec87:2cb6
+In-Reply-To: <CAFEAcA82eVxnvGomgzSegXBBqcc3_wtPQhV3b4cLcxikfTK13w@mail.gmail.com>
+References: <20250721201134.13270-1-fanyihao@rt-thread.org>
+ <20250721201134.13270-4-fanyihao@rt-thread.org>
+ <CAFEAcA82eVxnvGomgzSegXBBqcc3_wtPQhV3b4cLcxikfTK13w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received: from fanyihao@rt-thread.org(
+ [240e:360:931b:aa00:cd61:ec6e:ec87:2cb6] ) by ajax-webmail ( [127.0.0.1] ) ;
+ Thu, 21 Aug 2025 22:16:04 +0800 (GMT+08:00)
+From: =?UTF-8?B?6IyD6Im66LGq?= <fanyihao@rt-thread.org>
+Date: Thu, 21 Aug 2025 22:16:04 +0800 (GMT+08:00)
+X-HM-Tid: 0a98ccfc9c0502f2kunmef0f409f42521
+X-HM-MType: 1
+X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMYBSeVkCuDgEtMK2I7Iz00qensNJKpr13iP1kR
+ QhqmkIB0JsRL95DITp428yHXGpwKLvB4Y+XROSHNZiSvJBimXomaO6MzU8SLOCVGqeUZYWk7FoN3
+ 5Vglp1HUK9Mw5+Qx26/Go7faYN/YK6jxLNyp8=
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+ tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCSR0ZVh5JSkNNGUhJS0oYSlYVFAkWGhdVEwETFh
+ oSFyQUDg9ZV1kYEgtZQVlJT0seQUhNS0FCSEoZQRoaS0tBGB9NSkEeGE0eQR4YQ0xBSRgZTVlXWR
+ YaDxIVHRRZQVlPS0hVQkJJTkpVSktLVUpCS0JZBg++
+DKIM-Signature: a=rsa-sha256;
+ b=X+pBA/1QFAjuWj4rD90C8lDKugJtdwXEUo+Jug8iVycXjMP+nCE3PgRmvKj1NKQOPLXBOoZ6ha5SkU/416Nk7A8t2xvpNuePXcMbefIlASNZ4tIUbDLe1iIBSA46RmnRNXIypTToBCjal5mSUwet5XGUw7WtRMHECgKURYm5LlRCRxWsW/2eLtNzWh5ETmnhU9rclPhCJKZ0crfgIhi0vffOAq5vazD7KPmPegsia84CMRrAb2lWbCoqf+Lo33iP2AUzWWbjpUEmht/qu/JXmzCT2xqQpeTo5+PvTuxxYLE8f5hKbQyFBZlpGd/jbj8gEUayuQp5gMK8FyVzaYK6LA==;
+ s=default; c=relaxed/relaxed; d=rt-thread.org; v=1; 
+ bh=btQ0wz4fS8jF0+rVICGo5C2jMCTwQZFvBllp11BrTlU=;
+ h=date:mime-version:subject:message-id:from;
+Received-SPF: pass client-ip=45.254.49.232;
+ envelope-from=fanyihao@rt-thread.org; helo=mail-m49232.qiye.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_PORT=0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ MSGID_FROM_MTA_HEADER=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,68 +80,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Christian Ehrhardt <christian.ehrhardt@canonical.com> writes:
+--=_Part_480692_518683843.1755785764002
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-(adding qemu-arm and Richard to the CC)
+SGksCgpUaGUgRjR4eCBVU0FSVCBpcyBsYXJnZWx5IHNpbWlsYXIgdG8gdGhlIEYyeHguIFRoZSBp
+bXBsZW1lbnRhdGlvbiBjYW4gbW9zdGx5IGJlIHNoYXJlZCwKd2l0aCBGNC1zcGVjaWZpYyBmZWF0
+dXJlcyBhZGRlZCBzZXBhcmF0ZWx5LCBhbGxvd2luZyBhIGNvbW1vbiBiYXNlIHdoaWxlIGtlZXBp
+bmcgZGlmZmVyZW5jZXMgaXNvbGF0ZWQuCknigJlsbCBjb25zaWRlciBzaGFyaW5nIGEgY29tbW9u
+IGJhc2UgaW4gdGhlIG5leHQgcmV2aXNpb24uCgpCZXN0IHdpc2hlcywKLS0gWWloYW8gRmFuCgoK
+CgoKCgoKIOiMg+iJuuixqgpmYW55aWhhb0BydC10aHJlYWQub3JnCgoKCgoKCgoKCgpPcmlnaW5h
+bDoKRnJvbe+8mlBldGVyIE1heWRlbGwgPHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz5EYXRl77ya
+MjAyNS0wOC0xNiAwMTo0NjowNijkuK3lm70gKEdNVCswODowMCkpVG/vvJpmYW55aWhhbzxmYW55
+aWhhb0BydC10aHJlYWQub3JnPkNj77yacWVtdS1kZXZlbDxxZW11LWRldmVsQG5vbmdudS5vcmc+
+U3ViamVjdO+8mlJlOiBbUEFUQ0ggdjIgMy8zXSBBZGQgU1RNMzJGNHh4IFVTQVJUIGRldmljZSBt
+b2RlbE9uIE1vbiwgMjEgSnVsIDIwMjUgYXQgMjE6MTEsIDxmYW55aWhhb0BydC10aHJlYWQub3Jn
+PiB3cm90ZToKPgo+IEZyb206IFlpaGFvIEZhbiA8ZmFueWloYW9AcnQtdGhyZWFkLm9yZz4KPgo+
+IFRoaXMgcGF0Y2ggYWRkcyBzdXBwb3J0IGZvciB0aGUgU1RNMzJGNDA3IFVTQVJUIGNvbnRyb2xs
+ZXJzIGRldmljZSBtb2RlbC4KPgo+IFNpZ25lZC1vZmYtYnk6IFlpaGFvIEZhbiA8ZmFueWloYW9A
+cnQtdGhyZWFkLm9yZz4KPiAtLS0KPiAgTUFJTlRBSU5FUlMgICAgICAgICAgICAgICAgICAgICAg
+IHwgICAyICsKPiAgaHcvYXJtL0tjb25maWcgICAgICAgICAgICAgICAgICAgIHwgICAxICsKPiAg
+aHcvYXJtL3N0bTMyZjQwN19zb2MuYyAgICAgICAgICAgIHwgIDI1ICsrKwo+ICBody9jaGFyL0tj
+b25maWcgICAgICAgICAgICAgICAgICAgfCAgIDMgKwo+ICBody9jaGFyL21lc29uLmJ1aWxkICAg
+ICAgICAgICAgICAgfCAgIDEgKwo+ICBody9jaGFyL3N0bTMyZjR4eF91c2FydC5jICAgICAgICAg
+fCAyMzYgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrCj4gIGluY2x1ZGUvaHcvYXJtL3N0
+bTMyZjQwN19zb2MuaCAgICB8ICAgOCArCj4gIGluY2x1ZGUvaHcvY2hhci9zdG0zMmY0eHhfdXNh
+cnQuaCB8ICA2MCArKysrKysrKwoKV2UgZ2VuZXJhbGx5IHByZWZlciB0d28gc2VwYXJhdGUgcGF0
+Y2hlcyBmb3IgdGhpczoKKDEpIGltcGxlbWVudGF0aW9uIG9mIHRoZSBuZXcgZGV2aWNlCigyKSBh
+ZGQgdGhlIG5ldyBkZXZpY2UgdG8gdGhlIFNvQwoKPiAtLS0gL2Rldi9udWxsCj4gKysrIGIvaHcv
+Y2hhci9zdG0zMmY0eHhfdXNhcnQuYwo+IEBAIC0wLDAgKzEsMjM2IEBACj4gKy8qIFNQRFgtTGlj
+ZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyICovCj4gKyNpbmNsdWRlICJxZW11L29z
+ZGVwLmgiCj4gKyNpbmNsdWRlICJody9jaGFyL3N0bTMyZjR4eF91c2FydC5oIgo+ICsjaW5jbHVk
+ZSAicWVtdS9sb2cuaCIKPiArI2luY2x1ZGUgImh3L2lycS5oIgo+ICsjaW5jbHVkZSAiaHcvcWRl
+di1wcm9wZXJ0aWVzLmgiCj4gKyNpbmNsdWRlICJody9xZGV2LXByb3BlcnRpZXMtc3lzdGVtLmgi
+Cj4gKyNpbmNsdWRlICJxZW11L21vZHVsZS5oIgoKVGhpcyBsb29rcyB2ZXJ5IHNpbWlsYXIgdG8g
+dGhlIGV4aXN0aW5nIHN0bTMyZjJ4eCBVU0FSVC4KSG93IGRpZmZlcmVudCBhcmUgdGhlc2UgdHdv
+IGRldmljZXM/IENvdWxkIHdlIHNoYXJlCmNvZGUgYnkgaGF2aW5nIHRoZW0gYmUgdHdvIGNoaWxk
+IGNsYXNzZXMgd2hpY2ggYWRqdXN0CndoYXQgZmVhdHVyZXMgdGhlIGRldmljZSBleHBvc2VzPwoK
+dGhhbmtzCi0gUE1NCgoKCgoNCg0K
+--=_Part_480692_518683843.1755785764002
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-> Hi,
-> Debian and Ubuntu run the self tests of snek as integration tests like:
->
-> `make SNEK_NATIVE=3D/usr/bin/snek SNEK_ARM=3D/usr/share/snek/snek-arm
-> SNEK_RISCV=3D/usr/share/snek/snek-riscv -C test check`
->
-> Those tests recently generated signal by failing in the arm emulation
-> tests with `qemu-system-arm` - full log [1].
->
-> ```
-> 224s Running test pass-precedence.py.
-> 224s     pass python3
-> 224s     pass snek
-> 224s pass-precedence.py:72 Syntax error at "".
-> 224s     ***************** snek-arm fail *********************
-> 224s     pass snek-riscv
-> ```
->
-> 14 tests failed, but all with quite similar signatures.
->
-> But that only happens when executed on armhf, the other host
-> architectures are all happy [2].
->
-> I've separated the test and ran a git bisect on qemu 10.0 -> 10.1 as
-> somewhere here is the trigger.
-> That worked fine and identified this change [3].
-
-This is:
-
-  tcg: Convert deposit to TCGOutOpDeposit
-
-  Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-  Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-
-> I must admit, I was able to debug it until here, but I can't see how
-> these snek test failures could be caused by that change.
-> And yes - arm emulation on an armhf platform isn't the most common
-> scenario.
-
-Are any of your other hosts 32 bit?
-
->
-> I can't predict if there is anything wrong in snek which now is
-> treated differently by qemu to trigger this or if snek is all fine and
-> qemu broken something - Therefore I've also reported it to snek [4].
->
-> The tracking of the initial finding in Ubuntu is here if you want to
-> see more about how this commit was identified [5].
->
-> [1]: https://autopkgtest.ubuntu.com/results/autopkgtest-questing/questing=
-/armhf/s/snek/20250818_045020_246a4@/log.gz
-> [2]: https://autopkgtest.ubuntu.com/packages/s/snek
-> [3]: https://salsa.debian.org/qemu-team/qemu/-/commit/cf4905c03135f1181e8=
-6c618426f8d6c703b38c0
-> [4]: https://github.com/keith-packard/snek/issues/103
-> [5]: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2121124
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+PGhlYWQ+PC9oZWFkPjxib2R5PjxwPkhpLDwvcD48cD48L3A+PHA+VGhlIEY0eHggVVNBUlQgaXMg
+bGFyZ2VseSBzaW1pbGFyIHRvIHRoZSBGMnh4LiBUaGUgaW1wbGVtZW50YXRpb24gY2FuIG1vc3Rs
+eSBiZSBzaGFyZWQsIDwvcD48cD53aXRoIEY0LXNwZWNpZmljIGZlYXR1cmVzIGFkZGVkIHNlcGFy
+YXRlbHksICBhbGxvd2luZyBhIGNvbW1vbiBiYXNlIHdoaWxlIGtlZXBpbmcgZGlmZmVyZW5jZXMg
+aXNvbGF0ZWQuPC9wPjxwPknigJlsbCBjb25zaWRlciBzaGFyaW5nIGEgY29tbW9uIGJhc2UgaW4g
+dGhlIG5leHQgcmV2aXNpb24uPC9wPjxwPjwvcD48cD5CZXN0IHdpc2hlcyw8L3A+PHA+LS0gWWlo
+YW8gRmFuPC9wPjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNp
+emU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICIgZGF0YS1tY2Utc3R5bGU9ImZvbnQtZmFt
+aWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAg
+ICI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250
+LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICIgZGF0YS1tY2Utc3R5bGU9ImZvbnQt
+ZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAg
+ICAgICI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztm
+b250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICIgZGF0YS1tY2Utc3R5bGU9ImZv
+bnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7
+CiAgICAgICI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fu
+cztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDoxLjU7CiAgICAgICIgZGF0YS1tY2Utc3R5bGU9
+ImZvbnQtZmFtaWx5OlNvdXJjZSBIYW4gU2Fucztmb250LXNpemU6MTRweDtsaW5lLWhlaWdodDox
+LjU7CiAgICAgICI+PGJyPjwvZGl2PjxkaXYgY2xhc3M9Im1haWwtc2lnbmF0dXJlIj4gICAgIDxk
+aXYgY2xhc3M9Imxpbmd4aS1zaWduYXR1cmUtY29udGFpbmVyIiBzdHlsZT0iZm9udC1mYW1pbHk6
+IFBpbmdGYW5nLFNvdXJjZSBIYW4gU2FucyxzYW5zLXNlcmlmOyI+ICAgICAgICAgIDwhLS0g5qC3
+5byP5LiA77yM5a6M5pW054mIIC0tPiAgICAgICAgICA8dGFibGUgc3R5bGU9ImJvcmRlci1jb2xs
+YXBzZTogY29sbGFwc2U7d2lkdGg6IDEwMCU7dGV4dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRh
+bnQ7dGFibGUtbGF5b3V0OiBmaXhlZDsiPiAgICAgICAgICAgICAgIDx0Ym9keSBzdHlsZT0idGV4
+dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRhbnQ7d29yZC13cmFwOmJyZWFrLXdvcmQ7IHdvcmQt
+YnJlYWs6YnJlYWstYWxsOyI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L3Ri
+b2R5PiAgICAgICAgICA8L3RhYmxlPiAgICAgICAgICA8IS0tIOagt+W8j+S6jO+8jOaXoOWktOWD
+jyAtLT4gICAgICAgICAgPGRpdiBpZD0ibGluZ3hpLXNpZ25hdHVyZS12Mi1ibG9jayIgc3R5bGU9
+IndpZHRoOiAxMDAlO3RleHQtZGVjb3JhdGlvbjogbm9uZTt0ZXh0LXVuZGVybGluZTogbm9uZTsi
+PiAgICAgICAgICAgICAgIDxkaXYgaWQ9Imxpbmd4aS1zaWduYXR1cmUtdjItY29udGVudCIgaXRl
+bWlkPSJpZCIgc3R5bGU9Im1heC13aWR0aDogOTUlO2ZvbnQtc2l6ZTogMTRweDtsaW5lLWhlaWdo
+dDogMTZweDtjb2xvcjogIzdBODU5OTtwYWRkaW5nOiAxNnB4IDE2cHggNHB4IDBweDttYXJnaW4t
+bGVmdDogMHB4OyIgaXRlbXByb3A9Ijk4MzAwMDMiPiAgICAgICAgICAgICAgICAgICAgPGRpdiBz
+dHlsZT0iY29sb3I6ICMyMzJENDc7Ym9yZGVyOiBub25lO21hcmdpbi1ib3R0b206NHB4O2ZvbnQt
+c2l6ZTogMTZweDtsaW5lLWhlaWdodDogMjBweDt0ZXh0LXVuZGVybGluZTogbm9uZTtmb250LXdl
+aWdodDogYm9sZGVyOyIgaXRlbWlkPSJuYW1lIj7ojIPoibrosao8L2Rpdj4gICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IHN0eWxl
+PSJib3JkZXI6IG5vbmU7bWFyZ2luLWJvdHRvbTo4cHg7dGV4dC11bmRlcmxpbmU6IG5vbmU7Ij5m
+YW55aWhhb0BydC10aHJlYWQub3JnPC9kaXY+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9kaXY+ICAgICAg
+ICAgIDwvZGl2PiAgICAgICAgICA8IS0t5Yqe5YWs5ZOB54mMLS0+ICAgICAgICAgICAgICAgPC9k
+aXY+PC9kaXY+PGRpdiBjbGFzcz0icHJlLW1haWwtY29udGVudCI+PGRpdiBzdHlsZT0iZm9udC1m
+YW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAg
+ICAgIiBkYXRhLW1jZS1zdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6
+ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIj48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9u
+dC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsK
+ICAgICAgIiBkYXRhLW1jZS1zdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQt
+c2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIj48YnI+PC9kaXY+PGRpdiBzdHlsZT0i
+Zm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2ZvbnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEu
+NTsKICAgICAgIiBkYXRhLW1jZS1zdHlsZT0iZm9udC1mYW1pbHk6U291cmNlIEhhbiBTYW5zO2Zv
+bnQtc2l6ZToxNHB4O2xpbmUtaGVpZ2h0OjEuNTsKICAgICAgIj48YnI+PC9kaXY+PGRpdiBpZD0i
+aXNSZXBseUNvbnRlbnQiIHN0eWxlPSJtYXJnaW46IDA7Ij48ZGl2IHN0eWxlPSJjb2xvcjogIzdk
+ODA4NSI+T3JpZ2luYWw6PC9kaXY+PHVsIHN0eWxlPSJjb2xvcjogIzdkODA4NTsgZm9udC1zaXpl
+OjEycHg7IHBhZGRpbmctbGVmdDogMjBweCI+PGxpPkZyb23vvJpQZXRlciBNYXlkZWxsICZsdDs8
+YSBocmVmPSJtYWlsdG86cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnIj5wZXRlci5tYXlkZWxsQGxp
+bmFyby5vcmc8L2E+Jmd0OzwvbGk+PGxpPkRhdGXvvJoyMDI1LTA4LTE2IDAxOjQ2OjA2KOS4reWb
+vSAoR01UKzA4OjAwKSk8L2xpPjxsaT5Ub++8mmZhbnlpaGFvJmx0OzxhIGhyZWY9Im1haWx0bzpm
+YW55aWhhb0BydC10aHJlYWQub3JnIj5mYW55aWhhb0BydC10aHJlYWQub3JnPC9hPiZndDs8L2xp
+PjxsaT5DY++8mnFlbXUtZGV2ZWwmbHQ7PGEgaHJlZj0ibWFpbHRvOnFlbXUtZGV2ZWxAbm9uZ251
+Lm9yZyI+cWVtdS1kZXZlbEBub25nbnUub3JnPC9hPiZndDs8L2xpPjxsaT5TdWJqZWN077yaUmU6
+IFtQQVRDSCB2MiAzLzNdIEFkZCBTVE0zMkY0eHggVVNBUlQgZGV2aWNlIG1vZGVsPC9saT48L3Vs
+PjxwcmU+T24gTW9uLCAyMSBKdWwgMjAyNSBhdCAyMToxMSwgJmx0O2ZhbnlpaGFvQHJ0LXRocmVh
+ZC5vcmcmZ3Q7IHdyb3RlOgomZ3Q7CiZndDsgRnJvbTogWWloYW8gRmFuICZsdDtmYW55aWhhb0By
+dC10aHJlYWQub3JnJmd0OwomZ3Q7CiZndDsgVGhpcyBwYXRjaCBhZGRzIHN1cHBvcnQgZm9yIHRo
+ZSBTVE0zMkY0MDcgVVNBUlQgY29udHJvbGxlcnMgZGV2aWNlIG1vZGVsLgomZ3Q7CiZndDsgU2ln
+bmVkLW9mZi1ieTogWWloYW8gRmFuICZsdDtmYW55aWhhb0BydC10aHJlYWQub3JnJmd0OwomZ3Q7
+IC0tLQomZ3Q7ICBNQUlOVEFJTkVSUyAgICAgICAgICAgICAgICAgICAgICAgfCAgIDIgKwomZ3Q7
+ICBody9hcm0vS2NvbmZpZyAgICAgICAgICAgICAgICAgICAgfCAgIDEgKwomZ3Q7ICBody9hcm0v
+c3RtMzJmNDA3X3NvYy5jICAgICAgICAgICAgfCAgMjUgKysrCiZndDsgIGh3L2NoYXIvS2NvbmZp
+ZyAgICAgICAgICAgICAgICAgICB8ICAgMyArCiZndDsgIGh3L2NoYXIvbWVzb24uYnVpbGQgICAg
+ICAgICAgICAgICB8ICAgMSArCiZndDsgIGh3L2NoYXIvc3RtMzJmNHh4X3VzYXJ0LmMgICAgICAg
+ICB8IDIzNiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKJmd0OyAgaW5jbHVkZS9ody9h
+cm0vc3RtMzJmNDA3X3NvYy5oICAgIHwgICA4ICsKJmd0OyAgaW5jbHVkZS9ody9jaGFyL3N0bTMy
+ZjR4eF91c2FydC5oIHwgIDYwICsrKysrKysrCgpXZSBnZW5lcmFsbHkgcHJlZmVyIHR3byBzZXBh
+cmF0ZSBwYXRjaGVzIGZvciB0aGlzOgooMSkgaW1wbGVtZW50YXRpb24gb2YgdGhlIG5ldyBkZXZp
+Y2UKKDIpIGFkZCB0aGUgbmV3IGRldmljZSB0byB0aGUgU29DCgomZ3Q7IC0tLSAvZGV2L251bGwK
+Jmd0OyArKysgYi9ody9jaGFyL3N0bTMyZjR4eF91c2FydC5jCiZndDsgQEAgLTAsMCArMSwyMzYg
+QEAKJmd0OyArLyogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAtb3ItbGF0ZXIgKi8K
+Jmd0OyArI2luY2x1ZGUgInFlbXUvb3NkZXAuaCIKJmd0OyArI2luY2x1ZGUgImh3L2NoYXIvc3Rt
+MzJmNHh4X3VzYXJ0LmgiCiZndDsgKyNpbmNsdWRlICJxZW11L2xvZy5oIgomZ3Q7ICsjaW5jbHVk
+ZSAiaHcvaXJxLmgiCiZndDsgKyNpbmNsdWRlICJody9xZGV2LXByb3BlcnRpZXMuaCIKJmd0OyAr
+I2luY2x1ZGUgImh3L3FkZXYtcHJvcGVydGllcy1zeXN0ZW0uaCIKJmd0OyArI2luY2x1ZGUgInFl
+bXUvbW9kdWxlLmgiCgpUaGlzIGxvb2tzIHZlcnkgc2ltaWxhciB0byB0aGUgZXhpc3Rpbmcgc3Rt
+MzJmMnh4IFVTQVJULgpIb3cgZGlmZmVyZW50IGFyZSB0aGVzZSB0d28gZGV2aWNlcz8gQ291bGQg
+d2Ugc2hhcmUKY29kZSBieSBoYXZpbmcgdGhlbSBiZSB0d28gY2hpbGQgY2xhc3NlcyB3aGljaCBh
+ZGp1c3QKd2hhdCBmZWF0dXJlcyB0aGUgZGV2aWNlIGV4cG9zZXM/Cgp0aGFua3MKLSBQTU0KCjwv
+cHJlPjwvZGl2PjwvZGl2Pjxicj48L2JvZHk+
+--=_Part_480692_518683843.1755785764002--
 
