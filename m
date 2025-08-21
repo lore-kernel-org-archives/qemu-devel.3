@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398A5CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 15:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB617CA0EFC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 15:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up7Mm-0005Y9-Nb; Thu, 21 Aug 2025 11:38:16 -0400
+	id 1up7PT-0006mN-Ka; Thu, 21 Aug 2025 11:41:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1up7Mj-0005Xe-Uj; Thu, 21 Aug 2025 11:38:14 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1up7PS-0006lr-14
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 11:41:02 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1up7Mh-0006XG-FB; Thu, 21 Aug 2025 11:38:13 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-76e1ff326bbso1746725b3a.1; 
- Thu, 21 Aug 2025 08:38:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1up7PQ-0006y5-6I
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 11:41:01 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-45a1ac7c066so7150175e9.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 08:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1755790688; x=1756395488; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
- :reply-to; bh=nFz56e8utBP595P1f8WNuvE3xc+Fv/jEZxgUDV6xr2g=;
- b=mqqQcdpVgFrSA8lW6WGcvugixbztcc7E3bo2ZOPOXGPZ5Czk0OOrrVOUIf1yr4WdpG
- 4H1I2ffyQHNS6fKgJLhV1h+0soZpPpl97DDHdCWU9LHljmYRZ5rLFfODqZg8RpeD3zkb
- VfIUZdH/GMHewdl3V2K/f9GgZKes69K8UbeAHA6rlOUUwa9zxlH4H6M1trZ+s3nweX7x
- McFpiTe+W3kUS87gQ1mjISVOibpaQ/MrM5rU1p3kcU9UlGvtOt3Rilb3GTovFyOfo9yX
- SyprpQm2SoEoCkrSwvuIH3FssO5TQOYPc9jCTA+CGFyKO4gs+FLKwX5lJCvywMlW58U/
- 4HMw==
+ d=linaro.org; s=google; t=1755790858; x=1756395658; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CvhcTLxPsUCkPB4qwOiGoL+dUJvDmAnVbQGWGy8Tu2c=;
+ b=mnBs+0/9qwJlPoIpyNGq1K423763grm+2eN4/6xCRPKE5uW+uMMgKOcSR3CEsUE1gP
+ z7O59yMYNa+H2eHJY5sWlkWGHOKJKbITeLCTpJMntagWPQOSneBf+xQ0MnOza2Pi3Kdq
+ z5XIHGHinanm2/FeGpRAhNA/aAsh4bnF5n65xgUWF15adixvSH7seNKK9x1nPwuXl3NZ
+ lRvAotycvLbwu/jIUuqirI3rZUXsMR69aLlwjhEovSBCCgLGIHMzCUwEsD/RAzJ7sGxW
+ WgEcqogRlhC0Yf5NW3oU9iF+mNkCuTJmguEP/W4zQHMcAY7apHoWEYXhiUqDdpTWXBHZ
+ LMGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755790688; x=1756395488;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1755790858; x=1756395658;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nFz56e8utBP595P1f8WNuvE3xc+Fv/jEZxgUDV6xr2g=;
- b=YM8m1LTIBRIEMH9v36k0tfju5aYh/GiEUEopxrzbkAyDMYBfGcBQmg89VEDKk3chXP
- nNGc79jcvM66wcbVK4TGTHXmBB/4tBR1tKy8uQ6FpQuZVl6a9uStAcx2JJTgICtDY6aK
- WqOBDLS0WVLQpJ5NDDQhkAklqgkDaGcyYvlXDqrmpcUbLLKtMwHJW6Z/UssT/+Nn32D+
- F/31LFlnGMIr2cxj5zcmpAIILHskwo18155EbtvgFk9D1QI/vCZKnV9iIbJWGgkk3mkL
- u96NLjMWT/cGOOs/9mr+hPe4hgX/pb7I1YlJgzL9Fn97ZXQ/2v4nqawlMjxFr29AAIEX
- +8Tg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWmKQMLvdLMC/hCISjTCCPhTupwDJPDsBid5XuikxqFcnHX26cAMFzcg1ObeSbfpUnaIWbrLSIehg==@nongnu.org
-X-Gm-Message-State: AOJu0Yz/M9kJnO/8+6pQ1YQRuC6V+2zu3P0ifaPli3ZG5uZcSMvXByyh
- bOHy4/7fvpdiT7zDAPDQH5HO6oG9u/Knlon3h0ZgWELKBNcZssVZc970
-X-Gm-Gg: ASbGncskjyq+ngu6A0LAJtpMfATW7ZlqfbaSZXDcXmVNavay4e4O4vLFHjU9Us2XbNs
- 8uOCtGYG7u62naVyHBe40MkjUTu6rz5V6yAYFXBfaKFU1MaJdXg3g0nugN/Bvb4uwrxvusGn3vz
- lozxhKUK4Nb0406St+jdd1TqU+UNtd4u6teMEyuCBx4o8zgPKkBONvt2Lyo1Vrjr1UWacwK5yd1
- LA1SMlPjvlzp6lJYjy4/pmZ87pgsA76AvfuIh2Lp8p/UP6PJbsvyvC7i5d9y33GYVVu2kHTRKHW
- HORytgn4ZsSg7QKXalVh0Gcbi0rCojt8uzxlngrzx3IecUQ74JCeH6aPp3qUUNyxrpmwE+78IZ2
- WUPCAYvAG1HquX4imG4vf+nv6j89FKsSkUakkUu7H6g1gKQ==
-X-Google-Smtp-Source: AGHT+IF4PgyBFTDizi0d/oULfVTONEhqwLlffcQs02/Xv0cHYuQ/wdVrDuVdoX+bTWLvIa9hlQPW3g==
-X-Received: by 2002:a05:6a20:6d17:b0:23f:f729:2e72 with SMTP id
- adf61e73a8af0-243306582c7mr2726989637.1.1755790687733; 
- Thu, 21 Aug 2025 08:38:07 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ bh=CvhcTLxPsUCkPB4qwOiGoL+dUJvDmAnVbQGWGy8Tu2c=;
+ b=Feq9I+ShQSWTdS72fR8UrfgwVkNgmT9/ZbocMmwkkAaGfKDyHTf+5d0SU6YaFdyR3J
+ zSnr9au94c2P61QQFnCMe/dF8q4NZqhc7SK5xBhVRDq623imao98Kts/23WP+i8W/VLM
+ PN0fNvfx7n7rgMHBLn8Y0hFuVSSmGOEWBzn5mMUT6NvxDdl1xKnkxj4EWD+kWvhcjUjg
+ twNLaZmTUZ1Ot5xWlJdIX8fX0Vn8lYSXi+LCc1bF5LGddeHukHMp5SQoHshHvll4eWAo
+ A+UELGZrhMNZvMCsxuiuOyri6ouqiTP0p6dxm8uqh6Zgma5tDv241arrJQzhCzTavi3+
+ y7OA==
+X-Gm-Message-State: AOJu0Ywvb51jiXUQ3AGH05R5fA6+5WtosVtPDi7l7db7NyhSCUJN80Sq
+ n5DhUAHPS9z03a3T9vNRjFDaOT1JX4LM0gqmBaGxldOzctcq0C/sXhDeepPSvZTvh0LBYVS2Bb3
+ 7PA5c
+X-Gm-Gg: ASbGncsk5ZfMbIMxu4ZPswsYTOvIxgOJWmvtBl9EPulFPT0RHJ9eRmxLrz8D4F0kORM
+ X4tkDpgps1El284afi8ElKqIhaIxvzcDJ7xxxAxRggY8TMyfsQvMsmq10BTxbKg4nttzCQeckBl
+ 3DgHUjXIw0p6u+sv80u4+bDrVuKQGRf3x0Q1huayhAeHO0TKilQ2NiZ4Jxg9U1QgNgLSAuRKhHX
+ aMtQFoSGUkHAFuEa/ObHm8s4rV4qXw2kjXtQCLz/0lWkde0bomJDPhV6bqbfIpBYBNUJf23jFEB
+ 49HY9NebKnZgJGt4Ax4I+WmRH8Kzr5vjr5h9YiFneU8RlgGeNYaq53Fp7rUfVq6E1RiF+spvX2x
+ x57KIsLH7BThuuJyMSfeyP2/6YRyYAKPhmiYiCKc=
+X-Google-Smtp-Source: AGHT+IHhzP8ijZwJ4Yku2Lg8fAXEWLjjjJx2GgiqvYqMqHx2uHi5InwyWEW+S44sCwqs9zGP4sd0hw==
+X-Received: by 2002:a05:600c:8b17:b0:456:942:b162 with SMTP id
+ 5b1f17b1804b1-45b4d9eaca9mr32373195e9.11.1755790858502; 
+ Thu, 21 Aug 2025 08:40:58 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b4764003537sm5115122a12.25.2025.08.21.08.38.06
+ 5b1f17b1804b1-45b50e0a479sm1443285e9.21.2025.08.21.08.40.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Aug 2025 08:38:07 -0700 (PDT)
-Date: Thu, 21 Aug 2025 08:38:06 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org
-Subject: Re: [PATCH 00/10] Designware PCIe host fixes
-Message-ID: <4968ffcd-20bf-4ad3-84d4-043e74b4e0b6@roeck-us.net>
-References: <20250820211932.27302-1-shentey@gmail.com>
- <7804e625-2421-473f-9320-89fa0cc0d085@roeck-us.net>
- <D1762D97-2253-4503-9BD9-E4BF6BED1EAE@gmail.com>
+ Thu, 21 Aug 2025 08:40:57 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 2/3] hw/char/serial-pci-multi: Use qemu_init_irq_child() to
+ avoid leak
+Date: Thu, 21 Aug 2025 16:40:52 +0100
+Message-ID: <20250821154053.2417090-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250821154053.2417090-1-peter.maydell@linaro.org>
+References: <20250821154053.2417090-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D1762D97-2253-4503-9BD9-E4BF6BED1EAE@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.058, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,90 +102,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 21, 2025 at 10:24:02AM +0000, Bernhard Beschow wrote:
-> 
-> 
-> Am 21. August 2025 03:36:44 UTC schrieb Guenter Roeck <linux@roeck-us.net>:
-> >On 8/20/25 14:19, Bernhard Beschow wrote:
-> >> This series fixes the Designware PCIe host to work with cards other than
-> >> virio-net-pci, e.g. e1000. It was tested on the imx8mp-evk machine.
-> >> 
-> >> The series is structured as follows: The first part refactors the device
-> >> model to create memory regions for inbound/outbound PCI mappings on demand
-> >> rather than upfront since this approach doesn't scale for adding I/O space
-> >> support. The second part consists of fixing the memory mapping by adding I/O
-> >> space support and fixing default inbound viewport mapping. The third part
-> >> concludes the series by implementing device reset and cleaning up the imx8mp SoC
-> >> implementation.
-> >> 
-> >> Testing done:
-> >> * Boot imx8mp-evk machine with Buildroot while having an e1000 card attached.
-> >> Observe that it gets an IP address via DHCP and allows for downloading an HTML
-> >> file via HTTP.
-> >> 
-> >Crashing for me even if no PCIe card is attached. This is with the series applied
-> >on top of 10.1.0-rc4 or 10.0.3. I have not tried to track down the problem.
-> >
-> >Guenter
-> 
-> Hi Guenther,
-> 
-> Thanks for testing this series! I can reproduce the issue with Buildroot while the functional test passes...
-> 
-> I guess that I was too optimistic in having resolved the issue mentioned in the last patch. Does it work for you if you omit it?
-> 
-I'll give it another try tonight.
+The serial-pci-multi device initializes an IRQ with qemu_init_irq()
+in its instance_init function; however it never calls qemu_free_irq(),
+so the init/deinit cycle has a memory leak, which ASAN catches
+in the device-introspect-test:
 
-Guenter
+Direct leak of 576 byte(s) in 6 object(s) allocated from:
+    #0 0x626306ddade3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qem
+u-system-arm+0x21f1de3) (BuildId: 52ece17287eba2d68e5be980e1856cd1f6be932f)
+    #1 0x7756ade79b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1
+eb6131419edb83b2178b682829a6913cf682d75)
+    #2 0x7756ade5b45a in g_hash_table_new_full (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4445a
+) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #3 0x62630965da37 in object_initialize_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qem
+u/build/arm-asan/../../qom/object.c:568:23
+    #4 0x62630965d440 in object_initialize /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/ar
+m-asan/../../qom/object.c:578:5
+    #5 0x626309653eeb in qemu_init_irq /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-as
+an/../../hw/core/irq.c:48:5
+    #6 0x6263072370bb in multi_serial_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/char/serial-pci-multi.c:183:9
 
-> Thanks,
-> Bernhard
-> 
-> >
-> >---
-> >Build reference: v6.17-rc1-287-g685de850cabf
-> >Compiler version: aarch64-linux-gcc (GCC) 13.4.0
-> >Qemu version: 10.0.94 (v10.1.0-rc4-55-g320ed12bd9)
-> >
-> >[    7.748393] Internal error: synchronous external abort: 0000000096000010 [#1]  SMP
-> >[    7.748917] Modules linked in:
-> >[    7.749533] CPU: 3 UID: 0 PID: 12 Comm: kworker/u16:0 Tainted: G   M             N  6.17.0-rc2-g685de850cabf #1 PREEMPT
-> >[    7.749689] Tainted: [M]=MACHINE_CHECK, [N]=TEST
-> >[    7.749745] Hardware name: NXP i.MX8MPlus EVK board (DT)
-> >[    7.750118]         ok 1 block_bits=10 cluster_bits=3 blocks_per_group=8192 group_count=4 desc_size=64
-> >[    7.749922] Workqueue: async async_run_entry_fn
-> >[    7.751174] pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> >[    7.751267] pc : pci_generic_config_read+0x38/0xb8
-> >[    7.751370] lr : pci_generic_config_read+0x24/0xb8
-> >[    7.751474] sp : ffff8000845fb730
-> >[    7.751532] x29: ffff8000845fb730 x28: 00000000000000ff x27: 0000000000000000
-> >[    7.751686] x26: 0000000000000001 x25: ffff80008290c008 x24: ffff8000832cbe80
-> >[    7.751770] x23: 0000000000000000 x22: ffff8000845fb844 x21: ffff000008a73800
-> >[    7.751859] x20: ffff8000845fb7a4 x19: 0000000000000004 x18: 00000000ffffffff
-> >[    7.751942] x17: ffff800080e2f918 x16: ffff800080e2f7ac x15: ffff800080e2e6d8
-> >[    7.752027] x14: 0000000000000000 x13: 0000000000000000 x12: ffff80008427cab8
-> >[    7.752120] x11: 0000000000000326 x10: 0000000000000326 x9 : 00000000000c0326
-> >[    7.752225] x8 : 000000006973b6c5 x7 : ffff800085c00000 x6 : 0000000000000000
-> >[    7.752320] x5 : ffff000007cc5080 x4 : 0000000000000000 x3 : 0000000000000000
-> >[    7.752403] x2 : 0000000000000000 x1 : ffff000004bf5680 x0 : ffff800085900000
-> >[    7.752577] Call trace:
-> >[    7.752694]  pci_generic_config_read+0x38/0xb8 (P)
-> >[    7.752794]  dw_pcie_rd_other_conf+0x38/0xb0
-> >[    7.752851]  pci_bus_read_config_dword+0x80/0xe4
-> >[    7.752903]  pci_bus_generic_read_dev_vendor_id+0x30/0x190
-> >[    7.752964]  pci_scan_device+0xdc/0x184
-> >[    7.753010]  pci_scan_slot+0xe0/0x23c
-> >[    7.753056]  pci_scan_child_bus_extend+0x44/0x2cc
-> >[    7.753110]  pci_scan_bridge_extend+0x514/0x598
-> >[    7.753166]  pci_scan_child_bus_extend+0x104/0x2cc
-> >[    7.753220]  pci_scan_root_bus_bridge+0x64/0xd8
-> >[    7.753273]  pci_host_probe+0x34/0x10c
-> >[    7.753328]  dw_pcie_host_init+0x2f0/0x4b0
-> >[    7.753376]  imx_pcie_probe+0x33c/0x70c
-> >[    7.753439]  platform_probe+0x5c/0x9c
-> >[    7.753485]  really_probe+0xc0/0x390
-> >[    7.753530]  __driver_probe_device+0x7c/0x15c
-> >[    7.753581]  driver_probe_device+0x3c/0x110
-> >[    7.753633]  __device_attach_driver+0xbc/0x158
-> >
+Use the new qemu_init_irq_child() function instead, so that the
+IRQ object is automatically unreffed when the serial-pci
+device is deinited.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/char/serial-pci-multi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
+index 13df272691a..9410428ba90 100644
+--- a/hw/char/serial-pci-multi.c
++++ b/hw/char/serial-pci-multi.c
+@@ -180,7 +180,9 @@ static void multi_serial_init(Object *o)
+     size_t i, nports = multi_serial_get_port_count(PCI_DEVICE_GET_CLASS(dev));
+ 
+     for (i = 0; i < nports; i++) {
+-        qemu_init_irq(&pms->irqs[i], multi_serial_irq_mux, pms, i);
++        g_autofree char *irqpropname = g_strdup_printf("irq[%zu]", i);
++        qemu_init_irq_child(o, irqpropname, &pms->irqs[i],
++                            multi_serial_irq_mux, pms, i);
+         object_initialize_child(o, "serial[*]", &pms->state[i], TYPE_SERIAL);
+     }
+ }
+-- 
+2.43.0
+
 
