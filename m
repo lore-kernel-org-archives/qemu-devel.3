@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C35CA0EFC
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 15:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89932CA0EFC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Aug 2025 15:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1up7PU-0006md-4i; Thu, 21 Aug 2025 11:41:04 -0400
+	id 1up7PV-0006nD-BK; Thu, 21 Aug 2025 11:41:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1up7PR-0006la-0F
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 11:41:01 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1up7PT-0006mR-OZ
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 11:41:03 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1up7PP-0006xr-6u
- for qemu-devel@nongnu.org; Thu, 21 Aug 2025 11:41:00 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-45a1b0bd237so8956735e9.2
- for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 08:40:58 -0700 (PDT)
+ id 1up7PR-0006yJ-Pf
+ for qemu-devel@nongnu.org; Thu, 21 Aug 2025 11:41:03 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0c52f3so7116425e9.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Aug 2025 08:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755790857; x=1756395657; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755790860; x=1756395660; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dDq4cF/t2UQHmVrYwS+n4qlrWTrQBtReMxtNz8ju/jo=;
- b=zAEAnySr4lLK7EjPDXWbTAOrjMFf0CZCi1cDO1INU4gWlM4O6zHlth/LTlChEdTw6W
- 4/tKoEpbpl66g7l+VIT8cgY65DskfZWBUh2HelQRt+gRsLPqgkSU61e51jVx6SD73/yq
- PMYjhsGG//c0UFFckLEQ0rOnW4WTIAi6WJa9ZlkCSwCpWpPc1ayIKLIHVohul2Tp33Z5
- fAnwW2la/il2uwIfX9nQ/AHAWngJBdt1z0NKhfp76SwTJcz32kKMn1x8iSgOdGHU/WtS
- 7Xy+vcD4t3F7186HO+xKIdGyGPiQmdOg1v4qXOci0vAw+xs391Ln3EN3zJTkJ5XiDrMk
- de6Q==
+ bh=g8msdbE8OOCV9QlavIWWqJy0H/EUNByvwJV0NVT0I2c=;
+ b=AcKKCUoGT5TLpRMg173zpx2pCqqfuWWUtObzjrfudyD/Gkd3Vf3VcmqvHxHgpIS2bG
+ 6JNKUIxB09NaCZEdy6cby2AFkGmu6MIVfJ4DfV0IDJDRy5zRIp0F02rLzg+3xuDzNUAQ
+ 5Yb1GfkLZsMu+6sk1y5Gr4GVYZEAxnE1nGuPg69E9r21R6/kO9o0Vk8XPxyK7JUAQkFf
+ tcAnYyGxj/1YD5JVV53IofLdfNSk2Gf6MPSMyqrL1L3M5pzPe4Q4Z5DVQNu2ZDvrCFi9
+ P2VJdJH7vtvFTcbwyVITlRR61rmjO8L4mN3YiVqMeRfM0Ua51bvFCZHBQjT5B/Xu9wez
+ 4Pkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755790857; x=1756395657;
+ d=1e100.net; s=20230601; t=1755790860; x=1756395660;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dDq4cF/t2UQHmVrYwS+n4qlrWTrQBtReMxtNz8ju/jo=;
- b=oiJCvwQhNk+gEXPHU120MAsxdcy3MK1uliPKiUaEyihYmPqAHPsMsfM44XnA3UUBwh
- 9EfE68sRBA3cYHz/mvgtbW6czH7dVEJy3Lr0oKAUHT+7JZaFRhKjPlqMnQaA8sSCYt2g
- KA2AqMAsiPlHvOcNXlDvfJAZxGuF1RER70svn/z5gMY9EMXDhXQZusRLg+/aEJ/Q0GiV
- FAsexkLqtTM20IHya0Fcm9mDAJbshym4eVrU2laaEJncg3mViwhxlEk9Wq/gXUR6Un/C
- xXS6+3XazC9gxyGVYj1E8UZc1WF6unFiinMKNx/ajuuHhG8qO5Gz7RDQCsowp2Inle1p
- fZPQ==
-X-Gm-Message-State: AOJu0YylnIeTrFygOKdk1oEMTWa1eI6Fe4CM5LVu5GtfRIZVlAFZreBM
- PdfN3PlnXwA45hoL62GzNMev5mXGpBoyeGll+UIMoiBFXP4fIdgI8YeidhD97w3O2AD3no5Zpdq
- 9gI0D
-X-Gm-Gg: ASbGncv4pmvWH4L/tjJgl5Fa5OLjPQuAVC9EWQ5skyeZCyt3A67j750J0D/1MpyGkoc
- /3c+7z4+o+iqvpXk6l9QAa3mRAs3lFkWMXFkPXmThXoArhx8i+20YmS6brqEd7ZbV8EPpGJjoaP
- G7OnLojI3YULlubaKMbnr1D9Jo3jOd78ddEfgdkTvk1iSB++E/xTpgEl50xc7GlOED7IsUwpSUU
- 8LigY65B3O0+E+zGWTMxDtalIOvZO9oj4x95w2ME4o0uhdmzV9VVjkUtKrh6TMmc6WcMrElZ15e
- Z9SKoMu3t1XOdunyPEP7qj+AAhiEnSqinvM7BkSMVNPpWSulR7sm5+l51k04k85ks1/twC4oRDF
- W4qBr2M8U7ghpiJK8vzrPkdAseRow
-X-Google-Smtp-Source: AGHT+IE+hApSgzsQ721FrzNOUM7n1YwKF4L5nJkf787ZuXHBDWmRgCwNs/ysw8BwVR0b3gsOfuh3eA==
-X-Received: by 2002:a05:600c:358b:b0:43d:745a:5a50 with SMTP id
- 5b1f17b1804b1-45b4e9e6929mr23386775e9.19.1755790857470; 
- Thu, 21 Aug 2025 08:40:57 -0700 (PDT)
+ bh=g8msdbE8OOCV9QlavIWWqJy0H/EUNByvwJV0NVT0I2c=;
+ b=qpQXBnBUREPrAquOSPZnO41rNDym7+0YHbDhUgHIPw7JnVZX2yDqn5w7RkCs9OEUHn
+ w9hphYU3E1RWg8HEbjjX36OMk8v6TGgk8qR45k/hhMRKT3csCXCjHPDvLr7pZ933ukUD
+ DqQ2mt5tRq8k2GUpI1ZAoA5MtIWIJ+zheAxQFogD5bChEzLS9cODdnd/6NcLCVGTQISk
+ PesC4nDD5oXGrqpjQe9woeVBg8t/4AL8RfTzg2TvLtn/OggiZqLWEz2lJrFQzbGEpkoP
+ qmkCTtRWxXUCeFit/jy1EcKI4F1BXjW5OZzEJnbRtlQWXYNeE/5TA1WPMGZY2dHZxTaO
+ hzww==
+X-Gm-Message-State: AOJu0YzSQJ9JlhHUYg2nMe2euPIx9oi6CwwrSpPwsE8IQ6bxemekcNjb
+ FFEjIGNF3Ao6VEgIaDvr3pb25sN1OM+kMgqOc5R3xoh+M0/UHP1+m9K0qLy6KIOQ47rbBmSTGHW
+ JoUcK
+X-Gm-Gg: ASbGncv5BygmX3jRiZzqPsxo8LgQUG8Yv4uCrahY21QI6HdsukGiVHoHMFLi4fH+LIX
+ 063zuUQ18lk5M4AwQhFmzxvCrolbgSkxX3GbmLhXOrqKReMH3TdLz1OYimMKKwV5i3Hwlk9+zKG
+ EYyk9tdrj3TBUmJS7keF6tK58ZX/9r4rx1deq28v8DlOTo87kmUoEiNjp+k2aJTf/P1FGq3Q4zq
+ aQ5ubYV+ANFHsmscGkGiVrE9j+uXaSDBI0VmkEXfWMz9YLYHQDna/Wqxkuo7qNr9j2Fd0MhAg9T
+ jZ1NmvCA65x+QdxR2tQK9HnehXyPQ+JfWtRnUVBQQRJRZXfVFJaBv1MRtDkvEMvbzrMI67Sn9xr
+ NwH+wenQVju2OTzy4MDb+/HPMBUFU
+X-Google-Smtp-Source: AGHT+IGDClXur+75vbOkVyf+XDzkUWiNa40JGDxMzW1NKW5vW6ksdMxoRKHsNhTuRD/3v7AHQgkv7w==
+X-Received: by 2002:a05:600c:4f87:b0:459:ea5d:418b with SMTP id
+ 5b1f17b1804b1-45b4d7dc6f7mr27644315e9.9.1755790859706; 
+ Thu, 21 Aug 2025 08:40:59 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b50e0a479sm1443285e9.21.2025.08.21.08.40.56
+ 5b1f17b1804b1-45b50e0a479sm1443285e9.21.2025.08.21.08.40.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Aug 2025 08:40:56 -0700 (PDT)
+ Thu, 21 Aug 2025 08:40:58 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/3] hw/irq: New qemu_init_irq_child() function
-Date: Thu, 21 Aug 2025 16:40:51 +0100
-Message-ID: <20250821154053.2417090-2-peter.maydell@linaro.org>
+Subject: [PATCH 3/3] hw/ide/ich.c: Use qemu_init_irq_child() to avoid memory
+ leak
+Date: Thu, 21 Aug 2025 16:40:53 +0100
+Message-ID: <20250821154053.2417090-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250821154053.2417090-1-peter.maydell@linaro.org>
 References: <20250821154053.2417090-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,82 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qemu_init_irq() function initializes a TYPE_IRQ QOM object.  The
-caller is therefore responsible for eventually calling
-qemu_free_irq() to unref (and thus free) it.
+The ICH9 PCI device uses qemu_init_irq() in its instance_init method,
+but fails to clean it up in its uninit. This results in a leak,
+detected by ASAN when running the device-introspect-test:
 
-In many places where we want to initialize an IRQ we are in
-the init/realize of some other QOM object; if we have a variant
-of this function that calls object_initialize_child() then the
-IRQ will be automatically cleaned up when its parent object is
-destroyed, and we don't need to remember to manually free it.
+Direct leak of 96 byte(s) in 1 object(s) allocated from:
+    #0 0x58f3b53ecde3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qem
+u-system-arm+0x21f1de3) (BuildId: 8dcd38b1d76bd7bd44f905c38200f4cceafd7ca4)
+    #1 0x72e446dd5b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1
+eb6131419edb83b2178b682829a6913cf682d75)
+    #2 0x72e446db745a in g_hash_table_new_full (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4445a
+) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #3 0x58f3b7c6fc67 in object_initialize_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qem
+u/build/arm-asan/../../qom/object.c:568:23
+    #4 0x58f3b7c6f670 in object_initialize /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/ar
+m-asan/../../qom/object.c:578:5
+    #5 0x58f3b7c6611b in qemu_init_irq /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/irq.c:48:5
+    #6 0x58f3b5c6e931 in pci_ich9_ahci_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/ide/ich.c:117:5
 
-Implement qemu_init_irq_child(), which is to qemu_init_irq()
-what object_initialize_child() is to object_initialize().
+We could call qemu_free_irq() in pci_ich9_uninit(), but
+since we have a method of initializing the IRQ that doesn't
+need manual freeing, use that instead: qemu_init_irq_child().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/irq.h | 23 ++++++++++++++++++++++-
- hw/core/irq.c    |  8 ++++++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ hw/ide/ich.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/irq.h b/include/hw/irq.h
-index b3012237acd..291fdd67df4 100644
---- a/include/hw/irq.h
-+++ b/include/hw/irq.h
-@@ -36,11 +36,32 @@ static inline void qemu_irq_pulse(qemu_irq irq)
- 
- /*
-  * Init a single IRQ. The irq is assigned with a handler, an opaque data
-- * and the interrupt number.
-+ * and the interrupt number. The caller must free this with qemu_free_irq().
-+ * If you are using this inside a device's init or realize method, then
-+ * qemu_init_irq_child() is probably a better choice to avoid the need
-+ * to manually clean up the IRQ.
-  */
- void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
-                    int n);
- 
-+/**
-+ * qemu_init_irq_child: Initialize IRQ and make it a QOM child
-+ * @parent: QOM object which owns this IRQ
-+ * @propname: child property name
-+ * @irq: pointer to IRQState to initialize
-+ * @handler: handler function for incoming interrupts
-+ * @opaque: opaque data to pass to @handler
-+ * @n: interrupt number to pass to @handler
-+ *
-+ * Init a single IRQ and make the IRQ object a child of @parent with
-+ * the child-property name @propname. The IRQ object will thus be
-+ * automatically freed when @parent is destroyed.
-+ */
-+void qemu_init_irq_child(Object *parent, const char *propname,
-+                         IRQState *irq, qemu_irq_handler handler,
-+                         void *opaque, int n);
-+
-+
- /**
-  * qemu_init_irqs: Initialize an array of IRQs.
-  *
-diff --git a/hw/core/irq.c b/hw/core/irq.c
-index 6dd8d47bd6e..0c768f7704e 100644
---- a/hw/core/irq.c
-+++ b/hw/core/irq.c
-@@ -49,6 +49,14 @@ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
-     init_irq_fields(irq, handler, opaque, n);
- }
- 
-+void qemu_init_irq_child(Object *parent, const char *propname,
-+                         IRQState *irq, qemu_irq_handler handler,
-+                         void *opaque, int n)
-+{
-+    object_initialize_child(parent, propname, irq, TYPE_IRQ);
-+    init_irq_fields(irq, handler, opaque, n);
-+}
-+
- void qemu_init_irqs(IRQState irq[], size_t count,
-                     qemu_irq_handler handler, void *opaque)
+diff --git a/hw/ide/ich.c b/hw/ide/ich.c
+index 4cade0d1219..b00987f08d4 100644
+--- a/hw/ide/ich.c
++++ b/hw/ide/ich.c
+@@ -114,7 +114,8 @@ static void pci_ich9_ahci_init(Object *obj)
  {
+     AHCIPCIState *d = ICH9_AHCI(obj);
+ 
+-    qemu_init_irq(&d->irq, pci_ich9_ahci_update_irq, d, 0);
++    qemu_init_irq_child(obj, "update-irq", &d->irq,
++                        pci_ich9_ahci_update_irq, d, 0);
+     ahci_init(&d->ahci, DEVICE(obj));
+     d->ahci.irq = &d->irq;
+ }
 -- 
 2.43.0
 
