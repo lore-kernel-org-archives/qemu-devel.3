@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9986FCA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 15:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE863CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 15:04:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upTGu-0001qE-9w; Fri, 22 Aug 2025 11:01:46 -0400
+	id 1upTIr-0003pV-8t; Fri, 22 Aug 2025 11:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1upTGg-0001kj-3h
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 11:01:30 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1upTH9-0001z7-AS
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 11:02:02 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1upTGT-0004zn-Kq
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 11:01:25 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-b474e8d6d01so1447083a12.0
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 08:01:12 -0700 (PDT)
+ id 1upTGe-00051q-JQ
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 11:01:49 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-b475dfb4f42so1477571a12.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 08:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755874870; x=1756479670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755874878; x=1756479678; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ip/07jDLRmn55A9AxAO0k3ZA6eMIYcjBUNqH28VJGig=;
- b=tB4/W2GAU+7YQ+NVl6rU1Aftfznn96o8TfhOlOXW4WcQT7JUgGU7gWX26Nvt56CQmx
- eJEymmUtZU07S/4FplQJ6p8uHhkgsNJcfl9ziACmDgXNt58k12xfqiVCzUCXRpIFM4vE
- YNRiFCMUSFGC+UQO8t/qs29UYXa9hOXJ2oUVpB8aitl+Ul0r5Z7NyGvnMH0KeB6+zsXA
- 27GuT30N30yo7KHiO7MyWAYzxNpOca8yZ12xWCTpdYNzfrw63QBP62GdknJNS4hiucF8
- 92w+KtIeZHGV3A9tVEeKA+ONx+B/fi3ODBjy3MF01mA1SPBuvaHDfeBRCI2V/GFQnA2b
- j8rA==
+ bh=tr18OZZ52dyGR1rp5GdhWCgXctWVe7+fEbjUyyRt8KQ=;
+ b=H6g4C+FCAnQc2VAt8ENTEU1uaOosyBORkscbOJ1EkOXBS7/NtxKHGAA0KQ2izo+Tpw
+ jUYf6WUT7xVHRFp46oPBBtGOXiizsifkgiBRoAZJpIPGmulY349jK9I0wXZF3dErngyc
+ 1aK936yF0hFykQHHDL5+AkYJ2T8lj87j/QTppH86CQ3qtq6JuqLOWSzFqb2v58gMnw50
+ 34/HfN2/ByiZOiKA1n03Mc1XkCHe3WX5whbMUkT1tuHOXwY7AL1HUVkeOMEbKfFfkKn4
+ x3Ei4z18u3speVEuM/eRye9O1IPkoAYtC4K6XLeVoRpr61VPg1olTnKlCBPSR/j9m7js
+ HqaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755874870; x=1756479670;
+ d=1e100.net; s=20230601; t=1755874878; x=1756479678;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ip/07jDLRmn55A9AxAO0k3ZA6eMIYcjBUNqH28VJGig=;
- b=QTT8GtdASV715W9hS4I30Ww6ysRshFm0cElW/vMwSnIc/d6W64BcdLiDEwOuQAviaS
- pvJCBwZyzuhTPb5uJkc8/GbOESmMnH7lUEzzekflCT56TkPWKDSLNm/07bUn1tNZzDu7
- Dng+q+RosfY7XdYL8kmYYMtfjYcaqy1+1MutsP14O3lZc+slZs147y7chpt4BkCle6BM
- LK7O/QhBZahvqHqwkBn+PSciVac84c3wq/cf5q6QyPdWTB7ZgVmaiPOUcY+sXgyo+uIX
- MtklFAcX8zacIaPGU3F34jHEt12nXq8NR6yOrEteFAd4/MnlKw16reNiqxr1W16Z9alj
- jbcg==
-X-Gm-Message-State: AOJu0YwFkZZ7u06Y1//4GjMYOn8VfHXAIoukBVTu7vYpnLk8HcN1+GfN
- QhB/RKuJzQ4N9w3EqIpDSePAACzFux8tM9MeAcXfRmOR+3bZkjxQqhr7aJcnYbrh0WhWyz1a4sq
- eclLEZDFxcQ==
-X-Gm-Gg: ASbGnctlCNLQ1hrmDb33IxvW/wCwYjQ9aCBYClw86+QkGgbjDubisU/a0HYFDzIUsLs
- PwjuOjVZVXBWxZbB0A090nIfBugFV+yTIEGzJ0si77dySxC6uyy3/FIgslePfSClHHsh3W32cZk
- kRXRSqjic5DyceW6/lww2hsnRKttpO1xv4tO3AAEsr10Pu+CBGjVqFMhwQ4zx6UCnI7W1izVx42
- hhQZFUdKQqYu/Ekw5CF9JuDFv7myaizMD4gJ/051arPE8m6IpGQzIXpFdt6iAlSAP3Tkf6BOlyH
- wwnJxsQQ82JQ/3xzZkSUPW1JobCC1RcUBXs0+UY3YcvMvCdvkJdxS/q5VC/gj68zzMOMRZSrfCm
- Yb2DsuejsVHaIQRfjb+PJFbvSVZXMNCYoGK0k5lW7iE8=
-X-Google-Smtp-Source: AGHT+IFm+WYJYSwq4c2rAUcbQ2F/KNZWR9BwSob7XbyViDG/2ZPk8mUgh5Tl064VrYT+QsD4SIck7g==
-X-Received: by 2002:a17:902:ec88:b0:234:bca7:2920 with SMTP id
- d9443c01a7336-2462ee59196mr54824695ad.24.1755874869794; 
- Fri, 22 Aug 2025 08:01:09 -0700 (PDT)
+ bh=tr18OZZ52dyGR1rp5GdhWCgXctWVe7+fEbjUyyRt8KQ=;
+ b=qleACmxXEASDDQ+7r6L5uxQRw4aN+2+6jlcDHic1ooTZb1sUTgqGfatjnBCtseAtX/
+ MIJD8IwGDlSAp8wzPlGcfD2O9wfTs1WLA4t66gzV6kJUHgi1YBhyFRHsZmL82pgzDLO5
+ iDq0nmbxM+E/nyra7UqRsVkzEB2bp0SiNVR4auWXT4xepbnYBPqSHIKLGTRxYXkyGoZo
+ Sum0V9/50aJ9wA71TNciGVlRxg6E9iAafOFbHBGw6BUbgvn5FEAiGN29cOskl1sK7P02
+ SsqGRMANlkOcWf0+NJqvgfji7b1kO1zXg+POrS2xREuW85bvuUVbHNYHoZoQGoFBFJX8
+ dOVQ==
+X-Gm-Message-State: AOJu0Ywavtr37SHbE7z7M+Qq3gUZS9wAOYPIJsbjp64f2XgJ5vX4uySM
+ n1DMEZc1qw4+Et43kLxhnv1gQKky13ekWqCIf0wMTbAadk2+yn9Wr1Z96D46zq/c5mkjID3S1uc
+ Jcn+udeuMlw==
+X-Gm-Gg: ASbGncszjP0DMXhl6S8jW9843aUW7HhTRKiPxgtFlTSVXL8pwGF2tN3lKeQ6GWOKEey
+ UhVx/x4LPJw+rsI+Kqzl2VguG8RfcTbimXq9v+2+5MKVO3rA6VpzT783j1a6c5n0Z6b89bIZY61
+ Dq/k2pZmkiQhHrLawbTAP55Sb9SqMUskMEtFxdXD+0eRCoyEPez+q0Q8MQ9GKq2pdi1VwyvIGSc
+ 08g8Xrkae06buH1s+SAwx2n7MJ7JhxE9Wfxt0rckVE3LZlDlf2n12aXWS6C+7rps6VaH0JrRFLK
+ D9ehUCLaQ7lEBTSgB8FJghToCupWyMCx9CRKLWn53FmNSYLcw4wNnVrYE0x8fwYgTG860TDVED8
+ M3N7Ja8xXJ2PsqK1XSjcYMFM2MrquL0uQBboyLnKzPLU=
+X-Google-Smtp-Source: AGHT+IHmY1fp1Cnt5Cfmqq6A+WCY/Utr6plzTnkgl4R8m0dB61vyWEpaa6QPYLHacKF/IvRmjv9Mqw==
+X-Received: by 2002:a17:902:e84d:b0:240:417d:8115 with SMTP id
+ d9443c01a7336-2462ee1a943mr51648885ad.16.1755874878302; 
+ Fri, 22 Aug 2025 08:01:18 -0700 (PDT)
 Received: from pc.taild8403c.ts.net ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed5406e4sm85929495ad.165.2025.08.22.08.01.08
+ d9443c01a7336-245ed5406e4sm85929495ad.165.2025.08.22.08.01.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 08:01:09 -0700 (PDT)
+ Fri, 22 Aug 2025 08:01:17 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -76,24 +76,24 @@ Cc: qemu-arm@nongnu.org,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 04/12] semihosting/arm-compat-semi: change
- common_semi_sys_exit_extended
-Date: Fri, 22 Aug 2025 08:00:50 -0700
-Message-ID: <20250822150058.18692-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 11/12] semihosting/arm-compat-semi: remove dependency on
+ cpu.h
+Date: Fri, 22 Aug 2025 08:00:57 -0700
+Message-ID: <20250822150058.18692-12-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250822150058.18692-1-pierrick.bouvier@linaro.org>
 References: <20250822150058.18692-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,64 +109,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We now check only is sys_exit is extended.
-This allows to break dependency to TARGET_SYS_EXIT_EXTENDED which will
-not be available anymore from this code.
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/common-semi-target.h   | 4 ++--
- target/riscv/common-semi-target.h | 4 ++--
- semihosting/arm-compat-semi.c     | 3 ++-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ semihosting/arm-compat-semi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/arm/common-semi-target.h b/target/arm/common-semi-target.h
-index da51f2d7f54..7bb442f24ca 100644
---- a/target/arm/common-semi-target.h
-+++ b/target/arm/common-semi-target.h
-@@ -34,9 +34,9 @@ static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
-     }
- }
- 
--static inline bool common_semi_sys_exit_extended(CPUState *cs, int nr)
-+static inline bool common_semi_sys_exit_is_extended(CPUState *cs)
- {
--    return nr == TARGET_SYS_EXIT_EXTENDED || is_a64(cpu_env(cs));
-+    return is_a64(cpu_env(cs));
- }
- 
- static inline bool is_64bit_semihosting(CPUArchState *env)
-diff --git a/target/riscv/common-semi-target.h b/target/riscv/common-semi-target.h
-index 7c8a59e0cc3..ba40e794dcc 100644
---- a/target/riscv/common-semi-target.h
-+++ b/target/riscv/common-semi-target.h
-@@ -25,9 +25,9 @@ static inline void common_semi_set_ret(CPUState *cs, target_ulong ret)
-     env->gpr[xA0] = ret;
- }
- 
--static inline bool common_semi_sys_exit_extended(CPUState *cs, int nr)
-+static inline bool common_semi_sys_exit_is_extended(CPUState *cs)
- {
--    return (nr == TARGET_SYS_EXIT_EXTENDED || sizeof(target_ulong) == 8);
-+    return sizeof(target_ulong) == 8;
- }
- 
- static inline bool is_64bit_semihosting(CPUArchState *env)
 diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-index 3f653c6e7a9..1c593d5e0dc 100644
+index 55d7bf29ad6..a14de23d45a 100644
 --- a/semihosting/arm-compat-semi.c
 +++ b/semihosting/arm-compat-semi.c
-@@ -755,7 +755,8 @@ void do_common_semihosting(CPUState *cs)
-     {
-         uint32_t ret;
- 
--        if (common_semi_sys_exit_extended(cs, nr)) {
-+        if (nr == TARGET_SYS_EXIT_EXTENDED ||
-+            common_semi_sys_exit_is_extended(cs)) {
-             /*
-              * The A64 version of SYS_EXIT takes a parameter block,
-              * so the application-exit type can return a subcode which
+@@ -34,7 +34,6 @@
+ #include "qemu/osdep.h"
+ #include "qemu/timer.h"
+ #include "exec/gdbstub.h"
+-#include "cpu.h"
+ #include "gdbstub/syscalls.h"
+ #include "semihosting/semihost.h"
+ #include "semihosting/console.h"
 -- 
 2.47.2
 
