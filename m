@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6622ACA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 12:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7244CA0EFC
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 12:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upQsJ-0005AU-Ij; Fri, 22 Aug 2025 08:28:07 -0400
+	id 1upQrb-0004qh-7L; Fri, 22 Aug 2025 08:27:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upQrr-0004vh-2c
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1upQrZ-0004q8-T1
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upQrl-0002Qy-It
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:38 -0400
+ id 1upQrT-0002PV-4T
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755865650;
+ s=mimecast20190719; t=1755865633;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hTzFYTlTuCIe98kYUF7OLCMB0bq8BQte/mSsm0luUmY=;
- b=KWPoCv9Wo2m+f659QlrKHtYgu8m1pUA5HcheU8E90mKJua8VVNYGw23AyVlPYWjOMc+8uP
- NriXQwA34nY0McwlPkZGwVW7KnNU+X7UVkrMy6NDvPVefV+84hVMT0K6ITMn3QigTi9jcw
- pxygUKECrMBWAzZvhKAuWjhIyaRSQnE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HHrA/UsW2DzabHAW3AoasOy3GBNC6W8fjR2RtT6A+zs=;
+ b=DjatiRTE5HfHMX+LtMR7fouUF494X7jcrDEpMGk/6bftUncQ70a4nSDNL7/WOtp7gRL9UA
+ mrztnqtBkBBtikuSV5RSjKCnObAeQYB+7g+a83d1pzjfXTQAA2/LT2lAUFopEA5AbkExir
+ 02wHaSjUGRsv1lmu9LhNBgiRh04QsrU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-UNIrPAtiMayqegaumqMWxQ-1; Fri, 22 Aug 2025 08:27:29 -0400
-X-MC-Unique: UNIrPAtiMayqegaumqMWxQ-1
-X-Mimecast-MFC-AGG-ID: UNIrPAtiMayqegaumqMWxQ_1755865648
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3b9e743736dso1153964f8f.3
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 05:27:29 -0700 (PDT)
+ us-mta-472-wpQCJlxxNtWea6T_f1PdMQ-1; Fri, 22 Aug 2025 08:27:12 -0400
+X-MC-Unique: wpQCJlxxNtWea6T_f1PdMQ-1
+X-Mimecast-MFC-AGG-ID: wpQCJlxxNtWea6T_f1PdMQ_1755865631
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0cb0aaso16100085e9.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 05:27:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755865647; x=1756470447;
+ d=1e100.net; s=20230601; t=1755865630; x=1756470430;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hTzFYTlTuCIe98kYUF7OLCMB0bq8BQte/mSsm0luUmY=;
- b=EvZ0POtiK/ZD7o6D5N1HOCzQhSjibnB3BMhKOVlFxMzB24dQIvAuUzVrF6siM0MwWi
- IlFPb0Aer4l7MxS9Nriahm+kBBdi47I9aoFUCjRIw+mWAdFx/Dra+TqPfJcFCJnx9MXR
- HFdAo1QFMoAlxvq7a+h0dC5wo94CGFl4KU8WWtGgaH4PjxTEJUf38ZeMV1iYV5O9GfW8
- Prfm4HX6IJmzGQpHFKnaSVp5XO6FFIZEVYhf+IXNexkXREExH/HzmClByz5J4UCtomOm
- TRZ9Zsi8kAmnR06rjl8JC/XDbA7UkgNe+2mJB+HaVo8vceYqdumlxpKRdjfpLtB1uT+0
- +TRA==
-X-Gm-Message-State: AOJu0YyNG26zsnRVm8yab8C87sMltXX6iDbuS0zPsXHnytQ2KD5tIXQ7
- Ew0vymZRnnWqmq6HLKW9uQVo1AQKpFYnhV5n/YPqfRgzAV0B99k9ZaB3A7R9isWrC+lRuZVqEK8
- i5HgUtr3YWuj1ADTW71a6p4G9KJeLTuCoKQfycDRjwOL0IW1AVXnifvkInvWa67ztOF4dQ9vX2s
- TsxmW/91WaZdiWAdl6ppT6rBqKI0nqSUm9xb02H/d4
-X-Gm-Gg: ASbGnctCAN1YWSoeA925NDJ3t5YtV2Znz5azhqrm6ZfcCefHdfnnwuzIhX4q+b7nKNe
- q/Bg49lRXG0wTJUsvJl5XCaFIZTaih//BYVAMDOQsLxzF3Bl1RMLILLdk6JmCWuEeJg9xI6v1ra
- KNCEuGtwJ7OpTFnquFTE0wXipcWbKeedjXXZxgz8tSNS+cDXepd/Rzggvx1K+txNmKJd/Ny1thn
- EED137jYfeuoDPaFrj/af4Qdrr28qJ5UOWGSLkmjmhvSXyVzhZZ68/D+gVjQ0Nlu9mdd1k6ixTb
- M6ixn8t+8Z6JFBg10m7W4TndgxqhvLuklmHK4h+t/RlbtjPjBVH6ZS/O1tZ8x4fq/etZw4Fhuo7
- +TK2Grx+aVzwCodQ/IsmbHBB8U/CLEOE09M4s1I3lyw==
-X-Received: by 2002:a05:6000:238a:b0:3b7:940e:6520 with SMTP id
- ffacd0b85a97d-3c5daefc7ccmr1999622f8f.18.1755865647445; 
- Fri, 22 Aug 2025 05:27:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHqEzFZGYw9kdPw23DUwJ6TL+j8Pl/O0Sxdmk/VdCqonQLsS8to6Qm+4AFMcXLFNt/bbuXIg==
-X-Received: by 2002:a05:6000:238a:b0:3b7:940e:6520 with SMTP id
- ffacd0b85a97d-3c5daefc7ccmr1999596f8f.18.1755865646932; 
- Fri, 22 Aug 2025 05:27:26 -0700 (PDT)
+ bh=HHrA/UsW2DzabHAW3AoasOy3GBNC6W8fjR2RtT6A+zs=;
+ b=OOmHiqSLi+xUp0ek9nQqaaIhSUgSN7X5urxaEHxkHnCUe2Hwda3nFSFnqMyAvTFvtC
+ afvMt/LW5nnKn67ZCaTjXVkDmxDlREg/qsvyCGMf3Vwxk2C/ZSff3OHPsOzpBtqrlHjh
+ 5ZqlbnrAm1OHIMBYILmhRinscngWKfEicVbHdrYQZj2vqpyfa4hA7Qr0WrNc+7fUFknu
+ sK01YgvGpH+Xr9KWCpG1FiA7F+/KcdqrTMhdBODU6dfB9I4QuztgrTO6EXYdgJm7Fz6f
+ PhgouYrlmi7Q8JUsyC1wGxjKTfa6n3qLib67NfOy0CJuJ7pA/Asy0MwRvbmR7PsXqtVe
+ csqQ==
+X-Gm-Message-State: AOJu0Yzujjln7UeQOUPGhmGvx8dpmP2u77gHuOvpDwWXFHVoggFQq35x
+ 07HyqkCdzdVKs4uYoANi+z7G6mO79o4t/wEx+S/hSPcfkyYkc2y2H+7hhSmM600sfw8gmuax7Dk
+ 5KL97Dg7zMe4PpflCl7L99wa9AUJW1MW6vc+/EWNKta5PpztekFujjtiW9uKAQjrRsJOZcmIXt5
+ ni2ByAOg0yJ6wzP1WsuIEnRO/Ibxm8nftlgfpP9GfE
+X-Gm-Gg: ASbGncvdm30PfbaTTps5tt8/GXvEBFr3MGzwMw5TYGVFXFL2M2v84hsC6pz3Rk1pd5l
+ i8vZsQ9+UyglH8IWzBMCdUSUSMEwhwMmbKhqZIN5wQjvoy3VRAsr9cBBs4/8hYFKYBE0aqRn5mG
+ SignaiZPMIz0gZ/JVJSu74PAQU4QoXaLBzwnO1ChjZgKKFiXPPfV13RCe56qMwFqSQY60mAO3ol
+ 2DweeDbKi6f3HWzUu6jnaTPjDNgbOfYZ9BgMqOcdsctetcjNu4dLzjbPSLPmfjdR+DE6JJ0StCu
+ PTJnQexH+nNFbrtYDdxCtXMqU962xjcTssRFi5d4b+qxnoC1DYyj+J/u3dPonOeQzeewsoXmE2N
+ qNedYJGy8GYOtodJnZMHiP3FlvXvaeCxOPfOKphm+2A==
+X-Received: by 2002:a05:600c:c87:b0:459:dd34:52fb with SMTP id
+ 5b1f17b1804b1-45b5179ebb2mr26048735e9.12.1755865630527; 
+ Fri, 22 Aug 2025 05:27:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUb4hAy9c5J9cOEAHkKQBB5FTbnN9DtgPHEf5YCMRJxxP+C1M/9T/eeYANdUFFxP9gTPWUkA==
+X-Received: by 2002:a05:600c:c87:b0:459:dd34:52fb with SMTP id
+ 5b1f17b1804b1-45b5179ebb2mr26048395e9.12.1755865630046; 
+ Fri, 22 Aug 2025 05:27:10 -0700 (PDT)
 Received: from [192.168.10.3] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c3e673ab01sm8671773f8f.18.2025.08.22.05.27.23
+ 5b1f17b1804b1-45b50e11ab8sm36112395e9.24.2025.08.22.05.27.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 05:27:23 -0700 (PDT)
+ Fri, 22 Aug 2025 05:27:08 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: tanishdesai37@gmail.com, stefanha@redhat.com, berrange@redhat.com,
  mads@ynddal.dk
-Subject: [PATCH 11/14] log: change qemu_loglevel to unsigned
-Date: Fri, 22 Aug 2025 14:26:52 +0200
-Message-ID: <20250822122655.1353197-12-pbonzini@redhat.com>
+Subject: [PATCH 05/14] tracetool/backend: remove redundant trace event checks
+Date: Fri, 22 Aug 2025 14:26:46 +0200
+Message-ID: <20250822122655.1353197-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250822122655.1353197-1-pbonzini@redhat.com>
 References: <20250822122655.1353197-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,121 +110,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bindgen makes the LOG_* constants unsigned, even if they are defined as
-(1 << 15):
+From: Tanish Desai <tanishdesai37@gmail.com>
 
-   pub const LOG_TRACE: u32 = 32768;
+Use CHECK_TRACE_EVENT_GET_STATE in log, syslog, dtrace and simple
+backend, so that the "if (trace_event_get_state)" is created from common
+code and unified when multiple backends are active.
 
-Make them unsigned in C as well, and also change the type of the variable
-that they are used with.
+When a single backend is active there is no code change (except
+for the log backend, as shown in tests/tracetool/log.h), but the
+code in the backends is simpler.
 
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/qemu/log-for-trace.h |  4 ++--
- include/qemu/log.h           | 44 ++++++++++++++++++------------------
- util/log.c                   |  2 +-
- rust/qemu-api/src/log.rs     |  2 +-
- 4 files changed, 26 insertions(+), 26 deletions(-)
+ tests/tracetool/log.h               | 16 ++++++++++------
+ scripts/tracetool/backend/ftrace.py |  6 ++----
+ scripts/tracetool/backend/log.py    | 10 ++++------
+ scripts/tracetool/backend/simple.py |  8 ++------
+ scripts/tracetool/backend/syslog.py |  8 ++------
+ 5 files changed, 20 insertions(+), 28 deletions(-)
 
-diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
-index d47c9cd4462..f3a8791f1d4 100644
---- a/include/qemu/log-for-trace.h
-+++ b/include/qemu/log-for-trace.h
-@@ -19,9 +19,9 @@
- #define QEMU_LOG_FOR_TRACE_H
+diff --git a/tests/tracetool/log.h b/tests/tracetool/log.h
+index edcc7f9d47c..c7795871f85 100644
+--- a/tests/tracetool/log.h
++++ b/tests/tracetool/log.h
+@@ -21,10 +21,12 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
  
- /* Private global variable, don't use */
--extern int qemu_loglevel;
-+extern unsigned qemu_loglevel;
+ static inline void trace_test_blah(void *context, const char *filename)
+ {
+-    if (trace_event_get_state(TRACE_TEST_BLAH) && qemu_loglevel_mask(LOG_TRACE)) {
++    if (trace_event_get_state(TRACE_TEST_BLAH)) {
++        if (qemu_loglevel_mask(LOG_TRACE)) {
+ #line 4 "trace-events"
+-        qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
+-#line 28 "log.h"
++            qemu_log("test_blah " "Blah context=%p filename=%s" "\n", context, filename);
++#line 29 "log.h"
++        }
+     }
+ }
  
--#define LOG_TRACE          (1 << 15)
-+#define LOG_TRACE          (1u << 15)
+@@ -34,10 +36,12 @@ static inline void trace_test_blah(void *context, const char *filename)
  
- /* Returns true if a bit is set in the current loglevel mask */
- static inline bool qemu_loglevel_mask(int mask)
-diff --git a/include/qemu/log.h b/include/qemu/log.h
-index aae72985f0d..7effba4da4c 100644
---- a/include/qemu/log.h
-+++ b/include/qemu/log.h
-@@ -14,30 +14,30 @@ bool qemu_log_enabled(void);
- /* Returns true if qemu_log() will write somewhere other than stderr. */
- bool qemu_log_separate(void);
+ static inline void trace_test_wibble(void *context, int value)
+ {
+-    if (trace_event_get_state(TRACE_TEST_WIBBLE) && qemu_loglevel_mask(LOG_TRACE)) {
++    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
++        if (qemu_loglevel_mask(LOG_TRACE)) {
+ #line 5 "trace-events"
+-        qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
+-#line 41 "log.h"
++            qemu_log("test_wibble " "Wibble context=%p value=%d" "\n", context, value);
++#line 44 "log.h"
++        }
+     }
+ }
+ #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
+diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+index a07f8a9dfd8..432f216ea2b 100644
+--- a/scripts/tracetool/backend/ftrace.py
++++ b/scripts/tracetool/backend/ftrace.py
+@@ -16,6 +16,7 @@
  
--#define CPU_LOG_TB_OUT_ASM (1 << 0)
--#define CPU_LOG_TB_IN_ASM  (1 << 1)
--#define CPU_LOG_TB_OP      (1 << 2)
--#define CPU_LOG_TB_OP_OPT  (1 << 3)
--#define CPU_LOG_INT        (1 << 4)
--#define CPU_LOG_EXEC       (1 << 5)
--#define CPU_LOG_PCALL      (1 << 6)
--#define CPU_LOG_TB_CPU     (1 << 8)
--#define CPU_LOG_RESET      (1 << 9)
--#define LOG_UNIMP          (1 << 10)
--#define LOG_GUEST_ERROR    (1 << 11)
--#define CPU_LOG_MMU        (1 << 12)
--#define CPU_LOG_TB_NOCHAIN (1 << 13)
--#define CPU_LOG_PAGE       (1 << 14)
-+#define CPU_LOG_TB_OUT_ASM (1u << 0)
-+#define CPU_LOG_TB_IN_ASM  (1u << 1)
-+#define CPU_LOG_TB_OP      (1u << 2)
-+#define CPU_LOG_TB_OP_OPT  (1u << 3)
-+#define CPU_LOG_INT        (1u << 4)
-+#define CPU_LOG_EXEC       (1u << 5)
-+#define CPU_LOG_PCALL      (1u << 6)
-+#define CPU_LOG_TB_CPU     (1u << 8)
-+#define CPU_LOG_RESET      (1u << 9)
-+#define LOG_UNIMP          (1u << 10)
-+#define LOG_GUEST_ERROR    (1u << 11)
-+#define CPU_LOG_MMU        (1u << 12)
-+#define CPU_LOG_TB_NOCHAIN (1u << 13)
-+#define CPU_LOG_PAGE       (1u << 14)
- /* LOG_TRACE (1 << 15) is defined in log-for-trace.h */
--#define CPU_LOG_TB_OP_IND  (1 << 16)
--#define CPU_LOG_TB_FPU     (1 << 17)
--#define CPU_LOG_PLUGIN     (1 << 18)
-+#define CPU_LOG_TB_OP_IND  (1u << 16)
-+#define CPU_LOG_TB_FPU     (1u << 17)
-+#define CPU_LOG_PLUGIN     (1u << 18)
- /* LOG_STRACE is used for user-mode strace logging. */
--#define LOG_STRACE         (1 << 19)
--#define LOG_PER_THREAD     (1 << 20)
--#define CPU_LOG_TB_VPU     (1 << 21)
--#define LOG_TB_OP_PLUGIN   (1 << 22)
--#define LOG_INVALID_MEM    (1 << 23)
-+#define LOG_STRACE         (1u << 19)
-+#define LOG_PER_THREAD     (1u << 20)
-+#define CPU_LOG_TB_VPU     (1u << 21)
-+#define LOG_TB_OP_PLUGIN   (1u << 22)
-+#define LOG_INVALID_MEM    (1u << 23)
  
- /* Lock/unlock output. */
+ PUBLIC = True
++CHECK_TRACE_EVENT_GET_STATE = True
  
-diff --git a/util/log.c b/util/log.c
-index abdcb6b3111..41f78ce86b2 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -44,7 +44,7 @@ static FILE *global_file;
- static __thread FILE *thread_file;
- static __thread Notifier qemu_log_thread_cleanup_notifier;
  
--int qemu_loglevel;
-+unsigned qemu_loglevel;
- static bool log_per_thread;
- static GArray *debug_regions;
+ def generate_h_begin(events, group):
+@@ -28,14 +29,11 @@ def generate_h(event, group):
+     if len(event.args) > 0:
+         argnames = ", " + argnames
  
-diff --git a/rust/qemu-api/src/log.rs b/rust/qemu-api/src/log.rs
-index a441b8c1f2e..fe43e30104c 100644
---- a/rust/qemu-api/src/log.rs
-+++ b/rust/qemu-api/src/log.rs
-@@ -140,7 +140,7 @@ macro_rules! log_mask_ln {
-         let _: Log = $mask;
+-    out('    if (trace_event_get_state(%(event_id)s)) {',
+-        '#line %(event_lineno)d "%(event_filename)s"',
++    out('#line %(event_lineno)d "%(event_filename)s"',
+         '        ftrace_write("%(name)s " %(fmt)s "\\n" %(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '    }',
+         name=event.name,
+         args=event.args,
+-        event_id="TRACE_" + event.name.upper(),
+         event_lineno=event.lineno,
+         event_filename=event.filename,
+         fmt=event.fmt.rstrip("\n"),
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index eb50ceea34c..2aa180f4b47 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
+@@ -16,6 +16,7 @@
  
-         if unsafe {
--            (::qemu_api::bindings::qemu_loglevel & ($mask as std::os::raw::c_int)) != 0
-+            (::qemu_api::bindings::qemu_loglevel & ($mask as std::os::raw::c_uint)) != 0
-         } {
-             _ = ::qemu_api::log::LogGuard::log_fmt(
-                 format_args!("{}\n", format_args!($fmt $($args)*)));
+ 
+ PUBLIC = True
++CHECK_TRACE_EVENT_GET_STATE = True
+ 
+ 
+ def generate_h_begin(events, group):
+@@ -28,14 +29,11 @@ def generate_h(event, group):
+     if len(event.args) > 0:
+         argnames = ", " + argnames
+ 
+-    cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
+-
+-    out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
++    out('        if (qemu_loglevel_mask(LOG_TRACE)) {',
+         '#line %(event_lineno)d "%(event_filename)s"',
+-        '        qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
++        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '    }',
+-        cond=cond,
++        '        }',
+         event_lineno=event.lineno,
+         event_filename=event.filename,
+         name=event.name,
+diff --git a/scripts/tracetool/backend/simple.py b/scripts/tracetool/backend/simple.py
+index 7c84c06b200..a8afc977a20 100644
+--- a/scripts/tracetool/backend/simple.py
++++ b/scripts/tracetool/backend/simple.py
+@@ -16,6 +16,7 @@
+ 
+ 
+ PUBLIC = True
++CHECK_TRACE_EVENT_GET_STATE = True
+ 
+ 
+ def is_string(arg):
+@@ -36,13 +37,8 @@ def generate_h_begin(events, group):
+ 
+ 
+ def generate_h(event, group):
+-    event_id = 'TRACE_' + event.name.upper()
+-    cond = "trace_event_get_state(%s)" % event_id
+-    out('    if (%(cond)s) {',
+-        '        _simple_%(api)s(%(args)s);',
+-        '    }',
++    out('        _simple_%(api)s(%(args)s);',
+         api=event.api(),
+-        cond=cond,
+         args=", ".join(event.args.names()))
+ 
+ 
+diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
+index 3f82e54aabf..04ec85717a3 100644
+--- a/scripts/tracetool/backend/syslog.py
++++ b/scripts/tracetool/backend/syslog.py
+@@ -16,6 +16,7 @@
+ 
+ 
+ PUBLIC = True
++CHECK_TRACE_EVENT_GET_STATE = True
+ 
+ 
+ def generate_h_begin(events, group):
+@@ -28,14 +29,9 @@ def generate_h(event, group):
+     if len(event.args) > 0:
+         argnames = ", " + argnames
+ 
+-    cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
+-
+-    out('    if (%(cond)s) {',
+-        '#line %(event_lineno)d "%(event_filename)s"',
++    out('#line %(event_lineno)d "%(event_filename)s"',
+         '        syslog(LOG_INFO, "%(name)s " %(fmt)s %(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '    }',
+-        cond=cond,
+         event_lineno=event.lineno,
+         event_filename=event.filename,
+         name=event.name,
 -- 
 2.50.1
 
