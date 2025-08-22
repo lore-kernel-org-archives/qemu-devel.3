@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DB6CA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 08:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D107CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 09:26:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upNO7-0001hd-BZ; Fri, 22 Aug 2025 04:44:43 -0400
+	id 1upO0t-0005L3-UA; Fri, 22 Aug 2025 05:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1upNO5-0001gt-MS
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 04:44:41 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1upO0s-0005K5-5k
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 05:24:46 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1upNNx-0000uM-6n
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 04:44:41 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-45a15fd04d9so19504035e9.1
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 01:44:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1upO0o-0006rU-HW
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 05:24:45 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-244582738b5so16808515ad.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 02:24:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755852271; x=1756457071; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qQbFyyOMI3SbqLeipVtF5lyvm6jyjtSixpUHUD6wGlM=;
- b=blo70OorBwnvDDNpZ1DyNAoMwTqGf0NAS60UXeNfuNJXrHnWta6duvHPYd87IYRJ1M
- pqfSMTsN1zO5tG5cesexCsSVwkfYyaixTqwvMNlM8YeMIKwqmvF29e42CPcuuJactr3l
- e/+iRSGvSESNKsQ40QN/xjwsva3iLW2xxDIHcOv4Pwlc2TnVWmr9iU5o4ewlcIVvXifR
- vbKYVHcNos0dH75jkO8wbdxWWpFpJ7oWfvy2K65fsDsgNP4ynGPHYQVq8vVcB7v812ud
- hEWLcfPy5OKxS5MdfDQy2FGV5+d4hd9WG4oM6IqK4Y4IvyM8zCUZBc8YtKWZsWkNS6ML
- vSAQ==
+ d=linaro.org; s=google; t=1755854679; x=1756459479; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DnsvRTA2N4VrjCyG181NCO74B2dC1T05V8l2irChUrc=;
+ b=dAPja6WzuTvOUshoOMVuWPWE9H6dwRXY60iGX34WsmfZcod1V94gIL7DWFGOotfPLo
+ 9UfNCaN679q9rySUBV+q7DxwxKrQcy2O250uzAeRRaZzYAewKUTWBV9hyYwgAWSplwaR
+ ljYmmyS4k8PLVmmV2SwUEl44HyGa+FMSev7q+i7Op16LRxZGi27rAkjJubrvfZhWQ8nI
+ 5LkUVqibR0lw4cifbigHR0RrZvMTDzzMmT3F7l8ktXcq/RpVkKztlKJ9G80OSIwpw+Ba
+ SN9KL27S7I1TI1bGGunJiI3ppJp6C4/We4NBhl1jVqPkKXoZ/1GT5kHn1svMIr1Ihwzv
+ MbRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755852271; x=1756457071;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qQbFyyOMI3SbqLeipVtF5lyvm6jyjtSixpUHUD6wGlM=;
- b=Uo1Zzv1ZwNhaBZ+jTjxg4QHq8Buo3MUp/keuthHQxtjG9ZJ4cTr9c5P4kwDCnqShC6
- 2OJeBcoHZMNMCcChDWz2MqJHD0DaHuFtzZg6ajNOBBDUJHYS/tzNUEb7tPwBSzT8O4Af
- l/HEzc3TZfrq6On6rlai+YuTSBD/tqsbIKSFF0+Z9Y0tIggelqpF1XB5RfwOk9vxJiZW
- gYsVscuXnmkjY7z+OkcswYtKb4QpwweEM/iQzZ0tJwbbqoQ6uITJYkSqPQfTjRf/VkMZ
- FJjbVqYlKjmVR7wUN63JOHoNAxcpixXRFFyq3JOVUF+dxQ7J9QhjR8qBPoyy0i7tlJrA
- 66jw==
+ d=1e100.net; s=20230601; t=1755854679; x=1756459479;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DnsvRTA2N4VrjCyG181NCO74B2dC1T05V8l2irChUrc=;
+ b=GooN8Y0/nIrMkzctX5k5hDEErt91xJmAQ4m5rIZyoPhhNm7mw7kLSgC1oczzHDmCUL
+ kAuV85qoPRd7JBK95MhEiIsgQ9H+Opp8RhMMP8VLAoOS7hOqeCGaLPvp5DSrLDtfV74m
+ aVsoiQTRmqZL6gZ/g81d4kymq+8rkA+MZPyNNLNUmNvpZ2KmhNabgH9GZmCaS24XR/jc
+ hMzRIh4xFPfxemkQbMoKx6WQQcjDYZmlLTu1zZJmSTKl56TSUfbvqisgn1VqSXetlkbe
+ mLPP9qf2Iw/rF2TtrEoCzalXQXr6Qi9atwyoQksV4xXs0s3cpsiXWtBUWSZnU02YAgRQ
+ zz5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5bISGZddxWczeexws7t69k5oEzfEXos+JQRswRg8oXkVD+A+uSaG+oTy6zi6TY74dViz2+lAxdPSq@nongnu.org
-X-Gm-Message-State: AOJu0YytOorlQn17G5TWcUsmPNzqmqLTfexPqQtdJ0WmNjmWDOCYsMF0
- IGV1AENz5hsX8yHzpUKI1ZuXmqmi8p/iVIlId/ZadMQ7IqdmFCB0cyck11+0Sfj5IyA=
-X-Gm-Gg: ASbGncsqYD7AOe68fkJDlAGlbZ6hdUzS2y25guIClBWcnqUtgovoAflGFVy0pclEVVU
- P1KXsHGKAyNFyKEiosk1mdKvLX8GbvBW+Nk+uycmTU+rhYYTVqPPGAcRbgaXOJ3OSGifWuwpVN1
- kcWsf5Mpkhwkck6lajgCz2D2hGv3lDTAwRYMVfKZGSB7xEuFrqs63wUqvuueA0daBDUB6G6r0lg
- t+ToCjEMBNWDP5SymgBY3qoziOC+ZIxcyyFcmPkWE3yr3EJgpIoxAdUIJZbg1tXaW3i75dh9PD6
- iYT47+V7CkZiD5DiA4+X34g62en73358AHmXmkGNQ4FbaBsh2pYTARUd1bW9YEOdl57I4e5aBp/
- FYU5bceq60Km/DpfNv0zVKnc=
-X-Google-Smtp-Source: AGHT+IF8UCp2CIS7Par/Uk/Iu6yOYbrGcfkTvsDiwv/4Dzi3WIai2jZWbdG6Ut6FaIF+i/oJv+BMsQ==
-X-Received: by 2002:a05:6000:2512:b0:3b7:931d:37a0 with SMTP id
- ffacd0b85a97d-3c4aee0f93fmr4414555f8f.9.1755852270584; 
- Fri, 22 Aug 2025 01:44:30 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c520d37833sm4331633f8f.45.2025.08.22.01.44.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 01:44:29 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0DBC45F810;
- Fri, 22 Aug 2025 09:44:29 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: pierrick.bouvier@linaro.org,  qemu-devel@nongnu.org,
- richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com
-Subject: Re: New capabilities for plugins
-In-Reply-To: <7e0bd15e-d022-4de1-814b-9d9bb6513934@epfl.ch> (Florian
- Hofhammer's message of "Thu, 21 Aug 2025 18:02:26 +0200")
-References: <205e6753-53a4-4739-99ed-26344403a437@epfl.ch>
- <87tt2n5az1.fsf@draig.linaro.org>
- <1016eeb7-57d8-4d80-ba25-42cda2d63b0f@epfl.ch>
- <874iul26rp.fsf@draig.linaro.org>
- <73d56742-5e6e-4e1f-8d8c-2b9783d0ddea@epfl.ch>
- <87y0rxzsz4.fsf@draig.linaro.org>
- <7e0bd15e-d022-4de1-814b-9d9bb6513934@epfl.ch>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Fri, 22 Aug 2025 09:44:29 +0100
-Message-ID: <87v7mfkaoi.fsf@draig.linaro.org>
+ AJvYcCUTQjx1Nasw1DMk6mVYk4yZdjNyY62EbEupy5O/0YiOl1UcDLXRUuddmbNrelyD7MbufYRIO945HU2v@nongnu.org
+X-Gm-Message-State: AOJu0YzOzm1P9d8tl5wF0fr8F8F2/UF2LqZ2K/mPoepY/hU6PXaxbY3N
+ RYaymfgnpDWDGW99wKWQiMGVB1GWZIlKSKSQkDMe92cRJ4tOIjx1vJUgLhzkWDts4iw=
+X-Gm-Gg: ASbGncv3SLdrlywuH0bvU1D9Nf2sJEXZRm9oUEvCBj/Ua0lPAVWnCDw2C1djEGSNlcj
+ RCkSNHaC0jDgzV2RD5tBb0XroPLqqdd2mn5uAOhPUGAaFMglFsKRyBvt6nYAEpHFuzU635JPrRS
+ UF9yC/cIrA+rnVeHsOb5I0F2VW1Lreh+RtVNd26X4EE9cDxSO4KCGbaSQDx3KPd1ceDSaDozPnG
+ BhTp+1DhtLVbNaunIxbWqXcArV748hTycErVJdtPPjfAtV/4tUVWlqftlX1qA28blUakYKlei3C
+ NCQl0og77GmuOcki4kEj/Zm0kTGciZFJALAb/S3ePCployLqKCKSoT+Eze3w6QTQYPXxPns97Q2
+ bYtA6WuldV5Az9GuoUcEcr8IzPj2+NgncWb60A+YFWlK1Z1PGB3AsPFOi2v5rWRx0NfaaaOB1co
+ i4ck4d
+X-Google-Smtp-Source: AGHT+IHW7Rv7qlWB+JAiKyKv+JqXAnZCGWGZIUN8mRYaOibj2i4/XegEkgm2MdqYTvz0fd8TJjO4OQ==
+X-Received: by 2002:a17:902:ec91:b0:240:71ad:a442 with SMTP id
+ d9443c01a7336-2462eded8fbmr25936465ad.9.1755854678926; 
+ Fri, 22 Aug 2025 02:24:38 -0700 (PDT)
+Received: from ?IPV6:2405:6e00:640:7cf2:733f:651e:e790:3bf3?
+ ([2405:6e00:640:7cf2:733f:651e:e790:3bf3])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-245ed33b4c2sm78197955ad.25.2025.08.22.02.24.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Aug 2025 02:24:38 -0700 (PDT)
+Message-ID: <35a78a36-989e-425a-b99e-bda52da8d20c@linaro.org>
+Date: Fri, 22 Aug 2025 19:24:30 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] accel/tcg: Unify big- and little- endian atomic ops
+To: Danila Zhebryakov <d.zhebryakov@yandex.ru>, qemu-devel@nongnu.org
+Cc: Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <thuth@redhat.com>
+References: <20250821113348.91339-1-d.zhebryakov@yandex.ru>
+ <20250821113348.91339-2-d.zhebryakov@yandex.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250821113348.91339-2-d.zhebryakov@yandex.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,45 +110,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+On 8/21/25 21:33, Danila Zhebryakov wrote:
+> @@ -1894,6 +1894,14 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>           notdirty_write(cpu, addr, size, full, retaddr);
+>       }
+>   
+> +    if (unlikely(tlb_addr & TLB_BSWAP)) {
+> +        assert(!( (  full->slow_flags[MMU_DATA_STORE]
+> +            ^ full->slow_flags[MMU_DATA_LOAD ])
+> +            & TLB_BSWAP));
+> +
+> +        *need_bswap = !need_bswap;
+> +    }
+> +
 
-> Hi Alex,
->
-> Sorry for the late reply, I've been out of office and did not check my
-> mail.
->
-> On 05/08/2025 17:30, Alex Benn=C3=A9e wrote:
->> I think to read the PC we would just need to make sure we properly
->> resolve it - internally QEMU does this for faults with:
->>      tb =3D tcg_tb_lookup(retaddr);
->>      cpu_restore_state_from_tb(cpu, tb, retaddr);
->> where retaddr is the address of the translated code. We just need to
->> special case PC handling in the read path.
->> *snip* No need - we just need to exit the loop via
->> cpu_loop_exit_restore() and
->> the code will do the right thing. However we probably don't want to
->> trigger that via register write as we would surprise the plugin -
->> especially if there are other hooks still to run. So we would want an
->> explicit helper to do it.
->
-> Is this something the QEMU maintainers would be interested in? If yes,
-> I'm happy to dig into the codebase and submit some patches for review.
-> But this of course depends on whether such a feature is even desirable
-> in QEMU (cf. the parallel discussion thread).
+How is this supposed to work?
 
-I think writing the patches would be a useful exercise anyway. The way
-the plugin code is structured should mean you can keep the changes
-fairly localised which would reduce the burden of maintaining an
-out-of-tree patch if it isn't accepted. This wasn't really possible
-pre-plugins as instrumentation was often deep in the frontends which is
-actively maintained code with constant changes making re-basing a
-nightmare.
+(!) TLB_BSWAP is a slow-flags bit, so it will never be set in tlb_addr.
+(2) Both MMU_DATA_STORE and MMU_DATA_LOAD will have the same value for TLB_BSWAP: X ^ X == 
+0, so sure, that assert can't fire.
 
->
-> Best regards,
-> Florian
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
+
+
 
