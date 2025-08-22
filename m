@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE863CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 15:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C16CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 15:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upTIr-0003pV-8t; Fri, 22 Aug 2025 11:03:42 -0400
+	id 1upTIC-0002c2-2U; Fri, 22 Aug 2025 11:03:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1upTH9-0001z7-AS
+ id 1upTH9-0001yu-AU
  for qemu-devel@nongnu.org; Fri, 22 Aug 2025 11:02:02 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1upTGe-00051q-JQ
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 11:01:49 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b475dfb4f42so1477571a12.0
+ id 1upTGe-00051N-Jz
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 11:01:53 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2445827be70so21935065ad.3
  for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 08:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755874878; x=1756479678; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755874877; x=1756479677; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tr18OZZ52dyGR1rp5GdhWCgXctWVe7+fEbjUyyRt8KQ=;
- b=H6g4C+FCAnQc2VAt8ENTEU1uaOosyBORkscbOJ1EkOXBS7/NtxKHGAA0KQ2izo+Tpw
- jUYf6WUT7xVHRFp46oPBBtGOXiizsifkgiBRoAZJpIPGmulY349jK9I0wXZF3dErngyc
- 1aK936yF0hFykQHHDL5+AkYJ2T8lj87j/QTppH86CQ3qtq6JuqLOWSzFqb2v58gMnw50
- 34/HfN2/ByiZOiKA1n03Mc1XkCHe3WX5whbMUkT1tuHOXwY7AL1HUVkeOMEbKfFfkKn4
- x3Ei4z18u3speVEuM/eRye9O1IPkoAYtC4K6XLeVoRpr61VPg1olTnKlCBPSR/j9m7js
- HqaQ==
+ bh=bB7IRnB2X72HyfFQdO8pk3Ty2DGMB4Kj1UdkMvzsUlw=;
+ b=PZ2KoEFsBrODq8+quYQVYpeR81uFLC7LaclGadJEuy3Fu3ZWAERggWajx5TEB6Xcl/
+ 09cldDpqZFB5ZvQyxwHQAa90icYsZqj1w4P/gZ0sph1mOUvpemeH3iCM30NBMGeCD4Jx
+ EDDqlMWXs4ecaxdZ4P0ny2jH6FWUGCsEF/Scv/e94QykoVZHdWTs/vCkd9+wu1OXEKp2
+ GB5nbywDPg305T31pdz8QztZDGiHJ1Wp1Vh9QN+Cv7E0XkTuklZdLfNbNLdo6jkvsbbo
+ CKYtPn6LLTKZ04I5n32XSWx41Key6Ea//uEmL4OIBkoLWJlmF02esxiKhs6YK3zNestK
+ bOAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755874878; x=1756479678;
+ d=1e100.net; s=20230601; t=1755874877; x=1756479677;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tr18OZZ52dyGR1rp5GdhWCgXctWVe7+fEbjUyyRt8KQ=;
- b=qleACmxXEASDDQ+7r6L5uxQRw4aN+2+6jlcDHic1ooTZb1sUTgqGfatjnBCtseAtX/
- MIJD8IwGDlSAp8wzPlGcfD2O9wfTs1WLA4t66gzV6kJUHgi1YBhyFRHsZmL82pgzDLO5
- iDq0nmbxM+E/nyra7UqRsVkzEB2bp0SiNVR4auWXT4xepbnYBPqSHIKLGTRxYXkyGoZo
- Sum0V9/50aJ9wA71TNciGVlRxg6E9iAafOFbHBGw6BUbgvn5FEAiGN29cOskl1sK7P02
- SsqGRMANlkOcWf0+NJqvgfji7b1kO1zXg+POrS2xREuW85bvuUVbHNYHoZoQGoFBFJX8
- dOVQ==
-X-Gm-Message-State: AOJu0Ywavtr37SHbE7z7M+Qq3gUZS9wAOYPIJsbjp64f2XgJ5vX4uySM
- n1DMEZc1qw4+Et43kLxhnv1gQKky13ekWqCIf0wMTbAadk2+yn9Wr1Z96D46zq/c5mkjID3S1uc
- Jcn+udeuMlw==
-X-Gm-Gg: ASbGncszjP0DMXhl6S8jW9843aUW7HhTRKiPxgtFlTSVXL8pwGF2tN3lKeQ6GWOKEey
- UhVx/x4LPJw+rsI+Kqzl2VguG8RfcTbimXq9v+2+5MKVO3rA6VpzT783j1a6c5n0Z6b89bIZY61
- Dq/k2pZmkiQhHrLawbTAP55Sb9SqMUskMEtFxdXD+0eRCoyEPez+q0Q8MQ9GKq2pdi1VwyvIGSc
- 08g8Xrkae06buH1s+SAwx2n7MJ7JhxE9Wfxt0rckVE3LZlDlf2n12aXWS6C+7rps6VaH0JrRFLK
- D9ehUCLaQ7lEBTSgB8FJghToCupWyMCx9CRKLWn53FmNSYLcw4wNnVrYE0x8fwYgTG860TDVED8
- M3N7Ja8xXJ2PsqK1XSjcYMFM2MrquL0uQBboyLnKzPLU=
-X-Google-Smtp-Source: AGHT+IHmY1fp1Cnt5Cfmqq6A+WCY/Utr6plzTnkgl4R8m0dB61vyWEpaa6QPYLHacKF/IvRmjv9Mqw==
-X-Received: by 2002:a17:902:e84d:b0:240:417d:8115 with SMTP id
- d9443c01a7336-2462ee1a943mr51648885ad.16.1755874878302; 
- Fri, 22 Aug 2025 08:01:18 -0700 (PDT)
+ bh=bB7IRnB2X72HyfFQdO8pk3Ty2DGMB4Kj1UdkMvzsUlw=;
+ b=C+SbTNjh36FiE8iT6+h5yFv4kZf1w2ybfbQ7H0cC3T8icH+0sArU1lI3wzUkAG4kcV
+ iZW57fZi+X9hNOOEQDaLwNcKlYueRSxwC3/8u1RB7B/aLHbJADaoM2KBN6ujDfmcC9QT
+ 9fXO8jTneEwTh4eolqunam9M6yhMmiVxD3XV7RU+ymfnJYpQURVZySn43CMi6tYLtiyp
+ 8/uzfF0rAQYrbjgq1FhwBMZTzneLXNIZ/Y4ihSYvuKc0S4T9+rf7czqQlK8+OHth+PUa
+ /LWgp2g7qUgqv1R7988nMsllY6k++AnEAPGR+JksSQOi/lgmrS9FzEV2Ot8NAcoU6vs/
+ R/bA==
+X-Gm-Message-State: AOJu0YwgClohg/Ud9Ydf25IBb48/E9joKRwfD60M8P80stdYFoasGjpp
+ jDARrmu5MVRKkpznBovOLfx0QZMFwM+aLyH08v8nzn2dbXqJRKAJlqVzJcwepIoQjL3lKi4NaNh
+ zuwVkYt+rlA==
+X-Gm-Gg: ASbGncsihsAT6UIM+yKJY0qgwF1r+J51YQaqMP1Ran+Z45QhwTw5aW43DpEtcAOblt1
+ XhMuz2jDcFtWGD5C/p+Du6wUPcHOjVWmHdDT3h/M6xffFFE8rGHSRKXihCdW/7jNBXDtjeiYvgN
+ C4InVYBqt00elrH3DWeVkOOl4soVyOG9Eu/JADtb2mJ3nunii1oleeU1NpKnqPfpRF0QXFkWuKD
+ jG/uxFbSaudixWz1p9wbvLbeYBzNYDx9yHC5S3vJuudWWFSie0Su6CuEkiTYOLZLXyJKbN1V6gg
+ Rg4RzyC4tD4niabRMLBJWfVrq+EEdCKjoF7Pi3PxIdz0zqFu204NWnRlxQiHTRmg+bgaglqJy7l
+ TZoipVBR51VMszJoTsM6johciW/dzOqw0lu8/jW7PkUt9otYOC4gVBw==
+X-Google-Smtp-Source: AGHT+IGhabOmuU32VxtZOGTmb/egh9mA6ZqqqVyknwS7TOPD81KLr+AFlSDav/1kfBeViUrNKPXpaw==
+X-Received: by 2002:a17:902:d483:b0:244:65c8:c1f2 with SMTP id
+ d9443c01a7336-2462edf24bdmr47926685ad.20.1755874877036; 
+ Fri, 22 Aug 2025 08:01:17 -0700 (PDT)
 Received: from pc.taild8403c.ts.net ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed5406e4sm85929495ad.165.2025.08.22.08.01.17
+ d9443c01a7336-245ed5406e4sm85929495ad.165.2025.08.22.08.01.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 08:01:17 -0700 (PDT)
+ Fri, 22 Aug 2025 08:01:16 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
@@ -76,17 +76,16 @@ Cc: qemu-arm@nongnu.org,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 11/12] semihosting/arm-compat-semi: remove dependency on
- cpu.h
-Date: Fri, 22 Aug 2025 08:00:57 -0700
-Message-ID: <20250822150058.18692-12-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 10/12] semihosting/arm-compat-semi: eradicate target_long
+Date: Fri, 22 Aug 2025 08:00:56 -0700
+Message-ID: <20250822150058.18692-11-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250822150058.18692-1-pierrick.bouvier@linaro.org>
 References: <20250822150058.18692-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,24 +108,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We use int64_t or int32_t depending on ret size.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- semihosting/arm-compat-semi.c | 1 -
- 1 file changed, 1 deletion(-)
+ semihosting/arm-compat-semi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
-index 55d7bf29ad6..a14de23d45a 100644
+index f593239cc9a..55d7bf29ad6 100644
 --- a/semihosting/arm-compat-semi.c
 +++ b/semihosting/arm-compat-semi.c
-@@ -34,7 +34,6 @@
- #include "qemu/osdep.h"
- #include "qemu/timer.h"
- #include "exec/gdbstub.h"
--#include "cpu.h"
- #include "gdbstub/syscalls.h"
- #include "semihosting/semihost.h"
- #include "semihosting/console.h"
+@@ -501,10 +501,13 @@ void do_common_semihosting(CPUState *cs)
+         break;
+ 
+     case TARGET_SYS_ISERROR:
++    {
+         GET_ARG(0);
+-        common_semi_set_ret(cs, (target_long)arg0 < 0);
++        bool ret = is_64bit_semihosting(env) ?
++                   (int64_t)arg0 < 0 : (int32_t)arg0 < 0;
++        common_semi_set_ret(cs, ret);
+         break;
+-
++    }
+     case TARGET_SYS_ISTTY:
+         GET_ARG(0);
+         semihost_sys_isatty(cs, common_semi_istty_cb, arg0);
 -- 
 2.47.2
 
