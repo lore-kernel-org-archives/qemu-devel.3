@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6441ACA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 12:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16D65CA0EFC
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 12:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upQsK-0005EG-HB; Fri, 22 Aug 2025 08:28:08 -0400
+	id 1upQsL-0005Gl-6i; Fri, 22 Aug 2025 08:28:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upQrt-0004w4-Ta
+ id 1upQru-0004w5-0p
  for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upQrq-0002RX-QH
+ id 1upQrm-0002RJ-Si
  for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755865657;
+ s=mimecast20190719; t=1755865653;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GLvY7T3qsFX5eHyIEjlzP7ZM0g6YBeoAiFTuVz2Nylg=;
- b=R2XDlxL4QthOucpSXPrNIDmPQ5tP53J+yxU+AQQI9qPD9JhmbhgRUEeGlAfIM4/BRFHB6X
- kF78PSTYLqwi7gNm9uiRT3WS/1QV+qgOHB2+e7PXJu5NkDih/AplfQZqACoX+uBc3z6F7G
- MSxmiyYcDKZbkyxidWZPKoIv7fo77Vo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=v/7mtm3oVuWK0/bAEbRoJQJxidr1NimhpHH+OXpqbtw=;
+ b=DUfc8IlhaX0oh7pWDSM15ARUkscxURB9oRLDqe87DWajXC1xMpMLgilX3Vmk81dnQkRubU
+ qRFVrFCYboqrIFk1SfApHd9WCagV+ivvNQX1J2k73bXZOcK4CZ3XyfGDlWIb53gTh37lUm
+ ejzMC7qHV5hGYh96K4plmQafJ7NMQSY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-Q3TWNpscMfGtRk8HYjB4Ag-1; Fri, 22 Aug 2025 08:27:36 -0400
-X-MC-Unique: Q3TWNpscMfGtRk8HYjB4Ag-1
-X-Mimecast-MFC-AGG-ID: Q3TWNpscMfGtRk8HYjB4Ag_1755865655
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3b9edf41d07so987423f8f.3
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 05:27:35 -0700 (PDT)
+ us-mta-210-FYAAfaYGO6akvBM-1Tr4Vw-1; Fri, 22 Aug 2025 08:27:31 -0400
+X-MC-Unique: FYAAfaYGO6akvBM-1Tr4Vw-1
+X-Mimecast-MFC-AGG-ID: FYAAfaYGO6akvBM-1Tr4Vw_1755865650
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0cfbafso11902215e9.2
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 05:27:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755865652; x=1756470452;
+ d=1e100.net; s=20230601; t=1755865650; x=1756470450;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GLvY7T3qsFX5eHyIEjlzP7ZM0g6YBeoAiFTuVz2Nylg=;
- b=fFgT+fzStz6QQXzec7AzTPBuUrsknh2K70HTusJ7VK+BcUtlY97HN7LVP+FxUJDyMB
- 5Di+Hw+v/swuVMXITXOsjMVcj+RqcADBDesxX6taM97G42PwkcfMhKdOMYpLYPKP1qJ3
- cAKZBjKv6hAXeakn9x/3gvXgu0l+Kd75qw0fuZsodaBUTTHKfZ38/4EFZ6iLJgptRDqM
- rUoA8WEmFw/QwfrjyDnBmDdoBV+VRxPryBK+1PJD4cIjR9be1PfvQ4ffbL6i/9vDItSL
- lIeOJ7QnM2QA6ooilocubERqioqkP76V3yLDps5HUQ9x5nyn9f9vhbOJI0gFU+LoPDrq
- shFA==
-X-Gm-Message-State: AOJu0Yz/AjERXeK1hS/q4+CuigmM17yxB+z0EXYUUxbp+graO+pvR0cx
- Kl44mFNxyrst/ym1DPU4NeqTGktAwgES3DH29W3Qy6o/llI8Sak2YLWfHAX3D4jL3ticbW7qnSo
- MW/kKQ5vvAuazX9mPfWO8GkUjTJQNAzrGOy+fYutl4rFp/jhxBgzSjWHHcFFVEwXGsRBiTXm/X4
- tF+PwtnndlUPoggydXbMjMRa7Qm3Nu3F9vtwesE0Qu
-X-Gm-Gg: ASbGncuL9FRMUiKtkQXliLtvL76C1LwrZSs622FZzA+lZXauc0gC9k4mnCZZXhDeam+
- U5xWYIf/I9cTiLcvsMQMUYy+xMD6f9IonnMVsl4vN5zjgN8wyydsMlMOY3HKGG90hpWjWDrUl7F
- jPcZWyfT76i76j8WYVAGPSoVZ4xF0sooQaTZvxYt904t4vkqs5murRPplA9HyUPMK6KGK0nXtHb
- IWPJxLb/ASPCzMEqWq7jVzueUZ32nmhtzQXj24oNgjWldoT+locq+sJ8PeV30IyPA+RVvSzPtWq
- JFpOfjQZZlhi5JUJ6QcpkFJYK4YLvPdZAm30e/t5LMYRh+ey1XJV+b0hoXJm6O7LA32v2Wgd6bT
- 6w/gFdT3e/IUiHU7EaVU1IKj+zN5Ztce18Sf0s3bCoA==
-X-Received: by 2002:a5d:64ed:0:b0:3b9:16ac:4f8b with SMTP id
- ffacd0b85a97d-3c5dcc0da2bmr1812705f8f.50.1755865652374; 
- Fri, 22 Aug 2025 05:27:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFh48/j6UvcQ/doO9lHqH5jiYggnUSJqTOvXNNW4jAyr0YLknHh2qQX1MFV31IVzKZnUfjMLQ==
-X-Received: by 2002:a5d:64ed:0:b0:3b9:16ac:4f8b with SMTP id
- ffacd0b85a97d-3c5dcc0da2bmr1812679f8f.50.1755865651795; 
- Fri, 22 Aug 2025 05:27:31 -0700 (PDT)
+ bh=v/7mtm3oVuWK0/bAEbRoJQJxidr1NimhpHH+OXpqbtw=;
+ b=JW1nWMEQmXtBhMYm/+0sRQC8s8jVHFh8ffaV5ViKQZnqRQexCPtXWBB+UhCRSy5q9d
+ otNh8xZluAGvrufU1Xbj0xP77W/X3i6rjXAB8ORCtEtYfnraz3KDBJksdW2tybGT7i5m
+ 3gYAjOf9p30GqnwEBDf/L2xTJfndn7kUAa8dRfdIllSRUNAnC0Q5PxHcPNlgHo63ypzx
+ 2FSIBds4Jth8Y/42O4UJ3rsPGMPoqvQmgT1W18yqhGdaVEh751XkUWUmglTBiK/pR3T2
+ ZuOUKkhULfGICju6FiQdTVgR7T8TPsPWiKGQb8vwMbaZelggbZX7DNTVguM3cvlRTwhK
+ Kqwg==
+X-Gm-Message-State: AOJu0YyTsXikfZ/uiyNVV7EFNA3HyDWW/NIHu+dMgHEDwBBTmEKolxyc
+ g3ojyxw/fZEKjxjfPsExb+zt7Pqp9mJ6QI3HPgLoSXEc05Nj6etF5DsLS7PDJvBwuiDb/unFf2x
+ Z8mAOGiPQX+Q0hHncGPgUsES8qv+mlE8f2vfPRlST33OO1ZGOaec0cVdyk3PvsEWBHiZNoXv3FI
+ SoOjIq2H6qwjSxNxXrYNQMKEETEkfnvvfmYJshN1po
+X-Gm-Gg: ASbGnctWU83BW4aT8z3qqNfgWUSEIlR4KGnT1yRK+ZW1HAumRVHgAcSTSRHc3fWD1tS
+ LgBGrCXh85trlH36kR3JZurEDDJKl5sZsdNAUVWRQbd8T0cse0n7sbmdnEuaLJSTin5uU2BixXS
+ KoYnuqSwn/LnecJrcURCvy9FXuGjNzL+dMTA0FV5EtdIIqpjYT1zeq8ju+ymPuD8a+9G4m3Rh7a
+ 7nf+Y9i0r+FXd85+QUZyowDzHcL+1j9mfbsktwadP9N5osI4muo4+8EkbDjhiuH/5PsATkx6pLO
+ Z0zulVjWbw3NnCZjDw0tLlu9lvYWe2r1k5ZEUP4oPLSc0SrKt1wFaD3tgCioDILkvzMmAvYrWPW
+ f1eFVjSIyMH5OKsKSKL5dzW13uihvA8SqmAvITfRsWQ==
+X-Received: by 2002:a05:600c:4715:b0:456:1923:7549 with SMTP id
+ 5b1f17b1804b1-45b517d294dmr21278825e9.26.1755865649890; 
+ Fri, 22 Aug 2025 05:27:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGU7A19ydCpL2O+lkkgt0SsGbTeiqI/mzkK+rzUtkhPUYTGPWIN/7e+Jq90QazMrP+E5hPGwA==
+X-Received: by 2002:a05:600c:4715:b0:456:1923:7549 with SMTP id
+ 5b1f17b1804b1-45b517d294dmr21278555e9.26.1755865649351; 
+ Fri, 22 Aug 2025 05:27:29 -0700 (PDT)
 Received: from [192.168.10.3] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c077c56454sm15434073f8f.58.2025.08.22.05.27.30
+ ffacd0b85a97d-3c61843c8fcsm2150715f8f.22.2025.08.22.05.27.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 05:27:30 -0700 (PDT)
+ Fri, 22 Aug 2025 05:27:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: tanishdesai37@gmail.com, stefanha@redhat.com, berrange@redhat.com,
  mads@ynddal.dk
-Subject: [PATCH 13/14] tracetool/ftrace: add Rust support
-Date: Fri, 22 Aug 2025 14:26:54 +0200
-Message-ID: <20250822122655.1353197-14-pbonzini@redhat.com>
+Subject: [PATCH 12/14] tracetool/log: add Rust support
+Date: Fri, 22 Aug 2025 14:26:53 +0200
+Message-ID: <20250822122655.1353197-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250822122655.1353197-1-pbonzini@redhat.com>
 References: <20250822122655.1353197-1-pbonzini@redhat.com>
@@ -112,28 +112,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Tanish Desai <tanishdesai37@gmail.com>
 
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/wrapper.h             |  1 +
- scripts/tracetool/backend/ftrace.py |  8 +++++-
- tests/tracetool/ftrace.rs           | 41 +++++++++++++++++++++++++++++
- tests/tracetool/tracetool-test.py   |  2 +-
- 4 files changed, 50 insertions(+), 2 deletions(-)
- create mode 100644 tests/tracetool/ftrace.rs
+ scripts/tracetool/backend/log.py  | 10 ++++++-
+ tests/tracetool/log.rs            | 45 +++++++++++++++++++++++++++++++
+ tests/tracetool/tracetool-test.py |  2 +-
+ 3 files changed, 55 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tracetool/log.rs
 
-diff --git a/rust/qemu-api/wrapper.h b/rust/qemu-api/wrapper.h
-index 15a1b19847f..5227838292b 100644
---- a/rust/qemu-api/wrapper.h
-+++ b/rust/qemu-api/wrapper.h
-@@ -69,3 +69,4 @@ typedef enum memory_order {
- #include "qemu/timer.h"
- #include "system/address-spaces.h"
- #include "hw/char/pl011.h"
-+#include "trace/ftrace.h"
-diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-index 432f216ea2b..51d978f998f 100644
---- a/scripts/tracetool/backend/ftrace.py
-+++ b/scripts/tracetool/backend/ftrace.py
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index 2aa180f4b47..c167f30cf2c 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
 @@ -12,7 +12,7 @@
  __email__      = "stefanha@redhat.com"
  
@@ -143,22 +134,24 @@ index 432f216ea2b..51d978f998f 100644
  
  
  PUBLIC = True
-@@ -43,3 +43,9 @@ def generate_h(event, group):
+@@ -44,3 +44,11 @@ def generate_h(event, group):
  def generate_h_backend_dstate(event, group):
      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
          event_id="TRACE_" + event.name.upper())
 +
 +def generate_rs(event, group):
-+    out('        let format_string = c"%(fmt)s";',
-+        '        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, %(args)s);}',
-+        fmt=expand_format_string(event.fmt),
++    out('        let format_string = c"%(fmt)s\\n";',
++        '        if (unsafe { bindings::qemu_loglevel } & bindings::LOG_TRACE) != 0 {',
++        '            unsafe { bindings::qemu_log(format_string.as_ptr() as *const c_char, %(args)s);}',
++        '        }',
++        fmt=expand_format_string(event.fmt, event.name + " "),
 +        args=event.args.rust_call_varargs())
-diff --git a/tests/tracetool/ftrace.rs b/tests/tracetool/ftrace.rs
+diff --git a/tests/tracetool/log.rs b/tests/tracetool/log.rs
 new file mode 100644
-index 00000000000..950a89534af
+index 00000000000..fc95adafa46
 --- /dev/null
-+++ b/tests/tracetool/ftrace.rs
-@@ -0,0 +1,41 @@
++++ b/tests/tracetool/log.rs
+@@ -0,0 +1,45 @@
 +// This file is autogenerated by tracetool, do not edit.
 +
 +#[allow(unused_imports)]
@@ -186,8 +179,10 @@ index 00000000000..950a89534af
 +pub fn trace_test_blah(_context: *mut (), _filename: &std::ffi::CStr)
 +{
 +    if trace_event_get_state_dynamic_by_id(unsafe { _TRACE_TEST_BLAH_DSTATE}) {
-+        let format_string = c"Blah context=%p filename=%s";
-+        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _context, _filename.as_ptr());}
++        let format_string = c"test_blah Blah context=%p filename=%s\n";
++        if (unsafe { bindings::qemu_loglevel } & bindings::LOG_TRACE) != 0 {
++            unsafe { bindings::qemu_log(format_string.as_ptr() as *const c_char, _context, _filename.as_ptr());}
++        }
 +    }
 +}
 +
@@ -196,20 +191,22 @@ index 00000000000..950a89534af
 +pub fn trace_test_wibble(_context: *mut (), _value: std::ffi::c_int)
 +{
 +    if trace_event_get_state_dynamic_by_id(unsafe { _TRACE_TEST_WIBBLE_DSTATE}) {
-+        let format_string = c"Wibble context=%p value=%d";
-+        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _context, _value);}
++        let format_string = c"test_wibble Wibble context=%p value=%d\n";
++        if (unsafe { bindings::qemu_loglevel } & bindings::LOG_TRACE) != 0 {
++            unsafe { bindings::qemu_log(format_string.as_ptr() as *const c_char, _context, _value);}
++        }
 +    }
 +}
 diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
-index 5e5b16e2856..a91d635910a 100755
+index ad7dd667288..5e5b16e2856 100755
 --- a/tests/tracetool/tracetool-test.py
 +++ b/tests/tracetool/tracetool-test.py
 @@ -13,7 +13,7 @@ def get_formats(backend):
          "c",
          "h",
      ]
--    if backend in {"log", "simple"}:
-+    if backend in {"ftrace", "log", "simple"}:
+-    if backend in {"simple"}:
++    if backend in {"log", "simple"}:
          formats += ["rs"]
      if backend == "dtrace":
          formats += [
