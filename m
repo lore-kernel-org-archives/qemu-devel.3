@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 971F0CA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 14:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49242CA0EED
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 14:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upSnN-0004Pc-Ih; Fri, 22 Aug 2025 10:31:09 -0400
+	id 1upSo5-0004a5-AL; Fri, 22 Aug 2025 10:31:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1upSnJ-0004O3-Lf
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:31:06 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1upSnu-0004YJ-Mn
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:31:45 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1upSn7-0001N8-EZ
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:31:04 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b47174beb13so1517014a12.2
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 07:30:49 -0700 (PDT)
+ id 1upSni-0001SL-B8
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:31:40 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-76e2ea94c7dso2266065b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 07:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755873047; x=1756477847; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755873087; x=1756477887; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PLNTU53ljORTky88qET0MLPgGguVw0bEU3PpVKGMfpk=;
- b=rqfrX232s1Z7ZGSmBnvV52BA/P5Dx0TL5P+N8NEk13IMMUX+jTiXIOCybu/Je+KBYf
- 7RMh20HZd9ePl34gLi+NrtiqE/axjQaqMtP7b+a4P+9aqmHkVr2JcJCqFnxqcJparYhJ
- L4N7Ybj0tJorBcZPj4GdF5mUICMOHaG4F3D2NleTPF9Ck+dJN3mnOAID0sARKhVJ2T8i
- rhRy+kXFJc68kJN78CC+KlVxo+Kh2gWeUFJSJbyASS/wEjMPXhhM+zgL4rQyAUpce88P
- 82zmuizz1bIh/znTWkO1kjPeKOZ5YfEbfY84Qzu0kS7+wZsii7lFSt9PCwn0Q34RDjQq
- p+cA==
+ bh=46NHqqnDVFeCyTicknz7UWSyUHI1/BQZRAEyvIm08Hg=;
+ b=AxnyGsgpxk6p9Kd8dA1a6H+rbmnB7PjHMFksXpEj402P2A1pvOPZP8pdeiI7ttC3ES
+ ciD6wrwGtY8bQgIsILOQ9tI7Rk42FIja8Xp9oJdsKoU2N6bIkrJCHenYgK/mY//Saiov
+ 3BgyXmYJ3AMe+uZ+4MOWytauiug6K2OC3Xjunx2gJL3jcjD6KHhJPzDSTBD1EDXmkXu8
+ F6oD0UOgDbVTA1mdyC/LG8pVtOUtUFXPpp8N7mFNC4fA8xkk9V3+IjpbgpYkqSB58KVL
+ E3yEEHjTyid1LU/3vpvKswfiR6S1TithJlOgSAF+6BijHeJ5R369ZvtWqgrVRasMMwJV
+ whig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755873047; x=1756477847;
+ d=1e100.net; s=20230601; t=1755873087; x=1756477887;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PLNTU53ljORTky88qET0MLPgGguVw0bEU3PpVKGMfpk=;
- b=MAO7p6Sk+VTkl1dOnEaiJj5hPw+IZhdhM8doNA6ZxYkjTz5fuvdvB44NQemsrKKhSl
- UqmNvnIrPwP8mebTpl7XYug5ThNvlf9gIWelcOqSe578hUZ3afqzGfgOP2Ij0Znb2ql7
- F5wOG6nCCdlseuDHOf/MpQ9WmGtEOLjFNbyMi8igKaw2BzJiX2ZxHTSDlxC/Wz+VZi+k
- 74ilvPSsuARg3v38UoBKHu+fPRkAm1l57sqw6O+a7mkbWFHDov48YXSAYifSP95qd4Nx
- 3rQtov5kM5Af4ITQjokMKn7Y+sfZebktATW9r/AoaK1na4BRcU2z5fczi7uRb45OWzlb
- OLsQ==
-X-Gm-Message-State: AOJu0Yy80k4PkGbgjaKvrAs0MCwWwZxEl5GtmoGUmwp3yTnnSxys4HhH
- EkJ5KMIVcg6/kfuU9XiZTNJSlyhc1QWSq35BlEAVCbSPK3P152GnuHB6yadq9eyJ2oAsPMITIhJ
- ePZt8kZSGcQ==
-X-Gm-Gg: ASbGncvxAbkx2z99bSPmP4eKJdwsLnyqXmel9qCnxNLRdr/YCCuN/8O6WlX14f5O6i+
- j1/OJt5xbM7AtCIayEu6S5k5HX+WCm0fYk7vhRzS/ydAlLcx9dLBSnLSyJtLtEJUNvYU9J4zL/2
- B6DT5W6M2+lOSeFGTFzzKK5rIOQwsPE0Pcr8M7aRxD6f1l+t2PSJxkyuDx9Ihli/8/KDIHwRNqn
- +4OblH67yF26JdnXQu7EP6b08orQ+pAZzyteAFuneySbj7lS0RplllmwOEokTexBlwGs6moo3nV
- NwZlZELceh1iTkTsbsF2vLcefsS+oFQ6va/0Ywb038PAUETVzoAQonisPeXo2L3jXJW6AJug3z3
- ux4qH+ScNzDhIQlzz1Y+/QaKs/7Ee5VTVRsWF
-X-Google-Smtp-Source: AGHT+IHdGnrufYkXQDMnfMkqp92dNheALr5avMcLu9wzfRt4yEfdNfG6VnnrxTCibC4VsHO2KexuMQ==
-X-Received: by 2002:a17:903:1ae4:b0:235:e8da:8d1 with SMTP id
- d9443c01a7336-2462edc46ffmr43143735ad.8.1755873047120; 
- Fri, 22 Aug 2025 07:30:47 -0700 (PDT)
+ bh=46NHqqnDVFeCyTicknz7UWSyUHI1/BQZRAEyvIm08Hg=;
+ b=kqZqcvDSnzSD29dQAR404JuVrxqgEmmMDIAnZ2ODkK2rh6z5CzqsmqutuVE9D3fPoU
+ KEnSKWfFOCQmK3GFjevBGP7MB/ziq9oYd+NgwuLD4axcDWHgyl6pgWrYB/gTZG7oLo0a
+ ux7oX4i+9dcGusoSiTwiwrwNGkuRIVCJdyPv5mAq+R7ujX/n+mNhHJK4GyVOB+25EqQ+
+ g5nR+/A3CDGZU2PiApY/CCVyYhOtFzRdoHRHBMOl9KzSsmoV3ECjA7VpWdPCv5su9kDb
+ yw4mLnKbyEtMrckKyjM1i97SdES3sJuBV9wWe1ShNo0QrsA8UhohKXQiQa2Ee89X4tlH
+ 3GnQ==
+X-Gm-Message-State: AOJu0Yyi3K/K6qmwYWGTofhnUpdp911eWwtg9JnFH2iVoRMDvZU5SFJT
+ DuUNzVXsG39LXfSnyvlq9k1SKGQ7Pk3Uw3pgUI8ZsgIkKLREu4WLluS4z5+4NIt4vJhe/S6unW2
+ DqhGSzEhpWA==
+X-Gm-Gg: ASbGncsbG3tOxeR2OT/d3GkQ0PW/suPTO5uu2UDUR7MBavu+LDelsCF1h1UjWSTRRhp
+ RGFIPzXtGNnyVoZMK8hLVEgYLoVsTkoaHzzuF3MA7bmx71UE8WTD2NUp7JPMDIciebSHpzSrB5+
+ 8VOW2IYxyEbWzR3bPoyi5XPmD1xDODHCx5TSAIygcoFet8ag3dbjkHpAKICVwiTXrHUQPPOUJ5H
+ ZtlAOP4xa/piPmXsA3BhKM7LuND/kQ908A6Syqomd5zL6Ax8uVSMhOVFbgpDgmaKWuC/RT2C0p8
+ pUO+1RR9AenmMdh7SdAvJVvC9G48DuRJ27oapn2w28Ce1U1tMCUUOHfotIyWlPoBrCdXpblnblI
+ 84rwJzA7Y9KfoO3pSIglR58jFcF45u2CwQ1yV6W4MT4CtU2Y=
+X-Google-Smtp-Source: AGHT+IGR0EQMdaROLezv0fCFPKPSL1XwVNeSqoTLrWCnV4drqCyPAOArMWGTn4WL4JoVHWUIEMsKNg==
+X-Received: by 2002:a05:6a00:2e95:b0:76b:d746:733a with SMTP id
+ d2e1a72fcca58-7702fadbe8bmr4547699b3a.21.1755873086738; 
+ Fri, 22 Aug 2025 07:31:26 -0700 (PDT)
 Received: from [192.168.1.111] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2465ccc53a2sm4790465ad.88.2025.08.22.07.30.45
+ d2e1a72fcca58-77040215981sm86919b3a.87.2025.08.22.07.31.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Aug 2025 07:30:46 -0700 (PDT)
-Message-ID: <8d706a95-9f90-4ea6-a9bd-e39a2b84e768@linaro.org>
-Date: Fri, 22 Aug 2025 07:30:45 -0700
+ Fri, 22 Aug 2025 07:31:26 -0700 (PDT)
+Message-ID: <7c026d43-04b4-4615-8478-639393b640c2@linaro.org>
+Date: Fri, 22 Aug 2025 07:31:24 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] single-binary: compile some top level files once
+Subject: Re: [PATCH v3 00/12] single-binary: compile once semihosting
 Content-Language: en-US
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250730220519.1140447-1-pierrick.bouvier@linaro.org>
+Cc: qemu-riscv@nongnu.org, philmd@linaro.org, Weiwei Li
+ <liwei1518@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ richard.henderson@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-arm@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+References: <20250804183950.3147154-1-pierrick.bouvier@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250730220519.1140447-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250804183950.3147154-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,29 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-07-30 15:05, Pierrick Bouvier wrote:
-> We still have some files left on top files that are compiled per target. Start
-> with the ones included in this series.
+On 2025-08-04 11:39, Pierrick Bouvier wrote:
+> This series compiles once semihosting files in system mode.
+> The most complicated file was semihosting/arm-compat-semi.c, which was carefully
+> cleaned in easy to understand steps.
 > 
 > v2
 > --
 > 
-> - rebase cleanly on top of master
-> - remove empty page-target.c file
+> - use vaddr for syscalls.c/.h
+> - static qualifier for console_{in,out}_gf
+> - use vaddr for arm-compat-semi.c
+> - semihosting/arm-compat-semi: fix cast for common_semi_set_ret
 > 
-> Pierrick Bouvier (3):
->    cpu-target: build compilation unit once for user/system
->    include/exec/target_page.h: move page-target.c to header
->    system/main.c: compile only once
+> v3
+> --
 > 
->   meson.build                |  9 +++++----
->   include/exec/target_page.h | 11 ++++++++++-
->   cpu-target.c               |  5 -----
->   page-target.c              | 21 ---------------------
->   target-info-stub.c         |  4 ++++
->   system/meson.build         |  1 +
->   6 files changed, 20 insertions(+), 31 deletions(-)
->   delete mode 100644 page-target.c
+> - keep common_semi_sys_exit_extended (Peter)
+> 
+> Pierrick Bouvier (12):
+>    semihosting/syscalls: compile once in system and per target for user
+>      mode
+>    semihosting/syscalls: replace uint64_t with vaddr where appropriate
+>    semihosting/guestfd: compile once for system/user
+>    semihosting/arm-compat-semi: change common_semi_sys_exit_extended
+>    target/riscv/common-semi-target: remove sizeof(target_ulong)
+>    target/{arm,riscv}/common-semi-target: eradicate target_ulong
+>    include/semihosting/common-semi: extract common_semi API
+>    semihosting/arm-compat-semi: eradicate sizeof(target_ulong)
+>    semihosting/arm-compat-semi: replace target_ulong with uint64_t
+>    semihosting/arm-compat-semi: eradicate target_long
+>    semihosting/arm-compat-semi: remove dependency on cpu.h
+>    semihosting/arm-compat-semi: compile once in system and per target for
+>      user mode
+> 
+>   include/semihosting/common-semi.h             |   6 +
+>   include/semihosting/guestfd.h                 |   7 --
+>   include/semihosting/semihost.h                |   2 +
+>   include/semihosting/syscalls.h                |  30 ++---
+>   semihosting/arm-compat-semi-stub.c            |  19 +++
+>   semihosting/arm-compat-semi.c                 |  65 ++++++++---
+>   semihosting/guestfd.c                         |  26 +----
+>   semihosting/syscalls.c                        | 109 +++++++++---------
+>   ...mon-semi-target.h => common-semi-target.c} |  22 ++--
+>   ...mon-semi-target.h => common-semi-target.c} |  27 +++--
+>   semihosting/meson.build                       |  18 +--
+>   target/arm/meson.build                        |   4 +
+>   target/riscv/meson.build                      |   4 +
+>   13 files changed, 190 insertions(+), 149 deletions(-)
+>   create mode 100644 semihosting/arm-compat-semi-stub.c
+>   rename target/arm/{common-semi-target.h => common-semi-target.c} (59%)
+>   rename target/riscv/{common-semi-target.h => common-semi-target.c} (53%)
 > 
 
 Ping on this series.
