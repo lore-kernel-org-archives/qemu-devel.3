@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76AB1CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 14:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD5CECA0EEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 14:32:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upSbX-00016O-VS; Fri, 22 Aug 2025 10:18:56 -0400
+	id 1upSng-0004Uu-Up; Fri, 22 Aug 2025 10:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1upSbE-0000wm-Eu
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:18:39 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1upSne-0004UE-Rw
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:31:26 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1upSb7-00083t-C5
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:18:36 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-618b62dbb21so4249265a12.2
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 07:18:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1upSna-0001R2-DM
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:31:26 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-76e39ec6f52so2579168b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 07:31:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755872294; x=1756477094; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+NNgavYd/C6gRZunP2rCFnk7FmfqlLnbTrs4vpaeo5c=;
- b=rc/jqan5Z18bgJ96Cdzu4d1TvV/8duK9KNZh7uATqKb5LaP2Z1iTkXR95McnJf3Lnw
- CVx+L2x1q9T6gjVQDfTCyefNkjYWQf5sCVZrRPYEn7fMxrDryhyaFGZhz1XJcrokqnNC
- SWfNtseaqjr3phjbMyWNaQ2nBtteKvYJVyPldh7vjabwebk+qkwRmSwt/DLAfvdI/Bet
- 4VXMDCEnhICNuWTNAsofPdtUGXtbgQ8/iYV/7miUbs8toHgA3Ky6/GNB7RI/LRgrWpa9
- G+L6St3wZsHcKkh1u5oQgT7e9ydD7ozyLJZdZbnZmlfGceOSQ04xv50UD6UMa2x9UiAd
- k38A==
+ d=linaro.org; s=google; t=1755873076; x=1756477876; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KcELbuUw+1+H9mAOl6UQfrPWV7H4vzw3MR6CPhp1FTU=;
+ b=If0B6u82Ko2KDlO1VcOt9dsLdNtTYAdOH4/D3sAV+Pz32KK89XU5NX+iWTelfyIxXm
+ QcpPTUa3sW/bFDBq0Fshrqy2T84RnmMEE9XUTfoPsl9sj5dKz0ocmZNSmGN75EsehnKv
+ qdGfy/HFpnVz5wJzVDaeRn1XnwlILoOtCMHdIskLj7/dZGqqyKej8ObfmPYME/m/EGCz
+ z3iXBtWcMhjf8jK+2uYGrEvwVi3vf1NDaBQk2pLbg6uXDO1dk6T+lABkQqGymMDWOJ3O
+ JAWma2qWiykIDvIykpSdG9Ru0b61j8/Rmq+0ITX1JGvcv0fB5F6lZuw6qnRbJ9YSz65n
+ 4fyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755872294; x=1756477094;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+NNgavYd/C6gRZunP2rCFnk7FmfqlLnbTrs4vpaeo5c=;
- b=OA8oFa+RySRXx45Ox8Ng1IJ1nHA1rEQX36eIfbVL0aI0S7uxj17X2pKzahOdBvnge0
- FmR+U4aKok6Eq+2DGPNJInyG0qBk0nBCAP/mhwtnlsRdk0lBB1VDnk++cIF4pDJ1M6kS
- 4GODHxeMdZbe8VH4HxiCYclQfzqVlXFz+a0kWe2Jqpw+YDIAAwsvy9kLJF/pXaSm3tGz
- WztV43SLFskFxrKkeSZUQTtjsQbeoVbwTh8/vocVgmozS5WXHo2qjWI3Cgv54j732FpJ
- B3uL9mVrKI0FVf/PYelAtuZF96DQA9+wqTXlJn0d90v8WWCs+R6u1B6pMKGtrSnMjhGt
- HKYg==
-X-Gm-Message-State: AOJu0YwaIJxXIyD9NIVHbeNsE5B2//AtIGmIWJfaPnx7zF/1KsuXQjQK
- +lYbc/IpSgUQ7x0dxBJiq6G5nEpNaxEv9jRNKb+LhT9ELCEQwJJKayAI+1fiZvJ1J0F7t65J56k
- hksXv1hgiIgw1/tY/8Y6T5VFxQzEQ/1+AlIkgpZMXIw==
-X-Gm-Gg: ASbGncuoMtwDnFsrxFgt1d4enm5Jpp2MRX81Mhl1Hq0o12+p8+kw87kXXM61A4dWL35
- oECKA4dTJARcguG+mNfr0PnMycxqW64TKsDWpN4mTckXxGf9bmpci+ZoQaVL0Fjc0C56sFRDFI8
- wQ7x8WGt+7NPz6bW9miDeQgfsdp20K6YUsPAzoAaqQFp0zDSKV9NzarsXFIk5dD+I2mWBQ8Y+Ri
- dQOIpk9
-X-Google-Smtp-Source: AGHT+IE5YfX7zaWm0yEgcbvrkWSasCzLiMaKl7IFqrLkP803LwXoMxgew/I+ph3aLBfYXd9YofqV+5c4bVg2GL3LOoU=
-X-Received: by 2002:a05:6402:5110:b0:61c:2762:10e with SMTP id
- 4fb4d7f45d1cf-61c276208edmr1032115a12.32.1755872294416; Fri, 22 Aug 2025
- 07:18:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1755873076; x=1756477876;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KcELbuUw+1+H9mAOl6UQfrPWV7H4vzw3MR6CPhp1FTU=;
+ b=vQ+GmSo9nVjMeFhA1THCtBoV4hYy9/20khASXoAcbIkVy6tIQ8SLh4bxOXDVqkFewd
+ 8ur1WiAoTcgGPIFIUYQEpByRaqbfkqhEro2N+rYccAiNsUgZFmdQ5ILm6VW9Si8lNTd8
+ lSzzn0nV9zazpkcgw1FeNDa3dwnkwciy9G/npbmMzQ3okIi79DQVj0kD+BycfkZtX31X
+ hGV7pYHhueby60iqOZYcfsBTx7nGCqykH6Lj3tb7TkiwuqWbavBv4X2S8sg35CeJqZ6G
+ wnGy7i4G3VJtdht97KQ3IHVzBVKDrpPbduQ60ZNavyU3+8b0pHi/YuCpPPyCNv4NUrCj
+ HUew==
+X-Gm-Message-State: AOJu0Yzp0PNwQrtZ+7jLVc+NNPBWakYiLWV/URB4LpGILItGeLOMcHcO
+ LX3GkmUC8MPopWBhCwh5r+vhQo961vf9wW15MiswMEwNC1p0YNHgNkEYDkp+0R2poK0N3xrwkXW
+ JCCHQrcP1Kg==
+X-Gm-Gg: ASbGncvPbscEgIRSmEMH6Z8x0z6qSSywCZ93/oaTY4gN2j8gLN1sCS5/Cwnh3r1ttHo
+ LB8zGKd0A2WJh91wJMMyqpYJCzrN5X4ToyxsQ/VXhvNam7RA37eaVoGasGqEKWqLZujNNwjA2Uz
+ h+eCYX2eS3BsLTSPDOUW9j6oI5hdvzGunBdpxX6PNbJGKbuhJzetMZFBfTrK+A71TpL84tRhrwk
+ 1qBosf5vniWWu7SmP2WIY5sSKtNbJ8DJxpG1eG97F9D+Isa/Jb1DafnM57T4U3zOeeaZlayTrpT
+ AKGzBKyD4VV6Z9zf82OHbYkC1qWXN92peGlLkYKD9AT8d4RJ3ZFpaWMZ87an9PC68mO0/U+sXIY
+ RuZ8INe0NBi+CA2l5UeGOjZXpYqeRB9Wzi9A/
+X-Google-Smtp-Source: AGHT+IG/qnmJphPksiFoF5HNix04sfvMrecB3tSCzxKuuoV+LT+s6eanNCiy2VASn6zRxic580x5tA==
+X-Received: by 2002:a05:6a00:3e1e:b0:76b:caa5:9a32 with SMTP id
+ d2e1a72fcca58-7702fa019ddmr3763536b3a.11.1755873075170; 
+ Fri, 22 Aug 2025 07:31:15 -0700 (PDT)
+Received: from [192.168.1.111] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7703ffb48a0sm130837b3a.8.2025.08.22.07.31.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Aug 2025 07:31:14 -0700 (PDT)
+Message-ID: <3ca7be1f-267e-45c9-9894-67e920ad5ee9@linaro.org>
+Date: Fri, 22 Aug 2025 07:31:13 -0700
 MIME-Version: 1.0
-References: <20250822134652.1366100-1-pbonzini@redhat.com>
-In-Reply-To: <20250822134652.1366100-1-pbonzini@redhat.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 22 Aug 2025 17:17:48 +0300
-X-Gm-Features: Ac12FXwpJhjlo8d7A7b5OC71vze56Sqd-hksmDKIx8uK6SrbKcxUf7uv1mCd6Js
-Message-ID: <CAAjaMXaSmM3FtDNXw3+FO92wx=gNtdrR1pDKabZ8Y3y1rRtvfg@mail.gmail.com>
-Subject: Re: [PATCH] python: mkvenv: fix messages printed by mkvenv
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- John Snow <jsnow@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] single-binary: compile hw/intc/arm* files once
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, philmd@linaro.org
+References: <20250801174006.2466508-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250801174006.2466508-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,52 +102,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 22, 2025 at 4:48=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> The new Matcher class does not have a __str__ implementation, and therefo=
-re
-> it prints the debugging representation of the internal object:
->
->   $ ../configure --enable-rust && make qemu-system-arm --enable-download
->   python determined to be '/usr/bin/python3'
->   python version: Python 3.13.6
->   mkvenv: Creating non-isolated virtual environment at 'pyvenv'
->   mkvenv: checking for LegacyMatcher('meson>=3D1.5.0')
->   mkvenv: checking for LegacyMatcher('pycotap>=3D1.1.0')
->
-> Add the method to print the nicer
->
->   mkvenv: checking for meson>=3D1.5.0
->   mkvenv: checking for pycotap>=3D1.1.0
->
-> Cc: qemu-stable@nongnu.org
-> Cc: John Snow <jsnow@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
+On 2025-08-01 10:40, Pierrick Bouvier wrote:
+> We simply compile them as target common code, without moving them to hw/arm.
+> 
+> Pierrick Bouvier (2):
+>    hw/meson: enter target hw first
+>    hw/intc: compile some arm related source once
+> 
+>   hw/intc/meson.build |  6 +++---
+>   hw/meson.build      | 45 +++++++++++++++++++++++----------------------
+>   2 files changed, 26 insertions(+), 25 deletions(-)
+> 
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
->  python/scripts/mkvenv.py | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-> index f102527c4de..9aed266df1b 100644
-> --- a/python/scripts/mkvenv.py
-> +++ b/python/scripts/mkvenv.py
-> @@ -184,6 +184,10 @@ def match(self, version_str: str) -> bool:
->              )
->          )
->
-> +    def __str__(self) -> str:
-> +        """String representation delegated to the backend."""
-> +        return str(self._m)
-> +
->      def __repr__(self) -> str:
->          """Stable debug representation delegated to the backend."""
->          return repr(self._m)
-> --
-> 2.50.1
->
->
+Ping on this series.
+I'll be out next week, but it should be ready to be pulled once the 
+trunk reopens.
+
+Regards,
+Pierrick
 
