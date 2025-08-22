@@ -4,149 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C8ACA0EEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 22:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71239CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 23:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upaS2-0002cw-QF; Fri, 22 Aug 2025 18:41:38 -0400
+	id 1upat8-0001Jg-L1; Fri, 22 Aug 2025 19:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1upaRy-0002cB-O3
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 18:41:35 -0400
-Received: from mail-dm6nam10on2062b.outbound.protection.outlook.com
- ([2a01:111:f403:2413::62b]
- helo=NAM10-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1upaRW-0002J9-6Z
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 18:41:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lf/FTl/dwSMTU7xX9iF9Hd+u0WAL0KChVXJLVre3opCK1XjqgGwQ15BDnJGWgwcdtcjlz2VlK1MpPgFKTtkwlRZPosHnl60DkowxT279Ki0BUFnQKuLuQtZPcOcg97z3HW2SBUpt/8GlGR3HEA5oN3m+aNpG/QV9VH1oqQfAgV0uVozXwz1x+0jfT+MnvGnpIY1PtLi995t7hnl1WjlW/jG6yVtbQzyDqAfoj5UC8+VU1R0NFE4o1735GRin6d43HxJDzWHN6YOsY2G1pjdI+xowDLfNYJZwpnLh7H8z4sZslho4PJ8hVMJ12Q6KejsBjX99RmZMOR8H0F97xYgtRA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IwlUVlSJSJKioi1oxgFe9is9y4pThKn1XRFCrfCEkhU=;
- b=RVx4exRfsFmRPt8kXIK9AxbstjDxVaJ2UvpAT8dvOof64cfrY8EGGWUeR1spF7eOfvz82j2ch4F47aNFTLv3iySe3Lf97UE5BjAIvmChBHjHpD/hrkpuP56uToDr0VA213EF2WbNYyJQ+WGpz6N9eAOiIUJZVrrwU8QHCFCPZTIt+EjLtWCGkh2f0i5/qXOITpqTX4Uihd2nGMVuBF7hIBGdeOfLjbxNnNSsjuKrs7qGnKWeCIcQxgyb/xbh7Ft41n/PRheRBIoeGijCtLHp7NsUdsNwop1It8+9FW1vAqhgcOoQgGw/1VrIn+VkgG7Q4R348/Ik0AxAXW5gyxIH4w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IwlUVlSJSJKioi1oxgFe9is9y4pThKn1XRFCrfCEkhU=;
- b=B09adaAaoCpvpNpI8kOEp0CxHEt3KrBMXNcqiP5KghD8OFwdqVEh47EKF8IVHU/pxIK19uXU7fUs9EEAEjZjF+7DmrE+tF9Jb8hYd+6/dtFq+utmfTaG1ZbZGN5+SeWoD0L5d4iZC2ei6e5OeqCiYFgbFDJXPjvB3MLKTnzSjMLIjaXd1QMWHDHUfjajGvHSE3rGsOxCP/V1Z4t7eFbRFDQoyP1lLi+VhdrJWwdrqgNDRFXXDWA0U2Hb2kj+9V83eznYx2acgebHzmCeFUb/KeQ8x4cttA0rCbNr59qjKBiZkrVUlAZ/WYqkllz/BNIQk8FaQ5PpfsimDtaxGTSaQw==
-Received: from CH2PR11CA0006.namprd11.prod.outlook.com (2603:10b6:610:54::16)
- by MW6PR12MB8949.namprd12.prod.outlook.com (2603:10b6:303:248::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.15; Fri, 22 Aug
- 2025 22:40:43 +0000
-Received: from CH3PEPF00000015.namprd21.prod.outlook.com
- (2603:10b6:610:54:cafe::98) by CH2PR11CA0006.outlook.office365.com
- (2603:10b6:610:54::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.18 via Frontend Transport; Fri,
- 22 Aug 2025 22:40:43 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- CH3PEPF00000015.mail.protection.outlook.com (10.167.244.120) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9073.0 via Frontend Transport; Fri, 22 Aug 2025 22:40:43 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 22 Aug
- 2025 15:40:29 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Fri, 22 Aug 2025 15:40:28 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Fri, 22 Aug 2025 15:40:28 -0700
-Date: Fri, 22 Aug 2025 15:40:26 -0700
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-CC: <qemu-devel@nongnu.org>, <alex.williamson@redhat.com>, <clg@redhat.com>,
- <eric.auger@redhat.com>, <mst@redhat.com>, <jasowang@redhat.com>,
- <peterx@redhat.com>, <ddutile@redhat.com>, <jgg@nvidia.com>,
- <joao.m.martins@oracle.com>, <clement.mathieu--drif@eviden.com>,
- <kevin.tian@intel.com>, <yi.l.liu@intel.com>, <chao.p.peng@intel.com>
-Subject: Re: [PATCH v5 04/21] vfio: Introduce helper
- vfio_pci_from_vfio_device()
-Message-ID: <aKjx2mckGYSD6bK0@Asurada-Nvidia>
-References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
- <20250822064101.123526-5-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1upat5-0001Ix-7q; Fri, 22 Aug 2025 19:09:35 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1upasy-0006Gq-7s; Fri, 22 Aug 2025 19:09:33 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-323267bc0a8so3038821a91.1; 
+ Fri, 22 Aug 2025 16:09:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1755904161; x=1756508961; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+ :reply-to; bh=fsgqxL4kN4cjwTfi+W7uPaSwoZlXzRyJTDEuQTB78sE=;
+ b=d+/X3Z4tzmhJjUIMCke3m06B4zGvG59zyRGYLMGG9QVoZZWLb1livoWLzWIELs61Zf
+ ADTTZHQ5GcdUmSQBWeWo44KUJhLt0eyOyrBZwwKVf0SaCWSXRGI/a52/h8Kimih0Tcvl
+ Qy/XF95UBWZ5Hfmw112DKDDeZhOe603w2LkZAx1Tc39LAcf9XTrzQOdFfs8lIYF9AjxT
+ GM67WxMm8PDMyQ4vq/q5WQ0r3pNxG+NXqOOQElKSB6D55WNY1ty6aJNm2ZkwMPu/Mg4I
+ f5A9ZUV0WaevYczIGRBzpkN7CgEX1SyK7hrbnuMwjffQ8HA5c6H7EkLgYz4eBEi1YbPv
+ ZXSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755904161; x=1756508961;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fsgqxL4kN4cjwTfi+W7uPaSwoZlXzRyJTDEuQTB78sE=;
+ b=prlUZzalalTvcKMQ1vCesmOT1k36/f2Tou4WZpR5smBz4ORlmN3RFfRgeYK56dl8HH
+ p2b2TBz4o1MbavC92/3H8WjUcg2H0zb0GhZ/qMxJUXGLxsPii99FRYkbbKAzu/9zQxif
+ kjTGSJcCKYderToEtHCOCperP9pM54Qry802jnOQMo6aq//yE8Y8pJlqVTHKjSF+tWvQ
+ Aw7iUmN/T2EbVl5U1zxe3icd5M/IX12DdC+MRWf6lm6f4YEdKnLk+K5KnJ0q3bFuf/tJ
+ uiU4wNlXRJarzaAP9SeWQjRXEHpPk8Q0Oke0GS38lWc4sFzl9xyAhTmcnuVSl4cvO9uY
+ Y/hA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXOhyrFbwdb82+tUdWma2JpE+s8quKf+q71qarBWCH90igDKLz/lshWmP8bIWKLJQ1/CUyNfJJRFw==@nongnu.org
+X-Gm-Message-State: AOJu0YwWEnmGo830I3LjhWHptHAYAoFSRN+VoSjmFo29gHKaZeSQ+ngQ
+ iVVVEi5TS+aJzunYSvPoOORgXrfoGUOdwrEIKxdUsY14ZbYqrs21qoWt
+X-Gm-Gg: ASbGncuMAXJy8ZCzn8hTGjiZJbPX4lLFk6dPO31lKfHATJcNrn+zqG9UHCtulqYaOPC
+ TU0Dmi3wiiyfcTvxBz4FA1Qd/J6WfvAuLx5yLw08aMWBsIJ+DlFT0JOyv2OzvnCCQr+Or0O+m/J
+ 5R3aV7e+nKBTtFx/I8i9d638X5dhGKCHZ+M02AevD9Vwn9WXA7Ff92cXYc3NYVhFgnnX2qKo482
+ +BKRFoHC+Xb96O+Rnqzy8ysu4MDxKwZ0OLnfYbRGueYAAM3IsnNFCCcLJSgxHwgEg35AMJP9/0w
+ jCjzFuSS58bnYTNUjF+kbDyFQi1vEmKiBDASEX9p2aN/kxGvCoCjlAE/AYYdQ8PNzREEZdGKOxK
+ 7cwFwX00FKFklFLpM254YIt/cwzjgQvXdxiE=
+X-Google-Smtp-Source: AGHT+IGK+dgtnBLPmx9whHPcXKTxoYUsnNvAHue2hTpGQ8ANIoQDLqbNIiH3/fvyKntulxpppkpGug==
+X-Received: by 2002:a17:90b:5627:b0:31e:ec58:62e2 with SMTP id
+ 98e67ed59e1d1-32515eaafdcmr7371529a91.19.1755904161038; 
+ Fri, 22 Aug 2025 16:09:21 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b49cb8918e7sm793002a12.6.2025.08.22.16.09.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 Aug 2025 16:09:20 -0700 (PDT)
+Date: Fri, 22 Aug 2025 16:09:18 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH 00/10] Designware PCIe host fixes
+Message-ID: <3e9ce165-9136-417e-bcac-d6f7fad0fee8@roeck-us.net>
+References: <20250820211932.27302-1-shentey@gmail.com>
+ <7804e625-2421-473f-9320-89fa0cc0d085@roeck-us.net>
+ <D1762D97-2253-4503-9BD9-E4BF6BED1EAE@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250822064101.123526-5-zhenzhong.duan@intel.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF00000015:EE_|MW6PR12MB8949:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7048a57c-a9ab-4de4-8ffd-08dde1ccedb8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|7416014|36860700013|1800799024|7053199007|13003099007;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?zJ/Yb7j2QDDpCx0ITfD+ZOv+cFf4uICQoKnJ3sXm/kkVC+SjyIo8Sm7e9R?=
- =?iso-8859-1?Q?pMxGCmoP90ttbUAut+IoAR8Bi7XXIsjrrQSxOD6biIgMg6PKuPAscRtO5R?=
- =?iso-8859-1?Q?3vJt0SnBOJt8DDUgiPyBA5fBIIOZ5KOKqTdzCexYv6WHZFYflcIcNhHzA6?=
- =?iso-8859-1?Q?w8NCgYkdiwUWU6tfoeT8xexwf2MYqCKoZN4R0qDd+VeFKyTowt/apdX0g9?=
- =?iso-8859-1?Q?FGI9HE+GnvgPaLk6hqa2weVTJIWPQE3BRwSegMhc7/Ep+24FffEDFY4G5+?=
- =?iso-8859-1?Q?tc2f+2FTcYtAdzCcKMvrZ6OJ+5lP9eCNiprKpca7duF+hvSA0lRwISpB1L?=
- =?iso-8859-1?Q?PW78RidPo+7WV2fwQYN5MFdnJ4Qh/68YTslP8drwSdXuJezbOsVT2XMR8h?=
- =?iso-8859-1?Q?1DvjifkcS54x1n1uZeAAWmsX14MUUFXq0pIdUhIsFsxYDFU5oeDJPEiT+U?=
- =?iso-8859-1?Q?cE8ic884cg6E1qktiPBaRzMFf0zeVNTvwDJOjUTXujEaPKXzfL4OCp0tcE?=
- =?iso-8859-1?Q?2HB8bcQmsZsLpcHxvYroLwvWzhfRDuNqxrMTBa68iNj3KS0qbc7ZDwXaRf?=
- =?iso-8859-1?Q?luyiz9hN/S2UsP2qBOqPeSWidzzlp7c4DU/cHt8epGWkzrKqPJllS+gjLZ?=
- =?iso-8859-1?Q?4sG9QobwGEAU4OEqfBXoG1s61Hb8JKx18YoZHM2eMW+F1cNFdaycVSbKoc?=
- =?iso-8859-1?Q?N9EVD/L2+dor45WfRo4akXNUyjbJOlEvT6gHFM/2/JTR64qgS1Sj09JUNa?=
- =?iso-8859-1?Q?/jy5nqE3iKqfXAvXmztDuEREQf+zwR3s3Mf8DuTYb9pRWUuXW0YmE/say0?=
- =?iso-8859-1?Q?iMhizcQBeVhQfepP44R5KToA+UR5gVKLc2bfezOKapX73WN8lL+0Pc0T/j?=
- =?iso-8859-1?Q?jm/rafh1LNB5GYyIVmPrF/4y9wRgXdL5FmKYSZ59L4v3Br2SeOSt7RvyFe?=
- =?iso-8859-1?Q?rwRDypIeRpZOJ6tfw6PI6sXMeHUf+/NiRPcjxO+q2/sx6xZp7Yrwf/o620?=
- =?iso-8859-1?Q?Hne7/3vpVOKmytD8vL7uSEnxE/Gv9p1gbcUI0Di0sEUKJm8MkrsdQOukCX?=
- =?iso-8859-1?Q?UVVHrqmBXzWvF6KpaO80xBAPlsEPDY+pSe1Fpz+6MCKegdVop66UI6DUb2?=
- =?iso-8859-1?Q?1FCR4PQGbf814HISi99Rkj9laN3ugh/guHB+mi0MP4nGibry7GN7fesJK/?=
- =?iso-8859-1?Q?8ahQF/HWDI5jxM+ztdUAKKk3ZUyJh2+NPnZjmWWQiNJZrC7+F6A7KtLfRE?=
- =?iso-8859-1?Q?M9L/KEfomB8+5stnU2W13ofQrCZK2/w4k4WAxHml913tbaZ4O2Amq/n6U0?=
- =?iso-8859-1?Q?cHrDAOp5gS+F2Z6bGih8RzuVvVT/uEIt7DegSksQuwZA5f3/EBDWfU46UL?=
- =?iso-8859-1?Q?XlfG5Nw4OgY7KNLhyQBZ4qZpeY9IjijRhcbsWu02BA9MN2VLt0HxkmDzJT?=
- =?iso-8859-1?Q?sKpJ78frUn2b5a1XPQMOgDllVzk3AJyjlbaBRWgIf2onJOEydoBGLBC/O5?=
- =?iso-8859-1?Q?B5NVyq3C6xWcPfPJ8x3MHhJLyUQ4Vg127E8ZQwqFa+OLLpE5CaVbau8Y8K?=
- =?iso-8859-1?Q?td/aHAWQrNuTHH9ghRLpJmUxaaDdBxuPhBDG1EPXpxutAWV4DA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(7416014)(36860700013)(1800799024)(7053199007)(13003099007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2025 22:40:43.2709 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7048a57c-a9ab-4de4-8ffd-08dde1ccedb8
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH3PEPF00000015.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8949
-Received-SPF: permerror client-ip=2a01:111:f403:2413::62b;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FORGED_SPF_HELO=1, KHOP_HELO_FCRDNS=0.399,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+In-Reply-To: <D1762D97-2253-4503-9BD9-E4BF6BED1EAE@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=groeck7@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.067, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,45 +99,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Nicolin Chen <nicolinc@nvidia.com>
-From:  Nicolin Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 22, 2025 at 02:40:42AM -0400, Zhenzhong Duan wrote:
-> Introduce helper vfio_pci_from_vfio_device() to transform from VFIODevice
-> to VFIOPCIDevice, also to hide low level VFIO_DEVICE_TYPE_PCI type check.
+On Thu, Aug 21, 2025 at 10:24:02AM +0000, Bernhard Beschow wrote:
 > 
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> Link: https://lore.kernel.org/qemu-devel/20250801023533.1458644-1-zhenzhong.duan@intel.com
-> [ clg: Added documentation ]
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> 
+> Am 21. August 2025 03:36:44 UTC schrieb Guenter Roeck <linux@roeck-us.net>:
+> >On 8/20/25 14:19, Bernhard Beschow wrote:
+> >> This series fixes the Designware PCIe host to work with cards other than
+> >> virio-net-pci, e.g. e1000. It was tested on the imx8mp-evk machine.
+> >> 
+> >> The series is structured as follows: The first part refactors the device
+> >> model to create memory regions for inbound/outbound PCI mappings on demand
+> >> rather than upfront since this approach doesn't scale for adding I/O space
+> >> support. The second part consists of fixing the memory mapping by adding I/O
+> >> space support and fixing default inbound viewport mapping. The third part
+> >> concludes the series by implementing device reset and cleaning up the imx8mp SoC
+> >> implementation.
+> >> 
+> >> Testing done:
+> >> * Boot imx8mp-evk machine with Buildroot while having an e1000 card attached.
+> >> Observe that it gets an IP address via DHCP and allows for downloading an HTML
+> >> file via HTTP.
+> >> 
+> >Crashing for me even if no PCIe card is attached. This is with the series applied
+> >on top of 10.1.0-rc4 or 10.0.3. I have not tried to track down the problem.
+> >
+> >Guenter
+> 
+> Hi Guenther,
+> 
+> Thanks for testing this series! I can reproduce the issue with Buildroot while the functional test passes...
+> 
+> I guess that I was too optimistic in having resolved the issue mentioned in the last patch. Does it work for you if you omit it?
+> 
 
-I think we should drop the link? The link points to the v3 that
-is not the officially accepted one now, as this PATCH-04 would
-be? IOW, the commit should probably have a link to this patch
-instead.
+It gives me hung task crashes when trying to boot from virtio-pci.
+I'll need some time for debugging.
 
-Also, in general, your "Signed-off-by" should be the last line,
-when you submit a patch.
-
-With that,
-
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index 810a842f4a..beb8fb9ee7 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -221,6 +221,18 @@ void vfio_pci_write_config(PCIDevice *pdev,
->  uint64_t vfio_vga_read(void *opaque, hwaddr addr, unsigned size);
->  void vfio_vga_write(void *opaque, hwaddr addr, uint64_t data, unsigned size);
->  
-> +/**
-> + * vfio_pci_from_vfio_device: Transform from VFIODevice to
-> + * VFIOPCIDevice
-
-Nit: this could fit into one line.
+Guenter
 
