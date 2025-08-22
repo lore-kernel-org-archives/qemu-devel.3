@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D156FCA0EEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 14:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97EA4CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 14:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upT9X-0004M5-1H; Fri, 22 Aug 2025 10:54:03 -0400
+	id 1upTAR-0004hC-QM; Fri, 22 Aug 2025 10:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1upT9V-0004JL-38
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:54:01 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1upTAJ-0004cc-AH
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:54:51 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1upT9Q-0003t3-JN
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:53:59 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3b9d41bfa35so1672716f8f.0
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 07:53:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1upTAF-0003w2-Jy
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 10:54:50 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0bd237so16527135e9.2
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 07:54:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755874428; x=1756479228; darn=nongnu.org;
+ d=linaro.org; s=google; t=1755874481; x=1756479281; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=B8/yuiXH2uxuuKdRnM6zCV4MFEMK8N2lAEcE0P13lBc=;
- b=yquo+4oqfSkAZnvKFJSLkDwYBhLL9AuciToiSm57aPQ+bGEwACxwwVDaupuPhJUpZJ
- PNK+ucJTy4PJTgnt0yxWzzfOFoMgbPLe3odLipwfW+POgugclNNJqQT0of28ripyuKek
- v+1qNmgx4VomTXV0rFIr4dYxxckveKrN+6WO2vuOsDdd01qmx8ZIMOPv8Yq7VTCaGYe4
- 7gIr8RzQIedORv4yYDXN5bg3UIEd5ycQrPgnzO3qwfU/eVY2skD1+eSWRqH4nYYQQcWH
- 5y+gX+zYNz51E6iRDkAKNkr3ZE4UqLFdbkWM8ZpRt//DzyRgMiWpKByeZRvEbv/zXFgf
- xyDA==
+ bh=bWjZWTxNyA+qhiNOJ6EJkD+ucHOkrk8FYbDXp7TDA6Y=;
+ b=Tk++fu5kfw0VvORqVIN9lBzTMZP6dkbKlv7ZVN4ltoLxLmUiy8m06P0ZfgxD2e5q3Q
+ vJrWHsqKutZ2k4weyThy5a/l7R4gjMeWD/+Ayzd15MzRhhDHxYMf8xQ/nywjjrkQsWcd
+ netlG+TV5b7YaSeU073/qRuFe9qY2LWcriXqEgFi2J7AaoRyV0SxnelDbAbcAyivIHao
+ /Sx6uKdWnMz4btSxtu7VsIjDiJJg3Wpwan95emKA31QqIzlwA5VP8nJ325ZJYoYkfbAj
+ jw/QcPWocKbcc49tj0oN2IA+Hd10il53v4CnQxmE1ilfBy7caIZVP0wn7l4AYJ/ANWlm
+ smhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755874428; x=1756479228;
+ d=1e100.net; s=20230601; t=1755874481; x=1756479281;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B8/yuiXH2uxuuKdRnM6zCV4MFEMK8N2lAEcE0P13lBc=;
- b=Jvls7zWg/XRoq8o1AmVLFhEgkwtXfCRHnqobV0/Mws6y47ZEJ0xfRcstNOcKmOjzpz
- a1uiwB9L4DI8J/ROv1wt/H/FvQehDG00xewuPG9pQ2twUOD+ODtg61KC1Nc/YSIczIij
- p2ISieZP4tlyvl5Jl3qs2Hi8ncBcLK7SibKFqYEx5dvMBa8Y5t29V3j3EPoku4sanaSi
- BAU4ZKE57T1PItBi0kJZ+oz4mJK3KRWGH6r9mkXxpjy6SZNudBq2HlzV8UJ+6J5gjYjc
- Ywm86OyeJhshqiX4KRSas53xOJsqWsF7OYnpJ8MzbZE3pnyGSXb70MmKMXxJA8IBj2UC
- LaMA==
+ bh=bWjZWTxNyA+qhiNOJ6EJkD+ucHOkrk8FYbDXp7TDA6Y=;
+ b=vY+jAtVeQ+NJl9gcI90JORpXmmWSyJjErI0w7xMPRD9OzGMRmxKWZxMgANncp1cb+c
+ sAkBy9gO78tJwFNchvBWUe751RBHcTBe05z0SE+k4cYqlTVbNSVkgTr/tJNSZNo98wjN
+ G65qEX0Kuom2wnI82ZajMuG1kh3X1jZCQf8HYNYhazm16oF7UIu7tKDyxuKU+vaSGiTd
+ fZJFF8UmrnO85cU85ZaLt8DgBsQKbU5b8KJnMhJZhaciNnQDUVEd22JSzQxfjk61xMMC
+ 120VgPcrOftUDHjtp17eJ00p/2zrqQKb5t2EPQAXDYjEdap6i8y5QDvXt/bBGIymj2CV
+ 2aGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWIdCx1bMT3IidVesk0eGhqxhQPKUVowIJ+gwXfUAymfIeU9M8E867Cj/B+FRtLF4KTPIjiQrDdn80@nongnu.org
-X-Gm-Message-State: AOJu0Yxxezu9sfwnGFu7m+xL7QC2o+Q1dIET3iZJ14QKkpwK5LpVL9Pc
- QdEzTYFxbXaq4yYF5gHNu6i/NYkoSz5K+KJrIqKrjU7f4gW5iBnXWN1d9txNF/L7BDYdvAoMeP5
- ykmLJ
-X-Gm-Gg: ASbGncvzZKKq5yW+LF4hMcnoGWTh9GI/RKtLBOqzl2kTJXJRCsdrqd6nB89+xxaX2AR
- JJc07uWYYeOYuF8x5Ta1czEwsm4WrI11eUcQg7y7Qk6/2B5gHyqBHn709BIqep8mo8LuXOKRzCv
- yjF7aTKBoUEGoPGBYM2C9NAV98PxWHV64nGB4uNg8XqxLaOJaWEK4FVpUD+C0fEKS5DM8SzCDjd
- CSeOPwbxqifxe9bxpcBIykoo2qWMe0BUklWhLdXQlydPEikWMEIGKkOeEkZ5KRIWM6PFtMYGKo8
- bSS+4ehSe+9sQd1OsnPFdxNwGFWRaKK4fOVEaJ6ZH9ZuPdS6bdWrj1bOt6BHiTCo2zhaT3FyOt0
- zKrXEQcag5lMXAe2CBvERjGrsaHWy4n7p/koPWts/8dwmI3SyggkdX9A0tARIYTrQSrWYeUE=
-X-Google-Smtp-Source: AGHT+IGSiOjltcILbAQ1a2kF/lG9KVWrw4COLVmMBEjJbdkJy/DJIbwwDmrhay7GCMfbAGCs0kMvNw==
-X-Received: by 2002:a05:6000:26cb:b0:3b7:952c:5de with SMTP id
- ffacd0b85a97d-3c5dc638421mr2047820f8f.29.1755874427931; 
- Fri, 22 Aug 2025 07:53:47 -0700 (PDT)
+ AJvYcCXFCfxq/rhKasbgCWexMmiHALcPA8QcMuEwO2PbsOfdWt2FMzDxI8HeZcSAbeG7Hnk+z/G6MrFGnb4W@nongnu.org
+X-Gm-Message-State: AOJu0YwkLUyu1qJiirj6WAIdwrT80fUGoLqV3DSxB9I7L77CLqKMiLas
+ cOHfRM9BpOjY3oD7lQ90YhWlPyEnbovOIU3949XvQ0aklhvEZi78B405CjbuIJSXQM8=
+X-Gm-Gg: ASbGncvpCZl8kUgOI5yN1C8Vqc5H/IMUbhlHkJ3QhEpTdyLCT1KtOpQkH+2YfY+GmF0
+ 3c4IQagYDOXGrJLbrYvKPS5o4+Ue9hCnK9Qg9xaogwz0/EQo9SXfWhOaQboOauHD0/ci4rifVKh
+ +NchbJn3PCAg9Tj3Nvx1Fj85lhyYuBf3pDV8oR46cucJVMKRSq8d8ki1r4JrjFL3YRZzO1Ip90P
+ TspM6qGNLUrhUJzbl7kLDtXZwRw86LjbqG8U6647Wb8Jwm6abnnaqvZ7AsfoVmxYdKJJHWF2PxC
+ GtCbUBFMjyzBEK2QHYjxWkK4roqCVpSlCQ3v5iyu/xtud2NWht1qXxfcoBlpDTzx2I2JYbHoMtB
+ FRyPtN5LN/3EXVDXfFIed4W8Ov5gl4tpdJ6eHZXvI3Z2TfrBiUyGmGLG6ya6D1/nwxYBpUyo=
+X-Google-Smtp-Source: AGHT+IFblZrW81weoUhrjY/ebuJgbGo7Wf2QuMxCpSxm3qC84LvqyfxwMBh+t+nrHI50/GH6GgvWmg==
+X-Received: by 2002:a05:600c:1548:b0:456:fd4:5322 with SMTP id
+ 5b1f17b1804b1-45b5179e7f3mr28019135e9.11.1755874481332; 
+ Fri, 22 Aug 2025 07:54:41 -0700 (PDT)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c6e2d3f2aesm339567f8f.58.2025.08.22.07.53.47
+ ffacd0b85a97d-3c6317a6a72sm2508623f8f.11.2025.08.22.07.54.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Aug 2025 07:53:47 -0700 (PDT)
-Message-ID: <ac33ad27-856e-45c6-a1d9-aa6704783ac1@linaro.org>
-Date: Fri, 22 Aug 2025 16:53:46 +0200
+ Fri, 22 Aug 2025 07:54:40 -0700 (PDT)
+Message-ID: <c5f5c2f2-11a9-4904-9fe6-18984b3c4f80@linaro.org>
+Date: Fri, 22 Aug 2025 16:54:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] single-binary: compile once migration files
+Subject: Re: [PATCH v2 0/3] single-binary: compile some top level files once
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <20250730220435.1139101-1-pierrick.bouvier@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250730220519.1140447-1-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250730220435.1139101-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250730220519.1140447-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,13 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/7/25 00:04, Pierrick Bouvier wrote:
-> This series removes target dependencies in migration code.
+On 31/7/25 00:05, Pierrick Bouvier wrote:
+> We still have some files left on top files that are compiled per target. Start
+> with the ones included in this series.
 
 
-> Pierrick Bouvier (2):
->    migration: compile migration/ram.c once
->    migration/vfio: compile only once
+> Pierrick Bouvier (3):
+>    cpu-target: build compilation unit once for user/system
+>    include/exec/target_page.h: move page-target.c to header
+>    system/main.c: compile only once
 
-Series queued, thanks!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+and queued, thanks!
 
