@@ -4,73 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40E8CA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 06:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 950AECA0EEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 07:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upLTZ-000858-5f; Fri, 22 Aug 2025 02:42:13 -0400
+	id 1upLx3-0001UK-N0; Fri, 22 Aug 2025 03:12:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1upLTW-00084b-VL
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:42:10 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1upLTU-0000lZ-Bp
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:42:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1755844928; x=1787380928;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=AyYedKklAZi/NEoMIK5BUi2qLYrPdx9QROvkxOI1fJ4=;
- b=lZTw5OxgM+IaMqsvIj7KTP7XDzoGJkUuPmNS3KTynq6jKzSY93+SMHkh
- r89gVViukAGbdDEpIJhucZracQfWWs6c3EYRXRJuC4+zDFRljE6CuXqCy
- mVwtTOUD4wHuTMyl36RaxGBN1Iv737sVbuYd4br2L9aDVsl5lEeOIXn2j
- L2C3C4cBvr/tVRksnTwFsVyAPgN4RkOLkLDdNvP+b+X0AEeY6vmJIXUtq
- u1yyV2uBDSg2f/8t+qDf9c9CY0cckRRNzM4vcLqYyf3ZJYas3SlTCedLR
- xncj8cuHw6LP25/XJj+s8hBDy8UdYf0lAXLlJfnleuiC2LpF/44TAOft/ Q==;
-X-CSE-ConnectionGUID: mOhsaHqsRbOf64EGxfwGdA==
-X-CSE-MsgGUID: GQKKWVhjQN2bprUxDv8VRA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11529"; a="68851916"
-X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="68851916"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Aug 2025 23:42:07 -0700
-X-CSE-ConnectionGUID: 2WQQp8p6QtCPmhrEHOiWvg==
-X-CSE-MsgGUID: zvY01fC4SRqfAG9tEcUYpw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="168244975"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Aug 2025 23:42:03 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
- jgg@nvidia.com, nicolinc@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Sun <yi.y.sun@linux.intel.com>
-Subject: [PATCH v5 11/21] intel_iommu: Handle PASID entry removal and update
-Date: Fri, 22 Aug 2025 02:40:49 -0400
-Message-ID: <20250822064101.123526-12-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250822064101.123526-1-zhenzhong.duan@intel.com>
-References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1upLx2-0001Tt-9f
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 03:12:40 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1upLwz-0004Zr-8f
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 03:12:39 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-45a286135c8so14153155e9.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 00:12:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755846754; x=1756451554; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gq5QaCBH3PfELDbEFJWuDYYvIi201XrAw2c4ht2gWNQ=;
+ b=z2LONBNAl6YKSl28OjIjjSI2uG7Yxq7nnrsmuZe3DDxnC0toxiIyhW9zyrfkxCSnaS
+ Ckzzwlxb88UOdIlR6pXz8lxEGH9hHsPsBeLA+QcmAPIk09YZE3ClVCbpICjc5xpBIBQb
+ k44jJYpLrq58CoSyXfN72CPBJBH3kRjuFemQirtY3yGP7WGNVv/MF0aBJLKaCKnvCHx2
+ 2iq70f/ikazR0OILsSUULu80R49nfjDtuxzejBu7i0X9LbHxFadeUy+egpPDsQ6wNA+B
+ 6fST084CWLlKhg2MWb/LiI+fSdNZKvPYlEqeLXejUrjNyK9Z6xjxEJl4pJVhEsYRRQKx
+ jHww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1755846754; x=1756451554;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gq5QaCBH3PfELDbEFJWuDYYvIi201XrAw2c4ht2gWNQ=;
+ b=YPnMSqT/V99GV6qEfK/vNTB5d9FdPPbrGbh0vpQFH27IbOokd1tZ1uI+cQprf/qT2m
+ uckaMcZs3jc3RAGERLrCOEURDwczrPG/bQg5JxPi23BjIDmfle/8Btg83YZeMFMkmP22
+ 9+RFeuwFhrfERm4Hmp2hH+6jqJyRKiayB8lw7SaoOpK+cUtd25iv7iSBYpjHyCtZP/Rh
+ 9D8rM+HEFSv4eheLUYuRqzPZ70pdeAJH7IqC4ibEAwHcTuoQ1DNvUKMKPq2NLijMijRt
+ U18dnHS2/i7M/KgKtZeQeHj07ZPHsiJwb6JH59RBdeKIXgIbXuU0FU3MjN4mAqpN2Oac
+ YQhw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeCvAvzizKbbsZyDEWITJfsGmBpbJ+RQwPNSqPbGH8G7W1CUsjWjtnN9/7NSuNOW7V0EnnRCbg+2hD@nongnu.org
+X-Gm-Message-State: AOJu0YyFQX83E/DcK9X4xwkg+v9JP2iJ3RJIEhhsT07Ynq+U0PDQQt4b
+ Sz5MPLUbhYn1SXcPsQhgSogida1O3BCeV8ZA4tq1gQ3xSO817P8diiYH5lY2s30iuho=
+X-Gm-Gg: ASbGnctTgjST+wakRfYPoK8e9er2TL1+y9HNP0MRanW/0vdqKPOsvr6EhVXg34Rqihn
+ RZBYGWO0aVIaRITH1kqz41W+PAn6pHRs0HtB9YHAoqHgMwL7qJDrdJ7AhRBUidTt9nJKzqHK4tT
+ fP3ODHfyrOfrAmskw2Y7pijZuF2bUQBPtFjxJIafVG1ZDIcNiL+4QUb3flfsIiPFqMVeDdmkRnw
+ z0PtyZvJXSI7b6VY0u9bpVRk3ZjqzHvtCHkfHlP+Js1jhEDok4r3A2ufcIcwThc54QujkWlXWMQ
+ aNUOeKpQF01x0FVmQcHyk7Zpamq95WJRWl0i0/EGXACzlovBxM5TxFbCyZCOQU006wmhIMCTj8c
+ mpO+gVz7XviRiQvedMJAWd/nuMIy+KOL8sC0TKlRsClF9dSwmX2/hC8AkZlbsdjWTWwfj9iU=
+X-Google-Smtp-Source: AGHT+IGVzjuhpaG5yMsdrzuR+WXPPp7DLAK+ZnK6fOJf7EKeoavE+Pjmc0KY0Q0GNJZxIvzLBzIwBQ==
+X-Received: by 2002:a05:600c:45d4:b0:45b:47e1:ef7b with SMTP id
+ 5b1f17b1804b1-45b5179e933mr15306545e9.17.1755846754346; 
+ Fri, 22 Aug 2025 00:12:34 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b4e8ae6aasm26713045e9.5.2025.08.22.00.12.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Aug 2025 00:12:33 -0700 (PDT)
+Message-ID: <19837997-57c3-47b7-ab25-f8bad6bd3d4f@linaro.org>
+Date: Fri, 22 Aug 2025 09:12:31 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 10/11] kvm/arm: implement a basic hypercall handler
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
+ Mark Burton <mburton@qti.qualcomm.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Alexander Graf <graf@amazon.com>, kvm@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250617163351.2640572-1-alex.bennee@linaro.org>
+ <20250617163351.2640572-11-alex.bennee@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250617163351.2640572-11-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,357 +107,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds an new entry VTDPASIDCacheEntry in VTDAddressSpace to cache the
-pasid entry and track PASID usage and future PASID tagged DMA address
-translation support in vIOMMU.
+On 17/6/25 18:33, Alex Bennée wrote:
+> For now just deal with the basic version probe we see during startup.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   target/arm/kvm.c        | 44 +++++++++++++++++++++++++++++++++++++++++
+>   target/arm/trace-events |  1 +
+>   2 files changed, 45 insertions(+)
+> 
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 0a852af126..1280e2c1e8 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -1507,6 +1507,43 @@ static int kvm_arm_handle_sysreg_trap(ARMCPU *cpu,
+>       return -1;
+>   }
+>   
+> +/*
+> + * The guest is making a hypercall or firmware call. We can handle a
+> + * limited number of them (e.g. PSCI) but we can't emulate a true
+> + * firmware. This is an abbreviated version of
+> + * kvm_smccc_call_handler() in the kernel and the TCG only arm_handle_psci_call().
+> + *
+> + * In the SplitAccel case we would be transitioning to execute EL2+
+> + * under TCG.
+> + */
+> +static int kvm_arm_handle_hypercall(ARMCPU *cpu,
+> +                                    int esr_ec)
+> +{
+> +    CPUARMState *env = &cpu->env;
+> +    int32_t ret = 0;
+> +
+> +    trace_kvm_hypercall(esr_ec, env->xregs[0]);
+> +
+> +    switch (env->xregs[0]) {
+> +    case QEMU_PSCI_0_2_FN_PSCI_VERSION:
+> +        ret = QEMU_PSCI_VERSION_1_1;
+> +        break;
+> +    case QEMU_PSCI_0_2_FN_MIGRATE_INFO_TYPE:
+> +        ret = QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED; /* No trusted OS */
+> +        break;
+> +    case QEMU_PSCI_1_0_FN_PSCI_FEATURES:
+> +        ret = QEMU_PSCI_RET_NOT_SUPPORTED;
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "%s: unhandled hypercall %"PRIx64"\n",
+> +                      __func__, env->xregs[0]);
+> +        return -1;
+> +    }
+> +
+> +    env->xregs[0] = ret;
+> +    return 0;
+> +}
+> +
+>   /**
+>    * kvm_arm_handle_hard_trap:
+>    * @cpu: ARMCPU
+> @@ -1538,6 +1575,13 @@ static int kvm_arm_handle_hard_trap(ARMCPU *cpu,
+>       switch (esr_ec) {
+>       case EC_SYSTEMREGISTERTRAP:
+>           return kvm_arm_handle_sysreg_trap(cpu, esr_iss, elr);
+> +    case EC_AA32_SVC:
+> +    case EC_AA32_HVC:
+> +    case EC_AA32_SMC:
+> +    case EC_AA64_SVC:
+> +    case EC_AA64_HVC:
+> +    case EC_AA64_SMC:
 
-VTDAddressSpace of PCI_NO_PASID is allocated when device is plugged and
-never freed. For other pasid, VTDAddressSpace instance is created/destroyed
-per the guest pasid entry set up/destroy.
+Should we increment $pc for SVC/SMC?
+The instruction operation pseudocode [*] is:
 
-When guest removes or updates a PASID entry, QEMU will capture the guest pasid
-selective pasid cache invalidation, removes VTDAddressSpace or update cached
-PASID entry.
+   preferred_exception_return = ThisInstrAddr(64);
 
-vIOMMU emulator could figure out the reason by fetching latest guest pasid entry
-and compare it with cached PASID entry.
+[*] 
+https://developer.arm.com/documentation/ddi0602/2022-06/Shared-Pseudocode/AArch64-Exceptions?lang=en
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu_internal.h |  27 ++++-
- include/hw/i386/intel_iommu.h  |   6 +
- hw/i386/intel_iommu.c          | 196 +++++++++++++++++++++++++++++++--
- hw/i386/trace-events           |   3 +
- 4 files changed, 220 insertions(+), 12 deletions(-)
-
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index f7510861d1..b9b76dd996 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -316,6 +316,7 @@ typedef enum VTDFaultReason {
-                                   * request while disabled */
-     VTD_FR_IR_SID_ERR = 0x26,   /* Invalid Source-ID */
- 
-+    VTD_FR_RTADDR_INV_TTM = 0x31,  /* Invalid TTM in RTADDR */
-     /* PASID directory entry access failure */
-     VTD_FR_PASID_DIR_ACCESS_ERR = 0x50,
-     /* The Present(P) field of pasid directory entry is 0 */
-@@ -493,6 +494,15 @@ typedef union VTDInvDesc VTDInvDesc;
- #define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
- #define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
- 
-+/* PASID-cache Invalidate Descriptor (pc_inv_dsc) fields */
-+#define VTD_INV_DESC_PASIDC_G(x)        extract64((x)->val[0], 4, 2)
-+#define VTD_INV_DESC_PASIDC_G_DSI       0
-+#define VTD_INV_DESC_PASIDC_G_PASID_SI  1
-+#define VTD_INV_DESC_PASIDC_G_GLOBAL    3
-+#define VTD_INV_DESC_PASIDC_DID(x)      extract64((x)->val[0], 16, 16)
-+#define VTD_INV_DESC_PASIDC_PASID(x)    extract64((x)->val[0], 32, 20)
-+#define VTD_INV_DESC_PASIDC_RSVD_VAL0   0xfff000000000f1c0ULL
-+
- /* Information about page-selective IOTLB invalidate */
- struct VTDIOTLBPageInvInfo {
-     uint16_t domain_id;
-@@ -553,6 +563,21 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
- 
-+typedef enum VTDPCInvType {
-+    /* VTD spec defined PASID cache invalidation type */
-+    VTD_PASID_CACHE_DOMSI = VTD_INV_DESC_PASIDC_G_DSI,
-+    VTD_PASID_CACHE_PASIDSI = VTD_INV_DESC_PASIDC_G_PASID_SI,
-+    VTD_PASID_CACHE_GLOBAL_INV = VTD_INV_DESC_PASIDC_G_GLOBAL,
-+} VTDPCInvType;
-+
-+typedef struct VTDPASIDCacheInfo {
-+    VTDPCInvType type;
-+    uint16_t did;
-+    uint32_t pasid;
-+    PCIBus *bus;
-+    uint16_t devfn;
-+} VTDPASIDCacheInfo;
-+
- /* PASID Table Related Definitions */
- #define VTD_PASID_DIR_BASE_ADDR_MASK  (~0xfffULL)
- #define VTD_PASID_TABLE_BASE_ADDR_MASK (~0xfffULL)
-@@ -574,7 +599,7 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_SM_PASID_ENTRY_PT          (4ULL << 6)
- 
- #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
--#define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
-+#define VTD_SM_PASID_ENTRY_DID(x)      extract64((x)->val[1], 0, 16)
- 
- #define VTD_SM_PASID_ENTRY_FLPM          3ULL
- #define VTD_SM_PASID_ENTRY_FLPTPTR       (~0xfffULL)
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 50f9b27a45..0e3826f6f0 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -95,6 +95,11 @@ struct VTDPASIDEntry {
-     uint64_t val[8];
- };
- 
-+typedef struct VTDPASIDCacheEntry {
-+    struct VTDPASIDEntry pasid_entry;
-+    bool valid;
-+} VTDPASIDCacheEntry;
-+
- struct VTDAddressSpace {
-     PCIBus *bus;
-     uint8_t devfn;
-@@ -107,6 +112,7 @@ struct VTDAddressSpace {
-     MemoryRegion iommu_ir_fault; /* Interrupt region for catching fault */
-     IntelIOMMUState *iommu_state;
-     VTDContextCacheEntry context_cache_entry;
-+    VTDPASIDCacheEntry pasid_cache_entry;
-     QLIST_ENTRY(VTDAddressSpace) next;
-     /* Superset of notifier flags that this address space has */
-     IOMMUNotifierFlag notifier_flags;
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 1801f1cdf6..a2ee6d684e 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1675,7 +1675,7 @@ static uint16_t vtd_get_domain_id(IntelIOMMUState *s,
- 
-     if (s->root_scalable) {
-         vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
--        return VTD_SM_PASID_ENTRY_DID(pe.val[1]);
-+        return VTD_SM_PASID_ENTRY_DID(&pe);
-     }
- 
-     return VTD_CONTEXT_ENTRY_DID(ce->hi);
-@@ -3112,6 +3112,183 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
-     return true;
- }
- 
-+static inline int vtd_dev_get_pe_from_pasid(VTDAddressSpace *vtd_as,
-+                                            uint32_t pasid, VTDPASIDEntry *pe)
-+{
-+    IntelIOMMUState *s = vtd_as->iommu_state;
-+    VTDContextEntry ce;
-+    int ret;
-+
-+    if (!s->root_scalable) {
-+        return -VTD_FR_RTADDR_INV_TTM;
-+    }
-+
-+    ret = vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus), vtd_as->devfn,
-+                                   &ce);
-+    if (ret) {
-+        return ret;
-+    }
-+
-+    return vtd_ce_get_pasid_entry(s, &ce, pe, pasid);
-+}
-+
-+static bool vtd_pasid_entry_compare(VTDPASIDEntry *p1, VTDPASIDEntry *p2)
-+{
-+    return !memcmp(p1, p2, sizeof(*p1));
-+}
-+
-+/*
-+ * This function is a loop function which return value determines if
-+ * vtd_as including cached pasid entry is removed.
-+ *
-+ * For PCI_NO_PASID, when corresponding cached pasid entry is cleared,
-+ * it returns false so that vtd_as is reserved as it's owned by PCI
-+ * sub-system. For other pasid, it returns true so vtd_as is removed.
-+ */
-+static gboolean vtd_flush_pasid_locked(gpointer key, gpointer value,
-+                                       gpointer user_data)
-+{
-+    VTDPASIDCacheInfo *pc_info = user_data;
-+    VTDAddressSpace *vtd_as = value;
-+    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-+    VTDPASIDEntry pe;
-+    uint16_t did;
-+    uint32_t pasid;
-+    int ret;
-+
-+    if (!pc_entry->valid) {
-+        return false;
-+    }
-+    did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
-+
-+    if (vtd_as_to_iommu_pasid_locked(vtd_as, &pasid)) {
-+        goto remove;
-+    }
-+
-+    switch (pc_info->type) {
-+    case VTD_PASID_CACHE_PASIDSI:
-+        if (pc_info->pasid != pasid) {
-+            return false;
-+        }
-+        /* fall through */
-+    case VTD_PASID_CACHE_DOMSI:
-+        if (pc_info->did != did) {
-+            return false;
-+        }
-+        /* fall through */
-+    case VTD_PASID_CACHE_GLOBAL_INV:
-+        break;
-+    default:
-+        error_setg(&error_fatal, "invalid pc_info->type for flush");
-+    }
-+
-+    /*
-+     * pasid cache invalidation may indicate a present pasid entry to present
-+     * pasid entry modification. To cover such case, vIOMMU emulator needs to
-+     * fetch latest guest pasid entry and compares with cached pasid entry,
-+     * then update pasid cache.
-+     */
-+    ret = vtd_dev_get_pe_from_pasid(vtd_as, pasid, &pe);
-+    if (ret) {
-+        /*
-+         * No valid pasid entry in guest memory. e.g. pasid entry was modified
-+         * to be either all-zero or non-present. Either case means existing
-+         * pasid cache should be removed.
-+         */
-+        goto remove;
-+    }
-+
-+    /*
-+     * Update cached pasid entry if it's stale compared to what's in guest
-+     * memory.
-+     */
-+    if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
-+        pc_entry->pasid_entry = pe;
-+    }
-+    return false;
-+
-+remove:
-+    pc_entry->valid = false;
-+
-+    /*
-+     * Don't remove address space of PCI_NO_PASID which is created for PCI
-+     * sub-system.
-+     */
-+    if (vtd_as->pasid == PCI_NO_PASID) {
-+        return false;
-+    }
-+    return true;
-+}
-+
-+/*
-+ * For a PASID cache invalidation, this function handles below scenarios:
-+ * a) a present cached pasid entry needs to be removed
-+ * b) a present cached pasid entry needs to be updated
-+ */
-+static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-+{
-+    if (!s->flts || !s->root_scalable || !s->dmar_enabled) {
-+        return;
-+    }
-+
-+    vtd_iommu_lock(s);
-+    /*
-+     * a,b): loop all the existing vtd_as instances for pasid cache removal
-+       or update.
-+     */
-+    g_hash_table_foreach_remove(s->vtd_address_spaces, vtd_flush_pasid_locked,
-+                                pc_info);
-+    vtd_iommu_unlock(s);
-+}
-+
-+static bool vtd_process_pasid_desc(IntelIOMMUState *s,
-+                                   VTDInvDesc *inv_desc)
-+{
-+    uint16_t did;
-+    uint32_t pasid;
-+    VTDPASIDCacheInfo pc_info;
-+    uint64_t mask[4] = {VTD_INV_DESC_PASIDC_RSVD_VAL0, VTD_INV_DESC_ALL_ONE,
-+                        VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
-+
-+    if (!vtd_inv_desc_reserved_check(s, inv_desc, mask, true,
-+                                     __func__, "pasid cache inv")) {
-+        return false;
-+    }
-+
-+    did = VTD_INV_DESC_PASIDC_DID(inv_desc);
-+    pasid = VTD_INV_DESC_PASIDC_PASID(inv_desc);
-+
-+    switch (VTD_INV_DESC_PASIDC_G(inv_desc)) {
-+    case VTD_INV_DESC_PASIDC_G_DSI:
-+        trace_vtd_pasid_cache_dsi(did);
-+        pc_info.type = VTD_PASID_CACHE_DOMSI;
-+        pc_info.did = did;
-+        break;
-+
-+    case VTD_INV_DESC_PASIDC_G_PASID_SI:
-+        /* PASID selective implies a DID selective */
-+        trace_vtd_pasid_cache_psi(did, pasid);
-+        pc_info.type = VTD_PASID_CACHE_PASIDSI;
-+        pc_info.did = did;
-+        pc_info.pasid = pasid;
-+        break;
-+
-+    case VTD_INV_DESC_PASIDC_G_GLOBAL:
-+        trace_vtd_pasid_cache_gsi();
-+        pc_info.type = VTD_PASID_CACHE_GLOBAL_INV;
-+        break;
-+
-+    default:
-+        error_report_once("invalid granularity field in PASID-cache invalidate "
-+                          "descriptor, hi: 0x%"PRIx64" lo: 0x%" PRIx64,
-+                           inv_desc->val[1], inv_desc->val[0]);
-+        return false;
-+    }
-+
-+    vtd_pasid_cache_sync(s, &pc_info);
-+    return true;
-+}
-+
- static bool vtd_process_inv_iec_desc(IntelIOMMUState *s,
-                                      VTDInvDesc *inv_desc)
- {
-@@ -3274,6 +3451,13 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
-         }
-         break;
- 
-+    case VTD_INV_DESC_PC:
-+        trace_vtd_inv_desc("pasid-cache", inv_desc.val[1], inv_desc.val[0]);
-+        if (!vtd_process_pasid_desc(s, &inv_desc)) {
-+            return false;
-+        }
-+        break;
-+
-     case VTD_INV_DESC_PIOTLB:
-         trace_vtd_inv_desc("p-iotlb", inv_desc.val[1], inv_desc.val[0]);
-         if (!vtd_process_piotlb_desc(s, &inv_desc)) {
-@@ -3309,16 +3493,6 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
-         }
-         break;
- 
--    /*
--     * TODO: the entity of below two cases will be implemented in future series.
--     * To make guest (which integrates scalable mode support patch set in
--     * iommu driver) work, just return true is enough so far.
--     */
--    case VTD_INV_DESC_PC:
--        if (s->scalable_mode) {
--            break;
--        }
--    /* fallthrough */
-     default:
-         error_report_once("%s: invalid inv desc: hi=%"PRIx64", lo=%"PRIx64
-                           " (unknown type)", __func__, inv_desc.hi,
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index ac9e1a10aa..ae5bbfcdc0 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -24,6 +24,9 @@ vtd_inv_qi_head(uint16_t head) "read head %d"
- vtd_inv_qi_tail(uint16_t head) "write tail %d"
- vtd_inv_qi_fetch(void) ""
- vtd_context_cache_reset(void) ""
-+vtd_pasid_cache_gsi(void) ""
-+vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
-+vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
- vtd_re_not_present(uint8_t bus) "Root entry bus %"PRIu8" not present"
- vtd_ce_not_present(uint8_t bus, uint8_t devfn) "Context entry bus %"PRIu8" devfn %"PRIu8" not present"
- vtd_iotlb_page_hit(uint16_t sid, uint64_t addr, uint64_t slpte, uint16_t domain) "IOTLB page hit sid 0x%"PRIx16" iova 0x%"PRIx64" slpte 0x%"PRIx64" domain 0x%"PRIx16
--- 
-2.47.1
+> +        return kvm_arm_handle_hypercall(cpu, esr_ec);
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "%s: unhandled EC: %x/%x/%x/%d\n",
+>                   __func__, esr_ec, esr_iss, esr_iss2, esr_il);
+> diff --git a/target/arm/trace-events b/target/arm/trace-events
+> index 69bb4d370d..10cdba92a3 100644
+> --- a/target/arm/trace-events
+> +++ b/target/arm/trace-events
+> @@ -15,3 +15,4 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+>   kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
+>   kvm_sysreg_read(const char *name, uint64_t val) "%s => 0x%" PRIx64
+>   kvm_sysreg_write(const char *name, uint64_t val) "%s <=  0x%" PRIx64
+> +kvm_hypercall(int ec, uint64_t arg0) "%d: %"PRIx64
 
 
