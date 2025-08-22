@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AC6CA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 11:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3085CCA0EFC
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 11:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upPrp-0007Xx-83; Fri, 22 Aug 2025 07:23:33 -0400
+	id 1upQJy-0005Cj-3Q; Fri, 22 Aug 2025 07:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1upPrn-0007Xc-Tq
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 07:23:31 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1upQJr-0005C4-UI
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 07:52:32 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1upPrU-0002TY-Sr
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 07:23:31 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-45a1b065d58so16392735e9.1
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 04:23:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1upQJp-0006KA-Ra
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 07:52:31 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-77031d4638bso486138b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 04:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1755861789; x=1756466589; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XwRlfdLD1ctMdmZ8QEZ6byp8xwlw+tmby5Yo44DY6Kc=;
- b=wjDXtgRbVMdMANf8XByoIfOv3LUUYTkTJulJET+J1WXABGKZ4W1KBGIfX9o2ijBgrc
- oM0u93yQ7fuoQ4rTz6p8ZahowrcwJ+DzIZtZX1nBo8SU8IMqqPShMP0litNSskUqwcYV
- 1nGnGMnUT99GXLNZERyye4yAke4K58QAI/xwo7ZjE0vtygVfmBmxClRW3f2nCkpfZJBB
- rG9VTqltnzomT5B3UI1NwtU7iGeQJ0bg3NIcAolaN4FYiYkJqHvFjYs+nvm3joUpdJLr
- I+1Ty+sOy3Ir6x9XCdVL33cV0RqSd5r7j8vBcNoEE9cB3yMRBcamXXhWvcBZbSRJzje1
- Ykug==
+ d=linaro.org; s=google; t=1755863547; x=1756468347; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Wn1bCZjgDcOwXxqHfGPWrlWCMkfWjCkq46iJlSADHTM=;
+ b=gZ5dAjysVZYb3mA+YDJ34pgV/Fr0Cs7irry+Hh23tG05dhyKoet+60KOJZ+lizIaj3
+ lAp2HtG0HLU2bI5f1vTMGgXnDy1uUJdZvjcvviWDYWi6qWnM+kFQaV86Dk0W0JtkbUk1
+ W5bVAbzaSTrDnZHaoPAuVVZKPrFxuozRxPVyObTTXdl8qxgIbAW3XVKWACCvnq7lz/r6
+ GQQ2mm8WmJRdGQo2NY3G0NnpcqdEFQ8pv27/NESyhAEUe7GWFOdYX258O5IQgaLjwu0B
+ DqiEL3jpvamT1yb0vnRG1Aj24dJBwzx1yImttaX16v2NRFSGiXrAAXYhHr5MrzXZbTvO
+ gXOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755861789; x=1756466589;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XwRlfdLD1ctMdmZ8QEZ6byp8xwlw+tmby5Yo44DY6Kc=;
- b=eEHAIQ+kNpAF5S+GkcN2C/9fyVB/zeU3a8xIWPhrkzWsoGaKBAggFoIxkUVE19VQoF
- kxnW3lDlkIDFqlOUMXxrd8WqilutTvZxdeQX/KtOZdA1EbTbt497+vkby/zgggY/RG1W
- frosv7lGqT1UImeHRZdK6K3RDPc/Yi8/mApyNwy1HmM9/KOseRjeTwErE7yQ17NFLCq/
- 4jwABvOoJcvQ5/Xejr792ZhCmzLVIUNv3fxMk/mErwsGIyGYFJnzuS4G3opxbtx3KGaY
- ytkolIGYWTaf4Bgk/TYhPlNLUpMHz+Y9R5PuYTI16iv/UhwtI3lbaVpNz5LO7zDuZuLD
- dwVQ==
-X-Gm-Message-State: AOJu0YyB+o7wtZHHpJ4qWmdyAhSwlq6m6P29zRmHhoyMeWK26x40ippH
- N2Pc946/c0dRR7sor2tLhfvI552W+YcDFNss3JQf80q6VEraYPw/Mb6fafe+h0n1RgM=
-X-Gm-Gg: ASbGnctHGCodq7+GmRRqCJUxj2wpKjskKK8x0Kz6GvzknHIzoT1OR4And8Lqm6gxyWT
- QBRc/YhcGBZclGGXq1LrkoT2ZCRcSpOaathssHX5tpNvloMe75uEzk1yeLD3xbxz5N9+c2ywSdB
- RqVOeI695xJkG2dm5udO0v62LkIgHqSvxRMqBYro5NI8iEX9De+04uU2+vLkSh0vZPaGlnA+yo3
- R6ip4Z5XoQqfqwxtKAzRIup2eirWxA0CpR+EkKoRvr64lhsQMhBsJO+x2L07y7PWv3X0t0TZYtm
- Yxi7KakPRjUyC83h/iOqhXiSqX9IjFIxBIZEtaiwmsopUJ9aFPUlwjGJaM64kW7rJj9TkTZffa8
- mG8gXPNdGfHZ6Pf5aUN1yf13HLXLUlAFupw==
-X-Google-Smtp-Source: AGHT+IG+X+ikCXu60VC9gxR5UnC9GcQsnuOvheUINrmPICDFlB9pxjHa9gNEctUVI3ch8d7sacH/Fg==
-X-Received: by 2002:a05:600c:3594:b0:459:f90e:4f5a with SMTP id
- 5b1f17b1804b1-45b5179ebbdmr19644045e9.15.1755861788940; 
- Fri, 22 Aug 2025 04:23:08 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b50dcea8esm34980225e9.8.2025.08.22.04.23.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 04:23:08 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2D8975F810;
- Fri, 22 Aug 2025 12:23:07 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Aleksandar Rikalo <arikalo@gmail.com>,  Riku
- Voipio <riku.voipio@iki.fi>,  Aurelien Jarno <aurelien@aurel32.net>,
- Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Huacai Chen
- <chenhuacai@kernel.org>,  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: Re: [PATCH 1/5] docker: Remove 32-bit MIPS toolchain from
- debian-all-test image
-In-Reply-To: <20250820142108.46639-2-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 20 Aug 2025 16:21:04
- +0200")
-References: <20250820142108.46639-1-philmd@linaro.org>
- <20250820142108.46639-2-philmd@linaro.org>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Fri, 22 Aug 2025 12:23:07 +0100
-Message-ID: <87ect3k3c4.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1755863547; x=1756468347;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Wn1bCZjgDcOwXxqHfGPWrlWCMkfWjCkq46iJlSADHTM=;
+ b=OWOFjjuKDoIUgdSMu/njvrrfmMfoNWE4jGiR6TzxcjmQ5wqOxKD7E+BUFm31/tC4V8
+ NdSxNGLlRGmzirWtrHWRNvuDIOrPgPhOWtm9UkPtzvvupQD7tMvUfc+OEc784hecV9uO
+ Y1Aj2df1eI8lEvTCg7vVkYcH31Nv81SAx+7nZzh8NO/w5lf/DzI4QLtcAvbbnNJZm7ji
+ WckyO50C9fMyDAJmWByweGufhFssMyTZhVc/WU6UU3paRerzMRPns6Ql1fG9Xjv4fnO4
+ M0Z/yBvRogkQcckbIzv3QiAf3Jvfz7USkICIjKkV8i5wCY2Ob3gP8MQlnOHI6RkUqgcw
+ Bg4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWTBUtn0mI7Ohp3/LXPGevP4Zd9ZPiHL+Z1WSLQyIT4p6FGWcXeDrTSaWAH4xZU4HjMcpfTUuZIKcB@nongnu.org
+X-Gm-Message-State: AOJu0YxkDG1oHkkdAxUs+qPvkaorKKiX64ikGm4YidYqrzBCUy6Kppyh
+ bx6mm4PfS4OSpgQtD/2KSyCj7ec+CAO4IplLZPRhnqR/n0m6jIsaUZirxLK5hfvlSaQ=
+X-Gm-Gg: ASbGncvx1Bmqc2FPoBq669cvLZ4ptt1JKdZpnDiYMQ3uSjvWfCXiDMJUCwkQZdGct+R
+ 25nlF8CrOHrmwOHJG70YQppexzf7Bu9R9e4SrnshgrGB/e34wr1330f7m3IcVc5NthXDPVYOoOc
+ JN56ZSo9/JfM/od0O8/giyDfw1woh43NSIM3qdeanO74ahJNec3N2vYEvy+jOrAkZT+EohwT3Pz
+ LrOxv2EctK+NLTBHF38rQbWunabKy1CD/LQDDDQfQuPSY488gmIZHu0S+tbIF06nxdmOtLK4YGY
+ Avuo2q8hqg/AlD6CEUOW5aAvNSpP0vaDEN5qaIk7cunl397HgOjnXzyHfT2nGIEmxzuX6/H93nv
+ f0z19ECNGuRjMYJl3XyZMP8uRhNQcRwnXncj5wF6EyT7KqJjMJiKTF4yvqOQ9vSr3XfOegyaNIY
+ o4aDpxqGy0cIu/hxZg16sWgrv3GjpWMXnv+zVZuBO14cJfpTuD56Vnbx1vtBVENM2o
+X-Google-Smtp-Source: AGHT+IG3SZ9Hkg7REWGAA1sT8xftCOlnwEfPeuuOv6hn/fbODIxvOTjlhvV1njppnPTYdZAHs/7V7Q==
+X-Received: by 2002:a05:6a20:3944:b0:232:4a42:dfd1 with SMTP id
+ adf61e73a8af0-24340d7c205mr4435343637.36.1755863547315; 
+ Fri, 22 Aug 2025 04:52:27 -0700 (PDT)
+Received: from ?IPV6:2401:d006:5c08:e100:56e2:b289:a647:a268?
+ (19r3hzjn0zxz3knrhj8r.ipv6.originbroadband.com.au.
+ [2401:d006:5c08:e100:56e2:b289:a647:a268])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b47640b2d37sm6973268a12.46.2025.08.22.04.52.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Aug 2025 04:52:26 -0700 (PDT)
+Message-ID: <a01f5867-68a6-41e4-9204-66f40616eceb@linaro.org>
+Date: Fri, 22 Aug 2025 19:26:35 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] accel/tcg: Unify big- and little- endian atomic ops
+From: Richard Henderson <richard.henderson@linaro.org>
+To: Danila Zhebryakov <d.zhebryakov@yandex.ru>, qemu-devel@nongnu.org
+Cc: Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <thuth@redhat.com>
+References: <20250821113348.91339-1-d.zhebryakov@yandex.ru>
+ <20250821113348.91339-2-d.zhebryakov@yandex.ru>
+ <35a78a36-989e-425a-b99e-bda52da8d20c@linaro.org>
+Content-Language: en-US
+In-Reply-To: <35a78a36-989e-425a-b99e-bda52da8d20c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,50 +112,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
-
-> In commit d3322023bfe ("configure: unify again the case arms in
-> probe_target_compiler") we lost coverage of 32-bit MIPS with the
-> debian-all-test image. No need to keep installing the toolchain.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  tests/docker/dockerfiles/debian-all-test-cross.docker | 4 ----
->  1 file changed, 4 deletions(-)
->
-> diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/test=
-s/docker/dockerfiles/debian-all-test-cross.docker
-> index 420a4e33e60..bc74d65a634 100644
-> --- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-> +++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-> @@ -40,14 +40,10 @@ ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
->          libc6-dev-arm64-cross \
->          gcc-arm-linux-gnueabihf \
->          libc6-dev-armhf-cross \
-> -        gcc-mips-linux-gnu \
-> -        libc6-dev-mips-cross \
->          gcc-mips64-linux-gnuabi64 \
->          libc6-dev-mips64-cross \
->          gcc-mips64el-linux-gnuabi64 \
->          libc6-dev-mips64el-cross \
-> -        gcc-mipsel-linux-gnu \
-> -        libc6-dev-mipsel-cross \
->          gcc-powerpc64le-linux-gnu \
->          libc6-dev-ppc64el-cross \
->          gcc-riscv64-linux-gnu \
-
-You also need to remove the references in configure:
-
-      hppa|m68k|mips|riscv64|sparc64)
-        container_image=3Ddebian-all-test-cross
-        ;;
-      mips64)
-        container_image=3Ddebian-all-test-cross
-        container_cross_prefix=3Dmips64-linux-gnuabi64-
-        ;;
+On 8/22/25 19:24, Richard Henderson wrote:
+> On 8/21/25 21:33, Danila Zhebryakov wrote:
+>> @@ -1894,6 +1894,14 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, 
+>> MemOpIdx oi,
+>>           notdirty_write(cpu, addr, size, full, retaddr);
+>>       }
+>> +    if (unlikely(tlb_addr & TLB_BSWAP)) {
+>> +        assert(!( (  full->slow_flags[MMU_DATA_STORE]
+>> +            ^ full->slow_flags[MMU_DATA_LOAD ])
+>> +            & TLB_BSWAP));
+>> +
+>> +        *need_bswap = !need_bswap;
+>> +    }
+>> +
+> 
+> How is this supposed to work?
+> 
+> (!) TLB_BSWAP is a slow-flags bit, so it will never be set in tlb_addr.
+Whoops, we've just got finished merging the slow flags back in.
+I'd best do this again with more coffee tomorrow.
 
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
