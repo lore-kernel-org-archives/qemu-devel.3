@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 197ABCA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 06:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51A7ACA0EEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 06:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upLTi-00087F-8J; Fri, 22 Aug 2025 02:42:22 -0400
+	id 1upLTP-00080G-Oh; Fri, 22 Aug 2025 02:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1upLTf-00086a-Sh
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:42:19 -0400
+ id 1upLTO-000804-2G
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:42:02 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1upLTd-0000ms-OX
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:42:19 -0400
+ id 1upLTM-0000lZ-0Q
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:42:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1755844938; x=1787380938;
+ t=1755844920; x=1787380920;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=TjcSiYOFGErYkuxb0F+W0qo6CJQ3SHvdw/xJfxSWw98=;
- b=iD3iJ5jkaIt7fSwZ5qsQ6hnk4AjqOlttQJ4dG8HCod7rp8R9pH0DgiVr
- WJCnJfVcGYByv6cI2rHdTgMEMFwdK7ETa6j3OkwnFLleJ4v8cth/QTXNs
- ks8ndWmBjlSokqP7vm5mXuZoPzF1iLa9NbzlHGEXN+nahpcr+bh2cRakU
- 1WyJBnDETRC7kiuRE1KWrvizCqXExDm7W5WeIbcbJRKbqjGPkC30AM+sC
- dBfL8LPJyPS1d3FNEnLyTzfyr8jTjilE7gvC29ZkBi01tTRIpe4u6CIW+
- j88vjqnIMc4PzsHKJcdVUfrAL7ORf02QcL33IivjZM9kSrClzgg/1DiYY A==;
-X-CSE-ConnectionGUID: /jEegJDhSwqGEymf3PzPhg==
-X-CSE-MsgGUID: 5HuzbMUETj6hBLlf5WHnfg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11529"; a="68851940"
-X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="68851940"
+ bh=Wr/sgImnKqsUB/Q1Gf5g12dW3k4+5Z8EsJGY2u7UEXo=;
+ b=OcLU5jAVyu1rfqZfE28gbpsAfYUCqC97PaAoQatbZUduNvKKK9u35rvR
+ iK6DaslONLvvCwYw8le74o1qww9mYKOBsj2EtahUfQ+YVbJHsLBQKnfBP
+ G44VWCF/qGQg2mRttQPg3iiYFdYKwSaFyBgB1AL2EDn+UMksefIwtZh0J
+ 9yjRb/SnIlRnvO13M4di8ePmeB8Hyj4sMVppB4bJp4ngu8iKBaTTvLb6M
+ UC4WmDvYnxgLC7EcQYlt4iFHhqieKW0ZyVvQirMcnuARM0vx9ofB+tYR1
+ ZKI4PdSuhB3z2SBhxDt/ROVIS4K7jccG7QPQOogU9GBJtCPpA+A177JRn A==;
+X-CSE-ConnectionGUID: YXD9ppnPSGuFrsylzJG/vA==
+X-CSE-MsgGUID: 93c7jG1iSjmdYC2xSZXCcg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11529"; a="68851901"
+X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="68851901"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Aug 2025 23:42:16 -0700
-X-CSE-ConnectionGUID: xd8bp4wJSweM5w25WxofWw==
-X-CSE-MsgGUID: D7bfccMFQDa4QnouymoD1Q==
+ 21 Aug 2025 23:41:59 -0700
+X-CSE-ConnectionGUID: cnbKnYCnTy2jM849mOPbLw==
+X-CSE-MsgGUID: yNkLsunpSme8e3KrzeFUKQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="168245020"
+X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="168244954"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Aug 2025 23:42:12 -0700
+ 21 Aug 2025 23:41:55 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
  jgg@nvidia.com, nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Sun <yi.y.sun@linux.intel.com>
-Subject: [PATCH v5 13/21] intel_iommu: Introduce a new pasid cache
- invalidation type FORCE_RESET
-Date: Fri, 22 Aug 2025 02:40:51 -0400
-Message-ID: <20250822064101.123526-14-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v5 09/21] intel_iommu: Fail passthrough device under PCI
+ bridge if x-flts=on
+Date: Fri, 22 Aug 2025 02:40:47 -0400
+Message-ID: <20250822064101.123526-10-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250822064101.123526-1-zhenzhong.duan@intel.com>
 References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
@@ -88,117 +87,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FORCE_RESET is different from GLOBAL_INV which updates pasid cache if
-underlying pasid entry is still valid, it drops all the pasid caches.
+Currently we don't support nested translation for passthrough device with
+emulated device under same PCI bridge, because they require different address
+space when x-flts=on.
 
-FORCE_RESET isn't a VTD spec defined invalidation type for pasid cache,
-only used internally in system level reset.
+In theory, we do support if devices under same PCI bridge are all passthrough
+devices. But emulated device can be hotplugged under same bridge. To simplify,
+just forbid passthrough device under PCI bridge no matter if there is, or will
+be emulated devices under same bridge. This is acceptable because PCIE bridge
+is more popular than PCI bridge now.
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- hw/i386/intel_iommu_internal.h |  9 +++++++++
- hw/i386/intel_iommu.c          | 25 +++++++++++++++++++++++++
- hw/i386/trace-events           |  1 +
- 3 files changed, 35 insertions(+)
+ hw/i386/intel_iommu.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index fb2a919e87..c510b09d1a 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -569,6 +569,15 @@ typedef enum VTDPCInvType {
-     VTD_PASID_CACHE_DOMSI = VTD_INV_DESC_PASIDC_G_DSI,
-     VTD_PASID_CACHE_PASIDSI = VTD_INV_DESC_PASIDC_G_PASID_SI,
-     VTD_PASID_CACHE_GLOBAL_INV = VTD_INV_DESC_PASIDC_G_GLOBAL,
-+
-+    /*
-+     * Internally used PASID cache invalidation type starts here,
-+     * 0x10 is large enough as invalidation type in pc_inv_desc
-+     * is 2bits in size.
-+     */
-+
-+    /* Reset all PASID cache entries, used in system level reset */
-+    VTD_PASID_CACHE_FORCE_RESET = 0x10,
- } VTDPCInvType;
- 
- typedef struct VTDPASIDCacheInfo {
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 7d2c9feae7..af384ce7f0 100644
+index da355bda79..6edd91d94e 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -87,6 +87,8 @@ struct vtd_iotlb_key {
- static void vtd_address_space_refresh_all(IntelIOMMUState *s);
- static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
+@@ -4341,9 +4341,10 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+     return vtd_dev_as;
+ }
  
-+static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s);
-+
- static void vtd_panic_require_caching_mode(void)
+-static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
++static bool vtd_check_hiod(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+                            Error **errp)
  {
-     error_report("We need to set caching-mode=on for intel-iommu to enable "
-@@ -391,6 +393,7 @@ static void vtd_reset_caches(IntelIOMMUState *s)
-     vtd_iommu_lock(s);
-     vtd_reset_iotlb_locked(s);
-     vtd_reset_context_cache_locked(s);
-+    vtd_pasid_cache_reset_locked(s);
-     vtd_iommu_unlock(s);
- }
++    HostIOMMUDevice *hiod = vtd_hiod->hiod;
+     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+     int ret;
  
-@@ -3183,6 +3186,8 @@ static gboolean vtd_flush_pasid_locked(gpointer key, gpointer value,
-         /* fall through */
-     case VTD_PASID_CACHE_GLOBAL_INV:
-         break;
-+    case VTD_PASID_CACHE_FORCE_RESET:
-+        goto remove;
-     default:
-         error_setg(&error_fatal, "invalid pc_info->type for flush");
-     }
-@@ -3225,6 +3230,23 @@ remove:
-     return true;
- }
+@@ -4370,6 +4371,8 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+ #ifdef CONFIG_IOMMUFD
+     struct HostIOMMUDeviceCaps *caps = &hiod->caps;
+     struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
++    PCIBus *bus = vtd_hiod->bus;
++    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), vtd_hiod->devfn);
  
-+static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
-+{
-+    VTDPASIDCacheInfo pc_info;
-+
-+    trace_vtd_pasid_cache_reset();
-+
-+    pc_info.type = VTD_PASID_CACHE_FORCE_RESET;
-+
-+    /*
-+     * Reset pasid cache is a big hammer, so use g_hash_table_foreach_remove
-+     * which will free all vtd_as instances except those created for PCI
-+     * sub-system.
-+     */
-+    g_hash_table_foreach_remove(s->vtd_address_spaces,
-+                                vtd_flush_pasid_locked, &pc_info);
-+}
-+
- /*
-  * This function walks over PASID range within [start, end) in a single
-  * PASID table for entries matching @info type/did, then retrieve/create
-@@ -3363,6 +3385,9 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
-     case VTD_PASID_CACHE_GLOBAL_INV:
-         /* loop all assigned devices */
-         break;
-+    case VTD_PASID_CACHE_FORCE_RESET:
-+        /* For force reset, no need to go further replay */
-+        return;
-     default:
-         error_setg(&error_fatal, "invalid pc_info->type for replay");
+     /* Remaining checks are all stage-1 translation specific */
+     if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+@@ -4392,6 +4395,12 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+         error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
+         return false;
      }
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index ae5bbfcdc0..c8a936eb46 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -24,6 +24,7 @@ vtd_inv_qi_head(uint16_t head) "read head %d"
- vtd_inv_qi_tail(uint16_t head) "write tail %d"
- vtd_inv_qi_fetch(void) ""
- vtd_context_cache_reset(void) ""
-+vtd_pasid_cache_reset(void) ""
- vtd_pasid_cache_gsi(void) ""
- vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
- vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
++
++    if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
++        error_setg(errp, "Host device under PCI bridge is unsupported "
++                   "when x-flts=on");
++        return false;
++    }
+ #endif
+ 
+     error_setg(errp, "host IOMMU is incompatible with stage-1 translation");
+@@ -4425,7 +4434,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+     vtd_hiod->iommu_state = s;
+     vtd_hiod->hiod = hiod;
+ 
+-    if (!vtd_check_hiod(s, hiod, errp)) {
++    if (!vtd_check_hiod(s, vtd_hiod, errp)) {
+         g_free(vtd_hiod);
+         vtd_iommu_unlock(s);
+         return false;
 -- 
 2.47.1
 
