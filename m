@@ -4,98 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD4DCA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 12:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD365CA0EFC
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 12:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upQrU-0004om-Tr; Fri, 22 Aug 2025 08:27:17 -0400
+	id 1upQrk-0004tR-Rc; Fri, 22 Aug 2025 08:27:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upQrQ-0004ms-2u
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upQrN-0002Oh-LE
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755865628;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=htCTYY64s3u4/mbjf2jvp3grVQQ9g94LDvTznIBDP58=;
- b=BzJfljh5Dgnc4ULlzeKAppvWc+jPilNZKq21v1Rs1KybEmy79oEp13GAAx6xIG7ZduuZrc
- 10wupO3Pz9bO4p9h86w2IGuhwq1+89rC7xYDD8ZHN9dmYwrHby8JMIeoH+WXyil4kVHM3R
- vvf4zrirhuJaNaMIkY3Zl6ilxaPUG3U=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-EVTudWHEO9KrmiLl0LUlSg-1; Fri, 22 Aug 2025 08:27:07 -0400
-X-MC-Unique: EVTudWHEO9KrmiLl0LUlSg-1
-X-Mimecast-MFC-AGG-ID: EVTudWHEO9KrmiLl0LUlSg_1755865626
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3c380aa1ac0so824124f8f.0
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 05:27:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1upQrh-0004sp-Ds
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:29 -0400
+Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1upQre-0002QA-IX
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:29 -0400
+Received: by mail-yb1-xb34.google.com with SMTP id
+ 3f1490d57ef6-e932ded97easo1935350276.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 05:27:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1755865643; x=1756470443; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=BYsKwztJMauWR7WjTG5BAj51rSQL/be+C1+B8xc7DMM=;
+ b=QLMI2DmKAv/ylQ8KM88MXP4Ag6QgGwzEawzKcw1aRtFESj6ys99lFoxdm4ZgFxynB9
+ uLTsEPmwNmWMPwbTpx69qLvXwdEi0I251JOoCNHAv5oEg5iJVWFSZwzltcGyRn6FBLxS
+ AuNHIXoXqCEWSBY1n0jB13iWhpAl59DNWCZvlL14Hno7FNKcpJBq+y1sN4i7eQgSGDPU
+ 5s46TScO1Ff+mCMzLxc0FZtRreSputKtnctpwjcNRHUBae9sQ8TZRlRaLEu/vMz8dts+
+ 927QmmEW4N6+pi43szmvRxDJySnyh7NLH/amHpXNVj4SJLhkme2+yzetyaXg+RcL2bRT
+ x3fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755865625; x=1756470425;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=htCTYY64s3u4/mbjf2jvp3grVQQ9g94LDvTznIBDP58=;
- b=g/XAcGOT/10N9yjVf/DoC4wIQjAvoDygXQFp7ze/uyLSTVTR0JGn+yf9fARY6wB6rv
- RROZhUTtNJ/SIEz9a7RxzWxKw4NlxEl4uRlNNXuGSUjvDPu9HmQYLOrBVeMHbLPqpVRj
- 9bcV7ns38GNbMm0KEYZccY6brxHg2NDYNJXMHaybqyJAkdfm5uErmjmontgDgTohocRg
- iEgULg88oic4QaUDXbjCGFpunfTXiLb6pAl8RYvDLWbVFAQ2eIcVhxaniEFukg1y3UTs
- CSydfur+lO9Evd6RPcQ57S/ShB8hPF3XbGrKfd5dmlBpfB4jjSAzUw19tr28wJkTC41N
- wKiA==
-X-Gm-Message-State: AOJu0YwwXqFVpxHJvEbWlWFpWA8yvoPZwsGBPigZ6BKuwGUmF/0V3H4w
- FMQeM5BmAbySKVGE/RqoWt+4ZfqUQN/8V9yGggC1Dkaf7PkuugJJyNa7RiylNHm0BOBCT6oEs7M
- gPRIFEdw6kv0owrAygSvClEVWkPcApT8P9DcWq74rMKO32hD26YRXdSLRtTwwOUd0JSKHSb7GHw
- Qxyj+ebm3zJr8tsApSR3Gu+N9SG0L+RqZ/3WQ0EUTh
-X-Gm-Gg: ASbGnctHy6tRxCk8mDxjn+Q5CgskeH0Icz6ta2smUqfPCDgRzuJBzTPcerW9EeCpASt
- 9flHfx/fIKA0WLgfteP6yVycbfnM7YDZoE8aslfqywtRjPgMYFZ2CV2k3o5BG53aEBbHbi93VMm
- wQF0NG41WPv1TwH2ZQsMKordM6XPOm1EtkSHK0et2cfKWaEssfT6bcDjhnrrzjLU0ydKh5SEQsb
- awFTP5Eed3W3OyBl6q6cuTsWVmpaQHznDGNSwhufFm85gcK6vLxB/ZJKC8Otk352EsMLwkDu3Nb
- ef9m9aGuNCFFAIdIyzFoSrzwFNTOfMJuaiggLQ7AtGNqKb9IbeToWildwBk8o3UkbQqgKEwIFk9
- tAbOXHhJla5kfeNEVaOqhJRZtjKtKmeQJMFbN8HiUdQ==
-X-Received: by 2002:a5d:64ed:0:b0:3b5:dafc:1525 with SMTP id
- ffacd0b85a97d-3c5dc7313famr2232948f8f.33.1755865625477; 
- Fri, 22 Aug 2025 05:27:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHQbW6N9z46fAHU8L3UM37qtfoMuXROTfx9wqhUf4We2fCk7h6vboMTDv3txs3DawzRLROv6w==
-X-Received: by 2002:a5d:64ed:0:b0:3b5:dafc:1525 with SMTP id
- ffacd0b85a97d-3c5dc7313famr2232922f8f.33.1755865624986; 
- Fri, 22 Aug 2025 05:27:04 -0700 (PDT)
-Received: from [192.168.10.3] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c077789c92sm15156979f8f.52.2025.08.22.05.27.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 05:27:03 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: tanishdesai37@gmail.com, stefanha@redhat.com, berrange@redhat.com,
- mads@ynddal.dk
-Subject: [PATCH 03/14] trace/ftrace: move snprintf+write from tracepoints to
- ftrace.c
-Date: Fri, 22 Aug 2025 14:26:44 +0200
-Message-ID: <20250822122655.1353197-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250822122655.1353197-1-pbonzini@redhat.com>
-References: <20250822122655.1353197-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1755865643; x=1756470443;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BYsKwztJMauWR7WjTG5BAj51rSQL/be+C1+B8xc7DMM=;
+ b=X/wZ34wqF+82+dZV0khGz2svIc+Sjnp2l9dF1U67OxVbAhP1EyJ8VUMjBgaMoC7Mfd
+ 6D41EFLL1fEpYKft3dEMNu/1tnAT5ejaltxhoEewGmd+MZh1UoQnHsdtD3qSQaovc8VQ
+ k8RyMxINt+suS1AO95jWEGN06WErYJzI9ASuwOWzgoebKGWQ+DUKkWORWkX9G43+6a2t
+ 3+wqJndwp/05L3ROZJAJOBDIVgYgpRn5DelQ31R9wE5f+vRrFuhKwjaPV8Lzxn1gzmFy
+ h0/hrkgh4kxNs8EnLXXMIzd6q8BF5DvrF4/aT5UDylzgwKqQSB00S2vUSiLeZ3FC0UoW
+ Ahtg==
+X-Gm-Message-State: AOJu0YyVBNMsulE1zPBWMm9VNp5ltVTTRNfuNgDvEiFsYDMaaV2binca
+ o43I9pMInSoFBGzK0vI2Dw7JQBg1wGmnBgc+g7lxZewxz+o2LzZomi6XUP1uZiUXONdEVQw34YP
+ C2wTpvlOXZOLobSE1CQ3OLNHGc8eIqjIH+CFE3r9gUA==
+X-Gm-Gg: ASbGncvG/vAJiHlrZA1jOGdWFCcT+TnZXDAkfAqGIXz4ExmVdCM8ORWpZqnsnRRQ1wQ
+ xf4doKWhVtDNqlMqGa7yD61K9Z6+QK+WfflR0DHMDBWoPVTSeN5upBnrPmNlBmAfLyOGwhq/Y94
+ YgS3YclOxw0gfiCvsvLV5p+u76o9RB/tUu+xnJQ0pw/rIT7LR9ePI+Z7JMKgWqqG7UHDtRogZix
+ dLaq9qC
+X-Google-Smtp-Source: AGHT+IF7er9eyrfv7QjTi7lidx7NPd55hetUoy0ulPmLsgaXGsCsKrTqX+j3ta5+XMTIdENeLr0GxDRNZsYVjCgBnvk=
+X-Received: by 2002:a05:6902:310b:b0:e8f:f6d2:b706 with SMTP id
+ 3f1490d57ef6-e951c2de174mr3142690276.1.1755865643277; Fri, 22 Aug 2025
+ 05:27:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250811193654.4012878-1-vacha.bhavsar@oss.qualcomm.com>
+ <20250811193654.4012878-4-vacha.bhavsar@oss.qualcomm.com>
+ <CAFEAcA9wQ8qh3Ah+QNNXY6u8ut6ZMVqaxFTvDDhvEGYrazFPsA@mail.gmail.com>
+ <CAEWVDmuAkDuss-vB35dOPP-zSOZTEK4WJGfvqLQdHNG-63h51Q@mail.gmail.com>
+In-Reply-To: <CAEWVDmuAkDuss-vB35dOPP-zSOZTEK4WJGfvqLQdHNG-63h51Q@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 22 Aug 2025 13:27:11 +0100
+X-Gm-Features: Ac12FXxw2wMywUFCmmHFNV_0tSTgwquaHxpt_o2gB30wsft00vQuWby2sxpI03Q
+Message-ID: <CAFEAcA_BV1ThJ_2L5pDd8WQhSPKd2WKbW1eb1Owrr4YswOg9Bg@mail.gmail.com>
+Subject: Re: [PATCH v5 3/4] target/arm: Added support for SME register
+ exposure to
+To: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,127 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This simplifies the Python code and reduces the size of the tracepoints.
+On Thu, 21 Aug 2025 at 22:37, Vacha Bhavsar
+<vacha.bhavsar@oss.qualcomm.com> wrote:
+>
+> Hi,
+>
+> Regarding having the SME check inside the "if we have SVE" check, we were looking the the
+> Arm ARM, specifically the following excerpt from section A1.4:
+>
+> The architecture provides the following:
+>
+> - A general-purpose register file.
+> - A SIMD&FP register file.
+> - If FEAT_SVE or FEAT_SME is implemented, an SVE scalable vector register file and an
+> SVE scalable predicate register file.
+> - if FEAT_SME is implemented, the scalable ZA storage.
+>
+> Based on this, we were considering the following update to the change in gdbstub64.c and
+> we wanted to get your input.
+>
+> if (isar_feature_aa64_sve(&cpu->isar) || isar_feature_aa64_sme(&cpu->isar)) {
+>             GDBFeature *feature = arm_gen_dynamic_svereg_feature(cs, cs->gdb_num_regs);
+>             gdb_register_coprocessor(cs, aarch64_gdb_get_sve_reg,
+>                                      aarch64_gdb_set_sve_reg, feature, 0);
+> } else {
+>             gdb_register_coprocessor(cs, aarch64_gdb_get_fpu_reg,
+>                                      aarch64_gdb_set_fpu_reg,
+>                                      gdb_find_static_feature("aarch64-fpu.xml"),
+>                                      0);
+> }
+>
+> if (isar_feature_aa64_sme(&cpu->isar)) {
+>               GDBFeature *sme_feature = arm_gen_dynamic_smereg_feature(cs,
+>                     cs->gdb_num_regs);
+>               gdb_register_coprocessor(cs, aarch64_gdb_get_sme_reg,
+>                     aarch64_gdb_set_sme_reg, sme_feature, 0);
+> }
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- tests/tracetool/ftrace.h            | 28 ++++++----------------------
- trace/ftrace.h                      |  1 +
- trace/ftrace.c                      | 15 +++++++++++++++
- scripts/tracetool/backend/ftrace.py | 12 ++----------
- 4 files changed, 24 insertions(+), 32 deletions(-)
+Yes, I think that will be right.
 
-diff --git a/tests/tracetool/ftrace.h b/tests/tracetool/ftrace.h
-index fe22ea0f09f..1dfe4239413 100644
---- a/tests/tracetool/ftrace.h
-+++ b/tests/tracetool/ftrace.h
-@@ -21,18 +21,10 @@ extern uint16_t _TRACE_TEST_WIBBLE_DSTATE;
- 
- static inline void trace_test_blah(void *context, const char *filename)
- {
--    {
--        char ftrace_buf[MAX_TRACE_STRLEN];
--        int unused __attribute__ ((unused));
--        int trlen;
--        if (trace_event_get_state(TRACE_TEST_BLAH)) {
-+    if (trace_event_get_state(TRACE_TEST_BLAH)) {
- #line 4 "trace-events"
--            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
--                             "test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
--#line 33 "ftrace.h"
--            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
--            unused = write(trace_marker_fd, ftrace_buf, trlen);
--        }
-+        ftrace_write("test_blah " "Blah context=%p filename=%s" "\n" , context, filename);
-+#line 28 "ftrace.h"
-     }
- }
- 
-@@ -42,18 +34,10 @@ static inline void trace_test_blah(void *context, const char *filename)
- 
- static inline void trace_test_wibble(void *context, int value)
- {
--    {
--        char ftrace_buf[MAX_TRACE_STRLEN];
--        int unused __attribute__ ((unused));
--        int trlen;
--        if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
-+    if (trace_event_get_state(TRACE_TEST_WIBBLE)) {
- #line 5 "trace-events"
--            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,
--                             "test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
--#line 54 "ftrace.h"
--            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
--            unused = write(trace_marker_fd, ftrace_buf, trlen);
--        }
-+        ftrace_write("test_wibble " "Wibble context=%p value=%d" "\n" , context, value);
-+#line 41 "ftrace.h"
-     }
- }
- #endif /* TRACE_TESTSUITE_GENERATED_TRACERS_H */
-diff --git a/trace/ftrace.h b/trace/ftrace.h
-index cb5e35d2171..16c122816d1 100644
---- a/trace/ftrace.h
-+++ b/trace/ftrace.h
-@@ -8,5 +8,6 @@
- extern int trace_marker_fd;
- 
- bool ftrace_init(void);
-+G_GNUC_PRINTF(1, 2) void ftrace_write(const char *fmt, ...);
- 
- #endif /* TRACE_FTRACE_H */
-diff --git a/trace/ftrace.c b/trace/ftrace.c
-index 9749543d9b2..6875faedb9c 100644
---- a/trace/ftrace.c
-+++ b/trace/ftrace.c
-@@ -38,6 +38,21 @@ static int find_mount(char *mount_point, const char *fstype)
-     return ret;
- }
- 
-+void ftrace_write(const char *fmt, ...)
-+{
-+    char ftrace_buf[MAX_TRACE_STRLEN];
-+    int unused __attribute__ ((unused));
-+    int trlen;
-+    va_list ap;
-+
-+    va_start(ap, fmt);
-+    trlen = vsnprintf(ftrace_buf, MAX_TRACE_STRLEN, fmt, ap);
-+    va_end(ap);
-+
-+    trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);
-+    unused = write(trace_marker_fd, ftrace_buf, trlen);
-+}
-+
- bool ftrace_init(void)
- {
-     char mount_point[PATH_MAX];
-diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-index 5fa30ccc08e..a07f8a9dfd8 100644
---- a/scripts/tracetool/backend/ftrace.py
-+++ b/scripts/tracetool/backend/ftrace.py
-@@ -28,18 +28,10 @@ def generate_h(event, group):
-     if len(event.args) > 0:
-         argnames = ", " + argnames
- 
--    out('    {',
--        '        char ftrace_buf[MAX_TRACE_STRLEN];',
--        '        int unused __attribute__ ((unused));',
--        '        int trlen;',
--        '        if (trace_event_get_state(%(event_id)s)) {',
-+    out('    if (trace_event_get_state(%(event_id)s)) {',
-         '#line %(event_lineno)d "%(event_filename)s"',
--        '            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
--        '                             "%(name)s " %(fmt)s "\\n" %(argnames)s);',
-+        '        ftrace_write("%(name)s " %(fmt)s "\\n" %(argnames)s);',
-         '#line %(out_next_lineno)d "%(out_filename)s"',
--        '            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
--        '            unused = write(trace_marker_fd, ftrace_buf, trlen);',
--        '        }',
-         '    }',
-         name=event.name,
-         args=event.args,
--- 
-2.50.1
-
+thanks
+-- PMM
 
