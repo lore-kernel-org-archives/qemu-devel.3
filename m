@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F49CA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 13:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6522ECA0EFF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 13:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upS6v-0001mx-8z; Fri, 22 Aug 2025 09:47:17 -0400
+	id 1upSDP-0005sv-Um; Fri, 22 Aug 2025 09:53:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upS6q-0001md-0r
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 09:47:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upS6g-0003sk-OL
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 09:47:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755870418;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=aYUI7WCHmlia3Yql7Y7DBmlq2WOST6tJVNOXgAbyF+A=;
- b=gU5U+Z4uY3Rk1Ot5KMuRjBC61rVDE2d3kc64QZ2SAmJvihbK2LL6qdbN+xlv3/JwUyAICJ
- 9g30dz6Km44bRZAXOlJBu58txyO0tTdOq0U4syijkXa0k3WQ7VZWSU1M6CzhQx9QeXBN+K
- 1mK/PXV26PBvTIdc782rtZU8woNfdto=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-QoMS3Ps-Mlq88rux8xVAKw-1; Fri, 22 Aug 2025 09:46:56 -0400
-X-MC-Unique: QoMS3Ps-Mlq88rux8xVAKw-1
-X-Mimecast-MFC-AGG-ID: QoMS3Ps-Mlq88rux8xVAKw_1755870416
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45a1b0071c1so10530145e9.0
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 06:46:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cjchen@igel.co.jp>) id 1upO1z-00063w-Oz
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 05:25:55 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cjchen@igel.co.jp>) id 1upO1u-0007HH-4F
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 05:25:55 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-b47175d02dcso1480337a12.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 02:25:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1755854746; x=1756459546;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vh5PW27wq4M7UAgJQHpY8LHqZa1HVp12yT5xQoyQ7OE=;
+ b=DE2oWXZ2aGdAGKT9Je46/ChaN2UK301u/Fg2GH9etR1f1kbpIXdQiauuwHTp7nXeiG
+ AFMSCKpEJC0ELUQV6kfG0oFEcW34txbkT67WlZ/07Rf62rV8CghV4WiytBdH81lTHs2m
+ LOzwZFuZ7+lAP6w6Jx2POBYb9YyhX/79T63Vgs1+hYbrhuW9Giw6C3RF5JtxLJjh2YrO
+ XDToyH7O2Wbr5X8i8KLR9mgO9CV9LOYj2exkI80/sCYDm/rdwBKFDYiQKA4D9iLrJJIO
+ GBrg+ijM6ByFdO7cFTMTB8b/RyhLSHTt6BzylfRabKZsz4FlxIKKY+IhYd07bmHddV7a
+ 1THQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755870415; x=1756475215;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aYUI7WCHmlia3Yql7Y7DBmlq2WOST6tJVNOXgAbyF+A=;
- b=KZN6lw6C0jykyClL/vwld6gBaau2L/P7AC9Rl9QzVp5WQHwxqr4xXSviCoTUCVAkTg
- 0BOUIArSpJl90lhlCe50II4zmzZHJxh+St7SuaSEkaGIDspM06lwYCnzoupnAFrudGOi
- FJlQyfSUVVWuip5Ij3hrDyOtYJ1LrraT+MX2jR/x+FoIwavc6qRYr57Bm5Gl70Dx3EMv
- sJX8MU/EI43FnPSLsbG8iwUQ23S0llGSjsbvbDYIvbx06bQh3Hnd6O7aVIPsMLdLGRZz
- 7jLAb4QWBS59Cw4BYE53J/Q7jcTu2AEQnN4cb/Qw/q2JKInjytTrO8Dkt6nWmUuX+7hJ
- py7A==
-X-Gm-Message-State: AOJu0YzlKn409Wpg1O+woXxRkFh36gEk/b2DYlBgMMh5mvDTZE+H2bPS
- ZkKLsvp1Njj0LDWHcsA1AsS/aUWWl9CswoTn/AVT9uUtDqwmyDj83E6nqi7PSZPGNi1lAQup06I
- lz35OkdGS09Ddx79Q2qy+DW9ocWQQhXszC3NkGl2L352AUkBmCfveVPwnYg+XicQ1x9ntd3M59W
- vvHHew1u51DYjnj3Wk1s1VLF4f0hidQ/YjS3grx7Pw
-X-Gm-Gg: ASbGncv5mHw2oZgxOy7rKrMYDoF4Xa52qEnR8w2U/vA09XyqI89UkW4M/tN72c3OTBW
- 18Cq+T3Y+sCHn0vICFcL29/oAXOa3I/YoxCpQjQyKhBNEYYjoALmGRnxjFQrYHDmYnvTa8iGrAC
- yVIVRx+llGUwZXwbmlOiAsnCN8RveOD9U6G95yJUx62Qm71mlxpV595sJm9p0eB/+lgoThoKBBS
- OLvy1aqcm/rbezn33x/cfja/QF0o7jB5AaYXehxqug5te1c/kbrd2KF+ce6hNjbgVR8JCbmgf9Z
- 0WCcBLtbLgEKBXLVDyCHlNCO3cSMLzL4BNTpPB9eZLa1N9hajSMpNDL8dd29s6azXMG6jyE5m09
- T8Pc/ZNN8JmquESu0w7hVrT4YYkpdynjZuFpcGq7pQw==
-X-Received: by 2002:a05:6000:2891:b0:3b7:6d94:a032 with SMTP id
- ffacd0b85a97d-3c5da73f498mr2189326f8f.3.1755870414728; 
- Fri, 22 Aug 2025 06:46:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH7Ji3JnpkerEJGrM+z4Kx2hw5Sf0Id8I6Ug09Y2Tfqh+lwp14u6liE4y5Osf3zVIsZuGzZcg==
-X-Received: by 2002:a05:6000:2891:b0:3b7:6d94:a032 with SMTP id
- ffacd0b85a97d-3c5da73f498mr2189303f8f.3.1755870414306; 
- Fri, 22 Aug 2025 06:46:54 -0700 (PDT)
-Received: from [192.168.10.3] ([151.95.56.250])
+ d=1e100.net; s=20230601; t=1755854746; x=1756459546;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vh5PW27wq4M7UAgJQHpY8LHqZa1HVp12yT5xQoyQ7OE=;
+ b=cdcXyUTBQvBbob8RMASGyY+WJf7fh3P/SGMnIKTYsVivIGJSZOpSMLI+esXFI+Fc/B
+ N11tw30z2MzYglah+L7P4EVEIh+CarjU9QxobvcNQIWmdccstjjmh2OVInKE63xEbl/f
+ 0vL4X/QlPgOLykeX39aNqnk9udI7iIETiMJG5mOyiaqRoK/LfQ/4rDD+mHT7Rky7pRRi
+ n7CvOHrdmwrJdhhuqPzvf5pyfG4uIN3q5LrHrf4aWBImDQCr6bnHf22SNe5RDxnfQjRE
+ GBl6H/i1KajCH5y5FpNkydYEEQ5LLPlK4NzAaiJh/WVvVwAIuEFLMf+CtdBYJAzvfaHJ
+ Ko5g==
+X-Gm-Message-State: AOJu0YxPWUARNEJ2RlyXZXoO7JDjT7chwBrzSp+O0JP5oyKUBMtXgo4A
+ VFmk5E1OINPCUfwtBwGYQO9bHgDx4iG02YIqKHzHfSUpnR/ZF8BVTiDT5L7xIukwVWz64M86jbW
+ HEw3p3nQ=
+X-Gm-Gg: ASbGnctqDJbnzlTlUlxcM0rO0pdGZ6ViHFDKiGc9pHTnIOOZsidyh2FTP6LvJKN3EvW
+ nVhZWCTdIqpAFi/V/ldXdyimHpU7pS4Bi53Ya9ZZ2xUVP2OZe+mnmaVlAT74RlJF/OBV7+cp2m9
+ p/LG4a69t2r/q0TM8WULHJX1hbheZjKt8Yb1fBjGubBZQ6V1ItjFtGpgx1z7dqj82UVmLYM1/PA
+ 5Gwl2opjJjH+71g/IjQ0XRJs7sTCBEi2WbiNf3nQw0slvUsdKztxvHpZIn+yRek73O/JTNEF/O1
+ 9n5TgHTCZuodv9eX3FhpKQe2KB6K3HwThdyzIxbJKOl9s6F6wvQ/AVPGKDhDZtv6fsSIfNA9cHR
+ 0AEz4dN0nnt+1IjU786jgQ8V1DIt8Wd4fb19i3a///Q==
+X-Google-Smtp-Source: AGHT+IFqrkDmltRg7rBvuIoosHiBNJHGiYIXbN8rlbL3FhYZHp7oXOt3yH4etsE7arp7mbrFo0zW5g==
+X-Received: by 2002:a17:902:f68e:b0:243:7cf:9bcf with SMTP id
+ d9443c01a7336-2462ee0be0bmr37041655ad.2.1755854746463; 
+ Fri, 22 Aug 2025 02:25:46 -0700 (PDT)
+Received: from warg.hq.igel.co.jp (napt.igel.co.jp. [219.106.231.132])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c074879864sm15904509f8f.13.2025.08.22.06.46.53
+ d9443c01a7336-245ed4c6fb7sm78560215ad.89.2025.08.22.02.25.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 06:46:53 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	John Snow <jsnow@redhat.com>
-Subject: [PATCH] python: mkvenv: fix messages printed by mkvenv
-Date: Fri, 22 Aug 2025 15:46:52 +0200
-Message-ID: <20250822134652.1366100-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.50.1
+ Fri, 22 Aug 2025 02:25:46 -0700 (PDT)
+From: CJ Chen <cjchen@igel.co.jp>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Tomoyuki Hirose <hrstmyk811m@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, CJ Chen <cjchen@igel.co.jp>
+Subject: [RFC PATCH v2 7/9] system/memory: assert on invalid unaligned combo
+Date: Fri, 22 Aug 2025 18:24:08 +0900
+Message-Id: <20250822092410.25833-8-cjchen@igel.co.jp>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20250822092410.25833-1-cjchen@igel.co.jp>
+References: <20250822092410.25833-1-cjchen@igel.co.jp>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=cjchen@igel.co.jp; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 22 Aug 2025 09:53:58 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,44 +113,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The new Matcher class does not have a __str__ implementation, and therefore
-it prints the debugging representation of the internal object:
+When it comes to this pattern: .valid.unaligned = false and
+impl.unaligned = true, is effectlvely contradictory. The .valid
+structure indicates that unaligned access should be rejected at
+the access validation phase, yet .impl suggests the underlying
+device implementation can handle unaligned operations. As a result,
+the upper-layer code will never even reach the .impl logic, leading
+to confusion.
 
-  $ ../configure --enable-rust && make qemu-system-arm --enable-download
-  python determined to be '/usr/bin/python3'
-  python version: Python 3.13.6
-  mkvenv: Creating non-isolated virtual environment at 'pyvenv'
-  mkvenv: checking for LegacyMatcher('meson>=1.5.0')
-  mkvenv: checking for LegacyMatcher('pycotap>=1.1.0')
-
-Add the method to print the nicer
-
-  mkvenv: checking for meson>=1.5.0
-  mkvenv: checking for pycotap>=1.1.0
-
-Cc: qemu-stable@nongnu.org
-Cc: John Snow <jsnow@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: CJ Chen <cjchen@igel.co.jp>
+Tested-by: CJ Chen <cjchen@igel.co.jp>
+Suggested-by: Peter Xu <peterx@redhat.com>
+Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
 ---
- python/scripts/mkvenv.py | 4 ++++
- 1 file changed, 4 insertions(+)
+ system/memory.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index f102527c4de..9aed266df1b 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -184,6 +184,10 @@ def match(self, version_str: str) -> bool:
-             )
-         )
- 
-+    def __str__(self) -> str:
-+        """String representation delegated to the backend."""
-+        return str(self._m)
-+
-     def __repr__(self) -> str:
-         """Stable debug representation delegated to the backend."""
-         return repr(self._m)
+diff --git a/system/memory.c b/system/memory.c
+index d6071b4414..b536a62ce9 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1654,6 +1654,7 @@ void memory_region_init_io(MemoryRegion *mr,
+                            const char *name,
+                            uint64_t size)
+ {
++    g_assert(!ops || !(ops->impl.unaligned && !ops->valid.unaligned));
+     memory_region_init(mr, owner, name, size);
+     mr->ops = ops ? ops : &unassigned_mem_ops;
+     mr->opaque = opaque;
 -- 
-2.50.1
+2.25.1
 
 
