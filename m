@@ -4,102 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1313ECA0EEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 13:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2630CA0EED
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 14:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upSDX-0005vq-3a; Fri, 22 Aug 2025 09:54:07 -0400
+	id 1upSZO-0000C5-07; Fri, 22 Aug 2025 10:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cjchen@igel.co.jp>) id 1upO1f-0005pj-G0
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 05:25:36 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cjchen@igel.co.jp>) id 1upO1a-0007Bo-UH
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 05:25:34 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-24458272c00so20901255ad.3
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 02:25:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1755854727; x=1756459527;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2LelFaXu4nBaY9dT35+wlto5FIYzudNjlsl9EfmiZ5M=;
- b=2R5rzeR8InbtkyQo0P+AOoUt6iDP30ONkSIVG/0yTNb+ahyVL0I0n24yUL8floJWOU
- WTmXAuUX7mtKzkIDdmZm9zJ10BxRXHsvJvGyf2Lni0cZGrwKP2sWZciBCGXBPhs3iDr5
- rTtW3UXJ8w/eaAnit5w99PBOG9wHZTgWHwijCwuHJo7+NbLs1YQ/Rz62tfkNJ8IwT812
- XQ79chaVxbocuAHWZa2pY5QOvXI7iHVjCKhi/7/CimleexWo9qRWCXwT8T+Mf7lxyvML
- kDi0ieP6vfq71M7V6Yt9wMb9lTcgXIp3o/6iiA4uheBEKLt5bObQd3J83LvFsF/nsUj8
- pXpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755854727; x=1756459527;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2LelFaXu4nBaY9dT35+wlto5FIYzudNjlsl9EfmiZ5M=;
- b=WFFzsZL4lX21ocrpYtZRXBfGk7wkJA4URwUlLwIrns04dQrGH5ZnttGCMfBKBeKGUQ
- L+CXHSthov1LDgX7W+fTZ3n66WtfScVmQjvYON3qdnajLCCwTKG8HhrIvuN8WRVo2x2L
- juiCEhqdKmCR46JAN7f7bpEkrY2YT0LMCu5VXLtex9+T4sacbp7g2If0xBcyAo39Xs4s
- UW0r9Losyd7qbzvoOJkVq2jBWVEQQNjizgF91o2ypQvFFDJq6mtfEXUvcJ+J33hvkX3L
- 3L8+cFsSJkIt4H9zprscooQJqG3jsCz9uEGGgO6Vex2l4nTxxhfNT0UVY5PMlhZZYktN
- N/ug==
-X-Gm-Message-State: AOJu0YyQQRPFHdm6kX2kkF6K80vrAOy+YJh/ry3Ju4LnT99XI9jwKAKz
- d6aG7MLbuur1sOA9A+W9iDwC6UV7SXejraUj1Bi7WlBBoMW190Oev5NTWHU+LhRFSdCxGeGnr2o
- rtEqzsDQ=
-X-Gm-Gg: ASbGncvgwPTQcRIOva4EaTULeaeD7qx+tbxNKVcpIrv5FrayqzXMJW8VOLNzdoNciAF
- RBu8o80WHhEp7lyeN/+oPh/C9MD6E04RPz92q9pMI/pZ28xjkjEyeXtDUYoUJDFA7qnPIVbDO18
- +1p+ofiCphh/KpVCAd80XVutBlpaPIAPi7HBZ9Bxln3YvcrBQ9191MjZrvjPKVcZ4qpYjuwM5Rx
- bxFEpA1RoP0lj5CpbZWIZ5syM4NhirIIrehicPqTAzZ+BDhlh3hB0WfQz+5i7xi96fvkLkmte/y
- DI3JzKHwANWCSoMs/ZNBhxUAhB8Hqr691OyN1T3xb9e2FH0WwlNEqFcFv4za+gm/9hPvbsZGoWs
- egBogQymOjVQf9FFaxUWIONwNivuR0YS0rd5z2agOxZ5x4/35o+4j
-X-Google-Smtp-Source: AGHT+IHwO6/ISB0j/F3Fu/FL8iXEouvPElKuNTjaAa80YP6la6HrQCx45MOnxFn2E7Ame5lgK/uVxw==
-X-Received: by 2002:a17:903:94f:b0:246:4417:db76 with SMTP id
- d9443c01a7336-2464417dd58mr21785165ad.5.1755854727321; 
- Fri, 22 Aug 2025 02:25:27 -0700 (PDT)
-Received: from warg.hq.igel.co.jp (napt.igel.co.jp. [219.106.231.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-245ed4c6fb7sm78560215ad.89.2025.08.22.02.25.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 02:25:26 -0700 (PDT)
-From: CJ Chen <cjchen@igel.co.jp>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
- qemu-arm@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Tomoyuki Hirose <hrstmyk811m@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, CJ Chen <cjchen@igel.co.jp>
-Subject: [RFC PATCH v2 4/9] hw/nvme/ctrl: specify the 'valid' field in
- MemoryRegionOps
-Date: Fri, 22 Aug 2025 18:24:05 +0900
-Message-Id: <20250822092410.25833-5-cjchen@igel.co.jp>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20250822092410.25833-1-cjchen@igel.co.jp>
-References: <20250822092410.25833-1-cjchen@igel.co.jp>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=cjchen@igel.co.jp; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1upSZJ-0000Ap-B1; Fri, 22 Aug 2025 10:16:37 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1upSZD-0007wV-Aa; Fri, 22 Aug 2025 10:16:37 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M9CKqX012122;
+ Fri, 22 Aug 2025 14:16:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=Fi+Ab3Zfd7AsiVm0oH7J4X4uKZMf+pBGmIdWC98fHjE=; b=o1/KSMxniylv
+ vjoQgYjgUvABMcdoXiwwLc7TPXvISROhTBI8+xHa2bCnovV799fK4kh1b4wH1Yqy
+ USCr6ihOmHCSycNJg6xThkonLHu/mY+N6dG5QxgZy6CusUwAP+9n8+1ohLd6YW1I
+ E5mYNz1oNhiP/E2Z5VpvkrXy3P9l6pviIeEh2LdRRF4H5Dqvh649/RMOdFdfOlA3
+ mqowWevZ6dKKEBGOGFcvkWPvUQnImOxTOv6G6n3G8vH4PT1vWWI6UygCxfY9hakr
+ hrPfSo2EDPT1QlXNeMLCk1LMlrSwj9KVzy8vk0rA0Sz2bOxJ1mcHwYNTb/R3wMhI
+ giI1SBTIGw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38vpypf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 22 Aug 2025 14:16:22 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57MCPmsP031902;
+ Fri, 22 Aug 2025 14:16:21 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 48my5ydmrf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 22 Aug 2025 14:16:21 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57MEGKmv29491760
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 22 Aug 2025 14:16:20 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7DF5658059;
+ Fri, 22 Aug 2025 14:16:20 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 12B6F58058;
+ Fri, 22 Aug 2025 14:16:20 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 22 Aug 2025 14:16:19 +0000 (GMT)
+Message-ID: <1eee380615318374a4ab5fc5874d5b1906428997.camel@linux.ibm.com>
+Subject: Re: [PATCH] hw/gpio/pca9554: Avoid leak in pca9554_set_pin()
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org
+Date: Fri, 22 Aug 2025 09:16:19 -0500
+In-Reply-To: <20250821154459.2417976-1-peter.maydell@linaro.org>
+References: <20250821154459.2417976-1-peter.maydell@linaro.org>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: KkVZ1rtlSfEh6qNw7gCxZAFhPkwRwc7z
+X-Authority-Analysis: v=2.4 cv=IrhHsL/g c=1 sm=1 tr=0 ts=68a87bb6 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=KKAkSRfTAAAA:8 a=cs6J414EKrr35_aV8MEA:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDIyMiBTYWx0ZWRfX6czpAHgW0CeW
+ qMqW27DrCoLzKF+sMqDi8Me61LLDXE+ZLpGZWz3aG3zAkCTUmUp1g8/YpmHywiq3Zgc764wP7IF
+ 9Pxc52q8UKnTHrEtoGR24hVSXvj9VQHwU83JG+uB1bAB83D5ZzlO8qm09QZAzy2J1DKOOtfL5y6
+ hWTTIBFzYuCo0wNeg2HNBjJVXMMStErTawta9wcy1p/xnKQaiM3YyI1DZjhoH5Klqjur5IPDJzR
+ q6ceiHCStSoVTOlJrpwUr+y22LJPVCd5B7IIPn93GfdBTUZ7ACCnA0bxsCDQymTXZmo6zbeeujE
+ e1nwkY4Oau6+jY3LY0he+DBQB9DpYT5113NPeJV8+LfsVAJ0wfvBwvel+yovADposVcP7WHST7g
+ JSOnOvLTfgOGv2Qdp6O+UB7TERqDWQ==
+X-Proofpoint-ORIG-GUID: KkVZ1rtlSfEh6qNw7gCxZAFhPkwRwc7z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-22_04,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2508110000
+ definitions=main-2508190222
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 22 Aug 2025 09:53:58 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,44 +118,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-'valid' field in MemoryRegionOps struct indicates how the MemoryRegion
-can be accessed by the guest. In the previous code, the 'valid' field
-was not specified explicitly. As a result, the CMB area could only be
-accessed in units of 4 bytes.
+Thanks,
 
-This commit specifies the 'valid' field in MemoryRegionOps of CMB and
-the CMB area can be accessed in units of 8 bytes.
+Glenn
 
-Signed-off-by: CJ Chen <cjchen@igel.co.jp>
-Based-on-a-patch-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-Tested-by: CJ Chen <cjchen@igel.co.jp>
-Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
----
- hw/nvme/ctrl.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index fd935507bc..9dca718ca1 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8272,6 +8272,11 @@ static const MemoryRegionOps nvme_cmb_ops = {
-         .min_access_size = 1,
-         .max_access_size = 8,
-     },
-+    .valid = {
-+        .unaligned = true,
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
- };
- 
- static bool nvme_check_params(NvmeCtrl *n, Error **errp)
--- 
-2.25.1
+On Thu, 2025-08-21 at 16:44 +0100, Peter Maydell wrote:
+> In pca9554_set_pin() we have a string property which we parse in
+> order to set some non-string fields in the device state.  So we call
+> visit_type_str(), passing it the address of the local variable
+> state_str.
+> 
+> visit_type_str() will allocate a new copy of the string; we
+> never free this string, so the result is a memory leak, detected
+> by ASAN during a "make check" run:
+> 
+> Direct leak of 5 byte(s) in 1 object(s) allocated from:
+>     #0 0x5d605212ede3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qemu-system-arm+0x21f1de3) (
+> BuildId: 3d5373c89317f58bfcd191a33988c7347714be14)
+>     #1 0x7f7edea57b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b68282
+> 9a6913cf682d75)
+>     #2 0x7f7edea6d4d8 in g_strdup (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x784d8) (BuildId: 1eb6131419edb83b2178b68282
+> 9a6913cf682d75)
+>     #3 0x5d6055289a91 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
+>     #4 0x5d6055289a91 in qobject_input_type_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qapi/qo
+> bject-input-visitor.c:542:12
+>     #5 0x5d605528479c in visit_type_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qapi/qapi-visit
+> -core.c:349:10
+>     #6 0x5d60528bdd87 in pca9554_set_pin /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/gpio/pca9554.c:179:10
+>     #7 0x5d60549bcbbb in object_property_set /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1450:5
+>     #8 0x5d60549d2055 in object_property_set_qobject /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/qom-qobject.c:28:10
+>     #9 0x5d60549bcdf1 in object_property_set_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1458:15
+>     #10 0x5d605439d077 in gb200nvl_bmc_i2c_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/arm/aspeed.c:1267:5
+>     #11 0x5d60543a3bbc in aspeed_machine_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/arm/aspeed.c:493:9
+> 
+> 
+> Make the state_str g_autofree, so that we will always free
+> it, on both error-exit and success codepaths.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: de0c7d543bca ("misc: Add a pca9554 GPIO device model")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  hw/gpio/pca9554.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+> index de3f883aee9..eac0d23be34 100644
+> --- a/hw/gpio/pca9554.c
+> +++ b/hw/gpio/pca9554.c
+> @@ -174,7 +174,7 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+>      PCA9554State *s = PCA9554(obj);
+>      int pin, rc, val;
+>      uint8_t state, mask;
+> -    char *state_str;
+> +    g_autofree char *state_str = NULL;
+>  
+>      if (!visit_type_str(v, name, &state_str, errp)) {
+>          return;
 
 
