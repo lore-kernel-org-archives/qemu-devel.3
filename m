@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5E5CA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 12:30:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6441ACA0EED
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 12:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upQre-0004s2-UL; Fri, 22 Aug 2025 08:27:26 -0400
+	id 1upQsK-0005EG-HB; Fri, 22 Aug 2025 08:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upQrd-0004r9-79
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1upQrt-0004w4-Ta
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1upQrZ-0002Pr-4V
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:24 -0400
+ id 1upQrq-0002RX-QH
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 08:27:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1755865638;
+ s=mimecast20190719; t=1755865657;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TMnLffocBY7PHzrcHweiZicabkSK14EqZ+PBp8wGPA8=;
- b=B/wVJf7JMRv5xEbkgR/im75r2v/NV2gn+UPNPZ/1mwV+4WnLAM0GmLF7rTMDofhQK/piz2
- 7yvyS7Ca85UsKQW6Zi9q5msdivAmJ9N+jbu0acnBrg0zRbpnkONMX6dfdHmpU9HINOmV/I
- 9h6OfE/TPCwcFNIoBhRHnESNWWXwszs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GLvY7T3qsFX5eHyIEjlzP7ZM0g6YBeoAiFTuVz2Nylg=;
+ b=R2XDlxL4QthOucpSXPrNIDmPQ5tP53J+yxU+AQQI9qPD9JhmbhgRUEeGlAfIM4/BRFHB6X
+ kF78PSTYLqwi7gNm9uiRT3WS/1QV+qgOHB2+e7PXJu5NkDih/AplfQZqACoX+uBc3z6F7G
+ MSxmiyYcDKZbkyxidWZPKoIv7fo77Vo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-EAPyysZ1Oq2s-tqYlR1qsw-1; Fri, 22 Aug 2025 08:27:17 -0400
-X-MC-Unique: EAPyysZ1Oq2s-tqYlR1qsw-1
-X-Mimecast-MFC-AGG-ID: EAPyysZ1Oq2s-tqYlR1qsw_1755865636
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3c68ac7e19dso117713f8f.2
- for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 05:27:17 -0700 (PDT)
+ us-mta-668-Q3TWNpscMfGtRk8HYjB4Ag-1; Fri, 22 Aug 2025 08:27:36 -0400
+X-MC-Unique: Q3TWNpscMfGtRk8HYjB4Ag-1
+X-Mimecast-MFC-AGG-ID: Q3TWNpscMfGtRk8HYjB4Ag_1755865655
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3b9edf41d07so987423f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Aug 2025 05:27:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755865636; x=1756470436;
+ d=1e100.net; s=20230601; t=1755865652; x=1756470452;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TMnLffocBY7PHzrcHweiZicabkSK14EqZ+PBp8wGPA8=;
- b=lN94Qw77ZsIlEpD3AD4Auq2Z2HQp9ArPC20EKsgis+brOGEcByhfHKUbtUIXXeVxxq
- OUUFlPAwZJgjA9V1BPyO2pZbUVUsfASQkRNtEsw6HWuOLCxWzXFAZQjChVZgZTJ6E6GN
- defpWwdV4p7Tn+/0To5j1uF2HcIjfsQuiAjvfWnn/RVHfnno8BjmRB49TXSTx4n3Pwtl
- fHym5NEUoiiYRdqpTV3BpiAhiFBoJjnvcpGefX8aEIbIdTfAhAanx+OXK3MPduWVhtX1
- 29tsAVSNwO3i1LhoEFwnKdSKf1vRvem+/BHuNYMTqgkEH1g8AfoSpiWbE4XslN6r83DJ
- fMHw==
-X-Gm-Message-State: AOJu0Ywm+TDwPnOs7NKMOzTonuh6eOg/Xb7JY42P3n6dLbZVXFzEJBM4
- +xZ/T3SgobkxztioEIYmJZvusPNeMM0dX7oCGn20KF9UGLyrGicdOcDGblNlmz5Kic2XCE/q9L4
- UbU/8S+9587rY5YBU/AjsCkQKoplmdEBf8hsEccqqGUBNSiRDaFO+zCnzG6hmamCEC+84d806Su
- VYvp2Q9/enS9jUTuMm0tquOz+SJMiiXJaRBosowb84
-X-Gm-Gg: ASbGncui1I7pV9LRFtEqs92NFzt1Mwcxp779WEd2oMkD8/GqCc9dro+1vsRQsMlTeXG
- i3qZ5Mgb0hNlQnk3GNWAfgi95EvuN8RBL3AN6n0NCwR+sVfWgvu79xtd5i69Wnr4XIboMBDqBmV
- ovmOF7gR+uD+uW/aSLhiJRZXLyijkNqVpdT0wSalq7N3WJIUUavOBDKSqBJ2F+LQ/dFPJUcjkgz
- MjKAtOBP2c/PF6nwmyEpfvZJgnrUf5pQrJCoLKEGYIf+iel1SwEIgRs8Z+rhSn/tfio3OFTWQAg
- CMCQS+i2IbABPXzlih6E4y82owZNa6szjsgVCD5xGIogV1ZAvvhAeBlSylgVzSOqv93UjT8pWAd
- ug4MkKTXg8X7ydrTqO9eYab8dz4LGhnNhhDr0VdmG9g==
-X-Received: by 2002:a05:6000:26d2:b0:3b7:99cb:16f6 with SMTP id
- ffacd0b85a97d-3c5dcdfc4d2mr2174920f8f.53.1755865635615; 
- Fri, 22 Aug 2025 05:27:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgGJQwDL8jaqwULb8PQqDOorxezE4HpdzhqV0BkZlWUcROuYsz7BycSzFatMjutPWYYkZnrg==
-X-Received: by 2002:a05:6000:26d2:b0:3b7:99cb:16f6 with SMTP id
- ffacd0b85a97d-3c5dcdfc4d2mr2174886f8f.53.1755865635046; 
- Fri, 22 Aug 2025 05:27:15 -0700 (PDT)
+ bh=GLvY7T3qsFX5eHyIEjlzP7ZM0g6YBeoAiFTuVz2Nylg=;
+ b=fFgT+fzStz6QQXzec7AzTPBuUrsknh2K70HTusJ7VK+BcUtlY97HN7LVP+FxUJDyMB
+ 5Di+Hw+v/swuVMXITXOsjMVcj+RqcADBDesxX6taM97G42PwkcfMhKdOMYpLYPKP1qJ3
+ cAKZBjKv6hAXeakn9x/3gvXgu0l+Kd75qw0fuZsodaBUTTHKfZ38/4EFZ6iLJgptRDqM
+ rUoA8WEmFw/QwfrjyDnBmDdoBV+VRxPryBK+1PJD4cIjR9be1PfvQ4ffbL6i/9vDItSL
+ lIeOJ7QnM2QA6ooilocubERqioqkP76V3yLDps5HUQ9x5nyn9f9vhbOJI0gFU+LoPDrq
+ shFA==
+X-Gm-Message-State: AOJu0Yz/AjERXeK1hS/q4+CuigmM17yxB+z0EXYUUxbp+graO+pvR0cx
+ Kl44mFNxyrst/ym1DPU4NeqTGktAwgES3DH29W3Qy6o/llI8Sak2YLWfHAX3D4jL3ticbW7qnSo
+ MW/kKQ5vvAuazX9mPfWO8GkUjTJQNAzrGOy+fYutl4rFp/jhxBgzSjWHHcFFVEwXGsRBiTXm/X4
+ tF+PwtnndlUPoggydXbMjMRa7Qm3Nu3F9vtwesE0Qu
+X-Gm-Gg: ASbGncuL9FRMUiKtkQXliLtvL76C1LwrZSs622FZzA+lZXauc0gC9k4mnCZZXhDeam+
+ U5xWYIf/I9cTiLcvsMQMUYy+xMD6f9IonnMVsl4vN5zjgN8wyydsMlMOY3HKGG90hpWjWDrUl7F
+ jPcZWyfT76i76j8WYVAGPSoVZ4xF0sooQaTZvxYt904t4vkqs5murRPplA9HyUPMK6KGK0nXtHb
+ IWPJxLb/ASPCzMEqWq7jVzueUZ32nmhtzQXj24oNgjWldoT+locq+sJ8PeV30IyPA+RVvSzPtWq
+ JFpOfjQZZlhi5JUJ6QcpkFJYK4YLvPdZAm30e/t5LMYRh+ey1XJV+b0hoXJm6O7LA32v2Wgd6bT
+ 6w/gFdT3e/IUiHU7EaVU1IKj+zN5Ztce18Sf0s3bCoA==
+X-Received: by 2002:a5d:64ed:0:b0:3b9:16ac:4f8b with SMTP id
+ ffacd0b85a97d-3c5dcc0da2bmr1812705f8f.50.1755865652374; 
+ Fri, 22 Aug 2025 05:27:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFh48/j6UvcQ/doO9lHqH5jiYggnUSJqTOvXNNW4jAyr0YLknHh2qQX1MFV31IVzKZnUfjMLQ==
+X-Received: by 2002:a5d:64ed:0:b0:3b9:16ac:4f8b with SMTP id
+ ffacd0b85a97d-3c5dcc0da2bmr1812679f8f.50.1755865651795; 
+ Fri, 22 Aug 2025 05:27:31 -0700 (PDT)
 Received: from [192.168.10.3] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c074e38d7dsm15165739f8f.26.2025.08.22.05.27.13
+ ffacd0b85a97d-3c077c56454sm15434073f8f.58.2025.08.22.05.27.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Aug 2025 05:27:13 -0700 (PDT)
+ Fri, 22 Aug 2025 05:27:30 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: tanishdesai37@gmail.com, stefanha@redhat.com, berrange@redhat.com,
  mads@ynddal.dk
-Subject: [PATCH 07/14] rust: add trace crate
-Date: Fri, 22 Aug 2025 14:26:48 +0200
-Message-ID: <20250822122655.1353197-8-pbonzini@redhat.com>
+Subject: [PATCH 13/14] tracetool/ftrace: add Rust support
+Date: Fri, 22 Aug 2025 14:26:54 +0200
+Message-ID: <20250822122655.1353197-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250822122655.1353197-1-pbonzini@redhat.com>
 References: <20250822122655.1353197-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,174 +112,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Tanish Desai <tanishdesai37@gmail.com>
 
-The trace crate is a minimal container for dependencies of tracepoints
-(so that they do not have to be imported in all the crates that use
-tracepoints); it also contains a macro called "include_trace!" that is
-able to find the right include file from the trace/ directory.
-
-Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
-[Write commit message. - Paolo]
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/Cargo.lock        |  4 ++++
- rust/Cargo.toml        |  1 +
- rust/meson.build       |  2 +-
- rust/trace/Cargo.toml  | 16 ++++++++++++++++
- rust/trace/meson.build | 19 +++++++++++++++++++
- rust/trace/src/lib.rs  | 23 +++++++++++++++++++++++
- trace/meson.build      |  8 +++++++-
- 7 files changed, 71 insertions(+), 2 deletions(-)
- create mode 100644 rust/trace/Cargo.toml
- create mode 100644 rust/trace/meson.build
- create mode 100644 rust/trace/src/lib.rs
+ rust/qemu-api/wrapper.h             |  1 +
+ scripts/tracetool/backend/ftrace.py |  8 +++++-
+ tests/tracetool/ftrace.rs           | 41 +++++++++++++++++++++++++++++
+ tests/tracetool/tracetool-test.py   |  2 +-
+ 4 files changed, 50 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tracetool/ftrace.rs
 
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index b785c718f31..aa13ab2a99a 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -164,6 +164,10 @@ dependencies = [
-  "unicode-ident",
- ]
+diff --git a/rust/qemu-api/wrapper.h b/rust/qemu-api/wrapper.h
+index 15a1b19847f..5227838292b 100644
+--- a/rust/qemu-api/wrapper.h
++++ b/rust/qemu-api/wrapper.h
+@@ -69,3 +69,4 @@ typedef enum memory_order {
+ #include "qemu/timer.h"
+ #include "system/address-spaces.h"
+ #include "hw/char/pl011.h"
++#include "trace/ftrace.h"
+diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+index 432f216ea2b..51d978f998f 100644
+--- a/scripts/tracetool/backend/ftrace.py
++++ b/scripts/tracetool/backend/ftrace.py
+@@ -12,7 +12,7 @@
+ __email__      = "stefanha@redhat.com"
  
-+[[package]]
-+name = "trace"
-+version = "0.1.0"
-+
- [[package]]
- name = "unicode-ident"
- version = "1.0.12"
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index 99c275f2d9f..2be9f886113 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -4,6 +4,7 @@ members = [
-     "bits",
-     "qemu-api-macros",
-     "qemu-api",
-+    "trace",
-     "hw/char/pl011",
-     "hw/timer/hpet",
- ]
-diff --git a/rust/meson.build b/rust/meson.build
-index 45936a0a731..2878bd8bc8d 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -23,7 +23,7 @@ genrs = []
- subdir('qemu-api-macros')
- subdir('bits')
- subdir('qemu-api')
--
-+subdir('trace')
- subdir('hw')
  
- cargo = find_program('cargo', required: false)
-diff --git a/rust/trace/Cargo.toml b/rust/trace/Cargo.toml
+-from tracetool import out
++from tracetool import out, expand_format_string
+ 
+ 
+ PUBLIC = True
+@@ -43,3 +43,9 @@ def generate_h(event, group):
+ def generate_h_backend_dstate(event, group):
+     out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+         event_id="TRACE_" + event.name.upper())
++
++def generate_rs(event, group):
++    out('        let format_string = c"%(fmt)s";',
++        '        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, %(args)s);}',
++        fmt=expand_format_string(event.fmt),
++        args=event.args.rust_call_varargs())
+diff --git a/tests/tracetool/ftrace.rs b/tests/tracetool/ftrace.rs
 new file mode 100644
-index 00000000000..913010e9787
+index 00000000000..950a89534af
 --- /dev/null
-+++ b/rust/trace/Cargo.toml
-@@ -0,0 +1,16 @@
-+[package]
-+name = "trace"
-+version = "0.1.0"
-+authors = ["Tanish Desai<tanishdesai37@gmail.com>"]
-+description = "rust trace library"
-+resolver = "2"
-+publish = false
++++ b/tests/tracetool/ftrace.rs
+@@ -0,0 +1,41 @@
++// This file is autogenerated by tracetool, do not edit.
 +
-+edition.workspace = true
-+homepage.workspace = true
-+license.workspace = true
-+repository.workspace = true
-+rust-version.workspace = true
++#[allow(unused_imports)]
++use std::ffi::c_char;
++#[allow(unused_imports)]
++use qemu_api::bindings;
 +
-+[lints]
-+workspace = true
-diff --git a/rust/trace/meson.build b/rust/trace/meson.build
-new file mode 100644
-index 00000000000..adca57e5507
---- /dev/null
-+++ b/rust/trace/meson.build
-@@ -0,0 +1,19 @@
-+rust = import('rust')
-+
-+lib_rs = configure_file(
-+  input: 'src/lib.rs',
-+  output: 'lib.rs',
-+  configuration: {
-+    'MESON_BUILD_ROOT': meson.project_build_root(),
-+  })
-+
-+_trace_rs = static_library(
-+  'trace',             # Library name,
-+  lib_rs,
-+  trace_rs_targets,         # List of generated `.rs` custom targets
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  dependencies: [libc_rs],
-+  rust_abi: 'rust',
-+)
-+
-+trace_rs = declare_dependency(link_with: _trace_rs)
-diff --git a/rust/trace/src/lib.rs b/rust/trace/src/lib.rs
-new file mode 100644
-index 00000000000..9b931ddf1de
---- /dev/null
-+++ b/rust/trace/src/lib.rs
-@@ -0,0 +1,23 @@
-+//! This crate provides macros that aid in using QEMU's tracepoint
-+//! functionality.
-+
-+#[macro_export]
-+/// Define the trace-points from the named directory (which should have slashes
-+/// replaced by underscore characters) as functions in a module called `trace`.
-+///
-+/// ```ignore
-+/// ::trace::include_trace!("hw_char");
-+/// // ...
-+/// trace::trace_pl011_read_fifo_rx_full();
-+/// ```
-+macro_rules! include_trace {
-+    ($name:literal) => {
-+        mod trace {
-+            #[cfg(not(MESON))]
-+            include!(concat!(env!("MESON_BUILD_ROOT"), "/trace/", $name, ".rs"));
-+
-+            #[cfg(MESON)]
-+            include!(concat!("@MESON_BUILD_ROOT@/trace/", $name, ".rs"));
-+        }
-+    };
++#[inline(always)]
++fn trace_event_get_state_dynamic_by_id(_id: u16) -> bool {
++    unsafe { (trace_events_enabled_count != 0) && (_id != 0) }
 +}
-diff --git a/trace/meson.build b/trace/meson.build
-index 9c42a57a053..d89a0db82a1 100644
---- a/trace/meson.build
-+++ b/trace/meson.build
-@@ -1,5 +1,5 @@
- system_ss.add(files('control-target.c', 'trace-hmp-cmds.c'))
--
-+trace_rs_targets = []
- trace_events_files = []
- foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-   if item in qapi_trace_events
-@@ -24,6 +24,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-                           input: trace_events_file,
-                           command: [ tracetool, group, '--format=c', '@INPUT@', '@OUTPUT@' ],
-                           depend_files: tracetool_depends)
-+  trace_rs = custom_target(fmt.format('trace', 'rs'),
-+                          output: fmt.format('trace', 'rs'),
-+                          input: trace_events_file,
-+                          command: [ tracetool, group, '--format=rs', '@INPUT@', '@OUTPUT@' ],
-+                          depend_files: tracetool_depends)
-   if 'ust' in get_option('trace_backends')
-     trace_ust_h = custom_target(fmt.format('trace-ust', 'h'),
-                                 output: fmt.format('trace-ust', 'h'),
-@@ -34,6 +39,7 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-     genh += trace_ust_h
-   endif
-   trace_ss.add(trace_h, trace_c)
-+  trace_rs_targets += trace_rs
-   if 'dtrace' in get_option('trace_backends')
-     trace_dtrace = custom_target(fmt.format('trace-dtrace', 'dtrace'),
-                                  output: fmt.format('trace-dtrace', 'dtrace'),
++
++extern "C" {
++    static mut trace_events_enabled_count: u32;
++}
++extern "C" {
++    static mut _TRACE_TEST_BLAH_DSTATE: u16;
++    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
++}
++const _TRACE_TEST_BLAH_ENABLED: bool = true;
++const _TRACE_TEST_WIBBLE_ENABLED: bool = true;
++
++#[inline(always)]
++#[allow(dead_code)]
++pub fn trace_test_blah(_context: *mut (), _filename: &std::ffi::CStr)
++{
++    if trace_event_get_state_dynamic_by_id(unsafe { _TRACE_TEST_BLAH_DSTATE}) {
++        let format_string = c"Blah context=%p filename=%s";
++        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _context, _filename.as_ptr());}
++    }
++}
++
++#[inline(always)]
++#[allow(dead_code)]
++pub fn trace_test_wibble(_context: *mut (), _value: std::ffi::c_int)
++{
++    if trace_event_get_state_dynamic_by_id(unsafe { _TRACE_TEST_WIBBLE_DSTATE}) {
++        let format_string = c"Wibble context=%p value=%d";
++        unsafe {bindings::ftrace_write(format_string.as_ptr() as *const c_char, _context, _value);}
++    }
++}
+diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
+index 5e5b16e2856..a91d635910a 100755
+--- a/tests/tracetool/tracetool-test.py
++++ b/tests/tracetool/tracetool-test.py
+@@ -13,7 +13,7 @@ def get_formats(backend):
+         "c",
+         "h",
+     ]
+-    if backend in {"log", "simple"}:
++    if backend in {"ftrace", "log", "simple"}:
+         formats += ["rs"]
+     if backend == "dtrace":
+         formats += [
 -- 
 2.50.1
 
