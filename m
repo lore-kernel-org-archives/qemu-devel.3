@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99B24CA0EED
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 06:43:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64455CA0EED
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Aug 2025 06:43:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upLUJ-00019H-FR; Fri, 22 Aug 2025 02:42:59 -0400
+	id 1upLTM-0007zV-1h; Fri, 22 Aug 2025 02:42:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1upLUA-0000dv-Mn
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:42:50 -0400
+ id 1upLTK-0007ya-9m
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:41:58 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1upLU8-0000ng-9m
- for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:42:50 -0400
+ id 1upLTI-0000lZ-1N
+ for qemu-devel@nongnu.org; Fri, 22 Aug 2025 02:41:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1755844968; x=1787380968;
+ t=1755844916; x=1787380916;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=mUU9OMMJ/1zTbxE4IweHoAT8lJKpLVKsUXa0W5k5u1I=;
- b=iUB6lacKUJ+As4cF37Yy2kXOV1HfFCbU2HNlhW+u3uZ418KR5JXnLdZe
- IgqeeLcFblna+4lAwAH3eiSbdM9vHttpwP3soTiuXXHekOsnSGWM5U6/0
- RMnTdl8192P23/xrPqWwquICBYMpGSoQMpjkRO+8rwdf1VoRq241+W4DH
- WuXQOLjZoG1EJ0XZGYtmTmnmdNXRvM9KNlmP8QOokcw62eDIlP35EiYc2
- 1Ev+V9ZPjJGcf4XUWv9qhsEw1la3irh2qhEXqMmxDQfhj90iOzGmcYiWy
- w6IMQauNo8N7adi1j1OsD7SsdN5EaExQcK3w9GZIQm4aI3tzj2zKo3mwh A==;
-X-CSE-ConnectionGUID: I5CCE4pKRoqNpcOxD1YQrQ==
-X-CSE-MsgGUID: GJ7xhqbKRa+0fRKDA0G8Og==
-X-IronPort-AV: E=McAfee;i="6800,10657,11529"; a="68851987"
-X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="68851987"
+ bh=JE7nwL5OsxUQdPfDzwLdaqc7O9sf7StnsOE5x6dWgxI=;
+ b=W+WsAgnnaucidqE5OE7Y7pH1NJMAwB6imKfxtc1oxysFIAuG8owIVBcq
+ GBPMk/XIc3wcDU8vRoDELovvnYVZMx2TRtfFmpzDOg29Sm99FL9m6L3H0
+ bwU+Rzw+bZh22ZJedpr3tQ+B8gzkza/cit1F2GDYiM+qZtPX/ytgDPhEr
+ TsDfCn9B9Ao6A+HKGwAFWCcymjH6XtHi5bsjp8IQGdQTkvQZLE/+KodK9
+ 590oldwOQ8tatIhK8Vzo3nREgtbZfwuWbVWEqVBMnCTmnlGd9D43qvmhA
+ e3OyNSvdu0NjZIXLclmX5YtGuY611bKiGGpspwKaaCU+h39yqKcPJUS2t Q==;
+X-CSE-ConnectionGUID: B8URwJuxQ4aiHYuiiRzLNw==
+X-CSE-MsgGUID: gHZj26QrQ6qo1uciz/+voQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11529"; a="68851887"
+X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="68851887"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Aug 2025 23:42:40 -0700
-X-CSE-ConnectionGUID: rd1+3vbjTl6RIjUoQMs/Wg==
-X-CSE-MsgGUID: ED41qg/dQH2J2sF6wCdOeA==
+ 21 Aug 2025 23:41:55 -0700
+X-CSE-ConnectionGUID: X2cOLmZqSkSiRBGrMXVgjw==
+X-CSE-MsgGUID: YzGo5ychRv6mgY+VFByNaw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="168245093"
+X-IronPort-AV: E=Sophos;i="6.17,309,1747724400"; d="scan'208";a="168244946"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Aug 2025 23:42:37 -0700
+ 21 Aug 2025 23:41:52 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,10 +53,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  jgg@nvidia.com, nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v5 19/21] vfio: Add a new element bypass_ro in
- VFIOContainerBase
-Date: Fri, 22 Aug 2025 02:40:57 -0400
-Message-ID: <20250822064101.123526-20-zhenzhong.duan@intel.com>
+Subject: [PATCH v5 08/21] intel_iommu: Check for compatibility with IOMMUFD
+ backed device when x-flts=on
+Date: Fri, 22 Aug 2025 02:40:46 -0400
+Message-ID: <20250822064101.123526-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250822064101.123526-1-zhenzhong.duan@intel.com>
 References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
@@ -87,97 +87,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When bypass_ro is true, readonly memory section is bypassed from
-mapping in the container.
+When vIOMMU is configured x-flts=on in scalable mode, stage-1 page table
+is passed to host to construct nested page table. We need to check
+compatibility of some critical IOMMU capabilities between vIOMMU and
+host IOMMU to ensure guest stage-1 page table could be used by host.
 
-This is a preparing patch to workaround Intel ERRATA_772415.
+For instance, vIOMMU supports stage-1 1GB huge page mapping, but host
+does not, then this IOMMUFD backed device should fail.
 
+Even of the checks pass, for now we willingly reject the association
+because all the bits are not there yet.
+
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/hw/vfio/vfio-container-base.h |  1 +
- hw/vfio/listener.c                    | 21 ++++++++++++++-------
- 2 files changed, 15 insertions(+), 7 deletions(-)
+ hw/i386/intel_iommu_internal.h |  1 +
+ hw/i386/intel_iommu.c          | 30 +++++++++++++++++++++++++++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index bded6e993f..31fd784d76 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -51,6 +51,7 @@ typedef struct VFIOContainerBase {
-     QLIST_HEAD(, VFIODevice) device_list;
-     GList *iova_ranges;
-     NotifierWithReturn cpr_reboot_notifier;
-+    bool bypass_ro;
- } VFIOContainerBase;
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index c7046eb4e2..f7510861d1 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -192,6 +192,7 @@
+ #define VTD_ECAP_PT                 (1ULL << 6)
+ #define VTD_ECAP_SC                 (1ULL << 7)
+ #define VTD_ECAP_MHMV               (15ULL << 20)
++#define VTD_ECAP_NEST               (1ULL << 26)
+ #define VTD_ECAP_SRS                (1ULL << 31)
+ #define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid */
+ #define VTD_ECAP_PASID              (1ULL << 40)
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 512ca4fdc5..da355bda79 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -40,6 +40,7 @@
+ #include "kvm/kvm_i386.h"
+ #include "migration/vmstate.h"
+ #include "trace.h"
++#include "system/iommufd.h"
  
- typedef struct VFIOGuestIOMMU {
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index 903dfd8bf2..5fa2bb7f1a 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -76,8 +76,13 @@ static bool vfio_log_sync_needed(const VFIOContainerBase *bcontainer)
-     return true;
- }
+ /* context entry operations */
+ #define VTD_CE_GET_RID2PASID(ce) \
+@@ -4366,7 +4367,34 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+         return true;
+     }
  
--static bool vfio_listener_skipped_section(MemoryRegionSection *section)
-+static bool vfio_listener_skipped_section(MemoryRegionSection *section,
-+                                          bool bypass_ro)
- {
-+    if (bypass_ro && section->readonly) {
-+        return true;
+-    error_setg(errp, "host device is uncompatible with stage-1 translation");
++#ifdef CONFIG_IOMMUFD
++    struct HostIOMMUDeviceCaps *caps = &hiod->caps;
++    struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
++
++    /* Remaining checks are all stage-1 translation specific */
++    if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
++        error_setg(errp, "Need IOMMUFD backend when x-flts=on");
++        return false;
 +    }
 +
-     return (!memory_region_is_ram(section->mr) &&
-             !memory_region_is_iommu(section->mr)) ||
-            memory_region_is_protected(section->mr) ||
-@@ -365,9 +370,9 @@ static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
++    if (caps->type != IOMMU_HW_INFO_TYPE_INTEL_VTD) {
++        error_setg(errp, "Incompatible host platform IOMMU type %d",
++                   caps->type);
++        return false;
++    }
++
++    if (!(vtd->ecap_reg & VTD_ECAP_NEST)) {
++        error_setg(errp, "Host IOMMU doesn't support nested translation");
++        return false;
++    }
++
++    if (s->fs1gp && !(vtd->cap_reg & VTD_CAP_FS1GP)) {
++        error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
++        return false;
++    }
++#endif
++
++    error_setg(errp, "host IOMMU is incompatible with stage-1 translation");
+     return false;
  }
- 
- static bool vfio_listener_valid_section(MemoryRegionSection *section,
--                                        const char *name)
-+                                        bool bypass_ro, const char *name)
- {
--    if (vfio_listener_skipped_section(section)) {
-+    if (vfio_listener_skipped_section(section, bypass_ro)) {
-         trace_vfio_listener_region_skip(name,
-                 section->offset_within_address_space,
-                 section->offset_within_address_space +
-@@ -494,7 +499,8 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
-     int ret;
-     Error *err = NULL;
- 
--    if (!vfio_listener_valid_section(section, "region_add")) {
-+    if (!vfio_listener_valid_section(section, bcontainer->bypass_ro,
-+                                     "region_add")) {
-         return;
-     }
- 
-@@ -655,7 +661,8 @@ static void vfio_listener_region_del(MemoryListener *listener,
-     int ret;
-     bool try_unmap = true;
- 
--    if (!vfio_listener_valid_section(section, "region_del")) {
-+    if (!vfio_listener_valid_section(section, bcontainer->bypass_ro,
-+                                     "region_del")) {
-         return;
-     }
- 
-@@ -812,7 +819,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
-         container_of(listener, VFIODirtyRangesListener, listener);
-     hwaddr iova, end;
- 
--    if (!vfio_listener_valid_section(section, "tracking_update") ||
-+    if (!vfio_listener_valid_section(section, false, "tracking_update") ||
-         !vfio_get_section_iova_range(dirty->bcontainer, section,
-                                      &iova, &end, NULL)) {
-         return;
-@@ -1206,7 +1213,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
-     int ret;
-     Error *local_err = NULL;
- 
--    if (vfio_listener_skipped_section(section)) {
-+    if (vfio_listener_skipped_section(section, false)) {
-         return;
-     }
  
 -- 
 2.47.1
