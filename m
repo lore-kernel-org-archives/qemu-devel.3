@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A41CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Aug 2025 21:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A09E3CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Aug 2025 21:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upw6F-0004VK-3l; Sat, 23 Aug 2025 17:48:35 -0400
+	id 1upw6F-0004WV-QU; Sat, 23 Aug 2025 17:48:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1upw6C-0004Tf-Io
+ id 1upw6C-0004Te-GO
  for qemu-devel@nongnu.org; Sat, 23 Aug 2025 17:48:32 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1upw69-000543-MC
+ id 1upw69-00054A-MK
  for qemu-devel@nongnu.org; Sat, 23 Aug 2025 17:48:32 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D14F2807CA;
- Sun, 24 Aug 2025 00:48:26 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 023F8807C8;
+ Sun, 24 Aug 2025 00:48:28 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a5d::1:36])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Nmd3dr0GuSw0-J7Xc0DHy; Sun, 24 Aug 2025 00:48:26 +0300
+ ESMTPSA id Nmd3dr0GuSw0-GTo45y1a; Sun, 24 Aug 2025 00:48:27 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755985706;
- bh=kxovEUtU6YaTA5oc//90u76Nkj25zCDmGOze5dgMzHk=;
+ s=default; t=1755985707;
+ bh=GftTvKuCJ/20RJKBye2/TezLhjc0gyXvfMSFYxlvOO8=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=vwswRc2y3/wcTulu+WvG4Mr85aKGJxpr9a5qUTe+bjgAILTkwwMocMDrCha3v1i9m
- M8SKLqzHoaKqVJPutirsrwbO/FmLas5l+U4nGcm3Yrxgg6cu5A4mp8NsBaxPTrGrCa
- Nh25rGcMK4vWsdoMA6/KlipU2ZfCXz4XOwMQf058=
+ b=g3YFHIXSZo+X5vcdph5+hatcE8swRJisd//UZvpUjdAd/WXLkxzgzUY0WdBQYhJ+k
+ JDPGwaSHXNIi77Avmy2sCQpKtHl6g3J8AWnRuJpSGZBNywqyhqYPwJA1JtcUro0Gy+
+ 5phtS+PFSS6Sq/9xOnHOOgTgkMGFToRqhf2K/1Jk=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,23 +45,22 @@ To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, leiyang@redhat.com,
  steven.sistare@oracle.com, peterx@redhat.com, mst@redhat.com,
  farosas@suse.de, yc-core@yandex-team.ru
-Subject: [RFC 3/7] qapi: add interface for local TAP migration
-Date: Sun, 24 Aug 2025 00:48:17 +0300
-Message-ID: <20250823214821.48342-4-vsementsov@yandex-team.ru>
+Subject: [RFC 5/7] virtio-net: support local tap migration
+Date: Sun, 24 Aug 2025 00:48:19 +0300
+Message-ID: <20250823214821.48342-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250823214821.48342-1-vsementsov@yandex-team.ru>
 References: <20250823214821.48342-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,110 +75,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To migrate TAP device (including open fds) locally, user should:
-
-1. enable local-tap migration capability both on source and target
-2. use additional local-incoming=true option for tap on target
-
-Why capability is not enough? We need an option to modify early
-initialization of TAP, to avoid opening new fds. The capability
-may not be set at the moment of netdev initialization.
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- migration/options.c |  7 +++++++
- migration/options.h |  1 +
- qapi/migration.json |  9 ++++++++-
- qapi/net.json       | 12 +++++++++++-
- 4 files changed, 27 insertions(+), 2 deletions(-)
+ hw/net/virtio-net.c            | 100 ++++++++++++++++++++++++++++++++-
+ include/hw/virtio/virtio-net.h |   2 +
+ 2 files changed, 101 insertions(+), 1 deletion(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 11b719c81b..fd0cca97b3 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -276,6 +276,13 @@ bool migrate_local_vhost_user_blk(void)
-     return s->capabilities[MIGRATION_CAPABILITY_LOCAL_VHOST_USER_BLK];
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 6b5b5dace3..874e349fee 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -38,6 +38,8 @@
+ #include "qapi/qapi-events-migration.h"
+ #include "hw/virtio/virtio-access.h"
+ #include "migration/misc.h"
++#include "migration/migration.h"
++#include "migration/options.h"
+ #include "standard-headers/linux/ethtool.h"
+ #include "system/system.h"
+ #include "system/replay.h"
+@@ -2999,7 +3001,13 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
+     n->multiqueue = multiqueue;
+     virtio_net_change_num_queues(n, max * 2 + 1);
+ 
+-    virtio_net_set_queue_pairs(n);
++    /*
++     * Called from set_features(0) on reset, when on target we
++     * doesn't have fds yet
++     */
++    if (!n->tap_wait_incoming) {
++        virtio_net_set_queue_pairs(n);
++    }
  }
  
-+bool migrate_local_tap(void)
+ static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
+@@ -3009,6 +3017,19 @@ static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
+     return 0;
+ }
+ 
++static int virtio_net_pre_save_device(void *opaque)
 +{
-+    MigrationState *s = migrate_get_current();
++    VirtIONet *n = opaque;
++    int i, r;
 +
-+    return s->capabilities[MIGRATION_CAPABILITY_LOCAL_TAP];
++    for (i = 0; i < n->curr_queue_pairs; i++) {
++        r = peer_detach(n, i);
++        assert(!r);
++    }
++
++    return 0;
 +}
 +
- bool migrate_ignore_shared(void)
+ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
+                                         Error **errp)
  {
-     MigrationState *s = migrate_get_current();
-diff --git a/migration/options.h b/migration/options.h
-index 5a40ac073d..aa0ab6a61f 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -32,6 +32,7 @@ bool migrate_events(void);
- bool migrate_mapped_ram(void);
- bool migrate_local_char_socket(void);
- bool migrate_local_vhost_user_blk(void);
-+bool migrate_local_tap(void);
- bool migrate_ignore_shared(void);
- bool migrate_late_block_activate(void);
- bool migrate_multifd(void);
-diff --git a/qapi/migration.json b/qapi/migration.json
-index ead7f4d17c..bf554684f4 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -529,6 +529,12 @@
- #     For target device also @local-incoming option must be specified
- #     (since 10.2)
- #
-+# @local-tap: Migrate TAPs locally, keeping backend alive. Open file
-+#     descriptors and TAP-related state are migrated. Only may be
-+#     used when migration channel is unix socket. For target device
-+#     also @local-incoming option must be specified (since 10.2)
-+#     (since 10.2)
-+#
- # Features:
- #
- # @unstable: Members @x-colo, @x-ignore-shared, @local-char-socket,
-@@ -551,7 +557,8 @@
-            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
-            'dirty-limit', 'mapped-ram',
-            { 'name': 'local-char-socket', 'features': [ 'unstable' ] },
--           { 'name': 'local-vhost-user-blk', 'features': [ 'unstable' ] } ] }
-+           { 'name': 'local-vhost-user-blk', 'features': [ 'unstable' ] },
-+           { 'name': 'local-tap', 'features': [ 'unstable' ] } ] }
+@@ -3028,6 +3049,11 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
  
- ##
- # @MigrationCapabilityStatus:
-diff --git a/qapi/net.json b/qapi/net.json
-index 78bcc9871e..8f53549d58 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -353,6 +353,15 @@
- # @poll-us: maximum number of microseconds that could be spent on busy
- #     polling for tap (since 2.7)
- #
-+# @local-incoming: Do load open file descriptor for that TAP
-+#     on incoming migration. May be used only if QEMU is started
-+#     for incoming migration. Will work only together with local-tap
-+#     migration capability enabled (default: false) (Since: 10.2)
-+#
-+# Features:
-+#
-+# @unstable: Member @local-incoming is experimental
-+#
- # Since: 1.2
- ##
- { 'struct': 'NetdevTapOptions',
-@@ -371,7 +380,8 @@
-     '*vhostfds':   'str',
-     '*vhostforce': 'bool',
-     '*queues':     'uint32',
--    '*poll-us':    'uint32'} }
-+    '*poll-us':    'uint32',
-+    '*local-incoming': { 'type': 'bool', 'features': [ 'unstable' ] } } }
+     virtio_add_feature(&features, VIRTIO_NET_F_MAC);
  
- ##
- # @NetdevSocketOptions:
++    if (n->tap_wait_incoming) {
++        /* Excessive feature set is OK for early initialization */
++        return features;
++    }
++
+     if (!peer_has_vnet_hdr(n)) {
+         virtio_clear_feature(&features, VIRTIO_NET_F_CSUM);
+         virtio_clear_feature(&features, VIRTIO_NET_F_HOST_TSO4);
+@@ -3494,11 +3520,69 @@ static const VMStateDescription vhost_user_net_backend_state = {
+     }
+ };
+ 
++static int virtio_net_tap_save(QEMUFile *f, void *pv, size_t size,
++                                     const VMStateField *field,
++                                     JSONWriter *vmdesc)
++{
++    VirtIONet *n = pv;
++    int i;
++
++    for (i = 0; i < n->max_queue_pairs; i++) {
++        NetClientState *nc = qemu_get_subqueue(n->nic, i);
++        assert(nc->peer->info->type == NET_CLIENT_DRIVER_TAP);
++
++        tap_save(nc->peer, f);
++    }
++
++    return 0;
++}
++
++static int virtio_net_tap_load(QEMUFile *f, void *pv, size_t size,
++                                     const VMStateField *field)
++{
++    VirtIONet *n = pv;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
++    Error *local_err = NULL;
++    int i;
++
++    for (i = 0; i < n->max_queue_pairs; i++) {
++        NetClientState *nc = qemu_get_subqueue(n->nic, i);
++        assert(nc->peer->info->type == NET_CLIENT_DRIVER_TAP);
++
++        tap_load(nc->peer, f);
++    }
++
++    peer_test_vnet_hdr(n);
++    n->tap_wait_incoming = false;
++
++    vdev->host_features = vdc->get_features(vdev, vdev->host_features,
++                                            &local_err);
++    if (local_err) {
++        error_report_err(local_err);
++        return -EINVAL;
++    }
++
++    return 0;
++}
++
++static bool virtio_net_is_tap_local(void *opaque, int version_id)
++{
++    VirtIONet *n = opaque;
++    NetClientState *nc;
++
++    nc = qemu_get_queue(n->nic);
++
++    return migrate_local_tap() && nc->peer &&
++        nc->peer->info->type == NET_CLIENT_DRIVER_TAP;
++}
++
+ static const VMStateDescription vmstate_virtio_net_device = {
+     .name = "virtio-net-device",
+     .version_id = VIRTIO_NET_VM_VERSION,
+     .minimum_version_id = VIRTIO_NET_VM_VERSION,
+     .post_load = virtio_net_post_load_device,
++    .pre_save = virtio_net_pre_save_device,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT8_ARRAY(mac, VirtIONet, ETH_ALEN),
+         VMSTATE_STRUCT_POINTER(vqs, VirtIONet,
+@@ -3525,6 +3609,15 @@ static const VMStateDescription vmstate_virtio_net_device = {
+          * but based on the uint.
+          */
+         VMSTATE_BUFFER_POINTER_UNSAFE(vlans, VirtIONet, 0, MAX_VLAN >> 3),
++        {
++            .name = "tap",
++            .info = &(const VMStateInfo) {
++                .name = "virtio-net vhost-user backend state",
++                .get = virtio_net_tap_load,
++                .put = virtio_net_tap_save,
++            },
++            .field_exists = virtio_net_is_tap_local,
++        },
+         VMSTATE_WITH_TMP(VirtIONet, struct VirtIONetMigTmp,
+                          vmstate_virtio_net_has_vnet),
+         VMSTATE_UINT8(mac_table.multi_overflow, VirtIONet),
+@@ -3954,6 +4047,11 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+         vhost_net_set_config(get_vhost_net(nc->peer),
+             (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
+     }
++
++    if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_TAP) {
++        n->tap_wait_incoming = tap_local_incoming(nc->peer);
++    }
++
+     QTAILQ_INIT(&n->rsc_chains);
+     n->qdev = dev;
+ 
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index 73fdefc0dc..04ae0e4c06 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -231,6 +231,8 @@ struct VirtIONet {
+     struct EBPFRSSContext ebpf_rss;
+     uint32_t nr_ebpf_rss_fds;
+     char **ebpf_rss_fds;
++
++    bool tap_wait_incoming;
+ };
+ 
+ size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
 -- 
 2.48.1
 
