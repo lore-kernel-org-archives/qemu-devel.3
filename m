@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB7EECA0EFA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE505CA0EE4
 	for <qemu-devel@archiver.kernel.org>; Sat, 23 Aug 2025 21:49:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upw6F-0004VY-0O; Sat, 23 Aug 2025 17:48:35 -0400
+	id 1upw6H-0004Xh-Hz; Sat, 23 Aug 2025 17:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1upw6D-0004Uo-Sv
- for qemu-devel@nongnu.org; Sat, 23 Aug 2025 17:48:33 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1upw6D-0004Up-Te
+ for qemu-devel@nongnu.org; Sat, 23 Aug 2025 17:48:34 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1upw6A-00054Q-IA
+ id 1upw69-00053t-Mn
  for qemu-devel@nongnu.org; Sat, 23 Aug 2025 17:48:33 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c21:2d8b:0:640:7d49:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 7CA2C80818;
- Sun, 24 Aug 2025 00:48:28 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 549C78073C;
+ Sun, 24 Aug 2025 00:48:25 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:a5d::1:36])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Nmd3dr0GuSw0-FxGAKwFt; Sun, 24 Aug 2025 00:48:28 +0300
+ ESMTPSA id Nmd3dr0GuSw0-0KWdIOvx; Sun, 24 Aug 2025 00:48:24 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755985708;
- bh=zKfF0Jr3ZNXBdyUSBJ7GUqENZhLe0Y59SMSSlwzFldU=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=vBluVYAEm0HRd3eXs6En1RH0DMWTRMwRzrW7pYAxQShntPNs2wB6Hl7UIFZkGD2el
- StC9W1J51ZhHdPiGqQsSCbeiSR+vYP+MMJt15m5AdBPP4yYxz6Zwr2eUdOckcaQB/5
- PwdK9FenW0WfZIULajAYlXRyk78RP07xahhNba/8=
+ s=default; t=1755985704;
+ bh=wbBorqqEWfXJJFpeUpfDGfqpsSY88A9+GV2LqkdQv9s=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=NDKUuIGF+7Co4O9UQdkZ/bNp+7I7utvmVpzA8WV/DnMmLGoUQcdi+hG8NBS2o5vZ9
+ jM1Jl8IQBvI8xeUfn5WNsN0X4Kug/inNldKFtnGs5iAYIWmwNSog3KRczLrkkyAtBm
+ oM+7txnDxGpWzMhAcDHUbghkG1QzzIDhSvOTPTmk=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,24 +45,20 @@ To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, leiyang@redhat.com,
  steven.sistare@oracle.com, peterx@redhat.com, mst@redhat.com,
  farosas@suse.de, yc-core@yandex-team.ru
-Subject: [RFC 6/7] net/tap: experimental support for vhost in local tap
- migration
-Date: Sun, 24 Aug 2025 00:48:20 +0300
-Message-ID: <20250823214821.48342-7-vsementsov@yandex-team.ru>
+Subject: [RFC 0/7] virtio-net: live-TAP local migration
+Date: Sun, 24 Aug 2025 00:48:14 +0300
+Message-ID: <20250823214821.48342-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250823214821.48342-1-vsementsov@yandex-team.ru>
-References: <20250823214821.48342-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,109 +73,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just reinitialize vhost after getting the fd on target.
-This significantly increase downtime (0.03s -> 0.06s in my
-simple testing). So next step is to rework it, completely migrating
-the vhost state to the new qemu without reinitialization.
+Hi all!
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- net/tap.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+That's a kind of alternative to
+[RFC V2 0/8] Live update: tap and vhost
+https://patchew.org/QEMU/1752777568-236368-1-git-send-email-steven.sistare@oracle.com/
 
-diff --git a/net/tap.c b/net/tap.c
-index 4d3cdc0662..7a4de07025 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -84,6 +84,9 @@ typedef struct TAPState {
-     unsigned host_vnet_hdr_len;
-     Notifier exit;
-     bool local_incoming;
-+    bool need_vhost;
-+    char *vhost_fdname;
-+    uint32_t vhost_busyloop_timeout;
- } TAPState;
- 
- static void launch_script(const char *setup_script, const char *ifname,
-@@ -98,8 +101,7 @@ static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
-                                   const char *downscript,
-                                   const char *vhostfdname,
-                                   int vnet_hdr, int fd, Error **errp);
--static int net_tap_setup_vhost(TAPState *s, const NetdevTapOptions *tap,
--                               const char *vhostfdname, Error **errp);
-+static int net_tap_setup_vhost(TAPState *s, Error **errp);
- 
- static void tap_update_fd_handler(TAPState *s)
- {
-@@ -384,6 +386,7 @@ static void tap_cleanup(NetClientState *nc)
-         g_free(s->vhost_net);
-         s->vhost_net = NULL;
-     }
-+    g_free(s->vhost_fdname);
- 
-     qemu_purge_queued_packets(nc);
- 
-@@ -794,10 +797,8 @@ int tap_load(NetClientState *nc, QEMUFile *f)
-     qemu_get_be32s(f, &s->host_vnet_hdr_len);
- 
-     tap_read_poll(s, true);
--    s->exit.notify = tap_exit_notify;
--    qemu_add_exit_notifier(&s->exit);
- 
--    return 0;
-+    return net_tap_setup_vhost(s, NULL);
- }
- 
- static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
-@@ -874,8 +875,12 @@ static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
-         }
-     }
- 
-+    s->need_vhost = tap->has_vhost ? tap->vhost :
-+        vhostfdname || (tap->has_vhostforce && tap->vhostforce);
-+    s->vhost_fdname = g_strdup(vhostfdname);
-+    s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
-     if (!local_incoming) {
--        ret = net_tap_setup_vhost(s, tap, vhostfdname, errp);
-+        ret = net_tap_setup_vhost(s, errp);
-         if (ret < 0) {
-             goto failed;
-         }
-@@ -888,28 +893,22 @@ failed:
-     return -1;
- }
- 
--static int net_tap_setup_vhost(TAPState *s, const NetdevTapOptions *tap,
--                               const char *vhostfdname, Error **errp)
-+static int net_tap_setup_vhost(TAPState *s, Error **errp)
- {
--    if (tap->has_vhost ? tap->vhost :
--        vhostfdname || (tap->has_vhostforce && tap->vhostforce)) {
-+    if (s->need_vhost) {
-         VhostNetOptions options;
-         int vhostfd;
- 
-         options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
-         options.net_backend = &s->nc;
--        if (tap->has_poll_us) {
--            options.busyloop_timeout = tap->poll_us;
--        } else {
--            options.busyloop_timeout = 0;
--        }
-+        options.busyloop_timeout = s->vhost_busyloop_timeout;
- 
--        if (vhostfdname) {
--            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
-+        if (s->vhost_fdname) {
-+            vhostfd = monitor_fd_param(monitor_cur(), s->vhost_fdname, errp);
-             if (vhostfd == -1) {
-                 return -1;
-             }
--            if (!set_fd_nonblocking(vhostfd, vhostfdname, errp)) {
-+            if (!set_fd_nonblocking(vhostfd, s->vhost_fdname, errp)) {
-                 return -1;
-             }
-         } else {
+Instead of using CPR with additional stage and channel to pass FDs,
+we just pass everything we need (including FDs) through main
+migration channel (of-course, it should be unix socket). So,
+it's similar to live-backend vhost-user-blk migration which I propose in
+[PATCH 00/33] vhost-user-blk: live-backend local migration
+https://patchew.org/QEMU/20250813164856.950363-1-vsementsov@yandex-team.ru/
+
+The series is based on
+[PATCH 00/33] vhost-user-blk: live-backend local migration
+and
+[PATCH v2 00/20] TAP initialization refactoring
+
+The series is also pushed to tag up-tap-fd-migration-v1 here:
+https://gitlab.com/vsementsov/qemu/-/tree/up-tap-fd-migration-v1?ref_type=tags
+
+The series is working draft, so marked as RFC. Next steps would be
+implementing a test, and smarter migration of vhostnet
+(without reinitialization of vhost).
+
+The last patch provides a kind of stand to test these series, and it
+also can help with testing "[RFC V2 0/8] Live update: tap and vhost"
+
+Based-on: <20250823160323.20811-1-vsementsov@yandex-team.ru>
+Based-on: <20250823160323.20811-1-vsementsov@yandex-team.ru>
+
+Vladimir Sementsov-Ogievskiy (7):
+  net/tap: add some trace points
+  net/tap: keep exit notifier only when downscript set
+  qapi: add interface for local TAP migration
+  net/tap: implement interfaces for local migration
+  virtio-net: support local tap migration
+  net/tap: experimental support for vhost in local tap migration
+  RFC: add python/tap-migration-stand.py
+
+ hw/net/virtio-net.c            | 100 +++++++++-
+ include/hw/virtio/virtio-net.h |   2 +
+ include/net/tap.h              |   4 +
+ migration/options.c            |   7 +
+ migration/options.h            |   1 +
+ net/tap.c                      | 226 ++++++++++++++++-----
+ net/trace-events               |   7 +
+ python/qemu/machine/machine.py |  37 ++--
+ python/tap-migration-stand.py  | 348 +++++++++++++++++++++++++++++++++
+ qapi/migration.json            |   9 +-
+ qapi/net.json                  |  12 +-
+ 11 files changed, 681 insertions(+), 72 deletions(-)
+ create mode 100755 python/tap-migration-stand.py
+
 -- 
 2.48.1
 
