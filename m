@@ -4,99 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18551CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Aug 2025 10:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 980BECA0EE4
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Aug 2025 15:04:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uplit-0007pp-5w; Sat, 23 Aug 2025 06:43:48 -0400
+	id 1uppmG-00083R-MD; Sat, 23 Aug 2025 11:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1uplil-0007lc-OT
- for qemu-devel@nongnu.org; Sat, 23 Aug 2025 06:43:39 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1uppmF-000836-Mm; Sat, 23 Aug 2025 11:03:31 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1uplij-0005dy-Vv
- for qemu-devel@nongnu.org; Sat, 23 Aug 2025 06:43:39 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-459fbca0c95so40695e9.0
- for <qemu-devel@nongnu.org>; Sat, 23 Aug 2025 03:43:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1uppmD-0001oT-SM; Sat, 23 Aug 2025 11:03:31 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6188b793d21so4458932a12.3; 
+ Sat, 23 Aug 2025 08:03:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1755945816; x=1756550616; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=AIOyF8h41AAN01tpKcBE3Z7P7M8oJ+cDqLaohjVDWgQ=;
- b=m82lk5yzCgQcX8Miv6riAhauGglp07MHxF4gQVto4tpQ2t1FOxqqexC99lyjO4fUkJ
- uy7iKaYvgc4dxR00/Xh8Z+fXonF3+73yzjR+qUWqt+sB0olocyL17om44+6UygzbgVQM
- /hjSiB4prU2zI79QeKyF8LZBjb8N4z7WHrWsLC3AAWTZrGyoLe0sj0uhiodgXySEhAOL
- X119t2AtbaSgMPj1XmphWEVGdJaSw1KDIttf8IVJn5lizMxWFLsP3wCswQ11vJotKF81
- B1eRyzeHWKvn3Eqvy7er8NjkChPFQu102dyLP89/SvQH1WLHdEfmz5llq/X7GxFS0w0q
- 6wBw==
+ d=gmail.com; s=20230601; t=1755961408; x=1756566208; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=K19s5V0xXJ2VOusRN6qnztbZhcszJzpGVXtdaGk9hRY=;
+ b=fMUo65XyTUqy7sHchD9ILbHKCuhdW1E7u6wOoGgh7AKzljE2qsOimbtFKF7r8pXQQn
+ lPe0GuC152GTHAg5ng3VZBMcjGbCrjUVXzHa2+0I3Eq4v3L+NFAyCF7wSnABKPLVw4jV
+ yc6z1arhqmOV4C+KGurFAdkkR/21mKY8NeE1wh8B+5SVIQAjCi9kOcThkGw74NZXll2Z
+ M2zuhMm3V2eTeOOenXJikoAMiRMy6sp6z8N1+recWbk6gIogHHHbTcVKZ9LbYchiKrA6
+ sOA+vczknP7GAUJj05KIMUACvl19seQ6tNhk2oZLSPk+hgvns2JirrbhkC7HPx6P2Dsy
+ TgNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1755945816; x=1756550616;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AIOyF8h41AAN01tpKcBE3Z7P7M8oJ+cDqLaohjVDWgQ=;
- b=e6QLjOmfZM641Dob6RdTJ50OlfncJbSS9mc1ny+e+Smz07xoDcXpDm46eGSmJvqLlC
- 1fju9p3ASAx+o0DLbSvwkmBm1f/86JjPMkXOtZtFKbTt6w7U5BA+Gevxpo0isKw2IFt4
- fOoawsw6g+bgAg+7URCK4e0cxMWz9Et3wXjmP9Ci7h7r9yxQFCgX7aLZB8KP4E2Bmd4+
- F/+eOUtXTUYJcojIXdLfMDzQ3qvzs06Vt0LBXtajaYDcC1ERDAvIVR5SHy/WIn5mfx4e
- ncpAkS4MZCwj0h4V+7/ZrmHxY+0KFLZAft4ao6i797pwP2FlStfpHEK+1baPp4Pi7NEn
- JJYw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhPxEOaLHWdiK+QJ2bnD9W20+SvRVhx3K9AtqDsqlqiD4Pd5jDXg7iOnRCzWIsG4VXN27DpmLvYCHE@nongnu.org
-X-Gm-Message-State: AOJu0YwFOeT+TzmilQnUDm6tskp+HNp2EVeEa7FghTjOryVOlcPMKK5F
- JoQtZpR0FSkAdhbguevplfgSzt3pTyp8P1/GHOSWjCZPh8c5YBEw4YnowBwND9XJgQ==
-X-Gm-Gg: ASbGncvdOu58HZlVqg/1Dtij5v+sBIUbYmQ0wNCxdSE6kK0Wc11Neq1Z8TFvH8gcQeM
- YdBmSA27tzJysLjhUPTcH1bXoebASweDUuM00mt2EaDhbO3DdNM7so/C2TZ6QTHetY2uW1aM8XP
- WidqDlev3OnRH6GqWqxpGlrW2Ait/0j7IWybkn8pqn+zGKN6ZXG0PmV/B/KSSnGVxmRnOBl915G
- GeuDJ31IcnjFWI19yf0dBnt++K6LW3Oe56o5MfbV5cb59RMl4NIPicMdcVnJUX3Xq3BAMcjxK+x
- 744Q+N45a+yILORHp7xBft99USW2SD59erPq7537RH3NK1IRoxAyRwUScZMM8uJVgxl67J5v5lp
- 8c8Kn8DnrVy/X2/om7HVBKs2WEo4J8g0oU1+P6kLduVfgpPqra9VUhLacQW8L5SHL/hY=
-X-Google-Smtp-Source: AGHT+IFphaBK0vNlYF3H3FCXhE4KC+N388B6IwsWD8PalUoQWFFaW9jKmiIrMTqLkTT7NwtCR63z1A==
-X-Received: by 2002:a05:600c:8217:b0:453:672b:5b64 with SMTP id
- 5b1f17b1804b1-45b57c2981cmr1178885e9.2.1755945816345; 
- Sat, 23 Aug 2025 03:43:36 -0700 (PDT)
-Received: from google.com (248.27.205.35.bc.googleusercontent.com.
- [35.205.27.248]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c70ef55bddsm3105521f8f.22.2025.08.23.03.43.35
+ d=1e100.net; s=20230601; t=1755961408; x=1756566208;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=K19s5V0xXJ2VOusRN6qnztbZhcszJzpGVXtdaGk9hRY=;
+ b=XOndvUocY/RGz/iJJK42CazbghxosOIE4c2evHR2K77a5H6NicVpOl16H/sW8sbMrC
+ 3IkuWouUGQKWKGj2Gyk7+bpD119RVOzyiFGOMOqiuNRiVTuRQdQwovJe6YtONGOKScSF
+ FtfPBdCMgbcRSxY1SZF47mAvjYUwHWGuY1n5nhgY8XTXVqIC4hPah0nAAjiY1mujnIEs
+ JzNMxPBrz7IjSput2+dWohdfS1zG8Tgsoo50OFYZsZeCe1z6HtH8vWcPf5hgmf5Gu9RM
+ /UnhUiCO2LnQbdg+vat1VXe2J2KNJ4qd0gAu5v/Ug8vRw6IajRloridBmXBMAXa21Zfx
+ I0FA==
+X-Gm-Message-State: AOJu0YzeZppwxInroQDlBPIhjTlXflUmqgOHmNLtIKXdbvM5SVjMpD7Y
+ 20vnB8ZbsB7qrnYOe0K9gcygTdzIcBXvTAxHs9GEXp+4/xGvBkjfHJOYiD5d3J4c8wY=
+X-Gm-Gg: ASbGnctXCrVAdn+S1kj58r/6joqUFKsJwKyJ3bxANEhJXRkbB6NLANoUyiraBoA8nNg
+ Ii8mj9h0oU+jJq7Mlfdct6R5r8/zpzBUCGPWFiEjMwytGKQ8NhMDqKmAaRyn1zlOPvDnsp4Gkjp
+ aoo/tJx4vJRCAA3RQl8Y8oTEKfE8UlH39MWebPWBkPZ+3+fArWR7LanazL7aYAY82zmIqJ+m3Ek
+ kLjHD853elHGXsL6wIAyLMrpqosU9a72OfSKHryZFHqj5GZzndsODwnH0DiuV4r3NnEeRRyzh7d
+ Hywo2HVsuBAue/d0Pkk7eqqIkawCjGas9+VyO7ouKUwjJMIP8/sFFFa0G1Nxb519aukSdB1XfmA
+ XXMfFEEKC8SK8nzyeZ5OC5/Rd6ToT+v/tQWBL+4q8zd13iIETv3hVZPI5xUI0PMfDRIS8FrV4O2
+ OwGvk=
+X-Google-Smtp-Source: AGHT+IE2CSBNHWh0boRax4nI2w1pfz0xLf+5/jvO7ae+tzUUOoQOChEamnS0xMEwCNq30ul3hmO7Cg==
+X-Received: by 2002:a05:6402:2708:b0:61c:4338:29be with SMTP id
+ 4fb4d7f45d1cf-61c43382f8amr969520a12.26.1755961407381; 
+ Sat, 23 Aug 2025 08:03:27 -0700 (PDT)
+Received: from XPS.. ([2a02:908:1b0:afe0:2cf0:7750:e21:c9b7])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-61c312aeb15sm1627848a12.19.2025.08.23.08.03.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Aug 2025 03:43:35 -0700 (PDT)
-Date: Sat, 23 Aug 2025 10:43:32 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chen Baozi <chenbaozi@phytium.com.cn>, jean-philippe@linaro.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC 06/11] hw/arm/smmuv3: Plumb security state through core
- functions
-Message-ID: <aKmbVIGWry9nH8j8@google.com>
-References: <20250806151134.365755-1-tangtao1634@phytium.com.cn>
- <20250806151134.365755-7-tangtao1634@phytium.com.cn>
- <aKOa8KwAcm6hhAXq@google.com>
- <7b8acb9a-e3fe-461b-8495-42c7501a6a80@phytium.com.cn>
+ Sat, 23 Aug 2025 08:03:25 -0700 (PDT)
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ Osama Abdelkader <osama.abdelkader@gmail.com>
+Subject: [PATCH] hw/arm/boot: replace fprintf with error_report
+Date: Sat, 23 Aug 2025 17:03:21 +0200
+Message-ID: <20250823150321.135527-1-osama.abdelkader@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7b8acb9a-e3fe-461b-8495-42c7501a6a80@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=smostafa@google.com; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=osama.abdelkader@gmail.com; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,91 +97,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 21, 2025 at 12:25:40AM +0800, Tao Tang wrote:
-> 
-> On 2025/8/19 05:28, Mostafa Saleh wrote:
-> > On Wed, Aug 06, 2025 at 11:11:29PM +0800, Tao Tang wrote:
-> > > To support parallel processing of secure and non-secure streams, the
-> > > SMMUv3 model needs to differentiate between the two contexts throughout
-> > > its core logic. This commit is the foundational step to make the code
-> > > security-state aware.
-> > > 
-> > > An is_secure flag, which will be used in subsequent patches to represent
-> > > the transaction's security state, is now plumbed through the main
-> > > processing paths.
-> > > 
-> > > This change is purely preparatory and introduces no functional changes
-> > > for the existing non-secure path. All current call sites are updated
-> > > to pass is_secure = false.
-> > > 
-> > > This refactoring paves the way for upcoming patches that will introduce
-> > > separate TLB entries for secure transactions and enable a fully
-> > > parallel secure/non-secure SMMU model.
-> > > 
-> > I think it’s easier to review if this patch was split (STE parsing,
-> > page table handling and translation, TLB invalidation)
-> > Also based on my comment on patch 2, stage-2 handling doesn’t seem correct to me.
-> > 
-> > Thanks,
-> > Mostafa
-> > 
-> Hi Mostafa,
-> 
-> Thank you your suggestion.
-> 
-> You've made a very good point. This patch is indeed too large and tries to
-> cover too many different areas. For the v2 series, I will break this patch
-> down into logical parts as you suggested (STE parsing, page table handling,
-> etc.).
-> 
-> I also acknowledge your concern about the stage-2 handling logic from your
-> comment on patch 2. I have sent a separate, detailed reply to your feedback
-> on patch #2 that outlines my new understanding.
-> 
-> And as you commented on patch #01:
-> 
-> > > Inside this TCG VM, a KVM guest was launched, and the same NVMe device was
-> > > re-assigned to it via VFIO.
-> > > Command line of KVM VM inside TCG VM is below:
-> > > 
-> > > sudo qemu-system-aarch64  \
-> > > -enable-kvm  -m 1024  -cpu host  -M virt \
-> > > -machine virt,gic-version=3 \
-> > > -cpu max -append "nokaslr" -smp 1 \
-> > > -monitor stdio \
-> > > -kernel 5.15.Image \
-> > > -initrd rootfs.cpio.gz \
-> > > -display vnc=:22,id=primary \
-> > > -device vfio-pci,host=00:01.0
-> > > 
-> > > The KVM guest was able to perform I/O on the device
-> > > correctly, confirming that the non-secure path is not broken.
-> > I gave the patches a quick test and they seem to have broken my
-> > nested setup, I will look more into it and let you know what I find.
-> > 
-> > Thanks,
-> > Mostafa
-> > 
-> I'm sorry to hear that it has broken your environment. Please don't hesitate
-> to share any details, logs, or reproduction steps when you find them. I am
-> more than happy to help reproduce the issue on my end to get it fixed as
-> quickly as possible.
-> 
-> 
-> I would be delighted to hear back from you on any of the topics we've
-> discussed, as any further guidance you can offer would be invaluable.
-> 
+Replace direct fprintf(stderr, …) with QEMU's error_report() API,
+which ensures consistent formatting and integrates with QEMU's
+logging infrastructure.
 
-So far, I couldn’t repro, I remember getting permission errors, I will
-keep the patches in my stack, and will let you know if I hit that again.
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+---
+ hw/arm/boot.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-Thanks,
-Mostafa
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index d391cd01bb..17c744762f 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -531,13 +531,13 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+         char *filename;
+         filename = qemu_find_file(QEMU_FILE_TYPE_DTB, binfo->dtb_filename);
+         if (!filename) {
+-            fprintf(stderr, "Couldn't open dtb file %s\n", binfo->dtb_filename);
++            error_report("Couldn't open dtb file %s", binfo->dtb_filename);
+             goto fail;
+         }
+ 
+         fdt = load_device_tree(filename, &size);
+         if (!fdt) {
+-            fprintf(stderr, "Couldn't open dtb file %s\n", filename);
++            error_report("Couldn't open dtb file %s", filename);
+             g_free(filename);
+             goto fail;
+         }
+@@ -545,7 +545,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+     } else {
+         fdt = binfo->get_dtb(binfo, &size);
+         if (!fdt) {
+-            fprintf(stderr, "Board was unable to create a dtb blob\n");
++            error_report("Board was unable to create a dtb blob");
+             goto fail;
+         }
+     }
+@@ -564,7 +564,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+     scells = qemu_fdt_getprop_cell(fdt, "/", "#size-cells",
+                                    NULL, &error_fatal);
+     if (acells == 0 || scells == 0) {
+-        fprintf(stderr, "dtb file invalid (#address-cells or #size-cells 0)\n");
++        error_report("dtb file invalid (#address-cells or #size-cells 0)");
+         goto fail;
+     }
+ 
+@@ -572,8 +572,8 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+         /* This is user error so deserves a friendlier error message
+          * than the failure of setprop_sized_cells would provide
+          */
+-        fprintf(stderr, "qemu: dtb file not compatible with "
+-                "RAM size > 4GB\n");
++        error_report("qemu: dtb file not compatible with "
++                "RAM size > 4GB");
+         goto fail;
+     }
+ 
+@@ -611,7 +611,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+             rc = fdt_add_memory_node(fdt, acells, mem_base,
+                                      scells, mem_len, i);
+             if (rc < 0) {
+-                fprintf(stderr, "couldn't add /memory@%"PRIx64" node\n",
++                error_report("couldn't add /memory@%"PRIx64" node",
+                         mem_base);
+                 goto fail;
+             }
+@@ -622,7 +622,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+         rc = fdt_add_memory_node(fdt, acells, binfo->loader_start,
+                                  scells, binfo->ram_size, -1);
+         if (rc < 0) {
+-            fprintf(stderr, "couldn't add /memory@%"PRIx64" node\n",
++            error_report("couldn't add /memory@%"PRIx64" node",
+                     binfo->loader_start);
+             goto fail;
+         }
+@@ -637,7 +637,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+         rc = qemu_fdt_setprop_string(fdt, "/chosen", "bootargs",
+                                      ms->kernel_cmdline);
+         if (rc < 0) {
+-            fprintf(stderr, "couldn't set /chosen/bootargs\n");
++            error_report("couldn't set /chosen/bootargs");
+             goto fail;
+         }
+     }
+@@ -646,7 +646,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+         rc = qemu_fdt_setprop_sized_cells(fdt, "/chosen", "linux,initrd-start",
+                                           acells, binfo->initrd_start);
+         if (rc < 0) {
+-            fprintf(stderr, "couldn't set /chosen/linux,initrd-start\n");
++            error_report("couldn't set /chosen/linux,initrd-start");
+             goto fail;
+         }
+ 
+@@ -655,7 +655,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
+                                           binfo->initrd_start +
+                                           binfo->initrd_size);
+         if (rc < 0) {
+-            fprintf(stderr, "couldn't set /chosen/linux,initrd-end\n");
++            error_report("couldn't set /chosen/linux,initrd-end");
+             goto fail;
+         }
+     }
+-- 
+2.43.0
 
-> Thanks,
-> 
-> Tao
-> 
-> 
-> 
 
