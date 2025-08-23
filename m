@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5089ACA0EE4
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Aug 2025 16:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25232CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Aug 2025 16:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upqio-0005Rk-4O; Sat, 23 Aug 2025 12:04:02 -0400
+	id 1upqie-0005OP-PP; Sat, 23 Aug 2025 12:03:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1upqiP-0005Ky-MN
+ id 1upqiO-0005Kt-MT
  for qemu-devel@nongnu.org; Sat, 23 Aug 2025 12:03:42 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1upqiL-0000Hj-0c
- for qemu-devel@nongnu.org; Sat, 23 Aug 2025 12:03:37 -0400
+ id 1upqiK-0000Ha-V8
+ for qemu-devel@nongnu.org; Sat, 23 Aug 2025 12:03:36 -0400
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c23:36c1:0:640:5f85:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id DEA6B80636;
- Sat, 23 Aug 2025 19:03:28 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 5049580626;
+ Sat, 23 Aug 2025 19:03:27 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:c91::1:b])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Q3YUrj0Gl8c0-FG1CDEro; Sat, 23 Aug 2025 19:03:28 +0300
+ ESMTPSA id Q3YUrj0Gl8c0-lO4FDF9s; Sat, 23 Aug 2025 19:03:26 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1755965008;
- bh=kmfQHM8TLUvJTk/2iH8NlzJJp/mIQx68htlSJAODbrY=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=IVX30jzSnOOZ1wg0Z6fwK+O8gcFWe8O5bN7iiDgX9rYtSXcXyWHrb+pPlmMvnDZJ5
- 3ZHK2gqYfFvsOE+Stc+XbRvH50eveV8Bbb7CzuoYPExVV3eFyjsXTRHPu3iWA54tJ9
- hK7AC0oa4jMWjffWinEtddhLqoKhz3vyq9ZTZkfc=
+ s=default; t=1755965006;
+ bh=1fYPItZ9Vtf8BPJUTqQtktapLYD+de8NDSoi1l11oBI=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=lsB9iLFA7KGKAbSxV8lbQ6UhqjBkGdaMU1Rtit0qn4bfszm17fAVgEE+UKezIclS0
+ 9dPP6WzPhYhxRGnZKrCNzBIVLK3m1rAefPXA1JQLMatfaQwpJjvTWkqSFtTgoYVmfp
+ Eok5nPD3fYLDySpdQqAF+JPacIZZ1ME4pGqkP+aw=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, leiyang@redhat.com,
  steven.sistare@oracle.com
-Subject: [PATCH v2 03/20] net/tap: tap_set_sndbuf(): add return value
-Date: Sat, 23 Aug 2025 19:03:06 +0300
-Message-ID: <20250823160323.20811-4-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 00/20] TAP initialization refactoring
+Date: Sat, 23 Aug 2025 19:03:03 +0300
+Message-ID: <20250823160323.20811-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250823160323.20811-1-vsementsov@yandex-team.ru>
-References: <20250823160323.20811-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.136;
@@ -74,74 +72,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow common recommendations to avoid error propagation.
+Hi all!
 
-Probably, it would also be good to use bool as a return type
-(switching to true/false as success/failure instead of 0/-1). But
-seems almost all functions (including a lot of them with errp
-argument) have 0/-1 semantics in net/, so making exclusions doesn't
-seem good. If we want such a switch, we should update the whole
-net/ directory.
+Here is a refactoring of initialization code, to improve its
+readability and get rid of duplication.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- net/tap-linux.c | 5 ++++-
- net/tap.c       | 4 +---
- net/tap_int.h   | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+v2:
+01,03: improve commit msg
+14: fix return value for new net_tap_init_one()
+15: add return statements to other cases, to not break them
+20: new
 
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index 22ec2f45d2..3625379c58 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -140,7 +140,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
-  */
- #define TAP_DEFAULT_SNDBUF 0
- 
--void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
-+int tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
- {
-     int sndbuf;
- 
-@@ -154,7 +154,10 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
- 
-     if (ioctl(fd, TUNSETSNDBUF, &sndbuf) == -1 && tap->has_sndbuf) {
-         error_setg_errno(errp, errno, "TUNSETSNDBUF ioctl failed");
-+        return -1;
-     }
-+
-+    return 0;
- }
- 
- int tap_probe_vnet_hdr(int fd, Error **errp)
-diff --git a/net/tap.c b/net/tap.c
-index ba2731ee8a..0258ac8574 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -702,9 +702,7 @@ static int net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-     TAPState *s = net_tap_fd_init(peer, model, name, fd, vnet_hdr);
-     int vhostfd;
- 
--    tap_set_sndbuf(s->fd, tap, &err);
--    if (err) {
--        error_propagate(errp, err);
-+    if (tap_set_sndbuf(s->fd, tap, errp) < 0) {
-         goto failed;
-     }
- 
-diff --git a/net/tap_int.h b/net/tap_int.h
-index 8857ff299d..d21acf8486 100644
---- a/net/tap_int.h
-+++ b/net/tap_int.h
-@@ -33,7 +33,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
- 
- ssize_t tap_read_packet(int tapfd, uint8_t *buf, int maxlen);
- 
--void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
-+int tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
- int tap_probe_vnet_hdr(int fd, Error **errp);
- int tap_probe_has_ufo(int fd);
- int tap_probe_has_uso(int fd);
+Below are the initialization flow diagrams showing the changes.
+
+BEFORE REFACTORING:
+==================
+
+```
+net_init_tap()
+    |
+    +-- if (tap->fd)
+    |   +-- duplicated logic*
+    |   +-- net_init_tap_one()
+    |
+    +-- else if (tap->fds)
+    |   +-- for each fd:
+    |       +-- duplicated logic*
+    |       +-- net_init_tap_one()
+    |
+    +-- else if (tap->helper)
+    |   +-- duplicated logic*
+    |   +-- net_init_bridge()
+    |
+    +-- else (normal case)
+        +-- for each queue:
+            +-- net_tap_init()
+            +-- net_init_tap_one()
+
+net_init_bridge()
+    |
+    +-- duplicated logic*
+    +-- net_tap_fd_init()
+
+net_init_tap_one()
+    |
+    +-- net_tap_fd_init()
+
+net_tap_init()
+    |
+    +-- tap_open()
+
+net_tap_fd_init()
+    |
+    +-- qemu_new_net_client()
+    +-- Initialize TAPState
+
+* duplicated logic: set fd nonblocking + probe vnet_hdr
+```
+
+AFTER REFACTORING:
+=================
+
+```
+net_init_tap()
+    |
+    +-- if (tap->fd)
+    |   +-- net_tap_from_monitor_fd()
+    |
+    +-- else if (tap->fds)
+    |   +-- for each fd:
+    |       +-- net_tap_from_monitor_fd()
+    |
+    +-- else if (tap->helper)
+    |   +-- net_init_bridge()
+    |
+    +-- else (normal case)
+        +-- net_tap_open()
+
+net_tap_open()
+    |
+    +-- for each queue:
+        +-- net_tap_open_one()
+
+net_tap_open_one()
+    |
+    +-- tap_open()
+    +-- net_tap_fd_init_common()
+
+net_tap_from_monitor_fd()
+    |
+    +-- net_tap_fd_init_external()
+
+net_tap_fd_init_external()
+    |
+    +-- net_tap_fd_init_common()
+
+net_init_bridge()
+    |
+    +-- net_tap_fd_init_external()
+
+net_tap_fd_init_common()
+    |
+    +-- qemu_new_net_client()
+    +-- Initialize TAPState
+```
+
+Solved problems:
+
+- duplicated logic to handle external
+  file descriptors (set nonblocking, probe vnet_hdr)
+
+- duplication between tap/helper case in
+  net_init_tap() and net_init_bridge()
+
+- confusing naming and functionality spread between functions (we had
+  net_init_tap(), together with net_tap_init(); also main central
+  function was net_init_tap_one(), and part of its logic (not clear
+  why) moved to separate net_tap_fd_init()),
+
+- net_init_tap() was just too big
+
+Vladimir Sementsov-Ogievskiy (20):
+  net/tap: net_init_tap_one(): add return value
+  net/tap: add set_fd_nonblocking() helper
+  net/tap: tap_set_sndbuf(): add return value
+  net/tap: net_init_tap_one(): drop extra error propagation
+  net/tap: net_init_tap_one(): move parameter checking earlier
+  net/tap: net_init_tap(): refactor parameter checking
+  net/tap: net_init_tap(): drop extra variable vhostfdname
+  net/tap: move local variables related to the latter case to else
+    branch
+  net/tap: use glib strings vector and g_strsplit for fds case
+  net/tap: drop extra tap_fd_get_ifname() call
+  net/tap: net_init_tap_one(): refactor to use netdev as first arg
+  net/tap: net_init_tap_one(): support bridge
+  net/tap: net_init_bridge(): support tap
+  net/tap: refactor net_tap_init() into net_tap_open_one()
+  net/tap: introduce net_tap_open()
+  net/tap: introduce net_tap_fd_init_external()
+  net/tap: introduce net_tap_from_monitor_fd() helper
+  net/tap: split net_tap_setup_vhost() separate function
+  net/tap: drop net_tap_fd_init()
+  net/tap: introduce net_init_tap_fds()
+
+ net/tap-linux.c |   5 +-
+ net/tap.c       | 578 +++++++++++++++++++++++-------------------------
+ net/tap_int.h   |   2 +-
+ 3 files changed, 277 insertions(+), 308 deletions(-)
+
 -- 
 2.48.1
 
