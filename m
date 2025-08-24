@@ -4,45 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5844BCA0EE4
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 00:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 837D9CA0FE7
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 07:29:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1upyLK-0006Wt-Nc; Sat, 23 Aug 2025 20:12:18 -0400
+	id 1uq59q-0006QG-Bt; Sun, 24 Aug 2025 03:28:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1upyLJ-0006Wd-7A; Sat, 23 Aug 2025 20:12:17 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from
+ <fm-294854-202508240718414885864b8a27f75731-l29l51@rts-flowmailer.siemens.com>)
+ id 1uq59o-0006Oy-Or
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 03:28:52 -0400
+Received: from mta-65-227.siemens.flowmailer.net ([185.136.65.227])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1upyLG-0001Af-Vh; Sat, 23 Aug 2025 20:12:16 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF21D148E67;
- Sun, 24 Aug 2025 03:11:30 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 83E2F266BCD;
- Sun, 24 Aug 2025 03:11:51 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-stable@qemu.org
-Subject: [PATCH] block/curl: fix curl internal handles handling
-Date: Sun, 24 Aug 2025 03:11:42 +0300
-Message-ID: <20250824001144.2001882-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.2
+ (Exim 4.90_1) (envelope-from
+ <fm-294854-202508240718414885864b8a27f75731-l29l51@rts-flowmailer.siemens.com>)
+ id 1uq59k-0005Mh-WE
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 03:28:52 -0400
+Received: by mta-65-227.siemens.flowmailer.net with ESMTPSA id
+ 202508240718414885864b8a27f75731 for <qemu-devel@nongnu.org>;
+ Sun, 24 Aug 2025 09:18:41 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm2;
+ d=siemens.com; i=jan.kiszka@siemens.com;
+ h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
+ bh=M2h/EoMUlU9fk3MINaoT2/hg0rjYpm0aZBDmEdaeq6E=;
+ b=dDE8NQQqtUaNtiY0QUNl2fun+T/hxXDbAlj5X6V5FoTv4DrAfVKvEJYLEUbE0ESzLnayQm
+ biTH1JGqo1erMAtZQnCRpLkbAvZ9Q1ziK33bileGHm3qI/ITGO0Z+4Yjt278Lv8WEJlPymou
+ rRVOuOBLEaHJ8vPL8DclpIBR0y02LeGlhEPVUnzy7QicZa8vVclZ890PCjMWB+SP7aFVmlvx
+ mMUDguYBbQX+wZMS5fncyuk6kgwNMSklgwNLrbdYuauVmhUvnREaQTbQTUSUz/gYxAo5Pcm2
+ 2fIwcTUy1xmlBJGFQ7bUIkU4kkXFyIenpieDHcKlI3+wixG86neyiYnA==;
+From: Jan Kiszka <jan.kiszka@siemens.com>
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Subject: [PATCH 1/8] hw/sd/sdcard: Fix size check for backing block image
+Date: Sun, 24 Aug 2025 09:18:33 +0200
+Message-ID: <0d95cffa6131a06404f3cd6ef5951720ce01c37e.1756019920.git.jan.kiszka@siemens.com>
+In-Reply-To: <cover.1756019920.git.jan.kiszka@siemens.com>
+References: <cover.1756019920.git.jan.kiszka@siemens.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Flowmailer-Platform: Siemens
+Feedback-ID: 519:519-294854:519-21489:flowmailer
+Received-SPF: pass client-ip=185.136.65.227;
+ envelope-from=fm-294854-202508240718414885864b8a27f75731-l29l51@rts-flowmailer.siemens.com;
+ helo=mta-65-227.siemens.flowmailer.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,56 +74,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-block/curl.c uses CURLMOPT_SOCKETFUNCTION to register a socket callback.
-According to the documentation, this callback is called not just with
-application-created sockets but also with internal curl sockets, - and
-for such sockets, user data pointer is not set by the application, so
-the result qemu crashing.
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-Pass BDRVCURLState directly to the callback function as user pointer,
-instead of relying on CURLINFO_PRIVATE.
+The power-of-2 rule applies to the user data area, not the complete
+block image. The latter can be concatenation of boot partition images
+and the user data.
 
-This problem started happening with update of libcurl from 8.9 to 8.10 --
-apparently with this change curl started using private handles more.
-
-(CURLINFO_PRIVATE is used in one more place, in curl_multi_check_completion() -
-it might need a similar fix too)
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3081
-Cc: qemu-stable@qemu.org
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
 ---
- block/curl.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ hw/sd/sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/curl.c b/block/curl.c
-index 5467678024..00b949ea45 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -162,13 +162,9 @@ static int curl_timer_cb(CURLM *multi, long timeout_ms, void *opaque)
- static int curl_sock_cb(CURL *curl, curl_socket_t fd, int action,
-                         void *userp, void *sp)
- {
--    BDRVCURLState *s;
--    CURLState *state = NULL;
-+    BDRVCURLState *s = userp;
-     CURLSocket *socket;
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 8c290595f0..16aee210b4 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
+             return;
+         }
  
--    curl_easy_getinfo(curl, CURLINFO_PRIVATE, (char **)&state);
--    s = state->s;
--
-     socket = g_hash_table_lookup(s->sockets, GINT_TO_POINTER(fd));
-     if (!socket) {
-         socket = g_new0(CURLSocket, 1);
-@@ -605,6 +601,7 @@ static void curl_attach_aio_context(BlockDriverState *bs,
-     assert(!s->multi);
-     s->multi = curl_multi_init();
-     s->aio_context = new_context;
-+    curl_multi_setopt(s->multi, CURLMOPT_SOCKETDATA, s);
-     curl_multi_setopt(s->multi, CURLMOPT_SOCKETFUNCTION, curl_sock_cb);
-     curl_multi_setopt(s->multi, CURLMOPT_TIMERDATA, s);
-     curl_multi_setopt(s->multi, CURLMOPT_TIMERFUNCTION, curl_timer_cb);
+-        blk_size = blk_getlength(sd->blk);
++        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
+         if (blk_size > 0 && !is_power_of_2(blk_size)) {
+             int64_t blk_size_aligned = pow2ceil(blk_size);
+             char *blk_size_str;
 -- 
-2.47.2
+2.43.0
 
 
