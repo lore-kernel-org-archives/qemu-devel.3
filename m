@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53FF9CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 13:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A2A9CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 15:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqAyv-0001yv-3M; Sun, 24 Aug 2025 09:42:01 -0400
+	id 1uqCwi-0002ni-Fw; Sun, 24 Aug 2025 11:47:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
- id 1uqAyt-0001yX-Dc
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 09:41:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
- id 1uqAyq-0000d1-Sl
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 09:41:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756042914;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=K6NoufUsZ3lLPga0ywLpLDt2LTBe+XBzJJmEkkjedeM=;
- b=fTo477b1RIyEAHN42riT+LI2l5C1TrAMxQrRuXc6NPXlO3LJz3OPA8wDe2UrvkEbQx7cH6
- v2S0/rF79fCuC4uKvVQqIHMELzY0bWF3a6zFcVNDS9rehAFj3S+p0mQJg5Hgg19ovuY2Ka
- hWWVtNiPCVGO1NAY7RngCJnAl+ADIxY=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-K0ykFb5GNHqlKuZz7fPoQg-1; Sun, 24 Aug 2025 09:41:53 -0400
-X-MC-Unique: K0ykFb5GNHqlKuZz7fPoQg-1
-X-Mimecast-MFC-AGG-ID: K0ykFb5GNHqlKuZz7fPoQg_1756042912
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-24696a89d6dso16836875ad.3
- for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 06:41:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1uqCwf-0002nQ-Gp; Sun, 24 Aug 2025 11:47:49 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1uqCwd-0006Mm-UC; Sun, 24 Aug 2025 11:47:49 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-3366de457a5so3878331fa.0; 
+ Sun, 24 Aug 2025 08:47:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1756050465; x=1756655265; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=zVcvf6N1+8o3jeMKc47yk3nCFx/BK5BHs6172xH/slc=;
+ b=aEoqTm2iFFmI2xoZ/m89EHcttsTyq4zPjoVkX/4OqE1g7WRhyhpsvIty8ulTtMQ9DT
+ MSzx+kfpzyQCF9OkJR8EWcwNg85Ru2iuF0Uig5DBZkUywPI0Ds8fWFFoc3/ORPpKD0hM
+ hN88L4Ufvaw4a+Of41RIm3dmm3KjHOHZUAEBbuYaSiVnQCKBFD8e5SadQRmxu+l4we47
+ 0gWNZUVPjg2tcd4DuiV6gJxzTTCPAuX3ahfmmRQOBJUDZ7fGv2OmRw+u8SBgkgGNvS8s
+ EiEs1fPtISRCmUq51L+3tzwI2GjYSNjQyAKn09WhnFRmmL+Mpti8bkNSAi9q8l00jXQj
+ +fjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756042912; x=1756647712;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=K6NoufUsZ3lLPga0ywLpLDt2LTBe+XBzJJmEkkjedeM=;
- b=f0hVV76wvI+OKm6a2lHbD2+pmocTQ1TUI3+kE04c/37wnbJaxI4YZAbjlwhed2CpOD
- 1+P+ojN+omzY0kOsepir6QVRu5XN4RKkMvHfHPkTI5hgQXagRGfsJ0n0POobaeuIQiKi
- ZBEk6q6k4XjRd3hokZ5XmATQh7VXTz+a7ox20OeaI9OeoZI88tj7BKsDv7XBERy5TiRp
- fqKM1JD6Q9hoELyub//bjDnuHLro7a1yg36kVf+G3H8EfjLcvpSfShGqOPHwhSV2VmRM
- 9WmyL/93nZ2TG+NEaRNI2sAvO/9PpWaFpNSBLS8g6bgm/29QJ48k+V9SFYo6CuAERLi0
- 03QQ==
+ d=1e100.net; s=20230601; t=1756050465; x=1756655265;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zVcvf6N1+8o3jeMKc47yk3nCFx/BK5BHs6172xH/slc=;
+ b=eJiBMblbLiInCSE4sS66vmT87XPnJH3wr+EjprxeCjkSRIN6nUvvTko25wpoD9nmgL
+ Tf6YQAhVullBoikV6Ot1Pa2VLckNQQED0gOEZmMiuNoEhj/bWjZ3CQ1N9TAJZWgp4cGz
+ xwiCQveTiZyQDLy2ZFLbV7aOqJG8VSEnoD6Zuexz+p23UKbR3pG27BIJxzvPg5m+M8A1
+ Sqak5ySbmBvPWNCPZXsWjYqI1vQCKKgg81LEscX4VvUmPgYrcvM6V50NlpFpxsPVklZJ
+ rZFphu2QsYUo/vx+h9XsZ+wjz1QROGXNdxiSDzb8zL/N5jqMdUx5W8kiVaqRTQgpANPC
+ /haQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4wgmpbhxOO3LATlbWOxuw2b+hn/jsRMML6imt89dzRG6YBOivQO6erj755eu8/5Qb77BuY2p1/rv7@nongnu.org
-X-Gm-Message-State: AOJu0Yyg4DZF4BsHlm39Oo5XwmZlDVhIH5MmEf/tg9XdbXJESwvv2lc9
- pPNBTcRK6UjtZ4yHISVoIJXvknUhN6ai/66X5S0wma4SHpHHJJknP/gLJ83b3ErW1MmSineNVl+
- 1v4IJgGIVKyc5hFMNucbI2GCqRy67BZXlfjkGhvNeAgvsPvztGR6kvWb8IYzB9x6NFCDbiJ9UcT
- eie6mVDnYROlxwyOHnMlpo0c3EtRRHbRU=
-X-Gm-Gg: ASbGncv/MUmRHBoStu+HpuA0uUQcaZjqtu3nNhWJznmhcPZdbFdoRg+mrdAfVMVcHe6
- WymG4aBdykRKDSFF/FlCi8zM8PkEx2lYImVOo7jpXn5JHhmi+Zh9Y5DV9zeQ2xxf9/BWxXz/FDd
- AAvyYcU2luGjDHI166bg==
-X-Received: by 2002:a17:903:41cc:b0:246:b351:36a3 with SMTP id
- d9443c01a7336-246b3513841mr20371535ad.48.1756042911969; 
- Sun, 24 Aug 2025 06:41:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtOwnM0zUvK6bibgzn81RLTEZQ3jEiK+fk57Unk7a4gacChzgKnKqPnvcXorUn+asigXzoxNlhmThgsbf/uyw=
-X-Received: by 2002:a17:903:41cc:b0:246:b351:36a3 with SMTP id
- d9443c01a7336-246b3513841mr20371225ad.48.1756042911586; Sun, 24 Aug 2025
- 06:41:51 -0700 (PDT)
+ AJvYcCWEKffbL1ey11Tdf7b4iqjMFLseqT/vna6lT4v3iRPNCV/Mxjy7bHEz/IsHldaLJ6rAx4XJXeNEjA==@nongnu.org,
+ AJvYcCX4rDX0FEB1x6ipRhXoo7XZBu5jFto06oYZ9ioAFsrSxGBCC3l/ameXpGh6EB9Mt9ypSqOaMJAOUWTK6Q==@nongnu.org
+X-Gm-Message-State: AOJu0YzB2DLgwDY0xz4ukg1DxY5/luYiZpE5z4M08YVcyonhp8qnM1h8
+ L0Kfnji6XffzqW+TEJ57+XALklhpOI5awo5LoRqUoYExLZQOBvWmLrPw
+X-Gm-Gg: ASbGncvdIkFUDDeMgDUy3bKRp9jiuMHbbp6SWr25akwQmGR/18c6M+QHxZTri2YirQV
+ 1mu/5Ey9WxeH3Gm/nf2fkLKjX2V8N4WbHhmm5zirBcMQAX1sOw+/PZlq8YfUYA5X7XKtd+hPJ0L
+ E39jXo/3CV0tOSzmdVyCxotYzosmRl5TLRoiZUYU9/rrmCH/vZc9qEJEHYs/AOPTPXNJHwugpkX
+ Gm4VXF48MBPNRSrd/soW8HklnMzf/pvAOL7XlWGRQxK4YFj3LpKQqR0wYVD9hSbRg5nWKaMeP8e
+ DHY/NVqLVuwj+Wlxf/m2XfY44gpvbrPq6WHnfDSfMZVVQyLtanlWOWOlp1llqGRDdb6Q1TSdTqV
+ cUU6bAztAgJkQda05lQsprb9D9aDdxZ8gaToeXHFJNtAVmRr1BU46+l9fypZA+YgESNE+hA==
+X-Google-Smtp-Source: AGHT+IFVM5HFkO646CqImYDWzBwIqMXrSaCdRiuVR/Sxbi+VjFKLzPrJexLM+G/joyuX6gNl3ugNMA==
+X-Received: by 2002:a05:651c:3256:10b0:32b:3104:f89c with SMTP id
+ 38308e7fff4ca-33650f3fc52mr22458121fa.29.1756050464355; 
+ Sun, 24 Aug 2025 08:47:44 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-3365e5f4199sm10724941fa.63.2025.08.24.08.47.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 24 Aug 2025 08:47:43 -0700 (PDT)
+Date: Sun, 24 Aug 2025 17:47:42 +0200
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Corvin =?iso-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Corvin =?iso-8859-1?Q?K=F6hne?= <c.koehne@beckhoff.com>,
+ qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Yannick =?iso-8859-1?Q?Vo=DFen?= <y.vossen@beckhoff.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH v2 04/14] hw/arm/zynq-devcfg: Prevent unintended unlock
+ during initialization
+Message-ID: <aKs0HvG0OrKwWIhS@zapote>
+References: <20250815090113.141641-1-corvin.koehne@gmail.com>
+ <20250815090113.141641-5-corvin.koehne@gmail.com>
 MIME-Version: 1.0
-References: <20221107221236.47841-1-philmd@linaro.org>
- <20221107221236.47841-2-philmd@linaro.org>
- <234f5633-0b90-448b-84a1-12338ae159c6@tls.msk.ru>
-In-Reply-To: <234f5633-0b90-448b-84a1-12338ae159c6@tls.msk.ru>
-From: Mauro Matteo Cascella <mcascell@redhat.com>
-Date: Sun, 24 Aug 2025 15:41:40 +0200
-X-Gm-Features: Ac12FXypZNQqS9HFWja8uDRNapzyp12791EIAl-TzexNxpwUyZRWGFv8HZ4J8_s
-Message-ID: <CAA8xKjVaXnA0cX3UWK5B2FrZN7sp=bSMPVzPbrkynW6tMTU_8Q@mail.gmail.com>
-Subject: Re: [PATCH-for-7.2 1/2] hw/sd/sdhci: Do not set Buf Wr Ena before
- writing block (CVE-2022-3872)
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Sai Pavan Boddu <saipava@xilinx.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org, 
- Alexander Bulekov <alxndr@bu.edu>, Bin Meng <bin.meng@windriver.com>, 
- Andrey Smirnov <andrew.smirnov@gmail.com>, RivenDell <XRivenDell@outlook.com>, 
- Siqi Chen <coc.cyqh@gmail.com>, ningqiang <ningqiang1@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcascell@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250815090113.141641-5-corvin.koehne@gmail.com>
+User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,86 +111,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 11, 2025 at 11:38=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> w=
-rote:
->
-> On 08.11.2022 01:12, Philippe Mathieu-Daud=C3=A9 wrote:
-> > When sdhci_write_block_to_card() is called to transfer data from
-> > the FIFO to the SD bus, the data is already present in the buffer
-> > and we have to consume it directly.
-> >
-> > See the description of the 'Buffer Write Enable' bit from the
-> > 'Present State' register (prnsts::SDHC_SPACE_AVAILABLE) in Table
-> > 2.14 from the SDHCI spec v2:
-> >
-> >    Buffer Write Enable
-> >
-> >    This status is used for non-DMA write transfers.
-> >
-> >    The Host Controller can implement multiple buffers to transfer
-> >    data efficiently. This read only flag indicates if space is
-> >    available for write data. If this bit is 1, data can be written
-> >    to the buffer. A change of this bit from 1 to 0 occurs when all
-> >    the block data is written to the buffer. A change of this bit
-> >    from 0 to 1 occurs when top of block data can be written to the
-> >    buffer and generates the Buffer Write Ready interrupt.
-> >
-> > In our case, we do not want to overwrite the buffer, so we want
-> > this bit to be 0, then set it to 1 once the data is written onto
-> > the bus.
-> >
-> > This is probably a copy/paste error from commit d7dfca0807
-> > ("hw/sdhci: introduce standard SD host controller").
-> >
-> > Reproducer:
-> > https://lore.kernel.org/qemu-devel/CAA8xKjXrmS0fkr28AKvNNpyAtM0y0B+5Fic=
-hpsrhD+mUgnuyKg@mail.gmail.com/
-> >
-> > Fixes: CVE-2022-3872
-> > Reported-by: RivenDell <XRivenDell@outlook.com>
-> > Reported-by: Siqi Chen <coc.cyqh@gmail.com>
-> > Reported-by: ningqiang <ningqiang1@huawei.com>
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Tested-by: Mauro Matteo Cascella <mcascell@redhat.com>
->
-> Hi!
->
-> It's been almost 3 years since this patch.
-> Is it still relevant?
-> Or maybe the prob has been fixed by later changes in this area?
+On Fri, Aug 15, 2025 at 11:01:02AM +0200, Corvin Kˆhne wrote:
+> From: YannickV <Y.Vossen@beckhoff.com>
+> 
+> During the emulation startup, all registers are reset, which triggers the
+> `r_unlock_post_write` function with a value of 0. This led to an
+> unintended memory access disable, making the devcfg unusable.
+> 
+> During startup, the memory space no longer gets locked.
+> 
+> Signed-off-by: Yannick Voﬂen <y.vossen@beckhoff.com>
 
-SDHC_SPACE_AVAILABLE is still set in the write path:
-https://gitlab.com/qemu-project/qemu/-/blob/master/hw/sd/sdhci.c?ref_type=
-=3Dheads#L988
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-If that is a bug, this patch should be applied regardless of its
-security implications (if any).
 
-> Thanks,
->
-> /mjt
->
-> >   hw/sd/sdhci.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> > index 306070c872..f230e7475f 100644
-> > --- a/hw/sd/sdhci.c
-> > +++ b/hw/sd/sdhci.c
-> > @@ -954,7 +954,7 @@ static void sdhci_data_transfer(void *opaque)
-> >               sdhci_read_block_from_card(s);
-> >           } else {
-> >               s->prnsts |=3D SDHC_DOING_WRITE | SDHC_DAT_LINE_ACTIVE |
-> > -                    SDHC_SPACE_AVAILABLE | SDHC_DATA_INHIBIT;
-> > +                                           SDHC_DATA_INHIBIT;
-> >               sdhci_write_block_to_card(s);
-> >           }
-> >       }
->
 
---=20
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
-
+> ---
+>  hw/dma/xlnx-zynq-devcfg.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
+> index b838c1c0d0..f28d0015e6 100644
+> --- a/hw/dma/xlnx-zynq-devcfg.c
+> +++ b/hw/dma/xlnx-zynq-devcfg.c
+> @@ -221,7 +221,9 @@ static void r_unlock_post_write(RegisterInfo *reg, uint64_t val)
+>  {
+>      XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
+>      const char *device_prefix = object_get_typename(OBJECT(s));
+> -
+> +    if (device_is_in_reset(DEVICE(s))) {
+> +        return;
+> +    }
+>      if (val == R_UNLOCK_MAGIC) {
+>          DB_PRINT("successful unlock\n");
+>          s->regs[R_CTRL] |= R_CTRL_PCAP_PR_MASK;
+> -- 
+> 2.50.1
+> 
 
