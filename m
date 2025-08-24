@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785DCCA0EED
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 22:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C1ACA0FEB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 22:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqJBz-00064Z-4O; Sun, 24 Aug 2025 18:28:03 -0400
+	id 1uqJBr-00062e-3l; Sun, 24 Aug 2025 18:27:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqJBr-000633-Au
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 18:27:56 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ id 1uqJBl-000623-SD
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 18:27:50 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqJBn-0006An-RN
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 18:27:54 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-3366307712dso11476911fa.1
- for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 15:27:51 -0700 (PDT)
+ id 1uqJBi-00069a-Uv
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 18:27:49 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-55f4345cfd3so491598e87.1
+ for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 15:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756074469; x=1756679269; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756074464; x=1756679264; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1WoT7s3OlYD8+G3GhjBVb2VoQPl7Qm4aiBJ1d2EKqNM=;
- b=ODuq/QdG/7DfZY5miQgB41NPmCdK0KSMlwVFLOsAejE1sbkmS9BjwLJa74vgrBDKh4
- fHqP6tJVv5Pp+Ecwq//NlNqq+flGeQs7mKuol0EHx/dbgGzYNYEAgGUK7qsiepMURMxX
- c/x/OZPvaO2faG1FI2PfkgW4VvD1qqVmHx+NZtr403Qwd7OHFbZXeN9VAcqymD7pgAg3
- +FH9W1XmZXnnEihlQ5sTYk2p+e9ArU+kZwa2nYpqYZ4i+DakP/zH4ZH9095HvGeRhEMJ
- xBFUguTjbdhJKkodrz+o2baDi7lIbLVnoUR2sE9boB4IRU6GmQ0nXkqRaDqm7xslYSMk
- k9bA==
+ bh=mNGvEOc3hjFKrNjkZThH9ubiJryO/GrmqZf5jARL5gs=;
+ b=gg6NGmJU+UN0W6QUH7pKbjsj7l3iNaPEi8NMli6TdOvZJ6S1fn3k/AaM4zRDudh38S
+ LyKFcDule/a27uaN2lgdW1H++prbm96NT83wp4T2v6VfZZzNJIk2UoLzAxVWbbBpLbA+
+ 4zk62HlPKpCqyMgskdKDMrhlWakKaT7rkeCko9Joc5nVzalFBTk8LDEqcKwAcIFDL0Qg
+ 98uMU6RRkXOnuQy4j0JJBx+JPYlPifni+gmWY6G86HdQVKIl4Dv696RcOU9MFKPgRePv
+ j/pN96aCfJXtpWUrPiYH8/Ds/RlfRGlvimUFaOKYBTnBbO7lSp46+s/+OtcaH4AIWwy8
+ ILuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756074469; x=1756679269;
+ d=1e100.net; s=20230601; t=1756074464; x=1756679264;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1WoT7s3OlYD8+G3GhjBVb2VoQPl7Qm4aiBJ1d2EKqNM=;
- b=rsuz20frukficQevTdXC/d3nII3JanmOyO7hxUcnbWaRooIE1GeFWaBgl/3BHOFqYp
- IyRiCnpVr9s4F2yOTkw7neSaObyUq6BFuXZvMgbAgeRejbD8wg2Y6PuYfhWpepLBejwt
- oK7i9Pbj9O9aQBWdrSaqJEIj/VVoNLlanx356J+H47lhmQ9+zw/D7yWdrVblaltZF5A8
- /TD4x28XQASQyKuBGSv/67h7Zsun2H1kowzkxJULLo0S7mZb4lyG/Y/gm2ymfI7fmelU
- zNpzkScxAvMG1oWtFIZHplIeyDj0+oKeEUn0DRAdI8GlMzX/UCWo4J9gYmcejipDaZ1/
- Rvjw==
-X-Gm-Message-State: AOJu0YxGYgdomQy7B8RCSMQErOMQE1ynfAY2tmj8EgWvXdxrvpOsgwvG
- cMZw/N7i0u5NHXacaw1BAA1FKXqAOe7B3rf/g9fEqsWaKZy1hven38Ar4H5TnZRG
-X-Gm-Gg: ASbGnctz2mSMkwBO+vZZI4qK0BYDmw8JFOD+30E9WoGGGua9AqMsximn6LZgPqHo3bb
- Rwv+nXf2Jo8ENsUcRtepxKMGtemfH+cpGsJiRTeL8MtWo709iV60yrLWjKPdsvvhBftx+O4S/0g
- DKMLWF6qGd01aLw+aULse1s0GPDEn1+t3TgqOX+gN5kGTWjYeRPYEoc+RWnZUcKTmsJ6gPJGE3i
- pq1N7KshpWBEUzOtXD5H/ViB96kuzY1HgDd1M51YBSAaEu4a4Gy+6Hm80b84MRcSW4IL5pD5Ptw
- wD7ShM+Fv5+gd748dE5ySj6mBCVH5QJuD/poN4QEW2HQNStMygxg3mLsMFegjpYb+6dyJrUvJtO
- oqro9boyYaKR8wvH3x1GXzMogD8QxQjHgcZLGu+iBb3VftYgRRvCSTrYtrj2bZ+YKaeSsKK9V9w
- +MJz2K
-X-Google-Smtp-Source: AGHT+IEV6a27k4eBXr5cm7mt613vzPVqNeVdyod6wtYoCah+hTH/0/d9cfUQJE73253IspCViKmMUA==
-X-Received: by 2002:a05:651c:20cb:10b0:32c:be6e:6719 with SMTP id
- 38308e7fff4ca-3354a18bd45mr27613181fa.1.1756074468669; 
- Sun, 24 Aug 2025 15:27:48 -0700 (PDT)
+ bh=mNGvEOc3hjFKrNjkZThH9ubiJryO/GrmqZf5jARL5gs=;
+ b=N/2p6JPaGwo/THTh+6pz9alPTTWFD4XDA3zQeuel1+RT/dp8jxTDm9DeMlsbzn4AdY
+ 1eiQJnMg8Jz0fOciE6I21vJLDpTYaKS3oVg4lk5bGQ0L0fC2QzAfIElQIWaDsOIWfsSS
+ Q64Gy9ZNE/NVi3+mrZTfb7NoHZHIWoIVtqd08t5mMbN/V2gRd9rv/hqNjTIerAnQNsk/
+ S+7q+nRYEO/rBmwrvyjLEp1f9mXX5pEdO1/CqIi0xB3s9RRdNy9EKx2bWibHKqc9Ay6h
+ xgo7zhaPFRtpd/5ShE9CsC/JsLqJNCH7JTz6Z4QcBVqRJ8Id8PVvDcgxzi2auX4/l+my
+ biiQ==
+X-Gm-Message-State: AOJu0YxCvd8u9D7HKW7n6+3Z+MXe9q/oPId8CgzwYLjK17q3aBv/4Pcu
+ ji9dy8ukRkbOr0E523CJ9BCYoaSPOuxu/HLN2syIFTV59wsjSNFh1RzLHOWx7S1S
+X-Gm-Gg: ASbGncukFVqYBu9R9HiaXsXCpqc7zodoUEMnjx6/nJlnJoe1qu7vmqDLnhRqC7CiI7o
+ tNnc5mMkcif6hqM8HWwosvJV0+ZETJvJ2gSjmkURVpZE6R+bAXsTo8awpzFIz49ATXcGkJlL0Od
+ u07g4tJ0LoZyatMUBREFZU32gkBj+j1YNaE8D4Cybq3LLmCnSfIG+/tmHnBaCenohsm2HAUpmnm
+ LDJxz7pR0uG1fkpYJQEEriygD1yZYB0heVUGI9BwbrZThn5DmT4wZv2dtD4nUnoSgoYb9j/c19A
+ I+7MLqq1MivAjnty+OJH0CpzNixvCwhfQtYxTpGewbw+ITJoFYYd69j1dRqZg1cT2WPlTUQXF0O
+ 0Ed5R1vCaDmpUVLA708+Tfe1c98R9oUhCt+RA3bTQjHbVW4q8gZdxgZGIlj+3QVrPIsrF3w==
+X-Google-Smtp-Source: AGHT+IEKq69Zam6FqcavCIJ0PoS0rlX7KjSq4g0nJt6TCVzwBolyUacd6EeRRWx2Bt/wRexv3yQhYw==
+X-Received: by 2002:a05:6512:2522:b0:55b:814a:a7fa with SMTP id
+ 2adb3069b0e04-55e0da1a7e9mr3465047e87.8.1756074463534; 
+ Sun, 24 Aug 2025 15:27:43 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3366fdea6eesm5708371fa.44.2025.08.24.15.27.47
+ 2adb3069b0e04-55f35c11e88sm1265853e87.39.2025.08.24.15.27.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 Aug 2025 15:27:47 -0700 (PDT)
+ Sun, 24 Aug 2025 15:27:43 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org,
 	"Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Cc: richard.henderson@linaro.org,
 	edgar.iglesias@amd.com
-Subject: [PATCH v1 4/4] target/microblaze: Handle signed division overflows
-Date: Mon, 25 Aug 2025 00:27:34 +0200
-Message-ID: <20250824222734.4151956-5-edgar.iglesias@gmail.com>
+Subject: [PATCH v1 1/4] target/microblaze: Remove unused arg from check_divz()
+Date: Mon, 25 Aug 2025 00:27:31 +0200
+Message-ID: <20250824222734.4151956-2-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
 References: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x233.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,53 +103,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Handle signed division overflows as specified in UG984:
-https://docs.amd.com/r/en-US/ug984-vivado-microblaze-ref/idiv
+Remove unused arg from check_divz(). No functional change.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- target/microblaze/cpu.h       |  1 +
- target/microblaze/op_helper.c | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ target/microblaze/op_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index 3ce28b302f..7dd86653f0 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -87,6 +87,7 @@ typedef struct CPUArchState CPUMBState;
- #define          ESR_ESS_FSL_OFFSET     5
- 
- #define          ESR_ESS_MASK  (0x7f << 5)
-+#define          ESR_ESS_DEC_OF  (1 << 20) /* DEC: 0=DBZ, 1=OF */
- 
- #define          ESR_EC_FSL             0
- #define          ESR_EC_UNALIGNED_DATA  1
 diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
-index d9444aee29..e5f13824d8 100644
+index b8365b3b1d..470526ee92 100644
 --- a/target/microblaze/op_helper.c
 +++ b/target/microblaze/op_helper.c
-@@ -89,6 +89,21 @@ uint32_t helper_divs(CPUMBState *env, uint32_t ra, uint32_t rb)
-         raise_divzero(env, ESR_EC_DIVZERO, GETPC());
-         return 0;
-     }
-+
-+    /*
-+     * Check for division overflows.
-+     *
-+     * Spec: https://docs.amd.com/r/en-US/ug984-vivado-microblaze-ref/idiv
-+     * UG984, Chapter 5 MicroBlaze Instruction Set Architecture, idiv.
-+     *
-+     * If the U bit is clear, the value of rA is -1, and the value of rB is
-+     * -2147483648 (divide overflow), the DZO bit in MSR will be set and
-+     * the value in rD will be -2147483648, unless an exception is generated.
-+     */
-+    if ((int32_t)ra == -1 && (int32_t)rb == INT32_MIN) {
-+        raise_divzero(env, ESR_EC_DIVZERO | ESR_ESS_DEC_OF, GETPC());
-+        return INT32_MIN;
-+    }
-     return (int32_t)rb / (int32_t)ra;
+@@ -69,7 +69,7 @@ void helper_raise_exception(CPUMBState *env, uint32_t index)
+     cpu_loop_exit(cs);
  }
  
+-static bool check_divz(CPUMBState *env, uint32_t a, uint32_t b, uintptr_t ra)
++static bool check_divz(CPUMBState *env, uint32_t b, uintptr_t ra)
+ {
+     if (unlikely(b == 0)) {
+         env->msr |= MSR_DZ;
+@@ -89,7 +89,7 @@ static bool check_divz(CPUMBState *env, uint32_t a, uint32_t b, uintptr_t ra)
+ 
+ uint32_t helper_divs(CPUMBState *env, uint32_t a, uint32_t b)
+ {
+-    if (!check_divz(env, a, b, GETPC())) {
++    if (!check_divz(env, b, GETPC())) {
+         return 0;
+     }
+     return (int32_t)a / (int32_t)b;
+@@ -97,7 +97,7 @@ uint32_t helper_divs(CPUMBState *env, uint32_t a, uint32_t b)
+ 
+ uint32_t helper_divu(CPUMBState *env, uint32_t a, uint32_t b)
+ {
+-    if (!check_divz(env, a, b, GETPC())) {
++    if (!check_divz(env, b, GETPC())) {
+         return 0;
+     }
+     return a / b;
 -- 
 2.43.0
 
