@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C1ACA0FEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C7CCA0FE9
 	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 22:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqJBr-00062e-3l; Sun, 24 Aug 2025 18:27:55 -0400
+	id 1uqJBo-00062J-9h; Sun, 24 Aug 2025 18:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqJBl-000623-SD
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 18:27:50 -0400
+ id 1uqJBl-00061t-1I
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 18:27:49 -0400
 Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqJBi-00069a-Uv
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 18:27:49 -0400
+ id 1uqJBi-00069Q-Ue
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 18:27:48 -0400
 Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-55f4345cfd3so491598e87.1
- for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 15:27:46 -0700 (PDT)
+ 2adb3069b0e04-55ce5243f6dso4107911e87.2
+ for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 15:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756074464; x=1756679264; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mNGvEOc3hjFKrNjkZThH9ubiJryO/GrmqZf5jARL5gs=;
- b=gg6NGmJU+UN0W6QUH7pKbjsj7l3iNaPEi8NMli6TdOvZJ6S1fn3k/AaM4zRDudh38S
- LyKFcDule/a27uaN2lgdW1H++prbm96NT83wp4T2v6VfZZzNJIk2UoLzAxVWbbBpLbA+
- 4zk62HlPKpCqyMgskdKDMrhlWakKaT7rkeCko9Joc5nVzalFBTk8LDEqcKwAcIFDL0Qg
- 98uMU6RRkXOnuQy4j0JJBx+JPYlPifni+gmWY6G86HdQVKIl4Dv696RcOU9MFKPgRePv
- j/pN96aCfJXtpWUrPiYH8/Ds/RlfRGlvimUFaOKYBTnBbO7lSp46+s/+OtcaH4AIWwy8
- ILuw==
+ d=gmail.com; s=20230601; t=1756074463; x=1756679263; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kFK+TRxREkxrkN6UGzxqMsdJ85fFDeTcg2ThhZ+G1gg=;
+ b=ELxzQFM4cuRRu/nUu2V/U042MNrIMscx0gRaxm3zTRl6QBzPjQC4unt9xUqWWVvqpa
+ RrFigHFrKZ+z1oQPEnoBYbfDedcFYXZ/DNsiRWcY1hBDq12IAaiQuwF37J5OmTyyFP2z
+ JorkNgnOdQjGRZTz0gxH2yDBLyI/4wB9ylvWdlMz1CLeCmxRc6AV7IYI3TqNp5pr3zpL
+ CA7+fCOhahzAZl9qbm5ipdJ/q/ix8CDV9K5axTYDm0mlyHut+esfTfyizSqfSRVdGtXF
+ gP0VuEDJegfcZJYAi+rkpAclHOnwcHzwDhgLRFt+wjYmTMr1AF+/1SN9+O/N5dKfPMgz
+ HJQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756074464; x=1756679264;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mNGvEOc3hjFKrNjkZThH9ubiJryO/GrmqZf5jARL5gs=;
- b=N/2p6JPaGwo/THTh+6pz9alPTTWFD4XDA3zQeuel1+RT/dp8jxTDm9DeMlsbzn4AdY
- 1eiQJnMg8Jz0fOciE6I21vJLDpTYaKS3oVg4lk5bGQ0L0fC2QzAfIElQIWaDsOIWfsSS
- Q64Gy9ZNE/NVi3+mrZTfb7NoHZHIWoIVtqd08t5mMbN/V2gRd9rv/hqNjTIerAnQNsk/
- S+7q+nRYEO/rBmwrvyjLEp1f9mXX5pEdO1/CqIi0xB3s9RRdNy9EKx2bWibHKqc9Ay6h
- xgo7zhaPFRtpd/5ShE9CsC/JsLqJNCH7JTz6Z4QcBVqRJ8Id8PVvDcgxzi2auX4/l+my
- biiQ==
-X-Gm-Message-State: AOJu0YxCvd8u9D7HKW7n6+3Z+MXe9q/oPId8CgzwYLjK17q3aBv/4Pcu
- ji9dy8ukRkbOr0E523CJ9BCYoaSPOuxu/HLN2syIFTV59wsjSNFh1RzLHOWx7S1S
-X-Gm-Gg: ASbGncukFVqYBu9R9HiaXsXCpqc7zodoUEMnjx6/nJlnJoe1qu7vmqDLnhRqC7CiI7o
- tNnc5mMkcif6hqM8HWwosvJV0+ZETJvJ2gSjmkURVpZE6R+bAXsTo8awpzFIz49ATXcGkJlL0Od
- u07g4tJ0LoZyatMUBREFZU32gkBj+j1YNaE8D4Cybq3LLmCnSfIG+/tmHnBaCenohsm2HAUpmnm
- LDJxz7pR0uG1fkpYJQEEriygD1yZYB0heVUGI9BwbrZThn5DmT4wZv2dtD4nUnoSgoYb9j/c19A
- I+7MLqq1MivAjnty+OJH0CpzNixvCwhfQtYxTpGewbw+ITJoFYYd69j1dRqZg1cT2WPlTUQXF0O
- 0Ed5R1vCaDmpUVLA708+Tfe1c98R9oUhCt+RA3bTQjHbVW4q8gZdxgZGIlj+3QVrPIsrF3w==
-X-Google-Smtp-Source: AGHT+IEKq69Zam6FqcavCIJ0PoS0rlX7KjSq4g0nJt6TCVzwBolyUacd6EeRRWx2Bt/wRexv3yQhYw==
-X-Received: by 2002:a05:6512:2522:b0:55b:814a:a7fa with SMTP id
- 2adb3069b0e04-55e0da1a7e9mr3465047e87.8.1756074463534; 
- Sun, 24 Aug 2025 15:27:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756074463; x=1756679263;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kFK+TRxREkxrkN6UGzxqMsdJ85fFDeTcg2ThhZ+G1gg=;
+ b=ei3BdY4tdUpPs+k+fceJqwoyWmgchDuTwbjx+J00KcwOnp4Jl5m05PtLLNL0YNzJXe
+ U4WBcSqUUQBboridYIG7x/pSTmowfZtGxTZSkWqaB7fYhuRj8eBHxqVppN5a1IPJINvM
+ h7bQRbP7HK52SA7hSsJiq79dokFHVN1ooHmcPpeAuzbldzAfcxSCXpYsbs29tl7ywzDR
+ NWD+gYdPf+p1QyHR1ShzT990HJJ7Y1r93zghxqjXaQdzCVCDhvOEAUgdQtf16y+Pm/jS
+ C6Mi2UCn6xBges3aue8Q4HmPsPgPhQmEvfp9CfsAumG7MQpYXIZOa6dqvldQHTwdyqGl
+ fKXw==
+X-Gm-Message-State: AOJu0YwxlaK2AH45uxaTWlZcPgFxR3nhZRxFcT1E8a9sG+89xRnkVdXg
+ aiQ+r+QrWzweiOSS7fVTyFerKSTYZhTsySqbCLwbmS6Pv2e16NgxdWDzwJd7Vi8J
+X-Gm-Gg: ASbGncuhACJC7ua63CFRCp3sGDzDv11/KJMDtN73pU188YzMvh5aY52AUWLWMrKPg33
+ F8W52n+6QriE18Za9KZiwnAvkVbBRkxNA+eCUI1TiOiZWK40jgcgm/ezTcLQXzA/F+MmzBVEltG
+ FxmkwpZ1CukElCCKnmJXgQd2Y96XCJ/Li73c3aAYbl38A5PHekf4sU6fcVTFuI4J0iRdKDmA5mm
+ 4+6dKUbcFMochBZVZDTBoqFD4Z/pPtnKj9a1JbYbuEkDTRIegiesAdpx/+PcmoQdzTw+nANMmiz
+ gM5AqCWcqnUR4b33VQfBLU4mBe+kw1viwJNp69NgALTV9aKT0hVDipRD6medk75qcbPbBMbBA62
+ oGXdtUxbiflqcRXdrnjEQfmUWMNyvjFITB7+8SUuKVf9OAqX3mocWEmVZxTNhMVP0bRecLw==
+X-Google-Smtp-Source: AGHT+IHAkoD4WH6IPBJfVZ+ar9pKddOjAjK4oj5jR1huzV0/IRbZ82dxTzeeEmsC3fKl5BNATAV6Ew==
+X-Received: by 2002:a05:6512:104e:b0:55f:45bb:59a0 with SMTP id
+ 2adb3069b0e04-55f45bb5e23mr181014e87.24.1756074462542; 
+ Sun, 24 Aug 2025 15:27:42 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-55f35c11e88sm1265853e87.39.2025.08.24.15.27.43
+ 2adb3069b0e04-55f35c9a1e1sm1249025e87.114.2025.08.24.15.27.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 Aug 2025 15:27:43 -0700 (PDT)
+ Sun, 24 Aug 2025 15:27:42 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org,
-	"Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org,
 	edgar.iglesias@amd.com
-Subject: [PATCH v1 1/4] target/microblaze: Remove unused arg from check_divz()
-Date: Mon, 25 Aug 2025 00:27:31 +0200
-Message-ID: <20250824222734.4151956-2-edgar.iglesias@gmail.com>
+Subject: [PATCH v1 0/4] targets/microblaze: Handle signed division overflows
+Date: Mon, 25 Aug 2025 00:27:30 +0200
+Message-ID: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
-References: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
@@ -103,44 +99,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Remove unused arg from check_divz(). No functional change.
+First a few preparatory clean-ups followed by the detection and
+contional exception of signed division overflow.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- target/microblaze/op_helper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Spec:
+https://docs.amd.com/r/en-US/ug984-vivado-microblaze-ref/idiv
 
-diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
-index b8365b3b1d..470526ee92 100644
---- a/target/microblaze/op_helper.c
-+++ b/target/microblaze/op_helper.c
-@@ -69,7 +69,7 @@ void helper_raise_exception(CPUMBState *env, uint32_t index)
-     cpu_loop_exit(cs);
- }
- 
--static bool check_divz(CPUMBState *env, uint32_t a, uint32_t b, uintptr_t ra)
-+static bool check_divz(CPUMBState *env, uint32_t b, uintptr_t ra)
- {
-     if (unlikely(b == 0)) {
-         env->msr |= MSR_DZ;
-@@ -89,7 +89,7 @@ static bool check_divz(CPUMBState *env, uint32_t a, uint32_t b, uintptr_t ra)
- 
- uint32_t helper_divs(CPUMBState *env, uint32_t a, uint32_t b)
- {
--    if (!check_divz(env, a, b, GETPC())) {
-+    if (!check_divz(env, b, GETPC())) {
-         return 0;
-     }
-     return (int32_t)a / (int32_t)b;
-@@ -97,7 +97,7 @@ uint32_t helper_divs(CPUMBState *env, uint32_t a, uint32_t b)
- 
- uint32_t helper_divu(CPUMBState *env, uint32_t a, uint32_t b)
- {
--    if (!check_divz(env, a, b, GETPC())) {
-+    if (!check_divz(env, b, GETPC())) {
-         return 0;
-     }
-     return a / b;
+Cheers,
+Edgar
+
+Edgar E. Iglesias (4):
+  target/microblaze: Remove unused arg from check_divz()
+  target/microblaze: div: Rename and reorder function args
+  target/microblaze: Break out raise_divzero()
+  target/microblaze: Handle signed division overflows
+
+ target/microblaze/cpu.h       |  1 +
+ target/microblaze/op_helper.c | 53 ++++++++++++++++++++++-------------
+ target/microblaze/translate.c | 12 ++------
+ 3 files changed, 36 insertions(+), 30 deletions(-)
+
 -- 
 2.43.0
 
