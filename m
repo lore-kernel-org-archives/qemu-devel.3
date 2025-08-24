@@ -4,104 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32618CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 09:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB36FCA0EFC
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 10:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uq6vh-0006gI-7I; Sun, 24 Aug 2025 05:22:25 -0400
+	id 1uq7lv-00005H-12; Sun, 24 Aug 2025 06:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uq6vd-0006d5-6y
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 05:22:21 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uq6vY-00008P-Cs
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 05:22:19 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-246648f833aso8225685ad.3
- for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 02:22:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1756027333; x=1756632133; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=10KVTjiTjkDeYAW3f7yc0y5TY4emnBCzSRWe4eb/+jU=;
- b=hZNvYHC198vViWvNgWvxQLwH7+9Xl1dQWx0ONX3KG4ygbBatRK1QGICT1BdGqG7768
- C6ACABkpmrh0ZWcSB8hpwMtFeNdR26/ymDnWjBNCeqevdxpNmcebYtsdfpxjpzsjrvUZ
- T2+kMVeGhmjPEfJuliazL8VMIoaHqXxQtVwiTmGow57wuQPFA0v0reODzoq+ni7B5Yp+
- Q3F1hFhzlxy8dRl4v9ByEuPKg/s0evaqdSRHet/GWHlpfMyXIqZi2dGXWkT5eBeQSA22
- xR2pgSAijJQE87Hp5Lpho3KruFJC0W/l3GVJaFwFaJQi1nS+k+YZshxpsqJaFVj0umCM
- 0xuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756027333; x=1756632133;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=10KVTjiTjkDeYAW3f7yc0y5TY4emnBCzSRWe4eb/+jU=;
- b=BHacdYkv7RpC9nhP48/JqxV5/wwHc2des6r5ECOwwjHhOwpPcI76VpR1hJDDZpP0h3
- HQmylDICOaEosq6QcFiNEjEWt+7Tfl8MwCA5X6esKzes22ulcYask5NJh4KoSQDoQjQ6
- qI7B/ks+/aE61/g/zxM2fbSgHdPRQQZ+3BPc1EHxjfwWIy3P2sHB2ea8TTnVtC4I/39H
- Y2lXpFdP8lL6pEdU38WZbSSXFKexYMgEu4BVk2RShdjb52lws9gJ5/mWC4xH96uGxORZ
- Iyt5vq19ikkcehoVLKixxQ7K8rE1aZrJxaFd0phd0ZnGtwuTgsdY75krgoS1DdVV2HbV
- LxFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSR3yUdPRECLYJ2PhU2z1vCYTAhJGnuAgW/YhLZOPQIxSPDfyoDUOV/htVByeHN6v1ZabSM17TCnMw@nongnu.org
-X-Gm-Message-State: AOJu0Yyew/NOovmDE+c6DA40Ti9RGbj7oKqAZO2+obFQ0khuNKN69otU
- Ik6hAq3sJHh8P6eCJl21us/jgN9FSlq+rhcJa+35ue9m/7w78/MBG98BI+dOaWn9KTg=
-X-Gm-Gg: ASbGncsbXVS6rfKjgGUzAD6z64Aq1lObm6UQ9HFBozuk7NIFEMmB6cS3beq8mGq1aHZ
- MJeEOaR80rBaaHqf6492veb//LJwLqEz8V8JpiuOBdyHkgbVVAfJE/77/XAmc+7hE4ywg9qrgz3
- 4UdpkG3Rr+ra4V199HqLDg1bp0ajhYgtwgHI98Dg3cLSdogEmMwPn172IKvaUShB+C/yACDTLhJ
- OVSgwyuf9sE/8mgmBvms9EdmIFxCqrFO5Pl79hQ/5GutPILIAt6mtS5D1a/AeVbS0SbdE6/6UU/
- 3VOYFLBEyT/QviFfDJIKjQdmKyqx321L+viZqzxagno/chrU08C7usONk5ex8rLZxK2vzsK24bJ
- wmNGHVwO0b6s/RvenUAauOt8zXkdZR/CTViA=
-X-Google-Smtp-Source: AGHT+IG3QuVXZba8kDezAVZAOutqReXs8MTo6BPog2Bt5V6xYiY5YoOVEyaapszgsryCM//bIZIJPg==
-X-Received: by 2002:a17:902:e888:b0:240:a54e:21a0 with SMTP id
- d9443c01a7336-2462ee13154mr117050765ad.19.1756027333379; 
- Sun, 24 Aug 2025 02:22:13 -0700 (PDT)
-Received: from [192.168.68.110] ([187.11.154.56])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24668871071sm39558425ad.103.2025.08.24.02.22.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 24 Aug 2025 02:22:12 -0700 (PDT)
-Message-ID: <0c7c5894-3f57-4c95-b863-d9fce8d8f26b@ventanamicro.com>
-Date: Sun, 24 Aug 2025 06:22:04 -0300
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq7lp-0008Vs-JC
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 06:16:18 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq7lm-0006FC-Pg
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 06:16:17 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2DC1414994B
+ for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 13:15:47 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8BD2E2677DA
+ for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 13:16:08 +0300 (MSK)
+Message-ID: <f1a22d84-142e-4bc6-8ef0-c05156dcc20a@tls.msk.ru>
+Date: Sun, 24 Aug 2025 13:16:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 2/9] hw/riscv: iommu-trap: remove .impl.unaligned =
- true
-To: CJ Chen <cjchen@igel.co.jp>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Tomoyuki Hirose <hrstmyk811m@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250822092410.25833-1-cjchen@igel.co.jp>
- <20250822092410.25833-3-cjchen@igel.co.jp>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20250822092410.25833-3-cjchen@igel.co.jp>
+Content-Language: en-US, ru-RU
+To: QEMU Development <qemu-devel@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: qemu-user + binfmt Credential flag, again
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,37 +100,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Just a couple days ago Debian has released qemu security update (DSA
+5983-1), addressing qemu-user + binfmt vulnerability which were present
+in debian (and ubuntu) for over 15 years.  The prob is that qemu-user
+binfmts has been registered with C flag, which means qemu is run with
+elevated privileges (as root) when asked to provide interpreter to a
+suid foreign binary.  Apparently no one realized how bad it is, until
+now.  qemu was never supposed to be used like this, yet a few linux
+distributions wrongly enabled this C flag.
 
+To demonstrate how bad it is.
 
-On 8/22/25 6:24 AM, CJ Chen wrote:
-> Since riscv-iommu does not support unaligned accesses, drop
-> `.impl.unaligned = true` to avoid the contradictory pairing with
-> `.valid.unaligned = false`.  This makes QEMU reject unaligned accesses
-> for this device and prevents the assertion in memory.c that previously
-> caused `make check` to fail.
-> 
-> Signed-off-by: CJ Chen <cjchen@igel.co.jp>
-> Tested-by: CJ Chen <cjchen@igel.co.jp>
-> Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> ---
+  # debootstrap --arch=armel --variant=minbase bookworm /chroot/bookworm
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+this will populate /chroot/bookworm with an armel debian bookworm
+installation.  Almost any linux install includes a few suid-root
+binaries, for example the traditional *nix /bin/su.  Now, for any
+user on the system, starting with an easy one:
 
->   hw/riscv/riscv-iommu.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index a877e5da84..277746598a 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2288,7 +2288,6 @@ static const MemoryRegionOps riscv_iommu_trap_ops = {
->       .impl = {
->           .min_access_size = 4,
->           .max_access_size = 8,
-> -        .unaligned = true,
->       },
->       .valid = {
->           .min_access_size = 4,
+  $ QEMU_LOG_FILENAME=/etc/shadoww QEMU_LD_PREFIX=/chroot/bookworm \
+     /chroot/bookworm/bin/su
+    (just hit Ctrl+C to the su prompt).
+  $ ls -l /etc/shadoww
+  -rw-r--r-- 1 root mjt 0 Aug 14 21:56 /etc/shadoww
 
+this makes qemu write any file as root.  Not with a given contents,
+but the fact it writes to whatever file it is told to write is already
+interesting.
+
+Now, something more interesting would be to provide a modified
+lib/ld.so or lib/libc.so which just runs /bin/sh, and use it in the
+same way with that same /chroot/bookworm/bin/su binary to gain full
+root privileges.  I'm not providing actually working PoC here, --
+the above command line already tells you that you can control
+QEMU_LD_PREFIX which works exactly like LD_LIBRARY_PATH for ld.so,
+so qemu will happily run any user-supplied code as root.
+
+This is just a tip of the iceberg - just the very basics.  Qemu
+can be modified to not react to QEMU_* environment variables when
+it detects it is running with elevated privileges, in a way similar
+to a shell which ignore certain env vars when run in suid mode -
+and this is something which definitely should be done (I'll post
+a simpla patch later).  Maybe it should produce a big fat warning
+when it detects suid mode, too.
+
+The more deep prob is that qemu was never written with any sense
+of security in mind, and it is a complex and tricky piece of software,
+so making it "secure" is not really an option, at least not in any
+reasonable future.
+
+At the very least, I propose to remove --credential option from
+scripts/qemu-binfmt-setup.sh entirely (patch will follow) - not to
+help someone to shoot themselves in the foot.  It should not be
+noted in any docs or examples either (how to configure it to work
+with suid foreign binaries, that is).  Instead, we can add a big
+fat warning in the docs which tells the user *not* to try doing
+that.
+
+Seeing how much fun can be done with debian systems now before
+the yesterday update of qemu-user, I think this issue deserves
+much wider attention and care.  Thankfully, not every user system
+has foreign chroots installed with qemu-user binfmt handler enabled.
+
+Thanks,
+
+/mjt
 
