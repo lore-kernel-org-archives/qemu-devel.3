@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4B5CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 16:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E40CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 16:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqDJY-0003qX-E5; Sun, 24 Aug 2025 12:11:28 -0400
+	id 1uqDWf-0006r9-0R; Sun, 24 Aug 2025 12:25:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqDJU-0003pz-7I; Sun, 24 Aug 2025 12:11:24 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1uqDWc-0006qs-T2; Sun, 24 Aug 2025 12:24:58 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqDJR-0000Pw-55; Sun, 24 Aug 2025 12:11:22 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-55f30367cbeso2169420e87.1; 
- Sun, 24 Aug 2025 09:11:19 -0700 (PDT)
+ id 1uqDWa-0001kv-2C; Sun, 24 Aug 2025 12:24:58 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-61c51f56fc7so683719a12.1; 
+ Sun, 24 Aug 2025 09:24:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756051877; x=1756656677; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=2t7RIRiIFS6lwa7V0aDsSmE13uSsevOGfi2Mr9xzndw=;
- b=KwZSI4SZHBiuPXbeRDU89AAwMin3tXxXIVBqRnPEJ6zzm19IwcNhCgX4oEpTPjyBD9
- Zb1h2BRC5FA2KkWSUB5fVu2f0nzY96Dbvzt/F9Qm3T8sYdrjClf/XRTMmv1OUXQx4ARm
- V9Rmy/NLqqvUcPwUtogyu2Ae4PcwQ1cUZoQeyMiiJEPsJXG49ybhBQH1QjDuMi13FssR
- tsPNh8AKI8EN5u7Vk4YIExN46lU6x1EogvTP1fk6vVQ9CQHozCyxI5I5bnJFh+OuLhsi
- IZ1zBj3ire/tIyvKGLWER/2IdcXt2jghCUzCmy/k+4/9kZty2XtbKCV77NMme67XFMxs
- QD6g==
+ d=gmail.com; s=20230601; t=1756052692; x=1756657492; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dwDtQ0ivD5R0VBy5xshbePvfN0FwUBx8XtTF2m1KQyc=;
+ b=XMGwvwwi0HqLpHpHg2YUAmKL9kZkqB0fGaKKbcjRjkK0tKq5JkAS0tvNGEwIGW72Up
+ EpXFbahIbYUIij3Ul86bqWrO/QB6qTz7Q2y0N8W71wpls2OKucODod/C6+k7ZQaJhVzm
+ OTeKL30Tq5IGnf8pIknwV66NnQwn9Bil6Zp2abDHWkQq8siTeU1Osj8hDztKYZiLOo7I
+ o9Cmu4PyJJsIxKHJMlKhkUePP3NHw+0U4IR+vb1NnaHBQkowPDt/cnWZgcPGt22tMZ5T
+ hfdy4ZQBkxnRDhtR/abnI1SddTrvQX5dgY5DmBEzlCwqhCWGYvHEryWUQExo8BAbYdCf
+ 1koQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756051877; x=1756656677;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1756052692; x=1756657492;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2t7RIRiIFS6lwa7V0aDsSmE13uSsevOGfi2Mr9xzndw=;
- b=iV0/FfGzlYHDF6x2OzOUBhmrZnFc0Pcl+UyYVWn+o0sgr8ORgMtz8+ZXW/GWHai8sK
- c2DX+RiPrXZbJ1BvSPm3LRMZ4ixPOv2DqwS5EN5xQjleVddBMfuKPqQJA64/9czkJfoJ
- EkXle6vyLPhHuGT/PZLGvxhR9RC97aPxz/d3aq/5WeD9lFX2Ht4pys/yvUB2NbhQAI6N
- BsaWhof8F8BmbAdDX2MZF1uGzQ1dPpzWkYJ3F6YC2feHjCM14vXNP1YEE1VPuDzqykiE
- egYz0mrk2VgjkfhaqTPUwNNWODowK4VsX+Xwh47hgyL7+OqLPGD2CPtPKHABtfK372a8
- 01Mw==
+ bh=dwDtQ0ivD5R0VBy5xshbePvfN0FwUBx8XtTF2m1KQyc=;
+ b=Vaw5V4U/n6eYeiUSgz6Nj2DpULp6fUXwZgIxRwS+o47jUywSuJhZcAyPhsy907FAB6
+ 498yLk7kSQ4kcJsR3D69ee1KyJ0144JmeXXG2nF/GRkBuWlgmujJvwTJvE1lggFxUn2v
+ wC0f70ujjU8CfH1H9CsVPwSTzeYu/wodSIM9Ul2QE2XXiHHUDpSKxNIhmTzuQkoib90w
+ N4lMP/Qbb+USxMqdH0mVgddW5BZZJNRtvpgbGBHrNx9kStoXeMFxGxeVwr7RCvKX1M2J
+ AB4A9ql8v3mtaUj/cYxluWf8Ct6lkhqFadcMDCUMa/LQRqYqL/rkQJRTPPkFk2/VPBAp
+ VpRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgKXrvrqA7U8C99yXE7VDXthD+gdAiQeT6Radmjfl5iLnKu5uk0UVW9es0aMXSvYoRo3x0+zOV2g==@nongnu.org,
- AJvYcCXYnpa8lTPbffOUPr1NoEzYY2bevkNH+OORCZMJuYJ1dlUjUyDjPs/Oavy6Ca7R0mYt/y+8Bd3aSa9+5Q==@nongnu.org
-X-Gm-Message-State: AOJu0YyTs/q2+6964NpdCbiaKveoxgh18z8rymahD4OI8LY1Vywawv43
- C3b7Vd2GFMDr42RumlB2057c0WU6mPdblYZ8BWPQhOvR1EqwOJxj/r3u
-X-Gm-Gg: ASbGncsdYPjc7Ksb9Cs3zbpdyZfiziw2as6vTSqiQsAGlkAsjVp6alEXuocLwrKWLBT
- +ZiOFscJL5Cgfosa6Ini03+gf4cBtHUNRdjZqzBfBhZcwbzsTv6ovneE6GbQf0ZNdagnqT4RsYs
- 5bejwBMmoxUqfVckkeLHUo83VLfBjyxH0Oe5RE0lrokEZprPhcq8TzV1BYaVr51dHjOqmqcgHcC
- k9xvPC4kJkoCv5HSTnYsuZoFHNkB5CSe4DZ48Af5vqlUSnLY9QZcTGvrxiD7LnVdukuwOtRwjAU
- MyG1maskoo5ojoaDfFyWWxZG+bUGTfYaRyyVOAmLY8NSg1AAgfnzF2DcRS9crqCex+3oSSmn5CS
- 8AUd9mT9RoaKqi/EoWHA7bT/8T+/+IBlMi8muSKeN5LrKaeyunc4SP8kyKujKtLkNG+awE/bdax
- 2G9j1D
-X-Google-Smtp-Source: AGHT+IHwlo5z5oWvronNupSs44Ql6wq9JSxxedSkPk9pnGExF7jGXDV9TjjBCeObzHsvXBeXyky30g==
-X-Received: by 2002:a05:6512:63d7:20b0:55f:3dbb:4567 with SMTP id
- 2adb3069b0e04-55f3dbb473emr957707e87.32.1756051877318; 
- Sun, 24 Aug 2025 09:11:17 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-55f35c8bb59sm1117821e87.91.2025.08.24.09.11.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 Aug 2025 09:11:16 -0700 (PDT)
-Date: Sun, 24 Aug 2025 18:11:16 +0200
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Corvin =?iso-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Corvin =?iso-8859-1?Q?K=F6hne?= <c.koehne@beckhoff.com>,
- qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Yannick =?iso-8859-1?Q?Vo=DFen?= <y.vossen@beckhoff.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 07/14] hw/dma/zynq-devcfg: Indicate power-up status of
- PL
-Message-ID: <aKs5pO1qJ-h6MGIF@zapote>
-References: <20250815090113.141641-1-corvin.koehne@gmail.com>
- <20250815090113.141641-8-corvin.koehne@gmail.com>
+ AJvYcCVEvaZZBEgrFtmpJnKB0SGhxkHpjiPC84Z0CZeZnl6wjMKG1cuM8n/CQOC1vHyj7kvNbFDCbZT+KYIVEw==@nongnu.org,
+ AJvYcCVfX809CNbaplB/p4OUERc1VNhObg7ImNPSYp1YOxq+eH5cun0EtelDIKUIOF+Qo107sM2bkPPBow==@nongnu.org,
+ AJvYcCVjcEocr+kEvxyPWInuIb3Mi24Rss+oHLaOIH9G9GXYwOQ+0MMgMO14Aa0YDcNZWd822YssPQaC7SqaMg==@nongnu.org
+X-Gm-Message-State: AOJu0YyTqEQhCgZLMsEFbVMAxjCJIZ4IN/ajxZmBOUU8B+Cv2ORxkLvL
+ wxDLdIOPmKLlp5Lz+ZeyqePFyMb8PJrQpqm++Bx+BZHs9EneP4w3lbwZ9Ucm5sGywf1XC6E/vH8
+ A1m3nQ22PjDtUEUb5XZRP7avQC3rK1hk=
+X-Gm-Gg: ASbGnctUFjQiw8oZZxqe8biNWQUMqDnBH6TIiVsWS+fu3v17UqWH29Gl/+2JSBMI8me
+ cq5m2xNGmwdK9OTsC3KJFC9omM6U4CrLG1v4RAoqy5wcKuCO1vDoZlFM1Rcg7LB/a999pmOT6zn
+ Afd4wSiNCm74JEnF25nSOeJFJQMG25f944LP0jx6GK2Eh6bkmS+AY+rRo/4z/Da15kz6NBlWXZr
+ yLg6A==
+X-Google-Smtp-Source: AGHT+IHN0FtUEkb2m8RMYPj9BM1V2+Kzva3RD5Muei5D8rn2IHA13OsqbpAIF+4ABZyu1SS9AyoXrJmocJfINi7/Usc=
+X-Received: by 2002:a05:6402:4349:b0:618:528b:7f9b with SMTP id
+ 4fb4d7f45d1cf-61c1b6fb807mr7232662a12.31.1756052692168; Sun, 24 Aug 2025
+ 09:24:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250815090113.141641-8-corvin.koehne@gmail.com>
-User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12f.google.com
+References: <20250815090113.141641-1-corvin.koehne@gmail.com>
+ <20250815090113.141641-10-corvin.koehne@gmail.com>
+ <CAFEAcA-mTTLEtE72W=-R9O=m7zSUiL5bGf7TMXoFP=Xqvmq2OA@mail.gmail.com>
+In-Reply-To: <CAFEAcA-mTTLEtE72W=-R9O=m7zSUiL5bGf7TMXoFP=Xqvmq2OA@mail.gmail.com>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Sun, 24 Aug 2025 18:24:39 +0200
+X-Gm-Features: Ac12FXx1rX97XDQJIupzcERL60KnzyZYlxrpEh9uM3w6pZ7ijFGy4Hp0swjY9H4
+Message-ID: <CAJy5ezr1AQGuMoB9KZM0zsVOc+m5vinmgu6+zkM3w8E_ny5ybA@mail.gmail.com>
+Subject: Re: [PATCH v2 09/14] hw/misc: Add dummy ZYNQ DDR controller
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>, 
+ qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
+ qemu-arm@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000ec72fa063d1ee0f5"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,37 +102,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 15, 2025 at 11:01:05AM +0200, Corvin Kˆhne wrote:
-> From: YannickV <Y.Vossen@beckhoff.com>
-> 
-> It is assumed, that the programmable logic (PL) is always powered
-> during emulation. Therefor the PCFG_POR_B bit in the MCTRL register
-> is set.
-> 
-> Signed-off-by: Yannick Voﬂen <y.vossen@beckhoff.com>
+--000000000000ec72fa063d1ee0f5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+On Tue, Aug 19, 2025 at 5:44=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org>
+wrote:
+
+> On Fri, 15 Aug 2025 at 10:01, Corvin K=C3=B6hne <corvin.koehne@gmail.com>
+> wrote:
+> >
+> > From: YannickV <Y.Vossen@beckhoff.com>
+> >
+> > A dummy DDR controller for ZYNQ has been added. While all registers are
+> present,
+> > not all are functional. Read and write access is validated, and the use=
+r
+> mode
+> > can be set. This provides a basic DDR controller initialization,
+> preventing
+> > system hangs due to endless polling or similar issues.
+> >
+> > Signed-off-by: Yannick Vo=C3=9Fen <y.vossen@beckhoff.com>
+> > ---
+> >  hw/misc/Kconfig                  |   3 +
+> >  hw/misc/meson.build              |   1 +
+> >  hw/misc/xlnx-zynq-ddrc.c         | 393 +++++++++++++++++++++++++++++++
+> >  include/hw/misc/xlnx-zynq-ddrc.h | 140 +++++++++++
+> >  4 files changed, 537 insertions(+)
+> >  create mode 100644 hw/misc/xlnx-zynq-ddrc.c
+> >  create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
+> >
+> > diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> > index 8f9ce2f68c..99548e146f 100644
+> > --- a/hw/misc/Kconfig
+> > +++ b/hw/misc/Kconfig
+> > @@ -220,4 +220,7 @@ config IOSB
+> >  config XLNX_VERSAL_TRNG
+> >      bool
+> >
+> > +config XLNX_ZYNQ_DDRC
+> > +    bool
+> > +
+> >  source macio/Kconfig
+> > diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> > index 55f493521b..6ee7b6c71d 100644
+> > --- a/hw/misc/meson.build
+> > +++ b/hw/misc/meson.build
+> > @@ -89,6 +89,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+> >  ))
+> >  system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
+> >  system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
+> > +system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xlnx-zynq-ddrc.c'))
+> >  system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true:
+> files('xlnx-zynqmp-crf.c'))
+> >  system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true:
+> files('xlnx-zynqmp-apu-ctrl.c'))
+> >  system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files(
+> > diff --git a/hw/misc/xlnx-zynq-ddrc.c b/hw/misc/xlnx-zynq-ddrc.c
+> > new file mode 100644
+> > index 0000000000..8151a0e3ee
+> > --- /dev/null
+> > +++ b/hw/misc/xlnx-zynq-ddrc.c
+>
+> All new files must start with a comment which at least
+> (a) says what the file is for and (b) has the SPDX
+> license indicator. You can optionally also add an authorship
+> or copyright line here if you/your employer need that.
+>
+> Same applies to the .h file.
+>
+> > +static void zynq_ddrctrl_class_init(ObjectClass *klass, void *data)
+> > +{
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +
+> > +    device_class_set_legacy_reset(dc, zynq_ddrctrl_reset);
+> > +}
+>
+> This looks like it's missing registration of a vmstate
+> struct for state save/load.
+>
+> thanks
+> -- PMM
+>
 
 
-> ---
->  hw/dma/xlnx-zynq-devcfg.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-> index c699df6ad4..064955a0f8 100644
-> --- a/hw/dma/xlnx-zynq-devcfg.c
-> +++ b/hw/dma/xlnx-zynq-devcfg.c
-> @@ -333,7 +333,8 @@ static const RegisterAccessInfo xlnx_zynq_devcfg_regs_info[] = {
->         /* Silicon 3.0 for version field, the mysterious reserved bit 23
->          * and QEMU platform identifier.
->          */
-> -       .reset = 0x2 << R_MCTRL_PS_VERSION_SHIFT | 1 << 23 | R_MCTRL_QEMU_MASK,
-> +       .reset = 0x2 << R_MCTRL_PS_VERSION_SHIFT | 1 << 23 |
-> +                R_MCTRL_PCFG_POR_B_MASK | R_MCTRL_QEMU_MASK,
->         .ro = ~R_MCTRL_INT_PCAP_LPBK_MASK,
->         .rsvd = 0x00f00303,
->      },
-> -- 
-> 2.50.1
-> 
+Except for the stuff that Peter mentions, the rest looks good to me!
+
+Cheers,
+Edgar
+
+--000000000000ec72fa063d1ee0f5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 19,=
+ 2025 at 5:44=E2=80=AFPM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@=
+linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">On Fri, 15 Aug 2025 at 10:01, Corvin K=
+=C3=B6hne &lt;<a href=3D"mailto:corvin.koehne@gmail.com" target=3D"_blank">=
+corvin.koehne@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; From: YannickV &lt;<a href=3D"mailto:Y.Vossen@beckhoff.com" target=3D"=
+_blank">Y.Vossen@beckhoff.com</a>&gt;<br>
+&gt;<br>
+&gt; A dummy DDR controller for ZYNQ has been added. While all registers ar=
+e present,<br>
+&gt; not all are functional. Read and write access is validated, and the us=
+er mode<br>
+&gt; can be set. This provides a basic DDR controller initialization, preve=
+nting<br>
+&gt; system hangs due to endless polling or similar issues.<br>
+&gt;<br>
+&gt; Signed-off-by: Yannick Vo=C3=9Fen &lt;<a href=3D"mailto:y.vossen@beckh=
+off.com" target=3D"_blank">y.vossen@beckhoff.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 hw/misc/Kconfig=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 |=C2=A0 =C2=A03 +<br>
+&gt;=C2=A0 hw/misc/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 |=C2=A0 =C2=A01 +<br>
+&gt;=C2=A0 hw/misc/xlnx-zynq-ddrc.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 393 =
++++++++++++++++++++++++++++++++<br>
+&gt;=C2=A0 include/hw/misc/xlnx-zynq-ddrc.h | 140 +++++++++++<br>
+&gt;=C2=A0 4 files changed, 537 insertions(+)<br>
+&gt;=C2=A0 create mode 100644 hw/misc/xlnx-zynq-ddrc.c<br>
+&gt;=C2=A0 create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h<br>
+&gt;<br>
+&gt; diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig<br>
+&gt; index 8f9ce2f68c..99548e146f 100644<br>
+&gt; --- a/hw/misc/Kconfig<br>
+&gt; +++ b/hw/misc/Kconfig<br>
+&gt; @@ -220,4 +220,7 @@ config IOSB<br>
+&gt;=C2=A0 config XLNX_VERSAL_TRNG<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 bool<br>
+&gt;<br>
+&gt; +config XLNX_ZYNQ_DDRC<br>
+&gt; +=C2=A0 =C2=A0 bool<br>
+&gt; +<br>
+&gt;=C2=A0 source macio/Kconfig<br>
+&gt; diff --git a/hw/misc/meson.build b/hw/misc/meson.build<br>
+&gt; index 55f493521b..6ee7b6c71d 100644<br>
+&gt; --- a/hw/misc/meson.build<br>
+&gt; +++ b/hw/misc/meson.build<br>
+&gt; @@ -89,6 +89,7 @@ system_ss.add(when: &#39;CONFIG_RASPI&#39;, if_true:=
+ files(<br>
+&gt;=C2=A0 ))<br>
+&gt;=C2=A0 system_ss.add(when: &#39;CONFIG_SLAVIO&#39;, if_true: files(&#39=
+;slavio_misc.c&#39;))<br>
+&gt;=C2=A0 system_ss.add(when: &#39;CONFIG_ZYNQ&#39;, if_true: files(&#39;z=
+ynq_slcr.c&#39;))<br>
+&gt; +system_ss.add(when: &#39;CONFIG_ZYNQ&#39;, if_true: files(&#39;xlnx-z=
+ynq-ddrc.c&#39;))<br>
+&gt;=C2=A0 system_ss.add(when: &#39;CONFIG_XLNX_ZYNQMP_ARM&#39;, if_true: f=
+iles(&#39;xlnx-zynqmp-crf.c&#39;))<br>
+&gt;=C2=A0 system_ss.add(when: &#39;CONFIG_XLNX_ZYNQMP_ARM&#39;, if_true: f=
+iles(&#39;xlnx-zynqmp-apu-ctrl.c&#39;))<br>
+&gt;=C2=A0 system_ss.add(when: &#39;CONFIG_XLNX_VERSAL&#39;, if_true: files=
+(<br>
+&gt; diff --git a/hw/misc/xlnx-zynq-ddrc.c b/hw/misc/xlnx-zynq-ddrc.c<br>
+&gt; new file mode 100644<br>
+&gt; index 0000000000..8151a0e3ee<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/hw/misc/xlnx-zynq-ddrc.c<br>
+<br>
+All new files must start with a comment which at least<br>
+(a) says what the file is for and (b) has the SPDX<br>
+license indicator. You can optionally also add an authorship<br>
+or copyright line here if you/your employer need that.<br>
+<br>
+Same applies to the .h file.<br>
+<br>
+&gt; +static void zynq_ddrctrl_class_init(ObjectClass *klass, void *data)<b=
+r>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 DeviceClass *dc =3D DEVICE_CLASS(klass);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 device_class_set_legacy_reset(dc, zynq_ddrctrl_reset);<=
+br>
+&gt; +}<br>
+<br>
+This looks like it&#39;s missing registration of a vmstate<br>
+struct for state save/load.<br>
+<br>
+thanks<br>
+-- PMM<br></blockquote><div><br></div><div><br></div><div>Except for the st=
+uff that Peter mentions, the rest looks good to me!</div><div><br></div><di=
+v>Cheers,</div><div>Edgar</div><div>=C2=A0</div></div></div>
+
+--000000000000ec72fa063d1ee0f5--
 
