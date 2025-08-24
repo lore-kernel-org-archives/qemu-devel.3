@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C05CA0EED
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 23:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38DBBCA0EED
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 23:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqJhH-0006xB-1y; Sun, 24 Aug 2025 19:00:23 -0400
+	id 1uqK80-00048R-Lt; Sun, 24 Aug 2025 19:28:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1uqJhF-0006wo-P5; Sun, 24 Aug 2025 19:00:21 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uqK7z-00048J-AL
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 19:27:59 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chichikalyuk@gmail.com>)
- id 1uqJhE-0004r7-6o; Sun, 24 Aug 2025 19:00:21 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-afcb7ae6ed0so525611266b.3; 
- Sun, 24 Aug 2025 16:00:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uqK7u-0000Ot-Cq
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 19:27:56 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-3254e80ba08so1740713a91.1
+ for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 16:27:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756076418; x=1756681218; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zh2mOIzTyGmYIWY2saj6vgpTnQnQqNJ5gaTXcaHYWW8=;
- b=BtYj1oPR1FfaF37B6TKhF6gWxFtDLPAl610LA2MPMog1Dy+LKd/KNYpPlOm0ueXpx2
- DCVsPESQEXKyxZt/o2mQRizdNtGMc+XNRZDBgjx+IDmo76T/VQtFIHhvzkHz5aVz1S0C
- QMB3G99e2Uati23F+CGzvfEa6wyzZn31syyXlyUeaM3ZQPnHjyUyt7A6EkKo9v4UON5i
- P8+q6IPVDpdviiG0sXAywVIsd40PhxryDIUFVPdv1tpZfOEo5RKkUcL9+2WDDphGvWWb
- MxtPXVvpLB2K3pzRVe1b61EjdsC8CwKi64JkLaMYD7RiNzDwNTkWPXXzdHnkzcVCbAB5
- E5Dg==
+ d=linaro.org; s=google; t=1756078070; x=1756682870; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+zLiu8rdp+ACTfQ+lTdUk9CocYs8/pZz/iACQKC+rZE=;
+ b=DPAn6ePRG60HVHqO6rto1I6noCZvNdmnyb00hEDP0oATZ2/2u5jLchS5P3l1EYk9eB
+ tc5HTAtbB17BuAQt/avwv8ArXfs6ahf0JE6yGAWR5jwae4D7vwp/mreorrUjmRohkqFv
+ o/7rMUtP5uro7VSVaO9GI5BPOWVEpx83vs20PkAh764er2jd5xO3lTlYqTHnPjtadS9D
+ lqgHNqC96I0UpUxEoGsHOSDS0jOn7rYqSMAefnu/Ii1umNMvWy+9UAaeY6mi8nCqwRjH
+ sPvU7Yn5eYmfPL0515icgpHgKQbZkAFscNYl1Dzr0Z6fEaBEd4wkfAwAQ9VKx5NeR4Ca
+ X23A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756076418; x=1756681218;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zh2mOIzTyGmYIWY2saj6vgpTnQnQqNJ5gaTXcaHYWW8=;
- b=YK8o1lGumfvTqL+2jVDRLmUt4zDScMgsAJzg5i9F/K0BXop8SSpeIalobuESfUH/qX
- UZpjZZLWPFsNKwb2INQkOGGm7FRRg7GNYeaWFb8iKfrgz1HnsU8yuL/9Gwmw6liXABTx
- VjZaAbq6fBZPWEvI/JR1du5EKQOQ3Pv/4xttqzuIhL1br8ea7OBv4fAUlQ6WchT3S5ve
- B2ajhLK3IvwPt7SFd8Hr5QqnWkCJOJNGhcTVuMzWuPFrUgarJcHiVscv2U7OatAcs5ie
- UzawkYkKpQC+IZHywz2EXrfAuvvWj8C1JcKtXXEUcfz86fG6PhuPll/UEXV4kb1PhQGz
- xQMQ==
+ d=1e100.net; s=20230601; t=1756078070; x=1756682870;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+zLiu8rdp+ACTfQ+lTdUk9CocYs8/pZz/iACQKC+rZE=;
+ b=dA29kwIKZOyN7ipo0uI27IZb0gjJbEMdJ3aV8+pqXvqmegmo/lL37quEr6o0pSHzrE
+ l548Sj2L6a/m0tdSDzAN80yUHnh58xlE3R/t1zel21wgD2lzukyQpmsP1oG+13bF1F5P
+ t9f1tZ1MwXTaunYBIHFJdqV+DLr0nSOlfr5/pVErxC5SIueq+Yj0KnoUnR+OcUL5YTLs
+ GtSX3dKLEO5EdpLhu+tdYQef1TltyfFTqWPRtxb0t9WJXrP4pm0G3kkQKTNZW6OLipAI
+ o3HB8nWFSvJujX+3Su7L91U7JEMVegU5OJFwjNH3XAWVfo+mOMQl0uxEeJ6gOls8pulc
+ qMtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8Fx0O4BUjl1A4GoO5Qbc+B0zYnuRcxLYwQR6tJR9atShPb5prBvIkmsTvT/T07+DwW9V+TPzc1A==@nongnu.org
-X-Gm-Message-State: AOJu0Ywpu+EIfFZYIWmqfz1Sf4HDOSTgB2ra6LY9NVFobfnS5BKzJSwn
- OS+/xb0r/8VeMJiwo3T81ZqZRrt+NKP92JRMrdho4tLiHi4JUjKcoJEu
-X-Gm-Gg: ASbGncvOOgRRcufV6vS4CN4keNsc6SXkFCOmifzGGq0Cpwu8nsXO2VK9i5TToe1eHhe
- 6bp4Seu1/dZu4irwlVSK0wP94WCjWsxcwlfgn4boTURUKd0gceXaJedXtNUglz7QZlpk8TzhRl/
- gPvfpwec+uc273TC3ejU8ghotJqKjWuVm2tOSPk3en8DXM6rBTKySH1X9q53wWgHQTYJKKjX9En
- Y+RC5Fwa7a/ozz81tyb8ar/sn/Yl9GrgN18HE50nQaRSK9eDbfNJSKRfIIXaLgT8kXCz8vb4z51
- dC77YqZ+KEpoen8BJH5JIewv32i+wUBpLDBSU8LBgHvGrgSvOMg+eM2evvBKtPW1lqCH+wyZcVr
- w18zcnrIFOt5i5wTtSPPOXvtTjkMkinVtiHO8HtonMw==
-X-Google-Smtp-Source: AGHT+IHROHEhzLgp6MCVDN/eWH06s6wsbVBT+GG8PIq5HjI7sdpYODNPea//DqSkf/SM8buFFqAvzw==
-X-Received: by 2002:a17:906:478f:b0:ae3:5e70:32fb with SMTP id
- a640c23a62f3a-afe28ec36ebmr1045880966b.4.1756076417691; 
- Sun, 24 Aug 2025 16:00:17 -0700 (PDT)
-Received: from smtpclient.apple ([87.251.30.135])
+ AJvYcCUNwmVc1XqCEpKC28dzA2nNv+pW1/Zxe6dg6LdtcPpOFyELK/miFeFTSnGOXBgb2qoKcvCSkTbX71RS@nongnu.org
+X-Gm-Message-State: AOJu0YxyKo8dZXM9Ukdhc7iVq4bLVk0bP71U/z/qeXDmtolF2kwPoMmZ
+ iZ94m7DwNK9Uh2N47vOZrZ98PUCVrsgixNk4bjgW0Sx/Plrb/sjl+JrRNidenpKIzxc=
+X-Gm-Gg: ASbGncv8VebS+8s/UjPBbwmnjhX8yruRGesIzD9Y7no5ZhL3JnM5MRHVdr23+FYK1FS
+ zdxLsraz+96kurCoQbhwOy5ZsSXEyC4LR1yl5IRquw2Zs+Jt+SRGU4ipsZ14GuwSTZRdgwyYs5O
+ mhKCfFzxSaNrZ70Pt75RRglQCZPrBxlrIooLZc44VQXUlQj+837ViPyHNp82YNzonjiXO2pTCaR
+ Dd1MJBXQnWOZnmlvCWC6pkYDf6OS/hAsB6sQ7Ss8JI0BwPcK+GhyjJHAYQp4lE7mGOPDJArwgaG
+ QK6IwkFS9vrs+uE4Ynxi+0u1sk+XefrKgoTzmHoTC8qL0wfZF48Hn7uria8DDYOoAJsDlxJn5NU
+ DFojSiWdErp+N7Zez0ypU0SD1phyS8rBIPBxNeLIxnzf681tRureGOsnHKmdOHiAbRaxwXOkSqL
+ Zi/92GGKy67mOMmQQUTu9Wdqs1hmTaqK0N1R6501LdpuHk4XR912USUnqNt6ApvsRx
+X-Google-Smtp-Source: AGHT+IGclv0Y72hk6laGRLGOskK+MCy9XNOu1IDt6I0jBlpSTFsxJ3d18Ss8VaWU3opNGJmovrjnVA==
+X-Received: by 2002:a17:90b:3fc8:b0:325:57c1:6f8b with SMTP id
+ 98e67ed59e1d1-32557c170e9mr7280134a91.33.1756078070536; 
+ Sun, 24 Aug 2025 16:27:50 -0700 (PDT)
+Received: from ?IPV6:2401:d006:5c08:e100:2b1d:8711:2597:136f?
+ (19r3hzjj0vw81f3fs315.ipv6.originbroadband.com.au.
+ [2401:d006:5c08:e100:2b1d:8711:2597:136f])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-afe598a3fafsm373917766b.37.2025.08.24.16.00.16
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 24 Aug 2025 16:00:17 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
-Subject: Re: [PATCH v2 0/3] hw: acpi: add UART clock freq to AArch64 SPCR
-From: Vadim Chichikalyuk <chichikalyuk@gmail.com>
-In-Reply-To: <CAFEAcA-NwTDQUJAerkX2O88_3Mgprh3A7GqaEAFdM4mpN3s05Q@mail.gmail.com>
-Date: Mon, 25 Aug 2025 02:00:05 +0300
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Shannon Zhao <shannon.zhaosl@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0B0D958D-67D8-4036-A6BD-75CBD7DC636C@gmail.com>
-References: <20250809211051.68824-1-chichikalyuk@gmail.com>
- <CAFEAcA-NwTDQUJAerkX2O88_3Mgprh3A7GqaEAFdM4mpN3s05Q@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3826.700.81)
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=chichikalyuk@gmail.com; helo=mail-ej1-x62a.google.com
+ 41be03b00d2f7-b49cb8918e7sm5067070a12.6.2025.08.24.16.27.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 24 Aug 2025 16:27:50 -0700 (PDT)
+Message-ID: <09c7e4a0-9b1a-4568-9f5f-9e91291caa68@linaro.org>
+Date: Mon, 25 Aug 2025 09:27:44 +1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/4] target/microblaze: Remove unused arg from
+ check_divz()
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: edgar.iglesias@amd.com
+References: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
+ <20250824222734.4151956-2-edgar.iglesias@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250824222734.4151956-2-edgar.iglesias@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,31 +108,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/25/25 08:27, Edgar E. Iglesias wrote:
+> From: "Edgar E. Iglesias"<edgar.iglesias@amd.com>
+> 
+> Remove unused arg from check_divz(). No functional change.
+> 
+> Signed-off-by: Edgar E. Iglesias<edgar.iglesias@amd.com>
+> ---
+>   target/microblaze/op_helper.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-> On 18 Aug 2025, at 18:26, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> So, what's the rationale here? QEMU's UART doesn't care about
-> clocks at all. We provide a clock in the DTB because the kernel
-> refuses to boot if you don't, but if the ACPI spec didn't even
-> have a way to pass the clock frequency until rev 4 this obviously
-> isn't a problem on that side.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-The rationale is the same =E2=80=93 just as the (Linux?) kernel expects=20=
-
-a clock frequency if a UART is present in the DTB, guests using=20
-ACPI may expect a valid value for the clock frequency in the
-SPCR record when one is present.
-
-Since we already have to have a notional value in the DTB, it
-makes sense to expose the same value via ACPI, too, for=20
-consistency. The RISC-V virt machine, for example, has it both
-in its DTB and ACPI DSDT.
-
-I=E2=80=99ll fix the other patches per your comments if you think this
-is worth adding.
-
-Thanks,
-Vadim
-
+r~
 
