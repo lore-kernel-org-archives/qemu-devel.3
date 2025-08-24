@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8001ACA0EEB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 11:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45BCFCA0EEB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 11:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uq8hG-0003ub-Lg; Sun, 24 Aug 2025 07:15:38 -0400
+	id 1uq8qP-0006Ix-PD; Sun, 24 Aug 2025 07:25:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq8hE-0003uK-3Z
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 07:15:36 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq8qF-0006IN-5z
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 07:24:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq8hB-0007Ah-3R
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 07:15:35 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq8qD-0008SC-DD
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 07:24:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0D35F149C45
- for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 14:15:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C6745149C6D;
+ Sun, 24 Aug 2025 14:24:28 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7B0C0267818
- for <qemu-devel@nongnu.org>; Sun, 24 Aug 2025 14:15:28 +0300 (MSK)
-Message-ID: <d4205e4c-a386-4554-8c54-ee8a45fa4d47@tls.msk.ru>
-Date: Sun, 24 Aug 2025 14:15:28 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C74626781D;
+ Sun, 24 Aug 2025 14:24:50 +0300 (MSK)
+Message-ID: <48d1ff2e-938c-4b01-9a1b-767e1dc8cab3@tls.msk.ru>
+Date: Sun, 24 Aug 2025 14:24:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: qemu-user + binfmt Credential flag, again
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: QEMU Development <qemu-devel@nongnu.org>
+To: Helge Deller <deller@gmx.de>, QEMU Development <qemu-devel@nongnu.org>
 References: <f1a22d84-142e-4bc6-8ef0-c05156dcc20a@tls.msk.ru>
+ <50e6ca70-5144-45ed-9afc-f15d45274a7b@gmx.de>
 Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -76,9 +77,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <f1a22d84-142e-4bc6-8ef0-c05156dcc20a@tls.msk.ru>
+In-Reply-To: <50e6ca70-5144-45ed-9afc-f15d45274a7b@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -102,37 +103,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.08.2025 13:16, Michael Tokarev wrote:
+On 24.08.2025 13:59, Helge Deller wrote:
+> On 8/24/25 12:16, Michael Tokarev wrote:
 ...
-> This is just a tip of the iceberg - just the very basics.  Qemu
-> can be modified to not react to QEMU_* environment variables when
-> it detects it is running with elevated privileges, in a way similar
-> to a shell which ignore certain env vars when run in suid mode -
-> and this is something which definitely should be done (I'll post
-> a simpla patch later).  Maybe it should produce a big fat warning
-> when it detects suid mode, too.
+>> At the very least, I propose to remove --credential option from
+>> scripts/qemu-binfmt-setup.sh entirely (patch will follow) - not to
+>> help someone to shoot themselves in the foot. 
+> 
+> I really disagree on this.
+> There are very good reasons to have qemu with credentials enabled.
+> One such valid example is to used debian as buildd server to cross-compile
+> debian packages for other architectures. For this you need to have
+> credentials enabled for quite some packages, so with security in mind
+> you should normally not allow other users to access the machine.
 
-This approach turned to be quite a bit fragile.
+Umgh no.  It does not matter how good or important any existing (or
+future) usages of this thing are.  We have something which is not
+designed to be used this way, and we don't provide ways to use it
+like that.
 
-I tried to modify linux-user/main.c to ignore -options or QEMU_*
-environment variables.  This is not difficult to do.
+There's nothing stops any user from enabling these flags.  Consider
+lack of direct instructions to be a clue barrier - if you figured out
+how to enable execution of foreign suid binaries, one might assume
+you've understood the implications.
 
-However, - suppose the foreign suid binary being run spawns some helper
-binary as root still (like, to verify user's password or whatnot), -
-which is also foreign architecture and will also run by (another) qemu,
-but this time, not necessary with a good indication it's running in suid
-mode.
+I know debian buildds and their issues with this context.  It is a very
+niche thing and there, again, it is trivial to change the entry provided
+by qemu to include additional flags (it's a one-line config file).
 
-We might filter these env vars, but since no other programs care for
-these variables, they might reappear somewhere (remember, it is the
-(evil) user who controls the whole environment).. so it becomes more
-and more fragile.
+And even there, - the buildds - I tend to disagree in general with the
+whole approach.  Instead of letting suid-to-root in debian CI tests,
+it is better to rewrite tests which do use it (using sudo usually) to
+avoid such access entirely.  After all, initial CI script can be told
+to be run as root (and build can be done as root too), and it can always
+perform su from root to a less-privileged user, not requiring the
+opposite way.
 
-So, basically, just a big fat warning when getuid() != geteuid(), and
-that's about it.  And this will break various CIs/tests where people
-compare test output with saved one.  Sigh.
+Right now we can't do that, but having found this issue, it's not a big
+deal to file bugs against packages in debian who do it, and fix them.
+After which, C flag wont be required in debian buildds.
 
-It's an interesting situation.
+> In general, just if someone can shoot himself into the foot you should
+> not remove features.
+> Instead, disabling it by default, and adding a big fat warning if people
+> enable it is a good way forward.
+> 
+>> It should not be noted in any docs or examples either (how to
+>> configure it to work with suid foreign binaries, that is). 
+> 
+> Disagree. Hiding issues don't solve them.
+
+It is not hiding, not at all.  On the contrary, I suggested adding a
+warning *not* to enable this to the docs, and why.   Not provide
+instructions of what should not be done, but provide reasons of why
+it shouldn't be done.  This is definitely not hiding.
+
+>> Instead, we can add a big fat warning in the docs which tells the
+>> user *not* to try doing that.
+> Yes. Agreed.
 
 Thanks,
 
