@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45BCFCA0EEB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 11:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3910DCA0EFC
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 11:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uq8qP-0006Ix-PD; Sun, 24 Aug 2025 07:25:06 -0400
+	id 1uq9Iq-0002Fg-VN; Sun, 24 Aug 2025 07:54:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq8qF-0006IN-5z
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 07:24:59 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq9Io-0002Dx-Uk
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 07:54:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq8qD-0008SC-DD
- for qemu-devel@nongnu.org; Sun, 24 Aug 2025 07:24:54 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uq9In-0002kl-3X
+ for qemu-devel@nongnu.org; Sun, 24 Aug 2025 07:54:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C6745149C6D;
- Sun, 24 Aug 2025 14:24:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 526FA149D4E;
+ Sun, 24 Aug 2025 14:53:58 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C74626781D;
- Sun, 24 Aug 2025 14:24:50 +0300 (MSK)
-Message-ID: <48d1ff2e-938c-4b01-9a1b-767e1dc8cab3@tls.msk.ru>
-Date: Sun, 24 Aug 2025 14:24:50 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id C0A6F267839;
+ Sun, 24 Aug 2025 14:54:19 +0300 (MSK)
+Message-ID: <c70e4ae2-09a6-4287-bd0c-fc8c3ae97180@tls.msk.ru>
+Date: Sun, 24 Aug 2025 14:54:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: qemu-user + binfmt Credential flag, again
@@ -104,65 +104,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24.08.2025 13:59, Helge Deller wrote:
-> On 8/24/25 12:16, Michael Tokarev wrote:
-...
->> At the very least, I propose to remove --credential option from
->> scripts/qemu-binfmt-setup.sh entirely (patch will follow) - not to
->> help someone to shoot themselves in the foot. 
-> 
-> I really disagree on this.
-> There are very good reasons to have qemu with credentials enabled.
-> One such valid example is to used debian as buildd server to cross-compile
-> debian packages for other architectures. For this you need to have
-> credentials enabled for quite some packages, so with security in mind
-> you should normally not allow other users to access the machine.
-
-Umgh no.  It does not matter how good or important any existing (or
-future) usages of this thing are.  We have something which is not
-designed to be used this way, and we don't provide ways to use it
-like that.
-
-There's nothing stops any user from enabling these flags.  Consider
-lack of direct instructions to be a clue barrier - if you figured out
-how to enable execution of foreign suid binaries, one might assume
-you've understood the implications.
-
-I know debian buildds and their issues with this context.  It is a very
-niche thing and there, again, it is trivial to change the entry provided
-by qemu to include additional flags (it's a one-line config file).
-
-And even there, - the buildds - I tend to disagree in general with the
-whole approach.  Instead of letting suid-to-root in debian CI tests,
-it is better to rewrite tests which do use it (using sudo usually) to
-avoid such access entirely.  After all, initial CI script can be told
-to be run as root (and build can be done as root too), and it can always
-perform su from root to a less-privileged user, not requiring the
-opposite way.
-
-Right now we can't do that, but having found this issue, it's not a big
-deal to file bugs against packages in debian who do it, and fix them.
-After which, C flag wont be required in debian buildds.
 
 > In general, just if someone can shoot himself into the foot you should
 > not remove features.
 > Instead, disabling it by default, and adding a big fat warning if people
 > enable it is a good way forward.
-> 
->> It should not be noted in any docs or examples either (how to
->> configure it to work with suid foreign binaries, that is). 
-> 
-> Disagree. Hiding issues don't solve them.
 
-It is not hiding, not at all.  On the contrary, I suggested adding a
-warning *not* to enable this to the docs, and why.   Not provide
-instructions of what should not be done, but provide reasons of why
-it shouldn't be done.  This is definitely not hiding.
+It is not "someone can shoot himself into the foot".
 
->> Instead, we can add a big fat warning in the docs which tells the
->> user *not* to try doing that.
-> Yes. Agreed.
+We don't ship a configuration option to make /bin/sh suid root.
+This would make a lot of use cases to work, this will simplify a lot
+of stuff, etc.  But we don't have such option.  This is done for a
+reason, - it breaks whole system security concept, entirely.  You
+can chmod u+s /bin/sh on any of your system, but this "configuration
+item" is not even described in any official docs.
 
-Thanks,
+Unfortunately, qemu's C flag is of this same theme.  It requires a
+tiny effort to get root, compared with `chmod u+s /bin/sh`, but it's
+a trivial way still, just one extra step.  In short, qemu-user C flag
+breaks whole system security concept.
+
+This is why it not only shouldn't be on by default but it should not
+exist, at all.  And if some system is willing to do chmod u+s their
+/bin/sh, they're free to do so, it's not a rocket science or requires
+a recompile or something.
 
 /mjt
 
