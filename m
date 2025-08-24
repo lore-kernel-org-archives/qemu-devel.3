@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052A2CA0EEB
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 16:10:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4B5CA0EEB
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Aug 2025 16:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqDHe-0002as-8r; Sun, 24 Aug 2025 12:09:30 -0400
+	id 1uqDJY-0003qX-E5; Sun, 24 Aug 2025 12:11:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqDHS-0002RD-AX; Sun, 24 Aug 2025 12:09:19 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ id 1uqDJU-0003pz-7I; Sun, 24 Aug 2025 12:11:24 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqDHQ-0008Sd-CH; Sun, 24 Aug 2025 12:09:17 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-55ce5097638so3921512e87.0; 
- Sun, 24 Aug 2025 09:09:15 -0700 (PDT)
+ id 1uqDJR-0000Pw-55; Sun, 24 Aug 2025 12:11:22 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-55f30367cbeso2169420e87.1; 
+ Sun, 24 Aug 2025 09:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756051753; x=1756656553; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756051877; x=1756656677; darn=nongnu.org;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=gcWgU4uJKCQi5G4rMilEpP8ql/dVsMsGLckek1G1ulw=;
- b=FvlR6YyjrvuVn3H3ikhKaRiPsj+75dUUZxM2J690QJNWkz5biH0LoamEsHI5Thouai
- j/I5p6hIQXzPIf2J5XYSVYoBAu7uTs8OWIzokZRKP07x5uTF5M0V2Gw1jJU34pmUrkSc
- iOUC8dUS5UIlYDYiApSMl2K+/WF/KqvJeoiBHxZvfdpOo0tst/sZJvYbK8Z2XtHRk+3U
- VPkQhvDv8e9SSrYat0L1EUhkAm9WffTIhEtMKA8899u38wscgPPoj4lAQtAyz1TcOllG
- 7pxSWzfH4VkofVTWBAA0Pt/ec6UNuaDE8jk80/BCjXownjcLWNNLZPZtDbDwJqc5SPgo
- XbXA==
+ bh=2t7RIRiIFS6lwa7V0aDsSmE13uSsevOGfi2Mr9xzndw=;
+ b=KwZSI4SZHBiuPXbeRDU89AAwMin3tXxXIVBqRnPEJ6zzm19IwcNhCgX4oEpTPjyBD9
+ Zb1h2BRC5FA2KkWSUB5fVu2f0nzY96Dbvzt/F9Qm3T8sYdrjClf/XRTMmv1OUXQx4ARm
+ V9Rmy/NLqqvUcPwUtogyu2Ae4PcwQ1cUZoQeyMiiJEPsJXG49ybhBQH1QjDuMi13FssR
+ tsPNh8AKI8EN5u7Vk4YIExN46lU6x1EogvTP1fk6vVQ9CQHozCyxI5I5bnJFh+OuLhsi
+ IZ1zBj3ire/tIyvKGLWER/2IdcXt2jghCUzCmy/k+4/9kZty2XtbKCV77NMme67XFMxs
+ QD6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756051753; x=1756656553;
+ d=1e100.net; s=20230601; t=1756051877; x=1756656677;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gcWgU4uJKCQi5G4rMilEpP8ql/dVsMsGLckek1G1ulw=;
- b=ars4MYtpadNmCg7vdDvu0mfrverCP/UOyS+qlpjkGWId4qAd9RwnbidBLnEJV8uuI6
- RwRuL5Hvz4b35SbUdZO8duWp9e+1WxRH2Nfx4fPWAJP8mP1DTk58+X4GFNctl4C4dYuc
- yX7XkDAs7KvWCjiVD+1j4wjwdIY4yVhroet1UzML4ZkPoI2WbDyyRa5Z7gIajohGegCr
- 0jBT4LFpFr6DW00J7QRBtA3QrEj70vOSlupqvUFcw/tTC+MAFKASaQn8nEIV9MnB92Di
- /JvEYLIJPLItB9qEUrx/hwVb0d0rjfJfuHOLUYr2LxZtbhCNqdbJjKYYBQVy7T4G2X65
- Ni/A==
+ bh=2t7RIRiIFS6lwa7V0aDsSmE13uSsevOGfi2Mr9xzndw=;
+ b=iV0/FfGzlYHDF6x2OzOUBhmrZnFc0Pcl+UyYVWn+o0sgr8ORgMtz8+ZXW/GWHai8sK
+ c2DX+RiPrXZbJ1BvSPm3LRMZ4ixPOv2DqwS5EN5xQjleVddBMfuKPqQJA64/9czkJfoJ
+ EkXle6vyLPhHuGT/PZLGvxhR9RC97aPxz/d3aq/5WeD9lFX2Ht4pys/yvUB2NbhQAI6N
+ BsaWhof8F8BmbAdDX2MZF1uGzQ1dPpzWkYJ3F6YC2feHjCM14vXNP1YEE1VPuDzqykiE
+ egYz0mrk2VgjkfhaqTPUwNNWODowK4VsX+Xwh47hgyL7+OqLPGD2CPtPKHABtfK372a8
+ 01Mw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWd+OSdM5SVMUN0B2OcH1vkdTUv2a+6ChdV3NoYrQE9n+v8ixLEFJcNa0f8wlutBDq97dwBb8RoaQ==@nongnu.org,
- AJvYcCXr6HSQY5OuIpf8b4m1itOtEQeyvRWDy08u6dMvbaq1LujtJ+w+bzPQL94Vld4vh5hvqe60DJfeHnZB7Q==@nongnu.org
-X-Gm-Message-State: AOJu0YyoVWqsTiZ8rEOroIuU7IJXOyBGQkGNGeHQ4WXJxRYJeIMFoWgH
- /WxWxJ+MQiHhUcMzPiPDYK08sqQNOg1FTjOgQgmln7bCylXmWs1VFobW
-X-Gm-Gg: ASbGncsDoitL6vrdj0clHb0+tCWtXn4aCnc9ro4GYXZehmxTN4fiBmvlDsU9Sxisr/4
- R41Tff+bYhwoS+xB4a9glRepTzzgzIX90bFdtb5e8NARQil2rsZKOgBGUPVL6/xZCH/hFDevN1p
- QNndJcrKBgPxITyD3798nGwGrZ6u4DibYPHU2UPr9E1kUk4L48M5vmk//uQEEMiR/Wf6iqsTEXi
- EXUKjo1WD8WsYIm6pBDKbKiLIwYF6mYh6k/kydsBJelHd6FQnDGs9QGlRM2r08LHSODYqzJKC+M
- z1GJvFJcq3V8EsROkaFIpPfej1GUAiX4aW/NJ7ud2A+9ijLKpOybsuhBgGlEO2nxyjkiDgMLEBW
- DbBuhIOz4emteaniXheZtm2cpNLEu5nfbaqlDNfL0hygDVJz8cemhM69LBnOR+Y8S1BGu5Q==
-X-Google-Smtp-Source: AGHT+IG1ZaOofk4kssSmwo6UIeXhajJjGPQRXqZOEvSHlRmCUwwP3M/NCLQrcUi6DNRHPvtd3V11GA==
-X-Received: by 2002:a05:6512:6094:b0:55a:4ca6:d72d with SMTP id
- 2adb3069b0e04-55f0ccd36b8mr2925650e87.30.1756051753153; 
- Sun, 24 Aug 2025 09:09:13 -0700 (PDT)
+ AJvYcCUgKXrvrqA7U8C99yXE7VDXthD+gdAiQeT6Radmjfl5iLnKu5uk0UVW9es0aMXSvYoRo3x0+zOV2g==@nongnu.org,
+ AJvYcCXYnpa8lTPbffOUPr1NoEzYY2bevkNH+OORCZMJuYJ1dlUjUyDjPs/Oavy6Ca7R0mYt/y+8Bd3aSa9+5Q==@nongnu.org
+X-Gm-Message-State: AOJu0YyTs/q2+6964NpdCbiaKveoxgh18z8rymahD4OI8LY1Vywawv43
+ C3b7Vd2GFMDr42RumlB2057c0WU6mPdblYZ8BWPQhOvR1EqwOJxj/r3u
+X-Gm-Gg: ASbGncsdYPjc7Ksb9Cs3zbpdyZfiziw2as6vTSqiQsAGlkAsjVp6alEXuocLwrKWLBT
+ +ZiOFscJL5Cgfosa6Ini03+gf4cBtHUNRdjZqzBfBhZcwbzsTv6ovneE6GbQf0ZNdagnqT4RsYs
+ 5bejwBMmoxUqfVckkeLHUo83VLfBjyxH0Oe5RE0lrokEZprPhcq8TzV1BYaVr51dHjOqmqcgHcC
+ k9xvPC4kJkoCv5HSTnYsuZoFHNkB5CSe4DZ48Af5vqlUSnLY9QZcTGvrxiD7LnVdukuwOtRwjAU
+ MyG1maskoo5ojoaDfFyWWxZG+bUGTfYaRyyVOAmLY8NSg1AAgfnzF2DcRS9crqCex+3oSSmn5CS
+ 8AUd9mT9RoaKqi/EoWHA7bT/8T+/+IBlMi8muSKeN5LrKaeyunc4SP8kyKujKtLkNG+awE/bdax
+ 2G9j1D
+X-Google-Smtp-Source: AGHT+IHwlo5z5oWvronNupSs44Ql6wq9JSxxedSkPk9pnGExF7jGXDV9TjjBCeObzHsvXBeXyky30g==
+X-Received: by 2002:a05:6512:63d7:20b0:55f:3dbb:4567 with SMTP id
+ 2adb3069b0e04-55f3dbb473emr957707e87.32.1756051877318; 
+ Sun, 24 Aug 2025 09:11:17 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-55f35c1222esm1136208e87.49.2025.08.24.09.09.12
+ 2adb3069b0e04-55f35c8bb59sm1117821e87.91.2025.08.24.09.11.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 24 Aug 2025 09:09:12 -0700 (PDT)
-Date: Sun, 24 Aug 2025 18:09:12 +0200
+ Sun, 24 Aug 2025 09:11:16 -0700 (PDT)
+Date: Sun, 24 Aug 2025 18:11:16 +0200
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: Corvin =?iso-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -76,19 +77,19 @@ Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>,
  Yannick =?iso-8859-1?Q?Vo=DFen?= <y.vossen@beckhoff.com>,
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 05/14] hw/dma/zynq: Ensure PCFG_DONE bit remains set
- to indicate PL is in user mode
-Message-ID: <aKs5KHb3SnrMJMf2@zapote>
+Subject: Re: [PATCH v2 07/14] hw/dma/zynq-devcfg: Indicate power-up status of
+ PL
+Message-ID: <aKs5pO1qJ-h6MGIF@zapote>
 References: <20250815090113.141641-1-corvin.koehne@gmail.com>
- <20250815090113.141641-6-corvin.koehne@gmail.com>
+ <20250815090113.141641-8-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250815090113.141641-6-corvin.koehne@gmail.com>
+In-Reply-To: <20250815090113.141641-8-corvin.koehne@gmail.com>
 User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,50 +112,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 15, 2025 at 11:01:03AM +0200, Corvin Kˆhne wrote:
+On Fri, Aug 15, 2025 at 11:01:05AM +0200, Corvin Kˆhne wrote:
 > From: YannickV <Y.Vossen@beckhoff.com>
 > 
-> All register bits are clear on write by writing 1s to those bits, however
-> the register bits will only be cleared if the condition that sets the
-> interrupt flag is no longer true. Since we can assume that programming
-> is always done, the `PCFG_DONE` flag is always set to 1, so it will not
-> never be cleared.
+> It is assumed, that the programmable logic (PL) is always powered
+> during emulation. Therefor the PCFG_POR_B bit in the MCTRL register
+> is set.
 > 
 > Signed-off-by: Yannick Voﬂen <y.vossen@beckhoff.com>
-> ---
->  hw/dma/xlnx-zynq-devcfg.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-> index f28d0015e6..60ea351494 100644
-> --- a/hw/dma/xlnx-zynq-devcfg.c
-> +++ b/hw/dma/xlnx-zynq-devcfg.c
-> @@ -188,6 +188,8 @@ static void r_ixr_post_write(RegisterInfo *reg, uint64_t val)
->  {
->      XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
->  
-> +    s->regs[R_INT_STS] |= R_INT_STS_PCFG_DONE_MASK;
-> +    
-
-Looks like you've got some stray spaces in the empty line.
-
-I'm fine with this but another way to handle PCFG_DONE could be to have
-some state that goes true after the first programming. e.g:
-
-s->regs[R_INT_STS] |= s->pcfg_done ? R_INT_STS_PCFG_DONE_MASK : 0;
-
-On the other hand, for direct Linux boots we may want this to be always
-one...
-
-Anyway, with the whitespace fixes:
 
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
 
-
->      xlnx_zynq_devcfg_update_ixr(s);
->  }
->  
+> ---
+>  hw/dma/xlnx-zynq-devcfg.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
+> index c699df6ad4..064955a0f8 100644
+> --- a/hw/dma/xlnx-zynq-devcfg.c
+> +++ b/hw/dma/xlnx-zynq-devcfg.c
+> @@ -333,7 +333,8 @@ static const RegisterAccessInfo xlnx_zynq_devcfg_regs_info[] = {
+>         /* Silicon 3.0 for version field, the mysterious reserved bit 23
+>          * and QEMU platform identifier.
+>          */
+> -       .reset = 0x2 << R_MCTRL_PS_VERSION_SHIFT | 1 << 23 | R_MCTRL_QEMU_MASK,
+> +       .reset = 0x2 << R_MCTRL_PS_VERSION_SHIFT | 1 << 23 |
+> +                R_MCTRL_PCFG_POR_B_MASK | R_MCTRL_QEMU_MASK,
+>         .ro = ~R_MCTRL_INT_PCAP_LPBK_MASK,
+>         .rsvd = 0x00f00303,
+>      },
 > -- 
 > 2.50.1
 > 
