@@ -4,104 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4013CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 10:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E78CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 10:48:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqUYi-0002OS-Ku; Mon, 25 Aug 2025 06:36:19 -0400
+	id 1uqUif-0004yY-If; Mon, 25 Aug 2025 06:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqUYe-0002N6-Ax
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:36:13 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqUiV-0004w3-Uy
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:46:24 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqUYU-0006wZ-Ml
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:36:08 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45a1b0d224dso21303805e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 03:35:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqUiK-00085k-SJ
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:46:23 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45a1b00f23eso23875275e9.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 03:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756118157; x=1756722957; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756118769; x=1756723569; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=w63cxLN3KRUNqwiXrJYqtIWo5C5s48OCDSjMs1jZ32o=;
- b=XUgZbwJxfMo1cxZVd4dUsU5i+5nrDx6FpUjRCb0+MLlXZCi3elLOE1MGnMSHVADjWT
- 5QSmTGDLnkMzD6eF4n4kmOuAy9zZTGV52WBD8PFFUjMW6hU2DBV7BCVlRdL40t1QoC0A
- OVbRGcRO71Yewru0kHRvZ6Lj/oZ/lB9jbbVpSuopzfzWeC0QaM0EkjXsv3pDPCmwjkiG
- xdkhZJKR1CapHvvXpoYZNyP67iFugylSRvIPf09tOPkfA+L3M9uQ6p5mAX8+I7m1T7HP
- bWU3T0PIcC5+gqzK6LaKAwA3ItLHKnOl+DHLSVOxXb0KNqp/hwjRDlIvqKqT5+kn3Lq6
- mRaA==
+ bh=VDzSIhe55Fz7N6xVWKs9w4Vwa72FIocHi6Kb3R0zpxk=;
+ b=ZQ5naKg9zrtoze4GHzvkshpsos7eKw83QHaRsMgapR/v9uAdbF1vh3SXAo07LUtzq+
+ mEcuDjNT9vVAtLYJN0ohNDB+gDW8+J9FUZScjl9DXWGkffJaNSW8AC3SB7JtOGXDVCg9
+ EnJ36tjbt5n7TP9MsDhzEz5W7LRckdBeXZOPLaJv/bEbWkpWi1ux33kEyaxXd+MwLwhQ
+ YacnXE/lCb5YB0XKBjLuYL9JJaDUs+RV6fr3mp2eAPeVBOgiOvjcCcXKZr11PFojz6vY
+ w1EfPyp+dCgTLiIcGwlAQfo4bHahCyHhFApT9uPl/YoUNwi9rOwty02Qq3g74LA/VmCm
+ N2pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756118157; x=1756722957;
+ d=1e100.net; s=20230601; t=1756118769; x=1756723569;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w63cxLN3KRUNqwiXrJYqtIWo5C5s48OCDSjMs1jZ32o=;
- b=Iw+MJ/XCnAFYoETtZDn6sInuzLTpRsyiXunRVWj6is8vDw5StW2x+oA9ZS+11tCKm5
- ECDrCrUm8oN5NB8Nzr1t6fx9hAb51K7U0gYZor/8r7CsuRVMJ3thNVqezg4Ne0ROEIr6
- 1AGPDX3k56h5sM4z0mMFlhAswN7/Mmozhzt23oUUQTsQBGCdNnu/aMO5xFSOGXD0ChLX
- mti4v3TdKbd9ZI40xB/jcwft9tpZC4hoNOGoOw2EDQsWPI3aiVfoIdHrh0IiwdOlCxfC
- lDpGSVA1OO0bfidv/4QG6jrhiDNsc4nwx6t89/Zwxi5Mq6RfUE3LsEDmy58vJ9hOGTyF
- JRLQ==
+ bh=VDzSIhe55Fz7N6xVWKs9w4Vwa72FIocHi6Kb3R0zpxk=;
+ b=tWcWSRd8npq7rpAxpYvd4XU+GsPJT5kwcjx5QkxUulzScevmqTTP0hDdx4FHFEfwO3
+ 9xf7n80l6VT+vYwmqYX+OMtKj0FZNVYuK6fzzoba+VVkvwNplI5EAhns07ivCd4zF2t2
+ z+aE/o6xr1tpoJE94+SkpF5Ufldn/MRjzJ+ULo//4WCEj3fZMJ1qj/8JqDXIx8CwxKxF
+ txjF+r5knMn+UWgSeSkflvB1tc5UVGRu0SMZ95WQdmzVuFoboLxUM3HiJmN2ZIhkB5CJ
+ PjjII/ja5GKQ1EUCeMEDmelFchC+rT2IkJ3LfrfnWBmZoQJsqx2XN0aVeCExHmYNfqa6
+ jCxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhI9dJx6Tpcu8EjcmVIBZmPWFxWMX3/L1wc5d/aW+WPHjtAepxAGuiyKXOnX7c8oqetJa7giqD4+J9@nongnu.org
-X-Gm-Message-State: AOJu0YyJC3PAxIipS177wNsAJ2bmW/sat2blqGhUbaOB9asME0jS3sik
- lTMS5vceUOY6vvQdm3sKKesKQuQG/98Xqto4MrSMvv2Htrscx3fP0dSkwARQMzT1FWifG3i6OuP
- 0DcGJ
-X-Gm-Gg: ASbGncs2YeG3JlnvlEC4dQj64TbmVe8VtnQ5zI/XA6LMUNLa4WaGndpjd7cDA4mbtq7
- CJKLyhOt8g4iD4ywce9fQlcouRX6+d0SdsOc+xlPO1UBc9ZlYmJaNV4VN7hBqVh3wCLDYLoDhON
- SRW0IfMgy6y/8b+ssrPyn1A4mXgLKom4+nxtKniDhNjtiF9DsEld8/+D8+6ScH01FyfIFFohTDP
- pacZ9Aplwca9XGTv2bEqY9/SiBYDAQnMbahp9iuERezJAtWfR6vWM/RTKAvGgrCaSLI3D+py7Ll
- Fr47/cU4i+S2L4ZWIJb7EsHyRUM5F5UgWvr4XIisSq656ewZSn/AE53N+LnU0Jq/oMICKO/SH4p
- x7CGDL8YZ1w55N0cYX0FTno1pgq+eHE0qvVU2rcI8+sD+nT0E7UdNYzaleLlxhdNv2w==
-X-Google-Smtp-Source: AGHT+IFhAUxs4RNLfENqnkegwfZCjgLo52KMealaWUJYRWktF+GUvHjqSZJoxs9Ow8zGsRPE4PiCvg==
-X-Received: by 2002:a05:600c:1548:b0:459:d709:e5b0 with SMTP id
- 5b1f17b1804b1-45b5178e893mr109301895e9.5.1756118156175; 
- Mon, 25 Aug 2025 03:35:56 -0700 (PDT)
+ AJvYcCV0wXUfAzDGwEw1BIAuKCaP4h/szPheZTjqkLS/tz4evFebwYSyFHjQcWVcOnVNWM6LFhjmipnBvSud@nongnu.org
+X-Gm-Message-State: AOJu0YwXlM78Y2QlZlb6C3wS6cFWvhA/WT4OptuxaR15dlBs3iCq3Di7
+ lS3Ay7ZpymNzl4dfflCVDnD8LBym15USpHqTRVcu5AxXRnRU63PYSvgIqavu5fQg/+o=
+X-Gm-Gg: ASbGncshgcKnR/FtYFcWNyHio3rzizpgDNYupLaiQqDH3mCeWBufhG/NE76gLzFEJu5
+ u0ycQDYK8LM1I2NqOwqfRnKwJumYrB+o/ez+cikqVkQN3Uq0MpjLlguX1+bjceBwr4wI0Zn85DW
+ R6B9gSWmgeseL20k5FR4pooUAfQ2heysQCO+1PHyxgAJt9ZuBN/2GVulAI+Wrh2pzhvn3Vk0xtI
+ G3jvoAAp9aq+r865qojDITBLwXZugoJvyKc5PYL2qwWWd40EHQ7ESyq+1uLrpBtgs88W/JJsJY9
+ M6md61msHWhjbfwhttrOUQuzUK1DvhO+bN4NTKgr1rqGqIbsdN2LohYRnR6QZZFaA2NscE6I/tB
+ A/qExP5qC8rubwyt4ph/tgowg9yixYU4S8LqAQo6lHFk4QEhUt/n1aoiy2CgCX41OG/qYK4BQ3E
+ Mf
+X-Google-Smtp-Source: AGHT+IGgVB4w3qbfsI7YCj54Xh0HWSAA0kZmpIKBZIhtzDqrmkIiJkeoaT1bK+cvYjeaOaw/Bs4RGg==
+X-Received: by 2002:a05:600c:19cd:b0:458:be62:dcd3 with SMTP id
+ 5b1f17b1804b1-45b517c2fc0mr123865575e9.17.1756118769428; 
+ Mon, 25 Aug 2025 03:46:09 -0700 (PDT)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c7119c4192sm11102267f8f.52.2025.08.25.03.35.53
+ 5b1f17b1804b1-45b57444b3asm106348125e9.4.2025.08.25.03.46.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Aug 2025 03:35:55 -0700 (PDT)
-Message-ID: <d585141a-07ab-479e-9d56-f58ecc4e7207@linaro.org>
-Date: Mon, 25 Aug 2025 12:35:51 +0200
+ Mon, 25 Aug 2025 03:46:08 -0700 (PDT)
+Message-ID: <c16db8b9-9b73-49c4-8233-370c1b46a382@linaro.org>
+Date: Mon, 25 Aug 2025 12:46:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
- helpers and use them tree wide
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peterx@redhat.com, mst@redhat.com,
- mtosatti@redhat.com, richard.henderson@linaro.org, riku.voipio@iki.fi,
- thuth@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- david@redhat.com, jjherne@linux.ibm.com, shorne@gmail.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, wangyanan55@huawei.com,
- zhao1.liu@intel.com, peter.maydell@linaro.org, agraf@csgraf.de,
- mads@ynddal.dk, mrolnik@gmail.com, deller@gmx.de, dirty@apple.com,
- rbolshakov@ddn.com, phil@philjordan.eu, reinoud@netbsd.org,
- sunilmut@microsoft.com, gaosong@loongson.cn, laurent@vivier.eu,
- edgar.iglesias@gmail.com, aurelien@aurel32.net, jiaxun.yang@flygoat.com,
- arikalo@gmail.com, chenhuacai@kernel.org, npiggin@gmail.com,
- rathc@linux.ibm.com, harshpb@linux.ibm.com, yoshinori.sato@nifty.com,
- iii@linux.ibm.com, mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com,
- qemu-s390x@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
-References: <20250814160600.2327672-7-imammedo@redhat.com>
- <20250821155603.2422553-1-imammedo@redhat.com>
+Subject: Re: [PATCH v4 7/8] kvm: i386: irqchip: take BQL only if there is an
+ interrupt
+To: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ qemu-ppc <qemu-ppc@nongnu.org>
+Cc: Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ mtosatti@redhat.com, qemu-devel@nongnu.org,
+ Peter Collingbourne <pcc@google.com>, Alexander Graf <agraf@csgraf.de>,
+ Roman Bolshakov <r.bolshakov@yadro.com>, Sergio Lopez <slp@redhat.com>,
+ qemu-arm <qemu-arm@nongnu.org>, Mohamed Mediouni <mohamed@unpredictable.fr>
+References: <20250814160600.2327672-1-imammedo@redhat.com>
+ <20250814160600.2327672-8-imammedo@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250821155603.2422553-1-imammedo@redhat.com>
+In-Reply-To: <20250814160600.2327672-8-imammedo@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,280 +109,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
-
-On 21/8/25 17:56, Igor Mammedov wrote:
-> the helpers form load-acquire/store-release pair and use them to replace
-> open-coded checkers/setters consistently across the code, which
-> ensures that appropriate barriers are in place in case checks happen
-> outside of BQL.
-
-I don't understand the beginning of this sentence (even prepending
-the patch subject).
-
+On 14/8/25 18:05, Igor Mammedov wrote:
+> when kernel-irqchip=split is used, QEMU still hits BQL
+> contention issue when reading ACPI PM/HPET timers
+> (despite of timer[s] access being lock-less).
+> 
+> So Windows with more than 255 cpus is still not able to
+> boot (since it requires iommu -> split irqchip).
+> 
+> Problematic path is in kvm_arch_pre_run() where BQL is taken
+> unconditionally when split irqchip is in use.
+> 
+> There are a few parts that BQL protects there:
+>    1. interrupt check and injecting
+> 
+>      however we do not take BQL when checking for pending
+>      interrupt (even within the same function), so the patch
+>      takes the same approach for cpu->interrupt_request checks
+>      and takes BQL only if there is a job to do.
+> 
+>    2. request_interrupt_window access
+>        CPUState::kvm_run::request_interrupt_window doesn't need BQL
+>        as it's accessed by its own vCPU thread.
+> 
+>    3. cr8/cpu_get_apic_tpr access
+>        the same (as #2) applies to CPUState::kvm_run::cr8,
+>        and APIC registers are also cached/synced (get/put) within
+>        the vCPU thread it belongs to.
+> 
+> Taking BQL only when is necessary, eleminates BQL bottleneck on
+> IO/MMIO only exit path, improoving latency by 80% on HPET micro
+> benchmark.
+> 
+> This lets Windows to boot succesfully (in case hv-time isn't used)
+> when more than 255 vCPUs are in use.
+> 
 > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 > Reviewed-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
 > ---
-> v5: fix copy/paste error in doc comment of cpu_set_interrupt()
->     "Jason J. Herne" <jjherne@linux.ibm.com>
-> v4:
->     add cpu_set_interrupt() and merge helpers patch with
->     patches that use them (v3 6-7,9/10).
->         Peter Xu <peterx@redhat.com>
+> v3:
+>    * drop net needed pair of () in cpu->interrupt_request & CPU_INTERRUPT_HARD
+>      check
+>    * Paolo Bonzini <pbonzini@redhat.com>
+>       * don't take BQL when setting exit_request, use qatomic_set() instead
+>       * after above simplification take/release BQL unconditionally
+>       * drop smp_mb() after run->cr8/run->request_interrupt_window update
 > ---
->   include/hw/core/cpu.h               | 25 +++++++++++++++++++++
->   accel/tcg/cpu-exec.c                | 10 ++++-----
->   accel/tcg/tcg-accel-ops.c           |  2 +-
->   accel/tcg/user-exec.c               |  2 +-
->   hw/intc/s390_flic.c                 |  2 +-
->   hw/openrisc/cputimer.c              |  2 +-
->   system/cpus.c                       |  2 +-
->   target/alpha/cpu.c                  |  8 +++----
->   target/arm/cpu.c                    | 20 ++++++++---------
->   target/arm/helper.c                 | 18 +++++++--------
->   target/arm/hvf/hvf.c                |  6 ++---
->   target/avr/cpu.c                    |  2 +-
->   target/hppa/cpu.c                   |  2 +-
->   target/i386/hvf/hvf.c               |  4 ++--
->   target/i386/hvf/x86hvf.c            | 21 +++++++++---------
->   target/i386/kvm/kvm.c               | 34 ++++++++++++++---------------
->   target/i386/nvmm/nvmm-all.c         | 24 ++++++++++----------
->   target/i386/tcg/system/seg_helper.c |  2 +-
->   target/i386/tcg/system/svm_helper.c |  2 +-
->   target/i386/whpx/whpx-all.c         | 34 ++++++++++++++---------------
->   target/loongarch/cpu.c              |  2 +-
->   target/m68k/cpu.c                   |  2 +-
->   target/microblaze/cpu.c             |  2 +-
->   target/mips/cpu.c                   |  6 ++---
->   target/mips/kvm.c                   |  2 +-
->   target/openrisc/cpu.c               |  3 +--
->   target/ppc/cpu_init.c               |  2 +-
->   target/ppc/kvm.c                    |  2 +-
->   target/rx/cpu.c                     |  3 +--
->   target/rx/helper.c                  |  2 +-
->   target/s390x/cpu-system.c           |  2 +-
->   target/sh4/cpu.c                    |  2 +-
->   target/sh4/helper.c                 |  2 +-
->   target/sparc/cpu.c                  |  2 +-
->   target/sparc/int64_helper.c         |  4 ++--
->   35 files changed, 141 insertions(+), 119 deletions(-)
-> 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 5eaf41a566..1dee9d4c76 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -942,6 +942,31 @@ CPUState *cpu_by_arch_id(int64_t id);
->   
->   void cpu_interrupt(CPUState *cpu, int mask);
->   
-> +/**
-> + * cpu_test_interrupt:
- > + * @cpu: The CPU to check interrupt(s) on.> + * @mask: The 
-interrupts to check.
+>   target/i386/kvm/kvm.c | 12 +++++-------
+>   1 file changed, 5 insertions(+), 7 deletions(-)
 
-Can we use plural form to express we might test for more
-than one interrupt in the mask?
 
-   -> cpu_test_interrupts()
-
-otherwise cpu_test_interrupt_mask().
-
-> + *
-> + * Checks if any of interrupts in @mask are pending on @cpu.
-> + */
-> +static inline bool cpu_test_interrupt(CPUState *cpu, int mask)
-> +{
-> +    return qatomic_load_acquire(&cpu->interrupt_request) & mask;
-How missing "qemu/atomic.h" header.
-
-> +}
-> +
-> +/**
-> + * cpu_set_interrupt:
-> + * @cpu: The CPU to set pending interrupt(s) on.
-> + * @mask: The interrupts to set.
-
-Rename plural: cpu_set_interrupts() or _mask().
-
-> + *
-> + * Sets interrupts in @mask as pending on @cpu.
-> + */
-> +static inline void cpu_set_interrupt(CPUState *cpu, int mask)
-> +{
-> +    qatomic_store_release(&cpu->interrupt_request,
-> +        cpu->interrupt_request | mask);
-
-(indent is off)
-
-> +}
-> +
-The field is described in CPUState as:
-
-   @interrupt_request: Indicates a pending interrupt request.
-
-Can we update the description, mentioning its access should be
-via the proper cpu_test_interrupts/cpu_set_interrupts/... helpers?
-
-> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> index 713bdb2056..1269c2c6ba 100644
-> --- a/accel/tcg/cpu-exec.c
-> +++ b/accel/tcg/cpu-exec.c
-> @@ -778,7 +778,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
->        */
->       qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
->   
-> -    if (unlikely(qatomic_read(&cpu->interrupt_request))) {
-> +    if (unlikely(cpu_test_interrupt(cpu, ~0))) {
-
-Maybe nitpicking, but I'd introduce the API and use it first only where
-we already use atomic accesses. Then convert the rest of the code base
-to this API in a distinct patch.
-
->           int interrupt_request;
->           bql_lock();
->           interrupt_request = cpu->interrupt_request;
-> @@ -786,7 +786,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
->               /* Mask out external interrupts for this step. */
->               interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
->           }> -        if (interrupt_request & CPU_INTERRUPT_DEBUG) {
-> +        if (cpu_test_interrupt(cpu, CPU_INTERRUPT_DEBUG)) {
->               cpu->interrupt_request &= ~CPU_INTERRUPT_DEBUG;
->               cpu->exception_index = EXCP_DEBUG;
->               bql_unlock();
-> @@ -795,7 +795,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
->   #if !defined(CONFIG_USER_ONLY)
->           if (replay_mode == REPLAY_MODE_PLAY && !replay_has_interrupt()) {
->               /* Do nothing */
-> -        } else if (interrupt_request & CPU_INTERRUPT_HALT) {
-> +        } else if (cpu_test_interrupt(cpu, CPU_INTERRUPT_HALT)) {
->               replay_interrupt();
->               cpu->interrupt_request &= ~CPU_INTERRUPT_HALT;
-
-Can we have a cpu_clear_interrupts() helper for completion? Likely we
-need the same BQL-safe access.
-
->               cpu->halted = 1;
-> @@ -805,7 +805,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
->           } else {
->               const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
->   
-> -            if (interrupt_request & CPU_INTERRUPT_RESET) {
-> +            if (cpu_test_interrupt(cpu, CPU_INTERRUPT_RESET)) {
->                   replay_interrupt();
->                   tcg_ops->cpu_exec_reset(cpu);
->                   bql_unlock();
-> @@ -841,7 +841,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
->               interrupt_request = cpu->interrupt_request;
+>       /* Force the VCPU out of its inner loop to process any INIT requests
+>        * or (for userspace APIC, but it is cheap to combine the checks here)
+> @@ -5489,10 +5486,10 @@ void kvm_arch_pre_run(CPUState *cpu, struct kvm_run *run)
+>       if (cpu_test_interrupt(cpu, CPU_INTERRUPT_INIT | CPU_INTERRUPT_TPR)) {
+>           if (cpu_test_interrupt(cpu, CPU_INTERRUPT_INIT) &&
+>               !(env->hflags & HF_SMM_MASK)) {
+> -            cpu->exit_request = 1;
+> +            qatomic_set(&cpu->exit_request, 1);
 >           }
->   #endif /* !CONFIG_USER_ONLY */
-> -        if (interrupt_request & CPU_INTERRUPT_EXITTB) {
-> +        if (cpu_test_interrupt(cpu, CPU_INTERRUPT_EXITTB)) {
->               cpu->interrupt_request &= ~CPU_INTERRUPT_EXITTB;
->               /* ensure that no TB jump will be modified as
->                  the program flow was changed */
-Looking at v4 applied on top of v10.1.0-rc4 reconstructing patch
-#6 with v5:
+>           if (cpu_test_interrupt(cpu, CPU_INTERRUPT_TPR)) {
+> -            cpu->exit_request = 1;
+> +            qatomic_set(&cpu->exit_request, 1);
+>           }
+>       }
 
-$ git grep -F -- '->interrupt_request'
+Interesting. IMHO to avoid future similar problems, we should declare
+CPUState::exit_request a "private" field and access it via a helper,
+where atomicity is enforced.
 
-* Missing cpu_test_interrupts()
+The only non-accelerator use is in PPC sPAPR:
 
-target/arm/machine.c:968:        env->irq_line_state = 
-cs->interrupt_request &
-target/i386/helper.c:600:    int sipi = cs->interrupt_request & 
-CPU_INTERRUPT_SIPI;
-target/i386/kvm/kvm.c:5067:            events.smi.pending = 
-cs->interrupt_request & CPU_INTERRUPT_SMI;
-target/i386/kvm/kvm.c:5068:            events.smi.latched_init = 
-cs->interrupt_request & CPU_INTERRUPT_INIT;
+hw/ppc/spapr_hcall.c:512:        cs->exit_request = 1;
+hw/ppc/spapr_hcall.c:534:    cs->exit_request = 1;
+hw/ppc/spapr_hcall.c:627:    cs->exit_request = 1;
 
-* Possible uses of qatomic_load_acquire()?
+FYI last week we noticed a similar problem with CPUState::thread_kicked
+when using HVF and I'll post in a few days a series containing this
+change:
 
-accel/tcg/cpu-exec.c:801:            int interrupt_request = 
-cpu->interrupt_request;
-accel/tcg/tcg-accel-ops-icount.c:152:    int old_mask = 
-cpu->interrupt_request;
+-- >8 --
+diff --git a/system/cpus.c b/system/cpus.c
+index 26fb3bd69c3..39daf85bae7 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -464,10 +464,10 @@ void qemu_wait_io_event(CPUState *cpu)
 
-* Candidates for cpu_clear_interrupts()
+  void cpus_kick_thread(CPUState *cpu)
+  {
+-    if (cpu->thread_kicked) {
++    if (qatomic_read(&cpu->thread_kicked)) {
+          return;
+      }
+-    cpu->thread_kicked = true;
++    qatomic_set(&cpu->thread_kicked, true);
 
-accel/tcg/cpu-exec.c:784:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_DEBUG;
-accel/tcg/cpu-exec.c:794:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_HALT;
-accel/tcg/cpu-exec.c:842:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_EXITTB;
-hw/core/cpu-common.c:79:    cpu->interrupt_request &= ~mask;
-hw/core/cpu-system.c:207:        cpu->interrupt_request &= ~0x01;
-target/avr/helper.c:50:            cs->interrupt_request &= 
-~CPU_INTERRUPT_RESET;
-target/avr/helper.c:62:                cs->interrupt_request &= 
-~CPU_INTERRUPT_HARD;
-target/i386/helper.c:605:    cs->interrupt_request = sipi;
-target/i386/hvf/x86hvf.c:400:            cs->interrupt_request &= 
-~CPU_INTERRUPT_NMI;
-target/i386/hvf/x86hvf.c:412:        cs->interrupt_request &= 
-~CPU_INTERRUPT_HARD;
-target/i386/hvf/x86hvf.c:440:        cs->interrupt_request &= 
-~CPU_INTERRUPT_POLL;
-target/i386/hvf/x86hvf.c:453:        cs->interrupt_request &= 
-~CPU_INTERRUPT_TPR;
-target/i386/kvm/kvm.c:5069:            cs->interrupt_request &= 
-~(CPU_INTERRUPT_INIT | CPU_INTERRUPT_SMI);
-target/i386/kvm/kvm.c:5459:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_NMI;
-target/i386/kvm/kvm.c:5470:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_SMI;
-target/i386/kvm/kvm.c:5505:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_HARD;
-target/i386/kvm/kvm.c:5600:        cs->interrupt_request &= 
-~CPU_INTERRUPT_MCE;
-target/i386/kvm/kvm.c:5630:        cs->interrupt_request &= 
-~CPU_INTERRUPT_POLL;
-target/i386/kvm/kvm.c:5643:        cs->interrupt_request &= 
-~CPU_INTERRUPT_TPR;
-target/i386/nvmm/nvmm-all.c:422:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_NMI;
-target/i386/nvmm/nvmm-all.c:431:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_HARD;
-target/i386/nvmm/nvmm-all.c:440:        cpu->interrupt_request &= 
-~CPU_INTERRUPT_SMI;
-target/i386/nvmm/nvmm-all.c:700:        cpu->interrupt_request &= 
-~CPU_INTERRUPT_POLL;
-target/i386/nvmm/nvmm-all.c:713:        cpu->interrupt_request &= 
-~CPU_INTERRUPT_TPR;
-target/i386/tcg/system/seg_helper.c:181:        cs->interrupt_request &= 
-~CPU_INTERRUPT_POLL;
-target/i386/tcg/system/seg_helper.c:189:        cs->interrupt_request &= 
-~CPU_INTERRUPT_SMI;
-target/i386/tcg/system/seg_helper.c:194:        cs->interrupt_request &= 
-~CPU_INTERRUPT_NMI;
-target/i386/tcg/system/seg_helper.c:199:        cs->interrupt_request &= 
-~CPU_INTERRUPT_MCE;
-target/i386/tcg/system/seg_helper.c:204:        cs->interrupt_request &= 
-~(CPU_INTERRUPT_HARD |
-target/i386/tcg/system/seg_helper.c:218:        cs->interrupt_request &= 
-~CPU_INTERRUPT_VIRQ;
-target/i386/tcg/system/svm_helper.c:827:    cs->interrupt_request &= 
-~CPU_INTERRUPT_VIRQ;
-target/i386/whpx/whpx-all.c:1474:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_NMI;
-target/i386/whpx/whpx-all.c:1481:            cpu->interrupt_request &= 
-~CPU_INTERRUPT_SMI;
-target/i386/whpx/whpx-all.c:1505:                cpu->interrupt_request 
-&= ~CPU_INTERRUPT_HARD;
-target/i386/whpx/whpx-all.c:1523:        cpu->interrupt_request &= 
-~CPU_INTERRUPT_HARD;
-target/i386/whpx/whpx-all.c:1610:        cpu->interrupt_request &= 
-~CPU_INTERRUPT_POLL;
-target/i386/whpx/whpx-all.c:1626:        cpu->interrupt_request &= 
-~CPU_INTERRUPT_TPR;
-target/openrisc/sys_helper.c:199:                cs->interrupt_request 
-&= ~CPU_INTERRUPT_TIMER;
-target/rx/helper.c:66:            cs->interrupt_request &= 
-~CPU_INTERRUPT_FIR;
-target/rx/helper.c:76:            cs->interrupt_request &= 
-~CPU_INTERRUPT_HARD;
-target/s390x/tcg/excp_helper.c:562:        cs->interrupt_request &= 
-~CPU_INTERRUPT_HARD;
+---
+
+It only affects HVF because this is the single access to thread_kicked
+out of accelerator code:
+
+$ git grep -w thread_kicked
+include/hw/core/cpu.h:484:    bool thread_kicked;
+system/cpus.c:449:    qatomic_set_mb(&cpu->thread_kicked, false);
+system/cpus.c:476:    if (cpu->thread_kicked) {
+system/cpus.c:479:    cpu->thread_kicked = true;
+target/arm/hvf/hvf.c:1825:    qatomic_set_mb(&cpu->thread_kicked, false);
+
+(Call introduced in commit 219c101fa7f "arm/hvf: Add a WFI handler").
 
