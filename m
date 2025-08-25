@@ -4,89 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C860CA0FE1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 11:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3466CCA0FEB
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 11:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqUy7-0002eR-H9; Mon, 25 Aug 2025 07:02:36 -0400
+	id 1uqV25-0004ss-Pr; Mon, 25 Aug 2025 07:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqUxs-0002WC-G6
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 07:02:16 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqV23-0004sQ-MU
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 07:06:36 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqUxm-0001e4-Jf
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 07:02:14 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-55f3dcb2b9fso1366352e87.1
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 04:02:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqV1w-0002Ft-RT
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 07:06:35 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3c763484ccdso1046618f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 04:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756119726; x=1756724526; darn=nongnu.org;
- h=user-agent:in-reply-to:content-disposition:mime-version:references
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sjdAeL7RTuKpBxor0GNtJ1RitBuids5FYyq5bPM94ys=;
- b=lhx2Aaqbwd7aqCf37L3+3GVXOa+slmfl/8B6UnzjRIIpPkeT1kIohaz7npDotOndd8
- yC5XefzO2uSIGkJSDTO8Ek+Srac3FcHqFxPiSGo03dor4D/KmKPD5kQ+B1NHUBrGgGk2
- wbplwftLZ2oAdXfDiae0wVeTN93ssb+DgskbSY+sjmliGvpPA4hLOgaYkJioTGR7Z9SV
- ZfVy88dvwn/7PKY8Z8agg1Uj+6isUF3dfe5L+GkCcOzTZIntH49E63vkhHupI9rTv3zf
- VEy2wTs7ggzFwfujyOi+KHbC1djK61B1DfjmL1VwJoaxYzZ68W9buO4DFbWrUQih6KHh
- bEHw==
+ d=linaro.org; s=google; t=1756119984; x=1756724784; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b7B1h6iBFdoyoaJoneA4WRk2fx4IAUGIgXcUS7w01a8=;
+ b=HXPa4trq5luvpNj9CeIJqM+SuK0dtb2glJtvjajCLLh77+TF61LE5r8F20j8PGGxFJ
+ en5nHjMqAGlHtTVCEk6fRcosoAjEZnHybLfRrjv0buIH6QVdaTf0k9Qku4S2fs79N+Jj
+ IY+w7XOZHXZ8xnPSMij5MuxjMaaAq62vCBNEcnUOOaRz0aTLIxgLD/RxsaoahvPPCCZB
+ NFLopykuyumCgVqPDiJnwDxVEpcKZdfc+Czkh4VN1F5r4FyChGD2T4vn3YAHFRxbs3o5
+ Gk+pFFyofWP/t/7IBF+cb2GmZ6rwNxq2GZf5bvIkZ8JamnbCuAAuGKi2wFUA7po60g2G
+ i5bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756119726; x=1756724526;
- h=user-agent:in-reply-to:content-disposition:mime-version:references
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sjdAeL7RTuKpBxor0GNtJ1RitBuids5FYyq5bPM94ys=;
- b=fs55MaYfhz4B0eXw7R2hD8QXB715otgOwV+yh3Vtm9vI7fnQgQuiSsKNOLia7MOy/5
- 1NZN3TI4MwYy6jE7vt7QtKd0l6hs8/XIdxQO+MAo3Idr6+dX4J2R3ozbEAXhK8aiMn/A
- FnQ9JcgbT2iEr6MrrFCTLH2TSO/+oOKwjoJ5z67TxSUyAgBoxbqqmzhKOpndw3Wj2ARM
- RVX4Vjh78CKT3DmIxXlZi4zJF/A2W+MqzE1Xvi8CjL7ORhDcM/vjXTq2yLL/W6OOup6F
- tZTV4ki06VTjKFnWE2wvI9HSuWmpC0w+xDkCWlFMDtbLe+OXfVEvMfyDb8qSUAOK10PR
- zVQQ==
-X-Gm-Message-State: AOJu0YwHUNrh9cMi8+4dCw9kt34co99rbYoU/mB9zcYwzuqOlUMG0zAS
- T8od08t5fxADKYIRVm8UQS4laepjUduniJcU/fVtyDhkPT303oe3iyza
-X-Gm-Gg: ASbGncsURpgoQopJrMw31iHX89i1Zss/FTFBqBdWUDcl7uw9CZRBB2jUILvOMSNhBhl
- DNu7akegIi67Mux2JH8zjqwxqOwsQYxbv3W5ggEfehKUxZIjst7r+ULxwpCCU1418q7b3pfPOTB
- jZFAh9WpBdgHbhVnx/ZQdQsUNQQs72Foyp+i/6Hhd4ht3MH2aA3NpSlQfInInS8YPxsa6ogvCW2
- l6BEQZ5wmTx2zRUN5qrIvdfqaJM13+yjU6Jp2sY3GNCmvLvORU07AgMxZDOAZ84nB+OOow5ajyO
- NENgPoWiDZAmGQZ8OFovLppmF177NcDO41ADCxcHnhaLcPv84zutyG4z+RyZOsttBhZ5EfmtECA
- 7USi+ZUXE1LmcFVJOo5v8mc+WRMGdz3yHlhsJC6KlqWjntykEuU0gmT2qfhDZDlmGVudASg==
-X-Google-Smtp-Source: AGHT+IFpYYCqmjxnTQKr7DpdGO4/w693+lIN/lofxavaPwXAJ1rhMj6NF71dHEwyIXUjjav4gkea4g==
-X-Received: by 2002:a05:6512:1412:b0:55f:4ac2:a59a with SMTP id
- 2adb3069b0e04-55f4ac2bd3amr94529e87.22.1756119725613; 
- Mon, 25 Aug 2025 04:02:05 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-55f35c8bce3sm1583819e87.95.2025.08.25.04.02.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Aug 2025 04:02:05 -0700 (PDT)
-Date: Mon, 25 Aug 2025 13:02:04 +0200
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, edgar.iglesias@amd.com
-Subject: Re: [PATCH v1 3/4] target/microblaze: Break out raise_divzero()
-Message-ID: <aKxCrEWclYHaHYCI@zapote>
-References: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
- <20250824222734.4151956-4-edgar.iglesias@gmail.com>
- <84378f52-2fc1-4079-ae80-d034defb1411@linaro.org>
+ d=1e100.net; s=20230601; t=1756119984; x=1756724784;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b7B1h6iBFdoyoaJoneA4WRk2fx4IAUGIgXcUS7w01a8=;
+ b=LV4cCqPHNA0VOJbwR3ZO0O6z/ZMnvfNzjx02xEvMb6A9LYG8FSJogpmord3VMoV0dn
+ 512FmexmRhUU0tx9DMm47+4nw5Uxrxp/uK7052FP5AVOtmKG/6GWA7jdLvoawIU/wh7F
+ n85ro6DKienhWVkEYQKZgoJf5OmlXP0OFqt/oAk1VDaQZs+vlBJSiiIOSp9/tz078P3L
+ 83SKRxAsJA2k78Pss/gforgLoS7+Hhv6IXBX+dzbVX7kweOAYGQWceNDoPEcZTURzD2b
+ qZiyGFmMq/8j7DrRmEVXd29dSdKAVudx54ean5vOTRJCaEufCAjpEqyijuHBjNejF022
+ 4haA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjW9bGGroDVnIlRQ9ZSdD7aJ2GArZlybUUOCSN+bunLCVbn6MvQiXL6lzKUWZ+Cv9nWYRFIT6hKjEf@nongnu.org
+X-Gm-Message-State: AOJu0YxfKc3XhVLNX0o2oDAmUStT7rcLixd6oHP20RTBdCB5MERWd0fj
+ NmexqxHwPQthtf3bwkyb+bQCwu4d/ERvNMjbuLxG2Pm3k6oRX4oKnig+Ndaawj8FHgo=
+X-Gm-Gg: ASbGncveSprVpM+IcpgVpc7BsgTEcJu3Sb7MS0wWEPuk6164eph1p/i4yESw0Q3s0+7
+ KqW6nrIFKyW2KqXhVXIy56tWM40ZmUwACWU70oQgF/UECNlzbpnmMh0r2Z+VZO1XC8Ie/VLDKdB
+ RWD5B/HrdbcMQPOWzqGtkI3Xm+RZh1BHRsa2o3yeYJpiHd2zjOOG8Gdi1f47B8SoWJ7VEBNeoJ4
+ TIJl1s1o6KJ6p1LLUUbb8oPU0q+CB/+g5WHAL5dlQKxjs75rgf4fIkkFZJYa+CUDhNGxkRoQpd0
+ H5jcnC1rSuf3uafzp0/ttN2fMrzk1lxKMYbP6WX3fy5y0Y3lwySWsQVbSl2plLUa5OEg6accyn4
+ H2vAH2YAOgdjixTEzNc9MRBnKlO8xeTlxQvGGVH7oj3zEA4p//quHCg+3xo8zT5F6ow==
+X-Google-Smtp-Source: AGHT+IHVbiY7+DxA209a+SDNjN0O/t9xMOqd06ESsCjGRaKa3e26xGXMmjMrUSmrrcxdVZT5ShtZ5Q==
+X-Received: by 2002:a05:6000:230a:b0:3c9:d1b0:809f with SMTP id
+ ffacd0b85a97d-3c9d1b08468mr1534329f8f.29.1756119984369; 
+ Mon, 25 Aug 2025 04:06:24 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3c70e4ba390sm11566406f8f.12.2025.08.25.04.06.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Aug 2025 04:06:23 -0700 (PDT)
+Message-ID: <74f86350-a10a-45c0-a3f2-4d582989655b@linaro.org>
+Date: Mon, 25 Aug 2025 13:06:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <84378f52-2fc1-4079-ae80-d034defb1411@linaro.org>
-User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 7/9] system/memory: assert on invalid unaligned
+ combo
+To: CJ Chen <cjchen@igel.co.jp>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Tomoyuki Hirose <hrstmyk811m@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250822092410.25833-1-cjchen@igel.co.jp>
+ <20250822092410.25833-8-cjchen@igel.co.jp>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250822092410.25833-8-cjchen@igel.co.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,33 +114,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 25, 2025 at 09:36:44AM +1000, Richard Henderson wrote:
-> On 8/25/25 08:27, Edgar E. Iglesias wrote:
-> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> > 
-> > Break out raise_divzero(). No functional change.
-> > 
-> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> > ---
-> >   target/microblaze/op_helper.c | 30 ++++++++++++++----------------
-> >   1 file changed, 14 insertions(+), 16 deletions(-)
+On 22/8/25 11:24, CJ Chen wrote:
+> When it comes to this pattern: .valid.unaligned = false and
+> impl.unaligned = true, is effectlvely contradictory. The .valid
+> structure indicates that unaligned access should be rejected at
+> the access validation phase, yet .impl suggests the underlying
+> device implementation can handle unaligned operations. As a result,
+> the upper-layer code will never even reach the .impl logic, leading
+> to confusion.
 > 
-> You could usefully squash this with the previous.  It obviates the b ->
-> divisor rename, and it perhaps clarifies why you don't like using "ra" in
-> two different contexts.
+> Signed-off-by: CJ Chen <cjchen@igel.co.jp>
+> Tested-by: CJ Chen <cjchen@igel.co.jp>
 
-Yes, that was what prompted me to rename ra in the first place.
+It is normal for contributors to test their patches ;)
 
-I'll squash this with the former patch and rename pc to unwind_pc,
-keeping your RB tag. Let me know if that wasn't your intention.
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+> ---
+>   system/memory.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-Cheers,
-Edgar
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> 
-> r~
 
