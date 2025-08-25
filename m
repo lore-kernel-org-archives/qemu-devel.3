@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE094CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4892CA0FE1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:59:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqTwI-00066n-Ty; Mon, 25 Aug 2025 05:56:35 -0400
+	id 1uqTys-0007L0-OI; Mon, 25 Aug 2025 05:59:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqTw3-00063b-9b
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:56:21 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqTvx-00026K-Rf
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:56:16 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-45a1b0c52f3so24961765e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 02:56:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756115763; x=1756720563; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DtPysv0q8plRMP+uuaG7xvmK7HEMKFlASd4qR6lUwg4=;
- b=Vh5CXMbcfLy1kmYwFrrbe0iRmuIFD7qb6tKOjR5D51ppZCKInMsNYLgSObhNwVjaQu
- jAGDlDuy6HgrWsHhihzz3sjqa1Sv/3Idx6QKz7EUSmpXOpaIl1MuQYLTUkUbza00obXe
- rxlH6uzC5f+H5s0XayXMi9J5B2BNBFnAbVcwQ4O3AUJrEGkqoJcQ84TsTCTHCZimH1S0
- Qw9keCyqy3goV6KqmHAdQPXq4rKjiuYaWkiFzD0UczIiH467ymG9ST227Vn0fS35baKL
- ejIdT8Lwp9JSVXplkZD7KGcPxNd34Zv2LK26OFznmWJN6eggfkN1KDr7UVD5GRKCizLd
- Z72g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uqTyq-0007Js-Cm
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:59:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uqTyj-0002Lu-6a
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:59:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756115939;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SqE1wYfDYojFcGZyUPFR3ZBs8YkWEU6ARG7lPiQTyD0=;
+ b=VvPPMML1FaTL0DQnpHs89es6Hbi7ipK++TUY39emLV0h/PIp8ANHtxihKnnfubi+zhFpVl
+ SxS4FL7TimpBNsUiZvrvID97rtxYTwODFf9X0p5W/gnz3o/BQ+4HWssi96C08UvflCYjQw
+ JxgQUC9dKOEC31IcL39N/uNLmn6BMo0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-127-JmxZ2I8vPuq0BMBDkMmMRg-1; Mon, 25 Aug 2025 05:58:57 -0400
+X-MC-Unique: JmxZ2I8vPuq0BMBDkMmMRg-1
+X-Mimecast-MFC-AGG-ID: JmxZ2I8vPuq0BMBDkMmMRg_1756115936
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3c8bc2914a9so568839f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 02:58:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756115763; x=1756720563;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DtPysv0q8plRMP+uuaG7xvmK7HEMKFlASd4qR6lUwg4=;
- b=JG97pYSkbkL5CDfwa1wqj9c76uMFn8QwamzbEKzmJ8e725pZOCaEeLeWEdtR2RAt3C
- zl50EjLH2LCYV2kuui7Ac5ghMyJdQqsuMMF+aTytNSCHjvkDtY/N7j6PHPdhifqBu/No
- uzmCz79QoPmJWd6N0v3jPAsdTe2Hgb/8R8pSFFhAq8c1CqnClAx7hR+HcKLa5428PlyR
- 32s0+Z2JdE4i43+2Q0ykp0uEJ2pS+iGTQDeo8yKe//d1RyJhWUkkX68yqB0SzByhEhuE
- Cdc8NASkWvnW2JvscpFKN3wZZcWTcaAFBNMUzE85MXqcwAzWG8zRXqDBG7iSMJ4rfTiW
- Rgvg==
+ d=1e100.net; s=20230601; t=1756115936; x=1756720736;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SqE1wYfDYojFcGZyUPFR3ZBs8YkWEU6ARG7lPiQTyD0=;
+ b=BXgetcGi1k/xR3eJ1saEBdh9DObSqQrk62vjKq8zmxlPR67Crl5/ec9xsSI7a67BRB
+ CKFjABVG2frAnvXdHw9VnIYuEvO6+UQReVsL0SuTiTpP7HxcBU2AJI6uRVvpCO/njEFC
+ ypAXxncgj6kAYJkQtGny7z3Efz/l6KNMPtPsbq3kPQbjncLIHL55QPiEM9LHiCBCPWaK
+ 7ln43ICfeUSMdTc/WDXRlS2XQ+BrFiNn4sefPbsFALAlYE+n4BAmodfapk9qYv7nQRnI
+ 3aiNn4NomLhu+SNOWbHodmj0OqcYFODwOAqFRh/UoDa4o9Rkz3zFYWIKuYyyitGcytz9
+ Gnvg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVyNiptMwPegAA33y419dQ7CetoNGdX6hcxYuZv+LKGEYNhAihrHioJUA3ymXxxWxH8ytkkPx6PWM06@nongnu.org
-X-Gm-Message-State: AOJu0Yw8MRbXcbh0mXuOsivF6nKlWxGnEiIVfU0c0jNnfQ9Ch3gfiZoP
- 2yNCJbK2oBSsMP+O/Kj0pUAvGGpZhu0SEZEBVb2XlZVVegIW0k93LQxC+O64op5G6KDxojAsIJX
- nYJpx
-X-Gm-Gg: ASbGncv2CAN8la6IDiir6OjS1uxSgbu8h+Ju/g3eafFhB9CKoGz68CHY1SNKfKAb6Qa
- 8qt7kOY0dpvyt652gSN/bby5MeRgUqdFvwMwcvyNLzCya2dLU0X8uhFXd/c8ZC5gnV7vEySqOmY
- WDOvJwJAklV5dWHO8XDhlPv8uSXfAQ04c0pxVJg1MPlDgzK778yedPuf9+Ro1kwyfzwJ3vivT9O
- UBveuTzMWH0jRtKYZTzLKtVJQMnK1qEbbAxiIjdQibr1AWzpXXFe8Dx49nIW9ukorZjpUoWaY4u
- 568AuWlwZOdyxmHrPp6lfVtywJ/f9c1cLqF/+onuTt66k/626tjHXco31XUiLL8Iq50QuWQnRc7
- FBzCHeL0bD6w5dN7vln+ord7+BGDBT3cSbQTSmAdjr6JeV3AI5eddIuipad60DbCXGw==
-X-Google-Smtp-Source: AGHT+IFII4uz9bHKRVMU/jqk/Ik1xyv1FNOwKxKjbIfzqXS6ferhx9aYm6vJ1OcwtxUTA8WX5oiUAQ==
-X-Received: by 2002:a05:600c:1d87:b0:45b:5ff4:2f8f with SMTP id
- 5b1f17b1804b1-45b5ff43124mr24307765e9.4.1756115762660; 
- Mon, 25 Aug 2025 02:56:02 -0700 (PDT)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b5757453fsm101240695e9.14.2025.08.25.02.56.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Aug 2025 02:56:02 -0700 (PDT)
-Message-ID: <eb4da435-2b16-4421-a192-612a33524897@linaro.org>
-Date: Mon, 25 Aug 2025 11:56:00 +0200
+ AJvYcCUQglhhVQzGIs61odTZyLpMeU88VEzG1T6s/srYCQjGi9ulogbeviKk9P+FVv0SApcFhhfMr1EWUb4G@nongnu.org
+X-Gm-Message-State: AOJu0Yxl+9aN61fjGKUi8a4ns6EMCK9LR2ihMzhan4ziBZMjy9Uiz4Ex
+ jrtouAQ25wxRR1HoabzO2lJ+Zk+n/eotyn5u5cBEI55tsk4v68QABi+N4Cw4rfNQgayNLz1pde1
+ SPcfb74yIzeiivJ/f2X8n00+e2xd/xgKLpodDEtUC9/oPiJYqRqwEh3bu8DzzgJIBRlbRNpsRx/
+ 5M2tFD86sUifVtUpeYys8V97Oeb+Bp70g=
+X-Gm-Gg: ASbGncugcJ0zEjKu+eEEUONBKG+1RuEGM5BI0L830ihTFjP+vI6RWCCKWD3tGWJxkhL
+ YQYE+tXXcO4WyWlS9BjFBamzLhjENz9uYlYoG3Vjtux10TP4E9MgY7AEdnKmNsHFA15biqvdwp5
+ 8/8vZdPGfuIOF5VyOOCTqUyaKMUhu8f2zumRiaiqFH9CZKHYyBxTzCsLfMZ8B5vEpCorMVZB8Xd
+ w3N23fAt98Wsc0FmG+WUf7ToQ==
+X-Received: by 2002:a05:6000:270a:b0:3c9:73f7:c835 with SMTP id
+ ffacd0b85a97d-3c973f7cbf1mr1309215f8f.29.1756115935974; 
+ Mon, 25 Aug 2025 02:58:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGyEjnfXcrPXkR4cLKAf75l8KGjNaDTlC6TVVVb64b4ugTCGIolfmeV1gmzXEwiRnhDz9NLvRIpjx5alrS1Vh8=
+X-Received: by 2002:a05:6000:270a:b0:3c9:73f7:c835 with SMTP id
+ ffacd0b85a97d-3c973f7cbf1mr1309202f8f.29.1756115935582; Mon, 25 Aug 2025
+ 02:58:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/12] single-binary: compile once semihosting
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, richard.henderson@linaro.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-arm@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-References: <20250804183950.3147154-1-pierrick.bouvier@linaro.org>
- <7c026d43-04b4-4615-8478-639393b640c2@linaro.org>
- <e7ea76f9-b66c-4656-b8b6-4d0ff0dfee35@linaro.org>
- <33849bb7-07a8-4a04-b142-ebfe5d286332@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <33849bb7-07a8-4a04-b142-ebfe5d286332@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250822122655.1353197-1-pbonzini@redhat.com>
+ <20250822122655.1353197-9-pbonzini@redhat.com>
+ <aKwV49H1RE31Bue5@intel.com>
+ <CAAjaMXZFus_sj4P_SNgUiWQ9xEO_rRmYvf5VVDBfz_Z_S6TXmg@mail.gmail.com>
+In-Reply-To: <CAAjaMXZFus_sj4P_SNgUiWQ9xEO_rRmYvf5VVDBfz_Z_S6TXmg@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 25 Aug 2025 11:58:44 +0200
+X-Gm-Features: Ac12FXze9heThqmIWqLBN1Fx4OwcPWfF9d2CsBgVkfNo52fgcI_3Vm0uuvCDi40
+Message-ID: <CABgObfZ4r2B0w-1XVcNG3HeZTPbSfuw4KB4uXxi2-0fYvP17wQ@mail.gmail.com>
+Subject: Re: [PATCH 08/14] rust: qdev: add minimal clock bindings
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
+ tanishdesai37@gmail.com, 
+ stefanha@redhat.com, berrange@redhat.com, mads@ynddal.dk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,28 +110,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/8/25 16:57, Pierrick Bouvier wrote:
-> On 2025-08-22 07:56, Philippe Mathieu-Daudé wrote:
->> On 22/8/25 16:31, Pierrick Bouvier wrote:
->>> On 2025-08-04 11:39, Pierrick Bouvier wrote:
->>>> This series compiles once semihosting files in system mode.
->>>> The most complicated file was semihosting/arm-compat-semi.c, which was
->>>> carefully
->>>> cleaned in easy to understand steps.
+On Mon, Aug 25, 2025 at 9:33=E2=80=AFAM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+> > get() sounds too general for Clock obj...maybe get_period()?
+>
+> (Or just clock.period())
 
+Will do period() and hz().
 
->>> Ping on this series.
->>> I'll be out next week, but it should be ready to be pulled once the
->>> trunk reopens.
->>
->> Modulo the comment on patch #9, the series is fully reviewed.
+Paolo
 
-Sorry, this was a comment for the maintainer, hoping he'd update the
-comment while queuing the series, not asking you to respin another one.
-
-Next time I'll be more verbose with such comments.
-
-> I'll send a v4 with this, thanks.
-
-We should be super good now ;)
 
