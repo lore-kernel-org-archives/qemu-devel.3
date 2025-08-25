@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D20FCA0EED
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 07:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4176BCA0EED
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 07:24:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqRUC-0001zt-Jk; Mon, 25 Aug 2025 03:19:26 -0400
+	id 1uqRYA-0003Q1-EF; Mon, 25 Aug 2025 03:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uqRU7-0001vO-Bg
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 03:19:21 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1uqRXw-0003PA-Ge
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 03:23:16 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uqRU0-0001Fe-M6
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 03:19:17 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-61c26f3cf6fso4984540a12.1
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 00:19:09 -0700 (PDT)
+ id 1uqRXq-0001fI-PY
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 03:23:15 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-61c30ceacdcso2949161a12.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 00:23:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756106345; x=1756711145; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756106586; x=1756711386; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cLp0m6ea3e0c8briQDkIXqwEqMhnxGpwcwjVUt8zo2o=;
- b=mADE4QS2p/gkXfpYtzPzSx7DO58gff+DBBPPYRRi+iR25vG4rjNFekf9Ufam2pskRv
- Ty36LCBxxpUa/Vcw83XOmBOgECmtPEpZBKZP7FoA7ZIWcSO1UKxUBqiSOQcq7PSWxpTT
- UOXmUYCupHE8aJ5wmOwsA5Jwis05dqLtCY9AiNVjb5wdHqr8MOcG+BtNmGhkF7QNgoX6
- GvXYaVbX4LqqUVBHUrqT2GwXr8+EsYWLbjDY20Lot/nJhL9lOTu7ABZQ+8+zSwKQRGS+
- JwHsDwD047iMpnPbTxtTw8QxOCjBEZq/TgGZQtSzmQ78LR8JMtlZYlTLG+2yGxd08IAh
- hDUg==
+ bh=u45ykrYkuCt/hD79fRrYiLNYCDS/5E2/xpZe84aiaXo=;
+ b=NFqW6AGN90beFT322E9/AuQKjmBWi/c7fxWBecIP94X0Gb+xAYKrwTy4FPtlYb7pN8
+ 08pMhlVGf/BE/Hb/O6lBFXlFlyL2KwZk2mpGhmOQp7l0TkXEO+YOXpkxf3k31rL8vSR0
+ NJnunpX0IUFzjUsg9L7dNkVpNCG28sCnqZt1XLUPePTO0+gHG4SOgufoI0fJS0UDo12m
+ zktpEXCdRjLUUyb0ta+XjQ/G+dFhZMzprNfzFvhdjwxiA1mBvhplcIpRpWv3F7zA38mL
+ QyUDbuheug6vgyFLVe1Wt1bZxllOLxn7x1aOA6SxmNda9iMAJJdl9B5UOCbrg9O2fv2L
+ R5Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756106345; x=1756711145;
+ d=1e100.net; s=20230601; t=1756106586; x=1756711386;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cLp0m6ea3e0c8briQDkIXqwEqMhnxGpwcwjVUt8zo2o=;
- b=M0dQ4rSSI00YLcZyz+HcQqTqV6MI3BKOwOsk/cVk1xu6yjM3sjZZloc3nHZqZe9Ybw
- a2B+wWxdW7yL9+Kx0kS+Jbs8jKU3ZbEkGfx4Z24UwRBbezVJikBAKfttNwMMXmaz38Ta
- ZydvEosDBMdGt5E8i0InY1rpaWj528pM4cdVPk2zk5AEjgA4d0yb1Kxo+/zB7NSR6hz+
- XJmaT8dL2uxB9DzcM0YYMAD7zZo7vWty+FwmqUFXv/l1U1xTLtfvNBFXPhAhEl2ZtTxK
- QEJTEbqbt9jMRimIqEPR58hvlbYJpzSe3tcPF+lbDQLQmeFHqw8FOnu7DEtYCfuzRSf6
- XsXg==
-X-Gm-Message-State: AOJu0YxTZ++gCJilSYxFDZPDmz0ogvy7JHspvZPVJL18G8nqldNnNfk3
- wc6RbWf2wUc8VHjZBSG46xcjxTsYgzKLjRpaudy9gSUQml7sNT42k5biuAhJVX8FhHqBvGcwuOH
- ShXphRTWZ6VSUQcte1yYzqxJVPzoiq5jZc1yF1+c4hA==
-X-Gm-Gg: ASbGncsZyLYv8TwnsTdxcG00i7m2myexjuHWYxtSOOFrAeE9mDWxP9nWHayJ7yYgTAu
- dQEHbwQwk7O7820HqnVvhWSb9vLEenRofo0RT178JcqrWfHv9M1L+J4i3A3t+Q7diWu2fsF96uA
- Pi+gikE2NOFJY+vgKISjkkygzk3UjuumjhjQ3sDRPOcy+ly9CzJe4Uelq5hys6zmUQJroFXGD5F
- algbxVMIN3z5m2SKqo=
-X-Google-Smtp-Source: AGHT+IHRsdMluH6nib53zjbAiU518qjJS5gb13PWfGa+if9uZWQ4Jr899Cxki16ktGjDZOE6MBxCnXxhBFDN4RIEyL4=
-X-Received: by 2002:a05:6402:5247:b0:617:f5e7:fe22 with SMTP id
- 4fb4d7f45d1cf-61c1b41150cmr9729547a12.16.1756106344704; Mon, 25 Aug 2025
- 00:19:04 -0700 (PDT)
+ bh=u45ykrYkuCt/hD79fRrYiLNYCDS/5E2/xpZe84aiaXo=;
+ b=hzTph1Im7JEaj7eLk4NH8Gu5Vah6HjoCMGVdYeiKK+EkoSGsPweQoDhXNrc4sKYWTJ
+ UYQKT/zCyGfs7QSRS6NlN/e2nWmBWOUyTvr8jX0u0xsUAqYmozpaNlGRi3jqdEdWATFh
+ odei2RI8HRE8RRQ1kmAuUkKMq6emCJlWOQWbGTnGNC6/kKtSXlXr4uCrIZ7Ab6K8og+/
+ nBK2UGVWPAdx78cWXE121fPi/54664b2QA7ZJfHGf9NXr/yDn1mjvLGy0Ru4zzrWagOY
+ 3z8grpaTe66tsJOLBWkBu/mn6tGO5tlcDhz3w+rHjW3imnZbj8FHpqAuCcahd+hcxTnh
+ hEyA==
+X-Gm-Message-State: AOJu0YxiQSuxXzIkcGq5YnlukcICmCBptF2g8YVAYf6O798FrgTAix01
+ 2YOYtUUy5mMQQKA4cdIrRWgTz6Hl1/RAb4WP/KlnGkJxkeeoCXtP3vfzXdNYJKTDZJ5lboXS+Bl
+ bSLhXpZMVmpcIvhxrjrpUcSpEXzN1ecNIGsuBMsBTXzYKhp2BTWm0R88=
+X-Gm-Gg: ASbGncvnGCasbZqZ49kfzLFMB7aFc0l4B1oacZklb5UwQErJdjqmco/as+XplzxB3Tb
+ u7PaQuLXUipXBP/13ovEZhbG53ha83SJXCfmMpOg/IvvOgxmMSLZegjJFWbISlvPa1ByhQ8mAQm
+ bm2M3467d9dTMp+HCskwTNku5eT2pwILmTMHgogzr8hx2cz0r0ccjOldTO2o1sa61+shiFA3g5V
+ 8dXlyKH
+X-Google-Smtp-Source: AGHT+IH9trGN2jhuQ7DnhbBllVkBRoB+E/61nbb8hnN8AqLzTMhtk5aP9wLoRd5WJS/5Gd5UvzjSVaAd95INgQbHbeA=
+X-Received: by 2002:a05:6402:1ec2:b0:61a:7385:29e3 with SMTP id
+ 4fb4d7f45d1cf-61c1b217c7emr11139766a12.18.1756106586231; Mon, 25 Aug 2025
+ 00:23:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250822122655.1353197-1-pbonzini@redhat.com>
- <20250822122655.1353197-8-pbonzini@redhat.com>
-In-Reply-To: <20250822122655.1353197-8-pbonzini@redhat.com>
+ <20250822122655.1353197-7-pbonzini@redhat.com>
+In-Reply-To: <20250822122655.1353197-7-pbonzini@redhat.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 25 Aug 2025 10:18:38 +0300
-X-Gm-Features: Ac12FXylF-Toqg-S474evmdHWp6oP4wKQuaXVBxmY9waS673R8g7ygp_i36Xat8
-Message-ID: <CAAjaMXYEp+c3gn7Gyp9_YS0iOmCP9FhRXTMEw9+dZbXaha2JzQ@mail.gmail.com>
-Subject: Re: [PATCH 07/14] rust: add trace crate
+Date: Mon, 25 Aug 2025 10:22:40 +0300
+X-Gm-Features: Ac12FXwM68nDkVjklxtTH9q-Wj13DjQ0q0MlbqJZFcozY_WU0O0XpBISahvNlZU
+Message-ID: <CAAjaMXYC37Ti-M=DcBKvuqoG03ZfW29qbhT3dPH7y6FYYAaQPw@mail.gmail.com>
+Subject: Re: [PATCH 06/14] tracetool: Add Rust format support
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, tanishdesai37@gmail.com, stefanha@redhat.com, 
  berrange@redhat.com, mads@ynddal.dk
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,202 +96,325 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 22, 2025 at 3:30=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+On Fri, Aug 22, 2025 at 3:31=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
  wrote:
 >
 > From: Tanish Desai <tanishdesai37@gmail.com>
 >
-> The trace crate is a minimal container for dependencies of tracepoints
-> (so that they do not have to be imported in all the crates that use
-> tracepoints); it also contains a macro called "include_trace!" that is
-> able to find the right include file from the trace/ directory.
+> Generating .rs files makes it possible to support tracing in rust.
+> This support comprises a new format, and common code that converts
+> the C expressions in trace-events to Rust.  In particular, types
+> need to be converted, and PRI macros expanded.  Fortunately, all
+> common platforms have a known mapping of 8/16/32/64-bit integers
+> to char/short/int/"long long": even if int64_t is equal to long,
+> it is fine to change the format string from PRIx64's expansion
+> "%lx" to "%llx".  This makes it possible to have a static mapping
+> from PRI macros to their expansion.
+>
+> As of this commit no backend generates Rust code, but it is already
+> possible to use tracetool to generate Rust sources; they are not
+> functional but they compile and contain tracepoint functions.
 >
 > Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
-> [Write commit message. - Paolo]
+> [Move Rust argument conversion from Event to Arguments; string
+>  support. - Paolo]
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/Cargo.lock        |  4 ++++
->  rust/Cargo.toml        |  1 +
->  rust/meson.build       |  2 +-
->  rust/trace/Cargo.toml  | 16 ++++++++++++++++
->  rust/trace/meson.build | 19 +++++++++++++++++++
->  rust/trace/src/lib.rs  | 23 +++++++++++++++++++++++
->  trace/meson.build      |  8 +++++++-
->  7 files changed, 71 insertions(+), 2 deletions(-)
->  create mode 100644 rust/trace/Cargo.toml
->  create mode 100644 rust/trace/meson.build
->  create mode 100644 rust/trace/src/lib.rs
+>  scripts/tracetool/__init__.py  | 156 +++++++++++++++++++++++++++++++++
+>  scripts/tracetool/format/rs.py |  76 ++++++++++++++++
+>  2 files changed, 232 insertions(+)
+>  create mode 100644 scripts/tracetool/format/rs.py
 >
-> diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-> index b785c718f31..aa13ab2a99a 100644
-> --- a/rust/Cargo.lock
-> +++ b/rust/Cargo.lock
-> @@ -164,6 +164,10 @@ dependencies =3D [
->   "unicode-ident",
->  ]
+> diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.p=
+y
+> index 1d5238a0843..0b8ec707332 100644
+> --- a/scripts/tracetool/__init__.py
+> +++ b/scripts/tracetool/__init__.py
+> @@ -31,6 +31,49 @@ def error(*lines):
+>      error_write(*lines)
+>      sys.exit(1)
 >
-> +[[package]]
-> +name =3D "trace"
-> +version =3D "0.1.0"
+> +FMT_TOKEN =3D re.compile(r'''(?:
+> +                       " ( (?: [^"\\] | \\[\\"abfnrt] |            # a s=
+tring literal
+> +                               \\x[0-9a-fA-F][0-9a-fA-F]) *? ) "
+> +                       | ( PRI [duixX] (?:8|16|32|64|PTR|MAX) )    # a P=
+RIxxx macro
+> +                       | \s+                                       # spa=
+ces (ignored)
+> +                       )''', re.X)
 > +
->  [[package]]
->  name =3D "unicode-ident"
->  version =3D "1.0.12"
-> diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-> index 99c275f2d9f..2be9f886113 100644
-> --- a/rust/Cargo.toml
-> +++ b/rust/Cargo.toml
-> @@ -4,6 +4,7 @@ members =3D [
->      "bits",
->      "qemu-api-macros",
->      "qemu-api",
-> +    "trace",
->      "hw/char/pl011",
->      "hw/timer/hpet",
->  ]
-> diff --git a/rust/meson.build b/rust/meson.build
-> index 45936a0a731..2878bd8bc8d 100644
-> --- a/rust/meson.build
-> +++ b/rust/meson.build
-> @@ -23,7 +23,7 @@ genrs =3D []
->  subdir('qemu-api-macros')
->  subdir('bits')
->  subdir('qemu-api')
-> -
-> +subdir('trace')
->  subdir('hw')
->
->  cargo =3D find_program('cargo', required: false)
-> diff --git a/rust/trace/Cargo.toml b/rust/trace/Cargo.toml
-> new file mode 100644
-> index 00000000000..913010e9787
-> --- /dev/null
-> +++ b/rust/trace/Cargo.toml
-> @@ -0,0 +1,16 @@
-> +[package]
-> +name =3D "trace"
-> +version =3D "0.1.0"
-> +authors =3D ["Tanish Desai<tanishdesai37@gmail.com>"]
-
-Missing space between name and angle bracket
-
-> +description =3D "rust trace library"
-
-Suggestion:
-
-> +description =3D "QEMU tracing infrastructure support"
-
-> +resolver =3D "2"
-> +publish =3D false
-> +
-> +edition.workspace =3D true
-> +homepage.workspace =3D true
-> +license.workspace =3D true
-> +repository.workspace =3D true
-> +rust-version.workspace =3D true
-> +
-> +[lints]
-> +workspace =3D true
-> diff --git a/rust/trace/meson.build b/rust/trace/meson.build
-> new file mode 100644
-> index 00000000000..adca57e5507
-> --- /dev/null
-> +++ b/rust/trace/meson.build
-> @@ -0,0 +1,19 @@
-> +rust =3D import('rust')
-> +
-> +lib_rs =3D configure_file(
-> +  input: 'src/lib.rs',
-> +  output: 'lib.rs',
-> +  configuration: {
-> +    'MESON_BUILD_ROOT': meson.project_build_root(),
-> +  })
-> +
-> +_trace_rs =3D static_library(
-> +  'trace',             # Library name,
-> +  lib_rs,
-> +  trace_rs_targets,         # List of generated `.rs` custom targets
-> +  override_options: ['rust_std=3D2021', 'build.rust_std=3D2021'],
-> +  dependencies: [libc_rs],
-> +  rust_abi: 'rust',
-> +)
-> +
-> +trace_rs =3D declare_dependency(link_with: _trace_rs)
-> diff --git a/rust/trace/src/lib.rs b/rust/trace/src/lib.rs
-> new file mode 100644
-> index 00000000000..9b931ddf1de
-> --- /dev/null
-> +++ b/rust/trace/src/lib.rs
-> @@ -0,0 +1,23 @@
-> +//! This crate provides macros that aid in using QEMU's tracepoint
-> +//! functionality.
-
-Missing SPDX headers
-
-> +
-> +#[macro_export]
-> +/// Define the trace-points from the named directory (which should have =
-slashes
-
-Pedantic: s/trace-points/tracepoints
-
-> +/// replaced by underscore characters) as functions in a module called `=
-trace`.
-> +///
-> +/// ```ignore
-> +/// ::trace::include_trace!("hw_char");
-> +/// // ...
-> +/// trace::trace_pl011_read_fifo_rx_full();
-> +/// ```
-> +macro_rules! include_trace {
-> +    ($name:literal) =3D> {
-> +        mod trace {
-> +            #[cfg(not(MESON))]
-> +            include!(concat!(env!("MESON_BUILD_ROOT"), "/trace/", $name,=
- ".rs"));
-> +
-> +            #[cfg(MESON)]
-> +            include!(concat!("@MESON_BUILD_ROOT@/trace/", $name, ".rs"))=
-;
-> +        }
-> +    };
+> +PRI_SIZE_MAP =3D {
+> +    '8':  'hh',
+> +    '16': 'h',
+> +    '32': '',
+> +    '64': 'll',
+> +    'PTR': 't',
+> +    'MAX': 'j',
 > +}
-> diff --git a/trace/meson.build b/trace/meson.build
-> index 9c42a57a053..d89a0db82a1 100644
-> --- a/trace/meson.build
-> +++ b/trace/meson.build
-> @@ -1,5 +1,5 @@
->  system_ss.add(files('control-target.c', 'trace-hmp-cmds.c'))
-> -
-> +trace_rs_targets =3D []
->  trace_events_files =3D []
->  foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
->    if item in qapi_trace_events
-> @@ -24,6 +24,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_t=
-race_events
->                            input: trace_events_file,
->                            command: [ tracetool, group, '--format=3Dc', '=
-@INPUT@', '@OUTPUT@' ],
->                            depend_files: tracetool_depends)
-> +  trace_rs =3D custom_target(fmt.format('trace', 'rs'),
-> +                          output: fmt.format('trace', 'rs'),
-> +                          input: trace_events_file,
-> +                          command: [ tracetool, group, '--format=3Drs', =
-'@INPUT@', '@OUTPUT@' ],
-> +                          depend_files: tracetool_depends)
->    if 'ust' in get_option('trace_backends')
->      trace_ust_h =3D custom_target(fmt.format('trace-ust', 'h'),
->                                  output: fmt.format('trace-ust', 'h'),
-> @@ -34,6 +39,7 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_tr=
-ace_events
->      genh +=3D trace_ust_h
->    endif
->    trace_ss.add(trace_h, trace_c)
-> +  trace_rs_targets +=3D trace_rs
->    if 'dtrace' in get_option('trace_backends')
->      trace_dtrace =3D custom_target(fmt.format('trace-dtrace', 'dtrace'),
->                                   output: fmt.format('trace-dtrace', 'dtr=
-ace'),
+> +
+> +def expand_format_string(c_fmt, prefix=3D""):
+> +    def pri_macro_to_fmt(pri_macro):
+> +        assert pri_macro.startswith("PRI")
+> +        fmt_type =3D pri_macro[3]  # 'd', 'i', 'u', or 'x'
+> +        fmt_size =3D pri_macro[4:]  # '8', '16', '32', '64', 'PTR', 'MAX=
+'
+> +
+> +        size =3D PRI_SIZE_MAP.get(fmt_size, None)
+> +        if size is None:
+> +            raise Exception(f"unknown macro {pri_macro}")
+> +        return size + fmt_type
+> +
+> +    result =3D prefix
+> +    pos =3D 0
+> +    while pos < len(c_fmt):
+> +        m =3D FMT_TOKEN.match(c_fmt, pos)
+> +        if not m:
+> +            print("No match at position", pos, ":", repr(c_fmt[pos:]), f=
+ile=3Dsys.stderr)
+> +            raise Exception("syntax error in trace file")
+> +        if m[1]:
+> +            substr =3D m[1]
+> +        elif m[2]:
+> +            substr =3D pri_macro_to_fmt(m[2])
+> +        else:
+> +            substr =3D ""
+> +        result +=3D substr
+> +        pos =3D m.end()
+> +    return result
+>
+>  out_lineno =3D 1
+>  out_filename =3D '<none>'
+> @@ -90,6 +133,48 @@ def out(*lines, **kwargs):
+>      "ptrdiff_t",
+>  ]
+>
+> +C_TYPE_KEYWORDS =3D {"int", "short", "long", "unsigned", "char"}
+> +
+> +C_TO_RUST_TYPE_MAP =3D {
+> +    "int": "std::ffi::c_int",
+> +    "long": "std::ffi::c_long",
+> +    "long long": "std::ffi::c_longlong",
+> +    "short": "std::ffi::c_short",
+> +    "char": "std::ffi::c_char",
+> +    "bool": "bool",
+> +    "unsigned": "std::ffi::c_uint",
+> +    "unsigned long": "std::ffi::c_long",
+> +    "unsigned long long": "std::ffi::c_ulonglong",
+> +    "unsigned short": "std::ffi::c_ushort",
+> +    "unsigned char": "u8",
+> +    "int8_t": "i8",
+> +    "uint8_t": "u8",
+> +    "int16_t": "i16",
+> +    "uint16_t": "u16",
+> +    "int32_t": "i32",
+> +    "uint32_t": "u32",
+> +    "int64_t": "i64",
+> +    "uint64_t": "u64",
+> +    "void": "()",
+> +    "size_t": "usize",
+> +    "ssize_t": "isize",
+> +    "uintptr_t": "usize",
+> +    "ptrdiff_t": "isize",
+> +}
+> +
+> +# Rust requires manual casting of <32-bit types when passing them to
+> +# variable-argument functions.
+> +RUST_VARARGS_SMALL_TYPES =3D {
+> +    "std::ffi::c_short",
+> +    "std::ffi::c_ushort",
+> +    "std::ffi::c_char",
+> +    "i8",
+> +    "u8",
+> +    "i16",
+> +    "u16",
+> +    "bool",
+> +}
+> +
+>  def validate_type(name):
+>      bits =3D name.split(" ")
+>      for bit in bits:
+> @@ -105,6 +190,40 @@ def validate_type(name):
+>                               "other complex pointer types should be "
+>                               "declared as 'void *'" % name)
+>
+> +def c_type_to_rust(name):
+> +    ptr =3D False
+> +    const =3D False
+> +    name =3D name.rstrip()
+> +    if name[-1] =3D=3D '*':
+> +        name =3D name[:-1].rstrip()
+> +        ptr =3D True
+> +        if name[-1] =3D=3D '*':
+> +            # pointers to pointers are the same as void*
+> +            name =3D "void"
+> +
+> +    bits =3D iter(name.split())
+> +    bit =3D next(bits)
+> +    if bit =3D=3D "const":
+> +        const =3D True
+> +        bit =3D next(bits)
+> +
+> +    if bit in C_TYPE_KEYWORDS:
+> +        if bit =3D=3D 'signed':
+> +            bit =3D ''
+> +        rest =3D list(bits)
+> +        if rest and rest[-1] =3D=3D 'int':
+> +            rest =3D rest[:-1]
+> +        name =3D bit + ' ' + ' '.join(rest)
+> +    else:
+> +        if list(bits):
+> +            raise ValueError("Invalid type '%s'." % name)
+> +        name =3D bit
+> +
+> +    ty =3D C_TO_RUST_TYPE_MAP[name.strip()]
+> +    if ptr:
+> +        ty =3D f'*{"const" if const else "mut"} {ty}'
+> +    return ty
+> +
+>  class Arguments:
+>      """Event arguments description."""
+>
+> @@ -197,6 +316,43 @@ def casted(self):
+>          """List of argument names casted to their type."""
+>          return ["(%s)%s" % (type_, name) for type_, name in self._args]
+>
+> +    def rust_decl_extern(self):
+> +        """Return a Rust argument list for an extern "C" function"""
+> +        return ", ".join((f"_{name}: {c_type_to_rust(type_)}"
+> +                          for type_, name in self._args))
+> +
+> +    def rust_decl(self):
+> +        """Return a Rust argument list for a tracepoint function"""
+> +        def decl_type(type_):
+> +            if type_ =3D=3D "const char *":
+> +                return "&std::ffi::CStr"
+> +            return c_type_to_rust(type_)
+> +
+> +        return ", ".join((f"_{name}: {decl_type(type_)}"
+> +                          for type_, name in self._args))
+> +
+> +    def rust_call_extern(self):
+> +        """Return a Rust argument list for a call to an extern "C" funct=
+ion"""
+> +        def rust_cast(name, type_):
+> +            if type_ =3D=3D "const char *":
+> +                return f"_{name}.as_ptr()"
+> +            return "_{name}"
+
+Missing f-prefix for f-string
+
+> +
+> +        return ", ".join((rust_cast(name, type_) for type_, name in self=
+._args))
+> +
+> +    def rust_call_varargs(self):
+> +        """Return a Rust argument list for a call to a C varargs functio=
+n"""
+> +        def rust_cast(name, type_):
+> +            if type_ =3D=3D "const char *":
+> +                return f"_{name}.as_ptr()"
+> +
+> +            type_ =3D c_type_to_rust(type_)
+> +            if type_ in RUST_VARARGS_SMALL_TYPES:
+> +                return f"_{name} as std::ffi::c_int"
+> +            return f"_{name} /* as {type_} */"
+> +
+> +        return ", ".join((rust_cast(name, type_) for type_, name in self=
+._args))
+> +
+>
+>  class Event(object):
+>      """Event description.
+> diff --git a/scripts/tracetool/format/rs.py b/scripts/tracetool/format/rs=
+.py
+> new file mode 100644
+> index 00000000000..bc8b2be5971
+> --- /dev/null
+> +++ b/scripts/tracetool/format/rs.py
+> @@ -0,0 +1,76 @@
+> +# -*- coding: utf-8 -*-
+> +
+> +"""
+> +trace-DIR.rs
+> +"""
+> +
+> +__author__     =3D "Tanish Desai <tanishdesai37@gmail.com>"
+> +__copyright__  =3D "Copyright 2025, Tanish Desai <tanishdesai37@gmail.co=
+m>"
+> +__license__    =3D "GPL version 2 or (at your option) any later version"
+> +
+> +__maintainer__ =3D "Stefan Hajnoczi"
+> +__email__      =3D "stefanha@redhat.com"
+> +
+> +
+> +from tracetool import out
+> +
+> +
+> +def generate(events, backend, group):
+> +    out('// This file is autogenerated by tracetool, do not edit.',
+> +        '',
+> +        '#[allow(unused_imports)]',
+> +        'use std::ffi::c_char;',
+> +        '#[allow(unused_imports)]',
+> +        'use qemu_api::bindings;',
+> +        '',
+> +        '#[inline(always)]',
+> +        'fn trace_event_get_state_dynamic_by_id(_id: u16) -> bool {',
+> +        '    unsafe { (trace_events_enabled_count !=3D 0) && (_id !=3D 0=
+) }',
+> +        '}',
+> +        '',
+> +        'extern "C" {',
+> +        '    static mut trace_events_enabled_count: u32;',
+> +        '}',)
+> +
+> +    out('extern "C" {')
+> +
+> +    for e in events:
+> +        out('    static mut %s: u16;' % e.api(e.QEMU_DSTATE))
+> +    out('}')
+> +
+> +    # static state
+> +    for e in events:
+> +        if 'disable' in e.properties:
+> +            enabled =3D "false"
+> +        else:
+> +            enabled =3D "true"
+> +        if "tcg-exec" in e.properties:
+> +            # a single define for the two "sub-events"
+> +            out('const _TRACE_%(name)s_ENABLED: bool =3D %(enabled)s;',
+> +                name=3De.original.name.upper(),
+> +                               enabled=3Denabled)
+> +        out('const _TRACE_%s_ENABLED: bool =3D %s;' % (e.name.upper(), e=
+nabled))
+> +
+> +    backend.generate_begin(events, group)
+> +
+> +    for e in events:
+> +        out('',
+> +                       '#[inline(always)]',
+> +            '#[allow(dead_code)]',
+> +            'pub fn %(api)s(%(args)s)',
+> +            '{',
+> +            api=3De.api(e.QEMU_TRACE),
+> +            args=3De.args.rust_decl())
+> +
+> +        if "disable" not in e.properties:
+> +            backend.generate(e, group, check_trace_event_get_state=3DFal=
+se)
+> +            if backend.check_trace_event_get_state:
+> +                event_id =3D 'TRACE_' + e.name.upper()
+> +                out('    if trace_event_get_state_dynamic_by_id(unsafe {=
+ _%(event_id)s_DSTATE}) {',
+> +                    event_id =3D event_id,
+> +                    api=3De.api())
+> +                backend.generate(e, group, check_trace_event_get_state=
+=3DTrue)
+> +                out('    }')
+> +        out('}')
+> +
+> +    backend.generate_end(events, group)
 > --
 > 2.50.1
 >
