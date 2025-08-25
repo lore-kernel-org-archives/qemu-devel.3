@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DCCCCA0FE7
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 14:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8502DCA0FE7
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 14:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqYH9-0004SG-Dr; Mon, 25 Aug 2025 10:34:24 -0400
+	id 1uqYZH-0005QN-S6; Mon, 25 Aug 2025 10:53:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uqYH2-0004Qt-Qt
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 10:34:16 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1uqYZ9-0005Nt-VL
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 10:53:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uqYGr-0001po-U9
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 10:34:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756132447; x=1787668447;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=imi/f3yNw4/LFCttWtHo4cWvZgy9220sGCMMpL2c6gc=;
- b=gg7x/eYwh0bBCIAn0fCNJeGFVs3f8AypJtdFjBMYNDA8+LZNBS/kS0zL
- jujRCNTx5VLlPB/klR8wSUwwLiWxTdGwPj3Y7uqL/yUshisoQe1PihQZV
- nAJBAI9UdcYXEjr+d959BeEsEiZqTuQzSwkAxIRTvtDSAJLwo6OqAnSPX
- dLTR8iB8UpRp9UFT76ufy6m5nR6Z6idrSipOAi0eYCxnV8mMKIcxG6ckn
- M4qt7LZAKFX4iAP2jlN2yZNSkRvuPrecc2737Zw2hdPMxA+RNSGQ4aKdd
- ES8qNZj4TN7b4KKtRCi1eKY+YLfN2iacSeQVr47Xbl9xSjLhIbvjZOxAz w==;
-X-CSE-ConnectionGUID: r+pgT9kXTy6Ekt3EPSh8zA==
-X-CSE-MsgGUID: LdYqVEKRRDawI/vaMaUgDQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11533"; a="69446976"
-X-IronPort-AV: E=Sophos;i="6.18,213,1751266800"; d="scan'208";a="69446976"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Aug 2025 07:34:00 -0700
-X-CSE-ConnectionGUID: IjA/+oOiRUSfWun/5ff1ZA==
-X-CSE-MsgGUID: WKl4KgC/Tm24SFmKQ59m1g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,213,1751266800"; d="scan'208";a="168821675"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 25 Aug 2025 07:33:58 -0700
-Date: Mon, 25 Aug 2025 22:55:43 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- mtosatti@redhat.com
-Subject: Re: [PATCH v4 5/8] hpet: make main counter read lock-less
-Message-ID: <aKx5b7VH1p0NHxjL@intel.com>
-References: <20250814160600.2327672-1-imammedo@redhat.com>
- <20250814160600.2327672-6-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1uqYZ6-0003xr-SL
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 10:52:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756133575;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FTU3PtkS0EZAw8enzY+8i+AJSlBDuS9lUlQPowU+ChA=;
+ b=D/GQkQQnU5vEVZV9i0uLPXhVem29gGOc80z2zGAH/9bowmT6lpLQ90Je8DKwwbEg26DNx8
+ ouvlv5caEI4u9dLZkAKI/chaz7cUTOCAqc52aG/qDM0nvCnDGpBhJyOh/HaCac+Kwv0KTf
+ MzPku0keBnGbtcDn38SaiAoXJ3z0RX8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-XDdUT057PbCWRKS4sJ3LJw-1; Mon,
+ 25 Aug 2025 10:52:52 -0400
+X-MC-Unique: XDdUT057PbCWRKS4sJ3LJw-1
+X-Mimecast-MFC-AGG-ID: XDdUT057PbCWRKS4sJ3LJw_1756133571
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 042B919560B1; Mon, 25 Aug 2025 14:52:51 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.45.224.207])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75D5919560AB; Mon, 25 Aug 2025 14:52:49 +0000 (UTC)
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, Yan Vugenfirer <yvugenfi@redhat.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH 2/2] qga-vss: Remove unused dependencies
+Date: Mon, 25 Aug 2025 17:52:41 +0300
+Message-ID: <20250825145241.170717-3-kkostiuk@redhat.com>
+In-Reply-To: <20250825145241.170717-1-kkostiuk@redhat.com>
+References: <20250825145241.170717-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250814160600.2327672-6-imammedo@redhat.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,61 +84,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 14, 2025 at 06:05:57PM +0200, Igor Mammedov wrote:
-> Date: Thu, 14 Aug 2025 18:05:57 +0200
-> From: Igor Mammedov <imammedo@redhat.com>
-> Subject: [PATCH v4 5/8] hpet: make main counter read lock-less
-> 
-> Make access to main HPET counter lock-less.
-> 
-> In unlikely event of an update in progress, readers will busy wait
-> untill update is finished.
-> 
-> As result micro benchmark of concurrent reading of HPET counter
-> with large number of vCPU shows over 80% better (less) latency.
-> 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> ---
-> v3:
->   * make reader busy wait during update and reuse existing seqlock API
->        Peter Xu <peterx@redhat.com>
-> ---
->  hw/timer/hpet.c | 26 ++++++++++++++++++++------
->  1 file changed, 20 insertions(+), 6 deletions(-)
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+---
+ qga/vss-win32/meson.build | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/qga/vss-win32/meson.build b/qga/vss-win32/meson.build
+index 0ac918910b..a6b810f12a 100644
+--- a/qga/vss-win32/meson.build
++++ b/qga/vss-win32/meson.build
+@@ -13,13 +13,11 @@ qga_vss = shared_module(
+   link_args: link_args,
+   vs_module_defs: 'qga-vss.def',
+   dependencies: [
+-    glib,
+     socket,
+     cc.find_library('ole32'),
+     cc.find_library('oleaut32'),
+     cc.find_library('shlwapi'),
+-    cc.find_library('uuid'),
+-    cc.find_library('intl')
++    cc.find_library('uuid')
+   ]
+ )
  
-...
-
-> -    QEMU_LOCK_GUARD(&s->lock);
->      if (addr == HPET_COUNTER) {
-> -        if (hpet_enabled(s)) {
-> -            cur_tick = hpet_get_ticks(s);
-> -        } else {
-> -            cur_tick = s->hpet_counter;
-> -        }
-> +        unsigned version;
-> +
-> +        /*
-> +         * Write update is rare, so busywait here is unlikely to happen
-> +         */
-> +        do {
-> +            version = seqlock_read_begin(&s->state_version);
-> +            if (unlikely(!hpet_enabled(s))) {
-
-is there any particular consideration for rearranging the order of the
-conditional branches here (and not directly using likely(hpet_enable()))?
-
-> +                cur_tick = s->hpet_counter;
-> +            } else {
-> +                cur_tick = hpet_get_ticks(s);
-> +            }
-> +        } while (seqlock_read_retry(&s->state_version, version));
->          trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
->          return cur_tick >> shift;
->      }
-
-Nice imprvoment!
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+-- 
+2.50.1
 
 
