@@ -4,70 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A84CA0EED
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 07:03:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E6BDCA0FE1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 07:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqREH-0004Cr-F9; Mon, 25 Aug 2025 03:02:57 -0400
+	id 1uqRFk-0005J2-EX; Mon, 25 Aug 2025 03:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uqREF-0004Cj-U0
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 03:02:56 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uqREC-0007pI-Kc
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 03:02:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756105373; x=1787641373;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=8VCksnUANnZpWCksBnUQSvpA2J6PwDmkE0ptSQKnaCE=;
- b=BpwsJOiHlqVFAzhXr8Iy2nRjZuLNXjEmhzjKw9VTEIDWzgXL4oJv3ZTM
- nQXDhnCMLr3HEJRfahBl+1or8vVnqJYUbGPwq/N8L2NyIe1I8/sN0Xb6l
- 8tHQG+pwFqp1/MZrd8nFoumtR/x3OLm5MadR/FdRtQ0uuGe5T7B2BxAsS
- rSqI13df2iHpbH/3M44/BFg9CNL9Woe61dhBCIo9ZG5c8wBUkBhVFG0Ce
- uZLGtPCZTBS/669421yUo2j53XaguvHU1NGFTsFtOCG+nOc4mesc69bEi
- 4McaV68YG/EVulqh9/bXmnKijlLnE29i/oZpgUuVWrWEDRBpPikmDwItK w==;
-X-CSE-ConnectionGUID: O8adKopoQPmZV5G+0IRzJA==
-X-CSE-MsgGUID: +OEo+d1cRYa6h6UNb89RaA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11532"; a="69414427"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="69414427"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Aug 2025 00:02:50 -0700
-X-CSE-ConnectionGUID: aQc6LoVCRlWXwfjH2nYzBQ==
-X-CSE-MsgGUID: Y3jAWNLuScas4KZx7wHMbw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="173622457"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 25 Aug 2025 00:02:47 -0700
-Date: Mon, 25 Aug 2025 15:24:33 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, tanishdesai37@gmail.com, stefanha@redhat.com,
- berrange@redhat.com, mads@ynddal.dk
-Subject: Re: [PATCH 02/14] rust: move dependencies to rust/Cargo.toml
-Message-ID: <aKwPsY7sg0YAOMbE@intel.com>
-References: <20250822122655.1353197-1-pbonzini@redhat.com>
- <20250822122655.1353197-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uqRFi-0005If-Jc
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 03:04:27 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uqRFc-0007xY-Dm
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 03:04:25 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-61c24250b38so3008376a12.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 00:04:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756105454; x=1756710254; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aVEtpKjxbKlVMq1uVdbr2WR6KUD4h6VK9ocYUlkin5A=;
+ b=MdzL5ELKW7zloI7Lmx5BoZAy8x2hQ9oEVOAHLi/VLYfHgvAQ2zmQBVK5L9XEVUw0Gc
+ zilqI1hrPM2Bz90RNP9kX3HKm8izo4XNBtYD8SJcrqIB1L/6VnazmagZzuUpRrQYOQ3g
+ hILm9H6qhzbNtWex3dMT04lS8O4vOzdU2U0C4xoordjsQLgDc5wu0DGNrvauVhIBZZ2y
+ dukH1r8aRy3YkG2dHJcf9xxC90SDsLeidtp8u260KXJQ9za47vs7Ly6fFkdB+Na3gCCa
+ lMaqYz0fYF8+qTwLxtkCbMCQFmdOFx5GB+t8jm+WulR8B+C+SrM6XDK1IvUAOoJbRrBD
+ 8PfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756105454; x=1756710254;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aVEtpKjxbKlVMq1uVdbr2WR6KUD4h6VK9ocYUlkin5A=;
+ b=nAO3BotgHq7nVDfUfXGPWrKvHdAITDsPB5IPKtN6fYdZ2MVA8HAS36XmGa5px/il/6
+ ScUOk7mhtrbBnZ/cOd8O/t2e8tLjc6Bl1bB1IJ2NIAmn7QxHbEqRJVK20G6MtzLmvHGW
+ GEicpbm52auJ6zwMmJxoLYVjikDTJtYC7GpJ7X1/5oqhpfowVm7lo4nHNFgUltB2yXP4
+ GT/yK4DVbHyYnIguTotgUKyfsO4q/UvSCX9jIHamNSpPXKKQ3x1mY0hEfA1UT8J4egiW
+ 4639A5eAjw+BJkUkof/ljr5YDVGBQobMDSHs2BftlI12ntLv9KtZ9yCdfEsJnIalqNaE
+ otwA==
+X-Gm-Message-State: AOJu0YwIZ95XtIZGgFWeO6KyZropWeybImEy1Z2NE49XcgRl4tBpFC/D
+ MqcgqB/WRTzjbf6TiNZNJWrBjclh0/FWNlMKROWNUdhiU8RzERXBq+c8vSC3/aIRayAunVvI1dx
+ wHG67SAwy1Yog/p4rqmBY++MWFpUA4jWTzbEozVBkbg==
+X-Gm-Gg: ASbGncvYvndZ4YXyShtRXJlUkzYMnhLHPR9AUNdwnk2doaUnjylN9DMXjoAqtHCjsJ3
+ FpL9lghxtsk/jhLi+CyFeIpjOrqVFvKK9D0pP/VGLtgVgvPA16D4fkULl9KR/++Oq/PYW+e5WhN
+ efILXBkruEtpXEtNdXh4G/NYVSdTfDklluZWaOzMLN7I9lsimIYL98IC7V5ELUUDqcY7oEElNU5
+ 6lqcQ1d
+X-Google-Smtp-Source: AGHT+IGUW5jPCd226ya5nedVdbb3BnEuXoBW3gxVcSGJNbZi3IoS7eAbm66b2pY4E7iDlD4vdRxbF/yObkx+tpSfaHs=
+X-Received: by 2002:a05:6402:35c3:b0:61c:61bb:e836 with SMTP id
+ 4fb4d7f45d1cf-61c61bbec87mr2266855a12.11.1756105454149; Mon, 25 Aug 2025
+ 00:04:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250822122655.1353197-3-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250822122655.1353197-1-pbonzini@redhat.com>
+ <20250822122655.1353197-7-pbonzini@redhat.com>
+In-Reply-To: <20250822122655.1353197-7-pbonzini@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Mon, 25 Aug 2025 10:03:47 +0300
+X-Gm-Features: Ac12FXyuc8w_J3wNH5Do_FaQ0N259hVzXcybqBzSsP1G1pP4JIzrFiTwrXNdzO4
+Message-ID: <CAAjaMXb=HseHy3vW+5W+f2uVR01c0NV9QKmOhQuB7BkW0Topkg@mail.gmail.com>
+Subject: Re: [PATCH 06/14] tracetool: Add Rust format support
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, tanishdesai37@gmail.com, stefanha@redhat.com, 
+ berrange@redhat.com, mads@ynddal.dk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,21 +96,350 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 22, 2025 at 02:26:43PM +0200, Paolo Bonzini wrote:
-> Date: Fri, 22 Aug 2025 14:26:43 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 02/14] rust: move dependencies to rust/Cargo.toml
-> X-Mailer: git-send-email 2.50.1
-> 
-> As more crates start using the same dependencies, it's better to not
-> repeat the versions and move the dependency declarations to the workspace.
-> 
+On Fri, Aug 22, 2025 at 3:31=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> From: Tanish Desai <tanishdesai37@gmail.com>
+>
+> Generating .rs files makes it possible to support tracing in rust.
+> This support comprises a new format, and common code that converts
+> the C expressions in trace-events to Rust.  In particular, types
+> need to be converted, and PRI macros expanded.  Fortunately, all
+> common platforms have a known mapping of 8/16/32/64-bit integers
+> to char/short/int/"long long": even if int64_t is equal to long,
+> it is fine to change the format string from PRIx64's expansion
+> "%lx" to "%llx".  This makes it possible to have a static mapping
+> from PRI macros to their expansion.
+>
+> As of this commit no backend generates Rust code, but it is already
+> possible to use tracetool to generate Rust sources; they are not
+> functional but they compile and contain tracepoint functions.
+>
+> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+> [Move Rust argument conversion from Event to Arguments; string
+>  support. - Paolo]
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/Cargo.toml          | 5 +++++
->  rust/qemu-api/Cargo.toml | 6 +++---
->  2 files changed, 8 insertions(+), 3 deletions(-)
+>  scripts/tracetool/__init__.py  | 156 +++++++++++++++++++++++++++++++++
+>  scripts/tracetool/format/rs.py |  76 ++++++++++++++++
+>  2 files changed, 232 insertions(+)
+>  create mode 100644 scripts/tracetool/format/rs.py
+>
+> diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.p=
+y
+> index 1d5238a0843..0b8ec707332 100644
+> --- a/scripts/tracetool/__init__.py
+> +++ b/scripts/tracetool/__init__.py
+> @@ -31,6 +31,49 @@ def error(*lines):
+>      error_write(*lines)
+>      sys.exit(1)
+>
+> +FMT_TOKEN =3D re.compile(r'''(?:
+> +                       " ( (?: [^"\\] | \\[\\"abfnrt] |            # a s=
+tring literal
+> +                               \\x[0-9a-fA-F][0-9a-fA-F]) *? ) "
+> +                       | ( PRI [duixX] (?:8|16|32|64|PTR|MAX) )    # a P=
+RIxxx macro
+> +                       | \s+                                       # spa=
+ces (ignored)
+> +                       )''', re.X)
+> +
+> +PRI_SIZE_MAP =3D {
+> +    '8':  'hh',
+> +    '16': 'h',
+> +    '32': '',
+> +    '64': 'll',
+> +    'PTR': 't',
+> +    'MAX': 'j',
+> +}
+> +
+> +def expand_format_string(c_fmt, prefix=3D""):
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+(Pedantic comment) let's put type annotations in function signatures
+when possible, these seem to handle `str` mostly so this should be
+simple. This should catch basic errors like passing/returning `str |
+None` or wrong types altogether.
 
+> +    def pri_macro_to_fmt(pri_macro):
+> +        assert pri_macro.startswith("PRI")
+> +        fmt_type =3D pri_macro[3]  # 'd', 'i', 'u', or 'x'
+> +        fmt_size =3D pri_macro[4:]  # '8', '16', '32', '64', 'PTR', 'MAX=
+'
+> +
+> +        size =3D PRI_SIZE_MAP.get(fmt_size, None)
+> +        if size is None:
+> +            raise Exception(f"unknown macro {pri_macro}")
+> +        return size + fmt_type
+> +
+> +    result =3D prefix
+> +    pos =3D 0
+> +    while pos < len(c_fmt):
+> +        m =3D FMT_TOKEN.match(c_fmt, pos)
+> +        if not m:
+> +            print("No match at position", pos, ":", repr(c_fmt[pos:]), f=
+ile=3Dsys.stderr)
+> +            raise Exception("syntax error in trace file")
+> +        if m[1]:
+> +            substr =3D m[1]
+> +        elif m[2]:
+> +            substr =3D pri_macro_to_fmt(m[2])
+> +        else:
+> +            substr =3D ""
+> +        result +=3D substr
+> +        pos =3D m.end()
+> +    return result
+>
+>  out_lineno =3D 1
+>  out_filename =3D '<none>'
+> @@ -90,6 +133,48 @@ def out(*lines, **kwargs):
+>      "ptrdiff_t",
+>  ]
+>
+> +C_TYPE_KEYWORDS =3D {"int", "short", "long", "unsigned", "char"}
+> +
+> +C_TO_RUST_TYPE_MAP =3D {
+> +    "int": "std::ffi::c_int",
+> +    "long": "std::ffi::c_long",
+> +    "long long": "std::ffi::c_longlong",
+> +    "short": "std::ffi::c_short",
+> +    "char": "std::ffi::c_char",
+> +    "bool": "bool",
+> +    "unsigned": "std::ffi::c_uint",
+> +    "unsigned long": "std::ffi::c_long",
+> +    "unsigned long long": "std::ffi::c_ulonglong",
+> +    "unsigned short": "std::ffi::c_ushort",
+> +    "unsigned char": "u8",
+> +    "int8_t": "i8",
+> +    "uint8_t": "u8",
+> +    "int16_t": "i16",
+> +    "uint16_t": "u16",
+> +    "int32_t": "i32",
+> +    "uint32_t": "u32",
+> +    "int64_t": "i64",
+> +    "uint64_t": "u64",
+> +    "void": "()",
+> +    "size_t": "usize",
+> +    "ssize_t": "isize",
+> +    "uintptr_t": "usize",
+> +    "ptrdiff_t": "isize",
+> +}
+> +
+> +# Rust requires manual casting of <32-bit types when passing them to
+> +# variable-argument functions.
+> +RUST_VARARGS_SMALL_TYPES =3D {
+> +    "std::ffi::c_short",
+> +    "std::ffi::c_ushort",
+> +    "std::ffi::c_char",
+> +    "i8",
+> +    "u8",
+> +    "i16",
+> +    "u16",
+> +    "bool",
+> +}
+> +
+>  def validate_type(name):
+>      bits =3D name.split(" ")
+>      for bit in bits:
+> @@ -105,6 +190,40 @@ def validate_type(name):
+>                               "other complex pointer types should be "
+>                               "declared as 'void *'" % name)
+>
+> +def c_type_to_rust(name):
+> +    ptr =3D False
+> +    const =3D False
+> +    name =3D name.rstrip()
+> +    if name[-1] =3D=3D '*':
+> +        name =3D name[:-1].rstrip()
+> +        ptr =3D True
+> +        if name[-1] =3D=3D '*':
+> +            # pointers to pointers are the same as void*
+> +            name =3D "void"
+> +
+> +    bits =3D iter(name.split())
+> +    bit =3D next(bits)
+> +    if bit =3D=3D "const":
+> +        const =3D True
+> +        bit =3D next(bits)
+> +
+> +    if bit in C_TYPE_KEYWORDS:
+> +        if bit =3D=3D 'signed':
+> +            bit =3D ''
+> +        rest =3D list(bits)
+> +        if rest and rest[-1] =3D=3D 'int':
+> +            rest =3D rest[:-1]
+> +        name =3D bit + ' ' + ' '.join(rest)
+> +    else:
+> +        if list(bits):
+> +            raise ValueError("Invalid type '%s'." % name)
+> +        name =3D bit
+> +
+> +    ty =3D C_TO_RUST_TYPE_MAP[name.strip()]
+> +    if ptr:
+> +        ty =3D f'*{"const" if const else "mut"} {ty}'
+> +    return ty
+> +
+>  class Arguments:
+>      """Event arguments description."""
+>
+> @@ -197,6 +316,43 @@ def casted(self):
+>          """List of argument names casted to their type."""
+>          return ["(%s)%s" % (type_, name) for type_, name in self._args]
+>
+> +    def rust_decl_extern(self):
+> +        """Return a Rust argument list for an extern "C" function"""
+> +        return ", ".join((f"_{name}: {c_type_to_rust(type_)}"
+> +                          for type_, name in self._args))
+> +
+> +    def rust_decl(self):
+> +        """Return a Rust argument list for a tracepoint function"""
+> +        def decl_type(type_):
+> +            if type_ =3D=3D "const char *":
+> +                return "&std::ffi::CStr"
+> +            return c_type_to_rust(type_)
+> +
+> +        return ", ".join((f"_{name}: {decl_type(type_)}"
+> +                          for type_, name in self._args))
+> +
+> +    def rust_call_extern(self):
+> +        """Return a Rust argument list for a call to an extern "C" funct=
+ion"""
+> +        def rust_cast(name, type_):
+> +            if type_ =3D=3D "const char *":
+> +                return f"_{name}.as_ptr()"
+> +            return "_{name}"
+> +
+> +        return ", ".join((rust_cast(name, type_) for type_, name in self=
+._args))
+> +
+> +    def rust_call_varargs(self):
+> +        """Return a Rust argument list for a call to a C varargs functio=
+n"""
+> +        def rust_cast(name, type_):
+> +            if type_ =3D=3D "const char *":
+> +                return f"_{name}.as_ptr()"
+> +
+> +            type_ =3D c_type_to_rust(type_)
+> +            if type_ in RUST_VARARGS_SMALL_TYPES:
+> +                return f"_{name} as std::ffi::c_int"
+> +            return f"_{name} /* as {type_} */"
+> +
+> +        return ", ".join((rust_cast(name, type_) for type_, name in self=
+._args))
+> +
+>
+>  class Event(object):
+>      """Event description.
+> diff --git a/scripts/tracetool/format/rs.py b/scripts/tracetool/format/rs=
+.py
+> new file mode 100644
+> index 00000000000..bc8b2be5971
+> --- /dev/null
+> +++ b/scripts/tracetool/format/rs.py
+> @@ -0,0 +1,76 @@
+> +# -*- coding: utf-8 -*-
+
+This was probably copied verbatim from other tracetool files, but IIUC
+it's not needed, utf-8 is the default encoding if there's no `coding`
+declaration.
+
+Also, missing SPDX header as a new file
+
+> +
+> +"""
+> +trace-DIR.rs
+
+(what's "trace-DIR"?)
+
+> +"""
+> +
+> +__author__     =3D "Tanish Desai <tanishdesai37@gmail.com>"
+> +__copyright__  =3D "Copyright 2025, Tanish Desai <tanishdesai37@gmail.co=
+m>"
+> +__license__    =3D "GPL version 2 or (at your option) any later version"
+> +
+> +__maintainer__ =3D "Stefan Hajnoczi"
+> +__email__      =3D "stefanha@redhat.com"
+> +
+> +
+> +from tracetool import out
+> +
+> +
+> +def generate(events, backend, group):
+> +    out('// This file is autogenerated by tracetool, do not edit.',
+
+Let's use `@generated comments` https://generated.at/
+
+> +        '',
+> +        '#[allow(unused_imports)]',
+> +        'use std::ffi::c_char;',
+> +        '#[allow(unused_imports)]',
+> +        'use qemu_api::bindings;',
+> +        '',
+> +        '#[inline(always)]',
+> +        'fn trace_event_get_state_dynamic_by_id(_id: u16) -> bool {',
+> +        '    unsafe { (trace_events_enabled_count !=3D 0) && (_id !=3D 0=
+) }',
+> +        '}',
+> +        '',
+> +        'extern "C" {',
+> +        '    static mut trace_events_enabled_count: u32;',
+> +        '}',)
+> +
+> +    out('extern "C" {')
+> +
+> +    for e in events:
+> +        out('    static mut %s: u16;' % e.api(e.QEMU_DSTATE))
+> +    out('}')
+> +
+> +    # static state
+> +    for e in events:
+> +        if 'disable' in e.properties:
+> +            enabled =3D "false"
+> +        else:
+> +            enabled =3D "true"
+> +        if "tcg-exec" in e.properties:
+> +            # a single define for the two "sub-events"
+> +            out('const _TRACE_%(name)s_ENABLED: bool =3D %(enabled)s;',
+> +                name=3De.original.name.upper(),
+
+What's the difference between e.original.name and e.name?
+
+> +                               enabled=3Denabled)
+> +        out('const _TRACE_%s_ENABLED: bool =3D %s;' % (e.name.upper(), e=
+nabled))
+> +
+> +    backend.generate_begin(events, group)
+> +
+> +    for e in events:
+> +        out('',
+> +                       '#[inline(always)]',
+> +            '#[allow(dead_code)]',
+> +            'pub fn %(api)s(%(args)s)',
+> +            '{',
+> +            api=3De.api(e.QEMU_TRACE),
+> +            args=3De.args.rust_decl())
+> +
+> +        if "disable" not in e.properties:
+> +            backend.generate(e, group, check_trace_event_get_state=3DFal=
+se)
+> +            if backend.check_trace_event_get_state:
+> +                event_id =3D 'TRACE_' + e.name.upper()
+> +                out('    if trace_event_get_state_dynamic_by_id(unsafe {=
+ _%(event_id)s_DSTATE}) {',
+> +                    event_id =3D event_id,
+> +                    api=3De.api())
+> +                backend.generate(e, group, check_trace_event_get_state=
+=3DTrue)
+> +                out('    }')
+> +        out('}')
+> +
+> +    backend.generate_end(events, group)
+> --
+> 2.50.1
+>
+>
+
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
