@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE2FCA0FE1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:43:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF3CCA0FE1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqTjQ-0000iO-Eb; Mon, 25 Aug 2025 05:43:16 -0400
+	id 1uqTnQ-0002bT-8E; Mon, 25 Aug 2025 05:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqTjN-0000gn-Ks
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:43:13 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqTnO-0002bI-VC
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:47:22 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqTjJ-0000rf-Rr
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:43:13 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3c7ba0f6983so668966f8f.0
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 02:43:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqTnM-0001Du-Dr
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:47:22 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0cbbbaso35472285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 02:47:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756114987; x=1756719787; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756115236; x=1756720036; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0sfbVIoFEZrS888VJSEblzKkwNzfAnm+rCRYKPsamV0=;
- b=nZTnF4ofGiIYtSoNJg0uu4iG3QTmmbVgUjqeatvAW5JhizNugIRrAyR8jIUzgi8752
- 89juixDdrSE1mt28srjPgy4YR9/kPNViSYCG8jdGIxhOjo66t3KaXB1rDSc41zUg35/J
- ABZ+YRvAlQfj3dSxo8806IiaqnzwdFWT7YRQzm1hAQDRz5dUNcCIqI+D1LFLBip4AzsY
- ZEj9FvKt91LrTWyMn/MNrLqRcVHHFgVJX1yB5U5mEnAEyhnNQ6JCBzQJqV9ykYHXd+3a
- Nu9OBJkLwTQu3TyYWKQ8CEbLgHs5TyKjbaUl7AZWDB4euZvrKBJ0naHWWM8RQPOLYavl
- ZENg==
+ bh=dURSmvwRCfSn6n+MmFPue7FlqfaiNZWS+C0N3taMCIo=;
+ b=P5E2N5jFyDT04W+PNrjfQddjV8PuhKeNsLbdzDBrxXnmxg4wVoZ8icAZEmJuz0LnMZ
+ fJ217BmD/957yJqip4Z32Nd0BWc3wG6xTqbxsqOu2jqWM2w4duIUn5OES2/o6bsuvlCc
+ H4GQdIbP4AGDtpC0rwHPNcR9psjQuUtqpfHgF1GoGPqzpVPCU1r+pmikAGaIe+iFijRi
+ Mbrgpop2/k5G6N7POFV2dUYx4UsdwYG0nWNpsZtJX3UTrBgJNZ1MPS+fHJ4nHv06+jd0
+ 8lnvRXhuzWTkum6nR2J00fwZgQoQkFq0Z835qV2yTHb+I92KGU3KKb8SqKTSSyPNXKKI
+ SHXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756114987; x=1756719787;
+ d=1e100.net; s=20230601; t=1756115236; x=1756720036;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0sfbVIoFEZrS888VJSEblzKkwNzfAnm+rCRYKPsamV0=;
- b=qgrVEXVbGoysYWIRzhnDGCkI4hcLGJpxqmrj2xA1mus1wTQ6z3waKWZbjaFCKOy+Pn
- epnEOJscevcBREs6ZroPL9h2hRSowTDDwgveoCFZo0wTu9V/Diy4QWKCtcCe+dARgcds
- 166UpHHNMsxmt94ejM0RpB1facqs29N+FtbOv9M2lx63sTdgB58Pe3N+g+CLFbd6gfQT
- JfIA/q4euShAG5ull0bFYxbAwzMMRgcA2ebN+TU/ygPnute3wg6GMz/C4lEoKAxFsoWD
- pD9QMZQNFDaYDizPExsSIZZLAScezsMIG6bmie+8Z0q9/gXid6sAbIriP8YSh1P871Za
- PzXA==
+ bh=dURSmvwRCfSn6n+MmFPue7FlqfaiNZWS+C0N3taMCIo=;
+ b=OQJXKzk9bwLACK75puyLQmT33ECT4douWIoyI1bzgknmikcrWKApVQu6sPRZ6I4pHv
+ 23MfWE1nohQJbMzmYqg3HWsJqBTwt1zqmG20HIjXzJVbD+YLMKK6QpNIogNxXFN0ID5e
+ ZN1cTXIE3g3DQQAp2itxEqwhFFfsvj5/ITDaqS8KY+HjJ5QqSeyvMAGYsd6fr+XPX8xy
+ MmMMBn8bPjdjSsLjMfBw5MVakONVVyTedKkDoFHaZFgMy3ihIPxU3t7l/ImWA68Ovzlt
+ IQGP7mAlzoYvMGU8zVegz14FDrGJUKXPGFMbRwmhA0NCkqEq0iyiP4m2KNgdjO/I/fSD
+ bpZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWkeVdzIs4YjoA6APOLu+pY9Kkg4RaDkBWNkWjiYxJNAEHM2Jx35gyqBtzrsbPt2cLBUz4Tn6gZiGJa@nongnu.org
-X-Gm-Message-State: AOJu0YxGASA42tm4Ae1u/8Q7jTCtdT2L0VtrEwhre++JQTL7QIcFLz2a
- fCrJzhw8rtN35h3oZtDNRyEg1UQALuyLNXvU+t3gcc9ra3xeqTuzle/h+/CqWROAuZ0=
-X-Gm-Gg: ASbGnct9i0ZiicrzyeIO3z331EEHXP6wPiCEo0gDevVxNnuzSF58NW0Zxih8n5IvQLW
- 9WMUvZ5MB9nu3QCcbtS/w923Ywbbr79JivaWVneBGrn+FU7KpUL7Ivp2iCPuPwE9kmir9o3/Dqh
- mqw1b8A5tM/xAOLB2BR2tExpJmNiAPLlgzgU4GjdPW8hBwQy/1KUG1yRlYZwt3JBMOXLz29lnBa
- pTerNjnPbPBQvQ+j81W9vZWZv8O7vUjfBCJWJfKtxD6BWV/waT5VGIGjKSSyr+a65+DRoYQOE2s
- sxS+UnFhYdv5IZEJFrTyBOceV+jZRJtKqnaEu0sBAC1gGlsI6zRc2qZbQ6hvq9fevPzDwl5jeLW
- dM+m1S8jGcsM9K+IOAMzaTGsgOrh2h0oBaeh08b3jeV7ZR/BYY1L6VWxyShgYp7D6AHL/gc2mbl
- cd
-X-Google-Smtp-Source: AGHT+IHFsCXI6RyE+8Pumea9aLdErmxD5/5dh5nk6SGv5uw0KhtQlgnDvKvZPXlFwn2/l+B5AB6Pnw==
-X-Received: by 2002:a05:6000:40c8:b0:3ca:5f27:46d0 with SMTP id
- ffacd0b85a97d-3ca5f274ab0mr802802f8f.4.1756114986767; 
- Mon, 25 Aug 2025 02:43:06 -0700 (PDT)
+ AJvYcCWflxVsJHRwy1PC996BLRjAwLoVNb/tV1CCfMnQir4EZP0hyEGO++MFDMNiXIK8HcrT8Ysv/UCXs7NQ@nongnu.org
+X-Gm-Message-State: AOJu0YzUIhetdtQsxUXj7flG+ivWfiXyywdIZ0M4RHMS3Y7NfNAwIT2Q
+ +6GIugCJIo/yIMbsTCv3UiInTGPpMugeEZaKY78sF9mOrlndHJhnADhiquGQ9z2IIPg=
+X-Gm-Gg: ASbGncsvt1jcDj0Su3nlvy7CXZ5w1iIqYf0iYgKlLsLoG8gn5PX/6xILFKc+0uoIxks
+ GSQkK09VakNuOOA8bnRk32Q+z1vM4q59bHrJNl+CqkmYVmb7vtj8W5oWPLI+rN4TKiO4IioFEPv
+ hq/mn+tAMeOZEXdVNKaMHgvZNNtqAwHogyWXcOBUWgk8Q54Ku+P/JMQPyoNORLJ7LJilFQ7oVow
+ cV75RpBPKNmNx18qPfQreEAl/6mRVpf6MgTMTaUxyfY8Trm+wvveVaZOtgo24yeMd4jMutj/nHl
+ NPT1IueCgLak7g0NAIPRavR1oUrqVgY8mykJ4H9gFRM7XRkP4/9kr5zmWxwmLLqCV1/0N1vX1WV
+ INS9W+KKAKTxsRIhnMOxVVsPL6mpTEV2TzCMafOfJg0kJstwucsVYNSHgBkNvVnJbL5z2OLtQgF
+ Gz
+X-Google-Smtp-Source: AGHT+IFNq4nJovP2BiLziXSWhG1U5Oj+Gb4V1C+I1PiKbarTjbKDqiNeyDKJf2mGPpexfvtF1X1A1w==
+X-Received: by 2002:a05:600c:1d07:b0:459:d9a2:e952 with SMTP id
+ 5b1f17b1804b1-45b5179f2f9mr73290115e9.1.1756115235664; 
+ Mon, 25 Aug 2025 02:47:15 -0700 (PDT)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b62dc6c30sm15594675e9.2.2025.08.25.02.43.05
+ 5b1f17b1804b1-45b575736f1sm101500875e9.13.2025.08.25.02.47.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Aug 2025 02:43:06 -0700 (PDT)
-Message-ID: <ce955ef5-69d1-47ad-9747-ea55f87d6df4@linaro.org>
-Date: Mon, 25 Aug 2025 11:43:05 +0200
+ Mon, 25 Aug 2025 02:47:15 -0700 (PDT)
+Message-ID: <51a9f857-69ff-43f6-8f3d-c7e5d5870c99@linaro.org>
+Date: Mon, 25 Aug 2025 11:47:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] crypto/hmac: Allow to build hmac over multiple
- qcrypto_gnutls_hmac_bytes[v] calls
+Subject: Re: [PATCH 7/8] hw/sd/sdcard: Handle RPMB MAC field
 To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>
 References: <cover.1756019920.git.jan.kiszka@siemens.com>
- <b9eadde84d8189635362e4e73a4941259be91a8f.1756019920.git.jan.kiszka@siemens.com>
+ <8ea56ae040ef1037e44fc864c159e2f96f23f059.1756019920.git.jan.kiszka@siemens.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b9eadde84d8189635362e4e73a4941259be91a8f.1756019920.git.jan.kiszka@siemens.com>
+In-Reply-To: <8ea56ae040ef1037e44fc864c159e2f96f23f059.1756019920.git.jan.kiszka@siemens.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,26 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Jan,
+
 On 24/8/25 09:18, Jan Kiszka wrote:
 > From: Jan Kiszka <jan.kiszka@siemens.com>
 > 
-> If the buffers that should be considered for building the hmac are not
-> available at the same time, the current API is unsuitable. Extend it so
-> that passing a NULL pointer as result_len is used as indicator that
-> further buffers will be passed in succeeding calls to
-> qcrypto_gnutls_hmac_bytes[v].
+> Implement correct setting of the MAC field when passing RPMB frames back
+> to the guest. Also check the MAC on authenticated write requests.
+> 
+> As this depends on HMAC support for QCRYPTO_HASH_ALGO_SHA256, only
+> register the eMMC class if that is available.
 > 
 > Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
 > ---
-> Cc: "Daniel P. Berrangé" <berrange@redhat.com>
-> ---
->   crypto/hmac-gcrypt.c  |  4 +++-
->   crypto/hmac-glib.c    |  4 +++-
->   crypto/hmac-gnutls.c  |  4 +++-
->   crypto/hmac-nettle.c  |  4 +++-
->   include/crypto/hmac.h | 12 ++++++++++++
->   5 files changed, 24 insertions(+), 4 deletions(-)
+>   hw/sd/sd.c | 90 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 89 insertions(+), 1 deletion(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> @@ -3122,6 +3201,7 @@ static const TypeInfo sd_types[] = {
+>           .parent         = TYPE_SD_CARD,
+>           .class_init     = sd_spi_class_init,
+>       },
+> +    /* must be last element */
+>       {
+>           .name           = TYPE_EMMC,
+>           .parent         = TYPE_SDMMC_COMMON,
+> @@ -3129,4 +3209,12 @@ static const TypeInfo sd_types[] = {
+>       },
+>   };
+>   
+> -DEFINE_TYPES(sd_types)
+> +static void sd_register_types(void)
+> +{
+> +    int num = ARRAY_SIZE(sd_types);
+> +    if (!qcrypto_hmac_supports(QCRYPTO_HASH_ALGO_SHA256)) {
+> +        num--;
+
+Instead, expose RPMB feature in CSD when HMAC supported?
+
+Something in emmc_set_ext_csd() in the lines of:
+
+   if (qcrypto_hmac_supports(QCRYPTO_HASH_ALGO_SHA256)) {
+       sd->ext_csd[EXT_CSD_REV] = 5;
+       sd->ext_csd[EXT_CSD_RPMB_MULT] = sd->rpmb_part_size / (128 * KiB);
+       sd->ext_csd[EXT_CSD_PARTITION_SUPPORT] = 0b111;
+   } else {
+       sd->ext_csd[EXT_CSD_REV] = 3;
+   }
+
+> +    }
+> +    type_register_static_array(sd_types, num);
+> +}
+> +type_init(sd_register_types);
 
 
