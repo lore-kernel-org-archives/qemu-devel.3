@@ -4,97 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4892CA0FE1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E432CA0FE1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqTys-0007L0-OI; Mon, 25 Aug 2025 05:59:14 -0400
+	id 1uqTyh-00075a-FN; Mon, 25 Aug 2025 05:59:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uqTyq-0007Js-Cm
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:59:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uqTy6-0006wD-VS; Mon, 25 Aug 2025 05:58:30 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uqTyj-0002Lu-6a
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:59:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756115939;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SqE1wYfDYojFcGZyUPFR3ZBs8YkWEU6ARG7lPiQTyD0=;
- b=VvPPMML1FaTL0DQnpHs89es6Hbi7ipK++TUY39emLV0h/PIp8ANHtxihKnnfubi+zhFpVl
- SxS4FL7TimpBNsUiZvrvID97rtxYTwODFf9X0p5W/gnz3o/BQ+4HWssi96C08UvflCYjQw
- JxgQUC9dKOEC31IcL39N/uNLmn6BMo0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-JmxZ2I8vPuq0BMBDkMmMRg-1; Mon, 25 Aug 2025 05:58:57 -0400
-X-MC-Unique: JmxZ2I8vPuq0BMBDkMmMRg-1
-X-Mimecast-MFC-AGG-ID: JmxZ2I8vPuq0BMBDkMmMRg_1756115936
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3c8bc2914a9so568839f8f.2
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 02:58:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756115936; x=1756720736;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SqE1wYfDYojFcGZyUPFR3ZBs8YkWEU6ARG7lPiQTyD0=;
- b=BXgetcGi1k/xR3eJ1saEBdh9DObSqQrk62vjKq8zmxlPR67Crl5/ec9xsSI7a67BRB
- CKFjABVG2frAnvXdHw9VnIYuEvO6+UQReVsL0SuTiTpP7HxcBU2AJI6uRVvpCO/njEFC
- ypAXxncgj6kAYJkQtGny7z3Efz/l6KNMPtPsbq3kPQbjncLIHL55QPiEM9LHiCBCPWaK
- 7ln43ICfeUSMdTc/WDXRlS2XQ+BrFiNn4sefPbsFALAlYE+n4BAmodfapk9qYv7nQRnI
- 3aiNn4NomLhu+SNOWbHodmj0OqcYFODwOAqFRh/UoDa4o9Rkz3zFYWIKuYyyitGcytz9
- Gnvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQglhhVQzGIs61odTZyLpMeU88VEzG1T6s/srYCQjGi9ulogbeviKk9P+FVv0SApcFhhfMr1EWUb4G@nongnu.org
-X-Gm-Message-State: AOJu0Yxl+9aN61fjGKUi8a4ns6EMCK9LR2ihMzhan4ziBZMjy9Uiz4Ex
- jrtouAQ25wxRR1HoabzO2lJ+Zk+n/eotyn5u5cBEI55tsk4v68QABi+N4Cw4rfNQgayNLz1pde1
- SPcfb74yIzeiivJ/f2X8n00+e2xd/xgKLpodDEtUC9/oPiJYqRqwEh3bu8DzzgJIBRlbRNpsRx/
- 5M2tFD86sUifVtUpeYys8V97Oeb+Bp70g=
-X-Gm-Gg: ASbGncugcJ0zEjKu+eEEUONBKG+1RuEGM5BI0L830ihTFjP+vI6RWCCKWD3tGWJxkhL
- YQYE+tXXcO4WyWlS9BjFBamzLhjENz9uYlYoG3Vjtux10TP4E9MgY7AEdnKmNsHFA15biqvdwp5
- 8/8vZdPGfuIOF5VyOOCTqUyaKMUhu8f2zumRiaiqFH9CZKHYyBxTzCsLfMZ8B5vEpCorMVZB8Xd
- w3N23fAt98Wsc0FmG+WUf7ToQ==
-X-Received: by 2002:a05:6000:270a:b0:3c9:73f7:c835 with SMTP id
- ffacd0b85a97d-3c973f7cbf1mr1309215f8f.29.1756115935974; 
- Mon, 25 Aug 2025 02:58:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyEjnfXcrPXkR4cLKAf75l8KGjNaDTlC6TVVVb64b4ugTCGIolfmeV1gmzXEwiRnhDz9NLvRIpjx5alrS1Vh8=
-X-Received: by 2002:a05:6000:270a:b0:3c9:73f7:c835 with SMTP id
- ffacd0b85a97d-3c973f7cbf1mr1309202f8f.29.1756115935582; Mon, 25 Aug 2025
- 02:58:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uqTxz-0002EQ-QY; Mon, 25 Aug 2025 05:58:26 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D544114A843;
+ Mon, 25 Aug 2025 12:57:44 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E31CF267E81;
+ Mon, 25 Aug 2025 12:58:07 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org,
+	qemu-block@nongnu.org,
+	qemu-trivial@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH trivial v2] block/curl: drop old/unuspported curl version
+ checks
+Date: Mon, 25 Aug 2025 12:58:04 +0300
+Message-ID: <20250825095806.2098237-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-References: <20250822122655.1353197-1-pbonzini@redhat.com>
- <20250822122655.1353197-9-pbonzini@redhat.com>
- <aKwV49H1RE31Bue5@intel.com>
- <CAAjaMXZFus_sj4P_SNgUiWQ9xEO_rRmYvf5VVDBfz_Z_S6TXmg@mail.gmail.com>
-In-Reply-To: <CAAjaMXZFus_sj4P_SNgUiWQ9xEO_rRmYvf5VVDBfz_Z_S6TXmg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 25 Aug 2025 11:58:44 +0200
-X-Gm-Features: Ac12FXze9heThqmIWqLBN1Fx4OwcPWfF9d2CsBgVkfNo52fgcI_3Vm0uuvCDi40
-Message-ID: <CABgObfZ4r2B0w-1XVcNG3HeZTPbSfuw4KB4uXxi2-0fYvP17wQ@mail.gmail.com>
-Subject: Re: [PATCH 08/14] rust: qdev: add minimal clock bindings
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
- tanishdesai37@gmail.com, 
- stefanha@redhat.com, berrange@redhat.com, mads@ynddal.dk
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,14 +59,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 25, 2025 at 9:33=E2=80=AFAM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> > get() sounds too general for Clock obj...maybe get_period()?
->
-> (Or just clock.period())
+We currently require libcurl >=7.29.0 (since f9cd86fe72be3cd8).
+Drop older LIBCURL_VERSION_NUM checks from the driver.
 
-Will do period() and hz().
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+v2: drop the right #if/#else block, thank you Marcus!
 
-Paolo
+ block/curl.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
+
+diff --git a/block/curl.c b/block/curl.c
+index 00b949ea45..e0f98e035a 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -516,7 +516,7 @@ static int curl_init_state(BDRVCURLState *s, CURLState *state)
+                              CURLOPT_REDIR_PROTOCOLS_STR, PROTOCOLS)) {
+             goto err;
+         }
+-#elif LIBCURL_VERSION_NUM >= 0x071304
++#else
+         if (curl_easy_setopt(state->curl, CURLOPT_PROTOCOLS, PROTOCOLS) ||
+             curl_easy_setopt(state->curl, CURLOPT_REDIR_PROTOCOLS, PROTOCOLS)) {
+             goto err;
+@@ -821,22 +821,11 @@ static int curl_open(BlockDriverState *bs, QDict *options, int flags,
+         goto out;
+     }
+ #endif
+-    /* Prior CURL 7.19.4 return value of 0 could mean that the file size is not
+-     * know or the size is zero. From 7.19.4 CURL returns -1 if size is not
+-     * known and zero if it is really zero-length file. */
+-#if LIBCURL_VERSION_NUM >= 0x071304
+     if (cl < 0) {
+         pstrcpy(state->errmsg, CURL_ERROR_SIZE,
+                 "Server didn't report file size.");
+         goto out;
+     }
+-#else
+-    if (cl <= 0) {
+-        pstrcpy(state->errmsg, CURL_ERROR_SIZE,
+-                "Unknown file size or zero-length file.");
+-        goto out;
+-    }
+-#endif
+ 
+     s->len = cl;
+ 
+-- 
+2.47.2
 
 
