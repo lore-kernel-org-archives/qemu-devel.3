@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED584CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 12:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC757CA0FE7
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 12:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqWhh-0007Oo-Av; Mon, 25 Aug 2025 08:53:45 -0400
+	id 1uqWiC-0007kK-MT; Mon, 25 Aug 2025 08:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <markjdb@gmail.com>) id 1uqWhQ-0007I5-M5
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 08:53:25 -0400
-Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqWhj-0007Y7-UT
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 08:53:46 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <markjdb@gmail.com>) id 1uqWhH-0005vH-R9
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 08:53:24 -0400
-Received: by mail-qv1-xf35.google.com with SMTP id
- 6a1803df08f44-70d9eb2e96fso27431496d6.0
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 05:53:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqWhb-0005wL-CM
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 08:53:42 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-45a1b004954so34172215e9.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 05:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756126390; x=1756731190; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
- :reply-to; bh=xzN5UM6Mcl1zDdSUky1UO1OvJmu1AZQv+xzg0DhxbbA=;
- b=ik8Elngdbg3fZFqy2Q3LOxbxrf4Lb20Nr/hcnQ9GOxHxbZmkLYZquk8I2H+KdJ7ET9
- Hh3aHM8+ZGd9F8DNDEMCgDpLDgj2pPAjGGU+F8uye5RU1GTYV3V3Dvd9BR7vvfuv72KW
- 4AkGkZ6EO1rkqMVCowEs6/ljTkdI0a5RIKMHRCUwMl1fY4WsTYxLjTOv90FB0n5cIbM7
- 2hWtbufgQPw4l/HQczVdeUuyv3+I1q4xQ+Ch0vQgOPH2kGq84rTAi5L/wEltF1Dk9zUQ
- 9E90T02PROB3ZJzCAejHIYq/l+d4kVyg/wSv693q3RhfxrcNigwnMAQLPxklv2Xcfr+r
- GVQQ==
+ d=linaro.org; s=google; t=1756126412; x=1756731212; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FPp9O11Y3qhhLvaOJJ2IBuLmaOaIDBR6fcwlXUGD724=;
+ b=vUsXkNtnzx7Uu69Pryoaof0uMR4YhA/wmrTKxKqqBc6jlGS/1ZdmPud+F6LRawnbdG
+ h4ZnvM3CyZhvsywamUy4S+FGJpTl4/gVWAFFtL3SD+zB56Zw53SaLzmPHtHObEtMa9Ao
+ MoKXtmq/x0uPFD96PKEE/92XplOXYvjNUf3dp7eAWcAzla1IJNiZ47ytA0ToX3fKhswS
+ hnR0nr7l12k5DFKxnubg/QvqRmo8uFKwkyb1Qx7wDIE5Aw9t91I/6eKjv6ikUpgyeyBN
+ xZ6GwmgGEyMCjF3UZKxL6Vr82zOLaKQjkvEHS84zB7BEuGBlsepZ9d6eN6fwseOJohkh
+ +woA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756126390; x=1756731190;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xzN5UM6Mcl1zDdSUky1UO1OvJmu1AZQv+xzg0DhxbbA=;
- b=KVVzB+qgVtJ+Mvst7aeBKWP7ZxVL7+5TgywnE2/zn4R/rVcIUFivfDMHwezqj3ee3k
- jIFXZ1RwKIpzFU0hXT9Vnm0fZWdoVulWF7dlSIJPLgPURINO/kUK0q1CA6zAGGZDZVZC
- VIEaQHXIhwo6GsusZkmHbsJUUz+Gtv4X+xlc8lwFRhsHFn5k/T8MaQHvx9xd2+nraSu9
- ROLQ1v4IBfpf3DoSUqIDVB8IBuRvABwnyavNqnvjOEuy4Sr7U9FcmnxQVAeQ5FMDzHs3
- E2Pz1j0k8vKE9GDcBb7Lm+n+Kk4+x7An4Pk0gFxkhZkRTmFVMwOLopevjL3fjquADvJT
- lrKQ==
-X-Gm-Message-State: AOJu0YyRC7l2NM6p3TWm37BsSKtm6NgGL0BEawfHKs/eyd7TiYHiMljw
- 9ZSjMadgGvBnOf/TKiYQ9S9OgG5IWszwFzFQR/8ab9ZiDWlVssnGwVqs
-X-Gm-Gg: ASbGncslYmDvngc7PHYc828xN1Shvcx1O/gmg0RxBVw2FsR6vT/W8W5RUkivclIgXhA
- +kmjLKtRsDv5fQ+M9ZGB2CSPSCiQFGeqWthuk8CCaoS7QMKgy7C7blObnpGgXnEUy8j6n246KC6
- PESiP6OGwjURc3Cusb5n3j89FWtm7Ls9KoT4/h799/sS1cd42LdiNhYB2iA+EhmYMDHOgQftKkd
- XBVAx5sLaBDwfj2Q6VXAlq+uyD3zFf5zmTZ0T5UN1ALA77BXSLV/XPMgB1cCAcQAtKnXExpmicF
- Soeb9MGrKtMFegCcRQqAUm/4mYcCvgjDui0K+jPmGRf9cJaEcLPNY0f36c/7p+9pxnjekcuy0Up
- ysmz6G1fKOj09vrZqasgms4WO1P8v4DAzNpLe
-X-Google-Smtp-Source: AGHT+IEQNfL5wThRSYb+EGsaChTMTEREvdXhGUQkO78SKl1PWZSLOY8Uqt4tFL1m5qeO6k+nVNRmeg==
-X-Received: by 2002:a05:6214:407:b0:70b:c8ae:1849 with SMTP id
- 6a1803df08f44-70d983dc528mr115013196d6.27.1756126389608; 
- Mon, 25 Aug 2025 05:53:09 -0700 (PDT)
-Received: from nuc (192-0-220-237.cpe.teksavvy.com. [192.0.220.237])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70dc949bcc6sm2526976d6.8.2025.08.25.05.53.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Aug 2025 05:53:08 -0700 (PDT)
-Date: Mon, 25 Aug 2025 08:53:06 -0400
-From: Mark Johnston <markj@freebsd.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2] 9pfs: Add FreeBSD support
-Message-ID: <aKxcsmP6MI5p9OPe@nuc>
-References: <aJOWhHB2p-fbueAm@nuc>
- <2602995.s6eulQLtdm@silver>
+ d=1e100.net; s=20230601; t=1756126412; x=1756731212;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FPp9O11Y3qhhLvaOJJ2IBuLmaOaIDBR6fcwlXUGD724=;
+ b=dnWHJFxKoF4pU5alw9n/OV6CsXsGfqXK0nYPEdxDglj6yrcvrBMo6upl8WHD18qm6H
+ Boy5hEvTr4z70/csTCDW6l6p3GeYGRGw7qqA3jp/OZM6ho/hp2bqybUFCgJrusEe14DE
+ juCBblJETziUtNZZ4iyrZSrrG43TKoYPBL4eO5oQB1Tw0CASVBgPOkfYWF6VPyu/K6+x
+ I0Ul1D9JNbL7deHuf+NhpjYc4cM6z+fBAj/56LSXOPwDuaVcSXL4MX+Qi3hd5E0AdaM2
+ TC0EwsxTEK9E4PnU5A1ThlP7uCir4cxKRNcAuJJ/UBhkETR8XI+GUtd+C+h8bLML3GIa
+ JM5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXvSFnfiX0NNq60q3WViNUAXuxqy53CoUjStumSdLh8fDmEB4YkN+qb91H/CVCwW1mGxWQ53rfG2+h1@nongnu.org
+X-Gm-Message-State: AOJu0YxlXxJZBoBvW+sSaX7a/tVBdup4+w1P8d3zizlMr3K2BU7Zw4Mz
+ HqmhcsF0v+KAhleN7wdaMAaStjDD9g72iKTj+oVQEM3XP36I+rgilFFWnMuECrW3RRI=
+X-Gm-Gg: ASbGncsxmCt9PNAPRdmiok9gSsraC1Euuz2v65zqCfj1oxW1+dMfunGslfGx8T4FrGz
+ RZtZqBLiSS1SPvs5ZMQm7Tv5aC5iMluIwvDeC3AclzAMRWEL3+3vEBiPrnhqIHZiFvw0Vw/5Yki
+ wtrKhvRqMURC4ou8BlrESSL65bCem1zsjiqEPwaIImkS5MTmbc6trhoR5/S1QXDSKGcWIlPG6uj
+ l+6Vtl64afFe+WslDgb8NCBdvlE6rUz4zGvsIrkYkGtzW94KeaBGpWXgyCzKJdm5/SP1prOpZZ5
+ Nk3NQbQdQq3hmSHYpUQhRH0HqOSGS2leTTdakZGJIEjQleZqyyiyu5OUL5unFSEe1lOltRgo359
+ jETG4FbznF/SO5rURnOc48I9PdKpIAlyauAwqj3OgLQrPA/mfd0/q6dAUze7gwfJODw==
+X-Google-Smtp-Source: AGHT+IHwXyOyUllRvIsMJaLXEUCwlR0rkMgQ9/VDddxtgCG/OgcsrgBBzvZ9TgbWWIS58XN/x6PD0A==
+X-Received: by 2002:a5d:640a:0:b0:3c6:5532:28e with SMTP id
+ ffacd0b85a97d-3c655320f2cmr6418797f8f.13.1756126411820; 
+ Mon, 25 Aug 2025 05:53:31 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b57444963sm118147705e9.3.2025.08.25.05.53.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Aug 2025 05:53:31 -0700 (PDT)
+Message-ID: <69226b06-8c4f-4efb-b4d7-281e7df428f5@linaro.org>
+Date: Mon, 25 Aug 2025 14:53:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2602995.s6eulQLtdm@silver>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
- envelope-from=markjdb@gmail.com; helo=mail-qv1-xf35.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] target/microblaze: div: Break out raise_divzero()
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, edgar.iglesias@amd.com
+References: <20250825112051.4155931-1-edgar.iglesias@gmail.com>
+ <20250825112051.4155931-3-edgar.iglesias@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250825112051.4155931-3-edgar.iglesias@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- HK_RANDOM_ENVFROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,71 +102,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 21, 2025 at 01:24:04PM +0200, Christian Schoenebeck wrote:
-> On Wednesday, August 6, 2025 7:53:08 PM CEST Mark Johnston wrote:
-> > This is largely derived from existing Darwin support.  FreeBSD
-> > apparently has better support for *at() system calls so doesn't require
-> > workarounds for a missing mknodat().  The implementation has a couple of
-> > warts however:
-> > - The extattr(2) system calls don't support anything akin to
-> >   XATTR_CREATE or XATTR_REPLACE, so a racy workaround is implemented.
-> > - Attribute names cannot begin with "user." on ZFS, so the prefix is
-> >   trimmed off.  FreeBSD's extattr system calls sport an extra
-> >   "namespace" identifier, and attributes created by the 9pfs backend
-> >   live in the universal user namespace, so this seems innocent enough.
-> > 
-> > The 9pfs tests were verified to pass on the UFS, ZFS and tmpfs
-> > filesystems.
-> > 
-> > Signed-off-by: Mark Johnston <markj@FreeBSD.org>
-> > ---
-> > Changes since v1:
-> > - Handle extended attributes in the system.* namespace as well.
-> > - Fix a typo in a comment.
-> > - Clarify a comment.
+On 25/8/25 13:20, Edgar E. Iglesias wrote:
+> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > 
-> Not forgotten. I just hoped there were other reviewers or testers in the 
-> meantime, but be it.
+> Break out raise_divzero() and take the opportunity to rename
+> and reorder function args to better match with spec and
+> pseudo code.
 > 
-> Like I said, I don't have FreeBSD system here to test this, so I am taking 
-> your word for now that you tested this and plan to bring this into QEMU when 
-> master re-opens for new features soon.
+> No functional change.
+> 
+> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/microblaze/op_helper.c | 38 +++++++++++++++++------------------
+>   target/microblaze/translate.c | 12 ++---------
+>   2 files changed, 20 insertions(+), 30 deletions(-)
 
-Thank you very much!
-
-In case I missed somewhat, what testing would you typically do
-otherwise?  So far I had run the QEMU test suite (which indeed found
-some bugs in the initial version) and tried mounting a 9pfs share from
-Linux and FreeBSD guests and doing a bit of manual testing.
-
-> If you have some time to adjust the commit log message above, that would be 
-> great, otherwise I can also handle this on my end later on. Looks like that 
-> comment is not adjusted for v2 yet (i.e. "user." and not mentioning 
-> "system.").
-
-Here's an amended commit log message.  Please let me know if this is
-better submitted as a v3.
-
-commit b79bf1b7d42025e3e14da86a7c08d269038cd3ed
-Author: Mark Johnston <markj@FreeBSD.org>
-Date:   Wed Jul 16 20:32:05 2025 +0000
-
-    9pfs: Add FreeBSD support
-    
-    This is largely derived from existing Darwin support.  FreeBSD
-    apparently has better support for *at() system calls so doesn't require
-    workarounds for a missing mknodat().  The implementation has a couple of
-    warts however:
-    - The extattr(2) system calls don't support anything akin to
-      XATTR_CREATE or XATTR_REPLACE, so a racy workaround is implemented.
-    - Attribute names cannot begin with "user." or "system." on ZFS, so
-      these prefixes are trimmed off.  FreeBSD's extattr system calls sport
-      an extra "namespace" identifier, and attributes created by the 9pfs
-      backend live in the universal user and system namespaces, so this
-      seems innocent enough.
-    
-    The 9pfs tests were verified to pass on the UFS, ZFS and tmpfs
-    filesystems.
-    
-    Signed-off-by: Mark Johnston <markj@FreeBSD.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
