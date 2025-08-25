@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B04FCA0FE1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 10:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4165DCA0FE1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 11:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqUuX-00089l-5G; Mon, 25 Aug 2025 06:58:49 -0400
+	id 1uqUvG-0008Rv-VE; Mon, 25 Aug 2025 06:59:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqUuU-00088C-4U
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:58:46 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1uqUvC-0008R6-QG
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:59:33 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1uqUuN-000150-Lw
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:58:44 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-55f48cb7db9so401528e87.3
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 03:58:36 -0700 (PDT)
+ id 1uqUv9-00017r-HC
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:59:30 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-3367144d35cso7003321fa.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 03:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756119513; x=1756724313; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=QbwWs2+ydTs8g64zcQoevgXQBlwL0ffFlBvLl0V3K0w=;
- b=YvRn52HlN9ZImgsSG/Ofo1UPwPjsCWq4yZCCJaO6s0FwHhZeCqi4VMhPh8GOLD3dlh
- Jaf9cfPgspvDwof+iE8Rlb37SFQI2/CZ+klFIm9sgu01xPraFuj9pStSn5U5qGoPqykG
- n1GkSg85VE1aabpExLEeS4hycHRNd+G+2aSDPtciDNZ5mgMsQSOxxkuRT0uopljjr2IQ
- JtP1R2FZC4FW0RKLvD8bXqoOG1/b314HU4o3TTAvhVVgNbbgVcylno5i92p2Z0fzFQnC
- EDtqA9G3jHYNJehVPtwmGLF7szJE9EfIGwBHrMHDDKOZ+Qz1eKhyxAeCq2E48LzmHyzx
- j3iA==
+ d=gmail.com; s=20230601; t=1756119564; x=1756724364; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IKpkCXSMMvrYSK0FB3XakUiVDOVF1I6yNKLmtcEh5Oo=;
+ b=ZP4/C4d/5EUmQi02S/gq/eblNGZfkmcdTxA2Mk/5D5UGJSnVmKf8LNUe3UN5Srl65P
+ MdD8rq7vXVt538CLKweUFd43sS3gpjYIHNnDmd7cWtiC+1K9nea5NTsSIU9FmSTUaguI
+ kTvV0H6PFogPN+VtIsQBHmgEAi6oCO1/NsnNNgIwx9rv+GkNao09gsniBm8f3bTQmXND
+ lfahurxvT2rTY0eESCH+aQN4cqcIxF7LzTbVJq7a6GrxzDbALsmkRXRq5Yz38AJhOaWq
+ bxClyvnDMgFiZuUBoQ79SpGSL77ArEwf5jZspC6XzyqmqUQ61W2J2D25cBttCScW3TsZ
+ Aa9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756119513; x=1756724313;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QbwWs2+ydTs8g64zcQoevgXQBlwL0ffFlBvLl0V3K0w=;
- b=CgFr9uousH09BieQihAQ13pCXO1TvxMVKGE25vYOtJP+gpDQOX34GtUdSVaV1jtKQw
- uRBSwkugiyFJrTTLkPUWyJoLBmZIKUHkG/JX2u8HypqPpHAZjcm1IetJ8q5/V8jvBEhq
- XinNiF73mxqCFNxnJRVsbmk06H0IB0QM6gp2u1hC0JO9D8QLkR7fLnO435AdISFBioLB
- GhzhXm3ynm0s/uUMC+6ClSWH3JcQI1ZD3K1udXamSZ8wWb10cwLia73n3eEgZsr1h7If
- zqWpw3HeC9aPFXdXBuqo07TrICuI10FihGVtDkP/7QyIbNq4AgvZoWPYzo78kvVxD7/N
- qRLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIEJYePWT4vbpxfkXT36esyLn0iocxSrOQ6BDZ00ga9DRZ84Bj4ZOY21jPFPEKwbiHTeNqVCOkaQeF@nongnu.org
-X-Gm-Message-State: AOJu0YwYYP4rC7iM9Lwe1OAlOyJ8CkySqfmeBpSG54Kv64K12vNBQwVE
- bVCxKLvlm1XmtanNQ+SF9mHm5kzwszuU4WOznKwt4P0AwSsKh6Ig8ncb
-X-Gm-Gg: ASbGncvlNs18/Zh9EUOOQIdDd61EmV8XlgvWRa6LUxCQa0UxNOuo2FlQ/kBAPyIPQWf
- ZR4b3xujQu6S5OJ1eqoEnW3qnAe63vjpzcSb5AsAzfhhEUOyx83Ozu9s4QKFVuZlF5vEKWga/wW
- MO5PO1y6y441fw1yCOTebE0tGT3u/KwLrkNL7daJ88qZUixFEaQQ5W/iHyWJWFK6RDPZUapjtKO
- DCRKCJa8KD2wzUfFfbX8EDGT/1zWLJp1iUTAOekDZIT9tfWvoSej/bJg5eSn//ArycVMadTqyRx
- hWHLHs1SXWDGg+JJ3D096GLnOmZsHEv7IbOJiNu22OSEFZ0xCUlNR9GRQb3pvviO4eg+TNK45Q3
- 3esHfjUvdivMekkpy6NLuj0qIIkACvX9vBkPJtEw5JJgkTZ9M987qxbE9/VVllU/5D47jpw==
-X-Google-Smtp-Source: AGHT+IEOWLBcDutsKCGJbtB4zgs+/nH1CQ2tw7szfI/oorRmrJ+95ebgdHdbCzFxTk6ifK2sHuyzyw==
-X-Received: by 2002:a05:6512:631c:b0:558:f694:a65e with SMTP id
- 2adb3069b0e04-55f0cd0a837mr2692730e87.34.1756119512437; 
- Mon, 25 Aug 2025 03:58:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756119564; x=1756724364;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IKpkCXSMMvrYSK0FB3XakUiVDOVF1I6yNKLmtcEh5Oo=;
+ b=XW9gmX5QBrbaiFq0kvwlvvSyp0L8aEnyyFqcvGR2zaLXL+ko1vu2yZKATcyPdXh00M
+ O31lMcDr6X9oXh7gEUa/3+Wxm05PjMTVGKExD2MyNxTsVEyFXah/JmN2rOa2socS4j5O
+ KnfuTvrU+d5Ap3t+jvqP62lIG6O3zR6P+mteWTwL6hofjRy+mFXR0XnwQwcfh6HVuNte
+ FgnHS4gZUWJcTpuFsJgtcxMdwPjxXMfDCbGWnYP4rPJjXUVnCS4/wtYYp5VtEojyj3fr
+ e6P/v3XDYd6NT7gjJNoG4Z/6bMWhSgCWl42aDv9Y6YHS4obZKJgLp6ymVc0l7IXVLTHi
+ 4lGg==
+X-Gm-Message-State: AOJu0Yyyv49CV3jAupafW2NvVFE/vXN6uv7Ewl2nQZfvfnafjYqiFIth
+ 904VmTEa+tZ9dzGTgfWrbdlj335U1+7+T06g6V8nn//TjLad1hDr/wOE
+X-Gm-Gg: ASbGncvfpHiJgBhPHGMFWcvu8pyMAfy2y0LFe1tPHIqCAd0ikaOFW8BK3HcKt/sWbTe
+ W0UcRYkAxDMuM8mUydisuldq85Z2y8ZSM0H8juAMcsYbD2gRePjaiQvSsNIH9RJq+DiLHZQGoQc
+ XhtJKGhiqEMgzsbjBoEVVUBe0XehUpafvXTvjbt2vOrX5Dzb5Aejsm2bHbWva+tswECSCWmyBhP
+ bx0xtZ86LipfFkYGDJxYK2WLpAXldznsI0bJmPx61OxWQQV8dDwvpUcJf4/d11aOhZiNgS2j6nc
+ NRqgpab0T9an9/bwewm+YC+kUWhsvRq0+FV7VwIRfTBuEx0ulCbiV8W1P9l8B4xNRE68emaRUVp
+ rMyGEHzroLf/383iGDJ5DOFfJXeTp2tBNbHedTr0/Nm/7aILsozHY+S9qMD1BKNVRFIxxlp5uZ9
+ mhis5/
+X-Google-Smtp-Source: AGHT+IGuS0/T+EqpktZCx5DICf5BWIC1cukJs+F3ticGlyuov/LGe/ocYU94mp1cKaNWM3Y/JHboKw==
+X-Received: by 2002:a05:651c:2115:b0:336:7bcc:a939 with SMTP id
+ 38308e7fff4ca-3367bdbf7fdmr5248951fa.19.1756119564096; 
+ Mon, 25 Aug 2025 03:59:24 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3365e5d1b1asm16203511fa.50.2025.08.25.03.58.31
+ 38308e7fff4ca-3367f2cd3cfsm1408211fa.64.2025.08.25.03.59.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Aug 2025 03:58:31 -0700 (PDT)
-Date: Mon, 25 Aug 2025 12:58:31 +0200
+ Mon, 25 Aug 2025 03:59:23 -0700 (PDT)
+Date: Mon, 25 Aug 2025 12:59:23 +0200
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- edgar.iglesias@amd.com
-Subject: Re: [PATCH v1 2/4] target/microblaze: div: Rename and reorder
- function args
-Message-ID: <aKxB18pZPajWdLSe@zapote>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, edgar.iglesias@amd.com
+Subject: Re: [PATCH v1 4/4] target/microblaze: Handle signed division overflows
+Message-ID: <aKxCC1FI5jaVAl4d@zapote>
 References: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
- <20250824222734.4151956-3-edgar.iglesias@gmail.com>
- <80a82610-0423-4e25-a88a-14c4f7d95ed3@linaro.org>
- <a879c454-626b-4194-80f2-229ad60ca971@linaro.org>
+ <20250824222734.4151956-5-edgar.iglesias@gmail.com>
+ <764b48a4-6cf7-408d-afb7-503348906789@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a879c454-626b-4194-80f2-229ad60ca971@linaro.org>
+In-Reply-To: <764b48a4-6cf7-408d-afb7-503348906789@linaro.org>
 User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,47 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 25, 2025 at 12:11:25PM +0200, Philippe Mathieu-Daudé wrote:
-> On 25/8/25 01:32, Richard Henderson wrote:
-> > On 8/25/25 08:27, Edgar E. Iglesias wrote:
-> > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> > > 
-> > > Rename and reorder function args to better match with spec
-> > > and pseudo code.
-> > > 
-> > > No functional change.
-> > > 
-> > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> > > ---
-> > >   target/microblaze/op_helper.c | 18 +++++++++---------
-> > >   target/microblaze/translate.c | 12 ++----------
-> > >   2 files changed, 11 insertions(+), 19 deletions(-)
-> > > 
-> > > diff --git a/target/microblaze/op_helper.c b/target/microblaze/
-> > > op_helper.c
-> > > index 470526ee92..092977b3e1 100644
-> > > --- a/target/microblaze/op_helper.c
-> > > +++ b/target/microblaze/op_helper.c
-> > > @@ -69,9 +69,9 @@ void helper_raise_exception(CPUMBState *env,
-> > > uint32_t index)
-> > >       cpu_loop_exit(cs);
-> > >   }
-> > > -static bool check_divz(CPUMBState *env, uint32_t b, uintptr_t ra)
-> > > +static bool check_divz(CPUMBState *env, uint32_t divisor, uintptr_t pc)
+On Mon, Aug 25, 2025 at 09:44:34AM +1000, Richard Henderson wrote:
+> On 8/25/25 08:27, Edgar E. Iglesias wrote:
+> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > > 
-> > The name GETPC notwithstanding, I don't think ra -> pc is a good rename.
+> > Handle signed division overflows as specified in UG984:
+> > https://docs.amd.com/r/en-US/ug984-vivado-microblaze-ref/idiv
 > > 
-> > PC often gets confused about whether that's a host or guest value.
-> > RA (return address) is less so; it gets used often in core tcg.
+> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > ---
+> >   target/microblaze/cpu.h       |  1 +
+> >   target/microblaze/op_helper.c | 15 +++++++++++++++
+> >   2 files changed, 16 insertions(+)
 > > 
-> > If you really don't like RA, then perhaps "retaddr" (also with quite a
-> > bit of usage) or "unwind_pc" (no existing usage, but very descriptive).
+> > diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+> > index 3ce28b302f..7dd86653f0 100644
+> > --- a/target/microblaze/cpu.h
+> > +++ b/target/microblaze/cpu.h
+> > @@ -87,6 +87,7 @@ typedef struct CPUArchState CPUMBState;
+> >   #define          ESR_ESS_FSL_OFFSET     5
+> >   #define          ESR_ESS_MASK  (0x7f << 5)
+> > +#define          ESR_ESS_DEC_OF  (1 << 20) /* DEC: 0=DBZ, 1=OF */
 > 
-> +1 for 'unwind_pc'.
+> That's bit 20 big-endian, so bit (1 << 11).
 
+Fixed for v2, thanks!
 
-Sounds good!
-
-Thanks,
-Edgar
+> 
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> 
+> r~
 
