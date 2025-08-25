@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21ABECA0FE1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 10:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B04FCA0FE1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 10:59:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqUrX-000777-Q7; Mon, 25 Aug 2025 06:55:43 -0400
+	id 1uqUuX-00089l-5G; Mon, 25 Aug 2025 06:58:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqUrU-00076B-7Y
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:55:40 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1uqUuU-00088C-4U
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:58:46 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqUrM-0000v4-Dh
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:55:39 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45b60fd5a1dso6221565e9.2
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 03:55:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1uqUuN-000150-Lw
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 06:58:44 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-55f48cb7db9so401528e87.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 03:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756119325; x=1756724125; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YTMmAtlYBpPyx7uvCP+0dkvpd9jM9kpze1Jc4278uck=;
- b=SJDhdvHSLCh0OM6BFeJvmVvDow/4rFxrOgAFQFChAWiX7Fl5LMKbnohpgEOp5dVM6U
- vy0Ty4+Gfg+jJGFH6JZd5ZHYs30LiSPHi4qPy4VyLTWBWGN5h8Gf/EuI/T5emTrR2r7K
- Q3S5D91qR4kMau7HJx6iNe23KsaeZCYqoNOqy68qLNT/itt/e9u1rLnGKe8yWm889s/2
- JAG+ymE8RTzfpARaOYbJ2jLW7Ni104ZlHR21vXyQ+snfxynVCOSvGebK3qub4FC5kl4D
- jLhwtYBwLCKjUN7ixz5fLTin/MImv5ajLRJk4dgH+exPiceM9iW5p5FfcHpeRIGBtPcu
- PcKw==
+ d=gmail.com; s=20230601; t=1756119513; x=1756724313; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=QbwWs2+ydTs8g64zcQoevgXQBlwL0ffFlBvLl0V3K0w=;
+ b=YvRn52HlN9ZImgsSG/Ofo1UPwPjsCWq4yZCCJaO6s0FwHhZeCqi4VMhPh8GOLD3dlh
+ Jaf9cfPgspvDwof+iE8Rlb37SFQI2/CZ+klFIm9sgu01xPraFuj9pStSn5U5qGoPqykG
+ n1GkSg85VE1aabpExLEeS4hycHRNd+G+2aSDPtciDNZ5mgMsQSOxxkuRT0uopljjr2IQ
+ JtP1R2FZC4FW0RKLvD8bXqoOG1/b314HU4o3TTAvhVVgNbbgVcylno5i92p2Z0fzFQnC
+ EDtqA9G3jHYNJehVPtwmGLF7szJE9EfIGwBHrMHDDKOZ+Qz1eKhyxAeCq2E48LzmHyzx
+ j3iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756119325; x=1756724125;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YTMmAtlYBpPyx7uvCP+0dkvpd9jM9kpze1Jc4278uck=;
- b=n5GSrNfPtP6PS52RP13Ah4WwoddmWddG1LP12pAPdJkxaoBgwKzrXe8n7i4mVbLB37
- xwjETdOzFGlVZ7msMbO1S8SimLAjfV0O0wWtC/x4xtAO5ECkp/Zt7buvhEUxScr6Pl9d
- zRwntrkDpfRbdoMcZEyR4yk5XJmrY9pCTfxGPLRZpkZ9xmvaO1/kGy/QIcDUuQWbVesc
- Mz3NICNy6cD4kdYxwAyG8KLIsGdkTPeQBzjGAfXxJ3EbGbv1ytqhEMhIg0SqScsXUcTN
- NWAlyzi/aFagG8EnczK5izefYQKKqwpeA3ziucRlDgP0SeUn8RAcDdO8A6/rs82YjJoZ
- /p2A==
+ d=1e100.net; s=20230601; t=1756119513; x=1756724313;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:message-id:subject:cc
+ :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QbwWs2+ydTs8g64zcQoevgXQBlwL0ffFlBvLl0V3K0w=;
+ b=CgFr9uousH09BieQihAQ13pCXO1TvxMVKGE25vYOtJP+gpDQOX34GtUdSVaV1jtKQw
+ uRBSwkugiyFJrTTLkPUWyJoLBmZIKUHkG/JX2u8HypqPpHAZjcm1IetJ8q5/V8jvBEhq
+ XinNiF73mxqCFNxnJRVsbmk06H0IB0QM6gp2u1hC0JO9D8QLkR7fLnO435AdISFBioLB
+ GhzhXm3ynm0s/uUMC+6ClSWH3JcQI1ZD3K1udXamSZ8wWb10cwLia73n3eEgZsr1h7If
+ zqWpw3HeC9aPFXdXBuqo07TrICuI10FihGVtDkP/7QyIbNq4AgvZoWPYzo78kvVxD7/N
+ qRLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxAcOxN5fhx6ApXBNNYD3EqUDeqAIzsNz8P9G5gQoV+BFTBKmeDJRRP4VxSv7bT6hquAxyZ8d+TMPz@nongnu.org
-X-Gm-Message-State: AOJu0YyEYWi1L1um6bqhXAxh+L2aLhwSY90DQefl5AhIbK7QST/2XDDP
- EJ3KGBrLEAcgon9mxiCAy8vuVqjgUoe+W/IkpbDG/upkS3Ec0zM/2mVqoY+ws6hqwv6QI+ev6mx
- L2IWL
-X-Gm-Gg: ASbGnctVl9ORhFZSdqg6gAEGqFWCuo1VfY2modFLhd4swZ05NG6b5FIkI3I8b6nIJJC
- O0P9j5Fe8sxp9R45hs55NUG1jjTXhZhwKDthD6aefsMaURGoSm3Q5eBUw5TGZaDvhYSb31c74Xb
- LzN+JCY/vF8oWec4526efscDFNlkJaGamcbfF2MQnQGQg4b+Smm3MNnSUOzMsjqgCms3dekcllk
- NyDNMgRebVq3w5qK/P/vKWhJ4NmRmYgKqV5mjYazbYJCfw84J+tfyseAESI90YVvslgrxVw9axo
- K8rrZ30T7ZwuC5z71e1fuN18kEKPP0bHFMdiUltPduBFdfSsRzpVbl498jg3PfR172pqFyXAfaN
- lcfIXFY+G6fdTJMpc6tQ5gbjRfcNwmW9dGEcLXzHazNcGOqWoNo7e+L2TFmcEcUHiaQ==
-X-Google-Smtp-Source: AGHT+IHKMEA5UQ6/uObPzesPFKlwgRLxVMg4rChnaFMtF05c63HDPx2qiSUfeo2HKOJG6TKGt5zvXQ==
-X-Received: by 2002:a05:600c:4f03:b0:458:a7b5:9f6c with SMTP id
- 5b1f17b1804b1-45b5ec68358mr35830645e9.11.1756119325363; 
- Mon, 25 Aug 2025 03:55:25 -0700 (PDT)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b57589e49sm103826475e9.18.2025.08.25.03.55.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Aug 2025 03:55:24 -0700 (PDT)
-Message-ID: <8c52a821-021c-4711-98dc-30bfb605a3d6@linaro.org>
-Date: Mon, 25 Aug 2025 12:55:24 +0200
+ AJvYcCVIEJYePWT4vbpxfkXT36esyLn0iocxSrOQ6BDZ00ga9DRZ84Bj4ZOY21jPFPEKwbiHTeNqVCOkaQeF@nongnu.org
+X-Gm-Message-State: AOJu0YwYYP4rC7iM9Lwe1OAlOyJ8CkySqfmeBpSG54Kv64K12vNBQwVE
+ bVCxKLvlm1XmtanNQ+SF9mHm5kzwszuU4WOznKwt4P0AwSsKh6Ig8ncb
+X-Gm-Gg: ASbGncvlNs18/Zh9EUOOQIdDd61EmV8XlgvWRa6LUxCQa0UxNOuo2FlQ/kBAPyIPQWf
+ ZR4b3xujQu6S5OJ1eqoEnW3qnAe63vjpzcSb5AsAzfhhEUOyx83Ozu9s4QKFVuZlF5vEKWga/wW
+ MO5PO1y6y441fw1yCOTebE0tGT3u/KwLrkNL7daJ88qZUixFEaQQ5W/iHyWJWFK6RDPZUapjtKO
+ DCRKCJa8KD2wzUfFfbX8EDGT/1zWLJp1iUTAOekDZIT9tfWvoSej/bJg5eSn//ArycVMadTqyRx
+ hWHLHs1SXWDGg+JJ3D096GLnOmZsHEv7IbOJiNu22OSEFZ0xCUlNR9GRQb3pvviO4eg+TNK45Q3
+ 3esHfjUvdivMekkpy6NLuj0qIIkACvX9vBkPJtEw5JJgkTZ9M987qxbE9/VVllU/5D47jpw==
+X-Google-Smtp-Source: AGHT+IEOWLBcDutsKCGJbtB4zgs+/nH1CQ2tw7szfI/oorRmrJ+95ebgdHdbCzFxTk6ifK2sHuyzyw==
+X-Received: by 2002:a05:6512:631c:b0:558:f694:a65e with SMTP id
+ 2adb3069b0e04-55f0cd0a837mr2692730e87.34.1756119512437; 
+ Mon, 25 Aug 2025 03:58:32 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-3365e5d1b1asm16203511fa.50.2025.08.25.03.58.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Aug 2025 03:58:31 -0700 (PDT)
+Date: Mon, 25 Aug 2025 12:58:31 +0200
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ edgar.iglesias@amd.com
+Subject: Re: [PATCH v1 2/4] target/microblaze: div: Rename and reorder
+ function args
+Message-ID: <aKxB18pZPajWdLSe@zapote>
+References: <20250824222734.4151956-1-edgar.iglesias@gmail.com>
+ <20250824222734.4151956-3-edgar.iglesias@gmail.com>
+ <80a82610-0423-4e25-a88a-14c4f7d95ed3@linaro.org>
+ <a879c454-626b-4194-80f2-229ad60ca971@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/8] memory: reintroduce BQL-free fine-grained PIO/MMIO
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, mtosatti@redhat.com
-References: <20250814160600.2327672-1-imammedo@redhat.com>
- <20250814160600.2327672-2-imammedo@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250814160600.2327672-2-imammedo@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a879c454-626b-4194-80f2-229ad60ca971@linaro.org>
+User-Agent: Mutt/2.2.14+84 (2efcabc4) (2025-03-23)
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,110 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/8/25 18:05, Igor Mammedov wrote:
-> This patch brings back Jan's idea [1] of BQL-free IO access
+On Mon, Aug 25, 2025 at 12:11:25PM +0200, Philippe Mathieu-Daudé wrote:
+> On 25/8/25 01:32, Richard Henderson wrote:
+> > On 8/25/25 08:27, Edgar E. Iglesias wrote:
+> > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> > > 
+> > > Rename and reorder function args to better match with spec
+> > > and pseudo code.
+> > > 
+> > > No functional change.
+> > > 
+> > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > > ---
+> > >   target/microblaze/op_helper.c | 18 +++++++++---------
+> > >   target/microblaze/translate.c | 12 ++----------
+> > >   2 files changed, 11 insertions(+), 19 deletions(-)
+> > > 
+> > > diff --git a/target/microblaze/op_helper.c b/target/microblaze/
+> > > op_helper.c
+> > > index 470526ee92..092977b3e1 100644
+> > > --- a/target/microblaze/op_helper.c
+> > > +++ b/target/microblaze/op_helper.c
+> > > @@ -69,9 +69,9 @@ void helper_raise_exception(CPUMBState *env,
+> > > uint32_t index)
+> > >       cpu_loop_exit(cs);
+> > >   }
+> > > -static bool check_divz(CPUMBState *env, uint32_t b, uintptr_t ra)
+> > > +static bool check_divz(CPUMBState *env, uint32_t divisor, uintptr_t pc)
+> > 
+> > The name GETPC notwithstanding, I don't think ra -> pc is a good rename.
+> > 
+> > PC often gets confused about whether that's a host or guest value.
+> > RA (return address) is less so; it gets used often in core tcg.
+> > 
+> > If you really don't like RA, then perhaps "retaddr" (also with quite a
+> > bit of usage) or "unwind_pc" (no existing usage, but very descriptive).
 > 
-> This will let us make access to ACPI PM/HPET timers cheaper,
-> and prevent BQL contention in case of workload that heavily
-> uses the timers with a lot of vCPUs.
-> 
-> 1) 196ea13104f (memory: Add global-locking property to memory regions)
->     ... de7ea885c539 (kvm: Switch to unlocked MMIO)
-> 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> ---
-> v4:
->    improove doc comment over memory_region_enable_lockless_io()
->      David Hildenbrand <david@redhat.com>
-> v3:
->    add comment for 'mr->disable_reentrancy_guard = true'
->      Peter Xu <peterx@redhat.com>
-> ---
->   include/system/memory.h | 12 ++++++++++++
->   system/memory.c         | 15 +++++++++++++++
->   system/physmem.c        |  2 +-
->   3 files changed, 28 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index e2cd6ed126..aa85fc27a1 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -833,6 +833,7 @@ struct MemoryRegion {
->       bool nonvolatile;
->       bool rom_device;
->       bool flush_coalesced_mmio;
-> +    bool lockless_io;
->       bool unmergeable;
->       uint8_t dirty_log_mask;
->       bool is_iommu;
-> @@ -2341,6 +2342,17 @@ void memory_region_set_flush_coalesced(MemoryRegion *mr);
->    */
->   void memory_region_clear_flush_coalesced(MemoryRegion *mr);
->   
-> +/**
-> + * memory_region_enable_lockless_io: Enable lockless (BQL free) acceess.
+> +1 for 'unwind_pc'.
 
-Typo "access[es]".
 
-> + *
-> + * Enable BQL-free access for devices that are well prepared to handle
-> + * locking during I/O themselves: either by doing fine grained locking or
-> + * by providing lock-free I/O schemes.
-> + *
-> + * @mr: the memory region to be updated.
+Sounds good!
 
-"the memory region to enable [lockless accesses]"?
-
-> + */
-> +void memory_region_enable_lockless_io(MemoryRegion *mr);
-> +
->   /**
->    * memory_region_add_eventfd: Request an eventfd to be triggered when a word
->    *                            is written to a location.
-> diff --git a/system/memory.c b/system/memory.c
-> index 5646547940..44701c465c 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -2546,6 +2546,21 @@ void memory_region_clear_flush_coalesced(MemoryRegion *mr)
->       }
->   }
->   
-> +void memory_region_enable_lockless_io(MemoryRegion *mr)
-> +{
-> +    mr->lockless_io = true;
-> +    /*
-> +     * reentrancy_guard has per device scope, that when enabled
-> +     * will effectively prevent concurrent access to device's IO
-> +     * MemoryRegion(s) by not calling accessor callback.
-> +     *
-> +     * Turn it off for lock-less IO enabled devices, to allow
-> +     * concurrent IO.
-> +     * TODO: remove this when reentrancy_guard becomes per transaction.
-> +     */
-> +    mr->disable_reentrancy_guard = true;
-> +}
-> +
->   void memory_region_add_eventfd(MemoryRegion *mr,
->                                  hwaddr addr,
->                                  unsigned size,
-> diff --git a/system/physmem.c b/system/physmem.c
-> index e5dd760e0b..f498572fc8 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2900,7 +2900,7 @@ bool prepare_mmio_access(MemoryRegion *mr)
->   {
->       bool release_lock = false;
->   
-> -    if (!bql_locked()) {
-> +    if (!bql_locked() && !mr->lockless_io) {
-
-Check @lockless_io first to avoid a call?
-
-        if (likely(!mr->lockless_io) && !bql_locked()) {
-
->           bql_lock();
->           release_lock = true;
->       }
-
+Thanks,
+Edgar
 
