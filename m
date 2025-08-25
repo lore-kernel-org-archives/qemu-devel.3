@@ -4,69 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE46C8303F
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 21:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DA5C8303F
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 21:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqee8-00006A-W0; Mon, 25 Aug 2025 17:22:33 -0400
+	id 1uqeeY-0000E3-My; Mon, 25 Aug 2025 17:22:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uqee5-0008WS-N4
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 17:22:30 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uqeeU-0000CK-RD
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 17:22:54 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uqedo-0001XE-Oz
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 17:22:28 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uqeeB-0001a2-LJ
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 17:22:52 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 369E521291;
- Mon, 25 Aug 2025 21:22:03 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D232E2190C;
+ Mon, 25 Aug 2025 21:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1756156923; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1756156935; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1/UQold+BctrxjEuj1hWkVLXGM8eij8a79gC7wG9z7Q=;
- b=h8qR16CUasti4inhaorMhLqCwVJzOnZOrF7xAYzd2Jom0Fx568r5F57Jjm1vwrUm6WLRKp
- 0GjVi5dQ7Kh4ZQrL1cU5z/ibz34rp6EJsDDXWgqUSDHlNtP36fte1TRgPmR/pMuJjoFep/
- RUndqGxJhvxZjpc2rv15ggX27LM7f38=
+ bh=64KRh2N2ciiUijHe5EWWLYU0gpoW5zP977R2AC0wrwM=;
+ b=IpJy9Ut4VfEPkG2TKOvdfVyHLyk3boFRMF3KMQSfR1EIMzGXfrwtlp2ERwVKuejqOWaDVY
+ +NeUHcn3BkStjtUhLMvByuzonIKmlMqt9WqKFGAIjaHRdKBnuJarJ2lqWk7CT2EqXF9unZ
+ b4M9xVbdVzReLxj430UvmuIU9cy+09c=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1756156923;
+ s=susede2_ed25519; t=1756156935;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1/UQold+BctrxjEuj1hWkVLXGM8eij8a79gC7wG9z7Q=;
- b=M9ktoR+4HIym9AILaxQiOY+0NK3xTU3tJVpGBiVyr1/i/pzfbYy1ECHrE+WVm7u0OtOJdX
- FGVhniX5K7e19UCw==
+ bh=64KRh2N2ciiUijHe5EWWLYU0gpoW5zP977R2AC0wrwM=;
+ b=T+7smBY30bzZ8Xrm8qPLmx5dobNPWc8OrdGdzbqqzyfGLRZDFkWbRcV0/cEEQ3VCnkxqM/
+ MD9PE0KCdddCFzBA==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1756156923; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1756156935; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1/UQold+BctrxjEuj1hWkVLXGM8eij8a79gC7wG9z7Q=;
- b=h8qR16CUasti4inhaorMhLqCwVJzOnZOrF7xAYzd2Jom0Fx568r5F57Jjm1vwrUm6WLRKp
- 0GjVi5dQ7Kh4ZQrL1cU5z/ibz34rp6EJsDDXWgqUSDHlNtP36fte1TRgPmR/pMuJjoFep/
- RUndqGxJhvxZjpc2rv15ggX27LM7f38=
+ bh=64KRh2N2ciiUijHe5EWWLYU0gpoW5zP977R2AC0wrwM=;
+ b=IpJy9Ut4VfEPkG2TKOvdfVyHLyk3boFRMF3KMQSfR1EIMzGXfrwtlp2ERwVKuejqOWaDVY
+ +NeUHcn3BkStjtUhLMvByuzonIKmlMqt9WqKFGAIjaHRdKBnuJarJ2lqWk7CT2EqXF9unZ
+ b4M9xVbdVzReLxj430UvmuIU9cy+09c=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1756156923;
+ s=susede2_ed25519; t=1756156935;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1/UQold+BctrxjEuj1hWkVLXGM8eij8a79gC7wG9z7Q=;
- b=M9ktoR+4HIym9AILaxQiOY+0NK3xTU3tJVpGBiVyr1/i/pzfbYy1ECHrE+WVm7u0OtOJdX
- FGVhniX5K7e19UCw==
+ bh=64KRh2N2ciiUijHe5EWWLYU0gpoW5zP977R2AC0wrwM=;
+ b=T+7smBY30bzZ8Xrm8qPLmx5dobNPWc8OrdGdzbqqzyfGLRZDFkWbRcV0/cEEQ3VCnkxqM/
+ MD9PE0KCdddCFzBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5A8091368F;
- Mon, 25 Aug 2025 21:22:02 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0A9031368F;
+ Mon, 25 Aug 2025 21:22:15 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id EtzLFfrTrGijKQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 25 Aug 2025 21:22:02 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id QhwjAgfUrGiwKQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 25 Aug 2025 21:22:15 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
@@ -88,23 +92,26 @@ Cc: Peter Xu <peterx@redhat.com>, Alex =?utf-8?Q?Benn=C3=A9e?=
  <marcandre.lureau@redhat.com>, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
  Hailiang Zhang <zhanghailiang@xfusion.com>, Stefan Berger
  <stefanb@linux.vnet.ibm.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Arun Menon <armenon@redhat.com>
-Subject: Re: [PATCH v12 26/27] migration: Add error-parameterized function
- variants in VMSD struct
-In-Reply-To: <20250821-propagate_tpm_error-v12-26-72b803e707dc@redhat.com>
+ qemu-arm@nongnu.org, Arun Menon <armenon@redhat.com>, =?utf-8?Q?Daniel_P?=
+ =?utf-8?Q?=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Stefan Berger <stefanb@linux.vnet.ibm.com>
+Subject: Re: [PATCH v12 27/27] backends/tpm: Propagate vTPM error on
+ migration failure
+In-Reply-To: <20250821-propagate_tpm_error-v12-27-72b803e707dc@redhat.com>
 References: <20250821-propagate_tpm_error-v12-0-72b803e707dc@redhat.com>
- <20250821-propagate_tpm_error-v12-26-72b803e707dc@redhat.com>
-Date: Mon, 25 Aug 2025 18:21:59 -0300
-Message-ID: <875xebayh4.fsf@suse.de>
+ <20250821-propagate_tpm_error-v12-27-72b803e707dc@redhat.com>
+Date: Mon, 25 Aug 2025 18:22:12 -0300
+Message-ID: <87349faygr.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
  ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
  MISSING_XM_UA(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
  MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_TWELVE(0.00)[32];
+ TO_DN_SOME(0.00)[]; RCPT_COUNT_TWELVE(0.00)[34];
  TAGGED_RCPT(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
  R_RATELIMIT(0.00)[to_ip_from(RL96jwb13nk98k7j3ws9zhxhn8)];
  FROM_HAS_DN(0.00)[];
@@ -112,16 +119,18 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,23 +148,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Arun Menon <armenon@redhat.com> writes:
 
-> - We need to have good error reporting in the callbacks in
->   VMStateDescription struct. Specifically pre_save, pre_load
->   and post_load callbacks.
-> - It is not possible to change these functions everywhere in one
->   patch, therefore, we introduce a duplicate set of callbacks
->   with Error object passed to them.
-> - So, in this commit, we implement 'errp' variants of these callbacks,
->   introducing an explicit Error object parameter.
-> - This is a functional step towards transitioning the entire codebase
->   to the new error-parameterized functions.
-> - Deliberately called in mutual exclusion from their counterparts,
->   to prevent conflicts during the transition.
-> - New impls should preferentally use 'errp' variants of
->   these methods, and existing impls incrementally converted.
->   The variants without 'errp' are intended to be removed
->   once all usage is converted.
+> - When migration of a VM with encrypted vTPM fails on the
+>   destination host, (e.g., due to a mismatch in secret values),
+>   the error message displayed on the source host is generic and unhelpful.
+> - For example, a typical error looks like this:
+>   "operation failed: job 'migration out' failed: Sibling indicated error =
+1.
+>   operation failed: job 'migration in' failed: load of migration failed:
+>   Input/output error"
+> - Such generic errors are logged using error_report(), which prints to
+>   the console/monitor but does not make the detailed error accessible via
+>   the QMP query-migrate command.
+> - This change, along with the set of changes of passing errp Error object
+>   to the VM state loading functions, help in addressing the issue.
+>   We use the post_load_errp hook of VMStateDescription to propagate errors
+>   by setting Error **errp objects in case of failure in the TPM backend.
+> - It can then be retrieved using QMP command:
+>   {"execute" : "query-migrate"}
 >
+> Buglink: https://issues.redhat.com/browse/RHEL-82826
+>
+> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > Signed-off-by: Arun Menon <armenon@redhat.com>
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
