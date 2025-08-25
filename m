@@ -4,193 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E95CA0FE1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBCFCA0EFA
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:27:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqTP0-0002Km-7s; Mon, 25 Aug 2025 05:22:10 -0400
+	id 1uqTTe-0003cf-JG; Mon, 25 Aug 2025 05:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uqTOu-0002Ik-93
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:22:04 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uqTTc-0003cM-Kk
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:26:56 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uqTOr-0006wM-NX
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:22:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756113722; x=1787649722;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=tmfdcIeQH3mRzptjz61kP0k9l66WXK8uQrQLgxqrVqM=;
- b=LQuthopdni4CMsi4F9mb/KXUFHhYs6wh3dZT5FyVgkHySKCpDpNU+ZhL
- kDkxE11nnRomNk48k6sRkO7+5BCb+970E3YyhaPSwXi05k7Mh+oCHRLwI
- QFRgc0mRaC8SiA54sGW/SdpxgIZT4pIDrYZU+0tf5LlYmuD1Cq/UWsh5Z
- c2IDp60HR4SL8HMSs3Bkk0gICj3uFXAo3Kevezcg1JYKVioUsgbinJrG2
- JdQRBaIwDeqRi8GML/Q4vFmWGOySgRrYZxvynjRa9oRIztfYtBUrLHR3j
- b58FyvVjtYib4ImEDk+/n9nv9Pq/SVc3as/QpLSJfUVx/v4EsMLP38aGn w==;
-X-CSE-ConnectionGUID: XPLq1A1uTZuFExYY0E8eWw==
-X-CSE-MsgGUID: PSofO5oGRj+p5nJBO8kWdg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11532"; a="75773137"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="75773137"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Aug 2025 02:21:58 -0700
-X-CSE-ConnectionGUID: nFAW+f00SJOOwECw25IzEw==
-X-CSE-MsgGUID: tUI3JUlERSeT1s/OX8Umbw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="169639331"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Aug 2025 02:21:57 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Mon, 25 Aug 2025 02:21:56 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17 via Frontend Transport; Mon, 25 Aug 2025 02:21:56 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (40.107.243.41)
- by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Mon, 25 Aug 2025 02:21:55 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CVrvijiAU92XJQjkGvBLnZm9RsIOalCoVDn4UJE8GLnMt7M5Tm30CKocmV0vlE+RVWzY2Y1zL/7gRHXrOg7/q6KF9+FBDACKl3V0LfAVeT8YjsS137wSX9+zFrURUOyw0QkylUZi5eGdGKWAnzgcASnwus+Gb4A8Y3NTZVp1TcFqCxy7D2Tvd0kvUSBXCruFmjAux9UJv/4QxFt+AfiAg9WhJtW6vf9DzPRHgyc0lB7CEN7x5cpoAq5n+z40Q8TTc/ciMg8+K9aa8be/HlxfDMOnnrByx3lt4ltFm2Psg7oCVxbFm3fHoZfIGRCkTo5liTYUOncXPgL/padLbAcOBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wyP32GUttox7lFx/fIUqUrJp5eBwE2jIJtaSj17jfP4=;
- b=KxbCKFUq3wKUST7Mg5Wf/WBzxKUTZ2nQM1BGVgefkcH4xqL+jL2jGxtj78YegN/nOamRQVPgLuUbZEptj6VuP9blqgT+atwBCWtPcULATji2TrNsOsMMNXhuQpUqURCNA0KrAk/z27LNS8+o0AWWVxAYRvw45MGE8VJnAM385HORMjJvBYxioRvBeW2jp/kKRfxYpv0IEoH/oN1kaQk1wyv48ZunmN0CtUdnZDXO27AuC0+CpgeuLO0GwVh+W8yHWkp0qDB4EGZR1VoH38l2Thfev5Epnx2gISg5DTC3AVBIir1989NjralbnNAHjKVsTOAvsQZzmvPDNa37t4fPkA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by SJ2PR11MB7504.namprd11.prod.outlook.com (2603:10b6:a03:4c5::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.16; Mon, 25 Aug
- 2025 09:21:48 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9052.019; Mon, 25 Aug 2025
- 09:21:48 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
- <clg@redhat.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian, 
- Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao
- P" <chao.p.peng@intel.com>
-Subject: RE: [PATCH v5 20/21] Workaround for ERRATA_772415_SPR17
-Thread-Topic: [PATCH v5 20/21] Workaround for ERRATA_772415_SPR17
-Thread-Index: AQHcEy/8GohI0K7pz0eZTie1Q5YTorRvWgMAgAPANdA=
-Date: Mon, 25 Aug 2025 09:21:48 +0000
-Message-ID: <IA3PR11MB913633DE25AD6CF07BF26F8E923EA@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
- <20250822064101.123526-21-zhenzhong.duan@intel.com>
- <aKkDXiSwWGgio0dM@Asurada-Nvidia>
-In-Reply-To: <aKkDXiSwWGgio0dM@Asurada-Nvidia>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|SJ2PR11MB7504:EE_
-x-ms-office365-filtering-correlation-id: bb6bca65-0722-4dca-3a6f-08dde3b8d159
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|366016|38070700018; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?2nozjySY9dD2vD9SFCRTJO4FWdDCbrVZnDI72PMxyNE+1CDuBC0qG1wfh5GE?=
- =?us-ascii?Q?dgjA3EmyqhqX+4Sj9ihzNRgt4Ic01Rb7bF7NeYJmNn/kH6NMRfPM8I0kn4nq?=
- =?us-ascii?Q?hDIN4IAWvqx7AineCnCJGcVPaFN1itu/lxrOjxICGbmE+h1gT+1pdDFM5voT?=
- =?us-ascii?Q?schzD9CILoPG/QTNO85PlMWWsh9N3Xfp/JZyr41eY1CQILnCcIL52KbVXtUR?=
- =?us-ascii?Q?QnOMgn0ayU6n/XMbPZAwp2f5ssduw6FJ207NAh+iewqaHQOQe8+Xi4TUh9ke?=
- =?us-ascii?Q?oCIJ4yUzsRxc4EFDfoOfM8M61kSPnyMB6e1kBcFu0XK0B57xRqDb2CnAM2vQ?=
- =?us-ascii?Q?Op7LlohYiXZQbKXZ7LbwqmkXe+dZEyBpn/I4lWFC7M++YknH0pydD5dUy+F+?=
- =?us-ascii?Q?FP+OtNcqnlacf74/ryxVmFQGauxoV8LfdYskv8TFgQsDUinp4ladc12lLQT0?=
- =?us-ascii?Q?twE1A20TZ8nxsWSawDhssa39SCkyMV6tasYGbSY70hdMtMFh7k5qOF+VRFJV?=
- =?us-ascii?Q?oR3u9SPIwaG9Jtt/PMuf+1rpIaJQ0gsN2PQYjCluN4uTPP99KLdMdAjxjLqd?=
- =?us-ascii?Q?llxjzz+HnflTMq4TsK/LQuYLioarhVx3qE7M+LfL3sw8w54A5FGRms4uu1y7?=
- =?us-ascii?Q?i89bBUFSx629bqKk1SAyS825GIlM/SflNMbsXXCN3Qo/1MCJkFSxdrweLQEX?=
- =?us-ascii?Q?QC/USpTD0irFDt15MXduK7rLBjNMIMr4H5Yy6pof2GPo97y6eDZLj17RLsKm?=
- =?us-ascii?Q?738qY643KFbZcDlEumR6Qgg8swaPXWUccInDhTYNVJQ0khlKqNE4WNRObj5Y?=
- =?us-ascii?Q?idy0jEo7+xc7BrDjFoqa0U0TyrHU8eibe6dJBPXmOGFH8GRiZLsPymmFga9i?=
- =?us-ascii?Q?vKD0Iny4KsvNBrIyLjIteWGHlr+E0jrcFSFMWh+Qcv/XmNqU9cRGDkyQ6A/F?=
- =?us-ascii?Q?X14f8steQh/jzxxH8Ao6AgNFknTmMM67qFxNyQ2/5arsbpLd2MNMbairHhuH?=
- =?us-ascii?Q?/Afs/FOh1aSAV4xbclAWWkRqpxtXUunvNs0CdJbJ96vcT2mTlPJxNR19zNoB?=
- =?us-ascii?Q?VBDpMjNFlnJ6kNOsZr1mKyRxdUP6BgRSfynb2ZHu6l2WQVcLD9/slNRWnq09?=
- =?us-ascii?Q?BBzOEDSQ/kSfGjoffESGO30732+lCuZSSD08TdeHXLRvyYB+Nd7jZ2ZEDc0I?=
- =?us-ascii?Q?wa4ztDIdrk4hAEKySIp2gKurj0TjEqaDmg5yjG1zZsJ2eKtAO4xasOqSZnZ9?=
- =?us-ascii?Q?WUjv7TtcveQXQ14g+LcEI1HKXIF9qyWrH1fgElADbbDUjwDav1otwOATUjsH?=
- =?us-ascii?Q?/+VpNP2MjKy9NZvGYJiKuA6TswoRR+fTnaGQYvBxTdN0UcdLvXnmJsofa2la?=
- =?us-ascii?Q?aXD1SE9z/lF6JGvscc1oXZnYTD1Ptr5qcdGBSJ5c6ex+Wks8MBno/9NmSnag?=
- =?us-ascii?Q?T8zUbB+FXNIPVROUtuvS1EjxJHow1pNQaZ7fsKCO63OSyu/ia4gg7w=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?wZaY8LFGjFfmDXRoBzaaJd5DxDpbmydtckikthgTUUq6Vpfc1oO9uv2CYKbl?=
- =?us-ascii?Q?UZ9VgY6qVlagCdIahCuD9Bss5G+4uxkUFDY/gPGKFE5iSdEjo0I/WqxB+cK1?=
- =?us-ascii?Q?N8G2j/PdZtwXyUPY7/pSW5NHP5ZR5Y5wc2Z7C1NfkbIGAevCjxXlGx+QIjac?=
- =?us-ascii?Q?7VR90CdjfAOY94b4i9Ly3HSRglOlK8jOQ0AC2T1Yvfnh9IWV9T+u3meW2K/B?=
- =?us-ascii?Q?VIL3zoj2NMaEesXBIjYIxX6ipuODarETfw1d6R+aO1ti+FYs8Scyf4bgArVj?=
- =?us-ascii?Q?NIonDzNsk99kpy5++MVo1i/8761tjY198K58gPDdMLHKMzpaCjlFvNUVinHp?=
- =?us-ascii?Q?aTq34a6KBMcxXf+aYkWVNhLmmcZ6FKW/Oq2s/YTClHtc/FP3LEcjP8NH1mrc?=
- =?us-ascii?Q?7STeHAQJ/uJ28PrWsWtV44tB3taWU7oHfG0VdXsjwFHarzopbPTxO/R+life?=
- =?us-ascii?Q?3fk+frakjcZdFft2J1iwXiSu0JRpDTXLQlyCfhN7PwiF8uV1o0y0KUmusG+5?=
- =?us-ascii?Q?/TCNNp0pWygrkjeeO7EWJNuzTwyG+vUXV3IVCUp4v2B3BJEmzbyavGxb0dgm?=
- =?us-ascii?Q?+jdEavqW5WkLkubiGfTdGlU0RXAGyETtBu335mkKm64Ig5ywnVKYPSJa+eHt?=
- =?us-ascii?Q?UAFOQa/Ke+znu1zxKhcbEF2W/ZaACiBvwYRvuIPgID+phEZvg2Zz4s/2Apzz?=
- =?us-ascii?Q?f41h4v2mLyYL3IzIbLPwRWSZHUgjwDplvyRUZ5kk6ssZ5XpLVdt7qfl1asIO?=
- =?us-ascii?Q?gzbTjKcZqmLFeUDWLv9ijVngd8F79AFlVcIl1I3aabIamWU6rzCMiVps5U9O?=
- =?us-ascii?Q?U+QKG433/g1ED7K1RaqC4CRBpncuTJLXpTjFKqXhbbCzb3jPmTuRN4gj+KQI?=
- =?us-ascii?Q?j25g4vkoCxIPxdkZDnhUtr5dGsT2kZR5XKZch5TxkL7L1rrF0FFjVwWV35mS?=
- =?us-ascii?Q?JDDPRTxvXcbtHm4wE8dyrNV/CmDAFLQJ2ZoYWvwCkXO1SB8Isac0T7cylFZI?=
- =?us-ascii?Q?ItCIiGNUEAQ0V1luN2jNH2R2WoZoTXluU6ufHmqFeC0+mE9tVWZRPThS9FR+?=
- =?us-ascii?Q?PQVHiP2JH0ikmwBYPWD8DjtkJTlLmUfd8A3OlYWiBZOR9RFXQJEqoH58BLPJ?=
- =?us-ascii?Q?m7oay0rOrISJQhb4AqWy9LWq59BK5jOTqUcDefp697vL1pcwdTtAeJseYXjx?=
- =?us-ascii?Q?+y4gGBT4ymsHthD4KMf/rvml2c2mfMU16tm2CEZ22iGrDt/SU3/fDScpFuD5?=
- =?us-ascii?Q?OKGaDnH6Hrz/gA3XumBihjtRlMYgyhOPMFRu+Hrhao6K7j/Aj6LjaWbCfk1C?=
- =?us-ascii?Q?883F59Sfv7F3xogEq252VuxisjiEsZTVmID2KMK/HS70xVTKUIAhD3p1QCMh?=
- =?us-ascii?Q?JFagYswPgNm0pZp69Sg7+NiuCuQ+gOVeV5tT1DW/Hs5dqas9yc/hld+2hhcY?=
- =?us-ascii?Q?95Ktj1vpN2qyN4FRGTW8ZICbf4qG9nxTYkaDs/lr6feaxQ21NWFtzLINkE65?=
- =?us-ascii?Q?fPWkx28/Kr/3jVjHRmQt9uBPddYlqORw/qZ2Oqz8kzwb2E+fynvaxVGwLZUf?=
- =?us-ascii?Q?0DBeXUBl79qJwacYiqzHqJUZhQxdWGODMDAfqNDC?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uqTTa-0007SR-5m
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:26:56 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id CC20114A7ED;
+ Mon, 25 Aug 2025 12:26:26 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D37B7267E50;
+ Mon, 25 Aug 2025 12:26:49 +0300 (MSK)
+Message-ID: <0ca1b15b-911d-44e1-a327-4c72f2274154@tls.msk.ru>
+Date: Mon, 25 Aug 2025 12:26:49 +0300
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb6bca65-0722-4dca-3a6f-08dde3b8d159
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Aug 2025 09:21:48.2093 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /W521xeD7IiXK5kj3sDeUKhTmmx98EF/RzgwJ+NMLb+l+wwKVkEGsdoHa8wJN/FE11hv4/rAPuVGUxDrJtXUoWneeFyybqqeoY8VSiPGPps=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7504
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: qemu-user + binfmt Credential flag, again
+To: Helge Deller <deller@gmx.de>, QEMU Development <qemu-devel@nongnu.org>
+References: <f1a22d84-142e-4bc6-8ef0-c05156dcc20a@tls.msk.ru>
+ <50e6ca70-5144-45ed-9afc-f15d45274a7b@gmx.de>
+ <c70e4ae2-09a6-4287-bd0c-fc8c3ae97180@tls.msk.ru>
+ <b76abf1c-7a9e-4236-ac7f-bc200646fbd0@gmx.de>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <b76abf1c-7a9e-4236-ac7f-bc200646fbd0@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -206,80 +105,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
->-----Original Message-----
->From: Nicolin Chen <nicolinc@nvidia.com>
->Subject: Re: [PATCH v5 20/21] Workaround for ERRATA_772415_SPR17
->
->On Fri, Aug 22, 2025 at 02:40:58AM -0400, Zhenzhong Duan wrote:
->> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->> index e503c232e1..59735e878c 100644
->> --- a/hw/vfio/iommufd.c
->> +++ b/hw/vfio/iommufd.c
->> @@ -324,6 +324,7 @@ static bool
->iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>  {
->>      ERRP_GUARD();
->>      IOMMUFDBackend *iommufd =3D vbasedev->iommufd;
->> +    struct iommu_hw_info_vtd vtd;
->
->VendorCaps vendor_caps;
->
->>      uint32_t type, flags =3D 0;
->>      uint64_t hw_caps;
->>      VFIOIOASHwpt *hwpt;
->> @@ -371,10 +372,15 @@ static bool
->iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>       * instead.
->>       */
->>      if (!iommufd_backend_get_device_info(vbasedev->iommufd,
->vbasedev->devid,
->> -                                         &type, NULL, 0,
->&hw_caps, errp)) {
->> +                                         &type, &vtd, sizeof(vtd),
->&hw_caps,
->
->s/vtd/vendor_caps/g
->
->> +                                         errp)) {
->>          return false;
->>      }
+On 25.08.2025 11:42, Helge Deller wrote:
+> On 8/24/25 13:54, Michael Tokarev wrote:
+>> On 24.08.2025 13:59, Helge Deller wrote:
 >>
->> +    if (vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
->> +        container->bcontainer.bypass_ro =3D true;
->
->This circled back to checking a vendor specific flag in the core..
+>>> In general, just if someone can shoot himself into the foot you should
+>>> not remove features.
+>>> Instead, disabling it by default, and adding a big fat warning if people
+>>> enable it is a good way forward.
+>>
+>> It is not "someone can shoot himself into the foot".
+>>
+>> We don't ship a configuration option to make /bin/sh suid root.
+>> This would make a lot of use cases to work, this will simplify a lot
+>> of stuff, etc.  But we don't have such option.  This is done for a
+>> reason, - it breaks whole system security concept, entirely.  You
+>> can chmod u+s /bin/sh on any of your system, but this "configuration
+>> item" is not even described in any official docs.
+>>
+>> Unfortunately, qemu's C flag is of this same theme.  It requires a
+>> tiny effort to get root, compared with `chmod u+s /bin/sh`, but it's
+>> a trivial way still, just one extra step.  In short, qemu-user C flag
+>> breaks whole system security concept.
+> 
+> I think we all are clear why there is a potential security issue.
 
-I'm not sure if VendorCaps struct wrapper is overprogramming as this ERRARA=
- is only VTD specific. We still need to check VendorCaps.vtd.flags bit.
+It is not potential.  It is right there, very much real, -- that's the
+whole difference.
 
->
->Perhaps we could upgrade the get_viommu_cap op and its API:
->
->enum viommu_flags {
->    VIOMMU_FLAG_HW_NESTED =3D BIT_ULL(0),
->    VIOMMU_FLAG_BYPASS_RO =3D BIT_ULL(1),
->};
->
->bool vfio_device_get_viommu_flags(VFIODevice *vbasedev, VendorCaps
->*vendor_caps,
->                                  uint64_t *viommu_flags);
->
->Then:
->    if (viommu_flags & VIOMMU_FLAG_BYPASS_RO) {
->        container->bcontainer.bypass_ro =3D true;
->    }
->...
->    if (viommu_flags & VIOMMU_FLAG_HW_NESTED) {
->        flags |=3D IOMMU_HWPT_ALLOC_NEST_PARENT;
->    }
+We've, for example, wireshark which is a big complex GUI app often
+installed suid-root to be able to watch network traffic.  There's also
+a huge difference between wireshark and qemu, -- while wireshark is
+complex and all, and sure has bugs, it *tries* to be as careful as
+possible, and drops privs once network sockets are open, etc.
 
-IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17 is a VTD specific flag bit from host =
-IOMMU, we have defined get_viommu_cap() to return pure vIOMMU capability bi=
-ts, so no host IOMMU flag bit can be returned here. See patch2 commit log f=
-or the reason.
+Qemu, on the other hand, has never been designed to be run in suid
+mode, and does not perform even minimal input sanitizing, it blindly
+follows what the user specified.  Before suid mode can *ever* be
+enabled, we should at least try some minimum to filter env. vars and
+whatnot, so that it is not trivial to own whole system just by running
+a foreign binary.
 
-Thanks
-Zhenzhong
+Until this is done, option to run it with suid binaries should not
+exist.
+
+BTW, I think we can do a bit better here when I thought.
+
+qemu-linux-user can detect if it's running a suid binary, and if yes,
+*and* if any option/environment is specified, just *refuse* to run
+(or drop privs back to euid/egid), instead of trying to sanitize them.
+
+With that, we can *try* to enable credentials flag with binfmt, with
+a big fat warning.. maybe.  At least we can think about the possibility.
+
+But not before.  I think.
+
+...
+
+> As you know, for those need Qemu's credential flag,
+> the "chmod u+s /bin/sh" generates many more implications than Qemu's flag,
+> so they would prefer the qemu credential flag.
+
+It doesn't matter how good or useful this flag is in qemu-user context.
+Right now, qemu is not prepared to handle it in any sensible way.  And
+with that, it doesn't matter how important or useful these use cases
+are: we just don't have what people want, it simply doesn't exist...
+
+Maybe a better comparison is not having /bin/sh suid-root, but having
+a *copy* of /bin/sh, say, /bin/suid-sh, which is suid-root.  This is
+what qemu-user currently is - it is not usual system interpreter, it
+is an "alternative" system interpreter, ready to be used when "needed" -
+by anyone, including any evil person.
+
+This is not the beginning of this discussion, - first was similar
+arguments on debian mailing lists, following the debian security
+announce of qemu-user dropping the credentials flag.  People also
+started suggesting (or demanding) to have an option to return this
+flag back on.  No, this wont be done, this is not discussable - until
+qemu has at least minimal input sanitizing, such mode simply does not
+exist, so there's nothing to enable.
+
+I'm really surprised, even shocked, why people don't understand such
+simple things.
+
+Thanks,
+
+/mjt
 
