@@ -4,71 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F04CA0FE1
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A949ACA0FE1
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 09:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqTZl-00051k-5V; Mon, 25 Aug 2025 05:33:17 -0400
+	id 1uqTfz-00071e-Q8; Mon, 25 Aug 2025 05:39:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uqTZh-00050x-Nr
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:33:13 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uqTZa-00087m-Kp
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:33:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756114386; x=1787650386;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=p0hMioeV02n2xJ99grAeHjV1AMAAU4W1bDFUcK9uEog=;
- b=IOy/c2w+WneJM2cnEPNpbt1yag7EIqpVfgxjXJM3yijT0ceJXhEVSacX
- 1CUXqABN0GT0L5ZjKSm1yc8HYjXN31pKXeP/CP/l6cPrpEl+62SVNAmhR
- KVUCWLVXaHP3lXiNQ3HjMZPXBk1rIaAJDJj5hwBSQ411ae/Guh8Q1riC6
- dx4J+txfBSg8LfT45rtBrZcXPPt2gUskMIiqfGbnFY/slNdLQD2ojkbDR
- oC1Nqs1epdhlXZNdtPoOVyVIr5MKiJriLrgiOEsX0zYuKJiD+HATspKr4
- g9GWkeT+EXGCSwsFbvqfWYc/jBKrAwSijHkkAWIkqtUej3IHTaSHclfyf Q==;
-X-CSE-ConnectionGUID: WFNuEqtoTbuFXKmh4+5e5A==
-X-CSE-MsgGUID: 0T2yNzDsTMu5SXU8jAz44A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11532"; a="68591545"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="68591545"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Aug 2025 02:33:02 -0700
-X-CSE-ConnectionGUID: pn6k/TFvSrm3gnabKz4xQQ==
-X-CSE-MsgGUID: vtQfJptmRASde5Na9HH/DQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="200143886"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 25 Aug 2025 02:33:00 -0700
-Date: Mon, 25 Aug 2025 17:54:46 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, tanishdesai37@gmail.com, stefanha@redhat.com,
- berrange@redhat.com, mads@ynddal.dk
-Subject: Re: [PATCH 07/14] rust: add trace crate
-Message-ID: <aKwy5joqsgmBPOFI@intel.com>
-References: <20250822122655.1353197-1-pbonzini@redhat.com>
- <20250822122655.1353197-8-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqTfi-0006zM-P7
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:39:29 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqTfe-0000Ow-25
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 05:39:25 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3c7ba6c2b2cso895252f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 02:39:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756114758; x=1756719558; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uL4MewPfGpmAXSTAGgHX+e6JFT0fYLvCPKi7tGEA830=;
+ b=KmoDq2JHSl+9qOsaC9okSYHTAyfdq4aVXrxO3WtwGWgW0Yw9G79pXTf2kF6vk3g2Wh
+ X1hrZP/OY5zRN2pVhbI+eXlmpKrYtHI6bLyfB26wvE6FU+RgCeV5Q+LqE1RrWrpIf9tD
+ G7KCAjGPQ6ESpH4Gx5Js/YdqDicYOFZ8ZazUHfXMuSmbq2Ia5NwUIGmlPQO1+Pt6aIMX
+ dhebPUSILk9YrGu2fsNPEzcL49nQuQtViOX7VstVOpSOYqEt9MNerWW/vHvMpEybkyt6
+ GYo4PUAhy6IUDG4EpDbWSkHGbyZEgYXw8ZWSRQrXxoOsGcvKxR0K4mTbcpd0MsZiqeMX
+ 3h/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756114758; x=1756719558;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uL4MewPfGpmAXSTAGgHX+e6JFT0fYLvCPKi7tGEA830=;
+ b=Wqyd6TUgai79Zb3PVKaiR4rMdrRMTjdqXROn63juufbRvhRAC3oeqrsXRJCfkumR3D
+ F4jVWtpAj/TWBis9AJKS92gc9zVQyPuo8OQPYZV9JvFDP1sYV5RNDUJb3PBD50mS+irf
+ XXLfcZQcAh00HRSTBDf9XQ7p4/tbDduMxke97ceeRMPIXXBUFbbfz8g+O3zgoBT0Oodk
+ phfy10nuI8lsSOKQ/+IwjcrT7P1HbmBO5Mt57JnIp8N88Tc4ngixFachOer/lFKRIgO7
+ wXT8bvR9W/l2wkanZYAX0eV6jp1D7y7wVjQj6f18cIje6p6Op2h7o/vkObp8QxS/+Adc
+ v0rQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlFOilIhnjS6GCsMsum4x33Uxw/1XVtC2sZf8Wob/zlHElBwcVjv8rBfCZ5ZZsOeSrS5Ydg7/howN+@nongnu.org
+X-Gm-Message-State: AOJu0YxdvCtAKnpk3N1U+naTzFviwiZ4kSJKbOLodvwNmNd38JwUK2jZ
+ nzwwBlpuR5sCHFIX7wuknTsEtAO8cghIwLIdNT6+5CkqOUKBipruIpd27yMGapK0/p8=
+X-Gm-Gg: ASbGncvDOefDbNhb6Km/VJCC09/+vQS3mhNvuBKXC9d6Wk8Br0+UEpbFR4sFKUTn64f
+ GPYdLZllgfOaPdOxXH30BPOQ048Y+jXit9wvGEE2l3H4HBkhVsunuZ2o2lS+Fze+ZALka8LYMS5
+ i3BgKCpabyzRdpfDbtyOkc69P/Vwwoioohp/FsP4lF9khtBGSvpGDYzl5L1cdGQonG5CIc8jsmX
+ HluyOBjyBuxV/jSNJUtlt7pWSPFAaC8RcXI7kH94dHy+/IjhLkyQEPBAtbZeeZR4UOqcyDOj/MN
+ rkOpISO9xKqdOSRh1evnCoRsUW/W3JUuMYC7scGlkKbtUs8BdQfZEELlHBoGPpWrgP8pUm4xeD5
+ aJSlWFtM4MOnJNCIl+maoE848qPfT7Fkpa4mfejcxoKTRwOjKqx6tbz33QpOmNqdtuA==
+X-Google-Smtp-Source: AGHT+IFH7uUbxr6eUdjiBdUJmskjnnkgLBniP+B7sguOqZHqkI5ioNblKBq7M5V51eMzKtl7J37/+g==
+X-Received: by 2002:a05:6000:2384:b0:3ca:267f:2a18 with SMTP id
+ ffacd0b85a97d-3ca267f2c67mr1099308f8f.46.1756114757847; 
+ Mon, 25 Aug 2025 02:39:17 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3c70e4b9e1fsm11424049f8f.14.2025.08.25.02.39.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Aug 2025 02:39:17 -0700 (PDT)
+Message-ID: <6fbcb266-83d0-496f-9ef2-bf00dd9b2629@linaro.org>
+Date: Mon, 25 Aug 2025 11:39:16 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250822122655.1353197-8-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] hw/sd/sdcard: Fix size check for backing block image
+To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>
+References: <cover.1756019920.git.jan.kiszka@siemens.com>
+ <0d95cffa6131a06404f3cd6ef5951720ce01c37e.1756019920.git.jan.kiszka@siemens.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0d95cffa6131a06404f3cd6ef5951720ce01c37e.1756019920.git.jan.kiszka@siemens.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,54 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> diff --git a/rust/trace/src/lib.rs b/rust/trace/src/lib.rs
-> new file mode 100644
-> index 00000000000..9b931ddf1de
-> --- /dev/null
-> +++ b/rust/trace/src/lib.rs
-> @@ -0,0 +1,23 @@
-> +//! This crate provides macros that aid in using QEMU's tracepoint
-> +//! functionality.
-> +
-> +#[macro_export]
-> +/// Define the trace-points from the named directory (which should have slashes
-> +/// replaced by underscore characters) as functions in a module called `trace`.
-> +///
-> +/// ```ignore
-> +/// ::trace::include_trace!("hw_char");
-> +/// // ...
-> +/// trace::trace_pl011_read_fifo_rx_full();
-> +/// ```
-> +macro_rules! include_trace {
-> +    ($name:literal) => {
-> +        mod trace {
-> +            #[cfg(not(MESON))]
-> +            include!(concat!(env!("MESON_BUILD_ROOT"), "/trace/", $name, ".rs"));
+On 24/8/25 09:18, Jan Kiszka wrote:
+> From: Jan Kiszka <jan.kiszka@siemens.com>
+> 
+> The power-of-2 rule applies to the user data area, not the complete
+> block image. The latter can be concatenation of boot partition images
+> and the user data.
+> 
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> ---
+>   hw/sd/sd.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-nit: missing the "trace-" prefix~
-
-include!(concat!(env!("MESON_BUILD_ROOT"), "/trace/", "trace-", $name, ".rs"));
-
-> +            #[cfg(MESON)]
-> +            include!(concat!("@MESON_BUILD_ROOT@/trace/", $name, ".rs"));
-
-ditto
-
-> +        }
-> +    };
-> +}
-
-this is the nice work!
-
-(but it breaks the doing `cargo build` directly without meson virt env.
- For `cfd(not(MESON)) case`, could we support placing trace files under
- local folder? like
-
- include!(concat!(env!("CARGO_MANIFEST_DIR"), "src/", "trace-", $name, ".rs"));
-
- Or should we add a build.rs like qemu-api does?)
-
-Thanks,
-Zhao
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
