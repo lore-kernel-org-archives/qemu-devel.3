@@ -4,222 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D078CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 14:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F48CA0FE7
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 15:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqYeL-0000hn-Tx; Mon, 25 Aug 2025 10:58:22 -0400
+	id 1uqYjI-0002r6-UL; Mon, 25 Aug 2025 11:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uqYe6-0000cG-4U
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 10:58:10 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uqYjG-0002qM-TD
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 11:03:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uqYdz-0004aS-Jc
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 10:58:04 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PDY2vi018428;
- Mon, 25 Aug 2025 14:57:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=2v+0M6XvOx3JEDpQD66sBC44OZiMYSC9M3PdKWogOCw=; b=
- L4jqqoY2d89yHZiwI3pBes+yVA5yX85ekr7KCIsnsWh1zVOvfaIqdlycsc//7GBH
- +QtKBRhv2CHSKdOwI+QRJ6dlRjD+eeJaON2kFjd4jhJZ0aF8pu3zwHU6aeWU52Py
- BcfS6pcMiqhtH2vm+EX1Y9NgOPkuU3KY8etagYXeG52OotURia4bBuslr79bef7E
- KKtEAynETfj5UYcYo2PV44qjKAsQ2zZWpfdtqBmRVjYju1DsSv4ICPK7EvRu1UCL
- a2SHuhnKlbDDVGlXd0Pes2EIjfQSNolshVWEaiv5YtJRVI00Vm3Rzllq801Y7WEG
- 0RkpvIfMCLPww4QVSAmGww==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48q5pt2gmu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 25 Aug 2025 14:57:55 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 57PEFaut005001; Mon, 25 Aug 2025 14:57:54 GMT
-Received: from nam10-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam10on2068.outbound.protection.outlook.com [40.107.93.68])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 48qj88juk1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 25 Aug 2025 14:57:54 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jTp1lQxWttk6vtQmCjnCZt7noJI0MeRgPpFvX1ZUxJX1sy110/jeI1w9Aad3kR2kAEIxvfU2AaOGQnVWnJYO/Tw4+DVUjyuA19DglWGgTZ8mGLWJKt+PcyPEwcxEplXemFu5sJaq2iCSGroTaW0QmyminYqfZc6xp7xSC+Scgqv/iHYdBZEaQLGPyx08cQcVYbIRQ+mMRJ5AoAyXOg8KRc6Q0O1hi0u1aRrBd68FlI4Bew8EYbJ3JpKGUzwhfUuV0GgwfUkz3uoI/0BcbHnnyM6/+uTAifLc0loIWy5fiLNtShU2lOaEyYED0U3vn7ormV1qHmOmjlwr+tSq9jkvdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2v+0M6XvOx3JEDpQD66sBC44OZiMYSC9M3PdKWogOCw=;
- b=UityJmAziVGt/QErtQZYCzJvKxglfpi09sMduoExMVcG7ieN6RhafwWqPcgB3S/hrPurhMlT54anymZnefBvsutD0H5LDlRKTjahM2r50N8pWDTVBkn97SuQDq6sXWjxrix4098qN11dNtO/SZO8PpMn9FZPYnpwenkmAnTQpdGMrxnC7F0iQ1QgSGH+ACewSixni5t9H+SGj8/j5QCj1quwNFn+cFY6fUynl2G0fn0ZNiqnPuRwi0q0u9VGtLrWnn83ByFkQaZTHSm/peSLw2gC1s6dxSqFvXfS4rUssD6eaXNlxwXLy/MBF4l2i3DNDukECJcp+ofwokLhtEELBw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2v+0M6XvOx3JEDpQD66sBC44OZiMYSC9M3PdKWogOCw=;
- b=I5c2AFq22eQSsnzkJlCAgASyO0NHWjBf8AzJftys1iNvjC3W9eXYWDlcPZ+ohvwXfDy2CN5O8kL9lPOWKHFRB3X+OlRVlywWYulEqnBsC+L1WN+2YSMXofzrZ3hu6nAq7/G5MD9nV94M1dlyL6lQ5mgQX7IHkJCxFQHb5Bfh5Mg=
-Received: from DM6PR10MB4363.namprd10.prod.outlook.com (2603:10b6:5:21e::21)
- by BN0PR10MB4918.namprd10.prod.outlook.com (2603:10b6:408:12e::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.17; Mon, 25 Aug
- 2025 14:57:52 +0000
-Received: from DM6PR10MB4363.namprd10.prod.outlook.com
- ([fe80::999b:18e4:cc6a:7cc6]) by DM6PR10MB4363.namprd10.prod.outlook.com
- ([fe80::999b:18e4:cc6a:7cc6%7]) with mapi id 15.20.9052.017; Mon, 25 Aug 2025
- 14:57:50 +0000
-Message-ID: <2764b188-a4cd-40b8-95a7-ccec775d7db9@oracle.com>
-Date: Mon, 25 Aug 2025 10:57:47 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/6] migration: Add virtio-iterative capability
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- eblake@redhat.com, jasowang@redhat.com, mst@redhat.com,
- si-wei.liu@oracle.com, eperezma@redhat.com, boris.ostrovsky@oracle.com
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <20250722124127.2497406-2-jonah.palmer@oracle.com>
- <874iuihyxd.fsf@pond.sub.org>
- <5a8bb5ef-c500-4fac-b5fc-566408ae8ffc@oracle.com>
- <87h5xvsh9c.fsf@pond.sub.org>
-Content-Language: en-US
-From: Jonah Palmer <jonah.palmer@oracle.com>
-In-Reply-To: <87h5xvsh9c.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR03CA0379.namprd03.prod.outlook.com
- (2603:10b6:a03:3a1::24) To DM6PR10MB4363.namprd10.prod.outlook.com
- (2603:10b6:5:21e::21)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uqYjC-0005HI-TF
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 11:03:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756134201;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Uo+XruI8548gvlbgyudl9sYN+5f0IyR174ZzdauaxRg=;
+ b=gJaEcjx6sxFGE7g08C2QS9t5Pz8auY4y1Ft+Pd0FtYqDjmguB9LZ12tbNjjLiKLSzW8HNO
+ qZrH1lUOeVl6+JgBYpJzeS/DnCKeOMjWFogmq8D2oDJep7NcWRKDcjFxdwdevATkvIkxJw
+ 8vKDHK5TlVgT31qj0B0ljJJHy1JHGF0=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-330-Lr7q1Ez1Nn-LNbL4sR_qkQ-1; Mon, 25 Aug 2025 11:03:18 -0400
+X-MC-Unique: Lr7q1Ez1Nn-LNbL4sR_qkQ-1
+X-Mimecast-MFC-AGG-ID: Lr7q1Ez1Nn-LNbL4sR_qkQ_1756134197
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-70d9eb2e971so57893576d6.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 08:03:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756134182; x=1756738982;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Uo+XruI8548gvlbgyudl9sYN+5f0IyR174ZzdauaxRg=;
+ b=rwPgq+I+AkCC/qtcJc9lkm58dG1yC6s/I0y1DcRR4B/2EF40yUsOIrDuCbmBJD0LF8
+ Cuq7F39IP2BS5APPbn6jSDlIYqwqDuCAvHL6m7PRvC8fR5gI/IV+STQBSe8pf/goOuKn
+ LH+Rcr/1vwdEFnTa/vi/cXtfX3FYOAVTTN2w3n2eQgwgsR2FgdbQtLhsZfwmtrEvNFhr
+ BHWrHWug4jL2YiIl73h0mOKe0Cw49zFyzBhQL6GzrDKprwDbSb4nDPLC3X27zS/0fT3M
+ +Ewm2aT7mtxbQVY40zAEI5VaX+njK38BBjWADGmd1EaebEms6GztDWsLEN6Li27xTHZb
+ uW4A==
+X-Gm-Message-State: AOJu0YyKPu2DbqRo7a7O/XAxlJkyJo8n+Ys42fOyk6a2oAZhSB1w6R+t
+ UfE3jWfonIF42DFuF21G1zig98elep7ezNYWY0dT2XZhvB8dzgqI8KRNrFc1ZVSNmuORDSdxZl2
+ dRaLlDXpHZgsAUFOCh7L4omHZwXfMlXFhPObCV0AyZ/cC9c86lADumLIP
+X-Gm-Gg: ASbGnct17xK8ad0IbQh9itoXW3Vu45oQmF7VsJhxuKZ+IYI2sLky0qMI9RKjM+o1XWz
+ t7nrBClAvPoeXGyyCFPEL4tOFWjKVUS6xPoIeFnG85jKMcQtoMNSHdmB24fluroa5FOxNUkBMR0
+ 69qSFpzbJ6O38dwUCfntO+VrKOlXT4VdxSkkmAJ8mOdA0PJESwB38BQ4DfWU0zHmO190DeKvZHx
+ HcYW8dd4jKx+S7ZqCRXEAhmZ0eZxvyvt4Te9/AuRuuXaFCOoYvIksfYaFYT4EgOCiDlMIAm9dvm
+ KEltEzChYjQ1+NSubHaGGRrxJYu8bg==
+X-Received: by 2002:ad4:5de9:0:b0:70d:ac6c:d5e with SMTP id
+ 6a1803df08f44-70dac6c152cmr85612426d6.17.1756134179954; 
+ Mon, 25 Aug 2025 08:02:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGv8eCrFNDO0lherB04MdWnrE7/si3AJQBQeeVWXJF6plrcPBMwu5wfSREvSOXxachUxzbc+w==
+X-Received: by 2002:ad4:5de9:0:b0:70d:ac6c:d5e with SMTP id
+ 6a1803df08f44-70dac6c152cmr85610226d6.17.1756134177610; 
+ Mon, 25 Aug 2025 08:02:57 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-70da728659fsm46415946d6.39.2025.08.25.08.02.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Aug 2025 08:02:57 -0700 (PDT)
+Date: Mon, 25 Aug 2025 17:02:49 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ pbonzini@redhat.com, peterx@redhat.com
+Cc: qemu-devel@nongnu.org, mst@redhat.com, mtosatti@redhat.com,
+ richard.henderson@linaro.org, riku.voipio@iki.fi, thuth@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, david@redhat.com,
+ jjherne@linux.ibm.com, shorne@gmail.com, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, wangyanan55@huawei.com, zhao1.liu@intel.com,
+ peter.maydell@linaro.org, agraf@csgraf.de, mads@ynddal.dk,
+ mrolnik@gmail.com, deller@gmx.de, dirty@apple.com, rbolshakov@ddn.com,
+ phil@philjordan.eu, reinoud@netbsd.org, sunilmut@microsoft.com,
+ gaosong@loongson.cn, laurent@vivier.eu, edgar.iglesias@gmail.com,
+ aurelien@aurel32.net, jiaxun.yang@flygoat.com, arikalo@gmail.com,
+ chenhuacai@kernel.org, npiggin@gmail.com, rathc@linux.ibm.com,
+ harshpb@linux.ibm.com, yoshinori.sato@nifty.com, iii@linux.ibm.com,
+ mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com, qemu-s390x@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v5 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
+ helpers and use them tree wide
+Message-ID: <20250825170249.3cdd315f@fedora>
+In-Reply-To: <d585141a-07ab-479e-9d56-f58ecc4e7207@linaro.org>
+References: <20250814160600.2327672-7-imammedo@redhat.com>
+ <20250821155603.2422553-1-imammedo@redhat.com>
+ <d585141a-07ab-479e-9d56-f58ecc4e7207@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR10MB4363:EE_|BN0PR10MB4918:EE_
-X-MS-Office365-Filtering-Correlation-Id: 76812fff-f618-4f4f-bae7-08dde3e7c309
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SnBDQS92LzN4allHcVVveGFuWHBZd2hHeW5LV09tV1VNL2hldzdLZ1pYcHNn?=
- =?utf-8?B?WWw4Qk9XKzQxU0IyblNpOHVMU1hnYWNpSWtvMVFGVTlMaG9sakR0d1h3ZE4x?=
- =?utf-8?B?ZjJNcU5ERlc2VFRxb01qdVFNL0pma3ZLZUk3ZzlxSlhsaEFMVXI1R1REeXRo?=
- =?utf-8?B?MHd2akttUTBlQ2QyWVNteUF1NEVLSXBweHhDQUhxOUxJQTJqQ2Frcjg3TXBR?=
- =?utf-8?B?alBjcDZvK3JoaWZqYjhsZVJMZXVLWE5lS1hWK3hic29mRmovQWp0UXJNNmlG?=
- =?utf-8?B?TTk2SW5yMERuWEF0bWpObzdwYVNFcGhVUHlwUnBLSUVxVjNFSll4aE95dWRD?=
- =?utf-8?B?aXJBTVRRZ1VkMzNqbTlBRUdaSFBEZjJHcnM2ZTJ0OTV2UU50bzFoMkJvNW45?=
- =?utf-8?B?Z0trV3dWaHdoVGlFcHZHQlRkcGJ4dWZoUmpTSmQyNUJqUWJSUWd3U2ZNeFcy?=
- =?utf-8?B?SlhZNS9qT1ArWkhMRGdKV2cveGZEd0tqTUxabEhaZnZaVTlWRWZFM2NEY25N?=
- =?utf-8?B?V2xtVkU0MHhHQmhKSG1nckNqa1dTWGV5aU03RTFWUXVhMFgvR2dQVWJ3aUth?=
- =?utf-8?B?SUQ0b29mQjRmS1NrSEtqYXdNR2ZwVHAxVDh5bEpvVDRCbjArODNMVjJ4WWJn?=
- =?utf-8?B?VWRMaDF3SmU2WDVEM1pRWHA1NExPYlNMc0hEMkswTzhRcmJPdmQrb0FDTXZI?=
- =?utf-8?B?RkwzMjBhbk45RHhab1ZRMkdGUnVNSlVHUGNTTzBqcEttNkpuWGJLYmwyK3NT?=
- =?utf-8?B?cHErenF2cDMxVlFuK1NUWDhjcStsSThDNERsZVVPVWhSaDJDWEU4YS9DRlpo?=
- =?utf-8?B?L1BMVjNnZGpJbjZMWHdUY1cyRWRCdllyV2xBY1owaUVjbDQreTdpTUhKUXhx?=
- =?utf-8?B?QTJ0bnFiQndyOXBnUkZtMVlidkZsUU00RVBTT0ZzV2dVRmoweFByWVZsYlRX?=
- =?utf-8?B?SGJVQXRNcWFhVno0UVVkSzIxNEg3eVpSbGFQS1llQkNDNDhHNkQvajRwNGlP?=
- =?utf-8?B?ZEJDK2VuWWhCWEtZOERTdjluVk9aTjAvWWJ6dXRwaXVpQzhxMDA1WFBNcWJM?=
- =?utf-8?B?WG1NMmt2cS9jTmQwQ2JVUnMycGVrejQrTTI4QXNXc3Rxd0I5UDBKc1dpYndT?=
- =?utf-8?B?NkxDUHl4RlZSa2hDcGVBWmFpbEF2Mm1nODFjZ3lNTUlpL0tDQkxERkhGMnU2?=
- =?utf-8?B?eTZ1V2tBbHlwdE5RSDdTejdHOTJ4TndPd3BqRVVQQUpOT2YvbzVtQU85RjNQ?=
- =?utf-8?B?azluWWM3LzZZN3dLdlpUM2hOdWt1WVdidXhHZFVVeklaTWs5UE1sTVloN2Fo?=
- =?utf-8?B?Ymd4bkVyQmhQTlJpejVJa0x1Mytib2hJR1Z4eHcwelVLTFR1SUgwY2N2b3B0?=
- =?utf-8?B?MHZOUFpIditXSXlVRHV2VDQ1eU0wMXFsUVR2enBkUE51S2k2U3MwbW1LTm1l?=
- =?utf-8?B?aHNQUHlnNnBFcGhtdGd4LzBxaUI1YWFnT0E2Q29tV0FkdEtjYms2N1dUQmJS?=
- =?utf-8?B?Ym9oYlNEWlZ3ZUM0WitVWnh0OTU5RHkwQmoyM3pTSWJFSjRPb0ppRUl4TUpD?=
- =?utf-8?B?VmdKSkZsK3hNSzRYSzlLNFdURkl2RUhIL0phVEN0OE93djJMbndQR0xTZDd5?=
- =?utf-8?B?Tzh6MmVST1RqRExXTTg5K2FVR01LM1pOVk5IRjhvd3pIeUxEcGZwZlVCWEYr?=
- =?utf-8?B?UEIwNjYyblJJbjRoeVpxdCtPWlpQYklpcVlXMWVSQW1jY1ZxM01rdXdWM01U?=
- =?utf-8?B?Z3Vaamw2SEh3L0NCei9Ba3ZFaC9PUkZ5Uk43aDBzN0poUCtiUmNlT2NORFRO?=
- =?utf-8?B?enhmSDlKNkNUeDcrRGxoNkd2SzJzWkdUWVU1YktLWVZLckV1T0NSV3phY0xO?=
- =?utf-8?B?TkxFUVZ0V0VNS3c4Vk5MdkhxbmVwTDI5MGxPeFpFMGV1bERqZFdtSkczYlVM?=
- =?utf-8?Q?Fg+XsI1SlY0=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR10MB4363.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d3MrbHZlSVV6ajBlRVlscVFpWTNpY3pCVk85OEdhQnNydG9tNW16UjNvYjZ0?=
- =?utf-8?B?TklxMVA5b1FNRmJmY1V4MGxLRlJzcjhzVHhnWjN5cE5ERmp4cm1WVTMrSW56?=
- =?utf-8?B?OFRlM3lIYjFZSVlEY2JlYkhJZ20rcGhiNlpwbjNvQmpXVzZyQWtLeFhzNU0z?=
- =?utf-8?B?d3RXdUJJUGRrMTZLQSsvUDhKa3NyU25QL1dsOC9iMnl5RW1DRnQ1R1poZi9p?=
- =?utf-8?B?NE1RVzNoUnAvY1lCcG1EZ0JRQlBZdjJCeUc5SzNmVy9CcHk4dHFPSndYNG0v?=
- =?utf-8?B?ai95d0pDeDhPMGZQSnVyajIwQjQyR0lSMmphaHFwT1lmRzRNWUNIRU1PRWlw?=
- =?utf-8?B?VVlUdURVZ3NKaGtGUmp0RlpiN2tHSkcwN1ZpdEpQZGo1UHlvZVNPQUVXRzZ2?=
- =?utf-8?B?ZHVwTTBwQ2p5OWlSQWFhZi9pcHptYWJnanFsMkhoM1JkM1pZTXdhR3h5YzRM?=
- =?utf-8?B?azZPWmJUR3ZaV0pDOWFkT2YxNExuVFVYdkFtNEdybk5McDZMakhFa3NPYytK?=
- =?utf-8?B?bUpDcUxOd1I3bmlaSi81OUhoZ0JzYm4vYjhSMDdtQ25wbW4xRnFmc0tMalph?=
- =?utf-8?B?RzBjQm14aEJJOEdZenpMRVZzenQyNEwyTzNwZEpIcXlXenQxNmFkTCtuT0M2?=
- =?utf-8?B?bmhrMnFFSUI0SXg4T2dSaXF5Wk9zTFRCVDcxQ01NcktxVkZWemNPeDZyNmRO?=
- =?utf-8?B?Z2ZGTUcyV3NRRjIvTDk4K2U5RUZlb3lpQS9yb3Z1RHkwdjJOd0JES3JZeHlh?=
- =?utf-8?B?ZisvQkdXaWFiU3YzckpxYjgxSjQwNUduZGxFRkZqcm9zSzRQeWhjU25QZ2tq?=
- =?utf-8?B?QjBjWHZHZmhzSmd6OE1EV0llUDl1M1BSdm54ckM4VUp4UThWaGxVbGZBdFNJ?=
- =?utf-8?B?aWNaTjRrR2U2ZGF3d0FSMzYrMXRzaFRUZjAzNjNpMVlqQ0hCZ0ROZDBzWXJm?=
- =?utf-8?B?UE96Yks3d1krUVBSQjFTNnlXOFBoMmx6Q1RGWGVKL292WGl3V1BaeElaOHBU?=
- =?utf-8?B?YVpNejJYcndoMmlhamRwTFAvQkdJM1luMk9PV2gzL2RRSVVuTkFKZG1raVV2?=
- =?utf-8?B?N1Rkemdtd3hQL0Jsd3hUbElleDViMDZDSGpzVTBKS3dVWHlGVzdjZmNGc2ZW?=
- =?utf-8?B?OTZQUjRaOVl6SnQ2dWdWb3NWMk5HQWxUS2dmNE1kMytidC9KSDljOUE5WUY3?=
- =?utf-8?B?aGRsc0QxRjNPNFRkYWs1K241bXNZUXJ0UW94M1dhekQxVDNETXdiT0lrUlZa?=
- =?utf-8?B?ekhPMkNsYzNmT0ZMTUdydndleU9ldGJmSHpMdXlvS0Z6RFFvZHlObmdxRTVY?=
- =?utf-8?B?RjZ3UllYbHZaMzc4Ly9jdzhUbXdUcThpS3JnNUJnRDVlZ1pnSTFENWJFNEtN?=
- =?utf-8?B?VFRwUHNhNEN4OHprN3lhRjg2K1BIdUpaRExZSXlCRUZVUDJwZHJUeUF6UjRy?=
- =?utf-8?B?MGQ4SS9WOG0vM0RzNUhrYjJWdVJwZFkyREZxWGxnV3NCSjdGRi9xb3NHT1B5?=
- =?utf-8?B?NURBR0NCSzVtSUFJaU1IRHNYSDhUUmpqN3A5NkNKUWoxby9sT3VnRGpnbjlm?=
- =?utf-8?B?S2lzMFI4NFp2NStSNFIxS1NUaW5LRW5rcVVxeFFYaGtqcVZ0NVd6aXZEd0Ji?=
- =?utf-8?B?Rk5EVEhBaUZNTzJRSk1NK1VudGJHRWNaTjE3b2tuWlhhRVkwY1BHTnhzeitM?=
- =?utf-8?B?R0Z3eThJaHBZclc2eEtEakpIMEJRcGVFN1oxNHoxWTB6Y3Zkb0RDVFZlazcw?=
- =?utf-8?B?Zlk1dUZCVUd4Z3AxQWNkQVNHWi9JQTVMamRreDBpWVNVd2tQVkQzWlNtY1NE?=
- =?utf-8?B?dHFyR2YvVkF2OGJIaUtUVWlJRDU0cmtiKzZ2bC9LM203RitUYUx3WFU4VXZZ?=
- =?utf-8?B?UFk5U2hFME5DbURDeWFHWmhXWGpSVlBpaTJQdkxub2l2blBVdVJQTWQyWDJX?=
- =?utf-8?B?R00rUWxIQXhnUGU1Mm5GTmw5M2M5RE90b1RNUjJVWkhFcGFtYmQ4dllidTZs?=
- =?utf-8?B?bjV0UW5Kazl2TS8rSkxZN3dCQTIxNzlEUlQwUy8wOTFoT2ZSN2FMc0QzZ1lq?=
- =?utf-8?B?ZTBSUFlpL3hlc2VvK21zU09kR3BUMUtUK1pTQlNHUTh3UHRPSUV0STdlWGJ2?=
- =?utf-8?Q?zNkluzCF+4DLTlElNzSGJMp8a?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: DeqaV+GtmL68EOBnWkqUHCC2n0Zs47BIvq3VI7td+rEddTBEIu9MF2rF2MLf2dpcDtrayFBlrAoGcmO0JSaiMyrvX6IRJkUmPK/hFnWmP0ZygWeR9LyIvIrRvOBczSTJc16AVACA0dS8mThF85iC9foZWM5HqMH8c3qZOTXmz9BXAG9XEC/h3zXlUkZpoCZAVBjWgou1NwQWfiUztbHJMAhJRskxY62PuO6XTWq4NikuPJOIegNSHI6OzbDKQ3A6DZWJoUU16nEI89XdRjhj8718sBJzYGkhrQUUJj+s9xf/FT/mfo/Sq1NvgU0R/NcVG6qHAXlH8WafzZPniPP1U9UMOPTgdFJt27GownNaffQDRt11a862rd3Fb0jcT5mY7zPuLX4Zlt983iALH3QpDbSOYLj8MRJGgDFUH6x/33bxAfOiV3Iy15lMS8gKtxB12nLUG2ApLBf1beleP16PmJqt2Mo+SeC5dmMHqrWW13Zj6gFyjfbpyvDNXtE4XlVcn1Cn/he+dB+V9U+jOfyutU9x8aYLFSixQcwh/l/MFkHumq8toYnYkdkzqV5qTFr1Vz88xv2pzqobtiHqyrUdt+4UlM/jFoHkfszIG7bj7DI=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 76812fff-f618-4f4f-bae7-08dde3e7c309
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR10MB4363.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2025 14:57:50.6977 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EfvJ18Guo2nmyMQli6hXzxoERQVOi3X46r4j9STXU7ut4cF2K3+HL4M3grCIXSlYJ6RqD4sDe/Pbb5fEv0wpvg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR10MB4918
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-25_07,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- suspectscore=0 spamscore=0
- phishscore=0 bulkscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
- definitions=main-2508250135
-X-Proofpoint-ORIG-GUID: hEkKnqiz8kJ2xsDJKgMhpy8wH-1Cjw9c
-X-Proofpoint-GUID: hEkKnqiz8kJ2xsDJKgMhpy8wH-1Cjw9c
-X-Authority-Analysis: v=2.4 cv=EcXIQOmC c=1 sm=1 tr=0 ts=68ac79f3 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117
- a=zPCbziy225d3KhSqZt3L1A==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=2OwXVqhp2XgA:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=zu3spmGggHTAvyYcV_cA:9
- a=QEXdDO2ut3YA:10 cc=ntf awl=host:12069
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMCBTYWx0ZWRfX3DybUjD44Nze
- 8mGJjnuZTevMqcnQ3mAi6yhN43XgBumWe0fedNmhUX+Mh3r8xTNjIgvHA+DINfxKeUOuuz483OR
- TZ4o+pJyrDmfEtvuSFt5JeikK3qMARdE1dmteza2MUdAMOV2sHYoumdMVwYQSmVpOZ4sKIf42H5
- 3KU7xS2AOkNa0m7H3agXNQLLmiR8IadvQcNNOFw8/osAYBxnrA0bco9/wp7WjWPVFzDSSaoqIdi
- DhNRtXmvVwnclXWGVAxbwGxlIZc43sHQYTBBs78nGPbAW41nPniVeb5kRhV9X56UFEyCiS/tNMJ
- UoCqeLZuRZLUiOgp38peJzvRcZhBQetd06VK5by71ytfPRNtB0LINC3ZjwPMNq2OrWmoLRs55i3
- PRWo6Xw6eVFNBhkiZcXgQGxNY+3vtw==
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -235,154 +124,410 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 25 Aug 2025 12:35:51 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+
+> Hi Igor,
+>=20
+> On 21/8/25 17:56, Igor Mammedov wrote:
+> > the helpers form load-acquire/store-release pair and use them to replace
+> > open-coded checkers/setters consistently across the code, which
+> > ensures that appropriate barriers are in place in case checks happen
+> > outside of BQL.
+>=20
+> I don't understand the beginning of this sentence (even prepending
+> the patch subject).
+
+yep, it looks botched, how about following?
+
+"
+The helpers form load-acquire/store-release pair and ensure
+that appropriate barriers are in place in case checks happen
+outside of BQL.
+Use them to replace open-coded checkers/setters across the code,
+to make sure that barriers are not missed.
+Helpers also make code a bit more readable.
+"
 
 
-On 8/25/25 8:44 AM, Markus Armbruster wrote:
-> Please excuse the delay, I was on vacation.
-> 
-> Jonah Palmer <jonah.palmer@oracle.com> writes:
-> 
->> On 8/8/25 6:48 AM, Markus Armbruster wrote:
->>> I apologize for the lateness of my review.
-> 
-> Late again: I was on vacation.
-> 
->>> Jonah Palmer <jonah.palmer@oracle.com> writes:
->>>
->>>> Adds a new migration capability 'virtio-iterative' that will allow
->>>> virtio devices, where supported, to iteratively migrate configuration
->>>> changes that occur during the migration process.
->>>
->>> Why is that desirable?
->>
->> To be frank, I wasn't sure if having a migration capability, or even
->> have it toggleable at all, would be desirable or not. It appears though
->> that this might be better off as a per-device feature set via
->> --device virtio-net-pci,iterative-mig=on,..., for example.
-> 
-> See below.
-> 
->> And by "iteratively migrate configuration changes" I meant more along
->> the lines of the device's state as it continues running on the source.
-> 
-> Isn't that what migration does always?
-> 
+>=20
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+> > ---
+> > v5: fix copy/paste error in doc comment of cpu_set_interrupt()
+> >     "Jason J. Herne" <jjherne@linux.ibm.com>
+> > v4:
+> >     add cpu_set_interrupt() and merge helpers patch with
+> >     patches that use them (v3 6-7,9/10).
+> >         Peter Xu <peterx@redhat.com>
+> > ---
+> >   include/hw/core/cpu.h               | 25 +++++++++++++++++++++
+> >   accel/tcg/cpu-exec.c                | 10 ++++-----
+> >   accel/tcg/tcg-accel-ops.c           |  2 +-
+> >   accel/tcg/user-exec.c               |  2 +-
+> >   hw/intc/s390_flic.c                 |  2 +-
+> >   hw/openrisc/cputimer.c              |  2 +-
+> >   system/cpus.c                       |  2 +-
+> >   target/alpha/cpu.c                  |  8 +++----
+> >   target/arm/cpu.c                    | 20 ++++++++---------
+> >   target/arm/helper.c                 | 18 +++++++--------
+> >   target/arm/hvf/hvf.c                |  6 ++---
+> >   target/avr/cpu.c                    |  2 +-
+> >   target/hppa/cpu.c                   |  2 +-
+> >   target/i386/hvf/hvf.c               |  4 ++--
+> >   target/i386/hvf/x86hvf.c            | 21 +++++++++---------
+> >   target/i386/kvm/kvm.c               | 34 ++++++++++++++---------------
+> >   target/i386/nvmm/nvmm-all.c         | 24 ++++++++++----------
+> >   target/i386/tcg/system/seg_helper.c |  2 +-
+> >   target/i386/tcg/system/svm_helper.c |  2 +-
+> >   target/i386/whpx/whpx-all.c         | 34 ++++++++++++++---------------
+> >   target/loongarch/cpu.c              |  2 +-
+> >   target/m68k/cpu.c                   |  2 +-
+> >   target/microblaze/cpu.c             |  2 +-
+> >   target/mips/cpu.c                   |  6 ++---
+> >   target/mips/kvm.c                   |  2 +-
+> >   target/openrisc/cpu.c               |  3 +--
+> >   target/ppc/cpu_init.c               |  2 +-
+> >   target/ppc/kvm.c                    |  2 +-
+> >   target/rx/cpu.c                     |  3 +--
+> >   target/rx/helper.c                  |  2 +-
+> >   target/s390x/cpu-system.c           |  2 +-
+> >   target/sh4/cpu.c                    |  2 +-
+> >   target/sh4/helper.c                 |  2 +-
+> >   target/sparc/cpu.c                  |  2 +-
+> >   target/sparc/int64_helper.c         |  4 ++--
+> >   35 files changed, 141 insertions(+), 119 deletions(-)
+> >=20
+> > diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> > index 5eaf41a566..1dee9d4c76 100644
+> > --- a/include/hw/core/cpu.h
+> > +++ b/include/hw/core/cpu.h
+> > @@ -942,6 +942,31 @@ CPUState *cpu_by_arch_id(int64_t id);
+> >  =20
+> >   void cpu_interrupt(CPUState *cpu, int mask);
+> >  =20
+> > +/**
+> > + * cpu_test_interrupt:
+>  > + * @cpu: The CPU to check interrupt(s) on.> + * @mask: The  =20
+> interrupts to check.
+>=20
+> Can we use plural form to express we might test for more
+> than one interrupt in the mask?
+>=20
+>    -> cpu_test_interrupts() =20
 
-Essentially yes, but today all of the state is only migrated at the end, 
-once the source has been paused. So the final correct state is always 
-sent to the destination.
+it follow the same pattern as existing cpu_interrupt()/
+generic_handle_interrupt() which take the same 'mask'
+and cpu_handle_interrupt() that also handles a bunch of interrupts
+and CPUState::interrupt_request also in singular form.
 
-If we're no longer waiting until the source has been paused and the 
-initial state is sent early, then we need to make sure that any changes 
-that happen is still communicated to the destination.
+I don't have preference here but plural here would be
+inconsistent with existing pattern all over QEMU and
+it would be better to be consistent here.
 
-This RFC handles this by just re-sending the entire state again once the 
-source has been paused. But of course this isn't optimal and I'm looking 
-into how to better optimize this part.
+>=20
+> otherwise cpu_test_interrupt_mask().
+>=20
+> > + *
+> > + * Checks if any of interrupts in @mask are pending on @cpu.
+> > + */
+> > +static inline bool cpu_test_interrupt(CPUState *cpu, int mask)
+> > +{
+> > +    return qatomic_load_acquire(&cpu->interrupt_request) & mask; =20
+> How missing "qemu/atomic.h" header.
 
->> But perhaps actual configuration changes (e.g. changing the number of
->> queue pairs) could also be supported mid-migration like this?
-> 
-> I don't know.
-> 
->>>> This capability is added to the validated capabilities list to ensure
->>>> both the source and destination support it before enabling.
->>>
->>> What happens when only one side enables it?
->>
->> The migration stream breaks if only one side enables it.
-> 
-> How does it break?  Error message pointing out the misconfiguration?
-> 
+it's included implicitly via "qemu/rcu_queue.h"
 
-The destination VM is torn down and the source just reports that 
-migration failed.
+>=20
+> > +}
+> > +
+> > +/**
+> > + * cpu_set_interrupt:
+> > + * @cpu: The CPU to set pending interrupt(s) on.
+> > + * @mask: The interrupts to set. =20
+>=20
+> Rename plural: cpu_set_interrupts() or _mask().
+>=20
+> > + *
+> > + * Sets interrupts in @mask as pending on @cpu.
+> > + */
+> > +static inline void cpu_set_interrupt(CPUState *cpu, int mask)
+> > +{
+> > +    qatomic_store_release(&cpu->interrupt_request,
+> > +        cpu->interrupt_request | mask); =20
+>=20
+> (indent is off)
 
-I don't believe the source/destination could be aware of the 
-misconfiguration. IIUC the destination reads the migration stream and 
-expects certain pieces of data in a certain order. If new data is added 
-to the migration stream or the order has changed and the destination 
-isn't expecting it, then the migration fails. It doesn't know exactly 
-why, just that it read-in data that it wasn't expecting.
+checkpatch was fine with it and it is (4+4) which is
+within codestyle rules and the pattern widely used in QEMU.
 
->> This is poor wording on my part, my apologies. I don't think it's even
->> possible to know the capabilities between the source & destination.
->>
->>>> The capability defaults to off to maintain backward compatibility.
->>>>
->>>> To enable the capability via HMP:
->>>> (qemu) migrate_set_capability virtio-iterative on
->>>>
->>>> To enable the capability via QMP:
->>>> {"execute": "migrate-set-capabilities", "arguments": {
->>>>        "capabilities": [
->>>>           { "capability": "virtio-iterative", "state": true }
->>>>        ]
->>>>     }
->>>> }
->>>>
->>>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
->>>> ---
->>>>   migration/savevm.c  | 1 +
->>>>   qapi/migration.json | 7 ++++++-
->>>>   2 files changed, 7 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/migration/savevm.c b/migration/savevm.c
->>>> index bb04a4520d..40a2189866 100644
->>>> --- a/migration/savevm.c
->>>> +++ b/migration/savevm.c
->>>> @@ -279,6 +279,7 @@ static bool should_validate_capability(int capability)
->>>>       switch (capability) {
->>>>       case MIGRATION_CAPABILITY_X_IGNORE_SHARED:
->>>>       case MIGRATION_CAPABILITY_MAPPED_RAM:
->>>> +    case MIGRATION_CAPABILITY_VIRTIO_ITERATIVE:
->>>>           return true;
->>>>       default:
->>>>           return false;
->>>> diff --git a/qapi/migration.json b/qapi/migration.json
->>>> index 4963f6ca12..8f042c3ba5 100644
->>>> --- a/qapi/migration.json
->>>> +++ b/qapi/migration.json
->>>> @@ -479,6 +479,11 @@
->>>>   #     each RAM page.  Requires a migration URI that supports seeking,
->>>>   #     such as a file.  (since 9.0)
->>>>   #
->>>> +# @virtio-iterative: Enable iterative migration for virtio devices, if
->>>> +#     the device supports it. When enabled, and where supported, virtio
->>>> +#     devices will track and migrate configuration changes that may
->>>> +#     occur during the migration process. (Since 10.1)
->>>
->>> When and why should the user enable this?
->>
->> Well if all goes according to plan, always (at least for virtio-net).
->> This should improve the overall speed of live migration for a virtio-net
->> device (and vhost-net/vhost-vdpa).
-> 
-> So the only use for "disabled" would be when migrating to or from an
-> older version of QEMU that doesn't support this.  Fair?
-> 
+>=20
+> > +}
+> > + =20
+> The field is described in CPUState as:
+>=20
+>    @interrupt_request: Indicates a pending interrupt request.
+>=20
+> Can we update the description, mentioning its access should be
+> via the proper cpu_test_interrupts/cpu_set_interrupts/... helpers?
 
-Correct.
+I didn't do this because not all places are using helpers
+and there are places which just wouldn't use them
+(example: plain copy of the field).
+I'd would leave this change out.
 
-> What's the default?
-> 
 
-Disabled.
+> > diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> > index 713bdb2056..1269c2c6ba 100644
+> > --- a/accel/tcg/cpu-exec.c
+> > +++ b/accel/tcg/cpu-exec.c
+> > @@ -778,7 +778,7 @@ static inline bool cpu_handle_interrupt(CPUState *c=
+pu,
+> >        */
+> >       qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
+> >  =20
+> > -    if (unlikely(qatomic_read(&cpu->interrupt_request))) {
+> > +    if (unlikely(cpu_test_interrupt(cpu, ~0))) { =20
+>=20
+> Maybe nitpicking, but I'd introduce the API and use it first only where
+> we already use atomic accesses. Then convert the rest of the code base
+> to this API in a distinct patch.
 
->>> What exactly do you mean by "where supported"?
->>
->> I meant if both source's Qemu and destination's Qemu support it, as well
->> as for other virtio devices in the future if they decide to implement
->> iterative migration (e.g. a more general "enable iterative migration for
->> virtio devices").
->>
->> But I think for now this is better left as a virtio-net configuration
->> rather than as a migration capability (e.g. --device
->> virtio-net-pci,iterative-mig=on/off,...)
-> 
-> Makes sense to me (but I'm not a migration expert).
-> 
-> [...]
-> 
+I thought so and it was this way before v4,
+but I was asked to merge API and users in the same patch.
+It's all depends on how many changes we are going to squash together.
+
+>=20
+> >           int interrupt_request;
+> >           bql_lock();
+> >           interrupt_request =3D cpu->interrupt_request;
+> > @@ -786,7 +786,7 @@ static inline bool cpu_handle_interrupt(CPUState *c=
+pu,
+> >               /* Mask out external interrupts for this step. */
+> >               interrupt_request &=3D ~CPU_INTERRUPT_SSTEP_MASK; =20
+> >           }> -        if (interrupt_request & CPU_INTERRUPT_DEBUG) { =20
+> > +        if (cpu_test_interrupt(cpu, CPU_INTERRUPT_DEBUG)) {
+> >               cpu->interrupt_request &=3D ~CPU_INTERRUPT_DEBUG;
+> >               cpu->exception_index =3D EXCP_DEBUG;
+> >               bql_unlock();
+> > @@ -795,7 +795,7 @@ static inline bool cpu_handle_interrupt(CPUState *c=
+pu,
+> >   #if !defined(CONFIG_USER_ONLY)
+> >           if (replay_mode =3D=3D REPLAY_MODE_PLAY && !replay_has_interr=
+upt()) {
+> >               /* Do nothing */
+> > -        } else if (interrupt_request & CPU_INTERRUPT_HALT) {
+> > +        } else if (cpu_test_interrupt(cpu, CPU_INTERRUPT_HALT)) {
+> >               replay_interrupt();
+> >               cpu->interrupt_request &=3D ~CPU_INTERRUPT_HALT; =20
+>=20
+> Can we have a cpu_clear_interrupts() helper for completion? Likely we
+> need the same BQL-safe access.
+
+see below
+
+>=20
+> >               cpu->halted =3D 1;
+> > @@ -805,7 +805,7 @@ static inline bool cpu_handle_interrupt(CPUState *c=
+pu,
+> >           } else {
+> >               const TCGCPUOps *tcg_ops =3D cpu->cc->tcg_ops;
+> >  =20
+> > -            if (interrupt_request & CPU_INTERRUPT_RESET) {
+> > +            if (cpu_test_interrupt(cpu, CPU_INTERRUPT_RESET)) {
+> >                   replay_interrupt();
+> >                   tcg_ops->cpu_exec_reset(cpu);
+> >                   bql_unlock();
+> > @@ -841,7 +841,7 @@ static inline bool cpu_handle_interrupt(CPUState *c=
+pu,
+> >               interrupt_request =3D cpu->interrupt_request;
+> >           }
+> >   #endif /* !CONFIG_USER_ONLY */
+> > -        if (interrupt_request & CPU_INTERRUPT_EXITTB) {
+> > +        if (cpu_test_interrupt(cpu, CPU_INTERRUPT_EXITTB)) {
+> >               cpu->interrupt_request &=3D ~CPU_INTERRUPT_EXITTB;
+> >               /* ensure that no TB jump will be modified as
+> >                  the program flow was changed */ =20
+> Looking at v4 applied on top of v10.1.0-rc4 reconstructing patch
+> #6 with v5:
+>=20
+> $ git grep -F -- '->interrupt_request'
+>=20
+> * Missing cpu_test_interrupts()
+>=20
+> target/arm/machine.c:968:        env->irq_line_state =3D=20
+> cs->interrupt_request &
+
+it's not a test but a bitmask copy in cpu_post_load()
+where a barrier won't make a difference.
+though for consistency sake we can introduce something like
+ int cpu_get_interrupt(CPUState*)
+that will use acquire, but that won't guarantee much as
+copy might get stale after it's read.
+
+> target/i386/helper.c:600:    int sipi =3D cs->interrupt_request &=20
+> CPU_INTERRUPT_SIPI;
+
+ditto
+
+> target/i386/kvm/kvm.c:5067:            events.smi.pending =3D=20
+> cs->interrupt_request & CPU_INTERRUPT_SMI;
+> target/i386/kvm/kvm.c:5068:            events.smi.latched_init =3D=20
+> cs->interrupt_request & CPU_INTERRUPT_INIT;
+
+these indeed could use the helper
+
+>=20
+> * Possible uses of qatomic_load_acquire()?
+>=20
+> accel/tcg/cpu-exec.c:801:            int interrupt_request =3D=20
+> cpu->interrupt_request;
+
+for TCG interrupt processing seems to be under BQL, so it
+shouldn't make a difference.
+
+It might be a separate patch, but tit would be hard to come up
+with justification for it.
+
+But see 8/8, this line is moved closer to user and=20
+cpu_handle_interrupt() is cleaned up.
+
+> accel/tcg/tcg-accel-ops-icount.c:152:    int old_mask =3D=20
+> cpu->interrupt_request;
+
+another copy example, executed within cpu thread,
+we don't really need acquire here and following
+tcg_handle_interrupt->cpu_set_interrupt adds implicit one.
+
+>=20
+> * Candidates for cpu_clear_interrupts()
+
+it wasn't goal of this series
+(Paolo suggested to include cpu_interrupt()+cpu_test_interrupt()
+test pair assuming it would be relatively small change, and here we are).
+
+Also taking in account that setting interrupts are usually* done under BQL,
+cpu_clear_interrupts() would be just a wrapper without a barrier.
+
+and then we already have cpu_reset_interrupt() which should clear interrupt=
+s,
+taking BQL if needed.
+
+Anyways it's quite involving refactoring, derailing series even further
+from its scope.
+
+If it's deemed necessary probably another series taking care of
+interrupt clearing tree wide is in order. (but I'd prefer take care of
+it separately of this series).
+
+
+> accel/tcg/cpu-exec.c:784:            cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_DEBUG;
+> accel/tcg/cpu-exec.c:794:            cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_HALT;
+> accel/tcg/cpu-exec.c:842:            cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_EXITTB;
+> hw/core/cpu-common.c:79:    cpu->interrupt_request &=3D ~mask;
+> hw/core/cpu-system.c:207:        cpu->interrupt_request &=3D ~0x01;
+> target/avr/helper.c:50:            cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_RESET;
+> target/avr/helper.c:62:                cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_HARD;
+> target/i386/helper.c:605:    cs->interrupt_request =3D sipi;
+> target/i386/hvf/x86hvf.c:400:            cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_NMI;
+> target/i386/hvf/x86hvf.c:412:        cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_HARD;
+> target/i386/hvf/x86hvf.c:440:        cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_POLL;
+> target/i386/hvf/x86hvf.c:453:        cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_TPR;
+> target/i386/kvm/kvm.c:5069:            cs->interrupt_request &=3D=20
+> ~(CPU_INTERRUPT_INIT | CPU_INTERRUPT_SMI);
+
+* this one might be cleared outside of BQL
+  (kvm_cpu_exec->kvm_arch_put_registers->kvm_put_vcpu_events path)
+
+Paolo, Peter,
+should we take BQL here, if not then why?
+(kvm_arch_pre_run() that does run after it, does take BQL when resetting in=
+terrupts)
+
+> target/i386/kvm/kvm.c:5459:            cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_NMI;
+> target/i386/kvm/kvm.c:5470:            cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_SMI;
+> target/i386/kvm/kvm.c:5505:            cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_HARD;
+> target/i386/kvm/kvm.c:5600:        cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_MCE;
+> target/i386/kvm/kvm.c:5630:        cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_POLL;
+> target/i386/kvm/kvm.c:5643:        cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_TPR;
+> target/i386/nvmm/nvmm-all.c:422:            cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_NMI;
+> target/i386/nvmm/nvmm-all.c:431:            cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_HARD;
+> target/i386/nvmm/nvmm-all.c:440:        cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_SMI;
+> target/i386/nvmm/nvmm-all.c:700:        cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_POLL;
+> target/i386/nvmm/nvmm-all.c:713:        cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_TPR;
+> target/i386/tcg/system/seg_helper.c:181:        cs->interrupt_request &=
+=3D=20
+> ~CPU_INTERRUPT_POLL;
+> target/i386/tcg/system/seg_helper.c:189:        cs->interrupt_request &=
+=3D=20
+> ~CPU_INTERRUPT_SMI;
+> target/i386/tcg/system/seg_helper.c:194:        cs->interrupt_request &=
+=3D=20
+> ~CPU_INTERRUPT_NMI;
+> target/i386/tcg/system/seg_helper.c:199:        cs->interrupt_request &=
+=3D=20
+> ~CPU_INTERRUPT_MCE;
+> target/i386/tcg/system/seg_helper.c:204:        cs->interrupt_request &=
+=3D=20
+> ~(CPU_INTERRUPT_HARD |
+> target/i386/tcg/system/seg_helper.c:218:        cs->interrupt_request &=
+=3D=20
+> ~CPU_INTERRUPT_VIRQ;
+
+> target/i386/tcg/system/svm_helper.c:827:    cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_VIRQ;
+
+I had a question wrt this one, in one of previous versions,
+it's buried deep in opcode handling, and hard to tell if this one is
+BQL protected or not. Perhaps someone more familiar with TCG can clarify
+if it's safe as it is now.
+
+for comparison target/openrisc/sys_helper.c: HELPER(mtspr) does take BQL ex=
+plicitly
+
+> target/i386/whpx/whpx-all.c:1474:            cpu->interrupt_request &=3D=
+=20
+> ~CPU_INTERRUPT_NMI;
+> target/i386/whpx/whpx-all.c:1481:            cpu->interrupt_request &=3D=
+=20
+> ~CPU_INTERRUPT_SMI;
+> target/i386/whpx/whpx-all.c:1505:                cpu->interrupt_request=20
+> &=3D ~CPU_INTERRUPT_HARD;
+> target/i386/whpx/whpx-all.c:1523:        cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_HARD;
+> target/i386/whpx/whpx-all.c:1610:        cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_POLL;
+> target/i386/whpx/whpx-all.c:1626:        cpu->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_TPR;
+> target/openrisc/sys_helper.c:199:                cs->interrupt_request=20
+> &=3D ~CPU_INTERRUPT_TIMER;
+> target/rx/helper.c:66:            cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_FIR;
+> target/rx/helper.c:76:            cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_HARD;
+> target/s390x/tcg/excp_helper.c:562:        cs->interrupt_request &=3D=20
+> ~CPU_INTERRUPT_HARD;
+>=20
 
 
