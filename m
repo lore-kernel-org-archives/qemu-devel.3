@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25206CA0FE9
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 12:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27EA3CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 12:34:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqWMU-0005bK-8a; Mon, 25 Aug 2025 08:31:47 -0400
+	id 1uqWOH-0006St-RH; Mon, 25 Aug 2025 08:33:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uqWMR-0005aV-4J
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 08:31:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uqWOC-0006Kd-B2
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 08:33:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uqWMK-0003PG-DY
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 08:31:42 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uqWO1-0003WE-Et
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 08:33:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756125090;
+ s=mimecast20190719; t=1756125198;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ES2HsnE/m2etmDwN13e41Dr05jhaTNjB9PfbRz1XytY=;
- b=AjwEjQ3Z/Qxhj+IASwTRr5HYFOW4pMt15mpBXIsaxZzCw1H8bcMATSXlZeGE/m37gfKXf7
- OUoLXwD67wdWWpiEvPUoTnaiSY6YefQapTWq9Hu5k13kaekvOgn4o7/PYhUKvJV4HeijNT
- oFTWbAMIWVaItw1TFlBoeW1hIJJYHVE=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HzNDxd04MpsioOFSAoiD/q+VWEJ3/AlFgzJJ7B3c8Lc=;
+ b=AJ/7dDA1S7IVXrw2ZfciZF0DrVJFo6at0VJI8Q1r4OWHEWJtCEwH/t3T2TfmJgE3Lp8yn0
+ pPkci5+v1LkqYo/hr1x3iwXafL1u7oqDvQ7OeL4HUKXDjfLNNnSlEvgd8A49CBnRLyxU2h
+ mbHPPIpy9wkbAOtCQ0oA/tEoaLS9hE4=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-fCTxyBejP8-kOyWz3-CI9g-1; Mon, 25 Aug 2025 08:31:29 -0400
-X-MC-Unique: fCTxyBejP8-kOyWz3-CI9g-1
-X-Mimecast-MFC-AGG-ID: fCTxyBejP8-kOyWz3-CI9g_1756125089
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7e8706c668cso1153535185a.3
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 05:31:29 -0700 (PDT)
+ us-mta-505-gNwxc3UqOmeem776Ja25VQ-1; Mon, 25 Aug 2025 08:33:16 -0400
+X-MC-Unique: gNwxc3UqOmeem776Ja25VQ-1
+X-Mimecast-MFC-AGG-ID: gNwxc3UqOmeem776Ja25VQ_1756125196
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4b29a0b8a6aso110778831cf.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 05:33:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756125089; x=1756729889;
+ d=1e100.net; s=20230601; t=1756125196; x=1756729996;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ES2HsnE/m2etmDwN13e41Dr05jhaTNjB9PfbRz1XytY=;
- b=oZnJ4yjv95L/nNUMEKTLqWs0YEuQLCdtWN10HD5+U25YEFYpISNKRk8fxA/uSflsbD
- /STINWyIvNxgTjZHSR/JloBr4voXEkkyVwH6zZEIFwwzv/BWSEBDcPo8n6X4eutelgij
- 15VCz5iBAZdrIY4+NF8GDjY9h5zqjpMYs2ZHCKk0IszaXlfC07OGRa8BMzJVykMT+1Z8
- 7rFF3FBE4w/DFa78Jee2LQKeUbMbMiNr2WRttQCYWe7mY7QxJWIJUsVFqfge06hh0YMx
- AFM3mGoO4hOFkneEcKeYse5WQG/LJCZp4RJcHfky0nLC3yXAUmoWgWMwMWqyQANMM+c9
- YucA==
+ bh=HzNDxd04MpsioOFSAoiD/q+VWEJ3/AlFgzJJ7B3c8Lc=;
+ b=j0IUgXTU4qLxigyVrPin/8KuGEqySmp1xkTojpmlZ5nYu2V4UvUraWKGe1lGPxSlqf
+ YlgBS+O/1Y2O8T5gRr+fPmLeBGcVLDTFkXWhhVe49idQoVBqqOF7tdqXSAN5oBymVBXD
+ X6vTGq0LPw5nC5Fa+IsS6yYlGLnDxxjNDWiePKd1kCweQm6IMHA/h4U7nR7myGTHvP19
+ 4UTzFaDZgd5IVp/W/GjKsb7R7NZhIWgiV8iLX9a/IPFVg9UYmeJ5pheXYBAb4uypqJ9n
+ fVeAr65V4+injCn3pF+FCyUISmD/fU8qQDOY1Uw0OaRDiCeAKMunhWtfjO9z48rZaSwc
+ 5VuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUITVZ50BgPigpFJnUnI20BytiLKAFGtIyPg/mTnMw8pseg2umXBlN8GW2wI8Iu7SMZfhNg9VXJFP1D@nongnu.org
-X-Gm-Message-State: AOJu0YxAZG6QeV9w8TFCyQR4rhJRpn/LQ5pFVQ78CpbL8u+B0XLC0AYa
- uLYQ27Bm/5aXarvnkBDEiyLKdL+Mp43n55dRBLPGJCKWqYG6+NN68F+HBsFUnLorNVpi9dQfsxY
- g9OEGjRluk9sZVExOnwIW1vNaJVn0Ba/cOiyswOsFKK0FLB+yQ4qvABbz
-X-Gm-Gg: ASbGncvP/S7iGItfENp/vl1HjQ2/rE/dQ2uSimUmP9/lI6Lee9wlGt92USv1Dy5O+3s
- XlwREPgyy2DKFt0Y6hZIXYJvJfQF8T/cG3GijUKBxtOn6zT1LnxsraEwHpjqM5jofW+OkWxiqxR
- xbRE6Ln73be+s8XC//yI0ZR9JUa58cq3lN+OiPmwDzA2Yk2pNTaijb5oO5AfDbfjPRX5N5+0JpT
- qJ1Sk3VQwmvyHorcPztP5dnsF5yzkq06S6H43mpaKc50P6IylmbcaHMRpGRqHPQV+TOczRDLLnh
- JqZJ8fFFkn1TRgTpyk9KyUWC+TNb70nGddFl3Z/xzKW2qK/S/97VY8mDyQTvPmfUNdis6B0hX58
- sPu4=
-X-Received: by 2002:a05:620a:a112:b0:7e8:5fce:919f with SMTP id
- af79cd13be357-7ea1106a03bmr1074533885a.45.1756125088684; 
- Mon, 25 Aug 2025 05:31:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyAuT8pZE0dwgVjzub+PKKgvHEg6IeeQK4A4/dqQAuNwt68RLBv7WxxtBnFQzzGyGI4ql1nQ==
-X-Received: by 2002:a05:620a:a112:b0:7e8:5fce:919f with SMTP id
- af79cd13be357-7ea1106a03bmr1074528485a.45.1756125088172; 
- Mon, 25 Aug 2025 05:31:28 -0700 (PDT)
+ AJvYcCUVkKBZE9z1XUZWOfIIY5bjzvSrLnCvjcVWwJ1zKHX/HBIhrIEJKoP8mPgjWFIs8gW4y9OovtRLMXgl@nongnu.org
+X-Gm-Message-State: AOJu0YxMfpWTVve4t3X/IGkFyRIVLcSCj7N7cyyMaoUh2zzuv+uprw9n
+ m206undhaFO6XihA22tpj+BygL+EPFUvNho0ukw6WnSMEAlD3P2LQo1AdDBc/2jN0ktAFgataid
+ VJm4gPgn9bmhxnVw35p7hbKGs8kF+nfYbfet1wIFy1F3mQejy5DbMv7F/
+X-Gm-Gg: ASbGncu3BuRN/moa7N6p136oXiVR5/dXDX0kk2gkQP67+AGmle/wTZix+RcazwHEoIs
+ L+lddQl/9e8peFgbT93NWuLp4gWNOJL42qFAqqY0gTLrrgpr3QlKgA9Z6n1Fy7IhkfLRLUSyo4T
+ e3c7MG+L06dlXglQE55CKC5/G2qsJQlA0OVTpN1kMmr+yonavOsT73nlbQd1TL/qOnZVRLfjQ/2
+ VwD+wgpQzaN4qmuIilqEYO/b6WMClNHuD+xt39Wji8f6oLwCWh51nD8C/uAnaCH5IxLW2KeVIsQ
+ Pig1whcXCEJuiVeGJQomi51aUCY4W6uDSwKRb8cmFJ7EZIAUcwGL5ScFDfOZhjIyhA9UDxFIrv4
+ KoqA=
+X-Received: by 2002:ac8:58d2:0:b0:4b1:d6e:f038 with SMTP id
+ d75a77b69052e-4b2aab1e216mr134248401cf.61.1756125195821; 
+ Mon, 25 Aug 2025 05:33:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEb68C3HRkA7OkB59vXZT062nU3JeP4PhYEPRYMlDCSggaqPa901MlHyVlN9Hja9C0vMCbHQ==
+X-Received: by 2002:ac8:58d2:0:b0:4b1:d6e:f038 with SMTP id
+ d75a77b69052e-4b2aab1e216mr134248041cf.61.1756125195454; 
+ Mon, 25 Aug 2025 05:33:15 -0700 (PDT)
 Received: from [192.168.0.6] (ltea-047-064-112-084.pools.arcor-ip.net.
  [47.64.112.84]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4b2b8e70fd2sm49599941cf.57.2025.08.25.05.31.25
+ af79cd13be357-7ebee9da311sm479814085a.33.2025.08.25.05.33.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Aug 2025 05:31:27 -0700 (PDT)
-Message-ID: <8e16bdc4-127c-4300-abc0-bb68f0ad2e8c@redhat.com>
-Date: Mon, 25 Aug 2025 14:31:23 +0200
+ Mon, 25 Aug 2025 05:33:15 -0700 (PDT)
+Message-ID: <4f0a3df6-c509-4d7f-8bca-f32fa391e3df@redhat.com>
+Date: Mon, 25 Aug 2025 14:33:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] gitlab: Stop cross-testing for 32-bit MIPS hosts
+Subject: Re: [PATCH 3/5] docker: Stop building 32-bit MIPS images
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>, Riku Voipio <riku.voipio@iki.fi>,
@@ -86,7 +86,7 @@ Cc: Aleksandar Rikalo <arikalo@gmail.com>, Riku Voipio <riku.voipio@iki.fi>,
  Paolo Bonzini <pbonzini@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
 References: <20250820142108.46639-1-philmd@linaro.org>
- <20250820142108.46639-3-philmd@linaro.org>
+ <20250820142108.46639-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,7 +131,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250820142108.46639-3-philmd@linaro.org>
+In-Reply-To: <20250820142108.46639-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -161,15 +161,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/08/2025 16.21, Philippe Mathieu-Daudé wrote:
 > 32-bit host support is deprecated since commit 6d701c9bac1
-> ("meson: Deprecate 32-bit host support"). Next commits will
-> remove support for 32-bit MIPS hosts. Stop cross-building
-> QEMU on our CI.
+> ("meson: Deprecate 32-bit host support"). Besides, the Debian
+> distribution we are using to cross-build dropped support for
+> MIPS as of Debian 13 [*]:
+> 
+>    From trixie, the architectures mipsel and mips64el are no
+>    longer supported by Debian. Users of these architectures
+>    are advised to switch to different hardware.
+> 
+> Next commits will remove support for 32-bit MIPS hosts. Stop
+> building the mipsel Docker image.
+> 
+> [*] https://www.debian.org/releases/trixie/release-notes/issues.en.html#mips-architectures-removed
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   .gitlab-ci.d/container-cross.yml |  6 ------
->   .gitlab-ci.d/crossbuilds.yml     | 14 --------------
->   2 files changed, 20 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
