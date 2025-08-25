@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CA42CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 11:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6711CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Aug 2025 11:35:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqVPs-0002uB-5B; Mon, 25 Aug 2025 07:31:12 -0400
+	id 1uqVTd-00047G-Cm; Mon, 25 Aug 2025 07:35:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uqVPm-0002rp-Jq
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 07:31:08 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uqVTY-00046K-SS
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 07:35:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uqVPg-0005ch-6f
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 07:31:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uqVTR-0005wq-OT
+ for qemu-devel@nongnu.org; Mon, 25 Aug 2025 07:35:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756121454;
+ s=mimecast20190719; t=1756121688;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=38BdOppienMWSF5lbjKOv0nyGRWpeeREOGI++PRCcvk=;
- b=M5I/2LX0O5oTE+13OAMcmiV26dVElkY9fyU1mHGB7m6a2bE9F2G5cYaAHDKUCHMZHuLAIW
- IAgpg/MUGN0wxpuXrNe/bpo1JcuR/q2jOpP4fmaDpgLNzmpOr2YRZYH2QFND1mAvbe3GzU
- HkkclbIvxQdZnz40H14utfU/7LDiSPA=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6//xgR4ehJunBpKrOSTEk+Vg96Os9BXcvEztpOAIduw=;
+ b=V8MI7rbH+WqmKLtKfK4DVwJz9JTG9szByXpa+NC+kgZEhX9DK36iciykebvgvQ9wW4BbXG
+ QvijhL105MCkKYMX3kkB1U9nWi8BfRY8BGqjlvomxHRj/6N3hRaQ92Rg8EbHKpRTj7wby1
+ lgfpyiQv3mkSzpeipReag9TtMDC28X8=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-5WGX03rJM7WUgDl1nTc46A-1; Mon, 25 Aug 2025 07:30:52 -0400
-X-MC-Unique: 5WGX03rJM7WUgDl1nTc46A-1
-X-Mimecast-MFC-AGG-ID: 5WGX03rJM7WUgDl1nTc46A_1756121451
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4b109affec8so102783171cf.1
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 04:30:51 -0700 (PDT)
+ us-mta-179-OvY-MTrUOFGcHX3HxB5TJg-1; Mon, 25 Aug 2025 07:34:47 -0400
+X-MC-Unique: OvY-MTrUOFGcHX3HxB5TJg-1
+X-Mimecast-MFC-AGG-ID: OvY-MTrUOFGcHX3HxB5TJg_1756121687
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4b109ab1e1dso181688521cf.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 04:34:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756121451; x=1756726251;
+ d=1e100.net; s=20230601; t=1756121687; x=1756726487;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=38BdOppienMWSF5lbjKOv0nyGRWpeeREOGI++PRCcvk=;
- b=TbmsMfqjBDilnLT+dxQD1aL7mguzxDaDQBRk7/hoyN3T/euEWv5are8Mka0B6syfID
- EXMFeVQx5XEBPTSjsoWnQXhbHKEyNJh3TZ29OdDhqthUKVVgLoqUjJlT6GAIbHckns5z
- Vnd63MZUIDFjIkdWeTjqN9frwZ095cyqCQVITT5ZjKP9odQv/Mu5DgzHz76xkgR6n1VL
- eOOALU85HdSvqm1RWLnr7whwZDGkBA48BpxwWpAGD692NL+d3+EMB8x4BCLG9AraJta1
- V4H4/VmuKgcud0BfJNhyXLk2mbLz2JM11P8Pe58MgF6PpyzH/nxRRcvcvco7nfBETuUX
- QNHQ==
+ bh=6//xgR4ehJunBpKrOSTEk+Vg96Os9BXcvEztpOAIduw=;
+ b=lPRfY5jRnggR1EbcqmZ6hTfxKU2hlvr9D9lk4YKLHODL555Am1jnbEZDX+bA4jndkz
+ XsHF/H1xU5YZZUDu83A1hVjof25xLJLBvxBsRi71b3yMONljX3+ARyEri77FGS+G/A7M
+ Sk0hBj5nPX+u0d1Rurv74QOVu4k1ov1sA5k8HiI2ab7L7p360ulyWc3fmUHbLuEkwU0d
+ Qd4X4yntOeVGD/npPQ0vwtkJafZeAjisbyfh++kbHjaulQkYUk7yo/KNR5pQqSR0JAdi
+ n8DTFFufdQiVFRT0+qBIQDOhNg3pd8r8tAXvKouMcqL0mEK4OSQHt4UUqHq7Q1VUgVIs
+ 2WVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaHmonBrZT3QepvatRZIkr2rkxt0nOgDGK2Z+Qp5e2AWgXfetTVKeyWIYXENLg83hm5A8l9QYYKod/@nongnu.org
-X-Gm-Message-State: AOJu0Yzm0Z/VbkguutB1TusQXq3o7uxqt+LPWZHdG1cU0NKOjVCsB0ez
- Ha+pCqk9+/cFmwARLNZ3MU0mJfR9p9lrr+YUrR1CU73cgSH6m2TG/CS/ctWG29xHb6p6/rAYwsc
- 10C4yURHa5+ltjR/rRn2F2rAMze1QM2TJGP5UjqbUTMT/OcvBrYDHxqsm
-X-Gm-Gg: ASbGnctRswFPXskoxtjQ4MnQxd5anoaZ/5ZIZH3rJKPcd0eght8O+XTqiW+ic3lJHod
- bEsBHNctNhqL/EomtKT45PMGBiMiEgQD058pjIuBbfQvHcp6JqsIYzx1fs8JJcN3/LxspqeSe0R
- eP8ks/13wsh0//wMRRaubKkvqd5xNM12v1RexoCyBRdoMHTGZBqyyRXMOcCQSdXJPuV6dcw0ut+
- buMMxZiuF5k8ZkAhOjmc31n26IbaW4JM8pNiuzOlzVig2nO04pZYXkridJu+Df1Lx84bwdzGPoq
- ELBOdHG6XfkmwV+Po/slvB7rLccVw94xnT1SHGN5NYYKP8pgI15oBeVg1e0ecKpjK7V1WhCdKic
- fmQc=
-X-Received: by 2002:a0c:f10f:0:b0:70d:a7a1:debe with SMTP id
- 6a1803df08f44-70da7a1e55emr71186726d6.46.1756121450772; 
- Mon, 25 Aug 2025 04:30:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFppyERRSZFI9YOzwjXsCVG0o/HeCgDxFzTrSc3MGWWgRRgUJn34CtVmGqKE294DKv/IkD2pQ==
-X-Received: by 2002:a0c:f10f:0:b0:70d:a7a1:debe with SMTP id
- 6a1803df08f44-70da7a1e55emr71186256d6.46.1756121450144; 
- Mon, 25 Aug 2025 04:30:50 -0700 (PDT)
+ AJvYcCV12UQ+MkMxKeRE+4/rBBARHMkMRvx9qktaXQE3mjetZAH1YlQYRR//mwsHd1267J/7rmqCbjj2zIgy@nongnu.org
+X-Gm-Message-State: AOJu0Yzg59/gWUNKIjCRIlnUGxZuqiElrTrU75g0k39JU8+zI8fjMcnA
+ tBghPqIbo79W6N1+Do3cKIvR8fwpop77aLcsg4okJjroThAypVrW0d4JHLnZIjYPTf402UYKyxC
+ AF4JXKZU7pMPArxHagu+QiZ1wykkGb0XFP93SJN68aS2yC61sy99Tfx+m
+X-Gm-Gg: ASbGnctbItzoEvklYvJmAMzfPz0LOPfnwn7DqL5DZMcPkiyzbUfDk70unS6m2OyqY8p
+ kppPK8v5EDVYlbyFtYbfccWnLCsns0Y4LeTklG4iZWvT5qeFs6D34gL1POaJCHYc4V3nHZ9E6i9
+ xEyVQ8b/leRLy9iUIKT0p1HEg9de5kbNeOmYJ0aTFQrtWfROwCNnxVYYFuQqJ23TtQivnfAQTlp
+ IAH9I9X5qKKp1Ynn/3IK3wKqx95UohPh3vVXeMHN3IKpYRJdogZNZGg6FPOcRLXvRn+mgnRmi1C
+ 5OflHYr0joaiBYpLOnLt2AwNvZZQbLb+FVVLL2pNS+iOwPmPDhBd+O6F1e5CW5x9iDolBDmhU+B
+ EhUo=
+X-Received: by 2002:a05:622a:1a16:b0:4af:c0b6:b297 with SMTP id
+ d75a77b69052e-4b2aab4a136mr145631141cf.50.1756121686344; 
+ Mon, 25 Aug 2025 04:34:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF84dx3EqCTx1qVX+9tZBEtyN4yH0LRlcLmg2havOQQIQMZZy/bzGhtIYUGK854YEdN69TKmg==
+X-Received: by 2002:a05:622a:1a16:b0:4af:c0b6:b297 with SMTP id
+ d75a77b69052e-4b2aab4a136mr145630771cf.50.1756121685926; 
+ Mon, 25 Aug 2025 04:34:45 -0700 (PDT)
 Received: from [192.168.0.6] (ltea-047-064-112-084.pools.arcor-ip.net.
  [47.64.112.84]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70da72aff63sm44029886d6.51.2025.08.25.04.30.48
+ af79cd13be357-7ebeca23e05sm474735585a.1.2025.08.25.04.34.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Aug 2025 04:30:49 -0700 (PDT)
-Message-ID: <7b1222ef-df18-4770-b218-b71cacb441e9@redhat.com>
-Date: Mon, 25 Aug 2025 13:30:46 +0200
+ Mon, 25 Aug 2025 04:34:45 -0700 (PDT)
+Message-ID: <c13f63a6-5fef-42f2-89fe-946f71498f51@redhat.com>
+Date: Mon, 25 Aug 2025 13:34:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] tests/functional: add tests for SCLP event CPI
-To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
- qemu-s390x mailing list <qemu-s390x@nongnu.org>
-Cc: Daniel Berrange <berrange@redhat.com>,
- qemu-devel mailing list <qemu-devel@nongnu.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>
-References: <20250812123124.382696-1-shalini@linux.ibm.com>
+Subject: Re: [PATCH 1/4] target/ppc: Add IBM PPE42 family of processors
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@redhat.com, npiggin@gmail.com,
+ rathc@linux.ibm.com, richard.henderson@linaro.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250819212856.219932-1-milesg@linux.ibm.com>
+ <20250819212856.219932-2-milesg@linux.ibm.com>
+ <0d2c9aa2-2dcc-4c22-8f33-e5ecac907cf4@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,16 +131,16 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250812123124.382696-1-shalini@linux.ibm.com>
+In-Reply-To: <0d2c9aa2-2dcc-4c22-8f33-e5ecac907cf4@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
@@ -157,34 +159,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/08/2025 14.31, Shalini Chellathurai Saroja wrote:
-> Add tests for SCLP event type Control-Program Identification
-> (CPI) to s390x CCW virtio tests.
+On 25/08/2025 13.24, Harsh Prateek Bora wrote:
+> Hi Glenn,
 > 
-> Please note that these tests are skipped as the guest OS does not
-> trigger the SCLP event type CPI when the command
-> 'echo 1 > /sys/firmware/cpi/set' is executed in the guest. I
-> believe that the guest OS must to be updated to support the SCLP
-> event type CPI.
+> This seems significant work. Thanks for upstreaming.
 > 
-> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> ---
-...
-> +        try:
-> +            event = self.vm.event_wait('SCLP_EVENT_CTRL_PGM_ID')
+> On 8/20/25 02:58, Glenn Miles wrote:
+>> Adds the IBM PPE42 family of processors supporting the
+> 
+> family of 32-bit processors ?
+> 
+>> PPE42, PPE42X and PPE42XM processor versions.  These
+>> processors are used as embedded processors in the IBM
+>> Power9, Power10 and Power12 processors for various
+>> tasks.  It is basically a stripped down version of the
+>> IBM PowerPC 405 processor, with some added instructions
+>> for handling 64-bit loads and stores.
+>>
+>> For more information on the PPE 42 processor please visit:
+>>
+>> https://wiki.raptorcs.com/w/images/a/a3/PPE_42X_Core_Users_Manual.pdf
+>>
+>> Supports PPE42 SPR's (Including the MSR) and  Exceptions.
+>>
+>> Does not yet support new PPE42 instructions and does not
+>> prevent access to some invalid instructions and registers
+>> (currently allows for access to invalid GPR's and CR fields).
+>>
+>> Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+>> ---
+>>   target/ppc/cpu-models.c      |   7 +
+>>   target/ppc/cpu-models.h      |   4 +
+>>   target/ppc/cpu.h             |  66 +++++++-
+>>   target/ppc/cpu_init.c        | 286 ++++++++++++++++++++++++++++++-----
+>>   target/ppc/excp_helper.c     | 171 +++++++++++++++++++++
+>>   target/ppc/helper_regs.c     |  28 +++-
+>>   target/ppc/tcg-excp_helper.c |  12 ++
+>>   target/ppc/translate.c       |   6 +-
+>>   8 files changed, 535 insertions(+), 45 deletions(-)
+>>
+>> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+>> index ea86ea202a..09f73e23a8 100644
+>> --- a/target/ppc/cpu-models.c
+>> +++ b/target/ppc/cpu-models.c
+>> @@ -116,6 +116,13 @@
+>>                   NULL)
+>>       POWERPC_DEF("x2vp20",        CPU_POWERPC_X2VP20,                 405,
+>>                   NULL)
+>> +    /* PPE42 Embedded 
+>> Controllers                                            */
+>> +    POWERPC_DEF("PPE42",         CPU_POWERPC_PPE42,                  ppe42,
+>> +                "Generic PPE 42")
+>> +    POWERPC_DEF("PPE42X",        CPU_POWERPC_PPE42X,                 ppe42x,
+>> +                "Generic PPE 42X")
+>> +    POWERPC_DEF("PPE42XM",       CPU_POWERPC_PPE42XM,                
+>> ppe42xm,
+>> +                "Generic PPE 42XM")
+> 
+> Can all the PPE42 specific code be conditionally compiled only for
+> !TARGET_PPC64 (and !CONFIG_USER_ONLY wherever possible)?
+> Not only to reduce the bloating size of respective binaries, but also to
+> avoid some code being added to hot path routines like 
+> hreg_compute_hflags_value().
 
-As far as I can tell, SCLP_EVENT_CTRL_PGM_ID is an *SCLP* event only, but 
-you're trying to wait for a *QAPI* event here instead. That's two completely 
-different things, SCLP events are something between the guest and QEMU, 
-while QAPI events are between QEMU and the monitoring program (i.e. in this 
-case the test).
+qemu-system-ppc64 is a superset of qemu-system-ppc, and there are even 
+efforts to unify all system functionality into a singly binary, so excluding 
+a 32-bit feature from qemu-system-ppc64 sounds like a step into the wrong 
+direction to me right now...?
 
-If you want that QEMU generates such QAPI events for the monitoring program, 
-you have to do something similar to commit 1cfe52b78240679 and add the 
-qapi_event_send_... function to the right spot in your code.
-
-  HTH,
-   Thomas
+  Thomas
 
 
