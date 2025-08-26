@@ -4,95 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84080C8303F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 02:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F1E8CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 04:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqj3X-0000Xb-IF; Mon, 25 Aug 2025 22:05:03 -0400
+	id 1uqli6-0001Lm-54; Tue, 26 Aug 2025 00:55:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cjchen@igel.co.jp>) id 1uqj3V-0000Tb-6S
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 22:05:01 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cjchen@igel.co.jp>) id 1uqj3H-0004Vp-J6
- for qemu-devel@nongnu.org; Mon, 25 Aug 2025 22:04:59 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-55ce508d4d6so4035730e87.0
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 19:04:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1756173875; x=1756778675;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oYbhx6akeMrp0+j7CppN23HVOCbSEz9iiNk+OzyMiew=;
- b=cyD/5Ic9YokVOeId+PJFy821ebZFTjTqeAgvDCtSxpHmBdVrx7QAd+N+0V/3urRl8F
- d2NUKJ7T1zGRhBWzEuiP8WyV24HiyGKJZJ1sRT8MyR4YCzn2mRVOWL79MfK4MQo7oZJD
- 5RNcWKtEjdVAs9MEv5dQOJTgCXC6GvnxjQjmkfpmYOuKAioORHoxs18NZKSH9hFgd/K6
- feoaHMzpiq/xybgrHpqAtCFtioQ5LTpEQiI2NmcYKmgZX9zub9FdWUqcNHaDTwKcL3Rr
- N/jILAB9kqYw+2MI+sEbdUVfQF8FCloHiPfTnwTN2J+141EvBVAZFyU+Yso/jV13L21H
- chEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756173875; x=1756778675;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oYbhx6akeMrp0+j7CppN23HVOCbSEz9iiNk+OzyMiew=;
- b=TU/fZgSvDwI51DoRjO7vThUs231cB2YUPxnfFwP0aD0hcKPB0gO1ZIgtQCvrHTl4uB
- brritw03xvJ5hg9az4LuTCzp3u/MYnkfuVdhMaOlG4r40yke5Ys9nQ+3Yl5xn5ioT3Y1
- 09HONilruwM9qLtArYY7GVaEOmRPNoIf5XgQRRoZ+uglxyxxJOm2+5XRwVWXR5crPuX4
- YNinwJsL99bqu8d15AdGBycRBoJUxF5AdvO0DsjkF+vUJlV4XXQcH7A8xTF4ZcNiqirE
- tJcFzB0iCXkxzvoELgTAoHhZewP70o66b64GVFM40KoEbjwzxihEFiwiWVLBZythQ2GL
- IR8Q==
-X-Gm-Message-State: AOJu0YwuzZRkiUs5mVdKrVIvb7HiWGQ49yzp3+TlLM2NXfcROF84yAIL
- jNcCPNvtayOBwkM8ZcOADGWswX3Z29lYd5DTRG1e8+dhINQzpgdNAiGjQyg8mtS0aLkb/iOyv4c
- mIIoJWVu5Db9zUM+V4SG4wQSUo0SrgOa5AsoweZwXUw==
-X-Gm-Gg: ASbGncvs1psfAfE+U1NVhi+52gxF/eGllzXNvR8ElreISJNGo5UI10mqU9rALCV9tNp
- WkbniXWg9kEE6MQklYBZ0vSqjhXJ+pihJraQfoEY3hqr/0Hz5/dqhhMdKCH05q9VghOeNl/mXhv
- fC5pxre6nkEPeb1BpRcA14QHz8pG7MRl6DNgpjwR0dTc2JW+tcALmXHm5RxUyKBhI0f+98CqsUA
- D+pScSYOZNgYn9fs6+X
-X-Google-Smtp-Source: AGHT+IEszcJrVgWpZnUqNIKpNx2DkAOEn5XCeJFnYinMzW2Ne9pmJsYXTABQ7yr06tRvIUjlak1xZ0qnVmeooL9zs54=
-X-Received: by 2002:a05:6512:3a94:b0:55f:4031:4374 with SMTP id
- 2adb3069b0e04-55f40314508mr2318638e87.47.1756173875045; Mon, 25 Aug 2025
- 19:04:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1uqli1-0001L8-W5; Tue, 26 Aug 2025 00:55:02 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1uqlhu-0008C9-JY; Tue, 26 Aug 2025 00:55:01 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PKDSmc028933;
+ Tue, 26 Aug 2025 04:54:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=G++4m9
+ REj0hY1xOKErOpXAXzUjEPxiicM2yRZbdKGlQ=; b=Y38l7qpUDZ4wU4ZdxbVHi8
+ AL2suWf1GTNmLem9RplcMgQOTef0P5MUGSUZTTMLjGPVl50mVbNT0aTWVJMb7K5G
+ jiIUbK1PguN34fK2ZUOFU2B1UUo4uLLFCieLTEzb2mofGlSwaoisXIdSmYzTZvcg
+ zblvU7zZHUkS1A082HwSHLtqdR64WQVdlRMvxsB9Ha4zVZlIMEOjy91CNgkUDqm7
+ 6Q7IrIGMbILrbMi04BNheCPOaF2GzMZLuko6LfRNEKzvKg+Oz+c6oHtIHLz0hRMo
+ R/hrMRx8LB0KYb5BH3fP/Cv0Xzw4/f+2+noqleofLbRxVURp87z+ZChiN1Mww81g
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q32vcsv6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Aug 2025 04:54:46 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57Q4qOXV026183;
+ Tue, 26 Aug 2025 04:54:45 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q32vcsv3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Aug 2025 04:54:45 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57Q4JLM2017963;
+ Tue, 26 Aug 2025 04:54:44 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 48qtp38tnx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Aug 2025 04:54:44 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57Q4shlX10749124
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 26 Aug 2025 04:54:43 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8EE0958056;
+ Tue, 26 Aug 2025 04:54:43 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 836155803F;
+ Tue, 26 Aug 2025 04:54:39 +0000 (GMT)
+Received: from [9.109.242.24] (unknown [9.109.242.24])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 26 Aug 2025 04:54:39 +0000 (GMT)
+Message-ID: <9b0253e4-a906-4be4-ab46-df41bea0f054@linux.ibm.com>
+Date: Tue, 26 Aug 2025 10:24:37 +0530
 MIME-Version: 1.0
-References: <20250822092410.25833-1-cjchen@igel.co.jp>
- <20250822092410.25833-10-cjchen@igel.co.jp>
- <e755b413-b983-4c98-bda8-e0c7ec6e29b5@linaro.org>
-In-Reply-To: <e755b413-b983-4c98-bda8-e0c7ec6e29b5@linaro.org>
-From: chen CJ <cjchen@igel.co.jp>
-Date: Tue, 26 Aug 2025 11:04:24 +0900
-X-Gm-Features: Ac12FXzS2vczPWQMQ-PQmOJZV62OGYrLk4GHU71rFORmH0JpAwXZUq8dRM8DWNo
-Message-ID: <CAAMq-Y_9tqhAQmCfyMDhqmQEeF+XiyAq+RXiBY-GJGwmRMsEGw@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 9/9] tests/qtest: add test for memory region access
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org, 
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Tyrone Ting <kfting@nuvoton.com>, 
- Hao Wu <wuhaotsh@google.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, 
- Tomoyuki Hirose <hrstmyk811m@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=cjchen@igel.co.jp; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] target/ppc: Add IBM PPE42 family of processors
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Thomas Huth <thuth@redhat.com>, Glenn Miles <milesg@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, clg@redhat.com,
+ npiggin@gmail.com, rathc@linux.ibm.com, richard.henderson@linaro.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250819212856.219932-1-milesg@linux.ibm.com>
+ <20250819212856.219932-2-milesg@linux.ibm.com>
+ <0d2c9aa2-2dcc-4c22-8f33-e5ecac907cf4@linux.ibm.com>
+ <c13f63a6-5fef-42f2-89fe-946f71498f51@redhat.com>
+ <fd855a38-976f-430e-9db1-1bdce1cf869d@linux.ibm.com>
+ <dc6dc7db-f4c3-4641-9707-383737e2b678@redhat.com>
+ <0b6d96c7-b28f-42c0-93db-579d80f0298b@linux.ibm.com>
+ <fd6f2788-b1a8-41af-88b5-9eb2ebdfd9d8@redhat.com>
+ <e946e0f7-cc9f-40fa-bd41-3044510ce261@linux.ibm.com>
+ <cee8e481-8cfa-a86c-bca6-10ac3fbcffb6@eik.bme.hu>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <cee8e481-8cfa-a86c-bca6-10ac3fbcffb6@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: zQy3VggCs09-4DavM4VFTvAUwcpahGz0
+X-Proofpoint-GUID: N4jasUC0xPubsLDIQMO5BF1cT5PprPD-
+X-Authority-Analysis: v=2.4 cv=AfSxH2XG c=1 sm=1 tr=0 ts=68ad3e16 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=f7IdgyKtn90A:10
+ a=BkW6ZaEq_qAgNLOhhEwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAwMCBTYWx0ZWRfX/TM69pdtDZlt
+ A5C1YqfqAc2nwWffqZObd4eLlyGX6lih5vZb5tAcuBHch55x+w1wO7HP7QUR0CJuy4Mwbx0lBhT
+ AxTDneiJiLYzxPm+nEPJbZnvZJ1lqo54qNnFXbImRIC2tYhmEQuo4xUWtjkODY0B29rZyyEwrhy
+ UNG/RalCKSQT21h3jQeM+QzFHPwTXS4Hku+rabfSN3IKmpqcyuWdTri4RBKm1r0RJg2mdvZoDH/
+ bqRHOqrNsDuvbd0u3cOElMpaK/oGXtNdNDxB4mtYhdX9KHahFs9ykt+vM57DLlGcJdHQgsIY03n
+ 716OfXhIzS6cTt2jOlnyR32iqddMciJXQvBp8yzHl4/juJG2YskWqRUIZUVX8r++j+mSnflNW9i
+ R6Rp5qr7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-26_01,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 malwarescore=0 adultscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230000
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,188 +138,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
-
-Thanks for the review and the pointer.
-
-You=E2=80=99re right =E2=80=94 the CPUs are not involved in the test path, =
-and the only
-difference that matters is the binary endianness. I will re-spin the
-series and reduce the test matrix to one little-endian and one big-endian
-target to avoid redundant runs.
-
-Specifically, I will keep:
-  - x86_64  (cpu: "qemu64,apic-id=3D0")  =E2=80=94 little-endian
-  - s390x   (cpu: "qemu")              =E2=80=94 big-endian
-
-Thanks again for the feedback. If you have any further comments, please
-let me know.
-
-Best regards,
-CJ
 
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> =E6=96=BC 2025=E5=B9=B48=E6=
-=9C=8825=E6=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=888:16=E5=AF=AB=E9=81=
-=93=EF=BC=9A
->
-> On 22/8/25 11:24, CJ Chen wrote:
-> > From: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> >
-> > This commit adds a qtest for accessing various memory regions. The
-> > qtest checks the correctness of handling the access to memory regions
-> > by using 'memaccess-testdev'.
-> >
-> > Signed-off-by: CJ Chen <cjchen@igel.co.jp>
-> > Co-developed-by: CJ Chen <cjchen@igel.co.jp>
-> > Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> > ---
-> >   tests/qtest/memaccess-test.c | 597 ++++++++++++++++++++++++++++++++++=
-+
-> >   tests/qtest/meson.build      |   9 +
-> >   2 files changed, 606 insertions(+)
-> >   create mode 100644 tests/qtest/memaccess-test.c
-> >
-> > diff --git a/tests/qtest/memaccess-test.c b/tests/qtest/memaccess-test.=
-c
-> > new file mode 100644
-> > index 0000000000..7e90028ea0
-> > --- /dev/null
-> > +++ b/tests/qtest/memaccess-test.c
-> > @@ -0,0 +1,597 @@
-> > +/*
-> > + * QEMU memory region access test
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + *
-> > + * Author: Tomoyuki HIROSE <hrstmyk811m@gmail.com>
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "libqtest.h"
-> > +
-> > +#include "hw/misc/memaccess-testdev.h"
-> > +
-> > +static const char *arch =3D "";
-> > +static const hwaddr base =3D 0x200000000;
-> > +
-> > +struct arch2cpu {
-> > +    const char *arch;
-> > +    const char *cpu_model;
-> > +};
-> > +
-> > +static struct arch2cpu cpus_map[] =3D {
-> > +    /* tested targets list */
-> > +    { "arm", "cortex-a15" },
-> > +    { "aarch64", "cortex-a57" },
-> > +    { "avr", "avr6-avr-cpu" },
-> > +    { "x86_64", "qemu64,apic-id=3D0" },
-> > +    { "i386", "qemu32,apic-id=3D0" },
-> > +    { "alpha", "ev67" },
-> > +    { "cris", "crisv32" },
-> > +    { "m68k", "m5206" },
-> > +    { "microblaze", "any" },
-> > +    { "microblazeel", "any" },
-> > +    { "mips", "4Kc" },
-> > +    { "mipsel", "I7200" },
-> > +    { "mips64", "20Kc" },
-> > +    { "mips64el", "I6500" },
-> > +    { "or1k", "or1200" },
-> > +    { "ppc", "604" },
-> > +    { "ppc64", "power8e_v2.1" },
-> > +    { "s390x", "qemu" },
-> > +    { "sh4", "sh7750r" },
-> > +    { "sh4eb", "sh7751r" },
-> > +    { "sparc", "LEON2" },
-> > +    { "sparc64", "Fujitsu Sparc64" },
-> > +    { "tricore", "tc1796" },
-> > +    { "xtensa", "dc233c" },
-> > +    { "xtensaeb", "fsf" },
-> > +    { "hppa", "hppa" },
-> > +    { "riscv64", "rv64" },
-> > +    { "riscv32", "rv32" },
-> > +    { "rx", "rx62n" },
-> > +    { "loongarch64", "la464" },
->
-> IIUC CPUs are not involved in the test path. The only difference
-> is the binary endianness. So we are testing 2 distinct code path
-> duplicated as ARRAY_SIZE(cpus_map) =3D 31 times.
->
-> Let's run the tests with a pair of common targets and save 29
-> pointless tests:
->
-> ... cpus_map[] =3D {
->        /* One little endian and one big endian target */
->        { "x86_64", "qemu64,apic-id=3D0" },
->        { "s390x", "qemu" }
-> }
->
-> > +};
-> > +
-> > +static const char *get_cpu_model_by_arch(const char *arch)
-> > +{
-> > +    for (int i =3D 0; i < ARRAY_SIZE(cpus_map); i++) {
-> > +        if (!strcmp(arch, cpus_map[i].arch)) {
-> > +            return cpus_map[i].cpu_model;
-> > +        }
-> > +    }
-> > +    return NULL;
-> > +}
-> > +
-> > +static QTestState *create_memaccess_qtest(void)
-> > +{
-> > +    QTestState *qts;
-> > +
-> > +    qts =3D qtest_initf("-machine none -cpu \"%s\" "
-> > +                      "-device memaccess-testdev,address=3D0x%" PRIx64=
-,
-> > +                      get_cpu_model_by_arch(arch), base);
-> > +    return qts;
-> > +}
->
->
-> > +DEFINE_test_memaccess(little, LITTLE, b, B, valid, VALID)
-> > +DEFINE_test_memaccess(little, LITTLE, w, W, valid, VALID)
-> > +DEFINE_test_memaccess(little, LITTLE, l, L, valid, VALID)
-> > +DEFINE_test_memaccess(little, LITTLE, q, Q, valid, VALID)
-> > +DEFINE_test_memaccess(little, LITTLE, b, B, invalid, INVALID)
-> > +DEFINE_test_memaccess(little, LITTLE, w, W, invalid, INVALID)
-> > +DEFINE_test_memaccess(little, LITTLE, l, L, invalid, INVALID)
-> > +DEFINE_test_memaccess(little, LITTLE, q, Q, invalid, INVALID)
-> > +DEFINE_test_memaccess(big, BIG, b, B, valid, VALID)
-> > +DEFINE_test_memaccess(big, BIG, w, W, valid, VALID)
-> > +DEFINE_test_memaccess(big, BIG, l, L, valid, VALID)
-> > +DEFINE_test_memaccess(big, BIG, q, Q, valid, VALID)
-> > +DEFINE_test_memaccess(big, BIG, b, B, invalid, INVALID)
-> > +DEFINE_test_memaccess(big, BIG, w, W, invalid, INVALID)
-> > +DEFINE_test_memaccess(big, BIG, l, L, invalid, INVALID)
-> > +DEFINE_test_memaccess(big, BIG, q, Q, invalid, INVALID)
-> > +
-> > +#undef DEFINE_test_memaccess
-> > +
-> > +static struct {
-> > +    const char *name;
-> > +    void (*test)(void);
-> > +} tests[] =3D {
-> > +    {"little_b_valid", test_memaccess_little_b_valid},
-> > +    {"little_w_valid", test_memaccess_little_w_valid},
-> > +    {"little_l_valid", test_memaccess_little_l_valid},
-> > +    {"little_q_valid", test_memaccess_little_q_valid},
-> > +    {"little_b_invalid", test_memaccess_little_b_invalid},
-> > +    {"little_w_invalid", test_memaccess_little_w_invalid},
-> > +    {"little_l_invalid", test_memaccess_little_l_invalid},
-> > +    {"little_q_invalid", test_memaccess_little_q_invalid},
-> > +    {"big_b_valid", test_memaccess_big_b_valid},
-> > +    {"big_w_valid", test_memaccess_big_w_valid},
-> > +    {"big_l_valid", test_memaccess_big_l_valid},
-> > +    {"big_q_valid", test_memaccess_big_q_valid},
-> > +    {"big_b_invalid", test_memaccess_big_b_invalid},
-> > +    {"big_w_invalid", test_memaccess_big_w_invalid},
-> > +    {"big_l_invalid", test_memaccess_big_l_invalid},
-> > +    {"big_q_invalid", test_memaccess_big_q_invalid},
-> > +};
-> BTW this reminds me of
-> https://lore.kernel.org/qemu-devel/20200817161853.593247-8-f4bug@amsat.or=
-g/
-> ;)
+On 8/25/25 20:03, BALATON Zoltan wrote:
+> On Mon, 25 Aug 2025, Harsh Prateek Bora wrote:
+>> On 8/25/25 17:52, Thomas Huth wrote:
+>>> On 25/08/2025 14.08, Harsh Prateek Bora wrote:
+>>>> On 8/25/25 17:28, Thomas Huth wrote:
+>>>>> As I said, qemu-system-ppc64 is currently a full superset of 
+>>>>> qemu-system- ppc. The ppc64 binary contains all the 32-bit code, 
+>>>>> you can perfectly run a "g3beige" or "bamboo" machine with 
+>>>>> qemu-system-ppc64, too. By disabling the ppe42 code in the ppc64 
+>>>>> binary, this would now introduce an execption to that unwritten 
+>>>>> rule, so I'd expect that we'd not rather want to do this now.
+>>>>
+>>>> My understanding is that above holds true only for default builds which
+>>>> builds all targets. We certainly do not build 32 bit ppc code when 
+>>>> using
+>>>> --configure target-list=ppc64-softmmu. (we have ppc-softmmu for 32 
+>>>> bit though)
+> 
+> We do build 32-bit machines in ppc64-softmmu but leave out 64-bit from 
+> ppc-softmmu so it's only one way.
+> 
+>>> Just give it a try:
+>>>
+>>>   ./configure --target-list=ppc64-softmmu --disable-docs
+>>>   make -j$(nproc)
+>>>   ./qemu-system-ppc64 -M g3beige
+>>>
+>>> ... works perfectly fine for me.
+>>>
+>> This would work because the respective code is not restricted with 
+>> #ifndef TARGET_PPC64.
+>>
+>> However, there are instance like below in hw/ppc/mac_oldworld.c:
+>>
+>> static void heathrow_class_init(ObjectClass *oc, const void *data)
+>> {
+>>    MachineClass *mc = MACHINE_CLASS(oc);
+>>    FWPathProviderClass *fwc = FW_PATH_PROVIDER_CLASS(oc);
+>>
+>>    mc->desc = "Heathrow based PowerMac";
+>>    mc->init = ppc_heathrow_init;
+>>    mc->block_default_type = IF_IDE;
+>>    /* SMP is not supported currently */
+>>    mc->max_cpus = 1;
+>> #ifndef TARGET_PPC64
+>>    mc->is_default = true;
+>> #endif
+> 
+> This is only because the default machine for ppc64-softmmu is different 
+> than for ppc-softmmu as the 64-bit machines don't exist in ppc-softmmu 
+> but ppc64-softmmu had different default machine before machines from 
+> qemu-system-ppc got included in qemu-system-ppc64 so it kept that. 
+> (Looks like the default used to be mac_newworld before commit 
+> 159f8286b760dea but wasn't changed to match but to something else.) The 
+> default machines are arbitrary, we could make "none" the default and 
+> always require users to supply -machine but that would break existing 
+> command lines so this wasn't done.
+> 
+>> Similarly, we have multiple instances with #else block for #ifdef
+>> TARGET_PPC64 which doesnt get compiled with ppc64-softmmu, but only with
+>> ppc-softmmu meant for 32-bit targets. See target/ppc/excp_helper.c for 
+>> example.
+> 
+> This is again leaving out 64-bit code from ppc-softmmu but as Thomas 
+> says 32-bit machines are always included in qemu-softmmu-ppc64. I can't 
+> find the commit which changed this, previously we had these to be 
+> separate and since some types are different in ppc64-softmmu it wasn't 
+> clear if that could cause any problems for 32-bit CPUs and machines so 
+> ppc-softmmu was kept until that's cleaned up which never happened. There 
+> are also some pecularities in some machines like mac_newworld that 
+> behaves differently in qemu-system-ppc and qemu-system-ppc64 and the 
+> potentially lower performance of qemu-system-ppc64 in emulating 32-bit 
+> machines which is why we still have ppc-softmmu.
+> 
+
+Ok, I see. So, if we wish to keep the 32-bit machines supported with 
+qemu-system-ppc64, we will have them co-exist with run-time checks for 
+!ppc64 and/or "unlikely" operations in the hot path routines, which 
+wouldnt be needed otherwise. I hope we can deal with run-time checks for 
+!ppc64 if such ops increase.
+
+Thanks to Thomas and you for clarifying this.
+
+regards,
+Harsh
+
+> Regards,
+> BALATON Zoltan
+> 
+>> regards,
+>> Harsh
+>>
+>>> AFAIK we don't have a switch to disable 32-bit code in the ppc64 binary.
+>>>
+>>>   Thomas
+>>>
+>>
+>>
 
