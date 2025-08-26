@@ -4,77 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BE3CA0FE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 11:46:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33683CA0FE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 11:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqs7B-00046S-1E; Tue, 26 Aug 2025 07:45:25 -0400
+	id 1uqs82-0004SE-IZ; Tue, 26 Aug 2025 07:46:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uqs72-00044b-MW
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:45:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uqs6t-0002Za-AK
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:45:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756208703;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Sbyf47z2/1ZYhPtOwkkLmBJxseHYi0IqmAYIDV4XaZk=;
- b=EPB5EXiJ0Ge+E74vzRDTCNqt6Njr0LzTKBme1B6ts1REpEesWYSzOpugyoCf3a+wVl6ru5
- K2BsAz9KovfxBRBnPykqJeSj9V3OQa1xFth9mra6I8hyU3WWy9WaGTuUr5D3F/mDdOHHAv
- GSQxpJVS055pxNYMJ0LnRTccCjnpB9A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-c46Uy2WAP1yeTa1O1mhW2g-1; Tue,
- 26 Aug 2025 07:45:01 -0400
-X-MC-Unique: c46Uy2WAP1yeTa1O1mhW2g-1
-X-Mimecast-MFC-AGG-ID: c46Uy2WAP1yeTa1O1mhW2g_1756208700
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C7041956088; Tue, 26 Aug 2025 11:45:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.174])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1134D180047F; Tue, 26 Aug 2025 11:44:57 +0000 (UTC)
-Date: Tue, 26 Aug 2025 12:44:54 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, tanishdesai37@gmail.com, stefanha@redhat.com,
- mads@ynddal.dk
-Subject: Re: [PATCH 05/14] tracetool/backend: remove redundant trace event
- checks
-Message-ID: <aK2eNjsEb5xb7buI@redhat.com>
-References: <20250822122655.1353197-1-pbonzini@redhat.com>
- <20250822122655.1353197-6-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uqs7x-0004Px-4d
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:46:13 -0400
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uqs7m-0002qO-1F
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:46:12 -0400
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e96df7ff20eso439348276.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 04:45:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756208755; x=1756813555; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yfaH3eV+Iu+KeK+OzH1k9Ic0AvBJPdL4sj2orXre+YE=;
+ b=rbBMIPe9kl2bMQclJKh5Bbs2pYAE4aXD/y3rIz1JPdQa49tOqOgfHzHT/RcpniofXs
+ VK79hh8Jx0VtuKnKeuiC7xpDJZZ6JAc199tgTluCPkuhfz25Gq8Ds5aP4oXYNy4DZ4yG
+ ArqWpcpqUOiBVii4Bhy4hfXt2Ox+qEoL800jfCG8oSN8RmSsx+J+xHscVyJYb3oOhMsT
+ E2P5goujl8ZyfJu4aXFN5LHjQRbm+aDqydEHS1+eaP16SLo7eqCINSUx+gvqMzj41UPT
+ 7WwxFKIFcU0CDrq/lwj+avc+EEhYRAsdXXhRe9V+qprgI103+QwkhmVA7+hTVlf45Nn7
+ nbHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756208755; x=1756813555;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yfaH3eV+Iu+KeK+OzH1k9Ic0AvBJPdL4sj2orXre+YE=;
+ b=YnWHmBhFVj6jSVO1LqToImQceP57f1cWG3lPj66vl37Sn7GG4/jn0w5/morkDyFkyz
+ 651OUryxAnlKynvgPYYlbfn9L0Ssr72F4UPPAIGUTDJk4NJhSPGa9PzH2yugN27KlUi5
+ rg04zdC0yOVU+i153MXLcF/ai+GfpsmzlDHyoEnZ/gu3xdteGyX2jR9EMd2iCjSWqTG5
+ fbemrlC9yRomMyg2XCLNQQhDqQb49BGm91Lv+nZnW2x3n2qmK7qWDxD+dVocfS/iWLt4
+ edtm5v0WIIPwxexmu5i6tpmEJyc3NCzlXV+4PKZuc/FMkKyq6e99Pu06Xyog8V9hi2aF
+ 9Dyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcV3iyCEVG1zaQvF6RWTsJN5zUhhW7ZFLKXliBhqC1w+cqojbkafVJiw6WsT4i+0fbKvC/TVdPIBnV@nongnu.org
+X-Gm-Message-State: AOJu0YyqNT1HRgynXf+OdzJAPJGXlUTb+LY93lQos6XAYC2PAQOK0n+F
+ jWjcZ9ixKn5eFNm94AZFfRFbEvXzVpQbFiuXpWJjXZflnojGZVHbvVySM9BvENyTw9aV10usWYM
+ H9KpK/qflQsm/1WaJ1EvVL/E4/t3UzxPDAC5y2YJP84NK9mJPlSh5
+X-Gm-Gg: ASbGncv6lEuBOpMUcqruq0Kt5zvkqa8V1J1lzlnPg8NzbpMvh2LUVIoLDLIrY/QuE3G
+ UYAB/QIimN2C/ZT9xheakLYyY21EW4iRo39owTfzg+9q+Q0M5ktZVN8QBJKsCBDLxiHZn1Ftm/7
+ pdM0l4YlVFU5ZshTCNIFe5/0hB7gyqf/yJTtEPPHV2anHxv0WkKhuGaAA39VC8hxaPPtal/tw7w
+ YSCt18nmUcXJ02/LS8=
+X-Google-Smtp-Source: AGHT+IFKn+m2hglmd4M90SlKm1CRno0Y6SiriJSy8TOYx6A5PW85jCtIsIl1QFTshcxiQnNFCj8tRa5VnglzqD5DHCc=
+X-Received: by 2002:a05:6902:4111:b0:e93:38c1:1fa4 with SMTP id
+ 3f1490d57ef6-e951c2ca5b7mr15597617276.1.1756208754680; Tue, 26 Aug 2025
+ 04:45:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250822122655.1353197-6-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250822122655.1353197-1-pbonzini@redhat.com>
+ <20250822122655.1353197-4-pbonzini@redhat.com>
+ <aK2dMdD1i88PFn1j@redhat.com>
+In-Reply-To: <aK2dMdD1i88PFn1j@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 Aug 2025 12:45:42 +0100
+X-Gm-Features: Ac12FXy5HWvK5hJD-FPam4H5jz3DGmpC62CKCInvWj8BiPjAaAtWYwkwJk0Oxh8
+Message-ID: <CAFEAcA-msigoOs74vNMLBNJgWt9thkpaFEk5amM6ACjpE=6ThA@mail.gmail.com>
+Subject: Re: [PATCH 03/14] trace/ftrace: move snprintf+write from tracepoints
+ to ftrace.c
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ tanishdesai37@gmail.com, stefanha@redhat.com, mads@ynddal.dk
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,39 +97,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 22, 2025 at 02:26:46PM +0200, Paolo Bonzini wrote:
-> From: Tanish Desai <tanishdesai37@gmail.com>
-> 
-> Use CHECK_TRACE_EVENT_GET_STATE in log, syslog, dtrace and simple
-> backend, so that the "if (trace_event_get_state)" is created from common
-> code and unified when multiple backends are active.
-> 
-> When a single backend is active there is no code change (except
-> for the log backend, as shown in tests/tracetool/log.h), but the
-> code in the backends is simpler.
-> 
-> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  tests/tracetool/log.h               | 16 ++++++++++------
->  scripts/tracetool/backend/ftrace.py |  6 ++----
->  scripts/tracetool/backend/log.py    | 10 ++++------
->  scripts/tracetool/backend/simple.py |  8 ++------
->  scripts/tracetool/backend/syslog.py |  8 ++------
->  5 files changed, 20 insertions(+), 28 deletions(-)
+On Tue, 26 Aug 2025 at 12:42, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Fri, Aug 22, 2025 at 02:26:44PM +0200, Paolo Bonzini wrote:
+> > This simplifies the Python code and reduces the size of the tracepoints=
+.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> > +void ftrace_write(const char *fmt, ...)
+> > +{
+> > +    char ftrace_buf[MAX_TRACE_STRLEN];
+> > +    int unused __attribute__ ((unused));
+> > +    int trlen;
+> > +    va_list ap;
+> > +
+> > +    va_start(ap, fmt);
+> > +    trlen =3D vsnprintf(ftrace_buf, MAX_TRACE_STRLEN, fmt, ap);
+> > +    va_end(ap);
+> > +
+> > +    trlen =3D MIN(trlen, MAX_TRACE_STRLEN - 1);
+> > +    unused =3D write(trace_marker_fd, ftrace_buf, trlen);
+>
+> You're just copying the existing code pattern which is fine for now so
+>
+>    Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+>
+> More generally though, IMHO, QEMU would be better off bringing in
+> gnulib's 'ignore_value' macro, but simplified since we don't care
+> about ancient GCC
+>
+>   #define ignore_value(x) \
+>       (__extension__ ({ __typeof__ (x) __x =3D (x); (void) __x; }))
+>
+> so that we don't need to play games with extra variables. eg
+>
+>    ignore_value(write(trace_marker_fd, ftrace_buf, trlen));
 
+Isn't there a way to write that that explicitly tells
+the compiler "this is unused" (i.e. with the 'unused'
+attribute) rather than relying on a particular construct
+to not trigger a warning?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+-- PMM
 
