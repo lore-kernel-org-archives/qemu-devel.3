@@ -4,60 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AF1CA0FE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 12:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 506BDCA0FE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 12:36:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqstF-0006jq-2A; Tue, 26 Aug 2025 08:35:05 -0400
+	id 1uqstK-0006n3-NQ; Tue, 26 Aug 2025 08:35:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1uqstA-0006iw-2u
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 08:35:02 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1uqst7-0001Xg-13
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 08:34:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=5usHI9/Y7xqQrMQ/SJPLIiC7Bb3/zLQrSkR6dw3AVPc=; b=SP1txKsnFU/gjUbfOz4CohE4Fo
- QeL1HdHvbf+E4sXIuCLNV4hNWZWnDnMB70t2JAjlfoFnbzEHIuqhJh3eo3HNQGYM4d8uSDxuHC0n5
- w7V1DaESE3bqNlDXbFtporzLAJg5thTU+ofHprRcDKsMn3j5B4mMGo5lz0CWj+4DjMzcVNT+q0XSa
- GDWXGsK537qp7CPDhnaTOE713BKzVwQzIglTltlKIFmtWghoTvUhngGJoYKwFGW88m9fifigYfGEQ
- qcoMpTvn4NcSPqMONQ7PwnY3iDye2mX7BBDgdihgb0s+BuuB8/KvCa9xXc8jBC+RpbWatHl2zvQjW
- 9Ry1AGUs5zsjhbeKYS45bsu7wy38YZ91unlnpWxglThPrkiqkwH+HlpYJeySIUd+/hdnpLap3ckd7
- t64hONdWUxJ0tLKAerc5KzffQvutDtnpsjXHB+vgmJtEpEYI9VU1woAEfWT5Fc5pELZLzlFRC7uma
- GsTZr4w/AE55n3hv74SK0ew23cWfqCEaTO32S2ACqPRncRZiFSvwl7TvQwh+dTbXgfU2MhwXAr/V3
- Fy2rX66MJltVZVN2e9spgl9dx3qJ+8jgu3qu6Hqui7mkA34uVThfOdzD8zI/p7HueZuWY5rjmSs42
- L2FrsmjV1vPbQCzP7P6cNgio5TOEQ/+ZticRZ4HiY=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org, Mark Johnston <markj@freebsd.org>
-Cc: Greg Kurz <groug@kaod.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Marc=2DAndr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?ISO-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2] 9pfs: Add FreeBSD support
-Date: Tue, 26 Aug 2025 14:34:45 +0200
-Message-ID: <12113631.YhV4tvpBIu@silver>
-In-Reply-To: <aKxcsmP6MI5p9OPe@nuc>
-References: <aJOWhHB2p-fbueAm@nuc> <2602995.s6eulQLtdm@silver>
- <aKxcsmP6MI5p9OPe@nuc>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uqstH-0006le-Jn
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 08:35:07 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uqstD-0001ZT-J7
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 08:35:07 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3c763484ccdso1864014f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 05:35:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756211698; x=1756816498; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OVImhz4TNfHl3GmVSBulLFByeCJIESRF7O8GLCtrNtA=;
+ b=vH7AQgZ+wS2E1vDSc2ug+Q+ChLXCSigwNmtXbNsPB7FXMHGLA12r+waG1N04g10ov3
+ nw251AWNIi3718CfMmfv6ibWcrC0PaLaxBxcCIWZPP3A9PPcSM/jOiO9svjAAN0QH6WB
+ zUPvuswCWeOHzVvNMPHBWMjt2TRzAej2gv6MCP/Zno3yPvDoSzrO7BvY/y9y9BuwikRI
+ cY8UPN0pEKVhfGDQmJyXgsyiQ1EYY2mIaR1Oku8Ld+Cx0v4OfDYCkGq15v6XkTwY/kCL
+ DeBu3bIKeVoRTlTiwqz3jNMyPxeo/rxWyiCjnJfIySQlHw9MA2GYfFj+p1C4/jbRwQwc
+ vGtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756211698; x=1756816498;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OVImhz4TNfHl3GmVSBulLFByeCJIESRF7O8GLCtrNtA=;
+ b=FNOIAyCr4HRw+ig2Fdg7ayMaKAaQsJWCsNZkIr219HRP+jkCm8+cCNS+4jn54CmtW0
+ vpxTMNszN5xsV/b9lC3AAqud9EI8tPvRFxhwLLmU7PwzRJVDS+6Z/uTjD8Z24VDvOKI0
+ HCOmJFXRmklFEITgNjN6IvHY2DJiZyylNvyZbYfrJ3wMYWQua7/Xh8sfCVdx7bQxjOdS
+ BOOe08ZkfQXagJkI9RIIXCfouX/Yx/ytO7LesMkjfqfIcAtZh40M8Z1nu5PdEb/fHChD
+ AvRGBw1rJGPzCarMH8Iu3Wt5lAqTIWSY5LUerlhqO6DRR5xoJSQivFP92KhmskHsAgCc
+ PnLg==
+X-Gm-Message-State: AOJu0Yyy/QTw9vmhCSp2xwEdaO5I9O3nxQbqQ0wJVwMcJr7dXYKJP2Ce
+ ZhGVFmpcPuqJJNcazzZYss76SK3jYUi2mTbOADPmMgKU5qOFB/aYrNjNzLDAOgGgRAs62vP8ueP
+ hm25K
+X-Gm-Gg: ASbGnctHLcAT9L43uCghA0CDhvulnxBopwucL8LOi7kl2AcVJOHj4ygeWxTIG+qwFJr
+ 5Ok2grK7/L5mK3OX6dI54pUOl4jvVjvrAZOgae8kGqvxQgqzc1BkvKxABdcmMfQB4s/xJihOdkx
+ 8sGXqe6T4YUogeGgM9OEY1v6aQFxJUKcj87WpKtkgtBHtu4pneaCtFYERMupkpd94dI1pRPKzOD
+ J4gX1iOUoGfPhX+suN+4HlVX1DF2j8LzUKVvgIJulsYQdjVEb5bXbylhUCM1eOvR5+qgkJnxD6R
+ JYEVU1TZJugikQU1DCI21fg7J4XG7uDNozMr8tPA9mh9ryc4kYTZSUwwPIjyAS99NnowHEmdX4U
+ Ic4m5C2i+76gRq5PIQmPPXFWhssXUlyEBNxUyQSU=
+X-Google-Smtp-Source: AGHT+IF8IbqJLZBq/KHOeQPkii07d+3jeqU5Z57ns6OfeJdMTy6U4Hhc5punwGBEz3SGh6tCpTtinw==
+X-Received: by 2002:a05:6000:3106:b0:3bd:13d6:6c21 with SMTP id
+ ffacd0b85a97d-3cbb15ca095mr1380703f8f.0.1756211697538; 
+ Tue, 26 Aug 2025 05:34:57 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b66cb60e1sm13140455e9.6.2025.08.26.05.34.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Aug 2025 05:34:56 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH] tests/functional/test_aarch64_virt_gpu: Skip test if EGL
+ won't initialize
+Date: Tue, 26 Aug 2025 13:34:55 +0100
+Message-ID: <20250826123455.2856988-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,76 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Monday, August 25, 2025 2:53:06 PM CEST Mark Johnston wrote:
-> On Thu, Aug 21, 2025 at 01:24:04PM +0200, Christian Schoenebeck wrote:
-> > On Wednesday, August 6, 2025 7:53:08 PM CEST Mark Johnston wrote:
-[...]
-> > Not forgotten. I just hoped there were other reviewers or testers in the
-> > meantime, but be it.
-> > 
-> > Like I said, I don't have FreeBSD system here to test this, so I am taking
-> > your word for now that you tested this and plan to bring this into QEMU
-> > when master re-opens for new features soon.
-> 
-> Thank you very much!
-> 
-> In case I missed somewhat, what testing would you typically do
-> otherwise?  So far I had run the QEMU test suite (which indeed found
-> some bugs in the initial version) and tried mounting a 9pfs share from
-> Linux and FreeBSD guests and doing a bit of manual testing.
+If you are using the Nvidia drivers and have installed new versions
+of those packages but have not yet rebooted the host kernel,
+attempting to use the egl-headless display will cause QEMU to fail to
+start with
 
-Apart from QEMU's test cases, I also use guest systems running 9p as root file 
-system [1], run software compilations there among some things. That proofed to 
-be quite a useful test environment to spot edge cases, concurrency and 
-performance issues and such.
+$ qemu-system-aarch64 -M virt -display egl-headless
+qemu-system-aarch64: egl: eglInitialize failed: EGL_NOT_INITIALIZED
+qemu-system-aarch64: egl: render node init failed
 
-[1] https://wiki.qemu.org/Documentation/9p_root_fs
+together with this complaint in the host kernel dmesg:
 
-Greg was running some general purpose file system stress test suite in the 
-past, but I currently can't recall what that was.
+[7874777.555649] NVRM: API mismatch: the client has the version 535.247.01, but
+                 NVRM: this kernel module has the version 535.230.02.  Please
+                 NVRM: make sure that this kernel module and all NVIDIA driver
+                 NVRM: components have the same version.
 
-> > If you have some time to adjust the commit log message above, that would
-> > be
-> > great, otherwise I can also handle this on my end later on. Looks like
-> > that
-> > comment is not adjusted for v2 yet (i.e. "user." and not mentioning
-> > "system.").
-> 
-> Here's an amended commit log message.  Please let me know if this is
-> better submitted as a v3.
-> 
-> commit b79bf1b7d42025e3e14da86a7c08d269038cd3ed
-> Author: Mark Johnston <markj@FreeBSD.org>
-> Date:   Wed Jul 16 20:32:05 2025 +0000
-> 
->     9pfs: Add FreeBSD support
-> 
->     This is largely derived from existing Darwin support.  FreeBSD
->     apparently has better support for *at() system calls so doesn't require
->     workarounds for a missing mknodat().  The implementation has a couple of
-> warts however:
->     - The extattr(2) system calls don't support anything akin to
->       XATTR_CREATE or XATTR_REPLACE, so a racy workaround is implemented.
->     - Attribute names cannot begin with "user." or "system." on ZFS, so
->       these prefixes are trimmed off.  FreeBSD's extattr system calls sport
->       an extra "namespace" identifier, and attributes created by the 9pfs
->       backend live in the universal user and system namespaces, so this
->       seems innocent enough.
-> 
->     The 9pfs tests were verified to pass on the UFS, ZFS and tmpfs
->     filesystems.
-> 
->     Signed-off-by: Mark Johnston <markj@FreeBSD.org>
+This isn't a problem with QEMU itself, so reporting this as a test
+failure is misleading.  Instead skip the tests, as we already do for
+various other kinds of "host system can't actually run the EGL
+display" situation.
 
-Almost. Maybe something like this to make it a bit more clear?
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I run into this fairly often so I got fed up with just ignoring the
+spurious test failure messages...
+---
+ tests/functional/test_aarch64_virt_gpu.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-- Attribute names cannot begin with "user." or "system." on ZFS. However
-  FreeBSD's extattr(2) system supports two dedicated namespaces for these
-  two. So "user." or "system." prefixes are trimmed off from attribute
-  names and instead EXTATTR_NAMESPACE_USER or EXTATTR_NAMESPACE_SYSTEM
-  are picked and passed to extattr system calls instead accordingly.
-
-/Christian
-
+diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
+index 38447278579..4e50887c3e9 100755
+--- a/tests/functional/test_aarch64_virt_gpu.py
++++ b/tests/functional/test_aarch64_virt_gpu.py
+@@ -76,6 +76,8 @@ def _launch_virt_gpu(self, gpu_device):
+                 self.skipTest("egl-headless support is not available")
+             elif "'type' does not accept value 'dbus'" in excp.output:
+                 self.skipTest("dbus display support is not available")
++            elif "eglInitialize failed: EGL_NOT_INITIALIZED" in excp.output:
++                self.skipTest("EGL failed to initialize on this host")
+             else:
+                 self.log.info("unhandled launch failure: %s", excp.output)
+                 raise excp
+-- 
+2.43.0
 
 
