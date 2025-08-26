@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73136CA0FE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 10:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B655ECA0FE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 10:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqqsC-0004oe-EH; Tue, 26 Aug 2025 06:25:52 -0400
+	id 1uqr37-0000DF-7o; Tue, 26 Aug 2025 06:37:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uqqs9-0004nh-RU
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 06:25:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uqqs5-0006wd-E5
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 06:25:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756203940;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b5p8Pl/rlLwKkYrlPxvshgh3AGUv1NAra7NN+Z9dYCo=;
- b=a4xa/rwMbEBz7SnDxua1ymw+2R7agZepLRA4sk/nr3JNM4kbONanhKcQVS/0+8BBtuPwPq
- ehAoP3IBu8MPeI6Buz7vuM0aDdWtBOFT8D/PtYWnCmuk+EWorW4aZ7izrQ4LuHLtFkbvTJ
- 03HLKJSc0MAmmz2Ht/fYNIIradxmrLc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-vHd5-6OyM0WrxVbX8sr3EA-1; Tue,
- 26 Aug 2025 06:25:39 -0400
-X-MC-Unique: vHd5-6OyM0WrxVbX8sr3EA-1
-X-Mimecast-MFC-AGG-ID: vHd5-6OyM0WrxVbX8sr3EA_1756203938
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4B2E180036E; Tue, 26 Aug 2025 10:25:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.174])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9975A1955F24; Tue, 26 Aug 2025 10:25:34 +0000 (UTC)
-Date: Tue, 26 Aug 2025 11:25:31 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, qemu-stable@qemu.org
-Subject: Re: [PATCH] block/curl: fix curl internal handles handling
-Message-ID: <aK2Lmz6A36ea9lKc@redhat.com>
-References: <20250824001144.2001882-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uqr34-0000CV-HA
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 06:37:06 -0400
+Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uqr2z-0008Ex-Dm
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 06:37:06 -0400
+Received: by mail-yb1-xb35.google.com with SMTP id
+ 3f1490d57ef6-e951dfcbc5bso3573359276.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 03:36:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756204617; x=1756809417; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iTuOBvXWYGnmzTfB3cGveNb3IeH/u2Hzv8xTENHOBv4=;
+ b=RQEqThkoLMfWi7osNB8oT//zREF2LYtzpZeVVjqHcScJ6d/gRa0RKja667RDH3TiBZ
+ l+E+0zhv62jonXAdOEaYjaQFYJn4h/L+CvImW/O33UnspZsytJBf3tZD20okFw7lP3pf
+ 3vwrIrqOTQw0l5AVMXAtp047pLK3vjPEvF0tRL4ViHx/zMZlZIeq7VS7+2NhgutNKLnj
+ sOcC4LHoIU2dCIOGFt2rNdGynRLXLeUuWW7ghbCHdh9eafahQ1bFB2/mCVxaCwHILAdw
+ Uzsz01KwV/HrX0SqupuqoTZ9EWcaWzLVchVsGMS+Oc/ZbDD0M9mtGZxQQnOiXhQfUjMz
+ sJ2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756204617; x=1756809417;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iTuOBvXWYGnmzTfB3cGveNb3IeH/u2Hzv8xTENHOBv4=;
+ b=LT2+C6KYbOcTWwGqlW9VgsK35UECu6i7QRYqk3aatNP8UdJnnfFXxzyKVXStUtMZ1H
+ iengHkQHXaKKQc6hgGXgQ/TI1lnEpDmoRdGjwXhlBI/zE0AvswaBx985x9F+RG+DBZjp
+ Bi9EN86YnpxAdrlh1tXhh2r4+j1ac7uBW3ThEeHGiiLSJnuuwk3Ftnf++tt08lJhsIh/
+ d2glReNTTWekHp+Z+HFXhA2Qsbynk8KG2VTR2xo8Kzn+/HImB7BG+iyp7kKzD2Yjj82M
+ tutPra3/mZRLir/wEvLIPY9F5KntDRr7dkaK3PVXeJ/wj2PP0ut9ZmIAIcX7tI6498lc
+ fo+g==
+X-Gm-Message-State: AOJu0YwSJSkh/vd06HJw31jkODJsQe7uKPbSMCdXwtaesew70W+TeE3/
+ ohR1NckZ3oA9wnQLM+9QfQfa2ydX+zPkMLLbXWFP7D5g6RLWXuwpVix7xyCarxUGoltkskI+4aC
+ UbftyE7tofv87+2Oztw6WkBj+v2IKNk1BIWHDkr2yeQ==
+X-Gm-Gg: ASbGncvWcdTPog/zmirhqMlPf2z1YHO6ihJTVh5Rwn38Lt1P0jbB2oujdot2y2XiHsH
+ QH3yUEmq8SKQJIDqWmtoPM1/j/QuV0Nc75VpIiadePkRgo9WH0rklxphY2CSxQpUFO/7c6EGuzS
+ iiZICclHCpN0ZvDptXL0JT7LrrdyiXpYo26prsTdnddVXVuL4vt5tYT7M5cwN/GWf8MpEfiLF3W
+ DLhz3OIq4aExcGmL/U=
+X-Google-Smtp-Source: AGHT+IEjy+X9YN1S6YFRMXFnEsMjBQAOannvdJI0poA6URPWCYXM30OW6688/wdDFbex8u2sVFIEQWZ3oBVzY+QeaN8=
+X-Received: by 2002:a05:6902:161e:b0:e95:b680:3a86 with SMTP id
+ 3f1490d57ef6-e95b6804f4bmr8823995276.44.1756204616569; Tue, 26 Aug 2025
+ 03:36:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250824001144.2001882-1-mjt@tls.msk.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250814171324.1614516-1-peter.maydell@linaro.org>
+ <20250814171324.1614516-9-peter.maydell@linaro.org>
+ <20250815124005.6a93d35b@foz.lan>
+In-Reply-To: <20250815124005.6a93d35b@foz.lan>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 Aug 2025 11:36:44 +0100
+X-Gm-Features: Ac12FXxR9YYbJdX8Fg7-194QC14V1ctfR_Tbqafk_fDOGjXxcD7gdGX2ZeSnGtU
+Message-ID: <CAFEAcA88f_G3OQNm5LDRTPyq4eQ3cNeAydAOE5sZqzMCw-TeSg@mail.gmail.com>
+Subject: Re: [PATCH for-10.2 8/8] MAINTAINERS: Put kernel-doc under the "docs
+ build machinery" section
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ John Snow <jsnow@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,41 +93,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 24, 2025 at 03:11:42AM +0300, Michael Tokarev wrote:
-> block/curl.c uses CURLMOPT_SOCKETFUNCTION to register a socket callback.
-> According to the documentation, this callback is called not just with
-> application-created sockets but also with internal curl sockets, - and
-> for such sockets, user data pointer is not set by the application, so
-> the result qemu crashing.
-> 
-> Pass BDRVCURLState directly to the callback function as user pointer,
-> instead of relying on CURLINFO_PRIVATE.
-> 
-> This problem started happening with update of libcurl from 8.9 to 8.10 --
-> apparently with this change curl started using private handles more.
-> 
-> (CURLINFO_PRIVATE is used in one more place, in curl_multi_check_completion() -
-> it might need a similar fix too)
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3081
-> Cc: qemu-stable@qemu.org
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  block/curl.c | 7 ++-----
->  1 file changed, 2 insertions(+), 5 deletions(-)
+On Fri, 15 Aug 2025 at 11:40, Mauro Carvalho Chehab
+<mchehab+huawei@kernel.org> wrote:
+>
+> Em Thu, 14 Aug 2025 18:13:23 +0100
+> Peter Maydell <peter.maydell@linaro.org> escreveu:
+>
+> > We never had a MAINTAINERS entry for the old kernel-doc script; add
+> > the files for the new Python kernel-doc under "Sphinx documentation
+> > configuration and build machinery", as the most appropriate
+> > subsection.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >  MAINTAINERS | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index a07086ed762..efa59ce7c36 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -4436,6 +4436,8 @@ F: docs/sphinx/
+> >  F: docs/_templates/
+> >  F: docs/devel/docs.rst
+> >  F: docs/devel/qapi-domain.rst
+> > +F: scripts/kernel-doc
+> > +F: scripts/lib/kdoc/
+>
+> If you want, feel free to add me there either as maintainer or
+> reviewer. I can gladly help you maintaining it.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Thanks, that would be very helpful. I've added you as a line to
+this "Sphinx documentation configuration and build machinery"
+section:
+M: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
+(and since this whole series is now reviewed I'll take
+it via target-arm.next with that tweak.)
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+-- PMM
 
