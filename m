@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6668CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 13:49:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AB33CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 13:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqu1a-0000iK-N7; Tue, 26 Aug 2025 09:47:46 -0400
+	id 1uqu6k-0002Ib-Ii; Tue, 26 Aug 2025 09:53:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uqu1X-0000i4-KB
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 09:47:43 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqu6f-0002Hp-Cr
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 09:53:03 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uqu1N-0004Dk-4q
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 09:47:43 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-45b4a25ccceso33358505e9.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 06:47:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uqu6R-0005AN-Os
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 09:53:00 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3c7edd71bbfso2997714f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 06:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756216044; x=1756820844; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n4BduerXLbw54RivkHUFSaWTdvv6sqPDGxNfwa6hgf4=;
- b=gODsMYSbyYIOIWPJc2mvbO7tXzOUV3FbEMIASI+uR3wkYqw/W8flRCshkvKP54dxS9
- b5C2og/6n99K5KSvsA208eMS4aAuWBKVB3mhXvRGGvhbE8FpwjSlfUv26DhnOGBwKhRH
- zOxxhrblLCf3lhgP+CZfFHBoacX2XdtxgLpMFQJClf/346vnc7LhSW6RGo+dI6BoFIIT
- vzBVYKwKPTUv8JLK+od8c9UtH7NHxsymAWIQ1wKJwGVtF6QQL2TaCPrsDqcI/Y3L9dAV
- CqvPm8+1hiTqIOeTJ34yTa851smTfw2Xzd/y2GRK5ZhEf7LMbPjNS7a3yxYml90T/jBa
- ZghA==
+ d=linaro.org; s=google; t=1756216361; x=1756821161; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d6RVcu7TtsCI1UthkH5T8m5nh2YSjA+TXRxinaVHcxQ=;
+ b=Av/LaV9AsB/keSCnQlNTbX3LD2QS/fhEqGcKLvIUPRGNUFV2ThOFz2nVj0jH4xyUSA
+ mCYyTtKjUI6TaLIwpVBF0QoRKoZE9r8sgr6NNvsXzC/qNz4ppTynxbVUaDRJr8CawCiP
+ F2PEspx4nf0cTOgqeSXhdmYsdOqL2qz5Uc1o3PcFF06c4HpdzuUYwd2ZhMJxK2fTnAoe
+ kdjaj+S/5HuT9WQUXM00FgO2CNvh4lxYhLwQzbIWAg3CBJlslZtTzAlTvS56Ch7NrYCx
+ ZwRUK3ZZq4XCGXrDawsybHkScapb+bKRVJzbczyuhDsb2jKtKm+ZjBWSFuoQy5aLRO7h
+ qwKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756216044; x=1756820844;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=n4BduerXLbw54RivkHUFSaWTdvv6sqPDGxNfwa6hgf4=;
- b=ad8y69V+gZJHQOKxlo5qTuVcBo5/steBRK4Ca2lZodoilIbpCjORcD+gvxxm8kUawl
- 9esNlFTVulrHhjHG3rE93qa2PB1qnGb/h6UJrraBj93S1JGiQ2vmmkm6QUrR43xErER/
- AGPkUODy+k0RVI2GAmiWDuZPtqxSdvQaPCIQkEPhTzvTZAI/CzaNvrWpwp3LHsGg8NSv
- AibUGVExwvDL1gszyLnmd5Rva3KFUvG5zJ4hkBhV4pqbxmVESyoGkPbBzX+FjxYOGkBz
- vy98nrHwLxSUYox3F2udvKcoUSqG5LOAkENj1yfxas5debqXf+bo4JcMKLLeFsb5Mmwf
- u2cw==
-X-Gm-Message-State: AOJu0YwEXJMHg1Fl0gGCPHS62Uv8QW8+dNMwVwQz88pdK+K/M3VuMfOJ
- ZZriZPkNEQR8hXF/zL5ofAGMTPT2sj+x8OYWwXS0AVAiRSFqHI7UJQ+KRgxzpugSQgI=
-X-Gm-Gg: ASbGncsYqdtKMJE6cnw4AJ3ItBv3yQDPd37LQPn4utqTQQiMaastqdLykzXkwdPYc1Y
- t/+KI7Cej+SKY+MVpKeG+NxtLCALk9haZBj5OTE58gdD61vxnex3c1T+yGHJsuLFHTFwPDmW5ij
- oSAVjfeVtGMGHFR/o+e22qM10NrWV6svPbyzmtztn3h4C0ihAjpdpeFqca9x0xFAS1kMNzxN94a
- R/BmxdjvHarunUi3DrMY8kaIUq8Xo6nStiTbfNtQKd6ughn5vntGH31F0IsTCO4Ls6OLQEz03Z7
- v4Bnf6vLO5vGB8hhdmVzsvvmAT8SqcpkiRJfUDDr+svsB1TwEjLmdXTjlekwWcga/WKkPYsdl/i
- hqWbltHC+ry4R6nYV9Z9jmZWRgNVdHdJDsw==
-X-Google-Smtp-Source: AGHT+IF9RYj5s+z/fuLWLRlZnIPYEuaYkiwNvG5ZtS9ey5kkjlTAmy6DE/9dBbupxFpdhMRq3UIkgg==
-X-Received: by 2002:a05:600c:6287:b0:45b:6743:2242 with SMTP id
- 5b1f17b1804b1-45b69616f4fmr8080715e9.22.1756216044153; 
- Tue, 26 Aug 2025 06:47:24 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3c70e4b9e1fsm17747704f8f.14.2025.08.26.06.47.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 06:47:23 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9AA785F80C;
- Tue, 26 Aug 2025 14:47:22 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: Re: [PATCH] tests/functional/test_aarch64_virt_gpu: Skip test if
- EGL won't initialize
-In-Reply-To: <20250826123455.2856988-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Tue, 26 Aug 2025 13:34:55 +0100")
-References: <20250826123455.2856988-1-peter.maydell@linaro.org>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Tue, 26 Aug 2025 14:47:22 +0100
-Message-ID: <877byq19g5.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1756216361; x=1756821161;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d6RVcu7TtsCI1UthkH5T8m5nh2YSjA+TXRxinaVHcxQ=;
+ b=ExL9KErs+UjLuDYmIYVUB75Tmj5Dmv1e3MLXuQG1PMF3tGWdVljmBun1PoqjN5XgL3
+ yTuEZ29wVL+GvusiHoJrFDN0s5BUN2SrBad/wt70B9RNnJTadqlpzFdhr3oJAA9f2nwm
+ 2nYDpSgeTrGt2c1N0gOmMnLLPDNd26Z79YCUWZF/s7ZD+wuO7J9b+PQ20X25Xg4zUti5
+ HCrztfMEJ3dvUP9tMJUCVk3N/Y4emyYSKjhqY5Nk/YWc19xZp+N1cvr0I9np+UNbJoJl
+ moX6zPQI2mIqYdTZp+62tDthNL0Xhz/RhcZK9attG+hBKsrsyw3Z2+TWwxA2hp28Hcg0
+ ISZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVuG7chIFvZLyXg6wYsnAL1pwn4UyXMe0YJEQWo12QQ1ot2ZXCX3vsAYbV1eeIJ0PpXJPrzlvBMG/MM@nongnu.org
+X-Gm-Message-State: AOJu0Yw4UXsBBgMqOWnT/iHCkp1CDk2yd2/t1jircYEZDvWHDpB5Zx9b
+ kAaexxFl+0AXm0cz5VpIFbbJrN9TvX/p3bo5/rHQy8uf7BQ+c36iFA2kcZx+v1jOgb4=
+X-Gm-Gg: ASbGncvrn116ifBUQXeQRCKQunFAeo6Ohse6mVJQcdTOn8EDjmnzHeAtFoXxZ6Lxd1l
+ +1eszezXnN1jPsoI0MDoJUMA9XiirBF2lIH5Lch6uuKMiGn1GwrTLs3DgMp6PH99MFQD9LCB5eB
+ MIpQx3jsrrQ0uaXZtoXWNY/Jk1ANAs/JpjiXxLfeiCv7kZ2K6AeylV3/ygZqzUYMh7XjpdFvmfU
+ nOIRs57746XXDszCNClNOdKyZ/Qn0WZ4xpBklfDzB0MBzQlHujMWcaJqhUIrSVPf0gW5Aw3zA9d
+ HWmqeIOplXdJF7/Ml+kZ3tFGXa/Ispk5CSj16KWpKRlsckH8mZLT/oPEkPr1IRdBM8Ngo6mT1sA
+ H8sU4aja3Jy/ylp9yTspmWO0XU5Kx6bq2HPZWJXcw9NmA4ieNHwWL+lHt6sLkvrHtWA==
+X-Google-Smtp-Source: AGHT+IG/4Z0+Jgkq+XDFjvXYw5HL1xMZ4nL94K3kPHFZM61IrJ5g+3RceNBlxRX8uGHRMTuDr5CPbA==
+X-Received: by 2002:a05:6000:2507:b0:3b7:9d87:97ad with SMTP id
+ ffacd0b85a97d-3c5dc6385b5mr11597727f8f.37.1756216360830; 
+ Tue, 26 Aug 2025 06:52:40 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3c70eb7eed5sm15890252f8f.18.2025.08.26.06.52.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Aug 2025 06:52:40 -0700 (PDT)
+Message-ID: <1f55d5b8-7b9d-455b-842c-6627c48af18e@linaro.org>
+Date: Tue, 26 Aug 2025 15:52:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/14] log: change qemu_loglevel to unsigned
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: tanishdesai37@gmail.com, stefanha@redhat.com, berrange@redhat.com,
+ mads@ynddal.dk
+References: <20250822122655.1353197-1-pbonzini@redhat.com>
+ <20250822122655.1353197-12-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250822122655.1353197-12-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,39 +103,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 22/8/25 14:26, Paolo Bonzini wrote:
+> Bindgen makes the LOG_* constants unsigned, even if they are defined as
+> (1 << 15):
+> 
+>     pub const LOG_TRACE: u32 = 32768;
+> 
+> Make them unsigned in C as well, and also change the type of the variable
+> that they are used with.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   include/qemu/log-for-trace.h |  4 ++--
+>   include/qemu/log.h           | 44 ++++++++++++++++++------------------
+>   util/log.c                   |  2 +-
+>   rust/qemu-api/src/log.rs     |  2 +-
+>   4 files changed, 26 insertions(+), 26 deletions(-)
 
-> If you are using the Nvidia drivers and have installed new versions
-> of those packages but have not yet rebooted the host kernel,
-> attempting to use the egl-headless display will cause QEMU to fail to
-> start with
->
-> $ qemu-system-aarch64 -M virt -display egl-headless
-> qemu-system-aarch64: egl: eglInitialize failed: EGL_NOT_INITIALIZED
-> qemu-system-aarch64: egl: render node init failed
->
-> together with this complaint in the host kernel dmesg:
->
-> [7874777.555649] NVRM: API mismatch: the client has the version 535.247.0=
-1, but
->                  NVRM: this kernel module has the version 535.230.02.  Pl=
-ease
->                  NVRM: make sure that this kernel module and all NVIDIA d=
-river
->                  NVRM: components have the same version.
->
-> This isn't a problem with QEMU itself, so reporting this as a test
-> failure is misleading.  Instead skip the tests, as we already do for
-> various other kinds of "host system can't actually run the EGL
-> display" situation.
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> diff --git a/include/qemu/log.h b/include/qemu/log.h
+> index aae72985f0d..7effba4da4c 100644
+> --- a/include/qemu/log.h
+> +++ b/include/qemu/log.h
+> @@ -14,30 +14,30 @@ bool qemu_log_enabled(void);
+>   /* Returns true if qemu_log() will write somewhere other than stderr. */
+>   bool qemu_log_separate(void);
+>   
+> -#define CPU_LOG_TB_OUT_ASM (1 << 0)
+> -#define CPU_LOG_TB_IN_ASM  (1 << 1)
+> -#define CPU_LOG_TB_OP      (1 << 2)
+> -#define CPU_LOG_TB_OP_OPT  (1 << 3)
+> -#define CPU_LOG_INT        (1 << 4)
+> -#define CPU_LOG_EXEC       (1 << 5)
+> -#define CPU_LOG_PCALL      (1 << 6)
+> -#define CPU_LOG_TB_CPU     (1 << 8)
+> -#define CPU_LOG_RESET      (1 << 9)
+> -#define LOG_UNIMP          (1 << 10)
+> -#define LOG_GUEST_ERROR    (1 << 11)
+> -#define CPU_LOG_MMU        (1 << 12)
+> -#define CPU_LOG_TB_NOCHAIN (1 << 13)
+> -#define CPU_LOG_PAGE       (1 << 14)
+> +#define CPU_LOG_TB_OUT_ASM (1u << 0)
+> +#define CPU_LOG_TB_IN_ASM  (1u << 1)
+> +#define CPU_LOG_TB_OP      (1u << 2)
+> +#define CPU_LOG_TB_OP_OPT  (1u << 3)
+> +#define CPU_LOG_INT        (1u << 4)
+> +#define CPU_LOG_EXEC       (1u << 5)
+> +#define CPU_LOG_PCALL      (1u << 6)
+> +#define CPU_LOG_TB_CPU     (1u << 8)
+> +#define CPU_LOG_RESET      (1u << 9)
+> +#define LOG_UNIMP          (1u << 10)
+> +#define LOG_GUEST_ERROR    (1u << 11)
+> +#define CPU_LOG_MMU        (1u << 12)
+> +#define CPU_LOG_TB_NOCHAIN (1u << 13)
+> +#define CPU_LOG_PAGE       (1u << 14)
+>   /* LOG_TRACE (1 << 15) is defined in log-for-trace.h */
+> -#define CPU_LOG_TB_OP_IND  (1 << 16)
+> -#define CPU_LOG_TB_FPU     (1 << 17)
+> -#define CPU_LOG_PLUGIN     (1 << 18)
+> +#define CPU_LOG_TB_OP_IND  (1u << 16)
+> +#define CPU_LOG_TB_FPU     (1u << 17)
+> +#define CPU_LOG_PLUGIN     (1u << 18)
+>   /* LOG_STRACE is used for user-mode strace logging. */
+> -#define LOG_STRACE         (1 << 19)
+> -#define LOG_PER_THREAD     (1 << 20)
+> -#define CPU_LOG_TB_VPU     (1 << 21)
+> -#define LOG_TB_OP_PLUGIN   (1 << 22)
+> -#define LOG_INVALID_MEM    (1 << 23)
+> +#define LOG_STRACE         (1u << 19)
+> +#define LOG_PER_THREAD     (1u << 20)
+> +#define CPU_LOG_TB_VPU     (1u << 21)
+> +#define LOG_TB_OP_PLUGIN   (1u << 22)
+> +#define LOG_INVALID_MEM    (1u << 23)
 
-<snip>
+Since changing these, alternatively use BIT() from "qemu/bitops.h",
+as "easier for the eyes". Anyhow,
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+
+
 
