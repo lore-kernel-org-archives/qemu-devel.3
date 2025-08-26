@@ -4,116 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50900CA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 21:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1923CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 22:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur1fd-0003DA-Nb; Tue, 26 Aug 2025 17:57:37 -0400
+	id 1ur1zp-0000ZB-7J; Tue, 26 Aug 2025 18:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ur1fa-0003CX-SV
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 17:57:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ur1zn-0000Ys-MN
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 18:18:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ur1fX-0005Qi-V5
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 17:57:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ur1zb-0008F9-Ii
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 18:18:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756245450;
+ s=mimecast20190719; t=1756246691;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eVLM+mI5GY7nNysu6o4MpvRQzAYYBnK/Zh/dyRPVleQ=;
- b=fQioLVnEnveaq0M2N/LUIwGzQrm0peH9SYzKvoRVw3xQSI0ggui6OuOHP1TU1K4b285KcD
- E3tdT0wjMVoriE93reMHyCSKDlEQ0ID34aS3fB9C2FU0bG1+WffIqMBdKpbvhBdiDwxiqz
- nTtPDEeB3L/OwXvxy3SeuDfS6k0GCng=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=F+bjwlqEUtpkU0LwRRYAcrtQ+7O+EZnUr1dEn35sXLc=;
+ b=IQ3TFSOqtIu9qZbbKqk0n2ZhQTNOchZ++ZZPJZSQ/cCpQkZdKi9ZQR1QAZ3E0e1OGrPYMa
+ qXCBYDJNvd/RaqoeFKSeqc2L+QG5eNGOMKjo2gQpCtG6JlcK/dVAy0E+1B1/HRgADdwBgm
+ VduADOaf8aY0HDxVSVf082gI4HlzpVg=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-p0JrN4RzNHC-85u1i70lGw-1; Tue, 26 Aug 2025 17:57:28 -0400
-X-MC-Unique: p0JrN4RzNHC-85u1i70lGw-1
-X-Mimecast-MFC-AGG-ID: p0JrN4RzNHC-85u1i70lGw_1756245448
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-70d9eb2e970so126112176d6.0
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 14:57:28 -0700 (PDT)
+ us-mta-568-KZG_zQdmPniEMfHgGj_6_w-1; Tue, 26 Aug 2025 18:18:05 -0400
+X-MC-Unique: KZG_zQdmPniEMfHgGj_6_w-1
+X-Mimecast-MFC-AGG-ID: KZG_zQdmPniEMfHgGj_6_w_1756246684
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7e87031ae4dso764749285a.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 15:18:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756245448; x=1756850248;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eVLM+mI5GY7nNysu6o4MpvRQzAYYBnK/Zh/dyRPVleQ=;
- b=M+VJ5CJo1SU6ivwWUPTQhodCTIcH2rI4PNHzLjQraTN/Yp/z8JfRKaY5nKNXLaE3JU
- CX2538Vgiig9RP5kf54QTOzFJlXlz5qCjJstMHc3Z/Mo7G9Jo32jm9BwRPudgCxlP93d
- +bfpnMKUZJc1zGyKZH9/UT/uilAAdC4bz6N4OKsHdDsyuLwaX5U7V74Nac/lWODMPl2T
- 1d3aFeKcBg9BFg2fa0c4oWr/UOM+Qy4tVtlXE9OhAFqx9GpgPq6oIWbTD01YTr6EmOkC
- 27cx5jg7TORxgsvTWXi9ZogQ55JbEFKSI5sEAbL7ADJ/ql3cA1lf6aYQSV68S0qfPuwP
- qx4Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWh+Jl4CY/jwWBE0k4m0IYWN4fKkE8zhoKKmr5YDjKmybfc6Zt3M544o19Nk51abFeeoPJv7CvekL2Y@nongnu.org
-X-Gm-Message-State: AOJu0Yz7GzwAmZFsudbNvGoNG/o0qbYTBa8FztTm+riFHC4curPISjln
- GCxAfS+OKbRPo1w3eUTSIyghSabt63aqLjMrLJOdqEURb8Xbbh0niaak5nwDxpKobkAYH+CV33U
- Gs4xylZSXMGUzbjxrXToGTyyYitbhESIWHDnKRzxXIWokGlWwKjjvx+RM
-X-Gm-Gg: ASbGnctLCdpU77wHs+f7/g7CPoF5bTmTlSuVatt8Q3MkS4heyQdeysPfREmi92vuiky
- dUTn/BXIRyRzQ1n19o7VE9DSTTpmkIsxOAX7U+wjGOWUwC0LLwmtToUUUDOG8fefzn5wfuU8HBS
- a8Y9VHubWyElid7dFq2SrZ3cV/1Y+TeixrH2pA3b/csQJtmf5lH2nolzYo2DQd9LpGTCLTdDVn9
- b2w6oRN5+VPj3uJMDYYnpSvffCyyPmQ+WXdQeYobVmNi8zvDvfmadr10MLdwIvJ8CmsRGuFvvvI
- g8Da92/9lYM9nElmE0VIQps0f7NjM04u
-X-Received: by 2002:a05:6214:f2f:b0:709:895b:51b4 with SMTP id
- 6a1803df08f44-70d97245902mr192674456d6.11.1756245448032; 
- Tue, 26 Aug 2025 14:57:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGEWAwj+c0hayeRknKDfgnTpROfA77Jelo4oM3BBJUiWWDlFSo8Snjq1q23P+PnS5rCz67Vjg==
-X-Received: by 2002:a05:6214:f2f:b0:709:895b:51b4 with SMTP id
- 6a1803df08f44-70d97245902mr192674046d6.11.1756245447518; 
- Tue, 26 Aug 2025 14:57:27 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70da7145ec7sm73534956d6.15.2025.08.26.14.57.25
+ d=1e100.net; s=20230601; t=1756246683; x=1756851483;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=F+bjwlqEUtpkU0LwRRYAcrtQ+7O+EZnUr1dEn35sXLc=;
+ b=IHUOD1LHR1h01P7REbvjI9Tvc9iNrxT50RZv9RZfr055FfjKCcOiFPdr5Jf6m/10Je
+ XeeW/Y2vL1wli7uPqdvB/6YKJ7M/ARkhz84qcnv+9mkYagzWiKYE+0KIMFx4mhntX6EQ
+ eSF3ELlEb1B1i5Neb1JJSTyDOtZdEpGCvvA18wOdRNURuXqyXUme6jQlb8a6lIU4B1+k
+ MNQbcOk1U1JrIJgRDIRLqySA+o2lU1jids7NgwidkvOGmt7fiHC+WJkLkNR6YQVO1Shm
+ SLTdk1zFxVwy7q18r70hU6xkE1C8PiN+XIXPT8M40QqV8uRp3UevmuGTbMEA8MJJlcsR
+ ipHw==
+X-Gm-Message-State: AOJu0Yy+8dOOq8caVtHB0vIjlfKQ4TMEJw0OTTLJ6M2u+ePdLrJL7g0Q
+ 2460NwiSUy2PKUVs5ST6Xt+oHIElIaHhbtURpZ2Bx0ChRQozMzHf+qShGxSjAktLvzBawdb4b43
+ mIzXC+L0T2iRXwhncuHKoiMeqEE1ZGgWlNWpmapuZJgC8rFaSWSpUoOgZigj3Z5m5KOBzrUc69d
+ z/tA+n9XUX8NIP5tolNcud6E3lkU02NlynOM7zJg==
+X-Gm-Gg: ASbGncs8m+yEnwrBGVRmgkzgpWVkfF+wH4UndW7a303amlDsb47p3UYz3qxaHDF+qCL
+ +++4bLo+BZyJZWT8tj7vNPhOtexTNjJCQoXXZEs+CeU5im3Vp2Nlp3bdjIigq3unHquNtk2n0Bs
+ IP5ohzUwXETewZILyZuusTaYGTSQ9T2/o/0dPAM8Uok0GtVUYX1dibYapBA8aJ6pAdavmy/gptp
+ /p7ajdetBZwPXwhwiD3WeqtukFR/4IHFDkT3FcTKHMtezghNSi0txPRpFI519KC8LuH2PHsGmtd
+ +kwloBqrlXlR9sipnzjJwhM/lxcB4Q==
+X-Received: by 2002:a05:620a:410b:b0:7e6:8bd4:8c70 with SMTP id
+ af79cd13be357-7ea1104715cmr2101189085a.44.1756246683512; 
+ Tue, 26 Aug 2025 15:18:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbpIVQxhHBw0DEgWq95wBX5BKcL21M4ktInhJvHZWBqKcjuRbtQQEcjpjgF8eYYV4A5Ztghg==
+X-Received: by 2002:a05:620a:410b:b0:7e6:8bd4:8c70 with SMTP id
+ af79cd13be357-7ea1104715cmr2101184985a.44.1756246682883; 
+ Tue, 26 Aug 2025 15:18:02 -0700 (PDT)
+Received: from x1.com ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7eeb4bc9c65sm602730685a.9.2025.08.26.15.18.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 14:57:26 -0700 (PDT)
-Date: Tue, 26 Aug 2025 17:57:14 -0400
+ Tue, 26 Aug 2025 15:18:02 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- devel@daynix.com
-Subject: Re: [PATCH v8 2/2] memory: Do not create circular reference with
- subregion
-Message-ID: <aK4tuhRfotpndpa8@x1.local>
-References: <20250110-san-v8-0-57a5a1be1bcf@daynix.com>
- <20250110-san-v8-2-57a5a1be1bcf@daynix.com>
- <CAFEAcA-aTYebu-5s4AeBfE3oLQfxTwCpeosoj0TU8E_XPu_ZDg@mail.gmail.com>
- <CAFEAcA-ygHuA5BH+oftCGDKZOh8CHbiUKE4v=-iXvCaKzG4kHQ@mail.gmail.com>
- <aKctCjv8newNIX71@x1.local>
- <CAFEAcA8DV40fGsci76r4yeP1P-SP_QjNRDD2OzPxjx5wRs0GEg@mail.gmail.com>
- <aKdizYeNGocXvTzv@x1.local>
- <CAFEAcA8dKu3mSuD=rJkwDPcvqQASsOpFPdpG4Ht59GrTb+AywA@mail.gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, peterx@redhat.com,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] memory: Fix leaks due to owner-shared MRs circular references
+Date: Tue, 26 Aug 2025 18:17:50 -0400
+Message-ID: <20250826221750.285242-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA8dKu3mSuD=rJkwDPcvqQASsOpFPdpG4Ht59GrTb+AywA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,133 +105,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 26, 2025 at 06:45:43PM +0100, Peter Maydell wrote:
-> On Thu, 21 Aug 2025 at 19:18, Peter Xu <peterx@redhat.com> wrote:
-> > I remember I provided a draft somewhere during the discussion, anyway.. I
-> > redid it, and attached a formal patch below that will contain the removal
-> > of the mr->container check (plus auto-detach when it happens).  The hope is
-> > this should work.. and comparing to the v8 of Akihiko's, it won't make MR's
-> > own refcount any more complicated.
-> >
-> > If necessary, I can send a formal patch.
-> 
-> This patch seems to work, in that it fixes the memory-region
-> related leaks I previously was seeing. Review comments below
-> (which are only about the commit message and docs).
-> 
-> I also can't remember the details of the previous discussions about
-> these patches, so I'm reviewing the one below essentially from
-> scratch. Apologies in advance if we end up going back around
-> a conversation loop that we've already had...
-> 
-> > Thanks,
-> >
-> > ===8<===
-> > From f985c54af3e276b175bcb02725a5fb996c3f5fe5 Mon Sep 17 00:00:00 2001
-> > From: Peter Xu <peterx@redhat.com>
-> > Date: Thu, 21 Aug 2025 12:59:02 -0400
-> > Subject: [PATCH] memory: Fix leaks due to owner-shared MRs circular references
-> >
-> > Currently, QEMU refcounts the MR by always taking it from the owner.
-> >
-> > It should be non-issue if all the owners of MRs will properly detach all
-> > the MRs from their parents by memory_region_del_subregion() when the owner
-> > will be freed.  However, it turns out many of the device emulations do not
-> > do that properly.  It might be a challenge to fix all of such occurances.
-> 
-> I think that it's not really right to cast this as "some devices
-> don't do this right". The pattern of "a device has a container MR C
-> and some other MRs A, B... which it puts into C" is a legitimate one.
-> If you do this then (with the current code in QEMU) there is *no*
-> place where a device emulation can do a manual "remove A, B.. from
-> the container C so the refcounts go down": the place where devices
-> undo what they did in instance_init is instance_deinit, but we
-> will never call instance_deinit because the refcount of the owning
-> device never goes to 0.
+Currently, QEMU refcounts the MR by always taking it from the owner.
 
-It should still be able to reach zero if we skip the refcount of internal
-MR subregions like what this patch does.
+It's common that one object will have multiple MR objects embeded in the
+object itself.  All the MRs in this case share the same lifespan of the
+owner object.
 
-Said that, I think you're right..  the problem is we have object_deinit()
-after object_property_del_all() (in object_finalize()), which means
-memory_region_finalize() will be invoked before object_deinit()..  Then it
-looks wrong now to delete subregions in a deinit() even if reachable,
-because the MRs should have been freed..
+It's also common that in the instance_init() of an object, MR A can be a
+container of MR B, C, D, by using memory_region_add_subregion*() set of
+memory region APIs.
 
-> 
-> Further, even if we had some place where devices could somehow
-> undo the "put A, B... in the container so the refcounts go down
-> correctly", it is better API design to have the memory.c code
-> automatically handle this situation. "This just works" is more
-> reliable than "this works if you do cleanup step X", because it's
-> impossible to have the bug where you forget to write the code to
-> do the cleanup step.
+Now we have a circular reference issue, as when adding subregions for MR A,
+we essentially incremented the owner's refcount within the instance_init(),
+meaning the object will be self-boosted and its refcount can never go down
+to zero if the MRs won't get detached properly before object's finalize().
 
-Fair enough.
+Delete subregions within object's finalize() won't work either, because
+finalize() will be invoked only if the refcount goes to zero first.  What
+is worse, object_finalize() will do object_property_del_all() first before
+object_deinit().  Since embeded MRs will be properties of the owner object,
+it means they'll be freed _before_ the owner's finalize().
 
-> 
-> > Without fixing it, QEMU faces circular reference issue when an owner can
-> > contain more than one MRs, then when they are linked within each other in
-> > form of subregions, those links keep the owner alive forever, causing
-> > memory leaks even if all the external refcounts are released for the owner.
-> >
-> > To fix that, teach memory API to stop refcount on MRs that share the same
-> > owner because if they share the lifecycle of the owner, then they share the
-> > same lifecycle between themselves.
-> >
-> > Meanwhile, allow auto-detachments of MRs during finalize() of MRs even
-> > against its container, as long as they belong to the same owner.
-> >
-> > The latter is needed because now it's possible to have MR finalize() happen
-> > in any order when they exactly share the same lifespan.  In this case, we
-> > should allow finalize() to happen in any order of either the parent or
-> > child MR, however it should be guaranteed that the mr->container shares the
-> > same owner of this MR to be finalized.
-> >
-> > Proper document this behavior in code.
-> >
-> > This patch is heavily based on the work done by Akihiko Odaki:
-> >
-> > https://lore.kernel.org/r/CAFEAcA8DV40fGsci76r4yeP1P-SP_QjNRDD2OzPxjx5wRs0GEg@mail.gmail.com
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  docs/devel/memory.rst |  9 +++++++--
-> >  system/memory.c       | 45 ++++++++++++++++++++++++++++++++++---------
-> >  2 files changed, 43 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-> > index 57fb2aec76..1367c7caf7 100644
-> > --- a/docs/devel/memory.rst
-> > +++ b/docs/devel/memory.rst
-> > @@ -158,8 +158,13 @@ ioeventfd) can be changed during the region lifecycle.  They take effect
-> >  as soon as the region is made visible.  This can be immediately, later,
-> >  or never.
-> >
-> > -Destruction of a memory region happens automatically when the owner
-> > -object dies.
-> > +Destruction of a memory region happens automatically when the owner object
-> > +dies.  Note that the MRs under the same owner can be destroyed in any order
-> > +when the owner object dies.  It's because the MRs will share the same
-> > +lifespan of the owner, no matter if its a container or child MR.  It's
-> > +suggested to always cleanly detach the MRs under the owner object when the
-> > +owner object is going to be destroyed, however it is not required, as the
-> > +memory core will automatically detach the links when MRs are destroyed.
-> 
-> I think we should not say "we suggest you always cleanly detach the MRs":
-> instead we should say "you can rely on this happening, so you don't
-> need to write manual code to do it".
-> 
-> The actual code changes look OK to me.
+To fix that, teach memory API to stop refcount on MRs that share the same
+owner.  Because if they share the lifecycle of the owner, then they share
+the same lifecycle between themselves, hence the refcount doesn't help but
+only introduce troubles.
 
-I'll send the patch out officially for review, with above point taken.
+Meanwhile, allow auto-detachments of MRs during finalize() of MRs even
+against its container, as long as they belong to the same owner.
 
-Akihiko, let me know anytime when you want to either add your SoB or take
-over the ownership of the patch.  I'll be OK with it.
+The latter is needed because now it's possible to have MRs' finalize()
+happen in any order when they share the same lifespan with a same owner.
+In this case, we should allow finalize() to happen in any order of either
+the parent or child MR.  Loose the mr->container check in MR's finalize()
+to allow auto-detach.  Double check it shares the same owner.
 
-Thanks,
+Proper document this behavior in code.
 
+This patch is heavily based on the work done by Akihiko Odaki:
+
+https://lore.kernel.org/r/CAFEAcA8DV40fGsci76r4yeP1P-SP_QjNRDD2OzPxjx5wRs0GEg@mail.gmail.com
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ docs/devel/memory.rst |  7 +++++--
+ system/memory.c       | 45 ++++++++++++++++++++++++++++++++++---------
+ 2 files changed, 41 insertions(+), 11 deletions(-)
+
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index 57fb2aec76..a325e97d7b 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -158,8 +158,11 @@ ioeventfd) can be changed during the region lifecycle.  They take effect
+ as soon as the region is made visible.  This can be immediately, later,
+ or never.
+ 
+-Destruction of a memory region happens automatically when the owner
+-object dies.
++Destruction of a memory region happens automatically when the owner object
++dies.  When there are multiple memory regions under the same owner object,
++the memory API will guarantee all memory regions will be properly detached
++and finalized one by one.  The order which memory region will be finalized
++first is not guaranteed.
+ 
+ If however the memory region is part of a dynamically allocated data
+ structure, you should call object_unparent() to destroy the memory region
+diff --git a/system/memory.c b/system/memory.c
+index 5646547940..d7f6ad9be2 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1796,16 +1796,36 @@ static void memory_region_finalize(Object *obj)
+ {
+     MemoryRegion *mr = MEMORY_REGION(obj);
+ 
+-    assert(!mr->container);
+-
+-    /* We know the region is not visible in any address space (it
+-     * does not have a container and cannot be a root either because
+-     * it has no references, so we can blindly clear mr->enabled.
+-     * memory_region_set_enabled instead could trigger a transaction
+-     * and cause an infinite loop.
++    /*
++     * Each memory region (that can be dynamically freed..) must has an
++     * owner, and it always has the same lifecycle of its owner.  It means
++     * when reaching here, the memory region's owner refcount is zero.
++     *
++     * Here it is possible that the MR has:
++     *
++     * (1) mr->container set, which means this MR can be a subregion of a
++     *     container MR, in this case it must share the same owner
++     *     (otherwise the container should have kept a refcount of this
++     *     MR's owner), or,
++     *
++     * (2) mr->subregions non-empty, which means this MR can be a container
++     *     of other MRs (share the owner or not).
++     *
++     * We know the MR, or any MR that is attached to this one as either
++     * container or children, is not visible in any address space, because
++     * otherwise the address space should have taken at least one refcount
++     * of this MR's owner.  So we can blindly clear mr->enabled.
++     *
++     * memory_region_set_enabled instead could trigger a transaction and
++     * cause an infinite loop.
+      */
+     mr->enabled = false;
+     memory_region_transaction_begin();
++    if (mr->container) {
++        /* Must share the owner; see above comments */
++        assert(mr->container->owner == mr->owner);
++        memory_region_del_subregion(mr->container, mr);
++    }
+     while (!QTAILQ_EMPTY(&mr->subregions)) {
+         MemoryRegion *subregion = QTAILQ_FIRST(&mr->subregions);
+         memory_region_del_subregion(mr, subregion);
+@@ -2625,7 +2645,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
+ 
+     memory_region_transaction_begin();
+ 
+-    memory_region_ref(subregion);
++    if (mr->owner != subregion->owner) {
++        memory_region_ref(subregion);
++    }
++
+     QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
+         if (subregion->priority >= other->priority) {
+             QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
+@@ -2683,7 +2706,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
+         assert(alias->mapped_via_alias >= 0);
+     }
+     QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
+-    memory_region_unref(subregion);
++
++    if (mr->owner != subregion->owner) {
++        memory_region_unref(subregion);
++    }
++
+     memory_region_update_pending |= mr->enabled && subregion->enabled;
+     memory_region_transaction_commit();
+ }
 -- 
-Peter Xu
+2.50.1
 
 
