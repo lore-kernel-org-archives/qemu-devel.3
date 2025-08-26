@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3BA6CA0FF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 16:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2667CA0FF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 16:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqwII-0004is-Ht; Tue, 26 Aug 2025 12:13:16 -0400
+	id 1uqwIk-0005Rw-Mc; Tue, 26 Aug 2025 12:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uqwI5-0004Xt-QR; Tue, 26 Aug 2025 12:12:59 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1uqwIG-0004li-VA; Tue, 26 Aug 2025 12:13:11 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uqwI0-00083D-Qy; Tue, 26 Aug 2025 12:12:55 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-324fb2bb099so4356770a91.3; 
- Tue, 26 Aug 2025 09:12:50 -0700 (PDT)
+ id 1uqwIB-00083t-Ei; Tue, 26 Aug 2025 12:13:07 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-771e987b4e6so1839156b3a.2; 
+ Tue, 26 Aug 2025 09:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756224769; x=1756829569; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756224775; x=1756829575; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/YqSCW844/j/YS05m4IaJ3nc3QpjXnSjCef6LN7eSUo=;
- b=CBD9kLW+lAQIBr42d18S3QqB4jqIOmJ2gz5vv7NKzotiobA3PtJSyzJNNJ6f1wiC5T
- wzXys/GZvFGm339Uf/ext2jdJDGjrFY9lYoblERkljrW9/CQEG+vHUS63jgEKIK9373C
- kFLidO7QmFgsHmE4fNFSxkfe9e2OQORk2qd8tLkzLlHTxuggnA2s+Zvolt879X16efmu
- DzM9zQtillYKyJxHrq00/LZdRJN8ClJqfQ/rOdnPfcXTU/HsBOrn2rK54SiFZgWGpouW
- AIIYNkS99w3PSGfuk7gxyEkUtB5TYWbniveakY/z6AmEcMLJIqlC7NripwobGZmzbgvb
- UHKg==
+ bh=4g7xgFswCOOOQVtfkqWYJr9zaiKOTEbQZwPy6qzhivk=;
+ b=O1zJ3spta1J2kDHImdggvLNdKLXB5BIczWoq7MQn5mNpONpQwcex1GXr2i72DM52Lb
+ cMpagXTX0GO+AEDLP9zUVcXb4N6enCSD5mVJ802FZqlVsPqPIPGCWrnxVF0vvaICb1aQ
+ MOMpKVnFQC49FyZT8tR5h6gzOqihRxIe6MQkHYuYFnu7W4MF2LV5Yle9+F0HzQRieG6i
+ PRFbkARDSDZ4ykR71pNPsjlFk+HM55a1zeUQtUVJ0BghEOetK4No50VbtLiIdmp4v/HS
+ at4gu+QBENKTE/masLLVrwrYcUkUPP7hgglgAiOdhl8Gl+0hX+oS/VGOBUR/bWiDjGq8
+ g9kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756224769; x=1756829569;
+ d=1e100.net; s=20230601; t=1756224775; x=1756829575;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/YqSCW844/j/YS05m4IaJ3nc3QpjXnSjCef6LN7eSUo=;
- b=raCf5jksmZnZ6FUESe13nvCRSD+GNKhTC1+8aiRI55M40UNNnDWbG+x6jr8C52A8u6
- WoHaPk+tr3lm541SVLE3oHTR8Vl1ilrzYWLWnUyM5zEepHeZEABWtUFtU3LRseqk0Stv
- 83aDWc3fhif+Jdik8zgnk15zNUBvj584aMMc4xALcSra8pyMc3ZyYYGixfLiTxfPsCi6
- sii5ol7YLA9vWTrXvlgttST4EQWEKeDtT50J5nFRlkohAMctZImr+okQBayL4HQFBjqh
- N1DBYNIz5RUw5+rupfqwOl2iKkj0bsnvn3KjQ6h4f/SdPTMgmOQ5O0jA0BZ2CJsXdf4x
- EJ5A==
+ bh=4g7xgFswCOOOQVtfkqWYJr9zaiKOTEbQZwPy6qzhivk=;
+ b=nV4anVSr7fAPh4JPHRISDZN9uPtAMfsDj5WBbkCKacPFlLdsOFgoVcVCBsiwfQjeB3
+ uImmbJHQv2AO65cXc1c+VsgfhZHjk0zZ3xStb7Zh5WEhtD0A8zw6sNn88KEx/YtR27G5
+ JgZnYfBdxE8fQIkyrNxKMfO5UT4B+gy56ihVZNTepsV27Bq40EoKAvqr+PUmwRRYsPqe
+ vDm5QjI/8atPWIRWmvV++QJT6c3XXreqN79SY3Wuy8dBmlkYt1Z5jSZeaZhY859KEHSe
+ +BU19kQ482G3XrdN8s9a9fyDnWItnprlVYxJ6AKNFyLtd7pw9yNIneQcX+gbYIy4lEgf
+ rdvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU084PwxnCDadyp0P4cmErBWFyu+71zFRkLDrEdjWHg82VjJ1T23R8WlgchvGUeYWAkjzWCOkMjlSWHQw==@nongnu.org,
- AJvYcCUX3ZonRPe+zO3cqmrHjTPBpJwEVu6cSJvfVbgRuHhSYQFeQv7ZJTRZaSf6EqSt3ABOqs8SKAcTmw==@nongnu.org
-X-Gm-Message-State: AOJu0Yz7HjrWDakFNdjY2x4tAMf4TBnC+Ez+7Q894temx5ruUv8wBLYH
- Rij5GqhjjGJa+vAPHqB60o3WQ7aORIWZaEubk45qliquc9kJptB7/7pSBn7Psw==
-X-Gm-Gg: ASbGncuNQ2Y3YGfxS+4Bfw/+CBlnhTlo6S5zyQX78MC+9KGcILwp505HRjDPml9XKcE
- sYUbPtVuFw+hEv7sx81LPieVm1AMtFeC5wQ03LoeOjD3O1kgiX1FwQI1hoJjfhnwq05QnMK0LEL
- S/GQRee4oTt9qvIMSvepppIwOTeT5jQyJ/Kz8J2PyQCMQGSqGdLgy81QlCNOSMmXGo94BSTZNIi
- Dxw2IHJBw5Ey9tj6ro/Q/DNQkSkcmN2Jn+b3SqmiT058A8LI1GzT0adn+na+/ls8NCPu6ZpEVPN
- KYONbui9vcCNFKIvcRAtR3Vg7M3Yj4eAwOiHdred7/a2Y2e0LwIr0Ebe6kj8YJ2724zNjjxQENI
- 77dvVNn13QJsmgSZ3jT0QCZj5h7I6y5JN
-X-Google-Smtp-Source: AGHT+IF5Z2qnYKxxH0S/+OVlJyxliYNWDQv9vpXaRzBHyOaGjRCn9eQjMv89tbMwH1GSWzPk3RYD+A==
-X-Received: by 2002:a17:90b:1d06:b0:312:39c1:c9cf with SMTP id
- 98e67ed59e1d1-32515eadfc1mr22211613a91.7.1756224768572; 
- Tue, 26 Aug 2025 09:12:48 -0700 (PDT)
+ AJvYcCUd4oBjhxnIxNJjLIIBDg5ev+FKC2asqejewW9U6OHiaiFmcahciX1LKGYmDWDNUieF8J1brNYrtTjr/A==@nongnu.org,
+ AJvYcCX5ZXcfWX/bQssGBbZTccw78VxtaB+xtCXrC2f44AF0Z7l0/TjS7K2CDhAjEmErzncNm7dqMKdAAw==@nongnu.org
+X-Gm-Message-State: AOJu0Yw4ilYgAagh6ex6SCVTlqy/DtV5VTOO9Vk1OB8VJhrqFrJQ3Qq4
+ KBs64WtNrZrwaKDiD1BXSrowu6fuk2ZUxDu3ff1TCU9IdjX+hrTtM4nkT47TTw==
+X-Gm-Gg: ASbGncsPZjTCe1Y90bKXtx6Rqp9e9DnVB/aIQ5t3PUyCtrFPa3eJ1hTebO0npuBdaxL
+ R66d1XW+TMCQ8H0XcoLQc+lrAa9Hw4+mL+P3GL6Gt8WCqrekTBxNxxERChHP/ufFbDja2E6KNnf
+ +sk/qe6qGbhXj/hGTNmJMAZoxttZEMqxFQ2x65jPAaKkA4wNYVyMeAhUFdeBB8k8Ptwj8iLYwv2
+ n1NyrwE98G/cyMPzFFyizy9wHOncFh4X4F0IPhjzZ01vqPZqJKLRhFrMK2dKyjUNZjABEFGOMDj
+ haxi9fMDXMxOoZ2F1mKJ9FSUxGu3ArCLnVrnlt2lS3ux3zxrJy4M9vtEojc8dkg03ZPINtDhsCP
+ JRq2ZxRAWIzs7l//sfu5dXA==
+X-Google-Smtp-Source: AGHT+IEindR+GI1jxL/plyLy2KCLf0ZcXAh4yHBLPy+7HYlHuVybk9UEHOf9TciF+Z1Ixrs/az4FRg==
+X-Received: by 2002:a05:6a20:939f:b0:243:78a:8276 with SMTP id
+ adf61e73a8af0-24340e1cafamr21853352637.60.1756224774765; 
+ Tue, 26 Aug 2025 09:12:54 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:561f:1400:11f5:714b])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-32750bc341asm1749747a91.19.2025.08.26.09.12.43
+ 98e67ed59e1d1-32750bc341asm1749747a91.19.2025.08.26.09.12.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 09:12:47 -0700 (PDT)
+ Tue, 26 Aug 2025 09:12:53 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -80,16 +80,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH v2 17/35] tcg/wasm: Add div/rem instructions
-Date: Wed, 27 Aug 2025 01:10:22 +0900
-Message-ID: <32eaa622a5acc240179be619c09319bbb48f3f14.1756216429.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v2 18/35] tcg/wasm: Add neg/ctpop instructions
+Date: Wed, 27 Aug 2025 01:10:23 +0900
+Message-ID: <2cb39a5cb4df42d6a7b3bdc3d6449fb9a60e861f.1756216429.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1756216429.git.ktokunaga.mail@gmail.com>
 References: <cover.1756216429.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,162 +112,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The div and rem operations are implemented using the corresponding
+The neg/ctpop operations are implemented using the corresponding
 instructions in Wasm. TCI instructions are also generated in the same way as
 the original TCI backend.
 
+The Wasm backend implements only TCG_TARGET_REG_BITS=64 so the ctpop
+instruction is generated only for 64bit operations, as declared in
+cset_ctpop. Therefore, this commit adds only the 64bit version of ctpop
+implementation.
+
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- tcg/wasm.c                    | 32 +++++++++++++++++
- tcg/wasm/tcg-target-opc.h.inc |  4 +++
- tcg/wasm/tcg-target.c.inc     | 68 +++++++++++++++++++++++++++++++++++
- 3 files changed, 104 insertions(+)
+ tcg/wasm.c                |  4 ++++
+ tcg/wasm/tcg-target.c.inc | 44 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
 
 V2:
 - This commit generates both Wasm and TCI instrucitons.
+- Removed the not operation to rely on default expansion.
+- Fixed the neg implementation to "ret = 0 - arg"
 
 diff --git a/tcg/wasm.c b/tcg/wasm.c
-index 2c8a7b814e..8c8dcb81c7 100644
+index 8c8dcb81c7..a5e72d8fe5 100644
 --- a/tcg/wasm.c
 +++ b/tcg/wasm.c
-@@ -327,6 +327,38 @@ static uintptr_t tcg_qemu_tb_exec_tci(CPUArchState *env, const void *v_tb_ptr)
-             ptr = (void *)(regs[r1] + ofs);
-             *(uint32_t *)ptr = regs[r0];
+@@ -359,6 +359,10 @@ static uintptr_t tcg_qemu_tb_exec_tci(CPUArchState *env, const void *v_tb_ptr)
+             tci_args_rrr(insn, &r0, &r1, &r2);
+             regs[r0] = (uint32_t)regs[r1] % (uint32_t)regs[r2];
              break;
-+        case INDEX_op_divs:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = (int64_t)regs[r1] / (int64_t)regs[r2];
-+            break;
-+        case INDEX_op_divu:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = (uint64_t)regs[r1] / (uint64_t)regs[r2];
-+            break;
-+        case INDEX_op_rems:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = (int64_t)regs[r1] % (int64_t)regs[r2];
-+            break;
-+        case INDEX_op_remu:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = (uint64_t)regs[r1] % (uint64_t)regs[r2];
-+            break;
-+        case INDEX_op_tci_divs32:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = (int32_t)regs[r1] / (int32_t)regs[r2];
-+            break;
-+        case INDEX_op_tci_divu32:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = (uint32_t)regs[r1] / (uint32_t)regs[r2];
-+            break;
-+        case INDEX_op_tci_rems32:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = (int32_t)regs[r1] % (int32_t)regs[r2];
-+            break;
-+        case INDEX_op_tci_remu32:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = (uint32_t)regs[r1] % (uint32_t)regs[r2];
++        case INDEX_op_ctpop:
++            tci_args_rr(insn, &r0, &r1);
++            regs[r0] = ctpop64(regs[r1]);
 +            break;
          default:
              g_assert_not_reached();
          }
-diff --git a/tcg/wasm/tcg-target-opc.h.inc b/tcg/wasm/tcg-target-opc.h.inc
-index 122b45749a..5ed8c67535 100644
---- a/tcg/wasm/tcg-target-opc.h.inc
-+++ b/tcg/wasm/tcg-target-opc.h.inc
-@@ -8,3 +8,7 @@ DEF(tci_movi, 1, 0, 1, TCG_OPF_NOT_PRESENT)
- DEF(tci_movl, 1, 0, 1, TCG_OPF_NOT_PRESENT)
- DEF(tci_setcond32, 1, 2, 1, TCG_OPF_NOT_PRESENT)
- DEF(tci_movcond32, 1, 2, 1, TCG_OPF_NOT_PRESENT)
-+DEF(tci_divs32, 1, 2, 0, TCG_OPF_NOT_PRESENT)
-+DEF(tci_divu32, 1, 2, 0, TCG_OPF_NOT_PRESENT)
-+DEF(tci_rems32, 1, 2, 0, TCG_OPF_NOT_PRESENT)
-+DEF(tci_remu32, 1, 2, 0, TCG_OPF_NOT_PRESENT)
 diff --git a/tcg/wasm/tcg-target.c.inc b/tcg/wasm/tcg-target.c.inc
-index e41b3a0c27..38459a60d6 100644
+index 38459a60d6..27f3a7414b 100644
 --- a/tcg/wasm/tcg-target.c.inc
 +++ b/tcg/wasm/tcg-target.c.inc
-@@ -181,12 +181,20 @@ typedef enum {
-     OPC_I64_GE_U = 0x5a,
- 
-     OPC_I32_ADD = 0x6a,
-+    OPC_I32_DIV_S = 0x6d,
-+    OPC_I32_DIV_U = 0x6e,
-+    OPC_I32_REM_S = 0x6f,
-+    OPC_I32_REM_U = 0x70,
+@@ -188,6 +188,7 @@ typedef enum {
      OPC_I32_SHR_S = 0x75,
      OPC_I32_SHR_U = 0x76,
  
++    OPC_I64_POPCNT = 0x7b,
      OPC_I64_ADD = 0x7c,
      OPC_I64_SUB = 0x7d,
      OPC_I64_MUL = 0x7e,
-+    OPC_I64_DIV_S = 0x7f,
-+    OPC_I64_DIV_U = 0x80,
-+    OPC_I64_REM_S = 0x81,
-+    OPC_I64_REM_U = 0x82,
-     OPC_I64_AND = 0x83,
-     OPC_I64_OR = 0x84,
-     OPC_I64_XOR = 0x85,
-@@ -1070,6 +1078,66 @@ static const TCGOutOpUnary outop_extrh_i64_i32 = {
-     .out_rr = tgen_extrh_i64_i32,
+@@ -547,6 +548,21 @@ static void tcg_wasm_out_movi(TCGContext *s, TCGType type,
+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(ret));
+ }
+ 
++static void tcg_wasm_out_neg(TCGContext *s, TCGReg ret, TCGReg arg)
++{
++    tcg_wasm_out_op_const(s, OPC_I64_CONST, 0);
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(arg));
++    tcg_wasm_out_op(s, OPC_I64_SUB);
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(ret));
++}
++
++static void tcg_wasm_out_ctpop64(TCGContext *s, TCGReg ret, TCGReg arg)
++{
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(arg));
++    tcg_wasm_out_op(s, OPC_I64_POPCNT);
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(ret));
++}
++
+ static void tcg_out_op_ri(TCGContext *s, TCGOpcode op, TCGReg r0, int32_t i1)
+ {
+     tcg_insn_unit_tci insn = 0;
+@@ -1138,6 +1154,34 @@ static const TCGOutOpBinary outop_remu = {
+     .out_rrr = tgen_remu,
  };
  
-+static void tgen_divs(TCGContext *s, TCGType type,
-+                      TCGReg a0, TCGReg a1, TCGReg a2)
++static void tgen_neg(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
 +{
-+    TCGOpcode opc = (type == TCG_TYPE_I32
-+                     ? INDEX_op_tci_divs32
-+                     : INDEX_op_divs);
-+    tcg_out_op_rrr(s, opc, a0, a1, a2);
-+    tcg_wasm_out_o1_i2_type(s, type, OPC_I32_DIV_S, OPC_I64_DIV_S, a0, a1, a2);
++    tcg_out_op_rr(s, INDEX_op_neg, a0, a1);
++    tcg_wasm_out_neg(s, a0, a1);
 +}
 +
-+static const TCGOutOpBinary outop_divs = {
-+    .base.static_constraint = C_O1_I2(r, r, r),
-+    .out_rrr = tgen_divs,
++static const TCGOutOpUnary outop_neg = {
++    .base.static_constraint = C_O1_I1(r, r),
++    .out_rr = tgen_neg,
 +};
 +
-+static void tgen_divu(TCGContext *s, TCGType type,
-+                      TCGReg a0, TCGReg a1, TCGReg a2)
++static void tgen_ctpop(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
 +{
-+    TCGOpcode opc = (type == TCG_TYPE_I32
-+                     ? INDEX_op_tci_divu32
-+                     : INDEX_op_divu);
-+    tcg_out_op_rrr(s, opc, a0, a1, a2);
-+    tcg_wasm_out_o1_i2_type(s, type, OPC_I32_DIV_U, OPC_I64_DIV_U, a0, a1, a2);
++    tcg_out_op_rr(s, INDEX_op_ctpop, a0, a1);
++    tcg_wasm_out_ctpop64(s, a0, a1);
 +}
 +
-+static const TCGOutOpBinary outop_divu = {
-+    .base.static_constraint = C_O1_I2(r, r, r),
-+    .out_rrr = tgen_divu,
-+};
-+
-+static void tgen_rems(TCGContext *s, TCGType type,
-+                      TCGReg a0, TCGReg a1, TCGReg a2)
++static TCGConstraintSetIndex cset_ctpop(TCGType type, unsigned flags)
 +{
-+    TCGOpcode opc = (type == TCG_TYPE_I32
-+                     ? INDEX_op_tci_rems32
-+                     : INDEX_op_rems);
-+    tcg_out_op_rrr(s, opc, a0, a1, a2);
-+    tcg_wasm_out_o1_i2_type(s, type, OPC_I32_REM_S, OPC_I64_REM_S, a0, a1, a2);
++    return type == TCG_TYPE_REG ? C_O1_I1(r, r) : C_NotImplemented;
 +}
 +
-+static const TCGOutOpBinary outop_rems = {
-+    .base.static_constraint = C_O1_I2(r, r, r),
-+    .out_rrr = tgen_rems,
-+};
-+
-+static void tgen_remu(TCGContext *s, TCGType type,
-+                      TCGReg a0, TCGReg a1, TCGReg a2)
-+{
-+    TCGOpcode opc = (type == TCG_TYPE_I32
-+                     ? INDEX_op_tci_remu32
-+                     : INDEX_op_remu);
-+    tcg_out_op_rrr(s, opc, a0, a1, a2);
-+    tcg_wasm_out_o1_i2_type(s, type, OPC_I32_REM_U, OPC_I64_REM_U, a0, a1, a2);
-+}
-+
-+static const TCGOutOpBinary outop_remu = {
-+    .base.static_constraint = C_O1_I2(r, r, r),
-+    .out_rrr = tgen_remu,
++static const TCGOutOpUnary outop_ctpop = {
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_ctpop,
++    .out_rr = tgen_ctpop,
 +};
 +
  static void tcg_out_tb_start(TCGContext *s)
