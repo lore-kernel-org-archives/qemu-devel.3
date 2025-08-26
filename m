@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 771E4CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 11:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35D00CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 11:56:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqsFg-00009C-FC; Tue, 26 Aug 2025 07:54:12 -0400
+	id 1uqsHY-00016c-8W; Tue, 26 Aug 2025 07:56:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uqsFe-00008l-RV
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:54:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uqsHU-00015D-Tz
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:56:05 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uqsFX-0003jL-DP
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:54:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756209239;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=6hHxM8/HfwFFSYWjjLM249sSSY/+gfKqliyzmskxLE4=;
- b=HYJ2ysRj002D+0O1HBdkis8wuQ+13tQGFng+wGwxrtRz+CFOeC6IKvvnrR8jWSuBZogKld
- wbn9kBaM0GdjBaPJjCXRCk7MqentefPOotpwW3DOJrBFg/Oe4UyoOifanEWwdIzzWddr/p
- W0C++YCH8P40rJYuBYIKb0ZWi/Rf/EQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-c1_3yk81Mnmal9pL3mHM1g-1; Tue,
- 26 Aug 2025 07:53:56 -0400
-X-MC-Unique: c1_3yk81Mnmal9pL3mHM1g-1
-X-Mimecast-MFC-AGG-ID: c1_3yk81Mnmal9pL3mHM1g_1756209235
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17F921956088; Tue, 26 Aug 2025 11:53:55 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.174])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22BDF19560AB; Tue, 26 Aug 2025 11:53:52 +0000 (UTC)
-Date: Tue, 26 Aug 2025 12:53:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, tanishdesai37@gmail.com, stefanha@redhat.com,
- mads@ynddal.dk
-Subject: Re: [PATCH 10/14] tracetool/simple: add Rust support
-Message-ID: <aK2gTWBwHpOY4iwm@redhat.com>
-References: <20250822122655.1353197-1-pbonzini@redhat.com>
- <20250822122655.1353197-11-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uqsHN-00041Q-GW
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:56:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1756209357; x=1787745357;
+ h=message-id:date:mime-version:subject:to:references:from:
+ in-reply-to:content-transfer-encoding;
+ bh=kLqqN5HcEwjZwfNpDms8Rqd/qdDP1h9+n13szXmtxdg=;
+ b=CANIJE4gMVTPnX7Eebr/lQZnr279H9TlceAHfXW3LxazMaVkWaKqksPm
+ rAK9o4MMo35tMyFlfpRrziuhaamezDJqjcweK9qkWz9ipgqbpkFaAv5M8
+ 8fE3ZyZ0rNliQzwzhcQZxJvPK5969J2i+9KCfVpnRVzZO/ztuuIaPY01R
+ 0n8qHshTILrF9YyvcSuy/m/ToYK5Q9QdWcPGUzw+ZIoj7jAikFWdTMEp7
+ BvbCZVomcpyYDWF7pXcMj0BlFImIWL1yYUIg1mWvAUfGDZ6wa7WnCvaAW
+ Y9tXw90inPcTyWQMGEaUrpfzjCkypDYQKN17TIiIhDanTwcJXjUC3EIPc g==;
+X-CSE-ConnectionGUID: ebCTZcWjRd2uvs5ASOWUow==
+X-CSE-MsgGUID: 4miHZV4QTpqK1unptQRztg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="58381567"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="58381567"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2025 04:55:49 -0700
+X-CSE-ConnectionGUID: Hy/USlH0T8i81VLs6pPfnA==
+X-CSE-MsgGUID: 0iF0ZN8lRrmc/pGTdZZ2rg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="193225155"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
+ ([10.124.238.14])
+ by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2025 04:55:46 -0700
+Message-ID: <7df15c31-603d-460c-b0d8-18fded41d092@intel.com>
+Date: Tue, 26 Aug 2025 19:55:43 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250822122655.1353197-11-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 07/19] hw/i386/pc_piix.c: remove SGX initialisation
+ from pc_init_isa()
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
+ imammedo@redhat.com, qemu-devel@nongnu.org
+References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
+ <20250822121342.894223-8-mark.caveayland@nutanix.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250822121342.894223-8-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.751, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,96 +85,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 22, 2025 at 02:26:51PM +0200, Paolo Bonzini wrote:
-> From: Tanish Desai <tanishdesai37@gmail.com>
+On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote:
+> The Intel SGX instructions only exist on recent CPUs and so would never be available
+> on a CPU from the pre-PCI era.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
 > ---
->  scripts/tracetool/__init__.py       |  2 +-
->  scripts/tracetool/backend/simple.py |  7 +++++
->  tests/tracetool/simple.rs           | 41 +++++++++++++++++++++++++++++
->  tests/tracetool/tracetool-test.py   |  2 ++
->  4 files changed, 51 insertions(+), 1 deletion(-)
->  create mode 100644 tests/tracetool/simple.rs
+>   hw/i386/pc_piix.c | 2 --
+>   1 file changed, 2 deletions(-)
 > 
-> diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-> index 0b8ec707332..7542757799e 100644
-> --- a/scripts/tracetool/__init__.py
-> +++ b/scripts/tracetool/__init__.py
-> @@ -336,7 +336,7 @@ def rust_call_extern(self):
->          def rust_cast(name, type_):
->              if type_ == "const char *":
->                  return f"_{name}.as_ptr()"
-> -            return "_{name}"
-> +            return f"_{name}"
->  
->          return ", ".join((rust_cast(name, type_) for type_, name in self._args))
->
-
-This should be squashed into the earlier patch that introduced the mistake
-
-> diff --git a/tests/tracetool/simple.rs b/tests/tracetool/simple.rs
-> new file mode 100644
-> index 00000000000..895096088dc
-> --- /dev/null
-> +++ b/tests/tracetool/simple.rs
-> @@ -0,0 +1,41 @@
-> +// This file is autogenerated by tracetool, do not edit.
-> +
-> +#[allow(unused_imports)]
-> +use std::ffi::c_char;
-> +#[allow(unused_imports)]
-> +use qemu_api::bindings;
-> +
-> +#[inline(always)]
-> +fn trace_event_get_state_dynamic_by_id(_id: u16) -> bool {
-> +    unsafe { (trace_events_enabled_count != 0) && (_id != 0) }
-> +}
-> +
-> +extern "C" {
-> +    static mut trace_events_enabled_count: u32;
-> +}
-> +extern "C" {
-> +    static mut _TRACE_TEST_BLAH_DSTATE: u16;
-> +    static mut _TRACE_TEST_WIBBLE_DSTATE: u16;
-> +}
-> +const _TRACE_TEST_BLAH_ENABLED: bool = true;
-> +const _TRACE_TEST_WIBBLE_ENABLED: bool = true;
-
-Does rust have any policy reserving use of leading underscore in
-identifiers  ?
-
-
-> +
-> +#[inline(always)]
-> +#[allow(dead_code)]
-> +pub fn trace_test_blah(_context: *mut (), _filename: &std::ffi::CStr)
-> +{
-> +    if trace_event_get_state_dynamic_by_id(unsafe { _TRACE_TEST_BLAH_DSTATE}) {
-> +        extern "C" { fn _simple_trace_test_blah(_context: *mut (), _filename: *const std::ffi::c_char); }
-> +        unsafe { _simple_trace_test_blah(_context, _filename.as_ptr()); }
-> +    }
-> +}
-> +
-> +#[inline(always)]
-> +#[allow(dead_code)]
-> +pub fn trace_test_wibble(_context: *mut (), _value: std::ffi::c_int)
-> +{
-> +    if trace_event_get_state_dynamic_by_id(unsafe { _TRACE_TEST_WIBBLE_DSTATE}) {
-> +        extern "C" { fn _simple_trace_test_wibble(_context: *mut (), _value: std::ffi::c_int); }
-> +        unsafe { _simple_trace_test_wibble(_context, _value); }
-> +    }
-> +}
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index e58a7b3977..129a3e2524 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -509,8 +509,6 @@ static void pc_init_isa(MachineState *machine)
+>           }
+>       }
+>   
+> -    pc_machine_init_sgx_epc(pcms);
+> -
+>       /*
+>        * There is a small chance that someone unintentionally passes "-cpu max"
+>        * for the isapc machine, which will provide a much more modern 32-bit
 
 
