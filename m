@@ -4,218 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60DCACA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 14:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC2A3CA0FE7
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 14:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqusZ-0001K5-Nq; Tue, 26 Aug 2025 10:42:33 -0400
+	id 1uquum-00022X-Ge; Tue, 26 Aug 2025 10:44:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1uqusX-0001JP-2t
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 10:42:29 -0400
-Received: from
- mail-switzerlandnorthazon11021082.outbound.protection.outlook.com
- ([40.107.167.82] helo=ZRZP278CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uquuc-0001yf-8d
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 10:44:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1uqusL-0006RO-Eh
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 10:42:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wJulvXmKUQAD8xpNnHgVl388Y/ORh0nepVreck4ejNgGT8JDKgbc5jHyBAs0TeOHGpITgpHI5z/W8Kntom7BAT4BwT0N5ojAOteO5ZeBHh2XEnSAaDz+5bLQVWOEaPJMJByhDK+CclKSfh498EmgcBij/0iBQy0hHEIIMt/3uTuSoLnMt0nwbbHJxjPBYc+xcRgN+Cbbn61xBQhMKNP2jYgqWa0hogA7aKcr8nywbI+hrzTUqXj8oueLUBpTkujMe71EHqMdFLjNvsbFP3+/04qCs3HJdNhdTKkkCmxIJOAlIDkxY8netoWOeGyBh82nWtdLeF1KqbJDgv8VE+46UQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rkfYrPDUz4lmXnZGq8rBJQyiP3Tve9Mddx83rNl01OA=;
- b=v9R3T63ImE9Oc4bKSEs8R0tzvkLKwEEa5tNx+16G9pgN0MACWSgkb9IKpm8sT7kfCNkF3R9Ftj5/+MvNT8uoUEHL7rUtR/gIPLoBOcPWQCgtagcvZ2OBYgpmZ1BKTisM5LaB6ohcTRfRwdWrgRu0KFEkcxUF0cEVqC3HAk5N0Fc+MhXm9Xk+wFR61rGa4FuVbdDTGIiMLsdoxqUIh12Ms4/da14JSEZDiDkEsRZsdGcZBBFYxdKYSKULk1CW4s/5rgT5vtsfc+c5ohZ6Iyewi6ciSg9EdqdSpbjc5jBY3T2F5S0mW6cd2B3plmcfguOU3oEUn7NnQIqyXR18CX8VgQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
- header.d=epfl.ch; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rkfYrPDUz4lmXnZGq8rBJQyiP3Tve9Mddx83rNl01OA=;
- b=Fu8pWRBJMYdIsxTEA0cINveXvjysIkPIqj2L48iJlrFIUrzU3T3DrNMfSS2axbKWIAhE/RDgfj8QOapftPbiR9uOUVsZUB0C9GeLHHDMBoCZdMGVrqoztFjKaa99dHrp1iKMsyPSIvDiat2VUZgI5m2MrND6yLT6W91THUj6vzU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=epfl.ch;
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
- by ZRAP278MB0128.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:13::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.20; Tue, 26 Aug
- 2025 14:37:02 +0000
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::781a:c3f2:3706:82d]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::781a:c3f2:3706:82d%4]) with mapi id 15.20.9031.023; Tue, 26 Aug 2025
- 14:37:02 +0000
-Message-ID: <14d8ce11-a15b-448a-ac6e-2b50c66a46b3@epfl.ch>
-Date: Tue, 26 Aug 2025 16:37:00 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: New capabilities for plugins
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: pierrick.bouvier@linaro.org, qemu-devel@nongnu.org,
- richard.henderson@linaro.org, laurent@vivier.eu, imp@bsdimp.com
-References: <205e6753-53a4-4739-99ed-26344403a437@epfl.ch>
- <87tt2n5az1.fsf@draig.linaro.org>
- <1016eeb7-57d8-4d80-ba25-42cda2d63b0f@epfl.ch>
- <874iul26rp.fsf@draig.linaro.org>
- <73d56742-5e6e-4e1f-8d8c-2b9783d0ddea@epfl.ch>
- <87y0rxzsz4.fsf@draig.linaro.org>
- <7e0bd15e-d022-4de1-814b-9d9bb6513934@epfl.ch>
- <87v7mfkaoi.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
- 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
- 5hMMZIzTI4AtIcgA3xe4Ew==
-In-Reply-To: <87v7mfkaoi.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV0P278CA0030.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:28::17) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:918::220)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uquuR-0006kv-VD
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 10:44:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756219452;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=sD1lWKtRI6BfjYxwbDQNJgnpBwVJVgbqemBEwti6CPI=;
+ b=D9K45uW0XcQ/muM3U8jysMz/LZBMUUw270o4e7kpIpnMuZQFUVZrnykldhr38tJolPTTzE
+ zdPORO78oun0TUK2k7j42LoJDmQz/F6YIZu6H7BrOcWW0DUnY1BZUo1ZBwRv6AcQ1SwC4w
+ a+gw1snpTSK2GL+YAxybrklgnU7WZN0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-60-_f1zMwxGN0GUiP-0vadx4A-1; Tue, 26 Aug 2025 10:44:07 -0400
+X-MC-Unique: _f1zMwxGN0GUiP-0vadx4A-1
+X-Mimecast-MFC-AGG-ID: _f1zMwxGN0GUiP-0vadx4A_1756219446
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3cbd6cd78efso371842f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 07:44:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756219446; x=1756824246;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sD1lWKtRI6BfjYxwbDQNJgnpBwVJVgbqemBEwti6CPI=;
+ b=t9Mt/s4I9bjv/yuN/ZfAvQ3YmjH/Z53UedR0l4zFFFCjIiE/NpTilexlaJU2BZI+TM
+ QQksskEkFS/aEHweIMi4CO7zfbKvm/1LiyhjyyYOiRGd3X6v+6eIfmGTJXt5B7u12dq1
+ kD4YjuTxO0a1Y192f2QEcqk6N/xusXuSoXkyZR60cuZbUtcF+0nlMvCcGu4VSRB5EJtF
+ HXcePVXHeBqiQUXImbbtUpmco63GV6RghMhIGpM9er2xB9MlPZSi7oXG5YYdJp+ViJAQ
+ qdRx+aU7SF2GZ4Sj3y3J7+23iqfj31eeTIxlAUx/PXXT7ZlRRmW9lVtpX45fERCNsHcf
+ D9Cw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXNDP1soZGsXZUiJjbVWvRSf8FDDrF8FLDSyiFUFT99vrCoxltP0bWzIzItgTqBb2y8pE1xLl/WRyNu@nongnu.org
+X-Gm-Message-State: AOJu0Yw7v7y4jXap8xbMfSfDE0KYvFdZq8hbAhLMD6bSj5AG/ZJNHP9c
+ UM9Xle93IRTF+emUZrPcyl4bSVupapmJii/zH0Mh0Z19ExsWliQ249T5U5gbdkNCBvW0Dz8Dyr8
+ xVJgEE0hXq7E0rWazN4Hnfhriea8fQyO2jR0a7lUWRpvE7MhYNTMdP4TD
+X-Gm-Gg: ASbGnctiNx3xqXdmzmGjXGPg760gKz7LwDj2H6hir4NW/GJetvhKdgBTZh0sPxzpYjf
+ xwlWLhW5mW9V+ISOm8CSOIv026wiqTBltSFu8lGGmcuTDcnfsT4TwCnwBhBCESpfLzUEGh0Yiaj
+ mq1bMCvDuxywhg34gjyuHRqZDLmYJiJKYXssnEkl0zNsnoZl8yxKSOZT6Ig1kfu6Bpjzs7oDuPp
+ ZG/Rokg8erZDbngLkT1fj+nevIi9Y5ZH8R9a2jK3TDnGWoH4OyNQsqmGVq/rM0zOCiJlxTj/Fn/
+ mdGZfbZlCEu9F/dPR9PYMa153jEORyuj9GHRzYwouWqNh64zAehVMj2KXQhbFOL1lRH5TMjjyL4
+ tjJOpP7xGuI5N5EtbVrQeTSiG
+X-Received: by 2002:a05:6000:438a:b0:3c9:aa54:d119 with SMTP id
+ ffacd0b85a97d-3c9aa54de3dmr5794327f8f.57.1756219445960; 
+ Tue, 26 Aug 2025 07:44:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHuylGEo7R+xZfV7dFO4Y6RyceQmNoUKaPGrYjxc73gZoY/7WyjH59KZaMz6NCqM2TBX/C6eQ==
+X-Received: by 2002:a05:6000:438a:b0:3c9:aa54:d119 with SMTP id
+ ffacd0b85a97d-3c9aa54de3dmr5794291f8f.57.1756219445386; 
+ Tue, 26 Aug 2025 07:44:05 -0700 (PDT)
+Received: from [192.168.178.61] ([151.36.40.144])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-3cc4b102889sm62435f8f.51.2025.08.26.07.44.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Aug 2025 07:44:04 -0700 (PDT)
+Message-ID: <e58ea933-f941-44d8-8477-c8298663cc24@redhat.com>
+Date: Tue, 26 Aug 2025 16:44:03 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZRAP278MB0128:EE_
-X-MS-Office365-Filtering-Correlation-Id: 71a14027-09ea-480c-580d-08dde4ae0527
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0; ARA:13230040|376014|366016|1800799024|19092799006;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cVZKOWgvUTV5MGpGVjlkeSt0WEhQUmV0Qi9rblc0anQ4YUtONk81b3J4eDhQ?=
- =?utf-8?B?bEhudy9tUUpWVmlBTFVDL0llWENRODhpclpSRzVzek9HNWxSeWJXS1lFNUpz?=
- =?utf-8?B?M0M3YWptTW8yVmJCTkRSQjdic2ZuQVdHd2ozTHk2aldXS3R2T1IvZ1JHMUQr?=
- =?utf-8?B?ekpNSjRRZXRQSEJqdmhOU1c4WTlFNHVCRitTQjk0clhCcjE4dlgyVVdzNFdl?=
- =?utf-8?B?WDBsMzhqVGtnSTFDNXBxaURQU3F0Wmlacm9Lb0hzK2lacGRpVU94aGtNakFq?=
- =?utf-8?B?Y3VRVzUvcmtMSFlqcVpQa0VIVEs2dUdyWmpsMnF3VTgyVDV3NnpZNlhUVHJI?=
- =?utf-8?B?U2pFYlBmSDdXaCtpbHVTUHg4bVF4U3JEeTBTRTA2MXhaRVVkUEdHTitwaGxy?=
- =?utf-8?B?ZzBVL0c3ajd2Q2lDb2VhN3hIdGRZbHhuamIzMUVESkZjQkZDNTBSd2tMSGxL?=
- =?utf-8?B?SkdrRWgwUTNLa2V2dEwxdTZ6STRQcVF2U1NwcGNjTGd3cHo0bzV5UTN5U04z?=
- =?utf-8?B?a2FvaGU2THNnQ0dRb3hRbWRZUjQ3aHpSU3JZN3dRZUVsS3RGVXY2aDVWY2Fj?=
- =?utf-8?B?WTdpN3FSSnd6eS96UFBFVUwxUWthM1lpQmtobkxaM0RobGZIcnNtcVU1TWpm?=
- =?utf-8?B?MVVZM1NiRTRvdzJRTjc5U3VkOVp3Mk9kc3F6MjcrV3RpSW9JVDdncVJFZmdW?=
- =?utf-8?B?RUFBWGhBamRJalpUd2JDUXRyaURWMkVUTEFPVm15dzQ1TnJGUVR1ZXlHQ01I?=
- =?utf-8?B?dDIzTWdDc2phY0ZsMjdXbDVCbFBnSDNoOUJGc1U5Mk4wdTB2Rkd1TzlvMWVS?=
- =?utf-8?B?MlJpbE93Q0ZxRDJYZzdwU2Z2U0ZiTDlmUTlSckdhZEFkTnlBbGwvc1lSa2sr?=
- =?utf-8?B?SXZUNTlLSmRxREtUVUZ1VG5VazVoZzVwYmJ2dEg5TUFMRFFtQ1FHSkoxU0Zo?=
- =?utf-8?B?NUtmUmxQdzNYTVc2cDVGT3ZYR2FYOTcwUEFBSFpnUHNLSkVIRGtnaEx5Tjcw?=
- =?utf-8?B?K1JrM09hWlZZN010R2Jjdmg2U2xPNGRWREFhbWhJTGQyMFh5NmVWYk5uZWpX?=
- =?utf-8?B?TUhZdGRHYy9xVUxYckptdzNJOCtvNzJJNnNyTmJ6eTczcndQNXNKV0FGVmJL?=
- =?utf-8?B?aVQxMzJ4MUNFbTNHSmw0NHZIbzlYNXQvSlFCcUVUTkhPTEdWdUczdmYyQ3hV?=
- =?utf-8?B?eWlReFlDdEZGSVJxVVVQQkdITUFFeXUwb1BTWFUrTTRveTBnb2lxZUhUWWs2?=
- =?utf-8?B?bnFNa3ZBN3ppeC81RHZseVovZ0MrZXFBU1hQM2VpbHhDQng2eCtOTWdES2VG?=
- =?utf-8?B?OUM4S2JwOVR4azEvWGJXcUljVER2OTRrYm85eVlJKzV0V0FjanZtMzY3ZVBS?=
- =?utf-8?B?REROT3o0K1V3bG55RTBzWnhDWVZpQXVIVi9Cam4yajU3Tm15OU12WmtuK2R1?=
- =?utf-8?B?OUFnSzUyOVFTak9uOFJaZ1BSTStwRFYyZFM4YTQzNDlKS29KS2tYYXJFcEE2?=
- =?utf-8?B?RlNpODg5U3lrUDJpdEFMR2xndWljV0Z0TVFzZE0zdERKRlJkeWwzUmZmRkxk?=
- =?utf-8?B?cmZFOWxMbzkzZDBjdTNCM3UxSGwrSUtPaXN5R3JiWmtDS1duMWZ1YVdVT3JC?=
- =?utf-8?B?cWNkb2dvZmNjMWVuZE4yVUVzaytORi81UWdNMTYvTHQzOExPUDRwTUdBK3pU?=
- =?utf-8?B?R2U4WE1taUtsUEZ0V2JLNEtmcXh1QUh2VlpQdEQ3NEJEYVVvenNVSEdCeldz?=
- =?utf-8?B?R21QWi8xUjZKWEhZK3Y5ZTdHOTNRSmRuMERhWkFTZnEvSmR4Y1F4MzlIcG5l?=
- =?utf-8?B?M01hZXNETDhzcnJYSVo2K09zR25nWFBpVWN3Q0xpSjZjUXBPMkhiK1RWSmpY?=
- =?utf-8?B?YVBLc3E2d0s2TmtxSlhsNGsybmRJNkQ1ZTh2RzR1bTlSNC9ORFNCSnhVSjNT?=
- =?utf-8?Q?hkqofxxXy4A=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(19092799006); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RnY5L0FrYUJ2NjdYSUx5aGp1NzhhalpJeDBFQ3R0aDZvbDJKVW0zWWFHdUVx?=
- =?utf-8?B?ZzRPei9LOTIvaHpGUzFiSEdRQ2V5Z1NyaDJRZmhQeFFEa0tybGVXOXg1VWY0?=
- =?utf-8?B?S0JTbXlrRHFLYzdUVjFXRi9uTGJOK2RmMnJYYW5RK0svWkVnWjdzczgzczVG?=
- =?utf-8?B?MHFjYjR0YnB0ajg2WkZDVGdyRUJnMXlHUndWblI3U1dpWk1lZXdSMWYwS1BN?=
- =?utf-8?B?ZkdzZDlSSkVuZFh0enNRRmlRTjkra1dBU3ROQzRMOWhPT1N3K21tcHRpOE14?=
- =?utf-8?B?MDAvbVg3aExmQkQ5dDlmdFZIbTVyQTRHZ2ZMc24wZU5iWjdtaW5JdExVT1N4?=
- =?utf-8?B?ZU4rREVUUzdBYWpvdG5XcDU5U1Y5dUJJOHVhcVMyS2NMZ2p3NjBBQXV1RnRP?=
- =?utf-8?B?dklDRVRiL3RJVXNFYlB4NVFzcktuR2xjaGZET1I2aFY0Z1hDUWNZU1JRd054?=
- =?utf-8?B?dTBlT2FtZDZWeUlFQnhscUFuUmZ4WU11V2lrbVFLYnp4SFo0UlMwc3BhQzFG?=
- =?utf-8?B?aEZWbzR0QzFYc085M25GNnJwbVdJL0JORzVzWmV0dzhKZFRSa0dMUzhnMEhn?=
- =?utf-8?B?SkNWT3ZOUGdydHRSK0t4YytsLy9YbGxmTVJUUE8xUnVxWUMwV2ZhRG1yNDg5?=
- =?utf-8?B?aGdjWnYrQXFtbWhzQ2gyQ2UreDNWY1ozdnI2SFd3QWM0aXVvL2oyVEwrN1dE?=
- =?utf-8?B?OG80MExHUUpkSWVNOWlzRHB0U0JRcnV2ZDcrQXFWUDMvUTIyQ0VlNDFmbG1v?=
- =?utf-8?B?TXdJelQ4d2RUeFY4WHIyODhXeTIxeS94NFhaNHZsNWI0U2RqekZXTWFyQjY2?=
- =?utf-8?B?REVIVFRqaDJnd1BGMXIwNzJQL1ppbTg0dEE5dGFLVTdpcm0zNjI1RmR6dFJ2?=
- =?utf-8?B?dHNWemRZdUJ4ZDZ0aFhhSDJpcHh6N1dWc1FTQ3REY2VZWW90NWVRczAwUGdL?=
- =?utf-8?B?NU9MeTV1ejk5QXNBN1ArVTNMVUJ3ejJBVFdIVTJyclQ2NzR1OE4rL2M2Z0dk?=
- =?utf-8?B?a2hsL2ZNQUhZT0IvZkhTQ3NLcUxxaUs5MzlSZ3pZQ2JQOFRwRWdvNE9tRkVt?=
- =?utf-8?B?ek0wazlxaFhGVHpZMlhKWHo2QVhZaDRQd1hmV21KbXhDZ0l0a3ltaEQ3NFBO?=
- =?utf-8?B?TERkQ1RzWHBTeHViSks4N3ptTU80czVVNmlhU2FKaXhiUkhCdEp5ZURNWnNz?=
- =?utf-8?B?c3RhcHUyV29haUoyc3dMZzF2dG9wM3JkMjMzRXpadHNIZUJweUNhanAvSzR3?=
- =?utf-8?B?YW8xd3pDUHNIQ3FhUXE5anlxSFNUc2NJL2F1bS84YkNLemJYdkNHcVpHVUNw?=
- =?utf-8?B?YjFXaldiQjNLdHdoUzdYUUlPajdrenV2WHNJckNpVlM5dTNPNzFseUdzazVG?=
- =?utf-8?B?VlpCR0VZVmlwdzRtU1NRaXhRVU9sNWU5dm5XN3FmbHRUVWpwSDU4bWNwWDB5?=
- =?utf-8?B?WlVaMUtXOExnTzlCZ1BuY0dNY3VtVGtpZ0diMHRvblFJTnBWMHd2WURVa3A5?=
- =?utf-8?B?YWJMaFplZ2N6b2hCU1JhZGxZc21WSDZwV1dNbkVZR1JZRjN3Q1k0dG4vL1NW?=
- =?utf-8?B?U3lZU0w0YmdqSFdLWVZvSHA5SUdsLzdIeUtjeHFwRnpWT3c0VER2TzVoSFRQ?=
- =?utf-8?B?c2VpRVdYZ3NrczJneGhRZFN0QUJuck9lMHV4SS9NR1N0c2cwckN3dDJ3ckdT?=
- =?utf-8?B?U3RtdjdNMzBDR28vZUtIcVlndGtzMCtCcEcrbHJmRjh2UEo5T05NbG1xTC9m?=
- =?utf-8?B?ZHdmRlBSbUcya1JVcHNnVitWbnJuc1hUcTVUZkE2MTl0ai85NGVpMkdSS2xs?=
- =?utf-8?B?N0Z5eHhMaHIvRVdrSVpWc1FJVEtCWXhXWjV4N1FaQ0lEdGJTdFBucEhqSi9n?=
- =?utf-8?B?cHFGV25oSHdwS2haeTVqdS9EaWVWeDJxRzJCeHNuK3drSDNobUtuNnFUQXg2?=
- =?utf-8?B?cmRIMklQOUR4SmxoNEF3T3UvOUVwYkpRcWdTV09lR1l1N3pHTHJiTmdvYWtm?=
- =?utf-8?B?c1dhVVMzNGJDNmptbVloeWUwWFdQb2FKc2loZmFqUUpUSzRnSWZWM3dhd0VN?=
- =?utf-8?B?cmgxMlc3WStUUFkrd0dRL0tVVUdJWkNYaU9DT2w0aVB5WUJBWHlEWGF0SUk1?=
- =?utf-8?B?UTF6Ulc2NkZoODVMRktOdUg4cTEvbjNQZ2dKcXdsbVAyV09saEFLbUxGUFJ4?=
- =?utf-8?B?N1E9PQ==?=
-X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: 71a14027-09ea-480c-580d-08dde4ae0527
-X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2025 14:37:02.0320 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: FsaO7V25M21/+d31uatE7kayjVblXWEwznlSWjz9mgGyRF/PCLwNUOLXKtaP7SjVKEvf0TOWVzkebdDVF+xmu1HZuqaK4ez/QrN2oCzkmfQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZRAP278MB0128
-Received-SPF: pass client-ip=40.107.167.82;
- envelope-from=florian.hofhammer@epfl.ch;
- helo=ZRZP278CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 00/18] rust: split qemu-api
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-rust@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20250826140449.4190022-1-marcandre.lureau@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250826140449.4190022-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -231,19 +149,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+On 8/26/25 16:04, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Hi,
+> 
+> qemu-api is providing bindings for various internal libraries. Instead, the
+> bindings requirements should match the various libraries and use the minimal set
+> of dependencies.
+> 
+> An initial Rust-only "common" crate is introduced, then "util" (for libqemuutil,
+> without bql), "migration" (so it doesn't depend on bql), "bql", "qom" (arguably,
+> bql shouldn't be required?), and "chardev", "system", "hwcore". Finally the
+> qemu-api crates are renamed and repurposed.
+> 
+> This involves a lot of code churn, so hopefully it can be reviewed and merged
+> early and iterated upon :)
 
-> I think writing the patches would be a useful exercise anyway. The way
-> the plugin code is structured should mean you can keep the changes
-> fairly localised which would reduce the burden of maintaining an
-> out-of-tree patch if it isn't accepted. This wasn't really possible
-> pre-plugins as instrumentation was often deep in the frontends which is
-> actively maintained code with constant changes making re-basing a
-> nightmare.
+The one comment that I would like to handle before merging, is that I'd 
+prefer to keep the preludes and, in fact, even add more exports to them 
+since they can now be chosen per-crate.  Ideally, many of the crates 
+you've crated would be accessed through many "use xyz::prelude::*" 
+statements.
 
-I'll try to work on this and ask for feedback once I have some decent
-patches ready. Thanks for the explanations and support so far!
+Also, if I understood correctly the split util/errno.rs can move to 
+common/.  While it has a dependency on libc, it doesn't need bindgen.
 
-Best regards,
-Florian
+There's a bunch of code duplication for the various bindings.rs and 
+build.rs files, which is not ideal but shouldn't grow much more than 
+this.  I wonder if, later, common code across build.rs could be written 
+just once by adding a new crate (e.g. "qemu_meson") to the workspace, 
+that can be used as a build-dependency.
+
+Paolo
+
+> Marc-André Lureau (18):
+>    rust: remove unused global qemu "allocator"
+>    rust: add workspace authors
+>    rust: split Rust-only "common" crate
+>    rust: split "util" crate
+>    rust: move vmstate_clock!() to qdev module
+>    rust: move VMState handling to QOM module
+>    rust: move Cell vmstate impl
+>    rust: split "migration" crate
+>    rust: split "bql" crate
+>    rust: split "qom" crate
+>    rust: split "chardev" crate
+>    rust: split "system" crate
+>    rust: split "hwcore" crate
+>    rust: rename qemu_api_macros -> qemu_macros
+>    rust/hpet: drop now unneeded qemu_api dep
+>    rust/pl011: drop dependency on qemu_api
+>    rust: repurpose qemu_api -> tests
+>    docs: update rust.rst
+> 
+>   MAINTAINERS                                   |  12 +-
+>   docs/devel/rust.rst                           |  51 +--
+>   meson.build                                   |   4 -
+>   rust/bql/wrapper.h                            |  27 ++
+>   rust/chardev/wrapper.h                        |  28 ++
+>   rust/hw/char/pl011/wrapper.h                  |  51 +++
+>   rust/hw/core/wrapper.h                        |  32 ++
+>   rust/{qemu-api => migration}/wrapper.h        |  20 --
+>   rust/qom/wrapper.h                            |  27 ++
+>   rust/system/wrapper.h                         |  29 ++
+>   rust/util/wrapper.h                           |  32 ++
+>   rust/Cargo.lock                               | 127 ++++++-
+>   rust/Cargo.toml                               |  16 +-
+>   rust/bits/Cargo.toml                          |   2 +-
+>   rust/bits/meson.build                         |   2 +-
+>   rust/bits/src/lib.rs                          |   4 +-
+>   rust/{qemu-api => bql}/Cargo.toml             |  13 +-
+>   rust/{qemu-api => bql}/build.rs               |   2 +-
+>   rust/bql/meson.build                          |  52 +++
+>   rust/bql/src/bindings.rs                      |  25 ++
+>   rust/{qemu-api => bql}/src/cell.rs            | 333 +++---------------
+>   rust/bql/src/lib.rs                           |  29 ++
+>   rust/chardev/Cargo.toml                       |  24 ++
+>   rust/chardev/build.rs                         |  43 +++
+>   rust/chardev/meson.build                      |  54 +++
+>   rust/chardev/src/bindings.rs                  |  36 ++
+>   rust/{qemu-api => chardev}/src/chardev.rs     |  35 +-
+>   rust/chardev/src/lib.rs                       |   4 +
+>   rust/common/Cargo.toml                        |  16 +
+>   rust/common/meson.build                       |  32 ++
+>   rust/{qemu-api => common}/src/assertions.rs   |  16 +-
+>   rust/{qemu-api => common}/src/bitops.rs       |   1 -
+>   rust/{qemu-api => common}/src/callbacks.rs    |  12 +-
+>   rust/common/src/lib.rs                        |  17 +
+>   rust/common/src/opaque.rs                     | 240 +++++++++++++
+>   rust/{qemu-api => common}/src/uninit.rs       |   2 +-
+>   rust/common/src/zeroable.rs                   |  18 +
+>   rust/hw/char/pl011/Cargo.toml                 |  11 +-
+>   rust/hw/char/pl011/build.rs                   |  43 +++
+>   rust/hw/char/pl011/meson.build                |  39 +-
+>   rust/hw/char/pl011/src/bindings.rs            |  27 ++
+>   rust/hw/char/pl011/src/device.rs              |  49 +--
+>   rust/hw/char/pl011/src/lib.rs                 |   1 +
+>   rust/hw/char/pl011/src/registers.rs           |   4 +-
+>   rust/hw/core/Cargo.toml                       |  26 ++
+>   rust/hw/core/build.rs                         |  43 +++
+>   rust/{qemu-api => hw/core}/meson.build        |  86 ++---
+>   rust/hw/core/src/bindings.rs                  |  41 +++
+>   rust/{qemu-api => hw/core}/src/irq.rs         |  18 +-
+>   rust/hw/core/src/lib.rs                       |  12 +
+>   rust/{qemu-api => hw/core}/src/qdev.rs        |  81 +++--
+>   rust/{qemu-api => hw/core}/src/sysbus.rs      |  28 +-
+>   rust/{qemu-api => hw/core}/tests/tests.rs     |  29 +-
+>   rust/hw/timer/hpet/Cargo.toml                 |  10 +-
+>   rust/hw/timer/hpet/meson.build                |  12 +-
+>   rust/hw/timer/hpet/src/device.rs              |  56 ++-
+>   rust/hw/timer/hpet/src/fw_cfg.rs              |   6 +-
+>   rust/meson.build                              |  12 +-
+>   rust/migration/Cargo.toml                     |  21 ++
+>   rust/migration/build.rs                       |  43 +++
+>   rust/migration/meson.build                    |  57 +++
+>   rust/migration/src/bindings.rs                |  48 +++
+>   rust/migration/src/lib.rs                     |   4 +
+>   rust/{qemu-api => migration}/src/vmstate.rs   | 166 ++++-----
+>   rust/qemu-api/.gitignore                      |   2 -
+>   rust/qemu-api/README.md                       |  19 -
+>   rust/qemu-api/src/lib.rs                      | 170 ---------
+>   rust/qemu-api/src/prelude.rs                  |  31 --
+>   rust/qemu-api/src/zeroable.rs                 |  37 --
+>   .../Cargo.toml                                |   2 +-
+>   .../meson.build                               |  10 +-
+>   .../src/bits.rs                               |   0
+>   .../src/lib.rs                                |  20 +-
+>   .../src/tests.rs                              |   8 +-
+>   rust/qom/Cargo.toml                           |  23 ++
+>   rust/qom/build.rs                             |  43 +++
+>   rust/qom/meson.build                          |  61 ++++
+>   rust/qom/src/bindings.rs                      |  25 ++
+>   rust/qom/src/lib.rs                           |   4 +
+>   rust/{qemu-api => qom}/src/qom.rs             |  27 +-
+>   rust/qom/tests/tests.rs                       |  47 +++
+>   rust/system/Cargo.toml                        |  22 ++
+>   rust/system/build.rs                          |  43 +++
+>   rust/system/meson.build                       |  57 +++
+>   rust/{qemu-api => system}/src/bindings.rs     |  33 +-
+>   rust/system/src/lib.rs                        |   4 +
+>   rust/{qemu-api => system}/src/memory.rs       |  20 +-
+>   rust/tests/Cargo.toml                         |  30 ++
+>   rust/tests/meson.build                        |  14 +
+>   .../tests/vmstate_tests.rs                    |  18 +-
+>   rust/util/Cargo.toml                          |  23 ++
+>   rust/util/build.rs                            |  43 +++
+>   rust/util/meson.build                         |  61 ++++
+>   rust/util/src/bindings.rs                     |  25 ++
+>   rust/{qemu-api => util}/src/errno.rs          |  11 +-
+>   rust/{qemu-api => util}/src/error.rs          |   6 +-
+>   rust/util/src/lib.rs                          |  10 +
+>   rust/{qemu-api => util}/src/log.rs            |  12 +-
+>   rust/{qemu-api => util}/src/module.rs         |   2 +-
+>   rust/{qemu-api => util}/src/timer.rs          |  12 +-
+>   100 files changed, 2372 insertions(+), 1044 deletions(-)
+>   create mode 100644 rust/bql/wrapper.h
+>   create mode 100644 rust/chardev/wrapper.h
+>   create mode 100644 rust/hw/char/pl011/wrapper.h
+>   create mode 100644 rust/hw/core/wrapper.h
+>   rename rust/{qemu-api => migration}/wrapper.h (77%)
+>   create mode 100644 rust/qom/wrapper.h
+>   create mode 100644 rust/system/wrapper.h
+>   create mode 100644 rust/util/wrapper.h
+>   rename rust/{qemu-api => bql}/Cargo.toml (52%)
+>   rename rust/{qemu-api => bql}/build.rs (96%)
+>   create mode 100644 rust/bql/meson.build
+>   create mode 100644 rust/bql/src/bindings.rs
+>   rename rust/{qemu-api => bql}/src/cell.rs (70%)
+>   create mode 100644 rust/bql/src/lib.rs
+>   create mode 100644 rust/chardev/Cargo.toml
+>   create mode 100644 rust/chardev/build.rs
+>   create mode 100644 rust/chardev/meson.build
+>   create mode 100644 rust/chardev/src/bindings.rs
+>   rename rust/{qemu-api => chardev}/src/chardev.rs (91%)
+>   create mode 100644 rust/chardev/src/lib.rs
+>   create mode 100644 rust/common/Cargo.toml
+>   create mode 100644 rust/common/meson.build
+>   rename rust/{qemu-api => common}/src/assertions.rs (92%)
+>   rename rust/{qemu-api => common}/src/bitops.rs (98%)
+>   rename rust/{qemu-api => common}/src/callbacks.rs (97%)
+>   create mode 100644 rust/common/src/lib.rs
+>   create mode 100644 rust/common/src/opaque.rs
+>   rename rust/{qemu-api => common}/src/uninit.rs (98%)
+>   create mode 100644 rust/common/src/zeroable.rs
+>   create mode 100644 rust/hw/char/pl011/build.rs
+>   create mode 100644 rust/hw/char/pl011/src/bindings.rs
+>   create mode 100644 rust/hw/core/Cargo.toml
+>   create mode 100644 rust/hw/core/build.rs
+>   rename rust/{qemu-api => hw/core}/meson.build (52%)
+>   create mode 100644 rust/hw/core/src/bindings.rs
+>   rename rust/{qemu-api => hw/core}/src/irq.rs (92%)
+>   create mode 100644 rust/hw/core/src/lib.rs
+>   rename rust/{qemu-api => hw/core}/src/qdev.rs (86%)
+>   rename rust/{qemu-api => hw/core}/src/sysbus.rs (87%)
+>   rename rust/{qemu-api => hw/core}/tests/tests.rs (88%)
+>   create mode 100644 rust/migration/Cargo.toml
+>   create mode 100644 rust/migration/build.rs
+>   create mode 100644 rust/migration/meson.build
+>   create mode 100644 rust/migration/src/bindings.rs
+>   create mode 100644 rust/migration/src/lib.rs
+>   rename rust/{qemu-api => migration}/src/vmstate.rs (80%)
+>   delete mode 100644 rust/qemu-api/.gitignore
+>   delete mode 100644 rust/qemu-api/README.md
+>   delete mode 100644 rust/qemu-api/src/lib.rs
+>   delete mode 100644 rust/qemu-api/src/prelude.rs
+>   delete mode 100644 rust/qemu-api/src/zeroable.rs
+>   rename rust/{qemu-api-macros => qemu-macros}/Cargo.toml (94%)
+>   rename rust/{qemu-api-macros => qemu-macros}/meson.build (63%)
+>   rename rust/{qemu-api-macros => qemu-macros}/src/bits.rs (100%)
+>   rename rust/{qemu-api-macros => qemu-macros}/src/lib.rs (91%)
+>   rename rust/{qemu-api-macros => qemu-macros}/src/tests.rs (93%)
+>   create mode 100644 rust/qom/Cargo.toml
+>   create mode 100644 rust/qom/build.rs
+>   create mode 100644 rust/qom/meson.build
+>   create mode 100644 rust/qom/src/bindings.rs
+>   create mode 100644 rust/qom/src/lib.rs
+>   rename rust/{qemu-api => qom}/src/qom.rs (98%)
+>   create mode 100644 rust/qom/tests/tests.rs
+>   create mode 100644 rust/system/Cargo.toml
+>   create mode 100644 rust/system/build.rs
+>   create mode 100644 rust/system/meson.build
+>   rename rust/{qemu-api => system}/src/bindings.rs (56%)
+>   create mode 100644 rust/system/src/lib.rs
+>   rename rust/{qemu-api => system}/src/memory.rs (95%)
+>   create mode 100644 rust/tests/Cargo.toml
+>   create mode 100644 rust/tests/meson.build
+>   rename rust/{qemu-api => tests}/tests/vmstate_tests.rs (96%)
+>   create mode 100644 rust/util/Cargo.toml
+>   create mode 100644 rust/util/build.rs
+>   create mode 100644 rust/util/meson.build
+>   create mode 100644 rust/util/src/bindings.rs
+>   rename rust/{qemu-api => util}/src/errno.rs (98%)
+>   rename rust/{qemu-api => util}/src/error.rs (98%)
+>   create mode 100644 rust/util/src/lib.rs
+>   rename rust/{qemu-api => util}/src/log.rs (93%)
+>   rename rust/{qemu-api => util}/src/module.rs (97%)
+>   rename rust/{qemu-api => util}/src/timer.rs (93%)
+> 
+
 
