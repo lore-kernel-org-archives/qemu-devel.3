@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD955CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 09:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6553CA0FE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 09:23:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqpgF-0008U2-21; Tue, 26 Aug 2025 05:09:27 -0400
+	id 1uqpsD-0003DC-DX; Tue, 26 Aug 2025 05:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
- id 1uqpgD-0008TU-A8
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 05:09:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
- id 1uqpg6-0004Qq-Ju
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 05:09:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756199353;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/cfDsxZe4qv/ganmSR9RYxMQCiiSFV1f4aPgNcl94gQ=;
- b=bpiujDsDkMLtZze5OZ/+nHu8NCxY/eoPP8dM2U87/Dp3kWZSETM27/0vcACxFuLdVkr7lS
- FCjlIxMUkLCRcLsQd4JlAe7FcSWHomCRs//EXJvpKI8Qi6LGbLar/YVndrdD+4HV0+nudA
- csN6KGThMdzSXTVlbuDOY6jF6gPeFyU=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-362-pzsREr58M6WrMl9UgOFyDQ-1; Tue, 26 Aug 2025 05:09:12 -0400
-X-MC-Unique: pzsREr58M6WrMl9UgOFyDQ-1
-X-Mimecast-MFC-AGG-ID: pzsREr58M6WrMl9UgOFyDQ_1756199351
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-7200af345a5so28460137b3.1
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 02:09:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uqps8-0003Bd-Qf
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 05:21:45 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uqps5-0006Om-45
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 05:21:44 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-71d6059f490so47938007b3.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 02:21:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756200096; x=1756804896; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=cVT8EqQo4oW+kPc8LnM88Q3GyD1e+KQKjlAxfsHzn0Y=;
+ b=yQ/lQiDkozIiNL/jKUsuLEqcUr0O+QnvZRxays+pSygnSDSihCWJeUc2ucDPYHeqAC
+ 8kN5hu/Kgik73bkHKsOfDZ18BkGJXwXXzblwaLzbmJqv8yrLh87GDjalavk8UhYNAm74
+ GV75xNtuhcINE/XJ+U2XNF0GYOEBnRqqNxRnqQAUH0uZXhd6vYec/QCevZltejDvpQA3
+ XB49/7brsC2tLyTIhoqP4OY9i9lwCzWzdmFGuEWgepX8Sotth0AFBOng9RHYe5sfeZc4
+ VomMQOsjyyM5Oec0HzhqeGZwtfI6qa17gZGk1bqUt1fAd3chs33WQuPun395L9USJmSi
+ Ysgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756199351; x=1756804151;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/cfDsxZe4qv/ganmSR9RYxMQCiiSFV1f4aPgNcl94gQ=;
- b=exBvxUtu0wKpnO0f6cdFEGiylz5DCZi/aOHkpbQC+qh3HJ4RpU2M4sUTK4i/zHP1ni
- l+WHtdzyMzx+fiKO528McgFLEENyX47x9C2tNJUvdGlAf3pdU+S3IQAV1EfmxXSfLZDC
- MuZhcnvmdxpeA1pJr5yV78Njlg4qqWywUokOnEe4JQ8ccLZ0Kqy/EErBP6UKC6SOHW3e
- 19C0xZ6OJvJEPiEMkNNB1P/T7h5/Z2cT8Ltrdnf2XToOiI8EYhykVZT2zeGjVepJrPWZ
- VmFsSTK44Eupb6krwYo1WFN41KHzbnI916wcJcNzNTJoQU/VDs5eBsYla7PWk0U3EInp
- GQ9g==
-X-Gm-Message-State: AOJu0YzkfxeiY3HNguSP1qUNJLpNamFnOOn4CR3SZc4R7bDPWvspQiS2
- 7KSuvfiKG66uIzOhchQwra/pTjcSGaQ0Sf8I+sQ1ZMu1N3fBIxWTSLWzPqpss3hkNxfd+lliAPJ
- qaNLF3YxsOJs+nX0J+tPF7Uga71Y0Lkfce6qDvep2TbOPdW/AmIcniBP7MApX0fX94kGORw08rY
- 3cQ5jE6YXVj6bVOHrEehHWX3bFyk+qZY8=
-X-Gm-Gg: ASbGncsFQEPDaiuinYiJ/Yj+s3pcIOj2of+2ZjO+LUWjwzUiloisFim0MWBSjiN2MVs
- qWGz7NLEt1SA+8H9HJoD7dJTsQSPrtBjfqG6V+KV+XRwjsNEy9ZjH94s5tnG7Qp+Ir+Ct3CYHdn
- avh1+oNdmF45lFoEJwFOzKfromQhuVJZnMoaJlqvo5zLxRMkaaew==
-X-Received: by 2002:a05:690c:6c83:b0:71c:1a46:48f9 with SMTP id
- 00721157ae682-71fdc3d0a53mr159842957b3.33.1756199351174; 
- Tue, 26 Aug 2025 02:09:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEP2H6MHG05/HcLrAq14EgMwZwuLDqDTzHVKXgtt61qbR0NPrppYW2ultsz8jz1SRucug3opZ29mP5mZbPWYs=
-X-Received: by 2002:a05:690c:6c83:b0:71c:1a46:48f9 with SMTP id
- 00721157ae682-71fdc3d0a53mr159842737b3.33.1756199350570; Tue, 26 Aug 2025
- 02:09:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756200096; x=1756804896;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cVT8EqQo4oW+kPc8LnM88Q3GyD1e+KQKjlAxfsHzn0Y=;
+ b=DHS8HS8lLrShJ+KAHeqpiLghAvuRbrmq7ONXsERhoCjRsmptLCXQOzpKiAQenKTMw5
+ o6IN/xv28+SsiLZhZwVXd4CjfKHR3SdlXYbegHke+exasvQYek48AVheHITiriDIlpu2
+ ZwXvCL+MHTccYsz5hEPZNSstzKlRPMawNsCUx/COKdn2uq4jWu27NxZJ1haefHjbf5Wz
+ g/+c2XJrYYOeja8ILjZ6X6ZW4kl2aqtD0DbnowCyNVjR1eHz+CKtqmW2bkE5QGPBPyZN
+ PjOH4s3cYLafePAqmXexkpoXKn/k3Hnx4iqsHQUIWauc9spN/ZlAd8PxK9J40smt8af7
+ 7eYg==
+X-Gm-Message-State: AOJu0Yx9qMESM3a3DGXcO42vYHiVh5vut7uopBwkKSJLYEf/A+84U6fH
+ 4ASO9Vcd9kuG3WkehOOMtZXuLbhQ5GuNfqGF4S+L1SE6jfRJ8cUUWczYaW0wWmlZncR9krNEULl
+ GDZ5PKr9GtKEHur5M34VL6DBqeLOZOWDsCXeauexH8w==
+X-Gm-Gg: ASbGnctnXGcU8FdjsVu4oOBGM+4sm1bHnlYE0dSK5QiJl+0qS31EkFOosIgNz/DZeUX
+ 94JD/Ao+zflmpDbU+6PCFexn4k21dfsTbGbmEaEWT5Cynv6EwgL90UHrG3WMwCGqMlSkqewwEBf
+ XWtDtyiK8DVpUe2KxncGF1c+awW4ha4EL6fXianTnIXJWgYQJeHc6QpUK03IQY39nVmvXZ5DRRW
+ 5W0kMapPcPqE60bAoU=
+X-Google-Smtp-Source: AGHT+IGdJWD0WCczBe3htWp1bnyINaxl97XJ4ggXdwjchtKDu2qxn0hdjKqlPRfjVb4z7W4skgk2WGnKHLSv3uDs2Fk=
+X-Received: by 2002:a05:690c:4d88:b0:70c:c013:f26 with SMTP id
+ 00721157ae682-71fdc401aa8mr164838487b3.33.1756200096481; Tue, 26 Aug 2025
+ 02:21:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250825145241.170717-1-kkostiuk@redhat.com>
- <20250825145241.170717-2-kkostiuk@redhat.com>
-In-Reply-To: <20250825145241.170717-2-kkostiuk@redhat.com>
-From: Yan Vugenfirer <yvugenfi@redhat.com>
-Date: Tue, 26 Aug 2025 12:08:59 +0300
-X-Gm-Features: Ac12FXzVWe7CCrOlRKI7S9yPGPmogN9cIiu8ozzEyokwr1_FEfBk6-sTWlHZUl8
-Message-ID: <CAGoVJZwBEJ86fszad4j5AhOwmm_YURNhmYSJZrjGx_bAAbD-Zg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] qga-vss: Replace asserts with condition and report
- error
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
+References: <20250629204851.1778-1-shentey@gmail.com>
+ <20250629204851.1778-3-shentey@gmail.com>
+ <CAFEAcA-HaQwySM1j7Cy_R1z0fM1D9ykiBiMKLYNVYF+Tm_mrPA@mail.gmail.com>
+ <78B2535C-38D8-4612-8958-49AC28482A8D@gmail.com>
+ <CAFEAcA9b+1xx+Esnt80Ny1gWBOsh-QYYxuP6PwiPk-B20xv0Dw@mail.gmail.com>
+ <3DA254A8-76AC-4214-8C65-D3B3FFF55FF9@gmail.com>
+In-Reply-To: <3DA254A8-76AC-4214-8C65-D3B3FFF55FF9@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 Aug 2025 10:21:25 +0100
+X-Gm-Features: Ac12FXzkdbz8sSFdHkKIw5XmLVSnuk_qul-gsCB_G4ZzkqTuDewcIWi7cASaKvg
+Message-ID: <CAFEAcA-0843-YZMDqTDhiJgF223UrAcb8cQL5-ns12o8VHaT_g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/arm/imx8mp-evk: Add KVM support
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=yvugenfi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,60 +98,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 25, 2025 at 5:52=E2=80=AFPM Kostiantyn Kostiuk <kkostiuk@redhat=
-.com> wrote:
+On Tue, 8 Jul 2025 at 17:36, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-> ---
->  qga/vss-win32/requester.cpp | 19 ++++++++++++++++---
->  1 file changed, 16 insertions(+), 3 deletions(-)
 >
-> diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-> index 4401d55e3a..bc260abb96 100644
-> --- a/qga/vss-win32/requester.cpp
-> +++ b/qga/vss-win32/requester.cpp
-> @@ -347,7 +347,12 @@ void requester_freeze(int *num_vols, void *mountpoin=
-ts, ErrorSet *errset)
->          goto out;
->      }
 >
-> -    assert(pCreateVssBackupComponents !=3D NULL);
-> +    if (!pCreateVssBackupComponents) {
-> +        err_set(errset, (HRESULT)ERROR_PROC_NOT_FOUND,
-> +                "CreateVssBackupComponents proc address absent. Did you =
-call requester_init()?");
-> +        goto out;
-> +    }
-> +
->      hr =3D pCreateVssBackupComponents(&vss_ctx.pVssbc);
->      if (FAILED(hr)) {
->          err_set(errset, hr, "failed to create VSS backup components");
-> @@ -579,8 +584,16 @@ void requester_thaw(int *num_vols, void *mountpints,=
- ErrorSet *errset)
->      /* Tell the provider that the snapshot is finished. */
->      SetEvent(vss_ctx.hEventThaw);
+> Am 30. Juni 2025 21:03:06 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
+> >On Mon, 30 Jun 2025 at 21:22, Bernhard Beschow <shentey@gmail.com> wrote:
+> >>
+> >>
+> >>
+> >> Am 30. Juni 2025 09:09:31 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
+> >> >On Sun, 29 Jun 2025 at 21:49, Bernhard Beschow <shentey@gmail.com> wrote:
+> >> >>
+> >> >> Allows the imx8mp-evk machine to be run with KVM acceleration as a guest.
+> >> >>
+> >> >> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> >> >> ---
+> >> >>  docs/system/arm/imx8mp-evk.rst |  7 +++++++
+> >> >>  hw/arm/fsl-imx8mp.c            | 33 ++++++++++++++++++++++++++++-----
+> >> >>  hw/arm/imx8mp-evk.c            | 11 +++++++++++
+> >> >>  hw/arm/Kconfig                 |  3 ++-
+> >> >>  hw/arm/meson.build             |  2 +-
+> >> >>  5 files changed, 49 insertions(+), 7 deletions(-)
+> >> >
+> >> >This puts a lot of IMX device models onto our security boundary,
+> >> >which makes me a bit nervous -- that's a lot of code which
+> >> >wasn't really written or reviewed carefully to ensure it
+> >> >can't be exploited by a malicious guest.
+> >>
+> >> Hi Peter,
+> >>
+> >> Does KVM increase the attack surface compared to TCG?
+> >
+> >Yes, because our security policy says that TCG is not considered
+> >a security boundary, whereas KVM is:
+> >
+> >https://qemu-project.gitlab.io/qemu/system/security.html
+> >
+> >(It would move from "non-virtualization use case" to
+> >"virtualization use case".)
 >
-> -    assert(vss_ctx.pVssbc);
-> -    assert(vss_ctx.pAsyncSnapshot);
-> +    if (!vss_ctx.pVssbc) {
-> +        err_set(errset, (HRESULT)VSS_E_BAD_STATE,
-> +                "CreateVssBackupComponents is missing. Did you freeze th=
-e volumes?");
-> +        return;
-> +    }
-> +    if (!vss_ctx.pAsyncSnapshot) {
-> +        err_set(errset, (HRESULT)VSS_E_BAD_STATE,
-> +                "AsyncSnapshot set is missing. Did you freeze the volume=
-s?");
-> +        return;
-> +    }
+> Thanks, that document nails my question.
 >
->      HRESULT hr =3D WaitForAsync(vss_ctx.pAsyncSnapshot);
->      switch (hr) {
-> --
-> 2.50.1
->
+> If KVM requires the imx devices to be inside the security boundary, what needs to be done to lift them there?
 
-Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
+Code audit, fuzzing, commitments to maintenance. Basically
+I would strongly prefer not to.
 
+-- PMM
 
