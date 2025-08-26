@@ -4,91 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE65CA0EE4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB79CA0FE7
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 05:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqmHd-0003hS-BP; Tue, 26 Aug 2025 01:31:49 -0400
+	id 1uqmHD-0003Vp-Be; Tue, 26 Aug 2025 01:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
- id 1uqmHY-0003fY-OT
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 01:31:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1uqmH8-0003T3-75; Tue, 26 Aug 2025 01:31:19 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
- id 1uqmHT-00056S-JX
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 01:31:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756186294;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=arzY1zaiIadmcE3kE+Cl9U2WIt3ZzJN8rNJ1N+aTBZU=;
- b=DqAaD8EJUNvnddb4hedGVCsWTm22tfSXV6g9mrMq5DAb/FgaTU5YNYarDeMvIP4+nm2fLG
- xDDBh9pl820DTlzaFsD1zZUuZxv3uLn3YSg6EeRlMpbjQF+T2HFLxdM8odyqqGgaYjvjb9
- 1uzK4TbQE/vFXzQEPS5hjqi3FMiHpnc=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-TBW3rqB5P0m5LYJCfUeZEg-1; Tue, 26 Aug 2025 01:30:12 -0400
-X-MC-Unique: TBW3rqB5P0m5LYJCfUeZEg-1
-X-Mimecast-MFC-AGG-ID: TBW3rqB5P0m5LYJCfUeZEg_1756186212
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-71e7d652a65so60629667b3.1
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 22:30:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756186212; x=1756791012;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=arzY1zaiIadmcE3kE+Cl9U2WIt3ZzJN8rNJ1N+aTBZU=;
- b=saF9RytKlAZN+R9C8vZ3U+kgTz/kmmhcNuak7Ussa1uafi/N7qA7jn1iOgo9A6etVW
- +rawIKSZlWjkh6pX+ehegFxyiZX1xnyUn5CB0EG2+BBWMCuMV+NQjn2DMsLrMmPuaB1R
- gUTMvEXRhGZrJfVDPDA2hbYn1Wk9Ps105PnWKc781mZaRvwDxGULmMsylQedacUqP1MW
- o3+PhkxFK7BoKMqLq8v5337ybJGqaWz6JLWtny0laSQuRG1w3WeFJl9Ol4KEzpMTw0E2
- b3kMV5knDGnrTyFxV4EdUnv01I2N+OLp3kqUK+/JWsX/ix6Quodtj1+PZj/o/CMlQ7vv
- 1aeg==
-X-Gm-Message-State: AOJu0Ywk5f9MPwg5BtGt6HkbE+Mmhe44OhkH3B9AVchy0Nabrd3Zxg6z
- PsU4Ex+ky09vpF/SYN1LONl2fMO4h/Lybv/QjMNTA4m+EpC4LyIS4GgF4tI7p3ogu2W13ME8k1f
- 0BgL97lF3DdZJzfKAceNzOXNuB1kWa2JX5DX57RhPky1+2uCWavy2Hk+4Uoa49klKOUzxYl6yT0
- 8kUwtgzrEWrdw3la1hS6700zO39gS9mpk=
-X-Gm-Gg: ASbGncuOPgWpaPx/mvEDprLbBwNBSrN4jrEaUGgEUsBmUP6zVa+mmCd+ihwYd7B1Rxb
- GNSvQwOb70zgQMgs13Qs7Wo6mXTkdMyyRReFVmtsuCUrzvTcwKPcZlQh6liWrL+vDoCDFqhcMd5
- D/aznpyokX9McgLfFAOChHbtMd8a2tJbFBfLVTr+8TGolfcThHh/a8+FwF0u2HRBKBkykouFofv
- FCv/kduq9EM
-X-Received: by 2002:a05:690c:a041:b0:71f:eb2b:83e0 with SMTP id
- 00721157ae682-71feb2b8887mr120812337b3.13.1756186211744; 
- Mon, 25 Aug 2025 22:30:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4Vp0aCeFGb+5zUvcapRValTo1OLGGqHogcY06tTLt0Uo9X0dE73nInnraY2gi2OjrMgIqkAuLSbmQfNieuRg=
-X-Received: by 2002:a05:690c:a041:b0:71f:eb2b:83e0 with SMTP id
- 00721157ae682-71feb2b8887mr120812157b3.13.1756186211124; Mon, 25 Aug 2025
- 22:30:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1uqmH0-00052q-Qe; Tue, 26 Aug 2025 01:31:16 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PJJ9Wb032393;
+ Tue, 26 Aug 2025 05:31:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=jneueb
+ 4z6SxKShCinPAZH4aleemwlEJUUyThJoxli+0=; b=L8VpXnD0AylOeKCygm+46S
+ bs+XJ8Gj3dMVXsxQ1jh2925nu+rLNVb82/naaWSp4FW5oyla/ZmusX3Y7p7QueAY
+ vE908MA07LVXRlr4/z6Rd2lWcz2Ibu5r/rmh5cdtdkvBDn48PZrsZAFFR4aruU6U
+ k2iskmp89+2qKubg5CAyWVb/XiT87qeTLjqucNz/jWoOXQsmyTC/5w4ooydUTg1n
+ tdo/CZR1xDx54ddjxvCcX7pjwZbucYaLlf8ShNlY8pigZ5zCyM0Vq4WCXxtGBFCC
+ WoPMCFYeyctorfvCvvCG43gtFo66vPrXKTATYdH5VGTRNyNF+9HVX9+GvA1wLKtQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5avcnr5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Aug 2025 05:31:03 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57Q5V3ir016920;
+ Tue, 26 Aug 2025 05:31:03 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5avcnr4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Aug 2025 05:31:03 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57Q31vjk029895;
+ Tue, 26 Aug 2025 05:31:01 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48qsfmh5qd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Aug 2025 05:31:01 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57Q5V07529164160
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 26 Aug 2025 05:31:00 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A303F58056;
+ Tue, 26 Aug 2025 05:31:00 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 553B95803F;
+ Tue, 26 Aug 2025 05:30:58 +0000 (GMT)
+Received: from [9.109.242.24] (unknown [9.109.242.24])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 26 Aug 2025 05:30:58 +0000 (GMT)
+Message-ID: <b226f689-4a14-418b-9b60-72f4f5b38439@linux.ibm.com>
+Date: Tue, 26 Aug 2025 11:00:56 +0530
 MIME-Version: 1.0
-References: <20250825145241.170717-1-kkostiuk@redhat.com>
- <20250825145241.170717-3-kkostiuk@redhat.com>
-In-Reply-To: <20250825145241.170717-3-kkostiuk@redhat.com>
-From: Yan Vugenfirer <yvugenfi@redhat.com>
-Date: Tue, 26 Aug 2025 08:29:58 +0300
-X-Gm-Features: Ac12FXxaA6e12cf5I0S_hAuEA_bHdCZtxciCtzsO1furTsrfdQmUAvlVBLwFG0I
-Message-ID: <CAGoVJZwcqsuOQaD2m_DvcsvgXRS0fCx8T+3VyE3+ViH7chGHfQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] qga-vss: Remove unused dependencies
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=yvugenfi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] target/ppc: Add IBM PPE42 family of processors
+To: milesg@linux.ibm.com, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@redhat.com, npiggin@gmail.com, thuth@redhat.com, 
+ rathc@linux.ibm.com, richard.henderson@linaro.org
+References: <20250819212856.219932-1-milesg@linux.ibm.com>
+ <20250819212856.219932-2-milesg@linux.ibm.com>
+ <0d2c9aa2-2dcc-4c22-8f33-e5ecac907cf4@linux.ibm.com>
+ <b05363c1d72f93950f5872e59c1c4cf6c426b017.camel@linux.ibm.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <b05363c1d72f93950f5872e59c1c4cf6c426b017.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: a3L7t3Cu0TjENRrMKBRLL3UGOdQRrZty
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAyMSBTYWx0ZWRfXxdLhwrZ2Ovck
+ nC6/7mqE3DTLT8n2PTSawkUoCxvwv60KjWJMjQRDg08SPEU79ohAQGyhnhf5IqS++d1hDnCBuoG
+ Ydr/y6aGNmuRg1wDIYMBiqlseqIG0Cnh5JuGlWU5+8308J53WdXx/3bno0ejzJ6IKXwX0SpZePR
+ 6WSfnslbpgGhEkfe3BKeUAL0G4nu8aW1NcqF7mtD5MFZX2am+EhYC9y5Rk0MfB16jBFvA2BmfL2
+ heZxdch25vPZoKUIGBd/iEruV8N2J7JI8xo5W5DlSK6NBkvuBXhQ4yFnqHjWuyHFxR6ZfX0IvA4
+ 1Fh/kLahbpas8BF+o4KXj8AzKfxBbKpokVS6pf3v6f8V8phmAseoTx8g8VBFJTmQ2PwT3hqr+Jo
+ hj6q2VlG
+X-Proofpoint-ORIG-GUID: TrY-UXa-BuvvrgUTQgH0ZmhEkK7enqZZ
+X-Authority-Analysis: v=2.4 cv=SNNCVPvH c=1 sm=1 tr=0 ts=68ad4697 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=f7IdgyKtn90A:10
+ a=dIoP19eksFL2bOAxed0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-26_01,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230021
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,37 +129,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 25, 2025 at 5:52=E2=80=AFPM Kostiantyn Kostiuk <kkostiuk@redhat=
-.com> wrote:
->
-> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-> ---
->  qga/vss-win32/meson.build | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->
-> diff --git a/qga/vss-win32/meson.build b/qga/vss-win32/meson.build
-> index 0ac918910b..a6b810f12a 100644
-> --- a/qga/vss-win32/meson.build
-> +++ b/qga/vss-win32/meson.build
-> @@ -13,13 +13,11 @@ qga_vss =3D shared_module(
->    link_args: link_args,
->    vs_module_defs: 'qga-vss.def',
->    dependencies: [
-> -    glib,
->      socket,
->      cc.find_library('ole32'),
->      cc.find_library('oleaut32'),
->      cc.find_library('shlwapi'),
-> -    cc.find_library('uuid'),
-> -    cc.find_library('intl')
-> +    cc.find_library('uuid')
->    ]
->  )
->
-> --
-> 2.50.1
->
 
-Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
 
+On 8/25/25 22:26, Miles Glenn wrote:
+>>> @@ -186,6 +186,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
+>>>        if (env->spr[SPR_LPCR] & LPCR_HR) {
+>>>            hflags |= 1 << HFLAGS_HR;
+>>>        }
+>>> +    if (ppc_flags & POWERPC_FLAG_PPE42) {
+>>> +        /* PPE42 has a single address space and no problem state */
+>>> +        msr = 0;
+>>> +    }
+>> We really dont want this to be checked on PPC64 machines, hence
+>> !TARGET_PPC64 needed.
+>>
+> This is related to the issue of whether we want to continue supporting
+> 32-bit CPUs inside the 64-bit executable.  It seems that the community
+> is saying that we should continue to do that, so I'd like to keep this
+> in even for PPC64 machines, but I will go ahead and add an 'unlikely'
+> here in order to possibly lessen the impact.
+
+Yeh, sure, that should suffice for now.
+
+Thanks
+Harsh
 
