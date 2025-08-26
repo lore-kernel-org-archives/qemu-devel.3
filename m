@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C428CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 08:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368CFCA0FE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 08:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqosU-0007nq-Kz; Tue, 26 Aug 2025 04:18:02 -0400
+	id 1uqp12-0001k3-Nv; Tue, 26 Aug 2025 04:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1uqosJ-0007n4-QM
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 04:17:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1uqos7-0005J3-K8
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 04:17:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756196253;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=otsioMDDDis+4o/eJGjGOmPyrqxlHNYb4cwQxBf4zb4=;
- b=hIJLWGWR7GR8qnQiqNVuMVNwmgokfAqR23CFWSlZUrHnEU3WOuKvnRkSjRUXQZiErexFL4
- QHFqdnZG3mk8wVEl3JjQxw/fm0fUNnn2qZz1SXiOI81mSoxehZfHiyV+GrEzCvjk6dpWR/
- AF7ks1gd6ADKGr/IMFcEBlMY/kdUXV4=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-345-RMCC2RTnMQ-cqWBO2YcmUQ-1; Tue, 26 Aug 2025 04:17:30 -0400
-X-MC-Unique: RMCC2RTnMQ-cqWBO2YcmUQ-1
-X-Mimecast-MFC-AGG-ID: RMCC2RTnMQ-cqWBO2YcmUQ_1756196250
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-70d93f579ceso95340326d6.1
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 01:17:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uqp10-0001jg-KE
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 04:26:50 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uqp0s-0006pe-Fr
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 04:26:50 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-45b5d49ae47so11322215e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 01:26:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756196797; x=1756801597; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KnQZoJzcxwr/v3SVAw+XhgMswGl/dIdrzKeK5w4puc4=;
+ b=mSma+i0SQ8uQ8mYtLh+fJIPI5MSZPoZYF5/B9jKtt/JnS2Pr8V2nniOcJGcFZ1ZJrP
+ o+BV6Qw0frCi6oY2sLkQNaZlKsfYu+CYlBG7fm+EUfNEh4LB34p1RF8J6cn50kNDTHFV
+ 4v5TrCl5cAwccrGtt7cRCq0L9aiH7WOGl4HfBgTwqhwMiXdcvwXizJwU3NrzRCP+KdrT
+ O41n8W8WaaxE8Ja8DT3vv0Dh4mCalsNU69H7VqMlutKpRMgwv09IPujBbB4VYyhWgl2/
+ BiZjKDWg4X7R5VYuRuPoX8FqCF7y+aryNNHi8ifqZZdU8YsDDo+B1Vmn2x/VmFMHkdJ2
+ +LPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756196250; x=1756801050;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=otsioMDDDis+4o/eJGjGOmPyrqxlHNYb4cwQxBf4zb4=;
- b=AC9FG5qDBaXHZhPJEtxLKdbjhMtrH+iOV6SgyIesDA6pdKY8kkHHuDf68vBDACjnc/
- N5jGVifsPs34FIpxPLP6eJQv6Ji8lpckHLdnh7Gq5SaQD3Z6KkkwrsDzMw+y6oMzCYhN
- Ee1WJsWSJhs8kXvG9JvT84B05r806x0fzKeKJ9wB7ZgBcsyCjmhlGYpQI+E9dC3CGQK4
- MlNzANqYnKh3gJTl9glAecAwWceuEq5rlt4H/+tDI3IO+4Heg/x3ocO7CfPazgRmEEq7
- lH+UUbCdXADvBw30ulSTqsu1dpeFI6c/G/wwJA4XkSXIKNZjIc4G1UZ34yVklcgZuyKX
- /OKQ==
+ d=1e100.net; s=20230601; t=1756196797; x=1756801597;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KnQZoJzcxwr/v3SVAw+XhgMswGl/dIdrzKeK5w4puc4=;
+ b=KU7XvJp7BzHpzMK3Ao5CIYdlJw3nBpb/iGrEi7snzECo0ZVb4g6Ehe+CLI87UYORG5
+ oe8UPwLU1Vl14Ck7HQ72TjQVkdw6tLPJ783kon2qsXTI7iHnk3tq3cI+O9rx2z8BlzKj
+ TEdgUROYbxgV5vWN41rrMwWoR9lT3NEczecrEdlXj//IuSDsYHPluNkh5QyKFvjcuO89
+ 2y5g9ybtRN2QU35P+4Pr1Fudw1vIiF7UA+ajO2syZb5ORIq7faWWM60+Ltc1S2sN9PJQ
+ 1IIbHHlgCddQcwp3CMBSrTEJrZkVAdayECm86l+08YIh/DhKMM0nF2ESLACS9O4ijYm8
+ riWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLBQGuT53WtLa2zWBleXc2lw0ojaea2pmIAIneZd6Tw1pY2ESYEhWVkq+Oz9LSuwE4omew3POWSZRh@nongnu.org
-X-Gm-Message-State: AOJu0YwDOyCAa4OWCN8IPOUfyl0ot6Lb/omL9N3cFqU3hSpriwZg0bI0
- gXZFYPn5xcyh8s7MFkoMPd6bi9GXkyIpfOEPpxPQgk6CeZFLztVEPwXAyt35ldyDIU9IgwlgzzT
- SVqKpgYd5Uy7eING5kBkMFkHM1rQQeU15E3GBZ7GCKFJi5dcvvM59vUfA
-X-Gm-Gg: ASbGncvL3BhMkb6DVL7zLlOjQIx2ITGDj/a6cSBSEoDnsQditK0LxLH8zgSVlq/YY1s
- Lk8BZeB7d3/7etcC85Np6WlRi0AzmIcJO5Zh37qL5JRB31MCNK0MmMsLRf1yDm3aXpgm9Ghv8k/
- GM7GpTe0UvFlgjqGX232Br4D9QaWKRrlwAWpWDBM9S1XjK6V0nTjXNvBW1ALc5VqM80Y6R+h/Oc
- sD5OVAMtBcz0a74q+Fn1kXXvMYyg/i4fYF/mOM76MTcsY+MNSBsmtzVIP9gG7cEa2X9xPpPYuvY
- NUui1GcfYGSRnUv9v8oEcqeREwjhprknBuu6qBw=
-X-Received: by 2002:a05:6214:e81:b0:709:eddb:d1d4 with SMTP id
- 6a1803df08f44-70d971f6a61mr191867226d6.2.1756196250285; 
- Tue, 26 Aug 2025 01:17:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF1/dwDwvT99sdugEh9RL8Dlt04TXKclv+cwzMW3B/UX1+oQOrpzkhZaKP4YQDE99/6G32uuQ==
-X-Received: by 2002:a05:6214:e81:b0:709:eddb:d1d4 with SMTP id
- 6a1803df08f44-70d971f6a61mr191867086d6.2.1756196249902; 
- Tue, 26 Aug 2025 01:17:29 -0700 (PDT)
-Received: from [10.43.3.236] ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70da728584dsm60638836d6.37.2025.08.26.01.17.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Aug 2025 01:17:28 -0700 (PDT)
-Message-ID: <5af5b42a-c3af-4c4f-8cdd-139bced29613@redhat.com>
-Date: Tue, 26 Aug 2025 10:17:27 +0200
+ AJvYcCUSCVs2DhMqoX08LcYDWBExk8lPbJAu9r2bR9JvDAusIQ8XWvgnQyio6P1s2O2Q03Kt8DmGhunSBjoB@nongnu.org
+X-Gm-Message-State: AOJu0YyLiZsYsvK9qlMUAcH3sKAks/or07Wc3aPyednCB05f0zONEUHp
+ HP+ZFyLeIIWBEqe5yRVqdH1xBp0O+y8vPdi8azIXmcKUzETJnRkLninXwqJpoc9S+nA=
+X-Gm-Gg: ASbGnct6zCgpT8pMov3tM3SS3pMTqpLCRtUWSkVZV29ZYs3oS9Rvi0JHMgVm3MyvrB3
+ /v1N5k5WfQ0gEUeakqYFQ7nB0KY+883pHQX0c0SuM7TIbpMIXtMPAsmG1XB3buo0AxKJ+mhe7FT
+ 45bqujpK9xt9mh1TOZ+3bff02+i0fyY46y7F8Ypx3LnY+gzU6s1nslHzyw0jgVW35wrw57v8t9f
+ dRIyzWxC/V6VaO7NHOejMVyPs6WTiU2o23nrpysdQJvaD4fFEaz+lH295ykHBWJLt5JhHM0/Aw7
+ zwAFx0uoZw6mJLmHbWRmcriYLcf2c4V9ZedcJ6tzes005QMjscTwrmcgiF6aDdXMia9qYjt0yZ+
+ jUjCRWIECh2PoWg6OKioYepRdsNX8RMedvw==
+X-Google-Smtp-Source: AGHT+IFliCD2lMJu4Gy0VSnVbYIpdwJgh7EZF+0+Ga7qebz0BvyhXz5fgVkX9t05pKh1Y4e1Amjo4A==
+X-Received: by 2002:a05:600c:3ba6:b0:43c:f0ae:da7 with SMTP id
+ 5b1f17b1804b1-45b66c95ad3mr10344135e9.7.1756196796926; 
+ Tue, 26 Aug 2025 01:26:36 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3c711211cbcsm14861850f8f.31.2025.08.26.01.26.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Aug 2025 01:26:36 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 55DC35F7D8;
+ Tue, 26 Aug 2025 09:26:35 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org,  1844144@gmail.com,  Jan Richter <jarichte@redhat.com>
+Subject: Re: [PATCH 0/4] tests/functional: Adapt reverse_debugging to run
+ w/o Avocado
+In-Reply-To: <8326014d-114e-47df-89fc-632eb5683632@redhat.com> (Thomas Huth's
+ message of "Tue, 26 Aug 2025 09:51:27 +0200")
+References: <20250819143916.4138035-1-gustavo.romero@linaro.org>
+ <53b6e23f-5328-42c6-9c58-97ddbf3e5b29@redhat.com>
+ <a1105fed-dbd8-4223-b771-180ab12e3f77@linaro.org>
+ <8326014d-114e-47df-89fc-632eb5683632@redhat.com>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Tue, 26 Aug 2025 09:26:35 +0100
+Message-ID: <87tt1u1oas.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] qga: Fix --retry-path behaviour
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>, Jan Tomko <jtomko@redhat.com>,
- Yan Vugenfirer <yvugenfi@redhat.com>
-References: <20250825140549.146617-1-kkostiuk@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?B?TWljaGFsIFByw612b3puw61r?= <mprivozn@redhat.com>
-In-Reply-To: <20250825140549.146617-1-kkostiuk@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,19 +110,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/25/25 16:05, Kostiantyn Kostiuk wrote:
-> 
-> 
-> Kostiantyn Kostiuk (2):
->   qga: Fix channel initialization check in run_agent_once
->   qga: ignore channel_init() fail if 'retry_path' is set
-> 
->  qga/main.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
-> 
+Thomas Huth <thuth@redhat.com> writes:
 
-Reviewed-by: Michal Privoznik <mprivozn@redhat.com>
+> On 25/08/2025 16.04, Gustavo Romero wrote:
+>> Hello, Thomas!
+>> On 8/25/25 07:29, Thomas Huth wrote:
+>>> On 19/08/2025 16.39, Gustavo Romero wrote:
+>>>> The goal of this series is to remove Avocado as a dependency for runni=
+ng
+>>>> the reverse_debugging functional test.
+>>>>
+>>>> This test, the last one I=E2=80=99m aware of that relies on Avocado, r=
+equires it
+>>>> because of the need for GDB to test reverse stepping and continue.
+> ...
+>>> I gave it a try, but this did not work for me, the test was not run
+>>> at all anymore. Are there any patches needed on top?
+>> hmm that's odd. I'm able to run it with 'make check-functional' and
+>> with 'meson test'...
+>> This is how I'm running it (let me know if I'm missing something):
+> ...
+>> gromero@gromero0:/mnt/git/qemu_$
+>> gromero@gromero0:/mnt/git/qemu_/build$ ../configure
+>> --target-list=3Daarch64- softmmu --disable-docs
+>> gromero@gromero0:/mnt/git/qemu_/build$ make -j 32
+>> gromero@gromero0:/mnt/git/qemu_/build$ time make -j 15=C2=A0 check-funct=
+ional
+>> [1/2] Generating tests/functional/func-precache-aarch64-
+>> aarch64_reverse_debug with a custom command (wrapped by meson to set
+>> env)
+>> 2025-08-25 12:50:04,215 - qemu-test - INFO - Attempting to cache
+>> '/home/ gromero/.cache/qemu/
+>> download/7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf=
+7'
+>> 2025-08-25 12:50:04,225 - qemu-test - DEBUG - Using cached asset
+>> /home/ gromero/.cache/qemu/
+>> download/7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7
+>> for
+>> https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/29/
+>> Everything/aarch64/os/images/pxeboot/vmlinuz
+>> GDB CMD: /usr/bin/gdb-multiarch -q -n -batch -ex 'set pagination
+>> off' -ex 'set confirm off' -ex "py
+>> sys.argv=3D['/mnt/git/qemu_/tests/functional/
+>> test_aarch64_reverse_debug.py']" -x /mnt/git/qemu_/tests/functional/
+>> test_aarch64_reverse_debug.py
+>> [0/1] Running external command precache-functional (wrapped by meson
+>> to set env)
+>> make[1]: Entering directory '/mnt/git/qemu_/build'
+>> [1/6] Generating qemu-version.h with a custom command (wrapped by
+>> meson to capture output)
+>> /mnt/git/qemu_/build/pyvenv/bin/meson test=C2=A0 --no-rebuild -t 1
+>> --setup thorough=C2=A0 --num-processes 10 --print-errorlogs=C2=A0 --suite
+>> func=C2=A0 --suite func- quick=C2=A0 --suite func-thorough
+>>  =C2=A01/27 qemu:func-thorough+func-aarch64-thorough+thorough /
+>> func-aarch64- aarch64_virt_gpu=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SKIP=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+>> 1.95s=C2=A0=C2=A0 0 subtests passed
+>
+> I tried a couple of times now, and finally realized that it's the
+> "gdb-multiarch" binary that is missing on Fedora. And as far as I can
+> see, there is also no package that provides this on Fedora? So if we
+> go ahead with your patches, this test will only run on certain distros
+> that provide this binary.
 
-Michal
+I've mentioned in another review comment we should use the same gdb as
+set/detected from configure as we do for the check-tcg tests.
 
+>
+>  Thomas
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
