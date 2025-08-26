@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C439FCA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 07:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2275CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 07:36:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqo8K-0001ec-E7; Tue, 26 Aug 2025 03:30:20 -0400
+	id 1uqoCz-0003l4-OO; Tue, 26 Aug 2025 03:35:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uqo8I-0001do-NJ
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 03:30:18 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ id 1uqoCx-0003jy-B2
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 03:35:07 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uqo8F-00057b-MO
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 03:30:18 -0400
+ id 1uqoCr-0005pn-U4
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 03:35:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756193415; x=1787729415;
+ t=1756193703; x=1787729703;
  h=message-id:date:mime-version:subject:to:references:from:
  in-reply-to:content-transfer-encoding;
- bh=Z9WYOvBUKB42Hk/qGWIya7qsYyH1Bg2jeLGbN+FjqXU=;
- b=QUrAhf1G14ITL5bAFVuf0AGehxuRH5RnTcUCtslq1jxOqXk3boTT+0jr
- hLPBmnTUMTZcY8NkbpkiGrbwKWQww/7Ic4OEboQloTQtfo01yaq/H5mMC
- +rqXm6L2iVtqbaYmqHqfZ4VL0skVogkzg/3+K5bYMyrkBHdIxvc48m7Ll
- poisgEXiY3O7RooNdrrH/lgndZ/tPHlyoJXVJJKhXTBfaKBNBdn5VVnPi
- T7jamjICGIcZVfKcRaE1PpIieRhT4hC908jsVaq1QT8GH6D6Qoodxcdxn
- uJEFOtBF/CPi9L+NTm6RyV7/UEu83f+gFt+5jn04rpauhjuJph6IfIZWV Q==;
-X-CSE-ConnectionGUID: ifuMbwwZTLGBfKCGc3p/gA==
-X-CSE-MsgGUID: cjshuiRbRWaKGc7vsUtbow==
-X-IronPort-AV: E=McAfee;i="6800,10657,11533"; a="62235862"
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="62235862"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2025 00:30:11 -0700
-X-CSE-ConnectionGUID: ZjkRAkeqQFG2NV8OZA0qLA==
-X-CSE-MsgGUID: e6QyJHnWQa6C5jzYqY0jyw==
+ bh=3NptOdMiIKrbC7blk59uavM4sJ8ZqjB9x54KtTymCOA=;
+ b=RCetJhqiBnot4yrPUMcJF1cmvx0aaU7iRhIPO7E5Jl2we3Wxzlpu+Mqy
+ T7/6bL2dMoadf1vdFGQ54CdIYLEDxLwWrZODVmERjhm8eAoLD/gf8o+1v
+ E2BUjKEKCIzOWKmOLNgi9uFTXwhd6M/Cbz6+UfF/LQKg1mKHvz3Uf6roE
+ O4iS25IcOTKs3Yx+YSLAnLvDCIBdsrg1aFONUo5utu5XFCA/8O6zflIwO
+ KTxw+TowJXXu7F5GMr3xPdRFzRTLeRlKEp44o0lc2kF8ny/7Ika2OiuEF
+ 6x85L+1xeucu0mNgk3ZDBNC7aDoZ1I/lpKr2TdlSZazDSZ7XQMnXTs3ub A==;
+X-CSE-ConnectionGUID: tt4rYKQCRWWKifLTafI+Xg==
+X-CSE-MsgGUID: PCZfO9/9SFWSoR9eKy9b1g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11533"; a="69520028"
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="69520028"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2025 00:34:53 -0700
+X-CSE-ConnectionGUID: RHCbwVUNSw6Y7/WAIAdmew==
+X-CSE-MsgGUID: B/qvpcO+S8+2OTGvGaQ9QA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="169905145"
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="173904256"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
  ([10.124.238.14])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2025 00:30:09 -0700
-Message-ID: <2116ca60-63e4-456f-93a4-f83b5325b760@intel.com>
-Date: Tue, 26 Aug 2025 15:30:05 +0800
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2025 00:34:49 -0700
+Message-ID: <eb34b160-4638-487e-bb7b-d0cbeabe4faa@intel.com>
+Date: Tue, 26 Aug 2025 15:34:45 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/19] hw/i386/pc_piix.c: remove include for loader.h
+Subject: Re: [PATCH v6 03/19] hw/i386/pc_piix.c: inline pc_xen_hvm_init_pci()
+ into pc_xen_hvm_init()
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
  mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
  imammedo@redhat.com, qemu-devel@nongnu.org
 References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
- <20250822121342.894223-3-mark.caveayland@nutanix.com>
+ <20250822121342.894223-4-mark.caveayland@nutanix.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250822121342.894223-3-mark.caveayland@nutanix.com>
+In-Reply-To: <20250822121342.894223-4-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
@@ -88,29 +89,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote:
-> This header is not required since the loader functionality is handled separately
-> by pc_memory_init() in pc.c.
+> This helps to simplify the initialisation of the Xen hvm machine.
 > 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
 > ---
->   hw/i386/pc_piix.c | 1 -
->   1 file changed, 1 deletion(-)
+>   hw/i386/pc_piix.c | 13 ++++---------
+>   1 file changed, 4 insertions(+), 9 deletions(-)
 > 
 > diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 5720b6b556..bc8fbe46a1 100644
+> index bc8fbe46a1..071bf7412e 100644
 > --- a/hw/i386/pc_piix.c
 > +++ b/hw/i386/pc_piix.c
-> @@ -28,7 +28,6 @@
->   #include "qemu/units.h"
->   #include "hw/char/parallel-isa.h"
->   #include "hw/dma/i8257.h"
-> -#include "hw/loader.h"
->   #include "hw/i386/x86.h"
->   #include "hw/i386/pc.h"
->   #include "hw/i386/apic.h"
+> @@ -453,14 +453,6 @@ static void pc_init_isa(MachineState *machine)
+>   #endif
+>   
+>   #ifdef CONFIG_XEN
+> -static void pc_xen_hvm_init_pci(MachineState *machine)
+> -{
+> -    const char *pci_type = xen_igd_gfx_pt_enabled() ?
+> -                TYPE_IGD_PASSTHROUGH_I440FX_PCI_DEVICE : TYPE_I440FX_PCI_DEVICE;
+> -
+> -    pc_init1(machine, pci_type);
+> -}
+> -
+>   static void pc_xen_hvm_init(MachineState *machine)
+>   {
+>       PCMachineState *pcms = PC_MACHINE(machine);
+> @@ -470,7 +462,10 @@ static void pc_xen_hvm_init(MachineState *machine)
+>           exit(1);
+>       }
+>   
+> -    pc_xen_hvm_init_pci(machine);
+> +    pc_init1(machine, xen_igd_gfx_pt_enabled()
+> +                      ? TYPE_IGD_PASSTHROUGH_I440FX_PCI_DEVICE
+> +                      : TYPE_I440FX_PCI_DEVICE);
+> +
+>       xen_igd_reserve_slot(pcms->pcibus);
+>       pci_create_simple(pcms->pcibus, -1, "xen-platform");
+>   }
 
 
