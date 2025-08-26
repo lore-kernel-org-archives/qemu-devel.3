@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91ABBCA0FF8
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 20:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23413CA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 21:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur0i0-0000d1-LU; Tue, 26 Aug 2025 16:56:02 -0400
+	id 1ur1DI-0003dY-GO; Tue, 26 Aug 2025 17:28:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3Sh-uaAwKCo04rszyv9Avwr4x55x2v.t537v3B-uvCv2454x4B.58x@flex--nabihestefan.bounces.google.com>)
- id 1ur0hs-0000cL-2k
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 16:55:52 -0400
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3Sh-uaAwKCo04rszyv9Avwr4x55x2v.t537v3B-uvCv2454x4B.58x@flex--nabihestefan.bounces.google.com>)
- id 1ur0hj-0001ph-95
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 16:55:51 -0400
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-24458264c5aso65145245ad.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 13:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1756241738; x=1756846538; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=XLWQ6+awZKXTItHiME+BnTYtxfVMRnSFUV8dpp1zUQ0=;
- b=eNT5ERNBA4Lo/uCP2/JRSKJ70Kz3KTw0vHE+iQss5cTNIwO49XWaz0u+c5KSPdIigN
- Zxq/RYgbstqK6/OGyzPx8cDaefHFLQMklKHDY0JiN8g6tL1kPkuoATPfLVyFytHCO4Pp
- mrNwIDOfECuDGEQMzN6W6FU0JE/3yzv+McrjPPNUEzw9oahLF+fJTqUFVfkh73r6nsRK
- 5M5B7TM9PJ1x4iyZENmlZDVwU85Sp6+b4G1ckg5VsoGq8HagGN0N1iKZQwj5/bZwu5TP
- uTeQFbs70RN0/vnLFxhAAh1+dJpaqNuHoOZIgC9KFp1+9LnVK+OBuINw15nZNoDuEmY/
- K2hw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ur1D9-0003Z5-GE
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 17:28:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ur1D6-0000F9-KQ
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 17:28:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756243686;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5ky0SJpiPhbi6tJKr855XwA4Hgq9rsqFKwYVfBKO3Cw=;
+ b=fx6xiIHDmGbFfEwh0ygTbFujj8vO1aM9f40sfXYS0rhdCTnCu3IhkB3z0jmJEfOsy4cpLZ
+ ceLrcVXHNHxQDn+Op+EXaUl5xUh1W4aJckq0r/CHdTTFunoyBwC4ayrIxXzhZ5yLa5+swP
+ D+NcGQAfnANyFu/VBGOxZKXEKYXq7aI=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-385-gdeDnxiXMc2gYOSHMiR-KA-1; Tue, 26 Aug 2025 17:27:59 -0400
+X-MC-Unique: gdeDnxiXMc2gYOSHMiR-KA-1
+X-Mimecast-MFC-AGG-ID: gdeDnxiXMc2gYOSHMiR-KA_1756243678
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-7210a14dff0so3083247b3.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 14:27:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756241738; x=1756846538;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XLWQ6+awZKXTItHiME+BnTYtxfVMRnSFUV8dpp1zUQ0=;
- b=BS+SWUVZhWw/cYePxm4EANjW+JggiBkW5S17oz8cLXqTXaQ7aLbvNCPzY9y+pw2leG
- nZ2wIpM39feap8NCYYEc7vBL+n9m2Q3XMwUVOvBGrUxCCRbrN+us4Rw6W12Y46qZ+gj5
- IEbf5pkvLcBq4CVvPkjw/PbgZwirW/i2N9c93XvMrleLuf3nVslKV/02fB/ysyyT43jL
- PZZblm5mT64VlhP6Gi6tgRJUN81VTj5xY9lD4ovCSjsIsjsAYGMTEYky9ufDQg/SDoSR
- 9KLH5wxK5JkVx+EvyAXo/06qVzF6kyL1v/ExZaU8lHQZc0cd5YofXLCIILHC63Xlb1jA
- XYOg==
-X-Gm-Message-State: AOJu0YzIgiL/uOsuz/2CuG+hq94SAMvD2Mc2qtGqgFuaS4TRjqMaiSyO
- oL014V7sqPBQ2sH0wXItYl0FEaDEh6j+Iig0g8rfL2YBD1LW4MnxSB9cRT3SKDEssVTpPLw5r0f
- iuOwnBfyjTEwepUwoXFjA6+0ka2cFm3x33QjfwMrqtKPHHtoG+/w3dJvkPkps5caEasPts55Mbw
- 8hq8saNi70uXSb+FKwr3+UK8roYoimnoGhTXAriIojXomYBzq+EAf9gMb234r6RSOCr+o=
-X-Google-Smtp-Source: AGHT+IGGDVwy+ziI7XLSI546Hqn6ytIgWQ7BntNvFob5H3QNBypzvmK5KxyDaoC7YhFbqGdgsxOUAXFThezmjpWY0Fk=
-X-Received: from plbla4.prod.google.com ([2002:a17:902:fa04:b0:248:80ba:9ee0])
- (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:903:1acc:b0:246:6442:19e4 with SMTP id
- d9443c01a7336-246644231c4mr168828955ad.58.1756241738308; 
- Tue, 26 Aug 2025 13:55:38 -0700 (PDT)
-Date: Tue, 26 Aug 2025 20:55:32 +0000
-In-Reply-To: <20250826205532.1500639-1-nabihestefan@google.com>
-Mime-Version: 1.0
-References: <20250826205532.1500639-1-nabihestefan@google.com>
-X-Mailer: git-send-email 2.51.0.318.gd7df087d1a-goog
-Message-ID: <20250826205532.1500639-3-nabihestefan@google.com>
-Subject: [PATCH 2/2] MAINTAINERS: Add entry for PLX VSwitches
-From: Nabih Estefan <nabihestefan@google.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com, 
- venture@google.com, nabihestefan@google.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3Sh-uaAwKCo04rszyv9Avwr4x55x2v.t537v3B-uvCv2454x4B.58x@flex--nabihestefan.bounces.google.com;
- helo=mail-pl1-x649.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ d=1e100.net; s=20230601; t=1756243678; x=1756848478;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5ky0SJpiPhbi6tJKr855XwA4Hgq9rsqFKwYVfBKO3Cw=;
+ b=Cq+89y3IKEA5vK7IUpPYcCJedS/C+XawWOMfjxOCydX+vHNk34D5YKRNHyRCdXcRqP
+ tWAqSHIsltcc5sUIHcGMud9XaF/v5ZCR9vG8hhofS5SDS1xkKiJzM+zTcerdfIv0uQyM
+ S9iluxPWcoyv1rMgRelSCJjTBN/+Xd4oLPT9mhLime33HRNxXiQghtALJ5dxRcOTqJHE
+ 1VIcwFgJVE8g2rR2MW2i70GmO38ptwQjl6ES34F7CHEnAeNKWQawSILfIaFORdbgyrB9
+ 7MLv9hshWH6To30NZqmzfhze6seiHRagNircNzhY3Niz5VmVnMFpZI6d0Q/FCmuFpx1z
+ xQGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+5QNTAmfBIeeCk0WJ/xTIBVu7rTYQA1CDO89PwZcKVPaM907lIHQ8DvE54bE4W8DMrETw69gXrR2G@nongnu.org
+X-Gm-Message-State: AOJu0YzW5au8YYlGQxCYoveIfV4r55WZXumOf2fH9cha6/jlNfAiEaIA
+ sTtXngkcEIbvcv/QnL66hnaBj/3DMVlPVqnIDj40eibQT1yk3pl9dl8iWz43QeUmQlH/t1DSemx
+ S0nVAA5oRsrEE6DyZM5aU2JU6XkK0IM8aA3C5l6KNIGZwHtckNfT21HKP
+X-Gm-Gg: ASbGncsH0U8PL3K46qZsBLcTxtsrHlL7xWuEzx2Nn+JKVzGGb2PBbYL7aAXA5CwYfcl
+ csO6v5RWBGIKbVMgMOXr/o1iGUGVcrlFficTzboYY/0/8oDAQRCOxzg5p039mX7VQ1aiZ4jYpbj
+ y4L6EQ9u3g4BL1NtbheMpYmf3CasmQfNk8fTk8hsv8ez8rYae71VxUYfkssM3g6R2QqQzpE1idU
+ pnC5np7qS7iqz1Yw1gYN96KkY6PhrvferABM0FBbwvEQImX7ImK9M0za5FcD+JpUiHwI3MZ5FP2
+ f64+tUrstEf//lVPDkk2izstUlLB/yOG
+X-Received: by 2002:a05:690c:64c2:b0:71f:9a36:d332 with SMTP id
+ 00721157ae682-72132cd7798mr33037187b3.27.1756243678497; 
+ Tue, 26 Aug 2025 14:27:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH38QT9GrhuJKn+2Z/fzyJnt7wYtrhE1kDIfOcax70UAAJ8Yx5kG7DPSQZWCv6zlXXz+zuq0Q==
+X-Received: by 2002:a05:690c:64c2:b0:71f:9a36:d332 with SMTP id
+ 00721157ae682-72132cd7798mr33036977b3.27.1756243677973; 
+ Tue, 26 Aug 2025 14:27:57 -0700 (PDT)
+Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-71ff18ea7a3sm26820817b3.69.2025.08.26.14.27.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Aug 2025 14:27:57 -0700 (PDT)
+Date: Tue, 26 Aug 2025 17:27:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: farosas@suse.de, Marco.Cavenati@eurecom.fr, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH] migration: fix SEEK_CUR offset calculation in
+ qio_channel_block_seek
+Message-ID: <aK4m0MtycEi32--U@x1.local>
+References: <871pudmlmj.fsf@suse.de>
+ <dc23eaca-15f5-40be-89d0-2247cfe1f716@tls.msk.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <dc23eaca-15f5-40be-89d0-2247cfe1f716@tls.msk.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,32 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add entry for MAINTENANCE of PLX Switches
+On Tue, Aug 26, 2025 at 11:32:20PM +0300, Michael Tokarev wrote:
+> Hi!
+> 
+> This is
+> 
+> commit c0b32426ce56182c1ce2a12904f3a702c2ecc460
+> Author: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+> Date:   Wed Mar 26 17:22:30 2025 +0100
+> 
+>     migration: fix SEEK_CUR offset calculation in qio_channel_block_seek
+> 
+> which went to 10.0.0-rc2, and has been cherry-picked to
+> 7.2 and 9.2 stable series.
+> 
+> Reportedly it breaks migration in 7.2.18 and up.  Which is
+> kinda strange, as it shouldn't do any harm?
+> 
+> https://bugs.debian.org/1112044
+> 
+> any guess what's going on?
 
-Change-Id: I7592518c96af89fa2722c409b78ebc7e34acdb84
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
----
- MAINTAINERS | 6 ++++++
- 1 file changed, 6 insertions(+)
+The only thing I can think of is, when it used to save to some file /
+snapshot, then if the old image was stored with some wrong offsets (due to
+wrong seek()s) then a new QEMU with correct offsets will instead read wrong
+data even if they started to do the right things..
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a07086ed76..fb90b4b36f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2098,6 +2098,12 @@ F: docs/pci*
- F: docs/specs/*pci*
- F: docs/system/sriov.rst
- 
-+PCI PLX VSwitches
-+M: Nabih Estefan <nabihestefan@google.com>
-+S: Supported
-+F: hw/pci-bridge/plx_vswitch*
-+F: include/hw/pci-bridge/plx_vswitch.h
-+
- PCIE DOE
- M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
- M: Chris Browy <cbrowy@avery-design.com>
+The reporter says:
+
+        This occurs during live-migrating a guest onto a host with u15,
+        migrating it back fixes the softlocks. A reset is required to fix
+        it but is only required when the receiving host is on the latest
+        version.
+
+So it's a host-to-host live migration.  Is that using TCP as URI?  The
+problem is I don't even think TCP layer should use io_seek at all.
+
+qio_channel_io_seek() is only used in below (except VFIO when used with
+multifd, that doesn't look like what the reporter was using..):
+
+*** migration/file.c:
+file_start_outgoing_migration[121] if (offset && qio_channel_io_seek(ioc, offset, SEEK_SET, errp) < 0) {
+file_start_incoming_migration[190] qio_channel_io_seek(QIO_CHANNEL(fioc), offset, SEEK_SET, errp) < 0) {
+
+*** migration/qemu-file.c:
+qemu_set_offset[611]           ret = qio_channel_io_seek(f->ioc, off, whence, &err);
+qemu_get_offset[624]           ret = qio_channel_io_seek(f->ioc, 0, SEEK_CUR, &err);
+
+All these references are about file migrations, not generic live
+migrations..
+
 -- 
-2.51.0.318.gd7df087d1a-goog
+Peter Xu
 
 
