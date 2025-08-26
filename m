@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0CC2CA0FF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 16:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD59CA0FF2
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 16:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqwGx-0003nf-2r; Tue, 26 Aug 2025 12:11:47 -0400
+	id 1uqwJJ-0006nk-It; Tue, 26 Aug 2025 12:14:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uqwGl-0003g9-CE; Tue, 26 Aug 2025 12:11:36 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1uqwIi-0005L5-Ge; Tue, 26 Aug 2025 12:13:36 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1uqwGi-0007lq-NR; Tue, 26 Aug 2025 12:11:35 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-b4c3d8bd21eso173318a12.2; 
- Tue, 26 Aug 2025 09:11:29 -0700 (PDT)
+ id 1uqwIf-00088H-0w; Tue, 26 Aug 2025 12:13:36 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-b49db86cac4so1841491a12.3; 
+ Tue, 26 Aug 2025 09:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756224688; x=1756829488; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756224810; x=1756829610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0kdhJ8qVaboMFQEuaKJAhE/K3VU7nR9Fg/XwpkOOA2I=;
- b=KW7k4OVxN/+9+e4akGHbmSQGXnDb847jFGLolZ+sDhic1L9CKQ1GVQ/8a3uTkyfVw2
- EQBkgAS99KaHqSC27FQqixVIS8wBSN7woNSnTF3diuP/uavWzMyLe1TvWkLode0tuIJY
- Ym0BcAR5HrSGW/DCXGHxj3a8fwg4E/d8ks3NKZIEzRT+u6Pdjge55hVOnebGjPerjGAW
- weWDVKHAV9sYVCC6E6xA6DFG3QWVxyJ5PXhJ8gCbUVdaJopacNYSVchvf6Uxo4+8Yv2f
- YZf7LIBranOgfdq81XAGCKzVyrh1OKmaWSZc0UqG2WPcdAApLPUzZPwVvHhE7Ab6DBJW
- xmGA==
+ bh=wdm5qlPjiiBmfUrpVbsMm6TdPYck5xoQGraSVKOpe8I=;
+ b=OPGPPY9ZAiV/ByuEVPQOoX9Qz1JrSCD57L08m2a+4pLeMUzIiuUQrt7yiVQlDn5fOi
+ 8T6tkQ2whtbuj+hHqdXUhBQrtQUdV37xCbr7MHjq+IUVCz5luCMyz5/la6pFVc2bBKrf
+ TllMavomIG0ls5y0LDNaIu5dxPsgiz8KpA1hmR5fr5oRltBKhYUVVPodMKyr90S+RGbY
+ xjIJepQUh2kS/e22gPAqT+83YrpIU+rp7p0QfpMD2c2CZFcxFdElZWlojcBT3U7m75Y3
+ bOhnZg4Dkj6aaruomrFKW2i0Djz1zGex4jr4B/KrbwaP/bN/HH66X45k26CsqSVJWKnK
+ hILA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756224688; x=1756829488;
+ d=1e100.net; s=20230601; t=1756224810; x=1756829610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0kdhJ8qVaboMFQEuaKJAhE/K3VU7nR9Fg/XwpkOOA2I=;
- b=ZjWtkJ1zVexWaDg3qvQEorJ8LN4hhwKiof1YaQD6gn8xsvozSMEUPGRTBMa3Dy2vCw
- 6uJwop51moVaHCii3MYwQn4sNgMvJ7hXGd/wA7sxeSXQ44kDkADtfMYWTk+GVl2Dwe+u
- B12x/XegpNZI2rkMyXKBziMe1YCQHYa7zuZY7HVhjaPBy69f2qdfUGXrPvG0eJ4nWVP+
- l0zzU2Dmr53/8SYRK3QMYIdSM27dgI9e2s6SgVaYf3VUTQIbgfakYpni4gE/XSRcomJ8
- AwD2hQLS7F7Wzm+GoY0uDKfWnWZz1IiJ2ujd+g7RuhVykbEilYLRS8T9hP51bVRuCGth
- iB1Q==
+ bh=wdm5qlPjiiBmfUrpVbsMm6TdPYck5xoQGraSVKOpe8I=;
+ b=P9Z7HvYv7A48rZl+5X77HMZ4FxQuOzXHeLoP0oG6tmsaSk5v8fTFabXMrmFibx1J1L
+ 3ydlm86Lxo6kQ1vuZhquYCkXUnh0TYdxJiupdaRlbvT1dF/CF0AAn4/VMVWrzG6/Zaux
+ oXGGfffSecE2WKzOe3yATLGwy3PEcwK1ssyHxCACPQnbEA3j8Y+puKFHPquknHO1qHck
+ ulCTwsGXa+fr3DmempvRRCLZ9AbQevD1QVpG6EASwJUMBJWl+2dCxdexp9jMZv2h3mEL
+ KRnFcnBv2cCDhpk6i/42BIBgIsvd7b5cYtI+H/k+XVS1AxCKnKXnjXoNQ/RngjELaNje
+ CGiQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYBL5cAvO8tLTbn5hy9aOXhQVF06lwIc2Oz1e2f7cffGa+5jFUj0GYh1VX69qnSpElusqueLrWig==@nongnu.org,
- AJvYcCXsiZB0KXCSN9D1xr3haaBMwP4gt3i2sU61adrDMk7XLILR433g474Q6+VoxRiTx+tSAbN2z3DvKNL17w==@nongnu.org
-X-Gm-Message-State: AOJu0YwgHmPiTeQJmhPmPGpSqRH1owB7ArbKbu3Y0l3y4O88OfQdbj7N
- giJDgM0I77+VTPaDJfpSRXqNArU7UEVUTEhBFVTvFS9+sXfwxa4Pd1B4PWhKFw==
-X-Gm-Gg: ASbGncvrEnUDRYTuKTMDLIKiL8ZtowE4uspvzlGufpoxH9Y/QH+kJwAemfI8pv73KPc
- DMsoQnkABy/BzA9lZO9dIv6OxuptekzdkdzhaDAldTmbbk/AXtDH+nmuyzrDZWzPqQlGNvUE7Ot
- xcovRJT+pbHd2ipH6uoBe8sp8QpdlRuXyJmsIdA/hzUhuQwcTsJiHdqSQI7eH/cVQwjkifEnJDz
- K2/8k93D4jBVy0fPG1FbDZhr3SHDH4JfY9EaEE977Ne4CJPvSQzl+fDkojAxoN5ISBrF+9Y+zUP
- 4ol8Am6DjGLkmg1scQ7oYSWoCjcjHChGHIpID0c054TRYIAReXm9mq4hfKIZan82fmQO7cKdMH0
- LBtiFwygNMatgh1+QiGV7Pg==
-X-Google-Smtp-Source: AGHT+IFzvxQCHKPwaGwQEGeld5cnUhg5+g3NLLqLFlCfWoXgneEah+9GpE/7wzlXmT9xhRivPIefOA==
-X-Received: by 2002:a17:90b:3dcb:b0:325:4731:cea5 with SMTP id
- 98e67ed59e1d1-3254731d6c8mr14741705a91.31.1756224687782; 
- Tue, 26 Aug 2025 09:11:27 -0700 (PDT)
+ AJvYcCVHw3zVD15Bn/TrsxmLvAdbl3MJznZwx62Ln+B84XLtO65s6riULofIdCpQga6zsxSyyVdeJT5khQ==@nongnu.org,
+ AJvYcCX4319KgR1pITBpg9bc2vH7y8OaeNloUF/BvIMhssLx85IGYv+kmF7Bbi4EolHSN29IcDU+tHK6nIr1Fw==@nongnu.org
+X-Gm-Message-State: AOJu0Yz8ftffL2LU1caotP/mAL3SMCv9z/9flH2mBaAWCEJDP2stI3qI
+ Cmnp/G/OBrlyhefelIqjuWXkvczv06ZupMWt/JDV9mLWGRh6gw+s6K1Bg+sY1Q==
+X-Gm-Gg: ASbGncvj8K4ZVZwBKaA13DvZOfWp4Lr84TBu1+ws2Bt4IEQY0pDuaizde35+o54WTZ+
+ Xm0Spe2CL4KVBkl30RJVvZboW6AiNEjGWnugKT1A5RryFqnjA5NvYJH/UXk+F4KV61OYG86DiMo
+ lYBmEbqEDKhKjnqiSM6qsTvrTsk3A0CTdIGZFLfbAgJ48KAfpPZQllxeoJ0Y1w7dUhVuUmswwk9
+ xRPthXuaoOQal76gecAPdtFpKrlrBdNxdCD8rwqMha/lnqZMjOzbqoSiouduzxMz0JQ2S3gmXDg
+ 5wNbPofEyYR8xuPeeVXE8f9kP9au2nRagZY3Xch4S5yZGrb9Oa7SKEBrmUWdpsHWpFfCPq9mrcS
+ hWJ2i8Tvq3aArrXNlllGizg==
+X-Google-Smtp-Source: AGHT+IHM08p3gwEauAwGot3XMz9a+Eisy9iW8w94o7N8zZy3qFDxVmnsbhhE93IhyI2Bii++6C9NFQ==
+X-Received: by 2002:a17:902:ec81:b0:246:92f5:1c07 with SMTP id
+ d9443c01a7336-24692f51fb7mr134640575ad.51.1756224809607; 
+ Tue, 26 Aug 2025 09:13:29 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:561f:1400:11f5:714b])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-32750bc341asm1749747a91.19.2025.08.26.09.11.22
+ 98e67ed59e1d1-32750bc341asm1749747a91.19.2025.08.26.09.13.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 09:11:26 -0700 (PDT)
+ Tue, 26 Aug 2025 09:13:28 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -80,17 +80,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH v2 03/35] dockerfiles: Add support for wasm64 to the wasm
- Dockerfile
-Date: Wed, 27 Aug 2025 01:10:08 +0900
-Message-ID: <dd1d5aee5cc69ad95f6cf11106cf020bc3bc4b59.1756216429.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v2 24/35] tcg/wasm: Add mb instruction
+Date: Wed, 27 Aug 2025 01:10:29 +0900
+Message-ID: <3db8ec74078663cbaabcc680e53f1d588f5f5970.1756216429.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1756216429.git.ktokunaga.mail@gmail.com>
 References: <cover.1756216429.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,116 +112,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit fixes Dockerfile of the wasm build to support both of wasm32 and
-wasm64 build. Dockerfile takes the following build arguments and use these
-values for building dependencies.
+This commit generates the mb operation. In Wasm, it uses the atomic.fence
+instruction as the fence operator [1]. TCI instruction is also generated in
+the same way as the original TCI backend using smp_mb().
 
-- TARGET_CPU: target wasm arch (wasm32 or wasm64)
-- WASM64_MEMORY64: target -sMEMORY64 mode (1 or 2)
+[1] https://webassembly.github.io/threads/core/syntax/instructions.html#atomic-memory-instructions
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS                                   |  2 +-
- ...2-cross.docker => emsdk-wasm-cross.docker} | 29 ++++++++++++++-----
- 2 files changed, 23 insertions(+), 8 deletions(-)
- rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
+ tcg/wasm.c                |  4 ++++
+ tcg/wasm/tcg-target.c.inc | 19 +++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
 V2:
-- This commit is under review in another patch series so please ignore it
-  here.
+- Added Wasm implementation of the mb operation using the atomic.fence
+  instruction.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a07086ed76..433a44118d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -647,7 +647,7 @@ F: include/system/os-wasm.h
- F: os-wasm.c
- F: util/coroutine-wasm.c
- F: configs/meson/emscripten.txt
--F: tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+F: tests/docker/dockerfiles/emsdk-wasm-cross.docker
+diff --git a/tcg/wasm.c b/tcg/wasm.c
+index 793c1807c2..1cc2e45e77 100644
+--- a/tcg/wasm.c
++++ b/tcg/wasm.c
+@@ -566,6 +566,10 @@ static uintptr_t tcg_qemu_tb_exec_tci(CPUArchState *env, const void *v_tb_ptr)
+             taddr = regs[r1];
+             tci_qemu_st(env, taddr, regs[r0], oi, tb_ptr);
+             break;
++        case INDEX_op_mb:
++            /* Ensure ordering for all kinds */
++            smp_mb();
++            break;
+         default:
+             g_assert_not_reached();
+         }
+diff --git a/tcg/wasm/tcg-target.c.inc b/tcg/wasm/tcg-target.c.inc
+index e1ee2f6485..1d639561db 100644
+--- a/tcg/wasm/tcg-target.c.inc
++++ b/tcg/wasm/tcg-target.c.inc
+@@ -1116,6 +1116,11 @@ static void tcg_out_op_r(TCGContext *s, TCGOpcode op, TCGReg r0)
+     tcg_out32(s, insn);
+ }
  
- Alpha Machines
- --------------
-diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-similarity index 85%
-rename from tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-rename to tests/docker/dockerfiles/emsdk-wasm-cross.docker
-index 60a7d02f56..4b41be62ab 100644
---- a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+++ b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-@@ -1,14 +1,17 @@
- # syntax = docker/dockerfile:1.5
- 
--ARG EMSDK_VERSION_QEMU=3.1.50
-+ARG EMSDK_VERSION_QEMU=4.0.10
- ARG ZLIB_VERSION=1.3.1
- ARG GLIB_MINOR_VERSION=2.84
- ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
- ARG PIXMAN_VERSION=0.44.2
--ARG FFI_VERSION=v3.4.7
-+ARG FFI_VERSION=v3.5.2
- ARG MESON_VERSION=1.5.0
-+ARG TARGET_CPU=wasm32
-+ARG WASM64_MEMORY64=0
- 
--FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base
-+FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base-common
-+ARG TARGET_CPU
- ARG MESON_VERSION
- ENV TARGET=/builddeps/target
- ENV CPATH="$TARGET/include"
-@@ -33,8 +36,8 @@ RUN <<EOF
- cat <<EOT > /cross.meson
- [host_machine]
- system = 'emscripten'
--cpu_family = 'wasm32'
--cpu = 'wasm32'
-+cpu_family = '${TARGET_CPU}'
-+cpu = '${TARGET_CPU}'
- endian = 'little'
- 
- [binaries]
-@@ -46,6 +49,16 @@ pkgconfig = ['pkg-config', '--static']
- EOT
- EOF
- 
-+FROM build-base-common AS build-base-wasm32
++static void tcg_out_op_v(TCGContext *s, TCGOpcode op)
++{
++    tcg_out32(s, (uint8_t)op);
++}
 +
-+FROM build-base-common AS build-base-wasm64
-+ARG WASM64_MEMORY64
-+ENV CFLAGS="$CFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+ENV LDFLAGS="$LDFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+
-+FROM build-base-${TARGET_CPU} AS build-base
-+
- FROM build-base AS zlib-dev
- ARG ZLIB_VERSION
- RUN mkdir -p /zlib
-@@ -56,17 +69,19 @@ RUN emconfigure ./configure --prefix=$TARGET --static
- RUN emmake make install -j$(nproc)
+ static void tcg_out_op_ri(TCGContext *s, TCGOpcode op, TCGReg r0, int32_t i1)
+ {
+     tcg_insn_unit_tci insn = 0;
+@@ -1931,6 +1936,20 @@ static bool tcg_out_qemu_st_slow_path(TCGContext *s, TCGLabelQemuLdst *l)
+     g_assert_not_reached();
+ }
  
- FROM build-base AS libffi-dev
-+ARG TARGET_CPU
-+ARG WASM64_MEMORY64
- ARG FFI_VERSION
- RUN mkdir -p /libffi
- RUN git clone https://github.com/libffi/libffi /libffi
- WORKDIR /libffi
- RUN git checkout $FFI_VERSION
- RUN autoreconf -fiv
--RUN emconfigure ./configure --host=wasm32-unknown-linux \
-+RUN emconfigure ./configure --host=${TARGET_CPU}-unknown-linux \
-     --prefix=$TARGET --enable-static \
-     --disable-shared --disable-dependency-tracking \
-     --disable-builddir --disable-multi-os-directory \
--    --disable-raw-api --disable-docs
-+    --disable-raw-api --disable-docs WASM64_MEMORY64=${WASM64_MEMORY64}
- RUN emmake make install SUBDIRS='include' -j$(nproc)
- 
- FROM build-base AS pixman-dev
++static void tcg_out_mb(TCGContext *s, unsigned a0)
++{
++    tcg_out_op_v(s, INDEX_op_mb);
++
++    /*
++     * Wasm's threading proposal provides atomic.fence instruction as the fence
++     * operator.
++     * https://webassembly.github.io/threads/core/syntax/instructions.html#atomic-memory-instructions
++     */
++    tcg_wasm_out8(s, 0xfe);
++    tcg_wasm_out8(s, 0x03);
++    tcg_wasm_out8(s, 0x00);
++}
++
+ static void tcg_out_tb_start(TCGContext *s)
+ {
+     init_sub_buf();
 -- 
 2.43.0
 
