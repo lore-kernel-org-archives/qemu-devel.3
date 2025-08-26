@@ -4,92 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1923CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 22:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA3ACA0FED
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 22:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur1zp-0000ZB-7J; Tue, 26 Aug 2025 18:18:29 -0400
+	id 1ur2CW-0004FV-CG; Tue, 26 Aug 2025 18:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ur1zn-0000Ys-MN
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 18:18:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1ur2CP-0004Do-Sv; Tue, 26 Aug 2025 18:31:32 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ur1zb-0008F9-Ii
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 18:18:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756246691;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=F+bjwlqEUtpkU0LwRRYAcrtQ+7O+EZnUr1dEn35sXLc=;
- b=IQ3TFSOqtIu9qZbbKqk0n2ZhQTNOchZ++ZZPJZSQ/cCpQkZdKi9ZQR1QAZ3E0e1OGrPYMa
- qXCBYDJNvd/RaqoeFKSeqc2L+QG5eNGOMKjo2gQpCtG6JlcK/dVAy0E+1B1/HRgADdwBgm
- VduADOaf8aY0HDxVSVf082gI4HlzpVg=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-KZG_zQdmPniEMfHgGj_6_w-1; Tue, 26 Aug 2025 18:18:05 -0400
-X-MC-Unique: KZG_zQdmPniEMfHgGj_6_w-1
-X-Mimecast-MFC-AGG-ID: KZG_zQdmPniEMfHgGj_6_w_1756246684
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7e87031ae4dso764749285a.0
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 15:18:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756246683; x=1756851483;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=F+bjwlqEUtpkU0LwRRYAcrtQ+7O+EZnUr1dEn35sXLc=;
- b=IHUOD1LHR1h01P7REbvjI9Tvc9iNrxT50RZv9RZfr055FfjKCcOiFPdr5Jf6m/10Je
- XeeW/Y2vL1wli7uPqdvB/6YKJ7M/ARkhz84qcnv+9mkYagzWiKYE+0KIMFx4mhntX6EQ
- eSF3ELlEb1B1i5Neb1JJSTyDOtZdEpGCvvA18wOdRNURuXqyXUme6jQlb8a6lIU4B1+k
- MNQbcOk1U1JrIJgRDIRLqySA+o2lU1jids7NgwidkvOGmt7fiHC+WJkLkNR6YQVO1Shm
- SLTdk1zFxVwy7q18r70hU6xkE1C8PiN+XIXPT8M40QqV8uRp3UevmuGTbMEA8MJJlcsR
- ipHw==
-X-Gm-Message-State: AOJu0Yy+8dOOq8caVtHB0vIjlfKQ4TMEJw0OTTLJ6M2u+ePdLrJL7g0Q
- 2460NwiSUy2PKUVs5ST6Xt+oHIElIaHhbtURpZ2Bx0ChRQozMzHf+qShGxSjAktLvzBawdb4b43
- mIzXC+L0T2iRXwhncuHKoiMeqEE1ZGgWlNWpmapuZJgC8rFaSWSpUoOgZigj3Z5m5KOBzrUc69d
- z/tA+n9XUX8NIP5tolNcud6E3lkU02NlynOM7zJg==
-X-Gm-Gg: ASbGncs8m+yEnwrBGVRmgkzgpWVkfF+wH4UndW7a303amlDsb47p3UYz3qxaHDF+qCL
- +++4bLo+BZyJZWT8tj7vNPhOtexTNjJCQoXXZEs+CeU5im3Vp2Nlp3bdjIigq3unHquNtk2n0Bs
- IP5ohzUwXETewZILyZuusTaYGTSQ9T2/o/0dPAM8Uok0GtVUYX1dibYapBA8aJ6pAdavmy/gptp
- /p7ajdetBZwPXwhwiD3WeqtukFR/4IHFDkT3FcTKHMtezghNSi0txPRpFI519KC8LuH2PHsGmtd
- +kwloBqrlXlR9sipnzjJwhM/lxcB4Q==
-X-Received: by 2002:a05:620a:410b:b0:7e6:8bd4:8c70 with SMTP id
- af79cd13be357-7ea1104715cmr2101189085a.44.1756246683512; 
- Tue, 26 Aug 2025 15:18:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbpIVQxhHBw0DEgWq95wBX5BKcL21M4ktInhJvHZWBqKcjuRbtQQEcjpjgF8eYYV4A5Ztghg==
-X-Received: by 2002:a05:620a:410b:b0:7e6:8bd4:8c70 with SMTP id
- af79cd13be357-7ea1104715cmr2101184985a.44.1756246682883; 
- Tue, 26 Aug 2025 15:18:02 -0700 (PDT)
-Received: from x1.com ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7eeb4bc9c65sm602730685a.9.2025.08.26.15.18.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 15:18:02 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, peterx@redhat.com,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH] memory: Fix leaks due to owner-shared MRs circular references
-Date: Tue, 26 Aug 2025 18:17:50 -0400
-Message-ID: <20250826221750.285242-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1ur2CC-0001iM-NB; Tue, 26 Aug 2025 18:31:26 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QKWdOs008475;
+ Tue, 26 Aug 2025 22:31:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+eds93
+ Go/qjaCwT+QsAmJ/AL2ml+LRa33o1ekdfPMEo=; b=e3HcOlN8D+IZmcrdS9/Gt6
+ 2Ct+5JCWOX1gHG8RuHqjkSHmIvumxHpMo8eLzFjRu2JMGOItQKxK27/Lkt75hco4
+ R4xESAtqigfyWNp5JVT6rqbR0dTtBt0HJBqoefsDlWtNnPDbxWcmJQMhquT9/B6z
+ JXsKqMBvlxx3Uh+fZWTF8TZaoAV5dTE9NPWR2cQJ2w4itQ067w2Z37a7y0/cSD1f
+ ia9uyqrBDCTe5LfEqfgmlHYUbXqCIsJUMn8bk7UyFkvqXnvyMZtEZz+0SLyliFYh
+ koynR+EsP805WJKBEt/DGtQMYh8V8w0/Zd/YeZW3kQsSjVG6hFlo9NcNl+Js/J5Q
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5avh7j1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Aug 2025 22:31:04 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57QLmZEU007813;
+ Tue, 26 Aug 2025 22:31:04 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48qqyud8b5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Aug 2025 22:31:04 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57QMV2No49938820
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 26 Aug 2025 22:31:02 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5F5FD58052;
+ Tue, 26 Aug 2025 22:31:02 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C7D8E58050;
+ Tue, 26 Aug 2025 22:31:00 +0000 (GMT)
+Received: from [9.61.148.204] (unknown [9.61.148.204])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 26 Aug 2025 22:31:00 +0000 (GMT)
+Message-ID: <82c91b19-eb26-422b-9f2b-248ccd45b6db@linux.ibm.com>
+Date: Tue, 26 Aug 2025 18:30:59 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 07/29] s390x/diag: Implement DIAG 320 subcode 1
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-8-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20250818214323.529501-8-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: v7llMQG7CmMdfCjOrrIPNlu3pfmBSAlq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAyMSBTYWx0ZWRfX0bspzoyco+Pe
+ qdmKQeD4/wU4vlvRBWjDSCuQynsOxd08sdXj+r0XH9OAEr5zVzDi+H4iRnAYinAVZhrPbOZEnU/
+ PsgjMmNM8qcNna44c+j2wDD7PNSDgprPxxZmNIeybOnYf9OqAdkKLSPRQhQZIEEJ2+G4VBTdgRx
+ 1Ota5r/1ifuQDF+JcUz9J4i4eOVekMCJS5u89N7+K4ts8vt/VtPLkA86CE7zE53pEloohs1vdRo
+ 2ccuTTGGp35Z+kOP/anwrrvat6yq+S4uF0fRvLn1SvwdySa0FKmicpZECxHXa73cBeLYJEMQci8
+ nnkqyWc2UuLwrcnJRBv4t/0DnYXB1WaVooO+6UEW8yexNIjYmjDSxzBlmIhp1RChkrM3cksq3U4
+ S/YRs2yo
+X-Proofpoint-ORIG-GUID: v7llMQG7CmMdfCjOrrIPNlu3pfmBSAlq
+X-Authority-Analysis: v=2.4 cv=SNNCVPvH c=1 sm=1 tr=0 ts=68ae35a9 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=NoBh4wRB9a5phwg7ey4A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230021
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,145 +124,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, QEMU refcounts the MR by always taking it from the owner.
 
-It's common that one object will have multiple MR objects embeded in the
-object itself.  All the MRs in this case share the same lifespan of the
-owner object.
 
-It's also common that in the instance_init() of an object, MR A can be a
-container of MR B, C, D, by using memory_region_add_subregion*() set of
-memory region APIs.
+On 8/18/25 5:43 PM, Zhuoying Cai wrote:
+> DIAG 320 subcode 1 provides information needed to determine
+> the amount of storage to store one or more certificates from the
+> certificate store.
+>
+> Upon successful completion, this subcode returns information of the current
+> cert store, such as the number of certificates stored and allowed in the cert
+> store, amount of space may need to be allocate to store a certificate,
+> etc for verification-certificate blocks (VCBs).
+>
+> The subcode value is denoted by setting the left-most bit
+> of an 8-byte field.
+>
+> The verification-certificate-storage-size block (VCSSB) contains
+> the output data when the operation completes successfully. A VCSSB
+> length of 4 indicates that no certificate are available in the cert
+> store.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   docs/specs/s390x-secure-ipl.rst | 10 ++++++
+>   include/hw/s390x/ipl/diag320.h  | 22 +++++++++++++
+>   target/s390x/diag.c             | 56 ++++++++++++++++++++++++++++++++-
+>   3 files changed, 87 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> index 70e9a66fe0..ddc15f0322 100644
+> --- a/docs/specs/s390x-secure-ipl.rst
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -23,3 +23,13 @@ Subcode 0 - query installed subcodes
+>       Returns a 256-bit installed subcodes mask (ISM) stored in the installed
+>       subcodes block (ISB). This mask indicates which sucodes are currently
+>       installed and available for use.
+> +
+> +Subcode 1 - query verification certificate storage information
+> +    Provides the information required to determine the amount of memory needed to
+> +    store one or more verification-certificates (VCs) from the certificate store (CS).
+> +
+> +    Upon successful completion, this subcode returns various storage size values for
+> +    verification-certificate blocks (VCBs).
+> +
+> +    The output is returned in the verification-certificate-storage-size block (VCSSB).
+> +    A VCSSB length of 4 indicates that no certificates are available in the CS.
+> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+> index aa04b699c6..6e4779c699 100644
+> --- a/include/hw/s390x/ipl/diag320.h
+> +++ b/include/hw/s390x/ipl/diag320.h
+> @@ -11,10 +11,32 @@
+>   #define S390X_DIAG320_H
+>   
+>   #define DIAG_320_SUBC_QUERY_ISM     0
+> +#define DIAG_320_SUBC_QUERY_VCSI    1
+>   
+>   #define DIAG_320_RC_OK              0x0001
+>   #define DIAG_320_RC_NOT_SUPPORTED   0x0102
+> +#define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
+>   
+>   #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
+> +#define DIAG_320_ISM_QUERY_VCSI     0x40000000
+> +
+> +#define VCSSB_NO_VC     4
+> +#define VCSSB_MIN_LEN   128
+> +#define VCE_HEADER_LEN  128
+> +#define VCB_HEADER_LEN  64
+> +
+> +struct VCStorageSizeBlock {
+> +    uint32_t length;
+> +    uint8_t reserved0[3];
+> +    uint8_t version;
+> +    uint32_t reserved1[6];
+> +    uint16_t total_vc_ct;
+> +    uint16_t max_vc_ct;
+> +    uint32_t reserved3[11];
+> +    uint32_t max_single_vcb_len;
+> +    uint32_t total_vcb_len;
+> +    uint32_t reserved4[10];
+> +};
+> +typedef struct VCStorageSizeBlock VCStorageSizeBlock;
+Previous versions included a build bug message for the size of this 
+structure,
+was it dropped by mistake?
 
-Now we have a circular reference issue, as when adding subregions for MR A,
-we essentially incremented the owner's refcount within the instance_init(),
-meaning the object will be self-boosted and its refcount can never go down
-to zero if the MRs won't get detached properly before object's finalize().
-
-Delete subregions within object's finalize() won't work either, because
-finalize() will be invoked only if the refcount goes to zero first.  What
-is worse, object_finalize() will do object_property_del_all() first before
-object_deinit().  Since embeded MRs will be properties of the owner object,
-it means they'll be freed _before_ the owner's finalize().
-
-To fix that, teach memory API to stop refcount on MRs that share the same
-owner.  Because if they share the lifecycle of the owner, then they share
-the same lifecycle between themselves, hence the refcount doesn't help but
-only introduce troubles.
-
-Meanwhile, allow auto-detachments of MRs during finalize() of MRs even
-against its container, as long as they belong to the same owner.
-
-The latter is needed because now it's possible to have MRs' finalize()
-happen in any order when they share the same lifespan with a same owner.
-In this case, we should allow finalize() to happen in any order of either
-the parent or child MR.  Loose the mr->container check in MR's finalize()
-to allow auto-detach.  Double check it shares the same owner.
-
-Proper document this behavior in code.
-
-This patch is heavily based on the work done by Akihiko Odaki:
-
-https://lore.kernel.org/r/CAFEAcA8DV40fGsci76r4yeP1P-SP_QjNRDD2OzPxjx5wRs0GEg@mail.gmail.com
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- docs/devel/memory.rst |  7 +++++--
- system/memory.c       | 45 ++++++++++++++++++++++++++++++++++---------
- 2 files changed, 41 insertions(+), 11 deletions(-)
-
-diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-index 57fb2aec76..a325e97d7b 100644
---- a/docs/devel/memory.rst
-+++ b/docs/devel/memory.rst
-@@ -158,8 +158,11 @@ ioeventfd) can be changed during the region lifecycle.  They take effect
- as soon as the region is made visible.  This can be immediately, later,
- or never.
- 
--Destruction of a memory region happens automatically when the owner
--object dies.
-+Destruction of a memory region happens automatically when the owner object
-+dies.  When there are multiple memory regions under the same owner object,
-+the memory API will guarantee all memory regions will be properly detached
-+and finalized one by one.  The order which memory region will be finalized
-+first is not guaranteed.
- 
- If however the memory region is part of a dynamically allocated data
- structure, you should call object_unparent() to destroy the memory region
-diff --git a/system/memory.c b/system/memory.c
-index 5646547940..d7f6ad9be2 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1796,16 +1796,36 @@ static void memory_region_finalize(Object *obj)
- {
-     MemoryRegion *mr = MEMORY_REGION(obj);
- 
--    assert(!mr->container);
--
--    /* We know the region is not visible in any address space (it
--     * does not have a container and cannot be a root either because
--     * it has no references, so we can blindly clear mr->enabled.
--     * memory_region_set_enabled instead could trigger a transaction
--     * and cause an infinite loop.
-+    /*
-+     * Each memory region (that can be dynamically freed..) must has an
-+     * owner, and it always has the same lifecycle of its owner.  It means
-+     * when reaching here, the memory region's owner refcount is zero.
-+     *
-+     * Here it is possible that the MR has:
-+     *
-+     * (1) mr->container set, which means this MR can be a subregion of a
-+     *     container MR, in this case it must share the same owner
-+     *     (otherwise the container should have kept a refcount of this
-+     *     MR's owner), or,
-+     *
-+     * (2) mr->subregions non-empty, which means this MR can be a container
-+     *     of other MRs (share the owner or not).
-+     *
-+     * We know the MR, or any MR that is attached to this one as either
-+     * container or children, is not visible in any address space, because
-+     * otherwise the address space should have taken at least one refcount
-+     * of this MR's owner.  So we can blindly clear mr->enabled.
-+     *
-+     * memory_region_set_enabled instead could trigger a transaction and
-+     * cause an infinite loop.
-      */
-     mr->enabled = false;
-     memory_region_transaction_begin();
-+    if (mr->container) {
-+        /* Must share the owner; see above comments */
-+        assert(mr->container->owner == mr->owner);
-+        memory_region_del_subregion(mr->container, mr);
-+    }
-     while (!QTAILQ_EMPTY(&mr->subregions)) {
-         MemoryRegion *subregion = QTAILQ_FIRST(&mr->subregions);
-         memory_region_del_subregion(mr, subregion);
-@@ -2625,7 +2645,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
- 
-     memory_region_transaction_begin();
- 
--    memory_region_ref(subregion);
-+    if (mr->owner != subregion->owner) {
-+        memory_region_ref(subregion);
-+    }
-+
-     QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
-         if (subregion->priority >= other->priority) {
-             QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-@@ -2683,7 +2706,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
-         assert(alias->mapped_via_alias >= 0);
-     }
-     QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
--    memory_region_unref(subregion);
-+
-+    if (mr->owner != subregion->owner) {
-+        memory_region_unref(subregion);
-+    }
-+
-     memory_region_update_pending |= mr->enabled && subregion->enabled;
-     memory_region_transaction_commit();
- }
--- 
-2.50.1
-
+>   
+>   #endif
+> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+> index e67ee57f01..b42cf8fe98 100644
+> --- a/target/s390x/diag.c
+> +++ b/target/s390x/diag.c
+> @@ -191,11 +191,47 @@ out:
+>       }
+>   }
+>   
+> +static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
+> +                                     uintptr_t ra, S390IPLCertificateStore *qcs)
+> +{
+> +    g_autofree VCStorageSizeBlock *vcssb = NULL;
+> +
+> +    vcssb = g_new0(VCStorageSizeBlock, 1);
+> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcssb, sizeof(*vcssb))) {
+> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +        return -1;
+> +    }
+> +
+> +    if (be32_to_cpu(vcssb->length) < VCSSB_MIN_LEN) {
+> +        return DIAG_320_RC_INVAL_VCSSB_LEN;
+> +    }
+> +
+> +    if (!qcs->count) {
+> +        vcssb->length = cpu_to_be32(VCSSB_NO_VC);
+> +    } else {
+> +        vcssb->version = 0;
+> +        vcssb->total_vc_ct = cpu_to_be16(qcs->count);
+> +        vcssb->max_vc_ct = cpu_to_be16(MAX_CERTIFICATES);
+> +        vcssb->max_single_vcb_len = cpu_to_be32(VCB_HEADER_LEN + VCE_HEADER_LEN +
+> +                                                qcs->max_cert_size);
+> +        vcssb->total_vcb_len = cpu_to_be32(VCB_HEADER_LEN + qcs->count * VCE_HEADER_LEN +
+> +                                           qcs->total_bytes);
+> +    }
+> +
+> +    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcssb, be32_to_cpu(vcssb->length))) {
+> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +        return -1;
+> +    }
+> +    return DIAG_320_RC_OK;
+> +}
+> +
+>   void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>   {
+>       S390CPU *cpu = env_archcpu(env);
+> +    S390IPLCertificateStore *qcs = s390_ipl_get_certificate_store();
+>       uint64_t subcode = env->regs[r3];
+>       uint64_t addr = env->regs[r1];
+> +    int rc;
+>   
+>       if (env->psw.mask & PSW_MASK_PSTATE) {
+>           s390_program_interrupt(env, PGM_PRIVILEGED, ra);
+> @@ -219,7 +255,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>            * but the current set of subcodes can fit within a single word
+>            * for now.
+>            */
+> -        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES);
+> +        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
+> +                                         DIAG_320_ISM_QUERY_VCSI);
+>   
+>           if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
+>               s390_cpu_virt_mem_handle_exc(cpu, ra);
+> @@ -228,6 +265,23 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>   
+>           env->regs[r1 + 1] = DIAG_320_RC_OK;
+>           break;
+> +    case DIAG_320_SUBC_QUERY_VCSI:
+> +        if (!diag_parm_addr_valid(addr, sizeof(VCStorageSizeBlock), true)) {
+> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
+> +            return;
+> +        }
+> +
+> +        if (addr & 0x7) {
+> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
+> +            return;
+> +        }
+> +
+> +        rc = handle_diag320_query_vcsi(cpu, addr, r1, ra, qcs);
+> +        if (rc == -1) {
+> +            return;
+> +        }
+> +        env->regs[r1 + 1] = rc;
+> +        break;
+>       default:
+>           env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
+>           break;
+Regards,
+Jared rossi
 
