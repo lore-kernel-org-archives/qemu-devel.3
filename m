@@ -4,75 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC2FACA0FE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 09:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C310BCA0FE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 09:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqpsS-0003J9-6q; Tue, 26 Aug 2025 05:22:04 -0400
+	id 1uqq5c-00076E-K3; Tue, 26 Aug 2025 05:35:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uqpsP-0003IA-0i
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 05:22:01 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uqq5Z-000761-K1
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 05:35:37 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uqpsF-0006R5-6p
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 05:22:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756200111; x=1787736111;
- h=message-id:date:mime-version:subject:to:references:from:
- in-reply-to:content-transfer-encoding;
- bh=OpSBory3olZYVeJo7xvJG/y5BVJG+TbiJTNaBTF1klI=;
- b=MTAXC9dP+YI47m67pEVDI14CQM30UQaT7dzxz5HD4Ee7ojzoEF5V6aGA
- mPzSvfNd7c92a/+fiCHnDjL/Gzt6mUTm/VeU2CSHKL8BSOKun28vPLoBY
- X++NwhJwsJtUyiFVxK3DQRwU3bRzwIWwxoCFzReqv3eSO7EeQyP8oigQr
- PCuQOenjaeNdp1T49qhYbPJ8dA1NpGoN7sRyHypwlfQ0twwOAJgrkFtx6
- kKtlPLbnbBvfp93fim8pQIh/Xz/qG/QBIurs8ZkGWCKNQquHuflNSPJwN
- EASh80FYALgm4DQS2Kxvje4V1kAayEfR9kwHo4qg8n9Bv00LZtJvN4s/H g==;
-X-CSE-ConnectionGUID: Jo4qVwwIRbiv9KW4cW+MEA==
-X-CSE-MsgGUID: fFXAB9FUR/2rt1wklhKh6w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="58347497"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; d="scan'208";a="58347497"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2025 02:21:46 -0700
-X-CSE-ConnectionGUID: yu7KJY14TtOFxtV86ZGcXg==
-X-CSE-MsgGUID: ypNEKOthRdGOov3ylz7Q4Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="169030649"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
- ([10.124.238.14])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2025 02:21:44 -0700
-Message-ID: <010b2b2e-7d88-42b1-ad5e-ccd1518777af@intel.com>
-Date: Tue, 26 Aug 2025 17:21:40 +0800
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uqq5S-00008C-Vb
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 05:35:37 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cB2Yf0JNyz6GDX8;
+ Tue, 26 Aug 2025 17:34:30 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 97A191402F5;
+ Tue, 26 Aug 2025 17:34:59 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 26 Aug
+ 2025 11:34:58 +0200
+Date: Tue, 26 Aug 2025 10:34:57 +0100
+To: Wilfred Mallawa <wilfred.opensource@gmail.com>
+CC: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
+ <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Jesper Devantier
+ <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng
+ <fam@euphon.net>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>,
+ <qemu-block@nongnu.org>, Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: Re: [PATCH 1/4] spdm-socket: add seperate send/recv functions
+Message-ID: <20250826103457.0000698e@huawei.com>
+In-Reply-To: <20250826054630.222052-2-wilfred.opensource@gmail.com>
+References: <20250826054630.222052-1-wilfred.opensource@gmail.com>
+ <20250826054630.222052-2-wilfred.opensource@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 04/19] hw/i386/pc_piix.c: duplicate pc_init1() into
- pc_isa_init()
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
- mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- imammedo@redhat.com, qemu-devel@nongnu.org
-References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
- <20250822121342.894223-5-mark.caveayland@nutanix.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250822121342.894223-5-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.703, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,56 +75,152 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote:
-> This is to prepare for splitting the isapc machine into its own separate file.
+On Tue, 26 Aug 2025 15:46:27 +1000
+Wilfred Mallawa <wilfred.opensource@gmail.com> wrote:
+
+> From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Hi Wilfred,
+
+Great to see this support.
+
+> This is to support uni-directional transports such as SPDM
+> over Storage. As specified by the DMTF DSP0286.
+
+Trivial, wrap commit closer to 75 chars.
+
+> 
+> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 > ---
->   hw/i386/pc_piix.c | 261 +++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 260 insertions(+), 1 deletion(-)
+>  backends/spdm-socket.c       | 27 ++++++++++++++++++++++++---
+>  include/system/spdm-socket.h | 35 +++++++++++++++++++++++++++++++++++
+>  2 files changed, 59 insertions(+), 3 deletions(-)
 > 
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 071bf7412e..5b97ad2cea 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-
-...
-
-> +    if (piix4_pm) {
-> +        smi_irq = qemu_allocate_irq(pc_acpi_smi_interrupt, first_cpu, 0);
+> diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
+> index 2c709c68c8..bab1b512c8 100644
+> --- a/backends/spdm-socket.c
+> +++ b/backends/spdm-socket.c
+> @@ -184,6 +184,29 @@ int spdm_socket_connect(uint16_t port, Error **errp)
+>      return client_socket;
+>  }
+>  
+> +uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
+> +                             void *rsp, uint32_t rsp_len)
+> +{
+> +    uint32_t command;
+> +    bool result;
 > +
-> +        qdev_connect_gpio_out_named(DEVICE(piix4_pm), "smi-irq", 0, smi_irq);
-> +        pcms->smbus = I2C_BUS(qdev_get_child_bus(DEVICE(piix4_pm), "i2c"));
-> +        /* TODO: Populate SPD eeprom data.  */
-> +        smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
+> +    result = receive_platform_data(socket, transport_type, &command,
+> +                                   (uint8_t *)rsp, &rsp_len);
 > +
-> +        object_property_add_link(OBJECT(machine), PC_MACHINE_ACPI_DEVICE_PROP,
-> +                                 TYPE_HOTPLUG_HANDLER,
-> +                                 (Object **)&x86ms->acpi_dev,
-> +                                 object_property_allow_set_link,
-> +                                 OBJ_PROP_LINK_STRONG);
-> +        object_property_set_link(OBJECT(machine), PC_MACHINE_ACPI_DEVICE_PROP,
-> +                                 piix4_pm, &error_abort);
+> +    if (!result || command == 0) {
+
+Comment on why command == 0 is good even if result is a fail.
+In the existing code, there is an assert if result is true and command != 0,
+why don't we need similar here?  Might be worth adding a comment on that
+special case to the existing code as I for one can't remember what it is for :(
+Ah I see you modify it below. 
+
+
+> +        return 0;
 > +    }
 > +
-> +    if (machine->nvdimms_state->is_enabled) {
-> +        nvdimm_init_acpi_state(machine->nvdimms_state, system_io,
-> +                               x86_nvdimm_acpi_dsmio,
-> +                               x86ms->fw_cfg, OBJECT(pcms));
-> +    }
+> +    return rsp_len;
+> +}
+> +
+> +bool spdm_socket_send(const int socket, uint32_t socket_cmd,
+> +                      uint32_t transport_type, void *req, uint32_t req_len)
+> +{
+> +    return send_platform_data(socket, transport_type,
+> +                              socket_cmd, req, req_len);
+> +}
+> +
+>  uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+>                           void *req, uint32_t req_len,
+>                           void *rsp, uint32_t rsp_len)
+> @@ -200,12 +223,10 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+>  
+>      result = receive_platform_data(socket, transport_type, &command,
+>                                     (uint8_t *)rsp, &rsp_len);
+> -    if (!result) {
+> +    if (!result || command == 0) {
 
-IGVM support was merged recently and the rebase of this series doesn't 
-catch it.
+Add a comment here as well on 'why'.  Or can we have socket_rsp just call spdm_socket_send
++ spdm_socket_receive?  That would at least put the comment in just one place.
 
-I think we need to copy the IGVM related code as well, in this patch.
-We can remove it later in a separate patch if it's unnecessary for isapc.
-
->   }
->   #endif
->   
+>          return 0;
+>      }
+>  
+> -    assert(command != 0);
+> -
+>      return rsp_len;
+>  }
+>  
+> diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
+> index 5d8bd9aa4e..2b7d03f82d 100644
+> --- a/include/system/spdm-socket.h
+> +++ b/include/system/spdm-socket.h
+> @@ -50,6 +50,35 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+>                           void *req, uint32_t req_len,
+>                           void *rsp, uint32_t rsp_len);
+>  
+> +/**
+> + * spdm_socket_rsp: Receive a message from an SPDM server
+> + * @socket: socket returned from spdm_socket_connect()
+> + * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
+> + * @rsp: response buffer
+> + * @rsp_len: response buffer length
+> + *
+> + * Receives a message from the SPDM server and returns the number of bytes
+> + * received or 0 on failure. This can be used to receive a message from the SPDM
+> + * server without sending anything first.
+> + */
+> +uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
+> +                             void *rsp, uint32_t rsp_len);
+> +
+> +/**
+> + * spdm_socket_rsp: Sends a message to an SPDM server
+> + * @socket: socket returned from spdm_socket_connect()
+> + * @socket_cmd: socket command type (normal/if_recv/if_send etc...)
+> + * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
+> + * @req: request buffer
+> + * @req_len: request buffer length
+> + *
+> + * Sends platform data to a SPDM server on socket, returns true on success.
+> + * The response from the server must then be fetched by using
+> + * spdm_socket_receive().
+> + */
+> +bool spdm_socket_send(const int socket, uint32_t socket_cmd,
+> +                      uint32_t transport_type, void *req, uint32_t req_len);
+> +
+>  /**
+>   * spdm_socket_close: send a shutdown command to the server
+>   * @socket: socket returned from spdm_socket_connect()
+> @@ -60,6 +89,9 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+>  void spdm_socket_close(const int socket, uint32_t transport_type);
+>  
+>  #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
+> +#define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
+> +#define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
+> +#define SOCKET_SPDM_STORAGE_ACK_STATUS            0x0004
+>  #define SPDM_SOCKET_COMMAND_OOB_ENCAP_KEY_UPDATE  0x8001
+>  #define SPDM_SOCKET_COMMAND_CONTINUE              0xFFFD
+>  #define SPDM_SOCKET_COMMAND_SHUTDOWN              0xFFFE
+> @@ -68,7 +100,10 @@ void spdm_socket_close(const int socket, uint32_t transport_type);
+>  
+>  #define SPDM_SOCKET_TRANSPORT_TYPE_MCTP           0x01
+>  #define SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE        0x02
+> +#define SPDM_SOCKET_TRANSPORT_TYPE_SCSI           0x03
+> +#define SPDM_SOCKET_TRANSPORT_TYPE_NVME           0x04
+>  
+>  #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
+> +#define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
+>  
+>  #endif
 
 
