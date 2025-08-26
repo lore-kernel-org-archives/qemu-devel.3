@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4293ECA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 11:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BE3CA0FE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 11:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqs6m-0003xR-Fp; Tue, 26 Aug 2025 07:45:00 -0400
+	id 1uqs7B-00046S-1E; Tue, 26 Aug 2025 07:45:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uqs6g-0003wd-5J
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:44:54 -0400
+ id 1uqs72-00044b-MW
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:45:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uqs6a-0002Xb-KT
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:44:53 -0400
+ id 1uqs6t-0002Za-AK
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:45:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756208684;
+ s=mimecast20190719; t=1756208703;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=a3EWHfGQtyH3wIOLCFC/Re/z5sNdaNd1V8i9z17Rq1g=;
- b=jEq2gHJtWayRZTulNOJfB7m0hXIa0sbC3XuWr4tXwrKAy9Ld9qtDoA9tIYvX6uh7inAcgO
- rQrdhf10ldL/1um5fJnFjof48IPLh6LaH6fkcYbZmEGmPvxbl8cCIrlOMzTsDfbzIMUF5G
- I3uDisCgZxzuKGJFgDvsjfclOupyL/w=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Sbyf47z2/1ZYhPtOwkkLmBJxseHYi0IqmAYIDV4XaZk=;
+ b=EPB5EXiJ0Ge+E74vzRDTCNqt6Njr0LzTKBme1B6ts1REpEesWYSzOpugyoCf3a+wVl6ru5
+ K2BsAz9KovfxBRBnPykqJeSj9V3OQa1xFth9mra6I8hyU3WWy9WaGTuUr5D3F/mDdOHHAv
+ GSQxpJVS055pxNYMJ0LnRTccCjnpB9A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-183-XRMDzsZXMSqb5rIyYTNJrw-1; Tue,
- 26 Aug 2025 07:44:41 -0400
-X-MC-Unique: XRMDzsZXMSqb5rIyYTNJrw-1
-X-Mimecast-MFC-AGG-ID: XRMDzsZXMSqb5rIyYTNJrw_1756208680
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-c46Uy2WAP1yeTa1O1mhW2g-1; Tue,
+ 26 Aug 2025 07:45:01 -0400
+X-MC-Unique: c46Uy2WAP1yeTa1O1mhW2g-1
+X-Mimecast-MFC-AGG-ID: c46Uy2WAP1yeTa1O1mhW2g_1756208700
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5D6819560B5; Tue, 26 Aug 2025 11:44:39 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C7041956088; Tue, 26 Aug 2025 11:45:00 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.174])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 910021955F24; Tue, 26 Aug 2025 11:44:37 +0000 (UTC)
-Date: Tue, 26 Aug 2025 12:44:34 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1134D180047F; Tue, 26 Aug 2025 11:44:57 +0000 (UTC)
+Date: Tue, 26 Aug 2025 12:44:54 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, tanishdesai37@gmail.com, stefanha@redhat.com,
  mads@ynddal.dk
-Subject: Re: [PATCH 04/14] tracetool: add CHECK_TRACE_EVENT_GET_STATE
-Message-ID: <aK2eIiVAHQyTzdmR@redhat.com>
+Subject: Re: [PATCH 05/14] tracetool/backend: remove redundant trace event
+ checks
+Message-ID: <aK2eNjsEb5xb7buI@redhat.com>
 References: <20250822122655.1353197-1-pbonzini@redhat.com>
- <20250822122655.1353197-5-pbonzini@redhat.com>
+ <20250822122655.1353197-6-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250822122655.1353197-5-pbonzini@redhat.com>
+In-Reply-To: <20250822122655.1353197-6-pbonzini@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -71,7 +72,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,21 +91,26 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 22, 2025 at 02:26:45PM +0200, Paolo Bonzini wrote:
+On Fri, Aug 22, 2025 at 02:26:46PM +0200, Paolo Bonzini wrote:
 > From: Tanish Desai <tanishdesai37@gmail.com>
 > 
-> Add a new attribute CHECK_TRACE_EVENT_GET_STATE to the backends.
-> When present and True, the code generated by the generate function
-> is wrapped in a conditional that checks whether the event is enabled;
-> this removes the need for repeating the same conditional in multiple
-> backends.
+> Use CHECK_TRACE_EVENT_GET_STATE in log, syslog, dtrace and simple
+> backend, so that the "if (trace_event_get_state)" is created from common
+> code and unified when multiple backends are active.
+> 
+> When a single backend is active there is no code change (except
+> for the log backend, as shown in tests/tracetool/log.h), but the
+> code in the backends is simpler.
 > 
 > Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  scripts/tracetool/backend/__init__.py | 39 ++++++++++++++++++---------
->  scripts/tracetool/format/h.py         | 11 +++++---
->  2 files changed, 35 insertions(+), 15 deletions(-)
+>  tests/tracetool/log.h               | 16 ++++++++++------
+>  scripts/tracetool/backend/ftrace.py |  6 ++----
+>  scripts/tracetool/backend/log.py    | 10 ++++------
+>  scripts/tracetool/backend/simple.py |  8 ++------
+>  scripts/tracetool/backend/syslog.py |  8 ++------
+>  5 files changed, 20 insertions(+), 28 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
