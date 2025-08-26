@@ -4,63 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA25CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 11:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8C0CA0FE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 11:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqrkb-0006Cu-KL; Tue, 26 Aug 2025 07:22:05 -0400
+	id 1uqrmD-000746-8n; Tue, 26 Aug 2025 07:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uqrkU-0006Aa-BM; Tue, 26 Aug 2025 07:21:58 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uqrm9-00070G-HS
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:23:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uqrkL-0007kW-9O; Tue, 26 Aug 2025 07:21:57 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cB4tT4Plgz6LD7K;
- Tue, 26 Aug 2025 19:19:13 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 7DC2414038F;
- Tue, 26 Aug 2025 19:21:29 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 26 Aug
- 2025 13:21:28 +0200
-Date: Tue, 26 Aug 2025 12:21:27 +0100
-To: Wilfred Mallawa <wilfred.opensource@gmail.com>
-CC: Alistair Francis <alistair.francis@wdc.com>, Keith Busch
- <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Jesper Devantier
- <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng
- <fam@euphon.net>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, <qemu-devel@nongnu.org>,
- <qemu-block@nongnu.org>, Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: Re: [PATCH 4/4] hw/nvme: connect SPDM over NVMe Security Send/Recv
-Message-ID: <20250826122127.000061fc@huawei.com>
-In-Reply-To: <20250826054630.222052-5-wilfred.opensource@gmail.com>
-References: <20250826054630.222052-1-wilfred.opensource@gmail.com>
- <20250826054630.222052-5-wilfred.opensource@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uqrm4-00083b-7D
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 07:23:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756207409;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8cBugJJub36Mrueq/357PIlWuiu3NshY04ejaBBzNfA=;
+ b=DdGmB4ZyJp+MVWoGsmmayoe5MXy5vSnH4XpcTlQrsL3q5OYOKs7EKXsGz0YK0O9Ut6+u/h
+ TqWWS/Ceio3tv6kJ4cFJ7t7DficWmaMqIuf6jWG8oqlUewTP/5EHeQlgG9M+7p7tFshm2s
+ NB3wIHqa7/Nul4CPj0NlS9h26ae2ihc=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-ln517oLUNXGcS09OcrUoYQ-1; Tue, 26 Aug 2025 07:23:28 -0400
+X-MC-Unique: ln517oLUNXGcS09OcrUoYQ-1
+X-Mimecast-MFC-AGG-ID: ln517oLUNXGcS09OcrUoYQ_1756207407
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4b10946ab41so131905941cf.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 04:23:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756207407; x=1756812207;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8cBugJJub36Mrueq/357PIlWuiu3NshY04ejaBBzNfA=;
+ b=ONHtZLRyHuNluoCSyFeDlbwpyOyIpgdY85MP7dRPu9cMSP2StibMlJz1LowN1U6ipn
+ 3If7/e5SrCsD8/L2p61UFw4cwS1vU7FtMJyv+zrLGR9aIUYEUZKeXdrhDHIJX+2AOzjt
+ UA+hp5GYGtYBJ6pRK8EDUv7cze2mg7BXD5QbGhpG/snvzklw4Bk1HFDhgxHfvrxcmX6A
+ 7Wa8kCbo2XEqS+ipbTSn5+w0nTUUl65nPnjk2Ey6rJpT09Aa4XwwcML6y8q8BbPbANmU
+ IvPXryEaymVVwmY3BP+SOJcmxl5/CWut8NCOYGDqBEybII+1Iy8+qiJfU5o/s3ulnMNT
+ KABw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6/ICcEu881PkyZAHzG3kNJ4cn6WnHEuFRRK6loh8GSkFqL5G8pMFopcSC+hlMXMlkxTJ4LB4pAHvg@nongnu.org
+X-Gm-Message-State: AOJu0YyE0jHeylKuHEKPILrWgHn6Nk4maNDd3cVJc5xUel0B8pcLQchn
+ kqhvlwzVV+HPHB7XQrW4q/wSjpkciBS1VJ+eKoigcpbX5OoBZamwxdnaxx0Sq+BFKKGlGu5pdg5
+ xZzyJXIERiO9tz+jYaZ299LGnl9qaMQO1yRnVXyi8/KeIBG8xZY2Ynzh/
+X-Gm-Gg: ASbGncvon+E0Gv7v4JxuTSUM+CRe73LobRaJnlkPEOEta57dFj7JuGNxQNbpAG8NiGU
+ iINxjmmzTZJFKq5E1ND06B5t1bMhjGEuFUD+LRQqTGRI+FdC0LwLrB2ZaS5vI/ITXUCTE6YcPmZ
+ U2HQDzOC7Nf0kaQqjn75vfv/qsigCf5Ur2WK3pyeNMFU/BoXNCNma4Tt7OCocM6qG3Xm1QFKjuA
+ kwKIU8qmgJmQU22e6uvSryUxAbUqkNrrAvqqkPqCBPHwXkpF+sIyzppASGmesiQML1n3nlxuVwK
+ Qycc3+0wJiT7EbJBcI1lwFD04WV5fQ==
+X-Received: by 2002:a05:622a:4c14:b0:4b0:7521:3ba9 with SMTP id
+ d75a77b69052e-4b2e76f7ba6mr10849531cf.14.1756207407191; 
+ Tue, 26 Aug 2025 04:23:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXBfMGyjW9CyAOH5d4T0/t6MBzTl+/Lg0erCZk3HzO3qqTRnSeZRe3UaBUnknpkPBdAfe83Q==
+X-Received: by 2002:a05:622a:4c14:b0:4b0:7521:3ba9 with SMTP id
+ d75a77b69052e-4b2e76f7ba6mr10849241cf.14.1756207406777; 
+ Tue, 26 Aug 2025 04:23:26 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b2b8ca8d93sm70688711cf.18.2025.08.26.04.23.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Aug 2025 04:23:25 -0700 (PDT)
+Date: Tue, 26 Aug 2025 13:23:22 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, richard.henderson@linaro.org,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] kvm/kvm-all: make kvm_park/unpark_vcpu local to
+ kvm-all.c
+Message-ID: <20250826132322.7571b918@fedora>
+In-Reply-To: <20250815065445.8978-1-anisinha@redhat.com>
+References: <20250815065445.8978-1-anisinha@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,69 +108,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Aug 2025 15:46:30 +1000
-Wilfred Mallawa <wilfred.opensource@gmail.com> wrote:
+On Fri, 15 Aug 2025 12:24:45 +0530
+Ani Sinha <anisinha@redhat.com> wrote:
 
-> From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+> kvm_park_vcpu() and kvm_unpark_vcpu() is only used in kvm-all.c. Declare it
+> static, remove it from common header file and make it local to kvm-all.c
 > 
-> This patch extends the existing support we have for NVMe with only DoE
-> to also add support to SPDM over the NVMe Security Send/Recv commands.
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+
+> ---
+>  accel/kvm/kvm-all.c  |  4 ++--
+>  include/system/kvm.h | 17 -----------------
+>  2 files changed, 2 insertions(+), 19 deletions(-)
 > 
-> With the new definition of the `spdm-trans` argument, users can specify
-> `spdm_trans=nvme` or `spdm_trans=doe`. This allows us to select the SPDM
-> transport respectively. SPDM over the NVMe Security Send/Recv commands
-> are defined in the DMTF DSP0286.
+> changelog:
+> unexport  kvm_unpark_vcpu() as well and remove unnecessary forward
+> declarations.
 > 
-> Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
-
-A few comments inline.
-
-Jonathan
-
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index 442144642d..61feb9b35a 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -8849,6 +8849,23 @@ static DOEProtocol doe_spdm_prot[] = {
->      { }
->  };
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 890d5ea9f8..f36dfe3349 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -414,7 +414,7 @@ err:
+>      return ret;
+>  }
 >  
-> +static inline uint32_t nvme_get_spdm_trans_type(PCIDevice *pci_dev)
-> +{
-> +    if (!pci_dev) {
-> +        return false;
-
-It's a uin32_t, false doesn't make sense as a return value.
-
-> +    }
-> +
-> +    if (!strcmp(pci_dev->spdm_trans, "nvme")) {
-> +        return SPDM_SOCKET_TRANSPORT_TYPE_NVME;
-> +    }
-> +
-> +    if (!strcmp(pci_dev->spdm_trans, "doe")) {
-> +        return SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-
-> @@ -9297,6 +9332,7 @@ static const Property nvme_props[] = {
->                       false),
->      DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
->      DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
-> +    DEFINE_PROP_STRING("spdm_trans", PCIDevice, spdm_trans),
-
-There is enum support, (look for qdev_propinfo_get_enum() usage)
-but seems not that much used and there are examples of strings
-used for things that are enums underneath.
-
->      DEFINE_PROP_BOOL("ctratt.mem", NvmeCtrl, params.ctratt.mem, false),
+> -void kvm_park_vcpu(CPUState *cpu)
+> +static void kvm_park_vcpu(CPUState *cpu)
+>  {
+>      struct KVMParkedVcpu *vcpu;
+>  
+> @@ -426,7 +426,7 @@ void kvm_park_vcpu(CPUState *cpu)
+>      QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+>  }
+>  
+> -int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+> +static int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+>  {
+>      struct KVMParkedVcpu *cpu;
+>      int kvm_fd = -ENOENT;
+> diff --git a/include/system/kvm.h b/include/system/kvm.h
+> index 3c7d314736..4fc09e3891 100644
+> --- a/include/system/kvm.h
+> +++ b/include/system/kvm.h
+> @@ -317,23 +317,6 @@ int kvm_create_device(KVMState *s, uint64_t type, bool test);
+>   */
+>  bool kvm_device_supported(int vmfd, uint64_t type);
+>  
+> -/**
+> - * kvm_park_vcpu - Park QEMU KVM vCPU context
+> - * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to be parked.
+> - *
+> - * @returns: none
+> - */
+> -void kvm_park_vcpu(CPUState *cpu);
+> -
+> -/**
+> - * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
+> - * @s: KVM State
+> - * @vcpu_id: Architecture vCPU ID of the parked vCPU
+> - *
+> - * @returns: KVM fd
+> - */
+> -int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
+> -
+>  /**
+>   * kvm_create_and_park_vcpu - Create and park a KVM vCPU
+>   * @cpu: QOM CPUState object for which KVM vCPU has to be created and parked.
 
 
