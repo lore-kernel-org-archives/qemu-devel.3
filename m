@@ -4,111 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA3ACA0FED
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 22:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A89A9CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 23:32:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur2CW-0004FV-CG; Tue, 26 Aug 2025 18:31:36 -0400
+	id 1ur37v-0000Iq-O4; Tue, 26 Aug 2025 19:30:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1ur2CP-0004Do-Sv; Tue, 26 Aug 2025 18:31:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1ur37u-0000Ha-1g
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 19:30:54 -0400
+Received: from mail-bn8nam12on2062.outbound.protection.outlook.com
+ ([40.107.237.62] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1ur2CC-0001iM-NB; Tue, 26 Aug 2025 18:31:26 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QKWdOs008475;
- Tue, 26 Aug 2025 22:31:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=+eds93
- Go/qjaCwT+QsAmJ/AL2ml+LRa33o1ekdfPMEo=; b=e3HcOlN8D+IZmcrdS9/Gt6
- 2Ct+5JCWOX1gHG8RuHqjkSHmIvumxHpMo8eLzFjRu2JMGOItQKxK27/Lkt75hco4
- R4xESAtqigfyWNp5JVT6rqbR0dTtBt0HJBqoefsDlWtNnPDbxWcmJQMhquT9/B6z
- JXsKqMBvlxx3Uh+fZWTF8TZaoAV5dTE9NPWR2cQJ2w4itQ067w2Z37a7y0/cSD1f
- ia9uyqrBDCTe5LfEqfgmlHYUbXqCIsJUMn8bk7UyFkvqXnvyMZtEZz+0SLyliFYh
- koynR+EsP805WJKBEt/DGtQMYh8V8w0/Zd/YeZW3kQsSjVG6hFlo9NcNl+Js/J5Q
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5avh7j1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Aug 2025 22:31:04 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57QLmZEU007813;
- Tue, 26 Aug 2025 22:31:04 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48qqyud8b5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Aug 2025 22:31:04 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57QMV2No49938820
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 26 Aug 2025 22:31:02 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5F5FD58052;
- Tue, 26 Aug 2025 22:31:02 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C7D8E58050;
- Tue, 26 Aug 2025 22:31:00 +0000 (GMT)
-Received: from [9.61.148.204] (unknown [9.61.148.204])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 26 Aug 2025 22:31:00 +0000 (GMT)
-Message-ID: <82c91b19-eb26-422b-9f2b-248ccd45b6db@linux.ibm.com>
-Date: Tue, 26 Aug 2025 18:30:59 -0400
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1ur37q-00022D-1h
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 19:30:53 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Rdy78XVvDrLjJYEoE8TbPfoTGwKo4DCUuoxPSc+P3sEPumWIfC6EDB+UON+WH5QTEgT1vULlHNfqtuTDMK9w68bU6GaMdPZVEHyHvf6+iOG86BmVh2/5sURGG76JjqBrUe/kcDNRjn4jTp6YvLKNX3/rGBt8DKKlPSx++guhTUKhSkFD35s+LH4GVOyr0cFSGV+iUnavnRdx0y9yBo/bP61w9WWrpCDuFYSJAgw7p5Rsf4Ng2Ml7IiiP7CI5Mo5sD4NrdYMQYNfg5BMbRkB5Qe0jQSoX3fTh347l5g8kjMEg2q0o+5WrJ/741eG4ak7l+s4b6A0OXyeO/yFY9Tsu2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mZQyqqqw6J9xeYtwz8O5EYcbp5HKkUbLEnbsWxVPCCg=;
+ b=uAmIlGIT9G+wEzP/kdzgH0aKnrxHmLzRTdUO9vvKtb/wW1ezAFN8tTxhHQD4LD2rH8Wjr4xavAoj5S0TZQon7Vbx1t9MFXtpXFT6SjEVkaspjdYR2xl9cgtiZJ9q8Vi0lOZKYmJmJuyqXYZzheKryP4Cgt7EndwZwQwvRs6/zvDx9aboN45bBXOP2vk9g+erCQHPhmG80erkP5xX097+A/55Spd8cWFyk55ecE0d11pQMMedjJSz9GUlWRmWGmK3l9QttPAaQtqhZixzLrtTd0EXKY576KaALpOhFOOjwLzq+xbZULoY/eobNrlypXrYa2gj96AeO573mrXij43b8Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mZQyqqqw6J9xeYtwz8O5EYcbp5HKkUbLEnbsWxVPCCg=;
+ b=Oh7KVmLzSyjVcRpfXgLfecg+ufTzf6Kwg8tdZugeAqLKIIec+DJVgu08PzO1h0p+gsC1S4jiOyJWQ6PYNDyQkTXd4gDGkOzHjEg8wCA0zHUk/mFSySoRZQe1XCucxHCbb6WXZB9x4KIrzd4CzBKOPkauFHu7Fk6GWgTNO4fbYaY=
+Received: from BN0PR04CA0107.namprd04.prod.outlook.com (2603:10b6:408:ec::22)
+ by MW4PR12MB7118.namprd12.prod.outlook.com (2603:10b6:303:213::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.23; Tue, 26 Aug
+ 2025 23:25:38 +0000
+Received: from BN2PEPF0000449D.namprd02.prod.outlook.com
+ (2603:10b6:408:ec:cafe::8) by BN0PR04CA0107.outlook.office365.com
+ (2603:10b6:408:ec::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.22 via Frontend Transport; Tue,
+ 26 Aug 2025 23:25:37 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN2PEPF0000449D.mail.protection.outlook.com (10.167.243.148) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.9052.8 via Frontend Transport; Tue, 26 Aug 2025 23:25:37 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 26 Aug
+ 2025 18:25:37 -0500
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 07/29] s390x/diag: Implement DIAG 320 subcode 1
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com
-References: <20250818214323.529501-1-zycai@linux.ibm.com>
- <20250818214323.529501-8-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20250818214323.529501-8-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: v7llMQG7CmMdfCjOrrIPNlu3pfmBSAlq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAyMSBTYWx0ZWRfX0bspzoyco+Pe
- qdmKQeD4/wU4vlvRBWjDSCuQynsOxd08sdXj+r0XH9OAEr5zVzDi+H4iRnAYinAVZhrPbOZEnU/
- PsgjMmNM8qcNna44c+j2wDD7PNSDgprPxxZmNIeybOnYf9OqAdkKLSPRQhQZIEEJ2+G4VBTdgRx
- 1Ota5r/1ifuQDF+JcUz9J4i4eOVekMCJS5u89N7+K4ts8vt/VtPLkA86CE7zE53pEloohs1vdRo
- 2ccuTTGGp35Z+kOP/anwrrvat6yq+S4uF0fRvLn1SvwdySa0FKmicpZECxHXa73cBeLYJEMQci8
- nnkqyWc2UuLwrcnJRBv4t/0DnYXB1WaVooO+6UEW8yexNIjYmjDSxzBlmIhp1RChkrM3cksq3U4
- S/YRs2yo
-X-Proofpoint-ORIG-GUID: v7llMQG7CmMdfCjOrrIPNlu3pfmBSAlq
-X-Authority-Analysis: v=2.4 cv=SNNCVPvH c=1 sm=1 tr=0 ts=68ae35a9 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=NoBh4wRB9a5phwg7ey4A:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 bulkscore=0 phishscore=0 clxscore=1015
- impostorscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230021
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 10.1.0 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+Date: Tue, 26 Aug 2025 18:19:26 -0500
+Message-ID: <175625036608.469964.4138433906168641553@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF0000449D:EE_|MW4PR12MB7118:EE_
+X-MS-Office365-Filtering-Correlation-Id: 05f4c7bc-fbaa-404f-a765-08dde4f7dd38
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|376014|36860700013|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NTRKc2hhcTJlRFluaEp4cWxUSm9OelgycEZZank4UFBGQkF4ZzFMcnZFcjVo?=
+ =?utf-8?B?SWlVbkplOFJGTUhKQmxQcmJScllGc2N5SHhpT21mU0Y4emwyeHd2ajlNNmFi?=
+ =?utf-8?B?N0VwZ25oTCtjR2tVai9TQnNkR3c1U1FhZGNYQ2RJb09GN2xWN3c3aDBqem51?=
+ =?utf-8?B?N2M5bDFXQ05aZWtyQ2ZnMERod05pT05IRTVSN3NTMkdqOExxcVp4WHU4SHlK?=
+ =?utf-8?B?T0VMRitsMkZiRkJwVWcybERwOCtuekx5TExRWmI5YTkrU1dsVUQyOXhYc3hx?=
+ =?utf-8?B?dzNFNGVWc3BTMVBSVGQ4YWlSTkNYbkJWVGxQVnVGbk9od3VPTW9uR3lKWVZ6?=
+ =?utf-8?B?aHpQeGEwUVMvVzllUkRMekNjTFBTTDBqWnB4cjZpdFh3ZWJFQURWS1FqMHJ1?=
+ =?utf-8?B?Q0NZcFNNTlliRmUwbUlUVW04YjZBZ0twSG94M2lvSitQVG9idGFuMHZybXMv?=
+ =?utf-8?B?aGYxSmMwUDFzSUkrT2cxak00S3ExQUUxaTN2aWZ4VW5rN2FRcUZoUDVyWERm?=
+ =?utf-8?B?cjd2Z01CckQxWTNQb2F2Tzh0RVJrSzJnbGZReVFCajQzRnBKVHBrcmVQUUtD?=
+ =?utf-8?B?Q3NreXZ4aFFsUW85eU9CcitRVm1hREkzdVF6MXpUbkkwRzBnTTgxa3ZnWTIy?=
+ =?utf-8?B?MTNoWitrUzF2ZkI5ZlRqNC9GZHhUT2d1dFhab09OZXV2eWFkdmxsNUdVdVI1?=
+ =?utf-8?B?cm5kQWdzc1doVXMxT0Q5RnhjaTZLTGY2bWptaWdXeXZhanlFZ2p1ZDNqT0I5?=
+ =?utf-8?B?TmVhZ2RYaS9NeFV2U1hDWHVMZDB3Y05keHUvSUFUb09RVjBFblZ5Skk4L01i?=
+ =?utf-8?B?MDRkbEYyTk54cE0rd2wzaFMxVmNJRHBlczQ4WldTcnY3Zm1qbFE0RUo4SGZa?=
+ =?utf-8?B?Vy9zT25TZkpwWUJGVUhTS2VXd3BrTmdiNEt6REdldXZTZFQrMlk4aDhZaExN?=
+ =?utf-8?B?QlcxK2FXT2syaHdaOSs1RmJsYnUxREVuS3JUY0tEWThUWnFoK1hTeVkvN01j?=
+ =?utf-8?B?Y1VmZklVT3dSbG0zUE96Q1cvQUtnaEJISFdlSDFiQkxqekhBQmd6QlN1cllC?=
+ =?utf-8?B?VC9QbHdoWjI4UlppbkhFamJWMThuTkcwb1VxWFQvK091NXBzZjE0aUdXdTFX?=
+ =?utf-8?B?Sk5hTmVsRzJDVE52azJvbGtJUVRxb2hzMVZnYWUzbmIzNVlia0hSVjJyRW54?=
+ =?utf-8?B?eHBuaSt4WkdGdmw1ZThITkc4MEsva1kzT3JvYlQxQUFkV3FBOW9GZ0dvL3RQ?=
+ =?utf-8?B?OFY5Yk1IdE9wQzJHQS9zT0lvaWMyRlM1a29WbFNqS3RZMDJwdFlCd3gwdWUy?=
+ =?utf-8?B?NVpTSHRTNHFETDZEbjEzNXpHa3RZRkptNTdGSllYTVFEQkRVRFlDZ01TZStF?=
+ =?utf-8?B?TUNHaXZwNVZuak1kdHNDWTVQUTg4TWZQT0xPMmVrM0daeHRpa0orN1NUc3pu?=
+ =?utf-8?B?ektPQ3Q1N2o0aGJUWTBtQmFiYnhkNUZoMEp3WVlrN0NpMkZDemdWNHpPMCt5?=
+ =?utf-8?B?ZWJ2VVYxSTVicktUdllLMVdHZ3NOemRuajFLYUFVYjh0Qk85RXRNV1oxdjk5?=
+ =?utf-8?B?bmdtNndiM0hYVllpOWxaY0ROQS9kWmN4UHR5S2Y5WEdvQ3FBNnJWZk5LUXNw?=
+ =?utf-8?B?T1MxR2xFWHp4TlFTVUhnZ2ljdnFhQjVjTVY5TkxMbkZXYXBsRUkwaUlZd3Zs?=
+ =?utf-8?B?NVR0cUZ4Z3ovbkg4KytqeE9qMGZjK1pJQUM3cVJlOFU0bTZVeHEydGV2Skhv?=
+ =?utf-8?B?YXJrUVhsb3VLNGQ5dzJvcDIzT2s1NkZMOE93MFBqS1FGb1FtSEFLbnNONElG?=
+ =?utf-8?B?QW02WHhnTVROdExKdDNsV3AyMGxGVXNlck5vTjRjS1hkVWFsWlhUNkZlRHU3?=
+ =?utf-8?B?dWFQTmJYa1FobHFDc29rQjVNWlBnYVB1M3Q4WU9oQXZueVRteFEzY0JxWkVv?=
+ =?utf-8?B?ZlFrVzd5M0h4Q3FidTJPd3I5N3NRZ2tVTEk1Y1VITThpRTVFdlc1MHFQSGQy?=
+ =?utf-8?B?M1hlUVMyWlVBPT0=?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(376014)(36860700013)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2025 23:25:37.5581 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 05f4c7bc-fbaa-404f-a765-08dde4f7dd38
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF0000449D.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7118
+Received-SPF: permerror client-ip=40.107.237.62;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,178 +155,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello,
 
+On behalf of the QEMU Team, I'd like to announce the availability of
+the QEMU 10.1.0 release. This release contains 2700+ commits from 226
+authors.
 
-On 8/18/25 5:43 PM, Zhuoying Cai wrote:
-> DIAG 320 subcode 1 provides information needed to determine
-> the amount of storage to store one or more certificates from the
-> certificate store.
->
-> Upon successful completion, this subcode returns information of the current
-> cert store, such as the number of certificates stored and allowed in the cert
-> store, amount of space may need to be allocate to store a certificate,
-> etc for verification-certificate blocks (VCBs).
->
-> The subcode value is denoted by setting the left-most bit
-> of an 8-byte field.
->
-> The verification-certificate-storage-size block (VCSSB) contains
-> the output data when the operation completes successfully. A VCSSB
-> length of 4 indicates that no certificate are available in the cert
-> store.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   docs/specs/s390x-secure-ipl.rst | 10 ++++++
->   include/hw/s390x/ipl/diag320.h  | 22 +++++++++++++
->   target/s390x/diag.c             | 56 ++++++++++++++++++++++++++++++++-
->   3 files changed, 87 insertions(+), 1 deletion(-)
->
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> index 70e9a66fe0..ddc15f0322 100644
-> --- a/docs/specs/s390x-secure-ipl.rst
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -23,3 +23,13 @@ Subcode 0 - query installed subcodes
->       Returns a 256-bit installed subcodes mask (ISM) stored in the installed
->       subcodes block (ISB). This mask indicates which sucodes are currently
->       installed and available for use.
-> +
-> +Subcode 1 - query verification certificate storage information
-> +    Provides the information required to determine the amount of memory needed to
-> +    store one or more verification-certificates (VCs) from the certificate store (CS).
-> +
-> +    Upon successful completion, this subcode returns various storage size values for
-> +    verification-certificate blocks (VCBs).
-> +
-> +    The output is returned in the verification-certificate-storage-size block (VCSSB).
-> +    A VCSSB length of 4 indicates that no certificates are available in the CS.
-> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
-> index aa04b699c6..6e4779c699 100644
-> --- a/include/hw/s390x/ipl/diag320.h
-> +++ b/include/hw/s390x/ipl/diag320.h
-> @@ -11,10 +11,32 @@
->   #define S390X_DIAG320_H
->   
->   #define DIAG_320_SUBC_QUERY_ISM     0
-> +#define DIAG_320_SUBC_QUERY_VCSI    1
->   
->   #define DIAG_320_RC_OK              0x0001
->   #define DIAG_320_RC_NOT_SUPPORTED   0x0102
-> +#define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
->   
->   #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
-> +#define DIAG_320_ISM_QUERY_VCSI     0x40000000
-> +
-> +#define VCSSB_NO_VC     4
-> +#define VCSSB_MIN_LEN   128
-> +#define VCE_HEADER_LEN  128
-> +#define VCB_HEADER_LEN  64
-> +
-> +struct VCStorageSizeBlock {
-> +    uint32_t length;
-> +    uint8_t reserved0[3];
-> +    uint8_t version;
-> +    uint32_t reserved1[6];
-> +    uint16_t total_vc_ct;
-> +    uint16_t max_vc_ct;
-> +    uint32_t reserved3[11];
-> +    uint32_t max_single_vcb_len;
-> +    uint32_t total_vcb_len;
-> +    uint32_t reserved4[10];
-> +};
-> +typedef struct VCStorageSizeBlock VCStorageSizeBlock;
-Previous versions included a build bug message for the size of this 
-structure,
-was it dropped by mistake?
+You can grab the tarball from our download page here:
 
->   
->   #endif
-> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-> index e67ee57f01..b42cf8fe98 100644
-> --- a/target/s390x/diag.c
-> +++ b/target/s390x/diag.c
-> @@ -191,11 +191,47 @@ out:
->       }
->   }
->   
-> +static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
-> +                                     uintptr_t ra, S390IPLCertificateStore *qcs)
-> +{
-> +    g_autofree VCStorageSizeBlock *vcssb = NULL;
-> +
-> +    vcssb = g_new0(VCStorageSizeBlock, 1);
-> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcssb, sizeof(*vcssb))) {
-> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
-> +        return -1;
-> +    }
-> +
-> +    if (be32_to_cpu(vcssb->length) < VCSSB_MIN_LEN) {
-> +        return DIAG_320_RC_INVAL_VCSSB_LEN;
-> +    }
-> +
-> +    if (!qcs->count) {
-> +        vcssb->length = cpu_to_be32(VCSSB_NO_VC);
-> +    } else {
-> +        vcssb->version = 0;
-> +        vcssb->total_vc_ct = cpu_to_be16(qcs->count);
-> +        vcssb->max_vc_ct = cpu_to_be16(MAX_CERTIFICATES);
-> +        vcssb->max_single_vcb_len = cpu_to_be32(VCB_HEADER_LEN + VCE_HEADER_LEN +
-> +                                                qcs->max_cert_size);
-> +        vcssb->total_vcb_len = cpu_to_be32(VCB_HEADER_LEN + qcs->count * VCE_HEADER_LEN +
-> +                                           qcs->total_bytes);
-> +    }
-> +
-> +    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcssb, be32_to_cpu(vcssb->length))) {
-> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
-> +        return -1;
-> +    }
-> +    return DIAG_320_RC_OK;
-> +}
-> +
->   void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->   {
->       S390CPU *cpu = env_archcpu(env);
-> +    S390IPLCertificateStore *qcs = s390_ipl_get_certificate_store();
->       uint64_t subcode = env->regs[r3];
->       uint64_t addr = env->regs[r1];
-> +    int rc;
->   
->       if (env->psw.mask & PSW_MASK_PSTATE) {
->           s390_program_interrupt(env, PGM_PRIVILEGED, ra);
-> @@ -219,7 +255,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->            * but the current set of subcodes can fit within a single word
->            * for now.
->            */
-> -        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES);
-> +        uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
-> +                                         DIAG_320_ISM_QUERY_VCSI);
->   
->           if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
->               s390_cpu_virt_mem_handle_exc(cpu, ra);
-> @@ -228,6 +265,23 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->   
->           env->regs[r1 + 1] = DIAG_320_RC_OK;
->           break;
-> +    case DIAG_320_SUBC_QUERY_VCSI:
-> +        if (!diag_parm_addr_valid(addr, sizeof(VCStorageSizeBlock), true)) {
-> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
-> +            return;
-> +        }
-> +
-> +        if (addr & 0x7) {
-> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
-> +            return;
-> +        }
-> +
-> +        rc = handle_diag320_query_vcsi(cpu, addr, r1, ra, qcs);
-> +        if (rc == -1) {
-> +            return;
-> +        }
-> +        env->regs[r1 + 1] = rc;
-> +        break;
->       default:
->           env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
->           break;
-Regards,
-Jared rossi
+  https://www.qemu.org/download/#source
+
+The full list of changes are available at:
+
+  https://wiki.qemu.org/ChangeLog/10.1
+
+Highlights include:
+
+ * VFIO: Initial support for accessing/mapping memory for confidential
+   guests when guest_memfd is being utilized, allowing passthrough support
+   for virtual machines running under SEV-SNP/TDX
+ * Live migration: support for utilizing multifd to accelerate post-copy
+   migration, optimizations for pre-copy migration, and RDMA migration
+   support for ipv6
+ * QEMU guest agent: support for querying load of virtual machines
+   running Windows via new 'guest-get-load' command
+
+ * ARM: support for CPU features FEAT_SME2, FEAT_SME2p1, FEAT_SME_B16B16,
+   FEAT_SME_F16F16, FEAT_SVE_B16B16, and FEAT_SVE2p1
+ * ARM: support for new board/machine models 'max78000fthr',
+   'ast2700fc', 'catalina-bmc', 'gb200-bmc', and 'ast2700a0-evb'
+ * ARM: 'virt' board now supports nested virtualization under KVM, CXL,
+   and ACPI-based PCI hotplug
+ * LoongArch: support for in-kernel irqchip
+ * Microblaze: support for selecting the endianess of 'petalogix_s3adsp1800'
+   machine type
+ * RISC-V: ISA/extension support for atomic instruction fetch (Ziccif),
+   'Svrsw60t59b', and numerous other improvements/additions/fixes
+ * RISC-V: support for Kunminghu CPU and platform
+ * x86: KVM support for running confidential guests via Intel TDX
+ * x86: Support for initializing confidential TDX or SEV-SNP virtual
+   machines using the IGVM file format
+
+ * and lots more...
+
+Thank you to everyone involved!
 
