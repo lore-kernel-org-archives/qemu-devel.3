@@ -4,90 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8EBCA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 08:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E74CA0EFA
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 08:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqpK1-0000hL-Dr; Tue, 26 Aug 2025 04:46:30 -0400
+	id 1uqpLl-0001XO-Fi; Tue, 26 Aug 2025 04:48:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uqpJx-0000gq-KQ
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 04:46:26 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uqpJs-0001UL-Om
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 04:46:25 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-61c26f3cf0dso5850258a12.1
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 01:46:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756197975; x=1756802775; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GPWo4WjJyUa+1NvTRqYOLCOUGA3LO9vWWcJIDiicRyw=;
- b=IqaVErNKZE98GTyEc7fteTeMB1DyGXxSJ9Hl8BdZcwJGpXa4Hej+yfnSnGX+HPP+vV
- qSA+lFGC80tovi6jP69WQBpDUW7c9bxnfd7897/zqE4Dotfs/0dNmY7ATNfag2E0nwLg
- 2eUpB52nkOJzTJVrHWI4tiUEDLvTKrdrZNo/7r4EkID2dTk5wzb1fcEJcqp10OI9eFXI
- IzLmnFBNTytoVcTJtabnatC6EbCePk04G81liRj7jWbiDczqD7RjUERZGgIJp5HUm+QC
- m/8gJzUMhucbP0i39ICQJJnTCMC3D03cqeG2vQfG0DaIt27GIj6XrxQuQhXTSqt2i/AZ
- 5zuw==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uqpLY-0001JR-La
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 04:48:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uqpLN-0001cx-9c
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 04:48:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756198058;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EdNBK/G2CP/XYVHgsGugpIGSHBAagqVuwdkPmCuAfPQ=;
+ b=XN032csJW+SC/4v2zCzwlIXRSurPWhQ/5WBRtY0cYXsYBCu1MfdvJmXajNIMJxb/Qk/i2D
+ nJQojOMmWrPiaVCp2BOrgqtoxiufe20yOgL7CF9+zX1c1+mcIJSkUpPMfJi44mbJ074QKm
+ KiuxN1AJkM8Wr7++xpwwY5e2rAHPSOo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-684-Y_6L6MX6ME-3kM5wMdwaiQ-1; Tue, 26 Aug 2025 04:47:37 -0400
+X-MC-Unique: Y_6L6MX6ME-3kM5wMdwaiQ-1
+X-Mimecast-MFC-AGG-ID: Y_6L6MX6ME-3kM5wMdwaiQ_1756198056
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0cc989so37328205e9.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 01:47:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756197975; x=1756802775;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756198056; x=1756802856;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GPWo4WjJyUa+1NvTRqYOLCOUGA3LO9vWWcJIDiicRyw=;
- b=wAYcUmnRqTSqs8uNGuFPb6E59PIiiJFT9tLU2U+EemAfOrlxxFpYIGEd/lZz7Ee9dh
- zKFnbGO9FurvflZSfmzjUCABx/M+0croDjsEvGaercIIZtyx8dIJrDzMhszWEKaXfPDw
- dwyz29pQnL9zUKnCqSEyj5AAm10vZGcKEqGPcl8SZhSVZFhSoq4qT/BAmxBgofIgTpUy
- CnjN2Fm8MfXVU1v9MbjxTNnpB6fU5ndI2pT5z1YckzZXfw2LBzhBbfLoIwFUsLdgAZxJ
- 1N7+BneZ3bjFB5ooHpwObg2Knkf1EC8O6/y7fQQYs/FdrtP+f7FAuNrcMOd8WtJBqtCg
- Z8iQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZ0nIPZcolJqMKQrPuOv8ufsd7aiswnJqI7x6oz3G2Zu3t0c0RihNfH6ET0lEEPz4ZvAQ5mezM/XDE@nongnu.org
-X-Gm-Message-State: AOJu0YyvyBxCk5UdagVEkcW6w/8JoVXBrPeX9py2RJG24NTg6tG8HV4W
- /nfo13oOcwvOvqX2tIjyu3aFU8/6D2ktEYk55Ofs2QKvnfMyPrm0VXJn2g3wt9T6w+fuU1h9oZw
- X2umF5vWlnHpqyqlF/yv9gFPQer05nL9pVXUXIwh1Wg==
-X-Gm-Gg: ASbGncufUmcy9NYlKNmWtGEwNtWq5dmdInI2VcxNw6ckChJEuSa00kwgb2CESTbrrbl
- 6h2JU8tyFFCT797AEmzgCVojNucAFz2wbg4bpaqbX5t3ZPR+VjbnVM/wSszi6tSnXWSVBkAAnrP
- /dMXOSQ5HbHjuH3N7g2lw2inf6bdTH3ESKEPJjsoLaTlq5p/8EWaDI4cfAKeOG1GsD1Ec4iB7kC
- /SBY47s
-X-Google-Smtp-Source: AGHT+IGmoRCtrzOe8ND7lh01ZtopBB5FuED3WtYe0KW+FToofD9QWalQyRP9/FGXhzn1A5PZ0g+OvCIhX7meYW9maZs=
-X-Received: by 2002:a05:6402:2787:b0:61c:5264:ad97 with SMTP id
- 4fb4d7f45d1cf-61c5264b027mr7144519a12.30.1756197975511; Tue, 26 Aug 2025
- 01:46:15 -0700 (PDT)
+ bh=EdNBK/G2CP/XYVHgsGugpIGSHBAagqVuwdkPmCuAfPQ=;
+ b=cQ1IbhqZfO5B95e+/gQKHDiCQUABFUi3RZRBbgf5ierYxfP+yabTYlsglJoIBmhF+s
+ TTfaM+S8DrOaQ30rCebOywG3efYGPz2hMp/LO2ikT28vZIWSwHvOYUGXTnkGPcJG5s7Q
+ iE7EQbdStCWx2KE1PrnHLiHkrOeVzIAPGaDC91XOh3SwZ0ZVXt7hmxJENahOoxw/UAuz
+ IStIk5Ue/ZZAoZy1rT1469MbF8JOMJVKDFNNrEpiJm2pgzlbQq6/AK2pzNxJJNHM4+3d
+ bVGoEh7a/IUG5EJFXW4kEk5vEv1XrGVbi5JbVixsqol+2uV5XbjPAdFPbTDlf8maPGlf
+ 7cEw==
+X-Gm-Message-State: AOJu0YytiEhguLA3/KfvimZZK42L1WQDFJqy6SUxoyqjlTG7vdOnKPkc
+ KebIBIyvvyZSV+CAe5qo2hFKK4euviUmS9Z6Bl11Vj0v8R/FKRnyDJ6J7MQ62kM1hEg2RKNzfOJ
+ vLLjc2djm0XvZRP1Vf6q3Mt5rxpTbeJS5DqoWOM61MlYqHPKPD20jneq4
+X-Gm-Gg: ASbGncuhExEvK/Q2euwlNrbYcCYQt7KuYVwMdWOEw7S70r+1QrAN7MI+zqHrNw8R6EC
+ 3GoY9xpoLic46Pq09a5A1noEEcbqqWjEf3Lq5V0MI4ztXRX3uaSqByjMzv1rpLVtK6enTsS8Slr
+ E2DNUms9hkJsuRDGMcp5w+oVQLULWgWsRbOE49Iy6+mxup1Lg4SB8pU5/iNnakJuJwCzmT9zHi6
+ LzVyty319g/R4NcKKD+yRA5nZ0zl/h2OijZf5PYkno//biTSFve5UJWn7ksdCP0860ogk0LRf0l
+ I0Kasd89CEi44pNBOtvx/3wrypmcVQ==
+X-Received: by 2002:a05:600c:458a:b0:459:da76:d7aa with SMTP id
+ 5b1f17b1804b1-45b517dc897mr142437895e9.25.1756198055872; 
+ Tue, 26 Aug 2025 01:47:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVVmrnYcmC7VxaHNcL2r77LEs9HfW4js8Gz73X0F0e1YEXP0YHi7ixvt+oQRxtNLEoXqb7Fw==
+X-Received: by 2002:a05:600c:458a:b0:459:da76:d7aa with SMTP id
+ 5b1f17b1804b1-45b517dc897mr142437595e9.25.1756198055386; 
+ Tue, 26 Aug 2025 01:47:35 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3c86a8ccd1bsm10740609f8f.27.2025.08.26.01.47.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Aug 2025 01:47:33 -0700 (PDT)
+Date: Tue, 26 Aug 2025 10:47:31 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, peterx@redhat.com,
+ mst@redhat.com, mtosatti@redhat.com, richard.henderson@linaro.org,
+ riku.voipio@iki.fi, thuth@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, david@redhat.com, jjherne@linux.ibm.com,
+ shorne@gmail.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ philmd@linaro.org, wangyanan55@huawei.com, peter.maydell@linaro.org,
+ agraf@csgraf.de, mads@ynddal.dk, mrolnik@gmail.com, deller@gmx.de,
+ dirty@apple.com, rbolshakov@ddn.com, phil@philjordan.eu,
+ reinoud@netbsd.org, sunilmut@microsoft.com, gaosong@loongson.cn,
+ laurent@vivier.eu, edgar.iglesias@gmail.com, aurelien@aurel32.net,
+ jiaxun.yang@flygoat.com, arikalo@gmail.com, chenhuacai@kernel.org,
+ npiggin@gmail.com, rathc@linux.ibm.com, harshpb@linux.ibm.com,
+ yoshinori.sato@nifty.com, iii@linux.ibm.com, mark.cave-ayland@ilande.co.uk,
+ atar4qemu@gmail.com, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH v5 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
+ helpers and use them tree wide
+Message-ID: <20250826104731.1440e3ed@fedora>
+In-Reply-To: <aK1mHGan+n9NSAOk@intel.com>
+References: <20250814160600.2327672-7-imammedo@redhat.com>
+ <20250821155603.2422553-1-imammedo@redhat.com>
+ <aKyBFlCtnxnP9kt/@intel.com> <20250825171912.1bc7b841@fedora>
+ <aK1mHGan+n9NSAOk@intel.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20250819143916.4138035-1-gustavo.romero@linaro.org>
- <53b6e23f-5328-42c6-9c58-97ddbf3e5b29@redhat.com>
- <a1105fed-dbd8-4223-b771-180ab12e3f77@linaro.org>
- <8326014d-114e-47df-89fc-632eb5683632@redhat.com>
- <87tt1u1oas.fsf@draig.linaro.org>
-In-Reply-To: <87tt1u1oas.fsf@draig.linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 26 Aug 2025 11:45:49 +0300
-X-Gm-Features: Ac12FXy2ixjYjO8F0bCouJoDW43OlqusgC9ZZCtAcuxs_X6CrlFFAJRVdvXupPI
-Message-ID: <CAAjaMXaS9dGGo7EpvFQtTrFy819G+SW-cgom5gQ_bA_zqUE7ag@mail.gmail.com>
-Subject: Re: [PATCH 0/4] tests/functional: Adapt reverse_debugging to run w/o
- Avocado
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, 1844144@gmail.com, Jan Richter <jarichte@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,80 +125,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 26, 2025 at 11:28=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lina=
-ro.org> wrote:
->
-> Thomas Huth <thuth@redhat.com> writes:
->
-> > On 25/08/2025 16.04, Gustavo Romero wrote:
-> >> Hello, Thomas!
-> >> On 8/25/25 07:29, Thomas Huth wrote:
-> >>> On 19/08/2025 16.39, Gustavo Romero wrote:
-> >>>> The goal of this series is to remove Avocado as a dependency for run=
-ning
-> >>>> the reverse_debugging functional test.
-> >>>>
-> >>>> This test, the last one I=E2=80=99m aware of that relies on Avocado,=
- requires it
-> >>>> because of the need for GDB to test reverse stepping and continue.
-> > ...
-> >>> I gave it a try, but this did not work for me, the test was not run
-> >>> at all anymore. Are there any patches needed on top?
-> >> hmm that's odd. I'm able to run it with 'make check-functional' and
-> >> with 'meson test'...
-> >> This is how I'm running it (let me know if I'm missing something):
-> > ...
-> >> gromero@gromero0:/mnt/git/qemu_$
-> >> gromero@gromero0:/mnt/git/qemu_/build$ ../configure
-> >> --target-list=3Daarch64- softmmu --disable-docs
-> >> gromero@gromero0:/mnt/git/qemu_/build$ make -j 32
-> >> gromero@gromero0:/mnt/git/qemu_/build$ time make -j 15  check-function=
-al
-> >> [1/2] Generating tests/functional/func-precache-aarch64-
-> >> aarch64_reverse_debug with a custom command (wrapped by meson to set
-> >> env)
-> >> 2025-08-25 12:50:04,215 - qemu-test - INFO - Attempting to cache
-> >> '/home/ gromero/.cache/qemu/
-> >> download/7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cb=
-bf7'
-> >> 2025-08-25 12:50:04,225 - qemu-test - DEBUG - Using cached asset
-> >> /home/ gromero/.cache/qemu/
-> >> download/7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cb=
-bf7
-> >> for
-> >> https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/2=
-9/
-> >> Everything/aarch64/os/images/pxeboot/vmlinuz
-> >> GDB CMD: /usr/bin/gdb-multiarch -q -n -batch -ex 'set pagination
-> >> off' -ex 'set confirm off' -ex "py
-> >> sys.argv=3D['/mnt/git/qemu_/tests/functional/
-> >> test_aarch64_reverse_debug.py']" -x /mnt/git/qemu_/tests/functional/
-> >> test_aarch64_reverse_debug.py
-> >> [0/1] Running external command precache-functional (wrapped by meson
-> >> to set env)
-> >> make[1]: Entering directory '/mnt/git/qemu_/build'
-> >> [1/6] Generating qemu-version.h with a custom command (wrapped by
-> >> meson to capture output)
-> >> /mnt/git/qemu_/build/pyvenv/bin/meson test  --no-rebuild -t 1
-> >> --setup thorough  --num-processes 10 --print-errorlogs  --suite
-> >> func  --suite func- quick  --suite func-thorough
-> >>   1/27 qemu:func-thorough+func-aarch64-thorough+thorough /
-> >> func-aarch64- aarch64_virt_gpu                   SKIP
-> >> 1.95s   0 subtests passed
-> >
-> > I tried a couple of times now, and finally realized that it's the
-> > "gdb-multiarch" binary that is missing on Fedora. And as far as I can
-> > see, there is also no package that provides this on Fedora? So if we
-> > go ahead with your patches, this test will only run on certain distros
-> > that provide this binary.
->
-> I've mentioned in another review comment we should use the same gdb as
-> set/detected from configure as we do for the check-tcg tests.
+On Tue, 26 Aug 2025 15:45:32 +0800
+Zhao Liu <zhao1.liu@intel.com> wrote:
 
+> On Mon, Aug 25, 2025 at 05:19:12PM +0200, Igor Mammedov wrote:
+> > Date: Mon, 25 Aug 2025 17:19:12 +0200
+> > From: Igor Mammedov <imammedo@redhat.com>
+> > Subject: Re: [PATCH v5 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
+> >  helpers and use them tree wide
+> > X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+> > 
+> > On Mon, 25 Aug 2025 23:28:22 +0800
+> > Zhao Liu <zhao1.liu@intel.com> wrote:
+> >   
+> > > Hi Igor,
+> > >    
+> > > > diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> > > > index 5eaf41a566..1dee9d4c76 100644
+> > > > --- a/include/hw/core/cpu.h
+> > > > +++ b/include/hw/core/cpu.h
+> > > > @@ -942,6 +942,31 @@ CPUState *cpu_by_arch_id(int64_t id);
+> > > >  
+> > > >  void cpu_interrupt(CPUState *cpu, int mask);
+> > > >  
+> > > > +/**
+> > > > + * cpu_test_interrupt:
+> > > > + * @cpu: The CPU to check interrupt(s) on.
+> > > > + * @mask: The interrupts to check.
+> > > > + *
+> > > > + * Checks if any of interrupts in @mask are pending on @cpu.
+> > > > + */
+> > > > +static inline bool cpu_test_interrupt(CPUState *cpu, int mask)
+> > > > +{
+> > > > +    return qatomic_load_acquire(&cpu->interrupt_request) & mask;
+> > > > +}
+> > > > +
+> > > > +/**
+> > > > + * cpu_set_interrupt:
+> > > > + * @cpu: The CPU to set pending interrupt(s) on.
+> > > > + * @mask: The interrupts to set.
+> > > > + *
+> > > > + * Sets interrupts in @mask as pending on @cpu.
+> > > > + */
+> > > > +static inline void cpu_set_interrupt(CPUState *cpu, int mask)
+> > > > +{
+> > > > +    qatomic_store_release(&cpu->interrupt_request,
+> > > > +        cpu->interrupt_request | mask);    
+> > > 
+> > > It seems the read access of cpu->interrupt_request is not atomic, should
+> > > we also protect it by qatomic_read(cpu->interrupt_request)? like
+> > > 
+> > > qatomic_store_release(&cpu->interrupt_request,
+> > >                       qatomic_read(cpu->interrupt_request) | mask)  
+> > 
+> > it's not necessary according to doc:
+> > 
+> >   - ``qatomic_store_release()``, which guarantees the STORE to appear to           
+> >   happen, ...,                    
+> >   after all the LOAD or STORE operations specified before.
+> >   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+> > 
+> > that includes 'cpu->interrupt_request | mask' part  
+> 
+> Yes, thanks for your explaination and patience.
+> 
+> > > 
+> > > or futher,
+> > > 
+> > > qatomic_fetch_or(&cpu->interrupt_request, mask)  
+> > that would work as well  but it also could be more expensive than
+> > qatomic_store_release()  
+> 
+> Behind this helper, I mainly considerred the case of multiple writers:
+> 
+>    thread 0      .        thread 1
+>                  .
+> load:  x         .
+> OR:    x | a     .
+>                  .
+>                  .      load:  x
+>                  .      OR:    x | b
+>                  .      store: x | b
+>                  .
+> store: x | a     .      (x | b is missed)
+> 
+> In the above case, "load" means the direct access:
+> cpu->interrupt_request w/o protection, and "store" is done by
+> qatomic_store_release.
+> 
+> The memory order is guaranteed, but the operation result of thread 1
+> seems lost. Only BQL or other mutex could avoid such case.
+> 
+> qatomic_store_release is already a great step to avoid issues outside
+> BQL, so I'm not sure if it's worth going further to ensure atomicity,
+> especifically for multiple writers (my initial understanding is that
+> iothread or callback may have multiple writers, but I'm also a bit
+> unsure.). The overhead is also indeed an issue.
 
-FWIW you can pass your own binary and command flags to
-https://github.com/cs01/pygdbmi
+it looks like we are always holding BQL when setting interrupt.
 
-It uses subprocess and wraps all stdout/stderr of gdb, like avocado.
-So you can call it from the functional test directly.
+However currently we also have places that check interrupts
+without BQL but without using any atomics. This patch aims to ensure
+that proper barriers are in place when checking for interrupts
+and introduces release/acquire pair helpers for cpu->interrupt_request,
+to ensure it's don consistently.
+
+While overhead might be issue, it's better to have correcteness 1st.
+(that's why blanket tree wide change to make sure we don't miss places that
+set/test interrupts).
+
+Then if performance issues were found somewhere, as was suggested
+in previous reviews, we may opencode that place without barriers
+with a mandatory comment/justification why it's okey doing so.
+(well, at least that's the plan)
+
+> 
+> Thanks,
+> Zhao
+> 
+
 
