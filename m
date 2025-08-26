@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD187CA0FE7
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 14:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBFBDCA0FE7
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 14:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uquJp-0006PZ-Mv; Tue, 26 Aug 2025 10:06:37 -0400
+	id 1uquJ7-000670-EC; Tue, 26 Aug 2025 10:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uquJn-0006OS-N1
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 10:06:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uquJ2-00063w-BF
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 10:05:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uquJh-0007A9-3D
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 10:06:35 -0400
+ id 1uquIr-000728-V7
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 10:05:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756217183;
+ s=mimecast20190719; t=1756217133;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LQmIIYLUzh097n/O5nyO2lTxEH1GUsu0mM4g6N8iGa4=;
- b=HFm3H9XYLlC1MoMWQhM2buvwEc/CzOTM8BCjuHBF/X7kY4Q80hMc2Cd7zg/+QQoYYThb6v
- Sn8YpbKukEQlmxvdTHV6BiwfpkcWF2CvbyJhrKA+sO1Bui+gwF1EAjAfzxHQodfME9ZSmG
- 7w5b7EzWMX3la9uLEq5f1bvEOdP75t0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=o2GQ5VjLakir0/k6HgSkaXNO8ljFlfMT2OkBfKsfPEU=;
+ b=BVdr9D1a0JXpPhnKHjram9MgyHGagwjpY5MLQrHIVginHq8r7JetH3XTmRlSizB9DudaSj
+ pcJzBr4T8xpMshvhSqeEW6hzV12etdct3zrCwTfL3cqFXjosTszIuhljiK/ymUwmyL9wYu
+ +9XhQ7CbupH7ZTuLh11eo4DOIMxBA8Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-qux9eUsQOEeC6s1dVvRnAA-1; Tue,
- 26 Aug 2025 10:06:19 -0400
-X-MC-Unique: qux9eUsQOEeC6s1dVvRnAA-1
-X-Mimecast-MFC-AGG-ID: qux9eUsQOEeC6s1dVvRnAA_1756217174
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-25-lPBflaZQPK26Uhz6Di2OVA-1; Tue,
+ 26 Aug 2025 10:05:29 -0400
+X-MC-Unique: lPBflaZQPK26Uhz6Di2OVA-1
+X-Mimecast-MFC-AGG-ID: lPBflaZQPK26Uhz6Di2OVA_1756217128
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C058B19541B0; Tue, 26 Aug 2025 14:06:14 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1B1A518002A4; Tue, 26 Aug 2025 14:05:28 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.16])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 652D719560AB; Tue, 26 Aug 2025 14:06:12 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7FD401800447; Tue, 26 Aug 2025 14:05:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -55,26 +55,26 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  qemu-rust@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [RFC 14/18] rust: rename qemu_api_macros -> qemu_macros
-Date: Tue, 26 Aug 2025 18:04:42 +0400
-Message-ID: <20250826140449.4190022-15-marcandre.lureau@redhat.com>
+Subject: [RFC 06/18] rust: move VMState handling to QOM module
+Date: Tue, 26 Aug 2025 18:04:34 +0400
+Message-ID: <20250826140449.4190022-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20250826140449.4190022-1-marcandre.lureau@redhat.com>
 References: <20250826140449.4190022-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,807 +92,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Since "qemu_api" is no longer the unique crate to provide APIs.
+This will allow to split vmstate to a standalone crate next.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- MAINTAINERS                                   |  2 +-
- rust/Cargo.lock                               | 22 +++++++++----------
- rust/Cargo.toml                               |  2 +-
- rust/bits/Cargo.toml                          |  2 +-
- rust/bits/meson.build                         |  2 +-
- rust/bits/src/lib.rs                          |  4 ++--
- rust/chardev/Cargo.toml                       |  2 +-
- rust/chardev/meson.build                      |  4 ++--
- rust/chardev/src/chardev.rs                   |  2 +-
- rust/common/src/opaque.rs                     |  4 ++--
- rust/hw/char/pl011/Cargo.toml                 |  2 +-
- rust/hw/char/pl011/meson.build                |  4 ++--
- rust/hw/char/pl011/src/device.rs              |  4 ++--
- rust/hw/char/pl011/src/registers.rs           |  2 +-
- rust/hw/core/Cargo.toml                       |  2 +-
- rust/hw/core/meson.build                      |  4 ++--
- rust/hw/core/src/irq.rs                       |  2 +-
- rust/hw/core/src/qdev.rs                      |  4 ++--
- rust/hw/core/src/sysbus.rs                    |  2 +-
- rust/hw/core/tests/tests.rs                   |  4 ++--
- rust/hw/timer/hpet/Cargo.toml                 |  2 +-
- rust/hw/timer/hpet/meson.build                |  4 ++--
- rust/hw/timer/hpet/src/device.rs              |  6 ++---
- rust/meson.build                              |  2 +-
- rust/migration/Cargo.toml                     |  2 +-
- rust/qemu-api/Cargo.toml                      |  2 +-
- rust/qemu-api/meson.build                     |  4 ++--
- .../Cargo.toml                                |  2 +-
- .../meson.build                               | 10 ++++-----
- .../src/bits.rs                               |  0
- .../src/lib.rs                                |  0
- .../src/tests.rs                              |  0
- rust/qom/Cargo.toml                           |  2 +-
- rust/qom/meson.build                          |  4 ++--
- rust/qom/src/qom.rs                           |  4 ++--
- rust/qom/tests/tests.rs                       |  2 +-
- rust/system/Cargo.toml                        |  2 +-
- rust/system/meson.build                       |  4 ++--
- rust/system/src/memory.rs                     |  2 +-
- rust/util/Cargo.toml                          |  2 +-
- rust/util/meson.build                         |  2 +-
- rust/util/src/timer.rs                        |  4 ++--
- 42 files changed, 69 insertions(+), 69 deletions(-)
- rename rust/{qemu-api-macros => qemu-macros}/Cargo.toml (94%)
- rename rust/{qemu-api-macros => qemu-macros}/meson.build (63%)
- rename rust/{qemu-api-macros => qemu-macros}/src/bits.rs (100%)
- rename rust/{qemu-api-macros => qemu-macros}/src/lib.rs (100%)
- rename rust/{qemu-api-macros => qemu-macros}/src/tests.rs (100%)
+ rust/qemu-api/src/qom.rs     |  3 +++
+ rust/qemu-api/src/vmstate.rs | 10 +++++-----
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3f40a80240..62790c7b5d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3516,7 +3516,7 @@ F: rust/common/
- F: rust/hw/core/
- F: rust/migration/
- F: rust/qemu-api
--F: rust/qemu-api-macros
-+F: rust/qemu-macros/
- F: rust/qom/
- F: rust/rustfmt.toml
- F: rust/system/
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index 7ed22ca687..9bb2ab5bf6 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -41,7 +41,7 @@ dependencies = [
- name = "bits"
- version = "0.1.0"
- dependencies = [
-- "qemu_api_macros",
-+ "qemu_macros",
- ]
- 
- [[package]]
-@@ -58,7 +58,7 @@ dependencies = [
-  "bql",
-  "common",
-  "migration",
-- "qemu_api_macros",
-+ "qemu_macros",
-  "qom",
-  "util",
- ]
-@@ -91,7 +91,7 @@ dependencies = [
-  "hwcore",
-  "migration",
-  "qemu_api",
-- "qemu_api_macros",
-+ "qemu_macros",
-  "qom",
-  "system",
-  "util",
-@@ -105,7 +105,7 @@ dependencies = [
-  "chardev",
-  "common",
-  "migration",
-- "qemu_api_macros",
-+ "qemu_macros",
-  "qom",
-  "system",
-  "util",
-@@ -131,7 +131,7 @@ name = "migration"
- version = "0.1.0"
- dependencies = [
-  "common",
-- "qemu_api_macros",
-+ "qemu_macros",
-  "util",
- ]
- 
-@@ -148,7 +148,7 @@ dependencies = [
-  "hwcore",
-  "migration",
-  "qemu_api",
-- "qemu_api_macros",
-+ "qemu_macros",
-  "qom",
-  "system",
-  "util",
-@@ -198,14 +198,14 @@ dependencies = [
-  "hwcore",
-  "libc",
-  "migration",
-- "qemu_api_macros",
-+ "qemu_macros",
-  "qom",
-  "system",
-  "util",
- ]
- 
- [[package]]
--name = "qemu_api_macros"
-+name = "qemu_macros"
- version = "0.1.0"
- dependencies = [
-  "proc-macro2",
-@@ -220,7 +220,7 @@ dependencies = [
-  "bql",
-  "common",
-  "migration",
-- "qemu_api_macros",
-+ "qemu_macros",
-  "util",
- ]
- 
-@@ -249,7 +249,7 @@ name = "system"
- version = "0.1.0"
- dependencies = [
-  "common",
-- "qemu_api_macros",
-+ "qemu_macros",
-  "qom",
-  "util",
- ]
-@@ -268,7 +268,7 @@ dependencies = [
-  "common",
-  "foreign",
-  "libc",
-- "qemu_api_macros",
-+ "qemu_macros",
- ]
- 
- [[package]]
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index ca94d2cf40..1acee9e7cb 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -5,7 +5,7 @@ members = [
-     "bql",
-     "common",
-     "migration",
--    "qemu-api-macros",
-+    "qemu-macros",
-     "qemu-api",
-     "qom",
-     "system",
-diff --git a/rust/bits/Cargo.toml b/rust/bits/Cargo.toml
-index 1ff38a4117..7fce972b27 100644
---- a/rust/bits/Cargo.toml
-+++ b/rust/bits/Cargo.toml
-@@ -13,7 +13,7 @@ repository.workspace = true
- rust-version.workspace = true
- 
- [dependencies]
--qemu_api_macros = { path = "../qemu-api-macros" }
-+qemu_macros = { path = "../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/bits/meson.build b/rust/bits/meson.build
-index 2a41e138c5..359ca86f15 100644
---- a/rust/bits/meson.build
-+++ b/rust/bits/meson.build
-@@ -3,7 +3,7 @@ _bits_rs = static_library(
-   'src/lib.rs',
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
--  dependencies: [qemu_api_macros],
-+  dependencies: [qemu_macros],
- )
- 
- bits_rs = declare_dependency(link_with: _bits_rs)
-diff --git a/rust/bits/src/lib.rs b/rust/bits/src/lib.rs
-index d485d6bd11..4e091aebbd 100644
---- a/rust/bits/src/lib.rs
-+++ b/rust/bits/src/lib.rs
-@@ -380,11 +380,11 @@ fn from(x: $type) -> Self {
-     };
- 
-     { $type:ty: $expr:expr } => {
--        ::qemu_api_macros::bits_const_internal! { $type @ ($expr) }
-+        ::qemu_macros::bits_const_internal! { $type @ ($expr) }
-     };
- 
-     { $type:ty as $int_type:ty: $expr:expr } => {
--        (::qemu_api_macros::bits_const_internal! { $type @ ($expr) }.into_bits()) as $int_type
-+        (::qemu_macros::bits_const_internal! { $type @ ($expr) }.into_bits()) as $int_type
-     };
- }
- 
-diff --git a/rust/chardev/Cargo.toml b/rust/chardev/Cargo.toml
-index 7df9c677fc..c139177307 100644
---- a/rust/chardev/Cargo.toml
-+++ b/rust/chardev/Cargo.toml
-@@ -18,7 +18,7 @@ bql = { path = "../bql" }
- migration = { path = "../migration" }
- qom = { path = "../qom" }
- util = { path = "../util" }
--qemu_api_macros = { path = "../qemu-api-macros" }
-+qemu_macros = { path = "../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
-index 918e0a5224..487f36e27d 100644
---- a/rust/chardev/meson.build
-+++ b/rust/chardev/meson.build
-@@ -39,10 +39,10 @@ _chardev_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _chardev_cfg,
--  dependencies: [qemuutil_rs, common_rs, bql_rs, migration_rs, qemu_api_macros, qom_rs, util_rs, chardev],
-+  dependencies: [qemuutil_rs, common_rs, bql_rs, migration_rs, qemu_macros, qom_rs, util_rs, chardev],
- )
- 
--chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [qemu_api_macros, chardev])
-+chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [qemu_macros, chardev])
- 
- # Doctests are essentially integration tests, so they need the same dependencies.
- # Note that running them requires the object files for C code, so place them
-diff --git a/rust/chardev/src/chardev.rs b/rust/chardev/src/chardev.rs
-index 1a6795a938..fe90126b84 100644
---- a/rust/chardev/src/chardev.rs
-+++ b/rust/chardev/src/chardev.rs
-@@ -26,7 +26,7 @@
- 
- /// A safe wrapper around [`bindings::Chardev`].
- #[repr(transparent)]
--#[derive(qemu_api_macros::Wrapper)]
-+#[derive(qemu_macros::Wrapper)]
- pub struct Chardev(Opaque<bindings::Chardev>);
- 
- pub type ChardevClass = bindings::ChardevClass;
-diff --git a/rust/common/src/opaque.rs b/rust/common/src/opaque.rs
-index e076964634..06f6b8cd29 100644
---- a/rust/common/src/opaque.rs
-+++ b/rust/common/src/opaque.rs
-@@ -194,7 +194,7 @@ pub unsafe fn new() -> Self {
- 
- /// Annotates [`Self`] as a transparent wrapper for another type.
- ///
--/// Usually defined via the [`qemu_api_macros::Wrapper`] derive macro.
-+/// Usually defined via the [`qemu_macros::Wrapper`] derive macro.
- ///
- /// # Examples
- ///
-@@ -230,7 +230,7 @@ pub unsafe fn new() -> Self {
- ///
- /// They are not defined here to allow them to be `const`.
- ///
--/// [`qemu_api_macros::Wrapper`]: ../../qemu_api_macros/derive.Wrapper.html
-+/// [`qemu_macros::Wrapper`]: ../../qemu_macros/derive.Wrapper.html
- pub unsafe trait Wrapper {
-     type Wrapped;
- }
-diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
-index 830d88586b..9e451fc0aa 100644
---- a/rust/hw/char/pl011/Cargo.toml
-+++ b/rust/hw/char/pl011/Cargo.toml
-@@ -25,7 +25,7 @@ chardev = { path = "../../../chardev" }
- system = { path = "../../../system" }
- hwcore = { path = "../../../hw/core" }
- qemu_api = { path = "../../../qemu-api" }
--qemu_api_macros = { path = "../../../qemu-api-macros" }
-+qemu_macros = { path = "../../../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-index 83030476de..7d90f2aad6 100644
---- a/rust/hw/char/pl011/meson.build
-+++ b/rust/hw/char/pl011/meson.build
-@@ -12,7 +12,7 @@ _libpl011_rs = static_library(
-     migration_rs,
-     bql_rs,
-     qemu_api,
--    qemu_api_macros,
-+    qemu_macros,
-     qom_rs,
-     chardev_rs,
-     system_rs,
-@@ -24,6 +24,6 @@ rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
-   link_whole: [_libpl011_rs],
-   # Putting proc macro crates in `dependencies` is necessary for Meson to find
-   # them when compiling the root per-target static rust lib.
--  dependencies: [bilge_impl_rs, qemu_api_macros],
-+  dependencies: [bilge_impl_rs, qemu_macros],
-   variables: {'crate': 'pl011'},
- )])
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index e0d89db28d..caaa05c04c 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -106,7 +106,7 @@ pub struct PL011Registers {
- }
- 
- #[repr(C)]
--#[derive(qemu_api_macros::Object)]
-+#[derive(qemu_macros::Object)]
- /// PL011 Device Model in QEMU
- pub struct PL011State {
-     pub parent_obj: ParentField<SysBusDevice>,
-@@ -691,7 +691,7 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
- }
- 
- #[repr(C)]
--#[derive(qemu_api_macros::Object)]
-+#[derive(qemu_macros::Object)]
- /// PL011 Luminary device model.
- pub struct PL011Luminary {
-     parent_obj: ParentField<PL011State>,
-diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src/registers.rs
-index 2bfbd81095..a1c41347ed 100644
---- a/rust/hw/char/pl011/src/registers.rs
-+++ b/rust/hw/char/pl011/src/registers.rs
-@@ -16,7 +16,7 @@
- #[doc(alias = "offset")]
- #[allow(non_camel_case_types)]
- #[repr(u64)]
--#[derive(Debug, Eq, PartialEq, qemu_api_macros::TryInto)]
-+#[derive(Debug, Eq, PartialEq, qemu_macros::TryInto)]
- pub enum RegisterOffset {
-     /// Data Register
-     ///
-diff --git a/rust/hw/core/Cargo.toml b/rust/hw/core/Cargo.toml
-index 0b35380264..0eb9ffee26 100644
---- a/rust/hw/core/Cargo.toml
-+++ b/rust/hw/core/Cargo.toml
-@@ -20,7 +20,7 @@ chardev = { path = "../../chardev" }
- migration = { path = "../../migration" }
- system = { path = "../../system" }
- util = { path = "../../util" }
--qemu_api_macros = { path = "../../qemu-api-macros" }
-+qemu_macros = { path = "../../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
-index d390f2d665..692c4b8e0f 100644
---- a/rust/hw/core/meson.build
-+++ b/rust/hw/core/meson.build
-@@ -62,7 +62,7 @@ _hwcore_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _hwcore_cfg,
--  dependencies: [qemu_api_macros, common_rs, bql_rs, chardev_rs, migration_rs, qemuutil_rs, qom_rs, system_rs, util_rs,
-+  dependencies: [qemu_macros, common_rs, bql_rs, chardev_rs, migration_rs, qemuutil_rs, qom_rs, system_rs, util_rs,
-                  qom, hwcore, chardev, migration],
- )
- 
-@@ -85,7 +85,7 @@ test('rust-hwcore-rs-integration',
-         override_options: ['rust_std=2021', 'build.rust_std=2021'],
-         rust_args: ['--test'],
-         install: false,
--        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, qemu_api_macros, util_rs]),
-+        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, qemu_macros, util_rs]),
-     args: [
-         '--test', '--test-threads', '1',
-         '--format', 'pretty',
-diff --git a/rust/hw/core/src/irq.rs b/rust/hw/core/src/irq.rs
-index 5a380923fe..828e6cb28f 100644
---- a/rust/hw/core/src/irq.rs
-+++ b/rust/hw/core/src/irq.rs
-@@ -18,7 +18,7 @@
- 
- /// An opaque wrapper around [`bindings::IRQState`].
- #[repr(transparent)]
--#[derive(Debug, qemu_api_macros::Wrapper)]
-+#[derive(Debug, qemu_macros::Wrapper)]
- pub struct IRQState(Opaque<bindings::IRQState>);
- 
- /// Interrupt sources are used by devices to pass changes to a value (typically
-diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
-index 16a4769758..62f518a11a 100644
---- a/rust/hw/core/src/qdev.rs
-+++ b/rust/hw/core/src/qdev.rs
-@@ -26,7 +26,7 @@
- 
- /// A safe wrapper around [`bindings::Clock`].
- #[repr(transparent)]
--#[derive(Debug, qemu_api_macros::Wrapper)]
-+#[derive(Debug, qemu_macros::Wrapper)]
- pub struct Clock(Opaque<bindings::Clock>);
- 
- unsafe impl Send for Clock {}
-@@ -34,7 +34,7 @@ unsafe impl Sync for Clock {}
- 
- /// A safe wrapper around [`bindings::DeviceState`].
- #[repr(transparent)]
--#[derive(Debug, qemu_api_macros::Wrapper)]
-+#[derive(Debug, qemu_macros::Wrapper)]
- pub struct DeviceState(Opaque<bindings::DeviceState>);
- 
- unsafe impl Send for DeviceState {}
-diff --git a/rust/hw/core/src/sysbus.rs b/rust/hw/core/src/sysbus.rs
-index 66b618c705..51631cd237 100644
---- a/rust/hw/core/src/sysbus.rs
-+++ b/rust/hw/core/src/sysbus.rs
-@@ -19,7 +19,7 @@
- 
- /// A safe wrapper around [`bindings::SysBusDevice`].
- #[repr(transparent)]
--#[derive(Debug, qemu_api_macros::Wrapper)]
-+#[derive(Debug, qemu_macros::Wrapper)]
- pub struct SysBusDevice(Opaque<bindings::SysBusDevice>);
- 
- unsafe impl Send for SysBusDevice {}
-diff --git a/rust/hw/core/tests/tests.rs b/rust/hw/core/tests/tests.rs
-index f11c15ac62..2898844baf 100644
---- a/rust/hw/core/tests/tests.rs
-+++ b/rust/hw/core/tests/tests.rs
-@@ -25,7 +25,7 @@
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index c2f9a682bb..56feff3e17 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -110,6 +110,7 @@
+         object_get_typename, object_new, object_ref, object_unref, TypeInfo,
+     },
+     cell::bql_locked,
++    impl_vmstate_pointer,
  };
  
- #[repr(C)]
--#[derive(qemu_api_macros::Object)]
-+#[derive(qemu_macros::Object)]
- pub struct DummyState {
-     parent: ParentField<DeviceState>,
-     migrate_clock: bool,
-@@ -77,7 +77,7 @@ fn vmsd() -> Option<&'static VMStateDescription> {
- }
- 
- #[repr(C)]
--#[derive(qemu_api_macros::Object)]
-+#[derive(qemu_macros::Object)]
- pub struct DummyChildState {
-     parent: ParentField<DummyState>,
- }
-diff --git a/rust/hw/timer/hpet/Cargo.toml b/rust/hw/timer/hpet/Cargo.toml
-index e28d66f645..68e8187bb8 100644
---- a/rust/hw/timer/hpet/Cargo.toml
-+++ b/rust/hw/timer/hpet/Cargo.toml
-@@ -18,7 +18,7 @@ bql = { path = "../../../bql" }
- qom = { path = "../../../qom" }
- system = { path = "../../../system" }
- qemu_api = { path = "../../../qemu-api" }
--qemu_api_macros = { path = "../../../qemu-api-macros" }
-+qemu_macros = { path = "../../../qemu-macros" }
- hwcore = { path = "../../../hw/core" }
- 
- [lints]
-diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
-index d65306c169..b2eee01faf 100644
---- a/rust/hw/timer/hpet/meson.build
-+++ b/rust/hw/timer/hpet/meson.build
-@@ -9,7 +9,7 @@ _libhpet_rs = static_library(
-     migration_rs,
-     bql_rs,
-     qemu_api,
--    qemu_api_macros,
-+    qemu_macros,
-     qom_rs,
-     system_rs,
-     hwcore_rs,
-@@ -20,6 +20,6 @@ rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dependency(
-   link_whole: [_libhpet_rs],
-   # Putting proc macro crates in `dependencies` is necessary for Meson to find
-   # them when compiling the root per-target static rust lib.
--  dependencies: [qemu_api_macros],
-+  dependencies: [qemu_macros],
-   variables: {'crate': 'hpet'},
- )])
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index 2ea101bb7f..b883d56a9a 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -97,7 +97,7 @@
- /// Timer N Interrupt Routing Capability (bits 32:63)
- const HPET_TN_CFG_INT_ROUTE_CAP_SHIFT: usize = 32;
- 
--#[derive(qemu_api_macros::TryInto)]
-+#[derive(qemu_macros::TryInto)]
- #[repr(u64)]
- #[allow(non_camel_case_types)]
- /// Timer registers, masked by 0x18
-@@ -110,7 +110,7 @@ enum TimerRegister {
-     ROUTE = 16,
- }
- 
--#[derive(qemu_api_macros::TryInto)]
-+#[derive(qemu_macros::TryInto)]
- #[repr(u64)]
- #[allow(non_camel_case_types)]
- /// Global registers
-@@ -516,7 +516,7 @@ fn write(&mut self, reg: TimerRegister, value: u64, shift: u32, len: u32) {
- 
- /// HPET Event Timer Block Abstraction
- #[repr(C)]
--#[derive(qemu_api_macros::Object)]
-+#[derive(qemu_macros::Object)]
- pub struct HPETState {
-     parent_obj: ParentField<SysBusDevice>,
-     iomem: MemoryRegion,
-diff --git a/rust/meson.build b/rust/meson.build
-index 041b0a473e..9f6a0b161d 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -23,7 +23,7 @@ qemuutil_rs = qemuutil.partial_dependency(link_args: true, links: true)
- genrs = []
- 
- subdir('common')
--subdir('qemu-api-macros')
-+subdir('qemu-macros')
- subdir('bits')
- subdir('util')
- subdir('migration')
-diff --git a/rust/migration/Cargo.toml b/rust/migration/Cargo.toml
-index 98e6df2109..66af81e0a3 100644
---- a/rust/migration/Cargo.toml
-+++ b/rust/migration/Cargo.toml
-@@ -15,7 +15,7 @@ rust-version.workspace = true
- [dependencies]
- common = { path = "../common" }
- util = { path = "../util" }
--qemu_api_macros = { path = "../qemu-api-macros" }
-+qemu_macros = { path = "../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
-index 9f216e45a6..b6744f0286 100644
---- a/rust/qemu-api/Cargo.toml
-+++ b/rust/qemu-api/Cargo.toml
-@@ -20,7 +20,7 @@ hwcore = { path = "../hw/core" }
- migration = { path = "../migration" }
- util = { path = "../util" }
- bql = { path = "../bql" }
--qemu_api_macros = { path = "../qemu-api-macros" }
-+qemu_macros = { path = "../qemu-macros" }
- qom = { path = "../qom" }
- system = { path = "../system" }
- anyhow = "~1.0"
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index a4c90b2bf7..02318950ff 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -52,7 +52,7 @@ _qemu_api_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _qemu_api_cfg,
--  dependencies: [anyhow_rs, common_rs, chardev_rs, foreign_rs, libc_rs, qemu_api_macros, qemuutil_rs, util_rs, migration_rs, bql_rs, qom_rs, system_rs, hwcore_rs,
-+  dependencies: [anyhow_rs, common_rs, chardev_rs, foreign_rs, libc_rs, qemu_macros, qemuutil_rs, util_rs, migration_rs, bql_rs, qom_rs, system_rs, hwcore_rs,
-                  qom, hwcore, chardev, migration],
- )
- 
-@@ -60,7 +60,7 @@ rust.test('rust-qemu-api-tests', _qemu_api_rs,
-           suite: ['unit', 'rust'])
- 
- qemu_api = declare_dependency(link_with: [_qemu_api_rs],
--  dependencies: [qemu_api_macros, qom, hwcore, chardev, migration])
-+  dependencies: [qemu_macros, qom, hwcore, chardev, migration])
- 
- # Doctests are essentially integration tests, so they need the same dependencies.
- # Note that running them requires the object files for C code, so place them
-diff --git a/rust/qemu-api-macros/Cargo.toml b/rust/qemu-macros/Cargo.toml
-similarity index 94%
-rename from rust/qemu-api-macros/Cargo.toml
-rename to rust/qemu-macros/Cargo.toml
-index 0cd40c8e16..3b6f1d337f 100644
---- a/rust/qemu-api-macros/Cargo.toml
-+++ b/rust/qemu-macros/Cargo.toml
-@@ -1,5 +1,5 @@
- [package]
--name = "qemu_api_macros"
-+name = "qemu_macros"
- version = "0.1.0"
- authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
- description = "Rust bindings for QEMU - Utility macros"
-diff --git a/rust/qemu-api-macros/meson.build b/rust/qemu-macros/meson.build
-similarity index 63%
-rename from rust/qemu-api-macros/meson.build
-rename to rust/qemu-macros/meson.build
-index 2152bcb99b..d0b2992e20 100644
---- a/rust/qemu-api-macros/meson.build
-+++ b/rust/qemu-macros/meson.build
-@@ -1,5 +1,5 @@
--_qemu_api_macros_rs = rust.proc_macro(
--  'qemu_api_macros',
-+_qemu_macros_rs = rust.proc_macro(
-+  'qemu_macros',
-   files('src/lib.rs'),
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_args: [
-@@ -14,9 +14,9 @@ _qemu_api_macros_rs = rust.proc_macro(
-   ],
- )
- 
--qemu_api_macros = declare_dependency(
--  link_with: _qemu_api_macros_rs,
-+qemu_macros = declare_dependency(
-+  link_with: _qemu_macros_rs,
- )
- 
--rust.test('rust-qemu-api-macros-tests', _qemu_api_macros_rs,
-+rust.test('rust-qemu-macros-tests', _qemu_macros_rs,
-           suite: ['unit', 'rust'])
-diff --git a/rust/qemu-api-macros/src/bits.rs b/rust/qemu-macros/src/bits.rs
-similarity index 100%
-rename from rust/qemu-api-macros/src/bits.rs
-rename to rust/qemu-macros/src/bits.rs
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-macros/src/lib.rs
-similarity index 100%
-rename from rust/qemu-api-macros/src/lib.rs
-rename to rust/qemu-macros/src/lib.rs
-diff --git a/rust/qemu-api-macros/src/tests.rs b/rust/qemu-macros/src/tests.rs
-similarity index 100%
-rename from rust/qemu-api-macros/src/tests.rs
-rename to rust/qemu-macros/src/tests.rs
-diff --git a/rust/qom/Cargo.toml b/rust/qom/Cargo.toml
-index 46bbf7c7fe..060ad2ec34 100644
---- a/rust/qom/Cargo.toml
-+++ b/rust/qom/Cargo.toml
-@@ -16,7 +16,7 @@ rust-version.workspace = true
- common = { path = "../common" }
- bql = { path = "../bql" }
- migration = { path = "../migration" }
--qemu_api_macros = { path = "../qemu-api-macros" }
-+qemu_macros = { path = "../qemu-macros" }
- util = { path = "../util" }
- 
- [lints]
-diff --git a/rust/qom/meson.build b/rust/qom/meson.build
-index 6e95d75fa0..40a2bf9ae0 100644
---- a/rust/qom/meson.build
-+++ b/rust/qom/meson.build
-@@ -31,10 +31,10 @@ _qom_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _qom_cfg,
--  dependencies: [qemuutil_rs, bql_rs, common_rs, migration_rs, qemu_api_macros, qom],
-+  dependencies: [qemuutil_rs, bql_rs, common_rs, migration_rs, qemu_macros, qom],
- )
- 
--qom_rs = declare_dependency(link_with: [_qom_rs], dependencies: [qemu_api_macros, qom])
-+qom_rs = declare_dependency(link_with: [_qom_rs], dependencies: [qemu_macros, qom])
- 
- # Doctests are essentially integration tests, so they need the same dependencies.
- # Note that running them requires the object files for C code, so place them
-diff --git a/rust/qom/src/qom.rs b/rust/qom/src/qom.rs
-index a632ec43f2..880bef6c47 100644
---- a/rust/qom/src/qom.rs
-+++ b/rust/qom/src/qom.rs
-@@ -112,7 +112,7 @@
- 
  /// A safe wrapper around [`bindings::Object`].
- #[repr(transparent)]
--#[derive(Debug, qemu_api_macros::Wrapper)]
-+#[derive(Debug, qemu_macros::Wrapper)]
- pub struct Object(Opaque<bindings::Object>);
+@@ -949,3 +950,5 @@ fn debug_fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
  
- unsafe impl Send for Object {}
-@@ -173,7 +173,7 @@ fn as_ref(&self) -> &$parent {
- ///
- /// ```ignore
- /// #[repr(C)]
--/// #[derive(qemu_api_macros::Object)]
-+/// #[derive(qemu_macros::Object)]
- /// pub struct MyDevice {
- ///     parent: ParentField<DeviceState>,
- ///     ...
-diff --git a/rust/qom/tests/tests.rs b/rust/qom/tests/tests.rs
-index 49f1cbecf5..4d710f96a6 100644
---- a/rust/qom/tests/tests.rs
-+++ b/rust/qom/tests/tests.rs
-@@ -4,7 +4,7 @@
- use util::bindings::{module_call_init, module_init_type};
+ impl<T> ObjectClassMethods for T where T: IsA<Object> {}
+ impl<R: ObjectDeref> ObjectMethods for R where R::Target: IsA<Object> {}
++
++impl_vmstate_pointer!(Owned<T> where T: VMState + ObjectType);
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index ff64d2c6a2..c1e2b06390 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -29,8 +29,8 @@
  
- #[repr(C)]
--#[derive(qemu_api_macros::Object)]
-+#[derive(qemu_macros::Object)]
- pub struct DummyObject {
-     parent: ParentField<Object>,
+ use common::{callbacks::FnCall, Zeroable};
+ 
++use crate::bindings::VMStateFlags;
+ pub use crate::bindings::{VMStateDescription, VMStateField};
+-use crate::{bindings::VMStateFlags, prelude::*, qom::Owned};
+ 
+ /// This macro is used to call a function with a generic argument bound
+ /// to the type of a field.  The function must take a
+@@ -396,11 +396,12 @@ unsafe impl VMState for $type {
+ // Note that references are not supported, though references to cells
+ // could be allowed.
+ 
++#[macro_export]
+ macro_rules! impl_vmstate_pointer {
+     ($type:ty where $base:tt: VMState $($where:tt)*) => {
+-        unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
+-            const SCALAR_TYPE: VMStateFieldType = <T as VMState>::SCALAR_TYPE;
+-            const BASE: VMStateField = <$base as VMState>::BASE.with_pointer_flag();
++        unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmstate::VMState $($where)* {
++            const SCALAR_TYPE: $crate::vmstate::VMStateFieldType = <T as $crate::vmstate::VMState>::SCALAR_TYPE;
++            const BASE: $crate::vmstate::VMStateField = <$base as $crate::vmstate::VMState>::BASE.with_pointer_flag();
+         }
+     };
  }
-diff --git a/rust/system/Cargo.toml b/rust/system/Cargo.toml
-index 6803895e08..d8338c8348 100644
---- a/rust/system/Cargo.toml
-+++ b/rust/system/Cargo.toml
-@@ -16,7 +16,7 @@ rust-version.workspace = true
- common = { path = "../common" }
- qom = { path = "../qom" }
- util = { path = "../util" }
--qemu_api_macros = { path = "../qemu-api-macros" }
-+qemu_macros = { path = "../qemu-macros" }
+@@ -412,7 +413,6 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
+ // Unlike C pointers, Box is always non-null therefore there is no need
+ // to specify VMS_ALLOC.
+ impl_vmstate_pointer!(Box<T> where T: VMState);
+-impl_vmstate_pointer!(Owned<T> where T: VMState + ObjectType);
  
- [lints]
- workspace = true
-diff --git a/rust/system/meson.build b/rust/system/meson.build
-index cbd3eb4717..710462376d 100644
---- a/rust/system/meson.build
-+++ b/rust/system/meson.build
-@@ -39,12 +39,12 @@ _system_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _system_cfg,
--  dependencies: [qemuutil_rs, common_rs, bql_rs, migration_rs, qemu_api_macros, qom_rs, util_rs,
-+  dependencies: [qemuutil_rs, common_rs, bql_rs, migration_rs, qemu_macros, qom_rs, util_rs,
-                 hwcore],
- )
- 
- system_rs = declare_dependency(link_with: [_system_rs],
--  dependencies: [qemu_api_macros, hwcore])
-+  dependencies: [qemu_macros, hwcore])
- 
- # Doctests are essentially integration tests, so they need the same dependencies.
- # Note that running them requires the object files for C code, so place them
-diff --git a/rust/system/src/memory.rs b/rust/system/src/memory.rs
-index af69fb30bf..898401c33b 100644
---- a/rust/system/src/memory.rs
-+++ b/rust/system/src/memory.rs
-@@ -129,7 +129,7 @@ fn default() -> Self {
- 
- /// A safe wrapper around [`bindings::MemoryRegion`].
- #[repr(transparent)]
--#[derive(qemu_api_macros::Wrapper)]
-+#[derive(qemu_macros::Wrapper)]
- pub struct MemoryRegion(Opaque<bindings::MemoryRegion>);
- 
- unsafe impl Send for MemoryRegion {}
-diff --git a/rust/util/Cargo.toml b/rust/util/Cargo.toml
-index aa10f03384..c5d1adb8fe 100644
---- a/rust/util/Cargo.toml
-+++ b/rust/util/Cargo.toml
-@@ -17,7 +17,7 @@ anyhow = "~1.0"
- libc = "0.2.162"
- foreign = "~0.3.1"
- common = { path = "../common" }
--qemu_api_macros = { path = "../qemu-api-macros" }
-+qemu_macros = { path = "../qemu-macros" }
- 
- [lints]
- workspace = true
-diff --git a/rust/util/meson.build b/rust/util/meson.build
-index 3fe8e3975f..1e449b8dc7 100644
---- a/rust/util/meson.build
-+++ b/rust/util/meson.build
-@@ -45,7 +45,7 @@ _util_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _util_cfg,
--  dependencies: [anyhow_rs, libc_rs, foreign_rs, qemuutil_rs, common_rs, qemu_api_macros],
-+  dependencies: [anyhow_rs, libc_rs, foreign_rs, qemuutil_rs, common_rs, qemu_macros],
- )
- 
- util_rs = declare_dependency(link_with: [_util_rs], dependencies: [qemuutil_rs, qom])
-diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
-index 441072a949..42096cef0d 100644
---- a/rust/util/src/timer.rs
-+++ b/rust/util/src/timer.rs
-@@ -15,14 +15,14 @@
- 
- /// A safe wrapper around [`bindings::QEMUTimer`].
- #[repr(transparent)]
--#[derive(Debug, qemu_api_macros::Wrapper)]
-+#[derive(Debug, qemu_macros::Wrapper)]
- pub struct Timer(Opaque<bindings::QEMUTimer>);
- 
- unsafe impl Send for Timer {}
- unsafe impl Sync for Timer {}
- 
- #[repr(transparent)]
--#[derive(qemu_api_macros::Wrapper)]
-+#[derive(qemu_macros::Wrapper)]
- pub struct TimerListGroup(Opaque<bindings::QEMUTimerListGroup>);
- 
- unsafe impl Send for TimerListGroup {}
+ // Arrays using the underlying type's VMState plus
+ // VMS_ARRAY/VMS_ARRAY_OF_POINTER
 -- 
 2.50.1
 
