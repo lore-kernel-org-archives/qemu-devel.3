@@ -4,93 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4555BCA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 15:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF4BCA0FE7
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 15:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqvT3-0007sF-62; Tue, 26 Aug 2025 11:20:15 -0400
+	id 1uqvVZ-0000nL-2U; Tue, 26 Aug 2025 11:22:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uqvSz-0007oT-0L
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 11:20:10 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uqvSj-0005KF-AR
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 11:20:08 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-771f3f89952so1068817b3a.0
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 08:19:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756221586; x=1756826386; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CFp5XYV5vt0+YmMHlulgMAqHUrhNiVHLMR+6k+JMX94=;
- b=KpcmcUJmE9N9f1xdA76zlz2fDMNTzud7uG4M1yZuPYAMIYo4Us3NJ7YJm+Nt8z7T6q
- IBiv4bpsvRSNUcWA/j+YL5nP1Nhvq5Imq8gVZ/b5qwMsin5eCV3ZaUUKXy6NKqyyw1JR
- S8DEMYnInQFLKyBsFcdlavNxP3MzvfpgJANEP9VzrICrihgkHdgyEXUlmLrUSJaEqst7
- ljgMMBkh1Gxy1+T0uLyowmFPlBsTyPyRaGLJMWfiYchMoS1C+dNZWeVjqHFcQ53RcJSn
- vHTP/h5p5H3JbHxpwaYVYuY29yec8yLnJrkJY7MLZmAXkU9HsLBCQs+FD560p4Na38JM
- kKlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756221586; x=1756826386;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CFp5XYV5vt0+YmMHlulgMAqHUrhNiVHLMR+6k+JMX94=;
- b=gnG1Q1zth2TtpayKIc00qA8FfqQ2sTVn5iCynz1eaPwjhbs/450oGR7kZPmMvuFjTH
- 4GfH9hfd4B0Bbg87PPf9nYc8sMOQgfq71yPU7GmwxY1RHblfUknIE6nYbspUufC9v0UW
- Bifdzr19VHYIYKXdme6ovXc7KK1ejDq1y42J7GHMjUj0clGloPmz+uD/gYBOdclBDY3Y
- NHYOVQQlbZin/5wlQVBgquPzKgIsNalIqMV/FMBQJZVlercV/9Hd+mitIVM7RCStvln/
- Eo/nJTaCUtoAlgCrwfLkC0ZstBMbV0kJBTaMdivtfViCNSj+1eNi+jWhWLVQObNFYYiv
- zhmw==
-X-Gm-Message-State: AOJu0YwpRZx5zHU4J/BdwpM7OAHQcjHxCj1jhPMi2d9pK37xbQeJo+tH
- npP6R+xImoK9KOmXASI1VgmFy9JZZg381McXJ47bdomzeEWS6dRn3daBs1m9bXQ/noz0lGz8eJ0
- i+vOu4iE=
-X-Gm-Gg: ASbGncunr95xD2Oy8y7XWdls6X9BTQOroZMoSTNUmb2SkzlsRbKx9jFHVNI41UBwAk7
- 6YcM5jzQWpuo7Rsi6x/xVGChW208qhxhVMTxRAbUSL9Til/AraMQW7sihthGnjahUpBXOm2T5JM
- Xtd6xm7u2Bcl1fzPV9a9q5UjEp7qQZfjWFVOLysLvFr40dOJQcrpXhAgbH2BhjmL5fuct7VwX98
- MXk8M0esd9lB9ISODONsGZVwM0SG+5bsR1cNbhtic5A0vnEJGPGVflbv8FOcP5RofqK0UkoP0p4
- 9/1UTMCzkSfOV2ZpwI7l/t9BlQBjoXMiEVJYFpXE1HMuPQJxPCLAnIdXLiEFd1Rgpn/zoeOji4T
- JrScetxW4quY5ydhAnUf2G21M/pPUtsh6Wg==
-X-Google-Smtp-Source: AGHT+IH2gQWaOB6wCDxO5XdRxiGrTc1VAoLJ2V8vluKoeRh4BX2wn3ItW6HxOWAUZIiR4u4pjp7wdA==
-X-Received: by 2002:a05:6a00:3406:b0:771:f071:28fd with SMTP id
- d2e1a72fcca58-771fc296d94mr2215911b3a.14.1756221586008; 
- Tue, 26 Aug 2025 08:19:46 -0700 (PDT)
-Received: from [192.168.0.102] ([187.75.38.174])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7704fb69542sm8724553b3a.94.2025.08.26.08.19.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Aug 2025 08:19:45 -0700 (PDT)
-Message-ID: <ff89f821-e0aa-4a4e-9ac9-f50a6ee062af@linaro.org>
-Date: Tue, 26 Aug 2025 12:20:29 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] tests/functional: Support tests that require a runner
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, qemu-arm@nongnu.org,
- 1844144@gmail.com
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uqvVR-0000fC-O3
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 11:22:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uqvVH-00066P-08
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 11:22:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756221742;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=30bGLInMTeEMwx+OWsyGrNU+XiA1+5q7zylwgLkObYQ=;
+ b=H3I5mfahu+pqhtH9xahLBwzOl8moNNaUM6Lx6BJElCRRj3ssxxxEEItwGfKf9Ty4qV6QAa
+ 01l4LltKSA13m2A8w4jElum3EOPFdIs0ekWsjkS4fioOZUWGm3PFaz3GBy2Euj4fhuywMj
+ EGHaeu1553JYXGUXWCzjmSrzOJZYlmo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-_KbIDtc8ObG-8PkzAku6wg-1; Tue,
+ 26 Aug 2025 11:22:20 -0400
+X-MC-Unique: _KbIDtc8ObG-8PkzAku6wg-1
+X-Mimecast-MFC-AGG-ID: _KbIDtc8ObG-8PkzAku6wg_1756221739
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 981021956089; Tue, 26 Aug 2025 15:22:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.174])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 777F530001A5; Tue, 26 Aug 2025 15:22:17 +0000 (UTC)
+Date: Tue, 26 Aug 2025 16:22:14 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org, qemu-arm@nongnu.org, 1844144@gmail.com,
+ Jan Richter <jarichte@redhat.com>
+Subject: Re: [PATCH 0/4] tests/functional: Adapt reverse_debugging to run w/o
+ Avocado
+Message-ID: <aK3RJnTA1m-kEr4c@redhat.com>
 References: <20250819143916.4138035-1-gustavo.romero@linaro.org>
- <20250819143916.4138035-3-gustavo.romero@linaro.org>
- <87bjo32vmf.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <87bjo32vmf.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <53b6e23f-5328-42c6-9c58-97ddbf3e5b29@redhat.com>
+ <a1105fed-dbd8-4223-b771-180ab12e3f77@linaro.org>
+ <8326014d-114e-47df-89fc-632eb5683632@redhat.com>
+ <aK3AYjQmb3bNEdrh@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x431.google.com
+In-Reply-To: <aK3AYjQmb3bNEdrh@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,156 +90,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
-
-On 8/25/25 13:50, Alex Bennée wrote:
-> Gustavo Romero <gustavo.romero@linaro.org> writes:
+On Tue, Aug 26, 2025 at 03:10:42PM +0100, Daniel P. Berrangé wrote:
+> On Tue, Aug 26, 2025 at 09:51:27AM +0200, Thomas Huth wrote:
+> > On 25/08/2025 16.04, Gustavo Romero wrote:
+> > > Hello, Thomas!
+> > > 
+> > > On 8/25/25 07:29, Thomas Huth wrote:
+> > > > On 19/08/2025 16.39, Gustavo Romero wrote:
+> > > > > The goal of this series is to remove Avocado as a dependency for running
+> > > > > the reverse_debugging functional test.
+> > > > > 
+> > > > > This test, the last one I’m aware of that relies on Avocado, requires it
+> > > > > because of the need for GDB to test reverse stepping and continue.
+> > ...
+> > > > I gave it a try, but this did not work for me, the test was not run
+> > > > at all anymore. Are there any patches needed on top?
+> > > 
+> > > hmm that's odd. I'm able to run it with 'make check-functional' and with
+> > > 'meson test'...
+> > > 
+> > > This is how I'm running it (let me know if I'm missing something):
+> > ...
+> > > gromero@gromero0:/mnt/git/qemu_$
+> > > gromero@gromero0:/mnt/git/qemu_/build$ ../configure
+> > > --target-list=aarch64- softmmu --disable-docs
+> > > gromero@gromero0:/mnt/git/qemu_/build$ make -j 32
+> > > gromero@gromero0:/mnt/git/qemu_/build$ time make -j 15  check-functional
+> > > [1/2] Generating tests/functional/func-precache-aarch64-
+> > > aarch64_reverse_debug with a custom command (wrapped by meson to set
+> > > env)
+> > > 2025-08-25 12:50:04,215 - qemu-test - INFO - Attempting to cache '/home/
+> > > gromero/.cache/qemu/
+> > > download/7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7'
+> > > 2025-08-25 12:50:04,225 - qemu-test - DEBUG - Using cached asset /home/
+> > > gromero/.cache/qemu/
+> > > download/7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7
+> > > for
+> > > https://archives.fedoraproject.org/pub/archive/fedora/linux/releases/29/
+> > > Everything/aarch64/os/images/pxeboot/vmlinuz
+> > > GDB CMD: /usr/bin/gdb-multiarch -q -n -batch -ex 'set pagination off'
+> > > -ex 'set confirm off' -ex "py
+> > > sys.argv=['/mnt/git/qemu_/tests/functional/
+> > > test_aarch64_reverse_debug.py']" -x /mnt/git/qemu_/tests/functional/
+> > > test_aarch64_reverse_debug.py
+> > > [0/1] Running external command precache-functional (wrapped by meson to
+> > > set env)
+> > > make[1]: Entering directory '/mnt/git/qemu_/build'
+> > > [1/6] Generating qemu-version.h with a custom command (wrapped by meson
+> > > to capture output)
+> > > /mnt/git/qemu_/build/pyvenv/bin/meson test  --no-rebuild -t 1 --setup
+> > > thorough  --num-processes 10 --print-errorlogs  --suite func  --suite
+> > > func- quick  --suite func-thorough
+> > >   1/27 qemu:func-thorough+func-aarch64-thorough+thorough / func-aarch64-
+> > > aarch64_virt_gpu                   SKIP              1.95s   0 subtests
+> > > passed
+> > 
+> > I tried a couple of times now, and finally realized that it's the
+> > "gdb-multiarch" binary that is missing on Fedora. And as far as I can see,
+> > there is also no package that provides this on Fedora? So if we go ahead
+> > with your patches, this test will only run on certain distros that provide
+> > this binary.
 > 
->> Add support for running tests that require a specific runner.
->>
->> The test is specified via a tuple (name, runner, protocol), where name
->> is the test name as found in the tests/functional directory without the
->> 'test_' prefix and the .py extension, runner is an array containing the
->> runner and any arguments required by the runner, and protocol is
->> the test protocol used by Meson to determine whether the test passed or
->> failed.
->>
->> The test tuples are added to arrays that follow the current naming
->> logic but with the suffix '_with_runner' appended to their names. In
->> Meson it's not easy to select an element in an array at runtime based on
->> its type, so it's simpler to have a new array for these new test types
->> than use the current ones from the tests that don't require a runner,
->> and so avoid mixing strings and tuples in the same array.
->>
->> Currently there is only one runner, the GDB runner, but more runners can
->> be defined and associated to a test via the tuple.
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   meson.build                  |  4 +++
->>   tests/functional/meson.build | 62 ++++++++++++++++++++++++++++++++++++
->>   2 files changed, 66 insertions(+)
->>
->> diff --git a/meson.build b/meson.build
->> index 50c774a195..8d482f0809 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -75,6 +75,10 @@ have_user = have_linux_user or have_bsd_user
->>   
->>   sh = find_program('sh')
->>   python = import('python').find_installation()
->> +# Meson python.get_path() on 'purelib' or 'platlib' doesn't properly return the
->> +# site-packages dir in pyvenv, so it is built manually.
->> +python_ver = python.language_version()
->> +python_site_packages = meson.build_root() / 'pyvenv/lib/python' + python_ver / 'site-packages'
->>   
->>   cc = meson.get_compiler('c')
->>   all_languages = ['c']
->> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
->> index 311c6f1806..1f70b70fd4 100644
->> --- a/tests/functional/meson.build
->> +++ b/tests/functional/meson.build
->> @@ -349,6 +349,23 @@ tests_xtensa_system_thorough = [
->>     'xtensa_replay',
->>   ]
->>   
->> +# Tests that require a specific runner.
->> +gdb = find_program('gdb-multiarch', required: false)
->> +if gdb.found()
->> +    gdb_runner_script =  meson.project_source_root() + '/tests/guest-debug/run-test.py'
->> +    gdb_runner = [gdb_runner_script, '--gdb', gdb, '--test']
->> +
->> +    # A test with a runner is a tuple (name, runner, protocol).
->> +    # The tests must be elements of an array named like:
->> +    #
->> +    # test_<arch>_<mode=[system|linuxuser|bsduser]>_<speed=[quick|thorough]>_with_runner = [
->> +    #      ['test0', gdb_runner, 'exitcode'],
->> +    #      ...
->> +    # ]
->> +else
->> +    message('GDB multiarch not found, skipping functional tests that rely on it.')
->> +endif
->> +
+> 'gdb-multiarch' is a command name invented by Debian.
 > 
-> We already have a --gdb option in configure which sets GDB= for
-> check-tcg - we should use the same configuration for these tests. You
-> may need to convert the configure probe to a meson-option.
+> On Fedora, the regular 'gdb' binary is built with support for
+> multiple architectures for the purpose of remote debugging.
 
-True. I'll sort it out in v2. Afaics it will solve the issue Thomas found on
-Fedora. As Daniel says gdb in Fedora already has all the arch built-in, the
-detection in configure will work. Thanks.
+The set of archs supported by GDB in Fedora is
 
+  s390-linux-gnu
+  powerpc-linux-gnu
+  arm-linux-gnu
+  aarch64-linux-gnu
+  riscv64-linux-gnu
+  x86_64-redhat-linux-gnu
 
-Cheers,
-Gustavo
+you can query this with 'gdb --configuration' and parsing the
+'--enable-targets' args  - I've not found a better way :-( 
 
->>   precache_all = []
->>   foreach speed : ['quick', 'thorough']
->>     foreach dir : target_dirs
->> @@ -372,9 +389,11 @@ foreach speed : ['quick', 'thorough']
->>         suites = ['func-quick', 'func-' + target_base]
->>         target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_quick', []) \
->>                        + get_variable('tests_generic_' + sysmode)
->> +      target_tests_r = get_variable('tests_' + target_base + '_' + sysmode + '_quick_with_runner', [])
->>       else
->>         suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
->>         target_tests = get_variable('tests_' + target_base + '_' + sysmode + '_' + speed, [])
->> +      target_tests_r = get_variable('tests_' + target_base + '_' + sysmode + '_' + speed + '_with_runner', [])
->>       endif
->>   
->>       test_deps = [roms, keymap_targets]
->> @@ -423,6 +442,49 @@ foreach speed : ['quick', 'thorough']
->>              priority: test_timeouts.get(test, 90),
->>              suite: suites)
->>       endforeach
->> +
->> +    # Prepare tests that require a specific runner.
->> +    foreach test : target_tests_r
->> +      testname = '@0@-@1@'.format(target_base, test[0])
->> +      testfile = 'test_' + test[0] + '.py'
->> +      testpath = meson.current_source_dir() / testfile
->> +      teststamp = testname + '.tstamp'
->> +      testrunner  = test[1]
->> +      testproto = test[2]
->> +
->> +      test_precache_env = environment()
->> +      test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
->> +      # python_site_packages, i.e., site packages from Python in pyvenv, is
->> +      # added to PYTHONPATH because some runners can run a program that has its
->> +      # own Python hooks that, by its turn, will search for modules based on
->> +      # PYTHONPATH independently of the Python used by the runner, like, for
->> +      # example, GDB using libpython.
->> +      test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python' +
->> +                                          ':' + meson.current_source_dir() +
->> +                                          ':' + python_site_packages)
->> +      precache = custom_target('func-precache-' + testname,
->> +                               output: teststamp,
->> +                               command: [testrunner, testpath],
->> +                               depend_files: files(testpath),
->> +                               build_by_default: false,
->> +                               env: test_precache_env)
->> +      precache_all += precache
->> +
->> +      # See comment above about python_site_packages in test_precache_env.
->> +      # Don't append to test_env since it will affect previous uses of it.
->> +      test_r_env = test_env
->> +      test_r_env.append('PYTHONPATH', python_site_packages)
->> +
->> +      test('func-' + testname,
->> +           python,
->> +           depends: [test_deps, test_emulator, emulator_modules, plugin_modules],
->> +           env: test_r_env,
->> +           args: [testrunner, testpath],
->> +           protocol: testproto,
->> +           timeout: test_timeouts.get(test[0], 90),
->> +           priority: test_timeouts.get(test[0], 90),
->> +           suite: suites)
->> +    endforeach
->>     endforeach
->>   endforeach
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
