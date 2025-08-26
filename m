@@ -4,116 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB79CA0FE7
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 05:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90B3CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 05:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqmHD-0003Vp-Be; Tue, 26 Aug 2025 01:31:23 -0400
+	id 1uqmWV-0000WW-Dc; Tue, 26 Aug 2025 01:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1uqmH8-0003T3-75; Tue, 26 Aug 2025 01:31:19 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1uqmH0-00052q-Qe; Tue, 26 Aug 2025 01:31:16 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PJJ9Wb032393;
- Tue, 26 Aug 2025 05:31:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jneueb
- 4z6SxKShCinPAZH4aleemwlEJUUyThJoxli+0=; b=L8VpXnD0AylOeKCygm+46S
- bs+XJ8Gj3dMVXsxQ1jh2925nu+rLNVb82/naaWSp4FW5oyla/ZmusX3Y7p7QueAY
- vE908MA07LVXRlr4/z6Rd2lWcz2Ibu5r/rmh5cdtdkvBDn48PZrsZAFFR4aruU6U
- k2iskmp89+2qKubg5CAyWVb/XiT87qeTLjqucNz/jWoOXQsmyTC/5w4ooydUTg1n
- tdo/CZR1xDx54ddjxvCcX7pjwZbucYaLlf8ShNlY8pigZ5zCyM0Vq4WCXxtGBFCC
- WoPMCFYeyctorfvCvvCG43gtFo66vPrXKTATYdH5VGTRNyNF+9HVX9+GvA1wLKtQ
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5avcnr5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Aug 2025 05:31:03 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57Q5V3ir016920;
- Tue, 26 Aug 2025 05:31:03 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5avcnr4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Aug 2025 05:31:03 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57Q31vjk029895;
- Tue, 26 Aug 2025 05:31:01 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48qsfmh5qd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 26 Aug 2025 05:31:01 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57Q5V07529164160
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 26 Aug 2025 05:31:00 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A303F58056;
- Tue, 26 Aug 2025 05:31:00 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 553B95803F;
- Tue, 26 Aug 2025 05:30:58 +0000 (GMT)
-Received: from [9.109.242.24] (unknown [9.109.242.24])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 26 Aug 2025 05:30:58 +0000 (GMT)
-Message-ID: <b226f689-4a14-418b-9b60-72f4f5b38439@linux.ibm.com>
-Date: Tue, 26 Aug 2025 11:00:56 +0530
+ (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
+ id 1uqmWN-0000UN-GG; Tue, 26 Aug 2025 01:47:04 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
+ id 1uqmWF-0007ES-Oc; Tue, 26 Aug 2025 01:47:02 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-76e2eb6d07bso4398293b3a.3; 
+ Mon, 25 Aug 2025 22:46:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1756187212; x=1756792012; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6oy8OkyoxoCWvgcIQjEdmPLeYXlsxxxzgt3nlMA1C8k=;
+ b=KI1ETV4GUuBrWTt29zOqMHOtb3+j4fSmR6i+UYoG7NRHzQ/TRM8MVX9fJ4k7SC7kVV
+ NnYPj7isUNPHziWQsBLEjDcEUrDyd/BwywNNTOTKSW8kKokE29fkiXDkmzQ8zIp/u1lx
+ xKcmrRRRalXh5+TXICxacMQ4vme6UMk2/JhWAaq3BATI9z8i5vvaNLRPlDQIhYhWUIIj
+ EwCi2HQQ1TFmx/h1pzMtHwCrjtSuKhObXhsFYC/HjsIl1LnD4/cqqHL6TMo2+iZZYQbZ
+ N7Sd8SqfeRsWKoSCLjkXIhTxuGSaBaVNKKqqqIFlDu9OUSLd1rjJ1N+ScnsXQk2OFfWE
+ EFIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756187212; x=1756792012;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6oy8OkyoxoCWvgcIQjEdmPLeYXlsxxxzgt3nlMA1C8k=;
+ b=Nt/KFy0nblsIbmpCtnD65VLXi2SddeXc/Ez5D8kf6ICuTPbiJwY2iKZiyUvhwYoDO+
+ iSRGbcU0gqpU5sXl7QI6us/UnFHo+nPFCOo8gFF9GXFEcZ1MRibMVgDJafLm7DwLUkj7
+ kmMCNGmDPXCB+k/4vocvtPZp+FxXTW1wzmTCJMinpYBnJcmBXiHgVC3U3TP43czCZFeL
+ vIPrBY2hO8qcgS3MBdY8t56j+wy/3paZH3VfVB5kyoKaUSd/Xjg7oDkp8GZ+gT4gur/4
+ 9MqaeXRXMJnsvABHnMiTvDCmqXEupslu2WQFMo6RyOK+RexRkEOSUyGCDKl+jBRmbVA/
+ lPrA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUGiXdLUYLnSKxpGxVbqkq8vitaEDUCkIUOmZidjBZg82gOf1FYo73lEw3RmZ0FAZxC49QGjDeEPcoUQg==@nongnu.org,
+ AJvYcCXx5lHlCdie8ZLcZMOXQ04pENqT21z8Lj1ia4f+MdCgJFEomuHsmOKQcwICqzsWqjKrgbgWpIfYsmGd@nongnu.org
+X-Gm-Message-State: AOJu0YwvY71dc0yQQrp9PtfbActsZaGE5BTBUuWq0ynPwyUphTdqTuml
+ g9RuHbORdHzd2ZZU9RQCLwl2uLDWJhaFR5gsOTKrOdnuZxraRN4pocKt
+X-Gm-Gg: ASbGncuMhwiV7UUflPTsKXMvReyx30ktdnZ2ZV5EthepYduOvn+S2RUG8Fn9vzeuB0s
+ ww2PIwJztPSFKdPbu2YRYIYoEVEz5Cm6zWewhIQ0Kzq+4a46cOEInAIoySU5sMfMp2tKU7lzOp4
+ 5O/humClDijGakq4hxygY9qtD0DuKVnp4FJcrOhew/MDJAeJiVyNJShyRUNJP3Dhzk7LQUPLrjf
+ e9B77No9gPui16HTptkwlghswNUwGbq65Qad5q9aohtrEJuGI/ya9g/eGxzMWxfNc+GdmAkwyo5
+ FbU3AzVPxtr67ru8lp4Jlxu+S7+HwZrYOrAnosPoEU5nJpMfVJlCt5kGohqWOQGew95UgnJfxVS
+ EALXf88YKayL46kGo0hHi6TNTEg==
+X-Google-Smtp-Source: AGHT+IEGtlVn+9kFaShhiYJZ0A/MF1Z+FEYNYmN6YdU70+w4nsohrtKAdrSuTnARHLMjP3HBREe31g==
+X-Received: by 2002:a05:6a00:218a:b0:76b:d869:43fd with SMTP id
+ d2e1a72fcca58-7702fac69e7mr20450969b3a.18.1756187211675; 
+ Mon, 25 Aug 2025 22:46:51 -0700 (PDT)
+Received: from fedora ([159.196.5.243]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-770401afdaesm9032365b3a.53.2025.08.25.22.46.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Aug 2025 22:46:50 -0700 (PDT)
+From: Wilfred Mallawa <wilfred.opensource@gmail.com>
+To: Alistair Francis <alistair.francis@wdc.com>
+Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fam Zheng <fam@euphon.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Subject: [PATCH 0/4] NVMe: Add SPDM over the storage transport support
+Date: Tue, 26 Aug 2025 15:46:26 +1000
+Message-ID: <20250826054630.222052-1-wilfred.opensource@gmail.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] target/ppc: Add IBM PPE42 family of processors
-To: milesg@linux.ibm.com, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@redhat.com, npiggin@gmail.com, thuth@redhat.com, 
- rathc@linux.ibm.com, richard.henderson@linaro.org
-References: <20250819212856.219932-1-milesg@linux.ibm.com>
- <20250819212856.219932-2-milesg@linux.ibm.com>
- <0d2c9aa2-2dcc-4c22-8f33-e5ecac907cf4@linux.ibm.com>
- <b05363c1d72f93950f5872e59c1c4cf6c426b017.camel@linux.ibm.com>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <b05363c1d72f93950f5872e59c1c4cf6c426b017.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: a3L7t3Cu0TjENRrMKBRLL3UGOdQRrZty
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAyMSBTYWx0ZWRfXxdLhwrZ2Ovck
- nC6/7mqE3DTLT8n2PTSawkUoCxvwv60KjWJMjQRDg08SPEU79ohAQGyhnhf5IqS++d1hDnCBuoG
- Ydr/y6aGNmuRg1wDIYMBiqlseqIG0Cnh5JuGlWU5+8308J53WdXx/3bno0ejzJ6IKXwX0SpZePR
- 6WSfnslbpgGhEkfe3BKeUAL0G4nu8aW1NcqF7mtD5MFZX2am+EhYC9y5Rk0MfB16jBFvA2BmfL2
- heZxdch25vPZoKUIGBd/iEruV8N2J7JI8xo5W5DlSK6NBkvuBXhQ4yFnqHjWuyHFxR6ZfX0IvA4
- 1Fh/kLahbpas8BF+o4KXj8AzKfxBbKpokVS6pf3v6f8V8phmAseoTx8g8VBFJTmQ2PwT3hqr+Jo
- hj6q2VlG
-X-Proofpoint-ORIG-GUID: TrY-UXa-BuvvrgUTQgH0ZmhEkK7enqZZ
-X-Authority-Analysis: v=2.4 cv=SNNCVPvH c=1 sm=1 tr=0 ts=68ad4697 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=f7IdgyKtn90A:10
- a=dIoP19eksFL2bOAxed0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-26_01,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 bulkscore=0 phishscore=0 clxscore=1015
- impostorscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230021
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=wilfred.opensource@gmail.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,28 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 
+This series extends the existing SPDM support in QEMU to support the DSP0286
+SPDM Storage Transport [1] for NVMe. SPDM Storage Transport uses the NVMe
+Admin Security Send/Receive commands, as such, support for these commands have
+also been added.
 
-On 8/25/25 22:26, Miles Glenn wrote:
->>> @@ -186,6 +186,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
->>>        if (env->spr[SPR_LPCR] & LPCR_HR) {
->>>            hflags |= 1 << HFLAGS_HR;
->>>        }
->>> +    if (ppc_flags & POWERPC_FLAG_PPE42) {
->>> +        /* PPE42 has a single address space and no problem state */
->>> +        msr = 0;
->>> +    }
->> We really dont want this to be checked on PPC64 machines, hence
->> !TARGET_PPC64 needed.
->>
-> This is related to the issue of whether we want to continue supporting
-> 32-bit CPUs inside the 64-bit executable.  It seems that the community
-> is saying that we should continue to do that, so I'd like to keep this
-> in even for PPC64 machines, but I will go ahead and add an 'unlikely'
-> here in order to possibly lessen the impact.
+With the addition of a new `spdm-trans` CLI argument for NVMe controllers,
+users can specify `spdm_trans=nvme` or `spdm_trans=doe`. This allows for the
+selection of the SPDM transport. The `doe` option is the current default,
+`nvme` would select SPDM Storage Transport for the controller, where SPDM
+communication happens over the NVMe Admin Security Send/Receive commands.
 
-Yeh, sure, that should suffice for now.
+Support for DSP0286 already exists in `libspdm` [2] and support for the QEMU
+SPDM server is being upstreamed for `spdm-utils` [3]. This series was tested by
+using `spdm-utils` as the qemu SPDM server with SPDM Storage Transport support
+built with `libspdm` v3.8.0, and `spdm-utils` also as the SPDM requester.
 
-Thanks
-Harsh
+[1] https://www.dmtf.org/sites/default/files/standards/documents/DSP0286_1.0.0.pdf
+[2] https://github.com/DMTF/libspdm/pull/2827
+[3] https://github.com/westerndigitalcorporation/spdm-utils/pull/139
+
+Wilfred Mallawa (4):
+  spdm-socket: add seperate send/recv functions
+  spdm: add spdm storage transport virtual header
+  hw/nvme: add NVMe Admin Security SPDM support
+  hw/nvme: connect SPDM over NVMe Security Send/Recv
+
+ backends/spdm-socket.c       |  27 +++-
+ docs/specs/spdm.rst          |  10 +-
+ hw/nvme/ctrl.c               | 264 +++++++++++++++++++++++++++++++++--
+ hw/nvme/nvme.h               |   5 +
+ include/block/nvme.h         |  15 ++
+ include/hw/pci/pci_device.h  |   1 +
+ include/system/spdm-socket.h |  46 ++++++
+ 7 files changed, 351 insertions(+), 17 deletions(-)
+
+-- 
+2.51.0
+
 
