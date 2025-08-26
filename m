@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C843CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 15:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE35BCA0EFA
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 15:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqvgY-000631-O9; Tue, 26 Aug 2025 11:34:11 -0400
+	id 1uqvvU-0003EA-86; Tue, 26 Aug 2025 11:49:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uqvgW-00062W-LJ
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 11:34:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uqvvQ-0003DY-On
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 11:49:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uqvgM-0000Pl-O2
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 11:34:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uqvvL-0003da-GA
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 11:49:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756222436;
+ s=mimecast20190719; t=1756223358;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+QogLuuSQa1vN2PO5bJXOhb2Cy6/qAbMq9w2GP94I5U=;
- b=itkgAZSj5glcTb20svielDnJzctqgTt/jXpFprFKmtz0uzmq8HFPoNXdGx3emvJyXtMa/j
- XE9v+gSo/MztWYGDS3Tp/axFkFzO3BdOPch2P5ewyMb9yib/aNJRTe9xF3r9lf8U9YloTJ
- 9n/PvZyAl1DpuCn22W624ZmG+nboFdY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tnAw/Dtiq2M0v56dg1IIzRHeysoBF0QQldpC31nZcQo=;
+ b=YoBykQX72mZnrUgqPb01gRv7RSGOhuxag6Pa4NKd5bYSsAWpXh4t4GP/GkaBr1xpRoakXc
+ idfEFYOmUmWeA3pvCfDG3gUC4g9a+RHw4LRMaCcq0xWlRP2A9DO7RTpTls0AeB2IevS6j8
+ XppHZuFG7UG1xPV/dcgYJH3shK7lPQ8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-6dI8ZLu6NX-aUzbxAzPQpg-1; Tue, 26 Aug 2025 11:33:54 -0400
-X-MC-Unique: 6dI8ZLu6NX-aUzbxAzPQpg-1
-X-Mimecast-MFC-AGG-ID: 6dI8ZLu6NX-aUzbxAzPQpg_1756222433
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3cba0146f7aso341223f8f.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 08:33:54 -0700 (PDT)
+ us-mta-687-_GCsfY8nOO6L3de2yfG8nA-1; Tue, 26 Aug 2025 11:49:16 -0400
+X-MC-Unique: _GCsfY8nOO6L3de2yfG8nA-1
+X-Mimecast-MFC-AGG-ID: _GCsfY8nOO6L3de2yfG8nA_1756223355
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b612dbc28so14654285e9.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 08:49:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756222433; x=1756827233;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+QogLuuSQa1vN2PO5bJXOhb2Cy6/qAbMq9w2GP94I5U=;
- b=Ep1haqkspTjpuhQGF/zcEyhKLDe2vxEEMcCVoSTImlGKn2d5g7GM+1znGyNSYOJ5bD
- UZPzU9AoSizpgbl46gnTkM45AqL6uC9WStp/TrTvnK2nqemvYtavmQsPMEIIJkoEEUsu
- dQ0n3GAjAyQZYefZv3v6bGUlQMGZvvVGqmDQmSTc/ShA+58b3rSoe/6YCU5+zHnoqtVs
- R7FKRPvbbkBVfboezXqlUvlDJrFvog8rLmSTvV7LQFY2mPhKLKAN+rqRyH+h6Yt4Zvt0
- WjexOn4iQB5Fcgieu3zgHf3FHQT8b7Z0cn/b8VHWaKAPuokiRbnYH38NJU2DgvW7LaCJ
- SGmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCtVAUpOxymSZJ5ItDF6MJvfZCN62Fc1V0aMss9LChwsxAvR6AuW5HkvA+8EpZcMuVBJR7khg+aoYw@nongnu.org
-X-Gm-Message-State: AOJu0Yzr0qXw64aW8ep4/x1odUwTtYx/tY+Qz0ImlrNYYX99gO0TTkIM
- 1blYK5Bo4hekIKJm3Wiekscz1DJKzrvXqkZoRGrfIVHjzx2p9tCbCnQluIKZM5bNluyhZVSSLo6
- 8SR43c7N8KbFwktC1p1eib8YgZU4g2msg+u8jGtaJrYgaVPXXEujECADmcRD1DMnPyGtBOvlzt1
- aEv8+rrtNH3q+6V8Yp8dmKqHS0GoPfYMU=
-X-Gm-Gg: ASbGncsEfsQeuCaeQNf5SFcz6EbzUe8Yqy7zLmNhlLt5MxMM7RHPhxy1VSMBGNCa8DK
- rIW3go5btD9Zvy8y4jahVZnUQT/Gsh4nnOJ1h45+iMvM097Ac/8zcFuCAiIJZfX8MrdzNxD0rbE
- ne6sECyZ3ZXcE5awHmLC+SI0CSNluQp0j6Ccw2xydqkgHnmAHPAFYM6yK0v5ZjxaXKzXBmno6Zl
- NdvHGst+q6L0buqA6NFN11V
-X-Received: by 2002:a05:6000:381:b0:3c4:2a56:14db with SMTP id
- ffacd0b85a97d-3c5dd8aa758mr13384425f8f.41.1756222432981; 
- Tue, 26 Aug 2025 08:33:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG5oceQKcElAKiE4KlwJ53mCXnAfiQSCparQYyLHtI7rLnwCShrBr2IKkvQcvqcG0CR3U+3wPI5MLuWBBCdcjE=
-X-Received: by 2002:a05:6000:381:b0:3c4:2a56:14db with SMTP id
- ffacd0b85a97d-3c5dd8aa758mr13384401f8f.41.1756222432526; Tue, 26 Aug 2025
- 08:33:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756223355; x=1756828155;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tnAw/Dtiq2M0v56dg1IIzRHeysoBF0QQldpC31nZcQo=;
+ b=g0OfdtThxN9u0dveEmmDDxCBeYmb7WH59LUT+AlVYdzgZtgsDK4vFVgiFDKFoBZpWJ
+ NQM5cQpzTO7Ecw6UCwnXIJ/7aErZhSHK8VGMatOob0xj14ARhlo90lu3cXS5lz3J2PBK
+ /EocjieiHLJrjNVeItXE5vaFhib672bY4ehHU4gSgjjMfNVwmRPUcZ6tmebf14MWRipU
+ myO6ZCLvBbuDa0h8yeqGOdDt9jkKK/H0afW1YaAODI1ZEaoW8KbTYozM12Y7t/knQpwI
+ IzywB0TmZiVk6fbNyjecY/U3fhOlVMjDyzw/FYECq5k7WdwmcVY9olH6Kq3Wp6H2D8MM
+ 2ROw==
+X-Gm-Message-State: AOJu0YxRzq0EWPovswdVJfy5yF9sg6wabh7dH9ufyeLCQGO6VFPvPYkt
+ VrJ68KRo1WiBfKXuc4YHqEgIoJSzjsvYpFxwLk4Ui219PbA9EiUKNTI7d1hH53dllSIW3U4+bu8
+ 2q5bIDiSYU4qDNlQhGJKnsmqtgwguBP213K5Q2GmpxmXPN0DGq5Vgd1yH
+X-Gm-Gg: ASbGncvN2hLfhQSmtC1nFKAbtsg0HdWDnuazd3X7IfljuZHhttdYpY+E4Al6SAvPkvd
+ lyPPnpP7D1djXGWiV/4Vryjd5eRs/6yEBieO2fHZ0ji9hWcRbU0Pj3qtnr+JSqMDFcctB2xg5pa
+ 9mCoffMrwvsu5POMh7jL1kdos5YYwVrc5d54B6o0CpO7LywqOLTgpxqJMgFR3PVhrbEsW6047R5
+ fh35pgQ7McEuxg2tnA0gL4FmjIJwxfHgLGpFT5t8pj3lUDUEmMRe6UbOe2mbIR+Bf9CCyPuPu1b
+ BdjS2lRrb0p1NYuyHFYJ0p8PKrNH6s4=
+X-Received: by 2002:a05:600c:46d3:b0:450:cabd:b4a9 with SMTP id
+ 5b1f17b1804b1-45b517d2733mr124123575e9.29.1756223355413; 
+ Tue, 26 Aug 2025 08:49:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtd4QHwNqK+KCUJDfWt0qhH9oHrFBPu1LUpT4pFXRN3hbOp2qIS+YqrhrgD2gK/hjU0vL6Rw==
+X-Received: by 2002:a05:600c:46d3:b0:450:cabd:b4a9 with SMTP id
+ 5b1f17b1804b1-45b517d2733mr124123355e9.29.1756223354916; 
+ Tue, 26 Aug 2025 08:49:14 -0700 (PDT)
+Received: from redhat.com ([185.137.39.227]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b5753503esm154595765e9.1.2025.08.26.08.49.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Aug 2025 08:49:14 -0700 (PDT)
+Date: Tue, 26 Aug 2025 11:49:11 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "odaki@rsg.ci.i.u-tokyo.ac.jp" <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ "sriram.yagnaraman@ericsson.com" <sriram.yagnaraman@ericsson.com>,
+ DAMIEN BERGAMINI <damien.bergamini@eviden.com>
+Subject: Re: [PATCH] pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
+Message-ID: <20250826114836-mutt-send-email-mst@kernel.org>
+References: <20250820083953.439635-1-clement.mathieu--drif@eviden.com>
+ <8eaba1a296152a4750ac581172fa6ba150d5c8c3.camel@eviden.com>
 MIME-Version: 1.0
-References: <20250826140449.4190022-1-marcandre.lureau@redhat.com>
- <e58ea933-f941-44d8-8477-c8298663cc24@redhat.com>
- <CAAjaMXYwEwpaybjEiA6tBCartTrzoAqsKNzHSfrs4f2wJx-wjA@mail.gmail.com>
-In-Reply-To: <CAAjaMXYwEwpaybjEiA6tBCartTrzoAqsKNzHSfrs4f2wJx-wjA@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 26 Aug 2025 17:33:40 +0200
-X-Gm-Features: Ac12FXxEcrKLfJpwPU-c6QgaD0tDol8ORwo5O4X-0LcYDSg-y6saxDFaOyeerXo
-Message-ID: <CABgObfYkiSWmztjfH0HdOhMpF+NRDr-F0NjhqqaDcbYoWbzRFQ@mail.gmail.com>
-Subject: Re: [RFC 00/18] rust: split qemu-api
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-rust@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8eaba1a296152a4750ac581172fa6ba150d5c8c3.camel@eviden.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL=0.141, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,30 +111,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 26, 2025 at 4:56=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> I kind of agree with this sentiment. What this series basically does
-> is unwrapping most modules to standalone crates. Semantically, they
-> make sense to be their own crates just like they made sense being
-> their own modules before). But I'm not sure what developer benefit
-> this brings,
+On Tue, Aug 26, 2025 at 03:11:58PM +0000, CLEMENT MATHIEU--DRIF wrote:
+> Hi all,
+> 
+> Kindly ping,  
+> do you think we could have a look at this issue after the release of 10.1?
+> 
+> Thanks  
+> \>cmd
 
-The benefit (or rather, the problem that this solves) is that not all
-targets in the QEMU build use all the C libraries; in particular,
-tools like qemu-img do not include hw/.  Therefore, when Kevin was
-writing his Rust block layer experiments, he had to build a separate
-version of qemu_api that left out anything that could cause a linking
-failure for qemu-img and friends[1].
+indeed.
 
-Since we already have a well-proven module split in the form of
-variables defined with declare_dependency(), using it for Rust as well
-makes the most sense.  I can't exclude that in the future we might
-split even more (i2c, pci, etc.) but for now the split that Marc-Andr=C3=A9
-used with a single "system" crate is good enough.
-
-Paolo
-
-[1] https://lore.kernel.org/qemu-devel/20250218182019.111467-2-kwolf@redhat=
-.com/
+> On Wed, 2025-08-20 at 08:41 +0000, CLEMENT MATHIEU--DRIF wrote:
+> > From: Damien Bergamini <[damien.bergamini@eviden.com](mailto:damien.bergamini@eviden.com)>
+> > 
+> > Starting with commit cab1398a60eb, SR-IOV VFs are realized as soon as  
+> > pcie_sriov_pf_init() is called.  Because pcie_sriov_pf_init() must be  
+> > called before pcie_sriov_pf_init_vf_bar(), the VF BARs types won't be  
+> > known when the VF realize function calls pcie_sriov_vf_register_bar().
+> > 
+> > This breaks the memory regions of the VFs (for instance with igbvf):
+> > 
+> > $ lspci  
+> > ...  
+> >     Region 0: Memory at 281a00000 (64-bit, prefetchable) [virtual] [size=16K]  
+> >     Region 3: Memory at 281a20000 (64-bit, prefetchable) [virtual] [size=16K]
+> > 
+> > $ info mtree  
+> > ...  
+> > address-space: pci_bridge_pci_mem  
+> >   0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci  
+> >     0000000081a00000-0000000081a03fff (prio 1, i/o): igbvf-mmio  
+> >     0000000081a20000-0000000081a23fff (prio 1, i/o): igbvf-msix
+> > 
+> > and causes MMIO accesses to fail:
+> > 
+> >     Invalid write at addr 0x281A01520, size 4, region '(null)', reason: rejected  
+> >     Invalid read at addr 0x281A00C40, size 4, region '(null)', reason: rejected
+> > 
+> > To fix this, a type parameter is added to pcie_sriov_vf_register_bar()  
+> > to indicate the BAR type. It should be set to the same value as in the  
+> > pcie_sriov_pf_init_vf_bar() call.
+> > 
+> > Fixes: cab1398a60eb ("pcie_sriov: Reuse SR-IOV VF device instances")  
+> > Signed-off-by: Damien Bergamini <[damien.bergamini@eviden.com](mailto:damien.bergamini@eviden.com)>  
+> > Signed-off-by: Clement Mathieu--Drif <[clement.mathieu--drif@eviden.com](mailto:clement.mathieu--drif@eviden.com)>  
+> > ---  
+> >  docs/pcie_sriov.txt         | 2 +-  
+> >  hw/net/igbvf.c              | 8 ++++++--  
+> >  hw/nvme/ctrl.c              | 4 +++-  
+> >  hw/pci/pci.c                | 3 ---  
+> >  hw/pci/pcie_sriov.c         | 6 ++----  
+> >  include/hw/pci/pcie_sriov.h | 2 +-  
+> >  6 files changed, 13 insertions(+), 12 deletions(-)
+> > 
+> > diff --git a/docs/pcie_sriov.txt b/docs/pcie_sriov.txt  
+> > index ab2142807f..77d618b36f 100644  
+> > --- a/docs/pcie_sriov.txt  
+> > +++ b/docs/pcie_sriov.txt  
+> > @@ -83,7 +83,7 @@ setting up a BAR for a VF.  
+> >        pcie_ari_init(d, 0x100);  
+> >        ...  
+> >        memory_region_init(mr, ... )  
+> > -      pcie_sriov_vf_register_bar(d, bar_nr, mr);  
+> > +      pcie_sriov_vf_register_bar(d, bar_nr, bar_type, mr);  
+> >        ...  
+> >     }  
+> >    
+> > diff --git a/hw/net/igbvf.c b/hw/net/igbvf.c  
+> > index 31d72c4977..88dd8fb516 100644  
+> > --- a/hw/net/igbvf.c  
+> > +++ b/hw/net/igbvf.c  
+> > @@ -251,10 +251,14 @@ static void igbvf_pci_realize(PCIDevice *dev, Error **errp)  
+> >    
+> >      memory_region_init_io(&s->mmio, OBJECT(dev), &mmio_ops, s, "igbvf-mmio",  
+> >          IGBVF_MMIO_SIZE);  
+> > -    pcie_sriov_vf_register_bar(dev, IGBVF_MMIO_BAR_IDX, &s->mmio);  
+> > +    pcie_sriov_vf_register_bar(dev, IGBVF_MMIO_BAR_IDX,  
+> > +                               PCI_BASE_ADDRESS_MEM_TYPE_64 |  
+> > +                               PCI_BASE_ADDRESS_MEM_PREFETCH, &s->mmio);  
+> >    
+> >      memory_region_init(&s->msix, OBJECT(dev), "igbvf-msix", IGBVF_MSIX_SIZE);  
+> > -    pcie_sriov_vf_register_bar(dev, IGBVF_MSIX_BAR_IDX, &s->msix);  
+> > +    pcie_sriov_vf_register_bar(dev, IGBVF_MSIX_BAR_IDX,  
+> > +                               PCI_BASE_ADDRESS_MEM_TYPE_64 |  
+> > +                               PCI_BASE_ADDRESS_MEM_PREFETCH, &s->msix);  
+> >    
+> >      ret = msix_init(dev, IGBVF_MSIX_VEC_NUM, &s->msix, IGBVF_MSIX_BAR_IDX, 0,  
+> >          &s->msix, IGBVF_MSIX_BAR_IDX, 0x2000, 0x70, errp);  
+> > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c  
+> > index f5ee6bf260..35a82d2037 100644  
+> > --- a/hw/nvme/ctrl.c  
+> > +++ b/hw/nvme/ctrl.c  
+> > @@ -8709,7 +8709,9 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)  
+> >          memory_region_add_subregion(&n->bar0, 0, &n->iomem);  
+> >    
+> >          if (pci_is_vf(pci_dev)) {  
+> > -            pcie_sriov_vf_register_bar(pci_dev, 0, &n->bar0);  
+> > +            pcie_sriov_vf_register_bar(pci_dev, 0,  
+> > +                                       PCI_BASE_ADDRESS_SPACE_MEMORY |  
+> > +                                       PCI_BASE_ADDRESS_MEM_TYPE_64, &n->bar0);  
+> >          } else {  
+> >              pci_register_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |  
+> >                               PCI_BASE_ADDRESS_MEM_TYPE_64, &n->bar0);  
+> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c  
+> > index c70b5ceeba..4fe2626f9e 100644  
+> > --- a/hw/pci/pci.c  
+> > +++ b/hw/pci/pci.c  
+> > @@ -1490,9 +1490,6 @@ void pci_register_bar(PCIDevice *pci_dev, int region_num,  
+> >                          : pci_get_bus(pci_dev)->address_space_mem;  
+> >    
+> >      if (pci_is_vf(pci_dev)) {  
+> > -        PCIDevice *pf = pci_dev->exp.sriov_vf.pf;  
+> > -        assert(!pf || type == pf->exp.sriov_pf.vf_bar_type[region_num]);  
+> > -  
+> >          r->addr = pci_bar_address(pci_dev, region_num, r->type, r->size);  
+> >          if (r->addr != PCI_BAR_UNMAPPED) {  
+> >              memory_region_add_subregion_overlap(r->address_space,  
+> > diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c  
+> > index 8a4bf0d6f7..eedce6be1d 100644  
+> > --- a/hw/pci/pcie_sriov.c  
+> > +++ b/hw/pci/pcie_sriov.c  
+> > @@ -242,13 +242,11 @@ void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region_num,  
+> >      dev->exp.sriov_pf.vf_bar_type[region_num] = type;  
+> >  }  
+> >    
+> > +/* `type` must match the type passed to pcie_sriov_pf_init_vf_bar() */  
+> >  void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,  
+> > -                                MemoryRegion *memory)  
+> > +                                uint8_t type, MemoryRegion *memory)  
+> >  {  
+> > -    uint8_t type;  
+> > -  
+> >      assert(dev->exp.sriov_vf.pf);  
+> > -    type = dev->exp.sriov_vf.pf->exp.sriov_pf.vf_bar_type[region_num];  
+> >    
+> >      return pci_register_bar(dev, region_num, type, memory);  
+> >  }  
+> > diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h  
+> > index aeaa38cf34..b67449f8ba 100644  
+> > --- a/include/hw/pci/pcie_sriov.h  
+> > +++ b/include/hw/pci/pcie_sriov.h  
+> > @@ -39,7 +39,7 @@ void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region_num,  
+> >    
+> >  /* Instantiate a bar for a VF */  
+> >  void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,  
+> > -                                MemoryRegion *memory);  
+> > +                                uint8_t type, MemoryRegion *memory);  
+> >    
+> >  /**  
+> >   * pcie_sriov_pf_init_from_user_created_vfs() - Initialize PF with user-created
 
 
