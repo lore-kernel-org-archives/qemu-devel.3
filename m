@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AF3CA0EFA
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 06:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08408CA0EE4
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Aug 2025 06:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uqmn2-0008Ag-DN; Tue, 26 Aug 2025 02:04:16 -0400
+	id 1uqmu9-0003UA-3U; Tue, 26 Aug 2025 02:11:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1uqmmz-0008A9-EN
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 02:04:13 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1uqmmu-0001RJ-RY
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 02:04:13 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-246151aefaaso35064075ad.1
- for <qemu-devel@nongnu.org>; Mon, 25 Aug 2025 23:04:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756188245; x=1756793045; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=KFKAb/yGDF4r+9c1rPHsacMofDs4hgTNulXwczTP6bw=;
- b=S+CH5+EwgIypTZgb2EjK7DN2thYoRPZ/10EgWWM1MT4mQ1sZeix5Ln7q/A5KN3T1Nb
- 8KCoaWRsKUMV4s2IZeQIO0YPGB9KUDdI6+RtaNXpEnKOI5gOOuXfXD+4cIkBvJ1XRrja
- JUp5rh/R0Brv6bfmn34vIONqVSyDHTNUgcwVMiwXmZ2BUGsaeFk9B+b1DqnlMFPjtSbT
- 96wV9INu1aCsowl2GkNGPJRUeONWjHlSUDfn+Kcs75YaBf9i8Extm+8X6tDFDGPQ6000
- bCfjKO5l10g8V7Q+h51tQ/TTbw3A0+nolaETnCT+EwloUXUyvPRWfUO2+UlsvSeP4bX5
- XIHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756188245; x=1756793045;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KFKAb/yGDF4r+9c1rPHsacMofDs4hgTNulXwczTP6bw=;
- b=sc3fZgIQNCPtfhBEOmG7+SbISYQJRqN2VdtE+Tp+JZC264MvwlrD/E+0k9ZiN7sAIu
- wJcnwGsj+yvCH5HSFFJL//mgH7Ld5ohQcvs24GeZiQXJr3CdnGhwu+diKjsCNyE2ijHM
- FmtFKhI5gCtNfY9m6BxQlZDbVu68J5Yiklh4ubLx0WVYnRHGRryAuNB3ntuDo4zkfqaX
- +KNdKGjU3PfWQgDyX35PiCoYYwDrM9c+B6LUbBdH5LNfk5Ih2sT+hgl4MWhefQnEB43I
- dm99x3DSa1fmVL1xrGeD7YV/h0TkxiXR4uq3rHJbaZ1dU6WHBydl+EB6JWDpPSe57Vfu
- EVBA==
-X-Gm-Message-State: AOJu0YxN0M3fluQVbxSlYZkzkW6ZSQbRgEb+VDM60qD3P0JLojW7Ml6c
- 4D4fFIqRc30kbAS53wG1KjNdXlKIFetm7qFJnDUgofBzHcFCCkJl6vRa
-X-Gm-Gg: ASbGnctrFaKSCEW9dSsKJrnzdim33LGXK7NlAmjYWwwL5xqu+cqD7FG8LpRYMjFduuD
- 3AYqyiNJv331GtzKZRCkVKyHp7CvMkzv5LWH6jCp7wKffoNLG+3172+ZD2FqjoM1DWNvfjyYfX0
- NWkiu3byDy7jGZYEinv2CGVo8bjzFio2qwEiag88cBts0SSkphL4gBnb0Vk4do410xGdF/H3ylR
- 8/uta6SfJ/8eux5wQoUEAywdJPiz6G/0cWd5nw41iEwsdUlyiq2qq2U1CF8Qyshe1zXIGe31nTy
- AvDwjgjAxtIc6DC3+Fo9/y4QEyME40wNIcLcUgZSBZJ1eUHaTeWpPvGQsBCfvypct3ArUiFzhsD
- 6PsCfAk9fMmd4tSL8R3CoyQCutfjozcQa
-X-Google-Smtp-Source: AGHT+IFMjFeXVVCYPCD/Otf2D8HTDgzNS5BujzhI8aKkhAgRk064HT+1Pvo7HK8Q248YsAsgQnaC2Q==
-X-Received: by 2002:a17:903:1b0c:b0:240:6fc0:3421 with SMTP id
- d9443c01a7336-248753a27acmr4604695ad.3.1756188244505; 
- Mon, 25 Aug 2025 23:04:04 -0700 (PDT)
-Received: from donnager-debian.. ([45.124.203.15])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2466885f2b4sm85808175ad.94.2025.08.25.23.04.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Aug 2025 23:04:03 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] linux-user: Add strace for rseq
-Date: Tue, 26 Aug 2025 15:33:40 +0930
-Message-ID: <20250826060341.1118670-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.2
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uqmu4-0003TB-Ki
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 02:11:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uqmtu-0002eo-Ah
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 02:11:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756188673;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NfgGO2Kr8TuxewRI5AqbtyXP3dkRsvCWIw5wnsxpplM=;
+ b=CtqmzveT9WWYLqpxBQDO13Rwbvjaku1CoExmifARCXo7J0/AS/wSbV7R4Imm7dS8wQQO3y
+ PdP4LwM6xY8sy/+xpgc+knKK2jRVf4rmXBTdwJ+QyUa3k6G1SHpeprtF+g17LGQxWYTHyc
+ K2JqrZiGtmrEQySo654ORCw3JAwH96c=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-DEtakiW4N2mnm1ODv1SmVA-1; Tue,
+ 26 Aug 2025 02:11:11 -0400
+X-MC-Unique: DEtakiW4N2mnm1ODv1SmVA-1
+X-Mimecast-MFC-AGG-ID: DEtakiW4N2mnm1ODv1SmVA_1756188670
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 029281956089; Tue, 26 Aug 2025 06:11:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 427481955F24; Tue, 26 Aug 2025 06:11:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6ED7C21E6A27; Tue, 26 Aug 2025 08:11:06 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org,  peterx@redhat.com,  farosas@suse.de,
+ eblake@redhat.com,  jasowang@redhat.com,  mst@redhat.com,
+ si-wei.liu@oracle.com,  eperezma@redhat.com,  boris.ostrovsky@oracle.com
+Subject: Re: [RFC 1/6] migration: Add virtio-iterative capability
+In-Reply-To: <2764b188-a4cd-40b8-95a7-ccec775d7db9@oracle.com> (Jonah Palmer's
+ message of "Mon, 25 Aug 2025 10:57:47 -0400")
+References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
+ <20250722124127.2497406-2-jonah.palmer@oracle.com>
+ <874iuihyxd.fsf@pond.sub.org>
+ <5a8bb5ef-c500-4fac-b5fc-566408ae8ffc@oracle.com>
+ <87h5xvsh9c.fsf@pond.sub.org>
+ <2764b188-a4cd-40b8-95a7-ccec775d7db9@oracle.com>
+Date: Tue, 26 Aug 2025 08:11:06 +0200
+Message-ID: <87ecsypq85.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=joel.stan@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,31 +91,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- build/qemu-riscv64 -cpu rv64,v=on -d strace  build/tests/tcg/riscv64-linux-user/test-vstart-overflow
- 1118081 riscv_hwprobe(0xffffbc038200,1,0,0,0,0) = 0
- 1118081 brk(NULL) = 0x0000000000085000
- 1118081 brk(0x0000000000085b00) = 0x0000000000085b00
- 1118081 set_tid_address(0x850f0) = 1118081
- 1118081 set_robust_list(0x85100,24) = -1 errno=38 (Function not implemented)
- 1118081 rseq(0x857c0,32,0,0xf1401073) = -1 errno=38 (Function not implemented)
+Jonah Palmer <jonah.palmer@oracle.com> writes:
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- linux-user/strace.list | 3 +++
- 1 file changed, 3 insertions(+)
+> On 8/25/25 8:44 AM, Markus Armbruster wrote:
 
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index ab818352a90c..51b5ead9696c 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1719,3 +1719,6 @@
- #ifdef TARGET_NR_riscv_hwprobe
- { TARGET_NR_riscv_hwprobe, "riscv_hwprobe" , "%s(%p,%d,%d,%d,%d,%d)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_rseq
-+{ TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
-+#endif
--- 
-2.47.2
+[...]
+
+>> Jonah Palmer <jonah.palmer@oracle.com> writes:
+>> 
+>>> On 8/8/25 6:48 AM, Markus Armbruster wrote:
+
+[...]
+
+>>>> Jonah Palmer <jonah.palmer@oracle.com> writes:
+>>>>> Adds a new migration capability 'virtio-iterative' that will allow
+>>>>> virtio devices, where supported, to iteratively migrate configuration
+>>>>> changes that occur during the migration process.
+>>>>
+>>>> Why is that desirable?
+>>>
+>>> To be frank, I wasn't sure if having a migration capability, or even
+>>> have it toggleable at all, would be desirable or not. It appears though
+>>> that this might be better off as a per-device feature set via
+>>> --device virtio-net-pci,iterative-mig=on,..., for example.
+>> 
+>> See below.
+>> 
+>>> And by "iteratively migrate configuration changes" I meant more along
+>>> the lines of the device's state as it continues running on the source.
+>> 
+>> Isn't that what migration does always?
+>
+> Essentially yes, but today all of the state is only migrated at the end, once the source has been paused. So the final correct state is always sent to the destination.
+
+As far as I understand (and ignoring lots of detail, including post
+copy), we have three stages:
+
+1. Source runs, migrate memory pages.  Pages that get dirtied after they
+are migrated need to be migrated again.
+
+2. Neither source or destination runs, migrate remaining memory pages
+and device state.
+
+3. Destination starts to run.
+
+If the duration of stage 2 (downtime) was of no concern, we'd switch to
+it immediately, i.e. without migrating anything in stage 1.  This would
+minimize I/O.
+
+Of course, we actually care for limiting downtime.  We switch to stage 2
+when "little enough" is left for stage two to migrate.
+
+> If we're no longer waiting until the source has been paused and the initial state is sent early, then we need to make sure that any changes that happen is still communicated to the destination.
+
+So you're proposing to treat suitable parts of the device state more
+like memory pages.  Correct?
+
+Cover letter and commit message of PATCH 4 provide the motivation: you
+observe a shorter downtime.  You speculate this is due to moving "heavy
+allocations and page-fault latencies" from stage 2 to stage 1.  Correct?
+
+Is there anything that makes virtio-net particularly suitable?
+
+I think this patch's commit message should at least hint at the
+motivation at a high level.  Details like measurements are best left to
+PATCH 4.
+
+> This RFC handles this by just re-sending the entire state again once the source has been paused. But of course this isn't optimal and I'm looking into how to better optimize this part.
+
+How much is the entire state?
+
+>>> But perhaps actual configuration changes (e.g. changing the number of
+>>> queue pairs) could also be supported mid-migration like this?
+>>
+>> I don't know.
+>> 
+>>>>> This capability is added to the validated capabilities list to ensure
+>>>>> both the source and destination support it before enabling.
+>>>>
+>>>> What happens when only one side enables it?
+>>>
+>>> The migration stream breaks if only one side enables it.
+>>
+>> How does it break?  Error message pointing out the misconfiguration?
+>> 
+>
+> The destination VM is torn down and the source just reports that migration failed.
+
+Exact same failure as for other misconfigurations, like missing a device
+on the destination?
+
+> I don't believe the source/destination could be aware of the misconfiguration. IIUC the destination reads the migration stream and expects certain pieces of data in a certain order. If new data is added to the migration stream or the order has changed and the destination isn't expecting it, then the migration fails. It doesn't know exactly why, just that it read-in data that it wasn't expecting.
+>
+>>> This is poor wording on my part, my apologies. I don't think it's even
+>>> possible to know the capabilities between the source & destination.
+>>>
+>>>>> The capability defaults to off to maintain backward compatibility.
+>>>>>
+>>>>> To enable the capability via HMP:
+>>>>> (qemu) migrate_set_capability virtio-iterative on
+>>>>>
+>>>>> To enable the capability via QMP:
+>>>>> {"execute": "migrate-set-capabilities", "arguments": {
+>>>>>        "capabilities": [
+>>>>>           { "capability": "virtio-iterative", "state": true }
+>>>>>        ]
+>>>>>     }
+>>>>> }
+>>>>>
+>>>>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+
+[...]
+
+>>>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>>>> index 4963f6ca12..8f042c3ba5 100644
+>>>>> --- a/qapi/migration.json
+>>>>> +++ b/qapi/migration.json
+>>>>> @@ -479,6 +479,11 @@
+>>>>>  #     each RAM page.  Requires a migration URI that supports seeking,
+>>>>>  #     such as a file.  (since 9.0)
+>>>>>  #
+>>>>> +# @virtio-iterative: Enable iterative migration for virtio devices, if
+>>>>> +#     the device supports it. When enabled, and where supported, virtio
+>>>>> +#     devices will track and migrate configuration changes that may
+>>>>> +#     occur during the migration process. (Since 10.1)
+>>>>
+>>>> When and why should the user enable this?
+>>>
+>>> Well if all goes according to plan, always (at least for virtio-net).
+>>> This should improve the overall speed of live migration for a virtio-net
+>>> device (and vhost-net/vhost-vdpa).
+>> 
+>> So the only use for "disabled" would be when migrating to or from an
+>> older version of QEMU that doesn't support this.  Fair?
+>
+> Correct.
+>
+>> What's the default?
+>
+> Disabled.
+
+Awkward for something that should always be enabled.  But see below.
+
+Please document defaults in the doc comment.
+
+>>>> What exactly do you mean by "where supported"?
+>>>
+>>> I meant if both source's Qemu and destination's Qemu support it, as well
+>>> as for other virtio devices in the future if they decide to implement
+>>> iterative migration (e.g. a more general "enable iterative migration for
+>>> virtio devices").
+>>>
+>>> But I think for now this is better left as a virtio-net configuration
+>>> rather than as a migration capability (e.g. --device
+>>> virtio-net-pci,iterative-mig=on/off,...)
+>> 
+>> Makes sense to me (but I'm not a migration expert).
+
+A device property's default can depend on the machine type via compat
+properties.  This is normally used to restrict a guest-visible change to
+newer machine types.  Here, it's not guest-visible.  But it can get you
+this:
+
+* Migrate new machine type from new QEMU to new QEMU (old QEMU doesn't
+  have the machine type): iterative is enabled by default.  Good.  User
+  can disable it on both ends to not get the improvement.  Enabling it
+  on just one breaks migration.
+
+  All other cases go away with time.
+
+* Migrate old machine type from new QEMU to new QEMU: iterative is
+  disabled by default, which is sad, but no worse than before.  User can
+  enable it on both ends to get the improvement.  Enabling it on just
+  one breaks migration.
+
+* Migrate old machine type from new QEMU to old QEMU or vice versa:
+  iterative is off by default.  Good.  Enabling it on the new one breaks
+  migration.
+
+* Migrate old machine type from old QEMU to old QEMU: iterative is off
+
+I figure almost all users could simply ignore this configuration knob
+then.
+
+>> [...]
 
 
