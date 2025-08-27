@@ -4,82 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B12CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 21:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59765CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 21:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urNql-0005Nl-Eq; Wed, 27 Aug 2025 17:38:35 -0400
+	id 1urO1L-0000zX-4H; Wed, 27 Aug 2025 17:49:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urNqj-0005N0-3b
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:38:33 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urNqh-0004HK-9U
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:38:32 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-771f90a45easo315290b3a.1
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 14:38:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756330709; x=1756935509; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=TcqGqwXH8Y34JU3tiokZ9VuiXu0XJnAQ+5ZmwRYI344=;
- b=lYWrFsnlP+pUjkTc6nw46Bweg2BbW1Q9IhAfGnGgi/BMKPTP2oX8fr8YLFEdMDBXpQ
- vfEnjJzrkG7GeIdg3QesY+P7qg1S1x2KNnJDQhfnqLQyt/PMQasqWJMYikJyGG8M0awO
- 6OShdP4Rqbkf/3OLOgZy/1MRVKxPJ6JzDW32Rzi6RJbQVGubxMzIRLrG16V3N7HZwrii
- RAE1CS/58qrqPpA99XKI410L+qh8OUaphv4y8axzkB9Kwavvq5y5oPBHGG3ups0fAjkw
- VNn8aVWTHdm0FsgXth5gCMKPznIpD1LyJi7Y60ioYjbqKiqp3LbbmdF7EmDWNzhu9+7U
- i52w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756330709; x=1756935509;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TcqGqwXH8Y34JU3tiokZ9VuiXu0XJnAQ+5ZmwRYI344=;
- b=d0aML4iB+dB9BabCKU7ns/Ce+L4wq8Wb7Ecq37b1UibRXAAl/PA9VCYTA83BMcbX3y
- YBhsKnzs3M8VjDJUpqU8JGhxPERPWOSZAgMr37opzwwN1xoTB1QcCImvSO3XVgPU7XzJ
- qt3g6eEpe1ad4zG9jDBUTQe6R1ZsjJuDOP8FM8Fw6QU2I/lVVAmleDzc106mnJqvcgXI
- X0cNNkP0J2bqqdPt6DpxoF3zBKjCj+jZI1/EERXPqKIIqgKIKk2dJxhsHxFCLVaQI/p9
- gQU7CyaynrvYTfbVxibMYzv2HEuBmpeDsNqAWAGasENxC+D5C2fsqMBjyMSWVvnVsLxG
- SVEg==
-X-Gm-Message-State: AOJu0Yye3nJQSTieWNWErwSiMQzx+N1rztYchphLCyFr6uUc/G7r5pdO
- t92IUR3bYj8mlx1LYdch7NT7KUDG0IS/oHs33iax79mHPTIhHO8HBX6+C79deZU8x5Y9uBTPN+p
- e0y8nWTU=
-X-Gm-Gg: ASbGncsb0PaMHzX8izWaJv3yjPOORqCB7Z9IhGI1koFhDksaVgeIuIyCr2zh+8meY8K
- 7zPLPZIDuj2wGW8ZDBmjXPB/H0J/+FFq0gBpZRuAE7VjY8V9yD9ldIkIoerEqtjWSNvz4IENRjW
- KrIKfSiyw/hy1QjfOLfULTSZ0qDUSJhUv2dUnjmkvCo4y3VCTD9ezWxdazs7r6iihU+wWiRXJel
- 4dS4R0x/QZ5AWH9U0kK6nRfUhpEw62Pi31X0os7Su8hY0Sd8l1i7brHXSaqYtJOacnouRQ0BnOW
- hsKe8zYPS9lLmwm1brQPLLMzstZq5oo4Yd1YhdgKxeXcpj32uqrn4+Z1vbkwIDRshpN3H2lsDL0
- R8C3/BUFUjyW37bkZ17LZ03Yk/Q==
-X-Google-Smtp-Source: AGHT+IEuLPBTWGRnNbTlH6nQ0r+s0RGpEYrW4SdvN+oG6a6ZBS4LC3bHrBdzpdXww5lCLbo1q7tjjg==
-X-Received: by 2002:a05:6a00:a1e:b0:76b:dd2e:5b89 with SMTP id
- d2e1a72fcca58-7702f9d8b6cmr33331644b3a.6.1756330709358; 
- Wed, 27 Aug 2025 14:38:29 -0700 (PDT)
-Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7705406d213sm11414109b3a.81.2025.08.27.14.38.27
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 14:38:29 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] linux-user: Tidy print_socket_protocol
-Date: Thu, 28 Aug 2025 07:38:20 +1000
-Message-ID: <20250827213820.37624-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1urO1H-0000y3-HT; Wed, 27 Aug 2025 17:49:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1urO1E-0005hD-SP; Wed, 27 Aug 2025 17:49:27 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57RC0ThS008379;
+ Wed, 27 Aug 2025 21:49:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=GDhAeu
+ it4ePtbM+JUXvZIG23xLuH30s5tY0VPIK+/aY=; b=PN6Po1SatedgY6ypnfS12H
+ O8RdYs70c6UlzYi6mN63+VdXo9FPar0J01TAr2Dp3PZ6RjFqImgcK1M5wkg/3jAa
+ mNLt9TyqsOZrUY7s7g0V2a5mxJYTMHUF76vcfquc5X/gbwgIzuMt7dKCMqkLUJfv
+ DbKagmKXTjXaoWsjk5nGuhoKqpNvLhK93yv091zNrT52o1BSdUx4i9388MbKwmC0
+ 9Dugp6HiSBGTV01Uy8rypEdj778rmveLBLioFhi1D5WzUjjoZuweO2w+YLBA2WBY
+ bmEv0rLgtABv+cXDLCbYbhXKnEc9JKgfaIpnr7y4UvT1DEUsOSo2Ur9DCsnu3bCA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q42j6ck9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 Aug 2025 21:49:20 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57RIQvtC007474;
+ Wed, 27 Aug 2025 21:49:19 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48qqyuj6c9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 Aug 2025 21:49:19 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57RLnIXn4981764
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 27 Aug 2025 21:49:18 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7C95B5805A;
+ Wed, 27 Aug 2025 21:49:18 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 54D9E58051;
+ Wed, 27 Aug 2025 21:49:17 +0000 (GMT)
+Received: from [9.61.245.55] (unknown [9.61.245.55])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 27 Aug 2025 21:49:17 +0000 (GMT)
+Message-ID: <537aa1cf-7135-471e-874e-a4cd3796b5bc@linux.ibm.com>
+Date: Wed, 27 Aug 2025 14:49:17 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 07/29] s390x/diag: Implement DIAG 320 subcode 1
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-8-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20250818214323.529501-8-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAxMCBTYWx0ZWRfX1kpojvK5wLkx
+ h+6YKG2ljjR/DUYgE8AZ1hTcLBsdX0ICTaEYqZGTY/0GszZ1guD8dsh1yJqc6MB2I6MesSoxdo+
+ AP01ZPafU/mncDCDnIvxfn99s0saESXEprnr8q3PKJ2sQvxTvzFj0Het44fhKSq7hVlr8yNR6cm
+ cChcMk0EMb4GYS8vv2dsCmDxhATLJmpiqS+u52rUm5PoamlMcfwt0uxVUoj/N815BvhulwmA6c5
+ xFeoo6gafc8iMnu81IkdNLJvDW6Z6N8ZGcx4uhHYo5MXBQjgkCvZ2oWWPMyMt19dIDOTLNjWCf5
+ oLvvpzs6FtEyna3QQc7k3V2pzPSYeiEXl/IlFjsPjzmWRfvNMiS2iqosoD4vwp2QHeUw3heVeSV
+ I/GFVYqg
+X-Proofpoint-ORIG-GUID: Og2roixrnSj2HR68BXm_MrLjGYjUBVqB
+X-Proofpoint-GUID: Og2roixrnSj2HR68BXm_MrLjGYjUBVqB
+X-Authority-Analysis: v=2.4 cv=evffzppX c=1 sm=1 tr=0 ts=68af7d60 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=P-IC7800AAAA:8 a=VnNF1IyMAAAA:8
+ a=FAZsi83HLsRZ-jeIq-0A:9 a=QEXdDO2ut3YA:10 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-27_04,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ impostorscore=0 clxscore=1011 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230010
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,193 +124,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sink all of the qemu_log calls to the end, collecting only
-a string for the name, if identified.  Merge separate if
-blocks into one switch.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/strace.c | 102 ++++++++++++++++++++++----------------------
- 1 file changed, 52 insertions(+), 50 deletions(-)
----
-Based-on: 20250827095412.2348821-1-l.stelmach@samsung.com
-("[PATCH] linux-user: do not print IP socket options by default")
+On 8/18/2025 2:43 PM, Zhuoying Cai wrote:
+> DIAG 320 subcode 1 provides information needed to determine
+> the amount of storage to store one or more certificates from the
+> certificate store.
+>
+> Upon successful completion, this subcode returns information of the current
+> cert store, such as the number of certificates stored and allowed in the cert
+> store, amount of space may need to be allocate to store a certificate,
+> etc for verification-certificate blocks (VCBs).
+>
+> The subcode value is denoted by setting the left-most bit
+> of an 8-byte field.
+>
+> The verification-certificate-storage-size block (VCSSB) contains
+> the output data when the operation completes successfully. A VCSSB
+> length of 4 indicates that no certificate are available in the cert
+> store.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   docs/specs/s390x-secure-ipl.rst | 10 ++++++
+>   include/hw/s390x/ipl/diag320.h  | 22 +++++++++++++
+>   target/s390x/diag.c             | 56 ++++++++++++++++++++++++++++++++-
+>   3 files changed, 87 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> index 70e9a66fe0..ddc15f0322 100644
+> --- a/docs/specs/s390x-secure-ipl.rst
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -23,3 +23,13 @@ Subcode 0 - query installed subcodes
+>       Returns a 256-bit installed subcodes mask (ISM) stored in the installed
+>       subcodes block (ISB). This mask indicates which sucodes are currently
+>       installed and available for use.
+> +
+> +Subcode 1 - query verification certificate storage information
+> +    Provides the information required to determine the amount of memory needed to
+> +    store one or more verification-certificates (VCs) from the certificate store (CS).
+> +
+> +    Upon successful completion, this subcode returns various storage size values for
+> +    verification-certificate blocks (VCBs).
+> +
+> +    The output is returned in the verification-certificate-storage-size block (VCSSB).
+> +    A VCSSB length of 4 indicates that no certificates are available in the CS.
+> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+> index aa04b699c6..6e4779c699 100644
+> --- a/include/hw/s390x/ipl/diag320.h
+> +++ b/include/hw/s390x/ipl/diag320.h
+> @@ -11,10 +11,32 @@
+>   #define S390X_DIAG320_H
+>   
+>   #define DIAG_320_SUBC_QUERY_ISM     0
+> +#define DIAG_320_SUBC_QUERY_VCSI    1
+>   
+>   #define DIAG_320_RC_OK              0x0001
+>   #define DIAG_320_RC_NOT_SUPPORTED   0x0102
+> +#define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
+>   
+>   #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
+> +#define DIAG_320_ISM_QUERY_VCSI     0x40000000
+> +
+> +#define VCSSB_NO_VC     4
+> +#define VCSSB_MIN_LEN   128
+> +#define VCE_HEADER_LEN  128
+> +#define VCB_HEADER_LEN  64
+> +
+> +struct VCStorageSizeBlock {
+> +    uint32_t length;
+> +    uint8_t reserved0[3];
+> +    uint8_t version;
+> +    uint32_t reserved1[6];
+> +    uint16_t total_vc_ct;
+> +    uint16_t max_vc_ct;
+> +    uint32_t reserved3[11];
+> +    uint32_t max_single_vcb_len;
+> +    uint32_t total_vcb_len;
+> +    uint32_t reserved4[10];
+> +};
+> +typedef struct VCStorageSizeBlock VCStorageSizeBlock;
+>   
+Should this be a packed structure? The Linux kernel defines it as packed 
+https://elixir.bootlin.com/linux/v6.17-rc3/source/arch/s390/kernel/cert_store.c#L81
 
-
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 786354627a..1233ebceb0 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -499,116 +499,118 @@ print_socket_type(int type)
- static void
- print_socket_protocol(int domain, int type, int protocol)
- {
--    if (domain == AF_PACKET ||
--        (domain == AF_INET && type == TARGET_SOCK_PACKET)) {
--        switch (protocol) {
--        case 0x0003:
--            qemu_log("ETH_P_ALL");
--            break;
--        default:
--            qemu_log("%d", protocol);
--        }
--        return;
--    }
-+    const char *name = NULL;
- 
--    if (domain == PF_NETLINK) {
-+    switch (domain) {
-+    case AF_PACKET:
-+        switch (protocol) {
-+        case 3:
-+            name = "ETH_P_ALL";
-+            break;
-+        }
-+        break;
-+
-+    case PF_NETLINK:
-         switch (protocol) {
-         case NETLINK_ROUTE:
--            qemu_log("NETLINK_ROUTE");
-+            name = "NETLINK_ROUTE";
-             break;
-         case NETLINK_UNUSED:
--            qemu_log("NETLINK_UNUSED");
-+            name = "NETLINK_UNUSED";
-             break;
-         case NETLINK_USERSOCK:
--            qemu_log("NETLINK_USERSOCK");
-+            name = "NETLINK_USERSOCK";
-             break;
-         case NETLINK_FIREWALL:
--            qemu_log("NETLINK_FIREWALL");
-+            name = "NETLINK_FIREWALL";
-             break;
-         case NETLINK_SOCK_DIAG:
--            qemu_log("NETLINK_SOCK_DIAG");
-+            name = "NETLINK_SOCK_DIAG";
-             break;
-         case NETLINK_NFLOG:
--            qemu_log("NETLINK_NFLOG");
-+            name = "NETLINK_NFLOG";
-             break;
-         case NETLINK_XFRM:
--            qemu_log("NETLINK_XFRM");
-+            name = "NETLINK_XFRM";
-             break;
-         case NETLINK_SELINUX:
--            qemu_log("NETLINK_SELINUX");
-+            name = "NETLINK_SELINUX";
-             break;
-         case NETLINK_ISCSI:
--            qemu_log("NETLINK_ISCSI");
-+            name = "NETLINK_ISCSI";
-             break;
-         case NETLINK_AUDIT:
--            qemu_log("NETLINK_AUDIT");
-+            name = "NETLINK_AUDIT";
-             break;
-         case NETLINK_FIB_LOOKUP:
--            qemu_log("NETLINK_FIB_LOOKUP");
-+            name = "NETLINK_FIB_LOOKUP";
-             break;
-         case NETLINK_CONNECTOR:
--            qemu_log("NETLINK_CONNECTOR");
-+            name = "NETLINK_CONNECTOR";
-             break;
-         case NETLINK_NETFILTER:
--            qemu_log("NETLINK_NETFILTER");
-+            name = "NETLINK_NETFILTER";
-             break;
-         case NETLINK_IP6_FW:
--            qemu_log("NETLINK_IP6_FW");
-+            name = "NETLINK_IP6_FW";
-             break;
-         case NETLINK_DNRTMSG:
--            qemu_log("NETLINK_DNRTMSG");
-+            name = "NETLINK_DNRTMSG";
-             break;
-         case NETLINK_KOBJECT_UEVENT:
--            qemu_log("NETLINK_KOBJECT_UEVENT");
-+            name = "NETLINK_KOBJECT_UEVENT";
-             break;
-         case NETLINK_GENERIC:
--            qemu_log("NETLINK_GENERIC");
-+            name = "NETLINK_GENERIC";
-             break;
-         case NETLINK_SCSITRANSPORT:
--            qemu_log("NETLINK_SCSITRANSPORT");
-+            name = "NETLINK_SCSITRANSPORT";
-             break;
-         case NETLINK_ECRYPTFS:
--            qemu_log("NETLINK_ECRYPTFS");
-+            name = "NETLINK_ECRYPTFS";
-             break;
-         case NETLINK_RDMA:
--            qemu_log("NETLINK_RDMA");
-+            name = "NETLINK_RDMA";
-             break;
-         case NETLINK_CRYPTO:
--            qemu_log("NETLINK_CRYPTO");
-+            name = "NETLINK_CRYPTO";
-             break;
-         case NETLINK_SMC:
--            qemu_log("NETLINK_SMC");
--            break;
--        default:
--            qemu_log("%d", protocol);
-+            name = "NETLINK_SMC";
-             break;
-         }
--        return;
--    }
-+        break;
- 
--    if (domain == AF_INET || domain == AF_INET6) {
-+    case AF_INET:
-+    case AF_INET6:
-         switch (protocol) {
-+        case 3:
-+            if (domain == AF_INET && type == TARGET_SOCK_PACKET) {
-+                name = "ETH_P_ALL";
-+            }
-+            break;
-         case IPPROTO_IP:
--            qemu_log("IPPROTO_IP");
-+            name = "IPPROTO_IP";
-             break;
-         case IPPROTO_TCP:
--            qemu_log("IPPROTO_TCP");
-+            name = "IPPROTO_TCP";
-             break;
-         case IPPROTO_UDP:
--            qemu_log("IPPROTO_UDP");
-+            name = "IPPROTO_UDP";
-             break;
-         case IPPROTO_RAW:
--            qemu_log("IPPROTO_RAW");
--            break;
--        default:
--            qemu_log("%d", protocol);
-+            name = "IPPROTO_RAW";
-             break;
-         }
--        return;
-+        break;
-     }
--    qemu_log("%d", protocol);
--}
- 
-+    if (name) {
-+        qemu_log("%s", name);
-+    } else {
-+        qemu_log("%d", protocol);
-+    }
-+}
- 
- #ifdef TARGET_NR__newselect
- static void
--- 
-2.43.0
+Thanks
+Farhan
 
 
