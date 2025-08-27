@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 530F9CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0276CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:24:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur4jR-0004ms-HN; Tue, 26 Aug 2025 21:13:45 -0400
+	id 1ur4jW-0005Kt-9d; Tue, 26 Aug 2025 21:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4i3-0001p5-2s
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:12:22 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1ur4i1-0001od-O0
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:12:23 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4ht-0000Kt-Jl
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:12:18 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7718408baf7so3195926b3a.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:12:09 -0700 (PDT)
+ id 1ur4hr-0000KV-Hs
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:12:17 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-771e1e64fbbso3803261b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756257126; x=1756861926; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756257124; x=1756861924; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RAmjouAdxbWZIhGVTm5xxs9AuY7ADuu5VQy/ar6fIhc=;
- b=GBz/CiV6F1B9+gzZC8vWoZT//1dgjqwJrBV0LOU1fZrvh6rW6mqt/TF7rIeoODF+5M
- fWUQAVIMiAAOH+UU/QQxMjqL4jEmlub1CLArvkps3sEou2s5vK0TlJoWfc0891hMBj++
- 5OMqo90a03bUjensEKoCM0gQs9mBupYnMOU9iuE/c4C76d+pUlR9A52e81m0cwIR0SYD
- tnOKBYo6Pjt6FkajygAliWCDMovYU1SyCmCDBteOE5K9pP12wBlFBcNiHgOS6snvI7Vs
- bmTtKZi8y7EkvI4Kwj5yhT6HjxeWOZepkrpTODgYM789p51cnM0blMNKRqMv1WJRSOo0
- vLOw==
+ bh=jag2QFFegs8XErUAZiv235hcNTVBDAqdG5eOQ1DkPIk=;
+ b=tiDr2w8o7OtuRlo9cfefe6+cAcUG2E7KmLFWppuc18vcAxXUQOTgbVHyP1wiT6i5O8
+ i4tY0VQE9FHdVGOLsuUGwJyEOTbKaQHNK//Wx9Jg6N36BAQFhEsMDL7ePLt0ah1NHEDR
+ PU3HUqZE3yYP7nXqQwZRllq0ttAOp8cQ9R+Cm3CXtC9uV0Krn6YoR9t3Axmr814C07uW
+ vzrB/hvSybTUqAXVib9oNJ+50aHuW1eo+ct6Ut+/uqnJC8iQNsSwX1x/w4+VstlgUzon
+ IXgOPuVfMsquTd1UIHeEC6iiaxMD5OEfALQt3JrRPteKo6gKMOmMvpg54mKN1nKBcWYA
+ mRcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756257126; x=1756861926;
+ d=1e100.net; s=20230601; t=1756257124; x=1756861924;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RAmjouAdxbWZIhGVTm5xxs9AuY7ADuu5VQy/ar6fIhc=;
- b=vZhsCFlszJZa+NNt0XQ0wpxd+QMLW0CS3XglAk1TAjmAlbXiVQ23qHmZiv/h7CRk4F
- a8po1sVE+aTb7PG16wuIA3uiDPbtRBxn43iQEsFVPiP/hAF2pamenXdU74QXfVnS+N+T
- gJw9pU9jDm+sr6Z2GJK5sLYKmH6im0YHhhrkWwC7Bv/nbPt498kjkw686xA3KYsJymTp
- rvLQ9j605xwTRNueK7ei658PWJOqpJQc7WzTvIRLMHFEoWHcpKB5IU8ahp2kNaFT9Ic0
- nLQB0J8FRJbs8w9GYvW7ZLAhkUfDaAJ6uXPCcsJ2xKvjXQT0wiEvS4SXi7SK8YtWlQu+
- hCKw==
-X-Gm-Message-State: AOJu0YwDDUIkMDACVJXMqBVYPMeFWt3+7Xlf1LVNT/z90X7daFXvxL6A
- 3kl10A6WxNAnVpTCHnDKREfzz1idGuidMfld7tVtAoOihVWK8L5AeoAMtbFXj2Dl5Ry0gl3Xb1f
- M/HHFDek=
-X-Gm-Gg: ASbGncsAx3Vxc34i2ww+Z8dHtgtYb1lb8NDqtz7j3c8KvA9FuBv02/1JNSXaW+f3p3z
- zbLI0jnIxPGB2W/hJPkIo2rCUq6geYJKMM0oS8Xk+/XRpIRLEGY1lrdeTrvQKXby0p2rPo+oFbB
- IqvniIhzcEV9gJ8kWi9FicDRsyidwPBmBgCnLeQvcJNc1vtcmfKKuSVwGwxiNDPsrewVoIDe+4a
- pH26IOfUHBv27MLuHu8tsBJiz9Du7iJ0h0j3M4ox9e+h6qE+6ErWJkSghQe5/qXf5v9VANpEIvC
- gB9nOIjYINe6sk/bkVYZgwcRcSx2Z+/qCVuvFXA67BE7mDl0HCRqHJT7aRG6kEWgeZp/EffTYSR
- kpSdst2sfARyORjk9WSH4ApodI2GELOBfJUGW
-X-Google-Smtp-Source: AGHT+IEDe1DmdxJj0gTYj51v6y56Jh/UPtgqAu9YwvRXI5lPmhHWkPvk1tzVI+KnBLWuxraa1Fa4DA==
-X-Received: by 2002:a05:6a00:2d90:b0:772:3c9:ce3e with SMTP id
- d2e1a72fcca58-77203c9d114mr2492254b3a.7.1756257126338; 
- Tue, 26 Aug 2025 18:12:06 -0700 (PDT)
+ bh=jag2QFFegs8XErUAZiv235hcNTVBDAqdG5eOQ1DkPIk=;
+ b=TjgzX75S+bsatuS8cikeE7EfrYSCOo1L+jPAKY98RrJJLmdubIAZIheCa1qS6o0k0D
+ DRFEv20AFfV+s7KcDhPz2BHzZk4VuomFLZu+FvPsr9vGYtexEs7s8XR2HrSbHPOyn2mZ
+ qn+JSNiWdiadE0ZFI4E/XhllLBRM81rrf/EBVsnBldEbAvem3nmKpzPgsqDmzRi7W01x
+ no2d0SQNZ1xnE/Jeco2iZuYyIyRaFr6GT5t7LxbYjsF2HWyXWjuPttQbe5icIa6lMuSm
+ EcZ5UgImV1Bpy/+/0JnPykWLEf0zQVmM5jcu6gRW5zDqg6AcoGS5sfyatmDBxL+zIOop
+ fk3g==
+X-Gm-Message-State: AOJu0Yy0zPaJ+ClAB7MzlFLcCCXWz/HTyxt/U8lMZfkmV05X3ShfwPt0
+ GGP56C5Ex7kfRdfDZ/+yVH8RLhGtdrcQ9yUbhYHdsZ/S6aiO4OAzKeZoqwNvEVGbo/nQUNa70fx
+ ZviAdNIw=
+X-Gm-Gg: ASbGnct1RWOyGZz5wptxuMqRMCjh92kfAyBYWVQHbXtwPPmoQm0Fi/8I4kPCCZjLsYi
+ yBVuVVm/C776weYkwvXPPBCiJ2YtV5vrNU6uJD7YzvYEgtlLiQuD5hyKgS+wFMVRgd9aOT/PbOY
+ uLbPrUalRTBCADQgMTnMjb/a6qTIqD8isM0YQ8N6aWAhg9KjovdTA12kWk6KKdxJ5D0cF+67O2u
+ IqRgyuydIzh547oh8X8RfGzHO3+mL+wuZqloN6nIv+N4TE9/HZMvZLYo/OrcRmZCLB7fvuQll5T
+ Xt1CRCV7t7U9N8mM1KeXYCwLfADzEMOoFoT5q8uB1X1iJfzUWL7V9UW9VGxxR09rVGGbKXDcyHg
+ jkTRhebRP2pFNRhSt62ZUZKRgxQ==
+X-Google-Smtp-Source: AGHT+IESbQkQ5L46tC0tRmuAEwzdOmuAPoQSmp8OnZE3ZNwJTDwl90bhEdFtmJP6waSOp0k+MgS4cA==
+X-Received: by 2002:a05:6a20:5493:b0:243:78a:82a8 with SMTP id
+ adf61e73a8af0-24340d5e384mr28514304637.48.1756257123945; 
+ Tue, 26 Aug 2025 18:12:03 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-771f2b2d2bfsm4348408b3a.93.2025.08.26.18.12.04
+ d2e1a72fcca58-771f2b2d2bfsm4348408b3a.93.2025.08.26.18.12.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 18:12:05 -0700 (PDT)
+ Tue, 26 Aug 2025 18:12:03 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 59/61] target/arm: Split out flush_if_asid_change
-Date: Wed, 27 Aug 2025 11:04:50 +1000
-Message-ID: <20250827010453.4059782-64-richard.henderson@linaro.org>
+Subject: [PATCH 58/61] target/arm: Consolidate definitions of TTBR[01]
+Date: Wed, 27 Aug 2025 11:04:49 +1000
+Message-ID: <20250827010453.4059782-63-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827010453.4059782-1-richard.henderson@linaro.org>
 References: <20250827010453.4059782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,67 +99,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Create a function define_ttbr_register which handles the 3
+distinct cases for TTBR[01] registers.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.c | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ target/arm/helper.c | 165 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 116 insertions(+), 49 deletions(-)
 
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3dde778369..7a817b7e28 100644
+index fb37d0674b..3dde778369 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -2893,6 +2893,15 @@ static void vmsa_tcr_el12_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     raw_write(env, ri, value);
+@@ -2973,26 +2973,6 @@ static const ARMCPRegInfo vmsa_cp_reginfo[] = {
+       .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 5, 2, 0),
+       .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 5, 2, 0),
+       .fieldoffset = offsetof(CPUARMState, cp15.esr_el[1]), .resetvalue = 0, },
+-    { .name = "TTBR0_EL1", .state = ARM_CP_STATE_BOTH,
+-      .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 0,
+-      .access = PL1_RW, .accessfn = access_tvm_trvm,
+-      .fgt = FGT_TTBR0_EL1,
+-      .nv2_redirect_offset = 0x200 | NV2_REDIR_NV1,
+-      .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 2, 0, 0),
+-      .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 2, 0, 0),
+-      .writefn = vmsa_ttbr_write, .resetvalue = 0, .raw_writefn = raw_write,
+-      .bank_fieldoffsets = { offsetof(CPUARMState, cp15.ttbr0_s),
+-                             offsetof(CPUARMState, cp15.ttbr0_ns) } },
+-    { .name = "TTBR1_EL1", .state = ARM_CP_STATE_BOTH,
+-      .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 1,
+-      .access = PL1_RW, .accessfn = access_tvm_trvm,
+-      .fgt = FGT_TTBR1_EL1,
+-      .nv2_redirect_offset = 0x210 | NV2_REDIR_NV1,
+-      .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 2, 0, 1),
+-      .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 2, 0, 1),
+-      .writefn = vmsa_ttbr_write, .resetvalue = 0, .raw_writefn = raw_write,
+-      .bank_fieldoffsets = { offsetof(CPUARMState, cp15.ttbr1_s),
+-                             offsetof(CPUARMState, cp15.ttbr1_ns) } },
+     { .name = "TCR_EL1", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .crn = 2, .crm = 0, .opc1 = 0, .opc2 = 2,
+       .access = PL1_RW, .accessfn = access_tvm_trvm,
+@@ -3247,23 +3227,6 @@ static const ARMCPRegInfo lpae_cp_reginfo[] = {
+     { .name = "AMAIR1", .cp = 15, .crn = 10, .crm = 3, .opc1 = 0, .opc2 = 1,
+       .access = PL1_RW, .accessfn = access_tvm_trvm,
+       .type = ARM_CP_CONST, .resetvalue = 0 },
+-
+-    /*
+-     * The primary definitions of TTBR[01]_EL1 are in vmsa_cp_reginfo[].
+-     * Here we need only provide the 64-bit views for AArch32.
+-     */
+-    { .name = "TTBR0", .cp = 15, .crm = 2, .opc1 = 0,
+-      .access = PL1_RW, .accessfn = access_tvm_trvm,
+-      .type = ARM_CP_64BIT | ARM_CP_ALIAS,
+-      .bank_fieldoffsets = { offsetof(CPUARMState, cp15.ttbr0_s),
+-                             offsetof(CPUARMState, cp15.ttbr0_ns) },
+-      .writefn = vmsa_ttbr_write, .raw_writefn = raw_write },
+-    { .name = "TTBR1", .cp = 15, .crm = 2, .opc1 = 1,
+-      .access = PL1_RW, .accessfn = access_tvm_trvm,
+-      .type = ARM_CP_64BIT | ARM_CP_ALIAS,
+-      .bank_fieldoffsets = { offsetof(CPUARMState, cp15.ttbr1_s),
+-                             offsetof(CPUARMState, cp15.ttbr1_ns) },
+-      .writefn = vmsa_ttbr_write, .raw_writefn = raw_write },
+ };
+ 
+ static void define_par_register(ARMCPU *cpu)
+@@ -3332,6 +3295,121 @@ static void define_par_register(ARMCPU *cpu)
+     define_arm_cp_regs(cpu, par64_reginfo);
  }
  
-+static void flush_if_asid_change(CPUARMState *env, uint64_t old,
-+                                 uint64_t new, unsigned mask)
++static void define_ttbr_registers(ARMCPU *cpu)
 +{
-+    /* The ASID or VMID is in bits [63:48]. */
-+    if ((old ^ new) >> 48) {
-+        tlb_flush_by_mmuidx(env_cpu(env), mask);
++    /*
++     * For v8:
++     * The aarch64 regs are primary, since they might be 128-bit.
++     * The aarch32 64-bit non-secure regs are secondary to aa64 el1.
++     * The aarch32 64-bit httbr is secondary to aa64 el2.
++     * The aarch32 64-bit secure ttbr0 is secondary to aa64 el3.
++     * The aarch32 64-bit secure ttbr1 is primary.
++     *
++     * For v7:
++     * The aarch32 64-bit s+ns regs are primary.
++     *
++     * The aarch32 32-bit regs are secondary to one of the above,
++     * and we also don't expose them to gdb.
++     */
++    static const ARMCPRegInfo ttbrv8_reginfo[] = {
++        { .name = "TTBR0_EL1", .state = ARM_CP_STATE_AA64,
++          .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 0,
++          .access = PL1_RW, .accessfn = access_tvm_trvm,
++          .fgt = FGT_TTBR0_EL1,
++          .nv2_redirect_offset = 0x200 | NV2_REDIR_NV1,
++          .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 2, 0, 0),
++          .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 2, 0, 0),
++          .writefn = vmsa_ttbr_write, .raw_writefn = raw_write,
++          .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[1]) },
++        { .name = "TTBR1_EL1", .state = ARM_CP_STATE_AA64,
++          .opc0 = 3, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 1,
++          .access = PL1_RW, .accessfn = access_tvm_trvm,
++          .fgt = FGT_TTBR1_EL1,
++          .nv2_redirect_offset = 0x210 | NV2_REDIR_NV1,
++          .vhe_redir_to_el2 = ENCODE_AA64_CP_REG(3, 4, 2, 0, 1),
++          .vhe_redir_to_el01 = ENCODE_AA64_CP_REG(3, 5, 2, 0, 1),
++          .writefn = vmsa_ttbr_write, .raw_writefn = raw_write,
++          .fieldoffset = offsetof(CPUARMState, cp15.ttbr1_el[1]) },
++        { .name = "TTBR0_EL2", .state = ARM_CP_STATE_AA64,
++          .opc0 = 3, .opc1 = 4, .crn = 2, .crm = 0, .opc2 = 0,
++          .access = PL2_RW, .resetvalue = 0,
++          .writefn = vmsa_tcr_ttbr_el2_write, .raw_writefn = raw_write,
++          .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[2]) },
++        { .name = "TTBR0_EL3", .state = ARM_CP_STATE_AA64,
++          .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 0, .opc2 = 0,
++          .access = PL3_RW, .resetvalue = 0,
++          .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[3]) },
++    };
++
++    static ARMCPRegInfo ttbr64_reginfo[] = {
++        [0 ... 3] = {
++            .cp = 15, .crm = 2, .type = ARM_CP_64BIT,
++            .access = PL1_RW, .accessfn = access_tvm_trvm,
++            .writefn = vmsa_ttbr_write, .raw_writefn = raw_write
++        },
++        [0 ... 1].opc1 = 0,
++        [0].name = "TTBR0",
++        [0].secure = ARM_CP_SECSTATE_NS,
++        [0].fieldoffset = offsetof(CPUARMState, cp15.ttbr0_ns),
++        [1].name = "TTBR0_S",
++        [1].secure = ARM_CP_SECSTATE_S,
++        [1].fieldoffset = offsetof(CPUARMState, cp15.ttbr0_s),
++
++        [2 ... 3].opc1 = 1,
++        [2].name = "TTBR1",
++        [2].secure = ARM_CP_SECSTATE_NS,
++        [2].fieldoffset = offsetof(CPUARMState, cp15.ttbr1_ns),
++        [3].name = "TTBR1_S",
++        [3].secure = ARM_CP_SECSTATE_S,
++        [3].fieldoffset = offsetof(CPUARMState, cp15.ttbr1_s),
++
++        [4] = {
++            .name = "HTTBR", .cp = 15, .crm = 2, .opc1 = 4,
++            .access = PL2_RW, .type = ARM_CP_64BIT,
++            .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[2])
++        },
++    };
++
++    static ARMCPRegInfo ttbr32_reginfo[] = {
++        { .name = "TTBR0", .cp = 15, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 0,
++          .access = PL1_RW, .accessfn = access_tvm_trvm,
++          .writefn = vmsa_ttbr_write, .raw_writefn = raw_write,
++          .bank_fieldoffsets = { offsetof(CPUARMState, cp15.ttbr0_s),
++                                 offsetof(CPUARMState, cp15.ttbr0_ns) } },
++        { .name = "TTBR1", .cp = 15, .opc1 = 0, .crn = 2, .crm = 0, .opc2 = 1,
++          .access = PL1_RW, .accessfn = access_tvm_trvm,
++          .writefn = vmsa_ttbr_write, .raw_writefn = raw_write,
++          .bank_fieldoffsets = { offsetof(CPUARMState, cp15.ttbr1_s),
++                                 offsetof(CPUARMState, cp15.ttbr1_ns) } },
++    };
++
++    CPUARMState *env = &cpu->env;
++
++    /* With only VMSA, define a 32-bit reg that filters bits from write. */
++    if (!arm_feature(env, ARM_FEATURE_LPAE)) {
++        define_arm_cp_regs(cpu, ttbr32_reginfo);
++        return;
 +    }
++
++    /* With LPAE, the 32-bit regs are aliases of 64-bit regs. */
++    for (int i = 0; i < ARRAY_SIZE(ttbr32_reginfo); ++i) {
++        ttbr32_reginfo[i].type = ARM_CP_ALIAS | ARM_CP_NO_GDB;
++    }
++    define_arm_cp_regs(cpu, ttbr32_reginfo);
++
++    if (arm_feature(env, ARM_FEATURE_V8)) {
++        define_arm_cp_regs(cpu, ttbrv8_reginfo);
++
++        ttbr64_reginfo[0].type |= ARM_CP_ALIAS;
++        ttbr64_reginfo[1].type |= ARM_CP_ALIAS;
++        ttbr64_reginfo[2].type |= ARM_CP_ALIAS;
++        /* Index 3, TTBR1_S, is not an alias. */
++        ttbr64_reginfo[4].type |= ARM_CP_ALIAS;
++    }
++
++    define_arm_cp_regs(cpu, ttbr64_reginfo);
 +}
 +
- static void vmsa_ttbr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                             uint64_t value)
+ static uint64_t aa64_fpcr_read(CPUARMState *env, const ARMCPRegInfo *ri)
  {
-@@ -2914,12 +2923,11 @@ static void vmsa_tcr_ttbr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-      * TCR_EL2.A1 to know if this is really the TTBRx_EL2 that
-      * holds the active ASID, only checking the field that might.
-      */
--    if (extract64(raw_read(env, ri) ^ value, 48, 16) &&
--        (arm_hcr_el2_eff(env) & HCR_E2H)) {
--        uint16_t mask = ARMMMUIdxBit_E20_2 |
--                        ARMMMUIdxBit_E20_2_PAN |
--                        ARMMMUIdxBit_E20_0;
--        tlb_flush_by_mmuidx(env_cpu(env), mask);
-+    if (arm_hcr_el2_eff(env) & HCR_E2H) {
-+        flush_if_asid_change(env, raw_read(env, ri), value,
-+                             ARMMMUIdxBit_E20_2 |
-+                             ARMMMUIdxBit_E20_2_PAN |
-+                             ARMMMUIdxBit_E20_0);
-     }
-     raw_write(env, ri, value);
- }
-@@ -2927,16 +2935,11 @@ static void vmsa_tcr_ttbr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
- static void vttbr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                         uint64_t value)
- {
--    ARMCPU *cpu = env_archcpu(env);
--    CPUState *cs = CPU(cpu);
--
-     /*
-      * A change in VMID to the stage2 page table (Stage2) invalidates
-      * the stage2 and combined stage 1&2 tlbs (EL10_1 and EL10_0).
-      */
--    if (extract64(raw_read(env, ri) ^ value, 48, 16) != 0) {
--        tlb_flush_by_mmuidx(cs, alle1_tlbmask(env));
--    }
-+    flush_if_asid_change(env, raw_read(env, ri), value, alle1_tlbmask(env));
-     raw_write(env, ri, value);
- }
- 
+     return vfp_get_fpcr(env);
+@@ -4386,14 +4464,6 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
+       .access = PL2_RW, .resetvalue = 0,
+       .nv2_redirect_offset = 0x90,
+       .fieldoffset = offsetof(CPUARMState, cp15.tpidr_el[2]) },
+-    { .name = "TTBR0_EL2", .state = ARM_CP_STATE_AA64,
+-      .opc0 = 3, .opc1 = 4, .crn = 2, .crm = 0, .opc2 = 0,
+-      .access = PL2_RW, .resetvalue = 0,
+-      .writefn = vmsa_tcr_ttbr_el2_write, .raw_writefn = raw_write,
+-      .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[2]) },
+-    { .name = "HTTBR", .cp = 15, .opc1 = 4, .crm = 2,
+-      .access = PL2_RW, .type = ARM_CP_64BIT | ARM_CP_ALIAS,
+-      .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[2]) },
+ #ifndef CONFIG_USER_ONLY
+     { .name = "CNTHCTL_EL2", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .opc1 = 4, .crn = 14, .crm = 1, .opc2 = 0,
+@@ -4578,10 +4648,6 @@ static const ARMCPRegInfo el3_cp_reginfo[] = {
+       .access = PL1_RW, .accessfn = access_trap_aa32s_el1,
+       .writefn = vbar_write, .resetvalue = 0,
+       .fieldoffset = offsetof(CPUARMState, cp15.mvbar) },
+-    { .name = "TTBR0_EL3", .state = ARM_CP_STATE_AA64,
+-      .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 0, .opc2 = 0,
+-      .access = PL3_RW, .resetvalue = 0,
+-      .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[3]) },
+     { .name = "TCR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 0, .opc2 = 2,
+       .access = PL3_RW,
+@@ -6727,6 +6793,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+     } else {
+         define_arm_cp_regs(cpu, vmsa_pmsa_cp_reginfo);
+         define_arm_cp_regs(cpu, vmsa_cp_reginfo);
++        define_ttbr_registers(cpu);
+         /* TTCBR2 is introduced with ARMv8.2-AA32HPD.  */
+         if (cpu_isar_feature(aa32_hpd, cpu)) {
+             define_one_arm_cp_reg(cpu, &ttbcr2_reginfo);
 -- 
 2.43.0
 
