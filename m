@@ -4,41 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A93CA0FFB
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE6E9CA0FF9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:08:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urJbG-0000F3-6u; Wed, 27 Aug 2025 13:06:18 -0400
+	id 1urJZK-0005pl-05; Wed, 27 Aug 2025 13:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJae-0006vR-EP; Wed, 27 Aug 2025 13:05:44 -0400
+ id 1urJZG-0005nf-Cg; Wed, 27 Aug 2025 13:04:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJab-000811-IM; Wed, 27 Aug 2025 13:05:40 -0400
+ id 1urJZ5-0007b1-Cu; Wed, 27 Aug 2025 13:04:14 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 328E914C734;
- Wed, 27 Aug 2025 20:03:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E86F414C722;
+ Wed, 27 Aug 2025 20:03:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4072E2698FA;
- Wed, 27 Aug 2025 20:03:57 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 059972698E8;
+ Wed, 27 Aug 2025 20:03:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 18/18] hw/sd/ssi-sd: Return noise (dummy byte) when no
- card connected
-Date: Wed, 27 Aug 2025 20:03:53 +0300
-Message-ID: <20250827170356.2698446-18-mjt@tls.msk.ru>
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 00/18] Patch Round-up for stable 7.2.20,
+ freeze on 2025-09-06
+Date: Wed, 27 Aug 2025 20:03:35 +0300
+Message-ID: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
-References: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,43 +59,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The following patches are queued for QEMU stable v7.2.20:
 
-Commit 1585ab9f1ba ("hw/sd/sdcard: Fill SPI response bits in card
-code") exposed a bug in the SPI adapter: if no SD card is plugged,
-we are returning "there is a card with an error". This is wrong,
-we shouldn't return any particular packet response, but the noise
-shifted on the MISO line. Return the dummy byte, otherwise we get:
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-  qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion `s->arglen > 0' failed.
+Patch freeze is 2025-09-06, and the release is planned for 2025-09-08:
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: 775616c3ae8 ("Partial SD card SPI mode support")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250812140415.70153-2-philmd@linaro.org>
-(cherry picked from commit e262646e12acd6c1132e03d57fea20680a503251)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+  https://wiki.qemu.org/Planning/7.2
 
-diff --git a/hw/sd/ssi-sd.c b/hw/sd/ssi-sd.c
-index 167c03b780..a912f40f68 100644
---- a/hw/sd/ssi-sd.c
-+++ b/hw/sd/ssi-sd.c
-@@ -106,6 +106,10 @@ static uint32_t ssi_sd_transfer(SSIPeripheral *dev, uint32_t val)
-     SDRequest request;
-     uint8_t longresp[16];
- 
-+    if (!sdbus_get_inserted(&s->sdbus)) {
-+        return SSI_DUMMY;
-+    }
-+
-     /*
-      * Special case: allow CMD12 (STOP TRANSMISSION) while reading data.
-      *
--- 
-2.47.2
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 b8882becd572 Michael Tokarev:
+   hw/display/qxl-render.c: fix qxl_unpack_chunks() chunk size calculation
+02 feea87cd6b64 Paolo Bonzini:
+   target/i386: fix width of third operand of VINSERTx128
+03 535ca76425fc Richard Henderson:
+   target/arm/sme: Reorg SME access handling in handle_msr_i()
+04 3c9ee5489488 Richard Henderson:
+   target/arm/sme: Rebuild hflags in set_pstate() helpers
+05 2a8af3825958 Richard Henderson:
+   target/arm/sme: Introduce aarch64_set_svcr()
+06 7f2a01e7368f Richard Henderson:
+   target/arm/sme: Reset SVE state in aarch64_set_svcr()
+07 fccb49182e23 Richard Henderson:
+   target/arm/sme: Reset ZA state in aarch64_set_svcr()
+08 f43185571491 Richard Henderson:
+   target/arm/sme: Rebuild hflags in aarch64_set_svcr()
+09 5c922ec5b136 Richard Henderson:
+   target/arm/sme: Unify set_pstate() SM/ZA helpers as set_svcr()
+10 99870aff907b Peter Maydell:
+   linux-user/aarch64: Support TPIDR2_MAGIC signal frame record
+11 e895095c78ab Philippe Mathieu-Daudé:
+   target/mips: Only update MVPControl.EVP bit if executed by master VPE
+12 2bfcd27e00a4 Luc Michel:
+   hw/net/cadence_gem: fix register mask initialization
+13 b10bd4bd17ac Zenghui Yu:
+   hw/intc/arm_gicv3_kvm: Write all 1's to clear enable/active
+14 35cca0f95ff5 Vacha Bhavsar:
+   target/arm: Fix big-endian handling of NEON gdb remote debugging
+15 97b3d732afec Vacha Bhavsar:
+   target/arm: Fix handling of setting SVE registers from gdb
+16 13ed972b4ce5 Jamin Lin:
+   hw/ssi/aspeed_smc: Fix incorrect FMC_WDT2 register read on AST1030
+17 c0df98ab1f3d Werner Fink:
+   qemu-iotests: Ignore indentation in Killed messages
+18 e262646e12ac Philippe Mathieu-Daudé:
+   hw/sd/ssi-sd: Return noise (dummy byte) when no card connected
 
