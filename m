@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8A7CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 18:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4083ACA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 18:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urKqY-0004fo-3A; Wed, 27 Aug 2025 14:26:11 -0400
+	id 1urKqp-0004uA-U1; Wed, 27 Aug 2025 14:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1urKqV-0004cq-7t
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 14:26:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1urKqj-0004r6-0S
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 14:26:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1urKqN-0005kK-Ty
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 14:26:03 -0400
+ id 1urKqX-0005nT-H4
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 14:26:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756319145;
+ s=mimecast20190719; t=1756319161;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Dj6C0S99+iJlZNSMVQzRclerl3uq69NIkG94+4R4VNU=;
- b=d6pz0Mn6dEaSite/qJm98k4vyBn5mmK1091/YErxsVrDdSaiEyG0cIn7fL8QeSzN/6K6qO
- XuViwpOyCykE2hdUxIqdpEVN0xT6vxLQm954MfBy1lHPWaRXq7/FpJgPFv6ACAAGSlbgq8
- b3/QmkTGcxtVAryOVGWQIE6kQUdHpfQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5VRifcALC9HJ5+Foto+SzUZAG5giZgk0/3Sb7XWLpHo=;
+ b=ZqayalvHQeBfPfv2ZnE7y3LASosTqqcP3m0Dn1o5ksTRKGpowzBfHNU4yTCodafFTx+tZW
+ LN+aMwhP6IMmyi2ApeJ+q1IUOOXP4COlt8I0bTBN7as8AdMWn/5tDGVtOzxJhNIGM7Ao9I
+ urn34EfL6dPXvehgxoZQ25VbNsmIKRQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-qQlpereiPBu4Iq_rlrGRhg-1; Wed, 27 Aug 2025 14:25:39 -0400
-X-MC-Unique: qQlpereiPBu4Iq_rlrGRhg-1
-X-Mimecast-MFC-AGG-ID: qQlpereiPBu4Iq_rlrGRhg_1756319138
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45b467f5173so499505e9.3
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 11:25:38 -0700 (PDT)
+ us-mta-679-SI6635G5OVK_DlhYMPsvdA-1; Wed, 27 Aug 2025 14:25:59 -0400
+X-MC-Unique: SI6635G5OVK_DlhYMPsvdA-1
+X-Mimecast-MFC-AGG-ID: SI6635G5OVK_DlhYMPsvdA_1756319158
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3c9bf5c8b12so77433f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 11:25:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756319136; x=1756923936;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Dj6C0S99+iJlZNSMVQzRclerl3uq69NIkG94+4R4VNU=;
- b=iAlsXFCEYSJ7BHmShG+M66gis+rKMaZgM9ipZzxP8cVMXIaBNyx/JVUxiGnbFcNbxq
- Qls1IkVVZa7niV13eacEowCuUE5FXXaKgbiMz73DiwVyCEKMN+YnmEXVFMtXmYFYCbY1
- ip4s6yQh2gHEtQxXYut+AikSZONITKZt8kjc8ZvuO2BE+5+G97r7nJzqxKUuWopnMP3X
- IQer8WYcqjC3/c3Ft4BnsR6KPD8SJhYduCItEBPGpQplMbQIB2N1xqLC9BXaa+2nTXhO
- /LCOVHPepcBbS5HWgjUdl3IosIyZxW6B9fp5rWDehoqCJFIfdmhknD9g5THzi+ZSp1Tm
- vv8A==
-X-Gm-Message-State: AOJu0YzUnQPVAOsfQVjow2a0SI7hE9Uz2VpFhsSIKGNEzBQpZK5UMSj9
- YJ+V04Kh4tqcg2lJVzChw3ORMz263GS3JHdkHLH1pjhC/7EBS8oJ+OUmEy9Sizri+EwgYV6pZxN
- eXois30bgKpHtwmDP1kKZFje8YI4QNIywSp4eyfkjcWNyTYALYlVjgY5i+zTyoO0Ev3+HjMZgm7
- DUHlDlJKj4IXDJRgrXJFcNUs8PiYPRQFfLXv5rnG0o
-X-Gm-Gg: ASbGncvBc+kz3IsmkvrvgJVJ/14iDcYL7aMjn744keutP6DcNGfgYnmws3jXhSAIkYB
- aaBW5eX3IB6EhHLKpYIUE2V/o2aU3pQ1i4CXkFv40Xgrr4CSOatENVhGMeNJ5XU+FxPKazZIZWt
- k5kUAnHXh/OngCca4pzbCos3r8hHPXnt64AdOa7i0XkBeDAhg1PMP4HeXDUmCK9n8eQH05nQTDS
- hn10z6Of8HRYEL7Ro2CEtifMmRkYDKgd1hratdxtTjPd1Ywga1i8IWMhcdPFQTeG3Kty0c//vEh
- IAuE0TmQbua0vEI9iwKU2AssXulLj2KDe7RuEVGfLyHy/feRJLZ7aqVNXiP+vX4wX7W4NT1hZTM
- 7X0jB7hsIcJG05R206g8ZtH/AMzpaeIQHRt6rDhr+OGQ=
-X-Received: by 2002:a05:600c:45d4:b0:458:f70d:ebdd with SMTP id
- 5b1f17b1804b1-45b5179eb97mr252306665e9.16.1756319136464; 
- Wed, 27 Aug 2025 11:25:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGywDtTct9wPnPWUhrciozQOzIZInHhqTD0IGBshl0mILZitOhWdTAA/qWd+ip6coeyqehtyw==
-X-Received: by 2002:a05:600c:45d4:b0:458:f70d:ebdd with SMTP id
- 5b1f17b1804b1-45b5179eb97mr252306385e9.16.1756319135826; 
- Wed, 27 Aug 2025 11:25:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756319156; x=1756923956;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5VRifcALC9HJ5+Foto+SzUZAG5giZgk0/3Sb7XWLpHo=;
+ b=O6gA4duI62qO3TMeQDBJhCW0O/ioCZ45QjrTe/A/+BaAOtIEn5B4RrbGx5l9Tx17jT
+ 9h4gOJfI0QX1x56AmyUX6DltZzkUQRemGQR7JjBjgUZLfv8iJS9UgOcsFXidTIVk0i9+
+ 2pYMXnmSKNd+/CXnkN5+UYXCO2eIl9fdaZpU+xR1REdUXzpEuqjl4jOWm78gRXCciAfU
+ ErTF27oQZk+pRSXuOWiChvCmvkAqRKKlDVfUMa12vNiVeJZWOTsdBKlz7odFl4ojNrMb
+ 5OZsaS2j62Hviyhni+fZka9gYtheC2U4nHqsx7kujXJvbrNnsQQROmTfEGbcJMXxo+ZD
+ c0nA==
+X-Gm-Message-State: AOJu0YxCKl2u707ZGq4Y+xHfZCmCiRqkVLhpgV7WkOFWKOPQFMjZaM3N
+ 7dhgvZnwubQYqVDgK3plT/GaGuRQn0GWJWbtUUXzdkZaAxWV/JCHhXccIe4ztbO+zsH4mKysFd+
+ 8x4/ycI2DVLapS2O0ziQQ/5kJMz5ELO29eDZd3LCE9N50czYlDzg7Z1P/LBEQaYUbTDUYYMS9tj
+ wifAZxWdAxhgMRWOtda+iUldbmvm2xHB/AW1cP+nGO
+X-Gm-Gg: ASbGncs2wosWDqtmzLRCg/iR43ANM4GD7Y9Jk9bTkRiIlhLJq4CTxcItuO6rbGKKUSw
+ hFmElwl97Uel4brCHkNolitN1Dwb9ktDqfnla/qK4incWZfm79CbKMJ8H4XrkNLPrBOqsKdGny3
+ BFd+HNzv1GaAHVKjETA+DtrShSVsm7NgKHZA8yt4FPVY32Y+2Nj2lAXjUW7cEO7bUdgSLd9yXE8
+ pOkpF7O4dKyofYC4+FvVEY1fmTSu1NQivvi+eg+Dpk4Vy7LTOFZxJyOuqYBcsuRYZFH0vsVNwto
+ zx6481VDFSBDzZbczBcxy1zMX4Saa1vnRUrZepBF2/vdAsZ2gKNMJzEaBvsfUObRQkqPWaP1I8O
+ 7PweE7yzr+e2iW4VYPKDlUT8Cta1brZ75jmBVqszNYBE=
+X-Received: by 2002:a5d:50c8:0:b0:3cb:fee1:de33 with SMTP id
+ ffacd0b85a97d-3cbfee1dea7mr3802340f8f.7.1756319155958; 
+ Wed, 27 Aug 2025 11:25:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHaTQhi8tnNlwspccnbYzWb444V2KHqcUn7ZLJZkgxtOXb0uxN9apIbnH6DYH8OaUWhzvfBgw==
+X-Received: by 2002:a5d:50c8:0:b0:3cb:fee1:de33 with SMTP id
+ ffacd0b85a97d-3cbfee1dea7mr3802312f8f.7.1756319155470; 
+ Wed, 27 Aug 2025 11:25:55 -0700 (PDT)
 Received: from [10.163.96.123] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6f0e27b2sm39248705e9.10.2025.08.27.11.25.34
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-3cbd534656asm6812783f8f.66.2025.08.27.11.25.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 11:25:34 -0700 (PDT)
+ Wed, 27 Aug 2025 11:25:51 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/14] QEMU patches for 2025-08-27
-Date: Wed, 27 Aug 2025 20:25:18 +0200
-Message-ID: <20250827182533.854476-1-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 04/14] python: mkvenv: fix messages printed by mkvenv
+Date: Wed, 27 Aug 2025 20:25:22 +0200
+Message-ID: <20250827182533.854476-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250827182533.854476-1-pbonzini@redhat.com>
+References: <20250827182533.854476-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,7 +96,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,74 +112,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 88f72048d2f5835a1b9eaba690c7861393aef283:
+The new Matcher class does not have a __str__ implementation, and therefore
+it prints the debugging representation of the internal object:
 
-  Update version for the v10.1.0-rc4 release (2025-08-19 14:05:56 -0400)
+  $ ../configure --enable-rust && make qemu-system-arm --enable-download
+  python determined to be '/usr/bin/python3'
+  python version: Python 3.13.6
+  mkvenv: Creating non-isolated virtual environment at 'pyvenv'
+  mkvenv: checking for LegacyMatcher('meson>=1.5.0')
+  mkvenv: checking for LegacyMatcher('pycotap>=1.1.0')
 
-are available in the Git repository at:
+Add the method to print the nicer
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+  mkvenv: checking for meson>=1.5.0
+  mkvenv: checking for pycotap>=1.1.0
 
-for you to fetch changes up to 92dedaf169ddcf8c81fa6d21c86c60f3b82458e5:
+Cc: qemu-stable@nongnu.org
+Cc: John Snow <jsnow@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ python/scripts/mkvenv.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-  rust: move dependencies to rust/Cargo.toml (2025-08-27 10:57:04 +0200)
-
-----------------------------------------------------------------
-* rust: declare self as qemu_api for proc-macros
-* rust/qemu-api-macros: make derive(Object) friendly when missing parent
-* x86/loader: Don't update kernel header for CoCo VMs
-* target/i386: Add support for save/load of exception error code
-* i386/tcg/svm: fix incorrect canonicalization
-* scripts/minikconf.py: small fixes
-
-----------------------------------------------------------------
-Ani Sinha (1):
-      kvm/kvm-all: make kvm_park/unpark_vcpu local to kvm-all.c
-
-Manos Pitsidianakis (3):
-      scripts/minikconf.py: fix invalid attribute access
-      scripts/minikconf.py: s/Error/KconfigParserError
-      rust: declare self as qemu_api for proc-macros
-
-Marc-André Lureau (1):
-      rust/qemu-api-macros: make derive(Object) friendly when missing parent
-
-Paolo Bonzini (6):
-      python: mkvenv: fix messages printed by mkvenv
-      MAINTAINERS: add a few more files to "Top Level Makefile and configure"
-      rust: disable borrow_as_ptr warning
-      rust: qemu-api-macros: support matching more than one error
-      subprojects: update proc-macro2 and syn
-      rust: move dependencies to rust/Cargo.toml
-
-Xiaoyao Li (1):
-      x86/loader: Don't update kernel header for CoCo VMs
-
-Xin Wang (1):
-      target/i386: Add support for save/load of exception error code
-
-Zero Tang (1):
-      i386/tcg/svm: fix incorrect canonicalization
-
- MAINTAINERS                                        |  4 +++-
- include/system/kvm.h                               | 17 ---------------
- accel/kvm/kvm-all.c                                |  4 ++--
- hw/i386/x86-common.c                               |  2 +-
- target/i386/machine.c                              | 19 +++++++++++++++++
- target/i386/tcg/system/svm_helper.c                |  2 +-
- python/scripts/mkvenv.py                           |  4 ++++
- rust/Cargo.lock                                    |  8 ++++----
- rust/Cargo.toml                                    |  6 +++++-
- rust/qemu-api-macros/src/lib.rs                    | 24 ++++++++++++++--------
- rust/qemu-api-macros/src/tests.rs                  |  6 +++---
- rust/qemu-api/Cargo.toml                           |  6 +++---
- rust/qemu-api/src/lib.rs                           |  4 ++++
- scripts/minikconf.py                               |  6 ++++--
- .../packagefiles/proc-macro2-1-rs/meson.build      |  2 +-
- subprojects/packagefiles/syn-2-rs/meson.build      |  2 +-
- subprojects/proc-macro2-1-rs.wrap                  |  8 ++++----
- subprojects/syn-2-rs.wrap                          |  8 ++++----
- 18 files changed, 78 insertions(+), 54 deletions(-)
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index f102527c4de..9aed266df1b 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -184,6 +184,10 @@ def match(self, version_str: str) -> bool:
+             )
+         )
+ 
++    def __str__(self) -> str:
++        """String representation delegated to the backend."""
++        return str(self._m)
++
+     def __repr__(self) -> str:
+         """Stable debug representation delegated to the backend."""
+         return repr(self._m)
 -- 
 2.51.0
 
