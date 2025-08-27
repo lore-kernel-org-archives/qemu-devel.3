@@ -4,80 +4,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB61DCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 06:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA91CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 06:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur9nD-0008Q5-NJ; Wed, 27 Aug 2025 02:37:59 -0400
+	id 1ur9v3-0002kI-KF; Wed, 27 Aug 2025 02:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ur9nB-0008Kw-PC
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 02:37:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1ur9uu-0002iZ-Cz
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 02:45:58 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ur9n5-00074S-U0
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 02:37:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756276662;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EQj2cmVlC1Zs70xoxGgNrsGcVQISQ3GrUFuIYZoGapQ=;
- b=XCkG9GrD51nlReSzbWVQj6Jadha1kFtaBuHWXb5GaAyvsovnzVmLChdnSENYIqIETSsOez
- 5JE9XWCrGpK7mhDNbk2RLa0b7VajIEvUPEBHBvCSPYiI5knrgtSyJkqfV6fQNmlwwLxVUW
- 8GTAdqUBObWPUrrK1dHXehp4+zqXzyI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-ULGo_1yHOWeoDr1tYXksiw-1; Wed,
- 27 Aug 2025 02:37:34 -0400
-X-MC-Unique: ULGo_1yHOWeoDr1tYXksiw-1
-X-Mimecast-MFC-AGG-ID: ULGo_1yHOWeoDr1tYXksiw_1756276653
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C5F2180028E; Wed, 27 Aug 2025 06:37:26 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C01B119560AB; Wed, 27 Aug 2025 06:37:25 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DEF1C21E6A27; Wed, 27 Aug 2025 08:37:22 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org,  peterx@redhat.com,  farosas@suse.de,
- eblake@redhat.com,  jasowang@redhat.com,  mst@redhat.com,
- si-wei.liu@oracle.com,  eperezma@redhat.com,  boris.ostrovsky@oracle.com
-Subject: Re: [RFC 1/6] migration: Add virtio-iterative capability
-In-Reply-To: <1636d435-d13d-489f-be59-5a225286b12a@oracle.com> (Jonah Palmer's
- message of "Tue, 26 Aug 2025 14:08:00 -0400")
-References: <20250722124127.2497406-1-jonah.palmer@oracle.com>
- <20250722124127.2497406-2-jonah.palmer@oracle.com>
- <874iuihyxd.fsf@pond.sub.org>
- <5a8bb5ef-c500-4fac-b5fc-566408ae8ffc@oracle.com>
- <87h5xvsh9c.fsf@pond.sub.org>
- <2764b188-a4cd-40b8-95a7-ccec775d7db9@oracle.com>
- <87ecsypq85.fsf@pond.sub.org>
- <1636d435-d13d-489f-be59-5a225286b12a@oracle.com>
-Date: Wed, 27 Aug 2025 08:37:22 +0200
-Message-ID: <87sehdl17h.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1ur9uq-00081m-DM
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 02:45:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1756277152; x=1787813152;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=kN4R4DTxJuwefdgisU7unOHqF5pY4DQwVtpkG4iy4g8=;
+ b=g66yJKE9rGpUBhKjoQl3kKJSRpHXAah50/DfgelllsgyVKk6cVTm2IrY
+ kHC7Ue/LHR2/fW9OkNsik5BJ1o4Kc9EqkDEWVhpZjPcfBz/z+/Tpm2UF4
+ J9aZ3e/F193DvIT4xZ+O1ILdDg/Xjt4XckfJ0fYkxR3cTvlZIKmrBHnnb
+ KqA5d/fUjgTgsxhbVCszZRYFaVxzLUfCK3+E/KpsZPZQNBzcfUYUgejtP
+ uEHuAvIN9DsdBTwiNF/8T0eA0dTU/BpxpxhShHQjUP8iB7gDZDMK3N3VX
+ kzxZ+WPt+qeJRw7oA+k9nO5k+2VOHTCF0taemY673lMjfyZDkesSUrZ4r A==;
+X-CSE-ConnectionGUID: G/1jnczLQyKfLWWfdlFI1g==
+X-CSE-MsgGUID: Efysl3UKSBOjvyNEV2JNew==
+X-IronPort-AV: E=McAfee;i="6800,10657,11534"; a="69894959"
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="69894959"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2025 23:45:47 -0700
+X-CSE-ConnectionGUID: OEcT89l2QZ+uHGO9BU+T8Q==
+X-CSE-MsgGUID: w//8ix5ARpGSeD+8QMrFow==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="170167610"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Aug 2025 23:45:46 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Tue, 26 Aug 2025 23:45:46 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Tue, 26 Aug 2025 23:45:46 -0700
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (40.107.100.42)
+ by edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Tue, 26 Aug 2025 23:45:44 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=d20Emnb2Hq0CUPexbPsXCTy6gCwz8epbsrNOoVhwbbTnrqGkLXfYxdW6Zg2RZVsJecvJ6Mgk6/Pvw2WMwr7v+ejCJj1td6MfUSd7FlUqA5vmC/dLJI4A6oSLtUhE22WE06FAsJWNGQ6JKEFzc3/0p2BNo86+sgJ5Rk/+AAPoM7hNxSF7sa9WPAmyHaZB80tRdbHzkg2Ck25jRppkVsp/H35/mdZy6oHGujEslcTw3vlkX5+Wai4TXJMW1Nyb04GiXMvzJoqkY85rWSgYWs/JMzTPRhciapFnhiSYJyJ6ASQLzUX8unXoIfj1qOk8bs36YfZph0YLOl1DyukLHKLLzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=weTGy3RQAfUlGsNx2FAHvbeHXxf6xbIt9ZwYlQgB11g=;
+ b=c3yUHnUOBZsiexQF6ph+X65QRfDU9xDwqYSvT7c3BqHbCRYDww2cGEVIGYyebEYoNcM8OaPPgZjt9PEfSVQ4VGen1SmfoacuEcEJFOz1uUe4aRv4rDrM7BJZ08jKicj41QdRB8dz+aQMWjxuJhMFdA0+WYWcylVzVmCfRiYKz/Q9CBMfWmSa2ic8tNuqImyiq60fyAOz1plujr5UiXhVGnt06qe5kEUzNHkOyK0RlWaSXrQCJESpveQfaeVoW35lVm6nPDOF4wdprRHQSFsYXOXomPjzB15OR34g9L6Y0n0yjNzs7Xs0jOPSsVHiSKqGpL6TQfMUrl4BfW5QBJKdyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by DS7PR11MB7783.namprd11.prod.outlook.com (2603:10b6:8:e1::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.21; Wed, 27 Aug
+ 2025 06:45:42 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.9052.019; Wed, 27 Aug 2025
+ 06:45:42 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Nicolin Chen <nicolinc@nvidia.com>, "Liu, Yi L" <yi.l.liu@intel.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
+ <clg@redhat.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian, 
+ Kevin" <kevin.tian@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
+Subject: RE: [PATCH v5 07/21] intel_iommu: Introduce a new structure
+ VTDHostIOMMUDevice
+Thread-Topic: [PATCH v5 07/21] intel_iommu: Introduce a new structure
+ VTDHostIOMMUDevice
+Thread-Index: AQHcEy/do9teDlFYnEKseS/ebbtbpLR1NTuAgAC5ezA=
+Date: Wed, 27 Aug 2025 06:45:42 +0000
+Message-ID: <IA3PR11MB913642ABC862B837CF0DF4359238A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
+ <20250822064101.123526-8-zhenzhong.duan@intel.com>
+ <aK3tAUUn5t61VPyk@Asurada-Nvidia>
+In-Reply-To: <aK3tAUUn5t61VPyk@Asurada-Nvidia>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DS7PR11MB7783:EE_
+x-ms-office365-filtering-correlation-id: 3c72cebb-218e-4d2d-cc5e-08dde53557c9
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|7416014|38070700018; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?bH2AiXGnlZeUoJhtWC8oIE3zTCzTqbi1YHtEUeTEzoHeyN4j/uQMmukf3Y7o?=
+ =?us-ascii?Q?dPrM7BVHY11W1Uam41YWmwaAaCz+yQlT/ckNVpd3pU/T+kqDc1E9X9CriKDE?=
+ =?us-ascii?Q?FXjg2fs32iwG3a0KdIbp7CMH9D0/3vXhLuPkdM/ZuwOn5EmSCnkvvxBcDyHK?=
+ =?us-ascii?Q?I4ZwEQtUFl1K+mc86HZy4oFaYLSJauTe/91aQ2MgGhj8ejkmtRxG6BcQlUYN?=
+ =?us-ascii?Q?7ppAkxXVb49SoHDvucKLA+1jnx9fxE1dZudkFSGQtvQUwaudo7XQU2mz6yh5?=
+ =?us-ascii?Q?NQpCDLbJRorcZHiDc7PRBdibpUZxyPw/Ka/514A4gnqoQ+ntULaLMWUY7OO0?=
+ =?us-ascii?Q?bmlMwZJgMFmkH5RbryJFK6oguYlC+a73gHWFEQ6MkBZJmStCmwJ2FBLwHPdB?=
+ =?us-ascii?Q?WWOXSXUDsfMt5lqqnpdgx1j0vqCpcIndawAmCtZlip93WJO6HniwTqE4PhJC?=
+ =?us-ascii?Q?es/4yE3dVCAMF3VfN14Xh1hbJ3JdeCBFFnpSrmVEj3W4ThZeFWoKs2DjukzK?=
+ =?us-ascii?Q?fPfZFg9Oyaz+3nlOqoaqYhhNXZyrVkDaF4IjLMcNXQDFOjx38pBBoffp4GBP?=
+ =?us-ascii?Q?RSMM1nLvaottbKjXu3a/WPgMurE/SZuUOjQ+HKeiPs7LDH77Agvelc6QqtzP?=
+ =?us-ascii?Q?VDv0YT4bgasDNj3ewROk+pkOCMrKqA19j54ivD4dVZdqZr1mrAmDuV+KCyaC?=
+ =?us-ascii?Q?F0J5pkIhASJGFvvD51eGhD1Rfy0T6lPMSa0C+Rv/j/xt2SJZRNOyCc9DFghK?=
+ =?us-ascii?Q?A15ZB6fzlhoAAWaZwBzv45w2AEpPDUPWWekhPGE18BG8pPpHbu0SsB9GONBQ?=
+ =?us-ascii?Q?IGWQwQ3xkGH4nk+Am3/dttfuhgkQkiM4NN/KPm7auI7wsAIvg+SH6wgno6vr?=
+ =?us-ascii?Q?m1MgwqBIRuf3aUuYhHXGzDi8l3SRJvSB2B86jyNPs+l+QQm/MxzPaZzmB1+W?=
+ =?us-ascii?Q?xgIAcqvsCZDY2D9Ctggy1VEOG4/IGQZ7sszGK7VuyJOBhks17qH+MB9wyNg/?=
+ =?us-ascii?Q?rGwAQ3FFvwtj+zMK7pktspbEKc5Z/g3MxsmQXULPoMowi2pDq85sCex6BuTZ?=
+ =?us-ascii?Q?5GXPllG5ouaNZPGMvUNLToO0uMlYOw+uYgjbdqkf+lQWNdyboRq6LDEsqKL1?=
+ =?us-ascii?Q?fsRJmwHQB+uQQAby+QYrVICEYH8TWwTbfJiKZUtdiAXCoaXkA2Dj7vqaU5IZ?=
+ =?us-ascii?Q?dpxNUM7D5EjkqR3HAzJs+53ls8qGEhk4ONbQGlxoBaIplUd7oP9Gy04lPgqY?=
+ =?us-ascii?Q?KTFsP1gSTVVx1qEIchloOVaTCmnWHM1ao130lAhOwkNKriJc6iZ74Odvq0tZ?=
+ =?us-ascii?Q?/aSwKUBc2yUsSF220k8OaWG8sMWsrS0VgDH9Cn+Mqe5Ghn8kr8pgzYx3ysmM?=
+ =?us-ascii?Q?07PyFeoGEOg56t49mqu3V0yTl3xndwYtVIXb6CO0Oc1AV4+G+fXye3yD25pW?=
+ =?us-ascii?Q?cgj/KvE9+achPJGWCe4YqmQX65gcIkr0Vt40qOrrQYlsoTPwC99BtRwEeD/E?=
+ =?us-ascii?Q?XJZvkQxigkdCBVY=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ozWsqTCWMxFc8Fbzq0Dkosg28et9F7V8yA63+Ft7D/0speQuvoJZOI3qUQ5I?=
+ =?us-ascii?Q?JMBMof+WheQmRQIBIE/wy1h6Vt8R6VGd8EpVcx7EP32nrH8pQynJqdMoQYXL?=
+ =?us-ascii?Q?hfW1lpPdp46itiaFm8pcIQ5ZfNhQ7+1p3d6kP04Mzai96yDF6ToJT02Tgd1T?=
+ =?us-ascii?Q?gB27YXHtzt2+o+R0E5YroFmbrvDu2TT2T0pyRwoQzgtKwRpJhgxrMcMzfpxg?=
+ =?us-ascii?Q?gbopr2yBDmj1I9Bmz6UdORGm3+i3VmDtY4NV94ooDXd0IuRtwsIl+Ggp8L7x?=
+ =?us-ascii?Q?MCrQwxGsnfQmoip0lFUtco5n26itAZXdztmkThb2//eBgqxU2U7PNo9tHxQH?=
+ =?us-ascii?Q?zJwBJjAlJwNlwRVIjerxWslOUdsbNM1aZHZGA08VSsCLQkuwBQy4J4kabkVd?=
+ =?us-ascii?Q?0mMCRoeckX3/gJQ9ykkFkfysbjT9L3k163vz6Zd1u/1kfdRvx40D44EWu1kc?=
+ =?us-ascii?Q?JEmsaEK3caLLMXD3kPJVFwWxkUG8JXX0TCuloytEqZXhY55fJPB38y5QscnL?=
+ =?us-ascii?Q?Ut+wwFKU8SHMgEYkEbKpqB7s4FiEQ/PnKOjcAkCUgmP4xnoYSA3HzojBukAS?=
+ =?us-ascii?Q?TjvdxI0o0tdLZoDX14e+SLIbxlc9lhDFGZui5rnxrwQn0OwN7bC8/4LLLaKg?=
+ =?us-ascii?Q?A6gkcKR+8IzpLJ+z0z3QREDO/JwmxbV3jaSuQJs8KmzWjETf6l+m4u4oKY1m?=
+ =?us-ascii?Q?DqCRMNE77Lid5NiDNpgzoOsisO0E5U49Z+ZLU90WKUdEVL3AqewrBgzEs6C2?=
+ =?us-ascii?Q?/P3+7vSI14kSeWE9MTgbCx4068c1U7u7ednal61WP2A01QzJaIFAoB4dt7Fn?=
+ =?us-ascii?Q?7dx9PHb1LbAmmBYsqhycPyaJCq37OSUS+KeqD1eDuAHzKQUKsNR1TKDYvMXh?=
+ =?us-ascii?Q?Qsc/iWIlnFYQoEofTzvBIH4b1lyqMllRqbesX+rq9Hhgs1cMQbhp/Tuegh8W?=
+ =?us-ascii?Q?1Qn2/8QBmup6+6xa5UOSf6kDpXYWCe1qSAVU335ZsYwRl5/wutWr/DgMnf/U?=
+ =?us-ascii?Q?9sTBhm4aYFUZkq2dIzIp5XDBOwZSjXbEQrjEdHWedbnqA/s7gv4jepsmqfAE?=
+ =?us-ascii?Q?2a1ewImXuHsZPT+yCfpGp/hnrMAC3om9jPHjg6E8GPVENMt+g1PQPQ4CPJD0?=
+ =?us-ascii?Q?IhG0KdU9fIhJOhCNnyjj6Oe7klPeJPie59aUbUyac2Vkj5lrOMsOfpiBX8sc?=
+ =?us-ascii?Q?mrKyXaI8o817YYGZkeF/OJTsfJhMSH4HT7gkI/R9FZ1Sr/sic2Wcbo8QtcmQ?=
+ =?us-ascii?Q?/K1k7LNX/hk9u+L84rjIimXRUHOiakPfAUUu88sBOPi+8nCJH6eIhwpVjusA?=
+ =?us-ascii?Q?81SP+F6LxJcE1uz/YCLs4MY9KU0ZDB3e/mal5Wyu/OGPYEULUNfzfdkF0bqL?=
+ =?us-ascii?Q?xfhojP9OFqCMxivvNjn7U/KDLKInx9IzXEMcUxOWrwe5iFI907bB94E5Os7e?=
+ =?us-ascii?Q?eE73j1LWsfOrq0XCvjZAvuubvQSe8Dbl5XWf4wedgj/w0muTABBhmXB/u26y?=
+ =?us-ascii?Q?t9FTMTwroUlp9Pa9Qet2MLbJfkawyOIYIZG+Gz0+s1qK5gfeSuDiR622S5Xo?=
+ =?us-ascii?Q?xYoNiCYKbesHVVLkWbuXzsNEV4b52cP+ZR9JFSHH?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3c72cebb-218e-4d2d-cc5e-08dde53557c9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Aug 2025 06:45:42.5248 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Tf0YOsWbv7oJ1QiBffL56FrKvoOaPkPDGxXu9SyJ23SOAjRictstvpl+FX8MRGRV/SCuwq/U0FTi7/kUXzd/ozvf+BQG4q1gqvIn4qZ3qVA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB7783
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.10;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,326 +208,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jonah Palmer <jonah.palmer@oracle.com> writes:
+Hi
 
-> On 8/26/25 2:11 AM, Markus Armbruster wrote:
->> Jonah Palmer <jonah.palmer@oracle.com> writes:
->> 
->>> On 8/25/25 8:44 AM, Markus Armbruster wrote:
->> 
->> [...]
->> 
->>>> Jonah Palmer <jonah.palmer@oracle.com> writes:
->>>>
->>>>> On 8/8/25 6:48 AM, Markus Armbruster wrote:
->> 
->> [...]
->> 
->>>>>> Jonah Palmer <jonah.palmer@oracle.com> writes:
->>>>>>> Adds a new migration capability 'virtio-iterative' that will allow
->>>>>>> virtio devices, where supported, to iteratively migrate configuration
->>>>>>> changes that occur during the migration process.
->>>>>>
->>>>>> Why is that desirable?
->>>>>
->>>>> To be frank, I wasn't sure if having a migration capability, or even
->>>>> have it toggleable at all, would be desirable or not. It appears though
->>>>> that this might be better off as a per-device feature set via
->>>>> --device virtio-net-pci,iterative-mig=on,..., for example.
->>>>
->>>> See below.
->>>>
->>>>> And by "iteratively migrate configuration changes" I meant more along
->>>>> the lines of the device's state as it continues running on the source.
->>>>
->>>> Isn't that what migration does always?
->>>
->>> Essentially yes, but today all of the state is only migrated at the end, once the source has been paused. So the final correct state is always sent to the destination.
->> 
->> As far as I understand (and ignoring lots of detail, including post
->> copy), we have three stages:
->> 
->> 1. Source runs, migrate memory pages.  Pages that get dirtied after they
->> are migrated need to be migrated again.
->> 
->> 2. Neither source or destination runs, migrate remaining memory pages
->> and device state.
->> 
->> 3. Destination starts to run.
->> 
->> If the duration of stage 2 (downtime) was of no concern, we'd switch to
->> it immediately, i.e. without migrating anything in stage 1.  This would
->> minimize I/O.
->> 
->> Of course, we actually care for limiting downtime.  We switch to stage 2
->> when "little enough" is left for stage two to migrate.
->> 
->>> If we're no longer waiting until the source has been paused and the initial state is sent early, then we need to make sure that any changes that happen is still communicated to the destination.
->> 
->> So you're proposing to treat suitable parts of the device state more
->> like memory pages.  Correct?
->> 
+>-----Original Message-----
+>From: Nicolin Chen <nicolinc@nvidia.com>
+>Subject: Re: [PATCH v5 07/21] intel_iommu: Introduce a new structure
+>VTDHostIOMMUDevice
 >
-> Not in the sense of "something got dirtied so let's immediately re-send 
-> that" like we would with RAM. It's more along the lines of "something 
-> got dirtied so let's make sure that gets re-sent at the start of stage 2".
-
-Or is it "something might have dirtied, just resend in stage 2"?
-
-> The entire state of a virtio-net device (even with vhost-net / 
-> vhost-vDPA) is <10KB I believe. I don't believe there's much to gain by 
-> "iteratively" re-sending changes for virtio-net. It should be suitable 
-> enough to just re-send whatever changed during stage 1 (after the 
-> initial state was sent) at the start of stage 2.
-
-Got it.
-
-> This is why I'm currently looking into a solution that uses VMSD's 
-> .early_setup flag (that Peter recommended) rather than implementing a 
-> suite of SaveVMHandlers hooks (like this RFC does). We don't need this 
-> iterative capability as much as we need to start migrating the state 
-> earlier (and doing corresponding config/prep work) during stage 1.
+>Hi Zhenzhong/Yi,
 >
->> Cover letter and commit message of PATCH 4 provide the motivation: you
->> observe a shorter downtime.  You speculate this is due to moving "heavy
->> allocations and page-fault latencies" from stage 2 to stage 1.  Correct?
+>On Fri, Aug 22, 2025 at 02:40:45AM -0400, Zhenzhong Duan wrote:
+>> @@ -4371,6 +4374,7 @@ static bool vtd_dev_set_iommu_device(PCIBus
+>*bus, void *opaque, int devfn,
+>>                                       HostIOMMUDevice *hiod,
+>Error **errp)
+>>  {
+>>      IntelIOMMUState *s =3D opaque;
+>> +    VTDHostIOMMUDevice *vtd_hiod;
+>>      struct vtd_as_key key =3D {
+>>          .bus =3D bus,
+>>          .devfn =3D devfn,
 >
-> Correct. But again I'd like to stress that this is just one part in 
-> reducing downtime during stage 2. The biggest reductions will come from 
-> the config/prep work that we're trying to move from stage 2 to stage 1, 
-> especially when vhost-vDPA is involved. And we can only do this early 
-> work once we have the state, hence why we're sending it earlier.
+>I wonder if the bus/devfn here would always reflect the actual BDF
+>numbers in this function, on an x86 VM.
 
-This is an important bit of detail I've been missing so far.  Easy
-enough to fix in a future commit message and cover letter.
+devfn is enumerated by QEMU, see do_pci_register_device(), bus number is en=
+umerated in BIOS or kernel.
+So we can't use BDF number as key, we use PCIBus pointer + devfn as the key=
+ instead.
 
->> Is there anything that makes virtio-net particularly suitable?
 >
-> Yes, especially with vhost-vDPA and configuring VQs. See Eugenio's 
-> comment here 
-> https://lore.kernel.org/qemu-devel/CAJaqyWdUutZrAWKy9d=ip+h+y3BnptUrcL8Xj06XfizNxPtfpw@mail.gmail.com/.
-
-Such prep work commonly depends only on device configuration, not state.
-I'm curious: what state bits exactly does the prep work need?
-
-Device configuration is available at the start of stage 1, state is
-fully available only at the end of stage 2.
-
-Your patches make *tentative* device state available in stage 1.
-Tentative, because it may still change afterwards.
-
-You use tentative state to do certain expensive work in stage 1 already,
-in order to cut downtime in stage 2.
-
-Fair?
-
-Can state change in ways that invalidate this work?
-
-If yes, how do you handle this?
-
-If no, do you verify the "no change" design assumption holds?
-
->> I think this patch's commit message should at least hint at the
->> motivation at a high level.  Details like measurements are best left to
->> PATCH 4.
+>With ARM, when the device is attached to a pxb bus, the bus/devfn
+>here are both 0, so PCI_BUILD_BDF() using these two returns 0 too.
 >
-> You're right, this was my bad for not framing this RFC more clearly and 
-> the true motivations behind it. I will certainly be more direct and 
-> descriptive in the next RFC for this effort.
+>QEMU command for the device:
+> -device pxb-pcie,id=3Dpcie.1,bus_nr=3D1,bus=3Dpcie.0 \
+> -device arm-smmuv3,primary-bus=3Dpcie.1,id=3Dsmmuv3.1,accel=3Don \
+> -device pcie-root-port,id=3Dpcie.port1,bus=3Dpcie.1,chassis=3D1,io-reserv=
+e=3D0 \
+> -device
+>vfio-pci-nohotplug,host=3D0009:01:00.0,bus=3Dpcie.port1,rombar=3D0,id=3Dde=
+v0,iom
+>mufd=3Diommufd0
 >
->>> This RFC handles this by just re-sending the entire state again once the source has been paused. But of course this isn't optimal and I'm looking into how to better optimize this part.
->> 
->> How much is the entire state?
+>QEMU log:
+>smmuv3_accel_set_iommu_device: bus=3D0, devfn=3D0, sid=3D0
+
+There is only one device under pcie.port1, devfn is initialized to 0, bus n=
+umber isn't enumerated yet during realize() so 0.
+
 >
-> I'm not exactly sure how large it is but it should be <10KB even with 
-> vhost-vDPA. It could be slightly larger if we really up the number of 
-> queue pairs and/or have huge MAC/multicast lists.
-
-No worries then.
-
->>>>> But perhaps actual configuration changes (e.g. changing the number of
->>>>> queue pairs) could also be supported mid-migration like this?
->>>>
->>>> I don't know.
->>>>
->>>>>>> This capability is added to the validated capabilities list to ensure
->>>>>>> both the source and destination support it before enabling.
->>>>>>
->>>>>> What happens when only one side enables it?
->>>>>
->>>>> The migration stream breaks if only one side enables it.
->>>>
->>>> How does it break?  Error message pointing out the misconfiguration?
->>>>
->>>
->>> The destination VM is torn down and the source just reports that migration failed.
->> 
->> Exact same failure as for other misconfigurations, like missing a device
->> on the destination?
+>The set_iommu_device op is invoked by vfio_pci_realize() where the
+>the BDF number won't get ready for this kind of PCI setup until a
+>later stage that I can't identify yet..
 >
-> I hesitate to say "exact" but for example, when missing a device on one 
-> side you might see something like below (I removed a serial device):
+>Given that VTD wants the BDF number too, I start to wonder whether
+>the set_iommu_device op is invoked in the right place or not..
 >
-> qemu-system-x86_64: Unknown ramblock "0000:00:03.0/virtio-net-pci.rom", 
-> cannot accept migration
-> qemu-system-x86_64: error while loading state for instance 0x0 of device 
-> 'ram'
-> qemu-system-x86_64: load of migration failed: Invalid argument
-> ...
+>Maybe VTD works because it saves the bus pointer v.s. bus_num(=3D0),
+>so its bus_num would be updated when later code calculates the BDF
+>number using the saved bus pointer (in the key). Nonetheless, the
+>saved devfn (in the key) is 0, which wouldn't be updated later as
+>the bus_num. So, if the device is supposed to have a devfn (!=3D0),
+>this wouldn't work?
 
-Aside: ugly error cascade due to migration's well-known failure to
-propagate errors up properly.
+Both PCIBus pointer and devfn are fixed value for a QEMU instance, never ch=
+anged.
 
-> The expected order gets messed up and eventually the wrong data will end 
-> up somewhere else. In this case it was the RAM.
-
-It's messy.  If we started on a green field today, we'd do better, I
-hope.
-
-What error message do you observe when only one side enables
-@virtio-iterative?  Question is moot if you plan to switch to a
-different interface.  Answer it for that interface in a commit message
-then.
-
->>> I don't believe the source/destination could be aware of the misconfiguration. IIUC the destination reads the migration stream and expects certain pieces of data in a certain order. If new data is added to the migration stream or the order has changed and the destination isn't expecting it, then the migration fails. It doesn't know exactly why, just that it read-in data that it wasn't expecting.
->>>
->>>>> This is poor wording on my part, my apologies. I don't think it's even
->>>>> possible to know the capabilities between the source & destination.
->>>>>
->>>>>>> The capability defaults to off to maintain backward compatibility.
->>>>>>>
->>>>>>> To enable the capability via HMP:
->>>>>>> (qemu) migrate_set_capability virtio-iterative on
->>>>>>>
->>>>>>> To enable the capability via QMP:
->>>>>>> {"execute": "migrate-set-capabilities", "arguments": {
->>>>>>>         "capabilities": [
->>>>>>>            { "capability": "virtio-iterative", "state": true }
->>>>>>>         ]
->>>>>>>      }
->>>>>>> }
->>>>>>>
->>>>>>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
->> 
->> [...]
->> 
->>>>>>> diff --git a/qapi/migration.json b/qapi/migration.json
->>>>>>> index 4963f6ca12..8f042c3ba5 100644
->>>>>>> --- a/qapi/migration.json
->>>>>>> +++ b/qapi/migration.json
->>>>>>> @@ -479,6 +479,11 @@
->>>>>>>   #     each RAM page.  Requires a migration URI that supports seeking,
->>>>>>>   #     such as a file.  (since 9.0)
->>>>>>>   #
->>>>>>> +# @virtio-iterative: Enable iterative migration for virtio devices, if
->>>>>>> +#     the device supports it. When enabled, and where supported, virtio
->>>>>>> +#     devices will track and migrate configuration changes that may
->>>>>>> +#     occur during the migration process. (Since 10.1)
->>>>>>
->>>>>> When and why should the user enable this?
->>>>>
->>>>> Well if all goes according to plan, always (at least for virtio-net).
->>>>> This should improve the overall speed of live migration for a virtio-net
->>>>> device (and vhost-net/vhost-vdpa).
->>>>
->>>> So the only use for "disabled" would be when migrating to or from an
->>>> older version of QEMU that doesn't support this.  Fair?
->>>
->>> Correct.
->>>
->>>> What's the default?
->>>
->>> Disabled.
->> 
->> Awkward for something that should always be enabled.  But see below.
->> 
->> Please document defaults in the doc comment.
->
-> Ack.
->
->>>>>> What exactly do you mean by "where supported"?
->>>>>
->>>>> I meant if both source's Qemu and destination's Qemu support it, as well
->>>>> as for other virtio devices in the future if they decide to implement
->>>>> iterative migration (e.g. a more general "enable iterative migration for
->>>>> virtio devices").
->>>>>
->>>>> But I think for now this is better left as a virtio-net configuration
->>>>> rather than as a migration capability (e.g. --device
->>>>> virtio-net-pci,iterative-mig=on/off,...)
->>>>
->>>> Makes sense to me (but I'm not a migration expert).
->> 
->> A device property's default can depend on the machine type via compat
->> properties.  This is normally used to restrict a guest-visible change to
->> newer machine types.  Here, it's not guest-visible.  But it can get you
->> this:
->> 
->> * Migrate new machine type from new QEMU to new QEMU (old QEMU doesn't
->>    have the machine type): iterative is enabled by default.  Good.  User
->>    can disable it on both ends to not get the improvement.  Enabling it
->>    on just one breaks migration.
->> 
->>    All other cases go away with time.
->> 
->> * Migrate old machine type from new QEMU to new QEMU: iterative is
->>    disabled by default, which is sad, but no worse than before.  User can
->>    enable it on both ends to get the improvement.  Enabling it on just
->>    one breaks migration.
->> 
->> * Migrate old machine type from new QEMU to old QEMU or vice versa:
->>    iterative is off by default.  Good.  Enabling it on the new one breaks
->>    migration.
->> 
->> * Migrate old machine type from old QEMU to old QEMU: iterative is off
->> 
->> I figure almost all users could simply ignore this configuration knob
->> then.
->
-> Oh, that's interesting. I wasn't aware of this. But couldn't this 
-> potentially cause some headaches and confusion when attempting to 
-> migrate between 2 guests where one VM is using a machine type does 
-> support it and the other isn't?
->
-> For example, the source and destination VMs both specify '-machine 
-> q35,...' and the q35 alias resolves into, say, pc-q35-10.1 for the 
-> source VM and pc-q35-10.0 for the destination VM. And say this property 
-> is supported on >= pc-q35-10.1.
-
-In my understanding, migration requires identical machine types on both
-ends, and all bets are off when they're different.
-
-> IIUC, this would mean that iterative is enabled by default on the source 
-> VM but disabled by default on the destination VM.
->
-> Then a user attempts the migration, the migration fails, and then they'd 
-> have to try and figure out why it's failing.
-
-Migration failures due to mismatched configuration tend to be that way,
-don't they?
-
-> Furthermore, since it's a device property that's essentially set at VM 
-> creation time, either the source would have to be reset and explicitly 
-> set this property to off or the destination would have to be reset and 
-> use a newer (>= pc-q35-10.1) machine type before starting it back up and 
-> perform the migration.
-
-You can use qom-set to change a device property after you created the
-device.  It might even work.  However, qom-set is a deeply problematic
-and seriously underdocumented interface.  Avoid.
-
-But will you need to change it?
-
-If you started the source with an explicit property value, start the
-destination the same way.  Same as for any number of other configuration
-knobs.
-
-If you started the source with the default property value, start the
-destination the same way.  Values will match as long as the machine type
-matches, as it should.
-
-> Am I understanding this correctly?
->
->>>> [...]
-
+Thanks
+Zhenzhong
 
