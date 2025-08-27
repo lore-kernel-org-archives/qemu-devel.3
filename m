@@ -4,205 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6AD8CA0FF7
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 10:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 093D1CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 10:50:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urDhI-0004uN-6B; Wed, 27 Aug 2025 06:48:08 -0400
+	id 1urDeh-0000Jm-HR; Wed, 27 Aug 2025 06:45:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1urDgw-0004fZ-Ro
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 06:47:50 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1urDeD-00005b-BS
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 06:44:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1urDgo-00043N-Nb
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 06:47:45 -0400
-Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 57R2cL5M2967180; Wed, 27 Aug 2025 03:47:26 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=4bqNILGhZfpsIG9ELymjnYACguif3xVgQgcCWB02e
- Io=; b=2uQritowz4cq2BiP8wqncBnKlqzVx7y/J9QIjWNs9OfOamHgbm8B42m8G
- xuUwT0v53UkXnoPL6RnardVsSioTKdORjuDw5LhoadIgQYbLk0JtP1CvheviuLkg
- KWwu37EU16ojpa4h2uOMhDB9zGi5ajUPlRoWgbPqUi+bkQq3YlGIr9I1A1i0aO3Z
- fwQBmCeUol/7NW+sC6oeUPG3nxYk8wWhZtR0YCaCnwqQoYcUmdySPbhlPZOwaHBV
- Q3crabmFY1QeYmRXBeG18l9ycgty9sb0DX8Co+pFTO+X4Wu9jvVGge54HEbXbaif
- p+x9b2jGC5+HEGdPlzptD3tqh+Dyw==
-Received: from nam04-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam04on2090.outbound.protection.outlook.com [40.107.101.90])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 48s9pru5f0-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 27 Aug 2025 03:47:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kmLTtv3djoB39bDa8FAl5TYqYgwO0ETnNHWe0Q1EY+6dTddk7fAYqt0JuwliAucpCE8rSQ26/6yJwTvJlV5WDL+DBmg8hm0LchU2Y25V63/VqIFftsqrinpCtPMLHzhP1zz2U94fRJWWYuLPUUrREW7R5vgIqjhZDz3q3FYTIPxH195LFsDGPBgnpwC+GyjIrP49997uBnYkmDm6R3qyNQXhRJU49ybx/3xMf8pb1ikQ+ncA4TZRtXQ0SO4WCYBIN3Z03WFGFz11eclWwyoM1y1SNLV4e6Jdw3zsjou27CgF1uC9GKFxl5OQbbaRJua4ez8WxKGAaZ6VhEphVksFeg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4bqNILGhZfpsIG9ELymjnYACguif3xVgQgcCWB02eIo=;
- b=gBIjySPrGDK/LQHy8kTokJnsFuqz3hwGk2yyoJKzt7FDWc/d5RgQtGinDSU6bAUrbDwy+cQRHLioDGQfLrcbo6wC+Nvi5Dn1f1vqeUAhlgCgFcY1hV19h9R9q4Rtp/UW5nrFsBMSTXsTiwi53WXrtEuWXk+0520AsEk4vQCSorZeapZ+l3fT6O9gCJvdRXG4FF8S2TuCgdL6eHfHdTCO592ZV7CYYtBTfrdTzit89Qihyn4snwRFnwWnrTxUOfN4bTsn4C1yvkzjRYTn2bJw0ehCvvwn913yTymGQTKgPyFBHR/cDwNVMHq8b6nvTzq7ZiiKArYNqVbyI8EVx7ZfRg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4bqNILGhZfpsIG9ELymjnYACguif3xVgQgcCWB02eIo=;
- b=f+fnXNTFsHiZzkb3fvKulJUk38R65QrTqXOVlcKhcph3yCPbBmJKDajBOsaIB/ya3lgJd3M4l+gfp7hB/xFMo7aeyUVan5Jnzvnme4FyQuhHsw/EvfN5dqWSFFtTNlAqI6QErcPtGvd7uDtUH1nZ6nsKu+y8hu/dxyQTi3FtXxWXiYh1nWB5nrwv3w3Q1vI8GV+6pfkfzfVaNzVQwbwNFaK25IK1661nzDxbCFi+IHscaveTYRlrKQMFfaabxk7jcM/46OMTN83ZMDEhLDwJcNHFRzjAnVTtABx7XcIBc27V4w396bE4TQa2pez+tbaVWwAF5r+pRwh889h2jq5Ewg==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by PH0PR02MB7414.namprd02.prod.outlook.com (2603:10b6:510:1f::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.21; Wed, 27 Aug
- 2025 10:47:24 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::6cf9:b35c:b143:bb88]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::6cf9:b35c:b143:bb88%3]) with mapi id 15.20.9052.019; Wed, 27 Aug 2025
- 10:47:17 +0000
-Message-ID: <26154464-e7cf-4445-81b9-11ccfa18dccc@nutanix.com>
-Date: Wed, 27 Aug 2025 11:47:13 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 04/19] hw/i386/pc_piix.c: duplicate pc_init1() into
- pc_isa_init()
-To: Xiaoyao Li <xiaoyao.li@intel.com>, pbonzini@redhat.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, imammedo@redhat.com,
- qemu-devel@nongnu.org
-References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
- <20250822121342.894223-5-mark.caveayland@nutanix.com>
- <010b2b2e-7d88-42b1-ad5e-ccd1518777af@intel.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <010b2b2e-7d88-42b1-ad5e-ccd1518777af@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AM0PR04CA0056.eurprd04.prod.outlook.com
- (2603:10a6:208:1::33) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1urDe1-0003L5-SN
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 06:44:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756291482;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Ko57smFf+5OpTIsqKRWP10DJwgLTh0NmxUjsXMuJ4s=;
+ b=SyAiB1U0QTbw3Gr3Tajig8ZsG/VhX0dwRxeuA1J14Tet08XPwHnnDMKUE205LrBaCzneSx
+ NYceCk9lZ6plUAA6DjLcVm+aWF9yD/fZg27awbDIYxQyzAVfZ9bDsILvP7uHLCHITGbvTz
+ g9DkVpS0X0k7qTxCdCEIP4umY0sBUZk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-hUdD0fEwPuassMqMAFH-HA-1; Wed,
+ 27 Aug 2025 06:44:39 -0400
+X-MC-Unique: hUdD0fEwPuassMqMAFH-HA-1
+X-Mimecast-MFC-AGG-ID: hUdD0fEwPuassMqMAFH-HA_1756291478
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08057195608A; Wed, 27 Aug 2025 10:44:38 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.16])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CEC0D18003FC; Wed, 27 Aug 2025 10:44:35 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ pbonzini@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH 21/22] rust: re-export qemu macros from common/qom/hwcore
+Date: Wed, 27 Aug 2025 14:41:43 +0400
+Message-ID: <20250827104147.717203-22-marcandre.lureau@redhat.com>
+In-Reply-To: <20250827104147.717203-1-marcandre.lureau@redhat.com>
+References: <20250827104147.717203-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|PH0PR02MB7414:EE_
-X-MS-Office365-Filtering-Correlation-Id: a31480bd-0fcc-4169-cca8-08dde557178a
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0; ARA:13230040|10070799003|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?TmVwSVN2VFMxWEx0ZFQ5WEhKOFpIVDQ4T0IvOFhmL3hTUHMyZ0F4dFhvMFF1?=
- =?utf-8?B?blJKZmRmbXFzemVIZ0gvaXVmTDZ0Mk9BbE84V3VsWHJnRDI5Ry9vYnkrb0p6?=
- =?utf-8?B?UGJkSi85WWFMYUQxaDkvYlltNkRyUlpkcWhIOWF2aUVEWFFmd1FFREJXSm5w?=
- =?utf-8?B?TjNickVNTXdzaS9XZ2RCall6ZUJJS3I0TUxrblNoRnhEandldXJOZ29GOWxi?=
- =?utf-8?B?OXlkb0FDc0tPYXZSSXc0VEJPdWFIL0ZvYkNnQkZrNnI1bkplSzc0aHJKMXpj?=
- =?utf-8?B?RktHYVBNRkhQSVVobjRmdEx1WW9LVlhVZUpXYzBlRmZXZkd0V1ZxUjM3NWhC?=
- =?utf-8?B?NW9KTkI2RWVOV3lOelAwWDZYenZMV3RaUEN1Z2J6RkhGUG9vT1pEZ0k3V01R?=
- =?utf-8?B?Vk9LcU1RMzUwMEM0UUh4ZUpsU3U2YlFHY0MwWEZ3ZmJ5MURFcjVoWE5jc241?=
- =?utf-8?B?b0MvZ2haZFFPZGtObDRFd1NVSFpnMXBBazhhLzdSaGx2UUkwU0I3RTVlRndG?=
- =?utf-8?B?aW1IYXhPQlFoMUJ1N0YwSElFSkxid0wrOEJ1VXBZVUJnVUtrdWpZYVEwZ2tL?=
- =?utf-8?B?Wi9EakdVTkFGQnZTc2d0T25nZWxpandkYXVKdGp1NHN2VkMwOGJLcU5LR2U0?=
- =?utf-8?B?am9VaXFqVVJDbjhKbS9XWEVCdmh5L0krL01sMUNyWWhoenlCL3E0cnp2RVNW?=
- =?utf-8?B?amt3bENyMnIzK0lUcnJvN0E2WnZGbE5DVS94ZGJFQUdmUEhMQ0Z4Y3J6YlFs?=
- =?utf-8?B?TEI2ayswMTZUdjBwM3A2OW1QN3lMdm1JRnVqN1NLQVhPeEVORFlybmt0WTY4?=
- =?utf-8?B?M3d0ZmxqUkxHSWpZY3MxQVRpWTV6aFU2RnFOaGJOS3pYYXhvRFlLUUpMYjRi?=
- =?utf-8?B?T1h2VHFIVm1wdTl5bHFRSmZWOW50VFJNclFLNFhVMkY4RlFGUmJKS2pwRlFT?=
- =?utf-8?B?b0hrMzF1bE5pMnJaYWdCTW00eWtRdElLc05YelVWUmNSRUQ1UVRYYmNNN280?=
- =?utf-8?B?aE9XbGlwYXk0SVB1TC9VVDJqeXcvY2c5OTEwWFJKL1NCamFaZnM3bkszL3o3?=
- =?utf-8?B?ZmpUSjlMOFFURzZ2d0xTZmtQMnZ4YVFWeXoxRGlpNFdzS3g1UHlMN29qdnMr?=
- =?utf-8?B?OFlmbVFITHdJTVBOMk51RHBCQzhPdDVMTDkvYmU2ZEFBMWFvYkErTkUxa24y?=
- =?utf-8?B?MVI2VG5Xc0t3Q3I2MkhzdXN5WllRbUFWd2VJajRLdGFPcjdHMGNHVm5IQzc3?=
- =?utf-8?B?d3ZtUEZtc1BTanN6TkZaWDJrUllPakFNdHpaTnZYY2NLdnJ1TlRDa2pMbVcv?=
- =?utf-8?B?K1NjSFQwazZ3NWpHR3MxMlBYdEkvKzJSWjZObStZWEFwalRJMkFWR2VBbEhT?=
- =?utf-8?B?T3dZaXphN0wreUxtT0MzV2tjakRHTW9ONk94QU96V2wrNnVxSU9wQkNwYzBp?=
- =?utf-8?B?bGNzbEFYTS9VUXp4VzlPcnBGeFVEMnVacG5icExmYWFOMXZlRnRrL2ttNnh6?=
- =?utf-8?B?V0x2eXhuY3Y2UTh4blBkWHJnSlpqSWZJbHVwT1JxcUxESHdMRWYzcWQzd3dm?=
- =?utf-8?B?bnZwNDRURGhUT3V6ZHdkTEJyOU9BNktkMFJZNU1EYVlWTUpNYlhFQnB3bkZG?=
- =?utf-8?B?MWYyRlVDWWF5YmdTbXN6Z2RiOHdIOHFHOGR0K1ZCVExTM0V1VFBkTzNoSVZr?=
- =?utf-8?B?TEZZaG9MWFRvckVVa3pHV3o1VjNpR1FJNFdLWk5TVE41eVJjWS9LYjY5U1BN?=
- =?utf-8?B?OXY1QzZnZGhHZDUyekY0c1hlRHJmbXFodFNqZ1g5WmkySXZubG8wY2lCam1u?=
- =?utf-8?B?bHFFV2xpVEFYbnBkeWV2U3BhMDRjVW45Rk5GWC95V1h6ZE0vckhRVU8zbjlR?=
- =?utf-8?B?Q05EZmh6R0FGWUhvSWUyUEpZdSsxRHN2UUlwbFoxV21xWno5V09ZeHpmMFRs?=
- =?utf-8?Q?r+ibYxZv3PI=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(10070799003)(366016)(376014)(1800799024); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VUlYSE9LY0N3NTM2RXVxUytQZThnditwdHhGZzVrRGJaRTgyaGszMVEwRzFm?=
- =?utf-8?B?YlJpdjEzSDVTMXFvbXRGZk1QdzZrTUlsTGpiaEorMUtHUE56S1JrS1BmZUp5?=
- =?utf-8?B?UmdCTnFaSmVxcmk2d2tKY2hyMUhlSmFVOUs4MStJYzBrdWorYkVnZi9CVzJB?=
- =?utf-8?B?Mkova2dyVzgxL2RORUE5WktWRzFDVTJ6QWhZMk41bVMyYUo5QUVwQzlRUmt4?=
- =?utf-8?B?bEF6UytpYjdxWHRBSTRLZUVYajU4cVo2SzNVTjMyOHg5NXhrOVhmazFjRzBB?=
- =?utf-8?B?cFhQWnhOMFpldlc4TDJ4d2pteGcrS3JnRjkrN0VwRmZIRjBQdlB4WDVwN2xN?=
- =?utf-8?B?eDlxc0llM0gwaUQwWjdDODdBVXRsY0tWR2lDRzdlalVJc05wdVZ3Uk9PcXFw?=
- =?utf-8?B?NjZoSE5aTUhYVmtiaWduaTFQM0w0VDlNQ0FPM2kwcTFsVmtmVm0wSWNhN01U?=
- =?utf-8?B?L093UXRwazljWnIzaXZybVZiZDMrSWN5VitTY0I5empKUFlZWmF5YUpQajg5?=
- =?utf-8?B?cVhnMThiNCt3MTFZN1A5M1NRVTduNjZkamg4bFlSaDhLRjV3NzFEVHV6bzNp?=
- =?utf-8?B?K1ZvZ3Ztck9oTGlnQzJVWG15R1h6VXVYZ0tNYVhIbWRYem1lNHJReDVNR2py?=
- =?utf-8?B?S3BtUC9xYll4OVRrRTd6Ni9tYk15Yys2QWk3bzhML05Kc2ZQWFlQOHR0Rm03?=
- =?utf-8?B?WFArN0VCd3BPWGhYbUE3NURKZFVEblRSTHltL01OMlJqOVREb2hqa0gra0pG?=
- =?utf-8?B?Wk13SFF3bU95c21FS3NqOGYrSzJ4TEtkeWdKY0lSdVU5UEJLR1R1ZDZCWG5t?=
- =?utf-8?B?WHc0MW94YkJnWVZkc011SVJaSmcrQUpaZ3pZRXYxRHN0Tnk3MUN4WjNDRFdk?=
- =?utf-8?B?K2JHVktJY2Rxenp6MlNVVENvSkpNVEI4RmIrenhjQVhFNUxhK3MzL3IySUdo?=
- =?utf-8?B?Y2pvU1NZTTI3RmhrRjRkQTRaVlVyZmFzNTRsT3lyaEJTVWJVeXpQYnYvMFlY?=
- =?utf-8?B?eldsOTV5U1dvcUlRMXBIL2FqOEVPNmRMNHhWVHRmRHQzWXAzbTNPZ3Q5cUdK?=
- =?utf-8?B?SkdwZUV2eUZra1RxazUvbUFBWk5sdFMrOTVqelNDeDN2TW02NGw4WE9GUVN2?=
- =?utf-8?B?TVErYTloS1B4RlhXTm5OVmp1ZGFWSTJFTTdOMDVtUTBCSVR3bEgrdXBocU9H?=
- =?utf-8?B?S291aVorSVVhcmJoTlRZTEk3VTl4eVBMcXRPOE9hL3M1eUxITHhVZUhKWk5m?=
- =?utf-8?B?bUtlOUszeTg1aGxDbjMrQjNNMFRTUWI4YUlPaFMwOFlPM0lXM3NGNWZyeHVC?=
- =?utf-8?B?azhETkRCenZ3eGF3RlhYZUNqeEFqRHppSjZDdlR5SG1XYzFZNHV5MjhJa2cr?=
- =?utf-8?B?bjlBOWppR3o0STlBdkpzYzJoSWNuZlNjRWs1bXhqMXBFeUxhMDRWdGJNcHFp?=
- =?utf-8?B?ZWNTNjdzSDRSN2tPelJNd2EzRUoyNXEwWlRteHlKeFViZUtJa1FFeGVOREY4?=
- =?utf-8?B?azhIeDBObW5WTzQwZUZxY3B0SjdIb3lGc240Yk9JRVhNb1BVUDQyNXBPd2xT?=
- =?utf-8?B?bHVzVm93cDJTbkpGTHdFUWo2Y1BZR2JVZVo4WXZVZ1V1QnRoTDllQXdlcWNU?=
- =?utf-8?B?cVBGREIxVC9weVRkb0FaTHVFNU1VL3JSbW0zVUlEUWNEOGE0Y2RUM2hDeHhx?=
- =?utf-8?B?bUdpblZCQnBkL1hUV2xzZHdjUVFlOXM3N0cyUnBBTGdOK28zeE8wd3I3NVdr?=
- =?utf-8?B?S2hIMDAwTjVCakhXSk5LYVBuMUNCTzhMeGpQamdrcmdmVG9SeGl3c01uUXo5?=
- =?utf-8?B?SlQ4RnhNLzFETVJUS1htcTNvMWhsTTFLdlVnbTE1ZnBUdlM2ZkRJaDRUdkJE?=
- =?utf-8?B?ZldEU0VJTDBJTDBnL21lQWxiT2ZJMUJKRHMyL0haNGxDVGtLU3IybGs0YkFr?=
- =?utf-8?B?Y3ZISjNGbWFzQzdzZHJsMENXdk5ZMGJhajk0b09OalJuRXp3MTlDaDE3WGc0?=
- =?utf-8?B?TUpPTWRpYUpHNCsxbjYzbnJHYWI3Vi9sSW1GY3d1a096UjdrNm4yYXVDTXA4?=
- =?utf-8?B?bXA5L3gybWZVOU1oOGxnSzdFUUJpREgvNEorVVpTRVRHbWk0RHFUeG4yUjlM?=
- =?utf-8?B?WTg2YlgyanZnRi9peURqZE9uVU0yaWNrd1hxNEhOczdOb2pwZE1CVndGcFdQ?=
- =?utf-8?B?dUhOZU8yR0JMYjBjMDdBNEJnaWc4QTdFTjJoeG5tNWNNNGV6NEdoRURsb0kw?=
- =?utf-8?B?TjUrWlBtYWVoUm1vZEdUMGxFeGhnPT0=?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a31480bd-0fcc-4169-cca8-08dde557178a
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2025 10:47:17.9146 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sfleb4ZYZtwyPz7iFXJqnKDTR2+YLtGkAzdI4ZusKifqxTsOXPrpZvsEmkA2H63wViyB02rNoc3u8svf+7N6pcaOzqt1REQQsjfm/25voL8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB7414
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI3MDA5MSBTYWx0ZWRfX70ukpJ5L603t
- MOi0KwyH+tVAryYDyLLcpO4zqLlvflZp7294wkBBr0MOEMiEMXKga9+5akIlDY1PPKS/lQGhMlT
- 63L+v75OblfMKvukNXob4f8c/P9yjwp1BvmbiNTzyX/foQ2fE0GsDBc0xjdIUP4clTXEZS4RPbR
- Vct+on/8hWrnBl4A36RPPWsOd/18YiL+0FB5aXW5oXwdCqL1sGjuJIsDOB7NlwQogpsqTm7kIkE
- oa7m/p3foDyu9HgUb3QpELXtCEf00jKWbpWmSkn3GQTZXQtgjHbknQM9lqhKp7LMQ0F7AE8m22L
- aNvutmXz5l3e4A+nbO2JDu9uUElBtRuL3Ul22noMwUMlzr1fY6s/sBd7SBj2Ok=
-X-Authority-Analysis: v=2.4 cv=G84cE8k5 c=1 sm=1 tr=0 ts=68aee23e cx=c_pps
- a=8L8FiTcFnCVlekLszpoA1Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=0kUYKlekyDsA:10
- a=p0WdMEafAAAA:8 a=64Cc0HZtAAAA:8 a=KKAkSRfTAAAA:8 a=guU5Yos-aBU_fBW4BsUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: CGpKbPQ1YlSaD7iyGgMUq8Jf7qgKRROg
-X-Proofpoint-GUID: CGpKbPQ1YlSaD7iyGgMUq8Jf7qgKRROg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-27_02,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -218,72 +90,641 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/08/2025 10:21, Xiaoyao Li wrote:
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-> On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote:
->> This is to prepare for splitting the isapc machine into its own 
->> separate file.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/i386/pc_piix.c | 261 +++++++++++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 260 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
->> index 071bf7412e..5b97ad2cea 100644
->> --- a/hw/i386/pc_piix.c
->> +++ b/hw/i386/pc_piix.c
-> 
-> ...
-> 
->> +    if (piix4_pm) {
->> +        smi_irq = qemu_allocate_irq(pc_acpi_smi_interrupt, first_cpu, 
->> 0);
->> +
->> +        qdev_connect_gpio_out_named(DEVICE(piix4_pm), "smi-irq", 0, 
->> smi_irq);
->> +        pcms->smbus = I2C_BUS(qdev_get_child_bus(DEVICE(piix4_pm), 
->> "i2c"));
->> +        /* TODO: Populate SPD eeprom data.  */
->> +        smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
->> +
->> +        object_property_add_link(OBJECT(machine), 
->> PC_MACHINE_ACPI_DEVICE_PROP,
->> +                                 TYPE_HOTPLUG_HANDLER,
->> +                                 (Object **)&x86ms->acpi_dev,
->> +                                 object_property_allow_set_link,
->> +                                 OBJ_PROP_LINK_STRONG);
->> +        object_property_set_link(OBJECT(machine), 
->> PC_MACHINE_ACPI_DEVICE_PROP,
->> +                                 piix4_pm, &error_abort);
->> +    }
->> +
->> +    if (machine->nvdimms_state->is_enabled) {
->> +        nvdimm_init_acpi_state(machine->nvdimms_state, system_io,
->> +                               x86_nvdimm_acpi_dsmio,
->> +                               x86ms->fw_cfg, OBJECT(pcms));
->> +    }
-> 
-> IGVM support was merged recently and the rebase of this series doesn't 
-> catch it.
+This is just a bit nicer.
 
-Indeed, thanks for spotting this!
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ docs/devel/rust.rst                 | 2 +-
+ rust/Cargo.lock                     | 9 +--------
+ rust/chardev/Cargo.toml             | 1 -
+ rust/chardev/meson.build            | 4 ++--
+ rust/chardev/src/chardev.rs         | 2 +-
+ rust/common/Cargo.toml              | 1 +
+ rust/common/meson.build             | 2 +-
+ rust/common/src/lib.rs              | 2 ++
+ rust/common/src/opaque.rs           | 4 +---
+ rust/hw/char/pl011/Cargo.toml       | 1 -
+ rust/hw/char/pl011/meson.build      | 3 +--
+ rust/hw/char/pl011/src/device.rs    | 4 ++--
+ rust/hw/char/pl011/src/registers.rs | 2 +-
+ rust/hw/core/Cargo.toml             | 1 -
+ rust/hw/core/meson.build            | 4 ++--
+ rust/hw/core/src/irq.rs             | 2 +-
+ rust/hw/core/src/qdev.rs            | 4 ++--
+ rust/hw/core/src/sysbus.rs          | 2 +-
+ rust/hw/core/tests/tests.rs         | 4 ++--
+ rust/hw/timer/hpet/Cargo.toml       | 1 -
+ rust/hw/timer/hpet/meson.build      | 4 ----
+ rust/hw/timer/hpet/src/device.rs    | 6 +++---
+ rust/meson.build                    | 3 ++-
+ rust/migration/Cargo.toml           | 1 -
+ rust/qom/src/lib.rs                 | 2 ++
+ rust/qom/src/qom.rs                 | 4 ++--
+ rust/system/Cargo.toml              | 1 -
+ rust/system/meson.build             | 5 ++---
+ rust/system/src/memory.rs           | 2 +-
+ rust/tests/Cargo.toml               | 1 -
+ rust/util/Cargo.toml                | 1 -
+ rust/util/meson.build               | 2 +-
+ rust/util/src/timer.rs              | 4 ++--
+ 33 files changed, 37 insertions(+), 54 deletions(-)
 
-> I think we need to copy the IGVM related code as well, in this patch.
-> We can remove it later in a separate patch if it's unnecessary for isapc.
-
-Yes, it looks like we can just simply remove it in a separate patch 
-since according to the docs at 
-https://gitlab.com/qemu-project/qemu/-/blob/master/qemu-options.hx?ref_type=heads#L6186 
-IGVM is only supported for the q35 and pc machines.
-
->>   }
->>   #endif
-
-
-ATB,
-
-Mark.
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index f52da6f97e..1e77a1c2b1 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -290,7 +290,7 @@ a raw pointer, for use in calls to C functions.  It can be used for
+ example as follows::
+ 
+     #[repr(transparent)]
+-    #[derive(Debug, qemu_api_macros::Wrapper)]
++    #[derive(Debug, common::Wrapper)]
+     pub struct Object(Opaque<bindings::Object>);
+ 
+ where the special ``derive`` macro provides useful methods such as
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index b7e55e0129..8e8ab6fd8c 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -58,7 +58,6 @@ dependencies = [
+  "bql",
+  "common",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "util",
+ ]
+@@ -68,6 +67,7 @@ name = "common"
+ version = "0.1.0"
+ dependencies = [
+  "libc",
++ "qemu_macros",
+ ]
+ 
+ [[package]]
+@@ -93,7 +93,6 @@ dependencies = [
+  "common",
+  "hwcore",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "system",
+  "util",
+@@ -107,7 +106,6 @@ dependencies = [
+  "chardev",
+  "common",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "system",
+  "util",
+@@ -133,7 +131,6 @@ name = "migration"
+ version = "0.1.0"
+ dependencies = [
+  "common",
+- "qemu_macros",
+  "util",
+ ]
+ 
+@@ -149,7 +146,6 @@ dependencies = [
+  "common",
+  "hwcore",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "system",
+  "util",
+@@ -232,7 +228,6 @@ name = "system"
+ version = "0.1.0"
+ dependencies = [
+  "common",
+- "qemu_macros",
+  "qom",
+  "util",
+ ]
+@@ -249,7 +244,6 @@ dependencies = [
+  "hwcore",
+  "libc",
+  "migration",
+- "qemu_macros",
+  "qom",
+  "system",
+  "util",
+@@ -269,7 +263,6 @@ dependencies = [
+  "common",
+  "foreign",
+  "libc",
+- "qemu_macros",
+ ]
+ 
+ [[package]]
+diff --git a/rust/chardev/Cargo.toml b/rust/chardev/Cargo.toml
+index c139177307..3e77972546 100644
+--- a/rust/chardev/Cargo.toml
++++ b/rust/chardev/Cargo.toml
+@@ -18,7 +18,6 @@ bql = { path = "../bql" }
+ migration = { path = "../migration" }
+ qom = { path = "../qom" }
+ util = { path = "../util" }
+-qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/chardev/meson.build b/rust/chardev/meson.build
+index 487f36e27d..b0fd415686 100644
+--- a/rust/chardev/meson.build
++++ b/rust/chardev/meson.build
+@@ -39,10 +39,10 @@ _chardev_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _chardev_cfg,
+-  dependencies: [qemuutil_rs, common_rs, bql_rs, migration_rs, qemu_macros, qom_rs, util_rs, chardev],
++  dependencies: [qemuutil_rs, common_rs, bql_rs, migration_rs, qom_rs, util_rs, chardev],
+ )
+ 
+-chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [qemu_macros, chardev])
++chardev_rs = declare_dependency(link_with: [_chardev_rs], dependencies: [chardev])
+ 
+ # Doctests are essentially integration tests, so they need the same dependencies.
+ # Note that running them requires the object files for C code, so place them
+diff --git a/rust/chardev/src/chardev.rs b/rust/chardev/src/chardev.rs
+index 0e0a8f5556..07b02bdd76 100644
+--- a/rust/chardev/src/chardev.rs
++++ b/rust/chardev/src/chardev.rs
+@@ -26,7 +26,7 @@
+ 
+ /// A safe wrapper around [`bindings::Chardev`].
+ #[repr(transparent)]
+-#[derive(qemu_macros::Wrapper)]
++#[derive(common::Wrapper)]
+ pub struct Chardev(Opaque<bindings::Chardev>);
+ 
+ pub type ChardevClass = bindings::ChardevClass;
+diff --git a/rust/common/Cargo.toml b/rust/common/Cargo.toml
+index 5e106427e8..0e1b4fc505 100644
+--- a/rust/common/Cargo.toml
++++ b/rust/common/Cargo.toml
+@@ -14,6 +14,7 @@ rust-version.workspace = true
+ 
+ [dependencies]
+ libc.workspace = true
++qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/common/meson.build b/rust/common/meson.build
+index 230a967760..b805e0faf5 100644
+--- a/rust/common/meson.build
++++ b/rust/common/meson.build
+@@ -19,7 +19,7 @@ _common_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _common_cfg,
+-  dependencies: [libc_rs],
++  dependencies: [libc_rs, qemu_macros],
+ )
+ 
+ common_rs = declare_dependency(link_with: [_common_rs])
+diff --git a/rust/common/src/lib.rs b/rust/common/src/lib.rs
+index 25216503aa..8311bf945d 100644
+--- a/rust/common/src/lib.rs
++++ b/rust/common/src/lib.rs
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++pub use qemu_macros::{TryInto, Wrapper};
++
+ pub mod assertions;
+ 
+ pub mod bitops;
+diff --git a/rust/common/src/opaque.rs b/rust/common/src/opaque.rs
+index 06f6b8cd29..ffc749aa0e 100644
+--- a/rust/common/src/opaque.rs
++++ b/rust/common/src/opaque.rs
+@@ -194,7 +194,7 @@ pub unsafe fn new() -> Self {
+ 
+ /// Annotates [`Self`] as a transparent wrapper for another type.
+ ///
+-/// Usually defined via the [`qemu_macros::Wrapper`] derive macro.
++/// Usually defined via the [`crate::Wrapper`] derive macro.
+ ///
+ /// # Examples
+ ///
+@@ -229,8 +229,6 @@ pub unsafe fn new() -> Self {
+ /// ```
+ ///
+ /// They are not defined here to allow them to be `const`.
+-///
+-/// [`qemu_macros::Wrapper`]: ../../qemu_macros/derive.Wrapper.html
+ pub unsafe trait Wrapper {
+     type Wrapped;
+ }
+diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
+index 285d25c217..b2418abc4b 100644
+--- a/rust/hw/char/pl011/Cargo.toml
++++ b/rust/hw/char/pl011/Cargo.toml
+@@ -24,7 +24,6 @@ qom = { path = "../../../qom" }
+ chardev = { path = "../../../chardev" }
+ system = { path = "../../../system" }
+ hwcore = { path = "../../../hw/core" }
+-qemu_macros = { path = "../../../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+index a14993f692..cee6beff87 100644
+--- a/rust/hw/char/pl011/meson.build
++++ b/rust/hw/char/pl011/meson.build
+@@ -35,7 +35,6 @@ _libpl011_rs = static_library(
+     util_rs,
+     migration_rs,
+     bql_rs,
+-    qemu_macros,
+     qom_rs,
+     chardev_rs,
+     system_rs,
+@@ -47,6 +46,6 @@ rust_devices_ss.add(when: 'CONFIG_X_PL011_RUST', if_true: [declare_dependency(
+   link_whole: [_libpl011_rs],
+   # Putting proc macro crates in `dependencies` is necessary for Meson to find
+   # them when compiling the root per-target static rust lib.
+-  dependencies: [bilge_impl_rs, qemu_macros],
++  dependencies: [bilge_impl_rs],
+   variables: {'crate': 'pl011'},
+ )])
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 5ce39b002e..c3a729b59f 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -103,7 +103,7 @@ pub struct PL011Registers {
+ }
+ 
+ #[repr(C)]
+-#[derive(qemu_macros::Object)]
++#[derive(qom::Object)]
+ /// PL011 Device Model in QEMU
+ pub struct PL011State {
+     pub parent_obj: ParentField<SysBusDevice>,
+@@ -688,7 +688,7 @@ pub fn post_load(&self, _version_id: u32) -> Result<(), ()> {
+ }
+ 
+ #[repr(C)]
+-#[derive(qemu_macros::Object)]
++#[derive(qom::Object)]
+ /// PL011 Luminary device model.
+ pub struct PL011Luminary {
+     parent_obj: ParentField<PL011State>,
+diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src/registers.rs
+index a1c41347ed..0c3a4d7d21 100644
+--- a/rust/hw/char/pl011/src/registers.rs
++++ b/rust/hw/char/pl011/src/registers.rs
+@@ -16,7 +16,7 @@
+ #[doc(alias = "offset")]
+ #[allow(non_camel_case_types)]
+ #[repr(u64)]
+-#[derive(Debug, Eq, PartialEq, qemu_macros::TryInto)]
++#[derive(Debug, Eq, PartialEq, common::TryInto)]
+ pub enum RegisterOffset {
+     /// Data Register
+     ///
+diff --git a/rust/hw/core/Cargo.toml b/rust/hw/core/Cargo.toml
+index 0eb9ffee26..cc7321cfb4 100644
+--- a/rust/hw/core/Cargo.toml
++++ b/rust/hw/core/Cargo.toml
+@@ -20,7 +20,6 @@ chardev = { path = "../../chardev" }
+ migration = { path = "../../migration" }
+ system = { path = "../../system" }
+ util = { path = "../../util" }
+-qemu_macros = { path = "../../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
+index 692c4b8e0f..394df40e88 100644
+--- a/rust/hw/core/meson.build
++++ b/rust/hw/core/meson.build
+@@ -62,7 +62,7 @@ _hwcore_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _hwcore_cfg,
+-  dependencies: [qemu_macros, common_rs, bql_rs, chardev_rs, migration_rs, qemuutil_rs, qom_rs, system_rs, util_rs,
++  dependencies: [common_rs, bql_rs, chardev_rs, migration_rs, qemuutil_rs, qom_rs, system_rs, util_rs,
+                  qom, hwcore, chardev, migration],
+ )
+ 
+@@ -85,7 +85,7 @@ test('rust-hwcore-rs-integration',
+         override_options: ['rust_std=2021', 'build.rust_std=2021'],
+         rust_args: ['--test'],
+         install: false,
+-        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, qemu_macros, util_rs]),
++        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, util_rs]),
+     args: [
+         '--test', '--test-threads', '1',
+         '--format', 'pretty',
+diff --git a/rust/hw/core/src/irq.rs b/rust/hw/core/src/irq.rs
+index d8d964cad2..e0d7784d97 100644
+--- a/rust/hw/core/src/irq.rs
++++ b/rust/hw/core/src/irq.rs
+@@ -18,7 +18,7 @@
+ 
+ /// An opaque wrapper around [`bindings::IRQState`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct IRQState(Opaque<bindings::IRQState>);
+ 
+ /// Interrupt sources are used by devices to pass changes to a value (typically
+diff --git a/rust/hw/core/src/qdev.rs b/rust/hw/core/src/qdev.rs
+index 69d8a7f4c1..ffb88948af 100644
+--- a/rust/hw/core/src/qdev.rs
++++ b/rust/hw/core/src/qdev.rs
+@@ -23,7 +23,7 @@
+ 
+ /// A safe wrapper around [`bindings::Clock`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct Clock(Opaque<bindings::Clock>);
+ 
+ unsafe impl Send for Clock {}
+@@ -31,7 +31,7 @@ unsafe impl Sync for Clock {}
+ 
+ /// A safe wrapper around [`bindings::DeviceState`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct DeviceState(Opaque<bindings::DeviceState>);
+ 
+ unsafe impl Send for DeviceState {}
+diff --git a/rust/hw/core/src/sysbus.rs b/rust/hw/core/src/sysbus.rs
+index 020d650b50..45203229b1 100644
+--- a/rust/hw/core/src/sysbus.rs
++++ b/rust/hw/core/src/sysbus.rs
+@@ -19,7 +19,7 @@
+ 
+ /// A safe wrapper around [`bindings::SysBusDevice`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct SysBusDevice(Opaque<bindings::SysBusDevice>);
+ 
+ unsafe impl Send for SysBusDevice {}
+diff --git a/rust/hw/core/tests/tests.rs b/rust/hw/core/tests/tests.rs
+index dff2daae35..53979ead8f 100644
+--- a/rust/hw/core/tests/tests.rs
++++ b/rust/hw/core/tests/tests.rs
+@@ -22,7 +22,7 @@
+ };
+ 
+ #[repr(C)]
+-#[derive(qemu_macros::Object)]
++#[derive(qom::Object)]
+ pub struct DummyState {
+     parent: ParentField<DeviceState>,
+     migrate_clock: bool,
+@@ -74,7 +74,7 @@ fn vmsd() -> Option<&'static VMStateDescription> {
+ }
+ 
+ #[repr(C)]
+-#[derive(qemu_macros::Object)]
++#[derive(qom::Object)]
+ pub struct DummyChildState {
+     parent: ParentField<DummyState>,
+ }
+diff --git a/rust/hw/timer/hpet/Cargo.toml b/rust/hw/timer/hpet/Cargo.toml
+index 08bf97af55..f781b28d8b 100644
+--- a/rust/hw/timer/hpet/Cargo.toml
++++ b/rust/hw/timer/hpet/Cargo.toml
+@@ -17,7 +17,6 @@ migration = { path = "../../../migration" }
+ bql = { path = "../../../bql" }
+ qom = { path = "../../../qom" }
+ system = { path = "../../../system" }
+-qemu_macros = { path = "../../../qemu-macros" }
+ hwcore = { path = "../../../hw/core" }
+ 
+ [lints]
+diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
+index 8ab26630d9..bb64b96672 100644
+--- a/rust/hw/timer/hpet/meson.build
++++ b/rust/hw/timer/hpet/meson.build
+@@ -8,7 +8,6 @@ _libhpet_rs = static_library(
+     util_rs,
+     migration_rs,
+     bql_rs,
+-    qemu_macros,
+     qom_rs,
+     system_rs,
+     hwcore_rs,
+@@ -17,8 +16,5 @@ _libhpet_rs = static_library(
+ 
+ rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dependency(
+   link_whole: [_libhpet_rs],
+-  # Putting proc macro crates in `dependencies` is necessary for Meson to find
+-  # them when compiling the root per-target static rust lib.
+-  dependencies: [qemu_macros],
+   variables: {'crate': 'hpet'},
+ )])
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 0ada7fcfde..43ee39fbf9 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -97,7 +97,7 @@
+ /// Timer N Interrupt Routing Capability (bits 32:63)
+ const HPET_TN_CFG_INT_ROUTE_CAP_SHIFT: usize = 32;
+ 
+-#[derive(qemu_macros::TryInto)]
++#[derive(common::TryInto)]
+ #[repr(u64)]
+ #[allow(non_camel_case_types)]
+ /// Timer registers, masked by 0x18
+@@ -110,7 +110,7 @@ enum TimerRegister {
+     ROUTE = 16,
+ }
+ 
+-#[derive(qemu_macros::TryInto)]
++#[derive(common::TryInto)]
+ #[repr(u64)]
+ #[allow(non_camel_case_types)]
+ /// Global registers
+@@ -516,7 +516,7 @@ fn write(&mut self, reg: TimerRegister, value: u64, shift: u32, len: u32) {
+ 
+ /// HPET Event Timer Block Abstraction
+ #[repr(C)]
+-#[derive(qemu_macros::Object)]
++#[derive(qom::Object)]
+ pub struct HPETState {
+     parent_obj: ParentField<SysBusDevice>,
+     iomem: MemoryRegion,
+diff --git a/rust/meson.build b/rust/meson.build
+index 32d569f871..6b50aa39b6 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -22,8 +22,9 @@ qemuutil_rs = qemuutil.partial_dependency(link_args: true, links: true)
+ 
+ genrs = []
+ 
+-subdir('common')
+ subdir('qemu-macros')
++
++subdir('common')
+ subdir('bits')
+ subdir('util')
+ subdir('migration')
+diff --git a/rust/migration/Cargo.toml b/rust/migration/Cargo.toml
+index 66af81e0a3..708bfaaa68 100644
+--- a/rust/migration/Cargo.toml
++++ b/rust/migration/Cargo.toml
+@@ -15,7 +15,6 @@ rust-version.workspace = true
+ [dependencies]
+ common = { path = "../common" }
+ util = { path = "../util" }
+-qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/qom/src/lib.rs b/rust/qom/src/lib.rs
+index 35ddc51bb0..007b604d73 100644
+--- a/rust/qom/src/lib.rs
++++ b/rust/qom/src/lib.rs
+@@ -1,5 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++pub use qemu_macros::Object;
++
+ pub mod bindings;
+ 
+ pub mod prelude;
+diff --git a/rust/qom/src/qom.rs b/rust/qom/src/qom.rs
+index 880bef6c47..06a7f1c3b0 100644
+--- a/rust/qom/src/qom.rs
++++ b/rust/qom/src/qom.rs
+@@ -112,7 +112,7 @@
+ 
+ /// A safe wrapper around [`bindings::Object`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct Object(Opaque<bindings::Object>);
+ 
+ unsafe impl Send for Object {}
+@@ -173,7 +173,7 @@ fn as_ref(&self) -> &$parent {
+ ///
+ /// ```ignore
+ /// #[repr(C)]
+-/// #[derive(qemu_macros::Object)]
++/// #[derive(qom::Object)]
+ /// pub struct MyDevice {
+ ///     parent: ParentField<DeviceState>,
+ ///     ...
+diff --git a/rust/system/Cargo.toml b/rust/system/Cargo.toml
+index d8338c8348..7fd369b9e3 100644
+--- a/rust/system/Cargo.toml
++++ b/rust/system/Cargo.toml
+@@ -16,7 +16,6 @@ rust-version.workspace = true
+ common = { path = "../common" }
+ qom = { path = "../qom" }
+ util = { path = "../util" }
+-qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/system/meson.build b/rust/system/meson.build
+index 710462376d..13cf4ed9cb 100644
+--- a/rust/system/meson.build
++++ b/rust/system/meson.build
+@@ -39,12 +39,12 @@ _system_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _system_cfg,
+-  dependencies: [qemuutil_rs, common_rs, bql_rs, migration_rs, qemu_macros, qom_rs, util_rs,
++  dependencies: [qemuutil_rs, common_rs, bql_rs, migration_rs, qom_rs, util_rs,
+                 hwcore],
+ )
+ 
+ system_rs = declare_dependency(link_with: [_system_rs],
+-  dependencies: [qemu_macros, hwcore])
++  dependencies: [hwcore])
+ 
+ # Doctests are essentially integration tests, so they need the same dependencies.
+ # Note that running them requires the object files for C code, so place them
+@@ -54,4 +54,3 @@ rust.doctest('rust-system-rs-doctests',
+      protocol: 'rust',
+      dependencies: system_rs,
+      suite: ['doc', 'rust'])
+-
+diff --git a/rust/system/src/memory.rs b/rust/system/src/memory.rs
+index 7312f809f5..02aa3af7b1 100644
+--- a/rust/system/src/memory.rs
++++ b/rust/system/src/memory.rs
+@@ -129,7 +129,7 @@ fn default() -> Self {
+ 
+ /// A safe wrapper around [`bindings::MemoryRegion`].
+ #[repr(transparent)]
+-#[derive(qemu_macros::Wrapper)]
++#[derive(common::Wrapper)]
+ pub struct MemoryRegion(Opaque<bindings::MemoryRegion>);
+ 
+ unsafe impl Send for MemoryRegion {}
+diff --git a/rust/tests/Cargo.toml b/rust/tests/Cargo.toml
+index 079c490363..50d63afa02 100644
+--- a/rust/tests/Cargo.toml
++++ b/rust/tests/Cargo.toml
+@@ -19,7 +19,6 @@ hwcore = { path = "../hw/core" }
+ migration = { path = "../migration" }
+ util = { path = "../util" }
+ bql = { path = "../bql" }
+-qemu_macros = { path = "../qemu-macros" }
+ qom = { path = "../qom" }
+ system = { path = "../system" }
+ anyhow = "~1.0"
+diff --git a/rust/util/Cargo.toml b/rust/util/Cargo.toml
+index c5d1adb8fe..cbc8e5675d 100644
+--- a/rust/util/Cargo.toml
++++ b/rust/util/Cargo.toml
+@@ -17,7 +17,6 @@ anyhow = "~1.0"
+ libc = "0.2.162"
+ foreign = "~0.3.1"
+ common = { path = "../common" }
+-qemu_macros = { path = "../qemu-macros" }
+ 
+ [lints]
+ workspace = true
+diff --git a/rust/util/meson.build b/rust/util/meson.build
+index a7a5bd8d99..c2fbf49d11 100644
+--- a/rust/util/meson.build
++++ b/rust/util/meson.build
+@@ -44,7 +44,7 @@ _util_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _util_cfg,
+-  dependencies: [anyhow_rs, libc_rs, foreign_rs, qemuutil_rs, common_rs, qemu_macros],
++  dependencies: [anyhow_rs, libc_rs, foreign_rs, qemuutil_rs, common_rs],
+ )
+ 
+ util_rs = declare_dependency(link_with: [_util_rs], dependencies: [qemuutil_rs, qom])
+diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
+index 42096cef0d..a87d299ebc 100644
+--- a/rust/util/src/timer.rs
++++ b/rust/util/src/timer.rs
+@@ -15,14 +15,14 @@
+ 
+ /// A safe wrapper around [`bindings::QEMUTimer`].
+ #[repr(transparent)]
+-#[derive(Debug, qemu_macros::Wrapper)]
++#[derive(Debug, common::Wrapper)]
+ pub struct Timer(Opaque<bindings::QEMUTimer>);
+ 
+ unsafe impl Send for Timer {}
+ unsafe impl Sync for Timer {}
+ 
+ #[repr(transparent)]
+-#[derive(qemu_macros::Wrapper)]
++#[derive(common::Wrapper)]
+ pub struct TimerListGroup(Opaque<bindings::QEMUTimerListGroup>);
+ 
+ unsafe impl Send for TimerListGroup {}
+-- 
+2.50.1
 
 
