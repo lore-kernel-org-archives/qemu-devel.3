@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E38CA0FF9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8519CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHgV-0002WX-VU; Wed, 27 Aug 2025 11:03:36 -0400
+	id 1urHjq-0007BW-QH; Wed, 27 Aug 2025 11:07:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHgU-0002UZ-FX; Wed, 27 Aug 2025 11:03:34 -0400
+ id 1urHiF-00059B-5C; Wed, 27 Aug 2025 11:05:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHgS-0004kg-6c; Wed, 27 Aug 2025 11:03:34 -0400
+ id 1urHiC-0005E3-VQ; Wed, 27 Aug 2025 11:05:22 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B12F14C52A;
- Wed, 27 Aug 2025 18:02:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1F91914C541;
+ Wed, 27 Aug 2025 18:02:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4B8C6269832;
- Wed, 27 Aug 2025 18:03:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0D092269849;
+ Wed, 27 Aug 2025 18:03:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Thomas Huth <thuth@redhat.com>
-Subject: [Stable-10.0.4 02/59] hw/display/qxl-render.c: fix
- qxl_unpack_chunks() chunk size calculation
-Date: Wed, 27 Aug 2025 18:02:07 +0300
-Message-ID: <20250827150323.2694101-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sairaj Kodilkar <sarunkod@amd.com>,
+ Vasant Hegde <vasant.hegde@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 25/59] hw/i386/amd_iommu: Move IOAPIC memory region
+ initialization to the end
+Date: Wed, 27 Aug 2025 18:02:30 +0300
+Message-ID: <20250827150323.2694101-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
@@ -60,48 +61,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In case of multiple chunks, code in qxl_unpack_chunks() takes size of the
-wrong (next in the chain) chunk, instead of using current chunk size.
-This leads to wrong number of bytes being copied, and to crashes if next
-chunk size is larger than the current one.
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-Based on the code by Gao Yong.
+Setting up IOAPIC memory region requires mr_sys and mr_ir. Currently
+these two memory regions are setup after the initializing the IOAPIC
+memory region, which cause `amdvi_host_dma_iommu()` to use unitialized
+mr_sys and mr_ir.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1628
+Move the IOAPIC memory region initialization to the end in order to use
+the mr_sys and mr_ir regions after they are fully initialized.
+
+Fixes: 577c470f4326 ("x86_iommu/amd: Prepare for interrupt remap support")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Message-Id: <20250801060507.3382-4-sarunkod@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit a7842d94067cddc80b47ac42fb6e49e2fc02a3c5)
+(Mjt: context fix due to missing v10.0.0-833-gf864a3235ea1
+ "hw/i386/amd_iommu: Isolate AMDVI-PCI from amd-iommu device
+ to allow full control over the PCI device creation")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit b8882becd572d3afb888c836a6ffc7f92c17d1c5)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index eda6d3de37..c6a9ac1da1 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -222,6 +222,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
-     uint32_t max_chunks = 32;
-     size_t offset = 0;
-     size_t bytes;
-+    QXLPHYSICAL next_chunk_phys = 0;
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index f773653487..37447dca25 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1620,9 +1620,6 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+         return;
+     }
  
-     for (;;) {
-         bytes = MIN(size - offset, chunk->data_size);
-@@ -230,7 +231,15 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
-         if (offset == size) {
-             return;
-         }
--        chunk = qxl_phys2virt(qxl, chunk->next_chunk, group_id,
-+        next_chunk_phys = chunk->next_chunk;
-+        /* fist time, only get the next chunk's data size */
-+        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
-+                              sizeof(QXLDataChunk));
-+        if (!chunk) {
-+            return;
-+        }
-+        /* second time, check data size and get data */
-+        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
-                               sizeof(QXLDataChunk) + chunk->data_size);
-         if (!chunk) {
-             return;
+-    /* Pseudo address space under root PCI bus. */
+-    x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, AMDVI_IOAPIC_SB_DEVID);
+-
+     /* set up MMIO */
+     memory_region_init_io(&s->mr_mmio, OBJECT(s), &mmio_mem_ops, s,
+                           "amdvi-mmio", AMDVI_MMIO_SIZE);
+@@ -1645,6 +1642,9 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion_overlap(&s->mr_sys, AMDVI_INT_ADDR_FIRST,
+                                         &s->mr_ir, 1);
+ 
++    /* Pseudo address space under root PCI bus. */
++    x86ms->ioapic_as = amdvi_host_dma_iommu(bus, s, AMDVI_IOAPIC_SB_DEVID);
++
+     if (kvm_enabled() && x86ms->apic_id_limit > 255 && !s->xtsup) {
+         error_report("AMD IOMMU with x2APIC configuration requires xtsup=on");
+         exit(EXIT_FAILURE);
 -- 
 2.47.2
 
