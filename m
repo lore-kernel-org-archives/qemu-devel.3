@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E2FCA0FF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DF2CA0EFF
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 07:56:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urB04-0005Iq-7e; Wed, 27 Aug 2025 03:55:20 -0400
+	id 1urB0f-0005YE-0C; Wed, 27 Aug 2025 03:55:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB01-0005GK-2m
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:55:18 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB0a-0005WP-Qf
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:55:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urAzw-0001wE-5A
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:55:16 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB0U-00020U-GY
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:55:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756281310;
+ s=mimecast20190719; t=1756281343;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5gQzJ90qET6RhRj461NrORejjWHb983qUtY+6T5oBsM=;
- b=E6UMGEPIo+BWAvzF45unNrgXuTVv2SCnIkYxa6qyxY5JhrtjqJIUe/kK/nWp1gPTrSZpU2
- APSP35jRRQ3rqrGw0rXrRYH/Z1hX5Emvc9dzz+iOkCXfMKISQTwRBLsN+l3/5/vDtM9Z9b
- 0bPwxHS8v7G8FLP07gSh8YqBwZnnzFY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=fpTzGXr/RALIWR2NaF9/oc2jGQiHMrHNrjpNixG0A2o=;
+ b=jQn2qReRwWAJfuiUTgEABDjJJBJ/C+tNfaaSHDJ9TpCuOn9eMzJWvt5YhLZvyO+A8QTfaH
+ Be6Rm1cptgg81PlBbYyUsuavco7JnZRVgAi/xqYLu5i9NgbjVmgPea6c59+FaAns+PD3RZ
+ U9BxS3FMEYvrK4RpMTYveJGHL9nqBKc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-85_bX24FPd2ImyD8vrvZ5A-1; Wed,
- 27 Aug 2025 03:55:03 -0400
-X-MC-Unique: 85_bX24FPd2ImyD8vrvZ5A-1
-X-Mimecast-MFC-AGG-ID: 85_bX24FPd2ImyD8vrvZ5A_1756281301
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-jFk29lZmM1KszOxXcFrlbA-1; Wed,
+ 27 Aug 2025 03:55:38 -0400
+X-MC-Unique: jFk29lZmM1KszOxXcFrlbA-1
+X-Mimecast-MFC-AGG-ID: jFk29lZmM1KszOxXcFrlbA_1756281337
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B351A180036E; Wed, 27 Aug 2025 07:55:01 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A59CD195609E; Wed, 27 Aug 2025 07:55:37 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.40])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B0EE01955F24; Wed, 27 Aug 2025 07:54:56 +0000 (UTC)
+ id 538A21955F24; Wed, 27 Aug 2025 07:55:34 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PULL 03/31] tests/functional/test_aarch64_virt_gpu: Skip test if EGL
- won't initialize
-Date: Wed, 27 Aug 2025 09:54:13 +0200
-Message-ID: <20250827075443.559712-4-thuth@redhat.com>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 13/31] tests/functional: Move avr tests into architecture
+ specific folder
+Date: Wed, 27 Aug 2025 09:54:23 +0200
+Message-ID: <20250827075443.559712-14-thuth@redhat.com>
 In-Reply-To: <20250827075443.559712-1-thuth@redhat.com>
 References: <20250827075443.559712-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,52 +87,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-If you are using the Nvidia drivers and have installed new versions
-of those packages but have not yet rebooted the host kernel,
-attempting to use the egl-headless display will cause QEMU to fail to
-start with
+The tests/functional folder has become quite crowded, thus move the
+avr tests into a target-specific subfolder.
 
-$ qemu-system-aarch64 -M virt -display egl-headless
-qemu-system-aarch64: egl: eglInitialize failed: EGL_NOT_INITIALIZED
-qemu-system-aarch64: egl: render node init failed
-
-together with this complaint in the host kernel dmesg:
-
-[7874777.555649] NVRM: API mismatch: the client has the version 535.247.01, but
-                 NVRM: this kernel module has the version 535.230.02.  Please
-                 NVRM: make sure that this kernel module and all NVIDIA driver
-                 NVRM: components have the same version.
-
-This isn't a problem with QEMU itself, so reporting this as a test
-failure is misleading.  Instead skip the tests, as we already do for
-various other kinds of "host system can't actually run the EGL
-display" situation.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20250826123455.2856988-1-peter.maydell@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250819112403.432587-9-thuth@redhat.com>
 ---
- tests/functional/test_aarch64_virt_gpu.py | 2 ++
- 1 file changed, 2 insertions(+)
+ MAINTAINERS                                                 | 4 ++--
+ tests/functional/avr/meson.build                            | 6 ++++++
+ .../{test_avr_mega2560.py => avr/test_mega2560.py}          | 0
+ tests/functional/{test_avr_uno.py => avr/test_uno.py}       | 0
+ tests/functional/meson.build                                | 6 +-----
+ 5 files changed, 9 insertions(+), 7 deletions(-)
+ create mode 100644 tests/functional/avr/meson.build
+ rename tests/functional/{test_avr_mega2560.py => avr/test_mega2560.py} (100%)
+ rename tests/functional/{test_avr_uno.py => avr/test_uno.py} (100%)
 
-diff --git a/tests/functional/test_aarch64_virt_gpu.py b/tests/functional/test_aarch64_virt_gpu.py
-index 38447278579..4e50887c3e9 100755
---- a/tests/functional/test_aarch64_virt_gpu.py
-+++ b/tests/functional/test_aarch64_virt_gpu.py
-@@ -76,6 +76,8 @@ def _launch_virt_gpu(self, gpu_device):
-                 self.skipTest("egl-headless support is not available")
-             elif "'type' does not accept value 'dbus'" in excp.output:
-                 self.skipTest("dbus display support is not available")
-+            elif "eglInitialize failed: EGL_NOT_INITIALIZED" in excp.output:
-+                self.skipTest("EGL failed to initialize on this host")
-             else:
-                 self.log.info("unhandled launch failure: %s", excp.output)
-                 raise excp
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1eb964feca4..d01afcbea6d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -221,7 +221,7 @@ S: Maintained
+ F: docs/system/target-avr.rst
+ F: gdb-xml/avr-cpu.xml
+ F: target/avr/
+-F: tests/functional/test_avr_*.py
++F: tests/functional/avr/
+ 
+ Hexagon TCG CPUs
+ M: Brian Cain <brian.cain@oss.qualcomm.com>
+@@ -1249,7 +1249,7 @@ Arduino
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Maintained
+ F: hw/avr/arduino.c
+-F: tests/functional/test_avr_uno.py
++F: tests/functional/avr/test_uno.py
+ 
+ HP-PARISC Machines
+ ------------------
+diff --git a/tests/functional/avr/meson.build b/tests/functional/avr/meson.build
+new file mode 100644
+index 00000000000..7a2cb7099e7
+--- /dev/null
++++ b/tests/functional/avr/meson.build
+@@ -0,0 +1,6 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++tests_avr_system_thorough = [
++  'mega2560',
++  'uno',
++]
+diff --git a/tests/functional/test_avr_mega2560.py b/tests/functional/avr/test_mega2560.py
+similarity index 100%
+rename from tests/functional/test_avr_mega2560.py
+rename to tests/functional/avr/test_mega2560.py
+diff --git a/tests/functional/test_avr_uno.py b/tests/functional/avr/test_uno.py
+similarity index 100%
+rename from tests/functional/test_avr_uno.py
+rename to tests/functional/avr/test_uno.py
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 6989446d1c4..81eaa9c218c 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -12,6 +12,7 @@ endif
+ subdir('aarch64')
+ subdir('alpha')
+ subdir('arm')
++subdir('avr')
+ 
+ test_mips_timeouts = {
+   'mips_malta' : 480,
+@@ -77,11 +78,6 @@ tests_generic_linuxuser = [
+ tests_generic_bsduser = [
+ ]
+ 
+-tests_avr_system_thorough = [
+-  'avr_mega2560',
+-  'avr_uno',
+-]
+-
+ tests_hppa_system_quick = [
+   'hppa_seabios',
+ ]
 -- 
 2.50.1
 
