@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B612BCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 21:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC80CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 21:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urNI1-0001TF-0o; Wed, 27 Aug 2025 17:02:42 -0400
+	id 1urNIW-0002ms-IK; Wed, 27 Aug 2025 17:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urNHc-0000wR-AM
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:02:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urNIT-0002Qi-J6
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:03:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urNHV-00073c-LF
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:02:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urNIR-00079N-RL
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:03:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756328527;
+ s=mimecast20190719; t=1756328583;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QJAr3TebO8J8PikwvNWprOvIsh2tZfg1cE20LO3lM7Y=;
- b=h2KUKO079Wa1O8FbS7mkZCfqp+GeIeEALZR9YyZ96JrMjdEeZ0VsOAt42yxtlwfonTjH/u
- MdjZ5eXFnaSWbKDxf/XzsVpbmx8h2s+L+u9y/I6cq+2xgPohWHjY3JjknDNY78k6Cfb2nW
- XCQOOSmDhwLywpuanXoICaKhssDIJkU=
-Received: from mail-yx1-f72.google.com (74.125.224.72 [74.125.224.72]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-2UFGrEGRPECKYoBnm9IgFw-1; Wed,
- 27 Aug 2025 16:59:56 -0400
-X-MC-Unique: 2UFGrEGRPECKYoBnm9IgFw-1
-X-Mimecast-MFC-AGG-ID: 2UFGrEGRPECKYoBnm9IgFw_1756328396
-Received: by mail-yx1-f72.google.com with SMTP id
- 956f58d0204a3-5f3562a16fbso437951d50.0
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 13:59:56 -0700 (PDT)
+ bh=l4BC263GXH0zaGK8Pbl+OQ+YsY3HK/MeO9mZ0YwB/IA=;
+ b=APXf5tvAlo9tUqbAh01xeJZFoRHxlbwABS5jDILwc8eqId2JnFujwKGdrMGoDKiwD5hyAx
+ NFhIDwyvnA+tdoL3eIxNJP1p3HxI3CuWN1uhOHvTOz1asq1j92GrSE+i2OXsVDHIkAW6th
+ HIk9yfK4V6LXG9ibmwIHbpdDklHmVXU=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-b_PqM8UaPI-aa0wsOcnoqA-1; Wed, 27 Aug 2025 16:59:54 -0400
+X-MC-Unique: b_PqM8UaPI-aa0wsOcnoqA-1
+X-Mimecast-MFC-AGG-ID: b_PqM8UaPI-aa0wsOcnoqA_1756328394
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-e950984545fso286913276.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 13:59:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756328396; x=1756933196;
+ d=1e100.net; s=20230601; t=1756328394; x=1756933194;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QJAr3TebO8J8PikwvNWprOvIsh2tZfg1cE20LO3lM7Y=;
- b=s98lyjl8oNZ3gMCUb5zi16iz3k7r7T7e5ijc0TfvF80EO5ypehLB1FeLKxLacZu0Bf
- CBwlp5TTybgZ8Zq22QQMBl3IO+nvO+iXs8MKNWTnuLp7xJ5/KARt7coR27btoyp2TzK4
- 3XspVAL3kIdGg/mYnX3PaGwa8C1iT+M+IyjznQX5kS9Qsf52iPtzrw1G6FER+4IJ/cQE
- hoeOTEvhjqOt1sTW8h5MEf+wpDnMd+GUAYpalFLSrTVvjmakmxczQ6yZNIZAoxyDx2lh
- oeCqYc4AJi3EpR9AdT37ngY9mAkEicWmUCjzICSTUYoGmdgIfSd9p1BGdoWRueELOZXZ
- ycNA==
-X-Gm-Message-State: AOJu0Yz2/cy7Pxj75KjOgi1JRnlhE6yLms2VwTG2EvW7xPL18UOyCA2R
- D9nd4ltqxqzLBJIcrA9+0Ra8mVdwNXwx8FrmroXocNHu0kq/ARQfIjiks4KPS6jdZak3qWgObWq
- U4RmfsEjydQRfPDaXwfxNv0YPpW4+4UjJTTsAsPtdJub/j/0VkG4R2ry+xj5Y5xpP2tdrH7M9Up
- BKGmkOk1Dq6/uJmFNeenOdudOkm+aUPsYxOEVjBw==
-X-Gm-Gg: ASbGnctESYGDC+gCqAd0yiUWJDjhCDx8LVCPwaLm2ijZG5HrBmdSjnKUrgChjHKPa1R
- MeR4buM3eoBDD5+Lk0xhTCSZzArPkwJw5C+Xhz2gm3QQSwp/Wf1c9vbPbXlW9M8b59b5QPS50lA
- UqdVPrC+CVche3OpIH7RAN0pAORF5ERqE7NT6t855z26lH4K87dX0yEjka5HwzfFPBPpjFrTqQa
- 2vD2nCFL9kp5ruDOb/B1+22tBlLPoGgY8VP0b3ibm0jRSoyAH7Ix0CMpwWcAPipnmZvkuG5SQ3A
- o75iqOTWUerU1TsRk3C3mWiy2+r27OIU4DgUbcd/uK6BJAHXa50WZKdlmH2IMaW9OlbFcaJrWwX
- 9F8UkqD8hGoXDvlLiwAQ=
-X-Received: by 2002:a05:6902:1145:b0:e95:3636:fec7 with SMTP id
- 3f1490d57ef6-e953637041bmr14362446276.3.1756328395872; 
- Wed, 27 Aug 2025 13:59:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGWuQxOKR+8wJOK0/TNbn7hTa6ZZbpCFF+H/RmQjalGCt0MH0LE5+RvkPGQaBYReAhzsoSjYA==
-X-Received: by 2002:a05:6902:1145:b0:e95:3636:fec7 with SMTP id
- 3f1490d57ef6-e953637041bmr14362396276.3.1756328395326; 
- Wed, 27 Aug 2025 13:59:55 -0700 (PDT)
+ bh=l4BC263GXH0zaGK8Pbl+OQ+YsY3HK/MeO9mZ0YwB/IA=;
+ b=fvdMxYl/+YhJmiRcPa/Xn800KiFxwbwf3ATc6q1JNsDjwOg6WSDXLI5Wcjkz18q3UO
+ w1/UI5jat6N92OGykwamKl0YdZouFoK/rBmCXASv1RzY5XszA/WIS9SAgkM/moi5pCYz
+ mqckBYk2dyveeAVtfAQ439J6JaPpILmvHYwLR0Sz0BTJbxQkxJAQwcEdnlS5TTZCb5w5
+ u3bbYQ7EZTtoirFp23sngcIEwETcN4FD1ntf+D/xYxXUfT5Z9f0NnQmDhtuGSQU+bwmT
+ F+hwcHmIJ7idq7V2jg5aLsJIy1shTj4SahqfbaaXKSD31T9GVzznuSi5pt7yKMaJPHER
+ WJ1A==
+X-Gm-Message-State: AOJu0YwcnrATHShj9FsygqSQqiVdLhHXWiQsXv/fGRNkLReTg551PmWT
+ o0DiKb8pgq8NERrJKLASGR9Wzf0f5ysaeywzDdrL9swxgxJ9+tevuUk7ggASWuyVrnSozFOn9mq
+ 2HoGkjBJAw+rHYNRbPoWx7V3KsxAnL5+dGkN9JhguCWFSNGbcG2YjxkufJfXED2lYBPE7HEG583
+ fcwfRv1mSmE5Ku4zXBBqJLba5yL3BZ9x4CJnOkdg==
+X-Gm-Gg: ASbGncswB6q2S0+j8NWZqRl9Vm0ve0jVffQbyTZSR46z4hWo+DFEEkiFOSHrD7+Htrl
+ Mb+wtAcKhgVmTWcc49iRoH2noz8Yyc3CWm2cuoM6qfS6o8p+JfN+JdtBIfCirAZhpAP/2t6pULJ
+ v8JJxq09AjfKu2uX+ntdIqm9uE8n1Wni1SgyufYDUYTPHA18HuF5KnU77bNLxK+2F0TKSJoR+wY
+ grkn3Pf+aT6EtWVThrdNozlZWKuick7we/b+Y3jAx9whfih6sYg6xcjhb1m8G0c1TnB0hXKf7zO
+ gIBnRv9Bii4LSTQ6tdngAAwkTq+vgq2MzZfo/AsgXERfJm3RppNyxuGClbdkCBCA5h4J1WKTsu0
+ cSpXOrwZnHgorEMQvA2w=
+X-Received: by 2002:a05:6902:1243:b0:e96:c325:9775 with SMTP id
+ 3f1490d57ef6-e96c3262d5amr13385987276.48.1756328394090; 
+ Wed, 27 Aug 2025 13:59:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFIgpJsamo7OoZBWxMJDrXBYPl0qpshQX7BvBfgYY4kZlgP8SwZiqltR8WgNxKmKaUkBwgBiw==
+X-Received: by 2002:a05:6902:1243:b0:e96:c325:9775 with SMTP id
+ 3f1490d57ef6-e96c3262d5amr13385943276.48.1756328393631; 
+ Wed, 27 Aug 2025 13:59:53 -0700 (PDT)
 Received: from x1.com
  (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
  by smtp.gmail.com with ESMTPSA id
- 3f1490d57ef6-e96e5530a32sm1389846276.17.2025.08.27.13.59.53
+ 3f1490d57ef6-e96e5530a32sm1389846276.17.2025.08.27.13.59.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 13:59:54 -0700 (PDT)
+ Wed, 27 Aug 2025 13:59:53 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com,
@@ -83,27 +83,28 @@ Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Prasad Pandit <ppandit@redhat.com>, Zhang Chen <zhangckid@gmail.com>,
  Li Zhijian <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>,
- Lidong Chen <jemmy858585@gmail.com>
-Subject: [PATCH RFC 2/9] migration/rdma: Fix wrong context in
- qio_channel_rdma_shutdown()
-Date: Wed, 27 Aug 2025 16:59:41 -0400
-Message-ID: <20250827205949.364606-3-peterx@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: [PATCH RFC 1/9] migration/vfio: Remove BQL implication in
+ vfio_multifd_switchover_start()
+Date: Wed, 27 Aug 2025 16:59:40 -0400
+Message-ID: <20250827205949.364606-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250827205949.364606-1-peterx@redhat.com>
 References: <20250827205949.364606-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,29 +120,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The rdmaout should be a cache of rioc->rdmaout, not rioc->rdmain.
+We may switch to a BQL-free loadvm model.  Be prepared with it.
 
-Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
-Cc: Lidong Chen <jemmy858585@gmail.com>
-Fixes: 54db882f07 ("migration: implement the shutdown for RDMA QIOChannel")
+Cc: Cédric Le Goater <clg@redhat.com>
+Cc: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/rdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/vfio/migration-multifd.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 2d839fce6c..e6837184c8 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -2986,7 +2986,7 @@ qio_channel_rdma_shutdown(QIOChannel *ioc,
-     RCU_READ_LOCK_GUARD();
+diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
+index e4785031a7..8dc8444f0d 100644
+--- a/hw/vfio/migration-multifd.c
++++ b/hw/vfio/migration-multifd.c
+@@ -763,16 +763,21 @@ int vfio_multifd_switchover_start(VFIODevice *vbasedev)
+ {
+     VFIOMigration *migration = vbasedev->migration;
+     VFIOMultifd *multifd = migration->multifd;
++    bool bql_is_locked = bql_locked();
  
-     rdmain = qatomic_rcu_read(&rioc->rdmain);
--    rdmaout = qatomic_rcu_read(&rioc->rdmain);
-+    rdmaout = qatomic_rcu_read(&rioc->rdmaout);
+     assert(multifd);
  
-     switch (how) {
-     case QIO_CHANNEL_SHUTDOWN_READ:
+     /* The lock order is load_bufs_mutex -> BQL so unlock BQL here first */
+-    bql_unlock();
++    if (bql_is_locked) {
++        bql_unlock();
++    }
+     WITH_QEMU_LOCK_GUARD(&multifd->load_bufs_mutex) {
+         assert(!multifd->load_bufs_thread_running);
+         multifd->load_bufs_thread_running = true;
+     }
+-    bql_lock();
++    if (bql_is_locked) {
++        bql_lock();
++    }
+ 
+     qemu_loadvm_start_load_thread(vfio_load_bufs_thread, vbasedev);
+ 
 -- 
 2.50.1
 
