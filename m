@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11674CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 10:45:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99287CA0FF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 10:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urDbs-0003xL-KF; Wed, 27 Aug 2025 06:42:32 -0400
+	id 1urDeA-0008M4-9X; Wed, 27 Aug 2025 06:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1urDbk-0003sl-Jw
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 06:42:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1urDdk-0007TR-9I
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 06:44:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1urDbc-0002wD-U2
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 06:42:22 -0400
+ id 1urDde-0003Gm-SA
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 06:44:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756291332;
+ s=mimecast20190719; t=1756291458;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4CKYRHs5VpBSowms/VyuQpNSYM15O3vu3Xz32VNlDzY=;
- b=SGODTD5W4HBwtnsYpGoQU0WmxOHm6TULDZIrgI2pswah7b6u2diCdkPgjbIYWUVAIO71KV
- IiO4DfqN2cs+2Ul9cP7zWRyYgOA0T17o0Rk8MUJOCx8l+SOEt95iVpxj2G1Vbkb+XaT2me
- 6Opq0Dl36sPgHzKw15+1xYuyvM/WxdE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=SdbOCiZ2T18wrfYG1QPoqXLktqgQGw1aQoAxzY5A+t8=;
+ b=afu6gP0SkrY/UqYYAe0tfNqnfTwIXX6jRLHExJylQSI/Vza8Uq+TEussIeDvF06Z+CoQpQ
+ 7Ao/5e44sfdiL9yKgqaj8musEtexMElQ47MUv8iRNLSXm90x2+bka3Yc4SEc5rHsrRYG6x
+ oR4sQVxTcibt5cfvU6JS36QwTpqwNl0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-U1S4W8RGPUOrFv2JsQzQUg-1; Wed,
- 27 Aug 2025 06:42:11 -0400
-X-MC-Unique: U1S4W8RGPUOrFv2JsQzQUg-1
-X-Mimecast-MFC-AGG-ID: U1S4W8RGPUOrFv2JsQzQUg_1756291330
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-ftfFArt1PweNQyAqrWBkdg-1; Wed,
+ 27 Aug 2025 06:44:15 -0400
+X-MC-Unique: ftfFArt1PweNQyAqrWBkdg-1
+X-Mimecast-MFC-AGG-ID: ftfFArt1PweNQyAqrWBkdg_1756291454
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7707180028C; Wed, 27 Aug 2025 10:42:09 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 891F619541AA; Wed, 27 Aug 2025 10:44:14 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9D7A01800291; Wed, 27 Aug 2025 10:42:07 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A93D530001A6; Wed, 27 Aug 2025 10:44:12 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
@@ -55,16 +55,16 @@ Cc: qemu-rust@nongnu.org,
  pbonzini@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH 02/22] rust: remove unused global qemu "allocator"
-Date: Wed, 27 Aug 2025 14:41:24 +0400
-Message-ID: <20250827104147.717203-3-marcandre.lureau@redhat.com>
+Subject: [PATCH 18/22] rust/pl011: drop dependency on qemu_api
+Date: Wed, 27 Aug 2025 14:41:40 +0400
+Message-ID: <20250827104147.717203-19-marcandre.lureau@redhat.com>
 In-Reply-To: <20250827104147.717203-1-marcandre.lureau@redhat.com>
 References: <20250827104147.717203-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -92,222 +92,212 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The global allocator has always been disabled. There is no clear reason
-Rust and C should use the same allocator. Allocations made from Rust
-must be freed by Rust, and same for C, otherwise we head into troubles.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- meson.build               |   4 --
- rust/Cargo.toml           |   2 +-
- rust/qemu-api/Cargo.toml  |   1 -
- rust/qemu-api/meson.build |   1 -
- rust/qemu-api/src/lib.rs  | 135 --------------------------------------
- 5 files changed, 1 insertion(+), 142 deletions(-)
+ rust/hw/char/pl011/wrapper.h       | 51 ++++++++++++++++++++++++++++++
+ rust/Cargo.lock                    |  1 -
+ rust/hw/char/pl011/Cargo.toml      |  1 -
+ rust/hw/char/pl011/build.rs        |  1 +
+ rust/hw/char/pl011/meson.build     | 27 ++++++++++++++--
+ rust/hw/char/pl011/src/bindings.rs | 27 ++++++++++++++++
+ rust/hw/char/pl011/src/device.rs   |  2 +-
+ rust/hw/char/pl011/src/lib.rs      |  1 +
+ 8 files changed, 106 insertions(+), 5 deletions(-)
+ create mode 100644 rust/hw/char/pl011/wrapper.h
+ create mode 120000 rust/hw/char/pl011/build.rs
+ create mode 100644 rust/hw/char/pl011/src/bindings.rs
 
-diff --git a/meson.build b/meson.build
-index 50c774a195..ebbe9f8785 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1090,9 +1090,6 @@ glib = declare_dependency(dependencies: [glib_pc, gmodule],
- # TODO: remove this check and the corresponding workaround (qtree) when
- # the minimum supported glib is >= 2.75.3
- glib_has_gslice = glib.version().version_compare('<2.75.3')
--# Check whether glib has the aligned_alloc family of functions.
--# <https://docs.gtk.org/glib/func.aligned_alloc.html>
--glib_has_aligned_alloc = glib.version().version_compare('>=2.72.0')
- 
- # override glib dep to include the above refinements
- meson.override_dependency('glib-2.0', glib)
-@@ -2706,7 +2703,6 @@ config_host_data.set('CONFIG_GETLOADAVG', cc.has_function('getloadavg'))
- config_host_data.set('HAVE_COPY_FILE_RANGE', cc.has_function('copy_file_range'))
- config_host_data.set('HAVE_GETIFADDRS', cc.has_function('getifaddrs'))
- config_host_data.set('HAVE_GLIB_WITH_SLICE_ALLOCATOR', glib_has_gslice)
--config_host_data.set('HAVE_GLIB_WITH_ALIGNED_ALLOC', glib_has_aligned_alloc)
- config_host_data.set('HAVE_OPENPTY', cc.has_function('openpty', dependencies: util))
- config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul', prefix: osdep_prefix))
- config_host_data.set('HAVE_SYSTEM_FUNCTION', cc.has_function('system', prefix: '#include <stdlib.h>'))
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index 56cfe07791..8b878775ce 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -18,7 +18,7 @@ rust-version = "1.77.0"
- 
- [workspace.lints.rust]
- unexpected_cfgs = { level = "deny", check-cfg = [
--    'cfg(MESON)', 'cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)',
-+    'cfg(MESON)',
- ] }
- 
- # Occasionally, we may need to silence warnings and clippy lints that
-diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
-index db7000dee4..603327945f 100644
---- a/rust/qemu-api/Cargo.toml
-+++ b/rust/qemu-api/Cargo.toml
-@@ -21,7 +21,6 @@ foreign = "~0.3.1"
- 
- [features]
- default = ["debug_cell"]
--allocator = []
- debug_cell = []
+diff --git a/rust/hw/char/pl011/wrapper.h b/rust/hw/char/pl011/wrapper.h
+new file mode 100644
+index 0000000000..87a5a589c8
+--- /dev/null
++++ b/rust/hw/char/pl011/wrapper.h
+@@ -0,0 +1,51 @@
++/*
++ * QEMU System Emulator
++ *
++ * Copyright (c) 2024 Linaro Ltd.
++ *
++ * Authors: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++
++/*
++ * This header file is meant to be used as input to the `bindgen` application
++ * in order to generate C FFI compatible Rust bindings.
++ */
++
++#ifndef __CLANG_STDATOMIC_H
++#define __CLANG_STDATOMIC_H
++/*
++ * Fix potential missing stdatomic.h error in case bindgen does not insert the
++ * correct libclang header paths on its own. We do not use stdatomic.h symbols
++ * in QEMU code, so it's fine to declare dummy types instead.
++ */
++typedef enum memory_order {
++  memory_order_relaxed,
++  memory_order_consume,
++  memory_order_acquire,
++  memory_order_release,
++  memory_order_acq_rel,
++  memory_order_seq_cst,
++} memory_order;
++#endif /* __CLANG_STDATOMIC_H */
++
++#include "qemu/osdep.h"
++#include "hw/char/pl011.h"
+diff --git a/rust/Cargo.lock b/rust/Cargo.lock
+index 80ad6f0fc6..d0299dc262 100644
+--- a/rust/Cargo.lock
++++ b/rust/Cargo.lock
+@@ -149,7 +149,6 @@ dependencies = [
+  "common",
+  "hwcore",
+  "migration",
+- "qemu_api",
+  "qemu_macros",
+  "qom",
+  "system",
+diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
+index 9e451fc0aa..285d25c217 100644
+--- a/rust/hw/char/pl011/Cargo.toml
++++ b/rust/hw/char/pl011/Cargo.toml
+@@ -24,7 +24,6 @@ qom = { path = "../../../qom" }
+ chardev = { path = "../../../chardev" }
+ system = { path = "../../../system" }
+ hwcore = { path = "../../../hw/core" }
+-qemu_api = { path = "../../../qemu-api" }
+ qemu_macros = { path = "../../../qemu-macros" }
  
  [lints]
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index a090297c45..062009f161 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -2,7 +2,6 @@ _qemu_api_cfg = run_command(rustc_args,
-   '--config-headers', config_host_h, '--features', files('Cargo.toml'),
-   capture: true, check: true).stdout().strip().splitlines()
+diff --git a/rust/hw/char/pl011/build.rs b/rust/hw/char/pl011/build.rs
+new file mode 120000
+index 0000000000..5f5060db35
+--- /dev/null
++++ b/rust/hw/char/pl011/build.rs
+@@ -0,0 +1 @@
++../../../util/build.rs
+\ No newline at end of file
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+index 7d90f2aad6..a14993f692 100644
+--- a/rust/hw/char/pl011/meson.build
++++ b/rust/hw/char/pl011/meson.build
+@@ -1,6 +1,30 @@
++# TODO: Remove this comment when the clang/libclang mismatch issue is solved.
++#
++# Rust bindings generation with `bindgen` might fail in some cases where the
++# detected `libclang` does not match the expected `clang` version/target. In
++# this case you must pass the path to `clang` and `libclang` to your build
++# command invocation using the environment variables CLANG_PATH and
++# LIBCLANG_PATH
++_libpl011_bindings_inc_rs = rust.bindgen(
++  input: 'wrapper.h',
++  dependencies: common_ss.all_dependencies(),
++  output: 'bindings.inc.rs',
++  include_directories: bindings_incdir,
++  bindgen_version: ['>=0.60.0'],
++  args: bindgen_args_common,
++)
++
+ _libpl011_rs = static_library(
+   'pl011',
+-  files('src/lib.rs'),
++  structured_sources(
++    [
++      'src/lib.rs',
++      'src/bindings.rs',
++      'src/device.rs',
++      'src/registers.rs',
++    ],
++    {'.' : _libpl011_bindings_inc_rs},
++  ),
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   dependencies: [
+@@ -11,7 +35,6 @@ _libpl011_rs = static_library(
+     util_rs,
+     migration_rs,
+     bql_rs,
+-    qemu_api,
+     qemu_macros,
+     qom_rs,
+     chardev_rs,
+diff --git a/rust/hw/char/pl011/src/bindings.rs b/rust/hw/char/pl011/src/bindings.rs
+new file mode 100644
+index 0000000000..bd5ea840cb
+--- /dev/null
++++ b/rust/hw/char/pl011/src/bindings.rs
+@@ -0,0 +1,27 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++#![allow(
++    dead_code,
++    improper_ctypes_definitions,
++    improper_ctypes,
++    non_camel_case_types,
++    non_snake_case,
++    non_upper_case_globals,
++    unnecessary_transmutes,
++    unsafe_op_in_unsafe_fn,
++    clippy::pedantic,
++    clippy::restriction,
++    clippy::style,
++    clippy::missing_const_for_fn,
++    clippy::ptr_offset_with_cast,
++    clippy::useless_transmute,
++    clippy::missing_safety_doc,
++    clippy::too_many_arguments
++)]
++
++//! `bindgen`-generated declarations.
++
++#[cfg(MESON)]
++include!("bindings.inc.rs");
++
++#[cfg(not(MESON))]
++include!(concat!(env!("OUT_DIR"), "/bindings.inc.rs"));
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index b7c1cb68a2..5ce39b002e 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -134,7 +134,7 @@ pub struct PL011State {
+ // structs, so the size of the Rust version must not be any larger
+ // than the size of the C one. If this assert triggers you need to
+ // expand the padding_for_rust[] array in the C PL011State struct.
+-static_assert!(size_of::<PL011State>() <= size_of::<qemu_api::bindings::PL011State>());
++static_assert!(size_of::<PL011State>() <= size_of::<crate::bindings::PL011State>());
  
--# _qemu_api_cfg += ['--cfg', 'feature="allocator"']
- if get_option('debug_mutex')
-   _qemu_api_cfg += ['--cfg', 'feature="debug_cell"']
- endif
-diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-index 86dcd8ef17..0f9231f398 100644
---- a/rust/qemu-api/src/lib.rs
-+++ b/rust/qemu-api/src/lib.rs
-@@ -32,139 +32,4 @@
- pub mod vmstate;
- pub mod zeroable;
+ qom_isa!(PL011State : SysBusDevice, DeviceState, Object);
  
--use std::{
--    alloc::{GlobalAlloc, Layout},
--    ffi::c_void,
--};
--
- pub use error::{Error, Result};
--
--#[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
--extern "C" {
--    fn g_aligned_alloc0(
--        n_blocks: bindings::gsize,
--        n_block_bytes: bindings::gsize,
--        alignment: bindings::gsize,
--    ) -> bindings::gpointer;
--    fn g_aligned_free(mem: bindings::gpointer);
--}
--
--#[cfg(not(HAVE_GLIB_WITH_ALIGNED_ALLOC))]
--extern "C" {
--    fn qemu_memalign(alignment: usize, size: usize) -> *mut c_void;
--    fn qemu_vfree(ptr: *mut c_void);
--}
--
--extern "C" {
--    fn g_malloc0(n_bytes: bindings::gsize) -> bindings::gpointer;
--    fn g_free(mem: bindings::gpointer);
--}
--
--/// An allocator that uses the same allocator as QEMU in C.
--///
--/// It is enabled by default with the `allocator` feature.
--///
--/// To set it up manually as a global allocator in your crate:
--///
--/// ```ignore
--/// use qemu_api::QemuAllocator;
--///
--/// #[global_allocator]
--/// static GLOBAL: QemuAllocator = QemuAllocator::new();
--/// ```
--#[derive(Clone, Copy, Debug)]
--#[repr(C)]
--pub struct QemuAllocator {
--    _unused: [u8; 0],
--}
--
--#[cfg_attr(all(feature = "allocator", not(test)), global_allocator)]
--pub static GLOBAL: QemuAllocator = QemuAllocator::new();
--
--impl QemuAllocator {
--    // From the glibc documentation, on GNU systems, malloc guarantees 16-byte
--    // alignment on 64-bit systems and 8-byte alignment on 32-bit systems. See
--    // https://www.gnu.org/software/libc/manual/html_node/Malloc-Examples.html.
--    // This alignment guarantee also applies to Windows and Android. On Darwin
--    // and OpenBSD, the alignment is 16 bytes on both 64-bit and 32-bit systems.
--    #[cfg(all(
--        target_pointer_width = "32",
--        not(any(target_os = "macos", target_os = "openbsd"))
--    ))]
--    pub const DEFAULT_ALIGNMENT_BYTES: Option<usize> = Some(8);
--    #[cfg(all(
--        target_pointer_width = "64",
--        not(any(target_os = "macos", target_os = "openbsd"))
--    ))]
--    pub const DEFAULT_ALIGNMENT_BYTES: Option<usize> = Some(16);
--    #[cfg(all(
--        any(target_pointer_width = "32", target_pointer_width = "64"),
--        any(target_os = "macos", target_os = "openbsd")
--    ))]
--    pub const DEFAULT_ALIGNMENT_BYTES: Option<usize> = Some(16);
--    #[cfg(not(any(target_pointer_width = "32", target_pointer_width = "64")))]
--    pub const DEFAULT_ALIGNMENT_BYTES: Option<usize> = None;
--
--    pub const fn new() -> Self {
--        Self { _unused: [] }
--    }
--}
--
--impl Default for QemuAllocator {
--    fn default() -> Self {
--        Self::new()
--    }
--}
--
--// Sanity check.
--const _: [(); 8] = [(); ::core::mem::size_of::<*mut c_void>()];
--
--unsafe impl GlobalAlloc for QemuAllocator {
--    unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
--        if matches!(Self::DEFAULT_ALIGNMENT_BYTES, Some(default) if default.checked_rem(layout.align()) == Some(0))
--        {
--            // SAFETY: g_malloc0() is safe to call.
--            unsafe { g_malloc0(layout.size().try_into().unwrap()).cast::<u8>() }
--        } else {
--            #[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
--            {
--                // SAFETY: g_aligned_alloc0() is safe to call.
--                unsafe {
--                    g_aligned_alloc0(
--                        layout.size().try_into().unwrap(),
--                        1,
--                        layout.align().try_into().unwrap(),
--                    )
--                    .cast::<u8>()
--                }
--            }
--            #[cfg(not(HAVE_GLIB_WITH_ALIGNED_ALLOC))]
--            {
--                // SAFETY: qemu_memalign() is safe to call.
--                unsafe { qemu_memalign(layout.align(), layout.size()).cast::<u8>() }
--            }
--        }
--    }
--
--    unsafe fn dealloc(&self, ptr: *mut u8, layout: Layout) {
--        if matches!(Self::DEFAULT_ALIGNMENT_BYTES, Some(default) if default.checked_rem(layout.align()) == Some(0))
--        {
--            // SAFETY: `ptr` must have been allocated by Self::alloc thus a valid
--            // glib-allocated pointer, so `g_free`ing is safe.
--            unsafe { g_free(ptr.cast::<_>()) }
--        } else {
--            #[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
--            {
--                // SAFETY: `ptr` must have been allocated by Self::alloc thus a valid aligned
--                // glib-allocated pointer, so `g_aligned_free`ing is safe.
--                unsafe { g_aligned_free(ptr.cast::<_>()) }
--            }
--            #[cfg(not(HAVE_GLIB_WITH_ALIGNED_ALLOC))]
--            {
--                // SAFETY: `ptr` must have been allocated by Self::alloc thus a valid aligned
--                // glib-allocated pointer, so `qemu_vfree`ing is safe.
--                unsafe { qemu_vfree(ptr.cast::<_>()) }
--            }
--        }
--    }
--}
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+index 2b70d2ff56..0c19b708c0 100644
+--- a/rust/hw/char/pl011/src/lib.rs
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -12,6 +12,7 @@
+ //! See [`PL011State`](crate::device::PL011State) for the device model type and
+ //! the [`registers`] module for register types.
+ 
++mod bindings;
+ mod device;
+ mod registers;
+ 
 -- 
 2.50.1
 
