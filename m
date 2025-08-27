@@ -4,38 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7953DCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 961D7CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urJbA-0008F8-0o; Wed, 27 Aug 2025 13:06:12 -0400
+	id 1urJZV-0005x6-Gu; Wed, 27 Aug 2025 13:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJaN-0006kH-9Z; Wed, 27 Aug 2025 13:05:23 -0400
+ id 1urJZQ-0005t9-CQ; Wed, 27 Aug 2025 13:04:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJaG-0007yP-Vd; Wed, 27 Aug 2025 13:05:23 -0400
+ id 1urJZL-0007cd-3n; Wed, 27 Aug 2025 13:04:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E4EC914C730;
+ by isrv.corpit.ru (Postfix) with ESMTP id 28ACE14C725;
  Wed, 27 Aug 2025 20:03:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 032322698F6;
- Wed, 27 Aug 2025 20:03:57 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 364712698EB;
+ Wed, 27 Aug 2025 20:03:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 14/18] target/arm: Fix big-endian handling of NEON gdb
- remote debugging
-Date: Wed, 27 Aug 2025 20:03:49 +0300
-Message-ID: <20250827170356.2698446-14-mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 03/18] target/arm/sme: Reorg SME access handling in
+ handle_msr_i()
+Date: Wed, 27 Aug 2025 20:03:38 +0300
+Message-ID: <20250827170356.2698446-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -44,7 +47,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,57 +63,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-In the code for allowing the gdbstub to set the value of an AArch64
-FP/SIMD register, we weren't accounting for target_big_endian()
-being true. This meant that for aarch64_be-linux-user we would
-set the two halves of the FP register the wrong way around.
-The much more common case of a little-endian guest is not affected;
-nor are big-endian hosts.
-
-Correct the handling of this case.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Message-id: 20250722173736.2332529-2-vacha.bhavsar@oss.qualcomm.com
-[PMM: added comment, expanded commit message, fixed missing space]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20230112102436.1913-2-philmd@linaro.org
+Message-Id: <20230112004322.161330-1-richard.henderson@linaro.org>
+[PMD: Split patch in multiple tiny steps]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 35cca0f95ff5345f54c11d116efc8940a0dab8aa)
-(Mjt: s/target_big_endian/target_words_bigendian/ due to missing
- v10.0.0-277-gb939b8e42a "exec: Rename target_words_bigendian() -> target_big_endian()")
+(cherry picked from commit 535ca76425fc1ffa4311b3a47518b06c596a55c6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index 07a6746944..2dc058fcd6 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -99,8 +99,22 @@ int aarch64_fpu_gdb_set_reg(CPUARMState *env, uint8_t *buf, int reg)
-         /* 128 bit FP register */
-         {
-             uint64_t *q = aa64_vfp_qreg(env, reg);
--            q[0] = ldq_le_p(buf);
--            q[1] = ldq_le_p(buf + 8);
-+
-+            /*
-+             * On the wire these are target-endian 128 bit values.
-+             * In the CPU state these are host-order uint64_t values
-+             * with the least-significant one first. This means they're
-+             * the other way around for target_words_bigendian() (which is
-+             * only true for us for aarch64_be-linux-user).
-+             */
-+            if (target_words_bigendian()) {
-+                q[1] = ldq_p(buf);
-+                q[0] = ldq_p(buf + 8);
-+            } else{
-+                q[0] = ldq_p(buf);
-+                q[1] = ldq_p(buf + 8);
-+            }
-+
-             return 16;
+diff --git a/target/arm/translate-a64.c b/target/arm/translate-a64.c
+index 7210a9cc4d..b66561a5cf 100644
+--- a/target/arm/translate-a64.c
++++ b/target/arm/translate-a64.c
+@@ -1855,18 +1855,20 @@ static void handle_msr_i(DisasContext *s, uint32_t insn,
+             goto do_unallocated;
          }
-     case 32:
+         if (sme_access_check(s)) {
+-            bool i = crm & 1;
+-            bool changed = false;
++            int old = s->pstate_sm | (s->pstate_za << 1);
++            int new = (crm & 1) * 3;
++            int msk = (crm >> 1) & 3;
+ 
+-            if ((crm & 2) && i != s->pstate_sm) {
+-                gen_helper_set_pstate_sm(cpu_env, tcg_constant_i32(i));
+-                changed = true;
+-            }
+-            if ((crm & 4) && i != s->pstate_za) {
+-                gen_helper_set_pstate_za(cpu_env, tcg_constant_i32(i));
+-                changed = true;
+-            }
+-            if (changed) {
++            if ((old ^ new) & msk) {
++                /* At least one bit changes. */
++                bool i = crm & 1;
++
++                if ((crm & 2) && i != s->pstate_sm) {
++                    gen_helper_set_pstate_sm(cpu_env, tcg_constant_i32(i));
++                }
++                if ((crm & 4) && i != s->pstate_za) {
++                    gen_helper_set_pstate_za(cpu_env, tcg_constant_i32(i));
++                }
+                 gen_rebuild_hflags(s);
+             } else {
+                 s->base.is_jmp = DISAS_NEXT;
 -- 
 2.47.2
 
