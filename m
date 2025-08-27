@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BF02CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 21:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8682CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 21:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urNQk-000845-JE; Wed, 27 Aug 2025 17:11:42 -0400
+	id 1urNXP-00031e-Q0; Wed, 27 Aug 2025 17:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urNQh-00083E-OK
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:11:40 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1urNXN-000311-3h
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:18:33 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urNQg-0008MN-0i
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:11:39 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-771facea122so180396b3a.1
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 14:11:37 -0700 (PDT)
+ id 1urNXL-00012A-5P
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:18:32 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-327771edfbbso317862a91.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 14:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756329096; x=1756933896; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756329507; x=1756934307; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TNPsCYpnhupNcfqnVv7/+NB9KH9afOEPXUQ5NXL7LAo=;
- b=i5d2u8LY+9f3W4fLDadGyTqQ2tXpZw4iY1UGiYzvgE9wY+8+LpizZdmAgoUGmBSI9l
- FJnXr1fFMqe36wWIitaUPLEAI/9H/tb0tj5SXVPebNejquV5vLZcH83LM+BG3sOi6m1K
- QAh10wA2ClR0Ek4DoWYQE36gmFNtSWrvb5PWe5lAMOiHcLwUXUA+e27ev/yWgMUKvOQZ
- HPTq1MHYyH2b5Rbkfc24v1Am+RFFccx1pugcOWEBMiroO5U1stMVof7gy25x8F5JdZNJ
- IWd05Pq1eLifd5LFr66EySs+1PpOqpBxwX9vh1bxWe9sPAJfo/O4zbSyIVUkYUb0J3pe
- i13w==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9csC/GBzJf55038pfldGMLLbABT0YJOLmsEk9jtNrRc=;
+ b=UP2KRN0tYAIrzhCFz9lkd/ZvbAHgUBcrzqabEhopKD5tpj3BpNZ6GSwn+1USUO2+lb
+ s8g5G4DPNKxXpev3rxYfeuBLqXkh26yfkg0cnCCVc+ZCWlN4ADoW9gXt4hpv0mp79gwF
+ /SsEpgspWUh/A/y/0YSEche94X84j1iYzbqYJGsEh+aaCampqnhiTPnGZYLhRtDDkmyz
+ Fja4X3nkT03QUuNhQU1Okzk++X5qTtmoc+smVSzBpHmX5uqH1scxiiMlH1JlTzI50zKb
+ /3j10YXn9Oq/6zm//rcFxVd2+6tI6etvX0Nu928FWYvj/WaRLX6BRHr7XCbbLXlxVjgf
+ lcuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756329096; x=1756933896;
+ d=1e100.net; s=20230601; t=1756329507; x=1756934307;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TNPsCYpnhupNcfqnVv7/+NB9KH9afOEPXUQ5NXL7LAo=;
- b=UPhMD8y9B3+1fTYXcXoRwx7DRuUPcnb7KvSddqf342dm2zJgIBGoAaBuokHLjH0jyr
- oByyC1WZzgL7eiBvmviwhtKjKwXjTmeTUERj2Miy3YFjUR3PBfsk/GshVTddT2+uLY8U
- oXnZHu/PENuVOuwPXGN4QMce4fSsp9HNp0H5qsYOkhiWsyT0tXDppmIg/CsoueBWXGxv
- h15KNpjvsjSkLnJLksea97+gSJYeME31ZCeeHzAHUuNeW0RTN47NvWOpkQ7qHf+DBE3O
- yOK90NT/KIPJMEbCNFsLnlvfEs2gA7PcUqlHHSSoDG6HYFw3S3+6fPCLbojjNnBjgC9E
- zg1Q==
-X-Gm-Message-State: AOJu0YyE0NqSARKW+Lea48OXvKT0NpSQ3/rbbUPT0n82MXI55mGH7rT9
- r/xB+3UrX+wFDOD/MCg/wlAfezcK7Wf8Mm+rLaVEXC4vxlskAsw5SRtCHJAk9YHwHD65caO4qXX
- AMuL6aN4=
-X-Gm-Gg: ASbGnctpvHpcU0A5bVzW3MK24Rc8HVx4QbQkWlKACqa3pnFN2FpqP/9AG59CD7QlPt7
- TtO1FogH0linICWJmfqz/UjUecH1I3xiC+9yiFyxPT01SEDF0/835m0ubMDHcCgSHKv5YUvV0zt
- qWBgNjmQTazclpx3spCjEVThOHb3nV91ZGFHYNJJ7+7cp+FKDY/oyHMs5qKUt0CKZ/NVP1QTC5r
- OifKupvx5RMgc79d+YfrLM/dln8GSwSIEj7ksfhiy773cqvoJi6uY6+ZwT9FoIPl8EzsnPYJgF0
- lOyh3fJH5Tz+Xq2LH49/nsPdv9IKIM6CCS0FaaDuTrUXv1S1YSmWt7jd5O3ITz5RorLhsROzngT
- nH3v4MdFNmuEyADxIfHJGQXPy7bzPVIggvUDT
-X-Google-Smtp-Source: AGHT+IGxDet9UFjKpMTJfZ0qF/wYCPFjn+GuxgEJCL24W4BIfq6WOQxHTBb9FywuvvEql92efM00Qg==
-X-Received: by 2002:a17:902:cec2:b0:240:3db8:9adc with SMTP id
- d9443c01a7336-2462edd7472mr281632465ad.4.1756329095812; 
- Wed, 27 Aug 2025 14:11:35 -0700 (PDT)
+ bh=9csC/GBzJf55038pfldGMLLbABT0YJOLmsEk9jtNrRc=;
+ b=T4tCACw1N0USNbHekG0rGTKIGI/Ji1HBcueJ8fQ13XccJ0sBTbSnpFT/KFY6zNrxlQ
+ x3WDFVaqIW2tVpqkcBMpp9yd12NTCw5FPEdcsnu8n5TP/VmLTbLB8oxv4bdVqfq4LeAF
+ zB9iw/mw98kxusTLLvf667vrf63bhWbuKt8Iry84UvABxX6mTBvsndPdolEW+Ib6okDh
+ VKG+7pATxJ1tUTlZVRlNtEBicZ8bQRmpL0ANcw2t87vWVWchrY/8I6JcRYxxOc+Mb8xk
+ WvtNbBundrLUm9gnHJcEVpSIXfnjAGFsQAMuk0q33Q4uZte8aY2WZi9dPdt7+UT5yzYY
+ HLNA==
+X-Gm-Message-State: AOJu0YyAFQtLPjxe7osem7HHoNuvaYnrSd3X6Mi0BZtyXoWQqSsJF/Xe
+ sBfBKmw9QpL0UP8TL2xcTj6F459fhv6mnDNknvWQqHSQzZwcOhgo+GJQO9iC4KyW1CIEWyM5hLn
+ lxPZzbmU=
+X-Gm-Gg: ASbGncsVsgR4KGGbGGi6VHzOo75wQNp5oWJNusBq5EcjpY2aGrb+M8hs25hq8LDoe4q
+ fHYOAKQRs0xWZ6TT3Js+ajoKqCTr+nbINo6gw1n5q5TR9Yq+lnaWsNM3HkAszr05aCCtptnx710
+ zXTpraqAjMW88X0ez4fIZ1VEOiqLQfRQwHeZzG2phRGPedN+fkx85juThpmTpnTkpFEbr9JRj6i
+ Ebo5t4VyME1BhQ8V0Zk4H8M6LGumVt8u2jxJR4hlAjCUh96DvxCN36SOxpPLa99WcW/V1jQR7EB
+ f4y6Y/PAJMMw7T+CkbA42y4lpKzUbn/6WkbzgGmeZBHtCyeL079wuJ5NIA0ICRU3EyUtgKID5VF
+ Xykuh7L4kXsE/LrthJvDuA42DCR2CwKmD06QbOHvAnsdMt1eYwS3qpf58NA==
+X-Google-Smtp-Source: AGHT+IFAREtfiyQOYHLgFpHVB+xyfiUddXk1zW49GRLT0FgxC8klsHLyaOKrDKPiwa8pk19vX8PJIg==
+X-Received: by 2002:a17:90a:d403:b0:327:add2:4f31 with SMTP id
+ 98e67ed59e1d1-327add25000mr179120a91.33.1756329507502; 
+ Wed, 27 Aug 2025 14:18:27 -0700 (PDT)
 Received: from [192.168.0.195] ([144.6.121.55])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24896e1bb19sm27201115ad.124.2025.08.27.14.11.33
+ 98e67ed59e1d1-327ab094f7csm177495a91.5.2025.08.27.14.18.26
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Aug 2025 14:11:35 -0700 (PDT)
-Message-ID: <d53079ce-dc44-421a-944a-e8be311e8cb5@linaro.org>
-Date: Thu, 28 Aug 2025 07:11:30 +1000
+ Wed, 27 Aug 2025 14:18:27 -0700 (PDT)
+Message-ID: <dcb3ddc6-4c6b-4691-b9e7-cfb25bd5e252@linaro.org>
+Date: Thu, 28 Aug 2025 07:18:23 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Adding termios2 support
-To: Luca Bonissi <qemu@bonslack.org>, Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-References: <e18add5b-c75a-4547-8ae0-01d9924883dd@bonslack.org>
+Subject: Re: [PATCH] linux-user: Add strace for rseq
+To: qemu-devel@nongnu.org
+References: <20250826060341.1118670-1-joel@jms.id.au>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <e18add5b-c75a-4547-8ae0-01d9924883dd@bonslack.org>
+In-Reply-To: <20250826060341.1118670-1-joel@jms.id.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,27 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/25 22:16, Luca Bonissi wrote:
-> From: Luca Bonissi <qemu@bonslack.org>
-> Date: Fri, 8 Aug 2025 13:30:19 +0200
-> Subject: [PATCH] Adding termios2 support
+On 8/26/25 16:03, Joel Stanley wrote:
+>   build/qemu-riscv64 -cpu rv64,v=on -d strace  build/tests/tcg/riscv64-linux-user/test-vstart-overflow
+>   1118081 riscv_hwprobe(0xffffbc038200,1,0,0,0,0) = 0
+>   1118081 brk(NULL) = 0x0000000000085000
+>   1118081 brk(0x0000000000085b00) = 0x0000000000085b00
+>   1118081 set_tid_address(0x850f0) = 1118081
+>   1118081 set_robust_list(0x85100,24) = -1 errno=38 (Function not implemented)
+>   1118081 rseq(0x857c0,32,0,0xf1401073) = -1 errno=38 (Function not implemented)
 > 
-> glibc 2.42 switched on some architectures (mips*, sh4, or1k) to termios2 ioctl syscalls 
-> (TCGETS2, TCSETS2, TCSETSW2, TCSETSF2).
-> This patch add support to termios2 structure and releated ioctls.
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>   linux-user/strace.list | 3 +++
+>   1 file changed, 3 insertions(+)
 > 
-> Fixed also wrong TC*2 definition on mips (missing "target_" from "struct termios2").
-> 
-> Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+> diff --git a/linux-user/strace.list b/linux-user/strace.list
+> index ab818352a90c..51b5ead9696c 100644
+> --- a/linux-user/strace.list
+> +++ b/linux-user/strace.list
+> @@ -1719,3 +1719,6 @@
+>   #ifdef TARGET_NR_riscv_hwprobe
+>   { TARGET_NR_riscv_hwprobe, "riscv_hwprobe" , "%s(%p,%d,%d,%d,%d,%d)", NULL, NULL },
+>   #endif
+> +#ifdef TARGET_NR_rseq
+> +{ TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
+> +#endif
 
-This looks plausible, but
+Usually the strace comes with the implementation.  But considering that we'll never be 
+able to implement rseq in qemu, this seems reasonable.
 
-(1) It does too much in one patch,
-(2) It now needs updating for master,
-(3) It came through email malformed.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-You can do all of the generic #ifdef TARGET_TCGETS2 stuff first, then take care of each 
-architecture one by one.
+and queued.
 
 
 r~
