@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B21ACA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 23:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8154CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 23:24:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urPS0-0001oZ-Ef; Wed, 27 Aug 2025 19:21:08 -0400
+	id 1urPRv-0001l2-HD; Wed, 27 Aug 2025 19:21:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urPRy-0001nc-Ff
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:21:06 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1urPRt-0001k4-Vc
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:21:01 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urPRw-0004Am-Fz
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:21:06 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7718408baf7so401671b3a.3
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 16:21:04 -0700 (PDT)
+ id 1urPRr-0004A8-Pz
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:21:01 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-76e2ea933b7so343429b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 16:20:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756336862; x=1756941662; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756336857; x=1756941657; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=plVtBvS4s1Af7rRNKV3HXQo32RvMRB2lbK947p094co=;
- b=JmumVz8H5PuYzpXp4Dk0LbjrmYBOR5OSkcPV4nIntOgszsfbVXwZ6lGtu8v2OQ5vRb
- WCUjaTtfQSLiZDyXBdQQ6/YhngVCcxuxFfRDFPZQP1vUgy3Z9jDfjU9jb9uy4VfP1B3K
- /1XjQM8gn2IJBTkRFf6fCpbSiu0+ckMcF0lqarTyQqxywJ6HhsyjkKoYYqah4Ri302XQ
- 4G/VregtLKZR3MAKxCrO6dkbfrel8xtNEryBSLuhrwIonlX/mVtx31EBI2BSQWFsfHJP
- 5pN5dY5RLZc+mGmHx4STRtoKwreTbmAsxEtrMbxWwWbIAiO+Zd5PPcPMKubwiZLBJ04f
- scQw==
+ bh=OKIdW06ZTz1VXr6FwN7LN5KfnzHWclYz+QB+jPoNsFE=;
+ b=ATQPBDWFaB8k7QWTRKQJUQhmukArmjzayvNTTjUMsQX9bK2fbX6moB+e9tL90NG+F6
+ pQTO7IEaL3wrNCtFQiFA6WvWakCVjIyhyNIYN9YyX/WHFwfAU+4AJEjOZjzm46kYY+Lb
+ xar4V2MOMDD68mSE2D2tLHnuvkA/4+plC7jnUvOXfQVfS4T+xrj0aaMnk71ZigGMFcbp
+ lt6KU7zlgFoULyC5cUHLvnwXCg4G7iabRvUAxzMKgtqg1qwnYopoe2Zu4V/uT6hDTZCM
+ BpjD06Tx1buimnJVe0EZ3qr8sIu/FWbhk3oH0VGVc9VnCtL1y2d3bWEn8FRcbrEwpYdJ
+ FPJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756336862; x=1756941662;
+ d=1e100.net; s=20230601; t=1756336857; x=1756941657;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=plVtBvS4s1Af7rRNKV3HXQo32RvMRB2lbK947p094co=;
- b=rLNQS/npqgTZwH+pnkt2uC27bhAKxx8E63jjFvASszfEPBkNmxANXmMsJ4drgbVWE8
- RdCfzYl5Wlu0/76vBVwXVvlwnnr/ozpnsqmC7RDFK5vzwlIWqUIKQq+WK24aFFrhg9rj
- mP2yT+tKuzHuSGqFwvnrvAXGw0hLPzcPDfYnH6vxwnoXb9toB7sBWtZGqKugU4/yS/JQ
- ROnmGvbSM3J/N/b9dV0vLTdfJ1GZF5m+vaL7ObqDk+8cJrI1zUww2osGBuacVkZT0pnQ
- xI8YBrx7QPpvVtcgEkdfqxNSj3tUmmLrA6I8K6aIHSc3dCU0aEPlixbg9zMQ5i5H/ToZ
- HOXg==
-X-Gm-Message-State: AOJu0YznD671Xbe6uvKSoUzZgxJdiw/gvSqT9FAdpmUUNZCybA1Thafu
- CN0iS504ZHemVlYbYkWY56TGf9BqJqkhsJVpU39BiD9Vb4BbLW44noIC/R47vgf2FVrIq2JTZir
- dfZYXKnQ=
-X-Gm-Gg: ASbGncvWkYhz6bDCfle7KLvOxAWSU+NCLIvvF8MDG7eyYReYivJF3W5NweHzx+VwFWx
- ICWwkKum65FKoIW7+AKRZHFfS3Pmb+V2d0v7JGmJ+3LreEqtpqID28A8HVJpEH+RmdGAtgWE/UB
- 8+WSyXR1Gce/0cpqXkQgJdV4VuQKYPUku1PiKzcX5Ap8j9oM0SYy78pkCv3syVUnXHu14zHv7Nu
- Xhj5zMJiIU4qwvnjgOAn/w1u/nYRTGOA9xU4OWLy+UbOu1ro7eOtvnyCF2AywoVvVjHwn0d/tQr
- /m3SiP69yE3a7PzON/ZdlfByFqr8gfDiF0BT+4k/l3LoBPvd/7IJiroZ1yEisnsGxKzS9bnhleK
- N6iZfImJ3kugx0l59MSt3MLra5bFqSH1bp7q4
-X-Google-Smtp-Source: AGHT+IHUZKzZJOlKhbIeq7GccDLDfIa7sViAR7a7JcnuOGVs24/gBvvqoq/xGLCSMVVT9DmWjGYyUg==
-X-Received: by 2002:a05:6a00:1746:b0:772:101f:5e46 with SMTP id
- d2e1a72fcca58-772101f7245mr3050817b3a.12.1756336862566; 
- Wed, 27 Aug 2025 16:21:02 -0700 (PDT)
+ bh=OKIdW06ZTz1VXr6FwN7LN5KfnzHWclYz+QB+jPoNsFE=;
+ b=b2Aa+2IP85zFerYzATCC2OxNh34dSg+WMyjmLenxY39UD3doGwAJojEoTOo1x/ZHjC
+ hYszubRSZ/b9P5y8wurY25NVUpX2oAAfAZiqml43o6+o5MjRDA7Z3JUsSf720qrMDV26
+ td+JsRQXxxQ8KRLzSIpVfxO/pOLUzkrAI/VxMFwHgsS1Dadi19yU8rG0yw9WSOI/OUXT
+ D6PF7fXK65bJbIngrlQ0DP6XkXnPAR5ACiEpg2vvDHIAwCOpl8bDPgx6I48kZv9Mfmte
+ uB/LGKJbpNqOCnDj+1yKEwzAcwR6mDE3XNuHvqVQlau0pNFXd1twe2RkR6cua6aNLrpl
+ Rj7g==
+X-Gm-Message-State: AOJu0YwUjkmk7szQhxGR/RLxHbJC0aM/4scpciqDRw/7nfPZ/5sNXegQ
+ nAR+6973fd4/1+jVrm/i+kQSaDMHPS5xSbSPgKfeYIWzVMcuvhhuljYRidZvHHkZPb9VwqKBXh9
+ W9CNYFHw=
+X-Gm-Gg: ASbGncubx5z/LI3g1b1vypU+axwteCxWqW3jNZOZJ9i9CjIaatxw8BmZE8koIDQWTxY
+ kSAYcAphIkTMNzrJfn7Vy/ZODJfOAZYf/YnDg7ECBzaM58KSS8InWBVogvrkosBOtyrPT++7l8m
+ IEGzwlaIY5CELZIC8HZzq5fmzWHDxMJEl5mGLiDJol5fyl3iRDk5Xy1bYi4L+OHYlP/POvdwOmF
+ BvBtNVvQOyvyCCY+6idY/3xbjYS0ZGwZ8jgnn3qLF89kCoVcC0jAjCCHwnLtgNCswgTJl25jXJ3
+ McFTYl448SCSpnywtOITIJfGnB0LNoVhTlGw2REvxB/9l2QreguJpnf5a0E2UCCb+urq+vGYaD1
+ Qfq9hJziSVOkNjChZVIjui4X4MQ==
+X-Google-Smtp-Source: AGHT+IH14cGBQ5YUc3UhzbynzfInCDAkWmBF+9hR2VidxnxEs6cCvfte8VeZZYS9PfFQM6P+SYRQ/Q==
+X-Received: by 2002:a05:6a20:918d:b0:243:a7f1:ffd9 with SMTP id
+ adf61e73a8af0-243a7f2042amr2988329637.14.1756336857572; 
+ Wed, 27 Aug 2025 16:20:57 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7703ffebd33sm13986886b3a.29.2025.08.27.16.21.00
+ d2e1a72fcca58-7703ffebd33sm13986886b3a.29.2025.08.27.16.20.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 16:21:02 -0700 (PDT)
+ Wed, 27 Aug 2025 16:20:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 12/46] linux-user: Move get_elf_hwcap to sh4/elfload.c
-Date: Thu, 28 Aug 2025 09:19:49 +1000
-Message-ID: <20250827232023.50398-13-richard.henderson@linaro.org>
+Subject: [PULL 10/46] linux-user: Move get_elf_hwcap to loongarch64/elfload.c
+Date: Thu, 28 Aug 2025 09:19:47 +1000
+Message-ID: <20250827232023.50398-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827232023.50398-1-richard.henderson@linaro.org>
 References: <20250827232023.50398-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,111 +104,151 @@ Change the return type to abi_ulong, and pass in the cpu.
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/loader.h         |  3 ++-
- linux-user/sh4/target_elf.h |  2 ++
- linux-user/elfload.c        | 29 +----------------------------
- linux-user/sh4/elfload.c    | 27 +++++++++++++++++++++++++++
- 4 files changed, 32 insertions(+), 29 deletions(-)
+ linux-user/loader.h                 |  3 +-
+ linux-user/loongarch64/target_elf.h |  2 ++
+ linux-user/elfload.c                | 49 +----------------------------
+ linux-user/loongarch64/elfload.c    | 47 +++++++++++++++++++++++++++
+ 4 files changed, 52 insertions(+), 49 deletions(-)
 
 diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 04457737dd..d8a9399807 100644
+index 818c5e6d7d..92b6d41145 100644
 --- a/linux-user/loader.h
 +++ b/linux-user/loader.h
-@@ -103,7 +103,8 @@ const char *get_elf_cpu_model(uint32_t eflags);
+@@ -102,7 +102,8 @@ extern unsigned long guest_stack_size;
+ const char *get_elf_cpu_model(uint32_t eflags);
  
  #if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM) \
-     || defined(TARGET_SPARC) || defined(TARGET_PPC) \
--    || defined(TARGET_LOONGARCH64) || defined(TARGET_MIPS)
-+    || defined(TARGET_LOONGARCH64) || defined(TARGET_MIPS) \
-+    || defined(TARGET_SH4)
+-    || defined(TARGET_SPARC) || defined(TARGET_PPC)
++    || defined(TARGET_SPARC) || defined(TARGET_PPC) \
++    || defined(TARGET_LOONGARCH64)
  abi_ulong get_elf_hwcap(CPUState *cs);
  abi_ulong get_elf_hwcap2(CPUState *cs);
  #endif
-diff --git a/linux-user/sh4/target_elf.h b/linux-user/sh4/target_elf.h
-index d17011bd75..badd0f5371 100644
---- a/linux-user/sh4/target_elf.h
-+++ b/linux-user/sh4/target_elf.h
-@@ -8,4 +8,6 @@
- #ifndef SH4_TARGET_ELF_H
- #define SH4_TARGET_ELF_H
+diff --git a/linux-user/loongarch64/target_elf.h b/linux-user/loongarch64/target_elf.h
+index 39a08d35d9..037740d36f 100644
+--- a/linux-user/loongarch64/target_elf.h
++++ b/linux-user/loongarch64/target_elf.h
+@@ -6,4 +6,6 @@
+ #ifndef LOONGARCH_TARGET_ELF_H
+ #define LOONGARCH_TARGET_ELF_H
  
 +#define HAVE_ELF_HWCAP          1
 +
  #endif
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index dc3f502277..7e1c11c39f 100644
+index 843b1f7b6c..574b37a22c 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -963,34 +963,7 @@ static inline void elf_core_copy_regs(target_elf_gregset_t *regs,
+@@ -725,54 +725,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
  #define USE_ELF_CORE_DUMP
  #define ELF_EXEC_PAGESIZE        4096
  
--enum {
--    SH_CPU_HAS_FPU            = 0x0001, /* Hardware FPU support */
--    SH_CPU_HAS_P2_FLUSH_BUG   = 0x0002, /* Need to flush the cache in P2 area */
--    SH_CPU_HAS_MMU_PAGE_ASSOC = 0x0004, /* SH3: TLB way selection bit support */
--    SH_CPU_HAS_DSP            = 0x0008, /* SH-DSP: DSP support */
--    SH_CPU_HAS_PERF_COUNTER   = 0x0010, /* Hardware performance counters */
--    SH_CPU_HAS_PTEA           = 0x0020, /* PTEA register */
--    SH_CPU_HAS_LLSC           = 0x0040, /* movli.l/movco.l */
--    SH_CPU_HAS_L2_CACHE       = 0x0080, /* Secondary cache / URAM */
--    SH_CPU_HAS_OP32           = 0x0100, /* 32-bit instruction support */
--    SH_CPU_HAS_PTEAEX         = 0x0200, /* PTE ASID Extension support */
--};
--
 -#define ELF_HWCAP get_elf_hwcap()
+-
+-/* See arch/loongarch/include/uapi/asm/hwcap.h */
+-enum {
+-    HWCAP_LOONGARCH_CPUCFG   = (1 << 0),
+-    HWCAP_LOONGARCH_LAM      = (1 << 1),
+-    HWCAP_LOONGARCH_UAL      = (1 << 2),
+-    HWCAP_LOONGARCH_FPU      = (1 << 3),
+-    HWCAP_LOONGARCH_LSX      = (1 << 4),
+-    HWCAP_LOONGARCH_LASX     = (1 << 5),
+-    HWCAP_LOONGARCH_CRC32    = (1 << 6),
+-    HWCAP_LOONGARCH_COMPLEX  = (1 << 7),
+-    HWCAP_LOONGARCH_CRYPTO   = (1 << 8),
+-    HWCAP_LOONGARCH_LVZ      = (1 << 9),
+-    HWCAP_LOONGARCH_LBT_X86  = (1 << 10),
+-    HWCAP_LOONGARCH_LBT_ARM  = (1 << 11),
+-    HWCAP_LOONGARCH_LBT_MIPS = (1 << 12),
+-};
 -
 -static uint32_t get_elf_hwcap(void)
 -{
--    SuperHCPU *cpu = SUPERH_CPU(thread_cpu);
--    uint32_t hwcap = 0;
+-    LoongArchCPU *cpu = LOONGARCH_CPU(thread_cpu);
+-    uint32_t hwcaps = 0;
 -
--    hwcap |= SH_CPU_HAS_FPU;
+-    hwcaps |= HWCAP_LOONGARCH_CRC32;
 -
--    if (cpu->env.features & SH_FEATURE_SH4A) {
--        hwcap |= SH_CPU_HAS_LLSC;
+-    if (FIELD_EX32(cpu->env.cpucfg[1], CPUCFG1, UAL)) {
+-        hwcaps |= HWCAP_LOONGARCH_UAL;
 -    }
 -
--    return hwcap;
+-    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, FP)) {
+-        hwcaps |= HWCAP_LOONGARCH_FPU;
+-    }
+-
+-    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LAM)) {
+-        hwcaps |= HWCAP_LOONGARCH_LAM;
+-    }
+-
+-    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LSX)) {
+-        hwcaps |= HWCAP_LOONGARCH_LSX;
+-    }
+-
+-    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LASX)) {
+-        hwcaps |= HWCAP_LOONGARCH_LASX;
+-    }
+-
+-    return hwcaps;
 -}
 +#define ELF_HWCAP get_elf_hwcap(thread_cpu)
  
- #endif
+ #define ELF_PLATFORM "loongarch"
  
-diff --git a/linux-user/sh4/elfload.c b/linux-user/sh4/elfload.c
-index 546034ec07..99ad4f6334 100644
---- a/linux-user/sh4/elfload.c
-+++ b/linux-user/sh4/elfload.c
-@@ -9,3 +9,30 @@ const char *get_elf_cpu_model(uint32_t eflags)
+diff --git a/linux-user/loongarch64/elfload.c b/linux-user/loongarch64/elfload.c
+index 874dc4c230..ee4a85b8d6 100644
+--- a/linux-user/loongarch64/elfload.c
++++ b/linux-user/loongarch64/elfload.c
+@@ -9,3 +9,50 @@ const char *get_elf_cpu_model(uint32_t eflags)
  {
-     return "sh7785";
+     return "la464";
  }
 +
++/* See arch/loongarch/include/uapi/asm/hwcap.h */
 +enum {
-+    SH_CPU_HAS_FPU            = 0x0001, /* Hardware FPU support */
-+    SH_CPU_HAS_P2_FLUSH_BUG   = 0x0002, /* Need to flush the cache in P2 area */
-+    SH_CPU_HAS_MMU_PAGE_ASSOC = 0x0004, /* SH3: TLB way selection bit support */
-+    SH_CPU_HAS_DSP            = 0x0008, /* SH-DSP: DSP support */
-+    SH_CPU_HAS_PERF_COUNTER   = 0x0010, /* Hardware performance counters */
-+    SH_CPU_HAS_PTEA           = 0x0020, /* PTEA register */
-+    SH_CPU_HAS_LLSC           = 0x0040, /* movli.l/movco.l */
-+    SH_CPU_HAS_L2_CACHE       = 0x0080, /* Secondary cache / URAM */
-+    SH_CPU_HAS_OP32           = 0x0100, /* 32-bit instruction support */
-+    SH_CPU_HAS_PTEAEX         = 0x0200, /* PTE ASID Extension support */
++    HWCAP_LOONGARCH_CPUCFG   = (1 << 0),
++    HWCAP_LOONGARCH_LAM      = (1 << 1),
++    HWCAP_LOONGARCH_UAL      = (1 << 2),
++    HWCAP_LOONGARCH_FPU      = (1 << 3),
++    HWCAP_LOONGARCH_LSX      = (1 << 4),
++    HWCAP_LOONGARCH_LASX     = (1 << 5),
++    HWCAP_LOONGARCH_CRC32    = (1 << 6),
++    HWCAP_LOONGARCH_COMPLEX  = (1 << 7),
++    HWCAP_LOONGARCH_CRYPTO   = (1 << 8),
++    HWCAP_LOONGARCH_LVZ      = (1 << 9),
++    HWCAP_LOONGARCH_LBT_X86  = (1 << 10),
++    HWCAP_LOONGARCH_LBT_ARM  = (1 << 11),
++    HWCAP_LOONGARCH_LBT_MIPS = (1 << 12),
 +};
 +
 +abi_ulong get_elf_hwcap(CPUState *cs)
 +{
-+    SuperHCPU *cpu = SUPERH_CPU(cs);
-+    abi_ulong hwcap = 0;
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    abi_ulong hwcaps = 0;
 +
-+    hwcap |= SH_CPU_HAS_FPU;
++    hwcaps |= HWCAP_LOONGARCH_CRC32;
 +
-+    if (cpu->env.features & SH_FEATURE_SH4A) {
-+        hwcap |= SH_CPU_HAS_LLSC;
++    if (FIELD_EX32(cpu->env.cpucfg[1], CPUCFG1, UAL)) {
++        hwcaps |= HWCAP_LOONGARCH_UAL;
 +    }
 +
-+    return hwcap;
++    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, FP)) {
++        hwcaps |= HWCAP_LOONGARCH_FPU;
++    }
++
++    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LAM)) {
++        hwcaps |= HWCAP_LOONGARCH_LAM;
++    }
++
++    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LSX)) {
++        hwcaps |= HWCAP_LOONGARCH_LSX;
++    }
++
++    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LASX)) {
++        hwcaps |= HWCAP_LOONGARCH_LASX;
++    }
++
++    return hwcaps;
 +}
 -- 
 2.43.0
