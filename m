@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01257CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0704ECA0FF0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:18:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur4h9-00009H-5l; Tue, 26 Aug 2025 21:11:23 -0400
+	id 1ur4hv-0001eD-PH; Tue, 26 Aug 2025 21:12:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4h3-0008DA-CG
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:18 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1ur4hN-0000wR-3p
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:37 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4gv-0008Ts-Id
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:16 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-770530175a6so2135122b3a.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:11:08 -0700 (PDT)
+ id 1ur4h9-000058-Fq
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:36 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-771e987b4e6so2236998b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:11:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756257067; x=1756861867; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756257079; x=1756861879; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9qlTssT5E1ksTdQhxmBteT9fyMAl300iOHwye3qziuI=;
- b=VhuQq34EiPlRGIkWVEgr2PZ/8owegkQ96UyA9cblLfkEc1iH38XQn7bHY4b7qNQPF+
- shi8dT9eJ7FJQTRH/hX020w7kfjOIAegBtu0tjtRRhQkBAlAoOFBaimxJirdN8rE5GHH
- 6VXhSFRIWZdGbAseZuzOdXcC/Ozgv+7EP9b+3WzPIqcJnvDcSqJxtVJw9VwoSDe55m/y
- j9AYtkL2fndd1EyX1UreAugcPX6pAxi+kHfuzn0r2Jql1isjy3wpmKcTaSPlPyTiIgD7
- hQZDIj1KUP84nA7+G2BN+DN74S/rxTjI1Fssi3DEV7cCkT9SWoEoseCDl4QpEvwcCUYl
- aVSA==
+ bh=cJsmimIu7dr8vrnk5jz0WzsneJPGwlTRlLHJVKFaYTw=;
+ b=Qm2txHIuIQf8apYKLwjFsVJQzO3NNkF4JxVDXPi1QA0AaxMm6e7Y5VqR0Vgn0FYC4E
+ x7HmIdWMHbscvzPO/Fwf1U9n/4SNYCyw+4Ez8MiLEwTvKADda2gMcYl6Uo6txC0kjzqN
+ YiAsay1kgH1eVwi5S99SjrhopRLRLhyFPg3wvRslRND6Z3XHnBqw+Ji6EEOPFlyPUAX4
+ QXuyZgTe9M8vI0I9ygUmHonJtXwe7CEIbrlA0dIcaxTeEiw2IsI1YwB/SBgvcZ2becoR
+ VgkvvL52ZTF2R+ot/vAb1Uh0x/qmtsiDxOsXRaCHFX6QGAfxZV4wxVzAN/66V3kDLI1Y
+ q1LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756257067; x=1756861867;
+ d=1e100.net; s=20230601; t=1756257079; x=1756861879;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9qlTssT5E1ksTdQhxmBteT9fyMAl300iOHwye3qziuI=;
- b=iNNVu918EzVeO6M+Z1FREyRI5ri5asyoFh/jBH7fzhn0naLqNuTv9wfTrJ9TcBE32t
- NyGs+jvxwx6on9udvOC0+ZuPlWEj8a8NsSp+1T6eRWX/U15yKAfSYvS+n7aIzaRnfHjq
- cc5iGo2poRwaxpZqr2mD9VYsI/ZoD4DakJij+wSwH4sWXIPFn8sRV4vQIL1RAQb1oCAP
- RSlA+TMiKnByWeVTjlMvbUSUlsbp4/sp2MEtk9aqLWQSTXB9TOEEDrLkcsen8cgN4720
- Ld1jAZQFz9l8jL3Ks8g8bF1t2ZzleEertXzC9LKLR3mky7JstJeKWBAaA8O2rrFp6WdM
- 8zVw==
-X-Gm-Message-State: AOJu0Yz0E6qXlPUNht0sOW3OoCAFw3oUcGZ5IR2D4jq+D35N1xXYG86X
- nD9q6uO7hLLwkfO9MlcMJ9+wlMSnTsBKNdhIoamNlZqIgJDsVUbDj1QtfTTmvaEsG+pWMA79YNR
- dxA+5Kjc=
-X-Gm-Gg: ASbGncvRdp0sRL3uiIrTKx1mJLvcDrIRezp8FSvG8KVUHIdR86Modo8l/rdjssk/ViN
- JtLaYbQUXZH/xUeblCJVC/l9LtT1g4CEPdg9qjc8wpnxUffSssbRmWMnTaHFqbMXx/mBMCK1AUn
- XQyu6ttwD2aubgBCETOrpszIvIs5aqJjODN1oOD7YN8Uki9skpHCsvSmLzeEDKt+0e2vhxHWTOP
- FjC13ji2vc6zWdUpc/EOuI6OqnOk6VNVcpHQmeRT69sfe5H11ETFgdE0/W0JESpkrnEVnDo3aGe
- EahIN6EahVtipJMPlqIzwURmkuYNItK2IsTKCFESEf7NjyquiUr8OUQqG9YhF0jeY2cLNp+31IX
- 7yN/u1UJJrvgEhYzNg4jrQGwykdrBJ1L7MJegoHiVruFr4ys=
-X-Google-Smtp-Source: AGHT+IFnrYSAy7hU+TyEF50uafimNdyUKUCEHPxkPg1+HZX+Dkf3VpCB3qrRkEeLSKZQIFKs06sMWw==
-X-Received: by 2002:a05:6a00:22c9:b0:771:ea9d:119b with SMTP id
- d2e1a72fcca58-771ea9d161cmr8899692b3a.29.1756257066692; 
- Tue, 26 Aug 2025 18:11:06 -0700 (PDT)
+ bh=cJsmimIu7dr8vrnk5jz0WzsneJPGwlTRlLHJVKFaYTw=;
+ b=HF2DOY7MCUR7fEsIXw8oAkoPIqjxHVXPAClTCKLp4VUrmWZhj5bDTn6MhfCpdI680l
+ adZaBCelRfkvG/SGqiIYOvumkcdVW2TPJsFwP0dN8ccNmC9Hq7c8LpEkfDog8BxPfnYI
+ jDH5LC/UBQX6e1U4VA8RySFWWv8IwyloT/6ffyjO0rGFICFFMBUfuBgErW50YmDW2/eW
+ dBpb/uIapo9ylMKZCJQIp+vLstUPkoRz4HYvfFDbsoqSREkkvVb0GnTY9qfZSJVpjzMR
+ AAHr8TE/CoIm3qGgV2kI3Ux2hMg0RFdWWwUpI4SIEyoEEcPqxpELI5shVvws5CP3mpiE
+ Svtg==
+X-Gm-Message-State: AOJu0YwDcL98ye+fHSKvz4Qzx7iZuziSHnajLCXyJ/6rbWuIoJ+f5PJo
+ Ndod0ZHVoSBQZO1mbARDpPESDxQfEmcjZXJtQJ9niFbDaUrtvX6ewBjY9rVV6BMPEVJMHRXXtYX
+ jzgU/ePI=
+X-Gm-Gg: ASbGncvq09hvmvmb/W23fc304zB7Ozo0NFl0fgAWok3fKV3rnxa8cP0zq60pBpy9ONz
+ HbemHbpqiyY/IfcQxGncxFxd8ZGHvICuY9QcEhJEkjwoCJd/J100mBW7oczkY71t+0fP1dnIvqx
+ zeBUVduP/W4sVSlQ0S7KwAJ0m1zgBb0Fm3+WshAHNJmHvHBdM5/ShfcU6Iwpr6NhopOXap8M+8S
+ Q0SrmNMCzednK7AfeaPUZJY3BQCHJeA1Hvto3d1s0M4Ve0CY7Mo6n8es9fhMiDxNAPx2ndfRoDB
+ rKQkzaT7dDvLipN5aA/DwQ9kdyKXDgyOwwXsoreE+Txh+6gH0cL56F1wCMTOnJVLrhbogWm73nK
+ s+aO29S3xzjCDxQJNlA8hxu+PnQ==
+X-Google-Smtp-Source: AGHT+IFpXbvERlfbH8lvKcHAfFXSL4ExLtBeFodIJh4MsP6k+QtpbALQRkDzzg5W1v7tBAq69RB3pA==
+X-Received: by 2002:a05:6a21:9997:b0:243:78a:8270 with SMTP id
+ adf61e73a8af0-24340e1939emr27306031637.54.1756257079164; 
+ Tue, 26 Aug 2025 18:11:19 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-771f2b2d2bfsm4348408b3a.93.2025.08.26.18.11.04
+ d2e1a72fcca58-771f2b2d2bfsm4348408b3a.93.2025.08.26.18.11.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 18:11:06 -0700 (PDT)
+ Tue, 26 Aug 2025 18:11:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 38/61] target/arm: Define CP_REG_SIZE_U128
-Date: Wed, 27 Aug 2025 11:04:29 +1000
-Message-ID: <20250827010453.4059782-43-richard.henderson@linaro.org>
+Subject: [PATCH 42/61] target/arm: Add raw_read128, raw_write128
+Date: Wed, 27 Aug 2025 11:04:33 +1000
+Message-ID: <20250827010453.4059782-47-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827010453.4059782-1-richard.henderson@linaro.org>
 References: <20250827010453.4059782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,29 +101,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/kvm-consts.h | 2 ++
- 1 file changed, 2 insertions(+)
+ target/arm/cpregs.h |  5 +++++
+ target/arm/helper.c | 17 +++++++++++++++++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
-index 54ae5da7ce..1b3c10c0d3 100644
---- a/target/arm/kvm-consts.h
-+++ b/target/arm/kvm-consts.h
-@@ -30,6 +30,7 @@
- #define CP_REG_SIZE_MASK       0x00f0000000000000ULL
- #define CP_REG_SIZE_U32        0x0020000000000000ULL
- #define CP_REG_SIZE_U64        0x0030000000000000ULL
-+#define CP_REG_SIZE_U128       0x0040000000000000ULL
- #define CP_REG_ARM             0x4000000000000000ULL
- #define CP_REG_ARCH_MASK       0xff00000000000000ULL
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 90f14dbb18..0d8c45b60c 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -21,6 +21,7 @@
+ #ifndef TARGET_ARM_CPREGS_H
+ #define TARGET_ARM_CPREGS_H
  
-@@ -37,6 +38,7 @@ MISMATCH_CHECK(CP_REG_SIZE_SHIFT, KVM_REG_SIZE_SHIFT);
- MISMATCH_CHECK(CP_REG_SIZE_MASK, KVM_REG_SIZE_MASK);
- MISMATCH_CHECK(CP_REG_SIZE_U32, KVM_REG_SIZE_U32);
- MISMATCH_CHECK(CP_REG_SIZE_U64, KVM_REG_SIZE_U64);
-+MISMATCH_CHECK(CP_REG_SIZE_U128, KVM_REG_SIZE_U128);
- MISMATCH_CHECK(CP_REG_ARM, KVM_REG_ARM);
- MISMATCH_CHECK(CP_REG_ARCH_MASK, KVM_REG_ARCH_MASK);
++#include "qemu/int128.h"
+ #include "hw/registerfields.h"
+ #include "exec/memop.h"
+ #include "target/arm/kvm-consts.h"
+@@ -1065,6 +1066,10 @@ uint64_t raw_read(CPUARMState *env, const ARMCPRegInfo *ri);
+ /* CPWriteFn that just writes the value to ri->fieldoffset */
+ void raw_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value);
  
++/* Likewise for 128-bit fields. */
++Int128 raw_read128(CPUARMState *env, const ARMCPRegInfo *opaque);
++void raw_write128(CPUARMState *env, const ARMCPRegInfo *opaque, Int128 value);
++
+ /*
+  * CPResetFn that does nothing, for use if no reset is required even
+  * if fieldoffset is non zero.
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 18af67742d..7568b78c49 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -59,6 +59,8 @@ int compare_u64(const void *a, const void *b)
+     (*(uint32_t *)((char *)(env) + (ri)->fieldoffset))
+ #define CPREG_FIELD64(env, ri) \
+     (*(uint64_t *)((char *)(env) + (ri)->fieldoffset))
++#define CPREG_FIELD128(env, ri) \
++    (*(Int128 *)((char *)(env) + (ri)->fieldoffset))
+ 
+ uint64_t raw_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+@@ -88,8 +90,23 @@ void raw_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+     }
+ }
+ 
++Int128 raw_read128(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    assert(ri->type & ARM_CP_128BIT);
++    assert(ri->fieldoffset);
++    return CPREG_FIELD128(env, ri);
++}
++
++void raw_write128(CPUARMState *env, const ARMCPRegInfo *ri, Int128 value)
++{
++    assert(ri->type & ARM_CP_128BIT);
++    assert(ri->fieldoffset);
++    CPREG_FIELD128(env, ri) = value;
++}
++
+ #undef CPREG_FIELD32
+ #undef CPREG_FIELD64
++#undef CPREG_FIELD128
+ 
+ static void *raw_ptr(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
 -- 
 2.43.0
 
