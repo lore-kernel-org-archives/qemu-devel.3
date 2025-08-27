@@ -4,112 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C307FCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 16:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4863BCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 16:37:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urJ5u-0004Hq-ON; Wed, 27 Aug 2025 12:33:54 -0400
+	id 1urJ8I-00064E-AD; Wed, 27 Aug 2025 12:36:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1urJ5r-0004GG-R3; Wed, 27 Aug 2025 12:33:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1urJ8F-00063A-UT
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 12:36:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1urJ5p-0003b8-Im; Wed, 27 Aug 2025 12:33:51 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57RBGouj019320;
- Wed, 27 Aug 2025 16:33:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FfsFBD
- WPoBpHkhYrVk5bohJ9ny1EkRCaLXrzMDcr83E=; b=sKZrsHmRXgypf6S3Kya6r6
- C0lZo/Nn1S6fii3jpFCYKpDMu9ndBWPK+1PXGnFsQT/z8B0SIezOGKbd9rTTTV1/
- rrH+s7XN2+BYG846M5IONVAWDYdCxx5Uozrm2YOoJ07KKrBqtXuMrIqUe06ARjcy
- 9Ad/vYi/0Yg3uVWWsbpEzGdC16fhjLL7Hh2rwPOl6fuRQPwyhZyv2ZzzKayYZ8Sj
- NZ9WLKIE4oIaUbwhvpCuwEGu0ROw4g89n83ZzkqC4PIpxbtXm1w0OBeP+b7JYWNW
- njSjRy8rIbUUvWfw9wBZkxtCzKz4j3wsLLoLlO3MYMqoagXaGu+XLCu/hpvqO9Bw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q975cfma-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 27 Aug 2025 16:33:45 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57RGH3Ho029986;
- Wed, 27 Aug 2025 16:33:44 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48qsfmrsfq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 27 Aug 2025 16:33:44 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57RGXXcw28050170
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 27 Aug 2025 16:33:34 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 611665805A;
- Wed, 27 Aug 2025 16:33:42 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 389A358051;
- Wed, 27 Aug 2025 16:33:41 +0000 (GMT)
-Received: from [9.61.148.204] (unknown [9.61.148.204])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 27 Aug 2025 16:33:41 +0000 (GMT)
-Message-ID: <d3d41828-c7e5-4b30-a7c7-cca5a9f0037d@linux.ibm.com>
-Date: Wed, 27 Aug 2025 12:33:40 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1urJ8D-00043C-0m
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 12:36:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756312574;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EMZfyzEp0y/MsQEdgng4cmTsFytN5+SO1/xJwn4sC5U=;
+ b=SB5d+u1oWL5LGKV+rM6fbSsaDgz+K0RWa1Va09XhLoaHUuiC0qHQGNDS3UCfYvSGoEIQ4P
+ 16Dwvp+kiOmw2dcPO0/iH/9C1URKpWZxLWZTulVkWGNpjQOqQpsaT8asm9HHPXiA/6WD+Y
+ Tbjpelv0O3lLhVazSd6puYl7arzuFjQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-619-h792kCwMPQuqOYjEnlDf8A-1; Wed, 27 Aug 2025 12:36:12 -0400
+X-MC-Unique: h792kCwMPQuqOYjEnlDf8A-1
+X-Mimecast-MFC-AGG-ID: h792kCwMPQuqOYjEnlDf8A_1756312571
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45a1b04f817so30520575e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 09:36:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756312571; x=1756917371;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EMZfyzEp0y/MsQEdgng4cmTsFytN5+SO1/xJwn4sC5U=;
+ b=D3VyhIjkyigItcG/3La05OTqZz5mp+kKXFtB8MoerNWeT14UD2v9TQFz1PIirc3CrN
+ iOi/CNklLVw+IKr5SbAU3l8GJMqYnspb8QD8Ddijbfj1mh9ji/aG7UAZPpLa4UpvAgDv
+ 4Kb2qKCwLTg8FQ9/1CKsPWJFxLXgs5ZSnSaUia7wVQE83Da9VjwwvOPCse9UTvDjGo20
+ RXgxe+xQ5DZ1mYQRxYmfhmPn+znTJV+0ZHIBaFsuCwVP3vbBntgvvM7r6/SDkn5gWlJV
+ FWtR/qiAu1QnxjU9q0s2gyyQvDqFLsTwm+eMz15D77Va6J/NnCgf6zEOrS4RtkoKE6jE
+ vcrA==
+X-Gm-Message-State: AOJu0YxoKt/tMmYWf0Bog9NJG6DPDLEgJ4XMNIEYHPIoeZU9aOG1No1u
+ zr1FRiDEqmLZfaiKFUsgunHjHtYNXzdvEvZwszMMzgBFmdDJPAIPI6jaGtDB+s1gFGl6UOymTcN
+ fuPK6RRvO3M34mtYwCDwVLZ+Dv8ED/HcBXgTLCFrnhzYWm2XVTHID3rZL
+X-Gm-Gg: ASbGncu9t2oGhhahQpmDd/TPR7whBdazHhevNeKAB8abLIjtQCidehcfA8LKqGWhN3U
+ 2tcjuf5OqEGJt5zkmiBSXh1wkL0rd91aKtBLuBd0Yw48z1xWKABDYLzdjV2eKCMvA/djNGr/D2p
+ +8gx0rujkWsTfQZ4aBR3THsxXjXWpeuv40ZMbyrsHKvOqInnDOOT6AoLkM+eHBaI6pWFWLV2K1Z
+ X2ZF36/9luUYuwF1sdPMby6NfHzYmgKmv3CU/a2w7juozPldZRh7v6jJ0TX/jTnibVhYV/RbGu8
+ gNIRulPdIQ7DZI8EBIp+BOstc0E9nY8ouP1I39x8G15CU9TtnsuiRf7s29pSNSqa3ZqVVfS+DD4
+ PIgugZCS1rho=
+X-Received: by 2002:a05:600c:350b:b0:459:d5d1:d602 with SMTP id
+ 5b1f17b1804b1-45b6153d946mr93688285e9.3.1756312571208; 
+ Wed, 27 Aug 2025 09:36:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6Z6B+wLfUhe2p+dYbf44TkecgapkVgY2IWL+C1jE4uCw4eGwptiNWSowZ/Rmzly9ZyXxCuA==
+X-Received: by 2002:a05:600c:350b:b0:459:d5d1:d602 with SMTP id
+ 5b1f17b1804b1-45b6153d946mr93688065e9.3.1756312570819; 
+ Wed, 27 Aug 2025 09:36:10 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b73cf86f4sm17357735e9.6.2025.08.27.09.36.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Aug 2025 09:36:10 -0700 (PDT)
+Message-ID: <b5e4d5ef-c7f0-4b3c-aec5-3916755f92ef@redhat.com>
+Date: Wed, 27 Aug 2025 18:36:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 16/29] hw/s390x/ipl: Set iplb->len to maximum length of
- IPL Parameter Block
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com
-References: <20250818214323.529501-1-zycai@linux.ibm.com>
- <20250818214323.529501-17-zycai@linux.ibm.com>
+Subject: Re: [PATCH v5 07/21] intel_iommu: Introduce a new structure
+ VTDHostIOMMUDevice
 Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20250818214323.529501-17-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: sQctFQg5Ew1NAo64I0UwiDVOwtaH6aYR
-X-Proofpoint-ORIG-GUID: sQctFQg5Ew1NAo64I0UwiDVOwtaH6aYR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDA3MSBTYWx0ZWRfXw4o0r2uOEQt3
- yaCdmKO+hg/Z5gCYWshLsyWkLpynKO+F3twfHtfbKQFJR1cgAg7PepnojirPu/UI47J2IkhRg1l
- TYqz1hAgTX387lSodUd+jvRu+GK66ayl/MuVp4B8uJVOBNouaSOhqW6CM79u6sEUdUEDWkWcnfI
- TWxp2Lmp8VBeZjz9A2CXcrHJ0lAioVE/R5y5nxYANJtTx0USCCHXa2Btjr8hc6Zg0+GianXFLmq
- eshp/WgWxhERwUM856wau4JexN7opULq7P0is0v05WU9tQtoah9beB21k0FhjOnvv4ugsGyR++E
- 7cAx5rMb5uXzy1eST6phb9EJT0GxxhhNn0HGOq78l5+7Io2WN3ir5x4/dKDbLlAUCdBGc09b1nP
- 2esSpN+D
-X-Authority-Analysis: v=2.4 cv=RtDFLDmK c=1 sm=1 tr=0 ts=68af3369 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=C9IQg14i1mWWDr6A2ooA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-27_04,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- bulkscore=0 clxscore=1015 phishscore=0 adultscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508230071
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+To: Nicolin Chen <nicolinc@nvidia.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, yi.l.liu@intel.com
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com,
+ mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
+ jgg@nvidia.com, joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, chao.p.peng@intel.com
+References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
+ <20250822064101.123526-8-zhenzhong.duan@intel.com>
+ <aK3tAUUn5t61VPyk@Asurada-Nvidia>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <aK3tAUUn5t61VPyk@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,72 +117,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Nicolin,
 
+On 8/26/25 7:21 PM, Nicolin Chen wrote:
+> Hi Zhenzhong/Yi,
+>
+> On Fri, Aug 22, 2025 at 02:40:45AM -0400, Zhenzhong Duan wrote:
+>> @@ -4371,6 +4374,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>>                                       HostIOMMUDevice *hiod, Error **errp)
+>>  {
+>>      IntelIOMMUState *s = opaque;
+>> +    VTDHostIOMMUDevice *vtd_hiod;
+>>      struct vtd_as_key key = {
+>>          .bus = bus,
+>>          .devfn = devfn,
+> I wonder if the bus/devfn here would always reflect the actual BDF
+> numbers in this function, on an x86 VM.
+>
+> With ARM, when the device is attached to a pxb bus, the bus/devfn
+> here are both 0, so PCI_BUILD_BDF() using these two returns 0 too.
+>
+> QEMU command for the device:
+>  -device pxb-pcie,id=pcie.1,bus_nr=1,bus=pcie.0 \
+>  -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.1,accel=on \
+>  -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1,io-reserve=0 \
+>  -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.port1,rombar=0,id=dev0,iommufd=iommufd0
+>
+> QEMU log:
+> smmuv3_accel_set_iommu_device: bus=0, devfn=0, sid=0
+>
+> The set_iommu_device op is invoked by vfio_pci_realize() where the
+> the BDF number won't get ready for this kind of PCI setup until a
+> later stage that I can't identify yet..
+>
+> Given that VTD wants the BDF number too, I start to wonder whether
+> the set_iommu_device op is invoked in the right place or not..
+>
+> Maybe VTD works because it saves the bus pointer v.s. bus_num(=0),
+> so its bus_num would be updated when later code calculates the BDF
+> number using the saved bus pointer (in the key). Nonetheless, the
+> saved devfn (in the key) is 0, which wouldn't be updated later as
+> the bus_num. So, if the device is supposed to have a devfn (!=0),
+> this wouldn't work?
 
-On 8/18/25 5:43 PM, Zhuoying Cai wrote:
-> The IPL Information Report Block (IIRB) immediately follows the IPL
-> Parameter Block (IPLB).
->
-> The IPLB struct is allocated 4KB in memory, and iplb->len indicates
-> the amount of memory currently used by the IPLB.
->
-> To ensure proper alignment of the IIRB and prevent overlap, set
-> iplb->len to the maximum length of the IPLB, allowing alignment
-> constraints to be determined based on its size.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   hw/s390x/ipl.c | 6 +++---
->   hw/s390x/ipl.h | 1 +
->   2 files changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index 8ac0cee73d..d1a972ac8d 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -459,7 +459,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->               if (scsi_lp && strlen(scsi_lp) > 0) {
->                   lp = scsi_lp;
->               }
-> -            iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
-> +            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
->               iplb->blk0_len =
->                   cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - S390_IPLB_HEADER_LEN);
->               iplb->pbt = S390_IPL_TYPE_QEMU_SCSI;
-> @@ -470,14 +470,14 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->               iplb->scsi.ssid = ccw_dev->sch->ssid & 3;
->               break;
->           case CCW_DEVTYPE_VFIO:
-> -            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-> +            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
->               iplb->pbt = S390_IPL_TYPE_CCW;
->               iplb->ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
->               iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
->               break;
->           case CCW_DEVTYPE_VIRTIO_NET:
->           case CCW_DEVTYPE_VIRTIO:
-> -            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
-> +            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
->               iplb->blk0_len =
->                   cpu_to_be32(S390_IPLB_MIN_CCW_LEN - S390_IPLB_HEADER_LEN);
->               iplb->pbt = S390_IPL_TYPE_CCW;
-> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-> index 3b8cc5474e..01922d80c4 100644
-> --- a/hw/s390x/ipl.h
-> +++ b/hw/s390x/ipl.h
-> @@ -100,6 +100,7 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
->   #define S390_IPLB_MIN_CCW_LEN 200
->   #define S390_IPLB_MIN_FCP_LEN 384
->   #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
-> +#define S390_IPLB_MAX_LEN 4096
->   
->   static inline bool diag_parm_addr_valid(uint64_t addr, size_t size, bool write)
->   {
-This only needs to be done if the IIRB exists.  See comments on patch 15.
+in hw/arm/smmu-common.c, along with smmu_find_smmu_pcibus() there is a
+comment about late computation of bus number. This looks like a safe
+place where the bus_num is known.
 
-Regards,
-Jared Rossi
+Thanks
+
+Eric
+>
+> Thanks
+> Nicolin
+>
+
 
