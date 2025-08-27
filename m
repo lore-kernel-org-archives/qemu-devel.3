@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB72CA0FF0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5100DCA0FF6
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur4jT-0004wo-Hz; Tue, 26 Aug 2025 21:13:47 -0400
+	id 1ur4sY-0007uz-70; Tue, 26 Aug 2025 21:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4hm-0001b5-2n
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:12:06 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ur4s2-0007hN-Sp
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:22:45 -0400
+Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4hd-0000H5-Uy
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:12:00 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-3254e80ba08so4479126a91.1
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:11:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ur4rx-0002MG-3M
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:22:36 -0400
+Received: by mail-pf1-x442.google.com with SMTP id
+ d2e1a72fcca58-76e434a0118so7252367b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756257111; x=1756861911; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XsyjxtX0JYNFc0VvXMsSTJsOh4qPBkbGNiMGxVJ/tuo=;
- b=UZ+W2H6ye2MQacrGbniliOW8n19hVFs5iFrK8lq6fUz21aVu62cNUOE14dzSyuycsd
- AL9t0qPZxV+QdnYNypxJe9Kfwt9svHyk1z1tmI+2CRBu3NauFEQ8Hv/6vkimMFX+ePI+
- CqtbNtAvNWuQ+au1B0QrrpVKX+VMf8dk9wzPNwVPKsyOo6wKi2N9oLboXudF1wKAr65s
- N1QkzPXGaGGlyCyeent2FRuPGPsQbDSVrvH6zisOVBQllo//+d3VRLfxcChpu64sFfFs
- GQp31QUbxFRFCk1JGhnS+8AwkZgXWD6O5DwTD4FYLeukNx0hg88CO5yG2HGg0qz7FCAJ
- D7Qw==
+ d=linaro.org; s=google; t=1756257750; x=1756862550; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=alNXz7XDt+/Gzjz8zwNmt5KRGgSbGDVcngw7hQnNDpw=;
+ b=JNnGvbLV3zqjduIuquGi/rYWzcKA/YT/jl/39tw7RqjsCgYjQMWoQHhd069MT3s4Iw
+ 43CELkKgGR90QghFheq00Amtsm7aiF/TxFlYfymkLTeXwgvGJUoLq45z3ixARnq73KyY
+ 1epGrQs25E54pPWcSls/WfwCCc90MfUNSAxtR2DdY8l7tNYq3StjPqdNSoKPVgYNBZzt
+ 61OhPy69DxKbS60F59nFSdFH203AsZz1MYeNMquMkFBeKhgAIw7HRvAU+aQcIfvAhOqv
+ S7VAHXgET3dQiOht2eJOk6kEeyle618HNELoZmOxRK8RFo3yl+gSCi4fXk8rvoqYhlmt
+ f99w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756257111; x=1756861911;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XsyjxtX0JYNFc0VvXMsSTJsOh4qPBkbGNiMGxVJ/tuo=;
- b=McKAzaR9q6EHfEaAKqH614jq9cGu9BlPkzO/8aZreyVD9Y+DKi9ChpBYCXzThtT++w
- e+NrPYdDkqF4JCXVCZ4W3jnRM6licVwX49OkVEFxNosU9BMAtOKj9bZzORL8bzpzZWor
- IQ4LG5+EaIN7jrRezObQAqJuNVMEqOTcCR9Y5WD01jgEbCObSVop7kJ2nOsVLwprrG87
- iAbuyvSQhOTMOyINGK6eJMpksHnEsDYpIoIYWaQYqIavEUGEy8R1o4mssr/xZpjinEjc
- XajKC4dOpYwshnq7HScoLMglEOpVRfd/DrY1attVZobSOrCz5d+TT3QdbOuFzPYkQHRA
- llbQ==
-X-Gm-Message-State: AOJu0Yx/4rIVwhOVMGk6u8ro8gXCh2qhZm2oJVeatLYv4Sk0lmO4owmS
- YwhVMrjf3fS98QmV4C2xrqbb98eJPRYH1Vj2bXFU0s+vcKBryRB7TZcfRed87THUEKe9vcp8XmY
- f2eCnurI=
-X-Gm-Gg: ASbGncuDoux2iojFum/cSsjaoajVd6csZzMo/bJ9Y1OhClHAZYqs6PdtpYHiui6bc1j
- NQBDl9pARy10CcrRT042UqoOhROEljb0s+omceoZ/DRwKfABibgS9tGNCyxY1Paxsb7Tn6ECEud
- fIIKTvYooayRZiY7Zs2n2e3pbOL5lsvkZor/jOx/MuO5h/sfYHeDQMSGtKfrMyutyClHzK+FWrz
- PV7OyI13dz4VWW/zwLDZmlr6ypjNM83BBVR0y8uSw7328DEnB9pSpGOLMrJuX5SUlODx0++2oUU
- sC7KL0d4Z0rHmK2aXa+0GJ3N/SiuI1iVbnHOyNbChfjzVUzXfTP9MKIQyZoOR7A6Dd7f1nY/eSG
- brQf+BzYVA8MGft3qQNs04OE1S5PDVyPFjYaD
-X-Google-Smtp-Source: AGHT+IFxAsRUdNyCVAI9FPmKLgxUmD4b08fvfwC9yLXeKkvxukf/slsZifs6KQskWixROMwKvKPKGg==
-X-Received: by 2002:a17:90b:384c:b0:324:ec53:138f with SMTP id
- 98e67ed59e1d1-32515efa487mr27532199a91.15.1756257110812; 
- Tue, 26 Aug 2025 18:11:50 -0700 (PDT)
-Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-771f2b2d2bfsm4348408b3a.93.2025.08.26.18.11.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 18:11:50 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 53/61] include/hw/core/cpu: Use HOST_ENDIAN_FIELDS in
- IcountDecr
-Date: Wed, 27 Aug 2025 11:04:44 +1000
-Message-ID: <20250827010453.4059782-58-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250827010453.4059782-1-richard.henderson@linaro.org>
-References: <20250827010453.4059782-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756257750; x=1756862550;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=alNXz7XDt+/Gzjz8zwNmt5KRGgSbGDVcngw7hQnNDpw=;
+ b=nTH1So7WNjcYgI9gF7GGObi8CbKGbrTq0FgCuVgw1ZW2zWAQT9D/vt40eoSCthNCjR
+ Cv2eRC0OQPtOh+FiqUr7t44QQsRQtsth0iZuwxya+OnY7vMOU9ruKkCAo2ePx+hI5yjR
+ f/t3svqBfPGe+hpuZX7sgmARoLZo/QN1JU68M44gpSXD8d7PlSbvOOmj+3Z0KrUITZ5k
+ s9CDR1iwCaTN03TsAvsQFoCQ7QSjI+j45ekX2EgarKfGNYGbB14SuqvGtRtuon95G9oe
+ U2hAMDjklPkbaJCiSgTpG7n11gz5JGxz+ARrdrgSQIFel2+d7pZGt1/5Vt9tUzcXWxVo
+ VCug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5N+ZB8HZ8rM4dH7UrRsK9QRJbW4K11X6yVm5d5evEYxZvxzSzHSw3mJI2UqHJu2aSuPwKcOxD5Aq/@nongnu.org
+X-Gm-Message-State: AOJu0Yxj84RJH3dV/e9psxAntlEmns/T4h1kMnxkBoHQ2RTXx56JFuVB
+ cLQnTHqmZZWWajwuxMmlpU+M2HBqTLm77NJ1LGU+kMqmB7UnVan/QqAWzOibPiqk3isXahMXShm
+ Mm25wpp3fKw==
+X-Gm-Gg: ASbGncuGImcE03DcYUuMo1DBvOR43VoJnQ4h27ynbpOSlxnIVY0h9bHjE0L7tbVWCLp
+ IInIJolHrSbkykWKRVLM1uYGy9sCu6E9eFJDvXuZw1e2ncP7auEOU3os3VGL99CpqKL5kAb4Jvj
+ /vZfbKpTDQ3ntMmmPsb5llkCcwKw9U0f4EMiq+UTnIQblO8CE5fsgGeTegEexfBx56j4DblzzVu
+ mI65tMBeLTjVI4dphTKKR5JyStJ1y0ZIu4SgSoZhy0zsGwrpheYFnijDQHSB7ePmQgsXbAeIzZ8
+ BMrfmYkmFo0Vv6/4WAVgssJ0U48lsveXMe8LcTIQHKqjlBTsw1VYpfP1tE4ZMA8QzItnFQaR3Q0
+ 2ImiunUNlAZgq9fx7fCHbTTetGgR5UyjZ8BWW6FrTkmLW
+X-Google-Smtp-Source: AGHT+IHmP409bB6GGaRifw/UT06Hfps1X7a+8+q3HSJRA6DuR8A7QcmKSR//t2yS4AYWfoCr+YjcUQ==
+X-Received: by 2002:a05:6a00:190e:b0:758:66a2:981f with SMTP id
+ d2e1a72fcca58-7702fa0590emr24716778b3a.12.1756257749601; 
+ Tue, 26 Aug 2025 18:22:29 -0700 (PDT)
+Received: from [192.168.0.102] ([187.75.38.174])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-771e93ec6fasm6071979b3a.31.2025.08.26.18.22.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Aug 2025 18:22:29 -0700 (PDT)
+Message-ID: <cc2edc28-1c43-4aad-ac8b-5ac8b26262e1@linaro.org>
+Date: Tue, 26 Aug 2025 22:23:11 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] tests/functional: Adapt reverse_debugging to run w/o
+ Avocado
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org
+Cc: qemu-arm@nongnu.org, "Daniel P. Berrange" <berrange@redhat.com>
+References: <20250819143916.4138035-1-gustavo.romero@linaro.org>
+ <20250819143916.4138035-5-gustavo.romero@linaro.org>
+ <2ef8923b-18f5-47c6-b688-c9fa5b4fb0e4@redhat.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <2ef8923b-18f5-47c6-b688-c9fa5b4fb0e4@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,31 +108,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/hw/core/cpu.h | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+Hi Thomas,
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5eaf41a566..2c0edc2912 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -341,13 +341,7 @@ typedef struct CPUTLB {
- typedef union IcountDecr {
-     uint32_t u32;
-     struct {
--#if HOST_BIG_ENDIAN
--        uint16_t high;
--        uint16_t low;
--#else
--        uint16_t low;
--        uint16_t high;
--#endif
-+        uint16_t HOST_ENDIAN_FIELDS(low, high);
-     } u16;
- } IcountDecr;
- 
--- 
-2.43.0
+On 8/25/25 07:34, Thomas Huth wrote:
+> On 19/08/2025 16.39, Gustavo Romero wrote:
+>> This commit removes Avocado as a dependency for running the
+>> reverse_debugging test.
+>>
+>> The main benefit, beyond eliminating an extra dependency, is that there
+>> is no longer any need to handle GDB packets manually. This removes the
+>> need for ad-hoc functions dealing with endianness and arch-specific
+>> register numbers, making the test easier to read. The timeout variable
+>> is also removed, since Meson now manages timeouts automatically.
+>>
+>> The reverse_debugging test is now executed through a runner, because it
+>> requires GDB in addition to QMP. The runner is responsible for invoking
+>> GDB with the appropriate arguments and for passing the test script to
+>> GDB.
+>>
+>> Since the test now runs inside GDB, its output, particularly from
+>> 'stepi' commands, which cannot be disabled, interleaves with the TAP
+>> output from unittest. To avoid this conflict, the test no longer uses
+>> Meson’s 'tap' protocol and instead relies on the simpler 'exitcode'
+>> protocol.
+>>
+>> reverse_debugging is kept "skipped" for aarch64, ppc64, and x86_64, so
+>> won't run unless QEMU_TEST_FLAKY_TESTS=1 is set in the test environment,
+>> before running 'make check-functional' or 'meson test [...]'.
+>>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> ---
+> ...
+>> diff --git a/tests/functional/test_aarch64_reverse_debug.py b/tests/functional/test_aarch64_reverse_debug.py
+>> index 58d4532835..8b6f82c227 100755
+>> --- a/tests/functional/test_aarch64_reverse_debug.py
+>> +++ b/tests/functional/test_aarch64_reverse_debug.py
+> ...
+>> -    KERNEL_ASSET = Asset(
+>> +    ASSET_KERNEL = Asset(
+>>           ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
+>>            'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
+>>           '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
+>> @@ -30,9 +29,9 @@ class ReverseDebugging_AArch64(ReverseDebugging):
+>>       def test_aarch64_virt(self):
+>>           self.set_machine('virt')
+>>           self.cpu = 'cortex-a53'
+>> -        kernel_path = self.KERNEL_ASSET.fetch()
+>> +        kernel_path = self.ASSET_KERNEL.fetch()
+>>           self.reverse_debugging(args=('-kernel', kernel_path))
+> 
+> Ouch, that "KERNEL_ASSET" is worth to be sent as a separate bugfix (without the proper "ASSET_" prefix, the asset won't be precached properly). Could you maybe send this as a separate patch, please?
+
+Post here:
+
+https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg03763.html
+
+
+Cheers,
+Gustavo
 
 
