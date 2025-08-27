@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03F6CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 07:21:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B248CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 07:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urARw-0007fq-5Y; Wed, 27 Aug 2025 03:20:05 -0400
+	id 1urAVV-0000s2-TU; Wed, 27 Aug 2025 03:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urARq-0007dr-RQ
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:19:59 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1urAVU-0000rC-HG
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:23:44 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urARi-0004bW-4h
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:19:57 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-32326e5f0bfso5339356a91.3
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 00:19:48 -0700 (PDT)
+ id 1urAVR-0005Cs-Vv
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:23:44 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2445806df50so50867105ad.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 00:23:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756279186; x=1756883986; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756279418; x=1756884218; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MUHahJJ7wR72AtK1qhqMQ6mYEqawXe7MjFSGztaHDt4=;
- b=VSExsoZ1O2d9Bmm36viYAZoKlM+1HwGNNYhNodeYMInibm/tjfy0Y4I5/idwsMXs/M
- rNdDBRXw2FBcNEs8J3xG75ht9nMt4aFaelZ3nDqwmjXyhPUn3J7xCe4ryHjUjkyTZxoc
- a7e+5W0p/YbaATggX0FXfv7VGj/RQuLad10sB61gt2ZbMNCEj7dz+l03hxrItobnEJU3
- SAAxPY6UtJrmoDo8BOfp1gIUUNBdfpmIpGEvSE/3+DyIR8bPnsxWD6Ho9u5r0XmOUDPE
- oPoLEtk6mWs8rnyoXdKdIag2erdyRiuJLSyGCcEe/LiecQPr6+uvXVr51OayCgpWjgeo
- CUZQ==
+ bh=QRlFArM/UDWpvqiG0eW4eiGKl8lUlVgAUfErF+E8J7Y=;
+ b=L9fMxs5vA8U3Oj9SwLk1M/NLIMlVvwmf/rLKFCmaacTEsnE4PCX7JvuUeOhZ1T5hkK
+ 4kjYwZl/HfSDOoWpSyQ/K/b0ZI16KIH0VzlS1Xc7Kspu1gTyVH7JXUVxOgiagBoLazVK
+ vk8/ijkNS2khK/P20j+BirDWjyJffUNFIS5xsHU/+drT+TVr4wL+TpiIKewjJ7qNuUkH
+ xMeDBoZLaY+JNkxNzXk4J795GaXI4jo2q4xNVHdlLusWJCVaVZEs2vxhlyvS6orM0CFf
+ L9bt5m1+66RjSaRBJHIPab+WIvg4bsbWPOVm9z6fOEiUyLTTo04mb3zcXVfbtdb6tMFR
+ 3ikw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756279186; x=1756883986;
+ d=1e100.net; s=20230601; t=1756279418; x=1756884218;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MUHahJJ7wR72AtK1qhqMQ6mYEqawXe7MjFSGztaHDt4=;
- b=m6LthvIsH1SHlwjN6+y8xmuE+HRjlQJt5qJiMLlioFnhOsVFOZ9RcGw/2Zw7xv0aRa
- MQ2xTm5zEAkCJx+tvRwjgy/JFuSNi25GHydlfG+pAiIp/yjtzXAo22mwdk7BDJiiiXUV
- JiaGm8yDNK1ZJD1CFGxKyfuThjkBYu2y1kd/5Yw3/jm93nza6HcvhKxUQzOJlWydxAjd
- K5kye5vTMHYr6kscF3WK2JCLUpCsSTK0vssZCU1NVVxoZVZ+rm9IpGF2BIDQ2ouH7q+F
- qMb0VCmU9b6erg20N5+Knm3xKTeLezls75pWUrfqn50hcbEKVH1JgnKP6P8nCTo0Upb0
- 1+ew==
+ bh=QRlFArM/UDWpvqiG0eW4eiGKl8lUlVgAUfErF+E8J7Y=;
+ b=AQ5jJca8R3DhLaKLTVef5QzxKwTKpfVf75EVk2ixB+s9hmFnbx0HuUZ5AyX6GqO7Dk
+ VEnjFpAwK6ch9KbIMTgNozNi9OhgpgQUKgYibNYyPUGfgoZeraVbpRs9oCWL8dHB+/Vt
+ HCJXn2VH6DU0Onc36eR8XlDL8YxcfWNdumOsGggVMmKVRihkgFTBcknJjWjnTryrgOJE
+ QDWIMpmCM9Y+KQkJ/Yt/1isAptkzteddQiNVf3dR0l7eQfVObYqdJDBz5nxNb/v0T93H
+ 6xlgn90ofRBXvcFaJOoc1ctYhfi5RJ/tmLxaDRFfERnH+axhmVXPK6fP8ACQuSiO56UD
+ Y2FA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVk8vUPWRzN2luwOwc1YTJsQYuY6lCbBiA3QPlR1k9m3AIE8WmZ4Dl7HvZhmhu1kQS1LrtI97ECLjuB@nongnu.org
-X-Gm-Message-State: AOJu0YxXpHibR5CjbhXMY0WNIK9+vqE3lfvwcVErgRebnXPcn4H/cFNu
- pXGSRGHR1EQWPQwr4rtFrJVLuijI+SX10E9Sx6QbBMLldweVl59Ayoxv0LQoH8S4IOQYKTwpdgU
- HurkWedk=
-X-Gm-Gg: ASbGncvr3ZLgF21bKwHMx7HjkjSxzGXfcI4u3dBW2FI6mNqkwtXvDcwvvEQJxqkQdpb
- xTpzkeQE15TGaiKbyMUHIlZW7r9OQ5KB7A9VjVo+Zy9ab7wExiQfc6KuO0g9acLumSJoZFE2ACh
- BGaQAP0jjUvXdKtR/OBv6qhn7qVdgtsGJKAh42g4Asl9DShCvBOxETuxxp3D3hip+pEHh6Z05Z+
- +9AbAkhIa8NGKNLVp3eiZWrDvjqlxyc2tsF3lVPWNt4NYSL7ZWKAxbuh3aXwKyY4L3X1RoR3Vfy
- Y8nPG0/0d4MrmmRAKjDvn3y589IHxTIVSpNLNZmeYPLhkzVESsCk0r0v1xnG4n2iFJcS1FSUySI
- b3iiENgC4vZBNVeiQsUBG3VvdPNt1YT5HYZMp
-X-Google-Smtp-Source: AGHT+IGmTTfk1U8VTw2EKO4QjariskL5R1hlsoBfCj5xl0o4Z4MupBMGm8H3vX4Yt6X/jgKEHz/sOg==
-X-Received: by 2002:a17:90b:48ca:b0:313:1c7b:fc62 with SMTP id
- 98e67ed59e1d1-3251774996bmr22088078a91.22.1756279185759; 
- Wed, 27 Aug 2025 00:19:45 -0700 (PDT)
+ AJvYcCWyXhAKZLHocS0XMa8effzUREmKms77lBKXCfw74y1XXJt8XHwoW+RMjfVIUJruHuh1K1RtRntRzXCt@nongnu.org
+X-Gm-Message-State: AOJu0Yw7bp5iz2ZQcurH7CfJiqxa14vRgG3BVumgg9qp5DK7TdBZ8qvJ
+ YtQcldm/g9EhQDzpPr9/QD5qMf6zatVAnxGKb5+V+XeoT4PYluslJWQfwA0NcI8BqUE=
+X-Gm-Gg: ASbGnctxet5Y0I1EIQUuwIWdcQQn1KADhs8bKtb3SHalWwTOaomqpeP9FcoUR35pFyu
+ ZsDLaB9QnL9DZK9DZR4OyjUb2YXN/XHvWahM2X1YOHyg1uRi8ePnIFh6s4dEpmK79+2NKiIvm1Y
+ Zt2gLooX+GGMTunGD+JrPPy/UL8M9+ILVmKfi7h+PZjR922CJSA1ooe09XQCRL38khY3QGYr4gA
+ TuDtXHazL5w9sSUmOxfQlDT+++8VrD9AN0dk2x/KxavjYyhIn9Z/0XQ1yYLByrUN6tWdv57f88/
+ ezBXEqrrQXWRHLoDwvQy7tCx5lpIuawKLmMiBGQhcddD59glmnO4sRrXdqnDfmvq2v9v4aW0lLg
+ M8z1GWRuGvyAftpCpBlvtJ3WDOEjB/y1+aMoO3yNrzz4fhso=
+X-Google-Smtp-Source: AGHT+IGVDUJpLoGGIxywyD4WKRU6ulwN9JdNvLDgnNjormuSm6GDJp9FdV2dUjS6aspd5EIz/5d8wA==
+X-Received: by 2002:a17:902:c94d:b0:235:ed02:288b with SMTP id
+ d9443c01a7336-2462ef40318mr226377535ad.30.1756279418392; 
+ Wed, 27 Aug 2025 00:23:38 -0700 (PDT)
 Received: from [192.168.0.195] ([144.6.121.55])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77202f6dfa6sm2050406b3a.87.2025.08.27.00.19.40
+ d2e1a72fcca58-771ea46b3b7sm6705489b3a.57.2025.08.27.00.23.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Aug 2025 00:19:45 -0700 (PDT)
-Message-ID: <7857ae80-63eb-4d18-9618-d6c94cdd0c17@linaro.org>
-Date: Wed, 27 Aug 2025 17:19:23 +1000
+ Wed, 27 Aug 2025 00:23:37 -0700 (PDT)
+Message-ID: <4adbfd47-5108-4ab6-9d52-b91280c3460f@linaro.org>
+Date: Wed, 27 Aug 2025 17:23:29 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] target/ppc: Move floating-point compare instructions
- to decodetree.
+Subject: Re: [PATCH 0/5] target/ppc: Move floating-point instructions to
+ decodetree.
 To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com
 Cc: harshpb@linux.ibm.com
 References: <20250619095840.369351-1-rathc@linux.ibm.com>
- <20250619095840.369351-3-rathc@linux.ibm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250619095840.369351-3-rathc@linux.ibm.com>
+In-Reply-To: <20250619095840.369351-1-rathc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,22 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/19/25 19:58, Chinmay Rath wrote:
-> +static bool do_helper_cmp(DisasContext *ctx, arg_X_bf *a,
-> +                          void (*helper)(TCGv_env, TCGv_i64, TCGv_i64,
-> +                                         TCGv_i32))
-> +    REQUIRE_INSNS_FLAGS(ctx, FLOAT);
+> Chinmay Rath (5):
+>    target/ppc: Move floating-point rounding and conversion instructions
+>      to decodetree.
+>    target/ppc: Move floating-point compare instructions to decodetree.
+>    target/ppc: Move floating-point move instructions to decodetree.
+>    target/ppc: Move remaining floating-point move instructions to
+>      decodetree.
+>    MAINTAINERS: Add myself as reviewer for PowerPC TCG CPUs
 
-...
-
-> +TRANS(FCMPU, do_helper_cmp, gen_helper_FCMPU);
-> +TRANS(FCMPO, do_helper_cmp, gen_helper_FCMPO);
-
-It's probably better to standardize on TRANS_FLAGS even though the flags checked is the 
-same for both of these.
-
-But anyway,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
