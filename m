@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB13CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 05:39:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5897BCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 05:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur8s2-0005NS-R9; Wed, 27 Aug 2025 01:38:54 -0400
+	id 1ur8s0-0005MU-HJ; Wed, 27 Aug 2025 01:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur8ry-0005M7-3p
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 01:38:50 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1ur8rx-0005Lr-CE
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 01:38:49 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur8rp-0006kc-Lq
+ id 1ur8rv-0006lD-7M
  for qemu-devel@nongnu.org; Wed, 27 Aug 2025 01:38:49 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-77053017462so2682057b3a.1
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 22:38:38 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-323266cdf64so4720520a91.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 22:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756273117; x=1756877917; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=DumEDsiLE2BMyDsQtn+QP6ikQp2JPurJ228DRcUJ9yY=;
- b=XiiXAsZjIGZXINXF3q7fhfxV+L7Mu/haep6wsBsUt1w8+A6TgD7OIU2DdLEj202C7b
- 0HrI+SDS3Iw3rNlgInIj8fdK03dQI1wQereeJG2GtgSYqAHXRSAK/bjfRndZoBn/hIm7
- TLIx48qH/uJFY8Xdoy6VUqig2JoFhRm7nIlhIyjw3VxlKJHOucshe2SPsMTndo9/QDyl
- ePrko4m9E3fu1JdR0KEC1KDTiP06pt1JnFp7Tqhiet0Qr4UAULedud2ZaR3S+Xxs2OXd
- 9K/hIxveouZtxBQEyP14Fw4b66d3cBYRqNCt/4lwMka0Dv7U/HpGzOuDWflNrc2uRRO6
- vlsw==
+ d=linaro.org; s=google; t=1756273123; x=1756877923; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=P/LENQOxma9sLlNHQfVZiYtvAKkgBC0iDr3UdZUm5Y4=;
+ b=LHoXPT428Lg8fQigWkbS7zULZE/Asjy2rJoD+cFBIb734/ssTWYO/Z0XvV2KB/AtQd
+ SoukstMrZd1exKk63OkjtBt4I3e3dnL1A6dtZDhLGX05AZnYYAIMqhnE2wugBHlOD190
+ UN3YghvbrqFFoXaLntKAqcwT4kKf1IRspbQTDgsPeU7mDSZEzaHyG2CziZpuQGWGFj8S
+ EbZv7lqkgxxFS85mhhP4Dql9efuG7SmbvOYfrO68WaWsCUnS6OqvkhwqRkNbi0WoNG/s
+ XJqH6CcipEBbKmeuojpOJ5YuRpCLRM6nFAF5b1M2PZ7nqwh8SWviMoVxQ0bl0NajLmAx
+ NdPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756273117; x=1756877917;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DumEDsiLE2BMyDsQtn+QP6ikQp2JPurJ228DRcUJ9yY=;
- b=eFvxJr0jNO2teuIPg4c628v0yqGDzB8coAMJscl+oShYgnbHk9KgQbNLp0S91RUk/W
- 6diGppme3gtgRFRRG3M5tx5dzvSjYmlxchEVyNKPqqrTp6N4TwWLRVSrEcc4re3VtGRZ
- mAYpTOOwr+2ug+Vt8C1C/lcJQXZUpFcinAyvJZftTetwCsYdQILcYJwE8654taPgVCmK
- l9WS9B+dYNgrWu8dsMM0Qt8aKo0eQjdW4HLcDFAXSNVSzIr89nDIELhuzYrEPf92PUep
- kk+poPL9UAb9AQR/9vlCQj7O5rO6z9cLHQmZsDAWdmizRUym/iEmiVL+pjEB9oEn+WXA
- bWhw==
-X-Gm-Message-State: AOJu0YwM5ei2m5wY+a1tHd9ZVEpmK3yX0ChXU+xPhV0+xSq6JyvrAswS
- 3aVdMTr3dnSfrsxIQV3uYWjGNGcY/exhJNyb6NZfYyWpkk4UQ1kc9J9IcCqA7Vri3xcpS7xWocl
- aT7oi8So=
-X-Gm-Gg: ASbGncuZ7d3XfWTSGH915Fo3DjEnjNR3SC8FC1hA85R1FdMlqXh2X2lCOvcXSePUAOt
- 6eguTFlClg+S6my6jt1MCFkGbi6JZ8UrDhiopjXSqr4l2zF363vRFxydf2FweY+/X+uJA7Ru+6V
- iFVswQ0mGw1eB+9NJZywLdtNK343BBAfAqwJ4lOTdQdfI4q1RbGvkHH2ELETx7pbnXgDx4D20Zx
- 2ExTpYrot/yoONvkTtdRlwOd9zwEcLbAcWV8uUzwlFw/yJr6dvSb41QK9LDCTXCqEnVa9Gl0U64
- 3P7LlIlbNVRL1yoTFKwN/wDFSgPRkR/DLIeo7JI3H5AUQcW3CEXobMFrb/D7NuaT5K67YmRYyy7
- k/sbbwGRnb7d97JV14hBfHVvw3w==
-X-Google-Smtp-Source: AGHT+IHnMK4mjeF/6WIF8F+4JtBjxUK+SiyJxKZp9OdtIS/xH9uGP68BN1/+cmdqDg3b5OhvOiyp5A==
-X-Received: by 2002:a05:6a00:398a:b0:76b:d75c:8a76 with SMTP id
- d2e1a72fcca58-7702f9d90b9mr21877441b3a.1.1756273116740; 
- Tue, 26 Aug 2025 22:38:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756273123; x=1756877923;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P/LENQOxma9sLlNHQfVZiYtvAKkgBC0iDr3UdZUm5Y4=;
+ b=Sx4XCJQte5+8/TShNaid8f+yIPeGUipZUHDFykivPuRvSvIeOeAQRC22obdMvcTYu7
+ y4T9lkQZWiaJA4A9bhBR0PBi3VRi5vZP43lXX9miT9bVNW1hKDRJcC8MW+aMR3cpdzE/
+ CAEzylEGIBispOKkSkG/8GUIucRzZU5gPIjElfuV0NNnIMMVe6JQj7q/1ho2C3+Ohh4g
+ TOMyTGZw7TUWofCfFeWGAVjJysbsNg+ZmDQtdT/vh1DgwyyQYeFQZdDsz3opJCVFCeHO
+ WJWosAAZ6wQRljRL3D8vFl7GF/okbbbAbg3su4921Yu3mbrFjyt2s5DWgsNLb1L6InO3
+ 1+iA==
+X-Gm-Message-State: AOJu0Yyc9xig+xftbYRmt0/Qo2BWK0H9wsHUdXFCMbkHd+WCr1tqR1kg
+ aYy7Hb8iXgqG/gEN0DnfMAO5HRE2CmfrtQajmq/KQHK1Pye+S9zW78DK7/Rb1/igLnR4GiK/mnf
+ 6jPNdb2E=
+X-Gm-Gg: ASbGnctYdj3ZLBNbf969sOdlVGX5fovTdABbvFwALR6kf82+1IGZJxIRo8/8jBxF4JD
+ CqlD2R1MG6ozE7RtewJ+Mt9MkgNE6qS4Gl4Xr+/i8a+fgpmGqEJr6DI6nsUlXDU7dDsquuHxIbz
+ +ArH/0og1G9yK/5TF6SeVW6fwuDTaucHMpWACWPZnVbJ18RPIldIaqFeJe9PxDBt3EW/Y9wXlfy
+ zr/c/9EUNp+O0ufrh0ZEPK58BTCVu8dt8ckqKhHvZ5vL7oksBpWmwf8WCCeHBA6Lfvxw8AruOs/
+ O7MFJva/TG82QRc2PTB+RBVEBqrotXY1r8kNzzLDosQhSKc6S2H6EVPst5MdJcypTxFnGAvGvmU
+ 8aQeJMkdMPPI+ycGeo+3niWsnSSxRoFjj3Qqa
+X-Google-Smtp-Source: AGHT+IHgsvwyHEG/8HvYpL/s4U3LtwfWQC+ywYEPdOfVkBHS9Ow+Kpo0Xj/EgHd/uB/a7ILDGD7TdA==
+X-Received: by 2002:a17:90b:58ce:b0:323:7e80:8819 with SMTP id
+ 98e67ed59e1d1-32518b825b3mr21057154a91.36.1756273122933; 
+ Tue, 26 Aug 2025 22:38:42 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-770401af6b2sm12071868b3a.56.2025.08.26.22.38.32
+ d2e1a72fcca58-770401af6b2sm12071868b3a.56.2025.08.26.22.38.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 22:38:36 -0700 (PDT)
+ Tue, 26 Aug 2025 22:38:42 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/2] hw/core: Don't dump incompletely reset cpu
-Date: Wed, 27 Aug 2025 15:38:20 +1000
-Message-ID: <20250827053822.4094239-1-richard.henderson@linaro.org>
+Subject: [PATCH 2/2] hw/core: Use qemu_log_trylock/unlock in
+ cpu_common_reset_exit
+Date: Wed, 27 Aug 2025 15:38:22 +1000
+Message-ID: <20250827053822.4094239-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250827053822.4094239-1-richard.henderson@linaro.org>
+References: <20250827053822.4094239-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,21 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The start of CPUState reset.hold happens before any subclasses,
-which can result in attempting to dump uninitialized data.
-In the case of Sparc, this will SIGSEGV.
+Ensure that the "CPU Reset" message won't be separated
+from the cpu_dump_state output.
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ hw/core/cpu-common.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-r~
-
-
-Richard Henderson (2):
-  hw/core: Dump cpu_reset in the reset.exit phase
-  hw/core: Use qemu_log_trylock/unlock in cpu_common_reset_exit
-
- hw/core/cpu-common.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
-
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 26321be785..259cf2a3c3 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -135,10 +135,15 @@ static void cpu_common_reset_hold(Object *obj, ResetType type)
+ static void cpu_common_reset_exit(Object *obj, ResetType type)
+ {
+     if (qemu_loglevel_mask(CPU_LOG_RESET)) {
+-        CPUState *cpu = CPU(obj);
++        FILE *f = qemu_log_trylock();
+ 
+-        qemu_log("CPU Reset (CPU %d)\n", cpu->cpu_index);
+-        log_cpu_state(cpu, cpu->cc->reset_dump_flags);
++        if (f) {
++            CPUState *cpu = CPU(obj);
++
++            fprintf(f, "CPU Reset (CPU %d)\n", cpu->cpu_index);
++            cpu_dump_state(cpu, f, cpu->cc->reset_dump_flags);
++            qemu_log_unlock(f);
++        }
+     }
+ }
+ 
 -- 
 2.43.0
 
