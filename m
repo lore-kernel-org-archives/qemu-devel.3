@@ -4,42 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D08CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBB0CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urJaZ-0006mD-Rc; Wed, 27 Aug 2025 13:05:42 -0400
+	id 1urJb8-00088E-2E; Wed, 27 Aug 2025 13:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJa5-0006Lq-87; Wed, 27 Aug 2025 13:05:08 -0400
+ id 1urJaP-0006lY-64; Wed, 27 Aug 2025 13:05:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJa0-0007kR-Ns; Wed, 27 Aug 2025 13:05:04 -0400
+ id 1urJaL-0007yf-Ld; Wed, 27 Aug 2025 13:05:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B544B14C72D;
- Wed, 27 Aug 2025 20:03:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0058814C731;
+ Wed, 27 Aug 2025 20:03:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C5FE42698F3;
- Wed, 27 Aug 2025 20:03:56 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 11CDE2698F7;
+ Wed, 27 Aug 2025 20:03:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 11/18] target/mips: Only update MVPControl.EVP bit if
- executed by master VPE
-Date: Wed, 27 Aug 2025 20:03:46 +0300
-Message-ID: <20250827170356.2698446-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 15/18] target/arm: Fix handling of setting SVE
+ registers from gdb
+Date: Wed, 27 Aug 2025 20:03:50 +0300
+Message-ID: <20250827170356.2698446-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,79 +60,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
 
-According to the 'MIPS MT Application-Speciﬁc Extension' manual:
+The code to handle setting SVE registers via the gdbstub is broken:
+ * it sets each pair of elements in the zregs[].d[] array in the
+   wrong order for the most common (little endian) case: the least
+   significant 64-bit value comes first
+ * it makes no attempt to handle target_endian()
+ * it does a simple copy out of the (target endian) gdbstub buffer
+   into the (host endan) zregs data structure, which is wrong on
+   big endian hosts
 
-  If the VPE executing the instruction is not a Master VPE,
-  with the MVP bit of the VPEConf0 register set, the EVP bit
-  is unchanged by the instruction.
-
-Modify the DVPE/EVPE opcodes to only update the MVPControl.EVP bit
-if executed on a master VPE.
+Fix all these problems:
+ * use ldq_p() to read from the gdbstub buffer
+ * check target_big_endian() to see if we need to handle the
+   128-bit values the opposite way around
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Hansni Bu
-Buglink: https://bugs.launchpad.net/qemu/+bug/1926277
-Fixes: f249412c749 ("mips: Add MT halting and waking of VPEs")
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Message-ID: <20210427133343.159718-1-f4bug@amsat.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit e895095c78ab877d40df2dd31ee79d85757d963b)
+Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+Message-id: 20250722173736.2332529-3-vacha.bhavsar@oss.qualcomm.com
+[PMM: adjusted commit message, fixed spacing]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 97b3d732afec9b165c33697452e31267a845338f)
+(Mjt: s/target_big_endian/target_words_bigendian/ due to missing
+ v10.0.0-277-gb939b8e42a "exec: Rename target_words_bigendian() -> target_big_endian()")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index 80260ecd8a..125bd541a7 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -1624,12 +1624,14 @@ target_ulong helper_dvpe(CPUMIPSState *env)
-     CPUState *other_cs = first_cpu;
-     target_ulong prev = env->mvp->CP0_MVPControl;
- 
--    CPU_FOREACH(other_cs) {
--        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
--        /* Turn off all VPEs except the one executing the dvpe.  */
--        if (&other_cpu->env != env) {
--            other_cpu->env.mvp->CP0_MVPControl &= ~(1 << CP0MVPCo_EVP);
--            mips_vpe_sleep(other_cpu);
-+    if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
-+        CPU_FOREACH(other_cs) {
-+            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
-+            /* Turn off all VPEs except the one executing the dvpe.  */
-+            if (&other_cpu->env != env) {
-+                other_cpu->env.mvp->CP0_MVPControl &= ~(1 << CP0MVPCo_EVP);
-+                mips_vpe_sleep(other_cpu);
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index 2dc058fcd6..fdbe6ffbd0 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -188,10 +188,17 @@ int arm_gdb_set_svereg(CPUARMState *env, uint8_t *buf, int reg)
+     case 0 ... 31:
+     {
+         int vq, len = 0;
+-        uint64_t *p = (uint64_t *) buf;
+         for (vq = 0; vq < cpu->sve_max_vq; vq++) {
+-            env->vfp.zregs[reg].d[vq * 2 + 1] = *p++;
+-            env->vfp.zregs[reg].d[vq * 2] = *p++;
++            if (target_words_bigendian()) {
++                env->vfp.zregs[reg].d[vq * 2 + 1] = ldq_p(buf);
++                buf += 8;
++                env->vfp.zregs[reg].d[vq * 2] = ldq_p(buf);
++            } else{
++                env->vfp.zregs[reg].d[vq * 2] = ldq_p(buf);
++                buf += 8;
++                env->vfp.zregs[reg].d[vq * 2 + 1] = ldq_p(buf);
 +            }
++            buf += 8;
+             len += 16;
          }
-     }
-     return prev;
-@@ -1640,15 +1642,17 @@ target_ulong helper_evpe(CPUMIPSState *env)
-     CPUState *other_cs = first_cpu;
-     target_ulong prev = env->mvp->CP0_MVPControl;
- 
--    CPU_FOREACH(other_cs) {
--        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
-+    if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
-+        CPU_FOREACH(other_cs) {
-+            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
- 
--        if (&other_cpu->env != env
--            /* If the VPE is WFI, don't disturb its sleep.  */
--            && !mips_vpe_is_wfi(other_cpu)) {
--            /* Enable the VPE.  */
--            other_cpu->env.mvp->CP0_MVPControl |= (1 << CP0MVPCo_EVP);
--            mips_vpe_wake(other_cpu); /* And wake it up.  */
-+            if (&other_cpu->env != env
-+                /* If the VPE is WFI, don't disturb its sleep.  */
-+                && !mips_vpe_is_wfi(other_cpu)) {
-+                /* Enable the VPE.  */
-+                other_cpu->env.mvp->CP0_MVPControl |= (1 << CP0MVPCo_EVP);
-+                mips_vpe_wake(other_cpu); /* And wake it up.  */
-+            }
+         return len;
+@@ -206,9 +213,9 @@ int arm_gdb_set_svereg(CPUARMState *env, uint8_t *buf, int reg)
+     {
+         int preg = reg - 34;
+         int vq, len = 0;
+-        uint64_t *p = (uint64_t *) buf;
+         for (vq = 0; vq < cpu->sve_max_vq; vq = vq + 4) {
+-            env->vfp.pregs[preg].p[vq / 4] = *p++;
++            env->vfp.pregs[preg].p[vq / 4] = ldq_p(buf);
++            buf += 8;
+             len += 8;
          }
-     }
-     return prev;
+         return len;
 -- 
 2.47.2
 
