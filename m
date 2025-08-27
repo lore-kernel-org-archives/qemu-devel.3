@@ -4,108 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B59CCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 16:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7849CCA0FF9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 16:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urJ1K-0000nc-I2; Wed, 27 Aug 2025 12:29:10 -0400
+	id 1urJ2a-0001vf-RL; Wed, 27 Aug 2025 12:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1urJ1F-0000mm-L4
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 12:29:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1urJ2U-0001oD-LO; Wed, 27 Aug 2025 12:30:23 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1urJ1B-0002x2-QU
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 12:29:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756312138;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bJ31tsxD6I7JX3ywPBhd83+DOp3d8ReEDszxelaubyc=;
- b=HcULxOZD/8vykdXozeD06tl2083n2jmDAVX191H8ILqcKxC5PalmRHexqZv+y2gc/jMhH1
- DtOYPFGzZtLPxkBvJccJBgb5fj3FQEtB3KzoWhefik1HgoPS1gejV5nbKx7tYDeWWK8p6E
- HNNBc00E6MOhWRhD+BK7vwxEx/GTs6w=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-lbN2gbmHMn6tJ73kHjvKiw-1; Wed, 27 Aug 2025 12:28:56 -0400
-X-MC-Unique: lbN2gbmHMn6tJ73kHjvKiw-1
-X-Mimecast-MFC-AGG-ID: lbN2gbmHMn6tJ73kHjvKiw_1756312136
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45b6490ea91so11721815e9.0
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 09:28:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756312135; x=1756916935;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bJ31tsxD6I7JX3ywPBhd83+DOp3d8ReEDszxelaubyc=;
- b=U9uDAu02yyW/xdNyv3ASgiFwWzhSbhyP/a3vyLsQ6IsmFbC7wnyW2FLO+Pm3JS/TAk
- mTiVybjV2HfwIvi/Fgz6sBSxlEe1/RDeqgGeb97don0RpkAh60R/z/kZAPAOTo6SqF2Q
- MAZIYqmOa14EfGJ+fUXLMEbGIonTWbIxv4oRAHaACqqOUxLSG4uNW5mwVc5cFa+9YVNZ
- VlhqQ+Zxdm6lIV0swUi4XrTnciAeB+ekftIUjis1x1tb3GAF5yBEva9k6TNmCqUeFos6
- Lk85T7P3Y+mcDjJ53tGl+UYSIWZ0/KHxlec/ib1oeeit2qtrAkEPGUbRag9msZ3FsaeP
- 6O1Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8bmyZPzGq6vhLdL/l7pqbis7G2ZCiVIW6hIfeK+4zCwKldhs+N1JuyXr1paIH+WfW3BWThx6HZzmi@nongnu.org
-X-Gm-Message-State: AOJu0Yw+iWKmEEXmwhsvNVmajsvcxury0yefUaWuZyFn4QuT/qN0OgFW
- nxfMiUMR1g5MkJgx/9jafKh381n1/1D+Eaa5l0OXLJNyD7lwNz1MjZnxEkCryIeBbR568aZa85B
- jDpGZGzmj0V15gKmRck1kgBkA6/aOypOvo2N0DGRsU/yXG9G+EvfDC/HKRghk6Hgc8hI=
-X-Gm-Gg: ASbGncvh34tY4kiw3zHISZKDCoR//Vk+s5MuyuM36J1dfF75GemhWUeWlCQMUEZBNUA
- fe/dQJOfvVI5rQwYvjrjKhZzts/yl0PzEX4zGipiIBgb6ot6M2rEJ4jnvxA/zazp6+H54Umljpc
- f7ye5sFblulro+b22xKwm43HWwnaLZTPcVZ4O40xqNyQlubbpSzL5VPTguw5ZpHvnZ1f0YSEqld
- ODlw5eELnsIOD+uLjGYcRaZAsaVp2imVIlalLDie7uBnzaYQEPqwSFHWRVjBo1sZz08qMKhRUZC
- s+Ed2C/xTiK+tHqSPsQI2HEPZq8JVWPuJy0v2en41ipfpqGc0DyFhMTBGPpJH3sYhmXfqOvMA3P
- 1qaS05keJhVo=
-X-Received: by 2002:a05:600c:1c9d:b0:45b:6684:9e07 with SMTP id
- 5b1f17b1804b1-45b685d740emr48773365e9.32.1756312135367; 
- Wed, 27 Aug 2025 09:28:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgBl9ESmuxKxJv70CYDawsDLCsmsgnXtKA+W9mPs1jGAgG9vxT/jR3XrNUYpr6twI7OcEkVg==
-X-Received: by 2002:a05:600c:1c9d:b0:45b:6684:9e07 with SMTP id
- 5b1f17b1804b1-45b685d740emr48773185e9.32.1756312134963; 
- Wed, 27 Aug 2025 09:28:54 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cd935931ebsm631684f8f.55.2025.08.27.09.28.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Aug 2025 09:28:54 -0700 (PDT)
-Message-ID: <c53b7bc6-fe76-4357-9eba-56f4c3111fa9@redhat.com>
-Date: Wed, 27 Aug 2025 18:28:53 +0200
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1urJ2P-0003GQ-Mr; Wed, 27 Aug 2025 12:30:22 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57R6pBb5015852;
+ Wed, 27 Aug 2025 16:30:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=B0+kMR
+ 1VbcbQ5Kx192IQYMYb2goRWYkzeU8EnCIpdbw=; b=adxPQDRI/uXQp9C4REEU/x
+ eD/o30HVO8ujMKp9SGG+dMLIKBKeBAl9Wn2xtMXz+ciEedDgQFlGmpYxZndtI59C
+ xFgdJ23LCD4dSriy1mCLoqz9Y9fL26f/DO1EbMexD2OZy/wsJe5g2gyKop9w7U7f
+ cvrjVubrTFIyNWxxtp/Jacz5vMvyS5NahRL4ConInzor+VrUk0X3GKJC6i7vOm9R
+ RcjnPiApH2YI80zMT4mDq2otbYuPOWB1Xe5QpzcTzXxkw7IIoKQA7D5h8pTSAgpA
+ BVeYNepe4Nb6s/QORpM5kmtKF+doQFjnRVS2ffPeaCXdwNTwfxac1AXk0Sqj2vgA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5avn4bp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 Aug 2025 16:30:12 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57RFckVA020799;
+ Wed, 27 Aug 2025 16:30:10 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48qrc0rwhv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 Aug 2025 16:30:10 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57RGU9TB6095684
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 27 Aug 2025 16:30:09 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 652475805A;
+ Wed, 27 Aug 2025 16:30:09 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 355DA58051;
+ Wed, 27 Aug 2025 16:30:08 +0000 (GMT)
+Received: from [9.61.148.204] (unknown [9.61.148.204])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 27 Aug 2025 16:30:08 +0000 (GMT)
+Message-ID: <e745b570-e1da-4992-a033-532c55f37339@linux.ibm.com>
+Date: Wed, 27 Aug 2025 12:30:07 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 13/21] intel_iommu: Introduce a new pasid cache
- invalidation type FORCE_RESET
+Subject: Re: [PATCH v5 15/29] hw/s390x/ipl: Add IPIB flags to IPL Parameter
+ Block
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-16-zycai@linux.ibm.com>
 Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>
-References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
- <20250822064101.123526-14-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250822064101.123526-14-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20250818214323.529501-16-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: bTFE0jDx31noYk8Ojb-A7B-E8L_I4T7X
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAyMSBTYWx0ZWRfXxJHRXIQRwnzN
+ yQticvFiv3ad+lWhdi6su0Q0efBuFHIUJFwgXIbAuVwjamvMZPblpGBK+v9xmSao54OhZpTqGD3
+ HOMWFc4VyY4aDYvbc/zjCcqudLIx5MvXe+jUCbKjlVfH7Gd9ZIQ7oUNS1d7jmT3aVHFbLVK0zJ2
+ PxBHl9Ixue7qG2rw9IVa6g9a0fA5Re9oenALjEdAoagyuBR+xSHZ3wbsAoNmHgSUGP6mvvNhFnr
+ ZDiZ20yPh0GsPv+PXoWGKYx2hBZdQ0QpEJ7jxk6/O+l+0PEeiUv72OIKapVKl6L2aWvPxgu+UA3
+ x0nar9TqM/EsAaAiXFjG0Nuh1Ewm0IKLkk80yYoe+YybaEYBJtRiNkuhztgryfWzQFsfdoCmTCv
+ uKqsWBzT
+X-Proofpoint-ORIG-GUID: bTFE0jDx31noYk8Ojb-A7B-E8L_I4T7X
+X-Authority-Analysis: v=2.4 cv=SNNCVPvH c=1 sm=1 tr=0 ts=68af3294 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=tFOKKjxJ0E9mQNCovc4A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-27_04,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230021
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,129 +122,171 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
 
-On 8/22/25 8:40 AM, Zhenzhong Duan wrote:
-> FORCE_RESET is different from GLOBAL_INV which updates pasid cache if
-> underlying pasid entry is still valid, it drops all the pasid caches.
+On 8/18/25 5:43 PM, Zhuoying Cai wrote:
+> Add IPIB flags to IPL Parameter Block to determine if IPL needs to
+> perform securely and if IPL Information Report Block (IIRB) exists.
 >
-> FORCE_RESET isn't a VTD spec defined invalidation type for pasid cache,
-> only used internally in system level reset.
+> Move DIAG308 flags to a separated header file and add flags for secure IPL.
 >
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Secure boot in audit mode will perform if certificate(s) exist in the
+> key store. IIRB will exist and results of verification will be stored in
+> IIRB.
+>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->  hw/i386/intel_iommu_internal.h |  9 +++++++++
->  hw/i386/intel_iommu.c          | 25 +++++++++++++++++++++++++
->  hw/i386/trace-events           |  1 +
->  3 files changed, 35 insertions(+)
+>   hw/s390x/ipl.c                 | 20 ++++++++++++++++++++
+>   hw/s390x/ipl.h                 | 17 -----------------
+>   include/hw/s390x/ipl/diag308.h | 34 ++++++++++++++++++++++++++++++++++
+>   include/hw/s390x/ipl/qipl.h    |  5 ++++-
+>   4 files changed, 58 insertions(+), 18 deletions(-)
+>   create mode 100644 include/hw/s390x/ipl/diag308.h
 >
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index fb2a919e87..c510b09d1a 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -569,6 +569,15 @@ typedef enum VTDPCInvType {
->      VTD_PASID_CACHE_DOMSI = VTD_INV_DESC_PASIDC_G_DSI,
->      VTD_PASID_CACHE_PASIDSI = VTD_INV_DESC_PASIDC_G_PASID_SI,
->      VTD_PASID_CACHE_GLOBAL_INV = VTD_INV_DESC_PASIDC_G_GLOBAL,
-> +
-> +    /*
-> +     * Internally used PASID cache invalidation type starts here,
-> +     * 0x10 is large enough as invalidation type in pc_inv_desc
-> +     * is 2bits in size.
-> +     */
-> +
-> +    /* Reset all PASID cache entries, used in system level reset */
-> +    VTD_PASID_CACHE_FORCE_RESET = 0x10,
-I am not very keen on adding such an artifical enum value that does not
-exist in the spec.
-
-Why not simply introduce another function (instead of
-vtd_flush_pasid_locked) that does the cleanup. To me it would be
-cleaner. Thanks Eric
->  } VTDPCInvType;
->  
->  typedef struct VTDPASIDCacheInfo {
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 7d2c9feae7..af384ce7f0 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -87,6 +87,8 @@ struct vtd_iotlb_key {
->  static void vtd_address_space_refresh_all(IntelIOMMUState *s);
->  static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
->  
-> +static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s);
-> +
->  static void vtd_panic_require_caching_mode(void)
->  {
->      error_report("We need to set caching-mode=on for intel-iommu to enable "
-> @@ -391,6 +393,7 @@ static void vtd_reset_caches(IntelIOMMUState *s)
->      vtd_iommu_lock(s);
->      vtd_reset_iotlb_locked(s);
->      vtd_reset_context_cache_locked(s);
-> +    vtd_pasid_cache_reset_locked(s);
->      vtd_iommu_unlock(s);
->  }
->  
-> @@ -3183,6 +3186,8 @@ static gboolean vtd_flush_pasid_locked(gpointer key, gpointer value,
->          /* fall through */
->      case VTD_PASID_CACHE_GLOBAL_INV:
->          break;
-> +    case VTD_PASID_CACHE_FORCE_RESET:
-> +        goto remove;
->      default:
->          error_setg(&error_fatal, "invalid pc_info->type for flush");
->      }
-> @@ -3225,6 +3230,23 @@ remove:
->      return true;
->  }
->  
-> +static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
+> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+> index 186be923d7..8ac0cee73d 100644
+> --- a/hw/s390x/ipl.c
+> +++ b/hw/s390x/ipl.c
+> @@ -430,6 +430,13 @@ S390IPLCertificateStore *s390_ipl_get_certificate_store(void)
+>       return &ipl->cert_store;
+>   }
+>   
+> +static bool s390_has_certificate(void)
 > +{
-> +    VTDPASIDCacheInfo pc_info;
+> +    S390IPLState *ipl = get_ipl_device();
 > +
-> +    trace_vtd_pasid_cache_reset();
-> +
-> +    pc_info.type = VTD_PASID_CACHE_FORCE_RESET;
-> +
-> +    /*
-> +     * Reset pasid cache is a big hammer, so use g_hash_table_foreach_remove
-> +     * which will free all vtd_as instances except those created for PCI
-> +     * sub-system.
-> +     */
-> +    g_hash_table_foreach_remove(s->vtd_address_spaces,
-> +                                vtd_flush_pasid_locked, &pc_info);
+> +    return ipl->cert_store.count > 0;
 > +}
 > +
->  /*
->   * This function walks over PASID range within [start, end) in a single
->   * PASID table for entries matching @info type/did, then retrieve/create
-> @@ -3363,6 +3385,9 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
->      case VTD_PASID_CACHE_GLOBAL_INV:
->          /* loop all assigned devices */
->          break;
-> +    case VTD_PASID_CACHE_FORCE_RESET:
-> +        /* For force reset, no need to go further replay */
-> +        return;
->      default:
->          error_setg(&error_fatal, "invalid pc_info->type for replay");
->      }
-> diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-> index ae5bbfcdc0..c8a936eb46 100644
-> --- a/hw/i386/trace-events
-> +++ b/hw/i386/trace-events
-> @@ -24,6 +24,7 @@ vtd_inv_qi_head(uint16_t head) "read head %d"
->  vtd_inv_qi_tail(uint16_t head) "write tail %d"
->  vtd_inv_qi_fetch(void) ""
->  vtd_context_cache_reset(void) ""
-> +vtd_pasid_cache_reset(void) ""
->  vtd_pasid_cache_gsi(void) ""
->  vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
->  vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
+>   static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>   {
+>       CcwDevice *ccw_dev = NULL;
+> @@ -487,6 +494,19 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+>           s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+>           iplb->flags |= DIAG308_FLAGS_LP_VALID;
+>   
+> +        /*
+> +         * Secure boot in audit mode will perform
+> +         * if certificate(s) exist in the key store.
+> +         *
+> +         * IPL Information Report Block (IIRB) will exist
+> +         * for secure boot in audit mode.
+> +         *
+> +         * Results of secure boot will be stored in IIRB.
+> +         */
+> +        if (s390_has_certificate()) {
+> +            iplb->hdr_flags |= DIAG308_IPIB_FLAGS_IPLIR;
+> +        }
+> +
+We could also override the previously assigned minimum IPLB length here 
+if the flag is set.
 
+That would avoid always using the max length and then patch 16 could be 
+dropped too.
+
+>           return true;
+>       }
+>   
+> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+> index e26fc1cd6a..3b8cc5474e 100644
+> --- a/hw/s390x/ipl.h
+> +++ b/hw/s390x/ipl.h
+> @@ -23,7 +23,6 @@
+>   #include "qom/object.h"
+>   #include "target/s390x/kvm/pv.h"
+>   
+> -#define DIAG308_FLAGS_LP_VALID 0x80
+>   #define MAX_BOOT_DEVS 8 /* Max number of devices that may have a bootindex */
+>   
+>   void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
+> @@ -91,22 +90,6 @@ struct S390IPLState {
+>   };
+>   QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
+>   
+> -#define DIAG_308_RC_OK              0x0001
+> -#define DIAG_308_RC_NO_CONF         0x0102
+> -#define DIAG_308_RC_INVALID         0x0402
+> -#define DIAG_308_RC_NO_PV_CONF      0x0902
+> -#define DIAG_308_RC_INVAL_FOR_PV    0x0a02
+> -
+> -#define DIAG308_RESET_MOD_CLR       0
+> -#define DIAG308_RESET_LOAD_NORM     1
+> -#define DIAG308_LOAD_CLEAR          3
+> -#define DIAG308_LOAD_NORMAL_DUMP    4
+> -#define DIAG308_SET                 5
+> -#define DIAG308_STORE               6
+> -#define DIAG308_PV_SET              8
+> -#define DIAG308_PV_STORE            9
+> -#define DIAG308_PV_START            10
+> -
+>   #define S390_IPL_TYPE_FCP 0x00
+>   #define S390_IPL_TYPE_CCW 0x02
+>   #define S390_IPL_TYPE_PV 0x05
+> diff --git a/include/hw/s390x/ipl/diag308.h b/include/hw/s390x/ipl/diag308.h
+> new file mode 100644
+> index 0000000000..6e62f29215
+> --- /dev/null
+> +++ b/include/hw/s390x/ipl/diag308.h
+> @@ -0,0 +1,34 @@
+> +/*
+> + * S/390 DIAGNOSE 308 definitions and structures
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef S390X_DIAG308_H
+> +#define S390X_DIAG308_H
+> +
+> +#define DIAG_308_RC_OK              0x0001
+> +#define DIAG_308_RC_NO_CONF         0x0102
+> +#define DIAG_308_RC_INVALID         0x0402
+> +#define DIAG_308_RC_NO_PV_CONF      0x0902
+> +#define DIAG_308_RC_INVAL_FOR_PV    0x0a02
+> +
+> +#define DIAG308_RESET_MOD_CLR       0
+> +#define DIAG308_RESET_LOAD_NORM     1
+> +#define DIAG308_LOAD_CLEAR          3
+> +#define DIAG308_LOAD_NORMAL_DUMP    4
+> +#define DIAG308_SET                 5
+> +#define DIAG308_STORE               6
+> +#define DIAG308_PV_SET              8
+> +#define DIAG308_PV_STORE            9
+> +#define DIAG308_PV_START            10
+> +
+> +#define DIAG308_FLAGS_LP_VALID 0x80
+> +
+> +#define DIAG308_IPIB_FLAGS_SIPL 0x40
+> +#define DIAG308_IPIB_FLAGS_IPLIR 0x20
+> +
+> +#endif
+> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+> index e505f44020..5c2bf3051c 100644
+> --- a/include/hw/s390x/ipl/qipl.h
+> +++ b/include/hw/s390x/ipl/qipl.h
+> @@ -12,6 +12,8 @@
+>   #ifndef S390X_QIPL_H
+>   #define S390X_QIPL_H
+>   
+> +#include "diag308.h"
+> +
+>   /* Boot Menu flags */
+>   #define QIPL_FLAG_BM_OPTS_CMD   0x80
+>   #define QIPL_FLAG_BM_OPTS_ZIPL  0x40
+> @@ -103,7 +105,8 @@ typedef struct IplBlockQemuScsi IplBlockQemuScsi;
+>   union IplParameterBlock {
+>       struct {
+>           uint32_t len;
+> -        uint8_t  reserved0[3];
+> +        uint8_t  hdr_flags;
+> +        uint8_t  reserved0[2];
+>           uint8_t  version;
+>           uint32_t blk0_len;
+>           uint8_t  pbt;
+Regards,
+Jared Rossi
 
