@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32508CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B98CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHhK-0003Bf-Mn; Wed, 27 Aug 2025 11:04:26 -0400
+	id 1urHls-0001o8-4g; Wed, 27 Aug 2025 11:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHhF-00033N-V2; Wed, 27 Aug 2025 11:04:22 -0400
+ id 1urHig-0005fr-9C; Wed, 27 Aug 2025 11:05:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHhD-0004t7-DI; Wed, 27 Aug 2025 11:04:21 -0400
+ id 1urHic-0005FR-Kg; Wed, 27 Aug 2025 11:05:50 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5D39214C537;
- Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 499C314C544;
+ Wed, 27 Aug 2025 18:02:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 49B2926983F;
- Wed, 27 Aug 2025 18:03:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3845B26984C;
+ Wed, 27 Aug 2025 18:03:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yang Jialong <z_bajeer@yeah.net>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 15/59] intc/riscv_aplic: Fix target register read when
- source is inactive
-Date: Wed, 27 Aug 2025 18:02:20 +0300
-Message-ID: <20250827150323.2694101-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 28/59] target/arm: Fix handling of setting SVE
+ registers from gdb
+Date: Wed, 27 Aug 2025 18:02:33 +0300
+Message-ID: <20250827150323.2694101-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
@@ -62,44 +60,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yang Jialong <z_bajeer@yeah.net>
+From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
 
-The RISC-V Advanced interrupt Architecture:
-4.5.16. Interrupt targets:
-If interrupt source i is inactive in this domain, register target[i] is
-read-only zero.
+The code to handle setting SVE registers via the gdbstub is broken:
+ * it sets each pair of elements in the zregs[].d[] array in the
+   wrong order for the most common (little endian) case: the least
+   significant 64-bit value comes first
+ * it makes no attempt to handle target_endian()
+ * it does a simple copy out of the (target endian) gdbstub buffer
+   into the (host endan) zregs data structure, which is wrong on
+   big endian hosts
 
-Signed-off-by: Yang Jialong <z_bajeer@yeah.net>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20250728055114.252024-1-z_bajeer@yeah.net>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit b6f1244678bebaf7e2c775cfc66d452f95678ebf)
+Fix all these problems:
+ * use ldq_p() to read from the gdbstub buffer
+ * check target_big_endian() to see if we need to handle the
+   128-bit values the opposite way around
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+Message-id: 20250722173736.2332529-3-vacha.bhavsar@oss.qualcomm.com
+[PMM: adjusted commit message, fixed spacing]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 97b3d732afec9b165c33697452e31267a845338f)
+(Mjt: s/target_big_endian/target_words_bigendian/ due to missing
+ v10.0.0-277-gb939b8e42a "exec: Rename target_words_bigendian() -> target_big_endian()")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 5964cde7e0..cab8f0cd4d 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -628,7 +628,7 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
- 
- static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
- {
--    uint32_t irq, word, idc;
-+    uint32_t irq, word, idc, sm;
-     RISCVAPLICState *aplic = opaque;
- 
-     /* Reads must be 4 byte words */
-@@ -696,6 +696,10 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
-     } else if ((APLIC_TARGET_BASE <= addr) &&
-             (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
-         irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
-+        sm = aplic->sourcecfg[irq] & APLIC_SOURCECFG_SM_MASK;
-+        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
-+            return 0;
-+        }
-         return aplic->target[irq];
-     } else if (!aplic->msimode && (APLIC_IDC_BASE <= addr) &&
-             (addr < (APLIC_IDC_BASE + aplic->num_harts * APLIC_IDC_SIZE))) {
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index d4d808a49b..b9b2b14c93 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -202,10 +202,17 @@ int aarch64_gdb_set_sve_reg(CPUState *cs, uint8_t *buf, int reg)
+     case 0 ... 31:
+     {
+         int vq, len = 0;
+-        uint64_t *p = (uint64_t *) buf;
+         for (vq = 0; vq < cpu->sve_max_vq; vq++) {
+-            env->vfp.zregs[reg].d[vq * 2 + 1] = *p++;
+-            env->vfp.zregs[reg].d[vq * 2] = *p++;
++            if (target_words_bigendian()) {
++                env->vfp.zregs[reg].d[vq * 2 + 1] = ldq_p(buf);
++                buf += 8;
++                env->vfp.zregs[reg].d[vq * 2] = ldq_p(buf);
++            } else{
++                env->vfp.zregs[reg].d[vq * 2] = ldq_p(buf);
++                buf += 8;
++                env->vfp.zregs[reg].d[vq * 2 + 1] = ldq_p(buf);
++            }
++            buf += 8;
+             len += 16;
+         }
+         return len;
+@@ -220,9 +227,9 @@ int aarch64_gdb_set_sve_reg(CPUState *cs, uint8_t *buf, int reg)
+     {
+         int preg = reg - 34;
+         int vq, len = 0;
+-        uint64_t *p = (uint64_t *) buf;
+         for (vq = 0; vq < cpu->sve_max_vq; vq = vq + 4) {
+-            env->vfp.pregs[preg].p[vq / 4] = *p++;
++            env->vfp.pregs[preg].p[vq / 4] = ldq_p(buf);
++            buf += 8;
+             len += 8;
+         }
+         return len;
 -- 
 2.47.2
 
