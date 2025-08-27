@@ -4,38 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8531CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E94CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHnM-0005Tb-WA; Wed, 27 Aug 2025 11:10:41 -0400
+	id 1urHmZ-00042R-Uf; Wed, 27 Aug 2025 11:09:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHko-0000Bu-Dz; Wed, 27 Aug 2025 11:08:04 -0400
+ id 1urHkH-0007pj-6S; Wed, 27 Aug 2025 11:07:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHkm-0005iB-BS; Wed, 27 Aug 2025 11:08:01 -0400
+ id 1urHkF-0005Y9-1B; Wed, 27 Aug 2025 11:07:28 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D344314C55A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 63AEF14C553;
  Wed, 27 Aug 2025 18:02:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C2573269861;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4B8EC26985B;
  Wed, 27 Aug 2025 18:03:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Jesper Wendel Devantier <foss@defmacro.it>,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 49/59] hw/nvme: fix namespace attachment
-Date: Wed, 27 Aug 2025 18:02:54 +0300
-Message-ID: <20250827150323.2694101-49-mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 43/59] ppc/xive: Fix PHYS NSR ring matching
+Date: Wed, 27 Aug 2025 18:02:48 +0300
+Message-ID: <20250827150323.2694101-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,56 +64,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Commit 6ccca4b6bb9f ("hw/nvme: rework csi handling") introduced a bug in
-Namespace Attachment, causing it to
+Test that the NSR exception bit field is equal to the pool ring value,
+rather than any common bits set, which is more correct (although there
+is no practical bug because the LSI NSR type is not implemented and
+POOL/PHYS NSR are encoded with exclusive bits).
 
-  a) not allow a controller to attach namespaces to other controllers
-  b) assert if a valid non-attached namespace is detached
-
-This fixes both issues.
-
-Fixes: 6ccca4b6bb9f ("hw/nvme: rework csi handling")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2976
-Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 31b737b19dca4d50758f5e9834d27b683102f2f1)
+Fixes: 4c3ccac636 ("pnv/xive: Add special handling for pool targets")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-7-npiggin@gmail.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit bde8c148bb22b99cb84cda800fa555851b8cb358)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index d6b77d4fbc..669fff41c7 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -6816,7 +6816,7 @@ static uint16_t nvme_ns_attachment(NvmeCtrl *n, NvmeRequest *req)
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index 80b07a0afe..cebe409a1a 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -54,7 +54,8 @@ static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
+         uint8_t *alt_regs;
  
-         switch (sel) {
-         case NVME_NS_ATTACHMENT_ATTACH:
--            if (nvme_ns(n, nsid)) {
-+            if (nvme_ns(ctrl, nsid)) {
-                 return NVME_NS_ALREADY_ATTACHED | NVME_DNR;
-             }
- 
-@@ -6824,7 +6824,7 @@ static uint16_t nvme_ns_attachment(NvmeCtrl *n, NvmeRequest *req)
-                 return NVME_NS_PRIVATE | NVME_DNR;
-             }
- 
--            if (!nvme_csi_supported(n, ns->csi)) {
-+            if (!nvme_csi_supported(ctrl, ns->csi)) {
-                 return NVME_IOCS_NOT_SUPPORTED | NVME_DNR;
-             }
- 
-@@ -6834,6 +6834,10 @@ static uint16_t nvme_ns_attachment(NvmeCtrl *n, NvmeRequest *req)
-             break;
- 
-         case NVME_NS_ATTACHMENT_DETACH:
-+            if (!nvme_ns(ctrl, nsid)) {
-+                return NVME_NS_NOT_ATTACHED | NVME_DNR;
-+            }
-+
-             nvme_detach_ns(ctrl, ns);
-             nvme_update_dsm_limits(ctrl, NULL);
- 
+         /* POOL interrupt uses IPB in QW2, POOL ring */
+-        if ((ring == TM_QW3_HV_PHYS) && (nsr & (TM_QW3_NSR_HE_POOL << 6))) {
++        if ((ring == TM_QW3_HV_PHYS) &&
++            ((nsr & TM_QW3_NSR_HE) == (TM_QW3_NSR_HE_POOL << 6))) {
+             alt_ring = TM_QW2_HV_POOL;
+         } else {
+             alt_ring = ring;
 -- 
 2.47.2
 
