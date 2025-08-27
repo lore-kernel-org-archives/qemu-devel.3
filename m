@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34684CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 18:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C3B0CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 18:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urKqq-0004t3-Rh; Wed, 27 Aug 2025 14:26:31 -0400
+	id 1urKr6-00055Q-HH; Wed, 27 Aug 2025 14:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1urKqZ-0004gO-74
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 14:26:11 -0400
+ id 1urKqp-0004w1-O4
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 14:26:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1urKqP-0005lR-6r
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 14:26:08 -0400
+ id 1urKqi-0005qd-6L
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 14:26:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756319149;
+ s=mimecast20190719; t=1756319177;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BYZBzbSuHz1ck9mAe9qDxSmyxZe5JBQ+ptoP0h/no4E=;
- b=C0v0O2KVnGg7FHxS9aBLe+kaaOYe8fzSvwN+4RRdn3+T7mAnS+kH6bi3Xn5oANKr3DSkIG
- LQ2WQKfDIO3T8Vn0mU1lraoHMzKQTZP7wcRRP6VMnWDHd0+tH3eirh/tcROorTXpHsDOUJ
- CrkeGlhg1zkuaieTNm6NprmG0HdCBzc=
+ bh=y1MQvD0EMJParIA4Upbk/AkJVJttVwCK2SW6874n6L8=;
+ b=LPKfr4VOfJGeyzZ8orZAXu8eYCkWhPYeo/F+kfVwP6MQsau+bvExtixDwdyUQ4S1dBSPHq
+ /2BUmO06DbPjJzUi14THn5d/q9t8mKb2xRLgJyVbMc7xZYsCT231RMX0xHh+0lVl5+7q4Q
+ R+ibHADZBBfymbVTJmM3ANqbBW5Ys30=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-258-OnyVD0O6Of2n3xQ2Y0t3XQ-1; Wed, 27 Aug 2025 14:25:48 -0400
-X-MC-Unique: OnyVD0O6Of2n3xQ2Y0t3XQ-1
-X-Mimecast-MFC-AGG-ID: OnyVD0O6Of2n3xQ2Y0t3XQ_1756319147
+ us-mta-484-31wfgQI9NiGeBYKMV8xE3Q-1; Wed, 27 Aug 2025 14:26:15 -0400
+X-MC-Unique: 31wfgQI9NiGeBYKMV8xE3Q-1
+X-Mimecast-MFC-AGG-ID: 31wfgQI9NiGeBYKMV8xE3Q_1756319174
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45b612dbc28so723135e9.0
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 11:25:47 -0700 (PDT)
+ 5b1f17b1804b1-45b7265febdso4127685e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 11:26:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756319145; x=1756923945;
+ d=1e100.net; s=20230601; t=1756319173; x=1756923973;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BYZBzbSuHz1ck9mAe9qDxSmyxZe5JBQ+ptoP0h/no4E=;
- b=cuWKJH1mh77L2CUTbT6PH4F85UspQCBP7xKrUPiNeHpr/eZuydo2bGnlXQqzFm3IX1
- 7VXVpieNU4FQaIH822UOQA/EoaD0La2Enu/Kbh52WdpJG1pbt5hQ42GeeI08LeHIlcFA
- wjFnr5bDm4Fhr3Ege86/3lZTVRUWbgJZuP7MSEEiV7lfgE4slZs5eEJOi1xFZUSF6YHQ
- kP/F9GIRsiAGebt6I8+5guYubUQXbTu0wg4AW+8GISSaahfkWR5cRMEuNiEg4iJFRY28
- 5JPyakXWWS3VnCH0oU+QUHy43L1FXVS3nDR7v90L+2aojNnWcmLVIIOzevJs3+AKraNd
- 0EvQ==
-X-Gm-Message-State: AOJu0YyQpEKONyJTSQM47K/Z5V/oSJnVGiwmpLOmifD+Nh++ET/ykVGt
- WrEYg4kNb880g8omGriUkf+AmfO6Hbd6WPAcuoTG54ltN5nkTfgbILYVdTtltF4IWvw96l1FPpe
- kUbX1F1lty37duQGO45jWf1H8yBGbksn6wGSw088f+OgmaFfI+PZ0oSl9foUWLxUYx8sJIFyQH/
- KSgdZjkOOAyg+sBMdH0MeXeI0FzwMyqYZwoyT/H/O3
-X-Gm-Gg: ASbGnctdkBYb/kMIEvg2ypgWQRdq5GChCHRj7b9J4gd3Puh80RjUsiTjmGka/25DbvB
- m7LZ0qdB2/2FM+50Tv34zn4U0f/2o1u03O68ovldm1PaR/oVEdus8z3tHeNjLWut0ck0XEwQEPK
- HhgVYD5dmB7CjGWWXQVYFA3L0Ir7A/39s028LI0lMduhdfhHeOiJ09Q7wf5kCYWTevNjOr/iEBX
- EoGl34Liyo65h4NR32fwOANEch++hFIb6VIPgh6G/dycly0uL9pffCu2wsDhpxtJpE27rbu0H09
- iokHLC8CYY8b+xfhDEDqv8MMzKKq8tHPdLMDtw0rtxzEAa+Qfv8nmf9ONqbwkMJ6vAaRQejaxHe
- 3eeIa34iAgCciP9/jOsPu0N5xpdg4z9qA02jBgP+VA7Q=
-X-Received: by 2002:a05:600c:3baa:b0:45b:7699:fe6d with SMTP id
- 5b1f17b1804b1-45b7699ff37mr2668465e9.17.1756319145535; 
- Wed, 27 Aug 2025 11:25:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkA2x4fl3Zds+J8KrosOJepd6JN97I3W0c54Zg9TmOizRHK2RyhQU13VIdQTBoMsddcG8AEA==
-X-Received: by 2002:a05:600c:3baa:b0:45b:7699:fe6d with SMTP id
- 5b1f17b1804b1-45b7699ff37mr2668315e9.17.1756319145023; 
- Wed, 27 Aug 2025 11:25:45 -0700 (PDT)
+ bh=y1MQvD0EMJParIA4Upbk/AkJVJttVwCK2SW6874n6L8=;
+ b=ib9Qu6dW0HC4asH9O4lm6rMiGplBSuvzYPf3ZywyFPBcKR0C9eAqaKz/MFZfVpOEJY
+ NPG0olda7Vt1iRRxtZGjeqzJihbTqq4BzlIWdOLkA3m+0ycRHReUzsksE2b3PDlXRbXP
+ T9g7uKFjuGPyoAh9tTHTzw2QIP/u8Mtg6zu3sTBzvSVGCykmjxkDShTbU5XK+JG8V8Ra
+ xgeqvxxPSqV+8+DbEg38DRwXGNzX0LPnd9pXfUaiwh6Fr5e0Zjyrrfz+4eGqGyyIFjal
+ FTtMRIkYEt3mob7W75ciO4Wwa7EtFIL+j4PoDXFjXIECLsc/r7oPY+zRb2/+v9/mUMlq
+ 4doA==
+X-Gm-Message-State: AOJu0Yy0Wgp2tjTVjbluOyQvw5ZnMViO3zd4ckW8Pb1FoMNIx3BTCIqn
+ oZUxqLg9y7YesKpzYDFnUwZ7v3iVJKN6G8Tv0t7IXZm6WXaqnmRJEkVCQZ/PdQklnCvyJ5I3vZv
+ 1rmzsEy9mCtb1edPyB9eUOs0luIczliENpCkFqobl2N0JybcoBIaQK3PX4V3rYvi8UzVC/14bro
+ exz55uXegSPIB1xZfFzJ+hx23J6VUKj+Xj5EVJtWO8
+X-Gm-Gg: ASbGncvRm4ahUUea7uFme5O/bGBNAT90h2mempaULrw+7tWHejWVOXZekSoTCK1h7sh
+ pmnPQhWSoOW6d6kSTGxC9Xo9zPp04rbe1t7jhvHl29vIVdDinctnmMTWnoJpsBrZMoYnuY5beLH
+ JSr9jOM71A1iCclUTGUCly+phL7EzGBNpQaADZIxCQoKopRF0PQ/uAcXFRx21Pqdfii4eq2q9Ng
+ m00bo/dT3BnNDAQwrbiMdmNXFkVBI8Fp7eKiVBin0ZXNObEAvifshZws/YWBwY4Hx8CFYKIxabM
+ uSvUh8aA9FLf3kV+xYvhvKV/eQ6arrznpXAwuxp4tjnOc/yMyH542wxwQ7MliqFrDuzHzXVwUqV
+ Hw4WUG6WPatw82aqEZ1LzIEGwIGDsJ6t8IPZcbljQnGg=
+X-Received: by 2002:a05:6000:1aca:b0:3b7:8646:eeb3 with SMTP id
+ ffacd0b85a97d-3cbb15c9d68mr5274488f8f.15.1756319173117; 
+ Wed, 27 Aug 2025 11:26:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyhgFc2vWuCX9UlNOPLRt5cY7PnhIk7I0tnQ1ajpkU6SNhqQoB1eoogJdQX+iRRlzy2ne60w==
+X-Received: by 2002:a05:6000:1aca:b0:3b7:8646:eeb3 with SMTP id
+ ffacd0b85a97d-3cbb15c9d68mr5274464f8f.15.1756319172575; 
+ Wed, 27 Aug 2025 11:26:12 -0700 (PDT)
 Received: from [10.163.96.123] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b69b7529asm29941395e9.0.2025.08.27.11.25.40
+ ffacd0b85a97d-3c70ef55aabsm20993958f8f.23.2025.08.27.11.26.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 11:25:40 -0700 (PDT)
+ Wed, 27 Aug 2025 11:26:11 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 02/14] scripts/minikconf.py: fix invalid attribute access
-Date: Wed, 27 Aug 2025 20:25:20 +0200
-Message-ID: <20250827182533.854476-3-pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 08/14] kvm/kvm-all: make kvm_park/unpark_vcpu local to kvm-all.c
+Date: Wed, 27 Aug 2025 20:25:26 +0200
+Message-ID: <20250827182533.854476-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250827182533.854476-1-pbonzini@redhat.com>
 References: <20250827182533.854476-1-pbonzini@redhat.com>
@@ -93,7 +94,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,32 +110,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Ani Sinha <anisinha@redhat.com>
 
-Fix parse method to use `defconfig` global variable instead of the
-non-existent KconfigParser class attribute
+kvm_park_vcpu() and kvm_unpark_vcpu() is only used in kvm-all.c. Declare it
+static, remove it from common header file and make it local to kvm-all.c
 
-Fixes: f349474920d80838ecea3d421531fdb0660b8740 ("minikconfig: implement allnoconfig and defconfig modes")
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Link: https://lore.kernel.org/r/20250820-scripts-minikconf-fixes-v1-1-252041a9125e@linaro.org
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250815065445.8978-1-anisinha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/minikconf.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/system/kvm.h | 17 -----------------
+ accel/kvm/kvm-all.c  |  4 ++--
+ 2 files changed, 2 insertions(+), 19 deletions(-)
 
-diff --git a/scripts/minikconf.py b/scripts/minikconf.py
-index 6f7f43b2918..2a4694fb6a3 100644
---- a/scripts/minikconf.py
-+++ b/scripts/minikconf.py
-@@ -340,7 +340,7 @@ class KconfigParser:
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 3c7d3147366..4fc09e38910 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -317,23 +317,6 @@ int kvm_create_device(KVMState *s, uint64_t type, bool test);
+  */
+ bool kvm_device_supported(int vmfd, uint64_t type);
  
-     @classmethod
-     def parse(self, fp, mode=None):
--        data = KconfigData(mode or KconfigParser.defconfig)
-+        data = KconfigData(mode or defconfig)
-         parser = KconfigParser(data)
-         parser.parse_file(fp)
-         return data
+-/**
+- * kvm_park_vcpu - Park QEMU KVM vCPU context
+- * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to be parked.
+- *
+- * @returns: none
+- */
+-void kvm_park_vcpu(CPUState *cpu);
+-
+-/**
+- * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
+- * @s: KVM State
+- * @vcpu_id: Architecture vCPU ID of the parked vCPU
+- *
+- * @returns: KVM fd
+- */
+-int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
+-
+ /**
+  * kvm_create_and_park_vcpu - Create and park a KVM vCPU
+  * @cpu: QOM CPUState object for which KVM vCPU has to be created and parked.
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 890d5ea9f86..f36dfe33492 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -414,7 +414,7 @@ err:
+     return ret;
+ }
+ 
+-void kvm_park_vcpu(CPUState *cpu)
++static void kvm_park_vcpu(CPUState *cpu)
+ {
+     struct KVMParkedVcpu *vcpu;
+ 
+@@ -426,7 +426,7 @@ void kvm_park_vcpu(CPUState *cpu)
+     QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+ }
+ 
+-int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
++static int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+ {
+     struct KVMParkedVcpu *cpu;
+     int kvm_fd = -ENOENT;
 -- 
 2.51.0
 
