@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D228CA0FFC
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 23:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DFBCA0FF7
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 23:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urPRq-0001fZ-IS; Wed, 27 Aug 2025 19:20:58 -0400
+	id 1urPRd-0001Sw-2q; Wed, 27 Aug 2025 19:20:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urPRo-0001cZ-AV
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:20:56 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1urPRa-0001Qd-5M
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:20:42 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urPRm-00049P-AZ
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:20:56 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-771e4378263so349635b3a.0
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 16:20:53 -0700 (PDT)
+ id 1urPRX-00047W-SM
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:20:41 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-76e2ea933b7so343287b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 16:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756336852; x=1756941652; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756336838; x=1756941638; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rkh6QSZcv8eWN+z+za46kqtwRfzEqAI+OgnnDkHvgxw=;
- b=ghxzpygJ613NXM4KcfJk+KdDa8FHoRF0c4VcCjc05Oul3ya1QVWT5UI1Ype/2eGtyL
- ufQ9Pb72ITu3peM765lmz0Puv6xO9XaIKRJXfJBhOLaVnHTVYa0HDymIwsCF//0fFVVw
- 0AEL87IP3TYGjDmO7wh5BgeU4b2V2VQ1kCghNZG68+TDvJLTioxu4aCJjwOLcw8nkrFV
- HIjkzxcJf8V/haml1+Qf7awsuj5UmOZ+OL/gJDvzWBK/I5MsMx4VoglYYzTrzQCPhliF
- EvrCogerL3/+lejYTPwg/OLJ9ja8oQiT5XvjTfT7Do66oaThY0VM/T+Fp2LrUrgyzrUe
- EdpQ==
+ bh=espLsLzFTU7cxFqyARSOxDSFafcxC054iwCcq6d9G2Y=;
+ b=vXS2hIvIdJPBUTl/+y1i7yoG9tXUjNYv/+0JmCOX2BxKoYMRMOfRkf0FxK3zpRBNCE
+ MdC1eNtr1nCxlEMTFAUo0QtzFfdu30gGHEAOO7Z6NVg0/IC+rPIcpuJUs8Rmq7of3tA7
+ 5+lODLXtu7yGvgX8Uq1LvDnX2ogwVxZKyaWMe08zD3yYatNeJvN+rDz6nUAEOANzZOCN
+ D/TFtiTghVNiPWq82ridVIMVFYrcrbdkDtr3pxgGE4UynyZ0yXAjabjzWs+3VdU9geSF
+ jhZbiBA297XuG14CYVlIF5Jpb7C+ui9K82b7H/AzNfhwD6HSAr+wYgL5OsjYVFviNEEn
+ kaDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756336852; x=1756941652;
+ d=1e100.net; s=20230601; t=1756336838; x=1756941638;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rkh6QSZcv8eWN+z+za46kqtwRfzEqAI+OgnnDkHvgxw=;
- b=hqCctQyY/aIBY5mCUDp/iQspEoFRdEqMHDx7aJORiVIEKrmFbEbGNg7ArvC9eo+kKG
- 9q52BOd/QsO0G+Z/QuKhSYRP3pcSiV0VQp8FR0idkQ0AAEVq+FT0ABa5dktFv0mye0nI
- UjbcK+40t4XNUweE4DU9tuQ5NTi4sLDhUJ4UJYuwJiGRA7wRCuNdomShpedk/c8RfRbn
- Dz6tt5h8DBmb8V32PoR6Ztl/b/XZO8cB+nWhZqM2orVxuAVo2w531Ah3i1xPckWVsf0+
- 5JPZFQ2X/xqdex/d5p3bd9KSSVo5KDlQzn1x0190EgR9s82xj8gR9eJj4Sr7nj/7OWRH
- GOYA==
-X-Gm-Message-State: AOJu0Yx0PluONGO11FDrgBfzhQXGBPNQbbj6aOpxcoIwhxXxFU0USqY8
- qPaTTl9NR6SQrVgAx7rhdADq2BB4VNiWbo3+L68sdrxsfPtWO26k310y111Xt6jaoo4d+5Pt2ZG
- z4ddg/h8=
-X-Gm-Gg: ASbGncvXF37QkbGCpCkq77cX9UADKb4fuOdLfYs11fgT1ruGBOItfe3xT7ndgtD70Rq
- vQlt+Z5y/51OtaAcSZoaHvW9M0sO54ItyXFz78eoeQRu6fJHvBK6h4RWtiTQtObYpn0t+3bbBPt
- 6jwddkjN0tnNPvIVZLksO2GvX1tGWlolw16wAfBq1xZDEusbSlbh9FVYvEbbKFSHorHdMmbbZkM
- wvXnRrpB3L+wQTfM7GkBd8JCfenT0IGF9qqJnVuXaw9d2WvHy4jpfsCoSpmUTKRHkYWQ5DX76FW
- 84Si0I/2KE3j9MKLfbETsiY3K0NULWt4oA/WH/E0jmWBO09uPM2ce1ngwoA727w8bBTg1dcoP0n
- e51/Uwnx6p2lHYDe4q1Pen11olw==
-X-Google-Smtp-Source: AGHT+IEUGb0ngIoZTXvgkhTGoF2RDSsuldUtMIlOsRnQ5H4dzmrbkCGlTg5wNhuaLiwCOMlm3plyWA==
-X-Received: by 2002:a05:6a00:1ca0:b0:771:f763:4654 with SMTP id
- d2e1a72fcca58-771f7634976mr11132733b3a.18.1756336852007; 
- Wed, 27 Aug 2025 16:20:52 -0700 (PDT)
+ bh=espLsLzFTU7cxFqyARSOxDSFafcxC054iwCcq6d9G2Y=;
+ b=dLf6o91F+PhwVghwObXi777TFR0NzW+RtlFJ489in0mWjo3KiNM9n4N2VM1bKpI4K9
+ QqGWYNCI2xZ4hPESP5NjmRYo7LtNfHgG5XR4Df/R5+laXAe2x119wMa6D4O6DRNxA74Z
+ HsR/sfcgn7RBW0VvtmMMZhayypiSGhpNAU8gDmzpDkkYBl1UDyn35hZuQHGWWBdbGbFq
+ nO1XqYGyQkHcsGtg/5/CmAPZkexNv3I1fVvmiDKdpF6Axmsxj4gDoNvPxK3xGd5MzH1V
+ IZtYewuGjzX+IJRoEPr+/qIv8jCR4MFqlwnwb3qyEhUgxUmNByYXvamEXBLZcPZYVnb1
+ E0vQ==
+X-Gm-Message-State: AOJu0Yx3rKS7+JP6e4x2VLldvZk2qtHX37rswfCUQ21wGC6i079HfqOn
+ gsUimo1PNFv8iZgAUP0qDGw9TjchuTV7z/zJlGGMqnB8WshduWwSZgt2ADQkKxwWAdC+9pKKskt
+ qSdJTgoM=
+X-Gm-Gg: ASbGncu/5pL4I4PG3GFQAuZ1EM9V9rp6j2qQnz8kSqC8K7GStLbljpMz/G4qMBpeV85
+ Bkf2i5hFG1uBi2sx/5wFyNwnQG+ROnhVyjotAhHhA4+IKLJmimIicUgFf/qvEbOp72FQ1D4dRj9
+ P8YrUQt+RVTmGLS0BhcH9AzAKimhTaOTLZuyDjfcLIwseQvaLRSpJ+NEbt/ULD9/77ZFbHl/umc
+ 9RDraXW+7F4TK2Tim756Qg2yiRrzgfYNpQg6VjPosPL4mIVHtGk5E2zDZYmyWwv1JX0fIUKx3Xa
+ DZoNw4yzPj+G0bXnMDYuDV9l8S/qeTzvCQymHrPfws+pteUva0y+gnuGJ1WgFMQLlTwo0+7ib9M
+ b5GbBsXgP5a+cSTjZGFUJi5yt8bYeV3eFeSpr
+X-Google-Smtp-Source: AGHT+IEsaZ4N+EhvxW0C8i3dLxmjtnYgrtSpDraXzhnwkClGtuBteqWHrAPkVJ19XaJpPMAOv9eLmA==
+X-Received: by 2002:a05:6a00:bd92:b0:736:4e14:8ec5 with SMTP id
+ d2e1a72fcca58-771fc2942e2mr8142525b3a.11.1756336838009; 
+ Wed, 27 Aug 2025 16:20:38 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7703ffebd33sm13986886b3a.29.2025.08.27.16.20.49
+ d2e1a72fcca58-7703ffebd33sm13986886b3a.29.2025.08.27.16.20.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 16:20:51 -0700 (PDT)
+ Wed, 27 Aug 2025 16:20:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 08/46] linux-user: Move get_elf_hwcap to sparc/elfload.c
-Date: Thu, 28 Aug 2025 09:19:45 +1000
-Message-ID: <20250827232023.50398-9-richard.henderson@linaro.org>
+Subject: [PULL 03/46] linux-user: Create target/elfload.c files
+Date: Thu, 28 Aug 2025 09:19:40 +1000
+Message-ID: <20250827232023.50398-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827232023.50398-1-richard.henderson@linaro.org>
 References: <20250827232023.50398-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,125 +99,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change the return type to abi_ulong, and pass in the cpu.
+Prepare to split the main linux-user/elfload.c.
+Create empty files for each target, and add the common build rule.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/loader.h           |  3 ++-
- linux-user/sparc/target_elf.h |  2 ++
- linux-user/elfload.c          | 30 +-----------------------------
- linux-user/sparc/elfload.c    | 27 +++++++++++++++++++++++++++
- 4 files changed, 32 insertions(+), 30 deletions(-)
+ linux-user/aarch64/elfload.c     | 1 +
+ linux-user/alpha/elfload.c       | 1 +
+ linux-user/arm/elfload.c         | 1 +
+ linux-user/hexagon/elfload.c     | 1 +
+ linux-user/hppa/elfload.c        | 1 +
+ linux-user/i386/elfload.c        | 1 +
+ linux-user/loongarch64/elfload.c | 1 +
+ linux-user/m68k/elfload.c        | 1 +
+ linux-user/microblaze/elfload.c  | 1 +
+ linux-user/mips/elfload.c        | 1 +
+ linux-user/mips64/elfload.c      | 1 +
+ linux-user/openrisc/elfload.c    | 1 +
+ linux-user/ppc/elfload.c         | 1 +
+ linux-user/riscv/elfload.c       | 1 +
+ linux-user/s390x/elfload.c       | 1 +
+ linux-user/sh4/elfload.c         | 1 +
+ linux-user/sparc/elfload.c       | 1 +
+ linux-user/x86_64/elfload.c      | 1 +
+ linux-user/xtensa/elfload.c      | 1 +
+ meson.build                      | 6 +++++-
+ 20 files changed, 24 insertions(+), 1 deletion(-)
+ create mode 100644 linux-user/aarch64/elfload.c
+ create mode 100644 linux-user/alpha/elfload.c
+ create mode 100644 linux-user/arm/elfload.c
+ create mode 100644 linux-user/hexagon/elfload.c
+ create mode 100644 linux-user/hppa/elfload.c
+ create mode 100644 linux-user/i386/elfload.c
+ create mode 100644 linux-user/loongarch64/elfload.c
+ create mode 100644 linux-user/m68k/elfload.c
+ create mode 100644 linux-user/microblaze/elfload.c
+ create mode 100644 linux-user/mips/elfload.c
+ create mode 100644 linux-user/mips64/elfload.c
+ create mode 100644 linux-user/openrisc/elfload.c
+ create mode 100644 linux-user/ppc/elfload.c
+ create mode 100644 linux-user/riscv/elfload.c
+ create mode 100644 linux-user/s390x/elfload.c
+ create mode 100644 linux-user/sh4/elfload.c
+ create mode 100644 linux-user/sparc/elfload.c
+ create mode 100644 linux-user/x86_64/elfload.c
+ create mode 100644 linux-user/xtensa/elfload.c
 
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 151a06f5db..2c8414e0e5 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -101,7 +101,8 @@ extern unsigned long guest_stack_size;
- /* Note that Elf32 and Elf64 use uint32_t for e_flags. */
- const char *get_elf_cpu_model(uint32_t eflags);
- 
--#if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM)
-+#if defined(TARGET_I386) || defined(TARGET_X86_64) || defined(TARGET_ARM) \
-+    || defined(TARGET_SPARC)
- abi_ulong get_elf_hwcap(CPUState *cs);
- abi_ulong get_elf_hwcap2(CPUState *cs);
- #endif
-diff --git a/linux-user/sparc/target_elf.h b/linux-user/sparc/target_elf.h
-index 7e46748d26..b7544db0a1 100644
---- a/linux-user/sparc/target_elf.h
-+++ b/linux-user/sparc/target_elf.h
-@@ -8,4 +8,6 @@
- #ifndef SPARC_TARGET_ELF_H
- #define SPARC_TARGET_ELF_H
- 
-+#define HAVE_ELF_HWCAP          1
-+
- #endif
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 149d1313c0..16709865f7 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -565,35 +565,7 @@ static void elf_core_copy_regs(target_elf_gregset_t *regs,
- # define ELF_ARCH   EM_SPARCV9
- #endif
- 
--#include "elf.h"
--
--#define ELF_HWCAP get_elf_hwcap()
--
--static uint32_t get_elf_hwcap(void)
--{
--    /* There are not many sparc32 hwcap bits -- we have all of them. */
--    uint32_t r = HWCAP_SPARC_FLUSH | HWCAP_SPARC_STBAR |
--                 HWCAP_SPARC_SWAP | HWCAP_SPARC_MULDIV;
--
--#ifdef TARGET_SPARC64
--    CPUSPARCState *env = cpu_env(thread_cpu);
--    uint32_t features = env->def.features;
--
--    r |= HWCAP_SPARC_V9 | HWCAP_SPARC_V8PLUS;
--    /* 32x32 multiply and divide are efficient. */
--    r |= HWCAP_SPARC_MUL32 | HWCAP_SPARC_DIV32;
--    /* We don't have an internal feature bit for this. */
--    r |= HWCAP_SPARC_POPC;
--    r |= features & CPU_FEATURE_FSMULD ? HWCAP_SPARC_FSMULD : 0;
--    r |= features & CPU_FEATURE_VIS1 ? HWCAP_SPARC_VIS : 0;
--    r |= features & CPU_FEATURE_VIS2 ? HWCAP_SPARC_VIS2 : 0;
--    r |= features & CPU_FEATURE_FMAF ? HWCAP_SPARC_FMAF : 0;
--    r |= features & CPU_FEATURE_VIS3 ? HWCAP_SPARC_VIS3 : 0;
--    r |= features & CPU_FEATURE_IMA ? HWCAP_SPARC_IMA : 0;
--#endif
--
--    return r;
--}
-+#define ELF_HWCAP get_elf_hwcap(thread_cpu)
- 
- static inline void init_thread(struct target_pt_regs *regs,
-                                struct image_info *infop)
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/aarch64/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/alpha/elfload.c b/linux-user/alpha/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/alpha/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/arm/elfload.c b/linux-user/arm/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/arm/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/hexagon/elfload.c b/linux-user/hexagon/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/hexagon/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/hppa/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/i386/elfload.c b/linux-user/i386/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/i386/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/loongarch64/elfload.c b/linux-user/loongarch64/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/loongarch64/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/m68k/elfload.c b/linux-user/m68k/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/m68k/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/microblaze/elfload.c b/linux-user/microblaze/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/microblaze/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/mips/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/mips64/elfload.c b/linux-user/mips64/elfload.c
+new file mode 100644
+index 0000000000..b719555e65
+--- /dev/null
++++ b/linux-user/mips64/elfload.c
+@@ -0,0 +1 @@
++#include "../mips/elfload.c"
+diff --git a/linux-user/openrisc/elfload.c b/linux-user/openrisc/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/openrisc/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/ppc/elfload.c b/linux-user/ppc/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/ppc/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/riscv/elfload.c b/linux-user/riscv/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/riscv/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/s390x/elfload.c b/linux-user/s390x/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/s390x/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/sh4/elfload.c b/linux-user/sh4/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/sh4/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 diff --git a/linux-user/sparc/elfload.c b/linux-user/sparc/elfload.c
-index 243e6f9b66..32ca1b05b1 100644
---- a/linux-user/sparc/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
 +++ b/linux-user/sparc/elfload.c
-@@ -3,6 +3,7 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "elf.h"
- 
- 
- const char *get_elf_cpu_model(uint32_t eflags)
-@@ -13,3 +14,29 @@ const char *get_elf_cpu_model(uint32_t eflags)
-     return "Fujitsu MB86904";
- #endif
- }
-+
-+abi_ulong get_elf_hwcap(CPUState *cs)
-+{
-+    /* There are not many sparc32 hwcap bits -- we have all of them. */
-+    uint32_t r = HWCAP_SPARC_FLUSH | HWCAP_SPARC_STBAR |
-+                 HWCAP_SPARC_SWAP | HWCAP_SPARC_MULDIV;
-+
-+#ifdef TARGET_SPARC64
-+    CPUSPARCState *env = cpu_env(cs);
-+    uint32_t features = env->def.features;
-+
-+    r |= HWCAP_SPARC_V9 | HWCAP_SPARC_V8PLUS;
-+    /* 32x32 multiply and divide are efficient. */
-+    r |= HWCAP_SPARC_MUL32 | HWCAP_SPARC_DIV32;
-+    /* We don't have an internal feature bit for this. */
-+    r |= HWCAP_SPARC_POPC;
-+    r |= features & CPU_FEATURE_FSMULD ? HWCAP_SPARC_FSMULD : 0;
-+    r |= features & CPU_FEATURE_VIS1 ? HWCAP_SPARC_VIS : 0;
-+    r |= features & CPU_FEATURE_VIS2 ? HWCAP_SPARC_VIS2 : 0;
-+    r |= features & CPU_FEATURE_FMAF ? HWCAP_SPARC_FMAF : 0;
-+    r |= features & CPU_FEATURE_VIS3 ? HWCAP_SPARC_VIS3 : 0;
-+    r |= features & CPU_FEATURE_IMA ? HWCAP_SPARC_IMA : 0;
-+#endif
-+
-+    return r;
-+}
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/x86_64/elfload.c b/linux-user/x86_64/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/x86_64/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/linux-user/xtensa/elfload.c b/linux-user/xtensa/elfload.c
+new file mode 100644
+index 0000000000..73fa78ef14
+--- /dev/null
++++ b/linux-user/xtensa/elfload.c
+@@ -0,0 +1 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/meson.build b/meson.build
+index 50c774a195..0d42de61ae 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4327,7 +4327,11 @@ foreach target : target_dirs
+     )
+     if 'CONFIG_LINUX_USER' in config_target
+       dir = base_dir / abi
+-      arch_srcs += files(dir / 'signal.c', dir / 'cpu_loop.c')
++      arch_srcs += files(
++        dir / 'cpu_loop.c',
++        dir / 'elfload.c',
++        dir / 'signal.c',
++      )
+       if config_target.has_key('TARGET_SYSTBL_ABI')
+         arch_srcs += \
+           syscall_nr_generators[abi].process(base_dir / abi / config_target['TARGET_SYSTBL'],
 -- 
 2.43.0
 
