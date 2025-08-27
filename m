@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA03CA0EFF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D08CA0FED
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urJag-0006qp-Sg; Wed, 27 Aug 2025 13:05:44 -0400
+	id 1urJaZ-0006mD-Rc; Wed, 27 Aug 2025 13:05:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJa3-0006KN-5X; Wed, 27 Aug 2025 13:05:04 -0400
+ id 1urJa5-0006Lq-87; Wed, 27 Aug 2025 13:05:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJZs-0007jY-NM; Wed, 27 Aug 2025 13:05:02 -0400
+ id 1urJa0-0007kR-Ns; Wed, 27 Aug 2025 13:05:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A5A1D14C72C;
+ by isrv.corpit.ru (Postfix) with ESMTP id B544B14C72D;
  Wed, 27 Aug 2025 20:03:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B543E2698F2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C5FE42698F3;
  Wed, 27 Aug 2025 20:03:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 10/18] linux-user/aarch64: Support TPIDR2_MAGIC signal
- frame record
-Date: Wed, 27 Aug 2025 20:03:45 +0300
-Message-ID: <20250827170356.2698446-10-mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 11/18] target/mips: Only update MVPControl.EVP bit if
+ executed by master VPE
+Date: Wed, 27 Aug 2025 20:03:46 +0300
+Message-ID: <20250827170356.2698446-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,140 +64,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
-FEAT_SME adds the TPIDR2 userspace-accessible system register, which
-is used as part of the procedure calling standard's lazy saving
-scheme for the ZA registers:
- https://github.com/ARM-software/abi-aa/blob/main/aapcs64/aapcs64.rst#66the-za-lazy-saving-scheme
+According to the 'MIPS MT Application-Speciﬁc Extension' manual:
 
-The Linux kernel has a signal frame record for saving
-and restoring this value when calling signal handlers, but
-we forgot to implement this. The result is that code which
-tries to unwind an exception out of a signal handler will
-not work correctly.
+  If the VPE executing the instruction is not a Master VPE,
+  with the MVP bit of the VPEConf0 register set, the EVP bit
+  is unchanged by the instruction.
 
-Add support for the missing record.
+Modify the DVPE/EVPE opcodes to only update the MVPControl.EVP bit
+if executed on a master VPE.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 78011586b90d1 ("target/arm: Enable SME for user-only")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250725175510.3864231-3-peter.maydell@linaro.org>
-(cherry picked from commit 99870aff907b1c863cd32558b543f0ab0d0e74ba)
+Reported-by: Hansni Bu
+Buglink: https://bugs.launchpad.net/qemu/+bug/1926277
+Fixes: f249412c749 ("mips: Add MT halting and waking of VPEs")
+Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Message-ID: <20210427133343.159718-1-f4bug@amsat.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit e895095c78ab877d40df2dd31ee79d85757d963b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
-index b265cfd470..17865356d8 100644
---- a/linux-user/aarch64/signal.c
-+++ b/linux-user/aarch64/signal.c
-@@ -120,6 +120,13 @@ struct target_za_context {
- #define TARGET_ZA_SIG_CONTEXT_SIZE(VQ) \
-     TARGET_ZA_SIG_ZAV_OFFSET(VQ, VQ * TARGET_SVE_VQ_BYTES)
+diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
+index 80260ecd8a..125bd541a7 100644
+--- a/target/mips/tcg/sysemu/cp0_helper.c
++++ b/target/mips/tcg/sysemu/cp0_helper.c
+@@ -1624,12 +1624,14 @@ target_ulong helper_dvpe(CPUMIPSState *env)
+     CPUState *other_cs = first_cpu;
+     target_ulong prev = env->mvp->CP0_MVPControl;
  
-+#define TARGET_TPIDR2_MAGIC 0x54504902
-+
-+struct target_tpidr2_context {
-+    struct target_aarch64_ctx head;
-+    uint64_t tpidr2;
-+};
-+
- struct target_rt_sigframe {
-     struct target_siginfo info;
-     struct target_ucontext uc;
-@@ -252,6 +259,14 @@ static void target_setup_za_record(struct target_za_context *za,
-     }
- }
- 
-+static void target_setup_tpidr2_record(struct target_tpidr2_context *tpidr2,
-+                                       CPUARMState *env)
-+{
-+    __put_user(TARGET_TPIDR2_MAGIC, &tpidr2->head.magic);
-+    __put_user(sizeof(struct target_tpidr2_context), &tpidr2->head.size);
-+    __put_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
-+}
-+
- static void target_restore_general_frame(CPUARMState *env,
-                                          struct target_rt_sigframe *sf)
- {
-@@ -402,6 +417,12 @@ static bool target_restore_za_record(CPUARMState *env,
-     return true;
- }
- 
-+static void target_restore_tpidr2_record(CPUARMState *env,
-+                                         struct target_tpidr2_context *tpidr2)
-+{
-+    __get_user(env->cp15.tpidr2_el0, &tpidr2->tpidr2);
-+}
-+
- static int target_restore_sigframe(CPUARMState *env,
-                                    struct target_rt_sigframe *sf)
- {
-@@ -409,6 +430,7 @@ static int target_restore_sigframe(CPUARMState *env,
-     struct target_fpsimd_context *fpsimd = NULL;
-     struct target_sve_context *sve = NULL;
-     struct target_za_context *za = NULL;
-+    struct target_tpidr2_context *tpidr2 = NULL;
-     uint64_t extra_datap = 0;
-     bool used_extra = false;
-     int sve_size = 0;
-@@ -459,6 +481,14 @@ static int target_restore_sigframe(CPUARMState *env,
-             za_size = size;
-             break;
- 
-+        case TARGET_TPIDR2_MAGIC:
-+            if (tpidr2 || size != sizeof(struct target_tpidr2_context) ||
-+                !cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-+                goto err;
+-    CPU_FOREACH(other_cs) {
+-        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
+-        /* Turn off all VPEs except the one executing the dvpe.  */
+-        if (&other_cpu->env != env) {
+-            other_cpu->env.mvp->CP0_MVPControl &= ~(1 << CP0MVPCo_EVP);
+-            mips_vpe_sleep(other_cpu);
++    if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
++        CPU_FOREACH(other_cs) {
++            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
++            /* Turn off all VPEs except the one executing the dvpe.  */
++            if (&other_cpu->env != env) {
++                other_cpu->env.mvp->CP0_MVPControl &= ~(1 << CP0MVPCo_EVP);
++                mips_vpe_sleep(other_cpu);
 +            }
-+            tpidr2 = (struct target_tpidr2_context *)ctx;
-+            break;
-+
-         case TARGET_EXTRA_MAGIC:
-             if (extra || size != sizeof(struct target_extra_context)) {
-                 goto err;
-@@ -496,6 +526,9 @@ static int target_restore_sigframe(CPUARMState *env,
-     if (za && !target_restore_za_record(env, za, za_size, &svcr)) {
-         goto err;
+         }
      }
-+    if (tpidr2) {
-+        target_restore_tpidr2_record(env, tpidr2);
-+    }
-     if (env->svcr != svcr) {
-         env->svcr = svcr;
-         arm_rebuild_hflags(env);
-@@ -567,8 +600,8 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         .total_size = offsetof(struct target_rt_sigframe,
-                                uc.tuc_mcontext.__reserved),
-     };
--    int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0;
--    int sve_size = 0, za_size = 0;
-+    int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0, tpidr2_ofs = 0;
-+    int sve_size = 0, za_size = 0, tpidr2_size = 0;
-     struct target_rt_sigframe *frame;
-     struct target_rt_frame_record *fr;
-     abi_ulong frame_addr, return_addr;
-@@ -584,6 +617,8 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-         sve_ofs = alloc_sigframe_space(sve_size, &layout);
-     }
-     if (cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-+        tpidr2_size = sizeof(struct target_tpidr2_context);
-+        tpidr2_ofs = alloc_sigframe_space(tpidr2_size, &layout);
-         /* ZA state needs saving only if it is enabled.  */
-         if (FIELD_EX64(env->svcr, SVCR, ZA)) {
-             za_size = TARGET_ZA_SIG_CONTEXT_SIZE(sme_vq(env));
-@@ -643,6 +678,9 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-     if (za_ofs) {
-         target_setup_za_record((void *)frame + za_ofs, env, za_size);
-     }
-+    if (tpidr2_ofs) {
-+        target_setup_tpidr2_record((void *)frame + tpidr2_ofs, env);
-+    }
+     return prev;
+@@ -1640,15 +1642,17 @@ target_ulong helper_evpe(CPUMIPSState *env)
+     CPUState *other_cs = first_cpu;
+     target_ulong prev = env->mvp->CP0_MVPControl;
  
-     /* Set up the stack frame for unwinding.  */
-     fr = (void *)frame + fr_ofs;
+-    CPU_FOREACH(other_cs) {
+-        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
++    if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
++        CPU_FOREACH(other_cs) {
++            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
+ 
+-        if (&other_cpu->env != env
+-            /* If the VPE is WFI, don't disturb its sleep.  */
+-            && !mips_vpe_is_wfi(other_cpu)) {
+-            /* Enable the VPE.  */
+-            other_cpu->env.mvp->CP0_MVPControl |= (1 << CP0MVPCo_EVP);
+-            mips_vpe_wake(other_cpu); /* And wake it up.  */
++            if (&other_cpu->env != env
++                /* If the VPE is WFI, don't disturb its sleep.  */
++                && !mips_vpe_is_wfi(other_cpu)) {
++                /* Enable the VPE.  */
++                other_cpu->env.mvp->CP0_MVPControl |= (1 << CP0MVPCo_EVP);
++                mips_vpe_wake(other_cpu); /* And wake it up.  */
++            }
+         }
+     }
+     return prev;
 -- 
 2.47.2
 
