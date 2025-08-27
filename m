@@ -4,77 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E301DCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2616CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urK7L-0002Mx-1i; Wed, 27 Aug 2025 13:39:27 -0400
+	id 1urKCO-00065B-GX; Wed, 27 Aug 2025 13:44:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1urK7H-0002Hd-8E
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 13:39:23 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1urKCL-00064D-Rf
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 13:44:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1urK7D-0005h5-Q0
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 13:39:21 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 65AF7600AC;
- Wed, 27 Aug 2025 17:39:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1EFC4CEEB;
- Wed, 27 Aug 2025 17:39:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1756316355;
- bh=sIim0lpOhWT3vJ+aa8RUuqqStSCbim+1s3SKubhgeag=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=J+93nleaK317G9QpNYWFPlqPl8coCy7/NpsYZT0EpKwoqUZD6n2xLEZwqOY1H+qzY
- wFcLIgr3p2SYLaClMcTTLBw/nan8+J3SGq3F4GeB6Eha5uetXRfNZ/TlYoqaWN7zZU
- 6aRLhnWId4kpGo2GcoCX2wyYsJaOvCLY2PJOHPLMl/aHSlwzgor78YsfVcrhbraoPr
- +HRpKD1TYbcqQyLMDEEJqdKeTUR9mTTWHS+Dp5NqeMiTeB5QdMXZNA3mVkl8nU0nuz
- FNUrCRIq6JgRqSq4o957uyZ7zbw7pYp6LbsgDeUzoih4CAxTlqDKjtK3gOWuxqXO36
- x9HK6dxSC4/aw==
-Date: Wed, 27 Aug 2025 17:39:13 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Magnus Kulke <magnus.kulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Magnus Kulke <magnus.kulke@microsoft.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
- Wei Liu <liuwe@microsoft.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 10/26] accel/mshv: Add vCPU creation and execution loop
-Message-ID: <aK9CwUoGGQzYuYx4@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
-References: <20250807143951.1154713-1-magnuskulke@linux.microsoft.com>
- <20250807143951.1154713-11-magnuskulke@linux.microsoft.com>
- <aK7q91-sjFp8nVIG@redhat.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1urKCD-0006PX-C3
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 13:44:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756316664;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zcf8TqjQ3/yb5B8qCAtMZmdycxDGMaqAUOgRT7KKKOI=;
+ b=LobYFTP0/qzn1wI2ZTW9+UilWyGjDFhiE0BMTC/8KsJVd3LwZz5KD1QvQjsr/cy65oDpIS
+ siHhDLdaiTGbfeUp+AS8IntX7LvVP4C5Nh9TPhEzwvAAGv2sODfGvHuqWLiCZ/Z/yndd+M
+ DpSBk/jZRmFq2MYMQpylJ3MZkVQ5ilA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-623-Wh1ZJD7VN3WQVGnJn897PA-1; Wed, 27 Aug 2025 13:44:23 -0400
+X-MC-Unique: Wh1ZJD7VN3WQVGnJn897PA-1
+X-Mimecast-MFC-AGG-ID: Wh1ZJD7VN3WQVGnJn897PA_1756316662
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45a1b05d251so288675e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 10:44:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756316658; x=1756921458;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zcf8TqjQ3/yb5B8qCAtMZmdycxDGMaqAUOgRT7KKKOI=;
+ b=O+JZp0ZcCGKZbGZ17Shs3SRhUqw142adtNy8VdmtzFT/t0oeFjsd+X8y+lYTVPe+A2
+ o35i3YxGlT5Va1+jEPr8Zoue9TyQYJnOTXeSqo0hrSSE7giKWaq17fZ3QffybiBW/D4N
+ ZzAoR+Ly7P3SUxK+tBOY2a3LYX7Y2/Y1X4Z2maj3ih3MsgRuxjojOvZJu4sXMMZZlSt6
+ sen5aXV1EX3glDCzZL0hzBx5Z+wZ6pwla+bPmAM+UwvaOvBSCBi9pV9KelSn9Npgi33S
+ jhBUEAntRAEocGqMv2i3ZbvZ9IQD8VAABTmYmYG3NyxDJyNGPjeT+1cqfx9XCyoqNCSM
+ 47aA==
+X-Gm-Message-State: AOJu0YwnjKAEYWbtA5gLra5Ma5KMCTH+eYZSlfQ9WS6XIn5DOAL79rXf
+ K67cmAQoy3V57ojUdjY5ReoORbcpsPi2CCoInz8UDxCDjZJrb4P8TMj6cyNt9guuquUnCgEd/qL
+ sd7GNSqi1o7NvQVxDvYGzDudHcNNPC3vpp4Xm99qfpl7yVvjdvZq6DMhKg23D9ZuTU066gpxCBL
+ A/ilJx97VtgwzC791PP0SGCR51V5t6jR59jvWduXUg
+X-Gm-Gg: ASbGncvU7lLvbxYEOoWBAm4QNYO4t7cvp5NE4TziVB4FLQlQtcUJQUG9SnLsj7KSyJi
+ 29IF9ru/SV/ywSmZpdKr7bGvaCq9RZidiDrlrqwy3h1eMFkps+o0W/SjDGX1z4iwkaaGSYUm/bl
+ 7npWV8GNXRgLKdGZnNpIIeYSL2NkoSkLYE1XyWX1LX5SClbbnctSFLomttWyNyXYQWBgErbnR57
+ u8IYVgLXg3e6DTyaG2lnUqdhbMWIjmHvVj18sCSAP8I148nUdvq5oEym8s6VwC4waE+tFUbFhxC
+ U4wOSqxa3+8Vih13iX3l3d3uYQK536d/w5rxJgw1Sti2bHpFYT/0NejDjwJdKCPBoB+c/62fAPv
+ cEOz8d4IALCDw7+KwmO08U9xlKihVPJsY1URE0iXw2is=
+X-Received: by 2002:a05:600c:19cd:b0:456:db0:4f3d with SMTP id
+ 5b1f17b1804b1-45b517b9571mr218758955e9.24.1756316658606; 
+ Wed, 27 Aug 2025 10:44:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzxwVEzXsrXnidhUzgVN9WNKpE4UBE4ViKz3g7At9m/OGwqx+811uLXsKsFpnLdFoNq5UnCg==
+X-Received: by 2002:a05:600c:19cd:b0:456:db0:4f3d with SMTP id
+ 5b1f17b1804b1-45b517b9571mr218758745e9.24.1756316658143; 
+ Wed, 27 Aug 2025 10:44:18 -0700 (PDT)
+Received: from [10.163.96.123] ([151.95.56.250])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b736b7068sm10330075e9.5.2025.08.27.10.44.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Aug 2025 10:44:16 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v2] MAINTAINERS: add a few more files to "Top Level Makefile
+ and configure"
+Date: Wed, 27 Aug 2025 19:44:13 +0200
+Message-ID: <20250827174414.814138-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aK7q91-sjFp8nVIG@redhat.com>
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=wei.liu@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,57 +108,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 27, 2025 at 12:24:39PM +0100, Daniel P. BerrangÈ wrote:
-[...]
-> 
-> > +static void *mshv_vcpu_thread(void *arg)
-> > +{
-> > +    CPUState *cpu = arg;
-> > +    int ret;
-> > +
-> > +    rcu_register_thread();
-> > +
-> > +    bql_lock();
-> > +    qemu_thread_get_self(cpu->thread);
-> > +    cpu->thread_id = qemu_get_thread_id();
-> 
-> So every MSHV  vCPU has a corresponding Linux thread, similar
-> to the model with KVM.  In libvirt we rely on the vCPU thread
-> being controllable with all the normal Linux process related
-> APIs. For example, setting thread CPU affinity, setting NUMA
-> memory policy, setting scheduler priorities, putting threads
-> into cgroups and applying a wide variety of cgroup controls.
-> 
-> Will there be any significant "gotchas" with the threads for
-> MSHV vCPUs, that would mean the above libvirt controls would
-> either raise errors, or silently not have any effect ?
-> 
+A few files in scripts, and the list of packages in pythondeps.toml, are
+strictly related to the toplevel build scripts.  Add them to the
+MAINTAINERS file stanza.
 
-It depends on the scheduling model of the host.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ MAINTAINERS | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-MSHV supports two scheduling models: hypervisor-based and root
-partition. Root partition is the term we use to describe the host VM --
-think of it like the Dom0 VM in Xen.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a07086ed762..0f3e55b51e8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4392,7 +4392,6 @@ R: Philippe Mathieu-Daud√© <philmd@linaro.org>
+ S: Maintained
+ F: meson.build
+ F: meson_options.txt
+-F: scripts/meson-buildoptions.*
+ F: scripts/check_sparse.py
+ F: scripts/symlink-install-tree.py
+ 
+@@ -4403,6 +4402,9 @@ R: Thomas Huth <thuth@redhat.com>
+ S: Maintained
+ F: Makefile
+ F: configure
++F: pythondeps.toml
++F: scripts/git-submodule.sh
++F: scripts/meson-buildoptions.*
+ F: scripts/mtest2make.py
+ F: tests/Makefile.include
+ 
+-- 
+2.51.0
 
-In the hypervisor-based scheduling model, the VCPUs are scheduled by the
-hypervisor. The root partition merely tells the hypervisor "this VCPU is
-ready to run", and the hypervisor decides when and where to actually run
-it. In this model, the VCPU threads, when scheduled, are shown as
-blocked. Libvirt controls over the threads won't fail but have no
-effect.
-
-The root partition scheduling model is where the root (Linux) can decide
-where and when to run the VCPUs.  Everything you mentioned should work
-as expected.
-
-For the upcoming project, we are going to use the root scheduling model.
-
-Thanks,
-Wei
-
-P.S. In the hpyervsior-based scheduling mode, the hypervisor does allow
-us to set CPU affinity for VCPUs or group them (similar to cgroup but
-not the same) by making some hypercalls. We've been thinking about
-mapping those into libvirt controls, but haven't made good progress on
-that front. It deserves its own discussion.
 
