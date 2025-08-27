@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E28CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 22:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8696FCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 22:03:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urODA-0006l4-Lw; Wed, 27 Aug 2025 18:01:44 -0400
+	id 1urODA-0006kW-11; Wed, 27 Aug 2025 18:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1urOD8-0006j1-53
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:01:42 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1urOD5-0006hL-Oy
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:01:40 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1urOD3-0007f0-DQ
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:01:41 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3cd59c5a953so237637f8f.0
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 15:01:37 -0700 (PDT)
+ id 1urOD0-0007eo-U3
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:01:38 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45a1b00f23eso1729405e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 15:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756332096; x=1756936896; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756332093; x=1756936893; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3X0sfvJ9BISpbpisYuLRIvvZ2RbhH0HSOpBQPIHzEpE=;
- b=Ju1ykz19Her+ft4JMgn4uh6D4qpBBF4s7WjxFgIVErCESJWCOBYHi3yumFxGtO6jyI
- pwjAVT6AG5O2k6wi+0kCxxBg9NdFeF4nEXHNzlzwrSlybHIeQNqPZCN2dsLHUvM8tFNq
- n/WHRy3IbzuNCPgtH8E7aNFjzbslf/On+mQDewEdL9/KKMbZjrl5ZdhPtGQ/R4EoDVOW
- EowQLLVUXDgXp+2cyukTWW73dZhrdTvGm4uptAZiEytKFN1FvTYBkWcOWGtjXgDHBDhA
- aTbt9GI8uofjKWlct4kWI+bSkwkWavMhUmwJfMvAmWmqdq8tnQJZDs81lIQUzPi5QtQt
- H7XA==
+ bh=1CMa98DanhdU+YFxRVKMRC0axlRfKE91aptJPg8KRCU=;
+ b=NasbsWhnmfo9S792e4qB6SpDqymMg0k5EPbd5yjYz4D8PnyxmSvXbcLfJj5H2s8fXy
+ qdO5jsMmphdiYDgXtM6UpOuZeXILCZLCDXY2gQWdo/P6XLKi+SpO1P5Ng4bQK265XuiS
+ whqAiAL35PVkkqy1NfeBLvqrKLfjzIDY7581ShHSPXAyLBSU4zjQ0IrlPCQhP/7wLHnt
+ 6zhPRLYrHJe0FIK/IwObjmyIOxWucZuNCM3YLDMJ44A1HgJB9kTY5Pws2Q28ahwhTY7k
+ gcxKtGegPumXI7k88zchEAG7f4ieMzvQ1Kvt/FHWzWpZenuY+hEpnoNbS7l7UEVMFiPQ
+ 2YCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756332096; x=1756936896;
+ d=1e100.net; s=20230601; t=1756332093; x=1756936893;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3X0sfvJ9BISpbpisYuLRIvvZ2RbhH0HSOpBQPIHzEpE=;
- b=XbendQZgi83cxisATbn0oZvk5RawUQYqzKJZCQjyH7GMaIqdKrG6HqhL+2c3d0sYyE
- zKYBRpc1CYNPj7NqVKoLP3ThmFyZ37SRiogSH5zePQfaNTTutIRLzCCYdqS0FdBWpTuq
- Cz0EnXUe1mCW8jYrCTIwxck1cN76H5VCFVKgs5hzxN9briWgrdJQBQxrWRg5FhcpsEfG
- 5LGA3V0JVCY7khIV0P3mmcudtmmFYxBDqi4XcArAlvUAFBCDIWCv0RtMZB2lk5HZNai2
- tC+PhTl2SmoXeYlWhqOIT1Fj2IedAKWyphDLzt15hjCRLfElFFRziXSF+5ke+ojnJHmA
- Vp0g==
+ bh=1CMa98DanhdU+YFxRVKMRC0axlRfKE91aptJPg8KRCU=;
+ b=rjfZAHOpnDiRHqk0EonYVbMCB3BIl5gy5w2HzIuChaob/xTYUGCp4RUGxHjH657tLF
+ md5jzDrW7tvo0/DIIt06NlsDXmBl1VkSnvWGxe6si1YgWWwdj+0fxqmLch3V0kJTEYzt
+ kX5GgqjFlDAuLcX6wfGhiFXJgD/KkB+EP6fB57bKbuLvaesVFsujF/Hgr9kIMwZWihhw
+ oKVcXFqgq7naKgwnTGoqV4QX6m34rBIp7A9vHiiHPGnxsJQD4Qbb3DRUrviEZGUNb8EN
+ pTySt2Vq0ASbgkjruPGB/mvXnJ6yQfHF6RiISY7QPFG1Z4yLrxMmdKklRD75DbwEn3aB
+ eIBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWqqe5Dxa34QnjOJEyBhFbu7us5OGHNNVDyJ/xDwfgGCcM0GgLNhK9Yy92w47ysUmw+BU86a3NTO3fC@nongnu.org
-X-Gm-Message-State: AOJu0YxKVjRsp01aQZk4UFSDNykcZcFxCBuKDNhx+60BcDrYkoL54sWM
- +djSqWY1kGepyOJrkkm21Kkui0bikOm37UY0fESunNeaLlVqkqgGEXvM
-X-Gm-Gg: ASbGnctxagKPlifAE5ejSTDf6rGel9SpmYQENQmN6jV5Z9DXtWmliGRvsDuuXX3iQoj
- PBwCaQawMlpz0UaKtbSKGsSI2sAaRp//gnAUvjg+zBgrci8vM0bF40bp+S8f61KpTIlrVKmOKgx
- Ud2cP16B281EnAVDU5h07NqZ3uDwQD8Y0fOjedOUFTFrvc/4Z4JYV1Cq7vaZyg+f8osZLRTthDo
- g7FIMCcQj4Xgeatpl85mALC7TjDGuYIIHom38LbX6aVp1JCtxnxQsg7UgMftJsixIzkKQ21Cwbm
- 9N37K/oRFGm6Gl/pGDj2AamacJzVSMUHj3IG6+iSNpByPEbYJZ288mT1sBDDvHwoN8tUpthqRfG
- m6y9FNWcElJoSXfA5NFMN8gsIy0vtemcva2mhhpZIrtvoX67zlXP+pS4i2qg8FR4nSUTdPkeF+d
- o5mmWSLZDxPse+/rPd4xtu
-X-Google-Smtp-Source: AGHT+IFXwYG5x4tyJa3Pb67+Yky00D86IvuNjyFZ8FkGg6rmY/zaEj8IK3TwpXm9SI+LBX+HJEey4A==
-X-Received: by 2002:a05:6000:2c0e:b0:3ca:4b59:2714 with SMTP id
- ffacd0b85a97d-3ca4b592c7fmr9143905f8f.10.1756332095530; 
- Wed, 27 Aug 2025 15:01:35 -0700 (PDT)
+ AJvYcCUdscgLcUEL2BpfFZaFYQK8PRr6PxFfIDdhktjZJlME/tuiCd9b0XXu4PmrkEYRP/4sw4bjFSjAmhRA@nongnu.org
+X-Gm-Message-State: AOJu0YyBGlkNONdwEFLzIuA82/A2NYeZKmIwcRFc0Yop+qtTT/rNpfCg
+ W0Uxj8sf5h2KzBe38MbzjiAVmClOCvjO0sETa7/7Qbz+PY4ajeamRQ4b
+X-Gm-Gg: ASbGncse8wDonvighdP4rQ7D2O0cEggyqj+iqQppDy57O3qq4h+tKCuloc0+0z7mplI
+ ZPTIJZpsKDYNN8aNiyVWAlPrUajjugj/6CndiGG9HWI5ecrr8YN/PZGAI40UY8LKwoO9PoMLZc2
+ lmSHkhqpYkzR1vZoZl7jfzaMBEt8/1+WmMzZOch7YZo8VyayKWauYYT3ZbLvzdGZRDLUAJYuVic
+ RMNZtfvAJP3OF9MP5AgaqJS7nyoA0TF6NX4lDUElhQjubnaaBSoa3pjm9EB+wr+iAV62CTnAJfH
+ eKe5aj0/yI4iRfP2JL1wufMfZxzU9r7C9J9O98oi+3sAeaySkEBRzYOzWZVsicO5fSNB9/oD7c2
+ 4bIBhcXRVRO9NBUpt/qG1ho297TUFWPSOlcP9NzWTi0o+l7T6dClP3i2lt/HiMca9Vogj9XjC8I
+ o1V7O1M82V297JhDMI8dit
+X-Google-Smtp-Source: AGHT+IHOvQsfIKMoHlVOgOawz7UfpaHS0zY4OCqDIQ7ZwQ8nDXAsEuD9vYaYnMcHftbWGrxf6LzcmA==
+X-Received: by 2002:a05:600c:1d0c:b0:456:fc1:c286 with SMTP id
+ 5b1f17b1804b1-45b66eaddc9mr56646205e9.1.1756332092860; 
+ Wed, 27 Aug 2025 15:01:32 -0700 (PDT)
 Received: from localhost.localdomain (46-116-237-160.bb.netvision.net.il.
  [46.116.237.160]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b797ce2b8sm4116755e9.12.2025.08.27.15.01.33
+ 5b1f17b1804b1-45b797ce2b8sm4116755e9.12.2025.08.27.15.01.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 15:01:34 -0700 (PDT)
+ Wed, 27 Aug 2025 15:01:32 -0700 (PDT)
 From: Leonid Bloch <lb.workbox@gmail.com>
 To: "Michael S . Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
@@ -78,16 +78,16 @@ To: "Michael S . Tsirkin" <mst@redhat.com>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>
 Cc: Leonid Bloch <lb.workbox@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 4/4] hw/acpi: Introduce the QEMU lid button
-Date: Thu, 28 Aug 2025 01:00:50 +0300
-Message-ID: <20250827220054.37268-5-lb.workbox@gmail.com>
+Subject: [PATCH v3 3/4] hw/acpi: Introduce the QEMU AC adapter
+Date: Thu, 28 Aug 2025 01:00:49 +0300
+Message-ID: <20250827220054.37268-4-lb.workbox@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250827220054.37268-1-lb.workbox@gmail.com>
 References: <20250827220054.37268-1-lb.workbox@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=lb.workbox@gmail.com; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=lb.workbox@gmail.com; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,211 +110,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The lid button device communicates laptop lid state to the guest via ACPI.
+The AC adapter device communicates AC power state to the guest via ACPI.
 It supports two modes of operation:
 
-1. QMP control mode (default): Lid state is controlled programmatically
-   via QMP commands for consistent behavior across environments.
+1. QMP control mode (default): AC adapter state is controlled
+   programmatically via QMP commands, ensuring deterministic behavior.
 
-2. Host mirroring mode (optional): The device reflects the host's lid
-   button state from procfs (/proc/acpi/button/lid/*/state). State
-   changes trigger ACPI notifications to the guest.
+2. Host mirroring mode (optional): The device reflects the host's AC
+   adapter state from sysfs. Probing occurs on guest ACPI requests and
+   at timed intervals. State changes trigger ACPI notifications.
 
 Properties:
 - 'use-qmp': Enable QMP control mode (default: true)
-- 'enable-procfs': Enable host lid button mirroring (default: false)
-- 'probe_interval': Probe interval in ms for procfs mode (default: 2000)
-- 'procfs_path': Override default procfs path /proc/acpi/button
+- 'enable-sysfs': Enable host AC adapter mirroring (default: false)
+- 'probe_interval': Probe interval in ms for sysfs mode (default: 2000)
+- 'sysfs_path': Override default sysfs path /sys/class/power_supply/
 
 The device implements the ACPI_DEV_AML_IF interface to generate its
-own AML code, placing the LID0 device directly under \_SB scope.
+own AML code, placing the ADP0 device directly under \_SB scope.
 
 QMP commands:
-- lid-button-set-state: Set lid open/closed state
-- query-lid-button: Query current lid state
+- ac-adapter-set-state: Set AC adapter connection state
+- query-ac-adapter: Query current AC adapter state
 
 Signed-off-by: Leonid Bloch <lb.workbox@gmail.com>
 ---
  MAINTAINERS                          |   6 +
- docs/specs/button.rst                | 189 ++++++++++++
+ docs/specs/acad.rst                  | 195 ++++++++++++
  docs/specs/index.rst                 |   1 +
  hw/acpi/Kconfig                      |   4 +
- hw/acpi/button.c                     | 438 +++++++++++++++++++++++++++
+ hw/acpi/acad.c                       | 447 +++++++++++++++++++++++++++
  hw/acpi/meson.build                  |   1 +
  hw/acpi/trace-events                 |   5 +
  hw/i386/Kconfig                      |   1 +
+ include/hw/acpi/acad.h               |  27 ++
  include/hw/acpi/acpi_dev_interface.h |   1 +
- include/hw/acpi/button.h             |  25 ++
  qapi/acpi.json                       |  49 +++
- 11 files changed, 720 insertions(+)
- create mode 100644 docs/specs/button.rst
- create mode 100644 hw/acpi/button.c
- create mode 100644 include/hw/acpi/button.h
+ 11 files changed, 737 insertions(+)
+ create mode 100644 docs/specs/acad.rst
+ create mode 100644 hw/acpi/acad.c
+ create mode 100644 include/hw/acpi/acad.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 19bea634c7..eb876803eb 100644
+index eb71a4a4b7..19bea634c7 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2940,6 +2940,12 @@ S: Maintained
- F: hw/acpi/acad.*
- F: docs/specs/acad.rst
+@@ -2934,6 +2934,12 @@ S: Maintained
+ F: hw/acpi/battery.*
+ F: docs/specs/battery.rst
  
-+Button
++AC Adapter
 +M: Leonid Bloch <lb.workbox@gmail.com>
 +S: Maintained
-+F: hw/acpi/button.*
-+F: docs/specs/button.rst
++F: hw/acpi/acad.*
++F: docs/specs/acad.rst
 +
  Subsystems
  ----------
  Overall Audio backends
-diff --git a/docs/specs/button.rst b/docs/specs/button.rst
+diff --git a/docs/specs/acad.rst b/docs/specs/acad.rst
 new file mode 100644
-index 0000000000..10a940b9f5
+index 0000000000..73d5501b8f
 --- /dev/null
-+++ b/docs/specs/button.rst
-@@ -0,0 +1,189 @@
++++ b/docs/specs/acad.rst
+@@ -0,0 +1,195 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +
-+========================
-+Laptop Lid Button Device
-+========================
++=================
++AC Adapter Device
++=================
 +
-+The button device provides laptop lid button state information to the guest.
-+It supports two operating modes:
++The AC adapter device provides AC power state information to the guest. It
++supports two operating modes:
 +
-+1. **QMP Control Mode** (default): Lid state is controlled via QMP commands,
-+   providing deterministic control for testing and migration safety.
-+2. **Procfs Mode**: Lid state mirrors the host's physical lid button, useful
-+   for desktop virtualization where the guest should see the host's lid state.
++1. **QMP Control Mode** (default): AC adapter state is controlled via QMP
++   commands, providing deterministic control for testing and migration safety.
++2. **Sysfs Mode**: AC adapter state mirrors the host's physical AC adapter,
++   useful for desktop virtualization where the guest should see the host's
++   power state.
 +
 +Configuration
 +-------------
 +
-+The lid button device is created as an ISA device using ``-device button``.
++The AC adapter device is created as an ISA device using ``-device acad``.
 +
 +Operating Modes
 +~~~~~~~~~~~~~~~
 +
 +**QMP Control Mode** (``use-qmp=true``, default)
-+  Lid state is controlled via QMP commands. This mode is recommended for:
++  AC adapter state is controlled via QMP commands. This mode is recommended for:
 +
 +  * Production environments requiring migration support
-+  * Testing with predictable lid states
-+  * Environments without host lid button access
++  * Testing with predictable power states
++  * Environments without host AC adapter access
 +  * Security-sensitive deployments
 +
-+**Procfs Mode** (``enable-procfs=true``)
-+  Lid mirrors the host's physical lid button. This mode is useful for:
++**Sysfs Mode** (``enable-sysfs=true``)
++  AC adapter mirrors the host's physical AC adapter. This mode is useful for:
 +
 +  * Desktop virtualization on laptops
-+  * Development and testing with real lid button behavior
++  * Development and testing with real AC adapter behavior
 +
-+  Note: Procfs mode reads host files and runs timers, which may impact
++  Note: Sysfs mode reads host files and runs timers, which may impact
 +  security and migration. Use with caution in production.
 +
 +Properties
 +~~~~~~~~~~
 +
-+``ioport`` (default: 0x53d)
-+  I/O port base address for the lid button device register.
++``ioport`` (default: 0x53c)
++  I/O port base address for the AC adapter device register.
 +
 +``use-qmp`` (default: true)
-+  Enable QMP control mode. When true, lid state is controlled via
-+  QMP commands. Cannot be used together with ``enable-procfs=true``.
++  Enable QMP control mode. When true, AC adapter state is controlled via
++  QMP commands. Cannot be used together with ``enable-sysfs=true``.
 +
-+``enable-procfs`` (default: false)
-+  Enable procfs mode to mirror the host's lid button. Cannot be used together
++``enable-sysfs`` (default: false)
++  Enable sysfs mode to mirror the host's AC adapter. Cannot be used together
 +  with ``use-qmp=true``.
 +
 +``probe_interval`` (default: 2000)
-+  Time interval between periodic probes in milliseconds (procfs mode only).
-+  The minimum allowed value is 10ms to prevent excessive polling.
++  Time interval between periodic probes in milliseconds (sysfs mode only).
++  A zero value disables the periodic probes, and makes the AC adapter state
++  updates occur on guest requests only.
 +
-+``procfs_path`` (default: /proc/acpi/button)
-+  Path to the host's lid button procfs directory (procfs mode only). The device
-+  will automatically scan this directory to find the lid state file. Use this
-+  property to specify a different path or to provide a custom location for
-+  testing purposes.
++``sysfs_path`` (default: auto-detected)
++  Path to the host's AC adapter sysfs directory (sysfs mode only). By default,
++  the device auto-detects the first AC adapter of type "Mains" in
++  ``/sys/class/power_supply/``. Use this property to specify a different
++  AC adapter, or to provide a custom path for testing purposes.
 +
-+Host Lid Button Detection
++Host AC Adapter Detection
 +-------------------------
 +
-+The host's lid button information is taken from::
++The host's AC adapter information is taken from the sysfs AC adapter
++data, located in::
 +
-+    /proc/acpi/button/lid/*/state
++    /sys/class/power_supply/[device of type "Mains"]
 +
-+This file is expected to be formatted as:
++The device automatically scans for the first AC adapter with:
 +
-+- ``state:      open`` (if the lid is open)
-+- ``state:      closed`` (if the lid is closed)
++- A ``type`` file containing "Mains"
++- An ``online`` file that can be read
 +
-+These formats are based on the Linux 'button' driver.
-+
-+The device automatically scans the ``/proc/acpi/button/lid/`` directory
-+for subdirectories containing a readable ``state`` file. If the procfs path
-+differs, a different lid button needs to be probed, or even if a "fake" host
-+lid button is to be provided, the ``procfs_path`` property allows overriding
-+the default detection.
++If the sysfs path differs, a different AC adapter needs to be probed,
++or even if a "fake" host AC adapter is to be provided, the ``sysfs_path``
++property allows overriding the default detection.
 +
 +ACPI Interface
 +--------------
 +
-+The lid button device is exposed to the guest as an ACPI device with:
++The AC adapter device is exposed to the guest as an ACPI device with:
 +
-+- **HID**: ``PNP0C0D`` (Lid Device)
-+- **Device Path**: ``\_SB.LID0``
++- **HID**: ``ACPI0003`` (AC Adapter)
++- **Device Path**: ``\_SB.ADP0``
 +- **Notification Values**:
 +
-+  - ``0x80``: Status change (lid opened/closed)
++  - ``0x80``: Status change (connected/disconnected)
 +
 +ACPI Methods
 +~~~~~~~~~~~~
 +
-+``_LID`` (Lid Status)
-+  Returns the current lid state (0 = closed, 1 = open).
++``_PSR`` (Power Source)
++  Returns the current AC adapter state (0 = offline, 1 = online).
++
++``_PCL`` (Power Consumer List)
++  Returns the list of devices powered by this adapter.
++
++``_PIF`` (Power Source Information)
++  Returns static information about the power source including model number,
++  serial number, and OEM information.
 +
 +I/O Interface
 +-------------
 +
 +The device uses a single I/O port register:
 +
-+- **Port**: ``ioport`` property value (default 0x53d)
++- **Port**: ``ioport`` property value (default 0x53c)
 +- **Size**: 1 byte
 +- **Access**: Read-only
 +
 +Register Layout
 +~~~~~~~~~~~~~~~
 +
-+**LIDS** (offset 0x00, 1 byte)
-+  Current lid state:
++**PWRS** (offset 0x00, 1 byte)
++  Current AC adapter state:
 +
-+  - ``0x00``: Lid closed
-+  - ``0x01``: Lid open
++  - ``0x00``: AC adapter offline (unplugged)
++  - ``0x01``: AC adapter online (plugged in)
 +
 +QMP Commands
 +------------
 +
 +When using QMP control mode (default), the following commands are available:
 +
-+``lid-button-set-state``
-+  Set the lid button state.
++``ac-adapter-set-state``
++  Set the AC adapter connection state.
 +
-+  * ``open``: Whether the lid is open (boolean)
++  * ``connected``: Whether the AC adapter is connected (boolean)
 +
 +  Example::
 +
-+    -> { "execute": "lid-button-set-state",
-+         "arguments": { "open": true }}
++    -> { "execute": "ac-adapter-set-state",
++         "arguments": { "connected": true }}
 +    <- { "return": {} }
 +
-+``query-lid-button``
-+  Query the current lid button state.
++``query-ac-adapter``
++  Query the current AC adapter state.
 +
 +  Example::
 +
-+    -> { "execute": "query-lid-button" }
-+    <- { "return": { "open": true }}
++    -> { "execute": "query-ac-adapter" }
++    <- { "return": { "connected": true }}
 +
 +Examples
 +--------
@@ -322,82 +328,82 @@ index 0000000000..10a940b9f5
 +QMP control mode (default - recommended)::
 +
 +  # Start with QMP control
-+  qemu-system-x86_64 -device button -qmp tcp:localhost:4444,server,wait=off
++  qemu-system-x86_64 -device acad -qmp tcp:localhost:4444,server,wait=off
 +
-+  # From another terminal, set lid state via QMP:
++  # From another terminal, set AC adapter state via QMP:
 +  echo '{"execute":"qmp_capabilities"}
-+        {"execute":"lid-button-set-state",
-+         "arguments":{"open":false}}' | \
++        {"execute":"ac-adapter-set-state",
++         "arguments":{"connected":true}}' | \
 +  nc -N localhost 4444
 +
-+Procfs mode (mirror host lid button)::
++Sysfs mode (mirror host AC adapter)::
 +
-+  # Enable procfs mode to mirror host lid button
-+  qemu-system-x86_64 -device button,use-qmp=false,enable-procfs=true
++  # Enable sysfs mode to mirror host AC adapter
++  qemu-system-x86_64 -device acad,use-qmp=false,enable-sysfs=true
 +
 +  # Custom probe interval (5 seconds)
-+  qemu-system-x86_64 -device button,use-qmp=false,enable-procfs=true,probe_interval=5000
++  qemu-system-x86_64 -device acad,use-qmp=false,enable-sysfs=true,probe_interval=5000
 +
-+  # Custom procfs path
-+  qemu-system-x86_64 -device button,use-qmp=false,enable-procfs=true,procfs_path=/custom/path
++  # Specific AC adapter path
++  qemu-system-x86_64 -device acad,use-qmp=false,enable-sysfs=true,sysfs_path=/sys/class/power_supply/ADP1
 +
-+Testing with fake lid button::
++Testing with fake AC adapter::
 +
-+  # Create fake lid button files for testing
-+  mkdir -p /tmp/fake_lid/lid/LID0
-+  echo "state:      open" > /tmp/fake_lid/lid/LID0/state    # Format: "state:      open" or "state:      closed"
++  # Create fake AC adapter files for testing
++  mkdir -p /tmp/fake_ac
++  echo "Mains" > /tmp/fake_ac/type
++  echo "1" > /tmp/fake_ac/online          # 1 = connected, 0 = disconnected
 +
-+  # Use fake lid button in procfs mode
-+  qemu-system-x86_64 -device button,use-qmp=false,enable-procfs=true,procfs_path=/tmp/fake_lid
++  # Use fake AC adapter in sysfs mode
++  qemu-system-x86_64 -device acad,use-qmp=false,enable-sysfs=true,sysfs_path=/tmp/fake_ac
 +
-+  # Update lid state while VM is running (from another terminal)
-+  echo "state:      closed" > /tmp/fake_lid/lid/LID0/state  # Close lid
-+  echo "state:      open" > /tmp/fake_lid/lid/LID0/state    # Open lid
++  # Update AC adapter state while VM is running (from another terminal)
++  echo "0" > /tmp/fake_ac/online          # Disconnect AC adapter
++  echo "1" > /tmp/fake_ac/online          # Reconnect AC adapter
 +
-+Combined with other laptop devices::
++Combined with battery device::
 +
 +  # QMP mode (recommended)
-+  qemu-system-x86_64 -device battery -device acad -device button
++  qemu-system-x86_64 -device battery -device acad
 +
-+  # Procfs/sysfs mode (desktop virtualization)
++  # Sysfs mode (desktop virtualization)
 +  qemu-system-x86_64 -device battery,use-qmp=false,enable-sysfs=true \
-+                     -device acad,use-qmp=false,enable-sysfs=true \
-+                     -device button,use-qmp=false,enable-procfs=true
++                     -device acad,use-qmp=false,enable-sysfs=true
 diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index e144afcd90..e1c9b91b7b 100644
+index 616e8228cc..e144afcd90 100644
 --- a/docs/specs/index.rst
 +++ b/docs/specs/index.rst
-@@ -24,6 +24,7 @@ guest hardware that is specific to QEMU.
+@@ -22,6 +22,7 @@ guest hardware that is specific to QEMU.
+    acpi_pci_hotplug
+    acpi_nvdimm
     acpi_erst
-    acad
++   acad
     battery
-+   button
     sev-guest-firmware
     fw_cfg
-    fsi
 diff --git a/hw/acpi/Kconfig b/hw/acpi/Kconfig
-index 9d28c3addf..6600685855 100644
+index 64403378bd..9d28c3addf 100644
 --- a/hw/acpi/Kconfig
 +++ b/hw/acpi/Kconfig
-@@ -73,6 +73,10 @@ config AC_ADAPTER
+@@ -69,6 +69,10 @@ config ACPI_VIOT
      bool
      depends on ACPI
  
-+config BUTTON
++config AC_ADAPTER
 +    bool
 +    depends on ACPI
 +
  config ACPI_HW_REDUCED
      bool
      select ACPI
-diff --git a/hw/acpi/button.c b/hw/acpi/button.c
+diff --git a/hw/acpi/acad.c b/hw/acpi/acad.c
 new file mode 100644
-index 0000000000..dfe86af713
+index 0000000000..699198c194
 --- /dev/null
-+++ b/hw/acpi/button.c
-@@ -0,0 +1,438 @@
++++ b/hw/acpi/acad.c
+@@ -0,0 +1,447 @@
 +/*
-+ * QEMU emulated lid button device
++ * QEMU emulated AC adapter device.
 + *
 + * Copyright (c) 2019 Janus Technologies, Inc. (http://janustech.com)
 + *
@@ -422,50 +428,46 @@ index 0000000000..dfe86af713
 +#include "hw/acpi/acpi_aml_interface.h"
 +#include "qapi/qapi-commands-acpi.h"
 +
-+#include "hw/acpi/button.h"
++#include "hw/acpi/acad.h"
 +
-+#define BUTTON_DEVICE(obj) OBJECT_CHECK(BUTTONState, (obj), \
-+                                        TYPE_BUTTON)
++#define AC_ADAPTER_DEVICE(obj) OBJECT_CHECK(ACADState, (obj), \
++                                            TYPE_AC_ADAPTER)
 +
-+#define BUTTON_STA_ADDR            0
++#define AC_STA_ADDR               0
 +
-+#define PROCFS_PATH                "/proc/acpi/button"
-+#define LID_DIR                    "lid"
-+#define LID_STATE_FILE             "state"
-+#define MIN_BUTTON_PROBE_INTERVAL  10  /* ms */
-+#define MAX_ALLOWED_LINE_LENGTH    32  /* For convenience when comparing */
++#define SYSFS_PATH                "/sys/class/power_supply"
++#define AC_ADAPTER_TYPE           "Mains"
++#define MAX_ALLOWED_TYPE_LENGTH   16
 +
 +enum {
-+    LID_CLOSED = 0,
-+    LID_OPEN = 1,
++    AC_ADAPTER_OFFLINE = 0,
++    AC_ADAPTER_ONLINE = 1,
 +};
 +
-+static const char *lid_state[] = { "closed", "open" };
-+
-+typedef struct BUTTONState {
++typedef struct ACADState {
 +    ISADevice dev;
 +    MemoryRegion io;
 +    uint16_t ioport;
-+    uint8_t lid_state;
++    uint8_t state;
 +    bool use_qmp_control;
-+    bool qmp_lid_open;
-+    bool enable_procfs;
++    bool qmp_connected;
++    bool enable_sysfs;
 +
 +    QEMUTimer *probe_state_timer;
 +    uint64_t probe_state_interval;
 +
-+    char *button_path;
-+    char lid_dir[MAX_ALLOWED_LINE_LENGTH];
-+} BUTTONState;
++    char *acad_path;
++} ACADState;
 +
-+static inline bool button_file_accessible(char *path, const char *dir,
-+                                          char *subdir, const char *file)
++static const char *online_file = "online";
++static const char *type_file = "type";
++
++static inline bool acad_file_accessible(char *path, const char *file)
 +{
 +    char full_path[PATH_MAX];
 +    int path_len;
 +
-+    path_len = snprintf(full_path, PATH_MAX, "%s/%s/%s/%s", path, dir, subdir,
-+                        file);
++    path_len = snprintf(full_path, PATH_MAX, "%s/%s", path, file);
 +    if (path_len < 0 || path_len >= PATH_MAX) {
 +        return false;
 +    }
@@ -476,98 +478,125 @@ index 0000000000..dfe86af713
 +    return false;
 +}
 +
-+static void button_get_lid_state(BUTTONState *s)
++static void acad_get_state(ACADState *s)
 +{
 +    char file_path[PATH_MAX];
 +    int path_len;
-+    char line[MAX_ALLOWED_LINE_LENGTH];
++    uint8_t val;
 +    FILE *ff;
 +
-+    path_len = snprintf(file_path, PATH_MAX, "%s/%s/%s/%s", s->button_path,
-+                        LID_DIR, s->lid_dir, LID_STATE_FILE);
++    path_len = snprintf(file_path, PATH_MAX, "%s/%s", s->acad_path,
++                        online_file);
 +    if (path_len < 0 || path_len >= PATH_MAX) {
-+        warn_report("Could not read the lid state.");
++        warn_report("Could not read the AC adapter state.");
 +        return;
 +    }
 +
 +    ff = fopen(file_path, "r");
 +    if (ff == NULL) {
-+        warn_report("Could not read the lid state.");
++        warn_report("Could not read the AC adapter state.");
 +        return;
 +    }
 +
-+    if (fgets(line, MAX_ALLOWED_LINE_LENGTH, ff) == NULL) {
-+        warn_report("Lid state unreadable.");
++    if (!fscanf(ff, "%hhu", &val)) {
++        warn_report("AC adapter state unreadable.");
 +    } else {
-+        if (strstr(line, lid_state[LID_OPEN]) != NULL) {
-+            s->lid_state = LID_OPEN;
-+        } else if (strstr(line, lid_state[LID_CLOSED]) != NULL) {
-+            s->lid_state = LID_CLOSED;
-+        } else {
-+            warn_report("Lid state undetermined.");
++        switch (val) {
++        case AC_ADAPTER_OFFLINE:
++        case AC_ADAPTER_ONLINE:
++            s->state = val;
++            break;
++        default:
++            warn_report("AC adapter state undetermined.");
 +        }
 +    }
-+
 +    fclose(ff);
 +}
 +
-+static void button_get_dynamic_status(BUTTONState *s)
++static void acad_get_dynamic_status(ACADState *s)
 +{
-+    trace_button_get_dynamic_status();
-+
 +    if (s->use_qmp_control) {
-+        s->lid_state = s->qmp_lid_open ? LID_OPEN : LID_CLOSED;
-+    } else if (s->enable_procfs) {
-+        button_get_lid_state(s);
++        s->state = s->qmp_connected ? AC_ADAPTER_ONLINE : AC_ADAPTER_OFFLINE;
++    } else if (s->enable_sysfs) {
++        acad_get_state(s);
 +    } else {
-+        s->lid_state = LID_CLOSED;
++        s->state = AC_ADAPTER_OFFLINE;
 +    }
++
++    trace_acad_get_dynamic_status(s->state);
 +}
 +
-+static void button_probe_state(void *opaque)
++static void acad_probe_state(void *opaque)
 +{
-+    BUTTONState *s = opaque;
++    ACADState *s = opaque;
 +
-+    uint8_t lid_state_before = s->lid_state;
++    uint8_t state_before = s->state;
 +
-+    button_get_dynamic_status(s);
++    acad_get_dynamic_status(s);
 +
-+    if (lid_state_before != s->lid_state) {
++    if (state_before != s->state) {
 +        Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF, NULL);
-+        acpi_send_event(DEVICE(obj), ACPI_BUTTON_CHANGE_STATUS);
++        acpi_send_event(DEVICE(obj), ACPI_AC_ADAPTER_CHANGE_STATUS);
 +    }
 +    timer_mod(s->probe_state_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
 +              s->probe_state_interval);
 +}
 +
-+static void button_probe_state_timer_init(BUTTONState *s)
++static void acad_probe_state_timer_init(ACADState *s)
 +{
-+    if (s->enable_procfs && s->probe_state_interval > 0) {
++    if (s->enable_sysfs && s->probe_state_interval > 0) {
 +        s->probe_state_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
-+                                            button_probe_state, s);
++                                            acad_probe_state, s);
 +        timer_mod(s->probe_state_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
 +                  s->probe_state_interval);
 +    }
 +}
 +
-+static inline bool button_verify_lid_procfs(char *path, char *lid_subdir)
++static bool acad_verify_sysfs(ACADState *s, char *path)
 +{
-+    return button_file_accessible(path, LID_DIR, lid_subdir, LID_STATE_FILE);
-+}
-+
-+static bool button_get_lid_dir(BUTTONState *s, char *path)
-+{
-+    DIR *dir;
-+    char lid_path[PATH_MAX];
++    FILE *ff;
++    char type_path[PATH_MAX];
 +    int path_len;
-+    struct dirent *ent;
++    char val[MAX_ALLOWED_TYPE_LENGTH];
 +
-+    path_len = snprintf(lid_path, PATH_MAX, "%s/%s", path, LID_DIR);
++    path_len = snprintf(type_path, PATH_MAX, "%s/%s", path, type_file);
 +    if (path_len < 0 || path_len >= PATH_MAX) {
 +        return false;
 +    }
 +
-+    dir = opendir(lid_path);
++    ff = fopen(type_path, "r");
++    if (ff == NULL) {
++        return false;
++    }
++
++    if (fgets(val, MAX_ALLOWED_TYPE_LENGTH, ff) == NULL) {
++        fclose(ff);
++        return false;
++    } else {
++        val[strcspn(val, "\n")] = 0;
++        if (strncmp(val, AC_ADAPTER_TYPE, MAX_ALLOWED_TYPE_LENGTH)) {
++            fclose(ff);
++            return false;
++        }
++    }
++    fclose(ff);
++
++    return acad_file_accessible(path, online_file);
++}
++
++static bool get_acad_path(DeviceState *dev)
++{
++    ACADState *s = AC_ADAPTER_DEVICE(dev);
++    DIR *dir;
++    struct dirent *ent;
++    char bp[PATH_MAX];
++    int path_len;
++
++    if (s->acad_path) {
++        return acad_verify_sysfs(s, s->acad_path);
++    }
++
++    dir = opendir(SYSFS_PATH);
 +    if (dir == NULL) {
 +        return false;
 +    }
@@ -575,12 +604,13 @@ index 0000000000..dfe86af713
 +    ent = readdir(dir);
 +    while (ent != NULL) {
 +        if (ent->d_name[0] != '.') {
-+            if (button_verify_lid_procfs(path, ent->d_name)) {
-+                path_len = snprintf(s->lid_dir, strlen(ent->d_name) + 1, "%s",
-+                                    ent->d_name);
-+                if (path_len < 0 || path_len > strlen(ent->d_name)) {
-+                    return false;
-+                }
++            path_len = snprintf(bp, PATH_MAX, "%s/%s", SYSFS_PATH,
++                                ent->d_name);
++            if (path_len < 0 || path_len >= PATH_MAX) {
++                return false;
++            }
++            if (acad_verify_sysfs(s, bp)) {
++                qdev_prop_set_string(dev, AC_ADAPTER_PATH_PROP, bp);
 +                closedir(dir);
 +                return true;
 +            }
@@ -588,70 +618,32 @@ index 0000000000..dfe86af713
 +        ent = readdir(dir);
 +    }
 +    closedir(dir);
-+    return false;
-+}
-+
-+static bool get_button_path(DeviceState *dev)
-+{
-+    BUTTONState *s = BUTTON_DEVICE(dev);
-+    char procfs_path[PATH_MAX];
-+    int path_len;
-+
-+    if (s->button_path) {
-+        path_len = snprintf(procfs_path, strlen(s->button_path) + 1, "%s",
-+                            s->button_path);
-+        if (path_len < 0 || path_len > strlen(s->button_path)) {
-+            return false;
-+        }
-+    } else {
-+        path_len = snprintf(procfs_path, sizeof(PROCFS_PATH), "%s",
-+                            PROCFS_PATH);
-+        if (path_len < 0 || path_len >= sizeof(PROCFS_PATH)) {
-+            return false;
-+        }
-+    }
-+
-+    if (button_get_lid_dir(s, procfs_path)) {
-+        qdev_prop_set_string(dev, BUTTON_PATH_PROP, procfs_path);
-+        return true;
-+    }
 +
 +    return false;
 +}
 +
-+static void button_realize(DeviceState *dev, Error **errp)
++static void acad_realize(DeviceState *dev, Error **errp)
 +{
 +    ISADevice *d = ISA_DEVICE(dev);
-+    BUTTONState *s = BUTTON_DEVICE(dev);
++    ACADState *s = AC_ADAPTER_DEVICE(dev);
 +    FWCfgState *fw_cfg = fw_cfg_find();
-+    uint16_t *button_port;
++    uint16_t *acad_port;
 +    char err_details[32] = {};
 +
-+    trace_button_realize();
++    trace_acad_realize();
 +
-+    if (s->use_qmp_control && s->enable_procfs) {
-+        error_setg(errp, "Cannot enable both QMP control and procfs mode");
++    if (s->use_qmp_control && s->enable_sysfs) {
++        error_setg(errp, "Cannot enable both QMP control and sysfs mode");
 +        return;
 +    }
 +
-+    /* Initialize lid to open by default when in QMP mode */
-+    if (s->use_qmp_control) {
-+        s->qmp_lid_open = true;
-+    }
-+
-+    if (s->probe_state_interval < MIN_BUTTON_PROBE_INTERVAL) {
-+        error_setg(errp, "'probe_state_interval' must be greater than %d ms",
-+                   MIN_BUTTON_PROBE_INTERVAL);
-+        return;
-+    }
-+
-+    if (s->enable_procfs) {
-+        if (!s->button_path) {
-+            strcpy(err_details, " Try using 'procfs_path='");
++    if (s->enable_sysfs) {
++        if (!s->acad_path) {
++            strcpy(err_details, " Try using 'sysfs_path='");
 +        }
 +
-+        if (!get_button_path(dev)) {
-+            error_setg(errp, "Button procfs path not found or unreadable.%s",
++        if (!get_acad_path(dev)) {
++            error_setg(errp, "AC adapter sysfs path not found or unreadable.%s",
 +                       err_details);
 +            return;
 +        }
@@ -659,238 +651,249 @@ index 0000000000..dfe86af713
 +
 +    isa_register_ioport(d, &s->io, s->ioport);
 +
-+    button_probe_state_timer_init(s);
++    acad_probe_state_timer_init(s);
 +
 +    if (!fw_cfg) {
 +        return;
 +    }
 +
-+    button_port = g_malloc(sizeof(*button_port));
-+    *button_port = cpu_to_le16(s->ioport);
-+    fw_cfg_add_file(fw_cfg, "etc/button-port", button_port,
-+                    sizeof(*button_port));
++    acad_port = g_malloc(sizeof(*acad_port));
++    *acad_port = cpu_to_le16(s->ioport);
++    fw_cfg_add_file(fw_cfg, "etc/acad-port", acad_port,
++                    sizeof(*acad_port));
 +}
 +
-+static const Property button_device_properties[] = {
-+    DEFINE_PROP_UINT16(BUTTON_IOPORT_PROP, BUTTONState, ioport, 0x53d),
-+    DEFINE_PROP_BOOL("use-qmp", BUTTONState, use_qmp_control, true),
-+    DEFINE_PROP_BOOL("enable-procfs", BUTTONState, enable_procfs, false),
-+    DEFINE_PROP_UINT64(BUTTON_PROBE_STATE_INTERVAL, BUTTONState,
++static const Property acad_device_properties[] = {
++    DEFINE_PROP_UINT16(AC_ADAPTER_IOPORT_PROP, ACADState, ioport, 0x53c),
++    DEFINE_PROP_BOOL("use-qmp", ACADState, use_qmp_control, true),
++    DEFINE_PROP_BOOL("enable-sysfs", ACADState, enable_sysfs, false),
++    DEFINE_PROP_UINT64(AC_ADAPTER_PROBE_STATE_INTERVAL, ACADState,
 +                       probe_state_interval, 2000),
-+    DEFINE_PROP_STRING(BUTTON_PATH_PROP, BUTTONState, button_path),
++    DEFINE_PROP_STRING(AC_ADAPTER_PATH_PROP, ACADState, acad_path),
 +};
 +
-+static const VMStateDescription button_vmstate = {
-+    .name = "button",
++static const VMStateDescription acad_vmstate = {
++    .name = "acad",
 +    .version_id = 1,
 +    .minimum_version_id = 1,
 +    .fields = (VMStateField[]) {
-+        VMSTATE_UINT16(ioport, BUTTONState),
-+        VMSTATE_UINT64(probe_state_interval, BUTTONState),
++        VMSTATE_UINT16(ioport, ACADState),
++        VMSTATE_UINT64(probe_state_interval, ACADState),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static void build_button_aml(AcpiDevAmlIf *adev, Aml *scope)
++static void build_acad_aml(AcpiDevAmlIf *adev, Aml *scope)
 +{
-+    Aml *dev, *field, *method;
-+    Aml *button_state;
++    Aml *dev, *field, *method, *pkg;
++    Aml *acad_state;
 +    Aml *sb_scope;
-+    BUTTONState *s = BUTTON_DEVICE(adev);
++    ACADState *s = AC_ADAPTER_DEVICE(adev);
 +
-+    button_state = aml_local(0);
++    acad_state  = aml_local(0);
 +
 +    sb_scope = aml_scope("\\_SB");
-+    dev = aml_device("LID0");
-+    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C0D")));
++    dev = aml_device("ADP0");
++    aml_append(dev, aml_name_decl("_HID", aml_string("ACPI0003")));
 +
-+    aml_append(dev, aml_operation_region("LSTA", AML_SYSTEM_IO,
++    aml_append(dev, aml_operation_region("ACST", AML_SYSTEM_IO,
 +                                         aml_int(s->ioport),
-+                                         BUTTON_LEN));
-+    field = aml_field("LSTA", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
-+    aml_append(field, aml_named_field("LIDS", 8));
++                                         AC_ADAPTER_LEN));
++    field = aml_field("ACST", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
++    aml_append(field, aml_named_field("PWRS", 8));
 +    aml_append(dev, field);
 +
-+    method = aml_method("_LID", 0, AML_NOTSERIALIZED);
-+    aml_append(method, aml_store(aml_name("LIDS"), button_state));
-+    aml_append(method, aml_return(button_state));
++    method = aml_method("_PSR", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_store(aml_name("PWRS"), acad_state));
++    aml_append(method, aml_return(acad_state));
++    aml_append(dev, method);
++
++    method = aml_method("_PCL", 0, AML_NOTSERIALIZED);
++    pkg = aml_package(1);
++    aml_append(pkg, aml_name("_SB"));
++    aml_append(method, aml_return(pkg));
++    aml_append(dev, method);
++
++    method = aml_method("_PIF", 0, AML_NOTSERIALIZED);
++    pkg = aml_package(6);
++    /* Power Source State */
++    aml_append(pkg, aml_int(0));  /* Non-redundant, non-shared */
++    /* Maximum Output Power */
++    aml_append(pkg, aml_int(AC_ADAPTER_VAL_UNKNOWN));
++    /* Maximum Input Power */
++    aml_append(pkg, aml_int(AC_ADAPTER_VAL_UNKNOWN));
++    /* Model Number */
++    aml_append(pkg, aml_string("QADP001"));
++    /* Serial Number */
++    aml_append(pkg, aml_string("SN00000"));
++    /* OEM Information */
++    aml_append(pkg, aml_string("QEMU"));
++    aml_append(method, aml_return(pkg));
 +    aml_append(dev, method);
 +
 +    aml_append(sb_scope, dev);
 +    aml_append(scope, sb_scope);
 +
 +    /* Status Change */
-+    method = aml_method("\\_GPE._E0B", 0, AML_NOTSERIALIZED);
-+    aml_append(method, aml_notify(aml_name("\\_SB.LID0"), aml_int(0x80)));
++    method = aml_method("\\_GPE._E0A", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_notify(aml_name("\\_SB.ADP0"), aml_int(0x80)));
 +    aml_append(scope, method);
 +}
 +
-+static void button_class_init(ObjectClass *class, const void *data)
++static void acad_class_init(ObjectClass *class, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(class);
 +    AcpiDevAmlIfClass *adevc = ACPI_DEV_AML_IF_CLASS(class);
 +
-+    dc->realize = button_realize;
-+    device_class_set_props(dc, button_device_properties);
-+    dc->vmsd = &button_vmstate;
-+    adevc->build_dev_aml = build_button_aml;
++    dc->realize = acad_realize;
++    device_class_set_props(dc, acad_device_properties);
++    dc->vmsd = &acad_vmstate;
++    adevc->build_dev_aml = build_acad_aml;
 +}
 +
-+static uint64_t button_ioport_read(void *opaque, hwaddr addr, unsigned size)
++static uint64_t acad_ioport_read(void *opaque, hwaddr addr, unsigned size)
 +{
-+    BUTTONState *s = opaque;
++    ACADState *s = opaque;
 +
-+    button_get_dynamic_status(s);
++    acad_get_dynamic_status(s);
 +
 +    switch (addr) {
-+    case BUTTON_STA_ADDR:
-+        return s->lid_state;
++    case AC_STA_ADDR:
++        return s->state;
 +    default:
-+        warn_report("Button: guest read unknown value.");
-+        trace_button_ioport_read_unknown();
++        warn_report("AC adapter: guest read unknown value.");
++        trace_acad_ioport_read_unknown();
 +        return 0;
 +    }
 +}
 +
-+static const MemoryRegionOps button_ops = {
-+    .read = button_ioport_read,
++static const MemoryRegionOps acad_ops = {
++    .read = acad_ioport_read,
 +    .impl = {
 +        .min_access_size = 1,
 +        .max_access_size = 1,
 +    },
 +};
 +
-+static void button_instance_init(Object *obj)
++static void acad_instance_init(Object *obj)
 +{
-+    BUTTONState *s = BUTTON_DEVICE(obj);
++    ACADState *s = AC_ADAPTER_DEVICE(obj);
 +
-+    memory_region_init_io(&s->io, obj, &button_ops, s, "button",
-+                          BUTTON_LEN);
++    memory_region_init_io(&s->io, obj, &acad_ops, s, "acad",
++                          AC_ADAPTER_LEN);
 +}
 +
-+static const TypeInfo button_info = {
-+    .name          = TYPE_BUTTON,
++static const TypeInfo acad_info = {
++    .name          = TYPE_AC_ADAPTER,
 +    .parent        = TYPE_ISA_DEVICE,
-+    .instance_size = sizeof(BUTTONState),
-+    .class_init    = button_class_init,
-+    .instance_init = button_instance_init,
++    .instance_size = sizeof(ACADState),
++    .class_init    = acad_class_init,
++    .instance_init = acad_instance_init,
 +    .interfaces = (InterfaceInfo[]) {
 +        { TYPE_ACPI_DEV_AML_IF },
 +        { },
 +    },
 +};
 +
-+static BUTTONState *find_button_device(void)
++static ACADState *find_acad_device(void)
 +{
-+    Object *o = object_resolve_path_type("", TYPE_BUTTON, NULL);
++    Object *o = object_resolve_path_type("", TYPE_AC_ADAPTER, NULL);
 +    if (!o) {
 +        return NULL;
 +    }
-+    return BUTTON_DEVICE(o);
++    return AC_ADAPTER_DEVICE(o);
 +}
 +
-+void qmp_lid_button_set_state(bool open, Error **errp)
++void qmp_ac_adapter_set_state(bool connected, Error **errp)
 +{
-+    BUTTONState *s = find_button_device();
++    ACADState *s = find_acad_device();
 +
 +    if (!s) {
-+        error_setg(errp, "No lid button device found");
++        error_setg(errp, "No AC adapter device found");
 +        return;
 +    }
 +
-+    s->qmp_lid_open = open;
++    s->qmp_connected = connected;
 +
 +    Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF, NULL);
 +    if (obj) {
-+        acpi_send_event(DEVICE(obj), ACPI_BUTTON_CHANGE_STATUS);
++        acpi_send_event(DEVICE(obj), ACPI_AC_ADAPTER_CHANGE_STATUS);
 +    }
 +}
 +
-+LidButtonInfo *qmp_query_lid_button(Error **errp)
++AcAdapterInfo *qmp_query_ac_adapter(Error **errp)
 +{
-+    BUTTONState *s = find_button_device();
-+    LidButtonInfo *ret;
++    ACADState *s = find_acad_device();
++    AcAdapterInfo *ret;
 +
 +    if (!s) {
-+        error_setg(errp, "No lid button device found");
++        error_setg(errp, "No AC adapter device found");
 +        return NULL;
 +    }
 +
-+    ret = g_new0(LidButtonInfo, 1);
++    ret = g_new0(AcAdapterInfo, 1);
 +
 +    if (s->use_qmp_control) {
-+        ret->open = s->qmp_lid_open;
++        ret->connected = s->qmp_connected;
 +    } else {
-+        button_get_dynamic_status(s);
-+        ret->open = (s->lid_state == LID_OPEN);
++        acad_get_dynamic_status(s);
++        ret->connected = (s->state == AC_ADAPTER_ONLINE);
 +    }
 +
 +    return ret;
 +}
 +
-+static void button_register_types(void)
++static void acad_register_types(void)
 +{
-+    type_register_static(&button_info);
++    type_register_static(&acad_info);
 +}
 +
-+type_init(button_register_types)
++type_init(acad_register_types)
 diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index 2b24951f28..94993ecb9a 100644
+index 10379a7b2c..2b24951f28 100644
 --- a/hw/acpi/meson.build
 +++ b/hw/acpi/meson.build
-@@ -33,6 +33,7 @@ if have_tpm
+@@ -32,6 +32,7 @@ if have_tpm
+   acpi_ss.add(files('tpm.c'))
  endif
  acpi_ss.add(when: 'CONFIG_BATTERY', if_true: files('battery.c'))
- acpi_ss.add(when: 'CONFIG_AC_ADAPTER', if_true: files('acad.c'))
-+acpi_ss.add(when: 'CONFIG_BUTTON', if_true: files('button.c'))
++acpi_ss.add(when: 'CONFIG_AC_ADAPTER', if_true: files('acad.c'))
  system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
  system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
  system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
 diff --git a/hw/acpi/trace-events b/hw/acpi/trace-events
-index 68ac6e9701..816f027bb3 100644
+index dd3e815482..68ac6e9701 100644
 --- a/hw/acpi/trace-events
 +++ b/hw/acpi/trace-events
-@@ -97,3 +97,8 @@ battery_ioport_read_unknown(void) "Battery read unknown"
- acad_realize(void) "AC adapter device realize entry"
- acad_get_dynamic_status(uint8_t state) "AC adapter read state: %"PRIu8
- acad_ioport_read_unknown(void) "AC adapter read unknown"
+@@ -92,3 +92,8 @@ acpi_nvdimm_invalid_revision(uint32_t revision) "Revision 0x%" PRIx32 " is not s
+ battery_realize(void) "Battery device realize entry"
+ battery_get_dynamic_status(uint32_t state, uint32_t rate, uint32_t charge) "Battery read state: 0x%"PRIx32", rate: %"PRIu32", charge: %"PRIu32
+ battery_ioport_read_unknown(void) "Battery read unknown"
 +
-+# button.c
-+button_realize(void) "Button device realize entry"
-+button_get_dynamic_status(void) "Button read dynamic status entry"
-+button_ioport_read_unknown(void) "Button read unknown"
++# acad.c
++acad_realize(void) "AC adapter device realize entry"
++acad_get_dynamic_status(uint8_t state) "AC adapter read state: %"PRIu8
++acad_ioport_read_unknown(void) "AC adapter read unknown"
 diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index baab382a2e..1d2d809028 100644
+index 2c878fd112..baab382a2e 100644
 --- a/hw/i386/Kconfig
 +++ b/hw/i386/Kconfig
-@@ -41,6 +41,7 @@ config PC
+@@ -40,6 +40,7 @@ config PC
+     imply NVDIMM
      imply FDC_ISA
      imply BATTERY
-     imply AC_ADAPTER
-+    imply BUTTON
++    imply AC_ADAPTER
      select I8259
      select I8254
      select PCKBD
-diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
-index 588fbbd05f..4f5bcc15da 100644
---- a/include/hw/acpi/acpi_dev_interface.h
-+++ b/include/hw/acpi/acpi_dev_interface.h
-@@ -15,6 +15,7 @@ typedef enum {
-     ACPI_POWER_DOWN_STATUS = 64,
-     ACPI_BATTERY_CHANGE_STATUS = 128,
-     ACPI_AC_ADAPTER_CHANGE_STATUS = 1024,
-+    ACPI_BUTTON_CHANGE_STATUS = 2048,
- } AcpiEventStatusBits;
- 
- #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
-diff --git a/include/hw/acpi/button.h b/include/hw/acpi/button.h
+diff --git a/include/hw/acpi/acad.h b/include/hw/acpi/acad.h
 new file mode 100644
-index 0000000000..fa5f7001b2
+index 0000000000..a4e7149488
 --- /dev/null
-+++ b/include/hw/acpi/button.h
-@@ -0,0 +1,25 @@
++++ b/include/hw/acpi/acad.h
+@@ -0,0 +1,27 @@
 +/*
-+ * QEMU emulated button device.
++ * QEMU emulated AC adapter device.
 + *
 + * Copyright (c) 2019 Janus Technologies, Inc. (http://janustech.com)
 + *
@@ -903,32 +906,46 @@ index 0000000000..fa5f7001b2
 + *
 + */
 +
-+#ifndef HW_ACPI_BUTTON_H
-+#define HW_ACPI_BUTTON_H
++#ifndef HW_ACPI_AC_ADAPTER_H
++#define HW_ACPI_AC_ADAPTER_H
 +
-+#define TYPE_BUTTON                  "button"
-+#define BUTTON_IOPORT_PROP           "ioport"
-+#define BUTTON_PATH_PROP             "procfs_path"
-+#define BUTTON_PROBE_STATE_INTERVAL  "probe_interval"
++#define TYPE_AC_ADAPTER                  "acad"
++#define AC_ADAPTER_IOPORT_PROP           "ioport"
++#define AC_ADAPTER_PATH_PROP             "sysfs_path"
++#define AC_ADAPTER_PROBE_STATE_INTERVAL  "probe_interval"
 +
-+#define BUTTON_LEN                   1
++#define AC_ADAPTER_VAL_UNKNOWN  0xFFFFFFFF
++
++#define AC_ADAPTER_LEN          1
 +
 +#endif
+diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+index 3064ef6734..588fbbd05f 100644
+--- a/include/hw/acpi/acpi_dev_interface.h
++++ b/include/hw/acpi/acpi_dev_interface.h
+@@ -14,6 +14,7 @@ typedef enum {
+     ACPI_VMGENID_CHANGE_STATUS = 32,
+     ACPI_POWER_DOWN_STATUS = 64,
+     ACPI_BATTERY_CHANGE_STATUS = 128,
++    ACPI_AC_ADAPTER_CHANGE_STATUS = 1024,
+ } AcpiEventStatusBits;
+ 
+ #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
 diff --git a/qapi/acpi.json b/qapi/acpi.json
-index 52e151f0e6..bcbddbfbd5 100644
+index d1ad663bfd..52e151f0e6 100644
 --- a/qapi/acpi.json
 +++ b/qapi/acpi.json
-@@ -264,3 +264,52 @@
+@@ -215,3 +215,52 @@
  ##
- { 'command': 'query-ac-adapter',
-   'returns': 'AcAdapterInfo' }
+ { 'command': 'query-battery',
+   'returns': 'BatteryInfo' }
 +
 +##
-+# @lid-button-set-state:
++# @ac-adapter-set-state:
 +#
-+# Set the state of the emulated laptop lid button device
++# Set the state of the emulated AC adapter device
 +#
-+# @open: whether the lid is open
++# @connected: whether the AC adapter is connected
 +#
 +
 +#
@@ -936,41 +953,41 @@ index 52e151f0e6..bcbddbfbd5 100644
 +#
 +# .. qmp-example::
 +#
-+#     -> { "execute": "lid-button-set-state",
-+#          "arguments": { "open": true } }
++#     -> { "execute": "ac-adapter-set-state",
++#          "arguments": { "connected": true } }
 +#     <- { "return": {} }
 +##
-+{ 'command': 'lid-button-set-state',
-+  'data': { 'open': 'bool' } }
++{ 'command': 'ac-adapter-set-state',
++  'data': { 'connected': 'bool' } }
 +
 +##
-+# @LidButtonInfo:
++# @AcAdapterInfo:
 +#
-+# Lid button state information
++# AC adapter state information
 +#
-+# @open: whether the lid is open
++# @connected: whether the AC adapter is connected
 +#
 +# Since: 10.2
 +##
-+{ 'struct': 'LidButtonInfo',
-+  'data': { 'open': 'bool' } }
++{ 'struct': 'AcAdapterInfo',
++  'data': { 'connected': 'bool' } }
 +
 +##
-+# @query-lid-button:
++# @query-ac-adapter:
 +#
-+# Query the current state of the emulated laptop lid button device
++# Query the current state of the emulated AC adapter device
 +#
-+# Returns: lid button state
++# Returns: AC adapter connection state
 +#
 +# Since: 10.2
 +#
 +# .. qmp-example::
 +#
-+#     -> { "execute": "query-lid-button" }
-+#     <- { "return": { "open": true } }
++#     -> { "execute": "query-ac-adapter" }
++#     <- { "return": { "connected": true } }
 +##
-+{ 'command': 'query-lid-button',
-+  'returns': 'LidButtonInfo' }
++{ 'command': 'query-ac-adapter',
++  'returns': 'AcAdapterInfo' }
 -- 
 2.51.0
 
