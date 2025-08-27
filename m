@@ -4,36 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6992CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 401A1CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHis-0005vx-7V; Wed, 27 Aug 2025 11:06:05 -0400
+	id 1urHnQ-0005oX-JI; Wed, 27 Aug 2025 11:10:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHhl-00043E-5r; Wed, 27 Aug 2025 11:04:54 -0400
+ id 1urHkx-0000JG-66; Wed, 27 Aug 2025 11:08:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHhh-0004x4-Pu; Wed, 27 Aug 2025 11:04:52 -0400
+ id 1urHkq-0005pD-FT; Wed, 27 Aug 2025 11:08:09 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B8EF714C53C;
- Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F16FB14C55C;
+ Wed, 27 Aug 2025 18:02:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A0784269844;
- Wed, 27 Aug 2025 18:03:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DF406269863;
+ Wed, 27 Aug 2025 18:03:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Tingting Mao <timao@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, Lei Yang <leiyang@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 20/59] vhost: Do not abort on log-start error
-Date: Wed, 27 Aug 2025 18:02:25 +0300
-Message-ID: <20250827150323.2694101-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 51/59] hw/nvme: cap MDTS value for internal limitation
+Date: Wed, 27 Aug 2025 18:02:56 +0300
+Message-ID: <20250827150323.2694101-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
@@ -62,43 +59,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Keith Busch <kbusch@kernel.org>
 
-Commit 3688fec8923 ("memory: Add Error** argument to .log_global_start()
-handler") enabled vhost_log_global_start() to return a proper error, but
-did not change it to do so; instead, it still aborts the whole process
-on error.
+The emulated device had let the user set whatever max transfers size
+they wanted, including no limit. However the device does have an
+internal limit of 1024 segments. NVMe doesn't report max segments,
+though. This is implicitly inferred based on the MDTS and MPSMIN values.
 
-This crash can be reproduced by e.g. killing a virtiofsd daemon before
-initiating migration.  In such a case, qemu should not crash, but just
-make the attempted migration fail.
+IOV_MAX is currently 1024 which 4k PRPs can exceed with 2MB transfers.
+Don't allow MDTS values that can exceed this, otherwise users risk
+seeing "internal error" status to their otherwise protocol compliant
+commands.
 
-Buglink: https://issues.redhat.com/browse/RHEL-94534
-Reported-by: Tingting Mao <timao@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-Id: <20250724125928.61045-2-hreitz@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit c1997099dc26d95eb9f2249f2894aabf4cf0bf8b)
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 53493c1f836f4dda90a6b5f2fb3d9264918c6871)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 99d31cc1b4..26e5a67653 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1111,7 +1111,8 @@ static bool vhost_log_global_start(MemoryListener *listener, Error **errp)
- 
-     r = vhost_migration_log(listener, true);
-     if (r < 0) {
--        abort();
-+        error_setg_errno(errp, -r, "vhost: Failed to start logging");
-+        return false;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index f34bd68c04..67cb95c809 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8339,6 +8339,11 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+         host_memory_backend_set_mapped(n->pmr.dev, true);
      }
-     return true;
- }
+ 
++    if (!n->params.mdts || ((1 << n->params.mdts) + 1) > IOV_MAX) {
++        error_setg(errp, "mdts exceeds IOV_MAX");
++        return false;
++    }
++
+     if (n->params.zasl > n->params.mdts) {
+         error_setg(errp, "zoned.zasl (Zone Append Size Limit) must be less "
+                    "than or equal to mdts (Maximum Data Transfer Size)");
 -- 
 2.47.2
 
