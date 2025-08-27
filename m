@@ -4,97 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8696FCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 22:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0051ACA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 22:19:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urODA-0006kW-11; Wed, 27 Aug 2025 18:01:44 -0400
+	id 1urOTZ-0008KW-Nq; Wed, 27 Aug 2025 18:18:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1urOD5-0006hL-Oy
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:01:40 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lb.workbox@gmail.com>)
- id 1urOD0-0007eo-U3
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:01:38 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45a1b00f23eso1729405e9.0
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 15:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756332093; x=1756936893; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1CMa98DanhdU+YFxRVKMRC0axlRfKE91aptJPg8KRCU=;
- b=NasbsWhnmfo9S792e4qB6SpDqymMg0k5EPbd5yjYz4D8PnyxmSvXbcLfJj5H2s8fXy
- qdO5jsMmphdiYDgXtM6UpOuZeXILCZLCDXY2gQWdo/P6XLKi+SpO1P5Ng4bQK265XuiS
- whqAiAL35PVkkqy1NfeBLvqrKLfjzIDY7581ShHSPXAyLBSU4zjQ0IrlPCQhP/7wLHnt
- 6zhPRLYrHJe0FIK/IwObjmyIOxWucZuNCM3YLDMJ44A1HgJB9kTY5Pws2Q28ahwhTY7k
- gcxKtGegPumXI7k88zchEAG7f4ieMzvQ1Kvt/FHWzWpZenuY+hEpnoNbS7l7UEVMFiPQ
- 2YCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756332093; x=1756936893;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1CMa98DanhdU+YFxRVKMRC0axlRfKE91aptJPg8KRCU=;
- b=rjfZAHOpnDiRHqk0EonYVbMCB3BIl5gy5w2HzIuChaob/xTYUGCp4RUGxHjH657tLF
- md5jzDrW7tvo0/DIIt06NlsDXmBl1VkSnvWGxe6si1YgWWwdj+0fxqmLch3V0kJTEYzt
- kX5GgqjFlDAuLcX6wfGhiFXJgD/KkB+EP6fB57bKbuLvaesVFsujF/Hgr9kIMwZWihhw
- oKVcXFqgq7naKgwnTGoqV4QX6m34rBIp7A9vHiiHPGnxsJQD4Qbb3DRUrviEZGUNb8EN
- pTySt2Vq0ASbgkjruPGB/mvXnJ6yQfHF6RiISY7QPFG1Z4yLrxMmdKklRD75DbwEn3aB
- eIBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdscgLcUEL2BpfFZaFYQK8PRr6PxFfIDdhktjZJlME/tuiCd9b0XXu4PmrkEYRP/4sw4bjFSjAmhRA@nongnu.org
-X-Gm-Message-State: AOJu0YyBGlkNONdwEFLzIuA82/A2NYeZKmIwcRFc0Yop+qtTT/rNpfCg
- W0Uxj8sf5h2KzBe38MbzjiAVmClOCvjO0sETa7/7Qbz+PY4ajeamRQ4b
-X-Gm-Gg: ASbGncse8wDonvighdP4rQ7D2O0cEggyqj+iqQppDy57O3qq4h+tKCuloc0+0z7mplI
- ZPTIJZpsKDYNN8aNiyVWAlPrUajjugj/6CndiGG9HWI5ecrr8YN/PZGAI40UY8LKwoO9PoMLZc2
- lmSHkhqpYkzR1vZoZl7jfzaMBEt8/1+WmMzZOch7YZo8VyayKWauYYT3ZbLvzdGZRDLUAJYuVic
- RMNZtfvAJP3OF9MP5AgaqJS7nyoA0TF6NX4lDUElhQjubnaaBSoa3pjm9EB+wr+iAV62CTnAJfH
- eKe5aj0/yI4iRfP2JL1wufMfZxzU9r7C9J9O98oi+3sAeaySkEBRzYOzWZVsicO5fSNB9/oD7c2
- 4bIBhcXRVRO9NBUpt/qG1ho297TUFWPSOlcP9NzWTi0o+l7T6dClP3i2lt/HiMca9Vogj9XjC8I
- o1V7O1M82V297JhDMI8dit
-X-Google-Smtp-Source: AGHT+IHOvQsfIKMoHlVOgOawz7UfpaHS0zY4OCqDIQ7ZwQ8nDXAsEuD9vYaYnMcHftbWGrxf6LzcmA==
-X-Received: by 2002:a05:600c:1d0c:b0:456:fc1:c286 with SMTP id
- 5b1f17b1804b1-45b66eaddc9mr56646205e9.1.1756332092860; 
- Wed, 27 Aug 2025 15:01:32 -0700 (PDT)
-Received: from localhost.localdomain (46-116-237-160.bb.netvision.net.il.
- [46.116.237.160]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b797ce2b8sm4116755e9.12.2025.08.27.15.01.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 15:01:32 -0700 (PDT)
-From: Leonid Bloch <lb.workbox@gmail.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <ehabkost@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Cc: Leonid Bloch <lb.workbox@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v3 3/4] hw/acpi: Introduce the QEMU AC adapter
-Date: Thu, 28 Aug 2025 01:00:49 +0300
-Message-ID: <20250827220054.37268-4-lb.workbox@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250827220054.37268-1-lb.workbox@gmail.com>
-References: <20250827220054.37268-1-lb.workbox@gmail.com>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1urOTX-0008JE-AT; Wed, 27 Aug 2025 18:18:39 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1urOTU-0001Pv-BA; Wed, 27 Aug 2025 18:18:39 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57RJZ4Mo020682;
+ Wed, 27 Aug 2025 22:18:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ji/38/
+ QPBsTkgF8BdRxBb92eq920TNTunO+rGoPzaLk=; b=rjjt+0+qmD3UeXd36UBaIz
+ d/ekq/s46/dwHOIT6/BC5kQ9ccEAIF6DOK6R8cggBF9bIdqr08pKtJ3Azl4Hrfc/
+ DAJZwsvX7HOXIVEneeNHjZAQkR2NSM1oYncNpyjPvRtKQlG19rOIyiq1SoY/btVm
+ MfbKPkYtpA5qitjVtAnoOVVJdeLcdEdEWoKWdrQDOZtaOyVOhMTtJchRrwZlOcnC
+ zQ/HWy8bFr9MCR7ok2UEo2cGWoQ/qcZrsbDbWr7dGD3CrIHqkeB8DMxKNi6DLR6Y
+ uls/c0h5lsos+1YOMFtwJQCvNpt8XBxEAa+LBH4xwEfhmOiLEmuttqfKvGLcJezw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5avphgd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 Aug 2025 22:18:32 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57RJIM1A007459;
+ Wed, 27 Aug 2025 22:18:30 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48qqyuja2u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 Aug 2025 22:18:30 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57RMISwF27132622
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 27 Aug 2025 22:18:29 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CCA7C58051;
+ Wed, 27 Aug 2025 22:18:28 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B1BF45805A;
+ Wed, 27 Aug 2025 22:18:27 +0000 (GMT)
+Received: from [9.61.245.55] (unknown [9.61.245.55])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 27 Aug 2025 22:18:27 +0000 (GMT)
+Message-ID: <b0dc190d-db0e-46a2-8fac-563845e293c1@linux.ibm.com>
+Date: Wed, 27 Aug 2025 15:18:27 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=lb.workbox@gmail.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 12/29] s390x/diag: Implement DIAG 508 subcode 1 for
+ signature verification
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-13-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20250818214323.529501-13-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 9unElqf6JW3rfB-1rT1AtPHFgiJED0aS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAyMSBTYWx0ZWRfXz79xGUCrZG/V
+ TYAHHUkfoSlJl9ojNfN+WtOejWFt7jvayWR3TYOmyO+9Gb5LqIeywwBoUeDSLD2LdeYENlnnAGF
+ TNDF1zRcrZfEco0Jy+XGHHqK9ByOyg9IwmDQjNOf07pK7BhuD9rmf9D+x7FkEy2jRwMbIJ5qN3v
+ /d8FXvCftqhJBgeOu3scFvLajlDe6kqhVeRfdJzsOWxeVJlvkPMl7vqaSkfgriEEfmmCigJ3MZt
+ TkG96udppKdmjo75v+fUcBE6o6xB3b7hq5RA7+C/HhRzZ2dYEY8KS5TcilVIXaSvGrbjskrROZg
+ 2FEOsyxcwZRRkCss4TBPQHDbeLGIo1Z0UJBpDnI/ABfyayxh0VzLhZxlk+PfYbVdwqzfURT+56h
+ p4YxFTEB
+X-Proofpoint-ORIG-GUID: 9unElqf6JW3rfB-1rT1AtPHFgiJED0aS
+X-Authority-Analysis: v=2.4 cv=SNNCVPvH c=1 sm=1 tr=0 ts=68af8438 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=14SE_xoyt5txGEo4rJ8A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-27_04,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230021
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,885 +125,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AC adapter device communicates AC power state to the guest via ACPI.
-It supports two modes of operation:
 
-1. QMP control mode (default): AC adapter state is controlled
-   programmatically via QMP commands, ensuring deterministic behavior.
+On 8/18/2025 2:43 PM, Zhuoying Cai wrote:
+> From: Collin Walling <walling@linux.ibm.com>
+>
+> DIAG 508 subcode 1 performs signature-verification on signed components.
+> A signed component may be a Linux kernel image, or any other signed
+> binary. **Verification of initrd is not supported.**
+>
+> The instruction call expects two item-pairs: an address of a device
+> component, an address of the analogous signature file (in PKCS#7 DER format),
+> and their respective lengths. All of this data should be encapsulated
+> within a Diag508SignatureVerificationBlock, with the CertificateStoreInfo
+> fields ignored. The DIAG handler will read from the provided addresses
+> to retrieve the necessary data, parse the signature file, then
+> perform the signature-verification. Because there is no way to
+> correlate a specific certificate to a component, each certificate
+> in the store is tried until either verification succeeds, or all
+> certs have been exhausted.
+>
+> The subcode value is denoted by setting the second-to-left-most bit of
+> a 2-byte field.
+>
+> A return code of 1 indicates success, and the index and length of the
+> corresponding certificate will be set in the CertificateStoreInfo
+> portion of the SigVerifBlock. The following values indicate failure:
+>
+> 	0x0102: certificate not available
+> 	0x0202: component data is invalid
+> 	0x0302: signature is not in PKCS#7 format
+> 	0x0402: signature-verification failed
+>
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>   docs/specs/s390x-secure-ipl.rst |   5 ++
+>   include/hw/s390x/ipl/diag508.h  |  23 +++++++
+>   target/s390x/diag.c             | 112 +++++++++++++++++++++++++++++++-
+>   3 files changed, 139 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> index 6b3249173f..385f8d85a8 100644
+> --- a/docs/specs/s390x-secure-ipl.rst
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -64,3 +64,8 @@ that requires assistance from QEMU.
+>   
+>   Subcode 0 - query installed subcodes
+>       Returns a 64-bit mask indicating which subcodes are supported.
+> +
+> +Subcode 1 - perform signature verification
+> +    Perform signature-verification on a signed component, using certificates
+> +    from the certificate store and leveraging qcrypto libraries to perform
+> +    this operation.
+> diff --git a/include/hw/s390x/ipl/diag508.h b/include/hw/s390x/ipl/diag508.h
+> index 6281ad8299..c99c6705c0 100644
+> --- a/include/hw/s390x/ipl/diag508.h
+> +++ b/include/hw/s390x/ipl/diag508.h
+> @@ -11,5 +11,28 @@
+>   #define S390X_DIAG508_H
+>   
+>   #define DIAG_508_SUBC_QUERY_SUBC    0x0000
+> +#define DIAG_508_SUBC_SIG_VERIF     0x8000
+> +
+> +#define DIAG_508_RC_OK              0x0001
+> +#define DIAG_508_RC_NO_CERTS        0x0102
+> +#define DIAG_508_RC_INVAL_COMP_DATA 0x0202
+> +#define DIAG_508_RC_INVAL_PKCS7_SIG 0x0302
+> +#define DIAG_508_RC_FAIL_VERIF      0x0402
+> +
+> +struct Diag508CertificateStoreInfo {
+> +    uint8_t  idx;
+> +    uint8_t  reserved[7];
+> +    uint64_t len;
+> +};
+> +typedef struct Diag508CertificateStoreInfo Diag508CertificateStoreInfo;
+> +
+> +struct Diag508SignatureVerificationBlock {
+> +    Diag508CertificateStoreInfo csi;
+> +    uint64_t comp_len;
+> +    uint64_t comp_addr;
+> +    uint64_t sig_len;
+> +    uint64_t sig_addr;
+> +};
+> +typedef struct Diag508SignatureVerificationBlock Diag508SignatureVerificationBlock;
+>   
+>   #endif
+> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+> index 6519a3cedc..2fe25a2c66 100644
+> --- a/target/s390x/diag.c
+> +++ b/target/s390x/diag.c
+> @@ -573,9 +573,107 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>       }
+>   }
+>   
+> +static int diag_508_verify_sig(uint8_t *cert, size_t cert_size,
+> +                              uint8_t *comp, size_t comp_size,
+> +                              uint8_t *sig, size_t sig_size)
+> +{
+> +    g_autofree uint8_t *sig_pem = NULL;
+> +    size_t sig_size_pem;
+> +    int rc;
+> +
+> +    /*
+> +     * PKCS#7 signature with DER format
+> +     * Convert to PEM format for signature verification
+> +     */
+> +    rc = qcrypto_pkcs7_convert_sig_pem(sig, sig_size, &sig_pem, &sig_size_pem, NULL);
+> +    if (rc < 0) {
+> +        return -1;
+> +    }
+> +
+> +    /*
+> +     * Ignore errors from signature format convertion and verification,
+> +     * because currently in the certificate lookup process.
+> +     *
+> +     * Any error is treated as a verification failure,
+> +     * and the final result (verified or not) will be reported later.
+> +     */
 
-2. Host mirroring mode (optional): The device reflects the host's AC
-   adapter state from sysfs. Probing occurs on guest ACPI requests and
-   at timed intervals. State changes trigger ACPI notifications.
+The comment here seems misleading as we are checking the return code 
+from qcrypto_x509_verify_sig and not ignoring the error here. Is it 
+meant for the handle_diag508_sig_verif function where we are looping 
+through the certs?
 
-Properties:
-- 'use-qmp': Enable QMP control mode (default: true)
-- 'enable-sysfs': Enable host AC adapter mirroring (default: false)
-- 'probe_interval': Probe interval in ms for sysfs mode (default: 2000)
-- 'sysfs_path': Override default sysfs path /sys/class/power_supply/
+Thanks Farhan
 
-The device implements the ACPI_DEV_AML_IF interface to generate its
-own AML code, placing the ADP0 device directly under \_SB scope.
-
-QMP commands:
-- ac-adapter-set-state: Set AC adapter connection state
-- query-ac-adapter: Query current AC adapter state
-
-Signed-off-by: Leonid Bloch <lb.workbox@gmail.com>
----
- MAINTAINERS                          |   6 +
- docs/specs/acad.rst                  | 195 ++++++++++++
- docs/specs/index.rst                 |   1 +
- hw/acpi/Kconfig                      |   4 +
- hw/acpi/acad.c                       | 447 +++++++++++++++++++++++++++
- hw/acpi/meson.build                  |   1 +
- hw/acpi/trace-events                 |   5 +
- hw/i386/Kconfig                      |   1 +
- include/hw/acpi/acad.h               |  27 ++
- include/hw/acpi/acpi_dev_interface.h |   1 +
- qapi/acpi.json                       |  49 +++
- 11 files changed, 737 insertions(+)
- create mode 100644 docs/specs/acad.rst
- create mode 100644 hw/acpi/acad.c
- create mode 100644 include/hw/acpi/acad.h
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index eb71a4a4b7..19bea634c7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2934,6 +2934,12 @@ S: Maintained
- F: hw/acpi/battery.*
- F: docs/specs/battery.rst
- 
-+AC Adapter
-+M: Leonid Bloch <lb.workbox@gmail.com>
-+S: Maintained
-+F: hw/acpi/acad.*
-+F: docs/specs/acad.rst
-+
- Subsystems
- ----------
- Overall Audio backends
-diff --git a/docs/specs/acad.rst b/docs/specs/acad.rst
-new file mode 100644
-index 0000000000..73d5501b8f
---- /dev/null
-+++ b/docs/specs/acad.rst
-@@ -0,0 +1,195 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+=================
-+AC Adapter Device
-+=================
-+
-+The AC adapter device provides AC power state information to the guest. It
-+supports two operating modes:
-+
-+1. **QMP Control Mode** (default): AC adapter state is controlled via QMP
-+   commands, providing deterministic control for testing and migration safety.
-+2. **Sysfs Mode**: AC adapter state mirrors the host's physical AC adapter,
-+   useful for desktop virtualization where the guest should see the host's
-+   power state.
-+
-+Configuration
-+-------------
-+
-+The AC adapter device is created as an ISA device using ``-device acad``.
-+
-+Operating Modes
-+~~~~~~~~~~~~~~~
-+
-+**QMP Control Mode** (``use-qmp=true``, default)
-+  AC adapter state is controlled via QMP commands. This mode is recommended for:
-+
-+  * Production environments requiring migration support
-+  * Testing with predictable power states
-+  * Environments without host AC adapter access
-+  * Security-sensitive deployments
-+
-+**Sysfs Mode** (``enable-sysfs=true``)
-+  AC adapter mirrors the host's physical AC adapter. This mode is useful for:
-+
-+  * Desktop virtualization on laptops
-+  * Development and testing with real AC adapter behavior
-+
-+  Note: Sysfs mode reads host files and runs timers, which may impact
-+  security and migration. Use with caution in production.
-+
-+Properties
-+~~~~~~~~~~
-+
-+``ioport`` (default: 0x53c)
-+  I/O port base address for the AC adapter device register.
-+
-+``use-qmp`` (default: true)
-+  Enable QMP control mode. When true, AC adapter state is controlled via
-+  QMP commands. Cannot be used together with ``enable-sysfs=true``.
-+
-+``enable-sysfs`` (default: false)
-+  Enable sysfs mode to mirror the host's AC adapter. Cannot be used together
-+  with ``use-qmp=true``.
-+
-+``probe_interval`` (default: 2000)
-+  Time interval between periodic probes in milliseconds (sysfs mode only).
-+  A zero value disables the periodic probes, and makes the AC adapter state
-+  updates occur on guest requests only.
-+
-+``sysfs_path`` (default: auto-detected)
-+  Path to the host's AC adapter sysfs directory (sysfs mode only). By default,
-+  the device auto-detects the first AC adapter of type "Mains" in
-+  ``/sys/class/power_supply/``. Use this property to specify a different
-+  AC adapter, or to provide a custom path for testing purposes.
-+
-+Host AC Adapter Detection
-+-------------------------
-+
-+The host's AC adapter information is taken from the sysfs AC adapter
-+data, located in::
-+
-+    /sys/class/power_supply/[device of type "Mains"]
-+
-+The device automatically scans for the first AC adapter with:
-+
-+- A ``type`` file containing "Mains"
-+- An ``online`` file that can be read
-+
-+If the sysfs path differs, a different AC adapter needs to be probed,
-+or even if a "fake" host AC adapter is to be provided, the ``sysfs_path``
-+property allows overriding the default detection.
-+
-+ACPI Interface
-+--------------
-+
-+The AC adapter device is exposed to the guest as an ACPI device with:
-+
-+- **HID**: ``ACPI0003`` (AC Adapter)
-+- **Device Path**: ``\_SB.ADP0``
-+- **Notification Values**:
-+
-+  - ``0x80``: Status change (connected/disconnected)
-+
-+ACPI Methods
-+~~~~~~~~~~~~
-+
-+``_PSR`` (Power Source)
-+  Returns the current AC adapter state (0 = offline, 1 = online).
-+
-+``_PCL`` (Power Consumer List)
-+  Returns the list of devices powered by this adapter.
-+
-+``_PIF`` (Power Source Information)
-+  Returns static information about the power source including model number,
-+  serial number, and OEM information.
-+
-+I/O Interface
-+-------------
-+
-+The device uses a single I/O port register:
-+
-+- **Port**: ``ioport`` property value (default 0x53c)
-+- **Size**: 1 byte
-+- **Access**: Read-only
-+
-+Register Layout
-+~~~~~~~~~~~~~~~
-+
-+**PWRS** (offset 0x00, 1 byte)
-+  Current AC adapter state:
-+
-+  - ``0x00``: AC adapter offline (unplugged)
-+  - ``0x01``: AC adapter online (plugged in)
-+
-+QMP Commands
-+------------
-+
-+When using QMP control mode (default), the following commands are available:
-+
-+``ac-adapter-set-state``
-+  Set the AC adapter connection state.
-+
-+  * ``connected``: Whether the AC adapter is connected (boolean)
-+
-+  Example::
-+
-+    -> { "execute": "ac-adapter-set-state",
-+         "arguments": { "connected": true }}
-+    <- { "return": {} }
-+
-+``query-ac-adapter``
-+  Query the current AC adapter state.
-+
-+  Example::
-+
-+    -> { "execute": "query-ac-adapter" }
-+    <- { "return": { "connected": true }}
-+
-+Examples
-+--------
-+
-+QMP control mode (default - recommended)::
-+
-+  # Start with QMP control
-+  qemu-system-x86_64 -device acad -qmp tcp:localhost:4444,server,wait=off
-+
-+  # From another terminal, set AC adapter state via QMP:
-+  echo '{"execute":"qmp_capabilities"}
-+        {"execute":"ac-adapter-set-state",
-+         "arguments":{"connected":true}}' | \
-+  nc -N localhost 4444
-+
-+Sysfs mode (mirror host AC adapter)::
-+
-+  # Enable sysfs mode to mirror host AC adapter
-+  qemu-system-x86_64 -device acad,use-qmp=false,enable-sysfs=true
-+
-+  # Custom probe interval (5 seconds)
-+  qemu-system-x86_64 -device acad,use-qmp=false,enable-sysfs=true,probe_interval=5000
-+
-+  # Specific AC adapter path
-+  qemu-system-x86_64 -device acad,use-qmp=false,enable-sysfs=true,sysfs_path=/sys/class/power_supply/ADP1
-+
-+Testing with fake AC adapter::
-+
-+  # Create fake AC adapter files for testing
-+  mkdir -p /tmp/fake_ac
-+  echo "Mains" > /tmp/fake_ac/type
-+  echo "1" > /tmp/fake_ac/online          # 1 = connected, 0 = disconnected
-+
-+  # Use fake AC adapter in sysfs mode
-+  qemu-system-x86_64 -device acad,use-qmp=false,enable-sysfs=true,sysfs_path=/tmp/fake_ac
-+
-+  # Update AC adapter state while VM is running (from another terminal)
-+  echo "0" > /tmp/fake_ac/online          # Disconnect AC adapter
-+  echo "1" > /tmp/fake_ac/online          # Reconnect AC adapter
-+
-+Combined with battery device::
-+
-+  # QMP mode (recommended)
-+  qemu-system-x86_64 -device battery -device acad
-+
-+  # Sysfs mode (desktop virtualization)
-+  qemu-system-x86_64 -device battery,use-qmp=false,enable-sysfs=true \
-+                     -device acad,use-qmp=false,enable-sysfs=true
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index 616e8228cc..e144afcd90 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -22,6 +22,7 @@ guest hardware that is specific to QEMU.
-    acpi_pci_hotplug
-    acpi_nvdimm
-    acpi_erst
-+   acad
-    battery
-    sev-guest-firmware
-    fw_cfg
-diff --git a/hw/acpi/Kconfig b/hw/acpi/Kconfig
-index 64403378bd..9d28c3addf 100644
---- a/hw/acpi/Kconfig
-+++ b/hw/acpi/Kconfig
-@@ -69,6 +69,10 @@ config ACPI_VIOT
-     bool
-     depends on ACPI
- 
-+config AC_ADAPTER
-+    bool
-+    depends on ACPI
-+
- config ACPI_HW_REDUCED
-     bool
-     select ACPI
-diff --git a/hw/acpi/acad.c b/hw/acpi/acad.c
-new file mode 100644
-index 0000000000..699198c194
---- /dev/null
-+++ b/hw/acpi/acad.c
-@@ -0,0 +1,447 @@
-+/*
-+ * QEMU emulated AC adapter device.
-+ *
-+ * Copyright (c) 2019 Janus Technologies, Inc. (http://janustech.com)
-+ *
-+ * Authors:
-+ *     Leonid Bloch <lb.workbox@gmail.com>
-+ *     Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-+ *     Dmitry Fleytman <dmitry.fleytman@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "trace.h"
-+#include "hw/isa/isa.h"
-+#include "hw/acpi/acpi.h"
-+#include "hw/nvram/fw_cfg.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "hw/qdev-properties.h"
-+#include "migration/vmstate.h"
-+#include "hw/acpi/acpi_aml_interface.h"
-+#include "qapi/qapi-commands-acpi.h"
-+
-+#include "hw/acpi/acad.h"
-+
-+#define AC_ADAPTER_DEVICE(obj) OBJECT_CHECK(ACADState, (obj), \
-+                                            TYPE_AC_ADAPTER)
-+
-+#define AC_STA_ADDR               0
-+
-+#define SYSFS_PATH                "/sys/class/power_supply"
-+#define AC_ADAPTER_TYPE           "Mains"
-+#define MAX_ALLOWED_TYPE_LENGTH   16
-+
-+enum {
-+    AC_ADAPTER_OFFLINE = 0,
-+    AC_ADAPTER_ONLINE = 1,
-+};
-+
-+typedef struct ACADState {
-+    ISADevice dev;
-+    MemoryRegion io;
-+    uint16_t ioport;
-+    uint8_t state;
-+    bool use_qmp_control;
-+    bool qmp_connected;
-+    bool enable_sysfs;
-+
-+    QEMUTimer *probe_state_timer;
-+    uint64_t probe_state_interval;
-+
-+    char *acad_path;
-+} ACADState;
-+
-+static const char *online_file = "online";
-+static const char *type_file = "type";
-+
-+static inline bool acad_file_accessible(char *path, const char *file)
-+{
-+    char full_path[PATH_MAX];
-+    int path_len;
-+
-+    path_len = snprintf(full_path, PATH_MAX, "%s/%s", path, file);
-+    if (path_len < 0 || path_len >= PATH_MAX) {
-+        return false;
-+    }
-+
-+    if (access(full_path, R_OK) == 0) {
-+        return true;
-+    }
-+    return false;
-+}
-+
-+static void acad_get_state(ACADState *s)
-+{
-+    char file_path[PATH_MAX];
-+    int path_len;
-+    uint8_t val;
-+    FILE *ff;
-+
-+    path_len = snprintf(file_path, PATH_MAX, "%s/%s", s->acad_path,
-+                        online_file);
-+    if (path_len < 0 || path_len >= PATH_MAX) {
-+        warn_report("Could not read the AC adapter state.");
-+        return;
-+    }
-+
-+    ff = fopen(file_path, "r");
-+    if (ff == NULL) {
-+        warn_report("Could not read the AC adapter state.");
-+        return;
-+    }
-+
-+    if (!fscanf(ff, "%hhu", &val)) {
-+        warn_report("AC adapter state unreadable.");
-+    } else {
-+        switch (val) {
-+        case AC_ADAPTER_OFFLINE:
-+        case AC_ADAPTER_ONLINE:
-+            s->state = val;
-+            break;
-+        default:
-+            warn_report("AC adapter state undetermined.");
-+        }
-+    }
-+    fclose(ff);
-+}
-+
-+static void acad_get_dynamic_status(ACADState *s)
-+{
-+    if (s->use_qmp_control) {
-+        s->state = s->qmp_connected ? AC_ADAPTER_ONLINE : AC_ADAPTER_OFFLINE;
-+    } else if (s->enable_sysfs) {
-+        acad_get_state(s);
-+    } else {
-+        s->state = AC_ADAPTER_OFFLINE;
-+    }
-+
-+    trace_acad_get_dynamic_status(s->state);
-+}
-+
-+static void acad_probe_state(void *opaque)
-+{
-+    ACADState *s = opaque;
-+
-+    uint8_t state_before = s->state;
-+
-+    acad_get_dynamic_status(s);
-+
-+    if (state_before != s->state) {
-+        Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF, NULL);
-+        acpi_send_event(DEVICE(obj), ACPI_AC_ADAPTER_CHANGE_STATUS);
-+    }
-+    timer_mod(s->probe_state_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
-+              s->probe_state_interval);
-+}
-+
-+static void acad_probe_state_timer_init(ACADState *s)
-+{
-+    if (s->enable_sysfs && s->probe_state_interval > 0) {
-+        s->probe_state_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
-+                                            acad_probe_state, s);
-+        timer_mod(s->probe_state_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
-+                  s->probe_state_interval);
-+    }
-+}
-+
-+static bool acad_verify_sysfs(ACADState *s, char *path)
-+{
-+    FILE *ff;
-+    char type_path[PATH_MAX];
-+    int path_len;
-+    char val[MAX_ALLOWED_TYPE_LENGTH];
-+
-+    path_len = snprintf(type_path, PATH_MAX, "%s/%s", path, type_file);
-+    if (path_len < 0 || path_len >= PATH_MAX) {
-+        return false;
-+    }
-+
-+    ff = fopen(type_path, "r");
-+    if (ff == NULL) {
-+        return false;
-+    }
-+
-+    if (fgets(val, MAX_ALLOWED_TYPE_LENGTH, ff) == NULL) {
-+        fclose(ff);
-+        return false;
-+    } else {
-+        val[strcspn(val, "\n")] = 0;
-+        if (strncmp(val, AC_ADAPTER_TYPE, MAX_ALLOWED_TYPE_LENGTH)) {
-+            fclose(ff);
-+            return false;
-+        }
-+    }
-+    fclose(ff);
-+
-+    return acad_file_accessible(path, online_file);
-+}
-+
-+static bool get_acad_path(DeviceState *dev)
-+{
-+    ACADState *s = AC_ADAPTER_DEVICE(dev);
-+    DIR *dir;
-+    struct dirent *ent;
-+    char bp[PATH_MAX];
-+    int path_len;
-+
-+    if (s->acad_path) {
-+        return acad_verify_sysfs(s, s->acad_path);
-+    }
-+
-+    dir = opendir(SYSFS_PATH);
-+    if (dir == NULL) {
-+        return false;
-+    }
-+
-+    ent = readdir(dir);
-+    while (ent != NULL) {
-+        if (ent->d_name[0] != '.') {
-+            path_len = snprintf(bp, PATH_MAX, "%s/%s", SYSFS_PATH,
-+                                ent->d_name);
-+            if (path_len < 0 || path_len >= PATH_MAX) {
-+                return false;
-+            }
-+            if (acad_verify_sysfs(s, bp)) {
-+                qdev_prop_set_string(dev, AC_ADAPTER_PATH_PROP, bp);
-+                closedir(dir);
-+                return true;
-+            }
-+        }
-+        ent = readdir(dir);
-+    }
-+    closedir(dir);
-+
-+    return false;
-+}
-+
-+static void acad_realize(DeviceState *dev, Error **errp)
-+{
-+    ISADevice *d = ISA_DEVICE(dev);
-+    ACADState *s = AC_ADAPTER_DEVICE(dev);
-+    FWCfgState *fw_cfg = fw_cfg_find();
-+    uint16_t *acad_port;
-+    char err_details[32] = {};
-+
-+    trace_acad_realize();
-+
-+    if (s->use_qmp_control && s->enable_sysfs) {
-+        error_setg(errp, "Cannot enable both QMP control and sysfs mode");
-+        return;
-+    }
-+
-+    if (s->enable_sysfs) {
-+        if (!s->acad_path) {
-+            strcpy(err_details, " Try using 'sysfs_path='");
-+        }
-+
-+        if (!get_acad_path(dev)) {
-+            error_setg(errp, "AC adapter sysfs path not found or unreadable.%s",
-+                       err_details);
-+            return;
-+        }
-+    }
-+
-+    isa_register_ioport(d, &s->io, s->ioport);
-+
-+    acad_probe_state_timer_init(s);
-+
-+    if (!fw_cfg) {
-+        return;
-+    }
-+
-+    acad_port = g_malloc(sizeof(*acad_port));
-+    *acad_port = cpu_to_le16(s->ioport);
-+    fw_cfg_add_file(fw_cfg, "etc/acad-port", acad_port,
-+                    sizeof(*acad_port));
-+}
-+
-+static const Property acad_device_properties[] = {
-+    DEFINE_PROP_UINT16(AC_ADAPTER_IOPORT_PROP, ACADState, ioport, 0x53c),
-+    DEFINE_PROP_BOOL("use-qmp", ACADState, use_qmp_control, true),
-+    DEFINE_PROP_BOOL("enable-sysfs", ACADState, enable_sysfs, false),
-+    DEFINE_PROP_UINT64(AC_ADAPTER_PROBE_STATE_INTERVAL, ACADState,
-+                       probe_state_interval, 2000),
-+    DEFINE_PROP_STRING(AC_ADAPTER_PATH_PROP, ACADState, acad_path),
-+};
-+
-+static const VMStateDescription acad_vmstate = {
-+    .name = "acad",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT16(ioport, ACADState),
-+        VMSTATE_UINT64(probe_state_interval, ACADState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void build_acad_aml(AcpiDevAmlIf *adev, Aml *scope)
-+{
-+    Aml *dev, *field, *method, *pkg;
-+    Aml *acad_state;
-+    Aml *sb_scope;
-+    ACADState *s = AC_ADAPTER_DEVICE(adev);
-+
-+    acad_state  = aml_local(0);
-+
-+    sb_scope = aml_scope("\\_SB");
-+    dev = aml_device("ADP0");
-+    aml_append(dev, aml_name_decl("_HID", aml_string("ACPI0003")));
-+
-+    aml_append(dev, aml_operation_region("ACST", AML_SYSTEM_IO,
-+                                         aml_int(s->ioport),
-+                                         AC_ADAPTER_LEN));
-+    field = aml_field("ACST", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
-+    aml_append(field, aml_named_field("PWRS", 8));
-+    aml_append(dev, field);
-+
-+    method = aml_method("_PSR", 0, AML_NOTSERIALIZED);
-+    aml_append(method, aml_store(aml_name("PWRS"), acad_state));
-+    aml_append(method, aml_return(acad_state));
-+    aml_append(dev, method);
-+
-+    method = aml_method("_PCL", 0, AML_NOTSERIALIZED);
-+    pkg = aml_package(1);
-+    aml_append(pkg, aml_name("_SB"));
-+    aml_append(method, aml_return(pkg));
-+    aml_append(dev, method);
-+
-+    method = aml_method("_PIF", 0, AML_NOTSERIALIZED);
-+    pkg = aml_package(6);
-+    /* Power Source State */
-+    aml_append(pkg, aml_int(0));  /* Non-redundant, non-shared */
-+    /* Maximum Output Power */
-+    aml_append(pkg, aml_int(AC_ADAPTER_VAL_UNKNOWN));
-+    /* Maximum Input Power */
-+    aml_append(pkg, aml_int(AC_ADAPTER_VAL_UNKNOWN));
-+    /* Model Number */
-+    aml_append(pkg, aml_string("QADP001"));
-+    /* Serial Number */
-+    aml_append(pkg, aml_string("SN00000"));
-+    /* OEM Information */
-+    aml_append(pkg, aml_string("QEMU"));
-+    aml_append(method, aml_return(pkg));
-+    aml_append(dev, method);
-+
-+    aml_append(sb_scope, dev);
-+    aml_append(scope, sb_scope);
-+
-+    /* Status Change */
-+    method = aml_method("\\_GPE._E0A", 0, AML_NOTSERIALIZED);
-+    aml_append(method, aml_notify(aml_name("\\_SB.ADP0"), aml_int(0x80)));
-+    aml_append(scope, method);
-+}
-+
-+static void acad_class_init(ObjectClass *class, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(class);
-+    AcpiDevAmlIfClass *adevc = ACPI_DEV_AML_IF_CLASS(class);
-+
-+    dc->realize = acad_realize;
-+    device_class_set_props(dc, acad_device_properties);
-+    dc->vmsd = &acad_vmstate;
-+    adevc->build_dev_aml = build_acad_aml;
-+}
-+
-+static uint64_t acad_ioport_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    ACADState *s = opaque;
-+
-+    acad_get_dynamic_status(s);
-+
-+    switch (addr) {
-+    case AC_STA_ADDR:
-+        return s->state;
-+    default:
-+        warn_report("AC adapter: guest read unknown value.");
-+        trace_acad_ioport_read_unknown();
-+        return 0;
-+    }
-+}
-+
-+static const MemoryRegionOps acad_ops = {
-+    .read = acad_ioport_read,
-+    .impl = {
-+        .min_access_size = 1,
-+        .max_access_size = 1,
-+    },
-+};
-+
-+static void acad_instance_init(Object *obj)
-+{
-+    ACADState *s = AC_ADAPTER_DEVICE(obj);
-+
-+    memory_region_init_io(&s->io, obj, &acad_ops, s, "acad",
-+                          AC_ADAPTER_LEN);
-+}
-+
-+static const TypeInfo acad_info = {
-+    .name          = TYPE_AC_ADAPTER,
-+    .parent        = TYPE_ISA_DEVICE,
-+    .instance_size = sizeof(ACADState),
-+    .class_init    = acad_class_init,
-+    .instance_init = acad_instance_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_ACPI_DEV_AML_IF },
-+        { },
-+    },
-+};
-+
-+static ACADState *find_acad_device(void)
-+{
-+    Object *o = object_resolve_path_type("", TYPE_AC_ADAPTER, NULL);
-+    if (!o) {
-+        return NULL;
-+    }
-+    return AC_ADAPTER_DEVICE(o);
-+}
-+
-+void qmp_ac_adapter_set_state(bool connected, Error **errp)
-+{
-+    ACADState *s = find_acad_device();
-+
-+    if (!s) {
-+        error_setg(errp, "No AC adapter device found");
-+        return;
-+    }
-+
-+    s->qmp_connected = connected;
-+
-+    Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF, NULL);
-+    if (obj) {
-+        acpi_send_event(DEVICE(obj), ACPI_AC_ADAPTER_CHANGE_STATUS);
-+    }
-+}
-+
-+AcAdapterInfo *qmp_query_ac_adapter(Error **errp)
-+{
-+    ACADState *s = find_acad_device();
-+    AcAdapterInfo *ret;
-+
-+    if (!s) {
-+        error_setg(errp, "No AC adapter device found");
-+        return NULL;
-+    }
-+
-+    ret = g_new0(AcAdapterInfo, 1);
-+
-+    if (s->use_qmp_control) {
-+        ret->connected = s->qmp_connected;
-+    } else {
-+        acad_get_dynamic_status(s);
-+        ret->connected = (s->state == AC_ADAPTER_ONLINE);
-+    }
-+
-+    return ret;
-+}
-+
-+static void acad_register_types(void)
-+{
-+    type_register_static(&acad_info);
-+}
-+
-+type_init(acad_register_types)
-diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-index 10379a7b2c..2b24951f28 100644
---- a/hw/acpi/meson.build
-+++ b/hw/acpi/meson.build
-@@ -32,6 +32,7 @@ if have_tpm
-   acpi_ss.add(files('tpm.c'))
- endif
- acpi_ss.add(when: 'CONFIG_BATTERY', if_true: files('battery.c'))
-+acpi_ss.add(when: 'CONFIG_AC_ADAPTER', if_true: files('acad.c'))
- system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
- system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
- system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
-diff --git a/hw/acpi/trace-events b/hw/acpi/trace-events
-index dd3e815482..68ac6e9701 100644
---- a/hw/acpi/trace-events
-+++ b/hw/acpi/trace-events
-@@ -92,3 +92,8 @@ acpi_nvdimm_invalid_revision(uint32_t revision) "Revision 0x%" PRIx32 " is not s
- battery_realize(void) "Battery device realize entry"
- battery_get_dynamic_status(uint32_t state, uint32_t rate, uint32_t charge) "Battery read state: 0x%"PRIx32", rate: %"PRIu32", charge: %"PRIu32
- battery_ioport_read_unknown(void) "Battery read unknown"
-+
-+# acad.c
-+acad_realize(void) "AC adapter device realize entry"
-+acad_get_dynamic_status(uint8_t state) "AC adapter read state: %"PRIu8
-+acad_ioport_read_unknown(void) "AC adapter read unknown"
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 2c878fd112..baab382a2e 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -40,6 +40,7 @@ config PC
-     imply NVDIMM
-     imply FDC_ISA
-     imply BATTERY
-+    imply AC_ADAPTER
-     select I8259
-     select I8254
-     select PCKBD
-diff --git a/include/hw/acpi/acad.h b/include/hw/acpi/acad.h
-new file mode 100644
-index 0000000000..a4e7149488
---- /dev/null
-+++ b/include/hw/acpi/acad.h
-@@ -0,0 +1,27 @@
-+/*
-+ * QEMU emulated AC adapter device.
-+ *
-+ * Copyright (c) 2019 Janus Technologies, Inc. (http://janustech.com)
-+ *
-+ * Authors:
-+ *     Leonid Bloch <lb.workbox@gmail.com>
-+ *     Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-+ *     Dmitry Fleytman <dmitry.fleytman@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#ifndef HW_ACPI_AC_ADAPTER_H
-+#define HW_ACPI_AC_ADAPTER_H
-+
-+#define TYPE_AC_ADAPTER                  "acad"
-+#define AC_ADAPTER_IOPORT_PROP           "ioport"
-+#define AC_ADAPTER_PATH_PROP             "sysfs_path"
-+#define AC_ADAPTER_PROBE_STATE_INTERVAL  "probe_interval"
-+
-+#define AC_ADAPTER_VAL_UNKNOWN  0xFFFFFFFF
-+
-+#define AC_ADAPTER_LEN          1
-+
-+#endif
-diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
-index 3064ef6734..588fbbd05f 100644
---- a/include/hw/acpi/acpi_dev_interface.h
-+++ b/include/hw/acpi/acpi_dev_interface.h
-@@ -14,6 +14,7 @@ typedef enum {
-     ACPI_VMGENID_CHANGE_STATUS = 32,
-     ACPI_POWER_DOWN_STATUS = 64,
-     ACPI_BATTERY_CHANGE_STATUS = 128,
-+    ACPI_AC_ADAPTER_CHANGE_STATUS = 1024,
- } AcpiEventStatusBits;
- 
- #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
-diff --git a/qapi/acpi.json b/qapi/acpi.json
-index d1ad663bfd..52e151f0e6 100644
---- a/qapi/acpi.json
-+++ b/qapi/acpi.json
-@@ -215,3 +215,52 @@
- ##
- { 'command': 'query-battery',
-   'returns': 'BatteryInfo' }
-+
-+##
-+# @ac-adapter-set-state:
-+#
-+# Set the state of the emulated AC adapter device
-+#
-+# @connected: whether the AC adapter is connected
-+#
-+
-+#
-+# Since: 10.2
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "ac-adapter-set-state",
-+#          "arguments": { "connected": true } }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'ac-adapter-set-state',
-+  'data': { 'connected': 'bool' } }
-+
-+##
-+# @AcAdapterInfo:
-+#
-+# AC adapter state information
-+#
-+# @connected: whether the AC adapter is connected
-+#
-+# Since: 10.2
-+##
-+{ 'struct': 'AcAdapterInfo',
-+  'data': { 'connected': 'bool' } }
-+
-+##
-+# @query-ac-adapter:
-+#
-+# Query the current state of the emulated AC adapter device
-+#
-+# Returns: AC adapter connection state
-+#
-+# Since: 10.2
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "query-ac-adapter" }
-+#     <- { "return": { "connected": true } }
-+##
-+{ 'command': 'query-ac-adapter',
-+  'returns': 'AcAdapterInfo' }
--- 
-2.51.0
-
+> +    rc = qcrypto_x509_verify_sig(cert, cert_size,
+> +                                 comp, comp_size,
+> +                                 sig_pem, sig_size_pem, NULL);
+> +    if (rc < 0) {
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static int handle_diag508_sig_verif(uint64_t addr, size_t csi_size, size_t svb_size,
+> +                                    S390IPLCertificateStore *qcs)
+> +{
+> +    int rc;
+> +    int verified;
+> +    uint64_t comp_len, comp_addr;
+> +    uint64_t sig_len, sig_addr;
+> +    g_autofree uint8_t *svb_comp = NULL;
+> +    g_autofree uint8_t *svb_sig = NULL;
+> +    g_autofree Diag508SignatureVerificationBlock *svb = NULL;
+> +
+> +    if (!qcs || !qcs->count) {
+> +        return DIAG_508_RC_NO_CERTS;
+> +    }
+> +
+> +    svb = g_new0(Diag508SignatureVerificationBlock, 1);
+> +    cpu_physical_memory_read(addr, svb, svb_size);
+> +
+> +    comp_len = be64_to_cpu(svb->comp_len);
+> +    comp_addr = be64_to_cpu(svb->comp_addr);
+> +    sig_len = be64_to_cpu(svb->sig_len);
+> +    sig_addr = be64_to_cpu(svb->sig_addr);
+> +
+> +    if (!comp_len || !comp_addr) {
+> +        return DIAG_508_RC_INVAL_COMP_DATA;
+> +    }
+> +
+> +    if (!sig_len || !sig_addr) {
+> +        return DIAG_508_RC_INVAL_PKCS7_SIG;
+> +    }
+> +
+> +    svb_comp = g_malloc0(comp_len);
+> +    cpu_physical_memory_read(comp_addr, svb_comp, comp_len);
+> +
+> +    svb_sig = g_malloc0(sig_len);
+> +    cpu_physical_memory_read(sig_addr, svb_sig, sig_len);
+> +
+> +    rc = DIAG_508_RC_FAIL_VERIF;
+> +    /*
+> +     * It is uncertain which certificate contains
+> +     * the analogous key to verify the signed data
+> +     */
+> +    for (int i = 0; i < qcs->count; i++) {
+> +        verified = diag_508_verify_sig(qcs->certs[i].raw,
+> +                                       qcs->certs[i].size,
+> +                                       svb_comp, comp_len,
+> +                                       svb_sig, sig_len);
+> +        if (verified == 0) {
+> +            svb->csi.idx = i;
+> +            svb->csi.len = cpu_to_be64(qcs->certs[i].der_size);
+> +            cpu_physical_memory_write(addr, &svb->csi, be32_to_cpu(csi_size));
+> +            rc = DIAG_508_RC_OK;
+> +            break;
+> +       }
+> +    }
+> +
+> +    return rc;
+> +}
+> +
+> +QEMU_BUILD_BUG_MSG(sizeof(Diag508SignatureVerificationBlock) != 48,
+> +                   "size of Diag508SignatureVerificationBlock is wrong");
+> +
+>   void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>   {
+> +    S390IPLCertificateStore *qcs = s390_ipl_get_certificate_store();
+>       uint64_t subcode = env->regs[r3];
+> +    uint64_t addr = env->regs[r1];
+>       int rc;
+>   
+>       if (env->psw.mask & PSW_MASK_PSTATE) {
+> @@ -590,7 +688,19 @@ void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>   
+>       switch (subcode) {
+>       case DIAG_508_SUBC_QUERY_SUBC:
+> -        rc = 0;
+> +        rc = DIAG_508_SUBC_SIG_VERIF;
+> +        break;
+> +    case DIAG_508_SUBC_SIG_VERIF:
+> +        size_t csi_size = sizeof(Diag508CertificateStoreInfo);
+> +        size_t svb_size = sizeof(Diag508SignatureVerificationBlock);
+> +
+> +        if (!diag_parm_addr_valid(addr, svb_size, false) ||
+> +            !diag_parm_addr_valid(addr, csi_size, true)) {
+> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
+> +            return;
+> +        }
+> +
+> +        rc = handle_diag508_sig_verif(addr, csi_size, svb_size, qcs);
+>           break;
+>       default:
+>           s390_program_interrupt(env, PGM_SPECIFICATION, ra);
 
