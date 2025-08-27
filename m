@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8307DCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 22:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A87CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 22:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urOxt-0002AW-Kj; Wed, 27 Aug 2025 18:50:01 -0400
+	id 1urOyt-0002g3-JA; Wed, 27 Aug 2025 18:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urOxr-00029l-KX
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:49:59 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1urOyr-0002fH-Uv
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:51:01 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urOxp-00066N-SC
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:49:59 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-b4bafe2e538so382346a12.3
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 15:49:57 -0700 (PDT)
+ id 1urOyq-0006Ud-70
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 18:51:01 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b471737b347so282658a12.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 15:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756334996; x=1756939796; darn=nongnu.org;
- h=content-transfer-encoding:subject:cc:to:content-language:from
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vl8qTt5GgClBwkr3QJuiFld49KJnqCcZ4pTpk0ixsqY=;
- b=bObI/YUshabOzw22RriewP2D8Xu6nkAOBdhcsT6C4A1+RjIixnVvJE24/WSxd+ISbB
- qSBZc8LPDTOQ60l2LhWgDG2jc6UvmDxXeeCQ9NxjH6h9TaELNy83nWtn6SVzttqTUV3K
- 8cvVjJY/uMrnNWgXWmgzKrhxPAyWSfGFgObEuzC5Jww0qc8Rye0YL6U8Juw3wGMMciuE
- ewRKzEZwEOaZZ2ZHyG7wYLSgeyuKfig7Fqt6P8r3VBaW/fZc3AoJb8+Uxk2I3ITA2TPp
- fbKugP4SzHP3GkfNmrJ4w8ubhQbQRxJ+tdUcUT+zBgI9YC04+Htdx3UPhEDU6kL4JDqX
- GZwA==
+ d=linaro.org; s=google; t=1756335058; x=1756939858; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pBAEEHumrbzzOHvLHnRftzyUpfbjYa16c3FmklvRBjI=;
+ b=w9BJ74r0yYzWLgdFCYeRmydih3WaSqvLsJFTl9xv6OtG2b4/HwAWqfqp5JzKZOyHQI
+ ZDFlrMcH9rOv+h8vhObxq8kjo+WktMkE3cQ1VqdNOKjdUZX49vvjc4kqgVXzxEPOZejq
+ cvTokliRDevNoPWAKX3l6CfaKba+iW7g6jxufwPnvC1ZvMZKR4h4pvEWARscb9tnWWOn
+ 99n3jOfRuJWAqX1DeByXzFyDYCGuFqIcw0JAlLNaDKE+Nl/4LNgZA5enJZ/whA4848XO
+ QHFhpCoVFXYe9VdSRNadT0x4zups1a9Iw/JliZPN/b9HFbHeCsnn0gekoJEv5VjcRxLA
+ 76ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756334996; x=1756939796;
- h=content-transfer-encoding:subject:cc:to:content-language:from
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=vl8qTt5GgClBwkr3QJuiFld49KJnqCcZ4pTpk0ixsqY=;
- b=lqVTDB4eTEQ6InBMGkV1+Efwg2kA/ubVWZlojwZmjEz4VYPgebUPlS8nGEKxiVckEr
- W6cFxKBQBVUXV16XS9wswjqj+a6DDF/Q2Lfxhqqpp6t6cf7M9ENzjMGn7fh1octw+AuS
- TRAZVTQcDzpdEaI6aZTmVzxHBJ4aQ7SQzyS3fOaaK2my5MkpuWRl1DVoqdoQco14y2pU
- 8WLHKcuJatewyxetRC0P9czd183E6a7l5ZwlzVUne5beyF+TMeNFfw3QatLUzyJxPAE0
- MucLGNhe5MZu5nC66obstrNL4ccbkWXB7e3KnlIXke2xu7npXZO7sZUuJwXHHg9FODgK
- 0/zw==
-X-Gm-Message-State: AOJu0YyIKcoh+fvhGAhuBulnrWbokjJVEo4Ntk+AHD3Jo3MKo+nN7DFv
- Sq1yTGOsG5bGOr6A1MonfVIf/eUDZmfEfWTOc+NkF8W3JmZRLD3ciNqsbn11dWLCE+Y=
-X-Gm-Gg: ASbGncuuqJwifa57UmO0SB0rvDPQpf49toChzsxslf0ISSJg70HQgDeB/EHUtb8vjRe
- O/cSHpIRx/LK9vTq6u4R0RLid+q3Q2hURfmSItrqqEa9d2ak+BefCx29yRp+LUOzgtMbMS4KRCX
- lIDeE9Qnm66R3NNjvmEGSYK3nJ2wMZJS/+l+29a0WYOqRlCez7NZiZ6UUhP/r8Jhd+DLQHTHopO
- g3k9+MKmFhgENJoA0mMwTSkt0OnWZ7bVFlpG+LLDx75IvYx6GqDAp0rURhFTecwJCRwM553nupR
- XS0VAyTm3uNL9x7HbDIKMobhSWja8c2uoHXP9+dDg2Qt0GHXN5Lf+bhl9l8yvZgMkUmkczxNG7B
- KM9kNXJyBeeBVsUbRKg6zPt+JCIzVl6/EOV8XIf5HFTsqhmo=
-X-Google-Smtp-Source: AGHT+IFKwmuBvLSFhlhu3UWkqeFGNtKDfzxY4cCm+i5dF4/fU1hrPuC/B/vDb01LdPGJJxOk1JU7EQ==
-X-Received: by 2002:a17:902:e745:b0:248:9429:363a with SMTP id
- d9443c01a7336-24894293a0dmr52550785ad.9.1756334996055; 
- Wed, 27 Aug 2025 15:49:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756335058; x=1756939858;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pBAEEHumrbzzOHvLHnRftzyUpfbjYa16c3FmklvRBjI=;
+ b=OEeiHQXBPOF8IUdTN96h67H199LHQ9jFw+wXyvRJqCud9ofmihlm1eShvKS5OEV0xI
+ x4Siq1wSmEav85PdoltQf4fTbZz4fU6MPtBo+SMw/DQd0J+a2PK2cuPjL5nhpQuqDXXR
+ 9QszzNjRRXZrX1Fnv1cZjc1veQlsFjSBkHMBOEhDv6zKrpatmWPZYh/P1RN4JhDpALo9
+ kW6m1VysMzmSf9QcmWw6vFaGqnlx/14DvZ8Z4uT6WHsKi5xX9oKp9qCdEk8DhnIrKGlj
+ TeIf1OA3WzmqvcejFeWgmfWIrvA/9Yo6RTPTCWZsMwTKRrkz4Lh2lMmHHw4VYE8kUiBC
+ /H8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrEf5m8rmz+U2b2Uj+QoRVF6TbKQprHLbA2sH18y+A2oHEsWm9M/NONOeKcCfuzZ5kx89ULslPTqBK@nongnu.org
+X-Gm-Message-State: AOJu0Yzm1G99gZ1sNcyEOTg29JbXyrYAy21Vir1LuHshybFw7ldPrBMw
+ U299CVgjw5KtZxnIggvt1wu1xn634PD0YJiJbWzP5MjENJkox5fZAHpGaAtDiGSQiDWhwCy7obz
+ opKoFNfo=
+X-Gm-Gg: ASbGncsUv77IzJV8dKBjzsPtsEPlB0cGUnAGXjkZFW8r8evsJx25uXvoeRyNtDD/ZVs
+ abwaF1su2cBwWmBLIqbgEd9BpT4n9MFFxz9zIIqt10T8IkyBVMfTPWN5hpjmkkzfcsfjRUAQdC7
+ O9v+vXZtzu8+rnwc2llGSHWciKV/cUUG2bf9/qzSIG/jNlQIzXkpZCkbiLHBLcTLHg1y4TKhDwp
+ tKTlxHg3DbHo/5Fe4jng5r4Jie640yQjRfzuK7210dP3b2DXHrEFPAtBhSoazTRjUHjjrNk92YC
+ +DTDBUbyGLKSfyWcbBh1aMqQdQYMbYdfgmjIKq+mT0qvS4ok7f/YoQ8j/+xgUvZH/zVgrwopPw2
+ ODYtQDPfe1XvUymMDCLUYWXTjOgHW/+qNyyDySC88jbDydsQ=
+X-Google-Smtp-Source: AGHT+IGaCLHvzXjR28ldPqxgFPpKIU8V/38UfxFp5A2iXLSQSCVK28DUiwudQJNMQ2hHTh9dnY7DJg==
+X-Received: by 2002:a17:902:cec2:b0:246:61e:b564 with SMTP id
+ d9443c01a7336-2462f1d82c4mr256606295ad.61.1756335058575; 
+ Wed, 27 Aug 2025 15:50:58 -0700 (PDT)
 Received: from [192.168.0.195] ([144.6.121.55])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-248da18a5c9sm796445ad.150.2025.08.27.15.49.53
+ d9443c01a7336-24668879162sm130659865ad.113.2025.08.27.15.50.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Aug 2025 15:49:55 -0700 (PDT)
-Message-ID: <56800442-3962-43b9-9b87-1b899077a24b@linaro.org>
-Date: Thu, 28 Aug 2025 08:49:49 +1000
+ Wed, 27 Aug 2025 15:50:58 -0700 (PDT)
+Message-ID: <8d69480e-71b2-46ee-9419-9114ac9beb99@linaro.org>
+Date: Thu, 28 Aug 2025 08:50:53 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/14] QEMU patches for 2025-08-27
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20250827182533.854476-1-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Subject: Failure for ./tests/functional/arm/test_realview.py
+In-Reply-To: <20250827182533.854476-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,14 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-2025-08-27 21:55:08,729 - qemu-test - INFO - Downloading 
-https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/openwrt-15.05.1-realview-vmlinux-initramfs.elf 
-to 
-/builds/qemu-project/qemu/functional-cache/download/d3a01037f33e7512d46d50975588d5c3a0e0cbf25f37afab44775c2a2be523e6...
+On 8/28/25 04:25, Paolo Bonzini wrote:
+> The following changes since commit 88f72048d2f5835a1b9eaba690c7861393aef283:
+> 
+>    Update version for the v10.1.0-rc4 release (2025-08-19 14:05:56 -0400)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> 
+> for you to fetch changes up to 92dedaf169ddcf8c81fa6d21c86c60f3b82458e5:
+> 
+>    rust: move dependencies to rust/Cargo.toml (2025-08-27 10:57:04 +0200)
+> 
+> ----------------------------------------------------------------
+> * rust: declare self as qemu_api for proc-macros
+> * rust/qemu-api-macros: make derive(Object) friendly when missing parent
+> * x86/loader: Don't update kernel header for CoCo VMs
+> * target/i386: Add support for save/load of exception error code
+> * i386/tcg/svm: fix incorrect canonicalization
+> * scripts/minikconf.py: small fixes
 
-This url is now stale, and is causing the functional-system-debian test to fail.
-Do we have an alternate?
 
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
 r~
 
