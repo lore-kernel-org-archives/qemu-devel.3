@@ -4,73 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA792CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 02:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A40CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 02:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur61u-0007Ve-Sq; Tue, 26 Aug 2025 22:36:54 -0400
+	id 1ur62F-0007i8-I8; Tue, 26 Aug 2025 22:37:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ur61r-0007O9-6K; Tue, 26 Aug 2025 22:36:52 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1ur61j-0004m4-Tr; Tue, 26 Aug 2025 22:36:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756262204; x=1787798204;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=rts/0Q3cR6nRJCzrtg2wLNXiZ3VhT8rRBY6bKGvvPhM=;
- b=g98aK682eJ7+a/3JenardCkseMH7f1P6keKa85CzdkikkMa0PjhEy9ne
- eMAkEabp+OiddVUiAqUAFudYpfY3zDqzeAyU0bomuobpGPEmzMLsYylDt
- fKsZKYJghWgwyv72sv2Ip+G4dzeoUMKXaUZhDIM9cQvCcq4Mh/1uwuqoQ
- PirN1H6baqK8siamWkvnb9KHs+M3ZfQB8eB91c3QLQFGZYi5W2/aD/dTF
- qPP4Ngtwm6aqh/jwn28VPgncTprbjlzRfEIVQfzc+DnlRNUYz0844LUcW
- Wf59aRBrZ815a95I4leikux/F5nR33xhlQNsLHf4Hm5Q30IXGHxVqoGvD g==;
-X-CSE-ConnectionGUID: X7sCn0yURRyu9Q3mfCC0fg==
-X-CSE-MsgGUID: w6lLkgNBR4mK/5dVYyW8lg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11534"; a="83914131"
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="83914131"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2025 19:36:34 -0700
-X-CSE-ConnectionGUID: dhwEPE02R5uZErxgBfvP+w==
-X-CSE-MsgGUID: 4KzYpUURSOm63wBRRO4j4Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="169641087"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 26 Aug 2025 19:36:32 -0700
-Date: Wed, 27 Aug 2025 10:58:18 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- pbonzini@redhat.com, qemu-rust@nongnu.org
-Subject: Re: [PATCH 4/4] rust/qemu-api-macros: make derive(Object) friendly
- when missing parent
-Message-ID: <aK50Sjm595hUDJXB@intel.com>
-References: <20250826133132.4064478-1-marcandre.lureau@redhat.com>
- <20250826133132.4064478-5-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ur62D-0007ft-Uy
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 22:37:13 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ur629-0004vj-Gd
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 22:37:12 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-76e1fc69f86so442595b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 19:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756262225; x=1756867025; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=PN1UiIwUnx0TLN7HTYbR8GaxIk1k1o2adWXgiowZkYo=;
+ b=uhJPDReCW+upKRdkslJBzKUE15FZk8aKqAiFMstfNDvvXR4kTq68l72m9oNddQixOz
+ v/kDEl3nusGCOoc7LR2JHvV5G5UHt/Gv69Iye4KDxXVh4y1jBxyvM9SEPv0IcT6HJE9M
+ d1ORzk400TYFw3D7EBZwEpj6YaVZXCO1SjvEoR25wAs+l21Fw51SRnslVXeCfeivauPE
+ +uIjEwoQjl319cK6V9oOKABWI899m/lv8Cy3y3Xc661WKNKNijYMBf0W1fqaQ3ppgHLp
+ G9VDqNunsNyn5zdghWeIAZ3xeWCH6X7bsAQBaPAm/QzH3ASTeE77P7Asj01hUQ7NmI0M
+ qLOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756262225; x=1756867025;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PN1UiIwUnx0TLN7HTYbR8GaxIk1k1o2adWXgiowZkYo=;
+ b=H46XnGB5ajWOAPlQgxKOFWHa4DCg99f4dUCJ5tKuU2MsZDn6K9qtHMpyTcqf4zO8k7
+ 14YadFDaqxDwSFp4zp7NOUuEzEkT986qSzanGaCH7NCAqTPQ2f9uElRzB0qugCvMusbe
+ SxvlTQqwNjkj1MmLHVvyCysmjUoeZrdh6S0aMpgX57sQpYlBSDsyD2u8mcNBa1ULh4Q/
+ /145b0PQNP2SEO9Oo1fMvwDl4pNT5U1r8FlyCI79EbFqV1rcLA9ehqKJWQYfimNdKn6u
+ 2xYypQ+R00UiVaHj3ZhxEd/YAWGJYxvP+883QrbkiJXiIO/lDXr6EVk/ELluTFowtQvw
+ y8LA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXraZg7o2u8Ob4tbHRFdnSeEAF/I9yGS6ckKfsX7eoEPoBJ8+O6ukdALOgfDOBNTnsK8MkvY/L0qybB@nongnu.org
+X-Gm-Message-State: AOJu0YygyDEk0u1XTEM7y0AVnURlM6z1l/xTqZxcKM/Wnj872lOpG9Ls
+ hr9l1AJYya0U6rzQH1WpkxaGJOd90v4XMeA4RGtFFxAHAILZrswVIBiGhXY/+/FO7VI=
+X-Gm-Gg: ASbGnctIM2TwUKEHoQMO62RXjdmg1ZRw01uABja7bUM0dA8jUBhNILNbenjK79f8poE
+ 1OHAvPfUJlltIPMgOjuOE8z9vKQZMbeqjO2XkSuN31fScxbsK8Hm683ScJXTpCRW38HH80vpNFc
+ M2DqfkTcDyyRu7C3P/BoSqfvay/Y5Qgn7u7cREhaRFkqsnDsjslBXaCFult8EaYuT5r279JN7tP
+ 0vpSnKI1hne01BsdDC4tACiaB/lJvrGtQQzFZNNR+0/M2qsUK9PmEkTKFkOBPjWC+gXU9l4Xvd1
+ gvZZ1Yb0eu4AR9Dg2fH+ECmlAKNbOe4ttuCjtZU4WT6Cx1mIPj5W94pLOiVD32U7lyL9tVnXmXP
+ G9cBvjTXenKtDiat8bEZ22ywlUCzJAO3lwlldZqh2GkSWbag=
+X-Google-Smtp-Source: AGHT+IFDO75FNxA7H/3cx6TxNytQ5nTasFHH2VADHxcGpS6udD27t2pdITwUdx8KtTgpnn4oenH2VQ==
+X-Received: by 2002:a05:6a20:3d0d:b0:243:78a:82cc with SMTP id
+ adf61e73a8af0-2438fad28e9mr4141669637.25.1756262225351; 
+ Tue, 26 Aug 2025 19:37:05 -0700 (PDT)
+Received: from [192.168.0.195] ([144.6.121.55])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-772093cac4bsm303493b3a.12.2025.08.26.19.37.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Aug 2025 19:37:04 -0700 (PDT)
+Message-ID: <540d4897-df84-4ff3-beaf-059af914d5a4@linaro.org>
+Date: Wed, 27 Aug 2025 12:36:57 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250826133132.4064478-5-marcandre.lureau@redhat.com>
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Fix reverse_debugging asset precaching
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org, thuth@redhat.com
+Cc: qemu-arm@nongnu.org
+References: <20250827001008.22112-1-gustavo.romero@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250827001008.22112-1-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,19 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 26, 2025 at 05:31:32PM +0400, marcandre.lureau@redhat.com wrote:
-> Date: Tue, 26 Aug 2025 17:31:32 +0400
-> From: marcandre.lureau@redhat.com
-> Subject: [PATCH 4/4] rust/qemu-api-macros: make derive(Object) friendly
->  when missing parent
+On 8/27/25 10:10, Gustavo Romero wrote:
+> This commit fixes the asset precaching in the reverse_debugging test on
+> aarch64.
 > 
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> QemuBaseTest.main() precaches assets (kernel, rootfs, DT blobs, etc.)
+> that are defined in variables with the ASSET_ prefix. This works because
+> it ultimately calls Asset.precache_test(), which relies on introspection
+> to locate these variables.
 > 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> If an asset variable is not named with the ASSET_ prefix, precache_test
+> cannot find the asset and precaching silently fails. Hence, fix the
+> asset precaching by fixing the asset variable name.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > ---
->  rust/qemu-api-macros/src/lib.rs | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
+>   tests/functional/test_aarch64_reverse_debug.py | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+
+r~
 
