@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8489ACA0FF0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15928CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur4bD-0003YK-9R; Tue, 26 Aug 2025 21:05:15 -0400
+	id 1ur4bJ-0003b4-6k; Tue, 26 Aug 2025 21:05:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4bB-0003XI-Hh
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:05:13 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1ur4bH-0003aY-Or
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:05:19 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4b9-0007DQ-HL
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:05:13 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-77053017462so2567640b3a.1
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:05:10 -0700 (PDT)
+ id 1ur4bC-0007E4-Nd
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:05:19 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-77053017462so2567665b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:05:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756256709; x=1756861509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756256713; x=1756861513; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ggwb1PQpRrrkLOGCaS9ng6BrXdIGDe+gz4mi5GKaHg4=;
- b=RY9RBnWYuCqEOD+8ufxyOCGQfU4o+JriHwSSCyzHt4Zp7CNQKFaoRXkcXMODO9QqRx
- q29rY50q+UVC3kRkJF/ePwjwDYG11szpEOS3BbYE1fE5/SQ7Skg87F9gjN4uTujRDdSu
- fnt1oj/MPvoCAqVjX3sOOtFSxTSjjs7X9SOKP01tAWpQlH0uMFD2foxFS0odMZ7SU8WD
- TXOux+/X8iljDxcLXZGZyGexNGV9B9il7hiNodgJvVzkoPNgzU4J8toKEkEf0rgsAF82
- hz21u8XP+rOewyAv2IxIxJUmUGpmnBdKBAhhisq2S3+JYV8YqVWLY8znJIRHjI8/OwsR
- jVjA==
+ bh=NJ36daKgzfDvSRHW7lcAsbWEFxZLgKLsVjEywfc7kDk=;
+ b=Ep4/8642ePJMgJ/6cGVS+VrKeCIRKlbJiLYwoMcYg+IDitzPFySqeSImUPbudkAC2n
+ LffPAzlx15ITPku8pOIpOIH5Y6ZJl8iIpltlfoRqB1d4RuTqxCPPc9rrOJnYcGxvjxQr
+ BzI3+BmOuaSIZT/1ZeGRSM3dl7uj+w1/l+ax+AaI9uDlgXH6XdNmPlzNlLw31InW/h5G
+ NhoGFuvGLUWSUutZJ7BcgiR0OO9WwrwgC583RXrN5cBZSx/JxXEy7qBs9bt+r5kmfG2Y
+ lmocUYKW7l81/f94eAcmVzjukdg8J5/Cuqeii0A1UKyCvm76waBipMW+dOvYQlAmHWP8
+ TR9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756256709; x=1756861509;
+ d=1e100.net; s=20230601; t=1756256713; x=1756861513;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ggwb1PQpRrrkLOGCaS9ng6BrXdIGDe+gz4mi5GKaHg4=;
- b=qy90esSMljBtlA7mkGWJkhkys81yHhvPzoaHuNfte4pktdPlScqTRFB0u5eyejm/U3
- wSQU6WBcqTzZFnSrLsHy61w9s4paLjT4aiBb8qoePhIcGWpbdBOYilXAMPnYF4cBJXGs
- aF2koy9YdnVJr3lOyCgbbNLlsxbxvawm2gzwxF+QZTv5iuZ4CfRSG3KwifHbomyh+5LK
- jmE/ikXFxxdj8nP4NhoVtq3rURguc4hdrpYkVbAFZ2vfWN6JX7jdu9zMJ+Arba4A0bsj
- IOf6CdeU4qmk+6NtrX/j4fM49R3plwCjMvE5kEtWman7vSY3c8KxRFz029piq0NIQKcI
- fLKQ==
-X-Gm-Message-State: AOJu0YzpHgxP6+cGWj1TtZbxcFbN75DQyWoKyTcQ2Yb6mBFJjvcyavV8
- llJKD2suRVSpT9gB3xyuC2p7ia+HqxjI83pjuBuOcjjnYNUR7Ly+frYKhDgWWiOk2GoOqmnCF1B
- A+TbSOEE=
-X-Gm-Gg: ASbGncsw03KU28etPx+B5nEOldc2L9R+H1pzZkgvsrITAJy/yWhvGM6Q1qevQ3S7R8F
- Cp70nkoD2ah8x1fTo0Qo00NhZAe4kF7i3jzMzhn7j5aHLlYw5uPffCB3W3BVKH26i8exYRUP/PJ
- pdmvxKPErrAMCEEzzwuNMxfI3s417y8Cl4E5KfuJr/yNhbEXH3EVQsQjxtHpV5tNnsvitCZmqKX
- 3dUmrLoI1RauJRroUWIZAC0QkZ0mAIl8elLgAhldoc0kuIgPq1EZzjQuSwE64Tn4wJPBY3mLFdu
- j9gnPRGtdY+8vDqCQuQscR6posHxd58W56Sl2R5Hp26PInxHJNnSzJYVArD6VEWwhtYiFFEMGVK
- CAlRIYfS/rpPh8cBX1iZu2gpBTKKbeWjux/GrEmVFZNnKF2U=
-X-Google-Smtp-Source: AGHT+IHo+9tb4fg7yF/iu+ukHEiCLEDeDjjpFctjRINkMMnSU6BBn4Ddz0POx9nW7/d6DpumBAVVQg==
-X-Received: by 2002:a05:6a20:b32a:b0:243:6e7b:9666 with SMTP id
- adf61e73a8af0-2436e7ba22dmr10754084637.28.1756256709413; 
- Tue, 26 Aug 2025 18:05:09 -0700 (PDT)
+ bh=NJ36daKgzfDvSRHW7lcAsbWEFxZLgKLsVjEywfc7kDk=;
+ b=OoFJ0vIoobtBWm5eAbZuU24O/ku/PIO8OfQGd6MYkJCZvDSvBT1En5ctfQ7Zi31Q+/
+ yqfvl0A74m+qL6G+Rbs4Eho9FXkso+3xXmSIhXJLgkUtfMjbwiAdSvcCcKeXlTdpburM
+ LVPJrcCOGo22Fcs0bIf/5ePWf9QqFcBIvuBTTVGDPfLIdX/fiarIXN+iJSvEYLw+ZUP3
+ TVt52QnQccieXQRAd4uZtoGZ5MTMjWqF42NKpfMme8Yioc2rFI1buvAUSUyXbWKFi4uY
+ +UBs1TG4TESJCzQrfqOW3y0ZAhz1qqPLm0nKT3ykioajqOizgokeXrJ4hRsYAy1UAwtG
+ AHeA==
+X-Gm-Message-State: AOJu0Yyduc0F+L4+p0Xl8QtKHzRw1n2npKMkPVPqUOALOsUSN1sLOSBx
+ B+v+GXasuZQ9gU+XNcVZHV6NQ2YTAIwQ2zUeS3gIRmgy9fO0r81Q9k+iLhziMjh/mH0fcCsTFjh
+ FdZBS0Ho=
+X-Gm-Gg: ASbGncty1tiC6A3IWlDI2RZ2O0MICnWxvfzMdaqOrt979zkFLMQRmaRnADods4XuSND
+ rh8SMES8CMzs81Xw1s0zHU6o9G/LfEeiVN/7ad/H3Y/1IDZFXscmLQgPn7XT437haiBS7t1GrG6
+ XWvOFXaLsW+Qoi6n8TIAgBsGdd9CenIfZ+8IlrSBQWz6OYLLnLEDjZkhqPMT9/4c2yiT2cdSkJv
+ TuKrdLigEHTAAnCEVhPftFfFWwmzd+jFNLWTl8F9DpWdPawrCmwxonjrhyVjtx2hqmuILzjdTC7
+ wIivmZ1IhaSVYllHrPVOSqy7EYswExR4Oph22YxNe2xieLSn9yMgL5VVqvqV7O74HQfbu3+sk63
+ B5tvHwNRV2g8WxI8fTDnMzDTqiUlS/5dqeLmf
+X-Google-Smtp-Source: AGHT+IEm1mz+P8Len78T9DJPNSBvGS9J/uzxCTP+IxuTPXstCNoIw2UIwel5fY92BizRcLmkAIagjg==
+X-Received: by 2002:a05:6a00:3e15:b0:770:5822:ae30 with SMTP id
+ d2e1a72fcca58-7705822b1f6mr11518438b3a.19.1756256712905; 
+ Tue, 26 Aug 2025 18:05:12 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7720274534esm1419241b3a.47.2025.08.26.18.05.04
+ d2e1a72fcca58-7720274534esm1419241b3a.47.2025.08.26.18.05.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 18:05:08 -0700 (PDT)
+ Tue, 26 Aug 2025 18:05:12 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 01/61] target/arm: Introduce KVMID_AA64_SYS_REG64
-Date: Wed, 27 Aug 2025 11:03:48 +1000
-Message-ID: <20250827010453.4059782-2-richard.henderson@linaro.org>
+Subject: [PATCH 02/61] target/arm: Move compare_u64 to helper.c
+Date: Wed, 27 Aug 2025 11:03:49 +1000
+Message-ID: <20250827010453.4059782-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827010453.4059782-1-richard.henderson@linaro.org>
 References: <20250827010453.4059782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,34 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow us to create kvm ids directly, rather than going
-through ENCODE_AA64_CP_REG + cpreg_to_kvm_id.
+We will use this function beyond kvm.c.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/kvm-consts.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ target/arm/internals.h |  3 +++
+ target/arm/helper.c    | 11 +++++++++++
+ target/arm/kvm.c       | 11 -----------
+ 3 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
-index c44d23dbe7..fdb305eea1 100644
---- a/target/arm/kvm-consts.h
-+++ b/target/arm/kvm-consts.h
-@@ -180,4 +180,15 @@ MISMATCH_CHECK(CP_REG_ARM64_SYSREG_OP2_SHIFT, KVM_REG_ARM64_SYSREG_OP2_SHIFT);
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 1b3d0244fd..08e2acdb99 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1981,4 +1981,7 @@ void vfp_clear_float_status_exc_flags(CPUARMState *env);
+ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask);
+ bool arm_pan_enabled(CPUARMState *env);
  
- #undef MISMATCH_CHECK
- 
-+#define KVMID_AA64_SYS_REG_(op0, op1, crn, crm, op2)    \
-+    (CP_REG_AA64_MASK | CP_REG_ARM64_SYSREG |           \
-+     ((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
-+     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
-+     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
-+     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
-+     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
-+
-+#define KVMID_AA64_SYS_REG64(op0, op1, crn, crm, op2)   \
-+    (KVMID_AA64_SYS_REG_(op0, op1, crn, crm, op2) | CP_REG_SIZE_U64)
++/* Compare uint64_t for qsort and bsearch. */
++int compare_u64(const void *a, const void *b);
 +
  #endif
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 0c1299ff84..d230f9e766 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -40,6 +40,17 @@
+ 
+ static void switch_mode(CPUARMState *env, int mode);
+ 
++int compare_u64(const void *a, const void *b)
++{
++    if (*(uint64_t *)a > *(uint64_t *)b) {
++        return 1;
++    }
++    if (*(uint64_t *)a < *(uint64_t *)b) {
++        return -1;
++    }
++    return 0;
++}
++
+ uint64_t raw_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     assert(ri->fieldoffset);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 6672344855..9e569eff65 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -718,17 +718,6 @@ void kvm_arm_register_device(MemoryRegion *mr, uint64_t devid, uint64_t group,
+     memory_region_ref(kd->mr);
+ }
+ 
+-static int compare_u64(const void *a, const void *b)
+-{
+-    if (*(uint64_t *)a > *(uint64_t *)b) {
+-        return 1;
+-    }
+-    if (*(uint64_t *)a < *(uint64_t *)b) {
+-        return -1;
+-    }
+-    return 0;
+-}
+-
+ /*
+  * cpreg_values are sorted in ascending order by KVM register ID
+  * (see kvm_arm_init_cpreg_list). This allows us to cheaply find
 -- 
 2.43.0
 
