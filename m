@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA9ACA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 19:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF47CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 19:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urLb5-0003oq-Lc; Wed, 27 Aug 2025 15:14:15 -0400
+	id 1urLcn-0005rf-JN; Wed, 27 Aug 2025 15:16:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1urLab-0003ZU-Sa
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 15:13:47 -0400
+ id 1urLcj-0005pY-2n
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 15:15:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1urLaY-0005Kq-Gw
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 15:13:45 -0400
+ id 1urLce-0005q3-95
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 15:15:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756322018;
+ s=mimecast20190719; t=1756322147;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BSfKZzVfZaHPDG7BXoYprNfS0rYW/qvZeILoM7Hg25M=;
- b=jA/EQ48DXmewt8nbPTBnAAGuYRG0SZ4mnHB7mzZRlVCW778V64nez8K1eeMjDNZv17ujUH
- L/3Q3R6c9BIriVfpVIb1IPEQ5tadQt582h5gkF3tOf5xHPWDDAd0GN15D2RrISmY5eKi7+
- 41yEZp38Cc1zaEnj7vmPtzmbEeTX3Rw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=zT8TTM2XmgLq4uTNmcJ1B/5mzDEL6oV7EJD/OoiD1PI=;
+ b=fDTy9qMsyoRAISQHeDRThVODmfbGMJVeHtlR+5kn6OGAKB9Sd85ljzANKD2FuX/2XcFBjN
+ u7mtv8solyP9YvhNpuNVK6gSaDRO8ioGEf1/QTVE6cpXsVPrS3aFP1PXbfjlSlp1Kh2fcS
+ bdGUhQWCT28KnXK2dBUt/CSeEvWyj5I=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-si066xjzPty3nY6diFwXVQ-1; Wed,
- 27 Aug 2025 15:13:34 -0400
-X-MC-Unique: si066xjzPty3nY6diFwXVQ-1
-X-Mimecast-MFC-AGG-ID: si066xjzPty3nY6diFwXVQ_1756322013
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-zhylKspWPvS3t8LRirws2Q-1; Wed,
+ 27 Aug 2025 15:15:45 -0400
+X-MC-Unique: zhylKspWPvS3t8LRirws2Q-1
+X-Mimecast-MFC-AGG-ID: zhylKspWPvS3t8LRirws2Q_1756322144
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9D3761800285; Wed, 27 Aug 2025 19:13:33 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3272019560B2; Wed, 27 Aug 2025 19:15:44 +0000 (UTC)
 Received: from localhost (unknown [10.2.17.57])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 01FEA1800447; Wed, 27 Aug 2025 19:13:32 +0000 (UTC)
-Date: Wed, 27 Aug 2025 15:13:31 -0400
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A43D71800292; Wed, 27 Aug 2025 19:15:43 +0000 (UTC)
+Date: Wed, 27 Aug 2025 15:15:42 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, tanishdesai37@gmail.com, berrange@redhat.com,
  mads@ynddal.dk
-Subject: Re: [PATCH 04/14] tracetool: add CHECK_TRACE_EVENT_GET_STATE
-Message-ID: <20250827191331.GC228377@fedora>
+Subject: Re: [PATCH 05/14] tracetool/backend: remove redundant trace event
+ checks
+Message-ID: <20250827191542.GD228377@fedora>
 References: <20250822122655.1353197-1-pbonzini@redhat.com>
- <20250822122655.1353197-5-pbonzini@redhat.com>
+ <20250822122655.1353197-6-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="4QgI93sxNDbbY9s1"
+ protocol="application/pgp-signature"; boundary="Q8lPiJkxOUo1pYv2"
 Content-Disposition: inline
-In-Reply-To: <20250822122655.1353197-5-pbonzini@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+In-Reply-To: <20250822122655.1353197-6-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -87,44 +88,49 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---4QgI93sxNDbbY9s1
+--Q8lPiJkxOUo1pYv2
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 22, 2025 at 02:26:45PM +0200, Paolo Bonzini wrote:
+On Fri, Aug 22, 2025 at 02:26:46PM +0200, Paolo Bonzini wrote:
 > From: Tanish Desai <tanishdesai37@gmail.com>
 >=20
-> Add a new attribute CHECK_TRACE_EVENT_GET_STATE to the backends.
-> When present and True, the code generated by the generate function
-> is wrapped in a conditional that checks whether the event is enabled;
-> this removes the need for repeating the same conditional in multiple
-> backends.
+> Use CHECK_TRACE_EVENT_GET_STATE in log, syslog, dtrace and simple
+> backend, so that the "if (trace_event_get_state)" is created from common
+> code and unified when multiple backends are active.
+>=20
+> When a single backend is active there is no code change (except
+> for the log backend, as shown in tests/tracetool/log.h), but the
+> code in the backends is simpler.
 >=20
 > Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  scripts/tracetool/backend/__init__.py | 39 ++++++++++++++++++---------
->  scripts/tracetool/format/h.py         | 11 +++++---
->  2 files changed, 35 insertions(+), 15 deletions(-)
+>  tests/tracetool/log.h               | 16 ++++++++++------
+>  scripts/tracetool/backend/ftrace.py |  6 ++----
+>  scripts/tracetool/backend/log.py    | 10 ++++------
+>  scripts/tracetool/backend/simple.py |  8 ++------
+>  scripts/tracetool/backend/syslog.py |  8 ++------
+>  5 files changed, 20 insertions(+), 28 deletions(-)
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---4QgI93sxNDbbY9s1
+--Q8lPiJkxOUo1pYv2
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmivWNsACgkQnKSrs4Gr
-c8j2SQgAjsF5DfFDDHrKqbfIaaRW8d/ednZ65gMXIxvNI/7iVWku/QMRnT/IlsX+
-P/4I/Ms8In6P79YqCT6aFe6XS5yQNLew34swH/9/Kj8+koFmqkrGgnCmxSsowXPW
-ml3CvNqxRwnsbAJJYSMm5kexsl6MVimt6DnofjVOl+28t6/LKsQpQJQmjTXLj1Y7
-32yE7FLJGQ5lo+lVo17+DT8okrkrH4UAaXffP+Sy+21AYdr243xo3vi5Gj7IzYVw
-yuKBZl9oigUdkzQTJH1NgPanT+ZCmd4k6r3qIGA8tyHZeetOrv0V95OlP9v498ZP
-rWSL3lY3GJb8gGdjgAqp5tjxsbu4IA==
-=q2Xj
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmivWV4ACgkQnKSrs4Gr
+c8jPiwf9HR7ksojyvhE39Xd/Z+QWzA871FMnDn2884ibQw3Gr4iiQoWJkjRFsfrl
+Xsw1LfekK25mN+MCNpvTwQn3xPku1mi6x2HVY8XOs0xhmI15tDEid0JVmlsAUZ17
+nFlSqilwJ6AV0KSdjiCA1U/d0ulEUYHlv7ThF2IXo3tGJ/glrW4YMSRNDEfIvHD5
+/75Wl6BR0/bpVUtuyuhngKlbn5AodWKFWT3Memf4HqePStRGKhHu0uvBmIwegrj7
+xPRu20wyL6FhjuFF3sMmH9rtagG2h/PtSb1zOrwAC6WgjCENvPUpw52ucCc5ZDYX
+Xi7TwcKLEravuIqQLBCB56L9A/7K3w==
+=dzKu
 -----END PGP SIGNATURE-----
 
---4QgI93sxNDbbY9s1--
+--Q8lPiJkxOUo1pYv2--
 
 
