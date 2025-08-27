@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6A0CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8423CCA0FF9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHoY-0000O0-7a; Wed, 27 Aug 2025 11:11:54 -0400
+	id 1urHog-0001FE-KK; Wed, 27 Aug 2025 11:12:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHkL-00086k-SF; Wed, 27 Aug 2025 11:07:34 -0400
+ id 1urHl8-0000S8-1k; Wed, 27 Aug 2025 11:08:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHkK-0005eQ-1I; Wed, 27 Aug 2025 11:07:33 -0400
+ id 1urHkz-0005qm-Kt; Wed, 27 Aug 2025 11:08:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8EF2214C556;
- Wed, 27 Aug 2025 18:02:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1CE9D14C55E;
+ Wed, 27 Aug 2025 18:03:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 76DC826985D;
- Wed, 27 Aug 2025 18:03:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 09962269865;
+ Wed, 27 Aug 2025 18:03:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Michael Kowal <kowal@linux.ibm.com>,
- Caleb Schlossin <calebs@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Werner Fink <werner@suse.de>,
+ Kevin Wolf <kwolf@redhat.com>, Martin Kletzander <mkletzan@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 45/59] ppc/xive2: Fix irq preempted by lower priority
- group irq
-Date: Wed, 27 Aug 2025 18:02:50 +0300
-Message-ID: <20250827150323.2694101-45-mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 53/59] qemu-iotests: Ignore indentation in Killed
+ messages
+Date: Wed, 27 Aug 2025 18:02:58 +0300
+Message-ID: <20250827150323.2694101-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,43 +61,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.ibm.com>
+From: Werner Fink <werner@suse.de>
 
-A problem was seen where uart interrupts would be lost resulting in the
-console hanging. Traces showed that a lower priority interrupt was
-preempting a higher priority interrupt, which would result in the higher
-priority interrupt never being handled.
+New bash 5.3 uses a different padding for reporting job status.
 
-The new interrupt's priority was being compared against the CPPR
-(Current Processor Priority Register) instead of the PIPR (Post
-Interrupt Priority Register), as was required by the XIVE spec.
-This allowed for a window between raising an interrupt and ACK'ing
-the interrupt where a lower priority interrupt could slip in.
-
-Fixes: 26c55b99418 ("ppc/xive2: Process group backlog when updating the CPPR")
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
-Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-10-npiggin@gmail.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 8d373176181fbc11f8d8eae2b4532b867f083ea6)
+Resolves: boo#1246830
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3050
+Signed-off-by: Werner Fink <werner@suse.de>
+Message-ID: <aJL8RH8ePPNEteMg@boole.nue2.suse.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Tested-by: Martin Kletzander <mkletzan@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit c0df98ab1f3d348bc05f09d1c093abc529f2b530)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 453fe37f18..2b4d0f51be 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -1283,7 +1283,7 @@ bool xive2_tm_irq_precluded(XiveTCTX *tctx, int ring, uint8_t priority)
-      * priority to know if the thread can take the interrupt now or if
-      * it is precluded.
-      */
--    if (priority < alt_regs[TM_CPPR]) {
-+    if (priority < alt_regs[TM_PIPR]) {
-         return false;
-     }
-     return true;
+diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+index e52484d4be..8fdbcc528a 100644
+--- a/tests/qemu-iotests/039.out
++++ b/tests/qemu-iotests/039.out
+@@ -11,7 +11,7 @@ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
+ incompatible_features     [0]
+ ERROR cluster 5 refcount=0 reference=1
+ ERROR OFLAG_COPIED data cluster: l2_entry=8000000000050000 refcount=0
+@@ -46,7 +46,7 @@ read 512/512 bytes at offset 0
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
+ incompatible_features     [0]
+ ERROR cluster 5 refcount=0 reference=1
+ Rebuilding refcount structure
+@@ -60,7 +60,7 @@ incompatible_features     []
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
+ incompatible_features     []
+ No errors were found on the image.
+ 
+@@ -79,7 +79,7 @@ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
+ incompatible_features     [0]
+ ERROR cluster 5 refcount=0 reference=1
+ ERROR OFLAG_COPIED data cluster: l2_entry=8000000000050000 refcount=0
+@@ -89,7 +89,7 @@ Data may be corrupted, or further writes to the image may corrupt it.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
+ incompatible_features     []
+ No errors were found on the image.
+ *** done
+diff --git a/tests/qemu-iotests/061.out b/tests/qemu-iotests/061.out
+index 24c33add7c..951c6bf3e6 100644
+--- a/tests/qemu-iotests/061.out
++++ b/tests/qemu-iotests/061.out
+@@ -118,7 +118,7 @@ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
+ magic                     0x514649fb
+ version                   3
+ backing_file_offset       0x0
+@@ -304,7 +304,7 @@ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
+ magic                     0x514649fb
+ version                   3
+ backing_file_offset       0x0
+diff --git a/tests/qemu-iotests/137.out b/tests/qemu-iotests/137.out
+index 86377c80cd..e19df5b6ba 100644
+--- a/tests/qemu-iotests/137.out
++++ b/tests/qemu-iotests/137.out
+@@ -35,7 +35,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ qemu-io: Unsupported value 'blubb' for qcow2 option 'overlap-check'. Allowed are any of the following: none, constant, cached, all
+ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
+ OK: Dirty bit not set
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ qemu-io: Parameter 'lazy-refcounts' expects 'on' or 'off'
+diff --git a/tests/qemu-iotests/common.filter b/tests/qemu-iotests/common.filter
+index fc3c64bcb8..a8226e8b42 100644
+--- a/tests/qemu-iotests/common.filter
++++ b/tests/qemu-iotests/common.filter
+@@ -74,7 +74,7 @@ _filter_qemu_io()
+ {
+     _filter_win32 | \
+     gsed -e "s/[0-9]* ops\; [0-9/:. sec]* ([0-9/.inf]* [EPTGMKiBbytes]*\/sec and [0-9/.inf]* ops\/sec)/X ops\; XX:XX:XX.X (XXX YYY\/sec and XXX ops\/sec)/" \
+-        -e "s/: line [0-9][0-9]*:  *[0-9][0-9]*\( Aborted\| Killed\)/:\1/" \
++        -e "s/: line [0-9][0-9]*:  *[0-9][0-9]*\( Aborted\| Killed\) \{2,\}/:\1 /" \
+         -e "s/qemu-io> //g"
+ }
+ 
 -- 
 2.47.2
 
