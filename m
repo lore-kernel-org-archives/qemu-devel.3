@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8C47CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 14:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F0CCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 14:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHE3-0004XN-QZ; Wed, 27 Aug 2025 10:34:11 -0400
+	id 1urHEk-0004oj-Vl; Wed, 27 Aug 2025 10:34:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1urHE2-0004Ws-1x; Wed, 27 Aug 2025 10:34:10 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ id 1urHEh-0004nM-PY; Wed, 27 Aug 2025 10:34:51 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1urHDy-0008Bq-FO; Wed, 27 Aug 2025 10:34:09 -0400
+ id 1urHEg-0008Qe-4q; Wed, 27 Aug 2025 10:34:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756305247; x=1787841247;
+ t=1756305290; x=1787841290;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=IQqbDAXq08m9PvJxjfyY4LiECehXFs7VN1fCcMvsxZc=;
- b=M/ASdU5EPN2uuUzRWX+5r4OdjhlxaU8p5BlyHuWNUiMV6BOqomX9Hmwv
- Ecn1LSKyDh7mMRQw/1M278uw/TdmW3BsdIGlkaeHQJMyKWJfvjYjmMLSu
- Vem0OxrrN8benypYIFU30dwlYW9COqxzKESSJtSumHw4TqC1wh7R1gCXB
- X2BnPklo91/h6yNgkzXrTZA2/zhmviCeCKH1OAJM/a8k4eAhemlZbZepx
- K2Yv3A5mUgn2eMJt6AT2DYsaS38Is4tPkeZ9um+wZ5a+PbaHYO6F4l1x7
- jEJZjf4qfq5vKTmg0S9MS3ejmPD90Md4tUpLYVHZU+Bhy/Q0hHI9ik2/H Q==;
-X-CSE-ConnectionGUID: l8pV55PxSEiTvBWnhM1rWg==
-X-CSE-MsgGUID: J6nyn8/zR4ivEGfHS7smfg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11535"; a="58621974"
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="58621974"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Aug 2025 07:34:02 -0700
-X-CSE-ConnectionGUID: 6u6ylQkETOGT21ynX1B67Q==
-X-CSE-MsgGUID: IPKGvQKYTIGS8oRICE51ZQ==
+ bh=77lB+ZRggCdw9AxStVM7q/TKbJ2KCbrCEUXpDS5UA18=;
+ b=fHzIel4t9wgCjDRnILmQ0f7jvTD+lpaLwDxkjuvF5885hXGAbPpm+gAx
+ skqrE8wErJTfnZ1FuLhvM/JvZlSskrEQVSKLqgEx1qDLT/jq6KXyeUpgY
+ KxXWsn1fh5FonXUOYmRv4VwK7bRrr7GyOheZwuFIvhS0gB602nZz0fw4e
+ afQ6gW7qkuKU4oMZ+pa4JHfgkt1UBlJXrbkbcgRBqw+HWqOk0m8w5z/zC
+ fKYpzQDWy4QnKc0HJM6wCKrvw95zrhycfvPDs9DIRhkEmqRmL08Slm3fB
+ hkS+Mtr2QBbrf3hEVY3StAz1L6aeEooS09fgcdHJgC6/U6y7l9/E/Eqs/ w==;
+X-CSE-ConnectionGUID: piqszEshTTemivkj/yV8xg==
+X-CSE-MsgGUID: Pec2GYcaR425Jk6AtWQRMg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11535"; a="58654232"
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="58654232"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Aug 2025 07:34:47 -0700
+X-CSE-ConnectionGUID: ZL+A0ZIuR+SmflffphuJuQ==
+X-CSE-MsgGUID: T4mGOCHiQQGHl5R3k6Sang==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="170234011"
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="170680317"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 27 Aug 2025 07:34:00 -0700
-Date: Wed, 27 Aug 2025 22:55:47 +0800
+ by fmviesa010.fm.intel.com with ESMTP; 27 Aug 2025 07:34:45 -0700
+Date: Wed, 27 Aug 2025 22:56:32 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  pbonzini@redhat.com, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 02/22] rust: remove unused global qemu "allocator"
-Message-ID: <aK8cc7fW8FhFmYlM@intel.com>
+Subject: Re: [PATCH 03/22] rust: add workspace authors
+Message-ID: <aK8coHw/ugJ6Rs7c@intel.com>
 References: <20250827104147.717203-1-marcandre.lureau@redhat.com>
- <20250827104147.717203-3-marcandre.lureau@redhat.com>
+ <20250827104147.717203-4-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250827104147.717203-3-marcandre.lureau@redhat.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250827104147.717203-4-marcandre.lureau@redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -85,43 +85,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 27, 2025 at 02:41:24PM +0400, marcandre.lureau@redhat.com wrote:
-> Date: Wed, 27 Aug 2025 14:41:24 +0400
+On Wed, Aug 27, 2025 at 02:41:25PM +0400, marcandre.lureau@redhat.com wrote:
+> Date: Wed, 27 Aug 2025 14:41:25 +0400
 > From: marcandre.lureau@redhat.com
-> Subject: [PATCH 02/22] rust: remove unused global qemu "allocator"
+> Subject: [PATCH 03/22] rust: add workspace authors
 > 
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> The global allocator has always been disabled. There is no clear reason
-> Rust and C should use the same allocator. Allocations made from Rust
-> must be freed by Rust, and same for C, otherwise we head into troubles.
-> 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  meson.build               |   4 --
->  rust/Cargo.toml           |   2 +-
->  rust/qemu-api/Cargo.toml  |   1 -
->  rust/qemu-api/meson.build |   1 -
->  rust/qemu-api/src/lib.rs  | 135 --------------------------------------
->  5 files changed, 1 insertion(+), 142 deletions(-)
-
-There's a discussion almost one years ago:
-
-https://lore.kernel.org/qemu-devel/CABgObfYY1PrD9dRKRgzgyRAe8gzp-4KHvV1-Bgq32_2jpaTMPg@mail.gmail.com/#t
-
-Now we have libc crate and have an example which allocates the C structure
-at Rust side:
-
-let err: *mut c_void = libc::malloc(std::mem::size_of::<bindings::Error>());
-
-this indeed seems simpler than enabling QemuAllocator.
-
-So it's fine for me to remove this allocator:
+>  rust/Cargo.toml | 1 +
+>  1 file changed, 1 insertion(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-
-let's see if Paolo & Manos have other comment.
-
 
 
