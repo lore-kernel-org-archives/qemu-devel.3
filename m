@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A40CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 02:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70016CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 04:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur62F-0007i8-I8; Tue, 26 Aug 2025 22:37:15 -0400
+	id 1ur88N-0007Lb-Hs; Wed, 27 Aug 2025 00:51:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur62D-0007ft-Uy
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 22:37:13 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1ur88L-0007LK-TZ
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 00:51:42 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur629-0004vj-Gd
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 22:37:12 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-76e1fc69f86so442595b3a.0
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 19:37:08 -0700 (PDT)
+ id 1ur88G-0008Iu-CU
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 00:51:41 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-324fb2bb058so4747210a91.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 21:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756262225; x=1756867025; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756270291; x=1756875091; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PN1UiIwUnx0TLN7HTYbR8GaxIk1k1o2adWXgiowZkYo=;
- b=uhJPDReCW+upKRdkslJBzKUE15FZk8aKqAiFMstfNDvvXR4kTq68l72m9oNddQixOz
- v/kDEl3nusGCOoc7LR2JHvV5G5UHt/Gv69Iye4KDxXVh4y1jBxyvM9SEPv0IcT6HJE9M
- d1ORzk400TYFw3D7EBZwEpj6YaVZXCO1SjvEoR25wAs+l21Fw51SRnslVXeCfeivauPE
- +uIjEwoQjl319cK6V9oOKABWI899m/lv8Cy3y3Xc661WKNKNijYMBf0W1fqaQ3ppgHLp
- G9VDqNunsNyn5zdghWeIAZ3xeWCH6X7bsAQBaPAm/QzH3ASTeE77P7Asj01hUQ7NmI0M
- qLOQ==
+ bh=3bNPfUocClaAiiuisWVX53oIO7+rfN2/xpiwTvrSO4s=;
+ b=sXIvVVRz05IULH2MY2MUH1OmXw/jEqkUmDtB02CUKcxfBVRhbr00rRD7Ln22BhDR8q
+ cMpW2jAZ3fJy2JK1VanuNl5yZ9Qjml1WpwYIxS0FTNDuppTqIqNa6uIuAALIm2aVNIUQ
+ ENiA4U6vPZzW0m2OkILgl3sU9CumkpWolV6Ee86LeLnAOYYP7uPYVc3woMXEC/ZguYFO
+ Zf13wSXQQKfbYD9rWYjCdeYT29yXkCshMEiThN6LT2xUueOC3Bfkd1VbT16h+xS6QQga
+ 5B9j2tzgv9qWtJ0Uo1oOf3guJt5AfxJthlgCwiCtaXkOCqwvrsD1AYOUxwha242ZS9X0
+ cdJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756262225; x=1756867025;
+ d=1e100.net; s=20230601; t=1756270291; x=1756875091;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PN1UiIwUnx0TLN7HTYbR8GaxIk1k1o2adWXgiowZkYo=;
- b=H46XnGB5ajWOAPlQgxKOFWHa4DCg99f4dUCJ5tKuU2MsZDn6K9qtHMpyTcqf4zO8k7
- 14YadFDaqxDwSFp4zp7NOUuEzEkT986qSzanGaCH7NCAqTPQ2f9uElRzB0qugCvMusbe
- SxvlTQqwNjkj1MmLHVvyCysmjUoeZrdh6S0aMpgX57sQpYlBSDsyD2u8mcNBa1ULh4Q/
- /145b0PQNP2SEO9Oo1fMvwDl4pNT5U1r8FlyCI79EbFqV1rcLA9ehqKJWQYfimNdKn6u
- 2xYypQ+R00UiVaHj3ZhxEd/YAWGJYxvP+883QrbkiJXiIO/lDXr6EVk/ELluTFowtQvw
- y8LA==
+ bh=3bNPfUocClaAiiuisWVX53oIO7+rfN2/xpiwTvrSO4s=;
+ b=FPeYNm62TSWTxbGbCHqNytht//p5v/FDshn7lkxUXElIfZNRPtNZSw0q2GV9Ak+RaR
+ 7xhhnXNjbuM/M28TXw9SqPEDb6g1FQb6bnbbrAEU47rly0LrISli69hS3yHWJxBJ85/L
+ YTbM7e58UxeTsfhMHUpCw4Bc8CxNW1bhJOeo0b92FMfXSw1MoTg+ax+YU6/Hb25zr8IT
+ bB9vlG9YN4H0A8XOsvXNMaDgVn9A2t/dbBzFVncSsB4cuRurJDlIej8/5Qlu27TInq4T
+ Jwmv7XCqC0gpqxO0r5Y3Us9ABnv6noHJZbU/XuEP9EJqbntzXvWd79if6EDrPagy9q1C
+ /FsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXraZg7o2u8Ob4tbHRFdnSeEAF/I9yGS6ckKfsX7eoEPoBJ8+O6ukdALOgfDOBNTnsK8MkvY/L0qybB@nongnu.org
-X-Gm-Message-State: AOJu0YygyDEk0u1XTEM7y0AVnURlM6z1l/xTqZxcKM/Wnj872lOpG9Ls
- hr9l1AJYya0U6rzQH1WpkxaGJOd90v4XMeA4RGtFFxAHAILZrswVIBiGhXY/+/FO7VI=
-X-Gm-Gg: ASbGnctIM2TwUKEHoQMO62RXjdmg1ZRw01uABja7bUM0dA8jUBhNILNbenjK79f8poE
- 1OHAvPfUJlltIPMgOjuOE8z9vKQZMbeqjO2XkSuN31fScxbsK8Hm683ScJXTpCRW38HH80vpNFc
- M2DqfkTcDyyRu7C3P/BoSqfvay/Y5Qgn7u7cREhaRFkqsnDsjslBXaCFult8EaYuT5r279JN7tP
- 0vpSnKI1hne01BsdDC4tACiaB/lJvrGtQQzFZNNR+0/M2qsUK9PmEkTKFkOBPjWC+gXU9l4Xvd1
- gvZZ1Yb0eu4AR9Dg2fH+ECmlAKNbOe4ttuCjtZU4WT6Cx1mIPj5W94pLOiVD32U7lyL9tVnXmXP
- G9cBvjTXenKtDiat8bEZ22ywlUCzJAO3lwlldZqh2GkSWbag=
-X-Google-Smtp-Source: AGHT+IFDO75FNxA7H/3cx6TxNytQ5nTasFHH2VADHxcGpS6udD27t2pdITwUdx8KtTgpnn4oenH2VQ==
-X-Received: by 2002:a05:6a20:3d0d:b0:243:78a:82cc with SMTP id
- adf61e73a8af0-2438fad28e9mr4141669637.25.1756262225351; 
- Tue, 26 Aug 2025 19:37:05 -0700 (PDT)
+ AJvYcCWKTaTxpPZdVloq6QEEroxYFYSLavhNz37FQq98WrI0w9wSDQA6U1EtDimaP42wTXBNR7IEDSMr9wpU@nongnu.org
+X-Gm-Message-State: AOJu0YwNlqYCbJ7WLi5ZYeTPo+owIdMeV8JcMAllLPfNYn4iUVk0tAW7
+ b/B4zexWutnfO62159BZpAtM6Oh6BHZ8hYfeat2LosnoyMROChQaYHhdBHGwEWo6e6o=
+X-Gm-Gg: ASbGnctoYMzWqZvm9xF58II+mIVBGjG+snKMBQXUYicIAjcZAiEreYaEvlkZNt8XtcC
+ PsAuVCP75l3tAFBKPW2RVNieSo1SGhaMUZTFtHf6umTrrY0nzlUTzj2loIXjiWZDsZMtyB/WWT5
+ naN+93mLD2zJTm9VoYxeQyT2fYuqZ0NVH2Hfpp6ZFzEl+QwDJHFPOP8TFSgS5Sm5A8iRD7TuQUP
+ YaNgQPEgN/KNk9y32r/sqiC6cXzsM/3IWdgKvjDUU5hG4tgAlLIMSdJ7wIBEln3IyhefhOER54M
+ TqTjqcUwkBuYMRyciMyqWZMB0xbgcesqvWbhrmX0J49OGWYlWr6FCXP9VHf4r9DaCNh4YPay38A
+ kzFhmbN7auTChczqabre6fvo/GxbogNFasbtX
+X-Google-Smtp-Source: AGHT+IFh7c446Ez3pXXYnCgmPlAQWH12fQ1ZRxVFxYMVMXvnSP2HjTKmcqaXM5iSCdNADdSXbDpU3Q==
+X-Received: by 2002:a17:90b:1fc7:b0:327:7c8e:8735 with SMTP id
+ 98e67ed59e1d1-3277c8eb561mr268834a91.31.1756270290772; 
+ Tue, 26 Aug 2025 21:51:30 -0700 (PDT)
 Received: from [192.168.0.195] ([144.6.121.55])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-772093cac4bsm303493b3a.12.2025.08.26.19.37.00
+ 98e67ed59e1d1-3276fcd3285sm844969a91.14.2025.08.26.21.51.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Aug 2025 19:37:04 -0700 (PDT)
-Message-ID: <540d4897-df84-4ff3-beaf-059af914d5a4@linaro.org>
-Date: Wed, 27 Aug 2025 12:36:57 +1000
+ Tue, 26 Aug 2025 21:51:30 -0700 (PDT)
+Message-ID: <88284cce-ec2e-4641-9581-0e3bb1f9b6dd@linaro.org>
+Date: Wed, 27 Aug 2025 14:51:23 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Fix reverse_debugging asset precaching
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, thuth@redhat.com
-Cc: qemu-arm@nongnu.org
-References: <20250827001008.22112-1-gustavo.romero@linaro.org>
+Subject: Re: [PATCH] target/riscv: do not use translator_ldl in opcode_at
+To: Vladimir Isaev <vladimir.isaev@syntacore.com>, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+References: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250827001008.22112-1-gustavo.romero@linaro.org>
+In-Reply-To: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,26 +105,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/25 10:10, Gustavo Romero wrote:
-> This commit fixes the asset precaching in the reverse_debugging test on
-> aarch64.
+On 8/16/25 00:06, Vladimir Isaev wrote:
+> opcode_at is used only in semihosting checks to match opcodes with expected pattern.
 > 
-> QemuBaseTest.main() precaches assets (kernel, rootfs, DT blobs, etc.)
-> that are defined in variables with the ASSET_ prefix. This works because
-> it ultimately calls Asset.precache_test(), which relies on introspection
-> to locate these variables.
+> This is not a translator and if we got following assert if page is not in TLB:
+> qemu-system-riscv64: ../accel/tcg/translator.c:363: record_save: Assertion `offset == db->record_start + db->record_len' failed.
 > 
-> If an asset variable is not named with the ASSET_ prefix, precache_test
-> cannot find the asset and precaching silently fails. Hence, fix the
-> asset precaching by fixing the asset variable name.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Fixes: 1f9c4462334f ("target/riscv: Use translator_ld* for everything")
+> Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
 > ---
->   tests/functional/test_aarch64_reverse_debug.py | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   target/riscv/translate.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index b1e41cdbf1f6..980a67ea855e 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -25,6 +25,7 @@
+>   #include "exec/helper-gen.h"
+>   
+>   #include "exec/translator.h"
+> +#include "exec/cpu_ldst.h"
+>   #include "exec/log.h"
+>   #include "semihosting/semihost.h"
+>   
+> @@ -1143,7 +1144,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+>       CPUState *cpu = ctx->cs;
+>       CPURISCVState *env = cpu_env(cpu);
+>   
+> -    return translator_ldl(env, &ctx->base, pc);
+> +    return cpu_ldl_code(env, pc);
+>   }
+>   
+>   #define SS_MMU_INDEX(ctx) (ctx->mem_idx | MMU_IDX_SS_WRITE)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
