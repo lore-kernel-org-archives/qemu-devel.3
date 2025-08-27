@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95299CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 21:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB96CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 21:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urNFw-0006pa-In; Wed, 27 Aug 2025 17:00:32 -0400
+	id 1urNG0-0006tQ-Ly; Wed, 27 Aug 2025 17:00:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urNFj-0006lU-IW
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:00:26 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urNFh-0006kE-4n
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:00:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urNFf-0006t9-E4
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:00:18 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urNFd-0006s6-5m
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 17:00:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756328413;
+ s=mimecast20190719; t=1756328408;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lRJ8eE7rheNIp6zO98qNHCY36RqYoQUzbq48qUhyxQg=;
- b=D/oFLSpOuK0Au5IwunR9Od9jfPe4h7/uEBbvGmoplw3MsEgGf8/QCfqWL39P5hukECVqGm
- VfDQ50ShQJ4mrYXnXSUTGlCGOYdnA4I+021s/amFyeWNo7nrkCwmW8k0Q0ITXxV0j/LOqm
- 5oaNG9G3KIkHbreo2zVESyPGVA821/A=
+ bh=i0rL3mXXfqHBhyeJ127a2ssZ77MbnTaaoR6sQ91RNEU=;
+ b=CA+vNVi4QFuH4BEvr/MmzEvOZlmuOhPZqVeCnrTrF/eSkMtr/biHz+MoAB3ZN9Xs6FTViW
+ 967a5hyySpdkYX2LON9pNarGMx2wpImLCQzH86M3NfJgBobF8MIeknkVVUn5TozvxHKKxQ
+ B2mMqGqhgJXBu3JyAHxjn6mhGKuk12I=
 Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
  [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78--hpwgCisOE6M8iAoK7lvUA-1; Wed, 27 Aug 2025 17:00:12 -0400
-X-MC-Unique: -hpwgCisOE6M8iAoK7lvUA-1
-X-Mimecast-MFC-AGG-ID: -hpwgCisOE6M8iAoK7lvUA_1756328408
+ us-mta-354-FOWu-MbGPKmTpdOJDxDmIw-1; Wed, 27 Aug 2025 17:00:06 -0400
+X-MC-Unique: FOWu-MbGPKmTpdOJDxDmIw-1
+X-Mimecast-MFC-AGG-ID: FOWu-MbGPKmTpdOJDxDmIw_1756328406
 Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-e96c3f851dcso270659276.2
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 14:00:08 -0700 (PDT)
+ 3f1490d57ef6-e96d57eb1d0so242233276.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 14:00:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756328408; x=1756933208;
+ d=1e100.net; s=20230601; t=1756328406; x=1756933206;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lRJ8eE7rheNIp6zO98qNHCY36RqYoQUzbq48qUhyxQg=;
- b=ASk7wfKrfkjG14FxnR6g/WOfhP8SemtWT0sFm25KwGECFanC5cGDYIZ3tU3MDZd0PD
- G4FAc2wcfMlQGn7gcr1fgUX19kCj1X/MKRVt7gRqEOLtX4uV4ioBlHaLyPy6wTOU3w/8
- nH1dUmYwblFEMP5HwLeV60xRN6cBXqv8114X2mwPzU+7JCRIsZ3KpL6kUkEmsKHc4wzq
- qHP7SYlAH7YLAymXKBHo/eXb8jlLVFfhsSgjxFCmpJpYAQ9T2sg9VtUBcUEGwP+EOu0U
- +QA1sw9G2/vDheAwuoM6y3mLOGg2/QSmNpbrnhnQu4lD7W3xGClVO7wqptirLoZFOMtm
- XXEA==
-X-Gm-Message-State: AOJu0Yy0N8Lnx2jP+wF8s6qtCaK8bsVh5aHkq8IFSDUHG1nu7bKriDeE
- nddBbIM2yDtZDcimhIMXxxcOtSF8g1H3q/NMyEYZfrY38sO3zyxtaKkFiPRBTq/xQk+7ItgftZO
- 5cqjI+R58u0zf4cJA1Nw4guofnSRzl1PgdvpE47Ac7FfNDFV1LLIqmNGIKeeZV2dEz6byzkRr+x
- JoLauzu6Te0dOv1G7cVw+83HZbPrM+qopb27Li/Q==
-X-Gm-Gg: ASbGncvi92rOBNhZXezqpP2kNZh2Rtekq16atQtntg8KPZQqKdeKZ5jVLd/p2yXbDJ5
- J9NJ3imh1T+v4p0+2/QZoF9Vx3Z9OoFohE0+sDbnRf09FAALjVjFkiWm/0g/reEZvehjRu/NVai
- XnA7wsHniQSE38rECx9Z+TlUSFRuh626lVfTY6Xtz5aWygGYmKWtuE4KPMdLaSWOozAsvihxz4O
- R7NczVl/xXD5I3XCpVhGSAhGgyGEbmD9pR01ZziRwSRIBe7S/VVt/RHcVUfLFBeofNXL9WmL/rG
- StMtIg2QuiUGTJjUkUHsIc3KQST7/sqYhj64cEjiRarsl/AjFNtWWmfABxTpAQOSfW2EhmVXCCp
- BSnSQv7IArXMhYJh3P3A=
-X-Received: by 2002:a05:6902:1249:b0:e95:3d8c:f10e with SMTP id
- 3f1490d57ef6-e953d8cf2a4mr14597214276.13.1756328407709; 
- Wed, 27 Aug 2025 14:00:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH7gYZeSf/0Wf68bolNu0vksd3GOyhSqE61MyVfEdSnmecJOe2S3VaqtQjKAUOLLVKbkU3+/A==
-X-Received: by 2002:a05:6902:1249:b0:e95:3d8c:f10e with SMTP id
- 3f1490d57ef6-e953d8cf2a4mr14597146276.13.1756328407102; 
- Wed, 27 Aug 2025 14:00:07 -0700 (PDT)
+ bh=i0rL3mXXfqHBhyeJ127a2ssZ77MbnTaaoR6sQ91RNEU=;
+ b=sH1R1y7xGr2xgvXd6Tx70rzhZSp9xNPa49zFTbAcXkfQo7zXxXUC7lzeH9chFTaBMr
+ 7Xvm7NnPDCrfuj/PCeBQDy012sbSU0aa8FKC77cii22fYj7wrsgjLWE0CgUTFt25f2fM
+ k6LsAEaQyNjdImC59innHIYV6Cd5xKF0mDhhu3NlZiGWzsqNuQ0xX6HPS6Xdg01s5CYY
+ EXWtOG1FxFS5rnpVBKake+NQ8PeAq9WFiSfB5Nfeejio7sqbxEO9//qDTXOA8+WL3xNd
+ z5ZNPYjS5dSxNP3i1AOntAlvj0s03Y/8o6Mr/UFrOELIp1PiKCp0Yz7bfCA40WsScCoo
+ CCOw==
+X-Gm-Message-State: AOJu0Yw4HDHgqj/+dhk+jqZh4MJ37icwafR5BbYLpTmqDmyK1TPtdRcD
+ /HSpIbmV8XTfUmA/ioY6sHKBoBf8+3sdV1nFHBoF+RnYGq5PRxnKJWtvv7ZTfdFVhXK5fWUsQ6O
+ HKgBifBiIqxkwVclU9We2CRH6uOB14BOa0P+OyuAeY/KmRKjJmFk/Vn/Jw01W9RzVk8+qjqqOvP
+ IGdaS3ki+u1r0oeBAfns4WvNIKNqk+owbhkVADMg==
+X-Gm-Gg: ASbGncuJO8K9g9CsstLlvZYntvZploNXrUFuSOcu/pVlxXMy81qNOT4yVRqDHhqyvUZ
+ 7zqoLcjZFce4Sr7dx4G0qDm448Lp1FfGtPrTo5tFcZ1gdHILJ6xyClyUX8vhwYZXBcE1lHbbgBg
+ 3FkQqAez4/8SYzgbVte9Ywlvck3K9VyNEWjhiS6Xk2V8bcip/NYhrx29YAZhz6CYAzj5CXbg8ub
+ xnPZndg8Z64mOymkPrfcc4BlAHDnnNupc0UKig4s7/UtEnng7LBb4ws5RIrlXIo7sdsfRxQbTO5
+ jfU6FvCMdhr4kB7jATu9JKD6UVXe/h39SC9LOXy/N4SjgYlL9ezwpSLtkjf5M36Xyrt2jUSHETT
+ YZYwZXBRdIbd2++atUt0=
+X-Received: by 2002:a05:6902:1145:b0:e95:3636:fec7 with SMTP id
+ 3f1490d57ef6-e953637041bmr14363086276.3.1756328405695; 
+ Wed, 27 Aug 2025 14:00:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHpI/rLDdMeIg/XupM0lqAJf/9rUSqM2ymCzFKJaxl/Wt2t7IMda1Z5qm8Qk4hX+9j5vihTlw==
+X-Received: by 2002:a05:6902:1145:b0:e95:3636:fec7 with SMTP id
+ 3f1490d57ef6-e953637041bmr14363024276.3.1756328405060; 
+ Wed, 27 Aug 2025 14:00:05 -0700 (PDT)
 Received: from x1.com
  (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
  by smtp.gmail.com with ESMTPSA id
- 3f1490d57ef6-e96e5530a32sm1389846276.17.2025.08.27.14.00.05
+ 3f1490d57ef6-e96e5530a32sm1389846276.17.2025.08.27.14.00.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 14:00:06 -0700 (PDT)
+ Wed, 27 Aug 2025 14:00:04 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com,
@@ -83,10 +83,10 @@ Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Prasad Pandit <ppandit@redhat.com>, Zhang Chen <zhangckid@gmail.com>,
  Li Zhijian <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH RFC 8/9] migration/ram: Remove workaround on ram yield during
- load
-Date: Wed, 27 Aug 2025 16:59:47 -0400
-Message-ID: <20250827205949.364606-9-peterx@redhat.com>
+Subject: [PATCH RFC 7/9] migration/postcopy: Remove workaround on wait preempt
+ channel
+Date: Wed, 27 Aug 2025 16:59:46 -0400
+Message-ID: <20250827205949.364606-8-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250827205949.364606-1-peterx@redhat.com>
 References: <20250827205949.364606-1-peterx@redhat.com>
@@ -117,48 +117,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts e65cec5e5d97927d22b39167d3e8edeffc771788.
+This reverts commit 7afbdada7effbc2b97281bfbce0c6df351a3cf88.
 
-RAM load path had a hack in the past explicitly yield the thread to the
-main coroutine when RAM load spinning in a tight loop.  Not needed now
-because precopy RAM load now happens without the main thread.
+Now after switching to a thread in loadvm process, the main thread should
+be able to accept() even if loading the package could cause a page fault in
+userfaultfd path.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/ram.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ migration/savevm.c | 21 ---------------------
+ 1 file changed, 21 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 7208bc114f..2d9a6d1095 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4168,7 +4168,7 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
- static int ram_load_precopy(QEMUFile *f)
- {
-     MigrationIncomingState *mis = migration_incoming_get_current();
--    int flags = 0, ret = 0, invalid_flags = 0, i = 0;
-+    int flags = 0, ret = 0, invalid_flags = 0;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index ad606c5425..8018f7ad31 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2425,27 +2425,6 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis,
  
-     if (migrate_mapped_ram()) {
-         invalid_flags |= (RAM_SAVE_FLAG_HOOK | RAM_SAVE_FLAG_MULTIFD_FLUSH |
-@@ -4181,17 +4181,6 @@ static int ram_load_precopy(QEMUFile *f)
-         void *host = NULL, *host_bak = NULL;
-         uint8_t ch;
+     QEMUFile *packf = qemu_file_new_input(QIO_CHANNEL(bioc));
  
--        /*
--         * Yield periodically to let main loop run, but an iteration of
--         * the main loop is expensive, so do it each some iterations
--         */
--        if ((i & 32767) == 0 && qemu_in_coroutine()) {
--            aio_co_schedule(qemu_get_current_aio_context(),
--                            qemu_coroutine_self());
--            qemu_coroutine_yield();
+-    /*
+-     * Before loading the guest states, ensure that the preempt channel has
+-     * been ready to use, as some of the states (e.g. via virtio_load) might
+-     * trigger page faults that will be handled through the preempt channel.
+-     * So yield to the main thread in the case that the channel create event
+-     * hasn't been dispatched.
+-     *
+-     * TODO: if we can move migration loadvm out of main thread, then we
+-     * won't block main thread from polling the accept() fds.  We can drop
+-     * this as a whole when that is done.
+-     */
+-    do {
+-        if (!migrate_postcopy_preempt() || !qemu_in_coroutine() ||
+-            mis->postcopy_qemufile_dst) {
+-            break;
 -        }
--        i++;
 -
-         addr = qemu_get_be64(f);
-         ret = qemu_file_get_error(f);
-         if (ret) {
+-        aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
+-        qemu_coroutine_yield();
+-    } while (1);
+-
+     ret = qemu_loadvm_state_main(packf, mis, bql_held);
+     trace_loadvm_handle_cmd_packaged_main(ret);
+     qemu_fclose(packf);
 -- 
 2.50.1
 
