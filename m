@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9159CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 23:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90ACCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 23:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urPWm-0008SY-U7; Wed, 27 Aug 2025 19:26:04 -0400
+	id 1urPT6-0004bg-DL; Wed, 27 Aug 2025 19:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urPWh-0008JT-0n
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:26:00 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1urPSo-0004CW-DK
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:22:00 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urPWa-0005BX-5y
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:25:58 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-248cb0b37dfso3286675ad.3
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 16:25:51 -0700 (PDT)
+ id 1urPSf-0004HV-II
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 19:21:58 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7718408baf7so402085b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 16:21:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756337150; x=1756941950; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756336903; x=1756941703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=haA2NtyjzC37WFb40NMVWFRJEWFIj1glU6vfYtJmd2g=;
- b=TW5CTJFSZgqEX7jYmZor8/ILq5VMaEFbdGpshR8MrVN/zQBUygsG5FIeIfK3/V+DLD
- Yld991x6T+RDlKN6RKk0pzKVsb3YVw44G6KG8w0YMO6Tnq2VVPhIRHKzbpsuXmQJ3t4e
- xHp9y4S+eimcPf07ASA0gtON/vNabCeQU7rC+jhj4CmZqvqxPPKwwvxExxsA4fIyDkUp
- 2qMbOVgVvQAy1xqXHfeRBJq8Y/c3Paa64k9YuT7XPQixhaomlj3sZZBZGzFLizSNpfcU
- 5BMMoKNkA3FthEkuoXBMyMMOPGYpMIZcfSvPU5x2h/cOMZcEIhlgxY9elrx6AUg5jsB5
- XcXg==
+ bh=DswSe38yYoTArY++0If/RvNUZ/t2C2uJUE3zFUBMwiU=;
+ b=WNfdFpWwK7tpnWoHkypdmv9yMm0SrNQTsd+F9/vuBpTERAVh0TvyVApe67pQ2CKs1i
+ e8IBw8YovRlS2VFJAIWna8K+fqjvDHBkizTUSZ+rl4BnLejsaS/xqfugCSx5Zf+LbpKH
+ 1s9WkhLjKxjGXzrzEYw8WE7V23xn6IbL2Jh5Jiol3wrdp2s5D4/EPXyrX7IgCgaIxzvu
+ iwCZZfCirqkOhQ5gFmuVgprV2E1cy83DU7M+OsZBPRVxdwo+6kATQ20P8e046DRyo68x
+ BpLKfj67DL52ADIY+1YsooG6EZIwmRC9ojmNMi4WcUuz0IPJrks937MCrHPNBzGCWWC3
+ 7TLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756337150; x=1756941950;
+ d=1e100.net; s=20230601; t=1756336903; x=1756941703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=haA2NtyjzC37WFb40NMVWFRJEWFIj1glU6vfYtJmd2g=;
- b=azVkMyrPPP6qoYpUk+CSV1ZM7vLZXH8IX5PAjspuVyj0zN7TmO/IspbaNeoezzBPvN
- KBFftb1z9LQs1DDj0xoKohp6LJiRRECpuZSmBM0+zGuT/Er1Yy2h4r3mOCxymuc3Dr4f
- tukBmWFeqiqaw7E3AYWMFEbsLqeRR8BUXSK63ytaRRVedJWhu8qQ3gQHdT6sdWoXVxZu
- NEl3QnUaqwP3KDNtPsBoIW2SSHfnTFjIsXuPilYp6N3Jq3L6dex55Mz6uNtHIUarR72A
- vxpRVYpFQInBmcOxCSfPTxNSnf0RvfEKfLmzbVgE9c+no9Ik7k41x5gu2EXoyiOOxCx0
- 5Vng==
-X-Gm-Message-State: AOJu0YxvKv4Aa0iatbHoB6cyFTYy43Ev3XnuksqeVQ6sRe9ezcsUtBER
- hOm7Huo54cbNEre893A7szPh6SyU+2uG9BpHyrXTvF6hHnqRiVxi4lyezOK5QlKE51R76U2qNPw
- vbMBV35k=
-X-Gm-Gg: ASbGncsAQdGIC854TMfLfNSnIGndHk+hZKNWWkiNn0q5zIc3xVIV4rFCGpWyjKbN3XC
- OTX/oPYTYZ9ZdEZrBRwStP7UEHVx/EvBsOuHv3UQtfQ5wINoxPC/E9hFBQN9iahZ4N6jcmgYfZx
- q/T2zdpNQvcb7NGr0FqiTfsRspZ040mxGLblkhlT64FVYbymZCsbhjdKKF7qQtjWYkKggg7xaIF
- LQ4RigLCcYr++tS9iE0S52LDinVet3YxZz2usNG4Y9N+fvrYg82kzvlOnOp5s40Aqv8Gr2g0eA3
- njJKQP54n3rUpBxl1kJGw0RiafpPn5vv2otlmZIaSeC6QF/we6QYnur7Wwu3Si1VwHjfFqIyld4
- daCWB0qpQZAIyGWADvlBK8pqkoRfffGf6AP2d
-X-Google-Smtp-Source: AGHT+IFtR7ouaDwumS40uehw9I3SFpCeqZGyCMaxDTku8bGG9OQ9Dp1/gCvfzek1NV/UbSqS/fE18A==
-X-Received: by 2002:a17:902:e78b:b0:248:98a6:fb55 with SMTP id
- d9443c01a7336-24898a6fc9dmr55281535ad.16.1756337150510; 
- Wed, 27 Aug 2025 16:25:50 -0700 (PDT)
+ bh=DswSe38yYoTArY++0If/RvNUZ/t2C2uJUE3zFUBMwiU=;
+ b=E4c/iWB9iZfzPer32UjR2og5rxqIY3tyqtx8/Y83F0Mp6m8gOJ3pTFng6MX/Iqbwuz
+ cixeGPf452amjPrnClGIBnRZ8S+bS+P71hzHFibgq1UCPTX9KloHuNj9BCVNvCbPGl47
+ HMn+mwchAASqI1FLKYoU0yV4xHpN8P/gNjfyRDFNFN/RNXR2tPeuwZcTq9bK6lnPfCEg
+ XvMLqQrNkHa6WuS8zTp83E+/rr4bksTwxkaYHQe/rs2YlGhu/Nwr9DWelRKg6A3t5ffQ
+ /QxseFUHNCCoBNSzhyv2Cq5NNhtEHo6gLS1VzQ7G9Pw/JrEjt39WE67fKzb73ywUdb9m
+ buQw==
+X-Gm-Message-State: AOJu0YyJLN9RzH8jgrCm9iLJH52HjlMQ8s5sql8dmaSG2k7Qa16kC/vn
+ V6HytwXqZU/to2N+LAP7eGiQkpSEgb13UJrCp7HKwx1ely6v0ewV0+GxaMpic1Ou9kLNpO7spq7
+ GuAz1ZL4=
+X-Gm-Gg: ASbGncvRbrHrw27D6urESywjex4ahqAY1OCiUabAEuidn+sXr+3mIcWMVI7Pvv5EMrP
+ 4tgKN3d1R9l+rk79GSYri637fB/oWr7SuzfQ65B7gjVG7nGP2Khbrs33YBm/XmxM7X0DFSA2Xae
+ XtfEvS0wBkVDXmwx35Nm/WeIFe7+nD8axWpwmFCKXL5/NkPb/eAl4niEK0rxkJeYtDJbQjrcNBl
+ jhoup/0rj8fEoA4TkWrt9YfdmklPB56hOHz3COv7C5O72JmGOTjqzRYkLnn/O8qf/R1XvvSNX51
+ kqC3HHlFj//2+bxcY8IwPW+SsDK1ucBk1VwoPKPTaMb8g1bPzq9dqtxVwauTJZPNTlSwriLTTEW
+ YNwgg5za6ElVTIX5wlN4H44ZlYw==
+X-Google-Smtp-Source: AGHT+IGZIx8uD6jjmNeAsJSBExrOnOneqh0GScEuMXY7EnKjcYTmmT86g0v1OQ0qADmCwq+SKnouyA==
+X-Received: by 2002:a05:6a00:3d06:b0:770:73ed:e6e8 with SMTP id
+ d2e1a72fcca58-77073edece2mr18034419b3a.22.1756336903433; 
+ Wed, 27 Aug 2025 16:21:43 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-248cd627e40sm7282025ad.94.2025.08.27.16.25.45
+ d2e1a72fcca58-7703ffebd33sm13986886b3a.29.2025.08.27.16.21.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Aug 2025 16:25:50 -0700 (PDT)
+ Wed, 27 Aug 2025 16:21:43 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>
-Subject: [PULL 45/46] linux-user: Add strace for rseq
-Date: Thu, 28 Aug 2025 09:20:22 +1000
-Message-ID: <20250827232023.50398-46-richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 25/46] linux-user: Create do_init_main_thread
+Date: Thu, 28 Aug 2025 09:20:02 +1000
+Message-ID: <20250827232023.50398-26-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827232023.50398-1-richard.henderson@linaro.org>
 References: <20250827232023.50398-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,35 +99,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+Provide a unified function to initialize the main thread.
+Keep target_pt_regs isolated to this function.
 
- build/qemu-riscv64 -cpu rv64,v=on -d strace  build/tests/tcg/riscv64-linux-user/test-vstart-overflow
- 1118081 riscv_hwprobe(0xffffbc038200,1,0,0,0,0) = 0
- 1118081 brk(NULL) = 0x0000000000085000
- 1118081 brk(0x0000000000085b00) = 0x0000000000085b00
- 1118081 set_tid_address(0x850f0) = 1118081
- 1118081 set_robust_list(0x85100,24) = -1 errno=38 (Function not implemented)
- 1118081 rseq(0x857c0,32,0,0xf1401073) = -1 errno=38 (Function not implemented)
-
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250826060341.1118670-1-joel@jms.id.au>
 ---
- linux-user/strace.list | 3 +++
- 1 file changed, 3 insertions(+)
+ linux-user/loader.h    |  5 ++---
+ linux-user/elfload.c   |  7 +++++--
+ linux-user/linuxload.c |  6 ++----
+ linux-user/main.c      | 10 +++-------
+ 4 files changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index ab818352a9..51b5ead969 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1719,3 +1719,6 @@
- #ifdef TARGET_NR_riscv_hwprobe
- { TARGET_NR_riscv_hwprobe, "riscv_hwprobe" , "%s(%p,%d,%d,%d,%d,%d)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_rseq
-+{ TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
-+#endif
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index 42cba90dea..e0291cc3b0 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -82,12 +82,11 @@ struct linux_binprm {
+     int (*core_dump)(int, const CPUArchState *); /* coredump routine */
+ };
+ 
+-void do_init_thread(struct target_pt_regs *regs, struct image_info *infop);
++void do_init_main_thread(CPUState *cs, struct image_info *infop);
+ abi_ulong loader_build_argptr(int envc, int argc, abi_ulong sp,
+                               abi_ulong stringp, int push_ptr);
+ int loader_exec(int fdexec, const char *filename, char **argv, char **envp,
+-             struct target_pt_regs *regs, struct image_info *infop,
+-             struct linux_binprm *);
++                struct image_info *infop, struct linux_binprm *);
+ 
+ uint32_t get_elf_eflags(int fd);
+ int load_elf_binary(struct linux_binprm *bprm, struct image_info *info);
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 4facaa7e27..6fce74f45a 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3619,7 +3619,10 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+ }
+ #endif /* USE_ELF_CORE_DUMP */
+ 
+-void do_init_thread(struct target_pt_regs *regs, struct image_info *infop)
++void do_init_main_thread(CPUState *cs, struct image_info *infop)
+ {
+-    init_thread(regs, infop);
++    target_pt_regs regs = { };
++
++    init_thread(&regs, infop);
++    target_cpu_copy_regs(cpu_env(cs), &regs);
+ }
+diff --git a/linux-user/linuxload.c b/linux-user/linuxload.c
+index 37f132be4a..85d700953e 100644
+--- a/linux-user/linuxload.c
++++ b/linux-user/linuxload.c
+@@ -139,8 +139,7 @@ abi_ulong loader_build_argptr(int envc, int argc, abi_ulong sp,
+ }
+ 
+ int loader_exec(int fdexec, const char *filename, char **argv, char **envp,
+-                struct target_pt_regs *regs, struct image_info *infop,
+-                struct linux_binprm *bprm)
++                struct image_info *infop, struct linux_binprm *bprm)
+ {
+     int retval;
+ 
+@@ -175,8 +174,7 @@ int loader_exec(int fdexec, const char *filename, char **argv, char **envp,
+         return retval;
+     }
+ 
+-    /* Success.  Initialize important registers. */
+-    do_init_thread(regs, infop);
++    /* Success. */
+     return 0;
+ }
+ 
+diff --git a/linux-user/main.c b/linux-user/main.c
+index ad1a29d198..e21842bde9 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -696,7 +696,6 @@ static int parse_args(int argc, char **argv)
+ 
+ int main(int argc, char **argv, char **envp)
+ {
+-    struct target_pt_regs regs1, *regs = &regs1;
+     struct image_info info1, *info = &info1;
+     struct linux_binprm bprm;
+     TaskState *ts;
+@@ -762,9 +761,6 @@ int main(int argc, char **argv, char **envp)
+     trace_init_file();
+     qemu_plugin_load_list(&plugins, &error_fatal);
+ 
+-    /* Zero out regs */
+-    memset(regs, 0, sizeof(struct target_pt_regs));
+-
+     /* Zero out image_info */
+     memset(info, 0, sizeof(struct image_info));
+ 
+@@ -988,8 +984,8 @@ int main(int argc, char **argv, char **envp)
+ 
+     fd_trans_init();
+ 
+-    ret = loader_exec(execfd, exec_path, target_argv, target_environ, regs,
+-        info, &bprm);
++    ret = loader_exec(execfd, exec_path, target_argv, target_environ,
++                      info, &bprm);
+     if (ret != 0) {
+         printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
+         _exit(EXIT_FAILURE);
+@@ -1041,7 +1037,7 @@ int main(int argc, char **argv, char **envp)
+        the real value of GUEST_BASE into account.  */
+     tcg_prologue_init();
+ 
+-    target_cpu_copy_regs(env, regs);
++    do_init_main_thread(cpu, info);
+ 
+     if (gdbstub) {
+         gdbserver_start(gdbstub, &error_fatal);
 -- 
 2.43.0
 
