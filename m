@@ -4,42 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A3CBCA0FED
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 547CBCA0EFF
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHm1-0002zL-Hm; Wed, 27 Aug 2025 11:09:17 -0400
+	id 1urHnW-0006IW-3R; Wed, 27 Aug 2025 11:10:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHjt-0007GY-I9; Wed, 27 Aug 2025 11:07:11 -0400
+ id 1urHjM-0006oU-QK; Wed, 27 Aug 2025 11:06:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHjr-0005Xc-RG; Wed, 27 Aug 2025 11:07:05 -0400
+ id 1urHjK-0005Ro-Tq; Wed, 27 Aug 2025 11:06:32 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4E96314C552;
- Wed, 27 Aug 2025 18:02:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CFF7914C54C;
+ Wed, 27 Aug 2025 18:02:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 37CCF26985A;
- Wed, 27 Aug 2025 18:03:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BA9E3269854;
+ Wed, 27 Aug 2025 18:03:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>, Caleb Schlossin <calebs@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 42/59] ppc/xive2: fix context push calculation of IPB
- priority
-Date: Wed, 27 Aug 2025 18:02:47 +0300
-Message-ID: <20250827150323.2694101-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Qian Wen <qian.wen@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 36/59] i386/cpu: Fix cpu number overflow in
+ CPUID.01H.EBX[23:16]
+Date: Wed, 27 Aug 2025 18:02:41 +0300
+Message-ID: <20250827150323.2694101-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,37 +61,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Qian Wen <qian.wen@intel.com>
 
-Pushing a context and loading IPB from NVP is defined to merge ('or')
-that IPB into the TIMA IPB register. PIPR should therefore be calculated
-based on the final IPB value, not just the NVP value.
+The legacy topology enumerated by CPUID.1.EBX[23:16] is defined in SDM
+Vol2:
 
-Fixes: 9d2b6058c5b ("ppc/xive2: Add grouping level to notification")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-6-npiggin@gmail.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit d1023a296c8297454fc4b207d58707c0a5e62e0a)
+Bits 23-16: Maximum number of addressable IDs for logical processors in
+this physical package.
+
+When threads_per_socket > 255, it will 1) overwrite bits[31:24] which is
+apic_id, 2) bits [23:16] get truncated.
+
+Specifically, if launching the VM with -smp 256, the value written to
+EBX[23:16] is 0 because of data overflow. If the guest only supports
+legacy topology, without V2 Extended Topology enumerated by CPUID.0x1f
+or Extended Topology enumerated by CPUID.0x0b to support over 255 CPUs,
+the return of the kernel invoking cpu_smt_allowed() is false and APs
+(application processors) will fail to bring up. Then only CPU 0 is online,
+and others are offline.
+
+For example, launch VM via:
+qemu-system-x86_64 -M q35,accel=kvm,kernel-irqchip=split \
+    -cpu qemu64,cpuid-0xb=off -smp 256 -m 32G \
+    -drive file=guest.img,if=none,id=virtio-disk0,format=raw \
+    -device virtio-blk-pci,drive=virtio-disk0,bootindex=1 --nographic
+
+The guest shows:
+    CPU(s):               256
+    On-line CPU(s) list:  0
+    Off-line CPU(s) list: 1-255
+
+To avoid this issue caused by overflow, limit the max value written to
+EBX[23:16] to 255 as the HW does.
+
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Qian Wen <qian.wen@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250714080859.1960104-6-zhao1.liu@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit a62fef58299562aae6667b8d8552247423e886b3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 790152a2a6..4dd04a0398 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -835,8 +835,9 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
-         nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, 0);
-         xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
-     }
-+    /* IPB bits in the backlog are merged with the TIMA IPB bits */
-     regs[TM_IPB] |= ipb;
--    backlog_prio = xive_ipb_to_pipr(ipb);
-+    backlog_prio = xive_ipb_to_pipr(regs[TM_IPB]);
-     backlog_level = 0;
- 
-     first_group = xive_get_field32(NVP2_W0_PGOFIRST, nvp.w0);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index ed262edcc8..56af1857b9 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6835,6 +6835,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         }
+         *edx = env->features[FEAT_1_EDX];
+         if (threads_per_pkg > 1) {
++            uint32_t num;
++
+             /*
+              * For CPUID.01H.EBX[Bits 23-16], AMD requires logical processor
+              * count, but Intel needs maximum number of addressable IDs for
+@@ -6842,10 +6844,13 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+              */
+             if (/*10.0: cpu->vendor_cpuid_only_v2*/ false &&
+                 (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
+-                *ebx |= 1 << apicid_pkg_offset(topo_info) << 16;
++                num = 1 << apicid_pkg_offset(topo_info);
+             } else {
+-                *ebx |= threads_per_pkg << 16;
++                num = threads_per_pkg;
+             }
++
++            /* Fixup overflow: max value for bits 23-16 is 255. */
++            *ebx |= MIN(num, 255) << 16;
+         }
+         break;
+     case 2:
 -- 
 2.47.2
 
