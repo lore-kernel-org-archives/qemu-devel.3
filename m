@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87559CA0FF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 649DECA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:16:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur4dn-0000B0-Om; Tue, 26 Aug 2025 21:07:55 -0400
+	id 1ur4j6-00038w-NU; Tue, 26 Aug 2025 21:13:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4dN-00079Q-R3
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:07:33 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1ur4hd-0001TC-SZ
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:54 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4dK-0007Xl-MV
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:07:29 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-771fa65b0e1so659367b3a.0
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:07:25 -0700 (PDT)
+ id 1ur4hP-0000Ap-Ur
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:53 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-24626e06f04so40715925ad.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:11:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756256843; x=1756861643; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756257096; x=1756861896; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CiTPcH4cN132XrAlCNyqqTcsX5/+34SY6jW1V2d9z4Y=;
- b=YSoobIgLYB+MPPwTTpSTO9a/Z+NLKWDbEyFnylZEdnrbchBiWafC1rWvyoeG7KiHPa
- XvbtFNfK9whRxiK8N8RxVWiADFliMpDNh6puZHRHnvQLKCb9exHUP3Gb0C5+gGwsap+7
- oe4OOjT9wpVVYqffl5GAEHhu2O8PzCaiKNmcZlNgCg0lhBMbA10VeUWASF8fJceD4QXK
- Pv5sgLXwVqtAlWEOrZvFUriT9RL6WDO6uMkVkt65PwhXp8efyeuKeifch8RmSKxu2dE6
- RiqFPM2ktDe/G+cIQUYdTWvfiuXntGqAa+lFG1A1YsXQxUg8yQTIwUD/siNtg4hp0AWy
- GHvQ==
+ bh=NBOnBkxFaEwe2K3Bn4cTXQl/fQtmv3u9jbbXCvu41Ds=;
+ b=CV80/sSCt7fcdxW7SHqsAhpP0WvRn2SAnhwqWqd9xmyGY1CBuCo3jYaI7HdeTeIxU2
+ 3PpN7JrrpzUrwDlzxjZfMSo9mIN6lck+bRkcK/vAHENofMxGZJCh0er3OaiKTrFIwE5a
+ mYeq5pRs57nOszvmfPEKXuxvGlzDgXwSk9OC5tvz560IlQG5+ETNQpXWLzOT9oIAQy2n
+ FM2+WZZ+j2AghYY4zTGfA5h/omm68iiCRIKEzkmB2hMTVUNTa7WpBAhkY+SxGh8nGW9G
+ 9F1NURy7DmMqroeirMGOR++uYpz5j5RRmak13FldAwhls9gRKTUbBdnooqKZQbfuUbuq
+ BwMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756256843; x=1756861643;
+ d=1e100.net; s=20230601; t=1756257096; x=1756861896;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CiTPcH4cN132XrAlCNyqqTcsX5/+34SY6jW1V2d9z4Y=;
- b=HI+mbdFMgrmDuGaWFiUPqJ3DH3f0EeiH06Jh+MpllLWSD8tN2FS9UkcZ/Ckwe2yYav
- umpk8nqTq292p3Rsu/8TrjzqcRLOcjmhB/RN17gMuQkg8jvD2TdsAtzVbgOlh6hmOqfF
- 91QtMmyATdwLpJPpUNzWdHpYV6IHMly7tMK5we+6s2LCn61QqlgvjwsNvTzTzmQR/9yh
- 79s9rKHD/QIRzt4Drw61LQt9Fe9vS1eeWn4O5+CSIHzQy5jqgm83DgQYmexO8PO3Ktpr
- HKpXu39apUXGjlYA9crZZWHHvjMZtjF4higcikl0KXa3R4uz+xVIamxBsX8d0ofFuKle
- 4GXA==
-X-Gm-Message-State: AOJu0YxaJ6wIsXrQwjPu2rYMdHc86WveiJkSanehACHui89Cd9aLob1f
- 3pDMZ5Uc6RZ3Xn8lk1hUflJE7QJjYS9O0ZEMrJ1shVryEAKthjGv7Ks6stC4bTYOuUHkVHo1+QR
- v7ZTRLrc=
-X-Gm-Gg: ASbGncsQdaJ09kx+/0S/8855E810C3ixw9G7mHujoVXuTCMzKLI6lXv2u4cVP5btrrL
- 9w9lbmTVZ8e9bWCrJQoRYvzod9LR7WHWg04RLDs2iaLuAdmgCRFIKyMzh0LMOYGH1ogGquoXeMq
- ORXBie3Rv6H49D2kmg70ylZh0kWr845Eu5Mt8ZSc+HNWqGkbDB2FwHo/Jt61HCIXY+rRKHcBK7k
- YfNGZn+9PvwmzcMU6jD9Vm2owjTUy5NyRsfwEnNv3k98eZSLdAZfx7CYCyNILQzKkIS+ercEPrA
- HBzpYTtmua93zJs/j9S8S72pk62qLB6vDirER3/TokBhGMPOw6XtBiliEJeyeoyRMEc527Os9dQ
- ZPWM0XYMZ3ROYrZnUWEDjlMMwMZyKIhKL9roN
-X-Google-Smtp-Source: AGHT+IFQVDWFOeS/wZ1LS5SwKVdpALVIw+/wXO+QLvv7MNvP1FXnvJv+ieUAx4+DxhLleFXj4N2waA==
-X-Received: by 2002:a05:6a00:391f:b0:76e:99fc:db8d with SMTP id
- d2e1a72fcca58-7702fa08e63mr20625201b3a.3.1756256842850; 
- Tue, 26 Aug 2025 18:07:22 -0700 (PDT)
+ bh=NBOnBkxFaEwe2K3Bn4cTXQl/fQtmv3u9jbbXCvu41Ds=;
+ b=Xf/TQR3Kqkioa5TRMk2uku4ioTSYuPrSqlxCYio2W948G7dXDHKDUHJzlAzCVTLk1p
+ sDfMRmg184TNiX6lR+lL0ntPXN3aGyQ+gHO1grr0WDjaaLTDWPSEyxlxILMd1s4cEXal
+ pwtZZHNs4apLTLC1qDqTUHQLtLBgo6pLvuAL4wWJdQ9UHrNb1B/KaEXUbsH+fzt6PQeM
+ 1iRgIpZ1oDonpV4GfWOW//sZ98dCcJSJV0uhilS22G9YggzXz15azyl6JCb2YTfv4XrK
+ 5+KYaBdLPHZv1ja304hxJQYxvYatDVnSQJD5i4pXid6GU+k5jZcI+sRvDcWRHAa+TlHI
+ BbPg==
+X-Gm-Message-State: AOJu0YyD4budhoP8HtJ5TjSyy3lTGMZAL+sddI6K6Cjlr2RywqNcQ9Go
+ MCTS7RoB04j951wf1dOBtFjHCGL1jxr0Npi81Nt4Uv1P+sG9CA3Gu8szEGjqwHbMuxFTK38EwvG
+ Upw2VJBc=
+X-Gm-Gg: ASbGnctbFfRTcV07K+L78KDI/SAQzHVjSqIfz3PWtqRtz96YbtTLegkbzr8NQPuzh/X
+ 6Zmp32LwJBX6HiPl2EREM91uizoDDzFyeyNKbMkV8xrAyyVsF/KjYy39iQA92qQz4OT8N9hY4bL
+ al34d/zZw6zfiZ1+FtOmcRMaiXWBeZs3wmMSBCeZcrgFculm1s6+cQQr9QFm4IOAqnPc7Vw6ziC
+ J3Wm+ikSDnNTJlP+7iI/JpGqdqjc/JD27fWXlulVt1v6/vfi7e9TwvgqVOe7hhDGhquP7SbgRJo
+ yx2mwJczjreIU2wbcTPCKvfEUt7inUhlzuvhm4fsfZBLH1RrxOqVbN+yLCmFcACZA7gCnqUdkyf
+ jmMbpj6ZS9BDxgElpgYrVaZorOqiGLEM21Ikr
+X-Google-Smtp-Source: AGHT+IH/zMfczHEuoM7jzSkWFJSo4yMbbQ7zHhsJ/G+n+LuTnOIoWsq+VUUjnfR0aMph1uP23F3TZw==
+X-Received: by 2002:a17:902:e784:b0:246:42a9:d38b with SMTP id
+ d9443c01a7336-24642a9d45fmr162358605ad.21.1756257095733; 
+ Tue, 26 Aug 2025 18:11:35 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7720274534esm1419241b3a.47.2025.08.26.18.07.14
+ d2e1a72fcca58-771f2b2d2bfsm4348408b3a.93.2025.08.26.18.11.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 18:07:22 -0700 (PDT)
+ Tue, 26 Aug 2025 18:11:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 25/61] target/arm: Split out alloc_cpreg
-Date: Wed, 27 Aug 2025 11:04:16 +1000
-Message-ID: <20250827010453.4059782-30-richard.henderson@linaro.org>
+Subject: [PATCH 48/61] target/arm: Migrate cpreg128 registers
+Date: Wed, 27 Aug 2025 11:04:39 +1000
+Message-ID: <20250827010453.4059782-53-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827010453.4059782-1-richard.henderson@linaro.org>
 References: <20250827010453.4059782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,67 +99,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Include provision for a name suffix.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ target/arm/machine.c | 50 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index a4cd4cf232..0e4be14606 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -7263,6 +7263,28 @@ void register_cp_regs_for_features(ARMCPU *cpu)
- #endif
- }
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 6986915bee..35ff28cc30 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -868,6 +868,34 @@ static const VMStateInfo vmstate_powered_off = {
+     .put = put_power,
+ };
  
-+/*
-+ * Copy a ARMCPRegInfo structure, allocating it along with the name
-+ * and an optional suffix to the name.
-+ */
-+static ARMCPRegInfo *alloc_cpreg(const ARMCPRegInfo *in,
-+                                 const char *name, const char *suffix)
++static bool sysreg128_needed(void *opaque)
 +{
-+    size_t name_len = strlen(name);
-+    size_t suff_len = suffix ? strlen(suffix) : 0;
-+    ARMCPRegInfo *out = g_malloc(sizeof(*in) + name_len + suff_len + 1);
-+    char *p = (char *)(out + 1);
-+
-+    *out = *in;
-+    out->name = p;
-+
-+    memcpy(p, name, name_len + 1);
-+    if (suffix) {
-+        memcpy(p + name_len, suffix, suff_len + 1);
-+    }
-+    return out;
++    ARMCPU *cpu = opaque;
++    return cpu->cpreg128_array_len != 0;
 +}
 +
- /*
-  * Private utility function for define_one_arm_cp_reg():
-  * add a single reginfo struct to the hash table.
-@@ -7275,7 +7297,6 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, const ARMCPRegInfo *r,
-     CPUARMState *env = &cpu->env;
-     ARMCPRegInfo *r2;
-     bool ns = secstate & ARM_CP_SECSTATE_NS;
--    size_t name_len;
++static const VMStateDescription vmstate_sysreg128 = {
++    .name = "cpu/sysreg128",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sysreg128_needed,
++    .fields = (const VMStateField[]) {
++        /*
++         * The length-check must come before the arrays to avoid
++         * incoming data possibly overflowing the array.
++         */
++        VMSTATE_INT32_POSITIVE_LE(cpreg128_vmstate_array_len, ARMCPU),
++        VMSTATE_VARRAY_INT32(cpreg128_vmstate_indexes, ARMCPU,
++                             cpreg128_vmstate_array_len,
++                             0, vmstate_info_uint64, uint64_t),
++        VMSTATE_VARRAY_INT32(cpreg128_vmstate_values, ARMCPU,
++                             cpreg128_vmstate_array_len,
++                             0, vmstate_info_int128, Int128),
++
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static int cpu_pre_save(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+@@ -900,6 +928,12 @@ static int cpu_pre_save(void *opaque)
+     memcpy(cpu->cpreg_vmstate_values, cpu->cpreg_values,
+            cpu->cpreg_array_len * sizeof(uint64_t));
  
-     /* Overriding of an existing definition must be explicitly requested. */
-     if (!(r->type & ARM_CP_OVERRIDE)) {
-@@ -7285,11 +7306,7 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, const ARMCPRegInfo *r,
-         }
++    cpu->cpreg128_vmstate_array_len = cpu->cpreg128_array_len;
++    memcpy(cpu->cpreg128_vmstate_indexes, cpu->cpreg128_indexes,
++           cpu->cpreg128_array_len * sizeof(uint64_t));
++    memcpy(cpu->cpreg128_vmstate_values, cpu->cpreg128_values,
++           cpu->cpreg128_array_len * sizeof(Int128));
++
+     return 0;
+ }
+ 
+@@ -994,6 +1028,21 @@ static int cpu_post_load(void *opaque, int version_id)
+         v++;
      }
  
--    /* Combine cpreg and name into one allocation. */
--    name_len = strlen(name) + 1;
--    r2 = g_malloc(sizeof(*r2) + name_len);
--    *r2 = *r;
--    r2->name = memcpy(r2 + 1, name, name_len);
-+    r2 = alloc_cpreg(r, name, NULL);
- 
-     /*
-      * Update fields to match the instantiation, overwiting wildcards
++    for (i = 0, v = 0; i < cpu->cpreg128_array_len
++             && v < cpu->cpreg128_vmstate_array_len; i++) {
++        if (cpu->cpreg128_vmstate_indexes[v] > cpu->cpreg128_indexes[i]) {
++            /* register in our list but not incoming : skip it */
++            continue;
++        }
++        if (cpu->cpreg128_vmstate_indexes[v] < cpu->cpreg128_indexes[i]) {
++            /* register in their list but not ours: fail migration */
++            return -1;
++        }
++        /* matching register, copy the value over */
++        cpu->cpreg128_values[i] = cpu->cpreg128_vmstate_values[v];
++        v++;
++    }
++
+     if (kvm_enabled()) {
+         if (!kvm_arm_cpu_post_load(cpu)) {
+             return -1;
+@@ -1119,6 +1168,7 @@ const VMStateDescription vmstate_arm_cpu = {
+         &vmstate_serror,
+         &vmstate_irq_line_state,
+         &vmstate_wfxt_timer,
++        &vmstate_sysreg128,
+         NULL
+     }
+ };
 -- 
 2.43.0
 
