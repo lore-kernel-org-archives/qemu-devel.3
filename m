@@ -4,125 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F99CCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 08:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E4B8CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 08:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urBHE-0007L3-3b; Wed, 27 Aug 2025 04:13:04 -0400
+	id 1urBHj-0008Qk-Aq; Wed, 27 Aug 2025 04:13:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1urBHC-0007Ct-6g
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:13:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1urBHe-0008Kh-3c
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:13:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1urBH7-0004xB-Vm
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:13:01 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1urBHZ-00051v-MW
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:13:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756282369;
+ s=mimecast20190719; t=1756282404;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=H/00J/+IDLSRiwp7fmEW0WLqPAQqXOv2laMkrbaaiis=;
- b=XMjqxzrf2DEdapuaWMgCnI+uN7rciPnmYj1SSF/wfKvB8BnPKycWt+rDLrg3GrtslwX0bx
- hh+BSTZcZuBR6B72aH6pS4LsNCj9Safz4jbMy0PtX8h+5oXhZbODd7LdFf4VICb7KOlYiO
- 4R8ECA9BamwwsyrAPgx1eTXAlHzdsFo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-396-pUbbvGK_MRS1jFwOU-nRLQ-1; Wed, 27 Aug 2025 04:12:47 -0400
-X-MC-Unique: pUbbvGK_MRS1jFwOU-nRLQ-1
-X-Mimecast-MFC-AGG-ID: pUbbvGK_MRS1jFwOU-nRLQ_1756282366
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45b645707f1so11466555e9.0
- for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 01:12:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756282366; x=1756887166;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H/00J/+IDLSRiwp7fmEW0WLqPAQqXOv2laMkrbaaiis=;
- b=Y8U+Zj9hrlA7O1lDh5OZSRu3J8g7kPDVfCsKSnjyDV7lDDY8YV6kyhFeh9kHy0bNAU
- Fk44NF0z1fC0UNLaelJpX2jtiE+jl7AEV3yEFsS1MW/BkAESPyBIg6oCDNSg9EhQWgWT
- G1RAdyTpsG+GCHGa8QBOqvci2aleXC1DIyXCB8QCbCw1yDcR51lvRfNEl3B1DrtI0QhN
- 7e086CT9ezA8R46OACRzE6frpf6Q7MITFUkBDR9y6R95jyI1UkWo0o961fPux9yietis
- B6nqpRqFh5VAAeCXiVYipQwiBBp7jgv4oK4I13vhn73iYIzR+hnTxIJGw6l45dBVVEfv
- mrAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDtzyQxL8LQViro8kmM7QTOaDDGDSLdUFrYuplHB12s16lLAmuwdOltY1rmDe9XOlLbShsa5f4iwJm@nongnu.org
-X-Gm-Message-State: AOJu0YwDGzYb6Y/BOAMatFeBLnm7xepOxpEfx09RZ6NfjW8k7xgprK4b
- ruMdUFDhvF5NTYFZTC4EbovhtXXSdGKAY8IWPgZNefczAJvN9uIW4XmT0hPA9i1vnwm8pGIPGba
- FIW3NkNdML9cgLsO7DBGrbTKKGC9PXqeMea+HWcvcl3zhoIY3wsrcFMId
-X-Gm-Gg: ASbGncu95PWPt9/vnTIykB+71OyugQES/T7+0hP4PrnyfazLX2FJq/C5oUY+hltus1T
- ZV4D6bodDHgioi8Ub0sI3OkRG2VUa4W/KSn6DyIhFRDlIxP0Gzrc2YHa811yiBKn5MIo2Ko7puH
- hJPBDZPT0mvWQEhIokM8eiWZHwQZa4qOnJQxxunO80j3PzeVR3gBoXHlZVEeQeERS5LyFU3FawS
- lGdGHfFErT6i0ieCYAixxjXZQY49TdIkdCsv+eYnxgpMbP6pcVw0RC/xVJidOY8rehb5axexBx2
- 0F1TBqNvIrZjeYSXwOLPy7aI0I0SlVeMWnpbjukevOcpVas8gmz/kY2eNIcvlFDlYhzOJoRks6/
- sJVCLfO49lm4DOOnT+S/H5x4WRjPO1Y53mTNINFpSoCE=
-X-Received: by 2002:a05:6000:400e:b0:3b7:9c79:32ac with SMTP id
- ffacd0b85a97d-3c5ddd7f89amr13751382f8f.52.1756282366454; 
- Wed, 27 Aug 2025 01:12:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6yECmmyD2j0y4jqiOod+K6ZDzigy4+k+jUZso+vj0lOok1lnFqtEvWjaX7d+gFI9D+RMQLQ==
-X-Received: by 2002:a05:6000:400e:b0:3b7:9c79:32ac with SMTP id
- ffacd0b85a97d-3c5ddd7f89amr13751348f8f.52.1756282366010; 
- Wed, 27 Aug 2025 01:12:46 -0700 (PDT)
-Received: from [192.168.10.27] ([151.95.56.250])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3ca6240b4f9sm10318099f8f.15.2025.08.27.01.12.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Aug 2025 01:12:45 -0700 (PDT)
-Message-ID: <3d7f2ebe-111a-4858-a014-4e82872c0e88@redhat.com>
-Date: Wed, 27 Aug 2025 10:12:44 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=J0sJo/EOc+Q0sH52yHHjDp1WFnjCFWmnxBjE7uvB35g=;
+ b=eYYluCneAZKhyfWc6AO3w5A2EQMHqR6DiEMPve5+ChPpDx7UQa09UYKQRljcVK5RhXEd/j
+ MEFNkZaDEILJfC0uPbicmvg7GCSttfHyahVUV45Rz4LeKGHSv3Zde/AYkpj5DqIxhTi7Yt
+ FXCOEWvR3gxupY7sAoy4W2pdbQ0xGO0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-aZ4hcrHIMVWF6WPf7nQQXQ-1; Wed,
+ 27 Aug 2025 04:13:20 -0400
+X-MC-Unique: aZ4hcrHIMVWF6WPf7nQQXQ-1
+X-Mimecast-MFC-AGG-ID: aZ4hcrHIMVWF6WPf7nQQXQ_1756282399
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F1F3619541A0; Wed, 27 Aug 2025 08:13:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 540ED30001A8; Wed, 27 Aug 2025 08:13:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A929221E6A27; Wed, 27 Aug 2025 10:13:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,  Jason
+ Wang <jasowang@redhat.com>,  Andrew Melnychenko <andrew@daynix.com>,  Yuri
+ Benditovich <yuri.benditovich@daynix.com>
+Subject: Re: ebpf functions can fail without setting an error
+In-Reply-To: <2de22a4d-3e09-466a-ae66-e07c77c9532e@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 25 Aug 2025 15:27:14
+ +0200")
+References: <87ectns27j.fsf@pond.sub.org> <aKRWZwvbWzA0QbA_@redhat.com>
+ <87sehfsife.fsf@pond.sub.org>
+ <2de22a4d-3e09-466a-ae66-e07c77c9532e@linaro.org>
+Date: Wed, 27 Aug 2025 10:13:15 +0200
+Message-ID: <87bjo1kwro.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] tcg/i386: Improve 8-bit shifts with VGF2P8AFFINEQB
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250809234208.12158-1-richard.henderson@linaro.org>
- <31647a8c-60b7-4e27-b89f-6d1709331ec0@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <31647a8c-60b7-4e27-b89f-6d1709331ec0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -147,40 +92,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/25 09:26, Richard Henderson wrote:
-> On 8/10/25 09:42, Richard Henderson wrote:
->> x86 doesn't directly support 8-bit vector shifts, so we have
->> some 2 to 5 insn expansions.  With VGF2P8AFFINEQB, we can do
->> it in 1 insn, plus a (possibly shared) constant load.
->>
->>
->> r~
->>
->>
->> Richard Henderson (3):
->>    cpuinfo/i386: Detect GFNI as an AVX extension
->>    tcg/i386: Add INDEX_op_x86_vgf2p8affineqb_vec
->>    tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts
->>
->>   host/include/i386/host/cpuinfo.h |  1 +
->>   include/qemu/cpuid.h             |  3 ++
->>   util/cpuinfo-i386.c              |  1 +
->>   tcg/i386/tcg-target-opc.h.inc    |  1 +
->>   tcg/i386/tcg-target.c.inc        | 81 ++++++++++++++++++++++++++++++--
->>   5 files changed, 83 insertions(+), 4 deletions(-)
->>
-> 
-> Ping.
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-I don't know the target-independent part of TCG, but arithmetic right 
-shift by 7 probably should keep using pcmpgtb?
+> On 25/8/25 14:19, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>>> On Thu, Aug 07, 2025 at 03:14:56PM +0200, Markus Armbruster wrote:
+>>>> Three functions in ebpf_rss.h take an Error ** argument and return boo=
+l.
+>>>> Good.
+>>>>
+>>>> They can all fail without setting an error.  Not good.
+>>>>
+>>>> The failures without error are:
+>>>>
+>>>> * All three stubs in ebpf_rss-stub.c always.  Oversight?
+>>>
+>>> Opps, yes, we really should have added error_setg() calls for diagnosis
+>>> if someone tries to use eBPF when QEMU build has it disabled.
+>>=20
+>> Some stubs exist only to mollify the linker.  They are not meant to be
+>> called.  They should abort(), optionally with lipstick.
+>
+> When a host feature availability is known a compile time.
+>
+> These should be guarded with a if (feature_enabled()) to allow the
+> compiler to elide the call, thus removing the need for stubs.
 
-There's also a typo in patch 1 (s/NF/FN/):
+With if (...) guards, compilers need not elide the call (although a
+sufficiently smart optimizing compiler will).  Only #if guards remove
+the need for stubs with certainty.
 
-+#ifndef bit_GNFI
-+#define bit_GNFI        (1 << 8)
-+#endif
+Guards can also be implicit.  For instance, when creation of some
+(sub-)object always fails, then all its methods are unreachable.  This
+can serve as guard for calls of stubs in the methods.
 
-Paolo
+Of course, not compiling and linking unreachable code in the first place
+is desirable, but sometimes the #if are just too bothersome.
+
+>> Other stubs are called and should fail nicely.
+>>=20
+>> Can you tell me offhand which kind these are?
+>
+> When a host feature availability is known a runtime.
+>
+>>=20
+>>>> * Non-stub ebpf_rss_load() when ebpf_rss_is_loaded().  Are these
+>>>>   reachable?
+
+Scratch ebpf_rss_is_loaded(), it doesn't take @errp.
+
+> meson calls:
+>
+>    config_host_data.set('CONFIG_EBPF', libbpf.found())
+>
+> (even QAPI uses CONFIG_EBPF, see qapi/ebpf.json).
+
+Yes.
+
+C code doesn't use CONFIG_EBPF.  Instead, compilation of certain C files
+is conditional on the libbpf Meson dependency.
+
+> The user API is via the 'ebpf-rss-fds' property,
+> evaluated in virtio_net_load_ebpf_fds() without returning
+> any error when 1/ ebpf_rss_load_fds() fails (due to real
+> error or no CONFIG_EBPF -- the stub).
+
+If the user requested EBPF by setting the property, we call
+ebpf_rss_load_fds() via virtio_net_load_ebpf_fds().
+
+If CONFIG_EBPF, this can fail.  It sets an error then.
+
+Else, it will fail, and it won't set an error then.  Feels wrong.
+Impact unclear.  To find out I'd have to figure out how to configure
+virtio-net to make it attempt to use EBPF.
+
+> IMO if the normal implementation function sets some errp,
+> then the stub must also set it ("feature not available").
+> Otherwise such function shouldn't take an errp at all.
+
+Convention: a function taking an @errp must set its @errp exactly when
+it fails.
+
+Does not apply when it abort()s.
+
+I like unreachable stubs to abort().
+
+ebpf_rss_load() and ebpf_rss_load_fds() are only called from
+.get_features method virtio_net_get_features().  Reachability is not
+obvious.  If we assume they are reachable, we need to make the two stubs
+set an error.
+
+ebpf_rss_set_all() is only called from virtio_net_commit_rss_config()
+via virtio_net_attach_ebpf_rss().  virtio_net_attach_ebpf_rss() passes
+null @errp, i.e. the errors set by ebpf_rss_set_all() are all lost.
+virtio_net_attach_ebpf_rss() emits a generic warning on failure.  This
+is crap.  Better: virtio_net_attach_ebpf_rss() passes on the error, so
+that virtio_net_commit_rss_config() can include cause in the warning.
+
+If we do that, we also need to fix the stub to set an error.
+
+If we don't do it, we can just as well drop ebpf_rss_set_all()'s @errp
+parameter.
+
+> Reasoning valid for:
+> - ebpf_rss_load
+> - ebpf_rss_load_fds
+> - ebpf_rss_set_all
+>
+> As the name suggest, ebpf_rss_is_loaded() shouldn't be called
+> when eBPF not available, because ebpf_rss_load() would return
+> an error. Not reachable.
+>
+> Unfortunately ebpf_rss_init() doesn't return anything. "Feature
+> available" and "Initialization successful" are different cases,
+> so having it return a boolean isn't really helpful. I'd have the
+> stub assert if reached, and check the feature availability upfront.
+
+I'm not sure I follow.
+
+> Declaring ebpf_available() in "ebpf/ebpf_rss.h" as:
+>
+>    static inline bool ebpf_available(void)
+>    {
+>    #ifdef CONFIG_EBPF
+>        return true;
+>    #else
+>        return false;
+>    #endif
+>    }
+>
+> along with the prototypes, would allow the compiler to elide the callees
+> when not available, removing the need for various stubs.
+
+Only if we're willing to assume all compilers elide the calls even when
+optimization is off.
+
+>>> This scenario should never happen, and we should add a call like
+>>>
+>>>    error_setg(errp, "eBPF program is already loaded");
+>>>
+>>> to report it correctly.
+>>=20
+>> Is it a programming error when it happens?
 
 
