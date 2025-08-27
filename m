@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 541FCCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A3CBCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHlO-0000Sw-BN; Wed, 27 Aug 2025 11:08:42 -0400
+	id 1urHm1-0002zL-Hm; Wed, 27 Aug 2025 11:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHjB-0006f6-Ur; Wed, 27 Aug 2025 11:06:28 -0400
+ id 1urHjt-0007GY-I9; Wed, 27 Aug 2025 11:07:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHj9-0005L3-Um; Wed, 27 Aug 2025 11:06:21 -0400
+ id 1urHjr-0005Xc-RG; Wed, 27 Aug 2025 11:07:05 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 75B5314C547;
- Wed, 27 Aug 2025 18:02:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4E96314C552;
+ Wed, 27 Aug 2025 18:02:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 64AA126984F;
- Wed, 27 Aug 2025 18:03:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 37CCF26985A;
+ Wed, 27 Aug 2025 18:03:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [Stable-10.0.4 31/59] scripts/make-release: Go back to cloning all
- the EDK2 submodules
-Date: Wed, 27 Aug 2025 18:02:36 +0300
-Message-ID: <20250827150323.2694101-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Caleb Schlossin <calebs@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 42/59] ppc/xive2: fix context push calculation of IPB
+ priority
+Date: Wed, 27 Aug 2025 18:02:47 +0300
+Message-ID: <20250827150323.2694101-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
@@ -62,82 +64,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-In commit bd0da3a3d4f we changed make-release so that instead of
-cloning every git submodule of EDK2 we only cloned a fixed list.
-The original motivation for this was that one of the submodules:
- * was from a non-github repo
- * that repo had a "SSL certificate expired" failure
- * wasn't actually needed for the set of EDK2 binaries we build
-and at the time we were trying to build the EDK2 binaries in one of
-our CI jobs.
+Pushing a context and loading IPB from NVP is defined to merge ('or')
+that IPB into the TIMA IPB register. PIPR should therefore be calculated
+based on the final IPB value, not just the NVP value.
 
-Unfortunately this change meant that we were exposed to bugs where
-EDK2 adds a new submodule and the sources we ship in the release
-tarball won't build any more.  In particular, in EDK2 commit
-c6bb7d54beb05 the MipiSysTLib submodule was added, causing failure of
-the ROM build in our tarball starting from QEMU release 8.2.0:
-
-/tmp/qemu-10.0.0/roms/edk2/MdePkg/MdePkg.dec(32): error 000E: File/directory not found in workspace
-        Library/MipiSysTLib/mipisyst/library/include is not found in packages path:
-        /tmp/qemu-10.0.0/roms/.
-        /tmp/qemu-10.0.0/roms/edk2
-
-(Building from a QEMU git checkout works fine.)
-
-In the intervening time EDK2 moved the submodule that had a problem
-to be one they mirrored themselves (and at time of writing all their
-submodules are hosted on github), and we stopped trying to build
-EDK2 binaries in our own CI jobs with commit 690ceb71936f9037f6.
-
-Go back to cloning every EDK2 submodule, so we don't have an
-untested explicit list of submodules which will break without
-our noticing it.
-
-This increases the size of the QEMU tarball .tar.xz file from
-133M to 139M in my testing.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3041
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-ID: <20250721153341.2910800-1-peter.maydell@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit 0311a6edb9db34a41a2662d94c37e1fbaabf6ecf)
+Fixes: 9d2b6058c5b ("ppc/xive2: Add grouping level to notification")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-6-npiggin@gmail.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit d1023a296c8297454fc4b207d58707c0a5e62e0a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/make-release b/scripts/make-release
-index 8c3594a1a4..7e37ffad42 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -61,17 +61,15 @@ meson subprojects download $SUBPROJECTS
- (cd roms/skiboot && ./make_version.sh > .version)
- # Fetch edk2 submodule's submodules, since it won't have access to them via
- # the tarball later.
--#
--# A more uniform way to handle this sort of situation would be nice, but we
--# don't necessarily have much control over how a submodule handles its
--# submodule dependencies, so we continue to handle these on a case-by-case
--# basis for now.
--(cd roms/edk2 && \
--    git submodule update --init --depth 1 -- \
--        ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3 \
--        BaseTools/Source/C/BrotliCompress/brotli \
--        CryptoPkg/Library/OpensslLib/openssl \
--        MdeModulePkg/Library/BrotliCustomDecompressLib/brotli)
-+
-+# As recommended by the EDK2 readme, we don't use --recursive here.
-+# EDK2 won't use any code or feature from a submodule of a submodule,
-+# so we don't need to add them to the tarball.
-+# Although we don't necessarily need all of the submodules that EDK2
-+# has, we clone them all, to avoid running into problems where EDK2
-+# adds a new submodule or changes its use of an existing one and
-+# the sources we ship in the tarball then fail to build.
-+(cd roms/edk2 && git submodule update --init --depth 1)
- popd
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 790152a2a6..4dd04a0398 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -835,8 +835,9 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+         nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, 0);
+         xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
+     }
++    /* IPB bits in the backlog are merged with the TIMA IPB bits */
+     regs[TM_IPB] |= ipb;
+-    backlog_prio = xive_ipb_to_pipr(ipb);
++    backlog_prio = xive_ipb_to_pipr(regs[TM_IPB]);
+     backlog_level = 0;
  
- exclude=(--exclude=.git)
+     first_group = xive_get_field32(NVP2_W0_PGOFIRST, nvp.w0);
 -- 
 2.47.2
 
