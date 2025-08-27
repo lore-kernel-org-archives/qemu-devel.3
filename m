@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8423CCA0FF9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:14:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6822CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHog-0001FE-KK; Wed, 27 Aug 2025 11:12:02 -0400
+	id 1urHhH-00035H-E9; Wed, 27 Aug 2025 11:04:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHl8-0000S8-1k; Wed, 27 Aug 2025 11:08:29 -0400
+ id 1urHh3-0002xV-FQ; Wed, 27 Aug 2025 11:04:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHkz-0005qm-Kt; Wed, 27 Aug 2025 11:08:16 -0400
+ id 1urHh1-0004pF-NU; Wed, 27 Aug 2025 11:04:09 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1CE9D14C55E;
- Wed, 27 Aug 2025 18:03:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1019A14C533;
+ Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 09962269865;
- Wed, 27 Aug 2025 18:03:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E762326983B;
+ Wed, 27 Aug 2025 18:03:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Werner Fink <werner@suse.de>,
- Kevin Wolf <kwolf@redhat.com>, Martin Kletzander <mkletzan@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 53/59] qemu-iotests: Ignore indentation in Killed
- messages
-Date: Wed, 27 Aug 2025 18:02:58 +0300
-Message-ID: <20250827150323.2694101-53-mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 11/59] linux-user/strace.list: add riscv_hwprobe entry
+Date: Wed, 27 Aug 2025 18:02:16 +0300
+Message-ID: <20250827150323.2694101-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
@@ -61,117 +62,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Werner Fink <werner@suse.de>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-New bash 5.3 uses a different padding for reporting job status.
+We're missing a strace entry for riscv_hwprobe, and using -strace will
+report it as "Unknown syscall 258".
 
-Resolves: boo#1246830
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3050
-Signed-off-by: Werner Fink <werner@suse.de>
-Message-ID: <aJL8RH8ePPNEteMg@boole.nue2.suse.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Tested-by: Martin Kletzander <mkletzan@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit c0df98ab1f3d348bc05f09d1c093abc529f2b530)
+After this patch we'll have:
+
+$ ./build/qemu-riscv64 -strace test_mutex_riscv
+110182 riscv_hwprobe(0x7f207efdc700,1,0,0,0,0) = 0
+110182 brk(NULL) = 0x0000000000082000
+(...)
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250728170633.113384-1-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit e111ffe48b29ca8abd450af9ee5dd71af3f93536)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
-index e52484d4be..8fdbcc528a 100644
---- a/tests/qemu-iotests/039.out
-+++ b/tests/qemu-iotests/039.out
-@@ -11,7 +11,7 @@ No errors were found on the image.
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
- wrote 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
- incompatible_features     [0]
- ERROR cluster 5 refcount=0 reference=1
- ERROR OFLAG_COPIED data cluster: l2_entry=8000000000050000 refcount=0
-@@ -46,7 +46,7 @@ read 512/512 bytes at offset 0
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
- wrote 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
- incompatible_features     [0]
- ERROR cluster 5 refcount=0 reference=1
- Rebuilding refcount structure
-@@ -60,7 +60,7 @@ incompatible_features     []
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
- wrote 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
- incompatible_features     []
- No errors were found on the image.
- 
-@@ -79,7 +79,7 @@ No errors were found on the image.
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
- wrote 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
- incompatible_features     [0]
- ERROR cluster 5 refcount=0 reference=1
- ERROR OFLAG_COPIED data cluster: l2_entry=8000000000050000 refcount=0
-@@ -89,7 +89,7 @@ Data may be corrupted, or further writes to the image may corrupt it.
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
- wrote 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
- incompatible_features     []
- No errors were found on the image.
- *** done
-diff --git a/tests/qemu-iotests/061.out b/tests/qemu-iotests/061.out
-index 24c33add7c..951c6bf3e6 100644
---- a/tests/qemu-iotests/061.out
-+++ b/tests/qemu-iotests/061.out
-@@ -118,7 +118,7 @@ No errors were found on the image.
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
- wrote 131072/131072 bytes at offset 0
- 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
- magic                     0x514649fb
- version                   3
- backing_file_offset       0x0
-@@ -304,7 +304,7 @@ No errors were found on the image.
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
- wrote 131072/131072 bytes at offset 0
- 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
- magic                     0x514649fb
- version                   3
- backing_file_offset       0x0
-diff --git a/tests/qemu-iotests/137.out b/tests/qemu-iotests/137.out
-index 86377c80cd..e19df5b6ba 100644
---- a/tests/qemu-iotests/137.out
-+++ b/tests/qemu-iotests/137.out
-@@ -35,7 +35,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
- qemu-io: Unsupported value 'blubb' for qcow2 option 'overlap-check'. Allowed are any of the following: none, constant, cached, all
- wrote 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--./common.rc: Killed                  ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
- OK: Dirty bit not set
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
- qemu-io: Parameter 'lazy-refcounts' expects 'on' or 'off'
-diff --git a/tests/qemu-iotests/common.filter b/tests/qemu-iotests/common.filter
-index fc3c64bcb8..a8226e8b42 100644
---- a/tests/qemu-iotests/common.filter
-+++ b/tests/qemu-iotests/common.filter
-@@ -74,7 +74,7 @@ _filter_qemu_io()
- {
-     _filter_win32 | \
-     gsed -e "s/[0-9]* ops\; [0-9/:. sec]* ([0-9/.inf]* [EPTGMKiBbytes]*\/sec and [0-9/.inf]* ops\/sec)/X ops\; XX:XX:XX.X (XXX YYY\/sec and XXX ops\/sec)/" \
--        -e "s/: line [0-9][0-9]*:  *[0-9][0-9]*\( Aborted\| Killed\)/:\1/" \
-+        -e "s/: line [0-9][0-9]*:  *[0-9][0-9]*\( Aborted\| Killed\) \{2,\}/:\1 /" \
-         -e "s/qemu-io> //g"
- }
- 
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index fdf94ef32a..ab818352a9 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1716,3 +1716,6 @@
+ { TARGET_NR_clock_gettime64, "clock_gettime64" , NULL, print_clock_gettime64,
+                            print_syscall_ret_clock_gettime64 },
+ #endif
++#ifdef TARGET_NR_riscv_hwprobe
++{ TARGET_NR_riscv_hwprobe, "riscv_hwprobe" , "%s(%p,%d,%d,%d,%d,%d)", NULL, NULL },
++#endif
 -- 
 2.47.2
 
