@@ -4,38 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76AC4CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8878ECA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHgu-0002j7-Ia; Wed, 27 Aug 2025 11:04:01 -0400
+	id 1urHi2-0004cC-0I; Wed, 27 Aug 2025 11:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHgl-0002gu-0l; Wed, 27 Aug 2025 11:03:51 -0400
+ id 1urHhe-0003vq-89; Wed, 27 Aug 2025 11:04:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHgf-0004ol-Sd; Wed, 27 Aug 2025 11:03:50 -0400
+ id 1urHhb-0004tr-PX; Wed, 27 Aug 2025 11:04:45 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EA5AB14C532;
- Wed, 27 Aug 2025 18:02:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 81E4214C539;
+ Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DAD6326983A;
- Wed, 27 Aug 2025 18:03:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6D100269841;
+ Wed, 27 Aug 2025 18:03:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [Stable-10.0.4 10/59] roms/Makefile: fix npcmNxx_bootrom build rules
-Date: Wed, 27 Aug 2025 18:02:15 +0300
-Message-ID: <20250827150323.2694101-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jay Chang <jay.chang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Nutty Liu <liujingqi@lanxincomputing.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 17/59] target/riscv: Restrict midelegh access to
+ S-mode harts
+Date: Wed, 27 Aug 2025 18:02:22 +0300
+Message-ID: <20250827150323.2694101-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,42 +62,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 70ce076fa6dff60, the actual rom source dirs
-are subdirs of vbootrom/ submodule, not in top-level of it.
+From: Jay Chang <jay.chang@sifive.com>
 
-Fixes: 70ce076fa6dff60 "roms: Update vbootrom to 1287b6e"
-Fixes: 269b7effd90 ("pc-bios: Add NPCM8XX vBootrom")
+RISC-V AIA Spec states:
+"For a machine-level environment, extension Smaia encompasses all added
+CSRs and all modifications to interrupt response behavior that the AIA
+specifies for a hart, over all privilege levels. For a supervisor-level
+environment, extension Ssaia is essentially the same as Smaia except
+excluding the machine-level CSRs and behavior not directly visible to
+supervisor level."
 
-Cc: qemu-stable@nongnu.org
+Since midelegh is an AIA machine-mode CSR, add Smaia extension check in
+aia_smode32 predicate.
+
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Nutty Liu<liujingqi@lanxincomputing.com>
+Message-ID: <20250701030021.99218-3-jay.chang@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 86bc3a0abf10072081cddd8dff25aa72c60e67b8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250727215511.807880-1-mjt@tls.msk.ru>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 653a75a9d7f957c4ba9387d1a54bccfdce49cb9c)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/roms/Makefile b/roms/Makefile
-index beff58d9d5..6af68a922f 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -193,12 +193,12 @@ qboot:
- 	cp qboot/build/bios.bin ../pc-bios/qboot.rom
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 7fe6ac7ea2..66d572af1f 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -372,8 +372,11 @@ static RISCVException aia_smode(CPURISCVState *env, int csrno)
+ static RISCVException aia_smode32(CPURISCVState *env, int csrno)
+ {
+     int ret;
++    int csr_priv = get_field(csrno, 0x300);
  
- npcm7xx_bootrom:
--	$(MAKE) -C vbootrom CROSS_COMPILE=$(arm_cross_prefix)
--	cp vbootrom/npcm7xx_bootrom.bin ../pc-bios/npcm7xx_bootrom.bin
-+	$(MAKE) -C vbootrom/npcm7xx CROSS_COMPILE=$(arm_cross_prefix)
-+	cp vbootrom/npcm7xx/npcm7xx_bootrom.bin ../pc-bios/npcm7xx_bootrom.bin
+-    if (!riscv_cpu_cfg(env)->ext_ssaia) {
++    if (csr_priv == PRV_M && !riscv_cpu_cfg(env)->ext_smaia) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    } else if (!riscv_cpu_cfg(env)->ext_ssaia) {
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
  
- npcm8xx_bootrom:
--	$(MAKE) -C vbootrom CROSS_COMPILE=$(aarch64_cross_prefix)
--	cp vbootrom/npcm8xx_bootrom.bin ../pc-bios/npcm8xx_bootrom.bin
-+	$(MAKE) -C vbootrom/npcm8xx CROSS_COMPILE=$(aarch64_cross_prefix)
-+	cp vbootrom/npcm8xx/npcm8xx_bootrom.bin ../pc-bios/npcm8xx_bootrom.bin
+@@ -5832,7 +5835,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     [CSR_MVIP]     = { "mvip",     aia_any, NULL, NULL, rmw_mvip    },
  
- hppa-firmware:
- 	$(MAKE) -C seabios-hppa parisc
+     /* Machine-Level High-Half CSRs (AIA) */
+-    [CSR_MIDELEGH] = { "midelegh", aia_any32, NULL, NULL, rmw_midelegh },
++    [CSR_MIDELEGH] = { "midelegh", aia_smode32, NULL, NULL, rmw_midelegh },
+     [CSR_MIEH]     = { "mieh",     aia_any32, NULL, NULL, rmw_mieh     },
+     [CSR_MVIENH]   = { "mvienh",   aia_any32, NULL, NULL, rmw_mvienh   },
+     [CSR_MVIPH]    = { "mviph",    aia_any32, NULL, NULL, rmw_mviph    },
 -- 
 2.47.2
 
