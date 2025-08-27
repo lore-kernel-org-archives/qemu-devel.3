@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E51CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C72BCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHge-0002dQ-H9; Wed, 27 Aug 2025 11:03:44 -0400
+	id 1urHhS-0003VZ-6K; Wed, 27 Aug 2025 11:04:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHgc-0002be-I7; Wed, 27 Aug 2025 11:03:42 -0400
+ id 1urHhH-00036J-FQ; Wed, 27 Aug 2025 11:04:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHga-0004nh-KG; Wed, 27 Aug 2025 11:03:42 -0400
+ id 1urHhF-0004tU-31; Wed, 27 Aug 2025 11:04:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BC94914C52F;
- Wed, 27 Aug 2025 18:02:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F7E814C538;
+ Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8F5B269837;
- Wed, 27 Aug 2025 18:03:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5AA7D269840;
+ Wed, 27 Aug 2025 18:03:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 07/59] target/mips: Only update MVPControl.EVP bit if
- executed by master VPE
-Date: Wed, 27 Aug 2025 18:02:12 +0300
-Message-ID: <20250827150323.2694101-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jay Chang <jay.chang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Nutty Liu <liujingqi@lanxincomputing.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 16/59] target/riscv: Restrict mideleg/medeleg/medelegh
+ access to S-mode harts
+Date: Wed, 27 Aug 2025 18:02:21 +0300
+Message-ID: <20250827150323.2694101-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,79 +62,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+From: Jay Chang <jay.chang@sifive.com>
 
-According to the 'MIPS MT Application-Speciﬁc Extension' manual:
+RISC-V Privileged Spec states:
+"In harts with S-mode, the medeleg and mideleg registers must exist, and
+setting a bit in medeleg or mideleg will delegate the corresponding trap
+, when occurring in S-mode or U-mode, to the S-mode trap handler. In
+harts without S-mode, the medeleg and mideleg registers should not
+exist."
 
-  If the VPE executing the instruction is not a Master VPE,
-  with the MVP bit of the VPEConf0 register set, the EVP bit
-  is unchanged by the instruction.
+Add smode predicate to ensure these CSRs are only accessible when S-mode
+is supported.
 
-Modify the DVPE/EVPE opcodes to only update the MVPControl.EVP bit
-if executed on a master VPE.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Hansni Bu
-Buglink: https://bugs.launchpad.net/qemu/+bug/1926277
-Fixes: f249412c749 ("mips: Add MT halting and waking of VPEs")
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Message-ID: <20210427133343.159718-1-f4bug@amsat.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit e895095c78ab877d40df2dd31ee79d85757d963b)
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Nutty Liu<liujingqi@lanxincomputing.com>
+Message-ID: <20250701030021.99218-2-jay.chang@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit e443ba03361b63218e6c3aa4f73d2cb5b9b1d372)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
-index 78e422b0ca..97b7fb5e67 100644
---- a/target/mips/tcg/system/cp0_helper.c
-+++ b/target/mips/tcg/system/cp0_helper.c
-@@ -1561,12 +1561,14 @@ target_ulong helper_dvpe(CPUMIPSState *env)
-     CPUState *other_cs = first_cpu;
-     target_ulong prev = env->mvp->CP0_MVPControl;
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index f1c4c8c1b8..7fe6ac7ea2 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5783,8 +5783,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+                           NULL,                read_mstatus_i128           },
+     [CSR_MISA]        = { "misa",       any,   read_misa,    write_misa,
+                           NULL,                read_misa_i128              },
+-    [CSR_MIDELEG]     = { "mideleg",    any,   NULL, NULL,   rmw_mideleg   },
+-    [CSR_MEDELEG]     = { "medeleg",    any,   read_medeleg, write_medeleg },
++    [CSR_MIDELEG]     = { "mideleg",    smode,   NULL, NULL,   rmw_mideleg   },
++    [CSR_MEDELEG]     = { "medeleg",    smode,   read_medeleg, write_medeleg },
+     [CSR_MIE]         = { "mie",        any,   NULL, NULL,   rmw_mie       },
+     [CSR_MTVEC]       = { "mtvec",      any,   read_mtvec,   write_mtvec   },
+     [CSR_MCOUNTEREN]  = { "mcounteren", umode, read_mcounteren,
+@@ -5792,7 +5792,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
  
--    CPU_FOREACH(other_cs) {
--        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
--        /* Turn off all VPEs except the one executing the dvpe.  */
--        if (&other_cpu->env != env) {
--            other_cpu->env.mvp->CP0_MVPControl &= ~(1 << CP0MVPCo_EVP);
--            mips_vpe_sleep(other_cpu);
-+    if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
-+        CPU_FOREACH(other_cs) {
-+            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
-+            /* Turn off all VPEs except the one executing the dvpe.  */
-+            if (&other_cpu->env != env) {
-+                other_cpu->env.mvp->CP0_MVPControl &= ~(1 << CP0MVPCo_EVP);
-+                mips_vpe_sleep(other_cpu);
-+            }
-         }
-     }
-     return prev;
-@@ -1577,15 +1579,17 @@ target_ulong helper_evpe(CPUMIPSState *env)
-     CPUState *other_cs = first_cpu;
-     target_ulong prev = env->mvp->CP0_MVPControl;
- 
--    CPU_FOREACH(other_cs) {
--        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
-+    if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
-+        CPU_FOREACH(other_cs) {
-+            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
- 
--        if (&other_cpu->env != env
--            /* If the VPE is WFI, don't disturb its sleep.  */
--            && !mips_vpe_is_wfi(other_cpu)) {
--            /* Enable the VPE.  */
--            other_cpu->env.mvp->CP0_MVPControl |= (1 << CP0MVPCo_EVP);
--            mips_vpe_wake(other_cpu); /* And wake it up.  */
-+            if (&other_cpu->env != env
-+                /* If the VPE is WFI, don't disturb its sleep.  */
-+                && !mips_vpe_is_wfi(other_cpu)) {
-+                /* Enable the VPE.  */
-+                other_cpu->env.mvp->CP0_MVPControl |= (1 << CP0MVPCo_EVP);
-+                mips_vpe_wake(other_cpu); /* And wake it up.  */
-+            }
-         }
-     }
-     return prev;
+     [CSR_MSTATUSH]    = { "mstatush",   any32, read_mstatush,
+                           write_mstatush                                   },
+-    [CSR_MEDELEGH]    = { "medelegh",   any32, read_zero, write_ignore,
++    [CSR_MEDELEGH]    = { "medelegh",   smode32, read_zero, write_ignore,
+                           .min_priv_ver = PRIV_VERSION_1_13_0              },
+     [CSR_HEDELEGH]    = { "hedelegh",   hmode32, read_hedelegh, write_hedelegh,
+                           .min_priv_ver = PRIV_VERSION_1_13_0              },
 -- 
 2.47.2
 
