@@ -4,72 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22CCCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 14:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E598CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:04:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHcI-0000H2-Eu; Wed, 27 Aug 2025 10:59:14 -0400
+	id 1urHgS-0002T6-PK; Wed, 27 Aug 2025 11:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1urHcG-0000GA-OW; Wed, 27 Aug 2025 10:59:13 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1urHgQ-0002RU-B6; Wed, 27 Aug 2025 11:03:30 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1urHcE-0003xk-Tv; Wed, 27 Aug 2025 10:59:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756306752; x=1787842752;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=sMfQvAzQJILc1q4t6dp+HRnBN19H6kuEgUBH+TWMMpI=;
- b=a07oTnel4Z05jUJBR7Y6zIhvV5uerYz+QAF4JtLO1oNL+D6q1jEEhG+E
- OfogiEV2u2BRYEJ6XRbLL8GmySVWt7h5pozUEowuj/Zie/rbNjiVAloII
- ZG0m5AF3K6NqCUXQiTX4R18NtWEl5A6MePi6TyDa/mRQP67Y6QebLlkkE
- leL7coafExKevt2rtOfTLOPlJV8XHVVyjpFFdC1RTWShvhrq4AEhLfXq6
- PgNTfJJ6E2nuueYskpnJBw5HPNbzyqCnyuxC68bs7nwgtm7gDGzdJLQ48
- xIC6qqLzq/LiXwkSOuwCzoYLjrPBifuj5ovU7jItQOm+omvCugUOJhsrj w==;
-X-CSE-ConnectionGUID: C+OYgAN7QYSJA5nkUk0f8g==
-X-CSE-MsgGUID: j2Rcg55JTDGdrMTXvXeWaw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11535"; a="76010512"
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="76010512"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Aug 2025 07:59:08 -0700
-X-CSE-ConnectionGUID: VqV8Pg+/Q621rNqjsBje6w==
-X-CSE-MsgGUID: /X7jZCHJQDyopAcpdnNYtQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; d="scan'208";a="169111490"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 27 Aug 2025 07:59:05 -0700
-Date: Wed, 27 Aug 2025 23:20:52 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- pbonzini@redhat.com, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 05/22] rust: split Rust-only "common" crate
-Message-ID: <aK8iVBVe8NgGnmm1@intel.com>
-References: <20250827104147.717203-1-marcandre.lureau@redhat.com>
- <20250827104147.717203-6-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1urHgN-0004ja-9B; Wed, 27 Aug 2025 11:03:29 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4F16C14C529;
+ Wed, 27 Aug 2025 18:02:56 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3AFC1269831;
+ Wed, 27 Aug 2025 18:03:23 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 01/59] host-utils: Drop workaround for buggy Apple
+ Clang __builtin_subcll()
+Date: Wed, 27 Aug 2025 18:02:06 +0300
+Message-ID: <20250827150323.2694101-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
+References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250827104147.717203-6-marcandre.lureau@redhat.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,31 +64,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 27, 2025 at 02:41:27PM +0400, marcandre.lureau@redhat.com wrote:
-> Date: Wed, 27 Aug 2025 14:41:27 +0400
-> From: marcandre.lureau@redhat.com
-> Subject: [PATCH 05/22] rust: split Rust-only "common" crate
-> 
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
+From: Peter Maydell <peter.maydell@linaro.org>
 
-...
+In commit b0438861efe ("host-utils: Avoid using __builtin_subcll on
+buggy versions of Apple Clang") we added a workaround for a bug in
+Apple Clang 14 where its __builtin_subcll() implementation was wrong.
+This bug was only present in Apple Clang 14, not in upstream clang,
+and is not present in Apple Clang versions 15 and newer.
 
-> diff --git a/rust/common/Cargo.toml b/rust/common/Cargo.toml
-> new file mode 100644
-> index 0000000000..5e106427e8
-> --- /dev/null
-> +++ b/rust/common/Cargo.toml
-> @@ -0,0 +1,19 @@
-> +[package]
-> +name = "common"
-> +version = "0.1.0"
-> +description = "Rust common code for QEMU"
+Since commit 4e035201 we have required at least Apple Clang 15, so we
+no longer build with the buggy versions.  We can therefore drop the
+workaround. This is effectively a revert of b0438861efe.
 
-Meybe "Rust-only common code for QEMU"
+This should not be backported to stable branches, which may still
+need to support Apple Clang 14.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3030
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
+Message-id: 20250714145033.1908788-1-peter.maydell@linaro.org
+(cherry picked from commit e74aad9f81cc2bfee2057086610e21bd98e9c5a5)
+(Mjt: 10.0 already requres clang 15+, so it's okay to backport
+ this change to 10.0 branch)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+index 496dac5ac1..33b425dcf3 100644
+--- a/include/qemu/compiler.h
++++ b/include/qemu/compiler.h
+@@ -182,19 +182,6 @@
+ #define QEMU_DISABLE_CFI
+ #endif
+ 
+-/*
+- * Apple clang version 14 has a bug in its __builtin_subcll(); define
+- * BUILTIN_SUBCLL_BROKEN for the offending versions so we can avoid it.
+- * When a version of Apple clang which has this bug fixed is released
+- * we can add an upper bound to this check.
+- * See https://gitlab.com/qemu-project/qemu/-/issues/1631
+- * and https://gitlab.com/qemu-project/qemu/-/issues/1659 for details.
+- * The bug never made it into any upstream LLVM releases, only Apple ones.
+- */
+-#if defined(__apple_build_version__) && __clang_major__ >= 14
+-#define BUILTIN_SUBCLL_BROKEN
+-#endif
+-
+ #if __has_attribute(annotate)
+ #define QEMU_ANNOTATE(x) __attribute__((annotate(x)))
+ #else
+diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
+index 4d28fa22cf..dd558589cb 100644
+--- a/include/qemu/host-utils.h
++++ b/include/qemu/host-utils.h
+@@ -677,7 +677,7 @@ static inline uint64_t uadd64_carry(uint64_t x, uint64_t y, bool *pcarry)
+  */
+ static inline uint64_t usub64_borrow(uint64_t x, uint64_t y, bool *pborrow)
+ {
+-#if __has_builtin(__builtin_subcll) && !defined(BUILTIN_SUBCLL_BROKEN)
++#if __has_builtin(__builtin_subcll)
+     unsigned long long b = *pborrow;
+     x = __builtin_subcll(x, y, b, &b);
+     *pborrow = b & 1;
+-- 
+2.47.2
 
 
