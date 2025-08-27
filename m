@@ -4,92 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70016CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 04:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C010FC8303F
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 05:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur88N-0007Lb-Hs; Wed, 27 Aug 2025 00:51:44 -0400
+	id 1ur8m8-0002U1-VQ; Wed, 27 Aug 2025 01:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur88L-0007LK-TZ
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 00:51:42 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur88G-0008Iu-CU
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 00:51:41 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-324fb2bb058so4747210a91.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 21:51:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756270291; x=1756875091; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3bNPfUocClaAiiuisWVX53oIO7+rfN2/xpiwTvrSO4s=;
- b=sXIvVVRz05IULH2MY2MUH1OmXw/jEqkUmDtB02CUKcxfBVRhbr00rRD7Ln22BhDR8q
- cMpW2jAZ3fJy2JK1VanuNl5yZ9Qjml1WpwYIxS0FTNDuppTqIqNa6uIuAALIm2aVNIUQ
- ENiA4U6vPZzW0m2OkILgl3sU9CumkpWolV6Ee86LeLnAOYYP7uPYVc3woMXEC/ZguYFO
- Zf13wSXQQKfbYD9rWYjCdeYT29yXkCshMEiThN6LT2xUueOC3Bfkd1VbT16h+xS6QQga
- 5B9j2tzgv9qWtJ0Uo1oOf3guJt5AfxJthlgCwiCtaXkOCqwvrsD1AYOUxwha242ZS9X0
- cdJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756270291; x=1756875091;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3bNPfUocClaAiiuisWVX53oIO7+rfN2/xpiwTvrSO4s=;
- b=FPeYNm62TSWTxbGbCHqNytht//p5v/FDshn7lkxUXElIfZNRPtNZSw0q2GV9Ak+RaR
- 7xhhnXNjbuM/M28TXw9SqPEDb6g1FQb6bnbbrAEU47rly0LrISli69hS3yHWJxBJ85/L
- YTbM7e58UxeTsfhMHUpCw4Bc8CxNW1bhJOeo0b92FMfXSw1MoTg+ax+YU6/Hb25zr8IT
- bB9vlG9YN4H0A8XOsvXNMaDgVn9A2t/dbBzFVncSsB4cuRurJDlIej8/5Qlu27TInq4T
- Jwmv7XCqC0gpqxO0r5Y3Us9ABnv6noHJZbU/XuEP9EJqbntzXvWd79if6EDrPagy9q1C
- /FsA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKTaTxpPZdVloq6QEEroxYFYSLavhNz37FQq98WrI0w9wSDQA6U1EtDimaP42wTXBNR7IEDSMr9wpU@nongnu.org
-X-Gm-Message-State: AOJu0YwNlqYCbJ7WLi5ZYeTPo+owIdMeV8JcMAllLPfNYn4iUVk0tAW7
- b/B4zexWutnfO62159BZpAtM6Oh6BHZ8hYfeat2LosnoyMROChQaYHhdBHGwEWo6e6o=
-X-Gm-Gg: ASbGnctoYMzWqZvm9xF58II+mIVBGjG+snKMBQXUYicIAjcZAiEreYaEvlkZNt8XtcC
- PsAuVCP75l3tAFBKPW2RVNieSo1SGhaMUZTFtHf6umTrrY0nzlUTzj2loIXjiWZDsZMtyB/WWT5
- naN+93mLD2zJTm9VoYxeQyT2fYuqZ0NVH2Hfpp6ZFzEl+QwDJHFPOP8TFSgS5Sm5A8iRD7TuQUP
- YaNgQPEgN/KNk9y32r/sqiC6cXzsM/3IWdgKvjDUU5hG4tgAlLIMSdJ7wIBEln3IyhefhOER54M
- TqTjqcUwkBuYMRyciMyqWZMB0xbgcesqvWbhrmX0J49OGWYlWr6FCXP9VHf4r9DaCNh4YPay38A
- kzFhmbN7auTChczqabre6fvo/GxbogNFasbtX
-X-Google-Smtp-Source: AGHT+IFh7c446Ez3pXXYnCgmPlAQWH12fQ1ZRxVFxYMVMXvnSP2HjTKmcqaXM5iSCdNADdSXbDpU3Q==
-X-Received: by 2002:a17:90b:1fc7:b0:327:7c8e:8735 with SMTP id
- 98e67ed59e1d1-3277c8eb561mr268834a91.31.1756270290772; 
- Tue, 26 Aug 2025 21:51:30 -0700 (PDT)
-Received: from [192.168.0.195] ([144.6.121.55])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3276fcd3285sm844969a91.14.2025.08.26.21.51.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Aug 2025 21:51:30 -0700 (PDT)
-Message-ID: <88284cce-ec2e-4641-9581-0e3bb1f9b6dd@linaro.org>
-Date: Wed, 27 Aug 2025 14:51:23 +1000
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1ur8m6-0002T4-Np; Wed, 27 Aug 2025 01:32:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1ur8m0-0005ii-5N; Wed, 27 Aug 2025 01:32:46 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QJ5EWL006358;
+ Wed, 27 Aug 2025 05:32:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=78aJeJWqPy0WZtxtDFmgX5Jc6tj8qXF6Cwr+63gdl
+ QI=; b=B3j6G3TWGD2XRMJIvEiHZqq2+Xz+r+h/aGZzHHoVkFwO1FwC/VQsdjToL
+ A+dVm8L1pXBzqf8ZUQlXl0RdlLv/dT5cFZmYcqkF8Su7VkYvgxkh3UDhUl8vJP5P
+ SH1wqtxExfxTB5E9G3l6rCkOaks/04F+dl6Cbw/0dF37KNVyZ5fWhr83VICu7//N
+ zdiAJ4qVj5UDpK7cHnGUJq+NRzDp2nrj9giX/TcU1qfM1gqukZOxYVu7pXyTiXYC
+ DkjBM+LgYJEdrsXW2rZRPP9g98yWtU9IT9ZsTjLRF4okb/NXfuVtbF58p/v4tcrr
+ OzJpP/xKvauIaOPoLKCFOD2Kiw5lQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q5hq298j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 Aug 2025 05:32:34 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57R2o4P1020838;
+ Wed, 27 Aug 2025 05:32:34 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48qrc0pkkf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 Aug 2025 05:32:34 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57R5WUv545744602
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 27 Aug 2025 05:32:30 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 431E820043;
+ Wed, 27 Aug 2025 05:32:30 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2463A20040;
+ Wed, 27 Aug 2025 05:32:29 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.124.214.234])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 27 Aug 2025 05:32:28 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Gautam Menghani <gautam@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
+Subject: [PATCH] docs: fix typo in xive doc
+Date: Wed, 27 Aug 2025 11:02:28 +0530
+Message-ID: <20250827053228.519707-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: do not use translator_ldl in opcode_at
-To: Vladimir Isaev <vladimir.isaev@syntacore.com>, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250815140633.86920-1-vladimir.isaev@syntacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAyMSBTYWx0ZWRfXzqkRm7hN5XBD
+ MiAG69fzDu6/WEqYY6JeJOnRWV6RnX61NToSAZkydkg4tUqiJMmpyrNEROB33TLxZJvbn33v6mT
+ nFyR6rzCbXrp0Emaf9hxIh4XLkTQaI+PYEVDV1Zng7/+VaYy86lRbOSq5Xsz1gmHb8MCk3dE3mN
+ s8e/9QDKFrrEloMhP0RrMA0KFyDS/zrYpLdDRifGfvF3H52qTxt0GH0HAPiH5qp6eq61/UcUwAu
+ dVS8Cacjjpge2z1dNqBz7abM8+DBxT0suMj25dawuV2Aw3fVXfYfH/WvXdoYXZqZi9A8Vq/10t3
+ TmEOtJ9+8qrdorwsyXmXEuDccuvWIJAdiItro9c3r5t+bmR1LmWHNYnl2sZyz07JagahDnnmM9Z
+ np2ZNN0D
+X-Proofpoint-ORIG-GUID: uIIAcTm4KvF_8HkynvPL2l5wYjqqK5iO
+X-Proofpoint-GUID: uIIAcTm4KvF_8HkynvPL2l5wYjqqK5iO
+X-Authority-Analysis: v=2.4 cv=Ndbm13D4 c=1 sm=1 tr=0 ts=68ae9872 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=Ag8-cTVUF9tB8l3BjPcA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ suspectscore=0 bulkscore=0 spamscore=0 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508230021
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,41 +113,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/16/25 00:06, Vladimir Isaev wrote:
-> opcode_at is used only in semihosting checks to match opcodes with expected pattern.
-> 
-> This is not a translator and if we got following assert if page is not in TLB:
-> qemu-system-riscv64: ../accel/tcg/translator.c:363: record_save: Assertion `offset == db->record_start + db->record_len' failed.
-> 
-> Fixes: 1f9c4462334f ("target/riscv: Use translator_ld* for everything")
-> Signed-off-by: Vladimir Isaev <vladimir.isaev@syntacore.com>
-> ---
->   target/riscv/translate.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index b1e41cdbf1f6..980a67ea855e 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -25,6 +25,7 @@
->   #include "exec/helper-gen.h"
->   
->   #include "exec/translator.h"
-> +#include "exec/cpu_ldst.h"
->   #include "exec/log.h"
->   #include "semihosting/semihost.h"
->   
-> @@ -1143,7 +1144,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
->       CPUState *cpu = ctx->cs;
->       CPURISCVState *env = cpu_env(cpu);
->   
-> -    return translator_ldl(env, &ctx->base, pc);
-> +    return cpu_ldl_code(env, pc);
->   }
->   
->   #define SS_MMU_INDEX(ctx) (ctx->mem_idx | MMU_IDX_SS_WRITE)
+"Interrupt Pending Buffer" IPB, which got written as IBP due to typo.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The "IPB" register is also mentioned in same doc multiple times.
 
-r~
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ docs/specs/ppc-xive.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docs/specs/ppc-xive.rst b/docs/specs/ppc-xive.rst
+index 83d43f658b90..968cc760d466 100644
+--- a/docs/specs/ppc-xive.rst
++++ b/docs/specs/ppc-xive.rst
+@@ -157,7 +157,7 @@ Interrupt flow from an O/S perspective
+ 
+ After an event data has been enqueued in the O/S Event Queue, the IVPE
+ raises the bit corresponding to the priority of the pending interrupt
+-in the register IBP (Interrupt Pending Buffer) to indicate that an
++in the register IPB (Interrupt Pending Buffer) to indicate that an
+ event is pending in one of the 8 priority queues. The Pending
+ Interrupt Priority Register (PIPR) is also updated using the IPB. This
+ register represent the priority of the most favored pending
+-- 
+2.50.1
+
 
