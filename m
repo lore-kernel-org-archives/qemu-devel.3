@@ -4,38 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B98CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FACDCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHls-0001o8-4g; Wed, 27 Aug 2025 11:09:08 -0400
+	id 1urHhP-0003MA-FS; Wed, 27 Aug 2025 11:04:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHig-0005fr-9C; Wed, 27 Aug 2025 11:05:52 -0400
+ id 1urHhD-00031d-Ah; Wed, 27 Aug 2025 11:04:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHic-0005FR-Kg; Wed, 27 Aug 2025 11:05:50 -0400
+ id 1urHh7-0004py-4N; Wed, 27 Aug 2025 11:04:19 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 499C314C544;
- Wed, 27 Aug 2025 18:02:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 220B814C534;
+ Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3845B26984C;
- Wed, 27 Aug 2025 18:03:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0D31E26983C;
+ Wed, 27 Aug 2025 18:03:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 28/59] target/arm: Fix handling of setting SVE
- registers from gdb
-Date: Wed, 27 Aug 2025 18:02:33 +0300
-Message-ID: <20250827150323.2694101-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nutty Liu <liujingqi@lanxincomputing.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 12/59] target/riscv: do not call GETPC() in
+ check_ret_from_m_mode()
+Date: Wed, 27 Aug 2025 18:02:17 +0300
+Message-ID: <20250827150323.2694101-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,70 +66,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The code to handle setting SVE registers via the gdbstub is broken:
- * it sets each pair of elements in the zregs[].d[] array in the
-   wrong order for the most common (little endian) case: the least
-   significant 64-bit value comes first
- * it makes no attempt to handle target_endian()
- * it does a simple copy out of the (target endian) gdbstub buffer
-   into the (host endan) zregs data structure, which is wrong on
-   big endian hosts
+GETPC() should always be called from the top level helper, e.g. the
+first helper that is called by the translation code. We stopped doing
+that in commit 3157a553ec, and then we introduced problems when
+unwinding the exceptions being thrown by helper_mret(), as reported by
+[1].
 
-Fix all these problems:
- * use ldq_p() to read from the gdbstub buffer
- * check target_big_endian() to see if we need to handle the
-   128-bit values the opposite way around
+Call GETPC() at the top level helper and pass the value along.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Message-id: 20250722173736.2332529-3-vacha.bhavsar@oss.qualcomm.com
-[PMM: adjusted commit message, fixed spacing]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 97b3d732afec9b165c33697452e31267a845338f)
-(Mjt: s/target_big_endian/target_words_bigendian/ due to missing
- v10.0.0-277-gb939b8e42a "exec: Rename target_words_bigendian() -> target_big_endian()")
+[1] https://gitlab.com/qemu-project/qemu/-/issues/3020
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 3157a553ec ("target/riscv: Add Smrnmi mnret instruction")
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/3020
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250714133739.1248296-1-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 16aa7771afeac422dcf7be2833d5426da6b814fa)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index d4d808a49b..b9b2b14c93 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -202,10 +202,17 @@ int aarch64_gdb_set_sve_reg(CPUState *cs, uint8_t *buf, int reg)
-     case 0 ... 31:
-     {
-         int vq, len = 0;
--        uint64_t *p = (uint64_t *) buf;
-         for (vq = 0; vq < cpu->sve_max_vq; vq++) {
--            env->vfp.zregs[reg].d[vq * 2 + 1] = *p++;
--            env->vfp.zregs[reg].d[vq * 2] = *p++;
-+            if (target_words_bigendian()) {
-+                env->vfp.zregs[reg].d[vq * 2 + 1] = ldq_p(buf);
-+                buf += 8;
-+                env->vfp.zregs[reg].d[vq * 2] = ldq_p(buf);
-+            } else{
-+                env->vfp.zregs[reg].d[vq * 2] = ldq_p(buf);
-+                buf += 8;
-+                env->vfp.zregs[reg].d[vq * 2 + 1] = ldq_p(buf);
-+            }
-+            buf += 8;
-             len += 16;
-         }
-         return len;
-@@ -220,9 +227,9 @@ int aarch64_gdb_set_sve_reg(CPUState *cs, uint8_t *buf, int reg)
-     {
-         int preg = reg - 34;
-         int vq, len = 0;
--        uint64_t *p = (uint64_t *) buf;
-         for (vq = 0; vq < cpu->sve_max_vq; vq = vq + 4) {
--            env->vfp.pregs[preg].p[vq / 4] = *p++;
-+            env->vfp.pregs[preg].p[vq / 4] = ldq_p(buf);
-+            buf += 8;
-             len += 8;
-         }
-         return len;
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 72dc48e58d..6a8c2e1940 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -353,21 +353,22 @@ target_ulong helper_sret(CPURISCVState *env)
+ }
+ 
+ static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
+-                                  target_ulong prev_priv)
++                                  target_ulong prev_priv,
++                                  uintptr_t ra)
+ {
+     if (!(env->priv >= PRV_M)) {
+-        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
++        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
+     }
+ 
+     if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
+                                     env->priv_ver,
+                                     env->misa_ext) && (retpc & 0x3)) {
+-        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
++        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, ra);
+     }
+ 
+     if (riscv_cpu_cfg(env)->pmp &&
+         !pmp_get_num_rules(env) && (prev_priv != PRV_M)) {
+-        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
++        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, ra);
+     }
+ }
+ static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
+@@ -392,8 +393,9 @@ target_ulong helper_mret(CPURISCVState *env)
+     target_ulong retpc = env->mepc;
+     uint64_t mstatus = env->mstatus;
+     target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
++    uintptr_t ra = GETPC();
+ 
+-    check_ret_from_m_mode(env, retpc, prev_priv);
++    check_ret_from_m_mode(env, retpc, prev_priv, ra);
+ 
+     target_ulong prev_virt = get_field(env->mstatus, MSTATUS_MPV) &&
+                              (prev_priv != PRV_M);
+@@ -441,8 +443,9 @@ target_ulong helper_mnret(CPURISCVState *env)
+     target_ulong retpc = env->mnepc;
+     target_ulong prev_priv = get_field(env->mnstatus, MNSTATUS_MNPP);
+     target_ulong prev_virt;
++    uintptr_t ra = GETPC();
+ 
+-    check_ret_from_m_mode(env, retpc, prev_priv);
++    check_ret_from_m_mode(env, retpc, prev_priv, ra);
+ 
+     prev_virt = get_field(env->mnstatus, MNSTATUS_MNPV) &&
+                 (prev_priv != PRV_M);
 -- 
 2.47.2
 
