@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26EABCA0FF0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E45A5CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:20:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur4dl-0008LF-El; Tue, 26 Aug 2025 21:07:53 -0400
+	id 1ur4dq-0000T9-TL; Tue, 26 Aug 2025 21:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4cj-0004wg-Lx
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:06:50 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1ur4dd-0007pE-Tw
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:07:47 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4cT-0007KV-EZ
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:06:48 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-771e987b4e6so2234698b3a.2
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:05:53 -0700 (PDT)
+ id 1ur4dW-0007cL-MD
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:07:45 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-770d7dafacdso3339156b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756256752; x=1756861552; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756256856; x=1756861656; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JIkeU3rXeazXD0joqAFpWiHN3iI9fKZ4K7whY5dqlfg=;
- b=kctRrk+ngPr3gFJnMlBQrsMgrQXT+LG+JcHqqAdZD1uo7gd1EWs7fuyZyDEmh4pOho
- NBlIc2nYarTpN5TUL41WKcwya9zfkpH8Qv/8POKLljaWf+S88piWx8RRsZmCTpxhN8Nx
- QE4GWc+h4c2X81xiBRnHTkelVQ1gntn4oa131JpwbU3cze0MAiLWu93i/zTIte02KvcV
- AlsvMvk84zMT35ODHxIWjQmoPivyENW+G6lACZaDuJj9RG093B/PDO69yISadajoTkUS
- aUNpMNCGz+tNnVRHIH4R06Wj1lff8bwxggVYdRfSPincvq1NqRcBubKipzyGCxl/wgBK
- ljhA==
+ bh=GXUdqCkF+LYn22BhLyzjofcSNfXOcqV3+XqLF12lMmE=;
+ b=nKcdtVmPJA+Dlh4W96IBj0DTKeJOWi3jetSUC6V87hA+97cSDYO+NCTXIS1ywrJ4YQ
+ 7n7deoZzuvS2XlGGOFILNfbhyOEY/v60cHGe+CrSMmL1QWYZzzTd3yeQAbOwqiOGQwEI
+ tf3RYdBuSiiPBXBlypfbinM+5G9oZTKqvC1w0YBZt8F27YqgR0Tgv/qSr7W1dAWWikXf
+ dOGwuZXDzJ0EQwdPej89h0Tc+20m6rgFmkV0ip60gLRvQ215/DqIcw2Y+0dO/WzOKcDp
+ qnOem1Vw3roiRLHATIi4vB5K7jZruGkUvEbC8kZ15QEQWvMgYLA/uU9cSnOP4Nm9kK6a
+ vEYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756256752; x=1756861552;
+ d=1e100.net; s=20230601; t=1756256856; x=1756861656;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JIkeU3rXeazXD0joqAFpWiHN3iI9fKZ4K7whY5dqlfg=;
- b=taHwcbjTae59B6doYuGeiEOHAZam0Akipt3VVhxc/aVUuDIcXsR10zKtqoUNIij9H6
- jS8tGvTKQ4HKZ5bwEIK+L4oBEtan8oM/Kzli/DSJ6X0aOqyv6b/+ePM7vY9d9pq6cc35
- /WO9gUHK9BC9AKtjwTlGuvcTVLg0J/GBCGcG53AqKNC16cXJQ8EAL2VONFlHFW1TfT7b
- 6T6LPyGe2AYz+oSG+8XnzX9LicOV3zSTfhWDt8K/fGc6Uahn7KOD4oPEk7FL6AON4yue
- /SVr8mzVbnM81oo3EFfhSIHQb/GEEbs3JoUfLjuYIl9i7nAGaWuoQa1F0MaRVSm6PoNs
- 1qwQ==
-X-Gm-Message-State: AOJu0YySqTfh+W2fE7OamYhb1CtCDKsz4IXHU3SqL65qRnRs4GFoMQGs
- aR3U/8RK3whAhxPPS/B5mgbTax/Rehtn+RYkK0Sh7Y+ZJrZUcjlB7HRoFz/UVKJNJAQXFbObS0l
- 9/CjeX4A=
-X-Gm-Gg: ASbGncvRotk0OzH3Jp4vwJ5Tg9wfY3Vwoh4ejm6HyaTq30XhZTYVVa9HoM7tLJ5qNQ9
- Cg9WpO6WnGHWsN6K/HPdfw74y1DECLV6E6F8JzR4+aGXe7zl0Bf0ugIrhCKyKq1UUI0RngGdP8z
- 63JzD9l5Tz6UzF1c1JDv3vHHQ8sbS1UAoVQPs3UTgGQzCeL72Y9Ti8g2UqjhRwR8o1/X6FQgeZ5
- Tk4sjy02HIXif+kUkNBEubX+P5LvhJQLcnaCqDcGEgvAsdegNHbO4nK38HS8+fsjiE8L3jwcI7G
- uknzXpW8/NEcBctLGUAdLkjGgJEu2BJUpZnWzaD9aIqyIjj9+emenrJGdrQNdu0qAaenpL7MEJO
- 8+5WqU0fRLeN3F8jOuvWrKtzKyQ==
-X-Google-Smtp-Source: AGHT+IGq53fAtfQ9WKrngq87nWSvsvyjcpUdxHmpVrB7JN0jGslnRkl/4oLHs803/u1K4niu+LQT6w==
-X-Received: by 2002:a05:6a00:a8e:b0:76c:1eae:fd30 with SMTP id
- d2e1a72fcca58-7702fa02d0fmr23844538b3a.12.1756256751598; 
- Tue, 26 Aug 2025 18:05:51 -0700 (PDT)
+ bh=GXUdqCkF+LYn22BhLyzjofcSNfXOcqV3+XqLF12lMmE=;
+ b=FQ+nwoHBe0EnnLPSmW5UDxGrqdkqhAjRN711e7EheqzueNVwRtmMl+PBPuouT5fO+p
+ 0d87CSleHbWhHb5f0rxZLmoIQQhAKqUGrTX6HvXggoNlJeVgfvwhnGicVz/qW81XAT7E
+ H7qNOkiSGR5gYdWMaXvAAbCUfC6Q/rjtTMSsr6zVRGn+wPmKqBVXR0+FYNx0I3lY2fPI
+ z2WGtL/j+auXrRD2kRrPrZMRIpr1ZhgOeoFsNo9BFQPXEQS4jQbkbgbgs/OLf8JnHKlV
+ Lxd6ydZwbQ2LmfDN/XQYLZCHvEJ4gCknkOx9bkIOId5Dg6Dvo+HaEdzfpXCq65LzAECX
+ 7V8A==
+X-Gm-Message-State: AOJu0YxviVi/suYoQh0o7b0cRH/FBfG7LJZJqnSst1JYCipldZDfQBVO
+ +cpWsDdFzh+D4su6zxwzC6p4cuF502h2fDJubGcWPQHmyW86PKNdJAPxWWmVF1eUXrcJJHcbji6
+ 1HhPU7q0=
+X-Gm-Gg: ASbGncuXj0t26t1biuuiToRZVOmFjE5Ip7C8TWiR+zhpOK/9rfHeVc/jFD5BpSCidXn
+ a57XYvTDXfI5I5NmPgNEOJ+1I4Q6RxKRYGRDRajPfOh1OZdOizeDD9Du0oNPuwLZmvj1qqToqO7
+ 0lmby0Z4FR3tephB0NckXVJDz7fAfyztmngNi92TVrCVYvf5BqJST1JqRJjyxjjMvd+dj+I6D4P
+ cFT2a6+u5ytOhWrHZeVuKQkC2IoFpbLAIiPHhn7ZiXKYuAAKBEvNpEJALYhJfzvHDJtd5RppgAQ
+ RriFCLHstcv60zA8nDr3NLV0TyyQW2fNsKxnXUMtkZoGhLQvDuj3l8PyGi+rUE6WdmWtQU0Ghzy
+ U42ENGsXnsd7eA5UyIEAPBP3vJd7jq00iclBm
+X-Google-Smtp-Source: AGHT+IFf7ecdlminGXOBAydYbtK4duI+sSVUcfD5+Urj5l/NAJlkvs0mcElP4ltd85I9IUgbbqoCsQ==
+X-Received: by 2002:a05:6a00:439b:b0:771:f8b5:d88 with SMTP id
+ d2e1a72fcca58-771f8b51015mr6428666b3a.22.1756256856477; 
+ Tue, 26 Aug 2025 18:07:36 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7720274534esm1419241b3a.47.2025.08.26.18.05.48
+ d2e1a72fcca58-7720274534esm1419241b3a.47.2025.08.26.18.07.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 18:05:51 -0700 (PDT)
+ Tue, 26 Aug 2025 18:07:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 7/7] target/arm/hvf: Sort the cpreg_indexes array
-Date: Wed, 27 Aug 2025 11:03:58 +1000
-Message-ID: <20250827010453.4059782-12-richard.henderson@linaro.org>
+Subject: [PATCH 28/61] target/arm: Move alias setting for wildcards
+Date: Wed, 27 Aug 2025 11:04:19 +1000
+Message-ID: <20250827010453.4059782-33-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827010453.4059782-1-richard.henderson@linaro.org>
 References: <20250827010453.4059782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,25 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Move this test from add_cpreg_to_hashtable to
+define_one_arm_cp_reg_with_opaque, where we can also
+simplify it based on the loop variables.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/hvf/hvf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/arm/helper.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 647eb675ef..88ed96be11 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -925,6 +925,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     arm_cpu->cpreg_array_len = sregs_cnt;
-     arm_cpu->cpreg_vmstate_array_len = sregs_cnt;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 3cd4546494..1a321ad181 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7349,20 +7349,12 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, ARMCPRegInfo *r,
+     }
  
-+    /* cpreg tuples must be in strictly ascending order */
-+    qsort(arm_cpu->cpreg_indexes, sregs_cnt, sizeof(uint64_t), compare_u64);
+     /*
+-     * By convention, for wildcarded registers only the first
+-     * entry is used for migration; the others are marked as
+-     * ALIAS so we don't try to transfer the register
+-     * multiple times. Special registers (ie NOP/WFI) are
+-     * never migratable and not even raw-accessible.
++     * Special registers (ie NOP/WFI) are never migratable and
++     * are not even raw-accessible.
+      */
+     if (r->type & ARM_CP_SPECIAL_MASK) {
+         r->type |= ARM_CP_NO_RAW;
+     }
+-    if (((r->crm == CP_ANY) && crm != 0) ||
+-        ((r->opc1 == CP_ANY) && opc1 != 0) ||
+-        ((r->opc2 == CP_ANY) && opc2 != 0)) {
+-        r->type |= ARM_CP_ALIAS | ARM_CP_NO_GDB;
+-    }
+ 
+     /*
+      * Update fields to match the instantiation, overwiting wildcards
+@@ -7665,6 +7657,16 @@ void define_one_arm_cp_reg(ARMCPU *cpu, const ARMCPRegInfo *r)
+                 ARMCPRegInfo *r2 = alloc_cpreg(r, NULL);
+                 ARMCPRegInfo *r3;
+ 
++                /*
++                 * By convention for wildcarded registers, only the first
++                 * entry is used for migration; the others are marked as
++                 * ALIAS so we don't try to transfer the register
++                 * multiple times.
++                 */
++                if (crm != crmmin || opc1 != opc1min || opc2 != opc2min) {
++                    r2->type |= ARM_CP_ALIAS | ARM_CP_NO_GDB;
++                }
 +
-     assert(write_cpustate_to_list(arm_cpu, false));
- 
-     /* Set CP_NO_RAW system registers on init */
+                 switch (r->state) {
+                 case ARM_CP_STATE_AA32:
+                     add_cpreg_to_hashtable_aa32(cpu, r2, cp, crm, opc1, opc2);
 -- 
 2.43.0
 
