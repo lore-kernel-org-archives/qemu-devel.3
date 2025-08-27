@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C72BCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B34CA0FF9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHhS-0003VZ-6K; Wed, 27 Aug 2025 11:04:34 -0400
+	id 1urHhO-0003II-L6; Wed, 27 Aug 2025 11:04:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHhH-00036J-FQ; Wed, 27 Aug 2025 11:04:23 -0400
+ id 1urHhB-00030r-AQ; Wed, 27 Aug 2025 11:04:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHhF-0004tU-31; Wed, 27 Aug 2025 11:04:23 -0400
+ id 1urHh9-0004sc-7u; Wed, 27 Aug 2025 11:04:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F7E814C538;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4BF3D14C536;
  Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5AA7D269840;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 39E9B26983E;
  Wed, 27 Aug 2025 18:03:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jay Chang <jay.chang@sifive.com>,
- Frank Chang <frank.chang@sifive.com>,
+Cc: qemu-stable@nongnu.org, Vac Chen <vacantron@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Nutty Liu <liujingqi@lanxincomputing.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 16/59] target/riscv: Restrict mideleg/medeleg/medelegh
- access to S-mode harts
-Date: Wed, 27 Aug 2025 18:02:21 +0300
-Message-ID: <20250827150323.2694101-16-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 14/59] target/riscv: Fix pmp range wraparound on zero
+Date: Wed, 27 Aug 2025 18:02:19 +0300
+Message-ID: <20250827150323.2694101-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
@@ -62,51 +60,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jay Chang <jay.chang@sifive.com>
+From: Vac Chen <vacantron@gmail.com>
 
-RISC-V Privileged Spec states:
-"In harts with S-mode, the medeleg and mideleg registers must exist, and
-setting a bit in medeleg or mideleg will delegate the corresponding trap
-, when occurring in S-mode or U-mode, to the S-mode trap handler. In
-harts without S-mode, the medeleg and mideleg registers should not
-exist."
+pmp_is_in_range() prefers to match addresses within the interval
+[start, end]. To archieve this, pmpaddrX is decremented during the end
+address update.
 
-Add smode predicate to ensure these CSRs are only accessible when S-mode
-is supported.
+In TOR mode, a rule is ignored if its start address is greater than or
+equal to its end address.
 
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
+However, if pmpaddrX is set to 0, this decrement operation causes the
+calulated end address to wrap around to UINT_MAX. In this scenario, the
+address guard for this PMP entry would become ineffective.
+
+This patch addresses the issue by moving the guard check earlier,
+preventing the problematic wraparound when pmpaddrX is zero.
+
+Signed-off-by: Vac Chen <vacantron@gmail.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Nutty Liu<liujingqi@lanxincomputing.com>
-Message-ID: <20250701030021.99218-2-jay.chang@sifive.com>
+Message-ID: <20250706065554.42953-1-vacantron@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit e443ba03361b63218e6c3aa4f73d2cb5b9b1d372)
+(cherry picked from commit 77707bfdf871199bbee665e721ced961aaf3a798)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index f1c4c8c1b8..7fe6ac7ea2 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -5783,8 +5783,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-                           NULL,                read_mstatus_i128           },
-     [CSR_MISA]        = { "misa",       any,   read_misa,    write_misa,
-                           NULL,                read_misa_i128              },
--    [CSR_MIDELEG]     = { "mideleg",    any,   NULL, NULL,   rmw_mideleg   },
--    [CSR_MEDELEG]     = { "medeleg",    any,   read_medeleg, write_medeleg },
-+    [CSR_MIDELEG]     = { "mideleg",    smode,   NULL, NULL,   rmw_mideleg   },
-+    [CSR_MEDELEG]     = { "medeleg",    smode,   read_medeleg, write_medeleg },
-     [CSR_MIE]         = { "mie",        any,   NULL, NULL,   rmw_mie       },
-     [CSR_MTVEC]       = { "mtvec",      any,   read_mtvec,   write_mtvec   },
-     [CSR_MCOUNTEREN]  = { "mcounteren", umode, read_mcounteren,
-@@ -5792,7 +5792,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index c5f6cdaccb..a9e69de917 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -206,11 +206,12 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+         break;
  
-     [CSR_MSTATUSH]    = { "mstatush",   any32, read_mstatush,
-                           write_mstatush                                   },
--    [CSR_MEDELEGH]    = { "medelegh",   any32, read_zero, write_ignore,
-+    [CSR_MEDELEGH]    = { "medelegh",   smode32, read_zero, write_ignore,
-                           .min_priv_ver = PRIV_VERSION_1_13_0              },
-     [CSR_HEDELEGH]    = { "hedelegh",   hmode32, read_hedelegh, write_hedelegh,
-                           .min_priv_ver = PRIV_VERSION_1_13_0              },
+     case PMP_AMATCH_TOR:
+-        sa = prev_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
+-        ea = (this_addr << 2) - 1u;
+-        if (sa > ea) {
++        if (prev_addr >= this_addr) {
+             sa = ea = 0u;
++            break;
+         }
++        sa = prev_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
++        ea = (this_addr << 2) - 1u;
+         break;
+ 
+     case PMP_AMATCH_NA4:
 -- 
 2.47.2
 
