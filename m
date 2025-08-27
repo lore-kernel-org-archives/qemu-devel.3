@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F122BCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 532EFCA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:12:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHoc-00010d-Im; Wed, 27 Aug 2025 11:11:58 -0400
+	id 1urHnz-0006jw-IE; Wed, 27 Aug 2025 11:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHkl-00006K-0j; Wed, 27 Aug 2025 11:08:02 -0400
+ id 1urHl7-0000S7-TY; Wed, 27 Aug 2025 11:08:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHki-0005gO-Fd; Wed, 27 Aug 2025 11:07:58 -0400
+ id 1urHkz-0005qj-8e; Wed, 27 Aug 2025 11:08:15 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C50B314C559;
- Wed, 27 Aug 2025 18:02:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0C3D114C55D;
+ Wed, 27 Aug 2025 18:03:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B1BC7269860;
+ by tsrv.corpit.ru (Postfix) with ESMTP id EE6BE269864;
  Wed, 27 Aug 2025 18:03:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, WANG Rui <wangrui@loongson.cn>,
- Zhou Qiankang <wszqkzqk@qq.com>, Song Gao <gaosong@loongson.cn>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 48/59] target/loongarch: Fix [X]VLDI raising exception
- incorrectly
-Date: Wed, 27 Aug 2025 18:02:53 +0300
-Message-ID: <20250827150323.2694101-48-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 52/59] rbd: Fix .bdrv_get_specific_info implementation
+Date: Wed, 27 Aug 2025 18:02:57 +0300
+Message-ID: <20250827150323.2694101-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
@@ -61,53 +59,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: WANG Rui <wangrui@loongson.cn>
+From: Kevin Wolf <kwolf@redhat.com>
 
-According to the specification, [X]VLDI should trigger an invalid instruction
-exception only when Bit[12] is 1 and Bit[11:8] > 12. This patch fixes an issue
-where an exception was incorrectly raised even when Bit[12] was 0.
+qemu_rbd_get_specific_info() has at least two problems:
 
-Test case:
+The first is that it issues a blocking rbd_read() call in order to probe
+the encryption format for the image while querying the node. This means
+that if the connection to the server goes down, not only I/O is stuck
+(which is unavoidable), but query-names-block-nodes will actually make
+the whole QEMU instance unresponsive. .bdrv_get_specific_info
+implementations shouldn't perform blocking operations, but only return
+what is already known.
 
-```
-    .global main
-main:
-    vldi    $vr0, 3328
-    ret
-```
+The second is that the information returned isn't even correct. If the
+image is already opened with encryption enabled at the RBD level, we'll
+probe for "double encryption", i.e. if the encrypted data contains
+another encryption header. If it doesn't (which is the normal case), we
+won't return the encryption format. If it does, we return misleading
+information because it looks like we're talking about the outer level
+(the encryption format of the image itself) while the information is
+about an encryption header in the guest data.
 
-Reported-by: Zhou Qiankang <wszqkzqk@qq.com>
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20250804132212.4816-1-wangrui@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit e66644c48e96e81848c6aa94b185f59fc212d080)
+Fix this by storing the encryption format in BDRVRBDState when the image
+is opened (and we do blocking operations anyway) and returning only the
+stored information in qemu_rbd_get_specific_info().
+
+The information we'll store is either the actual encryption format that
+we enabled on the RBD level, or if the image is unencrypted, the result
+of the same probing as we previously did when querying the node. Probing
+image formats based on content that can be modified by the guest has
+long been known as problematic, but as long as we only output it to the
+user instead of making decisions based on it, it should be okay. It is
+undoubtedly useful in the context of 'qemu-img info' when you're trying
+to figure out which encryption options you have to use to open the
+image successfully.
+
+Fixes: 42e4ac9ef5a6 ("block/rbd: Add support for rbd image encryption")
+Buglink: https://issues.redhat.com/browse/RHEL-105440
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20250811134010.81787-1-kwolf@redhat.com>
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 4af976ef398e4e823addc00bf1c58787ba4952fe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index 78730029cb..38bccf2838 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -3585,7 +3585,9 @@ static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
-     int sel, vece;
-     uint64_t value;
- 
--    if (!check_valid_vldi_mode(a)) {
-+    sel = (a->imm >> 12) & 0x1;
+diff --git a/block/rbd.c b/block/rbd.c
+index af984fb7db..446e90d34c 100644
+--- a/block/rbd.c
++++ b/block/rbd.c
+@@ -99,6 +99,14 @@ typedef struct BDRVRBDState {
+     char *namespace;
+     uint64_t image_size;
+     uint64_t object_size;
 +
-+    if (sel && !check_valid_vldi_mode(a)) {
-         generate_exception(ctx, EXCCODE_INE);
-         return true;
++    /*
++     * If @bs->encrypted is true, this is the encryption format actually loaded
++     * at the librbd level. If it is false, it is the result of probing.
++     * RBD_IMAGE_ENCRYPTION_FORMAT__MAX means that encryption is not enabled and
++     * probing didn't find any known encryption header either.
++     */
++    RbdImageEncryptionFormat encryption_format;
+ } BDRVRBDState;
+ 
+ typedef struct RBDTask {
+@@ -471,10 +479,12 @@ static int qemu_rbd_encryption_format(rbd_image_t image,
+     return 0;
+ }
+ 
+-static int qemu_rbd_encryption_load(rbd_image_t image,
++static int qemu_rbd_encryption_load(BlockDriverState *bs,
++                                    rbd_image_t image,
+                                     RbdEncryptionOptions *encrypt,
+                                     Error **errp)
+ {
++    BDRVRBDState *s = bs->opaque;
+     int r = 0;
+     g_autofree char *passphrase = NULL;
+     rbd_encryption_luks1_format_options_t luks_opts;
+@@ -545,15 +555,19 @@ static int qemu_rbd_encryption_load(rbd_image_t image,
+         error_setg_errno(errp, -r, "encryption load fail");
+         return r;
      }
-@@ -3594,8 +3596,6 @@ static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
-         return true;
++    bs->encrypted = true;
++    s->encryption_format = encrypt->format;
+ 
+     return 0;
+ }
+ 
+ #ifdef LIBRBD_SUPPORTS_ENCRYPTION_LOAD2
+-static int qemu_rbd_encryption_load2(rbd_image_t image,
++static int qemu_rbd_encryption_load2(BlockDriverState *bs,
++                                     rbd_image_t image,
+                                      RbdEncryptionOptions *encrypt,
+                                      Error **errp)
+ {
++    BDRVRBDState *s = bs->opaque;
+     int r = 0;
+     int encrypt_count = 1;
+     int i;
+@@ -639,6 +653,8 @@ static int qemu_rbd_encryption_load2(rbd_image_t image,
+         error_setg_errno(errp, -r, "layered encryption load fail");
+         goto exit;
+     }
++    bs->encrypted = true;
++    s->encryption_format = encrypt->format;
+ 
+ exit:
+     for (i = 0; i < encrypt_count; ++i) {
+@@ -672,6 +688,45 @@ exit:
+ #endif
+ #endif
+ 
++/*
++ * For an image without encryption enabled on the rbd layer, probe the start of
++ * the image if it could be opened as an encrypted image so that we can display
++ * it when the user queries the node (most importantly in qemu-img).
++ *
++ * If the guest writes an encryption header to its disk after this probing, this
++ * won't be reflected when queried, but that's okay. There is no reason why the
++ * user should want to apply encryption at the rbd level while the image is
++ * still in use. This is just guest data.
++ */
++static void qemu_rbd_encryption_probe(BlockDriverState *bs)
++{
++    BDRVRBDState *s = bs->opaque;
++    char buf[RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN] = {0};
++    int r;
++
++    assert(s->encryption_format == RBD_IMAGE_ENCRYPTION_FORMAT__MAX);
++
++    r = rbd_read(s->image, 0,
++                 RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN, buf);
++    if (r < RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) {
++        return;
++    }
++
++    if (memcmp(buf, rbd_luks_header_verification,
++               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
++        s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT_LUKS;
++    } else if (memcmp(buf, rbd_luks2_header_verification,
++               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
++        s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT_LUKS2;
++    } else if (memcmp(buf, rbd_layered_luks_header_verification,
++               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
++        s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT_LUKS;
++    } else if (memcmp(buf, rbd_layered_luks2_header_verification,
++               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
++        s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT_LUKS2;
++    }
++}
++
+ /* FIXME Deprecate and remove keypairs or make it available in QMP. */
+ static int qemu_rbd_do_create(BlockdevCreateOptions *options,
+                               const char *keypairs, const char *password_secret,
+@@ -1134,17 +1189,18 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags,
+         goto failed_open;
      }
  
--    sel = (a->imm >> 12) & 0x1;
++    s->encryption_format = RBD_IMAGE_ENCRYPTION_FORMAT__MAX;
+     if (opts->encrypt) {
+ #ifdef LIBRBD_SUPPORTS_ENCRYPTION
+         if (opts->encrypt->parent) {
+ #ifdef LIBRBD_SUPPORTS_ENCRYPTION_LOAD2
+-            r = qemu_rbd_encryption_load2(s->image, opts->encrypt, errp);
++            r = qemu_rbd_encryption_load2(bs, s->image, opts->encrypt, errp);
+ #else
+             r = -ENOTSUP;
+             error_setg(errp, "RBD library does not support layered encryption");
+ #endif
+         } else {
+-            r = qemu_rbd_encryption_load(s->image, opts->encrypt, errp);
++            r = qemu_rbd_encryption_load(bs, s->image, opts->encrypt, errp);
+         }
+         if (r < 0) {
+             goto failed_post_open;
+@@ -1154,6 +1210,8 @@ static int qemu_rbd_open(BlockDriverState *bs, QDict *options, int flags,
+         error_setg(errp, "RBD library does not support image encryption");
+         goto failed_post_open;
+ #endif
++    } else {
++        qemu_rbd_encryption_probe(bs);
+     }
+ 
+     r = rbd_stat(s->image, &info, sizeof(info));
+@@ -1413,17 +1471,6 @@ static ImageInfoSpecific *qemu_rbd_get_specific_info(BlockDriverState *bs,
+ {
+     BDRVRBDState *s = bs->opaque;
+     ImageInfoSpecific *spec_info;
+-    char buf[RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN] = {0};
+-    int r;
 -
-     if (sel) {
-         value = vldi_get_value(ctx, a->imm);
-         vece = MO_64;
+-    if (s->image_size >= RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) {
+-        r = rbd_read(s->image, 0,
+-                     RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN, buf);
+-        if (r < 0) {
+-            error_setg_errno(errp, -r, "cannot read image start for probe");
+-            return NULL;
+-        }
+-    }
+ 
+     spec_info = g_new(ImageInfoSpecific, 1);
+     *spec_info = (ImageInfoSpecific){
+@@ -1431,28 +1478,13 @@ static ImageInfoSpecific *qemu_rbd_get_specific_info(BlockDriverState *bs,
+         .u.rbd.data = g_new0(ImageInfoSpecificRbd, 1),
+     };
+ 
+-    if (memcmp(buf, rbd_luks_header_verification,
+-               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
+-        spec_info->u.rbd.data->encryption_format =
+-                RBD_IMAGE_ENCRYPTION_FORMAT_LUKS;
+-        spec_info->u.rbd.data->has_encryption_format = true;
+-    } else if (memcmp(buf, rbd_luks2_header_verification,
+-               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
+-        spec_info->u.rbd.data->encryption_format =
+-                RBD_IMAGE_ENCRYPTION_FORMAT_LUKS2;
+-        spec_info->u.rbd.data->has_encryption_format = true;
+-    } else if (memcmp(buf, rbd_layered_luks_header_verification,
+-               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
+-        spec_info->u.rbd.data->encryption_format =
+-                RBD_IMAGE_ENCRYPTION_FORMAT_LUKS;
+-        spec_info->u.rbd.data->has_encryption_format = true;
+-    } else if (memcmp(buf, rbd_layered_luks2_header_verification,
+-               RBD_ENCRYPTION_LUKS_HEADER_VERIFICATION_LEN) == 0) {
+-        spec_info->u.rbd.data->encryption_format =
+-                RBD_IMAGE_ENCRYPTION_FORMAT_LUKS2;
+-        spec_info->u.rbd.data->has_encryption_format = true;
++    if (s->encryption_format == RBD_IMAGE_ENCRYPTION_FORMAT__MAX) {
++        assert(!bs->encrypted);
+     } else {
+-        spec_info->u.rbd.data->has_encryption_format = false;
++        ImageInfoSpecificRbd *rbd_info = spec_info->u.rbd.data;
++
++        rbd_info->has_encryption_format = true;
++        rbd_info->encryption_format = s->encryption_format;
+     }
+ 
+     return spec_info;
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index b1937780e1..807efd27fd 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -158,7 +158,14 @@
+ ##
+ # @ImageInfoSpecificRbd:
+ #
+-# @encryption-format: Image encryption format
++# @encryption-format: Image encryption format. If encryption is enabled for the
++#     image (see encrypted in BlockNodeInfo), this is the actual format in which the
++#     image is accessed. If encryption is not enabled, this is the result of
++#     probing when the image was opened, to give a suggestion which encryption
++#     format could be enabled. Note that probing results can be changed by the
++#     guest by writing a (possibly partial) encryption format header to the
++#     image, so don't treat this information as trusted if the guest is not
++#     trusted.
+ #
+ # Since: 6.1
+ ##
 -- 
 2.47.2
 
