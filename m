@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B37CA0FF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 07:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5239DCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 07:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urB1o-0007NV-KX; Wed, 27 Aug 2025 03:57:08 -0400
+	id 1urB0a-0005WI-Vd; Wed, 27 Aug 2025 03:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB1R-0006Vq-4a
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:56:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB0R-0005UF-Q3
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:55:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB1M-00027C-2W
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:56:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB0O-0001zk-3o
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:55:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756281397;
+ s=mimecast20190719; t=1756281338;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xB7Qj89OL/MK0qBsLMFZJOOzDym0ut5qvoN+/SrZJ58=;
- b=h64808MQqDAQpdh3UDDSZDtEPDqRVzcWOU/pzIQe3jPbaMa72p97prG9puH3urArA7xVLm
- cHCrCEpR4WJYnxrqu/o1w1AkknMP6BMPawz4jGch25I+VGLBrYwd+bmIy6WThbsvgoL4vU
- 5z4654G6b2ZPTv83Uqr6uzcuFO6+Y5M=
+ bh=7l19xKkpbq1cpW8+tXty8JzpdiIk5grtZ6e9NFMSjLs=;
+ b=M+7iusm9/Ujr4UdX0LnTCNzHa/c+/dFfjYAGkiVCulICyYwQsx7lIQiKpU3bAVIfcHLQ7E
+ P2RdCy+h/PIU9ZsBW3DuFbw9i10gpabd+4Cp01c61jtMXmw55Txjo3wcCGdmzLXMSPS+Kr
+ m3WhrGYOEigBEEfhbjRyKA506xcfEHQ=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-_4K3OgD7NqalyJh0gEMDjg-1; Wed,
- 27 Aug 2025 03:56:36 -0400
-X-MC-Unique: _4K3OgD7NqalyJh0gEMDjg-1
-X-Mimecast-MFC-AGG-ID: _4K3OgD7NqalyJh0gEMDjg_1756281395
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-lgopCXZ-NpyfwlVTnZaLmA-1; Wed,
+ 27 Aug 2025 03:55:31 -0400
+X-MC-Unique: lgopCXZ-NpyfwlVTnZaLmA-1
+X-Mimecast-MFC-AGG-ID: lgopCXZ-NpyfwlVTnZaLmA_1756281330
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27C2A19560B8; Wed, 27 Aug 2025 07:56:35 +0000 (UTC)
+ id 6CA8319560B2; Wed, 27 Aug 2025 07:55:30 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.40])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C66171955F24; Wed, 27 Aug 2025 07:56:32 +0000 (UTC)
+ id 99E401955F24; Wed, 27 Aug 2025 07:55:27 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 29/31] tests/functional: Move the generic tests to a subfolder
-Date: Wed, 27 Aug 2025 09:54:39 +0200
-Message-ID: <20250827075443.559712-30-thuth@redhat.com>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 11/31] tests/functional: Move alpha tests into architecture
+ specific folder
+Date: Wed, 27 Aug 2025 09:54:21 +0200
+Message-ID: <20250827075443.559712-12-thuth@redhat.com>
 In-Reply-To: <20250827075443.559712-1-thuth@redhat.com>
 References: <20250827075443.559712-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -64,8 +67,8 @@ Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -86,152 +89,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-This also removes the line for using tests from the main folder
-since we do not have any tests left here. And while we're at it,
-also mark the vnc test as generic now since it is not specific to x86.
+The tests/functional folder has become quite crowded already, some
+restructuring would be helpful here. Thus move the alpha tests into
+a target-specific subfolder.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250819112403.432587-25-thuth@redhat.com>
+Message-ID: <20250819112403.432587-7-thuth@redhat.com>
 ---
- MAINTAINERS                                     |  8 ++++----
- tests/functional/generic/meson.build            | 14 ++++++++++++++
- .../{ => generic}/test_empty_cpu_model.py       |  0
- .../{ => generic}/test_info_usernet.py          |  0
- tests/functional/{ => generic}/test_version.py  |  0
- tests/functional/{ => generic}/test_vnc.py      |  0
- tests/functional/meson.build                    | 17 ++---------------
- tests/functional/x86_64/meson.build             |  1 -
- 8 files changed, 20 insertions(+), 20 deletions(-)
- create mode 100644 tests/functional/generic/meson.build
- rename tests/functional/{ => generic}/test_empty_cpu_model.py (100%)
- rename tests/functional/{ => generic}/test_info_usernet.py (100%)
- rename tests/functional/{ => generic}/test_version.py (100%)
- rename tests/functional/{ => generic}/test_vnc.py (100%)
+ MAINTAINERS                                            |  3 ++-
+ tests/functional/alpha/meson.build                     | 10 ++++++++++
+ .../{test_alpha_clipper.py => alpha/test_clipper.py}   |  0
+ .../test_migration.py}                                 |  0
+ .../{test_alpha_replay.py => alpha/test_replay.py}     |  0
+ tests/functional/meson.build                           | 10 +---------
+ 6 files changed, 13 insertions(+), 10 deletions(-)
+ create mode 100644 tests/functional/alpha/meson.build
+ rename tests/functional/{test_alpha_clipper.py => alpha/test_clipper.py} (100%)
+ rename tests/functional/{test_alpha_migration.py => alpha/test_migration.py} (100%)
+ rename tests/functional/{test_alpha_replay.py => alpha/test_replay.py} (100%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 792d2d6f2de..625fe67b41d 100644
+index a2a5ccea7b6..8115aae6183 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1976,7 +1976,7 @@ F: include/hw/core/cpu.h
- F: include/hw/cpu/cluster.h
- F: include/system/numa.h
- F: tests/functional/x86_64/test_cpu_queries.py
--F: tests/functional/test_empty_cpu_model.py
-+F: tests/functional/generic/test_empty_cpu_model.py
- F: tests/unit/test-smp-parse.c
- T: git https://gitlab.com/ehabkost/qemu.git machine-next
+@@ -189,6 +189,7 @@ M: Richard Henderson <richard.henderson@linaro.org>
+ S: Maintained
+ F: target/alpha/
+ F: tests/tcg/alpha/
++F: tests/functional/alpha/
+ F: disas/alpha.c
  
-@@ -2197,7 +2197,7 @@ S: Odd Fixes
- F: hw/net/
- F: include/hw/net/
- F: tests/qtest/virtio-net-test.c
--F: tests/functional/test_info_usernet.py
-+F: tests/functional/generic/test_info_usernet.py
- F: docs/system/virtio-net-failover.rst
- T: git https://github.com/jasowang/qemu.git net
+ ARM TCG CPUs
+@@ -656,7 +657,7 @@ S: Maintained
+ F: hw/alpha/
+ F: hw/isa/smc37c669-superio.c
+ F: tests/tcg/alpha/system/
+-F: tests/functional/test_alpha_clipper.py
++F: tests/functional/alpha/test_clipper.py
  
-@@ -3134,7 +3134,7 @@ S: Supported
- F: include/qemu/option.h
- F: tests/unit/test-keyval.c
- F: tests/unit/test-qemu-opts.c
--F: tests/functional/test_version.py
-+F: tests/functional/generic/test_version.py
- F: util/keyval.c
- F: util/qemu-option.c
- 
-@@ -3252,7 +3252,7 @@ F: include/ui/
- F: qapi/ui.json
- F: util/drm.c
- F: docs/devel/ui.rst
--F: tests/functional/test_vnc.py
-+F: tests/functional/generic/test_vnc.py
- 
- Cocoa graphics
- M: Peter Maydell <peter.maydell@linaro.org>
-diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
+ ARM Machines
+ ------------
+diff --git a/tests/functional/alpha/meson.build b/tests/functional/alpha/meson.build
 new file mode 100644
-index 00000000000..013cc96fbf8
+index 00000000000..26a5b3f2e4b
 --- /dev/null
-+++ b/tests/functional/generic/meson.build
-@@ -0,0 +1,14 @@
++++ b/tests/functional/alpha/meson.build
+@@ -0,0 +1,10 @@
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+tests_generic_system = [
-+  'empty_cpu_model',
-+  'info_usernet',
-+  'version',
-+  'vnc',
++tests_alpha_system_quick = [
++  'migration',
 +]
 +
-+tests_generic_linuxuser = [
++tests_alpha_system_thorough = [
++  'clipper',
++  'replay',
 +]
-+
-+tests_generic_bsduser = [
-+]
-diff --git a/tests/functional/test_empty_cpu_model.py b/tests/functional/generic/test_empty_cpu_model.py
+diff --git a/tests/functional/test_alpha_clipper.py b/tests/functional/alpha/test_clipper.py
 similarity index 100%
-rename from tests/functional/test_empty_cpu_model.py
-rename to tests/functional/generic/test_empty_cpu_model.py
-diff --git a/tests/functional/test_info_usernet.py b/tests/functional/generic/test_info_usernet.py
+rename from tests/functional/test_alpha_clipper.py
+rename to tests/functional/alpha/test_clipper.py
+diff --git a/tests/functional/test_alpha_migration.py b/tests/functional/alpha/test_migration.py
 similarity index 100%
-rename from tests/functional/test_info_usernet.py
-rename to tests/functional/generic/test_info_usernet.py
-diff --git a/tests/functional/test_version.py b/tests/functional/generic/test_version.py
+rename from tests/functional/test_alpha_migration.py
+rename to tests/functional/alpha/test_migration.py
+diff --git a/tests/functional/test_alpha_replay.py b/tests/functional/alpha/test_replay.py
 similarity index 100%
-rename from tests/functional/test_version.py
-rename to tests/functional/generic/test_version.py
-diff --git a/tests/functional/test_vnc.py b/tests/functional/generic/test_vnc.py
-similarity index 100%
-rename from tests/functional/test_vnc.py
-rename to tests/functional/generic/test_vnc.py
+rename from tests/functional/test_alpha_replay.py
+rename to tests/functional/alpha/test_replay.py
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index b1eec16add8..2a0c5aa1418 100644
+index 9cb6325360f..a7f8c88a078 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -36,18 +36,7 @@ subdir('sparc')
- subdir('sparc64')
- subdir('x86_64')
- subdir('xtensa')
--
--tests_generic_system = [
--  'empty_cpu_model',
--  'info_usernet',
--  'version',
--]
--
--tests_generic_linuxuser = [
--]
--
--tests_generic_bsduser = [
--]
-+subdir('generic')
+@@ -10,6 +10,7 @@ if get_option('tcg_interpreter')
+ endif
  
- precache_all = []
- foreach speed : ['quick', 'thorough']
-@@ -90,9 +79,7 @@ foreach speed : ['quick', 'thorough']
+ subdir('aarch64')
++subdir('alpha')
  
-     foreach test : target_tests
-       testname = '@0@-@1@'.format(target_base, test)
--      if fs.exists('test_' + test + '.py')
--        testfile = 'test_' + test + '.py'
--      elif fs.exists('generic' / 'test_' + test + '.py')
-+      if fs.exists('generic' / 'test_' + test + '.py')
-         testfile = 'generic' / 'test_' + test + '.py'
-       else
-         testfile = target_base / 'test_' + test + '.py'
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 696a9ecab42..d0b4667bb8a 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -16,7 +16,6 @@ tests_x86_64_system_quick = [
-   'migration',
-   'pc_cpu_hotplug_props',
-   'virtio_version',
--  'vnc',
-   'memlock',
+ test_arm_timeouts = {
+   'arm_aspeed_palmetto' : 120,
+@@ -96,15 +97,6 @@ tests_generic_linuxuser = [
+ tests_generic_bsduser = [
  ]
  
+-tests_alpha_system_quick = [
+-  'alpha_migration',
+-]
+-
+-tests_alpha_system_thorough = [
+-  'alpha_clipper',
+-  'alpha_replay',
+-]
+-
+ tests_arm_system_quick = [
+   'arm_migration',
+ ]
 -- 
 2.50.1
 
