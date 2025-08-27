@@ -4,65 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE826C8303F
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 08:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0668DCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 08:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urB1H-0006MM-NT; Wed, 27 Aug 2025 03:56:35 -0400
+	id 1urB7i-0004Dm-3e; Wed, 27 Aug 2025 04:03:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB1E-0006E0-Td
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:56:34 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1urB7f-000453-HE
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:03:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1urB19-00025S-KN
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 03:56:31 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1urB7c-0003JN-F3
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:03:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756281385;
+ s=mimecast20190719; t=1756281783;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/fYdSQ/oOdHLPYM9QiPG+xLTKvuS+KdSP+uEu774ALY=;
- b=IgwtFgn1JLLGR6kkLrP19nYqmO4249EKnmFTUmcSwKzhyOGvay3VbYS5SutmNjlfAnKKQv
- L1RpLc4YjeZ2T0H7NEssahNrp41HcSMN43tGUYuU2epezNClooN1EAtqds1iaxjnjyTeH0
- R3FsmjGSlTwpvfQdAzRuYn9Wswph8w4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-citVMPlCP1m9NMboW-4LQg-1; Wed,
- 27 Aug 2025 03:56:22 -0400
-X-MC-Unique: citVMPlCP1m9NMboW-4LQg-1
-X-Mimecast-MFC-AGG-ID: citVMPlCP1m9NMboW-4LQg_1756281381
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B1BB21800451; Wed, 27 Aug 2025 07:56:21 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.40])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3CA01955F24; Wed, 27 Aug 2025 07:56:18 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 25/31] tests/functional: Move sh4/sh4eb tests into
- target-specific folders
-Date: Wed, 27 Aug 2025 09:54:35 +0200
-Message-ID: <20250827075443.559712-26-thuth@redhat.com>
-In-Reply-To: <20250827075443.559712-1-thuth@redhat.com>
-References: <20250827075443.559712-1-thuth@redhat.com>
+ bh=enLp0vSBb+0c5x5/f1QRe0OEzIP0CKokhxei+hbso8Q=;
+ b=DYsgE0FwPOYbwZJQPbontNjhVGXzNM2Vv/baPzpbjl8UMayySErT1KCc38G7ZLjbOnF1go
+ c5QCJCNzSBb/HIC/dyjFlGjTlTS74RnTtMxpknpH+J7iLR0JMNUuGbpSfmTjozOTxpAH9B
+ 5LVAV/34aU3qdYd7phGzdeY164Iku10=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-682-lQgbcFC1Px-RGvEVuuEMqg-1; Wed, 27 Aug 2025 04:03:02 -0400
+X-MC-Unique: lQgbcFC1Px-RGvEVuuEMqg-1
+X-Mimecast-MFC-AGG-ID: lQgbcFC1Px-RGvEVuuEMqg_1756281781
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4b0fa8190d4so19926821cf.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 01:03:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756281781; x=1756886581;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=enLp0vSBb+0c5x5/f1QRe0OEzIP0CKokhxei+hbso8Q=;
+ b=thPzgLVlBo8wQvWKAkNHo+7GnWs3wI9+DAMNNTNXrGK0EXg3htsVpK5cxr9QZtSQVf
+ c4XBeKWiCVPBwa2WzyjYw1PAL+VsKFKdZkqhwKIyuruRAuy4/k+38AWJUpiAz19s7PJs
+ jLjuO3lSedHOz1qqhrgHsiMTZiAQiDEzmI5LCfdYXiisyQsqOO8l3YGhZl9IwEkrcQzw
+ LA3/k1DbfRlxZxK3MPzn4estx+ZNdCCMK4Y/q9OybgIrrhRmQ2djJKmVuMwmtbWjncZ0
+ Oh/EAzizcQ3kdOTY4q5OGzfnijdtyYDVHUJGnDiLtOvbwpyDQq6pkNwD+G9PGiF41+mi
+ aINw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9zCDOdUjowV/nyR5516z4xG/qKcUZQsIA/hIx+rq6vRiGmHt7Pt5BhgZtIBBlnB9T52OoQ3oklnmZ@nongnu.org
+X-Gm-Message-State: AOJu0YzvQvwaWUmIsS/4PamBCqUqiTfrj6f3YR13Y8ZxH/6on8Fbz4y5
+ GFM/aeoY9w7aORThRbHwnI09Bssy3tqVKnMwlOYCVpqnBIO0ZBp9FumZtGNSUXjlKadt4gcLP8K
+ ZysllUcIFPcXpfdK/YdnmeFDFY910BGO3RDxA7UkMv/IDkhv8FP4VQGbH
+X-Gm-Gg: ASbGncuvaA+mLVkbZcwavkADzGFv6y+dej5FBbFlNeywVslj/HT0uiGPV9OrvxCag/7
+ ZZHgAk8+l5ZbVRh3UwIxlS+IEra4WKR2Q7DDovYG+a15PxgCn4eephSbMhKmJfLGfXMN+XnrLaK
+ pb2Mh0m3fvpYuWdhRz8zzhoOAfAARGKMTceIzuyhBZofPpWGdg3qNfs5QO9a9FBynDQ3JNuHy+u
+ iP2kIvRDBkxlIf3aVOA1AiSiG9B58hKSi9+/lyeJm+7jpYTR26rEgp2d1Y5ZGQPzWtz/bm8iiKb
+ dU1zcZmMYjjXtJvsQtEnSOWNkkOl/Q==
+X-Received: by 2002:ac8:5701:0:b0:4ab:6101:51e2 with SMTP id
+ d75a77b69052e-4b2e76f6c03mr57981121cf.9.1756281781284; 
+ Wed, 27 Aug 2025 01:03:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjdumMzp2Z+l6swklN4j5aUb2EpfFgXL9S5vFwcN5HdoqwTKpet5B8nF8HXyN0MZxdlb9lrA==
+X-Received: by 2002:ac8:5701:0:b0:4ab:6101:51e2 with SMTP id
+ d75a77b69052e-4b2e76f6c03mr57980831cf.9.1756281780814; 
+ Wed, 27 Aug 2025 01:03:00 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4b2b8e1cd7esm88574151cf.39.2025.08.27.01.02.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Aug 2025 01:03:00 -0700 (PDT)
+Date: Wed, 27 Aug 2025 10:02:56 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ richard.henderson@linaro.org, kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] kvm/kvm-all: make kvm_park/unpark_vcpu local to
+ kvm-all.c
+Message-ID: <20250827100256.64694a52@fedora>
+In-Reply-To: <d109215c-2b3c-46e4-9fb2-49fe70076a5c@linaro.org>
+References: <20250815065445.8978-1-anisinha@redhat.com>
+ <20250826132322.7571b918@fedora>
+ <d109215c-2b3c-46e4-9fb2-49fe70076a5c@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,118 +113,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Tue, 26 Aug 2025 17:09:27 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-The tests/functional folder has become quite crowded, thus move the
-sh4 tests into a target-specific subfolder.
+> On 26/8/25 13:23, Igor Mammedov wrote:
+> > On Fri, 15 Aug 2025 12:24:45 +0530
+> > Ani Sinha <anisinha@redhat.com> wrote:
+> >  =20
+> >> kvm_park_vcpu() and kvm_unpark_vcpu() is only used in kvm-all.c. Decla=
+re it
+> >> static, remove it from common header file and make it local to kvm-all=
+.c
+> >>
+> >> Signed-off-by: Ani Sinha <anisinha@redhat.com> =20
+> >=20
+> > Reviewed-by: Ani Sinha <anisinha@redhat.com> =20
+>=20
+> Do you mean Igor Mammedov <imammedo@redhat.com>?
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250819112403.432587-21-thuth@redhat.com>
----
- MAINTAINERS                                       |  4 ++--
- tests/functional/meson.build                      | 15 ++-------------
- tests/functional/sh4/meson.build                  | 10 ++++++++++
- .../{test_sh4_r2d.py => sh4/test_r2d.py}          |  0
- .../{test_sh4_tuxrun.py => sh4/test_tuxrun.py}    |  0
- tests/functional/sh4eb/meson.build                |  5 +++++
- .../{test_sh4eb_r2d.py => sh4eb/test_r2d.py}      |  0
- 7 files changed, 19 insertions(+), 15 deletions(-)
- create mode 100644 tests/functional/sh4/meson.build
- rename tests/functional/{test_sh4_r2d.py => sh4/test_r2d.py} (100%)
- rename tests/functional/{test_sh4_tuxrun.py => sh4/test_tuxrun.py} (100%)
- create mode 100644 tests/functional/sh4eb/meson.build
- rename tests/functional/{test_sh4eb_r2d.py => sh4eb/test_r2d.py} (100%)
+sorry for mistake,
+I've surely meant myself
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4a55a20f6a5..eddec0058e0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1736,8 +1736,8 @@ F: hw/pci-host/sh_pci.c
- F: hw/timer/sh_timer.c
- F: include/hw/sh4/sh_intc.h
- F: include/hw/timer/tmu012.h
--F: tests/functional/test_sh4*_r2d.py
--F: tests/functional/test_sh4_tuxrun.py
-+F: tests/functional/sh4*/test_r2d.py
-+F: tests/functional/sh4/test_tuxrun.py
- 
- SPARC Machines
- --------------
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index abaa4e00fca..ce713509e32 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -30,10 +30,8 @@ subdir('riscv32')
- subdir('riscv64')
- subdir('rx')
- subdir('s390x')
--
--test_sh4_timeouts = {
--  'sh4_tuxrun' : 240,
--}
-+subdir('sh4')
-+subdir('sh4eb')
- 
- test_x86_64_timeouts = {
-   'acpi_bits' : 420,
-@@ -56,15 +54,6 @@ tests_generic_linuxuser = [
- tests_generic_bsduser = [
- ]
- 
--tests_sh4_system_thorough = [
--  'sh4_r2d',
--  'sh4_tuxrun',
--]
--
--tests_sh4eb_system_thorough = [
--  'sh4eb_r2d',
--]
--
- tests_sparc_system_quick = [
-   'sparc_migration',
- ]
-diff --git a/tests/functional/sh4/meson.build b/tests/functional/sh4/meson.build
-new file mode 100644
-index 00000000000..56f824e1e71
---- /dev/null
-+++ b/tests/functional/sh4/meson.build
-@@ -0,0 +1,10 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+test_sh4_timeouts = {
-+  'tuxrun' : 240,
-+}
-+
-+tests_sh4_system_thorough = [
-+  'r2d',
-+  'tuxrun',
-+]
-diff --git a/tests/functional/test_sh4_r2d.py b/tests/functional/sh4/test_r2d.py
-similarity index 100%
-rename from tests/functional/test_sh4_r2d.py
-rename to tests/functional/sh4/test_r2d.py
-diff --git a/tests/functional/test_sh4_tuxrun.py b/tests/functional/sh4/test_tuxrun.py
-similarity index 100%
-rename from tests/functional/test_sh4_tuxrun.py
-rename to tests/functional/sh4/test_tuxrun.py
-diff --git a/tests/functional/sh4eb/meson.build b/tests/functional/sh4eb/meson.build
-new file mode 100644
-index 00000000000..25e9a6e4041
---- /dev/null
-+++ b/tests/functional/sh4eb/meson.build
-@@ -0,0 +1,5 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+tests_sh4eb_system_thorough = [
-+  'r2d',
-+]
-diff --git a/tests/functional/test_sh4eb_r2d.py b/tests/functional/sh4eb/test_r2d.py
-similarity index 100%
-rename from tests/functional/test_sh4eb_r2d.py
-rename to tests/functional/sh4eb/test_r2d.py
--- 
-2.50.1
+>=20
+> >  =20
+> >> ---
+> >>   accel/kvm/kvm-all.c  |  4 ++--
+> >>   include/system/kvm.h | 17 -----------------
+> >>   2 files changed, 2 insertions(+), 19 deletions(-)
+> >>
+> >> changelog:
+> >> unexport  kvm_unpark_vcpu() as well and remove unnecessary forward
+> >> declarations.
+> >>
+> >> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> >> index 890d5ea9f8..f36dfe3349 100644
+> >> --- a/accel/kvm/kvm-all.c
+> >> +++ b/accel/kvm/kvm-all.c
+> >> @@ -414,7 +414,7 @@ err:
+> >>       return ret;
+> >>   }
+> >>  =20
+> >> -void kvm_park_vcpu(CPUState *cpu)
+> >> +static void kvm_park_vcpu(CPUState *cpu)
+> >>   {
+> >>       struct KVMParkedVcpu *vcpu;
+> >>  =20
+> >> @@ -426,7 +426,7 @@ void kvm_park_vcpu(CPUState *cpu)
+> >>       QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+> >>   }
+> >>  =20
+> >> -int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+> >> +static int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+> >>   {
+> >>       struct KVMParkedVcpu *cpu;
+> >>       int kvm_fd =3D -ENOENT;
+> >> diff --git a/include/system/kvm.h b/include/system/kvm.h
+> >> index 3c7d314736..4fc09e3891 100644
+> >> --- a/include/system/kvm.h
+> >> +++ b/include/system/kvm.h
+> >> @@ -317,23 +317,6 @@ int kvm_create_device(KVMState *s, uint64_t type,=
+ bool test);
+> >>    */
+> >>   bool kvm_device_supported(int vmfd, uint64_t type);
+> >>  =20
+> >> -/**
+> >> - * kvm_park_vcpu - Park QEMU KVM vCPU context
+> >> - * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to b=
+e parked.
+> >> - *
+> >> - * @returns: none
+> >> - */
+> >> -void kvm_park_vcpu(CPUState *cpu);
+> >> -
+> >> -/**
+> >> - * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
+> >> - * @s: KVM State
+> >> - * @vcpu_id: Architecture vCPU ID of the parked vCPU
+> >> - *
+> >> - * @returns: KVM fd
+> >> - */
+> >> -int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
+> >> -
+> >>   /**
+> >>    * kvm_create_and_park_vcpu - Create and park a KVM vCPU
+> >>    * @cpu: QOM CPUState object for which KVM vCPU has to be created an=
+d parked. =20
+> >=20
+> >  =20
+>=20
 
 
