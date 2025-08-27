@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FACDCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04AC0CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHhP-0003MA-FS; Wed, 27 Aug 2025 11:04:31 -0400
+	id 1urHoH-000788-PL; Wed, 27 Aug 2025 11:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHhD-00031d-Ah; Wed, 27 Aug 2025 11:04:22 -0400
+ id 1urHjk-000766-Di; Wed, 27 Aug 2025 11:06:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHh7-0004py-4N; Wed, 27 Aug 2025 11:04:19 -0400
+ id 1urHji-0005Sl-H7; Wed, 27 Aug 2025 11:06:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 220B814C534;
- Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0164D14C54E;
+ Wed, 27 Aug 2025 18:02:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0D31E26983C;
- Wed, 27 Aug 2025 18:03:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DE818269856;
+ Wed, 27 Aug 2025 18:03:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Nutty Liu <liujingqi@lanxincomputing.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 12/59] target/riscv: do not call GETPC() in
- check_ret_from_m_mode()
-Date: Wed, 27 Aug 2025 18:02:17 +0300
-Message-ID: <20250827150323.2694101-12-mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 38/59] ppc/xive: Fix xive trace event output
+Date: Wed, 27 Aug 2025 18:02:43 +0300
+Message-ID: <20250827150323.2694101-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
@@ -66,83 +64,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-GETPC() should always be called from the top level helper, e.g. the
-first helper that is called by the translation code. We stopped doing
-that in commit 3157a553ec, and then we introduced problems when
-unwinding the exceptions being thrown by helper_mret(), as reported by
-[1].
+Typo, IBP should be IPB.
 
-Call GETPC() at the top level helper and pass the value along.
-
-[1] https://gitlab.com/qemu-project/qemu/-/issues/3020
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 3157a553ec ("target/riscv: Add Smrnmi mnret instruction")
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3020
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250714133739.1248296-1-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 16aa7771afeac422dcf7be2833d5426da6b814fa)
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20250512031100.439842-2-npiggin@gmail.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 301fbbaf03fb114a1e45833987ddfd7bbb403963)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 72dc48e58d..6a8c2e1940 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -353,21 +353,22 @@ target_ulong helper_sret(CPURISCVState *env)
- }
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 0ba9a02e73..f77f9733c9 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -274,9 +274,9 @@ kvm_xive_cpu_connect(uint32_t id) "connect CPU%d to KVM device"
+ kvm_xive_source_reset(uint32_t srcno) "IRQ 0x%x"
  
- static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
--                                  target_ulong prev_priv)
-+                                  target_ulong prev_priv,
-+                                  uintptr_t ra)
- {
-     if (!(env->priv >= PRV_M)) {
--        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-+        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
-     }
- 
-     if (!riscv_cpu_allow_16bit_insn(&env_archcpu(env)->cfg,
-                                     env->priv_ver,
-                                     env->misa_ext) && (retpc & 0x3)) {
--        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, GETPC());
-+        riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, ra);
-     }
- 
-     if (riscv_cpu_cfg(env)->pmp &&
-         !pmp_get_num_rules(env) && (prev_priv != PRV_M)) {
--        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, GETPC());
-+        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, ra);
-     }
- }
- static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
-@@ -392,8 +393,9 @@ target_ulong helper_mret(CPURISCVState *env)
-     target_ulong retpc = env->mepc;
-     uint64_t mstatus = env->mstatus;
-     target_ulong prev_priv = get_field(mstatus, MSTATUS_MPP);
-+    uintptr_t ra = GETPC();
- 
--    check_ret_from_m_mode(env, retpc, prev_priv);
-+    check_ret_from_m_mode(env, retpc, prev_priv, ra);
- 
-     target_ulong prev_virt = get_field(env->mstatus, MSTATUS_MPV) &&
-                              (prev_priv != PRV_M);
-@@ -441,8 +443,9 @@ target_ulong helper_mnret(CPURISCVState *env)
-     target_ulong retpc = env->mnepc;
-     target_ulong prev_priv = get_field(env->mnstatus, MNSTATUS_MNPP);
-     target_ulong prev_virt;
-+    uintptr_t ra = GETPC();
- 
--    check_ret_from_m_mode(env, retpc, prev_priv);
-+    check_ret_from_m_mode(env, retpc, prev_priv, ra);
- 
-     prev_virt = get_field(env->mnstatus, MNSTATUS_MNPV) &&
-                 (prev_priv != PRV_M);
+ # xive.c
+-xive_tctx_accept(uint32_t index, uint8_t ring, uint8_t ipb, uint8_t pipr, uint8_t cppr, uint8_t nsr) "target=%d ring=0x%x IBP=0x%02x PIPR=0x%02x CPPR=0x%02x NSR=0x%02x ACK"
+-xive_tctx_notify(uint32_t index, uint8_t ring, uint8_t ipb, uint8_t pipr, uint8_t cppr, uint8_t nsr) "target=%d ring=0x%x IBP=0x%02x PIPR=0x%02x CPPR=0x%02x NSR=0x%02x raise !"
+-xive_tctx_set_cppr(uint32_t index, uint8_t ring, uint8_t ipb, uint8_t pipr, uint8_t cppr, uint8_t nsr) "target=%d ring=0x%x IBP=0x%02x PIPR=0x%02x new CPPR=0x%02x NSR=0x%02x"
++xive_tctx_accept(uint32_t index, uint8_t ring, uint8_t ipb, uint8_t pipr, uint8_t cppr, uint8_t nsr) "target=%d ring=0x%x IPB=0x%02x PIPR=0x%02x CPPR=0x%02x NSR=0x%02x ACK"
++xive_tctx_notify(uint32_t index, uint8_t ring, uint8_t ipb, uint8_t pipr, uint8_t cppr, uint8_t nsr) "target=%d ring=0x%x IPB=0x%02x PIPR=0x%02x CPPR=0x%02x NSR=0x%02x raise !"
++xive_tctx_set_cppr(uint32_t index, uint8_t ring, uint8_t ipb, uint8_t pipr, uint8_t cppr, uint8_t nsr) "target=%d ring=0x%x IPB=0x%02x PIPR=0x%02x new CPPR=0x%02x NSR=0x%02x"
+ xive_source_esb_read(uint64_t addr, uint32_t srcno, uint64_t value) "@0x%"PRIx64" IRQ 0x%x val=0x%"PRIx64
+ xive_source_esb_write(uint64_t addr, uint32_t srcno, uint64_t value) "@0x%"PRIx64" IRQ 0x%x val=0x%"PRIx64
+ xive_router_end_notify(uint8_t end_blk, uint32_t end_idx, uint32_t end_data) "END 0x%02x/0x%04x -> enqueue 0x%08x"
 -- 
 2.47.2
 
