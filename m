@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0B8CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D4F8CA0FF9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urJb9-00088L-1y; Wed, 27 Aug 2025 13:06:11 -0400
+	id 1urJZH-0005nV-0F; Wed, 27 Aug 2025 13:04:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJaD-0006WW-N0; Wed, 27 Aug 2025 13:05:19 -0400
+ id 1urJZE-0005mY-5t; Wed, 27 Aug 2025 13:04:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJa8-0007xe-7w; Wed, 27 Aug 2025 13:05:11 -0400
+ id 1urJZ5-0007b3-Qo; Wed, 27 Aug 2025 13:04:10 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D6A2214C72F;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0086214C723;
  Wed, 27 Aug 2025 20:03:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E878B2698F5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 13E062698E9;
  Wed, 27 Aug 2025 20:03:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zenghui Yu <zenghui.yu@linux.dev>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 13/18] hw/intc/arm_gicv3_kvm: Write all 1's to clear
- enable/active
-Date: Wed, 27 Aug 2025 20:03:48 +0300
-Message-ID: <20250827170356.2698446-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [Stable-7.2.20 01/18] hw/display/qxl-render.c: fix
+ qxl_unpack_chunks() chunk size calculation
+Date: Wed, 27 Aug 2025 20:03:36 +0300
+Message-ID: <20250827170356.2698446-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
@@ -60,49 +60,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zenghui Yu <zenghui.yu@linux.dev>
+In case of multiple chunks, code in qxl_unpack_chunks() takes size of the
+wrong (next in the chain) chunk, instead of using current chunk size.
+This leads to wrong number of bytes being copied, and to crashes if next
+chunk size is larger than the current one.
 
-KVM's userspace access interface to the GICD enable and active bits
-is via set/clear register pairs which implement the hardware's "write
-1s to the clear register to clear the 0 bits, and write 1s to the set
-register to set the 1 bits" semantics.  We didn't get this right,
-because we were writing 0 to the clear register.
+Based on the code by Gao Yong.
 
-Writing 0 to GICD_IC{ENABLE,ACTIVE}R architecturally has no effect on
-interrupt status (all writes are simply ignored by KVM) and doesn't
-comply with the intention of "first write to the clear-reg to clear
-all bits".
-
-Write all 1's to actually clear the enable/active status.
-
-This didn't have any adverse effects on migration because there
-we start with a clean VM state; it would be guest-visible when
-doing a system reset, but since Linux always cleans up the
-register state of the GIC during bootup before it enables it
-most users won't have run into a problem here.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 367b9f527bec ("hw/intc/arm_gicv3_kvm: Implement get/put functions")
-Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
-Message-id: 20250729161650.43758-3-zenghui.yu@linux.dev
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit b10bd4bd17ac8628ede8735a08ad82dc3b721c64)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1628
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit b8882becd572d3afb888c836a6ffc7f92c17d1c5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-index 3ca643ecba..6d98dafc02 100644
---- a/hw/intc/arm_gicv3_kvm.c
-+++ b/hw/intc/arm_gicv3_kvm.c
-@@ -294,7 +294,7 @@ static void kvm_dist_putbmp(GICv3State *s, uint32_t offset,
-          * the 1 bits.
-          */
-         if (clroffset != 0) {
--            reg = 0;
-+            reg = ~0;
-             kvm_gicd_access(s, clroffset, &reg, true);
-             clroffset += 4;
+diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+index fcfd40c3ac..6d1df16fa4 100644
+--- a/hw/display/qxl-render.c
++++ b/hw/display/qxl-render.c
+@@ -222,6 +222,7 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
+     uint32_t max_chunks = 32;
+     size_t offset = 0;
+     size_t bytes;
++    QXLPHYSICAL next_chunk_phys = 0;
+ 
+     for (;;) {
+         bytes = MIN(size - offset, chunk->data_size);
+@@ -230,7 +231,15 @@ static void qxl_unpack_chunks(void *dest, size_t size, PCIQXLDevice *qxl,
+         if (offset == size) {
+             return;
          }
+-        chunk = qxl_phys2virt(qxl, chunk->next_chunk, group_id,
++        next_chunk_phys = chunk->next_chunk;
++        /* fist time, only get the next chunk's data size */
++        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
++                              sizeof(QXLDataChunk));
++        if (!chunk) {
++            return;
++        }
++        /* second time, check data size and get data */
++        chunk = qxl_phys2virt(qxl, next_chunk_phys, group_id,
+                               sizeof(QXLDataChunk) + chunk->data_size);
+         if (!chunk) {
+             return;
 -- 
 2.47.2
 
