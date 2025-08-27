@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8027CCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 00:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B9CCA0FF0
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur3kf-0003zh-24; Tue, 26 Aug 2025 20:10:57 -0400
+	id 1ur4b9-0003Vm-5A; Tue, 26 Aug 2025 21:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ur3kc-0003zG-LR
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 20:10:54 -0400
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ur4b7-0003VR-Oy
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:05:09 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ur3ka-0007oG-2L
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 20:10:54 -0400
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-76e2eb6ce24so4976047b3a.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 17:10:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ur4b4-00074H-Nh
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:05:09 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-770530175a6so2132488b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756253449; x=1756858249; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756256703; x=1756861503; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jBHUz3SuLSqqU/2ZexNeh2quDs8pmox9xIU2PVoduuM=;
- b=et4IEyykNOe/UEvSTRZJeT9GW9S49YoF31Mz/7qk2Dm7eqgK7bTwyFUU5lBW4FVddO
- /ArjdVLsu3yb+xXzULkW4jKTi0QEJQNoCY0cYlIo7rGJOzuTWzM0KLdwkHrE2ocaqk50
- KcviHUxgAGYsT8CQZLJSgRlOs/iTlY82Kp8aTBDROJ4NMhvf44PqtczO20IRrYNTwdUj
- 7KQjNjtdeVJ9v+C9NKEBnF83cmRmDwpkQlGkbZ3SkHbNYv8/t0cgOyXP7wMRfcJ1Hvjg
- s8pnqOH0zQ4W31a9jYsAyCeyomDu1BsE3iqRUsVlhhZTFE6cm3f7sY5WU7b+biYfQ4j5
- TGAg==
+ bh=NcG6Wtwuu8aUNgPha7rYWbXyXySoDRQtTWPzFZmxwPc=;
+ b=dIVbXsbAsL5JzvScn8FfswkvcHCiyqNX8ebGbrwljNIKgFMu6Loh3NUUSI4MUVyzsM
+ NSFA8AOleThVeKg4IAIEAnyzbNqD5BrSXHDmfMQMAM4tR0LlHSqLGRSVqTNksJ2Cyv1d
+ cZxjIBBGtUNHt4Mdbr0JWv34+m8TbSLPxQbINCbodWMzauyfa3Qhf59nvx5S1DEX4TL6
+ UCMcjmpxQf0cbW3SvvzTx7bRFDzkCNfTTgEy2Z7yqsLSWyfHzcSFyOEWukSpJtsTgnjI
+ RrN/jobBsm01XYmrbVVNaSwgOAuYTNqXssUXHeQNNVanHU58PFa5YVRdwgJNoK5ifnvP
+ O5vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756253449; x=1756858249;
+ d=1e100.net; s=20230601; t=1756256703; x=1756861503;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jBHUz3SuLSqqU/2ZexNeh2quDs8pmox9xIU2PVoduuM=;
- b=ttwLpZl6dpdL78lifRtEKEQJpcxM0giRMAMtaD/EqRIb1X/HlBVr0ERltHb8X7orkt
- AUdX118Qsg+wu51y8kLZC9lDawwrHGfQsxWFsAwLafaxHveq5teBb/JSilSLdHjYLPkZ
- F/hE/IgXeXCo3ZF2js5/ypxKCAlZulWyi+/qvS0RjR/YgfkjEndBHSd2l+s+8pxr49Kq
- loxhsjFpUCpkQO8T72WaXfSRZST2S5cZVzyZPrCD4AiL4UJNJUhOAbg0SjU+Trqlfkar
- PcWx5ZIiMpD3Qz+ruNHiIjj1x84ALDqnnRysq19D9uqqGFMjHuz2mrlKxByc8O9BMGBm
- YxNQ==
-X-Gm-Message-State: AOJu0Yw0XkVbSSVhmJANwRUAGoWhvvWxXM3ACMn3RcPrOK2Lzv2Vac0m
- ZQ0//X3BE8JrqsLmjOmvaXuGZas7+RNPh0FWwAGDVq6koVnY5Dc897az36JEl+AH6xq2vxphfsD
- DaqAur1DKdA==
-X-Gm-Gg: ASbGncvIhRh1QPGDIXAubgnzyDalmUZX8zg7N34b2fjvls88Mpv2jW/Rejc4hTEkNwG
- vIvFIkrt9hai8ReWGDvMUpSEwFwwYzcgcx1JtmBJfZh41rckMr8va06jmRlLoGXVBLbqYY7x01w
- mQvcJOPnxSX6QcWKdlzjrvkkCPruUM1KIZOlebzei3S1pRrtLNVdue4imXt4qSI0A9iijHKZ2xT
- 5nHW3aQNDQlcra8d4q3ktJ59vVw4u8YSuLoSTvJUNwYwqNsGximHHknBi9A03rZpLS0Ix2WUyo0
- vLNxIxP5agTkBztYlN0fs5X/fIvcnP9ApRXvMUZ9cYRG9tmwuKDf9qiqMhvNaDkdY0hZE/9htAV
- nld9amuswX4GPtjyONX7d08QzxNeQ9/GS2+FiPQ==
-X-Google-Smtp-Source: AGHT+IFPch2CscGnBJ7Sb4w0yVGbs7pmZXw70Q1rJ3R6gWBRhnWeBB2WUJIeQ/c0D2pAktsRwK/MuQ==
-X-Received: by 2002:a17:902:d4c8:b0:246:96bf:c90b with SMTP id
- d9443c01a7336-24696bfd557mr169274585ad.29.1756253449167; 
- Tue, 26 Aug 2025 17:10:49 -0700 (PDT)
-Received: from gromero0.. ([187.75.38.174]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24875471755sm24060245ad.54.2025.08.26.17.10.47
+ bh=NcG6Wtwuu8aUNgPha7rYWbXyXySoDRQtTWPzFZmxwPc=;
+ b=VkIOcSkzwOiut6HyXuTOjWA/rIETyw8vo+mEKZ+ITywI1FJsJ9pnOYoKK9lqolYysf
+ ksacYlELf0re3OfJD41vJyWxATftg6iRzuDxLUiyhHMkQTVjsGhBhXoU/60lSrO9BZgB
+ 1dZlEYMV/ngFCMgOy5VTdecOlsQYt17sszaAXYPPe/ijx55p2eSGpG0owlpHiz97h5Uo
+ hMn8eetW83HS29j0YKrwIg/XXfI77/4IMr744zxZfBQcZNg3JKM5So1XoajyFn571XMT
+ seZKZ+xbfY7mZx//zD2Wec18GZBKzOdt8GJoH0tVv49WVfQKi1fPzBnrSTI6vhrKQAdW
+ b73g==
+X-Gm-Message-State: AOJu0YzOpWSI5Qv72ygtLwWjj6ue1tfY68EOaMuix2IrLb9FEapdg1pI
+ 5x0gDuwG7pb5y2iZ6hOLoYCoFbBfLPQRVLg67OzrA6Fr6or+39P9tCUJ/vr6c9euFVUVQXTugeI
+ 2faaAF7g=
+X-Gm-Gg: ASbGnctLtFFxsnwlOnJIxQxNXH4maayedXrdahfZcSlO+GoJocqCKbTvs8HUpeKBwUr
+ e50RVPAV3P+GeGT0OAM95fX5MXmJEM46j57Pq/S7CQoMYHlaZrAbJlKWRFyCt0b+JNT40PxmKZ4
+ 9m7OATOoBzTkkvCfHx7qc8lOZSO1uL+wtm5sMbeV34FkAMe+HUmaV1eSX7pyZsGrR1//wTeL5X1
+ TVaWONvNU57TAnLDk1eGDtng9BcFCycR5scyVE3UY7cHTUTSkk3bpYPUwMqe5gh9rFPdkFXX1Gy
+ jxx7rMZdaeXdjojdIe+xd2dGtPXHDOTCuwn6x7fl+LGJyNxT8oRvFjMti+8emhLxTpdPFKdoqBO
+ RS8bl+F99ahtfIaOqFcpqDA4KxVi8ZCRSpW1U/38g+dYWfHM=
+X-Google-Smtp-Source: AGHT+IHlOFwmmCzIPenRLXFac1/mIbVgg/umHLMxPdJdClkbWFczbQq3x0zhdIUhTGxYNnv5qZsT6Q==
+X-Received: by 2002:a05:6a21:6d8f:b0:238:e08:f283 with SMTP id
+ adf61e73a8af0-24340c0fad3mr27152867637.13.1756256702504; 
+ Tue, 26 Aug 2025 18:05:02 -0700 (PDT)
+Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7720274534esm1419241b3a.47.2025.08.26.18.04.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 17:10:48 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org,
-	alex.bennee@linaro.org,
-	thuth@redhat.com
-Cc: qemu-arm@nongnu.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH] tests/functional: Fix reverse_debugging asset precaching
-Date: Wed, 27 Aug 2025 00:10:08 +0000
-Message-Id: <20250827001008.22112-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ Tue, 26 Aug 2025 18:05:01 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [RFC PATCH 00/61] target/arm: Implement FEAT_SYSREG128
+Date: Wed, 27 Aug 2025 11:03:47 +1000
+Message-ID: <20250827010453.4059782-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x441.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,46 +96,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit fixes the asset precaching in the reverse_debugging test on
-aarch64.
+Requesting feedback on the implementation of 128-bit registers.
 
-QemuBaseTest.main() precaches assets (kernel, rootfs, DT blobs, etc.)
-that are defined in variables with the ASSET_ prefix. This works because
-it ultimately calls Asset.precache_test(), which relies on introspection
-to locate these variables.
+Note that there ought to be no functional change with all of this,
+because 128-bit sysregs are not hereing enabled.  Despite all of the
+different FEAT_* names, it's all indivisible from FEAT_D128.
 
-If an asset variable is not named with the ASSET_ prefix, precache_test
-cannot find the asset and precaching silently fails. Hence, fix the
-asset precaching by fixing the asset variable name.
+I've used Int128 throughout, which seems sensible at first glance,
+but *really* complicates the definition of the registers within
+ARMCPU, especially when the low part is aliased with AArch32.
+The only saving grace is that there are so few 128-bit registers.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- tests/functional/test_aarch64_reverse_debug.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Gettng there isn't trivial either.  I wasn't happy with the idea
+of replicating the orig_{read,write,access} set of hooks used by
+VHE, so I've rewritten that to perform the VHE redirection at
+translation time, much like how we do for NV2.
 
-diff --git a/tests/functional/test_aarch64_reverse_debug.py b/tests/functional/test_aarch64_reverse_debug.py
-index 58d4532835..8bc91ccfde 100755
---- a/tests/functional/test_aarch64_reverse_debug.py
-+++ b/tests/functional/test_aarch64_reverse_debug.py
-@@ -21,7 +21,7 @@ class ReverseDebugging_AArch64(ReverseDebugging):
- 
-     REG_PC = 32
- 
--    KERNEL_ASSET = Asset(
-+    ASSET_KERNEL = Asset(
-         ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-          'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
-         '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
-@@ -30,7 +30,7 @@ class ReverseDebugging_AArch64(ReverseDebugging):
-     def test_aarch64_virt(self):
-         self.set_machine('virt')
-         self.cpu = 'cortex-a53'
--        kernel_path = self.KERNEL_ASSET.fetch()
-+        kernel_path = self.ASSET_KERNEL.fetch()
-         self.reverse_debugging(args=('-kernel', kernel_path))
- 
- 
+In the process of rewriting VHE, re-organize registration to
+simplify memory management and reduce the number of arguments
+to the inner helper functions.
+
+At one point in development, I did not have CP_REG_AA64_128BIT_MASK,
+which was going to require cpreg_to_kvm_id to also take a
+ARMCPRegInfo pointer.  There aren't a whole lot of calls to that
+helper, but the one in hvf required reorganization to handle.
+With CP_REG_AA64_128BIT_MASK, that reorganization is not required,
+but I still think it's a good cleanup so I have kept it.
+
+Alternate implementation strategies:
+
+  (1) Disconnect the 64-bit halves of the sysregs.
+      Cons:
+        - The 128-bit-ness isn't screamingly obvious.
+      Pros:
+        - Avoid having to rearrange the ARMCPU layout, and simpler
+          integration with AArch32.
+        - Avoid Int128 most places, since we wind up doing quite a
+          lot of packing and unpacking the structure.
+        - Because Int128 *isn't* a structure for most 64-bit builds,
+          we can accidentally assign a 64-bit local to a 128-bit field.
+        - Possibly easier migration changes; I havn't thought about
+          that too much.
+
+  (2) Avoid adding read128fn, raw_*128fn, and most write128fn, at
+      least for now, because no defined sysregs need such handling.
+      E.g. the 128-bit write of TTBR0_EL1 could call the existing
+      writefn for the low half and directly store the high half.
+      We do still need write128fn for the TLBIP set of insns, not
+      yet implemented here, but even that could avoid Int128 by
+      having 2 64-bit arguments.
+
+
+Thoughts?
+
+
+r~
+
+
+Richard Henderson (61):
+  target/arm: Introduce KVMID_AA64_SYS_REG64
+  target/arm: Move compare_u64 to helper.c
+  target/arm/hvf: Split out sysreg.c.inc
+  target/arm/hvf: Reorder DEF_SYSREG arguments
+  target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
+  target/arm/hvf: Remove hvf_sreg_match.key
+  target/arm/hvf: Replace hvf_sreg_match with hvf_sreg_list
+  target/arm/hvf: Sort the cpreg_indexes array
+  target/arm/hvf: Use raw_read, raw_write to access
+  target/arm: Use raw_write in cp_reg_reset
+  target/arm: Rename all ARMCPRegInfo from opaque to ri
+  target/arm: Drop define_one_arm_cp_reg_with_opaque
+  target/arm: Restrict the scope of CPREG_FIELD32, CPREG_FIELD64
+  target/arm: Replace cpreg_field_is_64bit with cpreg_field_type
+  target/arm: Add CP_REG_AA32_64BIT_{SHIFT,MASK}
+  target/arm: Rename CP_REG_AA32_NS_{SHIFT,MASK}
+  target/arm: Convert init_cpreg_list to g_hash_table_foreach
+  target/arm: Remove cp argument to ENCODE_AA64_CP_REG
+  target/arm: Reorder ENCODE_AA64_CP_REG arguments
+  target/arm: Split out add_cpreg_to_hashtable_aa{32,64}
+  target/arm: Improve asserts in define_one_arm_cp_reg
+  target/arm: Move cp processing to define_one_arm_cp_reg
+  target/arm: Move cpreg elimination to define_one_arm_cp_reg
+  target/arm: Add key parameter to add_cpreg_to_hashtable
+  target/arm: Split out alloc_cpreg
+  target/arm: Hoist the allocation of ARMCPRegInfo
+  target/arm: Remove name argument to alloc_cpreg
+  target/arm: Move alias setting for wildcards
+  target/arm: Move writeback of CP_ANY fields
+  target/arm: Move endianness fixup for 32-bit registers
+  target/arm: Rename TBFLAG_A64_NV2_MEM_E20 with *_E2H
+  target/arm: Split out redirect_cpreg
+  target/arm: Redirect VHE FOO_EL1 -> FOO_EL2 during translation
+  target/arm: Redirect VHE FOO_EL12 to FOO_EL1 during translation
+  target/arm: Rename some cpreg to their aarch64 names
+  target/arm: Remove define_arm_vh_e2h_redirects_aliases
+  target/arm: Implement isar tests for FEAT_SYSREG128, FEAT_SYSINSTR128
+  target/arm: Define CP_REG_SIZE_U128
+  target/arm: Update ARMCPRegInfo for 128-bit sysregs
+  target/arm: Assert ARM_CP_128BIT only with ARM_CP_STATE_AA64
+  target/arm: Split add_cpreg_to_hashtable_aa64
+  target/arm: Add raw_read128, raw_write128
+  target/arm: Add read_raw_cp_reg128, write_raw_cp_reg128
+  target/arm: Put 128-bit sysregs into a separate list
+  target/arm/kvm: Assert no 128-bit sysregs in kvm_arm_init_cpreg_list
+  target/arm/hvf: Assert no 128-bit sysregs in hvf_arch_init_vcpu
+  migration: Add vmstate_info_int128
+  target/arm: Migrate cpreg128 registers
+  target/arm: Add syn_aa64_sysreg128trap
+  target/arm: Introduce helper_{get,set}_cp_reg128
+  target/arm: Implement MRRS, MSRR, SYSP
+  include/qemu/compiler: Introduce HOST_ENDIAN_FIELDS
+  include/hw/core/cpu: Use HOST_ENDIAN_FIELDS in IcountDecr
+  include/qemu/host-utils: Use HOST_ENDIAN_FIELDS in muldiv64_rounding
+  target/arm: Use HOST_ENDIAN_FIELDS in CPUARMState
+  target/arm: Consolidate definitions of PAR
+  target/arm: Extend PAR_EL1 to 128-bit
+  target/arm: Consolidate definitions of TTBR[01]
+  target/arm: Split out flush_if_asid_change
+  target/arm: Use flush_if_asid_change in vmsa_ttbr_write
+  target/arm: Extend TTBR system registers to 128-bit
+
+ include/hw/core/cpu.h          |    8 +-
+ include/migration/vmstate.h    |    1 +
+ include/qemu/compiler.h        |   11 +
+ include/qemu/host-utils.h      |    6 +-
+ target/arm/cpregs.h            |  134 +--
+ target/arm/cpu-features.h      |   10 +
+ target/arm/cpu.h               |   95 +-
+ target/arm/internals.h         |    4 +
+ target/arm/kvm-consts.h        |   16 +-
+ target/arm/syndrome.h          |   10 +
+ target/arm/tcg/helper.h        |    2 +
+ target/arm/tcg/translate.h     |    2 +
+ hw/intc/arm_gicv3_cpuif.c      |   10 +-
+ migration/vmstate-types.c      |   30 +
+ target/arm/cpu.c               |   10 +-
+ target/arm/gdbstub.c           |   14 +-
+ target/arm/helper.c            | 1536 +++++++++++++++++++-------------
+ target/arm/hvf/hvf.c           |  243 ++---
+ target/arm/kvm.c               |   13 +-
+ target/arm/machine.c           |   50 ++
+ target/arm/ptw.c               |   14 +-
+ target/arm/tcg/cpregs-at.c     |    4 +-
+ target/arm/tcg/hflags.c        |    8 +-
+ target/arm/tcg/op_helper.c     |   28 +
+ target/arm/tcg/translate-a64.c |  207 ++++-
+ target/arm/hvf/sysreg.c.inc    |  146 +++
+ target/arm/tcg/a64.decode      |   12 +-
+ 27 files changed, 1595 insertions(+), 1029 deletions(-)
+ create mode 100644 target/arm/hvf/sysreg.c.inc
+
 -- 
-2.34.1
+2.43.0
 
 
