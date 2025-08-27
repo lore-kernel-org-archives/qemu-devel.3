@@ -4,54 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE53CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 08:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F99CCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 08:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urBFt-0004F7-D7; Wed, 27 Aug 2025 04:11:44 -0400
+	id 1urBHE-0007L3-3b; Wed, 27 Aug 2025 04:13:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1urBFb-00040O-CB
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:11:23 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1urBFY-0004kr-HI
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:11:22 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxbNI8va5ofbADAA--.7232S3;
- Wed, 27 Aug 2025 16:09:32 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJCxXME4va5oWKVrAA--.18662S11;
- Wed, 27 Aug 2025 16:09:31 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v3 09/12] target/loongarch: Move last PTE lookup into page
- table walker loop
-Date: Wed, 27 Aug 2025 16:09:24 +0800
-Message-Id: <20250827080927.1644016-10-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250827080927.1644016-1-maobibo@loongson.cn>
-References: <20250827080927.1644016-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1urBHC-0007Ct-6g
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:13:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1urBH7-0004xB-Vm
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 04:13:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756282369;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=H/00J/+IDLSRiwp7fmEW0WLqPAQqXOv2laMkrbaaiis=;
+ b=XMjqxzrf2DEdapuaWMgCnI+uN7rciPnmYj1SSF/wfKvB8BnPKycWt+rDLrg3GrtslwX0bx
+ hh+BSTZcZuBR6B72aH6pS4LsNCj9Safz4jbMy0PtX8h+5oXhZbODd7LdFf4VICb7KOlYiO
+ 4R8ECA9BamwwsyrAPgx1eTXAlHzdsFo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-396-pUbbvGK_MRS1jFwOU-nRLQ-1; Wed, 27 Aug 2025 04:12:47 -0400
+X-MC-Unique: pUbbvGK_MRS1jFwOU-nRLQ-1
+X-Mimecast-MFC-AGG-ID: pUbbvGK_MRS1jFwOU-nRLQ_1756282366
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45b645707f1so11466555e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Aug 2025 01:12:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756282366; x=1756887166;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H/00J/+IDLSRiwp7fmEW0WLqPAQqXOv2laMkrbaaiis=;
+ b=Y8U+Zj9hrlA7O1lDh5OZSRu3J8g7kPDVfCsKSnjyDV7lDDY8YV6kyhFeh9kHy0bNAU
+ Fk44NF0z1fC0UNLaelJpX2jtiE+jl7AEV3yEFsS1MW/BkAESPyBIg6oCDNSg9EhQWgWT
+ G1RAdyTpsG+GCHGa8QBOqvci2aleXC1DIyXCB8QCbCw1yDcR51lvRfNEl3B1DrtI0QhN
+ 7e086CT9ezA8R46OACRzE6frpf6Q7MITFUkBDR9y6R95jyI1UkWo0o961fPux9yietis
+ B6nqpRqFh5VAAeCXiVYipQwiBBp7jgv4oK4I13vhn73iYIzR+hnTxIJGw6l45dBVVEfv
+ mrAQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWDtzyQxL8LQViro8kmM7QTOaDDGDSLdUFrYuplHB12s16lLAmuwdOltY1rmDe9XOlLbShsa5f4iwJm@nongnu.org
+X-Gm-Message-State: AOJu0YwDGzYb6Y/BOAMatFeBLnm7xepOxpEfx09RZ6NfjW8k7xgprK4b
+ ruMdUFDhvF5NTYFZTC4EbovhtXXSdGKAY8IWPgZNefczAJvN9uIW4XmT0hPA9i1vnwm8pGIPGba
+ FIW3NkNdML9cgLsO7DBGrbTKKGC9PXqeMea+HWcvcl3zhoIY3wsrcFMId
+X-Gm-Gg: ASbGncu95PWPt9/vnTIykB+71OyugQES/T7+0hP4PrnyfazLX2FJq/C5oUY+hltus1T
+ ZV4D6bodDHgioi8Ub0sI3OkRG2VUa4W/KSn6DyIhFRDlIxP0Gzrc2YHa811yiBKn5MIo2Ko7puH
+ hJPBDZPT0mvWQEhIokM8eiWZHwQZa4qOnJQxxunO80j3PzeVR3gBoXHlZVEeQeERS5LyFU3FawS
+ lGdGHfFErT6i0ieCYAixxjXZQY49TdIkdCsv+eYnxgpMbP6pcVw0RC/xVJidOY8rehb5axexBx2
+ 0F1TBqNvIrZjeYSXwOLPy7aI0I0SlVeMWnpbjukevOcpVas8gmz/kY2eNIcvlFDlYhzOJoRks6/
+ sJVCLfO49lm4DOOnT+S/H5x4WRjPO1Y53mTNINFpSoCE=
+X-Received: by 2002:a05:6000:400e:b0:3b7:9c79:32ac with SMTP id
+ ffacd0b85a97d-3c5ddd7f89amr13751382f8f.52.1756282366454; 
+ Wed, 27 Aug 2025 01:12:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6yECmmyD2j0y4jqiOod+K6ZDzigy4+k+jUZso+vj0lOok1lnFqtEvWjaX7d+gFI9D+RMQLQ==
+X-Received: by 2002:a05:6000:400e:b0:3b7:9c79:32ac with SMTP id
+ ffacd0b85a97d-3c5ddd7f89amr13751348f8f.52.1756282366010; 
+ Wed, 27 Aug 2025 01:12:46 -0700 (PDT)
+Received: from [192.168.10.27] ([151.95.56.250])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-3ca6240b4f9sm10318099f8f.15.2025.08.27.01.12.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Aug 2025 01:12:45 -0700 (PDT)
+Message-ID: <3d7f2ebe-111a-4858-a014-4e82872c0e88@redhat.com>
+Date: Wed, 27 Aug 2025 10:12:44 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] tcg/i386: Improve 8-bit shifts with VGF2P8AFFINEQB
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250809234208.12158-1-richard.henderson@linaro.org>
+ <31647a8c-60b7-4e27-b89f-6d1709331ec0@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <31647a8c-60b7-4e27-b89f-6d1709331ec0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxXME4va5oWKVrAA--.18662S11
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,68 +147,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The last PTE lookup sentence is much similiar with the whole page
-table walker loop, move it into the whole loop.
+On 8/27/25 09:26, Richard Henderson wrote:
+> On 8/10/25 09:42, Richard Henderson wrote:
+>> x86 doesn't directly support 8-bit vector shifts, so we have
+>> some 2 to 5 insn expansions.  With VGF2P8AFFINEQB, we can do
+>> it in 1 insn, plus a (possibly shared) constant load.
+>>
+>>
+>> r~
+>>
+>>
+>> Richard Henderson (3):
+>>    cpuinfo/i386: Detect GFNI as an AVX extension
+>>    tcg/i386: Add INDEX_op_x86_vgf2p8affineqb_vec
+>>    tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts
+>>
+>>   host/include/i386/host/cpuinfo.h |  1 +
+>>   include/qemu/cpuid.h             |  3 ++
+>>   util/cpuinfo-i386.c              |  1 +
+>>   tcg/i386/tcg-target-opc.h.inc    |  1 +
+>>   tcg/i386/tcg-target.c.inc        | 81 ++++++++++++++++++++++++++++++--
+>>   5 files changed, 83 insertions(+), 4 deletions(-)
+>>
+> 
+> Ping.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu_helper.c | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+I don't know the target-independent part of TCG, but arithmetic right 
+shift by 7 probably should keep using pcmpgtb?
 
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index 336dadeb59..53d97c6d0b 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -124,7 +124,7 @@ static TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-     }
-     base &= TARGET_PHYS_MASK;
- 
--    for (level = 4; level > 0; level--) {
-+    for (level = 4; level >= 0; level--) {
-         get_dir_base_width(env, &dir_base, &dir_width, level);
- 
-         if (dir_width == 0) {
-@@ -135,17 +135,19 @@ static TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-         index = (address >> dir_base) & ((1 << dir_width) - 1);
-         phys = base | index << 3;
-         base = ldq_phys(cs->as, phys);
--        if (FIELD_EX64(base, TLBENTRY, HUGE)) {
--            /* base is a huge pte */
--            break;
--        } else {
--            /* Discard high bits with page directory table */
--            base &= TARGET_PHYS_MASK;
-+        if (level) {
-+            if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-+                /* base is a huge pte */
-+                break;
-+            } else {
-+                /* Discard high bits with page directory table */
-+                base &= TARGET_PHYS_MASK;
-+            }
-         }
-     }
- 
-     /* pte */
--    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-+    if (level > 0) {
-         /* Huge Page. base is pte */
-         base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
-         base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
-@@ -153,12 +155,6 @@ static TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-             base = FIELD_DP64(base, TLBENTRY, HGLOBAL, 0);
-             base = FIELD_DP64(base, TLBENTRY, G, 1);
-         }
--    } else {
--        /* Normal Page. base points to pte */
--        get_dir_base_width(env, &dir_base, &dir_width, 0);
--        index = (address >> dir_base) & ((1 << dir_width) - 1);
--        phys = base | index << 3;
--        base = ldq_phys(cs->as, phys);
-     }
- 
-     context->ps = dir_base;
--- 
-2.39.3
+There's also a typo in patch 1 (s/NF/FN/):
+
++#ifndef bit_GNFI
++#define bit_GNFI        (1 << 8)
++#endif
+
+Paolo
 
 
