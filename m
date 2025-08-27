@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E598CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C3DCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHgS-0002T6-PK; Wed, 27 Aug 2025 11:03:32 -0400
+	id 1urHgY-0002Yc-QH; Wed, 27 Aug 2025 11:03:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHgQ-0002RU-B6; Wed, 27 Aug 2025 11:03:30 -0400
+ id 1urHgX-0002Xs-1k; Wed, 27 Aug 2025 11:03:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHgN-0004ja-9B; Wed, 27 Aug 2025 11:03:29 -0400
+ id 1urHgU-0004lw-OP; Wed, 27 Aug 2025 11:03:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4F16C14C529;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7F9A314C52C;
  Wed, 27 Aug 2025 18:02:56 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3AFC1269831;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6B5D2269834;
  Wed, 27 Aug 2025 18:03:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 01/59] host-utils: Drop workaround for buggy Apple
- Clang __builtin_subcll()
-Date: Wed, 27 Aug 2025 18:02:06 +0300
-Message-ID: <20250827150323.2694101-1-mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 04/59] linux-user/aarch64: Clear TPIDR2_EL0 when
+ delivering signals
+Date: Wed, 27 Aug 2025 18:02:09 +0300
+Message-ID: <20250827150323.2694101-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -66,67 +64,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In commit b0438861efe ("host-utils: Avoid using __builtin_subcll on
-buggy versions of Apple Clang") we added a workaround for a bug in
-Apple Clang 14 where its __builtin_subcll() implementation was wrong.
-This bug was only present in Apple Clang 14, not in upstream clang,
-and is not present in Apple Clang versions 15 and newer.
+A recent change to the kernel (Linux commit b376108e1f88
+"arm64/fpsimd: signal: Clear TPIDR2 when delivering signals") updated
+the signal-handler entry code to always clear TPIDR2_EL0.
 
-Since commit 4e035201 we have required at least Apple Clang 15, so we
-no longer build with the buggy versions.  We can therefore drop the
-workaround. This is effectively a revert of b0438861efe.
+This is necessary for the userspace ZA lazy saving scheme to work
+correctly when unwinding exceptions across a signal boundary.
+(For the essay-length description of the incorrect behaviour and
+why this is the correct fix, see the commit message for the
+kernel commit.)
 
-This should not be backported to stable branches, which may still
-need to support Apple Clang 14.
+Make QEMU also clear TPIDR2_EL0 on signal entry, applying the
+equivalent bugfix to our implementation.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3030
+Note that getting this unwinding to work correctly also requires
+changes to the userspace code, e.g.  as implemented in gcc in
+https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=b5ffc8e75a8
+
+This change is technically an ABI change; from the kernel's
+point of view SME was never enabled (it was hidden behind
+CONFIG_BROKEN) before the change. From QEMU's point of view
+our SME-related signal handling was broken anyway as we weren't
+saving and restoring TPIDR2_EL0.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 78011586b90d1 ("target/arm: Enable SME for user-only")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250714145033.1908788-1-peter.maydell@linaro.org
-(cherry picked from commit e74aad9f81cc2bfee2057086610e21bd98e9c5a5)
-(Mjt: 10.0 already requres clang 15+, so it's okay to backport
- this change to 10.0 branch)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250725175510.3864231-2-peter.maydell@linaro.org>
+(cherry picked from commit 3cdd990aa920ec8f2994b634f758dab4a86ac167)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index 496dac5ac1..33b425dcf3 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -182,19 +182,6 @@
- #define QEMU_DISABLE_CFI
- #endif
+diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
+index bc7a13800d..df85354adc 100644
+--- a/linux-user/aarch64/signal.c
++++ b/linux-user/aarch64/signal.c
+@@ -666,8 +666,12 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
+         env->btype = 2;
+     }
  
--/*
-- * Apple clang version 14 has a bug in its __builtin_subcll(); define
-- * BUILTIN_SUBCLL_BROKEN for the offending versions so we can avoid it.
-- * When a version of Apple clang which has this bug fixed is released
-- * we can add an upper bound to this check.
-- * See https://gitlab.com/qemu-project/qemu/-/issues/1631
-- * and https://gitlab.com/qemu-project/qemu/-/issues/1659 for details.
-- * The bug never made it into any upstream LLVM releases, only Apple ones.
-- */
--#if defined(__apple_build_version__) && __clang_major__ >= 14
--#define BUILTIN_SUBCLL_BROKEN
--#endif
--
- #if __has_attribute(annotate)
- #define QEMU_ANNOTATE(x) __attribute__((annotate(x)))
- #else
-diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
-index 4d28fa22cf..dd558589cb 100644
---- a/include/qemu/host-utils.h
-+++ b/include/qemu/host-utils.h
-@@ -677,7 +677,7 @@ static inline uint64_t uadd64_carry(uint64_t x, uint64_t y, bool *pcarry)
-  */
- static inline uint64_t usub64_borrow(uint64_t x, uint64_t y, bool *pborrow)
- {
--#if __has_builtin(__builtin_subcll) && !defined(BUILTIN_SUBCLL_BROKEN)
-+#if __has_builtin(__builtin_subcll)
-     unsigned long long b = *pborrow;
-     x = __builtin_subcll(x, y, b, &b);
-     *pborrow = b & 1;
+-    /* Invoke the signal handler with both SM and ZA disabled. */
++    /*
++     * Invoke the signal handler with a clean SME state: both SM and ZA
++     * disabled and TPIDR2_EL0 cleared.
++     */
+     aarch64_set_svcr(env, 0, R_SVCR_SM_MASK | R_SVCR_ZA_MASK);
++    env->cp15.tpidr2_el0 = 0;
+ 
+     if (info) {
+         frame->info = *info;
 -- 
 2.47.2
 
