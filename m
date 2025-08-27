@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D811FCA0FF0
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB49CA0FF9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur4ix-0002z8-If; Tue, 26 Aug 2025 21:13:17 -0400
+	id 1ur4iH-0001xX-8Z; Tue, 26 Aug 2025 21:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4hl-0001ax-1s
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:12:03 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1ur4hW-0001Fd-Al
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:47 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4ha-0000GP-VM
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:58 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-771e1e64fbbso3803053b3a.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:11:50 -0700 (PDT)
+ id 1ur4hI-00008v-ND
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:11:45 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-771e15ce64eso2219204b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:11:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756257108; x=1756861908; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756257090; x=1756861890; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EAlJuQ7umZPgZ8d9w9IJxtJ1nYI4tOr6crCLs15bTxQ=;
- b=cwfon6RR3Tbgb44niFr5ZMJdkSzBZ25PIMQ4+p4/OwhgIVjQC5HLKJphfKEYSloO9H
- AgKqequRgHfRD8tb5rHIZgUlDThdr4XoMvqr6ZKH0UsMz19DXju3UxXbtaTMegxxOQ3/
- mUJ99i8ETV4mdMMRTDlYNoBG18IzeBR54g4J8kaiIvfj3h+Mjsk1tIw+sZATA4/cneH0
- Z3ij7p0PJuYaVWauOQVCBeHP+QZkWYLKcFdi7SW2Mc1L6pX2SbRTubPik314RS7zm8LT
- XMD/Nu6v9wNZEkyK6PwRZcQgZO6JlQE2mr3TwpfXWHQtjIam/Hk9SNIvMjpTVSLtY2NB
- bDpQ==
+ bh=BYMBiKJq8/lsK6z7ljr/lChjjHaZZY+QCsjrhv9wKe0=;
+ b=teEkHtCBqjtIfzdKu+OgvCjfvEMBEyT4szeuTkgJF28uYsMqPhizCUmiYjTWu9W4p9
+ McrRid9pNgAx0cH1F3abMp3EHYvnkqEYUGl089xdaY+YhwO3LL7bIgWBeHpz7WlUxx8t
+ ZvcqK0P3EZ6WV+cwrejme8yw8dZD6PH02dihu960ThysaH4K7vUuH4s6Vxm4wKCulpbx
+ GfMWY7L776Q/mxEW7oYzKZgFPZw2Cou6e/SKwYG7wQyU9uQVN+AqlIORhAqR0JeHgW34
+ w0G9Wddga7qDrqdwTLfgAkcLvic5emh1TwsD2+tOUSh8oz56BJH5Tnsbos9Pekb4wLiA
+ DX4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756257108; x=1756861908;
+ d=1e100.net; s=20230601; t=1756257090; x=1756861890;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EAlJuQ7umZPgZ8d9w9IJxtJ1nYI4tOr6crCLs15bTxQ=;
- b=hRyqKgwur03lBGvFKEUyy7OUSreiYjA31vjhhpBcUdv8xH8jQpPQGqzy4A8eprVosV
- bdeWv2Nm1q2fU4VmyY4wq4SWMFWQhThElDNPSN0Pzmt1e2ZvOMPQaQdiYnnvFPgwAk8M
- OHsckkUKd7Ck+a8r68qCtpIN3oE94pJReiNc3J9l0E2PLNDqcqx1ZqFQu0B+j72Dhluw
- 3Dh9N1T8YX+pxC1cI6YJs7dtxwXTNS6ogIfKzkzpifhjviqu8qpHEa3igUPKrDHVtKBN
- Bom+AnBGEsYLzUyrgqnDVsRVusoV8Rbr2MuWZcgcUeedh7WumTLdC6LvwEA3OtAC1W0O
- PGcA==
-X-Gm-Message-State: AOJu0Yx1U9EMdDje++ItotwbmqVxgAIVYK1g++it6bWNAlLfONx0dUDS
- 3J77Zn9t3uZuz83yKjHiczqma8n+eKE4OF0dKSJIfgu8WD1FTJ7yPGEcFD6GIMN5tNfSm9d/YXB
- QVbe4tKw=
-X-Gm-Gg: ASbGncv8BLlO7Ye8X8IWhwiYgavp0Z/hPsJitGIPzv5ZWWoLk3+qVbCiPoVp3jYm0in
- LCUccBKYXFiCX5FNW31LrquXsmKJ2fSdBpbFZ4BS0/lmKZQ9iuy3sM4zyMNMOop659aPwaIDnzO
- 3uwpdomBaghTPrlN+vfCgUu8JhITkXW5+wZa0RlGwWPHMHR/+22zO3Y0HseQxH69gLWUjE264NP
- xE09OBqR/5ZXqiWCz43K6DY0v8YwtOF7QLR+KA4d32x2gMyPWFoXrq6+aA/P6Cw5fP+9hmdxnMh
- vkdrAYSyNO2wLYrSv72jQwnDmtZWmVGfarPbLLj6DyjhP9wiBqzGWwWyZIt+ltjPMBc74a1WyW9
- Cu3W5evaUIHDcE+JnFtRM3TNVUr4dOwAJic5S
-X-Google-Smtp-Source: AGHT+IFGPXbvstPDAZ/vjeoAnKKRWixgFQA5cRSsggDoL755/mC+3ErSJJ7zTGg6vdJM1sMZvzLa+Q==
-X-Received: by 2002:a05:6a00:13a6:b0:771:e4c6:10cc with SMTP id
- d2e1a72fcca58-771e4c6143bmr13477411b3a.6.1756257108275; 
- Tue, 26 Aug 2025 18:11:48 -0700 (PDT)
+ bh=BYMBiKJq8/lsK6z7ljr/lChjjHaZZY+QCsjrhv9wKe0=;
+ b=JR46wIfyuzxj6gVgaRbsAEXimdii3dB4+uqTm5dYyzDP8ARcZH8a/KASlrYO91loBR
+ Di6SMzz4cf1atZ79N9XDMOJhdrEGM1wI7CvW/+sEofzOTPBbyG6ZEdDGUdS342tgiZZb
+ UUDbhNM29NIvvHdtTkqEaMPODxj6jGkj5YVD8OPpTETuhUt7kB0AbmDVEUw0Y//9biDV
+ vqmN87st9PD/0NeYE+rT+evW3S2RO08BMWIXp9yTH/aW1ptoOFpKsYzMD+Zb4eAehi+Z
+ HPr0e92lPPkAjuQBPvUd5BeNojPWLUBqRuaYxyqtbnN3lbQ6JaBetVOrCF9xEoWnyYO1
+ gZ1w==
+X-Gm-Message-State: AOJu0Yz80WHpwCeZo3aQS0QpOyVaPZ+mOHOwD5H8DZftwdqBUe1ei5AV
+ /EXkQJYv8f+q9SYiFdOBaXvbTGCLmvN0R6HrSj9SXhicksEEBGUEpmhgXAB9WHu4zxYmP5mO87Y
+ HMSj6QWA=
+X-Gm-Gg: ASbGnct4SPMr/5+qKq63r9c4OGfNQyArSNaiPT8fNFDNrjYTXRJbFGai9OEQSfWsRKm
+ 70QYYRC91YY7LWFTVHGiQP9MzmicTubzatT9PNPSkgEePYOR7Vvsg2IbxQkcTs3xVsb+A26S7fi
+ Ni0U7G8Lflm61AZEY/WtFwpSpi+ZeP6DpamQSZx0pLeke7svv/UufBfP6qIm/afXcdY8DDt9DN7
+ FzuxDGOPQiXQMLpBZembo3jN2UfrkPbvrDq5Mva8WlgPtT3bJ70qOPLskbOyzb6cPoa9UK1RMn+
+ SAMnJhae0ueQu0AaK/+8okJidaRDPtIjmhXrDU6npbO6p+O/WCHmY+u1RzImQYrndggVPuV9r4d
+ v8wEICEAci5l6UVfRskLmQ1CbSeVHDsIYwYe+
+X-Google-Smtp-Source: AGHT+IFAFET7HGfCWqmGxJ2/bmvyMn8AvMthMTMaEMNA3B6bzAEknoU2pFoPRvS0a5T9c5T7UWSZ2Q==
+X-Received: by 2002:a05:6a00:3d0f:b0:771:f520:f775 with SMTP id
+ d2e1a72fcca58-771fd6329bamr4304075b3a.28.1756257089626; 
+ Tue, 26 Aug 2025 18:11:29 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-771f2b2d2bfsm4348408b3a.93.2025.08.26.18.11.46
+ d2e1a72fcca58-771f2b2d2bfsm4348408b3a.93.2025.08.26.18.11.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 18:11:47 -0700 (PDT)
+ Tue, 26 Aug 2025 18:11:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 52/61] include/qemu/compiler: Introduce HOST_ENDIAN_FIELDS
-Date: Wed, 27 Aug 2025 11:04:43 +1000
-Message-ID: <20250827010453.4059782-57-richard.henderson@linaro.org>
+Subject: [PATCH 46/61] target/arm/hvf: Assert no 128-bit sysregs in
+ hvf_arch_init_vcpu
+Date: Wed, 27 Aug 2025 11:04:37 +1000
+Message-ID: <20250827010453.4059782-51-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827010453.4059782-1-richard.henderson@linaro.org>
 References: <20250827010453.4059782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,33 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+HVF has not yet enabled 128-bit system registers.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/compiler.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ target/arm/hvf/hvf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index 1c2b673c05..4b9a8ff419 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -9,6 +9,17 @@
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index bda57614ed..c05e81b4e5 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -896,6 +896,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+     env->aarch64 = true;
+     asm volatile("mrs %0, cntfrq_el0" : "=r"(arm_cpu->gt_cntfrq_hz));
  
- #define HOST_BIG_ENDIAN (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
- 
-+/*
-+ * Place two fields, LO, HI, in the order that corresponds to
-+ * the host-endian ordering.  To be used when the pair will be
-+ * visible through a union with a larger type.
-+ */
-+#if HOST_BIG_ENDIAN
-+#define HOST_ENDIAN_FIELDS(LO, HI)  HI, LO
-+#else
-+#define HOST_ENDIAN_FIELDS(LO, HI)  LO, HI
-+#endif
++    /* No support yet for FEAT_D128 */
++    assert(arm_cpu->cpreg128_array_len == 0);
 +
- /* HOST_LONG_BITS is the size of a native pointer in bits. */
- #define HOST_LONG_BITS (__SIZEOF_POINTER__ * 8)
+     /* Allocate enough space for our sysreg sync */
+     arm_cpu->cpreg_indexes = g_renew(uint64_t, arm_cpu->cpreg_indexes,
+                                      sregs_match_len);
+@@ -919,6 +922,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
  
+         if (ri) {
+             assert(!(ri->type & ARM_CP_NO_RAW));
++            assert(!(ri->type & ARM_CP_128BIT));
+             arm_cpu->cpreg_indexes[sregs_cnt++] = kvm_id;
+         }
+     }
 -- 
 2.43.0
 
