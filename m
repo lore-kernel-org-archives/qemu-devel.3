@@ -4,35 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D7DCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A93CA0FFB
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 17:08:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urJbC-0008SM-7f; Wed, 27 Aug 2025 13:06:14 -0400
+	id 1urJbG-0000F3-6u; Wed, 27 Aug 2025 13:06:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJaY-0006sC-Ad; Wed, 27 Aug 2025 13:05:38 -0400
+ id 1urJae-0006vR-EP; Wed, 27 Aug 2025 13:05:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urJaR-0007zu-6I; Wed, 27 Aug 2025 13:05:32 -0400
+ id 1urJab-000811-IM; Wed, 27 Aug 2025 13:05:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0F42C14C732;
+ by isrv.corpit.ru (Postfix) with ESMTP id 328E914C734;
  Wed, 27 Aug 2025 20:03:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 216112698F8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4072E2698FA;
  Wed, 27 Aug 2025 20:03:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.20 16/18] hw/ssi/aspeed_smc: Fix incorrect FMC_WDT2
- register read on AST1030
-Date: Wed, 27 Aug 2025 20:03:51 +0300
-Message-ID: <20250827170356.2698446-16-mjt@tls.msk.ru>
+Subject: [Stable-7.2.20 18/18] hw/sd/ssi-sd: Return noise (dummy byte) when no
+ card connected
+Date: Wed, 27 Aug 2025 20:03:53 +0300
+Message-ID: <20250827170356.2698446-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
 References: <qemu-stable-7.2.20-20250827180339@cover.tls.msk.ru>
@@ -46,7 +49,7 @@ X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,38 +65,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On AST1030, reading the FMC_WDT2 register always returns 0xFFFFFFFF.
-This issue is due to the aspeed_smc_read function, which checks for the
-ASPEED_SMC_FEATURE_WDT_CONTROL feature. Since AST1030 was missing this
-feature flag, the read operation fails and returns -1.
+Commit 1585ab9f1ba ("hw/sd/sdcard: Fill SPI response bits in card
+code") exposed a bug in the SPI adapter: if no SD card is plugged,
+we are returning "there is a card with an error". This is wrong,
+we shouldn't return any particular packet response, but the noise
+shifted on the MISO line. Return the dummy byte, otherwise we get:
 
-To resolve this, add the WDT_CONTROL feature to AST1030's feature set
-so that FMC_WDT2 can be correctly accessed by firmware.
+  qemu-system-riscv64: ../hw/sd/ssi-sd.c:160: ssi_sd_transfer: Assertion `s->arglen > 0' failed.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Fixes: 2850df6a81bcdc2e063dfdd56751ee2d11c58030 ("aspeed/smc: Add AST1030 support ")
-Link: https://lore.kernel.org/qemu-devel/20250804014633.512737-1-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 13ed972b4ce57198914a37217251d30fbec20e41)
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 775616c3ae8 ("Partial SD card SPI mode support")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250812140415.70153-2-philmd@linaro.org>
+(cherry picked from commit e262646e12acd6c1132e03d57fea20680a503251)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index 22df4be528..194df7df77 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -1761,7 +1761,8 @@ static void aspeed_1030_fmc_class_init(ObjectClass *klass, void *data)
-     asc->resets            = aspeed_1030_fmc_resets;
-     asc->flash_window_base = 0x80000000;
-     asc->flash_window_size = 0x10000000;
--    asc->features          = ASPEED_SMC_FEATURE_DMA;
-+    asc->features          = ASPEED_SMC_FEATURE_DMA |
-+                             ASPEED_SMC_FEATURE_WDT_CONTROL;
-     asc->dma_flash_mask    = 0x0FFFFFFC;
-     asc->dma_dram_mask     = 0x000BFFFC;
-     asc->nregs             = ASPEED_SMC_R_MAX;
+diff --git a/hw/sd/ssi-sd.c b/hw/sd/ssi-sd.c
+index 167c03b780..a912f40f68 100644
+--- a/hw/sd/ssi-sd.c
++++ b/hw/sd/ssi-sd.c
+@@ -106,6 +106,10 @@ static uint32_t ssi_sd_transfer(SSIPeripheral *dev, uint32_t val)
+     SDRequest request;
+     uint8_t longresp[16];
+ 
++    if (!sdbus_get_inserted(&s->sdbus)) {
++        return SSI_DUMMY;
++    }
++
+     /*
+      * Special case: allow CMD12 (STOP TRANSMISSION) while reading data.
+      *
 -- 
 2.47.2
 
