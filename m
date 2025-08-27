@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37F9DCA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41582CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 15:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urHk6-0007Pq-Ag; Wed, 27 Aug 2025 11:07:21 -0400
+	id 1urHgR-0002S6-JN; Wed, 27 Aug 2025 11:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHi9-00051z-J5; Wed, 27 Aug 2025 11:05:19 -0400
+ id 1urHgP-0002R1-Iq; Wed, 27 Aug 2025 11:03:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1urHi7-0004yK-B8; Wed, 27 Aug 2025 11:05:17 -0400
+ id 1urHgN-0004jZ-8w; Wed, 27 Aug 2025 11:03:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E63D514C53E;
- Wed, 27 Aug 2025 18:02:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3EC0814C528;
+ Wed, 27 Aug 2025 18:02:56 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D2B20269846;
- Wed, 27 Aug 2025 18:03:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2CA1B269830;
+ Wed, 27 Aug 2025 18:03:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Konstantin Shkolnyy <kshk@linux.ibm.com>, Lei Yang <leiyang@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.4 22/59] virtio-net: Fix VLAN filter table reset timing
-Date: Wed, 27 Aug 2025 18:02:27 +0300
-Message-ID: <20250827150323.2694101-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.4 00/59] Patch Round-up for stable 10.0.4,
+ freeze on 2025-09-06
+Date: Wed, 27 Aug 2025 18:02:05 +0300
+Message-ID: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
-References: <qemu-stable-10.0.4-20250827180051@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,108 +59,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+The following patches are queued for QEMU stable v10.0.4:
 
-Problem
--------
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
 
-The expected initial state of the table depends on feature negotiation:
+Patch freeze is 2025-09-06, and the release is planned for 2025-09-08:
 
-With VIRTIO_NET_F_CTRL_VLAN:
-  The table must be empty in accordance with the specification.
-Without VIRTIO_NET_F_CTRL_VLAN:
-  The table must be filled to permit all VLAN traffic.
+  https://wiki.qemu.org/Planning/10.0
 
-Prior to commit 06b636a1e2ad ("virtio-net: do not reset vlan filtering
-at set_features"), virtio_net_set_features() always reset the VLAN
-table. That commit changed the behavior to skip table reset when
-VIRTIO_NET_F_CTRL_VLAN was negotiated, assuming the table would be
-properly cleared during device reset and remain stable.
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
-However, this assumption breaks when a driver renegotiates features:
-1. Initial negotiation without VIRTIO_NET_F_CTRL_VLAN (table filled)
-2. Renegotiation with VIRTIO_NET_F_CTRL_VLAN (table will not be cleared)
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
 
-The problem was exacerbated by commit 0caed25cd171 ("virtio: Call
-set_features during reset"), which triggered virtio_net_set_features()
-during device reset, exposing the bug whenever VIRTIO_NET_F_CTRL_VLAN
-was negotiated after a device reset.
+Thanks!
 
-Solution
---------
+/mjt
 
-Fix the issue by initializing the table when virtio_net_set_features()
-is called to change the VIRTIO_NET_F_CTRL_VLAN bit of
-vdev->guest_features.
-
-This approach ensures the correct table state regardless of feature
-negotiation sequence by performing initialization in
-virtio_net_set_features() as QEMU did prior to commit 06b636a1e2ad
-("virtio-net: do not reset vlan filtering at set_features").
-
-This change still preserves the goal of the commit, which was to avoid
-resetting the table during migration, by checking whether the
-VIRTIO_NET_F_CTRL_VLAN bit of vdev->guest_features is being changed;
-vdev->guest_features is set before virtio_net_set_features() gets called
-during migration.
-
-It also avoids resetting the table when the driver sets a feature
-bitmask with no change for the VIRTIO_NET_F_CTRL_VLAN bit, which makes
-the operation idempotent and its semantics cleaner.
-
-Additionally, this change ensures the table is initialized after
-feature negotiation and before the DRIVER_OK status bit being set for
-compatibility with the Linux driver before commit 50c0ada627f5
-("virtio-net: fix race between ndo_open() and virtio_device_ready()"),
-which did not ensure to set the DRIVER_OK status bit before modifying
-the table.
-
-Fixes: 06b636a1e2ad ("virtio-net: do not reset vlan filtering at set_features")
-Cc: qemu-stable@nongnu.org
-Reported-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Tested-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
-Message-Id: <20250727-vlan-v3-1-bbee738619b1@rsg.ci.i.u-tokyo.ac.jp>
-Tested-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 6071d13c6a37493a6b26e1609b09a98aa058038a)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 5f908e5bca..8a0ea4cff5 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -997,8 +997,9 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
-         vhost_net_save_acked_features(nc->peer);
-     }
- 
--    if (!virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN)) {
--        memset(n->vlans, 0xff, MAX_VLAN >> 3);
-+    if (virtio_has_feature(vdev->guest_features ^ features, VIRTIO_NET_F_CTRL_VLAN)) {
-+        bool vlan = virtio_has_feature(features, VIRTIO_NET_F_CTRL_VLAN);
-+        memset(n->vlans, vlan ? 0 : 0xff, MAX_VLAN >> 3);
-     }
- 
-     if (virtio_has_feature(features, VIRTIO_NET_F_STANDBY)) {
-@@ -3896,6 +3897,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     n->mac_table.macs = g_malloc0(MAC_TABLE_ENTRIES * ETH_ALEN);
- 
-     n->vlans = g_malloc0(MAX_VLAN >> 3);
-+    memset(n->vlans, 0xff, MAX_VLAN >> 3);
- 
-     nc = qemu_get_queue(n->nic);
-     nc->rxfilter_notify_enabled = 1;
-@@ -3986,7 +3988,6 @@ static void virtio_net_reset(VirtIODevice *vdev)
-     memset(n->mac_table.macs, 0, MAC_TABLE_ENTRIES * ETH_ALEN);
-     memcpy(&n->mac[0], &n->nic->conf->macaddr, sizeof(n->mac));
-     qemu_format_nic_info_str(qemu_get_queue(n->nic), n->mac);
--    memset(n->vlans, 0, MAX_VLAN >> 3);
- 
-     /* Flush any async TX */
-     for (i = 0;  i < n->max_queue_pairs; i++) {
--- 
-2.47.2
-
+--------------------------------------
+01 e74aad9f81cc Peter Maydell:
+   host-utils: Drop workaround for buggy Apple Clang __builtin_subcll()
+02 b8882becd572 Michael Tokarev:
+   hw/display/qxl-render.c: fix qxl_unpack_chunks() chunk size calculation
+03 feea87cd6b64 Paolo Bonzini:
+   target/i386: fix width of third operand of VINSERTx128
+04 3cdd990aa920 Peter Maydell:
+   linux-user/aarch64: Clear TPIDR2_EL0 when delivering signals
+05 99870aff907b Peter Maydell:
+   linux-user/aarch64: Support TPIDR2_MAGIC signal frame record
+06 8d6c7de1cc71 Alex Bennée:
+   docs/user: clarify user-mode expects the same OS
+07 e895095c78ab Philippe Mathieu-Daudé:
+   target/mips: Only update MVPControl.EVP bit if executed by master VPE
+08 2bfcd27e00a4 Luc Michel:
+   hw/net/cadence_gem: fix register mask initialization
+09 2865bf1c5795 Pierrick Bouvier:
+   system/physmem: fix use-after-free with dispatch
+10 653a75a9d7f9 Michael Tokarev:
+   roms/Makefile: fix npcmNxx_bootrom build rules
+11 e111ffe48b29 Daniel Henrique Barboza:
+   linux-user/strace.list: add riscv_hwprobe entry
+12 16aa7771afea Daniel Henrique Barboza:
+   target/riscv: do not call GETPC() in check_ret_from_m_mode()
+13 30ef718423e8 Xu Lu:
+   target/riscv: Fix exception type when VU accesses supervisor CSRs
+14 77707bfdf871 Vac Chen:
+   target/riscv: Fix pmp range wraparound on zero
+15 b6f1244678be Yang Jialong:
+   intc/riscv_aplic: Fix target register read when source is inactive
+16 e443ba03361b Jay Chang:
+   target/riscv: Restrict mideleg/medeleg/medelegh access to S-mode harts
+17 86bc3a0abf10 Jay Chang:
+   target/riscv: Restrict midelegh access to S-mode harts
+18 caab7ac83507 Bibo Mao:
+   target/loongarch: Fix valid virtual address checking
+19 6fcf5ebafad6 Jonah Palmer:
+   virtio: fix off-by-one and invalid access in virtqueue_ordered_fill
+20 c1997099dc26 Hanna Czenczek:
+   vhost: Do not abort on log-start error
+21 d63c388dadb7 Hanna Czenczek:
+   vhost: Do not abort on log-stop error
+22 6071d13c6a37 Akihiko Odaki:
+   virtio-net: Fix VLAN filter table reset timing
+23 cad9aa6fbdcc Akihiko Odaki:
+   pcie_sriov: Fix configuration and state synchronization
+24 e8145dcd311b David Woodhouse:
+   intel_iommu: Allow both Status Write and Interrupt Flag in QI wait
+25 a7842d94067c Sairaj Kodilkar:
+   hw/i386/amd_iommu: Move IOAPIC memory region initialization to the end
+26 b10bd4bd17ac Zenghui Yu:
+   hw/intc/arm_gicv3_kvm: Write all 1's to clear enable/active
+27 35cca0f95ff5 Vacha Bhavsar:
+   target/arm: Fix big-endian handling of NEON gdb remote debugging
+28 97b3d732afec Vacha Bhavsar:
+   target/arm: Fix handling of setting SVE registers from gdb
+29 13ed972b4ce5 Jamin Lin:
+   hw/ssi/aspeed_smc: Fix incorrect FMC_WDT2 register read on AST1030
+30 cd9f752fee75 Alex Richardson:
+   target/arm: add support for 64-bit PMCCNTR in AArch32 mode
+31 0311a6edb9db Peter Maydell:
+   scripts/make-release: Go back to cloning all the EDK2 submodules
+32 b217d987a3c5 Michael Tokarev:
+   qga: correctly write to /sys/power/state on linux
+33 d973766e10 Michael Tokarev:
+   Revert "i386/cpu: Fix cpu number overflow in CPUID.01H.EBX[23:16]"
+34 e68ec2980901 Xiaoyao Li:
+   i386/cpu: Move adjustment of CPUID_EXT_PDCM before feature_dependencies[] 
+   check
+35 f985a1195ba2 Chuang Xu:
+   i386/cpu: Fix number of addressable IDs field for CPUID.01H.EBX[23:16]
+36 a62fef582995 Qian Wen:
+   i386/cpu: Fix cpu number overflow in CPUID.01H.EBX[23:16]
+37 4e5d58969ed6 Zhao Liu:
+   target/i386/cpu: Move addressable ID encoding out of compat property in 
+   CPUID[0x1]
+38 301fbbaf03fb Nicholas Piggin:
+   ppc/xive: Fix xive trace event output
+39 f0aab779418e Nicholas Piggin:
+   ppc/xive: Report access size in XIVE TM operation error logs
+40 f16697292add Glenn Miles:
+   ppc/xive2: Fix calculation of END queue sizes
+41 e8cf73b84987 Michael Kowal:
+   ppc/xive2: Remote VSDs need to match on forwarding address
+42 d1023a296c82 Nicholas Piggin:
+   ppc/xive2: fix context push calculation of IPB priority
+43 bde8c148bb22 Nicholas Piggin:
+   ppc/xive: Fix PHYS NSR ring matching
+44 576830428eea Michael Kowal:
+   ppc/xive2: Reset Generation Flipped bit on END Cache Watch
+45 8d373176181f Glenn Miles:
+   ppc/xive2: Fix irq preempted by lower priority group irq
+46 d4720a7faf4b Glenn Miles:
+   ppc/xive2: Fix treatment of PIPR in CPPR update
+47 c7ac771ee750 William Hu:
+   ui/curses: Fix infinite loop on windows
+48 e66644c48e96 WANG Rui:
+   target/loongarch: Fix [X]VLDI raising exception incorrectly
+49 31b737b19dca Klaus Jensen:
+   hw/nvme: fix namespace attachment
+50 bc0c24fdb157 Klaus Jensen:
+   hw/nvme: revert CMIC behavior
+51 53493c1f836f Keith Busch:
+   hw/nvme: cap MDTS value for internal limitation
+52 4af976ef398e Kevin Wolf:
+   rbd: Fix .bdrv_get_specific_info implementation
+53 c0df98ab1f3d Werner Fink:
+   qemu-iotests: Ignore indentation in Killed messages
+54 e262646e12ac Philippe Mathieu-Daudé:
+   hw/sd/ssi-sd: Return noise (dummy byte) when no card connected
+55 6ad034e71232 Sv. Lockal:
+   mkvenv: Support pip 25.2
+56 f757d9d90d19 Mauro Matteo Cascella:
+   hw/uefi: clear uefi-vars buffer in uefi_vars_write callback
+57 88e5a28d5aab Gerd Hoffmann:
+   hw/uefi: return success for notifications
+58 fc8ee8fe58ad Gerd Hoffmann:
+   hw/uefi: check access for first variable
+59 040237436f42 Gerd Hoffmann:
+   hw/uefi: open json file in binary mode
 
