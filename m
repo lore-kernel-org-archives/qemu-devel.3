@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 321D7CA0FED
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F40CA0FED
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Aug 2025 01:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ur4dG-0006j0-TP; Tue, 26 Aug 2025 21:07:22 -0400
+	id 1ur4cl-0004zz-Cx; Tue, 26 Aug 2025 21:06:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4dA-000677-9T
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:07:16 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1ur4cU-0004Qg-Lt
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:06:34 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ur4d6-0007Vt-Sh
- for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:07:16 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7704799d798so2856309b3a.3
- for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:07:09 -0700 (PDT)
+ id 1ur4cH-0007Jx-5Q
+ for qemu-devel@nongnu.org; Tue, 26 Aug 2025 21:06:33 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-323267872f3so4976055a91.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Aug 2025 18:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756256827; x=1756861627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756256748; x=1756861548; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6bG/3hhPGRMWHAj9F4OmuFUUkP9nD2TAKa5JDME5628=;
- b=XR3G/V8YFx8eIcaU6Kp+7GRp4UJgoFLLGY7a6ce8fWS2EExJGEyGonGXiSRal/K7Tt
- CACuxYiMl+DT1xLOs0aLoEiCH2K9VES6AU19XF3ofZRKdUliCjY3cAN9iq5/72vAyluw
- sSFc9AsnNmQw9etwl464H0gPZY0LdDPXw8CnDocteeh88QLmuBR+xL/lCCjnk8L44H7W
- d3INJzHiJMCNO5HZR/YfnXRvYfqt1BZmZQq3nJSsKqSPwhBE7F/nlPRG34nGJJMn/f4p
- C7CG/dC6Eo8HVnXgRPBieZmzotf5ZBaY0AoILX71Ob0SqSzpnR6Hdnyd91q6gXRcGLYL
- 4c2Q==
+ bh=kSe8riRjhb8O3kX08ti8qa14kSiIJuoOb2wA1l/P/pk=;
+ b=znDACpFXCAMxv5DzqX86DZhnao1GjF6A7WeRKoV90I2Vskk3A1DELyufIb8sSYa4ta
+ xw06VdUr/sDqFbySdAruz++qqtj/QYqQMo1arNdcIXNqTXAlre4gGl1c9+0n8apf70Q1
+ J8+P30sXGRRFXGyad3+a2eGlREsFec0+0TDuQAm05I9d+6hy8UYpdv6JiQTH+inrjEwF
+ UQ2O2COiEVCP4QALvFwj4Xx1BJbLDE5AZmqSBZmng/rPqY367m4E6nFybmwPo2g9+KxQ
+ NqnLo/cPqDYo3lw2CtuUGf9meW/WKvITpFmaEwpgmd/Uj3YDemOTlcJJHe4j4FQhcQXZ
+ eeZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756256827; x=1756861627;
+ d=1e100.net; s=20230601; t=1756256748; x=1756861548;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6bG/3hhPGRMWHAj9F4OmuFUUkP9nD2TAKa5JDME5628=;
- b=tS9IjRFocfJpvOF6yZFoPS+In+fjkfv/5PQptRSj5zGdZ5WEBZltbQ1QNJrpRbdpj8
- KwrNsomA4RTNlgHPeyJS9+eXXyFCnE9zWZVCX36s7wM/JKB+3kuDJiWywzG+1vBeI0t3
- /6HO+KvWuyTXlnfNbtzRA6jz8bimOlnAJW1ng/78PWQIUxX+ejwIf7svRyKzcrEIEhhg
- 3y7PQCmm+q7v4cHazxlJirYmfadjkknORBnMsbc8cT/J/jtD8Gh3d0psdNJHlXgJ26kt
- tTZvfgDwxv0N3xXDx5SwC16B2yCxukdJ797wVkxaUDJ9+ISMfJnFEhhxSKJmV0oeawsT
- Ui2Q==
-X-Gm-Message-State: AOJu0YzxEIQwhLF8hN4+OfFSXwam4c+O+DSpww/esR3n27JFk728lXPu
- 793jdT8Bf6mIiz4RsZDxebsVZwE6YbY0WrUjGUzs+xx+Z2EydzMWzF26cBOVNP5zCpXZiBzotYV
- ecPjH004=
-X-Gm-Gg: ASbGncu4doG1u0EWEYKGYXaxiClMGLDkihS27YfO2iRRkwbscwjcT1TJ/dTWR6r23gz
- kj7VAf6YpvwXSlJdZub68nhPr7zS4douErVT0Gb3/QFJiJyZzPymKHbLDTRrnjNwk4cNd+YHvJI
- W5TXvYxYRTqcpr6CFZxRqDh0Lm5i1lWmrPPULI/FB+cuVFb2mwPR+Y1br50i5foQcghQ/bGxhXb
- H3Jr0D0ZEnLbrDKUsJWUauONGToHJvuCKErduUwYUXbGy91DGQEeXWyzL5fywtFSFIA/ZdC/jrk
- sfyXvqPAVxnyjYMiZw5pGXt5BbF09XBs1GRLWeDb3rOOAyae78XyBkrQHXoAjP9ycIDosNqrkMV
- 5KHuvzqN0RNtP1Z2lRQqY6faErQ==
-X-Google-Smtp-Source: AGHT+IHTpjiKWKNk2X7Arek/BJl7IKIODx/CBorhfNc0eWu3w80SsiJQaokuP1Nssn2DS+pRm7SssQ==
-X-Received: by 2002:a05:6a00:2989:b0:772:775:88c9 with SMTP id
- d2e1a72fcca58-77207758ab4mr908175b3a.19.1756256827024; 
- Tue, 26 Aug 2025 18:07:07 -0700 (PDT)
+ bh=kSe8riRjhb8O3kX08ti8qa14kSiIJuoOb2wA1l/P/pk=;
+ b=kjmaABR7RRRHQ60fF/0M8Ze+z2sY1vqxCTnGNjEqE4iIkuPTMCcTzLWmTHH5oVaU+V
+ l93+WqEkoXNolZjA23dL+eDXh1Rr7m9X1cvlwcxJ3rwCH5trfRCxmI/wSeyJfWOjRA2F
+ YGOiEH32adCxr5ZI6mHmXsmnfNjWq5kURqH4hJF9f42LXvoLSCassHWFj0Y2rkisLgtT
+ CTVClspa+KXDdnyWl4mmwSTrZQzMJLIeWTe0sImo72o6xduSzTJVn/QKX7E62zDxiXgG
+ peIKBe7ENYAmjjBOibgcZGs8rZBQRfgjLyC4gq2BlKyVs2hHSHCtwSCYoXTf6cPegb2B
+ 0xEg==
+X-Gm-Message-State: AOJu0YxAv6eHotNyG6i5S1yG52tvikDpIcQEHXXfrbkOJ/3cZdQJajHv
+ BCrtJ6Lyuv6dWme+6j2/pJv+mC0HenLrt2Sigl+H2RmscPyzyWYFgFDtUimsDCWUjIPtK+jb6u8
+ WC+xEPdE=
+X-Gm-Gg: ASbGncuvfvswmHcz+wzGEN9j4B64bROuTH5hZYv/bQUdoit0VVYKPYw+jXwES33EmCo
+ t3sODpiCWLj4enBDC9+VjRi3tjumj3Cg1ISP3bvnYHaHZwNQtSVjLyOfw/e/VzSHlG6YId+ARr7
+ txhkAh0A8xG0g0nI0wNYWpLeBgq/pWb9jSjdVZao42mVJyvuSjG4PH92cpVD7Rkb8nLWkStkSqd
+ sUzNI+X1LE7SYgpG4oMUYD6TSyk449RWMdKSrpnDkMT6PtBciK/4tpotHtRDvciTtS5AEJB0g8B
+ GEOBFfBS20C2Em/pG7QtGJNr1dqueQ/Dy0lNnEjJ3e2UDOeDEcI+QTON9REeXv9BHgpgqQig95F
+ QjwzW9dSs0szC3QFhHyxTh7a9FTiUG/aEE7sS
+X-Google-Smtp-Source: AGHT+IFA5oZPxNUGizV7wFeIpe/aYobhUrWo8IuE1XqMukiwfiDEPQpgcf/0sgIX4oYI4d63JmXxOQ==
+X-Received: by 2002:a17:90a:e707:b0:31f:150:e045 with SMTP id
+ 98e67ed59e1d1-32515ed147emr22149559a91.32.1756256747890; 
+ Tue, 26 Aug 2025 18:05:47 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7720274534esm1419241b3a.47.2025.08.26.18.07.03
+ d2e1a72fcca58-7720274534esm1419241b3a.47.2025.08.26.18.05.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Aug 2025 18:07:06 -0700 (PDT)
+ Tue, 26 Aug 2025 18:05:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 23/61] target/arm: Move cpreg elimination to
- define_one_arm_cp_reg
-Date: Wed, 27 Aug 2025 11:04:14 +1000
-Message-ID: <20250827010453.4059782-28-richard.henderson@linaro.org>
+Subject: [PATCH 07/61] target/arm/hvf: Replace hvf_sreg_match with
+ hvf_sreg_list
+Date: Wed, 27 Aug 2025 11:03:57 +1000
+Message-ID: <20250827010453.4059782-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250827010453.4059782-1-richard.henderson@linaro.org>
 References: <20250827010453.4059782-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,176 +100,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eliminate unused registers earlier, so that by the time we
-arrive in add_cpreg_to_hashtable we never skip.
+Change hvf_get_registers and hvf_put_registers to iterate over
+cpregs_indexes instead of hvf_sreg_match.
+
+This lets us drop the cp_idx member of hvf_sreg_match, which leaves
+only one member in the struct.  Replace the struct with a const array.
+Instead of int, use the proper enum type: hv_sys_reg_t.
+Rename from hvf_sreg_match to hvf_sreg_list because there is no
+longer any matching going on.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.c | 123 +++++++++++++++++++++++---------------------
- 1 file changed, 64 insertions(+), 59 deletions(-)
+ target/arm/hvf/hvf.c | 45 +++++++++++++++-----------------------------
+ 1 file changed, 15 insertions(+), 30 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index a9d6ed1270..02c155418b 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -7278,7 +7278,6 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, const ARMCPRegInfo *r,
-     bool is64 = r->type & ARM_CP_64BIT;
-     bool ns = secstate & ARM_CP_SECSTATE_NS;
-     size_t name_len;
--    bool make_const;
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 5fcfa9a999..37d8f795eb 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -394,11 +394,6 @@ static const struct hvf_reg_match hvf_fpreg_match[] = {
+     { HV_SIMD_FP_REG_Q31, offsetof(CPUARMState, vfp.zregs[31]) },
+ };
  
-     switch (state) {
-     case ARM_CP_STATE_AA32:
-@@ -7299,32 +7298,6 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, const ARMCPRegInfo *r,
-         }
-     }
- 
--    /*
--     * Eliminate registers that are not present because the EL is missing.
--     * Doing this here makes it easier to put all registers for a given
--     * feature into the same ARMCPRegInfo array and define them all at once.
--     */
--    make_const = false;
--    if (arm_feature(env, ARM_FEATURE_EL3)) {
--        /*
--         * An EL2 register without EL2 but with EL3 is (usually) RES0.
--         * See rule RJFFP in section D1.1.3 of DDI0487H.a.
--         */
--        int min_el = ctz32(r->access) / 2;
--        if (min_el == 2 && !arm_feature(env, ARM_FEATURE_EL2)) {
--            if (r->type & ARM_CP_EL3_NO_EL2_UNDEF) {
--                return;
--            }
--            make_const = !(r->type & ARM_CP_EL3_NO_EL2_KEEP);
--        }
--    } else {
--        CPAccessRights max_el = (arm_feature(env, ARM_FEATURE_EL2)
--                                 ? PL2_RW : PL1_RW);
--        if ((r->access & max_el) == 0) {
--            return;
--        }
--    }
+-struct hvf_sreg_match {
+-    int reg;
+-    uint32_t cp_idx;
+-};
 -
-     /* Combine cpreg and name into one allocation. */
-     name_len = strlen(name) + 1;
-     r2 = g_malloc(sizeof(*r2) + name_len);
-@@ -7342,38 +7315,7 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, const ARMCPRegInfo *r,
-     r2->state = state;
-     r2->secure = secstate;
+ /*
+  * QEMU uses KVM system register ids in the migration format.
+  * Conveniently, HVF uses the same encoding of the op* and cr* parameters
+@@ -419,9 +414,9 @@ struct hvf_sreg_match {
  
--    if (make_const) {
--        /* This should not have been a very special register to begin. */
--        int old_special = r2->type & ARM_CP_SPECIAL_MASK;
--        assert(old_special == 0 || old_special == ARM_CP_NOP);
--        /*
--         * Set the special function to CONST, retaining the other flags.
--         * This is important for e.g. ARM_CP_SVE so that we still
--         * take the SVE trap if CPTR_EL3.EZ == 0.
--         */
--        r2->type = (r2->type & ~ARM_CP_SPECIAL_MASK) | ARM_CP_CONST;
--        /*
--         * Usually, these registers become RES0, but there are a few
--         * special cases like VPIDR_EL2 which have a constant non-zero
--         * value with writes ignored.
--         */
--        if (!(r->type & ARM_CP_EL3_NO_EL2_C_NZ)) {
--            r2->resetvalue = 0;
+ #undef DEF_SYSREG
+ 
+-#define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2)  { HVF_ID },
++#define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2)  HVF_ID,
+ 
+-static struct hvf_sreg_match hvf_sreg_match[] = {
++static const hv_sys_reg_t hvf_sreg_list[] = {
+ #include "sysreg.c.inc"
+ };
+ 
+@@ -434,7 +429,7 @@ int hvf_get_registers(CPUState *cpu)
+     hv_return_t ret;
+     uint64_t val;
+     hv_simd_fp_uchar16_t fpval;
+-    int i;
++    int i, n;
+ 
+     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
+         ret = hv_vcpu_get_reg(cpu->accel->fd, hvf_reg_match[i].reg, &val);
+@@ -463,13 +458,9 @@ int hvf_get_registers(CPUState *cpu)
+     assert_hvf_ok(ret);
+     pstate_write(env, val);
+ 
+-    for (i = 0; i < ARRAY_SIZE(hvf_sreg_match); i++) {
+-        int hvf_id = hvf_sreg_match[i].reg;
+-        uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
+-
+-        if (hvf_sreg_match[i].cp_idx == -1) {
+-            continue;
 -        }
--        /*
--         * ARM_CP_CONST has precedence, so removing the callbacks and
--         * offsets are not strictly necessary, but it is potentially
--         * less confusing to debug later.
--         */
--        r2->readfn = NULL;
--        r2->writefn = NULL;
--        r2->raw_readfn = NULL;
--        r2->raw_writefn = NULL;
--        r2->resetfn = NULL;
--        r2->fieldoffset = 0;
--        r2->bank_fieldoffsets[0] = 0;
--        r2->bank_fieldoffsets[1] = 0;
--    } else {
-+    {
-         bool isbanked = r->bank_fieldoffsets[0] && r->bank_fieldoffsets[1];
++    for (i = 0, n = arm_cpu->cpreg_array_len; i < n; i++) {
++        uint64_t kvm_id = arm_cpu->cpreg_indexes[i];
++        int hvf_id = KVMID_TO_HVF(kvm_id);
  
-         if (isbanked) {
-@@ -7538,6 +7480,8 @@ void define_one_arm_cp_reg(ARMCPU *cpu, const ARMCPRegInfo *r)
-     int opc2min = (r->opc2 == CP_ANY) ? 0 : r->opc2;
-     int opc2max = (r->opc2 == CP_ANY) ? 7 : r->opc2;
-     int cp = r->cp;
-+    ARMCPRegInfo r_const;
-+    CPUARMState *env = &cpu->env;
+         if (cpu->accel->guest_debug_enabled) {
+             /* Handle debug registers */
+@@ -553,7 +544,7 @@ int hvf_get_registers(CPUState *cpu)
  
-     /*
-      * AArch64 regs are all 64 bit so ARM_CP_64BIT is meaningless.
-@@ -7643,6 +7587,67 @@ void define_one_arm_cp_reg(ARMCPU *cpu, const ARMCPRegInfo *r)
+                 val = read_raw_cp_reg(env, ri);
+ 
+-                arm_cpu->cpreg_values[hvf_sreg_match[i].cp_idx] = val;
++                arm_cpu->cpreg_values[i] = val;
+                 continue;
+             }
+             }
+@@ -562,7 +553,7 @@ int hvf_get_registers(CPUState *cpu)
+         ret = hv_vcpu_get_sys_reg(cpu->accel->fd, hvf_id, &val);
+         assert_hvf_ok(ret);
+ 
+-        arm_cpu->cpreg_values[hvf_sreg_match[i].cp_idx] = val;
++        arm_cpu->cpreg_values[i] = val;
+     }
+     assert(write_list_to_cpustate(arm_cpu));
+ 
+@@ -578,7 +569,7 @@ int hvf_put_registers(CPUState *cpu)
+     hv_return_t ret;
+     uint64_t val;
+     hv_simd_fp_uchar16_t fpval;
+-    int i;
++    int i, n;
+ 
+     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
+         val = *(uint64_t *)((void *)env + hvf_reg_match[i].offset);
+@@ -605,12 +596,9 @@ int hvf_put_registers(CPUState *cpu)
+     aarch64_save_sp(env, arm_current_el(env));
+ 
+     assert(write_cpustate_to_list(arm_cpu, false));
+-    for (i = 0; i < ARRAY_SIZE(hvf_sreg_match); i++) {
+-        int hvf_id = hvf_sreg_match[i].reg;
+-
+-        if (hvf_sreg_match[i].cp_idx == -1) {
+-            continue;
+-        }
++    for (i = 0, n = arm_cpu->cpreg_array_len; i < n; i++) {
++        uint64_t kvm_id = arm_cpu->cpreg_indexes[i];
++        int hvf_id = KVMID_TO_HVF(kvm_id);
+ 
+         if (cpu->accel->guest_debug_enabled) {
+             /* Handle debug registers */
+@@ -688,7 +676,7 @@ int hvf_put_registers(CPUState *cpu)
+             }
+         }
+ 
+-        val = arm_cpu->cpreg_values[hvf_sreg_match[i].cp_idx];
++        val = arm_cpu->cpreg_values[i];
+         ret = hv_vcpu_set_sys_reg(cpu->accel->fd, hvf_id, val);
+         assert_hvf_ok(ret);
+     }
+@@ -899,7 +887,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
+-    uint32_t sregs_match_len = ARRAY_SIZE(hvf_sreg_match);
++    uint32_t sregs_match_len = ARRAY_SIZE(hvf_sreg_list);
+     uint32_t sregs_cnt = 0;
+     uint64_t pfr;
+     hv_return_t ret;
+@@ -924,17 +912,14 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+ 
+     /* Populate cp list for all known sysregs */
+     for (i = 0; i < sregs_match_len; i++) {
+-        int hvf_id = hvf_sreg_match[i].reg;
++        hv_sys_reg_t hvf_id = hvf_sreg_list[i];
+         uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
+         uint32_t key = kvm_to_cpreg_id(kvm_id);
+         const ARMCPRegInfo *ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
+ 
+         if (ri) {
+             assert(!(ri->type & ARM_CP_NO_RAW));
+-            hvf_sreg_match[i].cp_idx = sregs_cnt;
+             arm_cpu->cpreg_indexes[sregs_cnt++] = kvm_id;
+-        } else {
+-            hvf_sreg_match[i].cp_idx = -1;
          }
      }
- 
-+    /*
-+     * Eliminate registers that are not present because the EL is missing.
-+     * Doing this here makes it easier to put all registers for a given
-+     * feature into the same ARMCPRegInfo array and define them all at once.
-+     */
-+    if (arm_feature(env, ARM_FEATURE_EL3)) {
-+        /*
-+         * An EL2 register without EL2 but with EL3 is (usually) RES0.
-+         * See rule RJFFP in section D1.1.3 of DDI0487H.a.
-+         */
-+        int min_el = ctz32(r->access) / 2;
-+        if (min_el == 2 && !arm_feature(env, ARM_FEATURE_EL2)) {
-+            if (r->type & ARM_CP_EL3_NO_EL2_UNDEF) {
-+                return;
-+            }
-+            if (!(r->type & ARM_CP_EL3_NO_EL2_KEEP)) {
-+                /* This should not have been a very special register. */
-+                int old_special = r->type & ARM_CP_SPECIAL_MASK;
-+                assert(old_special == 0 || old_special == ARM_CP_NOP);
-+
-+                r_const = *r;
-+
-+                /*
-+                 * Set the special function to CONST, retaining the other flags.
-+                 * This is important for e.g. ARM_CP_SVE so that we still
-+                 * take the SVE trap if CPTR_EL3.EZ == 0.
-+                 */
-+                r_const.type = (r->type & ~ARM_CP_SPECIAL_MASK) | ARM_CP_CONST;
-+                /*
-+                 * Usually, these registers become RES0, but there are a few
-+                 * special cases like VPIDR_EL2 which have a constant non-zero
-+                 * value with writes ignored.
-+                 */
-+                if (!(r->type & ARM_CP_EL3_NO_EL2_C_NZ)) {
-+                    r_const.resetvalue = 0;
-+                }
-+                /*
-+                 * ARM_CP_CONST has precedence, so removing the callbacks and
-+                 * offsets are not strictly necessary, but it is potentially
-+                 * less confusing to debug later.
-+                 */
-+                r_const.readfn = NULL;
-+                r_const.writefn = NULL;
-+                r_const.raw_readfn = NULL;
-+                r_const.raw_writefn = NULL;
-+                r_const.resetfn = NULL;
-+                r_const.fieldoffset = 0;
-+                r_const.bank_fieldoffsets[0] = 0;
-+                r_const.bank_fieldoffsets[1] = 0;
-+
-+                r = &r_const;
-+            }
-+        }
-+    } else {
-+        CPAccessRights max_el = (arm_feature(env, ARM_FEATURE_EL2)
-+                                 ? PL2_RW : PL1_RW);
-+        if ((r->access & max_el) == 0) {
-+            return;
-+        }
-+    }
-+
-     for (int crm = crmmin; crm <= crmmax; crm++) {
-         for (int opc1 = opc1min; opc1 <= opc1max; opc1++) {
-             for (int opc2 = opc2min; opc2 <= opc2max; opc2++) {
+     arm_cpu->cpreg_array_len = sregs_cnt;
 -- 
 2.43.0
 
