@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9349CC8303F
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 11:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6975ECA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 11:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urau4-0003M2-UX; Thu, 28 Aug 2025 07:34:53 -0400
+	id 1uraug-0004Fu-5u; Thu, 28 Aug 2025 07:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urau0-0003IO-S3
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:49 -0400
+ id 1urauO-0003hf-FJ
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:35:15 -0400
 Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uraty-0005iW-U2
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:48 -0400
+ id 1urauL-00066u-K8
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:35:11 -0400
 Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45b7d485173so1537055e9.0
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 04:34:45 -0700 (PDT)
+ 5b1f17b1804b1-45b7d497ab9so1637455e9.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 04:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756380884; x=1756985684; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756380908; x=1756985708; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Iow63uqXZAY75W+e/Yf2GGnz7y0LeqIPIqHaXt7y/f8=;
- b=sMB1RiOAGgjsQhKq8S0HhANljkxiikxpjk9Pj/26RkHYY9k1Fs7cYDcspwgDb2eR+/
- D1conL0geG5OEeOaQ+vnBJpkRIrQs1Wdve9TdXdxcC+iEL1HEcTwF5SrLqc6713oHPvv
- 8vEKxu+8/HBYVHLVfe888HDg5zT8a25UJsi2xEuV+RpjBBuzC9xdKOjgdzrNZo1SzUXC
- uG9R2HtneV7+D7OVc4m4a0sF+rVSZsMQMy7mUczikGKRthH5OC7CKCTr46MyibWqe+XE
- 3YWd4LQUjHuG1u4mc23JztGpHmRnAayPifYn2mHRzFv91yygbvrn9/WSfqIILewAvcv2
- jQJQ==
+ :reply-to; bh=+JXna42BUY+PHZn26MLXt9OfmKpXLIHJyS7UYzTkIbI=;
+ b=t3v5Zqw5hvBWjYgHt2RidzfjlnEpV69wNX6UGIhJ9wEU5NQjTAgxAwUEnINf/vR1Oc
+ gWSBgph8YSImu5wvQwEoYM8xqg1wD06fuuaXpFyH4BD5FZ37IAX1/led1ANa8Oi8TzJ2
+ uGaAMEmw9deQ5lXm7KmeZs82DQH3WSKVsI2ChK2E4sk+ZVkhGEgeLnIjaSxUkCbXHJId
+ hKvzpSGDTAzzDqwyOFpbwiFRitw0fhdshL88DofOf5eXaPjUYCHl2Ozniz7d1qeptGfi
+ bj1MzvzMTC0bWQnQT/Glf0vjcfQLHS6S1z/tJAqTlmVDd+vTrIyX0YfxyQ8BAEweF5M1
+ YOfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756380884; x=1756985684;
+ d=1e100.net; s=20230601; t=1756380908; x=1756985708;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Iow63uqXZAY75W+e/Yf2GGnz7y0LeqIPIqHaXt7y/f8=;
- b=LoPw0F+boOvyoPixQtLG7yyQ7A0OVgCA6OGglarqnoCbHUUWkk+4WC3LhmIPBhEL6+
- LbiVpy7LcL0F/tNMRcuCntr51Dze1De3O/YCBWaT/WBkz3Z8Ve42rFKxSebCyH3W9O6L
- 86bC6jDYSdZlMunScn0ejVc/i7vxnYMGWUx1NOH+MU4wBI8cdSw9Ymz9CgZM4jOO/Lmk
- n04SAsC6iH9I7ZNUeK8G4pqzrj7aVYzhZuiaWxNq9Hd1be4VDON5fSu6r/XZKGpp3WuH
- v+CSUWkhkKS7GVRil5De3OUA6Bycad6mMSkapTqq4qMIO5Dpr2n42ena3P1pXPmNxutQ
- hwNg==
-X-Gm-Message-State: AOJu0Yz/J7X5Y4RVWmivcOr3YvNxkItTiOq9YGKycGeeo1X21DU3gdS/
- JHbfjISzx+wn0nDPmWKVGWTX9Goedtc1GeHD38cx1X+q/3bBaRxcPoatcgt5khRyI5pQUm9Sf5G
- euQeb
-X-Gm-Gg: ASbGncsd2ghG2rBEg6MyVkextTH6UUIfaumjuUGEnk8GZD8vplsl3PwUl/lImElLGij
- z7TGIQOUFARrGHtwMvrYsHEk6vmriD79BVmWjIF/bJ3j5iYuOsdob7L2aHbK3irZVNk7+n5UUFq
- jwDeD730VFzJf+Z2s7gGPJQmtQPEyeQlS61ZWcx2LaX8HjjczfjgZleUbBVk5DJods2vnCUfyqr
- qV0mv6aWM+7z7UYOnJrFLGl6Uw78jsmVD5rlru8vQlQ4+gxXDU8R/TgVtvDedvnlnvWpl4NNDBN
- P2j9AFGZmTB6jX0s72W5JU9ZvUmQlTUpn3b594IRey08BWRju199ClpenHDLGwxyJ+l9cFdKpG/
- mMsuKJRGzksBVdsIV9DmMDRDkl4lBFJEUl7WgRnQ=
-X-Google-Smtp-Source: AGHT+IHPmfUm5QObhjtEbEQZoX9DiEHCdcRvsO9DP43+ZIbCRpvLW+BGLX70APma+P1sP1fAwiWJWQ==
-X-Received: by 2002:a05:600c:4695:b0:456:26a1:a0c1 with SMTP id
- 5b1f17b1804b1-45b517cb8e5mr240528395e9.17.1756380884176; 
- Thu, 28 Aug 2025 04:34:44 -0700 (PDT)
+ bh=+JXna42BUY+PHZn26MLXt9OfmKpXLIHJyS7UYzTkIbI=;
+ b=F/Vb3GBubKgJ1rqr+5frKW3lEe2HlPTvXVlepM7EU0WRwBpjb8dqrN6ekKLj474x2P
+ HyFw3Y6yhoIqADwotcaRm/dLVsjg+lwi11aIYFtCyxpTZ4WYiXBRr4WdN6rozcr0RdQr
+ dzrU7Nrlv2R5Szq9MsqRDPNGmIjbxA6z3vu7YuigDQo6ek17kCAp5fEhtZSrmIBgNSvk
+ ddSYjaU6hHakv3ul4PkuGIYAtjWL1wlUuLEMAaYMoUgUPZYSsqcHA05c6Nq5N9ZJLWJb
+ xDkIMnnBum9F03hIuavwbmyc8gnwpZDYpLP+9HjjJ1UHYG76Kv2ITDIN58561ER5dg0M
+ ENfQ==
+X-Gm-Message-State: AOJu0YxpxtKJyVM1iCZcAmKB7AI4bAWYxk6mkzT/XreIHKgVKx8fEk53
+ mTNUFJVfwjF6oiQ5u/buYaIzESPlbBFexxZg3pAzOx34v/tKU0BXxfYH1ZK/ToEsO1QX2Gh0e5f
+ Eon8g
+X-Gm-Gg: ASbGnctK2I07qssCC3YHMcDBlxdTwJ4CEUYWPZ4nnsMJ5LXVpPnwhObimKHl+sR3W92
+ E34BXwpZGYa4UucLqMQ20CGx3EsMLg25e3asw01FB0b03I5IoJI1tLbLVKlmuhb/nHC0iTufS6Z
+ DbLJ7GXw2/2w0z2frBwYBy81enB80CZMLNFi61ZKSBOpSII2qaXVudVCZzcYbjdeBFMxrypZHEN
+ FJz71XVj+J/3ygj01rZz7TbKjC3Ek3WgbjpV1WvnstMR/Zzo71e31gNF+v8NC6p5l93NDZvoCrb
+ wNDjo1PIojMYch86iUQCdYwMz1RCCJPUmOleafWlCl7+RqHkWeKFQsTLq5hegGn4/L9im+zzwrM
+ FgeyUQda2lSxVYgYJmcJ8uIV2BMtG
+X-Google-Smtp-Source: AGHT+IH+Mt5HgjNrIiJ9CXJsxcGEiHIWTrDKtn2bd2Vqhof5yQFUZg8RujOe61lbb4msO4OBgnLZTQ==
+X-Received: by 2002:a05:600c:a46:b0:456:1bca:7faf with SMTP id
+ 5b1f17b1804b1-45b517ad840mr273802455e9.16.1756380907941; 
+ Thu, 28 Aug 2025 04:35:07 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b79799c33sm28691015e9.5.2025.08.28.04.34.43
+ 5b1f17b1804b1-45b79799c33sm28691015e9.5.2025.08.28.04.35.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 04:34:43 -0700 (PDT)
+ Thu, 28 Aug 2025 04:35:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/32] target/arm: Implement MIN/MAX (register)
-Date: Thu, 28 Aug 2025 12:34:07 +0100
-Message-ID: <20250828113430.3214314-11-peter.maydell@linaro.org>
+Subject: [PULL 32/32] hw/arm/stm32f205_soc: Don't leak TYPE_OR_IRQ objects
+Date: Thu, 28 Aug 2025 12:34:29 +0100
+Message-ID: <20250828113430.3214314-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250828113430.3214314-1-peter.maydell@linaro.org>
 References: <20250828113430.3214314-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::333;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
@@ -99,66 +100,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+In stm32f250_soc_initfn() we mostly use the standard pattern
+for child objects of calling object_initialize_child(). However
+for s->adc_irqs we call object_new() and then later qdev_realize(),
+and we never unref the object on deinit. This causes a leak,
+detected by ASAN on the device-introspect-test:
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250803014019.416797-4-richard.henderson@linaro.org
+Indirect leak of 10 byte(s) in 1 object(s) allocated from:
+    #0 0x5b9fc4789de3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qemu-system-arm+0x21f1de3) (BuildId: 267a2619a026ed91c78a07b1eb2ef15381538efe)
+    #1 0x740de3f28b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #2 0x740de3f3e4d8 in g_strdup (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x784d8) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #3 0x5b9fc70159e1 in g_strdup_inline /usr/include/glib-2.0/glib/gstrfuncs.h:321:10
+    #4 0x5b9fc70159e1 in object_property_try_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1276:18
+    #5 0x5b9fc7015f94 in object_property_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:1294:12
+    #6 0x5b9fc701b900 in object_add_link_prop /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:2021:10
+    #7 0x5b9fc701b3fc in object_property_add_link /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:2037:12
+    #8 0x5b9fc4c299fb in qdev_init_gpio_out_named /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/gpio.c:90:9
+    #9 0x5b9fc4c29b26 in qdev_init_gpio_out /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/gpio.c:101:5
+    #10 0x5b9fc4c0f77a in or_irq_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/core/or-irq.c:70:5
+    #11 0x5b9fc70257e1 in object_init_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:428:9
+    #12 0x5b9fc700cd4b in object_initialize_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:570:5
+    #13 0x5b9fc700e66d in object_new_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:774:5
+    #14 0x5b9fc700e750 in object_new /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../qom/object.c:789:12
+    #15 0x5b9fc68b2162 in stm32f205_soc_initfn /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/arm/stm32f205_soc.c:69:26
+
+Switch to using object_initialize_child() like all our
+other child objects for this SoC object.
+
+Cc: qemu-stable@nongnu.org
+Fixes: b63041c8f6b ("STM32F205: Connect the ADC devices")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20250821154229.2417453-1-peter.maydell@linaro.org
 ---
- target/arm/tcg/a64.decode      |  5 +++++
- target/arm/tcg/translate-a64.c | 22 ++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
+ include/hw/arm/stm32f205_soc.h |  2 +-
+ hw/arm/stm32f205_soc.c         | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index c1811b02747..a886b3ba4c7 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -708,6 +708,11 @@ GMI             1 00 11010110 ..... 000101 ..... .....  @rrr
+diff --git a/include/hw/arm/stm32f205_soc.h b/include/hw/arm/stm32f205_soc.h
+index 4f4c8bbebc1..46eda3403a9 100644
+--- a/include/hw/arm/stm32f205_soc.h
++++ b/include/hw/arm/stm32f205_soc.h
+@@ -59,7 +59,7 @@ struct STM32F205State {
+     STM32F2XXADCState adc[STM_NUM_ADCS];
+     STM32F2XXSPIState spi[STM_NUM_SPIS];
  
- PACGA           1 00 11010110 ..... 001100 ..... .....  @rrr
+-    OrIRQState *adc_irqs;
++    OrIRQState adc_irqs;
  
-+SMAX            . 00 11010110 ..... 011000 ..... .....  @rrr_sf
-+SMIN            . 00 11010110 ..... 011010 ..... .....  @rrr_sf
-+UMAX            . 00 11010110 ..... 011001 ..... .....  @rrr_sf
-+UMIN            . 00 11010110 ..... 011011 ..... .....  @rrr_sf
-+
- # Data Processing (1-source)
+     MemoryRegion sram;
+     MemoryRegion flash;
+diff --git a/hw/arm/stm32f205_soc.c b/hw/arm/stm32f205_soc.c
+index 229af7fb108..e3c7203c6e7 100644
+--- a/hw/arm/stm32f205_soc.c
++++ b/hw/arm/stm32f205_soc.c
+@@ -66,7 +66,7 @@ static void stm32f205_soc_initfn(Object *obj)
+                                 TYPE_STM32F2XX_TIMER);
+     }
  
- @rr             . .......... ..... ...... rn:5 rd:5     &rr
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index b70ae5befd2..bb92bdc296a 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -8201,6 +8201,28 @@ static bool trans_PACGA(DisasContext *s, arg_rrr *a)
-     return false;
- }
+-    s->adc_irqs = OR_IRQ(object_new(TYPE_OR_IRQ));
++    object_initialize_child(obj, "adc-irq-orgate", &s->adc_irqs, TYPE_OR_IRQ);
  
-+static bool gen_rrr(DisasContext *s, arg_rrr_sf *a, ArithTwoOp fn)
-+{
-+    TCGv_i64 tcg_rm = cpu_reg(s, a->rm);
-+    TCGv_i64 tcg_rn = cpu_reg(s, a->rn);
-+    TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
-+
-+    fn(tcg_rd, tcg_rn, tcg_rm);
-+    if (!a->sf) {
-+        tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(SMAX, aa64_cssc, gen_rrr, a,
-+           a->sf ? tcg_gen_smax_i64 : gen_smax32_i64)
-+TRANS_FEAT(SMIN, aa64_cssc, gen_rrr, a,
-+           a->sf ? tcg_gen_smin_i64 : gen_smin32_i64)
-+TRANS_FEAT(UMAX, aa64_cssc, gen_rrr, a,
-+           a->sf ? tcg_gen_umax_i64 : gen_umax32_i64)
-+TRANS_FEAT(UMIN, aa64_cssc, gen_rrr, a,
-+           a->sf ? tcg_gen_umin_i64 : gen_umin32_i64)
-+
- typedef void ArithOneOp(TCGv_i64, TCGv_i64);
+     for (i = 0; i < STM_NUM_ADCS; i++) {
+         object_initialize_child(obj, "adc[*]", &s->adc[i], TYPE_STM32F2XX_ADC);
+@@ -171,12 +171,12 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
+     }
  
- static bool gen_rr(DisasContext *s, int rd, int rn, ArithOneOp fn)
+     /* ADC 1 to 3 */
+-    object_property_set_int(OBJECT(s->adc_irqs), "num-lines", STM_NUM_ADCS,
++    object_property_set_int(OBJECT(&s->adc_irqs), "num-lines", STM_NUM_ADCS,
+                             &error_abort);
+-    if (!qdev_realize(DEVICE(s->adc_irqs), NULL, errp)) {
++    if (!qdev_realize(DEVICE(&s->adc_irqs), NULL, errp)) {
+         return;
+     }
+-    qdev_connect_gpio_out(DEVICE(s->adc_irqs), 0,
++    qdev_connect_gpio_out(DEVICE(&s->adc_irqs), 0,
+                           qdev_get_gpio_in(armv7m, ADC_IRQ));
+ 
+     for (i = 0; i < STM_NUM_ADCS; i++) {
+@@ -187,7 +187,7 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
+         busdev = SYS_BUS_DEVICE(dev);
+         sysbus_mmio_map(busdev, 0, adc_addr[i]);
+         sysbus_connect_irq(busdev, 0,
+-                           qdev_get_gpio_in(DEVICE(s->adc_irqs), i));
++                           qdev_get_gpio_in(DEVICE(&s->adc_irqs), i));
+     }
+ 
+     /* SPI 1 and 2 */
 -- 
 2.43.0
 
