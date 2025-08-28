@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 476C3CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC4FCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:24:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOeQ-0008SR-Ox; Sat, 30 Aug 2025 12:42:02 -0400
+	id 1usO5B-0002yd-7s; Sat, 30 Aug 2025 12:05:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkpI-0006mn-D1
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 18:10:36 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urkOe-0006WB-7Q
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:43:04 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkpG-0005Wp-9R
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 18:10:36 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-45b55ed86b9so8331145e9.0
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 15:10:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urkOZ-0003Sm-VH
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:43:01 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-327ceef65afso824133a91.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 14:42:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756419032; x=1757023832; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4IgyS4bdUdJEXom4nT0B8vFEDGGCP198DulKAudY4JM=;
- b=h07LdAOCELZFnR7Eq4HZtIErdMdAV2NuhlINLzm2Y+QmqaE1QKeJWAbx0Jd2Vzejqm
- Dn3zAX0Ifjc0/+JJ2ICToyA28byxum7P1FLWJAFEgKuWq1OsD6yYNEqCIvp1LMbHI79M
- YyKQPo8pFL/SqeHzJ6nJJQpcCJ43AdRmxWolDOkixsSs9baORSpJeFJTBHNaQVnCeIG8
- 3h4zWXm7wR4uq17ONzS55T+hjYp12CUNyCoLSXxYvg6o2Gm+4c7L55TiriNPOQuZagLj
- y/XJwhAcKoP2YJk5JfiZVqOZ5xruJ41CUcH3d4kHwV1BZZp/3Aj1lABkAXY1WsqNLLOt
- WvOg==
+ d=linaro.org; s=google; t=1756417377; x=1757022177; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QW+nLvV4rvtIb0C8gUiXVzNmuir38ZsWsYpP2QF+NY4=;
+ b=jKxy2noa9Y0ASybyhhDYZ9uU+WvaidHiHtRuduVmn3Ksye2fK9gJ1N5oaEk9t92bYl
+ 0IjYuPvh+//+ZIo+moo0sTuwvomHh+zeIVRqhIPFYKA0UCEEadBd6+86sMWcMLikSG4E
+ SIQfKIDJFTVlfL1TYjzGl7p5lRlbLeY/PKoYGU1zh+O6SSrN/OpEACh5zdCjiaX1F9wX
+ 10F5ytQWr/35yIYScU1+wfb/FXGfzesWjbJw+ONWCVxkw/N2K4acqgXII037C7IvIxTz
+ w53hUArEtPYy6UCyzCr0LqGdVkbrQh9ykoHg3nha6KhozDL9ufHSRwmhXq+LeVYUllPR
+ mBFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756419032; x=1757023832;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1756417377; x=1757022177;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4IgyS4bdUdJEXom4nT0B8vFEDGGCP198DulKAudY4JM=;
- b=nccgR5fY72vrpfRe3cOhFRDQvDSP5I58buKsVn2S8JktrJD2vgDrzKm3iwBhy8j+Sn
- IhgSGwuJNAS85P0YvTlHTCkI0w4Rkpch4q5amjSSuSIewD3EsSUMSGZF7ra1HBdMDmMU
- 6er38e7GhF8gYC7dXRXGKmpiOXpQ/9/RH0DsqIPGRkBBgWMAOA5ytQwc0IXI3CyG48uF
- kfwV3B73HU0UoAIbs/VwIvcqoGwKyA92p7JB6LayLE4pQ3DdbE7zWjcFsIdF3JJJ8psb
- rR9KEbjjR5Krd1Bew6mWyaqSWj2+X4pOiJkJu/sQpmGl0oefxX59ciwVIOYtVkhUriNY
- yfvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7JnZzryzyWP2r8xhX6vQbZ3iXv8vO4KQ/WZhfrvpT53hJll5c5vwUBQ7ECQhDIWA50lTWlOEUuHol@nongnu.org
-X-Gm-Message-State: AOJu0YxTeVghPpS9J5OjUFH4JosSSMSJgkiQPcZCyQ++eMwtLQrXQyT5
- xXqtCozqf9/rqvwj4X1fT3BZdIuerRLyTRcCLNz2EdDbl/+9jOgcVPH6m9vAX3eNRUs=
-X-Gm-Gg: ASbGncsXW8x4GR/i6MwT4c9/hGak+E+dVycTJg5eox+Kz42oCMNYbiKaqUgzGlPMYJT
- lyJ6A0cJR+C3wKOThuNpKCaztH6VnZ8dBVuAl955O3TUtkO0H744dFJqubEgTdPhJgWp8Bx0Zah
- qYtFHmq1HtUSeRBDnN6mtiHQlUY/oHxJV7VJDjn/Sdkos2Q58u99IDjH7MzWOLExrKCt5CGbyB6
- tGi8VKzNY8p9nBLzrF8/PQ6SC7zJj1yNWBnQwje3uIYTJiYInNjI7IEeVX1Dmq4p55Oce7yNld8
- BhB7eDqkBF9VVqt1NgdvvSGmno5JZDRKgJlc/9BboOy3WuWMCYyUlCONaRrbdS3DsWeR/4ruOHH
- i3FrYoKl4Pqh/gvBQzbPejgKWGIdlm7+LhiWwvZX0biZf49pogeVAHMYwj3FEfJCCO6zvx86uDd
- 9R
-X-Google-Smtp-Source: AGHT+IHScl1KSy8c6rgO/fZq1i52I8Tb+tOJ0kvl4c72DlD6QicoGVNLCVHONIw9rIcPPOjYu4mJTA==
-X-Received: by 2002:a05:6000:2508:b0:3c7:df1d:3d9 with SMTP id
- ffacd0b85a97d-3c7df1d0518mr13968837f8f.39.1756419031814; 
- Thu, 28 Aug 2025 15:10:31 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf346811b3sm794670f8f.63.2025.08.28.15.10.30
+ bh=QW+nLvV4rvtIb0C8gUiXVzNmuir38ZsWsYpP2QF+NY4=;
+ b=om6cu4CHRMm0wRI9nHwG4fSr116U+sPi/2GphutEbUvezhTjKn+3YHlQbOxX6qVqCV
+ ACndopFDHCRKtLvACTcYZUHq+LKw/PwB3aiK0qzXIg52B8Ed8geOtsV/YgNHqOb92tfw
+ 7uVA0CzyPhrJo1UaA3mAnx4CFDRbwFebOn6JVAMuD9R+RhSQ38mb8rKSUy0a88Sgpnwq
+ WaQy2dkpKEYqSm4KWH5Sd17OnN6GZ28T9rn+RgSWx378TgycrwiBm4jvoL2FoyO/L9Sm
+ AqKyPKaSCkpl7spbCFUpOUUC1FQHWeZJpP/xZGRhuZwDEq14YobpSvEClirv9MzkLuPq
+ tCcg==
+X-Gm-Message-State: AOJu0YxPjh3e1UOXGYnfGaKRMFDDy9vUsDINZ5G9UjIHyJmEoMHctYQf
+ qiL150DPgk3OhEv1qnHI62p2brU1ngYQlpXHKg9Hh1b4inwqCQBNRmpeREIDmYSz6shtuI6C8s8
+ YZZDQIa0=
+X-Gm-Gg: ASbGnctjcIAXpfyZCE1ZPhxLdZjRel54B5UFSc2MRq8vCMLNitzVB/BIQlA978aWsRr
+ ceqm3E2V45mmVE/Vagh5fvPtQVdJW6tY6dRfsaWehSJ8/0006xkMHgkMOBYOfgjDGZFlmm7ieFL
+ rQ4DILtIOum4Z/gXH7B1q6Px0rjG5kAxenvCOfxGZzy44jaQqOs33OSnxkhiC+UjqjZPCVVRcks
+ g+fSRXRGtOel7zakJ7bOtOUV9mySu8B6pr6xyztGlfofWuSXBxcoPG+jwCUR52GfaDHxQf3IOKy
+ h9s5oqPaRcfzMClfaDMmr5UZtQHS8aP5/fOxdgqvjGLrUXOjQ0Xw4QTIGH1zQ9+cYrxqRDaIPI1
+ lUblJkw24UPz6Hyfl44GVM8QANDNpYjeOjeOlxLarZ9ZOPUA=
+X-Google-Smtp-Source: AGHT+IFta4sbssUWjclhW0AnBw7v04jEm0iVW4n+S5HG2ogxJt23VGK3Izlx/CXPxZCKLunLdMUcqA==
+X-Received: by 2002:a17:90b:4fd0:b0:325:c92:4a89 with SMTP id
+ 98e67ed59e1d1-32515e3cad8mr28783004a91.5.1756417377428; 
+ Thu, 28 Aug 2025 14:42:57 -0700 (PDT)
+Received: from [192.168.0.195] ([144.6.121.55])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-327da90ecd1sm642429a91.21.2025.08.28.14.42.55
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 15:10:31 -0700 (PDT)
-Message-ID: <5ae93843-0059-4077-8158-6fd272f2e10d@linaro.org>
-Date: Fri, 29 Aug 2025 00:10:30 +0200
+ Thu, 28 Aug 2025 14:42:57 -0700 (PDT)
+Message-ID: <de5dd7bc-647f-4783-a747-ff392d880c68@linaro.org>
+Date: Fri, 29 Aug 2025 07:42:52 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/47] hw/arm/xlnx-versal: VersalMap: add support for
- OR'ed IRQs
-To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-References: <20250822151614.187856-1-luc.michel@amd.com>
- <20250822151614.187856-13-luc.michel@amd.com>
+Subject: Re: [PULL 29/32] target/arm: Rename isar_feature_aa64_atomics
+To: qemu-devel@nongnu.org
+References: <20250828113430.3214314-1-peter.maydell@linaro.org>
+ <20250828113430.3214314-30-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250822151614.187856-13-luc.michel@amd.com>
+In-Reply-To: <20250828113430.3214314-30-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,24 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/8/25 17:15, Luc Michel wrote:
-> Improve the IRQ index in the VersalMap structure to turn it into a
-> descriptor:
->     - the lower 16 bits still represent the IRQ index
->     - bit 18 is used to indicate a shared IRQ connected to a OR gate
->     - bits 19 to 22 indicate the index on the OR gate.
+On 8/28/25 21:34, Peter Maydell wrote:
+> From: Richard Henderson <richard.henderson@linaro.org>
 > 
-> This allows to share an IRQ among multiple devices. An OR gate is
-> created to connect the devices to the actual IRQ pin.
+> This is FEAT_LSE -- rename the predicate to match.
 > 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Message-id: 20250815122653.701782-6-richard.henderson@linaro.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/arm/xlnx-versal.c | 63 +++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 62 insertions(+), 1 deletion(-)
+>   target/arm/cpu-features.h      |  2 +-
+>   linux-user/aarch64/elfload.c   |  2 +-
+>   target/arm/tcg/translate-a64.c | 24 ++++++++++++------------
+>   3 files changed, 14 insertions(+), 14 deletions(-)
 
-Nice.
+Doh.  I failed to rename the usage in bsd-user.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+../bsd-user/aarch64/target_arch_elf.h:117:5: error: call to undeclared function 
+'isar_feature_aa64_atomics'; ISO C99 and later do not support implicit function 
+declarations [-Werror,-Wimplicit-function-declaration]
+   117 |     GET_FEATURE_ID(aa64_atomics, ARM_HWCAP_A64_ATOMICS);
 
+Sorry about that.
+
+
+r~
 
