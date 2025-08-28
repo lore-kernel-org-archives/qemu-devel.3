@@ -4,49 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7240CCA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB54CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgEM-000795-6v; Thu, 28 Aug 2025 13:16:10 -0400
+	id 1urgIb-0007xD-NG; Thu, 28 Aug 2025 13:20:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1urbhT-000262-Ju; Thu, 28 Aug 2025 08:25:55 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1urbhP-0002jm-JS; Thu, 28 Aug 2025 08:25:55 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Dxvr_DSrBo2S8EAA--.7394S3;
- Thu, 28 Aug 2025 20:25:39 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJAxT+bCSrBoy2RuAA--.14734S2;
- Thu, 28 Aug 2025 20:25:38 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PULL 0/2] loongarch-to-apply queue
-Date: Thu, 28 Aug 2025 20:02:16 +0800
-Message-Id: <20250828120218.1227427-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ureBo-0003ZZ-SZ
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 11:05:25 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ureBj-0004QP-7c
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 11:05:24 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-71d60504db9so7113167b3.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 08:05:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756393517; x=1756998317; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2zdGw5ohVi7ahJP2k23EcXeYCHD8NuEhzf19Msj/UJc=;
+ b=FXByKwF70YFqWiOHPy14ovMIaQvpJPqlooLDtW/LM8eYagDDQC2F31ZGeN6VoZCkpz
+ AqENqieB5tZpJUhoHjD9GvsIlH9tTzfTk7m6t6iijRCLGCXg8PelR176fplalnfbW2VU
+ l3P3y+B9EUeBV3W/ZZJwhbfKvjihirsTbppUYTE5hcX6BhnSatn/IeZMJPLCP6JZOU0f
+ q8JjE5UqLSf36lxxnQMiNUeX8NhRCw6Jwwya3LVjBeQtUQePHxaRIm9AsPZOS1+FN+S4
+ Ua8mJOxz8kFijsXZOtCIrFNsZmhb7PQ/b/T4bCCAr27JzVXs4JhWCO8z3+VQ1YnYr8Hz
+ 4cVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756393517; x=1756998317;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2zdGw5ohVi7ahJP2k23EcXeYCHD8NuEhzf19Msj/UJc=;
+ b=JZhRfFPwGW96HCPuQRdSgJnPOCRHtZC4Jdz/ZSXsCV+AgVGUlMfJHVW5idUADadx1j
+ Vz860ZZPEBwEh3fuQsxEyDdnGcV+ENEML+JOyAurwrRAqT67h4PGMxL3ee88I5FHYLOY
+ q9Ez17TjqaFl/0btrHpW/JL0Lazb+7kO+fc22D5qZF3iPbJb56b9ygF7p0n963ppSj0Z
+ VblTCemRoZ4ZBw+OAGcBCsQ3hQsC5YOsYFpYyUzVUSueSTedYt2YYlE11hQCRIGUITlr
+ C7QJxeZYKpn6wfGXSmy1PSXqJFpKBHaqgLzWJ32oX4pFOq6Gn/Y+EpcNE8a38R1z4Dv4
+ KB3Q==
+X-Gm-Message-State: AOJu0YwruVLkZLWDROT2WTk06raKlc8RFYvlLKBewfp7VAlRZU7YqqxD
+ QpjEsmIqfJEO8tpLOde6soQ4FzHvVSnQa3wR4OScm2XzlRcbGA2gjrW7s2EQ9WzNbqSyPBKQF4W
+ dCWT4x38w7ZLejqvM0LX/mMr1buy0nStGcT2tZlZlTQ==
+X-Gm-Gg: ASbGnctfJOS1T57qulhgbW8r6kzO4WCr5NGeBAdyLERpQBXDinwvzTTHF+C/8nj4wai
+ nsei4tqjp588HNlxSL9ClWergovkH/aiG4yv7N52WzdXiCYdZM0TLve3wlMkNHPDYuy4pEWYjkE
+ zhjxGtWszf6F+amhkps0k9sGGla6joSmJD8RFRPqfuiR47IKioDhK9jyFJpy6E7fWVCj2a5+RSz
+ Wi3yIhIMsWLFrxE2WqrjjcBDekF8g==
+X-Google-Smtp-Source: AGHT+IGMxMnBd0UDqZV8t3lKccNSVrYd8yf/yh2E7M2l1L4woWGCp2pgUghDwWGKPono2eHgVMAOpn4XpyH5mdsipP0=
+X-Received: by 2002:a05:690c:6082:b0:721:10a3:6584 with SMTP id
+ 00721157ae682-72110a36c63mr177207167b3.11.1756393516768; Thu, 28 Aug 2025
+ 08:05:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxT+bCSrBoy2RuAA--.14734S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250828120836.195358-1-richard.henderson@linaro.org>
+ <20250828120836.195358-50-richard.henderson@linaro.org>
+In-Reply-To: <20250828120836.195358-50-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 Aug 2025 16:05:05 +0100
+X-Gm-Features: Ac12FXyG_oiFCCEI2XJvxWT_k3UnV3QtW0REW7h8eLmt0lW3m4h7JkP1j4BCt2Y
+Message-ID: <CAFEAcA8DpE0HquA6QJGBXaiLCPYKUKjVFZoDL5axJJN283Lc4Q@mail.gmail.com>
+Subject: Re: [PATCH v3 49/87] linux-user/ppc: Create target_ptrace.h
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,37 +93,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ca18b336e12c8433177a3cd639c5bf757952adaa:
+On Thu, 28 Aug 2025 at 13:13, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Move the target_pt_regs structure from target_syscall.h.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  linux-user/ppc/target_ptrace.h  | 26 ++++++++++++++++++++++++++
+>  linux-user/ppc/target_syscall.h | 28 ----------------------------
+>  2 files changed, 26 insertions(+), 28 deletions(-)
+>  create mode 100644 linux-user/ppc/target_ptrace.h
 
-  Merge tag 'pull-lu-20250828' of https://gitlab.com/rth7680/qemu into staging (2025-08-28 09:24:36 +1000)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-are available in the Git repository at:
-
-  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20250828
-
-for you to fetch changes up to 86bca40402316891b8b9a920c2e3bf8cf37ba9a4:
-
-  hw/intc/loongarch_pch_pic: Fix ubsan warning and endianness issue (2025-08-28 20:06:27 +0800)
-
-----------------------------------------------------------------
-pull-loongarch-20250828
-
-----------------------------------------------------------------
-Thomas Huth (1):
-      hw/intc/loongarch_pch_pic: Fix ubsan warning and endianness issue
-
-WANG Rui (1):
-      target/loongarch: Guard 64-bit-only insn translation with TRANS64 macro
-
- hw/intc/loongarch_pch_pic.c                        | 15 ++++-----
- target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 36 +++++++++++-----------
- target/loongarch/tcg/insn_trans/trans_extra.c.inc  |  8 +++--
- target/loongarch/tcg/insn_trans/trans_farith.c.inc |  8 ++---
- target/loongarch/tcg/insn_trans/trans_fcnv.c.inc   |  4 +--
- .../loongarch/tcg/insn_trans/trans_fmemory.c.inc   | 16 +++++-----
- .../tcg/insn_trans/trans_privileged.c.inc          |  4 +--
- target/loongarch/tcg/insn_trans/trans_shift.c.inc  |  4 +--
- target/loongarch/translate.h                       |  4 +++
- 9 files changed, 54 insertions(+), 45 deletions(-)
-
+thanks
+-- PMM
 
