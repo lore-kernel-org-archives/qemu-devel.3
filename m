@@ -4,206 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDA7CA0FF2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01FF8CA0EED
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 12:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urbNU-0007tI-El; Thu, 28 Aug 2025 08:05:16 -0400
+	id 1urbMp-0007WN-TN; Thu, 28 Aug 2025 08:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1urbNS-0007rs-1y
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:05:14 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1urbMh-0007Ur-Vd; Thu, 28 Aug 2025 08:04:28 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1urbNO-0006HU-8h
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:05:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756382710; x=1787918710;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=f0JtJNCiu23D2gc1HjXQ+bNz4DLWzwSCovgup4ENt0U=;
- b=Bi7hJ33beqH+QNJYzcKnRwZ/o3kljPKSWWp2xZkungsfhyXXMIxPkXWn
- qR2LNLiU6oR4gsOQ5LppBK06GMOJWWY+YwBq04FpAWKwsL4A+NYGXZXOk
- QBsYAQv7m02qJS4NDRWqTuBzSjSTWu7tHOYDlscSrv5q6rHSS1zkeUJZ0
- cbTQIUiPGkDQA/himU+yRqESXQFoXjhGrOXdasUxTV+SAK2DiK3ZAtlkO
- mN0LjfYre4G+zaqPCLvMu7PMN9dolKawj+V9l/bRMgTHqMvvIHCLZjyph
- 2BJfafdbc4Y1C+1JQbFgyr78AmePlPsC74f/vbPyTIf0MeAu9Wq3OWymN A==;
-X-CSE-ConnectionGUID: DzOEuAj4RDiEcaRFdC7hkA==
-X-CSE-MsgGUID: 5pzPS0R5SeKViaGdlWeY3g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11535"; a="58358591"
-X-IronPort-AV: E=Sophos;i="6.18,217,1751266800"; d="scan'208";a="58358591"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Aug 2025 05:05:02 -0700
-X-CSE-ConnectionGUID: F1MLxWl8Temwr7n2NTjQ6A==
-X-CSE-MsgGUID: 83jqxBb5TKurtAjDUgGhOg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,217,1751266800"; d="scan'208";a="169997187"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Aug 2025 05:05:02 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Thu, 28 Aug 2025 05:05:01 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17 via Frontend Transport; Thu, 28 Aug 2025 05:05:01 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (40.107.244.76)
- by edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Thu, 28 Aug 2025 05:05:00 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V6kIUhvAZIPCoaCpidfmSoL/yTik/VcJjOPa8fyi4SKbEUQIVoz40uzamgZkECzKGobIG4nGINkNuxSbg5HuMkYd+ztu6Q2Mf+s/T4s26GA9LTiIG8nLswSAkJd894xWj8iKYSKL/7AlYUhQVEh/FiBbFfI3+0qyHI0NmaKm6xb9Poiu9Wk3JHs6e/LwG9e2Qa+I/UUyIGMRgaLq9RiCpMP+O/BsHo0F6L+hAWhou8Kd/H6ogiliZ8tYZ7z60YlUlsDvt25TFH0tK4Rdp7zt6ufB1gtrv65j+yDpdlZ8fg7c9wIIOT35aGH3VpJFtSETmWGswAGNqV5ZcxfeflhlDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xHdmrw/OnXFqEXIpu+pFlOETxMDV9nsiso4dXYsN2HM=;
- b=Y6mUTs4UVCgL57upUUbXA35ekXzthg7TKuG///SbhfN6oYlPIiAhv6HOk/CvubGG42h3umKTddV9yoqXSTpp2nJGsIRZjBxto78vx4/ShYgYFnHjvL09l92TZEDjeceXgoT4hCW467XP1t6n3vGEb5SwKiTeX9GkbN/TdpHJlJnCqEXUyBpBlpikeMoGtFnx1yb0mZMEtrCi3urODUIqssot8a5lL6/Ml8xqNkDDEB+gH/2ESi1scVN0Q3K2oLzAdMIuMjZ+hpXYUsK48aBlzPcU21dLwG64/le6wObyjbEpepQoGvhk/j6FJ54iWimoNVjO7LXYjdQP/oieJaiEZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from BY5PR11MB3974.namprd11.prod.outlook.com (2603:10b6:a03:183::29)
- by SJ5PPF1A7C623DA.namprd11.prod.outlook.com
- (2603:10b6:a0f:fc02::816) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.21; Thu, 28 Aug
- 2025 12:04:53 +0000
-Received: from BY5PR11MB3974.namprd11.prod.outlook.com
- ([fe80::fe0b:26f7:75b4:396]) by BY5PR11MB3974.namprd11.prod.outlook.com
- ([fe80::fe0b:26f7:75b4:396%5]) with mapi id 15.20.9073.010; Thu, 28 Aug 2025
- 12:04:53 +0000
-Message-ID: <4a03da89-512a-43c6-878d-435c1108e001@intel.com>
-Date: Thu, 28 Aug 2025 20:11:23 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 17/21] intel_iommu: Propagate PASID-based iotlb
- invalidation to host
-To: <eric.auger@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- <qemu-devel@nongnu.org>
-CC: <alex.williamson@redhat.com>, <clg@redhat.com>, <mst@redhat.com>,
- <jasowang@redhat.com>, <peterx@redhat.com>, <ddutile@redhat.com>,
- <jgg@nvidia.com>, <nicolinc@nvidia.com>, <joao.m.martins@oracle.com>,
- <clement.mathieu--drif@eviden.com>, <kevin.tian@intel.com>,
- <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>
-References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
- <20250822064101.123526-18-zhenzhong.duan@intel.com>
- <7d979fe7-95ba-4216-8cb9-05a047673e35@redhat.com>
-Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <7d979fe7-95ba-4216-8cb9-05a047673e35@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2P153CA0018.APCP153.PROD.OUTLOOK.COM (2603:1096:4:140::9)
- To BY5PR11MB3974.namprd11.prod.outlook.com
- (2603:10b6:a03:183::29)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1urbMe-00065L-UL; Thu, 28 Aug 2025 08:04:27 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57SB17IS008810;
+ Thu, 28 Aug 2025 12:04:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=iNhtsC
+ xtyXKRyGljNUYKyuUQbuXOucegUS+0eWZQnhA=; b=GtXl5VJ7WuRTqkjaYodAjA
+ qEme7nbnhWyYzg0ITrkoQIL3fwRvkj2McB3sjwU2wvF3/jzeJHI2CVJI1uZtRJVe
+ XDdGddfKUObIZpQ1zUX5rNf93r+Uq0eyYY3zb+e3eITnGvkuTSnofQQ87AZRAHCl
+ A0/YXCD0fMTDeuWiog2PWGGwDjknSf782KsZzW/k3/q/llnp22fMe3KA43Wi9ewq
+ u493dCJMciOpGyR8P/ujZbAxdZcBg06bsj03PWUG5MYaQhzeSRO628fwSeD7RCDH
+ kIviblPlyocrle8yLH3AigSUSKIMaqXaYMMHba2hE64BmlfMKxXl2zxofoW+CnqA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48tnv109sv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Aug 2025 12:04:19 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57SC0k0O005057;
+ Thu, 28 Aug 2025 12:04:18 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48tnv109ss-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Aug 2025 12:04:18 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57S9RemE029986;
+ Thu, 28 Aug 2025 12:04:17 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48qsfmvqjq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Aug 2025 12:04:17 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 57SC4DtY50004278
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 28 Aug 2025 12:04:13 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 760BB2004B;
+ Thu, 28 Aug 2025 12:04:13 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1E88420040;
+ Thu, 28 Aug 2025 12:04:11 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.109.199.210])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 28 Aug 2025 12:04:10 +0000 (GMT)
+Date: Thu, 28 Aug 2025 17:34:08 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
+ gautam@linux.ibm.com, Ganesh Goudar <ganeshgr@linux.ibm.com>
+Subject: Re: Access to remote XIVE2 units (was Re: [PATCH v9 0/7] Power11
+ support for QEMU [PowerNV])
+Message-ID: <utzcz3bpixqmviolacg7qv2f526tedqovvx6wcrl6ypk3v4v7w@nmjtwot6lhjs>
+References: <20250808115929.1073910-1-adityag@linux.ibm.com>
+ <baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com>
+ <yo6uk5z6dlq4jlk5hsaoyhymozdpo6ijpq5bz4fipkf5ftws4b@um57vsttgf65>
+ <wdkarichs5jrmpz3k4gxosw42dt6qxwodnc6t6tcuecsmxgqcd@km4q644fiixb>
+ <04eb08b6-b787-47f3-86b7-b2d3a0f50ed6@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR11MB3974:EE_|SJ5PPF1A7C623DA:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0d60973c-73b8-49ab-252a-08dde62b18bd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|366016|42112799006; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SGg2bFEzNnJMMDJJYktERnB3UHZyWm5nMEE2OU9RT0hGenlXRjlvb3ZPTUJh?=
- =?utf-8?B?YVBEdmZmbEk5S2cyNmVxWVphcHR2VklCZW9PQUhaZG9WOW9NUkRwVjJ4MnJD?=
- =?utf-8?B?RDBDazVxSTZ0RHh0d3dCVlhMWUU5M0V5bDM3enNPOGMrREQ5cEVsNUtVTWFo?=
- =?utf-8?B?b0VjaTVpQlBJZUlkSktMZDJBQ1pPZ0dhanBWQVE1RlhnUml0Y1NUcjFJSVJZ?=
- =?utf-8?B?enhWUkhzR0lkc3lmYUtoSStXVGgyTzVOT1NMU3ROTzNhYm5PN28vcXRuZUEv?=
- =?utf-8?B?dlNKcDZMdzU4dlYxRFJwR0ptNXptazd2MEQ4ZzRrejdkTzVZd1lDK3NUYVRH?=
- =?utf-8?B?Y0pzdndleSswbHY0VStseU9pRXR2MjJ0YkYvU0p1VHoya2phLzlKQUhkYlJx?=
- =?utf-8?B?WUFhTit1UGk4OWFBZHN1NC9GTUE0dEpPZXp1S1FPUzFoSVZRVlZYczNtOEg0?=
- =?utf-8?B?V3AzY3VieWVlNCthdFpBK1FFcW1KUjFOWWt1cW5BNW9XMVpPTFZqNG84YTRH?=
- =?utf-8?B?UFptdW5DdklsanFMNEI1cm4yZ3FpdHA0M3AzUGJ1ZkxPOWhJc29LQkNSdDdS?=
- =?utf-8?B?SGNMZ2FzNjh5ZVpEVGJjNkZKd25GZTJsWmcxcEhmWWx4c3liTUhkVFZuRjkw?=
- =?utf-8?B?MjZoQmdGYU8rbE45NTlyR0diSTY5d3hiYkR0d0JHNGd6M1JJcTlHbDZFdjZI?=
- =?utf-8?B?dzJWMkRHM2l6TTM0UlNNVGxldnVwN0REai9iYjFTUER2QVhVK2JZN05iY0Nn?=
- =?utf-8?B?aCtZVTdSVjNiRWNrQzFlN1VMc3dWSG1kUHNxRTR1RnEwK1E2TitVYUlxOWpB?=
- =?utf-8?B?NmJ2M2ZpUXdqOWZlbVZzM3hKOHRraFdiU1BPSURUczNzRnhEanY5NCsza1hw?=
- =?utf-8?B?L3NmTG9HdWlJWm85dW8xYjhxWVdtMUtsd2QyMFNtemFKYXpzM3ZhcXE4cnRB?=
- =?utf-8?B?ZlNWeU9VOUN2dTNjSy9OZ2lLLy9sVXJpeFBWWXBNTCszSWVVa3JhVk5rT2ZQ?=
- =?utf-8?B?bnNFc3MrandCZDVFbWQwVk8vOE5lQU9QdEh4eE52YnZpRE9zc1BWUVRHOElu?=
- =?utf-8?B?dmJRSHRVdXJMRmc0ZGQrZnl2cUkrYWRxUG9xYXhXK1VtVTFyRVhFYTFyTzMr?=
- =?utf-8?B?Z3BWcno0WU1zUDlHMGlMRUFtdm5NQmlhSUtUbnB6NXVHRlgwc1NRUWtqTTh6?=
- =?utf-8?B?Ly9JS21qbDZMUDI3UzJGMjlsOUZ1czlPakVMM0pXT3ZyT2t3eWJQV0VFL00r?=
- =?utf-8?B?YzRiMG01VG5TVW5xOGdrSTlQM0lubGJRZ2Ftc1VzczZjTisxM3hNU0NBN0N3?=
- =?utf-8?B?NGxoMExEU2pQZ2M4ZHcybjJQT1J1b2pudG1TaXlOMTVHUGJnTGNVNjZicG9I?=
- =?utf-8?B?Snl2cWtOaFhqMytob0Z0WnkwRG1UQWJjZUFBNnpIVW16aVBUQit0RndOaVJl?=
- =?utf-8?B?SjJTb1hRdG02T1NSTkp4K3J0VWFTRXdLRkRLSm53RjZUZUJHaU54KzJ3WTl0?=
- =?utf-8?B?VzdmVC9aZzZ2NmN0TGhrQklFdVJYd1V6T2pQVWhxRHNjYjdIYUVLM0pZSlI5?=
- =?utf-8?B?NlJydk1LRlpnZUx6WTllTmEzSk9jc3RUWktRZHpnN2RzMVhYUDZ3SVh5VEdn?=
- =?utf-8?B?N0hEOGFnamVGSUY0dFY3NUtnQ05QcVdMS1dJN2huZjJ4eENiRXNkSVFQU05Q?=
- =?utf-8?B?MHJoZWZoQzcvR3UyQlhwQUFqTFZQS2VjTTEyRmJIT2t2ZE9HYndPKzBwanBE?=
- =?utf-8?B?YUJmRkllc0xJWWJsUXNLcXFMWVhDZW5lQWg4MGtGNS8vMmZWK09lZHlsRisw?=
- =?utf-8?B?MzFnUUNRVU5lTzZ5YllEN3RMR1o2TVpCbStMa3czWVR3OGg3R1ZvT3RqTkhz?=
- =?utf-8?B?Ty95b21sU3RjQVNWNFlKUnJSVGVSdktKaE92Q29lR2NxYlM3b3RwSXpobU5K?=
- =?utf-8?Q?A8VlG5IvDTs=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY5PR11MB3974.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016)(42112799006); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Mm5nSWZ6OUFzSnV1d0hGemxvRDlTRmtvakxvQWluNVNkQXJXViszSmdNSlVE?=
- =?utf-8?B?UEgwQVBTT0hoYVEySWk3c1ZkVXE1amR5TU1helhpZ29LeGdERmkxWFBwTkdx?=
- =?utf-8?B?Y0FWZVA4dWFRV0EzSWJGMWhZcVhRRzBDdEM2Umk2V0d4bFJ4YnpyMDhzZkl1?=
- =?utf-8?B?dkRobXAyZjlpQmZIYnFiRmNjQUlLdEtCbkNDWnQ5bnBFSXcrcTBXTjN0WnJu?=
- =?utf-8?B?WVV3cnc1bTZjQXM0dmlNeUxBNzR0REJUeGc5eElmRFN3aitpdDUxVTRnckVP?=
- =?utf-8?B?SHFmZ2kvcndZMHltY3RxU09UWHJyZVRFSDVYV0Ftci9kdG1lMEt5UWQrSnBq?=
- =?utf-8?B?NEZhdk1XMUlUOFRaTnV6TXZSbHNhSkg5UG0zbmdXcit6cVQ4M0NybnA2czBW?=
- =?utf-8?B?Qy9tOHdWM3AxQk9MSUU1bVovc2cvdXRxdkV1QUFGT1Vvc05tUHF1OWJjUEFa?=
- =?utf-8?B?cEZKbUgwanJmQ1Rzd0xSakRZQVJ6eWdaMVlDNytPblE4dyt4cXBXbnNRNUt0?=
- =?utf-8?B?Z3k0MFp2aWJhOGorU2M3RnczZEVDSGRTQUE0dTIyTlVyY3lXNTRKMmQ1UG5x?=
- =?utf-8?B?UW9YcTNNY2t0MDF0Sld6WEZwUEtkWGRDbDBobDkyYy94WTN3RkVGZ0V6dEJO?=
- =?utf-8?B?ckF6eE5yWnNncEhodHBXeVU2eC8rV2J2MmIzSTd6U0hwS3puQUVpR1NBUjdW?=
- =?utf-8?B?VDhEbnpKWUdldnZFaUhRZ2UreXN3eFFURDVZUWtmQ0VybFdaUGtuaGxNOCtl?=
- =?utf-8?B?SVFBaFVGMkxvaEVzV0t5OVAvdnRURXBMYWsvZ1dOVndCaXpkZ2QxaktJN1I2?=
- =?utf-8?B?dHJvMjZwOFNCUzlGWFZyTnNqdWs4Vlp6eDc1RlhBWEVhZk5ZaVBLYS82NDMy?=
- =?utf-8?B?UjhqVUIyL2RDNmFmTUROb2d3UzhLczh0WWRFN0NuZUc2dHZKT1hDRnlBRmdr?=
- =?utf-8?B?MmdKc2lBNU8rdkh0aUVJRW1MbEJzR3BiaGlzOXJpT1RKZ2QrOWhsMjJqWEY0?=
- =?utf-8?B?NzJoeFVQNkt0TU8zb2JUVkFvb0RtWU9tWmxKZWgveXB3SjZBczdLYWdNVkNX?=
- =?utf-8?B?NGZuUnhPc3FLRDNNNVN4RkJmbE5BVjNhQVphaTJDckN6c3gwanpRVWM5ZU5i?=
- =?utf-8?B?bjAxOG1hcWpVUTZUNW96RmYrUkpDMHJtK2RTNVM1eVdON3YvNEJQODhqSWZZ?=
- =?utf-8?B?Mm1TaWlUOEE5a2MrVWJxMnhaRDdlUUZzelMxVHJDTHN3TjNzVkpLdmRhR0tz?=
- =?utf-8?B?Vms2dWJwQ1BaTG43cTZidVhyeTEwSTl2NW5aUjEvU29QVVFoRkNmRitCNzV6?=
- =?utf-8?B?SStndFhXejY4cFA1di9KTWFuWVlGYjFNOWNNRUExSHR4cG9PY2ZIZGdrajI1?=
- =?utf-8?B?cmJFRGlsc2NKSWtxNjl5WWxXUTAzekR1bUEveUVydUZ0cnhKZ0tIRE1NY3pI?=
- =?utf-8?B?RTkxMXRrK2xhekxHLzNhdE9iQTI2ZTFFeU4yM3VXT3dmZktDT28rRW85Q0FV?=
- =?utf-8?B?Z0hHcEdBdDNKWVIzb2UxdDBSUDJkZnY1N3RMK2FIYTlubTIyejJnSzExdjk4?=
- =?utf-8?B?cGpGNEF4c2hkR0lmTlZOVjNsemVmRkhQNlVtS25pdXQyZEczUjN0VWE1THZh?=
- =?utf-8?B?UmtPWjVVRTUrU09KV01pMDg4eStJc21hUldqVW1mQ25WYlc5OEFhMG9kall6?=
- =?utf-8?B?QVFqRkl5TTFQamxtRE5VejZWdWtTN2VWb3B0dzVrcHV6aDA4aDJEdkdpOUxV?=
- =?utf-8?B?UlordWVRME95WEV5aStMbFFubUU3SU1DRTBHeUtta0VwdUpTTmU4enhwVFVB?=
- =?utf-8?B?Yng1Rk9aQzVpQUxsbFVvQytmL0Z2dFQ3Q1FpdmlWSm5td0N5QTdrampZTWdJ?=
- =?utf-8?B?YVloYWl3QmxLdEZiVmdwRGhIY3VROWFDckNUT2QyYXQ0eER1TzBrSzdvWkVK?=
- =?utf-8?B?akFJTlFhN0wxaWVWWnZkNzBiYmU5UUlobktsRnJHZnVXRVNaYzFnL2VYbXNG?=
- =?utf-8?B?NWo5Nkt1dGp4bjV6dGo1U1duV2NGOEExNUw5cFBSSEtYWUNXTXJMajdNUUVx?=
- =?utf-8?B?ZlhjSG1INVY4RkUxWjFhdjh0UlBOUDFXRlFab0pjemV5bmY5Mk1qNEM1NXc4?=
- =?utf-8?Q?dZLumek97/As0J7U8uazopIJR?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0d60973c-73b8-49ab-252a-08dde62b18bd
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR11MB3974.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 12:04:53.2498 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HFDDMzD0uVQC28YNJxh5iloO3+o0YdGSZucGs9p8iDlL4RyqkPv4/lkmrpShyai2ld/U0EWz+KQnP/1jF8gd1A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF1A7C623DA
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <04eb08b6-b787-47f3-86b7-b2d3a0f50ed6@redhat.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: EHeRsOlc8f7KmjaoZt4Sf4Gt7Gk-6Wgo
+X-Authority-Analysis: v=2.4 cv=KMhaDEFo c=1 sm=1 tr=0 ts=68b045c3 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=gTffBqDDbQl0XjqN62EA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI4MDA5MCBTYWx0ZWRfX9U0ky2jgUkHF
+ omkY44bcvYHWfvsiogjvfXII4bW1fx5eQ4EKj7Gg+CqLGPH9G6MQvJw4mx9XGMcLmuJo5XHtwE5
+ uJK64KpahuuIJ4v9sh3ZZBx7x2EMmhfW+W5V+SK3Hc1gz1lYUeJ6W5Lnn1WliVdhO4oGfIXDMmM
+ 75hMK2jXVeSI3nzpxjAliYNM2OQ5Vk1qD92BbxHNRRJuvPgGcJTSBTYJLzfUbG5SOB+Dccq5b/e
+ GpNLS11l6vyDf/Y06axBR5EzFitJAloZW9aNlwp4h0b+XALrXnn3LcLc9tBKgZ9gb7hC+k08LuL
+ x/7xC6xWuwETb72womts2vg8Fd2NdhkFMPxT/ywYJeoXB7SRwWJicvj/2BYC/uapLZKKXHnyREP
+ nuMqkg+z
+X-Proofpoint-GUID: -vM6pu0dRGv9xt7bzd5xy2OsHLemYOx3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-28_03,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501
+ adultscore=0 malwarescore=0 suspectscore=0 bulkscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508280090
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -219,72 +135,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/8/28 18:00, Eric Auger wrote:
-> 
-> 
-> On 8/22/25 8:40 AM, Zhenzhong Duan wrote:
->> From: Yi Liu <yi.l.liu@intel.com>
->>
->> This traps the guest PASID-based iotlb invalidation request and propagate it
->> to host.
->>
->> Intel VT-d 3.0 supports nested translation in PASID granularity. Guest SVA
->> support could be implemented by configuring nested translation on specific
->> pasid. This is also known as dual stage DMA translation.
->>
->> Under such configuration, guest owns the GVA->GPA translation which is
->> configured as stage-1 page table on host side for a specific pasid, and host
->> owns GPA->HPA translation. As guest owns stage-1 translation table, piotlb
->> invalidation should be propagated to host since host IOMMU will cache first
->> level page table related mappings during DMA address translation.
->>
->> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
->> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
->> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->> ---
->>   hw/i386/intel_iommu_internal.h |  6 +++
->>   hw/i386/intel_iommu.c          | 95 +++++++++++++++++++++++++++++++++-
->>   2 files changed, 99 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
->> index 8af1004888..c1a9263651 100644
->> --- a/hw/i386/intel_iommu_internal.h
->> +++ b/hw/i386/intel_iommu_internal.h
->> @@ -596,6 +596,12 @@ typedef struct VTDPASIDCacheInfo {
->>       uint16_t devfn;
->>   } VTDPASIDCacheInfo;
->>   
->> +typedef struct VTDPIOTLBInvInfo {
->> +    uint16_t domain_id;
->> +    uint32_t pasid;
->> +    struct iommu_hwpt_vtd_s1_invalidate *inv_data;
->> +} VTDPIOTLBInvInfo;
->> +
->>   /* PASID Table Related Definitions */
->>   #define VTD_PASID_DIR_BASE_ADDR_MASK  (~0xfffULL)
->>   #define VTD_PASID_TABLE_BASE_ADDR_MASK (~0xfffULL)
->> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->> index 6c0e502d1c..7efa22f4ec 100644
->> --- a/hw/i386/intel_iommu.c
->> +++ b/hw/i386/intel_iommu.c
->> @@ -2611,12 +2611,99 @@ static int vtd_bind_guest_pasid(VTDAddressSpace *vtd_as, VTDPASIDOp op,
->>   
->>       return ret;
->>   }
->> +
->> +static void
->> +vtd_invalidate_piotlb_locked(VTDAddressSpace *vtd_as,
->> +                             struct iommu_hwpt_vtd_s1_invalidate *cache)
->> +{
->> +    IntelIOMMUState *s = vtd_as->iommu_state;
->> +    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(s, vtd_as);
->> +    HostIOMMUDeviceIOMMUFD *idev;
->> +    uint32_t entry_num = 1; /* Only implement one request for simplicity */
-> can you remind me what it is used for. What 1?
++ Ganesh
 
-the iommufd cache invalidation interface supports passing an array
-of invalidation requests. For simplicity, we start with 1.
+On 25/08/10 02:46PM, Cédric Le Goater wrote:
+> + Glenn
+> + Gautam
+> 
+> On 8/10/25 12:45, Aditya Gupta wrote:
+> > On 25/08/10 12:26PM, Aditya Gupta wrote:
+> > > > <...snip...>
+> > > 
+> > > About the error, seems xive2 always expecting powernv10 chip, I will
+> > > have to rethink how should I use the same xive2 for powernv11.
+> > > 
+> > 
+> > There's a type cast to Pnv10Chip in 'pnv_xive2_get_remote'.
+> > The cast is only temporarily used to get the 'PnvXive2' object in the
+> > Pnv10Chip.
+> > It's the only place in hw/intc/pnv_xive2.c assuming Pnv10Chip object.
+> > 
+> > Thinking to have a helper function to just return the 'PnvXive2' object
+> > inside the chip, given a 'PnvChip'.
+> > 
+> > Or the below change where we are adding another pointer in PnvChipClass:
+> > 
+> >      diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+> >      index e019cad5c14c..9832be5fd297 100644
+> >      --- a/hw/intc/pnv_xive2.c
+> >      +++ b/hw/intc/pnv_xive2.c
+> >      @@ -110,8 +110,8 @@ static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
+> >           int i;
+> >           for (i = 0; i < pnv->num_chips; i++) {
+> >      -        Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
+> >      -        PnvXive2 *xive = &chip10->xive;
+> >      +        PnvChipClass *k = PNV_CHIP_GET_CLASS(pnv->chips[i]);
+> >      +        PnvXive2 *xive = k->intc_get(pnv->chips[i]);
+> >               /*
+> >                * Is this the XIVE matching the forwarded VSD address is for this
+> > 
+> > Which one do you suggest ? Or should I look for another way ?
+> > 
+> > I am preferring the first way to have a helper, but both ways look hacky.
+> 
+> Any call to qdev_get_machine() in device model is at best
+> a modeling shortcut, most likely it is a hack :
+> 
+>   /*
+>    * Remote access to INT controllers. HW uses MMIOs(?). For now, a simple
+>    * scan of all the chips INT controller is good enough.
+>    */
+> 
+> So all these calls are suspicious :
+> 
+>   $ git grep qdev_get_machine hw/*/*pnv*
+>   hw/intc/pnv_xive2.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+>   hw/pci-host/pnv_phb.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+>   hw/pci-host/pnv_phb3.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+>   hw/ppc/pnv.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+>   hw/ppc/pnv.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+>   hw/ppc/pnv_chiptod.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+>   hw/ppc/pnv_chiptod.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+>   hw/ppc/pnv_lpc.c:    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> 
+> In the particular case of XIVE2, the solution is to rework
+> pnv_xive2_get_remote() like it was for P9. See b68147b7a5bf
+> ("ppc/xive: Add support for the PC MMIOs").
+> 
 
-Regards,
-Yi Liu
+Hi Cedric,
+
+While I am working with XIVE engineers to get the pnv_xive2_get_remote()
+reworked as suggested (since it's a bit more work due to multiple cases
+of indirect/direct vst, nvg/nvc types in case of XIVE2), I would like
+to propose below patch to have as an interim solution to unblock
+the PowerNV11 support patches.
+
+Please let me know if it looks good to you.
+I am planning to have this as part of the pnv11 patches.
+
+diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+index e019cad5c14c..0663baab544c 100644
+--- a/hw/intc/pnv_xive2.c
++++ b/hw/intc/pnv_xive2.c
+@@ -110,8 +110,8 @@ static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
+     int i;
+ 
+     for (i = 0; i < pnv->num_chips; i++) {
+-        Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
+-        PnvXive2 *xive = &chip10->xive;
++        PnvChipClass *k = PNV_CHIP_GET_CLASS(pnv->chips[i]);
++        PnvXive2 *xive = PNV_XIVE2(k->intc_get(pnv->chips[i]));
+ 
+         /*
+          * Is this the XIVE matching the forwarded VSD address is for this
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 673bb54c6789..907e029c51eb 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1488,6 +1488,11 @@ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+     xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
+ }
+ 
++static void *pnv_chip_power10_intc_get(PnvChip *chip)
++{
++    return &PNV10_CHIP(chip)->xive;
++}
++
+ static void pnv_chip_power11_intc_create(PnvChip *chip, PowerPCCPU *cpu,
+                                         Error **errp)
+ {
+@@ -1532,6 +1537,11 @@ static void pnv_chip_power11_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+     xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
+ }
+ 
++static void *pnv_chip_power11_intc_get(PnvChip *chip)
++{
++    return &PNV11_CHIP(chip)->xive;
++}
++
+ /*
+  * Allowed core identifiers on a POWER8 Processor Chip :
+  *
+@@ -2716,6 +2726,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, const void *data)
+     k->intc_reset = pnv_chip_power10_intc_reset;
+     k->intc_destroy = pnv_chip_power10_intc_destroy;
+     k->intc_print_info = pnv_chip_power10_intc_print_info;
++    k->intc_get = pnv_chip_power10_intc_get;
+     k->isa_create = pnv_chip_power10_isa_create;
+     k->dt_populate = pnv_chip_power10_dt_populate;
+     k->pic_print_info = pnv_chip_power10_pic_print_info;
+@@ -2749,6 +2760,7 @@ static void pnv_chip_power11_class_init(ObjectClass *klass, const void *data)
+     k->intc_reset = pnv_chip_power11_intc_reset;
+     k->intc_destroy = pnv_chip_power11_intc_destroy;
+     k->intc_print_info = pnv_chip_power11_intc_print_info;
++    k->intc_get = pnv_chip_power11_intc_get;
+     k->isa_create = pnv_chip_power11_isa_create;
+     k->dt_populate = pnv_chip_power11_dt_populate;
+     k->pic_print_info = pnv_chip_power11_pic_print_info;
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index 6bd930f8b439..a5b8c49680d3 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -170,6 +170,7 @@ struct PnvChipClass {
+     void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
+     void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
+     void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, GString *buf);
++    void* (*intc_get)(PnvChip *chip);
+     ISABus *(*isa_create)(PnvChip *chip, Error **errp);
+     void (*dt_populate)(PnvChip *chip, void *fdt);
+     void (*pic_print_info)(PnvChip *chip, GString *buf);
+
+Thanks,
+- Aditya G
+
 
