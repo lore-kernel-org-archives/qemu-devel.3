@@ -4,73 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E393CA0FF7
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C78C8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgIg-00085U-Oy; Thu, 28 Aug 2025 13:20:39 -0400
+	id 1urgD7-0003rM-Tm; Thu, 28 Aug 2025 13:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ureMr-00080h-VW
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 11:16:51 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbWp-0008If-Gf
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:56 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ureMp-0006W0-EC
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 11:16:49 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-71d60593000so7457327b3.3
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 08:16:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbWe-0008PH-Fm
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:47 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-248e3ef1641so3008355ad.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:14:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756394204; x=1756999004; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=RoIK4vikQSzkgi5qK/w5vUHuhDRQPTk1Hy0FOS0oaq4=;
- b=P/EY1J5wB8PkN6Ne/ObY8DT16C/x/0djcAawKi4pIIAn+C8vQqXfGqZYbem1LTWuhg
- jvCp0XjFl/Vz/6khvTjkaEaKZgE5qMtpxvR/03q4/FekbZ8njOPGbm7Csg7ga3iVJI2j
- PAmpI4V5tM2EEvib+c1fibqKDb0AHuKHziwtLwHrxRdctz/pfMDl99Resfd0alABPoH6
- 3XDTGvAC1uPgSg9OyFEM0BQOmB4OHXYKkrkVL3BVKLhEnPFzkHbNXC2ZVT8zZuzEyXdS
- Tclilo2vRdCvWz+r3o3lyMfLr8zPUFm9tIhnmVuxsiiHEedOwxo1l7qiWRgtnzcJGuUH
- 1x3w==
+ d=linaro.org; s=google; t=1756383283; x=1756988083; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aA1CZlBtF0AEUKR5am9ISxGmf8nS3Sm9ZoDdoUGF74o=;
+ b=vENxvKGQ3QLHGNpFmmQFG8tVyhOgZngF7rW/y05bPGgoJbY915P5Ntttgsds81E2sC
+ 1mFtBYiQsZp1z0ZA65BM6zkWLuq5Eu3aYfTcanbvEthID2tU3+Hwbrap2HEb2f7p6/B1
+ rBOlpVskSZ+kf6HHlZvCu31g/9TGn4XJuCT66Wg2VdfkhQVr9ygs8nZQLCYzaf6AErF0
+ Aq2CVMteyrK0nmJuEaUA1jeG4aj1RMVm0h0lzrKu4FDXyjJvjROvb9/26U0gTiIhcSrb
+ 6Chn32EdtouHcRnXKHLWtcZIMRoZgS3mqf+63ZpA2GfVXnNcnBFcwnwbryxY4aGvC8X7
+ ZL1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756394204; x=1756999004;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RoIK4vikQSzkgi5qK/w5vUHuhDRQPTk1Hy0FOS0oaq4=;
- b=KPHPT3xN2s2kYNKNJT0kGE04mv7SrMScsFe6GrhU7nve+1T0fmhGiCJWxOOmLLBg7r
- fbNO4GIxD/C6ah6w06O05vyU7eW5GyrClSmqU0fuJyHsQZ2Xh9zW6J+nvNbKddU9V5g/
- 3rbpAOwR21TNqbo5FfSKC0YyfM3XgVB3FQ9vkBY0lRSaKzdCYdzV+9OFjHQaV799x409
- dwCVVmpQnUi4S6r9rSLohy+DBXKugp0D05qQpR3utjj0RruHtq8wl6tpImMknaVp8kjg
- 8G4SBBIdB2RcamyJSmM4j70VJQE9o9DRD4ly33Sl0F+7Uguvi/Vgpy5cZvfspIciverl
- Almw==
-X-Gm-Message-State: AOJu0YzCoYi6A32X649cgY3DEym64faFH3XvIJDr9u1X1Io6xPXIqeMl
- sSZKMTi1kvhMbR2Eu+sKtDwrQXbqMKvbjZp6KTLdK8a500q3gBz1Ao8or4xHwrgkzRAM1shMEFg
- +YdSoOrkwMMWNYG1er7Krg7IGmjFCHoOEpJ+1UbZFIh78dUrmcpMN
-X-Gm-Gg: ASbGncvoUdjYP9iLoE5IBtqET5g0PCKEH994G9tWBHx8XotSfIwIPRFRIOHo9Y7SyEG
- XvzxWZswAptGegWIhzi99u0Rhk8hhkB1un8bmJjIYBPvEbv88uTFPqYXc3JqdvmBkqRUxLaY+A5
- kLlTBvf8ZvJ3TIwm/tSf7crl7xF6cb4FRC2JoUQ+UPn2JEeAWHRaYjxqhjm7Q45ujw6LUlBl5oG
- UqNedU46KuESSoleW4=
-X-Google-Smtp-Source: AGHT+IGwGwyBVe5uspw2lliJA8Q/Z8g1YJMDiNkwKAg18C8i7841A6yEyxr/LHz4hRYnyDW1kwSwylvwJC0lt734pcU=
-X-Received: by 2002:a05:690c:338e:b0:71f:f82d:91d2 with SMTP id
- 00721157ae682-71ff82d97e3mr223406837b3.37.1756394203667; Thu, 28 Aug 2025
- 08:16:43 -0700 (PDT)
-MIME-Version: 1.0
+ d=1e100.net; s=20230601; t=1756383283; x=1756988083;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aA1CZlBtF0AEUKR5am9ISxGmf8nS3Sm9ZoDdoUGF74o=;
+ b=nQiHNCTwIcT0a9pPPO6OcFN1YKiOEI5JQYWvZG64gA7hXHXP2pQ2F/R2hjC91z7tt3
+ zTR9Mb63ckKcRe6BfhJUeprlyLetaydTR98RGHBTEUm3/At75pjrLMxh1k8lSXh0LnmZ
+ zjGcC9yDJsRV6yYV38vFYnESXJdtLfH3/X8M3tYYgBZZXATdOS6JA90Fc2Vy2+GWuquI
+ eyc1AzhfEsdEfOY4f76A/5tF2sRR6yplwxT6PbVbTror+dXSquWN9RuNlZqy3rBvBkbF
+ GSXyB9HGSjyY+Bu9kAv5KsKeUzIZ8CpPf0GdVg6ETJt3HN31JqsnqodgJfUyx78XFcOl
+ PNLQ==
+X-Gm-Message-State: AOJu0YwqC6gFOHyLin2tMoWJhtnjQ2hbxFLGqa/HBS5mLujf0auKMNlI
+ izaOsDJjT5lgMKQbFmOPyeItBxJroqb4DX/TPj9n1qsBIjXTc5qIVx52Y5LhkTXyj+RziL2xM+h
+ iA5anXF4=
+X-Gm-Gg: ASbGncs3KHjsUqq3WzoqGzXfCQAl3b5kkI8vS4L+9DQ5C7WIAxxr3NPl91DucIToCl1
+ 8g3MZDNdU0uaDHUI/CyzK/PM14/cS2ueHc5q/QbT1+g/J1rEEvB9fzOE/oisA9RLGhkVQlJghRg
+ NFd0fyFGoi3HBn4lArJVA/MlGTKzr3BzWNoL0dO0mb95PpC9WSYud1gZ6aLm3lPATKadxh4kOrp
+ O2pVIziPcnuIyw6T99DtCv30zpCWc2iVN/hjI2nxPyg1BObRBYPJ8qGwQK+RtrD6FlIQwRSo42D
+ UyXlTNc33QJyvxRefkS2zCbCIy/0IpE/kYvfS5caPPqpQJ+bWJFKyC5AhBrNJKDKYUbB4A1Y/a/
+ BdrufQxxxRizf2lI1AGR6s5+BccWElNH9WP62
+X-Google-Smtp-Source: AGHT+IGgC8vC57Ngmy3dJwXz4EutY/+Kw4aau6VfjO7mZKgW+1I+KhCsJgjLbHiAV7olxGREVsNEkQ==
+X-Received: by 2002:a17:903:f85:b0:244:6a96:6912 with SMTP id
+ d9443c01a7336-2462ee7b50bmr300196035ad.20.1756383283058; 
+ Thu, 28 Aug 2025 05:14:43 -0700 (PDT)
+Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.14.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Aug 2025 05:14:42 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v3 65/87] linux-user: Move elf parameters to {arm,
+ aarch64}/target_elf.h
+Date: Thu, 28 Aug 2025 22:08:14 +1000
+Message-ID: <20250828120836.195358-66-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
 References: <20250828120836.195358-1-richard.henderson@linaro.org>
- <20250828120836.195358-54-richard.henderson@linaro.org>
-In-Reply-To: <20250828120836.195358-54-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Aug 2025 16:16:31 +0100
-X-Gm-Features: Ac12FXzFsYwa9zYTsVpMJ-DMhb0cI64Nq0bGHO50w6hKKaPIBnEtCk2hAYr4Gt0
-Message-ID: <CAFEAcA_Q5DO+ReKFe7nH-5QtdsdTb0Fg95mm+YrGfP3CaAJu8Q@mail.gmail.com>
-Subject: Re: [PATCH v3 53/87] linux-user/sh4: Create target_ptrace.h
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,18 +100,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 28 Aug 2025 at 13:14, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Move target_pt_regs to target_ptrace.h.
-> Convert to abi_foo types.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-
-
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/aarch64/target_elf.h |  9 +++++++++
+ linux-user/arm/target_elf.h     |  4 ++++
+ linux-user/elfload.c            | 25 -------------------------
+ 3 files changed, 13 insertions(+), 25 deletions(-)
 
-thanks
--- PMM
+diff --git a/linux-user/aarch64/target_elf.h b/linux-user/aarch64/target_elf.h
+index 9eb8bb547e..3c9fef9378 100644
+--- a/linux-user/aarch64/target_elf.h
++++ b/linux-user/aarch64/target_elf.h
+@@ -10,6 +10,9 @@
+ 
+ #include "target_ptrace.h"
+ 
++#define ELF_ARCH                EM_AARCH64
++#define ELF_CLASS               ELFCLASS64
++
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+ #define HAVE_ELF_PLATFORM       1
+@@ -23,4 +26,10 @@ typedef struct target_elf_gregset_t {
+     struct target_user_pt_regs pt;
+ } target_elf_gregset_t;
+ 
++#if TARGET_BIG_ENDIAN
++# define VDSO_HEADER            "vdso-be.c.inc"
++#else
++# define VDSO_HEADER            "vdso-le.c.inc"
++#endif
++
+ #endif
+diff --git a/linux-user/arm/target_elf.h b/linux-user/arm/target_elf.h
+index 19fdfa2f2c..d871d6d665 100644
+--- a/linux-user/arm/target_elf.h
++++ b/linux-user/arm/target_elf.h
+@@ -10,6 +10,10 @@
+ 
+ #include "target_ptrace.h"
+ 
++#define ELF_ARCH                EM_ARM
++#define ELF_CLASS               ELFCLASS32
++#define EXSTACK_DEFAULT         true
++
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+ #define HAVE_ELF_PLATFORM       1
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 73ca6c681e..838d7199a6 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -130,31 +130,6 @@ typedef abi_uint        target_gid_t;
+ #endif
+ typedef abi_int         target_pid_t;
+ 
+-#ifdef TARGET_ARM
+-
+-#ifndef TARGET_AARCH64
+-/* 32 bit ARM definitions */
+-
+-#define ELF_ARCH        EM_ARM
+-#define ELF_CLASS       ELFCLASS32
+-#define EXSTACK_DEFAULT true
+-
+-#else
+-/* 64 bit ARM definitions */
+-
+-#define ELF_ARCH        EM_AARCH64
+-#define ELF_CLASS       ELFCLASS64
+-
+-#if TARGET_BIG_ENDIAN
+-# define VDSO_HEADER  "vdso-be.c.inc"
+-#else
+-# define VDSO_HEADER  "vdso-le.c.inc"
+-#endif
+-
+-#endif /* not TARGET_AARCH64 */
+-
+-#endif /* TARGET_ARM */
+-
+ #ifdef TARGET_SPARC
+ 
+ #ifndef TARGET_SPARC64
+-- 
+2.43.0
+
 
