@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101CBCA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 11:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58279CA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 11:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urau4-0003Ly-NC; Thu, 28 Aug 2025 07:34:52 -0400
+	id 1urauH-0003Yp-AI; Thu, 28 Aug 2025 07:35:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urau1-0003IV-3n
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:49 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1urauD-0003UL-UG
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:35:02 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uratz-0005jH-CT
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:48 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-45a1b00f23eso5273055e9.0
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 04:34:46 -0700 (PDT)
+ id 1urauB-0005pr-V0
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:35:01 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3ceb830dd58so66531f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 04:34:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756380885; x=1756985685; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756380898; x=1756985698; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=we7y5/VDqLpIsOAURE4m8mL6SQ4y7Eow7HTKGCKn19g=;
- b=WdTBDHchOWnXT/9jelkThKKUGim9hTmAPesmYaoakl/cH6z644EJsVaVwYe+vbtO3V
- lQLeoqIn//h+K3MsdHSuWHAGJaKUvsv6hwXVmvQSWev7PWsNFetckMXJdfsgLsS3+MXo
- kchqqEA9qoS7UDlSXrgIUoVEYLmC1aIfx2qf4Dc+LzxZnzQ6yyYHF9HxYVCPWNM3JG+l
- HsduzyfUAqRqoPeqts0hRHybElHUxKQSwztztk2Z1dKi1XcxbdvdUuRlKPT8PhniJOsR
- KsYLVzme7Zd0d6qbxBy//HQWR0n1DZ2IRirmFpc1d5xyd1uTsQ7SCr6duBpZgEO4S+l/
- 9fmw==
+ :reply-to; bh=aFlNi84zHV+DQWq3I7X+awnNfmQLP9zzDTB0j2InexA=;
+ b=VftZQsTz8arM7vHrrrACvbYJgWh/JIt2KIsIlLsZYUsfRsXNfEbLmH6pS6mXmfc/TP
+ Xgr/n5oj9H5U+oNtab+pAPaD9RTH+KynbEUoobYuMYekPog3yYJyQ7iIZxRvtycxL0tB
+ yXEGVnO+Nm1OAAJ6njS4rrR3XqnhrNJrXLdssC8oP/oAgHsxnXOmIXaV1ppn5GPVvHGO
+ OahwWirZquxHZD/CjnHTqKOQCjBOPs92mThlNSSkgr3p3k934K1tYzQrOzpPr6LLqeq5
+ 3VQJ8o/d89NlZGzNKJmOQDi/DUM0p7a460oueUr9zn53z0yFKxQW4SUhkjdDoPuOn/zt
+ 3zyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756380885; x=1756985685;
+ d=1e100.net; s=20230601; t=1756380898; x=1756985698;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=we7y5/VDqLpIsOAURE4m8mL6SQ4y7Eow7HTKGCKn19g=;
- b=jYaYzcoR9PTol9NXDQAUErPMB+LzlSw96RitQU5rFLBB8BQ+24AdYssz/vV1PoGBLX
- HEH082hAWW2ynrdlBzpIx5UW0X+VVfdLQq0dzGb323/Vk2A/S9aUtxhtb8QfCrjA6wjI
- DlKKq0qBf6gOYnFzCTFdBs2TXT7Y1NhbqTnP3RPcy4GHCGddyUfdXVO5oRUsL0MJbwlk
- YJhfojI/Y2tnAuA6TWwH0HyI53VcF4aGQFa4iKUxxgql0pXVxotx2GkF4zdqkvgf7TAi
- Ur5v9UX6eaK4xjph48kaqZij9ssCLS/J3ZiID7GW49my5rDiBl/if/fqH7bAr+GMPeUV
- OWCg==
-X-Gm-Message-State: AOJu0Yys69crx9gB9zNdKwJOOBrt+VDC05oFd/i+bsVdEPTRZCjZzsCo
- +03Lxi6HRJ/PafbfD0IBJRQ0If3jWjql0a67FL+4Gf+DdiZqF8pu9+DN9qt7Q5hFvBwvUs2o5aU
- siT7m
-X-Gm-Gg: ASbGncsDkdHgpr1xUcjtk0tTwR85LwMWEljz5RiWg5WwZRqc2K12MlbFVnOpnszptaN
- j4Pxp3+LwJkK2pAaSP6JqoUU/isD7iprKyXE3bHEbeVKjOMRq0sq3A8upXWrdv1KLZvoIZF6v1A
- VF+5I7ane0Fd2DAUMvbqsBIL4vLnxey0jTaMAHiXHYIOa697zh2GsOgrFYmtTgCW7KN68MY8qHm
- thfbpaKEVUd8+lomAF1kkoVPCUawLQCpWx38UdvMYEZnSPFf+BkapE/Eev12RPh8br/9vEa9wiQ
- I6HaYEiuIjhK046K4LNJ8iISPT4ng04HG+497ZV7mXIBsquHQxCZlrrlyC0PRhf51dGkefuY64J
- rw05E98foJ59qQcckI6KLLTlabk+S
-X-Google-Smtp-Source: AGHT+IH3UimZfMWvkNi3rlnHNjGxQu6JbaJnzOZB5o1B1tltyAI1wDez5GK4H2AcFyUnocVX1Rf1mA==
-X-Received: by 2002:a05:600c:c48f:b0:459:dfa8:b854 with SMTP id
- 5b1f17b1804b1-45b5fbee605mr125589405e9.5.1756380885212; 
- Thu, 28 Aug 2025 04:34:45 -0700 (PDT)
+ bh=aFlNi84zHV+DQWq3I7X+awnNfmQLP9zzDTB0j2InexA=;
+ b=trxaAwstsq7hq6N2tAwQeVnB/1EtMG+Nlk28ipIDHN4ZB/No+D/Mpa2CWPkM4XnHrv
+ s09OC9+rIz7ReK2YJWboBio8pzVhywqzYOrSGmzfNuRtcFN25oMaKbqzxZ7Sqmof55a5
+ s0chU+0rzFm1ijXlw7iFHZE4nrm+aUyRP+ekSMvEhPkVqaYXuTnUF/dLJqBvKiiFpAoY
+ 5cw9ctkDZ/VhX/crH3hoZ/IrR0hfQzysR2D6Pgidn4AdJX6C48nUYOEmyFJ8A4DIUHGZ
+ qL3HzcRXHrEVvyETj14rkBqM1j0rX/k5qykGVAy/VxlvFZ888IUe+z2SsEPid4M7Z1xH
+ zmfg==
+X-Gm-Message-State: AOJu0Yz866gdU2hHUfY6FIeKMrzalCQiz5fWPA739ky454HaCU7TlP6s
+ d1RkGyv5s6ToEg6EfU1VoYaxL8b9KPG87BxhtnNaciLhR4wZOYgmPnepCXFNApWCcGRNGQJ6cES
+ muAoU
+X-Gm-Gg: ASbGnctbX2M7SbQxBlPJ9DtO2bsq4KsvyYfOPsm1NZ2tNe/lGRBRd6jSDHusq4mleWg
+ A9fhtc63LQ5nTDSH7rRX4p4BXEX4228ytBdalFvAYk7ItxHvj2SLvG8KhV/5MF2V2LOip6ciYh3
+ yZb0Bm+vO9bax6ysMkJqqyHKWFGcGyb6fMgPd/QAGbXj4IXDtGcZyWB9TpbO2ytHVOk1XKTKrP2
+ zuKELt2bN81zK3tzFLrdUXKKsLnOWlEAEHoqK54vZ/fbhnZ7WODI61ZgVzX/f4Yl1/VMgpkPvVm
+ 5FjZz0gZKvXYQFJC/PAyI2YnjRPDUs5WaxNElqWy2vDis3Ikm+EUXw+nTetihz5DyI23ZCjwXFv
+ O7Ea8/ZFGk5gu1zYsC8srnCaIGrbxieiSWDCSysY=
+X-Google-Smtp-Source: AGHT+IEfmyEPNcbFz4decERQggBDX/a08LH19W9Gp5h0QPxhqPxrZUdQZc/myLWPbE7i8nB79UuUVg==
+X-Received: by 2002:a05:6000:26cc:b0:3c9:83f3:bdb7 with SMTP id
+ ffacd0b85a97d-3cbb15c9df6mr7802537f8f.30.1756380898230; 
+ Thu, 28 Aug 2025 04:34:58 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b79799c33sm28691015e9.5.2025.08.28.04.34.44
+ 5b1f17b1804b1-45b79799c33sm28691015e9.5.2025.08.28.04.34.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 04:34:44 -0700 (PDT)
+ Thu, 28 Aug 2025 04:34:57 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/32] target/arm: Split out gen_wrap2_i32 helper
-Date: Thu, 28 Aug 2025 12:34:08 +0100
-Message-ID: <20250828113430.3214314-12-peter.maydell@linaro.org>
+Subject: [PULL 23/32] MAINTAINERS: Put kernel-doc under the "docs build
+ machinery" section
+Date: Thu, 28 Aug 2025 12:34:20 +0100
+Message-ID: <20250828113430.3214314-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250828113430.3214314-1-peter.maydell@linaro.org>
 References: <20250828113430.3214314-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,65 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+We never had a MAINTAINERS entry for the old kernel-doc script; add
+the files for the new Python kernel-doc under "Sphinx documentation
+configuration and build machinery", as the most appropriate
+subsection.
 
-Wrapper to extract the low 32 bits, perform an operation,
-and zero-extend back to 64 bits.
+Mauro has kindly volunteered to help with maintenance/review
+of this area of the codebase, so add him as a maintainer.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250803014019.416797-5-richard.henderson@linaro.org
-[PMM: fixed wrong output-reg argument in callsites; add comment]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Message-id: 20250814171324.1614516-9-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate-a64.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ MAINTAINERS | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index bb92bdc296a..c0fa9a44e7a 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -8231,13 +8231,22 @@ static bool gen_rr(DisasContext *s, int rd, int rn, ArithOneOp fn)
-     return true;
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8f074e43712..8147fff3523 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4441,6 +4441,7 @@ F: po/*.po
+ Sphinx documentation configuration and build machinery
+ M: John Snow <jsnow@redhat.com>
+ M: Peter Maydell <peter.maydell@linaro.org>
++M: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+ S: Maintained
+ F: docs/conf.py
+ F: docs/*/conf.py
+@@ -4449,6 +4450,8 @@ F: docs/sphinx/
+ F: docs/_templates/
+ F: docs/devel/docs.rst
+ F: docs/devel/qapi-domain.rst
++F: scripts/kernel-doc
++F: scripts/lib/kdoc/
  
-+/*
-+ * Perform 32-bit operation fn on the low half of n;
-+ * the high half of the output is zeroed.
-+ */
-+static void gen_wrap2_i32(TCGv_i64 d, TCGv_i64 n, NeonGenOneOpFn fn)
-+{
-+    TCGv_i32 t = tcg_temp_new_i32();
-+
-+    tcg_gen_extrl_i64_i32(t, n);
-+    fn(t, t);
-+    tcg_gen_extu_i32_i64(d, t);
-+}
-+
- static void gen_rbit32(TCGv_i64 tcg_rd, TCGv_i64 tcg_rn)
- {
--    TCGv_i32 t32 = tcg_temp_new_i32();
--
--    tcg_gen_extrl_i64_i32(t32, tcg_rn);
--    gen_helper_rbit(t32, t32);
--    tcg_gen_extu_i32_i64(tcg_rd, t32);
-+    gen_wrap2_i32(tcg_rd, tcg_rn, gen_helper_rbit);
- }
- 
- static void gen_rev16_xx(TCGv_i64 tcg_rd, TCGv_i64 tcg_rn, TCGv_i64 mask)
-@@ -8293,11 +8302,7 @@ static void gen_clz64(TCGv_i64 tcg_rd, TCGv_i64 tcg_rn)
- 
- static void gen_cls32(TCGv_i64 tcg_rd, TCGv_i64 tcg_rn)
- {
--    TCGv_i32 t32 = tcg_temp_new_i32();
--
--    tcg_gen_extrl_i64_i32(t32, tcg_rn);
--    tcg_gen_clrsb_i32(t32, t32);
--    tcg_gen_extu_i32_i64(tcg_rd, t32);
-+    gen_wrap2_i32(tcg_rd, tcg_rn, tcg_gen_clrsb_i32);
- }
- 
- TRANS(CLZ, gen_rr, a->rd, a->rn, a->sf ? gen_clz64 : gen_clz32)
+ Rust build system integration
+ M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 -- 
 2.43.0
 
