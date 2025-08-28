@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DF0C8303F
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF1AC8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgIh-00089Y-US; Thu, 28 Aug 2025 13:20:40 -0400
+	id 1urgFh-0001iX-2W; Thu, 28 Aug 2025 13:17:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1urdTL-0000kL-35; Thu, 28 Aug 2025 10:19:27 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1urdTE-0005se-7w; Thu, 28 Aug 2025 10:19:26 -0400
-Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 57SEICLM097958
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 28 Aug 2025 23:18:25 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=qnvNBRk/k2ji9GR/TCV7p/ZPIyvw3f4h7mAHQM6jeUk=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1756390705; v=1;
- b=jKY5colu/UHyKHD0tI50oy0BBtD12tbYfBlvM9ieVxW75UjXGP5efpOZVeibmCpn
- +OpgjTgeU41IoV0JH1mDcouNL1ND4JRLUk1Jdlwo6Xm2/yNlm6znKw7o1Meo6Olf
- DjZpwqaVFZbdopOJvq9iPhWSvDHb0XSD3Li1KVGxcqXO+wNFGPbG8cY8OPzvSdhH
- dgH4HTgml2YsQcyWY98R2I0RWrGQWbGEQ0CoyDkmrnFX0zONWOeNU14g8HJi4/Jp
- 0cCQP8A5iCKU7lTlT73/aYlZZIzbHVrMR2o2pHdafLIenkJG0tZ4ArGIj8GpHmDX
- Kul6c/9z0fT0PumAUNZ+YQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 28 Aug 2025 23:18:12 +0900
-Subject: [PATCH v9 2/2] memory: Do not create circular reference with subregion
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urdZX-0003Fz-05
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:25:53 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urdZU-0007E1-DS
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:25:50 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-31597d3b410so481348fac.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:25:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756391145; x=1756995945; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=V/LMAw9zqhgwCBkKtocn+JbHSbe3n0q/pOrLQxKbAJ8=;
+ b=dOOAVJWsXRfx6XLWhzE2kjDdhBrBZtaR5P5ttXkhEsEFWEY4qaZcNwTRJoXo6jTckM
+ CgF4Llof9K5BZ0g0+rgwxrMvYs8QM+USpOczyfHMgUNnGKF4PVSwWGAsC6oI9rG8dCbZ
+ +DKbnXpTI2PIR/pPwYixQWIZ75cQjD8yBBGpRYYAvUVAbm3DkeuXGpFtGuI1iKmUh3gb
+ 8b5aL/9bNTgbZ58//kXGJqgJInWesaaXTtgWzeDRYmC/mEv2gfwT6XRSICPvWVqy9Yvf
+ wGjvVyqt8zFQVIMMq/kd+hcSAYhxFmwEHoASYWSugdowglwRg6pUeiK9ZDB30Tfsbpzh
+ N76Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756391145; x=1756995945;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=V/LMAw9zqhgwCBkKtocn+JbHSbe3n0q/pOrLQxKbAJ8=;
+ b=O9DzDCfN64gYHZi+2aiDmLz8smvQVHrx6bMlk6YgMfLx8d3YL/HRZkLdQeWBswc2x9
+ +SPckR9Azp/l/cgZm/JGVEjLVxmbB25+oHwkAChSDjZjoQiMml9BReDo+f0lM+nuI2wk
+ kGsYZXN25YnKV3IrPxV73eXIFUraZQuZQlNkx15dQKV75DrOymWawXCVYbqjM+B6I+OM
+ 1RjBjNmQQpO9gp10C9GwX4pKAcG/ODFmSsPf3rSVA2vYTUOMhn43M8x5qTWu4kd90dD+
+ eE2eQVtp4hpEfjxcil5wJ6IlChHjICZHcOT1jKK0oBSovge77OEjXVLJD0Z2aKy4YKoC
+ dBQg==
+X-Gm-Message-State: AOJu0YxME+2Nzboenk+U/tpiVj4h4zSVTDuq6vaMLnmdXEpzv2sQUKUg
+ vPKXP+aezt8H9Lk9Z1qHa5sLrDvYDfOaKxBveLnFRePbqKwaKgT119rZPe9kIBTIK82obYnEP6X
+ Ci2kjVdQM7vKLYJHrrXycgraqqcIXrR/60m/bVPSRPFhkiDRnEdok
+X-Gm-Gg: ASbGncujP+9hjCClnal4MZMeI93rplTzg97Es8yYaQ8W286oZidSoAYTaRr55Bbat1q
+ dHqXEeN7twn9JHknCt8JDdt8iIUBqF4jsak/ljCQzYZEJ2JzxSPnH+QjdDWeNfGzZkyO9IJAGb7
+ oS1TUiYNcMzJsBTbcLZaHvEaPskqKtA+I+HNJhaOAS+PM9GBdX50SISWfCABGfcaVTkzTpU5Ff4
+ zswQD8HoSgR0hgo4HY=
+X-Google-Smtp-Source: AGHT+IF2cWhWU9JtdcIvtQITXtKKMtUAyDLi4+IvD48fUp6GdI7PtKoOu0ordRLlcMo8Sb08OfGQ+d1cHAN45WeB0cE=
+X-Received: by 2002:a05:690c:6f8e:b0:721:5b31:54cc with SMTP id
+ 00721157ae682-7215b316b46mr41331637b3.31.1756390839294; Thu, 28 Aug 2025
+ 07:20:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250828-san-v9-2-c0dff4b8a487@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250828-san-v9-0-c0dff4b8a487@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250828-san-v9-0-c0dff4b8a487@rsg.ci.i.u-tokyo.ac.jp>
-To: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250828120836.195358-1-richard.henderson@linaro.org>
+ <20250828120836.195358-8-richard.henderson@linaro.org>
+In-Reply-To: <20250828120836.195358-8-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 Aug 2025 15:20:27 +0100
+X-Gm-Features: Ac12FXwltZbc0MqciaNpuifldSpdg_UfQkKZcmEhBIVxH8IvuUWwsJujKOtj3aA
+Message-ID: <CAFEAcA89uVuH2KMecV1ri-6km5imBFZeVtNqo4fc31ew0+6H+g@mail.gmail.com>
+Subject: Re: [PATCH v3 07/87] linux-user/mips: Convert target_elf_gregset_t to
+ a struct
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=peter.maydell@linaro.org; helo=mail-oa1-x32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,111 +94,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-memory_region_update_container_subregions() used to call
-memory_region_ref(), which creates a reference to the owner of the
-subregion, on behalf of the owner of the container. This results in a
-circular reference if the subregion and container have the same owner.
+On Thu, 28 Aug 2025 at 13:09, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> While we're at it, merge the store of TARGET_EF_R0 into the
+> loop over all R0 registers.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-memory_region_ref() creates a reference to the owner instead of the
-memory region to match the lifetime of the owner and memory region. We
-do not need such a hack if the subregion and container have the same
-owner because the owner will be alive as long as the container is.
-Therefore, create a reference to the subregion itself instead ot its
-owner in such a case; the reference to the subregion is still necessary
-to ensure that the subregion gets finalized after the container.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- system/memory.c | 39 ++++++++++++++++++++++++++++++++-------
- 1 file changed, 32 insertions(+), 7 deletions(-)
-
-diff --git a/system/memory.c b/system/memory.c
-index 56465479406f4a264bfe13e6a2bc7d9b6565410f..1f4111fc24f5a8dda9ee8c277f68f839f5277906 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1848,6 +1848,31 @@ void memory_region_unref(MemoryRegion *mr)
-     }
- }
- 
-+static void memory_region_ref_subregion(MemoryRegion *mr,
-+                                        MemoryRegion *subregion)
-+{
-+    subregion->container = mr;
-+
-+    if (mr->owner == subregion->owner) {
-+        object_ref(OBJECT(subregion));
-+    } else {
-+        memory_region_ref(subregion);
-+    }
-+}
-+
-+static void memory_region_unref_subregion(MemoryRegion *subregion)
-+{
-+    MemoryRegion *mr = subregion->container;
-+
-+    subregion->container = NULL;
-+
-+    if (mr->owner == subregion->owner) {
-+        object_unref(OBJECT(subregion));
-+     } else {
-+        memory_region_unref(subregion);
-+     }
-+}
-+
- uint64_t memory_region_size(MemoryRegion *mr)
- {
-     if (int128_eq(mr->size, int128_2_64())) {
-@@ -2618,14 +2643,15 @@ void memory_region_del_eventfd(MemoryRegion *mr,
-     memory_region_transaction_commit();
- }
- 
--static void memory_region_update_container_subregions(MemoryRegion *subregion)
-+static void memory_region_update_container_subregions(MemoryRegion *mr,
-+                                                      MemoryRegion *subregion)
- {
--    MemoryRegion *mr = subregion->container;
-     MemoryRegion *other;
- 
-     memory_region_transaction_begin();
- 
--    memory_region_ref(subregion);
-+    memory_region_ref_subregion(mr, subregion);
-+
-     QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
-         if (subregion->priority >= other->priority) {
-             QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-@@ -2645,12 +2671,11 @@ static void memory_region_add_subregion_common(MemoryRegion *mr,
-     MemoryRegion *alias;
- 
-     assert(!subregion->container);
--    subregion->container = mr;
-     for (alias = subregion->alias; alias; alias = alias->alias) {
-         alias->mapped_via_alias++;
-     }
-     subregion->addr = offset;
--    memory_region_update_container_subregions(subregion);
-+    memory_region_update_container_subregions(mr, subregion);
- }
- 
- void memory_region_add_subregion(MemoryRegion *mr,
-@@ -2677,13 +2702,13 @@ void memory_region_del_subregion(MemoryRegion *mr,
- 
-     memory_region_transaction_begin();
-     assert(subregion->container == mr);
--    subregion->container = NULL;
-     for (alias = subregion->alias; alias; alias = alias->alias) {
-         alias->mapped_via_alias--;
-         assert(alias->mapped_via_alias >= 0);
-     }
-     QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
--    memory_region_unref(subregion);
-+    memory_region_unref_subregion(subregion);
-+
-     memory_region_update_pending |= mr->enabled && subregion->enabled;
-     memory_region_transaction_commit();
- }
-
--- 
-2.51.0
-
+thanks
+-- PMM
 
