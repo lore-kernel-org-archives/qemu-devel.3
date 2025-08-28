@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54125C8303F
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1C8CA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgIN-00071y-Fm; Thu, 28 Aug 2025 13:20:19 -0400
+	id 1urgFt-00035L-VO; Thu, 28 Aug 2025 13:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urde9-0005Dy-Ph
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:30:37 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1urbwb-0004Q7-EP
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:41:33 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urde2-0007o4-Pz
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:30:37 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-71fd1f94ad9so9135057b3.1
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:30:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1urbwZ-0006DC-KR
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:41:33 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-61c4f73cf20so1566951a12.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:41:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756391428; x=1756996228; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5hKop8A1AxZR6gYRUNJd+ddG/kwx4RbINvJrR4mJwro=;
- b=uB34fD/YRXEwpi4HCFJ1YdJey/sEgetzyyUp/FoDRZkbs+tKfRmmgLgo3wkv5E2hEK
- opWj9t8r3X5lhlzB3q4sTUuH+ubOKBCd9Uxoxk9iZi8kyNZASzUHbU415FrEY3W21oqu
- Vrmw2qV5a5pdmmCoCnCwFs/FKa0QybP9w0fNng/lC8HZNBqiVp7t1naLsNkOlmyJMlxv
- 8FZh3qzZT3VoYhTUs0+sw++o55s+lJ79+zwt7zRq/to33+LILkzWPb3DsTdN+mqLy2XV
- lDma+K3oSgRjBdK9JJqFVJlPtmX0FwzmkRJ2KFg65d5kSUp6E7Pk3le2XmV0z4xIqdzT
- OZaw==
+ d=linaro.org; s=google; t=1756384890; x=1756989690; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JMQ6mNN1qJHOswDd/UqFQ1lKqurpQQ1An6/zOUe9OOU=;
+ b=JWH7T0Ht3PF/H6sKGdwDslRHw1egXza8bHY7JBjwpaXis2H+yDClcbd6DzOOPDoVyY
+ bQZG/IPLM+WOp/tARF1TNVdeKiXfAYRTVjGLw4cR4q0lJ1eunKN+H8su3v5py6HTMtB3
+ encUx+LkZa9+X2vt6AOcOYceoaUar0gEaI/FvzpMp7ALaAnGv6ck1DFTYU6itwK/qoDM
+ 3QJpT87VP7rssbJ3GA99PHgOsnYNOO/5o1VFbUSYuduj44HeKf/hImc/npCm/fhXmZe5
+ TQNhQr6p9Fhvb7PsrBjS2h9numSFoSFw33CP8QLMebjgFGqHv+uw25J2RduPjXShy/Rh
+ E4vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756391428; x=1756996228;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5hKop8A1AxZR6gYRUNJd+ddG/kwx4RbINvJrR4mJwro=;
- b=Nm3P9tCXQyBsgLPHNfHdFK3mKPbjBbPeMkD6QPHSrVfiRE/U4Jku6X36GhoGzNIIU+
- 4Dqra5bLqb8kIm9AJP3QjjfwSbUv8NkFR0fvrUFAPk/j79qop2kWeKQrgXvdkyJRBO6s
- vmrKLumDPFzeUScxkxhEhmcBYl+UU8HkF5UY/aOa56Ij8FvFpBKttpN0Lw5AfkVDH9J0
- SRcW9vtItzjy+mQ6jnzu4DNJ2DG3VPxzR6Q/79pP2a6s8FnB5xv1EHONNkQM3WDeuOD+
- 7e/5nLAeuhXVmlan4jUFqxVzxC94qgrvhDxChkq0SAiHhhBNf6R0yz4rDG0cCISHQt0t
- 93dQ==
-X-Gm-Message-State: AOJu0YyH3rQsanb+QJKVktQkt3R4qL24BoVOhgcGLZ9GDOeiX3CeKgwA
- GpiemMRuAPbgyeIRCZISYM6cE9Ge+2x09ZVyrSkKokmEM/Ep10XZL6489u79U5Gds8q4t2nIR1d
- oU7HUu8atSr37L3qZJSpoA67wqRXQNmp409PJqvovcvTG7llbB+V8
-X-Gm-Gg: ASbGncvpyNJ0gIVsZfbYKBErhFL0MwA4jghaY1HbHd+o6gGHI0BbdxnsVAm010lH5Rf
- Pw1hMxWUv0YpUnBBFhPoxmIhANxpNiVfVvYtCZF5ybBbTeBw3yiaC3QncfNQ/L0iyD3HPTMnynT
- KPZg2slXln27jlpO4xlXwjmNz2mxvt7GfRX0MIG5LgidUQZWe4wOoMpWv+JZlNutLmPkypHwmr9
- sF7Upc/
-X-Google-Smtp-Source: AGHT+IGgXU5OTod7Xv83zPY8kU4fDlqrVSoh+LX7FZAsNGoISyaSurP1PHOabpgyXmmpTsSZaaEB4xHAPynW+S7TiPQ=
-X-Received: by 2002:a05:690c:60c5:b0:71a:183e:bfc0 with SMTP id
- 00721157ae682-71fdc2b8218mr258805907b3.9.1756391427704; Thu, 28 Aug 2025
- 07:30:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756384890; x=1756989690;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JMQ6mNN1qJHOswDd/UqFQ1lKqurpQQ1An6/zOUe9OOU=;
+ b=l7AC2EbJp30hI1eD6gGdBhkLX2A4q8eWgrIfwVCwhvL+CNeXuH1l5ncsX3w4RkB0J5
+ fula8P8bkMZXC1aKrGDUVg/jgYgPF9mpXYaqI/Bch7Wgp2T0GksaVWtF1Znybaxnv2du
+ uVdcTQz47YYQrpZ9XE8UfQ2cr1oojvxs0ZqDQzrkuJ/xxt10vII/eNcott/Kn9yVlPJi
+ aUHJl2NSAjQfISAdTaI2xyGkr95eLcCl1SRYCKT+2q6r99nj5+P//ZMAfaXwcTjFWKzk
+ nsC4iFao2+iL2sc0TVJN8vcOnIV9wX3TPfQOZswERYy4Cpu46VCCfNDAonM+cAc/Ql25
+ RDOQ==
+X-Gm-Message-State: AOJu0Yw4qjcmaE4p4vB9sRhFiuCbPMfuNzcH1v+Pr46DGyDf4B4cQ69C
+ FqChlzq/MWyOfXYzHr/KX5bPL19I5BTU+6k5I/cZV9VhcfTFpRpzI3KVqsDgtH207wLMD67gECz
+ Xm2/xLwbi0XQ1AFlqLrIPHxUGJ3Xzv2mITM6lLYiWJn3VPKaST91hHlZsOQ==
+X-Gm-Gg: ASbGnct27RZrZ7B3phUsagLMEqoqKd/Z4DX2O31OTDCnhykhN6iMmFCS1E1bTNGrHau
+ NTvflBVM35iWIMuDWnk+1FDbt6JGdn0cqgC387L5uBxRTuCmTAdFHbv8Xq63AquG7oVCYY+yT/5
+ 4O6k/vtCSuG4SN613cQY6KNvrafphjWhLWMI0fD+1gbA0SGU27YzYUQpghFbwcNdKj/3LpgW44D
+ B1WTBVAW38aZjRcr34zBw6UVjuTCw==
+X-Google-Smtp-Source: AGHT+IF3yyptflGVFifRVKc7BOGQDbOBUK+7uTMBa8kL11nVQ6QW0qWE7P9cJBIQwqUgeqgxDN6ddceRpkO5sSkbAN8=
+X-Received: by 2002:a17:906:c10f:b0:afe:e03c:2d70 with SMTP id
+ a640c23a62f3a-afee03c325dmr243322566b.16.1756384889786; Thu, 28 Aug 2025
+ 05:41:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250828120836.195358-1-richard.henderson@linaro.org>
- <20250828120836.195358-19-richard.henderson@linaro.org>
-In-Reply-To: <20250828120836.195358-19-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Aug 2025 15:30:16 +0100
-X-Gm-Features: Ac12FXx8fA3-4gt-cKL7WOtUu5inwvn81Rxmn36QrBjsOq6WX0dOgrcSAa2V1j8
-Message-ID: <CAFEAcA9_hUHrGHgixbJzBwc_0gefkLiNk9gjsE-4QoqJx2Ankw@mail.gmail.com>
-Subject: Re: [PATCH v3 18/87] linux-user: Move elf_core_copy_regs to
- arm/elfload.c
+References: <20250827010453.4059782-1-richard.henderson@linaro.org>
+ <20250827010453.4059782-16-richard.henderson@linaro.org>
+In-Reply-To: <20250827010453.4059782-16-richard.henderson@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 28 Aug 2025 15:41:03 +0300
+X-Gm-Features: Ac12FXxMSxBk14S28-wEQWcGRZlgWItJO6EZpFvGWInyvQwR6xdhl7772GVKw_0
+Message-ID: <CAAjaMXYjJsxhBY=W6J7yaG20MiAszRjrUJGWbC6=ZYDhs42EUQ@mail.gmail.com>
+Subject: Re: [PATCH 11/61] target/arm: Rename all ARMCPRegInfo from opaque to
+ ri
 To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,18 +96,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 28 Aug 2025 at 13:09, Richard Henderson
+On Wed, Aug 27, 2025 at 4:11=E2=80=AFAM Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Move elf_core_copy_regs to elfload.c.
-> Move HAVE_ELF_CORE_DUMP, ELF_NREGS, target_elf_gregset_t to target_elf.h.
-> For now, duplicate the definitions of target_elf_greg_t and tswapreg.
+> These pointers are no opaque, they have a specific type.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-thanks
--- PMM
+>  target/arm/cpregs.h | 10 +++++-----
+>  target/arm/helper.c |  6 +++---
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+> index c9506aa6d5..3344a02bd3 100644
+> --- a/target/arm/cpregs.h
+> +++ b/target/arm/cpregs.h
+> @@ -841,15 +841,15 @@ typedef struct ARMCPRegInfo ARMCPRegInfo;
+>   * Access functions for coprocessor registers. These cannot fail and
+>   * may not raise exceptions.
+>   */
+> -typedef uint64_t CPReadFn(CPUARMState *env, const ARMCPRegInfo *opaque);
+> -typedef void CPWriteFn(CPUARMState *env, const ARMCPRegInfo *opaque,
+> +typedef uint64_t CPReadFn(CPUARMState *env, const ARMCPRegInfo *ri);
+> +typedef void CPWriteFn(CPUARMState *env, const ARMCPRegInfo *ri,
+>                         uint64_t value);
+>  /* Access permission check functions for coprocessor registers. */
+>  typedef CPAccessResult CPAccessFn(CPUARMState *env,
+> -                                  const ARMCPRegInfo *opaque,
+> +                                  const ARMCPRegInfo *ri,
+>                                    bool isread);
+>  /* Hook function for register reset */
+> -typedef void CPResetFn(CPUARMState *env, const ARMCPRegInfo *opaque);
+> +typedef void CPResetFn(CPUARMState *env, const ARMCPRegInfo *ri);
+>
+>  #define CP_ANY 0xff
+>
+> @@ -1075,7 +1075,7 @@ void raw_write(CPUARMState *env, const ARMCPRegInfo=
+ *ri, uint64_t value);
+>   * CPResetFn that does nothing, for use if no reset is required even
+>   * if fieldoffset is non zero.
+>   */
+> -void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *opaque);
+> +void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *ri);
+>
+>  /*
+>   * Return true if this reginfo struct's field in the cpu state struct
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index d230f9e766..e03cbc0394 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -1067,7 +1067,7 @@ static const ARMCPRegInfo v6k_cp_reginfo[] =3D {
+>        .resetvalue =3D 0 },
+>  };
+>
+> -static void arm_gt_cntfrq_reset(CPUARMState *env, const ARMCPRegInfo *op=
+aque)
+> +static void arm_gt_cntfrq_reset(CPUARMState *env, const ARMCPRegInfo *ri=
+)
+>  {
+>      ARMCPU *cpu =3D env_archcpu(env);
+>
+> @@ -5407,7 +5407,7 @@ static const ARMCPRegInfo rndr_reginfo[] =3D {
+>        .access =3D PL0_R, .readfn =3D rndr_readfn },
+>  };
+>
+> -static void dccvap_writefn(CPUARMState *env, const ARMCPRegInfo *opaque,
+> +static void dccvap_writefn(CPUARMState *env, const ARMCPRegInfo *ri,
+>                            uint64_t value)
+>  {
+>  #ifdef CONFIG_TCG
+> @@ -7730,7 +7730,7 @@ uint64_t arm_cp_read_zero(CPUARMState *env, const A=
+RMCPRegInfo *ri)
+>      return 0;
+>  }
+>
+> -void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *opaque)
+> +void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *ri)
+>  {
+>      /* Helper coprocessor reset function for do-nothing-on-reset registe=
+rs */
+>  }
+> --
+> 2.43.0
+>
+>
 
