@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53AFC8303F
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD769C8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgGi-0004Bk-Rv; Thu, 28 Aug 2025 13:18:36 -0400
+	id 1urgHg-0005Xl-JC; Thu, 28 Aug 2025 13:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ureZV-0005lx-4J
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 11:29:53 -0400
-Received: from [2607:f8b0:4864:20::b136] (helo=mail-yx1-xb136.google.com)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbW0-0007m1-LG
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:05 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ureZK-0000NQ-JO
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 11:29:52 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-5f348748d71so598496d50.1
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 08:29:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbVx-0008FA-So
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:04 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b4c72885c8bso113254a12.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756394979; x=1756999779; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Fq/WSuZUUb7gFwdO5YuYbxD/5AbFkvBmVSaVjPtCJGA=;
- b=Yd/9GXxnQjbuEAxVU2z25WLIULpnFnyJ7Ol7OYUhm4Hy2xeUw4ZqqEAE2LJHz3Jo6I
- cGEDmH1zJPxSehonDKYo+15KRC+c4bu2P82ydmQw/UDqIkxS/Mg/BY2qaybEw1QsR8T7
- kGgwgDldPZpRuTlolL8ENbDDB+kiTJOe3WgEfu4+3ehbCP2TmNl8eXihEml+XL/Cb/XS
- bBcpKO+FAL3YPafgAhZtaRsFZqSCVgUJtkJ8ZQUBUmJxvgZZtVI9zIkkIOUh4M98I2sj
- SODMJtbXjqVb6RvSGmowAprUub5LgcF/2+3sgXEDly6rTjGUAHywLjJq8tWAmHw1tijY
- WM4w==
+ d=linaro.org; s=google; t=1756383231; x=1756988031; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UpJiF4bApuwU0krCB2cxcz2fyKtUh5H+0164pmacK1U=;
+ b=UDiL1pPULorqDWRQPAQfjUsV/FQC9Wxi64CCfRITHI6sYiiYailTm2wH1O5dWQ38E0
+ h4701zd2Uk4LWmG2dEytnXgU68HCwjeuJWgiqojHRaH/E0/WGdQ7HPeykCWB1yNSxkyM
+ 34FfyIHhU0WOJ2jdDCyoCd0WF8RA5dH1d8Q7gISrT06liqLMSqP5X8K94iaSytf3BIyI
+ /dzHQMoe+7uV9sktmBUWrpHCjFtQSvL8vESOnPvW4YzgWyx7qTVN7uYCsMDwkwryAXL+
+ OMJabvDQIzBlMTB5n0rM7FGpZGW1D8ke211Xcl+NGScVwPRC/1ySfI9TkwScG2YZLInk
+ kaUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756394979; x=1756999779;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Fq/WSuZUUb7gFwdO5YuYbxD/5AbFkvBmVSaVjPtCJGA=;
- b=bR/vOr3XdImBWKTbxNfncElUjEM8667vcEmJp58p2cK4OrnQWDBtl/+T6ZRYl5THp8
- eLcR0m3vwsdabPgRoPcIyS72MM4YWXiyXmftugW2XnTijF4DuPJj8NlmN5rP1ifXFtoV
- yPCkCvS3HAoEYKkn+Ojg7SliIGZ/D7uG2WwciVWxRptDHJ8WxaFVKXtFS0OOmda7homc
- oPxP3uXiy0aZp17pPGnqIeLM6FqOi7YXVxR+vLtIHuPNnX27PVsL+d1FO2n/vN5M8JRE
- yCnViEXIIamq2GOwYsPJ7d1/WO9mOGWtt+GWadzql13mmCoysPUF91xM8Vc1w14XLs9K
- ADOw==
-X-Gm-Message-State: AOJu0YwyfMUC/6HjcaoyeDrMmCjY4Xd8eCD2ls2nBAE7PFOUwBt4b6bx
- 09Zsha2hhO4ZF/0ojPR7kh3ym6hPC2n9RpD2kgsSJtQFr1GELI417Fq9VHqzKO33vAu773SLUdt
- uTnHdrhnj9AoG/bRVHHCYsAtAH2J0fBU3TXaRBtRzJOIs7jqxTrRs
-X-Gm-Gg: ASbGncsI5InUUSR8feN/qXxvlGU6XoN5/PNOOKvf27AZXIGmcmDeh4k1PEcwiGW+zkR
- N4tbv1nlkr8b30O6k/Or2qyhVs3SIHP/ZBUJ44yqoVsNyPbWHiXtLAO5dRk5ukNMf9x0AILOheK
- Kkzx0NBymaJxIeYm2cn6x4c4z3AH2aN8p9V8UDMK3fvOHSfZKJopfNrqOSwedja5sN63bbdrD5T
- qWB3yzDpMrHolrNJgs=
-X-Google-Smtp-Source: AGHT+IGr4DQHEH/SXKJKTWs51SZtbHQCv0QQn7HPv8oEh0O2XCNQhmqe3vqU4GLDf7FYsWwwZQrt9MYBf8U1IPmmITI=
-X-Received: by 2002:a05:690c:f90:b0:721:80a:abce with SMTP id
- 00721157ae682-721080ab0eamr179043137b3.9.1756394979202; Thu, 28 Aug 2025
- 08:29:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756383231; x=1756988031;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UpJiF4bApuwU0krCB2cxcz2fyKtUh5H+0164pmacK1U=;
+ b=XuXj+bGnhUwFQE2RMDJ3QK97YXWXhbsESDB0LL29Ph+oCyvt5nsMau81l55iKXHvsh
+ wMg3Khf5q8VNLe9X5voyYDb6EcN6XndOdxcSpQ0ehPAD+kvIqjWsjZEon0zQIr51QT0D
+ qPvz05KpN9SJUGPtSorv9zQDIx+0HFx9ec95wHmLk2A4XcuxXZaGf9IuS08OjQSPID8j
+ NE3Xim2YYRR/0PwlzQ0SgN0ej87g4KRE9yxdo9Sh77CNBZAJhhRdML7IW37jaj6dFRcs
+ IVCVdZlc42/JDM1n4I1PIjmKx2mEbvNauqEAtmggSeLIxuMLD7ZJ6iiUIZm4hUXbhXy0
+ N0pw==
+X-Gm-Message-State: AOJu0YwFHGpl7lY2ZD/N632w0dGzTH2uT3kqVkqBV1vjM5s3eW/RWdYQ
+ 7HDSyjzSTGiSLsEfE6juK3wGu+YBqstiamTEP88bnNeulgbVH70hfNv1fVo4v02jklh7KpCIdnd
+ 8uhATCts=
+X-Gm-Gg: ASbGncsy3XrougUIEnPORmPUd3jcNgBHHh+TZ++XLYIrk8mLNvyJku3vOZmMtZCDM9K
+ 2b7X63coAwtOsVosc31IVQghGWsYSn/E6YsTxxPf6Y1q2VjBkNKG+iqae2e3xzwemABTojwTDtN
+ /tY+Q8ZrPCBTTpGmLarv9fG7Rhn48z/jgzWlXvGe6u49yhKoUtlD2WpqlVRJOta0E75wAGG4pZL
+ p7iUOEa8W2LSrSW4JDRmkYr8n5FSPds8JcymT8gZm+PmXI1MOLp88dPITdnldQtCZXNwGS73yvy
+ w8+4JaneflAYalo4t/82R9TEcRIcbI/Zfa/VMdh0JnPt5dVxF1jJpEHD9bHrxUzier/eYKxD0U0
+ uDDNUaU1OTToqFTgZTJ3V44apnQ==
+X-Google-Smtp-Source: AGHT+IEMxegY0hn9Oy3HqE6vjQHAGIV2jYK19qBrO9540TQNVM2zdTUVYE3o6Nqh/DViV4C923TPeA==
+X-Received: by 2002:a17:903:2290:b0:248:95cd:5268 with SMTP id
+ d9443c01a7336-24895cd5bb4mr94760715ad.46.1756383230773; 
+ Thu, 28 Aug 2025 05:13:50 -0700 (PDT)
+Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.13.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Aug 2025 05:13:50 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v3 48/87] linux-user/openrisc: Expand target_elf_gregset_t
+Date: Thu, 28 Aug 2025 22:07:57 +1000
+Message-ID: <20250828120836.195358-49-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
+References: <20250828120836.195358-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250827053822.4094239-1-richard.henderson@linaro.org>
- <20250827053822.4094239-3-richard.henderson@linaro.org>
-In-Reply-To: <20250827053822.4094239-3-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Aug 2025 16:29:27 +0100
-X-Gm-Features: Ac12FXxbwKwc5m__sSBg12OrG3OXgWLs_FYHFeDnVFpJ7bLf3hCM-oMvuqsK-A0
-Message-ID: <CAFEAcA_z2k0ZM-dupWYhhUHSTPTAks3JmvQvr-RO1vzg5nvGWA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/core: Use qemu_log_trylock/unlock in
- cpu_common_reset_exit
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 2607:f8b0:4864:20::b136
- (failed)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RDNS_NONE=0.793,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,42 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 27 Aug 2025 at 06:39, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Ensure that the "CPU Reset" message won't be separated
-> from the cpu_dump_state output.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  hw/core/cpu-common.c | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-> index 26321be785..259cf2a3c3 100644
-> --- a/hw/core/cpu-common.c
-> +++ b/hw/core/cpu-common.c
-> @@ -135,10 +135,15 @@ static void cpu_common_reset_hold(Object *obj, ResetType type)
->  static void cpu_common_reset_exit(Object *obj, ResetType type)
->  {
->      if (qemu_loglevel_mask(CPU_LOG_RESET)) {
-> -        CPUState *cpu = CPU(obj);
-> +        FILE *f = qemu_log_trylock();
->
-> -        qemu_log("CPU Reset (CPU %d)\n", cpu->cpu_index);
-> -        log_cpu_state(cpu, cpu->cc->reset_dump_flags);
-> +        if (f) {
-> +            CPUState *cpu = CPU(obj);
-> +
-> +            fprintf(f, "CPU Reset (CPU %d)\n", cpu->cpu_index);
-> +            cpu_dump_state(cpu, f, cpu->cc->reset_dump_flags);
-> +            qemu_log_unlock(f);
-> +        }
->      }
->  }
+Make use of the fact that target_elf_gregset_t is a proper structure.
+Drop ELF_NREG, target_elf_greg_t, and tswapreg.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/openrisc/target_elf.h | 12 +++++++-----
+ linux-user/openrisc/elfload.c    |  8 +++-----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-thanks
--- PMM
+diff --git a/linux-user/openrisc/target_elf.h b/linux-user/openrisc/target_elf.h
+index e97bdc11ed..ad80e4b41a 100644
+--- a/linux-user/openrisc/target_elf.h
++++ b/linux-user/openrisc/target_elf.h
+@@ -8,14 +8,16 @@
+ #ifndef OPENRISC_TARGET_ELF_H
+ #define OPENRISC_TARGET_ELF_H
+ 
++#include "target_ptrace.h"
++
+ #define HAVE_ELF_CORE_DUMP      1
+ 
+-typedef abi_ulong target_elf_greg_t;
+-
+-/* See linux kernel arch/openrisc/include/asm/elf.h.  */
+-#define ELF_NREG                34 /* gprs and pc, sr */
++/*
++ * See linux kernel: arch/openrisc/include/uapi/asm/elf.h, where
++ * elf_gregset_t is mapped to struct user_regs_struct via sizeof.
++ */
+ typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
++    struct target_user_regs_struct pt;
+ } target_elf_gregset_t;
+ 
+ #endif
+diff --git a/linux-user/openrisc/elfload.c b/linux-user/openrisc/elfload.c
+index bb5ad96711..6bf02bf58d 100644
+--- a/linux-user/openrisc/elfload.c
++++ b/linux-user/openrisc/elfload.c
+@@ -11,13 +11,11 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     return "any";
+ }
+ 
+-#define tswapreg(ptr)   tswapal(ptr)
+-
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUOpenRISCState *env)
+ {
+     for (int i = 0; i < 32; i++) {
+-        r->regs[i] = tswapreg(cpu_get_gpr(env, i));
++        r->pt.gpr[i] = tswapal(cpu_get_gpr(env, i));
+     }
+-    r->regs[32] = tswapreg(env->pc);
+-    r->regs[33] = tswapreg(cpu_get_sr(env));
++    r->pt.pc = tswapal(env->pc);
++    r->pt.sr = tswapal(cpu_get_sr(env));
+ }
+-- 
+2.43.0
+
 
