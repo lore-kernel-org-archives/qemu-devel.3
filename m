@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A722C8303F
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 11:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DA5C8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 11:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uratz-0003F0-B1; Thu, 28 Aug 2025 07:34:47 -0400
+	id 1urau1-0003Ic-Eo; Thu, 28 Aug 2025 07:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uratr-0003Cz-MP
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:39 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1uratz-0003Gn-B9
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:47 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uratp-0005c9-EH
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:39 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3c854b644c1so580118f8f.3
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 04:34:36 -0700 (PDT)
+ id 1uratw-0005fp-2a
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:45 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45b7c01a708so1555895e9.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 04:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756380875; x=1756985675; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756380882; x=1756985682; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=g+Lwtf9Dc+UeK2oirT2wByiuRWQQHV3LBajiD+TT9Lo=;
- b=vuhfuTZQq83XwNSJuBG9+09UzP86FIPFCeuRumrYK7bEIXhDq+qinJQk2s9bkytuB7
- LNmeN7z11VhnD8Fo8UadpESWZxJPktWSFwIIjtLGUBOeZeUnwebz0x3WI0QGXZJRlekX
- jo3KV7UxPu9Wb2de02gxoHg3aY0sMJW3VEZAlTAM5qrH6nJq2gObFRlUYr2kWuhdkKu/
- Zf8DVdf7hNxcs91U2WOe5ODFBGqSPSuhcuOLq7EFEc3Z3+f4TCzbLbnA4pwMyT9nTJEG
- NhXvJs6t63wlLv1rN6e+3sNuzG1uAqSTOCD6Cb1pKc0NWMoVRD76ETgXFZRyXV56PbuR
- O6hA==
+ :reply-to; bh=xuy/HnGxlj+ennOmSNrgDfp/IdNzHUoZQxb6SbArPQ4=;
+ b=lIliu+sprZ63H49zSKTiB6eR/r6yxOvG1lOvMsGtvUuoA2UT7wp2VpgakLqvsoFBEY
+ UlnJwqcwDTZeRmBQfANYXeSOW3q8U3Wt6+zOBDIQhaU7KWjVdcXKe1fJ/UZD4PuT4u/O
+ 0dXOEacu23yr+e7Eb3WM7N/zzrjiG5LVsC+EzGUjQWt7DftXH9XkTAmpXsxqlh2Z8mdr
+ mNcDa4GgalP2IQkIPQOmxIY0fW/gVvkDjhJvx8JKWT4+LKqw5IFRXAcSM0m7TF3dE4/o
+ JHBGjkUO01rkp6VP71jSaEVm0yXzI+2Bd7pHV+bPTLTYBptC5cjJweoRVV/CbrkRcCs9
+ WggA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756380875; x=1756985675;
+ d=1e100.net; s=20230601; t=1756380882; x=1756985682;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=g+Lwtf9Dc+UeK2oirT2wByiuRWQQHV3LBajiD+TT9Lo=;
- b=S3heykD0woJl6UEOfVGIbFiX4GHJS1k7C68gFSxXT/YQhM66Qxl72gZuCiT4HS3ygm
- 7RWBPTpJd5Yz8hCoO+1K8RbNxHlxI7mhD/1FE8SqMRi8UbIivMziHJt7AW7yStgfMPJF
- 2MX7JYD8kAlR6Y2Dhy02tYg0d2ZPdl3NB8CYJizpPVU99fkK9zgc4hifgPzAaMNIdqRZ
- kx2ss0ikpOHdkqDs3rX2qxd47DuhlE+nnxnlV5LHOYRGpojHNrb0Y+3EV8CaH0g5Ca2X
- LGnAKzCoJdk22d+QfCG34MhjxUGl9EyukhNY3pIaFl1zRcLnxBo08fEb4YKcO3ZcEc++
- zHbw==
-X-Gm-Message-State: AOJu0YzY25+ut8TkTDb2vsU6c8nLe+NlH99l/iimJOYMxItVfYSlCC6U
- akiyE6aq9I25CxJaLH3h0bIXstJOI7rUzGUjMRxbXv0gkgujD+nqHqu8XIzQiBQ+si3kNaup8ma
- QC/7b
-X-Gm-Gg: ASbGncu00lT58DDow7QyORnKIF5mFVYmy064NH7qkkx/4VgOvFcRnG4INlqWlK2+M4L
- KmFkzgh87R1yFvS7J7C47HPHRZE8uUokx3F0FLb8If8T7E5vj9zdbLdmigLykLfnLNYixeCqKmY
- +mfUVsfUTsbHcgDAvh0qdb71Hv8spYd3gl05Y5Es3FO3bugFcCgppy/8IrL/piCb62JIlJOK6NU
- DuJBJbj2tZArJIK0LIOU8n+IVTCtDOsToEiTdlbxavpU1smdb3nRr20Y5uOBCPxxnYpXu/zCAHz
- Hngy8SKjWsqL7rq1DRAQqlrE6aAuZpfbc6d6HHEq5XEpTRWCPec3JRI8DFco49/iHRxaAdlcy+5
- b+9oB2t/2shU1XXK4N9i8wdUSfNAtDAiQUPvT7W8=
-X-Google-Smtp-Source: AGHT+IEm8Nwu7YjSNPM2yT7tmqkI82DwZY7HTuf7JD/zCCDMhHFj5jI3OGHE5Rjw2pDvhd5ICWuamg==
-X-Received: by 2002:a05:6000:647:b0:3cc:a43e:722e with SMTP id
- ffacd0b85a97d-3cca43e747cmr3304121f8f.24.1756380874983; 
- Thu, 28 Aug 2025 04:34:34 -0700 (PDT)
+ bh=xuy/HnGxlj+ennOmSNrgDfp/IdNzHUoZQxb6SbArPQ4=;
+ b=u9wcCrpoy49Uo+GJV4HJxmAzkLH4NUZE0YOMc7EOoM5drTHCsJLw0rpdowcMEQtMaP
+ 8RYl6mv7KEEAwH5RsAZCed61kO/hiix5N6mLSdaDLAncZ/wgOuhB+vElx6HZPrYg55eD
+ SM6wDpAQgHoJoq5cBCLLFHIrYL2mQjykQ5aqG2qEA2hUcrQKInSkPZh02hw8Y6krvPn/
+ 6ctrrrwEOi+TtbBglvCVJ2AkBJNTzT2s0qhaAZ5RUGe6xbjDRzn/qDBdC2YjYjAQXgmN
+ na5O/ULL7Blpm5YrJDV/YAJRVLx2X2opoKeXCGOVFjEw+J4+HbpgdTDLVbwc2YXtLugt
+ KhVA==
+X-Gm-Message-State: AOJu0YxZ+OvA8eWGQR5R5mVjnkMERaeImOP93ooTlF4u/hzN69llKgvv
+ 00LcjjM4qzrlh5nMQOx0d20xZofunGtwOSed9LMj8sg2U7NqNJkpMYuZpqouCUlRhBDKxc4gis/
+ /1ALb
+X-Gm-Gg: ASbGncvCmrT65XbaXH2q22H76COjaIaroxjAATXanEc/9kvqIgmQZgy5AH/Y4mP2N2m
+ xCQ4siBx5+RxcDXhqWsIaa1EMuhATvE34CWBf7DeRCnZNGgnmKiglV17AIU54kv5nzsBEVJcTFN
+ DrTpqwDVUp1D1mM6v4bIU25hf6j6X8iOiu4iS+qp0A+T6gmA9GWGpQKR/LMXFJraMRGBrGpLhE4
+ ZJprJHvw02j06eJpXq96OrxkOeYQHzVChj2gquEYnHhr9uObCsZXU2et2WMKZghPvidGcyNEGRk
+ U9cdZHMAIXoYefZiqUkiRGHEUuS4hYQUpeZsJmDugfN4jD+m/e0m7rSu5goIHfv8LsNOCqEnntM
+ Az+OW8tDfpbIJea4RgO4BXXr+GXzl
+X-Google-Smtp-Source: AGHT+IG3BunqCNMxuxLJOnSKpfKKFmxQHSX687x2mI50vc1GNqfJG1sZV4B+wFCoT3jnynIkc2ZshA==
+X-Received: by 2002:a05:600c:1911:b0:453:23fe:ca86 with SMTP id
+ 5b1f17b1804b1-45b5178e8a9mr194268595e9.4.1756380882283; 
+ Thu, 28 Aug 2025 04:34:42 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b79799c33sm28691015e9.5.2025.08.28.04.34.34
+ 5b1f17b1804b1-45b79799c33sm28691015e9.5.2025.08.28.04.34.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 04:34:34 -0700 (PDT)
+ Thu, 28 Aug 2025 04:34:41 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/32] tests/functional/test_aarch64_device_passthrough: update
- image
-Date: Thu, 28 Aug 2025 12:33:59 +0100
-Message-ID: <20250828113430.3214314-3-peter.maydell@linaro.org>
+Subject: [PULL 08/32] target/arm: Add feature predicate for FEAT_CSSC
+Date: Thu, 28 Aug 2025 12:34:05 +0100
+Message-ID: <20250828113430.3214314-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250828113430.3214314-1-peter.maydell@linaro.org>
 References: <20250828113430.3214314-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,79 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-TF-A needs to be patched to enable support for FEAT_TCR2 and
-FEAT_SCTLR2. This new image contains updated firmware.
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250727074202.83141-2-richard.henderson@linaro.org
-Message-ID: <20250719035838.2284029-2-pierrick.bouvier@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20250803014019.416797-2-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- .../aarch64/test_device_passthrough.py        | 27 ++++++++++---------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ target/arm/cpu-features.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/tests/functional/aarch64/test_device_passthrough.py b/tests/functional/aarch64/test_device_passthrough.py
-index 1f3f158a9ff..17437784bbe 100755
---- a/tests/functional/aarch64/test_device_passthrough.py
-+++ b/tests/functional/aarch64/test_device_passthrough.py
-@@ -9,7 +9,7 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 8ec8c3feb3d..41511d08350 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -604,6 +604,11 @@ static inline bool isar_feature_aa64_rpres(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64ISAR2, RPRES);
+ }
  
--import os
-+from os.path import join
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import exec_command, wait_for_console_pattern
-@@ -77,15 +77,16 @@
- 
- class Aarch64DevicePassthrough(QemuSystemTest):
- 
--    # https://github.com/pbo-linaro/qemu-linux-stack
-+    # https://github.com/pbo-linaro/qemu-linux-stack/tree/device_passthrough
-+    # $ ./build.sh && ./archive_artifacts.sh out.tar.xz
-     #
-     # Linux kernel is compiled with defconfig +
-     # IOMMUFD + VFIO_DEVICE_CDEV + ARM_SMMU_V3_IOMMUFD
-     # https://docs.kernel.org/driver-api/vfio.html#vfio-device-cde
-     ASSET_DEVICE_PASSTHROUGH_STACK = Asset(
--        ('https://fileserver.linaro.org/s/fx5DXxBYme8dw2G/'
--         'download/device_passthrough.tar.xz'),
--         '812750b664d61c2986f2b149939ae28cafbd60d53e9c7e4b16e97143845e196d')
-+        ('https://github.com/pbo-linaro/qemu-linux-stack/'
-+         'releases/download/build/device_passthrough-c3fb84a.tar.xz'),
-+         '15ac2b02bed0c0ea8e3e007de0bcfdaf6fd51c1ba98213f841dc7d01d6f72f04')
- 
-     # This tests the device passthrough implementation, by booting a VM
-     # supporting it with two nvme disks attached, and launching a nested VM
-@@ -96,16 +97,16 @@ def test_aarch64_device_passthrough(self):
- 
-         self.vm.set_console()
- 
--        stack_path_tar_gz = self.ASSET_DEVICE_PASSTHROUGH_STACK.fetch()
--        self.archive_extract(stack_path_tar_gz, format="tar")
-+        stack_path_tar = self.ASSET_DEVICE_PASSTHROUGH_STACK.fetch()
-+        self.archive_extract(stack_path_tar, format="tar")
- 
-         stack = self.scratch_file('out')
--        kernel = os.path.join(stack, 'Image.gz')
--        rootfs_host = os.path.join(stack, 'host.ext4')
--        disk_vfio = os.path.join(stack, 'disk_vfio')
--        disk_iommufd = os.path.join(stack, 'disk_iommufd')
--        guest_cmd = os.path.join(stack, 'guest.sh')
--        nested_guest_cmd = os.path.join(stack, 'nested_guest.sh')
-+        kernel = join(stack, 'Image.gz')
-+        rootfs_host = join(stack, 'host.ext4')
-+        disk_vfio = join(stack, 'disk_vfio')
-+        disk_iommufd = join(stack, 'disk_iommufd')
-+        guest_cmd = join(stack, 'guest.sh')
-+        nested_guest_cmd = join(stack, 'nested_guest.sh')
-         # we generate two random disks
-         with open(disk_vfio, "wb") as d: d.write(randbytes(512))
-         with open(disk_iommufd, "wb") as d: d.write(randbytes(1024))
++static inline bool isar_feature_aa64_cssc(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64ISAR2, CSSC) != 0;
++}
++
+ static inline bool isar_feature_aa64_lut(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64ISAR2, LUT);
 -- 
 2.43.0
 
