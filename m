@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A6E2CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E810CA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgBi-0002Wv-CP; Thu, 28 Aug 2025 13:13:26 -0400
+	id 1urgFr-0002pJ-Lo; Thu, 28 Aug 2025 13:17:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbXQ-0000s5-Sc
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:15:32 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urdpt-0001tK-1b
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:42:45 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbXP-0000IT-8r
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:15:32 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-24457fe9704so8996555ad.0
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:15:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urdpo-0000xd-UL
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:42:42 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-71d605a70bdso6136197b3.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756383330; x=1756988130; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nTQnacEh/bavu4Iz6YuAlqixOQk5hLWfu3s3/rNKivg=;
- b=ghFtz3V9/T4t+ZCGGdbDrFJ1niYk7j50BXM+KJ8SWmkefzKRtehCCnjMw9SxVCfWby
- thzwxKRYQHfrsZfHzZ9Urv5ibeBcWHxHvGYYyECoHgPUgU4cdfPRNexBX/PWLSm4Dnaf
- XRdc55MlCzaXsLmB5qowo0APdF/v5dvq3go8qvXhvVCqnkcB0Mt1EbCMtTNDlZ0w7y9+
- pFa3l3qFjjHUDKfHA6GEAl5+gqDbz1OOUaHsnLoMFgA8o/X02vmnE86tAVyVxvoTQljG
- q1358DtkzKqqmWqAUm60VLqgtYodXYsc5aeeJH4EcOzQC8GRTkxXJ1TwGVcYd+9exkBs
- kYAQ==
+ d=linaro.org; s=google; t=1756392157; x=1756996957; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9qWclpiN6jMwKb1GCF+UBItXxnlfbqyL6xd9BSEEJzg=;
+ b=lO3TEB6G/C1HNjo5MdSxsEj+AwuNNlOnRPkgMyHxLEacvjh/919lBUYHOfviFW4ZsE
+ zXuMbqVMhrRnXbNfRLbeD7V4J3NAQb4CL0YfzDxQxo0a74dmO7t1egFCIzOwnTEWrImr
+ FZJ8itV/vLE1DEO4Z6qvmdGQ4i0RknHoew149vINHApkLmlYCRqcfHj4SfHjEOoDTWHk
+ QbR2YT3HfbBtf0SsI/XxHyMmeV98A8QFPc0FM1NIzhpKWS8nBeQw7lSjRzunhcZlamCn
+ fZXR6QNTx0NlQFemMowMUDHRdZ9VjrT4GUDq8wn7VkT1F4uEzwMqAMp0yie5XpF1TX2C
+ ubLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756383330; x=1756988130;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nTQnacEh/bavu4Iz6YuAlqixOQk5hLWfu3s3/rNKivg=;
- b=ngJmhXHVbvKxBxJGY8hPUVCX1hurHEsDRI7bax+Z+uylOpM63FOgS1XIbaBFh4q27Y
- 8bxbazcCashdQCMWrRvXvKObOghNz/L/uByCukrufHABm2baIUfke77AfxVMvDf3l4ly
- /8uu8WKQdzPFYfxt5DnwoRypfAwVvmmf4qbN8HDOGPsC2rpYMDfNSZCisHpuZ6Jm2czv
- d3PaP6gsouiO0iphMUyCNj5x5qt+pbT3QyF/i6CJNSirCbEuFqfzOdU1UG6LVw/cRorO
- q864L2IxSgSddJbQOwutmTRFf7TmPvqamZ/73r42j3Oixyz66yI0N+CLYzMVgT2lJFc6
- /69g==
-X-Gm-Message-State: AOJu0YyWw1YE4pgrdTvZJyZM8ps3zj1msW9EteFZStD1lQd0t7KtZ0vZ
- 9wdUQzX26GVZp5mkix94kT0unfnZbbPKpgqlWp5sO8DKT7Fm2b7Xdv8BjHwDiFwLeljAW3yvsX2
- RAbRMKuI=
-X-Gm-Gg: ASbGncuTC1stYrEImG2nAzVIk8iTh1MIeTe6Pp0DhWmZxpHst15CYQEEv6KVG0XorD9
- V1E8AIBbMw3d+xiMdD/+HHkokIrePG+LTAAN8SWKhLz/+9Lqc9CnvtsMZCPuhF1yp35ppxqwEzA
- NyLa5qe6+KAi/T8v6dUt61dP2abeZFTGleKHeEcqksw7PwvysDf1tB6VRAG8Mtdeb68dF34lQaW
- 382GmqDGe6Wt7U2ycNXELUIkzSPs2Wb47y32QSNyZixgLSTCLHTpQ16P/NME3Yl6IuezaPNiv4L
- XDLmP9lYLGNKMQu6FZD49itdXQl74LUAYYpaQ7kR/W6pdDEkVd8h1qJqxEHv11S/xrNJy3AacJ8
- lumLhOJUQEnRRAl0uaUED12dH6w3GJMcf/rwlTxq/vTgJdD8=
-X-Google-Smtp-Source: AGHT+IFdnWarR19Zs7YMYKR76ewlkuZ1xQNFYikel85sg8cfVHQoTdZDsBi3Qw9x6IM58vaNNLOhcA==
-X-Received: by 2002:a17:903:19cc:b0:248:cd0b:3467 with SMTP id
- d9443c01a7336-248cd0b38bbmr42389455ad.11.1756383329761; 
- Thu, 28 Aug 2025 05:15:29 -0700 (PDT)
-Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.15.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 05:15:29 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PATCH v3 72/87] linux-user: Move elf parameters to sh4/target_elf.h
-Date: Thu, 28 Aug 2025 22:08:21 +1000
-Message-ID: <20250828120836.195358-73-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
-References: <20250828120836.195358-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756392157; x=1756996957;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9qWclpiN6jMwKb1GCF+UBItXxnlfbqyL6xd9BSEEJzg=;
+ b=US2d2gOTavcVQIW+4KVTU1mT+gM+T71zf6zdXFw+95A8KOFG2Yw1duhBYKj9W7+4D/
+ qSpb5FLIWb+6G4B6Z8biQMfdqnSIWClDOZIot9LgejK99v3Ndz7xsEmR7ELTJ5RgmC9H
+ ksh+qTHFcdScs/norP4tbfUWW6qqvdYWxxlEOlzuMbaeZzAK70NA6Y7T9zAoDY5QuHLI
+ /0iDLJzSZUo6NXDi/S7n9DcAUfzJN0Oxb7o7R8LexAf/I+kWpgXYTh8yh/wCWib+aV5j
+ p45jdMBQqbNfdStuy9qXzmv1AVskNG0+vo5S4IHt5InRP0I2rSEC8ExIfj9epv/Twmka
+ X9nw==
+X-Gm-Message-State: AOJu0YxUrM4AmCM6/RwQboVgyAgILBT2Pux5EIbSY9vJIOL1IAQIXcF1
+ sUy3QU+tWsk9zUQ4Xi4U6forg0sDEd8Mat443x6JnhqHAww2pMGfRnjI11ngfAcLSJaQ1+8s7rx
+ hGusoR/st3ihXIRWbGcJeUMpm7XwvsimQKSYoTUH23g==
+X-Gm-Gg: ASbGncsoycwMh2ieXb15Ut7LttQLAhabPPMInXfWB+elG7OpNsxhJBazO8hj7pg0EJx
+ M3pIQYV+eRizrfRDMrqupzItQdlpsxFHZRE3XS/VFeuYt4aMEW6FxRkIQa9U1VoF9UKyA0IxJNt
+ Zq4fPZ3uqmAff9gipw2q51N6tQh2FAyA6nijhG56Wb0/E8KHfWma+iXGVpojD/1uzkm2ArdzycQ
+ wYvU6bD
+X-Google-Smtp-Source: AGHT+IEo3rMkqU+jM4kKuMPCBKs2+Qai0LDOEfjpTaszgJlCp35xaHNslA9+a20EBNkRT7E6Jic4/zRJ2AzL5woue4g=
+X-Received: by 2002:a05:690c:6082:b0:721:10a3:6584 with SMTP id
+ 00721157ae682-72110a36c63mr175982417b3.11.1756392156851; Thu, 28 Aug 2025
+ 07:42:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+References: <20250828120836.195358-1-richard.henderson@linaro.org>
+ <20250828120836.195358-31-richard.henderson@linaro.org>
+In-Reply-To: <20250828120836.195358-31-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 Aug 2025 15:42:25 +0100
+X-Gm-Features: Ac12FXzb7UaFXG3TuloNSd7YQoZvIS41plSsgLMOlLnDd_183hljDBeFoag9X-c
+Message-ID: <CAFEAcA9AbA4pa9EjOnkmrGMOOC-4nS+FNqni91bfDDkH1wOAbA@mail.gmail.com>
+Subject: Re: [PATCH v3 30/87] linux-user/i386: Create target_ptrace.h
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,46 +93,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/sh4/target_elf.h | 3 +++
- linux-user/elfload.c        | 7 -------
- 2 files changed, 3 insertions(+), 7 deletions(-)
+On Thu, 28 Aug 2025 at 13:09, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Move the target_pt_regs structure from target_syscall.h.
+> Rename the bits according to user_regs_struct, which is
+> what is actually used by ELF_CORE_COPY_REGS; the layout
+> of the two structure definitions is identical.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  linux-user/i386/target_ptrace.h  | 31 +++++++++++++++++++++++++++++++
+>  linux-user/i386/target_syscall.h | 18 ------------------
+>  2 files changed, 31 insertions(+), 18 deletions(-)
+>  create mode 100644 linux-user/i386/target_ptrace.h
+>
+> diff --git a/linux-user/i386/target_ptrace.h b/linux-user/i386/target_ptrace.h
+> new file mode 100644
+> index 0000000000..51edb637af
+> --- /dev/null
+> +++ b/linux-user/i386/target_ptrace.h
+> @@ -0,0 +1,31 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#ifndef I386_TARGET_PTRACE_H
+> +#define I386_TARGET_PTRACE_H
+> +
+> +/*
+> + * Compare linux arch/x86/include/uapi/asm/ptrace.h (struct pt_regs) and
+> + * arch/x86/include/asm/user_32.h (struct user_regs_struct).
+> + * The structure layouts are identical; the user_regs_struct names are better.
+> + */
 
-diff --git a/linux-user/sh4/target_elf.h b/linux-user/sh4/target_elf.h
-index fd3ae68a01..61aea237c4 100644
---- a/linux-user/sh4/target_elf.h
-+++ b/linux-user/sh4/target_elf.h
-@@ -10,6 +10,9 @@
- 
- #include "target_ptrace.h"
- 
-+#define ELF_CLASS               ELFCLASS32
-+#define ELF_ARCH                EM_SH
-+
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_CORE_DUMP      1
- 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index d0993621c1..1a6e81394c 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -130,13 +130,6 @@ typedef abi_uint        target_gid_t;
- #endif
- typedef abi_int         target_pid_t;
- 
--#ifdef TARGET_SH4
--
--#define ELF_CLASS ELFCLASS32
--#define ELF_ARCH  EM_SH
--
--#endif
--
- #ifdef TARGET_M68K
- 
- #define ELF_CLASS       ELFCLASS32
--- 
-2.43.0
+Why do you think the user_regs_struct names are better?
+"bx" suggests a 16-bit register, but these are 32-bit, right?
 
+> +struct target_pt_regs {
+> +    abi_ulong bx;
+> +    abi_ulong cx;
+> +    abi_ulong dx;
+> +    abi_ulong si;
+> +    abi_ulong di;
+> +    abi_ulong bp;
+> +    abi_ulong ax;
+> +    abi_ulong ds;
+> +    abi_ulong es;
+> +    abi_ulong fs;
+> +    abi_ulong gs;
+> +    abi_ulong orig_ax;
+> +    abi_ulong ip;
+> +    abi_ulong cs;
+> +    abi_ulong flags;
+> +    abi_ulong sp;
+> +    abi_ulong ss;
+> +};
+> +
+> +#endif /* I386_TARGET_PTRACE_H */
+> diff --git a/linux-user/i386/target_syscall.h b/linux-user/i386/target_syscall.h
+> index aaade06b13..c214a909a6 100644
+> --- a/linux-user/i386/target_syscall.h
+> +++ b/linux-user/i386/target_syscall.h
+> @@ -5,24 +5,6 @@
+>  #define __USER_CS      (0x23)
+>  #define __USER_DS      (0x2B)
+>
+> -struct target_pt_regs {
+> -       long ebx;
+> -       long ecx;
+> -       long edx;
+> -       long esi;
+> -       long edi;
+> -       long ebp;
+> -       long eax;
+> -       int  xds;
+> -       int  xes;
+> -       long orig_eax;
+> -       long eip;
+> -       int  xcs;
+> -       long eflags;
+> -       long esp;
+> -       int  xss;
+> -};
+
+
+Commit message should say something about why we're changing
+the types (though clearly here the target-specific types are
+more sensible than the host-specific ones).
+
+-- PMM
 
