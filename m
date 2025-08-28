@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E09C1CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F246FCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usODn-000527-V6; Sat, 30 Aug 2025 12:14:32 -0400
+	id 1usO7J-0006dm-I5; Sat, 30 Aug 2025 12:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEQt-0007Jz-Fm
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:23 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkvF-0007us-Sb
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 18:16:45 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEQr-0004uS-OL
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:23 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b4c72885c8bso1656063a12.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:47:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkvB-0007gQ-Qw
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 18:16:44 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45a1b05ac1eso7802475e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 15:16:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532835; x=1757137635; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1dB1cHT1ha866F85MzBv2WZgn+PHcRylb/+Q2tL/eLA=;
- b=dCbdgZAmVUdkkBUGKbZkgyIRKLSqgnTRBE/xMZmI8sfWjSiTPt0rLLYNE+z9evTCgu
- CZSxnpge1jVEj+WjSfo7mZwQzwl6m76rB4UvzvB1ypx2pAH8COVbB5ZZ4YLeOjPHvC6v
- wWcX8+O0o1z1aeCxoBU/SYGg/vX6RkwvH5mUIQ4z7oXBxuw/KhFK+Hc/ovlZBQCFYBAV
- lArwYx1XKkzRjJfI2q0aPTaXdJSerm8ug9GEXDcnRuKG2O2cZEIcGn4pM2HtaettrTrv
- RTVtMHags14gq4e/IKB5jjojy/dOYm1TKPGtihSSh657UvTH9poRx6kkpGk+iPVr38pM
- e0LQ==
+ d=linaro.org; s=google; t=1756419399; x=1757024199; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z72tKFweJRb7XkCpknvHl5t2yNXAYpWjnXkbNnxdkPM=;
+ b=OsHA0K/7E271dGxjmFevJ5iqCtY2bM0IX/IDzTxj1Tow/ERw/1NuXHerrzYgzrbEL/
+ gsojUTicYtynJRJxPzmc6j5laZchZ2S/+z1XjlSNgXYXPXeWSuNSsIrr/wSO7SqYLyQw
+ LBy6FN7npa3z/eeK3BdSPA8Xi2DMctSKIR2fMl9X1xwQljOmYYz9gyp84hOfec0oOAWc
+ 0244jc9k1tguZrEa63n6XTQGZUxsQpL7e2fzQTHMzRWZOMO0MxKYB56SlPqVLDEIGaOL
+ t4xsLvrhMiJeojaTXUG7HrrMQAqzoryH1nkIwHDsEc8pMIq7tpnqNzxOQdr6SueU59A3
+ JU/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532835; x=1757137635;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1dB1cHT1ha866F85MzBv2WZgn+PHcRylb/+Q2tL/eLA=;
- b=bjWqw/g0hfF9o8ZiPLVdJiJoMciu55g2QzjwCqvFcEhVmIJesjp7Lam2qZVhOEEVhl
- L6wEgyT+XR8wllvn+7UlXAzfOtou5AyXcd0nBd+vaonGGNxUWhv95pHS8q+Qs1pp8tvs
- 9S7Ka0f+lxSWsreBqPWdIovs5wwig+3splv3NuKMH0ApA93wR6Rv9TA5fWXRuIYa85E3
- S0x5Bq2d+DOFwAgxembnW5W0hwrSjo+5cBPcDmU+SbDbLcUqKlIfZJGfmiyqPx0K/KHC
- VaitbKGDB57Tk9kPWC9NQAteggoUb+d2yJGLfsKejTohT8sL8w6p00o4SThm2JRaImJu
- d6jQ==
-X-Gm-Message-State: AOJu0Yxr70Pe6zIbWNCAUPAp+pikMJrzyJ1L2PyaHwGgafTzUR7njybB
- LXHT+wDAct+T03NZFEgDg/6E1gLsWagrqunFcc1srtpC2MxC8I/GQo4QAKxN/1LrSM120KAm6nj
- UUPO6wv4=
-X-Gm-Gg: ASbGncs1TD/KZIm5CChzeH3XRzuS1b5O4W+wM5szddzOkmk0E50dbxuyoWRs2D2FIzr
- voIy86lBfGhaciR/y1EIXpZ4E7bgkybT8edyhhPSMET8iJzDlt9EiA0kXrTspnH+mtC0N11Y4Z3
- 8nGF8dzSY+PS73x0hZguVI6vPxCXFuRXqdF9qiz+y4EEDLz0282o9AVbXpj13IkG6aYDl4CMPkJ
- tbSkA1fPK+eL5v7P9tG+tbvgg/47UrKkW6UPzpIkwcBNdNwmRCBSaX/p8EzjdStJE2PQ5nK/+zi
- fpYqifnskZlmDNeRvCa45MuYc9tzfMTC9R/rQyX2UqGUPz4i/v0y47bW9Pf4GYTA8fJlPAV+vCo
- lG10emsYjdWaGMHuT2u8bx3F907AHku5Bm2A1eeubFulHRF5iErGmgiOuc600yqA0JdaWZdv0PY
- 8qiXatRISB
-X-Google-Smtp-Source: AGHT+IFUF2vw3Ybp9B+8/EVZdXrvMa6WTfWSB0QJE4w35D0pCx6Eg1EUB1BVa5GNIF/lLTeJVSZuqQ==
-X-Received: by 2002:a17:902:e551:b0:240:671c:6341 with SMTP id
- d9443c01a7336-24944906d9fmr14071555ad.26.1756532834537; 
- Fri, 29 Aug 2025 22:47:14 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.47.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:47:14 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 56/84] target/arm: Emit v7m LTPSIZE exception out of line
-Date: Sat, 30 Aug 2025 15:41:00 +1000
-Message-ID: <20250830054128.448363-57-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756419399; x=1757024199;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z72tKFweJRb7XkCpknvHl5t2yNXAYpWjnXkbNnxdkPM=;
+ b=B/8cCzriCCzyNgql/LL2MgNLEWS+YBbTkqV5VnukNiaovRcwPmeNy0AtMrjNFxJxVT
+ wH2aKir3f0XGwGTYnvYCbGDD+x7RS/6kR5lcrFD3yy2Flu8uFKo4khdcdvfuPy3h7wkQ
+ 5N+Q6+hZMSEgPc6RBWwnWhhnnx5/7BDOwC8x6NzmXp4aRP/JdmAs8lbZ0frWD9Cp3lPu
+ YkcJEDy9CEyryNHqM/A879AllASLiVqe+yeXxql3XJ2YZxgfC47PPnvEparVXGHSATAA
+ xZ0FXx9dja9szDIconP2JhAzuEP8tQedGihVTdBMx6RvsMminwG8Fu8L7VGP/eOcYRj4
+ nPiw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWFNWlVvYtE6fNCiRMqA5Is0N3yDc6nFyIvM47xl1SbyH8uEajOP4bEGlZdT4UkFT6iLw9YAtTbf9kl@nongnu.org
+X-Gm-Message-State: AOJu0Yz+fXA1gMp/IuAhkewUTmUtReRis4zdW+S/wTYPSrnhsnNcVTmP
+ iX9Z54k7ckrBLZJCV/WFQ+Ra05ZQ2Op0PYUOSpvk+8vA3n7x/LC0P46F6Qtt3jPYqK0=
+X-Gm-Gg: ASbGncslYDimiOtFYeJ7LZGGUFK7K3Gqd0jGAZsZ9+6YWjTZ+iPhO00aUok8LR3tZge
+ FCv33tNpXpnJKwsCSbhmDgS7JOE9VQ89APMeQZw+yi+YYTZg1s/oH96Za1wSGwd6McOTMb+JFoj
+ gRAb2m5+IWEDu4TzfubbuNJPgSR4AUcIe1rLYfulBk9CavUNGjatrJDbBbjbbuMdIX3QfQwlI3Y
+ R9XNiKJKAMCcRz7oriSW7YD6nKTvzMOL02cpect/PTlreaNY+4ryCv7MStFbRmnWofo07jN8CRa
+ 9gT1j4/uhZQxd/8t5F5rhrAoxAlDxcjWYfmYhtuTQKAy7F+8qTwlm3xiuMQBljWW1GAf1oC2HZ9
+ jGKAaGKxE6EJ4Fmlr3DqeM/Xau4FOyAUtmo4EbJIRc381VpJFO+TKA/nXFtZGS2OXPw==
+X-Google-Smtp-Source: AGHT+IE9PHzRmrjZCiBc6JvuPWelSPwE+dERNowkWNcV6U6qGISzVTZSL6pkRQnBjVm7IciAPM8B4A==
+X-Received: by 2002:a05:600c:4f12:b0:459:dde3:1a37 with SMTP id
+ 5b1f17b1804b1-45b66343ea2mr101661815e9.25.1756419398733; 
+ Thu, 28 Aug 2025 15:16:38 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf34491a65sm778717f8f.56.2025.08.28.15.16.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Aug 2025 15:16:38 -0700 (PDT)
+Message-ID: <dd70c16b-9b46-407a-af8b-b6dcb7608def@linaro.org>
+Date: Fri, 29 Aug 2025 00:16:37 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 20/47] hw/arm/xlnx-versal: refactor CPU cluster creation
+To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Frederic Konrad <frederic.konrad@amd.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+References: <20250822151614.187856-1-luc.michel@amd.com>
+ <20250822151614.187856-21-luc.michel@amd.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250822151614.187856-21-luc.michel@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,32 +109,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+On 22/8/25 17:15, Luc Michel wrote:
+> Refactor the CPU cluster creation using the VersalMap structure. There
+> is no functional change. The clusters properties are now described in
+> the VersalMap structure. For now only the APU is converted. The RPU will
+> be taken care of by next commits.
+> 
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+> ---
+>   include/hw/arm/xlnx-versal.h |  12 +-
+>   hw/arm/xlnx-versal-virt.c    |  80 +-------
+>   hw/arm/xlnx-versal.c         | 352 ++++++++++++++++++++++++++---------
+>   3 files changed, 275 insertions(+), 169 deletions(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index f6fdfaa551..e787acfc66 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -6885,11 +6885,10 @@ static bool trans_LE(DisasContext *s, arg_LE *a)
- 
-     if (!a->tp && dc_isar_feature(aa32_mve, s) && fpu_active) {
-         /* Need to do a runtime check for LTPSIZE != 4 */
--        DisasLabel skipexc = gen_disas_label(s);
-+        TCGLabel *fail = delay_exception(s, EXCP_INVSTATE, syn_uncategorized());
-+
-         tmp = load_cpu_field(v7m.ltpsize);
--        tcg_gen_brcondi_i32(TCG_COND_EQ, tmp, 4, skipexc.label);
--        gen_exception_insn(s, 0, EXCP_INVSTATE, syn_uncategorized());
--        set_disas_label(s, skipexc);
-+        tcg_gen_brcondi_i32(TCG_COND_NE, tmp, 4, fail);
-     }
- 
-     if (a->f) {
--- 
-2.43.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
+> index b981d012558..27594f78c8f 100644
+> --- a/hw/arm/xlnx-versal-virt.c
+> +++ b/hw/arm/xlnx-versal-virt.c
+
+
+> @@ -394,20 +328,18 @@ static void versal_virt_init(MachineState *machine)
+>       fdt_create(s);
+>       versal_set_fdt(&s->soc, s->fdt);
+>       sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+>       create_virtio_regions(s);
+>   
+> -    fdt_add_gic_nodes(s);
+> -    fdt_add_timer_nodes(s);
+> -    fdt_add_cpu_nodes(s, psci_conduit);
+>       fdt_add_clk_node(s, "/old-clk125", 125000000, s->phandle.clk_125Mhz);
+>       fdt_add_clk_node(s, "/old-clk25", 25000000, s->phandle.clk_25Mhz);
+>   
+> -    /* Make the APU cpu address space visible to virtio and other
+> -     * modules unaware of multiple address-spaces.  */
+> -    memory_region_add_subregion_overlap(get_system_memory(),
+> -                                        0, &s->soc.fpd.apu.mr, 0);
+> +    /*
+> +     * Map the SoC address space onto system memory. This will allow virtio and
+> +     * other modules unaware of multiple address-spaces to work.
+> +     */
+> +    memory_region_add_subregion(get_system_memory(), 0, &s->soc.mr_ps);
+
+I was not aware of that shortcoming (Cc'ing Manos & Alex).
 
 
