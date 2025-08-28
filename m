@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B484CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C324CA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgFl-0002Lh-02; Thu, 28 Aug 2025 13:17:37 -0400
+	id 1urgIT-0007Yp-Vd; Thu, 28 Aug 2025 13:20:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urdhX-0006rY-HY
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:34:09 -0400
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urdhU-0008A9-AV
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:34:06 -0400
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e94d678e116so868956276.2
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:34:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756391641; x=1756996441; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JdW0FAikDnlYvC1ZJ5NjdjCS7rBoSnw11YgFEcbLqJ4=;
- b=kgtErnY3Gjh5DIOvm/o9/fDtRy6OpnAPso9iNspsNbwFH46OR/5xWtl6sZOTUqJukn
- l0gn8SSYeGy+LrpGniVWIHTdpti7nralkuZoTSCzxYGGWk1cf5LiWRw6ATra7Ihot6pE
- RDyiUICOtF3rn8m+cvk1+R/9v/8NHIM2J0qsv0cYKrRc+Zcs+t8mTnTfCqJelATNti5N
- 4qFKhfSVoxomfYZFhYFZmrDqIRIen1IxJ4+JfXs8+EyqMnGdnOC6RL2+IMA1KABhTA7C
- JDyr2boPi084iORj2A07lFvcNPgZ18wmdJ3uMXjQllXwcWh++ThGXBEt2ZPGGN80Bn9Q
- hdOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756391641; x=1756996441;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JdW0FAikDnlYvC1ZJ5NjdjCS7rBoSnw11YgFEcbLqJ4=;
- b=TahQvzN/ELSA3QScNfmdCJr6I774s37JvE4gJlnt6RtbQhGj9/c41iRiZP9Om8YxLW
- +vET4W6F7foSgHURWdv3U3xgnIq/l9GH94lyGOOTYuqF9A5aoCL8yZFrNKBjiWC3ADiV
- s/RER22Absj0UsSzFzr9BZguSxakI/GEba9bOZtqmHav5/8XF720M/UMuOtx0LvPE1T4
- a4a+fDhU5l1t68UkxvjSdoHOiXQBRKMsyfhZUEyC9+BQIjXzEJY9zZTSHurBQcV7E2HC
- FrhM1K9TKplHryIh/0BRj+lWP2px450ZgD+IUvacvjy7FPYxaCGj1sMRjjuJYB+D4fbJ
- h+cw==
-X-Gm-Message-State: AOJu0Ywh65bHrxBUJomyvfls97fXBIVEmpG0MaAaGZ5erdbgSZFH5R9+
- v1rKC5PfW2/EHQ7oAEy4UuMsexbpzA5jO71+LZfL4dco/U+ZKdXSI8unQrl0QMGqQgzszSKzg+F
- Xg5noYh1hU/cK/w4lxqijTe10/YxltVlRvhrT119dFTPpIH1D5+8J
-X-Gm-Gg: ASbGncthxTAx3wveqOdgKtnT9bQMzmDD3pVbRb6I5+O9URJmX/vFojQBGpAUB1k2pPi
- YtEaXrD2t9IQJnZxyBpXapsHABSrh9c7uuSJ+ytP7MIDANGbUghh4qww7GOevCKcJCk8IGwamPg
- 335onyfqYuOkdg/931dGk8l8FdHCV3J0BzIH9B0zL5LXLnE2D7VLNDrzC7YopPTYIaTd+oI6E7N
- 0PcZfWFVHu2mjgzXdo=
-X-Google-Smtp-Source: AGHT+IGyQikb/HfBAOrb6D4Iyc9MeaTTolDnPyDVRpSdDSnGhWK1m0UcfhIcX6TGlhM4+2XmPW5V53ON5bgNHA4qOoQ=
-X-Received: by 2002:a05:690c:4a01:b0:71f:f359:6c9d with SMTP id
- 00721157ae682-71ff3597064mr240129067b3.11.1756391641172; Thu, 28 Aug 2025
- 07:34:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jtomko@redhat.com>) id 1urdrc-0002eF-Ig
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:44:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jtomko@redhat.com>) id 1urdra-00014g-7I
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:44:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756392265;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RGHBPU+lcJo189CbJtshkPrbtOEHMe1Xxjnbkb5lhso=;
+ b=GAXg2g8YOhSiRe9xv+jzOM1V1yUQ0f1BKueCHg+7R6xmFeQG2JTpAiErohhzBbnxzyB589
+ d98O3GsLlq/whb5RtJI9F3DHoiy4Ab396gD9SGrTm2uog2RuNjAAmFLmZWtvHQOp3Wep/F
+ WpZHnJiwdrUcMl4KL/NCLQH+PrynZQ4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-sPlFbFC_P1qDfizSc_5KRg-1; Thu,
+ 28 Aug 2025 10:43:06 -0400
+X-MC-Unique: sPlFbFC_P1qDfizSc_5KRg-1
+X-Mimecast-MFC-AGG-ID: sPlFbFC_P1qDfizSc_5KRg_1756392185
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEBE4180034F; Thu, 28 Aug 2025 14:43:04 +0000 (UTC)
+Received: from fedora (unknown [10.44.32.52])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B25E730001A7; Thu, 28 Aug 2025 14:43:01 +0000 (UTC)
+Date: Thu, 28 Aug 2025 16:42:58 +0200
+From: =?iso-8859-1?B?SuFu?= Tomko <jtomko@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: Re: [PATCH 0/2] hw/mips: Remove mipssim machine and mipsnet device
+Message-ID: <aLBq8uo--L5qK30z@fedora>
+References: <20250828143800.49842-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250828120836.195358-1-richard.henderson@linaro.org>
- <20250828120836.195358-30-richard.henderson@linaro.org>
-In-Reply-To: <20250828120836.195358-30-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Aug 2025 15:33:49 +0100
-X-Gm-Features: Ac12FXxQT-zLnanGaQaAne4tuZczNe4uuAWLyOcNgc6YXxOMguw363-_P4HNnvg
-Message-ID: <CAFEAcA-DSpLNLN8WdFfN0L4huf-HT6UqEY2uyzJ7PqBHvngcrA@mail.gmail.com>
-Subject: Re: [PATCH v3 29/87] linux-user: Remove target_elf_greg_t, tswapreg
- from elfload.c
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="HGWPRM29bkXxGMUL"
+Content-Disposition: inline
+In-Reply-To: <20250828143800.49842-1-philmd@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jtomko@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,18 +84,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 28 Aug 2025 at 13:09, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> These are no longer used within the generic file.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  linux-user/elfload.c | 8 --------
->  1 file changed, 8 deletions(-)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+--HGWPRM29bkXxGMUL
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-thanks
--- PMM
+On a Thursday in 2025, Philippe Mathieu-Daud=E9 wrote:
+>mipssim machine (single user of  mipsnet device) is
+>deprecated since v10.0; remove for 10.2.
+>
+>Philippe Mathieu-Daud=E9 (2):
+>  hw/mips: Remove mipssim machine
+>  hw/net: Remove mipsnet device model
+>
+> MAINTAINERS                             |   6 -
+> docs/about/deprecated.rst               |  12 -
+> docs/about/removed-features.rst         |   5 +
+> docs/system/target-mips.rst             |  11 -
+> configs/devices/mips-softmmu/common.mak |   1 -
+> hw/mips/mipssim.c                       | 249 --------------------
+> hw/net/mipsnet.c                        | 297 ------------------------
+> hw/mips/Kconfig                         |   7 -
+> hw/mips/meson.build                     |   1 -
+> hw/net/Kconfig                          |   3 -
+> hw/net/meson.build                      |   1 -
+> hw/net/trace-events                     |   7 -
+> 12 files changed, 5 insertions(+), 595 deletions(-)
+> delete mode 100644 hw/mips/mipssim.c
+> delete mode 100644 hw/net/mipsnet.c
+>
+
+Reviewed-by: J=E1n Tomko <jtomko@redhat.com>
+
+Jano
+
+--HGWPRM29bkXxGMUL
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQT+Rn5j0qdK2hQgnuAU0rOr/y4PvAUCaLBq8gAKCRAU0rOr/y4P
+vDGfAQDEw2xJFLiAQCF9cnmNiaUhsHHcpgWSQPNRa/iTonsijQD/QadQN4x5KB3z
+cvgQ5+Z8XhJkwiCRtgmKaWzDgyzzrw4=
+=aKYJ
+-----END PGP SIGNATURE-----
+
+--HGWPRM29bkXxGMUL--
+
 
