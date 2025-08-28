@@ -4,113 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D06BCA0FF9
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:51:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC871CA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgFy-0003Ko-R3; Thu, 28 Aug 2025 13:17:51 -0400
+	id 1urgJB-0008Td-5F; Thu, 28 Aug 2025 13:21:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1ure7t-0001gJ-Pd; Thu, 28 Aug 2025 11:01:21 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1ure7p-0003eC-69; Thu, 28 Aug 2025 11:01:20 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57SEdNGp024619;
- Thu, 28 Aug 2025 15:01:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=63urAw
- iYiT2DbbZ93xRGvkcrtYWWvAURTUJ3xWQKy9c=; b=tT5MBJkHGH19TDSKXPXhEv
- uC6k+csvCmEKjlmsuSzd86fFEhcDSbVz96AuZhcN4C2IUCqA93cMRG6vV70UZaZ/
- MMmvdG5jde1De2k313KWONzDqvX5I8VJb55Ck+g1N0JFfG7GwwJiDrARSB8Udoqg
- S5dPiVKgiP91bTAzPhDmblzo/XSKBywPr7oDY5SM9iaq3JgaUN5FpElsPLf+/LRw
- QE1e62yJyBRvbCtaewwWmVQDIt6jY242+4tSCZOPSkEF0JP3R12dPctG8XvahhdY
- g2blg9dXSBdZb7/nKtKtPMqxoDHYCVWW7kch/asR3a2YKxiXDCCOotb9IB7ZKyGQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q42jaerk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 Aug 2025 15:01:10 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57SEwMc7017989;
- Thu, 28 Aug 2025 15:01:10 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 48qtp3n58w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 28 Aug 2025 15:01:10 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 57SF18iW19596004
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 Aug 2025 15:01:08 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 46CD758055;
- Thu, 28 Aug 2025 15:01:08 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ABE135805B;
- Thu, 28 Aug 2025 15:01:06 +0000 (GMT)
-Received: from [9.61.75.179] (unknown [9.61.75.179])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 28 Aug 2025 15:01:06 +0000 (GMT)
-Message-ID: <a30c0e5c-3fa7-442c-a333-12304dacb863@linux.ibm.com>
-Date: Thu, 28 Aug 2025 11:01:05 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbRm-0002s7-5T
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:09:43 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbRj-0007Hg-SQ
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:09:41 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-771fa8e4190so678186b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:09:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756382977; x=1756987777; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R9vU7UtNMSkO1PPlm9WkjYpJ2Jl3RkR5+b6cjhq8aXM=;
+ b=dH0OoVzWlE08ud6RyPcpbPiEQlAN0Eo57pnN/PWr4ANQHv66ALRuJ6FlfqowbF8Ozb
+ wT7JFL1aNvSdJ/LLQHa0g/nVBeU27wFzkxvyGkq3Y3zBLm2S3Pmom0VFMmU4kOCymuUP
+ 9oobEXijqoJebZn62sjoiV6uQ440VM8FrnNs5if5ToN5Z5f7p0Kd2Ygl3Ec25+ypsHMF
+ lOUNVvzzNP7GhR6qJe3x+0rraJPypMXwKHREHnjQ/ncK2S2asVrA3mng7eca9s15pjB3
+ JcP7OcoHoAQusjHaiOP9qhlv0Fujwhd2r7sbjrxq1ZeqymDXhw12dEkAye2S5THHE30F
+ 08BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756382977; x=1756987777;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=R9vU7UtNMSkO1PPlm9WkjYpJ2Jl3RkR5+b6cjhq8aXM=;
+ b=F3aJjyUcPxzaHNMtOM7oPjQNi7I4s7QYpSHLRMkdu7PnHy92xigDUift09WziLC+xo
+ RQfwc6iCDfXjSyOjI94YmpzdzUh77Gr/ofFYFIqoUNAe8KSm08ZeHVAJq7CR+v/gajsu
+ 7pWA8LqW1kj275cwBQft/qbgUFD2BDIJSkD7tL1CjfVJ0TECgE0SHRogbvktfpdJ9Qtk
+ yvPZShriSz+YMQO8kNfuCgbLLtjDi9Hz0QjBxsE4shVXMIrtAvIjB8hmylcyCSg+H9rb
+ ne7Af98kum7hMaOnNSWIQ2CBZCYeaGv2wEcGQtN1U2mHGfh15lb1MGnF3UVcSJpFF/Zw
+ abLw==
+X-Gm-Message-State: AOJu0YyRw6WoGJwPXzrLVLhfUo7MGJWzxWRKewF4lluVafo4xgQi+WfU
+ pHERqNOrVDWOIHyfUpvc/pDLF6O2RzdcG8fWeakOUofE27pwMYCmqzSYpGq1xiJcXVna293jDCk
+ 58F4hvfY=
+X-Gm-Gg: ASbGncvjdED6pxI+0RIeOFUHEUqYpdlKlVsHwnYWIt6T9u01rndBh75yzAZ85gRPNuE
+ HX1WYKUgjVBqSiS27oAOBWg4l0b+z7izSLiw5YzQf+uAhVjHCH6aqDfkSwfJvIH8mSfiW0xAz2y
+ QytOlmkH3+vEFOwWbjAYB0oyR/cBCcjio64jxwpswXdrJnKTokx3m+px20f7KcuJkSgmLZT8A8o
+ m897mvbCpRs1amK83FkAzOWJOLKfOPym/+6lrbO/Fquh988p9dVNunR6hZpgcBIZcaKt2HYnEJT
+ RHmLW7WQ2UafAJvEdnnebMSQMrctTfok6eHKrd/GDe0HddAN/QBTrlfXpHYDlqIh4aNdQEq/QgU
+ Om5mdJ4d+WiRp1IYRrUeL3Pg+aw==
+X-Google-Smtp-Source: AGHT+IFkoiGE0hNm/h0oQnxMC/EOyYoKBsFV77+m5MdsEdEB8q8c1BSuDHnCf9vAGb3YnTNA46eElg==
+X-Received: by 2002:a05:6a20:258e:b0:243:a5c7:3d6 with SMTP id
+ adf61e73a8af0-243a5c71469mr6686798637.6.1756382977209; 
+ Thu, 28 Aug 2025 05:09:37 -0700 (PDT)
+Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b49cb8b4b98sm13933222a12.19.2025.08.28.05.09.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Aug 2025 05:09:36 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v3 23/87] linux-user: Move elf_core_copy_regs to
+ microblaze/elfload.c
+Date: Thu, 28 Aug 2025 22:07:32 +1000
+Message-ID: <20250828120836.195358-24-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
+References: <20250828120836.195358-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 12/29] s390x/diag: Implement DIAG 508 subcode 1 for
- signature verification
-To: Farhan Ali <alifm@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
-References: <20250818214323.529501-1-zycai@linux.ibm.com>
- <20250818214323.529501-13-zycai@linux.ibm.com>
- <b0dc190d-db0e-46a2-8fac-563845e293c1@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <b0dc190d-db0e-46a2-8fac-563845e293c1@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAxMCBTYWx0ZWRfX9+mJyZgc+vMX
- qFv/FTjNZyVYM5GWqgLhbfQqWq8/TMisLONsOhEnTXPSQrkSfPTsz9XaGs4RxQecgiCpEHO4e4f
- 9Ti9P92RRg3/Tu44mr8xHPDH4tat00ZDioEAgb5nCuzgGkvr0hCiRCadE+b2knZEOPrNHtOFL79
- gHznShvoPKIP8VE+c0MHLEGUUOLDGVmBhUVPZR7aciNFboof6PLkWx02V88yxZdoXIPPiqLIGit
- ZrlJzo1oQchNTDp6yt+HCocuP2WjcBQLliULL2QzlZrwL9s8xNqvsk2b64msI6N+MhjG/NYnONR
- A5Z2U/drSAif6dxhKx6EYRN6UoIlmSTLLqTM2TO5dp+vS0UWH/Kc7522d158YRINkCThaUrSfhs
- CAlkHa3l
-X-Proofpoint-ORIG-GUID: rnh8ho4SStJOjFxOfJma0m5s1c9LTnyh
-X-Proofpoint-GUID: rnh8ho4SStJOjFxOfJma0m5s1c9LTnyh
-X-Authority-Analysis: v=2.4 cv=evffzppX c=1 sm=1 tr=0 ts=68b06f37 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VnNF1IyMAAAA:8 a=hSFDGSzQzLe0QX1fMVwA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-28_04,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 bulkscore=0
- impostorscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230010
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,237 +100,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/27/25 6:18 PM, Farhan Ali wrote:
-> 
-> On 8/18/2025 2:43 PM, Zhuoying Cai wrote:
->> From: Collin Walling <walling@linux.ibm.com>
->>
->> DIAG 508 subcode 1 performs signature-verification on signed components.
->> A signed component may be a Linux kernel image, or any other signed
->> binary. **Verification of initrd is not supported.**
->>
->> The instruction call expects two item-pairs: an address of a device
->> component, an address of the analogous signature file (in PKCS#7 DER format),
->> and their respective lengths. All of this data should be encapsulated
->> within a Diag508SignatureVerificationBlock, with the CertificateStoreInfo
->> fields ignored. The DIAG handler will read from the provided addresses
->> to retrieve the necessary data, parse the signature file, then
->> perform the signature-verification. Because there is no way to
->> correlate a specific certificate to a component, each certificate
->> in the store is tried until either verification succeeds, or all
->> certs have been exhausted.
->>
->> The subcode value is denoted by setting the second-to-left-most bit of
->> a 2-byte field.
->>
->> A return code of 1 indicates success, and the index and length of the
->> corresponding certificate will be set in the CertificateStoreInfo
->> portion of the SigVerifBlock. The following values indicate failure:
->>
->> 	0x0102: certificate not available
->> 	0x0202: component data is invalid
->> 	0x0302: signature is not in PKCS#7 format
->> 	0x0402: signature-verification failed
->>
->> Signed-off-by: Collin Walling <walling@linux.ibm.com>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>   docs/specs/s390x-secure-ipl.rst |   5 ++
->>   include/hw/s390x/ipl/diag508.h  |  23 +++++++
->>   target/s390x/diag.c             | 112 +++++++++++++++++++++++++++++++-
->>   3 files changed, 139 insertions(+), 1 deletion(-)
->>
->> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
->> index 6b3249173f..385f8d85a8 100644
->> --- a/docs/specs/s390x-secure-ipl.rst
->> +++ b/docs/specs/s390x-secure-ipl.rst
->> @@ -64,3 +64,8 @@ that requires assistance from QEMU.
->>   
->>   Subcode 0 - query installed subcodes
->>       Returns a 64-bit mask indicating which subcodes are supported.
->> +
->> +Subcode 1 - perform signature verification
->> +    Perform signature-verification on a signed component, using certificates
->> +    from the certificate store and leveraging qcrypto libraries to perform
->> +    this operation.
->> diff --git a/include/hw/s390x/ipl/diag508.h b/include/hw/s390x/ipl/diag508.h
->> index 6281ad8299..c99c6705c0 100644
->> --- a/include/hw/s390x/ipl/diag508.h
->> +++ b/include/hw/s390x/ipl/diag508.h
->> @@ -11,5 +11,28 @@
->>   #define S390X_DIAG508_H
->>   
->>   #define DIAG_508_SUBC_QUERY_SUBC    0x0000
->> +#define DIAG_508_SUBC_SIG_VERIF     0x8000
->> +
->> +#define DIAG_508_RC_OK              0x0001
->> +#define DIAG_508_RC_NO_CERTS        0x0102
->> +#define DIAG_508_RC_INVAL_COMP_DATA 0x0202
->> +#define DIAG_508_RC_INVAL_PKCS7_SIG 0x0302
->> +#define DIAG_508_RC_FAIL_VERIF      0x0402
->> +
->> +struct Diag508CertificateStoreInfo {
->> +    uint8_t  idx;
->> +    uint8_t  reserved[7];
->> +    uint64_t len;
->> +};
->> +typedef struct Diag508CertificateStoreInfo Diag508CertificateStoreInfo;
->> +
->> +struct Diag508SignatureVerificationBlock {
->> +    Diag508CertificateStoreInfo csi;
->> +    uint64_t comp_len;
->> +    uint64_t comp_addr;
->> +    uint64_t sig_len;
->> +    uint64_t sig_addr;
->> +};
->> +typedef struct Diag508SignatureVerificationBlock Diag508SignatureVerificationBlock;
->>   
->>   #endif
->> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
->> index 6519a3cedc..2fe25a2c66 100644
->> --- a/target/s390x/diag.c
->> +++ b/target/s390x/diag.c
->> @@ -573,9 +573,107 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->>       }
->>   }
->>   
->> +static int diag_508_verify_sig(uint8_t *cert, size_t cert_size,
->> +                              uint8_t *comp, size_t comp_size,
->> +                              uint8_t *sig, size_t sig_size)
->> +{
->> +    g_autofree uint8_t *sig_pem = NULL;
->> +    size_t sig_size_pem;
->> +    int rc;
->> +
->> +    /*
->> +     * PKCS#7 signature with DER format
->> +     * Convert to PEM format for signature verification
->> +     */
->> +    rc = qcrypto_pkcs7_convert_sig_pem(sig, sig_size, &sig_pem, &sig_size_pem, NULL);
->> +    if (rc < 0) {
->> +        return -1;
->> +    }
->> +
->> +    /*
->> +     * Ignore errors from signature format convertion and verification,
->> +     * because currently in the certificate lookup process.
->> +     *
->> +     * Any error is treated as a verification failure,
->> +     * and the final result (verified or not) will be reported later.
->> +     */
-> 
-> The comment here seems misleading as we are checking the return code 
-> from qcrypto_x509_verify_sig and not ignoring the error here. Is it 
-> meant for the handle_diag508_sig_verif function where we are looping 
-> through the certs?
-> 
-> Thanks Farhan
-> 
+Move elf_core_copy_regs to elfload.c.
+Move HAVE_ELF_CORE_DUMP, ELF_NREGS, target_elf_gregset_t to target_elf.h.
+For now, duplicate the definitions of target_elf_greg_t and tswapreg.
 
-Thank you for pointing it out. This comment is meant for when iterating
-over the certificates in handle_diag508_sig_verif(). I'll move it in the
-next version.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/microblaze/target_elf.h |  9 +++++++++
+ linux-user/elfload.c               | 21 ---------------------
+ linux-user/microblaze/elfload.c    | 17 +++++++++++++++++
+ 3 files changed, 26 insertions(+), 21 deletions(-)
 
->> +    rc = qcrypto_x509_verify_sig(cert, cert_size,
->> +                                 comp, comp_size,
->> +                                 sig_pem, sig_size_pem, NULL);
->> +    if (rc < 0) {
->> +        return -1;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static int handle_diag508_sig_verif(uint64_t addr, size_t csi_size, size_t svb_size,
->> +                                    S390IPLCertificateStore *qcs)
->> +{
->> +    int rc;
->> +    int verified;
->> +    uint64_t comp_len, comp_addr;
->> +    uint64_t sig_len, sig_addr;
->> +    g_autofree uint8_t *svb_comp = NULL;
->> +    g_autofree uint8_t *svb_sig = NULL;
->> +    g_autofree Diag508SignatureVerificationBlock *svb = NULL;
->> +
->> +    if (!qcs || !qcs->count) {
->> +        return DIAG_508_RC_NO_CERTS;
->> +    }
->> +
->> +    svb = g_new0(Diag508SignatureVerificationBlock, 1);
->> +    cpu_physical_memory_read(addr, svb, svb_size);
->> +
->> +    comp_len = be64_to_cpu(svb->comp_len);
->> +    comp_addr = be64_to_cpu(svb->comp_addr);
->> +    sig_len = be64_to_cpu(svb->sig_len);
->> +    sig_addr = be64_to_cpu(svb->sig_addr);
->> +
->> +    if (!comp_len || !comp_addr) {
->> +        return DIAG_508_RC_INVAL_COMP_DATA;
->> +    }
->> +
->> +    if (!sig_len || !sig_addr) {
->> +        return DIAG_508_RC_INVAL_PKCS7_SIG;
->> +    }
->> +
->> +    svb_comp = g_malloc0(comp_len);
->> +    cpu_physical_memory_read(comp_addr, svb_comp, comp_len);
->> +
->> +    svb_sig = g_malloc0(sig_len);
->> +    cpu_physical_memory_read(sig_addr, svb_sig, sig_len);
->> +
->> +    rc = DIAG_508_RC_FAIL_VERIF;
->> +    /*
->> +     * It is uncertain which certificate contains
->> +     * the analogous key to verify the signed data
->> +     */
->> +    for (int i = 0; i < qcs->count; i++) {
->> +        verified = diag_508_verify_sig(qcs->certs[i].raw,
->> +                                       qcs->certs[i].size,
->> +                                       svb_comp, comp_len,
->> +                                       svb_sig, sig_len);
->> +        if (verified == 0) {
->> +            svb->csi.idx = i;
->> +            svb->csi.len = cpu_to_be64(qcs->certs[i].der_size);
->> +            cpu_physical_memory_write(addr, &svb->csi, be32_to_cpu(csi_size));
->> +            rc = DIAG_508_RC_OK;
->> +            break;
->> +       }
->> +    }
->> +
->> +    return rc;
->> +}
->> +
->> +QEMU_BUILD_BUG_MSG(sizeof(Diag508SignatureVerificationBlock) != 48,
->> +                   "size of Diag508SignatureVerificationBlock is wrong");
->> +
->>   void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->>   {
->> +    S390IPLCertificateStore *qcs = s390_ipl_get_certificate_store();
->>       uint64_t subcode = env->regs[r3];
->> +    uint64_t addr = env->regs[r1];
->>       int rc;
->>   
->>       if (env->psw.mask & PSW_MASK_PSTATE) {
->> @@ -590,7 +688,19 @@ void handle_diag_508(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->>   
->>       switch (subcode) {
->>       case DIAG_508_SUBC_QUERY_SUBC:
->> -        rc = 0;
->> +        rc = DIAG_508_SUBC_SIG_VERIF;
->> +        break;
->> +    case DIAG_508_SUBC_SIG_VERIF:
->> +        size_t csi_size = sizeof(Diag508CertificateStoreInfo);
->> +        size_t svb_size = sizeof(Diag508SignatureVerificationBlock);
->> +
->> +        if (!diag_parm_addr_valid(addr, svb_size, false) ||
->> +            !diag_parm_addr_valid(addr, csi_size, true)) {
->> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
->> +            return;
->> +        }
->> +
->> +        rc = handle_diag508_sig_verif(addr, csi_size, svb_size, qcs);
->>           break;
->>       default:
->>           s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+diff --git a/linux-user/microblaze/target_elf.h b/linux-user/microblaze/target_elf.h
+index bfe2997fd2..cc5cc0477e 100644
+--- a/linux-user/microblaze/target_elf.h
++++ b/linux-user/microblaze/target_elf.h
+@@ -8,4 +8,13 @@
+ #ifndef MICROBLAZE_TARGET_ELF_H
+ #define MICROBLAZE_TARGET_ELF_H
+ 
++#define HAVE_ELF_CORE_DUMP      1
++
++typedef abi_ulong target_elf_greg_t;
++
++#define ELF_NREG                38
++typedef struct target_elf_gregset_t {
++    target_elf_greg_t regs[ELF_NREG];
++} target_elf_gregset_t;
++
+ #endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 5a3a5cfc39..96ed6b6515 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -416,27 +416,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+ 
+ #define ELF_EXEC_PAGESIZE        4096
+ 
+-#define HAVE_ELF_CORE_DUMP
+-#define ELF_NREG 38
+-typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
+-} target_elf_gregset_t;
+-
+-/* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
+-void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
+-{
+-    for (int i = 0; i < 32; i++) {
+-        r->regs[i] = tswapreg(env->regs[i]);
+-    }
+-
+-    r->regs[32] = tswapreg(env->pc);
+-    r->regs[33] = tswapreg(mb_cpu_read_msr(env));
+-    r->regs[34] = 0;
+-    r->regs[35] = tswapreg(env->ear);
+-    r->regs[36] = 0;
+-    r->regs[37] = tswapreg(env->esr);
+-}
+-
+ #endif /* TARGET_MICROBLAZE */
+ 
+ #ifdef TARGET_OPENRISC
+diff --git a/linux-user/microblaze/elfload.c b/linux-user/microblaze/elfload.c
+index b92442dfeb..89250dbd63 100644
+--- a/linux-user/microblaze/elfload.c
++++ b/linux-user/microblaze/elfload.c
+@@ -3,9 +3,26 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return "any";
+ }
++
++#define tswapreg(ptr)   tswapal(ptr)
++
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
++{
++    for (int i = 0; i < 32; i++) {
++        r->regs[i] = tswapreg(env->regs[i]);
++    }
++
++    r->regs[32] = tswapreg(env->pc);
++    r->regs[33] = tswapreg(mb_cpu_read_msr(env));
++    r->regs[34] = 0;
++    r->regs[35] = tswapreg(env->ear);
++    r->regs[36] = 0;
++    r->regs[37] = tswapreg(env->esr);
++}
+-- 
+2.43.0
 
 
