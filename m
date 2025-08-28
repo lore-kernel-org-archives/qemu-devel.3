@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8866CCA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 12:20:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEA7CA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 12:20:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urbX8-0000Mr-2V; Thu, 28 Aug 2025 08:15:19 -0400
+	id 1urbTr-0005Om-2S; Thu, 28 Aug 2025 08:11:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbS8-0003SZ-Rd
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:10:05 -0400
+ id 1urbRt-00033v-Ol
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:09:53 -0400
 Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbS6-0007Md-FC
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:10:04 -0400
+ id 1urbRs-0007Jh-3q
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:09:49 -0400
 Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-771e15ce64eso707507b3a.0
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:10:01 -0700 (PDT)
+ d2e1a72fcca58-771ed4a8124so961906b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:09:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756383000; x=1756987800; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756382986; x=1756987786; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gbyT5R6klG2h52SSw2CW+OGcOtC0Zmu7aFbJ12I/MfY=;
- b=kTT+HEjoM5aq9O5CaJ/UTrNDqMam6xjDMuA9uXHzx1qvgbhpo81GyGDQbLrfRcOOaq
- KE2qYdgd7PRc5e2rsC8UJnzP3EIvBlwj0GC4/Vouw8X+huo3+C3SUIfItq7xQtzNE8SN
- 7cT9mMAFgbcRYlFKMNf2LtvXq+5WgGDbA9IriLMJhHdwxpWZaeZ/b2S6k3e8fUBm/sXo
- 1/+Kb/vbXYpGwuaOE7MCq4woKWVGkCakq1V2vPBUgEhyMsLVLAcudBdmJ6gcURcWDUCr
- TTV+jrJ0HRu7Yiikh01iHQzzL1jLrYMWLMOoXQPnT39AMk1XCWmjQ6OYwGW4s6qa73Ac
- xC4g==
+ bh=E3VcaH/lHL+y4xRzCBDi6asdRL57brfvVUF5s/r+gDo=;
+ b=udjlfGmt1BWqjLec0JfvnQs3/EvXSJWoz8ABen09bq61s1zjaCextH9XFOOZnX/DLt
+ ueHHcsRyny7kE2jcW/bzSqK3P5gPLL2+ZXyub4TynGQZXfvyR9iVkCeoOq67LcW30Jgk
+ C/SMGjDZwsm3jfNb4PAGaIn0Gcq8jazddBcEt5wLr4cGPUNmfDTkDwCnLPB5mpXe1O7R
+ kkTxWCcyFyjjkY/AXYIlHTCtxfW2vdLoUD0Z6y473DxQ7+yt0vctmp+sucSSMGLvy7B3
+ 7NllIgEcQ6WFmlX+VO7rBYsx6WeK5y/JYuFRABPPYrSBYqq7KES+sSRC+9Yest7+xGL+
+ Zr/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756383000; x=1756987800;
+ d=1e100.net; s=20230601; t=1756382986; x=1756987786;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gbyT5R6klG2h52SSw2CW+OGcOtC0Zmu7aFbJ12I/MfY=;
- b=PIEL7ZPokVSc9J893q/AUlRp6JphBbve2am7MyXo3oCsDA23o5k8PexRebEnZbi6H7
- sNSsB52E7aHhdYkJGtqgA14Ni3QmFcAXzJMdiyUi/QsMIhrdrksKRRmXzREZTgw+4Ob0
- xkByXmrlXrtjswaWmqqnDKzikQRt3aQZDSYoKcDHauiyGgjmReJHy2f7H5E82N5eoAw6
- rX7YysZNIwaM2AN67mVPOTvORsvthbJk4CLBxCVEWRezM+S1U/+7vq/iiQCyJCUeMVyz
- udtPlFmdmol76s2fzbuIszj13FsTqX8TAOuq/17pMv+IUT26bKf3uJqR5aKPodDx8k1x
- e62g==
-X-Gm-Message-State: AOJu0YzwEt6x4uJUTWSsbR5cNe2ywa0A+/jVIS4+knZsdqtByw1zaI5N
- TR5lV5KipYmF2cUGU3d69Q1RMZTKDSyZdGCuhg+5ZfTu7yiIT32cm/b6NGKlMdwzADh5gug8dYM
- h1SLVopE=
-X-Gm-Gg: ASbGncu9saiaSEqFHb3lvCVKN0iQtENXN6RzjQBaA6OAssF1Ok3ZESLraBS1cXJMOJy
- HiDx/a8EzbdCsxOIXe5cV3zWviC/uKTip0qwKFWES4Tsd58FnufIUuYIHBqQr5BZEl25+b0Hi5L
- IpfRwE6WmRHzTBmDQQb/PkywNPx/sC1c9GhSIjwdYi+dwFccJMsEwQ3n+LQgxNRkdPpTBjOg9KY
- O8SOTgI7EV+nIUZSNzRRsj6dmrtPcxOiDOQzTctSr1d4nnRiXZ1GK/NZDWAhSGFRyLjS69tr0GX
- qQMSOl+hb9+MQZ04H9ymMqhfD7MZ7wYcn4q09niUhk2up1fX88WxLFQCaqzB0HhXF4RhZ/4wsC+
- UZysjbdJBIBLIwMArxUJv8RvriQ==
-X-Google-Smtp-Source: AGHT+IH9HHKYFZN6TNeXQJNK8uZ34VS/txk5MWqEbvTDd8VHT5FTD8/usHhc6DZufEXNxL0cdzIl4w==
-X-Received: by 2002:a05:6300:4ca:10b0:243:a251:cf46 with SMTP id
- adf61e73a8af0-243a251d3f9mr4837606637.32.1756383000080; 
- Thu, 28 Aug 2025 05:10:00 -0700 (PDT)
+ bh=E3VcaH/lHL+y4xRzCBDi6asdRL57brfvVUF5s/r+gDo=;
+ b=pZTrH0uYp7LWr54UfX795E9Hi8MoGzIS3tXmSLY07DQ5PTl/Vvfs91Gn5Z1vY5qgHn
+ SJeXhei1Wy4aKOtrtozVhK/X5KPWaOlwE5G771ej2bwTUz6ds49ys2W9ot/riCngVxIx
+ Q4Z+itPJvXuBzCn+QAaKjKEyG1lPeiCvFMA1bHCUjaOmSkK+pKJ2b9ASUn+bfR5ww2Vc
+ O+w6D3Fl00jbiZQ8qqTriUCV9fbGV2JVu+MaU0bhwMtpNyDE0iwcYZ7g7pnHzXlxjiId
+ gTeTqQPYojnH5FyQ9OXO6ZAPXXUt1Z6XBZtkEm0FYL9i7woQFalw9qZ6DGzKTWWTtu1Z
+ eOUA==
+X-Gm-Message-State: AOJu0YzkKji3xF4BBtHhsX6PzEf5L4AmlsaKQYEqbQhTaEfv9Lu8pOvX
+ fr39G5kHHdQzDReGVTAQ9wsdiviZwQKgOgW9TT5jfmwf0i8Xyp2HUX6B6DES3W3UgiAxdtp3axI
+ 0TCaDZoc=
+X-Gm-Gg: ASbGncu4zDUX84L505SMsdL9OA7vamK2VAGfDMtbPLCmJxgIHPmWK6KMmPDzA+KvQjE
+ wi6hTEfMDcnnDUXaBsl07I9M3roR6n1LqoI1hQBpOsPvXk1H8zgEn22jU4LkRHOE+nc89zcDlOF
+ JHA4QUNgRRYyU8hz1bOht1Pbsuq5AuDoh7ZiPdegVyg0NHG0gB5whMKFAmFChDEMb9W0aohGDf7
+ td13ro2Ma024wbcrgXfSJtxG25NPNAmLXJlaE6RtNRH7od/vNVSO6T4Vgpk2/Tfzk9aBYHlyp0x
+ FTOHZwXIpmhdjI0bTX1/QQLwH72B0MBbJ7Rwcw3R42FnnwLsfzkZs8ZTJlmINOFeRwymhiDBAUA
+ drlh6P5Ba0MrhMLRBXrKHPaTwxQ==
+X-Google-Smtp-Source: AGHT+IHE4X+KMfE1FGK76KkRY/kj7vEr2KdbblpMOQCZQaOFUqanosh/9kYxLzi7bnB0V9LE/E/zaA==
+X-Received: by 2002:a05:6a20:2589:b0:243:15b9:7797 with SMTP id
+ adf61e73a8af0-24340eb5753mr36366831637.59.1756382986081; 
+ Thu, 28 Aug 2025 05:09:46 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b49cb8b4b98sm13933222a12.19.2025.08.28.05.09.58
+ 41be03b00d2f7-b49cb8b4b98sm13933222a12.19.2025.08.28.05.09.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 05:09:59 -0700 (PDT)
+ Thu, 28 Aug 2025 05:09:45 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v3 33/87] linux-user/x86_64: Expand target_elf_gregset_t
-Date: Thu, 28 Aug 2025 22:07:42 +1000
-Message-ID: <20250828120836.195358-34-richard.henderson@linaro.org>
+Subject: [PATCH v3 27/87] linux-user: Move elf_core_copy_regs to
+ s390x/elfload.c
+Date: Thu, 28 Aug 2025 22:07:36 +1000
+Message-ID: <20250828120836.195358-28-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
 References: <20250828120836.195358-1-richard.henderson@linaro.org>
@@ -99,131 +100,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The comment re ELF_NREG is incorrect or out-of-date.
-Make use of the fact that target_elf_gregset_t is a
-proper structure by using target_user_regs_struct.
-
-Drop target_elf_greg_t and tswapreg.
+Move elf_core_copy_regs to elfload.c.
+Move HAVE_ELF_CORE_DUMP, ELF_NREGS, target_elf_gregset_t to target_elf.h.
+For now, duplicate the definitions of target_elf_greg_t and tswapreg.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/x86_64/target_elf.h    | 14 +++-----
- linux-user/x86_64/target_ptrace.h |  2 +-
- linux-user/x86_64/elfload.c       | 56 +++++++++++++++----------------
- 3 files changed, 33 insertions(+), 39 deletions(-)
+ linux-user/s390x/target_elf.h |  9 +++++++++
+ linux-user/elfload.c          | 32 --------------------------------
+ linux-user/s390x/elfload.c    | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 32 deletions(-)
 
-diff --git a/linux-user/x86_64/target_elf.h b/linux-user/x86_64/target_elf.h
-index 74a77d94cd..32a9eec431 100644
---- a/linux-user/x86_64/target_elf.h
-+++ b/linux-user/x86_64/target_elf.h
-@@ -8,22 +8,18 @@
- #ifndef X86_64_TARGET_ELF_H
- #define X86_64_TARGET_ELF_H
+diff --git a/linux-user/s390x/target_elf.h b/linux-user/s390x/target_elf.h
+index cebace949a..b7d863ee66 100644
+--- a/linux-user/s390x/target_elf.h
++++ b/linux-user/s390x/target_elf.h
+@@ -9,5 +9,14 @@
+ #define S390X_TARGET_ELF_H
  
-+#include "target_ptrace.h"
-+
  #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_PLATFORM       1
- #define HAVE_ELF_CORE_DUMP      1
- 
- /*
-- * Note that ELF_NREG should be 29 as there should be place for
-- * TRAPNO and ERR "registers" as well but linux doesn't dump those.
-- *
-- * See linux kernel: arch/x86/include/asm/elf.h
-+ * See linux kernel: arch/x86/include/asm/elf.h, where
-+ * elf_gregset_t is mapped to struct user_regs_struct via sizeof.
-  */
--#define ELF_NREG                27
--
--typedef abi_ulong target_elf_greg_t;
--
- typedef struct target_elf_gregset_t {
--    target_elf_greg_t regs[ELF_NREG];
-+    struct target_user_regs_struct pt;
- } target_elf_gregset_t;
++#define HAVE_ELF_CORE_DUMP      1
++
++typedef abi_ulong target_elf_greg_t;
++
++/* See linux kernel: arch/s390/include/uapi/asm/ptrace.h (s390_regs).  */
++#define ELF_NREG                27
++typedef struct target_elf_gregset_t {
++    target_elf_greg_t regs[ELF_NREG];
++} target_elf_gregset_t;
  
  #endif
-diff --git a/linux-user/x86_64/target_ptrace.h b/linux-user/x86_64/target_ptrace.h
-index ba162569a6..33527127cb 100644
---- a/linux-user/x86_64/target_ptrace.h
-+++ b/linux-user/x86_64/target_ptrace.h
-@@ -23,7 +23,7 @@ struct target_user_regs_struct {
-     abi_ulong dx;
-     abi_ulong si;
-     abi_ulong di;
--    abi_ulong orig_rax;
-+    abi_ulong orig_ax;
-     abi_ulong ip;
-     abi_ulong cs;
-     abi_ulong flags;
-diff --git a/linux-user/x86_64/elfload.c b/linux-user/x86_64/elfload.c
-index 76cf5c1509..18d632ec34 100644
---- a/linux-user/x86_64/elfload.c
-+++ b/linux-user/x86_64/elfload.c
-@@ -21,35 +21,33 @@ const char *get_elf_platform(CPUState *cs)
-     return "x86_64";
- }
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index e92c424faf..7c783b74d4 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -461,38 +461,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+ #define ELF_DATA	ELFDATA2MSB
+ #define ELF_ARCH	EM_S390
  
--#define tswapreg(ptr)   tswapal(ptr)
+-/* See linux kernel: arch/s390/include/uapi/asm/ptrace.h (s390_regs).  */
+-#define ELF_NREG 27
+-typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
+-} target_elf_gregset_t;
 -
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
- {
--    r->regs[0] = tswapreg(env->regs[15]);
--    r->regs[1] = tswapreg(env->regs[14]);
--    r->regs[2] = tswapreg(env->regs[13]);
--    r->regs[3] = tswapreg(env->regs[12]);
--    r->regs[4] = tswapreg(env->regs[R_EBP]);
--    r->regs[5] = tswapreg(env->regs[R_EBX]);
--    r->regs[6] = tswapreg(env->regs[11]);
--    r->regs[7] = tswapreg(env->regs[10]);
--    r->regs[8] = tswapreg(env->regs[9]);
--    r->regs[9] = tswapreg(env->regs[8]);
--    r->regs[10] = tswapreg(env->regs[R_EAX]);
--    r->regs[11] = tswapreg(env->regs[R_ECX]);
--    r->regs[12] = tswapreg(env->regs[R_EDX]);
--    r->regs[13] = tswapreg(env->regs[R_ESI]);
--    r->regs[14] = tswapreg(env->regs[R_EDI]);
--    r->regs[15] = tswapreg(get_task_state(env_cpu_const(env))->orig_ax);
--    r->regs[16] = tswapreg(env->eip);
--    r->regs[17] = tswapreg(env->segs[R_CS].selector & 0xffff);
--    r->regs[18] = tswapreg(env->eflags);
--    r->regs[19] = tswapreg(env->regs[R_ESP]);
--    r->regs[20] = tswapreg(env->segs[R_SS].selector & 0xffff);
--    r->regs[21] = tswapreg(env->segs[R_FS].selector & 0xffff);
--    r->regs[22] = tswapreg(env->segs[R_GS].selector & 0xffff);
--    r->regs[23] = tswapreg(env->segs[R_DS].selector & 0xffff);
--    r->regs[24] = tswapreg(env->segs[R_ES].selector & 0xffff);
--    r->regs[25] = tswapreg(env->segs[R_FS].selector & 0xffff);
--    r->regs[26] = tswapreg(env->segs[R_GS].selector & 0xffff);
-+    r->pt.r15 = tswapal(env->regs[15]);
-+    r->pt.r14 = tswapal(env->regs[14]);
-+    r->pt.r13 = tswapal(env->regs[13]);
-+    r->pt.r12 = tswapal(env->regs[12]);
-+    r->pt.bp = tswapal(env->regs[R_EBP]);
-+    r->pt.bx = tswapal(env->regs[R_EBX]);
-+    r->pt.r11 = tswapal(env->regs[11]);
-+    r->pt.r10 = tswapal(env->regs[10]);
-+    r->pt.r9 = tswapal(env->regs[9]);
-+    r->pt.r8 = tswapal(env->regs[8]);
-+    r->pt.ax = tswapal(env->regs[R_EAX]);
-+    r->pt.cx = tswapal(env->regs[R_ECX]);
-+    r->pt.dx = tswapal(env->regs[R_EDX]);
-+    r->pt.si = tswapal(env->regs[R_ESI]);
-+    r->pt.di = tswapal(env->regs[R_EDI]);
-+    r->pt.orig_ax = tswapal(get_task_state(env_cpu_const(env))->orig_ax);
-+    r->pt.ip = tswapal(env->eip);
-+    r->pt.cs = tswapal(env->segs[R_CS].selector & 0xffff);
-+    r->pt.flags = tswapal(env->eflags);
-+    r->pt.sp = tswapal(env->regs[R_ESP]);
-+    r->pt.ss = tswapal(env->segs[R_SS].selector & 0xffff);
-+    r->pt.fs_base = tswapal(env->segs[R_FS].selector & 0xffff);
-+    r->pt.gs_base = tswapal(env->segs[R_GS].selector & 0xffff);
-+    r->pt.ds = tswapal(env->segs[R_DS].selector & 0xffff);
-+    r->pt.es = tswapal(env->segs[R_ES].selector & 0xffff);
-+    r->pt.fs = tswapal(env->segs[R_FS].selector & 0xffff);
-+    r->pt.gs = tswapal(env->segs[R_GS].selector & 0xffff);
+-enum {
+-    TARGET_REG_PSWM = 0,
+-    TARGET_REG_PSWA = 1,
+-    TARGET_REG_GPRS = 2,
+-    TARGET_REG_ARS = 18,
+-    TARGET_REG_ORIG_R2 = 26,
+-};
+-
+-void elf_core_copy_regs(target_elf_gregset_t *r, const CPUS390XState *env)
+-{
+-    int i;
+-    uint32_t *aregs;
+-
+-    r->regs[TARGET_REG_PSWM] = tswapreg(env->psw.mask);
+-    r->regs[TARGET_REG_PSWA] = tswapreg(env->psw.addr);
+-    for (i = 0; i < 16; i++) {
+-        r->regs[TARGET_REG_GPRS + i] = tswapreg(env->regs[i]);
+-    }
+-    aregs = (uint32_t *)&(r->regs[TARGET_REG_ARS]);
+-    for (i = 0; i < 16; i++) {
+-        aregs[i] = tswap32(env->aregs[i]);
+-    }
+-    r->regs[TARGET_REG_ORIG_R2] = 0;
+-}
+-
+-#define HAVE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE 4096
+ 
+ #define VDSO_HEADER "vdso.c.inc"
+diff --git a/linux-user/s390x/elfload.c b/linux-user/s390x/elfload.c
+index 79ceaba51d..4113273b72 100644
+--- a/linux-user/s390x/elfload.c
++++ b/linux-user/s390x/elfload.c
+@@ -4,6 +4,7 @@
+ #include "qemu.h"
+ #include "loader.h"
+ #include "elf.h"
++#include "target_elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+@@ -66,3 +67,30 @@ const char *elf_hwcap_str(uint32_t bit)
+ 
+     return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
  }
++
++#define tswapreg(ptr)   tswapal(ptr)
++
++enum {
++    TARGET_REG_PSWM = 0,
++    TARGET_REG_PSWA = 1,
++    TARGET_REG_GPRS = 2,
++    TARGET_REG_ARS = 18,
++    TARGET_REG_ORIG_R2 = 26,
++};
++
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUS390XState *env)
++{
++    int i;
++    uint32_t *aregs;
++
++    r->regs[TARGET_REG_PSWM] = tswapreg(env->psw.mask);
++    r->regs[TARGET_REG_PSWA] = tswapreg(env->psw.addr);
++    for (i = 0; i < 16; i++) {
++        r->regs[TARGET_REG_GPRS + i] = tswapreg(env->regs[i]);
++    }
++    aregs = (uint32_t *)&(r->regs[TARGET_REG_ARS]);
++    for (i = 0; i < 16; i++) {
++        aregs[i] = tswap32(env->aregs[i]);
++    }
++    r->regs[TARGET_REG_ORIG_R2] = 0;
++}
 -- 
 2.43.0
 
