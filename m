@@ -4,115 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96EEECA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5D9C8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgBN-0002TT-UD; Thu, 28 Aug 2025 13:13:05 -0400
+	id 1urgCJ-0003B4-UG; Thu, 28 Aug 2025 13:14:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1urcFf-0004v9-4X
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 09:01:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1urcFc-0000rU-Pg
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 09:01:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756386068;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2FSHSriAEkJkOMz1ICxZHuNRqzraCwOGW/4wAlLiDXk=;
- b=V35aXZzczLMgMceEzPuO/y8kMTZNxv14O+iUkrDRV8oDTnmJslBZFDg7VJn+sA611Wa/d8
- vsNGr7w2oendMphBTVQU9Ktpbf6XuWR7t9GNuZe6M3jTeOwW8f4XuKiMCeie9jnCR3euIG
- J5BoOyN0gtxECtfO5ZK8FY+PPp/HsGk=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-156-k8mvxsW9MuqI0td4hkf2vw-1; Thu, 28 Aug 2025 09:01:07 -0400
-X-MC-Unique: k8mvxsW9MuqI0td4hkf2vw-1
-X-Mimecast-MFC-AGG-ID: k8mvxsW9MuqI0td4hkf2vw_1756386067
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-70d7c7e972eso22364016d6.3
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 06:01:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbWf-0008F2-Ta
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:50 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbWb-0008Od-3O
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:44 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2460757107bso8165725ad.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:14:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756383279; x=1756988079; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fPnYSmw0H+L9FlDEZScOlrbQhE23jpPXeeMmWAqzWT4=;
+ b=SkulLYPHTR9Y6oFy1hAjtOy2jEEbF5vpCd/mnTHqZZ0bn8o1HZvp/CdUcVPF2VLWj6
+ CQ9jmI4y43Nq11J0+AkmneapFYeDkFIE/b0Aa5ysW+SfmTymiZzdPVWjciZQ4o9VzNCK
+ zs7FvkE6JLrsGe7tHV1bRXf83v0p9o6ZNtP9WuMxiIgKM2jnTc8gjcWFE9ExvE0Fm7nh
+ SdmIhoi/HLTVtTOFQYUQpCIRPFW+ZW7e8OyNqR6ZlHafS1JX19UswplOqf2TgI2iJTNf
+ 3bbNzyDJtxXAOngF67K1UCaOlO9/EXhYToF6C8yfQ4de5MTzQjVDAu3WqEH0CGa0cjZs
+ M9eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756386066; x=1756990866;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2FSHSriAEkJkOMz1ICxZHuNRqzraCwOGW/4wAlLiDXk=;
- b=T131kD8MgN9deJ1rgFPj+t5iHYPDcx9lFqmrsgGbUtnbMYkh5xAYDZj8BBBY+NwqkG
- 7f7igl0QY3QoVqhGJpofqku30P4vz9J7BZo5BZyWcluKfjmBEBOhtxJvUPKk1ySILCpK
- hiZUN2NBOtPZ3pjcfyNj+eWuDoREARufikEKrc9pXoeGn+gbLOe+Gbt8odL9jZxhkBDj
- 7sGidIWmXA3KRYwWloJIhlQ0NyVP4x23kM6lYHRJygJ7lKr6JZ8JvlodJaaAt+YyEQtL
- 4UX1AAySL1Retz5x09D3c/yfueUZCKthRg7UVziAqBy+xPhoB3EfFaENzq89DZtdNEMB
- /6hQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWpTHwV/Q+2yFGDlPUV40RM2JjubV+ST9mW10D6z34JjzXwGHxBWQNMC6S4Ale6P65whphy6HOtdEcu@nongnu.org
-X-Gm-Message-State: AOJu0YwieGAMWi9TVsIdeZdf5vPWA/8A9mE5PRpWXRVBc49qFO1RNeMH
- kkenq/ApJXWw+EgRa0tpgCBcddNqGP4StFKWjQ0Le4CLY716FtMCOn84VfiC6X+swLbdNEV/EAo
- xJPF1KNpwCFTdmB02botlId77KW6PyMc87vQY5siGcrF7xjWd9bl0leZ5
-X-Gm-Gg: ASbGncu6hUdtEi57iz1fI1Vus0b8wrCCN3xKwv9kNqcXB6oRXj/3Xf2KuGDZVGeOEjO
- Zwym8fqDlW6ltYyZUjmE6tBXHC5E1MNC6XIdx3XF06OtWg4JGJErxmFbUKnD+C1Wjr7yxL7dmJk
- Hgi5mglH1E1MOr+isnE207KhXYjlqi+GJPzT07bZjfFnk5U06sVVuGJLiUXutTaOAjmi+aLBZyr
- g9qvmFovWW9LMQmK+o7E36Y52lBYY4u/0VBzSG9Ibz4PK7jMMlGOzF/7d6Y9lJXY2pzR+iQ0A/8
- haHp4yYzUFqtQNRZXVgJX0Kk5lau9IlWffOv7ORI2xdBzd3huDjC04gcaDcxYZ48QArQabPS27M
- Yhjus8o/h15s=
-X-Received: by 2002:a05:6214:5191:b0:70d:6de2:50d5 with SMTP id
- 6a1803df08f44-70d972153bamr264903596d6.66.1756386066506; 
- Thu, 28 Aug 2025 06:01:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFTX7iu2SSYp7lyAL22K2f7XpgBmpyccaeINyh6fOmPk9PG3qCxwefbyL/0PlXXSH0YsbxarA==
-X-Received: by 2002:a05:6214:5191:b0:70d:6de2:50d5 with SMTP id
- 6a1803df08f44-70d972153bamr264896416d6.66.1756386061198; 
- Thu, 28 Aug 2025 06:01:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70da728a11asm105183076d6.46.2025.08.28.06.00.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 06:00:59 -0700 (PDT)
-Message-ID: <ff8022d1-6363-43c7-b095-cf8f0a692a16@redhat.com>
-Date: Thu, 28 Aug 2025 15:00:55 +0200
+ d=1e100.net; s=20230601; t=1756383279; x=1756988079;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fPnYSmw0H+L9FlDEZScOlrbQhE23jpPXeeMmWAqzWT4=;
+ b=cwJZDOYTTwyu3LGzroYWwK5sRboJWdmlEar+PlyFSNkS6KYamHdEtiA9gmbn4Cj870
+ THdix2qCloMB+Hb2XPWrqceBdYXkxz1wCYLHd1uIWhC3qTnbYI7vpzN2FAFcFTO0QNk5
+ ggcyo2eK7UDr9kGzqGKuGgZ9LeKTEouQTYMqAlv5BJpIxBee59j0Ul1LnQLmqUN+rd8t
+ 4G3IbEB1FGv7wn+ocfVKvruKGE6Ss36rLQtU24qVW0sJ+AOG3sMGuinMZdIAy9xxXokA
+ zwO8M/si2sDIvrX60ctnZNiANsDpn+lI1Z/czaaPZEQqwixdyp/vrD2nFoNPo0olvJpA
+ 3Wig==
+X-Gm-Message-State: AOJu0Yzn+YYDfFd5EVC1TQ3/RcPM0toIxZWfSRGQrL9UQszS4Mt2FdBj
+ rW5LtPg09UjSWQQ2hz2jpZ1O6oujWAGYFsRed4Q/QDw4pzvX4KF1egfwzisY2C7ti6MxfSuZ6at
+ OsNYtQ4M=
+X-Gm-Gg: ASbGnctGE6XIsJkzZ+9nIps6CkF2PdotCSLuYX+n20YLxWjhwCFnYjOcypISD14CqO0
+ lxEPsP+UA7+sx0F9T9feC85R1VhAwmSVNR/Em18/2FbmYqyes4sAgWEpzdVdS0mn0pC6cQ0YMcI
+ 2x5eTGhPi0Ar6afBZvBl9UHHGY+NgOsjlNyNM9Qwd01hcNrxROU1y9tmOIlgylIugAjbBSSYp89
+ LuNR8Y7GU4tLV2KrSkm/GlGGHbV1qvmSYzBLosS/pP2SXf43xPcGMLxhx0av+QtpZnGgPxPSa+i
+ LygBmvJoyKEehciojfK21P7LQQVeYLjxg00dfUlB+zsab1ARsFvcmZwWDz89Bmn+9aNGjQEGUcU
+ d3MuDJvgmyvUdr/BFvt5yjat4XvCjkZ8qhSfq
+X-Google-Smtp-Source: AGHT+IEMPXzqO7wbQofpthWDEYRb5/qf+R3XVvSihUnLAAg6O8zwX0n3LFn3N1tR20KngAIUO9K0/A==
+X-Received: by 2002:a17:902:c404:b0:246:464d:1194 with SMTP id
+ d9443c01a7336-246464d13f7mr377206995ad.2.1756383279267; 
+ Thu, 28 Aug 2025 05:14:39 -0700 (PDT)
+Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.14.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Aug 2025 05:14:38 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v3 64/87] linux-user: Move elf parameters to {i386,
+ x86_64}/target_elf.h
+Date: Thu, 28 Aug 2025 22:08:13 +1000
+Message-ID: <20250828120836.195358-65-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
+References: <20250828120836.195358-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/21] vfio/iommufd: Force creating nested parent domain
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>
-References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
- <20250822064101.123526-6-zhenzhong.duan@intel.com>
- <93a7a387-ae57-488e-b341-2beea67bf78e@redhat.com>
- <IA3PR11MB9136E928181D1B95F5AD39AB923BA@IA3PR11MB9136.namprd11.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <IA3PR11MB9136E928181D1B95F5AD39AB923BA@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,134 +97,121 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/i386/target_elf.h   | 22 +++++++++++++++++++
+ linux-user/x86_64/target_elf.h |  4 ++++
+ linux-user/elfload.c           | 39 ----------------------------------
+ 3 files changed, 26 insertions(+), 39 deletions(-)
 
-
-On 8/28/25 11:53 AM, Duan, Zhenzhong wrote:
-> Hi Eric,
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Subject: Re: [PATCH v5 05/21] vfio/iommufd: Force creating nested parent
->> domain
->>
->> Hi Zhenzhong,
->>
->> On 8/22/25 8:40 AM, Zhenzhong Duan wrote:
->>> Call pci_device_get_viommu_cap() to get if vIOMMU supports
->> VIOMMU_CAP_HW_NESTED,
->>> if yes, create nested parent domain which could be reused by vIOMMU to
->> create
->>> nested domain.
->>>
->>> Introduce helper vfio_device_viommu_get_nested to facilitate this
->>> implementation.
->>>
->>> It is safe because even if VIOMMU_CAP_HW_NESTED is returned, s->flts is
->>> forbidden and VFIO device fails in set_iommu_device() call, until we support
->>> passthrough device with x-flts=on.
->>>
->>> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
->>> Suggested-by: Yi Liu <yi.l.liu@intel.com>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>  include/hw/vfio/vfio-device.h |  2 ++
->>>  hw/vfio/device.c              | 12 ++++++++++++
->>>  hw/vfio/iommufd.c             |  8 ++++++++
->>>  3 files changed, 22 insertions(+)
->>>
->>> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
->>> index 6e4d5ccdac..ecd82c16c7 100644
->>> --- a/include/hw/vfio/vfio-device.h
->>> +++ b/include/hw/vfio/vfio-device.h
->>> @@ -257,6 +257,8 @@ void vfio_device_prepare(VFIODevice *vbasedev,
->> VFIOContainerBase *bcontainer,
->>>  void vfio_device_unprepare(VFIODevice *vbasedev);
->>>
->>> +bool vfio_device_viommu_get_nested(VFIODevice *vbasedev);
->> I would suggest vfio_device_viommu_has_feature_hw_nested or something
->> alike
->> get usually means tou take a ref count associated with a put
-> Sure.
->
->>> +
->>>  int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
->>>                                  struct vfio_region_info **info);
->>>  int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t
->> type,
->>> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
->>> index 08f12ac31f..3eeb71bd51 100644
->>> --- a/hw/vfio/device.c
->>> +++ b/hw/vfio/device.c
->>> @@ -23,6 +23,7 @@
->>>
->>>  #include "hw/vfio/vfio-device.h"
->>>  #include "hw/vfio/pci.h"
->>> +#include "hw/iommu.h"
->>>  #include "hw/hw.h"
->>>  #include "trace.h"
->>>  #include "qapi/error.h"
->>> @@ -504,6 +505,17 @@ void vfio_device_unprepare(VFIODevice
->> *vbasedev)
->>>      vbasedev->bcontainer = NULL;
->>>  }
->>>
->>> +bool vfio_device_viommu_get_nested(VFIODevice *vbasedev)
->>> +{
->>> +    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
->>> +
->>> +    if (vdev) {
->>> +        return !!(pci_device_get_viommu_cap(&vdev->pdev) &
->>> +                  VIOMMU_CAP_HW_NESTED);
->>> +    }
->>> +    return false;
->>> +}
->>> +
->>>  /*
->>>   * Traditional ioctl() based io
->>>   */
->>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->>> index 8c27222f75..e503c232e1 100644
->>> --- a/hw/vfio/iommufd.c
->>> +++ b/hw/vfio/iommufd.c
->>> @@ -379,6 +379,14 @@ static bool
->> iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>>          flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
->>>      }
->>>
->>> +    /*
->>> +     * If vIOMMU supports stage-1 translation, force to create nested
->> parent
->> I would rather not use another terminology here. You previously used
->> hw_nested, I think that's better. Also bear in mind that smmu supports
->> S1, S2 and S1+S2 in emulated code.
-> What about 'nesting parent' to match kernel side terminology, per Nicolin's suggestion:
->
-> In kernel kdoc/uAPI, we use:
->  - "nesting parent" for stage-2 object
->  - "nested hwpt", "nested domain" for stage-1 object
-I still think that since you queried the HW_NESTED cap it makes sense to
-continue using it. This can come along with the kernel terminology though.
-
-Eric
->
-> Thanks
-> Zhenzhong
->> Thanks
->>
->> Eric
->>> +     * domain which could be reused by vIOMMU to create nested
->> domain.
->>> +     */
->>> +    if (vfio_device_viommu_get_nested(vbasedev)) {
->>> +        flags |= IOMMU_HWPT_ALLOC_NEST_PARENT;
->>> +    }
->>> +
->>>      if (cpr_is_incoming()) {
->>>          hwpt_id = vbasedev->cpr.hwpt_id;
->>>          goto skip_alloc;
+diff --git a/linux-user/i386/target_elf.h b/linux-user/i386/target_elf.h
+index da1e0a09bc..99a95ee45b 100644
+--- a/linux-user/i386/target_elf.h
++++ b/linux-user/i386/target_elf.h
+@@ -10,6 +10,11 @@
+ 
+ #include "target_ptrace.h"
+ 
++#define ELF_CLASS               ELFCLASS32
++#define ELF_ARCH                EM_386
++#define EXSTACK_DEFAULT         true
++#define VDSO_HEADER             "vdso.c.inc"
++
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_PLATFORM       1
+ #define HAVE_ELF_CORE_DUMP      1
+@@ -23,4 +28,21 @@ typedef struct target_elf_gregset_t {
+     struct target_pt_regs pt;
+ } target_elf_gregset_t;
+ 
++/*
++ * This is used to ensure we don't load something for the wrong architecture.
++ */
++#define elf_check_arch(x)       ((x) == EM_386 || (x) == EM_486)
++
++/*
++ * i386 is the only target which supplies AT_SYSINFO for the vdso.
++ * All others only supply AT_SYSINFO_EHDR.
++ */
++#define DLINFO_ARCH_ITEMS (vdso_info != NULL)
++#define ARCH_DLINFO                                     \
++    do {                                                \
++        if (vdso_info) {                                \
++            NEW_AUX_ENT(AT_SYSINFO, vdso_info->entry);  \
++        }                                               \
++    } while (0)
++
+ #endif
+diff --git a/linux-user/x86_64/target_elf.h b/linux-user/x86_64/target_elf.h
+index f05b1d4dba..f3c09bb8da 100644
+--- a/linux-user/x86_64/target_elf.h
++++ b/linux-user/x86_64/target_elf.h
+@@ -10,6 +10,10 @@
+ 
+ #include "target_ptrace.h"
+ 
++#define ELF_CLASS               ELFCLASS64
++#define ELF_ARCH                EM_X86_64
++#define VDSO_HEADER             "vdso.c.inc"
++
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_PLATFORM       1
+ #define HAVE_ELF_CORE_DUMP      1
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 8ff9f83bb8..73ca6c681e 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -130,45 +130,6 @@ typedef abi_uint        target_gid_t;
+ #endif
+ typedef abi_int         target_pid_t;
+ 
+-#ifdef TARGET_I386
+-
+-#ifdef TARGET_X86_64
+-#define ELF_CLASS      ELFCLASS64
+-#define ELF_ARCH       EM_X86_64
+-
+-#else
+-
+-/*
+- * This is used to ensure we don't load something for the wrong architecture.
+- */
+-#define elf_check_arch(x) ( ((x) == EM_386) || ((x) == EM_486) )
+-
+-/*
+- * These are used to set parameters in the core dumps.
+- */
+-#define ELF_CLASS       ELFCLASS32
+-#define ELF_ARCH        EM_386
+-
+-#define EXSTACK_DEFAULT true
+-
+-/*
+- * i386 is the only target which supplies AT_SYSINFO for the vdso.
+- * All others only supply AT_SYSINFO_EHDR.
+- */
+-#define DLINFO_ARCH_ITEMS (vdso_info != NULL)
+-#define ARCH_DLINFO                                     \
+-    do {                                                \
+-        if (vdso_info) {                                \
+-            NEW_AUX_ENT(AT_SYSINFO, vdso_info->entry);  \
+-        }                                               \
+-    } while (0)
+-
+-#endif /* TARGET_X86_64 */
+-
+-#define VDSO_HEADER "vdso.c.inc"
+-
+-#endif /* TARGET_I386 */
+-
+ #ifdef TARGET_ARM
+ 
+ #ifndef TARGET_AARCH64
+-- 
+2.43.0
 
 
