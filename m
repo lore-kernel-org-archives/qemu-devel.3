@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4760C8303F
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 08:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35839C8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 09:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urYKl-0000HH-6D; Thu, 28 Aug 2025 04:50:16 -0400
+	id 1urYZb-0001OJ-8N; Thu, 28 Aug 2025 05:05:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urYKh-0000D8-0l
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 04:50:11 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urYKe-0001WO-89
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 04:50:10 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45a1b05ac1eso3320125e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 01:50:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756371007; x=1756975807; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=p1hQtmOQGBZa1yuAFviVcjQiqSOgaYsu7/vEEkbZH2k=;
- b=fYLiiUBQ1aHy0TvWi8w0d+P/imUn2uy0pVXtsG8GhmaQRTp/m2ORrpp0uBkduNacIw
- Rizu8MCpLnNyRXgdxkR9cBpVl3u09tVuTNVuJwgGOMQK6bqzq7pJ601q/4x1EexWUCN8
- YZPi+N/+ge168RyNYRfYqQkFVETD/u6TQI4PmivjJaXn2U+1xK1wCln187fePLmVnHCz
- NJ9k1N2ChDOvQ6347KGIftRH/8hLIj1ArAky5iVY098IUPO92meNJTlB/grk9nHxLDxF
- 8J6TKD61Y3TweQcMn3T953+EoPoIPZM5q+ymfhIw47kj2z0VNFB2bEtjbJ7kAaeUC6d8
- PbUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756371007; x=1756975807;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p1hQtmOQGBZa1yuAFviVcjQiqSOgaYsu7/vEEkbZH2k=;
- b=oRyzDsl4hngxehiaD0cl0PafBdlCwHwkKeyNiVFuBxyrWGx1TQiyiZQ6wkF59tcoCy
- rA68Hh6dzm4cuB/JJqRv5eCkJVO1MISl1pfn3+H5PECYAAKuWs3c/e2dQOnQ8iwDWf/P
- sqOqI+BvJdR4q0S1mabu1V860RujraOarWtRp2S0kWKmWw1FRMBq/F+ZJJ9ew6NhxmKI
- 07T5F65MEz9kpgroexegZx9EFlvhDbdyNaHWAnI29GNnNzqjYEeAJNkLc8NasEta9P4V
- nke8cyYvM+he9ukjvzqFgxUP/me51ZZaGc98jPnZBY5QVUydM66hxfsnLmAPXIeMaB+F
- EWgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5jClZZpBrDHXNQollmtIp68OHCOvsj4TvsvaVHEC5qMsiQ9+GbiFpM17oXGyYrE2qZQrrTJ6F9vSy@nongnu.org
-X-Gm-Message-State: AOJu0Yzb8+4xjG5LpzEIqTrcqcE2x7S9eJpSVrLae60Ofw9PO3KPTPzb
- ermsMGhHLzX8ysnbVMgybf2GZNioxwAZP0Ipiz4OCqnPwTt6rcW0ocoWkY5wRegIZEw=
-X-Gm-Gg: ASbGncvW9f5coeqr+gVq4zxOd7fgJUXo2ucmgRhP+eH/qdZuT8ia9GjhC5OetwwRRBW
- zvaX9bniuoRJiX/z0WHFFw2CEaUDeJZ1CGIfb0LuZ58NsZdblRNQbWUevlizqDZliojqr1J9tTh
- 9JVMLrYIN3CHkle1iSs0DGygT8/YS1SFkrW4OaMe0V5Y5kWabicFt0pBPUXJMwM7jnKDMLRElWP
- nl/kYwCs26oK2dthzWbAtyVBYw4YEHthMUYG6DxAPycGQW0wCkiUvOuYHJ3otbEtyG5k4tZFNjf
- JuA0tYfdMDExUJZAgKxZ9MbQUuuVi8YMpUapvx0qrsO3kJCcEamHuw2H8jfnue3Vjywm6/tDxqI
- fB38r9bi3eoEoxSE/HPEDZq30e2bgeokPSFjulN4MBA/qOCkw+9s4Z7CfAhn/Sznbozzm/XNjMn
- pW
-X-Google-Smtp-Source: AGHT+IHfH9Vy1EIeCDmH748Ql82W2J+bWkms8kOrnkfTzAvNG56PSJPP32e8z3Ks5QSMcOCPGH/f5g==
-X-Received: by 2002:a05:600c:5254:b0:45b:7bba:c7a6 with SMTP id
- 5b1f17b1804b1-45b7bbacb8emr7896025e9.32.1756371006625; 
- Thu, 28 Aug 2025 01:50:06 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cad431ea49sm12643214f8f.42.2025.08.28.01.50.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 01:50:06 -0700 (PDT)
-Message-ID: <c2274ce1-65ee-4238-81f8-7bd6be5491d8@linaro.org>
-Date: Thu, 28 Aug 2025 10:50:05 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1urYZY-0001NR-S5; Thu, 28 Aug 2025 05:05:32 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1urYZW-0003WP-N8; Thu, 28 Aug 2025 05:05:32 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7BF0F14CCC7;
+ Thu, 28 Aug 2025 12:04:56 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id A1504269DC9;
+ Thu, 28 Aug 2025 12:05:24 +0300 (MSK)
+Message-ID: <ed61c700-209b-423f-a797-a1d05cecc5ff@tls.msk.ru>
+Date: Thu, 28 Aug 2025 12:05:24 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char/max78000_uart: Destroy FIFO on deinit
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Jackson Donaldson <jcksn@duck.com>
-References: <20250821154358.2417744-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250821154358.2417744-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH] block/curl: fix curl internal handles handling
+To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: qemu-stable@qemu.org
+References: <20250824001144.2001882-1-mjt@tls.msk.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250824001144.2001882-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,24 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/8/25 17:43, Peter Maydell wrote:
-> In the max78000_uart we create a FIFO in the instance_init function,
-> but we don't destroy it on deinit, so ASAN reports a leak in the
-> device-introspect-test:
+On 24.08.2025 03:11, Michael Tokarev wrote:
+> block/curl.c uses CURLMOPT_SOCKETFUNCTION to register a socket callback.
+> According to the documentation, this callback is called not just with
+> application-created sockets but also with internal curl sockets, - and
+> for such sockets, user data pointer is not set by the application, so
+> the result qemu crashing.
 > 
->      #0 0x561cc92d5de3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qemu-system-arm+0x21f1de3) (BuildId: 98fdf9fc85c3beaeca8eda0be8412f1e11b9c6ad)
->      #1 0x70cbf2afab09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
->      #2 0x561ccc4c884d in fifo8_create /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../util/fifo8.c:27:18
->      #3 0x561cc9744ec9 in max78000_uart_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/char/max78000_uart.c:241:5
+> Pass BDRVCURLState directly to the callback function as user pointer,
+> instead of relying on CURLINFO_PRIVATE.
 > 
-> Add an instance_finalize method to destroy the FIFO.
+> This problem started happening with update of libcurl from 8.9 to 8.10 --
+> apparently with this change curl started using private handles more.
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: d447e4b70295 ("MAX78000: UART Implementation")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/char/max78000_uart.c | 7 +++++++
->   1 file changed, 7 insertions(+)
+> (CURLINFO_PRIVATE is used in one more place, in curl_multi_check_completion() -
+> it might need a similar fix too)
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3081
 
-Patch queued, thanks.
+Kevin, qemu-block@ -- does it look okay if I'll push this one through
+trivial-patches tree?  It's not exactly trivial (but simple enough),
+but I'd rather fix this issue, here and for debian.
+
+Or are you going to send a pullreq for block?
+
+Thanks,
+
+/mjt
 
