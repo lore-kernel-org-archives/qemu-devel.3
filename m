@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB2C9CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E89EDC8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgFj-000211-UD; Thu, 28 Aug 2025 13:17:36 -0400
+	id 1urgIc-0007yL-21; Thu, 28 Aug 2025 13:20:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbVg-0007df-RG
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:13:50 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urduP-0003oh-4j
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:47:25 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbVd-0008D2-4P
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:13:42 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2489c65330aso8535265ad.0
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:13:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urduJ-0001Z9-IB
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:47:24 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-71d603acc23so6971897b3.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:47:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756383219; x=1756988019; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gxZ146uoWLbzcq7GV0ARwloQB6KyoHpZe1NQNrxqKfg=;
- b=EqNdAhnXsJbw5kEpSo2GfNoGBsy5UJwRfd9S4HC03vo26f7TaZHCc0x9EfL3b0xz3J
- 6eBNAfck6YlkUJl4RjSG4B64VGZ8q9+Vs5u8dmtrOkMo4138Leh8mJwKeV2AERi4J4wy
- jKZZOKjA53XeYktlUC08gOI4u9Ul982Q8ikl6gzdRDXAHptUr1VLfmjlzoMrGzm1Xeg5
- Nc3PW9B4F+MKULv0nDmje26Ei2ioE+OnaMLMitI98is2IpuezZIxfKnosFNyKeE+NlfE
- nDP3A5GysRUg1zoVnj4uM6nM0IXgVETYlirEqOUm39hu3b7IbGKfbnnDycMELX8aYrHZ
- UK6Q==
+ d=linaro.org; s=google; t=1756392438; x=1756997238; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HBSxWIEeG+rclfkWajGrnVaVMZsCrkC53o/De+Qt/eA=;
+ b=yI4pa0tVhN7RD8xvxyhUobMF+Z6PQ1Zkv/BFJEDoPZ4d7DZzub6u8QeBAiDWwjtP5I
+ g0uZ85PpdLmVR492bp7TTSFgMn5KyevOmBxMOKup6pwBjZYD2SuRssT3fnkGXoOF3XTN
+ sShvrLkRU863a32gPaLry3ruZYQjz2eEXAQGrFe/E9OdoaHYgR8SLTk72Wn3OmWhM/nU
+ 5sXpB7j8KNfuo9xw/QcCpHGvT4NputbSmZqyzkOdw8xZLWHBzIwxgUGmWMa1a9CasX+6
+ IoFQ2es9ZFMydeNGroh04hV9ffBkZt33wVe92gXI3kRmsVKG4RxDV3V9QP3Mlu2e2vQp
+ AZdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756383219; x=1756988019;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gxZ146uoWLbzcq7GV0ARwloQB6KyoHpZe1NQNrxqKfg=;
- b=tmUahlr9GlSGBdkc9z7Irxw5Lnes/Rj1lRDqC1AszFOYb28JrWpx6vmfGFhMJ+In5L
- zyBBYwARwdNIjLLGxClFg3s2iveCduOJW93ojhqLBLM9o0M5xYVTSlHPXPz/lf6QZX90
- MueivMMCXCKbSvoPigF+HgqIF6JsBlCQsE+AxdyrS+N5SAIySCdWhypaxK9FwYBOx5xG
- Q84if63XgSt8q/iuHcwj0/7KaylunqT7xseODW5nKv6TAA9IIy79xqnisf7AZ2vjPTry
- fWGfv8i6iI7zcQID3APt3bc5CyPwXCUkKzqr3HlUCh4VenMnTB+EhHEHZS8jbplC7RrD
- EnuQ==
-X-Gm-Message-State: AOJu0YwQWHFapYs4TxMP0xmFBzbI3ELg0PF17Istz0QvN2jV24yWoXDv
- 6m8ixPuqCNhf+kQbC8xmtHvAjvzKjuzIAMWEKBfceTLUjcmV59LW44W1YciYG0c8qwodhw9+o9a
- JLWQtqNU=
-X-Gm-Gg: ASbGncsEjLydRc2+3BfsuwVQYoXBJ5pxbXtWPDEZwjgNGWLJIGLCvxfY9DdbwKzWUbA
- QoxV8QhIOwDpDpD0E3kUM0enzdtLsviIzoh3d3J9I/fpYWFQUWjAPW7coiFOTM4PK3108qUTGq4
- BLU/CRfUElK++WJJhyLo8hkmj8yhPc92N3DLpjGTEoawH9C7BsrNnVL4517MalFeHEB5O1OeurV
- gM0xk9OO4rtNXKTpcxlIpmxdFBNxf8/r0f76NBG7gb4q9pGRSVWu81lpL2w39/0S4lujxwzVjJp
- Z4rwkqbONSQT7BJXJEHG+26Jt1OXQNNEoljP+F8dsDR7nNARmrMsxV5bTkUfBDtyAggtG5u7jCc
- sDkVlKuzJ1aFOnvuIhqDFn7PAPIjyav8IcXOh
-X-Google-Smtp-Source: AGHT+IFWo2ty1BndtontY0M31/O/8YKB1bwECb9tFfF/+fFhw/4a6weyR9Aqjknzn4iZy5ESVYLLzg==
-X-Received: by 2002:a17:902:ecc6:b0:244:5cde:d384 with SMTP id
- d9443c01a7336-2462eeb4090mr332794745ad.31.1756383219089; 
- Thu, 28 Aug 2025 05:13:39 -0700 (PDT)
-Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.13.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 05:13:38 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PATCH v3 44/87] linux-user/microblaze: Expand target_elf_gregset_t
-Date: Thu, 28 Aug 2025 22:07:53 +1000
-Message-ID: <20250828120836.195358-45-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
-References: <20250828120836.195358-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756392438; x=1756997238;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HBSxWIEeG+rclfkWajGrnVaVMZsCrkC53o/De+Qt/eA=;
+ b=uWy5AIWkz26gpB3tBTVfImarSdWEmnCSyPHPhFQ2/FfJymN+zOZipbvcWTqFljV5IG
+ ncpVY0POU4Fog65X3juH/75E+fsFbZU/e/x61lA6Dh/vMntc6JTLCXflsC3YBuMZY29J
+ vLxBENZA6s2juZhbtqyA+oAGa3Mpp1E6Y5FZOa8UJxMUtfmtEvgXD9iSZuVcLNOWUZRp
+ m5u06KtwJ+cQRPBG5axe6uwWayACmIu7bLYI6hf8S+677nt05iFMF3KVuyhT//DSLocA
+ uEaktrys9zS6/GpAJTlgj98/89ApP59P5s8oHbTeiKYbQXal8k+MTYUzFVLVgPMYKIDR
+ yVvw==
+X-Gm-Message-State: AOJu0YymhOtf70XjO3AKvalmebnTqufbqWownmekPni5Ev5Pield5jjo
+ k2yFav3c4xsE7GLK9qbQ3ujDfu1Hty4biUHZa+F4WFdzrQMHfYZp+WmaOf0a5EIy3sRltrt7siV
+ XWuYJEAvqdenK0Z0sW3oX0RVWVL5DWAVMXaDRt7C4DA3uxK+OAg7g
+X-Gm-Gg: ASbGncvBT6KWMH0hNsltBjIZa8iQBQIsJummWyit2gsDHUDzJFaXRY/+Ctn0GsKsEgS
+ sd0pIsglKiwkI27sVmb0qOGC2rdWeV/4MsUkr0xtUjyajuX6XhKBUsdG+9qvKqTWrwnivOsuGko
+ Gq1oMP3X20MD3+6FQ81RYjzCdkTMSdxWzx0FssmwzDkv6ruMdHlG3wtEDkfDXmAmqJEzhd2gzXN
+ NtwYh6nvR2lluPjag8=
+X-Google-Smtp-Source: AGHT+IG6Mm+vEteEg55K4/kzLXPRIigzBlygusULqZJFjlziNvL+pWPQ9qyf8RrLuNriSm8H9Wt22S1BJhhAKyxqSpM=
+X-Received: by 2002:a05:690c:4d0a:b0:720:9b0:5791 with SMTP id
+ 00721157ae682-72009b05a57mr205345977b3.25.1756392437665; Thu, 28 Aug 2025
+ 07:47:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+References: <20250828120836.195358-1-richard.henderson@linaro.org>
+ <20250828120836.195358-38-richard.henderson@linaro.org>
+In-Reply-To: <20250828120836.195358-38-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 28 Aug 2025 15:47:05 +0100
+X-Gm-Features: Ac12FXzIk6odLLHd-tI7PhbWB5xQCIbi9sF0-jjYFo5iFi9Uk9LeCtwnie80VUQ
+Message-ID: <CAFEAcA-UyNhs347efeZOQqUK4ZjuWG2sjbseH2n65D5-eYLj3w@mail.gmail.com>
+Subject: Re: [PATCH v3 37/87] linux-user/arm: Create target_ptrace.h
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,69 +93,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make use of the fact that target_elf_gregset_t is a proper structure.
-Drop ELF_NREG, target_elf_greg_t, and tswapreg.
+On Thu, 28 Aug 2025 at 13:10, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Move the target_pt_regs structure from target_syscall.h.
+> Replace the array with proper structure fields.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  linux-user/arm/target_ptrace.h  | 16 ++++++++++++++++
+>  linux-user/arm/target_syscall.h |  8 --------
+>  2 files changed, 16 insertions(+), 8 deletions(-)
+>  create mode 100644 linux-user/arm/target_ptrace.h
+>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/microblaze/target_elf.h | 11 +++++++----
- linux-user/microblaze/elfload.c    | 14 +++++---------
- 2 files changed, 12 insertions(+), 13 deletions(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/linux-user/microblaze/target_elf.h b/linux-user/microblaze/target_elf.h
-index cc5cc0477e..56de77d4f3 100644
---- a/linux-user/microblaze/target_elf.h
-+++ b/linux-user/microblaze/target_elf.h
-@@ -8,13 +8,16 @@
- #ifndef MICROBLAZE_TARGET_ELF_H
- #define MICROBLAZE_TARGET_ELF_H
- 
-+#include "target_ptrace.h"
-+
- #define HAVE_ELF_CORE_DUMP      1
- 
--typedef abi_ulong target_elf_greg_t;
--
--#define ELF_NREG                38
-+/*
-+ * See linux kernel: arch/microblaze/include/asm/elf.h, where
-+ * elf_gregset_t is mapped to struct pt_regs via sizeof.
-+ */
- typedef struct target_elf_gregset_t {
--    target_elf_greg_t regs[ELF_NREG];
-+    struct target_pt_regs pt;
- } target_elf_gregset_t;
- 
- #endif
-diff --git a/linux-user/microblaze/elfload.c b/linux-user/microblaze/elfload.c
-index 89250dbd63..7eb1b26d17 100644
---- a/linux-user/microblaze/elfload.c
-+++ b/linux-user/microblaze/elfload.c
-@@ -11,18 +11,14 @@ const char *get_elf_cpu_model(uint32_t eflags)
-     return "any";
- }
- 
--#define tswapreg(ptr)   tswapal(ptr)
--
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
- {
-     for (int i = 0; i < 32; i++) {
--        r->regs[i] = tswapreg(env->regs[i]);
-+        r->pt.r[i] = tswapal(env->regs[i]);
-     }
- 
--    r->regs[32] = tswapreg(env->pc);
--    r->regs[33] = tswapreg(mb_cpu_read_msr(env));
--    r->regs[34] = 0;
--    r->regs[35] = tswapreg(env->ear);
--    r->regs[36] = 0;
--    r->regs[37] = tswapreg(env->esr);
-+    r->pt.pc = tswapal(env->pc);
-+    r->pt.msr = tswapal(mb_cpu_read_msr(env));
-+    r->pt.ear = tswapal(env->ear);
-+    r->pt.esr = tswapal(env->esr);
- }
--- 
-2.43.0
-
+thanks
+-- PMM
 
