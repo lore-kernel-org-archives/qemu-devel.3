@@ -4,217 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFFACA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D6BCA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgEO-0007eJ-1U; Thu, 28 Aug 2025 13:16:12 -0400
+	id 1urgBQ-0002Td-IU; Thu, 28 Aug 2025 13:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1urbkM-000482-SX
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:28:57 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1urbkJ-0003Go-Ni
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:28:54 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57S8tqOr017709;
- Thu, 28 Aug 2025 12:28:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=pW3RyN6doQ/iF2qM9O8dQge6hsNdkMy103SjwNpRGSc=; b=
- J2q+LIpQBTj75/r540nPf9D2ANamlQa5q+NALCBj5EgmkUcrg1ys2KgTCQv2BDD6
- C6eHDFyo3eIc74YCB3Ou5OzGn5f4KJekW3UaVr3Jr4oZY1A4fc8BB40kEv8xRux6
- 8YKaoo8fv/oqu96C7n2lAz9zQ6P1uaBsh1u9zWsqlfo+2jjKBHIxAB13+lAaTiYB
- 65pOGDMLAuKKe/xmvUYtgTR70ipgKZT0Sr55rHb9yPW9X2Zp7vEdjVQp3v6NrJS4
- aWsWkv69sD7KFMYctyTFcZ5sT+1n4wLEpeYYY4O1TjljJUHVy1tjbEYS3GgEIKKG
- tLOnPt7DkxKo8zqwfQEByQ==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48q48erfpc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 Aug 2025 12:28:48 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 57SC3TVU005068; Thu, 28 Aug 2025 12:28:47 GMT
-Received: from nam10-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam10on2047.outbound.protection.outlook.com [40.107.93.47])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 48q43by44w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 28 Aug 2025 12:28:47 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jSKPHqE/p5ap0afyYihZOoaUETqkRK8kw6i7Yj9mFIa2drqvlEqvBLsOJXFVFU5tvB8KQqLI8v22X4UDuWy23dAd2nnnLhKh0L4uf3lMNj7rK7av/sfl/4li9VjwwG0kLtHa7ByEmGgm1sbH+f3f87gNQlJ+scp4ZFH+twJivUhapM9Pn6LEbsrUrUJw2gkP/WH/HjdD+JHfMqrgEWrUBFwFrLS7vWMwuv7BPsNu48m6reebofYUXXWZIX5Np4osYWGBH+9cp9LYoVwwyvbmgnubsIyY5H0RJ8Hep53Qw6T6yGIrW0VMFo/YNk2aiBEvEEWqEjavEIVi2FJy7Npu6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pW3RyN6doQ/iF2qM9O8dQge6hsNdkMy103SjwNpRGSc=;
- b=LFMxxGULdH/TtgbjsS75GDXcD1A1mwmAQ/AXczNgUdQFoLnvAd01zqLzY2bpMHUcn4XnoajwjWpj+Y5B2Mf5JADonXk+0HnzFsuecbjAC1wwh4PCBfMgpDBKrrC+K4L6hpSfVcC5rhYIbPLcq2cUERuQKNpCAUWDr0MGa+EB5ko0TkMsR9WQOxA1HUvpXDyUO9nIno6oJm22wyINX11SNvodVDcQeaUUa91PeOL1fgLBt2s7Fm6lEy/vUgTvWjXcArd0MMRYDKUdoEc7jplQ+SiZyzm3kkCv4fxGjBEdEOrk+H8NEMR929Xdw8EkxDDxFnp29osh0wEtJ3VYYIOcuQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urdEy-0003qr-S5
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:04:36 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urdEt-0002tC-7v
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:04:36 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-3c46686d1e6so613583f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:04:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pW3RyN6doQ/iF2qM9O8dQge6hsNdkMy103SjwNpRGSc=;
- b=A+JTSjcoqAgzQH7OkjXS6hKsObOt+e/l9PnBUJgWBZeWdgQPDz/F9qNYTQdjp/dNqxgmvqKEGxftZD5PjcwYur4MnOVUR5AcdhEmF2cuhA/l/nRRVZD99fyoICtNK+VOwEARlktD4sWyfyDIJCt1lBYJOU4qBP0tEAZ7JfUmYxg=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by PH8PR10MB6454.namprd10.prod.outlook.com (2603:10b6:510:22e::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Thu, 28 Aug
- 2025 12:28:41 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.9052.019; Thu, 28 Aug 2025
- 12:28:40 +0000
-Message-ID: <0286f864-9aaa-4a49-8975-cb1af3bb1270@oracle.com>
-Date: Thu, 28 Aug 2025 08:28:36 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/container: Remap only populated parts in a section
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com
-References: <20250814032414.301387-1-zhenzhong.duan@intel.com>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <20250814032414.301387-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PH8P220CA0034.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:348::17) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ d=linaro.org; s=google; t=1756389868; x=1756994668; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=7hSK9046fz2eOZAdVTDCm3ohXKp1eomTarCacMcNHDw=;
+ b=fE9lPzzHfcEWnO5UrxlwBCfpQhvS77pXPqCNprf/thEDZg0yogvK9kgCe1tJz1UxRb
+ m9CR0fq0hkETWf3jLATGfpOWRY5K0Sf7uRPIK9GIBoS7AUZuNApJ+lHLDlwZRF9xMk2U
+ 8f6/nA77UpImC/Qj1zxZcmaY3xAw+AA03ruqAcPslEMvZu0tC7kP9YbYWTseoR60FgNT
+ YmForvvcM6D0cAJJ90ne9vsM+TraAc69S5IPiP47Snag0BD6OV0fr8pZLp6KKlED8DBK
+ rcczfEP7QwYgEYYbeyURbpLcOIUq0uaPA5MfpZNUsHWq7NEtKn7Ytsrb1hF2mFkWV6hg
+ wL/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756389868; x=1756994668;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7hSK9046fz2eOZAdVTDCm3ohXKp1eomTarCacMcNHDw=;
+ b=V5BuhCt62OFzsc1n0E38B5ZQI1JfMOCk/EaNNPbA6yTQZVlJZntvBUU0plSgW0/6vd
+ aFWsDwEFaztWECioBZflkogOwktgXEpAeUkofmT7RMzEPLtzn50mWVJ9A8olJuzX69KY
+ 6yxhHnRpWO5mT0WrcFrN4aUavqe8sQzzo9UYyndg6rXifvEpVzFF4Vla1oL8wLqyag5r
+ gPhBOKVvacPb2peQmajmIpEkhg+CRY6p4RBjbrC9e+EOZFeVUIeFs5GxPWLHSx+culS2
+ cC6jVBQ6BC/pyMVPPshjjjcV2zibRRX2s+IPNnL2ouEM3GC+5MVA0W60kDOjPunsI1E2
+ s0kQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbcYyLa8Av3Xbxh3afaVx6Lfu/icRe50t3n1VxRqnlLFLfZobM9IBJwTe/N05cuyXj1M2lPsNbNH+z@nongnu.org
+X-Gm-Message-State: AOJu0YwaGCv+g3OQJlv7QHHioE2oxF/vF2M3p/XamlnzIZtpWB3J8XYU
+ EMKxBrOUMEUynRB7qjleC2cQE9N1RzIDTXA1odvt+YsclXO4OkKjqbqut4xRdRzBqbILP48kYC/
+ FspjU
+X-Gm-Gg: ASbGncvi8fMRXRr7sK7ijcAlc9Efb2K+xoKdL5D39ot44ykeThxpjTDkXyly84/x1KH
+ ysQLY+0E73f4F7Pyk659O4WKBwQz9PuGJ3PaMSPKT6oYFhL6mmjC6DEITIc9VXxKCJLKkjho1AS
+ 3zAhivSF6buYVOx7d0Go5mIkjXW0LKpCv+Rc6C62HS1ikyIgQWnIfns7LP5XfYp+3pea/B0mUNb
+ Ih06WY4HcuH7VuijJBxK4FubnFo+H6dQAn95/JlhzHhj9oYHIrIrytlNHbtv0UL6O7HAHqxk0Lb
+ BbWhHpA75A5vUe1W9uPL+t9gitSrtbR9K7DtjoY9BB8PHbW7cpq+fZcqpDMRjMt5ezjqR+6i1Pd
+ 4IPqkW8f7y4/t5uTF/g2XCKECJ43+
+X-Google-Smtp-Source: AGHT+IEQYjoj04yHYK2quKdM64Emfff5fvf2KEsAyQFSBdk/5dRz9PVDYJGcCu0s/7saA8eZ99lAkA==
+X-Received: by 2002:a05:6000:208a:b0:3ca:3b3f:ec8e with SMTP id
+ ffacd0b85a97d-3ca3b3ff127mr10138033f8f.39.1756389867869; 
+ Thu, 28 Aug 2025 07:04:27 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cce1724939sm6947712f8f.26.2025.08.28.07.04.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Aug 2025 07:04:27 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 2/5] target/arm: Remove XScale and iWMMXt translate.c code
+Date: Thu, 28 Aug 2025 15:04:19 +0100
+Message-ID: <20250828140422.3271703-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250828140422.3271703-1-peter.maydell@linaro.org>
+References: <20250828140422.3271703-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|PH8PR10MB6454:EE_
-X-MS-Office365-Filtering-Correlation-Id: a997ff17-5686-42b6-bf5c-08dde62e6b9d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?QUw0dzVwTXhoL0krNmZJUXRlZURWd0toR3hIQ3BmeitNbmxTM3JLeGluU1Jm?=
- =?utf-8?B?R2hySzhDeGlJUzdkelR1OU1BNUhCQXQyTjdyRHhJQ01xQTJwK04vVUJxUXJP?=
- =?utf-8?B?eEdLTTVGb1QzRDBhWU9CY0gxZC9sSnVOQWEwZVpjTlVHQW52SXlmYmdJbEFX?=
- =?utf-8?B?QmRyOFpyeFNlM2JId1M2YVpZZDVxSCtDV1dIRVVxdm1BREFTbFllWmtqRUtS?=
- =?utf-8?B?RkpOVUhvN2w1WmJLalF6eUR5RzU1ZFhNaWxZZHd2YmpOOVFtTkRrRmVjV2ZK?=
- =?utf-8?B?VWlUeXlSYnVWNURpSDkrRGl4TzRKVy8zNVJOcEtDdzZoY2RBRjBvdlNBTUxW?=
- =?utf-8?B?d2VLWStyT3k1ZlhJNU85aGUyNXc3ZWhkRG9uQzBJUW5sRloyZDRRcU9oSFBr?=
- =?utf-8?B?NGtiZlp6d0hVQUllc05kbXlIdzNUNFlEOXhub3UwdUhldElRSzRobWJNVWF6?=
- =?utf-8?B?dUUyYm1HVFJ3TWF4UVRlbTc0dHJzZ2luc1BjWEw2SFZrZGlxSWU0NjBRTGVL?=
- =?utf-8?B?Z2FXYWgwdkxYM2JBbUV3dTJEajEwblcwVGFPUUpXOEZuRW1GY3lFQmw4K3FF?=
- =?utf-8?B?M3NYY1RvbzROUWRLSll5U01vLzB2SkF2RGZjZEZYSnBnb0hRbjNPYzZDSkdy?=
- =?utf-8?B?K2FYQ21hZWo0WGY5c1QweVdmWkU5eXZLd2FUUnV3SVE1ZkVLN1k1VVNSN1RU?=
- =?utf-8?B?VHNsTjlCaVduOGVuMHMrRDdyeGZkVlAwakx5aXJsUDlBaUNMMkRoZlhMWG1S?=
- =?utf-8?B?dldoNDZPYnlzbkw2WE90NlkyY3AyQnVUNTY3cXlJMGFoRno4YUNTU2lIa0xU?=
- =?utf-8?B?SUtoMkw0YlUrclk4T0l5Zk5CRm9EaWNsUTVhTE5wQk1jWjczaFJMaGJHU0dF?=
- =?utf-8?B?dm1MU0tHUzFBcjVTNVNFNGtXcXZ5UlpDMzJmb1FiUmpCZHVlSUpIbnpyZ1gy?=
- =?utf-8?B?aEt3NmI0UnQzZ0UwbDlQSTFoUVk0TFQ4bkluZWNVL0k3L24vOGJKemQyUmRV?=
- =?utf-8?B?aVVXaHpiUWkwZmlRVFlhNXFwMnM0Ym9ZYjcrRDROOFhmcEVhNEZPeDlsK00r?=
- =?utf-8?B?RndqOFc0TUZhT1ZnVGJFTVBtaDdXM2lSRmtBelA1ekNvU2c0UEFMNDBnLzha?=
- =?utf-8?B?UzZuNmNXbldxb09qNG1nNW1ibUhITmQ3OTF4WE8vdGZiemlwSUthcGgzUjBh?=
- =?utf-8?B?eDdscGVLSnZCb3VqeG5KMTY3RmFBMkJQSWtLeVJxdDBzRjF0NW00enNIWkJI?=
- =?utf-8?B?eWRpdEFtUFcxN1pmbk9BNUFjcU44eXBWSjFMR3pZYlFBOHFEUjFlQzNvakVh?=
- =?utf-8?B?TWRaRU0xQ1hmTTBJWDlESnJpdGU5N2VCRUFkV1VNVWRHQ0dFd3Q1eVpvK09y?=
- =?utf-8?B?SlpieWQ1TGdhTThudE1wY0JKVDdzMEEzbE1IM0FWZnp3MkxDZDJGWUo1cXBW?=
- =?utf-8?B?NFFtL3pIQW1zMHc4THJxOFBzZDFMR1ZQTFRJM1Z3dElSL245TlphWXo0cWk3?=
- =?utf-8?B?ejVrdWZEeG9DaHFtK25LVDI5T2ZWUEZxVDBaZmxIWGROc2w2aDhCeEd6UTJu?=
- =?utf-8?B?aUVJRElqSWltR0tzeEh3Q3JsbW5mK2loS29ON2EvV0ZCZndFY3hYbzYyVXNF?=
- =?utf-8?B?a0NoNyt6b3BmRTVjbjNVc0VtN1ZkV3RMaXRZK0hhck5BeEY4WG42V3duRFQ3?=
- =?utf-8?B?SDJsVUhENkhoYVQya1RZUWpWK3hpcmp2ZGN6cnowVUdwQ3pyMUdjWU13Vjhn?=
- =?utf-8?B?Rm9aT2E5M1BVdFFkblpEdG1oUkNWM1lLYWlQRFlSVy9kTmp0SjlEcVpVU1ha?=
- =?utf-8?B?THYxUGNsUU5xcEk0TkRHY1NhbzJWaEV5SkJnR0Z5bnF4T2RWLzNOY3B5SmpH?=
- =?utf-8?B?OENDK3NGMzRPUEVIUFc2QnZSa0RCeW41WlBQSURYaE5Cd01KNktXa3F5UWlK?=
- =?utf-8?Q?dxx/hv6zwdo=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VHZ5ZEhQUDNMeHVxNEs5SW9sMVM0bWpuNXdYOW5GQS9uczUrNzBOdGd3VHln?=
- =?utf-8?B?dU5vKzNlY3h3dG9Sd2ttQkI5VG1jcEYvcERPcndPSzduRVhPT050bWk2UHdQ?=
- =?utf-8?B?azQySzlsY1pGU3lXb056QWg1QmZndmhILzFaalNhaUdKdUlJZFNEb2VqRkg4?=
- =?utf-8?B?WHFpVkd0ZDFoSkZUcTdVcGliRmpWWXJzN1dRdGc5eVloOWxSVjRpOE44ZHYr?=
- =?utf-8?B?T2dybXB0RlNvOVVYTVh2RmR0UUtpUFk0QnNQR3VUak50c0pYdW9xZ3cvU2Z5?=
- =?utf-8?B?Wi82cDVMOW9iQkxGUlJtZUtzOXRaY1hnUFZuRVhjWERXZWFWaDZpUFNQWWxT?=
- =?utf-8?B?eFpWaU84UXBZR3BxQWVMdjdkdlYyV1pRM3o3eTh3dnkySWNlaE5iT0liclB2?=
- =?utf-8?B?bzJKNXQzMHErVUVVZFZMdTRCTjh0aC9qejJrL3BpbFZtdCtGTjlLc3A3T2h0?=
- =?utf-8?B?dUkyUS9kVjJ0bVNGbDZxWkZQMkpIVk92aTNoZG5qMW1IL1A5UTN0aGU4c280?=
- =?utf-8?B?UWFEK3UzVVlBeGxZOEVtd3hmTUkwcGNnamJQZ0xZRG41KzNYdExKUGlXVjh5?=
- =?utf-8?B?TEZFd2FEazQrQi9MQnhVbEhxbWM2a29acHFvSHlLR3JKdGE5RCticXIwcnVK?=
- =?utf-8?B?ZWJVYWVEbEoyTjlNNlZhZVYvZzRUeGxwZ2VvckxjRTdEcjhUdGlOVzNuZzBF?=
- =?utf-8?B?WkM4U3ViYkVFcXNacVMvdXNjSnJXMnJyZGlSTFdCdUR5Znc0WVRKbmxyeUls?=
- =?utf-8?B?TGxJdWFoL3pINmJMMFBrWmVCM2o5dkFDRjNWMGkxMmxiRFFQbFkrcTlSak85?=
- =?utf-8?B?NnpEekE0dUM5cE9pZWgyNFdlcnBIV2VleFB2QnRRZDdSS0dxZEVLUVZjc3FX?=
- =?utf-8?B?Lzd3N1pCTHBjZldIa3BKMkY3QkVmL2ljWm5mV2FGWThlUnQ4ZFdCTlF4b25Z?=
- =?utf-8?B?bFlQVFZuMlgwdUg3NnJ6Vk1mLzdXL00rZ09MK2VBNHZTb21mcithUkVMeklQ?=
- =?utf-8?B?NWpYY0tONGl5TjBoTW9KMzBTcWtLTWFpaGpVZFR1ckxHQWpxNXQ0eTByaG5I?=
- =?utf-8?B?VUxTZjd5UHhKdG5HU2FsV1M2c1JkUTFxY3N3bmxxaFo1UW1CUWFqRlRIcG1w?=
- =?utf-8?B?Mktoa3VaUW1lc01WTlBnYVk0dGJPZVVFQXdDWDhDUEp0T1NCT0JWMEJGUkx6?=
- =?utf-8?B?NW9WUjZjSkxEaWJHL3hLMndzVzBPYkhzUzZHbnlUcXozeUR2bTZId1NqYThw?=
- =?utf-8?B?c000bVMzSHB2Tlc1ZFpLdk1TNTFpQ29iNXVjbGZjWGlhMHRyVlVFNmZlNU9j?=
- =?utf-8?B?dFZlLzcyMUk4bkUrc3EvQ3FNRWhWWUxDTS9pT2dRSVBNNXNNMlp3bktCQlli?=
- =?utf-8?B?QnlNVFlzd1E0Zit2ZnZTSnpOMjZHWGFWU29EWGhxUVZkNUhYTlRFSzU4dE9L?=
- =?utf-8?B?VlFOa2c1ZGNEMWVJTVhhOTkvNUJlellhMkQ4c2lWOFQ0eENObDZKUk1ESlFp?=
- =?utf-8?B?aGVOc2g1WExkSURvR1JzSDRCeVpOMEtaNnN0c3BZVDBzYWxPNEhvRkpDREJR?=
- =?utf-8?B?cis2eThNblBHUE03UVFZeGsrem9JRnBkTCt3bGU5eUtyaVF3SDFNVU9jbnNh?=
- =?utf-8?B?T1NNZkVlRXhBcUt2NlluVDlEejkvUCtJR2thbG5nQXFpZlFXT1A3Nlg2Ynhw?=
- =?utf-8?B?a0tCUmdheTh1cWJqNHhJWU56UnNHQUc3ZmNzbnJxanA2M2dCYnNxOVFWV0cv?=
- =?utf-8?B?ZWFuMVpmdkJMbXZCYlMwWTVyeWFYeGJvelFRR2paaXRhditDSWZwWHNIL3VK?=
- =?utf-8?B?RkxuVWJQbnFqY0U1N0d6MlNYQi9xZCtaRW9jZ083OTJGQ2NkNzExeE9tczZN?=
- =?utf-8?B?T05sRUV3NDVYMGIvZktqTS93RkRCaVZ0b2pXS0YvQ1Y2ZDcwYVNLc2RwYlN1?=
- =?utf-8?B?dU5PYnZFTU1oMkFuZ283NC9BNHFPS0wyQVBJWXdKdi9NSEpFRkx1ak9RYWVM?=
- =?utf-8?B?c255Q0wzcGs1bm9MdzZaVTdQQkEvVFM4UlpqOEYzZFZ6RkxNZ3J1K01vVi9S?=
- =?utf-8?B?c1k2RSs3V25lMThNNGQwOVVEVXhoL3RRUE5ZdlJKNmNJWkUyLzV2dWVXZWtJ?=
- =?utf-8?B?WlIwSkw2Vlk5SmFUSEVuZiswNWw2MWQ0WXZtK2dSMWpyYUlTNmdRU2ZoMzJx?=
- =?utf-8?B?V2c9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: x1cM+G4VPzilpDmtIliUDLZoQzoO7tqKtfmjV7z850BNGEE4c8T+mJm2r714tJWtN5RapcUwBdjFtEAmVpmeU0Eid87F7UYzXAm82GEHwmucoiP9BooaBxu05UPr69NbLnxzc6zynqXdpJiAd8b7gpxX7TK+Rc7pZ0ypWD1qpuw9Jb82LGploniPFTqdXJi9J/nePft/gi6VY8x8sX7umHOXvo57sDaQFI6TLicpcHMBRZa0oafn1isdXO/46m6pc5PLfuJzIIaYij2GSukpoDQ+VGJBNASQOmF9bN4XeY9gZ3ff2ukGonvznHL/HAXG8AoV4k/F1dmbfKmWCZssWgCRHYvVWVd9ZREWx8TdreuNUKNcTfHrCCmGrKd73pA3cjozgPTxYFYVtaMN+iL9sAAA36bwaICiZzH/C9g1gw7fDaxAYuhxx4G47Xyc08RRkRfVSxx+AbDqyNQJvkCPj9nOrcQtB28m1PWpIQHQbtFP2qCHJfPl61EE/43n9RxUmYd7cFm1UJMlEJwd5efP17jk++7Pzgds+iKfJ4+M+hd14VfwaxBQK+llykb0aFX4btO36tWQMQOkUscHW6FMtE9vMGE11tq3D/QLa6hjO8I=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a997ff17-5686-42b6-bf5c-08dde62e6b9d
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 12:28:40.8886 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ayNuuSHaDaCLsAuNZwD8aiDxaRGuLTolZ8EazbYTF73Eyf44SxPHGDLOTN89GZjGFSsqanM661g8UZj2lV8TmsqIgKyzEVVIYcSp/Ecmk0U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR10MB6454
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-28_04,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- bulkscore=0
- mlxlogscore=999 spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2508110000 definitions=main-2508280104
-X-Proofpoint-GUID: -eukFZqUwE3W6_j9_BfxLPYi7jLnvsw-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAxNCBTYWx0ZWRfX27JggZufMuR2
- QWgaX9n1IZBfefbB4EEd2KAIutYiTZv9Ge2/HZWvaccwiQ3j0ZDx9o3ILwrDDWR0XrsFkMshd/A
- Fq5u5S9GbscxVJrgjtae9SOF9NzqWLPxowkH6cvWj6m1it5uVLBUiaMAT3/PVtmhrzLjnJDt3QB
- zsGgUX7wAUnOKFc5rMM+i+oQoJXqnuvbm07s42py4HB0PiJ3vMmNIW9HXRNEcAol/hP3znfKlXz
- rwUaPT3hfv/EmITlT/M7o8lDFoyIGK80JRcaXWJAsbbRyX9jHHF1R8UNAR4up4wi2aewiY/FC1M
- qsURoNBgXwV+GW3T1yKYjTBYmKJ/cnLjyQnxnBVqm22XljoJ3DCKHaN+8AJ+XgHmu8lCuevOE95
- wD/4MTO9
-X-Authority-Analysis: v=2.4 cv=FtgF/3rq c=1 sm=1 tr=0 ts=68b04b80 b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117
- a=WeWmnZmh0fydH62SvGsd2A==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=2OwXVqhp2XgA:10 a=GoEa3M9JfhUA:10 a=QyXUC8HyAAAA:8 a=QC_ezbJ6CxWCFPOl7q8A:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: -eukFZqUwE3W6_j9_BfxLPYi7jLnvsw-
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -230,148 +101,1472 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/2025 11:24 PM, Zhenzhong Duan wrote:
-> If there are multiple containers and unmap-all fails for some container, we
-> need to remap vaddr for the other containers for which unmap-all succeeded.
-> When ram discard is enabled, we should only remap populated parts in a
-> section instead of the whole section.
-> 
-> Export vfio_ram_discard_notify_populate() and use it to do population.
-> 
-> Fixes: eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr failure")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
-> btw: I didn't find easy to test this corner case, only code inspecting
+Remove all the translator code that is accessible only via
+ARM_FEATURE_XSCALE or ARM_FEATURE_IWMMXT.  This includes the
+xscale-only cp15_cpar TB flags and cpu_{V0,V1,M0} TCG temps.
 
-Thanks Zhenzhong, this looks correct.
+The no-longer-used helper functions will be removed in a separate
+commit.
 
-However, I never liked patch
-   eba1f657cbb1 ("vfio/container: recover from unmap-all-vaddr failure")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/cpu.h           |    7 -
+ target/arm/tcg/translate.h |    2 -
+ target/arm/tcg/hflags.c    |   13 +-
+ target/arm/tcg/translate.c | 1324 +-----------------------------------
+ 4 files changed, 7 insertions(+), 1339 deletions(-)
 
-I think it adds too much complexity for a rare case.  In fact, if we
-examine all the possible error return codes, I believe they all would
-be caused by other qemu application bugs, or kernel bugs:
-
-vfio_dma_do_unmap()
-   returns -EBUSY if an mdev exists.  qemu blocks live update blocker
-     when mdev is present.  If this occurs, the blocker has a bug.
-   returns -EINVAL if the vaddr was already invalidated.  qemu already
-     invalidated it, or never remapped the vaddr after a previous live
-     update.  Both are qemu bugs.
-
-iopt_unmap_all
-   iopt_unmap_iova_range
-     -EBUSY - qemu is concurrently performing other dma map or unmap
-              operations.  a bug.
-
-     -EDEADLOCK - Something is not responding to unmap requests.
-
-Therefore, I think we should just revert eba1f657cbb1, and assert that
-the qemu vfio_dma_unmap_vaddr_all() call succeeds.
-
-Thoughts?
-
-- Steve
-
->   include/hw/vfio/vfio-container-base.h |  3 +++
->   include/hw/vfio/vfio-cpr.h            |  2 +-
->   hw/vfio/cpr-legacy.c                  | 19 ++++++++++++++-----
->   hw/vfio/listener.c                    |  8 ++++----
->   4 files changed, 22 insertions(+), 10 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-> index bded6e993f..3f0c085143 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -269,6 +269,9 @@ struct VFIOIOMMUClass {
->       void (*release)(VFIOContainerBase *bcontainer);
->   };
->   
-> +int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
-> +                                     MemoryRegionSection *section);
-> +
->   VFIORamDiscardListener *vfio_find_ram_discard_listener(
->       VFIOContainerBase *bcontainer, MemoryRegionSection *section);
->   
-> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-> index d37daffbc5..fb32a5f873 100644
-> --- a/include/hw/vfio/vfio-cpr.h
-> +++ b/include/hw/vfio/vfio-cpr.h
-> @@ -67,7 +67,7 @@ bool vfio_cpr_container_match(struct VFIOContainer *container,
->   void vfio_cpr_giommu_remap(struct VFIOContainerBase *bcontainer,
->                              MemoryRegionSection *section);
->   
-> -bool vfio_cpr_ram_discard_register_listener(
-> +bool vfio_cpr_ram_discard_replay_populated(
->       struct VFIOContainerBase *bcontainer, MemoryRegionSection *section);
->   
->   void vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
-> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-> index 553b203e9b..6909c0a616 100644
-> --- a/hw/vfio/cpr-legacy.c
-> +++ b/hw/vfio/cpr-legacy.c
-> @@ -224,22 +224,31 @@ void vfio_cpr_giommu_remap(VFIOContainerBase *bcontainer,
->       memory_region_iommu_replay(giommu->iommu_mr, &giommu->n);
->   }
->   
-> +static int vfio_cpr_rdm_remap(MemoryRegionSection *section, void *opaque)
-> +{
-> +    RamDiscardListener *rdl = opaque;
-> +    return vfio_ram_discard_notify_populate(rdl, section);
-> +}
-> +
->   /*
->    * In old QEMU, VFIO_DMA_UNMAP_FLAG_VADDR may fail on some mapping after
->    * succeeding for others, so the latter have lost their vaddr.  Call this
-> - * to restore vaddr for a section with a RamDiscardManager.
-> + * to restore vaddr for populated parts in a section with a RamDiscardManager.
->    *
-> - * The ram discard listener already exists.  Call its populate function
-> + * The ram discard listener already exists.  Call its replay_populated function
->    * directly, which calls vfio_legacy_cpr_dma_map.
->    */
-> -bool vfio_cpr_ram_discard_register_listener(VFIOContainerBase *bcontainer,
-> -                                            MemoryRegionSection *section)
-> +bool vfio_cpr_ram_discard_replay_populated(VFIOContainerBase *bcontainer,
-> +                                           MemoryRegionSection *section)
->   {
-> +    RamDiscardManager *rdm = memory_region_get_ram_discard_manager(section->mr);
->       VFIORamDiscardListener *vrdl =
->           vfio_find_ram_discard_listener(bcontainer, section);
->   
->       g_assert(vrdl);
-> -    return vrdl->listener.notify_populate(&vrdl->listener, section) == 0;
-> +    return ram_discard_manager_replay_populated(rdm, section,
-> +                                                vfio_cpr_rdm_remap,
-> +                                                &vrdl->listener) == 0;
->   }
->   
->   int vfio_cpr_group_get_device_fd(int d, const char *name)
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index f498e23a93..74837c1122 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -215,8 +215,8 @@ static void vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
->       }
->   }
->   
-> -static int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
-> -                                            MemoryRegionSection *section)
-> +int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
-> +                                     MemoryRegionSection *section)
->   {
->       VFIORamDiscardListener *vrdl = container_of(rdl, VFIORamDiscardListener,
->                                                   listener);
-> @@ -572,8 +572,8 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
->       if (memory_region_has_ram_discard_manager(section->mr)) {
->           if (!cpr_remap) {
->               vfio_ram_discard_register_listener(bcontainer, section);
-> -        } else if (!vfio_cpr_ram_discard_register_listener(bcontainer,
-> -                                                           section)) {
-> +        } else if (!vfio_cpr_ram_discard_replay_populated(bcontainer,
-> +                                                          section)) {
->               goto fail;
->           }
->           return;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index dc9b6dce4c9..d6e8e99f191 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -3008,13 +3008,6 @@ FIELD(TBFLAG_AM32, THUMB, 23, 1)         /* Not cached. */
+  */
+ FIELD(TBFLAG_A32, VECLEN, 0, 3)         /* Not cached. */
+ FIELD(TBFLAG_A32, VECSTRIDE, 3, 2)     /* Not cached. */
+-/*
+- * We store the bottom two bits of the CPAR as TB flags and handle
+- * checks on the other bits at runtime. This shares the same bits as
+- * VECSTRIDE, which is OK as no XScale CPU has VFP.
+- * Not cached, because VECLEN+VECSTRIDE are not cached.
+- */
+-FIELD(TBFLAG_A32, XSCALE_CPAR, 5, 2)
+ FIELD(TBFLAG_A32, VFPEN, 7, 1)         /* Partially cached, minus FPEXC. */
+ FIELD(TBFLAG_A32, SCTLR__B, 8, 1)      /* Cannot overlap with SCTLR_B */
+ FIELD(TBFLAG_A32, HSTR_ACTIVE, 9, 1)
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index f974996f3f8..ec4755ae3fd 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -175,8 +175,6 @@ typedef struct DisasContext {
+     uint8_t gm_blocksize;
+     /* True if the current insn_start has been updated. */
+     bool insn_start_updated;
+-    /* Bottom two bits of XScale c15_cpar coprocessor access control reg */
+-    int c15_cpar;
+     /* Offset from VNCR_EL2 when FEAT_NV2 redirects this reg to memory */
+     uint32_t nv2_redirect_offset;
+ } DisasContext;
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index 59ab5263753..01894226cc9 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -624,16 +624,9 @@ TCGTBCPUState arm_get_tb_cpu_state(CPUState *cs)
+                 DP_TBFLAG_M32(flags, MVE_NO_PRED, 1);
+             }
+         } else {
+-            /*
+-             * Note that XSCALE_CPAR shares bits with VECSTRIDE.
+-             * Note that VECLEN+VECSTRIDE are RES0 for M-profile.
+-             */
+-            if (arm_feature(env, ARM_FEATURE_XSCALE)) {
+-                DP_TBFLAG_A32(flags, XSCALE_CPAR, env->cp15.c15_cpar);
+-            } else {
+-                DP_TBFLAG_A32(flags, VECLEN, env->vfp.vec_len);
+-                DP_TBFLAG_A32(flags, VECSTRIDE, env->vfp.vec_stride);
+-            }
++            /* Note that VECLEN+VECSTRIDE are RES0 for M-profile. */
++            DP_TBFLAG_A32(flags, VECLEN, env->vfp.vec_len);
++            DP_TBFLAG_A32(flags, VECSTRIDE, env->vfp.vec_stride);
+             if (env->vfp.xregs[ARM_VFP_FPEXC] & (1 << 30)) {
+                 DP_TBFLAG_A32(flags, VFPEN, 1);
+             }
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index f7d6d8ce196..e62dcc5d85d 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -44,8 +44,6 @@
+ #define ENABLE_ARCH_7     arm_dc_feature(s, ARM_FEATURE_V7)
+ #define ENABLE_ARCH_8     arm_dc_feature(s, ARM_FEATURE_V8)
+ 
+-/* These are TCG temporaries used only by the legacy iwMMXt decoder */
+-static TCGv_i64 cpu_V0, cpu_V1, cpu_M0;
+ /* These are TCG globals which alias CPUARMState fields */
+ static TCGv_i32 cpu_R[16];
+ TCGv_i32 cpu_CF, cpu_NF, cpu_VF, cpu_ZF;
+@@ -1252,1263 +1250,6 @@ void write_neon_element64(TCGv_i64 src, int reg, int ele, MemOp memop)
+     }
+ }
+ 
+-#define ARM_CP_RW_BIT   (1 << 20)
+-
+-static inline void iwmmxt_load_reg(TCGv_i64 var, int reg)
+-{
+-    tcg_gen_ld_i64(var, tcg_env, offsetof(CPUARMState, iwmmxt.regs[reg]));
+-}
+-
+-static inline void iwmmxt_store_reg(TCGv_i64 var, int reg)
+-{
+-    tcg_gen_st_i64(var, tcg_env, offsetof(CPUARMState, iwmmxt.regs[reg]));
+-}
+-
+-static inline TCGv_i32 iwmmxt_load_creg(int reg)
+-{
+-    TCGv_i32 var = tcg_temp_new_i32();
+-    tcg_gen_ld_i32(var, tcg_env, offsetof(CPUARMState, iwmmxt.cregs[reg]));
+-    return var;
+-}
+-
+-static inline void iwmmxt_store_creg(int reg, TCGv_i32 var)
+-{
+-    tcg_gen_st_i32(var, tcg_env, offsetof(CPUARMState, iwmmxt.cregs[reg]));
+-}
+-
+-static inline void gen_op_iwmmxt_movq_wRn_M0(int rn)
+-{
+-    iwmmxt_store_reg(cpu_M0, rn);
+-}
+-
+-static inline void gen_op_iwmmxt_movq_M0_wRn(int rn)
+-{
+-    iwmmxt_load_reg(cpu_M0, rn);
+-}
+-
+-static inline void gen_op_iwmmxt_orq_M0_wRn(int rn)
+-{
+-    iwmmxt_load_reg(cpu_V1, rn);
+-    tcg_gen_or_i64(cpu_M0, cpu_M0, cpu_V1);
+-}
+-
+-static inline void gen_op_iwmmxt_andq_M0_wRn(int rn)
+-{
+-    iwmmxt_load_reg(cpu_V1, rn);
+-    tcg_gen_and_i64(cpu_M0, cpu_M0, cpu_V1);
+-}
+-
+-static inline void gen_op_iwmmxt_xorq_M0_wRn(int rn)
+-{
+-    iwmmxt_load_reg(cpu_V1, rn);
+-    tcg_gen_xor_i64(cpu_M0, cpu_M0, cpu_V1);
+-}
+-
+-#define IWMMXT_OP(name) \
+-static inline void gen_op_iwmmxt_##name##_M0_wRn(int rn) \
+-{ \
+-    iwmmxt_load_reg(cpu_V1, rn); \
+-    gen_helper_iwmmxt_##name(cpu_M0, cpu_M0, cpu_V1); \
+-}
+-
+-#define IWMMXT_OP_ENV(name) \
+-static inline void gen_op_iwmmxt_##name##_M0_wRn(int rn) \
+-{ \
+-    iwmmxt_load_reg(cpu_V1, rn); \
+-    gen_helper_iwmmxt_##name(cpu_M0, tcg_env, cpu_M0, cpu_V1); \
+-}
+-
+-#define IWMMXT_OP_ENV_SIZE(name) \
+-IWMMXT_OP_ENV(name##b) \
+-IWMMXT_OP_ENV(name##w) \
+-IWMMXT_OP_ENV(name##l)
+-
+-#define IWMMXT_OP_ENV1(name) \
+-static inline void gen_op_iwmmxt_##name##_M0(void) \
+-{ \
+-    gen_helper_iwmmxt_##name(cpu_M0, tcg_env, cpu_M0); \
+-}
+-
+-IWMMXT_OP(maddsq)
+-IWMMXT_OP(madduq)
+-IWMMXT_OP(sadb)
+-IWMMXT_OP(sadw)
+-IWMMXT_OP(mulslw)
+-IWMMXT_OP(mulshw)
+-IWMMXT_OP(mululw)
+-IWMMXT_OP(muluhw)
+-IWMMXT_OP(macsw)
+-IWMMXT_OP(macuw)
+-
+-IWMMXT_OP_ENV_SIZE(unpackl)
+-IWMMXT_OP_ENV_SIZE(unpackh)
+-
+-IWMMXT_OP_ENV1(unpacklub)
+-IWMMXT_OP_ENV1(unpackluw)
+-IWMMXT_OP_ENV1(unpacklul)
+-IWMMXT_OP_ENV1(unpackhub)
+-IWMMXT_OP_ENV1(unpackhuw)
+-IWMMXT_OP_ENV1(unpackhul)
+-IWMMXT_OP_ENV1(unpacklsb)
+-IWMMXT_OP_ENV1(unpacklsw)
+-IWMMXT_OP_ENV1(unpacklsl)
+-IWMMXT_OP_ENV1(unpackhsb)
+-IWMMXT_OP_ENV1(unpackhsw)
+-IWMMXT_OP_ENV1(unpackhsl)
+-
+-IWMMXT_OP_ENV_SIZE(cmpeq)
+-IWMMXT_OP_ENV_SIZE(cmpgtu)
+-IWMMXT_OP_ENV_SIZE(cmpgts)
+-
+-IWMMXT_OP_ENV_SIZE(mins)
+-IWMMXT_OP_ENV_SIZE(minu)
+-IWMMXT_OP_ENV_SIZE(maxs)
+-IWMMXT_OP_ENV_SIZE(maxu)
+-
+-IWMMXT_OP_ENV_SIZE(subn)
+-IWMMXT_OP_ENV_SIZE(addn)
+-IWMMXT_OP_ENV_SIZE(subu)
+-IWMMXT_OP_ENV_SIZE(addu)
+-IWMMXT_OP_ENV_SIZE(subs)
+-IWMMXT_OP_ENV_SIZE(adds)
+-
+-IWMMXT_OP_ENV(avgb0)
+-IWMMXT_OP_ENV(avgb1)
+-IWMMXT_OP_ENV(avgw0)
+-IWMMXT_OP_ENV(avgw1)
+-
+-IWMMXT_OP_ENV(packuw)
+-IWMMXT_OP_ENV(packul)
+-IWMMXT_OP_ENV(packuq)
+-IWMMXT_OP_ENV(packsw)
+-IWMMXT_OP_ENV(packsl)
+-IWMMXT_OP_ENV(packsq)
+-
+-static void gen_op_iwmmxt_set_mup(void)
+-{
+-    TCGv_i32 tmp;
+-    tmp = load_cpu_field(iwmmxt.cregs[ARM_IWMMXT_wCon]);
+-    tcg_gen_ori_i32(tmp, tmp, 2);
+-    store_cpu_field(tmp, iwmmxt.cregs[ARM_IWMMXT_wCon]);
+-}
+-
+-static void gen_op_iwmmxt_set_cup(void)
+-{
+-    TCGv_i32 tmp;
+-    tmp = load_cpu_field(iwmmxt.cregs[ARM_IWMMXT_wCon]);
+-    tcg_gen_ori_i32(tmp, tmp, 1);
+-    store_cpu_field(tmp, iwmmxt.cregs[ARM_IWMMXT_wCon]);
+-}
+-
+-static void gen_op_iwmmxt_setpsr_nz(void)
+-{
+-    TCGv_i32 tmp = tcg_temp_new_i32();
+-    gen_helper_iwmmxt_setpsr_nz(tmp, cpu_M0);
+-    store_cpu_field(tmp, iwmmxt.cregs[ARM_IWMMXT_wCASF]);
+-}
+-
+-static inline void gen_op_iwmmxt_addl_M0_wRn(int rn)
+-{
+-    iwmmxt_load_reg(cpu_V1, rn);
+-    tcg_gen_ext32u_i64(cpu_V1, cpu_V1);
+-    tcg_gen_add_i64(cpu_M0, cpu_M0, cpu_V1);
+-}
+-
+-static inline int gen_iwmmxt_address(DisasContext *s, uint32_t insn,
+-                                     TCGv_i32 dest)
+-{
+-    int rd;
+-    uint32_t offset;
+-    TCGv_i32 tmp;
+-
+-    rd = (insn >> 16) & 0xf;
+-    tmp = load_reg(s, rd);
+-
+-    offset = (insn & 0xff) << ((insn >> 7) & 2);
+-    if (insn & (1 << 24)) {
+-        /* Pre indexed */
+-        if (insn & (1 << 23))
+-            tcg_gen_addi_i32(tmp, tmp, offset);
+-        else
+-            tcg_gen_addi_i32(tmp, tmp, -offset);
+-        tcg_gen_mov_i32(dest, tmp);
+-        if (insn & (1 << 21)) {
+-            store_reg(s, rd, tmp);
+-        }
+-    } else if (insn & (1 << 21)) {
+-        /* Post indexed */
+-        tcg_gen_mov_i32(dest, tmp);
+-        if (insn & (1 << 23))
+-            tcg_gen_addi_i32(tmp, tmp, offset);
+-        else
+-            tcg_gen_addi_i32(tmp, tmp, -offset);
+-        store_reg(s, rd, tmp);
+-    } else if (!(insn & (1 << 23)))
+-        return 1;
+-    return 0;
+-}
+-
+-static inline int gen_iwmmxt_shift(uint32_t insn, uint32_t mask, TCGv_i32 dest)
+-{
+-    int rd = (insn >> 0) & 0xf;
+-    TCGv_i32 tmp;
+-
+-    if (insn & (1 << 8)) {
+-        if (rd < ARM_IWMMXT_wCGR0 || rd > ARM_IWMMXT_wCGR3) {
+-            return 1;
+-        } else {
+-            tmp = iwmmxt_load_creg(rd);
+-        }
+-    } else {
+-        tmp = tcg_temp_new_i32();
+-        iwmmxt_load_reg(cpu_V0, rd);
+-        tcg_gen_extrl_i64_i32(tmp, cpu_V0);
+-    }
+-    tcg_gen_andi_i32(tmp, tmp, mask);
+-    tcg_gen_mov_i32(dest, tmp);
+-    return 0;
+-}
+-
+-/* Disassemble an iwMMXt instruction.  Returns nonzero if an error occurred
+-   (ie. an undefined instruction).  */
+-static int disas_iwmmxt_insn(DisasContext *s, uint32_t insn)
+-{
+-    int rd, wrd;
+-    int rdhi, rdlo, rd0, rd1, i;
+-    TCGv_i32 addr;
+-    TCGv_i32 tmp, tmp2, tmp3;
+-
+-    if ((insn & 0x0e000e00) == 0x0c000000) {
+-        if ((insn & 0x0fe00ff0) == 0x0c400000) {
+-            wrd = insn & 0xf;
+-            rdlo = (insn >> 12) & 0xf;
+-            rdhi = (insn >> 16) & 0xf;
+-            if (insn & ARM_CP_RW_BIT) {                         /* TMRRC */
+-                iwmmxt_load_reg(cpu_V0, wrd);
+-                tcg_gen_extrl_i64_i32(cpu_R[rdlo], cpu_V0);
+-                tcg_gen_extrh_i64_i32(cpu_R[rdhi], cpu_V0);
+-            } else {                                    /* TMCRR */
+-                tcg_gen_concat_i32_i64(cpu_V0, cpu_R[rdlo], cpu_R[rdhi]);
+-                iwmmxt_store_reg(cpu_V0, wrd);
+-                gen_op_iwmmxt_set_mup();
+-            }
+-            return 0;
+-        }
+-
+-        wrd = (insn >> 12) & 0xf;
+-        addr = tcg_temp_new_i32();
+-        if (gen_iwmmxt_address(s, insn, addr)) {
+-            return 1;
+-        }
+-        if (insn & ARM_CP_RW_BIT) {
+-            if ((insn >> 28) == 0xf) {                  /* WLDRW wCx */
+-                tmp = tcg_temp_new_i32();
+-                gen_aa32_ld32u(s, tmp, addr, get_mem_index(s));
+-                iwmmxt_store_creg(wrd, tmp);
+-            } else {
+-                i = 1;
+-                if (insn & (1 << 8)) {
+-                    if (insn & (1 << 22)) {             /* WLDRD */
+-                        gen_aa32_ld64(s, cpu_M0, addr, get_mem_index(s));
+-                        i = 0;
+-                    } else {                            /* WLDRW wRd */
+-                        tmp = tcg_temp_new_i32();
+-                        gen_aa32_ld32u(s, tmp, addr, get_mem_index(s));
+-                    }
+-                } else {
+-                    tmp = tcg_temp_new_i32();
+-                    if (insn & (1 << 22)) {             /* WLDRH */
+-                        gen_aa32_ld16u(s, tmp, addr, get_mem_index(s));
+-                    } else {                            /* WLDRB */
+-                        gen_aa32_ld8u(s, tmp, addr, get_mem_index(s));
+-                    }
+-                }
+-                if (i) {
+-                    tcg_gen_extu_i32_i64(cpu_M0, tmp);
+-                }
+-                gen_op_iwmmxt_movq_wRn_M0(wrd);
+-            }
+-        } else {
+-            if ((insn >> 28) == 0xf) {                  /* WSTRW wCx */
+-                tmp = iwmmxt_load_creg(wrd);
+-                gen_aa32_st32(s, tmp, addr, get_mem_index(s));
+-            } else {
+-                gen_op_iwmmxt_movq_M0_wRn(wrd);
+-                tmp = tcg_temp_new_i32();
+-                if (insn & (1 << 8)) {
+-                    if (insn & (1 << 22)) {             /* WSTRD */
+-                        gen_aa32_st64(s, cpu_M0, addr, get_mem_index(s));
+-                    } else {                            /* WSTRW wRd */
+-                        tcg_gen_extrl_i64_i32(tmp, cpu_M0);
+-                        gen_aa32_st32(s, tmp, addr, get_mem_index(s));
+-                    }
+-                } else {
+-                    if (insn & (1 << 22)) {             /* WSTRH */
+-                        tcg_gen_extrl_i64_i32(tmp, cpu_M0);
+-                        gen_aa32_st16(s, tmp, addr, get_mem_index(s));
+-                    } else {                            /* WSTRB */
+-                        tcg_gen_extrl_i64_i32(tmp, cpu_M0);
+-                        gen_aa32_st8(s, tmp, addr, get_mem_index(s));
+-                    }
+-                }
+-            }
+-        }
+-        return 0;
+-    }
+-
+-    if ((insn & 0x0f000000) != 0x0e000000)
+-        return 1;
+-
+-    switch (((insn >> 12) & 0xf00) | ((insn >> 4) & 0xff)) {
+-    case 0x000:                                                 /* WOR */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 0) & 0xf;
+-        rd1 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        gen_op_iwmmxt_orq_M0_wRn(rd1);
+-        gen_op_iwmmxt_setpsr_nz();
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x011:                                                 /* TMCR */
+-        if (insn & 0xf)
+-            return 1;
+-        rd = (insn >> 12) & 0xf;
+-        wrd = (insn >> 16) & 0xf;
+-        switch (wrd) {
+-        case ARM_IWMMXT_wCID:
+-        case ARM_IWMMXT_wCASF:
+-            break;
+-        case ARM_IWMMXT_wCon:
+-            gen_op_iwmmxt_set_cup();
+-            /* Fall through.  */
+-        case ARM_IWMMXT_wCSSF:
+-            tmp = iwmmxt_load_creg(wrd);
+-            tmp2 = load_reg(s, rd);
+-            tcg_gen_andc_i32(tmp, tmp, tmp2);
+-            iwmmxt_store_creg(wrd, tmp);
+-            break;
+-        case ARM_IWMMXT_wCGR0:
+-        case ARM_IWMMXT_wCGR1:
+-        case ARM_IWMMXT_wCGR2:
+-        case ARM_IWMMXT_wCGR3:
+-            gen_op_iwmmxt_set_cup();
+-            tmp = load_reg(s, rd);
+-            iwmmxt_store_creg(wrd, tmp);
+-            break;
+-        default:
+-            return 1;
+-        }
+-        break;
+-    case 0x100:                                                 /* WXOR */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 0) & 0xf;
+-        rd1 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        gen_op_iwmmxt_xorq_M0_wRn(rd1);
+-        gen_op_iwmmxt_setpsr_nz();
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x111:                                                 /* TMRC */
+-        if (insn & 0xf)
+-            return 1;
+-        rd = (insn >> 12) & 0xf;
+-        wrd = (insn >> 16) & 0xf;
+-        tmp = iwmmxt_load_creg(wrd);
+-        store_reg(s, rd, tmp);
+-        break;
+-    case 0x300:                                                 /* WANDN */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 0) & 0xf;
+-        rd1 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        tcg_gen_neg_i64(cpu_M0, cpu_M0);
+-        gen_op_iwmmxt_andq_M0_wRn(rd1);
+-        gen_op_iwmmxt_setpsr_nz();
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x200:                                                 /* WAND */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 0) & 0xf;
+-        rd1 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        gen_op_iwmmxt_andq_M0_wRn(rd1);
+-        gen_op_iwmmxt_setpsr_nz();
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x810: case 0xa10:                             /* WMADD */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 0) & 0xf;
+-        rd1 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        if (insn & (1 << 21))
+-            gen_op_iwmmxt_maddsq_M0_wRn(rd1);
+-        else
+-            gen_op_iwmmxt_madduq_M0_wRn(rd1);
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x10e: case 0x50e: case 0x90e: case 0xd0e:     /* WUNPCKIL */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            gen_op_iwmmxt_unpacklb_M0_wRn(rd1);
+-            break;
+-        case 1:
+-            gen_op_iwmmxt_unpacklw_M0_wRn(rd1);
+-            break;
+-        case 2:
+-            gen_op_iwmmxt_unpackll_M0_wRn(rd1);
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x10c: case 0x50c: case 0x90c: case 0xd0c:     /* WUNPCKIH */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            gen_op_iwmmxt_unpackhb_M0_wRn(rd1);
+-            break;
+-        case 1:
+-            gen_op_iwmmxt_unpackhw_M0_wRn(rd1);
+-            break;
+-        case 2:
+-            gen_op_iwmmxt_unpackhl_M0_wRn(rd1);
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x012: case 0x112: case 0x412: case 0x512:     /* WSAD */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        if (insn & (1 << 22))
+-            gen_op_iwmmxt_sadw_M0_wRn(rd1);
+-        else
+-            gen_op_iwmmxt_sadb_M0_wRn(rd1);
+-        if (!(insn & (1 << 20)))
+-            gen_op_iwmmxt_addl_M0_wRn(wrd);
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x010: case 0x110: case 0x210: case 0x310:     /* WMUL */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        if (insn & (1 << 21)) {
+-            if (insn & (1 << 20))
+-                gen_op_iwmmxt_mulshw_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_mulslw_M0_wRn(rd1);
+-        } else {
+-            if (insn & (1 << 20))
+-                gen_op_iwmmxt_muluhw_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_mululw_M0_wRn(rd1);
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x410: case 0x510: case 0x610: case 0x710:     /* WMAC */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        if (insn & (1 << 21))
+-            gen_op_iwmmxt_macsw_M0_wRn(rd1);
+-        else
+-            gen_op_iwmmxt_macuw_M0_wRn(rd1);
+-        if (!(insn & (1 << 20))) {
+-            iwmmxt_load_reg(cpu_V1, wrd);
+-            tcg_gen_add_i64(cpu_M0, cpu_M0, cpu_V1);
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x006: case 0x406: case 0x806: case 0xc06:     /* WCMPEQ */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            gen_op_iwmmxt_cmpeqb_M0_wRn(rd1);
+-            break;
+-        case 1:
+-            gen_op_iwmmxt_cmpeqw_M0_wRn(rd1);
+-            break;
+-        case 2:
+-            gen_op_iwmmxt_cmpeql_M0_wRn(rd1);
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x800: case 0x900: case 0xc00: case 0xd00:     /* WAVG2 */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        if (insn & (1 << 22)) {
+-            if (insn & (1 << 20))
+-                gen_op_iwmmxt_avgw1_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_avgw0_M0_wRn(rd1);
+-        } else {
+-            if (insn & (1 << 20))
+-                gen_op_iwmmxt_avgb1_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_avgb0_M0_wRn(rd1);
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x802: case 0x902: case 0xa02: case 0xb02:     /* WALIGNR */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        tmp = iwmmxt_load_creg(ARM_IWMMXT_wCGR0 + ((insn >> 20) & 3));
+-        tcg_gen_andi_i32(tmp, tmp, 7);
+-        iwmmxt_load_reg(cpu_V1, rd1);
+-        gen_helper_iwmmxt_align(cpu_M0, cpu_M0, cpu_V1, tmp);
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x601: case 0x605: case 0x609: case 0x60d:     /* TINSR */
+-        if (((insn >> 6) & 3) == 3)
+-            return 1;
+-        rd = (insn >> 12) & 0xf;
+-        wrd = (insn >> 16) & 0xf;
+-        tmp = load_reg(s, rd);
+-        gen_op_iwmmxt_movq_M0_wRn(wrd);
+-        switch ((insn >> 6) & 3) {
+-        case 0:
+-            tmp2 = tcg_constant_i32(0xff);
+-            tmp3 = tcg_constant_i32((insn & 7) << 3);
+-            break;
+-        case 1:
+-            tmp2 = tcg_constant_i32(0xffff);
+-            tmp3 = tcg_constant_i32((insn & 3) << 4);
+-            break;
+-        case 2:
+-            tmp2 = tcg_constant_i32(0xffffffff);
+-            tmp3 = tcg_constant_i32((insn & 1) << 5);
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-        gen_helper_iwmmxt_insr(cpu_M0, cpu_M0, tmp, tmp2, tmp3);
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x107: case 0x507: case 0x907: case 0xd07:     /* TEXTRM */
+-        rd = (insn >> 12) & 0xf;
+-        wrd = (insn >> 16) & 0xf;
+-        if (rd == 15 || ((insn >> 22) & 3) == 3)
+-            return 1;
+-        gen_op_iwmmxt_movq_M0_wRn(wrd);
+-        tmp = tcg_temp_new_i32();
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            tcg_gen_shri_i64(cpu_M0, cpu_M0, (insn & 7) << 3);
+-            tcg_gen_extrl_i64_i32(tmp, cpu_M0);
+-            if (insn & 8) {
+-                tcg_gen_ext8s_i32(tmp, tmp);
+-            } else {
+-                tcg_gen_andi_i32(tmp, tmp, 0xff);
+-            }
+-            break;
+-        case 1:
+-            tcg_gen_shri_i64(cpu_M0, cpu_M0, (insn & 3) << 4);
+-            tcg_gen_extrl_i64_i32(tmp, cpu_M0);
+-            if (insn & 8) {
+-                tcg_gen_ext16s_i32(tmp, tmp);
+-            } else {
+-                tcg_gen_andi_i32(tmp, tmp, 0xffff);
+-            }
+-            break;
+-        case 2:
+-            tcg_gen_shri_i64(cpu_M0, cpu_M0, (insn & 1) << 5);
+-            tcg_gen_extrl_i64_i32(tmp, cpu_M0);
+-            break;
+-        }
+-        store_reg(s, rd, tmp);
+-        break;
+-    case 0x117: case 0x517: case 0x917: case 0xd17:     /* TEXTRC */
+-        if ((insn & 0x000ff008) != 0x0003f000 || ((insn >> 22) & 3) == 3)
+-            return 1;
+-        tmp = iwmmxt_load_creg(ARM_IWMMXT_wCASF);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            tcg_gen_shri_i32(tmp, tmp, ((insn & 7) << 2) + 0);
+-            break;
+-        case 1:
+-            tcg_gen_shri_i32(tmp, tmp, ((insn & 3) << 3) + 4);
+-            break;
+-        case 2:
+-            tcg_gen_shri_i32(tmp, tmp, ((insn & 1) << 4) + 12);
+-            break;
+-        }
+-        tcg_gen_shli_i32(tmp, tmp, 28);
+-        gen_set_nzcv(tmp);
+-        break;
+-    case 0x401: case 0x405: case 0x409: case 0x40d:     /* TBCST */
+-        if (((insn >> 6) & 3) == 3)
+-            return 1;
+-        rd = (insn >> 12) & 0xf;
+-        wrd = (insn >> 16) & 0xf;
+-        tmp = load_reg(s, rd);
+-        switch ((insn >> 6) & 3) {
+-        case 0:
+-            gen_helper_iwmmxt_bcstb(cpu_M0, tmp);
+-            break;
+-        case 1:
+-            gen_helper_iwmmxt_bcstw(cpu_M0, tmp);
+-            break;
+-        case 2:
+-            gen_helper_iwmmxt_bcstl(cpu_M0, tmp);
+-            break;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x113: case 0x513: case 0x913: case 0xd13:     /* TANDC */
+-        if ((insn & 0x000ff00f) != 0x0003f000 || ((insn >> 22) & 3) == 3)
+-            return 1;
+-        tmp = iwmmxt_load_creg(ARM_IWMMXT_wCASF);
+-        tmp2 = tcg_temp_new_i32();
+-        tcg_gen_mov_i32(tmp2, tmp);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            for (i = 0; i < 7; i ++) {
+-                tcg_gen_shli_i32(tmp2, tmp2, 4);
+-                tcg_gen_and_i32(tmp, tmp, tmp2);
+-            }
+-            break;
+-        case 1:
+-            for (i = 0; i < 3; i ++) {
+-                tcg_gen_shli_i32(tmp2, tmp2, 8);
+-                tcg_gen_and_i32(tmp, tmp, tmp2);
+-            }
+-            break;
+-        case 2:
+-            tcg_gen_shli_i32(tmp2, tmp2, 16);
+-            tcg_gen_and_i32(tmp, tmp, tmp2);
+-            break;
+-        }
+-        gen_set_nzcv(tmp);
+-        break;
+-    case 0x01c: case 0x41c: case 0x81c: case 0xc1c:     /* WACC */
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            gen_helper_iwmmxt_addcb(cpu_M0, cpu_M0);
+-            break;
+-        case 1:
+-            gen_helper_iwmmxt_addcw(cpu_M0, cpu_M0);
+-            break;
+-        case 2:
+-            gen_helper_iwmmxt_addcl(cpu_M0, cpu_M0);
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x115: case 0x515: case 0x915: case 0xd15:     /* TORC */
+-        if ((insn & 0x000ff00f) != 0x0003f000 || ((insn >> 22) & 3) == 3)
+-            return 1;
+-        tmp = iwmmxt_load_creg(ARM_IWMMXT_wCASF);
+-        tmp2 = tcg_temp_new_i32();
+-        tcg_gen_mov_i32(tmp2, tmp);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            for (i = 0; i < 7; i ++) {
+-                tcg_gen_shli_i32(tmp2, tmp2, 4);
+-                tcg_gen_or_i32(tmp, tmp, tmp2);
+-            }
+-            break;
+-        case 1:
+-            for (i = 0; i < 3; i ++) {
+-                tcg_gen_shli_i32(tmp2, tmp2, 8);
+-                tcg_gen_or_i32(tmp, tmp, tmp2);
+-            }
+-            break;
+-        case 2:
+-            tcg_gen_shli_i32(tmp2, tmp2, 16);
+-            tcg_gen_or_i32(tmp, tmp, tmp2);
+-            break;
+-        }
+-        gen_set_nzcv(tmp);
+-        break;
+-    case 0x103: case 0x503: case 0x903: case 0xd03:     /* TMOVMSK */
+-        rd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        if ((insn & 0xf) != 0 || ((insn >> 22) & 3) == 3)
+-            return 1;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        tmp = tcg_temp_new_i32();
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            gen_helper_iwmmxt_msbb(tmp, cpu_M0);
+-            break;
+-        case 1:
+-            gen_helper_iwmmxt_msbw(tmp, cpu_M0);
+-            break;
+-        case 2:
+-            gen_helper_iwmmxt_msbl(tmp, cpu_M0);
+-            break;
+-        }
+-        store_reg(s, rd, tmp);
+-        break;
+-    case 0x106: case 0x306: case 0x506: case 0x706:     /* WCMPGT */
+-    case 0x906: case 0xb06: case 0xd06: case 0xf06:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_cmpgtsb_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_cmpgtub_M0_wRn(rd1);
+-            break;
+-        case 1:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_cmpgtsw_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_cmpgtuw_M0_wRn(rd1);
+-            break;
+-        case 2:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_cmpgtsl_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_cmpgtul_M0_wRn(rd1);
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x00e: case 0x20e: case 0x40e: case 0x60e:     /* WUNPCKEL */
+-    case 0x80e: case 0xa0e: case 0xc0e: case 0xe0e:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_unpacklsb_M0();
+-            else
+-                gen_op_iwmmxt_unpacklub_M0();
+-            break;
+-        case 1:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_unpacklsw_M0();
+-            else
+-                gen_op_iwmmxt_unpackluw_M0();
+-            break;
+-        case 2:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_unpacklsl_M0();
+-            else
+-                gen_op_iwmmxt_unpacklul_M0();
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x00c: case 0x20c: case 0x40c: case 0x60c:     /* WUNPCKEH */
+-    case 0x80c: case 0xa0c: case 0xc0c: case 0xe0c:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_unpackhsb_M0();
+-            else
+-                gen_op_iwmmxt_unpackhub_M0();
+-            break;
+-        case 1:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_unpackhsw_M0();
+-            else
+-                gen_op_iwmmxt_unpackhuw_M0();
+-            break;
+-        case 2:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_unpackhsl_M0();
+-            else
+-                gen_op_iwmmxt_unpackhul_M0();
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x204: case 0x604: case 0xa04: case 0xe04:     /* WSRL */
+-    case 0x214: case 0x614: case 0xa14: case 0xe14:
+-        if (((insn >> 22) & 3) == 0)
+-            return 1;
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        tmp = tcg_temp_new_i32();
+-        if (gen_iwmmxt_shift(insn, 0xff, tmp)) {
+-            return 1;
+-        }
+-        switch ((insn >> 22) & 3) {
+-        case 1:
+-            gen_helper_iwmmxt_srlw(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        case 2:
+-            gen_helper_iwmmxt_srll(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        case 3:
+-            gen_helper_iwmmxt_srlq(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x004: case 0x404: case 0x804: case 0xc04:     /* WSRA */
+-    case 0x014: case 0x414: case 0x814: case 0xc14:
+-        if (((insn >> 22) & 3) == 0)
+-            return 1;
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        tmp = tcg_temp_new_i32();
+-        if (gen_iwmmxt_shift(insn, 0xff, tmp)) {
+-            return 1;
+-        }
+-        switch ((insn >> 22) & 3) {
+-        case 1:
+-            gen_helper_iwmmxt_sraw(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        case 2:
+-            gen_helper_iwmmxt_sral(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        case 3:
+-            gen_helper_iwmmxt_sraq(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x104: case 0x504: case 0x904: case 0xd04:     /* WSLL */
+-    case 0x114: case 0x514: case 0x914: case 0xd14:
+-        if (((insn >> 22) & 3) == 0)
+-            return 1;
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        tmp = tcg_temp_new_i32();
+-        if (gen_iwmmxt_shift(insn, 0xff, tmp)) {
+-            return 1;
+-        }
+-        switch ((insn >> 22) & 3) {
+-        case 1:
+-            gen_helper_iwmmxt_sllw(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        case 2:
+-            gen_helper_iwmmxt_slll(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        case 3:
+-            gen_helper_iwmmxt_sllq(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x304: case 0x704: case 0xb04: case 0xf04:     /* WROR */
+-    case 0x314: case 0x714: case 0xb14: case 0xf14:
+-        if (((insn >> 22) & 3) == 0)
+-            return 1;
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        tmp = tcg_temp_new_i32();
+-        switch ((insn >> 22) & 3) {
+-        case 1:
+-            if (gen_iwmmxt_shift(insn, 0xf, tmp)) {
+-                return 1;
+-            }
+-            gen_helper_iwmmxt_rorw(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        case 2:
+-            if (gen_iwmmxt_shift(insn, 0x1f, tmp)) {
+-                return 1;
+-            }
+-            gen_helper_iwmmxt_rorl(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        case 3:
+-            if (gen_iwmmxt_shift(insn, 0x3f, tmp)) {
+-                return 1;
+-            }
+-            gen_helper_iwmmxt_rorq(cpu_M0, tcg_env, cpu_M0, tmp);
+-            break;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x116: case 0x316: case 0x516: case 0x716:     /* WMIN */
+-    case 0x916: case 0xb16: case 0xd16: case 0xf16:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_minsb_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_minub_M0_wRn(rd1);
+-            break;
+-        case 1:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_minsw_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_minuw_M0_wRn(rd1);
+-            break;
+-        case 2:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_minsl_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_minul_M0_wRn(rd1);
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x016: case 0x216: case 0x416: case 0x616:     /* WMAX */
+-    case 0x816: case 0xa16: case 0xc16: case 0xe16:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 0:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_maxsb_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_maxub_M0_wRn(rd1);
+-            break;
+-        case 1:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_maxsw_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_maxuw_M0_wRn(rd1);
+-            break;
+-        case 2:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_maxsl_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_maxul_M0_wRn(rd1);
+-            break;
+-        case 3:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x002: case 0x102: case 0x202: case 0x302:     /* WALIGNI */
+-    case 0x402: case 0x502: case 0x602: case 0x702:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        iwmmxt_load_reg(cpu_V1, rd1);
+-        gen_helper_iwmmxt_align(cpu_M0, cpu_M0, cpu_V1,
+-                                tcg_constant_i32((insn >> 20) & 3));
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    case 0x01a: case 0x11a: case 0x21a: case 0x31a:     /* WSUB */
+-    case 0x41a: case 0x51a: case 0x61a: case 0x71a:
+-    case 0x81a: case 0x91a: case 0xa1a: case 0xb1a:
+-    case 0xc1a: case 0xd1a: case 0xe1a: case 0xf1a:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 20) & 0xf) {
+-        case 0x0:
+-            gen_op_iwmmxt_subnb_M0_wRn(rd1);
+-            break;
+-        case 0x1:
+-            gen_op_iwmmxt_subub_M0_wRn(rd1);
+-            break;
+-        case 0x3:
+-            gen_op_iwmmxt_subsb_M0_wRn(rd1);
+-            break;
+-        case 0x4:
+-            gen_op_iwmmxt_subnw_M0_wRn(rd1);
+-            break;
+-        case 0x5:
+-            gen_op_iwmmxt_subuw_M0_wRn(rd1);
+-            break;
+-        case 0x7:
+-            gen_op_iwmmxt_subsw_M0_wRn(rd1);
+-            break;
+-        case 0x8:
+-            gen_op_iwmmxt_subnl_M0_wRn(rd1);
+-            break;
+-        case 0x9:
+-            gen_op_iwmmxt_subul_M0_wRn(rd1);
+-            break;
+-        case 0xb:
+-            gen_op_iwmmxt_subsl_M0_wRn(rd1);
+-            break;
+-        default:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x01e: case 0x11e: case 0x21e: case 0x31e:     /* WSHUFH */
+-    case 0x41e: case 0x51e: case 0x61e: case 0x71e:
+-    case 0x81e: case 0x91e: case 0xa1e: case 0xb1e:
+-    case 0xc1e: case 0xd1e: case 0xe1e: case 0xf1e:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        tmp = tcg_constant_i32(((insn >> 16) & 0xf0) | (insn & 0x0f));
+-        gen_helper_iwmmxt_shufh(cpu_M0, tcg_env, cpu_M0, tmp);
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x018: case 0x118: case 0x218: case 0x318:     /* WADD */
+-    case 0x418: case 0x518: case 0x618: case 0x718:
+-    case 0x818: case 0x918: case 0xa18: case 0xb18:
+-    case 0xc18: case 0xd18: case 0xe18: case 0xf18:
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 20) & 0xf) {
+-        case 0x0:
+-            gen_op_iwmmxt_addnb_M0_wRn(rd1);
+-            break;
+-        case 0x1:
+-            gen_op_iwmmxt_addub_M0_wRn(rd1);
+-            break;
+-        case 0x3:
+-            gen_op_iwmmxt_addsb_M0_wRn(rd1);
+-            break;
+-        case 0x4:
+-            gen_op_iwmmxt_addnw_M0_wRn(rd1);
+-            break;
+-        case 0x5:
+-            gen_op_iwmmxt_adduw_M0_wRn(rd1);
+-            break;
+-        case 0x7:
+-            gen_op_iwmmxt_addsw_M0_wRn(rd1);
+-            break;
+-        case 0x8:
+-            gen_op_iwmmxt_addnl_M0_wRn(rd1);
+-            break;
+-        case 0x9:
+-            gen_op_iwmmxt_addul_M0_wRn(rd1);
+-            break;
+-        case 0xb:
+-            gen_op_iwmmxt_addsl_M0_wRn(rd1);
+-            break;
+-        default:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x008: case 0x108: case 0x208: case 0x308:     /* WPACK */
+-    case 0x408: case 0x508: case 0x608: case 0x708:
+-    case 0x808: case 0x908: case 0xa08: case 0xb08:
+-    case 0xc08: case 0xd08: case 0xe08: case 0xf08:
+-        if (!(insn & (1 << 20)) || ((insn >> 22) & 3) == 0)
+-            return 1;
+-        wrd = (insn >> 12) & 0xf;
+-        rd0 = (insn >> 16) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        gen_op_iwmmxt_movq_M0_wRn(rd0);
+-        switch ((insn >> 22) & 3) {
+-        case 1:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_packsw_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_packuw_M0_wRn(rd1);
+-            break;
+-        case 2:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_packsl_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_packul_M0_wRn(rd1);
+-            break;
+-        case 3:
+-            if (insn & (1 << 21))
+-                gen_op_iwmmxt_packsq_M0_wRn(rd1);
+-            else
+-                gen_op_iwmmxt_packuq_M0_wRn(rd1);
+-            break;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        gen_op_iwmmxt_set_cup();
+-        break;
+-    case 0x201: case 0x203: case 0x205: case 0x207:
+-    case 0x209: case 0x20b: case 0x20d: case 0x20f:
+-    case 0x211: case 0x213: case 0x215: case 0x217:
+-    case 0x219: case 0x21b: case 0x21d: case 0x21f:
+-        wrd = (insn >> 5) & 0xf;
+-        rd0 = (insn >> 12) & 0xf;
+-        rd1 = (insn >> 0) & 0xf;
+-        if (rd0 == 0xf || rd1 == 0xf)
+-            return 1;
+-        gen_op_iwmmxt_movq_M0_wRn(wrd);
+-        tmp = load_reg(s, rd0);
+-        tmp2 = load_reg(s, rd1);
+-        switch ((insn >> 16) & 0xf) {
+-        case 0x0:                                       /* TMIA */
+-            gen_helper_iwmmxt_muladdsl(cpu_M0, cpu_M0, tmp, tmp2);
+-            break;
+-        case 0x8:                                       /* TMIAPH */
+-            gen_helper_iwmmxt_muladdsw(cpu_M0, cpu_M0, tmp, tmp2);
+-            break;
+-        case 0xc: case 0xd: case 0xe: case 0xf:                 /* TMIAxy */
+-            if (insn & (1 << 16))
+-                tcg_gen_shri_i32(tmp, tmp, 16);
+-            if (insn & (1 << 17))
+-                tcg_gen_shri_i32(tmp2, tmp2, 16);
+-            gen_helper_iwmmxt_muladdswl(cpu_M0, cpu_M0, tmp, tmp2);
+-            break;
+-        default:
+-            return 1;
+-        }
+-        gen_op_iwmmxt_movq_wRn_M0(wrd);
+-        gen_op_iwmmxt_set_mup();
+-        break;
+-    default:
+-        return 1;
+-    }
+-
+-    return 0;
+-}
+-
+-/* Disassemble an XScale DSP instruction.  Returns nonzero if an error occurred
+-   (ie. an undefined instruction).  */
+-static int disas_dsp_insn(DisasContext *s, uint32_t insn)
+-{
+-    int acc, rd0, rd1, rdhi, rdlo;
+-    TCGv_i32 tmp, tmp2;
+-
+-    if ((insn & 0x0ff00f10) == 0x0e200010) {
+-        /* Multiply with Internal Accumulate Format */
+-        rd0 = (insn >> 12) & 0xf;
+-        rd1 = insn & 0xf;
+-        acc = (insn >> 5) & 7;
+-
+-        if (acc != 0)
+-            return 1;
+-
+-        tmp = load_reg(s, rd0);
+-        tmp2 = load_reg(s, rd1);
+-        switch ((insn >> 16) & 0xf) {
+-        case 0x0:                                       /* MIA */
+-            gen_helper_iwmmxt_muladdsl(cpu_M0, cpu_M0, tmp, tmp2);
+-            break;
+-        case 0x8:                                       /* MIAPH */
+-            gen_helper_iwmmxt_muladdsw(cpu_M0, cpu_M0, tmp, tmp2);
+-            break;
+-        case 0xc:                                       /* MIABB */
+-        case 0xd:                                       /* MIABT */
+-        case 0xe:                                       /* MIATB */
+-        case 0xf:                                       /* MIATT */
+-            if (insn & (1 << 16))
+-                tcg_gen_shri_i32(tmp, tmp, 16);
+-            if (insn & (1 << 17))
+-                tcg_gen_shri_i32(tmp2, tmp2, 16);
+-            gen_helper_iwmmxt_muladdswl(cpu_M0, cpu_M0, tmp, tmp2);
+-            break;
+-        default:
+-            return 1;
+-        }
+-
+-        gen_op_iwmmxt_movq_wRn_M0(acc);
+-        return 0;
+-    }
+-
+-    if ((insn & 0x0fe00ff8) == 0x0c400000) {
+-        /* Internal Accumulator Access Format */
+-        rdhi = (insn >> 16) & 0xf;
+-        rdlo = (insn >> 12) & 0xf;
+-        acc = insn & 7;
+-
+-        if (acc != 0)
+-            return 1;
+-
+-        if (insn & ARM_CP_RW_BIT) {                     /* MRA */
+-            iwmmxt_load_reg(cpu_V0, acc);
+-            tcg_gen_extrl_i64_i32(cpu_R[rdlo], cpu_V0);
+-            tcg_gen_extrh_i64_i32(cpu_R[rdhi], cpu_V0);
+-            tcg_gen_andi_i32(cpu_R[rdhi], cpu_R[rdhi], (1 << (40 - 32)) - 1);
+-        } else {                                        /* MAR */
+-            tcg_gen_concat_i32_i64(cpu_V0, cpu_R[rdlo], cpu_R[rdhi]);
+-            iwmmxt_store_reg(cpu_V0, acc);
+-        }
+-        return 0;
+-    }
+-
+-    return 1;
+-}
+-
+ static void gen_goto_ptr(void)
+ {
+     tcg_gen_lookup_and_goto_ptr();
+@@ -3048,13 +1789,10 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
+     }
+ 
+     if ((s->hstr_active && s->current_el == 0) || ri->accessfn ||
+-        (ri->fgt && s->fgt_active) ||
+-        (arm_dc_feature(s, ARM_FEATURE_XSCALE) && cpnum < 14)) {
++        (ri->fgt && s->fgt_active)) {
+         /*
+          * Emit code to perform further access permissions checks at
+          * runtime; this may result in an exception.
+-         * Note that on XScale all cp0..c13 registers do an access check
+-         * call in order to handle c15_cpar.
+          */
+         gen_set_condexec(s);
+         gen_update_pc(s, 0);
+@@ -3192,24 +1930,6 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
+     }
+ }
+ 
+-/* Decode XScale DSP or iWMMXt insn (in the copro space, cp=0 or 1) */
+-static void disas_xscale_insn(DisasContext *s, uint32_t insn)
+-{
+-    int cpnum = (insn >> 8) & 0xf;
+-
+-    if (extract32(s->c15_cpar, cpnum, 1) == 0) {
+-        unallocated_encoding(s);
+-    } else if (arm_dc_feature(s, ARM_FEATURE_IWMMXT)) {
+-        if (disas_iwmmxt_insn(s, insn)) {
+-            unallocated_encoding(s);
+-        }
+-    } else if (arm_dc_feature(s, ARM_FEATURE_XSCALE)) {
+-        if (disas_dsp_insn(s, insn)) {
+-            unallocated_encoding(s);
+-        }
+-    }
+-}
+-
+ /* Store a 64-bit value to a register pair.  Clobbers val.  */
+ static void gen_storeq_reg(DisasContext *s, int rlow, int rhigh, TCGv_i64 val)
+ {
+@@ -3569,14 +2289,7 @@ static bool valid_cp(DisasContext *s, int cp)
+      * only cp14 and cp15 are valid, and other values aren't considered
+      * to be in the coprocessor-instruction space at all. v8M still
+      * permits coprocessors 0..7.
+-     * For XScale, we must not decode the XScale cp0, cp1 space as
+-     * a standard coprocessor insn, because we want to fall through to
+-     * the legacy disas_xscale_insn() decoder after decodetree is done.
+      */
+-    if (arm_dc_feature(s, ARM_FEATURE_XSCALE) && (cp == 0 || cp == 1)) {
+-        return false;
+-    }
+-
+     if (arm_dc_feature(s, ARM_FEATURE_V8) &&
+         !arm_dc_feature(s, ARM_FEATURE_M)) {
+         return cp >= 14;
+@@ -7343,18 +6056,6 @@ static void disas_arm_insn(DisasContext *s, unsigned int insn)
+             disas_neon_shared(s, insn)) {
+             return;
+         }
+-        /* fall back to legacy decoder */
+-
+-        if ((insn & 0x0e000f00) == 0x0c000100) {
+-            if (arm_dc_feature(s, ARM_FEATURE_IWMMXT)) {
+-                /* iWMMXt register transfer.  */
+-                if (extract32(s->c15_cpar, 1, 1)) {
+-                    if (!disas_iwmmxt_insn(s, insn)) {
+-                        return;
+-                    }
+-                }
+-            }
+-        }
+         goto illegal_op;
+     }
+     if (cond != 0xe) {
+@@ -7368,16 +6069,7 @@ static void disas_arm_insn(DisasContext *s, unsigned int insn)
+         disas_vfp(s, insn)) {
+         return;
+     }
+-    /* fall back to legacy decoder */
+-    /* TODO: convert xscale/iwmmxt decoder to decodetree ?? */
+-    if (arm_dc_feature(s, ARM_FEATURE_XSCALE)) {
+-        if (((insn & 0x0c000e00) == 0x0c000000)
+-            && ((insn & 0x03000000) != 0x03000000)) {
+-            /* Coprocessor insn, coprocessor 0 or 1 */
+-            disas_xscale_insn(s, insn);
+-            return;
+-        }
+-    }
++    /* We didn't match anything in the decoder: UNDEF */
+ 
+ illegal_op:
+     unallocated_encoding(s);
+@@ -7606,12 +6298,8 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+         dc->hstr_active = EX_TBFLAG_A32(tb_flags, HSTR_ACTIVE);
+         dc->ns = EX_TBFLAG_A32(tb_flags, NS);
+         dc->vfp_enabled = EX_TBFLAG_A32(tb_flags, VFPEN);
+-        if (arm_feature(env, ARM_FEATURE_XSCALE)) {
+-            dc->c15_cpar = EX_TBFLAG_A32(tb_flags, XSCALE_CPAR);
+-        } else {
+-            dc->vec_len = EX_TBFLAG_A32(tb_flags, VECLEN);
+-            dc->vec_stride = EX_TBFLAG_A32(tb_flags, VECSTRIDE);
+-        }
++        dc->vec_len = EX_TBFLAG_A32(tb_flags, VECLEN);
++        dc->vec_stride = EX_TBFLAG_A32(tb_flags, VECSTRIDE);
+         dc->sme_trap_nonstreaming =
+             EX_TBFLAG_A32(tb_flags, SME_TRAP_NONSTREAMING);
+     }
+@@ -7651,10 +6339,6 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+         int bound = -(dc->base.pc_first | TARGET_PAGE_MASK) / 4;
+         dc->base.max_insns = MIN(dc->base.max_insns, bound);
+     }
+-
+-    cpu_V0 = tcg_temp_new_i64();
+-    cpu_V1 = tcg_temp_new_i64();
+-    cpu_M0 = tcg_temp_new_i64();
+ }
+ 
+ static void arm_tr_tb_start(DisasContextBase *dcbase, CPUState *cpu)
+-- 
+2.43.0
 
 
