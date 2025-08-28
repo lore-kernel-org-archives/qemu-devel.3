@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72FC9CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF490C8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgEA-0005jy-Oi; Thu, 28 Aug 2025 13:15:59 -0400
+	id 1urgoJ-0003dd-8x; Thu, 28 Aug 2025 13:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbWr-0008PF-Ni
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:59 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from
+ <3fpewaAkKCrsbolfftmfshpphmf.dpnrfnv-efwfmopohov.psh@flex--ankeesler.bounces.google.com>)
+ id 1urgoG-0003dF-No
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 13:53:16 -0400
+Received: from mail-qt1-x84a.google.com ([2607:f8b0:4864:20::84a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbWo-0008R2-5f
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:57 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7720f23123dso837919b3a.2
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:14:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3fpewaAkKCrsbolfftmfshpphmf.dpnrfnv-efwfmopohov.psh@flex--ankeesler.bounces.google.com>)
+ id 1urgo8-00081d-JZ
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 13:53:16 -0400
+Received: by mail-qt1-x84a.google.com with SMTP id
+ d75a77b69052e-4b109be41a1so49526411cf.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 10:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756383292; x=1756988092; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wZDPXdfsmxBIOUaB++qruH/yHWhEuoUSA6jOwZM9P+A=;
- b=UxkejWnlCRQHNWBdPIYH1am0yOTVgggYcQPuIj1yeborabubyYEAUSr/RcYKN75IaI
- Q4kLnmofbDKOZd0qYPWtaKOzNykfKdfo85fl30j+Vj9KKVgXMfk9OdyomLFXzWkFtK4s
- k8/pys0hCpcVvpr3jA14kJS8ag8dgh+WHmwMG1gE1sGjrXIe/Ne0+g4KYyMs/4xb99Nh
- ku7TTqGQB8HWhJusaghLxFq2Io3O1eS+BwOAs/qlhKWC2i8QfLCS/CKOkhEvYfdtVASn
- 1xDYs+2iMU9O5u3bqDh3SNZ0x69tOxbCs8HG5CAfuoKLOctGJfWniAmukIC6Y/aYseIc
- K6EA==
+ d=google.com; s=20230601; t=1756403583; x=1757008383; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=3Xa+Cr9KqBCArfh1BVK1sBDjtakPs/JB+duqu8nLn7o=;
+ b=OXbkJVW+W09O0WvGFXQMkA1/Tm7as9tPIF6HQY6oU1VLJncn2UOKsct7GCblVRtnz6
+ c7xTCeR6nK3oHMGJwsh0z/xqRqZVMPdEDvRo+Nr07LLuXai2G65ygAnhmwCmclGsCf5B
+ d+VeVsuXpCb0xmxF9FmnKUgIjxfGepUm2tXA23v7pxN45woSiN5nubwnBs35yn9wpOF6
+ LPBfBrEkM375k6O0LigvCuvKVrMYuU4ynZpumEHFET16nPCRxIbde0A6sc0O6GPr6aoW
+ 6Kv4xj4BEB1FvyXBx6kXz47c82ivpHkh9sSFg16AYA+qvTWug9aQo8uIKd/wIL0g6AHz
+ 3LbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756383292; x=1756988092;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wZDPXdfsmxBIOUaB++qruH/yHWhEuoUSA6jOwZM9P+A=;
- b=MgoiGY5TZSnpBf1rfyO2c7IuXzbRE/rRxKflgea38S1NdnR6m827uCddF/jHpdcJv3
- ggDG2BlUunx6n+iBiaMMdHBRvySiZiteEnPMkbEndyzQlQuViwb4dxVSWbJNldPj5WUk
- E7pUwPXqi0+o26DfpXFjOxt0u8Ho6rVV+/bMnncp7j5qAF58k02mkFeofYPukBD/4mM2
- dEHyCJMR5kbgjDLxeST43zWDkLlVFHDwKFyfcWsIi9fO5vg/HP711R3DJE1bwrq8Bweo
- jsItFEj76QHvpAkxFJ/Jd8F5v+CGGBVFDM0fqy4aLFKaGtARiZqMIxzbSq02wDlBKcgB
- 039A==
-X-Gm-Message-State: AOJu0Yz73yy+q0OkwZGMxDCjdjW9053q046YnOo07esjrIjZ9hNYV/bF
- WGAh6ElVsbBlbtZXy3y4PQO4zDffQRsdfszur+py/gYLP7ojsJpVIb4Gt0KC9aPMTVgc7jIov21
- tZcrWbHI=
-X-Gm-Gg: ASbGncvcSWLqFroIuIMyreWo6J4VZD4IwNFCeUF89Ojr6CH5dckYfKS32pz7rIBl3xt
- Ylgc9DboQdwQVaT5YrTL3mTf1OdnnodE46iR2MAmUVgb34jUKYPMYl6EPLu9laqGwjBVuFAvZBQ
- fp+QbS1dMNTk8tBKlfFkHPtQL0cOql3+O6kcaMuukrkfkXZY55TxHBUv1nqJlZRP3MnpvUkYM0p
- Rk+7YY0wvJsDWpyO3KXu4/Z8vTPzDs0nPww888wo7U1enaaJdg9bE9cu+zPBeBXSuoYJFN2fVLV
- 5x7/H/42lq/1ZItwO7PcX0SObMU5nKIVwJLXKkqQHeK4yTHMmzdI/vxBpeaNa+yj/Rzmby3FcX8
- a1h0GV5I06UROeHutMHXoULfPiGHnQo9PaseO
-X-Google-Smtp-Source: AGHT+IFgEq/lRrKD5XJahb3EGmlaKRQGJoue/3BYozyO2kbr99Z6Mz1mc074zCR6u8NPQeHW4HBPAA==
-X-Received: by 2002:a17:902:e80c:b0:246:b3d4:5c82 with SMTP id
- d9443c01a7336-246b3d4620amr244281685ad.16.1756383292496; 
- Thu, 28 Aug 2025 05:14:52 -0700 (PDT)
-Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.14.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 05:14:52 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PATCH v3 67/87] linux-user: Move elf parameters to ppc/target_elf.h
-Date: Thu, 28 Aug 2025 22:08:16 +1000
-Message-ID: <20250828120836.195358-68-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
-References: <20250828120836.195358-1-richard.henderson@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1756403583; x=1757008383;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3Xa+Cr9KqBCArfh1BVK1sBDjtakPs/JB+duqu8nLn7o=;
+ b=g4ifqajhvI6cy1ZMIQVDOwEBc2H2QZKR/Sqs+mFq4sA1v3PFrSh72AGbhLdptmSUCd
+ 57xJ+zPMQVPF3Ek5qw3S9P+kGVGRZP4wZOEImdozOXDyFyL3cmKm2f+lZfbP5yXDYSy9
+ sn0DHn1DzPNDEx3Wqtm2oRj2pM1oMMOJSrofYEx0d833Asvi4AdL0nDpiUmUU0JPojL5
+ FJEc05Ai6cBjsItYbBsXRtD6R38SgiDRoDkyyET9Hki/51FDqI7fwzfc6eGB7xl2T96G
+ uIVOeTyywyvmn6THl9YoPl9FS7RzwqN3Kh7ftPhZKfTKPl0iUMWBNxxZYvKoYJO5yNVg
+ aqGw==
+X-Gm-Message-State: AOJu0Yw+Bx9o+aBHJEYPG7/Fd/50Lcub052d6tOUWd4luOU/BCkTvZFD
+ +pou3zQimBWV70pMBfi8o1mKbAWGadmMl9YuLaYrGi3TgIXa5mTR+gcArFMiHlKLxw3UWhRTNRi
+ ZsBsO9J56EpfWILVX
+X-Google-Smtp-Source: AGHT+IErTmp/pG1SJL1JrowZ8dxWqRDYguXTrXaeSTGDSjvOHEIf7Pxr9jgjQFZMkuonvFujnCwdoy1+faLeGOA=
+X-Received: from qknqf9.prod.google.com ([2002:a05:620a:6609:b0:7e6:99b9:8ab0])
+ (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:622a:1993:b0:4b0:8057:1de9 with SMTP id
+ d75a77b69052e-4b2aaa19f21mr286456101cf.3.1756403582840; 
+ Thu, 28 Aug 2025 10:53:02 -0700 (PDT)
+Date: Thu, 28 Aug 2025 17:52:59 +0000
+In-Reply-To: <20250828175259.3831672-1-ankeesler@google.com>
+Mime-Version: 1.0
+References: <20250828175259.3831672-1-ankeesler@google.com>
+X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae-goog
+Message-ID: <20250828175259.3831672-2-ankeesler@google.com>
+Subject: [PATCH v2 1/1] Support per-head resolutions with virtio-gpu
+From: Andrew Keesler <ankeesler@google.com>
+To: berrange@redhat.com, marcandre.lureau@gmail.com
+Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::84a;
+ envelope-from=3fpewaAkKCrsbolfftmfshpphmf.dpnrfnv-efwfmopohov.psh@flex--ankeesler.bounces.google.com;
+ helo=mail-qt1-x84a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,137 +92,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/ppc/target_elf.h | 43 ++++++++++++++++++++++++++++++
- linux-user/elfload.c        | 53 -------------------------------------
- 2 files changed, 43 insertions(+), 53 deletions(-)
+In 454f4b0f, we started down the path of supporting separate
+configurations per display head (e.g., you have 2 heads - one with
+EDID name "AAA" and the other with EDID name "BBB").
 
-diff --git a/linux-user/ppc/target_elf.h b/linux-user/ppc/target_elf.h
-index 2a61cd2896..9a47f18fb8 100644
---- a/linux-user/ppc/target_elf.h
-+++ b/linux-user/ppc/target_elf.h
-@@ -10,6 +10,17 @@
+In this change, we add resolution to this configuration surface (e.g.,
+you have 2 heads - one with resolution 111x222 and the other with
+resolution 333x444).
+
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA",
+                 "xres":111,
+                 "yres":222
+              },
+              {
+                 "name":"BBB",
+                 "xres":333,
+                 "yres":444
+              }
+            ]}'
+
+Here is the behavior matrix of the current resolution configuration
+surface (xres/yres) with the new resolution configuration surface
+(outputs[i].xres/yres).
+
+Case: !(xres || yres) && !(outputs[i].xres || outputs[i].yres)
+Behavior: current behavior - outputs[0] enabled with default xres/yres
+
+Case: (xres || yres) && !(outputs[i].xres || outputs[i].yres)
+Behavior: current behavior - outputs[0] enabled with xres/yres
+
+Case: !(xres || yres) && (outputs[i].xres || outputs[i].yres)
+Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+
+Case: (xres || yres) && (outputs[i].xres || outputs[i].yres)
+Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+---
+ hw/display/virtio-gpu-base.c   | 10 ++++++++++
+ include/hw/virtio/virtio-gpu.h |  2 ++
+ qapi/virtio.json               |  6 +++++-
+ 3 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index 7269477a1c..8bcbe5e837 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -233,6 +233,16 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+     g->req_state[0].width = g->conf.xres;
+     g->req_state[0].height = g->conf.yres;
  
- #include "target_ptrace.h"
- 
-+#define ELF_MACHINE             PPC_ELF_MACHINE
++    for (output_idx = 0, node = g->conf.outputs;
++         node && output_idx < g->conf.max_outputs;
++         output_idx++, node = node->next) {
++        if (node->value->xres || node->value->yres) {
++            g->enabled_output_bitmask |= (1 << output_idx);
++            g->req_state[output_idx].width = node->value->xres;
++            g->req_state[output_idx].height = node->value->yres;
++        }
++    }
 +
-+#ifdef TARGET_PPC64
-+# define elf_check_arch(x)      ((x) == EM_PPC64)
-+# define ELF_CLASS              ELFCLASS64
-+#else
-+# define ELF_CLASS              ELFCLASS32
-+# define EXSTACK_DEFAULT        true
-+#endif
-+#define ELF_ARCH                EM_PPC
-+
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_HWCAP2         1
- #define HAVE_ELF_CORE_DUMP      1
-@@ -26,4 +37,36 @@ typedef struct target_elf_gregset_t {
-     };
- } target_elf_gregset_t;
+     g->hw_ops = &virtio_gpu_ops;
+     for (i = 0; i < g->conf.max_outputs; i++) {
+         g->scanout[i].con =
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 9f16f89a36..7597e87971 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -129,6 +129,8 @@ struct virtio_gpu_base_conf {
+     uint32_t xres;
+     uint32_t yres;
+     uint64_t hostmem;
++    // If set, outputs[i].xres/yres takes precedent over xres/yres and enables
++    // the ith output.
+     VirtIOGPUOutputList *outputs;
+ };
  
-+#ifndef TARGET_PPC64
-+# define VDSO_HEADER  "vdso-32.c.inc"
-+#elif TARGET_BIG_ENDIAN
-+# define VDSO_HEADER  "vdso-64.c.inc"
-+#else
-+# define VDSO_HEADER  "vdso-64le.c.inc"
-+#endif
-+
-+/*
-+ * The requirements here are:
-+ * - keep the final alignment of sp (sp & 0xf)
-+ * - make sure the 32-bit value at the first 16 byte aligned position of
-+ *   AUXV is greater than 16 for glibc compatibility.
-+ *   AT_IGNOREPPC is used for that.
-+ * - for compatibility with glibc ARCH_DLINFO must always be defined on PPC,
-+ *   even if DLINFO_ARCH_ITEMS goes to zero or is undefined.
-+ */
-+#define DLINFO_ARCH_ITEMS       5
-+#define ARCH_DLINFO                                     \
-+    do {                                                \
-+        PowerPCCPU *cpu = POWERPC_CPU(thread_cpu);              \
-+        /*                                              \
-+         * Handle glibc compatibility: these magic entries must \
-+         * be at the lowest addresses in the final auxv.        \
-+         */                                             \
-+        NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);        \
-+        NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);        \
-+        NEW_AUX_ENT(AT_DCACHEBSIZE, cpu->env.dcache_line_size); \
-+        NEW_AUX_ENT(AT_ICACHEBSIZE, cpu->env.icache_line_size); \
-+        NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
-+    } while (0)
-+
- #endif
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index ccdd87aa12..526c90e2c1 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -130,59 +130,6 @@ typedef abi_uint        target_gid_t;
- #endif
- typedef abi_int         target_pid_t;
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 9d652fe4a8..9f753543cb 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -970,11 +970,15 @@
+ #
+ # @name: the name of the output
+ #
++# @xres: horizontal resolution of the output in pixels (since 10.2)
++#
++# @yres: vertical resolution of the output in pixels (since 10.2)
++#
+ # Since: 10.1
+ ##
  
--#ifdef TARGET_PPC
--
--#define ELF_MACHINE    PPC_ELF_MACHINE
--
--#if defined(TARGET_PPC64)
--
--#define elf_check_arch(x) ( (x) == EM_PPC64 )
--
--#define ELF_CLASS       ELFCLASS64
--
--#else
--
--#define ELF_CLASS       ELFCLASS32
--#define EXSTACK_DEFAULT true
--
--#endif
--
--#define ELF_ARCH        EM_PPC
--
--/*
-- * The requirements here are:
-- * - keep the final alignment of sp (sp & 0xf)
-- * - make sure the 32-bit value at the first 16 byte aligned position of
-- *   AUXV is greater than 16 for glibc compatibility.
-- *   AT_IGNOREPPC is used for that.
-- * - for compatibility with glibc ARCH_DLINFO must always be defined on PPC,
-- *   even if DLINFO_ARCH_ITEMS goes to zero or is undefined.
-- */
--#define DLINFO_ARCH_ITEMS       5
--#define ARCH_DLINFO                                     \
--    do {                                                \
--        PowerPCCPU *cpu = POWERPC_CPU(thread_cpu);              \
--        /*                                              \
--         * Handle glibc compatibility: these magic entries must \
--         * be at the lowest addresses in the final auxv.        \
--         */                                             \
--        NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);        \
--        NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);        \
--        NEW_AUX_ENT(AT_DCACHEBSIZE, cpu->env.dcache_line_size); \
--        NEW_AUX_ENT(AT_ICACHEBSIZE, cpu->env.icache_line_size); \
--        NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
--    } while (0)
--
--#ifndef TARGET_PPC64
--# define VDSO_HEADER  "vdso-32.c.inc"
--#elif TARGET_BIG_ENDIAN
--# define VDSO_HEADER  "vdso-64.c.inc"
--#else
--# define VDSO_HEADER  "vdso-64le.c.inc"
--#endif
--
--#endif
--
- #ifdef TARGET_LOONGARCH64
+ { 'struct': 'VirtIOGPUOutput',
+-  'data': { 'name': 'str' } }
++  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
  
- #define ELF_CLASS   ELFCLASS64
+ ##
+ # @DummyVirtioForceArrays:
 -- 
-2.43.0
+2.51.0.338.gd7d06c2dae-goog
 
 
