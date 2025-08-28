@@ -4,106 +4,203 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA37CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 10:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85887CA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 10:27:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urZcB-0004Wh-9R; Thu, 28 Aug 2025 06:12:20 -0400
+	id 1urZqG-0001rA-IL; Thu, 28 Aug 2025 06:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urZc4-0004Ua-C5
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 06:12:13 -0400
-Received: from mail-yb1-xb34.google.com ([2607:f8b0:4864:20::b34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urZc1-0004IY-Sz
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 06:12:12 -0400
-Received: by mail-yb1-xb34.google.com with SMTP id
- 3f1490d57ef6-e96f401c478so507656276.3
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 03:12:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756375927; x=1756980727; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0tLPLtTKw4gLPTg4FLtEyN364FrJLmV5HJ3/RjjnJz4=;
- b=bGZ1MQPmga/QJKfHDHq1QjZNbMdIsEVP5pCqD5kLJ26B+bSut38TgPrNfutUmkYgw2
- otuLydaXEu16zB2EEnf+A7SzocnqxZlMAdQAhGn/CPDmqMstjFy58f/4d6NVOwzVKQjc
- bpaMsOT5NYZPVioqKecdOUqzboNe0zfFJ7Oxw9bTVqLk+HfcWQPl3+MCNuR59f8iEwIH
- NMevHPJQEvlduoEBG5RSK64YhnT7ytw2U+pfFaLFvHKQSOIBBfGn9dfEdl84TtTdMKqq
- md374YodrjJvRNfi8Pp5WHn2bqDdjUPNPr4VFUMyPk7EE8P1nNbwdP7oXWr1oRN8tTnH
- RjtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756375927; x=1756980727;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0tLPLtTKw4gLPTg4FLtEyN364FrJLmV5HJ3/RjjnJz4=;
- b=GnvhiqW0VxP+dx+5OqWfYLBZ5+JhV9kwqN0ueSXXV3AoZmbAvqw2NfWpZM7WyTsZAe
- orEy8WNh2wbHFu7P6F7KTQpkMFfSQqUtvnj8dRypWBe0u5XXOf0k7v2Zd16nRWnlVdHW
- QOIJKv/FZwzeIGzTWGQ3Xwr+pUvfjHJ+vKmaemhgUhCLmSJPAehWzq1RDxtp+ieArKoy
- BWGh/zRligXN2UH8GQYzRoz4PzyZwxs9C1ns5dNAke8tIdbjYxVNTSL3FqfCriwg9bfR
- 4J9DS0P2pZhtPR02Ncg5B483ukhV/qVc1b6Onkv/NugtwzowNuLkRZ67GQ0wDgl80sCd
- HARA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1KfyLckYd7LyXNDNoIn3JGJDBz4HoucK7i13boG5tZub1e4U49GUrDK96CESbRcs2yYDA3rBEcmPr@nongnu.org
-X-Gm-Message-State: AOJu0YyIqFWEpHt4ofDakxObNZvU4c5bJbYJVycoB7Xar58bTMyMTeRF
- uCGUcbaabrmsD7NRCEy/dsehLRQjVFM7mmhBZSfVTDFTrSHKjg//LIoplQmboNece6c0xGdwN7I
- i7/ZakoWQdI9bSh3/OItUH5HUlAaAautcLcHQp97hrg==
-X-Gm-Gg: ASbGncuTcaPbXzbR+gUtLD83WHTZK8L/VgkG28wGjIXU74IJmWQQOY4n7LbT82QNBRx
- XtHp9cMu+HBcEMrQzpWVVvFdCIpTc/9adwsyOcHgKry9DaPao+qWEHeHUhsQ/aSWsk2ZuVsRhQX
- hdBTJEfSM2S/OaIp0f+k7RoD6sg1jUbIQe8PaMbHYT7d77GMQLAvBaDGArliWO2mOfYuBGLDf0o
- 6cwf0r/tEDMufK7qGQ=
-X-Google-Smtp-Source: AGHT+IHzwad4jEP/ymZFDxhe+Y8s4Y56asUCrB9A57moRe/bqzY6Rpm1bcgYbN+l4JtlbZgIAQ0RiYSuwk5BDxd+Bvo=
-X-Received: by 2002:a05:690c:6082:b0:721:10a3:6584 with SMTP id
- 00721157ae682-72110a36c63mr164529087b3.11.1756375926711; Thu, 28 Aug 2025
- 03:12:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1urZqE-0001pw-8b
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 06:26:50 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1urZqB-0006Jx-9q
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 06:26:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1756376807; x=1787912807;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=pqYpjaqDxMc96+ij4FZwj10uNPZ8ds7W5T08Kk8VuLQ=;
+ b=jtZr8naMU6qFhOvVZIAkLU+7oigtvCR4dWAybc3VzbsY4c5cHOGbXJ7f
+ J7N9XlbFhSJN1QlTlN/knkfzlv09cFoPRIPj9xi6jQ5icnMgmp5PqAjml
+ 0MyuqO8wHZinKhfgF0ryMR3v5FU38BYTffRvphqA2WCeBNHxB3dFvtdTi
+ 5exI9Aykbos7/t4rvGIFn4sji6Z0OjFzhS7uMB7eNNkKr9+S+y1QnRGOs
+ 4E4EDfXf6JLjiegiDtj8h1WeCgOVCgaKU8NfGpAgkSUODotLkT+wmGXNi
+ Lbi3kKg4rLJ7PHH1gyFI22dOMzPVDahq2lvRA/hbmTz/VtozvRTsECAuC A==;
+X-CSE-ConnectionGUID: Y1tT38nLTe+oof85KH7f/A==
+X-CSE-MsgGUID: mq+QHds9Qj6J9dEbUgc9mA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11535"; a="69348802"
+X-IronPort-AV: E=Sophos;i="6.18,217,1751266800"; d="scan'208";a="69348802"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Aug 2025 03:26:43 -0700
+X-CSE-ConnectionGUID: mHYkg7o2S4yjRKakgljJPg==
+X-CSE-MsgGUID: Re4UljQ/TF+q2R/eFJkf7A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,217,1751266800"; d="scan'208";a="169372761"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Aug 2025 03:26:43 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Thu, 28 Aug 2025 03:26:42 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Thu, 28 Aug 2025 03:26:41 -0700
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (40.107.95.45) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Thu, 28 Aug 2025 03:26:41 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HmxOdTU+zAgNbTGufJ9qmpr4WW+G6RMikO4joxHzYkoX7VYiON7k6OEm0z/w0PR08uxkM6YuAvVlaMZz69KdG8r4i7yhQWFHm+Ddm6fadqVD6M/0OTxRoPbo9BZDdrOfZgbXO9yQD5xdoOBnNmxPCeVOfNbCCONxa+xmzonWfFVEE3z1kk8lUVmhwdXiCNEkpFWk4/pGyTT41qawJxmmE/ZVU/WnJNhp2AugqvkTZkuoYxQW0lBru69SxiCAno5m1KNXt5Obl5xKR/eXnksMqCtyE8W7g2xsTh4cO8vtBe8Hj342JZUDThKnXEQImM90jFFh+TTkEaXwMfVqpD5StA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sPoeywRejuB7P/jeIuZb/vHy1tk13w2MNjJEeLjwXs4=;
+ b=Tvf60O+zWksx+xPJantUIdec71ReKVOVVgD3SJ9e7D2SEDHyFtkTw74FLaYos/6q6an3p5qO4mKy43TIm+pfJyHexAZxQqywzH2Rrk+xKqOlIVvUuJAo+lEg6s0mS7AAUzmDPIAaLBCRLf54qVEY7TAbt8ZdMA7M/PxcSs9oHsV2RRGG5ltq2y3SSP85YcaJvXFrxviH3zQbAAfyWHvGTuM3EqMeZgYHExEcs0KL3fZvDfUnYRuUaYljo+ZXsaQNfYl5avEpbsWachJlU7895XIVp04acAcWNuMC7jcKi8wqQboXIrcXo2P346givG8mTUjwviJOAaHq6hRnspxdGw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BY5PR11MB3974.namprd11.prod.outlook.com (2603:10b6:a03:183::29)
+ by MW6PR11MB8411.namprd11.prod.outlook.com (2603:10b6:303:23c::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.13; Thu, 28 Aug
+ 2025 10:26:36 +0000
+Received: from BY5PR11MB3974.namprd11.prod.outlook.com
+ ([fe80::fe0b:26f7:75b4:396]) by BY5PR11MB3974.namprd11.prod.outlook.com
+ ([fe80::fe0b:26f7:75b4:396%5]) with mapi id 15.20.9073.010; Thu, 28 Aug 2025
+ 10:26:35 +0000
+Message-ID: <d470594c-959e-4cf7-a1a6-745c5671646f@intel.com>
+Date: Thu, 28 Aug 2025 18:33:06 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 09/21] intel_iommu: Fail passthrough device under PCI
+ bridge if x-flts=on
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
+CC: <alex.williamson@redhat.com>, <clg@redhat.com>, <eric.auger@redhat.com>,
+ <mst@redhat.com>, <jasowang@redhat.com>, <peterx@redhat.com>,
+ <ddutile@redhat.com>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
+ <joao.m.martins@oracle.com>, <clement.mathieu--drif@eviden.com>,
+ <kevin.tian@intel.com>, <chao.p.peng@intel.com>
+References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
+ <20250822064101.123526-10-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: Yi Liu <yi.l.liu@intel.com>
+In-Reply-To: <20250822064101.123526-10-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI1PR02CA0055.apcprd02.prod.outlook.com
+ (2603:1096:4:1f5::16) To BY5PR11MB3974.namprd11.prod.outlook.com
+ (2603:10b6:a03:183::29)
 MIME-Version: 1.0
-References: <59e70978-8895-f513-1b5e-1dc599e288ff@eik.bme.hu>
- <Z4AjkXbZeu3T94Y1@x1n> <Z4AldAcucTyqZ0HJ@x1n>
- <811633f6-6bf8-4a22-a21a-789e9a4747d7@daynix.com>
- <Z4E6TnKaUt8FMWIv@x1n> <9bb5f964-f930-4428-b800-8b589920fe1d@daynix.com>
- <Z4U30j9w1kPnKX9U@x1n> <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
- <Z4aYpo0VEgaQedKp@x1n>
- <CAFEAcA_mpWZO8V9cE74bKzveEEZDXkqE+XbOFFdhmKUKO3dmSw@mail.gmail.com>
- <Z4a3GxEbz1jjCDc5@x1n>
- <CAFEAcA87oYqMj1t+yriXHLuTg3G-=eRwOvt4-n4uJmeNujTBxQ@mail.gmail.com>
- <d9acf231-829e-4a9c-7429-282fcc2ae756@eik.bme.hu>
- <2fe8b128-dda1-40af-89ac-e86ba53138f5@daynix.com>
-In-Reply-To: <2fe8b128-dda1-40af-89ac-e86ba53138f5@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Aug 2025 11:11:54 +0100
-X-Gm-Features: Ac12FXyZh29LlEVt9V6PbmtXlaII1HVaram_3eJlpmW7Mnz64-dP-ALcJn18rbo
-Message-ID: <CAFEAcA8A97ocOfv72KeSEgFkchmAOfc=GiX8QmvRui5=DDF=qQ@mail.gmail.com>
-Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Peter Xu <peterx@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, 
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
- devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b34;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY5PR11MB3974:EE_|MW6PR11MB8411:EE_
+X-MS-Office365-Filtering-Correlation-Id: d6832666-df00-48a7-c68b-08dde61d5d77
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|42112799006|376014|7416014|366016; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ajBSa2UvdEJJaU8zc0wyWG9wTlpDemZPVU1HVHdpNEJMYnBFdWswMmlReWk3?=
+ =?utf-8?B?T0xLWENTK1RsMTd5aUFCRDY2akVFQStLdmg4Z2FDOFAyWStxUitvQ2NCQ1c3?=
+ =?utf-8?B?QWlDWFV4Q0ZXSDBKUlB2WW4wRnYxdnIyQmVqbS81dHdod0RnMFlsb21CaTAy?=
+ =?utf-8?B?aGVqeWtVYi83UEI3TXdsZ3RFWjZHNjNDLzMxRXdiUklwMTFGZllleXZlNDlQ?=
+ =?utf-8?B?eUlUY0RRTGtYWjJhYjFkaDdPV05BSHk4U0JNazFTVkwvWEZRUTdXMTdCV1RV?=
+ =?utf-8?B?eW5SaG1DZ05QK2JjN256QzVneWJ3RVJTSkJSK1A2UHZVWnArdVlmQkRrRkJN?=
+ =?utf-8?B?VDh1TGsyZnU3NTNHS2U0bFFNY1R2QWprOUFPb3dRUUxUQ3FKK253S0dZcjVu?=
+ =?utf-8?B?NVFHUEp4NW0vMXhKR2NCSnQ5VVdYb0Zka2lqbVhtbEs2bVRYK2U0YmZGUGta?=
+ =?utf-8?B?Y09ZVUloTHFSaEp6N1BRc29vb081ejF6a2t1OHFVMDdQKzBSWnJaS2xJWlZy?=
+ =?utf-8?B?ZjY1YWZvRnZidkR6TXVPOFowVittODE1OEpsZ0M4Z0grS0Z5RVQ0MUo3czlC?=
+ =?utf-8?B?VXF3OUl6SGFzTUdKdU9iY0E0Y3dCNFhDVGFyVnJpS3h6TUd5aTBxMEltdGZp?=
+ =?utf-8?B?N3U4NkhtZnJqMVZmQUwwenhtMlV0VWdZMENWWHdCYUJvQ0Z1ZkxmN0NhcEh5?=
+ =?utf-8?B?NUVYTHVKM01YZWt1eGJZZ1dobTVPQXd1ZklLZGVFV1hBVVpneDBhcVBuU0lv?=
+ =?utf-8?B?VU1PbHBlRys1UlVBRUZ1VEpvSVZKRjJhVklPei8wcERTR1FGcTNZRHhHLzJs?=
+ =?utf-8?B?S3lzTVZQZ0d1c0xtUWlaWGx4N1NJQ1NMZy8vbUJsR1BxaHd3N2szMnV5V1lN?=
+ =?utf-8?B?V01VeUptTmZRUWg4Y3NaVkcrWUJpQWtDR0hoQk1kSHN0RURtcXlTblZ0OTJp?=
+ =?utf-8?B?Q2VQcnRhUXBad3NRQ3BtOGNkOVIyckc5Q2Z1K0xRMERBUzV1Sk9kNnU0T3Nn?=
+ =?utf-8?B?bXNrM0dmaUhlQ0VSUk5iczRsbk1YeUZFSjUzZ3lNbElibnNlckJLMU0rTVYx?=
+ =?utf-8?B?Z0dBcDZvVlFPdGlrZFZJb2ZNRnd5L0MzVGJXU0xPa1FYSHh2RXJHNHFSUWM5?=
+ =?utf-8?B?N1g3S1dtaEdhNUhtdDFkNEQ0NUZvamJqTDlMK2RIT1QvVS9oSnFNam9OVjg3?=
+ =?utf-8?B?UUg5NXR2SDYzRDJIdFdRMWpESU9Va2hXWjJWMzM2amdCejVBTjJmS1o0SHlX?=
+ =?utf-8?B?eldZTWRoTTBaOFZuQ3JJeVEyc0IzV1FMRGQ5aXMrMXVnTnRvaFd6djRLTUth?=
+ =?utf-8?B?SFJ6KzdOeFh3ekFodmM0dkswUmhJZHVYSjlvS3ZjdEZYSWtoQkdUL2V1VFNx?=
+ =?utf-8?B?c05neE5jemEzdUlNVldEZ0kzODNNUFJCQnQvNXJqVDYxYnhGakRVZVlqVU1j?=
+ =?utf-8?B?OHVRckRwTHNya0V3REg1aVlYVGQ3d29KWG54MzI1ZnZPanloZi94bDZPSlRP?=
+ =?utf-8?B?dFltNVRRQ3h2TTlvcFVjS0VXZVF4eGlDUDZiaGJEUXhTY2pxUUNTL0YxZEpX?=
+ =?utf-8?B?RlM0S0xhVy9HMndpMi9SWnBWMFN5TDBUTlMyTzZaTXpNV2htY0xLZ0Fwbm0w?=
+ =?utf-8?B?MXpDUjNjUVc4SzVVdFlZYmMyTHpLTlJPUzJ0UVUxdFBjOXFRemllRy9UN1Uv?=
+ =?utf-8?B?cTlRRTFSQlo5VWdKY0lDbHJHTC96M2RlbTVtMk13RmcxMXI4TkJCWmUwNWdY?=
+ =?utf-8?B?d2VkS1kvRXVwYWdLbkI5cFg4VCtTZVM1bW1vL0FKb3pMMVJwVzc2UmxMRHJy?=
+ =?utf-8?B?VXUvczR3cEMvVm1hWWdDbEwyWjBkRnJpTWtnajI0K3VyTk9XNyswOUZlYkc5?=
+ =?utf-8?B?QTl5aHorYjVpaXU2blg2YXpObDdxZVFvQzZUZVVSMEwzSDY0aTEzWU9iaHc4?=
+ =?utf-8?Q?o2qqg4h44ck=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR11MB3974.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(42112799006)(376014)(7416014)(366016); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a1V1cTU0S3lSM0RlTE5EUjFWbGljRGV2N3BERExvRWw3YWJSaWcwMUFwek9Z?=
+ =?utf-8?B?WHZQczNMb0FDTnVCVTBDOUpZOXNhNG1VS2lPaTJQWTlDNURGWGZ5bEFRTHRJ?=
+ =?utf-8?B?YkpMdTMzQ3JLU1RnUDlJSXFranBrWXI1SmNwYlRwMUh4SUR4Rm12SWZRTVVw?=
+ =?utf-8?B?cWxRSm9ZbDJmV1QzNGMvSEpLTnJsRmdlc1JEbS9jN0lnb2lhL1c1Y3hGaVJy?=
+ =?utf-8?B?WkU1WkNsU2REazhSZEJ4YzgzSVNHd25xRVY5K3Vpd091YUM4QmRqbDdTeXh5?=
+ =?utf-8?B?TjdCVXFmL2hzWlRXcGZORy9qOWhvazVaS1JUNXBURzNSS2hFV2VLRFgvZWFM?=
+ =?utf-8?B?Q0crdjB4NkpZOUErdkdESVBpM3pkQnhPOHJiUGFGQjcwMW15eTRkMWovVUlS?=
+ =?utf-8?B?TldrSmRpSnhWUll2T1ZLTkNNakNvNVh3ZTNnMDNWelJXb1V4alpEMHFVWHBm?=
+ =?utf-8?B?VXlZVHBTUGx3b0N1NzNmcEp2NGszb29xZzdPVEFPUndmblNIbWZ3Uk5YWll5?=
+ =?utf-8?B?UjVYRnZScTF5eW9BZTQ3blFVZ2E1U1hMVjRzZ25OWlg2eFVzbllHNi9IODdv?=
+ =?utf-8?B?dVJVQmtxQXFrTmpjdnl5dFFuSmY3RVV4TDFFMDg0RnRuamJkbjJJOE0waXFm?=
+ =?utf-8?B?Y1JFcDNuenZ0TTFab3RlU1dnRk0rZ05qbmZQRUF4LzhTbHJTblF0VkppOWRZ?=
+ =?utf-8?B?aldmOTlRTWRuYWJnVGoxemdZUFZvVE5HUVIwV0R5V2ZGQzQwMURoWlc2eUxB?=
+ =?utf-8?B?THV4NzBnNGVkdE4veGhpYnFtUklpa1pNNko3b3JDZC9STVRxWmxRb3R5KzFi?=
+ =?utf-8?B?dXlUeHVQYjlFZmJEQVNROS9KNC9BTTRjVlQ1eVhrdWE4NnpDNnFndDZCTkV4?=
+ =?utf-8?B?M1dOZGVDRmpSdUZqbGIrNGRkbTM4RVh2T2dGRjJMbm1NdS9OTGtLU1hzQzQy?=
+ =?utf-8?B?QlZvc2Q3TGwyU0pSN0M3Q2tsRkJOYWdROVphaWhqR0cza0VSdWE2bXpLa0sx?=
+ =?utf-8?B?T1ErcUFZWmk0WUdIa0tWWGlVbHQxYXA3RnJzNlRaeUJ0TUJ3OFpPUHBoNXE4?=
+ =?utf-8?B?VEY4V0Q4WGpKd3RoWnJVeEt4cDQveVU3L2FJSzN5MU5TOTlLcWtmYWdrWXZ0?=
+ =?utf-8?B?SEF2MXQyUXZUWmpseHNWamFrS3pnai80RkZqeXpranluNDRYRTVUb1FWNTAy?=
+ =?utf-8?B?YTRSOWZkT2NwMTBCeStwL2RuUjBNR2ZMdzBVWG9Idy8rMjdyakhlb1lkTkhy?=
+ =?utf-8?B?MmxrMlNQcEZZdnVTRnQ5bHRuMmMveXJocVhaSDVFRVJPSlRtK3VlYmtDWHQ5?=
+ =?utf-8?B?TUk3cUlaUVh4UE84YW5QV0tQNEFPOXg4dFlHSGFUajNEZ1FzVmpYRDFsbm9J?=
+ =?utf-8?B?QWV3UkVIMVp1dzdCeDBEV3Vac2RURlRuZmdlR3QrL3BtWnFSZm1JM004QTE4?=
+ =?utf-8?B?QmVjeXJvdG9OakxGRlE2eFdDejhiTHZ0QUt4SmlOR0VQb25rMFpiSU1vaHNk?=
+ =?utf-8?B?Z0VUTXc5aHc1a1hIVGZqVFdsRGhPY0NTRjZrSkh3RWxCK09kTU1KSm83NmJP?=
+ =?utf-8?B?SUFWQk9GMTZvZHpsZDJZTFVIWFNIc0tZUzg2TVljOFNhZUFxUHVsYk1kUzk1?=
+ =?utf-8?B?ZmRYWGZIdmhxbXVSVEh1RVZzRTliQmQ2MWZNV0FtOTU5ZURiSHA3cVJFVURv?=
+ =?utf-8?B?a3RiaFc4YkFScWZsZjFEaEVxZ2xWbzh4QWN3NURhZityQUozbmVpVTczeHBL?=
+ =?utf-8?B?cStWVWRIbzd3amZTYm5YY2lJc21LaEVvNnMvZDZzUG9uT205VkR6OEROUlgz?=
+ =?utf-8?B?dkJ6MUJnNVIrM3JkWlFDTmtVeHQxSCtsbUZhTVN5NjhWbjhIaHN3ZVZTOEtT?=
+ =?utf-8?B?alNqZ0c4NGFoZC9iWEJBOGlZN2d3b1JIUkZBa0o4SnNwWVdHYXplb1E1cHRQ?=
+ =?utf-8?B?VGdUZWRQTERQL3RwR0tYMFpGQmxGZFhvN083bExIdmY0NXlIR3p2UjY3aXVD?=
+ =?utf-8?B?VDNRMlFuTGp4akVqUkZvc2dGQXpNQ0NUVEdCZ2Y5MDNiZEJLeVJpenBBbk1u?=
+ =?utf-8?B?UnhRUWg1ZlVzNmhuZk5GK3p5OHU0Mnp1Tzd6NmtVVFBlUytoSklSVy9iSmtK?=
+ =?utf-8?Q?ZdBLFYcSBviKc6D1Fh1XiLyri?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: d6832666-df00-48a7-c68b-08dde61d5d77
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR11MB3974.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 10:26:35.6123 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pWCpZ4ncR3Pptq3NEnIeY9Kp1S/j65TjrJ2xQKt1R7WMmHBgO9ePquiMeV+MuelXHmhtPU3TRZHkUnxxPyYmHA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR11MB8411
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=yi.l.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,92 +217,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 17 Jan 2025 at 06:19, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
-> Let me explain my and Peter Xu's solutions by listing object references.
-> It will abstract the details away and allow applying the analogy of
-> other reference counting systems like Objective-C.
->
-> "Real" reference relationship
-> -----------------------------
->
-> First, I'll introduce one basic rule:
->
-> Rule 1. If A needs B, let A refer to B.
->
-> Now, There is an owner and a memory region. The owner needs the memory
-> region to function. The memory region needs the owner to provide to
-> allocate itself and e.g., to provide MemoryRegionOps for
-> memory_region_init_io(). So we will make a bi-directional reference
-> between the owner and the memory region.
->
-> O (Owner) -> MR (Memory Region)
-> MR -> O
->
-> Now, let's think the case where there is a container and subregion, and
-> they are owned by different objects. The container needs the subregion
-> to satisfy its accesses, and the subregion needs the container for
-> memory_region_find(). So this relationship is also bi-directional.
->
-> CO (Container's Owner) -> C (Container)
-> C -> CO
-> SO (Subregions' Owner) -> S (Subregion)
-> S -> SO
-> C -> S
-> S -> C
->
-> Let's think someone took a reference to the container e.g., for DMA.
-> This mean we add the following reference:
->
-> DMA Controller -> Container
->
-> This will ensure all of Container, Container's Owner, Subregion,
-> Subregion's Owner are alive during the DMA.
->
-> "Weak" references
-> -----------------
->
-> Next, I'll impose the restriction that prevents circular references. To
-> avoid circular references, we'll stop counting references for one
-> direction. In other words, we'll make some references "weak". Weak
-> references are prone to be dangling (in Objective-C or other platforms,
-> such references will be usually replaced with nil-like values).
+On 2025/8/22 14:40, Zhenzhong Duan wrote:
+> Currently we don't support nested translation for passthrough device with
+> emulated device under same PCI bridge, because they require different address
+> space when x-flts=on.
+> 
+> In theory, we do support if devices under same PCI bridge are all passthrough
+> devices. But emulated device can be hotplugged under same bridge. To simplify,
+> just forbid passthrough device under PCI bridge no matter if there is, or will
+> be emulated devices under same bridge. This is acceptable because PCIE bridge
+> is more popular than PCI bridge now.
+> 
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>   hw/i386/intel_iommu.c | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index da355bda79..6edd91d94e 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -4341,9 +4341,10 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>       return vtd_dev_as;
+>   }
+>   
+> -static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+> +static bool vtd_check_hiod(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+>                              Error **errp)
+>   {
+> +    HostIOMMUDevice *hiod = vtd_hiod->hiod;
+>       HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+>       int ret;
+>   
+> @@ -4370,6 +4371,8 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+>   #ifdef CONFIG_IOMMUFD
+>       struct HostIOMMUDeviceCaps *caps = &hiod->caps;
+>       struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
+> +    PCIBus *bus = vtd_hiod->bus;
+> +    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), vtd_hiod->devfn);
 
-I'm not sure this is really how we think about the lifetimes
-of these objects, though. In particular, we definitely don't
-ever expect, for instance, the link from a memory region to
-its owner to be dangling.
+pci_find_device() finds bus pointer with bus_num, this can be avoided
+as you already have bus pointer. Perhaps this may be done by wrapping
+bus->devices[devfn] to a helper. Especially, pci_bus_num() may not have
+the correct bus number at this point.
 
-I think what we actually have is:
- * the thing which really has a reference count is the
-   device object
- * this device owns various things (irqs, child objects,
-   memory regions, etc)
- * we expect that when we destroy the device that all these
-   other things it owns also should be destroyed
- * some parts of the system have free-floating memory regions
-   which don't have an owner
- * parts of the code have to deal with both the "MR belonging
-   to a device" and the "MR not belonging to a device" case
+>   
+>       /* Remaining checks are all stage-1 translation specific */
+>       if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+> @@ -4392,6 +4395,12 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+>           error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
+>           return false;
+>       }
+> +
+> +    if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
+> +        error_setg(errp, "Host device under PCI bridge is unsupported "
+> +                   "when x-flts=on");
+> +        return false;
+> +    }
+>   #endif
+>   
+>       error_setg(errp, "host IOMMU is incompatible with stage-1 translation");
+> @@ -4425,7 +4434,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>       vtd_hiod->iommu_state = s;
+>       vtd_hiod->hiod = hiod;
+>   
+> -    if (!vtd_check_hiod(s, hiod, errp)) {
+> +    if (!vtd_check_hiod(s, vtd_hiod, errp)) {
+>           g_free(vtd_hiod);
+>           vtd_iommu_unlock(s);
+>           return false;
 
-> Comparison between the two patches
-> ----------------------------------
->
-> I'll compare them by showing pros and cons of Peter Xu's patch.
->
-> Pro:
-> a. Will not add yet another direct reference to memory regions where
-> currently there can be only one reference from the owner to each memory
-> region.
->
-> Cons:
-> b. It requires two new rules.
-> c. C will see its reference to S to disappear at random timing due to a
-> weak reference.
+other parts looks good to me.
 
-C should never see a reference to S disappear at a "random time".
-Either (a) we are going to clean up all these objects because they
-all belong to the same device and they get destroyed at the same time,
-or (b) something should be cleanly removing S from C.
-
--- PMM
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 
