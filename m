@@ -4,107 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC771CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 08:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868FEC8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 08:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urY92-0001Fv-Pb; Thu, 28 Aug 2025 04:38:08 -0400
+	id 1urYCX-0003g4-QM; Thu, 28 Aug 2025 04:41:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1urY8z-0001Au-8y
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 04:38:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1urYCV-0003fG-ES
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 04:41:43 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1urY8w-00085E-41
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 04:38:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756370279;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CR32s0TAMxMf/LqtoUuSWEjWYVZf9XtUtEvKi5acCiA=;
- b=SjZxRpE9yjVzvq+rg9iNFRmqT7p4Q7ugnWutDVgaAGdMvtoRRuitfcDYHxqep4ModKAX0G
- SIdAV/q/cOMVqllM4i9deS/vnRDxdVWqvbxV4kVuuMPg/StoWX2PClL5RRBlPelLulY9Tg
- qMsnJ4+0UBLBeb1mxe8tk+RNcp6RxCs=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-362--OQLyVuAM2STnQI1HwQHAQ-1; Thu, 28 Aug 2025 04:37:55 -0400
-X-MC-Unique: -OQLyVuAM2STnQI1HwQHAQ-1
-X-Mimecast-MFC-AGG-ID: -OQLyVuAM2STnQI1HwQHAQ_1756370274
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45b51baec92so1303355e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 01:37:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756370274; x=1756975074;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CR32s0TAMxMf/LqtoUuSWEjWYVZf9XtUtEvKi5acCiA=;
- b=Bzh/lQTolpM7GAvr6vcjdGCtHy1N1VgnrVT5DebwjcoFX1ng0BYWGeCHntBxPzM52Q
- VZ4NnYje0oScoPfkhXPEomnbZqfXgCFqzdtUjQ6VrWa+TgWN7JQJyhWWW6FAXBBw+Xh0
- eBwaxxUpaikt+/hv+W2piBuj5/slzyembq5bqS1dlGX+wqo/6i2tfOKdwQbCV7QN5OJK
- ypQNzhHvmbWJGxT8aZrKoLL/VExQcCxERago83eXpTtvJttI5D6s0uF1FwtOLE14UDCu
- WKJ4sNQAzuMDLy9E1wzGnEJsa/+1FsT4fzFybxn4rIt4nrtLVRgYI2L27jZx+ooFPUxa
- vpVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViW/BhKw3Hg4r1+fn/23XL78TWMrdfXxBtyKVxTliTMH9AHF9B7Ux26wAiREXMEJ0aSmb8s6Crsi/h@nongnu.org
-X-Gm-Message-State: AOJu0Yw3tznKt2CTU9Yp2eA1jLlyY2s7w4NeACtGmnDBgjtgFnGuOueg
- fkZYXr8C62BW/r+26thDGE8IS7GpaN2wPS67SnoE0LakOtNeOUyfC0yUILAwi7Uf8EntgRYs0W3
- ruuNJU+G4JLLCUn7RpYQKvLCW6aRMxgtNHAQD6fGuT5joROdS2lCzfUXS
-X-Gm-Gg: ASbGnctesoB2z24TX0pmd4tFJpEKuQ/3nondnZJx9gX925p9+OmF6umHRs3wq3RAWGT
- lnNjFnxLH+WagHGgtLc2POcHaWmVJGVJzbBORZdFy1UFCkx4y5o8jh/q4IzKJ6I+g74mi4WzhRJ
- HN5s7LYXZj/s1QL1JZShzSXod+wqUaJBTjgpBRBNPr6GhQIsybw2Yu5opW1Qq17rwKuSCZHdlIt
- +BAe6gdSS73lc44hExdzbFY4x9uRB0OndV6UDFq5/t7PVmUZQcrScW7XyVKFfDHI8asoz4mBCxO
- Yp6iGN7bZdhk2dGNm2kHUtNEZ0WHK1rg4CnnlfrbTnkQMJe+3wiR3y2L3lAHh3Pnqkxhuhbfegt
- atrrN+F8z1v8=
-X-Received: by 2002:a05:600c:3149:b0:45b:47e1:ef73 with SMTP id
- 5b1f17b1804b1-45b517df336mr171048365e9.34.1756370273585; 
- Thu, 28 Aug 2025 01:37:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGnqVAMRA4UPTb+kl6MTwJPOyS7Il5lEPovktm+Wc3F2d4PaZQ7CYPU0zjPHfZHOykqARMCgw==
-X-Received: by 2002:a05:600c:3149:b0:45b:47e1:ef73 with SMTP id
- 5b1f17b1804b1-45b517df336mr171047885e9.34.1756370273044; 
- Thu, 28 Aug 2025 01:37:53 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6f0d3073sm70414705e9.7.2025.08.28.01.37.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 01:37:52 -0700 (PDT)
-Message-ID: <092300de-c1e2-4a93-94b3-0a06a5a901b6@redhat.com>
-Date: Thu, 28 Aug 2025 10:37:51 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1urYCS-00009x-Oh
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 04:41:43 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 57S0C5mE3582237; Thu, 28 Aug 2025 01:41:35 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=1U5QrqG+v8PBUXPMyBap1xnYolXpCWcS3ybZPtd1A
+ hY=; b=i7DDEoDUCB2FB9IQhEVlLDci3wNTLQh0kgbctFyWN3kRFl3cxoVmyRQIP
+ BwP9U8cXh4qz+7RvqIkq/upq27/cQvppL2yE0c52dUT2hdGMIC0j6d9GFgeKkYMt
+ xM32e+eOa437ZNjEdBY+dVIKGN3XJeSM/wjtX62WB6kEsyfPKhbYPsLfYRtngvxF
+ LV/SM+NDlynwmzXoHWNGeWdQxBNjAr8bss5vYGBu7aFYtRo84HOwavA+tJoIo5Mf
+ Rv4HTzhGvecS7Fog5HrlmNnvT7NmYHfeWVAgSkFrxRbk703spyTtxCXyervIBwvy
+ SGvh3BigqI3TcF8h1KNxowMAuz2VQ==
+Received: from bl2pr02cu003.outbound.protection.outlook.com
+ (mail-eastusazon11023143.outbound.protection.outlook.com [52.101.54.143])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 48tcc30vbf-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 28 Aug 2025 01:41:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iIhDx9se+RlmQL1zfMcB+/vAN89A/LuNMk8yxB8jnrb2ju06iUNtHACNjsVusFYw45RWnocMDAErd3y/HxOw06GtAw38Ri5sG15FZqYscCWg+I0ny2O9yBAQssq4CLgWu5Y4WVhou+9Ji9IPjgkqegaocICEMuKmysqewg6sgVEcpbBuXyuxe33LndsTiwcyf9rmbEFEpnm/qqdaDJbCv9f/Pi3YvzMqqgps3pTLXqGyRWhpNtuNHt3OdghFX3tR3Jlm4N9Yd67cJ++wLhh5ETrpPQP0Cj1jbjLNB5VBa8ARIDP3usQjGcPZSPz1MJfpuNaHW1zJSMB8vKs1JQlKFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1U5QrqG+v8PBUXPMyBap1xnYolXpCWcS3ybZPtd1AhY=;
+ b=Mhszwwf5XR5vkZ/kH+oytlC9Iuq52SJP0RWQL9G3E0OkjeEk/Cnzu8fX89kvIAg4CeHgZyDbcLjNWFPcrx1Wi5IIDbjBq0SOaUJHrcZCP26YTXqI/KEqQoapLgT/zBkEh4666rdcc0NG81E95g3tQMIhPbD7oTlWU2XSG/4ZwK/+c+j+BShe2HvEVz6ALtI9UMCDyw8xheniXRdS4kdHBmOuRvy0v0GPQyPZREtt3wAiLYFPDAQkrJS9HcvY8JWb+Q4/i/z0GQ8CXwjoD+D//O2y+cKFVBSm/MSV7JWe/h0BmNH8JcStMygz+aoNC5SkbMLJ5mM8p1ZImqMRXA0Cqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1U5QrqG+v8PBUXPMyBap1xnYolXpCWcS3ybZPtd1AhY=;
+ b=um87tnn8UHRt8iRXuibSaqziztZpQjTbfpEZL5RXaG6yZP+PEt2XcOmJZ6P4t8QWEOP2WO7fnWU2/Y+Nlzcc9YEVbnRPvg5z2Gyj2nMowb6iXAfmltKX3L6JIF5ADKWH+htOiAHLWy+Nt+zIeFKhF0mXr2D7TXL51o5He+DNrOrcx4lwQQT3qKS18T0oBkVuX/isrqs0MWv+MYDFkrZ3dDpegdDUC6uwkPo8wu6+boLIa4IDEjo313wdSfN4jwQNJM54HrBQ3fNszHUMKExvZ61S5gUO7CCKUSwL+8k1YAyfKFMsdZxRgA6JBxgBLv/458QQVp5uJr6dVKjkhavGUg==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by BY5PR02MB7060.namprd02.prod.outlook.com (2603:10b6:a03:236::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.22; Thu, 28 Aug
+ 2025 08:41:29 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::6cf9:b35c:b143:bb88]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::6cf9:b35c:b143:bb88%3]) with mapi id 15.20.9052.019; Thu, 28 Aug 2025
+ 08:41:29 +0000
+Message-ID: <345b5031-c8e2-42d7-b944-5341747c7349@nutanix.com>
+Date: Thu, 28 Aug 2025 09:41:25 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/21] intel_iommu: Bind/unbind guest page table to host
+Subject: Re: [PATCH v6 09/19] hw/i386/pc_piix.c: simplify RAM size logic in
+ pc_init_isa()
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>, pbonzini@redhat.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net, imammedo@redhat.com,
+ qemu-devel@nongnu.org
+References: <20250822121342.894223-1-mark.caveayland@nutanix.com>
+ <20250822121342.894223-10-mark.caveayland@nutanix.com>
+ <7fa8968e-c584-4441-8859-a40788067e95@intel.com>
+ <fd631cee-4089-400a-a79f-0091341fec1f@nutanix.com>
 Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>
-References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
- <20250822064101.123526-16-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250822064101.123526-16-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <fd631cee-4089-400a-a79f-0091341fec1f@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: AS4P191CA0007.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5d5::7) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BY5PR02MB7060:EE_
+X-MS-Office365-Filtering-Correlation-Id: f18587d4-f7ff-43cd-9834-08dde60eaeb7
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0; ARA:13230040|366016|1800799024|10070799003|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UldneklIYTVXVUZZY2RVTnBkbDM0OGl1d2lSL0JScy9jeWh5ZzRWU1JSa2Y1?=
+ =?utf-8?B?WXhSVjhVK3k3OFMvaFZnOGRlY0o1OEFjK1lPTFQ5d1Zha1VlaloreWVpYjR0?=
+ =?utf-8?B?NWs5d05obVk3YytadkdJMDdrSkQzanZXR1AxMjBlVXVkcUEvczVXWkdiNVVm?=
+ =?utf-8?B?WWtyWXpJL2tsUzlZcU4zK0NXczdVSitQRUo1ZzYyWUN2dzhmYXAveHhXZ2dn?=
+ =?utf-8?B?UWVuNkN5WHU2aUlCT3huL2xUQ1h6eG1uU0xmYkZaM1l3Zk5PMEYzZERrem9o?=
+ =?utf-8?B?L0tubDZpdVRjaENvNW1tVmR2bGMvSy9sTUR3elAxZEp5TDRqckFUNlZLVU1C?=
+ =?utf-8?B?OTNqYXVpVWhmYU1oR1pJZ0tzcFRzVk9tOXJhU29XYi9YR3VVK1hudFF1OTRq?=
+ =?utf-8?B?MWZVVmIyVTlmU0kxYVFwWDZUVDNkbllmNFFDWTducjY5UUtlbFh4bU1ReUor?=
+ =?utf-8?B?Z0RZK1ZLcXpyejJtdE5sZGUyK21ScmJWS2prL1UzdnN2dzNTUjErQmQ5S3Nh?=
+ =?utf-8?B?TVRMUzg0bm9pajhFUnZ1SVVHYmEvZmJUV3hJMHdydjlBcS9GazdOcjVubnZl?=
+ =?utf-8?B?cjl3dkYzNjJSOHpwY0R6bjdTd0RmZFJ3ekY3ZmpyRXhqMTk2b1l0ZTFSaWxB?=
+ =?utf-8?B?eWZtNElpeDYwKzBTU3dRVTA4ay8wL0NTNFhhdDBYTEtSMU5DQWhDYTJhOHdH?=
+ =?utf-8?B?Vmo0QU9QL2MxNDFCWnRlWFVDVm5rbHZZT1dDQjR2ZVRvQTk1dGR4VTByekFB?=
+ =?utf-8?B?c0xQVTM2WnRPM3duUUh3UFFRdjlpZzl3cVU3OFVTQkZCWnA5bXpYZ0VVZWgr?=
+ =?utf-8?B?VmVTMDlONjJEaVdOUkpTdWgwUk5JTUVPL2YzQ0dhWUdzV3JDSGdSYWZZaXU3?=
+ =?utf-8?B?WnNpV0xyRlMwaWtNVGRZWm8wS3kweW5lLzF3cDVZcHZQU2dsYkxpT0FjV3RP?=
+ =?utf-8?B?NUtPTkFhemZKcXBHeHkxY1RCZjZRVWhpTk5kUGErQkFHaVQvMkgzeFJPbGlz?=
+ =?utf-8?B?a1dqbXJ0Lzl5SE5IMERxWGxzN0dETlF4NEtMQmNINHRLK2xGWnA2YUZJMG95?=
+ =?utf-8?B?VEhjQXM4WlN1a1RwZFJKUEVLNTJHWUt5ejFSVHFnTWZjRXpUSDNWSThQSnNt?=
+ =?utf-8?B?ZVFsaFEzYi9zYThTbGhiR2tHTCtINFhKTWl3Znc4VXpyT0wxSnNFUTNUSzRI?=
+ =?utf-8?B?T1BzVVA0eW9ZOFVKT1NFeGxoVUdmcm5Cc3JlWlJ1d3RxQWpyZUJsaVIxa1lo?=
+ =?utf-8?B?SlVOSHZ2ZmJTRTg3bUZqQ0RISU93SWZTUTVuYWUrZlhDajJwem9PeGw5dGZy?=
+ =?utf-8?B?ekM2S3lNM2pQSGIwYVFXdnIyYnBXRFZkSHh4RTlJVVJVUnVEYlpoZVFyTUFh?=
+ =?utf-8?B?ZHorU0xCdnBFVGRFR1EvVFdSUFU3ZDJVZG5zZzNzWGx3VW5IZlY1VXp0OFdP?=
+ =?utf-8?B?UVltT0FKUzNNWHdjYzA3RVViUFh5czNMcDRCN3lzT2xmcm9nUzlRN0VXRGRT?=
+ =?utf-8?B?QVNnWVI2MExRYzRaUC9ub2l0TXV5NWtpY3FIaGdUUGxWVVpTTFJPSTRIbFRl?=
+ =?utf-8?B?RDBnTkRHRDA2UldxNUsvS040WnRuNW1rSVZxeElmK0lNdHR3clBnQlhsUWxP?=
+ =?utf-8?B?YTZLMWM5ZWpoVVhtbHdueWtWdHM4YjE1U3A5OThHVEpzd05xa0hhNzl2RDY2?=
+ =?utf-8?B?aWpMS3FuL0lJN253R3JxVDVFMkRFcituZEY0dWs5NVgvK0V6UnNXMkt4Vyta?=
+ =?utf-8?B?SC9jcGxzZzNpYUNUYkN3SS80UnEzR1BmQlkvejlZSkFBOE1lOEVvQzVoMG42?=
+ =?utf-8?B?aEpkc28wOHVjZU51VStodWZPL3YvNUY0RHI4S0Y2UThpc1dSc1RQalVhbjNS?=
+ =?utf-8?B?R2h1L1VxbTRkR0xVYTV4M0g2UEhEQmtIeXdHZnVEdEJDT2swZC82aFFnL2pV?=
+ =?utf-8?Q?J+LEzDCQXtc=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(10070799003)(376014); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WlRXcXBuUVRidW5RM21tS25QYVV3SmJWditCcnVaSEFXUTNGZlI0dTh2MWky?=
+ =?utf-8?B?MTNPMi9yMnlSREpDaGRhcWFtY2lTcXlNOHd1eXdVRXRJRlJDZ0Vwak4zSUpF?=
+ =?utf-8?B?MnV6TU5STFBWSnNIQXduZ1NpK2NCUVV6ZFNFUzdmcHh2WkJWREhnTzk5Qmgv?=
+ =?utf-8?B?YU5naUU2S3V6K0ZXVFRwc2tCTkNTbmNKYm9KaTByVTlnUEhWZVlodFk0ZlBj?=
+ =?utf-8?B?d0FYZFRFSjNTVnBnbkxKaVREbnhubjM5YnNCV205a3UzSnN2dEo2ZTRkeklz?=
+ =?utf-8?B?MGt6c2Q0d1ZlVEUxd2g5cTJ3dWtSRllZYUpMTDZ5UnN4RjZZZWFMbHVoSFBa?=
+ =?utf-8?B?TXpzS09yc2JWck1VWHVveHE3U1pFTmxkSU9EVTY5ZzlZT1JXemNBVVd4Q0dU?=
+ =?utf-8?B?S1hnQ0Q2aHJCQThsYWZwQUlHSUh0RlNyY3h4Mm5LMUdJL2o0SGc4WmtwVWVO?=
+ =?utf-8?B?T1ZOMWdMYms3UU11WHVBcE4wQVBSTE5ZWXNha1pFQnlSa3hnYzZIMHl4Uk5V?=
+ =?utf-8?B?aTNnR2l4eGJ6b2cxdGFteXBnYWJ5WmZDU2tRTnNnVWhOR3ZOQlU3ajVzRTF5?=
+ =?utf-8?B?NjlwYXlIQTdGMCs2bFAyZThPQ2E0a3REUkgzY3pZRWxjVnNGUG9SV0laV1Fq?=
+ =?utf-8?B?WmZaWU52TVd1NUNPMnBKNnpvcE1oeGpjT3VmbmJzNDZYMVFyK1cwOUN6M1Ex?=
+ =?utf-8?B?NTZFRzRLWGV0N0lUTGk5MUhiUThsaW5uQVMwcXhLTG11RnhSUUduV0lJYjhq?=
+ =?utf-8?B?RFM0WmlYaDNlUmNaNHNyeks5R1FjQ21vMS9KNXRIWFB0MzlCRG1ha0djb2dO?=
+ =?utf-8?B?Tmd2WFMyUm10UzRCaEJ0dDN1Y0s0WHZrczh0UTBLUGdqNTJNU2J5WjNrNzBi?=
+ =?utf-8?B?TjVxS0hSYTNLSWV6Z3ErUlVuZVdCajUrQnhFWCt2enFhMXR3SlNqejJTZ1Y2?=
+ =?utf-8?B?Zzd1Q3UxRFlhMzJ4emMvRW5OWU54Z05ENFExamp2UEdEenNXWDVGYXdacElx?=
+ =?utf-8?B?aGFnclVYaCt2dkVSOWdEK2NzUFhEQlNQSWpPQk9jeEdQU1Z4dGFFS1RmQW50?=
+ =?utf-8?B?ZzVIbDNPSXF5SkVJTlBUZU42ZGJxUmkrR0tHb3dHMmlFbFV4YkVEOWswTHI3?=
+ =?utf-8?B?YW1RUWtHMDRPUUVEMHpUdGx0cXlJRTNhYUhZalJvQXNENVJTWDJjZDcwY05q?=
+ =?utf-8?B?NGVKcDZYajdXOVp6NkJ4NEN0VDBONkE0eEhwZEtBOFF2U2doLzk1TDVQbVV4?=
+ =?utf-8?B?cXh2RXpiU2RiZ3djTjJ1YTJkMkRYRnJZTTJadzVlVWtMd3N5TXRXZXJRT0lY?=
+ =?utf-8?B?SXlRWmRKU29MSVpwd1BuMnk1TkVFVnBZaituVVJyemE2cmVtdGFXMTRSQk1m?=
+ =?utf-8?B?MzFjaXZycmkxZnJ2bmw4NWUrM2RPbE9qckljbGY1QzR0MFFvb29wSzFYSVMx?=
+ =?utf-8?B?bE1vaGQxank3WGdOL2JGSGxTQldjb1BDNlJvOUVSWlJKby93Y1RhRE5wL1g4?=
+ =?utf-8?B?akhBaXpRYndicmNCakRSZ3BXUEtCaUJXT09RWUs0eE03a0NuMm81dm5ZMnVi?=
+ =?utf-8?B?WHpLdEdwRGFHbzF1TGwyV3AwR2s3WVRmK3QrM3lzc3djYmRXM05kUk5hU1Nw?=
+ =?utf-8?B?M25JZy82RFRRejkveE5wNFBQeVhCL1JDSm5aeURoLzk2a0w2TUduS0xPeXVz?=
+ =?utf-8?B?bkh5VGFNZHY4MllEMEZOeWl1VGlOWFZvelBzTmRmcEk1UVQzaEMxTnBjWG9S?=
+ =?utf-8?B?TVZ5aXlPMU1tbmVrTnJzbmlQNTFZSUFreW5rUmtEY2xxU2U0a0VVZ1I2eXA3?=
+ =?utf-8?B?Z01Ha3lhQjdOU0IvSDZGTGYrc3JpV2wxVU5vdENuUHFRend0eStQeTZ1a0lH?=
+ =?utf-8?B?VTBTOXhjWTFER1hSdlV1Y0dLaFV2UmcyYVJSdVMxQXFCV1R6bjlrWjR5eFNu?=
+ =?utf-8?B?aSsxZXNSR1FjY0tqS3JMa1BWeURwMDJuL3p5ZkJ4dkQxcWpRelBkSVpJSlRQ?=
+ =?utf-8?B?MWxMd1BVTTBFVUF2TXdzTUNidE5OYWxYNzJiRWNDOGFIeXJ6U0NuenZ3bGVX?=
+ =?utf-8?B?T0ZqTzgwOXlUYTliOFIvVXBSeEpCZUpGTWdTM3pBOXhNRUs1ejJoNnQrdkwv?=
+ =?utf-8?B?TFFwU1VrOWhOQTB0NkpWdzU3dnk1V3JkeVNPdmhmWm1ZdUdUbitKdGNpUXJK?=
+ =?utf-8?B?WjlmeGVqUERhby9ud2FKYS9WcW5KUDdLV1FWdW44Zy9WWGViYkFvZnJ3aGZT?=
+ =?utf-8?B?RmlQMG1peDhjVkZhQ2VKN205UGlRPT0=?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f18587d4-f7ff-43cd-9834-08dde60eaeb7
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 08:41:29.4285 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZIKA26toY+0W1AwBqnJhKvYJiH5Y7Ovg61fl3h6ymow3M4Z9emzWu6GCCzb1QFZrJfG5ElTbXMuAAZV/dEvII7diFDu+Cbxpcs2mzSfW0b8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB7060
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI4MDA3MiBTYWx0ZWRfXyCsRWGGkXnlx
+ ohNLLcmhB4tABe5knFXpdyzjBTvPnvDTahkdQ2FlwQLO3qPURQUI+AnnPeJch5ad/Ywe7fBk37Y
+ qJGk3PSSRbTrYrFH016aaBP25YpBYyU09M56Sj0tk9iMlfpkbzmsDw8P2BB4vyqDOHIqZvJJkjk
+ Cr8PjTHNxwciMJ18tUOmEigpv5RrNwgSEbulFsIUGf88mYk45R1NA6RXmF5Ef40Wzz7qg4IhuGx
+ 2f5UkDH7U0lXzFYIZXO3/beSH6UoEWZIqKN2WEHFMnrP6/b5GOBndnKUO9i2aBhLoAG6H76SPuJ
+ DILc4n32+GK6zATiLJBwFitaB+DFbmwoUSycZfGtE53eVxzEwsPGGjl3KDPsQg=
+X-Authority-Analysis: v=2.4 cv=JaS8rVKV c=1 sm=1 tr=0 ts=68b0163f cx=c_pps
+ a=nFyb9+RW4Vn7xfSDTd+rIQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=0kUYKlekyDsA:10
+ a=64Cc0HZtAAAA:8 a=dpeeZ51g4ZwX-gffGBMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: itjysqTyVKm4mfacpRCUKLBL-pOReSnM
+X-Proofpoint-ORIG-GUID: itjysqTyVKm4mfacpRCUKLBL-pOReSnM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-28_02,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,414 +215,130 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On 27/08/2025 12:00, Mark Cave-Ayland wrote:
 
-On 8/22/25 8:40 AM, Zhenzhong Duan wrote:
-> This captures the guest PASID table entry modifications and
-> propagates the changes to host to attach a hwpt with type determined
-> per guest IOMMU mode and PGTT configuration.
->
-> When PGTT is Pass-through(100b), the hwpt on host side is a stage-2
-> page table(GPA->HPA). When PGTT is First-stage Translation only(001b),
-> vIOMMU reuse hwpt(GPA->HPA) provided by VFIO as nested parent to
-> construct nested page table.
->
-> When guest decides to use legacy mode then vIOMMU switches the MRs of
-> the device's AS, hence the IOAS created by VFIO container would be
-> switched to using the IOMMU_NOTIFIER_IOTLB_EVENTS since the MR is
-> switched to IOMMU MR. So it is able to support shadowing the guest IO
-> page table.
->
-> Co-Authored-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/i386/intel_iommu_internal.h |  14 ++-
->  include/hw/i386/intel_iommu.h  |   1 +
->  hw/i386/intel_iommu.c          | 221 ++++++++++++++++++++++++++++++++-
->  hw/i386/trace-events           |   3 +
->  4 files changed, 233 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index c510b09d1a..61e35dbdc0 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -564,6 +564,12 @@ typedef struct VTDRootEntry VTDRootEntry;
->  #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
->  #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
->  
-> +typedef enum VTDPASIDOp {
-> +    VTD_PASID_BIND,
-> +    VTD_PASID_UPDATE,
-> +    VTD_PASID_UNBIND,
-> +} VTDPASIDOp;
-> +
->  typedef enum VTDPCInvType {
->      /* VTD spec defined PASID cache invalidation type */
->      VTD_PASID_CACHE_DOMSI = VTD_INV_DESC_PASIDC_G_DSI,
-> @@ -612,8 +618,12 @@ typedef struct VTDPASIDCacheInfo {
->  #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
->  #define VTD_SM_PASID_ENTRY_DID(x)      extract64((x)->val[1], 0, 16)
->  
-> -#define VTD_SM_PASID_ENTRY_FLPM          3ULL
-> -#define VTD_SM_PASID_ENTRY_FLPTPTR       (~0xfffULL)
-> +#define VTD_SM_PASID_ENTRY_FSPTPTR       (~0xfffULL)
-along with renaming, use extract64()
-will be simpler than
-intel_iommu.c:    return pe->val[2] & VTD_SM_PASID_ENTRY_FSPTPTR;
-intel_iommu.c:            return pe.val[2] & VTD_SM_PASID_ENTRY_FSPTPTR;
+> On 26/08/2025 11:01, Xiaoyao Li wrote:
+> 
+>> On 8/22/2025 8:11 PM, Mark Cave-Ayland wrote:
+>>> All isapc machines must have 32-bit CPUs and so the RAM split logic 
+>>> can be hardcoded
+>>> accordingly.
+>>>
+>>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+>>> ---
+>>>   hw/i386/pc_piix.c | 58 ++++-------------------------------------------
+>>>   1 file changed, 4 insertions(+), 54 deletions(-)
+>>>
+>>> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+>>> index 816124c027..fc94937ad4 100644
+>>> --- a/hw/i386/pc_piix.c
+>>> +++ b/hw/i386/pc_piix.c
+>>> @@ -444,69 +444,19 @@ static void pc_init_isa(MachineState *machine)
+>>>       GSIState *gsi_state;
+>>>       MemoryRegion *ram_memory;
+>>>       MemoryRegion *rom_memory = system_memory;
+>>> -    ram_addr_t lowmem;
+>>>       uint64_t hole64_size = 0;
+>>>       /*
+>>> -     * Calculate ram split, for memory below and above 4G.  It's a bit
+>>> -     * complicated for backward compatibility reasons ...
+>>> -     *
+>>> -     *  - Traditional split is 3.5G (lowmem = 0xe0000000).  This is the
+>>> -     *    default value for max_ram_below_4g now.
+>>> -     *
+>>> -     *  - Then, to gigabyte align the memory, we move the split to 3G
+>>> -     *    (lowmem = 0xc0000000).  But only in case we have to split in
+>>> -     *    the first place, i.e. ram_size is larger than (traditional)
+>>> -     *    lowmem.  And for new machine types (gigabyte_align = true)
+>>> -     *    only, for live migration compatibility reasons.
+>>> -     *
+>>> -     *  - Next the max-ram-below-4g option was added, which allowed to
+>>> -     *    reduce lowmem to a smaller value, to allow a larger PCI I/O
+>>> -     *    window below 4G.  qemu doesn't enforce gigabyte alignment 
+>>> here,
+>>> -     *    but prints a warning.
+>>> -     *
+>>> -     *  - Finally max-ram-below-4g got updated to also allow raising 
+>>> lowmem,
+>>> -     *    so legacy non-PAE guests can get as much memory as 
+>>> possible in
+>>> -     *    the 32bit address space below 4G.
+>>> -     *
+>>> -     *  - Note that Xen has its own ram setup code in xen_ram_init(),
+>>> -     *    called via xen_hvm_init_pc().
+>>> -     *
+>>> -     * Examples:
+>>> -     *    qemu -M pc-1.7 -m 4G    (old default)    -> 3584M low, 
+>>> 512M high
+>>> -     *    qemu -M pc -m 4G        (new default)    -> 3072M low, 
+>>> 1024M high
+>>> -     *    qemu -M pc,max-ram-below-4g=2G -m 4G     -> 2048M low, 
+>>> 2048M high
+>>> -     *    qemu -M pc,max-ram-below-4g=4G -m 3968M  -> 3968M low 
+>>> (=4G-128M)
+>>> +     * There is no RAM split for the isapc machine
+>>>        */
+>>>       if (xen_enabled()) {
+>>>           xen_hvm_init_pc(pcms, &ram_memory);
+>>>       } else {
+>>>           ram_memory = machine->ram;
+>>> -        if (!pcms->max_ram_below_4g) {
+>>> -            pcms->max_ram_below_4g = 0xe0000000; /* default: 3.5G */
+>>> -        }
+>>> -        lowmem = pcms->max_ram_below_4g;
+>>> -        if (machine->ram_size >= pcms->max_ram_below_4g) {
+>>> -            if (pcmc->gigabyte_align) {
+>>> -                if (lowmem > 0xc0000000) {
+>>> -                    lowmem = 0xc0000000;
+>>> -                }
+>>> -                if (lowmem & (1 * GiB - 1)) {
+>>> -                    warn_report("Large machine and max_ram_below_4g "
+>>> -                                "(%" PRIu64 ") not a multiple of 1G; "
+>>> -                                "possible bad performance.",
+>>> -                                pcms->max_ram_below_4g);
+>>> -                }
+>>> -            }
+>>> -        }
+>>> -        if (machine->ram_size >= lowmem) {
+>>> -            x86ms->above_4g_mem_size = machine->ram_size - lowmem;
+>>> -            x86ms->below_4g_mem_size = lowmem;
+>>> -        } else {
+>>> -            x86ms->above_4g_mem_size = 0;
+>>> -            x86ms->below_4g_mem_size = machine->ram_size;
+>>> -        }
+>>> +        pcms->max_ram_below_4g = 4 * GiB;
+>>> +        x86ms->above_4g_mem_size = 0;
+>>> +        x86ms->below_4g_mem_size = machine->ram_size;
+>>
+>> I think we need to sanity check the machine->ram_size is not bigger 
+>> than 4G, and error out if it exceeds.
+> 
+> Amazingly there is currently no limit for the isapc machine, but I shall 
+> add it in for v7.
 
-also this will take care of the upper bits.
+With the PCI hole removed it appears that TCG and KVM have a different 
+idea as to the maximum allowable amount of RAM available:
 
-> +#define VTD_SM_PASID_ENTRY_SRE_BIT(x)    extract64((x)->val[2], 0, 1)
-> +/* 00: 4-level paging, 01: 5-level paging, 10-11: Reserved */
-> +#define VTD_SM_PASID_ENTRY_FSPM(x)       extract64((x)->val[2], 2, 2)
-> +#define VTD_SM_PASID_ENTRY_WPE_BIT(x)    extract64((x)->val[2], 4, 1)
-> +#define VTD_SM_PASID_ENTRY_EAFE_BIT(x)   extract64((x)->val[2], 7, 1)
->  
->  /* First Level Paging Structure */
->  /* Masks for First Level Paging Entry */
-> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-> index 0e3826f6f0..2affab36b2 100644
-> --- a/include/hw/i386/intel_iommu.h
-> +++ b/include/hw/i386/intel_iommu.h
-> @@ -104,6 +104,7 @@ struct VTDAddressSpace {
->      PCIBus *bus;
->      uint8_t devfn;
->      uint32_t pasid;
-> +    uint32_t s1_hwpt;
->      AddressSpace as;
->      IOMMUMemoryRegion iommu;
->      MemoryRegion root;          /* The root container of the device */
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 15582977b8..a10ee8eb4f 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -20,6 +20,7 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include CONFIG_DEVICES /* CONFIG_IOMMUFD */
->  #include "qemu/error-report.h"
->  #include "qemu/main-loop.h"
->  #include "qapi/error.h"
-> @@ -41,6 +42,9 @@
->  #include "migration/vmstate.h"
->  #include "trace.h"
->  #include "system/iommufd.h"
-> +#ifdef CONFIG_IOMMUFD
-> +#include <linux/iommufd.h>
-> +#endif
->  
->  /* context entry operations */
->  #define VTD_CE_GET_RID2PASID(ce) \
-> @@ -50,10 +54,9 @@
->  
->  /* pe operations */
->  #define VTD_PE_GET_TYPE(pe) ((pe)->val[0] & VTD_SM_PASID_ENTRY_PGTT)
-> -#define VTD_PE_GET_FL_LEVEL(pe) \
-> -    (4 + (((pe)->val[2] >> 2) & VTD_SM_PASID_ENTRY_FLPM))
->  #define VTD_PE_GET_SL_LEVEL(pe) \
->      (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
-> +#define VTD_PE_GET_FL_LEVEL(pe) (VTD_SM_PASID_ENTRY_FSPM(pe) + 4)
-this change and above one are cleanups. They can easily be put in a
-separate patch to ease the review.
->  
->  /*
->   * PCI bus number (or SID) is not reliable since the device is usaully
-> @@ -834,6 +837,31 @@ static inline uint32_t vtd_sm_ce_get_pdt_entry_num(VTDContextEntry *ce)
->      return 1U << (VTD_SM_CONTEXT_ENTRY_PDTS(ce) + 7);
->  }
->  
-> +static inline dma_addr_t vtd_pe_get_flpt_base(VTDPASIDEntry *pe)
-> +{
-> +    return pe->val[2] & VTD_SM_PASID_ENTRY_FSPTPTR;
-> +}
-> +
-> +/*
-> + * Stage-1 IOVA address width: 48 bits for 4-level paging(FSPM=00)
-> + *                             57 bits for 5-level paging(FSPM=01)
-> + */
-> +static inline uint32_t vtd_pe_get_fl_aw(VTDPASIDEntry *pe)
-fl = first level? You may prefer fs (ifrts stage) which is used in fspm
-terminology.
-> +{
-> +    return 48 + VTD_SM_PASID_ENTRY_FSPM(pe) * 9;
-> +}
-> +
-> +static inline bool vtd_pe_pgtt_is_pt(VTDPASIDEntry *pe)
-> +{
-> +    return (VTD_PE_GET_TYPE(pe) == VTD_SM_PASID_ENTRY_PT);
-> +}
-> +
-> +/* check if pgtt is first stage translation */
-> +static inline bool vtd_pe_pgtt_is_flt(VTDPASIDEntry *pe)
-> +{
-> +    return (VTD_PE_GET_TYPE(pe) == VTD_SM_PASID_ENTRY_FLT);
-> +}
-> +
->  static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
->  {
->      return pdire->val & 1;
-> @@ -1131,7 +1159,7 @@ static dma_addr_t vtd_get_iova_pgtbl_base(IntelIOMMUState *s,
->      if (s->root_scalable) {
->          vtd_ce_get_pasid_entry(s, ce, &pe, pasid);
->          if (s->flts) {
-> -            return pe.val[2] & VTD_SM_PASID_ENTRY_FLPTPTR;
-> +            return pe.val[2] & VTD_SM_PASID_ENTRY_FSPTPTR;
->          } else {
->              return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
->          }
-> @@ -1766,7 +1794,7 @@ static bool vtd_dev_pt_enabled(IntelIOMMUState *s, VTDContextEntry *ce,
->               */
->              return false;
->          }
-> -        return (VTD_PE_GET_TYPE(&pe) == VTD_SM_PASID_ENTRY_PT);
-> +        return vtd_pe_pgtt_is_pt(&pe);
-that change can be put in the cleanup patch too
->      }
->  
->      return (vtd_ce_get_type(ce) == VTD_CONTEXT_TT_PASS_THROUGH);
-> @@ -2433,6 +2461,178 @@ static void vtd_context_global_invalidate(IntelIOMMUState *s)
->      vtd_iommu_replay_all(s);
->  }
->  
-> +#ifdef CONFIG_IOMMUFD
-> +static void vtd_init_s1_hwpt_data(struct iommu_hwpt_vtd_s1 *vtd,
-> +                                  VTDPASIDEntry *pe)
-> +{
-> +    memset(vtd, 0, sizeof(*vtd));
-> +
-> +    vtd->flags =  (VTD_SM_PASID_ENTRY_SRE_BIT(pe) ? IOMMU_VTD_S1_SRE : 0) |
-> +                  (VTD_SM_PASID_ENTRY_WPE_BIT(pe) ? IOMMU_VTD_S1_WPE : 0) |
-> +                  (VTD_SM_PASID_ENTRY_EAFE_BIT(pe) ? IOMMU_VTD_S1_EAFE : 0);
-> +    vtd->addr_width = vtd_pe_get_fl_aw(pe);
-> +    vtd->pgtbl_addr = (uint64_t)vtd_pe_get_flpt_base(pe);
-> +}
-> +
-> +static int vtd_create_s1_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> +                              VTDPASIDEntry *pe, uint32_t *s1_hwpt,
-> +                              Error **errp)
-> +{
-> +    struct iommu_hwpt_vtd_s1 vtd;
-= {};
-and get rid of above memset?
-> +
-> +    vtd_init_s1_hwpt_data(&vtd, pe);
-not sure the leper is needed. Is it reused somewhere else?
-> +
-> +    return !iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-> +                                       idev->hwpt_id, 0, IOMMU_HWPT_DATA_VTD_S1,
-> +                                       sizeof(vtd), &vtd, s1_hwpt, errp);
-> +}
-> +
-> +static void vtd_destroy_s1_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> +                                VTDAddressSpace *vtd_as)
-> +{
-> +    if (!vtd_as->s1_hwpt) {
-> +        return;
-> +    }
-> +    iommufd_backend_free_id(idev->iommufd, vtd_as->s1_hwpt);
-> +    vtd_as->s1_hwpt = 0;
-> +}
-> +
-> +static int vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-> +                                     VTDAddressSpace *vtd_as, Error **errp)
-> +{
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> +    VTDPASIDEntry *pe = &vtd_as->pasid_cache_entry.pasid_entry;
-> +    uint32_t hwpt_id;
-> +    int ret;
-> +
-> +    /*
-> +     * We can get here only if flts=on, the supported PGTT is FLT and PT.
-> +     * Catch invalid PGTT when processing invalidation request to avoid
-> +     * attaching to wrong hwpt.
-> +     */
-> +    if (!vtd_pe_pgtt_is_flt(pe) && !vtd_pe_pgtt_is_pt(pe)) {
-> +        error_setg(errp, "Invalid PGTT type");
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (vtd_pe_pgtt_is_flt(pe)) {
-> +        /* Should fail if the FLPT base is 0 */
-OK I see there is a mix of FL and FS terminology. Forget about my
-previous comment.
-> +        if (!vtd_pe_get_flpt_base(pe)) {
-> +            error_setg(errp, "FLPT base is 0");
-> +            return -EINVAL;
-> +        }
-> +
-> +        if (vtd_create_s1_hwpt(idev, pe, &hwpt_id, errp)) {
-> +            return -EINVAL;
-> +        }
-> +    } else {
-> +        hwpt_id = idev->hwpt_id;
-> +    }
-> +
-> +    ret = !host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp);
-> +    trace_vtd_device_attach_hwpt(idev->devid, vtd_as->pasid, hwpt_id, ret);
-> +    if (!ret) {
-that double ! looks pretty bad ;-)
-> +        vtd_destroy_s1_hwpt(idev, vtd_as);
-> +        if (vtd_pe_pgtt_is_flt(pe)) {
-> +            vtd_as->s1_hwpt = hwpt_id;
-would deserve some comments
-> +        }
-> +    } else if (vtd_pe_pgtt_is_flt(pe)) {
-> +        iommufd_backend_free_id(idev->iommufd, hwpt_id);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static int vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-> +                                     VTDAddressSpace *vtd_as, Error **errp)
-> +{
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> +    uint32_t pasid = vtd_as->pasid;
-> +    int ret;
-> +
-> +    if (vtd_hiod->iommu_state->dmar_enabled) {
-> +        ret = !host_iommu_device_iommufd_detach_hwpt(idev, errp);
-> +        trace_vtd_device_detach_hwpt(idev->devid, pasid, ret);
-> +    } else {
-> +        ret = !host_iommu_device_iommufd_attach_hwpt(idev, idev->hwpt_id, errp);
-> +        trace_vtd_device_reattach_def_hwpt(idev->devid, pasid, idev->hwpt_id,
-> +                                           ret);
-> +    }
-> +
-> +    if (!ret) {
-gere as well, !! lost me sorry
-> +        vtd_destroy_s1_hwpt(idev, vtd_as);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static int vtd_bind_guest_pasid(VTDAddressSpace *vtd_as, VTDPASIDOp op,
-> +                                Error **errp)
-> +{
-> +    IntelIOMMUState *s = vtd_as->iommu_state;
-> +    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(s, vtd_as);
-> +    int ret;
-> +
-> +    if (!vtd_hiod) {
-> +        /* No need to go further, e.g. for emulated device */
-> +        return 0;
-> +    }
-> +
-> +    if (vtd_as->pasid != PCI_NO_PASID) {
-> +        error_setg(errp, "Non-rid_pasid %d not supported yet", vtd_as->pasid);
-> +        return -EINVAL;
-> +    }
-> +
-> +    switch (op) {
-> +    case VTD_PASID_UPDATE:
-> +    case VTD_PASID_BIND:
-> +    {
-> +        ret = vtd_device_attach_iommufd(vtd_hiod, vtd_as, errp);
-> +        break;
-> +    }
-> +    case VTD_PASID_UNBIND:
-> +    {
-> +        ret = vtd_device_detach_iommufd(vtd_hiod, vtd_as, errp);
-> +        break;
-> +    }
-> +    default:
-> +        error_setg(errp, "Unknown VTDPASIDOp!!!");
-> +        break;
-> +    }
-> +
-> +    return ret;
-> +}
-> +#else
-> +static int vtd_bind_guest_pasid(VTDAddressSpace *vtd_as, VTDPASIDOp op,
-> +                                Error **errp)
-> +{
-> +    return 0;
-> +}
-> +#endif
-> +
-> +static int vtd_bind_guest_pasid_report_err(VTDAddressSpace *vtd_as,
-> +                                           VTDPASIDOp op)
-> +{
-> +    Error *local_err = NULL;
-> +    int ret;
-> +
-> +    /*
-> +     * vIOMMU calls into kernel to do BIND/UNBIND, the failure reason
-> +     * can be kernel, QEMU bug or invalid guest config. None of them
-> +     * should be reported to guest in PASID cache invalidation
-> +     * processing path. But at least, we can report it to QEMU console.
-> +     *
-> +     * TODO: for invalid guest config, DMA translation fault will be
-> +     * caught by host and passed to QEMU to inject to guest in future.
-> +     */
-> +    ret = vtd_bind_guest_pasid(vtd_as, op, &local_err);
-> +    if (ret) {
-> +        error_report_err(local_err);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
->  /* Do a context-cache device-selective invalidation.
->   * @func_mask: FM field after shifting
->   */
-> @@ -3248,10 +3448,20 @@ static gboolean vtd_flush_pasid_locked(gpointer key, gpointer value,
->       */
->      if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
->          pc_entry->pasid_entry = pe;
-> +        if (vtd_bind_guest_pasid_report_err(vtd_as, VTD_PASID_UPDATE)) {
-I would remove that helper.
-> +            /*
-> +             * In case update binding fails, tear down existing binding to
-> +             * catch invalid pasid entry config during DMA translation.
-> +             */
-> +            goto remove;
-> +        }
->      }
->      return false;
->  
->  remove:
-> +    if (vtd_bind_guest_pasid_report_err(vtd_as, VTD_PASID_UNBIND)) {
-> +        return false;
-> +    }
->      pc_entry->valid = false;
->  
->      /*
-> @@ -3336,6 +3546,9 @@ static void vtd_sm_pasid_table_walk_one(IntelIOMMUState *s,
->              if (!pc_entry->valid) {
->                  pc_entry->pasid_entry = pe;
->                  pc_entry->valid = true;
-> +                if (vtd_bind_guest_pasid_report_err(vtd_as, VTD_PASID_BIND)) {
-> +                    pc_entry->valid = false;
-> +                }
->              }
->          }
->          pasid++;
-> diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-> index c8a936eb46..1c31b9a873 100644
-> --- a/hw/i386/trace-events
-> +++ b/hw/i386/trace-events
-> @@ -73,6 +73,9 @@ vtd_warn_invalid_qi_tail(uint16_t tail) "tail 0x%"PRIx16
->  vtd_warn_ir_vector(uint16_t sid, int index, int vec, int target) "sid 0x%"PRIx16" index %d vec %d (should be: %d)"
->  vtd_warn_ir_trigger(uint16_t sid, int index, int trig, int target) "sid 0x%"PRIx16" index %d trigger %d (should be: %d)"
->  vtd_reset_exit(void) ""
-> +vtd_device_attach_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
-> +vtd_device_detach_hwpt(uint32_t dev_id, uint32_t pasid, int ret) "dev_id %d pasid %d ret: %d"
-> +vtd_device_reattach_def_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
->  
->  # amd_iommu.c
->  amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
-Thanks
+Fails with KVM:
+./build/qemu-system-x86_64 -accel kvm -M isapc -m 4079M
+qemu-system-x86_64: kvm_set_user_memory_region: 
+KVM_SET_USER_MEMORY_REGION failed, slot=0, start=0x0, size=0xfef00000: 
+File exists
+kvm_set_phys_mem: error registering slot: File exists
 
-Eric
+Works with TCG:
+./build/qemu-system-x86_64 -accel tcg -M isapc -m 4096M
+
+Given that the original limit above is 3.5G I think it's best to revert 
+back to using 3.5G instead of 4G so that both TCG and KVM behave the 
+same, whilst also allowing a bit of wiggle room if required.
+
+
+ATB,
+
+Mark.
 
 
