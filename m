@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36CA2CA0EED
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B83C8303F
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 10:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urZWX-00006D-Lg; Thu, 28 Aug 2025 06:06:30 -0400
+	id 1urZWU-0008Rk-Ic; Thu, 28 Aug 2025 06:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1urZWJ-0008Nz-AL
+ id 1urZWH-0008K6-Nl
  for qemu-devel@nongnu.org; Thu, 28 Aug 2025 06:06:15 -0400
 Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1urZWF-0003VF-TF
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 06:06:14 -0400
-Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ id 1urZWF-0003V9-BM
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 06:06:13 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
  by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 57S0C71L3582273; Thu, 28 Aug 2025 03:06:09 -0700
+ 57S9LKp33193266; Thu, 28 Aug 2025 03:06:07 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=CuQgdSrRjgGPUlUSJOGq1cNPCX9+NLqRMhVg2G/ku
- Js=; b=LuzlWSr2ddZU171t5KTjN6AS4L38PNHBdnp4cauj1zZX+1SrS77Jj5dpx
- Jf2PSewYxgVuv//qSaBoYUgjjmkdzAsM5F929J0yp2M988zZU9gR9la5mCU+bdBl
- SQXzo/vGt3LHCe1YcA3yyLJu4BjO0krY30b61WNV5kYqLYh1f4zGZv+MrzOSj5RX
- /TD9zBq5NBP2RnOEpGAODmjj3/u8n65VVBL8iK4Vtb7KB82Pk0FQ+/wo1xDY3UPe
- 2lwX9Lo7U3aX9X9yiQYu1iNB9DmkaFJRE9mqNo7ZvLJDC4lkjOTx+ixxgxw62iOO
- BZS9PmyMPXiO2k5FJee+I5XdBYlrw==
+ proofpoint20171006; bh=uE7Bshe3Mn4Z3emcfE29xaUQyWYuWb5NF10akxGAo
+ Gk=; b=gMHPyDQuYm+tHQr6U/cOnMgN60r1wN50qJ6tUl1M2qP5VsuH9OwfIlGOK
+ rjA43hj7gGh6CNFyB2L6/UijtRc35y05mLO3UlTcysXrI9cm6Ex8I0xFvyjqXuIG
+ UZJ9sQbgJENfB1jCppVnztlDgeh4lyOQuvc9wqURCYqh1t/tMMmD1vTow7jJUXBQ
+ /zyQzWLaarEon+uZuzqdor3fXwE3TtaPsPw0MZDngERH4+TtMsJIPkg/Grf8cGFD
+ 1x0Rbv0OP4VBUlytGlvJnfBeyTa8mBRtVLPn2uXxaEVqjh1p3kNaMzaJPO3/wh0Q
+ 2RXrVEd+eNyQv2Djqx1kEn0jdZ9bg==
 Received: from nam10-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam10on2121.outbound.protection.outlook.com [40.107.94.121])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 48tcc312n4-1
+ (mail-mw2nam10on2105.outbound.protection.outlook.com [40.107.94.105])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 48t9gyhcjr-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 28 Aug 2025 03:06:08 -0700 (PDT)
+ Thu, 28 Aug 2025 03:06:07 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EkXlEnwr7AJocILx0hVvwJ4vjUWGafkYPMBJtBwDZB523IpDjxjyTXx9DHOo6AJAR9zMIUq0lPEyAAJraWGAV9Ut/fRdvBTHSddGPIh/QYu4F0JBelq0dDIeBwxG0l2f0BsgusaTeOIBqbTWbkmp978FCSmjhuZ0V5tgY0IVTDENPJXhVnFMOWtDOK0Jn5dMj0V+CGIT3/WmZEyy4LY8BUtOyXfHwczlR1WJMNaESD2LPW2QfdZlpHGKnDCm50+aWbL23Wp4jpB60bGeFXkCz8ygsxhgbYGYFCF8V5nU4Wzd2idXLT3aPQoFw6UpP76eJz5a3EZquBEjKFlQcQMDJA==
+ b=pTVOIUYAZ0UIX+uClnE84VqfDuNbkwJW3+5wkruUiuBqGuhgaoJcdrqLKIxQxSi1/T+L99utuIqiyHcCCUv7Z/2Iiul3xNQ0zDs8vGcI2nWgSo/+JVV/hshcrFbJRJUTOmTCHCCkx8ddzr7oi7k8hDfUxzJS0DCy/q/TucSQcc70dASIIwMNtpjeKKBCe5v8AeRWOIvjTQ1D6EzRpKVjbmsAIcbRM4usVFnlBHg5bVPagaTVwa3ysa16B4WdEvGXRTWRTzFrVQS/ZpGqUGM36QiaGGTOkeGXL07+qGSmkPgzu/mBs8Xz+S9wpsN0kuuheOB/j7ypD76SD6iQG1XVWQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CuQgdSrRjgGPUlUSJOGq1cNPCX9+NLqRMhVg2G/kuJs=;
- b=odG82KfcW+ilfkj+zPEzJUrG0s0khAJYDgNFid/E80v7XkGCzUahqJu/lVrPMbJ6ycnyfzG+CaHFsrGmfbHljkgMm8NX3Lq/6sKKHcMkxZgKWD7tv59EmApyFKpCnBFN/U1B54sE0za4nEsslrT/AdP9ealIMO3lnjKbrlhssbXIEEwQBxR5vbI+xxgkE58Sc0xctEZW0NysvS6PQcD3Yqbbt10NO57IRLIv4SKPC1D4FUelGunYvJfWDgMXH2cHKDi2yFDSMKwvPO+GLcj7gTyF0einrRRBDPt+p8Zzb6R7NBsymo1kSF8dO+Sm6UkKM6ZD6F+kJtqxJEiWIdV+Zw==
+ bh=uE7Bshe3Mn4Z3emcfE29xaUQyWYuWb5NF10akxGAoGk=;
+ b=OQcb6ENDQ2mdI9rE4ASr9jFgBNsF248d6jbwYdad7xAJyfxZrNzxGA2RRghRkKkC/xZAQyxAn/FHVSNv8fv/Nh1si3y6e8mGtSqPUaqEymApq1/h1DVxtN9FHHOm+NFUNvI31btsv3npYcf73bajoTPKNOpyyaHzgTY6cTFl8FgoV5lUohp4iml4XNaVRibbjqdRP9PkMaP/ojaC8qkVftQLVGGKY87kSihVKXT+kxSN/E/YKZhseK+WXNS9afP5DUifl7RBEYIME0ulonYRgegNMcNVsngkBb7a7wpi5gr3wKaXj0vEUi52P6TZHSWA91rNZ3k84tmq8f2mO1wCrw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CuQgdSrRjgGPUlUSJOGq1cNPCX9+NLqRMhVg2G/kuJs=;
- b=fEPSsfhxO7X898jcNR4Pj+raqNTaDHPHzdw7c4gsRJIaSNhdRzmdeCJ5bmP5AvxB0QbidiMKIEQ/2+CagHZrP7tMAa28AVRBCLxOi2vGEpxlR0EYoygRUgGKtMHp+nG/n9IxFvjU03krx78e4JROTyEeZZ1qezM2X3UngVz2kNmqlNw8RftEoNKVM/xEHUn7jMsNmGYC5CadKrXtmK/LiZvm8RguLunl6MDbsoZnVtPM3fEirQxuCUamjP2zZkd/nvhB+lPSuTvc/ZRQNeNzstUuQ87GDPkUUJxxL1vLIWp2xnOHX1TpE57flGwN7nIWiYAYccLPYf6DA13eLwbTWQ==
+ bh=uE7Bshe3Mn4Z3emcfE29xaUQyWYuWb5NF10akxGAoGk=;
+ b=wkoOU4l4yeCk49QOFLPEdtsZfTFcFBLdGRmWVaZ6i0in4Ub191JM+J4QiMZvOha9PQ7U3X2uS2PNw050TyCxsjfrlYQbNPuMgOwjG80LnZMgzhqgfW74LjnwbrYo8hJUGDGFoBb3r2pnE4yaSaYHXVzd3XLG2hyDAbj5rOkaqukh3gADDTT1TU663zTgSLC8raj0Pfm0q7vd1zGWDAPCk0lQxwsIh+Ud18a6y3cogtP0k09Vg8P1jBI0frn57i5ocSarsqxTZthHAWYfaBAtg4NonQ2j0fRywxorcjPIC79wfKwb3+qkzhxSSqr/9bKuepgVlHwR9kGKLViDLz5WPg==
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
  by BY5PR02MB6628.namprd02.prod.outlook.com (2603:10b6:a03:205::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.16; Thu, 28 Aug
- 2025 10:06:03 +0000
+ 2025 10:06:01 +0000
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51%7]) with mapi id 15.20.9052.021; Thu, 28 Aug 2025
- 10:06:03 +0000
+ 10:06:01 +0000
 From: John Levon <john.levon@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
@@ -71,9 +71,9 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>
-Subject: [PATCH v3 2/3] tests/functional: add vm param to cmd.py helpers
-Date: Thu, 28 Aug 2025 11:05:54 +0100
-Message-ID: <20250828100555.1893504-3-john.levon@nutanix.com>
+Subject: [PATCH v3 1/3] tests/functional: return output from cmd.py helpers
+Date: Thu, 28 Aug 2025 11:05:53 +0100
+Message-ID: <20250828100555.1893504-2-john.levon@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250828100555.1893504-1-john.levon@nutanix.com>
 References: <20250828100555.1893504-1-john.levon@nutanix.com>
@@ -85,91 +85,91 @@ X-ClientProxiedBy: AS4P190CA0050.EURP190.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|BY5PR02MB6628:EE_
-X-MS-Office365-Filtering-Correlation-Id: 48ac3954-7da0-433d-d44b-08dde61a7ee4
+X-MS-Office365-Filtering-Correlation-Id: 0822ecdc-3727-47be-379a-08dde61a7dda
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?/xdVv1eMvnhIR2YNKT//MC2Xf4hGcsRiLEQJpUXXa/yyKhla0sNrN4Fs3qm8?=
- =?us-ascii?Q?4Z5ODBjkGs/yCd5hm9hFGLpDPGtkmkiqCt8WljlfUuA1spssaTUtxqsiVYWl?=
- =?us-ascii?Q?fUiPDNuEcRCfuYBpUBmLCBFcEL/2rsQ42wAyO0Efi2xMW7DQju7EF+0IoDZn?=
- =?us-ascii?Q?8Tf5wPTV5xQ5Z/Nx5MaQaNNhbuAfEnnyozPRYzaTGRNQgaDuXgeGjNNg7Ov9?=
- =?us-ascii?Q?qlrBJsSohkcQ2gcyUIjMKLeLwEZgBJksWtQ5pYmDiu/ACICPMRAiMgHSnT/E?=
- =?us-ascii?Q?3VWijW/YMuDlgQ8FFMkM4VLJox9KpPLG7vTk/HuavqsEX97zjaV+BoStDSAF?=
- =?us-ascii?Q?Ife2h8tV4ZjtKoZuoKkmdk9RxowfMNW7A6ClLKL0/nwhRUk0CjaWI893UCQX?=
- =?us-ascii?Q?HSsscK9i2FB7s9wO+FCY68GOt2didKBpQIAlePDRTgWqr/PgoayFXvGesjCb?=
- =?us-ascii?Q?yAN9UYbaTlqFd6M7W/1RdAIFdJ4BuXOpsapLkWShIfSmlfiZBPb/QO9tPKlD?=
- =?us-ascii?Q?CDZHQ9KiXnLu+kNQ0+/YU36oQfZXIDLnS9Eex8PNirfFpNjSzLgYh41rgjvh?=
- =?us-ascii?Q?Ca3M+byNmBukI9FAgHSVNJRlRt4LP88J2AZ/rSItthhZqdH/6dT/Er3VgKh4?=
- =?us-ascii?Q?4TDR4maliTaxLFRhSwiMkT91WPTrRZyOQXZdgLG1QXWZuE8pedlUvC/A1LNv?=
- =?us-ascii?Q?gviTyoVsGytkuhynPUqkkNHr4HxGPC/QGAyxIakczhoAYY0HsVPeZI7r+6Fu?=
- =?us-ascii?Q?HDjfJFnlUi5qq9A7/0A6UHNFFL8wXFeLWT9iZzQmrQNWryQgWRnGVSInsH6G?=
- =?us-ascii?Q?iowzxFMPt+RXjiI7OYhE+V2Tf09cYTprHYZIZh+yLznTR0ieR+l2TFrWW0M2?=
- =?us-ascii?Q?pCqUHUKT+XNE4Tu5uGJjTKWkAVZSeKXDxWandrBCs1zS8mCTNkJDjNdKa+OY?=
- =?us-ascii?Q?6nvs6UzavrD+x4aPFbWzfOUdI1SpKiEt7AV6grIHhTNFuDji3lZChMPwou3L?=
- =?us-ascii?Q?UsnOGrV0wWLUrbG0sjHUZlRI+HdlKsY2Z/iLmcyMfiWU7wpeN+KbbTHRJefd?=
- =?us-ascii?Q?Ir7X+x7ttMfhf3WIJdPCuLAqEZkfgjZ4hxBuSa2JyK2U7sNNKARIBB1ycV9S?=
- =?us-ascii?Q?z8mig8qFiTqbwEE1AdM+VCJShMxT0gRd4GpW54uj2QZ2yf5WNy0bDBKWRBsw?=
- =?us-ascii?Q?Lokq0AF4Y1QAVXqB8i176zEynbuXRFAPn4qFIzOhB+2CJY0vi6UzjEJJJsMX?=
- =?us-ascii?Q?UKYP9CbcQ3liaKDk/IQ10B7qRQC1z8hHt6jstnWlmEcfvZes3KlmKxqyCRq7?=
- =?us-ascii?Q?m+neXws1AvDcH+Qif8KGSKgmeqNbh87h4qdUSiaT82Yc5W7APmWjOEgafTak?=
- =?us-ascii?Q?fA4Lpp/Q8B4UFSU7Q+sNSW4Vn7JQTh801HMzzVFPD/Ju9hjJG2g+palfElYo?=
- =?us-ascii?Q?PWLYOBCrZhI=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Z4ERxZg6ZeVO2YhS4EFZ8ibTu/2kjaioSKc85xIoYIE2t59Jj1g+q1z6UuIf?=
+ =?us-ascii?Q?23+LiTQ2i+Yc6OPHffjPuKor9I7C4Qf7/95MxSIHmkD+xoTZ6RVzdxDsQ5Lj?=
+ =?us-ascii?Q?609dzQROuiqa+QP0Q5wgiVrBFe4Tr09RyZKf71tPUofE7OCtHNUv7yz3EZ8M?=
+ =?us-ascii?Q?ncTo4TTGJOX3lNtzMX8L9PSFBDvr7Hy4ZjBcz2SLlsetph1Ba+YSslHv6EkW?=
+ =?us-ascii?Q?q0MctufZ+kP6pNB+UqQbg/KJNc23YFkjxT2OhElDVRo3E89tQoGoqApCI9/D?=
+ =?us-ascii?Q?sjKSoXcAKG2gAU1Lqn0DcwLTgJGNfdQLm7daWlpUxmcpftS3bT2KFwZiP3nz?=
+ =?us-ascii?Q?QQNIy0M3xtfxI2T3axgKPehYr2P8lp0RnG1VCqrtNdp+pe3Gyg6sINCxzmZj?=
+ =?us-ascii?Q?c3/wC7l4plS3IMCy1x2V6J4f1qSRXraxrvbW6glmHNUwUwoDKyoNBWmxF6bm?=
+ =?us-ascii?Q?N5VayxQ32/5xlaP3fV4rNF8kBLaq6URgc4ZvQqL/6fWpQfGQzIlJvXv+2a7V?=
+ =?us-ascii?Q?VOHVAYS4iA8vWHwze6e9rCR+lpuRn2L5wWnvngM86QEURVPJGzSU+uMpsw+N?=
+ =?us-ascii?Q?YavEv5NKSgqt2rwevO7C+1+vOyqD/U/waoOtily9CxK/AzSfC6ceSoXuOb70?=
+ =?us-ascii?Q?++t8wBLOZiZlhChQuFqUTO2LuZ+02OQzpRx0iQAwSNd5vGy8Cis2fTpcH2jz?=
+ =?us-ascii?Q?Q3laKPQfp2UhUp7zpzFvS62ZeZq/RxA4u2IZsqfbRz4IrqVaC5CSvp7qgmA1?=
+ =?us-ascii?Q?jmHHoqocXdQVbnyexY2X4LfNFXgbFsTsn+GshjD4j7WC2/DvQccanFOvufLL?=
+ =?us-ascii?Q?xRDreLRIJxtOKau+J+R9QcBzhLg3XPxQJUG2QY7rSEzWTFHmDwSCFd+6tEhF?=
+ =?us-ascii?Q?UywEX1Ai+fsyH87pXQNg3RO28m5yi/+dMmIFmKU/PT9IblYJSEYBM0Phtf3Z?=
+ =?us-ascii?Q?9mdEEKm2jgZ3qEPVEB1HPPdkL/rMMYcP6vZIhJZLAaLVnrkDDMg71UEXKLU2?=
+ =?us-ascii?Q?hipVHT3KcpuT+r9Wt1BHzM2Tqld2dUaX/JWRYdSsZ/Gol46X1wI5OOiHZ/la?=
+ =?us-ascii?Q?rzYHIR8jzyvqdAHAxnaM6hEVC65KF/q6Gfje6DcL8EAZW5f4Va4YMwLw0nF8?=
+ =?us-ascii?Q?fKB97aOsxqSyF79x+U/wqwcHI+72bQcf8q+q3W/ED0r/q+r/ys2xEniYTDCu?=
+ =?us-ascii?Q?uf1oIaAZQFgtRzY10WSB+wrMQ0QYUaMofmMdkGJkerMcU8Ro6+brrQ7hFgEm?=
+ =?us-ascii?Q?7A7U8yYhZTc6fNzrG4qoudzTIEt/ciH8/Z3lP2NOd/WEmffiiFC0TKtCR7GD?=
+ =?us-ascii?Q?clqzARPFLLIBBAhltj7c0JL/UW31fRixmVKGyZ7YjhDEaHnTRAmDiBgAwlSv?=
+ =?us-ascii?Q?4RZ0brOqnLLbnicBAhEUuHuokoCqEs7T8CubEVd1wMJTVDXKfaCXe+DVPWOK?=
+ =?us-ascii?Q?oSmfsg0DaeY=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3XbhqBWe4/72f1eo9oPGKxvARlfsjoJnuX3IQNZFcyZHmBY9nmL+7o3nnyex?=
- =?us-ascii?Q?/Wdj66/u6UoYmLARnq7RNqTIzDHNv+VPCAmXUCOlW22+wVtIFRPV3CrmTPdj?=
- =?us-ascii?Q?pt5/NFZsrHr2MGXWJqxms+GceR2nJXwF6g/ory/A085Qmlv18AP9vf5PQEqf?=
- =?us-ascii?Q?mpha4hqLbSynmmTFjmHTWHj4rbqIvd3V4b263rrsvf/f+l8xj56A4H8ZvtgV?=
- =?us-ascii?Q?BBZCP/Hs7kKolY5IBf0+B96HyEljS16Rev2/kuvxaBtUOayj6MhoSPmoXSkw?=
- =?us-ascii?Q?+uXqq/VJMCsNObAZhs8bc5gVpZ0i1cigF+xsWbBbbochIfp8Wt1xZS5wM/wp?=
- =?us-ascii?Q?7kTW0w4ck08ILN3fXyDcdOvIV1uHLeSapvJkspdeoIF+VUgJ2ipWZblH4Pep?=
- =?us-ascii?Q?2HyRHVlL8DqSAJo64QEagIHeiexb7tvFSvkAw+EW7UqSvNCuSGg4E07YpIfl?=
- =?us-ascii?Q?lYgH0ijDqNWDtBXcC73YQlR86ZAyxDeRZfZHOsuFVguVhx/qVesDBw1trOHP?=
- =?us-ascii?Q?0JdFSA0i+TCQYKUIEOmFF6Gik3P1iLZkIvIWjv8XZG0+X0Nd5NsO7qWoQ0zK?=
- =?us-ascii?Q?WYwp7kZxZb+8hQvnuG+IQrj1XmCY8CT/kja1MH1LQJA02V5vBnoZ7zYyu8DP?=
- =?us-ascii?Q?A9kgpnJa48DNjcz0ARzDjXuYDpXOkHZJr2rHqYIRI6Ik7lfGHJhV65hIj6Bk?=
- =?us-ascii?Q?00adJoSuaVEDkZ+3AQAkt0wQULAql2y8IE3qrU5T2+kMQexWSVAtjPSCxmFr?=
- =?us-ascii?Q?3Mk2yZIhB/u5DMH9YblQATCvAqOVmC4L5r2BtUDznTvw4AwMgeCcp0qW/SXf?=
- =?us-ascii?Q?uo2XTPqT5OjMp3gsDVFGkv8vXKK2nj2A5TXP/Z8xHOyBSXLKNRpdtmQUOmY1?=
- =?us-ascii?Q?Mjf0Wr0xroug9NUhsdlMwLOiVFdAf0fHW3DlTeBM/0XAReRScXlOanAGAlIN?=
- =?us-ascii?Q?38OLCD87yOhAT+GZ7GYc+FE6E2qmw7vw+dCkAzWHTvDQ2CWKTPYcnRAbcLCt?=
- =?us-ascii?Q?CpH2wIzC2xs3Dm2MfUKG8/czmB68b/o7qnnVeJMXM4ymbqjMJw3obtS6kejv?=
- =?us-ascii?Q?e7LsmeyycNqG38H9W/2JW0ChvxPcpAl5va6KHeSZffVem6Vx35Gao2CelP3q?=
- =?us-ascii?Q?Ky9HX+Do1rjlEFm5ntk1i3YNT5N+pIhO3tpsqM25dAnNQy67qlrFyuT6z+tM?=
- =?us-ascii?Q?lJBenNOQvGtGBuRIHDM8Hp7k9cZ80RdTmariO5pFaNk09NlJnpk6EiTnyEMj?=
- =?us-ascii?Q?NhYvzI928XuhtdZZXGrIkHGULe/FIvLyOpb5egubcyF8Ofc0x3LDawOZKUZ3?=
- =?us-ascii?Q?4IXQKw/ZGyRlvz1X/1FKk7XMPKcREGQsa1bfFZubaSOfF6c73dTHuS0M4E+5?=
- =?us-ascii?Q?CzEIeetK6d+xHnUTgtYth3OpAPKRZ9R0HZujJoygWkIc6qzwvQ+Lc2mObMe8?=
- =?us-ascii?Q?2C7n/LEn/pGqYjwCDJFiZtJGORuK4xK7yv/SZn44Qf1MGS475rlHu0mq+19J?=
- =?us-ascii?Q?gudfxhzTxQe81HyfIIbyuH7izKKKa9u5v3iqehLjJDvAWvWQQdVcQ/HR6HrF?=
- =?us-ascii?Q?X9kkdafp6NpJmi+Zhx18YtwYJc4gPL0IIq2t+zpq?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?s6rEXWlWIBDIf+ndiTax23fVA1XmFUgiINSTg/xNV5cV4lMOeD8x3pCU3Lnc?=
+ =?us-ascii?Q?155vNRgp9tFFigYnrqZukR0LIvysvoSINS3lfgPz6OnRkDy/LlHrD9JJJUwa?=
+ =?us-ascii?Q?heKtMomxFBRAM62NX78zYVEPSEd0IhdzGxOCAJvpxVMAFTa2J37yRcE1pono?=
+ =?us-ascii?Q?OpYIqDYaHqkws/3Yb6nxURCDiI6my3h7KlZEOI9AnGKaEQEIBjHnvkEDJbMz?=
+ =?us-ascii?Q?P5Bmws/fEWOKBPX6Dmh7ZFbex192AiOkQ2nbnPR/OCPP3hUNtH3NOxl2XiWC?=
+ =?us-ascii?Q?Nu9dTXlB4RhF1eIU0y19FPliRGbv1GasLq8HLy/QEB6H6Z/SJ/ttjDqT2yV+?=
+ =?us-ascii?Q?Nl2SCAxnSE2ZHrVAeDRY3KPbNkIowuo4HVBd9aQ3t+ZnIFwlc+pHlr0952r1?=
+ =?us-ascii?Q?YV//rHFESThQxZWX5t++rmBMQZf3AyH1C3ciQ8Q9ys8MmKIHcTu49X80ryKu?=
+ =?us-ascii?Q?h8yH9UKv14PV+sY2fA5pWq1FoIfukd4gNdfNyjybhgGoRJkaMLOZD2VGvkz6?=
+ =?us-ascii?Q?K9oZqXeno/wBgfNky6+BkiKcWbQ0zxBvLWYnj43+vshoxIPPgjfNyIgRBagr?=
+ =?us-ascii?Q?A9E5XJfRyEwTizGFrokZA8vjxnPn1vg+SBHjuNrjIcAd839LF+IX9B/Wtbjl?=
+ =?us-ascii?Q?vTPv0PIBNc2nBnf3p7yJ3BS8q6oOA0pxV8zss/SCH1MaYMWJQveF1Ztl5UzZ?=
+ =?us-ascii?Q?X7L+w6gMzC9X7OVYEaBJZBofz1ZIw/qREnKKbtfKoL10Vg2OnPM10e5KWX3J?=
+ =?us-ascii?Q?yRu+2D4gU/gN65dEjbc+xZelwU2tK0gwTyvjTXO5uqIO/oO3hs/WsVPaLfLX?=
+ =?us-ascii?Q?peGdKi4T2U8aUfL3BlPPtXCsMAEtP9pXOH/xI6oqh+OKDK9GKokG83Q3aj0O?=
+ =?us-ascii?Q?rUYqBM5bKRJgrwop/uZzXD+nvbhmr/cqj34aYlHcLPXZLRKS4ZRgSsFXhljY?=
+ =?us-ascii?Q?U5yfxs79su59S4vRQXFoEQQGlzgKYgpLA9XS09QhpujrYTFthYi8aAeAX4c8?=
+ =?us-ascii?Q?D9uVVz8n8jrUEpM0ukBZRq4azcwbslbonUFnhi7lV1mzG6m46n8+GUHZSSKI?=
+ =?us-ascii?Q?cy6yMQ0mM2daIrYp5bE8uirflq/Iy4XrO3eacS0RgWNdpPnHCz0F5hi92XXw?=
+ =?us-ascii?Q?Bq3pLOkLVUoqajsEYVDQt0a5/HsKQIL279nWJ8ea2fnkQrpIGMF7jC4UMFEz?=
+ =?us-ascii?Q?bAAyJ74D46wnYn7hWOnLkB+fkPRe1OxBy3pHvzL5i4csLcvL5wxAPtuTcrUk?=
+ =?us-ascii?Q?hsk6gKEIVx3SuF7fJfq7tBEfsBb8hcGGWsOPHG1d4+tBnHcHMW6nkE+a+sh5?=
+ =?us-ascii?Q?unaBt0ELw71ouRv4tpe8F36kUnvFqCvHt0u8RG0gAAduFSy2fT37phq3oOTd?=
+ =?us-ascii?Q?Bu2CRovsiZaxl1lFT9iEbzJRoHgQdbUKlZl+xLg9eQnOGpDjCTGXUb6FPKLH?=
+ =?us-ascii?Q?tVKy67N+4iOwP+U6LdRRfYT+KWEucq2PBxCp9jOx416cPfaCfXJPUvOw5xNw?=
+ =?us-ascii?Q?EYJA1YYa3BEY7gwwtqMPxiYa4/Wy9kgzOVRWWln/UivQFP2D2HJtUZTC+isc?=
+ =?us-ascii?Q?dry2tlFQYiOVqo6FJEkhTBAAb57SnF6nxL8QFknj?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 48ac3954-7da0-433d-d44b-08dde61a7ee4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0822ecdc-3727-47be-379a-08dde61a7dda
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 10:06:03.0526 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 10:06:01.3321 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qrb40ZxavYdr/zS1MGnIqrcBXN5GWcDAs+pVnMLb4+Il/SA6fOw5VQ1pnr982DAHq3774Myy26NgWm7BGAB2aw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: KGwY0BsOL/BCDwFkZdTJ05FHJ0RSBDIYJ4cpQWfdW3cLXxY0mxYxN7Rm1F/4S3RuU1AbTa15gH0xQEHP3eoclg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6628
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI4MDA4NCBTYWx0ZWRfXysDBqthGZ/eL
- iJojl3xS5KLaXlD9DOIvd4DsGvm4QBUOZmTodAE4KPyNZjXv4nsCPy9Rr5aRr5DBwLNIidmp29w
- l8rerzBU+9B7+jIbX5e27NNJW81SznFeUfhmXEJrg7L6LP91MlgLeMhNvqYA2MfLGz3sPpkle1Q
- JtLjCbNz1AMexczMJ6PXs//0nrDPwmegjGYLPJ4958GkH0o9cS6apFJG2G9+I6oRrDevPeermMJ
- zfp4pDNHAPRUK7HIAczKnzyxqmSQ75q/OCfqldc9ssKoihU7DUKgf3raiCD2F5Igj6rJWdOsTsb
- XhHTjryO+qZxjmNKMD75sS7ogIEaL3INNFPDrVoYUeBqlUkUcM3V0sHEwphxx0=
-X-Authority-Analysis: v=2.4 cv=JaS8rVKV c=1 sm=1 tr=0 ts=68b02a10 cx=c_pps
- a=pkYLGSLT82isoLqesn6nFg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-Proofpoint-ORIG-GUID: tkD5EHmDWdoC0Wr8HRHsYn6yYmuXxWES
+X-Proofpoint-GUID: tkD5EHmDWdoC0Wr8HRHsYn6yYmuXxWES
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI4MDA4NCBTYWx0ZWRfX3Xuin2bwk9BB
+ nRpGtAf+RG0GWQ+Jn1l2ZZk/0lCKlAbOAfLpPOYLiDjNRElkKHRat10zxeqEHZWTxf3xo6A3L47
+ Em7CtQnRGc0lkyaD5PShM70jSMw9wWK1r/SCHhFvyLPJI4tlsV9VwUj/Qosja2vRQdnpnis1tgg
+ EbIpHKOyxGg3HJsvLTlaxpL4sd5hIQPXa3pnXxvrN7u1dV22x7J9VMRI0a+G78JkwCPdcOUkmll
+ H36hkX7UPV3nfclGD3RU8HquB8BZK1wWApoLeEEfzejYIqq8LuIDoPhCgbIMR8YkWs5OKv69ZrD
+ EJyTYT3fwhD6IqDVFmn7ngKbqIbe4qvhvfxn5ghzz8Ksoz+w/jE2ZWcvxU+NiM=
+X-Authority-Analysis: v=2.4 cv=ArTu3P9P c=1 sm=1 tr=0 ts=68b02a0f cx=c_pps
+ a=DgGpGtaONXtiYPP+4HxLvA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
  a=xqWC_Br6kY4A:10 a=2OwXVqhp2XgA:10 a=0kUYKlekyDsA:10 a=64Cc0HZtAAAA:8
- a=XuhTMkjeje0lLBXxpz8A:9
-X-Proofpoint-GUID: 9ZkEezdx7O2iz9xIvE4j8AXmxvYANzW4
-X-Proofpoint-ORIG-GUID: 9ZkEezdx7O2iz9xIvE4j8AXmxvYANzW4
+ a=AsuM2kbEzKHZIBb9HfkA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-28_02,2025-08-28_01,2025-03-28_01
@@ -199,93 +199,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the "vm" parameter of wait_for_console_pattern() to all the other
-utility functions; this allows them to be used on a VM other than
-test.vm.
+Tests might want to look at the whole output from a command execution,
+as well as just logging it. Add support for this.
 
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- tests/functional/qemu_test/cmd.py | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ tests/functional/qemu_test/cmd.py | 53 +++++++++++++++++++++++++------
+ 1 file changed, 44 insertions(+), 9 deletions(-)
 
 diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index c19dfc577f..8069c89730 100644
+index dc5f422b77..c19dfc577f 100644
 --- a/tests/functional/qemu_test/cmd.py
 +++ b/tests/functional/qemu_test/cmd.py
-@@ -144,7 +144,8 @@ def _console_interaction(test, success_message, failure_message,
+@@ -45,6 +45,9 @@ def is_readable_executable_file(path):
+ # If end of line is seen, with neither @success or @failure
+ # return False
+ #
++# In both cases, also return the contents of the line (in bytes)
++# up to that point.
++#
+ # If @failure is seen, then mark @test as failed
+ def _console_read_line_until_match(test, vm, success, failure):
+     msg = bytes([])
+@@ -76,10 +79,23 @@ def _console_read_line_until_match(test, vm, success, failure):
+     except:
+         console_logger.debug(msg)
  
+-    return done
++    return done, msg
+ 
+ def _console_interaction(test, success_message, failure_message,
+                          send_string, keep_sending=False, vm=None):
++    """
++    Interact with the console until either message is seen.
++
++    :param success_message: if this message appears, finish interaction
++    :param failure_message: if this message appears, test fails
++    :param send_string: a string to send to the console before trying
++                        to read a new line
++    :param keep_sending: keep sending the send string each time
++    :param vm: the VM to interact with
++
++    :return: The collected output (in bytes form).
++    """
++
+     assert not keep_sending or send_string
+     assert success_message or send_string
+ 
+@@ -101,6 +117,8 @@ def _console_interaction(test, success_message, failure_message,
+     if failure_message is not None:
+         failure_message_b = failure_message.encode()
+ 
++    out = bytes([])
++
+     while True:
+         if send_string:
+             vm.console_socket.sendall(send_string.encode())
+@@ -113,11 +131,17 @@ def _console_interaction(test, success_message, failure_message,
+                 break
+             continue
+ 
+-        if _console_read_line_until_match(test, vm,
+-                                          success_message_b,
+-                                          failure_message_b):
++        done, line = _console_read_line_until_match(test, vm,
++                                                    success_message_b,
++                                                    failure_message_b)
++
++        out += line
++
++        if done:
+             break
+ 
++    return out
++
  def interrupt_interactive_console_until_pattern(test, success_message,
                                                  failure_message=None,
--                                                interrupt_string='\r'):
-+                                                interrupt_string='\r',
-+                                                vm=None):
-     """
-     Keep sending a string to interrupt a console prompt, while logging the
-     console output. Typical use case is to break a boot loader prompt, such:
-@@ -164,12 +165,13 @@ def interrupt_interactive_console_until_pattern(test, success_message,
+                                                 interrupt_string='\r'):
+@@ -140,10 +164,12 @@ def interrupt_interactive_console_until_pattern(test, success_message,
      :param failure_message: if this message appears, test fails
      :param interrupt_string: a string to send to the console before trying
                               to read a new line
-+    :param vm: VM to use
- 
-     :return: The collected output (in bytes form).
++
++    :return: The collected output (in bytes form).
      """
      assert success_message
-     return _console_interaction(test, success_message, failure_message,
--                                interrupt_string, True)
-+                                interrupt_string, True, vm=vm)
+-    _console_interaction(test, success_message, failure_message,
+-                         interrupt_string, True)
++    return _console_interaction(test, success_message, failure_message,
++                                interrupt_string, True)
  
  def wait_for_console_pattern(test, success_message, failure_message=None,
                               vm=None):
-@@ -181,6 +183,7 @@ def wait_for_console_pattern(test, success_message, failure_message=None,
+@@ -155,9 +181,12 @@ def wait_for_console_pattern(test, success_message, failure_message=None,
      :type test: :class:`qemu_test.QemuSystemTest`
      :param success_message: if this message appears, test succeeds
      :param failure_message: if this message appears, test fails
-+    :param vm: VM to use
- 
-     :return: The collected output (in bytes form).
-     """
-@@ -188,7 +191,7 @@ def wait_for_console_pattern(test, success_message, failure_message=None,
-     return _console_interaction(test, success_message, failure_message,
-                                 None, vm=vm)
- 
--def exec_command(test, command):
-+def exec_command(test, command, vm=None):
-     """
-     Send a command to a console (appending CRLF characters), while logging
-     the content.
-@@ -196,14 +199,16 @@ def exec_command(test, command):
-     :param test: a test containing a VM.
-     :type test: :class:`qemu_test.QemuSystemTest`
-     :param command: the command to send
-+    :param vm: VM to use
-     :type command: str
- 
-     :return: The collected output (in bytes form).
-     """
--    return _console_interaction(test, None, None, command + '\r')
-+    return _console_interaction(test, None, None, command + '\r', vm=vm)
- 
- def exec_command_and_wait_for_pattern(test, command,
--                                      success_message, failure_message=None):
-+                                      success_message, failure_message=None,
-+                                      vm=None):
-     """
-     Send a command to a console (appending CRLF characters), then wait
-     for success_message to appear on the console, while logging the.
-@@ -215,13 +220,14 @@ def exec_command_and_wait_for_pattern(test, command,
-     :param command: the command to send
-     :param success_message: if this message appears, test succeeds
-     :param failure_message: if this message appears, test fails
-+    :param vm: VM to use
- 
-     :return: The collected output (in bytes form).
++
++    :return: The collected output (in bytes form).
      """
      assert success_message
+-    _console_interaction(test, success_message, failure_message, None, vm=vm)
++    return _console_interaction(test, success_message, failure_message,
++                                None, vm=vm)
  
-     return _console_interaction(test, success_message, failure_message,
--                                command + '\r')
-+                                command + '\r', vm=vm)
+ def exec_command(test, command):
+     """
+@@ -168,8 +197,10 @@ def exec_command(test, command):
+     :type test: :class:`qemu_test.QemuSystemTest`
+     :param command: the command to send
+     :type command: str
++
++    :return: The collected output (in bytes form).
+     """
+-    _console_interaction(test, None, None, command + '\r')
++    return _console_interaction(test, None, None, command + '\r')
+ 
+ def exec_command_and_wait_for_pattern(test, command,
+                                       success_message, failure_message=None):
+@@ -184,9 +215,13 @@ def exec_command_and_wait_for_pattern(test, command,
+     :param command: the command to send
+     :param success_message: if this message appears, test succeeds
+     :param failure_message: if this message appears, test fails
++
++    :return: The collected output (in bytes form).
+     """
+     assert success_message
+-    _console_interaction(test, success_message, failure_message, command + '\r')
++
++    return _console_interaction(test, success_message, failure_message,
++                                command + '\r')
  
  def get_qemu_img(test):
      test.log.debug('Looking for and selecting a qemu-img binary')
