@@ -4,118 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041FCC8303F
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0244BC8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgGa-00040m-HQ; Thu, 28 Aug 2025 13:18:30 -0400
+	id 1urgIO-00075D-3g; Thu, 28 Aug 2025 13:20:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urfD5-0004OA-Sp
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 12:10:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1urfCv-0007A2-Hd
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 12:10:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756397433;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oDERzEzBHnJXU1xhba4X/mrF4LFYKd9iDT3MmhX+84o=;
- b=SKdL97E+z95ZcPLm1n1PS7jFIYCpoXR7CcYkswUicxCom2ZwIAsjlSH1giGHIdzr20ARft
- xa1BptCWJ5oCYX2LpHt/+vJZPKyozBNCdEHkKZWLgRWs80oW4OO1Zp48QjRlQ4On/+7LCH
- rB9exq2KpRpOcswMdjO4FGKgedsBvr4=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-fE-B3N9kN2Wpl0FQnED6pg-1; Thu, 28 Aug 2025 12:10:31 -0400
-X-MC-Unique: fE-B3N9kN2Wpl0FQnED6pg-1
-X-Mimecast-MFC-AGG-ID: fE-B3N9kN2Wpl0FQnED6pg_1756397431
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-7200579b490so14704727b3.2
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 09:10:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urdEs-0003ne-I9
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:04:30 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1urdEq-0002sp-HQ
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:04:30 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3c7ba0f6983so669983f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:04:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756389866; x=1756994666; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xiVFollxZQsjCjMToco6G/qNjvqu856G5dlynEUOU+U=;
+ b=IWSPn4l5M/asjtjt1ZRa5dXEp5do8YBfSYEixfPWujXSJ3LpJnPhIjYEQdBdcEqj2v
+ ud+WY1MIFu0BX4PFk7GKhw79rHPPk/VgWGw62QIJXnk6hlvbYH7yTxwkHhFzOzL1/EiG
+ umcbtS8EM/Ec/cyKyNSHDpDnZuboRUgB/p1Wra1Kb69hzZpSDenjddnUrF6rOl8u0CxG
+ DA6NzcvqG5+JUSh8gfUOPyZBEK+3RAsC6GiGQun7lMMK29iEIDRtZX0KSIQmkPap0VrE
+ sjzSZDbO83SQIxIleAq8QyK8vZBaR9l7GgcNs1tgn5cZQSCdTpfS/n0T+EPDwE9rallZ
+ m+kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756397431; x=1757002231;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oDERzEzBHnJXU1xhba4X/mrF4LFYKd9iDT3MmhX+84o=;
- b=JVjTkR4HUP4+KqrMt3m/PV5RcfMVvAT0X0bJV7qM1SZYjxA2pv35V22oBzuMYc/4mJ
- lNdYGOuPQ+JCYSFPmACRTAtHAFzzgZTyUzieouw03xyY9VrXZPsAQK6RAG0JQN6mHhcH
- uZYdvbLQG2/LrZmry0pLszEuN+2esr9kq1bJd/FcH90lu9ydXLrMHsPI2gnP3UWG7zEu
- Q0eQuofsAJ85otCKV+Chs+jNLcj0eiN0+awBE29a4skVMClv7QPJFW31xJf5bsYrndZQ
- 4OVo/oyHVdZv7pRgwfvVxxegK9gQXtqF8U1gT1fSV8rcf+G6LFcADdgayNUn11+1W2v1
- shSQ==
+ d=1e100.net; s=20230601; t=1756389866; x=1756994666;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xiVFollxZQsjCjMToco6G/qNjvqu856G5dlynEUOU+U=;
+ b=awwQZQyLOrQ+hrHcpVMdW98IE1SYFhSV/oFFowBIw2x6e15wSljCohAK9tDmG+TBnF
+ 3ofU7Dex4O9/J9LKNrJ9E2jUXyGx596u15oUilZiDOgThDPUS21rtNWm0XdMmVFhg/tj
+ 779JvCpi0y+Xmq610epcnbmdUXby9MuNZBmuRTubAtermbI1weDEr412nKS0QTqSivm0
+ KHu4OTMrOd6KsnqFMWEgmwtB888/CEU05Y86+erGxiSist4uBfGceZdwK7OOwleT1XHx
+ oISJflebUExkPWpVQ9hNop4cDs2OXdiDu/ZFSiRh0hx7MEirA1rsuL1arG5eEDdw43lQ
+ FmeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVd7ub6zYWjk2D/cgk+yZWJkwLLctLD+Ll7+ApiQ+pUFbvgQ5ea4PTiXLhwKC2Cubd1AlrpqSwixdEG@nongnu.org
-X-Gm-Message-State: AOJu0Yz0izNgt8RZGOhORyIupCFcXyrlxGwEAkcCzPD1cGrCugKhSCkk
- kF/X7RQjvN/FTwdRtboapwg9lBeJnoETfHWMksvw6iTMizxEc697z4B9UXbXu24AOdIeCholfKf
- 1Hc6D+Cd85GJdPFwKXsiI2dj6A4TqnAeLo1BN9NgP2YtT7p5dyfnzAYvI
-X-Gm-Gg: ASbGncvcL8aFIAq3ljuFPIWy6oedS1Z4qHgK/QyMNqVTTnIZVZJCWk1+m0capDDOjQT
- p3NHqHgJhm9Xw9V8bCRlQDY+uypr8UbIxiHRKv+ciOK9xWrOriv9+OZ2sbKAY1es+h5XUC0PSyK
- FcA+eEvI7URFr2pIWvMfxpqtjlNr4DgHwI+mlaDDcjFWDXqzzuzITDr/5lBoLZrTkHSwx90vrIt
- zxq6GvDkcW3QiecBPUMioXiaFQ5qDBOwQWNxl4qrLca4BHYHxacJY3QSnnReM8KjGhIlTnrSy0D
- zo3n2nNHe2AOOPHh9JUtKBgog6HHiZ4Q
-X-Received: by 2002:a05:690c:7401:b0:71e:7907:7b49 with SMTP id
- 00721157ae682-71fdc2ea7demr274947887b3.14.1756397431199; 
- Thu, 28 Aug 2025 09:10:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuYExElLnfjtVRrMpzw+tR5E8Ja0u2iCfHxqP09K3DJkDuValsY2MLsWzGKlYAAccsX0Sjuw==
-X-Received: by 2002:a05:690c:7401:b0:71e:7907:7b49 with SMTP id
- 00721157ae682-71fdc2ea7demr274946897b3.14.1756397429998; 
- Thu, 28 Aug 2025 09:10:29 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-721c634bb45sm353257b3.22.2025.08.28.09.10.28
+ AJvYcCWsCvNvOOvjKP79X4L4A50ohgybX7tpvx2pSj6jqf0AL/mUgHy4AcATAbRFiBHMn69C03DXsOTsq8uG@nongnu.org
+X-Gm-Message-State: AOJu0Yz7vPvDPdrGqtW1b3w99oRNzKyB65OPR9Z1mgl3h3QmAbJEiBEF
+ D4POnSwR3YjEibdg7YK5BbjA/vo4Atz4W4csDIGArp60xJbQU/2ZFWEV9lBhXNBfBctfWIfcJmr
+ raKqL
+X-Gm-Gg: ASbGncsZZWhxCEjTe1B3IIpl6V/MGQeh6f3spiKdbUqlWk2la93U1p3Pz1TRneRdpWK
+ SsU+EEetszWoZvN6Jnxw6pf3to+9jzWBNdhqShR+DQKUocDVnMqIJWBjeorq8M9jsCT6Ro0j1tm
+ y6RHbGBLsqxI3PNelJci/nsu/MwpoTWtA/sOxIDIAFvcHwQ4Wf5ttMowO2NTC00qlTmK9wINgwR
+ inHm37edN4hYwsc5E22zMwtpbXuOiF2dpIe9NnNdYY5dKHh1IxH3uwQU8lp2Gvkf1Gsn+iWcHeU
+ 4Ouol0dB7ZaoEi6VAkHqvT64lchcW0cFhBNf7llbcJzaoP+A/HHnlsj8FE8RLEhLjPmRBO3GrO6
+ lRLQyzSjyOGaa7cV3/QxAnfG4Evfk+E8hJ5d9IAg=
+X-Google-Smtp-Source: AGHT+IFAuZ0C8W9SFx4jySCnTtuGz/UubGW04BAXDycKs6v5amvzcGAP0AHC3KC2utSZI6S+naHbkw==
+X-Received: by 2002:a05:6000:2485:b0:3b7:9703:d99f with SMTP id
+ ffacd0b85a97d-3cbb15ca058mr8022648f8f.27.1756389865486; 
+ Thu, 28 Aug 2025 07:04:25 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cce1724939sm6947712f8f.26.2025.08.28.07.04.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 09:10:29 -0700 (PDT)
-Date: Thu, 28 Aug 2025 12:10:15 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- devel@daynix.com
-Subject: Re: [PATCH v7 1/2] memory: Update inline documentation
-Message-ID: <aLB_ZwL7v9Uzvc2s@x1.local>
-References: <Z4U30j9w1kPnKX9U@x1n>
- <5dc54c92-0382-4a70-9dad-588572698eed@daynix.com>
- <Z4aYpo0VEgaQedKp@x1n>
- <CAFEAcA_mpWZO8V9cE74bKzveEEZDXkqE+XbOFFdhmKUKO3dmSw@mail.gmail.com>
- <Z4a3GxEbz1jjCDc5@x1n>
- <CAFEAcA87oYqMj1t+yriXHLuTg3G-=eRwOvt4-n4uJmeNujTBxQ@mail.gmail.com>
- <d9acf231-829e-4a9c-7429-282fcc2ae756@eik.bme.hu>
- <2fe8b128-dda1-40af-89ac-e86ba53138f5@daynix.com>
- <CAFEAcA8A97ocOfv72KeSEgFkchmAOfc=GiX8QmvRui5=DDF=qQ@mail.gmail.com>
- <878qj3zitv.fsf@draig.linaro.org>
+ Thu, 28 Aug 2025 07:04:24 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 0/5] target/arm: Remove deprecated pxa CPUs and xscale/iwmmxt
+ code
+Date: Thu, 28 Aug 2025 15:04:17 +0100
+Message-ID: <20250828140422.3271703-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <878qj3zitv.fsf@draig.linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,44 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 28, 2025 at 02:17:32PM +0100, Alex Bennée wrote:
-> The virtio-gpu blobs are a special MR which we handle clumsily at the
-> moment as they are backed by separate thread (virglrenderer) and we need
-> to jump through hoops (c.f. virtio_gpu_virgl_hostmem_region_free) to
-> make sure it is done with the memory before we can free the container.
+This patchset removes the pxa* CPU family, which we deprecated for
+the 10.0 release and can now drop in 10.2.  The diffstat should
+illustrate the motivation for the deprecation: it lets us delete
+thousands of lines of xscale/iwmmxt specific emulation code which we
+don't think anybody was using, which was unmaintained and which we
+had no test coverage for.
 
-I remember looking at that path when discussing this problem.
+thanks
+-- PMM
 
-Using virtio_gpu_virgl_hostmem_region_free overwrites the object->free is
-pretty tricky.  Same on having MR->owner points to itself..
+Peter Maydell (5):
+  target/arm: Remove deprecated pxa CPU family
+  target/arm: Remove XScale and iWMMXt translate.c code
+  target/arm: Remove iwmmxt helper functions
+  target/arm: Drop ARM_FEATURE_XSCALE handling
+  target/arm: Drop ARM_FEATURE_IWMMXT handling
 
-Is it possible to make virtio_gpu_virgl_hostmem_region an object, then make
-it as the owner of virtio_gpu_virgl_hostmem_region.mr?
-
-In general, whenever a MR needs serious refcounts on its own besides the
-device to be emulated, IMHO the simplest way (which still 100% follow the
-current QEMU's MR refcount design), is to create an umbrella object, making
-that to be the owner instead.
-
-We recently also have another discussion on how to achieve similar dynamic
-MRs in vhost-user's SHMEM_MAP series:
-
-https://lore.kernel.org/all/20250805081123.137064-1-aesteve@redhat.com/#r
-
-Ultimately, Albert went on with the VhostUserShmemObject approach, looks
-like it works all fine, it's used in his latest post:
-
-https://lore.kernel.org/all/20250818100353.1560655-2-aesteve@redhat.com/#t
-
-In that work, TYPE_VHOST_USER_SHMEM_OBJECT still dynamically allocates the
-MR, but then it needs an explicit object_unparent() in finalize().  IIUC it
-can be an embeded MR inside the owner object then object_unparent() isn't
-needed either.
-
-I may not have the full picture of virgl here, but not sure if this can be
-solved in the similiar way to avoid the hacks.
+ docs/about/deprecated.rst       |   21 -
+ docs/about/removed-features.rst |   14 +
+ bsd-user/arm/target_arch_elf.h  |    1 -
+ target/arm/cpu.h                |   29 -
+ target/arm/tcg/helper.h         |   95 ---
+ target/arm/tcg/translate.h      |    2 -
+ linux-user/arm/elfload.c        |    1 -
+ linux-user/arm/signal.c         |   67 --
+ target/arm/cpu.c                |   21 -
+ target/arm/helper.c             |   54 --
+ target/arm/machine.c            |   21 -
+ target/arm/ptw.c                |    7 +-
+ target/arm/tcg/cpu32.c          |  163 ----
+ target/arm/tcg/hflags.c         |   13 +-
+ target/arm/tcg/iwmmxt_helper.c  |  672 ----------------
+ target/arm/tcg/op_helper.c      |    6 -
+ target/arm/tcg/translate.c      | 1324 +------------------------------
+ target/arm/tcg/meson.build      |    2 -
+ 18 files changed, 24 insertions(+), 2489 deletions(-)
+ delete mode 100644 target/arm/tcg/iwmmxt_helper.c
 
 -- 
-Peter Xu
+2.43.0
 
 
