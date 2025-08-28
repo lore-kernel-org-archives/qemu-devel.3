@@ -4,102 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D29CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7442ECA0EED
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgEh-0008HI-MA; Thu, 28 Aug 2025 13:16:32 -0400
+	id 1urgIJ-0006v8-BS; Thu, 28 Aug 2025 13:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1urdvx-0004No-5L
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:49:01 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbas-0006hj-GF
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:19:09 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1urdvs-0001hv-IU
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:48:59 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-45b4d892175so6650685e9.2
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:48:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbaq-0000oq-7X
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:19:06 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7720c7cbcabso641698b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:19:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756392532; x=1756997332; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=20rhRhSoCiq08+MNEHWT6JrwnW53MD1cP6RaKUG734A=;
- b=gij/tyVJifwGUUE8c+nd6ZAdF02zbFUf9MTzU9hT4+EkVK9Tq7EB3P92TsFDA0caCg
- TdAkgeNVayRZA+ZLDU4l3cRrLZIPuzceL6fTAH/FMCI9HG48PzTy1R9Ih+B+KEBslihg
- DhfGtsmqkO9C26Sz6q6sIFxN5lVoVRZxsHw51diu8s1vJ5sy399BDJiZB6h0ldY7fe1D
- 0uAAC+sDlrnc5C8umTrqk5VwZECP0aA+PHhq80esskcUpQKWoU5FnQ8ONICpid192VSo
- b1yQBjrGwsDE/wI+Vfhdri2Pve9zBGDg78SBPJLcMBfnC6x7leyYKanaRVK6wbMRMnwI
- l10g==
+ d=linaro.org; s=google; t=1756383542; x=1756988342; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8WjM1vxXQ4hTMsgbOuNurVqo634njinTp8OegjizR4w=;
+ b=EQY0nfI1EmoGhbMEOk7NfexAluoSLDtXAdA95YU5VJrk9WF3bhaZkqWXkY0zsFxtYN
+ 2N781zAL6zdKb8buVjjgbUP3FJ/ohLxjcfEHcntht9d5m5HogA2SkMHP6f3cHutixcB6
+ vQK9+1wNeYSnbT4DiCeIGlNI6yE1Opn0VrsrTu7vMa+2N2cDBSag36+XygsMQSlxNz5V
+ AyHPqSwmXYXO0xy/LXfk6DEmDV5eQHIUic54r3t9UVjrSP/s8ch5eYjmf9MBEIU92Tlr
+ Nz6Z/XurAg5bJi9LmvMEGLGI/e0DIXw1VnIiQT6eptXb8/7lnjNKf039bLXmSIyEJCvV
+ KcCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756392532; x=1756997332;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=20rhRhSoCiq08+MNEHWT6JrwnW53MD1cP6RaKUG734A=;
- b=UBGQeylvmwkRDRKFtFybbEP9MiFJdNgN4PUaj+2iSyLeNSvliUS1h86rw6ZM11PJUO
- d5f+leKuCTpcvJi4qgq90lDOWxdeI7uCFxj7NERAHw5DNq2UN2ilcurykhE/l3Iln7st
- V4ht2XkjeA9dKLpUd/SBMzb5aVuJMgq0ME2WY7ynBmshi597zEwVjJ2Ka5A6hKzSy/62
- v/kPM9QKzBMi6r1eUGbo1zeDfHH3qapMFcXefwGC1jj4KI8mCC1aEvrZ8GMSXNG/sy8B
- 0PlOMYeNdaT25Up/VHYJO9jwcuBUCpiHfbPRYl6cjGwZpjaQlAc9ar9/X5vEkL3Z/Mwk
- kN3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtZPXHfTRK9xlQ+rLq/qY2FRzJbCdw+0c1yJkBsXSOFi0aSEV4sAccaC/etFKoFwRO17RmiaS9fC6k@nongnu.org
-X-Gm-Message-State: AOJu0Ywser8wHWAa56UEAC1NOiZNBn0s5acbpugFOwFPBBvdwOT/UYEw
- YLhS5d1iSLqcXixx/tm+SMTkgSaGfxsSWRrBvT0i+k8iGZQrJS3GwDjy/+TU9zppzCI=
-X-Gm-Gg: ASbGncuBA2Ega797G4ANRyERgJ00pUBzxlajx0WSWqil/kIg/KL9yn3CRTn3o2Aq357
- nVz0b1hYrLQJAyxl7onVHvMgXTBiopS0xvriEGv+4BQATZKGXWNrid2OHhjXnNJEilDqGb9YQju
- XFCHL2ezXVFqSPCJr59yAzEvVDuGz3CIELCQrerwHlWT15R4xcVb6mkzYk8HO3I8B0S8DEuzk19
- oJ1c9MuYVMIn5dcgmG+g9k9+9Sa4oNkSZnmvSWXumjr24XjRbGy8PQllJ8M7h9MIeS6k1eNT+C+
- uz8AkI7Erit3py/tNjOdCEGbpPgAiVi1Uezg1qGNUn4zggZMkejZgGkkSMhHcXA3aFe1sZclJWF
- dQ6hGGJAZMe8lZjqN3CFM37rVlK8hN2qvJLUITJoGlZECSv78DqlDYpdebyp+ET/qjGqKf7K97N
- 6lzx/ZRNbvmSw9cK+YWBo1aFqilMIeQDewuP81PSbNvppuOsKHZONQpPX9+NfWi5ZMSdUPS9om0
- 6Iu
-X-Google-Smtp-Source: AGHT+IE8pe3cBB23s7tvDc2YMVQTUYgPcgRXpRtS3nilMPGrpwaJPJmJvTp4kImNXK3QpuAf56lkYA==
-X-Received: by 2002:a05:6000:1acf:b0:3c8:c89d:6b5b with SMTP id
- ffacd0b85a97d-3c8c89d6f7dmr12451511f8f.48.1756392532177; 
- Thu, 28 Aug 2025 07:48:52 -0700 (PDT)
-Received: from ?IPV6:2a01:cb09:d021:8fd6:94b3:f1b:6ece:2fef?
- (2a01cb09d0218fd694b30f1b6ece2fef.ipv6.abo.wanadoo.fr.
- [2a01:cb09:d021:8fd6:94b3:f1b:6ece:2fef])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b797d1a67sm40618515e9.15.2025.08.28.07.48.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 07:48:51 -0700 (PDT)
-Message-ID: <76ee9b6c-1bbd-4a77-8b00-bdfda7dbf870@linaro.org>
-Date: Thu, 28 Aug 2025 16:48:46 +0200
+ d=1e100.net; s=20230601; t=1756383542; x=1756988342;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8WjM1vxXQ4hTMsgbOuNurVqo634njinTp8OegjizR4w=;
+ b=pfOjUFTZFqDBYVjx9kvsuESSRhYA5C6XBagYbObhY7BMwhKxC7O1WWX6VgCF91CYZ4
+ mx+1hXy8QknR7nxkkTtpuetpT4oanMv2+Dq05gZsulaAAEX9OBw7IkPKqrNu0Z7kb9hR
+ Y4zFDSmycFQ3ZdhpZ6FbAvntJQYB8N2hfxICmVkt4K0FGhP0GGgIL+/Cie+Av7/avemh
+ C/Mn+SkhpoMSXzg9xMIgp4uux+E+MoTEcZBwOloMPO5720cd57YzVengTErBAbUDflG+
+ bBEGW896hSpVuyg0ymQ76GUQ6Z+XOn2TuptcFDl5JYd0+fz7LTis0RA7A8nVXYzEhJBs
+ B8mg==
+X-Gm-Message-State: AOJu0YyaZCRYVv76+y0gbrwIgtO+PhQamFjHAz0+Ghsd/NY1G5FLhdT3
+ C9Y4Vcgbp7a0s8Y2UF37n0z6BTWncnQafRJuUWDPa+5hjR9FNpDWMvqqRPwZLSJjwQel/TvQvsH
+ JR6h4Ibs=
+X-Gm-Gg: ASbGnct+lAQ/EHjzGI8iagsDuNEQsCkkcNp8UkwYiwaH7D34AaX/JNrYpmJLYSIeBRu
+ FDGMe9HrQusm9TVnAwTyIawrDDMiAzONp3tJqV5OuLAtxp7TzaN8Domlwm44HhfrUXGd/CCWSYo
+ RK9AOEAygwKF9WkDfa2dbZEzuGapQjk1WaFyve7DW5EXeQc4TAi28QF0Nj95JIWI6ODoN8lRLXq
+ 4Wp/YxBDVoUQ8Iauzb83WodvRz/RmgYrl3P+fGM57z2/kn4KV1KGPWY+DRoRWE3zj4sGPfrjQNj
+ zdYyT9XLXjmB6qMMU3HCe49DEipsUltsX1o3FY8LvMx/5SvqovzDuBy8ywYk6sVOO4OWOtJ3e8u
+ jJp1cPPDa7nSXj+ZYiquNYJEl7pZ5cdO2spJm
+X-Google-Smtp-Source: AGHT+IGi3KS5OKPIC7SbPuHNqhAHqzheEs3zHfNBhBd9v3mUOFl2H+dqWv3Bsmk03GgLl+iu5nuNSg==
+X-Received: by 2002:a17:903:94e:b0:246:ae6e:e5db with SMTP id
+ d9443c01a7336-246ae6ee847mr220964005ad.42.1756383541654; 
+ Thu, 28 Aug 2025 05:19:01 -0700 (PDT)
+Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-248953dc1f4sm48898735ad.30.2025.08.28.05.18.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Aug 2025 05:19:01 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v3 80/87] linux-user: Standardize on ELF_MACHINE not ELF_ARCH
+Date: Thu, 28 Aug 2025 22:08:29 +1000
+Message-ID: <20250828120836.195358-81-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
+References: <20250828120836.195358-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] target/ppc: Add IBM PPE42 family of processors
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>, Glenn Miles <milesg@linux.ibm.com>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, clg@redhat.com,
- npiggin@gmail.com, rathc@linux.ibm.com, richard.henderson@linaro.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250819212856.219932-1-milesg@linux.ibm.com>
- <20250819212856.219932-2-milesg@linux.ibm.com>
- <0d2c9aa2-2dcc-4c22-8f33-e5ecac907cf4@linux.ibm.com>
- <c13f63a6-5fef-42f2-89fe-946f71498f51@redhat.com>
- <fd855a38-976f-430e-9db1-1bdce1cf869d@linux.ibm.com>
- <dc6dc7db-f4c3-4641-9707-383737e2b678@redhat.com>
- <0b6d96c7-b28f-42c0-93db-579d80f0298b@linux.ibm.com>
- <fd6f2788-b1a8-41af-88b5-9eb2ebdfd9d8@redhat.com>
- <e946e0f7-cc9f-40fa-bd41-3044510ce261@linux.ibm.com>
- <cee8e481-8cfa-a86c-bca6-10ac3fbcffb6@eik.bme.hu>
- <9b0253e4-a906-4be4-ab46-df41bea0f054@linux.ibm.com>
- <62de0cb3-c4de-fc5a-e770-1bebb4423628@eik.bme.hu>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <62de0cb3-c4de-fc5a-e770-1bebb4423628@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,115 +99,319 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-08-26 14:12, BALATON Zoltan wrote:
-> On Tue, 26 Aug 2025, Harsh Prateek Bora wrote:
->> On 8/25/25 20:03, BALATON Zoltan wrote:
->>> On Mon, 25 Aug 2025, Harsh Prateek Bora wrote:
->>>> On 8/25/25 17:52, Thomas Huth wrote:
->>>>> On 25/08/2025 14.08, Harsh Prateek Bora wrote:
->>>>>> On 8/25/25 17:28, Thomas Huth wrote:
->>>>>>> As I said, qemu-system-ppc64 is currently a full superset of
->>>>>>> qemu-system- ppc. The ppc64 binary contains all the 32-bit code, you
->>>>>>> can perfectly run a "g3beige" or "bamboo" machine with
->>>>>>> qemu-system-ppc64, too. By disabling the ppe42 code in the ppc64
->>>>>>> binary, this would now introduce an execption to that unwritten rule,
->>>>>>> so I'd expect that we'd not rather want to do this now.
->>>>>>
->>>>>> My understanding is that above holds true only for default builds which
->>>>>> builds all targets. We certainly do not build 32 bit ppc code when using
->>>>>> --configure target-list=ppc64-softmmu. (we have ppc-softmmu for 32 bit
->>>>>> though)
->>>
->>> We do build 32-bit machines in ppc64-softmmu but leave out 64-bit from
->>> ppc-softmmu so it's only one way.
->>>
->>>>> Just give it a try:
->>>>>
->>>>>    ./configure --target-list=ppc64-softmmu --disable-docs
->>>>>    make -j$(nproc)
->>>>>    ./qemu-system-ppc64 -M g3beige
->>>>>
->>>>> ... works perfectly fine for me.
->>>>>
->>>> This would work because the respective code is not restricted with #ifndef
->>>> TARGET_PPC64.
->>>>
->>>> However, there are instance like below in hw/ppc/mac_oldworld.c:
->>>>
->>>> static void heathrow_class_init(ObjectClass *oc, const void *data)
->>>> {
->>>>     MachineClass *mc = MACHINE_CLASS(oc);
->>>>     FWPathProviderClass *fwc = FW_PATH_PROVIDER_CLASS(oc);
->>>>
->>>>     mc->desc = "Heathrow based PowerMac";
->>>>     mc->init = ppc_heathrow_init;
->>>>     mc->block_default_type = IF_IDE;
->>>>     /* SMP is not supported currently */
->>>>     mc->max_cpus = 1;
->>>> #ifndef TARGET_PPC64
->>>>     mc->is_default = true;
->>>> #endif
->>>
->>> This is only because the default machine for ppc64-softmmu is different
->>> than for ppc-softmmu as the 64-bit machines don't exist in ppc-softmmu but
->>> ppc64-softmmu had different default machine before machines from
->>> qemu-system-ppc got included in qemu-system-ppc64 so it kept that. (Looks
->>> like the default used to be mac_newworld before commit 159f8286b760dea but
->>> wasn't changed to match but to something else.) The default machines are
->>> arbitrary, we could make "none" the default and always require users to
->>> supply -machine but that would break existing command lines so this wasn't
->>> done.
->>>
->>>> Similarly, we have multiple instances with #else block for #ifdef
->>>> TARGET_PPC64 which doesnt get compiled with ppc64-softmmu, but only with
->>>> ppc-softmmu meant for 32-bit targets. See target/ppc/excp_helper.c for
->>>> example.
->>>
->>> This is again leaving out 64-bit code from ppc-softmmu but as Thomas says
->>> 32-bit machines are always included in qemu-softmmu-ppc64. I can't find the
->>> commit which changed this, previously we had these to be separate and since
->>> some types are different in ppc64-softmmu it wasn't clear if that could
->>> cause any problems for 32-bit CPUs and machines so ppc-softmmu was kept
->>> until that's cleaned up which never happened. There are also some
->>> pecularities in some machines like mac_newworld that behaves differently in
->>> qemu-system-ppc and qemu-system-ppc64 and the potentially lower performance
->>> of qemu-system-ppc64 in emulating 32-bit machines which is why we still
->>> have ppc-softmmu.
->>>
->>
->> Ok, I see. So, if we wish to keep the 32-bit machines supported with
->> qemu-system-ppc64, we will have them co-exist with run-time checks for !ppc64
->> and/or "unlikely" operations in the hot path routines, which wouldnt be
->> needed otherwise. I hope we can deal with run-time checks for !ppc64 if such
->> ops increase.
-> 
-> I guess this will only get worse with the single binary that will also add
-> if target == checks and removes some of the optimisations that assumed
-> endianness and word size. It would be good if somebody could do some tests
-> to check performance issues which could be made part of the test suite so
-> we at least notice these changes. I'm not sure what would be a good set of
-> benchmarks, I've used STREAM to check memory access and exceptions/MMU and
-> lame some.waw some.mp3 to check FPU and vector instructions speed before
-> but maybe there are better tools.
-> 
-> I've also tried adding function pointers to CPU class for different
-> exception models to remove the switch from the beginning of excp handling
-> functions that call out to PPC64 specific versions but I found that to be
-> slower than the current switch at least on x86_64 host.
->
+PowerPC was the one outlier that defined both ELF_ARCH and
+ELF_MACHINE; ELF_ARCH was defined incorrectly, necessitating
+the definition of elf_check_arch.
 
-Having performance tests would be a great addition to the QEMU test 
-suite, whether it's for the single binary or any other change.
+However, the elf file header field in question is called
+e_machine, so ELF_MACHINE is in fact the better name.
 
-Concerning the single binary, we have no plan to modify ppc target code 
-for now. As well, most of other architecture already handle 32 vs 64bits 
-and endianness with runtime paths, and it has not been a problem so far.
+Mechanically change most target/target_elf.h files,
+then adjust ppc/target_elf.h manually.
 
-I still think it's better to write proper code and eventually optimize 
-parts identified by proper profiling. But impacting architecture and use 
-preprocessor heavily before any proof that is needed has been found is 
-premature optimization IMHO.
+Do not provide a default for ELF_MACHINE.
 
-Regards,
-Pierrick
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/aarch64/target_elf.h     | 2 +-
+ linux-user/alpha/target_elf.h       | 2 +-
+ linux-user/arm/target_elf.h         | 2 +-
+ linux-user/hexagon/target_elf.h     | 2 +-
+ linux-user/hppa/target_elf.h        | 2 +-
+ linux-user/i386/target_elf.h        | 2 +-
+ linux-user/loongarch64/target_elf.h | 2 +-
+ linux-user/m68k/target_elf.h        | 2 +-
+ linux-user/microblaze/target_elf.h  | 2 +-
+ linux-user/mips/target_elf.h        | 2 +-
+ linux-user/mips64/target_elf.h      | 2 +-
+ linux-user/openrisc/target_elf.h    | 2 +-
+ linux-user/ppc/target_elf.h         | 2 --
+ linux-user/riscv/target_elf.h       | 2 +-
+ linux-user/s390x/target_elf.h       | 2 +-
+ linux-user/sh4/target_elf.h         | 2 +-
+ linux-user/sparc/target_elf.h       | 4 ++--
+ linux-user/x86_64/target_elf.h      | 2 +-
+ linux-user/xtensa/target_elf.h      | 2 +-
+ linux-user/elfload.c                | 6 +-----
+ 20 files changed, 20 insertions(+), 26 deletions(-)
+
+diff --git a/linux-user/aarch64/target_elf.h b/linux-user/aarch64/target_elf.h
+index 3c9fef9378..9ec51f6237 100644
+--- a/linux-user/aarch64/target_elf.h
++++ b/linux-user/aarch64/target_elf.h
+@@ -10,7 +10,7 @@
+ 
+ #include "target_ptrace.h"
+ 
+-#define ELF_ARCH                EM_AARCH64
++#define ELF_MACHINE             EM_AARCH64
+ #define ELF_CLASS               ELFCLASS64
+ 
+ #define HAVE_ELF_HWCAP          1
+diff --git a/linux-user/alpha/target_elf.h b/linux-user/alpha/target_elf.h
+index f9d6372c9f..864dc6e2e6 100644
+--- a/linux-user/alpha/target_elf.h
++++ b/linux-user/alpha/target_elf.h
+@@ -9,6 +9,6 @@
+ #define ALPHA_TARGET_ELF_H
+ 
+ #define ELF_CLASS               ELFCLASS64
+-#define ELF_ARCH                EM_ALPHA
++#define ELF_MACHINE             EM_ALPHA
+ 
+ #endif
+diff --git a/linux-user/arm/target_elf.h b/linux-user/arm/target_elf.h
+index d871d6d665..12cdc8e5a7 100644
+--- a/linux-user/arm/target_elf.h
++++ b/linux-user/arm/target_elf.h
+@@ -10,7 +10,7 @@
+ 
+ #include "target_ptrace.h"
+ 
+-#define ELF_ARCH                EM_ARM
++#define ELF_MACHINE             EM_ARM
+ #define ELF_CLASS               ELFCLASS32
+ #define EXSTACK_DEFAULT         true
+ 
+diff --git a/linux-user/hexagon/target_elf.h b/linux-user/hexagon/target_elf.h
+index a9f6d77fc6..f81ae3895a 100644
+--- a/linux-user/hexagon/target_elf.h
++++ b/linux-user/hexagon/target_elf.h
+@@ -19,6 +19,6 @@
+ #define HEXAGON_TARGET_ELF_H
+ 
+ #define ELF_CLASS               ELFCLASS32
+-#define ELF_ARCH                EM_HEXAGON
++#define ELF_MACHINE             EM_HEXAGON
+ 
+ #endif
+diff --git a/linux-user/hppa/target_elf.h b/linux-user/hppa/target_elf.h
+index 9b6363a0a7..76930c9369 100644
+--- a/linux-user/hppa/target_elf.h
++++ b/linux-user/hppa/target_elf.h
+@@ -9,7 +9,7 @@
+ #define HPPA_TARGET_ELF_H
+ 
+ #define ELF_CLASS               ELFCLASS32
+-#define ELF_ARCH                EM_PARISC
++#define ELF_MACHINE             EM_PARISC
+ 
+ #define HAVE_ELF_PLATFORM       1
+ 
+diff --git a/linux-user/i386/target_elf.h b/linux-user/i386/target_elf.h
+index 99a95ee45b..bb7571f6cb 100644
+--- a/linux-user/i386/target_elf.h
++++ b/linux-user/i386/target_elf.h
+@@ -11,7 +11,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS32
+-#define ELF_ARCH                EM_386
++#define ELF_MACHINE             EM_386
+ #define EXSTACK_DEFAULT         true
+ #define VDSO_HEADER             "vdso.c.inc"
+ 
+diff --git a/linux-user/loongarch64/target_elf.h b/linux-user/loongarch64/target_elf.h
+index 47bf51a41c..b988592993 100644
+--- a/linux-user/loongarch64/target_elf.h
++++ b/linux-user/loongarch64/target_elf.h
+@@ -9,7 +9,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS64
+-#define ELF_ARCH                EM_LOONGARCH
++#define ELF_MACHINE             EM_LOONGARCH
+ #define EXSTACK_DEFAULT         true
+ #define elf_check_arch(x)       ((x) == EM_LOONGARCH)
+ #define VDSO_HEADER             "vdso.c.inc"
+diff --git a/linux-user/m68k/target_elf.h b/linux-user/m68k/target_elf.h
+index 073c85becc..b997fa0b6d 100644
+--- a/linux-user/m68k/target_elf.h
++++ b/linux-user/m68k/target_elf.h
+@@ -9,7 +9,7 @@
+ #define M68K_TARGET_ELF_H
+ 
+ #define ELF_CLASS               ELFCLASS32
+-#define ELF_ARCH                EM_68K
++#define ELF_MACHINE             EM_68K
+ 
+ #define HAVE_ELF_CORE_DUMP      1
+ 
+diff --git a/linux-user/microblaze/target_elf.h b/linux-user/microblaze/target_elf.h
+index a622cd8e43..1ec91ea5a9 100644
+--- a/linux-user/microblaze/target_elf.h
++++ b/linux-user/microblaze/target_elf.h
+@@ -11,7 +11,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS32
+-#define ELF_ARCH                EM_MICROBLAZE
++#define ELF_MACHINE             EM_MICROBLAZE
+ 
+ #define elf_check_arch(x)   ((x) == EM_MICROBLAZE || (x) == EM_MICROBLAZE_OLD)
+ 
+diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
+index f400bc2fdb..157306f7a0 100644
+--- a/linux-user/mips/target_elf.h
++++ b/linux-user/mips/target_elf.h
+@@ -11,7 +11,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS32
+-#define ELF_ARCH                EM_MIPS
++#define ELF_MACHINE             EM_MIPS
+ #define EXSTACK_DEFAULT         true
+ 
+ #define HAVE_ELF_HWCAP          1
+diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
+index c455985a76..061471a0f1 100644
+--- a/linux-user/mips64/target_elf.h
++++ b/linux-user/mips64/target_elf.h
+@@ -11,7 +11,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS64
+-#define ELF_ARCH                EM_MIPS
++#define ELF_MACHINE             EM_MIPS
+ #define EXSTACK_DEFAULT         true
+ 
+ #ifdef TARGET_ABI_MIPSN32
+diff --git a/linux-user/openrisc/target_elf.h b/linux-user/openrisc/target_elf.h
+index ed9739380f..e8554f5339 100644
+--- a/linux-user/openrisc/target_elf.h
++++ b/linux-user/openrisc/target_elf.h
+@@ -10,7 +10,7 @@
+ 
+ #include "target_ptrace.h"
+ 
+-#define ELF_ARCH                EM_OPENRISC
++#define ELF_MACHINE             EM_OPENRISC
+ #define ELF_CLASS               ELFCLASS32
+ 
+ #define HAVE_ELF_CORE_DUMP      1
+diff --git a/linux-user/ppc/target_elf.h b/linux-user/ppc/target_elf.h
+index 9a47f18fb8..22854cf52f 100644
+--- a/linux-user/ppc/target_elf.h
++++ b/linux-user/ppc/target_elf.h
+@@ -13,13 +13,11 @@
+ #define ELF_MACHINE             PPC_ELF_MACHINE
+ 
+ #ifdef TARGET_PPC64
+-# define elf_check_arch(x)      ((x) == EM_PPC64)
+ # define ELF_CLASS              ELFCLASS64
+ #else
+ # define ELF_CLASS              ELFCLASS32
+ # define EXSTACK_DEFAULT        true
+ #endif
+-#define ELF_ARCH                EM_PPC
+ 
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+diff --git a/linux-user/riscv/target_elf.h b/linux-user/riscv/target_elf.h
+index 51b8def1d1..dbbfdf54d3 100644
+--- a/linux-user/riscv/target_elf.h
++++ b/linux-user/riscv/target_elf.h
+@@ -8,7 +8,7 @@
+ #ifndef RISCV_TARGET_ELF_H
+ #define RISCV_TARGET_ELF_H
+ 
+-#define ELF_ARCH                EM_RISCV
++#define ELF_MACHINE             EM_RISCV
+ 
+ #ifdef TARGET_RISCV32
+ #define ELF_CLASS               ELFCLASS32
+diff --git a/linux-user/s390x/target_elf.h b/linux-user/s390x/target_elf.h
+index b23e46ab46..ef5edbd860 100644
+--- a/linux-user/s390x/target_elf.h
++++ b/linux-user/s390x/target_elf.h
+@@ -11,7 +11,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS64
+-#define ELF_ARCH                EM_S390
++#define ELF_MACHINE             EM_S390
+ #define VDSO_HEADER             "vdso.c.inc"
+ 
+ #define HAVE_ELF_HWCAP          1
+diff --git a/linux-user/sh4/target_elf.h b/linux-user/sh4/target_elf.h
+index 61aea237c4..d9e253d425 100644
+--- a/linux-user/sh4/target_elf.h
++++ b/linux-user/sh4/target_elf.h
+@@ -11,7 +11,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS32
+-#define ELF_ARCH                EM_SH
++#define ELF_MACHINE             EM_SH
+ 
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_CORE_DUMP      1
+diff --git a/linux-user/sparc/target_elf.h b/linux-user/sparc/target_elf.h
+index f89c708c46..6b0cac3caf 100644
+--- a/linux-user/sparc/target_elf.h
++++ b/linux-user/sparc/target_elf.h
+@@ -10,13 +10,13 @@
+ 
+ #ifndef TARGET_SPARC64
+ # define ELF_CLASS              ELFCLASS32
+-# define ELF_ARCH               EM_SPARC
++# define ELF_MACHINE            EM_SPARC
+ #elif defined(TARGET_ABI32)
+ # define ELF_CLASS              ELFCLASS32
+ # define elf_check_arch(x)      ((x) == EM_SPARC32PLUS || (x) == EM_SPARC)
+ #else
+ # define ELF_CLASS              ELFCLASS64
+-# define ELF_ARCH               EM_SPARCV9
++# define ELF_MACHINE            EM_SPARCV9
+ #endif
+ 
+ #define HAVE_ELF_HWCAP          1
+diff --git a/linux-user/x86_64/target_elf.h b/linux-user/x86_64/target_elf.h
+index f3c09bb8da..840bddf5ec 100644
+--- a/linux-user/x86_64/target_elf.h
++++ b/linux-user/x86_64/target_elf.h
+@@ -11,7 +11,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS64
+-#define ELF_ARCH                EM_X86_64
++#define ELF_MACHINE             EM_X86_64
+ #define VDSO_HEADER             "vdso.c.inc"
+ 
+ #define HAVE_ELF_HWCAP          1
+diff --git a/linux-user/xtensa/target_elf.h b/linux-user/xtensa/target_elf.h
+index 0689e79be5..1bf8f2a14a 100644
+--- a/linux-user/xtensa/target_elf.h
++++ b/linux-user/xtensa/target_elf.h
+@@ -11,7 +11,7 @@
+ #include "target_ptrace.h"
+ 
+ #define ELF_CLASS               ELFCLASS32
+-#define ELF_ARCH                EM_XTENSA
++#define ELF_MACHINE             EM_XTENSA
+ 
+ #define HAVE_ELF_CORE_DUMP      1
+ 
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 33c4214c95..c481759710 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -130,12 +130,8 @@ typedef abi_uint        target_gid_t;
+ #endif
+ typedef abi_int         target_pid_t;
+ 
+-#ifndef ELF_MACHINE
+-#define ELF_MACHINE ELF_ARCH
+-#endif
+-
+ #ifndef elf_check_arch
+-#define elf_check_arch(x) ((x) == ELF_ARCH)
++#define elf_check_arch(x) ((x) == ELF_MACHINE)
+ #endif
+ 
+ #ifndef elf_check_abi
+-- 
+2.43.0
+
 
