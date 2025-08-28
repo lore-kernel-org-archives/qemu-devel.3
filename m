@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8791FC8303F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A819CA0FF7
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgBU-0002U3-Ru; Thu, 28 Aug 2025 13:13:14 -0400
+	id 1urgBp-0002Zg-MP; Thu, 28 Aug 2025 13:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1urbeQ-0005a5-Uy
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:22:50 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <ankeesler@google.com>)
+ id 1ureqm-0000wp-Fr
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 11:47:44 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1urbeN-0001v7-D8
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:22:44 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-afead3cf280so109596366b.1
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:22:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ankeesler@google.com>)
+ id 1ureqi-0002qh-QM
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 11:47:44 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-55f4410f7c9so1343864e87.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 08:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756383760; x=1756988560; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B2DgyHheK/0+xUl8Bkf91Pj5PAamzCFASNWdNNp4r7o=;
- b=jFh5/SmKLZHuzU/VUV2UrTBQW+nsrHx3Om6TzAdLM6ie3tNcuq//j/KfsFFw7uLTY0
- 8D1g/SX7zagep7mtUnlLYIhyxLZ3eTaStMLxYWEvSWdrB4UEw/Ay9gBOLKxjE/w4akmb
- MzKdZqR07XoK6PtXApUukwB5lPGD/o61pcJp54Cn9S6ERuPAUaIj8kD9C7H+0Zr3sgGf
- UJQ/aFF89YJVjlXQddL9BCNYdnWm+AYZQmEyvN413R7YFugviPMpf6m9eenMkheiOeJW
- nlUCB2QBkDMbukuNsSl6Qlw+73RVFziC8rOHCHpHb7Vmp7cobFTbXTN04t1R9uvKqI15
- YH7Q==
+ d=google.com; s=20230601; t=1756396057; x=1757000857; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=AyyrOBBynXugkIwtswIsMyDBzmhP0zBrM1ml36TvSlM=;
+ b=UVSHnMPvvQA0dQAvunWqmO+D5NtoV8a91b86V72cN87FZtpRskEJ0/YLsp6D+ZpZak
+ V80WwVK1fBjcIeCm/dkxros5T+vo96wBiPlwCjQNZ2aBJupkNKqC5lpGlV1Gq2CzvSO8
+ LdCfCzHVqi175cugVF9DzoIb3mlKHwF3C8QTCTXo0ukrilEbANrHqUzhbTCitwLP2MUZ
+ 7aSb1R7oGI1Y6HdWTKqjLtbaeQQBN20S6L4Kver6nt8NlWOSahMZF9YS7zE6+iaPAETO
+ NuCrZ9rof7GJs6oQQK2EpaRr37sii6d1kUnX9Lvgg0UZ/gq2tlO1YC593BAf9QpAOQ4P
+ 0Oog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756383760; x=1756988560;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=B2DgyHheK/0+xUl8Bkf91Pj5PAamzCFASNWdNNp4r7o=;
- b=Em6Nm4rnl2NRICPeehBg3yJVaYRTLbsCL6RaB4/nuB3Y650Yb6FDCsQBYTeaeicSps
- 1unwIYSti5yb+9PMEvsuNF7z2LH5yI6R5nRm32ZqUcqUwtPDUzbIPuMirMJLaJ6bmxGY
- 0F6vbR9P7OIvZx9cboKVARhAkpe2QF2wXmE/ALCmx92mm7j32O9kfLFhsmOUWqVNkh2k
- jXnu+lTkXBwjP/DEKnitIItY02aSTMjIcKkUEh1uayZ19Wmd0KgvY7qSEUldYZ1/BpOd
- 5g+TkMtL3/2bUFR1W3wS7Vb6S78yR15QsBNmAtjLqRZCZnNKD9OTRFIVDTVlDLlvkNDQ
- YTcg==
-X-Gm-Message-State: AOJu0YzMrk2uWqz4gVQQuW+RIsemyNCwab203xts5tr67R6U87rTMUKR
- GAmUxmUkEzmhY0bylBM+jEpSxbUno71P1Ckxfv1j6XQja8L4X8IDkJJLuNM4hyO1e3/alADwLoc
- alwpTemATSfH993v/q14mbSrcdRI9ajMTDQ1wr5QRIQ==
-X-Gm-Gg: ASbGncuIM99deqHmKohy3uUoO5diB8uuSKJNkDyXhcYH0pkZyz2A6Xsxu/1q7NU5Ra8
- EXayL+yU77LeCCtA3gEIQX/u10X5jxqvBxujyfnQyHL7k+sI+uxDi14cJFMemIYO0pFX2jJpEN/
- 6xsDjJZHNhd6BdHy7VN//Q8VakqAa8nCSpymxfNkp2d1zivU1965WRSNwZbhYpFyoZRB7PVTUCh
- D9+PkZz
-X-Google-Smtp-Source: AGHT+IGmpkIX6sXY1NIRRJFhLI0IE0J4O7kQkMygI48WdLjm/PxwgDHDQZePNjNjB2RxY8ezwRtrjlJVTEFBfxgDwwo=
-X-Received: by 2002:a17:907:72c9:b0:ae0:cc5f:88ef with SMTP id
- a640c23a62f3a-afe29048ce7mr2253035866b.32.1756383760080; Thu, 28 Aug 2025
- 05:22:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756396057; x=1757000857;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AyyrOBBynXugkIwtswIsMyDBzmhP0zBrM1ml36TvSlM=;
+ b=OI264SshihdSIjiJGSUARA+crvd+6bPKGVkQdUHtgXkCkzE5owWdlt/w077x6DvvAA
+ oANAALlQDl//n82FCRnx8wHOuGfX85EhgbO9/NUVxDO24NQHCAVNSJW8Kde3w3QLm88E
+ x+8Tg1vcNwawLUTESx52trCgOJ/XR2Q9hU0ptJM9+04YD0/3oQKYVAGvpfoJTKF0YScU
+ ioWQ3yYoWjaKRsPcnVB+MoMf9Ww/m6mGpyToknQQ2IU6B0DvU7cGzvyJskzp/UMWhZ3V
+ Xm2lc6pbjXtsBPMmdEzZzu6gIOwhqU3Jy5ZITIU4G7hfO5l5J3JXo7RbB9Ht3p7JgDL/
+ 2aeQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVEzdOcT0GjoVKTohRPo8VdysJg7yGEk1VEg0puWL2OvjRlwQCf2gGBR5mJGsy/ZyF9oEsGDMDrBGv@nongnu.org
+X-Gm-Message-State: AOJu0YybaTLRgdZW2gSLsn6J+8N/sXacAJ2YzJfISoY2GU7pvE+nozHw
+ z/KhbPmNC6HzH42ZivwjIekA21x2SOhRuzH5PM/2RKLwu3GS5TKm4u2y0Qv6Bvav2PlgWRL/eb8
+ e3im4J7QaZVcnUuuWHiU8s5LOx4t23oGtPpDknC8=
+X-Gm-Gg: ASbGnctNvC0n49KegjLcIZWor7uFE920kib6urGcNEK6tq/zmXsKaWF5m9TOzjGPFUo
+ MbU+4cooNxKD4a2Ac18sYfv4vV7YfAKGxLzy1HdsqxjIPBaLmVsU96tzcPampYCN+j+ZgunErZv
+ 6cliQCQBBbJ9ztu7uCE/cCt68ktKDIdFKcM4AGvFlcUt9x9owTTDiBiY6SzOM9snIijIvfRt3MU
+ vSHdmqaa2yiH7gRBkxAKGw//3wlRM1EbLG+Lts7rA0OM88WU1srGQ==
+X-Google-Smtp-Source: AGHT+IGBJ+y4p74p5F4usGVQ45sHf3LQQUimo7oskeQL5DVYd1UqesNTY5ntU0Scsf1B09fAPAENJ9wFVahkVu0miis=
+X-Received: by 2002:a05:6512:6282:b0:55f:4953:ae91 with SMTP id
+ 2adb3069b0e04-55f4953b230mr4668374e87.5.1756396056869; Thu, 28 Aug 2025
+ 08:47:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250827010453.4059782-1-richard.henderson@linaro.org>
- <20250827010453.4059782-5-richard.henderson@linaro.org>
-In-Reply-To: <20250827010453.4059782-5-richard.henderson@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Thu, 28 Aug 2025 15:22:13 +0300
-X-Gm-Features: Ac12FXxF4ko9mIQyFgJKPpiGe9OspY4f7xK_bnO9Y3fmu7P2zewEodjgRx6T158
-Message-ID: <CAAjaMXYUJxadTdi7BjvwEA-AwuAjpQyp6o2rRMC5s4jCCN9XoA@mail.gmail.com>
-Subject: Re: [PATCH 4/7] target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250722190824.3419413-1-ankeesler@google.com>
+ <20250722190824.3419413-2-ankeesler@google.com> <aK8MHGgp-Dm_Lkmb@redhat.com>
+ <CAGZECHOL=v50aV0vcCHdFxb69TmH7mXry2NEhu+EZZnWztRO-A@mail.gmail.com>
+ <aK81yUqtwoZ9_29l@redhat.com>
+In-Reply-To: <aK81yUqtwoZ9_29l@redhat.com>
+From: Andrew Keesler <ankeesler@google.com>
+Date: Thu, 28 Aug 2025 11:47:23 -0400
+X-Gm-Features: Ac12FXykRMIDzpB4fn4C7JTttyAib_JJaN6siy_5v3XKdXBmVFglGxOt0EPGUfs
+Message-ID: <CAGZECHNkRo=Oejh9CgAAV+Qa8f_PgdhvyOy+rAGNRG29Datt1Q@mail.gmail.com>
+Subject: Re: [PATCH 1/1] hw/display: Support per-head resolutions with
+ virtio-gpu
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: marcandre.lureau@gmail.com, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000000e63f4063d6ed339"
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=ankeesler@google.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,56 +99,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 27, 2025 at 4:07=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Conversion between KVM system registers ids and the HVF system
-> register ids is trivial.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+--0000000000000e63f4063d6ed339
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-FYI: you sent this as [PATCH 4/7] and [PATCH 05/61] by accident,
-happened to a few other patches in this series as well.
+> > I think we should probably report an error if xres / yres
+> > are set at the global level and also set against any individual
+> > output, so the two approaches are mutually exclusive.
 
->  target/arm/hvf/hvf.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
+> ACK - fixed for the next patch.
+
+Doh, I ran into an error. Seems like if I don't set xres/yres, then it
+gets defaulted to 1280x800.
+
+
+https://gitlab.com/qemu-project/qemu/-/blob/master/include/hw/virtio/virtio=
+-gpu.h#L175-176
+
+So...could we just get away with documenting that if you set xres/yres
+and outputs[0].xres/yres, then the later is going to overwrite the
+former? I'm not sure how to detect if xres/yres has been set globally
+to 1280x800, or if we are just getting the defaults.
+
+What do you think?
+
+On Wed, Aug 27, 2025 at 12:44=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com>
+wrote:
+
+> On Wed, Aug 27, 2025 at 11:48:34AM -0400, Andrew Keesler wrote:
+> > Sending again (replying all this time).
+> >
+> > > IIUC from the current code, xres/yres are only set against the
+> > > first head. The 2nd and later heads are left undefined by the
+> > > virtio-gpu-base code at least - I'm unclear if something else
+> > > in QEMU will fill in defaults later, or if they set to 0x0.
+> >
+> > That is correct - xres/yres are only set against the first head in the
+> > current code. The wording in my commit message (and cover letter) was
+> > misleading. I will fix that to say that "If no
+> > virtio_gpu_base_conf.outputs are provided,
+> > virtio_gpu_base_conf.xres/virtio_gpu_base_conf.yres will still be
+> > respected _for the first head_ for backwards compatibility".
+> >
+> > The only way I could get QEMU to fill in xres/yres for a 2nd and later
+> > head was to trigger virtio_gpu_ops.ui_info via a VNC client.
+> >
+> > > Is it relevant to set xres/yres on outputs, even when they are
+> > > not (yet) enabled ?  Perhaps we should have an explicit 'enabled: boo=
+l'
+> > > property in the 'outputs' struct ?
+> >
+> > Maybe you might want to set xres/yres on an output, but not enable it
+> > yet? I don't have any concrete examples of when you might want to do
+> > that, maybe you have some examples?
 >
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index f0e4b75e6a..2577dc1c0c 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -403,6 +403,26 @@ struct hvf_sreg_match {
->      uint32_t cp_idx;
->  };
+> No, I don't have an example.
 >
-> +/*
-> + * QEMU uses KVM system register ids in the migration format.
-> + * Conveniently, HVF uses the same encoding of the op* and cr* parameter=
-s
-> + * within the low 16 bits of the ids.  Thus conversion between the
-> + * formats is trivial.
-> + */
-> +
-> +#define KVMID_TO_HVF(KVM)  ((KVM) & 0xffff)
-> +#define HVF_TO_KVMID(HVF)  \
-> +    (CP_REG_ARM64 | CP_REG_SIZE_U64 | CP_REG_ARM64_SYSREG | (HVF))
-> +
-> +/* Verify this at compile-time. */
-> +
-> +#define DEF_SYSREG(HVF_ID, ...) \
-> +  QEMU_BUILD_BUG_ON(HVF_ID !=3D KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_A=
-RGS__)));
-> +
-> +#include "sysreg.c.inc"
-> +
-> +#undef DEF_SYSREG
-> +
->  #define DEF_SYSREG(HVF_ID, crn, crm, op0, op1, op2) \
->      { HVF_ID, HVF_SYSREG(crn, crm, op0, op1, op2) },
+> > I feel like I could see a user setting xres/yres on an output,
+> > forgetting to set enabled on that output, and then being confused why
+> > their head is blank. Because of this, my vote would be to default to
+> > enabling an output when it has configuration. I am easily swayed by
+> > your guidance, though.
 >
+> Ok, lets just document that setting xres/yres will cause the
+> output to be automatically enabled. We can always retrofit
+> an 'enabled' property at a later date if someone arrives with
+> a use case for setting res without enabling the output.
+>
+> With regards,
+> Daniel
 > --
-> 2.43.0
+> |: https://berrange.com      -o-
+> https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-
+> https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-
+> https://www.instagram.com/dberrange :|
 >
 >
+
+--0000000000000e63f4063d6ed339
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">&gt; &gt; I think we should probably report an error if xr=
+es / yres<br>&gt; &gt; are set at the global level and also set against any=
+ individual<br>&gt; &gt; output, so the two approaches are mutually exclusi=
+ve.<br><br>&gt; ACK - fixed for the next patch.<br><br>Doh, I ran into an e=
+rror. Seems like if I don&#39;t set xres/yres, then it<br>gets defaulted to=
+ 1280x800.<br><br>=C2=A0 <a href=3D"https://gitlab.com/qemu-project/qemu/-/=
+blob/master/include/hw/virtio/virtio-gpu.h#L175-176">https://gitlab.com/qem=
+u-project/qemu/-/blob/master/include/hw/virtio/virtio-gpu.h#L175-176</a><br=
+><br>So...could we just get away with documenting that if you set xres/yres=
+<br>and outputs[0].xres/yres, then the later is going to overwrite the<br>f=
+ormer? I&#39;m not sure how to detect if xres/yres has been set globally<br=
+>to 1280x800, or if we are just getting the defaults.<br><div><br></div><di=
+v>What do you think?</div></div><br><div class=3D"gmail_quote gmail_quote_c=
+ontainer"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Aug 27, 2025 at 12:=
+44=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat=
+.com">berrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">On Wed, Aug 27, 2025 at 11:48:34AM -0400, Andrew K=
+eesler wrote:<br>
+&gt; Sending again (replying all this time).<br>
+&gt; <br>
+&gt; &gt; IIUC from the current code, xres/yres are only set against the<br=
+>
+&gt; &gt; first head. The 2nd and later heads are left undefined by the<br>
+&gt; &gt; virtio-gpu-base code at least - I&#39;m unclear if something else=
+<br>
+&gt; &gt; in QEMU will fill in defaults later, or if they set to 0x0.<br>
+&gt; <br>
+&gt; That is correct - xres/yres are only set against the first head in the=
+<br>
+&gt; current code. The wording in my commit message (and cover letter) was<=
+br>
+&gt; misleading. I will fix that to say that &quot;If no<br>
+&gt; virtio_gpu_base_conf.outputs are provided,<br>
+&gt; virtio_gpu_base_conf.xres/virtio_gpu_base_conf.yres will still be<br>
+&gt; respected _for the first head_ for backwards compatibility&quot;.<br>
+&gt; <br>
+&gt; The only way I could get QEMU to fill in xres/yres for a 2nd and later=
+<br>
+&gt; head was to trigger virtio_gpu_ops.ui_info via a VNC client.<br>
+&gt; <br>
+&gt; &gt; Is it relevant to set xres/yres on outputs, even when they are<br=
+>
+&gt; &gt; not (yet) enabled ?=C2=A0 Perhaps we should have an explicit &#39=
+;enabled: bool&#39;<br>
+&gt; &gt; property in the &#39;outputs&#39; struct ?<br>
+&gt; <br>
+&gt; Maybe you might want to set xres/yres on an output, but not enable it<=
+br>
+&gt; yet? I don&#39;t have any concrete examples of when you might want to =
+do<br>
+&gt; that, maybe you have some examples?<br>
+<br>
+No, I don&#39;t have an example.<br>
+<br>
+&gt; I feel like I could see a user setting xres/yres on an output,<br>
+&gt; forgetting to set enabled on that output, and then being confused why<=
+br>
+&gt; their head is blank. Because of this, my vote would be to default to<b=
+r>
+&gt; enabling an output when it has configuration. I am easily swayed by<br=
+>
+&gt; your guidance, though.<br>
+<br>
+Ok, lets just document that setting xres/yres will cause the<br>
+output to be automatically enabled. We can always retrofit<br>
+an &#39;enabled&#39; property at a later date if someone arrives with<br>
+a use case for setting res without enabling the output.<br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
+s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
+ttps://www.flickr.com/photos/dberrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
+ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
+oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
+|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
+nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
+"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
+https://www.instagram.com/dberrange</a> :|<br>
+<br>
+</blockquote></div>
+
+--0000000000000e63f4063d6ed339--
 
