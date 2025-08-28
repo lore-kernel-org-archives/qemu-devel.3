@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D39CA1000
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91CEFCA1001
 	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgDn-0004ne-2G; Thu, 28 Aug 2025 13:15:37 -0400
+	id 1urgFo-0002ZH-Ii; Thu, 28 Aug 2025 13:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbb1-00077H-Ki
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:19:17 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urdlQ-00008o-On
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:38:08 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbay-0000qY-I7
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:19:15 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2445824dc27so7555115ad.3
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:19:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urdlO-0000KG-8I
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:38:08 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45b49f7aaf5so5993775e9.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756383551; x=1756988351; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VAlclsw7NdwMNzDXXMYCt62TrsWhB1wwPrwu4zLwNMI=;
- b=nsQAxRWa9n6rjSHR65//BJAxuwPSNCwzRnSC90i7r66i/olWoljDUto/ZE8eTYlMZE
- +sJkXTujj1qmf5XYNFYmkxUh6BtlIrHGaFoCc6MtjApAOHQo2PI86eRr9vUQSzOi1THn
- tz0nFyShLYv13PXTJdou/SGZjwNTM4btNE9vD8bMM+umuGMg2XbawIg/WNGqug2P+WVa
- ckdzbAxiRKefwrDAVWbf5L17Hup27wzXvp1lhG5ljeVZuf2CkbZprvjKdRGQp7Lxbd9e
- UO2mk/5MNGx3I2DY7CHQOMD2VZiMKUxe8p9tt1UPbwfEJi8udL5y6p6bR6c+DSFoca91
- TH8g==
+ d=linaro.org; s=google; t=1756391882; x=1756996682; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZaaqeFg6YWA/VaFX9J9PW6xyun3eIcbEMeFHq6CsG9Y=;
+ b=uRvQ/QW91DzuLOckr8fCJQTrDFx/jRcbuBZjjqP+7NjebCVGomUst68VitN+BrBYwr
+ tPamH3FOKdnRk5ih00ooqPPOdeakwC2HBlsNfsWFMOu+9ikVmLZt93SfZ2/cuGj0uy2h
+ 4rUKYPpYNfnE3IqI1+WVRnXOmApWOmBGftAwyZsE3kSzOt5mjGzXgIaUpsShjtXd5d0n
+ SflC4TfOoXZrxT5aifUHZz9zQSV62wRL+/QN8A8zZWQYhCXj/Eei0cGHEJ620Gq7Yprj
+ Yu1pfemv3jAXt7xpHhStOutP7V6eWYOY8tyJT+KBKzhwoyEKVrtc3kyX0rMaM6toTxLj
+ q5eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756383551; x=1756988351;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VAlclsw7NdwMNzDXXMYCt62TrsWhB1wwPrwu4zLwNMI=;
- b=wx98p+5DFZ6SY8gQhIVkYQyD3c3NEBccX1NsJnGDzkIEsVHxgnN8L4lRPUqb3qiudB
- U7tLDbYpEePSSpuTCYYo2eqaHstiDxSu9MCnMe/ZeAVBK15VB6s+K3TgS/vsVm7ixC8T
- JkAyB4zUuUrgqW6X2okY5IMjss7ct+Q9AgekUPmpy+ONrr9nDY2+hKEvCiNRoCWUhpnv
- H0yD/R9SseS/gXq6xcgIkOhas51/V7rWy5sOWWsWU6LvdT0lM0wDxKuhBuKNfJM21thN
- 4K6aWYYHfcNikN5zMe8PCL9M4aNEpvjrgcOnhuJOsZvJ5O84UkicDlr2XNyvLvkQjL09
- p02w==
-X-Gm-Message-State: AOJu0YyigTm82w1z2P86XIX88Q9mWAzzO5PGG1zeD+3QOTplR+xn4k/K
- 0K1LEcKiiylUOlYizUKulhDCK9nqz8sVcHS/cjT686O8SuCXlWfOM8OzPTwm3aavBIaBMqjJBhM
- 7JQqBfW8=
-X-Gm-Gg: ASbGnctzMFDg26K/1p8shI0dut2FnyFrtl4QSLAQ3FW8CYJw2SpnSxulmTW7d/7OGGX
- Bo02IL8HPejf62quu+d7PYVPFPtpWNQIWUyerGHZd5q60sZpaegEiPb0e8AtEdC2q2APUykVFcM
- z8OozjrbA1miSFIrwI1fACkNFDYnh2smqLY2GxOxdrqCCI1O54Pj07OJZBc7TzYATJbFmqNMYsD
- MTMLx++JvIuGTJRvlUHR7yBh8H/hiIkpF6FAANIxcHIGRIexjHgXBSc6n2v9T9EfrfI7ESvyRoX
- D3DnjCiy1oOs0SGrXKHtHFW/NCwuG4E6t25cUyoHzMgHw9s01pKMYy+Kn76ZeS0E6tcAy03vIVf
- tvEeasNCmooXtTZl6yw5jm48VwzI57MgYyOKV
-X-Google-Smtp-Source: AGHT+IGVsvquWZuAjmSFsGt4kxATy4qBiX8HDexAI0tWopd6VxhG1Ts9eOISN2V7/qNHexAkAIJVbQ==
-X-Received: by 2002:a17:903:244b:b0:246:cc56:39e5 with SMTP id
- d9443c01a7336-246cc563f19mr197661145ad.17.1756383551031; 
- Thu, 28 Aug 2025 05:19:11 -0700 (PDT)
-Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-248953dc1f4sm48898735ad.30.2025.08.28.05.19.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 05:19:10 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756391882; x=1756996682;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZaaqeFg6YWA/VaFX9J9PW6xyun3eIcbEMeFHq6CsG9Y=;
+ b=a4JEFe+BIEk1XUBCGFwXUkzDMm9zkrhg7n7XYCo15EkDRxwgoa9oWawNIk3OlYIwKs
+ euniq0lpWUDpRwQwYNrR3/T7DN9JqdJGtC53tAkN9IXn0nfIBsrMHnRbml3VNP4BGD8x
+ quoq+qvnHDBrJ2eANdrL8E5Md5HuB7tp7y7Od8fyfbkUNNQpwyIE1vyL5jyPvgUXUslx
+ 1SKYoeLksgnzTN1eeHe/eu1JwxWSSsKaodrJP05v7SrZdvgeg6ys7ff3pyjkkdqNpON2
+ NlespKd5RCXzc/9kZURhrmGgFPfctvoIlaX22zpKjmRWZr4DBDmCmLvO0ThiJYODt8ux
+ YySw==
+X-Gm-Message-State: AOJu0Yw1BVJYX6ff+qf1g0x15OKi+qVz/FkbXeIitV7I+Jt71BP/KLpV
+ 7/osK8v0lvD7wxQTMAjzBFv5OsYepUDuNLV16eK9sEAgjkoTU/SpuRFYDnx06t+K/W30cQZYUWZ
+ V/dJQ3jA=
+X-Gm-Gg: ASbGncsuRoLYonxKds8MwL/L2GL7oNIfg6u0Z6FDK/tHr2lEu0C5+lGhDo+HnYOX1Gm
+ wQCWCNEkmtueWwLD9kMUAgi9gcFGg9LERRfLtpgl729INp4HlbyPAJswTOjbj/Qju16sj1huHBc
+ ESkyZYp9oobGFGIAW8YLjs+KtGIZNkmzq/xzkbfXFEm75BJG8RxRYKoYTgNUf/SW1N+bDJ6tVQd
+ 2aUZqZ5htdvhONq9e4teER5NJpC/uGB3/ZVn5BGngfzKjOHnXg77ciAg4KLhHll2cACkfY0OzCU
+ uuLUiMz4ZD1IRTYrqDRl6g7UmIJ5j2vbFZGgiVxAUbIzivIj9hFfiGxDyDMqb07qf5+5NFdEIg2
+ PYjB47yLGCpiYJXJFw3+unpAwGRf15zkbabCqipRcbyuIPnWJwyLyHo0FER0NMNHOQnbl92OT
+X-Google-Smtp-Source: AGHT+IH9NGbcSFaqbMrIkPOtnVSA/MCM8mtkb1ZT4Bgu3foAQyUCnBKPfnzJJk8x8xLtZl01Qt2Dtg==
+X-Received: by 2002:a05:600c:4f4b:b0:45b:7692:b47 with SMTP id
+ 5b1f17b1804b1-45b76920d55mr31224495e9.29.1756391882489; 
+ Thu, 28 Aug 2025 07:38:02 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3c711212566sm24139836f8f.41.2025.08.28.07.38.01
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 28 Aug 2025 07:38:01 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PATCH v3 84/87] linux-user: Move arch_parse_elf_property to
- aarch64/elfload.c
-Date: Thu, 28 Aug 2025 22:08:33 +1000
-Message-ID: <20250828120836.195358-85-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
-References: <20250828120836.195358-1-richard.henderson@linaro.org>
+Cc: devel@lists.libvirt.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 0/2] hw/mips: Remove mipssim machine and mipsnet device
+Date: Thu, 28 Aug 2025 16:37:58 +0200
+Message-ID: <20250828143800.49842-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,147 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the controlling macro to HAVE_ELF_GNU_PROPERTY to
-match the other HAVE_* macros.
+mipssim machine (single user of  mipsnet device) is
+deprecated since v10.0; remove for 10.2.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/aarch64/target_elf.h |  1 +
- linux-user/loader.h             |  5 +++++
- linux-user/aarch64/elfload.c    | 18 +++++++++++++++
- linux-user/elfload.c            | 39 +++++++--------------------------
- 4 files changed, 32 insertions(+), 31 deletions(-)
+Philippe Mathieu-Daudé (2):
+  hw/mips: Remove mipssim machine
+  hw/net: Remove mipsnet device model
 
-diff --git a/linux-user/aarch64/target_elf.h b/linux-user/aarch64/target_elf.h
-index 9ec51f6237..4cdeb64b0d 100644
---- a/linux-user/aarch64/target_elf.h
-+++ b/linux-user/aarch64/target_elf.h
-@@ -17,6 +17,7 @@
- #define HAVE_ELF_HWCAP2         1
- #define HAVE_ELF_PLATFORM       1
- #define HAVE_ELF_CORE_DUMP      1
-+#define HAVE_ELF_GNU_PROPERTY   1
- 
- /*
-  * See linux kernel: arch/arm64/include/asm/elf.h, where
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 2175dd4e0a..e42b8fa1e3 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -122,4 +122,9 @@ typedef struct {
- /* Note that both Elf32_Word and Elf64_Word are uint32_t. */
- const VdsoImageInfo *get_vdso_image_info(uint32_t elf_flags);
- 
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data,
-+                             struct image_info *info,
-+                             Error **errp);
-+
- #endif /* LINUX_USER_LOADER_H */
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 07a0c3f844..8076968251 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -1,10 +1,12 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
- 
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
- #include "qemu.h"
- #include "loader.h"
- #include "target/arm/cpu-features.h"
- #include "target_elf.h"
-+#include "elf.h"
- 
- 
- const char *get_elf_cpu_model(uint32_t eflags)
-@@ -349,6 +351,22 @@ const char *get_elf_platform(CPUState *cs)
-     return TARGET_BIG_ENDIAN ? "aarch64_be" : "aarch64";
- }
- 
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data,
-+                             struct image_info *info,
-+                             Error **errp)
-+{
-+    if (pr_type == GNU_PROPERTY_AARCH64_FEATURE_1_AND) {
-+        if (pr_datasz != sizeof(uint32_t)) {
-+            error_setg(errp, "Ill-formed GNU_PROPERTY_AARCH64_FEATURE_1_AND");
-+            return false;
-+        }
-+        /* We will extract GNU_PROPERTY_AARCH64_FEATURE_1_BTI later. */
-+        info->note_flags = *data;
-+    }
-+    return true;
-+}
-+
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUARMState *env)
- {
-     for (int i = 0; i < 31; i++) {
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 8b92fba0f0..12d4873212 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -166,41 +166,18 @@ const char *get_elf_platform(CPUState *cs) { return NULL; }
- const char *get_elf_base_platform(CPUState *cs) { return NULL; }
- #endif
- 
--#include "elf.h"
--
--/* We must delay the following stanzas until after "elf.h". */
--#if defined(TARGET_AARCH64)
--
--static bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
--                                    const uint32_t *data,
--                                    struct image_info *info,
--                                    Error **errp)
--{
--    if (pr_type == GNU_PROPERTY_AARCH64_FEATURE_1_AND) {
--        if (pr_datasz != sizeof(uint32_t)) {
--            error_setg(errp, "Ill-formed GNU_PROPERTY_AARCH64_FEATURE_1_AND");
--            return false;
--        }
--        /* We will extract GNU_PROPERTY_AARCH64_FEATURE_1_BTI later. */
--        info->note_flags = *data;
--    }
--    return true;
--}
--#define ARCH_USE_GNU_PROPERTY 1
--
--#else
--
--static bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
--                                    const uint32_t *data,
--                                    struct image_info *info,
--                                    Error **errp)
-+#ifndef HAVE_ELF_GNU_PROPERTY
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data, struct image_info *info,
-+                             Error **errp)
- {
-     g_assert_not_reached();
- }
--#define ARCH_USE_GNU_PROPERTY 0
--
-+#define HAVE_ELF_GNU_PROPERTY 0
- #endif
- 
-+#include "elf.h"
-+
- struct exec
- {
-     unsigned int a_info;   /* Use macros N_MAGIC, etc for access */
-@@ -1233,7 +1210,7 @@ static bool parse_elf_properties(const ImageSource *src,
-     uint32_t prev_type;
- 
-     /* Unless the arch requires properties, ignore them. */
--    if (!ARCH_USE_GNU_PROPERTY) {
-+    if (!HAVE_ELF_GNU_PROPERTY) {
-         return true;
-     }
- 
+ MAINTAINERS                             |   6 -
+ docs/about/deprecated.rst               |  12 -
+ docs/about/removed-features.rst         |   5 +
+ docs/system/target-mips.rst             |  11 -
+ configs/devices/mips-softmmu/common.mak |   1 -
+ hw/mips/mipssim.c                       | 249 --------------------
+ hw/net/mipsnet.c                        | 297 ------------------------
+ hw/mips/Kconfig                         |   7 -
+ hw/mips/meson.build                     |   1 -
+ hw/net/Kconfig                          |   3 -
+ hw/net/meson.build                      |   1 -
+ hw/net/trace-events                     |   7 -
+ 12 files changed, 5 insertions(+), 595 deletions(-)
+ delete mode 100644 hw/mips/mipssim.c
+ delete mode 100644 hw/net/mipsnet.c
+
 -- 
-2.43.0
+2.51.0
 
 
