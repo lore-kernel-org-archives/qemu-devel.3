@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD686C8303F
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 11:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34497CA0FF2
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 11:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urau3-0003LG-LW; Thu, 28 Aug 2025 07:34:51 -0400
+	id 1urauH-0003Ye-8N; Thu, 28 Aug 2025 07:35:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uratz-0003Gs-BX
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:47 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1urauB-0003Ro-Uv
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:35:00 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uratx-0005hO-5w
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:46 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45b7d485204so1575245e9.0
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 04:34:44 -0700 (PDT)
+ id 1urau9-0005oY-Ku
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 07:34:59 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45b4d8921f2so7129035e9.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 04:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756380883; x=1756985683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756380896; x=1756985696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9rv5evHq+vjKZvOo6i0wNloSfFYxnuEPBkxKdkW8gSk=;
- b=BiI9Ryov44Zy82sONzBcKN54Ju7z8WfGuwV5STgfF/GX6SSxdMDOkG5tLhvNaQbfqF
- w/D+9htgdNrxDW3wig4RI7jAls9uhidRxet9MPzMvl+X7taThHQWslSgIRCSpX16Kngu
- bkjp+0DMdzt8BBrXkfHNpUD9HZQlLTSyjzJhg0WM4o+8yTx5W2hWOY4ndXECQU6PCylp
- IBLqEg91zu7sBVBkp7GH1arP67zol1ikMdSnSq1DuMUHDQU/6CQ3CQvYucMgP0kaKOCU
- sdAN3vGVQtbSACGeqSpVedfp0gdImMVYT78lmkoEY2URJQ48B51X7TBpUab5UaUSs9dJ
- bh6A==
+ :reply-to; bh=tlYbhB8nOl5JrIUdyBD4JxZnpHrBbp0zUqXwmx5QSWY=;
+ b=hMA02QDoH5v24jm5vqGt5q7BDaIO4hJqC82VnzO9ULxRyrnLihVIZAuuvmxhn4Wxby
+ d9ETzBgUEbZVNux6BQ6B2LX2fo0BMatQq6KdexpwiT2GkUclA6+j6VFnHIeEoePN6hzj
+ LhPwy+zR7RpUFsQmMME85waEotBGAt8c7mFPXxlMnzqbmWSReKpEkBDodyfFVPFTsoHm
+ bCgZ8YNC9/cX1JXYImxg6OKecN41GkM+R14I8Tlpin/Apc3XjmxPPPltyH/MtcfzTXIc
+ Fzik+AgnoOeeCr6lMBqOTz7fRNeRfwMlynUSsQPQqfouu6P3fBx33xiv9dGNtFcLanWL
+ 8Teg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756380883; x=1756985683;
+ d=1e100.net; s=20230601; t=1756380896; x=1756985696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9rv5evHq+vjKZvOo6i0wNloSfFYxnuEPBkxKdkW8gSk=;
- b=W/SZRQqj4w5SbZtO2mjzWjfLdlU89nHFjlPa8AYlA7YSpwyZSg11c4pOtPgV9wWDFe
- KFO23W76s3H/ucjKmnqdlodm3HYvq8raizw27X1k3qW8/oDaZF2JkG0ba/rDEL4Im14w
- 3aNBA46ZYkgfZISGW9HAILakM/vvUKLhg6ikYpqxiVFq2c0Knkq6YWF3vnSo3+lRCSrw
- qkWVBP30srtgWkN2bEdJSOhQBmCC55oRY8LPMCuHzLjgGDR1yxGUC6LJpkmvVQ9erjuZ
- VB0X7QOsP4zz1nVpRsB7kErODpqu6TTV6PP0omuAvI9BGaU686/3No6gNbha+mUGRhxu
- G3NQ==
-X-Gm-Message-State: AOJu0YxwGZGIj/6ukyUzQLw+4qVA8NFnussTqfWE10uXJtVcf23ie6VF
- 8ZM6LxnNBW2I8zwFQce0KLpOUvc4wG8v5mdHSx/3dwUEDw24w5X1NJe8a+pI+pscf9w+5aNpbEI
- 4xqUo
-X-Gm-Gg: ASbGncuwHq7cHNDW/vVHFNlnaLFMcwCt8L6VA6IS8rpKNP9uN6a03yy9IL3PaqhsRY7
- rpIQ3BA19Pti7LE4DQxRZrRH1/OWoUYH5P8H106xiPxymjlfERDIaGbz13Jhc5n2fCrjvoZsTDo
- ZVHvl7LKvkGS7C4PBoTh9edNgkfts/dSPUfwD+xrAbx5xG25RaJgKQ1GtRHIvykMxTZWCEFsL4C
- 8vGrtIYh0/RtUpQkJaHeea3YyfV/vaYV+bO6VKDb+u2L8uKRyMzdPfY0XAof3Zam3TDygmiltb4
- 7MT5LQEG89Hx4jh+hsyfT2YKOZWewOESoSZtfHneaRaogXDs2R/3ZkYKyhvgV3GlDLdq8PmRr/c
- Z7cz1ooYY/9i98Kxeua3vqmRvJdrXCKq0BwhUh7DXLiZoeN0dmA==
-X-Google-Smtp-Source: AGHT+IGTdTRweGagzdZ13NT2qbQTj+E4X8+5zJWCCNScCnRWGNrlqPbhUh60EbBjdGSQwEaIKVuypQ==
-X-Received: by 2002:a05:600c:4ecf:b0:459:d3ce:2cea with SMTP id
- 5b1f17b1804b1-45b5179947cmr232275815e9.6.1756380883235; 
- Thu, 28 Aug 2025 04:34:43 -0700 (PDT)
+ bh=tlYbhB8nOl5JrIUdyBD4JxZnpHrBbp0zUqXwmx5QSWY=;
+ b=nMdIQNzm4OUA/JBRHrub9Wg4YLcAlV0zUi5EaHovOLfsAiasCJFgBr+GWySvQzrI0M
+ Po0/pnzpwyarc60Qlt1lX+zncqLFnf/qgl7zmQknMPaTjRXROJFhEEszyIJtne3WKo+N
+ ifWJC2qTgXAThhCUlCLBXwxEtIMsImK7N/AOJVJoR6zjkm3Jzq40YbJS0K+o7+NdZMCW
+ Ym30K8caTN5JepnSbLXscDs7/bHozG9/a0rc5tRcXcyGiTLsd4vmeFlG2KNsRAKcsVk7
+ DMpg5rh1XIOh2p+FMEjXs1jAzECo1X2MRReX034Cl/w1rxKDKm54ORvML3OXX/KzRb8e
+ TGPA==
+X-Gm-Message-State: AOJu0YxRvhbE+o17zE2AuCyik7MHHYQA8rtbuUBFmSZBBjwzUAa9F27X
+ 3VWb5LfX+fe6jTq9L8HyE267Ft3X187pQDn7FHuM8enz86DFN0InUVUwfs71dZQjr6cR4+W7kPH
+ E1eqF
+X-Gm-Gg: ASbGncvMaGDIjG1ctu9I3XKAfZJHE7kmqoENR5WEG1stSZ1DDTKR+PoVdwjfln3vlai
+ E2ywIyFEoDh0ZrY0zOcGrameJbLvBG7haeqEKfTgnp/LuLmPmw56/sGXpzZPTlLL7I315UswPfZ
+ z4+i6Vt16/qJiJNBJK5vZFTnGY2qRMc4oaluvIZVTY4rUnTmUrE15nXSJuVC9dsZfur+KsxLxwv
+ q5qYweuvI4TP08YA97jxO/FO9QlUD9NROlnrvlkuI+YnFqsnTLfuBk5knDJQvQWuJ5f6Odv4CWm
+ NwTCrJ9Nj1DjWmIW9Op2Cc5xqE+GKTUVFUa+Y61YF+shm85svfw1C79xRB0rWaB22B8ZsA29jE8
+ /NzpFu9sqsoObk/oOgmUvL42QdHwLex66nncC0rg=
+X-Google-Smtp-Source: AGHT+IEhekCwFl8XcyS5kuEn7i/XrhEWqFauR65JKRCYM/uZ11wsK0bzisdeXxfyZAXN5MBiFJ1vDA==
+X-Received: by 2002:a05:600c:4f41:b0:459:d3ce:2cbd with SMTP id
+ 5b1f17b1804b1-45b517ad602mr194774255e9.13.1756380895875; 
+ Thu, 28 Aug 2025 04:34:55 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b79799c33sm28691015e9.5.2025.08.28.04.34.42
+ 5b1f17b1804b1-45b79799c33sm28691015e9.5.2025.08.28.04.34.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 04:34:42 -0700 (PDT)
+ Thu, 28 Aug 2025 04:34:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/32] target/arm: Implement MIN/MAX (immediate)
-Date: Thu, 28 Aug 2025 12:34:06 +0100
-Message-ID: <20250828113430.3214314-10-peter.maydell@linaro.org>
+Subject: [PULL 21/32] scripts/kerneldoc: Switch to the Python kernel-doc script
+Date: Thu, 28 Aug 2025 12:34:18 +0100
+Message-ID: <20250828113430.3214314-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250828113430.3214314-1-peter.maydell@linaro.org>
 References: <20250828113430.3214314-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,93 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Change the Sphinx config to run the new Python kernel-doc script
+instead of the Perl one.  The only difference between the two is that
+the new script does not handle the -sphinx-version option, instead
+assuming that Sphinx is always at least version 3: so we must
+delete the code that passes that option to avoid the Python
+script complaining about an unknown option.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20250803014019.416797-3-richard.henderson@linaro.org
+QEMU's minimum Sphinx version is already 3.4.3, so this doesn't
+change the set of versions we can handle.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Message-id: 20250814171324.1614516-7-peter.maydell@linaro.org
 ---
- target/arm/tcg/a64.decode      | 10 ++++++++
- target/arm/tcg/translate-a64.c | 44 ++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
+ docs/conf.py             | 4 +++-
+ docs/sphinx/kerneldoc.py | 5 -----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 8c798cde2b4..c1811b02747 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -156,6 +156,16 @@ MOVZ            . 10 100101 .. ................ .....   @movw_32
- MOVK            . 11 100101 .. ................ .....   @movw_64
- MOVK            . 11 100101 .. ................ .....   @movw_32
+diff --git a/docs/conf.py b/docs/conf.py
+index f892a6e1da3..e09769e5f83 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -341,7 +341,9 @@
+ # We use paths starting from qemu_docdir here so that you can run
+ # sphinx-build from anywhere and the kerneldoc extension can still
+ # find everything.
+-kerneldoc_bin = ['perl', os.path.join(qemu_docdir, '../scripts/kernel-doc')]
++# Since kernel-doc is now a Python script, we should run it with whatever
++# Python this sphinx is using (rather than letting it find one via env)
++kerneldoc_bin = [sys.executable, os.path.join(qemu_docdir, '../scripts/kernel-doc.py')]
+ kerneldoc_srctree = os.path.join(qemu_docdir, '..')
+ hxtool_srctree = os.path.join(qemu_docdir, '..')
+ qapidoc_srctree = os.path.join(qemu_docdir, '..')
+diff --git a/docs/sphinx/kerneldoc.py b/docs/sphinx/kerneldoc.py
+index 30bb3431983..9721072e476 100644
+--- a/docs/sphinx/kerneldoc.py
++++ b/docs/sphinx/kerneldoc.py
+@@ -63,11 +63,6 @@ def run(self):
+         env = self.state.document.settings.env
+         cmd = env.config.kerneldoc_bin + ['-rst', '-enable-lineno']
  
-+# Min/Max (immediate)
-+
-+@minmaxi_s      sf:1 .. ........... imm:s8 rn:5 rd:5    &rri_sf
-+@minmaxi_u      sf:1 .. ........... imm:8  rn:5 rd:5    &rri_sf
-+
-+SMAX_i          . 00 1000111 0000 ........ ..... .....  @minmaxi_s
-+SMIN_i          . 00 1000111 0010 ........ ..... .....  @minmaxi_s
-+UMAX_i          . 00 1000111 0001 ........ ..... .....  @minmaxi_u
-+UMIN_i          . 00 1000111 0011 ........ ..... .....  @minmaxi_u
-+
- # Bitfield
- 
- &bitfield       rd rn sf immr imms
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index dbf47595dbe..b70ae5befd2 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -4552,6 +4552,50 @@ TRANS(SUB_i, gen_rri, a, 1, 1, tcg_gen_sub_i64)
- TRANS(ADDS_i, gen_rri, a, 0, 1, a->sf ? gen_add64_CC : gen_add32_CC)
- TRANS(SUBS_i, gen_rri, a, 0, 1, a->sf ? gen_sub64_CC : gen_sub32_CC)
- 
-+/*
-+ * Min/Max (immediate)
-+ */
-+
-+static void gen_wrap3_i32(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m, NeonGenTwoOpFn fn)
-+{
-+    TCGv_i32 t1 = tcg_temp_new_i32();
-+    TCGv_i32 t2 = tcg_temp_new_i32();
-+
-+    tcg_gen_extrl_i64_i32(t1, n);
-+    tcg_gen_extrl_i64_i32(t2, m);
-+    fn(t1, t1, t2);
-+    tcg_gen_extu_i32_i64(d, t1);
-+}
-+
-+static void gen_smax32_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m)
-+{
-+    gen_wrap3_i32(d, n, m, tcg_gen_smax_i32);
-+}
-+
-+static void gen_smin32_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m)
-+{
-+    gen_wrap3_i32(d, n, m, tcg_gen_smin_i32);
-+}
-+
-+static void gen_umax32_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m)
-+{
-+    gen_wrap3_i32(d, n, m, tcg_gen_umax_i32);
-+}
-+
-+static void gen_umin32_i64(TCGv_i64 d, TCGv_i64 n, TCGv_i64 m)
-+{
-+    gen_wrap3_i32(d, n, m, tcg_gen_umin_i32);
-+}
-+
-+TRANS_FEAT(SMAX_i, aa64_cssc, gen_rri, a, 0, 0,
-+           a->sf ? tcg_gen_smax_i64 : gen_smax32_i64)
-+TRANS_FEAT(SMIN_i, aa64_cssc, gen_rri, a, 0, 0,
-+           a->sf ? tcg_gen_smin_i64 : gen_smin32_i64)
-+TRANS_FEAT(UMAX_i, aa64_cssc, gen_rri, a, 0, 0,
-+           a->sf ? tcg_gen_umax_i64 : gen_umax32_i64)
-+TRANS_FEAT(UMIN_i, aa64_cssc, gen_rri, a, 0, 0,
-+           a->sf ? tcg_gen_umin_i64 : gen_umin32_i64)
-+
- /*
-  * Add/subtract (immediate, with tags)
-  */
+-        # Pass the version string to kernel-doc, as it needs to use a different
+-        # dialect, depending what the C domain supports for each specific
+-        # Sphinx versions
+-        cmd += ['-sphinx-version', sphinx.__version__]
+-
+         # Pass through the warnings-as-errors flag
+         if env.config.kerneldoc_werror:
+             cmd += ['-Werror']
 -- 
 2.43.0
 
