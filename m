@@ -4,81 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09728CA0FF7
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C64D2CA0FF9
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:33:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgIH-0006lq-3k; Thu, 28 Aug 2025 13:20:13 -0400
+	id 1urgIP-0007Gn-KZ; Thu, 28 Aug 2025 13:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urdcb-0004bZ-Kh
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:29:01 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urdcZ-0007Ue-35
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:29:01 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-71fd1f94ad9so9117187b3.1
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:28:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756391337; x=1756996137; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jAhd32F5CCjvDrAOEsOXSSVNN6qUgpl6tLXJJE+dNt0=;
- b=c4aFUXcdLGDTRkT+gL8+3UiSoFSYEJ0GkyXTx7YpWqgf6HBzEYNwvEs3TF8MqzMTsY
- Gau1S5ElJ6FKkwdBY4ifzsMgZNHnzzAT48H6da6ydoeru4EksjA2gcHt+o7nRyjlVg+s
- N47ENUpQtWdXG7g8S6Nq7xS1d56zRG/ZUOsr+4KZgoEV35DJeNpryAVSCnI5+Lbfan0m
- ux2kaqruyeV0L7ExsH76I0rPHLwNT9LHe1n0PyADgD86g4E2R7CB3RfOQtSgMLtJmSD3
- i/mmGT15pC0COfGiQOBWxqmK1elkGbXHm6bjJx2m80N4m+9PmDH6zNC/UR73x24u7bNt
- ywyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756391337; x=1756996137;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jAhd32F5CCjvDrAOEsOXSSVNN6qUgpl6tLXJJE+dNt0=;
- b=G65PFaVnLT07tF17ZBpDNvA64Nwt2ui/Zh4YQ92MQO9x2NR6ZhaKGOTceVpFYqA1Uk
- dbOuSPjNI5b0yYHVCUBfMiW8U4FLKuG8/ijTtTI/GegmOZiGnYcebSLNqhIp5j+3BGSp
- zs8tUIU/DxYBut7EUVXn/g+sdRTdDenDIA1LLa5qHlGGiI3HkMJGIMcQaD6xOrAd2yhI
- pmG0hdgsFRu1fsbE1PSb9yCsbBeoB8KybGtG7/CVzSRQ58ZDUEVuB6+dUOqp/X4D9Jap
- wD4NL+ZF+1rx5gvYERIdu4cjsi6p8vrcMFBhg3gIR66itVJqNq9/gkd5PlDzC2GltPK/
- +4Bw==
-X-Gm-Message-State: AOJu0YymwnGfu8sUpOyVl35Ms60sZwzH91LWU2EYovgQhkoBSddo3jvx
- 4tWmQOFMwgmNy8m2ducG+nxpss6haInpad4SQcn9Tfn3FwbqT841wCAzDG/Pz7PPSq0LNeoZLYx
- 1J24SCGLOsmC4AzhAnP5F33rNZ5ibOhy6zbfcRtle+/mmsbTMVjDr
-X-Gm-Gg: ASbGncsmRMETUkkHOHVc/qtQoDh5r5ipSg8QUtqbuuvx8RUoTFPcp2Oyd30C1PL9qSl
- DCLuI1FYywZ+vgG/5+mn0lQYs9PTywq05a8YLFWucBAmuWPZuKVaICJXvRRHzGMvrlwNyHIwPjh
- hYQ3PUnySIatf6y+BytAiZU1CkRJpUrWGpXqnN9gUz3I3CsjF3x35+iogJM+YlgY4lteSTQxuBk
- NwwuUL3ITz/sY+I2H0=
-X-Google-Smtp-Source: AGHT+IElfb2/0BgNVqno2R48ylqe0NM7cV1R4oZHkL1Mmofk1yTPr/Su4+/dQ4o67mlZ6PcdvoQvpU7YfXSrsNnUN34=
-X-Received: by 2002:a05:690c:7482:b0:720:4ec:3f7a with SMTP id
- 00721157ae682-72004ec494fmr198557287b3.31.1756391336863; Thu, 28 Aug 2025
- 07:28:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1urbhS-00024E-51; Thu, 28 Aug 2025 08:25:54 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>)
+ id 1urbhO-0002jx-S8; Thu, 28 Aug 2025 08:25:53 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8Axz7_GSrBo3C8EAA--.7252S3;
+ Thu, 28 Aug 2025 20:25:42 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJAxT+bCSrBoy2RuAA--.14734S4;
+ Thu, 28 Aug 2025 20:25:42 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Bibo Mao <maobibo@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 2/2] hw/intc/loongarch_pch_pic: Fix ubsan warning and
+ endianness issue
+Date: Thu, 28 Aug 2025 20:02:18 +0800
+Message-Id: <20250828120218.1227427-3-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250828120218.1227427-1-gaosong@loongson.cn>
+References: <20250828120218.1227427-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-References: <20250828120836.195358-1-richard.henderson@linaro.org>
- <20250828120836.195358-17-richard.henderson@linaro.org>
-In-Reply-To: <20250828120836.195358-17-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Aug 2025 15:28:45 +0100
-X-Gm-Features: Ac12FXwga7FaxYBexiYRDAWhxT7cLRXZlrf65X7YOlH5sUeNNa0govpVNao2f1o
-Message-ID: <CAFEAcA81boKrN2EHLbLEord-cc=iLTvXpVY_nGA7u3R5y3gtLA@mail.gmail.com>
-Subject: Re: [PATCH v3 16/87] linux-user: Rename USE_ELF_CORE_DUMP to
- HAVE_ELF_CORE_DUMP
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAxT+bCSrBoy2RuAA--.14734S4
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,18 +67,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 28 Aug 2025 at 13:09, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> The other knobs in target_elf.h are all HAVE_*.
-> Rename this USE_ELF_CORE_DUMP to match.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  linux-user/elfload.c | 38 +++++++++++++++++++-------------------
+From: Thomas Huth <thuth@redhat.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+When booting the Linux kernel from tests/functional/test_loongarch64_virt.py
+with a QEMU that has been compiled with --enable-ubsan, there is
+a warning like this:
 
-thanks
--- PMM
+ .../hw/intc/loongarch_pch_pic.c:171:46: runtime error: index 512 out of
+  bounds for type 'uint8_t[64]' (aka 'unsigned char[64]')
+ SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
+  .../hw/intc/loongarch_pch_pic.c:171:46
+ .../hw/intc/loongarch_pch_pic.c:175:45: runtime error: index 256 out of
+  bounds for type 'uint8_t[64]' (aka 'unsigned char[64]')
+ SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
+  .../hw/intc/loongarch_pch_pic.c:175:45
+
+It happens because "addr" is added first before substracting the base
+(PCH_PIC_HTMSI_VEC or PCH_PIC_ROUTE_ENTRY).
+Additionally, this code looks like it is not endianness safe, since
+it uses a 64-bit pointer to write values into an array of 8-bit values.
+
+Thus rework the code to use the stq_le_p / ldq_le_p helpers here
+and make sure that we do not create pointers with undefined behavior
+by accident.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/intc/loongarch_pch_pic.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index c4b242dbf4..32f01aabf0 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -110,10 +110,10 @@ static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
+         val = s->int_polarity;
+         break;
+     case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
+-        val = *(uint64_t *)(s->htmsi_vector + addr - PCH_PIC_HTMSI_VEC);
++        val = ldq_le_p(&s->htmsi_vector[addr - PCH_PIC_HTMSI_VEC]);
+         break;
+     case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
+-        val = *(uint64_t *)(s->route_entry + addr - PCH_PIC_ROUTE_ENTRY);
++        val = ldq_le_p(&s->route_entry[addr - PCH_PIC_ROUTE_ENTRY]);
+         break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -129,7 +129,8 @@ static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
+ {
+     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+     uint32_t offset;
+-    uint64_t old, mask, data, *ptemp;
++    uint64_t old, mask, data;
++    void *ptemp;
+ 
+     offset = addr & 7;
+     addr -= offset;
+@@ -168,12 +169,12 @@ static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
+         s->int_polarity = (s->int_polarity & ~mask) | data;
+         break;
+     case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
+-        ptemp = (uint64_t *)(s->htmsi_vector + addr - PCH_PIC_HTMSI_VEC);
+-        *ptemp = (*ptemp & ~mask) | data;
++        ptemp = &s->htmsi_vector[addr - PCH_PIC_HTMSI_VEC];
++        stq_le_p(ptemp, (ldq_le_p(ptemp) & ~mask) | data);
+         break;
+     case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
+-        ptemp = (uint64_t *)(s->route_entry + addr - PCH_PIC_ROUTE_ENTRY);
+-        *ptemp = (*ptemp & ~mask) | data;
++        ptemp = (uint64_t *)&s->route_entry[addr - PCH_PIC_ROUTE_ENTRY];
++        stq_le_p(ptemp, (ldq_le_p(ptemp) & ~mask) | data);
+         break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+-- 
+2.47.0
+
 
