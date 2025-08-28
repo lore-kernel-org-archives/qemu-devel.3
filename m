@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53DB9CA0EFF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 759B4CA1000
 	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usO6E-0005mC-AZ; Sat, 30 Aug 2025 12:06:42 -0400
+	id 1usOgT-0002Hn-Mk; Sat, 30 Aug 2025 12:44:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkma-0006E3-Ur
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 18:07:48 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkEJ-0004M7-M5
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:32:23 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkmY-0004Pb-Mn
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 18:07:48 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3cdfb1ff7aeso704548f8f.2
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 15:07:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkEG-00087F-QX
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:32:22 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-45b7e69570bso2148515e9.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 14:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756418864; x=1757023664; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756416734; x=1757021534; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=66gdu98n6/HjcL+4A8OHa+2xjTTxkZ7IxSyMj1Xo23U=;
- b=d26kq9HeX/1sWumQMN/ZrE7rIyETA0FWwyqirFJyFkmwXZyE1GcUjUYJz4r0YbZE9C
- 5LMkj/jUKO67UUv7uXhdBxpvc4uSbwFPC7oOarj5EHGtk9SJy/3jjqwYvL8M79prJf08
- YBq5S/e66cH1z713YdgCdQmlInoHM9MvtlLFU0BrFrzMD9C+MdzpsgXVdm2/+jKTEQJ0
- IYiIHDFVocR59gD7gDfNC8j+ocGpc1YZEy0ctSXYOE07Qg3+u5qNrZUQDX62yyvW/2lb
- S3p/UP/avWgDpb3mrARx4bRAXKpoDrD645BAEH6UyeyIowYdTMwBo3qVpg7VKU4qXKzC
- 2lbw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/dNzAE06fiYRsxFXdP0nWLTdBPhF/t/Du0Zyr0GctJ8=;
+ b=YnThAwZIsQtv9AgwZLBc8QxVFThG2aOVVCowqheluxDf68WmL4Woe/pugapbgmUvBX
+ 6BhgZQ/oF2BqiXIO2djcyB4/lwHjRCkn1uYK+6UQZ2FEk8nPp+eRCJMXsRXEgymdmDTX
+ aUaSiO/1AXtZ2lo6U0r6iEr6g2/7y99V0NW5Nc9Gmbs3k/TYcz8RcprHBFfCWp1i8pub
+ 8HEe6N+VEzrFcSbjXULwO6zWpSANOd9AqSU7WvgS3wEKjFa9gcEtgycXaO4EgtAV6PCX
+ XJ25IFcj01rF8FAhUC3hDzDz7l7Ww7m5t2eFTArLtWupYXbaZ+iyVssDr6xSp86WYsU1
+ Qd/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756418864; x=1757023664;
+ d=1e100.net; s=20230601; t=1756416734; x=1757021534;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=66gdu98n6/HjcL+4A8OHa+2xjTTxkZ7IxSyMj1Xo23U=;
- b=pOs8RFoTqAtqa7Z6oWC6hlnlUh/c/gV14Niyirsu0ggrGBcObBPKQGQzr9Vaqe7a9V
- 8k4/eZVUocLSDg/3Qsb7rkfHCwy2B/vGXkNsh+lLFWd73Ym260cc9UbDqkpmyEmT0WX6
- m9YnhxFfePLMxmv9MPDBYsOVIKkIoa6tBggO/eBS6k1AUvDSw18HSH1aPLvc6o6RgaRy
- zqYWTMkomAnX1B8ukIDpmUx1qmR+t+ZZjaq7xwkMFxNIwXv7QzorkKQ6x/UpWa8atGhO
- 52oQA2fVOT0x0RCXU3L4L57QLh2n+BGKQHysxV1rVBATTRKRSqMuo3rgtRw+x4VGRHA4
- +ScQ==
+ bh=/dNzAE06fiYRsxFXdP0nWLTdBPhF/t/Du0Zyr0GctJ8=;
+ b=cuTR7tFEM7zINX2Ab36RZdtjOP8sgP9sT2m8STXvte/VvFPnU7hr/CgSFWmrTWLuSV
+ LTJDAdyleH8RwQaazF1BUlCzTpa1ZuAOSCphsuBVmuQwbECburomTVN6e14dzNsFZiLz
+ QHb+4+ha14E0bZl/JL2xRQxLMulq37ughmQXUPcBDLWBIM7GeQaDdIwkOvS78f2HqK1g
+ BEaLqczK+Z1v9vfRA0aGxesQh11NBxkGXKRM/XuR5lFJ08eDGjTXjktyVNWr8LFi7b+z
+ MKi8JKg/6jL/SzUbJZWQKKMQSYIb597B+CCbzoTKyDrEz1epRGc5GBEHeIM772nP5rgW
+ GvuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVb+msR4YlHtirKPQv2kRqZZZ22IEx2X91KSTRkQalPVG+PweVNxd++UjY+u5DVDS2tmqZrf/EO2y6v@nongnu.org
-X-Gm-Message-State: AOJu0YxGm0vgjTm2y64SbVVhfahrjx5tcnlM930FYHoR/pocbvm1CtXd
- 4F181hAqjrtMgVb4xsma4JPZ9LsRocTJ6S0hG71lpNf27A0aCKEaXO0h8pyPE8o/Vcc=
-X-Gm-Gg: ASbGncv/mvDtZncMXeKktjpFOs++pezf/GwA3Bz+PU4TczfvTwoMvcVpAsH7tEkw5uu
- ZK0Gb3/ZVbUnE9HryqPdJsysDwiShNDocAD+uLutVPxUDRXCYR0QUsMK+TdPmSxZ1Nxo2/ENo2A
- JElIW79fCI8Kqq04Dt4iMlfKwi6gGjucqtf+eZ2P74rPeIRyheIEfWgneqLZU22SZY+PuYw50Hw
- kSWriNuW/y0M4UrqMzvpIbi9jvFithjXF3s+IEIXeicukpOqDSjKrhQR7idQ+cTVM0ldghrA5Rq
- 9hQ6Y1mMv9wcmlLif3+SvzxHA2NPA7TXIhS+wCr0RbnJ8MO/0j1Kua6rPeg9Bgf/TJpJGEHsK8z
- 0H3HP24pDshFJ9lb1VClIvbMl8BFT+OlLJhiKaDnMy26uhnskQ8owoZchzmu0vno8lLRaLtJhs6
- /t
-X-Google-Smtp-Source: AGHT+IFgCNYwf20THSM76ZfvjsKEe6bWkikShrRXtLAmv+if23JrxY/YuoBAUkvrnK2gBXoyXLQiJg==
-X-Received: by 2002:a05:6000:2507:b0:3c3:a80d:2b98 with SMTP id
- ffacd0b85a97d-3c5db8aa404mr17866439f8f.6.1756418864264; 
- Thu, 28 Aug 2025 15:07:44 -0700 (PDT)
+ AJvYcCV/uxibi/ryQbnZTd8tdMp6179vEugqDr2mWD7FRyoAss8kJ3LpYLGtXqr2xzMhYpPlSPumvpx7un4/@nongnu.org
+X-Gm-Message-State: AOJu0YyaZllSYa2oDM5cEdMQ+QSPyqy2tKC0y7sca84e1jinOzFtnivq
+ HelQPnM543PNvP/SWbu5YV+gAlwZZCSdMuExuOHjwhfg0d/CbWeE/VtC1zZeq0vlUvJM44rQ3ZP
+ YHNqd
+X-Gm-Gg: ASbGnctb4sV8JVoqvBQQmyVwccqP+ySIEpyiQiFYYOXk56tcq5bEXpFkxzsh7mF6pcc
+ hhRoVwgsuJOJV0gFcRra+98mgbuU3Qnd8iLAVPCVH2a8+7d5vHKkWwdvg4lAxTFiPLach5LKKXW
+ km438r+QpY+rj2JQPF4A3VrUT5kVjaXonwHnxOlmj9eVDNUMp5vN/9guYGZ7j7wTtDpw+p7meWF
+ 6LBmQ872z85FF6rq1kfskYjET8reaI4ZD+b+bNN5fspiQYc2LFKwMG8ubXeW4KU8M6giubzufOo
+ YfkfXXv585qSp56jCvRn+rgKyT22mFREHe3Jdte/CDqMhryBcwFoEhvGVbkLWcepjyCAYX8pfUw
+ qhn7DPycOnVcLtIbwZnpQAZvhSFREGwXTWdOplW+gWaUIvhi/Qw6yWLuS18YdwEoHMCepHpi3Zu
+ Un
+X-Google-Smtp-Source: AGHT+IGa2OnwqIfeh4CKrY3jPPfmNJJrOUcCSIf/kiOJXZZKhZjyyIm5dZAJojxx8yKZYOgfJwwlgQ==
+X-Received: by 2002:a05:600c:4e90:b0:458:a559:a693 with SMTP id
+ 5b1f17b1804b1-45b517b957emr235780905e9.18.1756416734222; 
+ Thu, 28 Aug 2025 14:32:14 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7a9404c4sm20359065e9.10.2025.08.28.15.07.43
+ 5b1f17b1804b1-45b6f3098c7sm89822345e9.15.2025.08.28.14.32.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 15:07:43 -0700 (PDT)
-Message-ID: <36328ac5-b5a8-4826-9d44-e30bc38c853c@linaro.org>
-Date: Fri, 29 Aug 2025 00:07:42 +0200
+ Thu, 28 Aug 2025 14:32:13 -0700 (PDT)
+Message-ID: <80e866f2-7c97-49cd-b0e2-d28f2f1aed0b@linaro.org>
+Date: Thu, 28 Aug 2025 23:32:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/47] hw/arm/xlnx-versal: split the xlnx-versal type
-To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Alistair Francis <alistair@alistair23.me>,
- Frederic Konrad <frederic.konrad@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-References: <20250822151614.187856-1-luc.michel@amd.com>
- <20250822151614.187856-2-luc.michel@amd.com>
+Subject: Re: [PATCH 4/5] target/arm: Drop ARM_FEATURE_XSCALE handling
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250828140422.3271703-1-peter.maydell@linaro.org>
+ <20250828140422.3271703-5-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250822151614.187856-2-luc.michel@amd.com>
+In-Reply-To: <20250828140422.3271703-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,22 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/8/25 17:15, Luc Michel wrote:
-> Split the xlnx-versal device into two classes, a base, abstract class
-> and the existing concrete one. Introduce a VersalVersion type that will
-> be used across several device models when versal2 implementation is
-> added.
+On 28/8/25 16:04, Peter Maydell wrote:
+> We have now removed all the CPU types which had the Intel XScale
+> extensions indicated via ARM_FEATURE_XSCALE, so this feature bit
+> is never set. Remove all the code that can only be reached when
+> using this flag.
 > 
-> This is in preparation for versal2 implementation.
-> 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   include/hw/arm/xlnx-versal-version.h | 15 ++++++++++++++
->   include/hw/arm/xlnx-versal.h         | 12 ++++++++++-
->   hw/arm/xlnx-versal.c                 | 31 +++++++++++++++++++++-------
->   3 files changed, 50 insertions(+), 8 deletions(-)
->   create mode 100644 include/hw/arm/xlnx-versal-version.h
+>   target/arm/cpu.h           |  3 ---
+>   target/arm/cpu.c           | 13 ---------
+>   target/arm/helper.c        | 54 --------------------------------------
+>   target/arm/ptw.c           |  7 +++--
+>   target/arm/tcg/op_helper.c |  6 -----
+>   5 files changed, 3 insertions(+), 80 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
