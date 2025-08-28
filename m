@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98853CA0FF2
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 07:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA434CA0FF2
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 07:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urX1n-0004Tk-Co; Thu, 28 Aug 2025 03:26:37 -0400
+	id 1urXD0-0003Nq-P9; Thu, 28 Aug 2025 03:38:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
- id 1urX1P-0004H6-Pc; Thu, 28 Aug 2025 03:26:13 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wilfred.opensource@gmail.com>)
- id 1urX1N-0005NM-Pd; Thu, 28 Aug 2025 03:26:11 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-b49cf1d4f6fso505777a12.3; 
- Thu, 28 Aug 2025 00:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756365967; x=1756970767; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jNY4ncpuDcOsXQxB2Rg/MklRq+L9/xqLJrUQZb5aHUA=;
- b=Ijh5FLHNNwLJxAUuM4oIW9MU0qZWrKgnUkeKkro/zQa69flahtLAFmh2yl+OUb6o8G
- 3xvNTC1+mB7BbDb7vfFgc/gGM81CE1sLgBgvNJsFF6QOddu/eerjLwyCqSltQX7nziow
- TAcufzYTFbhrRq1Idj39IUdE/Bg4Dk/TJlw6t+Sh3zTntrppJOIDpXKclEMvDAGh+Wc4
- skwAbza8FJPqSGleOyh/sXYyEiBYgSPXzVvO4SF66WM5aK6BnGaCAgIlAdf6fiYvYeUq
- hF+zv6OeYiWm0JTt5Ib0nBO5Up6coDgh2Oq2zm2tuthdENaipKEp0fDKUElzBtPoQnjZ
- 4BxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756365967; x=1756970767;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jNY4ncpuDcOsXQxB2Rg/MklRq+L9/xqLJrUQZb5aHUA=;
- b=ii+XGZihfqTnMfTucLBCgiaLOmSb+tWMjAAtBlBoOT4W1ybNgbAmExZ/tMQyxhvLUP
- TG5AGynpR7mMoVSJcqqy0IAQItNzEcmjYMHUQOW04l+O4YJESZlpFZnPqAbxL9B6nwTg
- w8Q4tH4qt5Nh5rC/Gc1lqauTfFk76DXmWaygovgNVKLJFQn7Dn6ZMKScZpttWKtbs83s
- YPJNAUfNRJfMDLE2dVGHLy09ggZUKLxBiSDr3rF64nl/4f34HR4XTtYqccOPHzb8N305
- MQ65aZdDtlpFv0hdhDUOxoyPr3BUdGUe6X7RWjZG9xGYqIVTTuNJJTuBZftvWh3Iux4Y
- tA/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUlCH+U3CWxyg8u8wFwfVzxqva1rlyjPDUHvSFJcJzYRiHHRp//t9wUHe7CpXZT/fVamYTC7o0Cb+ceFQ==@nongnu.org,
- AJvYcCUwQvUXMl5NKv3mrSqjRr2i6LGkhE1MM1QhSkLr9uAuaAEuWMSIQAkrVmKshjPjXjAIE/13nS82e3Pa@nongnu.org
-X-Gm-Message-State: AOJu0YzsiHoX3h7t/uP7D4EI1XA1c0Y5ZacdKbGG5mqiLMiTGWJf5gbf
- JAxNK101YD6HrsRgfQajrjQQZsCYI+2txD5ck4LIPscXhN6R8cXevgkA
-X-Gm-Gg: ASbGnctVR+Yc/VW49TdtrOogfg4EiHkdRdD0yVtpVpe2eHjxVSqXbOQDK/G8+xhz0o9
- exxjZx1L+81v9JvC5J1P/140hV/HjfczCO+lZcTmoaCvfwif/381pAWnveozo+AlW5Z0TJAtjHB
- TMQNWgc4fK1w/CrWC4QVz9RgQ1ec89yXyzdBrT1iPulZmLqXJiII1dmejvfqxcxMcL8/6C/MrU6
- RoilUJGq8kbuG4V2QaQfpgoaAyCWLnb2xwnIH83rZqdKQ2HYAGzigULz1adKmkn6phaptP0fYs7
- 5/X4lSXuNQIFEwnBhM6HJpUG7FMcTMmCBcHr2np91DPTW78iG4Iwx9gm9y8cu9yUFbQALEGLc/Z
- 5m7MFtx2ARN8s4ZKjqje7dLZKi6CzSbpcNtOwLJdoFH0u0oY=
-X-Google-Smtp-Source: AGHT+IHBYzMaGkOIL1ZjpUwqP29SLBrEi72rPjKWtHFnO0b0N9aYCtkoSbG6yWqlCKxdx0ngb7Dwqg==
-X-Received: by 2002:a17:902:f70c:b0:246:a165:87c7 with SMTP id
- d9443c01a7336-246a1658a38mr223930275ad.42.1756365967215; 
- Thu, 28 Aug 2025 00:26:07 -0700 (PDT)
-Received: from fedora ([159.196.5.243]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24884a629fcsm51009775ad.19.2025.08.28.00.26.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 00:26:06 -0700 (PDT)
-From: Wilfred Mallawa <wilfred.opensource@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>
-Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, Stefan Hajnoczi <stefanha@redhat.com>,
- Fam Zheng <fam@euphon.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Wilfred Mallawa <wilfred.mallawa@wdc.com>
-Subject: [PATCH v2 2/5] spdm: add spdm storage transport virtual header
-Date: Thu, 28 Aug 2025 17:25:30 +1000
-Message-ID: <20250828072532.425592-4-wilfred.opensource@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250828072532.425592-2-wilfred.opensource@gmail.com>
-References: <20250828072532.425592-2-wilfred.opensource@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1urXCy-0003N8-VH; Thu, 28 Aug 2025 03:38:08 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1urXCs-00073y-J8; Thu, 28 Aug 2025 03:38:08 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 78ED714CB50;
+ Thu, 28 Aug 2025 10:37:18 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8B555269D46;
+ Thu, 28 Aug 2025 10:37:46 +0300 (MSK)
+Message-ID: <cc833433-ab4a-4a89-8e36-2a4636cd9487@tls.msk.ru>
+Date: Thu, 28 Aug 2025 10:37:46 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=wilfred.opensource@gmail.com; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 101/163] tcg: Convert deposit to TCGOutOpDeposit
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
+ <20250415192515.232910-102-richard.henderson@linaro.org>
+Content-Language: en-US, ru-RU
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250415192515.232910-102-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,40 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+On 15.04.2025 22:24, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/tcg.c                        | 33 ++++++++++++++
+>   tcg/tci.c                        |  8 ++--
+>   tcg/aarch64/tcg-target.c.inc     | 30 +++++--------
+>   tcg/arm/tcg-target.c.inc         | 29 ++++++------
+>   tcg/i386/tcg-target.c.inc        | 76 ++++++++++++++++----------------
+>   tcg/loongarch64/tcg-target.c.inc | 27 +++++++-----
+>   tcg/mips/tcg-target.c.inc        | 27 +++++++-----
+>   tcg/ppc/tcg-target.c.inc         | 44 +++++++++---------
+>   tcg/riscv/tcg-target.c.inc       |  4 ++
+>   tcg/s390x/tcg-target.c.inc       | 60 +++++++++++++------------
+>   tcg/sparc64/tcg-target.c.inc     |  4 ++
+>   tcg/tci/tcg-target.c.inc         | 19 ++++----
+>   12 files changed, 206 insertions(+), 155 deletions(-)
 
-This header contains the transport encoding for an SPDM message that
-uses the SPDM over Storage transport as defined by the DMTF DSP0286.
+This commit (cf4905c03135f1181e8 on master) broke tcg linux-user
+on 32bit arm host.
 
-Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
----
- include/system/spdm-socket.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Running armel binary (busybox) on armhf host or armhf binary on
+armel host gives:
 
-diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index 2b7d03f82d..6c2cb7b926 100644
---- a/include/system/spdm-socket.h
-+++ b/include/system/spdm-socket.h
-@@ -88,6 +88,18 @@ bool spdm_socket_send(const int socket, uint32_t socket_cmd,
-  */
- void spdm_socket_close(const int socket, uint32_t transport_type);
- 
-+/**
-+ * Defines the transport encoding for SPDM, this information shall be passed
-+ * down to the SPDM server, when conforming to the SPDM over Storage standard
-+ * as defined by DSP0286.
-+ */
-+typedef struct {
-+    uint8_t security_protocol;              /* Must be 0xE8 for SPDM Commands */
-+    uint16_t security_protocol_specific;    /* Bit[7:2] SPDM Operation
-+                                               Bit[0:1] Connection ID */
-+    uint32_t length;                        /* Length of the SPDM Message*/
-+} QEMU_PACKED StorageSpdmTransportHeader;
-+
- #define SPDM_SOCKET_COMMAND_NORMAL                0x0001
- #define SPDM_SOCKET_STORAGE_CMD_IF_SEND           0x0002
- #define SPDM_SOCKET_STORAGE_CMD_IF_RECV           0x0003
--- 
-2.51.0
+$ ./qemu-arm -L ~/q ~/q/busybox-armhf
+Inconsistency detected by ld.so: dl-sort-maps.c: 229: _dl_sort_maps_dfs: 
+Assertion `rpo_head == rpo' failed!
+
+Running i386 binary on armhf or armel host gives:
+
+$ ./qemu-i386 -L ~/q ~/q/busybox-i386
+/home/mjt/q/busybox-i386: symbol lookup error: linux-gate.so.1: 
+undefined symbol: __vdso_clock_gettime, version LINUX_2.6
+
+
+Yes, I know 32bit arm is deprecated as host.  But it should work
+with qemu 10.1 still.  Or should it not?
+
+Unfortunately I haven't noticed this before.
+
+Thanks,
+
+/mjt
 
 
