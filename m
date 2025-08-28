@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B9F5CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C105ECA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOEx-0001hP-Cy; Sat, 30 Aug 2025 12:15:43 -0400
+	id 1usOgx-0004rv-62; Sat, 30 Aug 2025 12:44:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usERk-0007a4-02
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:48:19 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkai-0003ev-8w
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:55:32 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usERh-00054N-E5
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:48:15 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-b4d4881897cso855567a12.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:48:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkaf-0008Of-6j
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:55:32 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-45b627ea5f3so6103525e9.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 14:55:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532892; x=1757137692; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=H0WgDnjZZbQNGrZHbHxQl5y/Vvc/Dh17BYKXEKy/nEk=;
- b=t4BoLRNWN2cVid4WNN4CzADpu5O0Kmi0sORmxhd/StfbXC2FuTt3HML5mnLiYcUbel
- aCsRAHdHgxUxRve7ojVRn98kJzYmwl0s6WnvYnL2Xclj4otCGXVy5CqyTWQ5h2vr948V
- z+AiAmykREFgdlJQZOL+0YiKwSnfWa2H6roaV5AEBrPfMpycYIa+qYdzh3dh258LCD/E
- WUZx+APTbXp3YIRLezDgOx9C5LKPYnVNrvYY6FIbQA0wz0wpT/mx6tWormvfg0PreDy1
- uvyD62cQ7PRWf/2aqc9fDtOlD4yELF18+LQ9MgcJ+SDue/WD0jJO+cWcLDNVyGy65iRS
- Sd5g==
+ d=linaro.org; s=google; t=1756418125; x=1757022925; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=himmVZ1AMNLozirnOY2wu+QpUFfS93WwBoK6WfM4uOE=;
+ b=nEnyKHPBi0A8RRHwlkpRmJIk4KwJlPd3lTfjOOiGki04prHjav/2PZrrxhj2UfXNns
+ NqJqrOBFNEvjYSloiv4yoyI4izAhrj0hK4kGFyQMhTS0EaQS5tUutemtT8/gkosLipTV
+ IUx4YeMiYxsIvNmwMVXy7duBP+eV3sJvvcZZUtwggW2McSrmRZkUYgE0QyNAw9YjLtZc
+ iKgwgKdMFms33VOBBKvBUSBJKIxsm1322lQiyMbTIJfltXGGclGoKuuosaM5zuU8s/Ss
+ DTls+T3enfS24hgSZuI1cuMEpuiFkoa7AcaSkbnJ1d5pownmQ+AUHCWNCgiJ2HVtsFXI
+ j0iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532892; x=1757137692;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=H0WgDnjZZbQNGrZHbHxQl5y/Vvc/Dh17BYKXEKy/nEk=;
- b=jZpIL0DSNXK1LTKFMNCOKKfe4+m4DEiTeBgrYF8m6E0E/C5O623AmunJ/314wB7ET6
- YhhjZDxooE8Tu/NW9os0vq6uvPnuNQlrdZAb/YmE4mwSJNSfA74Lg50aYK5w6kMUOtaI
- iUBrOxgaE9grko94nM1n6XzcTFMzlzXfBs6k1OeSNHSZ1KRYI26Y9qMIldJ2wQv8/rLw
- Cu6p5h51S08gf/RdGG7T1JIy8IZWZgvCEEgTC5mqR8tgqpZAby80qGz4255K22RfuvJy
- AslqJs9nFjOGNEAScmF0zMvp7nWAHt3ioQWcVeyl0X0Fq4OCivQpYSOvmyiJFSbpdSn6
- 492w==
-X-Gm-Message-State: AOJu0YxGUYjI2axJ1Lj7QV4ND3P2q79Dcd2dKg2GNvEPLudYFwon2bW4
- KmlOms6zkXMM+owRcpYZ/ZXY7nPKXSRu2T5DO0mJYvGugsRuSbh9wsr0fdXd4fn5cQQ0IcTF0uD
- vqj/thus=
-X-Gm-Gg: ASbGncuJxgF/WSdniKrPamdDz0BI7fGLPKvS7K66SScuBjdM0zwysimdOYMxTFparvj
- ef1QJ4EdiFVN9gDiyeycEZC+BoiE5X3zJc1C9xsX1tB5B1tzZFG0PpGIq2h8P3xG+17w5sW58w1
- h8BPfy1IM+gp3ogwqUINqeh6Y0L3Rfa8XFxlbdpbhCQrqxNvdnSpf58YOx4AzSg0NBGGd1QEcLF
- /3LwyWRfhNu/EbxcVI1AK1szlLNsE/7wBYF4/XeFerm76lbwnxJjelduZI/RhW4ql0FzG8Le1h6
- BkyNz5Vy3Fl+ktN+qh+fOUT0kk+wVgKpofYZLv7zNMpZRZdHQO/dsQD8NO+mdHUZX/YQ5gScRt+
- afzMNpGEdt8znio0h+iM6tu4FNwZvJAhHAuH+F3gug7KRMG4VvGhfvTYqiKS/QZs=
-X-Google-Smtp-Source: AGHT+IFhAGp04tFeGPSHGX+k/hQ7QkE+sDXVgBvtVb6ngHPJzppAca0ixsWxOWsPKeyX6vZfYtdfHA==
-X-Received: by 2002:a17:902:e745:b0:246:e1f3:77b2 with SMTP id
- d9443c01a7336-24944b65071mr12458765ad.53.1756532892160; 
- Fri, 29 Aug 2025 22:48:12 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.48.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:48:11 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 77/84] linux-user/aarch64: Implement map_shadow_stack
- syscall
-Date: Sat, 30 Aug 2025 15:41:21 +1000
-Message-ID: <20250830054128.448363-78-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756418125; x=1757022925;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=himmVZ1AMNLozirnOY2wu+QpUFfS93WwBoK6WfM4uOE=;
+ b=GM+tmzcIalIioeXZwwPAEmXn1WoedIBQLqf0gFbzdZPun7+qr1CvscO4/1BY2hOuEc
+ AANHDY+qgShyI8ISmalYuD1wBzl3tyrI0cLPNpoyJadk8OKrUUdfcpdMU6NswdUR1f69
+ 8Wvd5Boo+GugN9lbRFWW4thQOh5YNY8ddNvOW+ErBtUG1CFBG42S6Fcm/tyczjW+F+6b
+ CA1QFQaC5hsQ7iwjgSHwvlgeQlyYeSVAWNl/FOo3WXd9veKvbwHzaJA40XnU87buH1d2
+ ZMm8Hur6kDjOtL5p1IeIV6c4z9gPsgZslXJf+rUzkYBAIJyRbNza48fHzjFHF22tBbQd
+ 6SSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWU3ayTm0sORtFlGgNZ6Hv5tB718bOML8Ymw+mRYlbi8nYzuJVVVBJAMrspRAqhgMZqAJOI1lXrUKgd@nongnu.org
+X-Gm-Message-State: AOJu0Yz6HHTVC1OeEvJzgNwpngWagJErUBPW/t6WmpFXw1bqv4cFkuZp
+ F4BaGvw6MFk9llYPP1N+zIh4w/fFIZV/JFBQ1oKUH+hoIA+5qV0vB0HodCewrrZKSir0SI3Ok0H
+ jOHJp
+X-Gm-Gg: ASbGncvRD/Fz+7jlGzXQ9ewxdbCKSaU/mukY0yrF8YPQRht6Ycdj0zHMJF6nbUqoa+Q
+ meb1BMbk+pvRJfY4KYaMGPud/HEl0ZNS8kT70FaJv3fnAB/RbbX9is2lkIIcF0MlHWZ1HhvT8CF
+ FbglSrMMkGKCXcMgPu3U6ifM+tOy2Obi3cI4hZI2DcpeOBGm+zXeYzfA0FfwlBk4PKsqLNqTv2e
+ VI/+abBK4VUubOBRLnFVxNWfsCwWRuxsAqZV8alufegSY6GVMlVL3RrROWMxHpOO5+4+0gl4XMm
+ BeB+CAKZbR6/1HxrgWrUYEOzgImnJpFYh8tD5QTS1pnYM0mvJoBrYvFc0Vkw1PvgZIFr0pJbqj9
+ R39b3/VpqPOaC5GSAN04Legwfnh9PGBEiUGVOULGLU6Jap+1N56PB+pCKWFoqCsPeLw==
+X-Google-Smtp-Source: AGHT+IGW0szNFr30KnSNi6TZYT+rMvSezvccioz68Y8ix2WHEA9yOFXcIRAKL8qRdXEMo2tP1bhWuA==
+X-Received: by 2002:a05:600c:3505:b0:456:1dd2:4e3a with SMTP id
+ 5b1f17b1804b1-45b6bbd3411mr72548875e9.3.1756418124639; 
+ Thu, 28 Aug 2025 14:55:24 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf270fcffdsm806193f8f.2.2025.08.28.14.55.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Aug 2025 14:55:24 -0700 (PDT)
+Message-ID: <973ed433-c365-467f-90ae-1d9348d59730@linaro.org>
+Date: Thu, 28 Aug 2025 23:55:23 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] hw/core: Use qemu_log_trylock/unlock in
+ cpu_common_reset_exit
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250827053822.4094239-1-richard.henderson@linaro.org>
+ <20250827053822.4094239-3-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250827053822.4094239-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,97 +103,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/syscall.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+On 27/8/25 07:38, Richard Henderson wrote:
+> Ensure that the "CPU Reset" message won't be separated
+> from the cpu_dump_state output.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   hw/core/cpu-common.c | 11 ++++++++---
+>   1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index dfe114ceb3..0a7ce7a262 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6356,6 +6356,12 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
- # define PR_SET_SHADOW_STACK_STATUS  75
- # define PR_LOCK_SHADOW_STACK_STATUS 76
- #endif
-+#ifndef SHADOW_STACK_SET_TOKEN
-+# define SHADOW_STACK_SET_TOKEN  (1u << 0)
-+#endif
-+#ifndef SHADOW_STACK_SET_MARKER
-+# define SHADOW_STACK_SET_MARKER (1u << 1)
-+#endif
- 
- #include "target_prctl.h"
- 
-@@ -6571,6 +6577,54 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
-     }
- }
- 
-+#ifdef TARGET_AARCH64
-+static abi_long do_map_shadow_stack(CPUArchState *env, abi_ulong addr,
-+                                    abi_ulong size, abi_int flags)
-+{
-+    ARMCPU *cpu = env_archcpu(env);
-+    abi_ulong alloc_size;
-+
-+    if (!cpu_isar_feature(aa64_gcs, cpu)) {
-+        return -TARGET_EOPNOTSUPP;
-+    }
-+    if (flags & ~(SHADOW_STACK_SET_TOKEN | SHADOW_STACK_SET_MARKER)) {
-+        return -TARGET_EINVAL;
-+    }
-+    if (addr & ~TARGET_PAGE_MASK) {
-+        return -TARGET_EINVAL;
-+    }
-+    if (size == 8 || !QEMU_IS_ALIGNED(size, 8)) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    alloc_size = TARGET_PAGE_ALIGN(size);
-+    if (alloc_size < size) {
-+        return -TARGET_EOVERFLOW;
-+    }
-+
-+    mmap_lock();
-+    addr = gcs_alloc(addr, alloc_size);
-+    if (addr != -1) {
-+        if (flags & SHADOW_STACK_SET_TOKEN) {
-+            abi_ptr cap_ptr = addr + size - 8;
-+            uint64_t cap_val;
-+
-+            if (flags & SHADOW_STACK_SET_MARKER) {
-+                /* Leave an extra empty frame at top-of-stack. */
-+                cap_ptr -= 8;
-+            }
-+            cap_val = (cap_ptr & TARGET_PAGE_MASK) | 1;
-+            if (put_user_u64(cap_val, cap_ptr)) {
-+                /* Allocation succeeded above. */
-+                g_assert_not_reached();
-+            }
-+        }
-+    }
-+    mmap_unlock();
-+    return get_errno(addr);
-+}
-+#endif
-+
- #define NEW_STACK_SIZE 0x40000
- 
- 
-@@ -13945,6 +13999,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_riscv_hwprobe(cpu_env, arg1, arg2, arg3, arg4, arg5);
- #endif
- 
-+#ifdef TARGET_AARCH64
-+    case TARGET_NR_map_shadow_stack:
-+        return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
-+#endif
-+
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
-         return -TARGET_ENOSYS;
--- 
-2.43.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
