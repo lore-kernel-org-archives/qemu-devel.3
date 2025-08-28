@@ -4,53 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46908CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 01:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08809CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 01:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urRKs-00032m-RA; Wed, 27 Aug 2025 21:21:55 -0400
+	id 1urRMW-0003pA-FC; Wed, 27 Aug 2025 21:23:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1urRKp-00032P-Ug
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 21:21:52 -0400
+ id 1urRMU-0003oh-TB
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 21:23:34 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1urRKm-00066j-HE
- for qemu-devel@nongnu.org; Wed, 27 Aug 2025 21:21:51 -0400
+ id 1urRMS-0006HD-Nd
+ for qemu-devel@nongnu.org; Wed, 27 Aug 2025 21:23:34 -0400
 Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 57S1LTRR007800
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 57S1NO42008539
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 28 Aug 2025 10:21:29 +0900 (JST)
+ Thu, 28 Aug 2025 10:23:25 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=48nzBvMG5dwiKBAmOYm7PdmNzQy63EvBLBKRo2Foxqw=; 
+DKIM-Signature: a=rsa-sha256; bh=r0YXLRyqod+LYi8x9Xilp6ORJH10psLQR/TwmZxt3IE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1756344089; v=1;
- b=EIbezIFfY0Ss5MGF6oZITwBKIGtesj8SIXZ+f65R1fyPa47Il5t88DLDbyHhcbXm
- dcIB778zYPxcjiszWpfrb6asNOujkqX/WQhvRgtmSJLBK+0DOTqnQN2Uq0A3AREo
- tCIF/R1b9tWwq62rSQj+df6flMFRDZFau8RSSmu9l7eBkPgoNz/gESLcK0iv6X8N
- /0zPBTcsCOYx4UOPCPQo1w5GmSTsZitO4xciXzf0PYw5pFg7Cg7uIUvMjfjiHR/3
- yB/JU6yrIJ2gFrNQB1ncQ7Q56fdxcbg7Pj9LcyS6d+bASL+o0Bl1uQvAqkPM62yy
- PBNcsOPzGuYoafkHTfxW5w==
-Message-ID: <3a5b6c93-f32a-4824-ae1a-942de415ef58@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 28 Aug 2025 10:21:29 +0900
+ s=rs20250326; t=1756344205; v=1;
+ b=qkw2TtnYov0p7xwZQq1Uf4tR4TEUsqvxvjGLF5ug0OoLxsG5VZFH+UTtEN3eNE98
+ qkc6x9LttC/uv9En5nw0WTHeYHedeIu8+mtUYFqqfH8fFL3uOth0KDcHJwGXuf5R
+ vfhDl8H63ECY2l2bzeG+nA7HLuknYtf0FZuZgGoYOaPNpZXoVF46Rp3RIUbi6tZO
+ VCTw+Z/oWeLoNl6Yjiqpv3y8wtVikkZIcWKUC7lS/PdFgs6hWvSaBEXdHqXCha9T
+ H0wiPPINbXZPk+gX2yCvrw6LNf2m7/q48HmehBU7NgrWFN2xRMQumfYPB3+TQ4LJ
+ 2WVAE5JVl7peOIFv+t7xyQ==
+Message-ID: <c8498b04-4937-4a1b-aab4-04a6ebaa3e57@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 28 Aug 2025 10:23:24 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pcie_sriov: Fix broken MMIO accesses from SR-IOV VFs
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "sriram.yagnaraman@ericsson.com" <sriram.yagnaraman@ericsson.com>,
- DAMIEN BERGAMINI <damien.bergamini@eviden.com>
-References: <20250820083953.439635-1-clement.mathieu--drif@eviden.com>
+Subject: Re: [PATCH] tests/functional/test_aarch64_virt_gpu: Skip test if EGL
+ won't initialize
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20250826123455.2856988-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250820083953.439635-1-clement.mathieu--drif@eviden.com>
+In-Reply-To: <20250826123455.2856988-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -77,43 +75,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/08/20 17:41, CLEMENT MATHIEU--DRIF wrote:
-> From: Damien Bergamini <damien.bergamini@eviden.com>
+On 2025/08/26 21:34, Peter Maydell wrote:
+> If you are using the Nvidia drivers and have installed new versions
+> of those packages but have not yet rebooted the host kernel,
+> attempting to use the egl-headless display will cause QEMU to fail to
+> start with
 > 
-> Starting with commit cab1398a60eb, SR-IOV VFs are realized as soon as
-> pcie_sriov_pf_init() is called.  Because pcie_sriov_pf_init() must be
-> called before pcie_sriov_pf_init_vf_bar(), the VF BARs types won't be
-> known when the VF realize function calls pcie_sriov_vf_register_bar().
+> $ qemu-system-aarch64 -M virt -display egl-headless
+> qemu-system-aarch64: egl: eglInitialize failed: EGL_NOT_INITIALIZED
+> qemu-system-aarch64: egl: render node init failed
 > 
-> This breaks the memory regions of the VFs (for instance with igbvf):
+> together with this complaint in the host kernel dmesg:
 > 
-> $ lspci
-> ...
->      Region 0: Memory at 281a00000 (64-bit, prefetchable) [virtual] [size=16K]
->      Region 3: Memory at 281a20000 (64-bit, prefetchable) [virtual] [size=16K]
+> [7874777.555649] NVRM: API mismatch: the client has the version 535.247.01, but
+>                   NVRM: this kernel module has the version 535.230.02.  Please
+>                   NVRM: make sure that this kernel module and all NVIDIA driver
+>                   NVRM: components have the same version.
 > 
-> $ info mtree
-> ...
-> address-space: pci_bridge_pci_mem
->    0000000000000000-ffffffffffffffff (prio 0, i/o): pci_bridge_pci
->      0000000081a00000-0000000081a03fff (prio 1, i/o): igbvf-mmio
->      0000000081a20000-0000000081a23fff (prio 1, i/o): igbvf-msix
+> This isn't a problem with QEMU itself, so reporting this as a test
+> failure is misleading.  Instead skip the tests, as we already do for
+> various other kinds of "host system can't actually run the EGL
+> display" situation.
 > 
-> and causes MMIO accesses to fail:
-> 
->      Invalid write at addr 0x281A01520, size 4, region '(null)', reason: rejected
->      Invalid read at addr 0x281A00C40, size 4, region '(null)', reason: rejected
-> 
-> To fix this, a type parameter is added to pcie_sriov_vf_register_bar()
-> to indicate the BAR type. It should be set to the same value as in the
-> pcie_sriov_pf_init_vf_bar() call.
-
-Thank you for debugging and proposing a fix.
-
-There is no point of keeping pcie_sriov_vf_register_bar() though as it 
-will be essentially identical with pci_register_bar(). It can be simply 
-removed and replaced with pci_register_bar().
-
-Regards,
-Akihiko Odaki
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
