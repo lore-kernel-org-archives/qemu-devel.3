@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF25CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3202C8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgCO-0003DP-4G; Thu, 28 Aug 2025 13:14:08 -0400
+	id 1urgCH-00035P-Tw; Thu, 28 Aug 2025 13:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbWS-00088D-Ud
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:37 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1urbW1-0007tu-Ao
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:06 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urbWO-0008La-IQ
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:31 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-b49cf21320aso1032894a12.1
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:14:24 -0700 (PDT)
+ id 1urbVy-0008G4-3l
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:14:04 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-248c7f955a2so8135885ad.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:13:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756383264; x=1756988064; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756383237; x=1756988037; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iohwGQx+PJHpsLcgRWLe+gDcmZ33+kolO8wPf1tJJvc=;
- b=P5zBD3WI4BlIYxxLghBd59zbyl4n53QxVfqIbmw54DROYnhLXtyu0iLKAbtWtpeBXT
- FmfhC0YfJXlKa18ZIUbLgTgQkin/+JNOEzUlZzWbIQH7juz/Bd61q1iLbN4EeE9gNdXk
- wUnd/wF8v87RuKc+Ci/XcOJ35y7sPOiYU783XgQhR2C0n6DP4XpgLaq54BGaITBPSs15
- 265ezNCVB46Gsh1jcgn8ulGImHKIC8tToKbDffWk4wfE8o4pzvt9Y8DfSXJ4hZwRBnWW
- 90GfyvSKZslggEo2U/kofD/0D0QdkffkOhi36XUhaq1mByDIJhty3rVfxGMwyVw6uPR+
- iIQA==
+ bh=Jc1Hd4IAJ+hIHiSM2SjlYyCPHAEkMo+OJOYDdKf2WxY=;
+ b=q5qmvGBHQkEtqHf77ru/tEgkakc3+PNvP7VjZi3EFPKf2tTpQcFQIkLdCtkyVuvATY
+ LxlAm0y5oyNdQNK3izGlB6SePF4f2eU6KVg5DjMR1gImUZORhYm0tk4BKf0Z9Hfe3znc
+ hsIY+MAuMgStwp4KSJX6AXTrbxK2KVfPAwQH3+L4XK/gcHe44xrdOsKPQNxpWQAur6lb
+ vHQvQmOJdYI37s6z0LHapgIcNunpen88hL61e8tLLPPWEXTcnd7XqBDwbB26ozaM0aXc
+ nCigsmqH42bfZReDqshEsDPXrAwGhygb0W8WkPTyAAQcw97vM/6DYy0eWwfUFff5iz4n
+ 6pSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756383264; x=1756988064;
+ d=1e100.net; s=20230601; t=1756383237; x=1756988037;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iohwGQx+PJHpsLcgRWLe+gDcmZ33+kolO8wPf1tJJvc=;
- b=dGK8LMWZRKYq4ZrUggmwdETtvb3eD+9iIIyO/UO212hBgKZUHrksWMNvYrVkVDUG3H
- oNN4EqGyPRl8y/37IgQODGYHMv7ul+DQpVZ/cJyo77PYY40GgOyZ+w3DmC4b0jvjhQeX
- RPrCQWtDNy8XxNXR4yTIQOS7mM0bDpJVkL997SFbu45nbdHPGh2YFZ55+SR8Zk6Gd/f2
- mukDkk6Q2jEZ/UZ13CUKHt8SM7B5byAXPkEa2hFuLLbBcK8qar587rAqAoWubIEH2x6f
- yTmud7R2xIKKHTWx6UtaDMvvvPO9C6DvwvRNQ6g39zPxv+6ZIf6/CafQ/HGnFMebEOO1
- +srg==
-X-Gm-Message-State: AOJu0YziUGW42qzEt6LF+7SMOJwsazYlhoB7p+tt728mBzuI0c+3fNs4
- tewCGMFVSNDI7qEMm4a0Y22+qSEPi8jMdzkvZprKTciMm1lp0wq+45ouNgCR1DmfIqIgCiqrBew
- tMKEtHPw=
-X-Gm-Gg: ASbGncuw3++B3823OIONOxIZqcLxUddZXjzOOzLdggc0y3/v1xkrckwaX5DIhpNee9k
- QQpl2TqoVxdMCmCM1Am6K9GOhbYQLMCY/1g2irdK+7henMnkVBlLHG+1JjbIyicINbqtLl1jIPf
- sDQRUd1WaZNfgFa++zmujlAIXHeUN2lzgZ49MfJK7mWS/C94N+He3QxabMCzkBgz8528EKFmkTr
- l2GngLsVEXy1S38qdmwsWZ0WkI4cNRuvZD1xoesLKV1scFooD5zVLAMBV1UkryPN15MmlHR306/
- k9OKAH940P184GOtbvRKBMR1oG9QHbx4Q2J3RbMgGOrnZ4ld1SV+oO0Zfw5+5ntZBwKUB82EZXR
- Wfc8z/ev4TQ7NavtlN6fIvEk2VhWYicZvVtcEbXnbAAwJOHw=
-X-Google-Smtp-Source: AGHT+IE0GVi0OBeMfdw8EANZyzg1IEhChw4uDGfK3cwP/feacIDbaJRsJvsWhwewMPeFs4Zt3TVEzw==
-X-Received: by 2002:a17:902:e552:b0:247:b86:548f with SMTP id
- d9443c01a7336-2470b86560amr148579125ad.11.1756383263795; 
- Thu, 28 Aug 2025 05:14:23 -0700 (PDT)
+ bh=Jc1Hd4IAJ+hIHiSM2SjlYyCPHAEkMo+OJOYDdKf2WxY=;
+ b=OoWAp8DQuvyhu2bpSAF/S9+LtCyBft1mHhcSzsWvIm7mOzvKjKw4x+SX/WL1FQM32b
+ AMFzf4MjDfEE2x1Bw7OACj68EC1g9DwZNGmvjDghrZh1HNu5bpU8jfKfWnmXGE8At7FO
+ IDjmLMD9R1kjOGYGXSxJKDS2OjC796BJjMglWLnv3pe19gRzoJ33T2YRq6zppbjVhSe3
+ zUdilF/Ntwe8eHZIFTlCPSSLOWFP+Q2m8Z2F3m1KpkEGi9rvmp5TDM+AWwOTbH9M9JGS
+ HwlGSRvd/Db/vbD7ZILrzwlblQkxSv40cuRQkhTXtYMkwRKThZHi91WvaZ1PWuLfPgmm
+ Yk4A==
+X-Gm-Message-State: AOJu0YyEMEPCDCSYGUBvWT60hjf7a5mSYqB9Na2EwtjwxV+4GvI7IxZL
+ WLtFPv+Q8Q8D/nPT0dcC7JZF4q1HGuzlXS5Z2jVYuk760qUvoL3qDNiqvFT7li++fUUAwpZo2ny
+ cNilz8lk=
+X-Gm-Gg: ASbGncvKXqPEClajLyaZQe9eQPwvYH/4o4JO1w9FWeLYLPlYicaalqQtsBsiKihDZBv
+ dcEimSjvhPbraWYSPsmGJhTp5QOCeNbqWqokFWgbo8hMSeBFH0tYxgkJsQrVmJyRi6y9wwHDH54
+ sWQgmi/W4QGorzRWB0ssk7qYBw6Ton9RPOy7488SSTOqsy3NnyFvIgizLckKDFtBndL6kC+XyEN
+ lS9guVXj2GK3MojL0efife16E6PcYE+pPT3RxQAJ2/k7AkYPvmZ1OP7e6epj70shr/bwuKjKEuS
+ /wrIfs20cyHFzC3Db9pemAEkLsYrQ3i82ICRg9PBAH0HCNJkoqS90JhJliYNkt4Gz6hmtuednfi
+ v1VIBmWLfq6R3/CTwmQRb7Hj0u7L5MfzQ5Uec
+X-Google-Smtp-Source: AGHT+IEIKH6TOH8AZaem44I3Qm/MOv3M/n5qe3tOpwC8BYL3Q0bZ5jF0KDlWTjP3B6KDkviOZ9PJog==
+X-Received: by 2002:a17:903:19e5:b0:248:75da:f797 with SMTP id
+ d9443c01a7336-24875dafbe1mr123918785ad.54.1756383237035; 
+ Thu, 28 Aug 2025 05:13:57 -0700 (PDT)
 Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.14.21
+ d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.13.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Aug 2025 05:14:23 -0700 (PDT)
+ Thu, 28 Aug 2025 05:13:56 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v3 59/87] linux-user: Move init_guest_commpage to
- hppa/elfload.c
-Date: Thu, 28 Aug 2025 22:08:08 +1000
-Message-ID: <20250828120836.195358-60-richard.henderson@linaro.org>
+Subject: [PATCH v3 50/87] linux-user/ppc: Expand target_elf_gregset_t
+Date: Thu, 28 Aug 2025 22:07:59 +1000
+Message-ID: <20250828120836.195358-51-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
 References: <20250828120836.195358-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,129 +99,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Make use of the fact that target_elf_gregset_t is a proper structure.
+Drop ELF_NREG, target_elf_greg_t, and tswapreg.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/hppa/target_elf.h |  2 ++
- linux-user/loader.h          |  2 --
- linux-user/elfload.c         | 32 --------------------------------
- linux-user/hppa/elfload.c    | 31 +++++++++++++++++++++++++++++++
- 4 files changed, 33 insertions(+), 34 deletions(-)
+ linux-user/ppc/target_elf.h | 16 +++++++++++-----
+ linux-user/ppc/elfload.c    | 23 ++++++++---------------
+ 2 files changed, 19 insertions(+), 20 deletions(-)
 
-diff --git a/linux-user/hppa/target_elf.h b/linux-user/hppa/target_elf.h
-index 85be00584d..b654758afa 100644
---- a/linux-user/hppa/target_elf.h
-+++ b/linux-user/hppa/target_elf.h
-@@ -10,4 +10,6 @@
+diff --git a/linux-user/ppc/target_elf.h b/linux-user/ppc/target_elf.h
+index 72615553ea..2a61cd2896 100644
+--- a/linux-user/ppc/target_elf.h
++++ b/linux-user/ppc/target_elf.h
+@@ -8,16 +8,22 @@
+ #ifndef PPC_TARGET_ELF_H
+ #define PPC_TARGET_ELF_H
  
- #define HAVE_ELF_PLATFORM       1
- 
-+#define LO_COMMPAGE             0
++#include "target_ptrace.h"
 +
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+ #define HAVE_ELF_CORE_DUMP      1
+ 
+-typedef abi_ulong target_elf_greg_t;
+-
+-/* See linux kernel: arch/powerpc/include/asm/elf.h.  */
+-#define ELF_NREG                48
++/*
++ * The size of 48 words is set in arch/powerpc/include/uapi/asm/elf.h.
++ * However PPC_ELF_CORE_COPY_REGS in arch/powerpc/include/asm/elf.h
++ * open-codes a memcpy from struct pt_regs, then zeros the rest.
++ */
+ typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
++    union {
++        struct target_pt_regs pt;
++        abi_ulong reserved[48];
++    };
+ } target_elf_gregset_t;
+ 
  #endif
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 0c2cc556c3..c3b8f92e23 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -105,9 +105,7 @@ const char *elf_hwcap_str(uint32_t bit);
- const char *elf_hwcap2_str(uint32_t bit);
- const char *get_elf_platform(CPUState *cs);
- const char *get_elf_base_platform(CPUState *cs);
--#if defined(TARGET_X86_64) || defined(TARGET_ARM)
- bool init_guest_commpage(void);
--#endif
- 
- struct target_elf_gregset_t;
- void elf_core_copy_regs(struct target_elf_gregset_t *, const CPUArchState *);
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 2281853c57..25f29e60de 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -415,38 +415,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
- 
- #define VDSO_HEADER "vdso.c.inc"
- 
--#define LO_COMMPAGE  0
--
--static bool init_guest_commpage(void)
--{
--    /* If reserved_va, then we have already mapped 0 page on the host. */
--    if (!reserved_va) {
--        void *want, *addr;
--
--        want = g2h_untagged(LO_COMMPAGE);
--        addr = mmap(want, TARGET_PAGE_SIZE, PROT_NONE,
--                    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED_NOREPLACE, -1, 0);
--        if (addr == MAP_FAILED) {
--            perror("Allocating guest commpage");
--            exit(EXIT_FAILURE);
--        }
--        if (addr != want) {
--            return false;
--        }
--    }
--
--    /*
--     * On Linux, page zero is normally marked execute only + gateway.
--     * Normal read or write is supposed to fail (thus PROT_NONE above),
--     * but specific offsets have kernel code mapped to raise permissions
--     * and implement syscalls.  Here, simply mark the page executable.
--     * Special case the entry points during translation (see do_page_zero).
--     */
--    page_set_flags(LO_COMMPAGE, LO_COMMPAGE | ~TARGET_PAGE_MASK,
--                   PAGE_EXEC | PAGE_VALID);
--    return true;
--}
--
- #endif /* TARGET_HPPA */
- 
- #ifdef TARGET_XTENSA
-diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
-index 9dd3fe092a..018034f244 100644
---- a/linux-user/hppa/elfload.c
-+++ b/linux-user/hppa/elfload.c
-@@ -3,6 +3,7 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "target_elf.h"
- 
- 
- const char *get_elf_cpu_model(uint32_t eflags)
-@@ -14,3 +15,33 @@ const char *get_elf_platform(CPUState *cs)
- {
-     return "PARISC";
+diff --git a/linux-user/ppc/elfload.c b/linux-user/ppc/elfload.c
+index 114e40a358..0d54da9803 100644
+--- a/linux-user/ppc/elfload.c
++++ b/linux-user/ppc/elfload.c
+@@ -131,23 +131,16 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
+     return features;
  }
-+
-+bool init_guest_commpage(void)
-+{
-+    /* If reserved_va, then we have already mapped 0 page on the host. */
-+    if (!reserved_va) {
-+        void *want, *addr;
-+
-+        want = g2h_untagged(LO_COMMPAGE);
-+        addr = mmap(want, TARGET_PAGE_SIZE, PROT_NONE,
-+                    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED_NOREPLACE, -1, 0);
-+        if (addr == MAP_FAILED) {
-+            perror("Allocating guest commpage");
-+            exit(EXIT_FAILURE);
-+        }
-+        if (addr != want) {
-+            return false;
-+        }
-+    }
-+
-+    /*
-+     * On Linux, page zero is normally marked execute only + gateway.
-+     * Normal read or write is supposed to fail (thus PROT_NONE above),
-+     * but specific offsets have kernel code mapped to raise permissions
-+     * and implement syscalls.  Here, simply mark the page executable.
-+     * Special case the entry points during translation (see do_page_zero).
-+     */
-+    page_set_flags(LO_COMMPAGE, LO_COMMPAGE | ~TARGET_PAGE_MASK,
-+                   PAGE_EXEC | PAGE_VALID);
-+    return true;
-+}
+ 
+-#define tswapreg(ptr)   tswapal(ptr)
+-
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUPPCState *env)
+ {
+-    int i;
+-    target_ulong ccr = 0;
+-
+-    for (i = 0; i < ARRAY_SIZE(env->gpr); i++) {
+-        r->regs[i] = tswapreg(env->gpr[i]);
++    for (int i = 0; i < ARRAY_SIZE(env->gpr); i++) {
++        r->pt.gpr[i] = tswapal(env->gpr[i]);
+     }
+ 
+-    r->regs[32] = tswapreg(env->nip);
+-    r->regs[33] = tswapreg(env->msr);
+-    r->regs[35] = tswapreg(env->ctr);
+-    r->regs[36] = tswapreg(env->lr);
+-    r->regs[37] = tswapreg(cpu_read_xer(env));
+-
+-    ccr = ppc_get_cr(env);
+-    r->regs[38] = tswapreg(ccr);
++    r->pt.nip = tswapal(env->nip);
++    r->pt.msr = tswapal(env->msr);
++    r->pt.ctr = tswapal(env->ctr);
++    r->pt.link = tswapal(env->lr);
++    r->pt.xer = tswapal(cpu_read_xer(env));
++    r->pt.ccr = tswapal(ppc_get_cr(env));
+ }
 -- 
 2.43.0
 
