@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D02CA0EED
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:33:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CAF5C8303F
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Aug 2025 17:33:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1urgFb-0001Cj-Jz; Thu, 28 Aug 2025 13:17:27 -0400
+	id 1urgBm-0002ZN-LF; Thu, 28 Aug 2025 13:13:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urdV6-0001Xn-3e
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:21:16 -0400
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbVU-0007VC-Tk
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:13:39 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1urdUy-0006H1-Bh
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 10:21:15 -0400
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e970e624b7cso208260276.0
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 07:21:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urbVS-0008BC-VI
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 08:13:32 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-b471756592cso598085a12.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 05:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756390866; x=1756995666; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=W+pwYfhE15RM0lWEieT/Yy0PeY0BjQe3dqJRrOXQPf8=;
- b=DJTWpIV6Aj8Umop5/8OguY62eja3lo5Z+beZIktVkbKJihZ+BDsCksq/AUxPjFF90W
- uPQedhtJHkphVnBeL85tURwZ3IG0j3iY2ze+qvBj1Au8L2DfCZ5JqZDFwCPUvybeEQul
- fhgGV3owAVhWzhjyOjOfrrYcBU/DGhSNr/D6uVgyHELdFbAIJ8+EzoLCqdy6wm/pgYBz
- bEqjqYV9Ws3qB+MyM5Qp13Z8dUalTeBwSd3hzKEJVPSbmvPIhy6qDbJDtNeTDamuvYKN
- 2E9b5WzvIay6uOaU2c7zk0Td+h6frCj1AYo/BBdbFQ8rJIo0V4nXSf9TT2QEvTqCpzPr
- Od2w==
+ d=linaro.org; s=google; t=1756383209; x=1756988009; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=b9WlSjF0+HjwhfJFeJ6DVK0cBfr4XpFmhJQo+afKF+s=;
+ b=Fc5wCtUD09BZ7j46w6arblK+OdzvLEClCYOktwmroLPOZ7/LlyjLlMEPH4+sy2KDbG
+ rF1bsSJiyjNnO1d53xNFgxtbX/LDgEF98dsKY7kyEHhkwD+DszvNvfVVLavjnhKaYE5/
+ yI8ZM3GiAFDrjGONU2DkjsoSwUc1ljfIMcXyUffUVKlrNUYYbpR4rzwB8kvP8OHBVT0Y
+ FZ5Iyd9VegTTtbDoztgIWmBg/IgrMTWETl7leRmljblteNBFtbFDoOd3JYH2iLaHNQX2
+ jwArOzXXyBN97nOMruN9JZ/O/l7gAXJ/hWxga8rtHys4JqDs07hqZw/5htaFrN2yv+e8
+ +frA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756390866; x=1756995666;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W+pwYfhE15RM0lWEieT/Yy0PeY0BjQe3dqJRrOXQPf8=;
- b=cGlQ0UFknw/XYDMiNKlRG1nyNuQ/v3Sw5Aq2logMSmZutDrPvlAlPVW6M2xcjHPuBI
- bCxTf5XqJTC0SKCQSsUxvWB7Os9ts3abIyZ6cWg5eRY72rD9wrTDprOMHoZxlxisMHWH
- IR6b8QZXWX0ItOhlcpN+Njt/GIOqtEUI+AJPlN1hRLJwCyfwcsIpJauMnFM3SUhDB7Fb
- 0CSSrX+/gJaWDRcq91JxvVSlEQ6x80TlDmdD5XUstmyQRH5GLLZeEnpeqThXa7tplqhK
- cNFjzX9d64Rvd6ZcbeqpPt8WKd0+lo6RGqtmmLyczugenQKXo63oMHRdPRqmcbEadDdy
- uY8A==
-X-Gm-Message-State: AOJu0YyMcmpz/YdHHgBdfKvLxTmkWPYWZ0NBOdT3LK/g7rRxaDOdpnl3
- 9wKK3jlrjLDfLgilVTNNganzU1aTe850LZ9EZlsCv2wVTdts0A9WbK37tmEAZXT5r8u5jD2A31P
- RMDoD8iVqaMFevQwPccgZJ3ppjLVhGAQtaGqcW97dxBe9SqsqhHR4
-X-Gm-Gg: ASbGncuHkZpB67PsMFW8GnG0f/go4KOjWs2FeeozD6R/Y5TL3OJJ5mtOLd+9+PCpEcE
- 0D1zbYIOtwD3mgZS5vDcEcqLCPHkH5l06eOaO3TBsj0BoVHWl1bihYdUpsDnd+Nd7v1AubsBQVt
- jruqKxYXJzdk3DR0sa7f2zpYgYmqekZx4MUFw12hE6VH4slD3cFEU3G1nk2Z+tWIJL8z4FY9Tq9
- 3PL/5MlZ2UrKmw5los=
-X-Google-Smtp-Source: AGHT+IHfZ+b96KkmkYBSsCj+NStFdVT2UvXU6Cut305ZsVGkQ7pBClPPl5b6kTMru83yD8Rvmjd67p6I+0nyX1ETrEo=
-X-Received: by 2002:a05:690c:eca:b0:70e:43e9:6149 with SMTP id
- 00721157ae682-72132cd775bmr110242757b3.16.1756390866037; Thu, 28 Aug 2025
- 07:21:06 -0700 (PDT)
-MIME-Version: 1.0
+ d=1e100.net; s=20230601; t=1756383209; x=1756988009;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b9WlSjF0+HjwhfJFeJ6DVK0cBfr4XpFmhJQo+afKF+s=;
+ b=ZjR4XnsF9jK8qU9PMlP3oYBlZpV6BtCUN8I3lilXD3GfQuEcuEIW6SagUJ+/+S6/An
+ 9VE/De2/rk8zS0BcebBKc69t7lTGhosrKiQEk2ObJ4Mc8JUZfSHJLr6eVTUAE7iwziYk
+ Q+qrwZ2QG2FkV1wUKOFmM4MQouUkZyZeoAK1OR2oLeqFMk+t7NvYp1szhfs0qQOJmQj6
+ biQFa7GVlVA/4iMe3CKlnTC3NWAyTmimBE+GFKMcPuWwjqCPviws3kxjFqVNnlUwA0BW
+ JfX5IZBUQkZW3ppGykd1TSM+Sx62lb2piKDZ6DRsWsHrlyKjTufGtor5XVP3phTKwwCf
+ 5SPQ==
+X-Gm-Message-State: AOJu0Yw5VzdDizSd1/ciFf3gA2SKDA3FWG4bAjlBEVtl5Z0LjRXeke4n
+ zmVJBx4H2W901m42YMgBILT8xprKQ0MGKOTOn+GN4/gEyjUj1cdlOTJqXAAFWkby8+OJjMOeIne
+ vRYF6MWA=
+X-Gm-Gg: ASbGncusEBuB7ww8qZtWQkHzBNUX37gTwkoF/M0DQV9/XdKTNiY6Urn7I448C0Cu+Zi
+ UwQi9ASIAM/TvpzBbz2DVbG1LBu1DYVmAHkWGzx2c73hU5EX5skdOQBTWvvUslzVgYSzosz6NvQ
+ kgEVOWD+vi7JxOYB1K48ABj9SgruSI1zmUqHJytvvo5SQV92HuHHEeB355R3f0XCnR/7F/KxY1Y
+ IMgbNqYRtGodiMg+SfRPzfdwFdHDaI59enIjc+i0g/ASe8Y2YkCEQqfbYZa86j1EQAuHMX16pMm
+ 9znLnZG7FYdwC0XOfBN7GAGO+hOkfDY1Mr3faoWRi5iixT7fiih77IbOibv8jmDWKlKB3YZvXsC
+ zlfbXvZEgRPTaeh/NS1TOJBus3XiyfkjbBYEn
+X-Google-Smtp-Source: AGHT+IEYP/ILgr4L4QmKcULUOk2t7mhr0of12kX8Kaxru8fohKz5l1ABc5LA1Y3uqk+lWqR4ngmjiA==
+X-Received: by 2002:a17:902:f542:b0:248:7b7e:11e8 with SMTP id
+ d9443c01a7336-2487b7e1af0mr121236745ad.18.1756383209000; 
+ Thu, 28 Aug 2025 05:13:29 -0700 (PDT)
+Received: from stoup.. ([144.6.121.55]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-248e3e0b75esm15129025ad.8.2025.08.28.05.13.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Aug 2025 05:13:28 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PATCH v3 41/87] linux-user/m68k: Expand target_elf_gregset_t
+Date: Thu, 28 Aug 2025 22:07:50 +1000
+Message-ID: <20250828120836.195358-42-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250828120836.195358-1-richard.henderson@linaro.org>
 References: <20250828120836.195358-1-richard.henderson@linaro.org>
- <20250828120836.195358-9-richard.henderson@linaro.org>
-In-Reply-To: <20250828120836.195358-9-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 28 Aug 2025 15:20:54 +0100
-X-Gm-Features: Ac12FXyI4pwvUEaGUTNSxrutrU8A_Adkohu6a6p8haP0CV8ZaWUVzREy2ry9DCE
-Message-ID: <CAFEAcA8R+p51nvo4Nwrbh=OHGyV8SaRzXXWcu_-bx8HZPHc8Yg@mail.gmail.com>
-Subject: Re: [PATCH v3 08/87] linux-user/microblaze: Convert
- target_elf_gregset_t to a struct
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,19 +99,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 28 Aug 2025 at 13:09, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> While we're at it, drop "pos++" and simply open-code indexes.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  linux-user/elfload.c | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
->
+Make use of the fact that target_elf_gregset_t is a proper structure.
+Drop ELF_NREG, target_elf_greg_t, and tswapreg.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/m68k/target_elf.h | 24 ++++++++++++++++-----
+ linux-user/m68k/elfload.c    | 42 +++++++++++++++++-------------------
+ 2 files changed, 39 insertions(+), 27 deletions(-)
 
-thanks
--- PMM
+diff --git a/linux-user/m68k/target_elf.h b/linux-user/m68k/target_elf.h
+index cd6908ab57..0737412cee 100644
+--- a/linux-user/m68k/target_elf.h
++++ b/linux-user/m68k/target_elf.h
+@@ -10,12 +10,26 @@
+ 
+ #define HAVE_ELF_CORE_DUMP      1
+ 
+-typedef abi_ulong target_elf_greg_t;
+-
+-/* See linux kernel: arch/m68k/include/asm/elf.h.  */
+-#define ELF_NREG                20
++/*
++ * See linux kernel: arch/m68k/include/asm/elf.h, where
++ * elf_gregset_t is mapped to struct user_regs_struct via sizeof.
++ *
++ * Note that user_regs_struct has
++ *    short stkadj, sr;
++ *    ...
++ *    short fmtvec, __fill;
++ * but ELF_CORE_COPY_REGS writes to unsigned longs.
++ * Therefore adjust the sr and fmtvec fields to match.
++ */
+ typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
++    abi_ulong d1, d2, d3, d4, d5, d6, d7;
++    abi_ulong a0, a1, a2, a3, a4, a5, a6;
++    abi_ulong d0;
++    abi_ulong usp;
++    abi_ulong orig_d0;
++    abi_ulong sr;
++    abi_ulong pc;
++    abi_ulong fmtvec;
+ } target_elf_gregset_t;
+ 
+ #endif
+diff --git a/linux-user/m68k/elfload.c b/linux-user/m68k/elfload.c
+index 2970ff7dec..423d1f680a 100644
+--- a/linux-user/m68k/elfload.c
++++ b/linux-user/m68k/elfload.c
+@@ -18,28 +18,26 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     return "any";
+ }
+ 
+-#define tswapreg(ptr)   tswapal(ptr)
+-
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUM68KState *env)
+ {
+-    r->regs[0] = tswapreg(env->dregs[1]);
+-    r->regs[1] = tswapreg(env->dregs[2]);
+-    r->regs[2] = tswapreg(env->dregs[3]);
+-    r->regs[3] = tswapreg(env->dregs[4]);
+-    r->regs[4] = tswapreg(env->dregs[5]);
+-    r->regs[5] = tswapreg(env->dregs[6]);
+-    r->regs[6] = tswapreg(env->dregs[7]);
+-    r->regs[7] = tswapreg(env->aregs[0]);
+-    r->regs[8] = tswapreg(env->aregs[1]);
+-    r->regs[9] = tswapreg(env->aregs[2]);
+-    r->regs[10] = tswapreg(env->aregs[3]);
+-    r->regs[11] = tswapreg(env->aregs[4]);
+-    r->regs[12] = tswapreg(env->aregs[5]);
+-    r->regs[13] = tswapreg(env->aregs[6]);
+-    r->regs[14] = tswapreg(env->dregs[0]);
+-    r->regs[15] = tswapreg(env->aregs[7]);
+-    r->regs[16] = tswapreg(env->dregs[0]); /* FIXME: orig_d0 */
+-    r->regs[17] = tswapreg(env->sr);
+-    r->regs[18] = tswapreg(env->pc);
+-    r->regs[19] = 0;  /* FIXME: regs->format | regs->vector */
++    r->d1 = tswapal(env->dregs[1]);
++    r->d2 = tswapal(env->dregs[2]);
++    r->d3 = tswapal(env->dregs[3]);
++    r->d4 = tswapal(env->dregs[4]);
++    r->d5 = tswapal(env->dregs[5]);
++    r->d6 = tswapal(env->dregs[6]);
++    r->d7 = tswapal(env->dregs[7]);
++    r->a0 = tswapal(env->aregs[0]);
++    r->a1 = tswapal(env->aregs[1]);
++    r->a2 = tswapal(env->aregs[2]);
++    r->a3 = tswapal(env->aregs[3]);
++    r->a4 = tswapal(env->aregs[4]);
++    r->a5 = tswapal(env->aregs[5]);
++    r->a6 = tswapal(env->aregs[6]);
++    r->d0 = tswapal(env->dregs[0]);
++    r->usp = tswapal(env->aregs[7]);
++    r->orig_d0 = tswapal(env->dregs[0]); /* FIXME */
++    r->sr = tswapal(env->sr);
++    r->pc = tswapal(env->pc);
++    /* FIXME: regs->format | regs->vector */
+ }
+-- 
+2.43.0
+
 
