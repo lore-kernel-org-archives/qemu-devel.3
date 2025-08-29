@@ -4,73 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10034CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58806CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usN9J-0003MZ-Ad; Sat, 30 Aug 2025 11:05:49 -0400
+	id 1usNBJ-0005UC-7M; Sat, 30 Aug 2025 11:07:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1urtwC-0005di-Vg
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:54:22 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1urtw8-00079R-BF
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:54:19 -0400
-Received: from loongson.cn (unknown [10.20.42.126])
- by gateway (Coremail) with SMTP id _____8AxSNGiXLFoUn8EAA--.9215S3;
- Fri, 29 Aug 2025 15:54:10 +0800 (CST)
-Received: from [10.20.42.126] (unknown [10.20.42.126])
- by front1 (Coremail) with SMTP id qMiowJBxZOSfXLFoTTdwAA--.21919S3;
- Fri, 29 Aug 2025 15:54:09 +0800 (CST)
-Subject: Re: Re: [PATCH] hw/loongarch/virt: Add reset interface for
- virt-machine
-To: maobibo <maobibo@loongson.cn>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org
-References: <20241031065418.3111892-1-maobibo@loongson.cn>
- <CAFEAcA_4PabxEui-wbztw+nDpHsoAJNi-HWJU4opax54HgAo5w@mail.gmail.com>
- <c6a29d72-763b-69b6-c5e2-3f5c3828f6ea@loongson.cn>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <bc03fd77-ef72-e871-da36-c745bac5d0a8@loongson.cn>
-Date: Fri, 29 Aug 2025 15:53:00 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1uruUQ-0002uk-L2; Fri, 29 Aug 2025 04:29:43 -0400
+Received: from mail-dm6nam12on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::601]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1uruUL-0006QC-9t; Fri, 29 Aug 2025 04:29:41 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dGvx4LNDFdgMrDc8EAiCtZp4D6cE8C7LicB6sNow2+sNttYs+drQV7+SfKdWUanztEaHiAcyC6KEvoX+mC6E+cArcBYLtFcaPSDauZl+Dqe2f8msNgpUl1MoBg5DSVnsx2pUWF0CHkZtpD4x4FdLrWhOIpwab96dN2GFpU3s2Vkqds2HcUxmHpNu2YORyVVoAaNJe9wmseK/HKYDesbZz5h7/uGuz4fKi+IFRQZ+CdI/nFmKdJ/Uz43mx++6c4iCjsOxJcvYdpAdZlrNIaN758v1GhiT49Ed8eYOpb+7I1TGZTEBfyFWrwQp/TLBbE/aqym8JtrPkjy0RYWxg6ngLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VXTaYNhXa6PsWcyqfVyVATmSC6JTnkjfHpbmLc1oisY=;
+ b=Ugq80laYatJrtcTS0YtJ3cSYpXL6usR6pGCY9rQ0qUhE9fooIqE8T/clGVZDXeZiHzAEVk3xfh98RUXD1A8jYO1BbAvJucWpy9vSaI5h2FKIFMx5y9wf2tYJ78d2tHFByJ/8XwodTOpLhXohTGJ7rynMeW6F1vh8IDXwt0X50V8Yi8WiXi9V0LXuGUd/yJnUXEn3i61hpTekFakfI0S5U1lnusiGfB+44Ucf3Mbb9VZYQIxjEJYzCVlM4eq5gaoBjztUuzgna2dl+1v9Dx5ks8IRkoi3H0c0HbpsiMOt4DR9kpfcdXjF6YUCuU0q4HQP3HNFajcYzbVLXmslgKy66g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VXTaYNhXa6PsWcyqfVyVATmSC6JTnkjfHpbmLc1oisY=;
+ b=fEoEXyZEkDDY2JD2nNVjvNm4y9ESWqZ8cTl2zG14cmWgMqC5uRyCct29hSJRQQa2K8Y7TzIVG14ZyXE6MdFjsguKMv2o7fofcKAdMhkIJ1CsxxWISzUPmzmgMgyeeBfyyfbyTUy2jcfe2bJVqpZ0Dvje6DEEMWL8E9XwG5U49m3i69ZvyDMiAG7rqvrxKBHFdEkHOUA7PjEFUdVl5+duy5XuWkbNclEwqLB6d+a9JfKKkO4kgOMSQTN8u3wROw3zyv/Ag2ONtB6GXrCD0gq9gavlKuZFNfHFJ7nSU+Yb3Infdsge+GwqQC5EOCsT5xOMo+M66W/AewzEbStzG2Nfxg==
+Received: from SJ0PR03CA0370.namprd03.prod.outlook.com (2603:10b6:a03:3a1::15)
+ by LV8PR12MB9451.namprd12.prod.outlook.com (2603:10b6:408:206::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.20; Fri, 29 Aug
+ 2025 08:29:26 +0000
+Received: from SJ1PEPF000026C6.namprd04.prod.outlook.com
+ (2603:10b6:a03:3a1:cafe::87) by SJ0PR03CA0370.outlook.office365.com
+ (2603:10b6:a03:3a1::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.22 via Frontend Transport; Fri,
+ 29 Aug 2025 08:29:25 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ1PEPF000026C6.mail.protection.outlook.com (10.167.244.103) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9073.11 via Frontend Transport; Fri, 29 Aug 2025 08:29:25 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 29 Aug
+ 2025 01:29:09 -0700
+Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 29 Aug
+ 2025 01:29:03 -0700
+From: Shameer Kolothum <skolothumtho@nvidia.com>
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <imammedo@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
+ <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
+Subject: [PATCH v9 06/11] hw/pci: Introduce pci_setup_iommu_per_bus() for
+ per-bus IOMMU ops retrieval
+Date: Fri, 29 Aug 2025 09:25:28 +0100
+Message-ID: <20250829082543.7680-7-skolothumtho@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829082543.7680-1-skolothumtho@nvidia.com>
+References: <20250829082543.7680-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-In-Reply-To: <c6a29d72-763b-69b6-c5e2-3f5c3828f6ea@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJBxZOSfXLFoTTdwAA--.21919S3
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW3ArW3Jr13Zr1rJF1rAF18Zwc_yoWxXr1Dpr
- ykAF45JrZ5Wrn7Jw42ga4UuFyqyr1xKa1aqF1xtFy0kFsFgryjgr4jqryq9F1DAw48WF1Y
- vr15Cw13ZF45X3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7_MaUUUU
- U
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.357,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.126.231.35]
+X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000026C6:EE_|LV8PR12MB9451:EE_
+X-MS-Office365-Filtering-Correlation-Id: 28f7bc4f-6657-497e-f6ea-08dde6d629ef
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|1800799024|7416014|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RWorTVBBb3ptb3hrUVJJVml2aW15SnI4eU42T2NYKzVVdmFsdTZFS1o1MTBM?=
+ =?utf-8?B?aHl3NVlDRlBTelhLcGpKWUdVQXhoQWt1VDFjd1ByeThIMzBpM0dONVZNSjJr?=
+ =?utf-8?B?SGJ5NXZCelp1L0V4ZlhvdFZvVmREdllFdkpwYmFnZElBV3dvT1kzaFhkWVc2?=
+ =?utf-8?B?WmJoSWgxZzZQemVISVRqZ3dFOW9wcmZ6OHdSZG0zMXJWVGJMbEhMUFRjTTQy?=
+ =?utf-8?B?OGswbC9KVkNONk1PaWlMcFhxZ2VsSXZZNGRSMm5RdS9lR0V4STkzUm1vMlc2?=
+ =?utf-8?B?TGxTTHJYdmNPanA5OERlR1VCU2NGY2M0aHN0cy9PUi9oWFFrRTNYcDlWTC9U?=
+ =?utf-8?B?SVZuOEEvV2srT3B2MXlhRFprTUh6SkJ4UytHSmZUS0dYV3pqVlRsQmpyemNT?=
+ =?utf-8?B?ejdEaEVHNDN1eE1tNjZWYTNsZnZOdFAzOVdBT1gySUw1MHNpdGFFVDBvQmEx?=
+ =?utf-8?B?WEg2dWdETzh1dG8weENQUGRLcnNuVHJnQWErNXFvRms3N3FvdTBzQnN1STJz?=
+ =?utf-8?B?WGtiU0RaWk5zUlFrWllES0M1OVJTVlpXZHYxb1lEdy93eDZQMFdQNXdWUnhu?=
+ =?utf-8?B?U3A3Q1JJUU0xcU9MR0hxcUgrVnpTS2VaU2dRRTkvRlhISWlyNDcvWVhvWXVD?=
+ =?utf-8?B?cXhyVnBjRjM1S2RKZkt2eE41MDQydFhFeHQvS2VPQ0hYOXJYdytmaEhFemNR?=
+ =?utf-8?B?cjhsaFN6QjVOZ0VhYkc0aGY5c1EwbklaeGc4OVk3d0NJNDByMm9PdVFXcTdR?=
+ =?utf-8?B?OWxSS3ZzOWdSeXM3Y3VNR0c4OHFxTXVUOU8zZGtYN2hQZjYxSUFtVVZSTVRo?=
+ =?utf-8?B?b1BrTlF6QzZkQlhGUHZCKzN4N0VTSEI5MXNOREYvQXhuaWs5UCtDVk54RjZK?=
+ =?utf-8?B?M3RyU1drQit2ZG1LR0xRNGNZTWtOM0Job3ZNOU9RdmswQy94cjM4djZiek5y?=
+ =?utf-8?B?S1RodVRrbUs0ZW44R2FBMDBEQms3aW5sY2h3UlRMalpEd3pBdGxkSktOUDVn?=
+ =?utf-8?B?MjY1VmhkUC8vRlpabW1abGxIVStIK3lyYXBBMm5ZQmhmSGxZOEs1SlVFVVNS?=
+ =?utf-8?B?U3FtU0I2ZkxvTXpjU0FLU0lWeVF5SThrQWluUjVpRXhVQTRzUW55a1lJWFYy?=
+ =?utf-8?B?dm5XQkUxdzV0eGREK3VoMVlVck5DQ05FM1ZzbGdBbVZMUG9qU0RUYWhQSS9N?=
+ =?utf-8?B?eTlhMlJVVHZQbDk0eVBUbFlkR0tuR2FMQTFrTTlSd2FKb1ZQc1hwSy9iM2lL?=
+ =?utf-8?B?a0F6TnByL0ovRUFldTZvM2VzTTJtQlhUWGRTNnN6UTJxV3lFVGNiL1hKMWlK?=
+ =?utf-8?B?MGgzUG1wVWlTYzdGbThRdWtlRU9tZXBpUEpEeDVNUVJVMmx3ZjNreVJZbG93?=
+ =?utf-8?B?L0lySW5zZFo3ZjJHaHc3Mk5keXBlL0I3czFOUWFjaDRXRkYzOG1JUEZPYTlJ?=
+ =?utf-8?B?Q3JHWWxKUWwxQUwyZUswV1RCdVBPTDYrZlJwbHdHZ1hFRkRZTDc5WWR6WmhJ?=
+ =?utf-8?B?L0kwd3drREhpdGN6eHRvb2dzM2wyR2s1aGJZSmkvSThJenl2VXZuNWVxUDAy?=
+ =?utf-8?B?U1pJUkZCdURPa01mUXpLV2g4aXUxRHhjRVlzdE1EWUpJVEVwQ0hUZWV4WURl?=
+ =?utf-8?B?VWZsdW40YnZSa2pHeGpsUGdEd0QreDA5SlU3b0tDQ1lIQkRJTkU3MWwvMVR2?=
+ =?utf-8?B?cjZwL2pOaGI4K1VBQmZURGpsQWpLYkdDbHpNR09iWG56RkVmS1dvc1FQYmov?=
+ =?utf-8?B?bGw3WllZN0JsdTlBM3ZzWmxkRGlUQ1pCanpodGt2bTJjNHA4NHVoemVFeTZT?=
+ =?utf-8?B?VmJ0YUZITkJPblkwNlNna0ppKy92cU84cGM5NHlkblVnNEF4NDIvdUtyK1M2?=
+ =?utf-8?B?MFQ3Y1VyQ0RzUzdxSmdiVHAwcnpNd2lNVVg0MXFQRGFVTDl0VXFHRXhlUXVq?=
+ =?utf-8?B?QUpoYmEvc1FwUkUxNFNFdnNPQ0pkd21uOWcwWVRHN3E3aWt4aUxFclJkdmlB?=
+ =?utf-8?B?cXcrakRzU1d4UmJqV3Bna0VZV2EwalZPbnFpMUZMQmZySExESXd2MVM2ZWR4?=
+ =?utf-8?Q?tSce0i?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(1800799024)(7416014)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2025 08:29:25.6146 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 28f7bc4f-6657-497e-f6ea-08dde6d629ef
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000026C6.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9451
+Received-SPF: permerror client-ip=2a01:111:f403:2417::601;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 29 Aug 2025 09:59:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,170 +169,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter:
->> On Thu, 31 Oct 2024 at 06:55, Bibo Mao <maobibo@loongson.cn> wrote:
->>>
->>> With generic cpu reset interface, pc register is entry of FLASH for
->>> UEFI BIOS. However with direct kernel booting requirement, there is
->>> little different, pc register of primary cpu is entry address of ELF
->>> file.
->>>
->>> At the same time with requirement of cpu hotplug, hot-added CPU should
->>> register reset interface for this cpu object. Now reset callback is
->>> not registered for hot-added CPU.
->>>
->>> With this patch reset callback for CPU is register when CPU instance
->>> is created, and reset interface is added for virt-machine board. In
->>> reset interface of virt-machine, reset for direct kernel booting
->>> requirement is called.
->>>
->>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>> ---
->>>   hw/loongarch/boot.c         |  9 +--------
->>>   hw/loongarch/virt.c         | 14 ++++++++++++++
->>>   include/hw/loongarch/boot.h |  1 +
->>>   target/loongarch/cpu.c      | 10 ++++++++++
->>>   4 files changed, 26 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
->>> index cb668703bd..cbb4e3737d 100644
->>> --- a/hw/loongarch/boot.c
->>> +++ b/hw/loongarch/boot.c
->>> @@ -216,12 +216,11 @@ static int64_t load_kernel_info(struct 
->>> loongarch_boot_info *info)
->>>       return kernel_entry;
->>>   }
->>>
->>> -static void reset_load_elf(void *opaque)
->>> +void reset_load_elf(void *opaque)
->>>   {
->>>       LoongArchCPU *cpu = opaque;
->>>       CPULoongArchState *env = &cpu->env;
->>>
->>> -    cpu_reset(CPU(cpu));
->>>       if (env->load_elf) {
->>>          if (cpu == LOONGARCH_CPU(first_cpu)) {
->>>               env->gpr[4] = env->boot_info->a0;
->>> @@ -320,12 +319,6 @@ static void loongarch_direct_kernel_boot(struct 
->>> loongarch_boot_info *info)
->>>   void loongarch_load_kernel(MachineState *ms, struct 
->>> loongarch_boot_info *info)
->>>   {
->>>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
->>> -    int i;
->>> -
->>> -    /* register reset function */
->>> -    for (i = 0; i < ms->smp.cpus; i++) {
->>> -        qemu_register_reset(reset_load_elf, 
->>> LOONGARCH_CPU(qemu_get_cpu(i)));
->>> -    }
->>>
->>>       info->kernel_filename = ms->kernel_filename;
->>>       info->kernel_cmdline = ms->kernel_cmdline;
->>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->>> index 9a635d1d3d..80680d178c 100644
->>> --- a/hw/loongarch/virt.c
->>> +++ b/hw/loongarch/virt.c
->>> @@ -1434,6 +1434,19 @@ static int64_t 
->>> virt_get_default_cpu_node_id(const MachineState *ms, int idx)
->>>       }
->>>   }
->>>
->>> +static void virt_reset(MachineState *machine, ResetType type)
->>> +{
->>> +    CPUState *cs;
->>> +
->>> +    /* Reset all devices including CPU devices */
->>> +    qemu_devices_reset(type);
->>> +
->>> +    /* Reset PC and register context for kernel direct booting 
->>> method */
->>> +    CPU_FOREACH(cs) {
->>> +        reset_load_elf(LOONGARCH_CPU(cs));
->>> +    }
->>> +}
->>> +
->>>   static void virt_class_init(ObjectClass *oc, void *data)
->>>   {
->>>       MachineClass *mc = MACHINE_CLASS(oc);
->>> @@ -1457,6 +1470,7 @@ static void virt_class_init(ObjectClass *oc, 
->>> void *data)
->>>       mc->auto_enable_numa_with_memdev = true;
->>>       mc->get_hotplug_handler = virt_get_hotplug_handler;
->>>       mc->default_nic = "virtio-net-pci";
->>> +    mc->reset = virt_reset;
->>>       hc->plug = virt_device_plug_cb;
->>>       hc->pre_plug = virt_device_pre_plug;
->>>       hc->unplug_request = virt_device_unplug_request;
->>> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
->>> index b3b870df1f..c7020ec9bb 100644
->>> --- a/include/hw/loongarch/boot.h
->>> +++ b/include/hw/loongarch/boot.h
->>> @@ -115,5 +115,6 @@ struct memmap_entry {
->>>   };
->>>
->>>   void loongarch_load_kernel(MachineState *ms, struct 
->>> loongarch_boot_info *info);
->>> +void reset_load_elf(void *opaque);
->>>
->>>   #endif /* HW_LOONGARCH_BOOT_H */
->>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>> index 7212fb5f8f..f7f8fcc024 100644
->>> --- a/target/loongarch/cpu.c
->>> +++ b/target/loongarch/cpu.c
->>> @@ -592,6 +592,13 @@ static void 
->>> loongarch_cpu_disas_set_info(CPUState *s, disassemble_info *info)
->>>       info->print_insn = print_insn_loongarch;
->>>   }
->>>
->>> +#ifndef CONFIG_USER_ONLY
->>> +static void loongarch_cpu_reset_cb(void *opaque)
->>> +{
->>> +    cpu_reset((CPUState *) opaque);
->>> +}
->>> +#endif
->>> +
->>>   static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
->>>   {
->>>       CPUState *cs = CPU(dev);
->>> @@ -607,6 +614,9 @@ static void loongarch_cpu_realizefn(DeviceState 
->>> *dev, Error **errp)
->>>       loongarch_cpu_register_gdb_regs_for_features(cs);
->>>
->>>       cpu_reset(cs);
->>> +#ifndef CONFIG_USER_ONLY
->>> +    qemu_register_reset(loongarch_cpu_reset_cb, dev);
->>> +#endif
->>
->> Please don't add new uses of qemu_register_reset().
->> I know that CPU reset is currently rather awkward (because
->> we don't automatically-reset CPU objects the way we do most
->> device objects), but generally what should happen is that
->> the machine model should arrange to reset the CPU objects
->> it creates. (Which is what it looks like the code you're
->> removing in this patch was doing already.)
-> Currently the machine model does not register reset callback for 
-> hot-added CPUs, so we put reset callback registration on CPU object 
-> created stage, that works for hot-added CPUs.
->
+Currently, pci_setup_iommu() registers IOMMU ops for a given PCIBus.
+However, when retrieving IOMMU ops for a device using
+pci_device_get_iommu_bus_devfn(), the function checks the parent_dev
+and fetches IOMMU ops from the parent device, even if the current
+bus does not have any associated IOMMU ops.
 
-I see this comment has been around for a long time. Can this patch be 
-merged? Recently,
-I also encountered the same problem, so I submitted a patch.
-However, I found that this patch was a bit better than the one I submitted.
-So, I wonder what the final conclusion of this patch is.
+This behavior works for now because QEMU's IOMMU implementations are
+globally scoped, and host bridges rely on the bypass_iommu property
+to skip IOMMU translation when needed.
 
-Thanks!
-Xianglai.
+However, this model will break with the soon to be introduced
+arm-smmuv3 device, which allows users to associate the IOMMU
+with a specific PCIe root complex (e.g., the default pcie.0
+or a pxb-pcie root complex).
 
-> Regards
-> Bibo Mao
->>
->> thanks
->> -- PMM
->>
->
->
->
+For example, consider the following setup with multiple root
+complexes:
+
+-device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0 \
+...
+-device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \
+-device pcie-root-port,id=pcie.port1,bus=pcie.1 \
+-device virtio-net-pci,bus=pcie.port1
+
+In Qemu, pxb-pcie acts as a special root complex whose parent is
+effectively the default root complex(pcie.0). Hence, though pcie.1
+has no associated SMMUv3 as per above, pci_device_get_iommu_bus_devfn()
+will incorrectly return the IOMMU ops from pcie.0 due to the fallback
+via parent_dev.
+
+To fix this, introduce a new helper pci_setup_iommu_per_bus() that
+explicitly sets the new iommu_per_bus field in the PCIBus structure.
+This helper will be used in a subsequent patch that adds support for
+the new arm-smmuv3 device.
+
+Update pci_device_get_iommu_bus_devfn() to use iommu_per_bus when
+determining the correct IOMMU ops, ensuring accurate behavior for
+per-bus IOMMUs.
+
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nathan Chen <nathanc@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+---
+ hw/pci/pci.c             | 31 +++++++++++++++++++++++++++++++
+ include/hw/pci/pci.h     |  2 ++
+ include/hw/pci/pci_bus.h |  1 +
+ 3 files changed, 34 insertions(+)
+
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index c70b5ceeba..0012cc12e7 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2909,6 +2909,19 @@ static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
+             }
+         }
+ 
++        /*
++         * When multiple PCI Express Root Buses are defined using pxb-pcie,
++         * the IOMMU configuration may be specific to each root bus. However,
++         * pxb-pcie acts as a special root complex whose parent is effectively
++         * the default root complex(pcie.0). Ensure that we retrieve the
++         * correct IOMMU ops(if any) in such cases.
++         */
++        if (pci_bus_is_express(iommu_bus) && pci_bus_is_root(iommu_bus)) {
++            if (parent_bus->iommu_per_bus) {
++                break;
++            }
++        }
++
+         iommu_bus = parent_bus;
+     }
+ 
+@@ -3169,6 +3182,24 @@ void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+     bus->iommu_opaque = opaque;
+ }
+ 
++/*
++ * Similar to pci_setup_iommu(), but sets iommu_per_bus to true,
++ * indicating that the IOMMU is specific to this bus. This is used by
++ * IOMMU implementations that are tied to a specific PCIe root complex.
++ *
++ * In QEMU, pxb-pcie behaves as a special root complex whose parent is
++ * effectively the default root complex (pcie.0). The iommu_per_bus
++ * is checked in pci_device_get_iommu_bus_devfn() to ensure the correct
++ * IOMMU ops are returned, avoiding the use of the parent’s IOMMU when
++ * it's not appropriate.
++ */
++void pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops,
++                             void *opaque)
++{
++    pci_setup_iommu(bus, ops, opaque);
++    bus->iommu_per_bus = true;
++}
++
+ static void pci_dev_get_w64(PCIBus *b, PCIDevice *dev, void *opaque)
+ {
+     Range *range = opaque;
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index 6b7d3ac8a3..6bccb25ac2 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -773,6 +773,8 @@ int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
+  */
+ void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque);
+ 
++void pci_setup_iommu_per_bus(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque);
++
+ pcibus_t pci_bar_address(PCIDevice *d,
+                          int reg, uint8_t type, pcibus_t size);
+ 
+diff --git a/include/hw/pci/pci_bus.h b/include/hw/pci/pci_bus.h
+index 2261312546..c738446788 100644
+--- a/include/hw/pci/pci_bus.h
++++ b/include/hw/pci/pci_bus.h
+@@ -35,6 +35,7 @@ struct PCIBus {
+     enum PCIBusFlags flags;
+     const PCIIOMMUOps *iommu_ops;
+     void *iommu_opaque;
++    bool iommu_per_bus;
+     uint8_t devfn_min;
+     uint32_t slot_reserved_mask;
+     pci_set_irq_fn set_irq;
+-- 
+2.43.0
 
 
