@@ -4,53 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC096CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F228ACA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:12:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOJv-00039F-Gp; Sat, 30 Aug 2025 12:20:58 -0400
+	id 1usNkR-0002Qb-Ci; Sat, 30 Aug 2025 11:44:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu@bonslack.org>) id 1usLQK-0001cc-51
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:15:17 -0400
-Received: from bonnix2.bonnix.it ([37.247.49.194])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <qemu@bonslack.org>) id 1usLQE-0002iJ-Pk
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:15:15 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 bonnix2.bonnix.it 42187243410
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bonslack.org;
- s=20220805; t=1756559698;
- bh=UpJ3eLXvOnRdBEmtsdcpLwOzW3r5fZ7Upt3+dj4PLBI=;
- h=Date:To:Cc:From:Subject;
- b=AdBp2ca+6YfntMEU8YwSXxaDqZlfcnjX/aB/Bmfi7PCuzZu3jMu6qnqZ3Xnt/qlUn
- eqdKYm3Ul3DFDtRNWeVKTqsdqs9lYHECq3geFpkWgdxI2rsgAOo8NxNPBd50H7oTgR
- 2kE7IFZWTsxFmAEztiP6nXIItXrWK2NXuKkqBxZQ=
-Received: from [10.0.0.70] (ip190-129-198-217.pool-bba.aruba.it
- [217.198.129.190])
- by bonnix2.bonnix.it (Postfix) with ESMTPSA id 42187243410;
- Sat, 30 Aug 2025 15:14:58 +0200 (CEST)
-Message-ID: <4bfb150f-7f5a-459b-808f-b0d1abc3b830@bonslack.org>
-Date: Sat, 30 Aug 2025 15:14:56 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7Xu-0003N9-MR
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:26:10 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7Xs-00035l-Ms
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:26:10 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-77238cb3cbbso565449b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:26:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756506364; x=1757111164; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TkQfzRBVz9LGX2QM0Sbr4ZLF3ewH7Bmx5RrPOumx3wA=;
+ b=vkYwxBD/HzkyO9LxjvYUKvHT8qp2c525/oPrbeLH3Ea85tkEzqXSdsI7ThTe7EpNYp
+ Q4fXymwDNA/rvSeQQXkC4w/mOOmfXGc5bnXDTU210otB4N/LVNyikUogGoufv2W1RkTk
+ DfHg3Fm1uoZpySgIu0t2T+iLEMaB2zGDQ25qHYjbjixg6qkG/j2dQVIu6tma3tKjFlOi
+ 9jN0mVkVPF76FxpQ9B6TuEeZprWuOd1loRz4VNkwCs1K+uzF6EFWJvSyRoyLJyuPi7Ve
+ O7g0G4URO7VQtvd9uPJcYSRVZPxgoUQ1vHUdvigoiB7Z4RE3HGDnO5DGdlssZC5L4nNZ
+ K18Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756506364; x=1757111164;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TkQfzRBVz9LGX2QM0Sbr4ZLF3ewH7Bmx5RrPOumx3wA=;
+ b=Up3gry7fPRZzSVsU3lRijyVDz1XVuskjIRBuzp99ziAp8s5uQZagc/CyfISMmMFXS0
+ /iAmMn5v4Eg2Sd7MXBNnRcx5TQThOxsKI2wUyMsqwO3iQbYcgP3tjS0W91M0x4vAAKjQ
+ QyX+dnfA9iXGnKZv/JPMYhU/A6JHQTXn3B3qdWhLulLjM5157m7Ta+/0OHj7DTIgjL2N
+ OoC6FRDfRNYqEGpHlP8DPlmUkU6V8FfcYVjhiHS/OAZPxQW9lCOcXg/6epjZDxSgGByo
+ mAA6SpEybyaP767AT8D+vfuRpU/8tqO0DwcV3NPeRZ7ZPaozWAww5CTVYbT06/jSqfTu
+ siiQ==
+X-Gm-Message-State: AOJu0YwZDMbstTzDAZhrGeEuMTVIrb8RtMbupbIUwrW6AvwQcXDHbl6b
+ T1DSlrF9UkwvpF6H5U5yxcz31FY+Ts7H2HWm2E5HBYx7znKF8AFadZOWAazuEXOzmJ2X0i7Yn4i
+ txmV3r5Q=
+X-Gm-Gg: ASbGncvPSa8q10CGa+ltysOJhrXTpQZ5gg7QhGEfPP4W5gbSoQfsPYfJhCpZBfI50zA
+ 4BORG7uvKQIbG1YJ/nXBVTAQ6kaKU0ddBpEmewcJzYe2Gf8owFzV2bJz4iIZOmv5Ux7wqvxGlSp
+ Dgwxsrmbz6jenSpFwg6cn6Kv9IL6IQ7o0gWCABrg1ja9oONbXtAMNURXCT8kPW82GdIqiq+HIP3
+ xqQWD9Jw/+Ylg0g3ekNmZASqxxHchbOlnjoNd7T+ONxPzfmyjtu8mvyWg6eunxwE5kIMZdD5xd0
+ 4I7YWTwxUEO+iY9wLgY5Hb9QitSX42GrPIXNsIVfs0dYWVjlbpvlhaOzM0rYsQ+ckyuzLD75KLF
+ uQAZVKQ68x23PyyGseS0rKWV4A0PESpFVqxyMYj3864d7zmOvcwyDqVmsK4Uy
+X-Google-Smtp-Source: AGHT+IFslxS34ToofJkY0hOlSq4LPxUvYgT4UtQfkr/mOMBTE1PRYeZoQclUZj3HV8ICHVmfgRVS1A==
+X-Received: by 2002:a05:6a00:3e18:b0:772:3c9:ce3e with SMTP id
+ d2e1a72fcca58-7723e21f348mr265665b3a.7.1756506364417; 
+ Fri, 29 Aug 2025 15:26:04 -0700 (PDT)
+Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.26.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 15:26:04 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 38/91] linux-user/x86_64: Fix dump of fs_base, gs_base
+Date: Sat, 30 Aug 2025 08:23:34 +1000
+Message-ID: <20250829222427.289668-39-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: it
-To: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-From: Luca Bonissi <qemu@bonslack.org>
-Subject: [PATCH 1/7] Add termios2 support to linux-user
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.247.49.194; envelope-from=qemu@bonslack.org;
- helo=bonnix2.bonnix.it
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,236 +100,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From f784259c584fa5f69172f5223b82e21e6054569f Mon Sep 17 00:00:00 2001
-From: Luca Bonissi <qemu@bonslack.org>
-Date: Sat, 30 Aug 2025 14:51:09 +0200
-Subject: [PATCH 1/7] Add termios2 support to linux-user
+We were storing the selector, not the base.
 
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/ioctls.h         |  6 +++
- linux-user/strace.c         | 63 +++++++++++++++++++++++++++++
- linux-user/syscall.c        | 80 +++++++++++++++++++++++++++++++++++++
- linux-user/syscall_types.h  |  3 ++
- linux-user/user-internals.h |  3 ++
- 5 files changed, 155 insertions(+)
+ linux-user/x86_64/elfload.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 3b41128fd7..0b2deb2824 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -1,5 +1,11 @@
-      /* emulated ioctl list */
- 
-+#ifdef TARGET_TCGETS2
-+     IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+     IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-+#endif
-      IOCTL(TCGETS, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios)))
-      IOCTL(TCSETS, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-      IOCTL(TCSETSF, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 786354627a..ce35769f92 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -1933,6 +1933,69 @@ print_termios(void *arg)
-     qemu_log("}");
- }
- 
-+#ifdef TARGET_TCGETS2
-+void
-+print_termios2(void *arg)
-+{
-+    const struct target_termios2 *target = arg;
-+
-+    target_tcflag_t iflags = tswap32(target->c_iflag);
-+    target_tcflag_t oflags = tswap32(target->c_oflag);
-+    target_tcflag_t cflags = tswap32(target->c_cflag);
-+    target_tcflag_t lflags = tswap32(target->c_lflag);
-+
-+    qemu_log("{");
-+
-+    qemu_log("c_iflag = ");
-+    print_flags(termios_iflags, iflags, 0);
-+
-+    qemu_log("c_oflag = ");
-+    target_tcflag_t oflags_clean =  oflags & ~(TARGET_NLDLY | TARGET_CRDLY |
-+                                               TARGET_TABDLY | TARGET_BSDLY |
-+                                               TARGET_VTDLY | TARGET_FFDLY);
-+    print_flags(termios_oflags, oflags_clean, 0);
-+    if (oflags & TARGET_NLDLY) {
-+        print_enums(termios_oflags_NLDLY, oflags & TARGET_NLDLY, 0);
-+    }
-+    if (oflags & TARGET_CRDLY) {
-+        print_enums(termios_oflags_CRDLY, oflags & TARGET_CRDLY, 0);
-+    }
-+    if (oflags & TARGET_TABDLY) {
-+        print_enums(termios_oflags_TABDLY, oflags & TARGET_TABDLY, 0);
-+    }
-+    if (oflags & TARGET_BSDLY) {
-+        print_enums(termios_oflags_BSDLY, oflags & TARGET_BSDLY, 0);
-+    }
-+    if (oflags & TARGET_VTDLY) {
-+        print_enums(termios_oflags_VTDLY, oflags & TARGET_VTDLY, 0);
-+    }
-+    if (oflags & TARGET_FFDLY) {
-+        print_enums(termios_oflags_FFDLY, oflags & TARGET_FFDLY, 0);
-+    }
-+
-+    qemu_log("c_cflag = ");
-+    if (cflags & TARGET_CBAUD) {
-+        print_enums(termios_cflags_CBAUD, cflags & TARGET_CBAUD, 0);
-+    }
-+    if (cflags & TARGET_CSIZE) {
-+        print_enums(termios_cflags_CSIZE, cflags & TARGET_CSIZE, 0);
-+    }
-+    target_tcflag_t cflags_clean = cflags & ~(TARGET_CBAUD | TARGET_CSIZE);
-+    print_flags(termios_cflags, cflags_clean, 0);
-+
-+    qemu_log("c_lflag = ");
-+    print_flags(termios_lflags, lflags, 0);
-+
-+    qemu_log("c_cc = ");
-+    qemu_log("\"%s\",", target->c_cc);
-+
-+    qemu_log("c_line = ");
-+    print_raw_param("\'%c\'", target->c_line, 1);
-+
-+    qemu_log("}");
-+}
-+#endif
-+
- #undef UNUSED
- 
- #ifdef TARGET_NR_accept
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 91360a072c..41ef690e52 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -88,6 +88,7 @@
- #endif
- 
- #define termios host_termios
-+#define termios2 host_termios2
- #define winsize host_winsize
- #define termio host_termio
- #define sgttyb host_sgttyb /* same as target */
-@@ -5887,6 +5888,85 @@ static const StructEntry struct_termios_def = {
-     .print = print_termios,
- };
- 
-+#ifdef TARGET_TCGETS2
-+static void target_to_host_termios2 (void *dst, const void *src)
-+{
-+    struct host_termios2 *host = dst;
-+    const struct target_termios2 *target = src;
-+
-+    host->c_iflag =
-+        target_to_host_bitmask(tswap32(target->c_iflag), iflag_tbl);
-+    host->c_oflag =
-+        target_to_host_bitmask(tswap32(target->c_oflag), oflag_tbl);
-+    host->c_cflag =
-+        target_to_host_bitmask(tswap32(target->c_cflag), cflag_tbl);
-+    host->c_lflag =
-+        target_to_host_bitmask(tswap32(target->c_lflag), lflag_tbl);
-+    host->c_line = target->c_line;
-+
-+    memset(host->c_cc, 0, sizeof(host->c_cc));
-+    host->c_cc[VINTR] = target->c_cc[TARGET_VINTR];
-+    host->c_cc[VQUIT] = target->c_cc[TARGET_VQUIT];
-+    host->c_cc[VERASE] = target->c_cc[TARGET_VERASE];
-+    host->c_cc[VKILL] = target->c_cc[TARGET_VKILL];
-+    host->c_cc[VEOF] = target->c_cc[TARGET_VEOF];
-+    host->c_cc[VTIME] = target->c_cc[TARGET_VTIME];
-+    host->c_cc[VMIN] = target->c_cc[TARGET_VMIN];
-+    host->c_cc[VSWTC] = target->c_cc[TARGET_VSWTC];
-+    host->c_cc[VSTART] = target->c_cc[TARGET_VSTART];
-+    host->c_cc[VSTOP] = target->c_cc[TARGET_VSTOP];
-+    host->c_cc[VSUSP] = target->c_cc[TARGET_VSUSP];
-+    host->c_cc[VEOL] = target->c_cc[TARGET_VEOL];
-+    host->c_cc[VREPRINT] = target->c_cc[TARGET_VREPRINT];
-+    host->c_cc[VDISCARD] = target->c_cc[TARGET_VDISCARD];
-+    host->c_cc[VWERASE] = target->c_cc[TARGET_VWERASE];
-+    host->c_cc[VLNEXT] = target->c_cc[TARGET_VLNEXT];
-+    host->c_cc[VEOL2] = target->c_cc[TARGET_VEOL2];
-+}
-+
-+static void host_to_target_termios2 (void *dst, const void *src)
-+{
-+    struct target_termios2 *target = dst;
-+    const struct host_termios2 *host = src;
-+
-+    target->c_iflag =
-+        tswap32(host_to_target_bitmask(host->c_iflag, iflag_tbl));
-+    target->c_oflag =
-+        tswap32(host_to_target_bitmask(host->c_oflag, oflag_tbl));
-+    target->c_cflag =
-+        tswap32(host_to_target_bitmask(host->c_cflag, cflag_tbl));
-+    target->c_lflag =
-+        tswap32(host_to_target_bitmask(host->c_lflag, lflag_tbl));
-+    target->c_line = host->c_line;
-+
-+    memset(target->c_cc, 0, sizeof(target->c_cc));
-+    target->c_cc[TARGET_VINTR] = host->c_cc[VINTR];
-+    target->c_cc[TARGET_VQUIT] = host->c_cc[VQUIT];
-+    target->c_cc[TARGET_VERASE] = host->c_cc[VERASE];
-+    target->c_cc[TARGET_VKILL] = host->c_cc[VKILL];
-+    target->c_cc[TARGET_VEOF] = host->c_cc[VEOF];
-+    target->c_cc[TARGET_VTIME] = host->c_cc[VTIME];
-+    target->c_cc[TARGET_VMIN] = host->c_cc[VMIN];
-+    target->c_cc[TARGET_VSWTC] = host->c_cc[VSWTC];
-+    target->c_cc[TARGET_VSTART] = host->c_cc[VSTART];
-+    target->c_cc[TARGET_VSTOP] = host->c_cc[VSTOP];
-+    target->c_cc[TARGET_VSUSP] = host->c_cc[VSUSP];
-+    target->c_cc[TARGET_VEOL] = host->c_cc[VEOL];
-+    target->c_cc[TARGET_VREPRINT] = host->c_cc[VREPRINT];
-+    target->c_cc[TARGET_VDISCARD] = host->c_cc[VDISCARD];
-+    target->c_cc[TARGET_VWERASE] = host->c_cc[VWERASE];
-+    target->c_cc[TARGET_VLNEXT] = host->c_cc[VLNEXT];
-+    target->c_cc[TARGET_VEOL2] = host->c_cc[VEOL2];
-+}
-+
-+static const StructEntry struct_termios2_def = {
-+    .convert = { host_to_target_termios2, target_to_host_termios2 },
-+    .size = { sizeof(struct target_termios2), sizeof(struct host_termios2) },
-+    .align = { __alignof__(struct target_termios2), __alignof__(struct host_termios2) },
-+    .print = print_termios2,
-+};
-+#endif
-+
- /* If the host does not provide these bits, they may be safely discarded. */
- #ifndef MAP_SYNC
- #define MAP_SYNC 0
-diff --git a/linux-user/syscall_types.h b/linux-user/syscall_types.h
-index 6dd7a80ce5..ac45705acf 100644
---- a/linux-user/syscall_types.h
-+++ b/linux-user/syscall_types.h
-@@ -1,4 +1,7 @@
- STRUCT_SPECIAL(termios)
-+#ifdef TARGET_TCGETS2
-+STRUCT_SPECIAL(termios2)
-+#endif
- 
- STRUCT(winsize,
-        TYPE_SHORT, TYPE_SHORT, TYPE_SHORT, TYPE_SHORT)
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 691b9a1775..191e01c3a8 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -127,6 +127,9 @@ static inline uint64_t target_offset64(uint64_t word0, uint64_t word1)
- #endif /* TARGET_ABI_BITS != 32 */
- 
- void print_termios(void *arg);
-+#ifdef TARGET_TCGETS2
-+void print_termios2(void *arg);
-+#endif
- 
- /* ARM EABI and MIPS expect 64bit types aligned even on pairs or registers */
- #ifdef TARGET_ARM
+diff --git a/linux-user/x86_64/elfload.c b/linux-user/x86_64/elfload.c
+index 18d632ec34..12de1c54c7 100644
+--- a/linux-user/x86_64/elfload.c
++++ b/linux-user/x86_64/elfload.c
+@@ -44,8 +44,8 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
+     r->pt.flags = tswapal(env->eflags);
+     r->pt.sp = tswapal(env->regs[R_ESP]);
+     r->pt.ss = tswapal(env->segs[R_SS].selector & 0xffff);
+-    r->pt.fs_base = tswapal(env->segs[R_FS].selector & 0xffff);
+-    r->pt.gs_base = tswapal(env->segs[R_GS].selector & 0xffff);
++    r->pt.fs_base = tswapal(env->segs[R_FS].base);
++    r->pt.gs_base = tswapal(env->segs[R_GS].base);
+     r->pt.ds = tswapal(env->segs[R_DS].selector & 0xffff);
+     r->pt.es = tswapal(env->segs[R_ES].selector & 0xffff);
+     r->pt.fs = tswapal(env->segs[R_FS].selector & 0xffff);
 -- 
-2.50.1
-
+2.43.0
 
 
