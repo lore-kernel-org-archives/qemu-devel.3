@@ -4,71 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03631CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA87FCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNFX-0006Sx-GT; Sat, 30 Aug 2025 11:12:15 -0400
+	id 1usNN5-0008EZ-En; Sat, 30 Aug 2025 11:20:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1urwyF-00004q-4G
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:08:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1us0HI-0007Zn-Ll
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 10:40:32 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1urwyC-0001j8-VF
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:08:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756465715;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PGvG/LGRqC2htS89N6HiSrot7Fa5WLiu5iEYx6qvNzE=;
- b=JbLQ5TxjY/88CNw39AgLr0tJUiV7gTVLDNcB/PIqhMOEkKjuHyD5PActzrJwkPmn6o8oSt
- aTLTgT/8/C9uNn1OxpFgAMTdLGAer5UukFvfqE7VHQVkJe1/OWpzWFqFuXtpxCMn3Uqvjf
- k5cVFAm9UXvCgx4oaSq8w8gJpU5i60M=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-PR4zvEojM8O3YlsnkE_wkQ-1; Fri,
- 29 Aug 2025 07:08:32 -0400
-X-MC-Unique: PR4zvEojM8O3YlsnkE_wkQ-1
-X-Mimecast-MFC-AGG-ID: PR4zvEojM8O3YlsnkE_wkQ_1756465711
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17278195C27E; Fri, 29 Aug 2025 11:08:31 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.45.225.62])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8349E30001B5; Fri, 29 Aug 2025 11:08:29 +0000 (UTC)
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 6/9] qga: ignore channel_init() fail if 'retry_path' is set
-Date: Fri, 29 Aug 2025 14:08:10 +0300
-Message-ID: <20250829110813.50286-7-kkostiuk@redhat.com>
-In-Reply-To: <20250829110813.50286-1-kkostiuk@redhat.com>
-References: <20250829110813.50286-1-kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1us0HE-0007zp-AX
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 10:40:32 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 57TEeJeE054845
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 29 Aug 2025 23:40:20 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=5cOfY4KsxJ9w2KVkX2GwNF0odtUWxEb47sjM2jUg8jw=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1756478420; v=1;
+ b=pDQC64DYAY11Cy/zu0XOpDVIENy/nuq5TcvKiPZDpZhNpYAki+uOAA0qjX54cOWH
+ C8klR8/RHNReHufFfYlsvm1VwYD8v/Sb9XdhZwgV1nzM1RHglDlJLbzVrAUL8uAw
+ rMBspzbkXYL+PqLZW+ScdaGDZ+OQ5ITdIVL94pTFFF8U+MW6lclVkDKlUCSMrBvP
+ MauSmP7bztrGTMRzm5XcBLdiAakCUcAV43OKjAtMwOcbtK9GyGCIr86SbP/MO8AT
+ dbThCyZLxJzQ3tmiqjv93ayDUMrw5X06EwlY3sJilQmH8TvTCL5HVzrNfZxm7/zv
+ 7r3O9GqZ0EAnFx48+6TGNw==
+Message-ID: <942ae41e-931f-4d09-85d8-8849d36b88db@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 29 Aug 2025 23:40:19 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio: Call set_features during reset
+To: Michael Tokarev <mjt@tls.msk.ru>, Fabiano Rosas <farosas@suse.de>
+Cc: peterx@redhat.com, qemu-devel@nongnu.org
+References: <871pudmlmj.fsf@suse.de>
+ <dc23eaca-15f5-40be-89d0-2247cfe1f716@tls.msk.ru> <87plchkaxo.fsf@suse.de>
+ <3983904c-9530-4cf5-b294-12ca04658b23@rsg.ci.i.u-tokyo.ac.jp>
+ <3b17f289-876d-4cbd-bda7-1bbd83832e85@tls.msk.ru>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <3b17f289-876d-4cbd-bda7-1bbd83832e85@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,38 +76,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Windows, we run QGA with `-d --retry-path` options by default,
-and expect that QGA will start even without the vioserial driver
-and will wait for communication forever.
+On 2025/08/29 17:34, Michael Tokarev wrote:
+> On 28.08.2025 03:57, Akihiko Odaki wrote:
+> 
+>> The posted call trace indicates a lockup happens in the control path, 
+>> but commit cefd67f25430 ("virtio-net: Fix num_buffers for version 1") 
+>> changes the data path.
+>>
+>> On the other hand, I can come up with a possible failure scenario with 
+>> commit ce1431615292 ("virtio: Call set_features during reset"). 
+>> Perhaps it changed the machine state before loading the migrated 
+>> state, and caused a mismatch between them.
+> 
+> Yes, the problem commit is 0caed25cd171c6 "virtio: Call set_features
+> during reset", - the OP corrected himself in the next message (subject
+> line updated).
+> 
+>> I need more information to understand the issue. A command line to 
+>> reproduce the issue is especially helpful because options like 
+>> mrg_rxbuf=, which you mentioned, tell enabled features, which is 
+>> valuable information.
+> 
+> See https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1112044#69 for
+> the command line.  The guest is started by libvirtd.
 
-Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
-Reviewed-by: Michal Privoznik <mprivozn@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250825140549.146617-3-kkostiuk@redhat.com
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
----
- qga/main.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Thank you, now I think I understand the problem.
 
-diff --git a/qga/main.c b/qga/main.c
-index a1bf8f53ac..dd1c216f9a 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -1512,8 +1512,12 @@ static GAState *initialize_agent(GAConfig *config, int socket_activation)
- 
-     if (!channel_init(s, s->config->method, s->config->channel_path,
-                       s->socket_activation ? FIRST_SOCKET_ACTIVATION_FD : -1)) {
--        g_critical("failed to initialize guest agent channel");
--        return NULL;
-+        if (s->config->retry_path) {
-+            g_info("failed to initialize guest agent channel, will retry");
-+        } else {
-+            g_critical("failed to initialize guest agent channel");
-+            return NULL;
-+        }
-     }
- 
-     if (config->daemonize) {
--- 
-2.50.1
+> 
+> Please note: this is stable-7.2 series, it is *not* master (I picked
+> up this commit to 7.2.x).  It'd be interesting to check if master is
+> affected too.  Unfortunately I never tried migration, and now I only
+> have my notebook, so can only migrate between two qemu instances on
+> the same box - which is probably okay too.
 
+I think you need to backport commit 9379ea9db3c0 ("virtio-net: Add 
+queues before loading them") and adda0ad56bd2 ("virtio-net: Add queues 
+for RSS during migration"). Here is an explanation:
+
+First, let me define two variables for conciseness:
+N: the number of queue pairs
+M: the maximum number of queue pairs, which is determined with
+    n->max_queue_pairs
+
+The problem is that QEMU inconsistently chose N for virtio-net in the 
+past. Before commit 8c49756825da ("virtio-net: Add only one queue pair 
+when realizing"):
+1) realize() chose M.
+2) set_features() chose: 1 (when RSS and MQ are disabled)
+                          M (otherwise)
+
+This itself was a problem; both RSS and MQ were disabled when realize() 
+but N was M, which is inconsistent with 2) and this inconsistency was 
+guest-visible.
+
+I wrote commit 8c49756825da ("virtio-net: Add only one queue pair when 
+realizing") to make QEMU implement the behavior in 2) also during 
+realization and fix the inconsistency, but it broke migration when the 
+migrated VM had enabled VIRTIO_NET_F_RSS and VIRTIO_NET_F_MQ because it 
+expected that N == M.
+
+This is also why the backported commit also broke migration; it 
+accidentally fixed the inconsistency between the first reset state and 
+the state after set_features() and caused the same problem.
+
+I wrote commit 9379ea9db3c0 ("virtio-net: Add queues before loading 
+them") to fix the issue and later complemented it with commit 
+adda0ad56bd2 ("virtio-net: Add queues for RSS during migration").
+
+There are several relevant commits because I could not fix the 
+underlying problem at once, but hopefully this email clarifies how the 
+two commits fixed it in the end.
+
+Regards,
+Akihiko Odaki
 
