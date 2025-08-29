@@ -4,90 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65244CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8598ACA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:18:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usODc-0003w5-Hk; Sat, 30 Aug 2025 12:14:20 -0400
+	id 1usNf4-0005RH-H2; Sat, 30 Aug 2025 11:38:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEQf-0007GC-2K
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:09 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEQb-0004ri-Mg
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:08 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-248ff5cabe0so12032105ad.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:47:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532824; x=1757137624; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8B7sIbsSJ/cOWPqqEvvb1o4vwQPENNhK2iKckGHu1kw=;
- b=ukyjja0etJPzF2sge61036Hpym2dA7p9z0C9QLS1p1IdgCat/LRhj39ujp6sW26CK5
- Lcg65aUUhbh1R2KgURDj0w3A5Kt4vgvpX5NJ3ISc2Jf1ohSHBEO4U5wEfjwTiZi33nur
- pMchigqJMSpuiJNyWE2mJEEwD3TEUidHk3BRSVLeB190VGsVxOCsazb67f4PGqu1lMYQ
- 5BlnM3T3VSInQvN1DmWiFmsHtEdBVE7JnfYin48QVDgCh+faQaOqwFXUcu1cWpVXr1KQ
- Y3cJfmhA4f2Uw9R/fDK+spKDo+LpfNqe1KNE4n0I1cei3BBzcmS1zWUt2/NQ8zNGogFv
- eDzg==
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1us5OL-0006iJ-7S
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:08:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1us5OJ-0005Jz-2P
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:08:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756498086;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RIJWzM+9HmtrwS0tPhmUTm+5sifEW+9w36De81b4Bm8=;
+ b=iLoIlqgtGuXbYScHeBWumkcjyuIhEjt8Dlpl0pQzY3HZBd1ZLC26AqU9LcsnpL+h/io+cP
+ r/zOfjct/vS59FWqqLfLYK6EoHMGvTRBN/Gljf5Mg1RVhOH0y4pB1Ha7vQq7sG/B4xpBhC
+ gvz8mKXXk4tt5I/GvFv32Cmzu8bdasM=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-rEJYVAYJPFmx0z2aXEBx0A-1; Fri, 29 Aug 2025 16:08:05 -0400
+X-MC-Unique: rEJYVAYJPFmx0z2aXEBx0A-1
+X-Mimecast-MFC-AGG-ID: rEJYVAYJPFmx0z2aXEBx0A_1756498084
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3251961140bso2371412a91.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 13:08:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532824; x=1757137624;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756498084; x=1757102884;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8B7sIbsSJ/cOWPqqEvvb1o4vwQPENNhK2iKckGHu1kw=;
- b=ZWQLoVtjd3Pg5FIvwhoYzMsa9tuCIecI3u5VbS9wxCtGd8Ot6SO7ZkpEHFNxOGyF2P
- hr+uNoxiNHY0wriRoeJtARji6LxdJmehdrXbQ7MZLY5KyWUSaDEHZA6ImBKiZuvZ3n+4
- /REQUk/weoe+9U/OiZqb0qRhpX+q746Q+Q8lOhr0sVvFVVYQu8enp/DQw4TlRx7hTeVU
- uT71Jm4fJD3y1D6nRngv8M9JJZSoSP9KouvZp99sc0pB2iaox6lHabSgjpOTRzgwZGPL
- qfzE5WlIoCV+p4xhKKBrIEVzAsqKJ+5o/Av8oO+UsC5PNzje9fN1quzAjX7c/pY96ito
- ReeQ==
-X-Gm-Message-State: AOJu0YzOK+4YdC1prIdNJhSQlitLEHriSabXWFZpj6QDWkMPK2LVDtIJ
- dF6JAYb6xLMf/FX9pUxYh+/QLxs71iKOM8As0kGBlrRLX8NJD8LDGju31mCSocWdnXJhIXv8kgO
- C6fG6GkU=
-X-Gm-Gg: ASbGncshSpBs/g2dbxWR8m2xHO+dMr+bVt0gMOMiO/W86+owxgzWp6ly30yklVIfwSq
- gLaIc32cqeRP5d2cHUoxzgnwhBzDLJZlIh2I/DBom4JX1VquSNQegRgJrHx++ofoePVeMx2rRBS
- C+QSk/eV2PrI+mIdoFcM4wVda1hgiLLq1Dfob2a8B1j/nBlSjpsCa7H9N2WabpU+NhJWukECur/
- fFTgGxSc1247UdQ8qDToeEdc6V12r1P6AgCxtNvfrjAfQGJ8TLM9zyCl5lsNkBaUS9ydgCM8H+d
- 7i09VdnCl/AumgUEsC8MZIRNbVnhBFuyrWeucZRxUP4T/BRqnP00XeSdsYiAKFoF1W8IRjs7AUw
- GcHWTQ/Nv37NQkYuLueNFgxetgweAuw0XKVAkFYbqw2+vHxyrHmMkpbo4XtY5wRNKZdZjDhOkcg
- ==
-X-Google-Smtp-Source: AGHT+IF4jSutS5ul/aEuCvRgPJiuCGXz5G0mpCqAizeb9k2KQQlI9oSYZHPqrQ0qPzlkXYluqNV1+Q==
-X-Received: by 2002:a17:902:ebc5:b0:246:a93c:5850 with SMTP id
- d9443c01a7336-24944ad3977mr10464805ad.42.1756532823704; 
- Fri, 29 Aug 2025 22:47:03 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ bh=RIJWzM+9HmtrwS0tPhmUTm+5sifEW+9w36De81b4Bm8=;
+ b=Etuhiud8iy/RE5raAFS8JoxXWhj8NM21uy4oriDQd9oUvd0mffHhWymMlSxn/RaFaF
+ onTCk8rF7B9HY2nNn0xauBpz8xH28XOXwVuPTfvGirPOrY8JTFilviiepLN+tfjt/qZ0
+ 9aaxRBwB5b7FdEVc5z21sxX0K3w2VeQVkDviIJ1U8P/6JDdD+/tfO+ZopOCIzdtMkdli
+ eWlw0OovxW2kPYbu/Xy1zrDEWXRDo2vs2XjtdGkcqBSPiYLxoOA0E0A/EX/ddvPREi/s
+ 98agbswKYmIbVzpY92f+7VORwRwPiqC0mYTNjHBvjidpK4AV9J9zC7bq0lWh+GFlSIWp
+ SoIQ==
+X-Gm-Message-State: AOJu0YwidabfCP2BGKRkCBprnnz27cWnSLuplYeusVIk/b++m19F39HX
+ Qs8VpVitsnyO7aWncMyX1Se/Pp9kw043zalfw0qCZiqlVLiXBneslH8vTUy7PNa+GM4I3Gezxsj
+ Rh+Af5rFfY+mn9mjFxQGx9GvF48PFu+gYxIGcusjcUMLtG7oCFfeMCZtq
+X-Gm-Gg: ASbGnctd0fFPegy4GVErWl96to/5FY7uhBWKH7FyyVtMtx+eTiujNj5AoYhkCy2OMj+
+ A7wMwEvUINl8/8w1CreicoSMDvAz6Ccuo7Mk4+Z7vmAz3Qnxjbi/3NAyyv0c2t27D6uh+7Ccmc9
+ BaAJw24iE9UYCFwSHtMXIqMtqsPQSUV1VuL8QRvg0Cmd5NzMZH5fVYQcUxrdETnFBSpuv1Sm6hB
+ 0J+eIhjLz5FzvOlY/9OVYdhvVNFOI9Q15b2lRW1X6B/dTrYagg6ffIQm1Gg/c0ZYklYBD3wnBDr
+ 7ont4X1jrBN+cPBHNcOrYx1pNiRLgRBdVKjsRgKtJz9SKZn93qKPmg==
+X-Received: by 2002:a17:90b:2648:b0:327:83e1:5bf with SMTP id
+ 98e67ed59e1d1-32783e10b79mr12610536a91.28.1756498084088; 
+ Fri, 29 Aug 2025 13:08:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFr7U8FzL+m7/jCRocI5RF71VOc6/69Njtxm9FXx7CFFkbaoLToigV1VKRugxWrzZED3Hot9Q==
+X-Received: by 2002:a17:90b:2648:b0:327:83e1:5bf with SMTP id
+ 98e67ed59e1d1-32783e10b79mr12610498a91.28.1756498083584; 
+ Fri, 29 Aug 2025 13:08:03 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.47.195.108])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.47.01
+ 98e67ed59e1d1-327d8f66f16sm3570543a91.0.2025.08.29.13.07.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:47:03 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 52/84] target/arm: Implement EXLOCKException for ELR_ELx
- and SPSR_ELx
-Date: Sat, 30 Aug 2025 15:40:56 +1000
-Message-ID: <20250830054128.448363-53-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ Fri, 29 Aug 2025 13:08:03 -0700 (PDT)
+From: Arun Menon <armenon@redhat.com>
+Date: Sat, 30 Aug 2025 01:32:05 +0530
+Subject: [PATCH v13 25/27] migration: Rename post_save() to cleanup_save()
+ and make it void
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250830-propagate_tpm_error-v13-25-a4e777b7eb2c@redhat.com>
+References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+In-Reply-To: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Steve Sistare <steven.sistare@oracle.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Arun Menon <armenon@redhat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6500; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=74/dsKktNrtzX90Ti+uqvjJHnSL4vO0NIyRx84Chf/E=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8Ymdj8HhidK3T2391w4tKmTN23tNefV+XmZHbNr+lwnP
+ ymbfHBtRykLgxgXg6yYIkvD1wDZpoDCiEjbl9dh5rAygQxh4OIUgImYCjP8U/23auOilooJvw26
+ 82VWfNguH/wi2SHSo/1QZmtYbmbKC4b/VR9Pxy1geb/a95aPnfb/uOyPTP8COjqy9n+JTDw9y0C
+ PGwA=
+X-Developer-Key: i=armenon@redhat.com; a=openpgp;
+ fpr=80F5501D82507158593DE9D76A7A2538D90F328E
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,198 +140,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If PSTATE.EXLOCK is set, and the GCS EXLOCK enable bit is set,
-and nested virt is in the appropriate state, then we need to
-raise an EXLOCK exception.
+The post_save() function call is responsible for cleaning up resources
+after the device state has been saved.
+Currently it is infallible, and does not return an error.
 
-Since PSTATE.EXLOCK cannot be set without GCS being present
-and enabled, no explicit check for GCS is required.
+It is called regardless of whether there is a preceding error from
+save or subsection save. That is, save and post_save() together are
+considered to be an atomic logical operation.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+It should not be confused as a counterpart of the post_load() function
+because post_load() does some sanity checks and returns an error if it
+fails. This commit, therefore, renames post_save() to cleanup_save()
+and makes it a void function.
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- target/arm/cpregs.h        |  3 ++
- target/arm/cpu.h           |  1 +
- target/arm/helper.c        | 83 +++++++++++++++++++++++++++++++++++---
- target/arm/tcg/op_helper.c |  4 ++
- 4 files changed, 85 insertions(+), 6 deletions(-)
+ docs/devel/migration/main.rst |  2 +-
+ hw/ppc/spapr_pci.c            |  5 ++---
+ include/migration/vmstate.h   |  2 +-
+ migration/savevm.c            |  5 ++---
+ migration/vmstate.c           | 12 ++++--------
+ target/arm/machine.c          |  6 ++----
+ 6 files changed, 12 insertions(+), 20 deletions(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index bc6adf5956..15894332b2 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -346,6 +346,9 @@ typedef enum CPAccessResult {
-      * specified target EL.
-      */
-     CP_ACCESS_UNDEFINED = (2 << 2),
-+
-+    /* Access fails with EXLOCK, a GCS exception syndrome. */
-+    CP_ACCESS_EXLOCK = (3 << 2),
- } CPAccessResult;
+diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+index 6493c1d2bca48a2fa34d92f6c0979c215c56b8d5..a39fec2e21c26c4315c0cf13b105176d70679d4d 100644
+--- a/docs/devel/migration/main.rst
++++ b/docs/devel/migration/main.rst
+@@ -439,7 +439,7 @@ The functions to do that are inside a vmstate definition, and are called:
  
- /* Indexes into fgt_read[] */
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index d5a5152a9c..17902eb40d 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1511,6 +1511,7 @@ void pmu_init(ARMCPU *cpu);
- #define PSTATE_C (1U << 29)
- #define PSTATE_Z (1U << 30)
- #define PSTATE_N (1U << 31)
-+#define PSTATE_EXLOCK (1ULL << 34)
- #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
- #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
- #define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE)
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 83a7d6ae36..2f19695d82 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3432,6 +3432,77 @@ static CPAccessResult access_nv1(CPUARMState *env, const ARMCPRegInfo *ri,
-     return CP_ACCESS_OK;
+   This function is called before we save the state of one device.
+ 
+-- ``int (*post_save)(void *opaque);``
++- ``void (*cleanup_save)(void *opaque);``
+ 
+   This function is called after we save the state of one device
+   (even upon failure, unless the call to pre_save returned an error).
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index 1ac1185825e84ca908fd878f6cbe7e8cacac1d89..135265f075dff502af59fbc91babca1f9a26c54d 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -2118,14 +2118,13 @@ static int spapr_pci_pre_save(void *opaque)
+     return 0;
  }
  
-+static CPAccessResult access_exlock_el1(CPUARMState *env,
-+                                        const ARMCPRegInfo *ri, bool isread)
-+{
-+    int el = arm_current_el(env);
-+
-+    if (el == 1) {
-+        uint64_t hcr = arm_hcr_el2_eff(env);
-+
-+        /*
-+         * EXLOCK check is disabled for NVx in 'x11'.
-+         * Since we have to diagnose that, dispatch NV1 trap too.
-+         */
-+        if ((hcr & HCR_NV) && (hcr & HCR_NV1)) {
-+            if (hcr & HCR_NV2) {
-+                return CP_ACCESS_OK;
-+            }
-+            return CP_ACCESS_TRAP_EL2;
-+        }
-+    }
-+
-+    if (!isread &&
-+        (env->pstate & PSTATE_EXLOCK) &&
-+        (el_is_in_host(env, el) ? el == 2 : el == 1) &&
-+        (env->cp15.gcscr_el[el] & GCSCR_EXLOCKEN)) {
-+        return CP_ACCESS_EXLOCK;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
-+static CPAccessResult access_exlock_el2(CPUARMState *env,
-+                                        const ARMCPRegInfo *ri, bool isread)
-+{
-+    int el = arm_current_el(env);
-+
-+    if (el == 3) {
-+        return CP_ACCESS_OK;
-+    }
-+    if (el == 1) {
-+        uint64_t hcr = arm_hcr_el2_eff(env);
-+
-+        /*
-+         * EXLOCK check is disabled for NVx in 'xx1'.
-+         * Since we have to diagnose that, dispatch NV1 trap too.
-+         */
-+        if (hcr & HCR_NV) {
-+            if (hcr & HCR_NV2) {
-+                return CP_ACCESS_OK;
-+            }
-+            return CP_ACCESS_TRAP_EL2;
-+        }
-+    }
-+
-+    if (!isread &&
-+        (env->pstate & PSTATE_EXLOCK) &&
-+        (env->cp15.gcscr_el[el] & GCSCR_EXLOCKEN)) {
-+        return CP_ACCESS_EXLOCK;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
-+static CPAccessResult access_exlock_el3(CPUARMState *env,
-+                                        const ARMCPRegInfo *ri, bool isread)
-+{
-+    if (!isread &&
-+        (env->pstate & PSTATE_EXLOCK) &&
-+        (env->cp15.gcscr_el[3] & GCSCR_EXLOCKEN)) {
-+        return CP_ACCESS_EXLOCK;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
- #ifdef CONFIG_USER_ONLY
- /*
-  * `IC IVAU` is handled to improve compatibility with JITs that dual-map their
-@@ -3603,13 +3674,13 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-     { .name = "ELR_EL1", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS,
-       .opc0 = 3, .opc1 = 0, .crn = 4, .crm = 0, .opc2 = 1,
--      .access = PL1_RW, .accessfn = access_nv1,
-+      .access = PL1_RW, .accessfn = access_exlock_el1,
-       .nv2_redirect_offset = 0x230 | NV2_REDIR_NV1,
-       .fieldoffset = offsetof(CPUARMState, elr_el[1]) },
-     { .name = "SPSR_EL1", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS,
-       .opc0 = 3, .opc1 = 0, .crn = 4, .crm = 0, .opc2 = 0,
--      .access = PL1_RW, .accessfn = access_nv1,
-+      .access = PL1_RW, .accessfn = access_exlock_el1,
-       .nv2_redirect_offset = 0x160 | NV2_REDIR_NV1,
-       .fieldoffset = offsetof(CPUARMState, banked_spsr[BANK_SVC]) },
-     /*
-@@ -4080,7 +4151,7 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
-     { .name = "ELR_EL2", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS | ARM_CP_NV2_REDIRECT,
-       .opc0 = 3, .opc1 = 4, .crn = 4, .crm = 0, .opc2 = 1,
--      .access = PL2_RW,
-+      .access = PL2_RW, .accessfn = access_exlock_el2,
-       .fieldoffset = offsetof(CPUARMState, elr_el[2]) },
-     { .name = "ESR_EL2", .state = ARM_CP_STATE_BOTH,
-       .type = ARM_CP_NV2_REDIRECT,
-@@ -4098,7 +4169,7 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
-     { .name = "SPSR_EL2", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS | ARM_CP_NV2_REDIRECT,
-       .opc0 = 3, .opc1 = 4, .crn = 4, .crm = 0, .opc2 = 0,
--      .access = PL2_RW,
-+      .access = PL2_RW, .accessfn = access_exlock_el2,
-       .fieldoffset = offsetof(CPUARMState, banked_spsr[BANK_HYP]) },
-     { .name = "VBAR_EL2", .state = ARM_CP_STATE_BOTH,
-       .opc0 = 3, .opc1 = 4, .crn = 12, .crm = 0, .opc2 = 0,
-@@ -4380,7 +4451,7 @@ static const ARMCPRegInfo el3_cp_reginfo[] = {
-     { .name = "ELR_EL3", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS,
-       .opc0 = 3, .opc1 = 6, .crn = 4, .crm = 0, .opc2 = 1,
--      .access = PL3_RW,
-+      .access = PL3_RW, .accessfn = access_exlock_el3,
-       .fieldoffset = offsetof(CPUARMState, elr_el[3]) },
-     { .name = "ESR_EL3", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 6, .crn = 5, .crm = 2, .opc2 = 0,
-@@ -4391,7 +4462,7 @@ static const ARMCPRegInfo el3_cp_reginfo[] = {
-     { .name = "SPSR_EL3", .state = ARM_CP_STATE_AA64,
-       .type = ARM_CP_ALIAS,
-       .opc0 = 3, .opc1 = 6, .crn = 4, .crm = 0, .opc2 = 0,
--      .access = PL3_RW,
-+      .access = PL3_RW, .accessfn = access_exlock_el3,
-       .fieldoffset = offsetof(CPUARMState, banked_spsr[BANK_MON]) },
-     { .name = "VBAR_EL3", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 6, .crn = 12, .crm = 0, .opc2 = 0,
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 46a3b911ec..56e117c01e 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -887,6 +887,10 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
-         }
-         syndrome = syn_uncategorized();
-         break;
-+    case CP_ACCESS_EXLOCK:
-+        /* CP_ACCESS_EXLOCK is always directed to the current EL */
-+        syndrome = syn_gcs_exlock();
-+        break;
-     default:
-         g_assert_not_reached();
+-static int spapr_pci_post_save(void *opaque)
++static void spapr_pci_cleanup_save(void *opaque)
+ {
+     SpaprPhbState *sphb = opaque;
+ 
+     g_free(sphb->msi_devs);
+     sphb->msi_devs = NULL;
+     sphb->msi_devs_num = 0;
+-    return 0;
+ }
+ 
+ static int spapr_pci_post_load(void *opaque, int version_id)
+@@ -2152,7 +2151,7 @@ static const VMStateDescription vmstate_spapr_pci = {
+     .version_id = 2,
+     .minimum_version_id = 2,
+     .pre_save = spapr_pci_pre_save,
+-    .post_save = spapr_pci_post_save,
++    .cleanup_save = spapr_pci_cleanup_save,
+     .post_load = spapr_pci_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64_EQUAL(buid, SpaprPhbState, NULL),
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 5fe9bbf39058d0cf97c1adab54cc516dbe8dc32a..c1d8e5b7a7d9d544fc8ce181372660f5538ef66b 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -208,7 +208,7 @@ struct VMStateDescription {
+     int (*pre_load)(void *opaque);
+     int (*post_load)(void *opaque, int version_id);
+     int (*pre_save)(void *opaque);
+-    int (*post_save)(void *opaque);
++    void (*cleanup_save)(void *opaque);
+     bool (*needed)(void *opaque);
+     bool (*dev_unplug_pending)(void *opaque);
+ 
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 2c05b763148295d7e2095027aa143f45bc4c4676..693f77b728604f2072fb40bd2ec268b217da9727 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -322,14 +322,13 @@ static int configuration_pre_save(void *opaque)
+     return 0;
+ }
+ 
+-static int configuration_post_save(void *opaque)
++static void configuration_cleanup_save(void *opaque)
+ {
+     SaveState *state = opaque;
+ 
+     g_free(state->capabilities);
+     state->capabilities = NULL;
+     state->caps_count = 0;
+-    return 0;
+ }
+ 
+ static int configuration_pre_load(void *opaque)
+@@ -544,7 +543,7 @@ static const VMStateDescription vmstate_configuration = {
+     .pre_load = configuration_pre_load,
+     .post_load = configuration_post_load,
+     .pre_save = configuration_pre_save,
+-    .post_save = configuration_post_save,
++    .cleanup_save = configuration_cleanup_save,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(len, SaveState),
+         VMSTATE_VBUFFER_ALLOC_UINT32(name, SaveState, 0, NULL, len),
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index ad8e5b71ae2ce78e66a6426602e5c20405ec57c0..a7562a5cfd8627e20c90e286e35c5e3429c48150 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -529,8 +529,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 if (ret) {
+                     error_setg(errp, "Save of field %s/%s failed",
+                                 vmsd->name, field->name);
+-                    if (vmsd->post_save) {
+-                        vmsd->post_save(opaque);
++                    if (vmsd->cleanup_save) {
++                        vmsd->cleanup_save(opaque);
+                     }
+                     return ret;
+                 }
+@@ -557,12 +557,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+ 
+     ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+ 
+-    if (vmsd->post_save) {
+-        int ps_ret = vmsd->post_save(opaque);
+-        if (!ret && ps_ret) {
+-            ret = ps_ret;
+-            error_setg(errp, "post-save failed: %s", vmsd->name);
+-        }
++    if (vmsd->cleanup_save) {
++        vmsd->cleanup_save(opaque);
      }
+     return ret;
+ }
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 6986915bee876402c1bd2efb92f41ca1298c66a3..d070114da15de85fd50af71e1d8caa84f25846d8 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -903,15 +903,13 @@ static int cpu_pre_save(void *opaque)
+     return 0;
+ }
+ 
+-static int cpu_post_save(void *opaque)
++static void cpu_cleanup_save(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+ 
+     if (!kvm_enabled()) {
+         pmu_op_finish(&cpu->env);
+     }
+-
+-    return 0;
+ }
+ 
+ static int cpu_pre_load(void *opaque)
+@@ -1048,7 +1046,7 @@ const VMStateDescription vmstate_arm_cpu = {
+     .version_id = 22,
+     .minimum_version_id = 22,
+     .pre_save = cpu_pre_save,
+-    .post_save = cpu_post_save,
++    .cleanup_save = cpu_cleanup_save,
+     .pre_load = cpu_pre_load,
+     .post_load = cpu_post_load,
+     .fields = (const VMStateField[]) {
+
 -- 
-2.43.0
+2.51.0
 
 
