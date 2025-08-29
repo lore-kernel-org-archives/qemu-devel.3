@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CD74CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B937BCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNg8-0007ee-2A; Sat, 30 Aug 2025 11:39:44 -0400
+	id 1usNkJ-0001Xc-2f; Sat, 30 Aug 2025 11:44:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us6oM-0004Vo-4p
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:39:06 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1us7bm-0004oZ-1c
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:10 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us6oI-00007K-Tu
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:39:04 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-244580523a0so26507485ad.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 14:39:02 -0700 (PDT)
+ id 1us7bk-0003uG-0t
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:09 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-76e4f2e4c40so2302077b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756503541; x=1757108341; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iMCIi3z5edR6MVDUP2g4UOv8RXSM/sAGgqJ3ufSyAO4=;
- b=hB8ycX2bcjadoVloVkTCyobbb+Z63AV4xZhAa7D9a8Nd6SAtCXhG6MKLcwL3ga6du9
- R+j2ii6KKYvljolTUaOj6FTPo4dUrKsj7w+3Y8rsCUk8BdJcOefD59gCykr4a3zJrcWx
- fTcvyIo+qSjhEbQ6anrHPNOE+ITGUZofPuwvlfFyYsLnD9207Y0NAiOe14YHoqXvgveq
- Ry5yeFpv5EP4S9/RuGiz69WqS6LwZ37y869jGb2L32oLVnYSyqj7sOF9WHfT8pg+Y/Rp
- R6f9ScV/pXK/yJIRFYdAsK0rDzg1Lxr+3PBQslkwIXyZH8Gqf5lxNxjpY6YroBpj5RV/
- PzlA==
+ d=linaro.org; s=google; t=1756506606; x=1757111406; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iohwGQx+PJHpsLcgRWLe+gDcmZ33+kolO8wPf1tJJvc=;
+ b=wGvxw+sdOkyVcdcdURyvaeQHnAIxJ4L2hWjbW/l+tH06ndfXjsZZ6hVQ0Af7ZJvfCu
+ RJQMynOvE6Bk4ljkRFqygpfqnMgYiVS9z+CT50bpfHaIKqkpBI4pZUSs8WKbPwfI37ol
+ yllsuUwwlpXwllw9ZjTju+/MVzzSVLAMyflMPX+6DByBsCR9ENOqRe8lIEG1IrZvywMs
+ qzdOY5Ex5pc3GJMqPXEu1C2ITOl/K8Fjv8inv17u2qgg9u3tuXIGpB4C5fqMqh4YjnmG
+ Pea5oUU8CeFWhAaaT5eo4PT8iRoI1WoHSEy8BwnFN1ChHBCwVNBgPK4SiAvEQSY9p9nA
+ ER6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756503541; x=1757108341;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iMCIi3z5edR6MVDUP2g4UOv8RXSM/sAGgqJ3ufSyAO4=;
- b=NgTGpGyn/2I5JnOKmTWdv4nzUUWkdZwQNNwZfMbO8iuphzCzPuhJgBGXz9I4JKvwhn
- KieLvdhDVQICS7fWvcj/Ogpd4Z63ITpPhPbGjdfiWZnKrngxAIbojYj51e4aq03jgmP5
- pa1LVcydBEjaozheXvvPtf8My64oR/JdxM9IOM1w8SoTRbMBeuA8Ro2VKOGYIdQWC7Fl
- PfYMrIavwERmPIYsvFp5LQekpFXaRBA3CuwzWSgXk6s2MFvtohR0iz3MIbueftxquxEK
- 7ayGl5vFYuTsoHLZvYPSC7bJV1dazdRkm8RpSPgEkGDQMCtacKsaQ9uTlXj68eLnOyLZ
- x/Mw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwqepkyGu3rDNnlK823iejNctbZAnEIx/bm6VyahAFfsxBkCObH8yJLSOgT7MTGhN/I4mCIYyTyVRu@nongnu.org
-X-Gm-Message-State: AOJu0YwDyX5lK5eOVJiJzbtFF3KwUr8pJeDYeUtlYQc9sjiGZADR+X3u
- 2S/VOVEWSQMdn5VVbz4Z/6+eObW9xmBx+R1Kyo9JtIWAvwOJMCDLgOJqFFCVRa+Fhv0=
-X-Gm-Gg: ASbGncv3iHaeY8zTmLV7Vjn2XLkjhSkUSxRNqI2fL07Bl17EEjUIXbbSHZt0udvcrIt
- 14bpJwN59aOQL0TbhGMk7xiLnklsGjmO563Xl/ZNGVn5X+e73PiGqeRjpon2gVskRY5NB216gH0
- QxykqOBeH6MqdxHqFQrYvme1eL7wb3ihVHeEM+AOJXUO+52zf3f294AU+F0Dp4nzk5FPnqzAgzs
- 3z5U/stUww2w9jxZ+2HYu9MfKRVSj9VNP6EyxvzezhaJ3Y2dIrKnF6a9L09Se6YSYVQa9k+GcJR
- gi4Dl/XwdeDpgt97ll/VySmACJw88rEhhI+WK4H0dbEBnjtcMn0Wi7fR2zAKHkN/beCQuFhL+VH
- WF+sq6WyCz5tWh8iophkV83DRe8IOwunGGmSa1+NbLHxKgCvlj12PLPoOITyTGuf/K8qv4o/AJs
- V+bdczYg0=
-X-Google-Smtp-Source: AGHT+IGCdga0s5dtkCfKGsd3TgqoQ7aUWkiYKENmw7+ZVqxzS0S0YYvMwH2jBBnfNnzzV99y5DwZLA==
-X-Received: by 2002:a17:902:e80f:b0:240:968f:4d64 with SMTP id
- d9443c01a7336-249448f9c33mr1442465ad.11.1756503540929; 
- Fri, 29 Aug 2025 14:39:00 -0700 (PDT)
-Received: from [10.118.1.198] (122-150-204-179.dyn.ip.vocus.au.
- [122.150.204.179]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24906596416sm33568395ad.118.2025.08.29.14.38.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 14:39:00 -0700 (PDT)
-Message-ID: <2f5c6c14-ca41-4ce8-8a19-3d40e2589385@linaro.org>
-Date: Sat, 30 Aug 2025 07:38:55 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/18] cpu-common: use atomic access for interrupt_request
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, imammedo@redhat.com
-References: <20250829152909.1589668-1-pbonzini@redhat.com>
- <20250829153115.1590048-3-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1756506606; x=1757111406;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iohwGQx+PJHpsLcgRWLe+gDcmZ33+kolO8wPf1tJJvc=;
+ b=n4bd92CO9QpuhCtl5Y+ig1E4Ku3783c4puJEi7r2cyOLzY0GGcDED0SSkNLv9d6PXs
+ D+akBx2FdPQuNgNigwn2eh1hCcQQYal931z7fZAkxq8C9dXpdBCL2evs59H0MqJpHXpX
+ eDj1V2zyqA/x35mHuol2Z5ZU8m3X6dkQA+q2t9Afb0RIs39nIeM5u+z/d257zRzyuVbE
+ mCKFvODkxhJrfZAjYSUnR1C4yPhFigjXupqVGyUcyg3gK6zqqGxqeTZD+22ftorGnhtO
+ cdH8hgW1dOxoiOPhVu/+AQ3QoCjCB1CS2XxWpqskM1VmeewPYWju5XVorJPjv6k422we
+ ZuLw==
+X-Gm-Message-State: AOJu0YwnNNKJNTxwo9Z1AMxH//v8xT1I/f2Ui8/fKN/fbxQYZtiMxoF7
+ Ap0m3zyvRM7Hm0moiKan2Evo1QGWfI9I4jilLPgBTBvO8lpp7bOuhlhB/mH1YAC5OPA8Df2AF4l
+ Fqv0pp10=
+X-Gm-Gg: ASbGncubv+DjfM45SrGtBhdDR2GgXCLgJI2v//9n6V7/RiT2GCXCAnFWi9lUyB7cwz/
+ zhsQ4841KYetair669mJ4EN73y1lrjJWR3AMz0cza9a04mInlBNkt7k1/4yY020Ym0TDSwpSeUi
+ iMu0oXCpBhBKNO7MQqKuod4Xe6robRUwRsGWExKO++DWRYroKWEZgzBo4shyayfGjTi3qADZIP7
+ p/eJX9NGIhGjLhABU6MF4ZJfSxaxNVpxpZ/0UrNxzCBeCAbUnn7bA4JbBjYMwpJwHZZe6ZE8Xnm
+ E46adk8VyWp5eVWh1gUuvn6V7zrN/o1Xt7HYToYtqYHWQBPDcSt1RoGliLYyQcmpxrJsTOIFHrH
+ mGaJmkJZiI7OCxml+QDzZiO9WBu8vhMWKpMCPYkpzWjP6Cbd5B6LBnCrGTdO2RqfxMT3nhE7JiA
+ ==
+X-Google-Smtp-Source: AGHT+IG+NXNTK7jtChrQagzOK2TVUWHSH9Pqb1sC4hO2IUqtFpUsV2raqHuWyF4RIWdkzZV0aqzUww==
+X-Received: by 2002:a05:6a00:3e0c:b0:76b:fab4:6456 with SMTP id
+ d2e1a72fcca58-7723e308c8emr282439b3a.21.1756506605879; 
+ Fri, 29 Aug 2025 15:30:05 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 15:30:05 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250829153115.1590048-3-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 63/91] linux-user: Move init_guest_commpage to hppa/elfload.c
+Date: Sat, 30 Aug 2025 08:23:59 +1000
+Message-ID: <20250829222427.289668-64-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,25 +101,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/30/25 01:31, Paolo Bonzini wrote:
-> Writes to interrupt_request used non-atomic accesses, but there are a
-> few cases where the access was not protected by the BQL.  Now that
-> there is a full set of helpers, it's easier to guarantee that
-> interrupt_request accesses are fully atomic, so just drop the
-> requirement instead of fixing them.
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   include/hw/core/cpu.h |  1 -
->   hw/core/cpu-common.c  | 12 +-----------
->   system/cpus.c         |  3 +--
->   3 files changed, 2 insertions(+), 14 deletions(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/hppa/target_elf.h |  2 ++
+ linux-user/loader.h          |  2 --
+ linux-user/elfload.c         | 32 --------------------------------
+ linux-user/hppa/elfload.c    | 31 +++++++++++++++++++++++++++++++
+ 4 files changed, 33 insertions(+), 34 deletions(-)
 
-I guess we didn't need SEQ_CST, but since we don't choose to play with relaxed atomics 
-elsewhere, it would simply complicate things to start.
+diff --git a/linux-user/hppa/target_elf.h b/linux-user/hppa/target_elf.h
+index 85be00584d..b654758afa 100644
+--- a/linux-user/hppa/target_elf.h
++++ b/linux-user/hppa/target_elf.h
+@@ -10,4 +10,6 @@
+ 
+ #define HAVE_ELF_PLATFORM       1
+ 
++#define LO_COMMPAGE             0
++
+ #endif
+diff --git a/linux-user/loader.h b/linux-user/loader.h
+index 0c2cc556c3..c3b8f92e23 100644
+--- a/linux-user/loader.h
++++ b/linux-user/loader.h
+@@ -105,9 +105,7 @@ const char *elf_hwcap_str(uint32_t bit);
+ const char *elf_hwcap2_str(uint32_t bit);
+ const char *get_elf_platform(CPUState *cs);
+ const char *get_elf_base_platform(CPUState *cs);
+-#if defined(TARGET_X86_64) || defined(TARGET_ARM)
+ bool init_guest_commpage(void);
+-#endif
+ 
+ struct target_elf_gregset_t;
+ void elf_core_copy_regs(struct target_elf_gregset_t *, const CPUArchState *);
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 2281853c57..25f29e60de 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -415,38 +415,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+ 
+ #define VDSO_HEADER "vdso.c.inc"
+ 
+-#define LO_COMMPAGE  0
+-
+-static bool init_guest_commpage(void)
+-{
+-    /* If reserved_va, then we have already mapped 0 page on the host. */
+-    if (!reserved_va) {
+-        void *want, *addr;
+-
+-        want = g2h_untagged(LO_COMMPAGE);
+-        addr = mmap(want, TARGET_PAGE_SIZE, PROT_NONE,
+-                    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED_NOREPLACE, -1, 0);
+-        if (addr == MAP_FAILED) {
+-            perror("Allocating guest commpage");
+-            exit(EXIT_FAILURE);
+-        }
+-        if (addr != want) {
+-            return false;
+-        }
+-    }
+-
+-    /*
+-     * On Linux, page zero is normally marked execute only + gateway.
+-     * Normal read or write is supposed to fail (thus PROT_NONE above),
+-     * but specific offsets have kernel code mapped to raise permissions
+-     * and implement syscalls.  Here, simply mark the page executable.
+-     * Special case the entry points during translation (see do_page_zero).
+-     */
+-    page_set_flags(LO_COMMPAGE, LO_COMMPAGE | ~TARGET_PAGE_MASK,
+-                   PAGE_EXEC | PAGE_VALID);
+-    return true;
+-}
+-
+ #endif /* TARGET_HPPA */
+ 
+ #ifdef TARGET_XTENSA
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 9dd3fe092a..018034f244 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -3,6 +3,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+@@ -14,3 +15,33 @@ const char *get_elf_platform(CPUState *cs)
+ {
+     return "PARISC";
+ }
++
++bool init_guest_commpage(void)
++{
++    /* If reserved_va, then we have already mapped 0 page on the host. */
++    if (!reserved_va) {
++        void *want, *addr;
++
++        want = g2h_untagged(LO_COMMPAGE);
++        addr = mmap(want, TARGET_PAGE_SIZE, PROT_NONE,
++                    MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED_NOREPLACE, -1, 0);
++        if (addr == MAP_FAILED) {
++            perror("Allocating guest commpage");
++            exit(EXIT_FAILURE);
++        }
++        if (addr != want) {
++            return false;
++        }
++    }
++
++    /*
++     * On Linux, page zero is normally marked execute only + gateway.
++     * Normal read or write is supposed to fail (thus PROT_NONE above),
++     * but specific offsets have kernel code mapped to raise permissions
++     * and implement syscalls.  Here, simply mark the page executable.
++     * Special case the entry points during translation (see do_page_zero).
++     */
++    page_set_flags(LO_COMMPAGE, LO_COMMPAGE | ~TARGET_PAGE_MASK,
++                   PAGE_EXEC | PAGE_VALID);
++    return true;
++}
+-- 
+2.43.0
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
 
