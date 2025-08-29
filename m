@@ -4,71 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B036CCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B6BCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNF9-0005f7-Kl; Sat, 30 Aug 2025 11:11:52 -0400
+	id 1usNEq-0004Rf-Gb; Sat, 30 Aug 2025 11:11:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1urxh4-0008Q4-Md
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:54:58 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1urwy5-0008QW-33
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:08:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1urxh2-0002y0-AH
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:54:58 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1urwy2-0001gF-LH
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:08:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756468493;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1756465705;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZlZSLx5pDOCRxKLaNUjVvsynijDi4vUAs7rDWUUz71o=;
- b=LX7y18gkOyz/xV7v+TGVTH+z9z1JVjPfmW6ymwLSZ//A4eMS2S8LEVpU6ahnicFTOpi5Pk
- iv9gETybXwnqWTGwrfupc+skGIL6dRA59c4q4YMHZ/XRrXT4R1p5Fwh6+ZLbtOW1eBPsV1
- tmtS79cIWso3Guf0D9bcKv0C3pc4K0U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=og6ymulh9UmaMSIescETQPevhxzm1aJMZFMSGR8zlFk=;
+ b=D/8xktZ+uMSswme4HwcTS4OiE3ea7TAHdymLW/BJJWSSyLVH5uA/1KUyjBprf2+Bplk3jT
+ aGgwOzsI1wRJgdLlHqIUoI02p2tyzxU93vMfGGavLD78b8fTUg83TbBvsbxN5/3Tw/nvdh
+ u1FaU/2pWQKpGigWIzxoADhw1oB7aGk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-u2gX84jIN7mz3UmAN0O0nQ-1; Fri,
- 29 Aug 2025 07:54:50 -0400
-X-MC-Unique: u2gX84jIN7mz3UmAN0O0nQ-1
-X-Mimecast-MFC-AGG-ID: u2gX84jIN7mz3UmAN0O0nQ_1756468488
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-dBgAec-gMnmw4UuDehncdg-1; Fri,
+ 29 Aug 2025 07:08:21 -0400
+X-MC-Unique: dBgAec-gMnmw4UuDehncdg-1
+X-Mimecast-MFC-AGG-ID: dBgAec-gMnmw4UuDehncdg_1756465700
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D0DC180035D; Fri, 29 Aug 2025 11:54:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.108])
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79CFD195608F; Fri, 29 Aug 2025 11:08:20 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.45.225.62])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 514C130001B5; Fri, 29 Aug 2025 11:54:44 +0000 (UTC)
-Date: Fri, 29 Aug 2025 12:54:41 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- pbonzini@redhat.com, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 10/22] rust: split "migration" crate
-Message-ID: <aLGVAbBqkMMn8CkN@redhat.com>
-References: <20250827104147.717203-1-marcandre.lureau@redhat.com>
- <20250827104147.717203-11-marcandre.lureau@redhat.com>
- <aLFr3u+r8P5GGZRJ@intel.com>
- <CAMxuvaz6n1bhsknnyfgvgw9sha13sEicAfZ6hsNX-vX7v7eDsw@mail.gmail.com>
+ id DF36A30001B5; Fri, 29 Aug 2025 11:08:18 +0000 (UTC)
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 1/9] qga: Fix ubsan warning
+Date: Fri, 29 Aug 2025 14:08:05 +0300
+Message-ID: <20250829110813.50286-2-kkostiuk@redhat.com>
+In-Reply-To: <20250829110813.50286-1-kkostiuk@redhat.com>
+References: <20250829110813.50286-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMxuvaz6n1bhsknnyfgvgw9sha13sEicAfZ6hsNX-vX7v7eDsw@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,87 +82,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 29, 2025 at 03:50:02PM +0400, Marc-André Lureau wrote:
-> Hi
-> 
-> On Fri, Aug 29, 2025 at 12:37 PM Zhao Liu <zhao1.liu@intel.com> wrote:
-> 
-> > Hi Marc-Andre,
-> >
-> > On Wed, Aug 27, 2025 at 02:41:32PM +0400, marcandre.lureau@redhat.com
-> > wrote:
-> > > Date: Wed, 27 Aug 2025 14:41:32 +0400
-> > > From: marcandre.lureau@redhat.com
-> > > Subject: [PATCH 10/22] rust: split "migration" crate
-> > >
-> > > From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > >
-> > > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > > ---
-> >
-> > ...
-> >
-> > > @@ -0,0 +1,51 @@
-> > > +/*
-> > > + * QEMU System Emulator
-> > > + *
-> > > + * Copyright (c) 2024 Linaro Ltd.
-> > > + *
-> > > + * Authors: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > > + *
-> > > + * Permission is hereby granted, free of charge, to any person
-> > obtaining a copy
-> > > + * of this software and associated documentation files (the
-> > "Software"), to deal
-> > > + * in the Software without restriction, including without limitation
-> > the rights
-> > > + * to use, copy, modify, merge, publish, distribute, sublicense, and/or
-> > sell
-> > > + * copies of the Software, and to permit persons to whom the Software is
-> > > + * furnished to do so, subject to the following conditions:
-> > > + *
-> > > + * The above copyright notice and this permission notice shall be
-> > included in
-> > > + * all copies or substantial portions of the Software.
-> > > + *
-> > > + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-> > EXPRESS OR
-> > > + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-> > MERCHANTABILITY,
-> > > + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
-> > SHALL
-> > > + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-> > OTHER
-> > > + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-> > ARISING FROM,
-> > > + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-> > DEALINGS IN
-> > > + * THE SOFTWARE.
-> > > + */
-> >
-> > Could we use /* SPDX-License-Identifier: GPL-2.0-or-later */ directly ?
-> >
-> > [snip]
-> >
-> 
-> I guess we could. Probably for a future cleanup though.
+From: Thomas Huth <thuth@redhat.com>
 
-checkpatch will complain about this - all newly introduced files
-should be using SPDX-License-Identifier from the start, with no
-boilerplate text present.
+When compiling QEMU with --enable-ubsan there is a undefined behavior
+warning when running "make check":
 
-Also it will warn about any license use which is not GPL-2.0-or-later,
-requesting that it be explained in the commit message.
+ .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset 5 to null pointer
+ #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-linux.c:452:15
 
-With regards,
-Daniel
+Fix it by avoiding the additional pointer variable here and use an
+"offset" integer variable instead.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250730072709.27077-1-thuth@redhat.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+---
+ qga/commands-linux.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 9dc0c82503..4a09ddc760 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+                                            Error **errp)
+ {
+     unsigned int pci[4], host, hosts[8], tgt[3];
+-    int i, nhosts = 0, pcilen;
++    int i, offset, nhosts = 0, pcilen;
+     GuestPCIAddress *pciaddr = disk->pci_controller;
+     bool has_ata = false, has_host = false, has_tgt = false;
+-    char *p, *q, *driver = NULL;
++    char *p, *driver = NULL;
+     bool ret = false;
+ 
+     p = strstr(syspath, "/devices/pci");
+@@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+ 
+     p = strstr(syspath, "/ata");
+     if (p) {
+-        q = p + 4;
++        offset = 4;
+         has_ata = true;
+     } else {
+         p = strstr(syspath, "/host");
+-        q = p + 5;
++        offset = 5;
+     }
+-    if (p && sscanf(q, "%u", &host) == 1) {
++    if (p && sscanf(p + offset, "%u", &host) == 1) {
+         has_host = true;
+         nhosts = build_hosts(syspath, p, has_ata, hosts,
+                              ARRAY_SIZE(hosts), errp);
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.50.1
 
 
