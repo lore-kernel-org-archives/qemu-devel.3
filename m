@@ -4,77 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0B4CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 925DBCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNaZ-0002pj-MC; Sat, 30 Aug 2025 11:33:59 -0400
+	id 1usNjC-000681-4E; Sat, 30 Aug 2025 11:42:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1us3VR-0005pg-L4
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:07:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1us3VO-0006Yu-Oo
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:07:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756490837;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PVYEfV3M2Ca9/tWwfDex5h4JxVijyGZSd4PlQCvlmxo=;
- b=TwoGZ6K4bdX0DzdpxviMmdlAjhNOxGT4RhOnpJBCPEUIpL+CUt5DvgfuXLU+KeDNesLhLx
- sGAGcSYRR19lqEjlhiGsqxhaYr6cfYpjKFhaotumQ6NLj1HkyDNxxNKWfYJGeny8JCvFrr
- I0Kk5n8Ey2WjRXvLgxEa5D2F98jCRes=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-7SWCtFQXNrS_4y0zJlYoeA-1; Fri,
- 29 Aug 2025 14:07:15 -0400
-X-MC-Unique: 7SWCtFQXNrS_4y0zJlYoeA-1
-X-Mimecast-MFC-AGG-ID: 7SWCtFQXNrS_4y0zJlYoeA_1756490834
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 513FD1956089; Fri, 29 Aug 2025 18:07:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.108])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2EB5E1800446; Fri, 29 Aug 2025 18:07:12 +0000 (UTC)
-Date: Fri, 29 Aug 2025 19:07:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 08/12] util: convert error-report & log to message API
- for timestamp
-Message-ID: <aLHsTToeZWkHIsSN@redhat.com>
-References: <20250819202708.1185594-1-berrange@redhat.com>
- <20250819202708.1185594-9-berrange@redhat.com>
- <ac90c3c6-64ae-4abf-a850-59c862400b89@linaro.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7Jj-00079B-Jq
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:11:33 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7Ji-000865-0s
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:11:31 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2445806df50so21207275ad.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:11:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756505488; x=1757110288; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JBgbeqmakXJZ94NcJp1dL0IUXP+TER7E5qmbIvunW2c=;
+ b=OHSMD2Y3hE5VJpR6L6kbM5UOCw9Wt9S5bU6/8XgNtHGINRNpNf3QlC8S1xfigSRP74
+ SwSOJr2OjPe1LWPqTELMqtkcjw0OtEdzx/5pXqiYWnz3OlQX4HBVwU9eIeHjQHdrV3O8
+ LjUnId+qqZ89pgjHZDuMpsLhaBiSlSBj5TbbUtMwMz/kpVGpbnVKZQ9sGYCg8qHqQRFi
+ Jhuz/Ft7k1h6M1/77f06fIvpwQaWFMX2PZSauZwMR4xrcZp5T8npngkemqE7z6bWB1ez
+ +6TLpwjvWbuutLCmXthWM2LnK/NG2CQrVCCSgvHMV1mw4zyAeF3T2X5t7MVLNAbT/RP8
+ 7gLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756505488; x=1757110288;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JBgbeqmakXJZ94NcJp1dL0IUXP+TER7E5qmbIvunW2c=;
+ b=KX9g18msDIAOaAS4HTRGjl8yNDGCijCbdi9wdD67e6hmDCG4f0gQFbcgARDdmxepe+
+ dUod7DWARZY2u9ARThtQ8suUnSrR+lzEfpq49V0f7MZIIrfGvnvipNIPqxBbknq8UxT1
+ 6xEIF4NvzDmsHV64iVCx4tQz1L9ANbl5gpM5oSCZtxLByIVPCBwY3ICtpW0R0+fIGD6D
+ AVH8RBWlI5Mtmu1gaXtFbsp9ShPc0kzD8lIiTVt8zgv37j85sdrQsWO8FFndMjx3VuWW
+ mOOOH+2VEqWJa5oB5fjSVnL28ZwtY5/3GLXWD8BewqJdrYQ3gCK4Vgoj5gQcgBIhf/yt
+ 1BOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXiNssexcGyMcqS+hMfv7v2Wy+otVge9fNSOF0vgSmbMNHX+P/gsSraX+XOzqYOEkLP35MKxBMx/d/s@nongnu.org
+X-Gm-Message-State: AOJu0Yx5xVy22kPemjV3pgSQwI6beFZ1Cb34fU+6oQQb+qhWPSSbuCSx
+ lZTg481E2Ed/QprH2e7W/pgJjsgU72xLGR76P5OyEFLx/xORr1KGN+19BzkQI+B452o=
+X-Gm-Gg: ASbGncvYFtXhQpRpdlqpvZliXVBK9+k/sVJmXFEhAsFqhK8aZDLhK41CWqxfhfln7+x
+ ps0g9nRtVP/60qvtm0pP83bIrLnZjk3lJx4zz2dQ7F4IkmXY5biSjz2hdcgVSRRje5L+jwGIMVg
+ RONDG3T5M4yALzPE72T8FdU29JWH0GBxRkbJpRk7SR5yMdD3vWiUpwsyqCDDKSQm04xJltU3U/W
+ Wp6mEjOuX2oO58RN+6Qz3qb+rff/Xdg4Ar94ImJzt+aMh0BCM+WQh4heZEGhhSV7r5pf2uc2Lkt
+ Cy49S74qTKeipeSYgoxRjVKuQXN4+Fpv5T5R92PObC7sQhWwfWhcG4Oasm5fTng0QpB3fCG3SVm
+ eEz5S79PtA+v9IMrGqtVGdzyFF5ez+rkqAGIPp4vfr331PvnUbK/VUkO+vazHAAi2W2o7vvzh
+X-Google-Smtp-Source: AGHT+IGr5EM3eq3hqL35f+cFtM83sGm/I/fkqvb5kPaBD5iK65HQipxIzqfICuozLg1CbKG1zGqdGA==
+X-Received: by 2002:a17:902:f549:b0:249:19b0:d3d4 with SMTP id
+ d9443c01a7336-24944b63e3amr2125845ad.52.1756505488331; 
+ Fri, 29 Aug 2025 15:11:28 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-179.dyn.ip.vocus.au.
+ [122.150.204.179]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-249037223d7sm34018435ad.32.2025.08.29.15.11.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 15:11:27 -0700 (PDT)
+Message-ID: <c673489c-f0fc-4ddb-8b67-0db8b39c5a49@linaro.org>
+Date: Sat, 30 Aug 2025 08:11:23 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ac90c3c6-64ae-4abf-a850-59c862400b89@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/18] bsd-user, linux-user: introduce qemu_wait_io_event
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, imammedo@redhat.com
+References: <20250829152909.1589668-1-pbonzini@redhat.com>
+ <20250829153115.1590048-11-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250829153115.1590048-11-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,48 +101,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 20, 2025 at 08:02:14AM +1000, Richard Henderson wrote:
-> On 8/20/25 06:27, Daniel P. Berrangé wrote:
-> >   void qemu_log(const char *fmt, ...)
-> >   {
-> >       FILE *f;
-> > -    g_autofree const char *timestr = NULL;
-> > -
-> >       /*
-> > -     * Prepare the timestamp*outside* the logging
-> > -     * lock so it better reflects when the message
-> > -     * was emitted if we are delayed acquiring the
-> > -     * mutex
-> > +     * Prepare the context*outside* the logging
-> > +     * lock so any timestamp better reflects when
-> > +     * the message was emitted if we are delayed
-> > +     * acquiring the mutex
-> >        */
-> > -    if (message_with_timestamp) {
-> > -        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
-> > -        timestr = g_date_time_format_iso8601(dt);
-> > -    }
+On 8/30/25 01:31, Paolo Bonzini wrote:
+> Add a user-mode emulation version of the function.  More will be
+> added later, for now it is just process_queued_cpu_work.
 > 
-> Something that really ought to be handled better is that we currently use
-> qemu_log to print pieces of a larger message.  E.g. looping over the general
-> registers to print the whole cpu state.
-> 
-> (1) We don't want timestamps in the middle, and
-> (2) we don't want unnecessary memory allocation in the middle.
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   bsd-user/aarch64/target_arch_cpu.h | 2 +-
+>   bsd-user/arm/target_arch_cpu.h     | 2 +-
+>   bsd-user/i386/target_arch_cpu.h    | 2 +-
+>   bsd-user/riscv/target_arch_cpu.h   | 2 +-
+>   bsd-user/x86_64/target_arch_cpu.h  | 2 +-
+>   include/hw/core/cpu.h              | 9 +++++++++
+>   include/system/cpus.h              | 1 -
+>   accel/tcg/user-exec.c              | 5 +++++
+>   linux-user/aarch64/cpu_loop.c      | 2 +-
+>   linux-user/alpha/cpu_loop.c        | 2 +-
+>   linux-user/arm/cpu_loop.c          | 2 +-
+>   linux-user/hexagon/cpu_loop.c      | 2 +-
+>   linux-user/hppa/cpu_loop.c         | 2 +-
+>   linux-user/i386/cpu_loop.c         | 2 +-
+>   linux-user/loongarch64/cpu_loop.c  | 2 +-
+>   linux-user/m68k/cpu_loop.c         | 2 +-
+>   linux-user/microblaze/cpu_loop.c   | 2 +-
+>   linux-user/mips/cpu_loop.c         | 2 +-
+>   linux-user/openrisc/cpu_loop.c     | 2 +-
+>   linux-user/ppc/cpu_loop.c          | 2 +-
+>   linux-user/riscv/cpu_loop.c        | 2 +-
+>   linux-user/s390x/cpu_loop.c        | 2 +-
+>   linux-user/sh4/cpu_loop.c          | 2 +-
+>   linux-user/sparc/cpu_loop.c        | 2 +-
+>   linux-user/xtensa/cpu_loop.c       | 2 +-
+>   25 files changed, 36 insertions(+), 23 deletions(-)
 
-This turned out to be surprisingly simple to fix - don't emit the
-prefix if the previous qemu_log() call lacked a terminating newline
-character.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+r~
 
