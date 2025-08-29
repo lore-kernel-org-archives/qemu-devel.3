@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6422CCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8793CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNNy-0002gV-JW; Sat, 30 Aug 2025 11:20:59 -0400
+	id 1usNL4-0004IC-6j; Sat, 30 Aug 2025 11:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1us0oj-0005Xj-Kp
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:15:06 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1us0og-0005Zs-MM
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:15:05 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A06C214D587;
- Fri, 29 Aug 2025 18:14:22 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 12BEA26A7D7;
- Fri, 29 Aug 2025 18:14:53 +0300 (MSK)
-Message-ID: <efca6a14-7bb2-470d-ac2c-9fbbef7f7ebf@tls.msk.ru>
-Date: Fri, 29 Aug 2025 18:14:53 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urzWV-0008MI-IQ
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:52:11 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1urzWU-0000zl-1z
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:52:11 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2489acda3bbso16340045ad.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:52:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756475528; x=1757080328; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6ugGnloBP1A/JNiPociBvYx/p6/DHz1cAJve+Grw0JE=;
+ b=A+atSk2nVA4kA/wzhF72BTBzH+geZjhVbPi5C/9jAhaCs1xFazOaOTLSZ3HCTgOpgl
+ vBfQIRg7uc54D5chLS0h3vDX/lvgDwQVbvqyxTgwYd2ifb8VXZa1USybudCsutimnwD7
+ r0c8bxZOvariV2X0ERh3k/dWR9xUGUEN38GSEbR6xfSYGdLSmIs0m8ZNh024zXsRxRFz
+ RCtRaKcVNAnxGHTqw6g3tciiJsC6QoSsffcSrpWe5+jJTsEVODBT/g7zS+tfpqzn68yg
+ 81zfStZumiuT93JMUJYRiCn8Pt2syBC9tUO0Fc0ZFSslmYWUYoRlIeYbTj5Aw8rB5bT/
+ SYJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756475528; x=1757080328;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6ugGnloBP1A/JNiPociBvYx/p6/DHz1cAJve+Grw0JE=;
+ b=wIMIFJtzdFaJwOERMQt4a++c1q2sEBl5DdU3C3XcH6atLt48VB+MPjNw8EnRbPuXGK
+ ilypdBmFwQUUe+1XTbv55TngMFZquU5JLiQEs2tdVpyZla6NG8+8iUcsnU7Sz2WtcmUR
+ nb5H9WdYTLYcxf/azBqE6Wbnjlug/nAjtMYQYvASiz2yk05lTRNUnpVhre1Py/9VK9no
+ 12POKhYiSHQ1KmKv0uqW5RESVLQyE/OHeooj+McrLiMgZTUIL8dVuYosmaFQLEUFxDQY
+ Bcl+5hfHnpC3ExdyGM+tnmDOAkpboF6J+IuzVNFXmRPqfuSmUTUYKxjPnKVpjjIxrX/1
+ od1Q==
+X-Gm-Message-State: AOJu0YyiYcEVIFl0Ws9J+wPV/ZNFhKLI3u2zplHCz4FPxbQ6hZisZQJY
+ M8g6yEF7o6QG5bfzRzlGcJHKocOVo9JiNUAwbkxN0QcmrP3Tdm1bMWbCVZl4mJ2yX6nQvTt60pG
+ dYRziHEY=
+X-Gm-Gg: ASbGnctHhoY4DNe25OvzQq42fIqF+BS650v4T37ITDaqwfrV0wSXrCPFmw/rMgrVWJ9
+ 2pbRFyHycrsEV3W1su5+ygzWNFGOsrG0yf0cPlbLwBCHjZZbulXPVW+fzLfLjOTu3vpKwAyHcSM
+ mr71zrMOOsN2FCfATXFx0dXIJoogCF1gpbeHV1HvRVHgk81D/3PcPvRb7KakPcFMn3KayYhgeoT
+ o5PK3CdEqC/ZjPGoW5Wtp/Yf1OqygUgc4c/iWC9UhFhaXZpslaGl2EUn6O9SnUZdhvr8Sk7GdKH
+ wPvVhQEI8iDjs+LiVtFv0dop6UtoDpEUaYS6WKEVyYUa8mwWfSTOcfrdQLfXdZljS7DXD8PlJbO
+ CCUynMFjyC+gI5+/PjOqZaGXdi5fxX654iZ8AxPxLLlgzEaGosZr11xiYVnfo4R2T4EoWqMI=
+X-Google-Smtp-Source: AGHT+IGK78rmTz+6XPFVlsQ0CEW9mg3iiz4yD2/7aJD6kTO/3Qp+X8PDZD1ygXzSP2fKQJdmWrRFNA==
+X-Received: by 2002:a17:903:124c:b0:240:84b:a11a with SMTP id
+ d9443c01a7336-2462ee2bc6fmr361146025ad.17.1756475528388; 
+ Fri, 29 Aug 2025 06:52:08 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-24903705b9dsm26457415ad.7.2025.08.29.06.52.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 06:52:07 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH] tcg/arm: Fix tgen_deposit
+Date: Fri, 29 Aug 2025 23:52:03 +1000
+Message-ID: <20250829135203.284630-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio: Call set_features during reset
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org
-References: <871pudmlmj.fsf@suse.de>
- <dc23eaca-15f5-40be-89d0-2247cfe1f716@tls.msk.ru> <87plchkaxo.fsf@suse.de>
- <3983904c-9530-4cf5-b294-12ca04658b23@rsg.ci.i.u-tokyo.ac.jp>
- <3b17f289-876d-4cbd-bda7-1bbd83832e85@tls.msk.ru>
- <942ae41e-931f-4d09-85d8-8849d36b88db@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <942ae41e-931f-4d09-85d8-8849d36b88db@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,75 +98,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.08.2025 17:40, Akihiko Odaki wrote:
-> On 2025/08/29 17:34, Michael Tokarev wrote:
->> On 28.08.2025 03:57, Akihiko Odaki wrote:
-...
->> Please note: this is stable-7.2 series, it is *not* master (I picked
->> up this commit to 7.2.x).  It'd be interesting to check if master is
->> affected too.  Unfortunately I never tried migration, and now I only
->> have my notebook, so can only migrate between two qemu instances on
->> the same box - which is probably okay too.
-> 
-> I think you need to backport commit 9379ea9db3c0 ("virtio-net: Add 
-> queues before loading them") and adda0ad56bd2 ("virtio-net: Add queues 
-> for RSS during migration"). Here is an explanation:
+When converting from tcg_out_deposit, the arguments were not
+shuffled properly.
 
-"Add queues before loading them" is marked as fixing
+Cc: qemu-stable@nongnu.org
+Fixes: cf4905c03135f1181e8 ("tcg: Convert deposit to TCGOutOpDeposit")
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/arm/tcg-target.c.inc | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Both the mentioned commits were tagged with Cc: qemu-stable, but both
-has Fixes: the same commit 8c49756825da ("virtio-net: Add only one queue
-pair when realizing"), which is in 9.1, but not in 7.2.  I guess, in
-this case, I also need 8c49756825da - let's first break things, and
-next fix them :)
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index 836894b16a..338c57b061 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -975,7 +975,8 @@ static void tgen_deposit(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
+                          TCGReg a2, unsigned ofs, unsigned len)
+ {
+     /* bfi/bfc */
+-    tcg_out32(s, 0x07c00010 | (COND_AL << 28) | (a0 << 12) | a1
++    tcg_debug_assert(a0 == a1);
++    tcg_out32(s, 0x07c00010 | (COND_AL << 28) | (a0 << 12) | a2
+               | (ofs << 7) | ((ofs + len - 1) << 16));
+ }
+ 
+-- 
+2.34.1
 
-> First, let me define two variables for conciseness:
-> N: the number of queue pairs
-> M: the maximum number of queue pairs, which is determined with
->     n->max_queue_pairs
-> 
-> The problem is that QEMU inconsistently chose N for virtio-net in the 
-> past. Before commit 8c49756825da ("virtio-net: Add only one queue pair 
-> when realizing"):
-> 1) realize() chose M.
-> 2) set_features() chose: 1 (when RSS and MQ are disabled)
->                           M (otherwise)
-> 
-> This itself was a problem; both RSS and MQ were disabled when realize() 
-> but N was M, which is inconsistent with 2) and this inconsistency was 
-> guest-visible.
-> 
-> I wrote commit 8c49756825da ("virtio-net: Add only one queue pair when 
-> realizing") to make QEMU implement the behavior in 2) also during 
-> realization and fix the inconsistency, but it broke migration when the 
-> migrated VM had enabled VIRTIO_NET_F_RSS and VIRTIO_NET_F_MQ because it 
-> expected that N == M.
-
-Yup, 8c49756825da it is, which is missing in 7.2, which broke things :))
-
-> This is also why the backported commit also broke migration; it 
-> accidentally fixed the inconsistency between the first reset state and 
-> the state after set_features() and caused the same problem.
-> 
-> I wrote commit 9379ea9db3c0 ("virtio-net: Add queues before loading 
-> them") to fix the issue and later complemented it with commit 
-> adda0ad56bd2 ("virtio-net: Add queues for RSS during migration").
-> 
-> There are several relevant commits because I could not fix the 
-> underlying problem at once, but hopefully this email clarifies how the 
-> two commits fixed it in the end.
-
-Now, with 3 commits picked up to 7.2, things are at least compiles :))
-
-Let's test the result..  hopefully I didn't break something else in the
-process of breaking+fixing stuff :))
-
-Thank you very much for the detailed explanation and attention to
-details.  It makes sense.
-
-An for the 7.2.x series which is getting old(ish) - I plan to end
-support for it in the near future, so there will be less surprises
-like this one.. if not only for 10.0.x :)
-
-/mjt
 
