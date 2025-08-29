@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20204CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5396CCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:01:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOEI-0007yg-Sb; Sat, 30 Aug 2025 12:15:03 -0400
+	id 1usNaQ-00027g-OW; Sat, 30 Aug 2025 11:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usERL-0007Rc-1O
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:51 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usERI-00050Y-EC
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:50 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-24a1274cfb1so1044035ad.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:47:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532866; x=1757137666; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=s4O/Df2srkFicGVgbJE0q2IGU0RhnxZd3TgyrSwbJEQ=;
- b=BkLT+vqY0tgK+aQTy7oPXBpq7hlbBGCEPLIoz1VZCgaQbxUNGWGP3q98D4p+4C4xCI
- pw26pl/yRw0Yr8XJnoFTpWjPcYim22oQisogd9fhOtZ+SV3OqB24XNDuZSKylp3jVUaO
- /p/Hw31xyNK2A5UJuU6pd2b3QrEB2GATtM7jlwv8Pm+ybPrBFSnbLw3cbClV8W9EaZKK
- jsXd9Q+ybmVQPAPVU3qU4io8UPMs074MJbEP6vKVVQ97tEo+FD1JGWWKCmsaiN9YY/yf
- +KoNkz/535pMugaWDHq8nobFiUboGk7Q8sk2RXXxUNxA0xm7eSYNrbWOUWX1gQrJit3m
- C5Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532866; x=1757137666;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=s4O/Df2srkFicGVgbJE0q2IGU0RhnxZd3TgyrSwbJEQ=;
- b=P++qNTYhGMd+4fFEzS6ZNYql2789Biv8Dgv0OR+GDZlVBaW6r9/DPogMuueKbULpku
- +KTsy3hdeaDbUj9Fo52MF1+yu0IoRuMr7TPVQPXXant6/PbnXrKc1I0iImlrNYYluY8E
- AobqRXPVCPtUVeYe8R2sTTL78sN/hW8H3KHSuUJ3eRkLwt9n/j39z7aVwxNFC8phF5D4
- XePlLewihFBDJHsgKJMl+zVwKVodtKkGXEeoTyze0lS0EXy0yvJ89aWBajVJlN2I6d3K
- jErHKO5RaKB7xQ9RRXuNPfbnQrSKyoZhh3NtiBPdip4niiR/5lQU7zxM3jftnv+5btj4
- rcHg==
-X-Gm-Message-State: AOJu0YxuvKIIqiXqE4QlNi3aRNy0UprN7Dyelcs52tVrXL/QENE9ZoQ9
- AEfXMAV1qSTgpEBUw6pLl9cDA1XuAFCXrtahF63YmLwQq1w9l39cphlO2Ajo3ddC2zKjMF8C4yo
- CEtF2anY=
-X-Gm-Gg: ASbGnctGLhTZZ7jeFD+M4gMD4lY7NtPSxdKA4MoXdPT8p3oLWqt0PpKpHB8YDnFvTgH
- PrHsd0UrEAOk/DrmIVFCwULQBe73f9TwS4+fEbp5Hji0ONPc8ZAHvWlAvzKRZM7qh/fSV0Bpi3v
- 4lYsUY4P64LEnjrojddy20EpjkDocrjGYMznu/Rclc6phazD39gf0CEV/WXxHDrVx69wBCjUbVX
- YTxODPyxAYAeXUZ3ivRlg+u6ln4SM4gvehbWC3S3ifMiqaUCahIXayVj1XZZqlDqLPYsPaE0gUb
- gNOjqt8qNaEA/mxhi0USZcDTyrME7rXbtodVi7rr6rLDkOwAv7I4oKYi1c43sMG3dffANO91zwk
- 9p03IYnyTIfxp1/KYRxiCfTbCjTPFb+8clESN78//qyEPCfUJ4B2WvpIyI9QkqCNYW6BxNzvQPw
- ==
-X-Google-Smtp-Source: AGHT+IFJZpoTfVL6XI+7vU2svDG0Jxszv7OKocelo7eoWUskVZk8lUoI8G8OGPJYcoNBfRsWHF5Wgw==
-X-Received: by 2002:a17:903:2347:b0:24a:8e36:420a with SMTP id
- d9443c01a7336-24a8e364377mr5600575ad.40.1756532866418; 
- Fri, 29 Aug 2025 22:47:46 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.47.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:47:46 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us3TQ-0005fz-UC
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:05:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us3TP-0005yZ-33
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:05:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756490714;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DgjbyrOEn0brWKK2GHDnSTslVOsxwhRJLAenTWwHYrA=;
+ b=Qs03drpDXG7D7RwO9kjA9RepkN0hCTPIoJpfXs+Jr24vclfEGM3JB8zALepZLQ8x5LiCyw
+ J3L6UguOky3W9bGZXixwvWmDdHeNzZ3iaI3O9p/OhVZOAsWU5wsKOv2povBQn2CBS8mIHW
+ znCZmuWfHEHVkRS3SuOnC/75eyrEbD0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-IeRTXkO0MCu5zH4c3t5MTQ-1; Fri,
+ 29 Aug 2025 14:05:10 -0400
+X-MC-Unique: IeRTXkO0MCu5zH4c3t5MTQ-1
+X-Mimecast-MFC-AGG-ID: IeRTXkO0MCu5zH4c3t5MTQ_1756490709
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B6F1180034F; Fri, 29 Aug 2025 18:05:09 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8AF5719560B4; Fri, 29 Aug 2025 18:05:04 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 68/84] target/arm: Add gcs record for BLR with PAuth
-Date: Sat, 30 Aug 2025 15:41:12 +1000
-Message-ID: <20250830054128.448363-69-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 13/14] util: add support for formatting thread info in
+ messages
+Date: Fri, 29 Aug 2025 19:03:53 +0100
+Message-ID: <20250829180354.2922145-14-berrange@redhat.com>
+In-Reply-To: <20250829180354.2922145-1-berrange@redhat.com>
+References: <20250829180354.2922145-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,74 +94,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-a64.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+The message context is now extended to be able to include the
+thread ID and thread name, after the program name. On Linux
+the thread ID will match the process TID visible in /proc,
+while on other platforms it will merely be an integer repr
+of the system thread object address/ID.
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 8230ac0fab..20e18687d5 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1842,20 +1842,20 @@ static bool trans_BRAZ(DisasContext *s, arg_braz *a)
+This changes the output for both error_report and qemu_log,
+when running under the system emulators or the QEMU storage
+daemon. Other programs omit the thread information since
+they are largely single threaded, though potentially it
+would be useful to enable in all of them, given that the RCU
+thread will always get spawned by a constructor function.
+
+Before:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+  qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x560db818e080 dir=fish
+  qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=0x560db818e080 filename=ca-cert.pem path=<none>
+  qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+After:
+
+  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*'
+  qemu-system-x86_64(772366:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x560db818e080 dir=fish
+  qemu-system-x86_64(772366:main): qcrypto_tls_creds_get_path TLS creds path creds=0x560db818e080 filename=ca-cert.pem path=<none>
+  qemu-system-x86_64(772366:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qemu/message.h               |  1 +
+ storage-daemon/qemu-storage-daemon.c |  6 +++++
+ system/vl.c                          |  8 +++++--
+ tests/qemu-iotests/041               |  2 +-
+ tests/qemu-iotests/common.filter     |  2 +-
+ util/message.c                       | 33 +++++++++++++++++++---------
+ 6 files changed, 38 insertions(+), 14 deletions(-)
+
+diff --git a/include/qemu/message.h b/include/qemu/message.h
+index 4550ce8ed7..6dbb068ca9 100644
+--- a/include/qemu/message.h
++++ b/include/qemu/message.h
+@@ -7,6 +7,7 @@ enum QMessageFormatFlags {
+     QMESSAGE_FORMAT_TIMESTAMP = (1 << 0),
+     QMESSAGE_FORMAT_WORKLOAD_NAME = (1 << 1),
+     QMESSAGE_FORMAT_PROGRAM_NAME = (1 << 2),
++    QMESSAGE_FORMAT_THREAD_INFO = (1 << 3),
+ };
  
- static bool trans_BLRAZ(DisasContext *s, arg_braz *a)
+ /**
+diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
+index eb72561358..cc44ed7848 100644
+--- a/storage-daemon/qemu-storage-daemon.c
++++ b/storage-daemon/qemu-storage-daemon.c
+@@ -47,6 +47,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
++#include "qemu/message.h"
+ #include "qemu/help_option.h"
+ #include "qemu/job.h"
+ #include "qemu/log.h"
+@@ -65,6 +66,10 @@ static const char *pid_file;
+ static char *pid_file_realpath;
+ static volatile bool exit_requested = false;
+ 
++#define QMESSAGE_FORMAT_DEFAULT \
++    (QMESSAGE_FORMAT_PROGRAM_NAME | \
++     QMESSAGE_FORMAT_THREAD_INFO)
++
+ void qemu_system_killed(int signal, pid_t pid)
  {
--    TCGv_i64 dst, lr;
-+    TCGv_i64 dst, link;
+     exit_requested = true;
+@@ -399,6 +404,7 @@ int main(int argc, char *argv[])
+ #endif
  
-     if (!dc_isar_feature(aa64_pauth, s)) {
-         return false;
+     error_init(argv[0]);
++    qmessage_set_format(QMESSAGE_FORMAT_DEFAULT);
+     qemu_init_exec_dir(argv[0]);
+     os_setup_signal_handling();
+ 
+diff --git a/system/vl.c b/system/vl.c
+index 9030212c50..20b655a7bc 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -145,6 +145,10 @@
+ 
+ #define MAX_VIRTIO_CONSOLES 1
+ 
++#define QMESSAGE_FORMAT_DEFAULT \
++    (QMESSAGE_FORMAT_PROGRAM_NAME | \
++     QMESSAGE_FORMAT_THREAD_INFO)
++
+ typedef struct BlockdevOptionsQueueEntry {
+     BlockdevOptions *bdo;
+     Location loc;
+@@ -811,10 +815,9 @@ static void realtime_init(void)
      }
+ }
+ 
 -
-     dst = auth_branch_target(s, cpu_reg(s, a->rn), tcg_constant_i64(0), !a->m);
--    lr = cpu_reg(s, 30);
--    if (dst == lr) {
--        TCGv_i64 tmp = tcg_temp_new_i64();
--        tcg_gen_mov_i64(tmp, dst);
--        dst = tmp;
-+
-+    link = tcg_temp_new_i64();
-+    gen_pc_plus_diff(s, link, 4);
-+    if (s->gcs_en) {
-+        gen_add_gcs_record(s, link);
-     }
--    gen_pc_plus_diff(s, lr, curr_insn_len(s));
-+    tcg_gen_mov_i64(cpu_reg(s, 30), link);
-+
-     gen_a64_set_pc(s, dst);
-     set_btype_for_blr(s);
-     s->base.is_jmp = DISAS_JUMP;
-@@ -1892,19 +1892,20 @@ static bool trans_BRA(DisasContext *s, arg_bra *a)
- 
- static bool trans_BLRA(DisasContext *s, arg_bra *a)
+ static void configure_msg(QemuOpts *opts)
  {
--    TCGv_i64 dst, lr;
-+    TCGv_i64 dst, link;
+-    int flags = QMESSAGE_FORMAT_PROGRAM_NAME;
++    int flags = QMESSAGE_FORMAT_DEFAULT;
+     if (qemu_opt_get_bool(opts, "timestamp", false)) {
+         flags |= QMESSAGE_FORMAT_TIMESTAMP;
+     }
+@@ -2888,6 +2891,7 @@ void qemu_init(int argc, char **argv)
+     module_call_init(MODULE_INIT_OPTS);
  
-     if (!dc_isar_feature(aa64_pauth, s)) {
-         return false;
+     error_init(argv[0]);
++    qmessage_set_format(QMESSAGE_FORMAT_DEFAULT);
+     qemu_init_exec_dir(argv[0]);
+ 
+     os_setup_limits();
+diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
+index 8452845f44..d9954da42b 100755
+--- a/tests/qemu-iotests/041
++++ b/tests/qemu-iotests/041
+@@ -1102,7 +1102,7 @@ class TestRepairQuorum(iotests.QMPTestCase):
+         self.vm.shutdown()
+         log = iotests.filter_qtest(self.vm.get_log())
+         log = re.sub(r'^Formatting.*\n', '', log)
+-        log = re.sub(r'^%s: ' % os.path.basename(iotests.qemu_prog), '', log)
++        log = re.sub(r'^%s\(.*\): ' % os.path.basename(iotests.qemu_prog), '', log)
+ 
+         self.assertEqual(log,
+                          "Can no longer replace 'img1' by 'repair0', because " +
+diff --git a/tests/qemu-iotests/common.filter b/tests/qemu-iotests/common.filter
+index 511a55b1e8..ecf74c223e 100644
+--- a/tests/qemu-iotests/common.filter
++++ b/tests/qemu-iotests/common.filter
+@@ -81,7 +81,7 @@ _filter_qemu_io()
+ # replace occurrences of QEMU_PROG with "qemu"
+ _filter_qemu()
+ {
+-    gsed -e "s#\\(^\\|(qemu) \\)$(basename $QEMU_PROG):#\1QEMU_PROG:#" \
++    gsed -e "s#\\(^\\|(qemu) \\)$(basename $QEMU_PROG)(.*):#\1QEMU_PROG:#" \
+         -e 's#^QEMU [0-9]\+\.[0-9]\+\.[0-9]\+ monitor#QEMU X.Y.Z monitor#' \
+         -e $'s#\r##' # QEMU monitor uses \r\n line endings
+ }
+diff --git a/util/message.c b/util/message.c
+index cb3ffd6700..5201ffc569 100644
+--- a/util/message.c
++++ b/util/message.c
+@@ -44,15 +44,28 @@ char *qmessage_context(int flags)
+         pgnamestr = g_get_prgname();
      }
-     dst = auth_branch_target(s, cpu_reg(s, a->rn), cpu_reg_sp(s, a->rm), !a->m);
--    lr = cpu_reg(s, 30);
--    if (dst == lr) {
--        TCGv_i64 tmp = tcg_temp_new_i64();
--        tcg_gen_mov_i64(tmp, dst);
--        dst = tmp;
+ 
+-    if (!timestr && !wknamestr && !pgnamestr) {
+-        return NULL;
+-    }
++    if (message_format & QMESSAGE_FORMAT_THREAD_INFO) {
++        int thid = qemu_get_thread_id();
++        const char *thname = qemu_thread_get_name();
+ 
+-    return g_strdup_printf("%s%s%s%s%s%s",
+-                           timestr ? timestr : "",
+-                           timestr ? " " : "",
+-                           wknamestr ? wknamestr : "",
+-                           wknamestr ? " " : "",
+-                           pgnamestr ? pgnamestr : "",
+-                           pgnamestr ? ": " : "");
++        return g_strdup_printf("%s%s%s%s%s(%d:%s): ",
++                               timestr ? timestr : "",
++                               timestr ? " " : "",
++                               wknamestr ? wknamestr : "",
++                               wknamestr ? " " : "",
++                               pgnamestr ? pgnamestr : "",
++                               thid, thname);
++    } else {
++        if (!timestr && !wknamestr && !pgnamestr) {
++            return NULL;
++        }
 +
-+    link = tcg_temp_new_i64();
-+    gen_pc_plus_diff(s, link, 4);
-+    if (s->gcs_en) {
-+        gen_add_gcs_record(s, link);
-     }
--    gen_pc_plus_diff(s, lr, curr_insn_len(s));
-+    tcg_gen_mov_i64(cpu_reg(s, 30), link);
-+
-     gen_a64_set_pc(s, dst);
-     set_btype_for_blr(s);
-     s->base.is_jmp = DISAS_JUMP;
++        return g_strdup_printf("%s%s%s%s%s%s",
++                               timestr ? timestr : "",
++                               timestr ? " " : "",
++                               wknamestr ? wknamestr : "",
++                               wknamestr ? " " : "",
++                               pgnamestr ? pgnamestr : "",
++                               pgnamestr ? ": " : "");
++    }
+ }
 -- 
-2.43.0
+2.50.1
 
 
