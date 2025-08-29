@@ -4,89 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E68ACA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FE4CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNjD-0006Aa-Qi; Sat, 30 Aug 2025 11:42:56 -0400
+	id 1usNGu-0007oU-OR; Sat, 30 Aug 2025 11:13:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7WY-0002dm-2l
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:24:46 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7WU-0002Ya-WA
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:24:45 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-76e6cbb991aso2490753b3a.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506281; x=1757111081; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UOcWUc5rHijwQW3sC3RaBXrOkg4imftVqoCeUx1b1us=;
- b=HGDZ5/PPPPUzCT0QP20gHWeZmiFFKlyFCbDM/g93bzV5bnC3Qs+rwxcq7WKdAgLp9C
- bIv4BblliapAShNE8OPjJafHMWAnd4Z2Rk/MRk8VPhG+UYonAWcxGxqEP6LRV44aN1el
- MDxBOKrhN/dmGkb75AtVRLCTt0BHlQ08XhIVlRjNGx/tvHWpL0CD7PxagSTEt/zc0RDU
- TROwn7S3toaMgI7r596Ayj3bjil8o8S7sOqx++pvvYRCgwO5esglMMzkhUYESrY1/ld/
- mQx8ZNCQfzFAW4v/b5TOLaT6YcFAj9w0oyPjSyCoURMFS3rOsRyhZdP1q09EmYtDOriL
- iIWg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryJW-0005V3-GK
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 08:34:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryJR-0001iH-2a
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 08:34:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756470858;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Cz1BXjpfXAmfEJm6RS15seidZTfgeDzKoSF/4UZc5Dc=;
+ b=L4i/PslH98YIhnRTly2b3xpmDtZZOl0fMz1Cw5Qm4CV9KRILEHNTQ/8NzvWfqh1DWx01z+
+ qEvO/YxWh33dNKgyWhWBU4PcBQBaDB6+t0mTLQRZ5/zaWJ2xoMN/iqdJkNwuo17477oKTZ
+ XlHv7K5BaCjEly7OzdTg8h0NceHjQuE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-BPnKsoubNZuTrr-YYGdWOQ-1; Fri, 29 Aug 2025 08:34:10 -0400
+X-MC-Unique: BPnKsoubNZuTrr-YYGdWOQ-1
+X-Mimecast-MFC-AGG-ID: BPnKsoubNZuTrr-YYGdWOQ_1756470849
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3c584459d02so1322871f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 05:34:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506281; x=1757111081;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756470849; x=1757075649;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UOcWUc5rHijwQW3sC3RaBXrOkg4imftVqoCeUx1b1us=;
- b=BHvhMnKu9rcFKCOARtZNVdJg+/x227usPiiLTCxGf4udo6pJ7w+3ad/1ekFt8iLTOt
- dAD2wQRrGUTrDMG0qGGJOEWmVhERffvksIMyWgS29MWdoO73iVMVwDkviijjT16Ky6so
- oKs2/6Kl5G98TIQSZS5zhqA0MOc0jY2RXkRtzasngRoVfMBjmnsG8aNgszMDJvf/TPpR
- tXqtajJV+unVq0OrKZAk6rKfGA5ZP9hfR4OL+p6iuJv9/eSMrDKzAXiZSloSBwCkbKOH
- SlP1OEGpbgfhPoHHelkdjnUUQKuGUopwgVT31RuqHWreAskcSoAkuOc2j2fINSufqnA8
- T5qg==
-X-Gm-Message-State: AOJu0YxA8V6JpjVkah3eHvYyMmrYWBjNFt1s+VNh3YV97mrECb3MNNbv
- ZtzBWBhVzMMi3AmnBZQ2hxywK6sC1IWnwB+kyw0CrYZ1+gmBNeiYwXIIqus9bLwCRYlKU8W+W2q
- GJvMO2vo=
-X-Gm-Gg: ASbGncvvSmjmt4CPByBNq97Jnq49GvcMA6n4yznd09H9xx4DhjgpYYpjYFk52BVxu7Z
- ltO3lli6+a4lkIf0F/xenZwuPyNvDATRuo7z0ohDaSt+Yjlctydyk+McflusDMos55pJrJ820f+
- mjBsuZddyx1rM6DIo956DsbG2LtvlVaC3wo4XqDbmUc1Wu4OAFqkBKlGxXtiiimQxYLIF9DTjAU
- kswWfYZ/SRPNk6zvM/12AbmaxCJcF97LpMXbHgEiMYb4YHgEp/8VEhdY6vScan+JIv+IL0tKlXl
- cUoqHyl6oWwSJicwl90mYHzjpxISdexGua9NzYq01MXeSVLnr8FpwzFSbNSxWr9ERpWF/hbgeHy
- 0JlpXbiJdTuF1VVnxvDCeT6mDSmM60PJvrzpYrvybYiRtUnklYUzBw0yPM9o8
-X-Google-Smtp-Source: AGHT+IHuUveqfkfC+6KXlw/14GbFhELbZIwmXziACfIQGIKoyWGgbeNp6mlG+cxoKUQzzqEETObESw==
-X-Received: by 2002:a05:6a00:1482:b0:771:ea2e:b002 with SMTP id
- d2e1a72fcca58-7723e22d0a2mr244843b3a.10.1756506281271; 
- Fri, 29 Aug 2025 15:24:41 -0700 (PDT)
-Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.24.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:24:40 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/91] linux-user: Tidy print_socket_protocol
-Date: Sat, 30 Aug 2025 08:22:59 +1000
-Message-ID: <20250829222427.289668-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+ bh=Cz1BXjpfXAmfEJm6RS15seidZTfgeDzKoSF/4UZc5Dc=;
+ b=NsSZKfvPBBvYjLGQdNQI3PD8OTYbPRdAuOs5pF69ev3Vy0Yfrtak//dZdJfo6/Rs/E
+ NXM6kB9S6IkuU6DZYYnlRnukQ6y1lwbvh8/Pg+7/MwB3sxh2wMSc4hmODQ7YsAJjQfZW
+ Uw+ShoqAHlxMX+mawBsJMJ7neGiodXWAozb920Y8oG7H4rSP6s+Dw6sWbJZ7HD+iaQq/
+ SCDTTxo4JWERsd2aiKsiT+gySz9ugdDPqkQ0gR5wCxTPjvNSCbsvVDckbuAVgCfDzEn6
+ 2gdjoFT47xQakyxGCiBoWrAG+U8RiwHNhcAPWgPh0x1faJJY+FUYWZQOYGqHbhU4QkLf
+ vcQw==
+X-Gm-Message-State: AOJu0Yxcoukls14x/TM4oqXqjN4LpBkf7Mv57ZTXkWZET6HDtXaH6kCS
+ Ox3w5CLlDNQH7Bsp/LpBcCCJe5NovrywU60F8H4KTTTJMDMoiIT8sjOLRfuT4KElLyxGE0ZjLSl
+ CYbrxgqZs+i0l9lI1YtTF70gSVPX26EyNR2cjHPAz7zVPwDkQf9BqCbqVTHL290eF1DVGcGDqL5
+ 8uQpwykjx0pnJozqSZlpXA+Nel8kp0BFY=
+X-Gm-Gg: ASbGncsmRRFjWRFrVyuVILqX1AtzXWLNmorL1VFc7Cyn6ZDNRemRet0koZoB2S/qCbr
+ USoFpJQGwFD0gF2Zl15LGv/6sO39+915AZbm1PU4Zjdgs+tKEyaqWAY6P1DXvTgyTcBtjwTzvGb
+ i/O1M/rNyoob8b71ow6Vpga+Y0A5wIfFntGhPI3ZVwx1EWvQdr9SevXk+6I/qgps2lDHZxcmpT2
+ glE8OmeqZ7C8rPC186q7ImC
+X-Received: by 2002:a05:6000:25c6:b0:3ca:4e3:6ea6 with SMTP id
+ ffacd0b85a97d-3ca04e3768amr14037150f8f.46.1756470849291; 
+ Fri, 29 Aug 2025 05:34:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+9ral3wwkJofl1NoPSw+FQ5Xplvqw2IU2Tgs39YXVRGIFh7swHtcRzbllWKRf9bNNy9J4n7PjRI+inCjOhLo=
+X-Received: by 2002:a05:6000:25c6:b0:3ca:4e3:6ea6 with SMTP id
+ ffacd0b85a97d-3ca04e3768amr14037101f8f.46.1756470848792; Fri, 29 Aug 2025
+ 05:34:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+References: <20250814160600.2327672-7-imammedo@redhat.com>
+ <20250821155603.2422553-1-imammedo@redhat.com>
+ <aKyBFlCtnxnP9kt/@intel.com> <20250825171912.1bc7b841@fedora>
+ <aK1mHGan+n9NSAOk@intel.com> <20250826104731.1440e3ed@fedora>
+ <33661ea1-b0aa-45b3-8923-0b47a40dcea8@redhat.com>
+In-Reply-To: <33661ea1-b0aa-45b3-8923-0b47a40dcea8@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 29 Aug 2025 14:33:57 +0200
+X-Gm-Features: Ac12FXwROH2Sg5p-UYSJ-6MOitEUdMAKq4acnRp2TbAekXjq-AqLBZUoYzx-QVw
+Message-ID: <CABgObfb6Hs8EOeLQeG_S=Y8j8dj6A9fAMn0DzSSVKZYBG_rP-g@mail.gmail.com>
+Subject: Re: [PATCH v5 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
+ helpers and use them tree wide
+To: Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com, 
+ mtosatti@redhat.com, richard.henderson@linaro.org, riku.voipio@iki.fi, 
+ thuth@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com, 
+ david@redhat.com, jjherne@linux.ibm.com, shorne@gmail.com, 
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
+ wangyanan55@huawei.com, peter.maydell@linaro.org, agraf@csgraf.de, 
+ mads@ynddal.dk, mrolnik@gmail.com, deller@gmx.de, dirty@apple.com, 
+ rbolshakov@ddn.com, phil@philjordan.eu, reinoud@netbsd.org, 
+ sunilmut@microsoft.com, gaosong@loongson.cn, laurent@vivier.eu, 
+ edgar.iglesias@gmail.com, aurelien@aurel32.net, jiaxun.yang@flygoat.com, 
+ arikalo@gmail.com, chenhuacai@kernel.org, npiggin@gmail.com, 
+ rathc@linux.ibm.com, harshpb@linux.ibm.com, yoshinori.sato@nifty.com, 
+ iii@linux.ibm.com, mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com, 
+ qemu-s390x@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,191 +121,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sink all of the qemu_log calls to the end, collecting only
-a string for the name, if identified.  Merge separate if
-blocks into one switch.
+On Fri, Aug 29, 2025 at 10:18=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+>
+> On 8/26/25 10:47, Igor Mammedov wrote:
+> > While overhead might be issue, it's better to have correcteness 1st.
+> > (that's why blanket tree wide change to make sure we don't miss places =
+that
+> > set/test interrupts).
+>
+> Looking more at it, I found at least one place that sets interrupts
+> without bql:
+>
+>      if (ctl_has_irq(env)) {
+>          cpu_set_interrupt(cs, CPU_INTERRUPT_VIRQ);
+>      }
+>
+> I'm going to squash this in:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/strace.c | 102 ++++++++++++++++++++++----------------------
- 1 file changed, 52 insertions(+), 50 deletions(-)
+Rethinking about it - this can be a separate patch that also affects
+cpu_reset_interrupt(), as well as all cases where
+cpu_reset_interrupt() is open coded.
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 786354627a..1233ebceb0 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -499,116 +499,118 @@ print_socket_type(int type)
- static void
- print_socket_protocol(int domain, int type, int protocol)
- {
--    if (domain == AF_PACKET ||
--        (domain == AF_INET && type == TARGET_SOCK_PACKET)) {
--        switch (protocol) {
--        case 0x0003:
--            qemu_log("ETH_P_ALL");
--            break;
--        default:
--            qemu_log("%d", protocol);
--        }
--        return;
--    }
-+    const char *name = NULL;
- 
--    if (domain == PF_NETLINK) {
-+    switch (domain) {
-+    case AF_PACKET:
-+        switch (protocol) {
-+        case 3:
-+            name = "ETH_P_ALL";
-+            break;
-+        }
-+        break;
-+
-+    case PF_NETLINK:
-         switch (protocol) {
-         case NETLINK_ROUTE:
--            qemu_log("NETLINK_ROUTE");
-+            name = "NETLINK_ROUTE";
-             break;
-         case NETLINK_UNUSED:
--            qemu_log("NETLINK_UNUSED");
-+            name = "NETLINK_UNUSED";
-             break;
-         case NETLINK_USERSOCK:
--            qemu_log("NETLINK_USERSOCK");
-+            name = "NETLINK_USERSOCK";
-             break;
-         case NETLINK_FIREWALL:
--            qemu_log("NETLINK_FIREWALL");
-+            name = "NETLINK_FIREWALL";
-             break;
-         case NETLINK_SOCK_DIAG:
--            qemu_log("NETLINK_SOCK_DIAG");
-+            name = "NETLINK_SOCK_DIAG";
-             break;
-         case NETLINK_NFLOG:
--            qemu_log("NETLINK_NFLOG");
-+            name = "NETLINK_NFLOG";
-             break;
-         case NETLINK_XFRM:
--            qemu_log("NETLINK_XFRM");
-+            name = "NETLINK_XFRM";
-             break;
-         case NETLINK_SELINUX:
--            qemu_log("NETLINK_SELINUX");
-+            name = "NETLINK_SELINUX";
-             break;
-         case NETLINK_ISCSI:
--            qemu_log("NETLINK_ISCSI");
-+            name = "NETLINK_ISCSI";
-             break;
-         case NETLINK_AUDIT:
--            qemu_log("NETLINK_AUDIT");
-+            name = "NETLINK_AUDIT";
-             break;
-         case NETLINK_FIB_LOOKUP:
--            qemu_log("NETLINK_FIB_LOOKUP");
-+            name = "NETLINK_FIB_LOOKUP";
-             break;
-         case NETLINK_CONNECTOR:
--            qemu_log("NETLINK_CONNECTOR");
-+            name = "NETLINK_CONNECTOR";
-             break;
-         case NETLINK_NETFILTER:
--            qemu_log("NETLINK_NETFILTER");
-+            name = "NETLINK_NETFILTER";
-             break;
-         case NETLINK_IP6_FW:
--            qemu_log("NETLINK_IP6_FW");
-+            name = "NETLINK_IP6_FW";
-             break;
-         case NETLINK_DNRTMSG:
--            qemu_log("NETLINK_DNRTMSG");
-+            name = "NETLINK_DNRTMSG";
-             break;
-         case NETLINK_KOBJECT_UEVENT:
--            qemu_log("NETLINK_KOBJECT_UEVENT");
-+            name = "NETLINK_KOBJECT_UEVENT";
-             break;
-         case NETLINK_GENERIC:
--            qemu_log("NETLINK_GENERIC");
-+            name = "NETLINK_GENERIC";
-             break;
-         case NETLINK_SCSITRANSPORT:
--            qemu_log("NETLINK_SCSITRANSPORT");
-+            name = "NETLINK_SCSITRANSPORT";
-             break;
-         case NETLINK_ECRYPTFS:
--            qemu_log("NETLINK_ECRYPTFS");
-+            name = "NETLINK_ECRYPTFS";
-             break;
-         case NETLINK_RDMA:
--            qemu_log("NETLINK_RDMA");
-+            name = "NETLINK_RDMA";
-             break;
-         case NETLINK_CRYPTO:
--            qemu_log("NETLINK_CRYPTO");
-+            name = "NETLINK_CRYPTO";
-             break;
-         case NETLINK_SMC:
--            qemu_log("NETLINK_SMC");
--            break;
--        default:
--            qemu_log("%d", protocol);
-+            name = "NETLINK_SMC";
-             break;
-         }
--        return;
--    }
-+        break;
- 
--    if (domain == AF_INET || domain == AF_INET6) {
-+    case AF_INET:
-+    case AF_INET6:
-         switch (protocol) {
-+        case 3:
-+            if (domain == AF_INET && type == TARGET_SOCK_PACKET) {
-+                name = "ETH_P_ALL";
-+            }
-+            break;
-         case IPPROTO_IP:
--            qemu_log("IPPROTO_IP");
-+            name = "IPPROTO_IP";
-             break;
-         case IPPROTO_TCP:
--            qemu_log("IPPROTO_TCP");
-+            name = "IPPROTO_TCP";
-             break;
-         case IPPROTO_UDP:
--            qemu_log("IPPROTO_UDP");
-+            name = "IPPROTO_UDP";
-             break;
-         case IPPROTO_RAW:
--            qemu_log("IPPROTO_RAW");
--            break;
--        default:
--            qemu_log("%d", protocol);
-+            name = "IPPROTO_RAW";
-             break;
-         }
--        return;
-+        break;
-     }
--    qemu_log("%d", protocol);
--}
- 
-+    if (name) {
-+        qemu_log("%s", name);
-+    } else {
-+        qemu_log("%d", protocol);
-+    }
-+}
- 
- #ifdef TARGET_NR__newselect
- static void
--- 
-2.43.0
+Paolo
+
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 1dee9d4c76e..5c3397fe108 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -959,12 +959,13 @@ static inline bool cpu_test_interrupt(CPUState *cpu=
+, int mask)
+>    * @cpu: The CPU to set pending interrupt(s) on.
+>    * @mask: The interrupts to set.
+>    *
+> - * Sets interrupts in @mask as pending on @cpu.
+> + * Sets interrupts in @mask as pending on @cpu.  Unlike @cpu_interrupt,
+> + * this does not kick the vCPU.
+>    */
+>   static inline void cpu_set_interrupt(CPUState *cpu, int mask)
+>   {
+> -    qatomic_store_release(&cpu->interrupt_request,
+> -        cpu->interrupt_request | mask);
+> +    /* Pairs with cpu_test_interrupt(). */
+> +    qatomic_or(&cpu->interrupt_request, mask);
+>   }
+>
+>   /**
+>
 
 
