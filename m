@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE35CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E89CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:11:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNGv-0007pH-0f; Sat, 30 Aug 2025 11:13:41 -0400
+	id 1usNQi-0007c5-Ev; Sat, 30 Aug 2025 11:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryjT-0001R2-TL
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryjR-0000Ai-Um
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756472489;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S1JyH2wiz5vFRYd2711N6Hwx1KpHo8g0euMCvUb8MQs=;
- b=D5dEVy0v4dg0SAzWJ4kg/q/BTjKNQdrO3XJddkMetY/n7WVGhkpdT5f1sTLjZZhegYtexr
- tKJ051Eg+HQgEaSEQiKnrbTi0WATwLOEsB2nS5vWFfD4p2/rfTPdCbaG3xqre0BD1NfOiv
- qmp44sgsdTveJx48iChPQf+F31nuClk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-363-W_wH6aiUOECmvybDJ2FuoA-1; Fri, 29 Aug 2025 09:01:27 -0400
-X-MC-Unique: W_wH6aiUOECmvybDJ2FuoA-1
-X-Mimecast-MFC-AGG-ID: W_wH6aiUOECmvybDJ2FuoA_1756472486
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45b7bb85e90so12269985e9.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:01:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1us1e9-0003Wd-AL
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:08:13 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1us1e5-0008G2-W8
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:08:13 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0c8867so20108755e9.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 09:08:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756483685; x=1757088485; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1bdT+FbwQxM19QOto7Jq7CUzlonVbULRUD0RULaYVII=;
+ b=zG/USa3IVwZUGUd4UBo+/9ilPwrS8uJIbzbf1c5FV7STdChLKxaGo/SrcxLAV+WVDg
+ 7TOiKpx2HULpOvs+vMRqIIQEkJ3Dk1v2IwhQOVdF7LHQP1wgMmww5R5RXrsJt62Isk8c
+ mF9zPdJmZYho5lqoBBv0jQ1txu8RVjahDHZtfuiw2NuG/rPAQQLFS9cssZPnybp7lnOR
+ d+bZcW7Hnmh7bxnQZP/1zaO8M3jMrUrcPS6uBnBLd82L3d6qWeufLb3qNcyM/GpwN8Cf
+ mYDploP6NtQHMjTH6NqRl8CW8LRHZl5lJreLiDvNcUR0n8RWn0OsrmIKvJBZOrbTN62C
+ iPTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756472485; x=1757077285;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=S1JyH2wiz5vFRYd2711N6Hwx1KpHo8g0euMCvUb8MQs=;
- b=kkTBjrED4FtaveF8+jhIefh6YVIfYMvIEeeWdAyT9GktAyX653PH841ckvHURbY+nT
- QgNdNroRP+Ettyaju4/We4W09GNdcPhn9TSM/z6zMOkW4iDJpv491qfnMhDd0qFlGt9m
- GqZybACN5mi8Vn9+D643EjIt13HVEeQ02H7Q362GZ6Plzm70035/whzIB/Z10SzzTYeg
- 3vKD53EpfpduwGCknK0RJIo2pOcw3e2+rz2Sx+2l0lwGK9n4WlQaVLXXDgbCe/Obieu6
- n7rIorDP8jq1YCegxMLp2+uo3vba2zrx3DAiYA+KsaVe7NmjAbj3NLb3agizoqJWdt4m
- APbw==
-X-Gm-Message-State: AOJu0Yxufa1m/rZxWISt+p1jBttegMnx88svG5+iELIb/z298PKHIyJB
- TQxgIfKNdQnUceIEOQlNoQeiEWei2xHxjY1eOfOjv4HU3oRnLTwMug1VXsuMELGt7tyyGS3TTmO
- JsDN6uG1XhC3JMsmSb5+OFTsoA3aSzHn8MFFu88EaBobNomG0lkl5LkO+sV8ni47RKXFI8fVwZF
- 2CBLsaveM9O7GMImD1WIABFQ+lKS0R8AO4E2HH9fWI
-X-Gm-Gg: ASbGncsHeoFNzmqqsF+i3Wmu1AGrGx9prB6+ds/0aS8x074CgJo8EGpv1oaXoYsaamg
- tpg+TDxTxCKsxS/+IW8I1SV3NL8pxfY2yec+tEVOsbfOGmnQPqJuIuKefYDKfXGIAmQo0BpQT5g
- vR6WjzEvVgeDCmezHHs/k9h/Sbe/J6/933PuNyaa7aivNTOYL9KAr8smzTkSNGP8ydkm+zEyVr0
- cP9PktAZG9QvGlMe3N/93ucHX2YOhd4j2eE+1XegibOZUWFxjZIOF6I/APyeiNHxtgYpT3+/QT5
- 7A1yu23Lljv5Vt8wcz5pS1jkAZTvUZKv7hXrkx0kmC1CwkVtukMQgGKoXZhVd5nk2qoLZZoA98H
- GbCp0B5dXmfikNNbaFBFVWNxdh1i0bv/MEHYtKZjrmyw=
-X-Received: by 2002:a05:600c:430b:b0:456:942:b162 with SMTP id
- 5b1f17b1804b1-45b6e42bad0mr65771665e9.11.1756472484780; 
- Fri, 29 Aug 2025 06:01:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrtRhe/ZtpJP3KGy3yiPpcs6g6Jf7QM/4IUPegPEJhbcJp9bbBWUT/eOfGDy484lyCHyLm4A==
-X-Received: by 2002:a05:600c:430b:b0:456:942:b162 with SMTP id
- 5b1f17b1804b1-45b6e42bad0mr65771235e9.11.1756472484107; 
- Fri, 29 Aug 2025 06:01:24 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf270fc496sm3400264f8f.1.2025.08.29.06.01.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 06:01:22 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 28/28] tcg: move interrupt caching and single step masking
- closer to user
-Date: Fri, 29 Aug 2025 14:59:35 +0200
-Message-ID: <20250829125935.1526984-29-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1756483685; x=1757088485;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1bdT+FbwQxM19QOto7Jq7CUzlonVbULRUD0RULaYVII=;
+ b=ULK+vxMOco6dzwBGNDglviKYt4RIxHRBy6Qhd/yaetT5t/SxDlqtKZt/FAh/zP0gtV
+ etlhhP1TrnvRijeLbUXFZ5q3QFL85R/2xBFdNToWLxaPmjxiYcNGQ5EUnQw8JaNvdtRW
+ VRdI+RjvtoM0BxKRFP2ucQNDtpBdE59KyPyaVRX25nrBVFfSc81zeZ+IWaoebYBR40G0
+ BX07uPJ2/7WuKdSLSOgkRJks5/iykER6iw3vHwyDnXE9CT4vG6ASXrn11ftjKH7ATMLn
+ cCinsRbIgI7zQmeonbejDSVTyLXJsdMAkG+NB7eU6NrNXp68BllwQTGz+nV+aFbl9QQc
+ fCHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzvcJFVHc0POTi9tu72SqBQP9E2HZ9akn/cy5cpXXk8nblmSazwOIYZzuVJfirO18zgI5ZzfJ1Siq8@nongnu.org
+X-Gm-Message-State: AOJu0Yw6ewjdXrJ7QwEYOKdS0vc5rA/DT6zarQ/auhLNLHQp97vj8K+8
+ pF9A6E40Okgts1ojChIC3M9DM3szPw32AzNUeRw3vFJqYJLJZJAVGGjz2oGe0rdmUu8=
+X-Gm-Gg: ASbGncvGHfFMpdliAEb1RHlqawc9HAgkKAqRNvo1/XCEBVPopwsx5vyRaYX0/yeO5F5
+ 7JPO9keYC+srrela5mXo/QGxqnn9wwRnTCSdVuEIgkv1Rfk27ePhq9o9ANiActyfieT4jMSnqG7
+ J0koAA4GOfNgf94vGXF9I1pUMq4Iiyon8gJ7kJucmteppzEwKLxnJ8+L76lq0TKUWIprMIaEaXD
+ L1WK03iL2METsmeyicQ1Zzn+5Z81G1dph8X9XVXr6CcCF8dFWijOO27PxKCgtO7sc3jzmPHU2k/
+ DIj4FlvG4vrPeAE34hGTXodYMloiiSu1PwXCmGVx4urlVClHKa8NIX13xkvyh8j1gCLRbliJTAg
+ 8ZtgfSixFGMhG1nxQY3D6mjgdMUji0G/Ez8OSgGSC91IsGbnnwYp3LRYGr2Mi9Vjv//IRETb6iO
+ he
+X-Google-Smtp-Source: AGHT+IEM+6KpH6oDUzr0lN//poUNxfYzzFtom4jkhcoo9PhxlshbvSyejTGCBWR7JZlwHIjOgAAtbg==
+X-Received: by 2002:a05:600c:4715:b0:456:302:6dc3 with SMTP id
+ 5b1f17b1804b1-45b517d4c47mr230804695e9.26.1756483684854; 
+ Fri, 29 Aug 2025 09:08:04 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf276c751esm3847062f8f.16.2025.08.29.09.08.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 09:08:04 -0700 (PDT)
+Message-ID: <472194f0-5853-4c7f-8b52-3c85e902097d@linaro.org>
+Date: Fri, 29 Aug 2025 18:08:02 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/5] hw/i2c: add support for PMBus
+To: Titus Rwantare <titusr@google.com>, Corey Minyard <minyard@acm.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Joel Stanley
+ <joel@jms.id.au>, Hao Wu <wuhaotsh@google.com>
+References: <20210708172556.1868139-1-titusr@google.com>
+ <20210708172556.1868139-2-titusr@google.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20210708172556.1868139-2-titusr@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,74 +104,744 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+Hi Titus,
 
-in cpu_handle_interrupt() the only place where cached interrupt_request
-might have effect is when CPU_INTERRUPT_SSTEP_MASK applied and
-cached interrupt_request handed over to cpu_exec_interrupt() and
-need_replay_interrupt().
+On 8/7/21 19:25, Titus Rwantare wrote:
+> QEMU has support for SMBus devices, and PMBus is a more specific
+> implementation of SMBus. The additions made in this commit makes it easier to
+> add new PMBus devices to QEMU.
+> 
+> https://pmbus.org/specification-archives/
+> 
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> Reviewed-by: Hao Wu <wuhaotsh@google.com>
+> Signed-off-by: Titus Rwantare <titusr@google.com>
+> ---
+>   include/hw/i2c/pmbus_device.h |  517 +++++++++++
+>   hw/i2c/pmbus_device.c         | 1612 +++++++++++++++++++++++++++++++++
+>   hw/arm/Kconfig                |    1 +
+>   hw/i2c/Kconfig                |    4 +
+>   hw/i2c/meson.build            |    1 +
+>   5 files changed, 2135 insertions(+)
+>   create mode 100644 include/hw/i2c/pmbus_device.h
+>   create mode 100644 hw/i2c/pmbus_device.c
 
-Simplify code by moving interrupt_request caching and CPU_INTERRUPT_SSTEP_MASK
-masking into the block where it actually matters and drop reloading cached value
-from CPUState:interrupt_request as the rest of the code directly uses
-CPUState:interrupt_request.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Link: https://lore.kernel.org/r/20250814160600.2327672-9-imammedo@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- accel/tcg/cpu-exec.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+> +static uint8_t pmbus_receive_byte(SMBusDevice *smd)
+> +{
+> +    PMBusDevice *pmdev = PMBUS_DEVICE(smd);
+> +    PMBusDeviceClass *pmdc = PMBUS_DEVICE_GET_CLASS(pmdev);
+> +    uint8_t ret = 0xFF;
+> +    uint8_t index = pmdev->page;
+> +
+> +    if (pmdev->out_buf_len != 0) {
+> +        ret = pmbus_out_buf_pop(pmdev);
+> +        return ret;
+> +    }
+> +
+> +    switch (pmdev->code) {
+> +    case PMBUS_PAGE:
+> +        pmbus_send8(pmdev, pmdev->page);
+> +        break;
+> +
+> +    case PMBUS_OPERATION:                 /* R/W byte */
+> +        pmbus_send8(pmdev, pmdev->pages[index].operation);
+> +        break;
+> +
+> +    case PMBUS_ON_OFF_CONFIG:             /* R/W byte */
+> +        pmbus_send8(pmdev, pmdev->pages[index].on_off_config);
+> +        break;
+> +
+> +    case PMBUS_PHASE:                     /* R/W byte */
+> +        pmbus_send8(pmdev, pmdev->pages[index].phase);
+> +        break;
+> +
+> +    case PMBUS_WRITE_PROTECT:             /* R/W byte */
+> +        pmbus_send8(pmdev, pmdev->pages[index].write_protect);
+> +        break;
+> +
+> +    case PMBUS_CAPABILITY:
+> +        pmbus_send8(pmdev, pmdev->capability);
+> +        break;
+> +
+> +    case PMBUS_VOUT_MODE:                 /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_MODE) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].vout_mode);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_COMMAND:              /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_command);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_TRIM:                 /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_trim);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_CAL_OFFSET:           /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_cal_offset);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_MAX:                  /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_max);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_MARGIN_HIGH:          /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_MARGIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_margin_high);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_MARGIN_LOW:           /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_MARGIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_margin_low);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_TRANSITION_RATE:      /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_transition_rate);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_DROOP:                /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_droop);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_SCALE_LOOP:           /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_scale_loop);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_SCALE_MONITOR:        /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_scale_monitor);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    /* TODO: implement coefficients support */
+> +
+> +    case PMBUS_POUT_MAX:                  /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].pout_max);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VIN_ON:                    /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vin_on);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VIN_OFF:                   /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vin_off);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IOUT_CAL_GAIN:             /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT_GAIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].iout_cal_gain);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_OV_FAULT_LIMIT:       /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_ov_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_OV_FAULT_RESPONSE:    /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].vout_ov_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_OV_WARN_LIMIT:        /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_ov_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_UV_WARN_LIMIT:        /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_uv_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_UV_FAULT_LIMIT:       /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vout_uv_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VOUT_UV_FAULT_RESPONSE:    /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].vout_uv_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IOUT_OC_FAULT_LIMIT:       /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].iout_oc_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IOUT_OC_FAULT_RESPONSE:    /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].iout_oc_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IOUT_OC_LV_FAULT_LIMIT:    /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].iout_oc_lv_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IOUT_OC_LV_FAULT_RESPONSE: /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].iout_oc_lv_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IOUT_OC_WARN_LIMIT:        /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].iout_oc_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IOUT_UC_FAULT_LIMIT:       /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].iout_uc_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IOUT_UC_FAULT_RESPONSE:    /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].iout_uc_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_OT_FAULT_LIMIT:            /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].ot_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_OT_FAULT_RESPONSE:         /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].ot_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_OT_WARN_LIMIT:             /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].ot_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_UT_WARN_LIMIT:             /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].ut_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_UT_FAULT_LIMIT:            /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].ut_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_UT_FAULT_RESPONSE:         /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].ut_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VIN_OV_FAULT_LIMIT:        /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vin_ov_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VIN_OV_FAULT_RESPONSE:     /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].vin_ov_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VIN_OV_WARN_LIMIT:         /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vin_ov_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VIN_UV_WARN_LIMIT:         /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vin_uv_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VIN_UV_FAULT_LIMIT:        /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].vin_uv_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_VIN_UV_FAULT_RESPONSE:     /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].vin_uv_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IIN_OC_FAULT_LIMIT:        /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].iin_oc_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IIN_OC_FAULT_RESPONSE:     /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].iin_oc_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_IIN_OC_WARN_LIMIT:         /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].iin_oc_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_POUT_OP_FAULT_LIMIT:       /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].pout_op_fault_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_POUT_OP_FAULT_RESPONSE:    /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].pout_op_fault_response);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_POUT_OP_WARN_LIMIT:        /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].pout_op_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_PIN_OP_WARN_LIMIT:         /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_PIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].pin_op_warn_limit);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_STATUS_BYTE:               /* R/W byte */
+> +        pmbus_send8(pmdev, pmdev->pages[index].status_word & 0xFF);
+> +        break;
+> +
+> +    case PMBUS_STATUS_WORD:               /* R/W word */
+> +        pmbus_send16(pmdev, pmdev->pages[index].status_word);
+> +        break;
+> +
+> +    case PMBUS_STATUS_VOUT:               /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].status_vout);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_STATUS_IOUT:               /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].status_iout);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_STATUS_INPUT:              /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN ||
+> +            pmdev->pages[index].page_flags & PB_HAS_IIN ||
+> +            pmdev->pages[index].page_flags & PB_HAS_PIN) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].status_input);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_STATUS_TEMPERATURE:        /* R/W byte */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
+> +            pmbus_send8(pmdev, pmdev->pages[index].status_temperature);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_STATUS_CML:                /* R/W byte */
+> +        pmbus_send8(pmdev, pmdev->pages[index].status_cml);
+> +        break;
+> +
+> +    case PMBUS_STATUS_OTHER:              /* R/W byte */
+> +        pmbus_send8(pmdev, pmdev->pages[index].status_other);
+> +        break;
+> +
+> +    case PMBUS_READ_EIN:                  /* Read-Only block 5 bytes */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_EIN) {
+> +            pmbus_send(pmdev, pmdev->pages[index].read_ein, 5);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_EOUT:                 /* Read-Only block 5 bytes */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_EOUT) {
+> +            pmbus_send(pmdev, pmdev->pages[index].read_eout, 5);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_VIN:                  /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_vin);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_IIN:                  /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_iin);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_VOUT:                 /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_vout);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_IOUT:                 /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_iout);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_TEMPERATURE_1:        /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_temperature_1);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_TEMPERATURE_2:        /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP2) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_temperature_2);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_TEMPERATURE_3:        /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP3) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_temperature_3);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_POUT:                 /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_pout);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_READ_PIN:                  /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_PIN) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].read_pin);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_REVISION:                  /* Read-Only byte */
+> +        pmbus_send8(pmdev, pmdev->pages[index].revision);
+> +        break;
+> +
+> +    case PMBUS_MFR_ID:                    /* R/W block */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_MFR_INFO) {
+> +            pmbus_send_string(pmdev, pmdev->pages[index].mfr_id);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_MODEL:                 /* R/W block */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_MFR_INFO) {
+> +            pmbus_send_string(pmdev, pmdev->pages[index].mfr_model);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_REVISION:              /* R/W block */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_MFR_INFO) {
+> +            pmbus_send_string(pmdev, pmdev->pages[index].mfr_revision);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_LOCATION:              /* R/W block */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_MFR_INFO) {
+> +            pmbus_send_string(pmdev, pmdev->pages[index].mfr_location);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_VIN_MIN:               /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_vin_min);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_VIN_MAX:               /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_vin_max);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_IIN_MAX:               /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_iin_max);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_PIN_MAX:               /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_PIN_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_pin_max);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_VOUT_MIN:              /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_vout_min);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_VOUT_MAX:              /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_vout_max);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_IOUT_MAX:              /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_iout_max);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_POUT_MAX:              /* Read-Only word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_pout_max);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_MAX_TEMP_1:            /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_max_temp_1);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_MAX_TEMP_2:            /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_max_temp_2);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_MFR_MAX_TEMP_3:            /* R/W word */
+> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP_RATING) {
+> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_max_temp_3);
+> +        } else {
+> +            goto passthough;
+> +        }
+> +        break;
+> +
+> +    case PMBUS_CLEAR_FAULTS:              /* Send Byte */
+> +    case PMBUS_PAGE_PLUS_WRITE:           /* Block Write-only */
+> +    case PMBUS_STORE_DEFAULT_ALL:         /* Send Byte */
+> +    case PMBUS_RESTORE_DEFAULT_ALL:       /* Send Byte */
+> +    case PMBUS_STORE_DEFAULT_CODE:        /* Write-only Byte */
+> +    case PMBUS_RESTORE_DEFAULT_CODE:      /* Write-only Byte */
+> +    case PMBUS_STORE_USER_ALL:            /* Send Byte */
+> +    case PMBUS_RESTORE_USER_ALL:          /* Send Byte */
+> +    case PMBUS_STORE_USER_CODE:           /* Write-only Byte */
+> +    case PMBUS_RESTORE_USER_CODE:         /* Write-only Byte */
+> +    case PMBUS_QUERY:                     /* Write-Only */
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: reading from write only register 0x%02x\n",
+> +                      __func__, pmdev->code);
+> +        break;
+> +
+> +passthough:
+> +    default:
+> +        /* Pass through read request if not handled */
+> +        if (pmdc->receive_byte) {
+> +            ret = pmdc->receive_byte(pmdev);
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 96c124aa720..8491e5badd1 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -782,13 +782,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-     assert(!cpu_test_interrupt(cpu, ~0));
- #else
-     if (unlikely(cpu_test_interrupt(cpu, ~0))) {
--        int interrupt_request;
-         bql_lock();
--        interrupt_request = cpu->interrupt_request;
--        if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
--            /* Mask out external interrupts for this step. */
--            interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
--        }
-         if (cpu_test_interrupt(cpu, CPU_INTERRUPT_DEBUG)) {
-             cpu->interrupt_request &= ~CPU_INTERRUPT_DEBUG;
-             cpu->exception_index = EXCP_DEBUG;
-@@ -806,6 +800,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-             return true;
-         } else {
-             const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
-+            int interrupt_request = cpu->interrupt_request;
- 
-             if (cpu_test_interrupt(cpu, CPU_INTERRUPT_RESET)) {
-                 replay_interrupt();
-@@ -814,6 +809,11 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-                 return true;
-             }
- 
-+            if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
-+                /* Mask out external interrupts for this step. */
-+                interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
-+            }
-+
-             /*
-              * The target hook has 3 exit conditions:
-              * False when the interrupt isn't processed,
-@@ -838,9 +838,6 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-                 cpu->exception_index = -1;
-                 *last_tb = NULL;
-             }
--            /* The target hook may have updated the 'cpu->interrupt_request';
--             * reload the 'interrupt_request' value */
--            interrupt_request = cpu->interrupt_request;
-         }
-         if (cpu_test_interrupt(cpu, CPU_INTERRUPT_EXITTB)) {
-             cpu->interrupt_request &= ~CPU_INTERRUPT_EXITTB;
--- 
-2.51.0
+This returned value ...
 
+> +        }
+> +        break;
+> +    }
+> +
+> +    if (pmdev->out_buf_len != 0) {
+> +        ret = pmbus_out_buf_pop(pmdev);
+
+... is overwritten here, is that expected?
+
+> +        return ret;
+> +    }
+> +
+> +    return ret;
+> +}
+Regards,
+Phil.
 
