@@ -4,148 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F24B4CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226B8CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usN9g-0004iW-1U; Sat, 30 Aug 2025 11:06:12 -0400
+	id 1usNGl-0007Wo-NA; Sat, 30 Aug 2025 11:13:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1uruUF-0002qR-Ry; Fri, 29 Aug 2025 04:29:32 -0400
-Received: from mail-bn7nam10on20620.outbound.protection.outlook.com
- ([2a01:111:f403:2009::620]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryiZ-0001D3-Cq
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1uruU6-0006Nw-PA; Fri, 29 Aug 2025 04:29:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ffyo4eW15zC4EGw/WUqGKtPOiGw6ezPIwRjpYtDd89N7VNDiw6J0b+9qh/3cJ4NzpiYqv0JTvXs7VeOxGdiZuEB3fjo/4JZmX7S1bk95xK8GjIl3x+Kdmcvuj7VauWrimkOqVoFH0NM33n+k4QPKmLoJiq2iQ3YuH/QJte8V790Q5nsViT5vuRCm9ToShWEWhFKql9evzUMVmN8ndfqRfqrRscbL100IOvkxF858CrgDxs/o3gPi9AaUlGqK4JhjJAtaOvrhnu+LQ8B3c9baNqzXALA4OAyGBO3Gsaj/YtoJP+ETKi2d4w+kZhqWiuVq+LtFPIZzVmYIOTydPnVxpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eqUsHgMwSOtZZy1pvZPCmTRMLBj+9+ACk2xTR9ZmYt8=;
- b=KwAfX4pE0BD21LjLK2PB66SDrnk9smcllmn3LpPVOBEd6YetRaBhz6H48Nd+2cpkjw3q7BCU4bZUByJz2mEF6mf19a+oNYbK320Wn1z1ZCt0xho4FYBIR2JANf0ijuUNd2yBQ7EUb6rIWNC5hMlMRi3KmtaVntYahUEjc9Ze72tPp3CnUEGIq9GVk8Ce7dluwE6KPQs9i6XDhtExkmhMk/9gXIq3z/XufTl0RyiCP+ol6b0DjupRmgnNOmWyKB96fzSgB2QZqTDtMt2BGUjw/jpmyNGs+fNjHYM5cW6cmZyyRBYPKgxo37tkM3p3TG3ytSzRxWsJECn3ouc+Otgapw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eqUsHgMwSOtZZy1pvZPCmTRMLBj+9+ACk2xTR9ZmYt8=;
- b=i1xJr1hts0/9u47d8UsFxr1YPxY1hX1Cxdxd8ilymnxttD8H8UJYGoyBg0bE4dC3Kq4CEQcV233JayeJ/4bCmFB1C1FgZO+gMi1tHoOrzNpb+sPBim2+EBILqYk5dCewZe5Mu1rNpdlRh+4v1ErPyFhYuuxFezNA5iCFtDURsI1NfkExzvz1evZMXjkC/ulYe/q7CA79085COvkek1Y12pS52SNI13OSJAgYwCsDeOEczLcez4MjtXoT9r70y7QnhTp5SBCTrriMYlOrGNk2C/IrOChtSgVYis2ZXJARKwOFzpWhfac2cKG84RzoRWdcKACAn6CaZIGYNpVLGL2ifg==
-Received: from BYAPR08CA0048.namprd08.prod.outlook.com (2603:10b6:a03:117::25)
- by DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.19; Fri, 29 Aug
- 2025 08:29:11 +0000
-Received: from SJ5PEPF000001EA.namprd05.prod.outlook.com
- (2603:10b6:a03:117:cafe::b2) by BYAPR08CA0048.outlook.office365.com
- (2603:10b6:a03:117::25) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9073.20 via Frontend Transport; Fri,
- 29 Aug 2025 08:29:10 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SJ5PEPF000001EA.mail.protection.outlook.com (10.167.242.198) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9073.11 via Frontend Transport; Fri, 29 Aug 2025 08:29:09 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 29 Aug
- 2025 01:28:56 -0700
-Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 29 Aug
- 2025 01:28:51 -0700
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
- <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <imammedo@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <smostafa@google.com>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
- <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [PATCH v9 04/11] hw/arm/virt: Factor out common SMMUV3 dt bindings
- code
-Date: Fri, 29 Aug 2025 09:25:26 +0100
-Message-ID: <20250829082543.7680-5-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829082543.7680-1-skolothumtho@nvidia.com>
-References: <20250829082543.7680-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryiS-0008Q1-4Y
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756472426;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hxkiFnVY+mg3VKabUNHDgm4c9XtnC0Fwn5bhubwexes=;
+ b=bm0yiVXSIffMBqoeS1Lc/PnyUjTI6Vc3UstnUi4/AjgTeRg5HXclw0jaNOtLONsjf4zjcz
+ 7ulNdzDe0oSqLJN5X8v/LqPVrlvcBMd72kBzhqCMD02k2H7srbwAorYbGderLTRY4RlwEJ
+ qv0EwgjC3gSZ3+If0z3wwzR12JnoHQw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-497-q53OVtmEO3-K0XXlwAMHgQ-1; Fri, 29 Aug 2025 09:00:24 -0400
+X-MC-Unique: q53OVtmEO3-K0XXlwAMHgQ-1
+X-Mimecast-MFC-AGG-ID: q53OVtmEO3-K0XXlwAMHgQ_1756472423
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3c79f0a5ff1so922735f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756472423; x=1757077223;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hxkiFnVY+mg3VKabUNHDgm4c9XtnC0Fwn5bhubwexes=;
+ b=vO0qDtWB7lsP2UvMhIthpUCccEOWe5SHJXWEnZGyb8Aqt21jX4pONlfcnojzP/3l6P
+ e/5gsS4yS1ZJTN8sTN3CuhnI5B35GCHitL2Tw+D4LXx3l24s0vOGCM7dF9RRqMuiHTc8
+ 7ENjIatAT7iaPoKWtnM/1KJAIGuYxs2aHGCOo4a6CgnEW57JVSia8XIlQUyVCMb/zo+x
+ K26ArLnPfZ2KWOcCaCnwuj+y/1+ILZZdcSS2z27ZCZo0jOtS2ZF8OQOcQpUJhbkn092I
+ /d420vRgTCVJ/z8hb/8u7wXAjoCSXpw2kBS98aIs/4wvx33b04OiYF5twzOSuGwrqWwk
+ Heaw==
+X-Gm-Message-State: AOJu0Yzy02EsRl/Ohi9J6khfIasLbZUTOqWs/pfVkHa8YpS+P3hEoyvz
+ 63VmbFoV7xaYR5zuAMMiEn+gGuWnEo3xHsydC9qnzgbxplQ+GNnk4KGjn3HxG6ArNLQl+JNJYyd
+ ch9CV+1t107GBFq1XCQt7hIDMIWsTRzwAPPj4iAln7tAyP0wbaW1ywf00MGjOOH6ciHvUP5lCfA
+ hzgJW+Ayu4qNniDGhT8x3fCg7dp29kx4fXrk/j0qfx
+X-Gm-Gg: ASbGncsD9uiX3ok56wGW1Mn87Z6mIAXPJHOrNrpODPuUTaynXNfBzI/qL5a3JekCkHW
+ 2mR/ke+gmsd0PdvLBvT2ibAvzyTCqA8thXNbnqdB427cRUoCVvbxxFiaRaCZELewO8NSyPTZIUp
+ xM4vyhYbBMD/4x8jjfuCgqAyqIOlLurbbgFqk+JiyeIyhHT+Nvfdt5bXtXADjvYMUbfbtLNYzCR
+ TPRAzHQFNATJGAnrB8+FclgSRlugFqk3mL77tv5uFUL6mYyvWEEJKaNlfw1boItEwRvlGbY6HRm
+ 171jIpFGNpfkaKz6c8fzmKG5X6LFbKTTJvah8QGELbc48RBNHLhaT2b+b4DMjkwTYN5X/RVFfkZ
+ bXjvREwDZiRiEbbQBV8T++N2dnAJ+Jvw0q0Gi1EfPfRo=
+X-Received: by 2002:a5d:64e1:0:b0:3b6:436:b8ea with SMTP id
+ ffacd0b85a97d-3c5da83c601mr18910174f8f.6.1756472422264; 
+ Fri, 29 Aug 2025 06:00:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGM36Wo0fGXggWQDnWWH4VL8xKO3DiinY19cQeFX+2iWAhLjwKUpW9KtQTr1PyqqCRS29bqcg==
+X-Received: by 2002:a5d:64e1:0:b0:3b6:436:b8ea with SMTP id
+ ffacd0b85a97d-3c5da83c601mr18910133f8f.6.1756472421523; 
+ Fri, 29 Aug 2025 06:00:21 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf276d643dsm3363125f8f.26.2025.08.29.06.00.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 06:00:19 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Bernhard Beschow <shentey@gmail.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 16/28] hw/i386: move isapc machine to separate isapc.c file
+Date: Fri, 29 Aug 2025 14:59:23 +0200
+Message-ID: <20250829125935.1526984-17-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.231.35]
-X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EA:EE_|DM6PR12MB4356:EE_
-X-MS-Office365-Filtering-Correlation-Id: b88ca651-d349-4f41-de6d-08dde6d620a1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|82310400026|376014|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?4hn5YuW9QqRq6C95jNFOjaH/CB1Knqhq/gSOZ9BeOdRy0dKT/DlVOEVqw9i8?=
- =?us-ascii?Q?fOIP6PycdgQHYszM1hUa8taZufHd/tN6zqZr+ZvS4C1+pZHdlR07MwhpQsEV?=
- =?us-ascii?Q?qrgOaDeGDvgFI4z4dTR7ccKy7J2OKzmpXQFwRYLEBVP7dKqGf3pIrsGzccay?=
- =?us-ascii?Q?wlrbsQvCICOE8XJ5SlkKuWYU592K++j2e0HbOoaB68E63zg+T3eIhbElDHyj?=
- =?us-ascii?Q?hpL42s7Ye3JrcD5xrlHNIEn1IYnyhRxBSMp/sywQJSqE3//mG0+N1Ic6NcO+?=
- =?us-ascii?Q?4ukBdt82/V5PlKZXsT7xEBkXSK8z8mGVPtPll2tJwtPab9v3/fIksAtx5sFA?=
- =?us-ascii?Q?5Sj94aGuExWkKbnBgZxdgQMR0BqSdQ+GJO7sCRpj/bS5zaKNegnhO0GVIRTZ?=
- =?us-ascii?Q?IDEg3Aa6p6vxvWxtX69HM657c/OLZOhHvjSEDmE+MsTeBWU8K/ya4AJ7B7D7?=
- =?us-ascii?Q?WBSpLG9o4Hy1//BRhjgXpUKAUMX2h8f9gCMQbdWQmqmD12HfflZ1UubAipYX?=
- =?us-ascii?Q?VBT40NLEwJNvuXEAjlBDnvdBU/ucWfpH1A/Ga/xUEVhqoMeDiKTtvR26qd5D?=
- =?us-ascii?Q?RkomTon1SBq98b2B4jDFGmqOAvKV3hK3UIKdy4yz9BcmFbr9OP6HUPaX6VPU?=
- =?us-ascii?Q?7d7RD/TdZ6dzKWZusGOVFiMidIHJqSJDsDRxM3WC07dyjjYibRYynhpHthqF?=
- =?us-ascii?Q?sI3NWzRnpa04tX7xMe6uuGNaOr8CaBMN5TyI4h9shKctcTSY+HjtkQTMXBeX?=
- =?us-ascii?Q?jmSoyhJLOsbBtNGWq5q2MM+Hf0Ctkm16lh0MMFdNikyILIOuF3UjQUhX8z3Q?=
- =?us-ascii?Q?ik6TCKN9CzfSGNXczZf+tBsuEGT8Fqfe6rEWk6FHaldIsRswdUc2ZLtpeBnB?=
- =?us-ascii?Q?/FNSe0sG7zOtXM0jwtm6r6op+uIXf6WJD1w90ZUATfTXVKSCwHa3Zq0/PGjt?=
- =?us-ascii?Q?78l2VBGPDswfDvYdpQOyxhqRmyWrLENODX1tnWxgIIzN04tapauHmC2xfTFO?=
- =?us-ascii?Q?vy8L5H6PINLZ8kf6lHF7unybHHTHl54lYTlEAVE9Sb/+wdDSkl0KNAHwmhTB?=
- =?us-ascii?Q?8APSyq8Oc95QkirZ6Uz6vdsREqCvOJa1HjQJIhD/XPFNLasmWocFE8LzdqJq?=
- =?us-ascii?Q?g7wx8wlCrs4AFYQZM7dSNijAhYQo04gAstQzaCaC/PC7Wm3m1NzHlbRxiaj+?=
- =?us-ascii?Q?f7Xh4Y6Dt8XJ0JbCdzLHt1RenTqlYZNHKAaS8Jz/JLNMbET0a2q+FW6G9k9e?=
- =?us-ascii?Q?DqT+PKX4Oh9bEHfBKLPM4OnuZFUu7TxeYxkw2JID3xOcFjv/eVXHEyUdOWYu?=
- =?us-ascii?Q?uZ/rzs/sIQ/CGFyYZm+ABDwLJQVyiweeK7slJNBIdYp3LbmXTSkZcYRbJl91?=
- =?us-ascii?Q?KIh4TWYFh4S6pX1PbvHsVGQDCvyuVx4F3CF3hbkatMOjUfcHPnjnyO667YIQ?=
- =?us-ascii?Q?tChHxev1zQqv+EtV2yvARs4GgXJJ2LLKZT/aapF7nV/qCTgxY34zfRJHrzZw?=
- =?us-ascii?Q?z+xFfvpLuORp2+WYpKNl7VfKAQaD7s32MRaz?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(7416014)(82310400026)(376014)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2025 08:29:09.9955 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b88ca651-d349-4f41-de6d-08dde6d620a1
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001EA.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4356
-Received-SPF: permerror client-ip=2a01:111:f403:2009::620;
- envelope-from=skolothumtho@nvidia.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 29 Aug 2025 09:59:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -160,103 +110,452 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No functional changes intended. This will be useful when we
-add support for user-creatable smmuv3 device.
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Nathan Chen <nathanc@nvidia.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Now that pc_init_isa() is independent of any PCI initialisation, move it into a
+separate isapc.c file including the ISA IDE variables which are now no longer
+needed for the pc-i440fx machine. This enables us to finally fix the dependency
+of ISAPC on I440FX in hw/i386/Kconfig.
+
+Note that as part of the move to a separate file we can see that the licence text
+is a verbatim copy of the MIT licence. The text originates from commit 1df912cf9e
+("VL license of the day is MIT/BSD") so we can be sure that this was the original
+intent. As a consequence we can update the file header to use a SPDX tag as per
+the current project contribution guidelines.
+
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20250828111057.468712-17-mark.caveayland@nutanix.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/arm/virt.c | 54 +++++++++++++++++++++++++++------------------------
- 1 file changed, 29 insertions(+), 25 deletions(-)
+ hw/i386/isapc.c     | 190 ++++++++++++++++++++++++++++++++++++++++++++
+ hw/i386/pc_piix.c   | 172 ---------------------------------------
+ hw/i386/Kconfig     |   3 -
+ hw/i386/meson.build |   1 +
+ 4 files changed, 191 insertions(+), 175 deletions(-)
+ create mode 100644 hw/i386/isapc.c
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 4663184654..d0d93fc0b9 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1443,19 +1443,43 @@ static void create_pcie_irq_map(const MachineState *ms,
-                            0x7           /* PCI irq */);
- }
- 
-+static void create_smmuv3_dt_bindings(const VirtMachineState *vms, hwaddr base,
-+                                      hwaddr size, int irq)
+diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
+new file mode 100644
+index 00000000000..300d64b7ad2
+--- /dev/null
++++ b/hw/i386/isapc.c
+@@ -0,0 +1,190 @@
++/*
++ * QEMU PC System Emulator
++ *
++ * Copyright (c) 2003-2004 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: MIT
++ */
++
++#include "qemu/osdep.h"
++
++#include "qemu/units.h"
++#include "qemu/error-report.h"
++#include "hw/char/parallel-isa.h"
++#include "hw/dma/i8257.h"
++#include "hw/i386/pc.h"
++#include "hw/ide/isa.h"
++#include "hw/ide/ide-bus.h"
++#include "system/kvm.h"
++#include "hw/i386/kvm/clock.h"
++#include "hw/xen/xen-x86.h"
++#include "system/xen.h"
++#include "hw/rtc/mc146818rtc.h"
++#include "target/i386/cpu.h"
++
++static const int ide_iobase[MAX_IDE_BUS] = { 0x1f0, 0x170 };
++static const int ide_iobase2[MAX_IDE_BUS] = { 0x3f6, 0x376 };
++static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
++
++
++static void pc_init_isa(MachineState *machine)
 +{
-+    char *node;
-+    const char compat[] = "arm,smmu-v3";
-+    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
-+    MachineState *ms = MACHINE(vms);
++    PCMachineState *pcms = PC_MACHINE(machine);
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++    X86MachineState *x86ms = X86_MACHINE(machine);
++    MemoryRegion *system_memory = get_system_memory();
++    MemoryRegion *system_io = get_system_io();
++    ISABus *isa_bus;
++    uint32_t irq;
++    GSIState *gsi_state;
++    MemoryRegion *ram_memory;
++    MemoryRegion *rom_memory = system_memory;
++    DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
++    int i;
 +
-+    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
-+    qemu_fdt_add_subnode(ms->fdt, node);
-+    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
-+    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
++    /*
++     * There is a small chance that someone unintentionally passes "-cpu max"
++     * for the isapc machine, which will provide a much more modern 32-bit
++     * CPU than would be expected for an ISA-era PC. If the "max" cpu type has
++     * been specified, choose the "best" 32-bit cpu possible which we consider
++     * be the pentium3 (deliberately choosing an Intel CPU given that the
++     * default 486 CPU for the isapc machine is also an Intel CPU).
++     */
++    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("max"))) {
++        machine->cpu_type = X86_CPU_TYPE_NAME("pentium3");
++        warn_report("-cpu max is invalid for isapc machine, using pentium3");
++    }
 +
-+    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
-+            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
-+            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
++    /*
++     * Similarly if someone unintentionally passes "-cpu host" for the isapc
++     * machine then display a warning and also switch to the "best" 32-bit
++     * cpu possible which we consider to be the pentium3. This is because any
++     * host CPU will already be modern than this, but it also ensures any
++     * newer CPU flags/features are filtered out for older guests.
++     */
++    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("host"))) {
++        machine->cpu_type = X86_CPU_TYPE_NAME("pentium3");
++        warn_report("-cpu host is invalid for isapc machine, using pentium3");
++    }
 +
-+    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
-+                     sizeof(irq_names));
++    if (machine->ram_size > 3.5 * GiB) {
++        error_report("Too much memory for this machine: %" PRId64 " MiB, "
++                     "maximum 3584 MiB", machine->ram_size / MiB);
++        exit(1);
++    }
 +
-+    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
-+    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
-+    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
-+    g_free(node);
++    /*
++     * There is no RAM split for the isapc machine
++     */
++    if (xen_enabled()) {
++        xen_hvm_init_pc(pcms, &ram_memory);
++    } else {
++        ram_memory = machine->ram;
++
++        pcms->max_ram_below_4g = 3.5 * GiB;
++        x86ms->above_4g_mem_size = 0;
++        x86ms->below_4g_mem_size = machine->ram_size;
++    }
++
++    x86_cpus_init(x86ms, pcmc->default_cpu_version);
++
++    if (kvm_enabled()) {
++        kvmclock_create(pcmc->kvmclock_create_always);
++    }
++
++    /* allocate ram and load rom/bios */
++    if (!xen_enabled()) {
++        pc_memory_init(pcms, system_memory, rom_memory, 0);
++    } else {
++        assert(machine->ram_size == x86ms->below_4g_mem_size +
++                                    x86ms->above_4g_mem_size);
++
++        if (machine->kernel_filename != NULL) {
++            /* For xen HVM direct kernel boot, load linux here */
++            xen_load_linux(pcms);
++        }
++    }
++
++    gsi_state = pc_gsi_create(&x86ms->gsi, false);
++
++    isa_bus = isa_bus_new(NULL, system_memory, system_io,
++                          &error_abort);
++    isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
++
++    x86ms->rtc = isa_new(TYPE_MC146818_RTC);
++    qdev_prop_set_int32(DEVICE(x86ms->rtc), "base_year", 2000);
++    isa_realize_and_unref(x86ms->rtc, isa_bus, &error_fatal);
++    irq = object_property_get_uint(OBJECT(x86ms->rtc), "irq",
++                                   &error_fatal);
++    isa_connect_gpio_out(ISA_DEVICE(x86ms->rtc), 0, irq);
++
++    i8257_dma_init(OBJECT(machine), isa_bus, 0);
++    pcms->hpet_enabled = false;
++
++    if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
++        pc_i8259_create(isa_bus, gsi_state->i8259_irq);
++    }
++
++    if (tcg_enabled()) {
++        x86_register_ferr_irq(x86ms->gsi[13]);
++    }
++
++    pc_vga_init(isa_bus, NULL);
++
++    /* init basic PC hardware */
++    pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
++                         !MACHINE_CLASS(pcmc)->no_floppy, 0x4);
++
++    pc_nic_init(pcmc, isa_bus, NULL);
++
++    ide_drive_get(hd, ARRAY_SIZE(hd));
++    for (i = 0; i < MAX_IDE_BUS; i++) {
++        ISADevice *dev;
++        char busname[] = "ide.0";
++        dev = isa_ide_init(isa_bus, ide_iobase[i], ide_iobase2[i],
++                            ide_irq[i],
++                            hd[MAX_IDE_DEVS * i], hd[MAX_IDE_DEVS * i + 1]);
++        /*
++         * The ide bus name is ide.0 for the first bus and ide.1 for the
++         * second one.
++         */
++        busname[4] = '0' + i;
++        pcms->idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
++    }
 +}
 +
- static void create_smmu(const VirtMachineState *vms,
-                         PCIBus *bus)
- {
-     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
--    char *node;
--    const char compat[] = "arm,smmu-v3";
-     int irq =  vms->irqmap[VIRT_SMMU];
-     int i;
-     hwaddr base = vms->memmap[VIRT_SMMU].base;
-     hwaddr size = vms->memmap[VIRT_SMMU].size;
--    const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
-     DeviceState *dev;
--    MachineState *ms = MACHINE(vms);
++static void isapc_machine_options(MachineClass *m)
++{
++    static const char * const valid_cpu_types[] = {
++        X86_CPU_TYPE_NAME("486"),
++        X86_CPU_TYPE_NAME("athlon"),
++        X86_CPU_TYPE_NAME("kvm32"),
++        X86_CPU_TYPE_NAME("pentium"),
++        X86_CPU_TYPE_NAME("pentium2"),
++        X86_CPU_TYPE_NAME("pentium3"),
++        X86_CPU_TYPE_NAME("qemu32"),
++        X86_CPU_TYPE_NAME("max"),
++        X86_CPU_TYPE_NAME("host"),
++        NULL
++    };
++    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
++
++    m->desc = "ISA-only PC";
++    m->max_cpus = 1;
++    m->option_rom_has_mr = true;
++    m->rom_file_has_mr = false;
++    pcmc->pci_enabled = false;
++    pcmc->has_acpi_build = false;
++    pcmc->smbios_defaults = false;
++    pcmc->gigabyte_align = false;
++    pcmc->smbios_legacy_mode = true;
++    pcmc->has_reserved_memory = false;
++    m->default_nic = "ne2k_isa";
++    m->default_cpu_type = X86_CPU_TYPE_NAME("486");
++    m->valid_cpu_types = valid_cpu_types;
++    m->no_floppy = !module_object_class_by_name(TYPE_ISA_FDC);
++    m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
++}
++
++DEFINE_PC_MACHINE(isapc, "isapc", pc_init_isa,
++                  isapc_machine_options);
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 3ea77b2c44f..988c9edc32c 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -71,12 +71,6 @@
  
-     if (vms->iommu != VIRT_IOMMU_SMMUV3 || !vms->iommu_phandle) {
-         return;
-@@ -1474,27 +1498,7 @@ static void create_smmu(const VirtMachineState *vms,
-         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
-                            qdev_get_gpio_in(vms->gic, irq + i));
-     }
+ #define XEN_IOAPIC_NUM_PIRQS 128ULL
+ 
+-#ifdef CONFIG_IDE_ISA
+-static const int ide_iobase[MAX_IDE_BUS] = { 0x1f0, 0x170 };
+-static const int ide_iobase2[MAX_IDE_BUS] = { 0x3f6, 0x376 };
+-static const int ide_irq[MAX_IDE_BUS] = { 14, 15 };
+-#endif
 -
--    node = g_strdup_printf("/smmuv3@%" PRIx64, base);
--    qemu_fdt_add_subnode(ms->fdt, node);
--    qemu_fdt_setprop(ms->fdt, node, "compatible", compat, sizeof(compat));
--    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2, size);
--
--    qemu_fdt_setprop_cells(ms->fdt, node, "interrupts",
--            GIC_FDT_IRQ_TYPE_SPI, irq    , GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
--            GIC_FDT_IRQ_TYPE_SPI, irq + 1, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
--            GIC_FDT_IRQ_TYPE_SPI, irq + 2, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI,
--            GIC_FDT_IRQ_TYPE_SPI, irq + 3, GIC_FDT_IRQ_FLAGS_EDGE_LO_HI);
--
--    qemu_fdt_setprop(ms->fdt, node, "interrupt-names", irq_names,
--                     sizeof(irq_names));
--
--    qemu_fdt_setprop(ms->fdt, node, "dma-coherent", NULL, 0);
--
--    qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
--
--    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
--    g_free(node);
-+    create_smmuv3_dt_bindings(vms, base, size, irq);
+ static GlobalProperty pc_piix_compat_defaults[] = {
+     { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
+     { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
+@@ -392,134 +386,6 @@ static void pc_set_south_bridge(Object *obj, int value, Error **errp)
+     pcms->south_bridge = PCSouthBridgeOption_lookup.array[value];
  }
  
- static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
+-#ifdef CONFIG_ISAPC
+-static void pc_init_isa(MachineState *machine)
+-{
+-    PCMachineState *pcms = PC_MACHINE(machine);
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+-    X86MachineState *x86ms = X86_MACHINE(machine);
+-    MemoryRegion *system_memory = get_system_memory();
+-    MemoryRegion *system_io = get_system_io();
+-    ISABus *isa_bus;
+-    uint32_t irq;
+-    GSIState *gsi_state;
+-    MemoryRegion *ram_memory;
+-    MemoryRegion *rom_memory = system_memory;
+-    DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+-    int i;
+-
+-    /*
+-     * There is a small chance that someone unintentionally passes "-cpu max"
+-     * for the isapc machine, which will provide a much more modern 32-bit
+-     * CPU than would be expected for an ISA-era PC. If the "max" cpu type has
+-     * been specified, choose the "best" 32-bit cpu possible which we consider
+-     * be the pentium3 (deliberately choosing an Intel CPU given that the
+-     * default 486 CPU for the isapc machine is also an Intel CPU).
+-     */
+-    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("max"))) {
+-        machine->cpu_type = X86_CPU_TYPE_NAME("pentium3");
+-        warn_report("-cpu max is invalid for isapc machine, using pentium3");
+-    }
+-
+-    /*
+-     * Similarly if someone unintentionally passes "-cpu host" for the isapc
+-     * machine then display a warning and also switch to the "best" 32-bit
+-     * cpu possible which we consider to be the pentium3. This is because any
+-     * host CPU will already be modern than this, but it also ensures any
+-     * newer CPU flags/features are filtered out for older guests.
+-     */
+-    if (!strcmp(machine->cpu_type, X86_CPU_TYPE_NAME("host"))) {
+-        machine->cpu_type = X86_CPU_TYPE_NAME("pentium3");
+-        warn_report("-cpu host is invalid for isapc machine, using pentium3");
+-    }
+-
+-    if (machine->ram_size > 3.5 * GiB) {
+-        error_report("Too much memory for this machine: %" PRId64 " MiB, "
+-                     "maximum 3584 MiB", machine->ram_size / MiB);
+-        exit(1);
+-    }
+-
+-    /*
+-     * There is no RAM split for the isapc machine
+-     */
+-    if (xen_enabled()) {
+-        xen_hvm_init_pc(pcms, &ram_memory);
+-    } else {
+-        ram_memory = machine->ram;
+-
+-        pcms->max_ram_below_4g = 3.5 * GiB;
+-        x86ms->above_4g_mem_size = 0;
+-        x86ms->below_4g_mem_size = machine->ram_size;
+-    }
+-
+-    x86_cpus_init(x86ms, pcmc->default_cpu_version);
+-
+-    if (kvm_enabled()) {
+-        kvmclock_create(pcmc->kvmclock_create_always);
+-    }
+-
+-    /* allocate ram and load rom/bios */
+-    if (!xen_enabled()) {
+-        pc_memory_init(pcms, system_memory, rom_memory, 0);
+-    } else {
+-        assert(machine->ram_size == x86ms->below_4g_mem_size +
+-                                    x86ms->above_4g_mem_size);
+-
+-        if (machine->kernel_filename != NULL) {
+-            /* For xen HVM direct kernel boot, load linux here */
+-            xen_load_linux(pcms);
+-        }
+-    }
+-
+-    gsi_state = pc_gsi_create(&x86ms->gsi, false);
+-
+-    isa_bus = isa_bus_new(NULL, system_memory, system_io,
+-                          &error_abort);
+-    isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
+-
+-    x86ms->rtc = isa_new(TYPE_MC146818_RTC);
+-    qdev_prop_set_int32(DEVICE(x86ms->rtc), "base_year", 2000);
+-    isa_realize_and_unref(x86ms->rtc, isa_bus, &error_fatal);
+-    irq = object_property_get_uint(OBJECT(x86ms->rtc), "irq",
+-                                   &error_fatal);
+-    isa_connect_gpio_out(ISA_DEVICE(x86ms->rtc), 0, irq);
+-
+-    i8257_dma_init(OBJECT(machine), isa_bus, 0);
+-    pcms->hpet_enabled = false;
+-
+-    if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
+-        pc_i8259_create(isa_bus, gsi_state->i8259_irq);
+-    }
+-
+-    if (tcg_enabled()) {
+-        x86_register_ferr_irq(x86ms->gsi[13]);
+-    }
+-
+-    pc_vga_init(isa_bus, NULL);
+-
+-    /* init basic PC hardware */
+-    pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
+-                         !MACHINE_CLASS(pcmc)->no_floppy, 0x4);
+-
+-    pc_nic_init(pcmc, isa_bus, NULL);
+-
+-    ide_drive_get(hd, ARRAY_SIZE(hd));
+-    for (i = 0; i < MAX_IDE_BUS; i++) {
+-        ISADevice *dev;
+-        char busname[] = "ide.0";
+-        dev = isa_ide_init(isa_bus, ide_iobase[i], ide_iobase2[i],
+-                            ide_irq[i],
+-                            hd[MAX_IDE_DEVS * i], hd[MAX_IDE_DEVS * i + 1]);
+-        /*
+-         * The ide bus name is ide.0 for the first bus and ide.1 for the
+-         * second one.
+-         */
+-        busname[4] = '0' + i;
+-        pcms->idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
+-    }
+-}
+-#endif
+-
+ #ifdef CONFIG_XEN
+ static void pc_xen_hvm_init(MachineState *machine)
+ {
+@@ -887,44 +753,6 @@ static void pc_i440fx_machine_2_6_options(MachineClass *m)
+ 
+ DEFINE_I440FX_MACHINE(2, 6);
+ 
+-#ifdef CONFIG_ISAPC
+-static void isapc_machine_options(MachineClass *m)
+-{
+-    static const char * const valid_cpu_types[] = {
+-        X86_CPU_TYPE_NAME("486"),
+-        X86_CPU_TYPE_NAME("athlon"),
+-        X86_CPU_TYPE_NAME("kvm32"),
+-        X86_CPU_TYPE_NAME("pentium"),
+-        X86_CPU_TYPE_NAME("pentium2"),
+-        X86_CPU_TYPE_NAME("pentium3"),
+-        X86_CPU_TYPE_NAME("qemu32"),
+-        X86_CPU_TYPE_NAME("max"),
+-        X86_CPU_TYPE_NAME("host"),
+-        NULL
+-    };
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    m->desc = "ISA-only PC";
+-    m->max_cpus = 1;
+-    m->option_rom_has_mr = true;
+-    m->rom_file_has_mr = false;
+-    pcmc->pci_enabled = false;
+-    pcmc->has_acpi_build = false;
+-    pcmc->smbios_defaults = false;
+-    pcmc->gigabyte_align = false;
+-    pcmc->smbios_legacy_mode = true;
+-    pcmc->has_reserved_memory = false;
+-    m->default_nic = "ne2k_isa";
+-    m->default_cpu_type = X86_CPU_TYPE_NAME("486");
+-    m->valid_cpu_types = valid_cpu_types;
+-    m->no_floppy = !module_object_class_by_name(TYPE_ISA_FDC);
+-    m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
+-}
+-
+-DEFINE_PC_MACHINE(isapc, "isapc", pc_init_isa,
+-                  isapc_machine_options);
+-#endif
+-
+ #ifdef CONFIG_XEN
+ static void xenfv_machine_4_2_options(MachineClass *m)
+ {
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index 3a0e2b8ebbb..6a0ab54bea4 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -96,9 +96,6 @@ config ISAPC
+     select ISA_BUS
+     select PC
+     select IDE_ISA
+-    # FIXME: it is in the same file as i440fx, and does not compile
+-    # if separated
+-    depends on I440FX
+ 
+ config Q35
+     bool
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index 7896f348cff..436b3ce52d6 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -14,6 +14,7 @@ i386_ss.add(when: 'CONFIG_X86_IOMMU', if_true: files('x86-iommu.c'),
+ i386_ss.add(when: 'CONFIG_AMD_IOMMU', if_true: files('amd_iommu.c'),
+                                       if_false: files('amd_iommu-stub.c'))
+ i386_ss.add(when: 'CONFIG_I440FX', if_true: files('pc_piix.c'))
++i386_ss.add(when: 'CONFIG_ISAPC', if_true: files('isapc.c'))
+ i386_ss.add(when: 'CONFIG_MICROVM', if_true: files('x86-common.c', 'microvm.c', 'acpi-microvm.c', 'microvm-dt.c'))
+ i386_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: files('nitro_enclave.c'))
+ i386_ss.add(when: 'CONFIG_Q35', if_true: files('pc_q35.c'))
 -- 
-2.43.0
+2.51.0
 
 
