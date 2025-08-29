@@ -4,90 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E152CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA30CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNH1-00088y-B5; Sat, 30 Aug 2025 11:13:47 -0400
+	id 1usNfu-0006rL-E5; Sat, 30 Aug 2025 11:39:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryiE-000182-0S
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:15 -0400
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1us5OW-0006mM-Dw
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:08:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryiC-0008Bv-2L
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:13 -0400
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1us5OS-0005LL-LN
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:08:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756472411;
+ s=mimecast20190719; t=1756498096;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aNgBnsocI3GR7Pw0K8L2VSK+KTUjcI66uLxSDZZqK5U=;
- b=cNtDXdxz2rTPm6NVYZvq2e1XDpFCBDy3mqJOSlUDWlQLQ/NiKkYDfurQ/LAE6cTQjt5pj5
- 7O0YRixoDZi5GSH4BAqx0cD7mL1f5PHyCaYpnDStAx/LTbEjdAjKBifFZiNO7w04bIKuyu
- MPq2HKWHxA62jrj4KloGHMCJcIgzAeo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Vc9okNpMYt4DXDWcpMg2ynUqZTjLFOeZYVXE63oU0yM=;
+ b=Vak9cNNlln8L6RvqVDbiQLpqXYBKo53MKHm6ZmNM2TPdj5VTszUfDW3B2ljEfrZWxm1ixF
+ DpDoFIFCZuLPy7mNiEYPe1QgNhPrM09wRrgCR/x/1Cv6hep2MreuU/4HKrxTOFNWC6Grk6
+ D9Z01ZE59n6fxAfzOELii/NPuzVLQDU=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-ApmVIgcfOqCvjfr_9g990w-1; Fri, 29 Aug 2025 09:00:09 -0400
-X-MC-Unique: ApmVIgcfOqCvjfr_9g990w-1
-X-Mimecast-MFC-AGG-ID: ApmVIgcfOqCvjfr_9g990w_1756472408
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3cbe70a7861so1524579f8f.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:08 -0700 (PDT)
+ us-mta-48-mB2ZTRDBMq-WoawYBuOfYg-1; Fri, 29 Aug 2025 16:08:14 -0400
+X-MC-Unique: mB2ZTRDBMq-WoawYBuOfYg-1
+X-Mimecast-MFC-AGG-ID: mB2ZTRDBMq-WoawYBuOfYg_1756498094
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-325b2959306so4061275a91.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 13:08:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756472407; x=1757077207;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756498094; x=1757102894;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aNgBnsocI3GR7Pw0K8L2VSK+KTUjcI66uLxSDZZqK5U=;
- b=RBWnLaSHvdnQ4JjmDDr33+NJszz/6fYLOKZTjduOa1jnV9SWQuDAiKvEOV5ld/4lPu
- jWeO1ZWB0Ztu3ZGhT9QYL6tycg2d97pa3aeCs5ZUMx5PLOX1FCUYpEUm22rg2jj7QAza
- pFwnMcHcd4H9OiIuuYjnO9Bp3lZYhJzgVw5DySxQeaNUFkj/7DtQgPgwO0HWHOIRZPXC
- 4KjLWFsC+0GXb587zXHmONHoSc7RErbtr7pPTmBS14cc2bKNwmqTCv/Jp16zvvycSuxW
- S9xICrvvl5AMNGMcNTlV4Mei/maol5ef5IQLq60Ae9rxpTvYBiJnH+8VN5WXzxpkFe2l
- KspA==
-X-Gm-Message-State: AOJu0Yzo8DSQDi1ayzE+JJzyzY+CnJC0BjxLEmQGumk/oNMVriV5VfWG
- Zp+3suh5kTfhR35OnEHscS75psWmIMCHWqmNArSxBBP3VHJz8iKrkRakH9wJ+Z8TCE4nWGENq4/
- ay4PCx2ZnYztnOu5f12Qd6dMEA0GNmlshS6i/ycEt3BPUUV60Gla6+I5w7lLtLdY9yjD8C2gESD
- IZLxnqY/2QsqedibhlEieBWiKYuanwvWOwoZYooCia
-X-Gm-Gg: ASbGncv65rLvt5DzstxIUFtL9R9a4MKO1Mi5Rpsaea+jvr7d7EfpG+z0z/4L42bqL5A
- eo8Uf2neQmpj8wR22aOoDE5pheW+Q0NntzO2AVHhy+fXYcimpy+11coVBIZo+vxdOA30M+YAmGr
- HL2oB+A+u/iJS/loTcv4fB+dlFW36ye6zedsgTyh5/UdqWWwWnnQFkX/xAGQIgn5TeXvQqM8/3M
- 5mSTQG8HacKLcYB4bGqaLASVElgpjS9rPpiw58bBHy+5fFxHrP6YaUuZ6TD8RN6hWX9G91C5j/1
- Gbl6vL6rOHTe6OWZtaSxhtYZAKzFep9KVxEjOJGA+u2Rq5+VwBuQ7V3jLz5Z2nvrzsONF/wt5U1
- Gm5jtjEASrHeNL6FZddvbQKHa8x2gZacgkCr78Kn13E4=
-X-Received: by 2002:a05:6000:178b:b0:3c9:a722:e189 with SMTP id
- ffacd0b85a97d-3c9a722e3e6mr13429075f8f.62.1756472406536; 
- Fri, 29 Aug 2025 06:00:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHeRExpKznG0FMDzIDcV7empYGImPiru2lwiaqSFyXZr9Lf9EUeIxynWnRcR61ivvoyNeEtMw==
-X-Received: by 2002:a05:6000:178b:b0:3c9:a722:e189 with SMTP id
- ffacd0b85a97d-3c9a722e3e6mr13429039f8f.62.1756472405790; 
- Fri, 29 Aug 2025 06:00:05 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
+ bh=Vc9okNpMYt4DXDWcpMg2ynUqZTjLFOeZYVXE63oU0yM=;
+ b=glFVy1Hy++d3gT85Cvm4nUbkePb10zNZ4zpKVEKidzYZ3d1wvGDOSgJbd9mDCvczez
+ aOBLxeCrj4qhTMUD3cFjWWmvsSWVuneIbaIT3rICSZ4GzA7M+dZkZw2IL3QaPHyo5yZ+
+ ejn31uI4oueqd6Le3bmeHxYbJBB3UG1K1vTTBBLmDkMmFUqi8Q17Xt0aNXezJyOFqutl
+ lum2jxyDPnu8sQFm415xPoboI/xjUiapzS9jK5Fhxsfj+aRcaaf5KdSJhjC1rCNiA0Bu
+ PAfpELlUvC9rlSqMg2l/5pXJIlsyVGC/7lGA08LHG9O0PSBNExj5cbONzTW36UbDasWq
+ sWIQ==
+X-Gm-Message-State: AOJu0YxM8iojXnduJzI8HQrow32R5IA+DK9FIqR9Djd88U0nniBSNVJ8
+ LnDTG8jYduFA8FTfJGhPE82HwGXDRH4mMoOs5Vaw7/mjHiogr4zKlo+lJq2GfiWi5imvqFWQU0w
+ 2dAsf4HMqOBJUj5kQxD3hUnfMxpM0628V5p1LU27jC9rqpc4ZWHNG1b1G
+X-Gm-Gg: ASbGncuUT9bWPLJA5hwzlW+Y3z2LPSe5sG5DW+KmraJo0EyFKCUfssiECw+XHjso3Qg
+ dVxS9gJEtBWX3RUsd17fUu65gtOyO1XJjvxkOR3PaEDkVamN8ZUO2mPQB5ZJO+a35CjzqtXNCTP
+ swKht7gDbQp4JfkIaU/z0J5e6nNwjc1XAV/IpxrNUTH1pP3w1tQxTyrPhrXYXB89fG5qIhEkBOM
+ ZYka7BEHhMBcw07v9aHTK2ds3GO7KTgRleNklSl9Hsf54/IhrUwZPdQnWbmwkfCLJDgfs6SYuAD
+ m/x4zjkptautoDPHS2jdfoqu71ro2d1Xxemwpf8axGhR9RmWXPiDbQ==
+X-Received: by 2002:a17:90a:d403:b0:327:7334:403d with SMTP id
+ 98e67ed59e1d1-3277334435cmr15906346a91.26.1756498093573; 
+ Fri, 29 Aug 2025 13:08:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhhXSX2eCLxAvWt7EvUR1swwAMrlBlt350y/9PRxwjHXPTpxnRCJrDDncu9hYyB0LWMaCANQ==
+X-Received: by 2002:a17:90a:d403:b0:327:7334:403d with SMTP id
+ 98e67ed59e1d1-3277334435cmr15906316a91.26.1756498093195; 
+ Fri, 29 Aug 2025 13:08:13 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.47.195.108])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d12c90a01bsm876081f8f.31.2025.08.29.06.00.03
+ 98e67ed59e1d1-327d8f66f16sm3570543a91.0.2025.08.29.13.08.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 06:00:04 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 11/28] hw/i386/pc_piix.c: simplify RAM size logic in
- pc_init_isa()
-Date: Fri, 29 Aug 2025 14:59:18 +0200
-Message-ID: <20250829125935.1526984-12-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
+ Fri, 29 Aug 2025 13:08:12 -0700 (PDT)
+From: Arun Menon <armenon@redhat.com>
+Date: Sat, 30 Aug 2025 01:32:06 +0530
+Subject: [PATCH v13 26/27] migration: Add error-parameterized function
+ variants in VMSD struct
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250830-propagate_tpm_error-v13-26-a4e777b7eb2c@redhat.com>
+References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+In-Reply-To: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Steve Sistare <steven.sistare@oracle.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Arun Menon <armenon@redhat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6945; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=mV3iaTC209YJUAdA9bqx8Vyx3XlTmai9n7FrOGzxR9o=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8Ymdj+/nV3C61nVvXI3iCyO4BA6Wuz51FvC1vvg14Wt/
+ tH7TlV1lLIwiHExyIopsjR8DZBtCiiMiLR9eR1mDisTyBAGLk4BmEjcSUaG/fHWLRtFZdXeCHQ+
+ 5P7+R9fJRD9s+Xv3QLsPvbp+Xil/GRkWVBfzJPya1WSh5adme6TGK2divO3RC6tiHnKa1+zI92I
+ GAA==
+X-Developer-Key: i=armenon@redhat.com; a=openpgp;
+ fpr=80F5501D82507158593DE9D76A7A2538D90F328E
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -96,7 +124,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,101 +140,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+- We need to have good error reporting in the callbacks in
+  VMStateDescription struct. Specifically pre_save, pre_load
+  and post_load callbacks.
+- It is not possible to change these functions everywhere in one
+  patch, therefore, we introduce a duplicate set of callbacks
+  with Error object passed to them.
+- So, in this commit, we implement 'errp' variants of these callbacks,
+  introducing an explicit Error object parameter.
+- This is a functional step towards transitioning the entire codebase
+  to the new error-parameterized functions.
+- Deliberately called in mutual exclusion from their counterparts,
+  to prevent conflicts during the transition.
+- New impls should preferentally use 'errp' variants of
+  these methods, and existing impls incrementally converted.
+  The variants without 'errp' are intended to be removed
+  once all usage is converted.
 
-All isapc machines must have 32-bit CPUs and so the RAM split logic can be hardcoded
-accordingly.
-
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20250828111057.468712-12-mark.caveayland@nutanix.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- hw/i386/pc_piix.c | 58 ++++-------------------------------------------
- 1 file changed, 4 insertions(+), 54 deletions(-)
+ docs/devel/migration/main.rst | 19 +++++++++++++++++++
+ include/migration/vmstate.h   | 14 ++++++++++++++
+ migration/vmstate.c           | 31 ++++++++++++++++++++++++++++---
+ 3 files changed, 61 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index daf63a326b6..0bc033943ca 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -445,7 +445,6 @@ static void pc_init_isa(MachineState *machine)
-     GSIState *gsi_state;
-     MemoryRegion *ram_memory;
-     MemoryRegion *rom_memory = system_memory;
--    ram_addr_t lowmem;
-     uint64_t hole64_size = 0;
+diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+index a39fec2e21c26c4315c0cf13b105176d70679d4d..93620102ae875e7477af2e26eeffe636ca0cdbca 100644
+--- a/docs/devel/migration/main.rst
++++ b/docs/devel/migration/main.rst
+@@ -444,6 +444,25 @@ The functions to do that are inside a vmstate definition, and are called:
+   This function is called after we save the state of one device
+   (even upon failure, unless the call to pre_save returned an error).
  
-     /*
-@@ -480,65 +479,16 @@ static void pc_init_isa(MachineState *machine)
-     }
++Following are the errp variants of these functions.
++
++- ``int (*pre_load_errp)(void *opaque, Error **errp);``
++
++  This function is called before we load the state of one device.
++
++- ``int (*post_load_errp)(void *opaque, int version_id, Error **errp);``
++
++  This function is called after we load the state of one device.
++
++- ``int (*pre_save_errp)(void *opaque, Error **errp);``
++
++  This function is called before we save the state of one device.
++
++New impls should preferentally use 'errp' variants of these
++methods and existing impls incrementally converted.
++The variants without 'errp' are intended to be removed
++once all usage is converted.
++
+ Example: You can look at hpet.c, that uses the first three functions
+ to massage the state that is transferred.
  
-     /*
--     * Calculate ram split, for memory below and above 4G.  It's a bit
--     * complicated for backward compatibility reasons ...
--     *
--     *  - Traditional split is 3.5G (lowmem = 0xe0000000).  This is the
--     *    default value for max_ram_below_4g now.
--     *
--     *  - Then, to gigabyte align the memory, we move the split to 3G
--     *    (lowmem = 0xc0000000).  But only in case we have to split in
--     *    the first place, i.e. ram_size is larger than (traditional)
--     *    lowmem.  And for new machine types (gigabyte_align = true)
--     *    only, for live migration compatibility reasons.
--     *
--     *  - Next the max-ram-below-4g option was added, which allowed to
--     *    reduce lowmem to a smaller value, to allow a larger PCI I/O
--     *    window below 4G.  qemu doesn't enforce gigabyte alignment here,
--     *    but prints a warning.
--     *
--     *  - Finally max-ram-below-4g got updated to also allow raising lowmem,
--     *    so legacy non-PAE guests can get as much memory as possible in
--     *    the 32bit address space below 4G.
--     *
--     *  - Note that Xen has its own ram setup code in xen_ram_init(),
--     *    called via xen_hvm_init_pc().
--     *
--     * Examples:
--     *    qemu -M pc-1.7 -m 4G    (old default)    -> 3584M low,  512M high
--     *    qemu -M pc -m 4G        (new default)    -> 3072M low, 1024M high
--     *    qemu -M pc,max-ram-below-4g=2G -m 4G     -> 2048M low, 2048M high
--     *    qemu -M pc,max-ram-below-4g=4G -m 3968M  -> 3968M low (=4G-128M)
-+     * There is no RAM split for the isapc machine
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index c1d8e5b7a7d9d544fc8ce181372660f5538ef66b..647d7a35ce5f2c8b8ca5fdb15b54c10a0896cea8 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -200,14 +200,28 @@ struct VMStateDescription {
+      * exclusive. For this reason, also early_setup VMSDs are migrated in a
+      * QEMU_VM_SECTION_FULL section, while save_setup() data is migrated in
+      * a QEMU_VM_SECTION_START section.
++     *
++     * There are duplicate impls of the post/pre save/load hooks.
++     * New impls should preferentally use 'errp' variants of these
++     * methods and existing impls incrementally converted.
++     * The variants without 'errp' are intended to be removed
++     * once all usage is converted.
++     *
++     * For the errp variants,
++     * Returns: 0 on success,
++     *          <0 on error where -value is an error number from errno.h
       */
-     if (xen_enabled()) {
-         xen_hvm_init_pc(pcms, &ram_memory);
-     } else {
-         ram_memory = machine->ram;
--        if (!pcms->max_ram_below_4g) {
--            pcms->max_ram_below_4g = 0xe0000000; /* default: 3.5G */
--        }
--        lowmem = pcms->max_ram_below_4g;
--        if (machine->ram_size >= pcms->max_ram_below_4g) {
--            if (pcmc->gigabyte_align) {
--                if (lowmem > 0xc0000000) {
--                    lowmem = 0xc0000000;
--                }
--                if (lowmem & (1 * GiB - 1)) {
--                    warn_report("Large machine and max_ram_below_4g "
--                                "(%" PRIu64 ") not a multiple of 1G; "
--                                "possible bad performance.",
--                                pcms->max_ram_below_4g);
--                }
--            }
--        }
++
+     bool early_setup;
+     int version_id;
+     int minimum_version_id;
+     MigrationPriority priority;
+     int (*pre_load)(void *opaque);
++    int (*pre_load_errp)(void *opaque, Error **errp);
+     int (*post_load)(void *opaque, int version_id);
++    int (*post_load_errp)(void *opaque, int version_id, Error **errp);
+     int (*pre_save)(void *opaque);
++    int (*pre_save_errp)(void *opaque, Error **errp);
+     void (*cleanup_save)(void *opaque);
+     bool (*needed)(void *opaque);
+     bool (*dev_unplug_pending)(void *opaque);
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index a7562a5cfd8627e20c90e286e35c5e3429c48150..86293593e0fbb8409409b22d3f0653327d727c32 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -134,6 +134,7 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, int version_id, Error **errp)
+ {
++    ERRP_GUARD();
+     const VMStateField *field = vmsd->fields;
+     int ret = 0;
  
--        if (machine->ram_size >= lowmem) {
--            x86ms->above_4g_mem_size = machine->ram_size - lowmem;
--            x86ms->below_4g_mem_size = lowmem;
--        } else {
--            x86ms->above_4g_mem_size = 0;
--            x86ms->below_4g_mem_size = machine->ram_size;
--        }
-+        pcms->max_ram_below_4g = 3.5 * GiB;
-+        x86ms->above_4g_mem_size = 0;
-+        x86ms->below_4g_mem_size = machine->ram_size;
+@@ -152,7 +153,16 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
+         return -EINVAL;
      }
+-    if (vmsd->pre_load) {
++    if (vmsd->pre_load_errp) {
++        ret = vmsd->pre_load_errp(opaque, errp);
++        if (ret < 0) {
++            error_prepend(errp, "pre load hook failed for: '%s', "
++                          "version_id: %d, minimum version_id: %d, "
++                          "ret: %d: ", vmsd->name, vmsd->version_id,
++                          vmsd->minimum_version_id, ret);
++            return ret;
++        }
++    } else if (vmsd->pre_load) {
+         ret = vmsd->pre_load(opaque);
+         if (ret) {
+             error_setg(errp, "pre load hook failed for: '%s', "
+@@ -245,7 +255,14 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+         qemu_file_set_error(f, ret);
+         return ret;
+     }
+-    if (vmsd->post_load) {
++    if (vmsd->post_load_errp) {
++        ret = vmsd->post_load_errp(opaque, version_id, errp);
++        if (ret < 0) {
++            error_prepend(errp, "post load hook failed for: %s, version_id: "
++                          "%d, minimum_version: %d, ret: %d: ", vmsd->name,
++                          vmsd->version_id, vmsd->minimum_version_id, ret);
++        }
++    } else if (vmsd->post_load) {
+         ret = vmsd->post_load(opaque, version_id);
+         if (ret < 0) {
+             error_setg(errp,
+@@ -414,12 +431,20 @@ int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                          void *opaque, JSONWriter *vmdesc, int version_id, Error **errp)
+ {
++    ERRP_GUARD();
+     int ret = 0;
+     const VMStateField *field = vmsd->fields;
  
-     x86_cpus_init(x86ms, pcmc->default_cpu_version);
+     trace_vmstate_save_state_top(vmsd->name);
+ 
+-    if (vmsd->pre_save) {
++    if (vmsd->pre_save_errp) {
++        ret = vmsd->pre_save_errp(opaque, errp);
++        trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
++        if (ret < 0) {
++            error_prepend(errp, "pre-save for %s failed, ret: %d: ",
++                          vmsd->name, ret);
++        }
++    } else if (vmsd->pre_save) {
+         ret = vmsd->pre_save(opaque);
+         trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
+         if (ret) {
+
 -- 
 2.51.0
 
