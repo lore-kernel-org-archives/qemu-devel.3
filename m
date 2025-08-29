@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A5FCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78E4CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNiJ-0003SS-W9; Sat, 30 Aug 2025 11:42:00 -0400
+	id 1usN63-0006x3-BJ; Sat, 30 Aug 2025 11:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7Wy-0002zq-J9
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:12 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1urtT8-0004V4-Ji
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:24:18 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7Wu-0002st-I8
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:11 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-772301f8a4cso1238416b3a.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:25:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1urtT1-0000m6-B3
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:24:18 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3cf991e8bb8so261814f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 00:24:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506305; x=1757111105; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y9AwCvFTz8r3ZgF7ChY2U9tJWuC1SnogfSAKkPVxJRU=;
- b=iyz0nOM3MLH9+/gh7nMx3qfqGFVL21FdgLzYHW9406Sb9yE8pkgGXIv37x+zb+v2Tb
- 5B0dbjdrVknap6CvuJU6IGCyHr1OzJAKOi8XhVNVVeP7lJtvIG/YnrBOopPbdv36GTiM
- AWBLoSDE7/Xw6vuabeYvpSpU9ZyJoL06jjyv6lxC0Tn8/7GMRrac/NqEqh0/w4Tm4Qzb
- ZQd82pXQiuAO92YV2iwvFiwFG0krxV8tzoavyNni7NdjvHYEHU2OSHQcvTMaFRYAMpaI
- jCGcCNoHiBB3Z/zG7VQtIZ3mSTknzKL/BuS0NnjvYcq9N8cN7lFPMvdmidgir8vD3Gws
- 6Ywg==
+ d=linaro.org; s=google; t=1756452248; x=1757057048; darn=nongnu.org;
+ h=mime-version:message-id:in-reply-to:references:user-agent:subject
+ :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=wXmjW04Q5nWo4fwSqD9DR6HEZfNngIptCj90NYOKuis=;
+ b=LFE6Ga2mgv9BCIFIBhQgJJGaspp5sNRbSk4um9QkURHUYQ9sW6xmYpb5LFUut7ZnyJ
+ 7V0moCDiZn2LLYqe9tudT4eZoUtKRuR8w/TQ2tSupi6sozV97MLlpzyHfqlXACzEL7Ym
+ 2gKuNKfr6SNQ4WfZ3HD6eJycWybLucawAc7gfNGZGTVZk0lkd3maLi6/q/NdG7rJEepU
+ 7BnoP7gQQrjigyt3OdgxKWZ8p2E9VJ4xlJ0PvTvNRxwXN1EbiosRRI16XaI6CqTbsE53
+ waDcc5VGiqNJSVEi+yDPx4sPTILmSrUpcIuap9Ne+T4k4jjjCg9Rc1ZrVZRYNF0sm5X4
+ 6eUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506305; x=1757111105;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y9AwCvFTz8r3ZgF7ChY2U9tJWuC1SnogfSAKkPVxJRU=;
- b=kGqMTyV4KMVDns0fg4hH/EEWisSVcCod3si/jDexYJelk+7oELv3kwPAQgoCjAfpfy
- G1OD3FsswO76G9vcKIP+xBTGBSKrvUvcUzUfA02D0Zi6e7hLdJLSHwM5VASFdv3ccpk6
- dRymzmFG3NstSkvFWLMJWJP/iYNg0Z6HoPWzL/BRreo1cx31EGkVrHwnoUhqZPjksRd3
- SMajtzuKynZF3X1yiyaVVmYWsXpNuTwSOfu+hdlHAt2A8eu3MUeY+byinnEFJUIw5JZC
- D3PKfJD+fqjeQI6xSSg6P7MywFy+fOfbo+RTbiajSqKhdHxeI1BtmKL9zZLv3X0tpW/v
- 2q6g==
-X-Gm-Message-State: AOJu0YyqnJVgP2d8DXo6q1XRoqxC8Cc7yo/90e7yjQxxPfDE0le+YSz3
- 6VEHc0Dw2uhUThSZO6lBYZbKK3BL82mfEq1KtaTIe2qQ36tq6ipv7xPrxVIYEB4rnKdEQSNaqoA
- j5aSEi9E=
-X-Gm-Gg: ASbGncu1avwFCuwVLMFtX5rzZE8OOPAW5ur/bXbf1symHGFn05wzPD3EpHdkmfkYIwg
- DnzrkUuHhxF4pJ62U+nIf+T+QH9mH1CKAicp6wpkqOBM3ptMUP2L322bZ0BAYJKi2Aep7DnzSuh
- HaKBJuLUnSLahpRgoq88rXKMLR0rLKky13rdHu/DRnv7eiy9REbWaFTCHIOdhH2RCiiocnay6Ji
- UHMhs5OVbJurQFtCCEx3KWPmAatDxfVh2SnmlQdxERAtrUan0TkurGzU4czrLJ0ECexRBnmT0Ip
- +EnycTxrjFe5VGaKE3S7Ic6XzRhfEkjllDAoyXTyWCELS9QVlCcVd3eGexdv2tMbgO8FSTtaAbJ
- xkMggHaJ4JeBoKFRfM/7ZouRqoloC2xsDE88bAXAhAmmiMJL+JJPHsKPByIJkZLqqzQ+YinU=
-X-Google-Smtp-Source: AGHT+IEvAFk1L+Pcn/Uzb6O2RnHrfPP/1zS5OHJzZ6IjJGH3HQ3YsJMLWnSlUDxaBb8GfBVdT+LUjg==
-X-Received: by 2002:a05:6a20:5483:b0:243:d5ab:d202 with SMTP id
- adf61e73a8af0-243d6e0090emr333558637.15.1756506305279; 
- Fri, 29 Aug 2025 15:25:05 -0700 (PDT)
-Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.25.03
+ d=1e100.net; s=20230601; t=1756452248; x=1757057048;
+ h=mime-version:message-id:in-reply-to:references:user-agent:subject
+ :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wXmjW04Q5nWo4fwSqD9DR6HEZfNngIptCj90NYOKuis=;
+ b=lsyCxc/OdTZBy1/Yki8dkJT4lQn8IKZM2wGnqcEH4/QKBON3571ZsboCA89zWo4Ft2
+ 5IYCyf70T0B5kmsH6RytNVxEdmfZ64sQYbm1FDe5QFMeLP0B+ITt9HwqgpeMfczxoCtU
+ BmrCOimBwFOSmN8LXmq2kzX/SR1apKKSwgZ0r48wfSWx6SluQt+6UwL5rheAPqNJA5Io
+ /G/Gw5cqysIftw2AYtBc5vfDkS5agxkugax3qM74GWcGAeNDAdAXbOjJSa1XmaboCGUW
+ Wxbjsa/omsbrRhEyFVZmW7w83dqhztFt9JKIzet3exbk/fvKuY35t7iuHSUSK9q8/Sgz
+ eocw==
+X-Gm-Message-State: AOJu0Yy2PnqDqmMFtYlo1kCmn8OKN2SayNLB1t2zQa0odi0Og0+n3bit
+ IaNQOXB2NPve3Rizy8YQ3ZLJdmKu6/D6+NTgcSd2TBP4K1Z5iov6WWTub8SVPeHicU1xYO9ZAUU
+ amyNGlbA=
+X-Gm-Gg: ASbGncvMPCpD0I0qVUjMhPwg/cu/u+LU3f7YR5OCq5qjMtqS1PV0MuS7XbaI1+y29EO
+ 09OKsLjM/PqnSdMGzbamEai3UCOGF4sow/ChZALOPkuZaMN+x0OzxsZuczep5L8p6Pbm9mxZxgj
+ ZbpcWpGoArdQJGnW5jEpUHkTcvwzmRHmBh00EtfhTAsova+6JhrNtyT1jU4JxqhG/Ud3X5IpW02
+ n++H5a3W1NWKk9zwoBFGNSulcTS9RNIj3+Zsl+yGs5z+gB3566B5o7Di5Z2MhHAqI232zQ+S9pd
+ 7FKyGWA3A+6jQeOYV3psFDWnYtZRHORkUTzdGzezlvKS8EyvPtKAMGa4Uf5c50MuKJgxV1tqb5Q
+ Y11KkfhhKzmYOSaCBIoBEaqdWwpYTjLO+ANFkVijJ/s7/Whhbonp6yeIaqprrc5jnWzf3I3ZEeo
+ OtzKGXIHk=
+X-Google-Smtp-Source: AGHT+IEY3hyWhHuePou6SKqfpe1MsXXsHYpdHIbdfJs5KQmk84fkiWpReZ7DbXtQhBdiHh8KcpDv3g==
+X-Received: by 2002:a05:6000:2081:b0:3b9:148b:e78 with SMTP id
+ ffacd0b85a97d-3c5dcdfc385mr22658154f8f.53.1756452247904; 
+ Fri, 29 Aug 2025 00:24:07 -0700 (PDT)
+Received: from meli-email.org (athedsl-4441256.home.otenet.gr.
+ [79.129.180.152]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf274dde69sm2244238f8f.14.2025.08.29.00.24.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:25:04 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 13/91] linux-user/openrisc: Convert target_elf_gregset_t to a
- struct
-Date: Sat, 30 Aug 2025 08:23:09 +1000
-Message-ID: <20250829222427.289668-14-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+ Fri, 29 Aug 2025 00:24:07 -0700 (PDT)
+Date: Fri, 29 Aug 2025 10:13:43 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org
+Subject: Re: [PATCH 14/61] target/arm: Replace cpreg_field_is_64bit with
+ cpreg_field_type
+User-Agent: meli/0.8.12
+References: <20250827010453.4059782-1-richard.henderson@linaro.org>
+ <20250827010453.4059782-19-richard.henderson@linaro.org>
+In-Reply-To: <20250827010453.4059782-19-richard.henderson@linaro.org>
+Message-ID: <t1qv86.8eeulsm1hy3p@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,44 +101,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/elfload.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+On Wed, 27 Aug 2025 04:04, Richard Henderson <richard.henderson@linaro.org> wrote:
+>Prepare for 128-bit fields by using a better query api.
+>
+>Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>---
+> target/arm/cpregs.h  | 10 ++++++----
+> target/arm/gdbstub.c |  7 +++++--
+> target/arm/helper.c  | 18 +++++++++++++-----
+> 3 files changed, 24 insertions(+), 11 deletions(-)
+>
+>diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+>index 812fb1340a..b6c8eff0dd 100644
+>--- a/target/arm/cpregs.h
+>+++ b/target/arm/cpregs.h
+>@@ -22,6 +22,7 @@
+> #define TARGET_ARM_CPREGS_H
+> 
+> #include "hw/registerfields.h"
+>+#include "exec/memop.h"
+> #include "target/arm/kvm-consts.h"
+> #include "cpu.h"
+> 
+>@@ -1053,12 +1054,13 @@ void raw_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value);
+> void arm_cp_reset_ignore(CPUARMState *env, const ARMCPRegInfo *ri);
+> 
+> /*
+>- * Return true if this reginfo struct's field in the cpu state struct
+>- * is 64 bits wide.
+>+ * Return MO_32 if the field in CPUARMState is uint32_t or
+>+ * MO_64 if the field in CPUARMState is uint64_t.
+>  */
+>-static inline bool cpreg_field_is_64bit(const ARMCPRegInfo *ri)
+>+static inline MemOp cpreg_field_type(const ARMCPRegInfo *ri)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 40a5bcccab..da034e5a76 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -655,18 +655,18 @@ static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
- 
- /* See linux kernel arch/openrisc/include/asm/elf.h.  */
- #define ELF_NREG 34 /* gprs and pc, sr */
--typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
-+typedef struct target_elf_gregset_t {
-+    target_elf_greg_t regs[ELF_NREG];
-+} target_elf_gregset_t;
- 
--static void elf_core_copy_regs(target_elf_gregset_t *regs,
-+static void elf_core_copy_regs(target_elf_gregset_t *r,
-                                const CPUOpenRISCState *env)
- {
--    int i;
--
--    for (i = 0; i < 32; i++) {
--        (*regs)[i] = tswapreg(cpu_get_gpr(env, i));
-+    for (int i = 0; i < 32; i++) {
-+        r->regs[i] = tswapreg(cpu_get_gpr(env, i));
-     }
--    (*regs)[32] = tswapreg(env->pc);
--    (*regs)[33] = tswapreg(cpu_get_sr(env));
-+    r->regs[32] = tswapreg(env->pc);
-+    r->regs[33] = tswapreg(cpu_get_sr(env));
- }
- 
- #endif /* TARGET_OPENRISC */
--- 
-2.43.0
+Using MemOp is slightly confusing though I understand where you're 
+coming from. Would introducing a BitWidth enum be a good idea?
 
+
+diff --git a/include/exec/memop.h b/include/exec/memop.h
+index cf7da3362e..9104c4f162 100644
+--- a/include/exec/memop.h
++++ b/include/exec/memop.h
+@@ -14,15 +14,26 @@
+ 
+ #include "qemu/host-utils.h"
+ 
++typedef enum BitWidth {
++    BW_8     = 0,
++    BW_16    = 1,
++    BW_32    = 2,
++    BW_64    = 3,
++    BW_128   = 4,
++    BW_256   = 5,
++    BW_512   = 6,
++    BW_1024  = 7,
++}
++
+ typedef enum MemOp {
+-    MO_8     = 0,
+-    MO_16    = 1,
+-    MO_32    = 2,
+-    MO_64    = 3,
+-    MO_128   = 4,
+-    MO_256   = 5,
+-    MO_512   = 6,
+-    MO_1024  = 7,
++    MO_8     = BW_8,
++    MO_16    = BW_16,
++    MO_32    = BW_32,
++    MO_64    = BW_64,
++    MO_128   = BW_128,
++    MO_256   = BW_256,
++    MO_512   = BW_512,
++    MO_1024  = BW_1024,
+     MO_SIZE  = 0x07,   /* Mask for the above.  */
+
+> {
+>-    return (ri->state == ARM_CP_STATE_AA64) || (ri->type & ARM_CP_64BIT);
+>+    return (ri->state == ARM_CP_STATE_AA64 || (ri->type & ARM_CP_64BIT)
+>+            ? MO_64 : MO_32);
+> }
+> 
+> static inline bool cp_access_ok(int current_el,
+>diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
+>index ce4497ad7c..e2fc389170 100644
+>--- a/target/arm/gdbstub.c
+>+++ b/target/arm/gdbstub.c
+>@@ -247,10 +247,13 @@ static int arm_gdb_get_sysreg(CPUState *cs, GByteArray *buf, int reg)
+>     key = cpu->dyn_sysreg_feature.data.cpregs.keys[reg];
+>     ri = get_arm_cp_reginfo(cpu->cp_regs, key);
+>     if (ri) {
+>-        if (cpreg_field_is_64bit(ri)) {
+>+        switch (cpreg_field_type(ri)) {
+>+        case MO_64:
+>             return gdb_get_reg64(buf, (uint64_t)read_raw_cp_reg(env, ri));
+>-        } else {
+>+        case MO_32:
+>             return gdb_get_reg32(buf, (uint32_t)read_raw_cp_reg(env, ri));
+>+        default:
+>+            g_assert_not_reached();
+>         }
+>     }
+>     return 0;
+>diff --git a/target/arm/helper.c b/target/arm/helper.c
+>index 3a9d8f0ddc..c4103d958a 100644
+>--- a/target/arm/helper.c
+>+++ b/target/arm/helper.c
+>@@ -63,20 +63,28 @@ int compare_u64(const void *a, const void *b)
+> uint64_t raw_read(CPUARMState *env, const ARMCPRegInfo *ri)
+> {
+>     assert(ri->fieldoffset);
+>-    if (cpreg_field_is_64bit(ri)) {
+>+    switch (cpreg_field_type(ri)) {
+>+    case MO_64:
+>         return CPREG_FIELD64(env, ri);
+>-    } else {
+>+    case MO_32:
+>         return CPREG_FIELD32(env, ri);
+>+    default:
+>+        g_assert_not_reached();
+>     }
+> }
+> 
+> void raw_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+> {
+>     assert(ri->fieldoffset);
+>-    if (cpreg_field_is_64bit(ri)) {
+>+    switch (cpreg_field_type(ri)) {
+>+    case MO_64:
+>         CPREG_FIELD64(env, ri) = value;
+>-    } else {
+>+        break;
+>+    case MO_32:
+>         CPREG_FIELD32(env, ri) = value;
+>+        break;
+>+    default:
+>+        g_assert_not_reached();
+>     }
+> }
+> 
+>@@ -2748,7 +2756,7 @@ static void vmsa_ttbr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>                             uint64_t value)
+> {
+>     /* If the ASID changes (with a 64-bit write), we must flush the TLB.  */
+>-    if (cpreg_field_is_64bit(ri) &&
+>+    if (cpreg_field_type(ri) == MO_64 &&
+>         extract64(raw_read(env, ri) ^ value, 48, 16) != 0) {
+>         ARMCPU *cpu = env_archcpu(env);
+>         tlb_flush(CPU(cpu));
+>-- 
+>2.43.0
+>
+>
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
