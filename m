@@ -4,157 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E41CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76990CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usN43-0002Yx-MZ; Sat, 30 Aug 2025 11:00:24 -0400
+	id 1usN3c-0001ns-Sg; Sat, 30 Aug 2025 10:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1urq60-00044h-Ek
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 23:48:12 -0400
-Received: from mail-mw2nam10on20614.outbound.protection.outlook.com
- ([2a01:111:f403:2412::614]
- helo=NAM10-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1urq5u-0003eI-US
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 23:48:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=b4fRTTrCRmkj85XIwEXur43BzSEp7zK0p044CYU0gg1jcxT2pkQa/F8rAm3esU8QTXzyNW6wQeZzuWhEimuJ4aG6c9CPrrG3v3ecitbRO/xocshPuM8i8VUpIAvGgTCrj7vhzbipqpds1ejsLCCfvIPj+EUCd+rCIw2Ap4NhgaUemVfIAsR+PcGD1baOfyzuBwR/rVdm1/ybWZYjMMdQG9EjadozeBEKStDd0IuXyUanEkMUEFuCCvWifUjWtbT2pu9RmIQwH+VzuDvoay0R73eVkfHdUaHajD8gmsdU56MbI4vSfW0eY4fdSaaYhyq7Bco6BFvYxeNz/gwdftP/Bg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kc+8fWldv0ZdcaAXx9Zq4H64ke6bEWx+VcUiPiOYeu8=;
- b=gHgEbnFCk/tbF2eGJcWZzv8G3Pxx8R3fFG3YjjJOfKv+M9EgogvsOiWimCK7qOBgo1OM18fCy1aqck6+jtZ9J4BgZO2EPu7pVqUQGIA5tekWeoGK08SIx4G+pryN6rQsUWiEcvzpXQJR7d7UZf+y/IMo4Mk7MQyD4fdf5AKIy9Cp+/857gG0V+BIoznV1/HKFKQ/yCe/vyrALIuzvCDAFOPYXFFyz5I/ok2lk4V3GOIVNHk33sQhDCi64bonFC5MXhB7noDMVQKzbsPQ9lSJxgOf17Xyk/VSICc+mLv2hy3XL/d5Uo6i8uYCZ6bki+zI0TmCqyChiE67N9f3tHiPxw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kc+8fWldv0ZdcaAXx9Zq4H64ke6bEWx+VcUiPiOYeu8=;
- b=MxELsqOTComU7rQayHC8LKDu+HH5ipLq3coBstly+Y3oZFtw2tWrRcB13gAPavxNlqiAq8y7oXxM61NqtWh6CoxrhOueLHJkCSh42v/7ZZwKK0Hcf48VT0RNc4jToNlztUTYQS1eLKjssU2Mp8cAJfGjysKu5WK6nAUXeoRPujlWVDVVUmjCDs5DfrqltbFXxjAilO5EsFD5iEY/UCx9+2HarD4h7PrLKcV1Nl5gCr7KUj3Nws77ohD9zH+GzLvg8oQvQRTqqZp1MGzJoWwFilqKTR3rmoPSh3NYyRJSEB5REIh9uWZezK00Q0+AUd9UsNKJsKPm3O598r76FHfYeQ==
-Received: from BY1P220CA0008.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:59d::16)
- by IA0PPFB67404FBA.namprd12.prod.outlook.com
- (2603:10b6:20f:fc04::be2) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.24; Fri, 29 Aug
- 2025 03:47:53 +0000
-Received: from SJ5PEPF000001D4.namprd05.prod.outlook.com
- (2603:10b6:a03:59d:cafe::4d) by BY1P220CA0008.outlook.office365.com
- (2603:10b6:a03:59d::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9073.20 via Frontend Transport; Fri,
- 29 Aug 2025 03:47:53 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SJ5PEPF000001D4.mail.protection.outlook.com (10.167.242.56) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9073.11 via Frontend Transport; Fri, 29 Aug 2025 03:47:53 +0000
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 28 Aug
- 2025 20:47:38 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail202.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 28 Aug
- 2025 20:47:38 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Thu, 28 Aug 2025 20:47:36 -0700
-Date: Thu, 28 Aug 2025 20:47:35 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
- <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian, 
- Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao
- P" <chao.p.peng@intel.com>
-Subject: Re: [PATCH v5 05/21] vfio/iommufd: Force creating nested parent domain
-Message-ID: <aLEi1yjlmdNeJx08@Asurada-Nvidia>
-References: <20250822064101.123526-1-zhenzhong.duan@intel.com>
- <20250822064101.123526-6-zhenzhong.duan@intel.com>
- <93a7a387-ae57-488e-b341-2beea67bf78e@redhat.com>
- <IA3PR11MB9136E928181D1B95F5AD39AB923BA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <ff8022d1-6363-43c7-b095-cf8f0a692a16@redhat.com>
- <IA3PR11MB9136713B0F6F9DD8D5751294923AA@IA3PR11MB9136.namprd11.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1urpHA-0008QB-Bf
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 22:55:40 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1urpH6-0007Ap-M4
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 22:55:40 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8BxmdGYFrFovG4EAA--.9127S3;
+ Fri, 29 Aug 2025 10:55:20 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJDxbMGMFrFoKstvAA--.33085S15;
+ Fri, 29 Aug 2025 10:55:20 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 13/14] target/loongarch: Use MMUContext in
+ get_physical_address()
+Date: Fri, 29 Aug 2025 10:55:06 +0800
+Message-Id: <20250829025507.2315073-14-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250829025507.2315073-1-maobibo@loongson.cn>
+References: <20250829025507.2315073-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <IA3PR11MB9136713B0F6F9DD8D5751294923AA@IA3PR11MB9136.namprd11.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D4:EE_|IA0PPFB67404FBA:EE_
-X-MS-Office365-Filtering-Correlation-Id: d20768f3-a8e9-4ac7-8670-08dde6aed571
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|36860700013|376014|1800799024|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?2D6XeIsy5lPS9YNiaqiQSErJqwM7CxZ0Iv136PGGAFJrvz4XGcQGwR4HR5KK?=
- =?us-ascii?Q?akOG8+vSxMR3izrZgQiuhZkQg+CCvzFnFMyzGxBrxb3WGi/0YbMXZ5gPMmnr?=
- =?us-ascii?Q?OM0orEwp7Sp+PCen05mEBzrzD41uv7ui29uizfuG1f/detZBlP0Otpr2pE+b?=
- =?us-ascii?Q?mex3O+I/buaDxsC3KkA3zZBG7MkHtv39SgML6ph9+LTu7+tDd8SvkhBjyF1c?=
- =?us-ascii?Q?dwqETY0uWJOUITsl28tJ3Jj+Aliw9qXbkUL7my+NL77Zdqp/4EmgkFEbWmV0?=
- =?us-ascii?Q?LTulFoswjUzOxvkUza6Dbgni4iZOTNMxeMOAoL0cRWAhaVeR/GynAurbQMOW?=
- =?us-ascii?Q?zAs8a2tMdV9gGAmY7fDfzttO4GY9Y2wOJ9/kUrEikHJidR3kcEcz2U/+KclP?=
- =?us-ascii?Q?OywOLY+sEfyg0WjIbgbO26z8n4l2Y3v38G69q2dHBY6QnJNmvdZee6CWlwyE?=
- =?us-ascii?Q?kbD2chapIJxfXZZjcwQfpQpSnuepDUV5nOphgV0WdNhypX8/XJPL5+5IHKu0?=
- =?us-ascii?Q?qs5u5UXIf2tFot/YXWy+d8rVVHGDGptQAOU4iUc561supqTwVI8pJm45q5Wu?=
- =?us-ascii?Q?GMJOf6cR8oToiYxEDkwRVroBFKEaQ/qAm7nrO/TPHmTR8KZVniCWLAz5K2Y8?=
- =?us-ascii?Q?L9mj29BlS4J96fxRqnqxUqHJZxriKgltoX/kHWX0WyOcysVhCXvdKayFyDF1?=
- =?us-ascii?Q?7eBh2GxS1aECUY3aYRozfd7tptKDXRi4K4D/spStLufEsMEznAyr7CTruqpQ?=
- =?us-ascii?Q?e82k2a0Dhzoan8l1qGzT1lijamFZfBgfXK6q5p5kRodl7ofECZXUgeI/XjnX?=
- =?us-ascii?Q?D6y69dj6L5gq3NswQM8kvkk+gZvpCij9UqIWBStO5r3NSRa0IMuComvRLbPQ?=
- =?us-ascii?Q?uBDjaKYk8BsXqppMXnR8dNdB3VMBTJOYSzgECYSsd8GCFJqxsNiaBHPDyRq1?=
- =?us-ascii?Q?D+xvyUVol7CC7LwbTPsTX9yXN5CBHgiBHOLCw6P16fTBCyJYgMY8FFqiDOiI?=
- =?us-ascii?Q?aFgqYIDvCzGBhMPjLcubaV/qmclHaQroXnzlI3qDOEjw3krhtCBK2Ci3T9Dw?=
- =?us-ascii?Q?7bzp/dLD1Y3anuQeAKlNdpFWyCa9f6X0FBYDRDuap0hMtWMsyx4d4eJSh94I?=
- =?us-ascii?Q?qB7HnuVi1QUbVPIcmdPosXwIS38C0afMK/EBPhjbVnCu57QMB9MHL02SwCdp?=
- =?us-ascii?Q?PAIMi5r6/cvs40moYOew8FCQFJu1SjTaAMa0vuBUePyj8m873ZhzOT1vGYmD?=
- =?us-ascii?Q?yNyvlKlckleT6KNugbIbCJbRNx3sr8KXWcksghA8krP7n5e6TaJZb8UDZmUB?=
- =?us-ascii?Q?JdMHj0Yf+30HOtLmPERfS810vqqOuoakiIsksKGiAbm0Oao+p4+57tdHYQUx?=
- =?us-ascii?Q?lT09tnWJxZ6vNgS79lfJ3AdrgecosTLFbQm11G2j7RLudAKsdbHlgRGbWz0K?=
- =?us-ascii?Q?FKm9Lg3W6GTo/a2UDSXLvmiA+P0JoLbeqtbxhmMrVp0OeCwp4TKbpV3A9AGu?=
- =?us-ascii?Q?o9zwoyDW4ZgEUJB+8vHDsLUtv2Wgs//Qff1D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(7416014)(36860700013)(376014)(1800799024)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2025 03:47:53.5530 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d20768f3-a8e9-4ac7-8670-08dde6aed571
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001D4.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PPFB67404FBA
-Received-SPF: permerror client-ip=2a01:111:f403:2412::614;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxbMGMFrFoKstvAA--.33085S15
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,51 +65,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 29, 2025 at 01:40:01AM +0000, Duan, Zhenzhong wrote:
-> >-----Original Message-----
-> >On 8/28/25 11:53 AM, Duan, Zhenzhong wrote:
-> >>>> +    /*
-> >>>> +     * If vIOMMU supports stage-1 translation, force to create nested
-> >>> parent
-> >>> I would rather not use another terminology here. You previously used
-> >>> hw_nested, I think that's better. Also bear in mind that smmu supports
-> >>> S1, S2 and S1+S2 in emulated code.
-> >> What about 'nesting parent' to match kernel side terminology, per Nicolin's
-> >suggestion:
-> >>
-> >> In kernel kdoc/uAPI, we use:
-> >>  - "nesting parent" for stage-2 object
-> >>  - "nested hwpt", "nested domain" for stage-1 object
-> >I still think that since you queried the HW_NESTED cap it makes sense to
-> >continue using it. This can come along with the kernel terminology though.
-> 
-> OK, like below, do I understand right?
-> 
-> +    /*
-> +     * If vIOMMU supports stage-1 translation, force to create hw_nested
-> +     * (aka. nesting parent in kernel) domain which could be reused by
-> +     * vIOMMU to create nested domain.
-> +     */
+With function get_physical_address(), parameter MMUContext is added
+and remove parameter address, prot and address.
 
-FWIW, while I was targeting the word "nested parent", I think Eric
-was commenting on the word "stage-1 translation".
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/loongarch/cpu-mmu.h        |  3 +--
+ target/loongarch/cpu_helper.c     | 32 ++++++++++++-------------------
+ target/loongarch/tcg/tlb_helper.c |  8 +++++---
+ 3 files changed, 18 insertions(+), 25 deletions(-)
 
-The vSMMU code supports "stage-1", "stage-2", and even "nested" as
-its full emulation modes (no HW acceleration). So, any word like
-"stage-1 translation" or "nested S1" can be confusing to the vSMMU
-folks, as neither of them necessarily means "HW_NESTED" that stands
-for "HW-accelerated nested stage-1".
+diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+index be3d11d3c1..0068d22efc 100644
+--- a/target/loongarch/cpu-mmu.h
++++ b/target/loongarch/cpu-mmu.h
+@@ -30,8 +30,7 @@ typedef struct MMUContext {
+ bool check_ps(CPULoongArchState *ent, uint8_t ps);
+ TLBRet loongarch_check_pte(CPULoongArchState *env, MMUContext *context,
+                            MMUAccessType access_type, int mmu_idx);
+-TLBRet get_physical_address(CPULoongArchState *env, hwaddr *physical,
+-                            int *prot, vaddr address,
++TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+                             MMUAccessType access_type, int mmu_idx,
+                             int is_debug);
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 225382f70e..4a9db3ea4c 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -200,8 +200,7 @@ static hwaddr dmw_va2pa(CPULoongArchState *env, vaddr va, target_ulong dmw)
+     }
+ }
+ 
+-TLBRet get_physical_address(CPULoongArchState *env, hwaddr *physical,
+-                            int *prot, vaddr address,
++TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+                             MMUAccessType access_type, int mmu_idx,
+                             int is_debug)
+ {
+@@ -211,13 +210,13 @@ TLBRet get_physical_address(CPULoongArchState *env, hwaddr *physical,
+     int64_t addr_high;
+     uint8_t da = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, DA);
+     uint8_t pg = FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PG);
+-    MMUContext context;
+-    TLBRet ret;
++    vaddr address;
+ 
+     /* Check PG and DA */
++    address = context->addr;
+     if (da & !pg) {
+-        *physical = address & TARGET_PHYS_MASK;
+-        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++        context->physical = address & TARGET_PHYS_MASK;
++        context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+         return TLBRET_MATCH;
+     }
+ 
+@@ -235,8 +234,8 @@ TLBRet get_physical_address(CPULoongArchState *env, hwaddr *physical,
+             base_c = FIELD_EX64(env->CSR_DMW[i], CSR_DMW_32, VSEG);
+         }
+         if ((plv & env->CSR_DMW[i]) && (base_c == base_v)) {
+-            *physical = dmw_va2pa(env, address, env->CSR_DMW[i]);
+-            *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++            context->physical = dmw_va2pa(env, address, env->CSR_DMW[i]);
++            context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+             return TLBRET_MATCH;
+         }
+     }
+@@ -248,25 +247,18 @@ TLBRet get_physical_address(CPULoongArchState *env, hwaddr *physical,
+     }
+ 
+     /* Mapped address */
+-    context.addr = address;
+-    ret = loongarch_map_address(env, &context,
+-                                access_type, mmu_idx, is_debug);
+-    if (ret == TLBRET_MATCH) {
+-        *physical = context.physical;
+-        *prot = context.prot;
+-    }
+-    return ret;
++    return loongarch_map_address(env, context, access_type, mmu_idx, is_debug);
+ }
+ 
+ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+ {
+     CPULoongArchState *env = cpu_env(cs);
+-    hwaddr phys_addr;
+-    int prot;
++    MMUContext context;
+ 
+-    if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
++    context.addr = addr;
++    if (get_physical_address(env, &context, MMU_DATA_LOAD,
+                              cpu_mmu_index(cs, false), 1) != TLBRET_MATCH) {
+         return -1;
+     }
+-    return phys_addr;
++    return context.physical;
+ }
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 64a4e82dec..7d3f98633d 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -517,13 +517,15 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     CPULoongArchState *env = cpu_env(cs);
+     hwaddr physical;
+     int prot;
++    MMUContext context;
+     TLBRet ret;
+ 
+     /* Data access */
+-    ret = get_physical_address(env, &physical, &prot, address,
+-                               access_type, mmu_idx, 0);
+-
++    context.addr = address;
++    ret = get_physical_address(env, &context, access_type, mmu_idx, 0);
+     if (ret == TLBRET_MATCH) {
++        physical = context.physical;
++        prot = context.prot;
+         tlb_set_page(cs, address & TARGET_PAGE_MASK,
+                      physical & TARGET_PAGE_MASK, prot,
+                      mmu_idx, TARGET_PAGE_SIZE);
+-- 
+2.43.5
 
-Also, "HW_NESTED" != "nesting parent". They're two different things.
-Thus, "force to create hw_nested" isn't accurate. Here, we want to
-create a "nesting parent" HWPT. There is no other alternative name,
-IMHO, given this is essentially a kernel-defined object.
-
-Anyway, if we all agree on the VIOMMU_FLAG_WANT_NESTING_PARENT, it
-is not necessary to have this comment (at least the first part) --
-we could still note that the nesting parent HWPT will be reused by
-vIOMMU to create nested HWPTs, if you'd like to.
-
-Thanks
-Nicolin
 
