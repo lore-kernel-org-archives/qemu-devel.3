@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24854CA1000
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41512CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNjw-0007Qn-F1; Sat, 30 Aug 2025 11:43:40 -0400
+	id 1usNk1-00085s-I1; Sat, 30 Aug 2025 11:43:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7Wf-0002fz-7s
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:24:53 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1us7WS-0002bf-H1
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:24:40 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7Wd-0002di-3h
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:24:52 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-771ed4a8124so2659562b3a.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:24:50 -0700 (PDT)
+ id 1us7WQ-0002Te-Jm
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:24:40 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-771fa8e4190so1831382b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:24:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506289; x=1757111089; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756506276; x=1757111076; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z4f8Bk40mBnFtjMnElfv2A+6k42T3Vl2Ap1FLvlfy/s=;
- b=NhiCoejFNjT22znBHfOXlOaikLeY2XB8T2VNQZGzYwHOCMH3sSDeUQiKNSBAcoLQVf
- 0EqL1fsFAq6yuAOBjquM7YkVzgJToXjd00z7NLfaC8mxZBHca7+9hXDaj4YiL3SUL3Km
- i4yOuDuhb3xA6qES801XdxMDeUovYt/nwc7LIcj0l3+qw2ONFM59MDVULXKo1VoQoJDX
- MzF35z74s/debI7FU9IVdsHeY2c6K49V3l8GSh1zN4O3PKMjdTxrEMa4NMPgGnMn6CUK
- ZTAzde8JshSzxebWAuTxc+zCWr35liuk7vv2aY+BJrb6fYzvZlPhcwZ6YsXk+1zc2J5q
- uLpQ==
+ bh=9j/Bp+Ofsaajc1QH9mZ+L5jNL3buNCRIVJFSBOGhwRM=;
+ b=fm5+FLuhVhgHKpvQkef1V0Qg11O2VyrninPeD3CPKsNiwbOP7BkLrA7GtFRhD9+YzX
+ hMGAZggYb39wI8EM77aVymc5J2ORicTL1HxMnThDzBuB35L7Sf/QAYePG1SjMzRUZ3YW
+ 8gSvlW7cp+AuilGyNneJiwxOwByAwg9elj1/CjD5PSoiwIxTMIQpVqUw5ydd7sS01MUd
+ 4/yXyE2LSeIzwUoVAa+KlU26YFEejVcFUJmx6xOGW1b7rIdNYNIZWygXw2/w47Gio2z2
+ G9Kr19t37yYoBhfYUwJlvnsd5pvLWD/fER/z5G0ZNesLLtBHWG710Er7Y1Arcjbuvwwf
+ aVcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506289; x=1757111089;
+ d=1e100.net; s=20230601; t=1756506276; x=1757111076;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Z4f8Bk40mBnFtjMnElfv2A+6k42T3Vl2Ap1FLvlfy/s=;
- b=Flbly4BHsCCcVyH7S+LsCrrsx+yiDcqej94T1m8oLVwrRnW5Ghr9QVhH+2PSUYFOdO
- 6BP7tK8c38bR86rIr7RTnQGsPNtCRiJc+FuN/aalvL3jlTboCsb3CCfXkha/faFgxZ5A
- 3bKyJdGlL/Q8aRDCHK7A/nuEfMU4xOgRJhYxpyNAanvPaBUe5lboDJ3J6f/TjKJxdKB1
- ue5/838M2qDUTowVlqscvpoWR63J+auHf7CJgE/ukSqt3gPml1d6jxdllEg14HGHTUYA
- mWefhvY0OTpjHGS3Z9KjPhM1eVNi2pa/PQ+muj78exuUxVQ9FvdhaaDGF6zUAIpNvv8r
- 07HA==
-X-Gm-Message-State: AOJu0Yx1PEftxJReJ04obNFtPgjG6pyVDu/ox3jzTLPmA2cRaxZkQLvE
- dWhkCKmVERRguDaKQ8k5h+7HxUFjDvK6FOKRpHEZ2yQh7dM/NvHc32EJ+LWJ77ELZdYwmM36Ovm
- ZMj249S4=
-X-Gm-Gg: ASbGncsi+ZC8IA0LjT+zUXXisWYCHFk+vlVRcd8LA3elE2ikEsvB0nyJ0zUd6FwrHqU
- pXKwq/qGVpWmTO+2icDDVU3k8TZVvi0iyC1wuwEGczc7FcY/UjRyjIQJRu352CvlQ0wTtCsFolc
- C19q1t+PttX1mKv7HppSBzboYFHYMQeWK5cJbY21W0oW1kPK24W3Mp96ceq4LQ3mnUPSszxOVyu
- FwLtMEG9xnYNp3a1CSaef2EJtf9w2efgiRoQvtR66M+LLJq+onqeK8skhvp7eA22PKmhp8QhUzz
- IV6VHUBrn7KP06WTutlxnd3PDy1bx934YUEU38XrnfLYEGu56HXzEOrHnLnxD7Yd5QB7dXr389d
- HyNsv7l7hs5JzXV+bBqGGTlHE8x3qpwly14Ip2ZfsHklpDNq01MWxgfo+kCQ9
-X-Google-Smtp-Source: AGHT+IEzNeUMTIm0I/7jVEc7kvWy/BnbCGlNwwfn0Xj/Lz7AIaEtVlYqD88PZlvaaXa4jYQRKOiMoA==
-X-Received: by 2002:a05:6a00:bd90:b0:771:ead8:dcdb with SMTP id
- d2e1a72fcca58-7723e258689mr233617b3a.8.1756506288982; 
- Fri, 29 Aug 2025 15:24:48 -0700 (PDT)
+ bh=9j/Bp+Ofsaajc1QH9mZ+L5jNL3buNCRIVJFSBOGhwRM=;
+ b=ErlBWv35Arrwik9YGqgnseWnU362n11oY6GaKRx0ZjIJMArxgSQ7N4u3vZG+FprFof
+ 2S/KPAeTzfeHTUcZtgVSy9rucSNGIA1MUd6SZwNnLssSq/M7hF9tGAzJIsVH7BXNs5gK
+ zt/yLbk0U0kq/cI9RiVW5uemrGZuGt09koV46EVCohg9J2/nIVbj762JmH5CAKg/bzHi
+ oj+qyhS2QS/YW+GmOdQaV4lUJORlMVflbctWuYl56wFNN/Vo9PGnvXKVnOAikMyfUdci
+ Ioo+ccaivzziuXrWDd6JWwPaufE1BUkb0rsyfyzY96ijUPui/jlxoKu78kIXU4mn2eZj
+ K3PA==
+X-Gm-Message-State: AOJu0YxGy81QFdYE7uq1EFN+6QGjX2gvdL3eFwOHtWzYRM0Lre4XOPg3
+ 4WZIBdF1lBaD+JqJnDfiPvyNAftYOYPe3n6Ti5y46pQ3SJfsyK2aGpK+jhHpSBB4NzmKC4hCqnm
+ G6zlk4uA=
+X-Gm-Gg: ASbGncuEMCCreG3YHcj+DR0yyvfEf6jqN41uaNIO0JY7I4Fl/X9VGvov9WqRtC0TEel
+ oG/5z7unnzT/DYQpzOCP/TqvFr1vKJtGJLwETpUx0/Y+38+Q98GSgJ3LqalW0eypTWTQXM20tMy
+ 0iVP7tKc+30RmTWoIh8Lqre/D/abPAz5JJWzeoogn91X9D6xSpSHbim67t+XQK1hbR4ZuA2lIis
+ POkrYYT1M6G5uaVx/MJ2JauJZbOP7/iXuCO2MXeaH5Xs4Qggx3Ns8hQ+GGoqqHlzzTni3EFU9OV
+ 2dSh66S9RdzqB6ihOLcK+f1avn8E/jK73vxjtuiCJVIkXPKZSVj9GPRzQIqS8kDzQXRXDaZNZTT
+ Ezix7QuF8pWFw6bMQWkbIoP/ZtSTSx6ktn8XvBVJj04BuKG2qYLCM+atnF6MI9+gy8tdUatQ=
+X-Google-Smtp-Source: AGHT+IGCdRpiAhMCHrjl69TC11Slb+COrriaZNgW0wF5wecI+MQTw1M9Q70VNHRL+B7zAWLfovR6Mg==
+X-Received: by 2002:a05:6a00:4616:b0:770:343b:5457 with SMTP id
+ d2e1a72fcca58-7723e308528mr242100b3a.16.1756506275764; 
+ Fri, 29 Aug 2025 15:24:35 -0700 (PDT)
 Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.24.47
+ d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.24.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:24:48 -0700 (PDT)
+ Fri, 29 Aug 2025 15:24:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 06/91] linux-user/i386: Convert target_elf_gregset_t to a struct
-Date: Sat, 30 Aug 2025 08:23:02 +1000
-Message-ID: <20250829222427.289668-7-richard.henderson@linaro.org>
+Cc: Henk van der Laak <henk@laaksoft.nl>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 01/91] hw/core: Dump cpu_reset in the reset.exit phase
+Date: Sat, 30 Aug 2025 08:22:57 +1000
+Message-ID: <20250829222427.289668-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
 References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,71 +103,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+During reset.hold, the cpu is in an inconsistent state,
+where the leaf class has not had a chance to initialize
+state at all.
+
+This is visible as a SIGSEGV in "qemu-system-sparc64 -d cpu_reset".
+
+Move the dump to the exit phase, where all initialization
+is certain to be complete.
+
+Reported-by: Henk van der Laak <henk@laaksoft.nl>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 40 +++++++++++++++++++++-------------------
- 1 file changed, 21 insertions(+), 19 deletions(-)
+ hw/core/cpu-common.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index ba205c5a19..e8a7f040ed 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -233,7 +233,9 @@ static bool init_guest_commpage(void)
- #define EXSTACK_DEFAULT true
- 
- #define ELF_NREG    17
--typedef target_elf_greg_t  target_elf_gregset_t[ELF_NREG];
-+typedef struct target_elf_gregset_t {
-+    target_elf_greg_t regs[ELF_NREG];
-+} target_elf_gregset_t;
- 
- /*
-  * Note that ELF_NREG should be 19 as there should be place for
-@@ -242,25 +244,25 @@ typedef target_elf_greg_t  target_elf_gregset_t[ELF_NREG];
-  *
-  * See linux kernel: arch/x86/include/asm/elf.h
-  */
--static void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUX86State *env)
-+static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 39e674aca2..26321be785 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -119,11 +119,6 @@ static void cpu_common_reset_hold(Object *obj, ResetType type)
  {
--    (*regs)[0] = tswapreg(env->regs[R_EBX]);
--    (*regs)[1] = tswapreg(env->regs[R_ECX]);
--    (*regs)[2] = tswapreg(env->regs[R_EDX]);
--    (*regs)[3] = tswapreg(env->regs[R_ESI]);
--    (*regs)[4] = tswapreg(env->regs[R_EDI]);
--    (*regs)[5] = tswapreg(env->regs[R_EBP]);
--    (*regs)[6] = tswapreg(env->regs[R_EAX]);
--    (*regs)[7] = tswapreg(env->segs[R_DS].selector & 0xffff);
--    (*regs)[8] = tswapreg(env->segs[R_ES].selector & 0xffff);
--    (*regs)[9] = tswapreg(env->segs[R_FS].selector & 0xffff);
--    (*regs)[10] = tswapreg(env->segs[R_GS].selector & 0xffff);
--    (*regs)[11] = tswapreg(get_task_state(env_cpu_const(env))->orig_ax);
--    (*regs)[12] = tswapreg(env->eip);
--    (*regs)[13] = tswapreg(env->segs[R_CS].selector & 0xffff);
--    (*regs)[14] = tswapreg(env->eflags);
--    (*regs)[15] = tswapreg(env->regs[R_ESP]);
--    (*regs)[16] = tswapreg(env->segs[R_SS].selector & 0xffff);
-+    r->regs[0] = tswapreg(env->regs[R_EBX]);
-+    r->regs[1] = tswapreg(env->regs[R_ECX]);
-+    r->regs[2] = tswapreg(env->regs[R_EDX]);
-+    r->regs[3] = tswapreg(env->regs[R_ESI]);
-+    r->regs[4] = tswapreg(env->regs[R_EDI]);
-+    r->regs[5] = tswapreg(env->regs[R_EBP]);
-+    r->regs[6] = tswapreg(env->regs[R_EAX]);
-+    r->regs[7] = tswapreg(env->segs[R_DS].selector & 0xffff);
-+    r->regs[8] = tswapreg(env->segs[R_ES].selector & 0xffff);
-+    r->regs[9] = tswapreg(env->segs[R_FS].selector & 0xffff);
-+    r->regs[10] = tswapreg(env->segs[R_GS].selector & 0xffff);
-+    r->regs[11] = tswapreg(get_task_state(env_cpu_const(env))->orig_ax);
-+    r->regs[12] = tswapreg(env->eip);
-+    r->regs[13] = tswapreg(env->segs[R_CS].selector & 0xffff);
-+    r->regs[14] = tswapreg(env->eflags);
-+    r->regs[15] = tswapreg(env->regs[R_ESP]);
-+    r->regs[16] = tswapreg(env->segs[R_SS].selector & 0xffff);
+     CPUState *cpu = CPU(obj);
+ 
+-    if (qemu_loglevel_mask(CPU_LOG_RESET)) {
+-        qemu_log("CPU Reset (CPU %d)\n", cpu->cpu_index);
+-        log_cpu_state(cpu, cpu->cc->reset_dump_flags);
+-    }
+-
+     cpu->interrupt_request = 0;
+     cpu->halted = cpu->start_powered_off;
+     cpu->mem_io_pc = 0;
+@@ -137,6 +132,16 @@ static void cpu_common_reset_hold(Object *obj, ResetType type)
+     cpu_exec_reset_hold(cpu);
  }
  
- /*
++static void cpu_common_reset_exit(Object *obj, ResetType type)
++{
++    if (qemu_loglevel_mask(CPU_LOG_RESET)) {
++        CPUState *cpu = CPU(obj);
++
++        qemu_log("CPU Reset (CPU %d)\n", cpu->cpu_index);
++        log_cpu_state(cpu, cpu->cc->reset_dump_flags);
++    }
++}
++
+ ObjectClass *cpu_class_by_name(const char *typename, const char *cpu_model)
+ {
+     ObjectClass *oc;
+@@ -380,6 +385,7 @@ static void cpu_common_class_init(ObjectClass *klass, const void *data)
+     dc->realize = cpu_common_realizefn;
+     dc->unrealize = cpu_common_unrealizefn;
+     rc->phases.hold = cpu_common_reset_hold;
++    rc->phases.exit = cpu_common_reset_exit;
+     cpu_class_init_props(dc);
+     /*
+      * Reason: CPUs still need special care by board code: wiring up
 -- 
 2.43.0
 
