@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF0C0CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F79CA1000
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNkF-0001Dj-WE; Sat, 30 Aug 2025 11:44:00 -0400
+	id 1usNaO-0001sd-GA; Sat, 30 Aug 2025 11:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bk-0004lr-68
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:08 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bh-0003po-E3
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:07 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7718408baf7so2552711b3a.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506603; x=1757111403; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FKxMYOztX3yzcXwsVljsK6LJXRCdoI1IIVbZGiH0hNo=;
- b=I0vAozCzejMpjIWRhezJ7fufE7YQf4aDul2YKe6rPDRSVFw2TsJe9BJgQpVajxCmvI
- DAhaUkr7e9l5kwkodumbuuzugwcT7eZwx2+xi1wA7NCc4f4PjkV6jyneOiRlq+yD8AuM
- IUioVIyes7lW/onpIPeZsLcyjfti2gzBcNz9PoOrmLPj1iJL+ULvSVrThbWaUpgP4ckN
- zINytd6uHKhvaAwRWo1yq546+i6ZKZdeOUd4k9ip3vBcSCtwZ5smf5frQNvaZ0qrSTgD
- N6B0K7EoRNMe55iYJjPLTn/E8LCqjsTIn/QL0M/oLF7h8hT8OvhgLcwE/hQczcVO8ho9
- EZkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506603; x=1757111403;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FKxMYOztX3yzcXwsVljsK6LJXRCdoI1IIVbZGiH0hNo=;
- b=SCkIS4gmbcK+uCfvSIh/E34L/vsdeCO6ii/1p8OBsBFRaTEmnC7pYhhgPpLKspRax0
- i85VKA+lBszQOJufitCMu1qhz5bxE/hNCd/FwVm45aWlrYIXUMhbrZeNjyK4lItMWaFB
- magmvH1FOIRo8oaYDbw+eQDeQWdzVN8shpm07ei6jKlzUt2OVJOKW7hWozAGgD6SdkG4
- xC7eoABpHAM8/v7ZN8B1Yb+AjRbn5t+JwBITxh0td7I9pEvVLouI/uuBJhuTT0mys5W7
- v4A4kP44OMDei/QKK0BWUJMWcyMcXf25iMRGKS1Bx6hoxEoiALFU3ytehmYHqMFRNXVZ
- m3LA==
-X-Gm-Message-State: AOJu0YydojApRvH+xFJNFDyLtGY/P2UT8feHROeAvgB8uqn8RUA8Tz3P
- bilFbWM3gm9HMTAxoDOqkiGBoBNOuSQIZdCq4yW3OzuAj8/7ZlwkBipbLttSkNXQ4+F58WYAD93
- hh7oyj/g=
-X-Gm-Gg: ASbGncvYTxjNJBLmAJO4kKoQ1liVDUvHcdJQstlv9dLmfnp31TxRgMC5ZEKHkaRfptM
- B5Bmc3oAGLjRSJiLorN0eD6x2cW5ctkucBVilCIVomF1N9CaPO5Cf5hJQhkLp3qgWoxBgNsTGKV
- /8O3og3wZzsFZa71S8U99G7vXCg4rWzPQupDnMANroJxEWQFsW5WDJdAgH6Gpvz+7MdFCY73gfY
- PC3+mEVePMZfFXIm4uIXg+D4N56sgoELt4NKH7HonSie8BNaqg7kpfDmTgoe83Il6KtAs/rgAXY
- j4lnVPIL9I/uKEA2paLHkrFtjpovcZyiZ61MOvsy9SDmJPLO/J8jgH5A7SGfCgVul3XwZPATYiZ
- BQRVl5NDFINPAvdRl6gj56J1jRhwdzyGRI7XFiH8FcAfSNoi0YT9hE0V2gGgCF40=
-X-Google-Smtp-Source: AGHT+IEdmH8gDzbPE7uBp5Nvdn1uSzcedWmXetOh73odoiu+kw1t+SpOeZQ7mc+G9DSQ7QKsCX5oEg==
-X-Received: by 2002:a05:6a21:3396:b0:243:15b9:7655 with SMTP id
- adf61e73a8af0-243d6f40f0dmr271666637.47.1756506603628; 
- Fri, 29 Aug 2025 15:30:03 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:30:03 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us3TB-0005cn-WC
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:05:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us3TA-0005gl-6J
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:05:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756490698;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=F/cobAJwGDXoAJ4ItSXx4mK66gP1Qq/p1TnARKbFAtM=;
+ b=Remka6pqBauT4NNlHbY47UpLrGvW69vpz2G2VOEtOgL4xBgrUUYdXa7L5O8DK5BJ4zLrCA
+ UF8fJwrIf7lax4Wt9n1qaKLdbaAvxgeAcdtZ0r9LiWxe4PeTbYQdepTS4zdR7YOHiq8xWk
+ zgCqGHBZjcqPe4BrGitAulhU9eJZeK8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-xVYzwrrmN42N4zYGB54JbA-1; Fri,
+ 29 Aug 2025 14:04:54 -0400
+X-MC-Unique: xVYzwrrmN42N4zYGB54JbA-1
+X-Mimecast-MFC-AGG-ID: xVYzwrrmN42N4zYGB54JbA_1756490693
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F88A19560A5; Fri, 29 Aug 2025 18:04:53 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EEFAB19560B4; Fri, 29 Aug 2025 18:04:47 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 62/91] linux-user: Move init_guest_commpage to arm/elfload.c
-Date: Sat, 30 Aug 2025 08:23:58 +1000
-Message-ID: <20250829222427.289668-63-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 10/14] util: convert error-report & log to message API for
+ timestamp
+Date: Fri, 29 Aug 2025 19:03:50 +0100
+Message-ID: <20250829180354.2922145-11-berrange@redhat.com>
+In-Reply-To: <20250829180354.2922145-1-berrange@redhat.com>
+References: <20250829180354.2922145-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,165 +94,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/arm/target_elf.h |  2 ++
- linux-user/loader.h         |  2 +-
- linux-user/arm/elfload.c    | 46 +++++++++++++++++++++++++++++++++++
- linux-user/elfload.c        | 48 -------------------------------------
- 4 files changed, 49 insertions(+), 49 deletions(-)
+Both the error-report and log APIs can optional emit a timestamp
+as a prefix on messages, with the '-msg timestamp=on' command
+line flag is set.
 
-diff --git a/linux-user/arm/target_elf.h b/linux-user/arm/target_elf.h
-index fa8f8af2f3..5f81a43efb 100644
---- a/linux-user/arm/target_elf.h
-+++ b/linux-user/arm/target_elf.h
-@@ -15,6 +15,8 @@
- #define HAVE_ELF_PLATFORM       1
- #define HAVE_ELF_CORE_DUMP      1
+Convert them to the new message API for formatting the context
+prefix, guaranteeign they will have matching behaviour going
+forward.
+
+There is no change in output format for either logs or errors
+with this conversion.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qemu/error-report.h    |  1 -
+ system/vl.c                    |  7 ++++++-
+ tests/unit/test-error-report.c |  3 ++-
+ util/error-report.c            | 18 ++++--------------
+ util/log.c                     | 21 +++++++++------------
+ 5 files changed, 21 insertions(+), 29 deletions(-)
+
+diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
+index 3ae2357fda..c8000778ec 100644
+--- a/include/qemu/error-report.h
++++ b/include/qemu/error-report.h
+@@ -70,7 +70,6 @@ void error_init(const char *argv0);
+                               fmt, ##__VA_ARGS__);      \
+     })
  
-+#define HI_COMMPAGE             ((intptr_t)0xffff0f00u)
-+
- /*
-  * See linux kernel: arch/arm/include/asm/elf.h, where
-  * elf_gregset_t is mapped to struct pt_regs via sizeof.
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 98015fba7d..0c2cc556c3 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -105,7 +105,7 @@ const char *elf_hwcap_str(uint32_t bit);
- const char *elf_hwcap2_str(uint32_t bit);
- const char *get_elf_platform(CPUState *cs);
- const char *get_elf_base_platform(CPUState *cs);
--#if defined(TARGET_X86_64)
-+#if defined(TARGET_X86_64) || defined(TARGET_ARM)
- bool init_guest_commpage(void);
- #endif
+-extern bool message_with_timestamp;
+ extern bool error_with_guestname;
+ extern const char *error_guest_name;
  
-diff --git a/linux-user/arm/elfload.c b/linux-user/arm/elfload.c
-index f811c2f07a..1205687976 100644
---- a/linux-user/arm/elfload.c
-+++ b/linux-user/arm/elfload.c
-@@ -3,6 +3,8 @@
- #include "qemu/osdep.h"
- #include "qemu.h"
- #include "loader.h"
-+#include "user-internals.h"
-+#include "target_elf.h"
- #include "target/arm/cpu-features.h"
- #include "target_elf.h"
+diff --git a/system/vl.c b/system/vl.c
+index a64fd90d4a..696dd92669 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -26,6 +26,7 @@
+ #include "qemu/help-texts.h"
+ #include "qemu/datadir.h"
+ #include "qemu/units.h"
++#include "qemu/message.h"
+ #include "qemu/module.h"
+ #include "qemu/target-info.h"
+ #include "exec/cpu-common.h"
+@@ -813,8 +814,12 @@ static void realtime_init(void)
  
-@@ -201,6 +203,50 @@ const char *get_elf_platform(CPUState *cs)
- #undef END
+ static void configure_msg(QemuOpts *opts)
+ {
+-    message_with_timestamp = qemu_opt_get_bool(opts, "timestamp", false);
++    int flags = 0;
++    if (qemu_opt_get_bool(opts, "timestamp", false)) {
++        flags |= QMESSAGE_FORMAT_TIMESTAMP;
++    }
+     error_with_guestname = qemu_opt_get_bool(opts, "guest-name", false);
++    qmessage_set_format(flags);
  }
  
-+bool init_guest_commpage(void)
-+{
-+    ARMCPU *cpu = ARM_CPU(thread_cpu);
-+    int host_page_size = qemu_real_host_page_size();
-+    abi_ptr commpage;
-+    void *want;
-+    void *addr;
-+
-+    /*
-+     * M-profile allocates maximum of 2GB address space, so can never
-+     * allocate the commpage.  Skip it.
-+     */
-+    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
-+        return true;
-+    }
-+
-+    commpage = HI_COMMPAGE & -host_page_size;
-+    want = g2h_untagged(commpage);
-+    addr = mmap(want, host_page_size, PROT_READ | PROT_WRITE,
-+                MAP_ANONYMOUS | MAP_PRIVATE |
-+                (commpage < reserved_va ? MAP_FIXED : MAP_FIXED_NOREPLACE),
-+                -1, 0);
-+
-+    if (addr == MAP_FAILED) {
-+        perror("Allocating guest commpage");
-+        exit(EXIT_FAILURE);
-+    }
-+    if (addr != want) {
-+        return false;
-+    }
-+
-+    /* Set kernel helper versions; rest of page is 0.  */
-+    __put_user(5, (uint32_t *)g2h_untagged(0xffff0ffcu));
-+
-+    if (mprotect(addr, host_page_size, PROT_READ)) {
-+        perror("Protecting guest commpage");
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    page_set_flags(commpage, commpage | (host_page_size - 1),
-+                   PAGE_READ | PAGE_EXEC | PAGE_VALID);
-+    return true;
-+}
-+
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUARMState *env)
+ 
+diff --git a/tests/unit/test-error-report.c b/tests/unit/test-error-report.c
+index 54319c86c9..78f8b57660 100644
+--- a/tests/unit/test-error-report.c
++++ b/tests/unit/test-error-report.c
+@@ -13,6 +13,7 @@
+ 
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "qemu/message.h"
+ 
+ static void
+ test_error_report_simple(void)
+@@ -90,7 +91,7 @@ static void
+ test_error_report_timestamp(void)
  {
-     for (int i = 0; i < 16; ++i) {
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0ba75a83b3..2281853c57 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -191,54 +191,6 @@ typedef abi_int         target_pid_t;
+     if (g_test_subprocess()) {
+-        message_with_timestamp = true;
++        qmessage_set_format(QMESSAGE_FORMAT_TIMESTAMP);
+         warn_report("warn");
+         error_report("err");
+         return;
+diff --git a/util/error-report.c b/util/error-report.c
+index 1b17c11de1..9ee164b1dd 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -13,6 +13,7 @@
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
+ #include "qemu/error-report.h"
++#include "qemu/message.h"
  
- #define ELF_EXEC_PAGESIZE       4096
+ /*
+  * @report_type is the type of message: error, warning or
+@@ -24,8 +25,6 @@ typedef enum {
+     REPORT_TYPE_INFO,
+ } report_type;
  
--/* The commpage only exists for 32 bit kernels */
--
--#define HI_COMMPAGE (intptr_t)0xffff0f00u
--
--static bool init_guest_commpage(void)
+-/* Prepend timestamp to messages */
+-bool message_with_timestamp;
+ bool error_with_guestname;
+ const char *error_guest_name;
+ 
+@@ -169,13 +168,6 @@ static void print_loc(void)
+     }
+ }
+ 
+-static char *
+-real_time_iso8601(void)
 -{
--    ARMCPU *cpu = ARM_CPU(thread_cpu);
--    int host_page_size = qemu_real_host_page_size();
--    abi_ptr commpage;
--    void *want;
--    void *addr;
--
--    /*
--     * M-profile allocates maximum of 2GB address space, so can never
--     * allocate the commpage.  Skip it.
--     */
--    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
--        return true;
--    }
--
--    commpage = HI_COMMPAGE & -host_page_size;
--    want = g2h_untagged(commpage);
--    addr = mmap(want, host_page_size, PROT_READ | PROT_WRITE,
--                MAP_ANONYMOUS | MAP_PRIVATE |
--                (commpage < reserved_va ? MAP_FIXED : MAP_FIXED_NOREPLACE),
--                -1, 0);
--
--    if (addr == MAP_FAILED) {
--        perror("Allocating guest commpage");
--        exit(EXIT_FAILURE);
--    }
--    if (addr != want) {
--        return false;
--    }
--
--    /* Set kernel helper versions; rest of page is 0.  */
--    __put_user(5, (uint32_t *)g2h_untagged(0xffff0ffcu));
--
--    if (mprotect(addr, host_page_size, PROT_READ)) {
--        perror("Protecting guest commpage");
--        exit(EXIT_FAILURE);
--    }
--
--    page_set_flags(commpage, commpage | (host_page_size - 1),
--                   PAGE_READ | PAGE_EXEC | PAGE_VALID);
--    return true;
+-    g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+-    return g_date_time_format_iso8601(dt);
 -}
 -
- #if TARGET_BIG_ENDIAN
- #include "elf.h"
- #include "vdso-be8.c.inc"
+ /*
+  * Print a message to current monitor if we have one, else to stderr.
+  * @report_type is the type of message: error, warning or informational.
+@@ -186,12 +178,10 @@ real_time_iso8601(void)
+ G_GNUC_PRINTF(2, 0)
+ static void vreport(report_type type, const char *fmt, va_list ap)
+ {
+-    gchar *timestr;
++    g_autofree gchar *context = qmessage_context(QMESSAGE_CONTEXT_SKIP_MONITOR);
+ 
+-    if (message_with_timestamp && !monitor_cur()) {
+-        timestr = real_time_iso8601();
+-        error_printf("%s ", timestr);
+-        g_free(timestr);
++    if (context != NULL) {
++        error_printf("%s", context);
+     }
+ 
+     /* Only prepend guest name if -msg guest-name and -name guest=... are set */
+diff --git a/util/log.c b/util/log.c
+index 2642a55c59..fc900cde0c 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -22,6 +22,7 @@
+ #include "qemu/range.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "qemu/message.h"
+ #include "qemu/cutils.h"
+ #include "trace/control.h"
+ #include "qemu/thread.h"
+@@ -152,25 +153,21 @@ static __thread bool incomplete;
+ void qemu_log(const char *fmt, ...)
+ {
+     FILE *f;
+-    g_autofree const char *timestr = NULL;
+-
+     /*
+-     * Prepare the timestamp *outside* the logging
+-     * lock so it better reflects when the message
+-     * was emitted if we are delayed acquiring the
+-     * mutex
++     * Prepare the context *outside* the logging
++     * lock so any timestamp better reflects when
++     * the message was emitted if we are delayed
++     * acquiring the mutex
+      */
+-    if (message_with_timestamp && !incomplete) {
+-        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+-        timestr = g_date_time_format_iso8601(dt);
+-    }
++    g_autofree const char *context =
++        incomplete ? NULL : qmessage_context(0);
+ 
+     f = qemu_log_trylock();
+     if (f) {
+         va_list ap;
+ 
+-        if (timestr) {
+-            fprintf(f, "%s ", timestr);
++        if (context != NULL) {
++            fwrite(context, 1, strlen(context), f);
+         }
+ 
+         va_start(ap, fmt);
 -- 
-2.43.0
+2.50.1
 
 
