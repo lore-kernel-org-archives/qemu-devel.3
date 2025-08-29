@@ -4,87 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E3CACA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CEE0CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:03:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNmd-00007l-V2; Sat, 30 Aug 2025 11:46:28 -0400
+	id 1usNcH-0007JF-5v; Sat, 30 Aug 2025 11:35:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7fN-0005vU-5W
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:33:53 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7fL-0004kn-6Z
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:33:52 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-771e987b4e6so2095219b3a.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:33:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506830; x=1757111630; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ehuepqbbm1Pb/ucVF5IT0BiMjGQDJEiKUXOOtANgHtk=;
- b=WSh2EOgMX8L89JL5UKOPeq9pEKyJ/vlXPcbAsrIGKe93a+LJX09FUpdCbruwEkABu6
- +hRmd+zm2J58WYFgD8hrvM6KVuimuxDv2wz/rn0ORx9Gx5Oq7GDEfEam376OLc7naflZ
- X9K4NxVAipA5514tvP4fuZnzZdbiT8yySCMNohf5uMUZQLgKsgGtY+Mj38IYQfMmmZnJ
- 4VYEO/i+8UZQcqVhWMPPGu+0dHcsWXRtvR9A/cMctxKaaTyD5QZFLSxMl9dCmdOA7Bkf
- gstG9ehYwKv1hy8nu0h09XJ6jy7XGPoHot3eowh6WacldLCtXfYJaLe2X0P4byCd7g3s
- V/HA==
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1us5Kk-0005ID-Sh
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:04:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1us5Kj-0004hu-9q
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:04:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756497864;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BaRoLgnvXipTQIwgmh18VwtQRJZMUjxN2HSv+RmjctM=;
+ b=M6L/mDHzPI5dhA8fCwqCXPlw8c/oN3UxFgMgL5qvVXrv5/omVKoMeQpIcJ/OzXbCst0Qks
+ afHO/im8DMGeZ5623wjix//tnhKKijUidPjcBZSUl7sdcOZFlBlWpYkHyPNknwd9TjQSgJ
+ TSdqi17IkzbajdkVKV8LVWElNLwaNTY=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-361-azPTDkVIPuqPE9Se0v-ELw-1; Fri, 29 Aug 2025 16:04:17 -0400
+X-MC-Unique: azPTDkVIPuqPE9Se0v-ELw-1
+X-Mimecast-MFC-AGG-ID: azPTDkVIPuqPE9Se0v-ELw_1756497856
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-324e41e946eso4300922a91.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 13:04:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506830; x=1757111630;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756497856; x=1757102656;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ehuepqbbm1Pb/ucVF5IT0BiMjGQDJEiKUXOOtANgHtk=;
- b=iuR4B8kTAtTwtNc+eulQ2UIvPAJsUFEmRqps4CMdJ78e2H93VsTVjPhlA32MHyeKMj
- RlH6BlpAGxbFhn7T2bNdmHkpDU9rKci/hyG//6QeVSX0xllyDPTHx2wHeWSnKokT8Ols
- M5n03+3Yr8kBPttHowWQqTUhIOYhBBD7DGESHvEB6D4SmtdhP2PYkqMkc7bk6/Ar0+gu
- /s3apt0ST5u1X0gngt96yFtqgSqWnrcW+BGBwREN64RnSVjTcsXUxOktEfvKgzdrHNt+
- H6/Pzb4cR14eBKbMqggCNV7jYFJjus5OX+MT12/KzV/0wRmFVe9GlCd0bdZpKvrWbv0k
- AygQ==
-X-Gm-Message-State: AOJu0Yxf/+I9vFRHQH7lsaLi8036Ok1pDUvN3lSF78iq2GybCEdD7N3P
- S8sZATP7nLH5BZwof77Fiopq+7dJmAVYAYtXHeMy0Q07OgN7VLffPBmalOTRR88+i3I1ERnoDHm
- Xe/J7VrA=
-X-Gm-Gg: ASbGnctvOfXsGTRKZSeLzqPw63lEqNhTBtTnp+yvPWtFhaGD+H5JyEDpR76/ROeyw+O
- W3ukAE6687sZxOWpygCwnjUNlICc2S5OTe7iKbXzHkNnO5cuTuianaQABa0MmFmH/0hIdAvKEhA
- 1IZoegrgfd8oELJVFqzY2M+WBB4Ln/XdC1H/5hXCpIJ2NwF/+EvuxZSziSWh9QtPlvUcBVxXVEJ
- DvZiEL9lEXvD8W/ukK+OX1ouzwxE0cfsfdEcVkTH0AtPF80PCR7wibTTwhTAaWnYikcTj4/D1PI
- gjAVdDfIN2IOZnG604OcpYT1q8ZbggoOzJ/f54+YHMDf5ooeCiBziaWaI1mrPay5VaspldiTftw
- gDfiNu/QXMsObN9AN1qdmSQPEISszE3CDDDITx/5uqlD4dQXcW5HFbh3+JseR
-X-Google-Smtp-Source: AGHT+IGnkBb/UdwDIGtDE9/rdtjgkj+MFXrkVyYyI1/dn4U4xOH7U9+C99hEVGdmJMACTJbR4QU2Cg==
-X-Received: by 2002:a05:6a00:1495:b0:772:177:d442 with SMTP id
- d2e1a72fcca58-7723e309f7emr306041b3a.20.1756506829714; 
- Fri, 29 Aug 2025 15:33:49 -0700 (PDT)
-Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
+ bh=BaRoLgnvXipTQIwgmh18VwtQRJZMUjxN2HSv+RmjctM=;
+ b=IH5FNmKK0c7dN+upDIsbvsxexjXi9QWezz/6GM092DCkMeJlEo/G97UjOFUEhU/dFZ
+ 2N64KOTVFc6WSBLwqtZcVbfD07oc1pmuQPwef5TYe4uI6gAJcNYczvAq5YMOf1oLks2m
+ GCrD489tRyGagBo+2Ym5YeqF+xUETZerF/ULmxUBGoyVces8j6dx8f0iUnv/sWA6EFv4
+ JwJof+k4/6HtPf2Ubcay/vYD6xkEcT9xh2Wy9E8oeB/yrfQhR9S+serKULWTEZkUHGW5
+ dC7fS35DIZdsPN1sebnZ6L7p0B/wM3lENwsv+sDbwKfVqSXp+wdp5tWX1yABnDtCfajg
+ ZJWA==
+X-Gm-Message-State: AOJu0YzMEPCu7QyuKyLR+FMW+2wUCg9ef6nceCpvKF2CS370K8DdOJqN
+ 7uxNUOMYAq79152WtfIZHEKmPk0G3gG9aFQtg/2FRTUSoqKFZAZ48s4gI3Uh4Vq8jtcwjVXA0EC
+ AUDIcOsMNcxGDNjGHcGbKM87i73f3WTspuGEzBaUD23OJtAdYT/llp1ic
+X-Gm-Gg: ASbGnctSBCLwGKPqidizZqws4MueOPiySd6qVQNzYmXXBFpGy3qEEa/QRlGh/gMrw4r
+ tIB7z+jF2LPdjmLzg8th41AYCZD2wbZQPsuWE2MZ5ZOWcFGt/QEdX7/vz0/f65hyxF7r0PbTnDa
+ VuYykhZoxuNXWLzILPV+oXNeD7UanYnQw0HG8M6khqk1cvRYszKH3069EQuoIt2qty0znZ1PAM1
+ i8twPMFgDktXdJWwKA+hCmSV0r/bOD1X2rtSKwvwY+u3RnRcbD1GDRFTVMuHhz+gIYQ++jCHBhg
+ mgNWf1ZjLSyv7OMXctIenqoz7T5G0DI9VrSkoCI40M998UaOxshp3A==
+X-Received: by 2002:a17:90b:4f44:b0:327:9e81:ebb1 with SMTP id
+ 98e67ed59e1d1-3279e81f451mr10353648a91.31.1756497856042; 
+ Fri, 29 Aug 2025 13:04:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFv8H08IlwNFTAlmeU6lJUrkYSJCahYKGC1k6IyFM9h8UDI6KXXimddarHwebX8ROKAiGzzvw==
+X-Received: by 2002:a17:90b:4f44:b0:327:9e81:ebb1 with SMTP id
+ 98e67ed59e1d1-3279e81f451mr10353590a91.31.1756497855550; 
+ Fri, 29 Aug 2025 13:04:15 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.47.195.108])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a269f27sm3449728b3a.12.2025.08.29.15.33.47
+ 98e67ed59e1d1-327d8f66f16sm3570543a91.0.2025.08.29.13.04.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:33:49 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 80/91] linux-user: Move elf parameters to riscv/target_elf.h
-Date: Sat, 30 Aug 2025 08:24:16 +1000
-Message-ID: <20250829222427.289668-81-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+ Fri, 29 Aug 2025 13:04:15 -0700 (PDT)
+From: Arun Menon <armenon@redhat.com>
+Date: Sat, 30 Aug 2025 01:31:48 +0530
+Subject: [PATCH v13 08/27] migration: push Error **errp into
+ qemu_load_device_state()
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Message-Id: <20250830-propagate_tpm_error-v13-8-a4e777b7eb2c@redhat.com>
+References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+In-Reply-To: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Steve Sistare <steven.sistare@oracle.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Arun Menon <armenon@redhat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2697; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=UirhkFM9zKCc9fAhhyz10Rt0EBJQI4cJF89hFF4FZFs=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8Ymdh9esW5F1f1R1hM1t7EcnrL48Lpvtm5ht2tEq/r43
+ wkv3Dipo5SFQYyLQVZMkaXha4BsU0BhRKTty+swc1iZQIYwcHEKwETOnWdkOP95m8njJWaqns9d
+ dt9Z33uwZUIyk8H54MNOk2zfCMgdCWBkOO+pusv8/spZC6X1lqsv/Ol8eY/NiZR0Dl7LtQcT/7v
+ yswEA
+X-Developer-Key: i=armenon@redhat.com; a=openpgp;
+ fpr=80F5501D82507158593DE9D76A7A2538D90F328E
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,60 +140,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/riscv/target_elf.h | 10 ++++++++++
- linux-user/elfload.c          | 14 --------------
- 2 files changed, 10 insertions(+), 14 deletions(-)
+This is an incremental step in converting vmstate loading
+code to report error via Error objects instead of directly
+printing it to console/monitor.
+It is ensured that qemu_load_device_state() must report an error
+in errp, in case of failure.
 
-diff --git a/linux-user/riscv/target_elf.h b/linux-user/riscv/target_elf.h
-index 48d9af557b..51b8def1d1 100644
---- a/linux-user/riscv/target_elf.h
-+++ b/linux-user/riscv/target_elf.h
-@@ -8,6 +8,16 @@
- #ifndef RISCV_TARGET_ELF_H
- #define RISCV_TARGET_ELF_H
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Arun Menon <armenon@redhat.com>
+---
+ migration/colo.c   | 3 +--
+ migration/savevm.c | 4 ++--
+ migration/savevm.h | 2 +-
+ 3 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/migration/colo.c b/migration/colo.c
+index e0f713c837f5da25d67afbd02ceb6c54024ca3af..2f524b19e6a79dcfe3861f1dfb768222f65a718a 100644
+--- a/migration/colo.c
++++ b/migration/colo.c
+@@ -729,9 +729,8 @@ static void colo_incoming_process_checkpoint(MigrationIncomingState *mis,
+     bql_lock();
+     vmstate_loading = true;
+     colo_flush_ram_cache();
+-    ret = qemu_load_device_state(fb);
++    ret = qemu_load_device_state(fb, errp);
+     if (ret < 0) {
+-        error_setg(errp, "COLO: load device state failed");
+         vmstate_loading = false;
+         bql_unlock();
+         return;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 0087fca15ce108685667d3808350d80d37b807b1..5462eaff0dcec1fa207c08da6124fe91656201ac 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3264,7 +3264,7 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
+     return ret;
+ }
  
-+#define ELF_ARCH                EM_RISCV
-+
-+#ifdef TARGET_RISCV32
-+#define ELF_CLASS               ELFCLASS32
-+#define VDSO_HEADER             "vdso-32.c.inc"
-+#else
-+#define ELF_CLASS               ELFCLASS64
-+#define VDSO_HEADER             "vdso-64.c.inc"
-+#endif
-+
- #define HAVE_ELF_HWCAP          1
+-int qemu_load_device_state(QEMUFile *f)
++int qemu_load_device_state(QEMUFile *f, Error **errp)
+ {
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     int ret;
+@@ -3272,7 +3272,7 @@ int qemu_load_device_state(QEMUFile *f)
+     /* Load QEMU_VM_SECTION_FULL section */
+     ret = qemu_loadvm_state_main(f, mis);
+     if (ret < 0) {
+-        error_report("Failed to load device state: %d", ret);
++        error_setg(errp, "Failed to load device state: %d", ret);
+         return ret;
+     }
  
- #endif
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 705d726922..6e476d5308 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -130,20 +130,6 @@ typedef abi_uint        target_gid_t;
- #endif
- typedef abi_int         target_pid_t;
- 
--#ifdef TARGET_RISCV
--
--#define ELF_ARCH  EM_RISCV
--
--#ifdef TARGET_RISCV32
--#define ELF_CLASS ELFCLASS32
--#define VDSO_HEADER "vdso-32.c.inc"
--#else
--#define ELF_CLASS ELFCLASS64
--#define VDSO_HEADER "vdso-64.c.inc"
--#endif
--
--#endif /* TARGET_RISCV */
--
- #ifdef TARGET_HPPA
- 
- #define ELF_CLASS       ELFCLASS32
+diff --git a/migration/savevm.h b/migration/savevm.h
+index b80770b7461a60e2ad6ba5e24a7baeae73d90955..b12681839f0b1afa3255e45215d99c13a224b19f 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -67,7 +67,7 @@ int qemu_save_device_state(QEMUFile *f);
+ int qemu_loadvm_state(QEMUFile *f, Error **errp);
+ void qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
+ int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis);
+-int qemu_load_device_state(QEMUFile *f);
++int qemu_load_device_state(QEMUFile *f, Error **errp);
+ int qemu_loadvm_approve_switchover(void);
+ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+         bool in_postcopy);
+
 -- 
-2.43.0
+2.51.0
 
 
