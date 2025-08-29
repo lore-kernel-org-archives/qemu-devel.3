@@ -4,96 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C887CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 684A5CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:32:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNJl-0002Wk-U3; Sat, 30 Aug 2025 11:16:43 -0400
+	id 1usN9L-0003YX-5s; Sat, 30 Aug 2025 11:05:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryit-0001JT-C8
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryim-0008Sz-H7
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756472446;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kZyEgH9DKztXeTe2Vje8AkYxR7PVqbAXH0RSFUOrC7o=;
- b=M532JqtsoWjc20Rv0Tcla25871TR/4oQ8NMY9XaBgr44SFaEUn3w4Dr2ZFWsCBhW0vARin
- QMRJPj7vtmftFW1DD0xlKHBG8GSQzWWm0Vx5jyzDT9DukZF/7RIwjJrcWziGz7Hcyfmspf
- 2fNlAEHV4+L7bCx/NU4kHAbQoZjzcRo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-ZpFmLFY3OCyPbNd8u7yUKw-1; Fri, 29 Aug 2025 09:00:44 -0400
-X-MC-Unique: ZpFmLFY3OCyPbNd8u7yUKw-1
-X-Mimecast-MFC-AGG-ID: ZpFmLFY3OCyPbNd8u7yUKw_1756472443
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3c456849a25so736717f8f.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756472443; x=1757077243;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kZyEgH9DKztXeTe2Vje8AkYxR7PVqbAXH0RSFUOrC7o=;
- b=GUO8AVkg5Cjm0CUK7kxSCRInf+hZMy9ciCvFG7P//AMntpHjRa60ChxOtlQ2++1fzF
- 3h26JgKcnawbJZSi7RgcoQidINEMat/oJRlpSkqtATpgMjj+3vuRhCKe/3prK+OhTTta
- CTPrRyHBj8uVBxhgnny4gr4x5UwfuMYjMsAJNsn7LAyCM9WPylcKNpSKfMulwm52BVWh
- wOUTZLJ8ynAgYEVRWT9JyHWkrrkojaq5jkd9EgjpHzU/4RWLKls6VYhqa6qiQXV1uesL
- 4R1fHxCsSigb99EDALA3RhTKOK8ygxdxNYllPsFvQVyatOj1ZZ1m7m/wSgmuIyKvdpVy
- AK2A==
-X-Gm-Message-State: AOJu0Yy6mU5Qh1Ceol5yL+bsGO7fwN/qdnt4frULjEAqgeFfW+hk4p72
- hWpCk57YQPyH4FhRU5GrADeok/zPcDlwgPWHO5gf9eI8+sAZXElqpmIi5Q8RmhflziAg3J5skav
- Oej5yWkKdVq5LgUROJFk6WlHAEKzBWax1ynU6Dr30xfJJVynSfno769JVK8sK4QOp9V/Kgw7rT8
- AEPqvA+p7dCyWRsAQ4keLTSSmZ+N56n+rlg3hTegNv
-X-Gm-Gg: ASbGnct0z7veiV+UDtKkkORQJa2Z+D3v8FaooAJSiY3SNfUfkfJxfIRozwOmyWU+KDv
- kVTGYaDbqRCFSIby97dmf3JS/JNCDlkX3szNp9jIRsLdLJ7xjR6t9CWNHZIPhgEpd0HgjfY74TQ
- OPX5myjbZsvvHeTxruIMhfQ+C8bi5J00DQArpYQQmVim0uFpx9sIWYyZZ8wz3vfC/mnDNfQn4IR
- HzxOcqYE+trgd3YnGHoQ5fF1YNrgMjUQh9E775gFZMHiaVA85AwjTlq3qshoGnobU2CsP5D7iQL
- rIeSPzMMBzwQE08o7uSExxrYh1wP63c9jseFvLmrQmcMAcwl/JBS+ohU+xxFyR6ia2ldr+jU8KB
- dQug/YE4+giM0Li/I53ACDgcVJkm+N7Dg2e1PhwAZKcg=
-X-Received: by 2002:a05:6000:1787:b0:3b7:94ad:ef50 with SMTP id
- ffacd0b85a97d-3cbb15ca78amr11348875f8f.2.1756472442612; 
- Fri, 29 Aug 2025 06:00:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFA+IXhHNAq5Mvz62ij47oXOz5UcksSZg/GlMImUrn9SRZ9TNQJBj6tGCymnJHmyWipA7b+QA==
-X-Received: by 2002:a05:6000:1787:b0:3b7:94ad:ef50 with SMTP id
- ffacd0b85a97d-3cbb15ca78amr11348831f8f.2.1756472442052; 
- Fri, 29 Aug 2025 06:00:42 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf33add7f2sm3549508f8f.32.2025.08.29.06.00.36
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 06:00:37 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 20/28] user-exec: ensure interrupt_request is not used
-Date: Fri, 29 Aug 2025 14:59:27 +0200
-Message-ID: <20250829125935.1526984-21-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1urtoX-0002ED-Fj
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:46:25 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1urtoT-0005XY-6M
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:46:24 -0400
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8BxWNHEWrFomX4EAA--.9169S3;
+ Fri, 29 Aug 2025 15:46:12 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowJAxT+bBWrFoJDRwAA--.21087S3;
+ Fri, 29 Aug 2025 15:46:11 +0800 (CST)
+Subject: Re: [PATCH] hw/loongarch/virt: Add reset interface for virt-machine
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241031065418.3111892-1-maobibo@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <abce6ab9-1700-7848-391f-ef95bbcb2c12@loongson.cn>
+Date: Fri, 29 Aug 2025 15:45:02 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <20241031065418.3111892-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJAxT+bBWrFoJDRwAA--.21087S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoWxArW7XFWkuF18GrW3Zr1fuFX_yoWrtw1rpF
+ ZruFn8Jws5JrnrZ39xJas8uF1DZw1IkrWa9F1xKryFkF47WryUXr10yasFvF4DA3yrWF1Y
+ vrnakw12va1UX3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.357,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,83 +82,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpu_interrupt() is not called anymore except by ARM but even there
-it is dead code; disentangling the various cpregs accessors from user-mode
-emulation is a work in progress.
+Hi Bibo Mao:
+> With generic cpu reset interface, pc register is entry of FLASH for
+> UEFI BIOS. However with direct kernel booting requirement, there is
+> little different, pc register of primary cpu is entry address of ELF
+> file.
+>
+> At the same time with requirement of cpu hotplug, hot-added CPU should
+> register reset interface for this cpu object. Now reset callback is
+> not registered for hot-added CPU.
+>
+> With this patch reset callback for CPU is register when CPU instance
+> is created, and reset interface is added for virt-machine board. In
+> reset interface of virt-machine, reset for direct kernel booting
+> requirement is called.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/loongarch/boot.c         |  9 +--------
+>   hw/loongarch/virt.c         | 14 ++++++++++++++
+>   include/hw/loongarch/boot.h |  1 +
+>   target/loongarch/cpu.c      | 10 ++++++++++
+>   4 files changed, 26 insertions(+), 8 deletions(-)
+>
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index cb668703bd..cbb4e3737d 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -216,12 +216,11 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>       return kernel_entry;
+>   }
+>   
+> -static void reset_load_elf(void *opaque)
+> +void reset_load_elf(void *opaque)
+>   {
+>       LoongArchCPU *cpu = opaque;
+>       CPULoongArchState *env = &cpu->env;
+>   
+> -    cpu_reset(CPU(cpu));
+>       if (env->load_elf) {
+>   	if (cpu == LOONGARCH_CPU(first_cpu)) {
+>               env->gpr[4] = env->boot_info->a0;
+> @@ -320,12 +319,6 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+> -    int i;
+> -
+> -    /* register reset function */
+> -    for (i = 0; i < ms->smp.cpus; i++) {
+> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
+> -    }
+>   
+>       info->kernel_filename = ms->kernel_filename;
+>       info->kernel_cmdline = ms->kernel_cmdline;
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 9a635d1d3d..80680d178c 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -1434,6 +1434,19 @@ static int64_t virt_get_default_cpu_node_id(const MachineState *ms, int idx)
+>       }
+>   }
+>   
+> +static void virt_reset(MachineState *machine, ResetType type)
+> +{
+> +    CPUState *cs;
+> +
+> +    /* Reset all devices including CPU devices */
+> +    qemu_devices_reset(type);
+> +
+> +    /* Reset PC and register context for kernel direct booting method */
+> +    CPU_FOREACH(cs) {
+> +        reset_load_elf(LOONGARCH_CPU(cs));
+> +    }
+> +}
+> +
+>   static void virt_class_init(ObjectClass *oc, void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -1457,6 +1470,7 @@ static void virt_class_init(ObjectClass *oc, void *data)
+>       mc->auto_enable_numa_with_memdev = true;
+>       mc->get_hotplug_handler = virt_get_hotplug_handler;
+>       mc->default_nic = "virtio-net-pci";
+> +    mc->reset = virt_reset;
+>       hc->plug = virt_device_plug_cb;
+>       hc->pre_plug = virt_device_pre_plug;
+>       hc->unplug_request = virt_device_unplug_request;
+> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+> index b3b870df1f..c7020ec9bb 100644
+> --- a/include/hw/loongarch/boot.h
+> +++ b/include/hw/loongarch/boot.h
+> @@ -115,5 +115,6 @@ struct memmap_entry {
+>   };
+>   
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
+> +void reset_load_elf(void *opaque);
+>   
+>   #endif /* HW_LOONGARCH_BOOT_H */
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 7212fb5f8f..f7f8fcc024 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -592,6 +592,13 @@ static void loongarch_cpu_disas_set_info(CPUState *s, disassemble_info *info)
+>       info->print_insn = print_insn_loongarch;
+>   }
+>   
+> +#ifndef CONFIG_USER_ONLY
+> +static void loongarch_cpu_reset_cb(void *opaque)
+> +{
+> +    cpu_reset((CPUState *) opaque);
+> +}
+> +#endif
+> +
+>   static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+>   {
+>       CPUState *cs = CPU(dev);
+> @@ -607,6 +614,9 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+>       loongarch_cpu_register_gdb_regs_for_features(cs);
+>   
+>       cpu_reset(cs);
+> +#ifndef CONFIG_USER_ONLY
+> +    qemu_register_reset(loongarch_cpu_reset_cb, dev);
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/hw/core/cpu.h | 1 +
- accel/tcg/cpu-exec.c  | 6 ++++--
- accel/tcg/user-exec.c | 4 +---
- 3 files changed, 6 insertions(+), 5 deletions(-)
+I think we should implement the corresponding unregistration process in 
+loongarch_cpu_unrealizefn
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5eaf41a566f..f73b4357c7b 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -423,6 +423,7 @@ struct qemu_work_item;
-  * @created: Indicates whether the CPU thread has been successfully created.
-  * @halt_cond: condition variable sleeping threads can wait on.
-  * @interrupt_request: Indicates a pending interrupt request.
-+ *   Only used by system emulation.
-  * @halted: Nonzero if the CPU is in suspended state.
-  * @stop: Indicates a pending stop request.
-  * @stopped: Indicates the CPU has been artificially stopped.
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 713bdb20564..b44dd1e8205 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -778,6 +778,9 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-      */
-     qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
- 
-+#ifdef CONFIG_USER_ONLY
-+    g_assert(!qatomic_read(&cpu->interrupt_request));
-+#else
-     if (unlikely(qatomic_read(&cpu->interrupt_request))) {
-         int interrupt_request;
-         bql_lock();
-@@ -792,7 +795,6 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-             bql_unlock();
-             return true;
-         }
--#if !defined(CONFIG_USER_ONLY)
-         if (replay_mode == REPLAY_MODE_PLAY && !replay_has_interrupt()) {
-             /* Do nothing */
-         } else if (interrupt_request & CPU_INTERRUPT_HALT) {
-@@ -840,7 +842,6 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-              * reload the 'interrupt_request' value */
-             interrupt_request = cpu->interrupt_request;
-         }
--#endif /* !CONFIG_USER_ONLY */
-         if (interrupt_request & CPU_INTERRUPT_EXITTB) {
-             cpu->interrupt_request &= ~CPU_INTERRUPT_EXITTB;
-             /* ensure that no TB jump will be modified as
-@@ -851,6 +852,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-         /* If we exit via cpu_loop_exit/longjmp it is reset in cpu_exec */
-         bql_unlock();
-     }
-+#endif /* !CONFIG_USER_ONLY */
- 
-     /* Finally, check if we need to exit to the main loop.  */
-     if (unlikely(qatomic_read(&cpu->exit_request)) || icount_exit_request(cpu)) {
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index f25d80e2dc2..748bfab04a7 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -48,9 +48,7 @@ __thread uintptr_t helper_retaddr;
- 
- void cpu_interrupt(CPUState *cpu, int mask)
- {
--    g_assert(bql_locked());
--    cpu->interrupt_request |= mask;
--    qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
-+    g_assert_not_reached();
- }
- 
- /*
--- 
-2.51.0
+Thanks!
+Xianglai
+
+> +#endif
+>       qemu_init_vcpu(cs);
+>   
+>       lacc->parent_realize(dev, errp);
+>
+> base-commit: 58d49b5895f2e0b5cfe4b2901bf24f3320b74f29
 
 
