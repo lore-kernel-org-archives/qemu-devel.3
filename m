@@ -4,53 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B300DCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F41CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:53:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOJv-0003BZ-H9; Sat, 30 Aug 2025 12:20:58 -0400
+	id 1usNkQ-0002Ku-Ic; Sat, 30 Aug 2025 11:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu@bonslack.org>) id 1usLRL-0001lN-7C
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:16:23 -0400
-Received: from bonnix2.bonnix.it ([37.247.49.194])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <qemu@bonslack.org>) id 1usLRJ-00030D-GW
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:16:19 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 bonnix2.bonnix.it 42F7D243422
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bonslack.org;
- s=20220805; t=1756559775;
- bh=8PmNlTuQwCyS+5jCt13f/nI3DAOT95XMaqQBnJoqoe4=;
- h=Date:From:Subject:To:Cc;
- b=AbVvrj7OZg5aJ0EE6R/o1oEGRqbW9JOgqVBED01ZmQ2uON2RrsEx7MuagwBn+1MnP
- KxpU9/kKghxcHi7xTl0N5ZRdsSwKtVzCVdc0yFMFJrb6hhtQvN0A3z6b/aT6vcpKfL
- JYpxdNgqsOJbegedSsFfMbZdaOphiZkA3SybMBAQ=
-Received: from [10.0.0.70] (ip190-129-198-217.pool-bba.aruba.it
- [217.198.129.190])
- by bonnix2.bonnix.it (Postfix) with ESMTPSA id 42F7D243422;
- Sat, 30 Aug 2025 15:16:15 +0200 (CEST)
-Message-ID: <f09b7615-5d29-4eb1-aa5f-b67c237c4c32@bonslack.org>
-Date: Sat, 30 Aug 2025 15:16:14 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7Xa-0003G5-Vv
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:51 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7XY-00032U-Mp
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:50 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-76e1fc69f86so2837575b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:25:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756506346; x=1757111146; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yxM1TKQLG9007cv3kPvK0tgDNKw7VDbffsV5cWbtYRI=;
+ b=y4d0RRy2BbpmIsyW7/OkgdBIOyeGA+XT6v2JLzsdRd78N9YaFF/uFICaZTnzfcrOMT
+ iY73lRQCm7gRk+WD9xxVt0u3OjKqcFXcVWm9tIu/jxcPTiAH+m6nNrcCH5tX1mGxl0lR
+ LBsN5pvJ/QZq3L3qQqFTtFmbsnxn6kJ2B2oiLLZvVdqJ4dITS791b5QB2Ih9Fy/NACss
+ tU8DGPEOsaSDwEWS1nKGrEmbXEbmqmii2CB1vwaJt8Q9FrKVzyDkTiFl1o4GVZAOKx1s
+ FSQTpKZ+i1e5LOOzgGLpwjvzHfhlpyKluNEx+rqM4KGXwv7YeJatPzuRwxzmRBRbH8Jd
+ DzDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756506346; x=1757111146;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yxM1TKQLG9007cv3kPvK0tgDNKw7VDbffsV5cWbtYRI=;
+ b=WL5A1iFSkZAVRHm+d9P8N75u9MGfWPzjpuOROowLLJIht/leUFTKEtZbvkepOBOO0A
+ Y2HcWaRSl5oJiZsbqLgg3n3sAlC49plv9oi9Swk9jHujuFtbCuLzYW0LcwLZUYByDcEg
+ F82UVYmiJXSM9dZsjts76eOEhK6zHKywcYgy1M4O/MB1Z0jaihcur6/VEXDt4qxEd1U4
+ B6u1vLfqjl4iZt5eCQLcq/u5ytl/WEZsNcPtGB9PDqAoKemgOhtKKiH9KU1gsgIFSQ3K
+ nBycIB7vArjv6S7FP50HosdhNuIOYBU3quZIe8E7zgwsAlcAR7BBBysND30fV6Nt5RcE
+ 2aAg==
+X-Gm-Message-State: AOJu0YzYcf8z4BeY+lvsvwkYzbkiYxsKVb/Va5ofTC9aQJo5IPSi6Fct
+ zJkHK5JVLb3LcdkXArwaYZuJUUb3USiCsGD3IgoCjjbwiqRnvxM14b/OvUf5fKRyEQbNbgF3tbt
+ LgumuziU=
+X-Gm-Gg: ASbGncvSKO8c3bJBIL/0f+VioAFdYEoJ4m7Kj5GuhlsWIOylIQmsAciPCVO3pP6YoMR
+ ADUlsUihUoG/NMkSvpqi7TocM/WVdU+hM5+SR51rHPkCymg1VL0kOH/DFgKSHvePA9oNGyvzi8W
+ UqfMH6JY7ElIsl/lpV9uTfLKSOQVUXHxbU0sIOtmROSxaoT3hdLjsKpNwHdPjnJxknsUuPpJins
+ MDy5wNVhwU3bs5LwjqPd+u4f9r+GBcjNERO5GmloaXviAAHdNfecw8jEwFB9cOvxvUX9gN9QTl3
+ J5SB3BLzBtztyY+A9I5CtB8b5CzP3ApUaX20IMpuwApOS11WWvddFtA8TVo/32XGIGX4czLNS+A
+ MerZ8t/lLY9WR9BEOHlCN6l/U900Ay6OlW/UDlK6+4wnQNzzvyVyPbxxQl4fB5JVqtbzjgUA=
+X-Google-Smtp-Source: AGHT+IG3lgJ5t2JD2VSt9zVdohPY6YwiTqj+mpq5R2UUWDSZr6LctUq3x4Xwsl+BkOL5l5qBMRFdJw==
+X-Received: by 2002:a05:6a20:2585:b0:243:b31a:5945 with SMTP id
+ adf61e73a8af0-243d6f7eacdmr242448637.26.1756506345870; 
+ Fri, 29 Aug 2025 15:25:45 -0700 (PDT)
+Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.25.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 15:25:45 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 30/91] linux-user: Move elf_core_copy_regs to m68k/elfload.c
+Date: Sat, 30 Aug 2025 08:23:26 +1000
+Message-ID: <20250829222427.289668-31-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Luca Bonissi <qemu@bonslack.org>
-Subject: [PATCH 2/7] Add termios2 support to alpha target
-To: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-Content-Language: it
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.247.49.194; envelope-from=qemu@bonslack.org;
- helo=bonnix2.bonnix.it
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,65 +100,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From 008a255607ad9c0a55eaf38a5d3d6ef26d005b0f Mon Sep 17 00:00:00 2001
-From: Luca Bonissi <qemu@bonslack.org>
-Date: Sat, 30 Aug 2025 14:51:45 +0200
-Subject: [PATCH 2/7] Add termios2 support to alpha target
+Move elf_core_copy_regs to elfload.c.
+Move HAVE_ELF_CORE_DUMP, ELF_NREGS, target_elf_gregset_t to target_elf.h.
+For now, duplicate the definitions of target_elf_greg_t and tswapreg.
 
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/alpha/termbits.h | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ linux-user/m68k/target_elf.h | 10 ++++++++++
+ linux-user/elfload.c         | 31 -------------------------------
+ linux-user/m68k/elfload.c    | 27 +++++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 31 deletions(-)
 
-diff --git a/linux-user/alpha/termbits.h b/linux-user/alpha/termbits.h
-index 4a4b1e96f2..b7be23ea13 100644
---- a/linux-user/alpha/termbits.h
-+++ b/linux-user/alpha/termbits.h
-@@ -17,6 +17,29 @@ struct target_termios {
- 	target_speed_t c_ospeed;		/* output speed */
- };
+diff --git a/linux-user/m68k/target_elf.h b/linux-user/m68k/target_elf.h
+index 62ff9d38d4..cd6908ab57 100644
+--- a/linux-user/m68k/target_elf.h
++++ b/linux-user/m68k/target_elf.h
+@@ -8,4 +8,14 @@
+ #ifndef M68K_TARGET_ELF_H
+ #define M68K_TARGET_ELF_H
  
-+struct target_termios2 {
-+	target_tcflag_t c_iflag;		/* input mode flags */
-+	target_tcflag_t c_oflag;		/* output mode flags */
-+	target_tcflag_t c_cflag;		/* control mode flags */
-+	target_tcflag_t c_lflag;		/* local mode flags */
-+	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
-+	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
-+	target_speed_t c_ispeed;		/* input speed */
-+	target_speed_t c_ospeed;		/* output speed */
-+};
++#define HAVE_ELF_CORE_DUMP      1
 +
-+struct target_ktermios {
-+	target_tcflag_t c_iflag;		/* input mode flags */
-+	target_tcflag_t c_oflag;		/* output mode flags */
-+	target_tcflag_t c_cflag;		/* control mode flags */
-+	target_tcflag_t c_lflag;		/* local mode flags */
-+	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
-+	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
-+	target_speed_t c_ispeed;		/* input speed */
-+	target_speed_t c_ospeed;		/* output speed */
-+};
++typedef abi_ulong target_elf_greg_t;
 +
++/* See linux kernel: arch/m68k/include/asm/elf.h.  */
++#define ELF_NREG                20
++typedef struct target_elf_gregset_t {
++    target_elf_greg_t regs[ELF_NREG];
++} target_elf_gregset_t;
 +
- /* c_cc characters */
- #define TARGET_VEOF 0
- #define TARGET_VEOL 1
-@@ -247,6 +270,12 @@ struct target_termios {
- #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
- #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
- #define TARGET_TIOCGSID	0x5429  /* Return the session ID of FD */
-+#define TARGET_TCGETS2		TARGET_IOR('T', 0x2A, struct target_termios2)
-+#define TARGET_TCSETS2		TARGET_IOW('T', 0x2B, struct target_termios2)
-+#define TARGET_TCSETSW2	TARGET_IOW('T', 0x2C, struct target_termios2)
-+#define TARGET_TCSETSF2	TARGET_IOW('T', 0x2D, struct target_termios2)
-+#define TARGET_TIOCGRS485	TARGET_IOR('T', 0x2E, struct serial_rs485)
-+#define TARGET_TIOCSRS485	TARGET_IOWR('T', 0x2F, struct serial_rs485)
- #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
- #define TARGET_TIOCSPTLCK	TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
- #define TARGET_TIOCGPTPEER      TARGET_IO('T', 0x41) /* Safely open the slave */
+ #endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 69532faddb..e92c424faf 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -442,37 +442,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_68K
+ 
+-/* See linux kernel: arch/m68k/include/asm/elf.h.  */
+-#define ELF_NREG 20
+-typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
+-} target_elf_gregset_t;
+-
+-void elf_core_copy_regs(target_elf_gregset_t *r, const CPUM68KState *env)
+-{
+-    r->regs[0] = tswapreg(env->dregs[1]);
+-    r->regs[1] = tswapreg(env->dregs[2]);
+-    r->regs[2] = tswapreg(env->dregs[3]);
+-    r->regs[3] = tswapreg(env->dregs[4]);
+-    r->regs[4] = tswapreg(env->dregs[5]);
+-    r->regs[5] = tswapreg(env->dregs[6]);
+-    r->regs[6] = tswapreg(env->dregs[7]);
+-    r->regs[7] = tswapreg(env->aregs[0]);
+-    r->regs[8] = tswapreg(env->aregs[1]);
+-    r->regs[9] = tswapreg(env->aregs[2]);
+-    r->regs[10] = tswapreg(env->aregs[3]);
+-    r->regs[11] = tswapreg(env->aregs[4]);
+-    r->regs[12] = tswapreg(env->aregs[5]);
+-    r->regs[13] = tswapreg(env->aregs[6]);
+-    r->regs[14] = tswapreg(env->dregs[0]);
+-    r->regs[15] = tswapreg(env->aregs[7]);
+-    r->regs[16] = tswapreg(env->dregs[0]); /* FIXME: orig_d0 */
+-    r->regs[17] = tswapreg(env->sr);
+-    r->regs[18] = tswapreg(env->pc);
+-    r->regs[19] = 0;  /* FIXME: regs->format | regs->vector */
+-}
+-
+-#define HAVE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE       8192
+ 
+ #endif
+diff --git a/linux-user/m68k/elfload.c b/linux-user/m68k/elfload.c
+index 561ac5b3b3..2970ff7dec 100644
+--- a/linux-user/m68k/elfload.c
++++ b/linux-user/m68k/elfload.c
+@@ -4,6 +4,7 @@
+ #include "qemu.h"
+ #include "loader.h"
+ #include "elf.h"
++#include "target_elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+@@ -16,3 +17,29 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     /* Coldfire */
+     return "any";
+ }
++
++#define tswapreg(ptr)   tswapal(ptr)
++
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUM68KState *env)
++{
++    r->regs[0] = tswapreg(env->dregs[1]);
++    r->regs[1] = tswapreg(env->dregs[2]);
++    r->regs[2] = tswapreg(env->dregs[3]);
++    r->regs[3] = tswapreg(env->dregs[4]);
++    r->regs[4] = tswapreg(env->dregs[5]);
++    r->regs[5] = tswapreg(env->dregs[6]);
++    r->regs[6] = tswapreg(env->dregs[7]);
++    r->regs[7] = tswapreg(env->aregs[0]);
++    r->regs[8] = tswapreg(env->aregs[1]);
++    r->regs[9] = tswapreg(env->aregs[2]);
++    r->regs[10] = tswapreg(env->aregs[3]);
++    r->regs[11] = tswapreg(env->aregs[4]);
++    r->regs[12] = tswapreg(env->aregs[5]);
++    r->regs[13] = tswapreg(env->aregs[6]);
++    r->regs[14] = tswapreg(env->dregs[0]);
++    r->regs[15] = tswapreg(env->aregs[7]);
++    r->regs[16] = tswapreg(env->dregs[0]); /* FIXME: orig_d0 */
++    r->regs[17] = tswapreg(env->sr);
++    r->regs[18] = tswapreg(env->pc);
++    r->regs[19] = 0;  /* FIXME: regs->format | regs->vector */
++}
 -- 
-2.50.1
-
+2.43.0
 
 
