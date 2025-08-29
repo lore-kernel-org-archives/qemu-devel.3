@@ -4,98 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA2ECA0EFF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8847ACA1000
 	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usN8O-0001l0-Lh; Sat, 30 Aug 2025 11:04:53 -0400
+	id 1usN3X-0001d9-6N; Sat, 30 Aug 2025 10:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uru8g-0002e7-83
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:07:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uru8c-0001Vz-F6
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:07:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756454824;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=dDlKdHrChKNTu87N9kOxbM51RRf5R1hoyAkG4YmmBS/Fj443xhUgxo/rsz1v82QYxgf3Y6
- w9AoBOd8x+Dkd+yOJzCuCcKdygDzbqXN9RVH7V9vIIVeaR98tsPtj7kiaUCf4fl2MvBiBE
- fAkYWK4vf85mK1mtuxNUeoNsoryi7oI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-280-esiVzZJPPWuTlW4eKCku-w-1; Fri, 29 Aug 2025 04:07:02 -0400
-X-MC-Unique: esiVzZJPPWuTlW4eKCku-w-1
-X-Mimecast-MFC-AGG-ID: esiVzZJPPWuTlW4eKCku-w_1756454822
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3c6ae25997cso1063025f8f.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 01:07:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756454822; x=1757059622;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=Bi9/G5Y1E3q3s8b+ZH2XPiewQeS5DnpvfLDD0YIT78+lJAzSyXl3FrH3Cwwhd0uWca
- Mm3qJbjIbpF+spWGXrg0oItjbmJGzT65TRQXwc0fku6Xqfm648V4Xe5tAMcKRyjE8Tto
- hhf/bZraw5cEwcfwpdZhT6TTAWrsPphXeD3XqnBCuHXUgXsSlhN/qw63S2X9PHyILRF+
- 1h1Gd92UF34A4yPLFrPFEFScDQHC791BFIyLbPX8TWwtf2YmKIxu8Sk1dsZJwwHmc9LC
- eDAPbbXwEx86+x5/KBrcMOg0/t0qqaoh+iOxWJ872OrBIkdvIU23ooCZLXidFcmbeEeM
- 4nIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwX9sgtkza+M8VYv1PuhnInJaZOQgXFYUYDcHj2NopFn04ywSAFcDp8hY+CepbiQ0kZEhorQdjBazB@nongnu.org
-X-Gm-Message-State: AOJu0Yx44XRt59sEXIgX6QAte3siC3555b8AyJzwI3PNJZVuJPBBoS/c
- IhkqJdj/gZSh8fbyIucHq1v5rZr3boyc6pGboeDBeckAuYtySRKwl71gZsKo7qlV9nZF/C0OL2U
- yl6puPq4oBU49yd44dZZfxxh1Eb9IGZKTN5/95M/z5asE3YkdfesNvKwz
-X-Gm-Gg: ASbGnctoqVjsN9wJOOxdrLw/W4TaGNoXEjlPCIHD0XBqYw1vfuozMKD6k3PJaYTCbzC
- Qvm1Qay+VrRstSjvRUXimd6wH/bL87bG6MnC5GXt7r2lipGOhVhbTinhG774PyWKUHWciT2ucch
- v1LLxsJr6Uy84nlzj77HV0FPJAXf07z4WyDeIH6e9pr0BloXOM4soVc8lprjvxY+SFB8f28N6gs
- TI6wQURYMjPA+zWW8NP6gYGs+XHYbO1Cftubafq2/l4RWqtJkYfbOQFFzuRuU2B8fI9lyZE6nGB
- gk9iuvOyhiptqsxVAGrJZtjiwY8fO++HOADX3gs+hvCyAhK5vrNpGes3vE8B6QgmVmug0n8UadY
- xFiGjKDMLZCq6n6nz3gW3ctt/Y5oKoNzUDnc5MjrAfuM=
-X-Received: by 2002:a05:6000:2204:b0:3cd:6c09:1692 with SMTP id
- ffacd0b85a97d-3cd6c0920e9mr5717001f8f.63.1756454821569; 
- Fri, 29 Aug 2025 01:07:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFg8wWtmDIVg+JsFDLKlSM4WJ46mzB9Nw7BkIDAoZDYGAdr2DRLkrLaLDTebKoAJ6FnRy5fNQ==
-X-Received: by 2002:a05:6000:2204:b0:3cd:6c09:1692 with SMTP id
- ffacd0b85a97d-3cd6c0920e9mr5716967f8f.63.1756454821092; 
- Fri, 29 Aug 2025 01:07:01 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf1a2560c3sm2392057f8f.0.2025.08.29.01.07.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 01:07:00 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: pbonzini@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
- eduardo@habkost.net, imammedo@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v7 00/19] hw/i386: separate isapc out from pc_piix
-Date: Fri, 29 Aug 2025 10:06:59 +0200
-Message-ID: <20250829080659.1422019-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250828111057.468712-1-mark.caveayland@nutanix.com>
-References: 
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1urpGw-0008MO-HC
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 22:55:26 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1urpGr-00078p-Ff
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 22:55:26 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Cxf9OVFrFopW4EAA--.8859S3;
+ Fri, 29 Aug 2025 10:55:17 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowJDxbMGMFrFoKstvAA--.33085S5;
+ Fri, 29 Aug 2025 10:55:16 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>
+Subject: [PULL 03/14] target/loongarch: Set page size in TLB entry with STLB
+Date: Fri, 29 Aug 2025 10:54:56 +0800
+Message-Id: <20250829025507.2315073-4-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250829025507.2315073-1-maobibo@loongson.cn>
+References: <20250829025507.2315073-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: qMiowJDxbMGMFrFoKstvAA--.33085S5
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,8 +64,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+With VTLB different TLB entry may have different page size, and
+page size is set in PS field of TLB entry. However with STLB, all
+the TLB entries have the same page size, page size comes from register
+CSR_STLBPS, PS field of TLB entry is not used.
 
-Paolo
+Here PS field of TLB entry is used with all TLB entries, even with
+STLB. It is convenient with TLB maintainance operation.
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/tcg/tlb_helper.c | 41 ++++++++-----------------------
+ 1 file changed, 10 insertions(+), 31 deletions(-)
+
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 8872593ff0..3ea0e153b1 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -110,11 +110,8 @@ static void invalidate_tlb_entry(CPULoongArchState *env, int index)
+     if (!tlb_e) {
+         return;
+     }
+-    if (index >= LOONGARCH_STLB) {
+-        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-    } else {
+-        tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    }
++
++    tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+     pagesize = MAKE_64BIT_MASK(tlb_ps, 1);
+     mask = MAKE_64BIT_MASK(0, tlb_ps + 1);
+ 
+@@ -173,11 +170,8 @@ static void fill_tlb_entry(CPULoongArchState *env, int index)
+         lo1 = env->CSR_TLBELO1;
+     }
+ 
+-    /* Only MTLB has the ps fields */
+-    if (index >= LOONGARCH_STLB) {
+-        tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, csr_ps);
+-    }
+-
++    /* Store page size in field PS */
++    tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, PS, csr_ps);
+     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, VPPN, csr_vppn);
+     tlb->tlb_misc = FIELD_DP64(tlb->tlb_misc, TLB_MISC, E, 1);
+     csr_asid = FIELD_EX64(env->CSR_ASID, CSR_ASID, ASID);
+@@ -283,12 +277,7 @@ void helper_tlbrd(CPULoongArchState *env)
+ 
+     index = FIELD_EX64(env->CSR_TLBIDX, CSR_TLBIDX, INDEX);
+     tlb = &env->tlb[index];
+-
+-    if (index >= LOONGARCH_STLB) {
+-        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-    } else {
+-        tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    }
++    tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+     tlb_e = FIELD_EX64(tlb->tlb_misc, TLB_MISC, E);
+ 
+     if (!tlb_e) {
+@@ -476,11 +465,8 @@ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
+         if (!tlb_e) {
+             continue;
+         }
+-        if (i >= LOONGARCH_STLB) {
+-            tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-        } else {
+-            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-        }
++
++        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+         tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+         vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+         compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+@@ -509,11 +495,8 @@ void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
+         if (!tlb_e) {
+             continue;
+         }
+-        if (i >= LOONGARCH_STLB) {
+-            tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-        } else {
+-            tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-        }
++
++        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+         tlb_vppn = FIELD_EX64(tlb->tlb_misc, TLB_MISC, VPPN);
+         vpn = (addr & TARGET_VIRT_MASK) >> (tlb_ps + 1);
+         compare_shift = tlb_ps + 1 - R_TLB_MISC_VPPN_SHIFT;
+@@ -673,11 +656,7 @@ static int loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
+     uint64_t tlb_entry, tlb_ppn;
+     uint8_t tlb_ps, n, tlb_v, tlb_d, tlb_plv, tlb_nx, tlb_nr, tlb_rplv;
+ 
+-    if (index >= LOONGARCH_STLB) {
+-        tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+-    } else {
+-        tlb_ps = FIELD_EX64(env->CSR_STLBPS, CSR_STLBPS, PS);
+-    }
++    tlb_ps = FIELD_EX64(tlb->tlb_misc, TLB_MISC, PS);
+     n = (address >> tlb_ps) & 0x1;/* Odd or even */
+ 
+     tlb_entry = n ? tlb->tlb_entry1 : tlb->tlb_entry0;
+-- 
+2.43.5
 
 
