@@ -4,78 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76466CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD05CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:50:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNCr-00009B-NF; Sat, 30 Aug 2025 11:09:31 -0400
+	id 1usN3r-00022Y-Ei; Sat, 30 Aug 2025 11:00:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1urv66-0006YV-B4
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 05:08:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1urv5y-0004jL-O7
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 05:08:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756458508;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3LRun1w+RtPNxJXGPeXD1A1Ywizv4pgYsknnrFow5y8=;
- b=AKyQOrhT5yhnZUQIUBHYeM4ivNdPC5glV8MfBlWe9UX6faVaIGInuXGWvZne3HqF/Ak+yr
- LnsQB6TZ+aFI1TiwAjzGJSo80Fp0zl/kg9IVNYiELSovVxnu6CoZFK+V9/nNgqe7DmmeuP
- q7nKalr3mfrisyKy+HpaRo3JYueUHIw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-gMlLvIaAN66jKpI6A4pUZg-1; Fri,
- 29 Aug 2025 05:08:18 -0400
-X-MC-Unique: gMlLvIaAN66jKpI6A4pUZg-1
-X-Mimecast-MFC-AGG-ID: gMlLvIaAN66jKpI6A4pUZg_1756458497
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39D94195E928; Fri, 29 Aug 2025 09:08:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.108])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BEF7718003FC; Fri, 29 Aug 2025 09:08:15 +0000 (UTC)
-Date: Fri, 29 Aug 2025 10:08:12 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 3/3] tests/functional: handle URLError when fetching assets
-Message-ID: <aLFt_KcyYpd3CyYt@redhat.com>
-References: <20250829083156.2570137-1-berrange@redhat.com>
- <20250829083156.2570137-4-berrange@redhat.com>
- <801f322a-6151-40ab-879a-f64e117d6d04@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1urpbU-0004D2-On
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 23:16:40 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1urpbN-0004D2-9z
+ for qemu-devel@nongnu.org; Thu, 28 Aug 2025 23:16:40 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx1tCHG7FoLnAEAA--.9035S3;
+ Fri, 29 Aug 2025 11:16:23 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJCxdOSEG7FoN9NvAA--.22893S3;
+ Fri, 29 Aug 2025 11:16:23 +0800 (CST)
+Subject: Re: [PATCH] hw/loongarch/virt: Fix the cpu hotplug issue
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20250829013243.1237107-1-lixianglai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <a0fe573d-efdd-069c-d72b-05a6e75ce3bc@loongson.cn>
+Date: Fri, 29 Aug 2025 11:14:22 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <20250829013243.1237107-1-lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <801f322a-6151-40ab-879a-f64e117d6d04@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-CM-TRANSID: qMiowJCxdOSEG7FoN9NvAA--.22893S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxGw43CrWDAw1rZw1fCryfAFc_yoW5ZFy8pF
+ Zru3WUArs5JrsrZ39rt3s8uF1DArsxKF4a9FnrtrWFkwsFqr1UXrnFva9FqF4UA348WF4F
+ vr9aka1ava17Z3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Yb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
+ 6r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+ CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+ 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+ AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
+ Ja73UjIFyTuYvjxUzsqWUUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.357,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,77 +78,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 29, 2025 at 11:00:12AM +0200, Thomas Huth wrote:
-> On 29/08/2025 10.31, Daniel P. Berrangé wrote:
-> > We treat most HTTP errors as non-fatal when fetching assets,
-> > but forgot to handle network level errors. This adds catching
-> > of URLError so that we retry on failure, and will ultimately
-> > trigger graceful skipping in the pre-cache task.
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >   tests/functional/qemu_test/asset.py | 9 ++++++++-
-> >   1 file changed, 8 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-> > index ae2bec3ea5..36f64fe2f6 100644
-> > --- a/tests/functional/qemu_test/asset.py
-> > +++ b/tests/functional/qemu_test/asset.py
-> > @@ -15,7 +15,7 @@
-> >   from time import sleep
-> >   from pathlib import Path
-> >   from shutil import copyfileobj
-> > -from urllib.error import HTTPError
-> > +from urllib.error import HTTPError, URLError
-> >   class AssetError(Exception):
-> >       def __init__(self, asset, msg, transient=False):
-> > @@ -171,6 +171,13 @@ def fetch(self):
-> >                       raise AssetError(self, "Unable to download %s: "
-> >                                        "HTTP error %d" % (self.url, e.code))
-> >                   continue
-> > +            except URLError as e:
-> > +                # This is typically a network/service level error
-> > +                # eg urlopen error [Errno 110] Connection timed out>
-> > +                tmp_cache_file.unlink()
-> > +                self.log.error("Unable to download %s: URL error %s",
-> > +                               self.url, e)
-> > +                continue
-> 
-> Hmm, I don't think we should retry on each and every URLError. For example
-> if you have a typo in the server name, you get a "Name or service not known"
-> URLError, and it does not make sense to retry in that case.
-> 
-> Also, in case of the server being down, it takes a minute or two 'til the
-> urllib gives up, so if you retry multiple times in that case, you can easily
-> extend the test time by > 5 minutes (as you can see by the timestamps in the
-> example in your cover letter), which is unfortunate, too (considering that
-> there is also a timeout setting for the gitlab CI jobs).
-> 
-> I think I'd maybe rather do something like this instead, without retrying
-> the download, just marking certain errors as transient:
-> 
->        except URLError as e:
->            tmp_cache_file.unlink()
->            msg = str(e.reason)
->            self.log.error("Unable to download %s: URL error %s",
->                           self.url, msg)
->            raise AssetError(self, msg,
->                             transient=("Network is unreachable" in msg))
-> 
-> WDYT?
 
-Ok, yes, we can do that instead.
+Another question about cpu reset, there is reset callback in CPU object 
+such as:
+   resettable_class_set_parent_phases(rc, NULL, 
+loongarch_cpu_reset_hold, NULL, &lacc->parent_phases);
 
+Do we need cpu_reset(CPU(cpu)) in reset_load_elf()?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Regards
+Bibo Mao
+
+On 2025/8/29 上午9:32, Xianglai Li wrote:
+> The hot-plugged cpu does not register the cpu reset function, so the cpu
+> plugged in later cannot reset properly, and there will be problems when
+> restarting.
+> 
+> Now register the cpu reset function in the cpu hotplug callback function.
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+>   hw/loongarch/boot.c         | 8 +-------
+>   hw/loongarch/virt.c         | 4 ++++
+>   include/hw/loongarch/virt.h | 1 +
+>   3 files changed, 6 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index 14d6c52d4e..6bc1f3d50c 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -324,7 +324,7 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>       return kernel_entry;
+>   }
+>   
+> -static void reset_load_elf(void *opaque)
+> +void reset_load_elf(void *opaque)
+>   {
+>       LoongArchCPU *cpu = opaque;
+>       CPULoongArchState *env = &cpu->env;
+> @@ -429,12 +429,6 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+> -    int i;
+> -
+> -    /* register reset function */
+> -    for (i = 0; i < ms->smp.cpus; i++) {
+> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
+> -    }
+>   
+>       info->kernel_filename = ms->kernel_filename;
+>       info->kernel_cmdline = ms->kernel_cmdline;
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index b15ada2078..71f8ddc980 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -1013,6 +1013,8 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev,
+>       /* Notify acpi ged CPU removed */
+>       hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &error_abort);
+>   
+> +    /* unregister reset function */
+> +    qemu_unregister_reset(reset_load_elf, cpu);
+>       cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+>       cpu_slot->cpu = NULL;
+>   }
+> @@ -1037,6 +1039,8 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
+>                                &error_abort);
+>       }
+>   
+> +    /* register reset function */
+> +    qemu_register_reset(reset_load_elf, cpu);
+>       cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+>       cpu_slot->cpu = CPU(dev);
+>   }
+> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+> index 602feab0f0..15ea393386 100644
+> --- a/include/hw/loongarch/virt.h
+> +++ b/include/hw/loongarch/virt.h
+> @@ -71,6 +71,7 @@ struct LoongArchVirtMachineState {
+>   OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
+>   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+>   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
+> +void reset_load_elf(void *opaque);
+>   
+>   static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+>   {
+> 
 
 
