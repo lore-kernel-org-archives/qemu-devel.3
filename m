@@ -4,59 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A96CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7447CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNMu-0007U7-Cr; Sat, 30 Aug 2025 11:19:53 -0400
+	id 1usNkw-0003aY-CG; Sat, 30 Aug 2025 11:44:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1us093-0004Xz-0f; Fri, 29 Aug 2025 10:32:02 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1us08s-0005Vi-9R; Fri, 29 Aug 2025 10:31:57 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9821256F31B;
- Fri, 29 Aug 2025 16:31:40 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id lqxsGrwcisnQ; Fri, 29 Aug 2025 16:31:38 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7C36756F30F; Fri, 29 Aug 2025 16:31:38 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7966956F30D;
- Fri, 29 Aug 2025 16:31:38 +0200 (CEST)
-Date: Fri, 29 Aug 2025 16:31:38 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-cc: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com, 
- mjrosato@linux.ibm.com, farman@linux.ibm.com, pasic@linux.ibm.com, 
- borntraeger@linux.ibm.com, thuth@redhat.com, richard.henderson@linaro.org, 
- david@redhat.com, iii@linux.ibm.com, john.levon@nutanix.com, 
- thanos.makatos@nutanix.com, alex.williamson@redhat.com, clg@redhat.com, 
- steven.sistare@oracle.com, tomitamoeko@gmail.com, qemu-ppc@nongnu.org, 
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 16/22] vfio/pci.c: use QOM casts where appropriate
-In-Reply-To: <bc37692f-da9b-44e9-b4db-6ab7edbeaaaf@nutanix.com>
-Message-ID: <3b64d555-d564-cf7a-9a0a-ea566a90524d@eik.bme.hu>
-References: <20250715093110.107317-1-mark.caveayland@nutanix.com>
- <20250715093110.107317-17-mark.caveayland@nutanix.com>
- <d02ef0f5-3c52-7a8a-dc29-1a8c28e70b50@eik.bme.hu>
- <bc37692f-da9b-44e9-b4db-6ab7edbeaaaf@nutanix.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7b8-0004Ld-33
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:30 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7b6-0003Zi-00
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:29 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7723cf6e4b6so123868b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:29:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756506566; x=1757111366; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QlDgwUU7iro35Dw3IbxLfzqVXXSRk7ljNX2J//jX8Lk=;
+ b=pQfBJOaWVyce8wnBgUNMPY2ZgIXrmfSLZMjdmdtjDbMsusYjf2SiUpjhvh8azluuSV
+ umjWQ08rlJqb9GUiO+JPSZ4xQOvo93x7gUMdIguSla9Rg2WyB/MhvM6iy6DzNOCw90vI
+ tpifIH4nmipjMKfpaqgUTsLBsKO+mXqeODKHIkSCSguTOXmKWut6CGqi80APSST1OhN/
+ 0DybEjP5SW4EIgzQ563wRgUWfBDYXnRS9/GR82mTnmjF8f7633sRiTWUpL+h0cZIxBAE
+ olD0tJbFGcSfoJni6MjY1T/ihLyUym4YQDKIWvaV6TsY5xEdy4FMxBmavjxAcvc2WQfT
+ 4jRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756506566; x=1757111366;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QlDgwUU7iro35Dw3IbxLfzqVXXSRk7ljNX2J//jX8Lk=;
+ b=a5etd0Wz1FpSPqP4D9uA5S8SdQby6o0qfyuE7XXfTzl8SdnKbEwa7ooeR6Jn4TMzT+
+ UzsgZo4LT8OLoKAaiuyBoz7n+WukPm9P2Eq0jJVkk7lP6PUajopDgIawq02E2w+1UzX4
+ o6ElvzsRC+tkkwYFHgQKFn/KwHySJn0DTQKkxCOdjO9dQ1YRhGVHfiMAw4nnDbu+PoHH
+ 6O3ZwzSxJoes6D+Ixxm2Pl4PffjyO671mvk5fNXfUxnIMjxge2IhSoQFwKUthU7Ua6gU
+ KEJ8HPdcpAkO48e8LP/cclObdmErm3APsZKl0BwIv9LK1bya5scFvdKs9AKBc5s3JG82
+ lxjw==
+X-Gm-Message-State: AOJu0YwRRbvDc0ZUGCs7dQATQQ6MAgyvvp5TOHnGB3VC5JiU7IhXK3IZ
+ 0vfaRimmBw7zxqi4BQ7C5O9gJaGqmcQBKWa5uwYU5e7V488G6yzJNKpQaidtJJhZSRXFj3hPGy8
+ U851bh7M=
+X-Gm-Gg: ASbGnctMRuCNBCjgKUJzJpPpCzo6zw1quXlVYqmXjjYoWMOo+NFq10jbEG83VysLD+V
+ jgW+588OOlN+7w1BK1kDo+DeBWBsSzdwrpHjSUiuLxUJKCYaPDy/V/OmyEiLNCAW0GRsXmbLzTb
+ 9m4FIUaFhMDEt9JbeSrQX2tApKDTKMH2n17VQO4VGnTS4imWgXqit1SSbcChk9ckcHET9owDV19
+ xMfEvCHZs0mAIsbha7EHSf10WB0lRAsLSp5gZYF/dmvNuubbbtoAv4aUDgQYqjiYUe7cejQTW6K
+ TF1hYKzWZMrCh4Tj1VPhg43i1AceYdPlZLrEikYN6hJJy9jGM0y9mmCufdg/xRCBXyOWzbWxVgR
+ SVfLcW/jh/MUKAEHrWTi8BWt/KMoj/bQuBqNTV7mbojbLxCycA+17H1uXC3xfgSs=
+X-Google-Smtp-Source: AGHT+IEiRtXICVGlbnYgCvBpAY9E3iqUaHqBIwhX1IEZLctmfAtdBySfTc5xasB/Dr3lGp9FYWJQgg==
+X-Received: by 2002:a05:6a20:3944:b0:243:be7c:2d62 with SMTP id
+ adf61e73a8af0-243d6dd4decmr299835637.11.1756506566221; 
+ Fri, 29 Aug 2025 15:29:26 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.29.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 15:29:25 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 46/91] linux-user/microblaze: Create target_ptrace.h
+Date: Sat, 30 Aug 2025 08:23:42 +1000
+Message-ID: <20250829222427.289668-47-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- BOUNDARY="3866299591-268935935-1756477553=:65066"
-Content-ID: <39cb9cff-c11a-708f-7aa5-363a70bc60a5@eik.bme.hu>
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,60 +100,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Move the target_pt_regs structure from target_syscall.h.
 
---3866299591-268935935-1756477553=:65066
-Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
-Content-ID: <fce22f5b-47d2-bd6a-04bd-ef622b499f65@eik.bme.hu>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/microblaze/target_ptrace.h  | 50 ++++++++++++++++++++++++++
+ linux-user/microblaze/target_syscall.h | 44 -----------------------
+ linux-user/microblaze/signal.c         |  1 +
+ 3 files changed, 51 insertions(+), 44 deletions(-)
+ create mode 100644 linux-user/microblaze/target_ptrace.h
 
-On Fri, 29 Aug 2025, Mark Cave-Ayland wrote:
-> On 15/07/2025 14:38, BALATON Zoltan wrote:
->
->> On Tue, 15 Jul 2025, Mark Cave-Ayland wrote:
->>> Use QOM casts to convert between VFIOPCIDevice and PCIDevice instead of
->>> accessing pdev directly.
->>> 
->>> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->>> ---
->>> hw/vfio/pci.c | 202 ++++++++++++++++++++++++++++++--------------------
->>> 1 file changed, 120 insertions(+), 82 deletions(-)
->>> 
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index 1093b28df7..fb9eb58da5 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -119,6 +119,7 @@ static void vfio_intx_mmap_enable(void *opaque)
->>> static void vfio_intx_interrupt(void *opaque)
->>> {
->>>     VFIOPCIDevice *vdev = opaque;
->>> +    PCIDevice *pdev = PCI_DEVICE(vdev);
->> 
->> Don't do that. Opaque data is already type checked when it is registered 
->> for the callback and cannot be changed so additional type checking here is 
->> just a performance hit without any advantage. It's OK to do it in less 
->> frequently called functions but don't add unnecessary casts to functions 
->> that can be called a lot.
->
-> In general the QOM casts fall into the noise in a standard profile, but I can 
-> see how it could be possible they might show up in the interrupt fast path.
->
-> I'll look at getting a vfio-pci perf test set up here to see if there is a 
-> noticeable effect in this case, and if so think about what the best approach 
-> is.
+diff --git a/linux-user/microblaze/target_ptrace.h b/linux-user/microblaze/target_ptrace.h
+new file mode 100644
+index 0000000000..a46c8cb7bc
+--- /dev/null
++++ b/linux-user/microblaze/target_ptrace.h
+@@ -0,0 +1,50 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#ifndef MICROBLAZE_TARGET_PTRACE_H
++#define MICROBLAZE_TARGET_PTRACE_H
++
++/* We use microblaze_reg_t to keep things similar to the kernel sources.  */
++typedef uint32_t microblaze_reg_t;
++
++struct target_pt_regs {
++    microblaze_reg_t r0;
++    microblaze_reg_t r1;
++    microblaze_reg_t r2;
++    microblaze_reg_t r3;
++    microblaze_reg_t r4;
++    microblaze_reg_t r5;
++    microblaze_reg_t r6;
++    microblaze_reg_t r7;
++    microblaze_reg_t r8;
++    microblaze_reg_t r9;
++    microblaze_reg_t r10;
++    microblaze_reg_t r11;
++    microblaze_reg_t r12;
++    microblaze_reg_t r13;
++    microblaze_reg_t r14;
++    microblaze_reg_t r15;
++    microblaze_reg_t r16;
++    microblaze_reg_t r17;
++    microblaze_reg_t r18;
++    microblaze_reg_t r19;
++    microblaze_reg_t r20;
++    microblaze_reg_t r21;
++    microblaze_reg_t r22;
++    microblaze_reg_t r23;
++    microblaze_reg_t r24;
++    microblaze_reg_t r25;
++    microblaze_reg_t r26;
++    microblaze_reg_t r27;
++    microblaze_reg_t r28;
++    microblaze_reg_t r29;
++    microblaze_reg_t r30;
++    microblaze_reg_t r31;
++    microblaze_reg_t pc;
++    microblaze_reg_t msr;
++    microblaze_reg_t ear;
++    microblaze_reg_t esr;
++    microblaze_reg_t fsr;
++    uint32_t kernel_mode;
++};
++
++#endif /* MICROBLAZE_TARGET_PTRACE_H */
+diff --git a/linux-user/microblaze/target_syscall.h b/linux-user/microblaze/target_syscall.h
+index 43362a1664..66f5a9ebe2 100644
+--- a/linux-user/microblaze/target_syscall.h
++++ b/linux-user/microblaze/target_syscall.h
+@@ -4,50 +4,6 @@
+ #define UNAME_MACHINE "microblaze"
+ #define UNAME_MINIMUM_RELEASE "2.6.32"
+ 
+-/* We use microblaze_reg_t to keep things similar to the kernel sources.  */
+-typedef uint32_t microblaze_reg_t;
+-
+-struct target_pt_regs {
+-        microblaze_reg_t r0;
+-        microblaze_reg_t r1;
+-        microblaze_reg_t r2;
+-        microblaze_reg_t r3;
+-        microblaze_reg_t r4;
+-        microblaze_reg_t r5;
+-        microblaze_reg_t r6;
+-        microblaze_reg_t r7;
+-        microblaze_reg_t r8;
+-        microblaze_reg_t r9;
+-        microblaze_reg_t r10;
+-        microblaze_reg_t r11;
+-        microblaze_reg_t r12;
+-        microblaze_reg_t r13;
+-        microblaze_reg_t r14;
+-        microblaze_reg_t r15;
+-        microblaze_reg_t r16;
+-        microblaze_reg_t r17;
+-        microblaze_reg_t r18;
+-        microblaze_reg_t r19;
+-        microblaze_reg_t r20;
+-        microblaze_reg_t r21;
+-        microblaze_reg_t r22;
+-        microblaze_reg_t r23;
+-        microblaze_reg_t r24;
+-        microblaze_reg_t r25;
+-        microblaze_reg_t r26;
+-        microblaze_reg_t r27;
+-        microblaze_reg_t r28;
+-        microblaze_reg_t r29;
+-        microblaze_reg_t r30;
+-        microblaze_reg_t r31;
+-        microblaze_reg_t pc;
+-        microblaze_reg_t msr;
+-        microblaze_reg_t ear;
+-        microblaze_reg_t esr;
+-        microblaze_reg_t fsr;
+-        uint32_t kernel_mode;
+-};
+-
+ #define TARGET_CLONE_BACKWARDS
+ #define TARGET_MCL_CURRENT 1
+ #define TARGET_MCL_FUTURE  2
+diff --git a/linux-user/microblaze/signal.c b/linux-user/microblaze/signal.c
+index f6d47d76ff..7aef781314 100644
+--- a/linux-user/microblaze/signal.c
++++ b/linux-user/microblaze/signal.c
+@@ -21,6 +21,7 @@
+ #include "user-internals.h"
+ #include "signal-common.h"
+ #include "linux-user/trace.h"
++#include "target_ptrace.h"
+ 
+ struct target_sigcontext {
+     struct target_pt_regs regs;  /* needs to be first */
+-- 
+2.43.0
 
-In general, casting opaque pointer of a callback is unnecessary because 
-these can be checked once when registered so it's not needed to check 
-again at every use. I think this should really be recommended practice to 
-not use QOM casts for these opaque pointers of callbacks. A lot of these 
-are also in hot path so not adding unnecessary checks is a good idea. In 
-this case when you're in the vfio implementation what's wrong with 
-accessing internal field of vfio anyway? An object's implemenattion should 
-be able to access its own fields so maybe the current way is OK and most 
-of this patch is not needed at all.
-
-Regards,
-BALATON Zoltan
---3866299591-268935935-1756477553=:65066--
 
