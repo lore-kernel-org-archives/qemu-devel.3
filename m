@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3456CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74590CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNxE-0002Ko-NE; Sat, 30 Aug 2025 11:57:24 -0400
+	id 1usNiB-0002Zl-LV; Sat, 30 Aug 2025 11:41:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEMa-0006Ah-Iq
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:57 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1us6SP-0007S1-HK
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:16:25 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEMY-0004H4-Tn
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:56 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-77033293ed8so2496476b3a.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:54 -0700 (PDT)
+ id 1us6SL-0002Il-Sv
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:16:24 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-771e15ce64eso2244449b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 14:16:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532573; x=1757137373; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6jXVVpPrnUxKOJDwLJ9Z6F/DAfv+srkdIqMUZ2+d07Y=;
- b=vWyjygIZbJOxqcvFbOrOcIh7gqCqO/JEwDbD8Ip0ztcK3SWs9CQmnqXD5JoaIUvW54
- 4beflCAUcgBBbuF0Vm1gxLNnPtDdrT2Hr2zOWCIL5AGhAH3lZsc5yFip1jWJdUWv4KEx
- rMNpYH26eD0cD5eVTn7aHV/PrKwMNppBRb96T63ycspCbiFbQ6uQW/aQEZMTkTow/Vwz
- JEE0+6nEyMhDuIxgSkbHYEuciX5gJyKztV6FLF1AqYmIrTnU1Dj6Z03paV+ib2iqsDcv
- H6uvvGZRn5YHsiCPEXoCTBNKzFHnTDJH4hqONl8ZtGveQy6AeBoYP7PoB68lmAmgDVZ7
- e4HQ==
+ d=linaro.org; s=google; t=1756502175; x=1757106975; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eAvDm46K6JOJ9DU6J17+dzG84o1PbcdA7P0Pammr8EU=;
+ b=CX9RXVgioaI5ECqGfcGK5UPhEjpkob5adYjofahR6vmo0MxNInC2M/Jj4bKPG7bwBI
+ guhjCauVONmLMkUlA8a3dvH0MIgXFO1qkmAVoCrksvMAFC7yRl1s6IhBZL/504m6R3zP
+ ucK4syGilAQFjEDMj7heaTYw18K3O/N4GnbGkeZU+AKGQjDC81MV6fYB/0zDmNPvhuzV
+ hwrcMgztfvMqPRSn2cgm9Xuahxj2A0aMBbtu3mCm+SE8itJZPJo9zCqqZ4vktnVEm2sQ
+ wdlUXX2x5tJ5riZM0dYjPR+fDc9NEfEESunwc7MzU4BIr1KhSAqDj8YcHG6D0egLDaZG
+ UM7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532573; x=1757137373;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6jXVVpPrnUxKOJDwLJ9Z6F/DAfv+srkdIqMUZ2+d07Y=;
- b=j0QY0/1ZEphYyrPST+fcc+YtkZ+USntnAW6NH1SWbGXvjTlx9fw1Ta9bgLJ0efBA3l
- 7fmQresJ9XfhZVrWcZzzWIp89TpvX6q8//Q+kO74+TH5lN1RTQ+zF7DgZxJOSZe0PRsy
- X4SKBGBlO6I6ICU6DMPCD+BDAyQrUAPEfbxzfYJcJEdz5Oc5WZtFZu9T6SYlqh3cQFaC
- Bw+Ns7eZI8SHGN+ZQBdSd0HuADIFO1usMP2gUWpSfg9DJJ8w+KjcYiP3OZjVGfA/YgqO
- LT1jUlBCDRuJohAn7G+UqMpYlaI0iJwptAK9gYdQjoxxOErPJDYNwWNzMbnFG7wBicSP
- k14g==
-X-Gm-Message-State: AOJu0YxLwz0tG7wRKMFJqlUcjxSVygy47xYzLYhCAuuMcBPgsmphMG85
- Kb5qK3DMKkItP21uf7xk7gzHoIZqVzBYqSHTwVi+AtPjGua4c+8qB8kOOocGdTZuOb6HSXepVW+
- uuH/VnNc=
-X-Gm-Gg: ASbGnctshaUlK7djO34Y3X5t4HAuqD5CIY8niElRgzW2W2IQGpZ3ruXdIxPIYa/w2R8
- WGadYJg5FpLmwF7dmuViv7Ji4UxpZc06njblblBXo79uH92KjNHVgKyYEOZefnOkppsa/z4jpp7
- 0bP9qmquGj2yX0ekm4qinxZSlsnjvM7sakVxL80p3Ly4y917qLSolOQ4q9FSmZdxobSe5YHYovn
- hjeNdLc1nHbddyZFoDF9/t64IsjvPpeRgyPKGk6bz1JgQidFkIqflpJUl8FjaWhFyei3V+Rl0sk
- L0/Ilhwe2QcSsAy05U6mr3a7R9qbOqlO0mJgMsTLI6i0dhFOuRmb6WDyijxCOfGIaB3ZskD6o8s
- 0fxxdgttejPepjHLrr3NVc6ntWJV+UrjVbw0MQjSv3tYyWK4XBpSMCZbSwSutiAgRruZ7Zto=
-X-Google-Smtp-Source: AGHT+IGSSV9YaeKjz1SVhbzdzd8dc2AALtEpO9t02uivwQ2oE+SXSYI8tX9dkGSYQiMyb9AIZGsh6w==
-X-Received: by 2002:a05:6a20:918c:b0:243:c2e8:f4c2 with SMTP id
- adf61e73a8af0-243d6bca374mr1584893637.0.1756532573249; 
- Fri, 29 Aug 2025 22:42:53 -0700 (PDT)
-Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.42.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:42:52 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 28/84] include/hw/core/cpu: Invert the indexing into
- CPUTLBDescFast
-Date: Sat, 30 Aug 2025 15:40:32 +1000
-Message-ID: <20250830054128.448363-29-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756502175; x=1757106975;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eAvDm46K6JOJ9DU6J17+dzG84o1PbcdA7P0Pammr8EU=;
+ b=RkDLhdydpjg1cMhaj/dW/kg+nIciahMvljgnAiv7r1VU4ExlJDkg1S7339IpcTlK9N
+ DkOeHXLXqqpIxN5rDesMa7aODP26ECal42zetOmqK7zLm6y6IBwwGePQmUA2Mnt99GvH
+ xeKwcc8uqDfuvIUdfNNTsIQDHR6YaTdDy5skkTBuTogy0e3xpdf5gOwPMhbRV+wyNS2r
+ jNfwMrMTKxJATLaASMU8SVVgAeHLMJy+WecybrKP667wwfpTMZ54528xnAEoogRtuxtb
+ MlmIKjpMPy+84h2B6LHC5Mkz/u159nz7cauF0D1LshTaDo2GTuf9JmPk97BqbG7UHEq2
+ Hjyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcVyYkFtuPXWTVNwmBLBv4fyctJ7heDn/5iASYk9DwaP3r7ONx7xAd/Fb3c/vOL4/sn2+0HKTD4DjQ@nongnu.org
+X-Gm-Message-State: AOJu0YyH0YVcNFUZjfKV3CMnYIbEjAjQw6Dc6+kFdLkl+E3rM38ffSJ+
+ nXUvf4QaTTEmW7s4hmbxrrmOppey+IAy6XayaaNyCNLUFUQoV4vZYEyOxrArcPj9wfU=
+X-Gm-Gg: ASbGnctUkU8WqiU8zlXwCNJTa3BmvY6W6/xbHlRqZhgc6J26fmHZLqBFsvl+tQC4yoP
+ wkVLsU/JSnRHZMcrjVnoDvnniE8pmkMCyPvR+c9zHfnErFMYoswLj+ZqDY3Ay/G0PyaHXnjya86
+ usko55Id9viE4PhCDEfiypVv3cptvduMrWOYZB0SeVb97beo6FwFTeM7bh5Ii3UiDAVoDPZlqxw
+ dPv3xt5WhiJXqBPTFJJ+oDyXC4JKjjaCxMqia3D7APYn5NS0Ysi7VMZeCEQpj++XnNXARb5QDLT
+ LjDupIwOGYFPVHtPZ/aLFl3Kky7omf6vhE9ebY9ByUP0zqTyPSzY8adfeE7G95wGkqEa8tzITU1
+ G7LWcLSmADh5MBfW8ow1EB0GaO6OFG4AKw1ihIjHMkWoGGKUmEF2gELoYxdMVzBTN9XedMHdQrJ
+ 0K3kXIdeo=
+X-Google-Smtp-Source: AGHT+IENWvvrJ8qhjZPe9SRq/DLqHWwXhMf4aNzk6ZCHVBXzpDJTxxWB46Eq7zhKZTYWm2ISkfvEdQ==
+X-Received: by 2002:a05:6a00:3d14:b0:76e:7ae9:e86b with SMTP id
+ d2e1a72fcca58-7723e3f372bmr46500b3a.27.1756502174598; 
+ Fri, 29 Aug 2025 14:16:14 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-179.dyn.ip.vocus.au.
+ [122.150.204.179]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a26a4e5sm3342246b3a.19.2025.08.29.14.16.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 14:16:14 -0700 (PDT)
+Message-ID: <b44f165c-6189-4402-bfe9-4cef04287929@linaro.org>
+Date: Sat, 30 Aug 2025 07:16:08 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] tests/functional: enable force refresh of cached
+ assets
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+References: <20250829142616.2633254-1-berrange@redhat.com>
+ <20250829142616.2633254-2-berrange@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250829142616.2633254-2-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,63 +108,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This array is within CPUNegativeOffsetState, which means the
-last element of the array has an offset from env with the
-smallest magnitude.  This can be encoded into fewer bits
-when generating TCG fast path memory references.
+On 8/30/25 00:26, Daniel P. Berrangé wrote:
+> If the 'QEMU_TEST_REFRESH_CACHE' environment variable is set, then
+> ignore any existing cached asset and download a fresh copy.
+> 
+> This can be used to selectively refresh assets if set before running
+> a single test script.
+> 
+> Reviewed-by: Thomas Huth<thuth@redhat.com>
+> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
+> ---
+>   docs/devel/testing/functional.rst   | 3 +++
+>   tests/functional/qemu_test/asset.py | 4 ++++
+>   2 files changed, 7 insertions(+)
 
-When we changed the NB_MMU_MODES to be a global constant,
-rather than a per-target value, we pessimized the code
-generated for targets which use only a few mmu indexes.
-By inverting the array index, we counteract that.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/hw/core/cpu.h | 11 ++++++++++-
- tcg/tcg.c             |  3 ++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index bd835b07d5..23eb849a9b 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -594,9 +594,18 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
- }
- 
- #ifdef CONFIG_TCG
-+/*
-+ * Invert the index order of the CPUTLBDescFast array so that lower
-+ * mmu_idx have offsets from env with smaller magnitude.
-+ */
-+static inline int mmuidx_to_fast_index(int mmu_idx)
-+{
-+    return NB_MMU_MODES - 1 - mmu_idx;
-+}
-+
- static inline CPUTLBDescFast *cpu_tlb_fast(CPUState *cpu, int mmu_idx)
- {
--    return &cpu->neg.tlb.f[mmu_idx];
-+    return &cpu->neg.tlb.f[mmuidx_to_fast_index(mmu_idx)];
- }
- #endif
- 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index afac55a203..294762c283 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -425,7 +425,8 @@ static uintptr_t G_GNUC_UNUSED get_jmp_target_addr(TCGContext *s, int which)
- static int __attribute__((unused))
- tlb_mask_table_ofs(TCGContext *s, int which)
- {
--    return (offsetof(CPUNegativeOffsetState, tlb.f[which]) -
-+    int fi = mmuidx_to_fast_index(which);
-+    return (offsetof(CPUNegativeOffsetState, tlb.f[fi]) -
-             sizeof(CPUNegativeOffsetState));
- }
- 
--- 
-2.43.0
-
+r~
 
