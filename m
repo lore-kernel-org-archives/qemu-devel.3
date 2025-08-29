@@ -4,88 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F822CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2250CCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:42:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNtt-0000KC-J7; Sat, 30 Aug 2025 11:53:59 -0400
+	id 1usNCr-00009t-Na; Sat, 30 Aug 2025 11:09:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usELl-0005tK-8R
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:07 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usELj-00046c-OK
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:05 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-772301f8a4cso1455631b3a.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532522; x=1757137322; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kEj8duxAu1Pam82WhtcHKlYlFMg89KDGm3ClOoILo48=;
- b=sc2rhVPr1Fst/iXFm9DjJ9jA1CsfekitiLQhc7hjGgd+tq9PnvlwDd+6G3+bRopXqZ
- PuXNIGnR5UWXYkKrhAFbt5v2amIOATTuSS0l6Fl9w7Su1xrXAgLPbk8i6wuJi3wzK8/3
- 1lkXOGuOly8jiReLBMX0hOG9vs9iCEKrb99D1icmn7+/5BQZD7BZL+L8wPtiyN9AKMwO
- sNrpQnr2izSVqogeXBCrkt8tWg0UQO44H/8BukR/OrU5HzWdp02yayMc9hdAgIoKt8Dg
- STEY5R6ce6N8GUm/bHZgJz2ymG7c4OFZHUWLoaZjzha4L7X7PK6OiZqcbplFQnieGE3O
- 8uPA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uruou-0001ns-QX
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:50:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uruos-0002Ds-3Y
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:50:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756457447;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=YWgsaOT0OAPMOoNl6wRbnZLwepxu8epCcwB5ieHEGd4=;
+ b=ZyPKiK92rAptMt/CZU+ZN5VSj3t/M+RtqkdmQ35u4vwQ8w9ZY3OvbPO20vSG5TqHwDrBKW
+ vypfHSuH5xvFHsba2X2yIfDIhEeDxeQ/06Mtjs3NYTBaH1rgS1u+qJE/Kgi58Eki+i9moI
+ ztiAwYN/8kfFVBGNCAJQJZn9N4n1Qh4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-473-BkJBYXMsMWymAVUnU9-rkg-1; Fri, 29 Aug 2025 04:50:44 -0400
+X-MC-Unique: BkJBYXMsMWymAVUnU9-rkg-1
+X-Mimecast-MFC-AGG-ID: BkJBYXMsMWymAVUnU9-rkg_1756457444
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45b51baec92so3767925e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 01:50:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532522; x=1757137322;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kEj8duxAu1Pam82WhtcHKlYlFMg89KDGm3ClOoILo48=;
- b=Jbgk/yBWiV6JvTFvDcwFh+Xw0obxKN40hxTbC/p9jw62MyMQTY+SMvRL/3e84dBzZL
- L5OBxrs081PpygTfVpipUjYnDTiOiqHhzl4SQYP2X1ka3Ing8l/yemAYk6wqL0rXfPw1
- VsUXo9wy5bDj4gVa3M5p/Msm/rvgaADWravG5w6Cil629nm3DH2nM5aYTzbO2e/G4lKL
- yAh3D31mYy7OqARmOsEEvgwPLYwySF0QLhwHOuDCu7RgZFAylUrhIQaQu3MqvkECZKNB
- zUUBse+snp6N/jg2SxoPjKyEg68D62MErZ70C88OODyxISXZSzXSSBBAwEpJtvi57S3P
- rcbA==
-X-Gm-Message-State: AOJu0Yxo6ooi3eaMNV2DH6k17jubndZE6bxGlcVA16yNe/pnKObVnwyr
- 5n88tKsrkHZnrdN12SqYo7DUTsPjH/jtE1pd8Fj5Qy5OeOR/QOQgSepg4LvJNSgcA9CKZnWv1gw
- tXbjzQ/g=
-X-Gm-Gg: ASbGnctQACWT5Rqs0RNY9o6AhUaD9kRr1vvVyP6SsSncYnl/hHMeSRzks++nHR1tgPd
- kwxP74e1E9nZbxY4Sk7NVOHc7fdlGuxIIHBVpQ9CfUdCZxImrEyBc9CNIN4EVyXlF8KuI3M8A2j
- Q75kviaysQ24AAaLlmdCkPx1y/9jWE9OSfL4thB5S3n12mi/KTJ5fZq7Cv6CZreLQvE3K6og56X
- ZbY/yGAwy3CrzRtIiKmE8BObDa1duaEYWJhHTXXMt85UsPu9efSco5Iii/IQVczZxPzBtTfFmDT
- EPI0zZTIv4Jc09qSUs6IoMe7A5wkUDC/fleDUnlUIaOQyDjt91b2pk7qzqX1uDqiqyHIxmVEtkn
- 93/wzRPm5NHmFqJWbYRYhYVacOgHaZmA2/DVwbo8kCOpJyoDDlWIVlCIKTNba
-X-Google-Smtp-Source: AGHT+IHPtBOFiEzfRefyZUtWHaBtI2tu0RAWhXNiugpnHWR+ub1KWfwokwz+lWmTlQTScu4hMzSOnA==
-X-Received: by 2002:a05:6a20:918c:b0:23f:fa6e:912a with SMTP id
- adf61e73a8af0-243d6e007b3mr1600596637.16.1756532521709; 
- Fri, 29 Aug 2025 22:42:01 -0700 (PDT)
-Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
+ d=1e100.net; s=20230601; t=1756457443; x=1757062243;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YWgsaOT0OAPMOoNl6wRbnZLwepxu8epCcwB5ieHEGd4=;
+ b=opKz/y0Y6p2IOh/+UJB571x6V4F0hvfQjb8/TLeLQsFQqzEjgiSZ7C5f+Z4qixFO9W
+ B3Uc8jucvPebxkJfoXs5czCGw0yypr/sExRG8LHI+LT4S2CdOS18s/rkMmHCXcqNYXoO
+ wT1j6ZwESBAHDpfAJ6PZjcqGNo2WTzykdO5Bxny3KU0tv32gH0HhZRfbMgyMjAlofaVD
+ HZKfpsXJzHnW0C6Nl6v6PNuQfNA0ECIIDC4V/bC8KtIyfRhUUutlpI3z+YvJmi39cU/u
+ paoLfWCIuthVdXmqQTsnfDoqm1G6wWiZpKAcoLAHhei9+X+L+D0BYBQUSLtBYdq9gE+g
+ ZwcQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhOoRpYfax2Fc6/oyr972K80RPeWi78pAyBqu4ZRgfetT+d/uHgrtvTR2Obc8Y89BPjYWeceeAJgUu@nongnu.org
+X-Gm-Message-State: AOJu0Yy4y3VMHeLLoH8PWpOJ/bguTSTj97eu9cxWoEV5FI84aZ3IxI+/
+ gKtHWvfpjjmCTOrRMXD+OOE69fz+Mq+Saw6amQ+i+f96cRJb2ANANC+fkADbK9yPFxsuR8X4chC
+ U3FegK1jpLcvFCLp/50i1VbST5IcER9FIdXVxm9Jk43UZAZZinry1Uquh
+X-Gm-Gg: ASbGncvsOLr/3IAoXOEfg+khUZIJWglE0cxyyP+2vWHRkznihBX/1pHfBlW9eI9Yd4W
+ kdc+hhX/pB6ZyGQXYYWuBV0FeWueXwc67NnL8j6VurFmvDRBP0Ua1kc9DeX3vOfFkrJmqIh/ing
+ gD8ve2HkbeWZwXBWQiXBVXOMdSUFmbRkozzDtFcJ5qyZzc60br8hgVrbWO++Y3cCt927OPgQxJq
+ VfQzMYZ4SsT5ux8B0ngLxdVCJtnYcvZMHaQClMkdXufvU/xdy+ItW697h1QAJtfKDUShOrAPA7m
+ D8ErHgZn0soOYO0ONnOClnHvUiNzVleyvV51Ik0p/Z69XbkvYalMbReHRpqBo8yyPbbo
+X-Received: by 2002:a05:600c:4512:b0:45b:67e9:121e with SMTP id
+ 5b1f17b1804b1-45b74e88d87mr63917175e9.14.1756457443519; 
+ Fri, 29 Aug 2025 01:50:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHA8fau6HGJNKuaIVMigG7NSi6iKwAJyM4YdhaFstWE34fp9xEWjywfBh6W1m41wCmbO4htEg==
+X-Received: by 2002:a05:600c:4512:b0:45b:67e9:121e with SMTP id
+ 5b1f17b1804b1-45b74e88d87mr63916915e9.14.1756457443062; 
+ Fri, 29 Aug 2025 01:50:43 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-42-48-43.web.vodafone.de. [109.42.48.43])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.41.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:42:01 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 10/84] target/arm: Fill in HFG[RWI]TR_EL2 bits for Arm v9.5
-Date: Sat, 30 Aug 2025 15:40:14 +1000
-Message-ID: <20250830054128.448363-11-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ ffacd0b85a97d-3cf270fc34esm2562694f8f.10.2025.08.29.01.50.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 01:50:42 -0700 (PDT)
+Message-ID: <5f7a13e8-3971-442d-88ac-641460d289da@redhat.com>
+Date: Fri, 29 Aug 2025 10:50:41 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] tests/functional: enable force refresh of cached
+ assets
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250829083156.2570137-1-berrange@redhat.com>
+ <20250829083156.2570137-2-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250829083156.2570137-2-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,70 +156,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/cpregs.h | 28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+On 29/08/2025 10.31, Daniel P. Berrangé wrote:
+> If the 'QEMU_TEST_REFRESH_CACHE' environment variable is set, then
+> ignore any existing cached asset and download a fresh copy.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   docs/devel/testing/functional.rst   | 3 +++
+>   tests/functional/qemu_test/asset.py | 4 ++++
+>   2 files changed, 7 insertions(+)
+> 
+> diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
+> index 3728bab6c0..fdeaebaadc 100644
+> --- a/docs/devel/testing/functional.rst
+> +++ b/docs/devel/testing/functional.rst
+> @@ -312,6 +312,9 @@ The cache is populated in the ``~/.cache/qemu/download`` directory by
+>   default, but the location can be changed by setting the
+>   ``QEMU_TEST_CACHE_DIR`` environment variable.
+>   
+> +To force the test suite to re-download the cache, even if still valid,
+> +set the ``QEMU_TEST_REFRESH_CACHE`` environment variable.
+> +
+>   Skipping tests
+>   --------------
+>   
+> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> index 704b84d0ea..b5a6136d36 100644
+> --- a/tests/functional/qemu_test/asset.py
+> +++ b/tests/functional/qemu_test/asset.py
+> @@ -72,6 +72,10 @@ def _check(self, cache_file):
+>           return self.hash == hl.hexdigest()
+>   
+>       def valid(self):
+> +        if os.getenv("QEMU_TEST_REFRESH_CACHE", None) is not None:
+> +            self.log.info("Force refresh of asset %s", self.url)
+> +            return False
+> +
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index c9506aa6d5..1d103b577f 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -408,10 +408,19 @@ FIELD(HFGRTR_EL2, ERXPFGCTL_EL1, 47, 1)
- FIELD(HFGRTR_EL2, ERXPFGCDN_EL1, 48, 1)
- FIELD(HFGRTR_EL2, ERXADDR_EL1, 49, 1)
- FIELD(HFGRTR_EL2, NACCDATA_EL1, 50, 1)
--/* 51-53: RES0 */
-+/* 51: RES0 */
-+FIELD(HFGRTR_EL2, NGCS_EL0, 52, 1)
-+FIELD(HFGRTR_EL2, NGCS_EL1, 53, 1)
- FIELD(HFGRTR_EL2, NSMPRI_EL1, 54, 1)
- FIELD(HFGRTR_EL2, NTPIDR2_EL0, 55, 1)
--/* 56-63: RES0 */
-+FIELD(HFGRTR_EL2, NRCWMASK_EL1, 56, 1)
-+FIELD(HFGRTR_EL2, NPIRE0_EL1, 57, 1)
-+FIELD(HFGRTR_EL2, NPIR_EL1, 58, 1)
-+FIELD(HFGRTR_EL2, NPOR_EL0, 59, 1)
-+FIELD(HFGRTR_EL2, NPOR_EL1, 60, 1)
-+FIELD(HFGRTR_EL2, NS2POR_EL1, 61, 1)
-+FIELD(HFGRTR_EL2, NMAIR2_EL1, 62, 1)
-+FIELD(HFGRTR_EL2, NAMAIR2_EL1, 63, 1)
- 
- /* These match HFGRTR but bits for RO registers are RES0 */
- FIELD(HFGWTR_EL2, AFSR0_EL1, 0, 1)
-@@ -452,8 +461,18 @@ FIELD(HFGWTR_EL2, ERXPFGCTL_EL1, 47, 1)
- FIELD(HFGWTR_EL2, ERXPFGCDN_EL1, 48, 1)
- FIELD(HFGWTR_EL2, ERXADDR_EL1, 49, 1)
- FIELD(HFGWTR_EL2, NACCDATA_EL1, 50, 1)
-+FIELD(HFGWTR_EL2, NGCS_EL0, 52, 1)
-+FIELD(HFGWTR_EL2, NGCS_EL1, 53, 1)
- FIELD(HFGWTR_EL2, NSMPRI_EL1, 54, 1)
- FIELD(HFGWTR_EL2, NTPIDR2_EL0, 55, 1)
-+FIELD(HFGWTR_EL2, NRCWMASK_EL1, 56, 1)
-+FIELD(HFGWTR_EL2, NPIRE0_EL1, 57, 1)
-+FIELD(HFGWTR_EL2, NPIR_EL1, 58, 1)
-+FIELD(HFGWTR_EL2, NPOR_EL0, 59, 1)
-+FIELD(HFGWTR_EL2, NPOR_EL1, 60, 1)
-+FIELD(HFGWTR_EL2, NS2POR_EL1, 61, 1)
-+FIELD(HFGWTR_EL2, NMAIR2_EL1, 62, 1)
-+FIELD(HFGWTR_EL2, NAMAIR2_EL1, 63, 1)
- 
- FIELD(HFGITR_EL2, ICIALLUIS, 0, 1)
- FIELD(HFGITR_EL2, ICIALLU, 1, 1)
-@@ -512,6 +531,11 @@ FIELD(HFGITR_EL2, SVC_EL1, 53, 1)
- FIELD(HFGITR_EL2, DCCVAC, 54, 1)
- FIELD(HFGITR_EL2, NBRBINJ, 55, 1)
- FIELD(HFGITR_EL2, NBRBIALL, 56, 1)
-+FIELD(HFGITR_EL2, NGCSPUSHM_EL1, 57, 1)
-+FIELD(HFGITR_EL2, NGCSSTR_EL1, 58, 1)
-+FIELD(HFGITR_EL2, NGCSEPP, 59, 1)
-+FIELD(HFGITR_EL2, COSPRCTX, 60, 1)
-+FIELD(HFGITR_EL2, ATS1E1A, 62, 1)
- 
- FIELD(HDFGRTR_EL2, DBGBCRN_EL1, 0, 1)
- FIELD(HDFGRTR_EL2, DBGBVRN_EL1, 1, 1)
--- 
-2.43.0
+Do we really need this? You can also simply "rm ~/.cache/qemu/downloads" 
+instead, or click on the "Clear runner caches" in the gitlab CI.
+
+  Thomas
 
 
