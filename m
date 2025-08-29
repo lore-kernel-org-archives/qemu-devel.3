@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F9B3CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA59FCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:53:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNkC-0000wu-QS; Sat, 30 Aug 2025 11:43:57 -0400
+	id 1usNOU-0003YW-I6; Sat, 30 Aug 2025 11:21:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7X8-00035B-Rn
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:22 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7X6-0002we-Nn
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:22 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-77033293ed8so2352415b3a.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:25:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506319; x=1757111119; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xdSZmf4gf+D2YfOOkYcOeqd7VudOjMm2IgypnFCFG5I=;
- b=R6g0COUXlaiPMJDafAY5L0hfsbB7k1IadQawms/kJUoWbQZxQ97AnydiE8sFqBJpBo
- Vk2xBpbJ/L2dmHhDUhQj0XmxuptnOLGc5jiQt3bmEu4B4m5Z84AGBJngPYXYbmY9SiKD
- fedzVE0yVprmu3NO4bhQ8jS9BFLSGCFD6CXnwmiQJ/NPYpcTLV4sFi2cX5nOH6j6DVx6
- p1faZfSXZ8xRGmMqQSJt3yBzG1gw5NXvbUYITkefyeVslYVjaMu+ONxRo9TMaqnRIwEc
- GZpTPywgd7HRBqE1YXSOjwMUt/uHnMKykn2FY/bkYyqpKFsaQS+EKeb8c5kn6o3fuR+/
- 7r2Q==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1us12a-0000zv-Oi
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:29:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1us12X-0008QK-9Y
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:29:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756481357;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oSaj7LkopQWoJPM6ZoQASZJAf1eQ1iaM4v2fSFrSvao=;
+ b=CQcYbfyK6IPzNPKwa+4nsK1CBFbTKrfYw3VcZQRw/yGiLfAlOS8CK4CHSV4YfEIqUoQNPs
+ yvLhbA4rH29lSRsLmVZ9evx33SDeVDBO/xst+evu1ABI54UIkVDsg9UNnj56lGjcAoolSe
+ AlW6n8CWX1+LHh90r7C8/dXKTOjK7/A=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-451-rIzarAQ1OPuhBCmeMZXEzg-1; Fri, 29 Aug 2025 11:29:16 -0400
+X-MC-Unique: rIzarAQ1OPuhBCmeMZXEzg-1
+X-Mimecast-MFC-AGG-ID: rIzarAQ1OPuhBCmeMZXEzg_1756481355
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45b74ec7cd0so14302455e9.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 08:29:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506319; x=1757111119;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xdSZmf4gf+D2YfOOkYcOeqd7VudOjMm2IgypnFCFG5I=;
- b=TZq7/52v+wmEbf8eAbk+4uaInl/uTzSouFlRR1U8/fZZaJZVHA+0PB9ZBcaQshdP6i
- tHiK6aH+CMv34Pbd0N/PxWxpCLqEjxsLzHSBN/Ay2q91mmgkKamL2yDSKzwGgAVBXWsy
- 9aqo/cEOeyva7FsQquT8N3qjBeDY5er2culvId/FjMKVIP2TURN700Hp2qAqO/OI+zyf
- T4NsRAMVbHe4DLyBhwrsMqgXyXA7Kta78jP03X2+h3kmwKO4g2RqmyCmaCN6+JDCPeAN
- B87bLy8vpA2WtLaxylTJ9iWZCUO4wnXdYLVuZc8POTZiP+vti0HbpGnUHvo5/aUOEdoV
- GlnA==
-X-Gm-Message-State: AOJu0Yz665xreP38lI9v6zbbjx/CrCQ2NzC+h3UC2bNzyxbhHC9JKMuL
- ZaHxiemXgBgugPYXi5fZu7t/5fISgwycCgsoP9dKkMSZD6pRtu0xPbu8SRAdOXWQQz3Za8ZFxkq
- 6Bv2A/w0=
-X-Gm-Gg: ASbGncvgLU+gG93QozjfytCVraLM3KYl0VWv/I0IZUUChAGsabEuQ5FxZsPTRlT8D0g
- 6oEj7btGyybalPBIDThUmTuEPcF4SZVjEIxl9iUvYrN12nfxojqPTb3KEwa9uDcfqQ+wwadcQs8
- 53JJrSCV3W09CV4zdvCp2LGiMJNmswu0YsvpJ9lUfCA5Ueg6tBq5bVljJYD4xUkvyYH47ROhK5Y
- ljBDMv6M2HuDk+1wG+empIMPmTxzRiWxCF98eVBBx13cl2pQk5Mium7OmRE3GCZjo2wF+6p72t4
- mKIhgHx2+Gq54UslgKdm3f1dyc63HyYy8m8FCqJSGMy4bnpD++/tQkSweUEClOysuA4X2w3lq/b
- JMDBeUPDhPG7rTPiZo0MfrGAMyy9HkidJwV/EpePy58XtZmSS/EFAPOI7meFNSVwxpQSic4k=
-X-Google-Smtp-Source: AGHT+IE6G8OQ44EsQZVppr97etnCQXNlov+mussN+3HAQQ3mjFZGJswhBrroZVTvE9COq5X/TREQOA==
-X-Received: by 2002:a05:6a00:3e0f:b0:771:e06b:7edf with SMTP id
- d2e1a72fcca58-7723e350dcbmr319402b3a.24.1756506319195; 
- Fri, 29 Aug 2025 15:25:19 -0700 (PDT)
-Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
+ d=1e100.net; s=20230601; t=1756481353; x=1757086153;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oSaj7LkopQWoJPM6ZoQASZJAf1eQ1iaM4v2fSFrSvao=;
+ b=AtaRIv6zwlEyvhx0plH+IPMtyTjKerFjsVVYK6BrqCiZrK1vMSxMzIJ2DQ3o23seLQ
+ YhnamHIoOf/2x+T/WvD9Q5ft/36rcG62/aHjtobzQtf3RKc9P5XjNf99srz2ns0v8S4B
+ zGQEBxc+sDgRKbojgv8vBuwD28GmdJ5LaUQv0FKNe6zy7Lpl7WsukKuP+6ojUaXfkDWj
+ 2/csdxyvyZpSqvrVU4RMkHP3c6AZJTzUHVavFeBoBy9z5UDQogu4yxbIUmgYHYqLVvzP
+ Sr/WT5H9KMF3R4+JDcGGYbjNPmKDNA62/KXtFrI6QEF0XSfwZ37qCvwvY8JeHhn7WEj8
+ z/6A==
+X-Gm-Message-State: AOJu0YyuVCpRdXRb8IX3+2PsGZfMQNSciOGDexjxjgdUV7DcyrfNxeRO
+ 3yIFnBnskxC9QfGkxKlDfzpGyLGx0H3baHa+TX0bifk1PgUmxKqVEtJsZOFm9R0x0COC3bKg5b2
+ cSBfrK3YkhvC249DTvBUINeOcBdT8wJppi2KkahnHYcQUwOYN7fvB+0MLsge4u3JWtrto3Xu2NN
+ GLtcEWeSBlZy/jDZA3hK41Z+llOkFRBGSTYD1P5bSE
+X-Gm-Gg: ASbGnctrcXmLMMOBNrgGIln9msUPD8x9EFmwQLYUY6KhZOQTZ4Y4LmTqWiTsV7JbX4C
+ s11itnDhlSDVX2PTqj+4FTeX3i+5ukryx88xx8WTLV3UBdBnUvrmj6ii0vvToPNaGDnTdlgBEqT
+ 7xipGa7YyMRv21zHAQeud+zdmOjtSuvrvsW51YCj9VZsgB9n9H7k0joyIcXGKBKN/19P5FstmEW
+ tjO/6tQcw4iiBmVTWyuYqf3bD6K0DFyOGbTrrw5QQWR13PdHRet7esizAhGQGt9hgGVNXSOAVQf
+ 4vRHCTr/FjtNIRaxeX+bCihA8O/XONbBDvJ7vvfPkzicBXsl+UluZFHCSXtwvuBFkzordURFwAo
+ fSbsvcflS7rCGj6dLwKLag4/i7DIcqh7hmjTXibe65Vw=
+X-Received: by 2002:a05:600c:5491:b0:459:db80:c2d0 with SMTP id
+ 5b1f17b1804b1-45b517954ddmr224449255e9.7.1756481352792; 
+ Fri, 29 Aug 2025 08:29:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlNYnU937bM8+S/KH3p6XVtZ3j6CCQWDEek9OgjfUs89ROwXtllFVVs7C6T4YqCbi/c8BHcQ==
+X-Received: by 2002:a05:600c:5491:b0:459:db80:c2d0 with SMTP id
+ 5b1f17b1804b1-45b517954ddmr224448915e9.7.1756481352268; 
+ Fri, 29 Aug 2025 08:29:12 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.25.17
+ ffacd0b85a97d-3d12c90a01bsm1325703f8f.31.2025.08.29.08.29.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:25:18 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Fri, 29 Aug 2025 08:29:11 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 19/91] linux-user: Declare elf_core_copy_regs in loader.h
-Date: Sat, 30 Aug 2025 08:23:15 +1000
-Message-ID: <20250829222427.289668-20-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+Cc: peterx@redhat.com,
+	richard.henderson@linaro.org,
+	imammedo@redhat.com
+Subject: [PATCH v2 00/18] accel, cpus: clean up cpu->exit_request
+Date: Fri, 29 Aug 2025 17:28:51 +0200
+Message-ID: <20250829152909.1589668-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,163 +109,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop the static from all implementations.
+cpu->exit_request is used to kick vCPU threads into qemu_wait_io_event().
+The code that handles the signaling of cpu->exit_request is messy, mostly
+due to no one ever taking a look at it as a whole.  In fact already in commit
+4b8523ee896 ("kvm: First step to push iothread lock out of inner run loop",
+2015-07-01), the read of cpu->exit_request was placed outside the BQL
+critical section without much attention to ordering; and it only got
+worse from that point, in no small part due to a young and naive me.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/loader.h  |  3 +++
- linux-user/elfload.c | 33 ++++++++++++++-------------------
- 2 files changed, 17 insertions(+), 19 deletions(-)
+This series is complementary to the cpu->interrupt_request cleanups
+that Igor did in "memory: reintroduce BQL-free fine-grained PIO/MMIO"
+(https://lore.kernel.org/qemu-devel/20250808120137.2208800-1-imammedo@redhat.com/T/),
+and in fact includes some extra changes to interrupt_request at the
+beginning.
 
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 6482c7c90c..8f4a7f69ac 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -106,4 +106,7 @@ const char *elf_hwcap2_str(uint32_t bit);
- const char *get_elf_platform(CPUState *cs);
- const char *get_elf_base_platform(CPUState *cs);
- 
-+struct target_elf_gregset_t;
-+void elf_core_copy_regs(struct target_elf_gregset_t *, const CPUArchState *);
-+
- #endif /* LINUX_USER_LOADER_H */
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 74f88dfa68..5ed5b3c544 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -165,7 +165,7 @@ typedef struct target_elf_gregset_t {
-  *
-  * See linux kernel: arch/x86/include/asm/elf.h
-  */
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
- {
-     r->regs[0] = tswapreg(env->regs[15]);
-     r->regs[1] = tswapreg(env->regs[14]);
-@@ -244,7 +244,7 @@ typedef struct target_elf_gregset_t {
-  *
-  * See linux kernel: arch/x86/include/asm/elf.h
-  */
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUX86State *env)
- {
-     r->regs[0] = tswapreg(env->regs[R_EBX]);
-     r->regs[1] = tswapreg(env->regs[R_ECX]);
-@@ -300,7 +300,7 @@ typedef struct target_elf_gregset_t {
-     target_elf_greg_t regs[ELF_NREG];
- } target_elf_gregset_t;
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUARMState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUARMState *env)
- {
-     for (int i = 0; i < 16; ++i) {
-         r->regs[i] = tswapreg(env->regs[i]);
-@@ -388,7 +388,7 @@ typedef struct target_elf_gregset_t {
-     target_elf_greg_t regs[ELF_NREG];
- } target_elf_gregset_t;
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUARMState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUARMState *env)
- {
-     for (int i = 0; i < 32; i++) {
-         r->regs[i] = tswapreg(env->xregs[i]);
-@@ -474,7 +474,7 @@ typedef struct target_elf_gregset_t {
-     target_elf_greg_t regs[ELF_NREG];
- } target_elf_gregset_t;
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUPPCState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUPPCState *env)
- {
-     int i;
-     target_ulong ccr = 0;
-@@ -528,8 +528,7 @@ enum {
-     TARGET_EF_CSR_BADV = TARGET_EF_R0 + 34,
- };
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r,
--                               const CPULoongArchState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPULoongArchState *env)
- {
-     r->regs[TARGET_EF_R0] = 0;
- 
-@@ -586,7 +585,7 @@ enum {
- };
- 
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
- {
-     int i;
- 
-@@ -628,7 +627,7 @@ typedef struct target_elf_gregset_t {
- } target_elf_gregset_t;
- 
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
- {
-     for (int i = 0; i < 32; i++) {
-         r->regs[i] = tswapreg(env->regs[i]);
-@@ -659,8 +658,7 @@ typedef struct target_elf_gregset_t {
-     target_elf_greg_t regs[ELF_NREG];
- } target_elf_gregset_t;
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r,
--                               const CPUOpenRISCState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUOpenRISCState *env)
- {
-     for (int i = 0; i < 32; i++) {
-         r->regs[i] = tswapreg(cpu_get_gpr(env, i));
-@@ -693,7 +691,7 @@ enum {
-     TARGET_REG_SYSCALL = 22
- };
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUSH4State *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUSH4State *env)
- {
-     for (int i = 0; i < 16; i++) {
-         r->regs[i] = tswapreg(env->gregs[i]);
-@@ -724,7 +722,7 @@ typedef struct target_elf_gregset_t {
-     target_elf_greg_t regs[ELF_NREG];
- } target_elf_gregset_t;
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r, const CPUM68KState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUM68KState *env)
- {
-     r->regs[0] = tswapreg(env->dregs[1]);
-     r->regs[1] = tswapreg(env->dregs[2]);
-@@ -782,8 +780,7 @@ enum {
-     TARGET_REG_ORIG_R2 = 26,
- };
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r,
--                               const CPUS390XState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUS390XState *env)
- {
-     int i;
-     uint32_t *aregs;
-@@ -890,8 +887,7 @@ enum {
-     TARGET_REG_AR0 = 64,
- };
- 
--static void elf_core_copy_regs(target_elf_gregset_t *r,
--                               const CPUXtensaState *env)
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUXtensaState *env)
- {
-     unsigned i;
- 
-@@ -2865,8 +2861,7 @@ int load_elf_binary(struct linux_binprm *bprm, struct image_info *info)
-  * Last step is to implement target specific function that copies registers
-  * from given cpu into just specified register set.  Prototype is:
-  *
-- * static void elf_core_copy_regs(taret_elf_gregset_t *regs,
-- *                                const CPUArchState *env);
-+ * void elf_core_copy_regs(target_elf_gregset_t *regs, const CPUArchState *env);
-  *
-  * Parameters:
-  *     regs - copy register values into here (allocated and zeroed by caller)
+v1->v2:
+- new patches 1-8, leftovers from Igor's own cleanup
+- patch 9: use "true" instead of 1, editorial cleanups
+- dropped "accel/hvf: check exit_request before running the vCPU"
+- patch 10: add more comments, use "true" instead of 1
+- patch 12: use accel/tcg/tcg-accel-ops.h for prototype, split out
+  patch 12 ("accel/tcg: inline cpu_exit()"), place user-mode
+  emulation version of qemu_cpu_kick() in accel/tcg/user-exec.c
+- patch 14: fix compilation errors
+- patch 15: new, fixes infinite loops in user-mode emulation
+- patches 16-17: split in two parts
+- patch 18: improve commit message
+
+Paolo Bonzini (18):
+  target/ppc: limit cpu_interrupt_exittb to system emulation
+  target/sparc: limit cpu_check_irqs to system emulation
+  target/i386: limit a20 to system emulation
+  target-arm: remove uses of cpu_interrupt() for user-mode emulation
+  user-exec: remove cpu_interrupt() stub
+  treewide: clear bits of cs->interrupt_request with
+    cpu_reset_interrupt()
+  cpu-common: use atomic access for interrupt_request
+  cpus: document that qemu_cpu_kick() can be used for BQL-less operation
+  accel: use store_release/load_acquire for cross-thread exit_request
+  accel: use atomic accesses for exit_request
+  accel/tcg: create a thread-kick function for TCG
+  accel/tcg: inline cpu_exit()
+  cpus: remove TCG-ism from cpu_exit()
+  cpus: properly kick CPUs out of inner execution loop
+  bsd-user, linux-user: introduce qemu_wait_io_event
+  cpus: clear exit_request in qemu_wait_io_event
+  accel: make all calls to qemu_wait_io_event look the same
+  tcg/user: do not set exit_request gratuitously
+
+ docs/devel/tcg-icount.rst           |   2 +-
+ accel/tcg/tcg-accel-ops-mttcg.h     |   3 -
+ accel/tcg/tcg-accel-ops.h           |   1 +
+ bsd-user/aarch64/target_arch_cpu.h  |   2 +-
+ bsd-user/arm/target_arch_cpu.h      |   2 +-
+ bsd-user/i386/target_arch_cpu.h     |   2 +-
+ bsd-user/riscv/target_arch_cpu.h    |   2 +-
+ bsd-user/x86_64/target_arch_cpu.h   |   2 +-
+ include/hw/core/cpu.h               |  22 +-
+ include/system/cpus.h               |   1 -
+ target/arm/internals.h              |   5 +
+ accel/dummy-cpus.c                  |   2 +-
+ accel/hvf/hvf-accel-ops.c           |   2 +-
+ accel/kvm/kvm-accel-ops.c           |   3 +-
+ accel/kvm/kvm-all.c                 |  23 +-
+ accel/tcg/cpu-exec.c                |  34 ++-
+ accel/tcg/tcg-accel-ops-mttcg.c     |  12 +-
+ accel/tcg/tcg-accel-ops-rr.c        |  42 +--
+ accel/tcg/tcg-accel-ops.c           |   4 +-
+ accel/tcg/user-exec.c               |  11 +-
+ bsd-user/main.c                     |   5 -
+ cpu-common.c                        |   3 +-
+ hw/core/cpu-common.c                |  19 +-
+ hw/core/cpu-system.c                |   2 +-
+ hw/ppc/ppc.c                        |   2 +
+ hw/ppc/spapr_hcall.c                |   7 +-
+ hw/ppc/spapr_rtas.c                 |   2 +-
+ linux-user/aarch64/cpu_loop.c       |   2 +-
+ linux-user/alpha/cpu_loop.c         |   2 +-
+ linux-user/arm/cpu_loop.c           |   2 +-
+ linux-user/hexagon/cpu_loop.c       |   2 +-
+ linux-user/hppa/cpu_loop.c          |   2 +-
+ linux-user/i386/cpu_loop.c          |   2 +-
+ linux-user/loongarch64/cpu_loop.c   |   2 +-
+ linux-user/m68k/cpu_loop.c          |   2 +-
+ linux-user/main.c                   |   5 -
+ linux-user/microblaze/cpu_loop.c    |   2 +-
+ linux-user/mips/cpu_loop.c          |   2 +-
+ linux-user/openrisc/cpu_loop.c      |   2 +-
+ linux-user/ppc/cpu_loop.c           |   2 +-
+ linux-user/riscv/cpu_loop.c         |   2 +-
+ linux-user/s390x/cpu_loop.c         |   2 +-
+ linux-user/sh4/cpu_loop.c           |   2 +-
+ linux-user/sparc/cpu_loop.c         |   2 +-
+ linux-user/xtensa/cpu_loop.c        |   2 +-
+ replay/replay-events.c              |   3 +-
+ system/cpu-timers.c                 |   6 +-
+ system/cpus.c                       |   9 +-
+ target/arm/cpu-irq.c                | 381 ++++++++++++++++++++++++++++
+ target/arm/cpu.c                    | 370 ---------------------------
+ target/arm/el2-stubs.c              |  37 +++
+ target/arm/helper.c                 |   4 +
+ target/arm/tcg/mte_helper.c         |   2 +-
+ target/avr/helper.c                 |   4 +-
+ target/i386/helper.c                |   2 +
+ target/i386/hvf/x86hvf.c            |   8 +-
+ target/i386/kvm/hyperv.c            |   1 -
+ target/i386/kvm/kvm.c               |  20 +-
+ target/i386/nvmm/nvmm-accel-ops.c   |   8 +-
+ target/i386/nvmm/nvmm-all.c         |  19 +-
+ target/i386/tcg/system/seg_helper.c |  13 +-
+ target/i386/tcg/system/svm_helper.c |   2 +-
+ target/i386/whpx/whpx-accel-ops.c   |   6 +-
+ target/i386/whpx/whpx-all.c         |  23 +-
+ target/openrisc/sys_helper.c        |   2 +-
+ target/ppc/helper_regs.c            |   2 +
+ target/rx/helper.c                  |   4 +-
+ target/s390x/tcg/excp_helper.c      |   2 +-
+ target/sparc/int32_helper.c         |   2 +
+ target/sparc/int64_helper.c         |   2 +
+ target/arm/meson.build              |   2 +
+ 71 files changed, 631 insertions(+), 559 deletions(-)
+ create mode 100644 target/arm/cpu-irq.c
+ create mode 100644 target/arm/el2-stubs.c
+
 -- 
-2.43.0
+2.51.0
 
 
