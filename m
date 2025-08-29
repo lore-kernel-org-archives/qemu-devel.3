@@ -4,89 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD5CCA0FFF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4306CCA1000
 	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNiQ-0003xP-Tl; Sat, 30 Aug 2025 11:42:06 -0400
+	id 1usNaQ-00025T-JJ; Sat, 30 Aug 2025 11:33:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7X4-00033i-R8
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:18 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7X2-0002vj-EW
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:18 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7722c88fc5fso1114396b3a.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:25:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506315; x=1757111115; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vntlxf7RKCOfwSDGO8mO6KzabCP78W1rl91PrXQ2mIc=;
- b=p300bDnoql9VzgbCvBsf38moIiul0id4ixc98sYl4Vs/RfEd1uwXj3jXtUEzInuSPx
- ay3e+iMlFUtsqQtJJqWyr+BUeDpi4/6uW39znARmSps1gPkJnwG9srH3qYwOxKe8ef3A
- tz/HalTRvQrDSMyepH81IJvLTrqMbYbHbEqG6JqKppTFcANhGaSJYeyyq/lYD+fm2HPT
- BIjKNx/aUZcK87SETsX2lA9ecFdey3ghKXXKus/r39i2NkcG2lC510HmfHeAdnzEftYA
- tld3BC04Ji4+9IBOghJO6oOvic8cv2tq5CAh5i6LI/KrANqwPLz+rXcQkKLD/BqGOG5H
- Fdng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506315; x=1757111115;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vntlxf7RKCOfwSDGO8mO6KzabCP78W1rl91PrXQ2mIc=;
- b=SdZVaWpVviGZ5jIIFBILP0mMW7DzhgcKBUy/kaKYVze9CJivz0bzuF8BD+TnRv9GI4
- ShWFZjtIsMP08FP9PRdJrbiTjeOgEbyipSNMViZTuFEJfdvZLkyrFQegxCRYfYyiT/jL
- 7BCFrH4dq4ZieOaUOPbgmDjxVcjYTlbMiGvtT7PpoBcpxzUdcL3kGSciT2mJPMFZtodh
- PDQ7u/vwXMIlgq2PJ+KwszAM/6QTss4Bg70Atnq5m2NxGsJ0Nf1NqSbmjluCgzCr4Tfm
- wg92gSfeaTjaFGnJ/IMO5zi40bFeDAzMc64rfkoMJzdIYmU7SjXv6B1KixmIjGmyd+Dz
- eYgA==
-X-Gm-Message-State: AOJu0YyX17F0N/m4VCfz1WbPF2xT2pFzAxPTpssTTM4qs1nnRTjz0jt4
- isDTCW5Qm2bS5amfhL3vyVrqo36AwNTRrAbTvmxiZYwHhQ3N06ZlzQSr3zKRoQZHWnBgNm54rE9
- Fq4UPVYs=
-X-Gm-Gg: ASbGncsQfT4MROQEPh5R1aoSGVW0XJdIixXU+aQTpSIQzFGrtoQ3roxyOb6ceHvTy5g
- 2lhOjDUpkVgJ3i+/xADZPRGqo2XNUSnBLj6pwIrbPfbdoCMaAC5yeqHJkp7UJFsvx0qzT6g8fFI
- fRDPAjYtTLd5A2AP4NVLwOYm2H0EAwA2dQo1h1sZ6xD56PNypZBkSzQQIMQ5dtv5RG4b5VH14se
- rRm5XVr7FZ5UOoK5xizmpDfRAFtX9219E4M9ILKPh213EN1nbOoQueq4traKR1z2cbgYLjREszc
- 3GMmABjTzWk1+oyNbbiUU7z4/ZOsJ2GoOJfQWGA15sfdSCWZ+Gw3BxPWvprkNuDWjPl5jJ4wZ0E
- rCVSLII3yFke2/gxa0X1wj6COLQiWTGvVMcNYPbqM7IgEn9vUwNXqHA+cx9mGYOgm29hebeH7nD
- bmlHQDrA==
-X-Google-Smtp-Source: AGHT+IHwx6EQklugCPEKyuV0YGCstCxb98GkD/wxy3zK7DhlRDxpDcsVNumJJj3gfv9eWK1MkUregw==
-X-Received: by 2002:a05:6a00:1404:b0:770:556d:32e8 with SMTP id
- d2e1a72fcca58-7723e3502d7mr312566b3a.24.1756506314742; 
- Fri, 29 Aug 2025 15:25:14 -0700 (PDT)
-Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.25.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:25:14 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us3Sq-0005WU-IO
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:04:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us3Sn-0005WO-7j
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:04:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756490675;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XFoXFoRHsSZ4hvmRYV9ZwsMGx9Bv6rZuE8b3f6MHfZw=;
+ b=i03zWHpCWuiNvcGFBpI0DFeX0bwGmwr+Nw/J7+85jg465j3R4A3brGe9CTO/ctyOLg/ejy
+ jTJ7YZsbuPCGnkk5dF4Eee7Ow0YsaAVE1UHZln8Lb1w6g9UWOrr3x00zAFOE1qGGmFycCA
+ zQN6FCBlO6oiQKstPzzvw/uXqFceDgU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-kFuzWI-QPf6xYD7hcl-rNg-1; Fri,
+ 29 Aug 2025 14:04:30 -0400
+X-MC-Unique: kFuzWI-QPf6xYD7hcl-rNg-1
+X-Mimecast-MFC-AGG-ID: kFuzWI-QPf6xYD7hcl-rNg_1756490669
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29928195C27C; Fri, 29 Aug 2025 18:04:29 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9A4E41955E89; Fri, 29 Aug 2025 18:04:24 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 17/91] linux-user/xtensa: Convert target_elf_gregset_t to a
- struct
-Date: Sat, 30 Aug 2025 08:23:13 +1000
-Message-ID: <20250829222427.289668-18-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 05/14] audio: make jackaudio use qemu_thread_set_name
+Date: Fri, 29 Aug 2025 19:03:45 +0100
+Message-ID: <20250829180354.2922145-6-berrange@redhat.com>
+In-Reply-To: <20250829180354.2922145-1-berrange@redhat.com>
+References: <20250829180354.2922145-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,63 +93,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/elfload.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+This has greater portability than directly call pthread_setname_np,
+which is only 1 out of 3 possible functions for pthreads that can
+set the name.
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 98c17d32e6..930701f08f 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -873,7 +873,9 @@ static bool init_guest_commpage(void)
- 
- /* See linux kernel: arch/xtensa/include/asm/elf.h.  */
- #define ELF_NREG 128
--typedef target_elf_greg_t target_elf_gregset_t[ELF_NREG];
-+typedef struct target_elf_gregset_t {
-+    target_elf_greg_t regs[ELF_NREG];
-+} target_elf_gregset_t;
- 
- enum {
-     TARGET_REG_PC,
-@@ -888,23 +890,23 @@ enum {
-     TARGET_REG_AR0 = 64,
- };
- 
--static void elf_core_copy_regs(target_elf_gregset_t *regs,
-+static void elf_core_copy_regs(target_elf_gregset_t *r,
-                                const CPUXtensaState *env)
- {
-     unsigned i;
- 
--    (*regs)[TARGET_REG_PC] = tswapreg(env->pc);
--    (*regs)[TARGET_REG_PS] = tswapreg(env->sregs[PS] & ~PS_EXCM);
--    (*regs)[TARGET_REG_LBEG] = tswapreg(env->sregs[LBEG]);
--    (*regs)[TARGET_REG_LEND] = tswapreg(env->sregs[LEND]);
--    (*regs)[TARGET_REG_LCOUNT] = tswapreg(env->sregs[LCOUNT]);
--    (*regs)[TARGET_REG_SAR] = tswapreg(env->sregs[SAR]);
--    (*regs)[TARGET_REG_WINDOWSTART] = tswapreg(env->sregs[WINDOW_START]);
--    (*regs)[TARGET_REG_WINDOWBASE] = tswapreg(env->sregs[WINDOW_BASE]);
--    (*regs)[TARGET_REG_THREADPTR] = tswapreg(env->uregs[THREADPTR]);
-+    r->regs[TARGET_REG_PC] = tswapreg(env->pc);
-+    r->regs[TARGET_REG_PS] = tswapreg(env->sregs[PS] & ~PS_EXCM);
-+    r->regs[TARGET_REG_LBEG] = tswapreg(env->sregs[LBEG]);
-+    r->regs[TARGET_REG_LEND] = tswapreg(env->sregs[LEND]);
-+    r->regs[TARGET_REG_LCOUNT] = tswapreg(env->sregs[LCOUNT]);
-+    r->regs[TARGET_REG_SAR] = tswapreg(env->sregs[SAR]);
-+    r->regs[TARGET_REG_WINDOWSTART] = tswapreg(env->sregs[WINDOW_START]);
-+    r->regs[TARGET_REG_WINDOWBASE] = tswapreg(env->sregs[WINDOW_BASE]);
-+    r->regs[TARGET_REG_THREADPTR] = tswapreg(env->uregs[THREADPTR]);
-     xtensa_sync_phys_from_window((CPUXtensaState *)env);
-     for (i = 0; i < env->config->nareg; ++i) {
--        (*regs)[TARGET_REG_AR0 + i] = tswapreg(env->phys_regs[i]);
-+        r->regs[TARGET_REG_AR0 + i] = tswapreg(env->phys_regs[i]);
-     }
+The new API requires a trampoline function, since it can only set
+the name of the current thread.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ audio/jackaudio.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
+
+diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+index 974a3caad3..48ffbf735f 100644
+--- a/audio/jackaudio.c
++++ b/audio/jackaudio.c
+@@ -629,18 +629,36 @@ static void qjack_enable_in(HWVoiceIn *hw, bool enable)
+     ji->c.enabled = enable;
  }
  
+-#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
++#if !defined(WIN32)
++struct QJackThreadData {
++    void *(*function)(void *);
++    void *arg;
++};
++
++static void *qjack_thread_trampoline(void *targ)
++{
++    struct QJackThreadData *data = targ;
++    void *(*function)(void *) = data->function;
++    void *arg = data->arg;
++
++    g_free(data);
++    qemu_thread_set_name("jack-client");
++
++    return function(arg);
++}
++
+ static int qjack_thread_creator(jack_native_thread_t *thread,
+     const pthread_attr_t *attr, void *(*function)(void *), void *arg)
+ {
+-    int ret = pthread_create(thread, attr, function, arg);
++    struct QJackThreadData *data = g_new0(struct QJackThreadData, 1);
++    data->function = function;
++    data->arg = arg;
++    int ret = pthread_create(thread, attr, qjack_thread_trampoline, data);
+     if (ret != 0) {
++        g_free(data);
+         return ret;
+     }
+ 
+-    /* set the name of the thread */
+-    pthread_setname_np(*thread, "jack-client");
+-
+     return ret;
+ }
+ #endif
 -- 
-2.43.0
+2.50.1
 
 
