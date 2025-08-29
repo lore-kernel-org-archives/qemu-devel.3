@@ -4,60 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACDD7CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D20CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNDt-00036w-Fe; Sat, 30 Aug 2025 11:10:33 -0400
+	id 1usNDx-0003Sg-5p; Sat, 30 Aug 2025 11:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1urvdk-0002Sp-Ll; Fri, 29 Aug 2025 05:43:24 -0400
-Received: from apollo.dupie.be ([51.159.20.238])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1urvdh-0001lz-GA; Fri, 29 Aug 2025 05:43:23 -0400
-Received: from [IPV6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57] (unknown
- [IPv6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57])
- by apollo.dupie.be (Postfix) with ESMTPSA id 3AC2D1520DF7;
- Fri, 29 Aug 2025 11:43:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1756460592;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JDSVKia2awfNEGjE80OXFYyZVf1FYankz5gcB8IqXTE=;
- b=JGVwcx2uV+q/BGBk1qERKbnYqEAzg7rA5ypObLEdsyinvqWhr7LVzcXd/q3wCJS9QPbyN0
- L9mvFYpFUMNDD0POMRP6GeEmivS4ldND5WFguWvvMJRrMINRKtKnVasT1eGqqynfCml5fQ
- JDo0Y7MIgybZZ1+aDll9Tbd12T2+ed6VU28NymRvD+YXHqcWZEUeqrfgMXzt99rgjJipMr
- lcIWNOmX2IE9b1AgJN2B+7zwmQabneZkkvfodjJmRkbkb9ZmttgxUMkzx9AQZOeu6xwdYH
- wSu2fFjwI4ZOlEUyoCj2mCkOCpmUU2ioiyqqMRidjhvbiT/LFiNFUBLMM8eqkw==
-Message-ID: <8d2033db-34e3-434a-aaae-22fe538ddbb6@dupond.be>
-Date: Fri, 29 Aug 2025 11:43:12 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] qcow2: queue discards when discard-no-unref enabled
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1urwLi-0008CK-TE
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 06:28:51 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1urwLg-00019t-Io
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 06:28:50 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-afcb7ae6ed0so271192166b.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 03:28:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756463326; x=1757068126; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0OAYDaE9GsknEeqaJd9kzGBYjESvoyAnzYx/N1AbW7o=;
+ b=b8nveYjmzLJcsEMBe2CgWrEwHYOKlASj09nz93kC2WCmKtlpw6jEBEpHS6EXyn212A
+ PnCPrPpTm4EHX6xly3pxOBOk1mYQ2YblFiXFAg6H5hi2wEsb4FHS0luu+clrMabFPFcQ
+ OeXhipJYu25R/vQaX4F3yDhbhnikjn+o0VYGWGA/8BOL1NTy+wo8hceSMM9xPrqxqCEw
+ /qXLsB9m0BUp5HfpkCPyBccOUwF2d00tyn0lzJMyrOo9dUH2if43n8DhDkb2R7y6D6cV
+ Lw0KFOdmGZvxOAZkqa9iUeKz/IM25qzblPy6186niAZTKMAAyVpCa6/1f0Ox00vjQ+Zi
+ NM/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756463326; x=1757068126;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0OAYDaE9GsknEeqaJd9kzGBYjESvoyAnzYx/N1AbW7o=;
+ b=gG42njat0kUS1ePxH5Jfs/QHBxtJQB+j9W61+aMTjpjix5OcEy8GPKVI0KuI3TffcY
+ No6kgs98cLIrdQRs4RczHQS9nfHVWNVv66TiC12fk7bxWpgJ5Mb2ZIhefiDLTcK91KPc
+ KUfCZnQwbo4PbKALIb0cxLseifX0C7Uxxdp9mL7j4h7XM6PFPPui+3V3tBuSjg5vgQbq
+ TjE1iBestWDdgYqVL9BaDxWpnfFQ+ErrbsRiWaJCdNN94Fojl5bXGOOUjpXsH0uEK6iy
+ RQPPPA35H6+AjBqyacwKl74QbplvMoaNw5BiBH5iSceTxTx7FNECtGS2dlaAnj3w5OGk
+ 8tKw==
+X-Gm-Message-State: AOJu0YyyPnKPwCNCkTo+hiwIo0MtH3FCMcDALI9pELOzVqhphFOK6Ena
+ oUs9HWvWl1t4ANxw/Vl7euaaTavDKHoyhgDssEtRrDD5Xnp9o8dVsRIHPkbyEbbuLbg=
+X-Gm-Gg: ASbGncv/WA/ZnahaPh2aNtRF9GJQY0Lh3uN5SpsmZMsVGUwoiZK+8rhaXgTOnLq2SsL
+ iyTIBZdKrC3pjFHTVtY+vgA9wyqV0rLi91B7ANndTlj7HtWN7RRsnMS/V/TwRWX/TxuTLyWb4GD
+ DJKBMya6o+TWmyzldtEFjFGxD5sO04fmZwm5texyN3BiVo0L63fUk48dL6SwbBDMES01KrQpMcr
+ HfMKfDnJu7kdqA0edzW/LtTS6tI968pFProjf3ySVuuOV89fa2SGJdn3C/jZGnrzCHVOsKM/oi0
+ 0QT2MjjKn0km5RnWR91WQe2ifwqnD623v/ZdI/8QdznxeZY60+kl3NVsyndQtvXZfSs1AYv2msk
+ bOTJ8zzmLKMS8SjP06yRVbX0=
+X-Google-Smtp-Source: AGHT+IErKVVpi9FUdAmR2pX1yDBQI3+k/PKYE0O4/+/d/oEan+IYw68skgb0b2AxTmbabaBKu1QPVw==
+X-Received: by 2002:a17:907:6e86:b0:afe:ba6c:7ba0 with SMTP id
+ a640c23a62f3a-afeba6d2b90mr1038364366b.53.1756463325939; 
+ Fri, 29 Aug 2025 03:28:45 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-afefca08b62sm174610166b.31.2025.08.29.03.28.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 03:28:44 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E6A765F747;
+ Fri, 29 Aug 2025 11:28:43 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
-References: <20250513132628.1055549-1-jean-louis@dupond.be>
-Content-Language: en-US, en-GB, nl-BE
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-In-Reply-To: <20250513132628.1055549-1-jean-louis@dupond.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
- helo=apollo.dupie.be
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] docs/devel: fix typo in code-provenance.rst
+Date: Fri, 29 Aug 2025 11:28:41 +0100
+Message-ID: <20250829102841.52702-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,29 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/05/2025 15:26, Jean-Louis Dupond wrote:
-> Partially based on the proposal of Andrey in
-> https://patchew.org/QEMU/20240913163942.423050-1-andrey.drobyshev@virtuozzo.com/
-> Split up this from the rest might get it merged a bit quicker hopefully :)
->
-> Since the implementation of discard-no-unref, we did not queue the discards correctly
-> when discard-no-unref was enabled.
->
-> Jean-Louis Dupond (2):
->    qcow2: rename update_refcount_discard to queue_discard
->    qcow2: put discards in discard queue when discard-no-unref is enabled
->
->   block/qcow2-cluster.c  | 16 ++++++----------
->   block/qcow2-refcount.c | 25 +++++++++++++++++++++----
->   block/qcow2.h          |  4 ++++
->   3 files changed, 31 insertions(+), 14 deletions(-)
->
-This was already reviewed.
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ docs/devel/code-provenance.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Any chance on getting this merged?
-
-Thanks
-Jean-Louis
+diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+index b5aae2e2532..af5d7349e12 100644
+--- a/docs/devel/code-provenance.rst
++++ b/docs/devel/code-provenance.rst
+@@ -331,7 +331,7 @@ ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
+ generation agents which are built on top of such tools.
+ 
+ This policy may evolve as AI tools mature and the legal situation is
+-clarifed. In the meanwhile, requests for exceptions to this policy will be
++clarified. In the meanwhile, requests for exceptions to this policy will be
+ evaluated by the QEMU project on a case by case basis. To be granted an
+ exception, a contributor will need to demonstrate clarity of the license and
+ copyright status for the tool's output in relation to its training model and
+-- 
+2.47.2
 
 
