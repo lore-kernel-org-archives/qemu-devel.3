@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA77CCA1000
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA02CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNqS-0001MW-QQ; Sat, 30 Aug 2025 11:50:25 -0400
+	id 1usNkM-0001tf-26; Sat, 30 Aug 2025 11:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1usBg5-0003c9-Vj; Fri, 29 Aug 2025 22:50:54 -0400
-Received: from mail-qk1-x72a.google.com ([2607:f8b0:4864:20::72a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7c3-0004wJ-6H
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:27 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1usBg4-00088D-82; Fri, 29 Aug 2025 22:50:53 -0400
-Received: by mail-qk1-x72a.google.com with SMTP id
- af79cd13be357-7f7e89e4b37so260077485a.3; 
- Fri, 29 Aug 2025 19:50:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7c0-0003ya-Dj
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:26 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-772301f8ae2so956499b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756522251; x=1757127051; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756506623; x=1757111423; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qwx7Non1RKQkij6XP/CEOZXUJ1kdTiRPKXDqDi7L1NE=;
- b=eC2kBaebvVPOntPMu/wiDcHeLqhB5umi4Dt12j45XToWzyjP8MjWltHmbekhWJHjDJ
- 0vOPCvD181/s0nmHWTGrL1hmcf3CnMWGKQhySLSuTxnwCkV0NvSXKMKUDOUwZMdlkLPy
- 50vjYSHrGdPiIBR6QsuW5Oe04BWztCxm//xccJxDMnXE5I9CmH8fGNZWR156oNJvfzd9
- nbtNv8qYcyGklztInWF05OBgpfUncB0IP972NCOl5QhkEk/3JtLLM4VkdEWh5QErX6yy
- l59j3D2t4M4HAU7JoGysDqhhBL4YZyesyfLpCqS7FFzqd+ZKJM5Bvs3b5Z4yfHtI4NOa
- ZHcQ==
+ bh=D1To9kj0NUReaVQ1Qmnz3yHyScg57OYykVcZq9vtj4w=;
+ b=Ux3B7Z5iB8RCKOxfAoMcqbx3uNyPTxIHWSTWR0D0Q3qAaVxeSd8tmI9YGAcB2DJlI2
+ hGj+tin9jRzAYJPAfCeLWHU6u4UYqkO4p3oUiD6pl1/am4hZH/29uw+brNBoj+2ItCTr
+ FLAqy+ikvG4CQlE0vj0MKqPAPFhjajHXLDdh/Pai0xb4aFwn2mz3mhivn4PEvsLLzXA9
+ pvbF1YXK8x4bgnuA5hkeErUYO+HThFRd5s1o/9nNamCEJSwJ63Nk1FCDFEwgvVXH1xcF
+ 1fGU/iQGYIsgYmWxY1q2bbgA7A9duDEKAsmzv/lKo4q5yrSo2MPEt6mOapiPRSPp6Ymv
+ VSxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756522251; x=1757127051;
+ d=1e100.net; s=20230601; t=1756506623; x=1757111423;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qwx7Non1RKQkij6XP/CEOZXUJ1kdTiRPKXDqDi7L1NE=;
- b=djehV/yDWN8TkMpftauWuX3X/DbEFDtVKS2Mt63QR221bmYqYNvVpPGlNcrBgyJ2R4
- wdADN7+ivVX73yNcT0q99EFN0ghl8Nlmd1Xd9483WIT+7ZfSin0eqy7FnyMRoek3t0Ss
- kNQZOdXnN5LDex1fVled2ykXHTDszUkALw4z1MSj1ZURisLvc+e6OiyJe+/BAkX1FdHZ
- 0nqjjzgY+oasXhPFnlkGzT/xn3I7j464HwY7dRPCHZMohud4fqDu/FSbTKWVeF7958om
- VutRJq0bgVWGMNBouPQ+hDZ/p52tWEcoykfakK3oTmX1HxKWcd+h91G+q+7cMNU6CQOk
- c7SA==
-X-Gm-Message-State: AOJu0YzGz3NjIS7x/cPmJwNQ8iMY0T+MDXQc7B0t7YNsX73cm9RjiJAx
- 2IC3vj5ykjBsRdI/SN9cUuqCGsOmnR0yLeQPmNo9ucsL5Qf/GrS+pseTwT/X6Q==
-X-Gm-Gg: ASbGncsMT41rh82lAMgxFazwtGbHe/9rQQYs+ubZydIMquVkNSp9dLjerrSDs4o468V
- 8LWkrsYuqoamk68VvSSYBA4Ur4VgYoku9wCrhDfaGUPOGXNwCVMfejY4dFwzUJ9BRDnHANJ3mjn
- dNRUrhnyMdelOYI4j3PA2FJTBkUulY8dJ9fbT07o/WAaXqBKFJ+wqfrOyeCrCbgs/nuytDYb+/z
- huwysQ0+kDHF1ZENFYGtOE8yjl2w5ajHcBajASOUeXc5wpaOUjiB9MbW41kaRZUlXkMA1M2yw11
- ZK8cx3kaIVu6a0Oq0SGJeJZus4xPzVbtrDC6C1dh6WHoOV+CoQYg7doQwH8fk4oz49XJ2k+Fufv
- fxM3fydtZ4+4jClTFHT/8CeQRo64Wi3AM4y4MiyUQ/14rjPoITJdSlMOkSgbPiMwP0HEheBIefK
- blolxYpGAp4swrV5lbchqhyJKbW4w=
-X-Google-Smtp-Source: AGHT+IGXDfsIf0avkJ5sxwRhCFbRVyU9krZ2QlADQXNxoBq7/CyDcVLwJmFFJEogH/CEImWaTWSjyg==
-X-Received: by 2002:a05:620a:7010:b0:7e9:f81f:ce72 with SMTP id
- af79cd13be357-7ff2ccd09e3mr99786185a.72.1756522250697; 
- Fri, 29 Aug 2025 19:50:50 -0700 (PDT)
-Received: from localhost.localdomain
- (wn-campus-nat-129-97-124-90.dynamic.uwaterloo.ca. [129.97.124.90])
+ bh=D1To9kj0NUReaVQ1Qmnz3yHyScg57OYykVcZq9vtj4w=;
+ b=hC0oD4iGtQFSWFLsE2kw8owWzsWDk7LEuzwVOVYLzttF8Q5sMzRyf6ojozgZinD6JA
+ IdY88m4qZ0G8EgojQ9JyhjPBU7CyphX4WQF5bYlOZ5XyKSIVbtrVQcsIgrMx0Mz9kKsb
+ QZNMS408xuF30woqHLXdS8o0NHb28iZW9YmXx9WhfstMPF1sPxadVeNMdM8pKJxM1ir3
+ kAeYJO3KlqtBUD1rq7aSUq3pAhj30ek7jdWrV6w594DjrAfmoQtWv9g5pMsy6bEH+LRW
+ tcr80vbrM7R9CRAxgcBSecPQrfj6PKQRyrSxkdNpatpnDooPeo3XnGluF01i/dTT5Pag
+ OmBQ==
+X-Gm-Message-State: AOJu0Ywpxj0ZQi8AIfvVrmvfK7+WD8vocw+OCb25+afkTv+ewuQtSF1S
+ HPolFYgZYH3dignC/QETE9DGzMRTH2ig8LmvGCJs+nQPnIsQdsIhufS4slTsq+0XQhc7lAU35CH
+ Z96JYmGI=
+X-Gm-Gg: ASbGncvOJRQUtH4AUJco02pxGg++GZp/SWa77Q1g7bHGDZl07VeoDQtt1Cjlcabegke
+ JEsGMYUoiWsq2+mNHe/28FFFtwkYzrYbbSfu+gColGB7CwqlJR2Y3vnmcjAR58L1LTGm2ouzPlI
+ W/GJdUMnq74wYwfQKc2nKAp6m8ZSl2J/hWdHE6czqyf6Uy+Ttdr9Q2h9M29zkheT+1OUQO4WlUY
+ DLQo772fkh715aYoB6+dQDnw3rbVlrIBgMJ0Dv1VEghGMqFBjwY4G1PTDQVrx+aWFK4Se/tQNt1
+ ICFgEc4NW6LDeKGPn1+NbDG87J0Rg1EbKtGsVoKQPo7xCTzejSh3bS6XN2OSDca/zogPOq2raHa
+ Bdr87r5nr6wVhnur3pUUeNAeOvStTiMBRsHvJ3mocn98/U6DiT79fuW6ZYFo3yjqjocJWLc7WgA
+ ==
+X-Google-Smtp-Source: AGHT+IHFw8y/4ANnMi6XjLjNZnxowhfDVKAfeOHfDlt0B18sX62Okf6hpzZCVw2CrNmbtiGZ/Uyj8A==
+X-Received: by 2002:a05:6a00:178f:b0:771:ea9d:119b with SMTP id
+ d2e1a72fcca58-7723e39f658mr290934b3a.29.1756506622878; 
+ Fri, 29 Aug 2025 15:30:22 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7fc0eacf1b4sm299457085a.21.2025.08.29.19.50.49
+ d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 19:50:50 -0700 (PDT)
-From: Brian Song <hibriansong@gmail.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, bernd@bsbernd.com,
- fam@euphon.net, hibriansong@gmail.com, hreitz@redhat.com, kwolf@redhat.com,
- stefanha@redhat.com
-Subject: [PATCH 4/4] iotests: add tests for FUSE-over-io_uring
-Date: Fri, 29 Aug 2025 22:50:25 -0400
-Message-ID: <20250830025025.3610-5-hibriansong@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250830025025.3610-1-hibriansong@gmail.com>
-References: <20250830025025.3610-1-hibriansong@gmail.com>
+ Fri, 29 Aug 2025 15:30:22 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 70/91] linux-user: Move elf parameters to sparc/target_elf.h
+Date: Sat, 30 Aug 2025 08:24:06 +1000
+Message-ID: <20250829222427.289668-71-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72a;
- envelope-from=hibriansong@gmail.com; helo=mail-qk1-x72a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,97 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To test FUSE-over-io_uring, set the environment variable
-FUSE_OVER_IO_URING=1. This applies only when using the
-'fuse' protocol.
-
-$ FUSE_OVER_IO_URING=1 ./check -fuse
-
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Brian Song <hibriansong@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/qemu-iotests/check     |  2 ++
- tests/qemu-iotests/common.rc | 45 +++++++++++++++++++++++++++---------
- 2 files changed, 36 insertions(+), 11 deletions(-)
+ linux-user/sparc/target_elf.h | 11 +++++++++++
+ linux-user/elfload.c          | 15 ---------------
+ 2 files changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qemu-iotests/check b/tests/qemu-iotests/check
-index 545f9ec7bd..c6fa0f9e3d 100755
---- a/tests/qemu-iotests/check
-+++ b/tests/qemu-iotests/check
-@@ -94,6 +94,8 @@ def make_argparser() -> argparse.ArgumentParser:
-         mg.add_argument('-' + fmt, dest='imgfmt', action='store_const',
-                         const=fmt, help=f'test {fmt}')
+diff --git a/linux-user/sparc/target_elf.h b/linux-user/sparc/target_elf.h
+index b7544db0a1..f89c708c46 100644
+--- a/linux-user/sparc/target_elf.h
++++ b/linux-user/sparc/target_elf.h
+@@ -8,6 +8,17 @@
+ #ifndef SPARC_TARGET_ELF_H
+ #define SPARC_TARGET_ELF_H
  
-+    # To test FUSE-over-io_uring, set the environment variable
-+    # FUSE_OVER_IO_URING=1. This applies only when using the 'fuse' protocol
-     protocol_list = ['file', 'rbd', 'nbd', 'ssh', 'nfs', 'fuse']
-     g_prt = p.add_argument_group(
-         '  image protocol options',
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index e977cb4eb6..f8b79c3810 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -539,17 +539,38 @@ _make_test_img()
-         touch "$export_mp"
-         rm -f "$SOCK_DIR/fuse-output"
- 
--        # Usually, users would export formatted nodes.  But we present fuse as a
--        # protocol-level driver here, so we have to leave the format to the
--        # client.
--        # Switch off allow-other, because in general we do not need it for
--        # iotests.  The default allow-other=auto has the downside of printing a
--        # fusermount error on its first attempt if allow_other is not
--        # permissible, which we would need to filter.
--        QSD_NEED_PID=y $QSD \
--              --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
--              --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off \
--              &
-+        if [ -n "$FUSE_OVER_IO_URING" ]; then
-+            nr_cpu=$(nproc 2>/dev/null || echo 1)
-+            nr_iothreads=$((nr_cpu / 2))
-+            if [ $nr_iothreads -lt 1 ]; then
-+                nr_iothreads=1
-+            fi
++#ifndef TARGET_SPARC64
++# define ELF_CLASS              ELFCLASS32
++# define ELF_ARCH               EM_SPARC
++#elif defined(TARGET_ABI32)
++# define ELF_CLASS              ELFCLASS32
++# define elf_check_arch(x)      ((x) == EM_SPARC32PLUS || (x) == EM_SPARC)
++#else
++# define ELF_CLASS              ELFCLASS64
++# define ELF_ARCH               EM_SPARCV9
++#endif
 +
-+            iothread_args=""
-+            iothread_export_args=""
-+            for ((i=0; i<$nr_iothreads; i++)); do
-+                iothread_args="$iothread_args --object iothread,id=iothread$i"
-+                iothread_export_args="$iothread_export_args,iothread.$i=iothread$i"
-+            done
-+
-+            QSD_NEED_PID=y $QSD \
-+                    $iothread_args \
-+                    --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
-+                    --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off,io-uring=on$iothread_export_args \
-+                &
-+        else
-+            # Usually, users would export formatted nodes.  But we present fuse as a
-+            # protocol-level driver here, so we have to leave the format to the
-+            # client.
-+            # Switch off allow-other, because in general we do not need it for
-+            # iotests.  The default allow-other=auto has the downside of printing a
-+            # fusermount error on its first attempt if allow_other is not
-+            # permissible, which we would need to filter.
-+            QSD_NEED_PID=y $QSD \
-+                --blockdev file,node-name=export-node,filename=$img_name,discard=unmap \
-+                --export fuse,id=fuse-export,node-name=export-node,mountpoint="$export_mp",writable=on,growable=on,allow-other=off \
-+                &
-+        fi
+ #define HAVE_ELF_HWCAP          1
  
-         pidfile="$QEMU_TEST_DIR/qemu-storage-daemon.pid"
+ #endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 838d7199a6..ccdd87aa12 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -130,21 +130,6 @@ typedef abi_uint        target_gid_t;
+ #endif
+ typedef abi_int         target_pid_t;
  
-@@ -592,6 +613,8 @@ _rm_test_img()
+-#ifdef TARGET_SPARC
+-
+-#ifndef TARGET_SPARC64
+-# define ELF_CLASS  ELFCLASS32
+-# define ELF_ARCH   EM_SPARC
+-#elif defined(TARGET_ABI32)
+-# define ELF_CLASS  ELFCLASS32
+-# define elf_check_arch(x) ((x) == EM_SPARC32PLUS || (x) == EM_SPARC)
+-#else
+-# define ELF_CLASS  ELFCLASS64
+-# define ELF_ARCH   EM_SPARCV9
+-#endif
+-
+-#endif /* TARGET_SPARC */
+-
+ #ifdef TARGET_PPC
  
-         kill "${FUSE_PIDS[index]}"
- 
-+        sleep 1
-+
-         # Wait until the mount is gone
-         timeout=10 # *0.5 s
-         while true; do
+ #define ELF_MACHINE    PPC_ELF_MACHINE
 -- 
-2.45.2
+2.43.0
 
 
