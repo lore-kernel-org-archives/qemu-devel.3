@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A10CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9705BCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNBq-0007GW-2c; Sat, 30 Aug 2025 11:08:26 -0400
+	id 1usNBu-0007fU-JS; Sat, 30 Aug 2025 11:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uruob-0001lE-06
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:50:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uruqP-00020N-IX
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:52:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uruoX-0002B8-FZ
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:50:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uruqM-0002QT-Tm
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:52:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756457424;
+ s=mimecast20190719; t=1756457540;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wAPoSw6rQLlZFazB/GjF4cHC0Lnqbfyi3kyJ8ceBySE=;
- b=Wtg9koAUrLNqNyWudLhJoKk2W2wRXVf7C3k8hBws9qRPJdHcUZNZ+cPpP9N83w19VcvJl7
- Bg4ll2DoMRKy+DUTI5u4H4LdwXrtRgDX700PG/5lMxXaPgP+z9kOMEeIUgqarZqZCzdbnz
- WTIgQLbNRtiH3XtUcUb2a76OyeoQR/Y=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/uzEyrp8K0TacJb3YSFM+4SzIIYw46pc5V7foBNNsV0=;
+ b=gO/bT84XKf3Aulos4m8Tb947fFF3A0M8rxhe1ITNXXwJBIhdDJJqC7nIM6wXrmZkEJlwOU
+ Jt7bzvI4vrLm/VltzhbyTjbSXJfyqQsnwC4aexXV1xy1HhdWKUbyyUM7/ew/zqEhCnO1kL
+ KcvHSdi9OR7RX542Teu1XLMmB6/BqY4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-wR45zAjfPYq1XomVIyQIhw-1; Fri, 29 Aug 2025 04:50:21 -0400
-X-MC-Unique: wR45zAjfPYq1XomVIyQIhw-1
-X-Mimecast-MFC-AGG-ID: wR45zAjfPYq1XomVIyQIhw_1756457420
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45a1b05d8d0so12854175e9.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 01:50:20 -0700 (PDT)
+ us-mta-311-C-To_Qs3PZ6S9HhZBAr6NA-1; Fri, 29 Aug 2025 04:52:16 -0400
+X-MC-Unique: C-To_Qs3PZ6S9HhZBAr6NA-1
+X-Mimecast-MFC-AGG-ID: C-To_Qs3PZ6S9HhZBAr6NA_1756457536
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45a1b05b15eso11896095e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 01:52:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756457420; x=1757062220;
+ d=1e100.net; s=20230601; t=1756457535; x=1757062335;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wAPoSw6rQLlZFazB/GjF4cHC0Lnqbfyi3kyJ8ceBySE=;
- b=TJtrSEdY14rd0Q/hQoe3O9W8CB5o9r9hdkhevEVZZ5O8cQ5Dron3onhOFEHwBD94Ja
- vMSsXGloJ+azD/Y5IuT1XTt/C80qr8eRBva1VgX2V6fZCacVbStoEABzdkKg1bydhKyL
- uKw5QFUNXjbqpzDwzvaWj6VB+8OdjxVlY0ak3QFRtE436wBHXFSOe0nCHIkMg9Iw9SKt
- pWkjNL534WMbe3xc8RbSyJ3tGElakjZxOJdLrpBhoi9qMM6N0+Gfl7JB7XB/8mqD5ILx
- VYrvXwjyuUwUl9MWR6yzthCADRCtLeeGJFau0dBnK0+39ZZNIgUl6eIHtqSujvQ89phe
- T6LQ==
-X-Gm-Message-State: AOJu0YynADW26fKgFWmH1e91PBi7gSBgVPlv3Vnfgj8+MMg9rmIowxm/
- AYED9sHb8Q/AugHPf5+Z2IxLjUIo3zm/jzolVeb4YeGivluMMy1RWj80gYioEu3HmBbnA3eC6C9
- l9lFoxGWPcl6wL2bU+MLcESFVaCBcYjAa30zpiwtFO9AwXfgxCJfBrOR2
-X-Gm-Gg: ASbGncuFSsN0C6aR4sey80iaucHMOAkNMA9Pa9KF/W7UZBEVkUnoXUx6drKgmNUET9f
- eYIqerLWb+Np2pH8JjWhEOpcmkWoQdlVRCJbcSWNFWsdyOxJbZ/YD2EU+4+9f4ZaBeqFX0isZnK
- 9nZhDo8IHmAGooeAfGTb7vXiUQb6GpBHxhT4OL4vB9kvOg1AcLSPcvexxZyC4zHMdmadeU8NC9/
- K1LsCiOiKkasf7UGUPl8f2Yw9O9hHKxtF2OgX4NVdSqjLw6X/FoeWsBogh9/qjoI7Vh1XaKw6KU
- M9FDzPY/1zDJDSRGWRRQgno2gorFXaRgO4r6GcZgZqhvchTd3zrCtolawew9hInj5xnb
-X-Received: by 2002:a05:6000:2288:b0:3cf:d68e:54c3 with SMTP id
- ffacd0b85a97d-3cfd68e5884mr1269242f8f.28.1756457419834; 
- Fri, 29 Aug 2025 01:50:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoFoCQOFkb3/2S083lBijX9dDdOdvmfuyLfqvSy4M1RIyvQFi/Ym3eOmUickVvhVFcB0Wmhw==
-X-Received: by 2002:a05:6000:2288:b0:3cf:d68e:54c3 with SMTP id
- ffacd0b85a97d-3cfd68e5884mr1269221f8f.28.1756457419307; 
- Fri, 29 Aug 2025 01:50:19 -0700 (PDT)
+ bh=/uzEyrp8K0TacJb3YSFM+4SzIIYw46pc5V7foBNNsV0=;
+ b=XeTEBWYq+2CjU6idjbEeCU/Wpoj8Jb8+EyTahr1dAZUiIcdNZvIbbhNpHw7Vd0+YEn
+ Gc3Bn3WrliHLNY39erywBx4xaeUhD+f5nrCz7lkQfblQJmKogm2iVE6t2SZdZBaCMFaA
+ 9ETPTNwy2RCbYlbq1/l68kC/mUuQ9oAHBuO/hO4cCBRKPyfn10zSuSFhiqGUpRG+wldM
+ 1/QhtoI8Al+q+Xi773e7l5UUCDsmAs6jeGJ+PVfo1xhJvdQrQRdjDZHdBic82VUsn5bT
+ tr4QHsIqRW4Bs1OJEXrJRUDw+tlwYvwhwUa17RJcQhORSsLX44J2K84nZgnogNwV6erB
+ cAug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4R+UagYhBNt7WjPYWFzBOcImtmZ+xYPOzw+23AKt3es9Fx12wxXoRGQT1F+EdoLD2JriIUmfL27mu@nongnu.org
+X-Gm-Message-State: AOJu0YzK34kre7sxo5EFbqxlgeJZeb74/gCCm508q0yilQdEPQTqQVIb
+ Vj6byjAFNKB9qQUaig1JTolLpOCChRMxGT7Mo34gLnXaHb4RKgGVk/pESV0N5QpCf154V1bFlez
+ 9jv/eRQWUTG92AEsTA+TNHDdEpVewmvBuBwkHUja+Q8wgxU+JYJ6w0jRr
+X-Gm-Gg: ASbGncvowMIxdsG4aSSMjNaPqyz/tNuCtaE1xsfZ23EjvvhqScJ3v1UeoO9MFjoDJvu
+ wu77vUuhPSCSvBxvbTqZzNOq9OCxFnOl6qPUOf1Dpg/iTlL7qZuAlYeGj1cgwRH9hIIIw49bWh0
+ MwN1+NNADeLODOg348lN22ZV5yKKDtmqTnCfOzh5O+mauCK7kJsdAkgYpRxTxxeDw9XKHVtb7wx
+ Bh9IC5bJi/Hfv6Ei3Ok8F+YLxxIXsmCXeRqX5Mhs4RA6TcWL7ktKjHMfB378x29W010MfGHCV7z
+ 7Qx16GgtonnKKWvGX6TbiaBcGW9/YNpPkCjhwh3FmpYrupLrzvDVqRZNHUwuIT+H4ZWN
+X-Received: by 2002:a05:600c:1c25:b0:45b:7608:3ca1 with SMTP id
+ 5b1f17b1804b1-45b76212044mr55310775e9.23.1756457535682; 
+ Fri, 29 Aug 2025 01:52:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGErU3Hfwc/cDsPvrsH+zyxQbz/d3of1/vz/qZVy9QNTKbn9DUOji1PZFFvBXiDVn38l4aTOg==
+X-Received: by 2002:a05:600c:1c25:b0:45b:7608:3ca1 with SMTP id
+ 5b1f17b1804b1-45b76212044mr55310565e9.23.1756457535271; 
+ Fri, 29 Aug 2025 01:52:15 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-42-48-43.web.vodafone.de. [109.42.48.43])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d0c344f6casm1351111f8f.36.2025.08.29.01.50.18
+ ffacd0b85a97d-3cf276ccc13sm2482515f8f.22.2025.08.29.01.52.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 01:50:18 -0700 (PDT)
-Message-ID: <28d768fc-eb5a-4550-940f-9f1a1dfc8d33@redhat.com>
-Date: Fri, 29 Aug 2025 10:50:16 +0200
+ Fri, 29 Aug 2025 01:52:14 -0700 (PDT)
+Message-ID: <d0195bfe-2a17-4020-8176-8f2219f1951b@redhat.com>
+Date: Fri, 29 Aug 2025 10:52:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Failure for ./tests/functional/arm/test_realview.py
-To: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <56800442-3962-43b9-9b87-1b899077a24b@linaro.org>
+Subject: Re: [PATCH 2/3] tests/functional: fix formatting of exception args
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250829083156.2570137-1-berrange@redhat.com>
+ <20250829083156.2570137-3-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -123,9 +127,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <56800442-3962-43b9-9b87-1b899077a24b@linaro.org>
+In-Reply-To: <20250829083156.2570137-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -151,19 +155,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/08/2025 00.49, Richard Henderson wrote:
-> 2025-08-27 21:55:08,729 - qemu-test - INFO - Downloading https:// 
-> archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/openwrt-15.05.1- 
-> realview-vmlinux-initramfs.elf to /builds/qemu-project/qemu/functional- 
-> cache/download/ 
-> d3a01037f33e7512d46d50975588d5c3a0e0cbf25f37afab44775c2a2be523e6...
+On 29/08/2025 10.31, Daniel P. Berrangé wrote:
+> On HTTP 404 errors, we failed to include the URL in the exception
+> that was raised, while for the catch-all exception we failed to
+> include the URL and forgot the placeholder for the exception
+> details too.
 > 
-> This url is now stale, and is causing the functional-system-debian test to 
-> fail.
-> Do we have an alternate?
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/qemu_test/asset.py | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> index b5a6136d36..ae2bec3ea5 100644
+> --- a/tests/functional/qemu_test/asset.py
+> +++ b/tests/functional/qemu_test/asset.py
+> @@ -168,12 +168,13 @@ def fetch(self):
+>                   # indicate a broken test rather than a transient
+>                   # server or networking problem
+>                   if e.code == 404:
+> -                    raise AssetError(self, "Unable to download: "
+> -                                     "HTTP error %d" % e.code)
+> +                    raise AssetError(self, "Unable to download %s: "
+> +                                     "HTTP error %d" % (self.url, e.code))
+>                   continue
+>               except Exception as e:
+>                   tmp_cache_file.unlink()
+> -                raise AssetError(self, "Unable to download: " % e)
+> +                raise AssetError(self, "Unable to download %s: %s" % (
+> +                    self.url, e))
+>   
+>           if not os.path.exists(tmp_cache_file):
+>               raise AssetError(self, "Download retries exceeded", transient=True)
 
-FWIW, looks like archive.openwrt.org is back online now!
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
