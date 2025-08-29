@@ -4,119 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9190BCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A6B8CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNed-0004cz-PV; Sat, 30 Aug 2025 11:38:11 -0400
+	id 1usNGq-0007bc-Bz; Sat, 30 Aug 2025 11:13:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1us5Nn-0006YV-Sz
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:07:35 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryij-0001HU-QN
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1us5Nm-0005GH-Cx
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:07:35 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryic-0008Rz-Hb
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756498053;
+ s=mimecast20190719; t=1756472436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wRbqiAPNISkqVRppZsP2Vwbcn9nh/EQ6BOnJNHC9Ojs=;
- b=QcYwMAB/AEJqJS8g+nlakOovtL0AFhQPMefZW6wLp90SpbLNUpS+Ahk9j0Duzpqj2PWo3w
- uryAdVueanKsUDGdASGAGE750h8nHXhyP/FzNrjrX5X+pkfOK1vz9zwtz/mYbeuZTTJ7R2
- hlLdozfz+rTLYw6Uz7X/2gG0EZ3w0C4=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IKwTKCGMs/5s/PqIcZfPRIUzTnq5pzaUCRSQnzg/mYU=;
+ b=F2ibKxXNILW3v9b9IuaHgtj2Y13bBVQzcTABLAASE1lKx/q7vtyBcPnOiWLcPTFa+TOtNg
+ ntpQAtdFiDJUVrTAlZQaYFUAl99mZoYBx4Dpy0g3bxli/oDBpquVUyd8sDuJRLKiI/Af3s
+ N1xcMZtXHoyO2wTXj3PF1FE03YE/fn4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-156-913E5fz5O8apV-G2DSBk4g-1; Fri, 29 Aug 2025 16:07:19 -0400
-X-MC-Unique: 913E5fz5O8apV-G2DSBk4g-1
-X-Mimecast-MFC-AGG-ID: 913E5fz5O8apV-G2DSBk4g_1756498038
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3234811cab3so2841511a91.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 13:07:18 -0700 (PDT)
+ us-mta-96-tOlf3thhNFqBTqpnrDMjog-1; Fri, 29 Aug 2025 09:00:33 -0400
+X-MC-Unique: tOlf3thhNFqBTqpnrDMjog-1
+X-Mimecast-MFC-AGG-ID: tOlf3thhNFqBTqpnrDMjog_1756472433
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45b7265febdso13907045e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756498038; x=1757102838;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756472432; x=1757077232;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wRbqiAPNISkqVRppZsP2Vwbcn9nh/EQ6BOnJNHC9Ojs=;
- b=p4K5H5+Pw9aWpo332Tjgqbi/0i8dlcqruEhqSZDUokca3pKaQ8zZOR6pWZoI9hD8jF
- 7vvy+WyvHfcMMlhVs3969lIABDN+W58wTL+FIwFfd7GJNrnTE/gAMPugNQyneu9s7fSx
- Q49mFVIrfyA3NPiVp9jdeGg0zq2gjbA4qobqBCjZW+OA4Nq97A22c2JIFKXhAKGWRrmB
- pLZgsR6hojux1BRdgWevU/LsR0sHzqzbVCtmd2Fmw/oVUoI2p8r5prqB3z7AvRxC+x7x
- BI9ciiRdBpgX4eFgq32sE6vpRGieOXnjf/O1qBcpl09n8lMu037jVlF17TxSP0YyHH/9
- gHJg==
-X-Gm-Message-State: AOJu0YwCuMdRwYnrfSDK94P9aUpLMqss3eFfo2GuMPjOK8plbj1HkTpw
- hnZZieVVEwW+2NYb4xMxURccp9wSXcF6XhWDw6y4qbiaJE0YXMxX4g4tklRZQA/pOd+OmwfJ+qd
- 5FnumpdkUwTqE+cFnHdHksZQoC4DcaHW516vOcYhn7WQqS2gTSL/4cItQ
-X-Gm-Gg: ASbGncu/idzJwI23aDe5FOJRnPA0Vt8M5645uWZi1JpQ3QNLt4oPMT+BFsglNHqacF+
- RB51DFLbj+VM9hVFOweBJwM2fRumm5MkiNEFv31KpsG/QU8M7dW8acuuBU81Bzwf4zoZtuWSmmP
- qxfgYcXL6R2GV6Xc4O923xdv7vVuMlnWAAp/muyjGg3iw9ioiCHeeB8RgJNlISW66PdWncPV3w9
- W5/u/7B+k/4Liy5bXkLou8QiRWp55qzMXPlb3q5fGNOR2Wy6VA9yImNbBCvyVIwPjBX9yIsIYOx
- 7arSVxmTXA4wJaUHYdTy1ilyAS7KPzCJa6OGeFmiARh4tPaVPef2fg==
-X-Received: by 2002:a17:90b:3b86:b0:327:d8e1:faea with SMTP id
- 98e67ed59e1d1-327d8e1fc98mr7387291a91.20.1756498037785; 
- Fri, 29 Aug 2025 13:07:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSA+umRYBhjmB+zDANRnxaj/OjOFTsAMCJs0OV+MDGSzS572ruE5lu43L+hyLGvsXdaOOuVQ==
-X-Received: by 2002:a17:90b:3b86:b0:327:d8e1:faea with SMTP id
- 98e67ed59e1d1-327d8e1fc98mr7387235a91.20.1756498037260; 
- Fri, 29 Aug 2025 13:07:17 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.47.195.108])
+ bh=IKwTKCGMs/5s/PqIcZfPRIUzTnq5pzaUCRSQnzg/mYU=;
+ b=rvUv7Hkzdq/yxSqmbDAwS1PcTPg+FLFsH9qDPqfbv/1z0Pc3Po7hWh3EUhP7pF5s7e
+ xANqPjL8mhf/YanyUMtVl2fDNXBt3oXJWNAxyF3Tnk5Sadg/yVBVjt60VM8hlS40Ajr8
+ WhZQf7RSpKqEam/75hqbhbWYymImVBNUsSIoEqbZSmVjbqUSve2968kgc56dTLRsIkrU
+ y298Zmt4yjHCaolkKfN5JUihma0jAXHw6Zfzu0h122Ci5jjYvCgOmrbfOO5iKER4A9qM
+ 45FDj4WNgr/9eJrzTBoY/oYuyXLGgeoUaKpXms1QAAirEyfROyIC7f36XHZYKzIi82Rs
+ v8vQ==
+X-Gm-Message-State: AOJu0YyoDR5pQbOEPA8Y09pXerMSEzYeLfHnQB4p1yDldeEmf9Zfy5dh
+ jrdoQxnh+XJyCIcMyJRKgdlIbVC72vGhovJYs/BrgifOus4KNPXOix3XnML+JCpvSKhaCqiztV1
+ Gj/OlZPUxjivuXrUGbwOTsR7YXrilgQs5mcRZBI0+/Yl15FbYVf+CWutXH1I5S0OOBmmheavaq3
+ OxriahvMsXnE7rLcK2HjDcaa0lLVjny4uG1Bx3WpC/
+X-Gm-Gg: ASbGnctoeO4pYcLm5DXotmXz/o8NNlI7ttjO+TpqVsy4WqSYW1a+kda4OwA2Fq5TZrU
+ iPGHY+pCtH+Wl2wvJ23LhIPsFTi1yF7LqeBq542Bn2RexOv70SyjtmgCBSkVV6DdldJe9LvoAeg
+ WTGUDdJhoKEwpcfqiHe3PQK06YCqlzHu3zSYLTo4L3y75l0IUDXGBK7DkIMQm8wPM2r6+NV/IQa
+ 7tDN1pw+Y/1lBHrzt3HIpdTg1ipyPmJf0U8UmBy+VXiXutmgDyCTL3AJNaaLPx7qdQlXpCVLWjN
+ isnITHgzwm/vAoCuneGdShjbFvw2L7+jMq4iaAzBrEoovRvFFDfyqbcJWFnxsh1QHy5WDyJw6Br
+ B1jCuBeKSf6VnWGfQLX81VyI16kIneAEU4IxDVqtaMQo=
+X-Received: by 2002:a05:600d:19:b0:459:d3e2:d743 with SMTP id
+ 5b1f17b1804b1-45b6870de14mr114964525e9.8.1756472432152; 
+ Fri, 29 Aug 2025 06:00:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrbXIp/z6ozUS8UyytZ6B0s4SBc/e5GYxtgTLoi9+RrNq9uEW2dfcycZUO4I4Dr9ozcu2Ajw==
+X-Received: by 2002:a05:600d:19:b0:459:d3e2:d743 with SMTP id
+ 5b1f17b1804b1-45b6870de14mr114964295e9.8.1756472431734; 
+ Fri, 29 Aug 2025 06:00:31 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327d8f66f16sm3570543a91.0.2025.08.29.13.07.08
+ ffacd0b85a97d-3d0f85c287fsm1535930f8f.52.2025.08.29.06.00.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 13:07:17 -0700 (PDT)
-From: Arun Menon <armenon@redhat.com>
-Date: Sat, 30 Aug 2025 01:32:02 +0530
-Subject: [PATCH v13 22/27] migration: push Error **errp into
- loadvm_postcopy_handle_switchover_start()
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250830-propagate_tpm_error-v13-22-a4e777b7eb2c@redhat.com>
-References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
-In-Reply-To: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+ Fri, 29 Aug 2025 06:00:28 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Steve Sistare <steven.sistare@oracle.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
- Hailiang Zhang <zhanghailiang@xfusion.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Arun Menon <armenon@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1747; i=armenon@redhat.com;
- h=from:subject:message-id; bh=x/yKec8YqQYPuuXzcHNbQkCBg0poQ6E8l/qo+33kxFQ=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8Ymdr8Yab51+V9UWAP5d9l792u0vJu+bltI+nkDafeUw
- k1ex6Q7SlkYxLgYZMUUWRq+Bsg2BRRGRNq+vA4zh5UJZAgDF6cATKSnieF/mcFiH9s7HAKJK2e+
- OC/4svjp2a0VXfkbTPOUfJ7eXbRVmpHhnu/02Mui5yY6iMdYGuv9ehu/7fP1jZEW4ac38p3imbq
- NFQA=
-X-Developer-Key: i=armenon@redhat.com; a=openpgp;
- fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 18/28] hw/i386/pc_piix.c: replace rom_memory with pci_memory
+Date: Fri, 29 Aug 2025 14:59:25 +0200
+Message-ID: <20250829125935.1526984-19-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -125,7 +96,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,53 +112,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an incremental step in converting vmstate loading code to report
-error via Error objects instead of directly printing it to console/monitor.
-It is ensured that loadvm_postcopy_handle_switchover_start() must report
-an error in errp, in case of failure.
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Arun Menon <armenon@redhat.com>
+Now that we can guarantee the i440fx-pc machine will always have a PCI bus, any
+instances of rom_memory can be replaced by pci_memory and rom_memory removed
+completely.
+
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20250828111057.468712-19-mark.caveayland@nutanix.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- migration/savevm.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ hw/i386/pc_piix.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 8e891243dc1e7f5d3bc3a4326c6c4a2f5c32e1a2..b0fd51d0f142c30ce21bdc02204ce947283fea49 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2534,7 +2534,7 @@ static int loadvm_process_enable_colo(MigrationIncomingState *mis,
-     return ret;
- }
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 627de09c704..7e78b6daa6d 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -113,7 +113,6 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+     GSIState *gsi_state;
+     MemoryRegion *ram_memory;
+     MemoryRegion *pci_memory = NULL;
+-    MemoryRegion *rom_memory = system_memory;
+     ram_addr_t lowmem;
+     uint64_t hole64_size = 0;
+     PCIDevice *pci_dev;
+@@ -193,7 +192,6 @@ static void pc_init1(MachineState *machine, const char *pci_type)
  
--static int loadvm_postcopy_handle_switchover_start(void)
-+static int loadvm_postcopy_handle_switchover_start(Error **errp)
- {
-     SaveStateEntry *se;
+     pci_memory = g_new(MemoryRegion, 1);
+     memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
+-    rom_memory = pci_memory;
  
-@@ -2547,6 +2547,7 @@ static int loadvm_postcopy_handle_switchover_start(void)
+     phb = OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
+     object_property_add_child(OBJECT(machine), "i440fx", phb);
+@@ -224,7 +222,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
  
-         ret = se->ops->switchover_start(se->opaque);
-         if (ret < 0) {
-+            error_setg(errp, "Switchover start failed: %d", ret);
-             return ret;
-         }
-     }
-@@ -2655,11 +2656,7 @@ static int loadvm_process_command(QEMUFile *f, Error **errp)
-         return loadvm_process_enable_colo(mis, errp);
- 
-     case MIG_CMD_SWITCHOVER_START:
--        ret = loadvm_postcopy_handle_switchover_start();
--        if (ret < 0) {
--            error_setg(errp, "Failed to load device state command: %d", ret);
--        }
--        return ret;
-+        return loadvm_postcopy_handle_switchover_start(errp);
-     }
- 
-     return 0;
-
+     /* allocate ram and load rom/bios */
+     if (!xen_enabled()) {
+-        pc_memory_init(pcms, system_memory, rom_memory, hole64_size);
++        pc_memory_init(pcms, system_memory, pci_memory, hole64_size);
+     } else {
+         assert(machine->ram_size == x86ms->below_4g_mem_size +
+                                     x86ms->above_4g_mem_size);
 -- 
 2.51.0
 
