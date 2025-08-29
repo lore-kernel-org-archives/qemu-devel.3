@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B6BCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:39:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15DFCCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNEq-0004Rf-Gb; Sat, 30 Aug 2025 11:11:32 -0400
+	id 1usNBl-0006xX-MU; Sat, 30 Aug 2025 11:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1urwy5-0008QW-33
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:08:29 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uruXE-00048K-4x
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:32:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1urwy2-0001gF-LH
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:08:28 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uruX0-000706-VP
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:32:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756465705;
+ s=mimecast20190719; t=1756456329;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=og6ymulh9UmaMSIescETQPevhxzm1aJMZFMSGR8zlFk=;
- b=D/8xktZ+uMSswme4HwcTS4OiE3ea7TAHdymLW/BJJWSSyLVH5uA/1KUyjBprf2+Bplk3jT
- aGgwOzsI1wRJgdLlHqIUoI02p2tyzxU93vMfGGavLD78b8fTUg83TbBvsbxN5/3Tw/nvdh
- u1FaU/2pWQKpGigWIzxoADhw1oB7aGk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=FsaiQKyd0g1CH9huElZ/L3wWpKaP1lA41/6YfWyyxLQ=;
+ b=PVVTm2WA0rjWmCJLQ61kFrPayyeni6TyV1364vxACEUGfS/hCY0ZJvR8xvZ/QlSF7526Ta
+ TGTAEr55UhxkK5XpwV7lpv8r1jFSQwhkpAesnZKli6Z5Pje37qaOAhdVu+fyM5VZV4Vmwu
+ KTMS/B7Z4Q/1JVaqrtZgxU/ZsgL6upk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-dBgAec-gMnmw4UuDehncdg-1; Fri,
- 29 Aug 2025 07:08:21 -0400
-X-MC-Unique: dBgAec-gMnmw4UuDehncdg-1
-X-Mimecast-MFC-AGG-ID: dBgAec-gMnmw4UuDehncdg_1756465700
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-zTKL4RUqOjWVdE7Hh8-3Dg-1; Fri,
+ 29 Aug 2025 04:32:00 -0400
+X-MC-Unique: zTKL4RUqOjWVdE7Hh8-3Dg-1
+X-Mimecast-MFC-AGG-ID: zTKL4RUqOjWVdE7Hh8-3Dg_1756456320
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79CFD195608F; Fri, 29 Aug 2025 11:08:20 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.45.225.62])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF36A30001B5; Fri, 29 Aug 2025 11:08:18 +0000 (UTC)
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 1/9] qga: Fix ubsan warning
-Date: Fri, 29 Aug 2025 14:08:05 +0300
-Message-ID: <20250829110813.50286-2-kkostiuk@redhat.com>
-In-Reply-To: <20250829110813.50286-1-kkostiuk@redhat.com>
-References: <20250829110813.50286-1-kkostiuk@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B8780195E906; Fri, 29 Aug 2025 08:31:59 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1219C19560BC; Fri, 29 Aug 2025 08:31:57 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 0/3] tests/functional: improve handling flaky downloads
+Date: Fri, 29 Aug 2025 09:31:53 +0100
+Message-ID: <20250829083156.2570137-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,60 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+This fixes the functional-system-debian job with the currently
+awol archive.openwrt.org server.
 
-When compiling QEMU with --enable-ubsan there is a undefined behavior
-warning when running "make check":
+  https://gitlab.com/berrange/qemu/-/jobs/11173491503
 
- .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset 5 to null pointer
- #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-linux.c:452:15
+We can see teh download fail & retry, and then gracefully
+skip pre-cache:
 
-Fix it by avoiding the additional pointer variable here and use an
-"offset" integer variable instead.
+2025-08-29 08:02:16,510 - qemu-test - INFO - Downloading https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/openwrt-15.05.1-realview-vmlinux-initramfs.elf to /builds/berrange/qemu/functional-cache/download/d3a01037f33e7512d46d50975588d5c3a0e0cbf25f37afab44775c2a2be523e6...
+2025-08-29 08:04:28,104 - qemu-test - ERROR - Unable to download https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/openwrt-15.05.1-realview-vmlinux-initramfs.elf: URL error <urlopen error [Errno 101] Network is unreachable>
+2025-08-29 08:06:39,177 - qemu-test - ERROR - Unable to download https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/openwrt-15.05.1-realview-vmlinux-initramfs.elf: URL error <urlopen error [Errno 101] Network is unreachable>
+2025-08-29 08:08:50,248 - qemu-test - ERROR - Unable to download https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/openwrt-15.05.1-realview-vmlinux-initramfs.elf: URL error <urlopen error [Errno 101] Network is unreachable>
+2025-08-29 08:08:50,250 - qemu-test - ERROR - https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/openwrt-15.05.1-realview-vmlinux-initramfs.elf: Download retries exceeded: skipping asset precache
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250730072709.27077-1-thuth@redhat.com
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
----
- qga/commands-linux.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+And then later the test itself is skipped:
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index 9dc0c82503..4a09ddc760 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
-                                            Error **errp)
- {
-     unsigned int pci[4], host, hosts[8], tgt[3];
--    int i, nhosts = 0, pcilen;
-+    int i, offset, nhosts = 0, pcilen;
-     GuestPCIAddress *pciaddr = disk->pci_controller;
-     bool has_ata = false, has_host = false, has_tgt = false;
--    char *p, *q, *driver = NULL;
-+    char *p, *driver = NULL;
-     bool ret = false;
- 
-     p = strstr(syspath, "/devices/pci");
-@@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
- 
-     p = strstr(syspath, "/ata");
-     if (p) {
--        q = p + 4;
-+        offset = 4;
-         has_ata = true;
-     } else {
-         p = strstr(syspath, "/host");
--        q = p + 5;
-+        offset = 5;
-     }
--    if (p && sscanf(q, "%u", &host) == 1) {
-+    if (p && sscanf(p + offset, "%u", &host) == 1) {
-         has_host = true;
-         nhosts = build_hosts(syspath, p, has_ata, hosts,
-                              ARRAY_SIZE(hosts), errp);
+55/67 qemu:func-thorough+func-arm-thorough+thorough / func-arm-realview            SKIP              0.11s   0 subtests passed
+
+Daniel P. Berrangé (3):
+  tests/functional: enable force refresh of cached assets
+  tests/functional: fix formatting of exception args
+  tests/functional: handle URLError when fetching assets
+
+ docs/devel/testing/functional.rst   |  3 +++
+ tests/functional/qemu_test/asset.py | 20 ++++++++++++++++----
+ 2 files changed, 19 insertions(+), 4 deletions(-)
+
 -- 
 2.50.1
 
