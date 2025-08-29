@@ -4,98 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D74CA0EFF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1DDCA1000
 	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNYL-0005EO-V2; Sat, 30 Aug 2025 11:31:42 -0400
+	id 1usNmC-0006Pr-KN; Sat, 30 Aug 2025 11:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1us2k3-0000VF-FX
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 13:18:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1us2k1-00011z-SB
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 13:18:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756487900;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PFl0pE59Dm5tIbM7MKcjvJkWCie7MVPDQ9LZAzsxkUo=;
- b=WuMypc5eiI7jhiepsC0QEU1nHyto0/H2WvuXGH8hFkyQ2Jlwj/GGNH9QmBLkE00Ua7nYpN
- qisrS/0+IpL8TDqp0aME5c6Ih+AW7DG5GiAAuiJheydV0hbBbd46yekhxwrGM2t5FtqDds
- ySj/3sL7OvlgYftw5crhu/i6hZBeTlU=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-9X2CJes7MketVDgEnBeUTA-1; Fri, 29 Aug 2025 13:18:18 -0400
-X-MC-Unique: 9X2CJes7MketVDgEnBeUTA-1
-X-Mimecast-MFC-AGG-ID: 9X2CJes7MketVDgEnBeUTA_1756487898
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7fa717ff667so375033785a.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 10:18:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756487898; x=1757092698;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7bu-0004sO-N4
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:18 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7bs-0003vz-MU
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:18 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-32326e2f0b3so2136002a91.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756506613; x=1757111413; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PFl0pE59Dm5tIbM7MKcjvJkWCie7MVPDQ9LZAzsxkUo=;
- b=Jo3S9y5yVc9bl3pYzrdP9ZtqyHDGrHmeeLE7JZr/KGtAFdk/smIRLK5/Xq0pLx/l/W
- lkv/Wv7b0jwjKPzi93A1/2DEB+IfI1YfWBdhP46aKAWjKEynBe9PUryhRAi28bzNt560
- zuEaiR/MLTuTUetZUvn2heDhV4QOWu5Xt/sst207WPnoAcFFtwb9oU2SBSiu8n0R72T+
- hPkE5YsBcqan0t7+QilYRORg+BQGD7cBTYt9HkAPv+hB7PYNkyPxmY1E4AP7XZ2Hdr2z
- 4k5EWCdDX6+JNP1y+VNKHroJB/7CmHe8/F8+ySj8/51IbYqkGBM78nat+4SN341fgi4y
- 4rxQ==
-X-Gm-Message-State: AOJu0YwO9akqtsReWw152csX8Z/SSsTIWXjn6//lpJfrwHd8eVUEcYBJ
- taB3MHz24kwoc9wrGYQWGMZq5IYF+rUiRNKEUxn1MLJJ5/JTqSIvyombCVJlXRu5EQZY1RB9Q1L
- u1Z9w4IUCI+GESAXp68rmvXuaIDNp/gO3Jvm1UPVKPLgcGACuLqgahGMH
-X-Gm-Gg: ASbGncvSi4OARkR7Ul2R5TwUPtDe4OHxrLaGr8E+gnpYJ6WEAuzPqBcPEXfDJA6iLbQ
- delrF+NVMgNbVgOW6DSHuyVr7slDl8ZLSEo2CECKsvOnFDTTFdKQKP2x+uT0hzhSKwWEmri9ess
- SO5VAcAZSutcANYss4rlA8Eqyk4eCrLuwco/EZSjIRTHj/HzMIcP9EkWr7CVvwzC6QOLVh401eK
- VSAA4pHXQ4s3sXEvYph+CECr3PgfcQEx4AlS8pwUd4Tpdgepz1C4azRZd9XfvB9+N4YckabXBkq
- iuSzZieeLiURUiQEqMSLpyBPw9zHjGl3
-X-Received: by 2002:a05:620a:d82:b0:7e7:fff0:70cd with SMTP id
- af79cd13be357-7ea11095d10mr2833402485a.41.1756487898190; 
- Fri, 29 Aug 2025 10:18:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHcMfAWIc9lEuEoM0HvqEmSdFa3eNz6SZ2ayR7aKShN3KQqFqF9Q6rzOwyXlHeqYHpLOW3WlA==
-X-Received: by 2002:a05:620a:d82:b0:7e7:fff0:70cd with SMTP id
- af79cd13be357-7ea11095d10mr2833397585a.41.1756487897573; 
- Fri, 29 Aug 2025 10:18:17 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7fc0e31be10sm220266185a.16.2025.08.29.10.18.16
+ bh=suVoDXWExnW7HRwC1OURW6XQc8WcncInBLooRnaEt8k=;
+ b=uaRCzHQoZ5DjNhu8BHVoXhY0w6LfdEEHxy5mZL1+e2Gmzq8SYvHi0PBDLX0NDCj4wv
+ yvNzL40f38kGIwhVyV8XIyzPriucwcb/OPVu3OcWjK2ovm7YMP2hXIdk6CGmLFPga6ys
+ nAUZCNT/WETa8JZNjnzZ7Yyv0Paq1da7Ecc+dZbsUxPoGLTEhxpdCi4W6gpmDht+JEbO
+ V9qgdnClL9SCpYNf4fyxQfnpGnLUX3bwaUWF8J8DXD0Q5RpYOcuZ+KX6suWE4uc82/n0
+ y6zkBXdWPSQq1fwHw9/34YpmbIC/9i06zXAtirJLIMvfcIaZinUXSLwz5b12gnkI2CI/
+ TWPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756506613; x=1757111413;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=suVoDXWExnW7HRwC1OURW6XQc8WcncInBLooRnaEt8k=;
+ b=O53t5gyf+aOyEIsSFLENlE/YTQfzaYoMp2Yb5mgCj/Qxa2CAz6ikchg6Q38icCiIMs
+ zK2AsUbHVT3oYXDBjjXWV1VeSxP0xQnEz7SJsN2YspIuqmMiJcaowR0wmEO0O40jzS5A
+ DaM6TVOYgPa1TkZzthPYNOnB/KoEDW4h2vrKFoKc6cqRKmPFWw2KrIaKNWpZzrNxu0Vx
+ KNNvt2HK6CqnxfBff8caq3oxEf2NUs6+Qvz6Xnjt8IFQGKIMKo6shGs/nevPL406DEzw
+ JdL87ddeCTrD4bJyyMuSlpJxNJZJ0sjO+6sk3ToGPFZ8Bg+/sUglWJQRuBRQT6ofL0G8
+ gcTQ==
+X-Gm-Message-State: AOJu0YwieuMz0swdIat6ma9Xz/Bz/Kbn4THnhlgDsn4janKVoTcGhV8K
+ PtgS8bcNCdrqUbsuaq91YU+H4UuA24oFoBjx0VZskyAB/q8JwCjaXDLs6OkAapU1+0lAhp/WX5g
+ 63w9hBkY=
+X-Gm-Gg: ASbGncuJ4zOX1soU9jPWW7GvYUm/1AcuJuWwogl8g08h+0jZDkqWnzmWe9mvyl2zK/h
+ 5lOY2AbBSzJBciFVNFhTf5EA+a+PdTmBe0MaeiZnl5dTh/ZVo6ALUWulZ/XuM1FdA08eMqGh4zC
+ qKGs7AQBHU3htN/4zcb49AP7rd0WPaM03JYavqJuXZS3uusiClJR7j8A7dAFxrAN0uYgdN6UrDd
+ 5CduA+acMWm257ynzGRAa+XLPucBM47BZnR5mP/kdI+b+PCanB08Gpu8ltm26Zxm4si1iDpxkpr
+ MTccJNgiNQ+R3wMz5gmqu6xjIB1tKvKn4oZjVlBlgadVIzFHaGi4qQm2IxIoq5ShPVkTIBQoBQq
+ qBXMBTKG0xiQNryd3+7SGFqOVph5ZMwz36tUQgf5B2wSgn8EkX+ZKwa6l0Id4jSE=
+X-Google-Smtp-Source: AGHT+IHTWlwfLuZcPbwgDHx2mkbAw9zI2JXZ+8E7s3rKZsdBH3yHNEN2AH/BV0+s2OV4HtkWM3lLew==
+X-Received: by 2002:a17:90b:1b12:b0:323:7e80:8818 with SMTP id
+ 98e67ed59e1d1-328156e5627mr326129a91.37.1756506613530; 
+ Fri, 29 Aug 2025 15:30:13 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 10:18:16 -0700 (PDT)
-Date: Fri, 29 Aug 2025 13:18:05 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Yury Kotov <yury-kotov@yandex-team.ru>, Prasad Pandit <ppandit@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH RFC 0/9] migration: Threadify loadvm process
-Message-ID: <aLHgzcDypW1r4Sbm@x1.local>
-References: <20250827205949.364606-1-peterx@redhat.com>
- <d801092f-76da-4b2c-ad35-c0c625c78861@yandex-team.ru>
+ Fri, 29 Aug 2025 15:30:13 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 66/91] linux-user: Remove ELF_EXEC_PAGESIZE
+Date: Sat, 30 Aug 2025 08:24:02 +1000
+Message-ID: <20250829222427.289668-67-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d801092f-76da-4b2c-ad35-c0c625c78861@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,17 +100,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 29, 2025 at 11:29:37AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 27.08.25 23:59, Peter Xu wrote:
-> > split the patches into smaller ones if possible
-> 
-> Support for bql_held parameter for some functions may also be
-> moved to separate preparation patches, which will simplify the
-> main patch.
+Use TARGET_PAGE_SIZE instead.  If the target page size may vary,
+using a different fixed size is wrong.
 
-Sure, I can do that.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/elfload.c | 32 ++------------------------------
+ 1 file changed, 2 insertions(+), 30 deletions(-)
 
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index aed390ebb3..59e6605e36 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -167,8 +167,6 @@ typedef abi_int         target_pid_t;
+ 
+ #define VDSO_HEADER "vdso.c.inc"
+ 
+-#define ELF_EXEC_PAGESIZE       4096
+-
+ #endif /* TARGET_I386 */
+ 
+ #ifdef TARGET_ARM
+@@ -180,16 +178,12 @@ typedef abi_int         target_pid_t;
+ #define ELF_CLASS       ELFCLASS32
+ #define EXSTACK_DEFAULT true
+ 
+-#define ELF_EXEC_PAGESIZE       4096
+-
+ #else
+ /* 64 bit ARM definitions */
+ 
+ #define ELF_ARCH        EM_AARCH64
+ #define ELF_CLASS       ELFCLASS64
+ 
+-#define ELF_EXEC_PAGESIZE       4096
+-
+ #if TARGET_BIG_ENDIAN
+ # define VDSO_HEADER  "vdso-be.c.inc"
+ #else
+@@ -258,8 +252,6 @@ typedef abi_int         target_pid_t;
+         NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
+     } while (0)
+ 
+-#define ELF_EXEC_PAGESIZE       4096
+-
+ #ifndef TARGET_PPC64
+ # define VDSO_HEADER  "vdso-32.c.inc"
+ #elif TARGET_BIG_ENDIAN
+@@ -280,8 +272,6 @@ typedef abi_int         target_pid_t;
+ 
+ #define VDSO_HEADER "vdso.c.inc"
+ 
+-#define ELF_EXEC_PAGESIZE        4096
+-
+ #endif /* TARGET_LOONGARCH64 */
+ 
+ #ifdef TARGET_MIPS
+@@ -300,8 +290,6 @@ typedef abi_int         target_pid_t;
+ #define elf_check_abi(x) (!((x) & EF_MIPS_ABI2))
+ #endif
+ 
+-#define ELF_EXEC_PAGESIZE        4096
+-
+ #endif /* TARGET_MIPS */
+ 
+ #ifdef TARGET_MICROBLAZE
+@@ -311,8 +299,6 @@ typedef abi_int         target_pid_t;
+ #define ELF_CLASS   ELFCLASS32
+ #define ELF_ARCH    EM_MICROBLAZE
+ 
+-#define ELF_EXEC_PAGESIZE        4096
+-
+ #endif /* TARGET_MICROBLAZE */
+ 
+ #ifdef TARGET_OPENRISC
+@@ -321,8 +307,6 @@ typedef abi_int         target_pid_t;
+ #define ELF_CLASS ELFCLASS32
+ #define ELF_DATA  ELFDATA2MSB
+ 
+-#define ELF_EXEC_PAGESIZE 8192
+-
+ #endif /* TARGET_OPENRISC */
+ 
+ #ifdef TARGET_SH4
+@@ -330,8 +314,6 @@ typedef abi_int         target_pid_t;
+ #define ELF_CLASS ELFCLASS32
+ #define ELF_ARCH  EM_SH
+ 
+-#define ELF_EXEC_PAGESIZE        4096
+-
+ #endif
+ 
+ #ifdef TARGET_M68K
+@@ -339,8 +321,6 @@ typedef abi_int         target_pid_t;
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_68K
+ 
+-#define ELF_EXEC_PAGESIZE       8192
+-
+ #endif
+ 
+ #ifdef TARGET_ALPHA
+@@ -348,8 +328,6 @@ typedef abi_int         target_pid_t;
+ #define ELF_CLASS      ELFCLASS64
+ #define ELF_ARCH       EM_ALPHA
+ 
+-#define ELF_EXEC_PAGESIZE        8192
+-
+ #endif /* TARGET_ALPHA */
+ 
+ #ifdef TARGET_S390X
+@@ -358,8 +336,6 @@ typedef abi_int         target_pid_t;
+ #define ELF_DATA	ELFDATA2MSB
+ #define ELF_ARCH	EM_S390
+ 
+-#define ELF_EXEC_PAGESIZE 4096
+-
+ #define VDSO_HEADER "vdso.c.inc"
+ 
+ #endif /* TARGET_S390X */
+@@ -376,8 +352,6 @@ typedef abi_int         target_pid_t;
+ #define VDSO_HEADER "vdso-64.c.inc"
+ #endif
+ 
+-#define ELF_EXEC_PAGESIZE 4096
+-
+ #endif /* TARGET_RISCV */
+ 
+ #ifdef TARGET_HPPA
+@@ -396,8 +370,6 @@ typedef abi_int         target_pid_t;
+ #define ELF_CLASS       ELFCLASS32
+ #define ELF_ARCH        EM_XTENSA
+ 
+-#define ELF_EXEC_PAGESIZE       4096
+-
+ #endif /* TARGET_XTENSA */
+ 
+ #ifdef TARGET_HEXAGON
+@@ -2697,7 +2669,7 @@ static int wmr_fill_region_phdr(void *opaque, vaddr start,
+     phdr->p_flags = (flags & PAGE_READ ? PF_R : 0)
+                   | (flags & PAGE_WRITE_ORG ? PF_W : 0)
+                   | (flags & PAGE_EXEC ? PF_X : 0);
+-    phdr->p_align = ELF_EXEC_PAGESIZE;
++    phdr->p_align = TARGET_PAGE_SIZE;
+ 
+     bswap_phdr(phdr, 1);
+     d->phdr = phdr + 1;
+@@ -2805,7 +2777,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+     offset += size_note("CORE", sizeof(struct target_elf_prpsinfo));
+     offset += size_note("CORE", sizeof(struct target_elf_prstatus)) * cpus;
+     note_size = offset - note_offset;
+-    data_offset = ROUND_UP(offset, ELF_EXEC_PAGESIZE);
++    data_offset = TARGET_PAGE_ALIGN(offset);
+ 
+     /* Do not dump if the corefile size exceeds the limit. */
+     if (dumpsize.rlim_cur != RLIM_INFINITY
 -- 
-Peter Xu
+2.43.0
 
 
