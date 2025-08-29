@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8227ECA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F8DCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNk1-00084C-58; Sat, 30 Aug 2025 11:43:46 -0400
+	id 1usNkF-0001DY-GO; Sat, 30 Aug 2025 11:44:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bJ-0004Pv-OM
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:41 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1us7XL-00039a-GM
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:35 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bH-0003c3-FH
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:41 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-77238cb3cbbso566920b3a.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:29:39 -0700 (PDT)
+ id 1us7XJ-0002zN-8U
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:35 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-771ed4a8124so2659893b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506578; x=1757111378; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756506331; x=1757111131; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hEu/Jd/KzuMLh+1O07NzkMG0vtLdDubGRA+9tMz/IuQ=;
- b=zAydEpOQW1gq4nOnjJfAiXX+HotuKYzS2jb1nyQOA4eyx03o+jIJFj4NO9I/3NQJxs
- hyb840dWO7HVHiAf4Bk0KMIPcH93TLtCNbXGDW7IH/sh5/5H3hoFALxdfnXNz7b45dWu
- S7tibfWPHDE3lSqj1BNwLjTb3PyUPdXDJKYLHuoaLotyqdy7rafDGHOrx3voX5X62ent
- +xnxNTry1OsC5Zl9CpC69wXJQqvfSWMFy43xWDZP6HGIO+vaK0W54YOgX0GftoDsOIoy
- /OuYeJrut+PmCsYyHIfCvR8sav5wzs3bB5UXmANijFQkg6HPL66WP5Woj20MxyO6vH8M
- v8uA==
+ bh=84/JK3DP1F/+ND6QYYiYK3M7/bjEXR8Zh3F4CzLGSok=;
+ b=iSxClwJnqTuc1QEQ3KSJ5Bg+qboTK5z5Zr1svxgWTS1L2CxWRoKXPelJDraKQjduyn
+ cfWsU5RM+5LMk6oh15ceMLXJQBxFujnzKNsFynXFma8G3s+KTki1jDLupDzXtGGVw3mi
+ XFxqWqYeS5t4cFZlr8vPfsZvgkgaHjSS9RZQraRzJUTVjN7fy/7iq96KpU4Lr0zdm3pZ
+ n7qG3xGmmMlAiyhRoWBXr4io0VG6wcr0tNsLKyDxYYFIl96kO13J4s3CPRuTi+kclaXV
+ WIgJyz8VFAFXGR5FQjScA8yQu42qkFoMaxfN0tMSeYQdgSg7FB46U04qaDkiUYxvuF1i
+ FdhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506578; x=1757111378;
+ d=1e100.net; s=20230601; t=1756506331; x=1757111131;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hEu/Jd/KzuMLh+1O07NzkMG0vtLdDubGRA+9tMz/IuQ=;
- b=GSP4TEXNom52tXv50r7zv1Z/LoNQcxf3A/kGTinKQAwh537KHl4OqqB8ydalPIZ4PC
- t3FoKpU8uW4AkliNk1VQDkxRfITrzB9d2ifEyq+DWaRzGWfvwqdPBXALK82o1jtSsS8F
- jSvq1Gcgfnr5EbZTLpGb0T5RTe/vdnBqOH5viN7BWVplFOquqnAGlZdryB1Eh+vV6sj2
- 5rjJ7At9H5GGXCx0+THp2l4EllxM/cngygJ0AisUb4xqJ9aONODUYzmE5wujGgBntdr3
- AI0YnPXBjVKHr+G9dzFh0FWsFZ8K8wr0TP1rC1Swvo+oWZeqi4WecdmcxYbrmR0z4A1v
- 2HEQ==
-X-Gm-Message-State: AOJu0YxgK5Qwa0jiP8kJrPrx1Vz65tu+BAUZGD10YgIv1ZvseH9y0KtN
- tjz/aTTScejmbQOsWueRljvpNdCZaLFIQY5pqz2JLjUeqzBvxY7d4iEvfDDUPp/w+cC6MgDOzQg
- gufCjkB4=
-X-Gm-Gg: ASbGncuN7B8pLAQQtJFSYccg+I5R0JR8YBoZPCTbjFbYhKc/uw7QaAjj0Bhl/yZ6X9p
- qECUCR5M2mYf+qRQN+E8FaP1kPHReygRxFlH+DqYFnR2sK1x1wt3HqlFMKF27I4gnAN/LBBBpqh
- SPvZN6CGqE2xW7Jba6sOdNFnfDlM9Rp95sQTanAmL+TZsXvTvfmoUYm7TGZyIni+vk6D0a8Ln9A
- McWHOSwFjAwxsKZHT3fpia6Meh+FjXml6u6IZNFE79lwTK+01M64eRnvm6bALbu6Tg5z9JFfS9E
- DHHELrxWIgXBRpK6fiqRfeBMGS7pJqQUhJDhGnY7OSQt+HPMVIDYtB7NKjzAco8uwQjW40UvcLP
- 41Ce/mifKHBpEHBEFt5wWH3EYJeyypyCsjcRWObrvep6k/XY0Lu6U+C6XOa1/WL7k0psJoUmOAM
- 2zyOwX2Bik
-X-Google-Smtp-Source: AGHT+IHQ9xcNrneHa9ylxk59nTdyuFRCRmYWLC3rdyfVR4/RTPM355ZvaQudYLw7z9OvZpzXQGN0gA==
-X-Received: by 2002:a05:6a00:390c:b0:76e:8cf4:7bc4 with SMTP id
- d2e1a72fcca58-7723e3c8c40mr233123b3a.26.1756506577893; 
- Fri, 29 Aug 2025 15:29:37 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ bh=84/JK3DP1F/+ND6QYYiYK3M7/bjEXR8Zh3F4CzLGSok=;
+ b=L7blKPaTY0cxB1wBF5zIbDExYaj+zZoeFZLu0k2kv6KifsLaHIvJlLrrqm8L1hIq9p
+ K6PbDjNLoPVRRfEpv3UpE7X5zy7jm2VXvjIWuPGl8nMOSSyGpwhb1JnOYt04zSDSnTsT
+ lMAOvc2I6dNZMBPq3wxrq6qyDlI0MKlqkx2ep4mhO8A6P0DIuPpPEGi4kYi0RiF6uP+y
+ 9LoVvPNVMAyens0x/5PSSpc8TFlLHM1yme+GpMzxarLBnQOh95SeYLSgJFsN4I/TxEf5
+ iG8q89ZxIfjSIeCttmBFriy3CFPGQ5f+6YeIbl3F9rlLuNZ71yr08eSfSYS4KHQzRHBz
+ Hv/A==
+X-Gm-Message-State: AOJu0YygKb3T2P7TrL5pcdZM5JG2zT3Ez2O5cuQsr3GIbZvFbz0nPSus
+ MSVZ6mt4Pcg/nceQwsrv3Q5JpCb5c95F+61YL1NqYDR/ta8h2ZyM8yQWysHLHE2KVPBXu99i1L6
+ HCb8dszg=
+X-Gm-Gg: ASbGnct0POOm8us3t87NbAR3vxMuGwC1elSWtHTc9SWPuM+Drv+vO8cXu6BWHVRAy3r
+ Mte1lKlaTC8yjYAYiwT+ewP8OelDfz4hSn0XwrLUxAczHpJh8XENQnjg5JjcVplmFFbU1YsLW8r
+ i1h1cmve3Sm8Id3oZw7V8mxOZz4igi7IkPpyIFjMr79ruiqZODeQym8lipRRFyoz8h7JZU+BVnj
+ E6NSO6ilbIYItuUe+F6hs3H7uKgTvwiuzAWlA4cUdqhY3xNmyb1j/kujgoq+YZnN4INA9GIi+LR
+ HZ+Y8Hq+D2H2kBjzTp+FEPPt9zbRdkdNx4Ny9D8uNm3OBwxpviIzuIZ3bVy72NhMhk3VBXJkGx2
+ qyxS4RQZy/XX0Lbvhhzg8Zr4bSxgOxcsnWnLeLJ/kzE318o3NLxsN/L6jPjGF
+X-Google-Smtp-Source: AGHT+IHdXy8KIUP3GzO0bFfdGMPxBM3nu1cp/u8esQGz4igqaMSGdXrzBzB2iX+MWccfrUpWtqmM8w==
+X-Received: by 2002:aa7:88c8:0:b0:771:f852:452e with SMTP id
+ d2e1a72fcca58-7723e4033afmr223752b3a.29.1756506331374; 
+ Fri, 29 Aug 2025 15:25:31 -0700 (PDT)
+Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.29.36
+ d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.25.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:29:37 -0700 (PDT)
+ Fri, 29 Aug 2025 15:25:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 51/91] linux-user/openrisc: Create target_ptrace.h
-Date: Sat, 30 Aug 2025 08:23:47 +1000
-Message-ID: <20250829222427.289668-52-richard.henderson@linaro.org>
+Subject: [PULL 24/91] linux-user: Move elf_core_copy_regs to ppc/elfload.c
+Date: Sat, 30 Aug 2025 08:23:20 +1000
+Message-ID: <20250829222427.289668-25-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
 References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,75 +100,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the target_pt_regs structure from target_syscall.h and
-rename to target_user_regs_struct, obviating the comment.
+Move elf_core_copy_regs to elfload.c.
+Move HAVE_ELF_CORE_DUMP, ELF_NREGS, target_elf_gregset_t to target_elf.h.
+For now, duplicate the definitions of target_elf_greg_t and tswapreg.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/openrisc/target_ptrace.h  | 13 +++++++++++++
- linux-user/openrisc/target_syscall.h | 11 -----------
- linux-user/openrisc/signal.c         |  3 ++-
- 3 files changed, 15 insertions(+), 12 deletions(-)
- create mode 100644 linux-user/openrisc/target_ptrace.h
+ linux-user/ppc/target_elf.h |  9 +++++++++
+ linux-user/elfload.c        | 26 --------------------------
+ linux-user/ppc/elfload.c    | 22 ++++++++++++++++++++++
+ 3 files changed, 31 insertions(+), 26 deletions(-)
 
-diff --git a/linux-user/openrisc/target_ptrace.h b/linux-user/openrisc/target_ptrace.h
-new file mode 100644
-index 0000000000..563c648525
---- /dev/null
-+++ b/linux-user/openrisc/target_ptrace.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef OPENRISC_TARGET_PTRACE_H
-+#define OPENRISC_TARGET_PTRACE_H
-+
-+/* See arch/openrisc/include/uapi/asm/ptrace.h. */
-+struct target_user_regs_struct {
-+    abi_ulong gpr[32];
-+    abi_ulong pc;
-+    abi_ulong sr;
-+};
-+
-+#endif /* OPENRISC_TARGET_PTRACE_H */
-diff --git a/linux-user/openrisc/target_syscall.h b/linux-user/openrisc/target_syscall.h
-index 7fe5b73d3b..c8394e9dcd 100644
---- a/linux-user/openrisc/target_syscall.h
-+++ b/linux-user/openrisc/target_syscall.h
-@@ -1,17 +1,6 @@
- #ifndef OPENRISC_TARGET_SYSCALL_H
- #define OPENRISC_TARGET_SYSCALL_H
+diff --git a/linux-user/ppc/target_elf.h b/linux-user/ppc/target_elf.h
+index 4203a89d66..72615553ea 100644
+--- a/linux-user/ppc/target_elf.h
++++ b/linux-user/ppc/target_elf.h
+@@ -10,5 +10,14 @@
  
--/* Note that in linux/arch/openrisc/include/uapi/asm/ptrace.h,
-- * this is called user_regs_struct.  Given that this is what
-- * is used within struct sigcontext we need this definition.
-- * However, elfload.c wants this name.
-- */
--struct target_pt_regs {
--    abi_ulong gpr[32];
--    abi_ulong pc;
--    abi_ulong sr;
--};
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
++#define HAVE_ELF_CORE_DUMP      1
++
++typedef abi_ulong target_elf_greg_t;
++
++/* See linux kernel: arch/powerpc/include/asm/elf.h.  */
++#define ELF_NREG                48
++typedef struct target_elf_gregset_t {
++    target_elf_greg_t regs[ELF_NREG];
++} target_elf_gregset_t;
+ 
+ #endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 017346b82d..d1d0a112fb 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -361,32 +361,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+         NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
+     } while (0)
+ 
+-/* See linux kernel: arch/powerpc/include/asm/elf.h.  */
+-#define ELF_NREG 48
+-typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
+-} target_elf_gregset_t;
 -
- #define UNAME_MACHINE "openrisc"
- #define UNAME_MINIMUM_RELEASE "2.6.32"
+-void elf_core_copy_regs(target_elf_gregset_t *r, const CPUPPCState *env)
+-{
+-    int i;
+-    target_ulong ccr = 0;
+-
+-    for (i = 0; i < ARRAY_SIZE(env->gpr); i++) {
+-        r->regs[i] = tswapreg(env->gpr[i]);
+-    }
+-
+-    r->regs[32] = tswapreg(env->nip);
+-    r->regs[33] = tswapreg(env->msr);
+-    r->regs[35] = tswapreg(env->ctr);
+-    r->regs[36] = tswapreg(env->lr);
+-    r->regs[37] = tswapreg(cpu_read_xer(env));
+-
+-    ccr = ppc_get_cr(env);
+-    r->regs[38] = tswapreg(ccr);
+-}
+-
+-#define HAVE_ELF_CORE_DUMP
+ #define ELF_EXEC_PAGESIZE       4096
  
-diff --git a/linux-user/openrisc/signal.c b/linux-user/openrisc/signal.c
-index cb74a9fe5e..40249095f2 100644
---- a/linux-user/openrisc/signal.c
-+++ b/linux-user/openrisc/signal.c
-@@ -21,9 +21,10 @@
- #include "user-internals.h"
- #include "signal-common.h"
- #include "linux-user/trace.h"
-+#include "target_ptrace.h"
+ #ifndef TARGET_PPC64
+diff --git a/linux-user/ppc/elfload.c b/linux-user/ppc/elfload.c
+index a214675650..114e40a358 100644
+--- a/linux-user/ppc/elfload.c
++++ b/linux-user/ppc/elfload.c
+@@ -3,6 +3,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
  
- typedef struct target_sigcontext {
--    struct target_pt_regs regs;
-+    struct target_user_regs_struct regs;
-     abi_ulong oldmask;
- } target_sigcontext;
  
+ const char *get_elf_cpu_model(uint32_t eflags)
+@@ -129,3 +130,24 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
+ 
+     return features;
+ }
++
++#define tswapreg(ptr)   tswapal(ptr)
++
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUPPCState *env)
++{
++    int i;
++    target_ulong ccr = 0;
++
++    for (i = 0; i < ARRAY_SIZE(env->gpr); i++) {
++        r->regs[i] = tswapreg(env->gpr[i]);
++    }
++
++    r->regs[32] = tswapreg(env->nip);
++    r->regs[33] = tswapreg(env->msr);
++    r->regs[35] = tswapreg(env->ctr);
++    r->regs[36] = tswapreg(env->lr);
++    r->regs[37] = tswapreg(cpu_read_xer(env));
++
++    ccr = ppc_get_cr(env);
++    r->regs[38] = tswapreg(ccr);
++}
 -- 
 2.43.0
 
