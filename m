@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0820ECA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA86CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usO62-00053C-LY; Sat, 30 Aug 2025 12:06:31 -0400
+	id 1usNkK-0001le-Iy; Sat, 30 Aug 2025 11:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1usGaO-0004pr-SM
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 04:05:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1usGaM-0007cV-SR
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 04:05:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756541115;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ml8Zf9PK6m5KoAqK+uECD5Djc8eYEKseVRFwnhscRlM=;
- b=JbBM4D64RFakzeV+TjKiXo3LOy9Z07yQce2udS+yuu7zmeVqGo6mWFt1tGXkb8kBbRzyX7
- Eq2hvM7IPznxfhrdL0Tis61pPt+Kis3JhxXEQwiXfmYHdDZtj9r+eSaBnZNCiHZSl/U9Mh
- YAcgh130NnzX8fbDRJd2hGPnWCwKtkQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-G-UyVm5PNmi8h2YvNcLe8A-1; Sat,
- 30 Aug 2025 04:05:11 -0400
-X-MC-Unique: G-UyVm5PNmi8h2YvNcLe8A-1
-X-Mimecast-MFC-AGG-ID: G-UyVm5PNmi8h2YvNcLe8A_1756541110
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1EDF51955F26; Sat, 30 Aug 2025 08:05:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 657AC1800447; Sat, 30 Aug 2025 08:05:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A24DD21E6A27; Sat, 30 Aug 2025 10:05:06 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Akihiko
- Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Jason Wang <jasowang@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Stefano Garzarella
- <sgarzare@redhat.com>,  Cornelia Huck <cohuck@redhat.com>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH v5 08/13] qmp: update virtio features map to support
- extended features
-In-Reply-To: <91ad4a0f8c1372b6c9405b5b861ce3e86b5d975a.1755080614.git.pabeni@redhat.com>
- (Paolo Abeni's message of "Wed, 13 Aug 2025 12:28:21 +0200")
-References: <cover.1755080613.git.pabeni@redhat.com>
- <91ad4a0f8c1372b6c9405b5b861ce3e86b5d975a.1755080614.git.pabeni@redhat.com>
-Date: Sat, 30 Aug 2025 10:05:06 +0200
-Message-ID: <873499dykt.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7c0-0004vG-6r
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:24 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7by-0003xo-Bf
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:23 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7722c8d2846so952164b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756506620; x=1757111420; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aA1CZlBtF0AEUKR5am9ISxGmf8nS3Sm9ZoDdoUGF74o=;
+ b=RiE5iJx87Q2MXw26Fknc49p6RE9hjqbb3eDWybETgbz4OnDQhJoaZbdiNvAON3wMCb
+ IreBVZWUiJaup1VENMuhOXIxK8vc3PkA6qIObyuRpZVSBXqHkPqYiuwn4sKZV+usNeCi
+ eK+K4z3oEVf4A2AjRwasgLVcSf259NbeAq6PVpitW1sBIZuKd3wePNpxoHksZ/E6PN8F
+ ZZeV9ULO+70es35GE+k0GvWlBgjVjBdl/wFmddRjErW5tj2GCqpyVT6LZqnWqdiaq5G9
+ 8Zcb/4Iv35yCNXQrbBoqKfsBPLLGvBW+pHmNQihCQr8yMcDEkCT81nQqFXOGcs1uH/b4
+ h1dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756506620; x=1757111420;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aA1CZlBtF0AEUKR5am9ISxGmf8nS3Sm9ZoDdoUGF74o=;
+ b=RZlFipUb1oGzF1V/fQdlA4QHfXO6rWhGG0mTZNyKHKTrWz6PcYgf8k6i57A5BPjoAj
+ oEJVvv3ce+M3X1f+Zic2TOELHsdQseYg+Ks3LU5epjfGaccQQlWYuXycQ4fpSM7WdLdW
+ StP5+PNd3MittlCVvt9NdL/zmaFqYRR6YREb5BHYJYLtXnGGtLNc0IF4oWKT7D5XlgTn
+ ZH7FKmHA0cs8yUHfsEHrOwD553OeMTf8v6SikMbb+rW+JaWW/FVuqMdgqTIC+ceItDb0
+ YI9SBOyJ9OWZKhDVvmyn+SHxzRGDyYFT41O3zCKtT+t/VtCwYGs83c7GMO3LYvEAMgjr
+ yEMw==
+X-Gm-Message-State: AOJu0YwEcZ9Aw1ZHn4W2ALcQA4HwJmGYQ3mzxXNV8VhkMx0tt8QmAeid
+ eEPcWvIkvY7wiPgA7VUQpXg2uPa0EB7fdnhZsyLFwt0gjPnX481Ay/rZvUlfCNcbfnHjPXYC93T
+ 6k69XTco=
+X-Gm-Gg: ASbGncuUMpMeSrPu+dB2HlZ5UtEX9en7LluOgV8nEU4+tvrX+CEnTU+YoHhqhOInHE7
+ n8WR1v85ggc1vA3qhQYMI2pPn19X1fP/i9bEJxi5TYhyu2/USibKnzt/k9GbhbNsl1Sv1WsKwpM
+ AEeh6wI3E5DVWAvINghvyKBrx+93YRpL1r3zNZGsfeA6Ap/mT4iLXv78ibd+8cBQIoaww4TkxAN
+ pkeJbSSU7kuarSqeaGJvbZSWdGeGrk66zLEntMbywVC75E2xc77UnpMAxUDzhsDu+0rk5SFCHei
+ 94D5Dr8x4CLE7mPH5R8oDOgD61Bc1GE2b8yd8mYsiJ+pfF0RgwYPqh3wU7thNT8O11Y5YyK2Pdi
+ JGkQ87QhMPpBm92g3kz4EfYckINVTSwf1iX+8IrAYoQxmcnVewSTb+LAeWpa91O8=
+X-Google-Smtp-Source: AGHT+IGXdP/ZiBMTkhhhoNqqiQu2fjiDWTqvmfSpmyjMpBg07qA0aH4FjpStiygm6M2IInJCzWKiUg==
+X-Received: by 2002:a05:6a00:1746:b0:772:bdb:276c with SMTP id
+ d2e1a72fcca58-7723e3949e9mr273014b3a.25.1756506620515; 
+ Fri, 29 Aug 2025 15:30:20 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 15:30:20 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 69/91] linux-user: Move elf parameters to {arm,
+ aarch64}/target_elf.h
+Date: Sat, 30 Aug 2025 08:24:05 +1000
+Message-ID: <20250829222427.289668-70-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,17 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Abeni <pabeni@redhat.com> writes:
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/aarch64/target_elf.h |  9 +++++++++
+ linux-user/arm/target_elf.h     |  4 ++++
+ linux-user/elfload.c            | 25 -------------------------
+ 3 files changed, 13 insertions(+), 25 deletions(-)
 
-> Extend the VirtioDeviceFeatures struct with an additional u64
-> to track unknown features in the 64-127 bit range and decode
-> the full virtio features spaces for vhost and virtio devices.
->
-> Also add entries for the soon-to-be-supported virtio net GSO over
-> UDP features.
->
-> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-
-Acked-by: Markus Armbruster <armbru@redhat.com>
+diff --git a/linux-user/aarch64/target_elf.h b/linux-user/aarch64/target_elf.h
+index 9eb8bb547e..3c9fef9378 100644
+--- a/linux-user/aarch64/target_elf.h
++++ b/linux-user/aarch64/target_elf.h
+@@ -10,6 +10,9 @@
+ 
+ #include "target_ptrace.h"
+ 
++#define ELF_ARCH                EM_AARCH64
++#define ELF_CLASS               ELFCLASS64
++
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+ #define HAVE_ELF_PLATFORM       1
+@@ -23,4 +26,10 @@ typedef struct target_elf_gregset_t {
+     struct target_user_pt_regs pt;
+ } target_elf_gregset_t;
+ 
++#if TARGET_BIG_ENDIAN
++# define VDSO_HEADER            "vdso-be.c.inc"
++#else
++# define VDSO_HEADER            "vdso-le.c.inc"
++#endif
++
+ #endif
+diff --git a/linux-user/arm/target_elf.h b/linux-user/arm/target_elf.h
+index 19fdfa2f2c..d871d6d665 100644
+--- a/linux-user/arm/target_elf.h
++++ b/linux-user/arm/target_elf.h
+@@ -10,6 +10,10 @@
+ 
+ #include "target_ptrace.h"
+ 
++#define ELF_ARCH                EM_ARM
++#define ELF_CLASS               ELFCLASS32
++#define EXSTACK_DEFAULT         true
++
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+ #define HAVE_ELF_PLATFORM       1
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 73ca6c681e..838d7199a6 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -130,31 +130,6 @@ typedef abi_uint        target_gid_t;
+ #endif
+ typedef abi_int         target_pid_t;
+ 
+-#ifdef TARGET_ARM
+-
+-#ifndef TARGET_AARCH64
+-/* 32 bit ARM definitions */
+-
+-#define ELF_ARCH        EM_ARM
+-#define ELF_CLASS       ELFCLASS32
+-#define EXSTACK_DEFAULT true
+-
+-#else
+-/* 64 bit ARM definitions */
+-
+-#define ELF_ARCH        EM_AARCH64
+-#define ELF_CLASS       ELFCLASS64
+-
+-#if TARGET_BIG_ENDIAN
+-# define VDSO_HEADER  "vdso-be.c.inc"
+-#else
+-# define VDSO_HEADER  "vdso-le.c.inc"
+-#endif
+-
+-#endif /* not TARGET_AARCH64 */
+-
+-#endif /* TARGET_ARM */
+-
+ #ifdef TARGET_SPARC
+ 
+ #ifndef TARGET_SPARC64
+-- 
+2.43.0
 
 
