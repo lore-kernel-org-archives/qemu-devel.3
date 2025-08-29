@@ -4,90 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AE2CA1000
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F38CACA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNGk-0007SV-6g; Sat, 30 Aug 2025 11:13:30 -0400
+	id 1usNNC-0000ln-04; Sat, 30 Aug 2025 11:20:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryiU-0001C6-0A
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:34 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us03s-0002aM-SQ
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 10:26:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryiK-0008OI-Dr
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:29 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us03n-0003l9-8s
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 10:26:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756472416;
+ s=mimecast20190719; t=1756477592;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k8kp0Cbu16sKsjDAB7J2N+24+1kUucDBRmU0sLqwMZQ=;
- b=d6Pak6MfMWnSR9EgkODJB0Y2U7UJGCI8DYo2zzoCIvdJd9+OMD9CPoW3S67+uLmWMLZKlJ
- 0MYtf3Z5b7MX+CihQ6zOBIDpx0D3kL6KGocR17zW3ivfYTq89iWuR3L3i+lrID4xClmi3H
- gSavnX8X9SEHBMIkXhYhSJEwy9JW+mw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-98-VG07g-4GOa283MIVQcaGsQ-1; Fri, 29 Aug 2025 09:00:15 -0400
-X-MC-Unique: VG07g-4GOa283MIVQcaGsQ-1
-X-Mimecast-MFC-AGG-ID: VG07g-4GOa283MIVQcaGsQ_1756472414
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3cdd69ee330so731582f8f.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756472413; x=1757077213;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=k8kp0Cbu16sKsjDAB7J2N+24+1kUucDBRmU0sLqwMZQ=;
- b=rTKkgGBnU/OyAwhSeC4rUgrr2bBJO+J43cd7w40ekChtyiFl1rRc05UcLrUY+9KPX0
- wScXXv14rqMWi4XNVKGH7BBfaYuVVcY4AeMb2znRHEmLTfBjLe00wUsrzCp1YDUnok5H
- k8nW39pESeQIpiKwIzvGlin57ErQUXbQb6K3wkKe99JVMfy1jbfZe9VpGdpBgy/WYs2v
- sSfmFeoP+3/lGTyO5HKAkIXg+IbkQT3e5C0cR0yE8+y5IE8TNFhPpHuAUn7gkBqbu+vW
- pTDOBj63+S6nplw27ijDxpjhspY8T+Anz6UWPhff+d7xl59PayIfbE61XtlOlHnDqjF3
- Iobw==
-X-Gm-Message-State: AOJu0YxCsAksplcLDmf4nfOhHift1RHlFhLhGXESbO1ULByv3qZcvmEq
- 2O3ZP61+hdKI+gqKxmku++3I3+pORqizqOIDaVrJ+pEWVP8pgLtEItX5YPLJMa6wP8EMVbFQRzd
- QqUjtqWRPnpeC7zaMy9VgbYocAtv+9wc/4xvbBjWmaIqe+0aNpcSMUSJcQ+YzCrhFU6K7bIE2HG
- FN10snY0caVVE9Vw9s19IYOQ6psByiISXKbjNnz0pv
-X-Gm-Gg: ASbGncsGnWSnwOwZCC1GV2Hz2z5ZubuRAjtFEDlfUCjxgsz7JSYpLYKqkeKLBZ2zSAF
- eKSFyzM4yQxkHW9gpMkKTccN8t+zhlCZu3laM4v0EBAB9LhnOQKfmLL0S/TFTSxzrZDXHA3UA8p
- AJnfJZOeaWO9BaBRWvLvT+bpyNmGj8XAm6ZrCHG4edPZA8shzEBU+ZEoLsNtmJq8XiL9yIpNEU/
- PRSIg18/8kkcd54AsCDk4FKXRDRLEwTWxHmqPiMxZL8ZMCWbm/Ghie1kE/BIq0/349H8GDsh92Y
- fH82iIeLFJJoLOQDHWvomDp75i7KgS22W7CT8EHAa+5a6FIauu2RhZ0iiIyA9saQH2dzkqo2Q/W
- 7RCT9uI1XyT2AzcI+tXQt2vwiVx9E1a2rYfLUrRGzpRE=
-X-Received: by 2002:a05:6000:40dd:b0:3a4:d6ed:8df8 with SMTP id
- ffacd0b85a97d-3c5dc734927mr21516467f8f.39.1756472412942; 
- Fri, 29 Aug 2025 06:00:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFY6a5M++V57bS+wpK+MuOfDStkPzeN9MtAnX3m6Z8KIV5YtsAP4l11iMRj4BKW0y6o5wcGeQ==
-X-Received: by 2002:a05:6000:40dd:b0:3a4:d6ed:8df8 with SMTP id
- ffacd0b85a97d-3c5dc734927mr21516430f8f.39.1756472412419; 
- Fri, 29 Aug 2025 06:00:12 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf33fb9d37sm3350068f8f.49.2025.08.29.06.00.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 06:00:10 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ bh=2Is+UiccWxb96yhRoOO7eKrwQn7xK9xKMoov8YL7HXs=;
+ b=ZtmdeTwyNlYuP+r0t2uR5tkuzwqd0Or6nv46v2zC3RDVhh5CXgRQZgpOgs7apWQcEslyI0
+ X8ojBnnmqcT5o3ji87l3TtoKV8XcGnwmNnLfVUw9xlIz2Je/Sf0JolUkc8JadK+s1uMDMG
+ pFjbEa3SBIzCmH8SIEMQ0wnhj0vph5I=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-TEPjQK3LOa2Io4Svkb8TTA-1; Fri,
+ 29 Aug 2025 10:26:29 -0400
+X-MC-Unique: TEPjQK3LOa2Io4Svkb8TTA-1
+X-Mimecast-MFC-AGG-ID: TEPjQK3LOa2Io4Svkb8TTA_1756477588
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB0D11956089; Fri, 29 Aug 2025 14:26:27 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DA19719560BC; Fri, 29 Aug 2025 14:26:25 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 13/28] hw/i386/pc_piix.c: remove
- pc_system_flash_cleanup_unused() from pc_init_isa()
-Date: Fri, 29 Aug 2025 14:59:20 +0200
-Message-ID: <20250829125935.1526984-14-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2 3/3] tests/functional: handle URLError when fetching assets
+Date: Fri, 29 Aug 2025 15:26:16 +0100
+Message-ID: <20250829142616.2633254-4-berrange@redhat.com>
+In-Reply-To: <20250829142616.2633254-1-berrange@redhat.com>
+References: <20250829142616.2633254-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,32 +87,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+We treat most HTTP errors as non-fatal when fetching assets,
+but forgot to handle network level errors. This adds catching
+of URLError so that we retry on failure, and will ultimately
+trigger graceful skipping in the pre-cache task.
 
-This function contains 'assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled)' and so we can
-safely assume that it should never be used for the isapc machine.
-
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20250828111057.468712-14-mark.caveayland@nutanix.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/i386/pc_piix.c | 1 -
- 1 file changed, 1 deletion(-)
+ tests/functional/qemu_test/asset.py | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 66dc4a5186e..fb936748bd1 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -503,7 +503,6 @@ static void pc_init_isa(MachineState *machine)
-         assert(machine->ram_size == x86ms->below_4g_mem_size +
-                                     x86ms->above_4g_mem_size);
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 5c74adf224..2dd32bf28d 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -15,7 +15,7 @@
+ from time import sleep
+ from pathlib import Path
+ from shutil import copyfileobj
+-from urllib.error import HTTPError
++from urllib.error import HTTPError, URLError
  
--        pc_system_flash_cleanup_unused(pcms);
-         if (machine->kernel_filename != NULL) {
-             /* For xen HVM direct kernel boot, load linux here */
-             xen_load_linux(pcms);
+ class AssetError(Exception):
+     def __init__(self, asset, msg, transient=False):
+@@ -171,6 +171,14 @@ def fetch(self):
+                     raise AssetError(self, "Unable to download: "
+                                      "HTTP error %d" % e.code)
+                 continue
++            except URLError as e:
++                # This is typically a network/service level error
++                # eg urlopen error [Errno 110] Connection timed out>
++                tmp_cache_file.unlink()
++                self.log.error("Unable to download %s: URL error %s",
++                               self.url, e.reason)
++                raise AssetError(self, "Unable to download: URL error %s" %
++                                 e.reason, transient=True)
+             except Exception as e:
+                 tmp_cache_file.unlink()
+                 raise AssetError(self, "Unable to download: %s" % e)
 -- 
-2.51.0
+2.50.1
 
 
