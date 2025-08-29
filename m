@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E89CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD668CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNQi-0007c5-Ev; Sat, 30 Aug 2025 11:23:48 -0400
+	id 1usNkV-0002gg-Rn; Sat, 30 Aug 2025 11:44:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1us1e9-0003Wd-AL
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:08:13 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7au-0004Fd-Qo
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:17 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1us1e5-0008G2-W8
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:08:13 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45a1b0c8867so20108755e9.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 09:08:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7as-0003XC-IL
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:16 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-771f90a45easo2234846b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756483685; x=1757088485; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1bdT+FbwQxM19QOto7Jq7CUzlonVbULRUD0RULaYVII=;
- b=zG/USa3IVwZUGUd4UBo+/9ilPwrS8uJIbzbf1c5FV7STdChLKxaGo/SrcxLAV+WVDg
- 7TOiKpx2HULpOvs+vMRqIIQEkJ3Dk1v2IwhQOVdF7LHQP1wgMmww5R5RXrsJt62Isk8c
- mF9zPdJmZYho5lqoBBv0jQ1txu8RVjahDHZtfuiw2NuG/rPAQQLFS9cssZPnybp7lnOR
- d+bZcW7Hnmh7bxnQZP/1zaO8M3jMrUrcPS6uBnBLd82L3d6qWeufLb3qNcyM/GpwN8Cf
- mYDploP6NtQHMjTH6NqRl8CW8LRHZl5lJreLiDvNcUR0n8RWn0OsrmIKvJBZOrbTN62C
- iPTA==
+ d=linaro.org; s=google; t=1756506552; x=1757111352; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2g9oIt4VPwMetgB/wVKiRncFietrLuZrsmH8GdIqkvs=;
+ b=kWYK/NHc80krr3Mm6Bo8YLGguTp5JoW3H4/pmNFNr6u1JKAvPz/l0ypZeuBpjB0ybA
+ Y1SQ+5KKc4h3cpV2tFUDVvKA4X6NIwmFe6WAq2QzqyQNexY8tU1W+ioLqouXkEQXL7Vu
+ 5n6rtXKf57CIV6YpmkQzRpcFrP8gDEAL9Hk2Gg9mGEixpGgfJQ3cac7emZTjUhaiaE2W
+ qz1XVJ+/Wyts2iH3uz01mLY6YKikht0KoGNUb/J3MUITGhCiVzun9VNB9CaVFtxzb4fV
+ DEbrTRCr3ExbE5d0HrI5CdSGaLWVAYnVkoDw2jVVUFj2MIDdsjNTq4/IyVhcq+nF8vF4
+ QhRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756483685; x=1757088485;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1bdT+FbwQxM19QOto7Jq7CUzlonVbULRUD0RULaYVII=;
- b=ULK+vxMOco6dzwBGNDglviKYt4RIxHRBy6Qhd/yaetT5t/SxDlqtKZt/FAh/zP0gtV
- etlhhP1TrnvRijeLbUXFZ5q3QFL85R/2xBFdNToWLxaPmjxiYcNGQ5EUnQw8JaNvdtRW
- VRdI+RjvtoM0BxKRFP2ucQNDtpBdE59KyPyaVRX25nrBVFfSc81zeZ+IWaoebYBR40G0
- BX07uPJ2/7WuKdSLSOgkRJks5/iykER6iw3vHwyDnXE9CT4vG6ASXrn11ftjKH7ATMLn
- cCinsRbIgI7zQmeonbejDSVTyLXJsdMAkG+NB7eU6NrNXp68BllwQTGz+nV+aFbl9QQc
- fCHQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzvcJFVHc0POTi9tu72SqBQP9E2HZ9akn/cy5cpXXk8nblmSazwOIYZzuVJfirO18zgI5ZzfJ1Siq8@nongnu.org
-X-Gm-Message-State: AOJu0Yw6ewjdXrJ7QwEYOKdS0vc5rA/DT6zarQ/auhLNLHQp97vj8K+8
- pF9A6E40Okgts1ojChIC3M9DM3szPw32AzNUeRw3vFJqYJLJZJAVGGjz2oGe0rdmUu8=
-X-Gm-Gg: ASbGncvGHfFMpdliAEb1RHlqawc9HAgkKAqRNvo1/XCEBVPopwsx5vyRaYX0/yeO5F5
- 7JPO9keYC+srrela5mXo/QGxqnn9wwRnTCSdVuEIgkv1Rfk27ePhq9o9ANiActyfieT4jMSnqG7
- J0koAA4GOfNgf94vGXF9I1pUMq4Iiyon8gJ7kJucmteppzEwKLxnJ8+L76lq0TKUWIprMIaEaXD
- L1WK03iL2METsmeyicQ1Zzn+5Z81G1dph8X9XVXr6CcCF8dFWijOO27PxKCgtO7sc3jzmPHU2k/
- DIj4FlvG4vrPeAE34hGTXodYMloiiSu1PwXCmGVx4urlVClHKa8NIX13xkvyh8j1gCLRbliJTAg
- 8ZtgfSixFGMhG1nxQY3D6mjgdMUji0G/Ez8OSgGSC91IsGbnnwYp3LRYGr2Mi9Vjv//IRETb6iO
- he
-X-Google-Smtp-Source: AGHT+IEM+6KpH6oDUzr0lN//poUNxfYzzFtom4jkhcoo9PhxlshbvSyejTGCBWR7JZlwHIjOgAAtbg==
-X-Received: by 2002:a05:600c:4715:b0:456:302:6dc3 with SMTP id
- 5b1f17b1804b1-45b517d4c47mr230804695e9.26.1756483684854; 
- Fri, 29 Aug 2025 09:08:04 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf276c751esm3847062f8f.16.2025.08.29.09.08.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 09:08:04 -0700 (PDT)
-Message-ID: <472194f0-5853-4c7f-8b52-3c85e902097d@linaro.org>
-Date: Fri, 29 Aug 2025 18:08:02 +0200
+ d=1e100.net; s=20230601; t=1756506552; x=1757111352;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2g9oIt4VPwMetgB/wVKiRncFietrLuZrsmH8GdIqkvs=;
+ b=dgvSxg4MV/9m2jowNMqxG6Nwy+9mL6Nx95cmyhUz75dN2nfGd5M+j5r3btikn/ehZt
+ 744pWaobZv/qNpRY1LOslU9MPWCw9sr/6mIEPIKBrNVJJ3OClypL0zZFOeka0C6QHAA/
+ 8H8pwJZk5qcMvM+RcaB5ODI87NTtHMtgSFP0CyoO48+oHOVMXLJcceAj/0C8wDQXNGvC
+ Rn2cubovIf4dUsXH3xwRfZph37LpJrC2HNsRHq33y4abn201yyxk0DXF2GWf0RviumYL
+ nZU8tclqjl7QhiVWQAvktragw2Kjq1ViWgt0Q9Nd+orAhVgXDmNGSdSzofymzNylPJz7
+ 9k4g==
+X-Gm-Message-State: AOJu0YwQOoBUVnfHcEaXIVT7+mwAjL1RzDDbYxxS+ThfzD0ZqhEHaePt
+ xQA7WA/t1LnmQF+36HVmDorqjalD6pGLkaOsFOQ0cW7wm/mYYfRtggIPHNCHbMBGQyvD3nBEOiM
+ q4O9xUbw=
+X-Gm-Gg: ASbGncsqYQ+XgQdjInzB0UAGPUrHR3KpZCHr0iBWTI3k8M/Spq4rg3XtUSHQ8zoFLXu
+ LPIVzQ+hhpg+Yh8emNYNbmjnmLYUTyzyvS0U1D7PQEF53nxMPWHNCcRqLUxIA6dNFgXDPXUEcRA
+ /vTwMg3X2nK/C58Nz1KgGGLh/2eBZr3A1BPmhV1sy7q1gx78l6+usKeusiD6bfm7TQvLO/JYPyU
+ yerOM9P0/9Kvw0nUEGpJKdrWxohmsgzrVZjSqs0/NnJDp7Fo9D4fPHYXZZFW2b2rrWx9+6Bs039
+ vEuwhJA7OaABCkOlC4amUPPIZKBH3UnrBXaqNQ4dL3Hja+eUja0W6nS7MBIbScad5OdojyiJiGs
+ agPacovO78B4RVqeu2QZc+GaS7/sWHTgrn7+4YjvN8+IESAPvd502YYFxZumUo6e1uU0c4RpK31
+ KGPdJsBwDm
+X-Google-Smtp-Source: AGHT+IHI6U/jfzqaT+L/sJRm1f3mhmnEACaC8NmzV2UuJS40DasTHyIwCw8EofxDV2xxrqU5JIdZMA==
+X-Received: by 2002:a05:6a21:32a8:b0:243:bd98:de64 with SMTP id
+ adf61e73a8af0-243d6f02826mr297189637.28.1756506552510; 
+ Fri, 29 Aug 2025 15:29:12 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.29.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 15:29:12 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 40/91] linux-user/aarch64: Expand target_elf_gregset_t
+Date: Sat, 30 Aug 2025 08:23:36 +1000
+Message-ID: <20250829222427.289668-41-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] hw/i2c: add support for PMBus
-To: Titus Rwantare <titusr@google.com>, Corey Minyard <minyard@acm.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Joel Stanley
- <joel@jms.id.au>, Hao Wu <wuhaotsh@google.com>
-References: <20210708172556.1868139-1-titusr@google.com>
- <20210708172556.1868139-2-titusr@google.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20210708172556.1868139-2-titusr@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,744 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Titus,
+Make use of the fact that target_elf_gregset_t is a
+proper structure by using target_user_pt_regs.
 
-On 8/7/21 19:25, Titus Rwantare wrote:
-> QEMU has support for SMBus devices, and PMBus is a more specific
-> implementation of SMBus. The additions made in this commit makes it easier to
-> add new PMBus devices to QEMU.
-> 
-> https://pmbus.org/specification-archives/
-> 
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
-> Reviewed-by: Hao Wu <wuhaotsh@google.com>
-> Signed-off-by: Titus Rwantare <titusr@google.com>
-> ---
->   include/hw/i2c/pmbus_device.h |  517 +++++++++++
->   hw/i2c/pmbus_device.c         | 1612 +++++++++++++++++++++++++++++++++
->   hw/arm/Kconfig                |    1 +
->   hw/i2c/Kconfig                |    4 +
->   hw/i2c/meson.build            |    1 +
->   5 files changed, 2135 insertions(+)
->   create mode 100644 include/hw/i2c/pmbus_device.h
->   create mode 100644 hw/i2c/pmbus_device.c
+Drop ELF_NREG, target_elf_greg_t, and tswapreg.
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/aarch64/target_elf.h | 11 +++++++----
+ linux-user/aarch64/elfload.c    | 11 +++++------
+ 2 files changed, 12 insertions(+), 10 deletions(-)
 
-> +static uint8_t pmbus_receive_byte(SMBusDevice *smd)
-> +{
-> +    PMBusDevice *pmdev = PMBUS_DEVICE(smd);
-> +    PMBusDeviceClass *pmdc = PMBUS_DEVICE_GET_CLASS(pmdev);
-> +    uint8_t ret = 0xFF;
-> +    uint8_t index = pmdev->page;
-> +
-> +    if (pmdev->out_buf_len != 0) {
-> +        ret = pmbus_out_buf_pop(pmdev);
-> +        return ret;
-> +    }
-> +
-> +    switch (pmdev->code) {
-> +    case PMBUS_PAGE:
-> +        pmbus_send8(pmdev, pmdev->page);
-> +        break;
-> +
-> +    case PMBUS_OPERATION:                 /* R/W byte */
-> +        pmbus_send8(pmdev, pmdev->pages[index].operation);
-> +        break;
-> +
-> +    case PMBUS_ON_OFF_CONFIG:             /* R/W byte */
-> +        pmbus_send8(pmdev, pmdev->pages[index].on_off_config);
-> +        break;
-> +
-> +    case PMBUS_PHASE:                     /* R/W byte */
-> +        pmbus_send8(pmdev, pmdev->pages[index].phase);
-> +        break;
-> +
-> +    case PMBUS_WRITE_PROTECT:             /* R/W byte */
-> +        pmbus_send8(pmdev, pmdev->pages[index].write_protect);
-> +        break;
-> +
-> +    case PMBUS_CAPABILITY:
-> +        pmbus_send8(pmdev, pmdev->capability);
-> +        break;
-> +
-> +    case PMBUS_VOUT_MODE:                 /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_MODE) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].vout_mode);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_COMMAND:              /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_command);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_TRIM:                 /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_trim);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_CAL_OFFSET:           /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_cal_offset);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_MAX:                  /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_max);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_MARGIN_HIGH:          /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_MARGIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_margin_high);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_MARGIN_LOW:           /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_MARGIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_margin_low);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_TRANSITION_RATE:      /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_transition_rate);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_DROOP:                /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_droop);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_SCALE_LOOP:           /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_scale_loop);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_SCALE_MONITOR:        /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_scale_monitor);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    /* TODO: implement coefficients support */
-> +
-> +    case PMBUS_POUT_MAX:                  /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].pout_max);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VIN_ON:                    /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vin_on);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VIN_OFF:                   /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vin_off);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IOUT_CAL_GAIN:             /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT_GAIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].iout_cal_gain);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_OV_FAULT_LIMIT:       /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_ov_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_OV_FAULT_RESPONSE:    /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].vout_ov_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_OV_WARN_LIMIT:        /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_ov_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_UV_WARN_LIMIT:        /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_uv_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_UV_FAULT_LIMIT:       /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vout_uv_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VOUT_UV_FAULT_RESPONSE:    /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].vout_uv_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IOUT_OC_FAULT_LIMIT:       /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].iout_oc_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IOUT_OC_FAULT_RESPONSE:    /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].iout_oc_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IOUT_OC_LV_FAULT_LIMIT:    /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].iout_oc_lv_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IOUT_OC_LV_FAULT_RESPONSE: /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].iout_oc_lv_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IOUT_OC_WARN_LIMIT:        /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].iout_oc_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IOUT_UC_FAULT_LIMIT:       /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].iout_uc_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IOUT_UC_FAULT_RESPONSE:    /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].iout_uc_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_OT_FAULT_LIMIT:            /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].ot_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_OT_FAULT_RESPONSE:         /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].ot_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_OT_WARN_LIMIT:             /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].ot_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_UT_WARN_LIMIT:             /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].ut_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_UT_FAULT_LIMIT:            /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].ut_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_UT_FAULT_RESPONSE:         /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].ut_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VIN_OV_FAULT_LIMIT:        /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vin_ov_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VIN_OV_FAULT_RESPONSE:     /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].vin_ov_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VIN_OV_WARN_LIMIT:         /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vin_ov_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VIN_UV_WARN_LIMIT:         /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vin_uv_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VIN_UV_FAULT_LIMIT:        /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].vin_uv_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_VIN_UV_FAULT_RESPONSE:     /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].vin_uv_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IIN_OC_FAULT_LIMIT:        /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].iin_oc_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IIN_OC_FAULT_RESPONSE:     /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].iin_oc_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_IIN_OC_WARN_LIMIT:         /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].iin_oc_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_POUT_OP_FAULT_LIMIT:       /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].pout_op_fault_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_POUT_OP_FAULT_RESPONSE:    /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].pout_op_fault_response);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_POUT_OP_WARN_LIMIT:        /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].pout_op_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_PIN_OP_WARN_LIMIT:         /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_PIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].pin_op_warn_limit);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_STATUS_BYTE:               /* R/W byte */
-> +        pmbus_send8(pmdev, pmdev->pages[index].status_word & 0xFF);
-> +        break;
-> +
-> +    case PMBUS_STATUS_WORD:               /* R/W word */
-> +        pmbus_send16(pmdev, pmdev->pages[index].status_word);
-> +        break;
-> +
-> +    case PMBUS_STATUS_VOUT:               /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].status_vout);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_STATUS_IOUT:               /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].status_iout);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_STATUS_INPUT:              /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN ||
-> +            pmdev->pages[index].page_flags & PB_HAS_IIN ||
-> +            pmdev->pages[index].page_flags & PB_HAS_PIN) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].status_input);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_STATUS_TEMPERATURE:        /* R/W byte */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
-> +            pmbus_send8(pmdev, pmdev->pages[index].status_temperature);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_STATUS_CML:                /* R/W byte */
-> +        pmbus_send8(pmdev, pmdev->pages[index].status_cml);
-> +        break;
-> +
-> +    case PMBUS_STATUS_OTHER:              /* R/W byte */
-> +        pmbus_send8(pmdev, pmdev->pages[index].status_other);
-> +        break;
-> +
-> +    case PMBUS_READ_EIN:                  /* Read-Only block 5 bytes */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_EIN) {
-> +            pmbus_send(pmdev, pmdev->pages[index].read_ein, 5);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_EOUT:                 /* Read-Only block 5 bytes */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_EOUT) {
-> +            pmbus_send(pmdev, pmdev->pages[index].read_eout, 5);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_VIN:                  /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_vin);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_IIN:                  /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_iin);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_VOUT:                 /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_vout);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_IOUT:                 /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_iout);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_TEMPERATURE_1:        /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMPERATURE) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_temperature_1);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_TEMPERATURE_2:        /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP2) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_temperature_2);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_TEMPERATURE_3:        /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP3) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_temperature_3);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_POUT:                 /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_pout);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_READ_PIN:                  /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_PIN) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].read_pin);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_REVISION:                  /* Read-Only byte */
-> +        pmbus_send8(pmdev, pmdev->pages[index].revision);
-> +        break;
-> +
-> +    case PMBUS_MFR_ID:                    /* R/W block */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_MFR_INFO) {
-> +            pmbus_send_string(pmdev, pmdev->pages[index].mfr_id);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_MODEL:                 /* R/W block */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_MFR_INFO) {
-> +            pmbus_send_string(pmdev, pmdev->pages[index].mfr_model);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_REVISION:              /* R/W block */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_MFR_INFO) {
-> +            pmbus_send_string(pmdev, pmdev->pages[index].mfr_revision);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_LOCATION:              /* R/W block */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_MFR_INFO) {
-> +            pmbus_send_string(pmdev, pmdev->pages[index].mfr_location);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_VIN_MIN:               /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_vin_min);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_VIN_MAX:               /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VIN_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_vin_max);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_IIN_MAX:               /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IIN_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_iin_max);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_PIN_MAX:               /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_PIN_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_pin_max);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_VOUT_MIN:              /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_vout_min);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_VOUT_MAX:              /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_VOUT_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_vout_max);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_IOUT_MAX:              /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_IOUT_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_iout_max);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_POUT_MAX:              /* Read-Only word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_POUT_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_pout_max);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_MAX_TEMP_1:            /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_max_temp_1);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_MAX_TEMP_2:            /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_max_temp_2);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_MFR_MAX_TEMP_3:            /* R/W word */
-> +        if (pmdev->pages[index].page_flags & PB_HAS_TEMP_RATING) {
-> +            pmbus_send16(pmdev, pmdev->pages[index].mfr_max_temp_3);
-> +        } else {
-> +            goto passthough;
-> +        }
-> +        break;
-> +
-> +    case PMBUS_CLEAR_FAULTS:              /* Send Byte */
-> +    case PMBUS_PAGE_PLUS_WRITE:           /* Block Write-only */
-> +    case PMBUS_STORE_DEFAULT_ALL:         /* Send Byte */
-> +    case PMBUS_RESTORE_DEFAULT_ALL:       /* Send Byte */
-> +    case PMBUS_STORE_DEFAULT_CODE:        /* Write-only Byte */
-> +    case PMBUS_RESTORE_DEFAULT_CODE:      /* Write-only Byte */
-> +    case PMBUS_STORE_USER_ALL:            /* Send Byte */
-> +    case PMBUS_RESTORE_USER_ALL:          /* Send Byte */
-> +    case PMBUS_STORE_USER_CODE:           /* Write-only Byte */
-> +    case PMBUS_RESTORE_USER_CODE:         /* Write-only Byte */
-> +    case PMBUS_QUERY:                     /* Write-Only */
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: reading from write only register 0x%02x\n",
-> +                      __func__, pmdev->code);
-> +        break;
-> +
-> +passthough:
-> +    default:
-> +        /* Pass through read request if not handled */
-> +        if (pmdc->receive_byte) {
-> +            ret = pmdc->receive_byte(pmdev);
+diff --git a/linux-user/aarch64/target_elf.h b/linux-user/aarch64/target_elf.h
+index b0728a1008..9eb8bb547e 100644
+--- a/linux-user/aarch64/target_elf.h
++++ b/linux-user/aarch64/target_elf.h
+@@ -8,16 +8,19 @@
+ #ifndef AARCH64_TARGET_ELF_H
+ #define AARCH64_TARGET_ELF_H
+ 
++#include "target_ptrace.h"
++
+ #define HAVE_ELF_HWCAP          1
+ #define HAVE_ELF_HWCAP2         1
+ #define HAVE_ELF_PLATFORM       1
+ #define HAVE_ELF_CORE_DUMP      1
+ 
+-typedef abi_ulong target_elf_greg_t;
+-
+-#define ELF_NREG                34
++/*
++ * See linux kernel: arch/arm64/include/asm/elf.h, where
++ * elf_gregset_t is mapped to struct user_pt_regs via sizeof.
++ */
+ typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
++    struct target_user_pt_regs pt;
+ } target_elf_gregset_t;
+ 
+ #endif
+diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
+index 00550f9fdf..07a0c3f844 100644
+--- a/linux-user/aarch64/elfload.c
++++ b/linux-user/aarch64/elfload.c
+@@ -349,13 +349,12 @@ const char *get_elf_platform(CPUState *cs)
+     return TARGET_BIG_ENDIAN ? "aarch64_be" : "aarch64";
+ }
+ 
+-#define tswapreg(ptr)   tswapal(ptr)
+-
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUARMState *env)
+ {
+-    for (int i = 0; i < 32; i++) {
+-        r->regs[i] = tswapreg(env->xregs[i]);
++    for (int i = 0; i < 31; i++) {
++        r->pt.regs[i] = tswap64(env->xregs[i]);
+     }
+-    r->regs[32] = tswapreg(env->pc);
+-    r->regs[33] = tswapreg(pstate_read((CPUARMState *)env));
++    r->pt.sp = tswap64(env->xregs[31]);
++    r->pt.pc = tswap64(env->pc);
++    r->pt.pstate = tswap64(pstate_read((CPUARMState *)env));
+ }
+-- 
+2.43.0
 
-This returned value ...
-
-> +        }
-> +        break;
-> +    }
-> +
-> +    if (pmdev->out_buf_len != 0) {
-> +        ret = pmbus_out_buf_pop(pmdev);
-
-... is overwritten here, is that expected?
-
-> +        return ret;
-> +    }
-> +
-> +    return ret;
-> +}
-Regards,
-Phil.
 
