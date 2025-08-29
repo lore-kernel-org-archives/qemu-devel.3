@@ -4,100 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBEF8CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 703D7CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNHT-0000lZ-Sc; Sat, 30 Aug 2025 11:14:16 -0400
+	id 1usNBb-0006SW-Gk; Sat, 30 Aug 2025 11:08:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryi5-0000yO-5D
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uruc3-0005wa-4t; Fri, 29 Aug 2025 04:37:35 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryi3-00089D-CL
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756472402;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Yxoy21IR96c+Q5DUdbsmFFGBfBDLqDyltAfmnPFJ63I=;
- b=jKubaDgeaIZrJB1PKQKMzLH0miypLUnrhdZWwJXksAIDcZa1FJIj9UXCBhoa4+q8A4usnw
- NUqQqGxbykl1MbmvDJmdhQXBwAc39L453YkMW4nZ/Mv1YdL+4eX8s4UhIsFSoOJyrftpTJ
- DqI8BGIJUpzNEi9pSScRTnd19sNFNk4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-Ama32dD4N3-_cD1UL_wOHw-1; Fri, 29 Aug 2025 09:00:00 -0400
-X-MC-Unique: Ama32dD4N3-_cD1UL_wOHw-1
-X-Mimecast-MFC-AGG-ID: Ama32dD4N3-_cD1UL_wOHw_1756472399
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45a1b0bd6a9so11531135e9.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756472398; x=1757077198;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Yxoy21IR96c+Q5DUdbsmFFGBfBDLqDyltAfmnPFJ63I=;
- b=axUYXNUhGWC8qA8dicht80IknMMgBan41tIHAzu4jZX+515r+w9XhNV04NkbdXSgVV
- 5i5rAespkWv4OE28rl2meuetJb22moWiPgfJHYWbGNFtrOdstmyd+eRaZ0H/GdWG3wiD
- guhBbgu52lJB8nl7o6Gcm2J3j6nxzjMSzTuZhF9JiEEb7nMA+L4RuDBpTJe9L/kszVJa
- 8PBZ1bQKTVTy1g/run9Z2eYjLia4rsWmq0iSY01hf+DN+4Ymd1B+tQQzeVjnEnqiJK3W
- jbFJm5/L8XG6lTvkgfFFQ6HWUAUu5bzbsq+bWu8JERtRsp8idrpGmUiTIwhPjW9kCewt
- hjSw==
-X-Gm-Message-State: AOJu0YzPWfNMUQ4FNNZMXlcT/VgRgIF7M9kBLpuJ+58c2qBmi86lbJRJ
- 0is1Hd4F5TxncsNS7jHZd/4rv0bGDEq42q1OX+7lyaBMISIcu9jVeatYix88CRHwHszY2pzjXj/
- CwjADm/rH9lbCu6AfbfyJanvm79K4cDEGGwgXgrJUDm0Ex4kMCHTPiwq9+0+zl/dmjLHUNn0ecM
- sMUMOor+sitlFz0MyUt/f1OWDbJRnSaL76tDtWhKoh
-X-Gm-Gg: ASbGncsouyLIBHhzP0B6mV3PmzB3C5hHI5e2TbMebfMD7kD4Pg8wuv07j9VaD7a4NVD
- 689PSOpNPmzFTvxi+WI7DpFC9mikbfcxUvJuquhvOkH6yuT2saRm0TjQRp+1g1PEidHv3ktGAYK
- xKSFyu4S4P1S6oRxNJSXTm3NpTXr8245+VTu8jO2DEh9MObFQuMYQZVwBKtywYUZ1AjyMTVKKuY
- 7MRC9ZCmdJFGNcweGU2i+/I5KlvRyAF5nwCaSFpJnt5L4Zh6VNZpZ3ofHmVlf1iFwKszlv8RHrN
- eQzD8/VMJRXwp7/MAs+ZlBLA7sZZr7b7+aRViQkSrge19/HSJ2toUwN7Q3jJz2bxQAlWWlcn1w3
- sUnwOoo9YszRmQueD46ewOnP8N6yXL5cmBrStblwl7R8=
-X-Received: by 2002:a05:6000:26d2:b0:3d0:d6e6:5d76 with SMTP id
- ffacd0b85a97d-3d0d6e664b1mr1445343f8f.55.1756472398143; 
- Fri, 29 Aug 2025 05:59:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHt0cX2L/zzLDzf7Rh9RUDJy1nUsZVdlXOQZJTOPoem8luhXtgrmrOY7rCXPWMS+/1u1hgagg==
-X-Received: by 2002:a05:6000:26d2:b0:3d0:d6e6:5d76 with SMTP id
- ffacd0b85a97d-3d0d6e664b1mr1445311f8f.55.1756472397658; 
- Fri, 29 Aug 2025 05:59:57 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf276cc915sm3273840f8f.21.2025.08.29.05.59.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 05:59:56 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 08/28] hw/i386/pc_piix.c: remove SMI and piix4_pm
- initialisation from pc_init_isa()
-Date: Fri, 29 Aug 2025 14:59:15 +0200
-Message-ID: <20250829125935.1526984-9-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uruc0-0007v3-6l; Fri, 29 Aug 2025 04:37:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1756456652; x=1787992652;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=8MEwvMA5vWesPqUlof2mHDRU5hI6F3MzUmiUPKTMc2w=;
+ b=HIsEgfp1Go/hDO3tu/U2onEWeLqA65sQ0z6AEJe9in9AREA2ERzH0dba
+ 2t2NXNW4BHxC8pgxaAWk5m+mQZVppb+7p4n4x2/fpQtLQCqIcD7ZOObpB
+ f6dEYKYJNvIeHKkI53mWwIr34lTEIJoOWrV7M2MQ8q0mCKaH+TRgY6MZd
+ SXW6UHCoHEBQkbf/EiO/88xhbTgSUpvnwUYiU29nYLlQ2PkfYSDS3u6sc
+ xCfK3ILArvPEbvAr0xJrlGKuIXij5Fcij4Q2GPDVOpaE7GvWtn/QY43Qg
+ c/2g9qKBgKQPqImrW48/6rq2UcaK8WP79p7CbxxweVPWzMVY8o7JGneDX Q==;
+X-CSE-ConnectionGUID: rtumsdV7TUeypL5xK0KwDQ==
+X-CSE-MsgGUID: GU90eCCpSr6IL5+I/o0vsg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11536"; a="46308778"
+X-IronPort-AV: E=Sophos;i="6.18,221,1751266800"; d="scan'208";a="46308778"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Aug 2025 01:37:25 -0700
+X-CSE-ConnectionGUID: yNyV1i/RRbCTfXHCc77mNw==
+X-CSE-MsgGUID: m8WXClvBTLinjLXFgRmqwg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,221,1751266800"; d="scan'208";a="170718644"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa008.fm.intel.com with ESMTP; 29 Aug 2025 01:37:23 -0700
+Date: Fri, 29 Aug 2025 16:59:10 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ pbonzini@redhat.com, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH 10/22] rust: split "migration" crate
+Message-ID: <aLFr3u+r8P5GGZRJ@intel.com>
+References: <20250827104147.717203-1-marcandre.lureau@redhat.com>
+ <20250827104147.717203-11-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20250827104147.717203-11-marcandre.lureau@redhat.com>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,57 +85,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Hi Marc-Andre,
 
-These are based upon the PIIX4 PCI chipset and so can never be used on an isapc machine.
+On Wed, Aug 27, 2025 at 02:41:32PM +0400, marcandre.lureau@redhat.com wrote:
+> Date: Wed, 27 Aug 2025 14:41:32 +0400
+> From: marcandre.lureau@redhat.com
+> Subject: [PATCH 10/22] rust: split "migration" crate
+> 
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250828111057.468712-9-mark.caveayland@nutanix.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/i386/pc_piix.c | 19 -------------------
- 1 file changed, 19 deletions(-)
+...
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 5ae265bd538..57b02da5a82 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -441,8 +441,6 @@ static void pc_init_isa(MachineState *machine)
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *system_io = get_system_io();
-     ISABus *isa_bus;
--    Object *piix4_pm = NULL;
--    qemu_irq smi_irq;
-     uint32_t irq;
-     GSIState *gsi_state;
-     MemoryRegion *ram_memory;
-@@ -618,23 +616,6 @@ static void pc_init_isa(MachineState *machine)
-     }
- #endif
- 
--    if (piix4_pm) {
--        smi_irq = qemu_allocate_irq(pc_acpi_smi_interrupt, first_cpu, 0);
--
--        qdev_connect_gpio_out_named(DEVICE(piix4_pm), "smi-irq", 0, smi_irq);
--        pcms->smbus = I2C_BUS(qdev_get_child_bus(DEVICE(piix4_pm), "i2c"));
--        /* TODO: Populate SPD eeprom data.  */
--        smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
--
--        object_property_add_link(OBJECT(machine), PC_MACHINE_ACPI_DEVICE_PROP,
--                                 TYPE_HOTPLUG_HANDLER,
--                                 (Object **)&x86ms->acpi_dev,
--                                 object_property_allow_set_link,
--                                 OBJ_PROP_LINK_STRONG);
--        object_property_set_link(OBJECT(machine), PC_MACHINE_ACPI_DEVICE_PROP,
--                                 piix4_pm, &error_abort);
--    }
--
-     if (machine->nvdimms_state->is_enabled) {
-         nvdimm_init_acpi_state(machine->nvdimms_state, system_io,
-                                x86_nvdimm_acpi_dsmio,
--- 
-2.51.0
+> @@ -0,0 +1,51 @@
+> +/*
+> + * QEMU System Emulator
+> + *
+> + * Copyright (c) 2024 Linaro Ltd.
+> + *
+> + * Authors: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining a copy
+> + * of this software and associated documentation files (the "Software"), to deal
+> + * in the Software without restriction, including without limitation the rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be included in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> + * THE SOFTWARE.
+> + */
+
+Could we use /* SPDX-License-Identifier: GPL-2.0-or-later */ directly ?
+
+[snip]
+
+> +// using extension traits would be nicer, unfortunately it doesn't allow const
+> +// fn yet
+> +pub struct VMStateFieldHelper(pub VMStateField);
+>
+>  // Add a couple builder-style methods to VMStateField, allowing
+>  // easy derivation of VMStateField constants from other types.
+
+A question: Sorry I didn't get your point about why we need
+VMStateFieldHelper?
+
+For its use case:
+
+> -        vmstate_struct!(FooB, arr_a[0 .. num_a], &VMSTATE_FOOA, FooA).with_version_id(1),
+> -        vmstate_struct!(FooB, arr_a_mul[0 .. num_a_mul * 32], &VMSTATE_FOOA, FooA).with_version_id(2),
+> +        VMStateFieldHelper(vmstate_struct!(FooB, arr_a[0 .. num_a], &VMSTATE_FOOA, FooA)).with_version_id(1).0,
+> +        VMStateFieldHelper(vmstate_struct!(FooB, arr_a_mul[0 .. num_a_mul * 32], &VMSTATE_FOOA, FooA)).with_version_id(2).0,
+
+It seems VMStateFieldHelper add another wrapper around vmstate_struct
+(and vmstate_of).
+
+The builder pattern is good, but I'm afraid this builder makes the use of
+vmstate_struct! more complex.
+
+> -impl VMStateField {
+> +impl VMStateFieldHelper {
+>      #[must_use]
+>      pub const fn with_version_id(mut self, version_id: i32) -> Self {
+>          assert!(version_id >= 0);
+> -        self.version_id = version_id;
+> +        self.0.version_id = version_id;
+>          self
+>      }
+
+If we could have a build() method then user doesn't need to write ".0"
+at the end.
+
+>  }
+
+And there's another VMStateDescriptionBuilder:
+
+https://lore.kernel.org/qemu-devel/20250505100854.73936-4-pbonzini@redhat.com/#t
+
+I think Paolo has the plan to merge it with v1.83 support. So if this
+VMStateFieldHelper is necessary, it's better seperate this into another
+patch and base it over VMStateDescriptionBuilder if possible.
+
+Thanks,
+Zhao
 
 
