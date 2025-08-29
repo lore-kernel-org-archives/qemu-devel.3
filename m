@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 071F8CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4C8CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNiI-0003KC-Qa; Sat, 30 Aug 2025 11:41:58 -0400
+	id 1usNiM-0003eu-UA; Sat, 30 Aug 2025 11:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us6i2-00039N-B7
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:32:38 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1us6qN-0004zX-F2
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:41:11 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us6hz-000738-QH
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:32:34 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-770530175a6so1705143b3a.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 14:32:30 -0700 (PDT)
+ id 1us6qL-0000oD-37
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:41:11 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-b4d4881897cso733328a12.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 14:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756503149; x=1757107949; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756503667; x=1757108467; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5Hqlc6/a7x2Z1czMBEiMziHSyqqwjw6QoDJsF0k2VYo=;
- b=yq+tdNad2ae7SOOA79IFRjQBgdth06DBKzuLA016RbaUPO7dDLCV1GLAZtgpUHwKR0
- gI/+530ZQTZ5odjTvZzLA/M/Bj97+PhMhekWVYrYVQiuKhbwxqFA951MK2DNHAhVGifx
- CrLXxp5z8LxJXKZ+YwXATUuxW/nTiYQf49MbfTZ0AjHK5qKoBg+IeoqqLs6tb2nRzCTr
- 6i5ZNFehPgRGggoGjQjjGCeMTk+uufuyitVS8IJ2WO6w9zQPguD3oul8gkKBD91CXRet
- rtlQ+KYQ6Gra+y2kgaQbPhm59lJBzfyAfe1ujVl8WXVh2stYI1RLKkCK+fZo7zrOCU+Y
- 7Tvg==
+ bh=fB5nmKg+3WVXiNIQHj0vBzxunuaqCaDa8V0Z/nwnd1c=;
+ b=HG6aZ3zD3VNINp9d/VPatlPzXFfR032oZZJnv6S9j+7Cc7Wz3PE/CzOvPzy7eoTPym
+ gJLTaE6xos1kRL2p+N0PVRecNA626zAYzUkhubO52yh3b3xwPAjEK43n4iUWAp0c7oeK
+ zxYHFY75o8p/x1U5/hLQSe6s604LSadFVVCEwDmnz4MbKpolFiNnZ3MpdfGpP3Zcbcfy
+ vy80IAQOpmRVvUmz/uTyFcFuxR8ppcqifVDrP/+/mGlKg3melUJA1YFbjtDf5nyUjp5Z
+ IP9xfl5sj7NwFU9GW+1eOXNRXgfoUA6u+JSRQflI0nZATkrK0Qi2lsVQhFlvUHeuo6nT
+ nYIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756503149; x=1757107949;
+ d=1e100.net; s=20230601; t=1756503667; x=1757108467;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5Hqlc6/a7x2Z1czMBEiMziHSyqqwjw6QoDJsF0k2VYo=;
- b=xEKHVNUp3gNhEwUX7F+EVyUKJt6KyykA9NsaoqgZWq/9j1T9qi39S0sjDRK1rxolqI
- 5c6T/almstVt3+X4/YxEX3J/wn4HLHuWnC1Dx0kri0vBUKFEv5k/WfWQQmhGWNKZGwwP
- YS7sbWP38Z/+db6Rv40xz6X1L7pflIEwFYlCDNRToKBwEkU6M1XY7QleVwPD/N0xCimu
- PgUPwwLu4q4M3D2r0Dqi1jSl7KuXrv1hYFgSOOlnlnLfbPJIVBEk9UP5FXoCxGRW3b4x
- oJ4JbYCcVS5Li7Jmibs6J+jszM1d0fN9BejAZcTLn1j8L3oEwCVrOuku7d7MDAtrCHsn
- lRqg==
+ bh=fB5nmKg+3WVXiNIQHj0vBzxunuaqCaDa8V0Z/nwnd1c=;
+ b=Wexi6i0CiFpLLtNYSqeL82NwfeIg8KQ085wY+LZ0tA/g+ztoYHyqqHkzwpMo8naYZW
+ 5AYy51N/oMx1Tw5VjsfWihz16d47TFDhiPCVBmyeeQYcvbBsNIejVYovfmNo+x6jLpNY
+ Rgv6ghXByJPwZW2cl5KUnQ1zb72RMWbH/3x9oY8uQ5PlO8iR16FDKT1ePh1UwLYPeJFL
+ Fw5PRUpEtFL5/okfHnvZ7XbfdMjwb4hw3JQwIGSpRXF89gbPFgCa3KnI5pfT1Nr4zbl9
+ dj2S6N3SyYIPfkwtPfg0hXWhWE19c9Cgk3IKDZFsLbzkJkGMY+x8J63L0pKAVJFZ9EhK
+ T/8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcfT4JZBAsPcAvqrPE2FuTy121SfsXeo71Q7l7HdUxno5BQTDsGo90tYmHgWleo/im1fQjcidNEXvt@nongnu.org
-X-Gm-Message-State: AOJu0Yx9sKe8BJcYT3E2hnv8WeZBg1/ktxtD6Sj7+qmBEajQoJvXKTOl
- CB6TWlKeWbCOHtnVlnbkZIqKxdal7i4qMAMFNvSZQyG7brYWZWVxK94PCOZfqbW++8CBbYL5MFl
- JddYA+xA=
-X-Gm-Gg: ASbGncsZ7BSmVXoUbWWK2mL1w6EWeJmrblcq8iRDBNyKQZyQm4zQjnKhFOLKLWCwxkz
- KyLJrk4viHZRUthmL99IUhcBJuuO844NLXjuWrb8GqncBle4CKJSkA1p19yH1tlODFLZZ3UbYms
- J+f3ekaXSm/N66SOkDsVzxD64A3ZgbL/DsX2/LqQv7wdHAUq4UkO/GflZ/73h2e4mdo1KBG+81p
- hO9s/0pyYUrRW2jmwG3v6ARIFaNoBH6Ju3wsK1x7BrwlNAa/cmfWf+zpFCP31cNqzItpAaD/vmj
- rnFbcDjM5fguMCkTcfW7ehE8MEDpVdbReI/9ND+AaxN/6B+mjslurkJ7rhO2uf97M3+0ym62dhR
- 8erT8ULyLokvmp8+VndR0SSbZsvApO8didwQJ9Ow1mpoM10d/PcYR7V/JiluuJDs/wOMFpg==
-X-Google-Smtp-Source: AGHT+IFdaEOvtaQpJYpqdmQyUnM9VKAKiP5R6Dc+pSThBmK3sAtiPvKWw54V0xmWk7oV7QTfw9vUqQ==
-X-Received: by 2002:a05:6a20:394b:b0:240:489:be9a with SMTP id
- adf61e73a8af0-243d6e0110emr133717637.23.1756503149116; 
- Fri, 29 Aug 2025 14:32:29 -0700 (PDT)
-Received: from [10.118.1.198] (122-150-204-48.dyn.ip.vocus.au.
- [122.150.204.48]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a2d2ea5sm3297560b3a.38.2025.08.29.14.32.26
+ AJvYcCXnk/mHyPcfJvhCxFRkOkvphw+MBr+AvHmwpwwC/VUd+kyDF6Gk0nrzoxN2ZFlCaEDTiU9/PXZ3gUmw@nongnu.org
+X-Gm-Message-State: AOJu0Yz/SZbVxPgego0xjKcGBr7HIuf1z9PvKpdMISXlsKb4UJvXFhjQ
+ s30ino5KaY7XDz+PJ65YGQFGzccmggXc2TIaShLTWlEzuro22ZOUNaizyUqlEB0ZJlY=
+X-Gm-Gg: ASbGncsamPOVFxdpvd6BVIy95LVXlLuMx3tRI0MRXyh631M3LjnLU7Ugr85K7QNBuKu
+ ILa4lJqDj85T4fA1fKsr5Cvlg0lZUlTtISrxua2UBw+UMSJU7lbprKidzLHRhaVLIGA1N1hj+WT
+ pHxI2dtGoNIJVIRPppquuS2c8/gXyZnDSWtWYg7UvW2hlAvyHFbvxQx3BvNWsvHvCcD3JvmYthv
+ wxyE6TPZOa6QIfY0BrTdToMHaJT66rt4IvKDru/JoZcPILl69BX+ENBh8USrPoNz3em8JZEukA3
+ SsFEingLfK2Iaf2ackt/Prn5+cO/xs8QBNz35qV0TcFLs3FBSOBjL55hJK7iSZSMSHN2wHd7K95
+ O3TDrXv+nWXDQBKxN3BvwKW0+kU6HsQT1uPWT3OYAo0adKN5QDcXKWrx2V+h68B3NwuLww+PNq2
+ +8OyTz
+X-Google-Smtp-Source: AGHT+IEtkorOF9MoxvcUzv0cph/GsCyuNrptYCGryzEgV2JQJQYBTOnlPEjSm2j+/sbRjF18WoScbQ==
+X-Received: by 2002:a17:902:c949:b0:246:edc9:3a80 with SMTP id
+ d9443c01a7336-249448dce41mr1720525ad.5.1756503667115; 
+ Fri, 29 Aug 2025 14:41:07 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-12.dyn.ip.vocus.au.
+ [122.150.204.12]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-327c5fc5055sm5106273a91.14.2025.08.29.14.41.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 14:32:28 -0700 (PDT)
-Message-ID: <56152a48-0297-4654-9934-7ca17e0e9416@linaro.org>
-Date: Sat, 30 Aug 2025 07:32:23 +1000
+ Fri, 29 Aug 2025 14:41:06 -0700 (PDT)
+Message-ID: <faf499b1-c3b9-49c8-baa2-00568fd0aab9@linaro.org>
+Date: Sat, 30 Aug 2025 07:41:01 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/18] target/ppc: limit cpu_interrupt_exittb to system
- emulation
+Subject: Re: [PATCH 11/18] accel/tcg: create a thread-kick function for TCG
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: peterx@redhat.com, imammedo@redhat.com
 References: <20250829152909.1589668-1-pbonzini@redhat.com>
- <20250829152909.1589668-2-pbonzini@redhat.com>
+ <20250829153115.1590048-7-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250829152909.1589668-2-pbonzini@redhat.com>
+In-Reply-To: <20250829153115.1590048-7-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,35 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/30/25 01:28, Paolo Bonzini wrote:
-> It is not used by user-mode emulation and is the only caller of
-> cpu_interrupt() in qemu-ppc* binaries.
+On 8/30/25 01:31, Paolo Bonzini wrote:
+> Round-robin TCG is calling into cpu_exit() directly.  In preparation
+> for making cpu_exit() usable from all accelerators, define a generic
+> thread-kick function for TCG which is used directly in the multi-threaded
+> case, and through CPU_FOREACH in the round-robin case.
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Use it also for user-mode emulation, and take the occasion to move
+> the implementation to accel/tcg/user-exec.c.
+> 
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/ppc/helper_regs.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-> index 7e5726871e5..5f217397490 100644
-> --- a/target/ppc/helper_regs.c
-> +++ b/target/ppc/helper_regs.c
-> @@ -274,6 +274,7 @@ TCGTBCPUState ppc_get_tb_cpu_state(CPUState *cs)
->       return (TCGTBCPUState){ .pc = env->nip, .flags = hflags_current };
->   }
->   
-> +#ifndef CONFIG_USER_ONLY
->   void cpu_interrupt_exittb(CPUState *cs)
->   {
->       /*
-> @@ -285,6 +286,7 @@ void cpu_interrupt_exittb(CPUState *cs)
->           cpu_interrupt(cs, CPU_INTERRUPT_EXITTB);
->       }
->   }
-> +#endif
->   
->   int hreg_store_msr(CPUPPCState *env, target_ulong value, int alter_hv)
->   {
+>   docs/devel/tcg-icount.rst       | 2 +-
+>   accel/tcg/tcg-accel-ops-mttcg.h | 3 ---
+>   accel/tcg/tcg-accel-ops.h       | 1 +
+>   accel/tcg/cpu-exec.c            | 6 ++++++
+>   accel/tcg/tcg-accel-ops-mttcg.c | 5 -----
+>   accel/tcg/tcg-accel-ops-rr.c    | 2 +-
+>   accel/tcg/tcg-accel-ops.c       | 2 +-
+>   accel/tcg/user-exec.c           | 6 ++++++
+>   bsd-user/main.c                 | 5 -----
+>   linux-user/main.c               | 5 -----
+>   10 files changed, 16 insertions(+), 21 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
