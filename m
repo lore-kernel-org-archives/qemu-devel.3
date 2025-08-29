@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB73CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B01DCCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:08:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNxr-0005ew-9w; Sat, 30 Aug 2025 11:58:04 -0400
+	id 1usNSo-0004tq-QY; Sat, 30 Aug 2025 11:25:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEQb-0007Fc-Vp
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:08 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1us26r-0006HC-CG
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:37:53 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEQW-0004qW-6C
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:01 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-b4e84a61055so71317a12.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:46:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1us26p-0006fL-GJ
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:37:53 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45b7d485204so14894185e9.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 09:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532815; x=1757137615; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QZLKbvaJXmVjJqae0cs73+DMl1qe751GQQY47wH+UJk=;
- b=P+ZCJQ7Z/vqqrN502oeGR6ivwkU1B5RlwzwD8B3NJUpcG2wYOx9k9SHifJ47CYuhXb
- +yA1fcY6tlUn5oobF+Z21Qac8DtmShekzYZXus+Br3hK2dHRuyO0ThsbuEFQJSIXopkx
- BqwhOBPNxPUdVOBoLw99BOou5H8prNOMElp+mhqSVqEh1JfkvHxPNosRs5oYPwkNdfBd
- dz5s8vvcur8xaP2A1x0fDC5ImhTld5Omy7/DVCZgOvgf1Sv7S6z8ZtyUBEaJBBl6OlM8
- xqPWxkszoPWv73CGTVIAq9VT07vGH1H+n+L7hx9PLvxdJL90QVFjGcmM7sX/4BEuU24b
- /6Gw==
+ d=linaro.org; s=google; t=1756485468; x=1757090268; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=huJdIqvmZ+zaJuBuQQp6mFkNWQfYfBe7ou7wyl7+Fmk=;
+ b=W7bYHK+stzVK0GKy9CNmXmUYjpm7bQKY759aPbonrEJKUexG/hB67BFIJhLpyN2HEZ
+ 6IYbAyLgVGQJKsv8HnOV28elbm5FyH70j7Yw0WqLpyE4Gsi1OD12uabGSEtORPeN2qeE
+ IVUq6kqtkAmz2bd70vv0IKxfb5KOSawQQrr7trohMtK3J7tM5X270NfzHTQXB0icorRo
+ tDKG/x6jq++PDTaGdAmAxOwIH2fBJExCTMqMpvTavCvfud8sa70gpKJfltXn2g2AcAX5
+ h5FilVwikRc7bSwpgdpVYaUpPkXF/72A02zzgANdlcRM2G/o+ObuSsw9FnEQNwuw/Z+n
+ /LWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532815; x=1757137615;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QZLKbvaJXmVjJqae0cs73+DMl1qe751GQQY47wH+UJk=;
- b=l2b0DJNCevnGMzHZHUn2Zsb8ugXIER59PKX+iTTk+9iY6JEkfosi9wgNhiBTEJt3Xx
- xPST98YiVZ8Bycc7dGyNV5E1WIpJ1U6fFoRZ47I9iz4y8aKjT0L0Ea8DDB0q7QT0io76
- CDK4Gvc59BNNd42plpakftxa73m9qI9rL6fFu7PGRpT0TBnOnX3FDwL5MVMyKqoIpATZ
- gob7nO806zW/jQXJYWgqHQtjqKabNJ+NoE7uqj6AGME9OLPDkjJj+Xgvhw9P9AWzTqxO
- CQt+wlqcnowEi5oRgleVxu261leV4LH7qe6Cbh6SMoM3vW41qQLh8C0Q/OPsSkyVJAFW
- nteA==
-X-Gm-Message-State: AOJu0Yxf0Hy1J6bB7+iSaE6F1wkXwyPJXJBVgOZ1Xj3L5HCnnuR9li16
- Y7NOOYuHniSAWTDoRy128b/gLlfilSW2uO0jXHpB5Euz005HPKBKTuxBIkOoWaOg7bxanF4KNth
- NGmNWHS0=
-X-Gm-Gg: ASbGncs6v8fN4vq5KzLVyYg0GdO1EIQYybWc8ZleVWe7c8tuxAHAiOG8uBc+yiK8ob/
- zEekmdrOuxOjw2ttNMiaNUVKW0Ga8Ou37quiLvi8GZf/wKvY+5kz+t6Wy6xsJJtVp0umiUWetZz
- /Hh7bu7jD9jpOqQOlGpKjdTDATA1v0MnL9vRsA+5mU8NHBrt/Qdkk0/N3iVhckr6rP9htaEiG+a
- ZNLU6/m6/btEIgXHuaY+4/d4SlIqA/aJGd7qitfTnLD4kZmiOiaH3bZ8bC6mH2yGpHkDLv8GVCK
- VgBRBw/Y8+rCC6nwiOG4zB7UVViKY7A0h7felb9tihsm/TccgiMa6JmPBfhIy3DBmFdniKlLAaV
- NEv92DmcpVjm0xfRdZRKQetUsHhjF7kGB4S1d7egiAlQTzA/FRbCeTtLFtZRr+sY=
-X-Google-Smtp-Source: AGHT+IEVNvqMG3+DGDs3rlePUboNFtyM1HZa+e+tI8fBAMOBtmtGPrJV9lbaPkeGHnRlWk3fPMNvqA==
-X-Received: by 2002:a17:903:1250:b0:249:1234:9f7c with SMTP id
- d9443c01a7336-24944b23caamr15133335ad.60.1756532815345; 
- Fri, 29 Aug 2025 22:46:55 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.46.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:46:54 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 49/84] target/arm: Implement FEAT_CHK
-Date: Sat, 30 Aug 2025 15:40:53 +1000
-Message-ID: <20250830054128.448363-50-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756485468; x=1757090268;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=huJdIqvmZ+zaJuBuQQp6mFkNWQfYfBe7ou7wyl7+Fmk=;
+ b=Agug7sw+IYrzZ0JXGBA0yjfzxOnt4PyQc+FRhFXwx42j+xiUNjL/+yq7GlUNBUpxgl
+ QhlXW2rvLTSm1bAlBMOffCmPQW/kbDfmKDrKZLiow/4ct9f85XgNv2C6xK8DrfPXI3UZ
+ evJokxGGCJGipFPI1778utcOgMxax2o0H4d48mHTqc83ppn5jAECLjyiAaC1/REf80Uk
+ ZowMDlifIdm0LkmuEuSbEm4zxDi7hQTcVfg6SJDMfwDBcTTXhfm/9QGCAX+yC7cL0O6T
+ mJFbavFzfgfa1jDqNbFYOaMOM3z9q24ymqw926jZLESuM06ZUHFzaETPAoPX3JFrg0Wp
+ bqcg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXnqiHGtF4gPk4pd0Gv+vaaROa8P2V5zTudww4am+fdOJdAzVO+++IUf33I2drE/9V6QFHgBi2ZCyrX@nongnu.org
+X-Gm-Message-State: AOJu0YwsTT6oA6+BhNTRiU6chAyHxt1Dfy7TNVwTONCfe+tgVQPi8PpQ
+ i4pxBHccr/PiTlxnzxpaKbsxh2AjTnx3/5wXCwOH/4X3+uNA//goX9mPJtEFN5vYjas=
+X-Gm-Gg: ASbGncvx7I2rgGsA1338L1K1//ADlk9ysKq99O7ohsHMScmKCiL3p/S/WA4yURlp1CX
+ f6T5pkRx0rYFd3jka/M8HPq0ZYRefOD0ihZ0OU7J9B/OKQC9YZAHk6nktcDtfoE8O87kpHMbYkF
+ LR/1s1CJqJhVH4uJKK9zT3QOvChwG7j2KjkJVTJj8nl5okUkFu58xjyLmlCp03kYEGELaUBcWsO
+ faC2QJtnz8CdpluChMZya0QGjru84p9CSwoNyLQjpTDkjRpprPuYfnoNGdDzKBW76TnT9+HI96L
+ iQgRnACBbxwsLAHjxu4fBBOUYMAyh7bWC6Q4uW/A5OBmeg9YOON7j11fdh0DKAEiYOyrXTkQGb5
+ V7QSPTdBh0ZortRagzOjtmizq+DCKyk/DcB8YNoZooxM4XhEOaf3byLUB+N5rvMI9aMda1I7ohZ
+ ZToyHFoEY2Op4=
+X-Google-Smtp-Source: AGHT+IGx4lPv5fUVgnNxOiziaaiKvWCf956a+8HuCHiCxa7LPGuUslVnlQhGSHWisHWq1+pqz+1LIg==
+X-Received: by 2002:a05:600c:4f0e:b0:45b:7f16:468a with SMTP id
+ 5b1f17b1804b1-45b7f16485dmr27834525e9.37.1756485468589; 
+ Fri, 29 Aug 2025 09:37:48 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b7e89920dsm51510625e9.16.2025.08.29.09.37.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 09:37:47 -0700 (PDT)
+Message-ID: <0c90ebd6-e112-478e-8604-ce5d1a1f29d5@linaro.org>
+Date: Fri, 29 Aug 2025 18:37:46 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] hw: fix some leaks in xlnx devices
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>
+References: <20250826174956.3010274-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250826174956.3010274-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,68 +105,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This feature contains only the CHKFEAT instruction.  It has
-no ID enable, being back-allocated into the hint nop space.
+On 26/8/25 19:49, Peter Maydell wrote:
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-a64.c | 14 ++++++++++++++
- docs/system/arm/emulation.rst  |  1 +
- target/arm/tcg/a64.decode      |  1 +
- 3 files changed, 16 insertions(+)
+> Peter Maydell (2):
+>    hw/misc/xlnx-versal-cframe-reg: Free FIFO, g_tree on deinit
+>    hw/display/xlnx_dp: Don't leak dpcd and edid objects
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 4139b0345f..8c73f54e9a 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2124,6 +2124,20 @@ static bool trans_AUTIBSP(DisasContext *s, arg_AUTIBSP *a)
-     return true;
- }
- 
-+static bool trans_CHKFEAT(DisasContext *s, arg_CHKFEAT *a)
-+{
-+    uint64_t feat_en = 0;
-+
-+    if (s->gcs_en) {
-+        feat_en |= 1 << 0;
-+    }
-+    if (feat_en) {
-+        TCGv_i64 x16 = cpu_reg(s, 16);
-+        tcg_gen_andi_i64(x16, x16, ~feat_en);
-+    }
-+    return true;
-+}
-+
- static bool trans_CLREX(DisasContext *s, arg_CLREX *a)
- {
-     tcg_gen_movi_i64(cpu_exclusive_addr, -1);
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 94a6192fa9..4b07af9eac 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -28,6 +28,7 @@ the following architecture extensions:
- - FEAT_BF16 (AArch64 BFloat16 instructions)
- - FEAT_BTI (Branch Target Identification)
- - FEAT_CCIDX (Extended cache index)
-+- FEAT_CHK (Check Feature Status)
- - FEAT_CMOW (Control for cache maintenance permission)
- - FEAT_CRC32 (CRC32 instructions)
- - FEAT_Crypto (Cryptographic Extension)
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 55ff6c504f..8283a9c83d 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -256,6 +256,7 @@ ERETA           1101011 0100 11111 00001 m:1 11111 11111 &reta  # ERETAA, ERETAB
-     AUTIASP     1101 0101 0000 0011 0010 0011 101 11111
-     AUTIBZ      1101 0101 0000 0011 0010 0011 110 11111
-     AUTIBSP     1101 0101 0000 0011 0010 0011 111 11111
-+    CHKFEAT     1101 0101 0000 0011 0010 0101 000 11111
-   ]
-   # The canonical NOP has CRm == op2 == 0, but all of the space
-   # that isn't specifically allocated to an instruction must NOP
--- 
-2.43.0
-
+Series queued, thanks.
 
