@@ -4,93 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E41FCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0563CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:22:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNi8-0002ET-Rh; Sat, 30 Aug 2025 11:41:49 -0400
+	id 1usNGh-0007Oz-MF; Sat, 30 Aug 2025 11:13:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us6jp-0003XD-U4
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:34:26 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us6jo-0007SD-7i
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:34:25 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-b4dc35711d9so531762a12.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 14:34:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756503262; x=1757108062; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tOwibmf+GhgC+Y+lRl1ImCOgkIBLcfEA70fp26QT5XQ=;
- b=ddnTphDrQYqTmxi0lE38B3JYrOmAHTna52jssQy8mfk1S7OwJw2trY1TpHcrkSe921
- KoT8xhw/RbnkUmgGfixdwNnS6L8AE5HYgHOjnKQkVvzjm/lr+DOord/D7GcSOSHupN9J
- EDiqCxUFYx1xuLyV1I/t0YZtpAjuFs9Z/9JnCHZlAUgOHhepbL3s8HB6C6G9Thd2pTD+
- 0S2Xy5zzYfWR1YpD82JELPCsyw+c0N7PVUwajMSl/lJ0W40T6ZOQUqviUOVexQ4SU8gM
- yXkSXEYx/R2bCDAgIrSwYcnG3BAMGsfmDOi2FDfyGHzTJjfsXsDjjR+tFfIg2Q6BdliF
- tP5w==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryiN-0001B9-4B
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryiF-0008Cx-OX
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:00:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756472414;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jtKc/6E/RbNiUG2cnBtKwsWzbtnSHz0rkgbelCKjpIE=;
+ b=ZILVrag0nSG1Xdtq3PKyY8982HYqFLHF5ycpZ293zoKi7BKu6t5evgS/49VC/JaWKTwnD3
+ b5+akFA+/nJscL+AWb8wCEOwncsjNVbPqdlf91fkgNCbfdnK1si6dVdK4ze2s30rYUJ+RB
+ uzb+oRO+7+mmI2Md+w6TIWky8DRLA+s=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-176-rFtJkVNZOvCPV02F2a0cSg-1; Fri, 29 Aug 2025 09:00:12 -0400
+X-MC-Unique: rFtJkVNZOvCPV02F2a0cSg-1
+X-Mimecast-MFC-AGG-ID: rFtJkVNZOvCPV02F2a0cSg_1756472411
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45b7d485153so11514745e9.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756503262; x=1757108062;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tOwibmf+GhgC+Y+lRl1ImCOgkIBLcfEA70fp26QT5XQ=;
- b=vgKoM34tviYMbgyHWk9n9IgETy1ddtKPipLzMi/SjywA4s/vqsNH5q2DHEL2GRhvA7
- tOipTIz9B1N1hi1I9qUI0wy5pjz6HiIZgQ/e4rziPJVAUreBVD8ObS0wHEgh6LkZ2b31
- f4ejePD6Dj1D0X7vAvLTGfH1fyzAC1jpvv8wcr5GYPQQKUUfCc/NTb6HMI//8dIoBoOS
- ACBtwdG8sQrY9WHP877IIZUAQmkwATng5ICuI1uJ0v9wduQEwWTYpNJhudqADROvY6jY
- nhDzGamYiosS5AbernVhyVJmKn8nLJXRcwCGvSJzG0MzOxz5N9NJdqZXRK+E52XmDMua
- Hrmw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXsXzvpIjJ1BepuAi3s/5Hdi/9UsIZt1bhNhH+yhW3KuZfpLFnai86dJ+elpCxrZ645F2hWKmmAzoYa@nongnu.org
-X-Gm-Message-State: AOJu0YwIstBn/VISmY843GQ/0O4IHgbR1IO11gfEmJIpZnwQJIuRqD/3
- Byft+QX0C95Rfq0nIXBt57zlYM2kOG6PNFXOvjt4rJqJvbV27IpRG/looh4+Fk29hIg=
-X-Gm-Gg: ASbGncvxRsHfU/2q9Q2IHxwal5aN/b1WV6KF4uzEebZS3DrhRJgpLdbQpNbS4o40seJ
- k0oaoW/cHSrjkuKfUKmsh8UgBUXsoniU1BVXiQJT6vn2EUo4SvRU7vIkOG455czFMKKxYWFV0jU
- pzr/UgmDQv7SaX2yFPz5L4Egm0iDjuF/nyQqpAHNxku8jV70n6aljumZbggEWbbqmS1E9amHfli
- TVtmwwlLJjEwLvGMmfUWGV/9H6Xigh35+ozI+DsqwmxU/Jf9Jb9mMykrdpgtDx89D4r2fpwK8Hk
- Gly+hwJict543qDF8pnzGPq2Oi8j4TOyfO3kZicMQ4UbBLgO4toqzCzGHy9zvhgoHBMQHqyGHHL
- e2Aj1pVdZiCeHtz9EDAtep1NLIOJJ6jam94nj50g1uZIZViFbye4RHu/KgObdkjcQFn8DwdEgfN
- Yf/b9CCuOOAyYGBOUBNA==
-X-Google-Smtp-Source: AGHT+IFXxOEBSfK5+FxFHO2pnYpvUjBLLTwPtFOAQabCPGnHOnqzoWI/WZnWAi40dOly0282kiV01A==
-X-Received: by 2002:a05:6a20:5493:b0:243:78a:82bd with SMTP id
- adf61e73a8af0-243d6f888e7mr118494637.55.1756503262582; 
- Fri, 29 Aug 2025 14:34:22 -0700 (PDT)
-Received: from [10.118.1.198] (122-150-204-179.dyn.ip.vocus.au.
- [122.150.204.179]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a26abd1sm3258085b3a.8.2025.08.29.14.34.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 14:34:22 -0700 (PDT)
-Message-ID: <3f95afe4-7188-40c0-9553-365328f62814@linaro.org>
-Date: Sat, 30 Aug 2025 07:34:17 +1000
+ d=1e100.net; s=20230601; t=1756472410; x=1757077210;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jtKc/6E/RbNiUG2cnBtKwsWzbtnSHz0rkgbelCKjpIE=;
+ b=biKo3G75l29bBImq9aip44om+K1v1Nj0znij20npPjKiBThLBwYu30mPkq1MmuL0Zl
+ 5V1dhGfZPrP6+4gwdIQavFoK6EBcV82ZY1uSf6ZzWS/p86YTyv9mtuVgya1IsqsMAZFR
+ 1GV/8yZwoJ+W3XiX2EpROyOzuoITkBS11/q580VI+lqAM5EMSRhbdsruu00VkSCuQHIs
+ q0Edn1iRMqpYTrD9iMjUA+5n2mDOYYHkF4e2lBywlDnKUweiVrpAqk89/UrN7i+y0Jb4
+ XtR/XbT15MH/Y/M+inW7maXWMaN4eYcj/vB//8KASYyrWGlu9hMIYuXkGWVoAOmtjyiz
+ 30uw==
+X-Gm-Message-State: AOJu0YxEEGaxkREhNuHlVt+sKsvdHCnWkXyf+LNIt2BXp+NzO0a1pTIj
+ QhEqzy90urC2m3YoEZHrJLpWxv1AFsi2IeZKcOONgg11GKCKqSW9d8paAlmSz/LBcOXN61aeyi5
+ Tv4lBKTpwd2yTKCkAZTxjvB0buoxMSGrEpmq+BD4//4glvG2btB7a5p9tmlwmE0Oi+3QaLM70Qy
+ 1yTyYG85sdif8unO7DrzNpz4JcsS/jovK780FNJerv
+X-Gm-Gg: ASbGncuQoPO8PhXc5sqiqC/9J1/BT4MnHxhN1ckz4NWafLb64EVG76a2t4rOiEBSmzP
+ 81Xf0Ho+bgfDMsrUUAf97sIOW8/MHHMQkoVC/lN9TJS/4eWCaCsVHU+mdg7Ab92e2QQKRVHPQmk
+ qV+CETZcNTOxbjX2D5PZbDlWcwT7SkhzWvCsoYJDvxkblvL8/d9zupIQxtz2KKflUoy+xJN/yQB
+ waULK4gaQJg8U2K6R/U0NKppWUUZ4qMxJKm+yhp9AZlZkaUXsxjcpa2uLPJ9kCx+maX5vT2OiNp
+ 835PbJVaiEPUBhAuIaCxWB4QaUWY2mRmuqpqU3j8vBVHC5wcCTSvDmzpWDhRj6IXB3GT6arUQ0V
+ jzXBOcn8uy9Y9R+75vg/58LIm3T1TkVsdQNcQWbr3w6Y=
+X-Received: by 2002:a05:600c:4511:b0:456:10a8:ff7 with SMTP id
+ 5b1f17b1804b1-45b517dd3admr225707805e9.28.1756472409802; 
+ Fri, 29 Aug 2025 06:00:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFX+JoRBf+P/lbVcUBADTBMTlEdHqi1xnX586DfxEksSoVDWPSvH7YGXB8suNz7FTMMm2eKqw==
+X-Received: by 2002:a05:600c:4511:b0:456:10a8:ff7 with SMTP id
+ 5b1f17b1804b1-45b517dd3admr225707315e9.28.1756472409190; 
+ Fri, 29 Aug 2025 06:00:09 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf276d5e5fsm3388364f8f.27.2025.08.29.06.00.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 06:00:06 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 12/28] hw/i386/pc_piix.c: hardcode hole64_size to 0 in
+ pc_init_isa()
+Date: Fri, 29 Aug 2025 14:59:19 +0200
+Message-ID: <20250829125935.1526984-13-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/18] treewide: clear bits of cs->interrupt_request with
- cpu_reset_interrupt()
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, imammedo@redhat.com
-References: <20250829152909.1589668-1-pbonzini@redhat.com>
- <20250829153115.1590048-2-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250829153115.1590048-2-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,23 +113,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/30/25 01:31, Paolo Bonzini wrote:
-> ---
->   accel/tcg/cpu-exec.c                |  6 +++---
->   hw/core/cpu-system.c                |  2 +-
->   target/avr/helper.c                 |  4 ++--
->   target/i386/hvf/x86hvf.c            |  8 ++++----
->   target/i386/kvm/kvm.c               | 14 +++++++-------
->   target/i386/nvmm/nvmm-all.c         | 10 +++++-----
->   target/i386/tcg/system/seg_helper.c | 13 ++++++-------
->   target/i386/tcg/system/svm_helper.c |  2 +-
->   target/i386/whpx/whpx-all.c         | 12 ++++++------
->   target/openrisc/sys_helper.c        |  2 +-
->   target/rx/helper.c                  |  4 ++--
->   target/s390x/tcg/excp_helper.c      |  2 +-
->   12 files changed, 39 insertions(+), 40 deletions(-)
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+All isapc machines must have 32-bit CPUs and have no PCI 64-bit hole so it can be
+hardcoded to 0.
 
-r~
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20250828111057.468712-13-mark.caveayland@nutanix.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/i386/pc_piix.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 0bc033943ca..66dc4a5186e 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -445,7 +445,6 @@ static void pc_init_isa(MachineState *machine)
+     GSIState *gsi_state;
+     MemoryRegion *ram_memory;
+     MemoryRegion *rom_memory = system_memory;
+-    uint64_t hole64_size = 0;
+ 
+     /*
+      * There is a small chance that someone unintentionally passes "-cpu max"
+@@ -499,7 +498,7 @@ static void pc_init_isa(MachineState *machine)
+ 
+     /* allocate ram and load rom/bios */
+     if (!xen_enabled()) {
+-        pc_memory_init(pcms, system_memory, rom_memory, hole64_size);
++        pc_memory_init(pcms, system_memory, rom_memory, 0);
+     } else {
+         assert(machine->ram_size == x86ms->below_4g_mem_size +
+                                     x86ms->above_4g_mem_size);
+-- 
+2.51.0
+
 
