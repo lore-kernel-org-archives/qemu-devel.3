@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E58CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D180CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNSc-0003x2-NZ; Sat, 30 Aug 2025 11:25:47 -0400
+	id 1usNHD-0000Q9-U3; Sat, 30 Aug 2025 11:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1us278-0006If-2f
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:38:10 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryj0-0001KM-By
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1us273-0006if-36
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:38:09 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryix-0008UL-2n
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756485479;
+ s=mimecast20190719; t=1756472457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=naVLCZ4zSiUzKP8RvI9TBiOX+GsWOP7N4xagM1Wa45Y=;
- b=eApQNIJzyP4l9i1xcUCTZ3JTq0jfPYOPBcjVJB4NeaW7RY0wXMKaMBkO6vs9CUZHR3y73R
- i0JvvAMy77tY3lTXfI8Ivh2HndhNjR3JIf199LRsaXQdw1fRBrAsLsehP6R1DQ6F0LJVPh
- npkWRBQq4+EvNosedAk8maUGrUbHCaU=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PB8Kdz4Nrxog6Sfp7mK37/CRD+JP3mh8G1Sat8ExiCM=;
+ b=bT4dPDCC6IhhpgBzqIYfoMhUTJ3KkZmYnYRcVFEv4WqqtEqG0gygO5aQxQnr8uovOPXjHu
+ LFuAZeYh3Tavx17RhoBU3grsyG2zymAT95c4PA0GuDrGI0g9xj/yJ9rXBQj8NoWzVZJcLO
+ HnR87eFGvSM/cVLUiPm0onLRr6Mvyq8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-R4qOqCQ4PVe6ygGvALhhoQ-1; Fri, 29 Aug 2025 12:37:55 -0400
-X-MC-Unique: R4qOqCQ4PVe6ygGvALhhoQ-1
-X-Mimecast-MFC-AGG-ID: R4qOqCQ4PVe6ygGvALhhoQ_1756485475
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7f95f65400fso509177285a.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 09:37:55 -0700 (PDT)
+ us-mta-111-jKls3dVzM1efA7WNxX-fNQ-1; Fri, 29 Aug 2025 09:00:55 -0400
+X-MC-Unique: jKls3dVzM1efA7WNxX-fNQ-1
+X-Mimecast-MFC-AGG-ID: jKls3dVzM1efA7WNxX-fNQ_1756472454
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0071c1so9717495e9.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756485475; x=1757090275;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=naVLCZ4zSiUzKP8RvI9TBiOX+GsWOP7N4xagM1Wa45Y=;
- b=J4mbpyctJ5N0d26WG5H/UP9IKchsGSz5JLjQgPKoKfdgxr8fBRYqr1kTpqby3sCaFH
- 5XI2rJjBROfvO2hUdsl7O//5VTvU8dwwl6RMF61s8TvT0ZajSIRdcq5qNKA1YLkiUhXR
- y/8kbvjSwTJJF7jwtZQHxGmPmo+b+NX+eRMv3WL8KMNcMqdmJTqL03kXuKunRNw4AaVX
- ZyWO8JysV2VqrbSNMG9tZUohqZ/8aJF8LNXJOMzRXNjTGLBxh0nuJt/TB/v8au+m4yVH
- bBTXL4AqFnp9xXPh12ZPACJb0Jk9nEaaUKIXB1EjnqnVKGJFBqbYLyluHVpYA0hSgqOH
- iI2A==
-X-Gm-Message-State: AOJu0YxtLx7ExVo2oFYHdIBdnyPVxv4OKAhs0g4T/IZIwSnsSSznEZCU
- 9MCHt+OjYRL8pLFrgipWZw61kvMHVCn16rqhMTKFSLKttEISGQq+y0aVtCGwalCecnhSQgrBc4X
- k8VhbC2BuiluHps9NqgiXc0+/WA/UUD751T+7F6oizzSvjYhkFwLLM6cr
-X-Gm-Gg: ASbGncvxd4mLUyJy4ehj21Pj66bzPBImEOBKAHqRrY5LwK3NaMUZN0V1IWqcGzv9Hdc
- zCDShzyhYk6rwl16Acu119C/+U8gaBeQH9rysYw0X746Gigpu/oVc/1+PnSMY78WzVzsTQl+zGa
- FpnjaydRIckzy0dGESFUnLslUAdqSsHdrd9MUoCUX4jY9rVy3GmDmpIoTtMvA0w/2toob3MQhmV
- px0cy9gHJmpdAhlZMsgb/giqHVm5flYbyCk7ylmxmZNKoGD95rNcLHA/jSR8Bqo0qWkT9gy9Ezi
- rwAOhsVr39OAFCVJ3Mrz5rOx59zR/qDE
-X-Received: by 2002:a05:620a:1a05:b0:7fe:257a:5d02 with SMTP id
- af79cd13be357-7fe257a5eebmr144305685a.70.1756485474544; 
- Fri, 29 Aug 2025 09:37:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjluIZNtiLGCkM5kaf7jIuLsY6Lab1fCPJ98RNiX6SIHfvMaqWZpZf9mrEGAevF6xlnovcOA==
-X-Received: by 2002:a05:620a:1a05:b0:7fe:257a:5d02 with SMTP id
- af79cd13be357-7fe257a5eebmr144298885a.70.1756485473582; 
- Fri, 29 Aug 2025 09:37:53 -0700 (PDT)
-Received: from x1.local ([174.89.135.121]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7fc0d869e5csm215194885a.7.2025.08.29.09.37.51
+ d=1e100.net; s=20230601; t=1756472454; x=1757077254;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PB8Kdz4Nrxog6Sfp7mK37/CRD+JP3mh8G1Sat8ExiCM=;
+ b=v8zYHbg361OhRXowApa6VidJ02owLA4Lj9sQuvVIjZzuPoqB5fbEfOYgsA+MBdu+w3
+ LBXHFnfEugvAs57DmSMpRlLp+pAZ42Qouu9fTfjk/X+imRlNATtwT10Ubhr+Lp1xOetS
+ eL6nA/wVYCAWHmL2MnndMmmNitVW72zY8GRyT/QOVywMDLhQR45/Vx0tVxyKML5u18fU
+ 94GA4LeKrexEiZnTV8n32GuZTrey+29JJzeLx8DoMxjajYLwPRF4bSkmbskJ1b6feqrM
+ sAtUT8ciyXu1BmY1/vv9Nd82nOxLM0n+DQHEHvRSRcusT1zphk3hhbC+wG8Cv3DXMqsx
+ Puog==
+X-Gm-Message-State: AOJu0YyfL9DsMiA14Hhq5ac1yte2BJJxw3f7baX9UNFjQ1mDOGUcsgu2
+ sKaEJCUVaqaA3SFoi1WA5b5jO0M1RBa3XRhf88/mWhucR4UXHvAMriDMIGfYBKs6ZtUPfAAOEZ/
+ U3MDlKYe9t0Bbn0nh9Y6LFFkRPcdF/co0TyI6EiW1QVW0o+JS4GD5AUrk2Gc/tCBSaHwWbtQIqe
+ ed3rXnJB678U8geZ2Bu9yKgQB30p9OIvnuWBwuODpu
+X-Gm-Gg: ASbGncs9tRzhsAtVk3rquZpR47+vVX3Er0CVZ//W0p0AQN44k0xLmExcTme9kDbZyhi
+ 0leC9thcvPwQjmTrZF3V7SOaKiwSjAfwWyPTKGjBjkiOpA6CpzESpxL8CsdMwsmo9JARN/sg+bZ
+ bF9oDK4tYXOAucfSww1IFHvtZEdSKkuITC1eiPcWv+DcAaHWu4is337/z33Fl4mObvZC5AN5l92
+ u6nesVhyYGZ7LF5nN5KNrzgU7oYdja/n9ec70r2b0N457x08imCWPSNA5DXl/ezQOagIQlVc18w
+ 0HCAMBPm/ym9HGV/uUE9t0QACA42fFdOD2P8LplqsN9k+lTlWSlQglkYQa7O2/88IZmOxWkrK+I
+ i4L29X0Mpyb5EMoqGEV1T/Qe0c+miMccA2VrveSj2pSE=
+X-Received: by 2002:a05:600c:4f12:b0:459:dde3:1a37 with SMTP id
+ 5b1f17b1804b1-45b66343ea2mr120077215e9.25.1756472453990; 
+ Fri, 29 Aug 2025 06:00:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdGjxsOOQTmODX/yZn9S7o0GsDaexHFAVVO/87hJ0D90AUqtnb/U2S1+h/BoufocZvx4EpZw==
+X-Received: by 2002:a05:600c:4f12:b0:459:dde3:1a37 with SMTP id
+ 5b1f17b1804b1-45b66343ea2mr120076775e9.25.1756472453487; 
+ Fri, 29 Aug 2025 06:00:53 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b6f30fe02sm115179505e9.18.2025.08.29.06.00.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 09:37:52 -0700 (PDT)
-Date: Fri, 29 Aug 2025 12:37:41 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Yury Kotov <yury-kotov@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Prasad Pandit <ppandit@redhat.com>, Zhang Chen <zhangckid@gmail.com>,
- Li Zhijian <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH RFC 5/9] migration: Thread-ify precopy vmstate load process
-Message-ID: <aLHXVadC-sjxmu8x@x1.local>
-References: <20250827205949.364606-1-peterx@redhat.com>
- <20250827205949.364606-6-peterx@redhat.com>
- <aK-Z6rARUbgNzy5Q@gallifrey>
+ Fri, 29 Aug 2025 06:00:51 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>, Peter Xu <peterx@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PULL 23/28] acpi: mark PMTIMER as unlocked
+Date: Fri, 29 Aug 2025 14:59:30 +0200
+Message-ID: <20250829125935.1526984-24-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aK-Z6rARUbgNzy5Q@gallifrey>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,753 +110,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 27, 2025 at 11:51:06PM +0000, Dr. David Alan Gilbert wrote:
-> * Peter Xu (peterx@redhat.com) wrote:
-> > Migration module was there for 10+ years.  Initially, it was in most cases
-> > based on coroutines.  As more features were added into the framework, like
-> > postcopy, multifd, etc.. it became a mixture of threads and coroutines.
-> > 
-> > I'm guessing coroutines just can't fix all issues that migration want to
-> > resolve.
-> 
-> Yeh migration can happily eat a whole core.
-> 
-> > After all these years, migration is now heavily based on a threaded model.
-> > 
-> > Now there's still a major part of migration framework that is still not
-> > thread-based, which is precopy load.  We do load in a separate thread in
-> > postcopy since the 1st day postcopy was introduced, however that requires a
-> > separate state transition from precopy loading all devices first, which
-> > still happens in the main thread of a coroutine.
-> 
-> ...
-> 
-> > COLO
-> > ====
-> 
-> If you can I suggest splitting the COLO stuff out as a separate thread,
-> not many people understand it.
+From: Igor Mammedov <imammedo@redhat.com>
 
-I can try this one, but then it'll be a bunch of "if (qemu_in_coroutine())"
-checks all over the places.
+Reading QEMU_CLOCK_VIRTUAL is thread-safe, write access is NOP.
 
-For emample, this change of this patch:
+This makes possible to boot Windows with large vCPUs count when
+hv-time is not used.
 
--    assert(bql_locked());
-     assert(migration_incoming_colo_enabled());
+Reproducer:
+  -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4 -m 8G WS2025.img
+fails to boot within 30min.
 
-     qemu_thread_create(&th, MIGRATION_THREAD_DST_COLO,
-                        colo_process_incoming_thread,
-                        mis, QEMU_THREAD_JOINABLE);
+With this fix it boots within 2-1min.
 
--    mis->colo_incoming_co = qemu_coroutine_self();
--    qemu_coroutine_yield();
--    mis->colo_incoming_co = NULL;
--
--    bql_unlock();
-     /* Wait checkpoint incoming thread exit before free resource */
-     qemu_thread_join(&th);
--    bql_lock();
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://lore.kernel.org/r/20250814160600.2327672-3-imammedo@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/acpi/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Will become:
-
--    assert(bql_locked());
-     assert(migration_incoming_colo_enabled());
+diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+index 58f8964e130..ff165828033 100644
+--- a/hw/acpi/core.c
++++ b/hw/acpi/core.c
+@@ -547,6 +547,7 @@ void acpi_pm_tmr_init(ACPIREGS *ar, acpi_update_sci_fn update_sci,
+     ar->tmr.timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, acpi_pm_tmr_timer, ar);
+     memory_region_init_io(&ar->tmr.io, memory_region_owner(parent),
+                           &acpi_pm_tmr_ops, ar, "acpi-tmr", 4);
++    memory_region_enable_lockless_io(&ar->tmr.io);
+     memory_region_add_subregion(parent, 8, &ar->tmr.io);
+ }
  
-     qemu_thread_create(&th, MIGRATION_THREAD_DST_COLO,
-                        colo_process_incoming_thread,
-                        mis, QEMU_THREAD_JOINABLE);
- 
--    mis->colo_incoming_co = qemu_coroutine_self();
--    qemu_coroutine_yield();
--    mis->colo_incoming_co = NULL;
-+    if (qemu_in_coroutine()) {
-+        assert(bql_locked());
-+        mis->colo_incoming_co = qemu_coroutine_self();
-+        qemu_coroutine_yield();
-+        mis->colo_incoming_co = NULL;
-+        bql_unlock();
-+    }
- 
--    bql_unlock();
-     /* Wait checkpoint incoming thread exit before free resource */
-     qemu_thread_join(&th);
--    bql_lock();
-+
-+    if (qemu_in_coroutine()) {
-+        bql_lock();
-+    }
-
-Then I'll add one more patch at last to remove all these "if" blocks.
-
-Which one is better?
-
-For the rest, I can still try to move things; migration_channel_read_peek()
-change be a separate patch after this one, but that's pretty small..  not
-so much like that, normally we'll still need such "if"s to be added prior
-this patch, apply this patch, then removed those "if"s in another later patch.
-
-> 
-> > TODO
-> > ====
-> > 
-> > Currently the BQL is taken during loading of a START|FULL section.  When
-> > the IO hangs (e.g. network issue) during this process, it could potentially
-> > block others like the monitor servers.  One solution is breaking BQL to
-> > smaller granule and leave IOs to be always BQL-free.  That'll need more
-> > justifications.
-> > 
-> > For example, there are at least four things that need some closer
-> > attention:
-> > 
-> >   - SaveVMHandlers's load_state(): this likely DO NOT need BQL, but we need
-> >   to justify all of them (not to mention, some of them look like prone to
-> >   be rewritten as VMSDs..)
-> > 
-> >   - VMSD's pre_load(): in most cases, this DO NOT really need BQL, but
-> >   sometimes maybe it will!  Double checking on this will be needed.
-> > 
-> >   - VMSD's post_load(): in many cases, this DO need BQL, for example on
-> >   address space operations.  Likely we should just take it for any
-> >   post_load().
-> > 
-> >   - VMSD field's get(): this is tricky!  It could internally be anything
-> >   even if it was only a field.  E.g. there can be users to use a SINGLE
-> >   field to load a whole VMSD, which can further introduce more
-> >   possibilities.
-> 
-> Long long ago, I did convert some get's to structure; I got stuck on some
-> though - some have pretty crazy hand built lists and things.
-
-Yeah, I can feel it even though I didn't look into each of them yet. :)
-
-Looks like they're all explicit VMS_SINGLE users; we have 22 instances.
-Unfortunately, I still see new ones being added, latest one in
-5d56bff11e3d.  I wonder whether pre_save() + post_load() would have worked
-there..
-
-> 
-> > In general, QEMUFile IOs should not need BQL, that is when receiving the
-> > VMSD data and waiting for e.g. the socket buffer to get refilled.  But
-> > that's the easy part.
-> 
-> It's probably generally a good thing to get rid of the BQL there, but I bet
-> it's going to throw some surprises; maybe something like devices doing
-> stuff before the migration has fully arrived
-
-Is that pre_load() or.. maybe something else?
-
-I should still look into each of them, but only if we want to further push
-the bql to be at post_load() level.  I am not sure if some pre_load() would
-assume BQL won't be released until post_load(), if so that'll be an issue,
-and that will need some closer code observation...
-
-> or incoming socket connections to non-migration stuff perhaps.
-
-Any example for this one?
-
-Thanks!
-
-> 
-> Dave
-> 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  include/migration/colo.h |  6 ++--
-> >  migration/migration.h    | 52 ++++++++++++++++++++++++++------
-> >  migration/savevm.h       |  5 ++--
-> >  migration/channel.c      |  7 ++---
-> >  migration/colo-stubs.c   |  2 +-
-> >  migration/colo.c         | 23 ++++-----------
-> >  migration/migration.c    | 62 ++++++++++++++++++++++++++++----------
-> >  migration/rdma.c         |  5 ----
-> >  migration/savevm.c       | 64 ++++++++++++++++++++++++----------------
-> >  migration/trace-events   |  4 +--
-> >  10 files changed, 142 insertions(+), 88 deletions(-)
-> > 
-> > diff --git a/include/migration/colo.h b/include/migration/colo.h
-> > index 43222ef5ae..bfb30eccf0 100644
-> > --- a/include/migration/colo.h
-> > +++ b/include/migration/colo.h
-> > @@ -44,12 +44,10 @@ void colo_do_failover(void);
-> >  void colo_checkpoint_delay_set(void);
-> >  
-> >  /*
-> > - * Starts COLO incoming process. Called from process_incoming_migration_co()
-> > + * Starts COLO incoming process. Called from migration_incoming_thread()
-> >   * after loading the state.
-> > - *
-> > - * Called with BQL locked, may temporary release BQL.
-> >   */
-> > -void coroutine_fn colo_incoming_co(void);
-> > +void colo_incoming_wait(void);
-> >  
-> >  void colo_shutdown(void);
-> >  #endif
-> > diff --git a/migration/migration.h b/migration/migration.h
-> > index 01329bf824..c4a626eed4 100644
-> > --- a/migration/migration.h
-> > +++ b/migration/migration.h
-> > @@ -42,6 +42,44 @@
-> >  #define  MIGRATION_THREAD_DST_LISTEN        "mig/dst/listen"
-> >  #define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
-> >  
-> > +/**
-> > + * WITH_BQL_HELD(): Run a task, making sure BQL is held
-> > + *
-> > + * @bql_held: Whether BQL is already held
-> > + * @task:     The task to run within BQL held
-> > + */
-> > +#define  WITH_BQL_HELD(bql_held, task)          \
-> > +    do {                                        \
-> > +        if (!bql_held) {                        \
-> > +            bql_lock();                         \
-> > +        } else {                                \
-> > +            assert(bql_locked());               \
-> > +        }                                       \
-> > +        task;                                   \
-> > +        if (!bql_held) {                        \
-> > +            bql_unlock();                       \
-> > +        }                                       \
-> > +    } while (0)
-> > +
-> > +/**
-> > + * WITHOUT_BQL_HELD(): Run a task, making sure BQL is released
-> > + *
-> > + * @bql_held: Whether BQL is already held
-> > + * @task:     The task to run making sure BQL released
-> > + */
-> > +#define  WITHOUT_BQL_HELD(bql_held, task)       \
-> > +    do {                                        \
-> > +        if (bql_held) {                         \
-> > +            bql_unlock();                       \
-> > +        } else {                                \
-> > +            assert(!bql_locked());              \
-> > +        }                                       \
-> > +        task;                                   \
-> > +        if (bql_held) {                         \
-> > +            bql_lock();                         \
-> > +        }                                       \
-> > +    } while (0)
-> > +
-> >  struct PostcopyBlocktimeContext;
-> >  typedef struct ThreadPool ThreadPool;
-> >  
-> > @@ -119,6 +157,10 @@ struct MigrationIncomingState {
-> >      bool           have_listen_thread;
-> >      QemuThread     listen_thread;
-> >  
-> > +    /* Migration main recv thread */
-> > +    bool           have_recv_thread;
-> > +    QemuThread     recv_thread;
-> > +
-> >      /* For the kernel to send us notifications */
-> >      int       userfault_fd;
-> >      /* To notify the fault_thread to wake, e.g., when need to quit */
-> > @@ -177,15 +219,7 @@ struct MigrationIncomingState {
-> >  
-> >      MigrationStatus state;
-> >  
-> > -    /*
-> > -     * The incoming migration coroutine, non-NULL during qemu_loadvm_state().
-> > -     * Used to wake the migration incoming coroutine from rdma code. How much is
-> > -     * it safe - it's a question.
-> > -     */
-> > -    Coroutine *loadvm_co;
-> > -
-> > -    /* The coroutine we should enter (back) after failover */
-> > -    Coroutine *colo_incoming_co;
-> > +    /* Notify secondary VM to move on */
-> >      QemuEvent colo_incoming_event;
-> >  
-> >      /* Optional load threads pool and its thread exit request flag */
-> > diff --git a/migration/savevm.h b/migration/savevm.h
-> > index 2d5e9c7166..c07e14f61a 100644
-> > --- a/migration/savevm.h
-> > +++ b/migration/savevm.h
-> > @@ -64,9 +64,10 @@ void qemu_savevm_send_colo_enable(QEMUFile *f);
-> >  void qemu_savevm_live_state(QEMUFile *f);
-> >  int qemu_save_device_state(QEMUFile *f);
-> >  
-> > -int qemu_loadvm_state(QEMUFile *f);
-> > +int qemu_loadvm_state(QEMUFile *f, bool bql_held);
-> >  void qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
-> > -int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis);
-> > +int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
-> > +                           bool bql_held);
-> >  int qemu_load_device_state(QEMUFile *f);
-> >  int qemu_loadvm_approve_switchover(void);
-> >  int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-> > diff --git a/migration/channel.c b/migration/channel.c
-> > index a547b1fbfe..621f8a4a2a 100644
-> > --- a/migration/channel.c
-> > +++ b/migration/channel.c
-> > @@ -136,11 +136,8 @@ int migration_channel_read_peek(QIOChannel *ioc,
-> >          }
-> >  
-> >          /* 1ms sleep. */
-> > -        if (qemu_in_coroutine()) {
-> > -            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
-> > -        } else {
-> > -            g_usleep(1000);
-> > -        }
-> > +        assert(!qemu_in_coroutine());
-> > +        g_usleep(1000);
-> >      }
-> >  
-> >      return 0;
-> > diff --git a/migration/colo-stubs.c b/migration/colo-stubs.c
-> > index e22ce65234..ef77d1ab4b 100644
-> > --- a/migration/colo-stubs.c
-> > +++ b/migration/colo-stubs.c
-> > @@ -9,7 +9,7 @@ void colo_shutdown(void)
-> >  {
-> >  }
-> >  
-> > -void coroutine_fn colo_incoming_co(void)
-> > +void colo_incoming_wait(void)
-> >  {
-> >  }
-> >  
-> > diff --git a/migration/colo.c b/migration/colo.c
-> > index e0f713c837..f5722d9d9d 100644
-> > --- a/migration/colo.c
-> > +++ b/migration/colo.c
-> > @@ -147,11 +147,6 @@ static void secondary_vm_do_failover(void)
-> >      }
-> >      /* Notify COLO incoming thread that failover work is finished */
-> >      qemu_event_set(&mis->colo_incoming_event);
-> > -
-> > -    /* For Secondary VM, jump to incoming co */
-> > -    if (mis->colo_incoming_co) {
-> > -        qemu_coroutine_enter(mis->colo_incoming_co);
-> > -    }
-> >  }
-> >  
-> >  static void primary_vm_do_failover(void)
-> > @@ -686,7 +681,7 @@ static void colo_incoming_process_checkpoint(MigrationIncomingState *mis,
-> >  
-> >      bql_lock();
-> >      cpu_synchronize_all_states();
-> > -    ret = qemu_loadvm_state_main(mis->from_src_file, mis);
-> > +    ret = qemu_loadvm_state_main(mis->from_src_file, mis, true);
-> >      bql_unlock();
-> >  
-> >      if (ret < 0) {
-> > @@ -854,10 +849,8 @@ static void *colo_process_incoming_thread(void *opaque)
-> >          goto out;
-> >      }
-> >      /*
-> > -     * Note: the communication between Primary side and Secondary side
-> > -     * should be sequential, we set the fd to unblocked in migration incoming
-> > -     * coroutine, and here we are in the COLO incoming thread, so it is ok to
-> > -     * set the fd back to blocked.
-> > +     * Here we are in the COLO incoming thread, so it is ok to set the fd
-> > +     * to blocked.
-> >       */
-> >      qemu_file_set_blocking(mis->from_src_file, true);
-> >  
-> > @@ -930,26 +923,20 @@ out:
-> >      return NULL;
-> >  }
-> >  
-> > -void coroutine_fn colo_incoming_co(void)
-> > +/* Wait for failover */
-> > +void colo_incoming_wait(void)
-> >  {
-> >      MigrationIncomingState *mis = migration_incoming_get_current();
-> >      QemuThread th;
-> >  
-> > -    assert(bql_locked());
-> >      assert(migration_incoming_colo_enabled());
-> >  
-> >      qemu_thread_create(&th, MIGRATION_THREAD_DST_COLO,
-> >                         colo_process_incoming_thread,
-> >                         mis, QEMU_THREAD_JOINABLE);
-> >  
-> > -    mis->colo_incoming_co = qemu_coroutine_self();
-> > -    qemu_coroutine_yield();
-> > -    mis->colo_incoming_co = NULL;
-> > -
-> > -    bql_unlock();
-> >      /* Wait checkpoint incoming thread exit before free resource */
-> >      qemu_thread_join(&th);
-> > -    bql_lock();
-> >  
-> >      /* We hold the global BQL, so it is safe here */
-> >      colo_release_ram_cache();
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 10c216d25d..7e4d25b15c 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -494,6 +494,11 @@ void migration_incoming_state_destroy(void)
-> >          mis->postcopy_qemufile_dst = NULL;
-> >      }
-> >  
-> > +    if (mis->have_recv_thread) {
-> > +        qemu_thread_join(&mis->recv_thread);
-> > +        mis->have_recv_thread = false;
-> > +    }
-> > +
-> >      cpr_set_incoming_mode(MIG_MODE_NONE);
-> >      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
-> >  }
-> > @@ -864,30 +869,46 @@ static void process_incoming_migration_bh(void *opaque)
-> >      migration_incoming_state_destroy();
-> >  }
-> >  
-> > -static void coroutine_fn
-> > -process_incoming_migration_co(void *opaque)
-> > +static void migration_incoming_state_destroy_bh(void *opaque)
-> > +{
-> > +    struct MigrationIncomingState *mis = opaque;
-> > +
-> > +    if (mis->exit_on_error) {
-> > +        /*
-> > +         * NOTE: this exit() should better happen in the main thread, as
-> > +         * the exit notifier may require BQL which can deadlock.  See
-> > +         * commit e7bc0204e57836 for example.
-> > +         */
-> > +        exit(EXIT_FAILURE);
-> > +    }
-> > +
-> > +    migration_incoming_state_destroy();
-> > +}
-> > +
-> > +static void *migration_incoming_thread(void *opaque)
-> >  {
-> >      MigrationState *s = migrate_get_current();
-> > -    MigrationIncomingState *mis = migration_incoming_get_current();
-> > +    MigrationIncomingState *mis = opaque;
-> >      PostcopyState ps;
-> >      int ret;
-> >      Error *local_err = NULL;
-> >  
-> > +    rcu_register_thread();
-> > +
-> >      assert(mis->from_src_file);
-> > +    assert(!bql_locked());
-> >  
-> >      mis->largest_page_size = qemu_ram_pagesize_largest();
-> >      postcopy_state_set(POSTCOPY_INCOMING_NONE);
-> >      migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
-> >                        MIGRATION_STATUS_ACTIVE);
-> >  
-> > -    mis->loadvm_co = qemu_coroutine_self();
-> > -    ret = qemu_loadvm_state(mis->from_src_file);
-> > -    mis->loadvm_co = NULL;
-> > +    ret = qemu_loadvm_state(mis->from_src_file, false);
-> >  
-> >      trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
-> >  
-> >      ps = postcopy_state_get();
-> > -    trace_process_incoming_migration_co_end(ret, ps);
-> > +    trace_process_incoming_migration_end(ret, ps);
-> >      if (ps != POSTCOPY_INCOMING_NONE) {
-> >          if (ps == POSTCOPY_INCOMING_ADVISE) {
-> >              /*
-> > @@ -901,7 +922,7 @@ process_incoming_migration_co(void *opaque)
-> >               * Postcopy was started, cleanup should happen at the end of the
-> >               * postcopy thread.
-> >               */
-> > -            trace_process_incoming_migration_co_postcopy_end_main();
-> > +            trace_process_incoming_migration_postcopy_end_main();
-> >              goto out;
-> >          }
-> >          /* Else if something went wrong then just fall out of the normal exit */
-> > @@ -913,8 +934,8 @@ process_incoming_migration_co(void *opaque)
-> >      }
-> >  
-> >      if (migration_incoming_colo_enabled()) {
-> > -        /* yield until COLO exit */
-> > -        colo_incoming_co();
-> > +        /* wait until COLO exits */
-> > +        colo_incoming_wait();
-> >      }
-> >  
-> >      migration_bh_schedule(process_incoming_migration_bh, mis);
-> > @@ -926,19 +947,24 @@ fail:
-> >      migrate_set_error(s, local_err);
-> >      error_free(local_err);
-> >  
-> > -    migration_incoming_state_destroy();
-> > -
-> >      if (mis->exit_on_error) {
-> >          WITH_QEMU_LOCK_GUARD(&s->error_mutex) {
-> >              error_report_err(s->error);
-> >              s->error = NULL;
-> >          }
-> > -
-> > -        exit(EXIT_FAILURE);
-> >      }
-> > +
-> > +    /*
-> > +     * There's some step of the destroy process that will need to happen in
-> > +     * the main thread (e.g. joining this thread itself).  Leave to a BH.
-> > +     */
-> > +    migration_bh_schedule(migration_incoming_state_destroy_bh, (void *)mis);
-> > +
-> >  out:
-> >      /* Pairs with the refcount taken in qmp_migrate_incoming() */
-> >      migrate_incoming_unref_outgoing_state();
-> > +    rcu_unregister_thread();
-> > +    return NULL;
-> >  }
-> >  
-> >  /**
-> > @@ -956,8 +982,12 @@ static void migration_incoming_setup(QEMUFile *f)
-> >  
-> >  void migration_incoming_process(void)
-> >  {
-> > -    Coroutine *co = qemu_coroutine_create(process_incoming_migration_co, NULL);
-> > -    qemu_coroutine_enter(co);
-> > +    MigrationIncomingState *mis = migration_incoming_get_current();
-> > +
-> > +    mis->have_recv_thread = true;
-> > +    qemu_thread_create(&mis->recv_thread, "mig/dst/main",
-> > +                       migration_incoming_thread, mis,
-> > +                       QEMU_THREAD_JOINABLE);
-> >  }
-> >  
-> >  /* Returns true if recovered from a paused migration, otherwise false */
-> > diff --git a/migration/rdma.c b/migration/rdma.c
-> > index bcd7aae2f2..2b995513aa 100644
-> > --- a/migration/rdma.c
-> > +++ b/migration/rdma.c
-> > @@ -3068,7 +3068,6 @@ static void rdma_cm_poll_handler(void *opaque)
-> >  {
-> >      RDMAContext *rdma = opaque;
-> >      struct rdma_cm_event *cm_event;
-> > -    MigrationIncomingState *mis = migration_incoming_get_current();
-> >  
-> >      if (rdma_get_cm_event(rdma->channel, &cm_event) < 0) {
-> >          error_report("get_cm_event failed %d", errno);
-> > @@ -3087,10 +3086,6 @@ static void rdma_cm_poll_handler(void *opaque)
-> >              }
-> >          }
-> >          rdma_ack_cm_event(cm_event);
-> > -        if (mis->loadvm_co) {
-> > -            qemu_coroutine_enter(mis->loadvm_co);
-> > -        }
-> > -        return;
-> >      }
-> >      rdma_ack_cm_event(cm_event);
-> >  }
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index fabbeb296a..ad606c5425 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -154,11 +154,10 @@ static void qemu_loadvm_thread_pool_destroy(MigrationIncomingState *mis)
-> >  }
-> >  
-> >  static bool qemu_loadvm_thread_pool_wait(MigrationState *s,
-> > -                                         MigrationIncomingState *mis)
-> > +                                         MigrationIncomingState *mis,
-> > +                                         bool bql_held)
-> >  {
-> > -    bql_unlock(); /* Let load threads do work requiring BQL */
-> > -    thread_pool_wait(mis->load_threads);
-> > -    bql_lock();
-> > +    WITHOUT_BQL_HELD(bql_held, thread_pool_wait(mis->load_threads));
-> >  
-> >      return !migrate_has_error(s);
-> >  }
-> > @@ -2091,14 +2090,11 @@ static void *postcopy_ram_listen_thread(void *opaque)
-> >      trace_postcopy_ram_listen_thread_start();
-> >  
-> >      rcu_register_thread();
-> > -    /*
-> > -     * Because we're a thread and not a coroutine we can't yield
-> > -     * in qemu_file, and thus we must be blocking now.
-> > -     */
-> > +    /* Because we're a thread, making sure to use blocking mode */
-> >      qemu_file_set_blocking(f, true);
-> >  
-> >      /* TODO: sanity check that only postcopiable data will be loaded here */
-> > -    load_res = qemu_loadvm_state_main(f, mis);
-> > +    load_res = qemu_loadvm_state_main(f, mis, false);
-> >  
-> >      /*
-> >       * This is tricky, but, mis->from_src_file can change after it
-> > @@ -2392,13 +2388,14 @@ static int loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
-> >   * Immediately following this command is a blob of data containing an embedded
-> >   * chunk of migration stream; read it and load it.
-> >   *
-> > - * @mis: Incoming state
-> > - * @length: Length of packaged data to read
-> > + * @mis:      Incoming state
-> > + * @bql_held: Whether BQL is held already
-> >   *
-> >   * Returns: Negative values on error
-> >   *
-> >   */
-> > -static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
-> > +static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis,
-> > +                                      bool bql_held)
-> >  {
-> >      int ret;
-> >      size_t length;
-> > @@ -2449,7 +2446,7 @@ static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis)
-> >          qemu_coroutine_yield();
-> >      } while (1);
-> >  
-> > -    ret = qemu_loadvm_state_main(packf, mis);
-> > +    ret = qemu_loadvm_state_main(packf, mis, bql_held);
-> >      trace_loadvm_handle_cmd_packaged_main(ret);
-> >      qemu_fclose(packf);
-> >      object_unref(OBJECT(bioc));
-> > @@ -2539,7 +2536,7 @@ static int loadvm_postcopy_handle_switchover_start(void)
-> >   * LOADVM_QUIT All good, but exit the loop
-> >   * <0          Error
-> >   */
-> > -static int loadvm_process_command(QEMUFile *f)
-> > +static int loadvm_process_command(QEMUFile *f, bool bql_held)
-> >  {
-> >      MigrationIncomingState *mis = migration_incoming_get_current();
-> >      uint16_t cmd;
-> > @@ -2609,7 +2606,7 @@ static int loadvm_process_command(QEMUFile *f)
-> >          break;
-> >  
-> >      case MIG_CMD_PACKAGED:
-> > -        return loadvm_handle_cmd_packaged(mis);
-> > +        return loadvm_handle_cmd_packaged(mis, bql_held);
-> >  
-> >      case MIG_CMD_POSTCOPY_ADVISE:
-> >          return loadvm_postcopy_handle_advise(mis, len);
-> > @@ -3028,7 +3025,8 @@ static bool postcopy_pause_incoming(MigrationIncomingState *mis)
-> >      return true;
-> >  }
-> >  
-> > -int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis)
-> > +int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
-> > +                           bool bql_held)
-> >  {
-> >      uint8_t section_type;
-> >      int ret = 0;
-> > @@ -3046,7 +3044,15 @@ retry:
-> >          switch (section_type) {
-> >          case QEMU_VM_SECTION_START:
-> >          case QEMU_VM_SECTION_FULL:
-> > -            ret = qemu_loadvm_section_start_full(f, section_type);
-> > +            /*
-> > +             * FULL should normally require BQL, e.g. during post_load()
-> > +             * there can be memory region updates.  START may or may not
-> > +             * require it, but just to keep it simple to always hold BQL
-> > +             * for now.
-> > +             */
-> > +            WITH_BQL_HELD(
-> > +                bql_held,
-> > +                ret = qemu_loadvm_section_start_full(f, section_type));
-> >              if (ret < 0) {
-> >                  goto out;
-> >              }
-> > @@ -3059,7 +3065,11 @@ retry:
-> >              }
-> >              break;
-> >          case QEMU_VM_COMMAND:
-> > -            ret = loadvm_process_command(f);
-> > +            /*
-> > +             * Be careful; QEMU_VM_COMMAND can embed FULL sections, so it
-> > +             * may internally need BQL.
-> > +             */
-> > +            ret = loadvm_process_command(f, bql_held);
-> >              trace_qemu_loadvm_state_section_command(ret);
-> >              if ((ret < 0) || (ret == LOADVM_QUIT)) {
-> >                  goto out;
-> > @@ -3103,7 +3113,7 @@ out:
-> >      return ret;
-> >  }
-> >  
-> > -int qemu_loadvm_state(QEMUFile *f)
-> > +int qemu_loadvm_state(QEMUFile *f, bool bql_held)
-> >  {
-> >      MigrationState *s = migrate_get_current();
-> >      MigrationIncomingState *mis = migration_incoming_get_current();
-> > @@ -3131,9 +3141,10 @@ int qemu_loadvm_state(QEMUFile *f)
-> >          qemu_loadvm_state_switchover_ack_needed(mis);
-> >      }
-> >  
-> > -    cpu_synchronize_all_pre_loadvm();
-> > +    /* run_on_cpu() requires BQL */
-> > +    WITH_BQL_HELD(bql_held, cpu_synchronize_all_pre_loadvm());
-> >  
-> > -    ret = qemu_loadvm_state_main(f, mis);
-> > +    ret = qemu_loadvm_state_main(f, mis, bql_held);
-> >      qemu_event_set(&mis->main_thread_load_event);
-> >  
-> >      trace_qemu_loadvm_state_post_main(ret);
-> > @@ -3149,7 +3160,7 @@ int qemu_loadvm_state(QEMUFile *f)
-> >      /* When reaching here, it must be precopy */
-> >      if (ret == 0) {
-> >          if (migrate_has_error(migrate_get_current()) ||
-> > -            !qemu_loadvm_thread_pool_wait(s, mis)) {
-> > +            !qemu_loadvm_thread_pool_wait(s, mis, bql_held)) {
-> >              ret = -EINVAL;
-> >          } else {
-> >              ret = qemu_file_get_error(f);
-> > @@ -3196,7 +3207,8 @@ int qemu_loadvm_state(QEMUFile *f)
-> >          }
-> >      }
-> >  
-> > -    cpu_synchronize_all_post_init();
-> > +    /* run_on_cpu() requires BQL */
-> > +    WITH_BQL_HELD(bql_held, cpu_synchronize_all_post_init());
-> >  
-> >      return ret;
-> >  }
-> > @@ -3207,7 +3219,7 @@ int qemu_load_device_state(QEMUFile *f)
-> >      int ret;
-> >  
-> >      /* Load QEMU_VM_SECTION_FULL section */
-> > -    ret = qemu_loadvm_state_main(f, mis);
-> > +    ret = qemu_loadvm_state_main(f, mis, true);
-> >      if (ret < 0) {
-> >          error_report("Failed to load device state: %d", ret);
-> >          return ret;
-> > @@ -3438,7 +3450,7 @@ void qmp_xen_load_devices_state(const char *filename, Error **errp)
-> >      f = qemu_file_new_input(QIO_CHANNEL(ioc));
-> >      object_unref(OBJECT(ioc));
-> >  
-> > -    ret = qemu_loadvm_state(f);
-> > +    ret = qemu_loadvm_state(f, true);
-> >      qemu_fclose(f);
-> >      if (ret < 0) {
-> >          error_setg(errp, "loading Xen device state failed");
-> > @@ -3512,7 +3524,7 @@ bool load_snapshot(const char *name, const char *vmstate,
-> >          ret = -EINVAL;
-> >          goto err_drain;
-> >      }
-> > -    ret = qemu_loadvm_state(f);
-> > +    ret = qemu_loadvm_state(f, true);
-> >      migration_incoming_state_destroy();
-> >  
-> >      bdrv_drain_all_end();
-> > diff --git a/migration/trace-events b/migration/trace-events
-> > index 706db97def..eeb41e03f1 100644
-> > --- a/migration/trace-events
-> > +++ b/migration/trace-events
-> > @@ -193,8 +193,8 @@ source_return_path_thread_resume_ack(uint32_t v) "%"PRIu32
-> >  source_return_path_thread_switchover_acked(void) ""
-> >  migration_thread_low_pending(uint64_t pending) "%" PRIu64
-> >  migrate_transferred(uint64_t transferred, uint64_t time_spent, uint64_t bandwidth, uint64_t avail_bw, uint64_t size) "transferred %" PRIu64 " time_spent %" PRIu64 " bandwidth %" PRIu64 " switchover_bw %" PRIu64 " max_size %" PRId64
-> > -process_incoming_migration_co_end(int ret, int ps) "ret=%d postcopy-state=%d"
-> > -process_incoming_migration_co_postcopy_end_main(void) ""
-> > +process_incoming_migration_end(int ret, int ps) "ret=%d postcopy-state=%d"
-> > +process_incoming_migration_postcopy_end_main(void) ""
-> >  postcopy_preempt_enabled(bool value) "%d"
-> >  migration_precopy_complete(void) ""
-> >  
-> > -- 
-> > 2.50.1
-> > 
-> -- 
->  -----Open up your eyes, open up your mind, open up your code -------   
-> / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-> \        dave @ treblig.org |                               | In Hex /
->  \ _________________________|_____ http://www.treblig.org   |_______/
-> 
-
 -- 
-Peter Xu
+2.51.0
 
 
