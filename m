@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8793CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E97CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNL4-0004IC-6j; Sat, 30 Aug 2025 11:17:58 -0400
+	id 1usNaG-00017F-TX; Sat, 30 Aug 2025 11:33:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urzWV-0008MI-IQ
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:52:11 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urzWU-0000zl-1z
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:52:11 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2489acda3bbso16340045ad.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:52:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756475528; x=1757080328; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6ugGnloBP1A/JNiPociBvYx/p6/DHz1cAJve+Grw0JE=;
- b=A+atSk2nVA4kA/wzhF72BTBzH+geZjhVbPi5C/9jAhaCs1xFazOaOTLSZ3HCTgOpgl
- vBfQIRg7uc54D5chLS0h3vDX/lvgDwQVbvqyxTgwYd2ifb8VXZa1USybudCsutimnwD7
- r0c8bxZOvariV2X0ERh3k/dWR9xUGUEN38GSEbR6xfSYGdLSmIs0m8ZNh024zXsRxRFz
- RCtRaKcVNAnxGHTqw6g3tciiJsC6QoSsffcSrpWe5+jJTsEVODBT/g7zS+tfpqzn68yg
- 81zfStZumiuT93JMUJYRiCn8Pt2syBC9tUO0Fc0ZFSslmYWUYoRlIeYbTj5Aw8rB5bT/
- SYJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756475528; x=1757080328;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6ugGnloBP1A/JNiPociBvYx/p6/DHz1cAJve+Grw0JE=;
- b=wIMIFJtzdFaJwOERMQt4a++c1q2sEBl5DdU3C3XcH6atLt48VB+MPjNw8EnRbPuXGK
- ilypdBmFwQUUe+1XTbv55TngMFZquU5JLiQEs2tdVpyZla6NG8+8iUcsnU7Sz2WtcmUR
- nb5H9WdYTLYcxf/azBqE6Wbnjlug/nAjtMYQYvASiz2yk05lTRNUnpVhre1Py/9VK9no
- 12POKhYiSHQ1KmKv0uqW5RESVLQyE/OHeooj+McrLiMgZTUIL8dVuYosmaFQLEUFxDQY
- Bcl+5hfHnpC3ExdyGM+tnmDOAkpboF6J+IuzVNFXmRPqfuSmUTUYKxjPnKVpjjIxrX/1
- od1Q==
-X-Gm-Message-State: AOJu0YyiYcEVIFl0Ws9J+wPV/ZNFhKLI3u2zplHCz4FPxbQ6hZisZQJY
- M8g6yEF7o6QG5bfzRzlGcJHKocOVo9JiNUAwbkxN0QcmrP3Tdm1bMWbCVZl4mJ2yX6nQvTt60pG
- dYRziHEY=
-X-Gm-Gg: ASbGnctHhoY4DNe25OvzQq42fIqF+BS650v4T37ITDaqwfrV0wSXrCPFmw/rMgrVWJ9
- 2pbRFyHycrsEV3W1su5+ygzWNFGOsrG0yf0cPlbLwBCHjZZbulXPVW+fzLfLjOTu3vpKwAyHcSM
- mr71zrMOOsN2FCfATXFx0dXIJoogCF1gpbeHV1HvRVHgk81D/3PcPvRb7KakPcFMn3KayYhgeoT
- o5PK3CdEqC/ZjPGoW5Wtp/Yf1OqygUgc4c/iWC9UhFhaXZpslaGl2EUn6O9SnUZdhvr8Sk7GdKH
- wPvVhQEI8iDjs+LiVtFv0dop6UtoDpEUaYS6WKEVyYUa8mwWfSTOcfrdQLfXdZljS7DXD8PlJbO
- CCUynMFjyC+gI5+/PjOqZaGXdi5fxX654iZ8AxPxLLlgzEaGosZr11xiYVnfo4R2T4EoWqMI=
-X-Google-Smtp-Source: AGHT+IGK78rmTz+6XPFVlsQ0CEW9mg3iiz4yD2/7aJD6kTO/3Qp+X8PDZD1ygXzSP2fKQJdmWrRFNA==
-X-Received: by 2002:a17:903:124c:b0:240:84b:a11a with SMTP id
- d9443c01a7336-2462ee2bc6fmr361146025ad.17.1756475528388; 
- Fri, 29 Aug 2025 06:52:08 -0700 (PDT)
-Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24903705b9dsm26457415ad.7.2025.08.29.06.52.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 06:52:07 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us3Sf-0005Tv-9D
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:04:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1us3SX-0005Nu-Vh
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:04:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756490652;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nCbGcsiVAJlNscguLMny9mM9bwo/qEQWFgH5PtIu/kE=;
+ b=St8a1VwbuaWbwRKOsDj3wL4ChM8YtOM7Xu8XFVuzYBiEJJ96j2RMWTRvquJT/hhAu0ImuH
+ 51J/7UA5DIY8iWlU7IaBTuUX2S0CoqiYCk3wXBRCYYWri6oLHy9lGgvP4sTF3yGNjRrVHE
+ rlgBhRiRfLpXkuElhceMWkDWqqyVZzY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-127-oaJGw1AHPlS_BtMHk5oe2Q-1; Fri,
+ 29 Aug 2025 14:04:08 -0400
+X-MC-Unique: oaJGw1AHPlS_BtMHk5oe2Q-1
+X-Mimecast-MFC-AGG-ID: oaJGw1AHPlS_BtMHk5oe2Q_1756490647
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E41719560AA; Fri, 29 Aug 2025 18:04:07 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.108])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0ED5619560B4; Fri, 29 Aug 2025 18:04:01 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH] tcg/arm: Fix tgen_deposit
-Date: Fri, 29 Aug 2025 23:52:03 +1000
-Message-ID: <20250829135203.284630-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 01/14] include: define constant for early constructor
+ priority
+Date: Fri, 29 Aug 2025 19:03:41 +0100
+Message-ID: <20250829180354.2922145-2-berrange@redhat.com>
+In-Reply-To: <20250829180354.2922145-1-berrange@redhat.com>
+References: <20250829180354.2922145-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,32 +94,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When converting from tcg_out_deposit, the arguments were not
-shuffled properly.
+Functions marked with __attribute__((__constructor__)) will be
+invoked in linker order. In theory this is well defined, but
+in practice, it is hard to determine what this order will be
+with the layers of indirection through meson, ninja and the
+static libraries QEMU builds.
 
-Cc: qemu-stable@nongnu.org
-Fixes: cf4905c03135f1181e8 ("tcg: Convert deposit to TCGOutOpDeposit")
-Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Notably, the order currently appears different between Linux
+and Windows (as tested with Wine on Linux). This can cause
+problems when certain QEMU constructors have a dependancy on
+other QEMU constructors.
+
+To address this define a QEMU_CONSTRUCTOR_EARLY constant which
+provides a priority value that will run before other default
+constructors. This is to be used for QEMU constructors that
+are themselves self-contained, but may be relied upon by other
+constructors.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tcg/arm/tcg-target.c.inc | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/qemu/compiler.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index 836894b16a..338c57b061 100644
---- a/tcg/arm/tcg-target.c.inc
-+++ b/tcg/arm/tcg-target.c.inc
-@@ -975,7 +975,8 @@ static void tgen_deposit(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
-                          TCGReg a2, unsigned ofs, unsigned len)
- {
-     /* bfi/bfc */
--    tcg_out32(s, 0x07c00010 | (COND_AL << 28) | (a0 << 12) | a1
-+    tcg_debug_assert(a0 == a1);
-+    tcg_out32(s, 0x07c00010 | (COND_AL << 28) | (a0 << 12) | a2
-               | (ofs << 7) | ((ofs + len - 1) << 16));
- }
+diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+index 1c2b673c05..4c49f52eb0 100644
+--- a/include/qemu/compiler.h
++++ b/include/qemu/compiler.h
+@@ -194,6 +194,14 @@
+ # define QEMU_USED
+ #endif
  
++/*
++ * A priority for __attribute__((constructor(...))) that
++ * will run earlier than the default constructors. Must
++ * only be used for functions that have no dependency
++ * on global initialization of other QEMU subsystems.
++ */
++#define QEMU_CONSTRUCTOR_EARLY 101
++
+ /*
+  * Disable -ftrivial-auto-var-init on a local variable.
+  *
 -- 
-2.34.1
+2.50.1
 
 
