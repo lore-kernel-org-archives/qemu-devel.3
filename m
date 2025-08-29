@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF072CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D74FCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNmO-0006xa-Mr; Sat, 30 Aug 2025 11:46:13 -0400
+	id 1usNj8-0005oC-4A; Sat, 30 Aug 2025 11:42:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7by-0004u4-H3
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:22 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1us7Jb-000772-0w
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:11:23 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bw-0003xE-88
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:21 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-77238a3101fso446973b3a.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:19 -0700 (PDT)
+ id 1us7JW-00083W-Mw
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:11:22 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-b4dc35711d9so546970a12.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506618; x=1757111418; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=i5SCOArTMDFn9DLEGEULkPg//35bBeOm8KVxr1J+Y1U=;
- b=PrRiRjqObu6k1y6ucg6yLj0yH+QpFiHR+zNRS1Rf6hwVWjF3MY1bn+0pQUFVekjogN
- j+++2cE0Lc4+MMzk3Ws6fDOaz6gEdKEJ30EqRnp1hZLrgYTuBQPWL2gllc94cR4Tv0at
- onRSRcXD3p/eFdMbFVr/MdvSuhLg561HdUmpDSIicoPJ9bJgNyQ0JApBS61B5ybSLs/0
- HvDhNIq31qy9ajGVYe+5fef9hKGkqow9ZOumAhFAp5GiLMXZf/PvQqhQQ1g7YopfzG8s
- ownBjzrgKhYjaAcXd0rxpmQlQktZsbMPVYB7/K77rN1Kl+6pgvYPhqmS7vsRMe3CbOcR
- fAAw==
+ d=linaro.org; s=google; t=1756505476; x=1757110276; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=p6dVFub8rfkbljYLWR1PaKydXBgAgpJmLsYGBvx29pU=;
+ b=WEqQOvLmyARNMJaUMGqfgGGeLqAljOPZ2aqQINVIxQVySwXAwUvg+y+XWOn+AHSqvy
+ Y7A/NB1r91I1JU/iNxdtRPczdA02ntvcMesKjxb8TataMILFgMdo4P+Li+A0uS1T/mr7
+ McXtLKb1RrU+hQ0nxHns6p16lsveuZiy5i1lYTeeyZov2CqtzXdzEpCQAguS6yfiQSGK
+ m1exrt6A+2ERQwcNQgMUeBNXb2waYkTCmUn+jLmvqBdTHqe7KdDDqkc43SbgfWpuaw0l
+ 6+WNv7qd/gr/adBwaMues47YyxavSPHss/y5PiJyfJhnMp+Dg0x3fh5CfaaNIpS7qMl1
+ ZbmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506618; x=1757111418;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=i5SCOArTMDFn9DLEGEULkPg//35bBeOm8KVxr1J+Y1U=;
- b=v3kfpJ5w+4v5pvdcpwKjwHZNIQiPcDVacHWgOlm8+XXRSFOtkm9WPaiXxuzz3YnARz
- yn16cZJwSvODfEtgJXlTtlXh6Sp2U9hqyg9pCxqNLsN3G/gojInqeILzXK4+HerDpiOb
- 41eKRLo40Dta6Omn0D0cKHJ67dt6klJO0HV1qgT2k4nQTpq4bl2KZTBhik24ec9brGR6
- njcIaDZnCEG4OZw3cb3zPk10p3SZJcZFdgOR/ov26NPkN5b0PdXUoqZ3V8PFiw9hpQD8
- MIhYTBZb/HKcLlC56nQdvjMk9okLbUoMQjVzZkXZgspIipBbMOgO363R9aYlbSS4kX0w
- I63Q==
-X-Gm-Message-State: AOJu0YxMauMH16hqmpJs9Zo9+isJPxrSYOouKLvCfERD29VW1T4USA4O
- feDNXvqzTIePw1Y5THhwazFhRr3v6IHivRg0+IjNALjdoZe/IggNknFyfYjxJPS2JMIaTfK9lSA
- aOL/DGn8=
-X-Gm-Gg: ASbGncvjrmOw7+FBIoKm+NotUIG42raQ63+ts9m7a0LHgj/dDO+Wu2E6WLQKyyNIsXQ
- daABWbPlevDctDSGubA+TX456eZ38EqioZOYnfp3KnP6q0Hoc8IxP8yX+TA7F02Aywe9Hmh++Aq
- +qrA8JJIxst24I/SvtbSgN3in91WoA1cIXOnPdxbWTG7MfejAGRzLBdRd8ygqhfgzDWR3uFVb8l
- qKE2AChO+ng4FoUQWCPUEjN0xWigh1PUZuRNhnLmQqkn3zJDUaCZQNWpi9UtlHQRmZIyTDxfIoN
- Uwsd4wHHHUb2FTh6sD4rNtQzEb0f308YVaptjTbHy5XD9alKa3Ksh7HnFkkoLGs5I6bwGFU7OpO
- c44F+YT1VCrYqMy9rqMPG27sseUxTcFYJZ87bcJBSTBYivt/YDY+ZxtRuwDjFrdJ/27xY+s0mjA
- ==
-X-Google-Smtp-Source: AGHT+IHnLcVs8VfGcJ6d49H84Xa3TxphBlKu9sh6/uO8dLQmJ1TKiteY44vBX1BMtnSp5AYRiQmpxw==
-X-Received: by 2002:a05:6a00:889:b0:771:e434:6c80 with SMTP id
- d2e1a72fcca58-7723e257d88mr301810b3a.11.1756506618264; 
- Fri, 29 Aug 2025 15:30:18 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:30:17 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 68/91] linux-user: Move elf parameters to {i386,
- x86_64}/target_elf.h
-Date: Sat, 30 Aug 2025 08:24:04 +1000
-Message-ID: <20250829222427.289668-69-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756505476; x=1757110276;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=p6dVFub8rfkbljYLWR1PaKydXBgAgpJmLsYGBvx29pU=;
+ b=LcaIyx57MFAhBrfE/r8ixl/O3ScepAC9INcqa5giQzPEymZd7/xlMtbRTN1dOxhLUk
+ wfPMtUg8rWamblwaI3dbi0PdgElRZ7aVc34pWMJdIDLo8KO5Jhy+5pqlin6zIHX/aP/D
+ Y8T8mMZ4vjlLlWOukKieQ0yCTU4HQFCnsOe7RvKpqxldizxOcxjLUMwJ4iGyqIIBWuax
+ PrBohwaCPKIpMqbNfvfB3PNFJk12JgN5hNoEdDuCmKz5R+Tk/suhZY2LmdW5HmXG93Wv
+ M6qL9B6yT24O9TdHhQ7A4OatWvZ2lT4TyR8RGvpT0C6qb+cjq5EnpFFvGOu51zKNTX7B
+ RgRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXkPGeKEVm7uMVkoGeNn5XmmdFCBGG1UTFz5eHpICMR8EjDFSk6UcFsK0+Y7RBp6Kt1/GkqCphcsgqx@nongnu.org
+X-Gm-Message-State: AOJu0Yy7sYEo/lZBuTHCKYOWF9LpZLXKcA4y5EbjpoYesORen0qTmlJk
+ PBVdHnttp3Dcy/zLfETEvIUXcsOcKSJ3WIOKOcviLFqAHeI+MAsW9Ce7hSrye2/QI00=
+X-Gm-Gg: ASbGncuW9E+SSPyO9myEy8aAsqGWUddmAj7KlspwCnFTVAIYXd0E8U+jlDWdKIxqcmR
+ 0GmrHGNDPZlsq2cBNHx7+8my0NGsJkG5WK4xGoSdib4PiWH4Iw8FJDXajfCslDxRH0gihgAH7nu
+ Xk/511/Nwao4VSLpIPwtBFVaolaLnW9zbEmo4bkfusxHAQQ2Y3xm2nMyvQsljm3eQxIZexCOq71
+ spANTC6DeuILDVG1iAtBVYbjQUwyuWYP3wpqZTzVSuVeGkMclGaG+2ps6aSZgHSkDRP7SZv2K4N
+ TAQxVJtLOq8UIRf/QUftIG4SkIiozjHe81eeL9OU9fa+8GzHIXw/8S2aXgybApnk7SXLW9RKn3E
+ jEqECDChjnWThla8jQHwx8jSXK/qi2JU/4BT31TiaoYWuE5cOLt6wTt7DRAkwv62Y7lS39SE1Or
+ sLZPfU
+X-Google-Smtp-Source: AGHT+IFl4+lGRoxnOIQax/suYjIRf+kNKrxg03b+4a+EWxcsk+9353g1FBlcrNxjOeuvMNfv/CUjCQ==
+X-Received: by 2002:a17:903:98f:b0:248:79d4:93b3 with SMTP id
+ d9443c01a7336-24944b29e4dmr1938005ad.59.1756505475729; 
+ Fri, 29 Aug 2025 15:11:15 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-48.dyn.ip.vocus.au.
+ [122.150.204.48]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-249065ab343sm34715735ad.126.2025.08.29.15.11.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 15:11:15 -0700 (PDT)
+Message-ID: <da327e5f-69a1-4480-bb7b-14bd78ec69c7@linaro.org>
+Date: Sat, 30 Aug 2025 08:11:10 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 16/18] cpus: clear exit_request in qemu_wait_io_event
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, imammedo@redhat.com
+References: <20250829152909.1589668-1-pbonzini@redhat.com>
+ <20250829153115.1590048-12-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250829153115.1590048-12-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,118 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/i386/target_elf.h   | 22 +++++++++++++++++++
- linux-user/x86_64/target_elf.h |  4 ++++
- linux-user/elfload.c           | 39 ----------------------------------
- 3 files changed, 26 insertions(+), 39 deletions(-)
+On 8/30/25 01:31, Paolo Bonzini wrote:
+> Make the code common to all accelerators: after seeing cpu->exit_request
+> set to true, accelerator code needs to reach qemu_wait_io_event_common().
+> 
+> So for the common cases where they use qemu_wait_io_event(), go ahead and
+> clear it in there.  Note that the cheap qatomic_set() is enough because
+> at this point the thread has taken the BQL; qatomic_set_mb() is not needed.
+> In particular, this is the ordering of the communication between
+> I/O and vCPU threads is always the same.
+> 
+> In the I/O thread:
+> 
+> (a) store other memory locations that will be checked if cpu->exit_request
+>      or cpu->interrupt_request is 1 (for example cpu->stop or cpu->work_list
+>      for cpu->exit_request)
+> 
+> (b) cpu_exit(): store-release cpu->exit_request, or
+> (b) cpu_interrupt(): store-release cpu->interrupt_request
 
-diff --git a/linux-user/i386/target_elf.h b/linux-user/i386/target_elf.h
-index f89ac0b611..dc58c0017a 100644
---- a/linux-user/i386/target_elf.h
-+++ b/linux-user/i386/target_elf.h
-@@ -10,6 +10,11 @@
- 
- #include "target_ptrace.h"
- 
-+#define ELF_CLASS               ELFCLASS32
-+#define ELF_ARCH                EM_386
-+#define EXSTACK_DEFAULT         true
-+#define VDSO_HEADER             "vdso.c.inc"
-+
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_PLATFORM       1
- #define HAVE_ELF_CORE_DUMP      1
-@@ -22,4 +27,21 @@ typedef struct target_elf_gregset_t {
-     struct target_user_regs_struct pt;
- } target_elf_gregset_t;
- 
-+/*
-+ * This is used to ensure we don't load something for the wrong architecture.
-+ */
-+#define elf_check_arch(x)       ((x) == EM_386 || (x) == EM_486)
-+
-+/*
-+ * i386 is the only target which supplies AT_SYSINFO for the vdso.
-+ * All others only supply AT_SYSINFO_EHDR.
-+ */
-+#define DLINFO_ARCH_ITEMS (vdso_info != NULL)
-+#define ARCH_DLINFO                                     \
-+    do {                                                \
-+        if (vdso_info) {                                \
-+            NEW_AUX_ENT(AT_SYSINFO, vdso_info->entry);  \
-+        }                                               \
-+    } while (0)
-+
- #endif
-diff --git a/linux-user/x86_64/target_elf.h b/linux-user/x86_64/target_elf.h
-index f05b1d4dba..f3c09bb8da 100644
---- a/linux-user/x86_64/target_elf.h
-+++ b/linux-user/x86_64/target_elf.h
-@@ -10,6 +10,10 @@
- 
- #include "target_ptrace.h"
- 
-+#define ELF_CLASS               ELFCLASS64
-+#define ELF_ARCH                EM_X86_64
-+#define VDSO_HEADER             "vdso.c.inc"
-+
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_PLATFORM       1
- #define HAVE_ELF_CORE_DUMP      1
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 8ff9f83bb8..73ca6c681e 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -130,45 +130,6 @@ typedef abi_uint        target_gid_t;
- #endif
- typedef abi_int         target_pid_t;
- 
--#ifdef TARGET_I386
--
--#ifdef TARGET_X86_64
--#define ELF_CLASS      ELFCLASS64
--#define ELF_ARCH       EM_X86_64
--
--#else
--
--/*
-- * This is used to ensure we don't load something for the wrong architecture.
-- */
--#define elf_check_arch(x) ( ((x) == EM_386) || ((x) == EM_486) )
--
--/*
-- * These are used to set parameters in the core dumps.
-- */
--#define ELF_CLASS       ELFCLASS32
--#define ELF_ARCH        EM_386
--
--#define EXSTACK_DEFAULT true
--
--/*
-- * i386 is the only target which supplies AT_SYSINFO for the vdso.
-- * All others only supply AT_SYSINFO_EHDR.
-- */
--#define DLINFO_ARCH_ITEMS (vdso_info != NULL)
--#define ARCH_DLINFO                                     \
--    do {                                                \
--        if (vdso_info) {                                \
--            NEW_AUX_ENT(AT_SYSINFO, vdso_info->entry);  \
--        }                                               \
--    } while (0)
--
--#endif /* TARGET_X86_64 */
--
--#define VDSO_HEADER "vdso.c.inc"
--
--#endif /* TARGET_I386 */
--
- #ifdef TARGET_ARM
- 
- #ifndef TARGET_AARCH64
--- 
-2.43.0
+Mm.  This is the reason we want the seq_cst of the qatomic_or.
+Perhaps comments in patch 7 should be expanded to document this?
 
+Anyway for this patch,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
