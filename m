@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50465CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B4DCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNk4-0008Vv-Rc; Sat, 30 Aug 2025 11:43:48 -0400
+	id 1usNi8-0002C9-8b; Sat, 30 Aug 2025 11:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bL-0004QU-QY
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:44 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1us7R1-0000wT-CR
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:19:05 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bJ-0003cS-TE
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:43 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-76e2ea933b7so2376482b3a.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:29:41 -0700 (PDT)
+ id 1us7Qx-0001AO-GT
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:19:01 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b4c29d2ea05so2607410a12.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506580; x=1757111380; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZvEXEx1VDU0jBpHbT/irolqC9K1ixlWLmUyzXXcC9HM=;
- b=oMgCcIkuac9LBfuU9IVHee/NxscD4MVjk0OjJDEJ5LFCxN8SewJLaAI9lQE+kPkwzM
- gxmoHPDYsDB3sgLuZ4lWJogQBPNSiiXz1ut+ghqGmjP5DUIjSOqq52gwIi6TlrRfiazx
- y+keABRTbmG7D6IETMNp1CCPzhlp7pXeK+LOmRmQ7bOT8ZV0Nqtp3/IcmXkdUbuzHDiO
- JlVN6lE16GWNFnKipdevGmpOB92i4rHseNSMgj04iE//mmyOmPafxRSVqpArxX4rByeZ
- W9QwZ9NVitRzjhLi/dSLeK6Xz4/LutIPHR/uJbkeIiuNyZmmv6N6SuyZ2OEnQhlvzc7X
- Mmbw==
+ d=linaro.org; s=google; t=1756505936; x=1757110736; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=t3jQQUc01jW0I2l5HvOL4L7fQ2s6GxUPSQM22cp499Y=;
+ b=DuWcsEnXgAOYlyh19lMtbgq/r8PeaxMqqDBROyezTKtI2mv75QfAzk+bFoDuWM0/ok
+ ShAfAknCIsakZKQfQE4y2WHTfSkQHuxZys37m7XYbyeKCrGGggWwMoQ5tGqynj7hdoJT
+ cNBjUghRx07peXieIUkrOZhFJg98erho5cwrCrD9Jx8ci3HXlTGRn1p4i0JremIdZg3p
+ rML3CmLP65Q4Fa8rt20vO9K7hSp+3X5P3a5E5vsF4mP9nXAcMOcsnM/DJmiQZz+qZmKc
+ Si4y2dB1lOpmp0BxEy2edvWytT2ZwNS/05uVje/ZeGfKQ7mtBGtqWK1SZaJhOVjJMRID
+ 8DoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506580; x=1757111380;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZvEXEx1VDU0jBpHbT/irolqC9K1ixlWLmUyzXXcC9HM=;
- b=CKVS4qEokNQHVXSQzAwURsJx7HemL9cpI5v/U9ylWe3U7aztBbUpDOHbNfVyO/VopC
- scMjkEnHzbUA7d0E4uLPZzQvqtLx1dsJOiNga1fTP/fiCV8Cu/kbUFnobXVpd3N3acbq
- IV7ORqpD4AVYyvrUHAQAA+NRoVgblfIUjoAIfyQdR9ZOVJb56v81PFwzmrUU8n75SXvs
- b0pvNzgHmO7ODo/MYT3tq9D7JLbjBSXLfyD0E/M8rqjTPYBtiicIMCtzG959DwkQaBAX
- PfDlYYwekmjm0ONm5k11YDjmmQJEzrwXZl5GvT52mMYBds/VGGIOH0f5yHaE2Xf3nPVj
- zDgw==
-X-Gm-Message-State: AOJu0YxTyX7ZSW1/+WBvPsU/mTWiEbd+yUDGhWBfkY18HXc2qQgpTxF2
- BF+GmioTQU8p9MHXA3mONzL0Ezf+aj4AnTjnWEhZMnsRZ092GL1+P2G04AfQnFyOQLfV7cDb/xh
- 94RKnYeo=
-X-Gm-Gg: ASbGnctirE3oOgst9xAaU+w2pFLzEPL9B85fDrzBR5uG9JW6thfdQJdwdAMl7sKkJs2
- tcsJ7JgfoT6xrpqDAVRoDxMASHmLZI1VR1FZyv50pdoM9f0DVAOKilq/xzm/S62b/99UTGXkW8W
- +vSfGkJZjUFFMKm7AqU+b5hka0kuseLcH5KW4rF+wjhT2RgLL8sh/8vUbst90nVOtsW7NaezHve
- Ko4pjxnkeIQjogYf5yXFv3pRlc756SSPVJjAvUFRJcV65cwpmVCBGfOtM7NUa+WFYLjgXtaaRnn
- M6zd70/wFlEVq4HAbFg5yIHWG3SQbYaxaX1zLW6uleB5XBA7RK2uzAxOj37c9JX8P1y5L0HznkL
- nCcn9mREtNISZYv2p3l92D/7G8UDuhbAJHbej1DyiamiSmGYyF0Izvn6o01UBJGc=
-X-Google-Smtp-Source: AGHT+IGsPhj+9a92VfeXy3JySQVgtmDptO1QR/UjL0azYG2JNCkmvO8RbUxzJyOWR0p0+c5dIvAb3g==
-X-Received: by 2002:a05:6a00:3c8e:b0:772:1fa1:be50 with SMTP id
- d2e1a72fcca58-7723e33708amr305116b3a.9.1756506580120; 
- Fri, 29 Aug 2025 15:29:40 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.29.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:29:39 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 52/91] linux-user/openrisc: Expand target_elf_gregset_t
-Date: Sat, 30 Aug 2025 08:23:48 +1000
-Message-ID: <20250829222427.289668-53-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756505936; x=1757110736;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=t3jQQUc01jW0I2l5HvOL4L7fQ2s6GxUPSQM22cp499Y=;
+ b=XJoQqtmVeEtD5sC4c0HKMzVshPsR6tIabMlSGbcckXUySGjw8lyHnDXpfPd76oH+Oe
+ G+gJLWWvQVNCs+nXUylvmZG7Zkj3UWQidt90ZfvB9rW3ydLXF+oFqymqmFmrZ2SWiJqS
+ umwbgZEvLPs3BE2yohy/JIxrgCfbo1IJcR6CmP3rspZA9JAfqW0lAHYfbYrRf0ODICh/
+ sMmsgBOIv7/P+L+qJIL/rd0r7mbK2xGFTBWb3qn0xfcPDMQXba/3Oh9Ro6+oYnZZRm6A
+ EjL4rGtVIc1TQAOz1nfrRsquWxKDv5UGsjeJaIapfF5D9YV9+YI2ctLFNZqEIJGioMqI
+ XHUg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0gyZsro1V3nMJwwlRF5yqGEDMcsBmm6AMyMJ0y4CdW/h5hhjkNXNApHahzCWD0AnxJorVKYuGGDXQ@nongnu.org
+X-Gm-Message-State: AOJu0YxsOal/yvn7ixbauxNdtrdyublX7YpiiPY75lJLbUaxPsQUYjoX
+ 48zszyiUJf7OCjR+f87F+S78XJtUlSPauIMYc73bKHpwS8O4+Y9qaGxbteiqtEy+B+w=
+X-Gm-Gg: ASbGncv6on5hkOU6hbW2ysPzyyx+DjROs9YqVszesh+fSZo5W2wo3OcT11IEN7GJ4Bl
+ ahS96feJpVVEnaFN4Z3W44+ursd2M5BGXsowjXMGGM1nlLvV2QYljJVb+lL0/h5E1O5gRPk8MVw
+ TPsZT6s4BlXH3xHr4CAMdiKnXxrSy2FyrnHO/UyYRdzdA3u3+woKmKj2u9KtU1xcM29DNpNqBG+
+ /KqSyCwq6us5bR1qzmXdZJlFoi2cQKQPn5Ox6mYdDTB1QQcx9BzTCvMdvzp1JgcDrft2BH5I8A3
+ nReGhDPyW2XqZCZuewCEGLCKIL0yaO3bGpdjENszuLWD8bycUFWkzxy4rAiA3zuQ1WTe/J8KxRw
+ KB3tI/IbsRYwke5XzYzesjQnVs1Ux/T1WeyMBSUlV4UJXjl+3MYVHncwRLMzgY/qr0nUktEL+db
+ 9mwwLD
+X-Google-Smtp-Source: AGHT+IFDw5kqLSmI9qrmgBJ3GGzK5bBsUF/rs1QywPSurSzNW4+gW1wDd3y6M3ZkVTIv0Hj66/bM4Q==
+X-Received: by 2002:a17:90b:4c8f:b0:31f:252:e765 with SMTP id
+ 98e67ed59e1d1-32815437acemr274227a91.6.1756505936316; 
+ Fri, 29 Aug 2025 15:18:56 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-48.dyn.ip.vocus.au.
+ [122.150.204.48]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-327976b5074sm3360315a91.4.2025.08.29.15.18.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 15:18:55 -0700 (PDT)
+Message-ID: <56d449f5-3572-4cf8-b875-07a2aaf1f094@linaro.org>
+Date: Sat, 30 Aug 2025 08:18:50 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/18] target-arm: remove uses of cpu_interrupt() for
+ user-mode emulation
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, imammedo@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250829152909.1589668-1-pbonzini@redhat.com>
+ <20250829152909.1589668-5-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250829152909.1589668-5-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,64 +107,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make use of the fact that target_elf_gregset_t is a proper structure.
-Drop ELF_NREG, target_elf_greg_t, and tswapreg.
+On 8/30/25 01:28, Paolo Bonzini wrote:
+> Arm leaves around some functions that use cpu_interrupt(), even for
+> user-mode emulation when the code is unreachable.  Pull out the
+> system-mode implementation to a separate file, and add stubs for
+> CONFIG_USER_ONLY.
+> 
+> Cc: Peter Maydell<peter.maydell@linaro.org>
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/arm/internals.h |   5 +
+>   target/arm/cpu-irq.c   | 381 +++++++++++++++++++++++++++++++++++++++++
+>   target/arm/cpu.c       | 370 ---------------------------------------
+>   target/arm/el2-stubs.c |  37 ++++
+>   target/arm/helper.c    |   4 +
+>   target/arm/meson.build |   2 +
+>   6 files changed, 429 insertions(+), 370 deletions(-)
+>   create mode 100644 target/arm/cpu-irq.c
+>   create mode 100644 target/arm/el2-stubs.c
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/openrisc/target_elf.h | 12 +++++++-----
- linux-user/openrisc/elfload.c    |  8 +++-----
- 2 files changed, 10 insertions(+), 10 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/linux-user/openrisc/target_elf.h b/linux-user/openrisc/target_elf.h
-index e97bdc11ed..ad80e4b41a 100644
---- a/linux-user/openrisc/target_elf.h
-+++ b/linux-user/openrisc/target_elf.h
-@@ -8,14 +8,16 @@
- #ifndef OPENRISC_TARGET_ELF_H
- #define OPENRISC_TARGET_ELF_H
- 
-+#include "target_ptrace.h"
-+
- #define HAVE_ELF_CORE_DUMP      1
- 
--typedef abi_ulong target_elf_greg_t;
--
--/* See linux kernel arch/openrisc/include/asm/elf.h.  */
--#define ELF_NREG                34 /* gprs and pc, sr */
-+/*
-+ * See linux kernel: arch/openrisc/include/uapi/asm/elf.h, where
-+ * elf_gregset_t is mapped to struct user_regs_struct via sizeof.
-+ */
- typedef struct target_elf_gregset_t {
--    target_elf_greg_t regs[ELF_NREG];
-+    struct target_user_regs_struct pt;
- } target_elf_gregset_t;
- 
- #endif
-diff --git a/linux-user/openrisc/elfload.c b/linux-user/openrisc/elfload.c
-index bb5ad96711..6bf02bf58d 100644
---- a/linux-user/openrisc/elfload.c
-+++ b/linux-user/openrisc/elfload.c
-@@ -11,13 +11,11 @@ const char *get_elf_cpu_model(uint32_t eflags)
-     return "any";
- }
- 
--#define tswapreg(ptr)   tswapal(ptr)
--
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUOpenRISCState *env)
- {
-     for (int i = 0; i < 32; i++) {
--        r->regs[i] = tswapreg(cpu_get_gpr(env, i));
-+        r->pt.gpr[i] = tswapal(cpu_get_gpr(env, i));
-     }
--    r->regs[32] = tswapreg(env->pc);
--    r->regs[33] = tswapreg(cpu_get_sr(env));
-+    r->pt.pc = tswapal(env->pc);
-+    r->pt.sr = tswapal(cpu_get_sr(env));
- }
--- 
-2.43.0
-
+r~
 
