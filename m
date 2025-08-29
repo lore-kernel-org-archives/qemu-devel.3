@@ -4,134 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0163CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 149FCCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNNL-0001l5-9Q; Sat, 30 Aug 2025 11:20:19 -0400
+	id 1usNOb-0003zJ-IL; Sat, 30 Aug 2025 11:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1us0eX-00046T-T2
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:04:33 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1us14i-0001nh-El
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:31:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1us0eW-0003U2-0C
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:04:33 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1us14c-0000V4-4V
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:31:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756479860;
+ s=mimecast20190719; t=1756481488;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=B9W68wmf4VVIjV6hRj+lROitNa3GSgjUdk1iMfoXRks=;
- b=WnEvTRfz5Z8Pxv13lHudyBr3P4xwZJiP/HEtU2X626E+OJDtr9JFogiFdZzhYVSTrm/T8e
- s30jt+LEE7iiggJmAU7QbWXDPhejeBrUkrAc2d0zebjXjWAyephKqcjzg/eNFYsrBP+xTP
- s19OJRU4sFUYM32l0CSAd0JNY2hu6G0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=EsZtj6B4xNxRbWQ2j10KIrPfvYq1rdhUBi92bjvMMmM=;
+ b=M54fA2GZmlWqH1cGEh/IydbM6QeXHH8Ny/cmEWFj0WS2O6uf7BhBxzxGQYn2W8BwNCInL0
+ UEYUnErihKCfavZrKGv39EXw3huC3CxmIZHv87tCvw4JEA/CG1dno64R5ERUjHF+025wCl
+ 7mi7o50xCWADHRalOUGckFvDUkQR8P8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-s-KzkCAfP1SqSSonVeNeMQ-1; Fri, 29 Aug 2025 11:03:31 -0400
-X-MC-Unique: s-KzkCAfP1SqSSonVeNeMQ-1
-X-Mimecast-MFC-AGG-ID: s-KzkCAfP1SqSSonVeNeMQ_1756479805
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-70deedd1deaso40980356d6.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 08:03:29 -0700 (PDT)
+ us-mta-588-CSDzsGIjMRG3MmLPlKuLpw-1; Fri, 29 Aug 2025 11:31:26 -0400
+X-MC-Unique: CSDzsGIjMRG3MmLPlKuLpw-1
+X-Mimecast-MFC-AGG-ID: CSDzsGIjMRG3MmLPlKuLpw_1756481484
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b71fe31ffso12933055e9.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 08:31:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756479800; x=1757084600;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B9W68wmf4VVIjV6hRj+lROitNa3GSgjUdk1iMfoXRks=;
- b=V/Lkh28YiHBDMHmhL6sKgXQ/x55oYiVJ5M1MK7ZOPnKfPdM+PVpxZ0J+kJBcntf5ub
- 1Le88u07CN76NBlWO/V5l2NSKiWqy8/xpY6WeSBFzqoN/bni30Wiwxq6zMzTTPBRhXDe
- mJRt7/mSZibGeNzhRwcvWBrr8QVyCFcKa1PCAuZxcPa8ZDhISxWNIqvj0xp79T4ENLpn
- 09+rhkenSKUYif5r14H2kM5S0NmFpsW39e+aKAgKsIJVFNfrJb3VI7fOTufPtp/Zx4P+
- CUHPNOv3ArcZbFh4pIFi8YWz9Wx14YLX05+v3qVXKjiPld1aTysHlZG6EWy35svULRx7
- XTYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrHs1AAWh/z7v90n91AAkonpdDxwtbMC8IHDVWLW3p+3HniWORGcDhtZ1jHgR1mct1Kqa20QMjSqve@nongnu.org
-X-Gm-Message-State: AOJu0YwZkBZC5QL3BlrQMdF3hKaVUvYJma3be0e5AkgOWCplVKWspW+z
- eqLHvV0L55n3fPjzuiw2T0qG7TtC+9uoNtTPXvWFqVImYqAIh6v6jXbFcpfC1HD6PlyJ6SqF2S9
- DHNjVCX5c2Xyzb+KL89wuyg2Np/hX7aqH8OaUUf7uRi1WBeWyjIdHFhNf
-X-Gm-Gg: ASbGncvo9a3zTsR3x22GJbHdgt06wzkX0/gGiVZt9NVYF1H/C3HyV2+cVusfvt96CDT
- gXtWTd9GMUbRe2VZAHOUQTb7r9iCBX2dua0HmWrfwlaglV9hyNpikC7OniKym7XSBtFqi+cfass
- Bwh7JsR8rV6hTU/9k1asWaqexWdLt3Y5tXnEKNNSMcjC8oFIt16h+7i6VGIQHHeXPEU28UzdbVG
- WJq6KKeCKXUxOGgbtleNpRT/WYbe3BR1Zx9ICPYkf3msBYqpe5Zd+5AzwYhaeA7ILqLdBWWyAlx
- aVz7cOl7/8nxo4b1MClDn09TwpyktdY5KpteBcoTSNCdulEVzpbWwv3L5ucncn+Qt6pS
-X-Received: by 2002:a05:6214:268a:b0:70b:c788:4e31 with SMTP id
- 6a1803df08f44-70d970a540amr368004296d6.12.1756479800303; 
- Fri, 29 Aug 2025 08:03:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG4ek+z0bDNDspsSHoRp4VCXYIbjgiTdivEBs3yrEx0RVsDtSVAVZHlDxZRT5jKyIqHxsvsdg==
-X-Received: by 2002:a05:6214:268a:b0:70b:c788:4e31 with SMTP id
- 6a1803df08f44-70d970a540amr368003416d6.12.1756479799494; 
- Fri, 29 Aug 2025 08:03:19 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-42-48-43.web.vodafone.de. [109.42.48.43])
+ d=1e100.net; s=20230601; t=1756481484; x=1757086284;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EsZtj6B4xNxRbWQ2j10KIrPfvYq1rdhUBi92bjvMMmM=;
+ b=fAEnEO8pxj6cLbc8npRRDn74e3B6TpSQhgeqPtL9qUm0g4KYKDaT3/tynP51EVBbY4
+ ppGbtPrfr31CorjbCR8MJjJJlK/GTGEBtpbvUV8w14RcGhqXJ29hNKcKMZM7KteXIIek
+ dX5u95prMSIoCx5vIgDU2JtN124EoIzEGm23+V/g4miGfdh3P4MH7Wj32sUNpYwUgrat
+ hf16j0S8ZaeVcEZ39cxCo+RPeXf1HbIFhrmLHZTnDBRAoSNDzWPWJzuA2xIgLtW35Arw
+ ExQ2vD7sQtuv6rQPn+zFfReQ25Q5cqKrTIoUjc65apC4cSHLL/XT4MyM0ixTUcVK+gkd
+ 6wew==
+X-Gm-Message-State: AOJu0YyrcIEIaOpAmu7rZLw8bW7SXQ4WOA7Q+3VPz0bjtckaCAGSlV8c
+ nGjr/N8TC9EneN+2nQPlo9v7uaYSn2YSRGP2fT1+QBRMamXE1PyglY3VfLS+SuMRMlMUFG2lpdl
+ ny7JpTQTneOZOb792S5oAImQeiZKBesQjKNGPH23l9UNF9GHouLcgBm0FbNWygs+aSIB5CzNT+4
+ y8FWGl5AWMmsPEFm3u8GaZw7tP0RvHHiW6dDiUXODo
+X-Gm-Gg: ASbGncsnH/NH246W+Eb3EqoFSyn74quQVroXWSvtK7fsOC1vD8XRWdobAJ8Yi14cptD
+ rTKD4oG1OsjCaRw4+dEXlTZ8gBxHJy6BJctNTslt8lnhJIMjWYXYSA9QcIgQUvtLIbYVh+C5HV4
+ JwrOfjNdX80oOqaXS2SEKYob59CPgxAARYJhM/cnLzVprtJz3EWI3ebwPQLJ8gMvwLpUqT7EKml
+ UH9YixhcPeJU+a99JRUcyAaOSQf1CbEDm+luFSupT+o3A8ApgPeGi+A0UP/12MXd5r6CLAd19Kz
+ nJpPVW141H6jAJlFtV2Plqnl7dOkyOSnTMxj6Pse1D/fljoNyVmyM+YCcF6V+lTeSv1Iz4xu3FK
+ 8nHbW1277znltjdJVcqywCVlZ0APbLhcNNJpVktb+Llo=
+X-Received: by 2002:a05:600c:3b8b:b0:45b:7951:92a2 with SMTP id
+ 5b1f17b1804b1-45b795195c9mr54607835e9.18.1756481483626; 
+ Fri, 29 Aug 2025 08:31:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH45wRzNb7t0IxQi75lcnXmWWtTjS7Pv6ApygqocKPXnWv0MkgD33L8EbCi5JtzBKvDyJaTUw==
+X-Received: by 2002:a05:600c:3b8b:b0:45b:7951:92a2 with SMTP id
+ 5b1f17b1804b1-45b795195c9mr54607495e9.18.1756481483080; 
+ Fri, 29 Aug 2025 08:31:23 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70e57e2986asm17397816d6.28.2025.08.29.08.03.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 08:03:19 -0700 (PDT)
-Message-ID: <409f0240-22f9-4586-9205-ae3d604a139c@redhat.com>
-Date: Fri, 29 Aug 2025 17:03:16 +0200
+ ffacd0b85a97d-3d0c344f6casm2718163f8f.36.2025.08.29.08.31.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 08:31:20 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com,
+	richard.henderson@linaro.org,
+	imammedo@redhat.com
+Subject: [PATCH 07/18] cpu-common: use atomic access for interrupt_request
+Date: Fri, 29 Aug 2025 17:31:04 +0200
+Message-ID: <20250829153115.1590048-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829152909.1589668-1-pbonzini@redhat.com>
+References: <20250829152909.1589668-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] tests/functional: handle URLError when fetching
- assets
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250829142616.2633254-1-berrange@redhat.com>
- <20250829142616.2633254-4-berrange@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250829142616.2633254-4-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -156,17 +111,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/08/2025 16.26, Daniel P. Berrangé wrote:
-> We treat most HTTP errors as non-fatal when fetching assets,
-> but forgot to handle network level errors. This adds catching
-> of URLError so that we retry on failure, and will ultimately
-> trigger graceful skipping in the pre-cache task.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/asset.py | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
+Writes to interrupt_request used non-atomic accesses, but there are a
+few cases where the access was not protected by the BQL.  Now that
+there is a full set of helpers, it's easier to guarantee that
+interrupt_request accesses are fully atomic, so just drop the
+requirement instead of fixing them.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/hw/core/cpu.h |  1 -
+ hw/core/cpu-common.c  | 12 +-----------
+ system/cpus.c         |  3 +--
+ 3 files changed, 2 insertions(+), 14 deletions(-)
+
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index b01a0cffd64..23bd02277f4 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -495,7 +495,6 @@ struct CPUState {
+     bool exit_request;
+     int exclusive_context_count;
+     uint32_t cflags_next_tb;
+-    /* updates protected by BQL */
+     uint32_t interrupt_request;
+     int singlestep_enabled;
+     int64_t icount_budget;
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 39e674aca21..9ea1f3764a8 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -67,19 +67,9 @@ CPUState *cpu_create(const char *typename)
+     return cpu;
+ }
+ 
+-/* Resetting the IRQ comes from across the code base so we take the
+- * BQL here if we need to.  cpu_interrupt assumes it is held.*/
+ void cpu_reset_interrupt(CPUState *cpu, int mask)
+ {
+-    bool need_lock = !bql_locked();
+-
+-    if (need_lock) {
+-        bql_lock();
+-    }
+-    cpu->interrupt_request &= ~mask;
+-    if (need_lock) {
+-        bql_unlock();
+-    }
++    qatomic_and(&cpu->interrupt_request, ~mask);
+ }
+ 
+ void cpu_exit(CPUState *cpu)
+diff --git a/system/cpus.c b/system/cpus.c
+index 437848b5eb4..9bfbe2b0607 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -257,8 +257,7 @@ int64_t cpus_get_elapsed_ticks(void)
+ void cpu_set_interrupt(CPUState *cpu, int mask)
+ {
+     /* Pairs with cpu_test_interrupt(). */
+-    qatomic_store_release(&cpu->interrupt_request,
+-        cpu->interrupt_request | mask);
++    qatomic_or(&cpu->interrupt_request, mask);
+ }
+ 
+ void generic_handle_interrupt(CPUState *cpu, int mask)
+-- 
+2.51.0
 
 
