@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10935CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FAFCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:11:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNwU-0000uG-IV; Sat, 30 Aug 2025 11:56:38 -0400
+	id 1usNkR-0002VZ-KY; Sat, 30 Aug 2025 11:44:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEMO-00064P-8Y
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:44 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1us7cD-0004zv-Kx
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:39 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEML-0004DS-2q
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:43 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-32753ef4e33so2086672a91.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:40 -0700 (PDT)
+ id 1us7cB-00041g-Qw
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:37 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-771f90a45easo2235600b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532559; x=1757137359; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756506634; x=1757111434; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xz6K6b/NcWzA9krG2jmDsuQPjPRc6na7yx50YdzA0DA=;
- b=y5DFKxF34yNCy9+vhF0ESHnd1b9RSHknGMjYd9Rp1Hlw7Yp2TFLYYwzOvLKMIQrrrF
- S9iPvduUCb4yst0YPm6FaHa74le2rB/6HgI+V9VRhVq63wHifT6meHwxlgE2q+59z/i/
- uoGJF7rk3QpUIUrtMpvthV+gLF7l7c8PweK5yLzp3feyMcRGdoMqBJ4f0OR6cvDwISCW
- 8xP6lhKVcuuMJrJP1W8JwpYJUuR1Nt12GAu9JwBKR8Spg2KpYmvQ5slvca0QHqPTu1x3
- bSi5KyLq/Ox1y60o0IdWMlDRW4EY8XPeJiHQJv60w1VTE3mDchNCaBIjpAGUqvKAJwzO
- IhUw==
+ bh=lowHNs0QIQ4pb8gQYo2rhZhqRLDHpO1LE/Cpq00H8f0=;
+ b=ZFemviTs0Alg/ZdcKrwhTUImlzJ2SvrUfVWQ0CEuuBQHn6anrzfkfQa8cHz2pvmeAz
+ YqATdjZDg6c4XT3wgDiSlu2vfpU/j1v1tz9FXaObcZ8oj5kUGvT8EdrzOgKaT6UTSCr6
+ 42uI3N8czC+Tt9M2Za3wyD46E2irPHGJt0qoSeu38jfrGl4/SipbK48hCNOzCJq+K+k4
+ kKc21iatN+uloNx0fVnDTsX4aO7O5lNsmk3CRb1FKpDQbmt2UUvRqH0u1Sq/tERBnA4Q
+ 0u95I2gb3LZD89f4eUnz7w5V+xEWin2YUz+G1H+V7+GnLFBHGfuy122vFBNSv92GLp+y
+ gZJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532559; x=1757137359;
+ d=1e100.net; s=20230601; t=1756506634; x=1757111434;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Xz6K6b/NcWzA9krG2jmDsuQPjPRc6na7yx50YdzA0DA=;
- b=K6bA8KiQ/jVEGXLiCCzKIb4/fLWYUJrJOZHebGnhOnJwW09At7iyytOwyeVg3tzVMZ
- YGohs5cFm1N41f0lZcXJRqcr2JVeUHQPBg8r3zQ5qc84Mc/UA1IXruWUnhpLkpOG+BMv
- F1JnZWAGLzgk/qrLC28t7hEtIYRK4ngCs623n1u76wV5Gl1UeCUvbPh/P2kC85QvnQiO
- rCJ5nepJvDWTc7YHX2MlPwhSl6ENU9e/M5kOu7xk8t0uImkByFZbaZwiXUJ7cHKMLoRh
- StEtnTF3/MCxtB2qm8BUVxSK0DhGwazARMTT1jXoyH65IOYu6L7PTJKswRAlon3bTK7K
- VrVA==
-X-Gm-Message-State: AOJu0YwhoxygOalcAm3JXLX48o3UGrMcPULBTsN8OfCQ0GZdlEtnoMw5
- 8kGjQ2bS4b+e+tqIDNiCUNnosKos/Ucwd/GbwDc2lzbsb6I1gP6GWGMukUwF62ZLXkI9lp8DoJn
- vcSFhONM=
-X-Gm-Gg: ASbGncuq1oJvfqKj3TyuKzZNfZF4rEVCujqriVaqbnijLo3Qs8qsJlIy0KjK7p1XRaA
- om9/t4mDD6085CcZ/mbsODyKhBsknsujCh9Y0CneNSbTPJJLcasI2eiPXj0c7MJ223oMQ/BkRy7
- oxn2tgK2UBirBzieJUBVwPwJp6S27t6XuZ/W2f6i8qguOWot3Eh98XPy7i9GrC+XASM6NsoDrmx
- 7fT4xpU/fZX8v1jfB1Ty2DDw1AqxTfWETZbEtiyScrwfEpNS62mbgbF8vsigpvBSyuHgQJlqj1C
- iQTijT9KcZIlsvKqmtQd68y9O2PdN0tPEpAT+sR5TRPO4uYETkkeRk3AvuiWTMZnpnsRwGUJI9U
- aqLE9j/RpYht+RRJjqXOJVw/e5APKI0+ABru1xlBG2nYwKwoRhGLvgFnOg4DD
-X-Google-Smtp-Source: AGHT+IGp1d6tKuN68ik3Wq98bpIlgM+VF7udjIuvf5QfIvYOgn/sSV4Axha9PfYLjXuK0ITh0YoBgw==
-X-Received: by 2002:a17:90b:4e88:b0:327:e9f4:4dd8 with SMTP id
- 98e67ed59e1d1-3281543831dmr1902032a91.10.1756532559244; 
- Fri, 29 Aug 2025 22:42:39 -0700 (PDT)
-Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
+ bh=lowHNs0QIQ4pb8gQYo2rhZhqRLDHpO1LE/Cpq00H8f0=;
+ b=YofYzm+/+b4g3oRRUxweNilV2bwnpdRQnz748ZULNQEwqAkSVamFLGkc+xBGY0vjpd
+ yBe08QxMAYl/zaSByGm9e6e6y15teD6zQilmpSchWnQy3hl0NPtBcvByN2ow58lSs/Jt
+ DqWAMraJwN2xB3NBqL8iTgBneIX5pRuPEBk5AIAChMDR3OS8Xgh0I6+x56tmLobi0o97
+ VdlLjipMb+TkLLLmJHeBvJGb7d9N0cxD1zqMvMZ2+26eU2b5DlIsX1Sm3NVcVXu0cpNX
+ 5xJyuZGwRRSQeHhDk08mBn5z1pQf7+Vn9J/h82v1LUFMuDmlrcjHNUsK3OV9DsRQhHyX
+ ++xA==
+X-Gm-Message-State: AOJu0YzERC2mAyv7iWa2gBUI7MsK4kDIGuTc2XOXZvYm0s6dkBoPrBZg
+ NTUYdl88vWyjsUD3FYnNSumv5q4MKAChqTDKhqdQuVXcPTWmC8QjkO1rdMRz6tKt1l9qQKe9jxU
+ iDx9ldeI=
+X-Gm-Gg: ASbGncuuW/Frc87ZROLEvZnSW4jCIU20KhJXt0+ohYrzmIqyH3gLQ4jKaJCRmxoZ2W5
+ 46Ysrvu5CwmRgd7Aa49QtMV8Uh0SfYemCUcahRlfQ+5Jb2HX9u6SZ4CRoCldM0PzPcPrqLX966i
+ 7bklpDqgJjHNQX8WRq/poDatL+UWdFXT+H545IYOU1nT9xdwdAj3FsrEw4mFv/xH3NHc6ghg33Q
+ fqrzjIMBaFiyEK3Gwd9ggKcfab+ifmrxpNurfhRGX5dDlBAo/usgPQvYl/oY50nB3gxGghlU7Gs
+ w2JJLkW0NLSNFndhd4xkU1n00NcWpPG+9eYwV1ntPKU9XhD8rKqLL+i5Tl1qxFC+fOLmnjQcnGK
+ DlA5VFkJdTKOwnzkxySpYiSQtRM9MuZuyzO1j2CrMXD/6KYuZxvXiFUuPF/25/aw=
+X-Google-Smtp-Source: AGHT+IHVPuJYhQjRxJNIkWzGnVz47GMqSwcr6dCnUDpBo3EL+TR2CsSecz9fTUDA7SfSj/ZioM8UIg==
+X-Received: by 2002:a05:6a00:14d6:b0:76b:c9b9:a11b with SMTP id
+ d2e1a72fcca58-7723e21e594mr291155b3a.3.1756506634329; 
+ Fri, 29 Aug 2025 15:30:34 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.42.37
+ d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:42:38 -0700 (PDT)
+ Fri, 29 Aug 2025 15:30:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 23/84] target/arm: Expand syndrome parameter to
- raise_exception*
-Date: Sat, 30 Aug 2025 15:40:27 +1000
-Message-ID: <20250830054128.448363-24-richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 75/91] linux-user: Move elf parameters to openrisc/target_elf.h
+Date: Sat, 30 Aug 2025 08:24:11 +1000
+Message-ID: <20250829222427.289668-76-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,73 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare for raising exceptions with 64-bit syndromes.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h     | 6 +++---
- target/arm/tcg-stubs.c     | 2 +-
- target/arm/tcg/op_helper.c | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ linux-user/openrisc/target_elf.h | 3 +++
+ linux-user/elfload.c             | 7 -------
+ 2 files changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 285b338aeb..1d60a4ff7d 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -304,14 +304,14 @@ FIELD(CNTHCTL, CNTPMASK, 19, 1)
-  * and never returns because we will longjump back up to the CPU main loop.
-  */
- G_NORETURN void raise_exception(CPUARMState *env, uint32_t excp,
--                                uint32_t syndrome, uint32_t target_el);
-+                                uint64_t syndrome, uint32_t target_el);
+diff --git a/linux-user/openrisc/target_elf.h b/linux-user/openrisc/target_elf.h
+index ad80e4b41a..ed9739380f 100644
+--- a/linux-user/openrisc/target_elf.h
++++ b/linux-user/openrisc/target_elf.h
+@@ -10,6 +10,9 @@
+ 
+ #include "target_ptrace.h"
+ 
++#define ELF_ARCH                EM_OPENRISC
++#define ELF_CLASS               ELFCLASS32
++
+ #define HAVE_ELF_CORE_DUMP      1
  
  /*
-  * Similarly, but also use unwinding to restore cpu state.
-  */
- G_NORETURN void raise_exception_ra(CPUARMState *env, uint32_t excp,
--                                      uint32_t syndrome, uint32_t target_el,
--                                      uintptr_t ra);
-+                                   uint64_t syndrome, uint32_t target_el,
-+                                   uintptr_t ra);
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 6c8771d804..d0993621c1 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -130,13 +130,6 @@ typedef abi_uint        target_gid_t;
+ #endif
+ typedef abi_int         target_pid_t;
  
- /*
-  * For AArch64, map a given EL to an index in the banked_spsr array.
-diff --git a/target/arm/tcg-stubs.c b/target/arm/tcg-stubs.c
-index aac99b2672..aeeede8066 100644
---- a/target/arm/tcg-stubs.c
-+++ b/target/arm/tcg-stubs.c
-@@ -16,7 +16,7 @@ void write_v7m_exception(CPUARMState *env, uint32_t new_exc)
-     g_assert_not_reached();
- }
+-#ifdef TARGET_OPENRISC
+-
+-#define ELF_ARCH EM_OPENRISC
+-#define ELF_CLASS ELFCLASS32
+-
+-#endif /* TARGET_OPENRISC */
+-
+ #ifdef TARGET_SH4
  
--void raise_exception_ra(CPUARMState *env, uint32_t excp, uint32_t syndrome,
-+void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
-                         uint32_t target_el, uintptr_t ra)
- {
-     g_assert_not_reached();
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 575e566280..46a3b911ec 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -46,7 +46,7 @@ int exception_target_el(CPUARMState *env)
- }
- 
- void raise_exception(CPUARMState *env, uint32_t excp,
--                     uint32_t syndrome, uint32_t target_el)
-+                     uint64_t syndrome, uint32_t target_el)
- {
-     CPUState *cs = env_cpu(env);
- 
-@@ -70,7 +70,7 @@ void raise_exception(CPUARMState *env, uint32_t excp,
-     cpu_loop_exit(cs);
- }
- 
--void raise_exception_ra(CPUARMState *env, uint32_t excp, uint32_t syndrome,
-+void raise_exception_ra(CPUARMState *env, uint32_t excp, uint64_t syndrome,
-                         uint32_t target_el, uintptr_t ra)
- {
-     CPUState *cs = env_cpu(env);
+ #define ELF_CLASS ELFCLASS32
 -- 
 2.43.0
 
