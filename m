@@ -4,90 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C105ECA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4F9CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOgx-0004rv-62; Sat, 30 Aug 2025 12:44:39 -0400
+	id 1usNFW-0006RI-MK; Sat, 30 Aug 2025 11:12:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkai-0003ev-8w
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:55:32 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkaf-0008Of-6j
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:55:32 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-45b627ea5f3so6103525e9.1
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 14:55:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756418125; x=1757022925; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=himmVZ1AMNLozirnOY2wu+QpUFfS93WwBoK6WfM4uOE=;
- b=nEnyKHPBi0A8RRHwlkpRmJIk4KwJlPd3lTfjOOiGki04prHjav/2PZrrxhj2UfXNns
- NqJqrOBFNEvjYSloiv4yoyI4izAhrj0hK4kGFyQMhTS0EaQS5tUutemtT8/gkosLipTV
- IUx4YeMiYxsIvNmwMVXy7duBP+eV3sJvvcZZUtwggW2McSrmRZkUYgE0QyNAw9YjLtZc
- iKgwgKdMFms33VOBBKvBUSBJKIxsm1322lQiyMbTIJfltXGGclGoKuuosaM5zuU8s/Ss
- DTls+T3enfS24hgSZuI1cuMEpuiFkoa7AcaSkbnJ1d5pownmQ+AUHCWNCgiJ2HVtsFXI
- j0iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756418125; x=1757022925;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=himmVZ1AMNLozirnOY2wu+QpUFfS93WwBoK6WfM4uOE=;
- b=GM+tmzcIalIioeXZwwPAEmXn1WoedIBQLqf0gFbzdZPun7+qr1CvscO4/1BY2hOuEc
- AANHDY+qgShyI8ISmalYuD1wBzl3tyrI0cLPNpoyJadk8OKrUUdfcpdMU6NswdUR1f69
- 8Wvd5Boo+GugN9lbRFWW4thQOh5YNY8ddNvOW+ErBtUG1CFBG42S6Fcm/tyczjW+F+6b
- CA1QFQaC5hsQ7iwjgSHwvlgeQlyYeSVAWNl/FOo3WXd9veKvbwHzaJA40XnU87buH1d2
- ZMm8Hur6kDjOtL5p1IeIV6c4z9gPsgZslXJf+rUzkYBAIJyRbNza48fHzjFHF22tBbQd
- 6SSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWU3ayTm0sORtFlGgNZ6Hv5tB718bOML8Ymw+mRYlbi8nYzuJVVVBJAMrspRAqhgMZqAJOI1lXrUKgd@nongnu.org
-X-Gm-Message-State: AOJu0Yz6HHTVC1OeEvJzgNwpngWagJErUBPW/t6WmpFXw1bqv4cFkuZp
- F4BaGvw6MFk9llYPP1N+zIh4w/fFIZV/JFBQ1oKUH+hoIA+5qV0vB0HodCewrrZKSir0SI3Ok0H
- jOHJp
-X-Gm-Gg: ASbGncvRD/Fz+7jlGzXQ9ewxdbCKSaU/mukY0yrF8YPQRht6Ycdj0zHMJF6nbUqoa+Q
- meb1BMbk+pvRJfY4KYaMGPud/HEl0ZNS8kT70FaJv3fnAB/RbbX9is2lkIIcF0MlHWZ1HhvT8CF
- FbglSrMMkGKCXcMgPu3U6ifM+tOy2Obi3cI4hZI2DcpeOBGm+zXeYzfA0FfwlBk4PKsqLNqTv2e
- VI/+abBK4VUubOBRLnFVxNWfsCwWRuxsAqZV8alufegSY6GVMlVL3RrROWMxHpOO5+4+0gl4XMm
- BeB+CAKZbR6/1HxrgWrUYEOzgImnJpFYh8tD5QTS1pnYM0mvJoBrYvFc0Vkw1PvgZIFr0pJbqj9
- R39b3/VpqPOaC5GSAN04Legwfnh9PGBEiUGVOULGLU6Jap+1N56PB+pCKWFoqCsPeLw==
-X-Google-Smtp-Source: AGHT+IGW0szNFr30KnSNi6TZYT+rMvSezvccioz68Y8ix2WHEA9yOFXcIRAKL8qRdXEMo2tP1bhWuA==
-X-Received: by 2002:a05:600c:3505:b0:456:1dd2:4e3a with SMTP id
- 5b1f17b1804b1-45b6bbd3411mr72548875e9.3.1756418124639; 
- Thu, 28 Aug 2025 14:55:24 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf270fcffdsm806193f8f.2.2025.08.28.14.55.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 14:55:24 -0700 (PDT)
-Message-ID: <973ed433-c365-467f-90ae-1d9348d59730@linaro.org>
-Date: Thu, 28 Aug 2025 23:55:23 +0200
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1urwy9-0008TI-7b
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:08:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1urwy7-0001hh-Ls
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 07:08:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756465710;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BSdjMYWo+86VX8GX3Xm4s2LHLgpFxbBibOQ/p953Ays=;
+ b=Akr8ZEoCf2B/mpFMQUAYEjc0x4PffkD6d1gcI9N4jNaR1xm/aa7k1CeFX7MMiewR49+D/k
+ jJjsPr6cMtk3hHFPdxT8V3YQg0vRdTcX8NieElj+jCVUDxgWTjsAoiM6zOlO+in7zZiZvd
+ n2+rRgUvY6rMOVDXfAduuHNLBF5yyxk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-30-6wZ0-10JN12Z8Tt9Cl6ZIQ-1; Fri,
+ 29 Aug 2025 07:08:26 -0400
+X-MC-Unique: 6wZ0-10JN12Z8Tt9Cl6ZIQ-1
+X-Mimecast-MFC-AGG-ID: 6wZ0-10JN12Z8Tt9Cl6ZIQ_1756465704
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9342195E908; Fri, 29 Aug 2025 11:08:24 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.45.225.62])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2234730001B5; Fri, 29 Aug 2025 11:08:22 +0000 (UTC)
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 3/9] qga-vss: Replace asserts with condition and report error
+Date: Fri, 29 Aug 2025 14:08:07 +0300
+Message-ID: <20250829110813.50286-4-kkostiuk@redhat.com>
+In-Reply-To: <20250829110813.50286-1-kkostiuk@redhat.com>
+References: <20250829110813.50286-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/core: Use qemu_log_trylock/unlock in
- cpu_common_reset_exit
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250827053822.4094239-1-richard.henderson@linaro.org>
- <20250827053822.4094239-3-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250827053822.4094239-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,15 +84,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/8/25 07:38, Richard Henderson wrote:
-> Ensure that the "CPU Reset" message won't be separated
-> from the cpu_dump_state output.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   hw/core/cpu-common.c | 11 ++++++++---
->   1 file changed, 8 insertions(+), 3 deletions(-)
+Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250825145241.170717-2-kkostiuk@redhat.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+---
+ qga/vss-win32/requester.cpp | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
+index 4401d55e3a..bc260abb96 100644
+--- a/qga/vss-win32/requester.cpp
++++ b/qga/vss-win32/requester.cpp
+@@ -347,7 +347,12 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
+         goto out;
+     }
+ 
+-    assert(pCreateVssBackupComponents != NULL);
++    if (!pCreateVssBackupComponents) {
++        err_set(errset, (HRESULT)ERROR_PROC_NOT_FOUND,
++                "CreateVssBackupComponents proc address absent. Did you call requester_init()?");
++        goto out;
++    }
++
+     hr = pCreateVssBackupComponents(&vss_ctx.pVssbc);
+     if (FAILED(hr)) {
+         err_set(errset, hr, "failed to create VSS backup components");
+@@ -579,8 +584,16 @@ void requester_thaw(int *num_vols, void *mountpints, ErrorSet *errset)
+     /* Tell the provider that the snapshot is finished. */
+     SetEvent(vss_ctx.hEventThaw);
+ 
+-    assert(vss_ctx.pVssbc);
+-    assert(vss_ctx.pAsyncSnapshot);
++    if (!vss_ctx.pVssbc) {
++        err_set(errset, (HRESULT)VSS_E_BAD_STATE,
++                "CreateVssBackupComponents is missing. Did you freeze the volumes?");
++        return;
++    }
++    if (!vss_ctx.pAsyncSnapshot) {
++        err_set(errset, (HRESULT)VSS_E_BAD_STATE,
++                "AsyncSnapshot set is missing. Did you freeze the volumes?");
++        return;
++    }
+ 
+     HRESULT hr = WaitForAsync(vss_ctx.pAsyncSnapshot);
+     switch (hr) {
+-- 
+2.50.1
 
 
