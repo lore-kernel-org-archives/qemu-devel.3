@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE19ACA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCB2CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNr6-0002aa-UD; Sat, 30 Aug 2025 11:51:06 -0400
+	id 1usNHh-00013D-D1; Sat, 30 Aug 2025 11:14:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1usBho-0003og-5K
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 22:52:40 -0400
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryjC-0001Lg-2q
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1usBhl-0008En-Nu
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 22:52:39 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 151947A013F;
- Fri, 29 Aug 2025 22:52:34 -0400 (EDT)
-Received: from phl-imap-08 ([10.202.2.84])
- by phl-compute-06.internal (MEProxy); Fri, 29 Aug 2025 22:52:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1756522353;
- x=1756608753; bh=EW5ADFusadMyzkyvSlveU4fNtMRwtxTq406ASshOFpM=; b=
- mRtytAaQQO2FcDqVmec7kMRba1IqF18PFtN9aUMe5WRZ1iKKfbAJ00KbBYxpj+AC
- tpPfuNBBH/7MNidvXYx5LLvcOpMKTAO+ozD84BfGwEdtcze2sebGvuykhYBTc/IC
- US2raP2RdiBTy0QMgmt6FuKH2WDw29nTANYSYGjGvFSuMYHavg5lHWO4JoaTwnhf
- WtHgWE54mxNesc7ofAEN6WA4w2Ap+Deznc7IAa/SRrfWKOUqxExSepSgj7fN6Iin
- bg7KvWBPnFQ8m35nHIEeNAZuCl1szq7ssXyCJRKsfuOBjUYlWUuLiK/9Q2XNo+sM
- 7cvSua0hCLDavtwvjujVOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1756522353; x=
- 1756608753; bh=EW5ADFusadMyzkyvSlveU4fNtMRwtxTq406ASshOFpM=; b=O
- UH7qGxWxTPaAPTNDbpC57LWKzV8tlkQ0luOkdRT4ruVctE8jeTzMrhnVkrOxI5rl
- WgAqW8QnkL0TFO4RwphwhpDsDmc//p2mGIfHYDesmS8f4Ojw+16x21hEpNCA0xJ9
- 5nYBOVstBnmtQuWzLNjcjVaAKY70D3M4AazA0/hj17/uQFkcSTpihefXNE+OmCa1
- +0Li4ng+7LuOn8WOsn1HRmA+5zZbQVfXp/GNDv7dbyEN3950epWGXQLS6+8pECns
- 58szPH0tjzvbPrbS7Y8rgWU5g+NTfwN7M0LkkdUCGt08rmZ1o9aMIgA8t/PXx1i0
- W9v5crw+38CCTx07nX3mg==
-X-ME-Sender: <xms:cWeyaFHXxzCVQk_2rDkrdWepNaqcn9SRUYydoyOPXlH1dJMFiC61Mg>
- <xme:cWeyaKWPK1V2J2W2i1pyd3JC_QZVeVMG-0tct0UUA860lvoUw4qsg3YPi5TOwUVKZ
- efU7vpcvQ4nw3pMCtw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddukeehvdefucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedflfhirgig
- uhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqne
- cuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdffkeethefhlefgvdevvdekuefffeek
- heehgeevhfevteejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
- hfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomhdpnhgspghrtghp
- thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhlmhgusehlih
- hnrghrohdrohhrghdprhgtphhtthhopeguvghvvghlsehlihhsthhsrdhlihgsvhhirhht
- rdhorhhgpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
- gtphhtthhopehjrghsohifrghnghesrhgvughhrghtrdgtohhmpdhrtghpthhtohepphgs
- ohhniihinhhisehrvgguhhgrthdrtghomhdprhgtphhtthhopehthhhuthhhsehrvgguhh
- grthdrtghomh
-X-ME-Proxy: <xmx:cWeyaFg62RIwW-eit4qgKVL-uFIBsl7jySkrKTU0HTZhg-pyfjLH6A>
- <xmx:cWeyaKy2frBqI8T8wjFE88Y_ZvN416Q4rG2e-z92ogvqbTmOto-ZsQ>
- <xmx:cWeyaBNu0htC9K11c0OsIvH9p6l15IGhWoiYbACqjZ5apYNtRd7E_g>
- <xmx:cWeyaLVmCukXkxFzroI5fetep0BReGBDGg5zPj4TpkL26wv_gz_Wjg>
- <xmx:cWeyaIxj0gHjkbOd9aj-50runqr9zCaxdjDdNPvyepRI1HZMVFpXGUZr>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id 3E63C2CE0078; Fri, 29 Aug 2025 22:52:33 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryj6-000058-CU
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756472467;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wib+D8WRzWnAj9UyAq3qZPgY0vk6Olt8tQ4PW4MKmdU=;
+ b=JywMhLbJb84Ulz1WUb2gQEnGFdGZ7QHVuQPjqk2biWPJkXdIX8C14lUBc4CDHk38ZTiocV
+ 8ZOkUIkNJcNB/dIghKovaEDhO8CH1Tj0JHbe3pfa9KAB1IlKcw74/bb9NGBylypDi72dty
+ pKw608rXSSC2XVoYUyirGLO36jgyJqY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-59-cvI3qvKbN_WrtczRO3PBWQ-1; Fri, 29 Aug 2025 09:01:05 -0400
+X-MC-Unique: cvI3qvKbN_WrtczRO3PBWQ-1
+X-Mimecast-MFC-AGG-ID: cvI3qvKbN_WrtczRO3PBWQ_1756472464
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0b46bbso11364025e9.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:01:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756472463; x=1757077263;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wib+D8WRzWnAj9UyAq3qZPgY0vk6Olt8tQ4PW4MKmdU=;
+ b=TVtECzLm0+qHPIT8BPczXmfDg7PJCC23WQIirHeeyMFMJV8Gt85etP/HqCf+OKFWW4
+ TKF5BZrsib5Jfc3A/oKYO5iuA0wd5Yj+tFg89KirNhbTSdosQfpumKrQxnwzZOLozmU+
+ uG0B7kdpMIchS2yvHxjv5BILA6m17ucHnnTnigQoCz1kjazGIUfXB6H06RpCutwBI+HY
+ 7tOWuwyu493+jciDJfVImIt5ux+ezOChgIS1UZyZopnoUicNUewAPuvuu58D8Y9dInYf
+ aLyJm0VTzBfkz88EiHwCrfoxJpSLNQKFrH7+9ZEDCVMSNoMU+e6wIwKrVCkEyCETRGae
+ Ljmw==
+X-Gm-Message-State: AOJu0Yyy5tbcMXBNIl7R3uqmdB8mAMi+aGqde/TsmObFHM6VG+XXP3V/
+ l97aMIZDSg1xMoNAuSMosdg7O/y7ZNhcJKAIANT2ri6aBWIizmN7JkGN/eeHdK5EXB38In1PNy/
+ VGRw7t1LK4Qlr2dWL4qwYgZOJSXwXCE4uEpfdwWltRCcuMe1wjhlu4aLWb9zdNl49xWafOz5plT
+ mBQIlmj4D3TwYmFlt9rH1lgltwRNwunL/0H2xAp6lz
+X-Gm-Gg: ASbGnctj9OsWqYb5brh7SGmlS87+ZyixJ7E2rcpaG7w5eVw1KMndy+OSw833x/7bnHV
+ stVI4juV82G6bUrognsgnz961uXl1eExVOmnCITogvVkGjHbdjzLAI3GBHJDew7JA/NEL1CSb4t
+ bGZLjboS0DO4mRQzJb68RsM7XmwZ5vM4nyiyZslVAKuPU1RCxjuNH07frHpes5jS8eq5YjynajV
+ H8KT59Dtjb0+h4TUqSIvdRNMbPI1dFk26l8fWdxMXAK3V4mdDbb/TQUEYWFIzqkcy01Y9JlIzy/
+ zvTDosxxO9AVfaFiNc0pIzZhb3Ma/nkDWYIoJAyVRAQUNcJUnuYPhXKDL7eKj3KnoV1rNvoCbt1
+ 6jiYSz7+UhOi5rUo0Vr/+uBJouMaQZG42GRkiJeWy3oQ=
+X-Received: by 2002:a05:600c:1d26:b0:45b:7c20:5709 with SMTP id
+ 5b1f17b1804b1-45b7c205c14mr51130295e9.12.1756472462128; 
+ Fri, 29 Aug 2025 06:01:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzpbmdD6NQq2vTFnKGN/6cnfNrrjKpUuP6QPaxbVk3vlZCOKff2eDDKni4SzcCXYOaw4fUvw==
+X-Received: by 2002:a05:600c:1d26:b0:45b:7c20:5709 with SMTP id
+ 5b1f17b1804b1-45b7c205c14mr51129975e9.12.1756472461632; 
+ Fri, 29 Aug 2025 06:01:01 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b7e50e30asm39297335e9.24.2025.08.29.06.01.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 06:01:00 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PULL 25/28] hpet: move out main counter read into a separate block
+Date: Fri, 29 Aug 2025 14:59:32 +0200
+Message-ID: <20250829125935.1526984-26-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-X-ThreadId: AlYk8EVD7EFJ
-Date: Sat, 30 Aug 2025 10:52:13 +0800
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "QEMU devel" <qemu-devel@nongnu.org>
-Cc: devel@lists.libvirt.org, "Paolo Bonzini" <pbonzini@redhat.com>,
- "Thomas Huth" <thuth@redhat.com>, "Jason Wang" <jasowang@redhat.com>
-Message-Id: <6ed130fe-7ddc-46ba-aefd-832ef87971ad@app.fastmail.com>
-In-Reply-To: <20250828143800.49842-1-philmd@linaro.org>
-References: <20250828143800.49842-1-philmd@linaro.org>
-Subject: Re: [PATCH 0/2] hw/mips: Remove mipssim machine and mipsnet device
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=202.12.124.159;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,44 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Igor Mammedov <imammedo@redhat.com>
 
+Follow up patche will switch main counter read to
+lock-less mode. As preparation for that move relevant
+branch into a separate top level block to make followup
+patch cleaner/simplier by reducing contextual noise
+when lock-less read is introduced.
 
-=E5=9C=A82025=E5=B9=B48=E6=9C=8828=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=
-=8D=8810:37=EF=BC=8CPhilippe Mathieu-Daud=C3=A9=E5=86=99=E9=81=93=EF=BC=9A
-> mipssim machine (single user of  mipsnet device) is
-> deprecated since v10.0; remove for 10.2.
->
-> Philippe Mathieu-Daud=C3=A9 (2):
->   hw/mips: Remove mipssim machine
->   hw/net: Remove mipsnet device model
+no functional changes.
 
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20250814160600.2327672-5-imammedo@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/timer/hpet.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-I should really give another go for MIPS virt machine :-)
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index ab5aa59ae4e..c776afc0f2d 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -431,6 +431,16 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+     addr &= ~4;
+ 
+     QEMU_LOCK_GUARD(&s->lock);
++    if (addr == HPET_COUNTER) {
++        if (hpet_enabled(s)) {
++            cur_tick = hpet_get_ticks(s);
++        } else {
++            cur_tick = s->hpet_counter;
++        }
++        trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
++        return cur_tick >> shift;
++    }
++
+     /*address range of all global regs*/
+     if (addr <= 0xff) {
+         switch (addr) {
+@@ -438,14 +448,6 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+             return s->capability >> shift;
+         case HPET_CFG:
+             return s->config >> shift;
+-        case HPET_COUNTER:
+-            if (hpet_enabled(s)) {
+-                cur_tick = hpet_get_ticks(s);
+-            } else {
+-                cur_tick = s->hpet_counter;
+-            }
+-            trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
+-            return cur_tick >> shift;
+         case HPET_STATUS:
+             return s->isr >> shift;
+         default:
+-- 
+2.51.0
 
-Thanks
-Jiaxun
-
->
->  MAINTAINERS                             |   6 -
->  docs/about/deprecated.rst               |  12 -
->  docs/about/removed-features.rst         |   5 +
->  docs/system/target-mips.rst             |  11 -
->  configs/devices/mips-softmmu/common.mak |   1 -
->  hw/mips/mipssim.c                       | 249 --------------------
->  hw/net/mipsnet.c                        | 297 ------------------------
->  hw/mips/Kconfig                         |   7 -
->  hw/mips/meson.build                     |   1 -
->  hw/net/Kconfig                          |   3 -
->  hw/net/meson.build                      |   1 -
->  hw/net/trace-events                     |   7 -
->  12 files changed, 5 insertions(+), 595 deletions(-)
->  delete mode 100644 hw/mips/mipssim.c
->  delete mode 100644 hw/net/mipsnet.c
->
-> --=20
-> 2.51.0
-
---=20
-- Jiaxun
 
