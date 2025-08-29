@@ -4,88 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41DE6CA1001
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F163ACA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:15:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNus-0002rc-Mb; Sat, 30 Aug 2025 11:54:58 -0400
+	id 1usNcu-0000tM-Op; Sat, 30 Aug 2025 11:36:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usELT-0005oM-HU
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:41:50 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usELR-00042W-2e
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:41:47 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-323266cdf64so2364977a91.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:41:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532503; x=1757137303; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cDcksatZM68Ouj9vpX+nhU7BNGlQ6N61jHkn+W4tDM0=;
- b=KRcAf6AYnZD/izpg1u3zrqtmzIQ5/Dq2R/nD4xXnQm1pKp+Ug+7wcovKOG2TaidI0m
- QZlUUpVDsLC6sjUQEuxCPqkG0hgk4ZjJfY6w4dtWFp6BB43Pis6vXm2nPu1BWYOChDvh
- SiRG+74/2bkzu17Li6pptw5Kc+uyrWUKT+cFU22Awlxnra894V6s2ilaaAZ1kElmQwMW
- Vj9NSVwUFwJvhlifckkXkM9wi1gxx2JbmeqF9sM2wxz52Mx/T1lGXlxrx3OGWuty1qS8
- dhPptsPppCOsmAneT9q2u+QMH7QS/nqSbejKzjTcXaW/fmbzZFJIWJyo5TWVP2VisDI6
- jbcQ==
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1us5LV-0005Wt-9u
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:05:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1us5LS-0004x3-75
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:05:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756497909;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wm02YWFPgXK6tLalWRdl7gepF4qWtk92F6eyDxpJHBE=;
+ b=eHq1xw9tq5jUwlNmIm5jqkM1bK0tzqrhpfVou42+H1rJDVAcXJHXiZrrxFxr/NVqIKkvlE
+ N7z0drgMKlFbQgf1EfQesVprn8y+BvdRzAeDs3qo3qvcoLuBPevwEEOsT4TwCEaJPAb6A/
+ kdryxZMRIcuj2JB+TbanTbzHrDeXMpE=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-108-xxBHHK7OMbC31dCVouphoQ-1; Fri, 29 Aug 2025 16:05:07 -0400
+X-MC-Unique: xxBHHK7OMbC31dCVouphoQ-1
+X-Mimecast-MFC-AGG-ID: xxBHHK7OMbC31dCVouphoQ_1756497906
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3259ff53c2eso3589053a91.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 13:05:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532503; x=1757137303;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756497906; x=1757102706;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cDcksatZM68Ouj9vpX+nhU7BNGlQ6N61jHkn+W4tDM0=;
- b=OZZzoC5iYQJ7hvEZGAfUfYJWYjBjEL3qLBKStoNDSv/LtD7x+r83by3LmyjecdElvK
- 7lCTP6nQYLpx4LAtiUwY+YBaVFp3D8K9dfL8xIuX4aiEdQTj7ROUF3L7az17yX+CveKj
- qRgsbQZHpmO9DpYsFbsqH/rNjefP7xKs6mD3oAjYFKNLYrc1CihYLY8FEUCcbJfOyCKZ
- 70mHiF4PmNR26PFKSmwxCx6Lnn0p/oMEECeKAtoqvrMPxRm4bLfKbiubeXoDAw8p4OC6
- FDQRrx0NN89nwT2hBJQSmmtaxIrIY5w+cdBmZfLHEL7xMskvZsiK1VAKSDGwZ+i44G4a
- zJCg==
-X-Gm-Message-State: AOJu0YxI6OT+LXvwG47DOqwoVKjuROTnxfGhTheqiP7jDpNRi3CMoAcS
- a13hSiMiYnEoK67VCPT62T8ZCBeheaZtf2DkFunCyRRgZvxX8pIHmUrgQaqzCguov6QPIVTG9xI
- 4pCyNN8U=
-X-Gm-Gg: ASbGncstMBxHSUYvvnLMUgxn2/qC0KzDgBOFu69i5Dcp6MQtY+ciA5KJUBxkC7+iYA8
- hJmzU1h0Xzi70zOziq7JigCyXtAHzqjZ5Us+NlltxhLgSmT2/WINkGh4gYjr5o0qxZQdXHZ7dc3
- gu72KCE1PQQDQwsnT6JLH/aHf82cNAV7+u/sIV1l7Mhi2b5ur/7Fy50PFHjOKco7D87W1Gc342p
- wsVyWvSsJauqBOWAlruu+2KRVxYQjbFhEWNsmNQIDOGsDa633duO9xAe2RIacpzEA6E6U7DiluJ
- BeYBsFcWAGwNILV6uYILOfCnyCKIvHzfK35C7SP/9OzZl2SAEV9MuHTyAUnPyC1eNUxXBhWZyWN
- WwCpoa7D0JG6+4O29ee7hQVxxm8HyEV09/V9MInUpT6GoDvqXE6z5HU4vPTKXTfMqGS8th8A=
-X-Google-Smtp-Source: AGHT+IGOyvRwLXmZhane5c2TsXXguA2/Ksos3xEUyokraPWcqT6Ro/J3wNnbFwyEbDtB0iZMRYNI4A==
-X-Received: by 2002:a17:90b:52cf:b0:31f:5ebe:fa1c with SMTP id
- 98e67ed59e1d1-3281531fb6emr1499463a91.0.1756532503144; 
- Fri, 29 Aug 2025 22:41:43 -0700 (PDT)
-Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
+ bh=Wm02YWFPgXK6tLalWRdl7gepF4qWtk92F6eyDxpJHBE=;
+ b=okKN5cCYlqMZmXelrVmeUqQtZ1aHX99KO96LEM+csHBKtqUgkKsegmA2g461G6h5j3
+ BDRKxbpwSdT5IQsyz+19TOK/i7H34VUrGpDOrf5iu2h2UVA0gr5VmWmwTRKZg05mR9Xo
+ 644smQz8OW+kwi9KCaITDABLp4OtfFMUOB/NJ+mjnqw6vMeRhpxi6FevvAVT/CG95zsD
+ U3YAfKKPLiGm0h7SEk4H4/URf82eh4Bdd2Q5otg7tS6VkqeHRr6AzqI4qcHkl3INZdMt
+ e49OBTrRLvejQ90KXMAlq3xme10Lxrhg8h9M5RKeupY9e8Edta1ZSLh85prThS0bnDSH
+ gdpA==
+X-Gm-Message-State: AOJu0YzFRFLbgczIPsH1/lPs0+8gjyOIPg26Szh3CxP6H+/gzcXmC9mt
+ O2r0p1mxXSgOyEsjrXJdmppMH/txjRqlijrCXFey0RI95+to5mrzvlZtWxotcPf6gkNxXdqSe53
+ rPFRwpWyU2iCycAdLm5zbTx1ivvt5vTWOP1+fHUao0FMtCtz2a+ohOOiN
+X-Gm-Gg: ASbGncv8dbcOvJikgcpikdDbIY2jLfPtWzXtEoXSIyoluQUdeK6MHw/lMC5ghxr4eOA
+ MGvuO2DKlHkCZKlyuVUCNbgiJuW6IhjDQylHCOso1ZJ1myUMOhHYWFDNRDdqoWRxQpd3uRGUmDB
+ ozf9ORd7r/eqPY1leU323z8W98piYRQAnIplbx/ymmUiLLSEbnjidOomkInQkgSV7pIOFWVjvKn
+ 1EY1EnHmdiuHXEO7m6YXiefpqiv4LauNjERc+SLDUk1WesIWO3pCs6ctImt1D9O/r3Qke2XALMo
+ kydpo1tWfDMsi2vFnEbuMoOcaxbHOJooRVtXviMvGm2wJaexo6F5yA==
+X-Received: by 2002:a17:90b:5627:b0:31e:ec58:62e2 with SMTP id
+ 98e67ed59e1d1-32515eaafdcmr40744262a91.19.1756497906038; 
+ Fri, 29 Aug 2025 13:05:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGlLHP+tT/LriDsdFC737V2EcYVvDdYR+0Tbu/PHzwEggq5Qw/fGkv9NeBWXVjw8VDQTAu+TQ==
+X-Received: by 2002:a17:90b:5627:b0:31e:ec58:62e2 with SMTP id
+ 98e67ed59e1d1-32515eaafdcmr40744196a91.19.1756497905451; 
+ Fri, 29 Aug 2025 13:05:05 -0700 (PDT)
+Received: from armenon-kvm.bengluru.csb ([49.47.195.108])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.41.40
+ 98e67ed59e1d1-327d8f66f16sm3570543a91.0.2025.08.29.13.04.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:41:42 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 03/84] linux-user/aarch64: Generate ESR signal records
-Date: Sat, 30 Aug 2025 15:40:07 +1000
-Message-ID: <20250830054128.448363-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ Fri, 29 Aug 2025 13:05:05 -0700 (PDT)
+From: Arun Menon <armenon@redhat.com>
+Date: Sat, 30 Aug 2025 01:31:51 +0530
+Subject: [PATCH v13 11/27] migration: push Error **errp into
+ qemu_loadvm_section_part_end()
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Message-Id: <20250830-propagate_tpm_error-v13-11-a4e777b7eb2c@redhat.com>
+References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+In-Reply-To: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Steve Sistare <steven.sistare@oracle.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Arun Menon <armenon@redhat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3094; i=armenon@redhat.com;
+ h=from:subject:message-id; bh=CgLPVCj6slw8FkUxePJRDJzlIhYmWPhKwDSIMzJ0/CA=;
+ b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8Ymdl/Wz1qhOT+auW8d+f9ap8nmVEhhjPdL9elLNTIWq
+ 6xUT9/ZUcrCIMbFICumyNLwNUC2KaAwItL25XWYOaxMIEMYuDgFYCKxfYwMB3VWZS44I7HwT/Id
+ jy23q1+evpa53SNFfdGSSl+3JxazLzL8M4097hE54+Zc3/a+Da3nju5385pxLfMur13Z70zdDCM
+ FHgA=
+X-Developer-Key: i=armenon@redhat.com; a=openpgp;
+ fpr=80F5501D82507158593DE9D76A7A2538D90F328E
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,108 +140,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/aarch64/cpu_loop.c |  3 +++
- linux-user/aarch64/signal.c   | 34 +++++++++++++++++++++++++++++++++-
- 2 files changed, 36 insertions(+), 1 deletion(-)
+This is an incremental step in converting vmstate loading
+code to report error via Error objects instead of directly
+printing it to console/monitor.
+It is ensured that qemu_loadvm_section_part_end() must report an error
+in errp, in case of failure.
+This patch also removes the setting of errp when errp is NULL in the
+out section as it is no longer required in the series.
 
-diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
-index 7ad26316de..6060572eed 100644
---- a/linux-user/aarch64/cpu_loop.c
-+++ b/linux-user/aarch64/cpu_loop.c
-@@ -33,6 +33,9 @@ static void signal_for_exception(CPUARMState *env, vaddr addr)
-     uint32_t syn = env->exception.syndrome;
-     int si_code, si_signo;
- 
-+    /* Let signal delivery see that ESR is live. */
-+    env->cp15.esr_el[1] = syn;
-+
-     switch (syn_get_ec(syn)) {
-     case EC_DATAABORT:
-     case EC_INSNABORT:
-diff --git a/linux-user/aarch64/signal.c b/linux-user/aarch64/signal.c
-index 668353bbda..ef97be3ac7 100644
---- a/linux-user/aarch64/signal.c
-+++ b/linux-user/aarch64/signal.c
-@@ -65,6 +65,13 @@ struct target_fpsimd_context {
-     uint64_t vregs[32 * 2]; /* really uint128_t vregs[32] */
- };
- 
-+#define TARGET_ESR_MAGIC    0x45535201
-+
-+struct target_esr_context {
-+    struct target_aarch64_ctx head;
-+    uint64_t esr;
-+};
-+
- #define TARGET_EXTRA_MAGIC  0x45585401
- 
- struct target_extra_context {
-@@ -201,6 +208,14 @@ static void target_setup_fpsimd_record(struct target_fpsimd_context *fpsimd,
-     }
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Arun Menon <armenon@redhat.com>
+---
+ migration/savevm.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
+
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 01e1a9739aa784d90f80bf2b561fd62f5e4678f8..c8234f2ef7f413b207aebae7192c82f1f4d6d91d 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2803,21 +2803,19 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type, Error **errp)
  }
  
-+static void target_setup_esr_record(struct target_esr_context *ctx,
-+                                    CPUARMState *env)
-+{
-+    __put_user(TARGET_ESR_MAGIC, &ctx->head.magic);
-+    __put_user(sizeof(*ctx), &ctx->head.size);
-+    __put_user(env->cp15.esr_el[1], &ctx->esr);
-+}
-+
- static void target_setup_extra_record(struct target_extra_context *extra,
-                                       uint64_t datap, uint32_t extra_size)
+ static int
+-qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
++qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type, Error **errp)
  {
-@@ -531,6 +546,9 @@ static int target_restore_sigframe(CPUARMState *env,
-             fpsimd = (struct target_fpsimd_context *)ctx;
+     bool trace_downtime = (type == QEMU_VM_SECTION_END);
+     int64_t start_ts, end_ts;
+     uint32_t section_id;
+     SaveStateEntry *se;
+     int ret;
+-    Error *local_err = NULL;
+ 
+     section_id = qemu_get_be32(f);
+ 
+     ret = qemu_file_get_error(f);
+     if (ret) {
+-        error_report("%s: Failed to read section ID: %d",
+-                     __func__, ret);
++        error_setg(errp, "Failed to read section ID: %d", ret);
+         return ret;
+     }
+ 
+@@ -2828,7 +2826,7 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
+         }
+     }
+     if (se == NULL) {
+-        error_report("Unknown savevm section %d", section_id);
++        error_setg(errp, "Unknown section %d", section_id);
+         return -EINVAL;
+     }
+ 
+@@ -2836,9 +2834,8 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
+         start_ts = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
+     }
+ 
+-    ret = vmstate_load(f, se, &local_err);
++    ret = vmstate_load(f, se, errp);
+     if (ret < 0) {
+-        error_report_err(local_err);
+         return ret;
+     }
+ 
+@@ -2849,6 +2846,8 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
+     }
+ 
+     if (!check_section_footer(f, se)) {
++        error_setg(errp, "Section footer error, section_id: %d",
++                   section_id);
+         return -EINVAL;
+     }
+ 
+@@ -3108,7 +3107,7 @@ retry:
              break;
+         case QEMU_VM_SECTION_PART:
+         case QEMU_VM_SECTION_END:
+-            ret = qemu_loadvm_section_part_end(f, section_type);
++            ret = qemu_loadvm_section_part_end(f, section_type, errp);
+             if (ret < 0) {
+                 goto out;
+             }
+@@ -3132,9 +3131,6 @@ retry:
  
-+        case TARGET_ESR_MAGIC:
-+            break; /* ignore */
-+
-         case TARGET_SVE_MAGIC:
-             if (sve || size < sizeof(struct target_sve_context)) {
-                 goto err;
-@@ -683,7 +701,7 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-                                uc.tuc_mcontext.__reserved),
-     };
-     int fpsimd_ofs, fr_ofs, sve_ofs = 0, za_ofs = 0, tpidr2_ofs = 0;
--    int zt_ofs = 0;
-+    int zt_ofs = 0, esr_ofs = 0;
-     int sve_size = 0, za_size = 0, tpidr2_size = 0, zt_size = 0;
-     struct target_rt_sigframe *frame;
-     struct target_rt_frame_record *fr;
-@@ -693,6 +711,15 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
-     fpsimd_ofs = alloc_sigframe_space(sizeof(struct target_fpsimd_context),
-                                       &layout);
+ out:
+     if (ret < 0) {
+-        if (*errp == NULL) {
+-            error_setg(errp, "Loading VM state failed: %d", ret);
+-        }
+         qemu_file_set_error(f, ret);
  
-+    /*
-+     * In user mode, ESR_EL1 is only set by cpu_loop while queueing the
-+     * signal, and it's only valid for the one sync insn.
-+     */
-+    if (env->cp15.esr_el[1]) {
-+        esr_ofs = alloc_sigframe_space(sizeof(struct target_esr_context),
-+                                       &layout);
-+    }
-+
-     /* SVE state needs saving only if it exists.  */
-     if (cpu_isar_feature(aa64_sve, env_archcpu(env)) ||
-         cpu_isar_feature(aa64_sme, env_archcpu(env))) {
-@@ -754,6 +781,11 @@ static void target_setup_frame(int usig, struct target_sigaction *ka,
- 
-     target_setup_general_frame(frame, env, set);
-     target_setup_fpsimd_record((void *)frame + fpsimd_ofs, env);
-+    if (esr_ofs) {
-+        target_setup_esr_record((void *)frame + esr_ofs, env);
-+        /* Leave ESR_EL1 clear while it's not relevant. */
-+        env->cp15.esr_el[1] = 0;
-+    }
-     target_setup_end_record((void *)frame + layout.std_end_ofs);
-     if (layout.extra_ofs) {
-         target_setup_extra_record((void *)frame + layout.extra_ofs,
+         /* Cancel bitmaps incoming regardless of recovery */
+
 -- 
-2.43.0
+2.51.0
 
 
