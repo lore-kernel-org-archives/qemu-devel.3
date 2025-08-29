@@ -4,90 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE45CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 760E3CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usO69-0005T6-QF; Sat, 30 Aug 2025 12:06:38 -0400
+	id 1usNOX-0003kK-FR; Sat, 30 Aug 2025 11:21:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urkmI-0006Ak-Dm
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 18:07:30 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1urkmA-0004GF-UV
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 18:07:30 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-248de53d12dso7642245ad.2
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 15:07:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756418841; x=1757023641; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=c7vY++mSU2EqQPLqYut58DFvA/idUVgIu8VvjYm5UYE=;
- b=kM8HwMBoa3O4hxTJMGyepsYEIwyv3rdJZvLA8la1FZQNZurvB05ISDH26Tv/faFYaw
- 9D5NgQkD/v0gEPPA/WENuEKN8QlyRb2DmljjR5Lr/ZZN4Mnoehk9lEw+2ZdsOBtBk92d
- 7XIPrCRJElV7yUi7wtCrdqs8F7QI3+3lsaECgPg2hL1GzUBH5iqjz21c3GpOBKsrj5hc
- 3m7eJ+pIlzQiUcH0y41+1iMMJgXZRGYjVveDSBCfsPz8nhx7nfSiz0nVNOqUwjoh8XOM
- ooVsJ/XxRSQwZWFqUh+7ALVfDq1Z7s1A8COwbZglgzA58Vw5ISjZO3SvDRax/yRAbXRp
- u48A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1us14a-0001kn-Uz
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:31:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1us14Y-0000UE-73
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 11:31:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756481482;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ngp7yieopXFSA/+lQJw7TEMgciyxdXPlsW+grRCDpfI=;
+ b=arF2I2AxU20XlomJJLZF3nTyUZEdoXNm2zGF51YjMMjunhvCDoS1XT4V753e08B3RqxKEK
+ 7owLPYKwkNJ+BjNeNEvVPV1GhZ/N+e1OWuoVIlAY/1mZMpL4R+e8i3yAEu+eVVHjFF+tl9
+ 13iRdZpZ9ilrEpF+pfPEVAkF/wrTV8M=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-196-CP3NVr3NO9CAe98yracTyA-1; Fri, 29 Aug 2025 11:31:21 -0400
+X-MC-Unique: CP3NVr3NO9CAe98yracTyA-1
+X-Mimecast-MFC-AGG-ID: CP3NVr3NO9CAe98yracTyA_1756481479
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45a1ad21752so13548755e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 08:31:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756418841; x=1757023641;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c7vY++mSU2EqQPLqYut58DFvA/idUVgIu8VvjYm5UYE=;
- b=G27CVxj0I2y/3bjPqEa4bwyM/NbJ8CCfh8FIvh37cQ8URkFH1jvcd09jYGq/QYVkxU
- 0Yk/yzh71jUPwew527ZDl4iXzI/F7iBjpS+FBRyY6wYnC+tscl3h//9sxgrmS11YMIp0
- DknSOaw53dmlc8wCpteI9UD09PskSQ+DoqbSwgwf6MAH2GBkBlSukbdMob+arqKKcr9J
- AOBMY+6loueXjrkdHjGEmF9AKNJ9ZOF0KsaqVz1nL/i2ZO8t+FqAxVSapa/UH9HKk6nX
- mc1LjFYbY0SbW/1j2O4F+F6Ke4jBQmYKE0jKxI+yEAAVMigUrN6ZNqngj6vPnopHoH/G
- ZubQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXoT1GfdWjFJcMMV4YD96tKwaa5khNj5iIJ1gNkmC1ZH656hg5qXeZSGPThdAzXac7C3oR6GKMevR+p@nongnu.org
-X-Gm-Message-State: AOJu0Yxf8Oabp57wFiEwGm65GV+S7HQXtFwkadSFFK69X1+BEU3DVVlp
- 9dWXfjtOYqvt74I6sNeS51mS6G5pmzUowL1kLQ/YMWVO/AlRHjGtrNWw7osaYySgFMo=
-X-Gm-Gg: ASbGncs7yMG/HPKx6P4C6UoVIgPcQJLaukA5iKuWi839uRUAvM9hdOj28uvOTZa7lWC
- ZVa3EpB17DXTASnrbKRN/8HvSMpCZeWFZ5D+kuR82XWUkBZuhPyrbZ7hHtdjUECYd3B/HnY5JVb
- uGTMUWdJRBmUdhH5hsWnFSUV+4TIQV+e5UwoLgc7PpE6ThpxE8e9QYDu1cmbRvS8NN7wnQd53la
- 1W/WEYYcDl6wsTaqAWI20r3mt8S3ZJlkyX+MAVSsbTJCAQ0yWQ2AvT8HuHpPK2+K0XC0zcHih0D
- JKa8JlLDpMozqaMgqIM6Z6UW0jiBSj9FRuyZI0Jhxg7BxXX66t0oZAJSKdAN/3NQgmI7lH2tDXh
- kkRYj+tuswz0llkqmrEagBUI+oJmWS/MzhObf
-X-Google-Smtp-Source: AGHT+IEfJ3aWx8r9bNObYOWEYvp3Go8oWXHk3yZmd/N9ORSzR6faJh3dls2IQL/B+6QIxkl5Uru70Q==
-X-Received: by 2002:a17:902:d4c8:b0:249:f33:116a with SMTP id
- d9443c01a7336-2490f331503mr2303125ad.17.1756418840638; 
- Thu, 28 Aug 2025 15:07:20 -0700 (PDT)
-Received: from [192.168.0.195] ([144.6.121.55])
+ d=1e100.net; s=20230601; t=1756481478; x=1757086278;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ngp7yieopXFSA/+lQJw7TEMgciyxdXPlsW+grRCDpfI=;
+ b=moBkRRF679/dxHgtkfIWWv0F14Sq+pQmBBVIqoXjKmoOzu9q0Ucqh4UYncr1OtNzhS
+ uzZEawT4vFz2hx49Ml3d82TRs0Tz8GlWQlIOarxBZ+QXUTCeKYe86WzKwDxaqHsGItQ5
+ BobDBk5JZH95oMmzWY8KYZOTmAHwrlvxyq2PQCRRxsXwsHdr3nVMg5gLXXaD2qjQkxCm
+ 11L6aFSViJw16lGXTNXe5VcBSDxm6Zd3p1NbUV/KXFJSfKLd3kviuAgDeE1os1zeF83/
+ x1SaRT7+7wNaMielzOUzFv83Cw5/60gERLqLDJHafrHty2oF45GgSqCx3/hhjDwCISvo
+ hd7g==
+X-Gm-Message-State: AOJu0YxWeNz7AOgExVIFen1W9zXwM7oR/DDUyEH+yNv4hkxJ0JEwx2tq
+ aPOXaG6YIUk95uHRsfTuv9tEL07CtN4gafARYSbqNM8UpU7iAUOOY5ahlb7sPgJvTNSlzA4vwxc
+ I8tkOI/fjNIcqzi3aRjOxw8VIFKAQcpv/JxGjdY0jE7BUmR0q9PA+hQ+OmwtmiEiWc3YpLWNygu
+ jJjXzv2o88srANkxZpeGF4RyuH3m6F6aDai2HkaKE5
+X-Gm-Gg: ASbGncsU4T7s/t1XFFxLbFb71AM745JyNGu4EE20Z8I+MhhCRkHIq3I2WIl/SY4eTRf
+ 8dp9aXRbHlJ5ntR5Zv8qKb5o0Zh7i9d9S2SpLDfJXdN6jz8yG8zjNnPsWdhp3NyTnRGHKu9tXkC
+ rQo93dX70PKo+4750y1ESlYZPt6VJbmxpPf+VtaXYtKF9+EabCbX3HKir6WTAuewCsaqfIOj70J
+ 5YoxM8YNo9jRS88fE6cBI1Au4b9adyl80OMJcz7XzooTbjaCcXYsGHNM0LfaAkoMzWiYB1+sz+m
+ 3yg5FkXtUyrIsMGzmX+/dEtkvtu6vCDGQ35UKFZ3ONIrCwHgneDF7csZRz6WaUCwE2eIB4UC+WI
+ f61hU3GYP7Fl7m6U+7PWTHoA/2rDEdGZE0qScZB4OsGM=
+X-Received: by 2002:a05:600c:4588:b0:45b:47e1:ef7c with SMTP id
+ 5b1f17b1804b1-45b68714514mr117243135e9.18.1756481478091; 
+ Fri, 29 Aug 2025 08:31:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxlFDxF7dRX9RJdG01km0RtGgW67kMB4cmwu8jDL1TDPA9sCP9ygSYa5CE/ODaeMewI6EE/g==
+X-Received: by 2002:a05:600c:4588:b0:45b:47e1:ef7c with SMTP id
+ 5b1f17b1804b1-45b68714514mr117242715e9.18.1756481477534; 
+ Fri, 29 Aug 2025 08:31:17 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a2f0ac8sm456356b3a.45.2025.08.28.15.07.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 15:07:20 -0700 (PDT)
-Message-ID: <96de96f5-b45f-48d2-929d-a76398c8dc02@linaro.org>
-Date: Fri, 29 Aug 2025 08:07:05 +1000
+ ffacd0b85a97d-3d164a57097sm555536f8f.40.2025.08.29.08.31.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 08:31:16 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com,
+	richard.henderson@linaro.org,
+	imammedo@redhat.com
+Subject: [PATCH 05/18] user-exec: remove cpu_interrupt() stub
+Date: Fri, 29 Aug 2025 17:31:02 +0200
+Message-ID: <20250829153115.1590048-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829152909.1589668-1-pbonzini@redhat.com>
+References: <20250829152909.1589668-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system: drop the -old-param option
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250828162700.3308812-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250828162700.3308812-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,26 +111,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/29/25 02:27, Peter Maydell wrote:
-> We deprecated the command line option -old-param for the 10.0
-> release, which allows us to drop it in 10.2.  This option was used to
-> boot Arm targets with a very old boot protocol using the
-> 'param_struct' ABI.  We only ever needed this on a handful of board
-> types which have all now been removed from QEMU.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   docs/about/deprecated.rst       | 13 ------
->   docs/about/removed-features.rst | 12 +++++
->   include/system/system.h         |  1 -
->   hw/arm/boot.c                   | 81 +--------------------------------
->   system/globals.c                |  1 -
->   system/vl.c                     |  4 --
->   qemu-options.hx                 |  7 ---
->   7 files changed, 13 insertions(+), 106 deletions(-)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ accel/tcg/user-exec.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 748bfab04a7..66c25fba7dd 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -46,11 +46,6 @@ __thread uintptr_t helper_retaddr;
+ 
+ //#define DEBUG_SIGNAL
+ 
+-void cpu_interrupt(CPUState *cpu, int mask)
+-{
+-    g_assert_not_reached();
+-}
+-
+ /*
+  * Adjust the pc to pass to cpu_restore_state; return the memop type.
+  */
+-- 
+2.51.0
 
-
-r~
 
