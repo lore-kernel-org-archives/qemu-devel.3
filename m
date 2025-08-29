@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7A2CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2BDCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:17:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOdo-0006Zy-8i; Sat, 30 Aug 2025 12:41:26 -0400
+	id 1usNRh-0001t2-8k; Sat, 30 Aug 2025 11:24:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkcG-00045s-PS
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:57:08 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1us1t0-0004jR-5i
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:23:35 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1urkcE-0000aL-Et
- for qemu-devel@nongnu.org; Thu, 28 Aug 2025 17:57:08 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-45a1b0cbbbaso12329775e9.3
- for <qemu-devel@nongnu.org>; Thu, 28 Aug 2025 14:57:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1us1sw-00034V-Ca
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 12:23:33 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-45b627ea685so18972945e9.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 09:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756418224; x=1757023024; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756484608; x=1757089408; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FfpYSdrfi4pNl2fkKCYvcekdrOfXAWNAC/gIlpg8QxA=;
- b=sfMC+//3ylqbWwabOsxAyG2PAGBA7c+jWVunLCM9YBJ8M+13OeQE2ezN5PxRelSiG3
- ZSaFB8VPTmDJUWLQic8yFz3eCbGYvutGwvZbznQOmNZJxjOyUHPhhOTiAwUE1F4yhE7n
- KcOgYf15Z4DxVYg/C8kTM3Hg1d6VtabZmRr9f2c5cWAuZg8chSCsUsRvUN8Z3Wz5/44M
- vUtXZ1BPPYqDLCTWh8WFODkTo3bvX8nREis0UcnCqHXe5qMFGn1kvjLUlqsuTnFFY8Zb
- Q1nuvr5Nkzp1ZvuR2FIqqnynkNKPr3viKNLE/VM3vHW/pAqDegDgErVRZp7ayMyMgghB
- F0wQ==
+ bh=14xM34WgZ5OVhiHty2VliE68LfnqhHTViqNX91fodbk=;
+ b=daUoVIFGmNBH85i5qQUb6QfZbhroniLw1NUAhqaEUqZQJZAM6/J63Z/7z5PyjJNqYZ
+ zfqGFrDUkksseoqDsgYO2dX2aw246cV/i1kJsU1ilaf7oXBnuQLPy/94Mv/0Y8CWFG7U
+ HdTWoV1dII66q9CrsJx+WB1RPpXhnKEW10E7pxw5Y+Nv6m4xaxqDede+LP5k0lo6RzQu
+ w8dTWj6Fi69yqV/4JGV0NdA6SPSOckr+XQ+ivRehPaZS2qdUPal4Yt+wu3oGTKp0g8Fs
+ kibfhck+KQd04ddunHGWDhIF1xbBH8vqHrP7ssC3jJTX9diFxS1mpcCgluEH63TwH+8P
+ WMEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756418224; x=1757023024;
+ d=1e100.net; s=20230601; t=1756484608; x=1757089408;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FfpYSdrfi4pNl2fkKCYvcekdrOfXAWNAC/gIlpg8QxA=;
- b=wMRZoZ5xdHBRY1t+yKDbo4m7pbEr9sTMFQ6TvxqrL1YsUzoWJE4D690zkeV3mek2X3
- Cu6eJ0OC661iCe4BfI4zVkTgX7E2+MHFEvj0nxVRk0GF1vT28qxbOqmRhCiJPeNCRCRc
- gF5HkFGPoyKySFZsZ3MFl1JA32HAO8Jo2TPyNvXk9zoN0uhwTqoL/Hmt+Rjrs02UkmmI
- uGEG0U/ZSgzoXep81YqSCl2HoAz2rF8Ax+dilQv4lavj9mx1qIh8OqXw3gpF5kXh/ez9
- tuO0Wn+W9XLLFPJwZ0l/aWGOUW/QOXWGI8Z0z9dWVISsmHe9vVUQ75BhZQchM3mF7Y8i
- HOhQ==
-X-Gm-Message-State: AOJu0Yxu6lxEhs5zPCeJETstpDdd6kL0g036TrwHl+0gNvC7jywqa07J
- TeJboQqSvW5oO2kpWXw7VaGXxuEFUkhz/24me18hT5puYTx42S8QYQbSUTNd+/ReWPkVlnKpDVI
- 3FAId
-X-Gm-Gg: ASbGncvmqzbFjwl7dzblYJ4o6H3goHOQTdwc+mm+j4oIjYugAFtv38eTunGvUHelPYS
- 1jZ2HP5hTL/f3HgXmxmCYezZMYVowvksGUEL0eTHWrn9iyVDr6Jm+ZsV1lDAoMJh41T+hLc+tdL
- BtqLiGUXVGs2ZjVLh9mdzVr1VF9ouh2Z7BrSj62/Gz0FjNRlMYr0sNTHwyBMQCg8HqIlgNLEGwR
- bH9pnPZLFGvHA+iiWIVXNLiz9HHaAFfkAD4elafedUg+Z7kmiqUjhubfj9waywZN03r0AzWnmv8
- 3RPfoQerWyquahoy/WDqvLVxjfBqVvEPaNmxW88cwR+6ii4xmCqlmrCEmfSA8CqBXSjuIvykraj
- HF9VbziAiPFiOMxVc/78T2tM3+POe2ce3X9RpfMSceatmnhhh6Ut3hQx76PEiGONfha7JRF36n3
- sqgxXvudWMlK0=
-X-Google-Smtp-Source: AGHT+IGEMllIfPn8029orEoVzsPXGxFO5qKjhoDSTL0/oYQE60HHGnOmtntpze37dnrddLpWslJKEA==
-X-Received: by 2002:a05:6000:401e:b0:3cf:2700:6814 with SMTP id
- ffacd0b85a97d-3cf27006a1bmr481863f8f.30.1756418224065; 
- Thu, 28 Aug 2025 14:57:04 -0700 (PDT)
+ bh=14xM34WgZ5OVhiHty2VliE68LfnqhHTViqNX91fodbk=;
+ b=BdN4JIMSQpIKKaFrN3zVqvCKny32RD/V7Zd/nPr2iorhWGjJ4lRFrsQtb3/JjEnaSI
+ SWF2sqGtTBbax6CMJhBz1WRSEsOkhAKgBw4PPrrdIKViHZZfQxm4NOPu7QI5kgSxlhxn
+ Td0ASLa89Ld3SakA+aZbBUqpfHR/l3nsBLIyoinYRMr1YicREQwIsELwhBnPl+4kE4i7
+ KeZcEVw/keRpe3S+YPn5woh4F9lGBbRhTYYxiw2vhXpAuBcT/LYfFKbFm0aLv90jQAnr
+ 4rXkh0soEfxjFN53eAJ2RDX/DJEUhOPEBKbJokdtYN1KiAgNNl/QJrgDIgjvMHJxsfrx
+ C1tg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUi0O+dSvRk1upmDjRzMp+jJkzs/a4fJm4fB/oDkEHy4OlJj+9z5DneId1GBSnbIVP1CDHOQSzzhmXH@nongnu.org
+X-Gm-Message-State: AOJu0YwGohxq17FLcZfZJQERwtM2ttiJ9VaKaGEJoTUpqjjRDwkV6ljp
+ 63IYzR+9OorZOPL1+EY5eD3v89TYb+TuwoR/w/svJBQfVduldAxqrsyw8Du6JzCPxQ8=
+X-Gm-Gg: ASbGncs9GSKy29TriOlePqNerkCaeDJ0XR+oFAJ0y9ESVCNyr+fVMsNX7fWbzevnM+s
+ orVB7KqKp/2hzBIwA1kyNOAD+CZRbon3aHNfWDg4wkzAX/F0GxZH9ddWMRtRsYsxDXzkyGf/Iun
+ cDFlqEtoddnxvMoR40EAMm8me8+B5nYuWJJ3yyk5ROWp4aWZSCXKGee2lOtTBr8DB/ukezo/+mc
+ JnpSYfuzJAb+j3IYpCQ7UUy1II82tDcAM8rNFqnP8BSl3yrUub2/g9ACUSHtmZvKw3jbEYQB068
+ 7g1evKnzBftpzt6FtojwIANNmZh1K5l5YuYVg7Jad+3pq2PKTAv/XyprU6ilWj+vOjwvcIRUMo5
+ o8bjapuTR2SkKv756lBYV4/Qn1X7HxYkcuiWERM8muhKv6wthz38uDksFDYCU1e/ylGrLJHpBPV
+ Jm
+X-Google-Smtp-Source: AGHT+IFfaWFlJtcZID9seekoVR7Cts1zfcFL78mYT9f73QFOfYqsZnnS8YyvLpbs+qb6AR6Q7T36Qg==
+X-Received: by 2002:a05:600c:1381:b0:45b:6b57:5308 with SMTP id
+ 5b1f17b1804b1-45b6b575361mr101850265e9.7.1756484607588; 
+ Fri, 29 Aug 2025 09:23:27 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf1a2560c3sm838302f8f.0.2025.08.28.14.57.03
+ 5b1f17b1804b1-45b7e92a42asm42863175e9.20.2025.08.29.09.23.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Aug 2025 14:57:03 -0700 (PDT)
-Message-ID: <787f7e70-e3fb-4ab0-a879-780247066157@linaro.org>
-Date: Thu, 28 Aug 2025 23:57:02 +0200
+ Fri, 29 Aug 2025 09:23:27 -0700 (PDT)
+Message-ID: <484d2580-77fc-4fdf-8f02-ef25df08bb7c@linaro.org>
+Date: Fri, 29 Aug 2025 18:23:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/core: Dump cpu_reset in the reset.exit phase
-To: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Henk van der Laak <henk@laaksoft.nl>
-References: <20250827053822.4094239-1-richard.henderson@linaro.org>
- <20250827053822.4094239-2-richard.henderson@linaro.org>
- <CAFEAcA9YC1772qpnT4eT=WP8=pmoACkx0k-a1p8fuXYZh54z=Q@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/sensor: add stub for ADM1266 blackbox
+To: Ben Hillier <bhillier@google.com>, wuhaotsh@google.com, kfting@nuvoton.com
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Titus Rwantare <titusr@google.com>
+References: <20250828184939.3140841-1-bhillier@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9YC1772qpnT4eT=WP8=pmoACkx0k-a1p8fuXYZh54z=Q@mail.gmail.com>
+In-Reply-To: <20250828184939.3140841-1-bhillier@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,45 +103,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/8/25 17:24, Peter Maydell wrote:
-> On Wed, 27 Aug 2025 at 06:39, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> During reset.hold, the cpu is in an inconsistent state,
->> where the leaf class has not had a chance to initialize
->> state at all.
->>
->> This is visible as a SIGSEGV in "qemu-system-sparc64 -d cpu_reset".
->>
->> Move the dump to the exit phase, where all initialization
->> is certain to be complete.
->>
->> Reported-by: Henk van der Laak <henk@laaksoft.nl>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   hw/core/cpu-common.c | 16 +++++++++++-----
->>   1 file changed, 11 insertions(+), 5 deletions(-)
+Hi Titus,
 
-
->> @@ -380,6 +385,7 @@ static void cpu_common_class_init(ObjectClass *klass, const void *data)
->>       dc->realize = cpu_common_realizefn;
->>       dc->unrealize = cpu_common_unrealizefn;
->>       rc->phases.hold = cpu_common_reset_hold;
->> +    rc->phases.exit = cpu_common_reset_exit;
->>       cpu_class_init_props(dc);
->>       /*
->>        * Reason: CPUs still need special care by board code: wiring up
+On 28/8/25 20:49, Ben Hillier wrote:
+> From: Titus Rwantare <titusr@google.com>
 > 
-> If we ever have CPUs that actually update their state in
-> the reset exit phase (e.g. if we manage to complete the refactoring
-> that would let us implement M-profile "load starting PC and SP
-> from memory" in reset-exit after rom blob loading rather than
-> having a hack to do it in reset-hold), this won't capture that.
-> But it's clearly better than trying to do it in the common
-> reset-hold method...
+> This patch fixes a bug that causes a kernel panic when calling ADM1266_BLACKBOX_INFORMATION.
+
+But you also implement BLACKBOX_CONFIG / READ_BLACKBOX...
+
+> Log Message:
 > 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> adm1266 5-0042: Could not read blackbox!
+> Kernel panic - not syncing: stack-protector: Kernel stack is corrupted in: adm1266_nvmem_read+0x168/0x170
+> 
+> Signed-off-by: Titus Rwantare <titusr@google.com>
+> ---
+>   hw/sensor/adm1266.c | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
+> 
+> diff --git a/hw/sensor/adm1266.c b/hw/sensor/adm1266.c
+> index 9017ce6116..cd11526c2b 100644
+> --- a/hw/sensor/adm1266.c
+> +++ b/hw/sensor/adm1266.c
+> @@ -75,6 +75,7 @@ typedef struct ADM1266State {
+>   static const uint8_t adm1266_ic_device_id[] = {0x03, 0x41, 0x12, 0x66};
+>   static const uint8_t adm1266_ic_device_rev[] = {0x08, 0x01, 0x08, 0x07, 0x0,
+>                                                   0x0, 0x07, 0x41, 0x30};
+> +static const uint8_t adm1266_blackbox_info[] = {0x04, 0x00, 0x00, 0x00, 0x00};
+   {
+     0x04,       /* length */
+     0x00, 0x00, /* latest ID */
+     0x00,       /* latest record logic index */
+     0x00        /* latest record count */
+   };
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   
+>   static void adm1266_exit_reset(Object *obj, ResetType type)
+>   {
+> @@ -125,6 +126,17 @@ static uint8_t adm1266_read_byte(PMBusDevice *pmdev)
+>           pmbus_send(pmdev, adm1266_ic_device_rev, sizeof(adm1266_ic_device_rev));
+>           break;
+>   
+> +    case ADM1266_BLACKBOX_CONFIG:
+> +        return 0;
 
+I'd was expecting pmbus_send(pmdev, "\0\0", 2) for CYCLIC_RECORD_DISABLED.
+
+> +
+> +    case ADM1266_READ_BLACKBOX:
+
+Here I'm confused, as len+data is 65bytes. Is the guest
+reading a stream of 0xff?
+
+> +        return 0;
+> +
+> +    case ADM1266_BLACKBOX_INFORMATION:
+> +        pmbus_send(pmdev, adm1266_blackbox_info,
+> +                   sizeof(adm1266_blackbox_info));
+> +        break;
+
+OK.
+
+>       default:
+>           qemu_log_mask(LOG_UNIMP,
+>                         "%s: reading from unimplemented register: 0x%02x\n",
+> @@ -154,6 +166,9 @@ static int adm1266_write_data(PMBusDevice *pmdev, const uint8_t *buf,
+>           pmbus_receive_block(pmdev, (uint8_t *)s->mfr_rev, sizeof(s->mfr_rev));
+>           break;
+>   
+> +    case ADM1266_BLACKBOX_CONFIG:
+Do we want to check, if lduw_p(buf) != 0 -> log(UNIMP)?
+
+> +    case ADM1266_READ_BLACKBOX:
+
+Do we want to check, if (buf[0] != 1) -> log(GUEST_ERROR),
+and log(UNIMP) regardless?
+
+> +    case ADM1266_BLACKBOX_INFORMATION:
+
+            log(GUEST_ERROR);
+
+>       case ADM1266_SET_RTC:   /* do nothing */
+>           break;
+>   
+Regards,
+
+Phil.
 
