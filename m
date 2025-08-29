@@ -4,88 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB382CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A9F8CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNn1-00021L-4z; Sat, 30 Aug 2025 11:46:51 -0400
+	id 1usNIr-0001pq-LE; Sat, 30 Aug 2025 11:15:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7ff-000620-7m
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:34:11 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7fd-0004oO-De
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:34:11 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-77201f3d389so2809989b3a.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506848; x=1757111648; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VAlclsw7NdwMNzDXXMYCt62TrsWhB1wwPrwu4zLwNMI=;
- b=pDZZGygO90TmO0j5s4ERQ7Y8ofEN8yhCDGezzpUo/cYR1pXjPzU1+yRnuvaw5MHdpI
- JbsFPJl1A43ULaOb1RFAzwTdMkTkevIq+3Sed6nXjOmOuwVZR+MiBf3i5HYeKJjnlCEp
- +1VxKuwoNbhnj2kXm6gDjer2x0/JqcR3aM5u1vWAk0GWgzR620+nprAWAtbN7Z7AT1Ib
- KCGQkN/M44mo/hHNGo2sA9GJ1Yexg0TSkcyr3VKSh6xRQqOsr7mJhPVC+gnMyx31A+Gc
- BbOKZB+wdG2dMd9DzSdtHWNyMuggIW0u4/MDo7Qyl5ldwtpXkdJ+1OKsuo+ZO623ALO0
- H+fw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryjD-0001Ln-RJ
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uryjA-00006T-4C
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756472471;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0orM1aVNWIA/N/a7VgzNhQDU3JWqnZ2top440RxQ0lE=;
+ b=YRsLhGsVBxU5aOwKC+Az8wRoXLAS/63ey+TCuJ6bbPn91BDHB76tM5A9E1q8AVxR4OcIah
+ FS+cP4kC5lEceE91DiGyauzuE0+pXG37l5xCcoSR0HKsZKDrYbLzRTCXH/Z4e2YwGKhdwT
+ dYNJNenUE92iBV7gsQYqqp9X/eugK74=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-466-f8fxBGJgMNik6soxjyscdw-1; Fri, 29 Aug 2025 09:01:10 -0400
+X-MC-Unique: f8fxBGJgMNik6soxjyscdw-1
+X-Mimecast-MFC-AGG-ID: f8fxBGJgMNik6soxjyscdw_1756472469
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45a1b0cc989so16485275e9.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:01:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506848; x=1757111648;
+ d=1e100.net; s=20230601; t=1756472468; x=1757077268;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VAlclsw7NdwMNzDXXMYCt62TrsWhB1wwPrwu4zLwNMI=;
- b=kjH5Ho1ZeEPdmrrG4qmOBLT57ulPy7xwiUd1ZXm92xIzbWz3R/bT3N8OUD6LPd3Si+
- wIAKqo7RnhGPni6dBOb/kPlAygSOHyx0llY+c5bmoCfIzhzVzJs+Y/ptbOaAVT1T85SF
- xoZs6oZVSqWL2bUnVdCJa75sdRk8+smLnM5CQ7/ZkW5ugmzk8GEASxZ+vjOmQjqfQsuE
- Tw/5+abML+GXy+3EdD2mXpVZfVROvAbTzNbnkBeHZLGvMrAsUN34GZHIQjCzYcWBaaLR
- dqrPQBk4Vzngbe6wVLh1xzDvWgwLwKv5b0cznpWwymBNoPPaxFHrIly+KVHwAG7L8r/y
- djcg==
-X-Gm-Message-State: AOJu0YzpEtSOZ9UGKfSYYinevTyldf+5G3Vj1NReFMLlMtRJomfGGLbq
- GP6tbuDZTszg2VzFlPKN1nU6sotaZCUBL/dDCumWlqNR/OnIiB7rb2+aUwL6+37VEYtvvxM/r4f
- zOub4EXc=
-X-Gm-Gg: ASbGncs5EWzHKYKpGlGOZhZEByh0Ic9Rc4p5Zw6zWSIXPRmuHkt0GBG+RCf1OVKJqtc
- xE3U29DG6NnaN7LmDJ6SAROkMqRrWm3fQo1kEcbKyhnFquxM7ZAak/MAuUfBPgg9UPZMPzQF1HY
- mH/fXa6B9VIfaDkIpkxOBwyJTSiFzmVfXxrHgP7mhBlxqdZAWE1+InzFEYxck0AFkyihU21g073
- lC48cUL0nUpfFbJvJVdW0T3rpwZmx+gAccmirTxIA1pq7F5d3mKEV5VH1AUSRNGB599KO261mxq
- 9ya3cLEShbgWu1qTHJvNsOTJMQ5N7lBpv8C75S0yFkXPxxuyOFtYQGccnDgkb1vqkSiWbYQAIs8
- tpBj3MzohcSdPSbGIPvjzZqPzqH5w535WUMD96uU85HtlzopCdOAGk6BRuCEo
-X-Google-Smtp-Source: AGHT+IEL2ygKto+vBNNkaZ7xM8ckllHe65N6Ft9ion7vFRJNc3DycYXoPDwmPcu3HlkGxvbvyIBP7A==
-X-Received: by 2002:aa7:8895:0:b0:772:3b9d:70f0 with SMTP id
- d2e1a72fcca58-7723e21a808mr293281b3a.2.1756506847916; 
- Fri, 29 Aug 2025 15:34:07 -0700 (PDT)
-Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
+ bh=0orM1aVNWIA/N/a7VgzNhQDU3JWqnZ2top440RxQ0lE=;
+ b=M85lrdmOoIzuKRBqrqnhijTN/6PmUWu1iLf49y/pn1YEFJ8R9GxvLNM2Q20FvPwksC
+ Ac6O91t5k+k44S32Blx+B20YdxHtwKoJFmo+WPoqkO/zahA5ez4af+dlaqffKTybQZ7X
+ Kzl5JbE896kbJg7/2ELw5EMjB08J0F8nPnTETZonkX9/ouF5xFkjEnFfwAt2P0CEpfra
+ hNwxKbWrbLoQ9BVWse11FJSMeoXYJCVQB9FXcg/0WgNtHTMt1p2xPICetL2fdVu1Q2Qo
+ lEvN+9L+YoJ/EvTvZRWH7/hRr6mclLgSaBl5F/t26cnridnU23XufWPQyAfdcMUoidmm
+ gDlw==
+X-Gm-Message-State: AOJu0YygcpN6mlL3gPKRk3xzbWao1A5An6RLQQbZ/lsDZjI35HnAuh5e
+ 4LWNQVbjSgXw+rlFgWRdFEOWnK3qXrI29yy3/8qO7wOGYw92Jh4QwoPe/kWpEXktHC5MXDap9Pe
+ 885yA5CeynZXlVGmKRxoDiGjFSehPfOct/oDXF3067DI0NvPYE7F2bT/K468Kcv+CPFvn+vZyD/
+ 0ZgZfwlfeTHqdirgDwId7Oq+eILI2mNVs0uCy2gvxl
+X-Gm-Gg: ASbGncunm5tCNMZCD9M1633zHCFVsld7/n7BWM96FM1pZj+RVH/UWHlljdL9F7HojgZ
+ LYijscaKOO2IUs5wUEHnWHWGslZ00v4t4eDZapVfhpC0gvpplQsEPY0Kh/ZFaJSv+bzlJ1XOcvd
+ k1GPcCezUbOcNHIBWAsVS0j917I5qdf9NMgYK8bduJzaJllq9ymh+pCRDoRLSCCmbyXG+AkWjFY
+ XVrE1ZdzwfIAdrCTA5g2EEbnHLvBFBtMAZB018IVHgD0kE/auhBozF+gxWwvklAw3hsPlLbZYQD
+ 91o/6dBg6GFOoggzoqE39lJKexoVCtIWoq5Ak518ew2LdXbaap5wYFSjTqQ2VYxMP1T/IGgsjWO
+ ykQv2TSpEJMRsgXMP8Rpu+8PBF2L+gqhGtLR4FQvVTn0=
+X-Received: by 2002:a05:600c:4590:b0:45b:47e1:ef67 with SMTP id
+ 5b1f17b1804b1-45b517e8d46mr198626635e9.34.1756472467505; 
+ Fri, 29 Aug 2025 06:01:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8Yv6xglzILBEpowjUqr6BdN0rB6z6cY37+FPkiEMRwvy3C3MmejApndDCueeE0XWKUSgM8Q==
+X-Received: by 2002:a05:600c:4590:b0:45b:47e1:ef67 with SMTP id
+ 5b1f17b1804b1-45b517e8d46mr198626105e9.34.1756472466806; 
+ Fri, 29 Aug 2025 06:01:06 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a269f27sm3449728b3a.12.2025.08.29.15.34.06
+ ffacd0b85a97d-3cf33add483sm3307321f8f.37.2025.08.29.06.01.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:34:07 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Fri, 29 Aug 2025 06:01:03 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 88/91] linux-user: Move arch_parse_elf_property to
- aarch64/elfload.c
-Date: Sat, 30 Aug 2025 08:24:24 +1000
-Message-ID: <20250829222427.289668-89-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PULL 26/28] hpet: make main counter read lock-less
+Date: Fri, 29 Aug 2025 14:59:33 +0200
+Message-ID: <20250829125935.1526984-27-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,147 +110,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the controlling macro to HAVE_ELF_GNU_PROPERTY to
-match the other HAVE_* macros.
+From: Igor Mammedov <imammedo@redhat.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Make access to main HPET counter lock-less.
+
+In unlikely event of an update in progress, readers will busy wait
+untill update is finished.
+
+As result micro benchmark of concurrent reading of HPET counter
+with large number of vCPU shows over 80% better (less) latency.
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20250814160600.2327672-6-imammedo@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- linux-user/aarch64/target_elf.h |  1 +
- linux-user/loader.h             |  5 +++++
- linux-user/aarch64/elfload.c    | 18 +++++++++++++++
- linux-user/elfload.c            | 39 +++++++--------------------------
- 4 files changed, 32 insertions(+), 31 deletions(-)
+ hw/timer/hpet.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/linux-user/aarch64/target_elf.h b/linux-user/aarch64/target_elf.h
-index 9ec51f6237..4cdeb64b0d 100644
---- a/linux-user/aarch64/target_elf.h
-+++ b/linux-user/aarch64/target_elf.h
-@@ -17,6 +17,7 @@
- #define HAVE_ELF_HWCAP2         1
- #define HAVE_ELF_PLATFORM       1
- #define HAVE_ELF_CORE_DUMP      1
-+#define HAVE_ELF_GNU_PROPERTY   1
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index c776afc0f2d..789a31d0a08 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -39,6 +39,7 @@
+ #include "system/address-spaces.h"
+ #include "qom/object.h"
+ #include "qemu/lockable.h"
++#include "qemu/seqlock.h"
+ #include "trace.h"
  
- /*
-  * See linux kernel: arch/arm64/include/asm/elf.h, where
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index 2175dd4e0a..e42b8fa1e3 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -122,4 +122,9 @@ typedef struct {
- /* Note that both Elf32_Word and Elf64_Word are uint32_t. */
- const VdsoImageInfo *get_vdso_image_info(uint32_t elf_flags);
+ struct hpet_fw_config hpet_fw_cfg = {.count = UINT8_MAX};
+@@ -74,6 +75,7 @@ struct HPETState {
+     MemoryRegion iomem;
+     uint64_t hpet_offset;
+     bool hpet_offset_saved;
++    QemuSeqLock state_version;
+     qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
+     uint32_t flags;
+     uint8_t rtc_irq_level;
+@@ -430,17 +432,25 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
+     trace_hpet_ram_read(addr);
+     addr &= ~4;
  
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data,
-+                             struct image_info *info,
-+                             Error **errp);
-+
- #endif /* LINUX_USER_LOADER_H */
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 07a0c3f844..8076968251 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -1,10 +1,12 @@
- /* SPDX-License-Identifier: GPL-2.0-or-later */
- 
- #include "qemu/osdep.h"
-+#include "qapi/error.h"
- #include "qemu.h"
- #include "loader.h"
- #include "target/arm/cpu-features.h"
- #include "target_elf.h"
-+#include "elf.h"
- 
- 
- const char *get_elf_cpu_model(uint32_t eflags)
-@@ -349,6 +351,22 @@ const char *get_elf_platform(CPUState *cs)
-     return TARGET_BIG_ENDIAN ? "aarch64_be" : "aarch64";
- }
- 
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data,
-+                             struct image_info *info,
-+                             Error **errp)
-+{
-+    if (pr_type == GNU_PROPERTY_AARCH64_FEATURE_1_AND) {
-+        if (pr_datasz != sizeof(uint32_t)) {
-+            error_setg(errp, "Ill-formed GNU_PROPERTY_AARCH64_FEATURE_1_AND");
-+            return false;
-+        }
-+        /* We will extract GNU_PROPERTY_AARCH64_FEATURE_1_BTI later. */
-+        info->note_flags = *data;
-+    }
-+    return true;
-+}
-+
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUARMState *env)
- {
-     for (int i = 0; i < 31; i++) {
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 8b92fba0f0..12d4873212 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -166,41 +166,18 @@ const char *get_elf_platform(CPUState *cs) { return NULL; }
- const char *get_elf_base_platform(CPUState *cs) { return NULL; }
- #endif
- 
--#include "elf.h"
--
--/* We must delay the following stanzas until after "elf.h". */
--#if defined(TARGET_AARCH64)
--
--static bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
--                                    const uint32_t *data,
--                                    struct image_info *info,
--                                    Error **errp)
--{
--    if (pr_type == GNU_PROPERTY_AARCH64_FEATURE_1_AND) {
--        if (pr_datasz != sizeof(uint32_t)) {
--            error_setg(errp, "Ill-formed GNU_PROPERTY_AARCH64_FEATURE_1_AND");
--            return false;
+-    QEMU_LOCK_GUARD(&s->lock);
+     if (addr == HPET_COUNTER) {
+-        if (hpet_enabled(s)) {
+-            cur_tick = hpet_get_ticks(s);
+-        } else {
+-            cur_tick = s->hpet_counter;
 -        }
--        /* We will extract GNU_PROPERTY_AARCH64_FEATURE_1_BTI later. */
--        info->note_flags = *data;
--    }
--    return true;
--}
--#define ARCH_USE_GNU_PROPERTY 1
--
--#else
--
--static bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
--                                    const uint32_t *data,
--                                    struct image_info *info,
--                                    Error **errp)
-+#ifndef HAVE_ELF_GNU_PROPERTY
-+bool arch_parse_elf_property(uint32_t pr_type, uint32_t pr_datasz,
-+                             const uint32_t *data, struct image_info *info,
-+                             Error **errp)
- {
-     g_assert_not_reached();
- }
--#define ARCH_USE_GNU_PROPERTY 0
--
-+#define HAVE_ELF_GNU_PROPERTY 0
- #endif
- 
-+#include "elf.h"
++        unsigned version;
 +
- struct exec
- {
-     unsigned int a_info;   /* Use macros N_MAGIC, etc for access */
-@@ -1233,7 +1210,7 @@ static bool parse_elf_properties(const ImageSource *src,
-     uint32_t prev_type;
- 
-     /* Unless the arch requires properties, ignore them. */
--    if (!ARCH_USE_GNU_PROPERTY) {
-+    if (!HAVE_ELF_GNU_PROPERTY) {
-         return true;
++        /*
++         * Write update is rare, so busywait here is unlikely to happen
++         */
++        do {
++            version = seqlock_read_begin(&s->state_version);
++            if (unlikely(!hpet_enabled(s))) {
++                cur_tick = s->hpet_counter;
++            } else {
++                cur_tick = hpet_get_ticks(s);
++            }
++        } while (seqlock_read_retry(&s->state_version, version));
+         trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
+         return cur_tick >> shift;
      }
  
++    QEMU_LOCK_GUARD(&s->lock);
+     /*address range of all global regs*/
+     if (addr <= 0xff) {
+         switch (addr) {
+@@ -500,6 +510,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+             old_val = s->config;
+             new_val = deposit64(old_val, shift, len, value);
+             new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
++            seqlock_write_begin(&s->state_version);
+             s->config = new_val;
+             if (activating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
+                 /* Enable main counter and interrupt generation. */
+@@ -518,6 +529,8 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
+                     hpet_del_timer(&s->timer[i]);
+                 }
+             }
++            seqlock_write_end(&s->state_version);
++
+             /* i8254 and RTC output pins are disabled
+              * when HPET is in legacy mode */
+             if (activating_bit(old_val, new_val, HPET_CFG_LEGACY)) {
+@@ -686,6 +699,7 @@ static void hpet_init(Object *obj)
+     HPETState *s = HPET(obj);
+ 
+     qemu_mutex_init(&s->lock);
++    seqlock_init(&s->state_version);
+     /* HPET Area */
+     memory_region_init_io(&s->iomem, obj, &hpet_ram_ops, s, "hpet", HPET_LEN);
+     memory_region_enable_lockless_io(&s->iomem);
 -- 
-2.43.0
+2.51.0
 
 
