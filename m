@@ -4,99 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71EE7CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 210EDCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNGe-0007GY-6K; Sat, 30 Aug 2025 11:13:24 -0400
+	id 1usN7w-0000su-0g; Sat, 30 Aug 2025 11:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryhr-0000u2-Dm
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 08:59:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryhp-00083l-SD
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 08:59:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756472389;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IPkT/oQDCaPUBTKhrgjd7p4GmdrxFlTRzjrLfJsc/fA=;
- b=Tz6l3W9ucnq5lXFVPol3CydAz4rcOmpSqrqut6Soqhcp+9iW8ZquvnF2XRN8Qb6BNYCBLY
- c8gaaCEnJJheHf7r6auqu8WDAPDS3yDqRtgL6mfhMtG7SxVcdNqpoNw/4c5xuCdc8RbK+7
- ybH/uiDo5weJJbtCAd9Cns7XrhXuOj4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-0UE4bEoNNQiNOzticR_Epg-1; Fri, 29 Aug 2025 08:59:47 -0400
-X-MC-Unique: 0UE4bEoNNQiNOzticR_Epg-1
-X-Mimecast-MFC-AGG-ID: 0UE4bEoNNQiNOzticR_Epg_1756472386
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45a1b0c5366so13165355e9.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 05:59:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1urtB8-00087f-DV
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:05:42 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1urtB6-000580-Q0
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:05:42 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3c68ac7e238so852110f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 00:05:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756451138; x=1757055938; darn=nongnu.org;
+ h=mime-version:message-id:in-reply-to:references:user-agent:subject
+ :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=cAOhZGc27dkuJST8zP11DmoI//cCNWK0In89yfdGBtI=;
+ b=Usq7gCy7WWU9bQ4rkdCDMET2J0i/ktPvoy7cVBaD3jx0VAzxPPWEXhU0A/htE0ZtY1
+ 4hhIPhlcp5FAx8g5VTxrKW7jk1d4WczqjKXlrrwx9L9EU/vyIeGAhWOTuXmq0W3fXHrT
+ TujhNh3y/g+9sMaqm/ApJ41CJ9wUsWAXeR5TqQjDHeZfujjeaUoNPWkIF0ZyxCL0EHoi
+ YXEUU3eMCqmTOXNeVTEsbQ2JSok+vLjy7tiOK1waL/KLqnIlSZlQdPhaCSESRgAmtp3b
+ 2zKjxul/xfxUPiMW+OUudVinxH9rm1rD5gOvzDNPOVkkLA7e3ZHrzMAiu/6ujOdK1NnU
+ 8w6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756472385; x=1757077185;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IPkT/oQDCaPUBTKhrgjd7p4GmdrxFlTRzjrLfJsc/fA=;
- b=JfDPXuz4ecEs1H6O610yRll5/LboiochSzAiL6aEKMBpnUVFJUdMM/bjZqvzYS6+Z7
- /aYGTVGnbY94ZvHo2JIFbb/XwSpJo8psxAM5ORHiFCvF02xAXRO47hmzubuYkrq/F/QO
- oBD4dCoepzRy6PN0dgdiAF3Iy+DUp11pzPlLmi7ZpFdIPik4R3Pzaj8YyFzp/pAKAelv
- lTFNZpRzt/c721l5FCRHoBKzuRVlIPJbGqaKwsAmNKjGbGc5Hx3e86an9ZOCFU6g4IcL
- m7utAA1w4FbvCTL/DC1jnYO7YPgDS77BCfhD77due4Lly98xfkHzM/NOghexPGldSww6
- 3nnw==
-X-Gm-Message-State: AOJu0YxVy3Y6rVY+0jBWRWasVmHdpeBnYei6/IIYX7aWwQHLYr2gK8oG
- NwXmu3RDmE7xn5sxRJpG1PuZAJB/JmrhNsu1Z3IBDhm+TbjcXHlSnDq8yGrTSOD92UdgV8TWIUn
- e7isZ/lvsiRxMpYhJxV8u2dD1Ow+YdPLmFJjYxzNPQXBNxOnYJlr/b3n7LBNImv7Qs6pt1xQYhp
- f90G2Fznvjwm5MRJWT6wXYM4xQlOjjheZzYGM1Xotv
-X-Gm-Gg: ASbGncuOL0QiE6IcMdZPk2JUomz92FIKYEhxGjs+POCsPHoEgTg1RK4Ay+l8t8rRwnP
- dyOLbszlvP0Za7iS8P8getErpgTNe1+dlK/PfwwSHbi6PHuiSiJxCQ5GKZx5AchxZ05x6o7y+sh
- flsorLiltypDMEaXSWRyW9pVVkH9ch/W6Jen1mhDlopFBZY3fu0EGbbex+lkqdfJFUzpQuS+a7u
- PBhkUiUDPjW0+W7bo1/jUKXjtRhH6/H6oV/uaNvvGQQN8ghktRWeW7JJRmWUag86Ojp3g1iVW4O
- 0HpxRI90lkrv1ziArmeYXQFCMUTwyv938QDfye8RQlcUIUKUecn91Og6Z2ueOrf+kLAYLAXwuoY
- JWd+gQhfhMKvDVjcxaL6iXNYKGoj9B07EHV5ZDkRQclk=
-X-Received: by 2002:a05:6000:2507:b0:3c5:9e0f:7608 with SMTP id
- ffacd0b85a97d-3c5dcdf9aa8mr22990947f8f.46.1756472385034; 
- Fri, 29 Aug 2025 05:59:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKjyQTnZgNBRmgGfrYpi8vfZVF3wS5qeq/xg88hLiz4h6gQC4vB5nhGyepkWCvKbZPpGRQsA==
-X-Received: by 2002:a05:6000:2507:b0:3c5:9e0f:7608 with SMTP id
- ffacd0b85a97d-3c5dcdf9aa8mr22990912f8f.46.1756472384553; 
- Fri, 29 Aug 2025 05:59:44 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf33fba9fbsm3328765f8f.50.2025.08.29.05.59.42
+ d=1e100.net; s=20230601; t=1756451138; x=1757055938;
+ h=mime-version:message-id:in-reply-to:references:user-agent:subject
+ :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cAOhZGc27dkuJST8zP11DmoI//cCNWK0In89yfdGBtI=;
+ b=gp9bKCYy8IM5TOjyi/cHsnoa2BMrfP1GFqXw+wQjR1e95kULwc3HEuVDHLkz7+GE9Y
+ H0X2xV7vpOxpZbLvxYGcamknENPp4bNjQ5bPDT1DdSKSRlygW1kcH3WVeqkpiCvGXFEQ
+ qrgIZ315JNAk4gs4tareUjVmnmufZlujRDugvQsvx/QE6Grp5jDZkbwQ2sz4pUzmFd15
+ HnUYl/GcZmGcM4/1FJOEwDQGzTv9QBWtNBX2CfBd6aGr+psvELHqRtN6cdZkxy0+Acpw
+ 0NL2nk+ECx7e1oVseTmvromtn726LL08glla3tPba3IERrNiBdcwljcwW2czVZ4fxVo7
+ O1Gg==
+X-Gm-Message-State: AOJu0YzAhB60SQi+urUJ/eIw2BsGkBS4xqm5VR+Ql+ocEt2qTSRtd3Hu
+ MZJ0EmiDmkXuel6+LvKcI2mSjMAKixM4d5Xw90gnBywDOnVEHzoh9iW4jJlOmXKDgYY524q7uwn
+ J0Fn4318=
+X-Gm-Gg: ASbGncvJ8TJAQzzW0kg05idFDASljWnt+JGZhSEGgqg72x8Z28L9D4T1LE+DoW03QqG
+ Kcv5iF7QYZDu1KFZFcVkW97GvZqqL4YHh1uVfCdRD3NFyBJiZCTdUK7+apiXhRTe8lm37JhXIjf
+ Ndkp6cGUagp88CVIzQFnBvHrHU6fAl1oHFsvil+MM+URBBwjeaycE4MxtWxtm42mmjyeHpWjpfD
+ dYyciw3XtN+RsQhjAOtwgG9lrJLiVWW9GY5MvTV6QKVf3iGwhMaSLa/HoNg3EhmTOhoNJyl7q5c
+ NIBhXo7n2VofLAA+wAh/Jj2lYfAGkZeGORiraUDQ5F9Nl8P6ti14ItTh1+8LnShqMo7gQrMdVdl
+ SO648Xw+uAyEGJYnJkeoSwfq+FRBJRm0fdo8IMPRrsFaEUI5dP0FQzb0OenskuxJUIlCPUKlO
+X-Google-Smtp-Source: AGHT+IGJ1PgFzNy1q7ttXbnzDctuCEmlWCg78sitn7yqV3Y4V4H/seXq6XhyiRDj8ifTEA2XoGJjmQ==
+X-Received: by 2002:a5d:64e1:0:b0:3bb:2fb3:9afb with SMTP id
+ ffacd0b85a97d-3c5dd8aa03cmr20614987f8f.31.1756451137823; 
+ Fri, 29 Aug 2025 00:05:37 -0700 (PDT)
+Received: from meli-email.org (athedsl-4441256.home.otenet.gr.
+ [79.129.180.152]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b7e7d1319sm27430195e9.5.2025.08.29.00.05.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 05:59:43 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 03/28] hw/i386/pc_piix.c: remove include for loader.h
-Date: Fri, 29 Aug 2025 14:59:10 +0200
-Message-ID: <20250829125935.1526984-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
+ Fri, 29 Aug 2025 00:05:37 -0700 (PDT)
+Date: Fri, 29 Aug 2025 10:05:23 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org
+Subject: Re: [PATCH 10/61] target/arm: Use raw_write in cp_reg_reset
+User-Agent: meli/0.8.12
+References: <20250827010453.4059782-1-richard.henderson@linaro.org>
+ <20250827010453.4059782-15-richard.henderson@linaro.org>
+In-Reply-To: <20250827010453.4059782-15-richard.henderson@linaro.org>
+Message-ID: <t1qudc.3cwx3bccf19p3@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,33 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+On Wed, 27 Aug 2025 04:04, Richard Henderson <richard.henderson@linaro.org> wrote:
+>Reduce the places that know about field types by 1.
+>
+>Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>---
 
-This header is not required since the loader functionality is handled separately
-by pc_memory_init() in pc.c.
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20250828111057.468712-4-mark.caveayland@nutanix.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/i386/pc_piix.c | 1 -
- 1 file changed, 1 deletion(-)
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 9a3b5d88f08..351986232d6 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -28,7 +28,6 @@
- #include "qemu/units.h"
- #include "hw/char/parallel-isa.h"
- #include "hw/dma/i8257.h"
--#include "hw/loader.h"
- #include "hw/i386/x86.h"
- #include "hw/i386/pc.h"
- #include "hw/i386/apic.h"
--- 
-2.51.0
-
+> target/arm/cpu.c | 10 ++--------
+> 1 file changed, 2 insertions(+), 8 deletions(-)
+>
+>diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>index e2b2337399..ed40e102fc 100644
+>--- a/target/arm/cpu.c
+>+++ b/target/arm/cpu.c
+>@@ -192,14 +192,8 @@ static void cp_reg_reset(gpointer key, gpointer value, gpointer opaque)
+>      * This is basically only used for fields in non-core coprocessors
+>      * (like the pxa2xx ones).
+>      */
+>-    if (!ri->fieldoffset) {
+>-        return;
+>-    }
+>-
+>-    if (cpreg_field_is_64bit(ri)) {
+>-        CPREG_FIELD64(&cpu->env, ri) = ri->resetvalue;
+>-    } else {
+>-        CPREG_FIELD32(&cpu->env, ri) = ri->resetvalue;
+>+    if (ri->fieldoffset) {
+>+        raw_write(&cpu->env, ri, ri->resetvalue);
+>     }
+> }
+> 
+>-- 
+>2.43.0
+>
+>
 
