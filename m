@@ -4,142 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9705BCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B97C4CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNBu-0007fU-JS; Sat, 30 Aug 2025 11:08:30 -0400
+	id 1usN85-0001bI-5l; Sat, 30 Aug 2025 11:04:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uruqP-00020N-IX
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:52:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uruqM-0002QT-Tm
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 04:52:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756457540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/uzEyrp8K0TacJb3YSFM+4SzIIYw46pc5V7foBNNsV0=;
- b=gO/bT84XKf3Aulos4m8Tb947fFF3A0M8rxhe1ITNXXwJBIhdDJJqC7nIM6wXrmZkEJlwOU
- Jt7bzvI4vrLm/VltzhbyTjbSXJfyqQsnwC4aexXV1xy1HhdWKUbyyUM7/ew/zqEhCnO1kL
- KcvHSdi9OR7RX542Teu1XLMmB6/BqY4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-C-To_Qs3PZ6S9HhZBAr6NA-1; Fri, 29 Aug 2025 04:52:16 -0400
-X-MC-Unique: C-To_Qs3PZ6S9HhZBAr6NA-1
-X-Mimecast-MFC-AGG-ID: C-To_Qs3PZ6S9HhZBAr6NA_1756457536
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45a1b05b15eso11896095e9.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 01:52:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756457535; x=1757062335;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/uzEyrp8K0TacJb3YSFM+4SzIIYw46pc5V7foBNNsV0=;
- b=XeTEBWYq+2CjU6idjbEeCU/Wpoj8Jb8+EyTahr1dAZUiIcdNZvIbbhNpHw7Vd0+YEn
- Gc3Bn3WrliHLNY39erywBx4xaeUhD+f5nrCz7lkQfblQJmKogm2iVE6t2SZdZBaCMFaA
- 9ETPTNwy2RCbYlbq1/l68kC/mUuQ9oAHBuO/hO4cCBRKPyfn10zSuSFhiqGUpRG+wldM
- 1/QhtoI8Al+q+Xi773e7l5UUCDsmAs6jeGJ+PVfo1xhJvdQrQRdjDZHdBic82VUsn5bT
- tr4QHsIqRW4Bs1OJEXrJRUDw+tlwYvwhwUa17RJcQhORSsLX44J2K84nZgnogNwV6erB
- cAug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4R+UagYhBNt7WjPYWFzBOcImtmZ+xYPOzw+23AKt3es9Fx12wxXoRGQT1F+EdoLD2JriIUmfL27mu@nongnu.org
-X-Gm-Message-State: AOJu0YzK34kre7sxo5EFbqxlgeJZeb74/gCCm508q0yilQdEPQTqQVIb
- Vj6byjAFNKB9qQUaig1JTolLpOCChRMxGT7Mo34gLnXaHb4RKgGVk/pESV0N5QpCf154V1bFlez
- 9jv/eRQWUTG92AEsTA+TNHDdEpVewmvBuBwkHUja+Q8wgxU+JYJ6w0jRr
-X-Gm-Gg: ASbGncvowMIxdsG4aSSMjNaPqyz/tNuCtaE1xsfZ23EjvvhqScJ3v1UeoO9MFjoDJvu
- wu77vUuhPSCSvBxvbTqZzNOq9OCxFnOl6qPUOf1Dpg/iTlL7qZuAlYeGj1cgwRH9hIIIw49bWh0
- MwN1+NNADeLODOg348lN22ZV5yKKDtmqTnCfOzh5O+mauCK7kJsdAkgYpRxTxxeDw9XKHVtb7wx
- Bh9IC5bJi/Hfv6Ei3Ok8F+YLxxIXsmCXeRqX5Mhs4RA6TcWL7ktKjHMfB378x29W010MfGHCV7z
- 7Qx16GgtonnKKWvGX6TbiaBcGW9/YNpPkCjhwh3FmpYrupLrzvDVqRZNHUwuIT+H4ZWN
-X-Received: by 2002:a05:600c:1c25:b0:45b:7608:3ca1 with SMTP id
- 5b1f17b1804b1-45b76212044mr55310775e9.23.1756457535682; 
- Fri, 29 Aug 2025 01:52:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGErU3Hfwc/cDsPvrsH+zyxQbz/d3of1/vz/qZVy9QNTKbn9DUOji1PZFFvBXiDVn38l4aTOg==
-X-Received: by 2002:a05:600c:1c25:b0:45b:7608:3ca1 with SMTP id
- 5b1f17b1804b1-45b76212044mr55310565e9.23.1756457535271; 
- Fri, 29 Aug 2025 01:52:15 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-42-48-43.web.vodafone.de. [109.42.48.43])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf276ccc13sm2482515f8f.22.2025.08.29.01.52.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 01:52:14 -0700 (PDT)
-Message-ID: <d0195bfe-2a17-4020-8176-8f2219f1951b@redhat.com>
-Date: Fri, 29 Aug 2025 10:52:13 +0200
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1urtHm-0002Yh-Oy
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:12:35 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1urtHi-0006R2-R2
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:12:34 -0400
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8BxWNHSUrFor3wEAA--.9142S3;
+ Fri, 29 Aug 2025 15:12:18 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowJDxrcHPUrFoJyxwAA--.64494S3;
+ Fri, 29 Aug 2025 15:12:17 +0800 (CST)
+Subject: Re: [PATCH] hw/loongarch/virt: Fix the cpu hotplug issue
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+References: <20250829013243.1237107-1-lixianglai@loongson.cn>
+ <34bc7ebf-4a7e-d2f8-65de-529ef658be49@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <a2825117-0fc1-1f5a-8128-d322ce94de06@loongson.cn>
+Date: Fri, 29 Aug 2025 15:11:07 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] tests/functional: fix formatting of exception args
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250829083156.2570137-1-berrange@redhat.com>
- <20250829083156.2570137-3-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250829083156.2570137-3-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <34bc7ebf-4a7e-d2f8-65de-529ef658be49@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Language: en-US
+X-CM-TRANSID: qMiowJDxrcHPUrFoJyxwAA--.64494S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoWxJw43uFykXryDGw4xCF18CrX_yoWrWr1fpr
+ WkAF1UJrWUCrn7Z39rG345uFyDJr13K3ZxWF17tFW0kr4DXr1jqr1jvwnFgF1UAw48WF18
+ Zr1kZw17ZF43ZrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU24SoDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.357,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,39 +84,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/08/2025 10.31, Daniel P. Berrangé wrote:
-> On HTTP 404 errors, we failed to include the URL in the exception
-> that was raised, while for the catch-all exception we failed to
-> include the URL and forgot the placeholder for the exception
-> details too.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/asset.py | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-> index b5a6136d36..ae2bec3ea5 100644
-> --- a/tests/functional/qemu_test/asset.py
-> +++ b/tests/functional/qemu_test/asset.py
-> @@ -168,12 +168,13 @@ def fetch(self):
->                   # indicate a broken test rather than a transient
->                   # server or networking problem
->                   if e.code == 404:
-> -                    raise AssetError(self, "Unable to download: "
-> -                                     "HTTP error %d" % e.code)
-> +                    raise AssetError(self, "Unable to download %s: "
-> +                                     "HTTP error %d" % (self.url, e.code))
->                   continue
->               except Exception as e:
->                   tmp_cache_file.unlink()
-> -                raise AssetError(self, "Unable to download: " % e)
-> +                raise AssetError(self, "Unable to download %s: %s" % (
-> +                    self.url, e))
->   
->           if not os.path.exists(tmp_cache_file):
->               raise AssetError(self, "Download retries exceeded", transient=True)
+Hi Bibo Mao:
+>
+>
+> On 2025/8/29 上午9:32, Xianglai Li wrote:
+>> The hot-plugged cpu does not register the cpu reset function, so the cpu
+>> plugged in later cannot reset properly, and there will be problems when
+>> restarting.
+>>
+>> Now register the cpu reset function in the cpu hotplug callback 
+>> function.
+> Oh, it is actually one problem and it is missing :(. There is similiar 
+> patch posted at:
+>
+> https://lore.kernel.org/qemu-devel/20241031065418.3111892-1-maobibo@loongson.cn/ 
+>
+>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This patch seems more reasonable. Please ignore the patch I currently 
+submitted,
+Hope it will be merged in soon.
+
+Thanks!
+Xianglai.
+
+> I prefer to adding cpu reset in CPU object realize function rather 
+> hotplug handler, and executing reset_load_elf() in board specific
+> reset callback. However peter has different thoughts.
+>
+> Regards
+> Bibo Mao
+>>
+>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>> ---
+>>   hw/loongarch/boot.c         | 8 +-------
+>>   hw/loongarch/virt.c         | 4 ++++
+>>   include/hw/loongarch/virt.h | 1 +
+>>   3 files changed, 6 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+>> index 14d6c52d4e..6bc1f3d50c 100644
+>> --- a/hw/loongarch/boot.c
+>> +++ b/hw/loongarch/boot.c
+>> @@ -324,7 +324,7 @@ static int64_t load_kernel_info(struct 
+>> loongarch_boot_info *info)
+>>       return kernel_entry;
+>>   }
+>>   -static void reset_load_elf(void *opaque)
+>> +void reset_load_elf(void *opaque)
+>>   {
+>>       LoongArchCPU *cpu = opaque;
+>>       CPULoongArchState *env = &cpu->env;
+>> @@ -429,12 +429,6 @@ static void 
+>> loongarch_direct_kernel_boot(MachineState *ms,
+>>   void loongarch_load_kernel(MachineState *ms, struct 
+>> loongarch_boot_info *info)
+>>   {
+>>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+>> -    int i;
+>> -
+>> -    /* register reset function */
+>> -    for (i = 0; i < ms->smp.cpus; i++) {
+>> -        qemu_register_reset(reset_load_elf, 
+>> LOONGARCH_CPU(qemu_get_cpu(i)));
+>> -    }
+>>         info->kernel_filename = ms->kernel_filename;
+>>       info->kernel_cmdline = ms->kernel_cmdline;
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index b15ada2078..71f8ddc980 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -1013,6 +1013,8 @@ static void virt_cpu_unplug(HotplugHandler 
+>> *hotplug_dev,
+>>       /* Notify acpi ged CPU removed */
+>>       hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, 
+>> &error_abort);
+>>   +    /* unregister reset function */
+>> +    qemu_unregister_reset(reset_load_elf, cpu);
+>>       cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+>>       cpu_slot->cpu = NULL;
+>>   }
+>> @@ -1037,6 +1039,8 @@ static void virt_cpu_plug(HotplugHandler 
+>> *hotplug_dev,
+>>                                &error_abort);
+>>       }
+>>   +    /* register reset function */
+>> +    qemu_register_reset(reset_load_elf, cpu);
+>>       cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+>>       cpu_slot->cpu = CPU(dev);
+>>   }
+>> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+>> index 602feab0f0..15ea393386 100644
+>> --- a/include/hw/loongarch/virt.h
+>> +++ b/include/hw/loongarch/virt.h
+>> @@ -71,6 +71,7 @@ struct LoongArchVirtMachineState {
+>>   OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, 
+>> LOONGARCH_VIRT_MACHINE)
+>>   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+>>   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
+>> +void reset_load_elf(void *opaque);
+>>     static inline bool 
+>> virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
+>>   {
+>>
 
 
