@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18FE4CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE35CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNGu-0007oU-OR; Sat, 30 Aug 2025 11:13:40 -0400
+	id 1usNGv-0007pH-0f; Sat, 30 Aug 2025 11:13:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryJW-0005V3-GK
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 08:34:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uryjT-0001R2-TL
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryJR-0001iH-2a
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 08:34:40 -0400
+ id 1uryjR-0000Ai-Um
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756470858;
+ s=mimecast20190719; t=1756472489;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cz1BXjpfXAmfEJm6RS15seidZTfgeDzKoSF/4UZc5Dc=;
- b=L4i/PslH98YIhnRTly2b3xpmDtZZOl0fMz1Cw5Qm4CV9KRILEHNTQ/8NzvWfqh1DWx01z+
- qEvO/YxWh33dNKgyWhWBU4PcBQBaDB6+t0mTLQRZ5/zaWJ2xoMN/iqdJkNwuo17477oKTZ
- XlHv7K5BaCjEly7OzdTg8h0NceHjQuE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=S1JyH2wiz5vFRYd2711N6Hwx1KpHo8g0euMCvUb8MQs=;
+ b=D5dEVy0v4dg0SAzWJ4kg/q/BTjKNQdrO3XJddkMetY/n7WVGhkpdT5f1sTLjZZhegYtexr
+ tKJ051Eg+HQgEaSEQiKnrbTi0WATwLOEsB2nS5vWFfD4p2/rfTPdCbaG3xqre0BD1NfOiv
+ qmp44sgsdTveJx48iChPQf+F31nuClk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-BPnKsoubNZuTrr-YYGdWOQ-1; Fri, 29 Aug 2025 08:34:10 -0400
-X-MC-Unique: BPnKsoubNZuTrr-YYGdWOQ-1
-X-Mimecast-MFC-AGG-ID: BPnKsoubNZuTrr-YYGdWOQ_1756470849
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3c584459d02so1322871f8f.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 05:34:10 -0700 (PDT)
+ us-mta-363-W_wH6aiUOECmvybDJ2FuoA-1; Fri, 29 Aug 2025 09:01:27 -0400
+X-MC-Unique: W_wH6aiUOECmvybDJ2FuoA-1
+X-Mimecast-MFC-AGG-ID: W_wH6aiUOECmvybDJ2FuoA_1756472486
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b7bb85e90so12269985e9.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:01:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756470849; x=1757075649;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756472485; x=1757077285;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Cz1BXjpfXAmfEJm6RS15seidZTfgeDzKoSF/4UZc5Dc=;
- b=NsSZKfvPBBvYjLGQdNQI3PD8OTYbPRdAuOs5pF69ev3Vy0Yfrtak//dZdJfo6/Rs/E
- NXM6kB9S6IkuU6DZYYnlRnukQ6y1lwbvh8/Pg+7/MwB3sxh2wMSc4hmODQ7YsAJjQfZW
- Uw+ShoqAHlxMX+mawBsJMJ7neGiodXWAozb920Y8oG7H4rSP6s+Dw6sWbJZ7HD+iaQq/
- SCDTTxo4JWERsd2aiKsiT+gySz9ugdDPqkQ0gR5wCxTPjvNSCbsvVDckbuAVgCfDzEn6
- 2gdjoFT47xQakyxGCiBoWrAG+U8RiwHNhcAPWgPh0x1faJJY+FUYWZQOYGqHbhU4QkLf
- vcQw==
-X-Gm-Message-State: AOJu0Yxcoukls14x/TM4oqXqjN4LpBkf7Mv57ZTXkWZET6HDtXaH6kCS
- Ox3w5CLlDNQH7Bsp/LpBcCCJe5NovrywU60F8H4KTTTJMDMoiIT8sjOLRfuT4KElLyxGE0ZjLSl
- CYbrxgqZs+i0l9lI1YtTF70gSVPX26EyNR2cjHPAz7zVPwDkQf9BqCbqVTHL290eF1DVGcGDqL5
- 8uQpwykjx0pnJozqSZlpXA+Nel8kp0BFY=
-X-Gm-Gg: ASbGncsmRRFjWRFrVyuVILqX1AtzXWLNmorL1VFc7Cyn6ZDNRemRet0koZoB2S/qCbr
- USoFpJQGwFD0gF2Zl15LGv/6sO39+915AZbm1PU4Zjdgs+tKEyaqWAY6P1DXvTgyTcBtjwTzvGb
- i/O1M/rNyoob8b71ow6Vpga+Y0A5wIfFntGhPI3ZVwx1EWvQdr9SevXk+6I/qgps2lDHZxcmpT2
- glE8OmeqZ7C8rPC186q7ImC
-X-Received: by 2002:a05:6000:25c6:b0:3ca:4e3:6ea6 with SMTP id
- ffacd0b85a97d-3ca04e3768amr14037150f8f.46.1756470849291; 
- Fri, 29 Aug 2025 05:34:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+9ral3wwkJofl1NoPSw+FQ5Xplvqw2IU2Tgs39YXVRGIFh7swHtcRzbllWKRf9bNNy9J4n7PjRI+inCjOhLo=
-X-Received: by 2002:a05:6000:25c6:b0:3ca:4e3:6ea6 with SMTP id
- ffacd0b85a97d-3ca04e3768amr14037101f8f.46.1756470848792; Fri, 29 Aug 2025
- 05:34:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250814160600.2327672-7-imammedo@redhat.com>
- <20250821155603.2422553-1-imammedo@redhat.com>
- <aKyBFlCtnxnP9kt/@intel.com> <20250825171912.1bc7b841@fedora>
- <aK1mHGan+n9NSAOk@intel.com> <20250826104731.1440e3ed@fedora>
- <33661ea1-b0aa-45b3-8923-0b47a40dcea8@redhat.com>
-In-Reply-To: <33661ea1-b0aa-45b3-8923-0b47a40dcea8@redhat.com>
+ bh=S1JyH2wiz5vFRYd2711N6Hwx1KpHo8g0euMCvUb8MQs=;
+ b=kkTBjrED4FtaveF8+jhIefh6YVIfYMvIEeeWdAyT9GktAyX653PH841ckvHURbY+nT
+ QgNdNroRP+Ettyaju4/We4W09GNdcPhn9TSM/z6zMOkW4iDJpv491qfnMhDd0qFlGt9m
+ GqZybACN5mi8Vn9+D643EjIt13HVEeQ02H7Q362GZ6Plzm70035/whzIB/Z10SzzTYeg
+ 3vKD53EpfpduwGCknK0RJIo2pOcw3e2+rz2Sx+2l0lwGK9n4WlQaVLXXDgbCe/Obieu6
+ n7rIorDP8jq1YCegxMLp2+uo3vba2zrx3DAiYA+KsaVe7NmjAbj3NLb3agizoqJWdt4m
+ APbw==
+X-Gm-Message-State: AOJu0Yxufa1m/rZxWISt+p1jBttegMnx88svG5+iELIb/z298PKHIyJB
+ TQxgIfKNdQnUceIEOQlNoQeiEWei2xHxjY1eOfOjv4HU3oRnLTwMug1VXsuMELGt7tyyGS3TTmO
+ JsDN6uG1XhC3JMsmSb5+OFTsoA3aSzHn8MFFu88EaBobNomG0lkl5LkO+sV8ni47RKXFI8fVwZF
+ 2CBLsaveM9O7GMImD1WIABFQ+lKS0R8AO4E2HH9fWI
+X-Gm-Gg: ASbGncsHeoFNzmqqsF+i3Wmu1AGrGx9prB6+ds/0aS8x074CgJo8EGpv1oaXoYsaamg
+ tpg+TDxTxCKsxS/+IW8I1SV3NL8pxfY2yec+tEVOsbfOGmnQPqJuIuKefYDKfXGIAmQo0BpQT5g
+ vR6WjzEvVgeDCmezHHs/k9h/Sbe/J6/933PuNyaa7aivNTOYL9KAr8smzTkSNGP8ydkm+zEyVr0
+ cP9PktAZG9QvGlMe3N/93ucHX2YOhd4j2eE+1XegibOZUWFxjZIOF6I/APyeiNHxtgYpT3+/QT5
+ 7A1yu23Lljv5Vt8wcz5pS1jkAZTvUZKv7hXrkx0kmC1CwkVtukMQgGKoXZhVd5nk2qoLZZoA98H
+ GbCp0B5dXmfikNNbaFBFVWNxdh1i0bv/MEHYtKZjrmyw=
+X-Received: by 2002:a05:600c:430b:b0:456:942:b162 with SMTP id
+ 5b1f17b1804b1-45b6e42bad0mr65771665e9.11.1756472484780; 
+ Fri, 29 Aug 2025 06:01:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrtRhe/ZtpJP3KGy3yiPpcs6g6Jf7QM/4IUPegPEJhbcJp9bbBWUT/eOfGDy484lyCHyLm4A==
+X-Received: by 2002:a05:600c:430b:b0:456:942:b162 with SMTP id
+ 5b1f17b1804b1-45b6e42bad0mr65771235e9.11.1756472484107; 
+ Fri, 29 Aug 2025 06:01:24 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.56.250])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf270fc496sm3400264f8f.1.2025.08.29.06.01.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 06:01:22 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 29 Aug 2025 14:33:57 +0200
-X-Gm-Features: Ac12FXwROH2Sg5p-UYSJ-6MOitEUdMAKq4acnRp2TbAekXjq-AqLBZUoYzx-QVw
-Message-ID: <CABgObfb6Hs8EOeLQeG_S=Y8j8dj6A9fAMn0DzSSVKZYBG_rP-g@mail.gmail.com>
-Subject: Re: [PATCH v5 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
- helpers and use them tree wide
-To: Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, mst@redhat.com, 
- mtosatti@redhat.com, richard.henderson@linaro.org, riku.voipio@iki.fi, 
- thuth@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com, 
- david@redhat.com, jjherne@linux.ibm.com, shorne@gmail.com, 
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
- wangyanan55@huawei.com, peter.maydell@linaro.org, agraf@csgraf.de, 
- mads@ynddal.dk, mrolnik@gmail.com, deller@gmx.de, dirty@apple.com, 
- rbolshakov@ddn.com, phil@philjordan.eu, reinoud@netbsd.org, 
- sunilmut@microsoft.com, gaosong@loongson.cn, laurent@vivier.eu, 
- edgar.iglesias@gmail.com, aurelien@aurel32.net, jiaxun.yang@flygoat.com, 
- arikalo@gmail.com, chenhuacai@kernel.org, npiggin@gmail.com, 
- rathc@linux.ibm.com, harshpb@linux.ibm.com, yoshinori.sato@nifty.com, 
- iii@linux.ibm.com, mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com, 
- qemu-s390x@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+To: qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 28/28] tcg: move interrupt caching and single step masking
+ closer to user
+Date: Fri, 29 Aug 2025 14:59:35 +0200
+Message-ID: <20250829125935.1526984-29-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,7 +94,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,52 +110,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 29, 2025 at 10:18=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
->
-> On 8/26/25 10:47, Igor Mammedov wrote:
-> > While overhead might be issue, it's better to have correcteness 1st.
-> > (that's why blanket tree wide change to make sure we don't miss places =
-that
-> > set/test interrupts).
->
-> Looking more at it, I found at least one place that sets interrupts
-> without bql:
->
->      if (ctl_has_irq(env)) {
->          cpu_set_interrupt(cs, CPU_INTERRUPT_VIRQ);
->      }
->
-> I'm going to squash this in:
+From: Igor Mammedov <imammedo@redhat.com>
 
-Rethinking about it - this can be a separate patch that also affects
-cpu_reset_interrupt(), as well as all cases where
-cpu_reset_interrupt() is open coded.
+in cpu_handle_interrupt() the only place where cached interrupt_request
+might have effect is when CPU_INTERRUPT_SSTEP_MASK applied and
+cached interrupt_request handed over to cpu_exec_interrupt() and
+need_replay_interrupt().
 
-Paolo
+Simplify code by moving interrupt_request caching and CPU_INTERRUPT_SSTEP_MASK
+masking into the block where it actually matters and drop reloading cached value
+from CPUState:interrupt_request as the rest of the code directly uses
+CPUState:interrupt_request.
 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 1dee9d4c76e..5c3397fe108 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -959,12 +959,13 @@ static inline bool cpu_test_interrupt(CPUState *cpu=
-, int mask)
->    * @cpu: The CPU to set pending interrupt(s) on.
->    * @mask: The interrupts to set.
->    *
-> - * Sets interrupts in @mask as pending on @cpu.
-> + * Sets interrupts in @mask as pending on @cpu.  Unlike @cpu_interrupt,
-> + * this does not kick the vCPU.
->    */
->   static inline void cpu_set_interrupt(CPUState *cpu, int mask)
->   {
-> -    qatomic_store_release(&cpu->interrupt_request,
-> -        cpu->interrupt_request | mask);
-> +    /* Pairs with cpu_test_interrupt(). */
-> +    qatomic_or(&cpu->interrupt_request, mask);
->   }
->
->   /**
->
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Link: https://lore.kernel.org/r/20250814160600.2327672-9-imammedo@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ accel/tcg/cpu-exec.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 96c124aa720..8491e5badd1 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -782,13 +782,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+     assert(!cpu_test_interrupt(cpu, ~0));
+ #else
+     if (unlikely(cpu_test_interrupt(cpu, ~0))) {
+-        int interrupt_request;
+         bql_lock();
+-        interrupt_request = cpu->interrupt_request;
+-        if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
+-            /* Mask out external interrupts for this step. */
+-            interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
+-        }
+         if (cpu_test_interrupt(cpu, CPU_INTERRUPT_DEBUG)) {
+             cpu->interrupt_request &= ~CPU_INTERRUPT_DEBUG;
+             cpu->exception_index = EXCP_DEBUG;
+@@ -806,6 +800,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+             return true;
+         } else {
+             const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
++            int interrupt_request = cpu->interrupt_request;
+ 
+             if (cpu_test_interrupt(cpu, CPU_INTERRUPT_RESET)) {
+                 replay_interrupt();
+@@ -814,6 +809,11 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+                 return true;
+             }
+ 
++            if (unlikely(cpu->singlestep_enabled & SSTEP_NOIRQ)) {
++                /* Mask out external interrupts for this step. */
++                interrupt_request &= ~CPU_INTERRUPT_SSTEP_MASK;
++            }
++
+             /*
+              * The target hook has 3 exit conditions:
+              * False when the interrupt isn't processed,
+@@ -838,9 +838,6 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+                 cpu->exception_index = -1;
+                 *last_tb = NULL;
+             }
+-            /* The target hook may have updated the 'cpu->interrupt_request';
+-             * reload the 'interrupt_request' value */
+-            interrupt_request = cpu->interrupt_request;
+         }
+         if (cpu_test_interrupt(cpu, CPU_INTERRUPT_EXITTB)) {
+             cpu->interrupt_request &= ~CPU_INTERRUPT_EXITTB;
+-- 
+2.51.0
 
 
