@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C35ECA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09DECCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:53:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNm7-0005qK-OE; Sat, 30 Aug 2025 11:45:55 -0400
+	id 1usNkL-0001tl-WA; Sat, 30 Aug 2025 11:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1us8AE-000716-IJ
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 19:05:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1us8AC-00037l-6W
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 19:05:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756508741;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=E8Gj6u+1Z5wWJiY80gUAAmNwK1Ecd1e8/1mbSVIaQ34=;
- b=NI3lGCPM2t3ta/J/mn80GxNmiIDmrCFxIOprh3h8lvReBaI1jOHMWSm4YDR7bod0wMEmmV
- Oz7CE8pVX2fSHbixDOWUQuYmleF2RMNqHhGNZXMlhGDT7KAYAQKrk+rjssuvuuABWiUcq8
- U7aU6A0oJXIFdedqh5NauI0aVyGM2rs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-8NxjAR8kN46F61aYqAhvMQ-1; Fri, 29 Aug 2025 19:05:39 -0400
-X-MC-Unique: 8NxjAR8kN46F61aYqAhvMQ-1
-X-Mimecast-MFC-AGG-ID: 8NxjAR8kN46F61aYqAhvMQ_1756508738
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45b7c4c738cso9021295e9.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 16:05:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7XS-0003CY-Lp
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:42 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1us7XQ-00030p-OF
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:25:42 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-b47173749dbso1933650a12.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756506338; x=1757111138; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x+Vi/O4BRs2S0eMYdKKxaAFZ166C21NyMikDLosj6Q0=;
+ b=VJCKqbitnjyiT8NkSAagmrS75ZZZRDRuQyZdzmR7LqhxYI34T65fSPKPaMsQlDYhvU
+ IbkfkTuTu3DGh/gLxQY/ms/nm8rqpMcesmRRqzOIsEcF7VPoTegxzCx9UNvJuEZi0G1R
+ aEHF75Fl2URHifE08nluh7nV8V+Oj2OCLXNh8hm9ZB08zpXXyTNhgvOP2eEhF4QdfQLb
+ /AcAdvXz7AM7se0I+H8A4SmikBkkr3XrOXlxqqshjguwwLIvt5oaHSHNgbPIW2R1JaE4
+ Ks/l2b7LWAUV9qEpSyGBCji5RNy953mk3DcmmZ7nfxsWE6UGT4pZJtqWgQspUTJngAK4
+ cQUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756508738; x=1757113538;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756506338; x=1757111138;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E8Gj6u+1Z5wWJiY80gUAAmNwK1Ecd1e8/1mbSVIaQ34=;
- b=neMeYp0CSyzu4XAOjrjjlMlYhJvO8+hlWmRiCg+ATsVRttSHRkVfhkMIQZeanZOXHz
- 9faYyh7csaPFPsqUkjHPtC90+qUZkRSZN8NR3zqJmvD8t9+UO6C4b/5vppKpEMGjIe6H
- HRwzyOrvyf/Q3JdT93Qr7yvzdxdsPd02v0sVfxb5+FE71gSdElQ6q+Gsewa2lyoflqNG
- p5USDlVDOglfLBr/VqW6zV3P477d/x7ckYOj73M79CVBHJANfaeNMQCSqNQbyFDJdHgY
- k99/nzqTa2jjOWneDSO4wbMeSD7xCwR6tA7zgMsgIhNgUJwF/1YSjlB2f91m2tsUjGKP
- v/cw==
-X-Gm-Message-State: AOJu0Yzcgu9ld4OHYNmEy88lauJ2Uy5eDiO5TQxE5iTs6EWNA4YggQ3F
- +okxusDSL/49t8TwJ8MlrHR4kLwntuAxO+CCmDVo4OgLeiwr6FcuIaWhNfsH0Wwy/byaMNEM7yc
- ehwLdnkLowG8DF+/AQ+vxZMyhpgB3RhK6jOZpqUW/cxbBnRdHpbYkLZduCCZdBo61K5Nx4mEcso
- XmEnpSX8pubyP4XhGcqyHOUtu4ttzY6LY=
-X-Gm-Gg: ASbGnctSB0Nnf/2tZF/SZzo7mVrww92aDTedj9/fZ9QCq3wHDeQ74JTSQfOHIsSse1/
- oUNDKuhnOVRzqa89Bqv7egFYDd/1L+qqeSbdJRGJxOC1CQU4ATid7vvJUUdQpWnvMQZZPloNbY4
- ZDkqUEnspXuedYFcYkGQtRSzthVvR/AfwFMb97GdRUR+PWIB802ghD+/NmY1jKJFcPswxxJTO8z
- ELGeDNgYv7GboICPUGhx4Zh
-X-Received: by 2002:a05:600c:4e44:b0:45b:80e4:4e1a with SMTP id
- 5b1f17b1804b1-45b855fe92bmr1435445e9.26.1756508738343; 
- Fri, 29 Aug 2025 16:05:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0lvddpu22SiW+zancsM2D7PFxpDflnwYA+VjcKvjbebB4qRKrKm4PnyWGHqBth4cP8dzh9JwNQ6J/vYwASKI=
-X-Received: by 2002:a05:600c:4e44:b0:45b:80e4:4e1a with SMTP id
- 5b1f17b1804b1-45b855fe92bmr1435345e9.26.1756508737951; Fri, 29 Aug 2025
- 16:05:37 -0700 (PDT)
+ bh=x+Vi/O4BRs2S0eMYdKKxaAFZ166C21NyMikDLosj6Q0=;
+ b=Q1YimQsxY1fGpi1DgfLLy87UzxKBrlZyDzyXC2TVyUuKUZ2vDDtDVNWCi8ugcut/RU
+ Y+jnumQO4T1SQRZbj1eb2YhErGK7906ph6Gguzuvwdf+jXKeKrtE6SK9RIp+XhMEJA5H
+ 2GiPlIuIdIcJfJCltLZ/p0GZg9omEgcMzJv98q/HPl0GJ3dyaym/yxNLmjPA5IXz5yjr
+ /gNEsb3TWRZF48aljBeZ6MbNwwz+fXJtRfLf4rQi6V6DealFY4akBcFwkett9mzSY1NM
+ 6M/zOEIFVnQ6keYsiiHK/6LI77IJPVQlmnneKoVwkupx1Zm8tI5cG8SXR88fTdkbIEVV
+ wGgQ==
+X-Gm-Message-State: AOJu0YyRdhP6Chy0AiwNC5z/tFENIQPvyf+ZBhdXt+jPeBMukmAQl4lL
+ ZzJMhmHs3BamYr6plG7QLVEv8AxjF/D/gBdO12OaOfkptFOjLQyeyJIy7iUJLbDlNltarD2cm7W
+ Ja3KK4Q8=
+X-Gm-Gg: ASbGncvL73M7S2QUkNOhWoXKU4qwBKupoV0JCyWVU0pUvOTuxdMoRRsMYXB3hBeqqOr
+ 4PhudftDiAa2cMwNOZcL8isFhi6fYzJy96Cjodn7ok7HJl2deZzshpsrH76PMl9M42nayHO2Yl8
+ xdpdaU05GF19wWA7r4dFr6+as4foWmqcNJ9hHaB1pTk4SX9PxoC9aIWyVKAs/t4ms+SC16w6dma
+ 33QA8aMxse7TxPVknharA0/MfNToxMo9fB9SV4obh8fn9r/a2gUtlhSo7/cCEUSbzziK+SZsa9c
+ gEcDVl4QD/SYFhydlig5elYGcZXKsIAN58pc4pFEurbUvTV9rnCjGt+SCvW5M+U56eCITj5zN9j
+ Y3qzfMUSGukUH8p0wUCpVQtw/N44ZJfTTQd17jx5DeWcTu3HG59eqrdrqYqK5NExyO3M3D5U=
+X-Google-Smtp-Source: AGHT+IHWKwz+92sPbVmaHEBS2hVGhK2jZAOyLxfLYHn2SaIHkNZqoMdpDQIdJCA3AvPtZsdemi2Z7g==
+X-Received: by 2002:a05:6a21:9989:b0:243:78a:8280 with SMTP id
+ adf61e73a8af0-243d6f8e6e2mr285357637.56.1756506338512; 
+ Fri, 29 Aug 2025 15:25:38 -0700 (PDT)
+Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.25.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 15:25:38 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 27/91] linux-user: Move elf_core_copy_regs to
+ microblaze/elfload.c
+Date: Sat, 30 Aug 2025 08:23:23 +1000
+Message-ID: <20250829222427.289668-28-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
+References: <20250829222427.289668-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250829152909.1589668-1-pbonzini@redhat.com>
- <20250829153115.1590048-10-pbonzini@redhat.com>
- <743782b5-1e3b-4b63-afe2-4ad1da333bde@linaro.org>
-In-Reply-To: <743782b5-1e3b-4b63-afe2-4ad1da333bde@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sat, 30 Aug 2025 01:05:26 +0200
-X-Gm-Features: Ac12FXziBEbSp4doToMPMSU9vWu_NcaGvEsAHPIDrYTfFpF-biLMcaHynincEv0
-Message-ID: <CABgObfYG=Aaz2ujr4xeuKgUqM35tF_2nS-W+v6bjYQJ4xMsvRg@mail.gmail.com>
-Subject: Re: [PATCH 14/18] cpus: properly kick CPUs out of inner execution loop
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, imammedo@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,59 +101,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 29, 2025 at 11:57=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 8/30/25 01:31, Paolo Bonzini wrote:
-> > @@ -624,8 +624,7 @@ static target_ulong h_confer(PowerPCCPU *cpu, Spapr=
-MachineState *spapr,
-> >       }
-> >
-> >       cs->exception_index =3D EXCP_YIELD;
-> > -    qatomic_set(&cs->exit_request, true);
-> > -    cpu_loop_exit(cs);
-> > +    cpu_exit(cs);
-> >
-> >       return H_SUCCESS;
-> >   }
->
-> cpu_loop_exit does a longjmp; cpu_exit does not.
->
-> This may be a bug fix, but it's hard to tell.
-> If it is a bug fix, it should be separated.
+Move elf_core_copy_regs to elfload.c.
+Move HAVE_ELF_CORE_DUMP, ELF_NREGS, target_elf_gregset_t to target_elf.h.
+For now, duplicate the definitions of target_elf_greg_t and tswapreg.
 
-The longjmp is overkill but works. Not doing the longjmp also works
-because gen_sc() finishes the TB and then you go all the way (check
-interrupt_request -> check exit_request -> write exception_index ->
-cpu_exec_end) out of tcg_cpu_exec().
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/microblaze/target_elf.h |  9 +++++++++
+ linux-user/elfload.c               | 21 ---------------------
+ linux-user/microblaze/elfload.c    | 17 +++++++++++++++++
+ 3 files changed, 26 insertions(+), 21 deletions(-)
 
-I like cpu_loop_exit() to signify that I am in the middle of the TB.
-That said, I'm always conflicted between renaming badly-named
-functions and keeping historical names. qemu_wait_io_event() is also
-horrible.
-
-> > +++ b/system/cpu-timers.c
-> > @@ -246,14 +246,14 @@ void qemu_timer_notify_cb(void *opaque, QEMUClock=
-Type type)
-> >
-> >      if (qemu_in_vcpu_thread()) {
-> >          /*
-> > -         * A CPU is currently running; kick it back out to the
-> > +         * A CPU is currently running; kick it back out of the
-> >           * tcg_cpu_exec() loop so it will recalculate its
-> >           * icount deadline immediately.
-> >           */
-> > -        qemu_cpu_kick(current_cpu);
-> > +        cpu_exit(current_cpu);
->
-> where the comment still says kick and we're replacing kick with exit.
->
-> I guess the root of this problem is that "kick" isn't a precise term, we =
-ought to name it
-> something else, and we should paint the bike shed green.
-
-Yes, I agree. "send it out of" can work too in this case, I'll chanbge it.
-
-Paolo
+diff --git a/linux-user/microblaze/target_elf.h b/linux-user/microblaze/target_elf.h
+index bfe2997fd2..cc5cc0477e 100644
+--- a/linux-user/microblaze/target_elf.h
++++ b/linux-user/microblaze/target_elf.h
+@@ -8,4 +8,13 @@
+ #ifndef MICROBLAZE_TARGET_ELF_H
+ #define MICROBLAZE_TARGET_ELF_H
+ 
++#define HAVE_ELF_CORE_DUMP      1
++
++typedef abi_ulong target_elf_greg_t;
++
++#define ELF_NREG                38
++typedef struct target_elf_gregset_t {
++    target_elf_greg_t regs[ELF_NREG];
++} target_elf_gregset_t;
++
+ #endif
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 5a3a5cfc39..96ed6b6515 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -416,27 +416,6 @@ static const VdsoImageInfo *vdso_image_info(uint32_t elf_flags)
+ 
+ #define ELF_EXEC_PAGESIZE        4096
+ 
+-#define HAVE_ELF_CORE_DUMP
+-#define ELF_NREG 38
+-typedef struct target_elf_gregset_t {
+-    target_elf_greg_t regs[ELF_NREG];
+-} target_elf_gregset_t;
+-
+-/* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
+-void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
+-{
+-    for (int i = 0; i < 32; i++) {
+-        r->regs[i] = tswapreg(env->regs[i]);
+-    }
+-
+-    r->regs[32] = tswapreg(env->pc);
+-    r->regs[33] = tswapreg(mb_cpu_read_msr(env));
+-    r->regs[34] = 0;
+-    r->regs[35] = tswapreg(env->ear);
+-    r->regs[36] = 0;
+-    r->regs[37] = tswapreg(env->esr);
+-}
+-
+ #endif /* TARGET_MICROBLAZE */
+ 
+ #ifdef TARGET_OPENRISC
+diff --git a/linux-user/microblaze/elfload.c b/linux-user/microblaze/elfload.c
+index b92442dfeb..89250dbd63 100644
+--- a/linux-user/microblaze/elfload.c
++++ b/linux-user/microblaze/elfload.c
+@@ -3,9 +3,26 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "loader.h"
++#include "target_elf.h"
+ 
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+     return "any";
+ }
++
++#define tswapreg(ptr)   tswapal(ptr)
++
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMBState *env)
++{
++    for (int i = 0; i < 32; i++) {
++        r->regs[i] = tswapreg(env->regs[i]);
++    }
++
++    r->regs[32] = tswapreg(env->pc);
++    r->regs[33] = tswapreg(mb_cpu_read_msr(env));
++    r->regs[34] = 0;
++    r->regs[35] = tswapreg(env->ear);
++    r->regs[36] = 0;
++    r->regs[37] = tswapreg(env->esr);
++}
+-- 
+2.43.0
 
 
