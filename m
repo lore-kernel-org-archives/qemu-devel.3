@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B6DCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F822CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNqS-0001Ll-FM; Sat, 30 Aug 2025 11:50:24 -0400
+	id 1usNtt-0000KC-J7; Sat, 30 Aug 2025 11:53:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1usBg5-0003bQ-DG; Fri, 29 Aug 2025 22:50:53 -0400
-Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usELl-0005tK-8R
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:07 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
- id 1usBg3-00087l-6Y; Fri, 29 Aug 2025 22:50:53 -0400
-Received: by mail-qk1-x736.google.com with SMTP id
- af79cd13be357-7f6d8fcd106so376235185a.2; 
- Fri, 29 Aug 2025 19:50:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usELj-00046c-OK
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:05 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-772301f8a4cso1455631b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756522250; x=1757127050; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756532522; x=1757137322; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u0/rMuj5BJq38ST18amwRehThVkEDs8BGEyd5stjYDo=;
- b=GQyHS0CKJGLxTbZz3wBB7eZEcHdicVnkDm0BNhjEcQCZlQB4MycWbhe6a6FPRq0YZg
- xCFtIdy89y0zy9KAyA/+3JcTQ/y4UcMUlKQdT7ZcHWCZOffS3vdNRsWdrbL3bFRpTz6A
- yXtJ8YGTHLDlySLq2+ti3euV2mKS287+j0IYQJ8wLfzTFXlW8yIDjKHMaXB+BLBr7kzn
- Luu0/juJPw96jm7bHEm0CSB1xhqMhS4s4Y5IaaDY6nbNUbv4BQgcc0uSHFe1r7RDEwr5
- IKbWJNJlcLMo2SyDQDLiLDvs3q8smKE+u6IawNkHLByug+tLK0nCSy7D849aoUIa0RLt
- nosA==
+ bh=kEj8duxAu1Pam82WhtcHKlYlFMg89KDGm3ClOoILo48=;
+ b=sc2rhVPr1Fst/iXFm9DjJ9jA1CsfekitiLQhc7hjGgd+tq9PnvlwDd+6G3+bRopXqZ
+ PuXNIGnR5UWXYkKrhAFbt5v2amIOATTuSS0l6Fl9w7Su1xrXAgLPbk8i6wuJi3wzK8/3
+ 1lkXOGuOly8jiReLBMX0hOG9vs9iCEKrb99D1icmn7+/5BQZD7BZL+L8wPtiyN9AKMwO
+ sNrpQnr2izSVqogeXBCrkt8tWg0UQO44H/8BukR/OrU5HzWdp02yayMc9hdAgIoKt8Dg
+ STEY5R6ce6N8GUm/bHZgJz2ymG7c4OFZHUWLoaZjzha4L7X7PK6OiZqcbplFQnieGE3O
+ 8uPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756522250; x=1757127050;
+ d=1e100.net; s=20230601; t=1756532522; x=1757137322;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u0/rMuj5BJq38ST18amwRehThVkEDs8BGEyd5stjYDo=;
- b=ob7tfXKGsgtjN1hsF1zL2XsMTX7eAfvVjrRTrJa6g7FNXefl24W70ptiPdlz0R8iZB
- hH2Y3op5/Pe4yGrVA7PJC7TNxlvvbI8xA9W1S3T19WQf/g3nMLQMZXES/jwjCo+KSjtP
- +uoU78TRH7ES1tq8SLMWynmoL+nWmQcAhiA0r6NfyCI3VjJPuGUTzkOhfKWmURQk+XIw
- Dps2hNC5Euvbn05vMj5/4rjxV83vjONbidBBjLbrqaFRdRfrGwCTxz3EYOmfi/K4rfKt
- B+tMco3aA4vJ65cQi9l0Kd7vJoZp+6fCoE0umCmCbY7VSXgJ+sqvw/JLW/tyIEFaap7r
- QIXw==
-X-Gm-Message-State: AOJu0YwSdB6Zj2ovPrIDLHezKTzvuKXmlDy7f8Iiy4/XW2YLoCF3ksFa
- 8CpkSbRnZXmG8WsA6oJ5ooZS+hAhdZiEuya8y0SkxUtu0rOg8Rq/8hcfmYbfKQ==
-X-Gm-Gg: ASbGnctaoztnbm+XHPUjrgyjshORmxa9E0M8SJy03LafA1azG1B0NMbtMtfpUrfE3KE
- QxprbiZ3+PIxHP4nW2xdVq5yCl9dTW56GbepR5z7hrFJeTVdy66qe7kUJTYdi4KAEhMGGI6JP0R
- ysnw2W69AUemvBUlYE3+djbsXailL45+OgrFhUe8H0elR/uZXWlY/Dutzl2DZulBPOSkEVIia+o
- jYvy2pMqe9rVMRjkegEJ3pcsZqqgLvOYa5GTSQHEiMxYo8AyqULEp7t4ubQwX2pEXxIZDVF/9eM
- VejVMUkoC0loX4E97RM5lp1u8Igq0FP0/qvaqITUsEORy7ILKMerYzcJFHSb1FH+5UkYQ8aKiCo
- hDHp2OkC90gKexagjC2/+LBOY4yAThaudIWBAp8D/xBlcJA/06Fu1OTJcT+IgTeznPrHmT2hSGK
- PEHs27R5SZvO+cAsilYv3KMgE4mf0=
-X-Google-Smtp-Source: AGHT+IH18oXSzBFKJ4Xk5tXPZGMM9o2LuvSrmp5tf/Cp7Okqf1nNmkA+1nQBGVyxlav+H4uferfSXg==
-X-Received: by 2002:a05:620a:4403:b0:7ea:458:e6e2 with SMTP id
- af79cd13be357-7ff2cbd87f0mr76635585a.77.1756522249642; 
- Fri, 29 Aug 2025 19:50:49 -0700 (PDT)
-Received: from localhost.localdomain
- (wn-campus-nat-129-97-124-90.dynamic.uwaterloo.ca. [129.97.124.90])
+ bh=kEj8duxAu1Pam82WhtcHKlYlFMg89KDGm3ClOoILo48=;
+ b=Jbgk/yBWiV6JvTFvDcwFh+Xw0obxKN40hxTbC/p9jw62MyMQTY+SMvRL/3e84dBzZL
+ L5OBxrs081PpygTfVpipUjYnDTiOiqHhzl4SQYP2X1ka3Ing8l/yemAYk6wqL0rXfPw1
+ VsUXo9wy5bDj4gVa3M5p/Msm/rvgaADWravG5w6Cil629nm3DH2nM5aYTzbO2e/G4lKL
+ yAh3D31mYy7OqARmOsEEvgwPLYwySF0QLhwHOuDCu7RgZFAylUrhIQaQu3MqvkECZKNB
+ zUUBse+snp6N/jg2SxoPjKyEg68D62MErZ70C88OODyxISXZSzXSSBBAwEpJtvi57S3P
+ rcbA==
+X-Gm-Message-State: AOJu0Yxo6ooi3eaMNV2DH6k17jubndZE6bxGlcVA16yNe/pnKObVnwyr
+ 5n88tKsrkHZnrdN12SqYo7DUTsPjH/jtE1pd8Fj5Qy5OeOR/QOQgSepg4LvJNSgcA9CKZnWv1gw
+ tXbjzQ/g=
+X-Gm-Gg: ASbGnctQACWT5Rqs0RNY9o6AhUaD9kRr1vvVyP6SsSncYnl/hHMeSRzks++nHR1tgPd
+ kwxP74e1E9nZbxY4Sk7NVOHc7fdlGuxIIHBVpQ9CfUdCZxImrEyBc9CNIN4EVyXlF8KuI3M8A2j
+ Q75kviaysQ24AAaLlmdCkPx1y/9jWE9OSfL4thB5S3n12mi/KTJ5fZq7Cv6CZreLQvE3K6og56X
+ ZbY/yGAwy3CrzRtIiKmE8BObDa1duaEYWJhHTXXMt85UsPu9efSco5Iii/IQVczZxPzBtTfFmDT
+ EPI0zZTIv4Jc09qSUs6IoMe7A5wkUDC/fleDUnlUIaOQyDjt91b2pk7qzqX1uDqiqyHIxmVEtkn
+ 93/wzRPm5NHmFqJWbYRYhYVacOgHaZmA2/DVwbo8kCOpJyoDDlWIVlCIKTNba
+X-Google-Smtp-Source: AGHT+IHPtBOFiEzfRefyZUtWHaBtI2tu0RAWhXNiugpnHWR+ub1KWfwokwz+lWmTlQTScu4hMzSOnA==
+X-Received: by 2002:a05:6a20:918c:b0:23f:fa6e:912a with SMTP id
+ adf61e73a8af0-243d6e007b3mr1600596637.16.1756532521709; 
+ Fri, 29 Aug 2025 22:42:01 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7fc0eacf1b4sm299457085a.21.2025.08.29.19.50.48
+ 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.41.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 19:50:49 -0700 (PDT)
-From: Brian Song <hibriansong@gmail.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, bernd@bsbernd.com,
- fam@euphon.net, hibriansong@gmail.com, hreitz@redhat.com, kwolf@redhat.com,
- stefanha@redhat.com
-Subject: [PATCH 3/4] export/fuse: Safe termination for FUSE-uring
-Date: Fri, 29 Aug 2025 22:50:24 -0400
-Message-ID: <20250830025025.3610-4-hibriansong@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250830025025.3610-1-hibriansong@gmail.com>
-References: <20250830025025.3610-1-hibriansong@gmail.com>
+ Fri, 29 Aug 2025 22:42:01 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 10/84] target/arm: Fill in HFG[RWI]TR_EL2 bits for Arm v9.5
+Date: Sat, 30 Aug 2025 15:40:14 +1000
+Message-ID: <20250830054128.448363-11-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
- envelope-from=hibriansong@gmail.com; helo=mail-qk1-x736.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,177 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the user sends a termination signal, storage-export-daemon stops
-the export, exits the main loop (main_loop_wait), and begins cleaning
-up associated resources. At this point, some SQEs submitted via FUSE_IO
-_URING_CMD_COMMIT_AND_FETCH may still be pending in the kernel, waiting
-for incoming FUSE requests, which can trigger CQE handlers in user
-space.
-
-Currently, there is no way to manually cancel these pending CQEs in the
-kernel. As a result, after export termination, the related data
-structures might be deleted before the pending CQEs return, causing the
-CQE handler to be invoked after it has been freed, which may lead to a
-segfault.
-
-As a workaround, when submitting an SQE to the kernel, we increment the
-block reference (blk_exp_ref) to prevent the CQE handler from being
-deleted during export termination. Once the CQE is received, we
-decrement the reference (blk_exp_unref).
-
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Brian Song <hibriansong@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- block/export/fuse.c | 75 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 65 insertions(+), 10 deletions(-)
+ target/arm/cpregs.h | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index 07f74fc8ec..ab2eb895ad 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -39,6 +39,7 @@
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index c9506aa6d5..1d103b577f 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -408,10 +408,19 @@ FIELD(HFGRTR_EL2, ERXPFGCTL_EL1, 47, 1)
+ FIELD(HFGRTR_EL2, ERXPFGCDN_EL1, 48, 1)
+ FIELD(HFGRTR_EL2, ERXADDR_EL1, 49, 1)
+ FIELD(HFGRTR_EL2, NACCDATA_EL1, 50, 1)
+-/* 51-53: RES0 */
++/* 51: RES0 */
++FIELD(HFGRTR_EL2, NGCS_EL0, 52, 1)
++FIELD(HFGRTR_EL2, NGCS_EL1, 53, 1)
+ FIELD(HFGRTR_EL2, NSMPRI_EL1, 54, 1)
+ FIELD(HFGRTR_EL2, NTPIDR2_EL0, 55, 1)
+-/* 56-63: RES0 */
++FIELD(HFGRTR_EL2, NRCWMASK_EL1, 56, 1)
++FIELD(HFGRTR_EL2, NPIRE0_EL1, 57, 1)
++FIELD(HFGRTR_EL2, NPIR_EL1, 58, 1)
++FIELD(HFGRTR_EL2, NPOR_EL0, 59, 1)
++FIELD(HFGRTR_EL2, NPOR_EL1, 60, 1)
++FIELD(HFGRTR_EL2, NS2POR_EL1, 61, 1)
++FIELD(HFGRTR_EL2, NMAIR2_EL1, 62, 1)
++FIELD(HFGRTR_EL2, NAMAIR2_EL1, 63, 1)
  
- #include "standard-headers/linux/fuse.h"
- #include <sys/ioctl.h>
-+#include <sys/sysinfo.h>
+ /* These match HFGRTR but bits for RO registers are RES0 */
+ FIELD(HFGWTR_EL2, AFSR0_EL1, 0, 1)
+@@ -452,8 +461,18 @@ FIELD(HFGWTR_EL2, ERXPFGCTL_EL1, 47, 1)
+ FIELD(HFGWTR_EL2, ERXPFGCDN_EL1, 48, 1)
+ FIELD(HFGWTR_EL2, ERXADDR_EL1, 49, 1)
+ FIELD(HFGWTR_EL2, NACCDATA_EL1, 50, 1)
++FIELD(HFGWTR_EL2, NGCS_EL0, 52, 1)
++FIELD(HFGWTR_EL2, NGCS_EL1, 53, 1)
+ FIELD(HFGWTR_EL2, NSMPRI_EL1, 54, 1)
+ FIELD(HFGWTR_EL2, NTPIDR2_EL0, 55, 1)
++FIELD(HFGWTR_EL2, NRCWMASK_EL1, 56, 1)
++FIELD(HFGWTR_EL2, NPIRE0_EL1, 57, 1)
++FIELD(HFGWTR_EL2, NPIR_EL1, 58, 1)
++FIELD(HFGWTR_EL2, NPOR_EL0, 59, 1)
++FIELD(HFGWTR_EL2, NPOR_EL1, 60, 1)
++FIELD(HFGWTR_EL2, NS2POR_EL1, 61, 1)
++FIELD(HFGWTR_EL2, NMAIR2_EL1, 62, 1)
++FIELD(HFGWTR_EL2, NAMAIR2_EL1, 63, 1)
  
- #if defined(CONFIG_FALLOCATE_ZERO_RANGE)
- #include <linux/falloc.h>
-@@ -321,6 +322,8 @@ static void coroutine_fn co_fuse_uring_queue_handle_cqes(void *opaque)
-     fuse_inc_in_flight(exp);
+ FIELD(HFGITR_EL2, ICIALLUIS, 0, 1)
+ FIELD(HFGITR_EL2, ICIALLU, 1, 1)
+@@ -512,6 +531,11 @@ FIELD(HFGITR_EL2, SVC_EL1, 53, 1)
+ FIELD(HFGITR_EL2, DCCVAC, 54, 1)
+ FIELD(HFGITR_EL2, NBRBINJ, 55, 1)
+ FIELD(HFGITR_EL2, NBRBIALL, 56, 1)
++FIELD(HFGITR_EL2, NGCSPUSHM_EL1, 57, 1)
++FIELD(HFGITR_EL2, NGCSSTR_EL1, 58, 1)
++FIELD(HFGITR_EL2, NGCSEPP, 59, 1)
++FIELD(HFGITR_EL2, COSPRCTX, 60, 1)
++FIELD(HFGITR_EL2, ATS1E1A, 62, 1)
  
-     /* A ring entry returned */
-+    blk_exp_unref(&exp->common);
-+
-     fuse_uring_co_process_request(ent);
- 
-     /* Finished processing requests */
-@@ -345,6 +348,9 @@ static void fuse_uring_cqe_handler(CqeHandler *cqe_handler)
-             err != -ENOTCONN) {
-             fuse_export_halt(exp);
-         }
-+
-+        /* A ring entry returned */
-+        blk_exp_unref(&exp->common);
-     } else {
-         co = qemu_coroutine_create(co_fuse_uring_queue_handle_cqes, ent);
-         qemu_coroutine_enter(co);
-@@ -392,6 +398,8 @@ static void fuse_uring_submit_register(void *opaque)
-     FuseRingEnt *ent = opaque;
-     FuseExport *exp = ent->rq->q->exp;
- 
-+    /* Commit and fetch a ring entry */
-+    blk_exp_ref(&exp->common);
- 
-     aio_add_sqe(fuse_uring_prep_sqe_register, ent, &(ent->fuse_cqe_handler));
- }
-@@ -886,6 +894,38 @@ static void read_from_fuse_fd(void *opaque)
-     qemu_coroutine_enter(co);
- }
- 
-+#ifdef CONFIG_LINUX_IO_URING
-+static void fuse_ring_queue_manager_destroy(FuseRingQueueManager *manager)
-+{
-+    if (!manager) {
-+        return;
-+    }
-+
-+    for (int i = 0; i < manager->num_ring_queues; i++) {
-+        FuseRingQueue *rq = &manager->ring_queues[i];
-+
-+        for (int j = 0; j < FUSE_DEFAULT_RING_QUEUE_DEPTH; j++) {
-+            g_free(rq->ent[j].op_payload);
-+        }
-+        g_free(rq->ent);
-+    }
-+
-+    g_free(manager->ring_queues);
-+    g_free(manager);
-+}
-+
-+static void fuse_export_delete_uring(FuseExport *exp)
-+{
-+    exp->is_uring = false;
-+
-+    /* Clean up ring queue manager */
-+    if (exp->ring_queue_manager) {
-+        fuse_ring_queue_manager_destroy(exp->ring_queue_manager);
-+        exp->ring_queue_manager = NULL;
-+    }
-+}
-+#endif
-+
- static void fuse_export_shutdown(BlockExport *blk_exp)
- {
-     FuseExport *exp = container_of(blk_exp, FuseExport, common);
-@@ -901,24 +941,15 @@ static void fuse_export_shutdown(BlockExport *blk_exp)
-          */
-         g_hash_table_remove(exports, exp->mountpoint);
-     }
--}
--
--static void fuse_export_delete(BlockExport *blk_exp)
--{
--    FuseExport *exp = container_of(blk_exp, FuseExport, common);
- 
--    for (int i = 0; i < exp->num_queues; i++) {
-+    for (size_t i = 0; i < exp->num_queues; i++) {
-         FuseQueue *q = &exp->queues[i];
- 
-         /* Queue 0's FD belongs to the FUSE session */
-         if (i > 0 && q->fuse_fd >= 0) {
-             close(q->fuse_fd);
-         }
--        if (q->spillover_buf) {
--            qemu_vfree(q->spillover_buf);
--        }
-     }
--    g_free(exp->queues);
- 
-     if (exp->fuse_session) {
-         if (exp->mounted) {
-@@ -927,8 +958,29 @@ static void fuse_export_delete(BlockExport *blk_exp)
- 
-         fuse_session_destroy(exp->fuse_session);
-     }
-+}
-+
-+static void fuse_export_delete(BlockExport *blk_exp)
-+{
-+    FuseExport *exp = container_of(blk_exp, FuseExport, common);
-+
-+    for (size_t i = 0; i < exp->num_queues; i++) {
-+        FuseQueue *q = &exp->queues[i];
-+
-+        if (q->spillover_buf) {
-+            qemu_vfree(q->spillover_buf);
-+        }
-+    }
- 
-     g_free(exp->mountpoint);
-+
-+#ifdef CONFIG_LINUX_IO_URING
-+    if (exp->is_uring) {
-+        fuse_export_delete_uring(exp);
-+    }
-+#endif
-+
-+    g_free(exp->queues);
- }
- 
- /**
-@@ -1917,6 +1969,9 @@ fuse_uring_send_response(FuseRingEnt *ent, uint32_t req_id, ssize_t ret,
-     out_header->unique = req_id;
-     /* out_header->len = ret > 0 ? ret : 0; */
-     ent_in_out->payload_sz = ret > 0 ? ret : 0;
-+
-+    /* Commit and fetch a ring entry */
-+    blk_exp_ref(&exp->common);
-     aio_add_sqe(fuse_uring_prep_sqe_commit, ent,
-                     &ent->fuse_cqe_handler);
- }
+ FIELD(HDFGRTR_EL2, DBGBCRN_EL1, 0, 1)
+ FIELD(HDFGRTR_EL2, DBGBVRN_EL1, 1, 1)
 -- 
-2.45.2
+2.43.0
 
 
