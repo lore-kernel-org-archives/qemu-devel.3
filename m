@@ -4,97 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A9F8CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7705CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNIr-0001pq-LE; Sat, 30 Aug 2025 11:15:46 -0400
+	id 1usNxj-00057T-HV; Sat, 30 Aug 2025 11:57:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryjD-0001Ln-RJ
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryjA-00006T-4C
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756472471;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0orM1aVNWIA/N/a7VgzNhQDU3JWqnZ2top440RxQ0lE=;
- b=YRsLhGsVBxU5aOwKC+Az8wRoXLAS/63ey+TCuJ6bbPn91BDHB76tM5A9E1q8AVxR4OcIah
- FS+cP4kC5lEceE91DiGyauzuE0+pXG37l5xCcoSR0HKsZKDrYbLzRTCXH/Z4e2YwGKhdwT
- dYNJNenUE92iBV7gsQYqqp9X/eugK74=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-466-f8fxBGJgMNik6soxjyscdw-1; Fri, 29 Aug 2025 09:01:10 -0400
-X-MC-Unique: f8fxBGJgMNik6soxjyscdw-1
-X-Mimecast-MFC-AGG-ID: f8fxBGJgMNik6soxjyscdw_1756472469
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-45a1b0cc989so16485275e9.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:01:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usEQy-0007L7-U0
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:32 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usEQw-0004wJ-Qy
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:28 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2487a60d649so31788215ad.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:47:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756532845; x=1757137645; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rnuzD3f6fqniCnUr6zHfwv+Jhw4Kn2Qu+tewJzRiqxg=;
+ b=SIocrkGU+xLalzYZt+kp8m4W42HRWGffcpfLpFGgyIAr6ZWguTyZKqhMOzVu+Mg8X+
+ p6147uog0Qn6+WSBgzf3RHIpBYptyAcXpC4WacASuvElEKb4BSN0+qpD49YfomaUSLKD
+ mer8XlSsuNAdLb6QTXC6i4mF1TwMAe6PMoe0w2+ly0qLYKo/OsqcS2fD/zNSveQj4kUE
+ 1afpW7icdwpqbYMEJCf68mfOa+HuqVLFQHHryzstxJJ/xBBbaD2S4ZHPwijdpa5ixMV3
+ XvxYFjtSd9oq3ISGzgbDAfFjWKicGtcr3vJ1YeutlaOSYme22GoRLR1KKyBrtSZnViQ6
+ WpUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756472468; x=1757077268;
+ d=1e100.net; s=20230601; t=1756532845; x=1757137645;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0orM1aVNWIA/N/a7VgzNhQDU3JWqnZ2top440RxQ0lE=;
- b=M85lrdmOoIzuKRBqrqnhijTN/6PmUWu1iLf49y/pn1YEFJ8R9GxvLNM2Q20FvPwksC
- Ac6O91t5k+k44S32Blx+B20YdxHtwKoJFmo+WPoqkO/zahA5ez4af+dlaqffKTybQZ7X
- Kzl5JbE896kbJg7/2ELw5EMjB08J0F8nPnTETZonkX9/ouF5xFkjEnFfwAt2P0CEpfra
- hNwxKbWrbLoQ9BVWse11FJSMeoXYJCVQB9FXcg/0WgNtHTMt1p2xPICetL2fdVu1Q2Qo
- lEvN+9L+YoJ/EvTvZRWH7/hRr6mclLgSaBl5F/t26cnridnU23XufWPQyAfdcMUoidmm
- gDlw==
-X-Gm-Message-State: AOJu0YygcpN6mlL3gPKRk3xzbWao1A5An6RLQQbZ/lsDZjI35HnAuh5e
- 4LWNQVbjSgXw+rlFgWRdFEOWnK3qXrI29yy3/8qO7wOGYw92Jh4QwoPe/kWpEXktHC5MXDap9Pe
- 885yA5CeynZXlVGmKRxoDiGjFSehPfOct/oDXF3067DI0NvPYE7F2bT/K468Kcv+CPFvn+vZyD/
- 0ZgZfwlfeTHqdirgDwId7Oq+eILI2mNVs0uCy2gvxl
-X-Gm-Gg: ASbGncunm5tCNMZCD9M1633zHCFVsld7/n7BWM96FM1pZj+RVH/UWHlljdL9F7HojgZ
- LYijscaKOO2IUs5wUEHnWHWGslZ00v4t4eDZapVfhpC0gvpplQsEPY0Kh/ZFaJSv+bzlJ1XOcvd
- k1GPcCezUbOcNHIBWAsVS0j917I5qdf9NMgYK8bduJzaJllq9ymh+pCRDoRLSCCmbyXG+AkWjFY
- XVrE1ZdzwfIAdrCTA5g2EEbnHLvBFBtMAZB018IVHgD0kE/auhBozF+gxWwvklAw3hsPlLbZYQD
- 91o/6dBg6GFOoggzoqE39lJKexoVCtIWoq5Ak518ew2LdXbaap5wYFSjTqQ2VYxMP1T/IGgsjWO
- ykQv2TSpEJMRsgXMP8Rpu+8PBF2L+gqhGtLR4FQvVTn0=
-X-Received: by 2002:a05:600c:4590:b0:45b:47e1:ef67 with SMTP id
- 5b1f17b1804b1-45b517e8d46mr198626635e9.34.1756472467505; 
- Fri, 29 Aug 2025 06:01:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8Yv6xglzILBEpowjUqr6BdN0rB6z6cY37+FPkiEMRwvy3C3MmejApndDCueeE0XWKUSgM8Q==
-X-Received: by 2002:a05:600c:4590:b0:45b:47e1:ef67 with SMTP id
- 5b1f17b1804b1-45b517e8d46mr198626105e9.34.1756472466806; 
- Fri, 29 Aug 2025 06:01:06 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
+ bh=rnuzD3f6fqniCnUr6zHfwv+Jhw4Kn2Qu+tewJzRiqxg=;
+ b=ml2FqU/yIa0/TUBu19Pn5kP9qnP0cpahrQZobjXQKKbYaetQ/0HQjcLFjbqy/ZRgfW
+ jcvtMjhAruEjMrGfe9urCZP6wOZvKe1oW3G+r/StQW1FwvC8+6jmP5evXKWt4HhUMOU0
+ 25RbGTA1xi0ESGDjCwwWirelxra839k0cazhlm4y27tyZpHEYA2tG0zEJWHaGMEvu1v+
+ xaEq8To1Tw228EFSId7J2Z4Ccp7Jrt0zNhYBd97ALziBKIh1Uw+P0Yg0nOVcsyTrqgn2
+ MhUqcMLDOVtLRdtqz0inciRYNbXS7gDaJIFCdsBw/ophiqC+DrhVe0hQPl5aMGQVeaI0
+ IsLg==
+X-Gm-Message-State: AOJu0Yy7p9+C3hjBTh8BThiLwyjf4aITUtk9jHl7NDKFXSTJKhU/N+SA
+ Wxk8EIF9ltGdrObUpK85PkOlTI/FUH+eNwgyLkQV/N5gOkg7gS/xoHl8UhLjLNLpsnz60HJjYlq
+ oWyTPIpk=
+X-Gm-Gg: ASbGnctReeQaXJTU+kW/U2+ZBz822viP8g49sVFdFziMLEEY+5Yl9BF3Y+qTNBTaVcZ
+ hPhN61yPsJff9+/O3T6NGb+cEgN21IOQoef91ljcEept5j0LXrc19dvGROeJ1O0GHXg0kX8LAAz
+ QmACJtYATaU9HF2Dfh0xBw5v52xiIYqWnL0xHjwB/xsDddj3qzi26ry1ganLTGxfLBs6dPkOJpJ
+ o+N8xriLV34QeKs/bN14wfroU6eBXwuXj9obstCWuJ0oo4q/mgX3sQPZ+cNWfwHcqFRyviH0sJQ
+ 7envwoXTsy0lIQ3GxgEv67HF1fhsBwtfw1iNdGitH5KDkP6iPUulQrAN81z/KJgyxE13VMxiEAB
+ S7YXmk8NkNXiM9LKZnUSUr6WROHfSvN2VXaBJwtFL2T7EUJE8fuXIbBOsIWmYf4A=
+X-Google-Smtp-Source: AGHT+IGChp18exmULT17wkoBYnzsW9UHJ0uJNbjFtYzYpcd0kveQTLZkj3vJVu8wZc+t3pO8xOv55w==
+X-Received: by 2002:a17:903:440f:b0:24a:2998:91b6 with SMTP id
+ d9443c01a7336-24a29989633mr9565645ad.54.1756532845204; 
+ Fri, 29 Aug 2025 22:47:25 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf33add483sm3307321f8f.37.2025.08.29.06.01.03
+ d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.47.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 06:01:03 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Fri, 29 Aug 2025 22:47:24 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 26/28] hpet: make main counter read lock-less
-Date: Fri, 29 Aug 2025 14:59:33 +0200
-Message-ID: <20250829125935.1526984-27-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 60/84] target/arm: Implement GCSPOPM
+Date: Sat, 30 Aug 2025 15:41:04 +1000
+Message-ID: <20250830054128.448363-61-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,102 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
-
-Make access to main HPET counter lock-less.
-
-In unlikely event of an update in progress, readers will busy wait
-untill update is finished.
-
-As result micro benchmark of concurrent reading of HPET counter
-with large number of vCPU shows over 80% better (less) latency.
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20250814160600.2327672-6-imammedo@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/timer/hpet.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ target/arm/cpregs.h            |  1 +
+ target/arm/cpregs-gcs.c        |  3 +++
+ target/arm/tcg/translate-a64.c | 24 ++++++++++++++++++++++++
+ 3 files changed, 28 insertions(+)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index c776afc0f2d..789a31d0a08 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -39,6 +39,7 @@
- #include "system/address-spaces.h"
- #include "qom/object.h"
- #include "qemu/lockable.h"
-+#include "qemu/seqlock.h"
- #include "trace.h"
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 93358e6123..9b19520346 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -48,6 +48,7 @@ enum {
+     ARM_CP_DC_GZVA               = 0x0007,
+     /* Special: gcs instructions */
+     ARM_CP_GCSPUSHM              = 0x0008,
++    ARM_CP_GCSPOPM               = 0x0009,
  
- struct hpet_fw_config hpet_fw_cfg = {.count = UINT8_MAX};
-@@ -74,6 +75,7 @@ struct HPETState {
-     MemoryRegion iomem;
-     uint64_t hpet_offset;
-     bool hpet_offset_saved;
-+    QemuSeqLock state_version;
-     qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
-     uint32_t flags;
-     uint8_t rtc_irq_level;
-@@ -430,17 +432,25 @@ static uint64_t hpet_ram_read(void *opaque, hwaddr addr,
-     trace_hpet_ram_read(addr);
-     addr &= ~4;
+     /* Flag: reads produce resetvalue; writes ignored. */
+     ARM_CP_CONST                 = 1 << 4,
+diff --git a/target/arm/cpregs-gcs.c b/target/arm/cpregs-gcs.c
+index d17c17dcb7..fdefb2e17a 100644
+--- a/target/arm/cpregs-gcs.c
++++ b/target/arm/cpregs-gcs.c
+@@ -96,6 +96,9 @@ static const ARMCPRegInfo gcs_reginfo[] = {
+       .opc0 = 1, .opc1 = 3, .crn = 7, .crm = 7, .opc2 = 0,
+       .access = PL0_W, .accessfn = access_gcspushm,
+       .fgt = FGT_NGCSPUSHM_EL1, .type = ARM_CP_GCSPUSHM },
++    { .name = "GCSPOPM", .state = ARM_CP_STATE_AA64,
++      .opc0 = 1, .opc1 = 3, .crn = 7, .crm = 7, .opc2 = 1,
++      .access = PL0_R, .type = ARM_CP_GCSPOPM },
+ };
  
--    QEMU_LOCK_GUARD(&s->lock);
-     if (addr == HPET_COUNTER) {
--        if (hpet_enabled(s)) {
--            cur_tick = hpet_get_ticks(s);
--        } else {
--            cur_tick = s->hpet_counter;
--        }
-+        unsigned version;
+ void define_gcs_cpregs(ARMCPU *cpu)
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 0d2df839f6..badc24d2a5 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2513,6 +2513,24 @@ static void gen_sysreg_undef(DisasContext *s, bool isread,
+     gen_exception_insn(s, 0, EXCP_UDEF, syndrome);
+ }
+ 
++static void gen_gcspopm(DisasContext *s, int rt)
++{
++    TCGv_i64 gcspr = cpu_gcspr[s->current_el];
++    int mmuidx = core_gcs_mem_index(s->mmu_idx);
++    MemOp mop = finalize_memop(s, MO_64 | MO_ALIGN);
++    TCGv_i64 value = tcg_temp_new_i64();
++    TCGLabel *fail_label =
++        delay_exception(s, EXCP_UDEF, syn_gcs_data_check(GCS_IT_GCSPOPM, rt));
 +
-+        /*
-+         * Write update is rare, so busywait here is unlikely to happen
-+         */
-+        do {
-+            version = seqlock_read_begin(&s->state_version);
-+            if (unlikely(!hpet_enabled(s))) {
-+                cur_tick = s->hpet_counter;
-+            } else {
-+                cur_tick = hpet_get_ticks(s);
-+            }
-+        } while (seqlock_read_retry(&s->state_version, version));
-         trace_hpet_ram_read_reading_counter(addr & 4, cur_tick);
-         return cur_tick >> shift;
++    /* The value at top-of-stack must have low 2 bits clear. */
++    tcg_gen_qemu_ld_i64(value, clean_data_tbi(s, gcspr), mmuidx, mop);
++    tcg_gen_brcondi_i64(TCG_COND_TSTNE, value, 3, fail_label);
++
++    /* Complete the pop and return the value. */
++    tcg_gen_addi_i64(gcspr, gcspr, 8);
++    tcg_gen_mov_i64(cpu_reg(s, rt), value);
++}
++
+ /* MRS - move from system register
+  * MSR (register) - move to system register
+  * SYS
+@@ -2794,6 +2812,12 @@ static void handle_sys(DisasContext *s, bool isread,
+             gen_add_gcs_record(s, cpu_reg(s, rt));
+         }
+         return;
++    case ARM_CP_GCSPOPM:
++        /* Note that X[rt] is unchanged if !GCSEnabled. */
++        if (s->gcs_en) {
++            gen_gcspopm(s, rt);
++        }
++        return;
+     default:
+         g_assert_not_reached();
      }
- 
-+    QEMU_LOCK_GUARD(&s->lock);
-     /*address range of all global regs*/
-     if (addr <= 0xff) {
-         switch (addr) {
-@@ -500,6 +510,7 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-             old_val = s->config;
-             new_val = deposit64(old_val, shift, len, value);
-             new_val = hpet_fixup_reg(new_val, old_val, HPET_CFG_WRITE_MASK);
-+            seqlock_write_begin(&s->state_version);
-             s->config = new_val;
-             if (activating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
-                 /* Enable main counter and interrupt generation. */
-@@ -518,6 +529,8 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
-                     hpet_del_timer(&s->timer[i]);
-                 }
-             }
-+            seqlock_write_end(&s->state_version);
-+
-             /* i8254 and RTC output pins are disabled
-              * when HPET is in legacy mode */
-             if (activating_bit(old_val, new_val, HPET_CFG_LEGACY)) {
-@@ -686,6 +699,7 @@ static void hpet_init(Object *obj)
-     HPETState *s = HPET(obj);
- 
-     qemu_mutex_init(&s->lock);
-+    seqlock_init(&s->state_version);
-     /* HPET Area */
-     memory_region_init_io(&s->iomem, obj, &hpet_ram_ops, s, "hpet", HPET_LEN);
-     memory_region_enable_lockless_io(&s->iomem);
 -- 
-2.51.0
+2.43.0
 
 
