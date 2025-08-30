@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D594CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 410ADCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNky-0003nU-Jh; Sat, 30 Aug 2025 11:44:44 -0400
+	id 1usNsX-0004OC-9H; Sat, 30 Aug 2025 11:52:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bA-0004MI-LJ
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:32 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1usCRO-00055X-ID
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 23:39:46 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7b8-0003a5-J3
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:29:32 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-771e987b4e6so2093269b3a.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:29:29 -0700 (PDT)
+ id 1usCRM-00053t-OS
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 23:39:46 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-b4cf40cd0d1so1145089a12.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 20:39:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506568; x=1757111368; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756525183; x=1757129983; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0b8XApD11uS49cAycox2dUykst7Wjzbv/b7G4vIsl14=;
- b=NnCzgKEQk5n2SyLKoj5TsoIDvLQjYq2SHXsb0iNyMab3W985RiviLo0fRszusjB/Ca
- riOanlBTu+t614TVWwTrbKeUqlXhDUeEoslN9IkeWB1Pro+FwVb3K35tee4qZBgibDjn
- FhOFIy9iAQWKWoHbxyzPmzVAlyuDGjEiWUJekVKcjMFIx7LLoeaGbMI1Ho0Bj2imOcWG
- MERUwj3Jre/pcX3jkWhYlJV86F8ulyO5FNSuaB4K1JjWQYg5wSu0L95xqndQ2jbitv0n
- dmhcPXcDS0aI8Aw8Wxy3HoQ5FPbgJ34DT/RaKmj7Q9mDG6gkJiDc3f10Jtrt5ZQjq/WG
- cNlg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=nAYrTiHACzTy9Y3gPDsiHUk0bVXAiu9l8x+fFNC+2QA=;
+ b=bHAg+pwVRO+ll8WZuWa6fx2Y83cvDzHEmu8edWHLMKdAdb2EJCnw/kcPTSRcI5QwT5
+ 4SwchTNH55iABizBvQz95tTUjwvlnbmjACUSWDrtJUGivWCemvo7F4A72BDEPTZxQ7w1
+ ZKj52/nnsETtvifBiP7j3Qr7y1pcZxMDxy8LppOWUStexlZTQg7S6Rj+c/Xe4dLpE6qP
+ dBJ+RDffe58IA6myKqm91ANq+Fb2/OugoOE0dz+DX39xlI1ZhlmzvqQLBHmnYzu5VHQB
+ 1gA1MrDO6pRj2G5zUaZyRArBjAdr2GKBwXVPakhM9i5WxU2fJmmE2zBEtvXsdGgmwMIE
+ TFfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506568; x=1757111368;
+ d=1e100.net; s=20230601; t=1756525183; x=1757129983;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0b8XApD11uS49cAycox2dUykst7Wjzbv/b7G4vIsl14=;
- b=gFQ/MXgrgPt9XwVO11WFbXymqS4+yMUYMbPbusQY8HwEOmGyxcIvuiyTORJxndq7MP
- IzdpLBg18A1tgosCooiSawXSC3FFjOhsjdJ/C9fO3ShK22fCOkgdIpRjhAeLo3iWQUix
- pqPoNphcRjWspw3Y1T1yr3qLesqIiP8lZHT/wf1EpcuyHGZcwTwvDm3la5gAIdelfy5c
- 8Q/PTZOpUAYgCHNXht+Fn4WKDh32uk9Ij+DjzoE59Peqrs31ssTdP+6qKOLF41obGqR3
- DloieQCcb6aVPPtEQdTxoznTl3GN9crIpwUnWV+qlVzS2EnhMfAWqgGkV/moQ3f/OoMJ
- IIYA==
-X-Gm-Message-State: AOJu0Yz1DhOej7etjg8SCTep5o3q5OTdIv7zJjTM9fXKnlR9ERsvDdnU
- LbE+PBLRBNo+7LqjeDRVcft9Nnhm6AvSmlh8Vsw5O2jBWWTNFAsdfgttkTdZB3bFXqvI5MsgUJF
- YMjU+zNM=
-X-Gm-Gg: ASbGncvG9U27W13KWC7dC9sWGJEtfVMefZxunAihPEMGqpAjVvl6pA/k28oUVCVgJ8t
- ApX1GysR4mNOPeTjocXaEON7rZ/jkYWzQtGmst0H83EGRBb7ahVb2R9fDayc65sltMNKfX4uEMt
- IbzeH3bZtcd2Fa6rp0eIy7V0Zfz/lLgmPwr0oBqZgFWmfvniqH3ALhd9QpclE5BH3MBMj6yKv1A
- QUGsoH8mQMMr3bVxS8KbuLHcSRUezwJtt/776SxJgoMdKr9bqkHA9LSzEPD/DUjsrMBwgwrj7mA
- x+vFXBx3NNhwn/xFQx/CBu0vw2wirRPWwodMGMSs+w7OR59TKJjUCDCZ6Ab8gN3aiiK57BoAIjt
- 7ddF5TujaZebfTgZzutusej1Qx2lQc16JR5O3V2MalEgoOD6cx1rCTMOqVlQopO8=
-X-Google-Smtp-Source: AGHT+IF86UjIpExCZf9kfvKrOOhbrRzG3nHakxqS988SQdXc/rTUTl1bVPoBIkjXSqg/rCBBfP+E9g==
-X-Received: by 2002:a05:6a00:4b11:b0:772:2ca8:9378 with SMTP id
- d2e1a72fcca58-7723e341374mr278060b3a.21.1756506568476; 
- Fri, 29 Aug 2025 15:29:28 -0700 (PDT)
+ bh=nAYrTiHACzTy9Y3gPDsiHUk0bVXAiu9l8x+fFNC+2QA=;
+ b=LkGTLHYi2+Mc97ewPbJgklLg1cvhYpTuZEbXV2Xvm8H3m0a9ZJczzU8hBeecT405QJ
+ iJ3PoIKWhgGafC2TyWXbqB0T6nWA3+R5peNU/M82sJWuLrb6whdeXh9XoxUi4OlkIhHo
+ /lJXegS8eaWDNP4JLbFGHcI3Llr6oSCeZxat9Opbv+IdN/GmQxCs8MVrx92fwFg6z6kF
+ ltrrRA/PAMlaMtANs1zgpTgxPUg7IXLJpJ9ZcO9juli7mZUZHBFGASrmbFvRSbCDJ3t3
+ wZlqjRGqgEui+H26K/4xS4EBGuhRm8V+qyA+UVi0Y4xogXKIZPKRZJ8CXJgfXE8zLhpI
+ bMig==
+X-Gm-Message-State: AOJu0YworDz4h5JSinX8sZjcgEqJvDP2xRJlRiE3hQTc0bFirMlrkio9
+ TxUyZspgz/YtHAnDEuBbIJ+2fYnvnTYjckosEUItGnO4tc79aL9lE43+dFHGWjyCwsF0X8o0jwv
+ x6x1lFyE=
+X-Gm-Gg: ASbGncuRf01pu6WTqheG1ktR219vZObxE7L6EKGr0CeTmFkAa29r4YkmdNlRH8vgtsw
+ fiocCnYKDl+3xWrmXTjpV6hB3zS0vheEfuPaAUgLHiPjw2SpigQxws57KkLlt59XhBmjV9x0bds
+ wBom4xi23uiQ5Bemjvroq2L6Wqr6O8SwyUBxTGUc0SI4AXcXgGJdCpK1MxTEwTUaJv1W/XiKpgF
+ cZHUoz+vdC1Q6B0omXCW70RRLLY5XOvvrzeacCefLNauxAVZOeji3IwloRd7dW+mIT5keFvShMH
+ V9qihSn14WHIK+vvbdxedXf38oX4aCOGvHrS4m62tju8A6adEg7auBO1B8y3qDj4GP6nks46Tgt
+ km6PEOsuDOd2cQxNCzHnD8jaMyhVo0K25wL0KXGeNvcZZTZhid+r+WTZMVos/QPM=
+X-Google-Smtp-Source: AGHT+IGz6szenwtmKvZg41WMGRsbkPwl7zGz5EjJTwckeYYOpYBmbos+I8D5v/8D3ZI3G890rZKSpA==
+X-Received: by 2002:a17:903:ac8:b0:248:7878:cee9 with SMTP id
+ d9443c01a7336-24944ad05a0mr8941335ad.42.1756525183134; 
+ Fri, 29 Aug 2025 20:39:43 -0700 (PDT)
 Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.29.26
+ d9443c01a7336-24905da4784sm39551685ad.90.2025.08.29.20.39.41
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:29:28 -0700 (PDT)
+ Fri, 29 Aug 2025 20:39:42 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 47/91] linux-user/microblaze: Fold target_pt_regs.r* to an array
-Date: Sat, 30 Aug 2025 08:23:43 +1000
-Message-ID: <20250829222427.289668-48-richard.henderson@linaro.org>
+Subject: [PATCH v2 5/5] tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts
+Date: Sat, 30 Aug 2025 13:39:26 +1000
+Message-ID: <20250830033926.372955-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+In-Reply-To: <20250830033926.372955-1-richard.henderson@linaro.org>
+References: <20250830033926.372955-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,146 +99,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Separately enumerating all 32 registers is not helpful.
+A constant matrix can describe the movement of the 8 bits,
+so these shifts can be performed with one instruction.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Logic courtesy of Andi Kleen <ak@linux.intel.com>:
+https://gcc.gnu.org/pipermail/gcc-patches/2025-August/691624.html
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/microblaze/target_ptrace.h | 34 +------------
- linux-user/microblaze/signal.c        | 70 +++------------------------
- 2 files changed, 8 insertions(+), 96 deletions(-)
+ tcg/i386/tcg-target.c.inc | 75 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 71 insertions(+), 4 deletions(-)
 
-diff --git a/linux-user/microblaze/target_ptrace.h b/linux-user/microblaze/target_ptrace.h
-index a46c8cb7bc..ead913e5a4 100644
---- a/linux-user/microblaze/target_ptrace.h
-+++ b/linux-user/microblaze/target_ptrace.h
-@@ -7,38 +7,8 @@
- typedef uint32_t microblaze_reg_t;
- 
- struct target_pt_regs {
--    microblaze_reg_t r0;
--    microblaze_reg_t r1;
--    microblaze_reg_t r2;
--    microblaze_reg_t r3;
--    microblaze_reg_t r4;
--    microblaze_reg_t r5;
--    microblaze_reg_t r6;
--    microblaze_reg_t r7;
--    microblaze_reg_t r8;
--    microblaze_reg_t r9;
--    microblaze_reg_t r10;
--    microblaze_reg_t r11;
--    microblaze_reg_t r12;
--    microblaze_reg_t r13;
--    microblaze_reg_t r14;
--    microblaze_reg_t r15;
--    microblaze_reg_t r16;
--    microblaze_reg_t r17;
--    microblaze_reg_t r18;
--    microblaze_reg_t r19;
--    microblaze_reg_t r20;
--    microblaze_reg_t r21;
--    microblaze_reg_t r22;
--    microblaze_reg_t r23;
--    microblaze_reg_t r24;
--    microblaze_reg_t r25;
--    microblaze_reg_t r26;
--    microblaze_reg_t r27;
--    microblaze_reg_t r28;
--    microblaze_reg_t r29;
--    microblaze_reg_t r30;
--    microblaze_reg_t r31;
-+    /* Note the kernel enumerates all 32 registers. */
-+    microblaze_reg_t r[32];
-     microblaze_reg_t pc;
-     microblaze_reg_t msr;
-     microblaze_reg_t ear;
-diff --git a/linux-user/microblaze/signal.c b/linux-user/microblaze/signal.c
-index 7aef781314..e874e4def1 100644
---- a/linux-user/microblaze/signal.c
-+++ b/linux-user/microblaze/signal.c
-@@ -51,75 +51,17 @@ struct target_rt_sigframe {
- 
- static void setup_sigcontext(struct target_sigcontext *sc, CPUMBState *env)
- {
--    __put_user(env->regs[0], &sc->regs.r0);
--    __put_user(env->regs[1], &sc->regs.r1);
--    __put_user(env->regs[2], &sc->regs.r2);
--    __put_user(env->regs[3], &sc->regs.r3);
--    __put_user(env->regs[4], &sc->regs.r4);
--    __put_user(env->regs[5], &sc->regs.r5);
--    __put_user(env->regs[6], &sc->regs.r6);
--    __put_user(env->regs[7], &sc->regs.r7);
--    __put_user(env->regs[8], &sc->regs.r8);
--    __put_user(env->regs[9], &sc->regs.r9);
--    __put_user(env->regs[10], &sc->regs.r10);
--    __put_user(env->regs[11], &sc->regs.r11);
--    __put_user(env->regs[12], &sc->regs.r12);
--    __put_user(env->regs[13], &sc->regs.r13);
--    __put_user(env->regs[14], &sc->regs.r14);
--    __put_user(env->regs[15], &sc->regs.r15);
--    __put_user(env->regs[16], &sc->regs.r16);
--    __put_user(env->regs[17], &sc->regs.r17);
--    __put_user(env->regs[18], &sc->regs.r18);
--    __put_user(env->regs[19], &sc->regs.r19);
--    __put_user(env->regs[20], &sc->regs.r20);
--    __put_user(env->regs[21], &sc->regs.r21);
--    __put_user(env->regs[22], &sc->regs.r22);
--    __put_user(env->regs[23], &sc->regs.r23);
--    __put_user(env->regs[24], &sc->regs.r24);
--    __put_user(env->regs[25], &sc->regs.r25);
--    __put_user(env->regs[26], &sc->regs.r26);
--    __put_user(env->regs[27], &sc->regs.r27);
--    __put_user(env->regs[28], &sc->regs.r28);
--    __put_user(env->regs[29], &sc->regs.r29);
--    __put_user(env->regs[30], &sc->regs.r30);
--    __put_user(env->regs[31], &sc->regs.r31);
-+    for (int i = 0; i < 32; ++i) {
-+        __put_user(env->regs[i], &sc->regs.r[i]);
-+    }
-     __put_user(env->pc, &sc->regs.pc);
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index efaca0ca67..ee27266861 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -4342,12 +4342,46 @@ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+     }
  }
  
- static void restore_sigcontext(struct target_sigcontext *sc, CPUMBState *env)
++static void gen_vgf2p8affineqb0(TCGType type, TCGv_vec v0,
++                                TCGv_vec v1, uint64_t matrix)
++{
++    vec_gen_4(INDEX_op_x86_vgf2p8affineqb_vec, type, MO_8,
++              tcgv_vec_arg(v0), tcgv_vec_arg(v1),
++              tcgv_vec_arg(tcg_constant_vec(type, MO_64, matrix)), 0);
++}
++
+ static void expand_vec_shi(TCGType type, unsigned vece, bool right,
+                            TCGv_vec v0, TCGv_vec v1, TCGArg imm)
  {
--    __get_user(env->regs[0], &sc->regs.r0);
--    __get_user(env->regs[1], &sc->regs.r1);
--    __get_user(env->regs[2], &sc->regs.r2);
--    __get_user(env->regs[3], &sc->regs.r3);
--    __get_user(env->regs[4], &sc->regs.r4);
--    __get_user(env->regs[5], &sc->regs.r5);
--    __get_user(env->regs[6], &sc->regs.r6);
--    __get_user(env->regs[7], &sc->regs.r7);
--    __get_user(env->regs[8], &sc->regs.r8);
--    __get_user(env->regs[9], &sc->regs.r9);
--    __get_user(env->regs[10], &sc->regs.r10);
--    __get_user(env->regs[11], &sc->regs.r11);
--    __get_user(env->regs[12], &sc->regs.r12);
--    __get_user(env->regs[13], &sc->regs.r13);
--    __get_user(env->regs[14], &sc->regs.r14);
--    __get_user(env->regs[15], &sc->regs.r15);
--    __get_user(env->regs[16], &sc->regs.r16);
--    __get_user(env->regs[17], &sc->regs.r17);
--    __get_user(env->regs[18], &sc->regs.r18);
--    __get_user(env->regs[19], &sc->regs.r19);
--    __get_user(env->regs[20], &sc->regs.r20);
--    __get_user(env->regs[21], &sc->regs.r21);
--    __get_user(env->regs[22], &sc->regs.r22);
--    __get_user(env->regs[23], &sc->regs.r23);
--    __get_user(env->regs[24], &sc->regs.r24);
--    __get_user(env->regs[25], &sc->regs.r25);
--    __get_user(env->regs[26], &sc->regs.r26);
--    __get_user(env->regs[27], &sc->regs.r27);
--    __get_user(env->regs[28], &sc->regs.r28);
--    __get_user(env->regs[29], &sc->regs.r29);
--    __get_user(env->regs[30], &sc->regs.r30);
--    __get_user(env->regs[31], &sc->regs.r31);
-+    for (int i = 0; i < 32; ++i) {
-+        __get_user(env->regs[i], &sc->regs.r[i]);
-+    }
-     __get_user(env->pc, &sc->regs.pc);
- }
++    static const uint64_t gf2_shi[2][8] = {
++        /* left shift */
++        { 0,
++          0x0001020408102040ull,
++          0x0000010204081020ull,
++          0x0000000102040810ull,
++          0x0000000001020408ull,
++          0x0000000000010204ull,
++          0x0000000000000102ull,
++          0x0000000000000001ull },
++        /* right shift */
++        { 0,
++          0x0204081020408000ull,
++          0x0408102040800000ull,
++          0x0810204080000000ull,
++          0x1020408000000000ull,
++          0x2040800000000000ull,
++          0x4080000000000000ull,
++          0x8000000000000000ull }
++    };
+     uint8_t mask;
  
+     tcg_debug_assert(vece == MO_8);
++
++    if (cpuinfo & CPUINFO_GFNI) {
++        gen_vgf2p8affineqb0(type, v0, v1, gf2_shi[right][imm]);
++        return;
++    }
++
+     if (right) {
+         mask = 0xff >> imm;
+         tcg_gen_shri_vec(MO_16, v0, v1, imm);
+@@ -4361,6 +4395,16 @@ static void expand_vec_shi(TCGType type, unsigned vece, bool right,
+ static void expand_vec_sari(TCGType type, unsigned vece,
+                             TCGv_vec v0, TCGv_vec v1, TCGArg imm)
+ {
++    static const uint64_t gf2_sar[8] = {
++        0,
++        0x0204081020408080ull,
++        0x0408102040808080ull,
++        0x0810204080808080ull,
++        0x1020408080808080ull,
++        0x2040808080808080ull,
++        0x4080808080808080ull,
++        0x8080808080808080ull,
++    };
+     TCGv_vec t1, t2;
+ 
+     if (imm >= (8 << vece) - 1) {
+@@ -4371,6 +4415,11 @@ static void expand_vec_sari(TCGType type, unsigned vece,
+ 
+     switch (vece) {
+     case MO_8:
++        if (cpuinfo & CPUINFO_GFNI) {
++            gen_vgf2p8affineqb0(type, v0, v1, gf2_sar[imm]);
++            break;
++        }
++
+         /* Unpack to 16-bit, shift, and repack.  */
+         t1 = tcg_temp_new_vec(type);
+         t2 = tcg_temp_new_vec(type);
+@@ -4422,12 +4471,30 @@ static void expand_vec_sari(TCGType type, unsigned vece,
+ static void expand_vec_rotli(TCGType type, unsigned vece,
+                              TCGv_vec v0, TCGv_vec v1, TCGArg imm)
+ {
++    static const uint64_t gf2_rol[8] = {
++        0,
++        0x8001020408102040ull,
++        0x4080010204081020ull,
++        0x2040800102040810ull,
++        0x1020408001020408ull,
++        0x0810204080010204ull,
++        0x0408102040800102ull,
++        0x0204081020408001ull,
++    };
+     TCGv_vec t;
+ 
+-    if (vece != MO_8 && have_avx512vbmi2) {
+-        vec_gen_4(INDEX_op_x86_vpshldi_vec, type, vece,
+-                  tcgv_vec_arg(v0), tcgv_vec_arg(v1), tcgv_vec_arg(v1), imm);
+-        return;
++    if (vece == MO_8) {
++        if (cpuinfo & CPUINFO_GFNI) {
++            gen_vgf2p8affineqb0(type, v0, v1, gf2_rol[imm]);
++            return;
++        }
++    } else {
++        if (have_avx512vbmi2) {
++            vec_gen_4(INDEX_op_x86_vpshldi_vec, type, vece,
++                      tcgv_vec_arg(v0), tcgv_vec_arg(v1),
++                      tcgv_vec_arg(v1), imm);
++            return;
++        }
+     }
+ 
+     t = tcg_temp_new_vec(type);
 -- 
 2.43.0
 
