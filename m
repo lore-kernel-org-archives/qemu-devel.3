@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87689CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69FDBCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOxN-0006PR-74; Sat, 30 Aug 2025 13:01:37 -0400
+	id 1usNvN-0004yC-0c; Sat, 30 Aug 2025 11:55:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1usO86-0001Uo-AB
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 12:08:42 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usELj-0005t9-WE
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:06 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1usO83-0004nT-Fj
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 12:08:38 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-45b7e69570bso12741145e9.0
- for <qemu-devel@nongnu.org>; Sat, 30 Aug 2025 09:08:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usELg-00046G-Ob
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:02 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-b49cf21320aso3039782a12.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756570111; x=1757174911; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZJG+EL2FkF86nIqbkYC2ddXBgtdgaQw+zt6Oja+ef1w=;
- b=O2iUsHsORff4Yvih+pYRQsIgu3hCykMo7FrVoaJjPJ7YdwRL88JE1DddQibpoFv9hy
- ceqGSyZ6LztI4S9kdghs/rkhHghWFv+kpUoiYmRkftalghIcx+j6sTcaAOtOZvJOXt6S
- /XUx7JKoA1s8uy0HUGueoQc7g1RZdwoaN4twctALyeqSFAfkDR56rhFpoQl8cJYNfW7h
- Qb4TDExsMpI1SRq9wQ7iZgvQtbzhDsoTIra/8bnjj1mTsDeRY93fjHP4oWDoCob7Kjic
- 1VOfcDcjM2Eu6c21JDdkrnapgG/ik2dEpSzDJ1lhocAQ8nrhzpXUaUX0qzMi+4AVXqcZ
- nNag==
+ d=linaro.org; s=google; t=1756532519; x=1757137319; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DZyOZ5ibz8YB1lWsiaU/JxXFHwk/vo9PWaKWI3jDReA=;
+ b=woFakJBpAkWEZl3DVdle8hXFEtUjK6RGYHHfDUNfkfCl8BI32jOVExc4svPV83TTbF
+ DLDxPgXiJeiva0UNHzsbMGrjMZVWquOxooRXCku0C3rv7QXOvsFRUWzgjzgbuMZnpE0C
+ 34/NSApBZ226jj5x1hHvqwofcaAu/3ZEcAn/9va1CQbcJAfUIgJUPvtKlsjHMsEVMSuL
+ DW0EqJt89QQJK7hsSdbEBaQKDAP1BQK6ubYPF5FkhH7b0mlvyrwLd818du12zUG6/5Vs
+ UNWP7TZFVhHVK9tE38MJdhRrdz+WFvAuWhcMN7hM6mpeOY+0FKW69QkE2p7eLMPLqZzg
+ MoGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756570111; x=1757174911;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZJG+EL2FkF86nIqbkYC2ddXBgtdgaQw+zt6Oja+ef1w=;
- b=NJIddpVpCuoZBD4Is6OzNYVDHnPZSntyGJFkN0qicAdcY0P7Db2APXAnE1MDdh5AgB
- FQ7d2cdrn8ff0o922UVAoafkMb26j5k0Xqajwp/UY7E0S2Pn9/RR82QWHw0q2jUlGDbk
- SUtxDl9+59+uI3pEb3Jx/gsEGMuqHDQ5NC1A+CAbQQ9lKu6QN4CpwjN4sghr7R0x80mH
- p9xG+yOVPV1YI/Ecmy8c+Ku+59/193zZ9xtVaC5GKOjtgtynDyYTBImpMilLgJjaVbVH
- a3WwXotXczT3HK5OTmz8TPS7vSNPJcJsF4VNMH8jN0HovpF4kecdBRxey58xSsI1bNeK
- OjvA==
-X-Gm-Message-State: AOJu0YzeqFZvnm93H4VUNSjBIPE7zoC4sd4QC79KmkJ4O5zi8KqtAAtG
- O5m8Kmf3ojCpCYqUVKX0pu2U6+18gSbN2B5GJbxlsrmbB1pXdcZcKWXDGMiU4u6kz1P5sGX21N5
- rMIO+
-X-Gm-Gg: ASbGncsSeeH61a+6/JVlsvbIK382k7yP0ljHbJGQkT7Z+nKHH6Fm6skD+dZVHvrFS0p
- u4knbj3kFMDZe5KzCOj1EGy8j8tYgAr30tk9yhqvLrnTYdGNhevRIK2NezEK39/Ysywz7ul4jsV
- UmkKGsNFVCcgX6vm/unTa9Hb+PqCzzMD1e4AtDwAtX9mXZ0UuIO67SVjjrr9RGoOPcimiztJYTm
- djNuqk2kI8Ozve/Y+J25ghOD05lMuoDjevnCr7f1EtaH+45RrQ2tN2azjxUXXulqeeMuSQpo2AC
- rsm0/I060jggqw0vuMSo3wMjKlpNKo3H3gZSB4nElhoLl34ugSwE5iPNTKvNeeoa9W2pqykRY6s
- D2lo9pAbL6rFydn4TFkhq4rt4sQV5NYWo+tBTX1+uMU1prf3JIA==
-X-Google-Smtp-Source: AGHT+IGrLqjyA7DO5FU4IeceOeNlJZMIx5Qr2mFtDPtJDzWaOtLYeHkTB0H7hBD1Ycn+lJXamzhMLg==
-X-Received: by 2002:a05:600c:1e89:b0:45b:88c6:70a2 with SMTP id
- 5b1f17b1804b1-45b88c67360mr4072175e9.1.1756570111550; 
- Sat, 30 Aug 2025 09:08:31 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1756532519; x=1757137319;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DZyOZ5ibz8YB1lWsiaU/JxXFHwk/vo9PWaKWI3jDReA=;
+ b=IYRbbf+3UIiyFU/lzSFX2Cexppw3aXk/k5b7kiCcBqpkqAD9nUPGITAOxOMVnxnmyU
+ TMLeI/dpcm1UJ6xHqFCvZ9WBAQvgLjPLmjvkrEHNQyjTgqtnLkXZS6qoUR4tuywazXOD
+ Z/BscULJQa8A52O/qkWNBBIWPFWd64SJwNVVse39R0Iq5ISb6QHHvkHViRw9LFQz0cSg
+ caEoQUmxkl9a1PeS6haVv1GOUmb92rfSb9RAFTmfbDOGKYdNHPPalllV0I5+Qtff1A+Y
+ OZZSK9S4E2VMgnZwvHqaL9RoANGe3Si0fbrttIkISFceFZSa+t3G+8VB7G6WUr2Q/B9+
+ Ghhg==
+X-Gm-Message-State: AOJu0Yz0dxpMCJQUlrk2O2vV0GHJHQaQ2JtXoRUatS5fEoUAPkPUj/jX
+ N0fBTZ9pczQa0pHNxWTlPcQMLUi9RxWw6iOn4cWvvKW+B1/M9kZyUNk+CXxwsSpY8IjIP+MAj+z
+ hPYa+4dc=
+X-Gm-Gg: ASbGncvf+5eIzGNKQymfdxFDhC0Sd4aBlYZsGuSENTHWzoLmDgu651rA/VP07UeSb0o
+ SaguSI87HueREFh7Fgo/KaZj1baStCZec77KjGj4KiQ53n7PeiRmqMVl8JPmElhklPgEC6CpdSw
+ lsB2ssrv8AsNDcvOOawCiS0l4zP2jzUfO4hVLIS7J2cU5TbhFRegAdKEL4LWkfGcFNiRzCaRjfO
+ 24YrQQEvl0U9KiDXLREZCeyPeE8zIVYtL6D3tnKbJWz1K0dyQSk5d1+KtwjIsth8ThtdVckzV47
+ EEMj08bpI1mplsONtr02jyzFS0na42pLnbGEIynJRGdTYObI6jxLwesYcb3myUQ7tGaMsv5FnW3
+ K2H/uJ3k7i+foMyPKUWgFEmUtDye9DeT3M6CJnI1/+GEeWYaub59Cz8/LNlzK
+X-Google-Smtp-Source: AGHT+IGy9M+jfEKInLDx/wPZPtI3vEwu3bjqVOtpz4NnBS21UmV5qG9Xh4Ry9zDFhIqi5lpI0fDvdQ==
+X-Received: by 2002:a17:903:41cc:b0:224:23be:c569 with SMTP id
+ d9443c01a7336-249448f4103mr12371095ad.22.1756532519253; 
+ Fri, 29 Aug 2025 22:41:59 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6ee66bddsm164634875e9.0.2025.08.30.09.08.29
+ 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.41.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 30 Aug 2025 09:08:29 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Fri, 29 Aug 2025 22:41:58 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 00/32] target-arm queue
-Date: Sat, 30 Aug 2025 17:08:28 +0100
-Message-ID: <20250830160828.3593075-1-peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 09/84] target/arm: Add prot_check parameter to do_ats_write
+Date: Sat, 30 Aug 2025 15:40:13 +1000
+Message-ID: <20250830054128.448363-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,136 +101,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2: handle bsd-user in the rename of isar_feature_aa64_atomics
+Separate protection check from access type, in preparation
+for skipping the protection check altogether.
 
--- PMM
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/cpregs-at.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-The following changes since commit 4791f22a5f5571cb248b1eddff98630545b3fd3e:
+diff --git a/target/arm/tcg/cpregs-at.c b/target/arm/tcg/cpregs-at.c
+index 2ff0b3e76f..bebf168997 100644
+--- a/target/arm/tcg/cpregs-at.c
++++ b/target/arm/tcg/cpregs-at.c
+@@ -24,14 +24,14 @@ static int par_el1_shareability(GetPhysAddrResult *res)
+ }
+ 
+ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
+-                             MMUAccessType access_type, ARMMMUIdx mmu_idx,
++                             unsigned prot_check, ARMMMUIdx mmu_idx,
+                              ARMSecuritySpace ss)
+ {
+     uint64_t par64;
+     bool format64 = false;
+     ARMMMUFaultInfo fi = {};
+     GetPhysAddrResult res = {};
+-    bool ret = get_phys_addr_for_at(env, value, 1 << access_type,
++    bool ret = get_phys_addr_for_at(env, value, prot_check,
+                                     mmu_idx, ss, &res, &fi);
+ 
+     /*
+@@ -191,7 +191,7 @@ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
+ 
+ static void ats_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+ {
+-    MMUAccessType access_type = ri->opc2 & 1 ? MMU_DATA_STORE : MMU_DATA_LOAD;
++    unsigned access_perm = ri->opc2 & 1 ? PAGE_WRITE : PAGE_READ;
+     uint64_t par64;
+     ARMMMUIdx mmu_idx;
+     int el = arm_current_el(env);
+@@ -253,7 +253,7 @@ static void ats_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+         g_assert_not_reached();
+     }
+ 
+-    par64 = do_ats_write(env, value, access_type, mmu_idx, ss);
++    par64 = do_ats_write(env, value, access_perm, mmu_idx, ss);
+ 
+     A32_BANKED_CURRENT_REG_SET(env, par, par64);
+ }
+@@ -261,11 +261,11 @@ static void ats_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+ static void ats1h_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                         uint64_t value)
+ {
+-    MMUAccessType access_type = ri->opc2 & 1 ? MMU_DATA_STORE : MMU_DATA_LOAD;
++    unsigned access_perm = ri->opc2 & 1 ? PAGE_WRITE : PAGE_READ;
+     uint64_t par64;
+ 
+     /* There is no SecureEL2 for AArch32. */
+-    par64 = do_ats_write(env, value, access_type, ARMMMUIdx_E2,
++    par64 = do_ats_write(env, value, access_perm, ARMMMUIdx_E2,
+                          ARMSS_NonSecure);
+ 
+     A32_BANKED_CURRENT_REG_SET(env, par, par64);
+@@ -309,7 +309,7 @@ static CPAccessResult at_s1e01_access(CPUARMState *env, const ARMCPRegInfo *ri,
+ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
+                         uint64_t value)
+ {
+-    MMUAccessType access_type = ri->opc2 & 1 ? MMU_DATA_STORE : MMU_DATA_LOAD;
++    unsigned access_perm = ri->opc2 & 1 ? PAGE_WRITE : PAGE_READ;
+     ARMMMUIdx mmu_idx;
+     uint64_t hcr_el2 = arm_hcr_el2_eff(env);
+     bool regime_e20 = (hcr_el2 & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE);
+@@ -352,7 +352,7 @@ static void ats_write64(CPUARMState *env, const ARMCPRegInfo *ri,
+     }
+ 
+     ss = for_el3 ? arm_security_space(env) : arm_security_space_below_el3(env);
+-    env->cp15.par_el[1] = do_ats_write(env, value, access_type, mmu_idx, ss);
++    env->cp15.par_el[1] = do_ats_write(env, value, access_perm, mmu_idx, ss);
+ }
+ 
+ static CPAccessResult ats_access(CPUARMState *env, const ARMCPRegInfo *ri,
+-- 
+2.43.0
 
-  Merge tag 'pull-lu-20250830' of https://gitlab.com/rth7680/qemu into staging (2025-08-30 08:24:48 +1000)
-
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20250830
-
-for you to fetch changes up to 2e27650bddd35477d994a795a3b1cb57c8ed5c76:
-
-  hw/arm/stm32f205_soc: Don't leak TYPE_OR_IRQ objects (2025-08-30 16:38:47 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * Implement FEAT_SCTLR2
- * Implement FEAT_TCR2
- * Implement FEAT_CSSC
- * Implement FEAT_LSE128
- * Clean up of register field definitions
- * Trap PMCR when MDCR_EL2.TPMCR is set
- * tests/functional: update aarch64 RME test images
- * hw/intc/arm_gicv3_kvm: preserve pending interrupts during cpr
- * hw/arm: add static NVDIMMs in device tree
- * hw/arm/stm32f205_soc: Don't leak TYPE_OR_IRQ objects
- * scripts/kernel-doc: Avoid new Perl precedence warning
- * scripts/kernel-doc: Update to kernel's new Python implementation
-
-----------------------------------------------------------------
-Gustavo Romero (3):
-      target/arm: Clean up of register field definitions
-      target/arm: Implement FEAT_SCTLR2 and enable with -cpu max
-      target/arm: Implement FEAT_TCR2 and enable with -cpu max
-
-Manos Pitsidianakis (1):
-      hw/arm: add static NVDIMMs in device tree
-
-Peter Maydell (12):
-      target/arm: Implement CTZ, CNT, ABS
-      scripts/kernel-doc: Avoid new Perl precedence warning
-      docs/sphinx/kerneldoc.py: Handle new LINENO syntax
-      tests/qtest/libqtest.h: Remove stray space from doc comment
-      scripts: Import Python kerneldoc from Linux kernel
-      scripts/kernel-doc: strip QEMU_ from function definitions
-      scripts/kernel-doc: tweak for QEMU coding standards
-      scripts/kerneldoc: Switch to the Python kernel-doc script
-      scripts/kernel-doc: Delete the old Perl kernel-doc script
-      MAINTAINERS: Put kernel-doc under the "docs build machinery" section
-      target/arm: Correct condition of aa64_atomics feature function
-      hw/arm/stm32f205_soc: Don't leak TYPE_OR_IRQ objects
-
-Pierrick Bouvier (2):
-      tests/functional/test_aarch64_device_passthrough: update image
-      tests/functional/test_aarch64_rme: update image
-
-Richard Henderson (12):
-      target/arm: Add feature predicate for FEAT_CSSC
-      target/arm: Implement MIN/MAX (immediate)
-      target/arm: Implement MIN/MAX (register)
-      target/arm: Split out gen_wrap2_i32 helper
-      target/arm: Enable FEAT_CSSC for -cpu max
-      qemu/atomic: Finish renaming atomic128-cas.h headers
-      qemu/atomic: Add atomic16 primitives for xchg, fetch_and, fetch_or
-      accel/tcg: Add cpu_atomic_*_mmu for 16-byte xchg, fetch_and, fetch_or
-      tcg: Add tcg_gen_atomic_{xchg,fetch_and,fetch_or}_i128
-      target/arm: Rename isar_feature_aa64_atomics
-      target/arm: Implement FEAT_LSE128
-      target/arm: Enable FEAT_LSE128 for -cpu max
-
-Smail AIDER (1):
-      target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
-
-Steve Sistare (1):
-      hw/intc/arm_gicv3_kvm: preserve pending interrupts during cpr
-
- MAINTAINERS                                        |    3 +
- docs/conf.py                                       |    4 +-
- docs/sphinx/kerneldoc.py                           |    7 +-
- docs/system/arm/emulation.rst                      |    4 +
- accel/tcg/atomic_template.h                        |   80 +-
- accel/tcg/tcg-runtime.h                            |   12 +
- bsd-user/aarch64/target_arch_elf.h                 |    2 +-
- host/include/aarch64/host/atomic128-cas.h          |   45 -
- include/accel/tcg/cpu-ldst-common.h                |   13 +-
- include/hw/arm/stm32f205_soc.h                     |    2 +-
- include/hw/intc/arm_gicv3_common.h                 |    3 +
- include/tcg/tcg-op-common.h                        |    7 +
- include/tcg/tcg-op.h                               |    3 +
- target/arm/cpu-features.h                          |   24 +-
- target/arm/cpu.h                                   |   17 +
- target/arm/internals.h                             |   28 +-
- tests/qtest/libqtest.h                             |    2 +-
- host/include/aarch64/host/atomic128-cas.h.inc      |  102 +
- host/include/generic/host/atomic128-cas.h.inc      |   96 +
- target/arm/tcg/a64.decode                          |   26 +
- hw/arm/boot.c                                      |   42 +
- hw/arm/stm32f205_soc.c                             |   10 +-
- hw/arm/virt.c                                      |    8 +-
- hw/intc/arm_gicv3_kvm.c                            |   15 +
- linux-user/aarch64/elfload.c                       |    4 +-
- target/arm/cpregs-pmu.c                            |   34 +-
- target/arm/cpu.c                                   |    6 +
- target/arm/helper.c                                |  168 +-
- target/arm/ptw.c                                   |    8 +-
- target/arm/tcg/cpu64.c                             |    9 +-
- target/arm/tcg/translate-a64.c                     |  195 +-
- tcg/tcg-op-ldst.c                                  |   97 +-
- accel/tcg/atomic_common.c.inc                      |    9 +
- .editorconfig                                      |    2 +-
- scripts/kernel-doc                                 | 2442 --------------------
- scripts/kernel-doc.py                              |  325 +++
- scripts/lib/kdoc/kdoc_files.py                     |  291 +++
- scripts/lib/kdoc/kdoc_item.py                      |   42 +
- scripts/lib/kdoc/kdoc_output.py                    |  749 ++++++
- scripts/lib/kdoc/kdoc_parser.py                    | 1670 +++++++++++++
- scripts/lib/kdoc/kdoc_re.py                        |  270 +++
- .../functional/aarch64/test_device_passthrough.py  |   27 +-
- tests/functional/aarch64/test_rme_sbsaref.py       |   64 +-
- tests/functional/aarch64/test_rme_virt.py          |   85 +-
- 44 files changed, 4389 insertions(+), 2663 deletions(-)
- delete mode 100644 host/include/aarch64/host/atomic128-cas.h
- create mode 100644 host/include/aarch64/host/atomic128-cas.h.inc
- delete mode 100755 scripts/kernel-doc
- create mode 100755 scripts/kernel-doc.py
- create mode 100644 scripts/lib/kdoc/kdoc_files.py
- create mode 100644 scripts/lib/kdoc/kdoc_item.py
- create mode 100644 scripts/lib/kdoc/kdoc_output.py
- create mode 100644 scripts/lib/kdoc/kdoc_parser.py
- create mode 100644 scripts/lib/kdoc/kdoc_re.py
 
