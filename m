@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E8ACA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E00DCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:22:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNaR-0002Bj-G9; Sat, 30 Aug 2025 11:33:51 -0400
+	id 1usNw0-0008AA-VF; Sat, 30 Aug 2025 11:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1us3TK-0005eL-1f
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:05:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1us3TH-0005vP-Rz
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:05:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756490706;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DfwSqq/b4hHS1NgiMr1RScFvay2XswWXsOaYXHkww6Y=;
- b=g5hQWeuC8ni4eaT5vjHoPUlk9ZbjH4VEG+/Zn1sj2fOVAzHcuKrxWkceiXiggaVc7rtxyi
- NqrqVKunel2TIskqM8yXK0bPDsGBpJ7ZpY/eU+50qCvwTiAEXzhqMwdjkENNMZ+gOACKSa
- ffFFrwtAsCQBTRMPLI7IxaAT2WmPxBw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-CGJZAov9Pk-4sCMJqBtaTQ-1; Fri,
- 29 Aug 2025 14:04:44 -0400
-X-MC-Unique: CGJZAov9Pk-4sCMJqBtaTQ-1
-X-Mimecast-MFC-AGG-ID: CGJZAov9Pk-4sCMJqBtaTQ_1756490680
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 93ED3195608E; Fri, 29 Aug 2025 18:04:38 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5A1EE19560B4; Fri, 29 Aug 2025 18:04:34 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usEMX-00069J-J0
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:53 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usEMV-0004GR-Po
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:53 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7722f2f2aa4so1626108b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756532570; x=1757137370; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Jdo4eXfghXIxBtW7gGLE9m9wdInFFP/OSUyrEzGuH10=;
+ b=LTPviQQ0Sg7qUJGXXLrjBBwoKzF+bSCDW/m0Lxo1svTZLs3CIBMq1zTKcYzl/mq9ki
+ 3dt/qvmGpuufj0poH6nygScl6HGtEvQZA78En14yNVGxmlWI8oakQICu+X7QoiaqmjSO
+ Q2S+AJWDfirWtGHYZv9jf3oQxSZFCUCOi0+srrguoUSv0FKYFTyhCXBxtDnqLd6vozBp
+ J7ohezni11/mb5xECa3FgOkZhtNm2I9H7GrEd7lzhgK+T8VDKuE9qUxoUG9H6dcxdkh3
+ 16e2N3bRloduSBiF68OwlZk1C1NHMnaL9Ba1SyctjpxFm6YktiM7b5trpK7+nqFFYlZc
+ Onxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756532570; x=1757137370;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Jdo4eXfghXIxBtW7gGLE9m9wdInFFP/OSUyrEzGuH10=;
+ b=WNp4KC0Vb7S39qAk2yGwZd5A/vDOmxUVQVlUQ2OKX8BhxtiNNIoDJgRjAiAHa8s/L8
+ x0d8Bw+qhzRrYl12yci863EJVCx2jTohhtJUPL7/kZYwBgUeaxPf+SRrfzTE+Nu1W5H4
+ fr5teQhzYYy4wo1f8AQro0PQqWjmX/BBHOM9lnyxsbzTeM0o3nEF700QK4Y6z3m2U/Jy
+ Berze9C1EnQqfo38AiWEfGJMtLXfDZQomS0N8bRSfGGjx//gQT1NEXCI4d3pt1dZzzbA
+ 2Vz8HzjB7IT8WoE2WAIm0Rroheb8dh4+E2sON9Ty56G8/kY0aSLAVmYPqH+/bwSMcqCu
+ /wFg==
+X-Gm-Message-State: AOJu0YxQp4u7ULDeQGqt7Flvt04hNXaPir93ZqicYlQj4OXLtRepmEMM
+ EgUrE7ZhDGE3W1JfkoV1CZnNnoAE+kPoGZA6A/fCPBVzGr3fcbkaPRxTPBV9B9MC+J1puwzV3aB
+ FXh5mGkQ=
+X-Gm-Gg: ASbGncsHYW8gqQYmbrVhCNjX20TrgvMHTAcXqJD5cHEfrLpMtps36uYBy/2PV2Yw34l
+ h/VJZS4oax3tKwhykVOqACq6UC5H87nktaezEgt5HkFZfZ3ueHgsaEL8VCWrxAuyaSSpU+8dIp8
+ fgLF0FPIDC2WnIf3iAiRDu3QnnaC/7OwFaSV3M18BDNa0X+2JAvQ3nvfI7KTJXMMo4eWpD4gSoC
+ tYMC06OoYH6wzn7R3gvRLf2QOPWP4U9ZcP+QNHn8sdDH1aoWnfKW5NS/YX2WDlJGpZgdTQChHmg
+ 5KU4ElHJr8AJLFD+BaFsAofxQJiiZf7wbKtm/mYmYXlzZLdoFuufwRRqzU0/soddqwmVqWEJf3v
+ li7Ju82aTKtDypvYqLgYezHV1stEQeQ1l9aTzOGyzxmxFu7f1PieiUhCpD3OsXm1N8UKWB50=
+X-Google-Smtp-Source: AGHT+IF3VT9uEIlI6pQXs5VR24ZSOkvF6uhjHqpH8aYDRsBz/7E5E8fAkVVguGSs9K4iHu4MW//DbQ==
+X-Received: by 2002:a05:6300:2109:b0:243:b3e2:ca07 with SMTP id
+ adf61e73a8af0-243d6f7ef5dmr1552786637.58.1756532570323; 
+ Fri, 29 Aug 2025 22:42:50 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.42.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 22:42:49 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 07/14] util: add API to fetch the current thread name
-Date: Fri, 29 Aug 2025 19:03:47 +0100
-Message-ID: <20250829180354.2922145-8-berrange@redhat.com>
-In-Reply-To: <20250829180354.2922145-1-berrange@redhat.com>
-References: <20250829180354.2922145-1-berrange@redhat.com>
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 27/84] include/hw/core/cpu: Introduce cpu_tlb_fast
+Date: Sat, 30 Aug 2025 15:40:31 +1000
+Message-ID: <20250830054128.448363-28-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,201 +103,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will be used to include the thread name in error reports
-in a later patch. It returns a const string stored in a thread
-local to avoid memory allocation when it is called repeatedly
-in a single thread. This makes the assumption that the thread
-name is set at the very start of the thread, which is the case
-when using qemu_thread_create.
+Encapsulate access to cpu->neg.tlb.f[] in a function.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/thread.h    |  1 +
- meson.build              | 21 +++++++++++++++++
- util/qemu-thread-posix.c | 28 ++++++++++++++++++++++-
- util/qemu-thread-win32.c | 49 ++++++++++++++++++++++++++++++++++++----
- 4 files changed, 94 insertions(+), 5 deletions(-)
+ include/hw/core/cpu.h        |  7 +++++++
+ accel/tcg/cputlb.c           | 16 ++++++++--------
+ tcg/aarch64/tcg-target.c.inc |  2 +-
+ tcg/arm/tcg-target.c.inc     |  2 +-
+ 4 files changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-index 27b888ab0a..98cc5c41ac 100644
---- a/include/qemu/thread.h
-+++ b/include/qemu/thread.h
-@@ -216,6 +216,7 @@ void qemu_thread_get_self(QemuThread *thread);
- bool qemu_thread_is_self(QemuThread *thread);
- G_NORETURN void qemu_thread_exit(void *retval);
- void qemu_thread_set_name(const char *name);
-+const char *qemu_thread_get_name(void);
- 
- struct Notifier;
- /**
-diff --git a/meson.build b/meson.build
-index 0d42de61ae..5d610224fa 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2920,6 +2920,27 @@ config_host_data.set('CONFIG_PTHREAD_SET_NAME_NP', cc.links(osdep_prefix + '''
-     pthread_set_name_np(thread, "QEMU");
-     return 0;
-   }''', dependencies: threads))
-+
-+config_host_data.set('CONFIG_PTHREAD_GETNAME_NP', cc.links(osdep_prefix + '''
-+  #include <pthread.h>
-+
-+  int main(void)
-+  {
-+    char buf[16];
-+    pthread_getname_np(pthread_self(), buf, sizeof(buf));
-+    return 0;
-+  }''', dependencies: threads))
-+config_host_data.set('CONFIG_PTHREAD_GET_NAME_NP', cc.links(osdep_prefix + '''
-+  #include <pthread.h>
-+  #include <pthread_np.h>
-+
-+  int main(void)
-+  {
-+    char buf[16];
-+    pthread_get_name_np(pthread_self(), buf, sizeof(buf));
-+    return 0;
-+  }''', dependencies: threads))
-+
- config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix + '''
-   #include <pthread.h>
- 
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index 275445ed94..fbb94ca97b 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -18,7 +18,7 @@
- #include "qemu/tsan.h"
- #include "qemu/bitmap.h"
- 
--#ifdef CONFIG_PTHREAD_SET_NAME_NP
-+#if defined(CONFIG_PTHREAD_SET_NAME_NP) || defined(CONFIG_PTHREAD_GET_NAME_NP)
- #include <pthread_np.h>
- #endif
- 
-@@ -532,3 +532,29 @@ void *qemu_thread_join(QemuThread *thread)
-     }
-     return ret;
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 1153cadb70..bd835b07d5 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -593,6 +593,13 @@ static inline CPUArchState *cpu_env(CPUState *cpu)
+     return (CPUArchState *)(cpu + 1);
  }
-+
-+#ifndef PTHREAD_MAX_NAMELEN_NP
-+#define PTHREAD_MAX_NAMELEN_NP 16
+ 
++#ifdef CONFIG_TCG
++static inline CPUTLBDescFast *cpu_tlb_fast(CPUState *cpu, int mmu_idx)
++{
++    return &cpu->neg.tlb.f[mmu_idx];
++}
 +#endif
 +
-+static __thread char namebuf[PTHREAD_MAX_NAMELEN_NP];
-+
-+const char *qemu_thread_get_name(void)
-+{
-+    int rv;
-+    if (namebuf[0] != '\0') {
-+        return namebuf;
-+    }
-+
-+# if defined(CONFIG_PTHREAD_GETNAME_NP)
-+    rv = pthread_getname_np(pthread_self(), namebuf, sizeof(namebuf));
-+# elif defined(CONFIG_PTHREAD_GET_NAME_NP)
-+    rv = pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
-+# else
-+    rv = -1;
-+# endif
-+    if (rv != 0) {
-+        strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
-+    }
-+    return namebuf;
-+}
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index 7a734a7a09..e3789c20d1 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -19,7 +19,10 @@
+ typedef QTAILQ_HEAD(CPUTailQ, CPUState) CPUTailQ;
+ extern CPUTailQ cpus_queue;
  
- typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
-                                                  PCWSTR lpThreadDescription);
-+typedef HRESULT (WINAPI *pGetThreadDescription) (HANDLE hThread,
-+                                                 PWSTR *lpThreadDescription);
- static pSetThreadDescription SetThreadDescriptionFunc;
-+static pGetThreadDescription GetThreadDescriptionFunc;
- static HMODULE kernel32_module;
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index d324f33339..2a6aa01c57 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -129,7 +129,7 @@ static inline uint64_t tlb_addr_write(const CPUTLBEntry *entry)
+ static inline uintptr_t tlb_index(CPUState *cpu, uintptr_t mmu_idx,
+                                   vaddr addr)
+ {
+-    uintptr_t size_mask = cpu->neg.tlb.f[mmu_idx].mask >> CPU_TLB_ENTRY_BITS;
++    uintptr_t size_mask = cpu_tlb_fast(cpu, mmu_idx)->mask >> CPU_TLB_ENTRY_BITS;
  
- static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-@@ -28,7 +31,7 @@ qemu_thread_init(void)
-     qemu_thread_set_name("main");
+     return (addr >> TARGET_PAGE_BITS) & size_mask;
+ }
+@@ -138,7 +138,7 @@ static inline uintptr_t tlb_index(CPUState *cpu, uintptr_t mmu_idx,
+ static inline CPUTLBEntry *tlb_entry(CPUState *cpu, uintptr_t mmu_idx,
+                                      vaddr addr)
+ {
+-    return &cpu->neg.tlb.f[mmu_idx].table[tlb_index(cpu, mmu_idx, addr)];
++    return &cpu_tlb_fast(cpu, mmu_idx)->table[tlb_index(cpu, mmu_idx, addr)];
  }
  
--static bool load_set_thread_description(void)
-+static bool load_thread_description(void)
+ static void tlb_window_reset(CPUTLBDesc *desc, int64_t ns,
+@@ -292,7 +292,7 @@ static void tlb_flush_one_mmuidx_locked(CPUState *cpu, int mmu_idx,
+                                         int64_t now)
  {
-     static gsize _init_once = 0;
+     CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
+-    CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
++    CPUTLBDescFast *fast = cpu_tlb_fast(cpu, mmu_idx);
  
-@@ -38,14 +41,17 @@ static bool load_set_thread_description(void)
-             SetThreadDescriptionFunc =
-                 (pSetThreadDescription)GetProcAddress(kernel32_module,
-                                                       "SetThreadDescription");
--            if (!SetThreadDescriptionFunc) {
-+            GetThreadDescriptionFunc =
-+                (pGetThreadDescription)GetProcAddress(kernel32_module,
-+                                                      "GetThreadDescription");
-+            if (!SetThreadDescriptionFunc || !GetThreadDescriptionFunc) {
-                 FreeLibrary(kernel32_module);
-             }
-         }
-         g_once_init_leave(&_init_once, 1);
+     tlb_mmu_resize_locked(desc, fast, now);
+     tlb_mmu_flush_locked(desc, fast);
+@@ -331,7 +331,7 @@ void tlb_init(CPUState *cpu)
+     cpu->neg.tlb.c.dirty = 0;
+ 
+     for (i = 0; i < NB_MMU_MODES; i++) {
+-        tlb_mmu_init(&cpu->neg.tlb.d[i], &cpu->neg.tlb.f[i], now);
++        tlb_mmu_init(&cpu->neg.tlb.d[i], cpu_tlb_fast(cpu, i), now);
      }
- 
--    return !!SetThreadDescriptionFunc;
-+    return !!(SetThreadDescriptionFunc && GetThreadDescriptionFunc);
  }
  
- static void error_exit(int err, const char *msg)
-@@ -326,7 +332,7 @@ void qemu_thread_set_name(const char *name)
- {
-     g_autofree wchar_t *namew = NULL;
+@@ -342,7 +342,7 @@ void tlb_destroy(CPUState *cpu)
+     qemu_spin_destroy(&cpu->neg.tlb.c.lock);
+     for (i = 0; i < NB_MMU_MODES; i++) {
+         CPUTLBDesc *desc = &cpu->neg.tlb.d[i];
+-        CPUTLBDescFast *fast = &cpu->neg.tlb.f[i];
++        CPUTLBDescFast *fast = cpu_tlb_fast(cpu, i);
  
--    if (!load_set_thread_description()) {
-+    if (!load_thread_description()) {
-         return;
-     }
- 
-@@ -412,3 +418,38 @@ bool qemu_thread_is_self(QemuThread *thread)
+         g_free(fast->table);
+         g_free(desc->fulltlb);
+@@ -667,7 +667,7 @@ static void tlb_flush_range_locked(CPUState *cpu, int midx,
+                                    unsigned bits)
  {
-     return GetCurrentThreadId() == thread->tid;
- }
-+
-+static __thread char namebuf[64];
-+
-+const char *qemu_thread_get_name(void)
-+{
-+    HRESULT hr;
-+    wchar_t *namew = NULL;
-+    g_autofree char *name = NULL;
-+
-+    if (namebuf[0] != '\0') {
-+        return namebuf;
-+    }
-+
-+    if (!load_thread_description()) {
-+        goto error;
-+    }
-+
-+    hr = GetThreadDescriptionFunc(GetCurrentThread(), &namew);
-+    if (!SUCCEEDED(hr)) {
-+        goto error;
-+    }
-+
-+    name = g_utf16_to_utf8(namew, -1, NULL, NULL, NULL);
-+    LocalFree(namew);
-+    if (!name) {
-+        goto error;
-+    }
-+
-+    g_strlcpy(namebuf, name, G_N_ELEMENTS(namebuf));
-+    return namebuf;
-+
-+ error:
-+    strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
-+    return namebuf;
-+}
+     CPUTLBDesc *d = &cpu->neg.tlb.d[midx];
+-    CPUTLBDescFast *f = &cpu->neg.tlb.f[midx];
++    CPUTLBDescFast *f = cpu_tlb_fast(cpu, midx);
+     vaddr mask = MAKE_64BIT_MASK(0, bits);
+ 
+     /*
+@@ -923,7 +923,7 @@ void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
+     qemu_spin_lock(&cpu->neg.tlb.c.lock);
+     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
+         CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
+-        CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
++        CPUTLBDescFast *fast = cpu_tlb_fast(cpu, mmu_idx);
+         unsigned int n = tlb_n_entries(fast);
+         unsigned int i;
+ 
+@@ -1316,7 +1316,7 @@ static bool victim_tlb_hit(CPUState *cpu, size_t mmu_idx, size_t index,
+ 
+         if (cmp == page) {
+             /* Found entry in victim tlb, swap tlb and iotlb.  */
+-            CPUTLBEntry tmptlb, *tlb = &cpu->neg.tlb.f[mmu_idx].table[index];
++            CPUTLBEntry tmptlb, *tlb = &cpu_tlb_fast(cpu, mmu_idx)->table[index];
+ 
+             qemu_spin_lock(&cpu->neg.tlb.c.lock);
+             copy_tlb_helper_locked(&tmptlb, tlb);
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index 3b088b7bd9..caf79c742d 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -1668,7 +1668,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+         ldst->oi = oi;
+         ldst->addr_reg = addr_reg;
+ 
+-        /* Load cpu->neg.tlb.f[mmu_idx].{mask,table} into {tmp0,tmp1}. */
++        /* Load CPUTLBDescFast.{mask,table} into {tmp0,tmp1}. */
+         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, mask) != 0);
+         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, table) != 8);
+         tcg_out_insn(s, 3314, LDP, TCG_REG_TMP0, TCG_REG_TMP1, TCG_AREG0,
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index 836894b16a..4069508272 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -1420,7 +1420,7 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+         ldst->oi = oi;
+         ldst->addr_reg = addr;
+ 
+-        /* Load cpu->neg.tlb.f[mmu_idx].{mask,table} into {r0,r1}.  */
++        /* Load CPUTLBDescFast.{mask,table} into {r0,r1}.  */
+         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, mask) != 0);
+         QEMU_BUILD_BUG_ON(offsetof(CPUTLBDescFast, table) != 4);
+         tcg_out_ldrd_8(s, COND_AL, TCG_REG_R0, TCG_AREG0, fast_off);
 -- 
-2.50.1
+2.43.0
 
 
