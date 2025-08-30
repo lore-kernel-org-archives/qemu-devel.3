@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 591BDCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793A8CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNaM-0001kw-MR; Sat, 30 Aug 2025 11:33:46 -0400
+	id 1usNzq-00006E-BH; Sat, 30 Aug 2025 12:00:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1us3Sf-0005Tr-8S
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:04:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1us3SY-0005PF-H9
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:04:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756490657;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wVZICUMCqxqz7az1/nfHmwGiaD1oCFJORFGMoNZGToI=;
- b=VDhPbrftrdEVDTQa4eE4FLdyP2W6pDN/R/2OS75swAb1I00pVa7g0JcVKavpG9aDRy0lRC
- Ux6v8KyFlwCRkd3vDGVJUEhPDG1XgMSU1TeGGMyI3KY/Jwr3x1WOZqRfD2vqphynPCvb53
- PbXOlFB656hCjIT+RwjGpB0C+qhnweM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-7vG2dPVPNouSKl29-JRabg-1; Fri,
- 29 Aug 2025 14:04:13 -0400
-X-MC-Unique: 7vG2dPVPNouSKl29-JRabg-1
-X-Mimecast-MFC-AGG-ID: 7vG2dPVPNouSKl29-JRabg_1756490652
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 16CA6195E917; Fri, 29 Aug 2025 18:04:12 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8238419560BC; Fri, 29 Aug 2025 18:04:07 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usERV-0007WX-BA
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:48:01 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usERQ-00051r-SP
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:58 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2445826fd9dso33012545ad.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756532875; x=1757137675; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iNjN5B/BY+FR/sks3ZCMW62nI8kvCxcg9XIZHJr9QyU=;
+ b=PJtOUDPBa+jktCGtw9JpcOa0CfYJFcj4ebfffeIlMWxkFX2XzUnLvhYpj2WZMvW05t
+ zYG+kmSwguFLKlX2KdZIxFwSbOGhBPAMlVhXpiJ5pWv9IN9RSR3XHYWV6HNNpw+BgWx6
+ G75tj7S3ouU68BQ8qNqA/dAudVB8t4foJDRrWzhE0ZYa4D9iAxrq4x44VKKBCcZkkLXD
+ RdDgpqAm+dAEMEUDvncmqEhcxO8S4J3l3CgKYWeXYrNsGVpjDsdmFcdJN921YLR4Cq63
+ 6qxaJzq+p03lqb+9E8qle2I9t1wErP+2+CznGZg/CRhXpzV1EChr0FiuoVzXz/PLwR8T
+ Kx3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756532875; x=1757137675;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iNjN5B/BY+FR/sks3ZCMW62nI8kvCxcg9XIZHJr9QyU=;
+ b=M34dSGgzFL5/8aTIJKZ/rUXf0AjlO9vNGf6l4Db0cRqcpMDGwtaHRiPzUGAQrEGmsZ
+ V4t2lkpmxv55qSx8iqPyKsXBy87UmPtTbLKF7rFZ1qbAYdtR3rdStrVx0M0fRthS+/bP
+ EEwmH6GudXo9/VhXl7g+puUlKmNda3QB/dYQvWTIYPqZD8gMk+IkduHMQdKuCRLLKU77
+ K1LbsWiAxu2693CHRdxNPpc7sS7eLw1ubtyd6TH6O+wKANfbZLV4/W/QFvG0dnJcMJXI
+ O9qnWJM0VJTaU8v0HeFy9DE0k8o5rYk7qPlDqpxP2soFNH569pSMsdVrFjrx5xDM/HT1
+ E/5g==
+X-Gm-Message-State: AOJu0Yz+fokB9q5U6CTO0oaSzVJwY4/vp5lZaOkvAEkvqwj7/jwWHA5W
+ nQk3shcrV8kXMKEXZ9YZBLm3UyxlrDcn91ilvvD44GM3GFoN530nfdUEqyG0MLfo5Ky0kNgVqP1
+ UyjVue/8=
+X-Gm-Gg: ASbGncupOziOfImT3HA8DkAIMYwaIU9goAm60IA0hOv7pCcAAy7JeSiO4Mp/TEU0tzq
+ jCVyf0pxt+8wIiS+4ETR2yXg+LDcGIorGyeYxo015glnzFC0eAyIL3aqjPvU8kC5Ii5zY4Ic3+N
+ 0f+4TiUe/6Xt6MMnkT8bIpJbWGefkKDuswW0nRByUUNC38+RoppXikJx+4FmQJmAHilavCGuE67
+ IUFQcmg3/mBp4r4xbSo+ZjK6wRo6NbZpQoHD98misUqUDHNUpLpNou3PJxop+lwi1z+xX59LF9w
+ 10/MA1RDVtbGSieNSd7ZmWW5e7NElhVTvuzlkoDNrr/IwzZJzBSj4lffGuM1xlRbPJB9unQebxd
+ KmaP0xM6Hip1+6Tj/fEmdTs90xqwg61A5+q8Qoh6yiVXALgScXwCbZDIUhjWOnY5FVc28oKzDbA
+ ==
+X-Google-Smtp-Source: AGHT+IEBGSWjcfK6Ks7RA7n873UkXWNDdUCrCAzAOl09BvWV7VyI02DPLxwmMDP9r9dBfhuZaiyuaw==
+X-Received: by 2002:a17:902:ecc6:b0:248:b25d:ff2d with SMTP id
+ d9443c01a7336-24944aed41cmr11694465ad.51.1756532875529; 
+ Fri, 29 Aug 2025 22:47:55 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.47.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 22:47:55 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 02/14] monitor: initialize global data from a constructor
-Date: Fri, 29 Aug 2025 19:03:42 +0100
-Message-ID: <20250829180354.2922145-3-berrange@redhat.com>
-In-Reply-To: <20250829180354.2922145-1-berrange@redhat.com>
-References: <20250829180354.2922145-1-berrange@redhat.com>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 71/84] target/arm: Copy EXLOCKEn to EXLOCK on exception to
+ the same EL
+Date: Sat, 30 Aug 2025 15:41:15 +1000
+Message-ID: <20250830054128.448363-72-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,60 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some monitor functions, most notably, monitor_cur() rely on global
-data being initialized by 'monitor_init_globals()'. The latter is
-called relatively late in startup. If code triggers error_report()
-before monitor_init_globals() is called, QEMU will abort when
-accessing the uninitialized monitor mutex.
+Per R_WTXBY, PSTATE.EXLOCK is 0 on an exception to a higher EL,
+and copied from EXLOCKEn otherwise.
 
-The critical monitor global data must be initialized from a
-constructor function, to improve the guarantee that it is done
-before any possible calls to monitor_cur(). Not only that, but
-the constructor must be marked to run before the default
-constructor in case any of them trigger error reporting.
-
-Note in particular that the RCU constructor will spawn a background
-thread so we might even have non-constructor QEMU code running
-concurrently with other constructors.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- monitor/monitor.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ target/arm/helper.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index c5a5d30877..da54e1b1ce 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -704,18 +704,22 @@ void monitor_cleanup(void)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 2f19695d82..4bd96de926 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9194,8 +9194,13 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
+         } else {
+             addr += 0x600;
+         }
+-    } else if (pstate_read(env) & PSTATE_SP) {
+-        addr += 0x200;
++    } else {
++        if (pstate_read(env) & PSTATE_SP) {
++            addr += 0x200;
++        }
++        if (is_a64(env) && (env->cp15.gcscr_el[new_el] & GCSCR_EXLOCKEN)) {
++            new_mode |= PSTATE_EXLOCK;
++        }
      }
- }
  
--static void monitor_qapi_event_init(void)
-+/*
-+ * Initialize static vars that have no deps on external
-+ * module initialization, and are required for external
-+ * functions to call things like monitor_cur()
-+ */
-+static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-+monitor_init_static(void)
- {
-+    qemu_mutex_init(&monitor_lock);
-+    coroutine_mon = g_hash_table_new(NULL, NULL);
-     monitor_qapi_event_state = g_hash_table_new(qapi_event_throttle_hash,
-                                                 qapi_event_throttle_equal);
- }
- 
- void monitor_init_globals(void)
- {
--    monitor_qapi_event_init();
--    qemu_mutex_init(&monitor_lock);
--    coroutine_mon = g_hash_table_new(NULL, NULL);
--
-     /*
-      * The dispatcher BH must run in the main loop thread, since we
-      * have commands assuming that context.  It would be nice to get
+     switch (cs->exception_index) {
 -- 
-2.50.1
+2.43.0
 
 
