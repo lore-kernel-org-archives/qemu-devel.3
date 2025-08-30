@@ -4,88 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 555FACA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614A0CA1000
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNyT-0006Qb-Me; Sat, 30 Aug 2025 11:58:41 -0400
+	id 1usOKN-0003fj-Oi; Sat, 30 Aug 2025 12:21:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usERP-0007Um-OS
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:55 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usERO-00051M-7b
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:47:55 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-248de53d12dso16179395ad.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532873; x=1757137673; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f5dGKmFEigKAhdoQrKYKjmoib66tUCQFbD5Z0usNefI=;
- b=AG5NFcRrIsDwQou6sr6EnNvPiFQEZRSLZ0imRb/4ZlfS7j0cByJMMI2+Om+i5RJUlT
- P84Hrb/6UP955qrnawHH8LMxCHUvnUOgOsolgQILPed/sMQ9CYgVRTsgQsWreCx5tv2/
- N8ojkg49bDg+QjDVqorntjNOsH34Px5gVarmkwYPsEHiR6g7UOTAav10WyLnIo4QY743
- nCl2OE3hjCne7HBiC4J8CNzaaAvh6CxCVe4+lidwKT8ljiapjMCE1/cu68GqaWrjklkD
- py4inNlBc3Piwnz68ZcYNfLKwPg+23WsczghDNAM+3fGR2W8IaIE28tI3SjWIsky6lE3
- J3hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532873; x=1757137673;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=f5dGKmFEigKAhdoQrKYKjmoib66tUCQFbD5Z0usNefI=;
- b=kRHLL258pk0w4HEH2A0zYuPUsDyxONz+581PYSua1COb+4r+hmJOx6BEORfpDomWKx
- JSfnMVOAgwiNsbZSgagjK3MFdVlN+t7i2nqYRI/3y7hLpzliDjBjkABg3iZrVqBCC5E0
- V0Cr77pSij2WAR0+cwVOBOjfM2+yC0hX2hnX9xQg5JlqdthAmiX/+nsgJSiRIpIIFAqj
- amCtYYNt7f2CWWZGzDLqZem7epdkNy2RIWKWR0yRqsX2joerSFaDXkLWm1ODYOjCkgQz
- MuZGMcwp86r/B9NprTKQQfTJT3U7QQd5VKwE3E1fxZUfQ0UUuVFIjjDN2AoXAL/W7sCE
- Q0Tg==
-X-Gm-Message-State: AOJu0YzMNycmDMnVo9H5zjClWpZdlYwxfttiO9zcg4P3/ej6003JJ9nt
- ABjWdwPlMDo8CorVLiZsgRnx0dYR/Mv+SkwJ9P2h0opz4wW0x/5aBFS8M6MVvpoCUbbD39nrsHz
- ZqiQ1Er4=
-X-Gm-Gg: ASbGncubAMWvCnLjqf/Xj9fozgx0pFaA5lXwPm1qlQDBAcSmU9FuVop/gSdA0sZ16iG
- 2Zi9HsyCBPk5Upskzrwj1Z2GpJtRBGKU9ywLYwCMb/ugevOwXJdw98DICyfE717XuEyOOS342fm
- dbkUUZ9oQ3FzwiAeFMFUPegurd4f8h4cAN9IMML1MujufX2CBDSYkYTeZcOvsPO5T3O8a57EZaf
- Wr/2xGe5Oy0AbYTbNvlyd8ucnupAhrQ6xHiJeUj2a8BvLkjeyPf1yhWSdYq9nfPa6mpRtLaw3mT
- Hfun5AvjMpT7elvq5oM2fdMIoGPz+jbBarsRw+0+k90HrSPugtVraSVYDXo7hPBFVy2PPb/CYTh
- 3jvWKSgM9yPPT1m8VYG3mfksAhq2UMPIVMduI0h1n7FVOgNp653+iIuq+08h26Uk=
-X-Google-Smtp-Source: AGHT+IHpwILMW1la4GLgqESLwjm3qtO7EzCqTpBu9haw6gJD6o3f6ILGnCbECz1Y/fdEmAclAIAwiw==
-X-Received: by 2002:a17:902:ce8b:b0:248:fc2d:3a2c with SMTP id
- d9443c01a7336-24944a0e28dmr15210635ad.26.1756532872717; 
- Fri, 29 Aug 2025 22:47:52 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.47.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:47:52 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 70/84] target/arm: Load gcs record for RET with PAuth
-Date: Sat, 30 Aug 2025 15:41:14 +1000
-Message-ID: <20250830054128.448363-71-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <qemu@bonslack.org>) id 1usLT0-0001xj-NS
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:18:02 -0400
+Received: from bonnix2.bonnix.it ([37.247.49.194])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <qemu@bonslack.org>) id 1usLSy-00039I-TH
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:18:02 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 bonnix2.bonnix.it 742CA243428
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bonslack.org;
+ s=20220805; t=1756559878;
+ bh=+w5ltWrAtgMYrK1G2SQXoN8OJLmBrzZSs1dk98DtHtA=;
+ h=Date:From:Subject:To:Cc;
+ b=2bx8ZK+uICq8lbcyCPybJuq2UqYg48CNsiPF9YkpfjkCTRkYOW/Uanct3TKw0UPlN
+ r2bjnOp9rYN2c8W9MDYzFOXS90RjVTPjkmpiDzSNHy9TfHFZNV3DabPDcjyPdOzbQr
+ 0sy7KqZQZRHhSszX8B4ivrVhicw2UHePg4Dc0UAA=
+Received: from [10.0.0.70] (ip190-129-198-217.pool-bba.aruba.it
+ [217.198.129.190])
+ by bonnix2.bonnix.it (Postfix) with ESMTPSA id 742CA243428;
+ Sat, 30 Aug 2025 15:17:58 +0200 (CEST)
+Message-ID: <eabd3ca5-ee87-4c59-84f3-4ea0586d3775@bonslack.org>
+Date: Sat, 30 Aug 2025 15:17:58 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+User-Agent: Mozilla Thunderbird
+From: Luca Bonissi <qemu@bonslack.org>
+Subject: [PATCH 4/7] Add termios2 support to mips target
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org
+Content-Language: it
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=37.247.49.194; envelope-from=qemu@bonslack.org;
+ helo=bonnix2.bonnix.it
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,31 +66,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-a64.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+From 7f4dc25d18880587a38bdd5ac81fc1a49354382e Mon Sep 17 00:00:00 2001
+From: Luca Bonissi <qemu@bonslack.org>
+Date: Sat, 30 Aug 2025 14:52:12 +0200
+Subject: [PATCH 4/7] Add termios2 support to mips target
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 3ddf4bb018..95d9842a4f 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1898,7 +1898,12 @@ static bool trans_RETA(DisasContext *s, arg_reta *a)
-     }
+Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+---
+ linux-user/mips/termbits.h | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
+
+diff --git a/linux-user/mips/termbits.h b/linux-user/mips/termbits.h
+index e8b4b58d87..27610f7c4d 100644
+--- a/linux-user/mips/termbits.h
++++ b/linux-user/mips/termbits.h
+@@ -18,6 +18,29 @@ struct target_termios {
+     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
+ };
  
-     dst = auth_branch_target(s, cpu_reg(s, 30), cpu_X[31], !a->m);
--    gen_a64_set_pc(s, dst);
-+    if (s->gcs_en) {
-+        GCSInstructionType it = a->m ? GCS_IT_RET_PauthB : GCS_IT_RET_PauthA;
-+        gen_load_check_gcs_record(s, dst, it, 30);
-+    } else {
-+        gen_a64_set_pc(s, dst);
-+    }
-     s->base.is_jmp = DISAS_JUMP;
-     return true;
- }
++struct target_termios2 {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
++struct target_ktermios {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
++
+ /* c_iflag bits */
+ #define TARGET_IGNBRK  0000001
+ #define TARGET_BRKINT  0000002
+@@ -227,10 +250,10 @@ struct target_termios {
+ #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
+ #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
+ #define TARGET_TIOCGSID	0x7416  /* Return the session ID of FD */
+-#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct termios2)
+-#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct termios2)
+-#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct termios2)
+-#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct termios2)
++#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct target_termios2)
++#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct target_termios2)
++#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct target_termios2)
++#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct target_termios2)
+ #define TARGET_TIOCGRS485       TARGET_IOR('T', 0x2E, struct serial_rs485)
+ #define TARGET_TIOCSRS485       TARGET_IOWR('T', 0x2F, struct serial_rs485)
+ #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
 -- 
-2.43.0
+2.50.1
+
 
 
