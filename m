@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20037CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 18:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C41CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 21:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usN7R-00087V-38; Sat, 30 Aug 2025 11:03:53 -0400
+	id 1usTVs-0001Dn-7E; Sat, 30 Aug 2025 17:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1urtkT-0000uN-CL
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:42:13 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usTVp-0000yK-1V
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 17:53:29 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1urtkQ-0004rB-V8
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 03:42:12 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-45a1b05fe23so10591215e9.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 00:42:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usTVn-00079D-6H
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 17:53:28 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2487a60d649so37761415ad.2
+ for <qemu-devel@nongnu.org>; Sat, 30 Aug 2025 14:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756453328; x=1757058128; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=l+2TI0bjgXnqdVs75iWIYrWQx8vb/t3W54+0JniDy7g=;
- b=ZxvXrwejGBL8t1Rqo7BvGYGXbAEuTSJmXAU/bSo8wSTkZ6eO/xZtDIMOffZBDTCOrw
- K/NI8xK+RnsDq0KZKGXcg1GMjNfIi2oxCeQYAKeQdmRvcfQKhXesNuBP5uiuzUx95EHn
- o5H6cSaVPf8bmX2UcoJ44QTWEMJF8l1k8L/ko8ETTDZtpnxuW1nfAMR6JpsxitQzjlpz
- 0yWHe41zI9WeFS49cf12yNC5k0KhMUkff0s+YNDJPDhtrrtqjbcFnBUCtV4vNrCVYTCb
- VxtYWigvDMUdelFBtbMQUtze4N8Mbvs2yp1btxHU1w8GpcLjwqDBbVl3SzxwYC2bi+mT
- hYhw==
+ d=linaro.org; s=google; t=1756590805; x=1757195605; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=q0CmiC0LwBGPgM8OTkGIpCwQdrlN1liKSx+3ERgIUT4=;
+ b=aQBqaTiRkIiqcMnFmFxX8RfzwTk20P82tmOXrrbs/BrSEuA1gJrDxZUZETrVsrAZce
+ O952ITPDmnGNhWhY9K3zz97OM3qux5PFU+t+e12bH6LAdhT51eNqc6MY5oUj4KKIu6Kt
+ EZsXN4sD3jI12+JKPXWb01ZVOwZe7RtIJwS94OgU/3t59XSSnYV+CwrZrY9y27l1psGd
+ 3p+ifHR+QHJu2IMtY6VLCbkUjk0jEAlIqgK/N//+ndFT5POoJaFieV3JWvRywtbosRAy
+ OgoQrNdaC4lcesg/KZXxe/B7a+GufHR+ZK85+/mePgiwurUu1l9n+VXyPRu3qda47qie
+ xLkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756453328; x=1757058128;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=l+2TI0bjgXnqdVs75iWIYrWQx8vb/t3W54+0JniDy7g=;
- b=YNbIyIf6mHytvrq1FKsurlfbsWlhMODXvqYmSbg1mG0YKG+ZOfOtVKtu4WKbi6wb+a
- PBfpIHO/0hjYAgvQiyhu3sGr+D3IJwjhFd9JGWcwlX1WO4U7zM2Fi+v08TQL2gtq/wb9
- dlBJ2ZEBiJieWPDyaHU5bI0msWbdUFY8s4dzshH6XO5YNxmPvMnGhFihVPLT8c4pby/Y
- //FNXYigshiRrt3cufAYKP3OK9j1l1Bb1aMC5Wcn7dMDWRj5Xhkhs464iOencaJWZT3R
- dm1q+LLDxqoUehPW2NXnIkoU7rnJ74bQdJlNPMExZIpDPLonrdswpXT9MGPLoS5gnpMT
- x55g==
-X-Gm-Message-State: AOJu0Yx80k8P4pq3mQ9b3mjji9b2pj2/K46tAAFbddDB5m3sPIppq54e
- W5uuVKMMgMVwsElbCn/cE5C5LbI/ic54nkR7RjSHSDtC/hMEbr5CSPGcX7Zj10rYGCdb3+3DdDs
- bGMyxY1M=
-X-Gm-Gg: ASbGncvAMqDTQIVpkKeZJXryjvakPkjUF/2b4A94cwh0hPl8veXEQPcCB61RZBm9tHi
- yKYEoc0FQ8MpdQrjyOQg2wjV3w8JpwOcxskE+HIlDnx9TPf6sFNWGMOUAqm64tbo2RzN+WfC0gf
- AKoZsZuePR8mHiNdUVCVIgYPhrEcQbkjRlSyoQ+8/NUhorLQdxailzilstc9rQPkg1PKGjJJIw8
- U5IsN50VWd9HZT6Uh87vefjTsB6eeOF6Sqa/YAl69RApAb2izI2h6IliDE7BaxJHMsmUF30ijI4
- 76pl5hJNIE//fqVF2IxEGisHqPwKsglfvmLwsfAmtk9uCXvreGcfgo8tZePDX1lYFlL68/VsZDE
- gPsaIIgPBKun66+mlBP+ceNzNWZuVYJOB/jbxmG+MHCR7pAwVmYxn6gvy2jIPaBUCQxknIkeA
-X-Google-Smtp-Source: AGHT+IF0AeISCiQvF6TlOHNlsUfD79Zz8LRsc7v7mDkuTtqjNZrivHDW1LH6vLiEoDa/pVftPu/k3w==
-X-Received: by 2002:a05:600c:3592:b0:45b:7e68:c6a3 with SMTP id
- 5b1f17b1804b1-45b7ec0ae32mr22281555e9.16.1756453328159; 
- Fri, 29 Aug 2025 00:42:08 -0700 (PDT)
-Received: from meli-email.org (athedsl-4441256.home.otenet.gr.
- [79.129.180.152]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6f0d3073sm117318105e9.7.2025.08.29.00.42.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 00:42:07 -0700 (PDT)
-Date: Fri, 29 Aug 2025 10:40:55 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-arm@nongnu.org
-Subject: Re: [PATCH 19/61] target/arm: Reorder ENCODE_AA64_CP_REG arguments
-User-Agent: meli/0.8.12
-References: <20250827010453.4059782-1-richard.henderson@linaro.org>
- <20250827010453.4059782-24-richard.henderson@linaro.org>
-In-Reply-To: <20250827010453.4059782-24-richard.henderson@linaro.org>
-Message-ID: <t1qw27.1nxwnzs1wma9d@linaro.org>
+ d=1e100.net; s=20230601; t=1756590805; x=1757195605;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=q0CmiC0LwBGPgM8OTkGIpCwQdrlN1liKSx+3ERgIUT4=;
+ b=gSbE7GIfgMsKw8GH06xptYmkKT4eN+trXzVopmQIP1szHU8vkSjjRvpL1wCQJjjIHS
+ PaamIO71ucvLDDMf30TLmgAtstoZ/n2dbqnMUbJvo1NIi8VmlUZs+gBdLLLK+XV1yLR2
+ RW3TzR/lifj41Itf8w0zLuu+eEUA43PNqVHvuL52e7gvkIFKGQfEViU8Z6Gk+8eAe9X4
+ wS7DzF4yzGEJWPoWq/fjUQfJORWuLwK3MOti6UJNguvwXukvvPx9pdvJOM96ZpZu1QCj
+ ZzJk1Z+nqR0I4YGz4YfThYhGDzeFH7VbpF5nEZfVl0OmDfgVCqn2hOUEHgLVT+hJCSTz
+ CDTQ==
+X-Gm-Message-State: AOJu0YwuFsOdTsjnoWkp1VHmq4S9LqDfcYRMXrLbqynetuIjdv8XrpGF
+ x7A6jR1C//kvOGKMa+rhmo1+gU5Twj4lzH6JpFQnus7/C6Xv9kTIeENzXkv/gyQ15LgKApVlRzY
+ P4DOfZ/8=
+X-Gm-Gg: ASbGncs8ddGoFLBbtUH2IKVNUIl/hTwNHs7JIsoDEuqCmODjG9dmnenQNv88gwQ3rSI
+ 2SZBaNSfgoTOeFa+dVhplO8EvqTHEV9wOGUUQYkbRzUJXexWu6dBKX8E9qCXk4an/f99inUaqPW
+ f3+NF67aw5V+uf1tez6b6Wl/8LAzNNeDd+fGnShubVMYwnzRyCRsgbTgd1PWIwYyH40VTbpqknd
+ Os7Y6AuoA0zmbXNslm7gqrWiWlrtCIj9ujr7LPEfGo1C/Xp4Hn0dbAekEyuuCOa9U56wKmlutkA
+ 0GncCUWh+H7BZQvuxG5ylFbJNsIebPebOL9fOUYAg/9aEERHOeF2GrBBxzLtKlUXwMNwI99nOCm
+ ArVxGUKFgnG0muVfnRgWrfgAewnco4r+ivCBiAVBMy3bK19V7wAMj/+K60vQEiMDR/aidiisx
+X-Google-Smtp-Source: AGHT+IH6jC8qwXtKUyR8fuYDKDFpQwwnKg5JtgXmjCVsy2l1+/O+slEPGNpUPsV9Ym2nOpSxl4iGKw==
+X-Received: by 2002:a17:903:380f:b0:240:a889:554d with SMTP id
+ d9443c01a7336-24944ae4ce6mr40054295ad.45.1756590805092; 
+ Sat, 30 Aug 2025 14:53:25 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-179.dyn.ip.vocus.au.
+ [122.150.204.179]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-24903724c62sm59976085ad.34.2025.08.30.14.53.23
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 30 Aug 2025 14:53:24 -0700 (PDT)
+Message-ID: <76dd4881-73dc-4849-9958-3d4ff73f8a38@linaro.org>
+Date: Sun, 31 Aug 2025 07:53:19 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x330.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] user-exec: abort if interrupt_request is used
+To: qemu-devel@nongnu.org
+References: <20250829111110.1490546-1-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250829111110.1490546-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,101 +102,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 27 Aug 2025 04:04, Richard Henderson <richard.henderson@linaro.org> wrote:
->The order of the parameters in the Arm ARM is
->
->  op0, op1, crn, crm, op2
->
->Reorder the arguments of ENCODE_AA64_CP_REG to match.
->
->Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->---
+On 8/29/25 21:11, Paolo Bonzini wrote:
+> cpu_interrupt() is only called by a few user-mode emulation targets:
+> i386, ppc, sparc, arm.  For all of them it is dead code:
+> 
+> - i386 uses it for the A20 line
+> 
+> - ppc uses it in cpu_interrupt_exittb(), whose uses (but not the definition)
+>    are guarded by CONFIG_USER_ONLY
+> 
+> - likewise for sparc's cpu_check_irqs()
+> 
+> Arm has various uses in arm_cpu_update_v* and omap_wfi_write, but they are
+> also dead; disentangling the various cpregs accessors from user-mode
+> emulation is a work in progress.
+> 
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>          A quick and dirty patch that I'd like to place before Igor's
+>          https://patchew.org/QEMU/20250814160600.2327672-1-imammedo@redhat.com/,
+>          to document that interrupt_request is dead for user-mode emulation.
+> 
+>          v2 ofhttps://patchew.org/QEMU/20250808185905.62776-1-pbonzini@redhat.com/
+>          will also remove callers of cpu_interrupt() treewide.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> target/arm/cpregs.h            | 2 +-
-> target/arm/helper.c            | 4 ++--
-> target/arm/hvf/hvf.c           | 6 +++---
-> target/arm/tcg/translate-a64.c | 4 ++--
-> 4 files changed, 8 insertions(+), 8 deletions(-)
->
->diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
->index 95b0b9c78e..7bdf6cf847 100644
->--- a/target/arm/cpregs.h
->+++ b/target/arm/cpregs.h
->@@ -187,7 +187,7 @@ enum {
->      ((is64) << CP_REG_AA32_64BIT_SHIFT) |                  \
->      ((cp) << 16) | ((crn) << 11) | ((crm) << 7) | ((opc1) << 3) | (opc2))
-> 
->-#define ENCODE_AA64_CP_REG(crn, crm, op0, op1, op2) \
->+#define ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2) \
->     (CP_REG_AA64_MASK | CP_REG_ARM64_SYSREG |           \
->      ((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
->      ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
->diff --git a/target/arm/helper.c b/target/arm/helper.c
->index 93cae888e2..b48b669a6a 100644
->--- a/target/arm/helper.c
->+++ b/target/arm/helper.c
->@@ -4527,7 +4527,7 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
->     };
-> 
-> #define K(op0, op1, crn, crm, op2) \
->-    ENCODE_AA64_CP_REG(crn, crm, op0, op1, op2)
->+    ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2)
-> 
->     static const struct E2HAlias aliases[] = {
->         { K(3, 0,  1, 0, 0), K(3, 4,  1, 0, 0), K(3, 5, 1, 0, 0),
->@@ -7299,7 +7299,7 @@ static void add_cpreg_to_hashtable(ARMCPU *cpu, const ARMCPRegInfo *r,
->          */
->         assert(cp == 0 || r->state == ARM_CP_STATE_BOTH);
->         cp = 0;
->-        key = ENCODE_AA64_CP_REG(r->crn, crm, r->opc0, opc1, opc2);
->+        key = ENCODE_AA64_CP_REG(r->opc0, opc1, r->crn, crm, opc2);
->         break;
->     default:
->         g_assert_not_reached();
->diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
->index af03fc7fc1..bda57614ed 100644
->--- a/target/arm/hvf/hvf.c
->+++ b/target/arm/hvf/hvf.c
->@@ -1124,10 +1124,10 @@ static bool is_id_sysreg(uint32_t reg)
-> 
-> static uint32_t hvf_reg2cp_reg(uint32_t reg)
-> {
->-    return ENCODE_AA64_CP_REG((reg >> SYSREG_CRN_SHIFT) & SYSREG_CRN_MASK,
->-                              (reg >> SYSREG_CRM_SHIFT) & SYSREG_CRM_MASK,
->-                              (reg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK,
->+    return ENCODE_AA64_CP_REG((reg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK,
->                               (reg >> SYSREG_OP1_SHIFT) & SYSREG_OP1_MASK,
->+                              (reg >> SYSREG_CRN_SHIFT) & SYSREG_CRN_MASK,
->+                              (reg >> SYSREG_CRM_SHIFT) & SYSREG_CRM_MASK,
->                               (reg >> SYSREG_OP2_SHIFT) & SYSREG_OP2_MASK);
-> }
-> 
->diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
->index 743c5a10e1..58303c224f 100644
->--- a/target/arm/tcg/translate-a64.c
->+++ b/target/arm/tcg/translate-a64.c
->@@ -2466,7 +2466,7 @@ static void handle_sys(DisasContext *s, bool isread,
->                        unsigned int op0, unsigned int op1, unsigned int op2,
->                        unsigned int crn, unsigned int crm, unsigned int rt)
-> {
->-    uint32_t key = ENCODE_AA64_CP_REG(crn, crm, op0, op1, op2);
->+    uint32_t key = ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2);
->     const ARMCPRegInfo *ri = get_arm_cp_reginfo(s->cp_regs, key);
->     bool need_exit_tb = false;
->     bool nv_trap_to_el2 = false;
->@@ -2602,7 +2602,7 @@ static void handle_sys(DisasContext *s, bool isread,
->          * We don't use the EL1 register's access function, and
->          * fine-grained-traps on EL1 also do not apply here.
->          */
->-        key = ENCODE_AA64_CP_REG(crn, crm, op0, 0, op2);
->+        key = ENCODE_AA64_CP_REG(op0, 0, crn, crm, op2);
->         ri = get_arm_cp_reginfo(s->cp_regs, key);
->         assert(ri);
->         assert(cp_access_ok(s->current_el, ri, isread));
->-- 
->2.43.0
->
->
+r~
 
