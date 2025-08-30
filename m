@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AAC3CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 21:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430BBCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 22:00:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usTa4-0007XF-L4; Sat, 30 Aug 2025 17:57:52 -0400
+	id 1usTc0-0003gD-M3; Sat, 30 Aug 2025 17:59:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usTa2-0007Oo-OD
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 17:57:50 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1usTbz-0003fg-9g
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 17:59:51 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usTa0-0007Y8-Nc
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 17:57:50 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-248e3ef1641so20218165ad.3
- for <qemu-devel@nongnu.org>; Sat, 30 Aug 2025 14:57:48 -0700 (PDT)
+ id 1usTbx-0007vy-PK
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 17:59:51 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-324e6daaa39so3053139a91.0
+ for <qemu-devel@nongnu.org>; Sat, 30 Aug 2025 14:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756591067; x=1757195867; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756591188; x=1757195988; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Te+h0xr04/upjt9E9xsQaw5KmodeYahKGykVskhkZ+o=;
- b=p8z18BbK43QVAjZaQJI5L+AR1PHdYqxPZ7uJqbH1xJymVygK66EzrdraqigAgv+dDz
- 17Z7Ucv0ImXXE76SsxZmNNjeJYRzS74qpwKzrQxqjDpWd1X4bAgcwqSLyNHtZ0qAa5bZ
- 17UoZiLPpjNcyzy/xi5RdkSdka63WcE3ud1MtqhS2xrar8GrlHrEMyjeHkq6TxJyogJJ
- wMcYAOPkL3rRt/hO1tWbNFsN5r70WZJoCmlazxV16JOs7PdDv7gXUqkXaSlBx+eye+ki
- wt/9wV1E/R+xQtLSmPCuIkwCZuQKEv+0leiVgs+8QcSg583iTuZMzrQlYRMMEjHlTw35
- I9EQ==
+ bh=KpBNOd1gjcJO1ux45Mtl8htnjkMz794eiQCdcH7eGLE=;
+ b=l2nZbWeQuKXE5/HYZtnsHBCNK260/q0SvCBiEqr7vu/7sx29S3vnLZXA3rzseCvm9O
+ cHZN+aDagTJi2TDw+0ZXkmtIKJ0Ur4sIZXVLMKJPRxBkMocUJFKI40lhaVuKVRfUOet6
+ v4B4dC/QpI9BzAjgegqN4dRU3cSQNZCUSNwYdymXOf+BSqSzofIXwlDaDPkqN3qC9F4S
+ TrH2imBTnuYqERgMwGFHSDr2wuBL4TrdQDmNOi0OQwJp4qagzwMdCPiIrd7DOcQxYdYP
+ hI9nTGx6yMv3ZTknioFQi7xF313miIrfJAXGMmBUPPrvmLGf+aOWq6Vnjj2RaFetvg2Y
+ mfng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756591067; x=1757195867;
+ d=1e100.net; s=20230601; t=1756591188; x=1757195988;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Te+h0xr04/upjt9E9xsQaw5KmodeYahKGykVskhkZ+o=;
- b=QPfMfC+4QoWvFacQsNMcCs7OWTMSjQOOIBIWtLiPXK4tQAl2t7qFUbEl+heLcmbDhH
- owLOuiNTYnQa7/Gja8t7Tvli5/oEwbGXeewHuzFKanOFoFDLyYGSmoDJ5Ouwpn6CelWv
- ZFmG2IISrs1v+u2s4F7XoO3t7QntP8s6ZGKjC/mqDHaBxcZB3OmNwTm0R11apXiRETO4
- nZzhQTAjSNkZJ9aWPmSDX4ru0veIZVs5iHGO8UzLtSqMAU4+RO3GZ8iLPTxuskQ5cFWL
- fMdTCjXrFawIHSs6xFjz5PJW/VHpl6atTHyF4ARbHXGK/RQ6V84mULEQNIh0zA2MLkOe
- GY4g==
-X-Gm-Message-State: AOJu0YyuCDFI/acPwhctZpY9IITPjTYe4gBbXz7tI6Gq3nEqamH2rl/k
- pAMOVVSrg1OIwiTxZyYd1lol5zNdQD2y0IXpVG/fSB2az5VgUsV0SICHZJFsSJD5/Z9r+htnVSP
- 5/g0DvM8=
-X-Gm-Gg: ASbGncvEsyPyej29g9djSn2T+QWx1O5Q2vRiu8PtQH9JjBI9fqGqGJ5uXbvi/9GZu3Y
- Irj8CjfdARoWaXnToIHUB9M3/yNsgfUdZG8D6YMU81XEecKtpUQ7OQuo1LOyx/xHWbHk4i82gTc
- ZBAKVZ9Wb2VtPYQ4crE4kSHTS9vyAexJwwl2UWPfMo/sDUsoctOKYeFDv2VxG3JWDI28LZLkSQ/
- Ef1GROJYypN8OjT+7B6ALBjaxuMZn/EjFtCHUCGK4XglD+/AjZaZ8UdoT+uua5T4EiX++9TbUG3
- VYvmtFdUdsaHPBe03KECnns4BBzFiDCcCqu8GHhQWdij8G0mvH8e9vUrnaaw2zzuj2JWLJ65HkM
- 9MlRNodKRW8mscQh0sUpMSr0DWv5beZnUnLqFcdkG+rP+lwCxgU6cJ/KIsEW5jD7pfw8c/gNavz
- FbqSil
-X-Google-Smtp-Source: AGHT+IGsbYfzItQV04TTYV3SvBFxUyk8tasMFl4SIbgVAxvujXm/J3F7VseylwPu0g9+TPD5S5gCXA==
-X-Received: by 2002:a17:903:38c7:b0:249:2d84:f416 with SMTP id
- d9443c01a7336-24944b766eamr42048795ad.58.1756591066614; 
- Sat, 30 Aug 2025 14:57:46 -0700 (PDT)
+ bh=KpBNOd1gjcJO1ux45Mtl8htnjkMz794eiQCdcH7eGLE=;
+ b=v+0rucdlTlBbcC/0nIzl0ZlYEPZTeXTGnjzx0CdgiNBWrH33ydlvYnlVjDwxFg9DoU
+ tSl2TP10jNe6nYAo3ocehL04jLg49ADAu9DneGF3yesRFns00Ba7j2U6Vn1MbOdf6fPs
+ GNquhB1ypA93BulFH8lfXi9gp79Cm4MfozF3q9B7JJpXVF5JJQqlUymvVqE9aHnKRxWe
+ y/P8t1PWvKjFcmtzQVsWWNeErZnxygrqY1LYCqDxW7uEXHjLqbX79FOLd4Q5F7w7czMP
+ RLUpsj0+mCp9bOakSR3kMmYeg0m3UsFxxq5pzMFBI4kwug5vokwKf4BuwXi3lgAjSC9H
+ sQ0A==
+X-Gm-Message-State: AOJu0YwictN1KNrPj5AQ81qxqu3SN79j2UIk3V2WMI2L71702inZXmf5
+ DC+WChBCcTaeSqfRK5Lx4rhQ2KHCjT2Z+a1uckXrQPfZixY/lXMAoHy3ixs70gDr2OprpVh2c1G
+ nevoDll0=
+X-Gm-Gg: ASbGncsX3/ybQqsxtV84svoLh/CDxnoS/UBCFuBbamVPS9SzmCySQ/YriUH3wWTIRMU
+ ItpONJ2SZw6rWVxEj0ltCCto50bxJSpvW+A1b6Q6ZS999s+5QnKEj8bi0GnJ20oP5REh3QC3yW4
+ /Yc3rKvnLMleKcnrIGelBeKeufUF2yZYRcsGa/H/c8BjtmqA4Ezc3/lmmyhtbRj+0e5WEPhxQHN
+ oiH617IMJMSG+rT4f67teH8D+Iqze4XlnlZjliFAIX5HPuflQwfIj+9xPrFkn0lmMtLyJ0Ys7HX
+ cnYK7Tr3cNMy+ai642BT82M4Whs9gl8TCGPJl+pHhDRoAqpEAzHXDWBClQ+7LLxdKVRGbdeF2Yh
+ XOOuPeidYSA7O5aQLvIZ2lcGoJS7KKT27DMmjFzIOlEjvpQLJJy/4HcAqGOTghuEzbacfBw==
+X-Google-Smtp-Source: AGHT+IFLPmbLsbT/WgBNJd+9km1F2pYcrGdun+G2RDtxLtjxjhJEVWNYk8rNp3y+6WGM5x8cQTdSNA==
+X-Received: by 2002:a17:90b:55c8:b0:327:dc81:b3a9 with SMTP id
+ 98e67ed59e1d1-32815437a2amr4565508a91.10.1756591187924; 
+ Sat, 30 Aug 2025 14:59:47 -0700 (PDT)
 Received: from [10.118.1.198] (122-150-204-64.dyn.ip.vocus.au.
  [122.150.204.64]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327af91f6ffsm4730132a91.4.2025.08.30.14.57.44
+ d2e1a72fcca58-7722a5f7a9csm6070691b3a.91.2025.08.30.14.59.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 30 Aug 2025 14:57:46 -0700 (PDT)
-Message-ID: <9a317ea2-64ca-4b87-a50f-92204fb542a8@linaro.org>
-Date: Sun, 31 Aug 2025 07:57:39 +1000
+ Sat, 30 Aug 2025 14:59:47 -0700 (PDT)
+Message-ID: <93d905c1-3c1b-4aa8-a227-efeb661df972@linaro.org>
+Date: Sun, 31 Aug 2025 07:59:41 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/14] monitor: initialize global data from a
- constructor
+Subject: Re: [PATCH v2 03/14] system: unconditionally enable thread naming
 To: qemu-devel@nongnu.org
 References: <20250829180354.2922145-1-berrange@redhat.com>
- <20250829180354.2922145-3-berrange@redhat.com>
+ <20250829180354.2922145-4-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250829180354.2922145-3-berrange@redhat.com>
+In-Reply-To: <20250829180354.2922145-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,29 +104,48 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/30/25 04:03, Daniel P. Berrangé wrote:
-> Some monitor functions, most notably, monitor_cur() rely on global
-> data being initialized by 'monitor_init_globals()'. The latter is
-> called relatively late in startup. If code triggers error_report()
-> before monitor_init_globals() is called, QEMU will abort when
-> accessing the uninitialized monitor mutex.
+> When thread naming was introduced years ago, it was disabled by
+> default and put behind a command line flag:
 > 
-> The critical monitor global data must be initialized from a
-> constructor function, to improve the guarantee that it is done
-> before any possible calls to monitor_cur(). Not only that, but
-> the constructor must be marked to run before the default
-> constructor in case any of them trigger error reporting.
+>    commit 8f480de0c91a18d550721f8d9af969ebfbda0793
+>    Author: Dr. David Alan Gilbert<dgilbert@redhat.com>
+>    Date:   Thu Jan 30 10:20:31 2014 +0000
 > 
-> Note in particular that the RCU constructor will spawn a background
-> thread so we might even have non-constructor QEMU code running
-> concurrently with other constructors.
+>      Add 'debug-threads' suboption to --name
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> This was done based on a concern that something might depend
+> on the historical thread naming. Thread names, however, were
+> never promised to be part of QEMU's public API. The defaults
+> will vary across platforms, so no assumptions should ever be
+> made about naming.
+> 
+> An opt-in behaviour is also unfortunately incompatible with
+> RCU which creates its thread from an constructor function
+> which is run before command line args are parsed. Thus the
+> RCU thread lacks any name.
+> 
+> libvirt has unconditionally enabled debug-threads=yes on all
+> VMs it creates for 10 years. Interestingly this DID expose a
+> bug in libvirt, as it parsed/proc/$PID/stat and could not
+> cope with a space in the thread name. This was a latent
+> pre-existing bug in libvirt though, and not a part of QEMU's
+> API.
+> 
+> Having thread names always available, will allow thread names
+> to be included in error reports and log messags QEMU prints
+> by default, which will improve ability to triage QEMU bugs.
+> 
+> Reviewed-by: Dr. David Alan Gilbert<dave@treblig.org>
+> Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
->   monitor/monitor.c | 14 +++++++++-----
->   1 file changed, 9 insertions(+), 5 deletions(-)
+>   docs/about/deprecated.rst |  7 +++++++
+>   include/qemu/thread.h     |  1 -
+>   system/vl.c               | 11 ++++++-----
+>   util/qemu-thread-posix.c  | 18 +-----------------
+>   util/qemu-thread-win32.c  | 27 ++++++---------------------
+>   5 files changed, 20 insertions(+), 44 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
