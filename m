@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13FC4CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 23:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D01DCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 23:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usUkU-0001f6-6q; Sat, 30 Aug 2025 19:12:42 -0400
+	id 1usUxx-0007Oc-4t; Sat, 30 Aug 2025 19:26:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1usUkO-0001cs-4G; Sat, 30 Aug 2025 19:12:37 -0400
+ id 1usUxu-0007OB-5e; Sat, 30 Aug 2025 19:26:34 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1usUkK-0003O9-En; Sat, 30 Aug 2025 19:12:35 -0400
+ id 1usUxs-00029w-3p; Sat, 30 Aug 2025 19:26:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=07tye9m7eYTzKcdfaWvaCSP5dbaJXmYQAlIefu6c9SE=; b=d1vN0rxgrc6GIfm+
- jSp1+0ZdzG+8rDjEjZV840tGVq3mxGpZBAiFWPdYXjgxO7t89HJ/pRkVUwztp7bLvBsgDPQ61Kkf+
- UTjOoOBq8NpQITZvROrBZtwx0kmxXtxsUW6DHzssA6r+DTms+ih1mfy3LMM6EGzpfdQLrJcFDWmEo
- P9c64E5XbSU6SeQSX9/4KirgnCM9B/HOUP04g9AGGGSzAWIBud8Fl5L8mC3EauxK4BVX1IRHE0CEW
- kLfA4lSwXVOLeEHUkP37+K0Jy4cx1BRCQE9LNVFb/TCebl2CBQ2wWE2qnExNAUcmej8bQ0B9GHQtK
- bftbEroE6zztiEv83w==;
+ :Subject; bh=SaTkd3o+M20TxnwkQV8tWwcM1oeWVwxqDzK95EyWDj4=; b=eOZkz8U3I/wLJjSw
+ OOw/nUcuHMz7SGIPOtbbpZP1piWItPV78Y62sTdz/ck/jzPv0ip53imvG96aLTO1wWFuZhTxjPAz2
+ zgmXmKYLm9gzWZod4DejFbJPl/VKWgqHUXHja6zghjPFsaLPc3IxQTEUsNHh857Q00zUYc0wQ2AY+
+ Qa2RO9dfOyi6IReUw4v5HeYs5K89G7PDjjHy6/vPf7HrmhwV+H/r1/xWif/56xNQMg5nigSrzP/BL
+ 4PIRC3kOmrhNsbjhjWIC8wnHru7r7IESuUQeS+c7hex+9DKBbfRZigkK9/VWYqrzor7QRKVB6TgHn
+ zOZbiO9hI5rWZ2aImw==;
 Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1usUkH-007aWX-27;
- Sat, 30 Aug 2025 23:12:29 +0000
-Date: Sat, 30 Aug 2025 23:12:29 +0000
+ (envelope-from <dg@treblig.org>) id 1usUxp-007aXB-2Q;
+ Sat, 30 Aug 2025 23:26:29 +0000
+Date: Sat, 30 Aug 2025 23:26:29 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
@@ -42,18 +42,18 @@ Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 05/14] audio: make jackaudio use qemu_thread_set_name
-Message-ID: <aLOFXb18pV85FPq7@gallifrey>
+Subject: Re: [PATCH v2 06/14] util: set the name for the 'main' thread
+Message-ID: <aLOIpXI92MQ6cbq_@gallifrey>
 References: <20250829180354.2922145-1-berrange@redhat.com>
- <20250829180354.2922145-6-berrange@redhat.com>
+ <20250829180354.2922145-7-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250829180354.2922145-6-berrange@redhat.com>
+In-Reply-To: <20250829180354.2922145-7-berrange@redhat.com>
 X-Chocolate: 70 percent or better cocoa solids preferably
 X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 23:11:45 up 125 days,  7:25,  1 user,  load average: 0.00, 0.00, 0.00
+X-Uptime: 23:24:04 up 125 days,  7:37,  1 user,  load average: 0.00, 0.00, 0.00
 User-Agent: Mutt/2.2.12 (2023-09-09)
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
  helo=mx.treblig.org
@@ -79,67 +79,66 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Daniel P. Berrangé (berrange@redhat.com) wrote:
-> This has greater portability than directly call pthread_setname_np,
-> which is only 1 out of 3 possible functions for pthreads that can
-> set the name.
-> 
-> The new API requires a trampoline function, since it can only set
-> the name of the current thread.
+> The default main thread name is undefined, so use a constructor to
+> explicitly set it to 'main'. This constructor is marked to run early
+> as the thread name is intended to be used in error reporting / logs
+> which may be triggered very early in QEMU execution.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+
+Initially I was unsure why it was in qemu-thread-* - given these
+are identical between the posix/windows versions; but I'm not sure
+where else it would go.  You'd probably want it in both system and user,
+and probably the none-emulator binaries as well.
+So this may be the best place.
+
+I'd probably rename it though, it looks like an operation on
+a qemu_thread;  like qemu_thread_create() and qemu_thread_start()
+
+Other than that;
+
 
 Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 
 > ---
->  audio/jackaudio.c | 28 +++++++++++++++++++++++-----
->  1 file changed, 23 insertions(+), 5 deletions(-)
+>  util/qemu-thread-posix.c | 6 ++++++
+>  util/qemu-thread-win32.c | 6 ++++++
+>  2 files changed, 12 insertions(+)
 > 
-> diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-> index 974a3caad3..48ffbf735f 100644
-> --- a/audio/jackaudio.c
-> +++ b/audio/jackaudio.c
-> @@ -629,18 +629,36 @@ static void qjack_enable_in(HWVoiceIn *hw, bool enable)
->      ji->c.enabled = enable;
->  }
+> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+> index ddaa1de4dd..275445ed94 100644
+> --- a/util/qemu-thread-posix.c
+> +++ b/util/qemu-thread-posix.c
+> @@ -22,6 +22,12 @@
+>  #include <pthread_np.h>
+>  #endif
 >  
-> -#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-> +#if !defined(WIN32)
-> +struct QJackThreadData {
-> +    void *(*function)(void *);
-> +    void *arg;
-> +};
-> +
-> +static void *qjack_thread_trampoline(void *targ)
+> +static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
+> +qemu_thread_init(void)
 > +{
-> +    struct QJackThreadData *data = targ;
-> +    void *(*function)(void *) = data->function;
-> +    void *arg = data->arg;
-> +
-> +    g_free(data);
-> +    qemu_thread_set_name("jack-client");
-> +
-> +    return function(arg);
+> +    qemu_thread_set_name("main");
 > +}
 > +
->  static int qjack_thread_creator(jack_native_thread_t *thread,
->      const pthread_attr_t *attr, void *(*function)(void *), void *arg)
+>  static void error_exit(int err, const char *msg)
 >  {
-> -    int ret = pthread_create(thread, attr, function, arg);
-> +    struct QJackThreadData *data = g_new0(struct QJackThreadData, 1);
-> +    data->function = function;
-> +    data->arg = arg;
-> +    int ret = pthread_create(thread, attr, qjack_thread_trampoline, data);
->      if (ret != 0) {
-> +        g_free(data);
->          return ret;
->      }
+>      fprintf(stderr, "qemu: %s: %s\n", msg, strerror(err));
+> diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+> index 62eaa11026..7a734a7a09 100644
+> --- a/util/qemu-thread-win32.c
+> +++ b/util/qemu-thread-win32.c
+> @@ -22,6 +22,12 @@ typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
+>  static pSetThreadDescription SetThreadDescriptionFunc;
+>  static HMODULE kernel32_module;
 >  
-> -    /* set the name of the thread */
-> -    pthread_setname_np(*thread, "jack-client");
-> -
->      return ret;
->  }
->  #endif
+> +static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
+> +qemu_thread_init(void)
+> +{
+> +    qemu_thread_set_name("main");
+> +}
+> +
+>  static bool load_set_thread_description(void)
+>  {
+>      static gsize _init_once = 0;
 > -- 
 > 2.50.1
 > 
