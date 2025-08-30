@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BBADCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC8BCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNs1-0003My-6C; Sat, 30 Aug 2025 11:52:02 -0400
+	id 1usNrw-0003FV-Ps; Sat, 30 Aug 2025 11:51:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usCRG-00052a-4R
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 23:39:39 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1usBtu-0005fY-Ai
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 23:05:10 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usCRD-00052c-3J
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 23:39:37 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2487104b9c6so25092975ad.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 20:39:33 -0700 (PDT)
+ id 1usBtr-0000t7-TV
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 23:05:10 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-327f87275d4so1043964a91.1
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 20:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756525173; x=1757129973; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=JmWEBsWkC6Iy2kPe2svm5u9XW4Lz+QhNZJnUvnzxWu8=;
- b=Yuj6jcvYFHKyWx4PlSFg2qKjIyjPFIxBUrB1D0k1o3YatE4/nxCVs/OP+UWmLIURDX
- SHj2iCSVy8Yj9v7ZxPpYGT/zarJRQELkiD0knaosaHXJ4rr99uDRZhKSjIvOD71CopEi
- HEgZBvhPwTQ9lo7l2mTIJ0AXMzR9HphvyDyEwNLQvNx6FJ8Goi1b1k4qw3wkVzPnJEoe
- wkfX26j6P8mLUusl+HlXK0aekfuC1sW0/AGMbpk1KhuDJ1hZJmWV5O7x4UldCKn1vdYg
- zxnDXnCIED0DaCvp4+Hi0YkqL0xHeo2wAvQ8705sbfzD063FCfhmKcDxQxYieev7YD9l
- EC+g==
+ d=linaro.org; s=google; t=1756523105; x=1757127905; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ukwoa5IccIQRUQm4QP0hSlkeC5H/N2q8r0mqAtwgM8w=;
+ b=rBHB4jfQNBlCTjbGu3pr0F7eCKyoFGB5Me9t3cperBlAPiqGUk6A89cDM/lGo5xTCz
+ /x21WzKI9DADcx7wHsAUgjpcMyUCLkcMW6v0kuoE1kuD95KFc1GJl1mHHSwn81Ns77Fr
+ 1VtObUehSfewHt4iz1N5klPVnSpsVQzUHYnrzE67Uid4S26xukCfCKgn5SXPtQZsudG4
+ s8vwvvMYrKzVEJUp2Mn4sAnS9cw9Q10nBT7O2xb5GmTpDlW5s5nOqfhtLcgAXoKqwaWZ
+ R4n/os3D3Lk6BDEnEyM7V73/x0s0BhFnMYo50r6gLiKtpjZNb4HN84l93KZjGh8XP+gN
+ Y2QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756525173; x=1757129973;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JmWEBsWkC6Iy2kPe2svm5u9XW4Lz+QhNZJnUvnzxWu8=;
- b=Uhmf11fOY0uaVHSNGKZwI49pwccApLaVZeSl9cvsQAYF8dxHG5fWtfgbYddfWSbHRe
- cWm4d88xiySLjGTZuEavDO6c1lkNCVTfB9M6sCbRIi8MVVX7aU87VWkS/TPfWsZJVuHZ
- MN3ftDrDCdmiizoHTIQYUQOkZ7rAZVrOH7uu0lmrTGNV4q0ZlIbnPBsb1tcb3FFCOxUZ
- gesTvigUm9HOBBsviig+7C6Ac0E847zSad1268Pv4oYgb9L1xBbcseySzYfdO418Reed
- DFVnWTqcdYDGhoGhylEbyRepPvC/1pzrk4El6ZMv109d6mO22Im+TZl0zXoOWZWQ3PXU
- PdPA==
-X-Gm-Message-State: AOJu0YwwZ4yo7erv6AlVF7VHHcWcuB+ZHesuc9HYQ1Lukf6Lgqem7pzW
- YIcqLjv6lTbw9Fm0bKuZchjja+QqevDorDQNGcvDiDU2P3HrqKwbq9j1HuZBvOjmWJEIzQp6MEr
- kIPwja4A=
-X-Gm-Gg: ASbGncu2cD5azOGk/TYIqVQLuNwHsKN1yow5DpgqeE9yl7KOXkLyDBZvdkperPAkixm
- 9bx+C8pvzc++j+Azyfv+w+IE4PBSWYfofEy1PdeBYyqGk5F7KjqX6VXt02yKOtbj82suBB6tjae
- 2SxEoqgZy1JTQMaLmlZwdG127hlrcsk9wqxyxAFiDi3bjDcv5zpXdJwjuvYRfwCzdhkVcEi+HCI
- uZfAfaFK7r4MQ6nBYDMMjjqvYtbERS0ey7yQP5Kn3jqek7OAWE7ew4FNrNcJbv8aFRBf5zUEwGU
- bJF8/fsTGR+hJIb3QnyqMkJpqqyvqPBo5KsOCFdXh/GW+IOHE0FGnNjjJkYpGfJcH+julHTER60
- p6zCqsxgrdrt7rYAP/uAnP685JvWIs5iCOqHaFdDc8bNNiLNYaYSuG4KFQH/8dlNz8VOAIL15Ig
- ==
-X-Google-Smtp-Source: AGHT+IHjGIMcnrt3dLT8rokciY0RpjzYKKVQkteIUbgEO4pIpXLWN3stP49Ug2NXH/Npc7bmk5/eig==
-X-Received: by 2002:a17:903:244e:b0:249:3eec:15bc with SMTP id
- d9443c01a7336-24944a44010mr11631645ad.19.1756525172641; 
- Fri, 29 Aug 2025 20:39:32 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-24905da4784sm39551685ad.90.2025.08.29.20.39.30
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 20:39:32 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v2 0/5] tcg/i386: Improve vector shifts
-Date: Sat, 30 Aug 2025 13:39:21 +1000
-Message-ID: <20250830033926.372955-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1756523105; x=1757127905;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ukwoa5IccIQRUQm4QP0hSlkeC5H/N2q8r0mqAtwgM8w=;
+ b=nxJ6bD58RxB8S/z4BlEZX8pexv/YubdLnh4cOs4DeaiTmmzd33ixHTk9HBc/830UDY
+ O4m3Ii7S45T/fQi3L0prdUlx0GkHvmt0wa3/Ihqisi4I53jJ8g+OxUy5K2ELrBcgTjsP
+ nlOEW/byIvkXEdU5T21jhGl8MlJ61yjftAHXzZ2WUCKyNHpxg6ciZAXpnSZKDwZM3wmJ
+ 8jgDmNp/8WlEa+wtz3Z9rpGJd2BUSrYuoKL2Tv3l5AwU4ALp9EesIJxLXkuko0s8g6Nx
+ rgXsytrnG3xyCZnmvPwMTcOw35N9taIZ2+MFATm1r7mALM14ei49BRgZs2A0smFDQba0
+ KDUg==
+X-Gm-Message-State: AOJu0YxOGWVbM9QNIhogTHutOa6E4CaNi8fPZoBl5/0wtgng7LUK9jSI
+ rtE68CrxgNEAr8Vr2QpX5kaDF6ZczzrlgZnP0bcQlYL3WjrhgHrZVHzvFbZ4SV52vpM=
+X-Gm-Gg: ASbGnctMmLAzNsvBrGHNKs0IAzxv3n0RLWmAvbs0dG67mi3tJ+N+2gpyBQ158vRag3w
+ 2S1/3fXuFjnIiSU2oY74AQX7sIAd50+QMdRpcdWe23Yl4DXYsu6z9P9z+EWRogy1H/k0wNj6Dcg
+ XzgvM9YfF8/0q/qzJCb8WUe6uQ6lU676jMRiLYynXeZNwtsPH6VxPS2e1OoWfwoWeXymaRgxKUT
+ VX2+gqPOuawnQY1AtNvmppPmb4vQFW4tYMCWh1qFoRQd5fHe47zE9oRxRiWYVQ0N2icwfJ+m2yB
+ LIrLqXNDPBfTLnEJK/EW0cP/dA5QkZWOD0Gn8VW+F3FtuMSGGSWgKyM1MP9ppScwcft6JCAXL0A
+ rwRRkrFRHhM1ofCExSRuh2KylbQy9KKhKQEdJIbwjfO+3Xi6ClWE1jOdfYp6J2BQjUi0u2tTeL3
+ FkcaxQ
+X-Google-Smtp-Source: AGHT+IEzfp7qlunCOvR6feN2SYtSLTG6mmqrVdH3YBk8Aegq3LeCr/LBWVCYFtkfgQJGcrS6b2BAcQ==
+X-Received: by 2002:a17:90b:2252:b0:327:edde:609e with SMTP id
+ 98e67ed59e1d1-3281543caffmr1430482a91.12.1756523105311; 
+ Fri, 29 Aug 2025 20:05:05 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-12.dyn.ip.vocus.au.
+ [122.150.204.12]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-77231f40553sm2745121b3a.43.2025.08.29.20.05.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 20:05:04 -0700 (PDT)
+Message-ID: <32f69f26-ff0e-4615-9711-d30f41f67f8e@linaro.org>
+Date: Sat, 30 Aug 2025 13:04:44 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/18] cpus: properly kick CPUs out of inner execution loop
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, imammedo@redhat.com
+References: <20250829152909.1589668-1-pbonzini@redhat.com>
+ <20250829153115.1590048-10-pbonzini@redhat.com>
+ <743782b5-1e3b-4b63-afe2-4ad1da333bde@linaro.org>
+ <CABgObfYG=Aaz2ujr4xeuKgUqM35tF_2nS-W+v6bjYQJ4xMsvRg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CABgObfYG=Aaz2ujr4xeuKgUqM35tF_2nS-W+v6bjYQJ4xMsvRg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,31 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x86 doesn't directly support 8-bit vector shifts, so we have
-some 2 to 5 insn expansions.  With VGF2P8AFFINEQB, we can do
-it in 1 insn, plus a (possibly shared) constant load.
+On 8/30/25 09:05, Paolo Bonzini wrote:
+> On Fri, Aug 29, 2025 at 11:57 PM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> On 8/30/25 01:31, Paolo Bonzini wrote:
+>>> @@ -624,8 +624,7 @@ static target_ulong h_confer(PowerPCCPU *cpu, SpaprMachineState *spapr,
+>>>        }
+>>>
+>>>        cs->exception_index = EXCP_YIELD;
+>>> -    qatomic_set(&cs->exit_request, true);
+>>> -    cpu_loop_exit(cs);
+>>> +    cpu_exit(cs);
+>>>
+>>>        return H_SUCCESS;
+>>>    }
+>>
+>> cpu_loop_exit does a longjmp; cpu_exit does not.
+>>
+>> This may be a bug fix, but it's hard to tell.
+>> If it is a bug fix, it should be separated.
+> 
+> The longjmp is overkill but works. Not doing the longjmp also works
+> because gen_sc() finishes the TB and then you go all the way (check
+> interrupt_request -> check exit_request -> write exception_index ->
+> cpu_exec_end) out of tcg_cpu_exec().
 
-Changes for v2:
-  - Use PCMPGT for arithmetic right-shift of bits-1 (paolo).
-  - Tidy an instance of non-canonical operand ordering.
+Ok.
+
+> 
+> I like cpu_loop_exit() to signify that I am in the middle of the TB.
+
+Agreed.  I suspect we over-use longjmp and could perhaps do better at simply returning up 
+the call-stack.
+
+
+> That said, I'm always conflicted between renaming badly-named
+> functions and keeping historical names. qemu_wait_io_event() is also
+> horrible.
+
+...
+
+> 
+>>> +++ b/system/cpu-timers.c
+>>> @@ -246,14 +246,14 @@ void qemu_timer_notify_cb(void *opaque, QEMUClockType type)
+>>>
+>>>       if (qemu_in_vcpu_thread()) {
+>>>           /*
+>>> -         * A CPU is currently running; kick it back out to the
+>>> +         * A CPU is currently running; kick it back out of the
+>>>            * tcg_cpu_exec() loop so it will recalculate its
+>>>            * icount deadline immediately.
+>>>            */
+>>> -        qemu_cpu_kick(current_cpu);
+>>> +        cpu_exit(current_cpu);
+>>
+>> where the comment still says kick and we're replacing kick with exit.
+>>
+>> I guess the root of this problem is that "kick" isn't a precise term, we ought to name it
+>> something else, and we should paint the bike shed green.
+> 
+> Yes, I agree. "send it out of" can work too in this case, I'll chanbge it.
+
+I was actually talking about renaming qemu_cpu_kick.
+But per above, that's hard.  :-)
+
+I guess just updating the comment is fine for now.
+
 
 r~
-
-Richard Henderson (5):
-  cpuinfo/i386: Detect GFNI as an AVX extension
-  tcg/i386: Expand sari of bits-1 as pcmpgt
-  tcg/i386: Use canonical operand ordering in expand_vec_sari
-  tcg/i386: Add INDEX_op_x86_vgf2p8affineqb_vec
-  tcg/i386: Use vgf2p8affineqb for MO_8 vector shifts
-
- host/include/i386/host/cpuinfo.h |  1 +
- include/qemu/cpuid.h             |  3 ++
- util/cpuinfo-i386.c              |  1 +
- tcg/i386/tcg-target-opc.h.inc    |  1 +
- tcg/i386/tcg-target.c.inc        | 91 +++++++++++++++++++++++++++++---
- 5 files changed, 91 insertions(+), 6 deletions(-)
-
--- 
-2.43.0
-
 
