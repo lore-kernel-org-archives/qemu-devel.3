@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A53F5CA1000
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC98CCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNkN-00024I-5y; Sat, 30 Aug 2025 11:44:07 -0400
+	id 1usNvv-0007jy-QG; Sat, 30 Aug 2025 11:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7c5-0004x8-Ap
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:29 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1usEM2-0005wd-65
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:24 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7c3-0003zG-1a
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:29 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-b4c53892a56so2197078a12.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:26 -0700 (PDT)
+ id 1usELz-00049i-3C
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:20 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-772301f8a4cso1455766b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506625; x=1757111425; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756532538; x=1757137338; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wZDPXdfsmxBIOUaB++qruH/yHWhEuoUSA6jOwZM9P+A=;
- b=ETp6MoalgxdIJvFyjOPo9SHlM8KzKDYD3SA+uxQ5NCGvJ0/ZZ102EFNxSYT/jRWTTe
- SQ78WyBl6yPhXmq9hTaeDqAQLeZfN1HNZDyNZzX9nujENJkwkRGHWWyPQiSeSvSwRA3Y
- vtNYXsCW6PVt0dZ07eNRAQF8nAOZMH3+7khzPEQRn01AGGQZSQT0cVGS0seILa5VntXN
- DAtWs2SQcin3xiHJB8ebTtieHCJ3loSOvmS4+jgGCveQW0TlO/DsMVgFH4nzHvZJzsTh
- jdw+Y4WGk2B8AaJBagMcfTuOc5sWNbkt9u4T/NGh5mL3OXXd0E/DONOm5b3BW3cM5smy
- WqVA==
+ bh=7lLK/x0vxeiUSIhLvYmhH4s0sefCFctg4R61gIveZjQ=;
+ b=usWbNEDN7sR4PupVBbGyMGQChRWFG+j+V/LYRvsxcXg7QWnAruiU+IPbpd7CkkvPZo
+ DHqa+4UR6OjRIoA9Q7BpyVym3TXcOlF0TxqGRcmbx2Jl83JzbhzlrJ358UyBKq/pJyG3
+ GGD935WFN4MDUxtGB2bX9W2ZJBGMPUj45074uFPUe1MJlUJS0sZhnGECalbymWLvKfcv
+ y8UEMvYYndL3tk6r7X9cj/4PAU/ZFBEIM772Z3nI7Fub7GxZXAamEPLe4eG4BQB2yZH4
+ Ass8BNtPwhJrsW1xbiqhN8eaz0WloOvSqr66dZ6Va9FWRuaP1m/U1CwumJKibb2X1fzq
+ 4jaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506625; x=1757111425;
+ d=1e100.net; s=20230601; t=1756532538; x=1757137338;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wZDPXdfsmxBIOUaB++qruH/yHWhEuoUSA6jOwZM9P+A=;
- b=vbbQXwrRZItbsGBBL96MnaBPVwaoL53cn7H2DI1VoHB9aDodIXDebt+pBx8mgyRRVI
- bWQMzNjaiQdAN7kf9Lo6ODBbU3N+icyG9YAf2Nwm2FqhTKdgRlKxKMGa1O5p1YCGb0WV
- T7FXKxDU+dbMvdUfPqIjuTyYvh+oIvghQih7RHhSsYUgTqFKTePKqwi88YmUduHsOGd8
- WfwVgpvsZrIPyfCE7PkPNG3KqhMCstAVYtYdq9ajfTbMCZYI/wkdvdEII/Nrsd5pH+cX
- rS343yhE8rQ6xn2Zjw6lR4YFzYtLWTpktBIwBpTFKPjE70u4J2kdkf4lO5HdPCCBX+/y
- WzwQ==
-X-Gm-Message-State: AOJu0YzNFjuMwUP+30/+vuA+jBv8S2mhJJQO4AsLXEezp/5CTOM7Bdkn
- uP913+MUob0t7qNaUe1iZth46+0JhtsTBqzHHdHu3wK+DlEi/dnw0PJ5WnDATkUKacf8PSt09iF
- h3TGOtWs=
-X-Gm-Gg: ASbGncv2d7DaFRGnOD1TopGNTsw5NfSN0njAQizv3IO3WLWrWdylQAvIEmzwswmrhEr
- gs2HjcoPltrp4qeOuGnZXMqpnnihqEUb6Qf5B/nyEyB/+y0tfgngM4ZBurZRc51N5v62hJCvikH
- 2wTBxFcjFzK9XkeP5bXBOpubif23xdxHQRmLVIK02niw1l7CUGlKlMNYYZ1M+LwMWeVOhYfuMwT
- tX1Ia0+1SgxF20VGCONJUlBk2dXNCo1XzwgWQcw7edQ0Gml+He7baqaPPAYU8ojHQMuLs26ELFu
- ziZBRkQ1ZUn3XwVjhhxeJVpL25XwuhMhi35mmdlcFpenKcD6XIkhczMSiTi+KkJss1QP2MyPhk6
- 3H5V3fN6qGCi5v7st736sjBXYxRkljwv3u0ZN5FvCOA+oVlc1tCLQkhoNpe3gC662vtImMt+zVQ
- ==
-X-Google-Smtp-Source: AGHT+IEED1U3Dbk26jwOcheD3Xah11zb1ZhstKva4PGt2+GzTsTuyDSlcobBR6ROrWx8r9yK5Kw6Ow==
-X-Received: by 2002:a05:6a20:2449:b0:243:a21c:3730 with SMTP id
- adf61e73a8af0-243d6f036c7mr301398637.31.1756506625214; 
- Fri, 29 Aug 2025 15:30:25 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ bh=7lLK/x0vxeiUSIhLvYmhH4s0sefCFctg4R61gIveZjQ=;
+ b=ad6OAcWXRtFAbHQqveWVyXKGn7mJtUwRCbzAa05iv1PSpjEyQkEGVTqeq0GZh3+Elg
+ GZApQ76tCyxXh1LMl0zfPkGoEz2nHmSjRJIvJ5QPMnihvQm1yM/V+cTpo5Q1q4wxTfMH
+ hbuN6y+hsijzoghheAFzVpUNtR16tQw1NpMJFo5rLiaO5ZWtX2UG/ecq+rhTsbHDA0Hk
+ axqGq4Y8u+4VJNOus/mcMeNmUsyyZ7Af0HB9J9IuGQBZb7epZJRrgieZlsUtaQxx+Qcc
+ 344M0u0wTQJL+Ty8G20M4KWR8WMfmoxgSipRLVL5O84tT6GZUhc4wGGHTbj368gtdzaD
+ GKzQ==
+X-Gm-Message-State: AOJu0YwqWFkFtAKZ0O7dWqVwqIaYxt1QIZcbOu6UsNXKUJmZJVMMb6v3
+ q37RRNPCyqsnkYCbNoXNqjgN3HTon8SOMJPgE6+IZQad0zGJ6wLc1ARBSXifHwpF1lPnjhrrpy6
+ lgv+gFR0=
+X-Gm-Gg: ASbGncuZ0xJxrmAEsRT/FnAOvM5iI1oiWjFo3kX3+BotdvrM292aRgqe9aJEqRjJzRt
+ DLDHgqWxylGP+Oh7C1/X7iYClwcTQu3c9HQ40WaT0u1s0uW8fdJu1TIaeG+P/EIiaYqx+4VCj20
+ RyNVQ34DJIEp3tQIYVuZaDTFS4vFlr6FyTd+OCorLZzWKslpC59MuirItMog8YEhdn5iWjcMSfg
+ xUpqHR2MTZRBImO4VJGtomFAriwSQGVUk18i477YEtqC4fai1uTe/W5nQ391x7vMUoeYm9CHTfN
+ Vh5zKVcFTj1S0YrnUMXFz3414xcY+lvJ66YQhEoKomYqbFjXVMvI2+DOEAgNTVsmfBnwAaKFKVe
+ Qi1vGGcNDqJjn1u/MnbKrEaFxr9l/yG4UMiAPkTOfIoTZCoxopax1d51TBCdsdPoC/dy1g44=
+X-Google-Smtp-Source: AGHT+IEevAUjssUVVkmf6Y51EVPkXAKW1XoJ5/r8IcnPFYsTNmh/N0Qn/oN3qrysd91dej5Qn4bJiQ==
+X-Received: by 2002:a05:6a20:72a4:b0:243:b144:adaa with SMTP id
+ adf61e73a8af0-243d6f7ef01mr1757482637.54.1756532537651; 
+ Fri, 29 Aug 2025 22:42:17 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.23
+ 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.42.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:30:24 -0700 (PDT)
+ Fri, 29 Aug 2025 22:42:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 71/91] linux-user: Move elf parameters to ppc/target_elf.h
-Date: Sat, 30 Aug 2025 08:24:07 +1000
-Message-ID: <20250829222427.289668-72-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 15/84] target/arm: Implement PIR_ELx, PIRE0_ELx,
+ S2PIR_EL2 registers
+Date: Sat, 30 Aug 2025 15:40:19 +1000
+Message-ID: <20250830054128.448363-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,136 +102,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/ppc/target_elf.h | 43 ++++++++++++++++++++++++++++++
- linux-user/elfload.c        | 53 -------------------------------------
- 2 files changed, 43 insertions(+), 53 deletions(-)
+ target/arm/cpregs.h |  2 ++
+ target/arm/cpu.h    |  4 +++
+ target/arm/cpu.c    |  4 +++
+ target/arm/helper.c | 70 +++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 80 insertions(+)
 
-diff --git a/linux-user/ppc/target_elf.h b/linux-user/ppc/target_elf.h
-index 2a61cd2896..9a47f18fb8 100644
---- a/linux-user/ppc/target_elf.h
-+++ b/linux-user/ppc/target_elf.h
-@@ -10,6 +10,17 @@
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 2a4826f5c4..9efe9238c1 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -776,6 +776,8 @@ typedef enum FGTBit {
+     DO_BIT(HFGRTR, ERRIDR_EL1),
+     DO_REV_BIT(HFGRTR, NSMPRI_EL1),
+     DO_REV_BIT(HFGRTR, NTPIDR2_EL0),
++    DO_REV_BIT(HFGRTR, NPIRE0_EL1),
++    DO_REV_BIT(HFGRTR, NPIR_EL1),
  
- #include "target_ptrace.h"
+     /* Trap bits in HDFGRTR_EL2 / HDFGWTR_EL2, starting from bit 0. */
+     DO_BIT(HDFGRTR, DBGBCRN_EL1),
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index c15d79a106..9eeecd45a3 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -369,6 +369,9 @@ typedef struct CPUArchState {
+         uint64_t tcr2_el[3];
+         uint64_t vtcr_el2; /* Virtualization Translation Control.  */
+         uint64_t vstcr_el2; /* Secure Virtualization Translation Control. */
++        uint64_t pir_el[4]; /* PIRE0_EL1, PIR_EL1, PIR_EL2, PIR_EL3 */
++        uint64_t pire0_el2;
++        uint64_t s2pir_el2;
+         uint32_t c2_data; /* MPU data cacheable bits.  */
+         uint32_t c2_insn; /* MPU instruction cacheable bits.  */
+         union { /* MMU domain access control register
+@@ -1729,6 +1732,7 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
+ #define SCR_ENTP2             (1ULL << 41)
+ #define SCR_TCR2EN            (1ULL << 43)
+ #define SCR_SCTLR2EN          (1ULL << 44)
++#define SCR_PIEN              (1ULL << 45)
+ #define SCR_GPF               (1ULL << 48)
+ #define SCR_NSE               (1ULL << 62)
  
-+#define ELF_MACHINE             PPC_ELF_MACHINE
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 27a4610da5..bf4bb04d95 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -650,6 +650,10 @@ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el)
+             if (cpu_isar_feature(aa64_sctlr2, cpu)) {
+                 env->cp15.scr_el3 |= SCR_SCTLR2EN;
+             }
++            if (cpu_isar_feature(aa64_s1pie, cpu) ||
++                cpu_isar_feature(aa64_s2pie, cpu)) {
++                env->cp15.scr_el3 |= SCR_PIEN;
++            }
+         }
+ 
+         if (target_el == 2) {
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 167362e32c..638d32fd80 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -747,6 +747,10 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
+         if (cpu_isar_feature(aa64_sctlr2, cpu)) {
+             valid_mask |= SCR_SCTLR2EN;
+         }
++        if (cpu_isar_feature(aa64_s1pie, cpu) ||
++            cpu_isar_feature(aa64_s2pie, cpu)) {
++            valid_mask |= SCR_PIEN;
++        }
+     } else {
+         valid_mask &= ~(SCR_RW | SCR_ST);
+         if (cpu_isar_feature(aa32_ras, cpu)) {
+@@ -4575,6 +4579,11 @@ static void define_arm_vh_e2h_redirects_aliases(ARMCPU *cpu)
+           "SCXTNUM_EL1", "SCXTNUM_EL2", "SCXTNUM_EL12",
+           isar_feature_aa64_scxtnum },
+ 
++        { K(3, 0, 10, 2, 3), K(3, 4, 10, 2, 3), K(3, 5, 10, 2, 3),
++          "PIR_EL1", "PIR_EL2", "PIR_EL12", isar_feature_aa64_s1pie },
++        { K(3, 0, 10, 2, 2), K(3, 4, 10, 2, 2), K(3, 5, 10, 2, 2),
++          "PIRE0_EL1", "PIRE0_EL2", "PIRE0_EL12", isar_feature_aa64_s1pie },
 +
-+#ifdef TARGET_PPC64
-+# define elf_check_arch(x)      ((x) == EM_PPC64)
-+# define ELF_CLASS              ELFCLASS64
-+#else
-+# define ELF_CLASS              ELFCLASS32
-+# define EXSTACK_DEFAULT        true
-+#endif
-+#define ELF_ARCH                EM_PPC
-+
- #define HAVE_ELF_HWCAP          1
- #define HAVE_ELF_HWCAP2         1
- #define HAVE_ELF_CORE_DUMP      1
-@@ -26,4 +37,36 @@ typedef struct target_elf_gregset_t {
+         /* TODO: ARMv8.2-SPE -- PMSCR_EL2 */
+         /* TODO: ARMv8.4-Trace -- TRFCR_EL2 */
      };
- } target_elf_gregset_t;
+@@ -6143,6 +6152,60 @@ static const ARMCPRegInfo tcr2_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.tcr2_el[2]) },
+ };
  
-+#ifndef TARGET_PPC64
-+# define VDSO_HEADER  "vdso-32.c.inc"
-+#elif TARGET_BIG_ENDIAN
-+# define VDSO_HEADER  "vdso-64.c.inc"
-+#else
-+# define VDSO_HEADER  "vdso-64le.c.inc"
-+#endif
++static CPAccessResult pien_access(CPUARMState *env, const ARMCPRegInfo *ri,
++                                  bool isread)
++{
++    if (arm_feature(env, ARM_FEATURE_EL3)
++        && !(env->cp15.scr_el3 & SCR_PIEN)
++        && arm_current_el(env) < 3) {
++        return CP_ACCESS_TRAP_EL3;
++    }
++    return CP_ACCESS_OK;
++}
 +
-+/*
-+ * The requirements here are:
-+ * - keep the final alignment of sp (sp & 0xf)
-+ * - make sure the 32-bit value at the first 16 byte aligned position of
-+ *   AUXV is greater than 16 for glibc compatibility.
-+ *   AT_IGNOREPPC is used for that.
-+ * - for compatibility with glibc ARCH_DLINFO must always be defined on PPC,
-+ *   even if DLINFO_ARCH_ITEMS goes to zero or is undefined.
-+ */
-+#define DLINFO_ARCH_ITEMS       5
-+#define ARCH_DLINFO                                     \
-+    do {                                                \
-+        PowerPCCPU *cpu = POWERPC_CPU(thread_cpu);              \
-+        /*                                              \
-+         * Handle glibc compatibility: these magic entries must \
-+         * be at the lowest addresses in the final auxv.        \
-+         */                                             \
-+        NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);        \
-+        NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);        \
-+        NEW_AUX_ENT(AT_DCACHEBSIZE, cpu->env.dcache_line_size); \
-+        NEW_AUX_ENT(AT_ICACHEBSIZE, cpu->env.icache_line_size); \
-+        NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
-+    } while (0)
++static CPAccessResult pien_el1_access(CPUARMState *env, const ARMCPRegInfo *ri,
++                                      bool isread)
++{
++    CPAccessResult ret = access_tvm_trvm(env, ri, isread);
++    if (ret == CP_ACCESS_OK) {
++        ret = pien_access(env, ri, isread);
++    }
++    return ret;
++}
 +
- #endif
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index ccdd87aa12..526c90e2c1 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -130,59 +130,6 @@ typedef abi_uint        target_gid_t;
- #endif
- typedef abi_int         target_pid_t;
++static const ARMCPRegInfo s1pie_reginfo[] = {
++    { .name = "PIR_EL1", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 0, .opc2 = 3, .crn = 10, .crm = 2,
++      .access = PL1_RW, .accessfn = pien_el1_access,
++      .fgt = FGT_NPIR_EL1, .nv2_redirect_offset = 0x2a0 | NV2_REDIR_NV1,
++      .fieldoffset = offsetof(CPUARMState, cp15.pir_el[1]) },
++    { .name = "PIR_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 3, .crn = 10, .crm = 2,
++      .access = PL2_RW, .accessfn = pien_access,
++      .fieldoffset = offsetof(CPUARMState, cp15.pir_el[2]) },
++    { .name = "PIR_EL3", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 6, .opc2 = 3, .crn = 10, .crm = 2,
++      .access = PL3_RW,
++      .fieldoffset = offsetof(CPUARMState, cp15.pir_el[3]) },
++    { .name = "PIRE0_EL1", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 0, .opc2 = 2, .crn = 10, .crm = 2,
++      .access = PL1_RW, .accessfn = pien_el1_access,
++      .fgt = FGT_NPIRE0_EL1, .nv2_redirect_offset = 0x290 | NV2_REDIR_NV1,
++      .fieldoffset = offsetof(CPUARMState, cp15.pir_el[0]) },
++    { .name = "PIRE0_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 2, .crn = 10, .crm = 2,
++      .access = PL2_RW, .accessfn = pien_access,
++      .fieldoffset = offsetof(CPUARMState, cp15.pire0_el2) },
++};
++
++static const ARMCPRegInfo s2pie_reginfo[] = {
++    { .name = "S2PIR_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .opc2 = 5, .crn = 10, .crm = 2,
++      .access = PL2_RW, .accessfn = pien_access,
++      .nv2_redirect_offset = 0x2b0,
++      .fieldoffset = offsetof(CPUARMState, cp15.s2pir_el2) },
++};
++
+ void register_cp_regs_for_features(ARMCPU *cpu)
+ {
+     /* Register all the coprocessor registers based on feature bits */
+@@ -7380,6 +7443,13 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         define_arm_cp_regs(cpu, tcr2_reginfo);
+     }
  
--#ifdef TARGET_PPC
--
--#define ELF_MACHINE    PPC_ELF_MACHINE
--
--#if defined(TARGET_PPC64)
--
--#define elf_check_arch(x) ( (x) == EM_PPC64 )
--
--#define ELF_CLASS       ELFCLASS64
--
--#else
--
--#define ELF_CLASS       ELFCLASS32
--#define EXSTACK_DEFAULT true
--
--#endif
--
--#define ELF_ARCH        EM_PPC
--
--/*
-- * The requirements here are:
-- * - keep the final alignment of sp (sp & 0xf)
-- * - make sure the 32-bit value at the first 16 byte aligned position of
-- *   AUXV is greater than 16 for glibc compatibility.
-- *   AT_IGNOREPPC is used for that.
-- * - for compatibility with glibc ARCH_DLINFO must always be defined on PPC,
-- *   even if DLINFO_ARCH_ITEMS goes to zero or is undefined.
-- */
--#define DLINFO_ARCH_ITEMS       5
--#define ARCH_DLINFO                                     \
--    do {                                                \
--        PowerPCCPU *cpu = POWERPC_CPU(thread_cpu);              \
--        /*                                              \
--         * Handle glibc compatibility: these magic entries must \
--         * be at the lowest addresses in the final auxv.        \
--         */                                             \
--        NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);        \
--        NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);        \
--        NEW_AUX_ENT(AT_DCACHEBSIZE, cpu->env.dcache_line_size); \
--        NEW_AUX_ENT(AT_ICACHEBSIZE, cpu->env.icache_line_size); \
--        NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
--    } while (0)
--
--#ifndef TARGET_PPC64
--# define VDSO_HEADER  "vdso-32.c.inc"
--#elif TARGET_BIG_ENDIAN
--# define VDSO_HEADER  "vdso-64.c.inc"
--#else
--# define VDSO_HEADER  "vdso-64le.c.inc"
--#endif
--
--#endif
--
- #ifdef TARGET_LOONGARCH64
- 
- #define ELF_CLASS   ELFCLASS64
++    if (cpu_isar_feature(aa64_s1pie, cpu)) {
++        define_arm_cp_regs(cpu, s1pie_reginfo);
++    }
++    if (cpu_isar_feature(aa64_s2pie, cpu)) {
++        define_arm_cp_regs(cpu, s2pie_reginfo);
++    }
++
+     if (cpu_isar_feature(any_predinv, cpu)) {
+         define_arm_cp_regs(cpu, predinv_reginfo);
+     }
 -- 
 2.43.0
 
