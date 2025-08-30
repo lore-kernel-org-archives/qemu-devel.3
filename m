@@ -4,127 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A285FCA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B62CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNfT-0006VI-Gg; Sat, 30 Aug 2025 11:39:03 -0400
+	id 1usNqE-0000MB-4x; Sat, 30 Aug 2025 11:50:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1us5OE-0006fq-Az
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:08:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1us5OC-0005J9-1k
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:08:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756498079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a2Fm5+NKWTXNmbcMVUNijv6+ysMm9REmdd9pZ77LGmk=;
- b=OOfjKHyQiPnVqcRNekwG6ACoHEbyYTzzMsQOr5ykO6umDDUWSuSxdgtONwx013DCtMV8g5
- LWjU+2vRMaX6Ms8TlY8y5E7KLxL84O+rcWFB+T99rrjBH97dEF9vUAEt52t3JpSK8ialq2
- 2UsGsd9rg5GFzxZgEfBxeoaJ+qRzM6c=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-308-6wn0r6gqNPO9fqRX0dgNDA-1; Fri, 29 Aug 2025 16:07:58 -0400
-X-MC-Unique: 6wn0r6gqNPO9fqRX0dgNDA-1
-X-Mimecast-MFC-AGG-ID: 6wn0r6gqNPO9fqRX0dgNDA_1756498077
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-325e31cece1so3633068a91.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 13:07:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1usBg3-0003as-VW; Fri, 29 Aug 2025 22:50:51 -0400
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1usBg1-00087L-Bu; Fri, 29 Aug 2025 22:50:51 -0400
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-7fd454e65cdso100275485a.2; 
+ Fri, 29 Aug 2025 19:50:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1756522248; x=1757127048; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j3cm0Mg08qHhHYH4vjziiJMKFR53qXZs+LCPZ4kO6b4=;
+ b=jGVuTtrPgH51kBPoitQbSPItYsrSqJK008uQtHVrrTxiJceMnSM4PqP/HMWPfWGkUV
+ gu4B3guORIJjKkN8217syqjXSdD7DJ2Cw8wmfpuZSNiCkKGK8SKK3+MrRqWVsSygNQGN
+ aJ4dvcYvM6RSCGD9J+7FrY8DZMvhCe4DMOlTe8YAVq4mDh6wYFc3NaPrSEn2THoyja6u
+ 9Reis9IT+6fELUAK665nbWmd4qZxZRnspi73r2WLrsyUgcPYgJWVjD850DPSiRJwZXDK
+ eKJC/l271NUlWumsuVDIwdFcIsCqARlvyKM70z6T1uPz5/IFGVEGxopIe9QY+SfTvkfE
+ 0DfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756498077; x=1757102877;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756522248; x=1757127048;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a2Fm5+NKWTXNmbcMVUNijv6+ysMm9REmdd9pZ77LGmk=;
- b=O5CYYNI1LTT6sCLM3oTMVIb0HotzcNCd53CJMGCJF/5fdQOv4v6U1YGMdeQHFqlTUV
- PCjBvZkwIDA4lai8eWfm5olr+8JEEe3ChkKpVHxBLY1h4+8Qzk+XVKKyM2t8TZogxG43
- hyOZIDRXfu0BoTIy7p8GZyPRcoxS+y03amoZ12CZR/skKXXkkdTIWjNqBR3CSsWGHOra
- kPHl/cKoCUDV87XWbqetCfLI1ctI5qqIdBomd4JgFKOPM8FHVJaFrrSvUczYqBw0nxcH
- fqky5rwaqMf3YU9m7rN+ENPFJA9AqUwmtO04PBJxZGPkhhpikpcr+wh26ATRJXz7bdN4
- UzWw==
-X-Gm-Message-State: AOJu0YwH3XZfjjZKqLiKeyxHBx8BF1Q4oD7ZwNdemLQ+SDx8nhbu1Jp6
- 0PKRGVgSdaKQHKk9l3TSBCOv2KOYgxkrYPBDqKuLCcbBSL8PWIrcHK9tNGcucOVjM9TWam6ztLM
- 5tFBbwIaRL1BmFvD/Ke/OPlE9X8+BDui26xraxGY5qq2UBLXnLuTb9kef
-X-Gm-Gg: ASbGncsw1lKCp2sU/9WAuBlVrr+4kKnI4RIa7juMYb+nAtF7/tqyg/n4drRX1QMK0b5
- DbFzDUjC1qLbzJ4G/J0cDqlsrY8kWC8kW5QpE0DwiwQK8lwcPk0BG23Qf5hjv+NViRmg+SQ2eXP
- IzKULE9StB47HnDtSmgq14F/LNFuTy4l13p4JRxWASgJmQKcKWXPNJ55gtUqVFP5tUGbQ64HZ54
- ezfBWvjEc/Y+nIJLl7P5sBTtxmJcMW/owJPQLWhGoMjr8iH0TdOTFyA4tG3Wc6rwSMg+QPTpa66
- pY4fP8SxO2i9eMHTHNNbGnuWSbD2Uy2vshVySs6oVGo6fMowXBh2IA==
-X-Received: by 2002:a17:90b:2e4d:b0:31e:b77c:1f09 with SMTP id
- 98e67ed59e1d1-3251774b61dmr39677304a91.19.1756498074254; 
- Fri, 29 Aug 2025 13:07:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGBpY2vjGIkl3mZJ3ALCGw3W7zmfq2ZrqVIEI1rdX9aWjbXQx3UegocbzhliExdBEQBCsmFkw==
-X-Received: by 2002:a17:90b:2e4d:b0:31e:b77c:1f09 with SMTP id
- 98e67ed59e1d1-3251774b61dmr39677164a91.19.1756498071636; 
- Fri, 29 Aug 2025 13:07:51 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.47.195.108])
+ bh=j3cm0Mg08qHhHYH4vjziiJMKFR53qXZs+LCPZ4kO6b4=;
+ b=sgVYkrh7wj8O1eLxXhyjxY2k8aHXlZUIDwD4EPFetzsWQCieCKkS3FQetV1gLONo2U
+ X2E0ws/73H4KyQNgpOl6DtbVSzB5FLpvNIhyEiMRK6BKqP+3nCniGZ2WKC7SdGBW5IW1
+ 9PA3h337lRvtUW9a0L7SDJdkWkQZOJo2rsvLl7a4f5Cnnl6xic+ObXWcpDeFVSXtG19x
+ WuoNgOUQag+pNK3l4+O4mKug1aT/kMtKim2ZkG0p4Dg9OcJP2RXeBL7dxUepX8+5bhxr
+ cmRodm5nxl+qBI4Wf1/xta6hCl+XtnF/wr+TuIItFbLeWSUR56IkB36gVSgReimEUpkw
+ B3Ug==
+X-Gm-Message-State: AOJu0Yyp+MchIrSHAKo12Qfm9mNPG8keD/8wWOGfpfQ8WqY/w/AGUpKY
+ u6lSkbrCZLElTk8Cf9B9lEPF9mQCF63iKLc990MPxVn0KVTvvLxyDHkWXheL6Q==
+X-Gm-Gg: ASbGnctwTEdMHasVYdoiXqrguKVwEwZYEPz6DhZtQGdJUZnJgcAipx9xpNBRvUwk+sy
+ RXMVBUVQanVTQfNEbNMaO3EA0Q5LVO6RK0bvK+e8Gq0+bQxl0hUFCXjoGgsR/LZqpl4bb93UopY
+ rJSI1L4C1H3qFAwLdk0Gygt8zuYh/pk4miUaJecj0frVgZcREWR8zzo4EW7yqmLuMLSc3SXylz4
+ FfLHW482oKpWxKeOYbWmOfDN2RybvIRBv3WcE7BIEx/SpPnq8R01bCNGqpFbooehD0fO/MxqIE4
+ wSAoBN+gKXCp2Y8hVxCq3rlcgjyo4TuMv372eWn5dNNRENlrU0EH2H8KLG38tbBGKp8I9Q7+gc0
+ 0cfM9UlVkP1epE7g+LhMRGXpl0vf8Gca/o9NYfxXKWvkqxBvwtX7WVGGo0EKhYl4v9h/MHs9VV+
+ Ljee4toOu2GtfQulF6
+X-Google-Smtp-Source: AGHT+IGm5K3vhxn/n2Iuhyh9GwzoTKCBXM4mGj0Uu7vc/4P+n2Idoa5ygxR+fWN6Qt9MfFUKK2jbOg==
+X-Received: by 2002:a05:620a:4016:b0:7e8:2604:bdab with SMTP id
+ af79cd13be357-7ff2b0d75f3mr88206485a.47.1756522247554; 
+ Fri, 29 Aug 2025 19:50:47 -0700 (PDT)
+Received: from localhost.localdomain
+ (wn-campus-nat-129-97-124-90.dynamic.uwaterloo.ca. [129.97.124.90])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327d8f66f16sm3570543a91.0.2025.08.29.13.07.31
+ af79cd13be357-7fc0eacf1b4sm299457085a.21.2025.08.29.19.50.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 13:07:51 -0700 (PDT)
-From: Arun Menon <armenon@redhat.com>
-Date: Sat, 30 Aug 2025 01:32:04 +0530
-Subject: [PATCH v13 24/27] migration: Remove error variant of
- vmstate_save_state() function
+ Fri, 29 Aug 2025 19:50:47 -0700 (PDT)
+From: Brian Song <hibriansong@gmail.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, bernd@bsbernd.com,
+ fam@euphon.net, hibriansong@gmail.com, hreitz@redhat.com, kwolf@redhat.com,
+ stefanha@redhat.com
+Subject: [PATCH 1/4] export/fuse: add opt to enable FUSE-over-io_uring
+Date: Fri, 29 Aug 2025 22:50:22 -0400
+Message-ID: <20250830025025.3610-2-hibriansong@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250830025025.3610-1-hibriansong@gmail.com>
+References: <20250830025025.3610-1-hibriansong@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250830-propagate_tpm_error-v13-24-a4e777b7eb2c@redhat.com>
-References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
-In-Reply-To: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Steve Sistare <steven.sistare@oracle.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
- Hailiang Zhang <zhanghailiang@xfusion.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Arun Menon <armenon@redhat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=18020; i=armenon@redhat.com;
- h=from:subject:message-id; bh=1hkl0TuxMtTDC0XdBgCz3faKw7v6xH3wc1VTiv0ES74=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8Ymdj+j2FVucTn9UpxrQnYfF2Jzm3Rkxs9zW188U1rP8
- 7Hr7Z3IjlIWBjEuBlkxRZaGrwGyTQGFEZG2L6/DzGFlAhnCwMUpABNx1mJkmLrpuJG6P9Mv3p+X
- 22bphaXe3BlbGc6ksCicTyQyOcR+GyPD+rrTy8z8P0lYfw4L+Z3V8e2WRWfdnMnLD8drVm+amWT
- CCgA=
-X-Developer-Key: i=armenon@redhat.com; a=openpgp;
- fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=hibriansong@gmail.com; helo=mail-qk1-x735.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,429 +101,542 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit removes the redundant vmstate_save_state_with_err()
-function.
+This patch adds a new export option for storage-export-daemon to enable
+FUSE-over-io_uring via the switch io-uring=on|off (disableby default).
+It also implements the protocol handshake with the Linux kernel
+during the FUSE-over-io_uring initialization phase.
 
-Previously, commit 969298f9d7 introduced vmstate_save_state_with_err()
-to handle error propagation, while vmstate_save_state() existed for
-non-error scenarios.
-This is because there were code paths where vmstate_save_state_v()
-(called internally by vmstate_save_state) did not explicitly set
-errors on failure.
+See: https://docs.kernel.org/filesystems/fuse-io-uring.html
 
-This change unifies error handling by
- - updating vmstate_save_state() to accept an Error **errp argument.
- - vmstate_save_state_v() ensures errors are set directly within the errp
-   object, eliminating the need for two separate functions.
+The kernel documentation describes in detail how FUSE-over-io_uring
+works. This patch implements the Initial SQE stage shown in thediagram:
+it initializes one queue per IOThread, each currently supporting a
+single submission queue entry (SQE). When the FUSE driver sends the
+first FUSE request (FUSE_INIT), storage-export-daemon calls
+fuse_uring_start() to complete initialization, ultimately submitting
+the SQE with the FUSE_IO_URING_CMD_REGISTER command to confirm
+successful initialization with the kernel.
 
-All calls to vmstate_save_state_with_err() are replaced with
-vmstate_save_state(). This simplifies the API and improves code
-maintainability.
+We also added support for multiple IOThreads. The current Linux kernel
+requires registering $(nproc) queues when setting up FUSE-over-io_uring
+To let users customize the number of FUSE Queues (i.e., IOThreads),
+we first create nproc Ring Queues as required by the kernel, then
+distribute them in a round-robin manner to the FUSE Queues for
+registration. In addition, to support multiple in-flight requests,
+we configure each Ring Queue with FUSE_DEFAULT_RING_QUEUE_DEPTH
+entries/requests.
 
-vmstate_save_state() that only calls vmstate_save_state_v(),
-by inference, also has errors set in errp in case of failure.
-The errors are reported using error_report_err().
-If we want the function to exit on error, then &error_fatal is
-passed.
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Arun Menon <armenon@redhat.com>
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Brian Song <hibriansong@gmail.com>
 ---
- hw/display/virtio-gpu.c     |  3 ++-
- hw/pci/pci.c                |  2 +-
- hw/s390x/virtio-ccw.c       |  2 +-
- hw/scsi/spapr_vscsi.c       |  2 +-
- hw/vfio/pci.c               |  4 ++--
- hw/virtio/virtio-mmio.c     |  2 +-
- hw/virtio/virtio-pci.c      |  2 +-
- hw/virtio/virtio.c          |  6 ++++--
- include/migration/vmstate.h |  2 --
- migration/cpr.c             |  3 +--
- migration/savevm.c          | 11 ++++++++---
- migration/vmstate-types.c   | 25 ++++++++++++++++++-------
- migration/vmstate.c         | 10 ++--------
- tests/unit/test-vmstate.c   | 20 +++++++++++++++++---
- ui/vdagent.c                |  3 ++-
- 15 files changed, 61 insertions(+), 36 deletions(-)
+ block/export/fuse.c                  | 310 +++++++++++++++++++++++++--
+ docs/tools/qemu-storage-daemon.rst   |  11 +-
+ qapi/block-export.json               |   5 +-
+ storage-daemon/qemu-storage-daemon.c |   1 +
+ util/fdmon-io_uring.c                |   5 +-
+ 5 files changed, 309 insertions(+), 23 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 5dc31bc6bfb0272e29a4364ab10de2595a4bedf7..477ec700a130d77ad93346c264bb7eaa8bca76d5 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1246,7 +1246,8 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index c0ad4696ce..19bf9e5f74 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -48,6 +48,9 @@
+ #include <linux/fs.h>
+ #endif
+ 
++/* room needed in buffer to accommodate header */
++#define FUSE_BUFFER_HEADER_SIZE 0x1000
++
+ /* Prevent overly long bounce buffer allocations */
+ #define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 1024))
+ /*
+@@ -63,12 +66,59 @@
+     (FUSE_MAX_WRITE_BYTES - FUSE_IN_PLACE_WRITE_BYTES)
+ 
+ typedef struct FuseExport FuseExport;
++typedef struct FuseQueue FuseQueue;
++
++#ifdef CONFIG_LINUX_IO_URING
++#define FUSE_DEFAULT_RING_QUEUE_DEPTH 64
++#define FUSE_DEFAULT_MAX_PAGES_PER_REQ 32
++
++typedef struct FuseRingQueue FuseRingQueue;
++typedef struct FuseRingEnt {
++    /* back pointer */
++    FuseRingQueue *rq;
++
++    /* commit id of a fuse request */
++    uint64_t req_commit_id;
++
++    /* fuse request header and payload */
++    struct fuse_uring_req_header req_header;
++    void *op_payload;
++    size_t req_payload_sz;
++
++    /* The vector passed to the kernel */
++    struct iovec iov[2];
++
++    CqeHandler fuse_cqe_handler;
++} FuseRingEnt;
++
++struct FuseRingQueue {
++    int rqid;
++
++    /* back pointer */
++    FuseQueue *q;
++    FuseRingEnt *ent;
++
++    /* List entry for ring_queues */
++    QLIST_ENTRY(FuseRingQueue) next;
++};
++
++/*
++ * Round-robin distribution of ring queues across FUSE queues.
++ * This structure manages the mapping between kernel ring queues and user
++ * FUSE queues.
++ */
++typedef struct FuseRingQueueManager {
++    FuseRingQueue *ring_queues;
++    int num_ring_queues;
++    int num_fuse_queues;
++} FuseRingQueueManager;
++#endif
+ 
+ /*
+  * One FUSE "queue", representing one FUSE FD from which requests are fetched
+  * and processed.  Each queue is tied to an AioContext.
+  */
+-typedef struct FuseQueue {
++struct FuseQueue {
+     FuseExport *exp;
+ 
+     AioContext *ctx;
+@@ -109,15 +159,11 @@ typedef struct FuseQueue {
+      * Free this buffer with qemu_vfree().
+      */
+     void *spillover_buf;
+-} FuseQueue;
+ 
+-/*
+- * Verify that FuseQueue.request_buf plus the spill-over buffer together
+- * are big enough to be accepted by the FUSE kernel driver.
+- */
+-QEMU_BUILD_BUG_ON(sizeof(((FuseQueue *)0)->request_buf) +
+-                  FUSE_SPILLOVER_BUF_SIZE <
+-                  FUSE_MIN_READ_BUFFER);
++#ifdef CONFIG_LINUX_IO_URING
++    QLIST_HEAD(, FuseRingQueue) ring_queue_list;
++#endif
++};
+ 
+ struct FuseExport {
+     BlockExport common;
+@@ -133,7 +179,7 @@ struct FuseExport {
+      */
+     bool halted;
+ 
+-    int num_queues;
++    size_t num_queues;
+     FuseQueue *queues;
+     /*
+      * True if this export should follow the generic export's AioContext.
+@@ -149,6 +195,12 @@ struct FuseExport {
+     /* Whether allow_other was used as a mount option or not */
+     bool allow_other;
+ 
++#ifdef CONFIG_LINUX_IO_URING
++    bool is_uring;
++    size_t ring_queue_depth;
++    FuseRingQueueManager *ring_queue_manager;
++#endif
++
+     mode_t st_mode;
+     uid_t st_uid;
+     gid_t st_gid;
+@@ -205,7 +257,7 @@ static void fuse_attach_handlers(FuseExport *exp)
+         return;
      }
-     qemu_put_be32(f, 0); /* end of list */
  
--    return vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL);
-+    return vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL,
-+                              &error_fatal);
- }
+-    for (int i = 0; i < exp->num_queues; i++) {
++    for (size_t i = 0; i < exp->num_queues; i++) {
+         aio_set_fd_handler(exp->queues[i].ctx, exp->queues[i].fuse_fd,
+                            read_from_fuse_fd, NULL, NULL, NULL,
+                            &exp->queues[i]);
+@@ -257,6 +309,189 @@ static const BlockDevOps fuse_export_blk_dev_ops = {
+     .drained_poll  = fuse_export_drained_poll,
+ };
  
- static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 6be932d3bb67ff0c4808707db2a7b6378a90e82b..e53fd270118293ca82f40d45d8f97f62612736a1 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -926,7 +926,7 @@ void pci_device_save(PCIDevice *s, QEMUFile *f)
-      * This makes us compatible with old devices
-      * which never set or clear this bit. */
-     s->config[PCI_STATUS] &= ~PCI_STATUS_INTERRUPT;
--    vmstate_save_state(f, &vmstate_pci_device, s, NULL);
-+    vmstate_save_state(f, &vmstate_pci_device, s, NULL, &error_fatal);
-     /* Restore the interrupt status bit. */
-     pci_update_irq_status(s);
- }
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index 6a9641a03d5d3a38a4de7ceb9deffc0cc303bcff..4cb1ced001ae241c53c503ebfd7c90e336799c37 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -1130,7 +1130,7 @@ static int virtio_ccw_load_queue(DeviceState *d, int n, QEMUFile *f)
- static void virtio_ccw_save_config(DeviceState *d, QEMUFile *f)
- {
-     VirtioCcwDevice *dev = VIRTIO_CCW_DEVICE(d);
--    vmstate_save_state(f, &vmstate_virtio_ccw_dev, dev, NULL);
-+    vmstate_save_state(f, &vmstate_virtio_ccw_dev, dev, NULL, &error_fatal);
- }
- 
- static int virtio_ccw_load_config(DeviceState *d, QEMUFile *f)
-diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-index da173f48676395cc02bd00cb3efa248afed4581b..f0a7dd2b882a13deec4a4c6d2eb4aae6d2fdbeb9 100644
---- a/hw/scsi/spapr_vscsi.c
-+++ b/hw/scsi/spapr_vscsi.c
-@@ -630,7 +630,7 @@ static void vscsi_save_request(QEMUFile *f, SCSIRequest *sreq)
-     vscsi_req *req = sreq->hba_private;
-     assert(req->active);
- 
--    vmstate_save_state(f, &vmstate_spapr_vscsi_req, req, NULL);
-+    vmstate_save_state(f, &vmstate_spapr_vscsi_req, req, NULL, &error_fatal);
- 
-     trace_spapr_vscsi_save_request(req->qtag, req->cur_desc_num,
-                                    req->cur_desc_offset);
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 1ecf150ed8218e8815655d3665f14ebac4382cf9..7c41687e4bab9e35b382bfceff66e82f68abaf56 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2789,8 +2789,8 @@ static int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp)
- {
-     VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
- 
--    return vmstate_save_state_with_err(f, &vmstate_vfio_pci_config, vdev, NULL,
--                                       errp);
-+    return vmstate_save_state(f, &vmstate_vfio_pci_config, vdev, NULL,
-+                              errp);
- }
- 
- static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
-diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
-index 0a688909fc606a3c9fde933667ae8c309ab527d0..fb58c36452730cfc92a0d26ff13e01e2d6654960 100644
---- a/hw/virtio/virtio-mmio.c
-+++ b/hw/virtio/virtio-mmio.c
-@@ -613,7 +613,7 @@ static void virtio_mmio_save_extra_state(DeviceState *opaque, QEMUFile *f)
- {
-     VirtIOMMIOProxy *proxy = VIRTIO_MMIO(opaque);
- 
--    vmstate_save_state(f, &vmstate_virtio_mmio, proxy, NULL);
-+    vmstate_save_state(f, &vmstate_virtio_mmio, proxy, NULL, &error_fatal);
- }
- 
- static int virtio_mmio_load_extra_state(DeviceState *opaque, QEMUFile *f)
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index b04faa1e5c91b5cef40e54ec41d92422d16bfc13..d2595fbd55151aba2579bb01a59577c1a40b71e0 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -154,7 +154,7 @@ static void virtio_pci_save_extra_state(DeviceState *d, QEMUFile *f)
- {
-     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
- 
--    vmstate_save_state(f, &vmstate_virtio_pci, proxy, NULL);
-+    vmstate_save_state(f, &vmstate_virtio_pci, proxy, NULL, &error_fatal);
- }
- 
- static int virtio_pci_load_extra_state(DeviceState *d, QEMUFile *f)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 018803c80d13107eb4e5e63914f9c1f837ab1b19..0a68f1b6f1ddb97a968c9c03ed4f37a38484d2f9 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -2992,6 +2992,7 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
-     uint32_t guest_features_lo = (vdev->guest_features & 0xffffffff);
-     int i;
-+    Error *local_err = NULL;
- 
-     if (k->save_config) {
-         k->save_config(qbus->parent, f);
-@@ -3035,14 +3036,15 @@ int virtio_save(VirtIODevice *vdev, QEMUFile *f)
-     }
- 
-     if (vdc->vmsd) {
--        int ret = vmstate_save_state(f, vdc->vmsd, vdev, NULL);
-+        int ret = vmstate_save_state(f, vdc->vmsd, vdev, NULL, &local_err);
-         if (ret) {
-+            error_report_err(local_err);
-             return ret;
-         }
-     }
- 
-     /* Subsections */
--    return vmstate_save_state(f, &vmstate_virtio, vdev, NULL);
-+    return vmstate_save_state(f, &vmstate_virtio, vdev, NULL, &error_fatal);
- }
- 
- /* A wrapper for use as a VMState .put function */
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 056781b1c21e737583f081594d9f88b32adfd674..5fe9bbf39058d0cf97c1adab54cc516dbe8dc32a 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -1198,8 +1198,6 @@ extern const VMStateInfo vmstate_info_qlist;
- int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-                        void *opaque, int version_id, Error **errp);
- int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
--                       void *opaque, JSONWriter *vmdesc);
--int vmstate_save_state_with_err(QEMUFile *f, const VMStateDescription *vmsd,
-                        void *opaque, JSONWriter *vmdesc, Error **errp);
- int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                          void *opaque, JSONWriter *vmdesc,
-diff --git a/migration/cpr.c b/migration/cpr.c
-index 8abb6db76d2474157f804ece4c35ebfc8c22d21a..038f48f810aceb66d7988852240e2e5d9840ad1a 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -182,9 +182,8 @@ int cpr_state_save(MigrationChannel *channel, Error **errp)
-     qemu_put_be32(f, QEMU_CPR_FILE_MAGIC);
-     qemu_put_be32(f, QEMU_CPR_FILE_VERSION);
- 
--    ret = vmstate_save_state(f, &vmstate_cpr_state, &cpr_state, 0);
-+    ret = vmstate_save_state(f, &vmstate_cpr_state, &cpr_state, 0, errp);
-     if (ret) {
--        error_setg(errp, "vmstate_save_state error %d", ret);
-         qemu_fclose(f);
-         return ret;
-     }
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 71f4d8399349934134c2c02609d3ede6f61754f8..2c05b763148295d7e2095027aa143f45bc4c4676 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1056,8 +1056,8 @@ static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc,
-     if (!se->vmsd) {
-         vmstate_save_old_style(f, se, vmdesc);
-     } else {
--        ret = vmstate_save_state_with_err(f, se->vmsd, se->opaque, vmdesc,
--                                          errp);
-+        ret = vmstate_save_state(f, se->vmsd, se->opaque, vmdesc,
-+                                 errp);
-         if (ret) {
-             return ret;
-         }
-@@ -1285,6 +1285,7 @@ void qemu_savevm_state_header(QEMUFile *f)
- {
-     MigrationState *s = migrate_get_current();
-     JSONWriter *vmdesc = s->vmdesc;
-+    Error *local_err = NULL;
- 
-     trace_savevm_state_header();
-     qemu_put_be32(f, QEMU_VM_FILE_MAGIC);
-@@ -1303,7 +1304,11 @@ void qemu_savevm_state_header(QEMUFile *f)
-             json_writer_start_object(vmdesc, "configuration");
-         }
- 
--        vmstate_save_state(f, &vmstate_configuration, &savevm_state, vmdesc);
-+        vmstate_save_state(f, &vmstate_configuration, &savevm_state,
-+                           vmdesc, &local_err);
-+        if (local_err) {
-+            error_report_err(local_err);
++#ifdef CONFIG_LINUX_IO_URING
++static void fuse_uring_sqe_set_req_data(struct fuse_uring_cmd_req *req,
++                    const unsigned int rqid,
++                    const unsigned int commit_id)
++{
++    req->qid = rqid;
++    req->commit_id = commit_id;
++    req->flags = 0;
++}
++
++static void fuse_uring_sqe_prepare(struct io_uring_sqe *sqe, FuseQueue *q,
++               __u32 cmd_op)
++{
++    sqe->opcode = IORING_OP_URING_CMD;
++
++    sqe->fd = q->fuse_fd;
++    sqe->rw_flags = 0;
++    sqe->ioprio = 0;
++    sqe->off = 0;
++
++    sqe->cmd_op = cmd_op;
++    sqe->__pad1 = 0;
++}
++
++static void fuse_uring_prep_sqe_register(struct io_uring_sqe *sqe, void *opaque)
++{
++    FuseRingEnt *ent = opaque;
++    struct fuse_uring_cmd_req *req = (void *)&sqe->cmd[0];
++
++    fuse_uring_sqe_prepare(sqe, ent->rq->q, FUSE_IO_URING_CMD_REGISTER);
++
++    sqe->addr = (uint64_t)(ent->iov);
++    sqe->len = 2;
++
++    fuse_uring_sqe_set_req_data(req, ent->rq->rqid, 0);
++}
++
++static void fuse_uring_submit_register(void *opaque)
++{
++    FuseRingEnt *ent = opaque;
++    FuseExport *exp = ent->rq->q->exp;
++
++
++    aio_add_sqe(fuse_uring_prep_sqe_register, ent, &(ent->fuse_cqe_handler));
++}
++
++/**
++ * Distribute ring queues across FUSE queues using round-robin algorithm.
++ * This ensures even distribution of kernel ring queues across user-specified
++ * FUSE queues.
++ */
++static
++FuseRingQueueManager *fuse_ring_queue_manager_create(int num_fuse_queues,
++                                                    size_t ring_queue_depth,
++                                                    size_t bufsize)
++{
++    int num_ring_queues = get_nprocs();
++    FuseRingQueueManager *manager = g_new(FuseRingQueueManager, 1);
++
++    if (!manager) {
++        return NULL;
++    }
++
++    manager->ring_queues = g_new(FuseRingQueue, num_ring_queues);
++    manager->num_ring_queues = num_ring_queues;
++    manager->num_fuse_queues = num_fuse_queues;
++
++    if (!manager->ring_queues) {
++        g_free(manager);
++        return NULL;
++    }
++
++    for (int i = 0; i < num_ring_queues; i++) {
++        FuseRingQueue *rq = &manager->ring_queues[i];
++        rq->rqid = i;
++        rq->ent = g_new(FuseRingEnt, ring_queue_depth);
++
++        if (!rq->ent) {
++            for (int j = 0; j < i; j++) {
++                g_free(manager->ring_queues[j].ent);
++            }
++            g_free(manager->ring_queues);
++            g_free(manager);
++            return NULL;
 +        }
- 
-         if (vmdesc) {
-             json_writer_end_object(vmdesc);
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index c5cfd861e3aa5391245ef46bec9c90106c467e6e..a1cd7a95fa0148858dd883acf9a707b2b076d89e 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -565,10 +565,14 @@ static int put_tmp(QEMUFile *f, void *pv, size_t size,
-     const VMStateDescription *vmsd = field->vmsd;
-     void *tmp = g_malloc(size);
-     int ret;
-+    Error *local_err = NULL;
- 
-     /* Writes the parent field which is at the start of the tmp */
-     *(void **)tmp = pv;
--    ret = vmstate_save_state(f, vmsd, tmp, vmdesc);
-+    ret = vmstate_save_state(f, vmsd, tmp, vmdesc, &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
++
++        for (size_t j = 0; j < ring_queue_depth; j++) {
++            FuseRingEnt *ent = &rq->ent[j];
++            ent->rq = rq;
++            ent->req_payload_sz = bufsize - FUSE_BUFFER_HEADER_SIZE;
++            ent->op_payload = g_malloc0(ent->req_payload_sz);
++
++            if (!ent->op_payload) {
++                for (size_t k = 0; k < j; k++) {
++                    g_free(rq->ent[k].op_payload);
++                }
++                g_free(rq->ent);
++                for (int k = 0; k < i; k++) {
++                    g_free(manager->ring_queues[k].ent);
++                }
++                g_free(manager->ring_queues);
++                g_free(manager);
++                return NULL;
++            }
++
++            ent->iov[0] = (struct iovec) {
++                &(ent->req_header),
++                sizeof(struct fuse_uring_req_header)
++            };
++            ent->iov[1] = (struct iovec) {
++                ent->op_payload,
++                ent->req_payload_sz
++            };
++
++            ent->fuse_cqe_handler.cb = fuse_uring_cqe_handler;
++        }
 +    }
-     g_free(tmp);
++
++    return manager;
++}
++
++static
++void fuse_distribute_ring_queues(FuseExport *exp, FuseRingQueueManager *manager)
++{
++    int queue_index = 0;
++
++    for (int i = 0; i < manager->num_ring_queues; i++) {
++        FuseRingQueue *rq = &manager->ring_queues[i];
++
++        rq->q = &exp->queues[queue_index];
++        QLIST_INSERT_HEAD(&(rq->q->ring_queue_list), rq, next);
++
++        queue_index = (queue_index + 1) % manager->num_fuse_queues;
++    }
++}
++
++static
++void fuse_schedule_ring_queue_registrations(FuseExport *exp,
++                                            FuseRingQueueManager *manager)
++{
++    for (int i = 0; i < manager->num_fuse_queues; i++) {
++        FuseQueue *q = &exp->queues[i];
++        FuseRingQueue *rq;
++
++        QLIST_FOREACH(rq, &q->ring_queue_list, next) {
++            for (int j = 0; j < exp->ring_queue_depth; j++) {
++                aio_bh_schedule_oneshot(q->ctx, fuse_uring_submit_register,
++                                        &(rq->ent[j]));
++            }
++        }
++    }
++}
++
++static void fuse_uring_start(FuseExport *exp, struct fuse_init_out *out)
++{
++    /*
++     * Since we didn't enable the FUSE_MAX_PAGES feature, the value of
++     * fc->max_pages should be FUSE_DEFAULT_MAX_PAGES_PER_REQ, which is set by
++     * the kernel by default. Also, max_write should not exceed
++     * FUSE_DEFAULT_MAX_PAGES_PER_REQ * PAGE_SIZE.
++     */
++    size_t bufsize = out->max_write + FUSE_BUFFER_HEADER_SIZE;
++
++    if (!(out->flags & FUSE_MAX_PAGES)) {
++        bufsize = FUSE_DEFAULT_MAX_PAGES_PER_REQ * qemu_real_host_page_size()
++                         + FUSE_BUFFER_HEADER_SIZE;
++    }
++
++    exp->ring_queue_manager = fuse_ring_queue_manager_create(
++        exp->num_queues, exp->ring_queue_depth, bufsize);
++
++    if (!exp->ring_queue_manager) {
++        error_report("Failed to create ring queue manager");
++        return;
++    }
++
++    /* Distribute ring queues across FUSE queues using round-robin */
++    fuse_distribute_ring_queues(exp, exp->ring_queue_manager);
++
++    fuse_schedule_ring_queue_registrations(exp, exp->ring_queue_manager);
++}
++#endif
++
+ static int fuse_export_create(BlockExport *blk_exp,
+                               BlockExportOptions *blk_exp_args,
+                               AioContext *const *multithread,
+@@ -270,6 +505,11 @@ static int fuse_export_create(BlockExport *blk_exp,
  
-     return ret;
-@@ -676,13 +680,15 @@ static int put_qtailq(QEMUFile *f, void *pv, size_t unused_size,
-     size_t entry_offset = field->start;
-     void *elm;
-     int ret;
-+    Error *local_err = NULL;
+     assert(blk_exp_args->type == BLOCK_EXPORT_TYPE_FUSE);
  
-     trace_put_qtailq(vmsd->name, vmsd->version_id);
- 
-     QTAILQ_RAW_FOREACH(elm, pv, entry_offset) {
-         qemu_put_byte(f, true);
--        ret = vmstate_save_state(f, vmsd, elm, vmdesc);
-+        ret = vmstate_save_state(f, vmsd, elm, vmdesc, &local_err);
-         if (ret) {
-+            error_report_err(local_err);
-             return ret;
++#ifdef CONFIG_LINUX_IO_URING
++    exp->is_uring = args->io_uring;
++    exp->ring_queue_depth = FUSE_DEFAULT_RING_QUEUE_DEPTH;
++#endif
++
+     if (multithread) {
+         /* Guaranteed by common export code */
+         assert(mt_count >= 1);
+@@ -283,6 +523,10 @@ static int fuse_export_create(BlockExport *blk_exp,
+                 .exp = exp,
+                 .ctx = multithread[i],
+                 .fuse_fd = -1,
++#ifdef CONFIG_LINUX_IO_URING
++                .ring_queue_list =
++                    QLIST_HEAD_INITIALIZER(exp->queues[i].ring_queue_list),
++#endif
+             };
          }
-     }
-@@ -711,6 +717,7 @@ static gboolean put_gtree_elem(gpointer key, gpointer value, gpointer data)
-     struct put_gtree_data *capsule = (struct put_gtree_data *)data;
-     QEMUFile *f = capsule->f;
-     int ret;
-+    Error *local_err = NULL;
- 
-     qemu_put_byte(f, true);
- 
-@@ -718,16 +725,20 @@ static gboolean put_gtree_elem(gpointer key, gpointer value, gpointer data)
-     if (!capsule->key_vmsd) {
-         qemu_put_be64(f, (uint64_t)(uintptr_t)(key)); /* direct key */
      } else {
--        ret = vmstate_save_state(f, capsule->key_vmsd, key, capsule->vmdesc);
-+        ret = vmstate_save_state(f, capsule->key_vmsd, key, capsule->vmdesc,
-+                                 &local_err);
-         if (ret) {
-+            error_report_err(local_err);
-             capsule->ret = ret;
-             return true;
-         }
+@@ -296,6 +540,10 @@ static int fuse_export_create(BlockExport *blk_exp,
+             .exp = exp,
+             .ctx = exp->common.ctx,
+             .fuse_fd = -1,
++#ifdef CONFIG_LINUX_IO_URING
++            .ring_queue_list =
++                QLIST_HEAD_INITIALIZER(exp->queues[0].ring_queue_list),
++#endif
+         };
      }
  
-     /* put the data */
--    ret = vmstate_save_state(f, capsule->val_vmsd, value, capsule->vmdesc);
-+    ret = vmstate_save_state(f, capsule->val_vmsd, value, capsule->vmdesc,
-+                             &local_err);
-     if (ret) {
-+        error_report_err(local_err);
-         capsule->ret = ret;
-         return true;
-     }
-@@ -857,14 +868,14 @@ static int put_qlist(QEMUFile *f, void *pv, size_t unused_size,
-     size_t entry_offset = field->start;
-     void *elm;
-     int ret;
-+    Error *local_err = NULL;
- 
-     trace_put_qlist(field->name, vmsd->name, vmsd->version_id);
-     QLIST_RAW_FOREACH(elm, pv, entry_offset) {
-         qemu_put_byte(f, true);
--        ret = vmstate_save_state(f, vmsd, elm, vmdesc);
-+        ret = vmstate_save_state(f, vmsd, elm, vmdesc, &local_err);
-         if (ret) {
--            error_report("%s: failed to save %s (%d)", field->name,
--                         vmsd->name, ret);
-+            error_report_err(local_err);
-             return ret;
-         }
-     }
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 8d1e9eb62bb9a7506604016b0ed858855e685776..ad8e5b71ae2ce78e66a6426602e5c20405ec57c0 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -406,12 +406,6 @@ bool vmstate_section_needed(const VMStateDescription *vmsd, void *opaque)
- 
- 
- int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
--                       void *opaque, JSONWriter *vmdesc_id)
--{
--    return vmstate_save_state_v(f, vmsd, opaque, vmdesc_id, vmsd->version_id, NULL);
--}
--
--int vmstate_save_state_with_err(QEMUFile *f, const VMStateDescription *vmsd,
-                        void *opaque, JSONWriter *vmdesc_id, Error **errp)
+@@ -685,17 +933,39 @@ static bool is_regular_file(const char *path, Error **errp)
+  */
+ static ssize_t coroutine_fn
+ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+-             uint32_t max_readahead, uint32_t flags)
++             uint32_t max_readahead, const struct fuse_init_in *in)
  {
-     return vmstate_save_state_v(f, vmsd, opaque, vmdesc_id, vmsd->version_id, errp);
-@@ -512,7 +506,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
- 
-                 if (inner_field->flags & VMS_STRUCT) {
-                     ret = vmstate_save_state(f, inner_field->vmsd,
--                                             curr_elem, vmdesc_loop);
-+                                             curr_elem, vmdesc_loop, errp);
-                 } else if (inner_field->flags & VMS_VSTRUCT) {
-                     ret = vmstate_save_state_v(f, inner_field->vmsd,
-                                                curr_elem, vmdesc_loop,
-@@ -674,7 +668,7 @@ static int vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
-             qemu_put_byte(f, len);
-             qemu_put_buffer(f, (uint8_t *)vmsdsub->name, len);
-             qemu_put_be32(f, vmsdsub->version_id);
--            ret = vmstate_save_state_with_err(f, vmsdsub, opaque, vmdesc, errp);
-+            ret = vmstate_save_state(f, vmsdsub, opaque, vmdesc, errp);
-             if (ret) {
-                 return ret;
-             }
-diff --git a/tests/unit/test-vmstate.c b/tests/unit/test-vmstate.c
-index 4ff0ab632f7e08b922dfcf565f31b0e63c17f59e..cadbab3c5e2609e217e436d470d00356704f2c8f 100644
---- a/tests/unit/test-vmstate.c
-+++ b/tests/unit/test-vmstate.c
-@@ -67,9 +67,13 @@ static QEMUFile *open_test_file(bool write)
- static void save_vmstate(const VMStateDescription *desc, void *obj)
- {
-     QEMUFile *f = open_test_file(true);
-+    Error *local_err = NULL;
- 
-     /* Save file with vmstate */
--    int ret = vmstate_save_state(f, desc, obj, NULL);
-+    int ret = vmstate_save_state(f, desc, obj, NULL, &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
+-    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
++    uint64_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO
++                                     | FUSE_INIT_EXT;
++    uint64_t outargflags = 0;
++    uint64_t inargflags = in->flags;
++
++    ssize_t ret = 0;
++
++    if (inargflags & FUSE_INIT_EXT) {
++        inargflags = inargflags | (uint64_t) in->flags2 << 32;
 +    }
-     g_assert(!ret);
-     qemu_put_byte(f, QEMU_VM_EOF);
-     g_assert(!qemu_file_get_error(f));
-@@ -438,10 +442,15 @@ static const VMStateDescription vmstate_skipping = {
- 
- static void test_save_noskip(void)
- {
-+    Error *local_err = NULL;
-     QEMUFile *fsave = open_test_file(true);
-     TestStruct obj = { .a = 1, .b = 2, .c = 3, .d = 4, .e = 5, .f = 6,
-                        .skip_c_e = false };
--    int ret = vmstate_save_state(fsave, &vmstate_skipping, &obj, NULL);
-+    int ret = vmstate_save_state(fsave, &vmstate_skipping, &obj, NULL,
-+                                 &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
++
++#ifdef CONFIG_LINUX_IO_URING
++    if (exp->is_uring) {
++        if (inargflags & FUSE_OVER_IO_URING) {
++            supported_flags |= FUSE_OVER_IO_URING;
++        } else {
++            exp->is_uring = false;
++            ret = -ENODEV;
++        }
 +    }
-     g_assert(!ret);
-     g_assert(!qemu_file_get_error(fsave));
++#endif
++
++    outargflags = inargflags & supported_flags;
  
-@@ -460,10 +469,15 @@ static void test_save_noskip(void)
+     *out = (struct fuse_init_out) {
+         .major = FUSE_KERNEL_VERSION,
+         .minor = FUSE_KERNEL_MINOR_VERSION,
+         .max_readahead = max_readahead,
+         .max_write = FUSE_MAX_WRITE_BYTES,
+-        .flags = flags & supported_flags,
+-        .flags2 = 0,
++        .flags = outargflags,
++        .flags2 = outargflags >> 32,
  
- static void test_save_skip(void)
- {
-+    Error *local_err = NULL;
-     QEMUFile *fsave = open_test_file(true);
-     TestStruct obj = { .a = 1, .b = 2, .c = 3, .d = 4, .e = 5, .f = 6,
-                        .skip_c_e = true };
--    int ret = vmstate_save_state(fsave, &vmstate_skipping, &obj, NULL);
-+    int ret = vmstate_save_state(fsave, &vmstate_skipping, &obj, NULL,
-+                                 &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
-+    }
-     g_assert(!ret);
-     g_assert(!qemu_file_get_error(fsave));
+         /* libfuse maximum: 2^16 - 1 */
+         .max_background = UINT16_MAX,
+@@ -717,7 +987,7 @@ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+         .map_alignment = 0,
+     };
  
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index bc3c77f01332a4b594cba00f3f9f9a5bca4d739a..ddb91e75c64a2af09d3f01e1b4900bd253513dd7 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -992,7 +992,8 @@ static int put_cbinfo(QEMUFile *f, void *pv, size_t size,
-         }
-     }
- 
--    return vmstate_save_state(f, &vmstate_cbinfo_array, &cbinfo, vmdesc);
-+    return vmstate_save_state(f, &vmstate_cbinfo_array, &cbinfo, vmdesc,
-+                              &error_fatal);
+-    return sizeof(*out);
++    return ret < 0 ? ret : sizeof(*out);
  }
  
- static int get_cbinfo(QEMUFile *f, void *pv, size_t size,
-
+ /**
+@@ -1506,6 +1776,14 @@ fuse_co_process_request(FuseQueue *q, void *spillover_buf)
+         fuse_write_buf_response(q->fuse_fd, req_id, out_hdr,
+                                 out_data_buffer, ret);
+         qemu_vfree(out_data_buffer);
++#ifdef CONFIG_LINUX_IO_URING
++    /* Handle FUSE-over-io_uring initialization */
++    if (unlikely(opcode == FUSE_INIT && exp->is_uring)) {
++        struct fuse_init_out *out =
++            (struct fuse_init_out *)FUSE_OUT_OP_STRUCT(out_buf);
++        fuse_uring_start(exp, out);
++    }
++#endif
+     } else {
+         fuse_write_response(q->fuse_fd, req_id, out_hdr,
+                             ret < 0 ? ret : 0,
+diff --git a/docs/tools/qemu-storage-daemon.rst b/docs/tools/qemu-storage-daemon.rst
+index 35ab2d7807..c5076101e0 100644
+--- a/docs/tools/qemu-storage-daemon.rst
++++ b/docs/tools/qemu-storage-daemon.rst
+@@ -78,7 +78,7 @@ Standard options:
+ .. option:: --export [type=]nbd,id=<id>,node-name=<node-name>[,name=<export-name>][,writable=on|off][,bitmap=<name>]
+   --export [type=]vhost-user-blk,id=<id>,node-name=<node-name>,addr.type=unix,addr.path=<socket-path>[,writable=on|off][,logical-block-size=<block-size>][,num-queues=<num-queues>]
+   --export [type=]vhost-user-blk,id=<id>,node-name=<node-name>,addr.type=fd,addr.str=<fd>[,writable=on|off][,logical-block-size=<block-size>][,num-queues=<num-queues>]
+-  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>[,growable=on|off][,writable=on|off][,allow-other=on|off|auto]
++  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>[,growable=on|off][,writable=on|off][,allow-other=on|off|auto][,io-uring=on|off]
+   --export [type=]vduse-blk,id=<id>,node-name=<node-name>,name=<vduse-name>[,writable=on|off][,num-queues=<num-queues>][,queue-size=<queue-size>][,logical-block-size=<block-size>][,serial=<serial-number>]
+ 
+   is a block export definition. ``node-name`` is the block node that should be
+@@ -111,10 +111,11 @@ Standard options:
+   that enabling this option as a non-root user requires enabling the
+   user_allow_other option in the global fuse.conf configuration file.  Setting
+   ``allow-other`` to auto (the default) will try enabling this option, and on
+-  error fall back to disabling it.
+-
+-  The ``vduse-blk`` export type takes a ``name`` (must be unique across the host)
+-  to create the VDUSE device.
++  error fall back to disabling it. Once ``io-uring`` is enabled (off by default),
++  the FUSE-over-io_uring-related settings will be initialized to bypass the
++  traditional /dev/fuse communication mechanism and instead use io_uring to
++  handle FUSE operations. The ``vduse-blk`` export type takes a ``name``
++  (must be unique across the host) to create the VDUSE device.
+   ``num-queues`` sets the number of virtqueues (the default is 1).
+   ``queue-size`` sets the virtqueue descriptor table size (the default is 256).
+ 
+diff --git a/qapi/block-export.json b/qapi/block-export.json
+index 9ae703ad01..37f2fc47e2 100644
+--- a/qapi/block-export.json
++++ b/qapi/block-export.json
+@@ -184,12 +184,15 @@
+ #     mount the export with allow_other, and if that fails, try again
+ #     without.  (since 6.1; default: auto)
+ #
++# @io-uring: Use FUSE-over-io-uring.  (since 10.2; default: false)
++#
+ # Since: 6.0
+ ##
+ { 'struct': 'BlockExportOptionsFuse',
+   'data': { 'mountpoint': 'str',
+             '*growable': 'bool',
+-            '*allow-other': 'FuseExportAllowOther' },
++            '*allow-other': 'FuseExportAllowOther',
++            '*io-uring': 'bool' },
+   'if': 'CONFIG_FUSE' }
+ 
+ ##
+diff --git a/storage-daemon/qemu-storage-daemon.c b/storage-daemon/qemu-storage-daemon.c
+index eb72561358..0cd4cd2b58 100644
+--- a/storage-daemon/qemu-storage-daemon.c
++++ b/storage-daemon/qemu-storage-daemon.c
+@@ -107,6 +107,7 @@ static void help(void)
+ #ifdef CONFIG_FUSE
+ "  --export [type=]fuse,id=<id>,node-name=<node-name>,mountpoint=<file>\n"
+ "           [,growable=on|off][,writable=on|off][,allow-other=on|off|auto]\n"
++"           [,io-uring=on|off]"
+ "                         export the specified block node over FUSE\n"
+ "\n"
+ #endif /* CONFIG_FUSE */
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index d2433d1d99..68d3fe8e01 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -452,10 +452,13 @@ static const FDMonOps fdmon_io_uring_ops = {
+ void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+ {
+     int ret;
++    int flags;
+ 
+     ctx->io_uring_fd_tag = NULL;
++    flags = IORING_SETUP_SQE128;
+ 
+-    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
++    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES,
++                            &ctx->fdmon_io_uring, flags);
+     if (ret != 0) {
+         error_setg_errno(errp, -ret, "Failed to initialize io_uring");
+         return;
 -- 
-2.51.0
+2.45.2
 
 
