@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1DDCA1000
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41748CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNmC-0006Pr-KN; Sat, 30 Aug 2025 11:46:07 -0400
+	id 1usNpY-00072B-4P; Sat, 30 Aug 2025 11:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bu-0004sO-N4
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:18 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1usC0c-0007Jt-Ij
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 23:12:06 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7bs-0003vz-MU
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:30:18 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-32326e2f0b3so2136002a91.2
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:30:15 -0700 (PDT)
+ id 1usC0a-0001Th-O4
+ for qemu-devel@nongnu.org; Fri, 29 Aug 2025 23:12:06 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-24457fe9704so28628565ad.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 20:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506613; x=1757111413; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=suVoDXWExnW7HRwC1OURW6XQc8WcncInBLooRnaEt8k=;
- b=uaRCzHQoZ5DjNhu8BHVoXhY0w6LfdEEHxy5mZL1+e2Gmzq8SYvHi0PBDLX0NDCj4wv
- yvNzL40f38kGIwhVyV8XIyzPriucwcb/OPVu3OcWjK2ovm7YMP2hXIdk6CGmLFPga6ys
- nAUZCNT/WETa8JZNjnzZ7Yyv0Paq1da7Ecc+dZbsUxPoGLTEhxpdCi4W6gpmDht+JEbO
- V9qgdnClL9SCpYNf4fyxQfnpGnLUX3bwaUWF8J8DXD0Q5RpYOcuZ+KX6suWE4uc82/n0
- y6zkBXdWPSQq1fwHw9/34YpmbIC/9i06zXAtirJLIMvfcIaZinUXSLwz5b12gnkI2CI/
- TWPA==
+ d=linaro.org; s=google; t=1756523522; x=1757128322; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W93BYCdUb+ss8Guv9YFZD35WMY45GW2bvrGgSXT5vaA=;
+ b=kmSsIlrz35T0RI6aqU01gJEeSH0x1kMY6pnL/yPjqY24fX5ga1xEcWUMt2b0uCHFtt
+ AKGFTj9xAhQ+ulerg0AQponW9DXsFLXQAWyRkSqGavUSEWMQV6Gu9PMMLZUH2F11Sv0y
+ aD+Bf3STXWsFGZhHPfsEMJ6uX6hw3sM35bMtf0facFe2CqFuEwXbQNxXv29MZOhNOWeY
+ vqW8m9h90DU14BKJWTkATW8Gj+M3aVaKS8O8s70wxhfJqz469S2UHliNQZJKlcoAvK2/
+ yIypRxBJtwcdKNqyEWUcKN+/1bNNTTKNRIGwH+CpkwUO+exIt+SMksq0e2dQni3npl3R
+ rkOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506613; x=1757111413;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=suVoDXWExnW7HRwC1OURW6XQc8WcncInBLooRnaEt8k=;
- b=O53t5gyf+aOyEIsSFLENlE/YTQfzaYoMp2Yb5mgCj/Qxa2CAz6ikchg6Q38icCiIMs
- zK2AsUbHVT3oYXDBjjXWV1VeSxP0xQnEz7SJsN2YspIuqmMiJcaowR0wmEO0O40jzS5A
- DaM6TVOYgPa1TkZzthPYNOnB/KoEDW4h2vrKFoKc6cqRKmPFWw2KrIaKNWpZzrNxu0Vx
- KNNvt2HK6CqnxfBff8caq3oxEf2NUs6+Qvz6Xnjt8IFQGKIMKo6shGs/nevPL406DEzw
- JdL87ddeCTrD4bJyyMuSlpJxNJZJ0sjO+6sk3ToGPFZ8Bg+/sUglWJQRuBRQT6ofL0G8
- gcTQ==
-X-Gm-Message-State: AOJu0YwieuMz0swdIat6ma9Xz/Bz/Kbn4THnhlgDsn4janKVoTcGhV8K
- PtgS8bcNCdrqUbsuaq91YU+H4UuA24oFoBjx0VZskyAB/q8JwCjaXDLs6OkAapU1+0lAhp/WX5g
- 63w9hBkY=
-X-Gm-Gg: ASbGncuJ4zOX1soU9jPWW7GvYUm/1AcuJuWwogl8g08h+0jZDkqWnzmWe9mvyl2zK/h
- 5lOY2AbBSzJBciFVNFhTf5EA+a+PdTmBe0MaeiZnl5dTh/ZVo6ALUWulZ/XuM1FdA08eMqGh4zC
- qKGs7AQBHU3htN/4zcb49AP7rd0WPaM03JYavqJuXZS3uusiClJR7j8A7dAFxrAN0uYgdN6UrDd
- 5CduA+acMWm257ynzGRAa+XLPucBM47BZnR5mP/kdI+b+PCanB08Gpu8ltm26Zxm4si1iDpxkpr
- MTccJNgiNQ+R3wMz5gmqu6xjIB1tKvKn4oZjVlBlgadVIzFHaGi4qQm2IxIoq5ShPVkTIBQoBQq
- qBXMBTKG0xiQNryd3+7SGFqOVph5ZMwz36tUQgf5B2wSgn8EkX+ZKwa6l0Id4jSE=
-X-Google-Smtp-Source: AGHT+IHTWlwfLuZcPbwgDHx2mkbAw9zI2JXZ+8E7s3rKZsdBH3yHNEN2AH/BV0+s2OV4HtkWM3lLew==
-X-Received: by 2002:a17:90b:1b12:b0:323:7e80:8818 with SMTP id
- 98e67ed59e1d1-328156e5627mr326129a91.37.1756506613530; 
- Fri, 29 Aug 2025 15:30:13 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a4bb5dasm3364297b3a.55.2025.08.29.15.30.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:30:13 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 66/91] linux-user: Remove ELF_EXEC_PAGESIZE
-Date: Sat, 30 Aug 2025 08:24:02 +1000
-Message-ID: <20250829222427.289668-67-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1756523522; x=1757128322;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=W93BYCdUb+ss8Guv9YFZD35WMY45GW2bvrGgSXT5vaA=;
+ b=pqP7kpmVSPNsl5DirzQXSESknDq6v2LkU5RwiCwxlAW6DHprYEvlEGL7mRd5ep0pcI
+ 6Ws37CeTJaRBnSH8Yz0BtmnO5nu4knRtXaMePBiNPFxYGFKgBMvHSHnfgynWNVp1zULd
+ HdOiYQjpAoQXRh1VgadD3RL9HBOw/V4H9rmWOG9IDVE8+w1714Z0m2ruIGL+vr9xoJiD
+ +doQpzbnoJyyurINOvz3UKv4EtVwY9kbd7U8rZ26wHv3+NxeqKOC0SiehQKWhyFTqWYT
+ yEa+uHymAFmI7X9yfUJZklvKWC60Q0Rqd0P6Gmy+2kPrw63W5lq8XE+hE4sBZ52qcCPk
+ AJLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVkAYVj0BoOpJlVGp/5Yr+3u3LHGpBSIw0NUxoP8RKNSH3L+7c0c9OCofKIONLvPjDN/SXZkIXBQjR@nongnu.org
+X-Gm-Message-State: AOJu0YwrFcDv5ZWD8/Z2p1u1Ch0AHVtYFYSRpQlhQryoLvGvzra1O9MQ
+ HfJcBcm+4OQxSqXtSj5/69CWLiQLEcEWoFZrlcvF4O97tAxOI4YY6Ro38seOVQWi+kI=
+X-Gm-Gg: ASbGncvgPEXZaKILaWnXW03z7UIbMNvHioHiZi83c5KzIr82JD4gnRahm18OcP90YtY
+ z40BqmwVuJZl9l0LccvPcK7Y/aJykJOlaBhZN9xQiKFwgr6DOthETzKmIj3kPYzlfiw9wlNRCry
+ AfL9lAB9jQPO3nEtR61xmKE+mp0BF3Pv8eJIOaHfoGfhOqWUZlGnTqaVgYVt9VAXu8cSNYh9JHY
+ iBEsER6VizRExN66AIyPVkctbAT0peeYfP+7Cj8r3/DO7sf4yMhXE6IAO1oP4AdX2mibwfIXJLG
+ Y3q6yGkL4aOn8Jfg4iiqsILuvhtXjGESH4IEOT7DoZdDgi3da9QvFv6az/2f4FSwxA0qBwrR6nc
+ rmX7zqi0gtdQzxgb6s04pAiJsJkYpSWJp74UhDmwKn+DD6TQKFQdBZgg0BWZnvacCIEKSGXhUk1
+ U67EVu
+X-Google-Smtp-Source: AGHT+IH4wRgt2YdrgXMyrFQrfMonHWeBtRVet+XOXL06Chw+3SIAkyduF7+3uL5wvSsVl6BUODuv2w==
+X-Received: by 2002:a17:903:944:b0:240:11cd:8502 with SMTP id
+ d9443c01a7336-249448cfba5mr7920945ad.13.1756523522296; 
+ Fri, 29 Aug 2025 20:12:02 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-64.dyn.ip.vocus.au.
+ [122.150.204.64]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2490373e321sm39053745ad.55.2025.08.29.20.11.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Aug 2025 20:12:01 -0700 (PDT)
+Message-ID: <b48aad39-d408-4666-9b19-e8f1fedf1a47@linaro.org>
+Date: Sat, 30 Aug 2025 13:11:56 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 18/28] target: Use cpu_pointer_wrap_notreached for strict
+ align targets
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Yoshinori Sato
+ <ysato@users.sourceforge.jp>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250528081410.157251-1-richard.henderson@linaro.org>
+ <20250528081410.157251-19-richard.henderson@linaro.org>
+ <dee8def3-3ff7-4a86-8bcc-430f3775c1c3@tls.msk.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <dee8def3-3ff7-4a86-8bcc-430f3775c1c3@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,163 +109,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use TARGET_PAGE_SIZE instead.  If the target page size may vary,
-using a different fixed size is wrong.
+On 8/29/25 16:55, Michael Tokarev wrote:
+> On 28.05.2025 11:14, Richard Henderson wrote:
+>> Alpha, HPPA, and SH4 always use aligned addresses,
+>> and therefore never produce accesses that cross pages.
+>>
+>> Cc: Helge Deller <deller@gmx.de>
+>> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> This seems to broke booting debian on alpha, -- see
+> https://bugs.debian.org/1112285 .  I weren't able to repro it
+> though, - asked the OP to get a backtrace.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/elfload.c | 32 ++------------------------------
- 1 file changed, 2 insertions(+), 30 deletions(-)
+Ok.  I haven't reproduced this either.
+Let me know if you get more information.
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index aed390ebb3..59e6605e36 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -167,8 +167,6 @@ typedef abi_int         target_pid_t;
- 
- #define VDSO_HEADER "vdso.c.inc"
- 
--#define ELF_EXEC_PAGESIZE       4096
--
- #endif /* TARGET_I386 */
- 
- #ifdef TARGET_ARM
-@@ -180,16 +178,12 @@ typedef abi_int         target_pid_t;
- #define ELF_CLASS       ELFCLASS32
- #define EXSTACK_DEFAULT true
- 
--#define ELF_EXEC_PAGESIZE       4096
--
- #else
- /* 64 bit ARM definitions */
- 
- #define ELF_ARCH        EM_AARCH64
- #define ELF_CLASS       ELFCLASS64
- 
--#define ELF_EXEC_PAGESIZE       4096
--
- #if TARGET_BIG_ENDIAN
- # define VDSO_HEADER  "vdso-be.c.inc"
- #else
-@@ -258,8 +252,6 @@ typedef abi_int         target_pid_t;
-         NEW_AUX_ENT(AT_UCACHEBSIZE, 0);                 \
-     } while (0)
- 
--#define ELF_EXEC_PAGESIZE       4096
--
- #ifndef TARGET_PPC64
- # define VDSO_HEADER  "vdso-32.c.inc"
- #elif TARGET_BIG_ENDIAN
-@@ -280,8 +272,6 @@ typedef abi_int         target_pid_t;
- 
- #define VDSO_HEADER "vdso.c.inc"
- 
--#define ELF_EXEC_PAGESIZE        4096
--
- #endif /* TARGET_LOONGARCH64 */
- 
- #ifdef TARGET_MIPS
-@@ -300,8 +290,6 @@ typedef abi_int         target_pid_t;
- #define elf_check_abi(x) (!((x) & EF_MIPS_ABI2))
- #endif
- 
--#define ELF_EXEC_PAGESIZE        4096
--
- #endif /* TARGET_MIPS */
- 
- #ifdef TARGET_MICROBLAZE
-@@ -311,8 +299,6 @@ typedef abi_int         target_pid_t;
- #define ELF_CLASS   ELFCLASS32
- #define ELF_ARCH    EM_MICROBLAZE
- 
--#define ELF_EXEC_PAGESIZE        4096
--
- #endif /* TARGET_MICROBLAZE */
- 
- #ifdef TARGET_OPENRISC
-@@ -321,8 +307,6 @@ typedef abi_int         target_pid_t;
- #define ELF_CLASS ELFCLASS32
- #define ELF_DATA  ELFDATA2MSB
- 
--#define ELF_EXEC_PAGESIZE 8192
--
- #endif /* TARGET_OPENRISC */
- 
- #ifdef TARGET_SH4
-@@ -330,8 +314,6 @@ typedef abi_int         target_pid_t;
- #define ELF_CLASS ELFCLASS32
- #define ELF_ARCH  EM_SH
- 
--#define ELF_EXEC_PAGESIZE        4096
--
- #endif
- 
- #ifdef TARGET_M68K
-@@ -339,8 +321,6 @@ typedef abi_int         target_pid_t;
- #define ELF_CLASS       ELFCLASS32
- #define ELF_ARCH        EM_68K
- 
--#define ELF_EXEC_PAGESIZE       8192
--
- #endif
- 
- #ifdef TARGET_ALPHA
-@@ -348,8 +328,6 @@ typedef abi_int         target_pid_t;
- #define ELF_CLASS      ELFCLASS64
- #define ELF_ARCH       EM_ALPHA
- 
--#define ELF_EXEC_PAGESIZE        8192
--
- #endif /* TARGET_ALPHA */
- 
- #ifdef TARGET_S390X
-@@ -358,8 +336,6 @@ typedef abi_int         target_pid_t;
- #define ELF_DATA	ELFDATA2MSB
- #define ELF_ARCH	EM_S390
- 
--#define ELF_EXEC_PAGESIZE 4096
--
- #define VDSO_HEADER "vdso.c.inc"
- 
- #endif /* TARGET_S390X */
-@@ -376,8 +352,6 @@ typedef abi_int         target_pid_t;
- #define VDSO_HEADER "vdso-64.c.inc"
- #endif
- 
--#define ELF_EXEC_PAGESIZE 4096
--
- #endif /* TARGET_RISCV */
- 
- #ifdef TARGET_HPPA
-@@ -396,8 +370,6 @@ typedef abi_int         target_pid_t;
- #define ELF_CLASS       ELFCLASS32
- #define ELF_ARCH        EM_XTENSA
- 
--#define ELF_EXEC_PAGESIZE       4096
--
- #endif /* TARGET_XTENSA */
- 
- #ifdef TARGET_HEXAGON
-@@ -2697,7 +2669,7 @@ static int wmr_fill_region_phdr(void *opaque, vaddr start,
-     phdr->p_flags = (flags & PAGE_READ ? PF_R : 0)
-                   | (flags & PAGE_WRITE_ORG ? PF_W : 0)
-                   | (flags & PAGE_EXEC ? PF_X : 0);
--    phdr->p_align = ELF_EXEC_PAGESIZE;
-+    phdr->p_align = TARGET_PAGE_SIZE;
- 
-     bswap_phdr(phdr, 1);
-     d->phdr = phdr + 1;
-@@ -2805,7 +2777,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     offset += size_note("CORE", sizeof(struct target_elf_prpsinfo));
-     offset += size_note("CORE", sizeof(struct target_elf_prstatus)) * cpus;
-     note_size = offset - note_offset;
--    data_offset = ROUND_UP(offset, ELF_EXEC_PAGESIZE);
-+    data_offset = TARGET_PAGE_ALIGN(offset);
- 
-     /* Do not dump if the corefile size exceeds the limit. */
-     if (dumpsize.rlim_cur != RLIM_INFINITY
--- 
-2.43.0
 
+r~
 
