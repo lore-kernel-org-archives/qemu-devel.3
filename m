@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D180CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:56:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F155ECA1000
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 15:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNHD-0000Q9-U3; Sat, 30 Aug 2025 11:14:02 -0400
+	id 1usNvG-00046h-C6; Sat, 30 Aug 2025 11:55:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryj0-0001KM-By
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uryix-0008UL-2n
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 09:01:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756472457;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PB8Kdz4Nrxog6Sfp7mK37/CRD+JP3mh8G1Sat8ExiCM=;
- b=bT4dPDCC6IhhpgBzqIYfoMhUTJ3KkZmYnYRcVFEv4WqqtEqG0gygO5aQxQnr8uovOPXjHu
- LFuAZeYh3Tavx17RhoBU3grsyG2zymAT95c4PA0GuDrGI0g9xj/yJ9rXBQj8NoWzVZJcLO
- HnR87eFGvSM/cVLUiPm0onLRr6Mvyq8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-111-jKls3dVzM1efA7WNxX-fNQ-1; Fri, 29 Aug 2025 09:00:55 -0400
-X-MC-Unique: jKls3dVzM1efA7WNxX-fNQ-1
-X-Mimecast-MFC-AGG-ID: jKls3dVzM1efA7WNxX-fNQ_1756472454
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45a1b0071c1so9717495e9.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 06:00:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usELa-0005qB-Vh
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:41:55 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usELZ-00044h-6D
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:41:54 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-3278efed3b0so2120073a91.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756532511; x=1757137311; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Iwhk1HGVIv53xO1tUgspGYJaTSrp9MM6iDeDwh0Ulxk=;
+ b=AyQXkTAl6OXTW0QOwlV/XAotH1QOusAY1cx2LSdCCZ3EzQcxqJR7ww1+jLNXzf24MO
+ UOweL+iC7ID86FqvMeSJ90keB60K2XIj0e844ZIvMKgT6XjMx5jJnBJ8ldL8m/WXFghQ
+ IVAxTYAAT1FeP9892vHMqvVswlMweJLJjWvm0WNSBzW0IaAuFytb4yXtQ1HSTTFpblj4
+ FMaPw/jFo/ohyDqriAnBfUOo9htcZClUY7zPa2XBZ4I3Rlk8S3xrdgnDRVk4DQ0d9cKI
+ Iaf5onB3h48slKGtkKxeSGWKke4B3Pwv7NJFUvc7bdMKD3nKu0WPPzku28JX8Uws+U0f
+ dufQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756472454; x=1757077254;
+ d=1e100.net; s=20230601; t=1756532511; x=1757137311;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PB8Kdz4Nrxog6Sfp7mK37/CRD+JP3mh8G1Sat8ExiCM=;
- b=v8zYHbg361OhRXowApa6VidJ02owLA4Lj9sQuvVIjZzuPoqB5fbEfOYgsA+MBdu+w3
- LBXHFnfEugvAs57DmSMpRlLp+pAZ42Qouu9fTfjk/X+imRlNATtwT10Ubhr+Lp1xOetS
- eL6nA/wVYCAWHmL2MnndMmmNitVW72zY8GRyT/QOVywMDLhQR45/Vx0tVxyKML5u18fU
- 94GA4LeKrexEiZnTV8n32GuZTrey+29JJzeLx8DoMxjajYLwPRF4bSkmbskJ1b6feqrM
- sAtUT8ciyXu1BmY1/vv9Nd82nOxLM0n+DQHEHvRSRcusT1zphk3hhbC+wG8Cv3DXMqsx
- Puog==
-X-Gm-Message-State: AOJu0YyfL9DsMiA14Hhq5ac1yte2BJJxw3f7baX9UNFjQ1mDOGUcsgu2
- sKaEJCUVaqaA3SFoi1WA5b5jO0M1RBa3XRhf88/mWhucR4UXHvAMriDMIGfYBKs6ZtUPfAAOEZ/
- U3MDlKYe9t0Bbn0nh9Y6LFFkRPcdF/co0TyI6EiW1QVW0o+JS4GD5AUrk2Gc/tCBSaHwWbtQIqe
- ed3rXnJB678U8geZ2Bu9yKgQB30p9OIvnuWBwuODpu
-X-Gm-Gg: ASbGncs9tRzhsAtVk3rquZpR47+vVX3Er0CVZ//W0p0AQN44k0xLmExcTme9kDbZyhi
- 0leC9thcvPwQjmTrZF3V7SOaKiwSjAfwWyPTKGjBjkiOpA6CpzESpxL8CsdMwsmo9JARN/sg+bZ
- bF9oDK4tYXOAucfSww1IFHvtZEdSKkuITC1eiPcWv+DcAaHWu4is337/z33Fl4mObvZC5AN5l92
- u6nesVhyYGZ7LF5nN5KNrzgU7oYdja/n9ec70r2b0N457x08imCWPSNA5DXl/ezQOagIQlVc18w
- 0HCAMBPm/ym9HGV/uUE9t0QACA42fFdOD2P8LplqsN9k+lTlWSlQglkYQa7O2/88IZmOxWkrK+I
- i4L29X0Mpyb5EMoqGEV1T/Qe0c+miMccA2VrveSj2pSE=
-X-Received: by 2002:a05:600c:4f12:b0:459:dde3:1a37 with SMTP id
- 5b1f17b1804b1-45b66343ea2mr120077215e9.25.1756472453990; 
- Fri, 29 Aug 2025 06:00:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdGjxsOOQTmODX/yZn9S7o0GsDaexHFAVVO/87hJ0D90AUqtnb/U2S1+h/BoufocZvx4EpZw==
-X-Received: by 2002:a05:600c:4f12:b0:459:dde3:1a37 with SMTP id
- 5b1f17b1804b1-45b66343ea2mr120076775e9.25.1756472453487; 
- Fri, 29 Aug 2025 06:00:53 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.56.250])
+ bh=Iwhk1HGVIv53xO1tUgspGYJaTSrp9MM6iDeDwh0Ulxk=;
+ b=YMnD25ZiDMSwLf4PnK/n3brAHbWDFbUpGIAJE1+rHvi8Z/LHBIXFSah9HPnxqA9hg2
+ zm34jN1TGYTUj6EfEfBCSU39lMUWbyh3NpCQmEuVsJWJebSqFML5ck9WgNFlMl9gmEEF
+ XAXTBh6Zbu71jGZrjp/RLBPM6bns9FM1cewPGSv0e1sqE7/PIX+jMvwk0T4JSOokBGqj
+ 0Rl2I0vgjUoweRqLgfN/oGHz0M59sCRAvJbogi10eq2y3bbb/2evBhACCuoVyYJEOEzi
+ hnSiZ+lFfKlT4Kqa+5DWV06ynwsR7bin5FmqhuBYtPLyY5KfP4F0qeYIa1mI9055o3Ms
+ g1oA==
+X-Gm-Message-State: AOJu0YxhdViYQk2a7o7vSiRjeF7PyqT8EH0XCxXr4ZcdzGGFVMVKPwh0
+ KyNDWrqwNMJWdkj+qlY8lLHokeXxeE41XNHvTb3n63N0cROgNUiDUA3Lw+aLwBRlK8kGVkXNYsK
+ 7tckmJJ4=
+X-Gm-Gg: ASbGncscPWdzsLoySxIwf+EhelFESxCm4OuXC0yjBhWzkpybg1D0maPP+QU9d6XamIx
+ SJP3uio2N1JKy5CZdIJfIYGP16/zzSCjJiMQhcrKbyobfrc4iiQMvhjkUyOBM+ycs4VGGzCYm13
+ VcchHjL+Q11hlrpGpaGyb1ILR8D+z7IokhqcPMiBXc9iY+UvUJ51GaLZvvf1lem1HA4qKNc3P6q
+ 3aI/rPKKUWIJdfO9qC4zXEdfqTv8PExwEoy1Ohn+yOSs99mefQTRyCp9dPVNXxJS9sFZ61kBNu9
+ GM5W06hUcaAPSKIxSoqEwem1wLWCcZqUUlTrXBkfDY3j03iX4v8jRggxyns83BH3twvi+S5yA1n
+ NvUQrFD8RsRxGTThNStZd7v1F5m8Yc2jluQc9t75vHdSN/ZLlQR5ChDeZTamMMU0EhKrA0us=
+X-Google-Smtp-Source: AGHT+IEZ+RJB4/2vLFUV6OggUWyyd9VqDey0ACNrvjRIeKm1Hd+dpw/QQzkDKYMxJxvc+vIEmtfjBQ==
+X-Received: by 2002:a17:90b:4b8d:b0:327:c9d5:257e with SMTP id
+ 98e67ed59e1d1-3281543c7a0mr1756181a91.16.1756532511576; 
+ Fri, 29 Aug 2025 22:41:51 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6f30fe02sm115179505e9.18.2025.08.29.06.00.51
+ 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.41.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 06:00:51 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Fri, 29 Aug 2025 22:41:51 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>, Peter Xu <peterx@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 23/28] acpi: mark PMTIMER as unlocked
-Date: Fri, 29 Aug 2025 14:59:30 +0200
-Message-ID: <20250829125935.1526984-24-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250829125935.1526984-1-pbonzini@redhat.com>
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 06/84] target/arm: Skip permission check from
+ arm_cpu_get_phys_page_attrs_debug
+Date: Sat, 30 Aug 2025 15:40:10 +1000
+Message-ID: <20250830054128.448363-7-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,41 +102,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+Do not require read permission when translating addresses
+for debugging purposes.
 
-Reading QEMU_CLOCK_VIRTUAL is thread-safe, write access is NOP.
-
-This makes possible to boot Windows with large vCPUs count when
-hv-time is not used.
-
-Reproducer:
-  -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4 -m 8G WS2025.img
-fails to boot within 30min.
-
-With this fix it boots within 2-1min.
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/r/20250814160600.2327672-3-imammedo@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/acpi/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/ptw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/acpi/core.c b/hw/acpi/core.c
-index 58f8964e130..ff165828033 100644
---- a/hw/acpi/core.c
-+++ b/hw/acpi/core.c
-@@ -547,6 +547,7 @@ void acpi_pm_tmr_init(ACPIREGS *ar, acpi_update_sci_fn update_sci,
-     ar->tmr.timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, acpi_pm_tmr_timer, ar);
-     memory_region_init_io(&ar->tmr.io, memory_region_owner(parent),
-                           &acpi_pm_tmr_ops, ar, "acpi-tmr", 4);
-+    memory_region_enable_lockless_io(&ar->tmr.io);
-     memory_region_add_subregion(parent, 8, &ar->tmr.io);
- }
- 
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index d37c0ce0f1..5d85610de2 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3646,7 +3646,7 @@ static hwaddr arm_cpu_get_phys_page(CPUARMState *env, vaddr addr,
+         .in_mmu_idx = mmu_idx,
+         .in_space = arm_mmu_idx_to_security_space(env, mmu_idx),
+         .in_debug = true,
+-        .in_prot_check = PAGE_READ,
++        .in_prot_check = 0,
+     };
+     GetPhysAddrResult res = {};
+     ARMMMUFaultInfo fi = {};
 -- 
-2.51.0
+2.43.0
 
 
