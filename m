@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7D32CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF4CCA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNkx-0003i7-4Y; Sat, 30 Aug 2025 11:44:43 -0400
+	id 1usOEl-0000ii-UJ; Sat, 30 Aug 2025 12:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7Xv-0003Na-SY
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:26:11 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1usERW-0007X9-Na
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:48:03 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us7Xt-000369-Oi
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 18:26:11 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-772301f8a4cso1239015b3a.3
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 15:26:09 -0700 (PDT)
+ id 1usERV-000526-5o
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:48:02 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-b482fd89b0eso2396446a12.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756506367; x=1757111167; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756532878; x=1757137678; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OeyuONIhn7M8m2f6ZvIYRj5UQSQ10lMaLgBMOA9lrAQ=;
- b=KfXWy/Fm63w12nVyFiO/slR4AWu/Rig9AwK1e1TAFLqJmLF75EMN6eTxuY30SSW/M2
- SN3vgQAz1pkvZhPLuQtOIXOYXK0l9cIsgqInZQ+2eVCRaDxbFNvzDPN8vQYMu7OtGIJY
- Q/Hz5/oPtrnyJiCEfm8YhPKEysjglKZZ9EGN4sJKDN6vn0WsLUfMrLcF+/0VDFB45ayt
- jXmlgL6hDkHBeIO1WUb1BQYA/peMa3+F6HfzAQqu3RpaMnftPDISmZFtafCOeJossNIu
- t180Yda3JbCN/lWic62Trhi87bS0A8xHtzazB+yydQpXEgQhA0WjG5yzP75HeslJl6rz
- bHMg==
+ bh=52VfTzYDSgjyTkCxi2KMOJnfbsQ5A6/k4xx3za3L80c=;
+ b=tjNQZVlCyQGg8QTCkYcy0sFfMPV9VQx6uW2F2cdtzrHudhAzYJ0KxHUxkhd0zJY+vd
+ gXmsvdEHh9aiOJy6nBI+jVWgdq8GNtogPWl8YeQBmD53s2n7iRSFfZVz65ifh9F/qvG3
+ tWXAz1PeA0+V2+WVXzc/bx/M0c8CkTTDYHcuVmnV7hM71Ph2Sc8sse823Wkr9HLwm7o+
+ d7wjtD3k8O+sv/jY9dvlPqBl50PMevkEi2uOesWeY8olJ4HxZw0QUZ5paHoETwvjSrM0
+ yaD9/6upDVDnOdbuSUUH6EPk9AuyNG2B9vpoGTRLXm5xb8hJvrHbYMutaKQUARNNnBZF
+ QIIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756506367; x=1757111167;
+ d=1e100.net; s=20230601; t=1756532878; x=1757137678;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OeyuONIhn7M8m2f6ZvIYRj5UQSQ10lMaLgBMOA9lrAQ=;
- b=bqgUF1YcX7i1IRL5AGD53ij+97O9zOqv6/udyNCHHRrU/gzRsSouw0hBjGBZh1hGkj
- aV92IFN4Oe0BeDTh288Y0ByP8Ju6A8Wr9OFlYuJeGzfph0xqn2T20L7ROW2b/Z+Tr1iE
- sXqDt7TUc2Syt49BWfeDEs3kXONuecmaYVSuyzTi2QAAft++vIOGLKaJ71k0cM4T3P3I
- ooRE7cp337aHczK1HL9AClY/O8hiLn/APybNUatwftjrmq1KR+ABIjJ8fvwir7U815Z+
- CwIEhTC/qUavrQIrilsNTO8EfxHfN23LaxwwgisabYby7p2R8zz6HbXrEbal1A+gu4pt
- MbeQ==
-X-Gm-Message-State: AOJu0YwhtkS0ceC2NXGG+Mrt5Xazz4RMzKqyYfvtHHKZS5FRTFsh2sqb
- L1PDSxWQkbpACvkAXHEamMxzxQXc0ttRup1PzcrIvQkh/ByY5xGqbySP2MTg4FTRLTE8bxPGzQd
- eHaBsXkc=
-X-Gm-Gg: ASbGncsbr/2GZ+CKWE6S7PGMkyIgcuWFtBT/KcQvM1oNJdatVumIWwm2QOk+Z3CCejK
- hcMdEXSWTfNMlgYTuGHqfQGHDgjxSlnMYvuVPsqB4QkZn5h7pSv/XPRFLG+sLheIZAcbXLLXG/p
- +ZJ8YEMzg6TtgOYLm8hb9PtHFspki9mAUjE9qNAMkIY8KK0sSGsSfBPlilPekXkT/ThRZKO+oxh
- HpPM7fQRYLZwGhMh/mHgnryNqB0RRDuqLoXw4bjFKKXh2K0s9sWijiHoDw61baIWlU54A6XuzdS
- P7wbSRZchT6uLr/SCeI7vG4S5NvXjOnbwyDmJIInI0HYMqS7EMYuyRcbeusmtwINjBtich2qw0I
- PSPxGtOpiPwJfVsFTiCH3Cm0GxG6Abvod2cc3DG11IeBslqo6wkYVnq0M2oue
-X-Google-Smtp-Source: AGHT+IFDccpDkN0i3dfJVEAzM3vxk3oC/yNuHoZorujCn2LTVTMReAddkuNEhLofihMoiepXIRj2TQ==
-X-Received: by 2002:a05:6a00:460e:b0:772:fc2:be71 with SMTP id
- d2e1a72fcca58-7723e338532mr275928b3a.20.1756506366734; 
- Fri, 29 Aug 2025 15:26:06 -0700 (PDT)
-Received: from stoup.. (122-150-204-12.dyn.ip.vocus.au. [122.150.204.12])
+ bh=52VfTzYDSgjyTkCxi2KMOJnfbsQ5A6/k4xx3za3L80c=;
+ b=Tp1oSOiJcMnIEQ1b3SpOJ6Qk1hJb3jjkBtGMVVyovOFbc5cV5QTozCgwXcEBehvmqi
+ WWbnTERsLSQ+KsOjXco0pvFmTKnQfPV9dW/oGhYHqIlRT00SGAlcFzpr2Rx7kq55XN46
+ zjEfx8q0j3p7K7k+kaeBp1x7mPgZp5V08jE5GVdUjW4jkZoDAKvt94n15lO4BTV6hGJd
+ hDpfDqJ4qdcIGp7gmtqQrV22LP/THwXMfWgioQ/YlanYKWct/gj18P2Eogod5vuKZ1EG
+ BeHUw3cKSsQfgtKoU9IljyPrpi5mrE2UmoRvL3sK1RdUDepKFQhkr1u1rwhVV9jEbWkR
+ IDgg==
+X-Gm-Message-State: AOJu0YwknlWwr4grY8RHj8vuagPtBUzRsA8JpwEx8ehuJG4za2YjXFn1
+ lmtCGNudap4mA6XXjOikpmw/u0Kmn28zNHDuXAE/g1raLrBP4BpshuntlO9qEGMefs6mvijKWT1
+ rBRWqKko=
+X-Gm-Gg: ASbGncuqD42CdDYD1wAjiYV9JTKmoS40k4DMNCjXYg40GS8t/TvstWKgskzGDVb0zsY
+ zJovMxzEFrvvJa2rIMhruppSQ4yTJ9wSJ2KETaLtBuVTuF4FncRG4fD1bcbBwB1m/NpI6eZ3I7E
+ aMHoLlvz1+2GUIqgB7tpfkSdSL55hJqUdjEQjpU8ToyBdy0fGInPJtP5cxdekdqFNXO/gJiafD8
+ dCHKy4yUL9riybkKFgJHRTWsaYMyGWBt90IXYPEBs4RBK/G1prnPTLUBkuKDMIdJDSHUU9c/is9
+ 8kSzUEe77Z2rGFS+fE8DherT5GN+Vhqj5AR0jHI8JVMvUC/pyqfwNJkgFSme50uEYUD6628kmIo
+ lTtc16rLwFYzNNkbCxdL2iDngWzK9H7epPDR83IWDoPMFxbF9aLzxsq4K/Luotn3ctyu4GLJomw
+ ==
+X-Google-Smtp-Source: AGHT+IEqJCtImH2Oz22eyTM4pkOhpINTH+uBWpwKAXITS6N4dUZazzhGQABM2eNAavdWhfck3ZKzUQ==
+X-Received: by 2002:a17:902:cf4a:b0:246:644f:5b81 with SMTP id
+ d9443c01a7336-24944a9bab4mr12851355ad.32.1756532878248; 
+ Fri, 29 Aug 2025 22:47:58 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a71c60bsm3302493b3a.103.2025.08.29.15.26.04
+ d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.47.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 15:26:06 -0700 (PDT)
+ Fri, 29 Aug 2025 22:47:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 39/91] linux-user/aarch64: Create target_ptrace.h
-Date: Sat, 30 Aug 2025 08:23:35 +1000
-Message-ID: <20250829222427.289668-40-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 72/84] target/arm: Implement EXLOCK check during exception
+ return
+Date: Sat, 30 Aug 2025 15:41:16 +1000
+Message-ID: <20250830054128.448363-73-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250829222427.289668-1-richard.henderson@linaro.org>
-References: <20250829222427.289668-1-richard.henderson@linaro.org>
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,55 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the target_pt_regs structure from target_syscall.h, and
-rename to target_user_pt_regs, to match what's in ptrace.h.
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/aarch64/target_ptrace.h  | 14 ++++++++++++++
- linux-user/aarch64/target_syscall.h |  7 -------
- 2 files changed, 14 insertions(+), 7 deletions(-)
- create mode 100644 linux-user/aarch64/target_ptrace.h
+ target/arm/tcg/helper-a64.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/linux-user/aarch64/target_ptrace.h b/linux-user/aarch64/target_ptrace.h
-new file mode 100644
-index 0000000000..10681338ba
---- /dev/null
-+++ b/linux-user/aarch64/target_ptrace.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef AARCH64_TARGET_PTRACE_H
-+#define AARCH64_TARGET_PTRACE_H
-+
-+/* See arch/arm64/include/uapi/asm/ptrace.h. */
-+struct target_user_pt_regs {
-+    uint64_t regs[31];
-+    uint64_t sp;
-+    uint64_t pc;
-+    uint64_t pstate;
-+};
-+
-+#endif /* AARCH64_TARGET_PTRACE_H */
-diff --git a/linux-user/aarch64/target_syscall.h b/linux-user/aarch64/target_syscall.h
-index c055133725..bd05f6c7fe 100644
---- a/linux-user/aarch64/target_syscall.h
-+++ b/linux-user/aarch64/target_syscall.h
-@@ -1,13 +1,6 @@
- #ifndef AARCH64_TARGET_SYSCALL_H
- #define AARCH64_TARGET_SYSCALL_H
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index f61adf1f80..7ab7ddf7c4 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -694,6 +694,17 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+         goto illegal_return;
+     }
  
--struct target_pt_regs {
--    uint64_t        regs[31];
--    uint64_t        sp;
--    uint64_t        pc;
--    uint64_t        pstate;
--};
--
- #if TARGET_BIG_ENDIAN
- #define UNAME_MACHINE "aarch64_be"
- #else
++    /*
++     * If GetCurrentEXLOCKEN, the exception return path must use GCSPOPCX,
++     * which will set PSTATE.EXLOCK.  We need not explicitly check FEAT_GCS,
++     * because GCSCR_ELx cannot be set without it.
++     */
++    if (new_el == cur_el &&
++        (env->cp15.gcscr_el[cur_el] & GCSCR_EXLOCKEN) &&
++        !(env->pstate & PSTATE_EXLOCK)) {
++        goto illegal_return;
++    }
++
+     bql_lock();
+     arm_call_pre_el_change_hook(cpu);
+     bql_unlock();
 -- 
 2.43.0
 
