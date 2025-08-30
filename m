@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430BBCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 22:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B245CCA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 22:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usTc0-0003gD-M3; Sat, 30 Aug 2025 17:59:52 -0400
+	id 1usTe9-0005oN-I5; Sat, 30 Aug 2025 18:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usTbz-0003fg-9g
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 17:59:51 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1usTe5-0005nM-0i
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 18:02:02 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usTbx-0007vy-PK
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 17:59:51 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-324e6daaa39so3053139a91.0
- for <qemu-devel@nongnu.org>; Sat, 30 Aug 2025 14:59:49 -0700 (PDT)
+ id 1usTe3-0008Fj-Hq
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 18:02:00 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-772488c78bcso338403b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 30 Aug 2025 15:01:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756591188; x=1757195988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756591317; x=1757196117; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KpBNOd1gjcJO1ux45Mtl8htnjkMz794eiQCdcH7eGLE=;
- b=l2nZbWeQuKXE5/HYZtnsHBCNK260/q0SvCBiEqr7vu/7sx29S3vnLZXA3rzseCvm9O
- cHZN+aDagTJi2TDw+0ZXkmtIKJ0Ur4sIZXVLMKJPRxBkMocUJFKI40lhaVuKVRfUOet6
- v4B4dC/QpI9BzAjgegqN4dRU3cSQNZCUSNwYdymXOf+BSqSzofIXwlDaDPkqN3qC9F4S
- TrH2imBTnuYqERgMwGFHSDr2wuBL4TrdQDmNOi0OQwJp4qagzwMdCPiIrd7DOcQxYdYP
- hI9nTGx6yMv3ZTknioFQi7xF313miIrfJAXGMmBUPPrvmLGf+aOWq6Vnjj2RaFetvg2Y
- mfng==
+ bh=hNqvXFQ3LJkmAJC3cZaiilNJgOnumTgENWlABLjMcDU=;
+ b=U5I94qO0ArnvdPJ5Nv5dj6UAGZRP88/NZ73GfFIQ46BdN9ytNvoRmNkIXLzQsh+CgZ
+ 9irL/+uT6Ihun/FY9hn21d7Z+N8yfUj0E0aSJGhxjRNLAHAdBBC24SJKnjflZ70oN3Kz
+ tlV9hf5pHsCsQcMFkjXk7WY5xB6cRAfjOFK2YKDxA1a3EE22C+KFECpdwM4HT+B8To7Q
+ KVwIUDY97fCKG3+Ds0oVzl5nDJ8Ph0eqsgXBsvi1a0wfHqb/LrulAGnDCaqpMX0Eqs1b
+ NSmqpAMH6ckQxDsQybOeb/zDDPJGTQmascGlcZk4mk4KqfVr+KIOO1Xr9V+oLMJv0OMi
+ DbKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756591188; x=1757195988;
+ d=1e100.net; s=20230601; t=1756591317; x=1757196117;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KpBNOd1gjcJO1ux45Mtl8htnjkMz794eiQCdcH7eGLE=;
- b=v+0rucdlTlBbcC/0nIzl0ZlYEPZTeXTGnjzx0CdgiNBWrH33ydlvYnlVjDwxFg9DoU
- tSl2TP10jNe6nYAo3ocehL04jLg49ADAu9DneGF3yesRFns00Ba7j2U6Vn1MbOdf6fPs
- GNquhB1ypA93BulFH8lfXi9gp79Cm4MfozF3q9B7JJpXVF5JJQqlUymvVqE9aHnKRxWe
- y/P8t1PWvKjFcmtzQVsWWNeErZnxygrqY1LYCqDxW7uEXHjLqbX79FOLd4Q5F7w7czMP
- RLUpsj0+mCp9bOakSR3kMmYeg0m3UsFxxq5pzMFBI4kwug5vokwKf4BuwXi3lgAjSC9H
- sQ0A==
-X-Gm-Message-State: AOJu0YwictN1KNrPj5AQ81qxqu3SN79j2UIk3V2WMI2L71702inZXmf5
- DC+WChBCcTaeSqfRK5Lx4rhQ2KHCjT2Z+a1uckXrQPfZixY/lXMAoHy3ixs70gDr2OprpVh2c1G
- nevoDll0=
-X-Gm-Gg: ASbGncsX3/ybQqsxtV84svoLh/CDxnoS/UBCFuBbamVPS9SzmCySQ/YriUH3wWTIRMU
- ItpONJ2SZw6rWVxEj0ltCCto50bxJSpvW+A1b6Q6ZS999s+5QnKEj8bi0GnJ20oP5REh3QC3yW4
- /Yc3rKvnLMleKcnrIGelBeKeufUF2yZYRcsGa/H/c8BjtmqA4Ezc3/lmmyhtbRj+0e5WEPhxQHN
- oiH617IMJMSG+rT4f67teH8D+Iqze4XlnlZjliFAIX5HPuflQwfIj+9xPrFkn0lmMtLyJ0Ys7HX
- cnYK7Tr3cNMy+ai642BT82M4Whs9gl8TCGPJl+pHhDRoAqpEAzHXDWBClQ+7LLxdKVRGbdeF2Yh
- XOOuPeidYSA7O5aQLvIZ2lcGoJS7KKT27DMmjFzIOlEjvpQLJJy/4HcAqGOTghuEzbacfBw==
-X-Google-Smtp-Source: AGHT+IFLPmbLsbT/WgBNJd+9km1F2pYcrGdun+G2RDtxLtjxjhJEVWNYk8rNp3y+6WGM5x8cQTdSNA==
-X-Received: by 2002:a17:90b:55c8:b0:327:dc81:b3a9 with SMTP id
- 98e67ed59e1d1-32815437a2amr4565508a91.10.1756591187924; 
- Sat, 30 Aug 2025 14:59:47 -0700 (PDT)
-Received: from [10.118.1.198] (122-150-204-64.dyn.ip.vocus.au.
- [122.150.204.64]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7722a5f7a9csm6070691b3a.91.2025.08.30.14.59.46
+ bh=hNqvXFQ3LJkmAJC3cZaiilNJgOnumTgENWlABLjMcDU=;
+ b=NTXxLpsGd5jj4xWRceIk0ipqRf62dMeYS6d6XluklD/Jw+yRmEd/pHPLxxnmlcuDT2
+ GM9N87N/EYjolbvXgpmlkHfMn3QOcI8IbjBVWmcHN2C2d5oRtjqjvys7CV3U5cwIIhih
+ sbocrLko+93p4lhzwlESSmEAL+jtba44NzNdcAlttWMelRmNXB0/pxOncECTdE8XKIXn
+ 0uQQMthZznyx8Qb63xcJH8H0k+CLupGxnpE+jm1jS+h+A+8ken2hJyfphIziByDiN+/9
+ 5V/pKo468guDHT13fmhTcrtEZftjvkIlrSZQ4VkUJSA/cQBXIm1xcrR/7uQHGHga30ZA
+ CoAg==
+X-Gm-Message-State: AOJu0YycqfaRwbSyNYTwK3cpQ0V+FYAp0onV7JjdNMsGCkgzPaoFNjHR
+ rBmhgxbs/xZZYIvLfAiy4NXuy/pyHV8eJ/ikz2he+CUQapndCNmz5cBmF5yUjTcbxPWe7I9y6/u
+ V4o5Rvh8=
+X-Gm-Gg: ASbGncts5A+z95zc8v5LcxmguRy6MFgsi/V3MFrvwkXg9r14AsNxgXHfsGH6xVhbuNd
+ aRNMUmCnesiJwUPFX3JsGrVEBGU/klzYPJr/A5gLDKMHbZUjao1KpN15uetUc6pbyTkECpkv2cp
+ tFIBqPHAwo0jFhh3oYi0hSxq8+Y7czABZCEvk8MYzeS8jv958diBO5L8aYOWmra+ewdXH7Mi9D2
+ PEpPHgoYLkX4+ctFW0uN/lb/Fwgm8oElEvLiMOUXMsIzV+kbAfswoMpcjX6zNrWVAukbAxn+F00
+ a6uRG330/+9yDhZ55cILlljUcQxKnLvqGJZFBCtgGnMYLC0wKlenHbUjGc2zcYIKe2EPdt1bYiy
+ V8HUvK+9sBxEt7c6jpmmUDfZACNm74V96uIiPadsne8UXcWZbaZzRy8pl7ZQwdKsBfffdETszPR
+ RwQb5y
+X-Google-Smtp-Source: AGHT+IG7GQpacE1Dbf2GizJepz3SwW+207g6S2XOdPGbG4bQhX3mvEVNbWjZ20NCB524Kv/c2zU9uA==
+X-Received: by 2002:a05:6a20:12cb:b0:240:15d2:aa7c with SMTP id
+ adf61e73a8af0-243d6f04cfdmr4553756637.36.1756591316908; 
+ Sat, 30 Aug 2025 15:01:56 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-48.dyn.ip.vocus.au.
+ [122.150.204.48]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b4cd006e546sm5513262a12.4.2025.08.30.15.01.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 30 Aug 2025 14:59:47 -0700 (PDT)
-Message-ID: <93d905c1-3c1b-4aa8-a227-efeb661df972@linaro.org>
-Date: Sun, 31 Aug 2025 07:59:41 +1000
+ Sat, 30 Aug 2025 15:01:56 -0700 (PDT)
+Message-ID: <3385c184-d58f-4e69-8391-951b40ff43f3@linaro.org>
+Date: Sun, 31 Aug 2025 08:01:50 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/14] system: unconditionally enable thread naming
+Subject: Re: [PATCH v2 04/14] util: expose qemu_thread_set_name
 To: qemu-devel@nongnu.org
 References: <20250829180354.2922145-1-berrange@redhat.com>
- <20250829180354.2922145-4-berrange@redhat.com>
+ <20250829180354.2922145-5-berrange@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250829180354.2922145-4-berrange@redhat.com>
+In-Reply-To: <20250829180354.2922145-5-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,46 +105,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/30/25 04:03, Daniel P. Berrangé wrote:
-> When thread naming was introduced years ago, it was disabled by
-> default and put behind a command line flag:
+> The ability to set the thread name needs to be used in a number
+> of places, so expose the current impls as public methods.
 > 
->    commit 8f480de0c91a18d550721f8d9af969ebfbda0793
->    Author: Dr. David Alan Gilbert<dgilbert@redhat.com>
->    Date:   Thu Jan 30 10:20:31 2014 +0000
-> 
->      Add 'debug-threads' suboption to --name
-> 
-> This was done based on a concern that something might depend
-> on the historical thread naming. Thread names, however, were
-> never promised to be part of QEMU's public API. The defaults
-> will vary across platforms, so no assumptions should ever be
-> made about naming.
-> 
-> An opt-in behaviour is also unfortunately incompatible with
-> RCU which creates its thread from an constructor function
-> which is run before command line args are parsed. Thus the
-> RCU thread lacks any name.
-> 
-> libvirt has unconditionally enabled debug-threads=yes on all
-> VMs it creates for 10 years. Interestingly this DID expose a
-> bug in libvirt, as it parsed/proc/$PID/stat and could not
-> cope with a space in the thread name. This was a latent
-> pre-existing bug in libvirt though, and not a part of QEMU's
-> API.
-> 
-> Having thread names always available, will allow thread names
-> to be included in error reports and log messags QEMU prints
-> by default, which will improve ability to triage QEMU bugs.
-> 
-> Reviewed-by: Dr. David Alan Gilbert<dave@treblig.org>
 > Signed-off-by: Daniel P. Berrangé<berrange@redhat.com>
 > ---
->   docs/about/deprecated.rst |  7 +++++++
->   include/qemu/thread.h     |  1 -
->   system/vl.c               | 11 ++++++-----
->   util/qemu-thread-posix.c  | 18 +-----------------
->   util/qemu-thread-win32.c  | 27 ++++++---------------------
->   5 files changed, 20 insertions(+), 44 deletions(-)
+>   include/qemu/thread.h    |  1 +
+>   util/qemu-thread-posix.c | 30 ++++++++++++++++++------------
+>   util/qemu-thread-win32.c |  6 +++---
+>   3 files changed, 22 insertions(+), 15 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
