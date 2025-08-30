@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DE7CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BEB6CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNg9-0007qv-2o; Sat, 30 Aug 2025 11:39:45 -0400
+	id 1usNvH-0004Em-Lo; Sat, 30 Aug 2025 11:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us6og-0004a2-RE
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:39:26 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1usEMP-00065y-Js
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:45 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1us6of-0000DN-C9
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 17:39:26 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-77238a3101fso431877b3a.0
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 14:39:24 -0700 (PDT)
+ id 1usEMN-0004Dw-7h
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:45 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-b482fd89b0eso2394029a12.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756503564; x=1757108364; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ptokQmhDOhgXJltpJ8JgLkTSP1yhe8qus+CKta6WgLM=;
- b=VqgOpH0LxwwfeZ3ZKzF463PtXxVJgT5WBXw4+ghmfEC15ZUvLz1294Hc1GaS2fsAhO
- 5hwSoQWKWZHrKeFn9t0v39qY5vywuriB/rcYhmCmD4rYqtZYKAcYJpw0yn9jdN7LuMHI
- H7ldyswJxMbnDC2xP53pLKsszKqwnm4GEPLBLx7w+OcOb+oHDGLcsmB53RgwgSwLSu2u
- +q5/IEqbj7WUWn1y7arpdVBfbXxfZlXdKvfUgrnWFJBbrqETETRuWC1bkEVA9PzfS/V1
- 2Nz8wrjceg1JbW2NaKOQv7CdeJI3cfNDHWI1Rj+CBGOoOC+3qLyZ2XmstlKq2z8mzFb7
- Lwew==
+ d=linaro.org; s=google; t=1756532562; x=1757137362; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RkmMxKsmWKq3Irpj/N+FmNwynILAG2P025dwAc8eVWU=;
+ b=WhFUgx8YQDOBOWfJu5wk1/PNW2LOSgRgnybXmRLe3s2X3Bk7tGPSLSbNAl9hTrThUl
+ ZPiCrG2xLSKxJ/NyCZOYpaiXOL2GRp7ndcFRZ8n1giTbmDwSVZ/rOKyzar26Vq3+s6L4
+ rbIq19uB9lALj0HvJayXd7ZZFrE06ceirkWBSzzn8W1fPa/4RKro4ciP6mRrW+g/6sNH
+ TQ6WWRCQ5OMZZnf1NsiRvEA9dM1J1Mfo58dPP4QniZxr6wjG40LBZVKrRz3SJJaL3ktc
+ a7MoAkbqpc8Rxc5SNSKm2YZrkes+vXA0LfIOF5o4Cn/5CCsoT73jBfXEgmZ0fqU+nz5l
+ XlJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756503564; x=1757108364;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ptokQmhDOhgXJltpJ8JgLkTSP1yhe8qus+CKta6WgLM=;
- b=MeAXh4Jy0xbCObxJUvdModAxDar/VyCdM9ugaiNQKGBgkqeI+WWvn3nJ6ysUKLKkzI
- BqZVGujeO2T7KjyY7PiqZOV4WjIq3kYIk8pnzFBWzC3zHEPS3pgD6Nk4J+K9CJWkhxNt
- I/7szsDmE04CF6RZnvJW/rWcmZhHlhpZNkwG4ULPSQPafG3Vk/U43xGfOYPyaYRuWzfR
- 6CCficJ0uDp6YcF89ujcbv4Hq4aHJbTtzs/dhZAPhBVa1uwVbWLDYs/tfPAbl7kVf84K
- oqSVEVsszepAQ7YJmcUtBne0mTywPF+XCf7V3phrkw9/EWlwnso1VLGc/E/hjsGNmKoL
- HBpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLoHaIXspJncH7aQpK3qjhbT6Zvsw5ze1khp+0Mp5YvwzcAZZT2fem2Mh3/fRl58qDlHjY7RKnvT1N@nongnu.org
-X-Gm-Message-State: AOJu0YxswvvwSdbT/tjlN5cgda8i6gd2RIX3UYPXTI5JuvCdKdVrpYSM
- V6jlmm58KOwgXdv/pn4jGXa7rlr6E+wf8DdRIFUxK13RMUkJALRItHE9qSsQize3hoM=
-X-Gm-Gg: ASbGncvQ1/0RYntTXFjdk8NjnsWnuWdojxtv5IPnuePGqQovJDZabJL6SA2T3QaZWNz
- 4av633yu5SL6Kf1UicKm2cq8yCZ4Q8+Hr8J6UY0lpm98DTiwVk6Mqv0+8/pRZg2AnnTtDiL52vJ
- 4dCqMxGYaA2nVmpAvxFT3JyTy6av5moKzN6krZWipafJQqNx9uleLm0WL8909WQKQ9jTasuiuOZ
- Gw3ktgkMBQIWmHG+JCOaM7dh1FXZfIXwCrwedZEBDRcNIERP6jVLsoyJ858NX8QXvCa76R36EiP
- H0zTG9YMXAJhOSIb+Zg59ZzjStr61Oks1cZjkxeFgoDKmVahNZ4RXoXouAR1WFYPAXb6T09s2FY
- AMhmXzsdGzuFTSgkU9OgV5sBJc3WphUAhWcUYRbmpwFxRsBAf4RAeE1GrbphoZXrki5kPQfa/mS
- huvbwi
-X-Google-Smtp-Source: AGHT+IF6FR6QFRpb2C0NsvXLzQ10YQHBP6JGnq/MG7SqYniaRxmc2NA8LyJfZDJjzWPel5nNO9t+kg==
-X-Received: by 2002:a05:6a00:39a9:b0:771:58e:5b10 with SMTP id
- d2e1a72fcca58-7723e2534acmr122976b3a.8.1756503563780; 
- Fri, 29 Aug 2025 14:39:23 -0700 (PDT)
-Received: from [10.118.1.198] (122-150-204-48.dyn.ip.vocus.au.
- [122.150.204.48]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-77232248100sm2269195b3a.98.2025.08.29.14.39.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 Aug 2025 14:39:23 -0700 (PDT)
-Message-ID: <340e9737-c31d-4c25-9e93-be22641251e0@linaro.org>
-Date: Sat, 30 Aug 2025 07:39:18 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/18] cpus: document that qemu_cpu_kick() can be used for
- BQL-less operation
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, imammedo@redhat.com
-References: <20250829152909.1589668-1-pbonzini@redhat.com>
- <20250829153115.1590048-4-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1756532562; x=1757137362;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RkmMxKsmWKq3Irpj/N+FmNwynILAG2P025dwAc8eVWU=;
+ b=Kb9wOv4OtIll8TROBPObmo4BfoY8p0jX8R6e3x0ODd2SEeZWsT4pkASGXMs1Fs2wJj
+ UMV4LwVCQEDYKvuI9ZRzjOkzJaLr7q+B0sbBcas2EfuA/lnYvH/IkIBGy2lYsusN7Va3
+ XhoAKChAFv+HPPwQDmPILK1TUyWgSEjdAqiHaB/Hk3AQOvnt3UNqO4gKQEQE3TpE9usD
+ OsdtdFAvV9t6mBlK49OM2UyCHhY3WuCQS2tO2AGWJpkMGQ7wewFbS7QGCKN+hrMQ+mlM
+ kxzo/Bj51ufUYWFvkNIzsvGx5yZNsg1xZih1+53I/gg+5QUPu9Bm60OgIiIY3FqPgTb0
+ V/Ww==
+X-Gm-Message-State: AOJu0YwxQvRU0Ne8nBNvp8PAQjqyq/3tlR3e7EC5Ye48dM20W6aqfNqC
+ rsEJinXcFQWIBv3LTJhKmqYLbPSr+XicIe9J21+HnK/niqwEqg0d8jYW79bMOnwtaXWnKqV8PfB
+ cjRzOfk4=
+X-Gm-Gg: ASbGnctwUR+uE/qW8TEVTLd2gwnAX12vF/3NJPtnlPOjP7LKwP+Tn/tBqoeceWDswcl
+ bhGShsuqGG08N3oEcGOWltFJF58dOq3haunvYwM7hPih+2Yr3U5C3yB1g7tExN1Skv5zt83jSmt
+ NVlTIKY9zxptBJRgMy7oERptU1p0T6DBpPthOswLnEPh1HFphCxSzx+U6Xew7Zg2cRUHDn1ElsV
+ b31xBHmryg58zLg88U5L0IsVvpMhgWijy5eJFWpD/3UVD99KIv6adT57nXNWV3Q6lQWkbZXGv4w
+ hkz683/jASYZQy2WwyIX7xz4dfwllqy1kdvaPHjwU01s6XJ9Smj84vXOOUGqkrF9ck32uoq8lDp
+ 1SxJ7MhnFzn29UqmI8M4Mf9H3yx6JVzBYward19J72q8viJxDKK2shGv6c3nW3fgl+a1zG8I=
+X-Google-Smtp-Source: AGHT+IE2cN3MXmVubhw779QDlzhGx7t0hD/HV2rzToKMUcyZF206nYAkv7kYO3g8Uu48sJ4Dzhw4Dg==
+X-Received: by 2002:a05:6a21:32a0:b0:243:b125:16c5 with SMTP id
+ adf61e73a8af0-243d6f581f5mr1542218637.49.1756532561862; 
+ Fri, 29 Aug 2025 22:42:41 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.42.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 22:42:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250829153115.1590048-4-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 24/84] target/arm: Implement dirtybit check for PIE
+Date: Sat, 30 Aug 2025 15:40:28 +1000
+Message-ID: <20250830054128.448363-25-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,28 +101,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/30/25 01:31, Paolo Bonzini wrote:
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   include/hw/core/cpu.h | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 23bd02277f4..8b57bcd92c9 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -829,7 +829,8 @@ bool qemu_cpu_is_self(CPUState *cpu);
->    * qemu_cpu_kick:
->    * @cpu: The vCPU to kick.
->    *
-> - * Kicks @cpu's thread.
-> + * Kicks @cpu's thread to exit the accelerator.  For accelerators that
-> + * can do that, the target vCPU thread will try not to take the BQL.
->    */
->   void qemu_cpu_kick(CPUState *cpu);
->   
+Both S1PIE and S2PIE have a bit to make software tracking
+of dirty pages easier.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/internals.h      |  1 +
+ target/arm/ptw.c            | 16 ++++++++++++++++
+ target/arm/tcg/tlb_helper.c | 12 +++++++++---
+ 3 files changed, 26 insertions(+), 3 deletions(-)
 
-r~
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 1d60a4ff7d..889669c67c 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -752,6 +752,7 @@ struct ARMMMUFaultInfo {
+     bool s1ptw;
+     bool s1ns;
+     bool ea;
++    bool dirtybit;  /* FEAT_S1PIE, FEAT_S2PIE */
+ };
+ 
+ /**
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 7ddae90f69..2b753b1319 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2306,6 +2306,22 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         goto do_fault;
+     }
+ 
++    /* S1PIE and S2PIE both have a bit for software dirty page tracking. */
++    if (access_type == MMU_DATA_STORE && param.pie) {
++        /*
++         * For S1PIE, bit 7 is nDirty and both HA and HD are checked.
++         * For S2PIE, bit 7 is Dirty and only HD is checked.
++         */
++        bool bit7 = extract64(attrs, 7, 1);
++        if (regime_is_stage2(mmu_idx)
++            ? !bit7 && !param.hd
++            : bit7 && !(param.ha && param.hd)) {
++            fi->type = ARMFault_Permission;
++            fi->dirtybit = true;
++            goto do_fault;
++        }
++    }
++
+     /* If FEAT_HAFDBS has made changes, update the PTE. */
+     if (new_descriptor != descriptor) {
+         new_descriptor = arm_casq_ptw(env, descriptor, new_descriptor, ptw, fi);
+diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+index 23c72a99f5..ae2acd6727 100644
+--- a/target/arm/tcg/tlb_helper.c
++++ b/target/arm/tcg/tlb_helper.c
+@@ -24,13 +24,13 @@ bool arm_s1_regime_using_lpae_format(CPUARMState *env, ARMMMUIdx mmu_idx)
+     return regime_using_lpae_format(env, mmu_idx);
+ }
+ 
+-static inline uint32_t merge_syn_data_abort(uint32_t template_syn,
++static inline uint64_t merge_syn_data_abort(uint32_t template_syn,
+                                             ARMMMUFaultInfo *fi,
+                                             unsigned int target_el,
+                                             bool same_el, bool is_write,
+                                             int fsc)
+ {
+-    uint32_t syn;
++    uint64_t syn;
+ 
+     /*
+      * ISV is only set for stage-2 data aborts routed to EL2 and
+@@ -75,6 +75,10 @@ static inline uint32_t merge_syn_data_abort(uint32_t template_syn,
+         /* Merge the runtime syndrome with the template syndrome.  */
+         syn |= template_syn;
+     }
++
++    /* Form ISS2 at the top of the syndrome. */
++    syn |= (uint64_t)fi->dirtybit << 37;
++
+     return syn;
+ }
+ 
+@@ -176,7 +180,9 @@ void arm_deliver_fault(ARMCPU *cpu, vaddr addr,
+     int target_el = exception_target_el(env);
+     int current_el = arm_current_el(env);
+     bool same_el;
+-    uint32_t syn, exc, fsr, fsc;
++    uint32_t exc, fsr, fsc;
++    uint64_t syn;
++
+     /*
+      * We know this must be a data or insn abort, and that
+      * env->exception.syndrome contains the template syndrome set
+-- 
+2.43.0
+
 
