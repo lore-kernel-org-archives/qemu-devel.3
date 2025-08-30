@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F530CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 23:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 920BDCA0FFE
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 23:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usUYe-0003yS-48; Sat, 30 Aug 2025 19:00:29 -0400
+	id 1usUaa-0005c1-SQ; Sat, 30 Aug 2025 19:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1usUYY-0003ww-UQ; Sat, 30 Aug 2025 19:00:24 -0400
+ id 1usUaY-0005Zm-VW; Sat, 30 Aug 2025 19:02:26 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1usUYX-0006Cw-53; Sat, 30 Aug 2025 19:00:22 -0400
+ id 1usUaW-00073g-Uh; Sat, 30 Aug 2025 19:02:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=s2peyQe3P//sWNdGamIK7XkvxSqNIB5HGKwXFbfRwo0=; b=H61+a7TNdcrf4FLj
- uB1gWZuHK/JXhJEbWCURwdGxrT5mMGmAZ8fsxzfyrCIdc8JaOz8CJPXhOnKwWqwmRllrmlCCJ9oqW
- sRUIgVDu5mWtd0I0WVvnOnsW0pWA6r4+pTpSweFoj6U7w18F9zI7AM4jEp5jrpUk/U/5b1LuQjdA3
- CmqHep3L/8YioaLYoHYMD6S5odpVxbanxbk84hIwEnwZ0O2WNgEHC6EJMti9hDPQgyVd6qNTrw/Q9
- u+JGath4v0Diz9REwx2NZYIHJNzfCOXbkzTAiVO4C+Qceei4EkyxMyW+m7J8H9P2ftIDKnzglWNCo
- VkkFdJUVa9ryZUvVZA==;
+ :Subject; bh=oLnEruikFcqGa4FsV/YF/95hmcT2KmaxYImIASMTDOs=; b=Rxid9MTKckT4EIPR
+ kpwrnrJKnc0YcSRwxir6XzpgjXifO2XKERfhWFy0EqI+2bg167hhe0upJ50VnQjqO75eos4QpDofo
+ 8dMzNT/c3fTHC9jySsP86vkntkdsO6pgrDMdvMTZA1gItVGBHZRSMz23g/Jf8nJcUCk5Gjho3xDbI
+ k1jqycfx8wPdtZmVraC8CsjaEkeG4/mHPZ7KsFTTwnUdQAs94f1tYF9oDgilkF2xEwlE+6ZfxPfhx
+ jWCUCm7oUXpZaT2A8PFp0lfZgsADA//cKNUUIm8I0wkKCmAfwWPrke0ajeA+5iqvJwX46wvKltWMX
+ dSEdIa1mMuKZmgfbIw==;
 Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1usUYV-007aUU-1W;
- Sat, 30 Aug 2025 23:00:19 +0000
-Date: Sat, 30 Aug 2025 23:00:19 +0000
+ (envelope-from <dg@treblig.org>) id 1usUaV-007aUm-0C;
+ Sat, 30 Aug 2025 23:02:23 +0000
+Date: Sat, 30 Aug 2025 23:02:23 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
@@ -42,19 +42,18 @@ Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 02/14] monitor: initialize global data from a
- constructor
-Message-ID: <aLOCg9QUaJelsNf_@gallifrey>
+Subject: Re: [PATCH v2 04/14] util: expose qemu_thread_set_name
+Message-ID: <aLOC_3gDfmpNCsx7@gallifrey>
 References: <20250829180354.2922145-1-berrange@redhat.com>
- <20250829180354.2922145-3-berrange@redhat.com>
+ <20250829180354.2922145-5-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250829180354.2922145-3-berrange@redhat.com>
+In-Reply-To: <20250829180354.2922145-5-berrange@redhat.com>
 X-Chocolate: 70 percent or better cocoa solids preferably
 X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 22:59:51 up 125 days,  7:13,  1 user,  load average: 0.00, 0.00, 0.00
+X-Uptime: 23:02:19 up 125 days,  7:15,  1 user,  load average: 0.00, 0.00, 0.00
 User-Agent: Mutt/2.2.12 (2023-09-09)
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
  helo=mx.treblig.org
@@ -80,65 +79,112 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Daniel P. Berrangé (berrange@redhat.com) wrote:
-> Some monitor functions, most notably, monitor_cur() rely on global
-> data being initialized by 'monitor_init_globals()'. The latter is
-> called relatively late in startup. If code triggers error_report()
-> before monitor_init_globals() is called, QEMU will abort when
-> accessing the uninitialized monitor mutex.
-> 
-> The critical monitor global data must be initialized from a
-> constructor function, to improve the guarantee that it is done
-> before any possible calls to monitor_cur(). Not only that, but
-> the constructor must be marked to run before the default
-> constructor in case any of them trigger error reporting.
-> 
-> Note in particular that the RCU constructor will spawn a background
-> thread so we might even have non-constructor QEMU code running
-> concurrently with other constructors.
+> The ability to set the thread name needs to be used in a number
+> of places, so expose the current impls as public methods.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-
-Checked that qemu_mutex_init doesn't look like it can call
-error code; so
 
 Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 
 > ---
->  monitor/monitor.c | 14 +++++++++-----
->  1 file changed, 9 insertions(+), 5 deletions(-)
+>  include/qemu/thread.h    |  1 +
+>  util/qemu-thread-posix.c | 30 ++++++++++++++++++------------
+>  util/qemu-thread-win32.c |  6 +++---
+>  3 files changed, 22 insertions(+), 15 deletions(-)
 > 
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index c5a5d30877..da54e1b1ce 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -704,18 +704,22 @@ void monitor_cleanup(void)
+> diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+> index 3a286bb3ef..27b888ab0a 100644
+> --- a/include/qemu/thread.h
+> +++ b/include/qemu/thread.h
+> @@ -215,6 +215,7 @@ void *qemu_thread_join(QemuThread *thread);
+>  void qemu_thread_get_self(QemuThread *thread);
+>  bool qemu_thread_is_self(QemuThread *thread);
+>  G_NORETURN void qemu_thread_exit(void *retval);
+> +void qemu_thread_set_name(const char *name);
+>  
+>  struct Notifier;
+>  /**
+> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+> index 7c985b5d38..ddaa1de4dd 100644
+> --- a/util/qemu-thread-posix.c
+> +++ b/util/qemu-thread-posix.c
+> @@ -329,6 +329,21 @@ static void qemu_thread_atexit_notify(void *arg)
+>      notifier_list_notify(&thread_exit, NULL);
+>  }
+>  
+> +void qemu_thread_set_name(const char *name)
+> +{
+> +    /*
+> +     * Attempt to set the threads name; note that this is for debug, so
+> +     * we're not going to fail if we can't set it.
+> +     */
+> +# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+> +    pthread_setname_np(pthread_self(), name);
+> +# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
+> +    pthread_setname_np(name);
+> +# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
+> +    pthread_set_name_np(pthread_self(), name);
+> +# endif
+> +}
+> +
+>  typedef struct {
+>      void *(*start_routine)(void *);
+>      void *arg;
+> @@ -342,20 +357,11 @@ static void *qemu_thread_start(void *args)
+>      void *arg = qemu_thread_args->arg;
+>      void *r;
+>  
+> -    /* Attempt to set the threads name; note that this is for debug, so
+> -     * we're not going to fail if we can't set it.
+> -     */
+>      if (qemu_thread_args->name) {
+> -# if defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+> -        pthread_setname_np(pthread_self(), qemu_thread_args->name);
+> -# elif defined(CONFIG_PTHREAD_SETNAME_NP_WO_TID)
+> -        pthread_setname_np(qemu_thread_args->name);
+> -# elif defined(CONFIG_PTHREAD_SET_NAME_NP)
+> -        pthread_set_name_np(pthread_self(), qemu_thread_args->name);
+> -# endif
+> +        qemu_thread_set_name(qemu_thread_args->name);
+> +        QEMU_TSAN_ANNOTATE_THREAD_NAME(qemu_thread_args->name);
+> +        g_free(qemu_thread_args->name);
 >      }
->  }
+> -    QEMU_TSAN_ANNOTATE_THREAD_NAME(qemu_thread_args->name);
+> -    g_free(qemu_thread_args->name);
+>      g_free(qemu_thread_args);
 >  
-> -static void monitor_qapi_event_init(void)
-> +/*
-> + * Initialize static vars that have no deps on external
-> + * module initialization, and are required for external
-> + * functions to call things like monitor_cur()
-> + */
-> +static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-> +monitor_init_static(void)
->  {
-> +    qemu_mutex_init(&monitor_lock);
-> +    coroutine_mon = g_hash_table_new(NULL, NULL);
->      monitor_qapi_event_state = g_hash_table_new(qapi_event_throttle_hash,
->                                                  qapi_event_throttle_equal);
->  }
->  
->  void monitor_init_globals(void)
->  {
-> -    monitor_qapi_event_init();
-> -    qemu_mutex_init(&monitor_lock);
-> -    coroutine_mon = g_hash_table_new(NULL, NULL);
-> -
 >      /*
->       * The dispatcher BH must run in the main loop thread, since we
->       * have commands assuming that context.  It would be nice to get
+> diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+> index 9595a5b090..62eaa11026 100644
+> --- a/util/qemu-thread-win32.c
+> +++ b/util/qemu-thread-win32.c
+> @@ -316,7 +316,7 @@ void *qemu_thread_join(QemuThread *thread)
+>      return ret;
+>  }
+>  
+> -static void set_thread_description(HANDLE h, const char *name)
+> +void qemu_thread_set_name(const char *name)
+>  {
+>      g_autofree wchar_t *namew = NULL;
+>  
+> @@ -329,7 +329,7 @@ static void set_thread_description(HANDLE h, const char *name)
+>          return;
+>      }
+>  
+> -    SetThreadDescriptionFunc(h, namew);
+> +    SetThreadDescriptionFunc(GetCurrentThread(), namew);
+>  }
+>  
+>  void qemu_thread_create(QemuThread *thread, const char *name,
+> @@ -356,7 +356,7 @@ void qemu_thread_create(QemuThread *thread, const char *name,
+>          error_exit(GetLastError(), __func__);
+>      }
+>      if (name) {
+> -        set_thread_description(hThread, name);
+> +        qemu_thread_set_name(name);
+>      }
+>      CloseHandle(hThread);
+>  
 > -- 
 > 2.50.1
 > 
