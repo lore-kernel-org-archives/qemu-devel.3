@@ -4,81 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6DFBCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4911CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNaW-0002d4-Io; Sat, 30 Aug 2025 11:33:56 -0400
+	id 1usOKi-00049h-2e; Sat, 30 Aug 2025 12:21:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1us3TX-0005hG-9J
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:05:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1us3TU-00060C-Aa
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 14:05:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756490719;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hFnegfN+ZJEFrktf/Xt9S8f7de5z0ix1bAkH/iyhqK8=;
- b=KAEVVkwqEW3o+2dSNxWKbbV9Q5GY5R32nIY2E/E8DhnbV2qx3bB0H0b00DxOfxjXrewCZu
- 0r6kaJowJ0/KidKA+46TZjDGShEUom2JzDt8ufCHdoDtZB0Zy1ae4Vhk04emLqDvJg4qES
- J5k7vee7ovhOm3E9qV5Z+hNBTfnBzo8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-A27-3dUVOTC3WsdXfTbViQ-1; Fri,
- 29 Aug 2025 14:05:15 -0400
-X-MC-Unique: A27-3dUVOTC3WsdXfTbViQ-1
-X-Mimecast-MFC-AGG-ID: A27-3dUVOTC3WsdXfTbViQ_1756490714
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35F43195609F; Fri, 29 Aug 2025 18:05:14 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DA5ED19560BC; Fri, 29 Aug 2025 18:05:09 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 14/14] util: add brackets around guest name in message
- context
-Date: Fri, 29 Aug 2025 19:03:54 +0100
-Message-ID: <20250829180354.2922145-15-berrange@redhat.com>
-In-Reply-To: <20250829180354.2922145-1-berrange@redhat.com>
-References: <20250829180354.2922145-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <qemu@bonslack.org>) id 1usLVY-0002en-Q4
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:20:40 -0400
+Received: from bonnix2.bonnix.it ([37.247.49.194])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <qemu@bonslack.org>) id 1usLVX-0003ft-2y
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:20:40 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 bonnix2.bonnix.it 1C03D24342E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bonslack.org;
+ s=20220805; t=1756560038;
+ bh=SEZilLHq4QbqNQI+IiMOldiliACziPiHJF3zIYJJwGM=;
+ h=Date:From:Subject:To:Cc;
+ b=4jt6P4OEoIgnW63ioDJN/df1mZkrYkbgrRTlZy+M0Ux9n2qq0wwkLK56IqUKNDIMh
+ O6sukMj+fxyZ5wusdAlDJwem7THT95TgZT7Lqy1zhfXYEnxiHQoW/9/cCQgH/gdT3z
+ 5t9xVgsKBH/mSJiKjqX5467Pb3LSMHNe0DOzKPkE=
+Received: from [10.0.0.70] (ip190-129-198-217.pool-bba.aruba.it
+ [217.198.129.190])
+ by bonnix2.bonnix.it (Postfix) with ESMTPSA id 1C03D24342E;
+ Sat, 30 Aug 2025 15:20:38 +0200 (CEST)
+Message-ID: <f058dae2-299b-49d0-8ae3-7f1b44a952f8@bonslack.org>
+Date: Sat, 30 Aug 2025 15:20:37 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Luca Bonissi <qemu@bonslack.org>
+Subject: [PATCH 7/7] Add termios2 support to sparc target
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org
+Content-Language: it
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=37.247.49.194; envelope-from=qemu@bonslack.org;
+ helo=bonnix2.bonnix.it
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,65 +66,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The message context can optionally include the guest name if the
-argument '-msg guest-name=on' is given. The formatting, however,
-does not look good if the guest name contains whitespace. Change
-the output to include square brackets to demarcate the name.
+From 982f2ab1346c2b89007521f57b10e57dded29274 Mon Sep 17 00:00:00 2001
+From: Luca Bonissi <qemu@bonslack.org>
+Date: Sat, 30 Aug 2025 14:52:56 +0200
+Subject: [PATCH 7/7] Add termios2 support to sparc target
 
-Before:
-
-  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*' -msg guest-name=on -name "fish food"
-  fish food qemu-system-x86_64(1146846:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x55657e94e690 dir=fish
-  fish food qemu-system-x86_64(1146846:main): qcrypto_tls_creds_get_path TLS creds path creds=0x55657e94e690 filename=ca-cert.pem path=<none>
-  fish food qemu-system-x86_64(1146846:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
-
-After:
-
-  # qemu-system-x86_64 -object tls-creds-x509,id=t0,dir=fish -d 'trace:qcrypto*' -msg guest-name=on -name "fish food"
-  [fish food] qemu-system-x86_64(1144713:main): qcrypto_tls_creds_x509_load TLS creds x509 load creds=0x5604ada2c950 dir=fish
-  [fish food] qemu-system-x86_64(1144713:main): qcrypto_tls_creds_get_path TLS creds path creds=0x5604ada2c950 filename=ca-cert.pem path=<none>
-  [fish food] qemu-system-x86_64(1144713:main): Unable to access credentials fish/ca-cert.pem: No such file or directory
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Luca Bonissi <qemu@bonslack.org>
 ---
- util/message.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ linux-user/sparc/termbits.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/util/message.c b/util/message.c
-index 5201ffc569..6d3580b7be 100644
---- a/util/message.c
-+++ b/util/message.c
-@@ -48,11 +48,12 @@ char *qmessage_context(int flags)
-         int thid = qemu_get_thread_id();
-         const char *thname = qemu_thread_get_name();
+diff --git a/linux-user/sparc/termbits.h b/linux-user/sparc/termbits.h
+index 704bee1c42..588d7e8dcd 100644
+--- a/linux-user/sparc/termbits.h
++++ b/linux-user/sparc/termbits.h
+@@ -18,6 +18,28 @@ struct target_termios {
+     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
+ };
  
--        return g_strdup_printf("%s%s%s%s%s(%d:%s): ",
-+        return g_strdup_printf("%s%s%s%s%s%s(%d:%s): ",
-                                timestr ? timestr : "",
-                                timestr ? " " : "",
-+                               wknamestr ? "[" : "",
-                                wknamestr ? wknamestr : "",
--                               wknamestr ? " " : "",
-+                               wknamestr ? "] " : "",
-                                pgnamestr ? pgnamestr : "",
-                                thid, thname);
-     } else {
-@@ -60,11 +61,12 @@ char *qmessage_context(int flags)
-             return NULL;
-         }
++struct target_termios2 {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
++struct target_ktermios {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
  
--        return g_strdup_printf("%s%s%s%s%s%s",
-+        return g_strdup_printf("%s%s%s%s%s%s%s",
-                                timestr ? timestr : "",
-                                timestr ? " " : "",
-+                               wknamestr ? "[" : "",
-                                wknamestr ? wknamestr : "",
--                               wknamestr ? " " : "",
-+                               wknamestr ? "] " : "",
-                                pgnamestr ? pgnamestr : "",
-                                pgnamestr ? ": " : "");
-     }
+ /* c_cc characters */
+ #define TARGET_VINTR    0
+@@ -251,6 +273,12 @@ struct target_termios {
+ #define TARGET_TIOCGPGRP	TARGET_IOR('t', 131, int)
+ #define TARGET_TIOCSCTTY	TARGET_IO('t', 132)
+ #define TARGET_TIOCGSID	TARGET_IOR('t', 133, int)
++#define TARGET_TCGETS2		TARGET_IOR('T', 12, struct target_termios2)
++#define TARGET_TCSETS2		TARGET_IOW('T', 13, struct target_termios2)
++#define TARGET_TCSETSW2	TARGET_IOW('T', 14, struct target_termios2)
++#define TARGET_TCSETSF2	TARGET_IOW('T', 15, struct target_termios2)
++#define TARGET_TIOCGRS485	TARGET_IOR('T', 0x41, struct serial_rs485)
++#define TARGET_TIOCSRS485	TARGET_IOWR('T', 0x42, struct serial_rs485)
+ /* Get minor device of a pty master's FD -- Solaris equiv is ISPTM */
+ #define TARGET_TIOCGPTN	TARGET_IOR('t', 134, unsigned int) /* Get Pty Number */
+ #define TARGET_TIOCSPTLCK	TARGET_IOW('t', 135, int) /* Lock/unlock PTY */
 -- 
 2.50.1
+
 
 
