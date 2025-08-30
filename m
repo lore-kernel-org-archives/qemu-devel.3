@@ -4,53 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4911CA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B9F5CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOKi-00049h-2e; Sat, 30 Aug 2025 12:21:40 -0400
+	id 1usOEx-0001hP-Cy; Sat, 30 Aug 2025 12:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu@bonslack.org>) id 1usLVY-0002en-Q4
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:20:40 -0400
-Received: from bonnix2.bonnix.it ([37.247.49.194])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <qemu@bonslack.org>) id 1usLVX-0003ft-2y
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 09:20:40 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 bonnix2.bonnix.it 1C03D24342E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bonslack.org;
- s=20220805; t=1756560038;
- bh=SEZilLHq4QbqNQI+IiMOldiliACziPiHJF3zIYJJwGM=;
- h=Date:From:Subject:To:Cc;
- b=4jt6P4OEoIgnW63ioDJN/df1mZkrYkbgrRTlZy+M0Ux9n2qq0wwkLK56IqUKNDIMh
- O6sukMj+fxyZ5wusdAlDJwem7THT95TgZT7Lqy1zhfXYEnxiHQoW/9/cCQgH/gdT3z
- 5t9xVgsKBH/mSJiKjqX5467Pb3LSMHNe0DOzKPkE=
-Received: from [10.0.0.70] (ip190-129-198-217.pool-bba.aruba.it
- [217.198.129.190])
- by bonnix2.bonnix.it (Postfix) with ESMTPSA id 1C03D24342E;
- Sat, 30 Aug 2025 15:20:38 +0200 (CEST)
-Message-ID: <f058dae2-299b-49d0-8ae3-7f1b44a952f8@bonslack.org>
-Date: Sat, 30 Aug 2025 15:20:37 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usERk-0007a4-02
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:48:19 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usERh-00054N-E5
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:48:15 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b4d4881897cso855567a12.0
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:48:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756532892; x=1757137692; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=H0WgDnjZZbQNGrZHbHxQl5y/Vvc/Dh17BYKXEKy/nEk=;
+ b=t4BoLRNWN2cVid4WNN4CzADpu5O0Kmi0sORmxhd/StfbXC2FuTt3HML5mnLiYcUbel
+ aCsRAHdHgxUxRve7ojVRn98kJzYmwl0s6WnvYnL2Xclj4otCGXVy5CqyTWQ5h2vr948V
+ z+AiAmykREFgdlJQZOL+0YiKwSnfWa2H6roaV5AEBrPfMpycYIa+qYdzh3dh258LCD/E
+ WUZx+APTbXp3YIRLezDgOx9C5LKPYnVNrvYY6FIbQA0wz0wpT/mx6tWormvfg0PreDy1
+ uvyD62cQ7PRWf/2aqc9fDtOlD4yELF18+LQ9MgcJ+SDue/WD0jJO+cWcLDNVyGy65iRS
+ Sd5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756532892; x=1757137692;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=H0WgDnjZZbQNGrZHbHxQl5y/Vvc/Dh17BYKXEKy/nEk=;
+ b=jZpIL0DSNXK1LTKFMNCOKKfe4+m4DEiTeBgrYF8m6E0E/C5O623AmunJ/314wB7ET6
+ YhhjZDxooE8Tu/NW9os0vq6uvPnuNQlrdZAb/YmE4mwSJNSfA74Lg50aYK5w6kMUOtaI
+ iUBrOxgaE9grko94nM1n6XzcTFMzlzXfBs6k1OeSNHSZ1KRYI26Y9qMIldJ2wQv8/rLw
+ Cu6p5h51S08gf/RdGG7T1JIy8IZWZgvCEEgTC5mqR8tgqpZAby80qGz4255K22RfuvJy
+ AslqJs9nFjOGNEAScmF0zMvp7nWAHt3ioQWcVeyl0X0Fq4OCivQpYSOvmyiJFSbpdSn6
+ 492w==
+X-Gm-Message-State: AOJu0YxGUYjI2axJ1Lj7QV4ND3P2q79Dcd2dKg2GNvEPLudYFwon2bW4
+ KmlOms6zkXMM+owRcpYZ/ZXY7nPKXSRu2T5DO0mJYvGugsRuSbh9wsr0fdXd4fn5cQQ0IcTF0uD
+ vqj/thus=
+X-Gm-Gg: ASbGncuJxgF/WSdniKrPamdDz0BI7fGLPKvS7K66SScuBjdM0zwysimdOYMxTFparvj
+ ef1QJ4EdiFVN9gDiyeycEZC+BoiE5X3zJc1C9xsX1tB5B1tzZFG0PpGIq2h8P3xG+17w5sW58w1
+ h8BPfy1IM+gp3ogwqUINqeh6Y0L3Rfa8XFxlbdpbhCQrqxNvdnSpf58YOx4AzSg0NBGGd1QEcLF
+ /3LwyWRfhNu/EbxcVI1AK1szlLNsE/7wBYF4/XeFerm76lbwnxJjelduZI/RhW4ql0FzG8Le1h6
+ BkyNz5Vy3Fl+ktN+qh+fOUT0kk+wVgKpofYZLv7zNMpZRZdHQO/dsQD8NO+mdHUZX/YQ5gScRt+
+ afzMNpGEdt8znio0h+iM6tu4FNwZvJAhHAuH+F3gug7KRMG4VvGhfvTYqiKS/QZs=
+X-Google-Smtp-Source: AGHT+IFhAGp04tFeGPSHGX+k/hQ7QkE+sDXVgBvtVb6ngHPJzppAca0ixsWxOWsPKeyX6vZfYtdfHA==
+X-Received: by 2002:a17:902:e745:b0:246:e1f3:77b2 with SMTP id
+ d9443c01a7336-24944b65071mr12458765ad.53.1756532892160; 
+ Fri, 29 Aug 2025 22:48:12 -0700 (PDT)
+Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.48.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 29 Aug 2025 22:48:11 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 77/84] linux-user/aarch64: Implement map_shadow_stack
+ syscall
+Date: Sat, 30 Aug 2025 15:41:21 +1000
+Message-ID: <20250830054128.448363-78-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Luca Bonissi <qemu@bonslack.org>
-Subject: [PATCH 7/7] Add termios2 support to sparc target
-To: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-Content-Language: it
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.247.49.194; envelope-from=qemu@bonslack.org;
- helo=bonnix2.bonnix.it
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,64 +102,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From 982f2ab1346c2b89007521f57b10e57dded29274 Mon Sep 17 00:00:00 2001
-From: Luca Bonissi <qemu@bonslack.org>
-Date: Sat, 30 Aug 2025 14:52:56 +0200
-Subject: [PATCH 7/7] Add termios2 support to sparc target
-
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/sparc/termbits.h | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ linux-user/syscall.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/linux-user/sparc/termbits.h b/linux-user/sparc/termbits.h
-index 704bee1c42..588d7e8dcd 100644
---- a/linux-user/sparc/termbits.h
-+++ b/linux-user/sparc/termbits.h
-@@ -18,6 +18,28 @@ struct target_termios {
-     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
- };
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index dfe114ceb3..0a7ce7a262 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6356,6 +6356,12 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
+ # define PR_SET_SHADOW_STACK_STATUS  75
+ # define PR_LOCK_SHADOW_STACK_STATUS 76
+ #endif
++#ifndef SHADOW_STACK_SET_TOKEN
++# define SHADOW_STACK_SET_TOKEN  (1u << 0)
++#endif
++#ifndef SHADOW_STACK_SET_MARKER
++# define SHADOW_STACK_SET_MARKER (1u << 1)
++#endif
  
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
+ #include "target_prctl.h"
  
- /* c_cc characters */
- #define TARGET_VINTR    0
-@@ -251,6 +273,12 @@ struct target_termios {
- #define TARGET_TIOCGPGRP	TARGET_IOR('t', 131, int)
- #define TARGET_TIOCSCTTY	TARGET_IO('t', 132)
- #define TARGET_TIOCGSID	TARGET_IOR('t', 133, int)
-+#define TARGET_TCGETS2		TARGET_IOR('T', 12, struct target_termios2)
-+#define TARGET_TCSETS2		TARGET_IOW('T', 13, struct target_termios2)
-+#define TARGET_TCSETSW2	TARGET_IOW('T', 14, struct target_termios2)
-+#define TARGET_TCSETSF2	TARGET_IOW('T', 15, struct target_termios2)
-+#define TARGET_TIOCGRS485	TARGET_IOR('T', 0x41, struct serial_rs485)
-+#define TARGET_TIOCSRS485	TARGET_IOWR('T', 0x42, struct serial_rs485)
- /* Get minor device of a pty master's FD -- Solaris equiv is ISPTM */
- #define TARGET_TIOCGPTN	TARGET_IOR('t', 134, unsigned int) /* Get Pty Number */
- #define TARGET_TIOCSPTLCK	TARGET_IOW('t', 135, int) /* Lock/unlock PTY */
+@@ -6571,6 +6577,54 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+     }
+ }
+ 
++#ifdef TARGET_AARCH64
++static abi_long do_map_shadow_stack(CPUArchState *env, abi_ulong addr,
++                                    abi_ulong size, abi_int flags)
++{
++    ARMCPU *cpu = env_archcpu(env);
++    abi_ulong alloc_size;
++
++    if (!cpu_isar_feature(aa64_gcs, cpu)) {
++        return -TARGET_EOPNOTSUPP;
++    }
++    if (flags & ~(SHADOW_STACK_SET_TOKEN | SHADOW_STACK_SET_MARKER)) {
++        return -TARGET_EINVAL;
++    }
++    if (addr & ~TARGET_PAGE_MASK) {
++        return -TARGET_EINVAL;
++    }
++    if (size == 8 || !QEMU_IS_ALIGNED(size, 8)) {
++        return -TARGET_EINVAL;
++    }
++
++    alloc_size = TARGET_PAGE_ALIGN(size);
++    if (alloc_size < size) {
++        return -TARGET_EOVERFLOW;
++    }
++
++    mmap_lock();
++    addr = gcs_alloc(addr, alloc_size);
++    if (addr != -1) {
++        if (flags & SHADOW_STACK_SET_TOKEN) {
++            abi_ptr cap_ptr = addr + size - 8;
++            uint64_t cap_val;
++
++            if (flags & SHADOW_STACK_SET_MARKER) {
++                /* Leave an extra empty frame at top-of-stack. */
++                cap_ptr -= 8;
++            }
++            cap_val = (cap_ptr & TARGET_PAGE_MASK) | 1;
++            if (put_user_u64(cap_val, cap_ptr)) {
++                /* Allocation succeeded above. */
++                g_assert_not_reached();
++            }
++        }
++    }
++    mmap_unlock();
++    return get_errno(addr);
++}
++#endif
++
+ #define NEW_STACK_SIZE 0x40000
+ 
+ 
+@@ -13945,6 +13999,11 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return do_riscv_hwprobe(cpu_env, arg1, arg2, arg3, arg4, arg5);
+ #endif
+ 
++#ifdef TARGET_AARCH64
++    case TARGET_NR_map_shadow_stack:
++        return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
++#endif
++
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+         return -TARGET_ENOSYS;
 -- 
-2.50.1
-
+2.43.0
 
 
