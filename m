@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5828FCA0EFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA741CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 17:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usOCZ-00027K-EO; Sat, 30 Aug 2025 12:13:15 -0400
+	id 1usNwe-0001L0-HP; Sat, 30 Aug 2025 11:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEQJ-0007B7-4W
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:46:47 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1usEMy-0006Gt-Gl
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:43:20 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1usEQH-0004ox-4M
- for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:46:46 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2445805aa2eso29798005ad.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:46:44 -0700 (PDT)
+ id 1usEMw-0004Mk-HW
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:43:19 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-772301f8a4cso1456366b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:43:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756532804; x=1757137604; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756532597; x=1757137397; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zlZEvW/doqzO9xqWDxfXmugnbOqvwtxVDwPmklV4QPY=;
- b=LrDdUnjftbIyG32LtzYMrqn6G8bcfaQpO5cpYlXqx186WZo6hJCQzWzV69LRFYVNli
- sged6nwmDAl7D9Z0Xa7h5Vz3HJ1zy3ICJqMslf9d9VH9bzailsdysbFJK5rNJefucgGa
- 1rH2h0Wj6ni6cEn0bTDVpoBYcOsQs6WxeUhQZOz4EYCoEYWhAonqqO+qWjytEntfr9YL
- 2TpkcIDR8t+RAL27rO5RpYw19TXqTEhB9BEyLpeW1hXlP+gaB88hDso8hyuKMar3GI2Y
- 1Rs9ctRFnzeRHFkPUmXCDXY5UDOeapDWrF6W6cqZX5RMhiETWWrqJoRX1T6p7E1HFO7h
- d5rg==
+ bh=WyUpmSL2n3VZMAxXx348SkKtQF1BK17TOs08zG5lW3A=;
+ b=jZ6FB/zAgKNtZqFvIDMRmPphe9GrNFnxQsXSTRZOCtwbuy0sS4oEzgBQVKTP36RiYW
+ Otd0eooyRKkApe6CSr5KkW/t+m8WdLe66QTF40MLFVtLyqjOT6+vBETzcpHgyGBVO8NX
+ fuBcJpomyfJWXbL6tFlwkcIM/W4GCGt/z/evPYfk14Z8p3i0ssp4ToPifJhnMCdm6OXt
+ DxeYjLfsBtLGrQ0IE8/UtEGW485MmaoTT+VgxpYE31C74fmNTggphpBZfmnGbRx8hnk1
+ dscS32h9CInmPhYm1q9zyOh+ZMxROXcLF8ohmEeMV42YujDIQU7Kh/MHGkooe215almM
+ Euqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756532804; x=1757137604;
+ d=1e100.net; s=20230601; t=1756532597; x=1757137397;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zlZEvW/doqzO9xqWDxfXmugnbOqvwtxVDwPmklV4QPY=;
- b=SdNI0MZuul+aCQgBoJGXGv9x4sTtEf+RuwGnJ/seLdwJIvdR8qvzwFec5x2M3/ZNhJ
- ByyDMz0EgR3caUcNgRk8zLiSfzkADX7a99Us7B4EKFvFk1Bulku85O00zh+scjBLqiMS
- pRB0K8gFz3DQXUSTJVMx6L5nACRROhH7ACCtvjYToO2y6DQb/mbEg1f3Frv/+lvBeOsY
- DxvXN5TczECGvd3LALIg3x3uzpo7mJqOCPlGEiumzr7yDAZFLEmjm/TH5mippfj6T3Lm
- aAuXuqKV6IOSTj1ozvhmvzVNq/da6vIY1J0rbGWZPqLYkWGNfJYBzguHsoLvqhLca4oX
- ofOQ==
-X-Gm-Message-State: AOJu0YyHWjBXPqd+rIXOcDOzAvrg+ZaVplfaoQ2Mhgj2OpOoMS1IZTGf
- useTjM+kP3fmIXGTwYEw6xmDocedh8QoE6b0T0Bh2UfFuMHYz85H4/9e38CmRDvVCg3nMscE4wE
- bOWopM5Q=
-X-Gm-Gg: ASbGncukv0w3yo27OYML5BKPlitOImkxSRd2XwjZoRcWrOgY60Qx0m1nWM/+uUMMeyj
- uI2UqFi15ofM8aJnyoVb77aquRjH/ZbZwuwtHl2SX3JJcUgelD1K4ijDog20iNw4RRJd/XOFrBX
- zwKgyB/Y0xAe5x35kYYicfbi+rCPc6rETlpcmXiTo7vzVuQWY/inH420AKwOwaGVqQVPPf/21sO
- siftIX2ZJk18paO4/zZOx55/hKVnxIEWaVJkBNsC0T5FuLg5SpTCssgkUc6K8jnAuUP8/xa0/Ro
- 3ww1oXNcM0/i7jmFrOHOAomSqmn/S+2gP11Ddzh8virDJdhvmEiunrEUFSGc2AuSPS5efZufsYB
- VTvQc2gwUQ26g//5Fm4r1yILvx8areGiXR8P2zPd7IR+WhKsyVVDf5tBJt2GQoBGnWAPKMQl65g
- ==
-X-Google-Smtp-Source: AGHT+IGBDunypJcA4WSE9leAfjgFS8ErG+yv+2Q1YKLFKsGAMMjqD0WVuETxwJ/TCYB9CGQg5R1mgw==
-X-Received: by 2002:a17:902:ce8c:b0:249:3eec:15bb with SMTP id
- d9443c01a7336-249448e1ce7mr12667545ad.14.1756532803656; 
- Fri, 29 Aug 2025 22:46:43 -0700 (PDT)
-Received: from stoup.. (122-150-204-179.dyn.ip.vocus.au. [122.150.204.179])
+ bh=WyUpmSL2n3VZMAxXx348SkKtQF1BK17TOs08zG5lW3A=;
+ b=Ik3ZhdUGbS6aEeHC07OXki/FgA63HOPPJNRa5FCTZ0hlZNfzHpBKEbQs57KmzfQ5jm
+ wmClQ+kYhzqNE0jd+apjv7ungsGgNuzAzEPC45PBP8NfW9ZQJcVdXPVSMXayFzvoqksU
+ 1a9tlijS42nvnM5fEPzvCoxM1aikkmkogM2/hkMEubbKnAI9klYTFPNPKztaAmXXNxDn
+ /PTCc8GPTY262Ol8gPdqWkBltk4OLrWuNWTvIxa70iD1mWkzCDjCtRgxeN9y38/DXYiF
+ QEwPHbxW5UGvM7aX5POLSl8chHNLcA2HZis2pxynpFfQIYfktzFjcxDvd2OKRCWZu0GB
+ UQog==
+X-Gm-Message-State: AOJu0YwHq7tYoxKlvrdx7FXTLkA3Pel5iVYiORMMyB6pm9oGxR2yaWNN
+ T+/rYR4cu07VvKaRnW928J4N5DtnRdPK3iCU35F6iRn2bb9jBmE7N3yGEZKyYinwkuJyFsnSRne
+ U9dVcLPc=
+X-Gm-Gg: ASbGnct1gI6IQK+ZIimQdFix423TN/xUnixUPT4Vz0PVOlHhBsjHvZJvw6io1HK40yW
+ WRlVJLHxsZBjEafcHOfw43U9ttsAR01PgaqgBHdqqryLVEOx0IGtPibNdhtAdvo2YAcRMZLo6dN
+ nJw2SHkI9vDqAfrQd8jKo5EUcPevuM9aVBzWUhd1xqKX5lQWKL1pCWXYS/wjETutrIJcN2C48Z8
+ RRnJaSzSRXfiRAfGgTorwlSv1tMN78PuHlm9b2L5ZybVgguot6IeIY9Qn2xxC1MnVx2sHJJd/BF
+ FrvJfjBRtQROv7mxpNV2hIve41ZpCAy/1UEzXZx6q8l4KB1IcGu/ZD451sPwh+eVG5EBDPdkT5y
+ cIeH6BIUa+1iIot3QKacD+BLSNQtM/wAlZczkeA+GaOW50Nm54bQC4h2Nbp+8iQF6mt7OcmE=
+X-Google-Smtp-Source: AGHT+IHsFwib7iOntDGZ3rUAOn54TapKLGJF6g6a9kg2W5VoPDYwo57Ng0Nog70/sQ2Grp6MM9Cchg==
+X-Received: by 2002:a05:6a20:5483:b0:243:d5ab:d202 with SMTP id
+ adf61e73a8af0-243d6e0090emr1696768637.15.1756532597177; 
+ Fri, 29 Aug 2025 22:43:17 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2490658999fsm40852715ad.112.2025.08.29.22.46.41
+ 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.43.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 22:46:43 -0700 (PDT)
+ Fri, 29 Aug 2025 22:43:16 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 45/84] target/arm: Support page protections for GCS mmu
- indexes
-Date: Sat, 30 Aug 2025 15:40:49 +1000
-Message-ID: <20250830054128.448363-46-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 37/84] target/arm: Remove unused env argument from
+ regime_is_pan
+Date: Sat, 30 Aug 2025 15:40:41 +1000
+Message-ID: <20250830054128.448363-38-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
 References: <20250830054128.448363-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,53 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Take read and write from the s1perms.gcs bit computed
-by the Arm pseudocode.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/ptw.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ target/arm/internals.h | 2 +-
+ target/arm/ptw.c       | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index ccdf9076c3..62aaf0f792 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1584,12 +1584,16 @@ static int get_S1prot_indirect(CPUARMState *env, S1Translate *ptw,
-         }
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index a9f44a23cd..2ef81a00ab 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1027,7 +1027,7 @@ static inline void arm_call_el_change_hook(ARMCPU *cpu)
      }
- 
--    if (perm & PAGE_WXN) {
-+    if (regime_is_gcs(mmu_idx)) {
-+        /*
-+         * Note that the one s1perms.gcs bit controls both read and write
-+         * access via AccessType_GCS.  See AArch64.S1CheckPermissions.
-+         */
-+        perm = (perm & PAGE_GCS ? PAGE_READ | PAGE_WRITE : 0);
-+    } else if (perm & PAGE_WXN) {
-         perm &= ~PAGE_EXEC;
-     }
- 
--    /* TODO: FEAT_GCS */
--
-     return perm & PAGE_RWX;
  }
  
-@@ -2236,6 +2240,13 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-              */
-             prot = get_S1prot_indirect(env, ptw, mmu_idx, pi, po,
-                                        result->f.attrs.space, out_space);
-+        } else if (regime_is_gcs(mmu_idx)) {
-+            /*
-+             * While one must use indirect permissions to successfully
-+             * use GCS instructions, AArch64.S1DirectBasePermissions
-+             * faithfully supplies s1perms.gcs = 0, Just In Case.
-+             */
-+            prot = 0;
-         } else {
-             int xn = extract64(attrs, 54, 1);
-             int pxn = extract64(attrs, 53, 1);
+-static inline bool regime_is_pan(CPUARMState *env, ARMMMUIdx mmu_idx)
++static inline bool regime_is_pan(ARMMMUIdx mmu_idx)
+ {
+     switch (mmu_idx) {
+     case ARMMMUIdx_Stage1_E1_PAN:
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 5adea5cd65..a8c450d28b 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1394,10 +1394,10 @@ static int get_S1prot(CPUARMState *env, ARMMMUIdx mmu_idx, bool is_aa64,
+          * We make the IMPDEF choices that SCR_EL3.SIF and Realm EL2&0
+          * do not affect EPAN.
+          */
+-        if (user_rw && regime_is_pan(env, mmu_idx)) {
++        if (user_rw && regime_is_pan(mmu_idx)) {
+             prot_rw = 0;
+         } else if (cpu_isar_feature(aa64_pan3, cpu) && is_aa64 &&
+-                   regime_is_pan(env, mmu_idx) &&
++                   regime_is_pan(mmu_idx) &&
+                    (regime_sctlr(env, mmu_idx) & SCTLR_EPAN) && !xn) {
+             prot_rw = 0;
+         }
+@@ -1536,7 +1536,7 @@ static int get_S1prot_indirect(CPUARMState *env, S1Translate *ptw,
+             p_perm &= ~(PAGE_RWX | PAGE_GCS);
+             u_perm &= ~(PAGE_RWX | PAGE_GCS);
+         }
+-        if ((u_perm & (PAGE_RWX | PAGE_GCS)) && regime_is_pan(env, mmu_idx)) {
++        if ((u_perm & (PAGE_RWX | PAGE_GCS)) && regime_is_pan(mmu_idx)) {
+             p_perm &= ~(PAGE_READ | PAGE_WRITE);
+         }
+         perm = regime_is_user(env, mmu_idx) ? u_perm : p_perm;
 -- 
 2.43.0
 
