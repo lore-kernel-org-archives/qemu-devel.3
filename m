@@ -4,127 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F163ACA0FFF
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398F8CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 Aug 2025 16:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usNcu-0000tM-Op; Sat, 30 Aug 2025 11:36:25 -0400
+	id 1usNuY-0001Kz-Ki; Sat, 30 Aug 2025 11:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1us5LV-0005Wt-9u
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:05:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1us5LS-0004x3-75
- for qemu-devel@nongnu.org; Fri, 29 Aug 2025 16:05:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756497909;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Wm02YWFPgXK6tLalWRdl7gepF4qWtk92F6eyDxpJHBE=;
- b=eHq1xw9tq5jUwlNmIm5jqkM1bK0tzqrhpfVou42+H1rJDVAcXJHXiZrrxFxr/NVqIKkvlE
- N7z0drgMKlFbQgf1EfQesVprn8y+BvdRzAeDs3qo3qvcoLuBPevwEEOsT4TwCEaJPAb6A/
- kdryxZMRIcuj2JB+TbanTbzHrDeXMpE=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-xxBHHK7OMbC31dCVouphoQ-1; Fri, 29 Aug 2025 16:05:07 -0400
-X-MC-Unique: xxBHHK7OMbC31dCVouphoQ-1
-X-Mimecast-MFC-AGG-ID: xxBHHK7OMbC31dCVouphoQ_1756497906
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3259ff53c2eso3589053a91.1
- for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 13:05:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usELq-0005uL-2s
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:13 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usELo-00047i-E1
+ for qemu-devel@nongnu.org; Sat, 30 Aug 2025 01:42:09 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-771ff6f117aso2424037b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 29 Aug 2025 22:42:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756532527; x=1757137327; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JXa5bV+w2XJCtl1B6/zvOBxDKz3xDTsxv0W99xe/k2Q=;
+ b=pst4cJJbuG/Q0EyAjeP5VulWTEOT9dl/ToQj08MWP/otUSItDWSVu5/RC4vwN10frw
+ eO7zlfUk77bufeAcrfiSwaStw/1NMdJT4PpBkMtzUb4yLjoxncGUEaXtK3Vdv+xsyoPP
+ frDS2Mo+gtIWBnsR5cgy+Dv+EM8fYFl0mlt+E0LM9iX9rd8gGFq4kaRfronh4Q0pkW2Q
+ lD0uOWlQ4TIJYDUFyb2ZqZ1M//Yv4CiY+yUczNMTxUGWTw/zaR2Ve+yq+WjmTY4N0jRQ
+ pS+QwnuKeblzbX470weTds25MXa1/nzqQLcT5h4pbqbAD3epUw2NNvURTL2ZkxDAhecD
+ VPQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756497906; x=1757102706;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1756532527; x=1757137327;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wm02YWFPgXK6tLalWRdl7gepF4qWtk92F6eyDxpJHBE=;
- b=okKN5cCYlqMZmXelrVmeUqQtZ1aHX99KO96LEM+csHBKtqUgkKsegmA2g461G6h5j3
- BDRKxbpwSdT5IQsyz+19TOK/i7H34VUrGpDOrf5iu2h2UVA0gr5VmWmwTRKZg05mR9Xo
- 644smQz8OW+kwi9KCaITDABLp4OtfFMUOB/NJ+mjnqw6vMeRhpxi6FevvAVT/CG95zsD
- U3YAfKKPLiGm0h7SEk4H4/URf82eh4Bdd2Q5otg7tS6VkqeHRr6AzqI4qcHkl3INZdMt
- e49OBTrRLvejQ90KXMAlq3xme10Lxrhg8h9M5RKeupY9e8Edta1ZSLh85prThS0bnDSH
- gdpA==
-X-Gm-Message-State: AOJu0YzFRFLbgczIPsH1/lPs0+8gjyOIPg26Szh3CxP6H+/gzcXmC9mt
- O2r0p1mxXSgOyEsjrXJdmppMH/txjRqlijrCXFey0RI95+to5mrzvlZtWxotcPf6gkNxXdqSe53
- rPFRwpWyU2iCycAdLm5zbTx1ivvt5vTWOP1+fHUao0FMtCtz2a+ohOOiN
-X-Gm-Gg: ASbGncv8dbcOvJikgcpikdDbIY2jLfPtWzXtEoXSIyoluQUdeK6MHw/lMC5ghxr4eOA
- MGvuO2DKlHkCZKlyuVUCNbgiJuW6IhjDQylHCOso1ZJ1myUMOhHYWFDNRDdqoWRxQpd3uRGUmDB
- ozf9ORd7r/eqPY1leU323z8W98piYRQAnIplbx/ymmUiLLSEbnjidOomkInQkgSV7pIOFWVjvKn
- 1EY1EnHmdiuHXEO7m6YXiefpqiv4LauNjERc+SLDUk1WesIWO3pCs6ctImt1D9O/r3Qke2XALMo
- kydpo1tWfDMsi2vFnEbuMoOcaxbHOJooRVtXviMvGm2wJaexo6F5yA==
-X-Received: by 2002:a17:90b:5627:b0:31e:ec58:62e2 with SMTP id
- 98e67ed59e1d1-32515eaafdcmr40744262a91.19.1756497906038; 
- Fri, 29 Aug 2025 13:05:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGlLHP+tT/LriDsdFC737V2EcYVvDdYR+0Tbu/PHzwEggq5Qw/fGkv9NeBWXVjw8VDQTAu+TQ==
-X-Received: by 2002:a17:90b:5627:b0:31e:ec58:62e2 with SMTP id
- 98e67ed59e1d1-32515eaafdcmr40744196a91.19.1756497905451; 
- Fri, 29 Aug 2025 13:05:05 -0700 (PDT)
-Received: from armenon-kvm.bengluru.csb ([49.47.195.108])
+ bh=JXa5bV+w2XJCtl1B6/zvOBxDKz3xDTsxv0W99xe/k2Q=;
+ b=Xx565KR8ldDyQVpQCbGaJxFRHQNzNMPCrqKtvyxziJVgvlMuzd8w2ld4sRD0rsCzJ7
+ hodnqurcszsQe8AMBsznUVjDeOtTdY+p8x0RLQmORnZxoB3Ea+yM/DyxLKUsRL2wnmjh
+ Uu3ZimWkShXr3LgJtR6Y78913Eztp4JNoEoBTyzrwfATpI3v4OI5uTvHqGlPXBOutjPm
+ VR2XWeTmnNxkwWHt46E77pIRniGfaYv9NET8DQ+yAjwPPGx+1AY6G+8EUHoOo8qcImRH
+ 6r6B3x2TYF7z5QNPmYWDB4qCUuIYWX6MmOd/Kn5nrDlxVIiafzz9w7nLm6DTgD2bpbKr
+ fq2A==
+X-Gm-Message-State: AOJu0Yz0113by+Qi1RPfBCMh2mk+GajNk+Fmu/ffoQaqmk+zLPMpmUff
+ Q79zgyQ40uK5Az1rYv1hSH8+08MZ1f8qUu/JeDC1uLL2oX65OA5pCPQ5vXx1Pu0WsqOIa4OGj/Y
+ 3JlPisZU=
+X-Gm-Gg: ASbGncuT4Zu+uQ1CuKnGjcG6S8/x+KzYX4keSpyIjcLlsZoxhVomd7RDyeNoYD86Qj8
+ t3nTrHBN1Jvd+Jn6a0cpq+XzH/R8D6jDL/PlKFUGM/eoQMvW3QzscQwm/GHInT8KRWCfCs7A53d
+ trylyiNMT8ojwY1ESddhOVaiLmhZrbtUO1baQfn++fv2uVr5yUk2MGyn9ZphgSQ+e2r98NkPqVF
+ zCA74zuL5EaSjnWylfZYh/b37oIAEPd7FuTj+E3Lk8vjKVJ8LSFKKy+dRXOBH5bKCQmvrnkivRb
+ uJ5Cyt7mxl7PzfyvrTCBnnNEd2Ql7lRibsRRfmW+jDdqWwefNNq2JFoZlR/ud7OgE/0hySYxZC0
+ mx88B30qvJeMURbzpyFQZcyepk+kvdM3k4sY+CdsHBK/QiV+GhcD1tHue2+ylZR547RFiHcE=
+X-Google-Smtp-Source: AGHT+IH0JvavmGZhTPCRrrwZlEP9Syl5QvyE7VLPyyJkF1OngTWJLulwHz3xGEiYsS4dZo68u6R4Mw==
+X-Received: by 2002:a05:6a20:3d07:b0:243:9587:a75c with SMTP id
+ adf61e73a8af0-243d6f7ec6cmr1501092637.59.1756532526794; 
+ Fri, 29 Aug 2025 22:42:06 -0700 (PDT)
+Received: from stoup.. (122-150-204-48.dyn.ip.vocus.au. [122.150.204.48])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327d8f66f16sm3570543a91.0.2025.08.29.13.04.44
+ 41be03b00d2f7-b4d96829a66sm2435905a12.6.2025.08.29.22.42.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 29 Aug 2025 13:05:05 -0700 (PDT)
-From: Arun Menon <armenon@redhat.com>
-Date: Sat, 30 Aug 2025 01:31:51 +0530
-Subject: [PATCH v13 11/27] migration: push Error **errp into
- qemu_loadvm_section_part_end()
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250830-propagate_tpm_error-v13-11-a4e777b7eb2c@redhat.com>
-References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
-In-Reply-To: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
+ Fri, 29 Aug 2025 22:42:06 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Steve Sistare <steven.sistare@oracle.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, 
- Hailiang Zhang <zhanghailiang@xfusion.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Arun Menon <armenon@redhat.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3094; i=armenon@redhat.com;
- h=from:subject:message-id; bh=CgLPVCj6slw8FkUxePJRDJzlIhYmWPhKwDSIMzJ0/CA=;
- b=owGbwMvMwCWWVaVqcZPfqI/xtFoSQ8Ymdl/Wz1qhOT+auW8d+f9ap8nmVEhhjPdL9elLNTIWq
- 6xUT9/ZUcrCIMbFICumyNLwNUC2KaAwItL25XWYOaxMIEMYuDgFYCKxfYwMB3VWZS44I7HwT/Id
- jy23q1+evpa53SNFfdGSSl+3JxazLzL8M4097hE54+Zc3/a+Da3nju5385pxLfMur13Z70zdDCM
- FHgA=
-X-Developer-Key: i=armenon@redhat.com; a=openpgp;
- fpr=80F5501D82507158593DE9D76A7A2538D90F328E
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 12/84] target/arm: Implement FEAT_ATS1A
+Date: Sat, 30 Aug 2025 15:40:16 +1000
+Message-ID: <20250830054128.448363-13-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250830054128.448363-1-richard.henderson@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,99 +101,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is an incremental step in converting vmstate loading
-code to report error via Error objects instead of directly
-printing it to console/monitor.
-It is ensured that qemu_loadvm_section_part_end() must report an error
-in errp, in case of failure.
-This patch also removes the setting of errp when errp is NULL in the
-out section as it is no longer required in the series.
+Implement FEAT_ATS1A and enable for -cpu max.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Arun Menon <armenon@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- migration/savevm.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ target/arm/cpregs.h           |  1 +
+ target/arm/cpu-features.h     |  5 ++++
+ target/arm/tcg/cpregs-at.c    | 44 +++++++++++++++++++++++++++++++++++
+ target/arm/tcg/cpu64.c        |  1 +
+ docs/system/arm/emulation.rst |  1 +
+ 5 files changed, 52 insertions(+)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 01e1a9739aa784d90f80bf2b561fd62f5e4678f8..c8234f2ef7f413b207aebae7192c82f1f4d6d91d 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2803,21 +2803,19 @@ qemu_loadvm_section_start_full(QEMUFile *f, uint8_t type, Error **errp)
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 1d103b577f..2a4826f5c4 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -854,6 +854,7 @@ typedef enum FGTBit {
+     DO_BIT(HFGITR, DVPRCTX),
+     DO_BIT(HFGITR, CPPRCTX),
+     DO_BIT(HFGITR, DCCVAC),
++    DO_BIT(HFGITR, ATS1E1A),
+ } FGTBit;
+ 
+ #undef DO_BIT
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index e49e0ae3af..512eeaf551 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -619,6 +619,11 @@ static inline bool isar_feature_aa64_lut(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64ISAR2, LUT);
  }
  
- static int
--qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-+qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type, Error **errp)
++static inline bool isar_feature_aa64_ats1a(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64ISAR2, ATS1A);
++}
++
+ static inline bool isar_feature_aa64_fp_simd(const ARMISARegisters *id)
  {
-     bool trace_downtime = (type == QEMU_VM_SECTION_END);
-     int64_t start_ts, end_ts;
-     uint32_t section_id;
-     SaveStateEntry *se;
-     int ret;
--    Error *local_err = NULL;
+     /* We always set the AdvSIMD and FP fields identically.  */
+diff --git a/target/arm/tcg/cpregs-at.c b/target/arm/tcg/cpregs-at.c
+index bebf168997..0e8f229aa7 100644
+--- a/target/arm/tcg/cpregs-at.c
++++ b/target/arm/tcg/cpregs-at.c
+@@ -488,6 +488,47 @@ static const ARMCPRegInfo ats1cp_reginfo[] = {
+       .writefn = ats_write },
+ };
  
-     section_id = qemu_get_be32(f);
- 
-     ret = qemu_file_get_error(f);
-     if (ret) {
--        error_report("%s: Failed to read section ID: %d",
--                     __func__, ret);
-+        error_setg(errp, "Failed to read section ID: %d", ret);
-         return ret;
++static void ats_s1e1a(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
++{
++    uint64_t hcr_el2 = arm_hcr_el2_eff(env);
++    bool regime_e20 = (hcr_el2 & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE);
++    ARMMMUIdx mmu_idx = regime_e20 ? ARMMMUIdx_E20_2 : ARMMMUIdx_Stage1_E1;
++    ARMSecuritySpace ss = arm_security_space_below_el3(env);
++
++    env->cp15.par_el[1] = do_ats_write(env, value, 0, mmu_idx, ss);
++}
++
++static void ats_s1e2a(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
++{
++    uint64_t hcr_el2 = arm_hcr_el2_eff(env);
++    ARMMMUIdx mmu_idx = hcr_el2 & HCR_E2H ? ARMMMUIdx_E20_2 : ARMMMUIdx_E2;
++    ARMSecuritySpace ss = arm_security_space_below_el3(env);
++
++    env->cp15.par_el[1] = do_ats_write(env, value, 0, mmu_idx, ss);
++}
++
++static void ats_s1e3a(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
++{
++    env->cp15.par_el[1] = do_ats_write(env, value, 0, ARMMMUIdx_E3,
++                                       arm_security_space(env));
++}
++
++static const ARMCPRegInfo ats1a_reginfo[] = {
++    { .name = "AT_S1E1A", .state = ARM_CP_STATE_AA64,
++      .opc0 = 1, .opc1 = 0, .crn = 7, .crm = 9, .opc2 = 2,
++      .access = PL1_W, .type = ARM_CP_NO_RAW | ARM_CP_RAISES_EXC,
++      .fgt = FGT_ATS1E1A,
++      .accessfn = at_s1e01_access, .writefn = ats_s1e1a },
++    { .name = "AT_S1E2A", .state = ARM_CP_STATE_AA64,
++      .opc0 = 1, .opc1 = 4, .crn = 7, .crm = 9, .opc2 = 2,
++      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_RAISES_EXC,
++      .accessfn = at_s1e2_access, .writefn = ats_s1e2a },
++    { .name = "AT_S1E3A", .state = ARM_CP_STATE_AA64,
++      .opc0 = 1, .opc1 = 6, .crn = 7, .crm = 9, .opc2 = 2,
++      .access = PL3_W, .type = ARM_CP_NO_RAW | ARM_CP_RAISES_EXC,
++      .writefn = ats_s1e3a },
++};
++
+ void define_at_insn_regs(ARMCPU *cpu)
+ {
+     CPUARMState *env = &cpu->env;
+@@ -509,4 +550,7 @@ void define_at_insn_regs(ARMCPU *cpu)
+     if (cpu_isar_feature(aa32_ats1e1, cpu)) {
+         define_arm_cp_regs(cpu, ats1cp_reginfo);
      }
++    if (cpu_isar_feature(aa64_ats1a, cpu)) {
++        define_arm_cp_regs(cpu, ats1a_reginfo);
++    }
+ }
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index b8b1981e70..abef6a246e 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1179,6 +1179,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64ISAR2, BC, 1);       /* FEAT_HBC */
+     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
+     t = FIELD_DP64(t, ID_AA64ISAR2, CSSC, 1);     /* FEAT_CSSC */
++    t = FIELD_DP64(t, ID_AA64ISAR2, ATS1A, 1);    /* FEAT_ATS1A */
+     SET_IDREG(isar, ID_AA64ISAR2, t);
  
-@@ -2828,7 +2826,7 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-         }
-     }
-     if (se == NULL) {
--        error_report("Unknown savevm section %d", section_id);
-+        error_setg(errp, "Unknown section %d", section_id);
-         return -EINVAL;
-     }
- 
-@@ -2836,9 +2834,8 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-         start_ts = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
-     }
- 
--    ret = vmstate_load(f, se, &local_err);
-+    ret = vmstate_load(f, se, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
-@@ -2849,6 +2846,8 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type)
-     }
- 
-     if (!check_section_footer(f, se)) {
-+        error_setg(errp, "Section footer error, section_id: %d",
-+                   section_id);
-         return -EINVAL;
-     }
- 
-@@ -3108,7 +3107,7 @@ retry:
-             break;
-         case QEMU_VM_SECTION_PART:
-         case QEMU_VM_SECTION_END:
--            ret = qemu_loadvm_section_part_end(f, section_type);
-+            ret = qemu_loadvm_section_part_end(f, section_type, errp);
-             if (ret < 0) {
-                 goto out;
-             }
-@@ -3132,9 +3131,6 @@ retry:
- 
- out:
-     if (ret < 0) {
--        if (*errp == NULL) {
--            error_setg(errp, "Loading VM state failed: %d", ret);
--        }
-         qemu_file_set_error(f, ret);
- 
-         /* Cancel bitmaps incoming regardless of recovery */
-
+     t = GET_IDREG(isar, ID_AA64PFR0);
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 4e8aca8b5d..6b04c96c8c 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -23,6 +23,7 @@ the following architecture extensions:
+ - FEAT_AFP (Alternate floating-point behavior)
+ - FEAT_Armv9_Crypto (Armv9 Cryptographic Extension)
+ - FEAT_ASID16 (16 bit ASID)
++- FEAT_ATS1A (Address Translation operations that ignore stage 1 permissions)
+ - FEAT_BBM at level 2 (Translation table break-before-make levels)
+ - FEAT_BF16 (AArch64 BFloat16 instructions)
+ - FEAT_BTI (Branch Target Identification)
 -- 
-2.51.0
+2.43.0
 
 
