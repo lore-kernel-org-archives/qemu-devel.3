@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DE5CA0FE8
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Aug 2025 17:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941A7CA0FE8
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Aug 2025 22:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uslcO-0008QC-4F; Sun, 31 Aug 2025 13:13:28 -0400
+	id 1usqiZ-0001vg-W0; Sun, 31 Aug 2025 18:40:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uslcK-0008Nu-8w; Sun, 31 Aug 2025 13:13:24 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uslcG-0008F6-QI; Sun, 31 Aug 2025 13:13:24 -0400
-Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 57VHCsfq063114
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 1 Sep 2025 02:12:54 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=PpBXGyElZog6vBu5RCro6oXYR3bKZ71T2HDsVr4zVHU=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1756660374; v=1;
- b=lT7TBwKL+zuq8gLDzAeydMbSeae/uqiPU7Zzc2CV5BO/mZQfS7UuA6ct1fX9evaC
- u0fJZGJRNc01iPOSidC2GePdjX0dFLN7L0bTqPj9vzcuBsASIwz5qqk51REORm8C
- O0L5aETTx5Fv/gnYkSh2UqC/Of01UUUfKw61FRvj3gzeV611CaYGO2p4Ql6ijqYq
- u6pCXDfR4lKHFZBnviRpWYj1bngeBxA8QSg67nhqb+pqYCnJz+K/Nqp0lv5LwOnq
- zgEmNsQ7pGlhg+gKhs0rV8oxzgn1aGKxQXmY7SmcV903n4HADadLGX/AbFbkccum
- WZwdr1RF60eQAeoGfFcRIA==
-Message-ID: <6bee20a5-6f12-4b12-aab3-1a2019418611@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 1 Sep 2025 02:12:54 +0900
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usqiU-0001ue-Hf
+ for qemu-devel@nongnu.org; Sun, 31 Aug 2025 18:40:09 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1usqiS-0003eH-N6
+ for qemu-devel@nongnu.org; Sun, 31 Aug 2025 18:40:05 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3298961169bso575655a91.2
+ for <qemu-devel@nongnu.org>; Sun, 31 Aug 2025 15:40:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756680002; x=1757284802; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RbUtwePrKyoHMrSs9BsdltIBoYZDapMC2fR/AHE/pkI=;
+ b=tyyKfOxQHuO7hfCCUoT4JpbHg58yJwD8uChrAR8aYveWpwKr+RgEr+s6ERmsCC8qWn
+ of/pjj8Ih1e8X/IlWzuH71jhQvXfBdUsOtsIp0GGeKc+pGjx2nXSC1yoHHnWMTq4mQdF
+ 8f8H6rWBkR0iZzP2ccimQWrTNOMGL5sYXLwzQ190zaKTSXlDmQtv/67yqCcg+v1sPPeV
+ w0/Oivvb6q2JBXzywG1JEdBt5kJwrhfyeHBn7IAZeoyxDTb99a25Y8LQEUHKuSU6O6ni
+ bFl8jxvVGy7pYXiFpJqGGXFC9uRGtMzzTIFYC7Vj7nFhqS9+RY+C3SgJtoFbZU4ZLn9m
+ vSKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756680002; x=1757284802;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RbUtwePrKyoHMrSs9BsdltIBoYZDapMC2fR/AHE/pkI=;
+ b=XG23VZrLgYACI1YhN0CcY5fbHSkL7+hUuqjsj/qj2XzvVJ2yGC2FqIYqPRTlEy6bSf
+ OoO9zc71XC4fo2xgsFYTZYBfjVNkJ1V2oehcIC9S/WRcU2jQDtKTgC4ItbvPejFWkw4v
+ 6CJ8If1HGY0estywYJyKelTPhJ4J1yILZ9x9KqQ/BSYnGmMLIajeP2weiPiMX8CkCd0f
+ oR5WGnW8cAES54DkI3+sOpghsc7/nwTpva097RF1C1v+KUa3HUiGA4cxWmDcxBoy9jox
+ 3RxPM+3evqvOu1t+4uVD3enqG7U7oD+Awzbrc0Fk4rerrKWkU+mPkO+S8wkBPgFjRGgc
+ wjXQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUHmriNjizoZ/XjnYLePS0zkiRN0kBtNg6VIbclNyKbc2/4+MHE+g63FAlNU/EptG5bRqid6A/2VsQ1@nongnu.org
+X-Gm-Message-State: AOJu0YwqReLj9QR13kTLwWpsER9umOxQA7dn4xTkaaXktcOYGWNy+TvA
+ ycdGHuc7N0BKSHaOlj6u/el4ZQ9psOGaJDR95twrZ+SfHfY3Gxb6/LoNtqiWsJ+iALs=
+X-Gm-Gg: ASbGncuFAHcaxlEfGRZ7IFPROg9rKdzaHtdK5EMFVSbMSzMB6pDjO55EIMBxhnifh6h
+ gXLIni2L3G9PbzyBgvnYLbwtNXdVwVaY6PW+3orNw4KOydAxJG/j+KNfW51W61kesC6485vpUZc
+ OO088Ft/HbLDREJgy8jh/ZkobT+Fu5aK1NSHFlQXWOoh+lE4KaSIPN6aTxMFDXUmVdF6Rv5V4/z
+ jc/wCxhn42tFmQYYBP1bhs20flvZbjftUzWKzKHN347G87i7HPx6cyOEwe8EoXOoYRZm1ED4S+I
+ GJaXEIVasJ2r0qxQk6+X7AGB1JN089iJcZFkbc3PYKqAp1wcEymlyCm9jkM9kbVj45PtY2VbEpj
+ /UvptCed91Xiix5Nzup/CWTA66tdfBJqIernp01GZzfqPhkSPFJmX5VS0EA0oJeDE+TWmwH/FNJ
+ kBgjux
+X-Google-Smtp-Source: AGHT+IG8qlQ572Ap52TE0Ryy3zfIvcsBlPxP0gXW4y6Eox58sU33oQHtKbNjj3n6iCy8pb0TJUPtUQ==
+X-Received: by 2002:a17:90b:4a87:b0:327:83e1:5bf with SMTP id
+ 98e67ed59e1d1-328156cd26cmr6231229a91.28.1756680002385; 
+ Sun, 31 Aug 2025 15:40:02 -0700 (PDT)
+Received: from [10.118.1.198] (122-150-204-12.dyn.ip.vocus.au.
+ [122.150.204.12]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3274572be3bsm9585886a91.2.2025.08.31.15.39.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 31 Aug 2025 15:40:01 -0700 (PDT)
+Message-ID: <93e542af-63a2-4236-9b58-b95eeb6b9185@linaro.org>
+Date: Mon, 1 Sep 2025 08:39:55 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 07/27] migration: push Error **errp into
- qemu_loadvm_state()
-To: armenon@redhat.com
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-References: <20250830-propagate_tpm_error-v13-0-a4e777b7eb2c@redhat.com>
- <20250830-propagate_tpm_error-v13-7-a4e777b7eb2c@redhat.com>
- <078e2ef1-fbfa-450a-a2ab-d1e77cc8e850@rsg.ci.i.u-tokyo.ac.jp>
- <aLRt_G-pOH1rwJbb@armenon-kvm.bengluru.csb>
- <017c40a6-3347-43e7-b7b7-9e2e2130d19e@rsg.ci.i.u-tokyo.ac.jp>
- <aLR6mKJyVPZ4bqnZ@armenon-kvm.bengluru.csb>
+Subject: Re: [PATCH] block: honor $TMPDIR in create_tmp_file()
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Cc: Bin Meng <bin.meng@windriver.com>
+References: <20250831114818.4136358-1-mjt@tls.msk.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aLR6mKJyVPZ4bqnZ@armenon-kvm.bengluru.csb>
+In-Reply-To: <20250831114818.4136358-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,133 +105,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/09/01 1:38, Arun Menon wrote:
-> Hi,
-> 
-> On Mon, Sep 01, 2025 at 01:04:40AM +0900, Akihiko Odaki wrote:
->> On 2025/09/01 0:45, Arun Menon wrote:
->>> Hi Akihiko,
->>> Thanks for the review.
->>>
->>> On Sat, Aug 30, 2025 at 02:58:05PM +0900, Akihiko Odaki wrote:
->>>> On 2025/08/30 5:01, Arun Menon wrote:
->>>>> This is an incremental step in converting vmstate loading
->>>>> code to report error via Error objects instead of directly
->>>>> printing it to console/monitor.
->>>>> It is ensured that qemu_loadvm_state() must report an error
->>>>> in errp, in case of failure.
->>>>>
->>>>> When postcopy live migration runs, the device states are loaded by
->>>>> both the qemu coroutine process_incoming_migration_co() and the
->>>>> postcopy_ram_listen_thread(). Therefore, it is important that the
->>>>> coroutine also reports the error in case of failure, with
->>>>> error_report_err(). Otherwise, the source qemu will not display
->>>>> any errors before going into the postcopy pause state.
->>>>>
->>>>> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->>>>> Signed-off-by: Arun Menon <armenon@redhat.com>
->>>>> ---
->>>>>     migration/migration.c |  9 +++++----
->>>>>     migration/savevm.c    | 30 ++++++++++++++++++------------
->>>>>     migration/savevm.h    |  2 +-
->>>>>     3 files changed, 24 insertions(+), 17 deletions(-)
->>>>>
->>>>> diff --git a/migration/migration.c b/migration/migration.c
->>>>> index 10c216d25dec01f206eacad2edd24d21f00e614c..c6768d88f45c870c7fad9b9957300766ff69effc 100644
->>>>> --- a/migration/migration.c
->>>>> +++ b/migration/migration.c
->>>>> @@ -881,7 +881,7 @@ process_incoming_migration_co(void *opaque)
->>>>>                           MIGRATION_STATUS_ACTIVE);
->>>>>         mis->loadvm_co = qemu_coroutine_self();
->>>>> -    ret = qemu_loadvm_state(mis->from_src_file);
->>>>> +    ret = qemu_loadvm_state(mis->from_src_file, &local_err);
->>>>>         mis->loadvm_co = NULL;
->>>>>         trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
->>>>> @@ -908,7 +908,8 @@ process_incoming_migration_co(void *opaque)
->>>>>         }
->>>>>         if (ret < 0) {
->>>>> -        error_setg(&local_err, "load of migration failed: %s", strerror(-ret));
->>>>> +        error_prepend(&local_err, "load of migration failed: %s: ",
->>>>> +                      strerror(-ret));
->>>>>             goto fail;
->>>>>         }
->>>>> @@ -924,13 +925,13 @@ fail:
->>>>>         migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
->>>>>                           MIGRATION_STATUS_FAILED);
->>>>>         migrate_set_error(s, local_err);
->>>>> -    error_free(local_err);
->>>>> +    error_report_err(local_err);
->>>>
->>>> This is problematic because it results in duplicate error reports when
->>>> !mis->exit_on_error; in that case the query-migrate QMP command reports the
->>>> error and this error reporting is redundant.
->>>
->>> If I comment this change, then all of the errors propagated up to now, using
->>> error_setg() will not be reported. This is the place where it is finally reported,
->>> when qemu_loadvm_state() fails. In other words, all the error_reports() we removed
->>> from all the files, replacing them with error_setg(), will finally be reported here
->>> using error_report_err().
->>
->> My understanding of the code without these two changes is:
->> - If the migrate-incoming QMP command is used with false as
->>    exit-on-error, this function will not report the error but
->>    the query-migrate QMP command will report the error.
->> - Otherwise, this function reports the error.
-> 
-> With my limited experience in testing, I have a question,
-> So there are 2 scenarios,
-> 1. running the virsh migrate command on the source host. Something like the following,
->    virsh -c 'qemu:///system' migrate --live --verbose --domain guest-vm --desturi qemu+ssh://10.6.120.20/system
->    OR for postcopy-ram,
->    virsh migrate guest-vm --live qemu+ssh://10.6.120.20/system --verbose --postcopy --timeout 10 --timeout-postcopy
-> 
-> 2. Using QMP commands, performing a migration from source to destination.
->    Running something like the following on the destination:
->    {
->      "execute": "migrate-incoming",
->      "arguments": {
->        "uri": "tcp:127.0.0.1:7777",
->        "exit-on-error": false
->      }
->    }
->    {
->      "execute": "migrate-incoming",
->      "arguments": {
->        "uri": "tcp:127.0.0.1:7777",
->        "exit-on-error": false
->      }
->    }
->    and the somthing like the following on source:
->    {
->      "execute": "migrate",
->      "arguments": {
->        "uri": "tcp:127.0.0.1:7777"
->      }
->    }
->    {"execute" : "query-migrate"}
-> 
-> In 1, previously, the user used to get an error message on migration failure.
-> This was because there were error_report() calls in all of the files.
-> Now that they are replaced with error_setg() and the error is stored in errp,
-> we need to display that using error_report_err(). Hence I introduced an error_report_err()
-> call in the fail section.
-> 
-> In 2, we have 2 QMP sessions, one for the source and another for the destination.
-> The QMP command migrate will be issued on the source, and the errp will be set.
-> I did not understand the part where the message will be displayed because of the
-> error_report_err() call. I did not see such a message on failure scenario on both
-> the sessions.
-> If the user wants to check for errors, then the destination qemu will not exit
-> (exit-on-error = false ) and we can retrieve it using {"execute" : "query-migrate"}
-> 
-> Aren't the 2 scenarios different by nature?
+On 8/31/25 21:48, Michael Tokarev wrote:
+>       /*
+>        * See commit 69bef79 ("block: use /var/tmp instead of /tmp for -snapshot")
+>        *
+> @@ -862,7 +860,12 @@ char *create_tmp_file(Error **errp)
+>        * so the files can become very large. /tmp is often a tmpfs where as
+>        * /var/tmp is usually on a disk, so more appropriate for disk images.
+>        */
 
-In 1, doesn't libvirt query the error with query-migrate and print it?
+This is going to cause other failures, per the tmpfs reason given in the comment.
 
-In any case, it would be nice if you describe how libvirt interacts with 
-QEMU in 1.
-
-Regards,
-Akihiko Odaki
+r~
 
