@@ -4,34 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B56FBCA0FF2
-	for <qemu-devel@archiver.kernel.org>; Sun, 31 Aug 2025 05:03:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF073CA0EFF
+	for <qemu-devel@archiver.kernel.org>; Sun, 31 Aug 2025 05:05:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usaD6-0005rm-KI; Sun, 31 Aug 2025 01:02:36 -0400
+	id 1usaFu-0007HP-QC; Sun, 31 Aug 2025 01:05:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1usaCz-0005r3-TD; Sun, 31 Aug 2025 01:02:29 -0400
+ id 1usaFs-0007Fr-Ag; Sun, 31 Aug 2025 01:05:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1usaCx-0005U5-Ht; Sun, 31 Aug 2025 01:02:29 -0400
+ id 1usaFq-0006AR-Di; Sun, 31 Aug 2025 01:05:28 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0284114E2C6;
- Sun, 31 Aug 2025 08:01:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AC96E14E2CB;
+ Sun, 31 Aug 2025 08:04:50 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3185026B8B6;
- Sun, 31 Aug 2025 08:02:15 +0300 (MSK)
-Message-ID: <85416a7b-0399-41b4-a1b0-6972b258f085@tls.msk.ru>
-Date: Sun, 31 Aug 2025 08:02:14 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id C83D526B8BB;
+ Sun, 31 Aug 2025 08:05:23 +0300 (MSK)
+Message-ID: <2e6d011f-a8a5-4eef-9fe0-2a95984e4116@tls.msk.ru>
+Date: Sun, 31 Aug 2025 08:05:23 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/arm: Fix tgen_deposit
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20250829135203.284630-1-richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 1/1] target/arm: Trap PMCR when MDCR_EL2.TPMCR is set
+To: Smail AIDER <smail.aider@huawei.com>, qemu-devel@nongnu.org
+Cc: alexander.spyridakis@huawei.com, zhangyue165@huawei.com,
+ liuyutao2@huawei.com, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org
+References: <20250811112143.1577055-1-smail.aider@huawei.com>
+ <20250811112143.1577055-2-smail.aider@huawei.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -77,7 +80,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250829135203.284630-1-richard.henderson@linaro.org>
+In-Reply-To: <20250811112143.1577055-2-smail.aider@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -103,20 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.08.2025 16:52, Richard Henderson wrote:
-> When converting from tcg_out_deposit, the arguments were not
-> shuffled properly.
+On 11.08.2025 14:21, Smail AIDER via wrote:
+> From: Smail AIDER via <qemu-devel@nongnu.org>
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: cf4905c03135f1181e8 ("tcg: Convert deposit to TCGOutOpDeposit")
+> Trap PMCR_EL0 or PMCR accesses to EL2 when MDCR_EL2.TPMCR is set.
+> Similar to MDCR_EL2.TPM, MDCR_EL2.TPMCR allows trapping EL0 and EL1
+> accesses to the PMCR register to EL2.
+> 
+> Signed-off-by: Smail AIDER <smail.aider@huawei.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-Id: <20250722131925.2119169-1-smail.aider@huawei.com>
 
-It fixed the prob indeed, - debian infra has finally catched up and ran
-the CI tests on armhf and armel where it all cleared up now.
-
-Tested-by: Michael Tokarev <mjt@tls.msk.ru>
+Hi!  Please take a look at
+https://gitlab.com/mjt0k/qemu/-/commit/842918ee3c1cb9ac687bb27920c8d9020c2c109b
+for my back-port of this commit to v10.0.x series, -- does it look
+sane?  I assume this change is targetting 10.0.x too, not just 10.1.x.
 
 Thanks,
 
 /mjt
-
 
