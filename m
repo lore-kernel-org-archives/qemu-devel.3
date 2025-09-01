@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 274CFCA1005
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B82CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2fp-0004IZ-TX; Mon, 01 Sep 2025 07:26:10 -0400
+	id 1ut2hx-0006KY-IO; Mon, 01 Sep 2025 07:28:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ut2fo-00047c-BD
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:26:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ut2hw-0006K9-0e
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:28:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ut2fk-0006a6-Fy
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:26:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ut2hu-0006qs-3z
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:28:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756725960;
+ s=mimecast20190719; t=1756726097;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tTsvtj5J1mlXFlgIjqBYd7ZJTboivNB2+ePzohNvUMA=;
- b=fdpfKCTvjWv4hhCYWqasnPdnuKeU9W/6Lpq+BSV49W4CMUOaHj9HiSfhtzldFPEfY4G5FC
- YJoVs7rO6Gc/3F9rebvkduM8vSxvjvCCq0L8eG8wt6Woy1tDG/8zgV1/A6H/mbFuWWwzU0
- BWsKD/jwyU7k2Zbr7KV2kJcwtmuNd2Y=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/N8upRJ1d8yzazW+f/bNmFNtjhrHai25NFdLNIm6DFQ=;
+ b=idyjBWo2BcpCh113T2JuXjTvLL+pWbwi0aeDBu88xs9kWGLvAAxjL3KfPRv8eulmJYOqpz
+ DFCNWWEzWbqR30Ql3bg8FVJioieMMgNc1PUV2FoXOr7J4fajMn2jBKKQzkFE92EQYgemjg
+ 83X/7gbSbNvzIhdw+8NSwsTvP5mkZoc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-veiWmFWSPUGT3WbQdP9lvQ-1; Mon, 01 Sep 2025 07:25:59 -0400
-X-MC-Unique: veiWmFWSPUGT3WbQdP9lvQ-1
-X-Mimecast-MFC-AGG-ID: veiWmFWSPUGT3WbQdP9lvQ_1756725958
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45b87bc6795so10410095e9.3
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:25:59 -0700 (PDT)
+ us-mta-511-qoaCZ9ATO3GgugmOupumCA-1; Mon, 01 Sep 2025 07:28:15 -0400
+X-MC-Unique: qoaCZ9ATO3GgugmOupumCA-1
+X-Mimecast-MFC-AGG-ID: qoaCZ9ATO3GgugmOupumCA_1756726094
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45b8f4c2f7fso4155865e9.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:28:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756725958; x=1757330758;
+ d=1e100.net; s=20230601; t=1756726094; x=1757330894;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tTsvtj5J1mlXFlgIjqBYd7ZJTboivNB2+ePzohNvUMA=;
- b=HdvITrpQhFLWKXKLLHODFScp2h6aCI8Ke1hzxmsJMzSGU0zz5DXKhN47su9nbcuRkj
- WY5/pKKEFGud2bZrAuV2olf0iSQ9n3VHZx2UocVge1+1sb7ecXn6BCH9EPDSQP2uf0fO
- J61vzPrl6pq+ChdhkwqeUBJVWk6o7bIYNs6MerqRTec8/qxZ6cuLux9RnEkmJGztNd+v
- 1Ow51o1syvQiygzhmHu1yG7yLIoe/LknVS4gVhkd+ucM2ayaEMoUfv2/80uQMxFWqDqH
- lbl719fLGADlQJ1C3ntPo5tjS2oBtA1f7UDDTCheGfbfFHgS3OJ2aD+40OpUMeoCGP4d
- 3oWg==
+ bh=/N8upRJ1d8yzazW+f/bNmFNtjhrHai25NFdLNIm6DFQ=;
+ b=WR7FLDuQ5S7NEIXLI1oGna2rfQZW4II+gGk2XqNCDNF+taoitynM5Ce7bBHGAGBiXE
+ w8JoGrtmiiq+zvlimYRkZeaSS7R6vRpGu3bYbYRHcrPwTRkOm3VJ+4y+2DT5Bq878s5w
+ Nqe7FjOH9V6LiSoMLwVbSC4fXQ/DIDaEqeSaR4oOf64VVn7fB/5JL1w3ELk6MTmPBHa2
+ 4vLWe0he4hWVqLvvH3f0Jy9nW7NEV9WauS2itLMs99KODExS77avSjs2TPPU/bypShEF
+ EoP19DXerP9nLE1tS46g2TpQjsU5gBrSYmIVuKMXr4UluJDaXAiZWPEhmbwTRxAWTHPu
+ Dx7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQ6KkZdzBhOiTcBWCPzjf6usoIVAgKdcTw1Hk3cL0PsEASDN4kowREJse5wcryOJ/ocXtI8dbjOTOO@nongnu.org
-X-Gm-Message-State: AOJu0Yzo8Enn44nfho5IYyy2srTYpqnsMVd1th4kiQ6S8WcEPxsAb2Bg
- wbFOR1uu290VDO8gakfgBzdY2YXrH4jDtwxttrJO3tKjicqujhFUu40Nvv8CW6EHzeHqhRU0wvA
- XOC0ZVfRKJkI6cwQlnHZgo2B00eusU69coNx+JbtRIjtBQHUCHr1G/HRu
-X-Gm-Gg: ASbGncv7nw/YtIw6ukjjo6qmvtYPKpNWIAGI8RxWuyQ61bcJD+zSDyHoFXILMp2p+wJ
- iVH6Frr/Xu217GlsksHiaBe8q3TicGyXBp6Q6cts+pq3MZO6+YuWXkn90SBWWfdnZtg/DgGHEeL
- 3YAUCuhaBr/BsbblhQRmCDb5Jx8VNpIZzJG8Mfb7o0wICqq6t2kYVbS9KwGhlzK2Ivtk0pX4hEN
- NzHipoBy1ppu4hykF1mPEBxYRjqjW+HdhIOjvp+Z5bSmgOx/R9W+pat0frIXndTOSNlb7q7mrG5
- //xP7NHIAOaIdKPWnGqYv4IAvvp0JbaPrDbO0rLzAeYtpDXMuJ61kAptEoi90GKwEw0kO5hlLuq
- lsrk=
-X-Received: by 2002:a05:600c:1c04:b0:45b:8cee:581d with SMTP id
- 5b1f17b1804b1-45b8cee5b4cmr20939945e9.22.1756725957946; 
- Mon, 01 Sep 2025 04:25:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1VocoAtk/XZa9cdD6GoVF4x8Ediro7NYS9aqJJ2uaCUnapd/4nezIqQoTiSg3vkJGUKf4DQ==
-X-Received: by 2002:a05:600c:1c04:b0:45b:8cee:581d with SMTP id
- 5b1f17b1804b1-45b8cee5b4cmr20939745e9.22.1756725957500; 
- Mon, 01 Sep 2025 04:25:57 -0700 (PDT)
+ AJvYcCVEj1lo+d8YWwkIpEzU0f8yhvLtEdaEvRdJK2T5OMUDEmmV+tuNEbRNgnDZ9+qLY5HAQ6DalFV6Pm6A@nongnu.org
+X-Gm-Message-State: AOJu0YwmoWsX/bupkJjXuy/PweXsV8HlJhAoY/7Nh/W6w3BToi07iAc1
+ qLmwxT5rP8fzSQKOehzIgCvIbYz+7YK4McO3b28tAw19ruYMP7vMPyoExYfJlHInWnwVJAPHo+p
+ MErvCIl6Qifb9+MrZsYeIpHXln9jD0eyA49bzthYTzLjzmvuFv+UnJRVU
+X-Gm-Gg: ASbGncuPU1kty6efhqBYTWY9PNKCabe0Cxhdqa0oK+sM8uJZppjaXpXS7Xk0RAqF7nm
+ B73l/2EEcBEG4++UZx7m8zJKjdwSboY2oRZ9ZS3DTW8CFi/MhOeKd1BYH7lmvadKp1VIjKBlml2
+ ivbDvMMCXeJ40utoX65JLgyXjSRYTGPD22IbK0sf9/a4J6fQJMMAjYOKQ9pwp9OBPRnFGMgy7eq
+ +Sp9Wc21iIlctiHNrPUTnN2uNIKAsOTIhRT7tGZ8bjZ5LxSIhVizVa+EDLrrdG+922UMJjtrlxt
+ O9E8TUCfT1F44xD6zJtVjsRg+e83x+YmKKw+i0F1eI4HGNHk++NYcNXrZ/shRzbSj2QiAHF72R0
+ /JFg=
+X-Received: by 2002:a05:6000:25c7:b0:3ce:9872:fd3 with SMTP id
+ ffacd0b85a97d-3d1de5b0cd7mr5924300f8f.34.1756726094315; 
+ Mon, 01 Sep 2025 04:28:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHlcrXv4iWFHf9FDBHwkL7noD7j0DD83YfkK9ws+k0GBzszCxVpISmqzAcUL5GnLL2cRSUt4A==
+X-Received: by 2002:a05:6000:25c7:b0:3ce:9872:fd3 with SMTP id
+ ffacd0b85a97d-3d1de5b0cd7mr5924283f8f.34.1756726093876; 
+ Mon, 01 Sep 2025 04:28:13 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf33fbb3ccsm15069000f8f.51.2025.09.01.04.25.56
+ ffacd0b85a97d-3d21a80c723sm9897923f8f.9.2025.09.01.04.28.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 04:25:56 -0700 (PDT)
-Message-ID: <24333a79-2a49-4abb-8bb7-8e5b30a0d58b@redhat.com>
-Date: Mon, 1 Sep 2025 13:25:55 +0200
+ Mon, 01 Sep 2025 04:28:13 -0700 (PDT)
+Message-ID: <0699f897-3aeb-4104-919b-c96cdab4d4e7@redhat.com>
+Date: Mon, 1 Sep 2025 13:28:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] s390x/pci: Add PCI error handling for vfio pci
- devices
+Subject: Re: [PATCH v2 2/4] vfio/pci: Add an architecture specific error
+ handler
 To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org
 Cc: mjrosato@linux.ibm.com, thuth@redhat.com, alex.williamson@redhat.com
 References: <20250825212434.2255-1-alifm@linux.ibm.com>
- <20250825212434.2255-4-alifm@linux.ibm.com>
+ <20250825212434.2255-3-alifm@linux.ibm.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -130,10 +130,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250825212434.2255-4-alifm@linux.ibm.com>
+In-Reply-To: <20250825212434.2255-3-alifm@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,168 +159,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/25/25 23:24, Farhan Ali wrote:
-> Add an s390x specific callback for vfio error handling. For s390x pci devices,
-> we have platform specific error information. We need to retrieve this error
-> information for passthrough devices. This is done via a memory region which
-> exposes that information.
-> 
-> Once this error information is retrieved we can then inject an error into
-> the guest, and let the guest drive the recovery.
+> Provide a architecture specific error handling callback, that can be used
+> by platforms to handle PCI errors for passthrough devices.
 > 
 > Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 > ---
->   hw/s390x/s390-pci-bus.c          |  5 +++
->   hw/s390x/s390-pci-vfio.c         | 76 ++++++++++++++++++++++++++++++++
->   include/hw/s390x/s390-pci-bus.h  |  1 +
->   include/hw/s390x/s390-pci-vfio.h |  2 +
->   4 files changed, 84 insertions(+)
+>   hw/vfio/pci.c | 5 +++++
+>   hw/vfio/pci.h | 1 +
+>   2 files changed, 6 insertions(+)
 > 
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index f87d2748b6..af42eb9938 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -158,6 +158,8 @@ static void s390_pci_perform_unplug(S390PCIBusDevice *pbdev)
->   {
->       HotplugHandler *hotplug_ctrl;
->   
-> +    qemu_mutex_destroy(&pbdev->err_handler_lock);
-> +
->       if (pbdev->pft == ZPCI_PFT_ISM) {
->           notifier_remove(&pbdev->shutdown_notifier);
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 07257d0fa0..3c71d19306 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3026,6 +3026,11 @@ static void vfio_err_notifier_handler(void *opaque)
+>           return;
 >       }
-> @@ -1140,6 +1142,7 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
->           pbdev->iommu->pbdev = pbdev;
->           pbdev->state = ZPCI_FS_DISABLED;
->           set_pbdev_info(pbdev);
-> +        qemu_mutex_init(&pbdev->err_handler_lock);
 >   
->           if (object_dynamic_cast(OBJECT(dev), "vfio-pci")) {
->               /*
-> @@ -1164,6 +1167,8 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
->               pbdev->iommu->dma_limit = s390_pci_start_dma_count(s, pbdev);
->               /* Fill in CLP information passed via the vfio region */
->               s390_pci_get_clp_info(pbdev);
-> +            /* Setup error handler for error recovery */
-> +            s390_pci_setup_err_handler(pbdev);
-
-This can fail. Please add an 'Error **' parameter and change the returned
-value to bool.
+> +    if (vdev->arch_err_handler) {
+> +        vdev->arch_err_handler(vdev);
 
 
->               if (!pbdev->interp) {
->                   /* Do vfio passthrough but intercept for I/O */
->                   pbdev->fh |= FH_SHM_VFIO;
-> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-> index aaf91319b4..87ecd06a81 100644
-> --- a/hw/s390x/s390-pci-vfio.c
-> +++ b/hw/s390x/s390-pci-vfio.c
-> @@ -10,6 +10,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
->   
->   #include <sys/ioctl.h>
->   #include <linux/vfio.h>
-> @@ -103,6 +104,60 @@ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt)
->       }
->   }
->   
-> +static int s390_pci_get_feature_err(VFIOPCIDevice *vfio_pci,
-> +                                    struct vfio_device_feature_zpci_err *err)
+I am not sure that the "architecture specific error handling"
+will be implemented this way but we need to check for potential
+errors.
 
-Please add an 'Error **' parameter and change the returned value to bool.
+So, please make the handler return a bool and add an extra
+'Error **' parameter.
 
-> +{
-> +    int ret;
-> +    uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
-> +                              sizeof(struct vfio_device_feature_zpci_err),
-> +                              sizeof(uint64_t))] = {};
-> +    struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
-> +
-> +    feature->argsz = sizeof(buf);
-> +    feature->flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_ZPCI_ERROR;
-> +    ret = vfio_pci->vbasedev.io_ops->device_feature(&vfio_pci->vbasedev,
-> +                                                     feature);
-
-
-Please introduce vfio helpers to hide the internal indirection :
-
-   ->vbasedev.io_ops->device_feature(...)
-
-
-> +
-> +    if (ret) {
-> +        error_report("Failed feature get VFIO_DEVICE_FEATURE_ZPCI_ERROR"
-> +                    " (rc=%d)", ret);
-> +        return ret;
-> +    }
-> +
-> +    memcpy(err, (struct vfio_device_feature_zpci_err *) feature->data,
-> +           sizeof(struct vfio_device_feature_zpci_err));
-> +    return 0;
-> +}
-> +
-> +static void s390_pci_err_handler(VFIOPCIDevice *vfio_pci)
-> +{
-> +    S390PCIBusDevice *pbdev;
-> +    struct vfio_device_feature_zpci_err err;
-> +    int ret;
-> +
-> +    pbdev = s390_pci_find_dev_by_target(s390_get_phb(),
-> +                                        DEVICE(&vfio_pci->pdev)->id);
-> +
-> +    QEMU_LOCK_GUARD(&pbdev->err_handler_lock);
-> +
-> +    ret = s390_pci_get_feature_err(vfio_pci, &err);
-> +    if (ret) {
-> +        return;
-> +    }
-> +
-> +    pbdev->state = ZPCI_FS_ERROR;
-> +    s390_pci_generate_error_event(err.pec, pbdev->fh, pbdev->fid, 0, 0);
-> +
-> +    while (err.pending_errors) {
-> +        ret = s390_pci_get_feature_err(vfio_pci, &err);
-> +        if (ret) {
-> +            return;
-> +        }
-> +        s390_pci_generate_error_event(err.pec, pbdev->fh, pbdev->fid, 0, 0);
-> +    }
-> +    return;
-> +}
-> +
->   static void s390_pci_read_base(S390PCIBusDevice *pbdev,
->                                  struct vfio_device_info *info)
->   {
-> @@ -369,3 +424,24 @@ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
->       s390_pci_read_util(pbdev, info);
->       s390_pci_read_pfip(pbdev, info);
->   }
-> +
-> +void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev)
-> +{
-> +    int ret;
-> +    VFIOPCIDevice *vfio_pci =  container_of(pbdev->pdev, VFIOPCIDevice, pdev);
-> +    uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
-> +                              sizeof(uint64_t))] = {};
-> +    struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
-> +
-> +    feature->argsz = sizeof(buf);
-> +    feature->flags = VFIO_DEVICE_FEATURE_PROBE | VFIO_DEVICE_FEATURE_ZPCI_ERROR;
-> +
-> +    ret = vfio_pci->vbasedev.io_ops->device_feature(&vfio_pci->vbasedev,
-> +                                                     feature);
-
-Please introduce vfio helpers to hide the internal indirection :
-
-   ->vbasedev.io_ops->device_feature(...)
-
-> +
-> +    if (ret) {
-
-Shouldn't we test the return value to decide if the error is
-an unimplemented feature or an unexpected error ?
 
 Thanks,
 
@@ -328,42 +194,25 @@ C.
 
 
 
-> +        info_report("Automated error recovery not available for passthrough device");
+
 > +        return;
 > +    }
-> +    vfio_pci->arch_err_handler = s390_pci_err_handler;
-> +}
-> diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-> index 04944d4fed..3795e0bbfc 100644
-> --- a/include/hw/s390x/s390-pci-bus.h
-> +++ b/include/hw/s390x/s390-pci-bus.h
-> @@ -364,6 +364,7 @@ struct S390PCIBusDevice {
->       bool forwarding_assist;
->       bool aif;
->       bool rtr_avail;
-> +    QemuMutex err_handler_lock;
->       QTAILQ_ENTRY(S390PCIBusDevice) link;
->   };
->   
-> diff --git a/include/hw/s390x/s390-pci-vfio.h b/include/hw/s390x/s390-pci-vfio.h
-> index ae1b126ff7..66b274293c 100644
-> --- a/include/hw/s390x/s390-pci-vfio.h
-> +++ b/include/hw/s390x/s390-pci-vfio.h
-> @@ -22,6 +22,7 @@ S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
->   void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
->   bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
->   void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
-> +void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev);
->   #else
->   static inline bool s390_pci_update_dma_avail(int fd, unsigned int *avail)
->   {
-> @@ -39,6 +40,7 @@ static inline bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh)
->       return false;
->   }
->   static inline void s390_pci_get_clp_info(S390PCIBusDevice *pbdev) { }
-> +static inline void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev) { }
->   #endif
->   
->   #endif
+> +
+>       /*
+>        * TBD. Retrieve the error details and decide what action
+>        * needs to be taken. One of the actions could be to pass
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index 810a842f4a..45d4405e47 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -145,6 +145,7 @@ struct VFIOPCIDevice {
+>       EventNotifier err_notifier;
+>       EventNotifier req_notifier;
+>       int (*resetfn)(struct VFIOPCIDevice *);
+> +    void (*arch_err_handler)(struct VFIOPCIDevice *);
+
+>       uint32_t vendor_id;
+>       uint32_t device_id;
+>       uint32_t sub_vendor_id;
 
 
