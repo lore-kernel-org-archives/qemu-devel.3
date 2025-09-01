@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16301CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCABCA1007
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:54:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut427-0002S2-RP; Mon, 01 Sep 2025 08:53:16 -0400
+	id 1ut426-0002QN-2p; Mon, 01 Sep 2025 08:53:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut425-0002QA-RT
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:53:13 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1ut424-0002Ow-9F
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:53:12 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut423-0004Jl-FQ
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:53:13 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b042cc39551so132424366b.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 05:53:10 -0700 (PDT)
+ id 1ut421-0004J3-OK
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:53:12 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-afede1b3d05so723587066b.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 05:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756731189; x=1757335989; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Pd+2JDdfFwuawP7wDOXmAy8XWU5BClWFTFIACcDZ1/g=;
- b=okt85dMFhDBrNfezzIa+U0iCgSMXVeZM7LDmnZ3me6Asb+CeY75hnFivQbWqd5n4SI
- 463LoyGtB6gjmDMw00MQlMfcLNI/th7nJga89XyK2IiB84LNLpoMz/8cghOdyUQPR9PU
- pda0e+8+d+gka/IsJ+zlV+cy80/HUlYhMMycwWfRYt3svclkpGpi6BKKqCG/kidkOW07
- XwUtG7nrKTYBsjkHngyEt+f2mKIBkPYsHSzNV0TbirJBkMxDtQVsBvVXfSDldv2JUZkb
- Oc/yZpQXl6J2ziLti0ZmfffBsZoISgqyo1R9og+MD1SiHWpBKSin3L3xQLWg1fD5oxIY
- 1qxQ==
+ d=linaro.org; s=google; t=1756731187; x=1757335987; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FA62XwpQPyNmrR76Sl1OJ/pIEbglEP1qpDGBeqWAqWk=;
+ b=LAEsZJf29nuE9grq7Vm1smIILMy9j42UFFx0ECvuOyxMA0/ko8zTOfQGdguISfYAFr
+ gVgNlqJ7loZ3ZoeKot1KNmL57dm4Vw19ffipJGeRf5WIlVbs0SB0ENJ7L4tAd6Hhy4Tq
+ w9esue1ZBQb5KGmXzbdpGEqpgpxSiKngexWQ3AoLMekrEZJa2hmvUtSspaf0DEie3M3g
+ uKQRGM6pby+JDr4JfIJCasR+dzBZf83Sr07JiBjp3id+e5fwDNdtc/eyoROvnGphePds
+ w5emen/eFhfcGwf8ibdMl5Dnciqwgu0eoCs6XeFEeeeOH8s56MfoHh0HO36VzPHymTaQ
+ 9kkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756731189; x=1757335989;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Pd+2JDdfFwuawP7wDOXmAy8XWU5BClWFTFIACcDZ1/g=;
- b=QwYU56+a1w+yGALzev/Ukc940vpFk1BVpyeQNLD4+07lp+UYtb5QGxyMQgHfSMg7lj
- XkjrxVmbkgGx12l1h9HkyYGpfUBY9wRgayjfnUzP65ATnUWNbeNVDIcbEC1bFCunzx7b
- 3HH+mIiaSFBGgTv/QfqmZtSRyafou0fow8at4f7yG8hU5bX6PNUsCSmJT1+VnGf8vjZb
- 1bUykelw4kF8Yc4sIswV3SnpUyiAAvJA9YlDaNYaxG1irc0u53A3mpDpMx3a/54iL9Oi
- k3xiXOZqTEEFJdG5RjhY/gZkY+jSYew8FBRgO6bMpvU3nEu4Wtdn28+sMGT+r2/+0P/d
- cD9Q==
-X-Gm-Message-State: AOJu0Yx88i7s80rLAuWO3wE0gw5xSbrOeW0gD3Fy3UmBEfUPmI50b48T
- Z+25+wCFiqGBYbuSG7m0uW9+jI5qU9Tqjy+Fqbi4aKqBAQxGLrfa4D4e2FzJugqveS4=
-X-Gm-Gg: ASbGncudXlkATqhElHqLQ391jbx4ma7FMOkb8yMR6Agvi26u/I99aLOhhdxNX00No6A
- 56PPnAEnVQVa3/UT03OdUVkQV7ygVHYrQQILTuXwT45TJIIOirAv3TqphkDq0sbxlSQgvYyDg3u
- L/UcrgdXRLG12XMP4d1O1muL6YIn1O80jVBvze16mmo7VDbmh+Jwb1gmXSfBDIVhjK0URU8Nfiw
- KOOTKfLYq1uvI8YZYC3HlA5hWLlxP7T1t48kmtjBfbbB1bTUJMcPDRnpwKyACm3eRhQFW6HKQ3q
- 9DcVELBsOmUaaeCBXQvqq9kIBgRcwYJ1afIw6TUmeBH0eFbnXvlYMuV3t+TTBw1f96SdN4yi1Mf
- 4RPDneZy6MKjtRvOGA7/TRyY=
-X-Google-Smtp-Source: AGHT+IFR2ofR8BC43gwtMFx0eNeY9up3YTCSQsBXf6ChNjE8mxzM4irzoQwDJPzn9uvfHo+TF7yp4A==
-X-Received: by 2002:a17:907:72ca:b0:afe:764d:6b19 with SMTP id
- a640c23a62f3a-b01d8a25c86mr744822966b.2.1756731189267; 
- Mon, 01 Sep 2025 05:53:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756731187; x=1757335987;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FA62XwpQPyNmrR76Sl1OJ/pIEbglEP1qpDGBeqWAqWk=;
+ b=ghEES5oRmvqNnxH4eWn8yQm8SNGosQVT/Uh8SC9RiettAlXRpPUv8+bKey0s4AQQE9
+ 6m2+RkBQkJ2iqbu42Hm6hYhUOz+5EbpWqry2FVxzATS1cjVaKybyl/PzcagoVjuirayE
+ holj36mOGC9vaVo6gDbcS0XN96+A2R1lBDeHkH0fZtoT1P8xfhJMQoMAMeJqQaPp87iU
+ u7wGohEUybZI/IEnY8VJy5MGwhkurSHFpwN6cK/72trfNw6z1szu9m5YfKKJP5Cluten
+ 2PsJOjcJyzmgEQpXhyTu+XuFyEu+rsJ9q447aDdcblcxBUrKOphdSj9h33mDjeA5ulOk
+ Zsbg==
+X-Gm-Message-State: AOJu0YxC30QWE2yUZJ6b5fWWkvFN+sVjfoO3GEpcwxn3lOpVlmpFEWkK
+ dHDr9N3iofMAPNZJCz9iYSErn6k8G4lZLfVeoAGNUr3vCfr6pi7U0VtPfqyX3gScnVM=
+X-Gm-Gg: ASbGncvc64B3ClhH2NEmywuasvwjHAJ+CtUhFQ6pmLJyog0JYuC/7/1Mer/M0RLSCft
+ tGmiFGxE42ztjz+uNl4w4mcV+xsiOUlOXmITDzvW6aZyi8hvv8gHedC1Jc9moN46DfpyeHQOylq
+ Ftrx6XY1b8UJk6q3IloyLxJhDmysbdEi57anOQUU9Cs12+8E1QP/GnW2o1VtrhY2a7JnPlSVtFq
+ cm2JMsph3gMuUKKcQOgL28jBIVeSYvuBvcu1xQuXjf56Spgv4IdnuVo3CL6SvBFduAD4TVFVRl6
+ I7yzDs8VkJ6mPu1RmB0fF0MIEM8O5hAd7B/SUrdyPEX1mCUkCzzYtz1TjoJqnEo3dnG9AcBl86L
+ BxavlSKAAcBLDY2phcYMRQjln1t4QPM1U9A==
+X-Google-Smtp-Source: AGHT+IGMBxwB/DKnr6fY8T1v5bK6K6ol72OuQXuqtTuwPjbzA5oRGLscHORewCaINkYKGrNDehzR9A==
+X-Received: by 2002:a17:907:2da2:b0:b04:36e3:c07c with SMTP id
+ a640c23a62f3a-b0436e3c5d3mr220300166b.33.1756731187351; 
+ Mon, 01 Sep 2025 05:53:07 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b04241b2e7esm299693366b.43.2025.09.01.05.53.05
+ a640c23a62f3a-b0432937e0esm190990766b.3.2025.09.01.05.53.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 01 Sep 2025 05:53:05 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 16E695F829;
- Mon, 01 Sep 2025 13:53:05 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id F40EF5F7F5;
+ Mon, 01 Sep 2025 13:53:04 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 1/4] hw/arm: use g_autofree for filename in arm_load_dtb
-Date: Mon,  1 Sep 2025 13:53:01 +0100
-Message-ID: <20250901125304.1047624-2-alex.bennee@linaro.org>
+Subject: [PATCH 0/4] arm_load_dtb cleanups
+Date: Mon,  1 Sep 2025 13:53:00 +0100
+Message-ID: <20250901125304.1047624-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250901125304.1047624-1-alex.bennee@linaro.org>
-References: <20250901125304.1047624-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,43 +100,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function has quite a number of exit cases so lets try and clean
-things up with g_autofree. As the fdt hasn't be allocated yet we can
-return directly from the fail point.
+This was prompted by a slop PR that came in via github and while
+looking at it I thought what arm_load_dtb really needed was to be
+modernised to:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- hw/arm/boot.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+  - use autofree to avoid goto fail
+  - use error_setg to report errors
+  - use error_fatal rather than open coding exit()
 
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index d391cd01bb1..56fd13b9f7c 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -528,20 +528,18 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-     Error *err = NULL;
- 
-     if (binfo->dtb_filename) {
--        char *filename;
--        filename = qemu_find_file(QEMU_FILE_TYPE_DTB, binfo->dtb_filename);
-+        g_autofree char *filename = qemu_find_file(QEMU_FILE_TYPE_DTB,
-+                                                   binfo->dtb_filename);
-         if (!filename) {
-             fprintf(stderr, "Couldn't open dtb file %s\n", binfo->dtb_filename);
--            goto fail;
-+            return -1;
-         }
- 
-         fdt = load_device_tree(filename, &size);
-         if (!fdt) {
-             fprintf(stderr, "Couldn't open dtb file %s\n", filename);
--            g_free(filename);
-             goto fail;
-         }
--        g_free(filename);
-     } else {
-         fdt = binfo->get_dtb(binfo, &size);
-         if (!fdt) {
+Alex.
+
+Alex Bennée (4):
+  hw/arm: use g_autofree for filename in arm_load_dtb
+  hw/arm: use g_autofree for fdt in arm_load_dtb
+  hw/arm: use g_auto(GStrv) for node_path in arm_load_dtb
+  hw/arm: expose Error * to arm_load_dtb
+
+ include/hw/arm/boot.h |  3 +-
+ hw/arm/boot.c         | 75 ++++++++++++++++++-------------------------
+ hw/arm/virt.c         |  6 ++--
+ 3 files changed, 36 insertions(+), 48 deletions(-)
+
 -- 
 2.47.2
 
