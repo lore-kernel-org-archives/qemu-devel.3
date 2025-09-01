@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 724ABCA1000
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 04:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B89CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 04:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usw3A-0006b2-AH; Mon, 01 Sep 2025 00:21:49 -0400
+	id 1usw3n-0006gk-TK; Mon, 01 Sep 2025 00:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1usvqH-0002mo-Bz; Mon, 01 Sep 2025 00:08:31 -0400
+ id 1usvqE-0002mJ-7V; Mon, 01 Sep 2025 00:08:26 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1usvqF-000862-6h; Mon, 01 Sep 2025 00:08:29 -0400
+ id 1usvqC-000862-Hv; Mon, 01 Sep 2025 00:08:25 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 1 Sep
@@ -33,9 +33,9 @@ To: "reviewer:Incompatible changes" <devel@lists.libvirt.org>,
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 3/4] hw/intc/aspeed: Remove GIC 128 - 136
-Date: Mon, 1 Sep 2025 12:08:06 +0800
-Message-ID: <20250901040808.1454742-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 2/4] hw/arm/aspeed_ast27x0: Remove ast2700-a0 SOC
+Date: Mon, 1 Sep 2025 12:08:05 +0800
+Message-ID: <20250901040808.1454742-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250901040808.1454742-1-jamin_lin@aspeedtech.com>
 References: <20250901040808.1454742-1-jamin_lin@aspeedtech.com>
@@ -67,212 +67,122 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GIC interrupts 128 - 136 were only used by the AST2700 A0 SoC.
-Since the AST2700 A0 has been deprecated, these interrupt
-definitions are no longer needed. This commit removes them to
-clean up the codebase.
+The ast2700-a1 SOC represented the first revision of the AST2700 and
+was intended as an early engineering sample rather than a production
+platform. A newer revision, A1, is now supported, and the ast2700-a1
+SOC should replace the older A0 version.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0.c | 40 +++++++++------------------------
- hw/intc/aspeed_intc.c   | 49 +----------------------------------------
- 2 files changed, 12 insertions(+), 77 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 81 -----------------------------------------
+ 1 file changed, 81 deletions(-)
 
 diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 2e47e2f860..b0b6849fbb 100644
+index 6aa3841b69..2e47e2f860 100644
 --- a/hw/arm/aspeed_ast27x0.c
 +++ b/hw/arm/aspeed_ast27x0.c
-@@ -137,37 +137,32 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
-     [ASPEED_DEV_SDHCI]     = 197,
- };
+@@ -89,54 +89,6 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+ #define AST2700_MAX_IRQ 256
  
--/* GICINT 128 */
- /* GICINT 192 */
--static const int ast2700_gic128_gic192_intcmap[] = {
-+static const int ast2700_gic192_intcmap[] = {
-     [ASPEED_DEV_LPC]       = 0,
-     [ASPEED_DEV_IBT]       = 2,
-     [ASPEED_DEV_KCS]       = 4,
- };
- 
--/* GICINT 129 */
- /* GICINT 193 */
- 
--/* GICINT 130 */
- /* GICINT 194 */
--static const int ast2700_gic130_gic194_intcmap[] = {
-+static const int ast2700_gic194_intcmap[] = {
-     [ASPEED_DEV_I2C]        = 0,
-     [ASPEED_DEV_ADC]        = 16,
-     [ASPEED_DEV_GPIO]       = 18,
- };
- 
--/* GICINT 131 */
- /* GICINT 195 */
--static const int ast2700_gic131_gic195_intcmap[] = {
-+static const int ast2700_gic195_intcmap[] = {
-     [ASPEED_DEV_I3C]       = 0,
-     [ASPEED_DEV_WDT]       = 16,
-     [ASPEED_DEV_FMC]       = 25,
-     [ASPEED_DEV_PWM]       = 29,
- };
- 
--/* GICINT 132 */
- /* GICINT 196 */
--static const int ast2700_gic132_gic196_intcmap[] = {
-+static const int ast2700_gic196_intcmap[] = {
-     [ASPEED_DEV_ETH1]      = 0,
-     [ASPEED_DEV_ETH2]      = 1,
-     [ASPEED_DEV_ETH3]      = 2,
-@@ -187,14 +182,12 @@ static const int ast2700_gic132_gic196_intcmap[] = {
-     [ASPEED_DEV_EHCI4]     = 29,
- };
- 
--/* GICINT 133 */
- /* GICINT 197 */
--static const int ast2700_gic133_gic197_intcmap[] = {
-+static const int ast2700_gic197_intcmap[] = {
-     [ASPEED_DEV_SDHCI]     = 1,
-     [ASPEED_DEV_PECI]      = 4,
- };
- 
--/* GICINT 128 ~ 136 */
- /* GICINT 192 ~ 201 */
- struct gic_intc_irq_info {
-     int irq;
-@@ -204,25 +197,16 @@ struct gic_intc_irq_info {
- };
- 
- static const struct gic_intc_irq_info ast2700_gic_intcmap[] = {
--    {192, 1, 0, ast2700_gic128_gic192_intcmap},
-+    {192, 1, 0, ast2700_gic192_intcmap},
-     {193, 1, 1, NULL},
--    {194, 1, 2, ast2700_gic130_gic194_intcmap},
--    {195, 1, 3, ast2700_gic131_gic195_intcmap},
--    {196, 1, 4, ast2700_gic132_gic196_intcmap},
--    {197, 1, 5, ast2700_gic133_gic197_intcmap},
-+    {194, 1, 2, ast2700_gic194_intcmap},
-+    {195, 1, 3, ast2700_gic195_intcmap},
-+    {196, 1, 4, ast2700_gic196_intcmap},
-+    {197, 1, 5, ast2700_gic197_intcmap},
-     {198, 1, 6, NULL},
-     {199, 1, 7, NULL},
-     {200, 1, 8, NULL},
-     {201, 1, 9, NULL},
--    {128, 0, 1, ast2700_gic128_gic192_intcmap},
--    {129, 0, 2, NULL},
--    {130, 0, 3, ast2700_gic130_gic194_intcmap},
--    {131, 0, 4, ast2700_gic131_gic195_intcmap},
--    {132, 0, 5, ast2700_gic132_gic196_intcmap},
--    {133, 0, 6, ast2700_gic133_gic197_intcmap},
--    {134, 0, 7, NULL},
--    {135, 0, 8, NULL},
--    {136, 0, 9, NULL},
- };
- 
- static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
-@@ -266,8 +250,7 @@ static qemu_irq aspeed_soc_ast2700_get_irq_index(AspeedSoCState *s, int dev,
-     }
- 
-     /*
--     * Invalid OR gate index, device IRQ should be between 128 to 136
--     * and 192 to 201.
-+     * Invalid OR gate index, device IRQ should be between 192 to 201.
-      */
-     g_assert_not_reached();
+ /* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
+-static const int aspeed_soc_ast2700a0_irqmap[] = {
+-    [ASPEED_DEV_SDMC]      = 0,
+-    [ASPEED_DEV_HACE]      = 4,
+-    [ASPEED_DEV_XDMA]      = 5,
+-    [ASPEED_DEV_UART4]     = 8,
+-    [ASPEED_DEV_SCU]       = 12,
+-    [ASPEED_DEV_RTC]       = 13,
+-    [ASPEED_DEV_EMMC]      = 15,
+-    [ASPEED_DEV_TIMER1]    = 16,
+-    [ASPEED_DEV_TIMER2]    = 17,
+-    [ASPEED_DEV_TIMER3]    = 18,
+-    [ASPEED_DEV_TIMER4]    = 19,
+-    [ASPEED_DEV_TIMER5]    = 20,
+-    [ASPEED_DEV_TIMER6]    = 21,
+-    [ASPEED_DEV_TIMER7]    = 22,
+-    [ASPEED_DEV_TIMER8]    = 23,
+-    [ASPEED_DEV_DP]        = 28,
+-    [ASPEED_DEV_EHCI1]     = 33,
+-    [ASPEED_DEV_EHCI2]     = 37,
+-    [ASPEED_DEV_LPC]       = 128,
+-    [ASPEED_DEV_IBT]       = 128,
+-    [ASPEED_DEV_KCS]       = 128,
+-    [ASPEED_DEV_ADC]       = 130,
+-    [ASPEED_DEV_GPIO]      = 130,
+-    [ASPEED_DEV_I2C]       = 130,
+-    [ASPEED_DEV_FMC]       = 131,
+-    [ASPEED_DEV_WDT]       = 131,
+-    [ASPEED_DEV_PWM]       = 131,
+-    [ASPEED_DEV_I3C]       = 131,
+-    [ASPEED_DEV_UART0]     = 132,
+-    [ASPEED_DEV_UART1]     = 132,
+-    [ASPEED_DEV_UART2]     = 132,
+-    [ASPEED_DEV_UART3]     = 132,
+-    [ASPEED_DEV_UART5]     = 132,
+-    [ASPEED_DEV_UART6]     = 132,
+-    [ASPEED_DEV_UART7]     = 132,
+-    [ASPEED_DEV_UART8]     = 132,
+-    [ASPEED_DEV_UART9]     = 132,
+-    [ASPEED_DEV_UART10]    = 132,
+-    [ASPEED_DEV_UART11]    = 132,
+-    [ASPEED_DEV_UART12]    = 132,
+-    [ASPEED_DEV_ETH1]      = 132,
+-    [ASPEED_DEV_ETH2]      = 132,
+-    [ASPEED_DEV_ETH3]      = 132,
+-    [ASPEED_DEV_PECI]      = 133,
+-    [ASPEED_DEV_SDHCI]     = 133,
+-};
+-
+ static const int aspeed_soc_ast2700a1_irqmap[] = {
+     [ASPEED_DEV_SDMC]      = 0,
+     [ASPEED_DEV_HACE]      = 4,
+@@ -958,34 +910,6 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                                   AST2700_SOC_IOMEM_SIZE);
  }
-@@ -622,7 +605,6 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     }
  
-     /* INTC -> GIC192 - GIC201 */
--    /* INTC -> GIC128 - GIC136 */
-     for (i = 0; i < ic->num_outpins; i++) {
-         sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[0]), i,
-                            qdev_get_gpio_in(DEVICE(&a->gic),
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index 5cd786dee6..d003566762 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -21,24 +21,6 @@
-  * because its memory region is start at 0x1000
-  *
-  */
--REG32(GICINT128_EN,         0x000)
--REG32(GICINT128_STATUS,     0x004)
--REG32(GICINT129_EN,         0x100)
--REG32(GICINT129_STATUS,     0x104)
--REG32(GICINT130_EN,         0x200)
--REG32(GICINT130_STATUS,     0x204)
--REG32(GICINT131_EN,         0x300)
--REG32(GICINT131_STATUS,     0x304)
--REG32(GICINT132_EN,         0x400)
--REG32(GICINT132_STATUS,     0x404)
--REG32(GICINT133_EN,         0x500)
--REG32(GICINT133_STATUS,     0x504)
--REG32(GICINT134_EN,         0x600)
--REG32(GICINT134_STATUS,     0x604)
--REG32(GICINT135_EN,         0x700)
--REG32(GICINT135_STATUS,     0x704)
--REG32(GICINT136_EN,         0x800)
--REG32(GICINT136_STATUS,     0x804)
- REG32(GICINT192_201_EN,         0xB00)
- REG32(GICINT192_201_STATUS,     0xB04)
- 
-@@ -507,29 +489,9 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-     trace_aspeed_intc_write(name, offset, size, data);
- 
-     switch (reg) {
--    case R_GICINT128_EN:
--    case R_GICINT129_EN:
--    case R_GICINT130_EN:
--    case R_GICINT131_EN:
--    case R_GICINT132_EN:
--    case R_GICINT133_EN:
--    case R_GICINT134_EN:
--    case R_GICINT135_EN:
--    case R_GICINT136_EN:
-     case R_GICINT192_201_EN:
-         aspeed_intc_enable_handler(s, offset, data);
-         break;
--    case R_GICINT128_STATUS:
--    case R_GICINT129_STATUS:
--    case R_GICINT130_STATUS:
--    case R_GICINT131_STATUS:
--    case R_GICINT132_STATUS:
--    case R_GICINT133_STATUS:
--    case R_GICINT134_STATUS:
--    case R_GICINT135_STATUS:
--    case R_GICINT136_STATUS:
--        aspeed_intc_status_handler(s, offset, data);
--        break;
-     case R_GICINT192_201_STATUS:
-         aspeed_intc_status_handler_multi_outpins(s, offset, data);
-         break;
-@@ -891,15 +853,6 @@ static const TypeInfo aspeed_intc_info = {
- 
- static AspeedINTCIRQ aspeed_2700_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
-     {0, 0, 10, R_GICINT192_201_EN, R_GICINT192_201_STATUS},
--    {1, 10, 1, R_GICINT128_EN, R_GICINT128_STATUS},
--    {2, 11, 1, R_GICINT129_EN, R_GICINT129_STATUS},
--    {3, 12, 1, R_GICINT130_EN, R_GICINT130_STATUS},
--    {4, 13, 1, R_GICINT131_EN, R_GICINT131_STATUS},
--    {5, 14, 1, R_GICINT132_EN, R_GICINT132_STATUS},
--    {6, 15, 1, R_GICINT133_EN, R_GICINT133_STATUS},
--    {7, 16, 1, R_GICINT134_EN, R_GICINT134_STATUS},
--    {8, 17, 1, R_GICINT135_EN, R_GICINT135_STATUS},
--    {9, 18, 1, R_GICINT136_EN, R_GICINT136_STATUS},
- };
- 
- static void aspeed_2700_intc_class_init(ObjectClass *klass, const void *data)
-@@ -910,7 +863,7 @@ static void aspeed_2700_intc_class_init(ObjectClass *klass, const void *data)
-     dc->desc = "ASPEED 2700 INTC Controller";
-     aic->num_lines = 32;
-     aic->num_inpins = 10;
--    aic->num_outpins = 19;
-+    aic->num_outpins = 10;
-     aic->mem_size = 0x4000;
-     aic->nr_regs = 0xB08 >> 2;
-     aic->reg_offset = 0x1000;
+-static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, const void *data)
+-{
+-    static const char * const valid_cpu_types[] = {
+-        ARM_CPU_TYPE_NAME("cortex-a35"),
+-        NULL
+-    };
+-    DeviceClass *dc = DEVICE_CLASS(oc);
+-    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+-
+-    /* Reason: The Aspeed SoC can only be instantiated from a board */
+-    dc->user_creatable = false;
+-    dc->realize      = aspeed_soc_ast2700_realize;
+-
+-    sc->valid_cpu_types = valid_cpu_types;
+-    sc->silicon_rev  = AST2700_A0_SILICON_REV;
+-    sc->sram_size    = 0x20000;
+-    sc->spis_num     = 3;
+-    sc->ehcis_num    = 2;
+-    sc->wdts_num     = 8;
+-    sc->macs_num     = 1;
+-    sc->uarts_num    = 13;
+-    sc->num_cpus     = 4;
+-    sc->uarts_base   = ASPEED_DEV_UART0;
+-    sc->irqmap       = aspeed_soc_ast2700a0_irqmap;
+-    sc->memmap       = aspeed_soc_ast2700_memmap;
+-    sc->get_irq      = aspeed_soc_ast2700_get_irq;
+-}
+-
+ static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+@@ -1020,11 +944,6 @@ static const TypeInfo aspeed_soc_ast27x0_types[] = {
+         .parent         = TYPE_ASPEED_SOC,
+         .instance_size  = sizeof(Aspeed27x0SoCState),
+         .abstract       = true,
+-    }, {
+-        .name           = "ast2700-a0",
+-        .parent         = TYPE_ASPEED27X0_SOC,
+-        .instance_init  = aspeed_soc_ast2700_init,
+-        .class_init     = aspeed_soc_ast2700a0_class_init,
+     },
+     {
+         .name           = "ast2700-a1",
 -- 
 2.43.0
 
