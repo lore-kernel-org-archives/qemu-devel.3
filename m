@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687A5CA1005
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 20:45:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A951CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 20:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utBOa-0003d2-Bu; Mon, 01 Sep 2025 16:44:57 -0400
+	id 1utBRv-0004sW-CY; Mon, 01 Sep 2025 16:48:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utBOQ-0003bu-PG
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:44:48 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utBRm-0004sJ-UX
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:48:15 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utBOO-0002Rz-WB
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:44:46 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45b869d35a0so14620285e9.1
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 13:44:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utBRl-0003Bg-9W
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:48:14 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-45b8b2712d8so17860155e9.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 13:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756759482; x=1757364282; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756759692; x=1757364492; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lcZfKdcFHefoyEz//AKrw7jXkUxORpy87LYcpYGQTAE=;
- b=FtZmDnGVf6Iz5ds+L4CxNEOqevw3RJ1pKMgsxO2AWmDmNquaQApvy7JGRfLpZzoUh3
- tuBBHEvUyKMcNFCbdYhfBpxhH1gvw21swCRQpKJ7O+TZ1sJ03a1WSy1gzAC4ujcOXqd0
- wjNRskegpI0/5oVPucufoOSZWXU+Dzqq0TOvSZk/7mYuZkhH3J0oSPfyKnkXaa1PDdaU
- kyHHWulwafYgnpfWsawUnu9VCURcn3hdrdP/5o6zSmrL1pk7oNLz/ieEvAn9yps4iZWh
- SjpwNt/912ATaaw/9R9RWVQJxv3PUXn2yhlK5zlmTzLzNoAzWLOw50YkiWkZnh0ZCz9K
- Je1Q==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3vdvUl0MRoYh6CNJF+cLUcCCM1TRYlKexU5CxmDSzLA=;
+ b=lLHt992Ew7T2VgIEiDWBhUp7f5Enhk/eKEB/dGFDzcvCnXLX1PEBZMhfupo66C78Re
+ msI4JON7R6VtJzSyVtdaIugth5C87IoxxWTcc58iKWygdzWhUkC6PGKhuqj/k/y2Cwz1
+ s5WHPRIy69GuMxVSjM2BHG4v9YtCMHGJrWbbXHSe7sQ/wl1eHLQm5EA3ud1F2wGDYlvP
+ 850Yfr9JWCErhY7Q6y5sN/z7KJ1lGYg8vZfPIElRCi2f7pytRcUR1zXjoCnqwgcrwGrh
+ pOs0tzM9pqAB/lIMuNNgpcYIKfMIDIXpUz+SI28aaxKHIi0DJS/n5tm5Xmobojuo2ViP
+ SBAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756759482; x=1757364282;
+ d=1e100.net; s=20230601; t=1756759692; x=1757364492;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lcZfKdcFHefoyEz//AKrw7jXkUxORpy87LYcpYGQTAE=;
- b=LOxdZ6K22wu6n2AdMK8tSxsyQO/+Zr0xgiMFFHi/B1uQ7QrS2tlKM2fmqLM2sUktxb
- /2vDKsX/n27STWu5FijakO96D953/BsjK+9JHtPerWWdmyUOe50Huy8CNVzIgw3lZpU4
- 6Gjx4Ok1DehR+kv7nH2c5T6Yg/6Ia0fpyIYJjQ0/9OkgJDDaq0r4Ycy9/vkOBJ8bjMoY
- ZuVQ2T/ysv1OdGaCuqgIYYewQOgBIVaKZNnUZf3I2tLu0m2Xx837fhXGk590MD7r25jp
- C6wa6O+ZMc19VXRpFGuRJh3irrvPgVpfeDuRBYXgcJkpn6ECstc73afqY5shBnSfwdrc
- ft3g==
+ bh=3vdvUl0MRoYh6CNJF+cLUcCCM1TRYlKexU5CxmDSzLA=;
+ b=BDdncZ0s1xvze6RFS3N6shvgtl3z8AdQX8ouXTDg4+pUXSODo/S+8KRLyFRmIgNQqv
+ p94frMfP+u+L2qgVMLeqv7uIRq24E5rZw0VY42OlhNJTPFCL74e5gNWmp2JO30TO+Bjv
+ IVJw+bp85M3Aexy5xnKdCfTNFiUskEkG3XgevNdrjPANiAlBolw5KZZJ1KoWWaNxyOFL
+ neOUJNBLyOjJgs3eVt3A68RsKe2jrXcQbprsWUnS8wR/g961oKIYD45k4X2Cu7dS/F90
+ X7sGdhYP1SOohg+NlZ/r7PA71n46tQgWpGzIs87m9sgKkutMODI1gFYkZxCEcV7xnXnL
+ 3Ikg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQWD9jvXddOLJscK4TPyEkZc29ICcH9fGDe4CVLZKm7Iri/OEExh8zqDq+2RJKC0iEyQmsFkG/3T7R@nongnu.org
-X-Gm-Message-State: AOJu0YxtWmO9LwWfYmFgHHHpQVHp9qQ3NidnO2AHolYRoAwREmtH4l+u
- F+IOrQqxyduUyZgmIylsCk0BrcTroYqp7FAFFIVAVY36sqsAZSMw1G/HCm7pK45zMJQ=
-X-Gm-Gg: ASbGncsOUMDfk5HWSN9qGevMFDDHFASA1mZ/QMpASgbcSWsrY9p0kqVX6sMneANWYRU
- WT+jf0ZcQXsyhic+gVIQ+yV6+EjXxrOX3Md5Vps5WOhLJkU1fsmHY0560/+RdJEuHIrd9Qr6RDF
- CruG/6zFKvTkJ+xCmea1DV7DWxuCw4J0bvYTL+JVwesUzlWqQVxIcoXMwuh0XsXiMNdH02tUmqP
- CcOcG256voi3JSLGDvbYSZfleeEmUk4FhLo1ioN5dwa5eNOdbJYQT0vVfypoy9K/etGD8/RRcxV
- TzYmo+x2nWqigMAcFnszEkHSaiZTLUug3QPDsmtVNOa0I7vl5TauSDzndvoqTzUNG3QVVEBLkNz
- IoI6fXJgDur0vBrAzxA0+qLuG2gzan91ZnOWBrfhzfreJIdoZsJSfsytMzf9OIXRnwQ==
-X-Google-Smtp-Source: AGHT+IGsdp1dwv2wMAk/hGj6z1bdTY+7kDCLh6+liJ3mdj6kwDLaEzxSH9GjMaUsHqgAQFwjCmq6Hg==
-X-Received: by 2002:a05:600c:354f:b0:459:d6a6:77c with SMTP id
- 5b1f17b1804b1-45b855add8bmr67244545e9.33.1756759482349; 
- Mon, 01 Sep 2025 13:44:42 -0700 (PDT)
+ AJvYcCX9KrpXKEaVhFBcJgqCrPstR+/cF+G5nXXJvh5BQlwD1Cc29UUrpopSg7WfYXa3m5+HewmZKHuOxt3C@nongnu.org
+X-Gm-Message-State: AOJu0YwBkgqcPeEIOI3+w4J238hQeRHCjo1OQjZEtLax2GFfqo/Fa6lW
+ WV2NiT7/3EmdQxhdHw/QSuVQir6ZNPIm/U0qxpO099NgJSAQ2UsRKtjnrZ8U0pk8QcmCPGS2HY5
+ oShgN
+X-Gm-Gg: ASbGncuWhWrltQokzHRBkHrgr1cpYastrP1HIVfa+9TrqVbh19TMcbdomv17n/sTMUp
+ K7w6afKbPZkwqLdV/Kv1sRTkc7FxLAbBXPrUmnAC/h9TcYTCzLotdPKrAAnEyhiL7K5MphWFOy5
+ Idu1wbX2OvOxaG1vd95+OUMlNogbT3Oei6lZiPMk9NFqrvvXVbmYaj7bC9BhWgnYJOo2yDEm5F3
+ kYVPdrA80bczs/MuO/7y6RHd9QLFi4tBgziudOaXp1dM7DtiDZ4foQ+NHJCw6PMpnk6KGx2m5/b
+ sJmm2kG4gVYNU7iAplSm5A9CrzShkZZwT4xju/MtPWPrw+IpvubiXEIHPOJnOogLN0RPsjOgfNi
+ Mruabek9QZegKIEJmof5Kkpkl05goOQ4GU1xP1r4SFMerwrBQkPwBty3p2qZzjh16DAyJWbiwS1
+ mR
+X-Google-Smtp-Source: AGHT+IFmhBUpjsQHxpQEM3umVxEY+dvar3Qp7/hDbDGXRQccdud179UeknYpNm56biGb1k2RQPRNNA==
+X-Received: by 2002:a05:600c:4f41:b0:45b:8b34:3482 with SMTP id
+ 5b1f17b1804b1-45b8b3437c0mr45326765e9.20.1756759691650; 
+ Mon, 01 Sep 2025 13:48:11 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7a938e75sm115073865e9.4.2025.09.01.13.44.41
+ 5b1f17b1804b1-45b6f0c6db6sm267321235e9.2.2025.09.01.13.48.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 13:44:41 -0700 (PDT)
-Message-ID: <c66c746b-9ecf-406b-932c-b516ecc927aa@linaro.org>
-Date: Mon, 1 Sep 2025 22:44:40 +0200
+ Mon, 01 Sep 2025 13:48:11 -0700 (PDT)
+Message-ID: <955a8399-f5ad-4b10-a667-e0f8ea632515@linaro.org>
+Date: Mon, 1 Sep 2025 22:48:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/i386/pc_piix.c: remove unnecessary if() from
- pc_init1()
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, armbru@redhat.com,
- peter.maydell@linaro.org, pbonzini@redhat.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, imammedo@redhat.com,
- qemu-devel@nongnu.org
-References: <20250901203409.1196620-1-mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v2 0/2] single-binary: compile hw/intc/arm* files once
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org
+References: <20250801174006.2466508-1-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250901203409.1196620-1-mark.caveayland@nutanix.com>
+In-Reply-To: <20250801174006.2466508-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,34 +103,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 22:31, Mark Cave-Ayland wrote:
-> Now that the isapc logic has been split out of pc_piix.c, the PCI Host Bridge
-> (phb) object is now always set in pc_init1().
-> 
-> Since phb is now guaranteed not to be NULL, Coverity reports that the if()
-> statement surrounding ioapic_init_gsi() is now unnecessary and can be removed
-> along with the phb NULL initialiser.
-> 
-> Coverity: CID 1620557
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Fixes: 99d0630a45 ("hw/i386/pc_piix.c: assume pcmc->pci_enabled is always true in pc_init1()")
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/i386/pc_piix.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> v3:
-> - Add Coverity tag suggested by Markus and tweak commit message
->    accordingly
+On 1/8/25 19:40, Pierrick Bouvier wrote:
 
-Queued, thanks!
+> Pierrick Bouvier (2):
+>    hw/meson: enter target hw first
+>    hw/intc: compile some arm related source once
 
-(I had v2 queued with tag added but now using v3)
-
-> 
-> v2:
-> - Add R-B tags from Peter and Phil
-> - Remove phb NULL initialiser
+Series:
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
