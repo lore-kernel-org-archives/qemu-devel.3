@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CBD2CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D13E6CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2zP-0007G3-Ga; Mon, 01 Sep 2025 07:46:23 -0400
+	id 1ut2z4-0006q7-Sq; Mon, 01 Sep 2025 07:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ut2yx-0006mQ-9P; Mon, 01 Sep 2025 07:45:56 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1ut2yt-0006kE-F4; Mon, 01 Sep 2025 07:45:52 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ut2yo-0001IZ-44; Mon, 01 Sep 2025 07:45:54 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2445806e03cso47820245ad.1; 
- Mon, 01 Sep 2025 04:45:41 -0700 (PDT)
+ id 1ut2yj-0001Ho-K9; Mon, 01 Sep 2025 07:45:51 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2445805aa2eso43000915ad.1; 
+ Mon, 01 Sep 2025 04:45:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756727139; x=1757331939; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756727134; x=1757331934; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=io12k5COHOK3Yc/em6rq8KtQkvhygCFM2FsEAygkmkY=;
- b=XPNaqIGaD8PNDWxeDI0+8eZSR17g8twtl8L22t4tm3B6c+8hm+LSgEjcInDSMr/PLq
- 9+7PbDZkMPxWiIkmVkRbMalv6/jNd2Wbo/rr5Fw38PHTBpD6LYuxJsL5ou5Im+pGqDK9
- K7HdeFbKL7kYJFWLINodS4KHZStbSZiPe6IRce/HIDJyavwsGq0fl12YGj930DHrXMBk
- urxKe6pXutw/qkOeABci0B8N1/JLw1+q7uYy4nhooDMHudUB5PYbUGvGYE73hp7Fe+iZ
- 4kDhFKpaqzkr9B/VJrKQ9oHiZMbreQs1DxXhF7UMnWTRRl7C88JSJiVeIKE5nPubP+0C
- xeKg==
+ bh=+PQrFo8EBMIk0vCQdMb98g3now50VhqZJnrrrRXa3xE=;
+ b=UqBKkC+nUrm2+6qsp+AZ78DQgyCSYcp6TCzo69z9uHkx8N7Sm2KnPRBmdF0N1zxP4q
+ NvNhnL7QAL4H0I5wWX+MM1Xxrr7IpH3vw5Vp/iG8OoReE/jVhr1mZ1nSqL6k0MtBQQgI
+ bSHg6SeiKUpGLR7G7fIVJt8v0yyeTzx6gMOzihxcgWpXF9ZpVkXDE+Ygye85fNv6in97
+ 6/3SftmBIUhrq9sgTL5f3Ci3Fug9OlGwzdfWyFuhyk/oqn11HBVu+AjTq9YKMH66Sd5Y
+ 3e4VQ0tyJxkRMcbTFPiqkrxiHyfvL/9xR2wGKxl11zWKFMH553dIq0n8mP7KrGUi5TW/
+ aZrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756727139; x=1757331939;
+ d=1e100.net; s=20230601; t=1756727134; x=1757331934;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=io12k5COHOK3Yc/em6rq8KtQkvhygCFM2FsEAygkmkY=;
- b=oSdjNgRU+4A03AD7ryfPlo6AwPB1drixGvOKt1qkmR2Z5R4uSV4eXScjCWdKqsmDV6
- KiKGkMCpRwQPAHgORfWhwsF4rusIavIj9C1WBpPm6qru+lOgtz4XXw8db1HNTAXtzCX5
- /BrMUkAGcYiCNaoefu42GcQ7QFud2QJS4KSSHrXNU6ZwS0A82BpS/DiJgOfXwj1nZWWy
- IsomVUNXzclM1SZhTP1wU6yVxG9MHpKNK2CHcF1NDAIjEy5xzNXrbNDaWUJo+hC45sg/
- bPk3XEdKjokYRG29MDfV9fG7pHtb3U2g5RlSOB78mrUFuEEyWlOqAsc8u7BDmj4y2Dvr
- 2r7Q==
+ bh=+PQrFo8EBMIk0vCQdMb98g3now50VhqZJnrrrRXa3xE=;
+ b=oczDQkDi4HcLwU3dJhcx9ZsUbD7ymb4HEom/ofJ6DCyrMd+magnHj38EzPJnr2H5XL
+ ywBXy6onCUVrdjzw6Jf4oObg8n6YnUC5FJK48gqe/7vFO8+kHiBJr/CAwRsJBRg8AC4m
+ 78s6garp88dSEAzSp/w46s/UFmw/5GoeiN7btKGJPz4HJR9JGYv9zHzQ+fzhzwAL5GBu
+ PNWkR8QpBKKnYfr8RNVmv8iFLsgX/sXvKfIZ+b9vFxJC/gHdHIv2ZW0eq6kEFVLPgF/q
+ 1RqYQLJzJyG8Qz8MALCzhgX3xWY45Pl9c+UKaIcIk0cXD8D78s5XneAZWZBI8Aof/C8V
+ iiLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUm+MtUO2O33vpVnbLyHpKxkWDX3Qqw8Ih9K9mcIKIIfQCCG5Ln4NSJMy/2d3bcz/Hkw+aAsqoINw==@nongnu.org,
- AJvYcCX7uD8VzcOpYVej//qmy5rraeCIa49W83t/1zwCwpH1wtSN7qJf8ZncT8vOR4EF3I3e49CN8Yituom5IQ==@nongnu.org
-X-Gm-Message-State: AOJu0YzfBMVSoMqnAEJA8wGJN+BnkhMIRrMHnkLBZ5WrTakWl65IA93q
- 7d5O9aG3WAQW34VQGeZPm5zv1DheREaPY/lirffRwngGNAQqGP3uL9Y1ehHzFA==
-X-Gm-Gg: ASbGncsUOJFQOKiVLLZwInyh6qzJBfs7GDC+Ewg6g/jrSYi1d88K1SWhLFPCw6LqXa7
- Lqa+0dF24jg/z2GUwHOl5s8hp8j6RG6NUKwRU0wpC5c2NNzY4bdx4y2c+lWMSkurDU0ly2e14U0
- S3vKMU6QqsknTKv3WEpujp1vWYdHBzMG5aaCMIcnfHg4bmFFkLn8bHe4V8JF0McLcHJKJz++d3U
- NgZU3RCoPZUgabqNrZtQKxwRODROPgrX85BBsaAboMjWeNI6tUoWoxkjnl/fudp0rE6a3IgBUp/
- 8U7GIN2qE6tdyqPpCN3C4TocXfqWhlVeetN3L8ATwREVNetIkcAu5ZyhYBJ4USlOXWZ0sV63QvX
- JTTqKRpIODCOgAG088r8fYoEbgRMHyNG2
-X-Google-Smtp-Source: AGHT+IEvGePlQn9QMKxmtmqoa8FIVGL1cCpeRfOkWdgU8ix3zc0C3oTbwMqiTJ9WQn4JsCCwDGwPmA==
-X-Received: by 2002:a17:902:ce09:b0:240:8ec:fe2 with SMTP id
- d9443c01a7336-2494487448fmr85433825ad.4.1756727139512; 
- Mon, 01 Sep 2025 04:45:39 -0700 (PDT)
+ AJvYcCVZvf1FznWrfUb1/suNUlRBFZrl9cARE9R+palk+S294p+UCjBQPndlWnXUXg6G+79ifdUdb84Ez1Llcw==@nongnu.org,
+ AJvYcCX249PDfpqdk/GAiNXhyN0bAemKR60YKFEgOAXcykxd6jTRGegAmiubmFFKIM379hX6V8v5JQRrSQ==@nongnu.org
+X-Gm-Message-State: AOJu0Yw8FLJgFu5zsDU7+mCD5uc6S5Wtg6WU0y3c7vWFxVIP6Kx/IbhS
+ FUC2G+Ttzktk1ZuUX40yGACbhNdandYfPG9pOQlGVfKVfiJ0tBXY66yX/+oOPQ==
+X-Gm-Gg: ASbGncvNSYW3sb0UnL4sjZqu4atoIE4c6c7eMTzn60ll6JpYexpO0ykwtuTcW0kPphF
+ 5wk0KPU2RbXDreLagPgm3hmE6JkZR4R7yoHU6wBxceBSNtNxatqhRC/1bDXit1O/+1wrJkVUrhU
+ sAWqK4zIxHsSQBT7YeXRMia1z3EWk8AqA4GRuTJVr7QNaUwtIQ1y30kYfImopnAB28apP3PFLH+
+ Wh1sucuudVZN5PYg2+J71hewro4kavCuKpRqHAQ91wQxXGibMgduOahkRhXfc+msurlb11UqYAT
+ fTOqLAs+sLl/2BTe3xYlEP2TIK4bTuTNMBczpHcXl2C6j5oINLOlWWNFQim2hVz7dkIVui7p8Hy
+ uo0ufeK2q1FkdPPxo8Ij2VEuheEYLhhMg
+X-Google-Smtp-Source: AGHT+IFTP42mQXbO3bVx0khj5I4eMKvfb49LTCNklV65+sAfcX5ZtwtVIu4pyFy2Lm9MzV1oMPfdlw==
+X-Received: by 2002:a17:902:e810:b0:23d:fa76:5c3b with SMTP id
+ d9443c01a7336-249448eb7a3mr92183895ad.22.1756727133912; 
+ Mon, 01 Sep 2025 04:45:33 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:750a:cb0b:f0f9:68f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-249065a8036sm103038775ad.129.2025.09.01.04.45.34
+ d9443c01a7336-249065a8036sm103038775ad.129.2025.09.01.04.45.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 04:45:38 -0700 (PDT)
+ Mon, 01 Sep 2025 04:45:33 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -80,23 +80,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH v3 03/35] dockerfiles: Add support for wasm64 to the wasm
- Dockerfile
-Date: Mon,  1 Sep 2025 20:44:05 +0900
-Message-ID: <dd1d5aee5cc69ad95f6cf11106cf020bc3bc4b59.1756724464.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v3 02/35] configure: Enable to propagate -sMEMORY64 flag to
+ Emscripten
+Date: Mon,  1 Sep 2025 20:44:04 +0900
+Message-ID: <f0fcfef4573d19ff9291f6aac8f53c08f72509f7.1756724464.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1756724464.git.ktokunaga.mail@gmail.com>
 References: <cover.1756724464.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,116 +113,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit fixes Dockerfile of the wasm build to support both of wasm32 and
-wasm64 build. Dockerfile takes the following build arguments and use these
-values for building dependencies.
+Currently there are some engines that don't support wasm64 (e.g. unsupported
+on Safari[1]). To mitigate this issue, the configure script allows the user
+to use Emscripten's compatibility feature, "-sMEMORY64=2" flag[2].
 
-- TARGET_CPU: target wasm arch (wasm32 or wasm64)
-- WASM64_MEMORY64: target -sMEMORY64 mode (1 or 2)
+Emscripten's "-sMEMORY64=2" flag still enables 64bit pointers in C code. But
+this flag lowers the output binary into wasm32, with limiting the maximum
+memory size to 4GB. So QEMU can run on wasm32 engines.
+
+[1] https://webassembly.org/features/
+[2] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS                                   |  2 +-
- ...2-cross.docker => emsdk-wasm-cross.docker} | 29 ++++++++++++++-----
- 2 files changed, 23 insertions(+), 8 deletions(-)
- rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
+ configure | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 V3:
 - This commit is under review in another patch series so please ignore it
   here.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a07086ed76..433a44118d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -647,7 +647,7 @@ F: include/system/os-wasm.h
- F: os-wasm.c
- F: util/coroutine-wasm.c
- F: configs/meson/emscripten.txt
--F: tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+F: tests/docker/dockerfiles/emsdk-wasm-cross.docker
+diff --git a/configure b/configure
+index 112e4725fc..8ac6cacc06 100755
+--- a/configure
++++ b/configure
+@@ -182,6 +182,10 @@ EXTRA_CXXFLAGS=""
+ EXTRA_OBJCFLAGS=""
+ EXTRA_LDFLAGS=""
  
- Alpha Machines
- --------------
-diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-similarity index 85%
-rename from tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-rename to tests/docker/dockerfiles/emsdk-wasm-cross.docker
-index 60a7d02f56..4b41be62ab 100644
---- a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+++ b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-@@ -1,14 +1,17 @@
- # syntax = docker/dockerfile:1.5
++# The value is propagated to Emscripten's "-sMEMORY64" flag.
++# https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
++wasm64_memory64=1
++
+ # Default value for a variable defining feature "foo".
+ #  * foo="no"  feature will only be used if --enable-foo arg is given
+ #  * foo=""    feature will be searched for, and if found, will be used
+@@ -239,6 +243,8 @@ for opt do
+   ;;
+   --without-default-features) default_feature="no"
+   ;;
++  --wasm64-32bit-address-limit) wasm64_memory64="2"
++  ;;
+   esac
+ done
  
--ARG EMSDK_VERSION_QEMU=3.1.50
-+ARG EMSDK_VERSION_QEMU=4.0.10
- ARG ZLIB_VERSION=1.3.1
- ARG GLIB_MINOR_VERSION=2.84
- ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
- ARG PIXMAN_VERSION=0.44.2
--ARG FFI_VERSION=v3.4.7
-+ARG FFI_VERSION=v3.5.2
- ARG MESON_VERSION=1.5.0
-+ARG TARGET_CPU=wasm32
-+ARG WASM64_MEMORY64=0
+@@ -537,7 +543,7 @@ case "$cpu" in
+     CPU_CFLAGS="-m32"
+     ;;
+   wasm64)
+-    CPU_CFLAGS="-m64 -sMEMORY64=1"
++    CPU_CFLAGS="-m64 -sMEMORY64=$wasm64_memory64"
+     ;;
+ esac
  
--FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base
-+FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base-common
-+ARG TARGET_CPU
- ARG MESON_VERSION
- ENV TARGET=/builddeps/target
- ENV CPATH="$TARGET/include"
-@@ -33,8 +36,8 @@ RUN <<EOF
- cat <<EOT > /cross.meson
- [host_machine]
- system = 'emscripten'
--cpu_family = 'wasm32'
--cpu = 'wasm32'
-+cpu_family = '${TARGET_CPU}'
-+cpu = '${TARGET_CPU}'
- endian = 'little'
- 
- [binaries]
-@@ -46,6 +49,16 @@ pkgconfig = ['pkg-config', '--static']
- EOT
+@@ -795,6 +801,8 @@ for opt do
+   ;;
+   --disable-rust) rust=disabled
+   ;;
++  --wasm64-32bit-address-limit)
++  ;;
+   # everything else has the same name in configure and meson
+   --*) meson_option_parse "$opt" "$optarg"
+   ;;
+@@ -920,6 +928,8 @@ Advanced options (experts only):
+   --disable-containers     don't use containers for cross-building
+   --container-engine=TYPE  which container engine to use [$container_engine]
+   --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
++  --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (default
++                               is to use the whole 64-bit range).
  EOF
- 
-+FROM build-base-common AS build-base-wasm32
-+
-+FROM build-base-common AS build-base-wasm64
-+ARG WASM64_MEMORY64
-+ENV CFLAGS="$CFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+ENV LDFLAGS="$LDFLAGS -sMEMORY64=${WASM64_MEMORY64}"
-+
-+FROM build-base-${TARGET_CPU} AS build-base
-+
- FROM build-base AS zlib-dev
- ARG ZLIB_VERSION
- RUN mkdir -p /zlib
-@@ -56,17 +69,19 @@ RUN emconfigure ./configure --prefix=$TARGET --static
- RUN emmake make install -j$(nproc)
- 
- FROM build-base AS libffi-dev
-+ARG TARGET_CPU
-+ARG WASM64_MEMORY64
- ARG FFI_VERSION
- RUN mkdir -p /libffi
- RUN git clone https://github.com/libffi/libffi /libffi
- WORKDIR /libffi
- RUN git checkout $FFI_VERSION
- RUN autoreconf -fiv
--RUN emconfigure ./configure --host=wasm32-unknown-linux \
-+RUN emconfigure ./configure --host=${TARGET_CPU}-unknown-linux \
-     --prefix=$TARGET --enable-static \
-     --disable-shared --disable-dependency-tracking \
-     --disable-builddir --disable-multi-os-directory \
--    --disable-raw-api --disable-docs
-+    --disable-raw-api --disable-docs WASM64_MEMORY64=${WASM64_MEMORY64}
- RUN emmake make install SUBDIRS='include' -j$(nproc)
- 
- FROM build-base AS pixman-dev
+   meson_options_help
+ cat << EOF
 -- 
 2.43.0
 
