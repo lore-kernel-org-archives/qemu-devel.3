@@ -4,94 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A301ACA1002
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28999CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:18:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2Wy-0004Fj-FJ; Mon, 01 Sep 2025 07:17:00 -0400
+	id 1ut2Xy-0004fE-SO; Mon, 01 Sep 2025 07:18:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2Ww-0004Ew-4K
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:16:58 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2Wt-0004fT-6d
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:16:57 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-45b7d87b90fso26232235e9.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:16:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756725409; x=1757330209; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SeDYy1DEgpcx4+sqiAQw9KNiJu2uZ5LQ1cRlI1CZNsQ=;
- b=AFXhgxL4/wbsgdE9DlSToEyQE4tZ/du+BiD3xeo/Y13AqcC0D6fw87oveDDLxHX1gC
- sYs1EsYc3SqHVhQDjpnekMhS7eLqw53TY3eRRnOXDmD2XlydzUHbZe6CZAu7eCdymYN9
- fYXhjXz7H99u5dWVfoWJeqgaSs9oMVm5FshzljZy8r+smAfqXgRSsBWXn+10MPirdq2j
- aXqkH+sL08YCFTlSvxf2MyPQWjfWNPf0fkKl8kPEaAYsOhtZ2JkM9MOzDvFS0ygTOaNp
- gLtmPZvRhZ6Ej7feK+qdaY2npeV055uvYV3c657SHBzyaMC/s70YSA/MiTL3CFO9szoi
- 9t0w==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ut2Xo-0004ZZ-4O
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:17:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ut2Xm-0004r9-AR
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:17:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756725468;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=kWTU4bILSuZYsIeV1wFLJONleX24OYtDFuupJRy7CtE=;
+ b=UBtMiFQ8y4vtiy65C2+SVQj3fx+HfqJ2VqvfOFKedOcw8Lg4tfGJBdzNeUMhPa8CVRP4JU
+ j8epAQH3M11Nr3dlEBsHRFJShg4a/L9gGTIG17XoeRENwwf7oizBR4Vf7FBuctWqMEelK3
+ Vsxk8c3v1/JTq7bViqS69+CyldOqSpM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-693-BeMBQsL3Op6_WZlJAEzRJA-1; Mon, 01 Sep 2025 07:17:47 -0400
+X-MC-Unique: BeMBQsL3Op6_WZlJAEzRJA-1
+X-Mimecast-MFC-AGG-ID: BeMBQsL3Op6_WZlJAEzRJA_1756725466
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-45b883aa405so11198815e9.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:17:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756725409; x=1757330209;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SeDYy1DEgpcx4+sqiAQw9KNiJu2uZ5LQ1cRlI1CZNsQ=;
- b=ZRVraNj6dT0hNNtYyQDWdXlVJCpVry23dCL253mJ2FJ+HLGUsbygAPjJcu46MYufUW
- /shtVbPwBc1kxfjKMKfQ7qausinP64dUsgFSA2Vs5kCq2RxGQW9zy0q/VhTug81yZSb1
- rC5aT1hrbWBCrSq+7vPzrrN/+3yZM7qIECnRwx8yi5pJ9Lc1S10suF5ai90xNAecuAix
- IJxIuqUvzgoHjiAkgxb36eSbxqIBHff4N0kMY19Z2dQfhptFA+7BKAbMhV5ZPXLiL/J/
- BxTLVHru/lZWHuS2mgFDHMt/dieYPy2/YPX29JiT2jH4D6hYKK3ggwDzHWTo6WiN4PpR
- B8Mw==
+ d=1e100.net; s=20230601; t=1756725466; x=1757330266;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kWTU4bILSuZYsIeV1wFLJONleX24OYtDFuupJRy7CtE=;
+ b=oUyMfVepYphN5qJsIlpodEYNTKC5NBjb66XfnnlxrQ/U/htOJ2szK52DZae8rktROd
+ 4BmW2c0gFvZe5Ac8zNewzw392VAX3myj2NPj9BQox9Cs6bKcKwYrwJTdWAqEZPq5Ld1c
+ 71G1Jj4dBXwJ21Cmgwi9YXcDwZXdm6VwAyiWb2zRj3vfoDCDmy9mhBpmDwlajP8qv4NJ
+ o+O8QS3aOBOZ8CxYazx6H6Nb15j6SMC8I+ZNc0TismoZiMFSvVtYkXmVK+3iGzKYzQxB
+ c26p1GwF3BP9Esik3KGSFx+vr+4ND1lgSGMez6Mi3HBAzQCCNr1iJp0eaei+0EG2MEcj
+ rA4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVyukuQ9w847yz5o5g6ERcMQpiHQx8AlFYh7foN019ZDDYyI9GNzArsOgClPcNAaobOOG1vu0r9nPM8@nongnu.org
-X-Gm-Message-State: AOJu0Ywm+MZDnYnTItHcskdoa7E3XfYoiIMsKbCw8BYcRDTJ29jgZRNN
- 4pPMg3di3aIeGk9esLwUbCeIVPfjXT+CoQSYIXSyEj/KMd+iXng+gqAJjX4W3yK1rtA=
-X-Gm-Gg: ASbGncsDCmdWDOb0Ig/KgiITCvIf2Td8VXspJ6hLedm+ybRLpL+u/YiJmMFSjEmS4EP
- WhIuGOk9b9TDeTTaWe0yl+969G5qMoImYYd7+kQZWD8RxrsEmWXG5ClVQHbkDVyYegiQco4bD9/
- sTroYBcTU0+5Yfi9IK0xVZfPuldfWP1Mhgy1r3dSRtW4lGgh9x8SF+l0Umy9zZd4la/E/MPaXcp
- X+6KJ/eTq11JM7czqRSIHgOKh6KjvVUDph4zYibxvj7yCW2SKycllgg55uC/VAwozJ7dqljgGtW
- p0yXMkc43WFV2MyO0PL4gYaqGwBfqV1pFimffNE3ge5wFCT2kAQoBB9fRD+7tGYbO6s1RwBK0SI
- nhrQXNRnKH8w5jG/wX58gLmopunfBwtoP9YkZtmyekTSmQiryQLzMq0pxa2BohSlfmzmma73ady
- HE
-X-Google-Smtp-Source: AGHT+IGYCiFhbzG8hE1HPz2tiQL8ZlJymxcKbWzkZ5BTsFKvL13gq0SSyI64VNQEDIRSNJBBmZZl0Q==
-X-Received: by 2002:a05:600c:35d5:b0:45b:8996:997d with SMTP id
- 5b1f17b1804b1-45b89969e0dmr46245175e9.16.1756725409510; 
- Mon, 01 Sep 2025 04:16:49 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7e7d141esm157883025e9.2.2025.09.01.04.16.48
+ AJvYcCX75mrxMGTbYm9QLjIizxDnpiCATZ1UElXHIP9HN3QtoXe0YkZHngS2ICssOPgUQAcY/RUP3ohkyvEX@nongnu.org
+X-Gm-Message-State: AOJu0Ywf2Qhex21ywa9Qwb2y0XIYVJSx4Gz5+APT8Q9QA891v0/8xVxr
+ 6KOUK6UF+QyTjZ67E3uINvK1T+kk76dvtmTxzPj1kj24aWtv/GvF2hWy7M8Snp464oxjF64HPo1
+ x+m+goNxznX7CBUr2JCWX/1/Om92btIwxdAy3AmZ+25xdCeuk8PwTHxQy
+X-Gm-Gg: ASbGnctQwxJBTgAWh6x1xbmLM29Nsfv1SgkSIxriUdeXL459mNuTIDZwztPsJzSNO27
+ nTbBA2pwZUGhj1qntP5bu77e2VkuKNKPfwqWaNeGtOzZ1Z0sY4OAoukpI8c6iGAVm5YUpOgRf3P
+ n7izXZc9h+rH016LgqBLXHKD5OL9RrbcXQOX59B0GkEmXP2rOi9BtPKIQwXnTjfGPLIEzTmHLAe
+ WcBz+3rABh229b3fGGCIyUery2R5aux47iQyHcO8atSNz7ULlLpTW3FB6GUMP32IiIWQG2SEo9n
+ sxqTvlc5vtcImCUQfK8UrrnDFzRy9H0vgc/ZGfUCT99kKVmKht6uCQHMbifpONVAL6Kx/e31i6z
+ dka4=
+X-Received: by 2002:a5d:64c7:0:b0:3d0:ae58:e337 with SMTP id
+ ffacd0b85a97d-3d1dcb76478mr6446861f8f.14.1756725466174; 
+ Mon, 01 Sep 2025 04:17:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEO9UIwtoYszt9kW69YvMd/a3j0gpvtAK00ZjgGe59qGb66weBOFnHbl/syoPDsAVYfVnAEcg==
+X-Received: by 2002:a5d:64c7:0:b0:3d0:ae58:e337 with SMTP id
+ ffacd0b85a97d-3d1dcb76478mr6446841f8f.14.1756725465702; 
+ Mon, 01 Sep 2025 04:17:45 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf275d2722sm15060393f8f.19.2025.09.01.04.17.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 04:16:49 -0700 (PDT)
-Message-ID: <a250edb4-7df5-4e3d-9f82-361778d8612a@linaro.org>
-Date: Mon, 1 Sep 2025 13:16:48 +0200
+ Mon, 01 Sep 2025 04:17:44 -0700 (PDT)
+Message-ID: <e3e6f261-4bc5-40f4-b3f9-65d2293e9276@redhat.com>
+Date: Mon, 1 Sep 2025 13:17:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 12/14] hw/pci: Allow explicit function numbers in pci
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
-References: <20250901102850.1172983-1-djordje.todorovic@htecgroup.com>
- <20250901102850.1172983-13-djordje.todorovic@htecgroup.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250901102850.1172983-13-djordje.todorovic@htecgroup.com>
+Subject: Re: [PATCH v2 4/4] s390x/pci: Reset a device in error state
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: mjrosato@linux.ibm.com, thuth@redhat.com, alex.williamson@redhat.com
+References: <20250825212434.2255-1-alifm@linux.ibm.com>
+ <20250825212434.2255-5-alifm@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250825212434.2255-5-alifm@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,70 +157,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 12:29, Djordje Todorovic wrote:
-> Since there is no pch_gbe emulation, we could be using func other
-> than 0 when adding new devices to specific boards.
+On 8/25/25 23:24, Farhan Ali wrote:
+> For passthrough devices in error state, for a guest driven reset of the
+> device we can attempt a reset to recover the device. A reset of the device
+> will trigger a CLP disable/enable cycle on the host to bring the device
+> into a recovered state.
 > 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 > ---
->   hw/pci/pci.c | 15 +++++++++------
->   1 file changed, 9 insertions(+), 6 deletions(-)
+>   hw/s390x/s390-pci-bus.c          | 7 +++++++
+>   hw/s390x/s390-pci-vfio.c         | 6 ++++++
+>   include/hw/s390x/s390-pci-vfio.h | 2 ++
+>   3 files changed, 15 insertions(+)
 > 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index c70b5ceeba..0c6d11e145 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -984,14 +984,15 @@ static int pci_parse_devaddr(const char *addr, int *domp, int *busp,
->   
->       slot = val;
->   
-> -    if (funcp != NULL) {
-> -        if (*e != '.')
-> +    if (funcp != NULL && *e != 0) {
-
-s/0/'\0'/, otherwise:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +        if (*e != '.') {
->               return -1;
-> -
-> +        }
->           p = e + 1;
->           val = strtoul(p, &e, 16);
-> -        if (e == p)
-> +        if (e == p) {
->               return -1;
-> +        }
->   
->           func = val;
+> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+> index af42eb9938..c9c2d775f0 100644
+> --- a/hw/s390x/s390-pci-bus.c
+> +++ b/hw/s390x/s390-pci-bus.c
+> @@ -1493,6 +1493,8 @@ static void s390_pci_device_reset(DeviceState *dev)
+>           return;
+>       case ZPCI_FS_STANDBY:
+>           break;
+> +    case ZPCI_FS_ERROR:
+> +        break;
+>       default:
+>           pbdev->fh &= ~FH_MASK_ENABLE;
+>           pbdev->state = ZPCI_FS_DISABLED;
+> @@ -1505,6 +1507,11 @@ static void s390_pci_device_reset(DeviceState *dev)
+>       } else if (pbdev->summary_ind) {
+>           pci_dereg_irqs(pbdev);
 >       }
-> @@ -2054,13 +2055,15 @@ bool pci_init_nic_in_slot(PCIBus *rootbus, const char *model,
->       int dom, busnr, devfn;
->       PCIDevice *pci_dev;
->       unsigned slot;
-> +    unsigned func;
 > +
->       PCIBus *bus;
->   
->       if (!nd) {
->           return false;
+> +    if (pbdev->state == ZPCI_FS_ERROR) {
+> +        s390_pci_reset(pbdev);
+> +    }
+> +
+>       if (pbdev->iommu->enabled) {
+>           pci_dereg_ioat(pbdev->iommu);
 >       }
+> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+> index 87ecd06a81..a11ec770a7 100644
+> --- a/hw/s390x/s390-pci-vfio.c
+> +++ b/hw/s390x/s390-pci-vfio.c
+> @@ -158,6 +158,12 @@ static void s390_pci_err_handler(VFIOPCIDevice *vfio_pci)
+>       return;
+>   }
 >   
-> -    if (!devaddr || pci_parse_devaddr(devaddr, &dom, &busnr, &slot, NULL) < 0) {
-> +    if (!devaddr || pci_parse_devaddr(devaddr, &dom, &busnr, &slot, &func) < 0) {
->           error_report("Invalid PCI device address %s for device %s",
->                        devaddr, model);
->           exit(1);
-> @@ -2071,7 +2074,7 @@ bool pci_init_nic_in_slot(PCIBus *rootbus, const char *model,
->           exit(1);
->       }
+> +void s390_pci_reset(S390PCIBusDevice *pbdev)
+> +{
+> +    VFIOPCIDevice *vfio_pci = container_of(pbdev->pdev, VFIOPCIDevice, pdev);
+> +    ioctl(vfio_pci->vbasedev.fd, VFIO_DEVICE_RESET);
+> +}
+> +
+>   static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+>                                  struct vfio_device_info *info)
+>   {
+> diff --git a/include/hw/s390x/s390-pci-vfio.h b/include/hw/s390x/s390-pci-vfio.h
+> index 66b274293c..c28dafeed8 100644
+> --- a/include/hw/s390x/s390-pci-vfio.h
+> +++ b/include/hw/s390x/s390-pci-vfio.h
+> @@ -23,6 +23,7 @@ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
+>   bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
+>   void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
+>   void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev);
+> +void s390_pci_reset(S390PCIBusDevice *pbdev);
+>   #else
+>   static inline bool s390_pci_update_dma_avail(int fd, unsigned int *avail)
+>   {
+> @@ -41,6 +42,7 @@ static inline bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh)
+>   }
+>   static inline void s390_pci_get_clp_info(S390PCIBusDevice *pbdev) { }
+>   static inline void s390_pci_setup_err_handler(S390PCIBusDevice *pbdev) { }
+> +void s390_pci_reset(S390PCIBusDevice *pbdev) { }
+
+static inline void ... ^
+
+
+Thanks,
+
+C.
+
+
+
+>   #endif
 >   
-> -    devfn = PCI_DEVFN(slot, 0);
-> +    devfn = PCI_DEVFN(slot, func);
->   
->       bus = pci_find_bus_nr(rootbus, busnr);
->       if (!bus) {
+>   #endif
 
 
