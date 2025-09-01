@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D275CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 17:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F63CA0FFF
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 17:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut8BS-0004DT-MW; Mon, 01 Sep 2025 13:19:10 -0400
+	id 1ut8E3-0005Xs-1q; Mon, 01 Sep 2025 13:21:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut8BQ-0004Cj-IN
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 13:19:08 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ut8Di-0005QQ-E2
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 13:21:30 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut8BO-0000vY-Hx
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 13:19:08 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3d1bf79d75aso640610f8f.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 10:19:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ut8De-0001Po-QL
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 13:21:30 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-71d60593000so33493947b3.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 10:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756747144; x=1757351944; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1sCqZB25DUfcm/4XKxVHPvAeQgXjO4vMXXkVVPHtE3o=;
- b=j1FOPXEhy34vnv0cZRsJMKsDEqcWiUecj0eerIndpV71ZoyAJtUoh+AS1Y8Y93LRt1
- SwPJVRCMspHkjL6LDAXXLaaXcb9SVeEx+MfBsbAMdUpk/sObEmiN+f1zZPoywPT1PrnX
- L/VIU5+ACbfKw4ZYOK9HPWBjMUNXJNFh+pFbj3UzkGy8rzU3g4REVSxcFxPo9efGp/41
- Yp6E44LRMoHE8g7a4UaCXa1fVuRYZbjYML0eWwh3pU2TY48F/xiO4fBzpvqNErGr18mC
- ZYwt8Gg851DNhkJuLsAcbWYBQYFGRcNr70B7wBceSO5+bLB3tJdMxk3bfAopN/4CblKj
- eMuw==
+ d=linaro.org; s=google; t=1756747285; x=1757352085; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=RTyD0Fn6bbjlULr96B4sZT8TrLBKaOXaASlNy+KFpbY=;
+ b=i4RnK0YRDvMmOjBJ33LIKL7yj5QU0tuccfzCoNKf+RrfMyqcas0ZZ1Px2oQVQAVZdq
+ dWWQ9x3Maxjuj6EmNQSVC1NKOHYI7cUQ33cBGDJcfvuCMjo924e1lEOTwYKQ+In9Bpn2
+ Xu3fZE/HRH0XxjQxBWFQamLWsTvZWbCuyT5i3aaJaC4wdCOH1hlMb/Hrl9yIbqJOWgnu
+ W6xN7CRklnKGFxk+ZMOpC/mvplFu2Sg4SJtZ1Z/Zakb8IRtpBf2kUIPUwL7pLfz8he4z
+ IG6iIYki40HJYO3m48GIKuIWo3em5WStgPClAfVn5m3AbUdDM+nhbJnol1d6U5Qb74WN
+ KHAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756747144; x=1757351944;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1sCqZB25DUfcm/4XKxVHPvAeQgXjO4vMXXkVVPHtE3o=;
- b=r6wD7M1L90i4IXcplhlJjjNIy30K43MpVXIeMy3fNQTKuiGDRcE+VzkwM8zIFYb1OL
- ntLgklHm9QXA0Lq87M3TQVB+iANoF2CXHGFeLEQNgjEUxDXrccH8JHAXZIcl44nAncxS
- GjEVvKXBcXiwpZP5fxqukuIs77Z5dAQ1SfMkjMxPywM/x9BDMjKjSrgeBoTNd7G8bUCl
- z7i06nphyHGR75ezF4IOhF+mXD/pwi8Zftbcr06PQAWBSue3G088ShDt/2cJbhtRK4ht
- nlL5TxSPCrcPM3d1/vYbFA3ZHVap4J4DfN22i7wE40XEAlb8LxF7OowTDQdXf0HFxiGv
- 94lg==
-X-Gm-Message-State: AOJu0YzWR7NQh9m2v8HYE88lzxbX7AJgbhFIYjsqk1GiucQWhadU64dB
- bJhAjVoZiFJHuQK+Iz8+clPslcHSmSKrxsfal3JPGewonkfpXEfQzDnELLqgq46IuRU=
-X-Gm-Gg: ASbGncv3d6OVYeDMtpOlSzSqDjyzBVfYmlm3SyH7yMNQLaHkRxWIqLW0O6iUOPNV/PJ
- eIu6nOotQYJUAXw4A0E6YDnaPtY46m4Zvk3mn/rVLhtbhgrlszMyEzmvUEmc0ncYNewl0BQTDu6
- TZ6yXA6ao9FvD5fcfYgHheTfKVVFr/TfGfc5wKEulS79eoVoqU4grKuVBt5P07uBOKyfKq3Uctm
- cb3IF0byOY7jwx25H59fAinQ/Zm3yDREK1jcmYyKB5TMxLZwFvk8dhod5e6enzSPyQp1d9jlrA+
- AeAkTzKQ75/K+Qg29SKRzULdtfzvNcP9J+d4r1IDMYRcUXTLjv2M699vLxsndDBZfJxHCDSA37d
- +vWTI8S/XNPNjedCqhX/qxZfBGSBWgg0QUg==
-X-Google-Smtp-Source: AGHT+IHf4XtF3R4nNEcYqWb5xnCRc4YVZ2xSTr0Mht90V/zwbhqs9g+o32+fEei//O7yEAW7bfZV2A==
-X-Received: by 2002:a05:6000:420f:b0:3c4:2f45:1503 with SMTP id
- ffacd0b85a97d-3d1b16f0bd5mr9675400f8f.16.1756747144002; 
- Mon, 01 Sep 2025 10:19:04 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7e50e30asm165673725e9.24.2025.09.01.10.19.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 10:19:03 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4705A5F81C;
- Mon, 01 Sep 2025 18:19:02 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  Bin Meng <bmeng.cn@gmail.com>,
- qemu-block@nongnu.org,  Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Subject: Re: [PATCH v2 2/8] hw/sd/sdcard: Add validation for
- boot-partition-size
-In-Reply-To: <1fff448da042bdf8cff7733ce67cadff4c540f1d.1756706188.git.jan.kiszka@siemens.com>
- (Jan Kiszka's message of "Mon, 1 Sep 2025 07:56:22 +0200")
-References: <cover.1756706188.git.jan.kiszka@siemens.com>
- <1fff448da042bdf8cff7733ce67cadff4c540f1d.1756706188.git.jan.kiszka@siemens.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 01 Sep 2025 18:19:02 +0100
-Message-ID: <87ms7e146x.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1756747285; x=1757352085;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RTyD0Fn6bbjlULr96B4sZT8TrLBKaOXaASlNy+KFpbY=;
+ b=rUIFEUIWwseas4yvh6pjirzjPfslm7gcVl7JMFl7F0DKHOY08vGnrTLG/lqFriiJ71
+ g6AMmMLRZeYjxPGXxWOYWZuX1SBSC/HNxwO+cQsk3xJuiShS6nQUR1zTEpwOV4gBlCk+
+ t5CXd5lwvDCPSsU0+ZrlWTpKfInohRruy9yslKeG1+SA9ux+S82vf4RsDG5IE2ZdDMuR
+ 1joXhT5wnTUK9zuLTM+GbIPB/kltg7zDv+lkdEYa71bYJHtuGsTSx81ArWfblw68Yqwb
+ BaNTpob/su/0DvQV9apvvP3m+pSrE/RB/wfWR/bsAlv9UcYmkDcK+TlRaPCBQitYeG1h
+ +nQg==
+X-Gm-Message-State: AOJu0YwXMchvqQ1a3o/mXidLF206sIy8YlYi/v0ZKZykrvFZD92+yHHb
+ Oy5AlR3kC7s2ZxdjYaglWDE2mwIPsI3Livh3WA+CS1+WLTSx5S0qrEDQAQSvzlx0yXnpxx/3z7T
+ MQ7ApOHlS5M1cy97z9T/afqAYyTcWBWH0fGyNWJ1WIg==
+X-Gm-Gg: ASbGnctztKMqJ+zfeuSdRfWrlfT76y91xfmT+Md4+7F5cpmqPNp89az7wfNVD3bqpeI
+ /siOxQNfowMWDJaGG9gqaaQYXjRz8s+knEuov5or8/ikdJ/sx9a5XBPmujQDgcadCV2uS/5GYHB
+ MGSwA0oN45IxKZUtMeDHFKV0Zj9xaOZtFR3R3znUlHpUb2Y5IoZDdj65TN75pKFpbx1oIO8W1uj
+ sHIk/Nx
+X-Google-Smtp-Source: AGHT+IEM4LWO9XF6/p6tzvHWtlI8xKRmDaB562+uYVGjDHh5dpBaivNV/mUAMAFq97Wwnjtgjw2hBy1S+SFWm73u5+s=
+X-Received: by 2002:a05:690c:7088:b0:71f:f3bc:3b9 with SMTP id
+ 00721157ae682-722764aca8cmr93519497b3.29.1756747285163; Mon, 01 Sep 2025
+ 10:21:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+References: <20250822092410.25833-1-cjchen@igel.co.jp>
+ <20250822092410.25833-6-cjchen@igel.co.jp>
+In-Reply-To: <20250822092410.25833-6-cjchen@igel.co.jp>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 1 Sep 2025 18:21:13 +0100
+X-Gm-Features: Ac12FXyJI2XnjPtE5F4YxZ1Q2oPpPsqvK45yYj6G0ijTh80jOYqdxYimZXMihn8
+Message-ID: <CAFEAcA9EgODY_wR2j9Bsy66P-CRfdTBPRSfYeJ1MGTGyEUDouw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 5/9] system/memory: support unaligned access
+To: CJ Chen <cjchen@igel.co.jp>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org, 
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Tyrone Ting <kfting@nuvoton.com>, 
+ Hao Wu <wuhaotsh@google.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Tomoyuki Hirose <hrstmyk811m@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,56 +106,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jan Kiszka <jan.kiszka@siemens.com> writes:
-
-> From: Jan Kiszka <jan.kiszka@siemens.com>
+On Fri, 22 Aug 2025 at 10:25, CJ Chen <cjchen@igel.co.jp> wrote:
 >
-> Make sure we are not silently rounding down or even wrapping around,
-> causing inconsistencies with the provided image.
+> From: Tomoyuki Hirose <hrstmyk811m@gmail.com>
 >
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> The previous code ignored 'impl.unaligned' and handled unaligned
+> accesses as-is. But this implementation could not emulate specific
+> registers of some devices that allow unaligned access such as xHCI
+> Host Controller Capability Registers.
+>
+> This commit emulates an unaligned access with multiple aligned
+> accesses. Additionally, the overwriting of the max access size is
+> removed to retrieve the actual max access size.
+>
+> Based-on-a-patch-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+> Signed-off-by: CJ Chen <cjchen@igel.co.jp>
+> Tested-by: CJ Chen <cjchen@igel.co.jp>
+> Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
 > ---
->  hw/sd/sd.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  system/memory.c  | 147 ++++++++++++++++++++++++++++++++++++++---------
+>  system/physmem.c |   8 ---
+>  2 files changed, 119 insertions(+), 36 deletions(-)
 >
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 16aee210b4..834392b0a8 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -2818,6 +2818,16 @@ static void sd_realize(DeviceState *dev, Error **e=
-rrp)
->          }
->          blk_set_dev_ops(sd->blk, &sd_block_ops, sd);
->      }
-> +    if (sd->boot_part_size % (128 * KiB) ||
-> +        sd->boot_part_size > 255 * 128 * KiB) {
-> +        char *size_str =3D size_to_str(sd->boot_part_size);
-> +
-
-This could be:
-
-  g_autofree char *size_str =3D size_to_str(sd->boot_part_size);
-
-> +        error_setg(errp, "Invalid boot partition size: %s", size_str);
-> +        g_free(size_str);
-
-which drops this.
-
-> +        error_append_hint(errp,
-> +                          "The boot partition size must be multiples of =
-128K"
-> +                          "and not larger than 32640K.\n");
-> +    }
+> diff --git a/system/memory.c b/system/memory.c
+> index 63b983efcd..d6071b4414 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -509,27 +509,118 @@ static MemTxResult memory_region_write_with_attrs_accessor(MemoryRegion *mr,
+>      return mr->ops->write_with_attrs(mr->opaque, addr, tmp, size, attrs);
 >  }
->=20=20
->  static void emmc_realize(DeviceState *dev, Error **errp)
+>
+> +typedef MemTxResult (*MemoryRegionAccessFn)(MemoryRegion *mr,
+> +                                            hwaddr addr,
+> +                                            uint64_t *value,
+> +                                            unsigned size,
+> +                                            signed shift,
+> +                                            uint64_t mask,
+> +                                            MemTxAttrs attrs);
 
-Otherwise:
+So we now have access_emulation and access_fastpath and
+the function is_access_fastpath() to select between them.
+Can we have a comment please that says what the two are
+doing and what the criterion is that lets us pick the fast path ?
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> +
+> +static MemTxResult access_emulation(hwaddr addr,
+> +                                    uint64_t *value,
+> +                                    unsigned int size,
+> +                                    unsigned int access_size_min,
+> +                                    unsigned int access_size_max,
+> +                                    MemoryRegion *mr,
+> +                                    MemTxAttrs attrs,
+> +                                    MemoryRegionAccessFn access_fn_read,
+> +                                    MemoryRegionAccessFn access_fn_write,
+> +                                    bool is_write)
+> +{
+> +    hwaddr a;
+> +    uint8_t *d;
+> +    uint64_t v;
+> +    MemTxResult r = MEMTX_OK;
+> +    bool is_big_endian = devend_big_endian(mr->ops->endianness);
+> +    void (*store)(void *, int, uint64_t) = is_big_endian ? stn_be_p : stn_le_p;
+> +    uint64_t (*load)(const void *, int) = is_big_endian ? ldn_be_p : ldn_le_p;
 
+Please use a typedef for all function pointers: it makes it
+much easier to read.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> +    size_t access_size = MAX(MIN(size, access_size_max), access_size_min);
+> +    uint64_t access_mask = MAKE_64BIT_MASK(0, access_size * 8);
+> +    hwaddr round_down = mr->ops->impl.unaligned && addr + size <= mr->size ?
+> +        0 : addr % access_size;
+> +    hwaddr start = addr - round_down;
+> +    hwaddr tail = addr + size <= mr->size ? addr + size : mr->size;
+> +    uint8_t data[16] = {0};
+> +    g_assert(size <= 8);
+
+There should be a blank line after the last variable definition
+and before the g_assert() here.
+
+> +
+> +    for (a = start, d = data, v = 0; a < tail;
+> +         a += access_size, d += access_size, v = 0) {
+> +        r |= access_fn_read(mr, a, &v, access_size, 0, access_mask,
+> +                            attrs);
+> +        store(d, access_size, v);
+> +    }
+> +    if (is_write) {
+> +        stn_he_p(&data[round_down], size, load(value, size));
+> +        for (a = start, d = data; a < tail;
+> +             a += access_size, d += access_size) {
+> +            v = load(d, access_size);
+> +            r |= access_fn_write(mr, a, &v, access_size, 0, access_mask,
+> +                                 attrs);
+> +        }
+> +    } else {
+> +        store(value, size, ldn_he_p(&data[round_down], size));
+> +    }
+
+This would be much easier to review if there were comments
+that said what the intention/design of the code was.
+
+> +
+> +    return r;
+> +}
+> +
+> +static bool is_access_fastpath(hwaddr addr,
+> +                               unsigned int size,
+> +                               unsigned int access_size_min,
+> +                               unsigned int access_size_max,
+> +                               MemoryRegion *mr)
+> +{
+> +    size_t access_size = MAX(MIN(size, access_size_max), access_size_min);
+> +    hwaddr round_down = mr->ops->impl.unaligned && addr + size <= mr->size ?
+> +        0 : addr % access_size;
+> +
+> +    return round_down == 0 && access_size <= size;
+> +}
+> +
+> +static MemTxResult access_fastpath(hwaddr addr,
+> +                                   uint64_t *value,
+> +                                   unsigned int size,
+> +                                   unsigned int access_size_min,
+> +                                   unsigned int access_size_max,
+> +                                   MemoryRegion *mr,
+> +                                   MemTxAttrs attrs,
+> +                                   MemoryRegionAccessFn fastpath)
+> +{
+> +    MemTxResult r = MEMTX_OK;
+> +    size_t access_size = MAX(MIN(size, access_size_max), access_size_min);
+> +    uint64_t access_mask = MAKE_64BIT_MASK(0, access_size * 8);
+> +
+> +    if (devend_big_endian(mr->ops->endianness)) {
+> +        for (size_t i = 0; i < size; i += access_size) {
+> +            r |= fastpath(mr, addr + i, value, access_size,
+> +                          (size - access_size - i) * 8, access_mask, attrs);
+> +        }
+> +    } else {
+> +        for (size_t i = 0; i < size; i += access_size) {
+> +            r |= fastpath(mr, addr + i, value, access_size,
+> +                          i * 8, access_mask, attrs);
+> +        }
+> +    }
+> +
+> +    return r;
+> +}
+> +
+>  static MemTxResult access_with_adjusted_size(hwaddr addr,
+>                                        uint64_t *value,
+>                                        unsigned size,
+>                                        unsigned access_size_min,
+>                                        unsigned access_size_max,
+> -                                      MemTxResult (*access_fn)
+> -                                                  (MemoryRegion *mr,
+> -                                                   hwaddr addr,
+> -                                                   uint64_t *value,
+> -                                                   unsigned size,
+> -                                                   signed shift,
+> -                                                   uint64_t mask,
+> -                                                   MemTxAttrs attrs),
+> +                                      MemoryRegionAccessFn access_fn_read,
+> +                                      MemoryRegionAccessFn access_fn_write,
+> +                                      bool is_write,
+>                                        MemoryRegion *mr,
+>                                        MemTxAttrs attrs)
+>  {
+> -    uint64_t access_mask;
+> -    unsigned access_size;
+> -    unsigned i;
+>      MemTxResult r = MEMTX_OK;
+>      bool reentrancy_guard_applied = false;
+> +    MemoryRegionAccessFn access_fn_fastpath =
+> +        is_write ? access_fn_write : access_fn_read;
+>
+>      if (!access_size_min) {
+>          access_size_min = 1;
+> @@ -551,20 +642,16 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
+>          reentrancy_guard_applied = true;
+>      }
+>
+> -    /* FIXME: support unaligned access? */
+> -    access_size = MAX(MIN(size, access_size_max), access_size_min);
+> -    access_mask = MAKE_64BIT_MASK(0, access_size * 8);
+> -    if (devend_big_endian(mr->ops->endianness)) {
+> -        for (i = 0; i < size; i += access_size) {
+> -            r |= access_fn(mr, addr + i, value, access_size,
+> -                        (size - access_size - i) * 8, access_mask, attrs);
+> -        }
+> +    if (is_access_fastpath(addr, size, access_size_min, access_size_max, mr)) {
+> +        r |= access_fastpath(addr, value, size,
+> +                             access_size_min, access_size_max, mr, attrs,
+> +                             access_fn_fastpath);
+>      } else {
+> -        for (i = 0; i < size; i += access_size) {
+> -            r |= access_fn(mr, addr + i, value, access_size, i * 8,
+> -                        access_mask, attrs);
+> -        }
+> +        r |= access_emulation(addr, value, size,
+> +                              access_size_min, access_size_max, mr, attrs,
+> +                              access_fn_read, access_fn_write, is_write);
+>      }
+
+Because you've removed the loops from this function, we don't
+any longer need to set r to MEMTX_OK and then OR in the
+return value from access_whatever; we can just set r = ...
+
+> +
+>      if (mr->dev && reentrancy_guard_applied) {
+>          mr->dev->mem_reentrancy_guard.engaged_in_io = false;
+>      }
+
+thanks
+-- PMM
 
