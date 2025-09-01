@@ -4,172 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6E9CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 08:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F690CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 08:29:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uszqA-0007LL-A9; Mon, 01 Sep 2025 04:24:38 -0400
+	id 1uszuI-00017F-2X; Mon, 01 Sep 2025 04:28:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1uszq8-0007KQ-TB; Mon, 01 Sep 2025 04:24:36 -0400
-Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <SRS0=6z4c=3M=kaod.org=clg@ozlabs.org>)
+ id 1uszu4-00012I-UB; Mon, 01 Sep 2025 04:28:44 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1uszq5-0000eP-Sk; Mon, 01 Sep 2025 04:24:36 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WxHXYM7rlwi96p9NM1iQbi5mfwKGtBog2J8jsOrWVVCchb7IJ+4lIBa2SUwNC2M4l4nb1K3kUMECw/Y3TPg8RUTVd6uTjKw2H9epfCieE0UcdKkm8Z6QcZGGJhD4tuShvEzXVYJR4/PghZTaO4plaPVp6dTzdUChDksBUoruMXpjv2MyFFFd+pgMyQ7RBautk25wn0Z605sJzjUMuq3mFuo9xcVRYA9jSjpBOLsXJOWf8aM5zhBS7pXGPkvL9dOgD9lXzibLI8hvnvtcmrVFiJPrd47ZPaQqSmrx5KPFGcFN1iLSyeC4EHoPQlu6XytqVw9KrB5wgeumGrASdPsS3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4Yn0uEzrI7kNNOJyT9a7+z5qu7zqQeF4rK2F7/lpL1c=;
- b=lH9oSP32hvkR+VC/a7kk5de9epZnqeZOhRGsnpwKVsn9hXzq9ZxYc3AxJmxskpX7+hlNZ+rJ5mtmlEe8j7XhvBAgeXZcokBZdcNAP+zpVegqeN0GF/Yhx+65QlpDNcFOMjH2uDuLf/oJy9jXHTujVWXeI/fLoDwAQq9UWwEjfIAot/QVS9apje2isqyw6U+5rlQ2K7vcebPzhgMuCE1ja7E79vtMUip1qWRbnr4UXxxSB2z+6SKkMGBkt5b5KjO/2BX0K/LC4OOiPMM6D2MACJ4Kmqs7fsId1YR8q2e4POnt1/WhLHuTguf4bJdIPJdzLPp81t+PlWd7J6p0YCKJFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=htecgroup.com; dmarc=pass action=none
- header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4Yn0uEzrI7kNNOJyT9a7+z5qu7zqQeF4rK2F7/lpL1c=;
- b=j8zkB0WFPDr0ad7jmafjvbe80GeOWK9SGezXuPtgVNliiQgArCxbsbTf8BDbMZYYDxIjrGA8J5tUQxCPZ/Vw7wrIDNTW/QfZWF+U15U8QyugtVD8ToIY37wbrZiipSF3R+fuZxl/ItdpCevqDjsO+fxVumdZc6flMV56QHt8a0StDsIjoM8ETBz5v2x+O8TbIAKOthnSAvb1tDW2PiV4nz6fvxZaeD6NXfAj+C7uvUOUh5GQGYIeuxpvnHoD4klqnafQ4zFXTFOcK/jwMm7OxazcNRHfvJlTD8HPvf9HrGcAe63EJJMiSr9gmkaz229ndohqlq9NeRi/69Z7UcUffg==
-Received: from AS4PR09MB6518.eurprd09.prod.outlook.com (2603:10a6:20b:4fb::5)
- by FRWPR09MB8121.eurprd09.prod.outlook.com (2603:10a6:d10:19c::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.20; Mon, 1 Sep
- 2025 08:24:26 +0000
-Received: from AS4PR09MB6518.eurprd09.prod.outlook.com
- ([fe80::ad50:891a:847c:580a]) by AS4PR09MB6518.eurprd09.prod.outlook.com
- ([fe80::ad50:891a:847c:580a%4]) with mapi id 15.20.9052.019; Mon, 1 Sep 2025
- 08:24:26 +0000
-From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
- <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
-Subject: Re: [PATCH v6 08/14] hw/misc: Add RISC-V CMGCR device implementation
-Thread-Topic: [PATCH v6 08/14] hw/misc: Add RISC-V CMGCR device implementation
-Thread-Index: AQHb9v6Wv13ajPXjLkiShog0d4iGHbRZDQWAgCU4pIA=
-Date: Mon, 1 Sep 2025 08:24:25 +0000
-Message-ID: <780e72ad-59b8-43f3-a6c3-b01b5d1d8b72@htecgroup.com>
-References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
- <20250717093833.402237-9-djordje.todorovic@htecgroup.com>
- <a9874cc7-e18e-4b6c-aaac-2c6ce56c1bf7@linaro.org>
-In-Reply-To: <a9874cc7-e18e-4b6c-aaac-2c6ce56c1bf7@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla Thunderbird
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=htecgroup.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS4PR09MB6518:EE_|FRWPR09MB8121:EE_
-x-ms-office365-filtering-correlation-id: 37224176-727c-48ae-f5ad-08dde930f678
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?dnM0WGlvSVlPaHo1WlNKNGE3cFdkUjVaMXd6K3B2cVgxb1UyQ2dQZzFkQ0Nv?=
- =?utf-8?B?Q1dNbWlFb0lwSWE2SU03MWVCNGxvU2ZjSTh1NVRsVE90MGpWSlNmVlp2aEU3?=
- =?utf-8?B?WktuQitRS2dPamxWdEpxUWwxQnFnMFBmdzJkZTJHazhnQlNJZXRlK2NreTZG?=
- =?utf-8?B?TmkvSmRrOHZ6UmpyKy9DTnM2dm14TTFoNEJ2MjVnNTF4VUVSQ0U4dTZhdSt3?=
- =?utf-8?B?TmM0V2I3aXVpaG4xVWhXTWVPanN4RGg1S1lKaG5xV1A2R2EzL1pLV0lCbDVP?=
- =?utf-8?B?bWMvd3ZIenVTVk9aaW16QXdVTVNZaDN6VGhRM1M5T1kvQ1VCSnRxdDJLSEdo?=
- =?utf-8?B?bWhKZGh5Y0U4N3VXK2JYdDV6c21IWEd5RWlDWGc0Z0ZyUEpYWWZ4aWVQcCtu?=
- =?utf-8?B?MmlGMVhBVGwyMkRLbFhtZ1ZGWlJvelNaNnVVclBiRklsRktSQ2RVaTgxeGp3?=
- =?utf-8?B?d29CR1dFb0VnVHZSbkFEd2NKeWJ6NXdudlVGdzUrT2NiYVBoSmYyUEFFY0dR?=
- =?utf-8?B?aTk0alVHdmo5ZGJtUTVVbFBLN0J0blRJamMxZUJmeFVBL0pnT0NoVzMwdEhC?=
- =?utf-8?B?NUt0Wk5sVC96cTVveGs1c2RrYktPem1HdDEySEdVVVhVM3E1blJyMnVmanhU?=
- =?utf-8?B?NUpkL3hlTENCRHNjRllMWlZVa2xlN1QvSkhTdERoQVprT1NoY0MxY2x2L2sz?=
- =?utf-8?B?U09LSkpzejJoblJ6SS9TYVJ6TTRxMEtobHJsQnh2ZEVpdFozOEdOaXlaQnhY?=
- =?utf-8?B?aWNYRVZOL3FuazkyTU9rcytGVzQvLzBYaCthcUR2SG5kamlXYm1hNWJiUjRa?=
- =?utf-8?B?T2N6RitrdU9sTm5jaWNtYXJvOXphQnNhSzFYMUs5N0wzTDFnRHZzODdzNnJm?=
- =?utf-8?B?RnB6b004MWl0NWdCRElTQ2diMkMwYU9TNXQ2TG9YV21kZzF5c1MwUXFLWlFs?=
- =?utf-8?B?UE51bTJuR1VoZWRPNEpDMjlPUEw4dnRHOHNpSkZlZllwWmhGRHJFbFhGSGVM?=
- =?utf-8?B?dm9DdEM2eUR1MDJxdG45dFY0a2xEZU45R3dhaTRKaXIzTGJIdm5OeE92V2x4?=
- =?utf-8?B?eFZnVnFicTFlTE4reTdvT2poRGltbEtXa0NhL1pFRVZxbXkxZ1RmV3NQVlN3?=
- =?utf-8?B?NmJqNnRhVzcwRnlVNW5OM01HMWxhM2NTL3ZZcnQ0bmljZU1Mb3J2VDJPbVV4?=
- =?utf-8?B?M0N1WHNXK1MyOXN4WDVDWDdEZ211TFlnU1MrUXBBQUtCUFBhK2x3L3JxUG16?=
- =?utf-8?B?dzkzYzFZUnR2clZPYk9PZnlIYjhvbjVOYlhmdVcvZGwwOEhlWGZqaXBZcHZQ?=
- =?utf-8?B?RnBmQ0JCVTFYRmRNb0Rxd09ONVpKaXQrWUhJamh3elNrUHp3bVcyWlFjZ2s4?=
- =?utf-8?B?dE53bHV6ZHA5cUJEZHlzaC9rMzlaMVdyMmJEMXNZbE5zV0tjNThldzgxQU4x?=
- =?utf-8?B?RjA2VVdpbzQ4RTBYK05BNTFlVDY3cnNIN3BPMVBvZndteTUxS2V6QkpiYTJD?=
- =?utf-8?B?K3hpa3Jod1J3YkFtdlZjenFYNTZaOTNnTDM5VHJTSE90Tzl3SVZyZGxlRmcr?=
- =?utf-8?B?ZXhJY2gycjVPb1lGSHEreVB0VkY1S1FoY1ROdXJqQ1pmMWExKy9FRXdvNG8z?=
- =?utf-8?B?K0dRNndOb0xxWWtBY2kzSDluQ1g0REQwTXNhTnVyUW5VUS84TU5vYWJzblJq?=
- =?utf-8?B?NG1vYURSaFBhaGllY0pQQkQrVkVncFdjQTBYeXhLRmhUQ0x6SVJUWitjV0R6?=
- =?utf-8?B?bk42cVRxbWVmOFdYQUcvMmtnMnBSTVA4Z3BqK09qTWExbU5neVNWWVVxN0g4?=
- =?utf-8?B?U0l5Ym02RjE2eG40ckJSK29JbGtNS3pCVUhCV0I3aXpodjZDU0ZuL0JRM01s?=
- =?utf-8?B?WXcyMWZ6U0ZFZDEwdWNGNDBlRVFsaXFJajhRd1JVTHd2SkRpWGlqMk9oL3ht?=
- =?utf-8?B?UDdMcVQ2SmhIK0JJbEpOSCtIRW9oWGZlTU1IRk91SlJRR2w1bFlab3o1RTNN?=
- =?utf-8?B?S0xGQU5iUzdRPT0=?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AS4PR09MB6518.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VkZxSTl1S28zNktBMDdaOVNlMGw3UzIzNGo3U3FqUDRJN0tqQWhTQ0tKUDhB?=
- =?utf-8?B?QXNSamt6R01CUlc3UDB1OEJ0U1lGdnhXL0RQQU9sSU5HQlIvNmduRWN0N1Mw?=
- =?utf-8?B?eENiR0lSVGkzU1FXTHBTc3NYeVdWNmlNNE1iak5JVHp2NldsdUpxZHNwcnJm?=
- =?utf-8?B?bVBOV2RZV0VzOUpPMWlvMFhBZ3NMYWhKSzUyUi9rQkJadEM5aWhYUEIzVWlU?=
- =?utf-8?B?NUE1S0U2eGZzdXBGdTZ0aE9IMUd2SnNDVnhSNVJXeUo0L2dTT08vbCtmd3NC?=
- =?utf-8?B?VWQ0TDNFbmcyTDF3aHltRUpadVRCMXdxakRLRlQySHgramJxM2cvM3NGRWMr?=
- =?utf-8?B?WWtWWWlOM3RvazJ0Y29jR0ZSeTcvWkRFQ2VCS3prMnUwdjRUSDhnRmRmdk9O?=
- =?utf-8?B?STB6cGsvajhjcFlJMmtxWEdpYTd5aTBGYm9JTDdhTkhzVUZldUZMNFdQbTZQ?=
- =?utf-8?B?UUdJL2Q5S2hqTFEyTjVuSndGdllhcldabEhJUG5vUWZDWk5wcDlMMmZXb08y?=
- =?utf-8?B?a0hOaC9KbFc1NmFFS3BoMDF0cTBJZXNKZzZMbEdiUnl3Q1JkbzJDMHUwZXlh?=
- =?utf-8?B?aGNwbTBCRUF3Z0E2QktBNExRTnhtQXF0SUN1SnEyRGRpY3hXalIvbG5MclRj?=
- =?utf-8?B?US9KNjd5V00ybDdDakxUZGRuL1dMWmo5Uk8xdmxFSVBoRXVZb2JhRWJSV2ds?=
- =?utf-8?B?OGlneHJ2d2FEN01CODB1RXhLb0IwNUpCeHVTU1JnZmZ1OFRiVldQZXNqY1My?=
- =?utf-8?B?eXpBZGJrOVZUOE5ZblNnS2dpd2hZQTFCT1E0T283RHVhaXJEVDVVYXRSQ1px?=
- =?utf-8?B?L2RNcEx2SHdCUzZ6U3A0cWowZG1GeHFrRjk3WXhpaGRhWHMra3BrVWZ2Nm1C?=
- =?utf-8?B?M240TUpWMFlEMldrelU5NExRM2VIaHZRVGh2MjNhTUZiK0tIZ2JxWlovajA3?=
- =?utf-8?B?NVE4d0lORFZPdVg2N3haRTk5Nnk0dXlHOFVpV1ZnZ1JQc1I2YTNFSm9WQ3ZW?=
- =?utf-8?B?NUx3T1hpZ3hvSTJZSmJZYlNtWG9QU3dhQkY1a0d5RHhOTlFGRS9FOFE1NEtx?=
- =?utf-8?B?cUdkK3BHWG9LaWxKYmlaSWJvWXhwNFFZbWJxaDdNUHNvL0N2enhOd2g0V3Jw?=
- =?utf-8?B?eitqZ3hzWE90OGF3SkQ5WDFaYWdZWEtQc0ViQytSOCtMc3JWeWp4SU92a0dU?=
- =?utf-8?B?WEtpcUFHQ0syTkJQejZtTmZBdjJmTGZMeDlRdUpNN1JWc2FLVnpGQkdYeno3?=
- =?utf-8?B?bVpnZDExVEgveDlkV3MvL1BBOUlaU0VtUkVhZUVObFVSa1ZURmpkUjViQUE5?=
- =?utf-8?B?bVRzb216alVoTUk3WjNiMU8xQjFQNmd5VlR1TjZlVzROeEVibGNscFgzMm10?=
- =?utf-8?B?ODZ6NkFVWDlUTjJWMnZaY20xTjU1bG9SZ3hKeTZCMlo2UTkvcmp2L2hhNjBP?=
- =?utf-8?B?c0R5cTFZc01tcVNuc2IxNUd0aW9NS2dsdDhmR00rUFdRaStManJnUUo4VDdF?=
- =?utf-8?B?T2VoUDJWK1ppSXNUbVd5NEFJcFhFZVUwSUpYUjU4RUpabEJFL2Eyell6Z3hr?=
- =?utf-8?B?S2xIYXlxOWxyMk1NY1RRQW9wTkpiZ1h6VkNjWkZKWjRTUGowNEQ1dk8yRzdL?=
- =?utf-8?B?RXloWXVNZnJLRXNtbE85YzRMZW5xeUh4aXYxMG1CWVBBc0xRbmw1My9kVHBw?=
- =?utf-8?B?d1lRUFVDS3RBSEV0aVY4QWROUmFQSWtjL1V5WDNISi9HSXpLMHpHSXAzbGg5?=
- =?utf-8?B?bW1IQ2EycDU5d2dnb1V5Nk9yek5Jajc0Umw4RXBaWXRGQmQ2dnVjZ1owZjF0?=
- =?utf-8?B?K0NnbFRYTTEyelEyTEJTd3BkMi9DeVBlYTBaVjIzRFJuK0NxQnZrQTZPOGU2?=
- =?utf-8?B?NCtiazZ3cDJsa28vbkJzMGp6ME53VnZIb2o0ZkpsdGljQ0x5ekk3SFpwMXF1?=
- =?utf-8?B?NVlPb2hzcUJaMEFGdVJVZktxYXM1bGJMVHA3MHFUb05hRnF1YW5pUDRlT1VI?=
- =?utf-8?B?bnVjTG1QQVBQRERuUU5wRkhKak5PakZ0Z2UzQmJOVnl2MVpwRlQybWVKZ0VQ?=
- =?utf-8?B?K3VVdWdRNm42cmVWSVJxeThteEQ5VCtXSnR2YzdHY29MVktBTU5sRnRlenFN?=
- =?utf-8?B?UWw2NlJJRnF3aS95d3V5U3hJc1VDZithbGJicFdQU0Y2QU1LWm5VZDFyTnhp?=
- =?utf-8?Q?mQJu7FcKgTNd9SUFa403zOk=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <99F04B42EDA1CA41BBA79FCA014FBB37@eurprd09.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <SRS0=6z4c=3M=kaod.org=clg@ozlabs.org>)
+ id 1usztx-0002Bp-DS; Mon, 01 Sep 2025 04:28:38 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cFhpY1PtNz4w9g;
+ Mon,  1 Sep 2025 18:28:21 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cFhpS6FMnz4w9d;
+ Mon,  1 Sep 2025 18:28:16 +1000 (AEST)
+Message-ID: <a735659a-5a1c-460d-826c-4978dc22a865@kaod.org>
+Date: Mon, 1 Sep 2025 10:28:12 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: htecgroup.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS4PR09MB6518.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37224176-727c-48ae-f5ad-08dde930f678
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Sep 2025 08:24:25.9072 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: uOEt89G43BxJccufv+xgrhVPqG1Egd2nraR22OQm4/1GGGh0OaqwbMiLdx0k0+SikqNONyJg3atOrbSooeHr8PYBP3CMaecCShO539mhXG4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FRWPR09MB8121
-Received-SPF: pass client-ip=2a01:111:f403:c201::1;
- envelope-from=Djordje.Todorovic@htecgroup.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [PATCH v1 1/4] hw/arm: Remove ast2700a0-evb machine
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ "reviewer:Incompatible changes" <devel@lists.libvirt.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com, kane_chen@aspeedtech.com
+References: <20250901040808.1454742-1-jamin_lin@aspeedtech.com>
+ <20250901040808.1454742-2-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250901040808.1454742-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=6z4c=3M=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -185,31 +112,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQpPbiA4LiA4LiAyNS4gMTg6MDAsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPiBD
-QVVUSU9OOiBUaGlzIGVtYWlsIG9yaWdpbmF0ZWQgZnJvbSBvdXRzaWRlIG9mIHRoZSBvcmdhbml6
-YXRpb24uIERvIA0KPiBub3QgY2xpY2sgbGlua3Mgb3Igb3BlbiBhdHRhY2htZW50cyB1bmxlc3Mg
-eW91IHJlY29nbml6ZSB0aGUgc2VuZGVyIA0KPiBhbmQga25vdyB0aGUgY29udGVudCBpcyBzYWZl
-Lg0KPg0KPg0KPiBPbiAxNy83LzI1IDExOjM4LCBEam9yZGplIFRvZG9yb3ZpYyB3cm90ZToNCj4+
-IEFkZCBSSVNDLVYgaW1wbGVtZW50YXRpb24gb2YgdGhlIENvaGVyZW50IE1hbmFnZXIgR2xvYmFs
-IENvbnRyb2wNCj4+IFJlZ2lzdGVyIChDTUdDUikgZGV2aWNlLiBJdCBpcyBiYXNlZCBvbiB0aGUg
-ZXhpc3RpbmcgTUlQUyBDTUdDUg0KPj4gaW1wbGVtZW50YXRpb24gYnV0IGFkYXB0ZWQgZm9yIFJJ
-U0MtViBzeXN0ZW1zLg0KPj4NCj4+IFRoZSBDTUdDUiBkZXZpY2UgcHJvdmlkZXMgZ2xvYmFsIHN5
-c3RlbSBjb250cm9sIGZvciBtdWx0aS1jb3JlDQo+PiBjb25maWd1cmF0aW9ucyBpbiBSSVNDLVYg
-c3lzdGVtcy4NCj4+DQo+PiBUaGlzIGlzIG5lZWRlZCBmb3IgdGhlIE1JUFMgQk9TVE9OIEFJQSBi
-b2FyZC4NCj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBDaGFvLXlpbmcgRnUgPGNmdUBtaXBzLmNvbT4N
-Cj4+IFNpZ25lZC1vZmYtYnk6IERqb3JkamUgVG9kb3JvdmljIDxkam9yZGplLnRvZG9yb3ZpY0Bo
-dGVjZ3JvdXAuY29tPg0KPj4gLS0tDQo+PiDCoCBody9taXNjL0tjb25maWfCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHzCoCAxMCArKw0KPj4gwqAgaHcvbWlzYy9tZXNvbi5idWlsZMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHzCoMKgIDIgKw0KPj4gwqAgaHcvbWlzYy9yaXNjdl9jbWdjci5jwqDC
-oMKgwqDCoMKgwqDCoCB8IDIzNCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+
-PiDCoCBpbmNsdWRlL2h3L21pc2MvcmlzY3ZfY21nY3IuaCB8wqAgNDkgKysrKysrKw0KPj4gwqAg
-NCBmaWxlcyBjaGFuZ2VkLCAyOTUgaW5zZXJ0aW9ucygrKQ0KPj4gwqAgY3JlYXRlIG1vZGUgMTAw
-NjQ0IGh3L21pc2MvcmlzY3ZfY21nY3IuYw0KPj4gwqAgY3JlYXRlIG1vZGUgMTAwNjQ0IGluY2x1
-ZGUvaHcvbWlzYy9yaXNjdl9jbWdjci5oDQo+DQo+DQo+PiArc3RhdGljIHZvaWQgcmlzY3ZfZ2Ny
-X3JlYWxpemUoRGV2aWNlU3RhdGUgKmRldiwgRXJyb3IgKiplcnJwKQ0KPj4gK3sNCj4+ICvCoMKg
-wqAgUklTQ1ZHQ1JTdGF0ZSAqcyA9IFJJU0NWX0dDUihkZXYpOw0KPg0KPiBQbGVhc2UgcmVwb3J0
-IGFuIGVycm9yIGZvciBpbnZhbGlkIG51bV92cHMgdmFsdWVzICgwIG9yID5NQVgpLg0KPg0KSSB3
-aWxsIGRvIGl0IGluIHY3LiBUaGFua3MhDQoNCg0KPj4gKw0KPj4gK8KgwqDCoCAvKiBDcmVhdGUg
-bG9jYWwgc2V0IG9mIHJlZ2lzdGVycyBmb3IgZWFjaCBWUCAqLw0KPj4gK8KgwqDCoCBzLT52cHMg
-PSBnX25ldyhSSVNDVkdDUlZQU3RhdGUsIHMtPm51bV92cHMpOw0KPj4gK30=
+Hello Jamin,
+
+On 9/1/25 06:08, Jamin Lin wrote:
+> The ast2700a0-evb machine represents the first revision of the AST2700 and
+> serves as the initial engineering sample rather than a production version.
+> A newer revision, A1, is now supported, and the ast2700a1-evb should replace
+> the older A0 version.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   docs/about/deprecated.rst                     |  8 ------
+>   hw/arm/aspeed.c                               | 28 +------------------
+>   .../functional/aarch64/test_aspeed_ast2700.py | 12 --------
+>   3 files changed, 1 insertion(+), 47 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 5d1579dcf8..8a273e019a 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -305,14 +305,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+>   better reflects the way this property affects all random data within
+>   the device tree blob, not just the ``kaslr-seed`` node.
+>   
+> -Arm ``ast2700a0-evb`` machine (since 10.1)
+> -''''''''''''''''''''''''''''''''''''''''''
+
+We need to wait *two* releases after deprecation before removing a
+machine or any other feature. So removal of the ast2700a0-evb machine
+will be possible for QEMU 11.0 (next after QEMU 10.2).
+
+> -
+> -The ``ast2700a0-evb`` machine represents the first revision of the AST2700
+> -and serves as the initial engineering sample rather than a production version.
+> -A newer revision, A1, is now supported, and the ``ast2700a1-evb`` should
+> -replace the older A0 version.
+> -
+
+File docs/about/removed-features.rst should be updated too.
+
+>   Mips ``mipssim`` machine (since 10.0)
+>   '''''''''''''''''''''''''''''''''''''
+>   
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index c31bbe7701..e729edfe13 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -1989,35 +1989,13 @@ static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
+>                               TYPE_TMP105, 0x4d);
+>   }
+>   
+> -static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc,
+> -                                                    const void *data)
+> -{
+> -    MachineClass *mc = MACHINE_CLASS(oc);
+> -    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+> -
+> -    mc->alias = "ast2700-evb";
+
+The "ast2700-evb" alias should be moved first to the ast2700a1_evb machine.
+This can be done in this QEMU cycle
+
+
+Thanks,
+
+C.
+
+
+
+
+> -    mc->desc = "Aspeed AST2700 A0 EVB (Cortex-A35)";
+> -    amc->soc_name  = "ast2700-a0";
+> -    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
+> -    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
+> -    amc->fmc_model = "w25q01jvq";
+> -    amc->spi_model = "w25q512jv";
+> -    amc->num_cs    = 2;
+> -    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+> -    amc->uart_default = ASPEED_DEV_UART12;
+> -    amc->i2c_init  = ast2700_evb_i2c_init;
+> -    amc->vbootrom = true;
+> -    mc->auto_create_sdcard = true;
+> -    mc->default_ram_size = 1 * GiB;
+> -    aspeed_machine_class_init_cpus_defaults(mc);
+> -}
+> -
+>   static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc,
+>                                                       const void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+>       AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+>   
+> +    mc->alias = "ast2700-evb";
+>       mc->desc = "Aspeed AST2700 A1 EVB (Cortex-A35)";
+>       amc->soc_name  = "ast2700-a1";
+>       amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
+> @@ -2166,10 +2144,6 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
+>   #ifdef TARGET_AARCH64
+>       }, {
+> -        .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
+> -        .parent        = TYPE_ASPEED_MACHINE,
+> -        .class_init    = aspeed_machine_ast2700a0_evb_class_init,
+> -        }, {
+>           .name          = MACHINE_TYPE_NAME("ast2700a1-evb"),
+>           .parent        = TYPE_ASPEED_MACHINE,
+>           .class_init    = aspeed_machine_ast2700a1_evb_class_init,
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700.py b/tests/functional/aarch64/test_aspeed_ast2700.py
+> index d02dc7991c..063d9e572c 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700.py
+> @@ -46,10 +46,6 @@ def verify_openbmc_boot_and_login(self, name):
+>           exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+>           exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+>   
+> -    ASSET_SDK_V906_AST2700 = Asset(
+> -            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-a0-default-obmc.tar.gz',
+> -            '7247b6f19dbfb700686f8d9f723ac23f3eb229226c0589cb9b06b80d1b61f3cb')
+> -
+>       ASSET_SDK_V906_AST2700A1 = Asset(
+>               'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-default-obmc.tar.gz',
+>               'f1d53e0be8a404ecce3e105f72bc50fa4e090ad13160ffa91b10a6e0233a9dc6')
+> @@ -111,14 +107,6 @@ def start_ast2700_test_vbootrom(self, name):
+>           self.do_test_aarch64_aspeed_sdk_start(
+>                   self.scratch_file(name, 'image-bmc'))
+>   
+> -    def test_aarch64_ast2700_evb_sdk_v09_06(self):
+> -        self.set_machine('ast2700-evb')
+> -
+> -        self.archive_extract(self.ASSET_SDK_V906_AST2700)
+> -        self.start_ast2700_test('ast2700-a0-default')
+> -        self.verify_openbmc_boot_and_login('ast2700-a0-default')
+> -        self.do_ast2700_i2c_test()
+> -
+>       def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
+>           self.set_machine('ast2700a1-evb')
+>   
+
 
