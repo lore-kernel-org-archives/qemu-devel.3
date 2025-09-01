@@ -4,99 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D590BCA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67540CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut33Y-000601-Fj; Mon, 01 Sep 2025 07:50:40 -0400
+	id 1ut3AJ-0001cs-U2; Mon, 01 Sep 2025 07:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ut31Z-0003ee-8R; Mon, 01 Sep 2025 07:48:42 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ut31J-0001pm-Hw; Mon, 01 Sep 2025 07:48:34 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-248c7f955a2so37343655ad.2; 
- Mon, 01 Sep 2025 04:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756727289; x=1757332089; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1mhZoyyImgDjzAPXj+YimSquQazjd0N7mWZJ50wnHeY=;
- b=LG9a+v/9Gx1DM0ZdNVMVKRxxGCC2XE8RoKcZcb7Xt+EybY8kUorRcZ1eIqqXFGK5bH
- EVk59HuDZBa02wrFqtjX7mk2AOHo/bjwyIpKw529/8hX/86LxgjudQJjbAGYFZuZFcXX
- D8UAymZoN/aVNBfWueMRTciWp9UnMYDYSW1W5yLMxKM8j37E3e2fV/Lrsoby8lxfsTEm
- A7danQoWblmpHnKga399qF9JEgS+LIvQFoMKUykflIzcUlpZ+dvjw7vfRJHTwMGr2G5x
- hr0qVGDdkxDZ3QYZ7Rws6JrgEUamyYCgMnhC2B5KYbfhNAyeM/S4InAlf6PcthU1EHk7
- vzpA==
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1ut3AD-0001Yq-AB
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:57:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1ut3A3-0003Sq-JL
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:57:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756727839;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=TTT8kRIsMSZH3fcysF8UhiZnE2FdZ4+bj/E+H1QmuVk=;
+ b=TYBqY8q9az8s0Zf5swvAa6QwDu0OPrzFb5pywv5lZ1szdv73z808PYmleKREjZq1pEMqzt
+ U1UUDRjThPExnrrw2UfxXEH66C666E+ChfnnRXZ1yWfdRKGQfiNbW88rXZjTWvHokLksTS
+ sgfX5M/Zi+sgwS4ZOG+dBhq3rl5E3hw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-438-C4_I_qvkOo-XAr9Y_sZZaQ-1; Mon, 01 Sep 2025 07:57:15 -0400
+X-MC-Unique: C4_I_qvkOo-XAr9Y_sZZaQ-1
+X-Mimecast-MFC-AGG-ID: C4_I_qvkOo-XAr9Y_sZZaQ_1756727833
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3cf48eca078so2494992f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:57:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756727289; x=1757332089;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1mhZoyyImgDjzAPXj+YimSquQazjd0N7mWZJ50wnHeY=;
- b=WsbVBIE1e/a26W4Bsp1yBimnPJhoG36rVuccxpNcP4OC7aNfh5makzm9i4eWGPqaYK
- kBTebskZqnN2sHTHXcv3ri7XsROqF1DDx+6/Ak7g+8ExrkOdrviY7F+HiHCjUH5LVA9k
- il4pPQpIXaNHUX6Lwi5S+Blb+2Rhz+E4U8rfwLWJsHgbmlaEeuiYh+O5gDMMlpIkwjpH
- xc+w98cyB/BXvBbLytWuUzGcOYH+j/Smf8n8sXmSHnJGR4Zmdefz39kfvkoqjda0iMs9
- GzNcIa0nQkCjn64fFo3DpS3WN5qrIJILukkU34Png9dDigIjPwmaMJSFMJeRWjKz45a7
- DXSw==
+ d=1e100.net; s=20230601; t=1756727833; x=1757332633;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TTT8kRIsMSZH3fcysF8UhiZnE2FdZ4+bj/E+H1QmuVk=;
+ b=Zv5cXIk03+1kJpVKwH2fzHyX1QniPhYy10XpBKOHJtwGyXeuiilowTAMGX+6JIBn5/
+ PkA8Ud9N+Jgi4MnwriKPvBSiZjgy5Fj1E64t6t7udUhvlxxo4o7i304iy90cykV3NKpY
+ i6ZUeKhrYyGSbMQ2r04oW58tBoURBBL3T6+DBrWY23ZWTnD9YcZ4n/3NsoEnC//hKyC0
+ SDE3D4erDlX5LNxzvXt6JFvvspnxJCefzd6lx/taQUxa2kSE2Qj7cFmPhuLN8EXMIJJy
+ fUnjHJ2AUSmIff+/bJQ43cbthpOqs3J4nnDV1Iy8AXcbqbmqESoo7cdfFwzVMfhJUyam
+ ycNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaNdRHxCLzjLYjLBetk3aJCSBWJ+bp2LAtZaS7NgYlUp9xdtOCe43ctIgb2Ha8yXzsAMHApr5wHcKfhg==@nongnu.org,
- AJvYcCWRsAsW6mUZiWqBLdca/onDtNii3C0lLWdc5yj9VCMSlIbLXCfdCxEfw8d87bqGMqwBZbpMmE9PWQ==@nongnu.org
-X-Gm-Message-State: AOJu0YxfszGfLqDnYMqJhRfaGOFsbwtF3F4CRj5hbOWtcDGnWG1mEJr1
- ngBoezwr66oVMvMshaEa8KWocV9sELjVtZ+f1Bm7r+4j6eygleGo5T5K9MEZwg==
-X-Gm-Gg: ASbGncvxBwpQapG+hOhaocb0ayBYcaURpastbiOOuunYeSEWFI/BQfX8KOSUHxwzG/4
- +5Q6/FBgy51Vldbjhq0rvnWG31TNt21rouJLALeto5HorCBMCF1s+cVS6pM7eiH3f70fFfdXtm7
- fMqAlqinSUzPBIHK98R8Wlo5UKYGOEnfel+8x2Vnxy5DqPFuiJ04+7b4mbWMDPNX7+ngDLydPeQ
- SopMo8geTEENBb04p107MnnYqKYzLyJBLnW2npsVLs2zEEIDTC77XaumEDrFkHifPN97uAquNwh
- Tvvz6BNPk+CgW9eWRFLho99VLavWHKibD/B+4pDGrhZ+3Y28Uncne9RCIxvvKkwy1Kci7JYTqVE
- RpBQT33HPhuZygKR1SWrhGZE2RAix+fth
-X-Google-Smtp-Source: AGHT+IHNZ8chk7HN4IaK7VGH469nQvszfLdvVQbyw/C82kWfZk/Gbu1regw3qFi2butVz/CuKmpPsg==
-X-Received: by 2002:a17:902:e749:b0:24a:ad84:b1bd with SMTP id
- d9443c01a7336-24aad84b320mr60189555ad.32.1756727288914; 
- Mon, 01 Sep 2025 04:48:08 -0700 (PDT)
-Received: from ktock.. ([240d:1a:3b6:8b00:750a:cb0b:f0f9:68f4])
+ AJvYcCU2jVa8DJrnx7vbt/hL7wIzH3J2TsDpRlIPWnK+bfuq5ZOOjR4Jm+Izn+9pSm+rzFm0EvUOqPt3ivxB@nongnu.org
+X-Gm-Message-State: AOJu0YyQifRudcgbBD/PBCF9+rbh5JlD3Q8T67wA7bnYVAI86KKI+nIw
+ Hic2fWx3e8PPVCmganF2Fz+Q3TMf41OVOOhf8E43YGO48tVg5X/P3PaXXeB+lnmHcT/rTkzJ9Ki
+ jEr6uJpaYYyS6noMrT976N0vEQ189bMAb80NxCf44ZOx2Tww83F6b4Vvq3yghqkAs
+X-Gm-Gg: ASbGncsQTsSa/CmRllwHFdNP6YY8mvJJKvd5L9xNpUn27M7c8jm+bZbk6mXwoWJIHhH
+ 21rWaQ09SprL1yLOw7+UJBX+OAogA6d3ryaAx72lmno+QacmwDhdluccMcCMmtpGtPhT2bo0W3G
+ zEhccU9cxbmhvRnXPjseNjrgNvBTssLQt4IRxiJta/TsGOA9HXwdHS+1B9HT584zZd9an/Ov2lk
+ sNcwBiwtNyLFQSCR6TKIh9N8BuEairXeo7VfD0YUmMjMVhNE6pYm5zfmjXjQdpqaasfrpljvFqL
+ oN2mZIud1nCXuKxIdGrqr0VchHbsrHrKJcvpWgmoD/5Hw+XbA8njPaaEK5bLzGCRRIHrzVz1QMq
+ DpQA=
+X-Received: by 2002:a05:6000:2403:b0:3d7:2cf7:9361 with SMTP id
+ ffacd0b85a97d-3d72cf796c4mr1614403f8f.21.1756727832949; 
+ Mon, 01 Sep 2025 04:57:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLuG33RbubXfxVrtraVRqagd4Z1xpppkIGlNsyz5uTF2H0hBKGmPQ+q82FnDDHbScbE85YTw==
+X-Received: by 2002:a05:6000:2403:b0:3d7:2cf7:9361 with SMTP id
+ ffacd0b85a97d-3d72cf796c4mr1614385f8f.21.1756727832507; 
+ Mon, 01 Sep 2025 04:57:12 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
+ ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-249065a8036sm103038775ad.129.2025.09.01.04.48.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 04:48:08 -0700 (PDT)
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH v3 29/35] tcg/wasm: Allow switching coroutine from a helper
-Date: Mon,  1 Sep 2025 20:44:31 +0900
-Message-ID: <18770eb1458b4824b97608563ce6a65dc381e994.1756724464.git.ktokunaga.mail@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1756724464.git.ktokunaga.mail@gmail.com>
-References: <cover.1756724464.git.ktokunaga.mail@gmail.com>
+ 5b1f17b1804b1-45b6f0c6fe5sm234654995e9.5.2025.09.01.04.57.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Sep 2025 04:57:12 -0700 (PDT)
+Message-ID: <52f9eaaa-cf33-4558-b869-f4f66844f92e@redhat.com>
+Date: Mon, 1 Sep 2025 13:57:11 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] e1000e: Prevent crash from legacy interrupt firing
+ after MSI-X enable
+To: Jason Wang <jasowang@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20250807110806.409065-1-lvivier@redhat.com>
+ <CACGkMEsYDPjPBNmAd=AmZQ2AY46weFC_u8PK=+CSCuUD6W9zYg@mail.gmail.com>
+ <20250818140313.GA7391@fedora>
+ <CACGkMEvUq4ugS6PQ=mRH5Kx+rnDda5Wq3K8hSVrehv3=n5xk4Q@mail.gmail.com>
+Content-Language: en-US
+From: Laurent Vivier <lvivier@redhat.com>
+Autocrypt: addr=lvivier@redhat.com; keydata=
+ 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
+In-Reply-To: <CACGkMEvUq4ugS6PQ=mRH5Kx+rnDda5Wq3K8hSVrehv3=n5xk4Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,236 +164,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emscripten's Fiber coroutine implements coroutine switching using Asyncify's
-stack unwinding and rewinding features [1]. When a coroutine yields
-(i.e. switches out), Asyncify unwinds the stack, returning control to
-Emscripten's JS code (Fiber.trampoline()). Then execution resumes in the
-target coroutine by rewinding the stack. Stack unwinding is implemented by a
-sequence of immediate function returns, while rewinding re-enters the
-functions in the call stack, skipping any code between the function's entry
-point and the original call position [2].
+Hi Jason,
 
-This commit updates the TB's Wasm module to allow helper functions to
-trigger coroutine switching. Particaully, the TB handles the unwinding and
-rewinding flows as follows:
+On 19/08/2025 04:46, Jason Wang wrote:
+> On Mon, Aug 18, 2025 at 10:03 PM Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>>
+>> On Mon, Aug 18, 2025 at 10:08:18AM +0800, Jason Wang wrote:
+>>> On Thu, Aug 7, 2025 at 7:08 PM Laurent Vivier <lvivier@redhat.com> wrote:
+>>>>
+>>>> A race condition between guest driver actions and QEMU timers can lead
+>>>> to an assertion failure when the guest switches the e1000e from legacy
+>>>> interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
+>>>> RDTR) is active, but the guest enables MSI-X before the timer fires,
+>>>> the pending interrupt cause can trigger an assert in
+>>>> e1000e_intmgr_collect_delayed_causes().
+>>>>
+>>>> This patch removes the assertion and executes the code that clears the
+>>>> pending legacy causes. This change is safe and introduces no unintended
+>>>> behavioral side effects, as it only alters a state that previously led
+>>>> to termination.
+>>>>
+>>>> - when core->delayed_causes == 0 the function was already a no-op and
+>>>>    remains so.
+>>>>
+>>>> - when core->delayed_causes != 0 the function would previously
+>>>>    crash due to the assertion failure. The patch now defines a safe
+>>>>    outcome by clearing the cause and returning. Since behavior after
+>>>>    the assertion never existed, this simply corrects the crash.
+>>>>
+>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
+>>>> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+>>>> ---
+>>>
+>>> Acked-by: Jason Wang <jasowang@redhat.com>
+>>>
+>>> Consider rc3 is out. Can this be applied directly by maintainers or a
+>>> PULL request is expected?
+>>
+>> The commit description doesn't mention whether this fixes a regression
+>> introduced since QEMU 10.0, whether there is a security impact, etc.
+>> In the absence of more information, this looks like a regular bug fix
+>> that does not need to be merged for -rc4.
+>>
+>> Only release blockers will be merged for -rc4 (Tue 19 Aug). Please
+>> provide a justification if this commit is a release blocker. Reasoning:
+>> - From -rc3 onwards the goal is to make the final release and adding
+>>    additional patches risks introducing new issues that will delay the
+>>    release further.
+>> - Commits should include enough information to make the decision to
+>>    merge easy and documented in git-log(1). Don't rely on me to judge the
+>>    severity in areas of the codebase I'm not an expert in.
+> 
+> I see, I think it's not a release blocker so we can defer this to the
+> next release.
 
-- The TB check the Asyncify.state JS object after each helper call. If
-  unwinding is in progress, the TB immediately returns to the caller so that
-  the unwinding can continue.
-- Each function call is preceded by a block boundary and an update of the
-  BLOCK_IDX variable. This enables rewinding to skip any code between the
-  function's entry point and the original call position.
+just a reminder not to forget to pull it now...
 
-Additionally, this commit introduces WasmContext.do_init which is a flag
-indicating whether the TB should reset the BLOCK_IDX variable to 0
-(i.e. start from the beginning). call_wasm_tb is a newly introduced wrapper
-function for the Wasm module's entrypoint and this sets "do_init = 1" to
-ensure normal TB execution begins at the first block. During a rewinding,
-the C code does not set do_init to 1, allowing the TB to preserve the
-BLOCK_IDX value from the previous unwinding and correctly resume execution
-from the last unwound block.
-
-[1] https://emscripten.org/docs/api_reference/fiber.h.html
-[2] https://kripken.github.io/blog/wasm/2019/07/16/asyncify.html#new-asyncify
-
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
----
- tcg/wasm.c                |  3 ++
- tcg/wasm.h                | 11 ++++++++
- tcg/wasm/tcg-target.c.inc | 58 ++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 71 insertions(+), 1 deletion(-)
-
-diff --git a/tcg/wasm.c b/tcg/wasm.c
-index 15db1f9a8a..82987e9dff 100644
---- a/tcg/wasm.c
-+++ b/tcg/wasm.c
-@@ -44,6 +44,9 @@ EM_JS_PRE(void*, instantiate_wasm, (void *wasm_begin,
-     const wasm = HEAP8.subarray(DEC_PTR(wasm_begin),
-                                 DEC_PTR(wasm_begin) + wasm_size);
-     var helper = {};
-+    helper.u = () => {
-+        return (Asyncify.state != Asyncify.State.Unwinding) ? 1 : 0;
-+    };
-     const entsize = TCG_TARGET_REG_BITS / 8;
-     for (var i = 0; i < import_vec_size / entsize; i++) {
-         const idx = memory_v.getBigInt64(
-diff --git a/tcg/wasm.h b/tcg/wasm.h
-index b5d9ce75da..fdde908557 100644
---- a/tcg/wasm.h
-+++ b/tcg/wasm.h
-@@ -30,11 +30,22 @@ struct WasmContext {
-      * Pointer to a stack array.
-      */
-     uint64_t *stack;
-+
-+    /*
-+     * Flag indicating whether to initialize the block index(1) or not(0).
-+     */
-+    uint32_t do_init;
- };
- 
- /* Instantiated Wasm function of a TB */
- typedef uintptr_t (*wasm_tb_func)(struct WasmContext *);
- 
-+static inline uintptr_t call_wasm_tb(wasm_tb_func f, struct WasmContext *ctx)
-+{
-+    ctx->do_init = 1; /* reset the block index (rewinding will skip this) */
-+    return f(ctx);
-+}
-+
- /*
-  * A TB of the Wasm backend starts from a header which contains pointers for
-  * each data stored in the following region in the TB.
-diff --git a/tcg/wasm/tcg-target.c.inc b/tcg/wasm/tcg-target.c.inc
-index 7663f03eaf..6af4d6eb07 100644
---- a/tcg/wasm/tcg-target.c.inc
-+++ b/tcg/wasm/tcg-target.c.inc
-@@ -152,7 +152,8 @@ static const uint8_t tcg_target_reg_index[TCG_TARGET_NB_REGS] = {
- #define CTX_IDX 0
- 
- /* Function index */
--#define HELPER_IDX_START 0 /* The first index of helper functions */
-+#define CHECK_UNWINDING_IDX 0 /* A function to check the Asyncify status */
-+#define HELPER_IDX_START 1 /* The first index of helper functions */
- 
- #define PTR_TYPE 0x7e
- 
-@@ -169,6 +170,7 @@ typedef enum {
-     OPC_GLOBAL_GET = 0x23,
-     OPC_GLOBAL_SET = 0x24,
- 
-+    OPC_I32_LOAD = 0x28,
-     OPC_I64_LOAD = 0x29,
-     OPC_I64_LOAD8_S = 0x30,
-     OPC_I64_LOAD8_U = 0x31,
-@@ -176,6 +178,7 @@ typedef enum {
-     OPC_I64_LOAD16_U = 0x33,
-     OPC_I64_LOAD32_S = 0x34,
-     OPC_I64_LOAD32_U = 0x35,
-+    OPC_I32_STORE = 0x36,
-     OPC_I64_STORE = 0x37,
-     OPC_I64_STORE8 = 0x3c,
-     OPC_I64_STORE16 = 0x3d,
-@@ -1116,6 +1119,17 @@ static int64_t get_helper_idx(TCGContext *s, intptr_t helper_idx_on_qemu)
-     return -1;
- }
- 
-+static void tcg_wasm_out_handle_unwinding(TCGContext *s)
-+{
-+    tcg_wasm_out_op_idx(s, OPC_CALL, CHECK_UNWINDING_IDX);
-+    tcg_wasm_out_op(s, OPC_I32_EQZ);
-+    tcg_wasm_out_op_block(s, OPC_IF, BLOCK_NORET);
-+    tcg_wasm_out_op_const(s, OPC_I64_CONST, 0);
-+    /* returns if unwinding */
-+    tcg_wasm_out_op(s, OPC_RETURN);
-+    tcg_wasm_out_op(s, OPC_END);
-+}
-+
- static void tcg_wasm_out_call(TCGContext *s, intptr_t func,
-                               const TCGHelperInfo *info)
- {
-@@ -1132,7 +1146,16 @@ static void tcg_wasm_out_call(TCGContext *s, intptr_t func,
-     tcg_wasm_out_op_const(s, OPC_I64_CONST, (uint64_t)s->code_ptr);
-     tcg_wasm_out_op_ldst(s, OPC_I64_STORE, 0, ofs);
- 
-+    /*
-+     * update the block index so that the possible rewinding will
-+     * skip this block
-+     */
-+    tcg_wasm_out_op_const(s, OPC_I64_CONST, cur_block_idx + 1);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+    tcg_wasm_out_new_block(s);
-+
-     gen_call(s, info, func_idx);
-+    tcg_wasm_out_handle_unwinding(s);
- }
- 
- static void gen_func_type_qemu_ld(TCGContext *s, uint32_t oi)
-@@ -1204,6 +1227,14 @@ static void tcg_wasm_out_qemu_ld(TCGContext *s, TCGReg data_reg,
-         gen_func_type_qemu_ld(s, oi);
-     }
- 
-+    /*
-+     * update the block index so that the possible rewinding will
-+     * skip this block
-+     */
-+    tcg_wasm_out_op_const(s, OPC_I64_CONST, cur_block_idx + 1);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+    tcg_wasm_out_new_block(s);
-+
-     /* call the target helper */
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(TCG_AREG0));
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(addr_reg));
-@@ -1212,6 +1243,7 @@ static void tcg_wasm_out_qemu_ld(TCGContext *s, TCGReg data_reg,
- 
-     tcg_wasm_out_op_idx(s, OPC_CALL, func_idx);
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(data_reg));
-+    tcg_wasm_out_handle_unwinding(s);
- }
- 
- static void *qemu_st_helper_ptr(uint32_t oi)
-@@ -1245,6 +1277,14 @@ static void tcg_wasm_out_qemu_st(TCGContext *s, TCGReg data_reg,
-         gen_func_type_qemu_st(s, oi);
-     }
- 
-+    /*
-+     * update the block index so that the possible rewinding will
-+     * skip this block
-+     */
-+    tcg_wasm_out_op_const(s, OPC_I64_CONST, cur_block_idx + 1);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+    tcg_wasm_out_new_block(s);
-+
-     /* call the target helper */
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(TCG_AREG0));
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(addr_reg));
-@@ -1261,6 +1301,7 @@ static void tcg_wasm_out_qemu_st(TCGContext *s, TCGReg data_reg,
-     tcg_wasm_out_op_const(s, OPC_I64_CONST, (intptr_t)s->code_ptr);
- 
-     tcg_wasm_out_op_idx(s, OPC_CALL, func_idx);
-+    tcg_wasm_out_handle_unwinding(s);
- }
- 
- static void tcg_out_op_l(TCGContext *s, TCGOpcode op, TCGLabel *l0)
-@@ -2264,6 +2305,9 @@ static const uint8_t mod_1[] = {
-     0x60,                         /* 0: Type of "start" function */
-     0x01, PTR_TYPE,               /* arg: ctx pointer */
-     0x01, PTR_TYPE,               /* return: res */
-+    0x60,                         /* 1: Type of the asyncify helper */
-+    0x0,                          /* no argument */
-+    0x01, 0x7f,                   /* return: res (i32) */
- };
- 
- #define MOD_1_PH_TYPE_SECTION_SIZE_OFF 9
-@@ -2289,6 +2333,9 @@ static const uint8_t mod_2[] = {
-     0x02, 0x07,                               /* shared mem(64bit) */
-     0x00, 0x80, 0x80, 0x10,                   /* min: 0, max: 262144 pages */
- #endif
-+    0x06, 0x68, 0x65, 0x6c, 0x70, 0x65, 0x72, /* module: "helper" */
-+    0x01, 0x75,                               /* name: "u" */
-+    0x00, 0x01,                               /* func type 1 */
- };
- 
- #define MOD_2_PH_IMPORT_SECTION_SIZE_OFF 1
-@@ -2427,8 +2474,17 @@ static void tcg_out_tb_start(TCGContext *s)
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(TCG_REG_CALL_STACK));
-     tcg_wasm_out_op(s, OPC_END);
- 
-+    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(do_init));
-+    tcg_wasm_out_op_ldst(s, OPC_I32_LOAD, 0, ofs);
-+    tcg_wasm_out_op_const(s, OPC_I32_CONST, 0);
-+    tcg_wasm_out_op(s, OPC_I32_NE);
-+    tcg_wasm_out_op_block(s, OPC_IF, BLOCK_NORET);
-     tcg_wasm_out_op_const(s, OPC_I64_CONST, 0);
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(do_init));
-+    tcg_wasm_out_op_const(s, OPC_I32_CONST, 0);
-+    tcg_wasm_out_op_ldst(s, OPC_I32_STORE, 0, ofs);
-+    tcg_wasm_out_op(s, OPC_END);
- 
-     tcg_wasm_out_op_block(s, OPC_LOOP, BLOCK_NORET);
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, BLOCK_IDX);
--- 
-2.43.0
+Thanks,
+Laurent
 
 
