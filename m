@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A98FDCA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1871ECA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usxgh-00039F-S2; Mon, 01 Sep 2025 02:06:43 -0400
+	id 1usxh2-0003Ev-Go; Mon, 01 Sep 2025 02:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <fm-294854-2025090105563076d4b775c70002070e-hZtRxR@rts-flowmailer.siemens.com>)
- id 1usxge-00037s-Pd
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:06:40 -0400
-Received: from mta-64-226.siemens.flowmailer.net ([185.136.64.226])
+ <fm-294854-20250901055632cede844f5a0002073b-YU_t0N@rts-flowmailer.siemens.com>)
+ id 1usxgj-0003As-Ia
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:06:47 -0400
+Received: from mta-65-226.siemens.flowmailer.net ([185.136.65.226])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <fm-294854-2025090105563076d4b775c70002070e-hZtRxR@rts-flowmailer.siemens.com>)
- id 1usxgc-0001x1-3a
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:06:40 -0400
-Received: by mta-64-226.siemens.flowmailer.net with ESMTPSA id
- 2025090105563076d4b775c70002070e for <qemu-devel@nongnu.org>;
- Mon, 01 Sep 2025 07:56:31 +0200
+ <fm-294854-20250901055632cede844f5a0002073b-YU_t0N@rts-flowmailer.siemens.com>)
+ id 1usxgh-0001wz-MD
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:06:45 -0400
+Received: by mta-65-226.siemens.flowmailer.net with ESMTPSA id
+ 20250901055632cede844f5a0002073b for <qemu-devel@nongnu.org>;
+ Mon, 01 Sep 2025 07:56:32 +0200
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm1;
  d=siemens.com; i=jan.kiszka@siemens.com;
  h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
- bh=e3EQT5gyoHqhFMBmKwgqxpylfFDp3FV32G6zJWOQZUw=;
- b=avRtqdbv3M3zIVPaD3/VK73aonDaIC0V080MrB6BbGpXi40U8rE9DuS1wo8KHryj074eVM
- Szt1yNaccN97Ys4ZCeaTHsTTIcoG8/0MtMNKBKdZEhFsesMyIVu66pVhhj7ppX6nPTq6zt+d
- Hw3xaz23j0/EVhxXhFhWiLWkSGmyF4ETK+q6ZXjXts14jI2MqiaYso/qkK0hbm0ONrbFDzIY
- sqz0ELrMlPZYJ/6F3N8hdQEKOrieo+BZvKlNXnsGk1cEKX0Sgho4hKC0vXkCpXG+XIY8H6q6
- mTV//j4zHwdE8sgS4uWKwOwn0tY6piPp/vMUXKt2pHiIbX0OXcZPsfIA==;
+ bh=V7KQGpWQzVrtiZ9vdXHJDLfedwP9JL7CMRLSHWdlRrg=;
+ b=l0SgWqC9rRrMK5y7O6OEt0dzaNy4nx/WOB1aze+72ngnBt+LYxc+IwdBK/spajZB4meyCa
+ rMOBVFXacvU9bxXwIhCr9kn+QFPv4ugZFsvwy3TmClp47iX+WbjvcVzj59PwPH25X86Wgg8A
+ I+zoFy3MwIq1Eximpy7wbgay0SkBYm/jOdZRyhmKVCFuOm9bk37KP5VbAaNEo2joXRku2FIq
+ a4uEh7NorPNKIPA91FRWgFFLX9ZjbydQek9KccQ/E39liWhrP5z2jK4n5L8DnBWd+CP2ExNY
+ tRjGE45ZlkLCjyrf2uPaGpT6RJMFIm1Y5eeunOBGjY4lSicRROW6uifA==;
 From: Jan Kiszka <jan.kiszka@siemens.com>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Subject: [PATCH v2 4/8] hw/sd/sdcard: Refactor sd_bootpart_offset
-Date: Mon,  1 Sep 2025 07:56:24 +0200
-Message-ID: <66e9b07476aad61820c4f42f4f984cc90752ba5e.1756706188.git.jan.kiszka@siemens.com>
+Subject: [PATCH v2 7/8] hw/sd/sdcard: Handle RPMB MAC field
+Date: Mon,  1 Sep 2025 07:56:27 +0200
+Message-ID: <ee58b08ed4030f33c45b5bdc81f1feafd7ef2a78.1756706188.git.jan.kiszka@siemens.com>
 In-Reply-To: <cover.1756706188.git.jan.kiszka@siemens.com>
 References: <cover.1756706188.git.jan.kiszka@siemens.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Flowmailer-Platform: Siemens
 Feedback-ID: 519:519-294854:519-21489:flowmailer
-Received-SPF: pass client-ip=185.136.64.226;
- envelope-from=fm-294854-2025090105563076d4b775c70002070e-hZtRxR@rts-flowmailer.siemens.com;
- helo=mta-64-226.siemens.flowmailer.net
+Received-SPF: pass client-ip=185.136.65.226;
+ envelope-from=fm-294854-20250901055632cede844f5a0002073b-YU_t0N@rts-flowmailer.siemens.com;
+ helo=mta-65-226.siemens.flowmailer.net
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
@@ -59,7 +58,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,87 +76,151 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jan Kiszka <jan.kiszka@siemens.com>
 
-This function provides the offset for any partition in the block image,
-not only the boot partitions, therefore rename it. Align the constant
-names with the numbering scheme in the standard and use constants for
-both boot partitions for consistency reasons. There is also no reason to
-return early if boot_part_size is zero because the existing code will
-provide the right value in that case as well.
+Implement correct setting of the MAC field when passing RPMB frames back
+to the guest. Also check the MAC on authenticated write requests.
+
+This depends on HMAC support for QCRYPTO_HASH_ALGO_SHA256 which is
+always available via glib - assert this, just to be safe.
 
 Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c             | 16 ++++++++--------
- hw/sd/sdmmc-internal.h |  3 ++-
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ hw/sd/sd.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 8a4f58295b..b727a37d06 100644
+index 7b4a48f822..7ac73b8afa 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -838,14 +838,14 @@ static uint32_t sd_blk_len(SDState *sd)
+@@ -51,6 +51,7 @@
+ #include "qemu/module.h"
+ #include "sdmmc-internal.h"
+ #include "trace.h"
++#include "crypto/hmac.h"
  
- /*
-  * This requires a disk image that has two boot partitions inserted at the
-- * beginning of it. The size of the boot partitions is the "boot-size"
-- * property.
-+ * beginning of it, followed by an RPMB partition. The size of the boot
-+ * partitions is the "boot-partition-size" property.
-  */
--static uint32_t sd_bootpart_offset(SDState *sd)
-+static uint32_t sd_part_offset(SDState *sd)
- {
-     unsigned partition_access;
+ //#define DEBUG_SD 1
  
--    if (!sd->boot_part_size || !sd_is_emmc(sd)) {
-+    if (!sd_is_emmc(sd)) {
-         return 0;
+@@ -118,6 +119,7 @@ typedef struct SDProto {
+ } SDProto;
+ 
+ #define RPMB_KEY_MAC_LEN    32
++#define RPMB_HASH_LEN       284
+ 
+ typedef struct {
+     uint8_t stuff_bytes[196];
+@@ -1125,6 +1127,66 @@ static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
      }
+ }
  
-@@ -854,9 +854,9 @@ static uint32_t sd_bootpart_offset(SDState *sd)
-     switch (partition_access) {
-     case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
-         return sd->boot_part_size * 2;
--    case EXT_CSD_PART_CONFIG_ACC_BOOT0:
-+    case EXT_CSD_PART_CONFIG_ACC_BOOT1:
-         return 0;
--    case EXT_CSD_PART_CONFIG_ACC_BOOT0 + 1:
-+    case EXT_CSD_PART_CONFIG_ACC_BOOT2:
-         return sd->boot_part_size * 1;
-     default:
-          g_assert_not_reached();
-@@ -1057,7 +1057,7 @@ static const VMStateDescription sd_vmstate = {
- static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
++static bool rpmb_calc_hmac(SDState *sd, RPMBDataFrame *frame,
++                           unsigned int num_blocks, uint8_t *mac)
++{
++    size_t mac_len = RPMB_KEY_MAC_LEN;
++    bool success = true;
++    Error *err = NULL;
++    QCryptoHmac *hmac;
++    uint64_t addr;
++
++    hmac = qcrypto_hmac_new(QCRYPTO_HASH_ALGO_SHA256, sd->rpmb_key,
++                            RPMB_KEY_MAC_LEN, &err);
++    if (!hmac) {
++        error_report_err(err);
++        return false;
++    }
++
++    /*
++     * This implies a read request because we only support single-block write
++     * requests so far.
++     */
++    if (num_blocks > 1) {
++        /*
++         * Unfortunately, the underlying crypto libraries do not allow us to
++         * migrate an active QCryptoHmac state. Therefore, we have to calculate
++         * the HMAC in one run. To avoid buffering a complete read sequence in
++         * SDState, reconstruct all frames except for the last one.
++         */
++        char *buf = (char *)sd->data;
++
++        memcpy(buf, frame->data, RPMB_HASH_LEN);
++        addr = be16_to_cpu(frame->address) * 256 + sd_part_offset(sd);
++        do {
++            if (blk_pread(sd->blk, addr, 256, buf, 0) < 0) {
++                fprintf(stderr, "sd_blk_read: read error on host side\n");
++                success = false;
++                break;
++            }
++            if (qcrypto_hmac_bytes(hmac, buf, RPMB_HASH_LEN, NULL, NULL,
++                                   &err) < 0) {
++                error_report_err(err);
++                success = false;
++                break;
++            }
++            addr += 256;
++        } while (--num_blocks > 1);
++    }
++
++    if (success &&
++        qcrypto_hmac_bytes(hmac, (const char*)frame->data, RPMB_HASH_LEN, &mac,
++                           &mac_len, &err) < 0) {
++        error_report_err(err);
++        success = false;
++    }
++    assert(!success || mac_len == RPMB_KEY_MAC_LEN);
++
++    qcrypto_hmac_free(hmac);
++
++    return success;
++}
++
+ static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
  {
-     trace_sdcard_read_block(addr, len);
--    addr += sd_bootpart_offset(sd);
-+    addr += sd_part_offset(sd);
-     if (!sd->blk || blk_pread(sd->blk, addr, len, sd->data, 0) < 0) {
-         fprintf(stderr, "sd_blk_read: read error on host side\n");
+     uint16_t resp = be16_to_cpu(sd->rpmb_result.req_resp);
+@@ -1147,6 +1209,17 @@ static void emmc_rpmb_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+             sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_READ_FAILURE |
+                 (result & RPMB_RESULT_COUTER_EXPIRED));
+         }
++        if (sd->multi_blk_cnt == 1 &&
++            !rpmb_calc_hmac(sd, &sd->rpmb_result,
++                            be16_to_cpu(sd->rpmb_result.block_count),
++                            sd->rpmb_result.key_mac)) {
++            memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
++            sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
++        }
++    } else if (!rpmb_calc_hmac(sd, &sd->rpmb_result, 1,
++                               sd->rpmb_result.key_mac)) {
++        memset(sd->rpmb_result.data, 0, sizeof(sd->rpmb_result.data));
++        sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
      }
-@@ -1066,7 +1066,7 @@ static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
- static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
+     memcpy(sd->data, &sd->rpmb_result, sizeof(sd->rpmb_result));
+ 
+@@ -1158,6 +1231,7 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
  {
-     trace_sdcard_write_block(addr, len);
--    addr += sd_bootpart_offset(sd);
-+    addr += sd_part_offset(sd);
-     if (!sd->blk || blk_pwrite(sd->blk, addr, len, sd->data, 0) < 0) {
-         fprintf(stderr, "sd_blk_write: write error on host side\n");
-     }
-diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
-index 91eb5b6b2f..ce6bc4e6ec 100644
---- a/hw/sd/sdmmc-internal.h
-+++ b/hw/sd/sdmmc-internal.h
-@@ -116,7 +116,8 @@ DECLARE_OBJ_CHECKERS(SDState, SDCardClass, SDMMC_COMMON, TYPE_SDMMC_COMMON)
+     RPMBDataFrame *frame = (RPMBDataFrame *)sd->data;
+     uint16_t req = be16_to_cpu(frame->req_resp);
++    uint8_t mac[RPMB_KEY_MAC_LEN];
  
- #define EXT_CSD_PART_CONFIG_ACC_MASK            (0x7)
- #define EXT_CSD_PART_CONFIG_ACC_DEFAULT         (0x0)
--#define EXT_CSD_PART_CONFIG_ACC_BOOT0           (0x1)
-+#define EXT_CSD_PART_CONFIG_ACC_BOOT1           (0x1)
-+#define EXT_CSD_PART_CONFIG_ACC_BOOT2           (0x2)
+     if (req == RPMB_REQ_READ_RESULT) {
+         /* just return the current result register */
+@@ -1195,6 +1269,11 @@ static void emmc_rpmb_blk_write(SDState *sd, uint64_t addr, uint32_t len)
+             sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_WRITE_FAILURE);
+             break;
+         }
++        if (!rpmb_calc_hmac(sd, frame, 1, mac) ||
++            memcmp(frame->key_mac, mac, RPMB_KEY_MAC_LEN) != 0) {
++            sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_AUTH_FAILURE);
++            break;
++        }
+         if (be32_to_cpu(frame->write_counter) != sd->rpmb_write_counter) {
+             sd->rpmb_result.result = cpu_to_be16(RPMB_RESULT_COUNTER_FAILURE);
+             break;
+@@ -3100,6 +3179,8 @@ static void emmc_class_init(ObjectClass *klass, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
  
- #define EXT_CSD_PART_CONFIG_EN_MASK             (0x7 << 3)
- #define EXT_CSD_PART_CONFIG_EN_BOOT0            (0x1 << 3)
++    assert(qcrypto_hmac_supports(QCRYPTO_HASH_ALGO_SHA256));
++
+     dc->desc = "eMMC";
+     dc->realize = emmc_realize;
+     device_class_set_props(dc, emmc_properties);
 -- 
 2.43.0
 
