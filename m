@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C48C7CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7B6CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2eV-0000Lj-Ty; Mon, 01 Sep 2025 07:24:47 -0400
+	id 1ut2eV-0000KY-QI; Mon, 01 Sep 2025 07:24:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ut2eB-0000F1-VV
+ id 1ut2eC-0000F8-EX
  for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ut2e9-00065G-AJ
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:27 -0400
+ id 1ut2eA-00065k-Fw
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756725861;
+ s=mimecast20190719; t=1756725865;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Efo6+uvgkAvzw0I3vbA0P9FCri5WFXlT1OqOChk/mAY=;
- b=av9nLG5XFZbZPm4IVgGFlCRP6H/cLiy4gK+0aOvmbmWlymSVnPmdMV8VEjCzbU8GfNyIVI
- hriJojDvbd+nCegC9d5fCaOgCRbUFa1BdT6ADyxRuSuWi+iw06GlFr5S2HB9SZev2y8N5r
- ogqdXCuFGPzzTYmlk+H5UCSVkc+rwH8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=og6ymulh9UmaMSIescETQPevhxzm1aJMZFMSGR8zlFk=;
+ b=ahzJWL+w3cUsrLluLC85aODAh6f9S8vz9REheRpQGn6XP7l2LdyQW/2aoOMsiiqxctSaAp
+ iDCyOSv1d1Vs2xKzBb6zWP2uD1+VFfpmPtYW8a7diM3K314ZA0uTGkoOKF6iKDwL9ehueN
+ jxn58EZvNQvRCJt5Gl+V44uBl3lyw1g=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-YvHNjSgCPViIhrEEmhayCw-1; Mon,
- 01 Sep 2025 07:24:19 -0400
-X-MC-Unique: YvHNjSgCPViIhrEEmhayCw-1
-X-Mimecast-MFC-AGG-ID: YvHNjSgCPViIhrEEmhayCw_1756725858
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-yZ1Hsw8JPZGABBRb-SEpsQ-1; Mon,
+ 01 Sep 2025 07:24:22 -0400
+X-MC-Unique: yZ1Hsw8JPZGABBRb-SEpsQ-1
+X-Mimecast-MFC-AGG-ID: yZ1Hsw8JPZGABBRb-SEpsQ_1756725861
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A921F1800286; Mon,  1 Sep 2025 11:24:18 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 076C5180036E; Mon,  1 Sep 2025 11:24:21 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.80])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 963CF1800446; Mon,  1 Sep 2025 11:24:16 +0000 (UTC)
+ id 3391F1800446; Mon,  1 Sep 2025 11:24:18 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 0/9] Misc QGA fixes for 2025-08-29
-Date: Mon,  1 Sep 2025 14:24:04 +0300
-Message-ID: <20250901112413.114314-1-kkostiuk@redhat.com>
+Subject: [PULL v2 1/9] qga: Fix ubsan warning
+Date: Mon,  1 Sep 2025 14:24:05 +0300
+Message-ID: <20250901112413.114314-2-kkostiuk@redhat.com>
+In-Reply-To: <20250901112413.114314-1-kkostiuk@redhat.com>
+References: <20250901112413.114314-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,53 +85,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit e771ba98de25c9f43959f79fc7099cf7fbba44cc:
+From: Thomas Huth <thuth@redhat.com>
 
-  Open 10.2 development tree (2025-08-26 14:10:25 -0400)
+When compiling QEMU with --enable-ubsan there is a undefined behavior
+warning when running "make check":
 
-are available in the Git repository at:
+ .../qga/commands-linux.c:452:15: runtime error: applying non-zero offset 5 to null pointer
+ #0 0x55ea7b89450c in build_guest_fsinfo_for_pci_dev ..../qga/commands-linux.c:452:15
 
-  https://github.com/kostyanf14/qemu.git tags/qga-pull-2025-08-29-v2
+Fix it by avoiding the additional pointer variable here and use an
+"offset" integer variable instead.
 
-for you to fetch changes up to 28c5d27dd4dc4100a96ff4c9e5871dd23c6b02ec:
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250730072709.27077-1-thuth@redhat.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+---
+ qga/commands-linux.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-  qga: Fix truncated output handling in guest-exec status reporting (2025-09-01 14:02:18 +0300)
-
-----------------------------------------------------------------
-qga-pull-2025-08-29-v2
-
-
-v2 -> v1: Fix author of commit
-v1: https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg04615.html
-
-----------------------------------------------------------------
-Denis V. Lunev (1):
-      qga: fix potentially not initialized nr_volumes in qga_vss_fsfreeze()
-
-Kostiantyn Kostiuk (6):
-      qga-vss: Replace asserts with condition and report error
-      qga-vss: Remove unused dependencies
-      qga: Fix channel initialization check in run_agent_once
-      qga: ignore channel_init() fail if 'retry_path' is set
-      qga-vss: Write hex value of error in log
-      qga/installer: Remove QGA VSS if QGA installation failed
-
-Thomas Huth (1):
-      qga: Fix ubsan warning
-
-minglei.liu (1):
-      qga: Fix truncated output handling in guest-exec status reporting
-
- qga/commands-linux.c        | 10 +++++-----
- qga/commands.c              |  6 ++++--
- qga/installer/qemu-ga.wxs   | 23 +++++++++++++++++++++--
- qga/main.c                  | 10 +++++++---
- qga/vss-win32.c             |  2 ++
- qga/vss-win32/meson.build   |  4 +---
- qga/vss-win32/requester.cpp | 24 +++++++++++++++++++-----
- 7 files changed, 59 insertions(+), 20 deletions(-)
-
---
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 9dc0c82503..4a09ddc760 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -400,10 +400,10 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+                                            Error **errp)
+ {
+     unsigned int pci[4], host, hosts[8], tgt[3];
+-    int i, nhosts = 0, pcilen;
++    int i, offset, nhosts = 0, pcilen;
+     GuestPCIAddress *pciaddr = disk->pci_controller;
+     bool has_ata = false, has_host = false, has_tgt = false;
+-    char *p, *q, *driver = NULL;
++    char *p, *driver = NULL;
+     bool ret = false;
+ 
+     p = strstr(syspath, "/devices/pci");
+@@ -445,13 +445,13 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+ 
+     p = strstr(syspath, "/ata");
+     if (p) {
+-        q = p + 4;
++        offset = 4;
+         has_ata = true;
+     } else {
+         p = strstr(syspath, "/host");
+-        q = p + 5;
++        offset = 5;
+     }
+-    if (p && sscanf(q, "%u", &host) == 1) {
++    if (p && sscanf(p + offset, "%u", &host) == 1) {
+         has_host = true;
+         nhosts = build_hosts(syspath, p, has_ata, hosts,
+                              ARRAY_SIZE(hosts), errp);
+-- 
 2.50.1
 
 
