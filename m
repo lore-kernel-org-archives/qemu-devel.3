@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7EF6CA0FF0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB61ACA1000
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usxln-0000sx-26; Mon, 01 Sep 2025 02:11:59 -0400
+	id 1usxli-0000oB-PX; Mon, 01 Sep 2025 02:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1usxlb-0000ma-OQ; Mon, 01 Sep 2025 02:11:49 -0400
+ id 1usxlY-0000la-Un; Mon, 01 Sep 2025 02:11:45 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1usxlU-0002Yo-Hd; Mon, 01 Sep 2025 02:11:45 -0400
+ id 1usxlS-0002Z0-U5; Mon, 01 Sep 2025 02:11:43 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5816ACAY076640
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5816ACAa076640
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Mon, 1 Sep 2025 15:10:26 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=C011D3nEi4gnvkKvq30wWt2rhwDFSibnUsxSm7LxoTk=; 
+DKIM-Signature: a=rsa-sha256; bh=kn8Bqoxi+tjKwwRXg2cZTs8dYOv2Ly9ES2G+ar9juS0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1756707026; v=1;
- b=CAEusT5y0bOiKbVw3q4ZjWEq90nxtfCC7lzVg4XydDe66LXoS3+44DWc6snn+DRG
- jmgcMA/qUq3HcUYZ29OxczTsE221CLxhXELhKUJEfLrQuoZWuOiGRYyjHfJAs2g6
- dJY1ZgV8EDpk3APAPKlk4bfHIKRM5z716J7boYkPo6mT2HffyBD4ZfPJQQYwTVgG
- aZ2EORdks/x7LT440u09yPT7g+5isPXyY1IHJbb2PB2Bu6zCacSpQm/sL6pM4A90
- /9A3pEL348HXhCGWgAxStzaSfJkeS/4k7YwujDsaRxnyrNxScsa8jsAvrU/LpXvD
- TMRC4M7VItFyaRNrrBiYZg==
+ s=rs20250326; t=1756707027; v=1;
+ b=Y3kcLJ5oTnSlfTdMd3rOLQN2cfelr/S84HOh0mrETvGvKTv/Q5EyaXsuJP8WbWP2
+ io+vp/5ShC9Lj6NdIhfU9kDwE79ChBpMJtGarCnP0efdZeKU+ve6dCsUm3K9MebZ
+ LbiykgsKIewOozoW+ddKNdk4N+vAaVMXziEFZtm4aeD+AvepiEQq6OLh/jQpF+5G
+ hCjb2JeA/nemUb+Vv5iaKbEIyddmee/YDm3gSFDsE/JZ45zed0p/MhsydrORXYhP
+ NDim3u3te/Pa5AEXXO1NafqQ0Eifm0emL3KsOyKyALc1G/+cGSe4zy7UNzP/QRO9
+ zyUx+E7GdcXPDjDQYHBEHQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 01 Sep 2025 15:10:02 +0900
-Subject: [PATCH 04/16] hw/char/diva-gsp: Do not delete the subregion
+Date: Mon, 01 Sep 2025 15:10:04 +0900
+Subject: [PATCH 06/16] secondary-vga: Do not delete the subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250901-mr-v1-4-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250901-mr-v1-6-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -103,21 +103,28 @@ It is no longer necessary.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/char/diva-gsp.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/display/vga-pci.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
-index e1f0713cb794d0442c56935dfe56d784d96949f0..1ae472e879b53555d4751b6a4848354f81c27fee 100644
---- a/hw/char/diva-gsp.c
-+++ b/hw/char/diva-gsp.c
-@@ -63,7 +63,6 @@ static void diva_pci_exit(PCIDevice *dev)
-     for (i = 0; i < pci->ports; i++) {
-         s = pci->state + i;
-         qdev_unrealize(DEVICE(s));
--        memory_region_del_subregion(&pci->membar, &s->io);
-         g_free(pci->name[i]);
-     }
-     qemu_free_irqs(pci->irqs, pci->ports);
+diff --git a/hw/display/vga-pci.c b/hw/display/vga-pci.c
+index b81f7fd2d0fd11913e6b132897028ca490e74b95..90b4545d382135b109e3bbc880bb8fe1a4fc5275 100644
+--- a/hw/display/vga-pci.c
++++ b/hw/display/vga-pci.c
+@@ -307,14 +307,6 @@ static void pci_secondary_vga_exit(PCIDevice *dev)
+     VGACommonState *s = &d->vga;
+ 
+     graphic_console_close(s->con);
+-    memory_region_del_subregion(&d->mmio, &d->mrs[0]);
+-    memory_region_del_subregion(&d->mmio, &d->mrs[1]);
+-    if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_QEXT)) {
+-        memory_region_del_subregion(&d->mmio, &d->mrs[2]);
+-    }
+-    if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_EDID)) {
+-        memory_region_del_subregion(&d->mmio, &d->mrs[3]);
+-    }
+ }
+ 
+ static void pci_secondary_vga_init(Object *obj)
 
 -- 
 2.51.0
