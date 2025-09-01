@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16CECA1005
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 20:29:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A83CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 20:30:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utB7Y-00046X-5g; Mon, 01 Sep 2025 16:27:20 -0400
+	id 1utB9H-0005Jp-Qd; Mon, 01 Sep 2025 16:29:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utB7T-00045B-ST
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:27:15 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utB89-0004O3-Bf
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:28:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utB7R-0008Ko-Sj
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:27:15 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1utB86-0000E8-Rg
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:27:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756758433;
+ s=mimecast20190719; t=1756758474;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6RVpBkHk7NMO1lI1YYFOF4xP7A9ERIrBpsLNs7g8GsU=;
- b=HhhtTaEkC3eFZG/K301iBjAIdlWzND/skS6dH8chIt1Y4oZl59q9FbH4uak5cA5lcqXXn1
- klNqfuZeDFIClpC8ztGVA+e+O1eWyr9XhmMC/u4AMgSrvXiZZjf7+cnm11yliRn8detaQE
- sMeNCX2xBsVSI/wzpQ5NDX9GUdevi0c=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=redY3J6Go7FDZCUZVMBmRGiuKOFKplF9JXDgVj4SBW8=;
+ b=DGbLMlNgcOqGicWtisYbdflU9verBneUxBJENs10M/hq1fwKjBd2fDvGrJTFt1dKeDxyzH
+ MQDzOBDVFbnR0QsEVup618sVRvqaQaAFrMqAOFIfdtgcBROyK+zYScmjDD5fTzekVNforz
+ 5ddOtNUsFoZU0ezJry5njzdC0Y5C5eo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-DpHa3maeOJi28sETwRtInQ-1; Mon,
- 01 Sep 2025 16:27:10 -0400
-X-MC-Unique: DpHa3maeOJi28sETwRtInQ-1
-X-Mimecast-MFC-AGG-ID: DpHa3maeOJi28sETwRtInQ_1756758429
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-Yfl1PKl2NI2ep4y1pXwSXw-1; Mon,
+ 01 Sep 2025 16:27:50 -0400
+X-MC-Unique: Yfl1PKl2NI2ep4y1pXwSXw-1
+X-Mimecast-MFC-AGG-ID: Yfl1PKl2NI2ep4y1pXwSXw_1756758469
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FE131800561; Mon,  1 Sep 2025 20:27:09 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C004E180034B; Mon,  1 Sep 2025 20:27:49 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.85])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CBDF119560B4; Mon,  1 Sep 2025 20:27:07 +0000 (UTC)
+ id A6D8F19560AB; Mon,  1 Sep 2025 20:27:47 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
  =?UTF-8?q?Daniel=20Berrang=C3=A9?= <berrange@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH 01/19] python: backport 'Change error classes to have better
- repr methods'
-Date: Mon,  1 Sep 2025 16:26:43 -0400
-Message-ID: <20250901202702.2971212-2-jsnow@redhat.com>
+Subject: [PATCH 17/19] iotests/147: ensure temporary sockets are closed before
+ exiting
+Date: Mon,  1 Sep 2025 16:26:59 -0400
+Message-ID: <20250901202702.2971212-18-jsnow@redhat.com>
 In-Reply-To: <20250901202702.2971212-1-jsnow@redhat.com>
 References: <20250901202702.2971212-1-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
@@ -85,168 +86,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By passing all of the arguments to the base class and overriding the
-__str__ method when we want a different "human readable" message that
-isn't just printing the list of arguments, we can ensure that all custom
-error classes have a reasonable __repr__ implementation.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-In the case of ExecuteError, the pseudo-field that isn't actually
-correlated to an input argument can be re-imagined as a read-only
-property; this forces consistency in the class and makes the repr output
-more obviously correct.
+This avoids the python resource leak detector from issuing warnings
+in the iotests.
 
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
-cherry picked from commit afdb7893f3b34212da4259b7202973f9a8cb85b3
 ---
- python/qemu/qmp/error.py      |  7 +++++--
- python/qemu/qmp/message.py    | 12 ++++++------
- python/qemu/qmp/protocol.py   |  7 +++++--
- python/qemu/qmp/qmp_client.py | 20 +++++++++++++-------
- 4 files changed, 29 insertions(+), 17 deletions(-)
+ tests/qemu-iotests/147 | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/python/qemu/qmp/error.py b/python/qemu/qmp/error.py
-index 24ba4d50541..c87b078f620 100644
---- a/python/qemu/qmp/error.py
-+++ b/python/qemu/qmp/error.py
-@@ -44,7 +44,10 @@ class ProtocolError(QMPError):
+diff --git a/tests/qemu-iotests/147 b/tests/qemu-iotests/147
+index 6d6f077a14d..3e14bd389a4 100755
+--- a/tests/qemu-iotests/147
++++ b/tests/qemu-iotests/147
+@@ -277,6 +277,7 @@ class BuiltinNBD(NBDBlockdevAddBase):
+                      } }
+         self.client_test(filename, flatten_sock_addr(address), 'nbd-export')
  
-     :param error_message: Human-readable string describing the error.
-     """
--    def __init__(self, error_message: str):
--        super().__init__(error_message)
-+    def __init__(self, error_message: str, *args: object):
-+        super().__init__(error_message, *args)
-         #: Human-readable error message, without any prefix.
-         self.error_message: str = error_message
-+
-+    def __str__(self) -> str:
-+        return self.error_message
-diff --git a/python/qemu/qmp/message.py b/python/qemu/qmp/message.py
-index f76ccc90746..c2e9dd0dd54 100644
---- a/python/qemu/qmp/message.py
-+++ b/python/qemu/qmp/message.py
-@@ -178,15 +178,15 @@ class DeserializationError(ProtocolError):
-     :param raw: The raw `bytes` that prompted the failure.
-     """
-     def __init__(self, error_message: str, raw: bytes):
--        super().__init__(error_message)
-+        super().__init__(error_message, raw)
-         #: The raw `bytes` that were not understood as JSON.
-         self.raw: bytes = raw
++        sockfd.close()
+         self._server_down()
  
-     def __str__(self) -> str:
--        return "\n".join([
-+        return "\n".join((
-             super().__str__(),
-             f"  raw bytes were: {str(self.raw)}",
--        ])
-+        ))
- 
- 
- class UnexpectedTypeError(ProtocolError):
-@@ -197,13 +197,13 @@ class UnexpectedTypeError(ProtocolError):
-     :param value: The deserialized JSON value that wasn't an object.
-     """
-     def __init__(self, error_message: str, value: object):
--        super().__init__(error_message)
-+        super().__init__(error_message, value)
-         #: The JSON value that was expected to be an object.
-         self.value: object = value
- 
-     def __str__(self) -> str:
-         strval = json.dumps(self.value, indent=2)
--        return "\n".join([
-+        return "\n".join((
-             super().__str__(),
-             f"  json value was: {strval}",
--        ])
-+        ))
-diff --git a/python/qemu/qmp/protocol.py b/python/qemu/qmp/protocol.py
-index a4ffdfad51b..86e588881b7 100644
---- a/python/qemu/qmp/protocol.py
-+++ b/python/qemu/qmp/protocol.py
-@@ -80,7 +80,7 @@ class ConnectError(QMPError):
-     :param exc: The root-cause exception.
-     """
-     def __init__(self, error_message: str, exc: Exception):
--        super().__init__(error_message)
-+        super().__init__(error_message, exc)
-         #: Human-readable error string
-         self.error_message: str = error_message
-         #: Wrapped root cause exception
-@@ -108,11 +108,14 @@ class StateError(QMPError):
-     """
-     def __init__(self, error_message: str,
-                  state: Runstate, required: Runstate):
--        super().__init__(error_message)
-+        super().__init__(error_message, state, required)
-         self.error_message = error_message
-         self.state = state
-         self.required = required
- 
-+    def __str__(self) -> str:
-+        return self.error_message
-+
- 
- F = TypeVar('F', bound=Callable[..., Any])  # pylint: disable=invalid-name
- 
-diff --git a/python/qemu/qmp/qmp_client.py b/python/qemu/qmp/qmp_client.py
-index 2a817f9db33..a87fb565ab5 100644
---- a/python/qemu/qmp/qmp_client.py
-+++ b/python/qemu/qmp/qmp_client.py
-@@ -41,7 +41,7 @@ class _WrappedProtocolError(ProtocolError):
-     :param exc: The root-cause exception.
-     """
-     def __init__(self, error_message: str, exc: Exception):
--        super().__init__(error_message)
-+        super().__init__(error_message, exc)
-         self.exc = exc
- 
-     def __str__(self) -> str:
-@@ -76,15 +76,21 @@ class ExecuteError(QMPError):
-     """
-     def __init__(self, error_response: ErrorResponse,
-                  sent: Message, received: Message):
--        super().__init__(error_response.error.desc)
-+        super().__init__(error_response, sent, received)
-         #: The sent `Message` that caused the failure
-         self.sent: Message = sent
-         #: The received `Message` that indicated failure
-         self.received: Message = received
-         #: The parsed error response
-         self.error: ErrorResponse = error_response
--        #: The QMP error class
--        self.error_class: str = error_response.error.class_
-+
-+    @property
-+    def error_class(self) -> str:
-+        """The QMP error class"""
-+        return self.error.error.class_
-+
-+    def __str__(self) -> str:
-+        return self.error.error.desc
- 
- 
- class ExecInterruptedError(QMPError):
-@@ -110,8 +116,8 @@ class _MsgProtocolError(ProtocolError):
-     :param error_message: Human-readable string describing the error.
-     :param msg: The QMP `Message` that caused the error.
-     """
--    def __init__(self, error_message: str, msg: Message):
--        super().__init__(error_message)
-+    def __init__(self, error_message: str, msg: Message, *args: object):
-+        super().__init__(error_message, msg, *args)
-         #: The received `Message` that caused the error.
-         self.msg: Message = msg
- 
-@@ -150,7 +156,7 @@ class BadReplyError(_MsgProtocolError):
-     :param sent: The message that was sent that prompted the error.
-     """
-     def __init__(self, error_message: str, msg: Message, sent: Message):
--        super().__init__(error_message, msg)
-+        super().__init__(error_message, msg, sent)
-         #: The sent `Message` that caused the failure
-         self.sent = sent
  
 -- 
 2.50.1
