@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 602BCCA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C80D3CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2wr-0004g0-Fd; Mon, 01 Sep 2025 07:43:45 -0400
+	id 1ut2x2-0004oq-Sw; Mon, 01 Sep 2025 07:43:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2wS-0004dc-Qs
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:43:22 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2x0-0004oB-2O
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:43:55 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2wL-0000rx-UN
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:43:19 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-45b8b7ac427so5736185e9.2
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:43:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2wm-0000uO-Qr
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:43:52 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3cbb0df3981so2070168f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:43:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756726987; x=1757331787; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756727017; x=1757331817; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oVThE2XUo6tz00UlNsDBLX50+YpEuFe1vy5czFvQ3wM=;
- b=MfHDxwMEcimZvf1qNhBMIzyrpoPIKiG6FgNltsfn9b4TFhFkRCfiU5+uTwADUmna/E
- YRdR1KMGrKLun2fKqYUWBgyb66zUgzw3LZe8NytM4AvegAirwiXfCGBhiJAwX7hkRdHY
- 8tvFymu5TWkWg7MQdYd4CN83llnh110PemFcr81bI8+4D3/i1ZDDohahwpqanRyYu4vw
- lLQ6uOc5O9HiyfppdWfyVvONlVwTPTneTrzGOcbtY65gBemrEGHjXn/lmgaSOgjRNdKt
- INn4NYT8U2fhe5SFP/jqi/t3CsTjb3JXRejfp0fgAH2IGnzmfsck7WBNm5r8Usz6qNiC
- hUxw==
+ bh=5vPB+uCTKThjbxVRwS6EBkKN4EVWXWVAmW/EtGN84nA=;
+ b=b34E414x6K35s60RLm68oppDfMmx0MWa8lFb3DKryP2lRAN8QatRLz3Yb4G1fHqnte
+ 0yJB4njtB6hwtaxgfllT44ierrDjE7CEMTnI22FFTnlhAtUsRoDZSvjPVuWnB619QDIP
+ 8oy3cufhNI9nD/mQzy6z4tSzcUdC02Ex62bHfhbOuv1qzYpGadeToCcnnuC8WzK7osaw
+ L6lWmSBdzJMDIiCcBj01a5h5Lzpw6t70wsjVtycRz6JU8vnk1HRzFdjiZy1OuJ92V5QE
+ qNPKu1rpmU1jvfkT+RJ9Xn8pOmoyGzszUCgbJbcJGC5eDvzUiXG4ZSeU9sIkhOQSTsIG
+ wT5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756726987; x=1757331787;
+ d=1e100.net; s=20230601; t=1756727017; x=1757331817;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oVThE2XUo6tz00UlNsDBLX50+YpEuFe1vy5czFvQ3wM=;
- b=VOltvQOGjG1whZ6X4ibawNHTInkSHw9Fqly6sH/fWcTXGo8IcvwFPPLj1OUibzJKkE
- UR1t42+rZDpurA9UdsYpWVcZhyd2OKPIG+OHZ87MtMyIQYSjyqSOsdUw8J5RC71gOEmD
- eQN8/4w0J7b0MMh2EGig7Q/evuJy3yqYz2hVZoRBA38qDEM1dodmf6E64hTiQG53H7t/
- bpvAqN1+TRnc8aVkKoG5uvwyCJ4emKAVZTU1BN8P4bILTZjiiOi4ZTAYuCRR99MR02vr
- qFxOyHeBaxxs40refAFK+WKisTD28uq4uAXG+Ta9SvO9HzDfi8MGcseGmv9zixGoj0vc
- ZIvg==
-X-Gm-Message-State: AOJu0YzQWaan75O0N2gLaE5aAMR9okbBDzHHPtBXOw/KzMMEeBD/ADiu
- yDYOB21kI76UpKC2Feffduitk91MvRfdQBG3IlesCJjjsuQauRp8N74gUmcg9RAIJMtJDj2L2UL
- jHafm
-X-Gm-Gg: ASbGncubeMgVhdKy+/HRhPvg8Bps6fpy4Eke2RSayoQYm+TgpGTovTG/le0pbm40Am5
- oAud2Axw5TCfxURTrx5eJEOsPA8mQgFtbMEyYh8D6MnsFMkRSsv/7qdTDC5xKn3GMi6T0G12Hj2
- QGsn9l3X/00+1AUANL5qXlZKtUgrlzCa1S87ew5QHddovxUY7vjKxUxL7LlHdC8V8D5Fi+VWLJ/
- d7+eGItUGAz0kOMYICTqhe2UGKbc+2XrP7X0rdE/QHZ/zSz6xrhtvRlzW7bUqWkwJ9m7caI6UxH
- uPCK94QqORje7AcaYfQrhBHQErOqb5RMfX0o3H5kDj4KgtI1qlOyrmQVIKWGXSm0i8izw8JsRsO
- rLjLiH5MJZKZpyH8sGa3amhfJ34cAkT38XQNhcdKhnoJq0yA0wbFr2SC29V8aQuQDpt0OqMs=
-X-Google-Smtp-Source: AGHT+IENMSEk96L/dr228kTneNm2ciEtV71vLYDWyiJBPsE71ZaXiWJ5luM9QUHCV6RebrMKv4JbjA==
-X-Received: by 2002:a05:600c:1c15:b0:456:1514:5b04 with SMTP id
- 5b1f17b1804b1-45b9353e825mr95285e9.21.1756726987450; 
- Mon, 01 Sep 2025 04:43:07 -0700 (PDT)
+ bh=5vPB+uCTKThjbxVRwS6EBkKN4EVWXWVAmW/EtGN84nA=;
+ b=v96q0rh4G7nOALQiFghwl8W5qn8dzSObvt2J1X1guVaVNVA/5SiQg4SJWEKa7K7UVS
+ GOHqdVkvIKkMuq2FPZorsy/EyHH6Pz6yAUW/2VHKEgYV3SPT2PpZEJQJM6mUhLNQQZ1L
+ EqvNIlUsx8CG4DkV1TD64BeYSSMokLtROG1t9/mgdNP9iYegvnpGRTQhE12hU2qN7s9D
+ FbjYOy7aKLfrub4DapFbqC0cJkWIjDVOuUWakJf7g5NvshNrfDjSdmv57LjDTMT3uwne
+ pAPmoVVSiOZCom4OTcXVCiw9JtjT2+UQxiFsQCLz/uJXd23aAHu74+rgK/UMHygFEI9R
+ thqw==
+X-Gm-Message-State: AOJu0YzlXWF6r3Ki6oHRRUtvXI1Sv2TEll3YLLvMHEh3CSyiuivlhR4m
+ PZDGdBHLOZ0mN2s6Yg+Ae1wZKXRZNnbPpLoSkCqBboAVA9VcDFHszqxxetTIpIau77bWOh5h3Fx
+ cCJWT
+X-Gm-Gg: ASbGnctpTkKCKjcgxx6sAeR6QSMBdZkP6E1/CshsvWLmnaSixPfc4uZY7r8YaT5Mcwy
+ 4RxqYIr5B1VO16I1qXzAfI5YtT+zKu1qCKS2jLCRTUx5Eb0HmZ1VqKLqolHLmQDijZlJHTwYUk6
+ kTAedZNlLuiPINMWRYlnGnp5Z+sTr6EfhsXCdyGn205o8nZQNB2C+kJIDmEL08hSKrqaN7gb++K
+ +3zcURdc2CEu2y6jBWwoSTR2/xjO/QEU3gGADdRgswIaM6yFInnqlhd1ntyLs+ecCfxGa7q/Nl0
+ QobNimd+KnA7aau/vP11/BdWu0xGn0SDE0Sd/hLdEYAK5PElBC2i3l+/VXXbNQlSMOpejzWaz/j
+ 3Pi/nydOmzwyGrm8vu5AegY7ZjIFfj6MI7cx/lYCxsgAZJfEMu4/mOipKxURlZwmHmxDaWQBzuq
+ 2J7jVojA==
+X-Google-Smtp-Source: AGHT+IHlM/Gsho8UTdqV3Lsm22622Je7DAcSmwzcsS1qdNLadVIEWRZscv5hwTKaTqphfdpxgLjCsg==
+X-Received: by 2002:a05:6000:2410:b0:3d8:e1de:7e4f with SMTP id
+ ffacd0b85a97d-3d8e1edc849mr392142f8f.21.1756727017281; 
+ Mon, 01 Sep 2025 04:43:37 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7e50e30asm154949815e9.24.2025.09.01.04.43.06
+ 5b1f17b1804b1-45b85090262sm104205435e9.17.2025.09.01.04.43.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 04:43:06 -0700 (PDT)
-Message-ID: <182ab8f4-c1c3-4228-b715-c8b0344c5a93@linaro.org>
-Date: Mon, 1 Sep 2025 13:43:06 +0200
+ Mon, 01 Sep 2025 04:43:36 -0700 (PDT)
+Message-ID: <fbba47d4-09af-4719-9cf0-c660c129739f@linaro.org>
+Date: Mon, 1 Sep 2025 13:43:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/rtc: Silent overflow in qemu_timedate_diff()
+Subject: Re: [PATCH] hw/scsi/mptsas: Avoid silent integer truncation in
+ MPI_FUNC_IOC_INIT
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250811100823.94105-1-philmd@linaro.org>
+Cc: Don Slutz <don.slutz@gmail.com>, Fam Zheng <fam@euphon.net>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+References: <20250811095550.93655-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250811100823.94105-1-philmd@linaro.org>
+In-Reply-To: <20250811095550.93655-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,42 +106,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 ping?
 
-On 11/8/25 12:08, Philippe Mathieu-Daudé wrote:
-> Per ctime(3) man-page:
+On 11/8/25 11:55, Philippe Mathieu-Daudé wrote:
+> For the MaxDevices 8-bit field of the request / response structures
+> of the MPI_FUNCTION_IOC_INIT command, the 0x00 value means "max 256
+> devices". This is not a problem because when max_devices=256, its
+> value (0x100), being casted to a uint8_t, is truncated to 0x00.
+> However Coverity complains for an "Overflowed constant". Fix by
+> re-using the request fields in the response, since they are not
+> modified and use the same types.
 > 
->    A negative value for tm_isdst causes the mktime() function to
->    attempt to divine whether summer time is in effect for the
->    specified time.  The tm_isdst and tm_gmtoff members are forced
->    to zero by timegm().
-> 
->    The mktime() function returns the specified calendar time; if
->    the calendar time cannot be represented, it returns -1;
-> 
-> Coverity reports (CID 1547724 Overflowed return value) the
-> qemu_timedate_diff() method doesn't handle this error path.
-> 
-> Since this method was added in commit f650305967f ("Unify RTCs
-> that use host time, fix M48t59 alarm") in 2008, and there is no
-> open issue related to it, keep ignoring this unlikely case, but
-> add an assertion to make Coverity happy.
-> 
-> Fixes: CID 1547724
+> Fix: Coverity 1547736 (Overflowed constant)
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   system/rtc.c | 1 +
->   1 file changed, 1 insertion(+)
+>   hw/scsi/mptsas.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> diff --git a/system/rtc.c b/system/rtc.c
-> index 56951288c40..070b99fe6ad 100644
-> --- a/system/rtc.c
-> +++ b/system/rtc.c
-> @@ -98,6 +98,7 @@ time_t qemu_timedate_diff(struct tm *tm)
->           struct tm tmp = *tm;
->           tmp.tm_isdst = -1; /* use timezone to figure it out */
->           seconds = mktime(&tmp);
-> +        assert(seconds >= 0);
->           break;
+> diff --git a/hw/scsi/mptsas.c b/hw/scsi/mptsas.c
+> index 1ebe0b82a79..4ada35b7ec8 100644
+> --- a/hw/scsi/mptsas.c
+> +++ b/hw/scsi/mptsas.c
+> @@ -579,11 +579,11 @@ static void mptsas_process_ioc_init(MPTSASState *s, MPIMsgIOCInit *req)
 >       }
->       default:
+>   
+>       memset(&reply, 0, sizeof(reply));
+> -    reply.WhoInit    = s->who_init;
+> +    reply.WhoInit    = req->WhoInit;
+>       reply.MsgLength  = sizeof(reply) / 4;
+>       reply.Function   = req->Function;
+> -    reply.MaxDevices = s->max_devices;
+> -    reply.MaxBuses   = s->max_buses;
+> +    reply.MaxDevices = req->MaxDevices;
+> +    reply.MaxBuses   = req->MaxBuses;
+>       reply.MsgContext = req->MsgContext;
+>   
+>       mptsas_fix_ioc_init_reply_endianness(&reply);
 
 
