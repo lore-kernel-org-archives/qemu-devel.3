@@ -4,60 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E9ACA1002
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C48C7CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2eM-0000HM-T5; Mon, 01 Sep 2025 07:24:40 -0400
+	id 1ut2eV-0000Lj-Ty; Mon, 01 Sep 2025 07:24:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ut2eD-0000FG-Nw
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:32 -0400
+ id 1ut2eB-0000F1-VV
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ut2eA-00065u-S4
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:29 -0400
+ id 1ut2e9-00065G-AJ
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756725865;
+ s=mimecast20190719; t=1756725861;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ujlFs9aXcF9f/wxxVzM/Vww2KayqUQ2rRaBGwtYJtpc=;
- b=bO04Oy+QeaWpgFc9JESC2Fo1chxjP0N9TppfWMBO4UKAusVoy/0wSrziWpepoKTtHqmdjO
- 8sETBWrpdTOkSGB/RDP1Sp5/vG0H9QKe9ciQ+/Geg4J2gIm4ttNV6behNvTfR7Tk7PSVm2
- 2FYQaS4jIOy4AJ4hg2YGwgx5u+uQkms=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Efo6+uvgkAvzw0I3vbA0P9FCri5WFXlT1OqOChk/mAY=;
+ b=av9nLG5XFZbZPm4IVgGFlCRP6H/cLiy4gK+0aOvmbmWlymSVnPmdMV8VEjCzbU8GfNyIVI
+ hriJojDvbd+nCegC9d5fCaOgCRbUFa1BdT6ADyxRuSuWi+iw06GlFr5S2HB9SZev2y8N5r
+ ogqdXCuFGPzzTYmlk+H5UCSVkc+rwH8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-GlFzNgjvNuy4_wXpUhZI4Q-1; Mon,
- 01 Sep 2025 07:24:24 -0400
-X-MC-Unique: GlFzNgjvNuy4_wXpUhZI4Q-1
-X-Mimecast-MFC-AGG-ID: GlFzNgjvNuy4_wXpUhZI4Q_1756725863
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-YvHNjSgCPViIhrEEmhayCw-1; Mon,
+ 01 Sep 2025 07:24:19 -0400
+X-MC-Unique: YvHNjSgCPViIhrEEmhayCw-1
+X-Mimecast-MFC-AGG-ID: YvHNjSgCPViIhrEEmhayCw_1756725858
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 37DD3195609D; Mon,  1 Sep 2025 11:24:23 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A921F1800286; Mon,  1 Sep 2025 11:24:18 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.80])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 952CE180029C; Mon,  1 Sep 2025 11:24:21 +0000 (UTC)
+ id 963CF1800446; Mon,  1 Sep 2025 11:24:16 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 2/9] qga: fix potentially not initialized nr_volumes in
- qga_vss_fsfreeze()
-Date: Mon,  1 Sep 2025 14:24:06 +0300
-Message-ID: <20250901112413.114314-3-kkostiuk@redhat.com>
-In-Reply-To: <20250901112413.114314-1-kkostiuk@redhat.com>
-References: <20250901112413.114314-1-kkostiuk@redhat.com>
+Subject: [PULL v2 0/9] Misc QGA fixes for 2025-08-29
+Date: Mon,  1 Sep 2025 14:24:04 +0300
+Message-ID: <20250901112413.114314-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
@@ -85,58 +82,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+The following changes since commit e771ba98de25c9f43959f79fc7099cf7fbba44cc:
 
-In this function we could have this variable not initialized. If this
-could be acceptable on error, the variable could be left not initialized
-f.e. as follows:
+  Open 10.2 development tree (2025-08-26 14:10:25 -0400)
 
-void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
-{
-    ...
-    if (mountpoints) {
-        ...
-        if (num_mount_points == 0) {
-            /* If there is no valid mount points, just exit. */
-            goto out;
-        }
-    }
-    ...
-    if (!mountpoints) {
-        ...
-        if (num_fixed_drives == 0) {
-            goto out; /* If there is no fixed drive, just exit. */
-        }
-    }
-    ...
-}
+are available in the Git repository at:
 
-Stay on safe side, initialize the variable at the beginning.
+  https://github.com/kostyanf14/qemu.git tags/qga-pull-2025-08-29-v2
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-CC: Michael Roth <michael.roth@amd.com>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250807133221.1135453-1-den@openvz.org
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
----
- qga/vss-win32.c | 2 ++
- 1 file changed, 2 insertions(+)
+for you to fetch changes up to 28c5d27dd4dc4100a96ff4c9e5871dd23c6b02ec:
 
-diff --git a/qga/vss-win32.c b/qga/vss-win32.c
-index f444a25a70..b272bfc782 100644
---- a/qga/vss-win32.c
-+++ b/qga/vss-win32.c
-@@ -157,6 +157,8 @@ void qga_vss_fsfreeze(int *nr_volume, bool freeze,
-         .errp = errp,
-     };
- 
-+    *nr_volume = 0;
-+
-     g_assert(errp);             /* requester.cpp requires it */
-     func = (QGAVSSRequesterFunc)GetProcAddress(provider_lib, func_name);
-     if (!func) {
--- 
+  qga: Fix truncated output handling in guest-exec status reporting (2025-09-01 14:02:18 +0300)
+
+----------------------------------------------------------------
+qga-pull-2025-08-29-v2
+
+
+v2 -> v1: Fix author of commit
+v1: https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg04615.html
+
+----------------------------------------------------------------
+Denis V. Lunev (1):
+      qga: fix potentially not initialized nr_volumes in qga_vss_fsfreeze()
+
+Kostiantyn Kostiuk (6):
+      qga-vss: Replace asserts with condition and report error
+      qga-vss: Remove unused dependencies
+      qga: Fix channel initialization check in run_agent_once
+      qga: ignore channel_init() fail if 'retry_path' is set
+      qga-vss: Write hex value of error in log
+      qga/installer: Remove QGA VSS if QGA installation failed
+
+Thomas Huth (1):
+      qga: Fix ubsan warning
+
+minglei.liu (1):
+      qga: Fix truncated output handling in guest-exec status reporting
+
+ qga/commands-linux.c        | 10 +++++-----
+ qga/commands.c              |  6 ++++--
+ qga/installer/qemu-ga.wxs   | 23 +++++++++++++++++++++--
+ qga/main.c                  | 10 +++++++---
+ qga/vss-win32.c             |  2 ++
+ qga/vss-win32/meson.build   |  4 +---
+ qga/vss-win32/requester.cpp | 24 +++++++++++++++++++-----
+ 7 files changed, 59 insertions(+), 20 deletions(-)
+
+--
 2.50.1
 
 
