@@ -4,59 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E011CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C980ACA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2eW-0000MK-F9; Mon, 01 Sep 2025 07:24:48 -0400
+	id 1ut2eZ-0000OY-Pc; Mon, 01 Sep 2025 07:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ut2eP-0000Iw-Al
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:44 -0400
+ id 1ut2eT-0000KQ-DT
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ut2eJ-0006Ai-Ah
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:41 -0400
+ id 1ut2eR-0006DN-Hy
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756725874;
+ s=mimecast20190719; t=1756725882;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PGvG/LGRqC2htS89N6HiSrot7Fa5WLiu5iEYx6qvNzE=;
- b=SH/1Va9/F0hyllZBirWF77TgTuGogyq106i0a5CYjzvSBRCafs9QADD0t24eKjLKPxwgYn
- GkhmEfUdhjOUL2IuhGwyXCRDZJeQ/T7DSV6AmeDoeuNy7z3jUjtEO8M5moG1TTESHnnzrB
- QX21LK9cgnopk7sRYo49YkoKCDXp4L4=
+ bh=8imASNa7WPLoyL5in5AEAUw1DAQ60jo9idLSR9tKcfs=;
+ b=W4Z1b8lLHpMo/EAB0egMjczel+kMwUwqm7DsLmIk2avo0nU/M0YjLFAM895DJNq8hOTAWl
+ QU7bdZtgfSNFvYsbaPPHANjnpHQde5jqmLjlLDlulxInDK8gjBHqzHTgtSvLWGGYv22e4P
+ nHLObomyWL3ViGpKN06xlfg89cwVQe0=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-dHT-a_PYMUOrMPT_th2QTA-1; Mon,
- 01 Sep 2025 07:24:33 -0400
-X-MC-Unique: dHT-a_PYMUOrMPT_th2QTA-1
-X-Mimecast-MFC-AGG-ID: dHT-a_PYMUOrMPT_th2QTA_1756725872
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-40n7um84Msa2QJEOc4InkA-1; Mon,
+ 01 Sep 2025 07:24:39 -0400
+X-MC-Unique: 40n7um84Msa2QJEOc4InkA-1
+X-Mimecast-MFC-AGG-ID: 40n7um84Msa2QJEOc4InkA_1756725878
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A022195C27B; Mon,  1 Sep 2025 11:24:32 +0000 (UTC)
+ id AA971195C27B; Mon,  1 Sep 2025 11:24:38 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.80])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 670221800446; Mon,  1 Sep 2025 11:24:29 +0000 (UTC)
+ id 127EB1800446; Mon,  1 Sep 2025 11:24:36 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 6/9] qga: ignore channel_init() fail if 'retry_path' is set
-Date: Mon,  1 Sep 2025 14:24:10 +0300
-Message-ID: <20250901112413.114314-7-kkostiuk@redhat.com>
+Subject: [PULL v2 9/9] qga: Fix truncated output handling in guest-exec status
+ reporting
+Date: Mon,  1 Sep 2025 14:24:13 +0300
+Message-ID: <20250901112413.114314-10-kkostiuk@redhat.com>
 In-Reply-To: <20250901112413.114314-1-kkostiuk@redhat.com>
 References: <20250901112413.114314-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
@@ -84,37 +86,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Windows, we run QGA with `-d --retry-path` options by default,
-and expect that QGA will start even without the vioserial driver
-and will wait for communication forever.
+From: "minglei.liu" <minglei.liu@smartx.com>
 
-Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
-Reviewed-by: Michal Privoznik <mprivozn@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250825140549.146617-3-kkostiuk@redhat.com
+Signed-off-by: minglei.liu <minglei.liu@smartx.com>
+Fixes: a1853dca743
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250711021714.91258-1-minglei.liu@smartx.com
 Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 ---
- qga/main.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ qga/commands.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/qga/main.c b/qga/main.c
-index a1bf8f53ac..dd1c216f9a 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -1512,8 +1512,12 @@ static GAState *initialize_agent(GAConfig *config, int socket_activation)
+diff --git a/qga/commands.c b/qga/commands.c
+index 5a5fad31f8..5f20af25d3 100644
+--- a/qga/commands.c
++++ b/qga/commands.c
+@@ -205,13 +205,15 @@ GuestExecStatus *qmp_guest_exec_status(int64_t pid, Error **errp)
+ #endif
+         if (gei->out.length > 0) {
+             ges->out_data = g_base64_encode(gei->out.data, gei->out.length);
+-            ges->has_out_truncated = gei->out.truncated;
++            ges->has_out_truncated = true;
++            ges->out_truncated = gei->out.truncated;
+         }
+         g_free(gei->out.data);
  
-     if (!channel_init(s, s->config->method, s->config->channel_path,
-                       s->socket_activation ? FIRST_SOCKET_ACTIVATION_FD : -1)) {
--        g_critical("failed to initialize guest agent channel");
--        return NULL;
-+        if (s->config->retry_path) {
-+            g_info("failed to initialize guest agent channel, will retry");
-+        } else {
-+            g_critical("failed to initialize guest agent channel");
-+            return NULL;
-+        }
-     }
+         if (gei->err.length > 0) {
+             ges->err_data = g_base64_encode(gei->err.data, gei->err.length);
+-            ges->has_err_truncated = gei->err.truncated;
++            ges->has_err_truncated = true;
++            ges->err_truncated = gei->err.truncated;
+         }
+         g_free(gei->err.data);
  
-     if (config->daemonize) {
 -- 
 2.50.1
 
