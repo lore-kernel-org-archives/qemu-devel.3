@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1A18CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E2F9CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut3L6-00064T-M1; Mon, 01 Sep 2025 08:08:48 -0400
+	id 1ut3LA-0006AH-LV; Mon, 01 Sep 2025 08:08:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ut3L4-0005z4-JG
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:08:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ut3Ky-0005ew-P4
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:08:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756728511;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:resent-to:
- resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=L/8AVTUZcFiQdhcB+bIxr4rVv/251UNsF28ctT64Eqs=;
- b=eOrG5ZYpmkmwQEGbXsT3ogI1Q+FxNgq6WSOjGOvcfjzIbQghTe0bL6CcrVB8zh6CYwz4pL
- sUBXtqOJU5pb1ONlIJS4G0XUjtUzVlWTjS5evjuLjgSqCcBu4v0OUEQyw3xnoA2++jbDXz
- Uyi/KxtkH5XUe6C1zHNrgz9HO2Z2rHU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-duGAsvHmOeuWcEevtU4Wfw-1; Mon,
- 01 Sep 2025 08:08:27 -0400
-X-MC-Unique: duGAsvHmOeuWcEevtU4Wfw-1
-X-Mimecast-MFC-AGG-ID: duGAsvHmOeuWcEevtU4Wfw_1756728507
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 13C6E195608B; Mon,  1 Sep 2025 12:08:27 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B3D6E180047F; Mon,  1 Sep 2025 12:08:26 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 17E6421E6925; Mon, 01 Sep 2025 14:08:24 +0200 (CEST)
-Resent-To: qemu-devel@nongnu.org, richard.henderson@linaro.org
-Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Mon, 01 Sep 2025 14:08:24 +0200
-Resent-Message-ID: <87plca4bpj.fsf@pond.sub.org>
-X-From-Line: armbru@redhat.com  Mon Sep  1 13:19:06 2025
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9CA4B21E6925; Mon, 01 Sep 2025 13:19:06 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 2/3] i386/kvm/vmsr_energy: Plug memory leak on failure to
- connect socket
-Date: Mon,  1 Sep 2025 13:19:05 +0200
-Message-ID: <20250901111906.2403307-3-armbru@redhat.com>
-In-Reply-To: <20250901111906.2403307-1-armbru@redhat.com>
-References: <20250901111906.2403307-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ut3L8-00068x-6u
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:08:50 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ut3Kz-0005fO-OV
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:08:48 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-71d5fe46572so40139207b3.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 05:08:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756728516; x=1757333316; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yXtHdrl+QM2N27NEU5e38Higfy7JEGr4Xf5KI2gQIQI=;
+ b=w1FRm/z3RRC2zxgYfvE5kktC0uc0ctsMadqBPGANzb2vSJwxyLGzG6WPQs832cmUFM
+ 495kBpQmiyVwW08+S1wTMB3erUVifkW8Ac5xWlNXicO1/0OwgK+co0QoN35e3ftFNEjJ
+ dflJi9uHClcYKohOk4yn2jU7VEeo7kjW/oVMawsfbCWJ2SOuWcnL75+LCNeQvQMYzKNM
+ bnfcRyX+6r2E8OB/T9aO9NcK0YdqFi0C9/2sskIGNdVC855LONiej0W0gMjR+80ITysk
+ BKmTKwYKNHaMrDfO/vvFlwPya4UaFwZJTNMcHR/8CwllLJsKSZm7LPe+eQlfeCUpTYQQ
+ K36g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756728516; x=1757333316;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yXtHdrl+QM2N27NEU5e38Higfy7JEGr4Xf5KI2gQIQI=;
+ b=A8Vpoep9z4M22yvx+twfeFNGgafLz3OdWLyVIOb6JC1Bj0SqLoVjVV2QYMG8qsPJyk
+ VvCzmnuXQI8M+QHHHo+VzSPZ7fcyisH7dSsEJeEQrxCrJ3XWpE/pXFwRm0iWZ23LbpFH
+ 4jRnYhN9OQsq2cH7+bSowIey0Tn7FZN5iREcZfrbb0rg7d8vHhqMVSY9M2rgMecxGL7X
+ VwRSWvLqw7lMipjxXAl9ppHUI1eW+Qb3VhImwQJTReUx0RgpXHgoZaAZMuqRX8gzAXYy
+ oYpLA8U2KDcYMwyf4t58TWSLpksnVCJtt1DwejNP3VcWNpmTrRSqAAbkfb6SBxh6MwSv
+ agZg==
+X-Gm-Message-State: AOJu0Yxiw7Gap5+cy/Cu62ocJ8ZkZLEsQ3I8y6QM+EajtfL6JvyI7Vvy
+ IskgKU+2gC8pL+HLRHY95hG4kKLINzsD5gNtVlS5h7TimaWkvLutshQ0niYu3jAf2B2dj2vtYhT
+ jquMuUbq/g1hC7yWQ4GYPRT4oWmsNmoboYci+1c6geA==
+X-Gm-Gg: ASbGnctMiAv2bPQcyM+lGEmUX/Ki/9+3dRW69Ac8CfQSNouaTY4e05Zq5iAzZ2ufr63
+ JgRUl8RCojon6feeGWidn04Ty7XWjtC5Z7zzTmanxpfqu4AnhNimm1on8ZRJ/LIhKOjfKpmoMwI
+ O2Ap/V5AieK51hQpgKkkzNuZdbH9tQb2GXgtDy61PMn5N2xzh/Y+x8myV9Ur63SHqngmUidnp9C
+ IYUYipefzPSfsKmoD0=
+X-Google-Smtp-Source: AGHT+IEAW7MwRNeVhU6Ent9zh1gCTq4zHNcPr2UQMRsiFLxuUQpRMYHma2GJqWbSXL7HhFbM3ZQI6GosfAwvIz+p2GE=
+X-Received: by 2002:a05:690c:61c6:b0:71f:9a36:d32f with SMTP id
+ 00721157ae682-7227653a540mr88021217b3.24.1756728515932; Mon, 01 Sep 2025
+ 05:08:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250811100823.94105-1-philmd@linaro.org>
+In-Reply-To: <20250811100823.94105-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 1 Sep 2025 13:08:24 +0100
+X-Gm-Features: Ac12FXzswSowIaE7UkJ51uR3Rpniv-oDaw0SUfciDCJIyWVhvyLTgMRPBgjSNGc
+Message-ID: <CAFEAcA_tW3UyUTcyFWP+bY15EO0DO3bcS9DLPuJYkdvEfFfVdA@mail.gmail.com>
+Subject: Re: [PATCH] system/rtc: Silent overflow in qemu_timedate_diff()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,39 +94,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vmsr_open_socket() leaks the Error set by
-qio_channel_socket_connect_sync().  Plug the leak by not creating the
-Error.
+On Mon, 11 Aug 2025 at 11:08, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Per ctime(3) man-page:
+>
+>   A negative value for tm_isdst causes the mktime() function to
+>   attempt to divine whether summer time is in effect for the
+>   specified time.  The tm_isdst and tm_gmtoff members are forced
+>   to zero by timegm().
+>
+>   The mktime() function returns the specified calendar time; if
+>   the calendar time cannot be represented, it returns -1;
+>
+> Coverity reports (CID 1547724 Overflowed return value) the
+> qemu_timedate_diff() method doesn't handle this error path.
+>
+> Since this method was added in commit f650305967f ("Unify RTCs
+> that use host time, fix M48t59 alarm") in 2008, and there is no
+> open issue related to it, keep ignoring this unlikely case, but
+> add an assertion to make Coverity happy.
+>
+> Fixes: CID 1547724
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  system/rtc.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/system/rtc.c b/system/rtc.c
+> index 56951288c40..070b99fe6ad 100644
+> --- a/system/rtc.c
+> +++ b/system/rtc.c
+> @@ -98,6 +98,7 @@ time_t qemu_timedate_diff(struct tm *tm)
+>          struct tm tmp =3D *tm;
+>          tmp.tm_isdst =3D -1; /* use timezone to figure it out */
+>          seconds =3D mktime(&tmp);
+> +        assert(seconds >=3D 0);
+>          break;
+>      }
+>      default:
 
-Fixes: 0418f90809ae (Add support for RAPL MSRs in KVM/Qemu)
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250723133257.1497640-2-armbru@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/kvm/vmsr_energy.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+Generally the struct tm that we call this function
+on is filled in using information from the guest.
+So I think that a silly guest could probably program
+a device in a way that causes us to call qemu_timedate_diff()
+on an invalid time and make mktime() fail.
 
-diff --git a/target/i386/kvm/vmsr_energy.c b/target/i386/kvm/vmsr_energy.c
-index 58ce3df53a..890322ae37 100644
---- a/target/i386/kvm/vmsr_energy.c
-+++ b/target/i386/kvm/vmsr_energy.c
-@@ -57,13 +57,9 @@ QIOChannelSocket *vmsr_open_socket(const char *path)
-     };
- 
-     QIOChannelSocket *sioc = qio_channel_socket_new();
--    Error *local_err = NULL;
- 
-     qio_channel_set_name(QIO_CHANNEL(sioc), "vmsr-helper");
--    qio_channel_socket_connect_sync(sioc,
--                                    &saddr,
--                                    &local_err);
--    if (local_err) {
-+    if (qio_channel_socket_connect_sync(sioc, &saddr, NULL) < 0) {
-         /* Close socket. */
-         qio_channel_close(QIO_CHANNEL(sioc), NULL);
-         object_unref(OBJECT(sioc));
--- 
-2.49.0
+Also, if the device is programmable to a date earlier
+than the Unix epoch, this will also make mktime() return
+a negative number, e.g:
 
+  tm_sec   =3D 0
+  tm_min   =3D 0
+  tm_hour  =3D 0
+  tm_mday  =3D 1
+  tm_mon   =3D 0
+  tm_year  =3D 70
+  tm_wday  =3D 0
+  tm_yday  =3D 0
+  tm_isdst =3D 0
 
+(Jan 1st 1970) makes mktime return -3600.
+
+The safe way to check for mktime() failure is to clear errno
+before calling it and then check for it returning -1 and
+setting errno.
+
+I think that if we care about trying to handle errors here
+(and plausibly we don't care enough to go to the effort)
+we would want to:
+ * update the API of this function to allow it to indicate
+   failure (in some better way than raw mktime() so we
+   don't have the "-1 is ambiguous" problem)
+ * have all the callers handle an error in whatever way
+   makes sense (which might be assert if they can guarantee
+   the fields to be in-bounds, or might be something else,
+   e.g. for mt48t59.c where it wants to set the alarm
+   timer "alarm time out of range" should be handled as
+   "don't set the timer" because the requested time will
+   be either in the past or else so far in the future it
+   will never arrive)
+
+thanks
+-- PMM
 
