@@ -4,100 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A5DACA1005
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 958E1CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut3Bo-00058j-34; Mon, 01 Sep 2025 07:59:12 -0400
+	id 1ut3Dq-00083m-V5; Mon, 01 Sep 2025 08:01:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ut3Bm-0004wc-D9
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:59:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ut3DS-0007Yj-99; Mon, 01 Sep 2025 08:00:59 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1ut3BY-0003gx-9m
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:59:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756727933;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kLqhidISZKYdtwaDku+KqyLfsSI4xpXN5PzFUDr90wg=;
- b=TaQALc+r+zPr3rR04wIbxCT0ZaWrTcHrzSRm49IJ2jLaiVKA6LacivUy14E0o93RqhTgG7
- QVBi8PhB1IYY8b/YJ/VrWm+Ipbj14fxd7cGzp9bBHON+VzwLv3ZLeYxFLgsZaSAyRS23+3
- oOVQfZDP8pyuvHsF5+aqmxZTF2QRVyA=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-XaHnSpiYPI-W0NYuSrro3w-1; Mon, 01 Sep 2025 07:58:52 -0400
-X-MC-Unique: XaHnSpiYPI-W0NYuSrro3w-1
-X-Mimecast-MFC-AGG-ID: XaHnSpiYPI-W0NYuSrro3w_1756727931
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4b32119e6c6so35958601cf.2
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:58:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756727931; x=1757332731;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kLqhidISZKYdtwaDku+KqyLfsSI4xpXN5PzFUDr90wg=;
- b=XdQHMgCvJA+kMCEM2hkIzSdXV3bqDWYqEtS/xphkNQ2N9dKOG7fgCXC/6TMhEykuHO
- 7Ue+WqaXX7GVf7nyJFCDeHVOXz0xojS2Zb3UxmKWkesM6mW9YiKCXdHVUi/pEdlT7pwt
- Hbo9qoRGIUypUf4WgQRgo80iARlNkVPKY2zILhIvZzoc2o32Rdm12EJIRzKxNXXhWH+I
- tq9uKeaABRHBWfvOBaEAWAFuSoRxeZ2ppYV4gjC6yeaIypR/ph5x+HhwpBMJAMhOH8w+
- 34vkXGqG+LCiF2H8hAQOF+S9tvEeYtn0Hxu2JsOX1n+UfiHuxF8OsOvhNVjXe9j7tZg1
- wyNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGwhxADtJAwwD65WSe3xJ8k8n1BpiE2XUrA1HvvCZf17TMwFlnGUZ8W9BxawdWqssAn4s0uF5e4J/L@nongnu.org
-X-Gm-Message-State: AOJu0YwNE2ZzMPMWs+rSSgHBcFsAvQxTV580tqemmTjFVl1jXvWPrjr7
- Gj4cuyhaj4AXB8sutfmjTKJD1TR4OFW1WcI1eoUcrcFs+noxHrsLokWEMmRftp+MeCJI+DC7krs
- AQYaBbFVHWFu8VOWxtb2RpnLsw0BGV+CsiLYphqlg8+AxXm679VGrR0fB
-X-Gm-Gg: ASbGnctURNqAfw/fHgfnzgZ7HTZDrY0JgVLu2/sk6emnkpRTDU7Lf9Zl2bQoQdBQAqe
- Vy8NSe9E6vxA8v3ibkk1BfZcjqaC9cQLwlCNZSJFerZBmVUhk0wSHk4kdilJ88oqPDLsDJMGDbx
- pPc7vfrgwxCIALaHTYVimUGvYNVV1shbJQA+4eALg2fEPHZhBi7VaAvXTdkLrFUAmYOjNiquVcj
- yLHjwH+vNz98m5f8whPvS/YhZLBHxXV1WeruvUGiOGNzlhy9SlVbzIbJ8NFSm4JYpum5qP9HLw2
- Vebef74NHiMKbt/j0QaQ1GIa30oDBg==
-X-Received: by 2002:ac8:5e4d:0:b0:4b3:219:b74a with SMTP id
- d75a77b69052e-4b31dcccadbmr96022331cf.72.1756727931364; 
- Mon, 01 Sep 2025 04:58:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVzSiGIacoyKAkRg9F8q4MC5XJ6qFH5lb5qdryTOPZIv+mpvzivw810mH/xt65m+97zANgJw==
-X-Received: by 2002:ac8:5e4d:0:b0:4b3:219:b74a with SMTP id
- d75a77b69052e-4b31dcccadbmr96022101cf.72.1756727930976; 
- Mon, 01 Sep 2025 04:58:50 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-70fb25c6f49sm38525136d6.15.2025.09.01.04.58.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 04:58:50 -0700 (PDT)
-Date: Mon, 1 Sep 2025 13:58:46 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org, Song Gao
- <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>
-Subject: Re: [PATCH] hw/loongarch/virt: Fix the cpu hotplug issue
-Message-ID: <20250901135846.12a9c3e2@fedora>
-In-Reply-To: <34bc7ebf-4a7e-d2f8-65de-529ef658be49@loongson.cn>
-References: <20250829013243.1237107-1-lixianglai@loongson.cn>
- <34bc7ebf-4a7e-d2f8-65de-529ef658be49@loongson.cn>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1ut3DF-0004H5-Lf; Mon, 01 Sep 2025 08:00:53 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 581C0CVL013478
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 1 Sep 2025 21:00:22 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=D+nZEAotU7RSIcgMm43EklAPwfbjaT+CdW78+OLt6sc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1756728022; v=1;
+ b=hSD19wHohaNJlLyAD/o8kwplzyecgzgTsC6OUMnlybKI90fZXe6YcN1NAgNN74T6
+ oipyh9G4wMBlKW55rVRjgyNeqOrXn6i193ZRssOOCFG+bSwyqJXS32UG2GqPiFze
+ bN578ZK3krM5uxnsVZj6a1xIuOw5uOELyPWKqFGp/15zFbbZZSWnDDrXgoCufriP
+ lrDg1KHH4sthAtf0IDq21RATV2mc6NShM1ZqqcuI1uGkRibteJjoovVX3AHTClB9
+ WV31P7ytHtsmLIbPMvKfAUFnzTCaVTW4bSzWs9Wqj4gRsHGa08PUObKSmUSdGE0S
+ EjQRoCrrU3FvCZjdm0HeJA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 01 Sep 2025 21:00:04 +0900
+Subject: [PATCH v2] hw/arm/virt: Remove the lower bound of HighMem IO Regions
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250901-virt-v2-1-ac2379402c80@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAMOKtWgC/12NwQ6CMBAFf4Xs2Ta0RKye/A/DoZQCqwnFbWkkp
+ P9uxYOJx5m8zNvAW0Lr4VJsQDaiRzdlkIcCzKinwTLsMoMs5bE8ScUiUmCqqjrd69oI0UKezmR
+ 7fO2ZW/Nlss8l18JPjuiDo3W/iuJj/6pRMMFK3Z5rJWUtjbqSH7hBjnxhwT1Wx7Xh9xmalNIbY
+ 4bZ6roAAAA=
+X-Change-ID: 20250728-virt-833dafa6c11b
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>, Andrew Jones <ajones@ventanamicro.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.14.2
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,122 +75,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 29 Aug 2025 10:31:57 +0800
-Bibo Mao <maobibo@loongson.cn> wrote:
+Remove the lower bound of the Highmem IO Regions' addresses for the
+latest machine version to increase the chance to fit the regions in the
+PA space.
 
-> On 2025/8/29 =E4=B8=8A=E5=8D=889:32, Xianglai Li wrote:
-> > The hot-plugged cpu does not register the cpu reset function, so the cpu
-> > plugged in later cannot reset properly, and there will be problems when
-> > restarting.
-> >=20
-> > Now register the cpu reset function in the cpu hotplug callback functio=
-n. =20
-> Oh, it is actually one problem and it is missing :(. There is similiar=20
-> patch posted at:
-> =20
-> https://lore.kernel.org/qemu-devel/20241031065418.3111892-1-maobibo@loong=
-son.cn/
->=20
-> I prefer to adding cpu reset in CPU object realize function rather=20
-> hotplug handler, and executing reset_load_elf() in board specific
-> reset callback. However peter has different thoughts.
+The lower bound was especially problematic when using virt-install on
+Apple M2. virt-install 5.0.0 adds multiple pcie-root-port devices that
+require sufficient space in the ECAM region. However, the Highmem ECAM
+region did not fit in the limited PA space on the hardware, and the ECAM
+region size was limited to 16 MiB. If virt-install had added more than
+16 devices to the root bridge, the region overflowed, which prevented
+edk2-stable202505 from scanning PCI devices, including the boot disk,
+causing boot failures.
 
-this patch and above mentioned one expose direct boot specific
-reset_load_elf() on a generic hardware bring up path. That's
-probably isn't right.
+Ideally, a virtual machine with more than 16 devices added to the root
+bridge should just work so that users and management layers do not have
+to care whether they use constrained hardware.
 
-Ideally default (cpu_reset()) reset would happen 1st during
-cpu creation/board init and then direct boot would patch
-the CPU that actually would execute payload.
+The base address of the Highmem IO Regions was fixed when commit
+f90747c4e8fb ("hw/arm/virt: GICv3 DT node with one or two redistributor
+regions") added the first Highmem IO Region. Later, commit 957e32cffa57
+("hw/arm/virt: Dynamic memory map depending on RAM requirements")
+allowed moving the Highmem IO Regions to higher addresses to accommodate
+RAM more than 255 GiB, but the lower bound remained to keep the legacy
+memory map.
 
-PS:
-what's the reason to call reset_load_elf() on all present
-vCPUs and why hotplugged ones matter here?
+Remove the lower bound for the latest machine version to accommodate more
+devices with the root bridge. Keeping the lower bound for the old
+machine versions ensures the compatibility is still maintained.
 
-Shouldn't direct booted QEMU patch BSP only?
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Changes in v2:
+- Rebased.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250728-virt-v1-1-0ab9682262c8@rsg.ci.i.u-tokyo.ac.jp
+---
+ include/hw/arm/virt.h |  1 +
+ hw/arm/virt.c         | 16 ++++++++++++----
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
->=20
-> Regards
-> Bibo Mao
-> >=20
-> > Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> > ---
-> >   hw/loongarch/boot.c         | 8 +-------
-> >   hw/loongarch/virt.c         | 4 ++++
-> >   include/hw/loongarch/virt.h | 1 +
-> >   3 files changed, 6 insertions(+), 7 deletions(-)
-> >=20
-> > diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-> > index 14d6c52d4e..6bc1f3d50c 100644
-> > --- a/hw/loongarch/boot.c
-> > +++ b/hw/loongarch/boot.c
-> > @@ -324,7 +324,7 @@ static int64_t load_kernel_info(struct loongarch_bo=
-ot_info *info)
-> >       return kernel_entry;
-> >   }
-> >  =20
-> > -static void reset_load_elf(void *opaque)
-> > +void reset_load_elf(void *opaque)
-> >   {
-> >       LoongArchCPU *cpu =3D opaque;
-> >       CPULoongArchState *env =3D &cpu->env;
-> > @@ -429,12 +429,6 @@ static void loongarch_direct_kernel_boot(MachineSt=
-ate *ms,
-> >   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_in=
-fo *info)
-> >   {
-> >       LoongArchVirtMachineState *lvms =3D LOONGARCH_VIRT_MACHINE(ms);
-> > -    int i;
-> > -
-> > -    /* register reset function */
-> > -    for (i =3D 0; i < ms->smp.cpus; i++) {
-> > -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu=
-(i)));
-> > -    }
-> >  =20
-> >       info->kernel_filename =3D ms->kernel_filename;
-> >       info->kernel_cmdline =3D ms->kernel_cmdline;
-> > diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> > index b15ada2078..71f8ddc980 100644
-> > --- a/hw/loongarch/virt.c
-> > +++ b/hw/loongarch/virt.c
-> > @@ -1013,6 +1013,8 @@ static void virt_cpu_unplug(HotplugHandler *hotpl=
-ug_dev,
-> >       /* Notify acpi ged CPU removed */
-> >       hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err=
-or_abort);
-> >  =20
-> > +    /* unregister reset function */
-> > +    qemu_unregister_reset(reset_load_elf, cpu);
-> >       cpu_slot =3D virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> >       cpu_slot->cpu =3D NULL;
-> >   }
-> > @@ -1037,6 +1039,8 @@ static void virt_cpu_plug(HotplugHandler *hotplug=
-_dev,
-> >                                &error_abort);
-> >       }
-> >  =20
-> > +    /* register reset function */
-> > +    qemu_register_reset(reset_load_elf, cpu);
-> >       cpu_slot =3D virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> >       cpu_slot->cpu =3D CPU(dev);
-> >   }
-> > diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> > index 602feab0f0..15ea393386 100644
-> > --- a/include/hw/loongarch/virt.h
-> > +++ b/include/hw/loongarch/virt.h
-> > @@ -71,6 +71,7 @@ struct LoongArchVirtMachineState {
-> >   OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_=
-MACHINE)
-> >   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
-> >   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
-> > +void reset_load_elf(void *opaque);
-> >  =20
-> >   static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState=
- *lvms)
-> >   {
-> >  =20
->=20
->=20
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 365a28b082cae36321ed906d9a13242997fa543a..341eb171d084b911e05b9861b9f4ba516fa2888e 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -120,6 +120,7 @@ typedef enum VirtGICType {
+ 
+ struct VirtMachineClass {
+     MachineClass parent;
++    hwaddr min_highmem_base;
+     bool no_tcg_its;
+     bool no_highmem_compact;
+     bool no_ged;   /* Machines < 4.2 have no support for ACPI GED device */
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 1e63f40fbece3997dedc8aa953957471f930d44c..3cb978dae2ec0cdd9e7b902b3b427dac8a27bebf 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1887,6 +1887,7 @@ static void virt_set_high_memmap(VirtMachineState *vms,
+ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+ {
+     MachineState *ms = MACHINE(vms);
++    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+     hwaddr base, device_memory_base, device_memory_size, memtop;
+     int i;
+ 
+@@ -1913,8 +1914,7 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+     /*
+      * We compute the base of the high IO region depending on the
+      * amount of initial and device memory. The device memory start/size
+-     * is aligned on 1GiB. We never put the high IO region below 256GiB
+-     * so that if maxram_size is < 255GiB we keep the legacy memory map.
++     * is aligned on 1GiB.
+      * The device region size assumes 1GiB page max alignment per slot.
+      */
+     device_memory_base =
+@@ -1932,8 +1932,8 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
+         error_report("maxmem/slots too huge");
+         exit(EXIT_FAILURE);
+     }
+-    if (base < vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES) {
+-        base = vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
++    if (base < vmc->min_highmem_base) {
++        base = vmc->min_highmem_base;
+     }
+ 
+     /* We know for sure that at least the memory fits in the PA space */
+@@ -3464,8 +3464,16 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
+ 
+ static void virt_machine_10_1_options(MachineClass *mc)
+ {
++    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
++
+     virt_machine_10_2_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
++
++    /*
++     * Do not put the high IO region below 256GiB so that if maxram_size is
++     * < 255GiB we keep the legacy memory map.
++     */
++    vmc->min_highmem_base = base_memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
+ }
+ DEFINE_VIRT_MACHINE(10, 1)
+ 
+
+---
+base-commit: e101d33792530093fa0b0a6e5f43e4d8cfe4581e
+change-id: 20250728-virt-833dafa6c11b
+
+Best regards,
+-- 
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
