@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67778CA1005
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E011CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:25:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2eZ-0000Nv-7I; Mon, 01 Sep 2025 07:24:51 -0400
+	id 1ut2eW-0000MK-F9; Mon, 01 Sep 2025 07:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ut2eJ-0000HF-2N
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ut2eP-0000Iw-Al
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1ut2eG-00067r-PI
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:34 -0400
+ id 1ut2eJ-0006Ai-Ah
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:24:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756725869;
+ s=mimecast20190719; t=1756725874;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BSdjMYWo+86VX8GX3Xm4s2LHLgpFxbBibOQ/p953Ays=;
- b=UWCIwa7nItLOoCowNjC28eDrXGuKUA4GuiWEm19wOiCML74GpLxFnsZoz2xrlaGyNqSKoc
- mLD5upYTXv3lrdi8276GkIybEXS1Sf6NiI0sLRJ92ujI8M3XytAaZa/s5d5U4EJg6n30WO
- /jV9qLu5rpgSnmAGAMZVaEygr+x6jr4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=PGvG/LGRqC2htS89N6HiSrot7Fa5WLiu5iEYx6qvNzE=;
+ b=SH/1Va9/F0hyllZBirWF77TgTuGogyq106i0a5CYjzvSBRCafs9QADD0t24eKjLKPxwgYn
+ GkhmEfUdhjOUL2IuhGwyXCRDZJeQ/T7DSV6AmeDoeuNy7z3jUjtEO8M5moG1TTESHnnzrB
+ QX21LK9cgnopk7sRYo49YkoKCDXp4L4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-_I9UQPjyN6u7pjJiZeVitw-1; Mon,
- 01 Sep 2025 07:24:26 -0400
-X-MC-Unique: _I9UQPjyN6u7pjJiZeVitw-1
-X-Mimecast-MFC-AGG-ID: _I9UQPjyN6u7pjJiZeVitw_1756725865
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-dHT-a_PYMUOrMPT_th2QTA-1; Mon,
+ 01 Sep 2025 07:24:33 -0400
+X-MC-Unique: dHT-a_PYMUOrMPT_th2QTA-1
+X-Mimecast-MFC-AGG-ID: dHT-a_PYMUOrMPT_th2QTA_1756725872
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 709E1180028D; Mon,  1 Sep 2025 11:24:25 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A022195C27B; Mon,  1 Sep 2025 11:24:32 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.44.32.80])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CED1F1800294; Mon,  1 Sep 2025 11:24:23 +0000 (UTC)
+ id 670221800446; Mon,  1 Sep 2025 11:24:29 +0000 (UTC)
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL v2 3/9] qga-vss: Replace asserts with condition and report error
-Date: Mon,  1 Sep 2025 14:24:07 +0300
-Message-ID: <20250901112413.114314-4-kkostiuk@redhat.com>
+Subject: [PULL v2 6/9] qga: ignore channel_init() fail if 'retry_path' is set
+Date: Mon,  1 Sep 2025 14:24:10 +0300
+Message-ID: <20250901112413.114314-7-kkostiuk@redhat.com>
 In-Reply-To: <20250901112413.114314-1-kkostiuk@redhat.com>
 References: <20250901112413.114314-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,50 +84,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Windows, we run QGA with `-d --retry-path` options by default,
+and expect that QGA will start even without the vioserial driver
+and will wait for communication forever.
+
 Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250825145241.170717-2-kkostiuk@redhat.com
+Reviewed-by: Michal Privoznik <mprivozn@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250825140549.146617-3-kkostiuk@redhat.com
 Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 ---
- qga/vss-win32/requester.cpp | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ qga/main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-index 4401d55e3a..bc260abb96 100644
---- a/qga/vss-win32/requester.cpp
-+++ b/qga/vss-win32/requester.cpp
-@@ -347,7 +347,12 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
-         goto out;
+diff --git a/qga/main.c b/qga/main.c
+index a1bf8f53ac..dd1c216f9a 100644
+--- a/qga/main.c
++++ b/qga/main.c
+@@ -1512,8 +1512,12 @@ static GAState *initialize_agent(GAConfig *config, int socket_activation)
+ 
+     if (!channel_init(s, s->config->method, s->config->channel_path,
+                       s->socket_activation ? FIRST_SOCKET_ACTIVATION_FD : -1)) {
+-        g_critical("failed to initialize guest agent channel");
+-        return NULL;
++        if (s->config->retry_path) {
++            g_info("failed to initialize guest agent channel, will retry");
++        } else {
++            g_critical("failed to initialize guest agent channel");
++            return NULL;
++        }
      }
  
--    assert(pCreateVssBackupComponents != NULL);
-+    if (!pCreateVssBackupComponents) {
-+        err_set(errset, (HRESULT)ERROR_PROC_NOT_FOUND,
-+                "CreateVssBackupComponents proc address absent. Did you call requester_init()?");
-+        goto out;
-+    }
-+
-     hr = pCreateVssBackupComponents(&vss_ctx.pVssbc);
-     if (FAILED(hr)) {
-         err_set(errset, hr, "failed to create VSS backup components");
-@@ -579,8 +584,16 @@ void requester_thaw(int *num_vols, void *mountpints, ErrorSet *errset)
-     /* Tell the provider that the snapshot is finished. */
-     SetEvent(vss_ctx.hEventThaw);
- 
--    assert(vss_ctx.pVssbc);
--    assert(vss_ctx.pAsyncSnapshot);
-+    if (!vss_ctx.pVssbc) {
-+        err_set(errset, (HRESULT)VSS_E_BAD_STATE,
-+                "CreateVssBackupComponents is missing. Did you freeze the volumes?");
-+        return;
-+    }
-+    if (!vss_ctx.pAsyncSnapshot) {
-+        err_set(errset, (HRESULT)VSS_E_BAD_STATE,
-+                "AsyncSnapshot set is missing. Did you freeze the volumes?");
-+        return;
-+    }
- 
-     HRESULT hr = WaitForAsync(vss_ctx.pAsyncSnapshot);
-     switch (hr) {
+     if (config->daemonize) {
 -- 
 2.50.1
 
