@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4DB8CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F24E7CA1005
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut33x-000745-Fv; Mon, 01 Sep 2025 07:51:05 -0400
+	id 1ut307-0000OE-NL; Mon, 01 Sep 2025 07:47:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ut31v-0004Cu-1k; Mon, 01 Sep 2025 07:48:59 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1ut2zp-000803-5o; Mon, 01 Sep 2025 07:46:49 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ut31o-0001xI-I0; Mon, 01 Sep 2025 07:48:58 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-24abf0215e8so8982865ad.1; 
- Mon, 01 Sep 2025 04:48:46 -0700 (PDT)
+ id 1ut2zk-0001SO-CN; Mon, 01 Sep 2025 07:46:48 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2487a60d649so52456875ad.2; 
+ Mon, 01 Sep 2025 04:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756727323; x=1757332123; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1756727197; x=1757331997; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oCoav4mrpfqHaiFY4ajN/hsX2ml/OjgBByRUO4LMbYo=;
- b=WT70pG7X7/DRAKFq3fnlIsfRev1wDgayeN4HVVpACNY5WWQMCAp7FG0Mvvy3LoVAO9
- qZ6BL3FliVQH9Z49TZEsKO9A2OexydyJx1sSmhXDBpt3OZpc7r++PebCdfLmuxvEzJ+U
- yjWPQ8ZBxZZ6oLRJTyq4t+oUCRJVA2FqF7eNtQXSpqfqz3PiU3J38fduAA+W451ot12+
- o55P5Gs7BRk9Bg1tY8FxTuv6c2n+MgEv8OaX8tzLLkn0tI+13AwKXmlCMALT9TTi/Xxe
- sEo3niZYTWTZA5GfG450akzeMclf8Vjqa8ZKoZboQfdxPlBIspL6eUQ+nN8d6LJHAFm/
- wTWQ==
+ bh=0L45vE0IuF3pvV+AN2AolMd1u+x6bFzT5jaCBTjmB4s=;
+ b=Gju9Hd0Sn4B/Xvmb3zBe4yjp+GhcqXKhshTaMOZ4nrdYM1NsohDZkHLg0xQZwsWKCw
+ +ndRzjlwkLjI3dUQe2400jpT8xC/6qGoEbefK2bCubR0bcrhm+J8f7IAGoNSGV9jqkhH
+ amj2de7oeBflc2ToKBC+6URtez8C9+AhEIrFgOW4JwcfB2y8Rc2CGdYDJgbimab2i4F0
+ SMZ/LfS7pekIUjPCTFaValiArXKBY5HYySd6WYVZ6GyNAOvGagnbOmyBMKBBP0DbGw4F
+ gtmzsFzANkvM69HEARSk8ut/GyJlmjiP64Lc8EIv2VAf4uBkEPLKhhLgqfXm5WtyiIOh
+ /s+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756727323; x=1757332123;
+ d=1e100.net; s=20230601; t=1756727197; x=1757331997;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oCoav4mrpfqHaiFY4ajN/hsX2ml/OjgBByRUO4LMbYo=;
- b=ZiSzv9Ca7J1TGzjOvAgUbFhbGvM1wOn6ft4SmVIJcJRY66PZ56wgxjdiWQ1YT/dXdp
- HEL5GUHuKDhpxUBs2Qk+B+9dmgVAzycs85L/cHN0Vro5VD042MBh8+8f5G3ol4INy18d
- gQ/9KUxO+HS2TmPFLOyoP/Z0qEVVGXATGhCBhhPOgklwASVeV/P6KA0uCIIrIZzrgq0X
- Khh16bclMZhb5Q+wf1nNVy2NWsnztW4UO7Eo7hrARfWxdqT7qcBAhAWOEhSYLhvuDhwx
- 5pQ1D9/lxAWgUjjAegsbVcqO0IamGsf6arMNSB3VOx9ANmcq4f8cX/PJqz3rlp8x0u3T
- 406w==
+ bh=0L45vE0IuF3pvV+AN2AolMd1u+x6bFzT5jaCBTjmB4s=;
+ b=Uk60uierzrpvZOkGpejOlCaKTeGT/q69VyKbZKmd7G3lg36j3zBjsV8q46H7CvOdLD
+ 1y+BTNaSnTqjuUC9svJ/M+ZKjX7vYwPGXXNYi/zRAn2UW0sOnkiZG1dbeGLizVfgtPeg
+ vqjUZCEieQolzT/iaqR8F/FY/4BgZeG1LpHmPcCFV4cnJE/PgegWr/Kgs4ZZzz/EhvVk
+ W3ofuC2mYhepaGP4Q6jdlmqI6IrygRjYma8yu2LvStVGjnI1xStz8Tmnd9s8mcNMEJKb
+ TDk8/CATZrOLpGIC6GJMlkCQ/FMv+jTU1M8xO2YJeJqSD9zNCThc2cz79EnmSfhVr4vr
+ SN7g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUoN3PGf4DQGFNVG56yhPulBMd5qLuQfE07IUOQAz8sWbveUq/kPRHmSgpzgDWanrIUKvg3HG78pZc/Qg==@nongnu.org,
- AJvYcCWx533ojmyOqj+5wUVGuhh2M2WvgimZUQBRAApUxj0RH6tZ2x/mqsqXuq8BzqhizmD6nWTRyp+BSg==@nongnu.org
-X-Gm-Message-State: AOJu0YwXDp14Vbj4c0fpfmLAbVkBG/v6Q3BjTMwwMcD70GSjBjkx6kjr
- woLncn6ZD6B8uJ0io57qlRF0eVHoakLmUlYvL3GiikJCEQ3V0koboVpSrnId+A==
-X-Gm-Gg: ASbGnctOqX40vbWwSdBJk7C51lLW2WjxHdHcraG/jqeOgrFQAqOPlTb8Vev7eQjAcEw
- lxaTgMYQvbUvyVXKSLhNLTGz0HcJNml55u97WlLMdzecri3U0CbN6PqGepIJwMoD5jRuiMD174l
- IuihoQ3KpQX8eEkrj58FYd7zIBqFdniz653Prf270biCgc9vcj9WUUvpjHILmOnqqE9jLHmxlxj
- Mg5sjJhWngZcH6hty0SC/HdUiFmk0U/HwXuAvekxrIg8cCjuzMfsUe8vQ2NyMAGPmrczH7+QSSQ
- A8ckUfafpQVuhCajbIYuphu0MS9Oq/lAdrpN/WSuwmPw4CLjmnTTmmVMhTG1dGKP4Ehqh3NClWr
- 5QgNQLyWv2OKCs6AqQD7kJA==
-X-Google-Smtp-Source: AGHT+IGBuKo7oc8jEgSjGF83e8jdS2ypBE6voQc1b4u6zfd+jYJdQPYmrsSnDAf6fCCLCxvmT9JGqA==
-X-Received: by 2002:a17:903:2c0e:b0:246:92f5:1c07 with SMTP id
- d9443c01a7336-24944b01822mr81547615ad.51.1756727323340; 
- Mon, 01 Sep 2025 04:48:43 -0700 (PDT)
+ AJvYcCWaJ7eOKRwN0zu8wanjuLl1bFB1eHWaWPmTv/m0c4YrGRcA/A2bJAUMAHCOFkbBHGGOBXBh2AIfQvQBAA==@nongnu.org,
+ AJvYcCX+UFrU71LqFhm3aaNlTdc0v/9+qcKYbdyAz86s3hNkIPyMnGuHt5eSeYpB5UxwS05iJa29gpj7fQ==@nongnu.org
+X-Gm-Message-State: AOJu0YxnsMz1ZGAgzWbM+VIFterCO4LQHFSurCN3WX6+SSV+O2W5PuKm
+ fnT0JJ3ZnM0SljhS2sgE4D1PgD795zYf/nXjfG0uRu4g54Yi7QauByhQ0Rl7FQ==
+X-Gm-Gg: ASbGncuvCcb96tSWINn6dnMzjv7XRGcPbJOZ+bgD3jITFDECsIJcw8e9KGXq/kNo4Tn
+ E2pvdHA//j5zWuT3VXP69626SWiHlmNtj3qdboHhtu2WgVBAlulnOmOwzvLaRaUpiyxpYWteyVK
+ YkkjBdNb4667bGj6A/iSnUnKjfwu6jkyw6Y65uYUA/gxIoK4m8w95c53ynp7rnOzlGKpcR+Iklo
+ N6QC5mQFMRQ0g2K+U9QPx70J5ygDXySop2SSPnE1QUMyogU4ie27l9TbwqEvZTeT0xunFoIRLlQ
+ qHcfP2OOF7l83HUf7eHu6+E6Wn7M8aanDRIMn4Uvtfnih3Cw0npNpHjBVKgP5CbiGXqiWQHEJei
+ 0aDTp2GYWsspLtKOMM3hHog==
+X-Google-Smtp-Source: AGHT+IGZJnFNBlyYCr+q9R3KmQbgYYftuNln5Mk3YposoQKUyA9Iqmn/kAN/CMUrHccfv7sAbgGNGA==
+X-Received: by 2002:a17:902:e750:b0:248:9677:5f33 with SMTP id
+ d9443c01a7336-24944873fa1mr119466745ad.3.1756727196756; 
+ Mon, 01 Sep 2025 04:46:36 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:750a:cb0b:f0f9:68f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-249065a8036sm103038775ad.129.2025.09.01.04.48.38
+ d9443c01a7336-249065a8036sm103038775ad.129.2025.09.01.04.46.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 04:48:42 -0700 (PDT)
+ Mon, 01 Sep 2025 04:46:36 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -80,16 +80,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH v3 35/35] .gitlab-ci.d: build wasm backend in CI
-Date: Mon,  1 Sep 2025 20:44:37 +0900
-Message-ID: <cfa10fb5386f161cdf136ec0aa1e0360e429ad47.1756724464.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v3 13/35] tcg/wasm: Add sextract instruction
+Date: Mon,  1 Sep 2025 20:44:15 +0900
+Message-ID: <f4f7a03f63e7d7e63c3449b4521b85b3ca0401e5.1756724464.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1756724464.git.ktokunaga.mail@gmail.com>
 References: <cover.1756724464.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,32 +112,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds the build tests for the wasm backend.
+The sextract operation is genereted only when the corresponding Wasm
+instructions are available, as specified by TCG_TARGET_sextract_valid.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- .gitlab-ci.d/buildtest.yml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tcg/wasm/tcg-target-has.h |  5 +++++
+ tcg/wasm/tcg-target.c.inc | 42 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index a97bb89714..16a3322277 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -803,7 +803,7 @@ build-wasm64-64bit:
-     job: wasm64-64bit-emsdk-cross-container
-   variables:
-     IMAGE: emsdk-wasm64-64bit-cross
--    CONFIGURE_ARGS: --static --cpu=wasm64 --disable-tools --enable-debug --enable-tcg-interpreter
-+    CONFIGURE_ARGS: --static --cpu=wasm64 --disable-tools --enable-debug
+diff --git a/tcg/wasm/tcg-target-has.h b/tcg/wasm/tcg-target-has.h
+index 7e3caf8790..cfb85388de 100644
+--- a/tcg/wasm/tcg-target-has.h
++++ b/tcg/wasm/tcg-target-has.h
+@@ -4,4 +4,9 @@
  
- build-wasm64-32bit:
-   extends: .wasm_build_job_template
-@@ -812,4 +812,4 @@ build-wasm64-32bit:
-     job: wasm64-32bit-emsdk-cross-container
-   variables:
-     IMAGE: emsdk-wasm64-32bit-cross
--    CONFIGURE_ARGS: --static --cpu=wasm64 --enable-wasm64-32bit-address-limit --disable-tools --enable-debug --enable-tcg-interpreter
-+    CONFIGURE_ARGS: --static --cpu=wasm64 --enable-wasm64-32bit-address-limit --disable-tools --enable-debug
+ #define TCG_TARGET_HAS_tst 0
+ 
++#define TCG_TARGET_extract_valid(type, ofs, len) 0
++#define TCG_TARGET_sextract_valid(type, ofs, len) \
++    ((ofs == 0) && ((len == 8) || (len == 16) || (len == 32)))
++#define TCG_TARGET_deposit_valid(type, ofs, len) 0
++
+ #endif
+diff --git a/tcg/wasm/tcg-target.c.inc b/tcg/wasm/tcg-target.c.inc
+index 70de3bbf83..dd75deecd3 100644
+--- a/tcg/wasm/tcg-target.c.inc
++++ b/tcg/wasm/tcg-target.c.inc
+@@ -182,7 +182,10 @@ typedef enum {
+     OPC_I64_SHR_U = 0x88,
+ 
+     OPC_I32_WRAP_I64 = 0xa7,
++    OPC_I64_EXTEND_I32_S = 0xac,
+     OPC_I64_EXTEND_I32_U = 0xad,
++    OPC_I64_EXTEND8_S = 0xc2,
++    OPC_I64_EXTEND16_S = 0xc3,
+ } WasmInsn;
+ 
+ typedef enum {
+@@ -391,6 +394,33 @@ static void tcg_wasm_out_movcond(TCGContext *s, TCGType type, TCGReg ret,
+     tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(ret));
+ }
+ 
++static void tcg_wasm_out_sextract(TCGContext *s, TCGReg dest, TCGReg arg1,
++                                  int pos, int len)
++{
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(arg1));
++
++    if (pos == 0) {
++        switch (len) {
++        case 8:
++            tcg_wasm_out_op(s, OPC_I64_EXTEND8_S);
++            break;
++        case 16:
++            tcg_wasm_out_op(s, OPC_I64_EXTEND16_S);
++            break;
++        case 32:
++            tcg_wasm_out_op(s, OPC_I32_WRAP_I64);
++            tcg_wasm_out_op(s, OPC_I64_EXTEND_I32_S);
++            break;
++        default:
++            g_assert_not_reached();
++        }
++    } else {
++        g_assert_not_reached();
++    }
++
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(dest));
++}
++
+ static void tcg_out_op_rr(TCGContext *s, TCGOpcode op, TCGReg r0, TCGReg r1)
+ {
+     tcg_insn_unit_tci insn = 0;
+@@ -529,6 +559,18 @@ static const TCGOutOpBinary outop_mul = {
+     .out_rrr = tgen_mul,
+ };
+ 
++static void tcg_out_sextract(TCGContext *s, TCGType type, TCGReg rd,
++                             TCGReg rs, unsigned pos, unsigned len)
++{
++    tcg_out_op_rrbb(s, INDEX_op_sextract, rd, rs, pos, len);
++    tcg_wasm_out_sextract(s, rd, rs, pos, len);
++}
++
++static const TCGOutOpExtract outop_sextract = {
++    .base.static_constraint = C_O1_I1(r, r),
++    .out_rr = tcg_out_sextract,
++};
++
+ static void tgen_shl(TCGContext *s, TCGType type,
+                      TCGReg a0, TCGReg a1, TCGReg a2)
+ {
 -- 
 2.43.0
 
