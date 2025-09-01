@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B2D5CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C72CA1005
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut429-0002TK-EN; Mon, 01 Sep 2025 08:53:17 -0400
+	id 1ut42L-0002WR-Jr; Mon, 01 Sep 2025 08:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut426-0002Qn-5p
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:53:14 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1ut42B-0002Ud-H0
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:53:19 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut421-0004Ik-AG
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:53:13 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-61cbfa1d820so8394861a12.3
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 05:53:08 -0700 (PDT)
+ id 1ut422-0004JE-Au
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:53:19 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b042eb09948so142114766b.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 05:53:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756731187; x=1757335987; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756731188; x=1757335988; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BW+pcAYJr7rs8sK+GJ83FOVoqQy2R24okxpayuOukDM=;
- b=uXz3ueEH8grKmRvzf8oB819OxF6JhLXEoZfAiufDSxA7hkTnei6eoDGyjTxnO6DXbA
- 8+A1JWoLEOb4rjsd5COE1XGw3SHVJEm2xWKzbVBAurEiHgl8tXSwYgprSp35p78nklQZ
- zVXt5Vein1OUK/i/TG/yReplqNlBcjDBhd+OMsA1k/eKD5PbgugixYlMKDVQSRoSf2fT
- DQ9iVlMUqtIynpMq+k3yXJasYN6WBwOcnCWr91/Gj/woFXJbEB1o4mMoWZy22upLIKmK
- /VQLJBsdVHwu3lt9ueE4fYyaAijT78+o+tE9EIjtaF0hpveTqcmiLbALeKof5l5E5EBY
- UrUw==
+ bh=3i2Eag+k7j9y13dUOQK5hZi+NdV8CGfRchfnzsO2Kps=;
+ b=Lb/Ukn2fWDTRdiHjxnglpcCuSX3RLALdZ0fNBUAfCf2q40xaWQ6DtPPRyK+zrkegdt
+ PEvgnFPpt7gL1a3H59TkGSQDYs+7jmtxfateHR6moPD0nOr4R9zu1GEK22GpEStHaV4x
+ i5zx3Q/oknH1CkE5kkxqPoozKAHxAMRCltzYYF3eW4M/V/2MdTqVGwc0pnz1zR9FoImF
+ kwTobB2FwfN//5uwIiCryE+xULcVvmscXrTjmswHfGwFuiIU0qX9Dmvjwo3DM1VrWdKp
+ /LFciXwT27U1FOg/yA3KrhjplRUh6/ait1OjPdrbju3fTrFd705sPmEIIEf5ngbRIbPh
+ O8uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756731187; x=1757335987;
+ d=1e100.net; s=20230601; t=1756731188; x=1757335988;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BW+pcAYJr7rs8sK+GJ83FOVoqQy2R24okxpayuOukDM=;
- b=CDLntT9MuuHUq+K3PbSWYGSTqzBP3DlQDqXA3/s+aeec+3wkxnmSF8VS93nGVmrapV
- 5PzeVgaOGj3Ju1rvzSWqhI7B68t/nPzvwq3+pxMZ/XXWP5lNwGF/QeeZLM9HCpOLFLCS
- pW1jm6rxtzMxH2nk2riQxAnPO4LmXC9k58wMM0ofo1hIzoGCosACv09xm5+HLKpNE47i
- 6spPRVlEDD/2G9Ezt00EBICjonY6T7efRhsKUL4mwTktUUWVzjC+6rbS2TXznKYNViJE
- iNZXnEFSQMJr1rlveL81+6FL9eKvi55yIm+DU9dELS90+RoH1rejOr0MbbG10dAyaoKC
- E3GA==
-X-Gm-Message-State: AOJu0Yx+AwnzoJUnHVyeQt2EFof80jVRk+FWjRziBD1aW8TipgbbrqI4
- jOcPVpN5mkocusq+wRb7JzHRkLsMn34MMHUZDJ5oBpDQpuCCDJi/+HaQ5VvsyrGPM50=
-X-Gm-Gg: ASbGncvr/KIrQiQ/KhE8XyerrVPOVnDoEBahnAJVLx3RY2ESRCBzy8oguzukGxkBgM3
- r8qZkU43z1ouGsS6giAS32uHJO+CcUApd6ds5cn6tfCP9jA30jMby+73SSz3oli7ROGlO5kdeG8
- 3WZDdkDp1aeiQgbXJ6LTEbuCvnewh+4SHcym8GpPMWYhXT4feSg0oJsR6aGOkL0Ri3bkDVzokTh
- +rAj8kTxfmaKmGkjpo+YpDv965q/TsjDkBcDHtIeP1baJ1Q3jhstyegoigEIr7vFv5fMbRsMi7s
- 0Y95DtW9HNW0jU1952w1ECIXrm8FtcQjwm8/V/RoYuN7Pr+JE9AJj8IIBLlBWVqw70aoPDiTiFv
- 071h2Zpgk/wLkGxmqnhlDrOg8SSAY/YYEcw==
-X-Google-Smtp-Source: AGHT+IErB9p5Z0ZCWdNwbhoKUaI0nbChocKjfcOqjuNfXkeiherqMi5oWD33sD8hEdJgDaOZVNuPhQ==
-X-Received: by 2002:a17:907:3c85:b0:af9:5e9a:b6a with SMTP id
- a640c23a62f3a-b01d9743b83mr685530566b.42.1756731186643; 
- Mon, 01 Sep 2025 05:53:06 -0700 (PDT)
+ bh=3i2Eag+k7j9y13dUOQK5hZi+NdV8CGfRchfnzsO2Kps=;
+ b=AVf1gRsqAAzyuoUCc2Fxd+Gmapq9vit6mhibiVCeTfjCuO6kcq+LX0hMXVnkQnMA3v
+ sTP2t39URBlSNkCfN4s+5mZIemGNhWK/V3fID1p+pUaMJXYi90a2MWf/i5j8dFvrKgoE
+ Kw4bQ9hopPEe95e4T0aey59soQFoJUo2IF6LnBL8EELDJy7j3D1XqCHcfe48tnNis7u7
+ qB5iGZEytnvKt9uWzqrIp0mrVo3shTjApLj+6ABDzlYhXBKPLyrK15h9d64kK6g01/rC
+ iUSzBnaR64KtMnGol+hy/9N8N/h84cDZDu6uHUFKvEuWw37crUVnopC22n8mxEYO5Sjn
+ Zw0w==
+X-Gm-Message-State: AOJu0Yy/IRcLzzPCg9jGVOfNSqEU/CaPiG9hbu7FJrfWXAiboi4MosBI
+ 1s8yb4J50HEz7P2yZ2Suh8Zd6C4eVwADO3EnaYDYsc4/bJbMNgKGZmsKrrMoD0G5784=
+X-Gm-Gg: ASbGncsnIdDymlcR7CNJV7UkpTEoXijIKuKxYFj6xbL3z07Ofb2Uf9DepV9/5u+/fvO
+ gWZX3mKd+hEv/7IXNfMsb1QqIQ0S/fOKVilyG6XAZQvcCfOK3PVVkIbBstsPWnsExds3QpDA1GM
+ 8DNKYjYog+ZwJ54dY3zcLYFxyElR5QUvnIOCbsT94rhRuLZNpMSEXee+UMNlNJIQwqjwf2rG1fh
+ l2iVzPDc/kIZ4/2G+nhnbZj1xR6m5SdcnGQB4uO5o/gqK/OvPI/FL0wLoH83VnnBRD9viDd4WyM
+ ymSDWFOmIwzxbuKL/iFoQsw8LpYQbnSqLacsVpr1C3e83FVl+wYmCQfAc2ZEeIxacabwImyC3gP
+ gTydjz1ZgrP2n0ro+WMy78oI=
+X-Google-Smtp-Source: AGHT+IGqt0ogGqxj+izrq1zJvuiUR1IrPzKUuoY3YElHWhJFmIL22cW4DdFz8ymREILKQFynnZ+VKw==
+X-Received: by 2002:a17:907:1ca0:b0:b04:286a:2fb8 with SMTP id
+ a640c23a62f3a-b04286a4b87mr417188866b.56.1756731188009; 
+ Mon, 01 Sep 2025 05:53:08 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b04093c9161sm515809666b.54.2025.09.01.05.53.05
+ a640c23a62f3a-b00bab3ef2esm609931666b.11.2025.09.01.05.53.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 01 Sep 2025 05:53:05 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2D8395F8D7;
+ by draig.lan (Postfix) with ESMTP id 4484B5F8D8;
  Mon, 01 Sep 2025 13:53:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/4] hw/arm: use g_autofree for fdt in arm_load_dtb
-Date: Mon,  1 Sep 2025 13:53:02 +0100
-Message-ID: <20250901125304.1047624-3-alex.bennee@linaro.org>
+Subject: [PATCH 3/4] hw/arm: use g_auto(GStrv) for node_path in arm_load_dtb
+Date: Mon,  1 Sep 2025 13:53:03 +0100
+Message-ID: <20250901125304.1047624-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250901125304.1047624-1-alex.bennee@linaro.org>
 References: <20250901125304.1047624-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,139 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the fdt being protected by g_autofree we can skip the goto fail
-and bail out straight away. The only thing we must take care of is
-stealing the pointer in the one case when we do need it to survive.
+This is potentially more of a bike-shed case as node_path will persist
+until the end of the function.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/arm/boot.c | 29 ++++++++++++-----------------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ hw/arm/boot.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index 56fd13b9f7c..749f2d08341 100644
+index 749f2d08341..f9d0bc7011e 100644
 --- a/hw/arm/boot.c
 +++ b/hw/arm/boot.c
-@@ -519,7 +519,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-                  hwaddr addr_limit, AddressSpace *as, MachineState *ms,
+@@ -520,11 +520,11 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
                   ARMCPU *cpu)
  {
--    void *fdt = NULL;
-+    g_autofree void *fdt = NULL;
+     g_autofree void *fdt = NULL;
++    g_auto(GStrv) node_path = NULL;
      int size, rc, n = 0;
      uint32_t acells, scells;
      unsigned int i;
-@@ -538,13 +538,13 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-         fdt = load_device_tree(filename, &size);
-         if (!fdt) {
-             fprintf(stderr, "Couldn't open dtb file %s\n", filename);
--            goto fail;
-+            return -1;
+     hwaddr mem_base, mem_len;
+-    char **node_path;
+     Error *err = NULL;
+ 
+     if (binfo->dtb_filename) {
+@@ -586,7 +586,6 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
          }
-     } else {
-         fdt = binfo->get_dtb(binfo, &size);
-         if (!fdt) {
-             fprintf(stderr, "Board was unable to create a dtb blob\n");
--            goto fail;
-+            return -1;
-         }
+         n++;
      }
+-    g_strfreev(node_path);
  
-@@ -553,7 +553,6 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-          * Whether this constitutes failure is up to the caller to decide,
-          * so just return 0 as size, i.e., no error.
-          */
--        g_free(fdt);
-         return 0;
-     }
- 
-@@ -563,7 +562,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-                                    NULL, &error_fatal);
-     if (acells == 0 || scells == 0) {
-         fprintf(stderr, "dtb file invalid (#address-cells or #size-cells 0)\n");
--        goto fail;
-+        return -1;
-     }
- 
-     if (scells < 2 && binfo->ram_size >= 4 * GiB) {
-@@ -572,14 +571,14 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-          */
-         fprintf(stderr, "qemu: dtb file not compatible with "
-                 "RAM size > 4GB\n");
--        goto fail;
-+        return -1;
-     }
- 
-     /* nop all root nodes matching /memory or /memory@unit-address */
-     node_path = qemu_fdt_node_unit_path(fdt, "memory", &err);
-     if (err) {
-         error_report_err(err);
--        goto fail;
-+        return -1;
-     }
-     while (node_path[n]) {
-         if (g_str_has_prefix(node_path[n], "/memory")) {
-@@ -611,7 +610,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-             if (rc < 0) {
-                 fprintf(stderr, "couldn't add /memory@%"PRIx64" node\n",
-                         mem_base);
--                goto fail;
-+                return -1;
-             }
- 
-             mem_base += mem_len;
-@@ -622,7 +621,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-         if (rc < 0) {
-             fprintf(stderr, "couldn't add /memory@%"PRIx64" node\n",
-                     binfo->loader_start);
--            goto fail;
-+            return -1;
-         }
-     }
- 
-@@ -636,7 +635,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-                                      ms->kernel_cmdline);
-         if (rc < 0) {
-             fprintf(stderr, "couldn't set /chosen/bootargs\n");
--            goto fail;
-+            return -1;
-         }
-     }
- 
-@@ -645,7 +644,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-                                           acells, binfo->initrd_start);
-         if (rc < 0) {
-             fprintf(stderr, "couldn't set /chosen/linux,initrd-start\n");
--            goto fail;
-+            return -1;
-         }
- 
-         rc = qemu_fdt_setprop_sized_cells(fdt, "/chosen", "linux,initrd-end",
-@@ -654,7 +653,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-                                           binfo->initrd_size);
-         if (rc < 0) {
-             fprintf(stderr, "couldn't set /chosen/linux,initrd-end\n");
--            goto fail;
-+            return -1;
-         }
-     }
- 
-@@ -673,14 +672,10 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
- 
-     if (fdt != ms->fdt) {
-         g_free(ms->fdt);
--        ms->fdt = fdt;
-+        ms->fdt = g_steal_pointer(&fdt);
-     }
- 
-     return size;
--
--fail:
--    g_free(fdt);
--    return -1;
- }
- 
- static void do_cpu_reset(void *opaque)
+     /*
+      * We drop all the memory nodes which correspond to empty NUMA nodes
 -- 
 2.47.2
 
