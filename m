@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C06CA0FFF
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 17:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D275CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 17:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut84x-0001Pq-H2; Mon, 01 Sep 2025 13:12:27 -0400
+	id 1ut8BS-0004DT-MW; Mon, 01 Sep 2025 13:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut81j-0004nE-Si
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 13:09:07 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1ut8BQ-0004Cj-IN
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 13:19:08 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut81i-0007iP-43
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 13:09:07 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-61cf429f4c2so7691193a12.1
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 10:09:05 -0700 (PDT)
+ id 1ut8BO-0000vY-Hx
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 13:19:08 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3d1bf79d75aso640610f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 10:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756746544; x=1757351344; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756747144; x=1757351944; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tfERClM86amj5ag83y3ekxEJqLT8FUk/93QmCFIEpog=;
- b=FzqZaL7rhVUufT3PM4USfGRRhdW0tmQygiwrdOMYC+YspyEI/t3xGZLzGh1uFe9JFI
- qDGDj5ZwWbzQ7ZYKZV3Vkg1IF5Lvh850SLl3ByXQJmBK12WplGLCbXisPqlvcGQkUztS
- yFxLdxT0xDxx1DMAGEm9wuiLGK+4SdPqxBdY8IN0ihaLikzQxbOz9wBCco/3Qo5uOTl5
- ZCw4vgfYaaBRsZSBMv+RigxTcQznaev6odLcFD1N7RmQKmSf/5g8iAxz+FouiUr8bXz5
- mGXDJZSHZLLHLnsYXSpIVs6pWvzhVUvwsVNDl/63QDBvn3vIgCEr3UTmt4i9HWsXePH7
- xWSg==
+ bh=1sCqZB25DUfcm/4XKxVHPvAeQgXjO4vMXXkVVPHtE3o=;
+ b=j1FOPXEhy34vnv0cZRsJMKsDEqcWiUecj0eerIndpV71ZoyAJtUoh+AS1Y8Y93LRt1
+ SwPJVRCMspHkjL6LDAXXLaaXcb9SVeEx+MfBsbAMdUpk/sObEmiN+f1zZPoywPT1PrnX
+ L/VIU5+ACbfKw4ZYOK9HPWBjMUNXJNFh+pFbj3UzkGy8rzU3g4REVSxcFxPo9efGp/41
+ Yp6E44LRMoHE8g7a4UaCXa1fVuRYZbjYML0eWwh3pU2TY48F/xiO4fBzpvqNErGr18mC
+ ZYwt8Gg851DNhkJuLsAcbWYBQYFGRcNr70B7wBceSO5+bLB3tJdMxk3bfAopN/4CblKj
+ eMuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756746544; x=1757351344;
+ d=1e100.net; s=20230601; t=1756747144; x=1757351944;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tfERClM86amj5ag83y3ekxEJqLT8FUk/93QmCFIEpog=;
- b=kY1tv5Zb2cc3iP2kF+MeVahCuN67EWxbpqJfYqoyYGM/Jt11Hs0HEfPKdHEx7lyjjh
- 7Hqe7gzypARVjPelOEBKB5D5sujRfCHc1sGEsovvwCRW2Zkh8JZKv084rF3L5BI5GFS3
- wEcTdAZmwQmU1Q5TGEFdjfc1SKqfD6Ar9WmVQHiJbznMym0FuEUyr/gYUb9SLlpYjSfD
- rIM/DYqPha+ieFmPuWxhJz5ikh+VDz/hpCoSNIBsmkQrYpo9GAWYXXU8hv5MZ+27cHZT
- E23x2fuvFql1O30d2kyiq+Va1YgNQziZApaWp+vMDh2UaUaSTLgCuoMH1cxEIbq0Kf9W
- 9pLA==
-X-Gm-Message-State: AOJu0Yz4AA8uOSONm6Ci2un7YL4QtXH1oN04hUMLsBE/sifZgradAJCY
- y6rSFajArRb0ldi472Zc+cTplMUBCMuyekNal7KqEG1vBiS0k2nHEyms4bccM/Xxbtg=
-X-Gm-Gg: ASbGncvDXGLyx9UjXwO+5EQV1bwmU3sEvbxegbHbuwuiP/UZDR2N4E6RJUFaMVicvJB
- oLNJ/ewuD4kjhJkZ5TQ9sdHCsLY9A+VxPo0lofRuY8Z92aGiNwR2vczETN+RthTzJaAWIIfOajo
- 0dKS+dT92Uku6EgiFtJjNCYPFdse/yiBzUvva7R2sAvsV32q6Cn0CL+WH/sOEoCurUHJyvuf7Mr
- dtxsWuXNdClc51eLvpXYRcfA/xMYBs4a+Tmpxw4GO9qLkGZX+dYDizxscrfUDh5GqmBagyKVPVS
- HJxrA19lV5qBez7Bq3Ijpr0DdhAQW3m9EkfggfBoGqu4r+MSs1LA+FdSSraxi29+PQLaWEQ9Fwu
- ooUmXJZEHEiC6xMv2izKzg7IIhXW3XgNNOvA4/Cd/jZ1B
-X-Google-Smtp-Source: AGHT+IF09cachTbbgjtWwom8g+GntcewSd/+X4zbcU5/WoxymHXjzelJIS6Iz5/rUCSfSZft/CLF3w==
-X-Received: by 2002:a05:6402:210b:b0:61e:a5c2:6358 with SMTP id
- 4fb4d7f45d1cf-61ea5c26477mr2476228a12.34.1756746544167; 
- Mon, 01 Sep 2025 10:09:04 -0700 (PDT)
+ bh=1sCqZB25DUfcm/4XKxVHPvAeQgXjO4vMXXkVVPHtE3o=;
+ b=r6wD7M1L90i4IXcplhlJjjNIy30K43MpVXIeMy3fNQTKuiGDRcE+VzkwM8zIFYb1OL
+ ntLgklHm9QXA0Lq87M3TQVB+iANoF2CXHGFeLEQNgjEUxDXrccH8JHAXZIcl44nAncxS
+ GjEVvKXBcXiwpZP5fxqukuIs77Z5dAQ1SfMkjMxPywM/x9BDMjKjSrgeBoTNd7G8bUCl
+ z7i06nphyHGR75ezF4IOhF+mXD/pwi8Zftbcr06PQAWBSue3G088ShDt/2cJbhtRK4ht
+ nlL5TxSPCrcPM3d1/vYbFA3ZHVap4J4DfN22i7wE40XEAlb8LxF7OowTDQdXf0HFxiGv
+ 94lg==
+X-Gm-Message-State: AOJu0YzWR7NQh9m2v8HYE88lzxbX7AJgbhFIYjsqk1GiucQWhadU64dB
+ bJhAjVoZiFJHuQK+Iz8+clPslcHSmSKrxsfal3JPGewonkfpXEfQzDnELLqgq46IuRU=
+X-Gm-Gg: ASbGncv3d6OVYeDMtpOlSzSqDjyzBVfYmlm3SyH7yMNQLaHkRxWIqLW0O6iUOPNV/PJ
+ eIu6nOotQYJUAXw4A0E6YDnaPtY46m4Zvk3mn/rVLhtbhgrlszMyEzmvUEmc0ncYNewl0BQTDu6
+ TZ6yXA6ao9FvD5fcfYgHheTfKVVFr/TfGfc5wKEulS79eoVoqU4grKuVBt5P07uBOKyfKq3Uctm
+ cb3IF0byOY7jwx25H59fAinQ/Zm3yDREK1jcmYyKB5TMxLZwFvk8dhod5e6enzSPyQp1d9jlrA+
+ AeAkTzKQ75/K+Qg29SKRzULdtfzvNcP9J+d4r1IDMYRcUXTLjv2M699vLxsndDBZfJxHCDSA37d
+ +vWTI8S/XNPNjedCqhX/qxZfBGSBWgg0QUg==
+X-Google-Smtp-Source: AGHT+IHf4XtF3R4nNEcYqWb5xnCRc4YVZ2xSTr0Mht90V/zwbhqs9g+o32+fEei//O7yEAW7bfZV2A==
+X-Received: by 2002:a05:6000:420f:b0:3c4:2f45:1503 with SMTP id
+ ffacd0b85a97d-3d1b16f0bd5mr9675400f8f.16.1756747144002; 
+ Mon, 01 Sep 2025 10:19:04 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc4bbca5sm7544293a12.31.2025.09.01.10.09.03
+ 5b1f17b1804b1-45b7e50e30asm165673725e9.24.2025.09.01.10.19.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 10:09:03 -0700 (PDT)
+ Mon, 01 Sep 2025 10:19:03 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AF9685F81C;
- Mon, 01 Sep 2025 18:09:02 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 4705A5F81C;
+ Mon, 01 Sep 2025 18:19:02 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH] contrib/plugins/execlog: Explicitly check for
- qemu_plugin_read_register() failure
-In-Reply-To: <20250710144543.1187715-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Thu, 10 Jul 2025 15:45:43 +0100")
-References: <20250710144543.1187715-1-peter.maydell@linaro.org>
+To: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org,  Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Subject: Re: [PATCH v2 2/8] hw/sd/sdcard: Add validation for
+ boot-partition-size
+In-Reply-To: <1fff448da042bdf8cff7733ce67cadff4c540f1d.1756706188.git.jan.kiszka@siemens.com>
+ (Jan Kiszka's message of "Mon, 1 Sep 2025 07:56:22 +0200")
+References: <cover.1756706188.git.jan.kiszka@siemens.com>
+ <1fff448da042bdf8cff7733ce67cadff4c540f1d.1756706188.git.jan.kiszka@siemens.com>
 User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 01 Sep 2025 18:09:02 +0100
-Message-ID: <87seh614nl.fsf@draig.linaro.org>
+Date: Mon, 01 Sep 2025 18:19:02 +0100
+Message-ID: <87ms7e146x.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,21 +107,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Jan Kiszka <jan.kiszka@siemens.com> writes:
 
-> In insn_check_regs() we don't explicitly check whether
-> qemu_plugin_read_register() failed, which confuses Coverity into
-> thinking that sz can be -1 in the memcmp().  In fact the assertion
-> that sz =3D=3D reg->last->len means this can't happen, but it's clearer
-> to both humans and Coverity if we explicitly assert that sz > 0, as
-> we already do in init_vcpu_register().
+> From: Jan Kiszka <jan.kiszka@siemens.com>
 >
-> Coverity: CID 1611901, 1611902
-> Fixes: af6e4e0a22c1 ("contrib/plugins: extend execlog to track register c=
-hanges")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Make sure we are not silently rounding down or even wrapping around,
+> causing inconsistencies with the provided image.
+>
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> ---
+>  hw/sd/sd.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index 16aee210b4..834392b0a8 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -2818,6 +2818,16 @@ static void sd_realize(DeviceState *dev, Error **e=
+rrp)
+>          }
+>          blk_set_dev_ops(sd->blk, &sd_block_ops, sd);
+>      }
+> +    if (sd->boot_part_size % (128 * KiB) ||
+> +        sd->boot_part_size > 255 * 128 * KiB) {
+> +        char *size_str =3D size_to_str(sd->boot_part_size);
+> +
 
-Queued to plugins/next, thanks.
+This could be:
+
+  g_autofree char *size_str =3D size_to_str(sd->boot_part_size);
+
+> +        error_setg(errp, "Invalid boot partition size: %s", size_str);
+> +        g_free(size_str);
+
+which drops this.
+
+> +        error_append_hint(errp,
+> +                          "The boot partition size must be multiples of =
+128K"
+> +                          "and not larger than 32640K.\n");
+> +    }
+>  }
+>=20=20
+>  static void emmc_realize(DeviceState *dev, Error **errp)
+
+Otherwise:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
 
 --=20
 Alex Benn=C3=A9e
