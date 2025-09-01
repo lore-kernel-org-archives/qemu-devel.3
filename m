@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39940CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06114CA1000
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usyGY-0005yt-8m; Mon, 01 Sep 2025 02:43:47 -0400
+	id 1usyHh-0006pR-Dk; Mon, 01 Sep 2025 02:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1usyGS-0005sZ-5H; Mon, 01 Sep 2025 02:43:40 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1usyGL-0001w8-Lj; Mon, 01 Sep 2025 02:43:36 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AA72E14E7F6;
- Mon, 01 Sep 2025 09:42:54 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B2BD426C009;
- Mon,  1 Sep 2025 09:43:29 +0300 (MSK)
-Message-ID: <359428aa-94b5-4589-a66d-e48efab1a76c@tls.msk.ru>
-Date: Mon, 1 Sep 2025 09:43:29 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1usyHf-0006og-8W
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:44:55 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1usyHX-0002A9-Vt
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:44:54 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-45b86157e18so7575265e9.0
+ for <qemu-devel@nongnu.org>; Sun, 31 Aug 2025 23:44:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756709084; x=1757313884; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zDUffA5+txK0ReURnF/Mw9qGx7ZmMC0xYBT3N9MqGTI=;
+ b=dSt7uUwhtpiBQ8wRuoNSE2mVNxRT+IUsNhU43U2idlM1tgsAKLGav/8BHnvsGIuJBU
+ GTzRqW89SrFH+fiaYjbWY1s17028Kpn5zUd3Xafi2UY+drhXvDWEiZl4tSP6UFCoEkNC
+ EEQl7+p5oVZ/ZJZ7uJMGvaidso7s2wHWOyyiF5W8mXtCcKxZyiiXQxXWoqHQmF+q8Rl7
+ +AgNIEz0x23zj+s8WBlJxmjGiLQ7C8/g9qhhHrita6u4FrtKXTkP1vfcjYoBCxKz58Ks
+ 647i/wG+ETQW36cuRSKHLYEARV8xsvaEgrebQscDw4uctcM2AFta/jscwDFG3XKVdGMH
+ ShrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756709084; x=1757313884;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zDUffA5+txK0ReURnF/Mw9qGx7ZmMC0xYBT3N9MqGTI=;
+ b=a0ug5CFOmDie1O/QfiJo83cmWlFt6zOL+YO0TW6NwKuC+GAVN35sLyzuBp4jmAE1gr
+ OxH/J6bjpbPFfjJU+mG/P0d2dCewGW+CPJh8v4c2ZwUjjj9N0tK0XaOPEzC2je7JS0hb
+ gtlITzYDCjoo/LVSaPqKcLjFfW7y45jSOqlDtMwod0/4M2xF/56CqIrUAp7ibcD9Aarv
+ Y3MGaoMKOn6nPSlU7SFVOR2dZSmQnxQuKTHHeG69JGNgn+BIJL8i2UD44aiK03cFY2Q4
+ 2VhloPkO1qskxr/t9pF4mRQgvGhivzd3lfCu1DW+CG+sxttXcZ2U4azB99ZtlyNRyZDl
+ 3EsA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhUJeS04Cp0uqJVNAPote1L+xl77S6gVt0aQTb9dkbINqahTFZA/J1Jyhe7Y+akXWP/6Z5P8zAyqKC@nongnu.org
+X-Gm-Message-State: AOJu0YxDqUZtu6tI6k3cCd9HKO7InJQl7q1kgckGbJ0CpQEh1YLJVJTp
+ ZYQxW2MYimb0KCZ8LtE8SiXm0dbj5dxeOdS2Tx5ORiNX5d/v3AxZqbV+wjKrUOjj+Rg=
+X-Gm-Gg: ASbGncvIaw/nInHXypYpOnkAoeCrOr7K7ARgEGpjO5Vn46f3Wdzd/LbxnI4YjgBJc/W
+ OwFOz4kfh1oKLKNgWCor1s3x3FOBPWvqSQeogO7v9JRf4qWd3U8MKIWPnTQT3UofXohiUSrdoui
+ 6Il2N1xsvkkeXdr5u8zk3a8qTS9AgVvEO5RJ4jeQ488Ikm67FFUv4REyK/JTKzfVDz94/V5HBPa
+ VNAgpD5QTY9g0XQta5sruzzppSGV03SGy7BvsT9RCSMPD8nLldB80D/Jzck1nww6zsoeH0k77Pz
+ W8ZUVh/9/xyQmXpVQeZr4MgqWyVkkq9lnozZ2thAuG0MtKl6/fwKKSm9tr052r1UrJEvcLrfLvb
+ JaY7PM3R6o9Irta9njDs/KN3f2BEsASbQ4oLbP3aXFtN5W8Y3Wv75ynAa/gyXx0vdOOhnd2FUqE
+ gO
+X-Google-Smtp-Source: AGHT+IFRe798liJw7x3zrN49lDsa+gkjcdNnIK0tKQLPN8+fKayJnlvhqLbIRiBJxsQRyqzyl55hJg==
+X-Received: by 2002:a05:600c:4f02:b0:45b:8f0a:889d with SMTP id
+ 5b1f17b1804b1-45b8f51eaebmr5848485e9.30.1756709083578; 
+ Sun, 31 Aug 2025 23:44:43 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b8f2d3c88sm9602845e9.19.2025.08.31.23.44.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 31 Aug 2025 23:44:43 -0700 (PDT)
+Message-ID: <7617dd28-7682-45a3-9c8b-2b81d1b6c2d3@linaro.org>
+Date: Mon, 1 Sep 2025 08:44:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/curl: fix curl internal handles handling
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: qemu-stable@qemu.org
-References: <20250824001144.2001882-1-mjt@tls.msk.ru>
- <ed61c700-209b-423f-a797-a1d05cecc5ff@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <ed61c700-209b-423f-a797-a1d05cecc5ff@tls.msk.ru>
+Subject: Re: [PATCH v2 3/5] tcg/i386: Use canonical operand ordering in
+ expand_vec_sari
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250830033926.372955-1-richard.henderson@linaro.org>
+ <20250830033926.372955-4-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250830033926.372955-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,41 +103,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping#2?  We've curl access broken entirely with current versions of
-curl..
+Hi Richard,
 
-With no replies, I'm going to merge it through trivial-patches in a day
-or two.
+On 30/8/25 05:39, Richard Henderson wrote:
+> The optimizer prefers to have constants as the second operand,
 
-Thanks,
+Should we document this somewhere?
 
-/mjt
-
-On 28.08.2025 12:05, Michael Tokarev wrote:
-> On 24.08.2025 03:11, Michael Tokarev wrote:
->> block/curl.c uses CURLMOPT_SOCKETFUNCTION to register a socket callback.
->> According to the documentation, this callback is called not just with
->> application-created sockets but also with internal curl sockets, - and
->> for such sockets, user data pointer is not set by the application, so
->> the result qemu crashing.
->>
->> Pass BDRVCURLState directly to the callback function as user pointer,
->> instead of relying on CURLINFO_PRIVATE.
->>
->> This problem started happening with update of libcurl from 8.9 to 8.10 --
->> apparently with this change curl started using private handles more.
->>
->> (CURLINFO_PRIVATE is used in one more place, in 
->> curl_multi_check_completion() -
->> it might need a similar fix too)
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3081
+> so expand LT x,0 instead of GT 0,x.  This will not affect the
+> generated code at all.
 > 
-> Kevin, qemu-block@ -- does it look okay if I'll push this one through
-> trivial-patches tree?  It's not exactly trivial (but simple enough),
-> but I'd rather fix this issue, here and for debian.
-> 
-> Or are you going to send a pullreq for block?
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/i386/tcg-target.c.inc | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
