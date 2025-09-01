@@ -4,85 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450C0CA1002
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 10:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825ABCA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 10:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut20l-0008M9-S7; Mon, 01 Sep 2025 06:43:43 -0400
+	id 1ut25P-0001OE-Px; Mon, 01 Sep 2025 06:48:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ut20k-0008Lq-Jo
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:43:42 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ut20h-0007Kt-Qz
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:43:42 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-71d60157747so32112447b3.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 03:43:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756723414; x=1757328214; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rZ5RUoU+zgo8RlxpYoa2W3rVy6/6tax6/KyWZxnBNAc=;
- b=uvV2oCvNH/hO9BxkLcZdYgmrYPJxwkUxhu6sERamPt8XxSHaKJzeZ9fhXRnZoxK8kZ
- uoeIlkolvfpt9hRWGmcD/ZOq5arIFRaPsFim/OgKan5OZsc3AoSPiszRxhyvZpitezmv
- ZYfuY8R2OSzBrinw/q0KQTHM5qEluSK8bcHe2/PtHcPhYS0BmANGbUIki+dBSaHPt1IC
- U6RKWgqbVuJy+PPOsu7BbIudNfSEKWesNH5Z+w/OGRum+0rRHGB+I5OKFDBCyHPw3kW1
- WoeEa/91mPQrVF+RxC/Q6WY7tSE/yEQMWBDCPi9MfMVEBCCCxYFXaBVfWSUG/0hE0coE
- bYWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756723414; x=1757328214;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rZ5RUoU+zgo8RlxpYoa2W3rVy6/6tax6/KyWZxnBNAc=;
- b=JsvWWTjB4ZmygmF5meN6f6eabrB/miA+qVq5ZTMluVGaICljjQ3ulAljeknsmHHk6K
- r4SZpC8weqWEykf2PqozdWyiBPX6RM1MDW6X3eWPwYwPtpJs1OtNvqFF+adj/1RlWPd7
- pMTRvx9sXyTnZTUjltpgnqvpLR7t4wTpIZbtFVJpKkeBunGBSR7IgJp3HZLAzULA+pIS
- KQhkzn5blAVP2Y5nWC/2Uw0WhpXqat1J7VixvXB+rR6VJSt62F2VEa0TcJClPrg39yTk
- IQ7ILn0QhR1nRvjgYfegTgdpxgIp/vo+zb4SYyR0f3wS5PS7POrOWF50Qu/3DBqmCNxz
- Fptg==
-X-Gm-Message-State: AOJu0YwAD07GQGs2CD5NTXq8rfGlb54vl2fA11JMMeHhFhYWKQYwN6au
- aMs8q2WUXghrTwiDDpHeFRGfsRoLD+B3wuLJQ7mMWDyyl1nBhyHRwX49zEblQx9kALlpbApuuB4
- 2OyI/ar9KVle+VxIbtG8YDv1ich1iTik9L4JpgSmF5Q==
-X-Gm-Gg: ASbGncvUlPvj9NCUW2yXvMFU4/shvqg9Cr4vQyU9HvQzHkdj/+t4XHfDb4lRnorxS/x
- IeYbds/cFbo/SSDKF4BIs4es7f2kwMZrBiFRUwtaWdAaA0AidrOEWT3BXpq7fSBsuSa3ZqwU3L8
- JGPwuQBb3MyUlS17ey+GVRQ3sUYFmm/mPV0TuR/20iWIZ0h6FRt2/HAzCDaEE7i2rPZs2ch4kGO
- vR2CQ+z
-X-Google-Smtp-Source: AGHT+IH9y0xweKMNzPFl/UhCz2pi8ugSywcFqS8woN0GYc/0W1RtfetnZNrqwOwwiTUt8zpUanHcEGF2qwENpGBnELU=
-X-Received: by 2002:a05:690c:dc8:b0:721:1649:b041 with SMTP id
- 00721157ae682-7227635c94amr64676047b3.2.1756723414037; Mon, 01 Sep 2025
- 03:43:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ut25N-0001NZ-61
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:48:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ut25L-0008DK-6A
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:48:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756723704;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=DLy8vJeo/748F1K5f+SyhcTtu99ZqSKZWJZPSM/Ad00=;
+ b=TUnJTsekpAeBfbgx5YpxfRNxwnPGLvSABh3wmbwq1xQQqjM8f3Wt7dqUUO00B9LnXEyZ6Y
+ 5GoJFiKt5S3re/Efhi2U7isqJf0grAiA+1jFRpKTfsuS7ZWZV11LBXfyCKJIOjvum9zaqM
+ UiqtiYzVIXvS6RGwpMDc3tckFOHv+qY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-AEy8X7YLMGywBfi-4amruw-1; Mon,
+ 01 Sep 2025 06:48:21 -0400
+X-MC-Unique: AEy8X7YLMGywBfi-4amruw-1
+X-Mimecast-MFC-AGG-ID: AEy8X7YLMGywBfi-4amruw_1756723700
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ABAF319560B2; Mon,  1 Sep 2025 10:48:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.100])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40F5A30001A2; Mon,  1 Sep 2025 10:48:15 +0000 (UTC)
+Date: Mon, 1 Sep 2025 11:48:12 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Subject: Re: [PATCH v7 08/14] hw/misc: Add RISC-V CMGCR device implementation
+Message-ID: <aLV57BIImTTLbhbL@redhat.com>
+References: <20250901102850.1172983-1-djordje.todorovic@htecgroup.com>
+ <20250901102850.1172983-9-djordje.todorovic@htecgroup.com>
 MIME-Version: 1.0
-References: <20250829125935.1526984-1-pbonzini@redhat.com>
- <20250829125935.1526984-16-pbonzini@redhat.com>
-In-Reply-To: <20250829125935.1526984-16-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Sep 2025 11:43:22 +0100
-X-Gm-Features: Ac12FXziklwxONgKokEyH739FqV5U8bamarVDaznuSicuXGJwEVGM43aH8f-I6g
-Message-ID: <CAFEAcA-xknGH8H-1M7xtkWwQHfb47+f7MdBqrt5UmKsh3As6OA@mail.gmail.com>
-Subject: Re: [PULL 15/28] hw/i386/pc_piix.c: assume pcmc->pci_enabled is
- always true in pc_init1()
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Xiaoyao Li <xiaoyao.li@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250901102850.1172983-9-djordje.todorovic@htecgroup.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,74 +87,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 30 Aug 2025 at 16:57, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->
-> PCI is always enabled on the pc-i440fx machine so hardcode the relevant l=
-ogic
-> in pc_init1(). Add an assert() to ensure that this is always the case at
-> runtime as already done in pc_q35_init().
->
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Link: https://lore.kernel.org/r/20250828111057.468712-16-mark.caveayland@=
-nutanix.com
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+On Mon, Sep 01, 2025 at 10:29:04AM +0000, Djordje Todorovic wrote:
+> Add RISC-V implementation of the Coherent Manager Global Control
+> Register (CMGCR) device. It is based on the existing MIPS CMGCR
+> implementation but adapted for RISC-V systems.
+> 
+> The CMGCR device provides global system control for multi-core
+> configurations in RISC-V systems.
+> 
+> This is needed for the MIPS BOSTON AIA board.
+> 
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  hw/misc/Kconfig               |   9 ++
+>  hw/misc/meson.build           |   2 +
+>  hw/misc/riscv_cmgcr.c         | 244 ++++++++++++++++++++++++++++++++++
+>  include/hw/misc/riscv_cmgcr.h |  50 +++++++
+>  4 files changed, 305 insertions(+)
+>  create mode 100644 hw/misc/riscv_cmgcr.c
+>  create mode 100644 include/hw/misc/riscv_cmgcr.h
 
-Hi; Coverity points out (CID 1620557) that this change means
-that an if() check later on in the function is no longer needed:
+> diff --git a/hw/misc/riscv_cmgcr.c b/hw/misc/riscv_cmgcr.c
+> new file mode 100644
+> index 0000000000..1093eede19
+> --- /dev/null
+> +++ b/hw/misc/riscv_cmgcr.c
+> @@ -0,0 +1,244 @@
+> +/*
+> + * This file is subject to the terms and conditions of the GNU General Public
+> + * License.  See the file "COPYING" in the main directory of this archive
+> + * for more details.
+> + *
+> + * Copyright (C) 2012  MIPS Technologies, Inc.  All rights reserved.
+> + * Authors: Sanjay Lal <sanjayl@kymasys.com>
+> + *
+> + * Copyright (C) 2015 Imagination Technologies
+> + *
+> + * Copyright (C) 2025 MIPS
+> + *
+> + * SPDX-License-Identifier: LGPL-2.1-or-later
 
-> @@ -195,38 +200,36 @@ static void pc_init1(MachineState *machine, const c=
-har *pci_type)
->          kvmclock_create(pcmc->kvmclock_create_always);
->      }
->
-> -    if (pcmc->pci_enabled) {
-> -        pci_memory =3D g_new(MemoryRegion, 1);
-> -        memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
-> -        rom_memory =3D pci_memory;
-> +    pci_memory =3D g_new(MemoryRegion, 1);
-> +    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
-> +    rom_memory =3D pci_memory;
->
-> -        phb =3D OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
-> -        object_property_add_child(OBJECT(machine), "i440fx", phb);
-> -        object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
-> -                                 OBJECT(ram_memory), &error_fatal);
-> -        object_property_set_link(phb, PCI_HOST_PROP_PCI_MEM,
-> -                                 OBJECT(pci_memory), &error_fatal);
-> -        object_property_set_link(phb, PCI_HOST_PROP_SYSTEM_MEM,
-> -                                 OBJECT(system_memory), &error_fatal);
-> -        object_property_set_link(phb, PCI_HOST_PROP_IO_MEM,
-> -                                 OBJECT(system_io), &error_fatal);
-> -        object_property_set_uint(phb, PCI_HOST_BELOW_4G_MEM_SIZE,
-> -                                 x86ms->below_4g_mem_size, &error_fatal)=
-;
-> -        object_property_set_uint(phb, PCI_HOST_ABOVE_4G_MEM_SIZE,
-> -                                 x86ms->above_4g_mem_size, &error_fatal)=
-;
-> -        object_property_set_str(phb, I440FX_HOST_PROP_PCI_TYPE, pci_type=
-,
-> -                                &error_fatal);
-> -        sysbus_realize_and_unref(SYS_BUS_DEVICE(phb), &error_fatal);
-> +    phb =3D OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
+IIUC, you copied this from hw/misc/mips_cmgcr.c, which was
+GPL-2.0-or-later and so you can't claim this is LGPL-2.1-or-later.
 
-phb is now guaranteed not to be NULL (when before it might have
-been NULL), so this bit of code near the bottom of pc_init1():
+Since the orignial file didn't have a SPDX tag, don't add one
+to this new file - leave the original GPL copyright header
+untouched.
 
-    if (phb) {
-        ioapic_init_gsi(gsi_state, phb);
-    }
+> diff --git a/include/hw/misc/riscv_cmgcr.h b/include/hw/misc/riscv_cmgcr.h
+> new file mode 100644
+> index 0000000000..d7145a51af
+> --- /dev/null
+> +++ b/include/hw/misc/riscv_cmgcr.h
+> @@ -0,0 +1,50 @@
+> +/*
+> + * This file is subject to the terms and conditions of the GNU General Public
+> + * License.  See the file "COPYING" in the main directory of this archive
+> + * for more details.
+> + *
+> + * Copyright (C) 2015 Imagination Technologies
+> + *
+> + * Copyright (C) 2025 MIPS
+> + *
+> + * SPDX-License-Identifier: LGPL-2.1-or-later
 
-can be simplified to unconditionally call ioapic_init_gsi().
+Same point again
 
-Would you mind sending a followup patch to clean that up?
 
-thanks
--- PMM
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
