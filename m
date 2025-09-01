@@ -4,179 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281F6CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 13:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236F0CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 13:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut4Lm-0008IH-2l; Mon, 01 Sep 2025 09:13:34 -0400
+	id 1ut4OR-0002pT-8y; Mon, 01 Sep 2025 09:16:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1ut2XW-0004L7-DI
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:17:34 -0400
-Received: from smarthost1.eviden.com ([80.78.11.82])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut4OD-00020w-LW
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 09:16:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1ut2XR-0004lm-Sz
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:17:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1756725450; x=1788261450;
- h=from:to:cc:subject:date:message-id:
- content-transfer-encoding:mime-version;
- bh=FGJpoV60L72HE0x3+fim62b3dV9YFJe48z/idYWR92Q=;
- b=EaV+EM5jZsZ8zxIIbodx1w4PnNb+o1Z8ccJ6cGzxkKloVfL2mAWU71GT
- yfJOZ7tI6b6eCBhOHXPWkA3dmLIy8Bl55o4Bo8Mf6m19mgHkvYkZACuk9
- dOvNKMgMMHNRuhPatATl3xQyADbDRWVibAEQcMgVLN8zpqcJ1e1J/VAp5
- GFaPqWKoRqqXcjMauN+j92njjxcK4KtjESPzUQs0OYj2XxvWvWsGct9Ic
- zgcPE8v/hAPVIq6pzRPdv6t6IPP1pSGENewW+CCQYg8W7FPmrjmifUuAF
- zolkuQO2/n9v1nFZ1h8hgcTvC4czHY6JG+yt5V7bx5ZnmOqDcSViK/tBB Q==;
-X-CSE-ConnectionGUID: JudlwTQiRyGD2Qhn1uEXfQ==
-X-CSE-MsgGUID: xYm2W393RUuFRsKVNYXDAQ==
-X-IronPort-AV: E=Sophos;i="6.18,225,1751234400"; d="scan'208";a="42537902"
-X-MGA-submission: =?us-ascii?q?MDEvBGIlF+1J+lC0riRIAufRbzllD7gimux0/s?=
- =?us-ascii?q?r1YCseXjeYWgpauPbH0Fcj1A4sLokqYMaFvbuz8QEa2d9nSRHM+UYGyG?=
- =?us-ascii?q?qCxbD/LDR/veKVs94JJVXoNgII+SXTeM4/V6FtTsRlwVUP0kvoZBpeUG?=
- =?us-ascii?q?HCRYs792pcA/f0ffFGNPrQ6g=3D=3D?=
-Received: from mail-westeuropeazon11010070.outbound.protection.outlook.com
- (HELO AM0PR83CU005.outbound.protection.outlook.com) ([52.101.69.70])
- by smarthost1.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 01 Sep 2025 13:17:22 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZaeGkMFt5vnse+8dFW4Xvw5CDKk76ElZ2l6tSvz/9HjxyQM+ZK+ILnvEUFMPx4897jQu9Hv7KZXpn3BFtTR58ZeDqPqQU7YjXo4iICt4vbMLLo1n84LNggDg+XOefzm9FGC3zXW0bibTjfaftcHqYjr8AOacGXTHqZAmwAurMax7rbjf5tBPx2yvsW8u6lfD+dCnhBsoVUWAGDulrrFdayCWK8J91+9CmthGdonWlVRttAFe9KMxJhRSxGpn8YRXx5VFMdi1AErjEz9tF3C3jElsxMYU6751uzz+BXB+XLn//4/Rv8DMN4vMTbhYd4jW4JJamh1KFVw5VG8QOx+6pA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dBtfnv3f4oOZRftunLF8Qd82qIrHgWAjDrwCpwtzhOo=;
- b=Epir4qojlUNsQlCb1t9/G3D7PbqhqYUFFtnQCnv8TwH9vmsgvMoai5PqWZoYOqnd5/ixdDAttx7fIBo/brdH8v/kscGjtFJovMLoZxqoBVjWuxQ5cjdTnCMsyLG7B3e8Yl5cS9pqsmgZFwSiPEc0ap4TR/Klf3ckGH7vx4sd8hRT27ip7C+O/hQD/d4kWaXikNxAmMjjdcNK13C+26PnFHYyZX2Mw9f86U0Or3fAqinVKhQnVs+v4XC1kyAyih5ABsDJuCoW15I/kHySH94P8ncSKNd9+QTQzci2J6DEoVQJjqTPddAeJnQS1tmdWVwlEVTE2Pcm+dmRPCemFNxfVQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
- dkim=pass header.d=eviden.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dBtfnv3f4oOZRftunLF8Qd82qIrHgWAjDrwCpwtzhOo=;
- b=qlgU0bE4d/UYrc4hCmy8El0MKHWmQDakzv5XmW+ttYZyQu+OwriLsZDH0dvs+AC/7s4swZxUE+pAEtmtbBF9Co4iKfjvZ4Ke4Ybb20y1AktENqzM/mV9qw2aACZ/7Ww7j7p+2YP3c8lldBY54OCcFDmAv7yiGyUv+j7VndxqTJloz6EYUhbYlu3j+u+wUaUYOBd+z/KGoQt2yFik9gaLJrLhHy/MahNb/vvkTZhaob7UwpIsRd+5/LMXxDP+4qjaUILWBX6U0VR3m6KPLB4gGVOSiTvPAnYJje7TVbDwAjs7uarV/5GLAei4UUv+HgOftYrlZ04jHZdLgJZyHmSbRA==
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by PAVPR07MB9215.eurprd07.prod.outlook.com (2603:10a6:102:317::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.17; Mon, 1 Sep
- 2025 11:17:17 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d%6]) with mapi id 15.20.9073.026; Mon, 1 Sep 2025
- 11:17:17 +0000
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "kevin.tian@intel.com"
- <kevin.tian@intel.com>, "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "minwoo.im@samsung.com" <minwoo.im@samsung.com>, CLEMENT MATHIEU--DRIF
- <clement.mathieu--drif@eviden.com>
-Subject: [PATCH 0/5] intel_iommu: Add PRI support
-Thread-Topic: [PATCH 0/5] intel_iommu: Add PRI support
-Thread-Index: AQHcGzH69L22Lrrt0EKlQsUSfgWejw==
-Date: Mon, 1 Sep 2025 11:17:17 +0000
-Message-ID: <20250901111630.1018573-1-clement.mathieu--drif@eviden.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=eviden.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PAVPR07MB9215:EE_
-x-ms-office365-filtering-correlation-id: ce613c1c-0209-40d1-c3c7-08dde9491c8f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?MsajPI9MhM0urvx6fOa1MzPTCNS+aDwStw2DEPBx+NSz9xIHql+OwZauuD?=
- =?iso-8859-1?Q?fbsnJI1i+baHrANumkcwmza7FCFPXsoB9irf9rG9DNADCS1HRo9jNUwZnK?=
- =?iso-8859-1?Q?13Wdt15aGixIiMoRzRxiyiP0HlvJfnyWKHCZKkycrEapk/xHlV80vm9Ylx?=
- =?iso-8859-1?Q?g17EkwUSXMaiyNBPNBuTulgNOieEZvaYJboAVXbzF7qh2qz0CABurZwwzm?=
- =?iso-8859-1?Q?XMgkKIQsyFGL4dRtNt8UODo+deBU+wp4K75Z+dWKwfn3mD553V+GZ56+0u?=
- =?iso-8859-1?Q?i8FVtwXAnW8D+WNRh1SgmnMjNzzDZP1U1aO6AyJYi817xZq2zGGQTIFLFF?=
- =?iso-8859-1?Q?x2+/Moh4y6aZTdNvZesljuUuhy5aOe+G3kNqQrbKyYirHLUYnILz+Rau9H?=
- =?iso-8859-1?Q?K6nTQEgl0RLTBtWa9WK0HuRqkKZl9ogoZD8u/z0zF9ztC7/U9AADpuPesY?=
- =?iso-8859-1?Q?T9mPTlz0399/+N3rAnMjL9mDhKdWnCr13mEwnpbZ1P0M2d97jirezc0KWS?=
- =?iso-8859-1?Q?tIL+KGreq3WrwwVOlzsrgQ4izGAaLLSfoXXYzYWxtlFVVgK3hkYqS2xTtx?=
- =?iso-8859-1?Q?izbuMG4T2WWEm7Qb7RucR3OTQ3FQNtArSAhNbZ3GwXPbrozYiG7dFHiomx?=
- =?iso-8859-1?Q?WCUSs5Y1nGdMDstzBGn8/sJk2Ky64kkGbYmTbFlaMSVlSPKhKUk2uZzahk?=
- =?iso-8859-1?Q?Le06SHziRWpnvI8y1c4dqZ3B5KLSUVM48FHzOWooDeJ02HmKJEdQCd1fj7?=
- =?iso-8859-1?Q?fv/NqVvZStHqlJ1VOnxI5s+aWWNfqRatBVUbOhFEi3hf42oJR6IZkV2uTg?=
- =?iso-8859-1?Q?0tJQD2C9BeVS9bxDKIph5Vq8rXY6rNCR9ZwmTFnP+S2c1MpdGKadt3pQsG?=
- =?iso-8859-1?Q?KMtu2If88K5+zz2b0rKlsTFPRz1j/S22MPx0/DxTSbjb7EJK8iVzSblS8w?=
- =?iso-8859-1?Q?JXwMRoNgEUfH0c7FV8bwS2BaLZoB6mOVpbP4kOlKiumOERoMRHpPvGeaJ/?=
- =?iso-8859-1?Q?KhvX/LI3HaXzNf5qP1VaYs/BpdZh+5Zn0oJ8ycq442YYIdxQj2+D7/+F4l?=
- =?iso-8859-1?Q?1J8L5DFpslFIa7WCa6n4Lsp4xO3ZssD5H5oOn0rLF5varXcm7xX6m+IZh3?=
- =?iso-8859-1?Q?3ezWoaQk5z+sw+tDUpMSnno10U70kbXE5B7ah+tD4GZKD4dbJPjfLgtGT5?=
- =?iso-8859-1?Q?XBxJ6Y9Hu1QwhvPRTHZ4gq9UYffqU2aaOY3w8SU3HSE+eQzNSSTvlN4Qck?=
- =?iso-8859-1?Q?5Ev0fLooqqtTEvIRhNpPV3IU+dJ9UfSE3NDnANemDFxWOSa1PR9nFP8fha?=
- =?iso-8859-1?Q?2fDdL7dTuDOlN/y5gy6URQT0twlW8lLNxuISWVjGFmY96PAq5tE24xiScx?=
- =?iso-8859-1?Q?zcqUqBFiHbrfDIJO93YaWGPzD/bWlpcyGbRgeBMcOjGJK4J2MlKMEnIfCi?=
- =?iso-8859-1?Q?4+NYA6ddqXjflTeFNqRkcJ5m3bqkDQIiRGCZ34+xCrnOYesw3iQMljxCZA?=
- =?iso-8859-1?Q?TEm7GpyQBA09AspyK4ptb5c8ygT50FERLxZELJCWPoVTgYOnWWxtw9ePS/?=
- =?iso-8859-1?Q?uO3ho5M=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?cC9y/HWCc98eF2eJoa86NHawLK0hEUBgv9k3yuQBm4oCRUX4nt8wUtgFoP?=
- =?iso-8859-1?Q?4v44TWNnu9B1ASUBiBJPa4GcVkXWiZ4hIGnBcta4t434Az7BDl1MbiqqpZ?=
- =?iso-8859-1?Q?LNuG34uShcSLNBhYX5mmvWsLZ9EQcbWpdwA5DgK6Zi8JkT7JfNeW4onrbO?=
- =?iso-8859-1?Q?+EtwDYXDuSnlmsshdzW2c5xPC5Mkon0LqcRAV5AeI9RczxSQHVxMNB5rKx?=
- =?iso-8859-1?Q?Zn5AJ0pKYyjMrY2bq4NLVw4Sc4PUs93AwgVnxkAy+vh7ehW3bO9c8q+8kC?=
- =?iso-8859-1?Q?lC6QX9rMi2PGjShCZeX3U88zZTquOlh9gfK9Pnr4bKJC9YkoAI2FA+6P1S?=
- =?iso-8859-1?Q?+jcBNcy0609z5rdavZK65jn+4Lj3471LPCxX/PLgfRA61xDfxA8lj8KpzG?=
- =?iso-8859-1?Q?i/eLrzX4fuyI/qeOMYlFSCZsW0PXxXVazzcUJ+A58EMzoC5/0KLrrKTRwu?=
- =?iso-8859-1?Q?9JeSYwf/0nA0baxp/X05Fd0VvVjQICz6z9EghQzulT8Bdq0rhRKMIoVw5x?=
- =?iso-8859-1?Q?vDDGNGVDFq34StogJZIJd4QXZw/RrIUefEjKfLrNnjlsCHftNO/2lODTJD?=
- =?iso-8859-1?Q?BcRHsHzuzFzIRyErjK/q7uw06uKB29adPwCG+zDezyf/NFMmRRS/6Kssva?=
- =?iso-8859-1?Q?ttD9zSJUVBOX//+42ERHgDsuYs9ifJj7AyDSM8FmfrpS4eZopwqKmY69G/?=
- =?iso-8859-1?Q?5+FG4FBxREMqcUycs3pWSqX1cpECiEt+OawIfIgdufKQiUJg0am3PNUalC?=
- =?iso-8859-1?Q?ehiRQavZ1E8MV80AOe85shZA0Sdhp5O69w7gkIVixtCZrhc8YUYhbcrJY5?=
- =?iso-8859-1?Q?K/mfUPKqnp/gUJh9RebqAEXlWPxvBn2cD8Y5OBIEYeRTxVjQ8kv48clSVN?=
- =?iso-8859-1?Q?NBfbBM0nxBtGgfvCVWhWd7o2eYOHq5V1DiaH5h3tUioE2BsgRw+sQJjvIp?=
- =?iso-8859-1?Q?OwmpOwGeR9b3+cXSvKV+aj+RFSWSA1cpoRRE3jaiNTyjCsDImwNmsqnfIa?=
- =?iso-8859-1?Q?4/mqkggBrJABB3uGbpxq/Tt/Qmp3M7d0TdO10kh07AeEj10JU/4qVecjb9?=
- =?iso-8859-1?Q?nfq/ooQ/1yEAl5isfeMTZKhPWbpa71wguujHuv0OBsRKJHpieqNE4mWyPx?=
- =?iso-8859-1?Q?edKnNlzSzMAA+C+lCMURQQUov7zkUuZn2203lhNFfdpGcqbpgBYx9KPeEY?=
- =?iso-8859-1?Q?hKuBo+0O1cCjnj/SLtRogxzjvrNgu6adEJMginOJHT8SUVT+KutTSlM/yH?=
- =?iso-8859-1?Q?hRf9c4KJ/SbsvVjACFz0/D1mAH2gt+p1lL242EnV3c3BaAEmtq8+TSp9wW?=
- =?iso-8859-1?Q?V4vjJGLGQz0IPVMfLIc/24fB6b8qrGXJJBAalUaxo8T4WZTKGB0UsPpmaw?=
- =?iso-8859-1?Q?qfJ7xqea5BahtEWHxSp32V7kmHzS6J5WJ8z8jNFKZh+NaVbUgAQdm+DNyS?=
- =?iso-8859-1?Q?1OFRRolz0HQDkoe5pU23l6xpxadjKGop726GplmmiXe6/i5oJUgoJWKYS1?=
- =?iso-8859-1?Q?zYWwsn/Z0ZFv+rBcEtr64qoLWMc2A1+UKuwI+rDS0rSwliLgxeNICCDv8T?=
- =?iso-8859-1?Q?Vihg5vZCzeVSbdlCtz0HhWAhZpWTZt1qx3jl8QD2MVLPaWYKT/XlPhVuT/?=
- =?iso-8859-1?Q?0ZMGpkXt3UbNoJYi9Yt/8vuEFlFO4wbXXD+LyfmfC0UqsWiNhQzGk9zkCs?=
- =?iso-8859-1?Q?G5TlV7mWynFiAcIJCZI=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut4OB-0007v8-0s
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 09:16:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756732561;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9mHvc5P43//szp4XzxvQFFLfC4Y352Ej51eCDvbXqmo=;
+ b=Tb9oSDGBs3vu6ntW7VQUEHoK0j9Mqhdm4NSOYCYd6CsAAv9VkxPc/v0Q/LHVD30A+72JyI
+ l80j9jrCsznNtNK7YQiq1fLdk9mal7Cgt7shqxGZfEFKNp1uLHHssL+kBe8UVAT4gWFIuZ
+ SEKWLzzqQiXTU+zQFWBO30+rmlkpXXM=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-164-Qa-tqwkNO_2V8z8lWJLvgQ-1; Mon, 01 Sep 2025 09:16:00 -0400
+X-MC-Unique: Qa-tqwkNO_2V8z8lWJLvgQ-1
+X-Mimecast-MFC-AGG-ID: Qa-tqwkNO_2V8z8lWJLvgQ_1756732560
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4b3349c2c38so22245981cf.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 06:16:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756732559; x=1757337359;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9mHvc5P43//szp4XzxvQFFLfC4Y352Ej51eCDvbXqmo=;
+ b=UJCzx5NDOSga82FmN1g8nmYD9nTluthy7qTkPiQ8vIl8IavgsukKeH5MDdCM6Vp/hq
+ J+cfE9f5Kfy3xTwXqPnnX+a61lyjtmaoG4nMFMwAW7tmLsKVzlQ+EDZioI/pJ4OAvD2S
+ ELN9TzAyAj4TDavtS4u8gO37YJ2AkCujt/rXUZV/IMbq7bUhMHLEOe5pHDGQALRGVr6r
+ nnhA/2K0y21sg6r4U95XMA69nRni15TMOEKx+vjJrsaPfGe3067jmhiaHMkFXEtaqQZo
+ p/WZQlepAqCToWC+4sL8vhcVGsH+maqVGRVBIfiMa75FYzBmyU9NXURWmoSxDEgnTWJo
+ 4FMw==
+X-Gm-Message-State: AOJu0Yx/7To7LrlWV0rGvvb3OUzrA3mN6rwy624BVy6th8fGmWdHE1c/
+ L42wIc256uCQYODjVwLoFT7VnZYv20OmABvMGI3tRM/gEdUhURnNhf8GGgazK4I5YBznExA10TI
+ nkZgqpU9hUrRnswd7ZI9r1jskQe/VnG2pMBdU+nFCJJUZRDC3ZzIWpT8W
+X-Gm-Gg: ASbGnctLT8FyNwsIHVplITROaX/nXig5xAHMjJqzxtute1zEW+fF16OC8NCcYht5fOt
+ oSNCONG0Ta4OdANvuUF0Ni6n8dn/F7cEFyj4AHUGW1uyFIJ89E24TE8dAWYsj0p16yXMTg6J5YT
+ CuITCaxhG42T0LjgsSbqqsPOvyZXu8aarCYbqJRQR7mvj0bz1vPqsg+6X+a8THP0JZ9SULm0/HX
+ LS7p57H6eZzvIC+LOHr/Xduc0G91qAJwhJ/QBaeQic6GyRIniZeUWrDXZ4k3yU3gofWFENBNmzp
+ nLfu+mDKRAQtWHwTnBR0SBPm2OIbgw==
+X-Received: by 2002:a05:622a:111:b0:4b3:11db:26a5 with SMTP id
+ d75a77b69052e-4b31d843295mr102172441cf.22.1756732559399; 
+ Mon, 01 Sep 2025 06:15:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8YaD3xCElkl0gftt1U1cLdT66OtHrMrLoYlJgBK/lveEeuFx2hC4AZ77mcBusDbNpVviFjQ==
+X-Received: by 2002:a05:622a:111:b0:4b3:11db:26a5 with SMTP id
+ d75a77b69052e-4b31d843295mr102171771cf.22.1756732558706; 
+ Mon, 01 Sep 2025 06:15:58 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-70fb25c82f4sm40328726d6.7.2025.09.01.06.15.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Sep 2025 06:15:58 -0700 (PDT)
+Date: Mon, 1 Sep 2025 15:15:54 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, richard.henderson@linaro.org,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Subject: Re: [PATCH 10/18] accel: use atomic accesses for exit_request
+Message-ID: <20250901151554.355ad47a@fedora>
+In-Reply-To: <20250829153115.1590048-6-pbonzini@redhat.com>
+References: <20250829152909.1589668-1-pbonzini@redhat.com>
+ <20250829153115.1590048-6-pbonzini@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-OriginatorOrg: eviden.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ce613c1c-0209-40d1-c3c7-08dde9491c8f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Sep 2025 11:17:17.7407 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: t8moBYb8vbS9d0Q0Iys8Y0dopZRRNObUK709mNuiBQuj27mHb97IQGym2WdwH1Tr5pnOEDAnogsyCjsBJwx+gIADFTJTFj0gVb57bl6xM07gKsrEN10wI2NjXQml23gx
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAVPR07MB9215
-Received-SPF: pass client-ip=80.78.11.82;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost1.eviden.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 01 Sep 2025 09:13:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -191,55 +109,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch set belongs to a list of series that add SVM support for VT-d.
-Here, we focus on implementing the PRI API exposed through the PCIIOMMUOps.
+On Fri, 29 Aug 2025 17:31:07 +0200
+Paolo Bonzini <pbonzini@redhat.com> wrote:
 
-This work is based on the VT-d specification version 4.1 (March 2023).
+> CPU threads write exit_request as a "note to self" that they need to
+> go out to a slow path.  This write happens out of the BQL and can be
+> a data race with another threads' cpu_exit(); use atomic accesses
+> consistently.
+>=20
+> While at it, change the source argument from int ("1") to bool ("true").
+>=20
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-What is PRI?
-''''''''''''
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-PRI (Page Request Interface) is a PCIe-level protocol that enables PCIe dev=
-ices
-to request page fault resolutions to the kernel through an IOMMU. PRI combi=
-ned
-with ATS are the 2 cornerstones of a technology called SVM (Shared Virtual
-Memory) or SVA (Shared Virtual Addressing) which allows PCIe devices to rea=
-d
-from and write to the memory of userspace applications without requiring pa=
-ge
-pinning.
+> ---
+>  include/hw/core/cpu.h             | 9 +++++++++
+>  accel/kvm/kvm-all.c               | 2 +-
+>  accel/tcg/tcg-accel-ops-mttcg.c   | 2 +-
+>  accel/tcg/tcg-accel-ops-rr.c      | 4 ++--
+>  hw/ppc/spapr_hcall.c              | 6 +++---
+>  target/i386/kvm/kvm.c             | 6 +++---
+>  target/i386/nvmm/nvmm-accel-ops.c | 2 +-
+>  target/i386/nvmm/nvmm-all.c       | 2 +-
+>  target/i386/whpx/whpx-all.c       | 6 +++---
+>  9 files changed, 24 insertions(+), 15 deletions(-)
+>=20
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 8b57bcd92c9..338757e5254 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -422,6 +422,15 @@ struct qemu_work_item;
+>   * valid under cpu_list_lock.
+>   * @created: Indicates whether the CPU thread has been successfully crea=
+ted.
+>   * @halt_cond: condition variable sleeping threads can wait on.
+> + * @exit_request: Another thread requests the CPU to call qemu_wait_io_e=
+vent().
+> + *   Should be read only by CPU thread with load-acquire, to synchronize=
+ with
+> + *   other threads' store-release operation.
+> + *
+> + *   In some cases, accelerator-specific code will write exit_request fr=
+om
+> + *   within the same thread, to "bump" the effect of qemu_cpu_kick() to
+> + *   the one provided by cpu_exit(), especially when processing interrupt
+> + *   flags.  In this case, the write and read happen in the same thread
+> + *   and the write therefore can use qemu_atomic_set().
+>   * @interrupt_request: Indicates a pending interrupt request.
+>   *   Only used by system emulation.
+>   * @halted: Nonzero if the CPU is in suspended state.
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index bd9e5e3886d..e4167d94b4f 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -3730,7 +3730,7 @@ int kvm_on_sigbus_vcpu(CPUState *cpu, int code, voi=
+d *addr)
+>      have_sigbus_pending =3D true;
+>      pending_sigbus_addr =3D addr;
+>      pending_sigbus_code =3D code;
+> -    qatomic_set(&cpu->exit_request, 1);
+> +    qatomic_set(&cpu->exit_request, true);
+>      return 0;
+>  #else
+>      return 1;
+> diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mt=
+tcg.c
+> index 337b993d3da..b12b7a36b5d 100644
+> --- a/accel/tcg/tcg-accel-ops-mttcg.c
+> +++ b/accel/tcg/tcg-accel-ops-mttcg.c
+> @@ -85,7 +85,7 @@ static void *mttcg_cpu_thread_fn(void *arg)
+>      qemu_guest_random_seed_thread_part2(cpu->random_seed);
+> =20
+>      /* process any pending work */
+> -    cpu->exit_request =3D 1;
+> +    qatomic_set(&cpu->exit_request, true);
+> =20
+>      do {
+>          if (cpu_can_run(cpu)) {
+> diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+> index 1e551e92d6d..c2468d15d4f 100644
+> --- a/accel/tcg/tcg-accel-ops-rr.c
+> +++ b/accel/tcg/tcg-accel-ops-rr.c
+> @@ -212,7 +212,7 @@ static void *rr_cpu_thread_fn(void *arg)
+>      cpu =3D first_cpu;
+> =20
+>      /* process any pending work */
+> -    cpu->exit_request =3D 1;
+> +    qatomic_set(&cpu->exit_request, true);
+> =20
+>      while (1) {
+>          /* Only used for icount_enabled() */
+> @@ -286,7 +286,7 @@ static void *rr_cpu_thread_fn(void *arg)
+>          /* Does not need a memory barrier because a spurious wakeup is o=
+kay.  */
+>          qatomic_set(&rr_current_cpu, NULL);
+> =20
+> -        if (cpu && cpu->exit_request) {
+> +        if (cpu && qatomic_read(&cpu->exit_request)) {
+>              qatomic_set_mb(&cpu->exit_request, 0);
+>          }
+> =20
+> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> index 1e936f35e44..51875e32a09 100644
+> --- a/hw/ppc/spapr_hcall.c
+> +++ b/hw/ppc/spapr_hcall.c
+> @@ -509,7 +509,7 @@ static target_ulong h_cede(PowerPCCPU *cpu, SpaprMach=
+ineState *spapr,
+>      if (!cpu_has_work(cs)) {
+>          cs->halted =3D 1;
+>          cs->exception_index =3D EXCP_HLT;
+> -        cs->exit_request =3D 1;
+> +        qatomic_set(&cs->exit_request, true);
+>          ppc_maybe_interrupt(env);
+>      }
+> =20
+> @@ -531,7 +531,7 @@ static target_ulong h_confer_self(PowerPCCPU *cpu)
+>      }
+>      cs->halted =3D 1;
+>      cs->exception_index =3D EXCP_HALTED;
+> -    cs->exit_request =3D 1;
+> +    qatomic_set(&cs->exit_request, true);
+>      ppc_maybe_interrupt(&cpu->env);
+> =20
+>      return H_SUCCESS;
+> @@ -624,7 +624,7 @@ static target_ulong h_confer(PowerPCCPU *cpu, SpaprMa=
+chineState *spapr,
+>      }
+> =20
+>      cs->exception_index =3D EXCP_YIELD;
+> -    cs->exit_request =3D 1;
+> +    qatomic_set(&cs->exit_request, true);
+>      cpu_loop_exit(cs);
+> =20
+>      return H_SUCCESS;
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 8420c4090ef..34e74f24470 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -5486,10 +5486,10 @@ void kvm_arch_pre_run(CPUState *cpu, struct kvm_r=
+un *run)
+>      if (cpu_test_interrupt(cpu, CPU_INTERRUPT_INIT | CPU_INTERRUPT_TPR))=
+ {
+>          if (cpu_test_interrupt(cpu, CPU_INTERRUPT_INIT) &&
+>              !(env->hflags & HF_SMM_MASK)) {
+> -            qatomic_set(&cpu->exit_request, 1);
+> +            qatomic_set(&cpu->exit_request, true);
+>          }
+>          if (cpu_test_interrupt(cpu, CPU_INTERRUPT_TPR)) {
+> -            qatomic_set(&cpu->exit_request, 1);
+> +            qatomic_set(&cpu->exit_request, true);
+>          }
+>      }
+> =20
+> @@ -5604,7 +5604,7 @@ int kvm_arch_process_async_events(CPUState *cs)
+>          if (env->exception_nr =3D=3D EXCP08_DBLE) {
+>              /* this means triple fault */
+>              qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+> -            cs->exit_request =3D 1;
+> +            qatomic_set(&cs->exit_request, true);
+>              return 0;
+>          }
+>          kvm_queue_exception(env, EXCP12_MCHK, 0, 0);
+> diff --git a/target/i386/nvmm/nvmm-accel-ops.c b/target/i386/nvmm/nvmm-ac=
+cel-ops.c
+> index 3799260bbde..86869f133e9 100644
+> --- a/target/i386/nvmm/nvmm-accel-ops.c
+> +++ b/target/i386/nvmm/nvmm-accel-ops.c
+> @@ -77,7 +77,7 @@ static void nvmm_start_vcpu_thread(CPUState *cpu)
+>   */
+>  static void nvmm_kick_vcpu_thread(CPUState *cpu)
+>  {
+> -    cpu->exit_request =3D 1;
+> +    qatomic_set(&cpu->exit_request, true);
+>      cpus_kick_thread(cpu);
+>  }
+> =20
+> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+> index 10bd51d9b59..7e36c42fbb4 100644
+> --- a/target/i386/nvmm/nvmm-all.c
+> +++ b/target/i386/nvmm/nvmm-all.c
+> @@ -414,7 +414,7 @@ nvmm_vcpu_pre_run(CPUState *cpu)
+>       * or commit pending TPR access.
+>       */
+>      if (cpu_test_interrupt(cpu, CPU_INTERRUPT_INIT | CPU_INTERRUPT_TPR))=
+ {
+> -        cpu->exit_request =3D 1;
+> +        qatomic_set(&cpu->exit_request, true);
+>      }
+> =20
+>      if (!has_event && cpu_test_interrupt(cpu, CPU_INTERRUPT_NMI)) {
+> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+> index 2106c29c3a0..00fb7e23100 100644
+> --- a/target/i386/whpx/whpx-all.c
+> +++ b/target/i386/whpx/whpx-all.c
+> @@ -1489,10 +1489,10 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+>      if (cpu_test_interrupt(cpu, CPU_INTERRUPT_INIT | CPU_INTERRUPT_TPR))=
+ {
+>          if (cpu_test_interrupt(cpu, CPU_INTERRUPT_INIT) &&
+>              !(env->hflags & HF_SMM_MASK)) {
+> -            cpu->exit_request =3D 1;
+> +            qatomic_set(&cpu->exit_request, true);
+>          }
+>          if (cpu_test_interrupt(cpu, CPU_INTERRUPT_TPR)) {
+> -            cpu->exit_request =3D 1;
+> +            qatomic_set(&cpu->exit_request, true);
+>          }
+>      }
+> =20
+> @@ -1539,7 +1539,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+>      if (tpr !=3D vcpu->tpr) {
+>          vcpu->tpr =3D tpr;
+>          reg_values[reg_count].Reg64 =3D tpr;
+> -        cpu->exit_request =3D 1;
+> +        qatomic_set(&cpu->exit_request, true);
+>          reg_names[reg_count] =3D WHvX64RegisterCr8;
+>          reg_count +=3D 1;
+>      }
 
-Resources
-'''''''''
-
-Here is a link to our GitHub repository where you can find:
-    - Qemu with all the patches for SVM
-        - ATS
-        - PRI
-        - Device IOTLB invalidations
-        - Requests with already pre-translated addresses
-    - A demo device
-    - A simple driver for the demo device
-    - A userspace program (for testing and demonstration purposes)
-
-https://github.com/BullSequana/Qemu-in-guest-SVM-demo
-
-Clement Mathieu--Drif (5):
-  pcie: Add a way to get the outstanding page request allocation (pri)
-    from the config space.
-  intel_iommu: Bypass barrier wait descriptor
-  intel_iommu: Declare PRI constants and structures
-  intel_iommu: Declare registers for PRI
-  intel_iommu: Add PRI operations support
-
- hw/i386/intel_iommu.c          | 337 ++++++++++++++++++++++++++++++++-
- hw/i386/intel_iommu_internal.h |  51 +++++
- hw/pci/pcie.c                  |   8 +
- include/hw/i386/intel_iommu.h  |   1 +
- include/hw/pci/pcie.h          |   1 +
- 5 files changed, 397 insertions(+), 1 deletion(-)
-
---=20
-2.51.0=
 
