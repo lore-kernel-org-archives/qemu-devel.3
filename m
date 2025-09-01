@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99283CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 16:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B900BCA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 16:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut7Cp-0000Hd-SK; Mon, 01 Sep 2025 12:16:32 -0400
+	id 1ut7G1-0001RD-4Y; Mon, 01 Sep 2025 12:19:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ut7Cn-0000Gl-Uv
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 12:16:30 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1ut7Fz-0001PA-3T
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 12:19:47 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ut7Cm-0005lt-B9
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 12:16:29 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-71d603b60cbso37106947b3.1
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 09:16:27 -0700 (PDT)
+ id 1ut7Fx-00068R-Gr
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 12:19:46 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e970acf352fso3793954276.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 09:19:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756743387; x=1757348187; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756743583; x=1757348383; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NV1AhK+d7vIS7RbUx8PHzB8MCmPm6vGN/vhbTkD6MlU=;
- b=TKVYxaGj0HLolleWtGU+JfAhL2aMnxcKsOxfyhJN/j/x2ES8GvQh3KBSd4USBOZPXY
- /fasiDmQR45AwpdpAWm8Ay65Eraryn6snteRX4nIeb2kMvq1JZJ75s7jC4M6buhCzEZT
- V8Sy+mCtB1sCd5N577YZ9K2iwS6J3ER3nIxzDorY1hGSZrv3hYQpHqmwosMrM8nbcqHv
- xgkEb90/KnndYqbeEQE/Qmqz4cebLl5pZcWhB0WnKE3ChgD6e6z2D3PNiqzIVmHlpMLr
- kDf71+B+5lRCEt8PUWJKBqt9/CrhKazOyq9qSNGf8OKAChTjManNT+MMy6tKq19anm37
- 47Lg==
+ bh=FXLr7kyljCCq8Ak4TIu9hyLJj09lg6Gt5VxUZ07ohDs=;
+ b=vSssX5XboCPr5jod6HwAX3mrglRFYsiX79R+DvNHC8wKdujwi0+lrd43oFrBSzIh4J
+ kUaXebsXS5RAojZyjpAk6UdA+ZcOdNHUeuGMyUdSDaix2bJkmDccwwqUmkzI6wn4G59K
+ JEV0OUi+NOiRJIOsldbFW9StBxyVVVE+w+2F0V2/OMfRVJ80aQLBEABVxPEq0iIRu/XI
+ 3eDTvlKfKymMdwfz1GDGVhJpKxtQZUirg3iXmzLBRIJ/mYpqEdA22ShaZbgUZaXPW5MR
+ kymTD2UZcp5iAD2HzIDH1UzixCGR1BzPHqrjMKJ2kqfNdKe0Pnx9GcJ3OinAXXF+5JwX
+ rXrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756743387; x=1757348187;
+ d=1e100.net; s=20230601; t=1756743583; x=1757348383;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NV1AhK+d7vIS7RbUx8PHzB8MCmPm6vGN/vhbTkD6MlU=;
- b=v+cCR2m9dHjUCyVxFduQ88ChrIW3I6l/U04LGUrglvB2MDjwpXFnrlbx6GjftMa0to
- gkS+AiZjdDLLPqqXrqi3ANILrYPoQe4d8TGmo1qMBv8VNlmMh04bUllMWdy+xKQT2WJv
- XE/Fym2edtyGpVvvtemYCeBwqumHRKxOsNrKDoLNVV2wpI/FuFbhtkBa1H96mZNqZObX
- DB91CjUUqd9MEPHB4gzmgHnmpGjBB0dEVsiqP1rfgAYm8TsY2JCiveIscNxRBKLXSyod
- AM2auWzOMKh28+6wn87o4HkXbRs/zkND0fb32H9TfJFDpSfd/OXfSVUKiKxO8/2FwQB0
- RLlA==
-X-Gm-Message-State: AOJu0YwI7iUUJff1GJegpkV1gQQJlHNSImaemiualNryeAzGC6OWGiDI
- z1NO1ku5mwg8aIlDwfmm30x3Cis84ja09E7ZVclgLfF0aYk8iHcIO3QOQCrrU8mwIXtZpzNO0Tx
- 7nBkxaH4sDXSKMg5WpjHlDG59WKY3wIjinHP/OBctoOPf63NBk+7P
-X-Gm-Gg: ASbGnctdvUkEXPbRG2NOU48RXoONzyLLBoeIRbdyYOXcAASccziIKSJ/L16T9PH5f4F
- evaVc2C8llynHqd8t09T3VflYsEUi9JOz2/4Qo61AbIk4k/VjeFaNnOlWxYqAs/B4VEJaEuFwMH
- hFgT6s8CGQGA/2R0fHpwC3C+fcmxAdPUaOVXJoopsEdXCfWS3HdPY18AkJZ7kjbNYGivSYXLgzN
- qRkC+vJN8SrMMjmltg=
-X-Google-Smtp-Source: AGHT+IG46UQIHhC4f/UfMqnKWgCuAw7YVpAJMqmMq9ByClkm7voY8T6CQl9+m52NJIfHYmr6nbFNHWJDNiqSrEF71mI=
-X-Received: by 2002:a05:690c:6b11:b0:71e:7ee9:839b with SMTP id
- 00721157ae682-722763a49d3mr112361607b3.12.1756743386780; Mon, 01 Sep 2025
- 09:16:26 -0700 (PDT)
+ bh=FXLr7kyljCCq8Ak4TIu9hyLJj09lg6Gt5VxUZ07ohDs=;
+ b=Q/ceyEVP8DSnoArzCLJxIdMNd04qWGbWwjQvdAJunPgBukg3zDn1kt4/oo2bu2RYQM
+ ZpLD8f20z1oSiKK+23PVhrRbof5MoSIcRlz3aXciTegy2vZYAnUk/DHhymckpEZOsmPn
+ 9uUmRI4nJYC2YWMzFbrijN66X4Gy/2V4LjT6oxT0GbXfP1rYBz5NRPCVOs29kaD5/JGY
+ iNOEZwp13Cd15HFdINg9wUKkIcOP21QJZMruGkji20MqomPzmelOrdq87SqjE8tyFjZz
+ NfYiYPYq+bG6wKM0LvWC+K1luePrlmZcQ2UJYv3N2M5sHEt069BZmOgTVoD01uYoQBb1
+ uiGw==
+X-Gm-Message-State: AOJu0YyuM1WTRMiMrqWHS+BjGfdMt29i2tzk9QoHkmCZsfYn20sVMF8h
+ TAYJAAQ2qljJOdfFzQhGCKmIe7WaIeUDNuKyLw+yNkojeQjpf82wTFmZMmHyFqM09rTq6bpXYr/
+ UdgwsahKvL3aMXLdCWsE1Qb31dhNtaqHH3K2UJfLqNA==
+X-Gm-Gg: ASbGnctiJxJikl/RsjMXGUGelMCW1GaUI1PWdivI/o5LWy+Z2J5K1fCF/AEssJXvDiH
+ a3udN4fB8fbplwJuDKMPH99oNr7Nifvc4Kd78G0eA+2Ls/5sXiayrtpBZCYO6e/YdM/3edeop3W
+ CG24495x3pu7aSrCHVFYDNkrJCeLU76WoVI45hvkSgVm5B68rSu+cmr0rneUbnjBmUdCIyHYdtm
+ D1qBURqwn1gHB452lc=
+X-Google-Smtp-Source: AGHT+IFbohj1uzUd8XqQkOoTMLHvzrDqq1WTybqpsQN7wt/WMgrmfLZQCkUy/X6Za8kKqLQfBhfypg2Fnf1FpwK2qfc=
+X-Received: by 2002:a05:690c:4d05:b0:71f:95ce:ac82 with SMTP id
+ 00721157ae682-72276333524mr94471967b3.9.1756743575020; Mon, 01 Sep 2025
+ 09:19:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250819102409.2117969-1-peter.maydell@linaro.org>
-In-Reply-To: <20250819102409.2117969-1-peter.maydell@linaro.org>
+References: <20250710144543.1187715-1-peter.maydell@linaro.org>
+ <f6c75047-d074-4200-a33a-c864e7beadf1@linaro.org>
+In-Reply-To: <f6c75047-d074-4200-a33a-c864e7beadf1@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Sep 2025 17:16:14 +0100
-X-Gm-Features: Ac12FXygXX6hugTf9GdD_d61BOwfkg0zEs7c0qoab75gyx2Kt9M2Z0T0rowOK_Y
-Message-ID: <CAFEAcA8APXVZmaJtQoGHWxVeDsk2s3kPSt3d94L6zZR-P2ZFaw@mail.gmail.com>
-Subject: Re: [PATCH] tests,
- scripts: Don't import print_function from __future__
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 1 Sep 2025 17:19:23 +0100
+X-Gm-Features: Ac12FXyXa5isM4OjB-Qt9NG72B2Tav8Rb1MM8_10YqZYZkAdOdBR9cO9eicVKtI
+Message-ID: <CAFEAcA8Dz5eic1MfKYjQjtMXzjrM50DmGefABYjKNendicHOSw@mail.gmail.com>
+Subject: Re: [PATCH] contrib/plugins/execlog: Explicitly check for
+ qemu_plugin_read_register() failure
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,32 +96,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 Aug 2025 at 11:24, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> Some of our Python scripts still include the line
->   from __future__ import print_function
->
-> which is intended to allow a Python 2 to handle the Python 3 print()
-> syntax. This particular part of the future arrived many years ago,
-> and our minimum Python version is 3.9, so we don't need to keep
-> this line around.
->
-> NB: the scripts in tests/tcg/*/gdbstub/ are run with whatever Python
-> gdb was built against, but we can safely assume that that was a
-> Python 3 because our supported distros are all on Python 3.  In any
-> case these are only run as part of "make check-tcg", not by
-> end-users.
->
-> Commit created with:
->
->  sed -i -e '/import print_function/d' $(git grep -l 'from __future__')
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-
-I'll apply this via target-arm.next, unless anybody would
-prefer to take it via a different tree.
+Hi Alex -- this patch was reviewed back in July but didn't
+make it into git before 10.1 freeze; would you like to
+pick it up now we've reopened for 10.2 ?
 
 thanks
 -- PMM
+
+On Thu, 10 Jul 2025 at 16:21, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 7/10/25 7:45 AM, Peter Maydell wrote:
+> > In insn_check_regs() we don't explicitly check whether
+> > qemu_plugin_read_register() failed, which confuses Coverity into
+> > thinking that sz can be -1 in the memcmp().  In fact the assertion
+> > that sz == reg->last->len means this can't happen, but it's clearer
+> > to both humans and Coverity if we explicitly assert that sz > 0, as
+> > we already do in init_vcpu_register().
+> >
+> > Coverity: CID 1611901, 1611902
+> > Fixes: af6e4e0a22c1 ("contrib/plugins: extend execlog to track register changes")
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   contrib/plugins/execlog.c | 1 +
+> >   1 file changed, 1 insertion(+)
+>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
