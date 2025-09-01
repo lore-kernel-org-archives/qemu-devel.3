@@ -4,89 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 354F9CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F04CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usyIw-0007RX-J3; Mon, 01 Sep 2025 02:46:14 -0400
+	id 1usyJP-00007b-2N; Mon, 01 Sep 2025 02:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1usyIc-0007Hz-K2
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:45:54 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1usyIP-0002a8-LA
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:45:52 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B8D614E7FD
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 09:45:04 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6BF9F26C00E
- for <qemu-devel@nongnu.org>; Mon,  1 Sep 2025 09:45:39 +0300 (MSK)
-Message-ID: <b9720e0c-de7c-45aa-bffe-bf4d655f80c1@tls.msk.ru>
-Date: Mon, 1 Sep 2025 09:45:39 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1usyJK-00006B-7l
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:46:38 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1usyJD-0002ob-Q1
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:46:38 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3cf991e8bb8so1570885f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 31 Aug 2025 23:46:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756709189; x=1757313989; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W/Neb+XJIU2WR94viZ5J+wzwdj3ZhbtzvmIEqHiEGl8=;
+ b=Ut9DONzfHP39JADS3lvGO73++6VsEPaIyiiuSJcEyY1h9Y35V0+/5SFnLK5wCk1pQw
+ fZVrs3kaEP4amwwJSqzeMU+dlsuGcN8BgLd6uqC0lkrkgkSiQgKfokbo0gcjscz6HGmU
+ 1SPz+rnS8MzM2Lb0S/kTm75MYn/nq7dhAoLD9mlRJpJBFce16o2h0PFgEv83aHNoAkJ6
+ WCRauwGubnrC1SZP1aT5RN42cv8toK/af7DshMPLzwI1qNv2ylfTgJfNt2L9FIXlncpP
+ o/IkzkSYTXYGf0XNNz0TrYgG4SISvyI0AX49OpXxQ+ncHseu33kh1o/YsSlao+eWOhJk
+ l7Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756709189; x=1757313989;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=W/Neb+XJIU2WR94viZ5J+wzwdj3ZhbtzvmIEqHiEGl8=;
+ b=tGOTY7vuBCrb7fwnLLKaxXDhJSLcnrUxsETmhXjDgD/qy0rgy25jFiC9N4IXsL+vxF
+ 3vibM6lSvatWkuJqDIaKOzVO7Zupxusk+Xp3V+UZokACWLhGbXOFDRmAQvncP7L5volF
+ uwd9mDxAgGFh6FcO+mUVeMrtb9n10iyfoejwybY3TOqCIUkLTQUI+ryMqwQ40LKbXq0K
+ QMpWqBdpQ4A1dUCdCkdpSNdIEOf1JIpwGYI5BQJ/0co2z5gWjabMarOOcw1I8yB6RQVV
+ 868pElyh31t9Ow2vWqadH+uMp/9AbJN4tRSaNz1Iuc4RLtSR86IESUtFB+7uFvo0+umv
+ GNaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXqvzPVxlQl6NFGVPcDwAw9mAE2fn7sIbMSFUVg+O+VayUbYm8WG+HJ8VwT5xerrXMrsqifWGbMJygU@nongnu.org
+X-Gm-Message-State: AOJu0YwMRej8iteOKlT//tAaTxlDtcEP8VztI4eVVadLvHlk5F1URAvu
+ 0p8VxaKSj5LKRSYQNm43BwQ7ZT8hC/N0Qiup7R3SXVyUAfmIXYTJ99P8Pnx/ZGcRsBg=
+X-Gm-Gg: ASbGncsUDsT6NrCWYUAOPlRkl+W1gxRQ4eFaoE01ALIMTb1THFbmeDmCU6ZG+dieweu
+ L/Kc6dvlaMsnrgrskXakD0+lMCfPyZuJb1Xy7CTE0wZEyW96Llc+27TG8I7yY1QZyXrjkx3+Dvm
+ il7LQL3Gna4+i/3Vl5c503i98bUBb3HY4rlk+MA4KqTx6uk0gfEtVi16wvRbhumDELpRLrxe9rD
+ hsJsVc+Lr02vSYHkwdxDf3W74BSIqbbtUMaPPgkNsl47p/VRJRoxWjywyoZhReQUXi38iZL8SQ+
+ bNRiF5/VhxbDMb8+yTHwOC1g6YceB+5odBvZw3IpTDRmGAgYs4/WPV9PVPKV9UVjgmT7K3OxLX8
+ JeeG30Fugi0zXc7XLMHNjHmsaPymQEKl4MzllXnVFAkjVoRgZeO2S1JNtMjaWn0YbUiBu631TuO
+ ke
+X-Google-Smtp-Source: AGHT+IHlN1qZgwX0n0CsciTMCMHfGFpN6PXBafEJyLOm1ziu9j92o5djuazY80MlvJyPXCzGXPsb0g==
+X-Received: by 2002:a05:6000:2007:b0:3b8:d15e:ed35 with SMTP id
+ ffacd0b85a97d-3d1dcb77d9fmr6002383f8f.23.1756709189063; 
+ Sun, 31 Aug 2025 23:46:29 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b6f0c72f8sm224498985e9.3.2025.08.31.23.46.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 31 Aug 2025 23:46:28 -0700 (PDT)
+Message-ID: <64361111-116b-4d56-98c7-095280c0577b@linaro.org>
+Date: Mon, 1 Sep 2025 08:46:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/qemu-binfmt-conf.sh: remove --credential option
-To: qemu-devel@nongnu.org
-References: <20250824102408.2066036-1-mjt@tls.msk.ru>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250824102408.2066036-1-mjt@tls.msk.ru>
+Subject: Re: [PATCH v4 06/19] target/loongarch: Use vaddr in
+ get_physical_address()
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20250730030202.3425934-1-maobibo@loongson.cn>
+ <20250730030202.3425934-7-maobibo@loongson.cn>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250730030202.3425934-7-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,99 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.08.2025 13:24, Michael Tokarev wrote:
-> qemu-user has never been designed to run in suid/sgid context,
-> to handle a suid/sgid binary which should run with elevated
-> privileges.  Our qemu-binfmt-conf script made it too easy to
-> hit this trap for the users.  Remove this ability.
+On 30/7/25 05:01, Bibo Mao wrote:
+> Replace target_ulong type with vaddr in function get_physical_address()
+> and the same with its calling functions.
 > 
-> If an experienced user wants to set up such an environment,
-> there's a simpe way to modify the resulting config to include
-> the necessary flags, but qemu itself should not support this
-> mode until we can provide a minimal security guarantee/support.
-
-Any opinions please?
-
-What I'm thinking - maybe, when this option is given, print an
-error message saying it is not supposed to be used like this,
-with an explanation "why", instead of complaining about an
-invalid option?
-
-Thanks,
-
-/mjt
-
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   scripts/qemu-binfmt-conf.sh | 16 +++-------------
->   1 file changed, 3 insertions(+), 13 deletions(-)
-> 
-> diff --git a/scripts/qemu-binfmt-conf.sh b/scripts/qemu-binfmt-conf.sh
-> index 5fd462b1d1..c4a1fe7685 100755
-> --- a/scripts/qemu-binfmt-conf.sh
-> +++ b/scripts/qemu-binfmt-conf.sh
-> @@ -183,7 +183,7 @@ qemu_normalize() {
->   usage() {
->       cat <<EOF
->   Usage: qemu-binfmt-conf.sh [--qemu-path PATH][--debian][--systemd CPU]
-> -                           [--help][--credential yes|no][--exportdir PATH]
-> +                           [--help][--exportdir PATH]
->                              [--persistent yes|no][--qemu-suffix SUFFIX]
->                              [--preserve-argv0 yes|no]
->   
-> @@ -200,8 +200,6 @@ Usage: qemu-binfmt-conf.sh [--qemu-path PATH][--debian][--systemd CPU]
->                           file for all known cpus
->          --exportdir:     define where to write configuration files
->                           (default: $SYSTEMDDIR or $DEBIANDIR)
-> -       --credential:    if yes, credential and security tokens are
-> -                        calculated according to the binary to interpret
->          --persistent:    if yes, the interpreter is loaded when binfmt is
->                           configured and remains in memory. All future uses
->                           are cloned from the open file.
-> @@ -275,9 +273,6 @@ qemu_check_systemd() {
->   
->   qemu_generate_register() {
->       flags=""
-> -    if [ "$CREDENTIAL" = "yes" ] ; then
-> -        flags="OC"
-> -    fi
->       if [ "$PERSISTENT" = "yes" ] ; then
->           flags="${flags}F"
->       fi
-> @@ -304,7 +299,7 @@ package qemu-$cpu
->   interpreter $qemu
->   magic $magic
->   mask $mask
-> -credentials $CREDENTIAL
-> +credentials no
->   preserve $PRESERVE_ARG0
->   fix_binary $PERSISTENT
->   EOF
-> @@ -359,13 +354,12 @@ SYSTEMDDIR="/etc/binfmt.d"
->   DEBIANDIR="/usr/share/binfmts"
->   
->   QEMU_PATH=/usr/local/bin
-> -CREDENTIAL=no
->   PERSISTENT=no
->   PRESERVE_ARG0=no
->   QEMU_SUFFIX=""
->   IGNORE_FAMILY=no
->   
-> -_longopts="debian,systemd:,qemu-path:,qemu-suffix:,exportdir:,help,credential:,\
-> +_longopts="debian,systemd:,qemu-path:,qemu-suffix:,exportdir:,help,\
->   persistent:,preserve-argv0:,ignore-family:"
->   options=$(getopt -o ds:Q:S:e:hc:p:g:F:i: -l ${_longopts} -- "$@")
->   eval set -- "$options"
-> @@ -415,10 +409,6 @@ while true ; do
->           usage
->           exit 1
->           ;;
-> -    -c|--credential)
-> -        shift
-> -        CREDENTIAL="$1"
-> -        ;;
->       -p|--persistent)
->           shift
->           PERSISTENT="$1"
+>   target/loongarch/cpu-mmu.h        |  2 +-
+>   target/loongarch/cpu_helper.c     |  9 ++++-----
+>   target/loongarch/tcg/tlb_helper.c | 11 ++++++-----
+>   3 files changed, 11 insertions(+), 11 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
