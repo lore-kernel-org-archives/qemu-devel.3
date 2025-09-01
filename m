@@ -4,92 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F04CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA93CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:47:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usyJP-00007b-2N; Mon, 01 Sep 2025 02:46:44 -0400
+	id 1usyJg-0000gz-5u; Mon, 01 Sep 2025 02:47:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1usyJK-00006B-7l
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:46:38 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1usyJD-0002ob-Q1
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:46:38 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3cf991e8bb8so1570885f8f.2
- for <qemu-devel@nongnu.org>; Sun, 31 Aug 2025 23:46:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756709189; x=1757313989; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W/Neb+XJIU2WR94viZ5J+wzwdj3ZhbtzvmIEqHiEGl8=;
- b=Ut9DONzfHP39JADS3lvGO73++6VsEPaIyiiuSJcEyY1h9Y35V0+/5SFnLK5wCk1pQw
- fZVrs3kaEP4amwwJSqzeMU+dlsuGcN8BgLd6uqC0lkrkgkSiQgKfokbo0gcjscz6HGmU
- 1SPz+rnS8MzM2Lb0S/kTm75MYn/nq7dhAoLD9mlRJpJBFce16o2h0PFgEv83aHNoAkJ6
- WCRauwGubnrC1SZP1aT5RN42cv8toK/af7DshMPLzwI1qNv2ylfTgJfNt2L9FIXlncpP
- o/IkzkSYTXYGf0XNNz0TrYgG4SISvyI0AX49OpXxQ+ncHseu33kh1o/YsSlao+eWOhJk
- l7Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756709189; x=1757313989;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W/Neb+XJIU2WR94viZ5J+wzwdj3ZhbtzvmIEqHiEGl8=;
- b=tGOTY7vuBCrb7fwnLLKaxXDhJSLcnrUxsETmhXjDgD/qy0rgy25jFiC9N4IXsL+vxF
- 3vibM6lSvatWkuJqDIaKOzVO7Zupxusk+Xp3V+UZokACWLhGbXOFDRmAQvncP7L5volF
- uwd9mDxAgGFh6FcO+mUVeMrtb9n10iyfoejwybY3TOqCIUkLTQUI+ryMqwQ40LKbXq0K
- QMpWqBdpQ4A1dUCdCkdpSNdIEOf1JIpwGYI5BQJ/0co2z5gWjabMarOOcw1I8yB6RQVV
- 868pElyh31t9Ow2vWqadH+uMp/9AbJN4tRSaNz1Iuc4RLtSR86IESUtFB+7uFvo0+umv
- GNaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXqvzPVxlQl6NFGVPcDwAw9mAE2fn7sIbMSFUVg+O+VayUbYm8WG+HJ8VwT5xerrXMrsqifWGbMJygU@nongnu.org
-X-Gm-Message-State: AOJu0YwMRej8iteOKlT//tAaTxlDtcEP8VztI4eVVadLvHlk5F1URAvu
- 0p8VxaKSj5LKRSYQNm43BwQ7ZT8hC/N0Qiup7R3SXVyUAfmIXYTJ99P8Pnx/ZGcRsBg=
-X-Gm-Gg: ASbGncsUDsT6NrCWYUAOPlRkl+W1gxRQ4eFaoE01ALIMTb1THFbmeDmCU6ZG+dieweu
- L/Kc6dvlaMsnrgrskXakD0+lMCfPyZuJb1Xy7CTE0wZEyW96Llc+27TG8I7yY1QZyXrjkx3+Dvm
- il7LQL3Gna4+i/3Vl5c503i98bUBb3HY4rlk+MA4KqTx6uk0gfEtVi16wvRbhumDELpRLrxe9rD
- hsJsVc+Lr02vSYHkwdxDf3W74BSIqbbtUMaPPgkNsl47p/VRJRoxWjywyoZhReQUXi38iZL8SQ+
- bNRiF5/VhxbDMb8+yTHwOC1g6YceB+5odBvZw3IpTDRmGAgYs4/WPV9PVPKV9UVjgmT7K3OxLX8
- JeeG30Fugi0zXc7XLMHNjHmsaPymQEKl4MzllXnVFAkjVoRgZeO2S1JNtMjaWn0YbUiBu631TuO
- ke
-X-Google-Smtp-Source: AGHT+IHlN1qZgwX0n0CsciTMCMHfGFpN6PXBafEJyLOm1ziu9j92o5djuazY80MlvJyPXCzGXPsb0g==
-X-Received: by 2002:a05:6000:2007:b0:3b8:d15e:ed35 with SMTP id
- ffacd0b85a97d-3d1dcb77d9fmr6002383f8f.23.1756709189063; 
- Sun, 31 Aug 2025 23:46:29 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6f0c72f8sm224498985e9.3.2025.08.31.23.46.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 31 Aug 2025 23:46:28 -0700 (PDT)
-Message-ID: <64361111-116b-4d56-98c7-095280c0577b@linaro.org>
-Date: Mon, 1 Sep 2025 08:46:26 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1usyJe-0000gC-QF
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:46:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1usyJd-0002xs-0F
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:46:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756709215;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QlsN4mK9ufsR5fKaEg53YJ+D4DFFV5Y3oBf8HMqBC6Q=;
+ b=hQIvnB4JecS78RgzI+BR7oU5ebLk3jCczJC1c3isu0rBijysyvtjZV143g8PxzGzboQMRI
+ 1MKVBV8ggcGy0lGtrlIr7pWUns0fIaWPx4P29X2ukd4vT4Kf2HsZSuIYLGuAK93YwPyA0P
+ 4qFjDLTSecXYJRLLxB/ty5BZlEBBHHM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-8P6ClBOQOKmZmkYevAf7KA-1; Mon,
+ 01 Sep 2025 02:46:52 -0400
+X-MC-Unique: 8P6ClBOQOKmZmkYevAf7KA-1
+X-Mimecast-MFC-AGG-ID: 8P6ClBOQOKmZmkYevAf7KA_1756709211
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 35E6F195609F; Mon,  1 Sep 2025 06:46:51 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CABDB19560B4; Mon,  1 Sep 2025 06:46:47 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH v2 4/8] hw/mips/malta: Include 'system/system.h'
+Date: Mon,  1 Sep 2025 08:46:27 +0200
+Message-ID: <20250901064631.530723-5-clg@redhat.com>
+In-Reply-To: <20250901064631.530723-1-clg@redhat.com>
+References: <20250901064631.530723-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 06/19] target/loongarch: Use vaddr in
- get_physical_address()
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20250730030202.3425934-1-maobibo@loongson.cn>
- <20250730030202.3425934-7-maobibo@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250730030202.3425934-7-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,17 +88,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/7/25 05:01, Bibo Mao wrote:
-> Replace target_ulong type with vaddr in function get_physical_address()
-> and the same with its calling functions.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/cpu-mmu.h        |  2 +-
->   target/loongarch/cpu_helper.c     |  9 ++++-----
->   target/loongarch/tcg/tlb_helper.c | 11 ++++++-----
->   3 files changed, 11 insertions(+), 11 deletions(-)
+Files using serial_hd() should include 'system/system.h'. Fix that.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Aurelien Jarno <aurelien@aurel32.net>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/mips/malta.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/mips/malta.c b/hw/mips/malta.c
+index cbdbb21056807538f495a2a75581e38627b69727..344dc8ca76675e16ebbeba42604e829b6140a19a 100644
+--- a/hw/mips/malta.c
++++ b/hw/mips/malta.c
+@@ -52,6 +52,7 @@
+ #include "system/qtest.h"
+ #include "system/reset.h"
+ #include "system/runstate.h"
++#include "system/system.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "system/kvm.h"
+-- 
+2.51.0
 
 
