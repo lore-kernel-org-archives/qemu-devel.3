@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B94CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0043ACA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:09:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2MS-00008d-KF; Mon, 01 Sep 2025 07:06:08 -0400
+	id 1ut2PO-0001RA-72; Mon, 01 Sep 2025 07:09:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2ML-000083-Cb
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:06:01 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2PM-0001Qo-Hf
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:09:08 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2MJ-0002lg-AD
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:06:00 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45b87a13242so13848505e9.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:05:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2PK-00038i-L7
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:09:08 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-45b8b7ac427so5491555e9.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756724755; x=1757329555; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756724945; x=1757329745; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=g7LfsmVoQpvJ0TsCDcTvSH/tR1rq1IEO/y3R4BdxsFA=;
- b=AQ/KybkvqaJihiQXlMxZ0zPMBXV7fLcJFn++aGgIts5oENnT/34xe61I1hp+8uSMUI
- lnx+Lt7pbtUnOcbEgqdfOFJqA3FOTO/p7efTlcz5wYu2mbq/Qi1wP3Du+KdxjuShbd2e
- uSvMi06NHXrlKgVy+lcdPEOlaBCwp2KLHsQncubWuU4nPIhbt2zrVqK89NBKM9gXhq/G
- N5rgjAtvZRgUA3HsMgoWlm+7mwdTQW8b8B90FLHxYLJHsCqZRya2NscJ+87gkS9J6d4C
- w85EfjaVYcz4zvOUSoSDMgivxnd7T3Z2uxc45/TA//kxGETx82CK7PmVT+Nu+YnljM0O
- kJ3g==
+ bh=sRHr5guPu7iMPr3nU1tfv6PHzbX40PpKttGsE7g8MxE=;
+ b=eq+fYuGFkAA088V8hTVCC4rATQSqeo1ERzte1Tj7PE7q0p1m29mY+pXc0BpZmSKAdF
+ x7BNioH1imtTgzpoeJ2dLR5fvTxfDNtOfDk+x9L3BnEHiHkuhRovtOP+hyh/KaH3GpwC
+ Jo4R/f6nvoSTyxr4TfnF/DE5ngVYP/KvPZcKT4D0rDMA2vcoLXPoC9Jm+tT5tpHVVZmq
+ 9rLl0sQkMiTJJ3fqVmec6AT43DnZe40OnLN2lOBES8lFNKFmmf/2uBXyrdDf5V6mi0OQ
+ mS5QIvhdNWThCwCndNX1rzyhooA3XJ3yE8F06M7cJ+2sM7hhcmoFND5hRt5K3vOig1fK
+ qqIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756724755; x=1757329555;
+ d=1e100.net; s=20230601; t=1756724945; x=1757329745;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g7LfsmVoQpvJ0TsCDcTvSH/tR1rq1IEO/y3R4BdxsFA=;
- b=pBKitHKT5vvLXXpMU0c3LHFF1j2z49/D+LMxMyXWie8eKLoa99h4qH8xinAXzos1zF
- i41YA8fSKdqjLuuV0pYUledq0x7DtGnUV6XWDmT93HrkWe+6Qo8B0WZ3Ui8BWnUjHFUg
- 3TzPtNn3M0MKHw8uSJ1H2VIMRMAcJ2tWt4ROfBXI0Kzi+0k518xM3sMcsP9w0gryFDmT
- Ye84qPYhALOJrpL4TXL00GdK1BmHrD//zwAzhmSj1Mb1B1oho7S52q7ASyh/fcp6wiMA
- ELFmIByT8MegyRPbhCsSTOO3E3Y0q8qIA/p9f34JKchmQuG1BxWiZ6x7TbZwt43asLAL
- 0F6g==
+ bh=sRHr5guPu7iMPr3nU1tfv6PHzbX40PpKttGsE7g8MxE=;
+ b=A3BGSUMuGtVQdt4klK5fwIl6TVNAf/0eB5ph56s/3h07JPOI4ZXhgDbDj0DWSraTuc
+ 0Y2XTAirQrj53yTQ9OnHWZVKHmAtnm4QCd6wmWcgE8lO8NYQ2SOqT9J4CfvQ7gmfF7CP
+ g7LgIya9JZBGlOfK851/J9juK0gibBwbCVMchXsnwr6ckOlYesKV2AkA87cfyybowfYW
+ wXMAY94BMba7OiknpFadCgcnFZAgVKMZSPhKLQAC3dwB/siQ744c82IshIjU+prqFfd3
+ CYAwlvj1PBsL/ZkNujVdAH1GGX83FK9rXNHx5tIbVP5As4y97g7OnTBeRLZp7cki6Flw
+ 8GBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdfv5vvR2W5IZ8+dUuYGbxfptlMK4kZ5udq1SKGK6ih3ca1x1h03KP+AdD3aUtOyWdPU9TeO34+K7f@nongnu.org
-X-Gm-Message-State: AOJu0YxUrP8yRSEHonAllxSvjij2NN1jHzY4Sszn3/GwzZeocJD0OHUX
- 7kHlvEYHqqSDWsMt6c2C7erujdzctShk5nXz15igRCWAKPSIaxi0vsSvQzj71TzorjE=
-X-Gm-Gg: ASbGncuIwmL4SsCB7aQIxknQqPpe7yitDbNB4N9xBRb8VxrCXff17rZNAbUjvSDe+sq
- joKBXMkjFBDxgRmZhlZTrIoNnU4StIg4f7ib8WmMVVkrX7UlokI10Wkuzy99ZKhYmxgPV3Y/R1x
- v+HTVNjWTz0oQNsdjnO4NTnijuE9ALLlNLyZI6SbxGmFuT2P8lJCyBxdo95m6o0/bnP3sUk3oJY
- d0bwJv6CQigJJeN6VvQD2h2twuMTE3l6NpkZ9V9018FiT0A5X3IUu2dyoW83dIWpmjLpV6lc/cF
- r/Z2nShp0tRxyqAeMwc2019UWKfmKXFR3kpGqVgprhZm7QZaQAUzLG29IYjqzF8dEM0w5lcAcuf
- Ds0zS7OS0K7ud6AzKnVDwoqtRb5bM15G8YjBcLFTZyfqzddTVFZEqLfnZkTR582lmTw==
-X-Google-Smtp-Source: AGHT+IF4D8hdX3lBSKH/Mx6rN2QmWaalI/tCjlcwyGM1+b+ZZeHaAdXhM1TSPOwp5lE3uVAW4o45pw==
-X-Received: by 2002:a05:600c:3b84:b0:45b:89ef:65ae with SMTP id
- 5b1f17b1804b1-45b89ef6623mr55082115e9.16.1756724755316; 
- Mon, 01 Sep 2025 04:05:55 -0700 (PDT)
+ AJvYcCXFaUnPReJU9w/3D9CgQexGpHgSeknyEkrqWRtmviYlX23mB5+p1CSsW8rjXkNXXWvoXN2HY/4UW5U/@nongnu.org
+X-Gm-Message-State: AOJu0YxAEPgT6qXtm8yBcdHlUlFUi8b9RPKA0FZarbMyhkGydHXBR3Nu
+ flZFsvtqRn+hOzNWi9X8GUsaEXYrZFD3BVh8UlAz8yjTtC9q+ZSrY0MVUrjBE42jkFE=
+X-Gm-Gg: ASbGncuhNe3HPuA1IB1gCYcqsAD8Y720TskXEuBiykVGZ5JvXdu9YqPAu4p3TvjQrly
+ OCEBfF1ljoHOWhb6MTx1dsJLPU9DUv+c406siefCncMdADmAtLomq+zmWtD1EU1kM/o6wguJy2f
+ UXOOHscLATWqldSF/iv6A9Y7PW0lnUsGpvE4EH9K2MDLR+qbiQkt7tvnOIK5MoM1mJBCabXC6u5
+ FTetDGYwSUj38sgqYkvNhh+PVR7vj8r4zAjY2sD7rZVlgPSB29+HRUSE7W0zgBID1HM3JopCUqN
+ vugjwI1DIOSQBzwPbEMzte3z0p34MEK15hCIhHaWuVvBk0axWQeY7D4c3IDZ6MWpLB589ngJJ+4
+ qF6THAIDn3rYFyqsnBsgf4p1D7O82yo2T0cd1g9pAdp91UyM2HjXCjYkcpjK3W/Q2rw==
+X-Google-Smtp-Source: AGHT+IFdSChrNZBgh+G+ZPiCNJM44gS23B8A9HZ9z2jgAbSZbaDgR1QCxTmRal7HhuVYQgcDCgbjyQ==
+X-Received: by 2002:a05:600c:1ca9:b0:45b:8c3f:7d5a with SMTP id
+ 5b1f17b1804b1-45b8c3f7dc6mr30041875e9.4.1756724944622; 
+ Mon, 01 Sep 2025 04:09:04 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b87632365sm94069375e9.16.2025.09.01.04.05.54
+ 5b1f17b1804b1-45b7e8ab093sm157419385e9.22.2025.09.01.04.09.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 04:05:54 -0700 (PDT)
-Message-ID: <ca5816d3-a0e7-4460-aead-8f0dbcb4bc92@linaro.org>
-Date: Mon, 1 Sep 2025 13:05:53 +0200
+ Mon, 01 Sep 2025 04:09:04 -0700 (PDT)
+Message-ID: <f903021c-e4e4-46c3-ae6a-d03201ee76bf@linaro.org>
+Date: Mon, 1 Sep 2025 13:09:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 01/14] hw/intc: Allow gaps in hartids for aclint and
- aplic
+Subject: Re: [PATCH v6 07/14] target/riscv: Add Xmipslsp instructions
 To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
@@ -77,16 +76,16 @@ Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
  "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
  "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
 References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
- <20250717093833.402237-2-djordje.todorovic@htecgroup.com>
- <5f0fb254-fa9c-4e29-a848-6e9b3bc8274d@linaro.org>
- <046d60ed-aa62-4357-a812-721de3412573@htecgroup.com>
+ <20250717093833.402237-8-djordje.todorovic@htecgroup.com>
+ <87427d18-af1e-4815-b95f-75bae32720d3@linaro.org>
+ <00c8547e-dbbc-44d3-bcdf-122899d7dc2e@htecgroup.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <046d60ed-aa62-4357-a812-721de3412573@htecgroup.com>
+In-Reply-To: <00c8547e-dbbc-44d3-bcdf-122899d7dc2e@htecgroup.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,49 +108,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 10:17, Djordje Todorovic wrote:
-> On 8. 8. 25. 17:52, Philippe Mathieu-Daudé wrote:
+On 1/9/25 10:30, Djordje Todorovic wrote:
 > 
+> On 8. 8. 25. 18:02, Philippe Mathieu-Daudé wrote:
 >> CAUTION: This email originated from outside of the organization. Do
 >> not click links or open attachments unless you recognize the sender
 >> and know the content is safe.
 >>
 >>
 >> On 17/7/25 11:38, Djordje Todorovic wrote:
->>> This is needed for riscv based CPUs by MIPS since those may have
->>> sparse hart-ID layouts. ACLINT and APLIC still assume a dense
->>> range, and if a hart is missing, this causes NULL derefs.
+>>> Add MIPS P8700 ldp, lwp, sdp, swp instructions.
 >>>
 >>> Signed-off-by: Chao-ying Fu <cfu@mips.com>
 >>> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
 >>> ---
->>>    hw/intc/riscv_aclint.c | 21 +++++++++++++++++++--
->>>    hw/intc/riscv_aplic.c  | 11 ++++++++---
->>>    2 files changed, 27 insertions(+), 5 deletions(-)
+>>>    target/riscv/cpu.c                        |  3 +
+>>>    target/riscv/cpu_cfg.h                    |  2 +-
+>>>    target/riscv/cpu_cfg_fields.h.inc         |  1 +
+>>>    target/riscv/insn_trans/trans_xmips.c.inc | 84 +++++++++++++++++++++++
+>>>    target/riscv/xmips.decode                 | 23 +++++++
+>>>    5 files changed, 112 insertions(+), 1 deletion(-)
+>>
+>>
+>>> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+>>> index 9734963035..f35d477f27 100644
+>>> --- a/target/riscv/cpu_cfg.h
+>>> +++ b/target/riscv/cpu_cfg.h
+>>> @@ -39,7 +39,7 @@ static inline bool always_true_p(const
+>>> RISCVCPUConfig *cfg __attribute__((__unus
 >>>
->>> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
->>> index b0139f03f5..22ac4133d5 100644
->>> --- a/hw/intc/riscv_aclint.c
->>> +++ b/hw/intc/riscv_aclint.c
->>> @@ -292,7 +292,13 @@ static void
->>> riscv_aclint_mtimer_realize(DeviceState *dev, Error **errp)
->>>        s->timecmp = g_new0(uint64_t, s->num_harts);
->>>        /* Claim timer interrupt bits */
->>>        for (i = 0; i < s->num_harts; i++) {
->>> -        RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(s->hartid_base + i));
->>> +        CPUState *cpu_by_hartid = cpu_by_arch_id(s->hartid_base + i);
->>> +        if (cpu_by_hartid == NULL) {
->>> +            qemu_log_mask(LOG_GUEST_ERROR, "aclint-mtimer: invalid
->>> hartid: %u",
->>> +                          s->hartid_base + i);
+>>>    static inline bool has_xmips_p(const RISCVCPUConfig *cfg)
+>>>    {
+>>> -    return cfg->ext_xmipscbop || cfg->ext_xmipscmov;
+>>> +    return cfg->ext_xmipscbop || cfg->ext_xmipscmov ||
+>>> cfg->ext_xmipslsp;
 >>
->> DeviceRealize() handlers are part of machine modelling, not guest uses.
->>
->> IOW, triggering this is a programming mistake, so we should just
->> abort() here.
+>> Checking for any XMIPS instruction implemented to return vendor
+>> extension presence seems odd. Can you implement them separately?
 > 
-> Well, if we do it that way, our Boston board target for P8700 cannot run.
+> And I tried several options, but it only made the code even "more off" :(
 
-So the problem is elsewhere :)
-
+OK, maybe this is the correct way to go then.
 
