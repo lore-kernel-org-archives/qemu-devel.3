@@ -4,76 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B900BCA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 16:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3061ACA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 16:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut7G1-0001RD-4Y; Mon, 01 Sep 2025 12:19:49 -0400
+	id 1ut7Js-00036m-2H; Mon, 01 Sep 2025 12:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ut7Fz-0001PA-3T
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 12:19:47 -0400
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ id 1ut7Jo-00036O-8O
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 12:23:44 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ut7Fx-00068R-Gr
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 12:19:46 -0400
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-e970acf352fso3793954276.2
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 09:19:44 -0700 (PDT)
+ id 1ut7Jk-0006sb-NU
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 12:23:43 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-723960ded6bso6438477b3.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 09:23:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756743583; x=1757348383; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756743819; x=1757348619; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FXLr7kyljCCq8Ak4TIu9hyLJj09lg6Gt5VxUZ07ohDs=;
- b=vSssX5XboCPr5jod6HwAX3mrglRFYsiX79R+DvNHC8wKdujwi0+lrd43oFrBSzIh4J
- kUaXebsXS5RAojZyjpAk6UdA+ZcOdNHUeuGMyUdSDaix2bJkmDccwwqUmkzI6wn4G59K
- JEV0OUi+NOiRJIOsldbFW9StBxyVVVE+w+2F0V2/OMfRVJ80aQLBEABVxPEq0iIRu/XI
- 3eDTvlKfKymMdwfz1GDGVhJpKxtQZUirg3iXmzLBRIJ/mYpqEdA22ShaZbgUZaXPW5MR
- kymTD2UZcp5iAD2HzIDH1UzixCGR1BzPHqrjMKJ2kqfNdKe0Pnx9GcJ3OinAXXF+5JwX
- rXrw==
+ bh=RNyMi1J9ComDo9kbsxnoSfvoNlKLpUo5dVx/FtaQbbk=;
+ b=d25RdqKf4rHmW9WM2E+mflatTZICLXDE1cMfyLJiaAlSKhtALwvIF29cb/nwDqzvCO
+ aFrU/AvMlgo0PdoxdlJIhOSqkgn+gBgolqKv9P610MCnU7WJJ+cMqKNe4g9gyl0c900u
+ XJKGq7EZwthAAtaq9bGbkkQxsi+z2AqKMkYg/UHjBA2/Bs2uDP7qY2ctMJ0unGQ2AqG5
+ yBkGooba0MyEaWsY4CVaUgRGGKOOrI/ml0427CLJAPyb8KqwiS13cuSCsBnroCheCIxg
+ 6Nv/SJbM7Dyf4Xts0AdOvFixKYgTV38fuAwB/YV9e1pv9NSJhTQTe9T3fPX3bxlYNgDY
+ 5htg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756743583; x=1757348383;
+ d=1e100.net; s=20230601; t=1756743819; x=1757348619;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FXLr7kyljCCq8Ak4TIu9hyLJj09lg6Gt5VxUZ07ohDs=;
- b=Q/ceyEVP8DSnoArzCLJxIdMNd04qWGbWwjQvdAJunPgBukg3zDn1kt4/oo2bu2RYQM
- ZpLD8f20z1oSiKK+23PVhrRbof5MoSIcRlz3aXciTegy2vZYAnUk/DHhymckpEZOsmPn
- 9uUmRI4nJYC2YWMzFbrijN66X4Gy/2V4LjT6oxT0GbXfP1rYBz5NRPCVOs29kaD5/JGY
- iNOEZwp13Cd15HFdINg9wUKkIcOP21QJZMruGkji20MqomPzmelOrdq87SqjE8tyFjZz
- NfYiYPYq+bG6wKM0LvWC+K1luePrlmZcQ2UJYv3N2M5sHEt069BZmOgTVoD01uYoQBb1
- uiGw==
-X-Gm-Message-State: AOJu0YyuM1WTRMiMrqWHS+BjGfdMt29i2tzk9QoHkmCZsfYn20sVMF8h
- TAYJAAQ2qljJOdfFzQhGCKmIe7WaIeUDNuKyLw+yNkojeQjpf82wTFmZMmHyFqM09rTq6bpXYr/
- UdgwsahKvL3aMXLdCWsE1Qb31dhNtaqHH3K2UJfLqNA==
-X-Gm-Gg: ASbGnctiJxJikl/RsjMXGUGelMCW1GaUI1PWdivI/o5LWy+Z2J5K1fCF/AEssJXvDiH
- a3udN4fB8fbplwJuDKMPH99oNr7Nifvc4Kd78G0eA+2Ls/5sXiayrtpBZCYO6e/YdM/3edeop3W
- CG24495x3pu7aSrCHVFYDNkrJCeLU76WoVI45hvkSgVm5B68rSu+cmr0rneUbnjBmUdCIyHYdtm
- D1qBURqwn1gHB452lc=
-X-Google-Smtp-Source: AGHT+IFbohj1uzUd8XqQkOoTMLHvzrDqq1WTybqpsQN7wt/WMgrmfLZQCkUy/X6Za8kKqLQfBhfypg2Fnf1FpwK2qfc=
-X-Received: by 2002:a05:690c:4d05:b0:71f:95ce:ac82 with SMTP id
- 00721157ae682-72276333524mr94471967b3.9.1756743575020; Mon, 01 Sep 2025
- 09:19:35 -0700 (PDT)
+ bh=RNyMi1J9ComDo9kbsxnoSfvoNlKLpUo5dVx/FtaQbbk=;
+ b=a5e1tkWjuQbQ7+qGgwMab00yU27KNoR2EOXjnFGIUvXNG3VEUkDbshqMhnnU7QVuPb
+ ckFyKvugd1PGNIuwLtIKNUEy59tlu6MrCvSVU+mdkufU1/hBVTHOjleCdlBQv+0Xp3tP
+ tbD5arMvXt7qR+GNY8iNqtwzYPCQDeB/tTgoz/4Li2eTfrbc9h7rHGmJioy80WQOHJbk
+ NA1f9kY8WciLfEbkMFZJChj1C8Lxxr+OOrAv0y9P9e/Sbbmhge4YfIk7G39XD07XaddH
+ GxvSO8rz723foH2Mgl+mbEJwlEQIvkPEOCJEXin1LxZgFGRQ6ahMOHUOZXC/UZAzbxWV
+ bHCQ==
+X-Gm-Message-State: AOJu0YwfnfTNF4QguohYjUSH3ESgcgsgQTxnAcAfRzcFHQJ2T2EH/Nsr
+ 5y+0pzKfvRPzdB3/FRVp0LmDhlp9IuCoMHlBKrBK+qMwyY6O36DxI2PBU1Oam7Vj4eiyxmHsPWS
+ hByJrs2IhanMM1/MmzptGpGMLeCbWvsCr+clfZ8uf4OjW6zhPN2J+
+X-Gm-Gg: ASbGncvCzgn0MoLzlI0GJZg/F5bLzcsxbNtNY31aAu4vY/HgaA8t+QGlAhsUZczMWos
+ Ed740zL8sPXtK7zE+Ty3mQR3y0OhznoFWMoeLZkZySnH+8S7y/+SAVOLU4Q+U+9wCb4jRu3NiT9
+ lBju8DnhQcEHQsbNGZCBdrzqcPANIM9066eEI2IfwyIvWTBH+tt+b1K+GRtkYp6Sd9xx+nfXQt9
+ Ma13eG0oWXQzSeWmlc=
+X-Google-Smtp-Source: AGHT+IFvLECNQksNxghAcwHL1zamWpO+A2RZPzzzPm5JacMBFgDzRH7Bco3UbD3VpHd8AXCzDJMc7le5dC0k05M93Pg=
+X-Received: by 2002:a05:690c:a04f:b0:722:875f:2cb0 with SMTP id
+ 00721157ae682-722875f2e81mr54814237b3.49.1756743818941; Mon, 01 Sep 2025
+ 09:23:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250710144543.1187715-1-peter.maydell@linaro.org>
- <f6c75047-d074-4200-a33a-c864e7beadf1@linaro.org>
-In-Reply-To: <f6c75047-d074-4200-a33a-c864e7beadf1@linaro.org>
+References: <20250801174006.2466508-1-pierrick.bouvier@linaro.org>
+ <3ca7be1f-267e-45c9-9894-67e920ad5ee9@linaro.org>
+In-Reply-To: <3ca7be1f-267e-45c9-9894-67e920ad5ee9@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Sep 2025 17:19:23 +0100
-X-Gm-Features: Ac12FXyXa5isM4OjB-Qt9NG72B2Tav8Rb1MM8_10YqZYZkAdOdBR9cO9eicVKtI
-Message-ID: <CAFEAcA8Dz5eic1MfKYjQjtMXzjrM50DmGefABYjKNendicHOSw@mail.gmail.com>
-Subject: Re: [PATCH] contrib/plugins/execlog: Explicitly check for
- qemu_plugin_read_register() failure
+Date: Mon, 1 Sep 2025 17:23:27 +0100
+X-Gm-Features: Ac12FXwVzDsCE9Vu0qXTpOqpX7ZsS-dfR9s2jxtZSCwM_JomYkB68eSz7bOBIh4
+Message-ID: <CAFEAcA991uW624qVvQe9Q+6JY7Qu7w+ksWJH6AExYghD8UtSFw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] single-binary: compile hw/intc/arm* files once
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,30 +93,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex -- this patch was reviewed back in July but didn't
-make it into git before 10.1 freeze; would you like to
-pick it up now we've reopened for 10.2 ?
-
-thanks
--- PMM
-
-On Thu, 10 Jul 2025 at 16:21, Pierrick Bouvier
+On Fri, 22 Aug 2025 at 15:31, Pierrick Bouvier
 <pierrick.bouvier@linaro.org> wrote:
 >
-> On 7/10/25 7:45 AM, Peter Maydell wrote:
-> > In insn_check_regs() we don't explicitly check whether
-> > qemu_plugin_read_register() failed, which confuses Coverity into
-> > thinking that sz can be -1 in the memcmp().  In fact the assertion
-> > that sz == reg->last->len means this can't happen, but it's clearer
-> > to both humans and Coverity if we explicitly assert that sz > 0, as
-> > we already do in init_vcpu_register().
+> On 2025-08-01 10:40, Pierrick Bouvier wrote:
+> > We simply compile them as target common code, without moving them to hw/arm.
 > >
-> > Coverity: CID 1611901, 1611902
-> > Fixes: af6e4e0a22c1 ("contrib/plugins: extend execlog to track register changes")
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   contrib/plugins/execlog.c | 1 +
-> >   1 file changed, 1 insertion(+)
+> > Pierrick Bouvier (2):
+> >    hw/meson: enter target hw first
+> >    hw/intc: compile some arm related source once
+> >
+> >   hw/intc/meson.build |  6 +++---
+> >   hw/meson.build      | 45 +++++++++++++++++++++++----------------------
+> >   2 files changed, 26 insertions(+), 25 deletions(-)
+> >
 >
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>
+> Ping on this series.
+> I'll be out next week, but it should be ready to be pulled once the
+> trunk reopens.
+
+Philippe -- I'm assuming you'll pick this up as part of
+the single-binary work. Let me know if you'd rather it
+goes via target-arm.
+
+-- PMM
 
