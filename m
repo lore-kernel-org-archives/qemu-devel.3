@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADB6CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A5DACA1005
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2yu-0006jl-Qq; Mon, 01 Sep 2025 07:45:52 -0400
+	id 1ut3Bo-00058j-34; Mon, 01 Sep 2025 07:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ut2yk-0006c7-UP; Mon, 01 Sep 2025 07:45:44 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1ut2yc-0001Gm-IH; Mon, 01 Sep 2025 07:45:41 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-b4c72e4f1b6so2240214a12.1; 
- Mon, 01 Sep 2025 04:45:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756727128; x=1757331928; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8PJjbFuVAPTI7U71p25kyRaD/FGclmStwyCKrbtmghs=;
- b=jRF6w8M0IJHrZXpE4O9ehr9i2T9b2U7kjnpMD2aQDTiuUX+iA86Y9zTmYd5nccgxBw
- QXYBuLXrFhfn77qwLJ4N8I7Mh8drbVXPvI4FuWyvD2gmJG617yaBRNFG5hnYtx2L439/
- QkyxSsUz6xZoxDPC2Ntmebf0kpIGsqn0CXglewfCBJu/cfrpKQOP3xoFfy7gpEJlAlg5
- ky0uuzT69C8nA3l0ghv9pqjd5rUlWJm/x+NkKPs2d+4WWkxXFlV17WPcIz7y5cvGptio
- jgWgAIr9WbNsiYm+VzDLFRr0vrdtZhlYjlzzkw9FWQKgvafXxT4QUNWpd5LiVmGVBRHB
- 3IkQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut3Bm-0004wc-D9
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:59:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut3BY-0003gx-9m
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:59:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756727933;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kLqhidISZKYdtwaDku+KqyLfsSI4xpXN5PzFUDr90wg=;
+ b=TaQALc+r+zPr3rR04wIbxCT0ZaWrTcHrzSRm49IJ2jLaiVKA6LacivUy14E0o93RqhTgG7
+ QVBi8PhB1IYY8b/YJ/VrWm+Ipbj14fxd7cGzp9bBHON+VzwLv3ZLeYxFLgsZaSAyRS23+3
+ oOVQfZDP8pyuvHsF5+aqmxZTF2QRVyA=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-614-XaHnSpiYPI-W0NYuSrro3w-1; Mon, 01 Sep 2025 07:58:52 -0400
+X-MC-Unique: XaHnSpiYPI-W0NYuSrro3w-1
+X-Mimecast-MFC-AGG-ID: XaHnSpiYPI-W0NYuSrro3w_1756727931
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4b32119e6c6so35958601cf.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:58:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756727128; x=1757331928;
+ d=1e100.net; s=20230601; t=1756727931; x=1757332731;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8PJjbFuVAPTI7U71p25kyRaD/FGclmStwyCKrbtmghs=;
- b=kIp2pFigla1QS7Y9YpMcvSMNe3LlvjXJd5htgklLH1s8l0H8oCaT2aHM6n7ogdPYx+
- zudJQ7KRwpbKV2S8kluvSkw7YTTcQZ2C+tMId4x/NC23wtpw+zy4RXYGQ9+HG6VVjKAL
- s0kyYMknisfldqaiYjKqUdBPrz+G6fffQMywZ4EKSETTZk2KkKlKPNpDS55OkZ9BO6Dx
- XwVYhuA+H+4EmRUsAF/GH/CpLkGda3SRtAvMoRekS71q+CMGNkO81U8UbBeYXu9ZNGio
- gzBdKe+OXnh8VZ/b7Z3WP7qEFc9QBYoWuL7CAmxl2PvCsjqxiFZ0QFKzqAjJmlJpCdck
- BX9w==
+ bh=kLqhidISZKYdtwaDku+KqyLfsSI4xpXN5PzFUDr90wg=;
+ b=XdQHMgCvJA+kMCEM2hkIzSdXV3bqDWYqEtS/xphkNQ2N9dKOG7fgCXC/6TMhEykuHO
+ 7Ue+WqaXX7GVf7nyJFCDeHVOXz0xojS2Zb3UxmKWkesM6mW9YiKCXdHVUi/pEdlT7pwt
+ Hbo9qoRGIUypUf4WgQRgo80iARlNkVPKY2zILhIvZzoc2o32Rdm12EJIRzKxNXXhWH+I
+ tq9uKeaABRHBWfvOBaEAWAFuSoRxeZ2ppYV4gjC6yeaIypR/ph5x+HhwpBMJAMhOH8w+
+ 34vkXGqG+LCiF2H8hAQOF+S9tvEeYtn0Hxu2JsOX1n+UfiHuxF8OsOvhNVjXe9j7tZg1
+ wyNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhGmSxb8D5necKLQ9qjrcLHgdbeo3A6c9dAOIBztue4KvT9XaxnU1p7mMT+czmRr2xtL8jett+WQ==@nongnu.org,
- AJvYcCXNDSRUYFC5DFgvJ4pbXTyaqp1rZgBXGrStshF6sOZb+FXrkke+TlMSO7TlR33xEIn9jmWycG8TLJulZg==@nongnu.org
-X-Gm-Message-State: AOJu0YwDPCfHpOvkiKcDDJvzzM92tSUfjP6hYB3JyE3HVM7NHE/zkqE7
- JKIAEgnbG+xKzPEySvw9fFZnrGKwL3vwl5WHB4IieQiSp4PLAOVfjA7YUHgILQ==
-X-Gm-Gg: ASbGnctJHuG5geChZDXP3X9lvJx+y542iSKwHMBJ8FmB/mHyB/+Cr3JCBTZ3bGVMz9e
- A7IIAfz6oSR/QyGxzyRpvNLHeHQRNvpA0fCTQG9MKtZJLreZPPBDDWYo5WznQIPEBmR6H7c0/Vc
- 0lNEZ1NYGbgt0jRaT5tL62S75qQtv1/RJJel/buTMsnjpxnfrE3/pu4CNqXaEeDHd6Q6lcuZJk6
- ek23NrrpNdEcLn+oCOz+xNERFvkubDi8VjbMbHwuoNsJzGb64PxwwmGImCu2mQ5Gnnjahk5lVko
- ASkg3HGopNxyXjhR8MVCPXF0RY/2SUZnMerVsq6zEi20t+L8Se6N8RbftmHY8T/Aj4PtaY3lpq5
- I34qOAe8E7ZgO7l0H/0u4bw==
-X-Google-Smtp-Source: AGHT+IEk+JR9rLQxwWFa2CL9gxcqSzd16zyWCdHr8aNXz6jrLhN/lSHLexK71nqTr/kN7zDED+mlew==
-X-Received: by 2002:a17:903:3804:b0:235:f091:11e5 with SMTP id
- d9443c01a7336-249449037ecmr95371585ad.10.1756727128189; 
- Mon, 01 Sep 2025 04:45:28 -0700 (PDT)
-Received: from ktock.. ([240d:1a:3b6:8b00:750a:cb0b:f0f9:68f4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-249065a8036sm103038775ad.129.2025.09.01.04.45.22
+ AJvYcCWGwhxADtJAwwD65WSe3xJ8k8n1BpiE2XUrA1HvvCZf17TMwFlnGUZ8W9BxawdWqssAn4s0uF5e4J/L@nongnu.org
+X-Gm-Message-State: AOJu0YwNE2ZzMPMWs+rSSgHBcFsAvQxTV580tqemmTjFVl1jXvWPrjr7
+ Gj4cuyhaj4AXB8sutfmjTKJD1TR4OFW1WcI1eoUcrcFs+noxHrsLokWEMmRftp+MeCJI+DC7krs
+ AQYaBbFVHWFu8VOWxtb2RpnLsw0BGV+CsiLYphqlg8+AxXm679VGrR0fB
+X-Gm-Gg: ASbGnctURNqAfw/fHgfnzgZ7HTZDrY0JgVLu2/sk6emnkpRTDU7Lf9Zl2bQoQdBQAqe
+ Vy8NSe9E6vxA8v3ibkk1BfZcjqaC9cQLwlCNZSJFerZBmVUhk0wSHk4kdilJ88oqPDLsDJMGDbx
+ pPc7vfrgwxCIALaHTYVimUGvYNVV1shbJQA+4eALg2fEPHZhBi7VaAvXTdkLrFUAmYOjNiquVcj
+ yLHjwH+vNz98m5f8whPvS/YhZLBHxXV1WeruvUGiOGNzlhy9SlVbzIbJ8NFSm4JYpum5qP9HLw2
+ Vebef74NHiMKbt/j0QaQ1GIa30oDBg==
+X-Received: by 2002:ac8:5e4d:0:b0:4b3:219:b74a with SMTP id
+ d75a77b69052e-4b31dcccadbmr96022331cf.72.1756727931364; 
+ Mon, 01 Sep 2025 04:58:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVzSiGIacoyKAkRg9F8q4MC5XJ6qFH5lb5qdryTOPZIv+mpvzivw810mH/xt65m+97zANgJw==
+X-Received: by 2002:ac8:5e4d:0:b0:4b3:219:b74a with SMTP id
+ d75a77b69052e-4b31dcccadbmr96022101cf.72.1756727930976; 
+ Mon, 01 Sep 2025 04:58:50 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-70fb25c6f49sm38525136d6.15.2025.09.01.04.58.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 04:45:27 -0700 (PDT)
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
-Subject: [PATCH v3 01/35] meson: Add wasm64 support to the --cpu flag
-Date: Mon,  1 Sep 2025 20:44:03 +0900
-Message-ID: <33d88400963d0da84f44296306c4e39af1f3cf5c.1756724464.git.ktokunaga.mail@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1756724464.git.ktokunaga.mail@gmail.com>
-References: <cover.1756724464.git.ktokunaga.mail@gmail.com>
+ Mon, 01 Sep 2025 04:58:50 -0700 (PDT)
+Date: Mon, 1 Sep 2025 13:58:46 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org, Song Gao
+ <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH] hw/loongarch/virt: Fix the cpu hotplug issue
+Message-ID: <20250901135846.12a9c3e2@fedora>
+In-Reply-To: <34bc7ebf-4a7e-d2f8-65de-529ef658be49@loongson.cn>
+References: <20250829013243.1237107-1-lixianglai@loongson.cn>
+ <34bc7ebf-4a7e-d2f8-65de-529ef658be49@loongson.cn>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,81 +113,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-wasm64 target enables 64bit pointers using Emscripten's -sMEMORY64=1
-flag[1]. This enables QEMU to run 64bit guests.
+On Fri, 29 Aug 2025 10:31:57 +0800
+Bibo Mao <maobibo@loongson.cn> wrote:
 
-Although the configure script uses "uname -m" as the fallback value when
-"cpu" is empty, this can't be used for Emscripten which targets to Wasm.
-So, in wasm build, this commit fixes configure to require --cpu flag to be
-explicitly specified by the user.
+> On 2025/8/29 =E4=B8=8A=E5=8D=889:32, Xianglai Li wrote:
+> > The hot-plugged cpu does not register the cpu reset function, so the cpu
+> > plugged in later cannot reset properly, and there will be problems when
+> > restarting.
+> >=20
+> > Now register the cpu reset function in the cpu hotplug callback functio=
+n. =20
+> Oh, it is actually one problem and it is missing :(. There is similiar=20
+> patch posted at:
+> =20
+> https://lore.kernel.org/qemu-devel/20241031065418.3111892-1-maobibo@loong=
+son.cn/
+>=20
+> I prefer to adding cpu reset in CPU object realize function rather=20
+> hotplug handler, and executing reset_load_elf() in board specific
+> reset callback. However peter has different thoughts.
 
-[1] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
+this patch and above mentioned one expose direct boot specific
+reset_load_elf() on a generic hardware bring up path. That's
+probably isn't right.
 
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- configure   | 6 +++++-
- meson.build | 4 ++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+Ideally default (cpu_reset()) reset would happen 1st during
+cpu creation/board init and then direct boot would patch
+the CPU that actually would execute payload.
 
-V3:
-- This commit is under review in another patch series so please ignore it
-  here.
+PS:
+what's the reason to call reset_load_elf() on all present
+vCPUs and why hotplugged ones matter here?
 
-diff --git a/configure b/configure
-index 274a778764..112e4725fc 100755
---- a/configure
-+++ b/configure
-@@ -365,7 +365,6 @@ elif check_define __APPLE__; then
-   host_os=darwin
- elif check_define EMSCRIPTEN ; then
-   host_os=emscripten
--  cpu=wasm32
-   cross_compile="yes"
- else
-   # This is a fatal error, but don't report it yet, because we
-@@ -425,6 +424,8 @@ elif check_define __aarch64__ ; then
-   cpu="aarch64"
- elif check_define __loongarch64 ; then
-   cpu="loongarch64"
-+elif check_define EMSCRIPTEN ; then
-+  error_exit "wasm32 or wasm64 must be specified to the cpu flag"
- else
-   # Using uname is really broken, but it is just a fallback for architectures
-   # that are going to use TCI anyway
-@@ -535,6 +536,9 @@ case "$cpu" in
-   wasm32)
-     CPU_CFLAGS="-m32"
-     ;;
-+  wasm64)
-+    CPU_CFLAGS="-m64 -sMEMORY64=1"
-+    ;;
- esac
- 
- if test -n "$host_arch" && {
-diff --git a/meson.build b/meson.build
-index 50c774a195..44bb7ed334 100644
---- a/meson.build
-+++ b/meson.build
-@@ -52,7 +52,7 @@ qapi_trace_events = []
- bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
- supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
- supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
--  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32']
-+  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32', 'wasm64']
- 
- cpu = host_machine.cpu_family()
- 
-@@ -916,7 +916,7 @@ if have_tcg
-     if not get_option('tcg_interpreter')
-       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
-     endif
--  elif host_arch == 'wasm32'
-+  elif host_arch == 'wasm32' or host_arch == 'wasm64'
-     if not get_option('tcg_interpreter')
-       error('WebAssembly host requires --enable-tcg-interpreter')
-     endif
--- 
-2.43.0
+Shouldn't direct booted QEMU patch BSP only?
+
+>=20
+> Regards
+> Bibo Mao
+> >=20
+> > Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> > ---
+> >   hw/loongarch/boot.c         | 8 +-------
+> >   hw/loongarch/virt.c         | 4 ++++
+> >   include/hw/loongarch/virt.h | 1 +
+> >   3 files changed, 6 insertions(+), 7 deletions(-)
+> >=20
+> > diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> > index 14d6c52d4e..6bc1f3d50c 100644
+> > --- a/hw/loongarch/boot.c
+> > +++ b/hw/loongarch/boot.c
+> > @@ -324,7 +324,7 @@ static int64_t load_kernel_info(struct loongarch_bo=
+ot_info *info)
+> >       return kernel_entry;
+> >   }
+> >  =20
+> > -static void reset_load_elf(void *opaque)
+> > +void reset_load_elf(void *opaque)
+> >   {
+> >       LoongArchCPU *cpu =3D opaque;
+> >       CPULoongArchState *env =3D &cpu->env;
+> > @@ -429,12 +429,6 @@ static void loongarch_direct_kernel_boot(MachineSt=
+ate *ms,
+> >   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_in=
+fo *info)
+> >   {
+> >       LoongArchVirtMachineState *lvms =3D LOONGARCH_VIRT_MACHINE(ms);
+> > -    int i;
+> > -
+> > -    /* register reset function */
+> > -    for (i =3D 0; i < ms->smp.cpus; i++) {
+> > -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu=
+(i)));
+> > -    }
+> >  =20
+> >       info->kernel_filename =3D ms->kernel_filename;
+> >       info->kernel_cmdline =3D ms->kernel_cmdline;
+> > diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> > index b15ada2078..71f8ddc980 100644
+> > --- a/hw/loongarch/virt.c
+> > +++ b/hw/loongarch/virt.c
+> > @@ -1013,6 +1013,8 @@ static void virt_cpu_unplug(HotplugHandler *hotpl=
+ug_dev,
+> >       /* Notify acpi ged CPU removed */
+> >       hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err=
+or_abort);
+> >  =20
+> > +    /* unregister reset function */
+> > +    qemu_unregister_reset(reset_load_elf, cpu);
+> >       cpu_slot =3D virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+> >       cpu_slot->cpu =3D NULL;
+> >   }
+> > @@ -1037,6 +1039,8 @@ static void virt_cpu_plug(HotplugHandler *hotplug=
+_dev,
+> >                                &error_abort);
+> >       }
+> >  =20
+> > +    /* register reset function */
+> > +    qemu_register_reset(reset_load_elf, cpu);
+> >       cpu_slot =3D virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
+> >       cpu_slot->cpu =3D CPU(dev);
+> >   }
+> > diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+> > index 602feab0f0..15ea393386 100644
+> > --- a/include/hw/loongarch/virt.h
+> > +++ b/include/hw/loongarch/virt.h
+> > @@ -71,6 +71,7 @@ struct LoongArchVirtMachineState {
+> >   OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_=
+MACHINE)
+> >   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
+> >   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
+> > +void reset_load_elf(void *opaque);
+> >  =20
+> >   static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState=
+ *lvms)
+> >   {
+> >  =20
+>=20
+>=20
 
 
