@@ -4,72 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E4CCA1007
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 21:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4217CA1007
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 00:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utC71-0002rR-36; Mon, 01 Sep 2025 17:30:51 -0400
+	id 1utFCt-00055k-9k; Mon, 01 Sep 2025 20:49:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1utC6g-0002nF-2R
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 17:30:35 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1utCEi-00068i-2n; Mon, 01 Sep 2025 17:38:48 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1utC6d-0000X5-Uf
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 17:30:29 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-61cb9e039d9so9439280a12.1
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 14:30:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1utCEg-0001WT-FM; Mon, 01 Sep 2025 17:38:47 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b0431c12df3so195740566b.1; 
+ Mon, 01 Sep 2025 14:38:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1756762224; x=1757367024; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VBEON7liFwE3rhrL6f6egG1ZwTxa789aLrtzJ80JnVU=;
- b=cDvl7BeuTzq8mBBa98Dpk/a4YpD9ckEWItHVqNGLCxS1fB2hNF9cfIJxVC+3gjhHSY
- i+3ABf4lakzZC9a1juzhsqPs0STgmUzg45mL90epwRsfgnL8kWRNyFqaGYv0VPfhOSD9
- FFvlSwDI9L11h5PXUVFfiZn46GC+M5wxDtSeWmjY6BqHUsHC2ugnUEEPqIpGAEXPxb5j
- vdQEuKWKU7ddN2tKPIFmEU0I5TRpjBh8tH+LnfHlU/Folm15GGIb2ncSWCKD5H8R0MVb
- bnHuvFjx7GzLEUx6tvatXlqtLvcbvxBLTQU8iZCHTYb7skMZrPK0XyMXMNpu0ap7xhxD
- +1Ww==
+ d=gmail.com; s=20230601; t=1756762724; x=1757367524; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4yTt4sEbaYXei+dSv43eNsIHDubDA3h78v1i98tBLMg=;
+ b=W99iX3BQmQujZPKpQQ2oT1CjL6wHZWkFjUU7AURuGuXMniw6c1EJu5CWrC9JfUn0e8
+ Ukg27LeOrKS9j5l6XKHroyY/brkkVoCQiTAx8CvtbpLrULCgjOVBGlsjHtIRYv9ET+hJ
+ 7Y7Ak598qH4tHCiavzrsQgEo/UvZKBTL3AHDqdwj1Gk1mupMVcbmZUCaHARNBQ+yuAkH
+ jkaL3mOTdw5s9qNDMyAydm4rc3ZQaRWtPKxessRPQkMPYaqfQdMHrwkXVwx455E1dneq
+ 1bDJQdTaB9kPM3bbsSl3P+lqQjHF4y+kXMq8Fpol+lkNNMw/a94zC4t+IjHmkeEr/yc4
+ Nmiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756762224; x=1757367024;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1756762724; x=1757367524;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VBEON7liFwE3rhrL6f6egG1ZwTxa789aLrtzJ80JnVU=;
- b=MCldOZgw1/ZldxKsWqvazZ29ReHXAK7/oGzfkQVThRCxb+AEoc9To23xrwtMXouKvu
- pEV69t91ytAhoBPrevAr2PqXi1ufN1yq9SpLE3FU0JdWlprpP5tnpYSuCL4l5BiXKaeR
- frGwdQ/QYzRQNcsKT+XjoZyIfoI2oo6zNLUjl7Ex7jtVQm575VQs9Szvfps5itZb6e6I
- saFpWA2SiN0qyUpgjPEemaSloExrCOK0JQV836Dk3oPzqya4KhTBF/Fpbx1/8ggf1OEL
- Pnyid9rFFT8yUX9PTXLS+so+8Isz7qW3xIfAruiKLW8vXUQ42lMNmnUUYtQbc+2IXky0
- Cc8Q==
-X-Gm-Message-State: AOJu0YzvWWSsQ2raBGDB7DfnnvrOmjTIFiyHPllvRXlO46oUF0F3IQCp
- GGBxO8JVxhUFiDrI4lrXOZp8pSWl+7Dr012l5JoXAmC25NuFSTg8kBiUxx76d0geZWtWyoizfZn
- yUa4sY3aM6/JjKICblpsytQZRzxCQP9A=
-X-Gm-Gg: ASbGncttodOQ8/1FZ2W5sw+VgtlAxo5/EfabmRx8PbY4oylv520XEHliEJv+7g+mfDj
- 72IyQvXeooeSFhLMd5who1kBXSv+tozGH/7pxC5B/SjrB6yHYKZSLmkWsekcmsIT9H+bAJlFjMc
- NnkLoKhZErEWhLRiB6r9+cKxR6ysF083EN7lCHuBetH/MgQmHq//8j7TDb0YGKEXwXwdkcA6Ckq
- i+yFlZsmRT0ypip
-X-Google-Smtp-Source: AGHT+IHSZKSqcH3GPagrKf2kYKksr/j0t9bkCmnAT4RNe1xeZEc1gsyUcgPbZpU1ua4m3n6OnBTPZ9z5phhP4hXevdY=
-X-Received: by 2002:a05:6402:2547:b0:61d:249a:43fe with SMTP id
- 4fb4d7f45d1cf-61d26d9c38cmr9429993a12.24.1756762224007; Mon, 01 Sep 2025
- 14:30:24 -0700 (PDT)
+ bh=4yTt4sEbaYXei+dSv43eNsIHDubDA3h78v1i98tBLMg=;
+ b=Be4tlj1Qmg3u8j3TTHjWPnPo8+8qrqPUgRVoL40vyRG5PepEKqwdzIBcvv8GTIgyje
+ lCgjp9y+8bmodaHyaQQ5aJAucyVp2btEEzvTXksunK30HomfOWjTwCXjB8lRWc9mQGcs
+ NVJm0HnP30nZ1k1uhIq0tExZ+jl36V89fggqfinzrWZ+q+vwW0OtLcmRahxfvNAXVE4X
+ G4v3yW5Z8SDdNpGpvVb2AzrdNZoAc+yC4VUF+RZeO0NoNVy0rPmOBdV1qIAUelveVWU7
+ y3g9TR9gIPDVFUVGRR/EmdxrfWvWayOe9rnDzyzewQIMWqs8sGoBPiQuv7nrKay1V5P0
+ kkjg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXumIq2Zsvq4DH0kBepCZNXKVg18Sose/5y2ZiVp0y1gJKzPYrR+lqCRHx+OcQMNDr95gliP07QjKso@nongnu.org
+X-Gm-Message-State: AOJu0YwWCvSNMppMcfz5Ay2CdvaJiIL7w51hQlTtcB2xVQElMyArGUMB
+ njbUFDnIUMT78Q6wZRO34E78QZFDd73CwfOVc/E62wdD0TcOGglfWMd6
+X-Gm-Gg: ASbGncs/56fK14EHqwohDv/2HRB9AD2Bljuz3mC9JPJ1vpnwzbP5AnPVL0QJeaYmGXl
+ IFHCcMlm5X/r8v54jiM3J+r7xEUBuGrgib5KEqoDbS/LgR174DiaXS7ZZ7g7dZX/SKYf4Y1wU+5
+ kkDpjDx8C6ytxK0VOwr7xep6cOkwLxxxEGSnwUSVB2eIwtnnkPN4HRejHjUYfBZZgw6DWG0a/Om
+ zcjIhZlJzvsHDS6FfwithNJVl8/U1HJTiQ+Q25WR4CVdyzHl24X/qXuIegu2rLKq4hJDbdV+k0A
+ bdHd72pcorlz1uJ0yCFvEEOW+IH8J7EkK4SC8sGUW8FHGJ1ZkCHQifbcA8A/Mr5mdoVDiv6AeKX
+ 3uxGkEKK4150Z48nM3fVt8Rs0Mb2FUHlC27s+Rh9CDpfIXhqnYn3Ndt72Z7eo/2SGPavMD+qEzs
+ warWr9HkB2HK3q8ap4UDv+6byt8p5wea8MOhPmE5OOjk7PRbtwOuZnQ1xz75UzxNnzzVS0TZXu4
+ sND6g==
+X-Google-Smtp-Source: AGHT+IE7Vxtc6JQEhtQEynyXlQCVX0Z8Mhn1kuY0pYSTUg/bM0YNZEVJpzkOMfjq/Q7rQbk1g+6Cvw==
+X-Received: by 2002:a17:907:94d6:b0:afe:d590:b6af with SMTP id
+ a640c23a62f3a-b01d8a8b60bmr880558366b.20.1756762723846; 
+ Mon, 01 Sep 2025 14:38:43 -0700 (PDT)
+Received: from osama..
+ (ipservice-092-210-202-008.092.210.pools.vodafone-ip.de. [92.210.202.8])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b0445cb9296sm109536466b.61.2025.09.01.14.38.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Sep 2025 14:38:43 -0700 (PDT)
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
+To: peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Osama Abdelkader <osama.abdelkader@gmail.com>
+Subject: [PATCH] hw/arm/raspi4b: replace fprintf with error_report
+Date: Mon,  1 Sep 2025 23:35:53 +0200
+Message-ID: <20250901213607.69603-1-osama.abdelkader@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <CABJz62PiQ9ipaJqr+X6AQvTJWZdAug5--4LOXa0i95DZkorNHw@mail.gmail.com>
-In-Reply-To: <CABJz62PiQ9ipaJqr+X6AQvTJWZdAug5--4LOXa0i95DZkorNHw@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 1 Sep 2025 17:30:11 -0400
-X-Gm-Features: Ac12FXwYP2ewfmvK3MvG5q9qgBGH9LnTHlYqts8j777sgts_vLrGebx9P_FcmYY
-Message-ID: <CAJSP0QW7DMpW9=dPXZmB219cbFVm7nUnuGtqNXCeazT-TTC1TQ@mail.gmail.com>
-Subject: Re: PGP keysigning at KVM Forum 2025
-To: Andrea Bolognani <abologna@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52f.google.com
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=osama.abdelkader@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -78,6 +87,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 01 Sep 2025 20:49:04 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,7 +102,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the reminder, Andrea! I will come prepared and am happy to sign keys.
+Replace direct fprintf(stderr, …) with QEMU's error_report() API,
+which ensures consistent formatting and integrates with QEMU's
+logging infrastructure.
 
-Stefan
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+---
+ hw/arm/raspi4b.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index 20082d5266..4a5f0eb91e 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -47,7 +47,7 @@ static int raspi_add_memory_node(void *fdt, hwaddr mem_base, hwaddr mem_len)
+     scells = qemu_fdt_getprop_cell(fdt, "/", "#size-cells",
+                                    NULL, &error_fatal);
+     if (acells == 0 || scells == 0) {
+-        fprintf(stderr, "dtb file invalid (#address-cells or #size-cells 0)\n");
++        error_report("dtb file invalid (#address-cells or #size-cells 0)");
+         ret = -1;
+     } else {
+         qemu_fdt_add_subnode(fdt, nodename);
+-- 
+2.43.0
+
 
