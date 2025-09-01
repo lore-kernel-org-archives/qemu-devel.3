@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54781CA1002
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 10:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450C0CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 10:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut1z4-0007XL-Gx; Mon, 01 Sep 2025 06:41:58 -0400
+	id 1ut20l-0008M9-S7; Mon, 01 Sep 2025 06:43:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ut1z0-0007Pk-0F
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:41:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ut1yw-0007Cr-UJ
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:41:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756723307;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=gTtIZk+m/iH3t1RTJQoqYI8hv01syqYwCSetwLDKdZI=;
- b=Wxqc4/RcExGGkTjCRBIbpJODIfRellY6yqULcvzBEcHHu+I7/arPFnX5yz8SQcEdHee/LA
- yUcVeeNAwOuRJuKt0fd6TI/RJeb270BOSFw8Wi17aVzJAe+Yd9Zoqs9XMHxMS/1aN7rSOz
- 54Z7jYxb6/+oNKqCdBt3fsADGEyq7ec=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-258-Jhl57t4_PJWpoYSMws_SsQ-1; Mon,
- 01 Sep 2025 06:41:42 -0400
-X-MC-Unique: Jhl57t4_PJWpoYSMws_SsQ-1
-X-Mimecast-MFC-AGG-ID: Jhl57t4_PJWpoYSMws_SsQ_1756723301
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4C02195C277; Mon,  1 Sep 2025 10:41:40 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.100])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C9D130001A2; Mon,  1 Sep 2025 10:41:37 +0000 (UTC)
-Date: Mon, 1 Sep 2025 11:41:33 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Subject: Re: [PATCH v7 04/14] target/riscv: Add MIPS P8700 CSRs
-Message-ID: <aLV4XVR6baQpZRD_@redhat.com>
-References: <20250901102850.1172983-1-djordje.todorovic@htecgroup.com>
- <20250901102850.1172983-5-djordje.todorovic@htecgroup.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ut20k-0008Lq-Jo
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:43:42 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ut20h-0007Kt-Qz
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:43:42 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-71d60157747so32112447b3.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 03:43:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756723414; x=1757328214; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rZ5RUoU+zgo8RlxpYoa2W3rVy6/6tax6/KyWZxnBNAc=;
+ b=uvV2oCvNH/hO9BxkLcZdYgmrYPJxwkUxhu6sERamPt8XxSHaKJzeZ9fhXRnZoxK8kZ
+ uoeIlkolvfpt9hRWGmcD/ZOq5arIFRaPsFim/OgKan5OZsc3AoSPiszRxhyvZpitezmv
+ ZYfuY8R2OSzBrinw/q0KQTHM5qEluSK8bcHe2/PtHcPhYS0BmANGbUIki+dBSaHPt1IC
+ U6RKWgqbVuJy+PPOsu7BbIudNfSEKWesNH5Z+w/OGRum+0rRHGB+I5OKFDBCyHPw3kW1
+ WoeEa/91mPQrVF+RxC/Q6WY7tSE/yEQMWBDCPi9MfMVEBCCCxYFXaBVfWSUG/0hE0coE
+ bYWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756723414; x=1757328214;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rZ5RUoU+zgo8RlxpYoa2W3rVy6/6tax6/KyWZxnBNAc=;
+ b=JsvWWTjB4ZmygmF5meN6f6eabrB/miA+qVq5ZTMluVGaICljjQ3ulAljeknsmHHk6K
+ r4SZpC8weqWEykf2PqozdWyiBPX6RM1MDW6X3eWPwYwPtpJs1OtNvqFF+adj/1RlWPd7
+ pMTRvx9sXyTnZTUjltpgnqvpLR7t4wTpIZbtFVJpKkeBunGBSR7IgJp3HZLAzULA+pIS
+ KQhkzn5blAVP2Y5nWC/2Uw0WhpXqat1J7VixvXB+rR6VJSt62F2VEa0TcJClPrg39yTk
+ IQ7ILn0QhR1nRvjgYfegTgdpxgIp/vo+zb4SYyR0f3wS5PS7POrOWF50Qu/3DBqmCNxz
+ Fptg==
+X-Gm-Message-State: AOJu0YwAD07GQGs2CD5NTXq8rfGlb54vl2fA11JMMeHhFhYWKQYwN6au
+ aMs8q2WUXghrTwiDDpHeFRGfsRoLD+B3wuLJQ7mMWDyyl1nBhyHRwX49zEblQx9kALlpbApuuB4
+ 2OyI/ar9KVle+VxIbtG8YDv1ich1iTik9L4JpgSmF5Q==
+X-Gm-Gg: ASbGncvUlPvj9NCUW2yXvMFU4/shvqg9Cr4vQyU9HvQzHkdj/+t4XHfDb4lRnorxS/x
+ IeYbds/cFbo/SSDKF4BIs4es7f2kwMZrBiFRUwtaWdAaA0AidrOEWT3BXpq7fSBsuSa3ZqwU3L8
+ JGPwuQBb3MyUlS17ey+GVRQ3sUYFmm/mPV0TuR/20iWIZ0h6FRt2/HAzCDaEE7i2rPZs2ch4kGO
+ vR2CQ+z
+X-Google-Smtp-Source: AGHT+IH9y0xweKMNzPFl/UhCz2pi8ugSywcFqS8woN0GYc/0W1RtfetnZNrqwOwwiTUt8zpUanHcEGF2qwENpGBnELU=
+X-Received: by 2002:a05:690c:dc8:b0:721:1649:b041 with SMTP id
+ 00721157ae682-7227635c94amr64676047b3.2.1756723414037; Mon, 01 Sep 2025
+ 03:43:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250901102850.1172983-5-djordje.todorovic@htecgroup.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250829125935.1526984-1-pbonzini@redhat.com>
+ <20250829125935.1526984-16-pbonzini@redhat.com>
+In-Reply-To: <20250829125935.1526984-16-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 1 Sep 2025 11:43:22 +0100
+X-Gm-Features: Ac12FXziklwxONgKokEyH739FqV5U8bamarVDaznuSicuXGJwEVGM43aH8f-I6g
+Message-ID: <CAFEAcA-xknGH8H-1M7xtkWwQHfb47+f7MdBqrt5UmKsh3As6OA@mail.gmail.com>
+Subject: Re: [PULL 15/28] hw/i386/pc_piix.c: assume pcmc->pci_enabled is
+ always true in pc_init1()
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,72 +95,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 01, 2025 at 10:29:02AM +0000, Djordje Todorovic wrote:
-> Define MIPS CSRs used for P8700 CPU.
-> 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/cpu.c       |   3 +
->  target/riscv/cpu.h       |   3 +
->  target/riscv/meson.build |   1 +
->  target/riscv/mips_csr.c  | 228 +++++++++++++++++++++++++++++++++++++++
->  4 files changed, 235 insertions(+)
->  create mode 100644 target/riscv/mips_csr.c
+On Sat, 30 Aug 2025 at 16:57, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+>
+> PCI is always enabled on the pc-i440fx machine so hardcode the relevant l=
+ogic
+> in pc_init1(). Add an assert() to ensure that this is always the case at
+> runtime as already done in pc_q35_init().
+>
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Link: https://lore.kernel.org/r/20250828111057.468712-16-mark.caveayland@=
+nutanix.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-> diff --git a/target/riscv/mips_csr.c b/target/riscv/mips_csr.c
-> new file mode 100644
-> index 0000000000..2fc10b8618
-> --- /dev/null
-> +++ b/target/riscv/mips_csr.c
-> @@ -0,0 +1,228 @@
-> +/*
-> + * MIPS-specific CSRs.
-> + *
-> + * Copyright (c) 2025 MIPS
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
+Hi; Coverity points out (CID 1620557) that this change means
+that an if() check later on in the function is no longer needed:
 
-What is the reason for this choice ?
+> @@ -195,38 +200,36 @@ static void pc_init1(MachineState *machine, const c=
+har *pci_type)
+>          kvmclock_create(pcmc->kvmclock_create_always);
+>      }
+>
+> -    if (pcmc->pci_enabled) {
+> -        pci_memory =3D g_new(MemoryRegion, 1);
+> -        memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
+> -        rom_memory =3D pci_memory;
+> +    pci_memory =3D g_new(MemoryRegion, 1);
+> +    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
+> +    rom_memory =3D pci_memory;
+>
+> -        phb =3D OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
+> -        object_property_add_child(OBJECT(machine), "i440fx", phb);
+> -        object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+> -                                 OBJECT(ram_memory), &error_fatal);
+> -        object_property_set_link(phb, PCI_HOST_PROP_PCI_MEM,
+> -                                 OBJECT(pci_memory), &error_fatal);
+> -        object_property_set_link(phb, PCI_HOST_PROP_SYSTEM_MEM,
+> -                                 OBJECT(system_memory), &error_fatal);
+> -        object_property_set_link(phb, PCI_HOST_PROP_IO_MEM,
+> -                                 OBJECT(system_io), &error_fatal);
+> -        object_property_set_uint(phb, PCI_HOST_BELOW_4G_MEM_SIZE,
+> -                                 x86ms->below_4g_mem_size, &error_fatal)=
+;
+> -        object_property_set_uint(phb, PCI_HOST_ABOVE_4G_MEM_SIZE,
+> -                                 x86ms->above_4g_mem_size, &error_fatal)=
+;
+> -        object_property_set_str(phb, I440FX_HOST_PROP_PCI_TYPE, pci_type=
+,
+> -                                &error_fatal);
+> -        sysbus_realize_and_unref(SYS_BUS_DEVICE(phb), &error_fatal);
+> +    phb =3D OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
 
-New files are expected to be GPL-2.0-or-later, with any divergence
-from this explained in the commit message.
+phb is now guaranteed not to be NULL (when before it might have
+been NULL), so this bit of code near the bottom of pc_init1():
 
+    if (phb) {
+        ioapic_init_gsi(gsi_state, phb);
+    }
 
-> + *
-> + * This program is free software; you can redistribute it and/or modify it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License along with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+can be simplified to unconditionally call ioapic_init_gsi().
 
-This should not be present on newly authored files - only pre-existing
-code which predated our use of SPDX tags, because it creates the possible
-problem of inconsistent license details - which is what you have here.
+Would you mind sending a followup patch to clean that up?
 
-This is saying GPL-2.0-or-later, while the SDPX tag says LGPL-2.1-or-later
-
-These points apply to multiple patches in this series.
-
-Please make sure to run 'checkpatch.pl' on patches before submissions,
-as it would have reported these problems.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
