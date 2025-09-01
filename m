@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50AECCA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 10:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54781CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 10:42:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut1yI-0006kx-6t; Mon, 01 Sep 2025 06:41:11 -0400
+	id 1ut1z4-0007XL-Gx; Mon, 01 Sep 2025 06:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1ut1yF-0006k2-FI
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:41:07 -0400
-Received: from 6.mo548.mail-out.ovh.net ([188.165.58.48])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ut1z0-0007Pk-0F
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:41:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1ut1y9-000782-TC
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:41:07 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.110.58.164])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4cFllM0jyRz5x9Q;
- Mon,  1 Sep 2025 10:40:47 +0000 (UTC)
-Received: from kaod.org (37.59.142.106) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.58; Mon, 1 Sep
- 2025 12:40:46 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-106R006b9bd2c1b-ccfd-4ec4-9a61-b4a0987e2eec,
- CAAE178DC29C5141E9BFB396468E1D399C164DD0) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Mon, 1 Sep 2025 12:40:40 +0200
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>, Mark Johnston <markj@freebsd.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
- <marcandre.lureau@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>
-Subject: Re: [PATCH v2] 9pfs: Add FreeBSD support
-Message-ID: <20250901124040.53166f30@bahia>
-In-Reply-To: <12113631.YhV4tvpBIu@silver>
-References: <aJOWhHB2p-fbueAm@nuc> <2602995.s6eulQLtdm@silver>
- <aKxcsmP6MI5p9OPe@nuc> <12113631.YhV4tvpBIu@silver>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ut1yw-0007Cr-UJ
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:41:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756723307;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=gTtIZk+m/iH3t1RTJQoqYI8hv01syqYwCSetwLDKdZI=;
+ b=Wxqc4/RcExGGkTjCRBIbpJODIfRellY6yqULcvzBEcHHu+I7/arPFnX5yz8SQcEdHee/LA
+ yUcVeeNAwOuRJuKt0fd6TI/RJeb270BOSFw8Wi17aVzJAe+Yd9Zoqs9XMHxMS/1aN7rSOz
+ 54Z7jYxb6/+oNKqCdBt3fsADGEyq7ec=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-258-Jhl57t4_PJWpoYSMws_SsQ-1; Mon,
+ 01 Sep 2025 06:41:42 -0400
+X-MC-Unique: Jhl57t4_PJWpoYSMws_SsQ-1
+X-Mimecast-MFC-AGG-ID: Jhl57t4_PJWpoYSMws_SsQ_1756723301
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C4C02195C277; Mon,  1 Sep 2025 10:41:40 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.100])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7C9D130001A2; Mon,  1 Sep 2025 10:41:37 +0000 (UTC)
+Date: Mon, 1 Sep 2025 11:41:33 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Subject: Re: [PATCH v7 04/14] target/riscv: Add MIPS P8700 CSRs
+Message-ID: <aLV4XVR6baQpZRD_@redhat.com>
+References: <20250901102850.1172983-1-djordje.todorovic@htecgroup.com>
+ <20250901102850.1172983-5-djordje.todorovic@htecgroup.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.106]
-X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: cbfd3aed-59ec-4bfd-ab69-6b01c81eb208
-X-Ovh-Tracer-Id: 8659859135243393385
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleduleefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepffetffefleetvdevkeffiefhkeefgfffjefghfejvedvkedtkeeutdduvdeghfeunecuffhomhgrihhnpehqvghmuhdrohhrghdpghhithhhuhgsrdgtohhmnecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdeipdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeejpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehmrghrkhhjsehfrhgvvggsshgurdhorhhgpdhrtghpthhtohepphgsohhniihinhhisehrvgguhhgrthdrtghomhdprhgtphhtthhopehmrghrtggrnhgurhgvrdhluhhrvggruhesrhgvughhrghtrdgtohhmpdhrtghpth
- htohepsggvrhhrrghnghgvsehrvgguhhgrthdrtghomhdprhgtphhtthhopehphhhilhhmugeslhhinhgrrhhordhorhhgpdfovfetjfhoshhtpehmohehgeekmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=gqjUpL9fgAszdT/kDQaagT3CtXC0PEPTmJv+Yxri8XU=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1756723247; v=1;
- b=wOyrL1dOw1AL/W7VPFKDSNEhMPKeG8VRa+DAXxh0tJQ0Nb00wkvYgVYK6M2nXNXosluCTOw2
- Vsb3J+oHnjpq7KtCAXyph5Qh4O/znHNGDt7WA/eExXEmIqfd5vwRLetNLWzcyuk8vIT3/lfCTZN
- qAyX3tT4O4Bnk5TPqaJCf2CUvP1igTSFYb2n/H+H4dtRfEZ3Bss+Gquqx7r2V+4fVEG8WDYXBhn
- KiOadVF/eIket+GoPYxUZBpMd4N5+GV2uEiX0irczPsTEQlLd7Q/FAQlUwBMvBwBljca2lzvEGW
- zY0v90a5g+4RZLKekyJOc9XGqSTTr3lvJ/wmhn9VxhLRw==
-Received-SPF: pass client-ip=188.165.58.48; envelope-from=groug@kaod.org;
- helo=6.mo548.mail-out.ovh.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250901102850.1172983-5-djordje.todorovic@htecgroup.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,99 +87,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Aug 2025 14:34:45 +0200
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
-
-> On Monday, August 25, 2025 2:53:06 PM CEST Mark Johnston wrote:
-> > On Thu, Aug 21, 2025 at 01:24:04PM +0200, Christian Schoenebeck wrote:
-> > > On Wednesday, August 6, 2025 7:53:08 PM CEST Mark Johnston wrote:
-> [...]
-> > > Not forgotten. I just hoped there were other reviewers or testers in the
-> > > meantime, but be it.
-> > > 
-> > > Like I said, I don't have FreeBSD system here to test this, so I am taking
-> > > your word for now that you tested this and plan to bring this into QEMU
-> > > when master re-opens for new features soon.
-> > 
-> > Thank you very much!
-> > 
-> > In case I missed somewhat, what testing would you typically do
-> > otherwise?  So far I had run the QEMU test suite (which indeed found
-> > some bugs in the initial version) and tried mounting a 9pfs share from
-> > Linux and FreeBSD guests and doing a bit of manual testing.
+On Mon, Sep 01, 2025 at 10:29:02AM +0000, Djordje Todorovic wrote:
+> Define MIPS CSRs used for P8700 CPU.
 > 
-> Apart from QEMU's test cases, I also use guest systems running 9p as root file 
-> system [1], run software compilations there among some things. That proofed to 
-> be quite a useful test environment to spot edge cases, concurrency and 
-> performance issues and such.
-> 
-> [1] https://wiki.qemu.org/Documentation/9p_root_fs
-> 
-> Greg was running some general purpose file system stress test suite in the 
-> past, but I currently can't recall what that was.
-> 
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu.c       |   3 +
+>  target/riscv/cpu.h       |   3 +
+>  target/riscv/meson.build |   1 +
+>  target/riscv/mips_csr.c  | 228 +++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 235 insertions(+)
+>  create mode 100644 target/riscv/mips_csr.c
 
-Hi Christian and Mark,
+> diff --git a/target/riscv/mips_csr.c b/target/riscv/mips_csr.c
+> new file mode 100644
+> index 0000000000..2fc10b8618
+> --- /dev/null
+> +++ b/target/riscv/mips_csr.c
+> @@ -0,0 +1,228 @@
+> +/*
+> + * MIPS-specific CSRs.
+> + *
+> + * Copyright (c) 2025 MIPS
+> + *
+> + * SPDX-License-Identifier: LGPL-2.1-or-later
 
-I was running this in the guest :
+What is the reason for this choice ?
 
-https://github.com/pjd/pjdfstest
-
-Cheers,
-
---
-Greg
-
-> > > If you have some time to adjust the commit log message above, that would
-> > > be
-> > > great, otherwise I can also handle this on my end later on. Looks like
-> > > that
-> > > comment is not adjusted for v2 yet (i.e. "user." and not mentioning
-> > > "system.").
-> > 
-> > Here's an amended commit log message.  Please let me know if this is
-> > better submitted as a v3.
-> > 
-> > commit b79bf1b7d42025e3e14da86a7c08d269038cd3ed
-> > Author: Mark Johnston <markj@FreeBSD.org>
-> > Date:   Wed Jul 16 20:32:05 2025 +0000
-> > 
-> >     9pfs: Add FreeBSD support
-> > 
-> >     This is largely derived from existing Darwin support.  FreeBSD
-> >     apparently has better support for *at() system calls so doesn't require
-> >     workarounds for a missing mknodat().  The implementation has a couple of
-> > warts however:
-> >     - The extattr(2) system calls don't support anything akin to
-> >       XATTR_CREATE or XATTR_REPLACE, so a racy workaround is implemented.
-> >     - Attribute names cannot begin with "user." or "system." on ZFS, so
-> >       these prefixes are trimmed off.  FreeBSD's extattr system calls sport
-> >       an extra "namespace" identifier, and attributes created by the 9pfs
-> >       backend live in the universal user and system namespaces, so this
-> >       seems innocent enough.
-> > 
-> >     The 9pfs tests were verified to pass on the UFS, ZFS and tmpfs
-> >     filesystems.
-> > 
-> >     Signed-off-by: Mark Johnston <markj@FreeBSD.org>
-> 
-> Almost. Maybe something like this to make it a bit more clear?
-> 
-> - Attribute names cannot begin with "user." or "system." on ZFS. However
->   FreeBSD's extattr(2) system supports two dedicated namespaces for these
->   two. So "user." or "system." prefixes are trimmed off from attribute
->   names and instead EXTATTR_NAMESPACE_USER or EXTATTR_NAMESPACE_SYSTEM
->   are picked and passed to extattr system calls instead accordingly.
-> 
-> /Christian
-> 
-> 
+New files are expected to be GPL-2.0-or-later, with any divergence
+from this explained in the commit message.
 
 
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
 
+This should not be present on newly authored files - only pre-existing
+code which predated our use of SPDX tags, because it creates the possible
+problem of inconsistent license details - which is what you have here.
+
+This is saying GPL-2.0-or-later, while the SDPX tag says LGPL-2.1-or-later
+
+These points apply to multiple patches in this series.
+
+Please make sure to run 'checkpatch.pl' on patches before submissions,
+as it would have reported these problems.
+
+With regards,
+Daniel
 -- 
-Greg
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
