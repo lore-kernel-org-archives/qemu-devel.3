@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A23BCA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C95DBCA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usxmA-00019b-5h; Mon, 01 Sep 2025 02:12:22 -0400
+	id 1usxqc-0001aJ-WC; Mon, 01 Sep 2025 02:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1usxlb-0000mb-OR; Mon, 01 Sep 2025 02:11:49 -0400
+ id 1usxq8-0000hX-Bi; Mon, 01 Sep 2025 02:16:29 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1usxlU-0002Yt-I8; Mon, 01 Sep 2025 02:11:47 -0400
+ id 1usxq5-0003Z5-AX; Mon, 01 Sep 2025 02:16:28 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5816ACAb076640
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5816ACAW076640
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 1 Sep 2025 15:10:27 +0900 (JST)
+ Mon, 1 Sep 2025 15:10:25 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Ku5gTVgI2eFOcSa5Fx00WOVlDLfLzBXwYcYASIz2wj0=; 
+DKIM-Signature: a=rsa-sha256; bh=mh1rQxxaQRm6volubP/55MFePhXgAS5EUt21ThmJ2tU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1756707027; v=1;
- b=Z6Bcu1P7d+ZrM03RcSjRgid/vQE1l/yJ7pBdCfGJDAaRxt+87XZzhaaSDk0y9iJF
- RD7lAX1xp3J5sbjc5oxIyTdb3OYXgf4mXkVHbdeSSo4a8FEZVizdoyJm/Qnubi4N
- DLqt3fqsRIKakUdNZjn1mZ0EWFn9FxipBHeEEJKmaYiVKFTQavZnLZKcR9pekSEi
- mFjIV5S+cv/FJDO+d2eDoujDLpmXQuLZWCA/lBrbZMcH2xAs5SyxTFEJx8N9l4LR
- Y/nmt/SkdBcvYijb7eKMMD4twZsqoRTTSJjI0lupCODfkjiCcQl2Q2PHGWgBWas9
- pxvtpIF42WR+92kikHEQOg==
+ s=rs20250326; t=1756707025; v=1;
+ b=hMHoFeRWDbGazxtjcsfIR+tfqmOYR7EBnchyPhrjiGRZOzf+OKyzR5s2OtcZtogX
+ PFuFvrnPPdTeo4HEojkdUPEXe0hKSXQHKzBxEQ7NlZ1IXx15ghzS+y7oUH/Rhrab
+ AcKQoRG92oRX21QjGuH5WxRcqybfwMOc46jhITyJC5/Iy4WC5Qgp76OY/rH1NEeO
+ q3EV4S0IjYB7PhCMJ+FauowJ0QpiPUfLGObvqv6ZBaZoMtbdwDj1D8BYF0EXzshj
+ BwqA7YqZuWBmFx9ZQDGt9aiuG+y09fwwkiogEI43DPdQXv/v9YC9kGRoV2HduDUq
+ X+PPf9VrRUC/uaTXw9Lwvg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 01 Sep 2025 15:10:05 +0900
-Subject: [PATCH 07/16] cmd646: Do not delete the subregions
+Date: Mon, 01 Sep 2025 15:10:00 +0900
+Subject: [PATCH 02/16] vfio/pci: Do not unparent in instance_finalize
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250901-mr-v1-7-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250901-mr-v1-2-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -99,43 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+This reflects a recent change of: docs/devel/memory.rst
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/ide/cmd646.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ hw/vfio/pci.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/ide/cmd646.c b/hw/ide/cmd646.c
-index 2a59516a9ddbc0a7d40400f521b9cef07006b76a..ea4d501c5e40b0f7f5fcd5c025c113d97d89f5b7 100644
---- a/hw/ide/cmd646.c
-+++ b/hw/ide/cmd646.c
-@@ -302,17 +302,6 @@ static void pci_cmd646_ide_realize(PCIDevice *dev, Error **errp)
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 07257d0fa049b09fc296ac2279a6fafbdf93d277..2e909c190f86a722e1022fa7c45a96d2dde8d58e 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2000,7 +2000,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+         vfio_region_finalize(&bar->region);
+         if (bar->mr) {
+             assert(bar->size);
+-            object_unparent(OBJECT(bar->mr));
+             g_free(bar->mr);
+             bar->mr = NULL;
+         }
+@@ -2008,9 +2007,6 @@ static void vfio_bars_finalize(VFIOPCIDevice *vdev)
+ 
+     if (vdev->vga) {
+         vfio_vga_quirk_finalize(vdev);
+-        for (i = 0; i < ARRAY_SIZE(vdev->vga->region); i++) {
+-            object_unparent(OBJECT(&vdev->vga->region[i].mem));
+-        }
+         g_free(vdev->vga);
      }
  }
- 
--static void pci_cmd646_ide_exitfn(PCIDevice *dev)
--{
--    PCIIDEState *d = PCI_IDE(dev);
--    unsigned i;
--
--    for (i = 0; i < 2; ++i) {
--        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].extra_io);
--        memory_region_del_subregion(&d->bmdma_bar, &d->bmdma[i].addr_ioport);
--    }
--}
--
- static const Property cmd646_ide_properties[] = {
-     DEFINE_PROP_UINT32("secondary", PCIIDEState, secondary, 0),
- };
-@@ -325,7 +314,6 @@ static void cmd646_ide_class_init(ObjectClass *klass, const void *data)
-     device_class_set_legacy_reset(dc, cmd646_reset);
-     dc->vmsd = &vmstate_ide_pci;
-     k->realize = pci_cmd646_ide_realize;
--    k->exit = pci_cmd646_ide_exitfn;
-     k->vendor_id = PCI_VENDOR_ID_CMD;
-     k->device_id = PCI_DEVICE_ID_CMD_646;
-     k->revision = 0x07;
 
 -- 
 2.51.0
