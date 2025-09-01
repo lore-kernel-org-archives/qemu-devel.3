@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 305C3CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02847CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:32:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2lN-00085y-5d; Mon, 01 Sep 2025 07:31:53 -0400
+	id 1ut2ln-0008EJ-2K; Mon, 01 Sep 2025 07:32:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2lL-00085b-0R
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:31:51 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2lf-0008C5-BR
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:32:12 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2lH-0007TQ-JF
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:31:50 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-45b8e28b3c5so4318935e9.1
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:31:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2la-0007Xh-RK
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:32:11 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3cef6debedcso1807337f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:32:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756726303; x=1757331103; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756726323; x=1757331123; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5nltoXv1Ty4Vrha1PBcGyW0fmFuugPfbNd3aYhKRn/A=;
- b=JNN93hRgr/kc64jrqBgXwrmA0TVUd+1jhYFbzJ8dC0ar63lBeKEQ3tZrOrFUou2mwY
- pZSqz1RQdTPfTkL5qMsSZRJ1OB963528U3HP4x9G0mYvDqZB0+JUAraMLKgZcrpYl27F
- WX5/lDJN6kxZvFtg7286Q+oVDzcncCRKAebY1hHI4JQ+IKzmUIrkU9KexevPx89KijED
- IR+n/BDdKDa/dYLj2QnsC8M1gDGJksA2AKeAFqm2LsWYfT4/yTLFoFBliHccgEYLKNGJ
- abCx82Dlo0pgVSlVbeqk0Kgjr36mWot37wD1VmM+jimaSMqSvGVI93ToZo9dBjyreQdk
- hAFg==
+ bh=GO9urr638LgUjRqwzWhN5G3kcWqYn59aypjCcRX6Fo8=;
+ b=Cw9rsnzHPcydFXc+ACENeyXZ6CMGx1iUbu0EWyjpHKfNeVFG+9oPs3F/riKWLcFy5j
+ Lt2dhctTxsY6QFOZDUKRCCwCncUzSZx5ZR3I8ugB8UxeM5nkoeWbz+vFlWySfpu6sPVv
+ tXZZS60YW+sH5HoV59FvQCD/69Dvs0Kqw4kioPAMiifCSDWGAl1kfV6V2LLBEBRrWa0T
+ GTy1Abaa7EN4ZwX/54oMH2OiNkBWnpULYoLTf68Awus0IoKIOL3GYZFRdUP3kfpocaL/
+ yRxyg3E7HMCJEDvRUUi5LwGPQtH8kp4XEMWKrfDJEmwvrva4JfI2UYqRozABjAcSjRH0
+ xhgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756726303; x=1757331103;
+ d=1e100.net; s=20230601; t=1756726323; x=1757331123;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5nltoXv1Ty4Vrha1PBcGyW0fmFuugPfbNd3aYhKRn/A=;
- b=D9gsbC+VzsLWAJUb5PbCbxLD8UGbxQJpUlgeus1FAM9wnZjRpIEE4tA+Pyoz1vFz6C
- +6YD7S7GYHHiAvbZMSVDYjKpqvzEf8Dxw9hv1Y2xhP9z8aJbqiK+Ntc9f+KEWcDLR8ZO
- YxuAn2YnxECSIJ+mlQJko6QRRTwu28pPRjlY5EirSvSPNeHs8h2fVvYcLNIiD35jb2M3
- x4njHY1jOY8HiNbjYgFYtUSTA6vWdo2zFE+Uwb8+n0RIZb2iviNXrPXDddNBohuhDOQM
- FMe3vV3zVKpOtWqNHNCv+qC+mAnYgPFbaNkLgDUFmkAMSW9wRsrYiu1UsBdsrYcQvUai
- Teng==
+ bh=GO9urr638LgUjRqwzWhN5G3kcWqYn59aypjCcRX6Fo8=;
+ b=D4SxLFgywphu/jFKPPrsZxSAFIC9M4OR7OSmZ2Riv+xzBlBnkzSMAg8xVa2D2tHdSI
+ iBnFQOUW32LHOerZABdYpCEyeRwfTSRW8UmUZUrYLVCBpo8nlc+FtE44E2JSWaGxQkqd
+ j+p0t8xvvwQkUy67etx2J32PPwhR0N2/oQ+J9T3gr8TbFrnuYJ8JgrcLO2Y0/BcnSuwf
+ dN7k1hamVCaSVhkRl67FkuwzT43ntzMI2qSAY4bJUWFkoorUEzaqvfVhrbkT7UtA1PGB
+ 1hLkUYnFOhFgeh0k/DYtCctOrB9Tz3BkDuoEOGIqzeXJ4mU6PdNMfukoX3rOJUxJYC1A
+ 4nvg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1P7sMvK4bkKZQ2Hx5QFufWsz/z/LjALV35VH5jI2LP0uwDm9Le/Muu8T+gcVtkEU66/+TSoP7ri3z@nongnu.org
-X-Gm-Message-State: AOJu0Yx/yDe/nagfqDBWuxXnxEKS6ZbyhaXYC8NMQLdZgVR/KdrT+r2c
- iWoadeRbc8GVW+evHbSDK2WzzmRBtCsFUkEUmCdp9CmDrL0BjUxCJgyo1mGrKkj8Q50=
-X-Gm-Gg: ASbGncuXQiiL8w6PGV/fbM78JTig3wZOoN4yl0nS+id9I/+UlaWk9u/xZ1MG8ahYg4u
- sLUIUWNGgTvJYzxm0drVh+I4VGlmPhD0hPjGbER5/a/3QBweHPWKpLzih5taaDYmGfRnKn+Ch5y
- HbcAz/eL7VehzbulTGH4e+F9Ad/vXI8RjxGATuQiLtTLAX/UQa34SyegfWGCMdZeqvI8AvuDeuY
- /uwHj9YIth5ckcPGcIw+Bv7vTVa8FFphnlDWXck4YhAQl7x/hELWXvTuDQdsyDoYUzz5rQBH2cg
- N7GoXMYK/xmaM/H0XzcGENnwLmTlX4Elxc6ZWQj3qkKjmLQNgG8Zy86+5m3mAvV4Ygr64kC7JLQ
- BHGbjReW0Y19Bb2vY6LgyWLSvtgV3gB90A8WpwSW6tFFrUop0nDWbOHl/mkSCvd4FX4lQWmf/zW
- Ji1xW2DW/yEY8=
-X-Google-Smtp-Source: AGHT+IH9UPWvgem+TiaqdQIiQ+Ci2gT+m7HlBEWw5dTdm1mCmi0/j5V39yo1F0iuIXerNzHDGbLuvw==
-X-Received: by 2002:a5d:64cb:0:b0:3d4:1acb:aeda with SMTP id
- ffacd0b85a97d-3d41acbb2d4mr3947845f8f.15.1756726302826; 
- Mon, 01 Sep 2025 04:31:42 -0700 (PDT)
+ AJvYcCVbchn9V8biykbXSTWS7ADilK8hzeNkHEpJs6xN/A9B+zQVHosUrUz7DrvTp8nbqZRWDrJ0Tw1r9prX@nongnu.org
+X-Gm-Message-State: AOJu0YxU6vPitIpPuO8gxtbwWnR4Y9YkQVYTNH4tt8Nfolbb8P67wWEI
+ LMhxkqysrfXT0tCQXZ0+ve8H3Qvn0nNeUp86JWUSrlrqPnjiPYKS4fh+1fXwW3TxuvA=
+X-Gm-Gg: ASbGncuHn0FXhmi80bCbShYpSyYUFW5GwH6xaHnuMR9vxnRQX8FPaYqfLyI8wmF5oeR
+ sONYiP3ItTd6VavBVrhjgzH1UflJcf9ow/gx2Dof+c44QtDwASh/iFT6po6dFEf01IhjNdhVBjj
+ A/r9PhLPestzTepOi8ZDSx8nvzY24epTicfS6cFne68VLhLPFboebJvm3MsVilH+gdfw625kMno
+ tlP7l9KpHQ5YQU7HWGNiILmevImIwdudKCpVBznQP1Pdw9CgJm6QbfWY7wx3t4g/NDVMp27hiXF
+ lfLi9AQENsfZEbx0AawefIJXnMGa8beDJH6K060vgqk3/qy7XCdK0yszo7HEbX/96kGIjGXJXUz
+ FdLeWVWOy+ltVgcmFwDi/P13CsYw8QWS6M/Iy3SByKTmNnWKbf4rDDwdi4zECrxWMUg==
+X-Google-Smtp-Source: AGHT+IHqrYsmnXeXNKWuXMkRIaHp7l4Dah/Z3I5UyzTnvckgPtsoSCdkcKdLTkIY+FbsELxJreWPfg==
+X-Received: by 2002:a05:6000:2dc2:b0:3d1:6748:65fd with SMTP id
+ ffacd0b85a97d-3d1df34f1e8mr5616301f8f.58.1756726323322; 
+ Mon, 01 Sep 2025 04:32:03 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d1007c0dc8sm13204993f8f.53.2025.09.01.04.31.42
+ ffacd0b85a97d-3d66b013b7dsm4312096f8f.28.2025.09.01.04.32.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 04:31:42 -0700 (PDT)
-Message-ID: <5b34feb2-b9ef-4b95-8e6e-dc15eefa710a@linaro.org>
-Date: Mon, 1 Sep 2025 13:31:41 +0200
+ Mon, 01 Sep 2025 04:32:02 -0700 (PDT)
+Message-ID: <f3b29049-af6f-4478-862e-11e649e913d6@linaro.org>
+Date: Mon, 1 Sep 2025 13:32:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/18] accel: make all calls to qemu_wait_io_event look
- the same
+Subject: Re: [PATCH 15/18] bsd-user, linux-user: introduce qemu_wait_io_event
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: peterx@redhat.com, richard.henderson@linaro.org, imammedo@redhat.com
 References: <20250829152909.1589668-1-pbonzini@redhat.com>
- <20250829153115.1590048-13-pbonzini@redhat.com>
+ <20250829153115.1590048-11-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250829153115.1590048-13-pbonzini@redhat.com>
+In-Reply-To: <20250829153115.1590048-11-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,23 +103,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/8/25 17:31, Paolo Bonzini wrote:
-> There is no reason for some accelerators to use qemu_wait_io_event_common
-> (which is separated from qemu_wait_io_event() specifically for round
-> robin).  They can also check for events directly on the first pass through
-> the loop, instead of setting cpu->exit_request to true.
+> Add a user-mode emulation version of the function.  More will be
+> added later, for now it is just process_queued_cpu_work.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   accel/dummy-cpus.c                |  2 +-
->   accel/hvf/hvf-accel-ops.c         |  2 +-
->   accel/kvm/kvm-accel-ops.c         |  3 ++-
->   accel/tcg/tcg-accel-ops-mttcg.c   |  7 ++---
->   accel/tcg/tcg-accel-ops-rr.c      | 43 ++++++++++++++-----------------
->   target/i386/nvmm/nvmm-accel-ops.c |  6 ++---
->   target/i386/whpx/whpx-accel-ops.c |  6 ++---
->   7 files changed, 30 insertions(+), 39 deletions(-)
-
-Nice.
+>   bsd-user/aarch64/target_arch_cpu.h | 2 +-
+>   bsd-user/arm/target_arch_cpu.h     | 2 +-
+>   bsd-user/i386/target_arch_cpu.h    | 2 +-
+>   bsd-user/riscv/target_arch_cpu.h   | 2 +-
+>   bsd-user/x86_64/target_arch_cpu.h  | 2 +-
+>   include/hw/core/cpu.h              | 9 +++++++++
+>   include/system/cpus.h              | 1 -
+>   accel/tcg/user-exec.c              | 5 +++++
+>   linux-user/aarch64/cpu_loop.c      | 2 +-
+>   linux-user/alpha/cpu_loop.c        | 2 +-
+>   linux-user/arm/cpu_loop.c          | 2 +-
+>   linux-user/hexagon/cpu_loop.c      | 2 +-
+>   linux-user/hppa/cpu_loop.c         | 2 +-
+>   linux-user/i386/cpu_loop.c         | 2 +-
+>   linux-user/loongarch64/cpu_loop.c  | 2 +-
+>   linux-user/m68k/cpu_loop.c         | 2 +-
+>   linux-user/microblaze/cpu_loop.c   | 2 +-
+>   linux-user/mips/cpu_loop.c         | 2 +-
+>   linux-user/openrisc/cpu_loop.c     | 2 +-
+>   linux-user/ppc/cpu_loop.c          | 2 +-
+>   linux-user/riscv/cpu_loop.c        | 2 +-
+>   linux-user/s390x/cpu_loop.c        | 2 +-
+>   linux-user/sh4/cpu_loop.c          | 2 +-
+>   linux-user/sparc/cpu_loop.c        | 2 +-
+>   linux-user/xtensa/cpu_loop.c       | 2 +-
+>   25 files changed, 36 insertions(+), 23 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
