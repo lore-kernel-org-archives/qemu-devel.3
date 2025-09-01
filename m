@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA94CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 13:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F69CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 13:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut4iF-0004yi-L8; Mon, 01 Sep 2025 09:36:47 -0400
+	id 1ut4jV-0005qI-93; Mon, 01 Sep 2025 09:38:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut4iD-0004wb-H0
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 09:36:45 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut4iA-0002mJ-TP
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 09:36:44 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-45b89147cfbso12830305e9.3
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 06:36:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756733800; x=1757338600; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=54Q6EzDt2CuWrPreE3EFty6fRQizOgYDQaAoVD7B9nY=;
- b=pE9QYWtQ99CsU0edSP6DsmDtSD8kmaY9NPH17R6AF3cjdxXlmtQrKfVggOJYsh2fkM
- zdtxqdxnHqZ5+uzj5B9OtRwoyp5PGfF7Ih/vOG1mdSxinPEAtSYTkT5pIWpQ7hp2YzF5
- D77UfeazfPPmYprFg1+IgWl/rjkt8YKZEI1tILwrja7fy22VNG19JwB7zKEacAscRZE0
- 3r/yNsWbyFgoHJNarUHQXYd5SW2paKPzA6Gl4TxEIgT8wU5ARPPzdvaTxD+QzIoVCI0U
- TCpjcJeEUm3VdsVivpz2VJwSzpSqbEIJX0eot6KWNYK1H3vHrB5P+HBUNFQDpezGezgp
- zvYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756733800; x=1757338600;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=54Q6EzDt2CuWrPreE3EFty6fRQizOgYDQaAoVD7B9nY=;
- b=ZyY7hCdq7cE8rkun1UJxelBDLQU67VMS3F0KOxw7Zt34/L/5bz4fU05xCWVU/4Wucr
- Qhr473ucbrtuwtWvE1JHds+OUWPMq1Cq15p3JKqHVG2baX484SXhve8fIf+G4oxE09E8
- /rXHr5+/iEeSYp/btYbtkSOJmET1PjKuOSOEfDiGLwH/uUEY3gxshQ+e4OYKYGwN2h7T
- jepO5fY2ZYByUSROilWxCml0HZvBZfTsFllzIa8OlacvPubQDpE9F77KKTw6hqgcsXym
- 5f2xPd4FK8s2RypEgTEzjnybEbnrF3IISfNeBm8JgUfEdXiKUYk1P4+bHr2EBCBjQFta
- wreg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWUKjskr8/k3rSb+AbYKjX/6UCTfeKlfuKM0snG/afjRkSAmzDqHFHeA00GDslnCY6tsrDQcG8S2y+3@nongnu.org
-X-Gm-Message-State: AOJu0YwloIAYjKTnesJDfRbZ8RySCoU+GANPUpUXWACARwOv23EYIS4v
- 7wqY0o2aDBcvqQ5numwrluZgiDJtq1SlXKI3GpnDxVT1C3fxKGip8JCVhfM/Rxz+gy4=
-X-Gm-Gg: ASbGncvmKWtVSzCqt1NHXxmSDQaWobKsf6TuKConcqnwgjYGJXpdgIdKL6qWYIseRbn
- AW8N3JF2+yM5EQusDJ6ObGzR5e5MlBSGBKULApzqafRJJvoXm6HQMIQiHg/XRc7zbLdcQTuk04e
- cDYvzZDTteL6q8Qs52HhE/p+K/8AgfcEdcTP1cvy8iNQVp3uK5OMbEgSqDXnON3w8dQ6SPM2q4E
- kWeueyTob0sshp6NZb2gYymsxHp8iLCuR78gTP5190S1PqdTPW+SIGChm1DfsDFLMBLFWsMylgf
- ZRxjdHNCNDT8gedXkTNwAB/EW/oKmxhcWh1nOD82Iusmn/zKxdXdlsgKPB1/0XrZaaRaSbp/TO/
- 6VdeUlT2+WXEUpLCjjgiQDZ9VmidHCxTlefkyMnSqoOA43CoRIT6euGKbxEBdpI+4l5UHcrrioO
- fc
-X-Google-Smtp-Source: AGHT+IHqehvQ62+oAgMa0nm8yc4DG0g1tzDf0Nk5fdDSxDBkoLzAOv87IIprMCixY3169LU9rs4yCA==
-X-Received: by 2002:a05:600c:354f:b0:459:e094:92c2 with SMTP id
- 5b1f17b1804b1-45b855addd6mr54539615e9.27.1756733800242; 
- Mon, 01 Sep 2025 06:36:40 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf274dde69sm15359089f8f.14.2025.09.01.06.36.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 06:36:39 -0700 (PDT)
-Message-ID: <dc143cea-d559-4491-8154-1406f227e597@linaro.org>
-Date: Mon, 1 Sep 2025 15:36:38 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ut4jT-0005ok-Sk
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 09:38:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ut4jQ-0002sY-JQ
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 09:38:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756733879;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UgsEaIVb7dOAyNYJBPoyoEcEYDI0X0WnsrsLkdY2hoE=;
+ b=ciSMXar7ZY68kIG1XWif6V9hNJqBCOIB++Hhgt9rU10lzqKcKB8bTqBcw43zHHc1z+bHnt
+ /Vse0h3DOVipMay670Gv2FWoqxIyCooH2qCkyhwk8D9oyx0zCqHmjyfAHBBiUOJ1fengtr
+ uoH4p/02b7dyaQeGTZfcvdV/euQG4xk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-601-dz18ecxlNBOU4mvOHyz-fA-1; Mon,
+ 01 Sep 2025 09:37:56 -0400
+X-MC-Unique: dz18ecxlNBOU4mvOHyz-fA-1
+X-Mimecast-MFC-AGG-ID: dz18ecxlNBOU4mvOHyz-fA_1756733874
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7024D1800289; Mon,  1 Sep 2025 13:37:54 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.100])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 83F6818003FC; Mon,  1 Sep 2025 13:37:48 +0000 (UTC)
+Date: Mon, 1 Sep 2025 14:37:45 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, kvm@vger.kernel.org,
+ Glenn Miles <milesg@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v2 2/3] buildsys: Prohibit alloca() use on system code
+Message-ID: <aLWhqb7Kc59N3jGx@redhat.com>
+References: <20250901132626.28639-1-philmd@linaro.org>
+ <20250901132626.28639-3-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/pc_piix.c: remove unnecessary if() from pc_init1()
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, peter.maydell@linaro.org, 
- pbonzini@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
- eduardo@habkost.net, imammedo@redhat.com, qemu-devel@nongnu.org
-References: <20250901132639.1123726-1-mark.caveayland@nutanix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250901132639.1123726-1-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+In-Reply-To: <20250901132626.28639-3-philmd@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,45 +93,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 15:24, Mark Cave-Ayland wrote:
-> Now that the isapc logic has been split out of pc_piix.c, the PCI Host Bridge
-> (phb) object is now always set in pc_init1().
+On Mon, Sep 01, 2025 at 03:26:25PM +0200, Philippe Mathieu-Daudé wrote:
+> Similarly to commit 64c1a544352 ("meson: Enable -Wvla") with
+> variable length arrays, forbid alloca() uses on system code.
 > 
-> Since phb is now guaranteed not to be NULL, Coverity reports that the if()
-> statement surrounding ioapic_init_gsi() is now unnecessary and can be removed
-> (CID 1620557).
+> There are few uses on ancient linux-user code, do not bother
+> there.
+
+This says you're not turning on -Walloca for linux-user, but....
+
+> +if have_system
+> +  warn_flags += ['-Walloca']
+> +endif
+
+...surely this still turns on -Walloca for linux-user, if the build has
+enabled multiple targets covering both system & user mode. ie a default
+qemu build ?
+
+> +
+>  # Set up C++ compiler flags
+>  qemu_cxxflags = []
+>  if 'cpp' in all_languages
+> -- 
+> 2.51.0
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Fixes: 99d0630a45 ("hw/i386/pc_piix.c: assume pcmc->pci_enabled is always true in pc_init1()")
-> ---
->   hw/i386/pc_piix.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 7e78b6daa6..b6d0cf411d 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -284,9 +284,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
 
-Maybe also remove the pointless NULL-init?
-
-   -    Object *phb = NULL;
-   +    Object *phb;
-
->           pc_i8259_create(isa_bus, gsi_state->i8259_irq);
->       }
->   
-> -    if (phb) {
-> -        ioapic_init_gsi(gsi_state, phb);
-> -    }
-> +    ioapic_init_gsi(gsi_state, phb);
->   
->       if (tcg_enabled()) {
->           x86_register_ferr_irq(x86ms->gsi[13]);
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
