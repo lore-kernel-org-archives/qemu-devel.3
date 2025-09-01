@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F93CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 733DCCA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:12:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usxm5-00013r-Qm; Mon, 01 Sep 2025 02:12:19 -0400
+	id 1usxmB-0001CF-5r; Mon, 01 Sep 2025 02:12:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1usxlb-0000mc-OV; Mon, 01 Sep 2025 02:11:49 -0400
+ id 1usxld-0000nW-VU; Mon, 01 Sep 2025 02:11:51 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1usxlU-0002Yp-0p; Mon, 01 Sep 2025 02:11:47 -0400
+ id 1usxlU-0002Z9-0o; Mon, 01 Sep 2025 02:11:49 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5816ACAi076640
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5816ACAV076640
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 1 Sep 2025 15:10:30 +0900 (JST)
+ Mon, 1 Sep 2025 15:10:24 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=mKUX+37+W6DCHXaSHKP3HQpAh7aEXoOw1LuL7ABZjxU=; 
+DKIM-Signature: a=rsa-sha256; bh=KWZuHmR5Opr2FHdoc3YFYaIEvZvc0eLGVYohiqlmGQE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1756707030; v=1;
- b=m69qb5TmXNwJGkbuvdQmp9EO2QhjywesNDDoBKi1YQA0736hO4HHw0jibTwrlltq
- CAknF1nURy59h1cA/6zw2n6iJ02XsKdkdvEPQTOD0M6l8p4nBj+IyJMR4V/RaDyc
- G1gjnkJaun+CQcb4OmUQ9sQqozoq1Rq20hUbbHHClZUMC5fjJv5IEu+5Dw/jhTQf
- EkkBU3jjWLKosC0uW/bduh0d/zNpj6ycFHX+4G13uIb9nkcRDZNtiNWXJU+SiGKA
- Ym28iXfsehNCuTL7RQ4+Zk+fB8H80+97ePWDRCeg/mT+YwmoNYfRKXV32yLFu39Y
- eoqLO6r0Ibv4FG5qRRKBTQ==
+ s=rs20250326; t=1756707025; v=1;
+ b=tjuUATsJbyfXaiqKgI4WZ7NFV3ZDDJA7dz9dZQRaZHLaDRCpj7qPSlu9nSnF5UH4
+ VXmpfnSnvwrNGfcq7Aqdf67eAOCpAPvpIqQwBupNk8gs/+2Am8C9vgYbtTfQp+GV
+ J+GGPZYgFByYLcQ25Ih6Mg3mHyJQqMtLsvtS0gDIHfKftrM6EKHjsfUE/ZMWJHYH
+ +B/o/zIJxaowQGpV9rOHrjHcT3GgftD1d3N9aIqbjg3dqW10cXmL27Io8BWBS2/y
+ Qr1nDk1etywoJuUSKZIzNMypYpqsmIsvBdGWVryHdr0zmTLO8IDjGkKefNKpu26j
+ QZBTGUOxaN9sj3ENASOHrA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 01 Sep 2025 15:10:12 +0900
-Subject: [PATCH 14/16] hw/usb/hcd-xhci: Do not delete the subregions
+Date: Mon, 01 Sep 2025 15:09:59 +0900
+Subject: [PATCH 01/16] docs/devel: Do not unparent in instance_finalize
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250901-mr-v1-14-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250901-mr-v1-1-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -99,34 +99,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+Children are automatically unparented so manually unparenting is
+unnecessary.
+
+Worse, automatic unparenting happens before the insntance_finalize
+callback of the parent gets called, so object_unparent() calls in
+the callback will refer to objects that are already unparented, which
+is semantically incorrect.
+
+Remove the instruction to call object_unparent(), and the exception
+of the "do not call object_unparent()" rule for instance_finalize.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/usb/hcd-xhci.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ docs/devel/memory.rst | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 292c378bfc98bf458f7f760cdb6f1f21f23a7633..b68a2aec317107ec36736f762b9dccd71b53dc3e 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -3454,16 +3454,6 @@ static void usb_xhci_unrealize(DeviceState *dev)
-         xhci->mfwrap_timer = NULL;
-     }
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index 57fb2aec76e066236d33efe1033d2e73c7f7c295..749f11d8a4ddc80f2d44b66fa41fb12c0fa54006 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -161,18 +161,11 @@ or never.
+ Destruction of a memory region happens automatically when the owner
+ object dies.
  
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_cap);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_oper);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_runtime);
--    memory_region_del_subregion(&xhci->mem, &xhci->mem_doorbell);
+-If however the memory region is part of a dynamically allocated data
+-structure, you should call object_unparent() to destroy the memory region
+-before the data structure is freed.  For an example see VFIOMSIXInfo
+-and VFIOQuirk in hw/vfio/pci.c.
 -
--    for (i = 0; i < xhci->numports; i++) {
--        XHCIPort *port = &xhci->ports[i];
--        memory_region_del_subregion(&xhci->mem, &port->mem);
--    }
--
-     usb_bus_release(&xhci->bus);
- }
+ You must not destroy a memory region as long as it may be in use by a
+ device or CPU.  In order to do this, as a general rule do not create or
+-destroy memory regions dynamically during a device's lifetime, and only
+-call object_unparent() in the memory region owner's instance_finalize
+-callback.  The dynamically allocated data structure that contains the
+-memory region then should obviously be freed in the instance_finalize
+-callback as well.
++destroy memory regions dynamically during a device's lifetime.
++The dynamically allocated data structure that contains the
++memory region should be freed in the instance_finalize callback.
  
+ If you break this rule, the following situation can happen:
+ 
+@@ -198,9 +191,9 @@ this exception is rarely necessary, and therefore it is discouraged,
+ but nevertheless it is used in a few places.
+ 
+ For regions that "have no owner" (NULL is passed at creation time), the
+-machine object is actually used as the owner.  Since instance_finalize is
+-never called for the machine object, you must never call object_unparent
+-on regions that have no owner, unless they are aliases or containers.
++machine object is actually used as the owner.  You must never call
++object_unparent on regions that have no owner, unless they are aliases
++or containers.
+ 
+ 
+ Overlapping regions and priority
 
 -- 
 2.51.0
