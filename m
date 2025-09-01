@@ -4,68 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE12CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B29DCA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2yM-0006Ry-Ks; Mon, 01 Sep 2025 07:45:18 -0400
+	id 1ut2ym-0006dg-HW; Mon, 01 Sep 2025 07:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1ut2yC-0006Lm-P4
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:45:11 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1ut2y6-000124-J3
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:45:08 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id EB6FC80EAC;
- Mon, 01 Sep 2025 14:44:55 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:12c::1:9] (unknown [2a02:6bf:8080:12c::1:9])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id sicvej2FwuQ0-avj4ZZ42; Mon, 01 Sep 2025 14:44:55 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1756727095;
- bh=egDQ14gR1v9UrIvXkFgO9grNQ8HXjFnldV6ergf6QzA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=XStCAahanPTbE16O2XQb0VDI+oSf5RjVxyObXMIAhONEllAg+e/r5nLSCB2vNTT0O
- QieeuCeSCmAXtcwJkeN8j1xjCr1LGjHartkp6mZ6Ay5JTYyt4V4UFh9RYRA0TWLeF5
- GTOU0h0LsvDhMKhWPaEuQaW2dY/AqhQJ+FRuUBFM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <2e6a35a4-b9b6-444c-90d7-1c748ad1b7d0@yandex-team.ru>
-Date: Mon, 1 Sep 2025 14:44:54 +0300
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ut2yj-0006c4-NC; Mon, 01 Sep 2025 07:45:42 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1ut2ya-0001GA-9L; Mon, 01 Sep 2025 07:45:39 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b471756592cso2722328a12.3; 
+ Mon, 01 Sep 2025 04:45:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1756727122; x=1757331922; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tWKvDDP5dwP9a+GHQGcF3kvJvaJfbssiacc01wFF9gI=;
+ b=OGOaSdL8PUM90O4rJDMWffj+1m1crNXwnbheFWG0wzD+fh103KJkeYmYTPGCJz7YhV
+ w+S+ZrmHdhkRH0ULg8I5DB8CYyZHRxH/s/7pBfBfgkGhpanIPpSXhWlhAu4F+OwLOK5z
+ eGc42pPPyAlhfARF/UdS+JchoYIFsO0f6TTW5OKwzn3KafT6Z1iGBKodjddFdP9pGIjU
+ wxeRF7DtN5BybMjbfZP+mcF85+BOO4Rr5v9laSVe2q8eNfoq9bTdtkKG/cEt9QVb06YA
+ auTiA/C95DC1+nt0myFAoCy0GdIzwbWRYUFfBo1RRA6be0OR9tJt7G4KgORKTj9TMN1h
+ ZTfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756727122; x=1757331922;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tWKvDDP5dwP9a+GHQGcF3kvJvaJfbssiacc01wFF9gI=;
+ b=G8pBd8ZnjpFxCyBaMfdqfDEUAuj9F5NChZOLDPJJ6uXU82x3VugynkNAlG9XJHi1RI
+ cUu3V0KroLdMjWnZ8JMezu49nfJXNauFwTD73LUCu/og7PGlunOpg5qwMyDk5cay16c4
+ i9s2Ke3BVOsMO30xQH8v/0GPf0HN5M0CO1kc7ipW/NgxLlHCtbbQr1meC3CdxH0d1uSo
+ g/ElCqd+ZYpqTZJ9RPxKI1SPJy9TwFJ9q8zXLDBxOn4yIjeaKj1Wet/hLaWDe9PjPL1g
+ XiBLbxBqnVZSpxDY//I6LFXSMZoBs+eMzFCre1Yc1oJL9g2vXwjSe0O6Ugxnnib8rIG9
+ kcag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTU3EiCTyjyi0NxLBN/bTty1xIIlbif4DhOen0ImqgJCHSUjj0n2MPSZqmJ6NwOa4LCKRvjLoz8Q==@nongnu.org,
+ AJvYcCXy814wee+/Pa22QpFk+aE0HlN29aDNHn9wg9aGN9iSVZwbqBdNfHqW7ItXk3TQlw3YujoXJBtLD2A1cw==@nongnu.org
+X-Gm-Message-State: AOJu0Ywo9o9Bag6yM+w7aZt6HM/oe2+MihO8Yp/KJnT7w2IffaeJOWGi
+ +3YOCXM0mC6kFydPkyuCoj/rRbIvzxoV+EulrIKp8imaKmp/v9Dhg8j3fxLfDw==
+X-Gm-Gg: ASbGncsAW4ZopqnQxBqPNO4ap8mt+xC1zz4QHSSNShDXtY8cemlpUh+FTs9QgcekFi7
+ mMXGcsBnBHpHnqBIRtTL0g9N8ZMrWZmv02//6EOull640ZnVhGJbd+0jm3DQsdrfkwpKfyaKPMz
+ WOYHL34iqiD3TIvRDkateegcfytiVx7GOlQDSEiU/cP2j6SbGMljKnKbR3tAISI8Pm2f6wjRG8i
+ O7fJSd7I+q9T5RPzU8qT7BrZrdfkEJOGVo7aUR0tB2Lw7ITPSzN9tyNijwdPksSz99R/sISqVJ9
+ NHuYvdAnfM5bs+PGVX3XzL5va8rGRUuz47qR3kUmo/vcxLGN1wmXf3UvMNfujxhcav28V8LkRy0
+ 06/+S9t7a4uL2bbV/diE7fQ==
+X-Google-Smtp-Source: AGHT+IGfE1Dw7d3AU5pu0OEqFkeyLda3ECKEUuw2gOdfGscotDPDxO5XmVWq2GxQ0iNWuVgoaJNqCQ==
+X-Received: by 2002:a17:903:284:b0:248:db40:daf0 with SMTP id
+ d9443c01a7336-24944aa3d39mr103030815ad.31.1756727122251; 
+ Mon, 01 Sep 2025 04:45:22 -0700 (PDT)
+Received: from ktock.. ([240d:1a:3b6:8b00:750a:cb0b:f0f9:68f4])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-249065a8036sm103038775ad.129.2025.09.01.04.45.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Sep 2025 04:45:21 -0700 (PDT)
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
+ Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, ktokunaga.mail@gmail.com
+Subject: [PATCH v3 00/35] wasm: Add Wasm TCG backend based on wasm64
+Date: Mon,  1 Sep 2025 20:44:02 +0900
+Message-ID: <cover.1756724464.git.ktokunaga.mail@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V2 0/8] Live update: tap and vhost
-To: Steven Sistare <steven.sistare@oracle.com>,
- "Chaney, Ben" <bchaney@akamai.com>
-Cc: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Hamza Khan <hamza.khan@nutanix.com>,
- qemu-devel@nongnu.org
-References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
- <ef7fd47a-f7c0-4bca-823c-07005c5f1959@yandex-team.ru>
- <f3cb36ee-e677-4377-9e4d-652085b205aa@oracle.com>
- <3c939b30-2479-4bdd-8fa8-1dcd7adaada5@oracle.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <3c939b30-2479-4bdd-8fa8-1dcd7adaada5@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,126 +110,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.08.25 22:37, Steven Sistare wrote:
-> On 8/28/2025 11:48 AM, Steven Sistare wrote:
->> On 8/23/2025 5:53 PM, Vladimir Sementsov-Ogievskiy wrote:
->>> On 17.07.25 21:39, Steve Sistare wrote:
->>>> Tap and vhost devices can be preserved during cpr-transfer using
->>>> traditional live migration methods, wherein the management layer
->>>> creates new interfaces for the target and fiddles with 'ip link'
->>>> to deactivate the old interface and activate the new.
->>>>
->>>> However, CPR can simply send the file descriptors to new QEMU,
->>>> with no special management actions required.  The user enables
->>>> this behavior by specifing '-netdev tap,cpr=on'.  The default
->>>> is cpr=off.
->>>
->>> Hi Steve!
->>>
->>> First, me trying to test the series:
->>
->> Thank-you Vladimir for all the work you are doing in this area.  I have
->> reproduced the "virtio_net_set_queue_pairs: Assertion `!r' failed." bug.
->> Let me dig into that before I study the larger questions you pose
->> about preserving tap/vhost-user-blk in local migration versus cpr.
-> 
-> I have reproduced your journey!  I fixed the assertion, the vnet_hdr, and
-> the blocking fd problems which you allude to.  The attached patch fixes
-> them, and will be squashed into the series.
-> 
-> Ben, you also reported the !r assertion failure, so this fix should help
-> you also.
-> 
->>> SOURCE:
->>>
->>> sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :0 -nodefaults -vga std -qmp stdio -msg timestamp -S -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on
->>>
->>> {"execute": "qmp_capabilities"}
->>> {"return": {}}
->>> {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
->>> {"return": {}}
->>> {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
->>> {"return": {}}
->>> {"execute": "cont"}
->>> {"timestamp": {"seconds": 1755977653, "microseconds": 248749}, "event": "RESUME"}
->>> {"return": {}}
->>> {"timestamp": {"seconds": 1755977657, "microseconds": 366274}, "event": "NIC_RX_FILTER_CHANGED", "data": {"name": "vnet.1", "path": "/machine/peripheral/vnet.1/virtio-backend"}}
->>> {"execute": "migrate-set-parameters", "arguments": {"mode": "cpr-transfer"}}
->>> {"return": {}}
->>> {"execute": "migrate", "arguments": {"channels": [{"channel-type": "main", "addr": {"path": "/tmp/migr.sock", "transport": "socket", "type": "unix"}}, {"channel-type": "cpr", "addr": {"path": "/tmp/cpr.sock", "transport": "socket", "type": "unix"}}]}}
->>> {"timestamp": {"seconds": 1755977767, "microseconds": 835571}, "event": "STOP"}
->>> {"return": {}}
->>>
->>> TARGET:
->>>
->>> sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :1 -nodefaults -vga std -qmp stdio -S -object memory-backend-file,id=ram0,size=4G,mem-p
->>> ath=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on -incoming defer -incoming '{"channel-type": "cpr","addr": { "transport": "socket","type": "unix", "path": "/tmp/cpr.sock"}}'
->>>
->>> <need to wait until "migrate" on source>
->>>
->>> {"execute": "qmp_capabilities"}
->>> {"return": {}}
->>> {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
->>> {"return": {}}
->>> {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
->>> could not disable queue
->>> qemu-system-x86_64: ../hw/net/virtio-net.c:771: virtio_net_set_queue_pairs: Assertion `!r' failed.
->>> fish: Job 1, 'sudo build/qemu-system-x86_64 -…' terminated by signal SIGABRT (Abort)
->>>
->>> So, it crashes on device_add..
->>>
->>> Second, I've come a long way, backporting you TAP v1 series together with needed parts of CPR and migration channels to QEMU 7.2, fixing different issues (like, avoid reinitialization of vnet_hdr length on target, avoid simultaneous use of tap on source an target, avoid making the fd blocking again on target), and it finally started to work.
->>>
->>> But next, I went to support similar migration for vhost-user-blk, and that was a lot more complex. No reason to pass an fd in preliminary stage, when source is running (like in CPR), because:
->>>
->>> 1. we just can't use the fd on target at all, until we stop use it on source, otherwise we just break vhost-user-blk protocol on the wire (unlike TAP, where some ioctls called on target doesn't break source)
->>> 2. we have to pass enough additional variables, which are simpler to pass through normal migration channel (how to pass anything except fds through cpr channel?)
-> 
-> You can pass extra state through the cpr channel.  See for example vmstate_cpr_vfio_device,
-> and how vmstate_cpr_vfio_devices is defined as a sub-section of vmstate_cpr_state.
+V3:
+- Fixed init_wasm_js to correctly cast pointers to Numbers when passing the
+  arguments to the getInt32 and setInt32 methods.
+- Lowered the the maximum number of instances (MAX_INSTANCES) to avoid the
+  out of memory error in recent versions of FireFox.
 
-O, I missed this.
+V2:
 
-Hmm. Still, finally CPR becomes just an additional stage of migration, which is done prior device initialization on target..
+- Reorganized commits to implement the backend incrementally from a clean
+  state.
+- Removed the andc, orc, eqv, nand and nor operations to rely on default
+  expansion.
+- Removed the bswap operations to use default expansion.
+- Removed the extract and deposit oprations to use default expansion.
+- Updated the sextract to emit only when the corresponding Wasm instruction
+  is available
+- Removed the not operation to rely on default expansion.
+- Fixed the neg implementation to "ret = 0 - arg"
+- Added Wasm implementation of the mb operation using the atomic.fence
+  instruction.
 
-Didn't you think of integrating it to the common scheme: so that devices may have .vmsd_cpr in addition to .vmsd? This way we don't need a global CPR state, and CPR stage of migration will work the same way as normal migration?
+Note:
+The first four commits are temporarily imported from a separated patch
+series which enables 64bit guests using wasm64 [2]. These commits are under
+review in that series and are included here only to allow subsequent patches
+to build. Please ignore them when reviewing this series.
 
-Still2, if we pass some state in CPR it should be a kind of constant. We need a guarantee that it will not change between migration start and source stop.
+V1:
 
-> 
->>> So, I decided to go another way, and just migrate everything backend-related including fds through main migration channel. Of course, this requires deep reworking of device initialization in case of incoming migration (but for vhost-user-blk we need it anyway). The feature is in my series "[PATCH 00/33] vhost-user-blk: live-backend local migration" (you are in CC).
-> 
-> You did a lot of work in those series!
-> I suspect much less rework of initialization is required if you pass variables in cpr state.
+This patch series adds a TCG backend for WebAssembly. Unlike eariler
+attempts [1], it is implemented using Emscripten's wasm64 target to support
+64bit guests.
 
-Not sure. I had to rework initialization anyway, as initialization damaged the connection. And this lead me to idea "if rework anyway, why not to go with one migration channel".
+The first four commits are temporarily imported from a separated patch
+series which enables 64bit guests using wasm64 [2]. These commits are under
+review in that series and are included here only to allow subsequent patches
+to build. Please ignore them when reviewing this series.
 
-> 
->>> The success with vhost-user-blk (of-course) make me rethink TAP migration too: try to avoid using additional cpr channel and unusual waiting for QMP interface on target. And, I've just sent an RFC: "[RFC 0/7] virtio-net: live-TAP local migration"
-> 
-> Is there a use case for this outside of CPR?
+# New TCG Backend for Browsers
 
-It just works without CPR.. Will CPR bring more benefit if I enable it in the setup with my local-tap + local-vhost-user-blk capabilities ( + ignore-shared of-course)?
+A new TCG backend translates IR instructions into Wasm instructions and runs
+them using the browser's WebAssembly APIs (WebAssembly.Module and
+WebAssembly.instantiate). To minimize compilation overhead and avoid hitting
+the browser's limitation of the number of instances, this backend integrates
+a forked TCI. TBs run on TCI by default, with frequently executed TBs
+compiled into WebAssembly.
 
+# 64bit guests support by wasm64
 
-> CPR is intended to be the "local migration" solution that does it all :)
-> But if you do proceed with your local migration tap solution, I would want
-> to see that CPR could also use your code paths.
-> 
-CPR can transparently use my code: you may enable both CPR and local-tap capability and it should work. Some devices will migrate their fds through CPR, TAP fds amd state will migrate through main migration channel. Making both channels to be unix-sockets should not be a considerable overhead I think.
+Support for 64bit guests is being reviewed in a separated patch series [2],
+which enables QEMU to use 64bit pointers by compiling with the --cpu=wasm64
+flag. The Wasm TCG backend is based on this feature and also requires
+--cpu=wasm64.
 
-Why I like my solution more:
+QEMU compiled with --cpu=wasm64 runs on wasm64-capable engines. To support
+engines which don't support wasm64 (e.g. Safari), the Wasm backend can use
+the compatibility flag "--enable-wasm64-32bit-address-limit" also introduced
+in [2]. This flag enables 64bit pointers in the C code while Emscripten
+lowers the output binary to wasm32 and limits the maximum memory size to
+4GB. As a result, the Wasm backend can run on wasm32 engiens while
+supporting 64bit guests.
 
-- no additional channel
-- no additional logic in management software (to handle target start with no QMP access until "migrate" command on source)
-- less code to backport (that's personal, of course not an argument for final upstream solution)
+Note: The flag was originally named --wasm64-32bit-address-limit but this
+patch series moved it from the configure script into meson_options.txt. To
+follow Meson's naming conventions, it was renamed to
+--enable-wasm64-32bit-address-limit.
 
-It seems that CPR is simpler to support as we don't need to do deep rework of initialization code.. But in reality, there is a lot of work anyway: TAP, vhost-user-blk cases proves this. You series about vfio are also huge.
+# Overview of build process
 
-What is the benefit of CPR against simple (unix-socket) migration?
+To compile QEMU with Emscripten, the following dependencies are required.
+The emsdk-wasm-cross.docker environment includes all necessary components
+and can be used as the build environment:
 
+- Emscripten SDK (emsdk) v4.0.10
+- Libraries cross-compiled with Emscripten (please see also
+  emsdk-wasm-cross.docker for build steps)
+  - GLib v2.84.0
+  - zlib v1.3.1
+  - libffi v3.5.2
+  - Pixman v0.44.2
+
+The configure script supports --cpu=wasm64 flag to compile QEMU with 64bit
+pointer support.
+
+emconfigure ./configure --cpu=wasm64 \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu
+emmake make -j$(nproc)
+
+If the output needs to run on wasm32 engines, use
+"--enable-wasm64-32bit-address-limit" flag.
+
+emconfigure ./configure --cpu=wasm64 --enable-wasm64-32bit-address-limit \
+                        --static --disable-tools \
+                        --target-list=x86_64-softmmu
+emmake make -j$(nproc)
+
+Either of the above commands generates the following files:
+
+- qemu-system-x86_64.js
+- qemu-system-x86_64.wasm
+
+Guest images can be packaged using Emscripten's file_packager.py tool.
+For example, if the images are stored in a directory named "pack", the
+following command packages them, allowing QEMU to access them through
+Emscripten's virtual filesystem:
+
+/path/to/file_packager.py qemu-system-x86_64.data --preload pack > load.js
+
+This process generates the following files:
+
+- qemu-system-x86_64.data
+- load.js
+
+Emscripten allows passing arguments to the QEMU command via the Module
+object in JavaScript:
+
+Module['arguments'] = [
+    '-nographic', '-m', '512M',
+    '-L', 'pack/',
+    '-drive', 'if=virtio,format=raw,file=pack/rootfs.bin',
+    '-kernel', 'pack/bzImage',
+    '-append', 'earlyprintk=ttyS0 console=ttyS0 root=/dev/vda loglevel=7',
+];
+
+The sample repository [3] (tcgdev64 branch) provides a complete setup,
+including an HTML file that implements a terminal UI.
+
+[1] https://patchew.org/QEMU/cover.1747744132.git.ktokunaga.mail@gmail.com/
+[2] https://patchew.org/QEMU/cover.1754534225.git.ktokunaga.mail@gmail.com/
+[3] https://github.com/ktock/qemu-wasm-sample/tree/tcgdev64
+
+Kohei Tokunaga (35):
+  meson: Add wasm64 support to the --cpu flag
+  configure: Enable to propagate -sMEMORY64 flag to Emscripten
+  dockerfiles: Add support for wasm64 to the wasm Dockerfile
+  .gitlab-ci.d: Add build tests for wasm64
+  tcg/wasm: Add tcg-target.h and tcg-target-reg-bits.h
+  tcg/wasm: Add register-related definitions
+  tcg/wasm: Add constraint definitions
+  tcg/wasm: Add relocation callbacks
+  tcg/wasm: Add and/or/xor instructions
+  tcg/wasm: Add add/sub/mul instructions
+  tcg/wasm: Add shl/shr/sar instructions
+  tcg/wasm: Add setcond/negsetcond/movcond instructions
+  tcg/wasm: Add sextract instruction
+  tcg/wasm: Add load and store instructions
+  tcg/wasm: Add mov/movi instructions
+  tcg/wasm: Add ext instructions
+  tcg/wasm: Add div/rem instructions
+  tcg/wasm: Add neg/ctpop instructions
+  tcg/wasm: Add rot/clz/ctz instructions
+  tcg/wasm: Add br/brcond instructions
+  tcg/wasm: Add exit_tb/goto_tb/goto_ptr instructions
+  tcg/wasm: Add call instruction
+  tcg/wasm: Add qemu_ld/qemu_st instructions
+  tcg/wasm: Add mb instruction
+  tcg/wasm: Mark unimplemented instructions
+  tcg/wasm: Add initialization of fundamental registers
+  tcg/wasm: Write wasm binary to TB
+  tcg/wasm: Implement instantiation of Wasm binary
+  tcg/wasm: Allow switching coroutine from a helper
+  tcg/wasm: Enable instantiation of TBs executed many times
+  tcg/wasm: Enable TLB lookup
+  tcg/wasm: Add tcg_target_init function
+  meson.build: enable to build Wasm backend
+  meson.build: Propagate optimization flag for linking on Emscripten
+  .gitlab-ci.d: build wasm backend in CI
+
+ .gitlab-ci.d/buildtest.yml                    |   26 +-
+ .gitlab-ci.d/container-cross.yml              |   20 +-
+ .gitlab-ci.d/container-template.yml           |    4 +-
+ MAINTAINERS                                   |    9 +-
+ configure                                     |   14 +-
+ include/accel/tcg/getpc.h                     |    2 +-
+ include/tcg/helper-info.h                     |    4 +-
+ include/tcg/tcg.h                             |    2 +-
+ meson.build                                   |   16 +-
+ meson_options.txt                             |    3 +
+ scripts/meson-buildoptions.sh                 |    5 +
+ tcg/aarch64/tcg-target.c.inc                  |   11 +
+ tcg/arm/tcg-target.c.inc                      |   11 +
+ tcg/i386/tcg-target.c.inc                     |   11 +
+ tcg/loongarch64/tcg-target.c.inc              |   11 +
+ tcg/meson.build                               |    5 +
+ tcg/mips/tcg-target.c.inc                     |   11 +
+ tcg/ppc/tcg-target.c.inc                      |   11 +
+ tcg/region.c                                  |   10 +-
+ tcg/riscv/tcg-target.c.inc                    |   11 +
+ tcg/s390x/tcg-target.c.inc                    |   11 +
+ tcg/sparc64/tcg-target.c.inc                  |   11 +
+ tcg/tcg.c                                     |   21 +-
+ tcg/tci/tcg-target.c.inc                      |   11 +
+ tcg/wasm.c                                    |  855 +++++
+ tcg/wasm.h                                    |  117 +
+ tcg/wasm/tcg-target-con-set.h                 |   19 +
+ tcg/wasm/tcg-target-con-str.h                 |   14 +
+ tcg/wasm/tcg-target-has.h                     |   14 +
+ tcg/wasm/tcg-target-mo.h                      |   20 +
+ tcg/wasm/tcg-target-opc.h.inc                 |   18 +
+ tcg/wasm/tcg-target-reg-bits.h                |   11 +
+ tcg/wasm/tcg-target.c.inc                     | 2843 +++++++++++++++++
+ tcg/wasm/tcg-target.h                         |   61 +
+ ...2-cross.docker => emsdk-wasm-cross.docker} |   29 +-
+ 35 files changed, 4218 insertions(+), 34 deletions(-)
+ create mode 100644 tcg/wasm.c
+ create mode 100644 tcg/wasm.h
+ create mode 100644 tcg/wasm/tcg-target-con-set.h
+ create mode 100644 tcg/wasm/tcg-target-con-str.h
+ create mode 100644 tcg/wasm/tcg-target-has.h
+ create mode 100644 tcg/wasm/tcg-target-mo.h
+ create mode 100644 tcg/wasm/tcg-target-opc.h.inc
+ create mode 100644 tcg/wasm/tcg-target-reg-bits.h
+ create mode 100644 tcg/wasm/tcg-target.c.inc
+ create mode 100644 tcg/wasm/tcg-target.h
+ rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (85%)
 
 -- 
-Best regards,
-Vladimir
+2.43.0
+
 
