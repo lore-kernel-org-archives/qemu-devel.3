@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B95CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F533CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:14:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usxmG-0001Mq-BB; Mon, 01 Sep 2025 02:12:28 -0400
+	id 1usxm0-0000vh-82; Mon, 01 Sep 2025 02:12:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1usxlm-0000tK-TW; Mon, 01 Sep 2025 02:11:59 -0400
+ id 1usxlb-0000me-QI; Mon, 01 Sep 2025 02:11:49 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1usxlk-0002ds-PZ; Mon, 01 Sep 2025 02:11:58 -0400
+ id 1usxlU-0002Yu-0q; Mon, 01 Sep 2025 02:11:47 -0400
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5816ACAg076640
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5816ACAX076640
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 1 Sep 2025 15:10:29 +0900 (JST)
+ Mon, 1 Sep 2025 15:10:25 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Qvj4+hZAXQ+HATM7aKOWvKVpmlqyAC4ni6CowomDhZk=; 
+DKIM-Signature: a=rsa-sha256; bh=Jqr8P+bWn9/t6f+kXj3iAqWRCxcJIhzvpyYZplXrOeo=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1756707029; v=1;
- b=DVy8vPnfeINZkIJXqVRqPN+8TliAxFg0TVUxOxnacYy2TjRwZqgdgP2H2urTuZ5+
- X6thdD2ZmYuL8ZNS1iZ7xnf4+8xadjxZr4vCE696+qBoFdeH6GvqQ1/e8FKrx1VD
- b7KXdoZRs6VsiRHY/IQWkkowGwZuQCDLBrStjM5pEmsnHaW1/uE3okYAbhsJG82N
- gdlXUdEAIvHcJa/AvZYv1cVPS9r1RRW8RFT3/hic3YbLeA6vNveftqvlErJeqTlw
- PJWpg6I5PYMxdnjRxJ5CVCNo17XV66UO1BXAZFiCSgpbxWAV/LgbNi35R/UWiWch
- /0tuInix7dN49goOgrgEpg==
+ s=rs20250326; t=1756707025; v=1;
+ b=rss782Ak4QRV616rnZzznzDZ+KU1TyzWzJtyB347whZIJHUDP1UdBB+ptHsz7FAJ
+ 0CLMJ1Z2n4YNqKuH+664JZEMPV+i05L2PMBMT394cpHTi7fyeXqjC1ZVOu97jSea
+ QMocdpjhM7j3ZHHdprv4tnZ9z8Gf7vthwZRUd179+CLQ0ivgEzZf1nxsdV2tQWqK
+ aAmCTXzjd0SD5qWRlra8LPomKeqxQLd51WU9k9gmgrmLNDWECY4oI24XHwpjeDFG
+ D/X7zDI3UEKk/19Or2pP1cWT2IvcArUG0TlyZBuJZY6eeA0MeifbljvPpwRxlmOK
+ xVOWiNP9rgL922zfYmviqQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 01 Sep 2025 15:10:10 +0900
-Subject: [PATCH 12/16] hw/ppc/spapr_pci: Do not delete the subregions
+Date: Mon, 01 Sep 2025 15:10:01 +0900
+Subject: [PATCH 03/16] qdev: Automatically delete memory subregions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250901-mr-v1-12-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20250901-mr-v1-3-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 References: <20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20250901-mr-v1-0-dd7cb6b1480b@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -99,67 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer necessary.
+A common pattern is that to delete memory subregions during realization
+error handling and unrealization. pci automatically automatically
+deletes the IO subregions, but the pattern is manually implemented
+in other places, which is tedious and error-prone.
+
+Implement the logic to delete subregions in qdev to cover all devices.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/ppc/spapr_pci.c | 22 ----------------------
- 1 file changed, 22 deletions(-)
+ include/hw/qdev-core.h |  2 ++
+ hw/core/qdev.c         | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 1ac1185825e84ca908fd878f6cbe7e8cacac1d89..b4043ee752c5f9ab2c0f5800dffa809d3c182225 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -1735,27 +1735,13 @@ static void spapr_phb_unrealize(DeviceState *dev)
-     SysBusDevice *s = SYS_BUS_DEVICE(dev);
-     PCIHostState *phb = PCI_HOST_BRIDGE(s);
-     SpaprPhbState *sphb = SPAPR_PCI_HOST_BRIDGE(phb);
--    SpaprTceTable *tcet;
-     int i;
--    const unsigned windows_supported = spapr_phb_windows_supported(sphb);
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 530f3da70218df59da72dc7a975dca8265600e00..c2582a4d59b38152a00d066351492c2e2ae0718f 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -226,6 +226,7 @@ typedef QLIST_HEAD(, BusState) BusStateHead;
+ struct DeviceState {
+     /* private: */
+     Object parent_obj;
++
+     /* public: */
  
-     if (sphb->msi) {
-         g_hash_table_unref(sphb->msi);
-         sphb->msi = NULL;
-     }
- 
--    /*
--     * Remove IO/MMIO subregions and aliases, rest should get cleaned
--     * via PHB's unrealize->object_finalize
--     */
--    for (i = windows_supported - 1; i >= 0; i--) {
--        tcet = spapr_tce_find_by_liobn(sphb->dma_liobn[i]);
--        if (tcet) {
--            memory_region_del_subregion(&sphb->iommu_root,
--                                        spapr_tce_get_iommu(tcet));
--        }
--    }
--
-     remove_drcs(sphb, phb->bus);
- 
-     for (i = PCI_NUM_PINS - 1; i >= 0; i--) {
-@@ -1767,8 +1753,6 @@ static void spapr_phb_unrealize(DeviceState *dev)
- 
-     QLIST_REMOVE(sphb, list);
- 
--    memory_region_del_subregion(&sphb->iommu_root, &sphb->msiwindow);
--
-     /*
-      * An attached PCI device may have memory listeners, eg. VFIO PCI. We have
-      * unmapped all sections. Remove the listeners now, before destroying the
-@@ -1779,12 +1763,6 @@ static void spapr_phb_unrealize(DeviceState *dev)
- 
-     qbus_set_hotplug_handler(BUS(phb->bus), NULL);
-     pci_unregister_root_bus(phb->bus);
--
--    memory_region_del_subregion(get_system_memory(), &sphb->iowindow);
--    if (sphb->mem64_win_pciaddr != (hwaddr)-1) {
--        memory_region_del_subregion(get_system_memory(), &sphb->mem64window);
--    }
--    memory_region_del_subregion(get_system_memory(), &sphb->mem32window);
+     /**
+@@ -526,6 +527,7 @@ bool qdev_realize_and_unref(DeviceState *dev, BusState *bus, Error **errp);
+  *  - unrealize any child buses by calling qbus_unrealize()
+  *    (this will recursively unrealize any devices on those buses)
+  *  - call the unrealize method of @dev
++ *  - remove @dev from memory
+  *
+  * The device can then be freed by causing its reference count to go
+  * to zero.
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index f600226176871361d7ff3875f5d06bd4e614be6e..8fdf6774f87ec8424348e8c9652dc4c99a2faeb5 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -451,6 +451,17 @@ static bool check_only_migratable(Object *obj, Error **errp)
+     return true;
  }
  
- static void spapr_phb_destroy_msi(gpointer opaque)
++static int del_memory_region(Object *child, void *opaque)
++{
++    MemoryRegion *mr = (MemoryRegion *)object_dynamic_cast(child, TYPE_MEMORY_REGION);
++
++    if (mr && mr->container) {
++        memory_region_del_subregion(mr->container, mr);
++    }
++
++    return 0;
++}
++
+ static void device_set_realized(Object *obj, bool value, Error **errp)
+ {
+     DeviceState *dev = DEVICE(obj);
+@@ -582,6 +593,7 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+         if (dc->unrealize) {
+             dc->unrealize(dev);
+         }
++        object_child_foreach(OBJECT(dev), del_memory_region, NULL);
+         dev->pending_deleted_event = true;
+         DEVICE_LISTENER_CALL(unrealize, Reverse, dev);
+     }
+@@ -606,6 +618,8 @@ post_realize_fail:
+     }
+ 
+ fail:
++    object_child_foreach(OBJECT(dev), del_memory_region, NULL);
++
+     error_propagate(errp, local_err);
+     if (unattached_parent) {
+         /*
 
 -- 
 2.51.0
