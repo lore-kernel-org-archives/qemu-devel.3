@@ -4,67 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE3CCA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 08:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19ACFCA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 08:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut0EG-0002ja-TF; Mon, 01 Sep 2025 04:49:33 -0400
+	id 1ut0EJ-0002oH-On; Mon, 01 Sep 2025 04:49:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ut0EC-0002ge-6g
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 04:49:28 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut0EF-0002jZ-Br
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 04:49:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ut0E9-0000wb-Jh
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 04:49:27 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut0ED-0000xY-43
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 04:49:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756716563;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s9wSE9i7vT8xHbJiCQ2OdMTkv0klDQu89+BoJ6Zih1w=;
- b=Gyw4iMaNeM2Q+Prh2j3QL+h2NpfKns9oR49NJfinfqdLuneCUjnW2MCG5SpTFm1vDZcu9/
- qc/YFClSN4h4vHghrgSbNF4gtoOy/62nYGPJPdwQs11vfYbtsRmd/sGdydvqKrJIkJmGjg
- rokXX9HAoeyZWAt5KimRyR3mW5zLV/U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1756716565;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4JE3VOkiV62MK+0IJ2Z6XJp4shx48oTJqqqImyPhww8=;
+ b=RYVgcKdlW23cMT6eBilKXbZQr0Vz9joU+aRY5mKJbvPd4fPudjbrO1sN6micHwe0yIShgT
+ uRN3yWVqDnx59rVFfx9xg4fgwci+OLMkqBwFGCAdOoKJwS1apQVtXqWmFKphhm1TcPkAFj
+ Vfwh//emCFSSrm73uY1NGzCUNdOSfRQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-462-ZYFFn6R7OteWiCTQAv6TSQ-1; Mon,
- 01 Sep 2025 04:49:20 -0400
-X-MC-Unique: ZYFFn6R7OteWiCTQAv6TSQ-1
-X-Mimecast-MFC-AGG-ID: ZYFFn6R7OteWiCTQAv6TSQ_1756716560
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-l6KBsbzGMG6l9KkSsssDtg-1; Mon,
+ 01 Sep 2025 04:49:22 -0400
+X-MC-Unique: l6KBsbzGMG6l9KkSsssDtg-1
+X-Mimecast-MFC-AGG-ID: l6KBsbzGMG6l9KkSsssDtg_1756716561
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4B2719560B4; Mon,  1 Sep 2025 08:49:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.100])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 879E9180029B; Mon,  1 Sep 2025 08:49:18 +0000 (UTC)
-Date: Mon, 1 Sep 2025 09:49:14 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 07/14] util: add API to fetch the current thread name
-Message-ID: <aLVeCs5QHtAJJLiY@redhat.com>
-References: <20250829180354.2922145-1-berrange@redhat.com>
- <20250829180354.2922145-8-berrange@redhat.com>
- <2fbc5525-cf8c-4d3a-ac2e-97d2764fc5f4@linaro.org>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E60618002BA; Mon,  1 Sep 2025 08:49:21 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5CA571955EA5; Mon,  1 Sep 2025 08:49:17 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@linaro.org, wangyanan55@huawei.com,
+ zhao1.liu@intel.com, mst@redhat.com, pbonzini@redhat.com,
+ qemu-arm@nongnu.org
+Subject: [PATCH] smbios: cap DIMM size to 2Tb as workaround for broken Windows
+Date: Mon,  1 Sep 2025 10:49:15 +0200
+Message-ID: <20250901084915.2607632-1-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <2fbc5525-cf8c-4d3a-ac2e-97d2764fc5f4@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -86,52 +81,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 31, 2025 at 08:14:21AM +1000, Richard Henderson wrote:
-> On 8/30/25 04:03, Daniel P. Berrangé wrote:
-> > +#ifndef PTHREAD_MAX_NAMELEN_NP
-> > +#define PTHREAD_MAX_NAMELEN_NP 16
-> > +#endif
-> > +
-> > +static __thread char namebuf[PTHREAD_MAX_NAMELEN_NP];
-> 
-> If you're going to have this...
-> 
-> > +static __thread char namebuf[64];
-> 
-> ... or this, why not just remember the name from when we set it?
-> 
-> You could even store a pointer instead of a larger number of characters.
-> I'll note that all of the names we actually pass to qemu_thread_create are
-> string literals, and that we don't actually need to do any memory allocation
-> at all with them.
+With current limit set to match max spec size (2PTb),
+Windows fails to parse type 17 records when DIMM size reaches 4Tb+.
+Failure happens in GetPhysicallyInstalledSystemMemory() function,
+and fails "Check SMBIOS System Memory Tables" SVVP test.
+Though not fatal, it might cause issues for userspace apps,
+something like [1].
 
-I was thinking about the possibility there will be threads running that
-were not created using qemu_thread_start, given that libraries use threads
-behind the scenes and I can't rule out possibility that such threads call
-back into QEMU code.
+Lets cap default DIMM size to 2Tb for now, until MS fixes it.
 
-> 
-> 
-> > +    name = g_utf16_to_utf8(namew, -1, NULL, NULL, NULL);
-> > +    LocalFree(namew);
-> > +    if (!name) {
-> > +        goto error;
-> > +    }
-> 
-> That would certainly avoid this kind of hassle.
-> 
-> 
-> 
+1) https://issues.redhat.com/browse/RHEL-81999?focusedId=27731200&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-27731200
 
-With regards,
-Daniel
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+PS: It's obvious 32 int overflow math somewhere in Windows,
+    MS admitted that it's Windows bug and in a process of fixing it.
+    However it's unclear if W10 and earlier would get the fix.
+    So however I dislike changing defaults, we heed to work around
+    the issue (it looks like QEMU regression while not being it).
+    Hopefully 2Tb/DIMM split will last longer until VM memory size
+    will become large enough to cause to many type 17 records issue
+    again.
+PS2:
+    Alternatively, instead of messing with defaults, I can create
+    a dedicated knob to ask for desired DIMM size cap explicitly
+    on CLI. That will let users to enable workaround when they
+    hit this corner case. Downside is that knob has to be propagated
+    up all mgmt stack, which might be not desirable.
+---
+ hw/arm/virt.c     | 1 +
+ hw/core/machine.c | 5 ++++-
+ hw/i386/pc_piix.c | 1 +
+ hw/i386/pc_q35.c  | 1 +
+ 4 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 9326cfc895..4100c4ff1e 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3463,6 +3463,7 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
+ static void virt_machine_10_1_options(MachineClass *mc)
+ {
+     virt_machine_10_2_options(mc);
++    mc->smbios_memory_device_size = 2047 * TiB;
+     compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+ }
+ DEFINE_VIRT_MACHINE(10, 1)
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 38c949c4f2..ac00e72127 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1115,8 +1115,11 @@ static void machine_class_init(ObjectClass *oc, const void *data)
+      * SMBIOS 3.1.0 7.18.5 Memory Device — Extended Size
+      * use max possible value that could be encoded into
+      * 'Extended Size' field (2047Tb).
++     *
++     * Unfortunately (current) Windows Server 2025 and earlier do not handle
++     * 4Tb+ DIMM size.
+      */
+-    mc->smbios_memory_device_size = 2047 * TiB;
++    mc->smbios_memory_device_size = 2 * TiB;
+ 
+     /* numa node memory size aligned on 8MB by default.
+      * On Linux, each node's border has to be 8MB aligned
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index d165ac72ed..eafa081825 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -514,6 +514,7 @@ DEFINE_I440FX_MACHINE_AS_LATEST(10, 2);
+ static void pc_i440fx_machine_10_1_options(MachineClass *m)
+ {
+     pc_i440fx_machine_10_2_options(m);
++    m->smbios_memory_device_size = 2047 * TiB;
+     compat_props_add(m->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+     compat_props_add(m->compat_props, pc_compat_10_1, pc_compat_10_1_len);
+ }
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index e89951285e..6015e639d7 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -384,6 +384,7 @@ DEFINE_Q35_MACHINE_AS_LATEST(10, 2);
+ static void pc_q35_machine_10_1_options(MachineClass *m)
+ {
+     pc_q35_machine_10_2_options(m);
++    m->smbios_memory_device_size = 2047 * TiB;
+     compat_props_add(m->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+     compat_props_add(m->compat_props, pc_compat_10_1, pc_compat_10_1_len);
+ }
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.1
 
 
