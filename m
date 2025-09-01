@@ -4,62 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 958E1CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D43E3CA0FF0
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 12:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut3Dq-00083m-V5; Mon, 01 Sep 2025 08:01:19 -0400
+	id 1ut3I3-00036W-PG; Mon, 01 Sep 2025 08:05:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ut3DS-0007Yj-99; Mon, 01 Sep 2025 08:00:59 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut3I1-00035Z-NF
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:05:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ut3DF-0004H5-Lf; Mon, 01 Sep 2025 08:00:53 -0400
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 581C0CVL013478
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 1 Sep 2025 21:00:22 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=D+nZEAotU7RSIcgMm43EklAPwfbjaT+CdW78+OLt6sc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1756728022; v=1;
- b=hSD19wHohaNJlLyAD/o8kwplzyecgzgTsC6OUMnlybKI90fZXe6YcN1NAgNN74T6
- oipyh9G4wMBlKW55rVRjgyNeqOrXn6i193ZRssOOCFG+bSwyqJXS32UG2GqPiFze
- bN578ZK3krM5uxnsVZj6a1xIuOw5uOELyPWKqFGp/15zFbbZZSWnDDrXgoCufriP
- lrDg1KHH4sthAtf0IDq21RATV2mc6NShM1ZqqcuI1uGkRibteJjoovVX3AHTClB9
- WV31P7ytHtsmLIbPMvKfAUFnzTCaVTW4bSzWs9Wqj4gRsHGa08PUObKSmUSdGE0S
- EjQRoCrrU3FvCZjdm0HeJA==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 01 Sep 2025 21:00:04 +0900
-Subject: [PATCH v2] hw/arm/virt: Remove the lower bound of HighMem IO Regions
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut3Hq-0005L2-97
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 08:05:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756728321;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=C92Jb1vPx6AsO3XUCz+MmXZ+Q5EFx3phYwlyl4ZRlic=;
+ b=bOngXK4mXzyH2sITXVo+6o/tRDLzI6n3RSsU4VTm8zvMEBFt3NQ7qewwbxB/eFLi1bmpG/
+ dPfA/lKzxBFtE+tWsBjHCLEZ5+6nVaMqxUYzD/w7X3+LcJsXAAq5RVyp/kuC427UfCchn0
+ sZVTDaxEPBM+dcRpZowKKoLrOQ5yJd4=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-aaRN-UoYMAyVQuKRlL42Mw-1; Mon, 01 Sep 2025 08:05:20 -0400
+X-MC-Unique: aaRN-UoYMAyVQuKRlL42Mw-1
+X-Mimecast-MFC-AGG-ID: aaRN-UoYMAyVQuKRlL42Mw_1756728320
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7e870646b11so938898485a.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 05:05:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756728319; x=1757333119;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=C92Jb1vPx6AsO3XUCz+MmXZ+Q5EFx3phYwlyl4ZRlic=;
+ b=m1lCmpY7+gqrWnRRByPXErPZHrAZxplvyM152+tgTPqBsHsNeUkL+wtJfIKtlyAhJ6
+ b2UEGLauztjSMyGiNguc+MjBL7IxIIxYgD5/GRHiPkvwZ6vJxjb2lS3yTer7DlCaYlBX
+ j0M6vvKWkJFp9a8pmtYIHcOUcseu6A4t2EZkaK6s8QqCDZ5frZ4hoaGZzCHeL/KvG+Eg
+ zja7W2XYVV1jinH8XKyzjPR7xJUbX3NDV3MU6CLmpFUuKZyJIu0w9UiHGZaTNpWMo4pE
+ nMjL1H0YaFb3ra22ZRPTikc+8ZbbKMiLLpQaXaTRnV1HYPVR3CXLKszfDbzrIAjWin24
+ UrNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmd5Cv5Uy/oatBrVb9nio+BIjNfqQzpkLgzVJK4ywlS8baGuDfBnBw/RUMKeCpE9zsUdj5bhuC/YSe@nongnu.org
+X-Gm-Message-State: AOJu0Yzj1ZLzF+3P9KQjbxHklIRiFSx6mGzg1eekuMpgHy9zONnJDATd
+ UFWUfEu/Enopzs1V+68E8EM/5iqSEW19SMpQBT2fyO16yRaVtKEvQyIioQhvrPaVr5AE9ueSXOq
+ 7+xbqXpxNHkRqbdMZT3NcykPoFi2BeEETiiCL6bNEp/p7u0XOt7mCfNSjfeCyyP+m
+X-Gm-Gg: ASbGncsN0vcE0UNFdFErgVX0HU5+YWOfXvZq38KeemNqMFaG9m/eHaRXDSLkUj8dEoh
+ QXi/elDcG7D6YC++zz35c4rnvze4rZJ0TcRA9GC3jsk0uyvTPuI58a4pMT9tUksy03YIbNL+YQr
+ 9Pd7RixXO+jHCtEt7mcKoF0STGrkU6SLp97X+t+UdWLcGQ7r6+P0dhZ05YxgOBT5rcYIoQd3ltw
+ ZQaEKg2vG++c5AQZbKMQ3AKkZCxEtQQ286toNYtNxZw8H7ZUNuok3gI3PaF4dYtEebb/8GpFlTU
+ zc12cys0nz7Cr+yrjBivkepG2CmwxQ==
+X-Received: by 2002:a05:620a:6cc3:b0:7e8:1f79:67a2 with SMTP id
+ af79cd13be357-7ff284b2c5fmr783423885a.34.1756728318840; 
+ Mon, 01 Sep 2025 05:05:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHtBrtcXrGIJbqCN4Edb1D5QpCc4HBMbgnLBa9zENiXovXI79he47XgyPCvhKxRlfUIwsTbUw==
+X-Received: by 2002:a05:620a:6cc3:b0:7e8:1f79:67a2 with SMTP id
+ af79cd13be357-7ff284b2c5fmr783417285a.34.1756728318190; 
+ Mon, 01 Sep 2025 05:05:18 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7fc16536012sm651323685a.66.2025.09.01.05.05.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Sep 2025 05:05:17 -0700 (PDT)
+Date: Mon, 1 Sep 2025 14:05:10 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
+ peterx@redhat.com, mst@redhat.com, mtosatti@redhat.com,
+ richard.henderson@linaro.org, riku.voipio@iki.fi, thuth@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, david@redhat.com,
+ jjherne@linux.ibm.com, shorne@gmail.com, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ peter.maydell@linaro.org, agraf@csgraf.de, mads@ynddal.dk,
+ mrolnik@gmail.com, deller@gmx.de, dirty@apple.com, rbolshakov@ddn.com,
+ phil@philjordan.eu, reinoud@netbsd.org, sunilmut@microsoft.com,
+ gaosong@loongson.cn, laurent@vivier.eu, edgar.iglesias@gmail.com,
+ aurelien@aurel32.net, jiaxun.yang@flygoat.com, arikalo@gmail.com,
+ chenhuacai@kernel.org, npiggin@gmail.com, rathc@linux.ibm.com,
+ harshpb@linux.ibm.com, yoshinori.sato@nifty.com, iii@linux.ibm.com,
+ mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com, qemu-s390x@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v5 6/8] add cpu_test_interrupt()/cpu_set_interrupt()
+ helpers and use them tree wide
+Message-ID: <20250901140510.2925ac85@fedora>
+In-Reply-To: <CABgObfb6Hs8EOeLQeG_S=Y8j8dj6A9fAMn0DzSSVKZYBG_rP-g@mail.gmail.com>
+References: <20250814160600.2327672-7-imammedo@redhat.com>
+ <20250821155603.2422553-1-imammedo@redhat.com>
+ <aKyBFlCtnxnP9kt/@intel.com> <20250825171912.1bc7b841@fedora>
+ <aK1mHGan+n9NSAOk@intel.com> <20250826104731.1440e3ed@fedora>
+ <33661ea1-b0aa-45b3-8923-0b47a40dcea8@redhat.com>
+ <CABgObfb6Hs8EOeLQeG_S=Y8j8dj6A9fAMn0DzSSVKZYBG_rP-g@mail.gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250901-virt-v2-1-ac2379402c80@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAMOKtWgC/12NwQ6CMBAFf4Xs2Ta0RKye/A/DoZQCqwnFbWkkp
- P9uxYOJx5m8zNvAW0Lr4VJsQDaiRzdlkIcCzKinwTLsMoMs5bE8ScUiUmCqqjrd69oI0UKezmR
- 7fO2ZW/Nlss8l18JPjuiDo3W/iuJj/6pRMMFK3Z5rJWUtjbqSH7hBjnxhwT1Wx7Xh9xmalNIbY
- 4bZ6roAAAA=
-X-Change-ID: 20250728-virt-833dafa6c11b
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Andrew Jones <ajones@ventanamicro.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,114 +129,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the lower bound of the Highmem IO Regions' addresses for the
-latest machine version to increase the chance to fit the regions in the
-PA space.
+On Fri, 29 Aug 2025 14:33:57 +0200
+Paolo Bonzini <pbonzini@redhat.com> wrote:
 
-The lower bound was especially problematic when using virt-install on
-Apple M2. virt-install 5.0.0 adds multiple pcie-root-port devices that
-require sufficient space in the ECAM region. However, the Highmem ECAM
-region did not fit in the limited PA space on the hardware, and the ECAM
-region size was limited to 16 MiB. If virt-install had added more than
-16 devices to the root bridge, the region overflowed, which prevented
-edk2-stable202505 from scanning PCI devices, including the boot disk,
-causing boot failures.
+> On Fri, Aug 29, 2025 at 10:18=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.c=
+om> wrote:
+> >
+> > On 8/26/25 10:47, Igor Mammedov wrote: =20
+> > > While overhead might be issue, it's better to have correcteness 1st.
+> > > (that's why blanket tree wide change to make sure we don't miss place=
+s that
+> > > set/test interrupts). =20
+> >
+> > Looking more at it, I found at least one place that sets interrupts
+> > without bql:
+> >
+> >      if (ctl_has_irq(env)) {
+> >          cpu_set_interrupt(cs, CPU_INTERRUPT_VIRQ);
+> >      }
+> >
+> > I'm going to squash this in: =20
+>=20
+> Rethinking about it - this can be a separate patch that also affects
+> cpu_reset_interrupt(), as well as all cases where
+> cpu_reset_interrupt() is open coded.
 
-Ideally, a virtual machine with more than 16 devices added to the root
-bridge should just work so that users and management layers do not have
-to care whether they use constrained hardware.
+I can take care of replacing open coded cpu_reset_interrupt() cases
+(I've already looked through them, while answering reviewers questions)
 
-The base address of the Highmem IO Regions was fixed when commit
-f90747c4e8fb ("hw/arm/virt: GICv3 DT node with one or two redistributor
-regions") added the first Highmem IO Region. Later, commit 957e32cffa57
-("hw/arm/virt: Dynamic memory map depending on RAM requirements")
-allowed moving the Highmem IO Regions to higher addresses to accommodate
-RAM more than 255 GiB, but the lower bound remained to keep the legacy
-memory map.
-
-Remove the lower bound for the latest machine version to accommodate more
-devices with the root bridge. Keeping the lower bound for the old
-machine versions ensures the compatibility is still maintained.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
-Changes in v2:
-- Rebased.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250728-virt-v1-1-0ab9682262c8@rsg.ci.i.u-tokyo.ac.jp
----
- include/hw/arm/virt.h |  1 +
- hw/arm/virt.c         | 16 ++++++++++++----
- 2 files changed, 13 insertions(+), 4 deletions(-)
-
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 365a28b082cae36321ed906d9a13242997fa543a..341eb171d084b911e05b9861b9f4ba516fa2888e 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -120,6 +120,7 @@ typedef enum VirtGICType {
- 
- struct VirtMachineClass {
-     MachineClass parent;
-+    hwaddr min_highmem_base;
-     bool no_tcg_its;
-     bool no_highmem_compact;
-     bool no_ged;   /* Machines < 4.2 have no support for ACPI GED device */
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 1e63f40fbece3997dedc8aa953957471f930d44c..3cb978dae2ec0cdd9e7b902b3b427dac8a27bebf 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1887,6 +1887,7 @@ static void virt_set_high_memmap(VirtMachineState *vms,
- static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
- {
-     MachineState *ms = MACHINE(vms);
-+    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
-     hwaddr base, device_memory_base, device_memory_size, memtop;
-     int i;
- 
-@@ -1913,8 +1914,7 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
-     /*
-      * We compute the base of the high IO region depending on the
-      * amount of initial and device memory. The device memory start/size
--     * is aligned on 1GiB. We never put the high IO region below 256GiB
--     * so that if maxram_size is < 255GiB we keep the legacy memory map.
-+     * is aligned on 1GiB.
-      * The device region size assumes 1GiB page max alignment per slot.
-      */
-     device_memory_base =
-@@ -1932,8 +1932,8 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
-         error_report("maxmem/slots too huge");
-         exit(EXIT_FAILURE);
-     }
--    if (base < vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES) {
--        base = vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
-+    if (base < vmc->min_highmem_base) {
-+        base = vmc->min_highmem_base;
-     }
- 
-     /* We know for sure that at least the memory fits in the PA space */
-@@ -3464,8 +3464,16 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
- 
- static void virt_machine_10_1_options(MachineClass *mc)
- {
-+    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
-+
-     virt_machine_10_2_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
-+
-+    /*
-+     * Do not put the high IO region below 256GiB so that if maxram_size is
-+     * < 255GiB we keep the legacy memory map.
-+     */
-+    vmc->min_highmem_base = base_memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
- }
- DEFINE_VIRT_MACHINE(10, 1)
- 
-
----
-base-commit: e101d33792530093fa0b0a6e5f43e4d8cfe4581e
-change-id: 20250728-virt-833dafa6c11b
-
-Best regards,
--- 
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>=20
+> Paolo
+>=20
+> > diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> > index 1dee9d4c76e..5c3397fe108 100644
+> > --- a/include/hw/core/cpu.h
+> > +++ b/include/hw/core/cpu.h
+> > @@ -959,12 +959,13 @@ static inline bool cpu_test_interrupt(CPUState *c=
+pu, int mask)
+> >    * @cpu: The CPU to set pending interrupt(s) on.
+> >    * @mask: The interrupts to set.
+> >    *
+> > - * Sets interrupts in @mask as pending on @cpu.
+> > + * Sets interrupts in @mask as pending on @cpu.  Unlike @cpu_interrupt,
+> > + * this does not kick the vCPU.
+> >    */
+> >   static inline void cpu_set_interrupt(CPUState *cpu, int mask)
+> >   {
+> > -    qatomic_store_release(&cpu->interrupt_request,
+> > -        cpu->interrupt_request | mask);
+> > +    /* Pairs with cpu_test_interrupt(). */
+> > +    qatomic_or(&cpu->interrupt_request, mask);
+> >   }
+> >
+> >   /**
+> > =20
+>=20
 
 
