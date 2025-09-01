@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9679CA0FFD
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 10:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D938CA1002
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 10:52:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut26t-0002DY-62; Mon, 01 Sep 2025 06:50:03 -0400
+	id 1ut28k-0003Ud-Jt; Mon, 01 Sep 2025 06:51:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ut26r-0002DE-AZ
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:50:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ut26l-0008RH-OK
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:50:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756723794;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=YHntFevXo73QLVEqNQao70/IiH3hy0xtaU592yGchNE=;
- b=BI9tSqeqL6qalxRGIlj8Vk8K2yagvp8pdfCyyQJ4H+z9IcgUefo7k43Gk4Hmvg5VHUtmL3
- Z8T8ttHhfryuXwdgGwv/BInrF/92h4l9/RMvy+rVR1+eVQWCUq7Pot1gNxLsrq9rjgQjI0
- IcWS8s8Xl9dGAgagGfcVF5w8oA4j/ew=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-TtzD-cfyO12eMGyYT0Ayug-1; Mon,
- 01 Sep 2025 06:49:50 -0400
-X-MC-Unique: TtzD-cfyO12eMGyYT0Ayug-1
-X-Mimecast-MFC-AGG-ID: TtzD-cfyO12eMGyYT0Ayug_1756723789
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8AEE61956087; Mon,  1 Sep 2025 10:49:49 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.100])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8ACA7180028F; Mon,  1 Sep 2025 10:49:46 +0000 (UTC)
-Date: Mon, 1 Sep 2025 11:49:42 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Subject: Re: [PATCH v7 09/14] hw/misc: Add RISC-V CPC device implementation
-Message-ID: <aLV6RjGTizwAbyd-@redhat.com>
-References: <20250901102850.1172983-1-djordje.todorovic@htecgroup.com>
- <20250901102850.1172983-10-djordje.todorovic@htecgroup.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut28i-0003UE-LJ
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:51:56 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut28g-0000Nw-2z
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 06:51:56 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-45b7722ea37so13646285e9.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 03:51:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756723911; x=1757328711; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Cmx1rdds1sqZIL+MsUfeUulT98pAMTAAhlMa04/omvo=;
+ b=J1Dd85rbFdXFnppCPP4BdXQbKuBpGpZ7iXkqNQ7oe99U+XKVHUZLqN6e016gWLXqiU
+ SEKMIaGsKtbyovtvr9EJmHdjn/X3iNsk6zmhOp1F5a7scBQGz1VeSasukL10NJgjHvJQ
+ 6f680sewHL7TXEqIsh9XgrAIe3DkUod6IntPHuxGnsZdviFilk5N9Fs1FcTNLYylfVpS
+ 4bxbVtgn84ZfFUFyThvaDIdU54PPY29zM8vUCPBSYdJcum6vQRINSMB+xq2+wRKQA8Jr
+ KnGZcQH0I5Z1qeq6ruvWwIQuwJw1BLRdTYeFbtzYlc+qORwyeCgHUas9Oxq6w4FR6Tah
+ Vl7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756723911; x=1757328711;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cmx1rdds1sqZIL+MsUfeUulT98pAMTAAhlMa04/omvo=;
+ b=w0Am5m4H7/ziAsbcAi7x6vfAS4JTkJtT5pUDd2Rs2K8zZe4cmxOTco7EPumgIE4HFo
+ JZCMHbJe2+8nW6qSfRuSc+vt3Unyn62leLDt7spmeSaowvBZO6l+6Ell+cpa6/1P2eAT
+ WPVHUbd5w2jRdizSDdegKpSFv7qKy3qw7z5PVcjWZdObZeu6nySNMytVDdDkz25FXYmS
+ H6rPYq+C7w3EGaBPkmvgDCg1B7LH7vYSEqdQqP/8k56ZnnKElU2KPgex8uBerJaf/KBQ
+ Dpma53wVTzZFIBYnUqHRS/KbYihMxXVapsD1t4HuOGKVrh+7usmkKwvOoybVuy49Op9Q
+ F/iQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUGTaj1vplhYy7CF2XrhZ2gx65NOCyqLhs8/alcbkDhuo9kdpCsjGy0MzYMyElE5KqoHyTWXMOg+xBg@nongnu.org
+X-Gm-Message-State: AOJu0YzdjqseyKpgKdaDZqSbj1dCW3NXrM1rB6bLGzBxceE45ypmra0Y
+ wHaAoMO8WvwLY730JkX4ovPtWDvEsQQBoDAheEatU36xeHzVyIlS7bK7zqL8d8AGoWk=
+X-Gm-Gg: ASbGnct/JiESWi2SwGkdNoz7VqIN4+LI6jwpoa9uLd2XaR9W38ugTGWTRS6FL1IcYOB
+ yU7CAKhAo/mRGb3fsf1yW+NL9VuhurX5pAjrxk9bJ2qPWxbMJQ4Xp16xSs+4s+eDOOpnplgWogH
+ P0J8dauWRdTOudrvGim3FtP6Z2jsJ2cnQCkbLm4RBtYNsB0c3cck8x74H5/Axl4Gyt2NhcASLFP
+ AtPaKRsG4j4yg0JwZkbH5O812X2hZN0yYkm9Wy961WdkXyWIZy4TfVpnB2Y2x+zewuURNeqCZiv
+ HWxrnsEmdoagIO/dIf2BInA6kfSfh1q2B3DtVA5LSN1aPTipuVjyqCDXko/wSe/EU3ONg39VVWB
+ YEYpRBuPrTavgq0LrSzVXazxfcpz0hhsZ3IJuDfxx8CP36sMJiwADQGV4VY+YiLjm4oXPzruuKn
+ ox
+X-Google-Smtp-Source: AGHT+IHkC3AGCylC23C2hvVGk5F/RdftejxdF8ig0qBNXO2NH4fVeiLIPbBdKIbF5qSRKRlf6GMVHQ==
+X-Received: by 2002:a05:600c:a45:b0:456:2139:456a with SMTP id
+ 5b1f17b1804b1-45b85599135mr61749835e9.15.1756723911404; 
+ Mon, 01 Sep 2025 03:51:51 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3d0b9402299sm13862566f8f.18.2025.09.01.03.51.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Sep 2025 03:51:50 -0700 (PDT)
+Message-ID: <e99ce8c4-b2cc-4eba-a947-f150330eda34@linaro.org>
+Date: Mon, 1 Sep 2025 12:51:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250901102850.1172983-10-djordje.todorovic@htecgroup.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/loongarch/virt: Add reset interface for virt-machine
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+References: <20250901081900.2931303-1-maobibo@loongson.cn>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250901081900.2931303-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,135 +100,169 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 01, 2025 at 10:29:05AM +0000, Djordje Todorovic wrote:
-> Add RISC-V implementation of the Cluster Power Controller (CPC) device.
-> It is based on the existing MIPS CPC implementations but adapted for
-> RISC-V systems.
+Hi Bibo,
+
+On 1/9/25 10:19, Bibo Mao wrote:
+> With generic cpu reset interface, pc register is entry of FLASH for
+> UEFI BIOS. However with direct kernel booting requirement, there is
+> a little different, pc register of primary cpu is entry address of ELF
+> file.
 > 
-> The CPC device manages power control for CPU clusters in RISC-V
-> systems.
+> At the same time with requirement of cpu hotplug, hot-added CPU should
+> register reset interface for this cpu object. Now reset callback is
+> not registered for hot-added CPU.
 > 
-> This is needed for the MIPS BOSTON AIA board.
+> With this patch reset callback for CPU is register when CPU instance
+> is created, and reset interface is added for virt-machine board. In
+> reset interface of virt-machine, reset for direct kernel booting
+> requirement is called.
 > 
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->  hw/misc/Kconfig             |   4 +
->  hw/misc/meson.build         |   1 +
->  hw/misc/riscv_cpc.c         | 271 ++++++++++++++++++++++++++++++++++++
->  include/hw/misc/riscv_cpc.h |  75 ++++++++++
->  4 files changed, 351 insertions(+)
->  create mode 100644 hw/misc/riscv_cpc.c
->  create mode 100644 include/hw/misc/riscv_cpc.h
+> v1 ... v2:
+>    1. Add qemu_unregister_reset() in function loongarch_cpu_unrealizefn(),
+>       remove reset callback if vCPU is unrealized.
+> ---
 > 
-> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-> index c72927c3ff..1e35bcd443 100644
-> --- a/hw/misc/Kconfig
-> +++ b/hw/misc/Kconfig
-> @@ -124,11 +124,15 @@ config MIPS_ITU
->  config RISCV_CMGCR
->      bool
->  
-> +config RISCV_CPC
-> +    bool
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/loongarch/boot.c         |  9 +--------
+>   hw/loongarch/virt.c         | 14 ++++++++++++++
+>   include/hw/loongarch/boot.h |  1 +
+>   target/loongarch/cpu.c      | 11 +++++++++++
+>   4 files changed, 27 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index 14d6c52d4e..4919758a20 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -324,12 +324,11 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>       return kernel_entry;
+>   }
+>   
+> -static void reset_load_elf(void *opaque)
+> +void reset_load_elf(void *opaque)
+>   {
+>       LoongArchCPU *cpu = opaque;
+>       CPULoongArchState *env = &cpu->env;
+>   
+> -    cpu_reset(CPU(cpu));
+>       if (env->load_elf) {
+>           if (cpu == LOONGARCH_CPU(first_cpu)) {
+>               env->gpr[4] = env->boot_info->a0;
+> @@ -429,12 +428,6 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+>   {
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+> -    int i;
+> -
+> -    /* register reset function */
+> -    for (i = 0; i < ms->smp.cpus; i++) {
+> -        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
+
+I agree CPU reset shouldn't be part of loading code to memory.
+
+> -    }
+>   
+>       info->kernel_filename = ms->kernel_filename;
+>       info->kernel_cmdline = ms->kernel_cmdline;
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index b15ada2078..4fc8506c10 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -1199,6 +1199,19 @@ static int64_t virt_get_default_cpu_node_id(const MachineState *ms, int idx)
+>       }
+>   }
+>   
+> +static void virt_reset(MachineState *machine, ResetType type)
+> +{
+> +    CPUState *cs;
 > +
->  config MIPS_BOSTON_AIA
->      bool
->      default y
->      depends on RISCV64
->      select RISCV_CMGCR
-> +    select RISCV_CPC
->  
->  config MPS2_FPGAIO
->      bool
-> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> index ef891e465b..1f9945755f 100644
-> --- a/hw/misc/meson.build
-> +++ b/hw/misc/meson.build
-> @@ -158,6 +158,7 @@ specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_cmgcr.c', 'mips_cp
->  specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
->  
->  specific_ss.add(when: 'CONFIG_RISCV_CMGCR', if_true: files('riscv_cmgcr.c'))
-> +specific_ss.add(when: 'CONFIG_RISCV_CPC', if_true: files('riscv_cpc.c'))
->  
->  system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
->  
-> diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
-> new file mode 100644
-> index 0000000000..6a6cf72d45
-> --- /dev/null
-> +++ b/hw/misc/riscv_cpc.c
-> @@ -0,0 +1,271 @@
-> +/*
-> + * Cluster Power Controller emulation
-> + *
-> + * Copyright (c) 2016 Imagination Technologies
-> + *
-> + * Copyright (c) 2025 MIPS
-> + *
-> + * This library is free software; you can redistribute it and/or
-> + * modify it under the terms of the GNU Lesser General Public
-> + * License as published by the Free Software Foundation; either
-> + * version 2.1 of the License, or (at your option) any later version.
-> + *
-> + * This library is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> + * Lesser General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU Lesser General Public
-> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
+> +    /* Reset all devices including CPU devices */
+> +    qemu_devices_reset(type);
+ > +> +    /* Reset PC and register context for kernel direct booting 
+method */
+> +    CPU_FOREACH(cs) {
+> +        reset_load_elf(LOONGARCH_CPU(cs));
+> +    }
+> +}
+> +
+>   static void virt_class_init(ObjectClass *oc, const void *data)
+>   {
+>       MachineClass *mc = MACHINE_CLASS(oc);
+> @@ -1223,6 +1236,7 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+>       mc->has_hotpluggable_cpus = true;
+>       mc->get_hotplug_handler = virt_get_hotplug_handler;
+>       mc->default_nic = "virtio-net-pci";
+> +    mc->reset = virt_reset;
+>       hc->plug = virt_device_plug_cb;
+>       hc->pre_plug = virt_device_pre_plug;
+>       hc->unplug_request = virt_device_unplug_request;
+> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+> index 9819f7fbe3..386b4406ad 100644
+> --- a/include/hw/loongarch/boot.h
+> +++ b/include/hw/loongarch/boot.h
+> @@ -114,5 +114,6 @@ struct memmap_entry {
+>   };
+>   
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
+> +void reset_load_elf(void *opaque);
+>   
+>   #endif /* HW_LOONGARCH_BOOT_H */
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 3a7621c0ea..61c8acb3c2 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -652,6 +652,13 @@ static void loongarch_cpu_disas_set_info(CPUState *s, disassemble_info *info)
+>       info->print_insn = print_insn_loongarch;
+>   }
+>   
+> +#ifndef CONFIG_USER_ONLY
+> +static void loongarch_cpu_reset_cb(void *opaque)
+> +{
+> +    cpu_reset((CPUState *) opaque);
+> +}
+> +#endif
+> +
+>   static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+>   {
+>       CPUState *cs = CPU(dev);
+> @@ -668,6 +675,9 @@ static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
+>   
+>       qemu_init_vcpu(cs);
+>       cpu_reset(cs);
 
-As this was copied from an existing file, just leave the original GPL
-header here unchanged, don't add a SPDX tag to pre-existing code, only
-to newly authored files.
+Devices shouldn't call their DeviceReset handler manually, as it is
+always called after DeviceRealize.
 
+> +#ifndef CONFIG_USER_ONLY
+> +    qemu_register_reset(loongarch_cpu_reset_cb, dev);
 
-> diff --git a/include/hw/misc/riscv_cpc.h b/include/hw/misc/riscv_cpc.h
-> new file mode 100644
-> index 0000000000..3e908f4f44
-> --- /dev/null
-> +++ b/include/hw/misc/riscv_cpc.h
-> @@ -0,0 +1,75 @@
-> +/*
-> + * Cluster Power Controller emulation
-> + *
-> + * Copyright (c) 2016 Imagination Technologies
-> + *
-> + * Copyright (c) 2025 MIPS
-> + *
-> + * This library is free software; you can redistribute it and/or
-> + * modify it under the terms of the GNU Lesser General Public
-> + * License as published by the Free Software Foundation; either
-> + * version 2.1 of the License, or (at your option) any later version.
-> + *
-> + * This library is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> + * Lesser General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU Lesser General Public
-> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
-> + *
-> + */
+qemu_register_reset() is a legacy API, replaced by
+qemu_register_resettable().
 
-Same points as above.
+That said, I don't think the CPU object has to register its own
+reset handlers. Instead that should the be responsibility of the
+object creating the CPU objects.
 
+> +#endif
+>   
+>       lacc->parent_realize(dev, errp);
+>   }
+> @@ -678,6 +688,7 @@ static void loongarch_cpu_unrealizefn(DeviceState *dev)
+>   
+>   #ifndef CONFIG_USER_ONLY
+>       cpu_remove_sync(CPU(dev));
+> +    qemu_unregister_reset(loongarch_cpu_reset_cb, dev);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Ditto, legacy -> qemu_unregister_resettable().
 
+>   #endif
+>   
+>       lacc->parent_unrealize(dev);
+> 
+> base-commit: 91589bcd9fee0e66b241d04e5f37cd4f218187a2
 
