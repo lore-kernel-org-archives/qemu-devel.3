@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 300ADCA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 08:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2194CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 08:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uszTI-00031p-6I; Mon, 01 Sep 2025 04:01:00 -0400
+	id 1uszVa-0004NK-Pm; Mon, 01 Sep 2025 04:03:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uszT4-0002yj-Rd
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 04:00:58 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uszVZ-0004Mn-0M
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 04:03:21 -0400
 Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uszT2-0000X7-Hm
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 04:00:46 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uszVW-0001NA-P8
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 04:03:20 -0400
 Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3ce47d1f1f8so2690645f8f.2
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 01:00:43 -0700 (PDT)
+ ffacd0b85a97d-3d1bf79d6eeso1104957f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 01:03:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756713640; x=1757318440; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756713797; x=1757318597; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OJnl9FKfwvtyKbyxYioMvx+hQ4+rrUXC1uZFIxOPbfY=;
- b=KX8Jgi7xY0gZZgyG+z1hVI5btaOOjbPwe/2fpdAladtRxhjDpd+gpIjyAhDc3voc0C
- 4q1C0YQxz5vAZxuFcT1sxBLFkZBtnZNbyi+buxXoainf7p2F6ggLsVsqIlEhgHeWuKLE
- tfgtD51hT8w0jsySwqwSVOuRvNigVaOQ0xDivHQhOAuHTqbI8yTzRlxeD1KNlxXUTboF
- FlfMCiAhUL5z3CynB53LRfCuZEuaC1kqwJGbmhMsRVm96Uaq+Oy3jHyof/csECWguMeC
- rlUO7pFFWRx3Sd6Spq/BcUNktmag68yCVDUK70yY7lJ+BcEUx24wD3BqrC2VxfHC9sRn
- 0Niw==
+ bh=+7Q9myghIcsZdoAphzG+RBMWVZ/y1QRGAR1qpXZUaJg=;
+ b=vAtugQciq8TKESnQUHo2IrMLXsxO2h4zpjyJ40bLGS8fte2h0TJ+pHdayN/nb6M+7M
+ e4ZB8XJBK+RVrFle20cUW+HoGDEevtmBHDJc0YbWJOifdZMdwHh5Ocf6sb6j2eBtOXak
+ cYtJuCaJ1HS2ZYv2QKXAZS5ZLHL17ch+wZ1723dnL68oiLTwkUljXWKzlyq/35wzyDcy
+ bSaOPDotvfLuLczVf7QPM/yGN4Mr2rk/DjxtEhcITonXalHwZCSCeLOOK4qjkmaJwha7
+ ZpQ3FbfpnAZk4zW8+RJBUtsv4+88egwUljwFI22iBpvJqrvGccGGkpWrsvDbi31rLzdS
+ MSyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756713640; x=1757318440;
+ d=1e100.net; s=20230601; t=1756713797; x=1757318597;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OJnl9FKfwvtyKbyxYioMvx+hQ4+rrUXC1uZFIxOPbfY=;
- b=Q6D1svbWPHUTX+FoFzEloym+ZhQ9BHj00WuHkB98/UKza97dt4hoS4XFP0UKSTwV7F
- yg+Gkr0hQJIcX5LZqkZu8vZJkVG/bX8TQlsDadR8+kgWOhuM9nkk8oRFoGXYm9Z4K4Jx
- 29SR7Sm1KNpfmeglIecTD0fY7mCncTijrwiZlqlpG7v1wJPQJhLo54ez4CBgaXr9Zm8B
- E38gs7ciVE/9JQ7Y0td1o/JfK6jlYgt4IGm4eE2u+tK92xFPP3wdcyXj5/cbStEwELOj
- qRcEkqFERz1iO9d6XMJN5CCs/y5Rs/cSNvhfBJqJRRuYg/VC3ISkU/h0xzPpYMBhKiT+
- wtIw==
+ bh=+7Q9myghIcsZdoAphzG+RBMWVZ/y1QRGAR1qpXZUaJg=;
+ b=oopQuXRrRwupLhYkYkRugLOrHJYxyCTksuUyBwJ7lF2mPLWDtp6uW2Hw/iRRuXdQOA
+ pGE/Cdb7GP6Ulucd/RP7Pdi2ZjN7tqgazfDG9moi92TXvR06OrzOA0Ud+2Shzas/30K4
+ fzsVs7xOl+3M7aViy4iU4DlO1WIkHc/Fi68BgfYWNLBEXSBprjVARKndAIhh4tTx3Cvz
+ zR5J3z2D7UPwi8Cy051aKVL2xqFT+8JFhLiLlX+Mfd7nTvlhrncVtN++aDD4UQ3yyNuC
+ wu4Uqov2/a+pxBlUfgRqoC99CcCkxYWQAspF7Lumfqf6HiSTK6IO8NRbAPtqTzloUmmG
+ NahQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXttOKztRGsnY9apT2yJu3fMaFRoXhpWJty1093FGxLfakkRkFnI71Jqq9c5+1mPuCP56j9R81QDsRB@nongnu.org
-X-Gm-Message-State: AOJu0YwZq89jkcD1wfxjEzpnHWW3gebDn+/cBlXMDxhgaJglMVM3Z9k9
- 9WIvt8cGatFf+ZGWZ1HWL2fyVHd3o8LKewWblEaLorM+VhgZrCJ5sUGUiQy0W8accK4=
-X-Gm-Gg: ASbGncv/rIaBhIlKauWpw3DryDoIqz6shfDUd5IZWYA7MtVJYyMIJdJnIYOEqBTKa+P
- i2qGKjBdy2FwW/RPWd9mbYw2ZOC3sC/1din6paJqYWhY20MzHQi7mJSEFMUQ2C3HY6xUhgWW8UQ
- QuvIq/Jm0WJiSLceRkTrnfSpHs7L3UwxAvwQL0AR926au5MAM2Owf1YZJJ80LpXtcAzrVuCdu7+
- R+fub482SICj76pl7CS0et5bpntxqFbjIc8QOq1BP7NJtax0uADLyUQBDRQ/6dbTK8X+K7TFCuk
- SzY3t7CXqYO+mndTPtWGfpOozxSgdBPyyz1MqIjGKLP8CLRPMd5omS6Eet3v/cZVEX2XzkIeKYF
- ++vZ5GYlIIeTYYueUSbFLJCWtrrkTfrmjQns3MnuWKdr/IGBh2fHc6bLd2yRQ8KiRKg==
-X-Google-Smtp-Source: AGHT+IFazF8p4eqS6Yd6Lyz9XUnUdePML9k+9Mbrs8TI7jtoy5ylqe+OTFXJtFSAOuJukOvrACVfAQ==
-X-Received: by 2002:a5d:64cd:0:b0:3d1:9979:dd48 with SMTP id
- ffacd0b85a97d-3d1de897d76mr6101286f8f.39.1756713640283; 
- Mon, 01 Sep 2025 01:00:40 -0700 (PDT)
+ AJvYcCX2Kvwi2hKInZ88urDICN3iwOQGqq7to2+NLbCJMmRoO02WH7M9y2GfP1E6s8nPE0P4STz1rtzq/AuF@nongnu.org
+X-Gm-Message-State: AOJu0YxCiLaZ1iPs7a5oB18KispzqLrivEmg2BWH3k/fPiaEQPOVdqnj
+ Qutitb8wivxAMHFTQIRpvR0qs1LVCSJ00EKjYgfIahHqbFnLdYsNX6hXc/TD9P/S0LU=
+X-Gm-Gg: ASbGncurJqaVNRvxZxLOWKjp3fSO0g2vGmIINVgU8JsAOy9BtfWxRZLULUKAR8yB75h
+ tlxAI+6e3UUWebxh9WB+yxY0zait13YsPrBLPxSQEQh06zDQ11FGrCZyCyNuUniOunsUh3FHDiV
+ Np2A1cpneDCOLFN0k39rFCKjHTT/N8iNPoceUl1BK6TEeEzNKpF4tNhSckeIILuO6u7kxbAbXac
+ iNaIwqyYVhFLYf1XRPxnYj0vg9tv6N0kIuCRoW/wkD9bBX/GuaI0ZrwIn2EcsQo520dvROxVm3x
+ CZsTcFB+QngAtTNqshHkd2yGmtT3JuCuZZLcLW9Ru2MYxubYqcdYZVYL6smJy1DYbsIYtzWpS2Q
+ kCFO2Lm1zTMT1u5mYrLGdX8fBVgkL8qw9c6u/UDmpAgyI9ZGN0+1mdpNIYQSztFeJWQ==
+X-Google-Smtp-Source: AGHT+IGYNpOeoxJuW7CiHj9I3myc4oQSIbvKFpsebevK0fG6DvwJ2EO/pOsdp7CF07ZNoSGOJdJXFQ==
+X-Received: by 2002:a05:6000:2083:b0:3b7:89c2:463c with SMTP id
+ ffacd0b85a97d-3d1dea86e46mr5546548f8f.29.1756713796110; 
+ Mon, 01 Sep 2025 01:03:16 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d85f80d8casm737246f8f.54.2025.09.01.01.00.38
+ 5b1f17b1804b1-45b7df3ff72sm91670855e9.1.2025.09.01.01.03.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 01:00:39 -0700 (PDT)
-Message-ID: <8197bbf5-7a50-44e7-bdb6-9bfc104ba0d4@linaro.org>
-Date: Mon, 1 Sep 2025 10:00:38 +0200
+ Mon, 01 Sep 2025 01:03:15 -0700 (PDT)
+Message-ID: <119df69e-592d-4a79-8408-6301ae7af812@linaro.org>
+Date: Mon, 1 Sep 2025 10:03:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/18] cpu-common: use atomic access for interrupt_request
+Subject: Re: [PATCH 11/18] accel/tcg: create a thread-kick function for TCG
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: peterx@redhat.com, richard.henderson@linaro.org, imammedo@redhat.com
 References: <20250829152909.1589668-1-pbonzini@redhat.com>
- <20250829153115.1590048-3-pbonzini@redhat.com>
+ <20250829153115.1590048-7-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250829153115.1590048-3-pbonzini@redhat.com>
+In-Reply-To: <20250829153115.1590048-7-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::431;
@@ -103,18 +103,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/8/25 17:31, Paolo Bonzini wrote:
-> Writes to interrupt_request used non-atomic accesses, but there are a
-> few cases where the access was not protected by the BQL.  Now that
-> there is a full set of helpers, it's easier to guarantee that
-> interrupt_request accesses are fully atomic, so just drop the
-> requirement instead of fixing them.
+> Round-robin TCG is calling into cpu_exit() directly.  In preparation
+> for making cpu_exit() usable from all accelerators, define a generic
+> thread-kick function for TCG which is used directly in the multi-threaded
+> case, and through CPU_FOREACH in the round-robin case.
+> 
+> Use it also for user-mode emulation, and take the occasion to move
+> the implementation to accel/tcg/user-exec.c.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   include/hw/core/cpu.h |  1 -
->   hw/core/cpu-common.c  | 12 +-----------
->   system/cpus.c         |  3 +--
->   3 files changed, 2 insertions(+), 14 deletions(-)
+>   docs/devel/tcg-icount.rst       | 2 +-
+>   accel/tcg/tcg-accel-ops-mttcg.h | 3 ---
+>   accel/tcg/tcg-accel-ops.h       | 1 +
+>   accel/tcg/cpu-exec.c            | 6 ++++++
+>   accel/tcg/tcg-accel-ops-mttcg.c | 5 -----
+>   accel/tcg/tcg-accel-ops-rr.c    | 2 +-
+>   accel/tcg/tcg-accel-ops.c       | 2 +-
+>   accel/tcg/user-exec.c           | 6 ++++++
+>   bsd-user/main.c                 | 5 -----
+>   linux-user/main.c               | 5 -----
+>   10 files changed, 16 insertions(+), 21 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
