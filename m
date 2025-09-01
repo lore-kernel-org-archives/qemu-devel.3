@@ -4,35 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA06CA0FF0
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39940CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 06:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1usyEs-0005Lg-9m; Mon, 01 Sep 2025 02:42:02 -0400
+	id 1usyGY-0005yt-8m; Mon, 01 Sep 2025 02:43:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1usyEc-0005Kd-96
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:41:47 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1usyGS-0005sZ-5H; Mon, 01 Sep 2025 02:43:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1usyEZ-0001Qr-45
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 02:41:45 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1usyGL-0001w8-Lj; Mon, 01 Sep 2025 02:43:36 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 73A7114E7F3;
- Mon, 01 Sep 2025 09:40:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AA72E14E7F6;
+ Mon, 01 Sep 2025 09:42:54 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8A06B26C008;
- Mon,  1 Sep 2025 09:41:32 +0300 (MSK)
-Message-ID: <c1b6e93a-1c85-4626-8ea6-5efee2bf9489@tls.msk.ru>
-Date: Mon, 1 Sep 2025 09:41:32 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id B2BD426C009;
+ Mon,  1 Sep 2025 09:43:29 +0300 (MSK)
+Message-ID: <359428aa-94b5-4589-a66d-e48efab1a76c@tls.msk.ru>
+Date: Mon, 1 Sep 2025 09:43:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests: honor $TMPDIR for test_virtio_version
-To: Maxim Cournoyer <maxim@guixotic.coop>, qemu-devel@nongnu.org
-References: <20250831125255.7066-1-maxim@guixotic.coop>
-Content-Language: en-US, ru-RU
+Subject: Re: [PATCH] block/curl: fix curl internal handles handling
 From: Michael Tokarev <mjt@tls.msk.ru>
+To: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: qemu-stable@qemu.org
+References: <20250824001144.2001882-1-mjt@tls.msk.ru>
+ <ed61c700-209b-423f-a797-a1d05cecc5ff@tls.msk.ru>
+Content-Language: en-US, ru-RU
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -76,9 +79,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250831125255.7066-1-maxim@guixotic.coop>
+In-Reply-To: <ed61c700-209b-423f-a797-a1d05cecc5ff@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -102,36 +105,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31.08.2025 15:52, Maxim Cournoyer wrote:
-> Until 10.1.0, the test suite could be run without having a writable
-> /var/tmp in the build environment.  To avoid now requiring /var/tmp in
-> the build environment (which can be a very minimal container like in
-> the case of GNU Guix), consult TMPDIR first, using /var/tmp as a
-> fallback.
+Ping#2?  We've curl access broken entirely with current versions of
+curl..
 
-> diff --git a/tests/functional/x86_64/test_virtio_version.py b/tests/functional/x86_64/test_virtio_version.py
-> index a5ea73237f..501545f655 100755
-> --- a/tests/functional/x86_64/test_virtio_version.py
-> +++ b/tests/functional/x86_64/test_virtio_version.py
-
-> @@ -68,7 +70,9 @@ def run_device(self, devtype, opts=None, machine='pc'):
->           """
->           Run QEMU with `-device DEVTYPE`, return device info from `query-pci`
->           """
-> -        with QEMUMachine(self.qemu_bin) as vm:
-> +        with QEMUMachine(
-> +                self.qemu_bin,
-> +                base_temp_dir=os.environ.get('TMPDIR', '/var/tmp')) as vm:
-
-I don't think /var/tmp is a good choice here, - I'm a bit surprised it
-come from you when your OS doesn't have /var/tmp by default - shouldn't
-it be /tmp here?
-
-Overall, /var/tmp is a strange choice here and in a few other tests too,
--- maybe only block.c default is the only right place to have it as the
-fallback/default.
+With no replies, I'm going to merge it through trivial-patches in a day
+or two.
 
 Thanks,
 
 /mjt
+
+On 28.08.2025 12:05, Michael Tokarev wrote:
+> On 24.08.2025 03:11, Michael Tokarev wrote:
+>> block/curl.c uses CURLMOPT_SOCKETFUNCTION to register a socket callback.
+>> According to the documentation, this callback is called not just with
+>> application-created sockets but also with internal curl sockets, - and
+>> for such sockets, user data pointer is not set by the application, so
+>> the result qemu crashing.
+>>
+>> Pass BDRVCURLState directly to the callback function as user pointer,
+>> instead of relying on CURLINFO_PRIVATE.
+>>
+>> This problem started happening with update of libcurl from 8.9 to 8.10 --
+>> apparently with this change curl started using private handles more.
+>>
+>> (CURLINFO_PRIVATE is used in one more place, in 
+>> curl_multi_check_completion() -
+>> it might need a similar fix too)
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3081
+> 
+> Kevin, qemu-block@ -- does it look okay if I'll push this one through
+> trivial-patches tree?  It's not exactly trivial (but simple enough),
+> but I'd rather fix this issue, here and for debian.
+> 
+> Or are you going to send a pullreq for block?
+
+
 
