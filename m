@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70754CA1005
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 20:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453AECA1005
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 20:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utBVQ-0006th-Lh; Mon, 01 Sep 2025 16:52:00 -0400
+	id 1utBcc-0000tO-Jm; Mon, 01 Sep 2025 16:59:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utBVP-0006tR-06
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:51:59 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utBca-0000sn-OO
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:59:24 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utBVM-0003io-Vh
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:51:58 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45b869d3560so20494615e9.1
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 13:51:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utBcZ-0004aO-3M
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 16:59:24 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3d965477dc0so286640f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 13:59:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756759915; x=1757364715; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=+bRCLBotJpD0nsAhCQSwG8T/JMPnSdVQ/G/2djp6dKI=;
- b=sGKUNhGqvqydXEZLUfRbZLRBGFVRfxi+4Xak30lyOOykIVhSU2TvlPQPUHlJSGr5cm
- RDizIhVopemBQCaBZYsB+mSuy8+Ao/1JMap9NRnrdX2Gu8pMK61y0zx66ko/R21kcuGs
- 7XHHD4rmcyNK93hT8IAWJEOzFofDZWFto7cLSos2UX+mKvDgSkDLGaLsTxNPckehubX6
- W1PQbU6jV59Kv6aOQkeiDGyh0+1NOrbf1We1hQuSmw3kSAkFryI246TmhzbtMqSBSDEe
- QpH0HxutRIB6SM9aRFU+yNoBpJx96bdaUDH+Y5qx+QATb10KZZa78kIKQzx7087HGUh8
- uqRA==
+ d=linaro.org; s=google; t=1756760359; x=1757365159; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xFrAV7/BUfAZXXKn8t4CkubHNvkcLgfU39lsOzMDwNU=;
+ b=OppSy8gA6jsFqRSNyiQnzVuIcU16kH3LK2aa89pfQk6mla5CP0FNm15JeIXcKuJxXz
+ k0svpzrqTfVJLgZhcxqG6RKbMfLA9qNbZOgdsrI64XViQIxWqH+w2dVCBBczJ9khG2GS
+ N/n/eNV+g1uAA/7rfbqNPfLrPaWkOeIvtrDW42IQ38f1AfkMdgvKcej9KZIqPS8nS3nT
+ WG1szGvJNbaVc7YDGWJPmsQRW5VEh52QieK+zFOqAFi6w47pE10kQjhixjm5+p6u9OEz
+ CkCPwrDri6ZSIW7F4k6uB45mWo0DQlf8iD8XHZz4eq+Xt8bZQHWJ4MlUvt3yfYU0CE8q
+ 51rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756759915; x=1757364715;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1756760359; x=1757365159;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+bRCLBotJpD0nsAhCQSwG8T/JMPnSdVQ/G/2djp6dKI=;
- b=YKcBW1iPY9DduXy7yqv4mMaHAvAqyrxeThvoURaaTtYAG4/41xyLXppTP9haMgonBG
- lvv9cvZLRBLQJmjkuPTbj+XsK5Y83K//Rqx87NgJsP8k9ws4MATAOARyzY3t046ppB94
- ehGq+3GZKSS8lzUt0lmCkyDyJsxaQWcYur2n7p3goPUYxyuu0lp132fx2r+QoSr3DIqo
- JzA0MyxRmryuOq0IBGWlbtAeCksagqQ/srQwB6nbQirOXUtiihYL2adT20VXTs8iMhJg
- R7WQFWgZFEI2nDOSfD6ciKCldv+RG4vKOtPSKFOQaDTkCryuQtJ8bq72R6gtqgDSD6sf
- XW4Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4fRkwWVwz0MymOm2c8VRNtnozeVCy1Y/5oDGscYK3ucp1mCxYxrJ5etFxYS0lOuxF/1wIu7OsM7SQ@nongnu.org
-X-Gm-Message-State: AOJu0YxGvRQ+ZzNhf+UqzSX92WJzm3IWwrz9UY2F6brgBvFjl3BoAArT
- 0bKVxs8Y+R5U1PLKvB9Tn1kgG792I4j+6ITOPcreuKSOq+ZOQ0eWLmfwZ/Mvzqk3sZk=
-X-Gm-Gg: ASbGncs0n8QPEDyy9on/50krFhCgWUC/2h6bdFe9icLe6Vf8fejnomPJvwrlx0NClxt
- qepXnDku0kFyZWo3nY6AxP2BSDwwVkaiZgau84Bq+7lGAEM8DfszNw7AhiXfM/gkp102hsyWOuR
- +Rfg1myT1Hlt9OGTxOx72G/VMLubazODHVhwHNXRAqdHCygjo7nPo4RdUguWBHB1VGCrTGim+Br
- jLk+a0WUHIJ05PQzqqLd/AgpDccDcmjtmNIowIF/7v+3ZPFanLAHB8OYqD6GJaKMed/Yths09uM
- j9dZStyeowW2eHZ6sczetvUJ/nT8/FUvSRZa8ILDEPFTlpBWPg1vEASMR0EK/iG4kKeFi/CJQvj
- CHMdLFtXKSsXR6zSqs2iYoRwxa70C7GQASGXSEFBEhVsr0I19rUM6XWVoIuw+W/BXwg==
-X-Google-Smtp-Source: AGHT+IH0mgebDH7ID5UroQ279srsccrFD8RR8Fmskp3G2fyQyV50m6YtWfOJ212rBsGoUwErbf2LMw==
-X-Received: by 2002:a05:600c:1d1c:b0:45b:8b3e:9f63 with SMTP id
- 5b1f17b1804b1-45b8b3ea13fmr49399695e9.18.1756759915312; 
- Mon, 01 Sep 2025 13:51:55 -0700 (PDT)
+ bh=xFrAV7/BUfAZXXKn8t4CkubHNvkcLgfU39lsOzMDwNU=;
+ b=jFDc7V1QeDYAETRiXU6+2P5R/yrJYkE4OL2yyoagxBnktRCGjH75n7PCfFqvLefPYt
+ 8YbUnY49iSWSzEMCZAfus0M5JtTk7lBCo0BVtmlzrlA3ECQv5uS63G12PA+lLqbEXI3u
+ ldH3c5zBKOWw2UZtZYCn5XOcg2F/RSqPgdO/3fpKL/QqCV5IWIHEl+2siQ+O0kmHhx1N
+ ipRGVRlUXRzRbJQ3FRplok0Jw87oAO81yHE+s4GhDSn4bFoOXD6uhBRb00VHxYZfk6xJ
+ 5F9XgI0w+fcSFHf5Y/+kinvZkWCykwm997wZQuHi4Y2JGvXJnbBGcD5zc4BGav8Lrxaq
+ wwTA==
+X-Gm-Message-State: AOJu0YydhfsAZ7FjclDrW+M2JUw6z9TVA5Z1mKj4wm40VObDNUwo/oAd
+ Ow44mUj0yV3zvkfz65+wCK9SWnPk4vgJUhR/Qy0Ko9uFX3Un3rPDebr9FB9/HnT8bIl5bZ297yu
+ bTXbQ
+X-Gm-Gg: ASbGncsmT9f0hd5G+c5HBTJMEikjTwMcuJfjpl1WSf0yryYkNErtLeCcAozTqgyECdW
+ iezxaBTIrnro8dZ3R+p3I4/etsVArTelMeJbh2Jim84b9dRukCicQiUB7C1Bzejif1MNwlKrqAM
+ ry8FiHVMxAx8STiAAs5mgSW+cdJyiDD4PjIg2Z+TD6i7wghtlwzENzDJ85hkHHaHprtSTzKysSs
+ mTQA7iOCE5wCUl64tvoyquG1bi2sPg7iUzKDJ9PDSaoglffi4caVt5KBn+HPJ1JqzVXwKEudrHJ
+ ikYSjWc4aF+RxqSlEAKz7UGT6NPXl4vbIowL4dDtgZ2Uyzx/05vJllMhOE8Bs/ijAhK/6Eo1ucI
+ XIIZeQpweH5mUR/8uDj60Yr2XwCFAp5EXlx33Z1gR2ylwjNF4fEI68Zf+JeKvptzjAQ==
+X-Google-Smtp-Source: AGHT+IEPvAAwmZOq2tL7nEjhPLBiOAtYWUc8vPScTdIhNirkAZiLSAC/rKSlmrepH25N1hzIUoMMZQ==
+X-Received: by 2002:a5d:584c:0:b0:3d4:4a27:af9 with SMTP id
+ ffacd0b85a97d-3d44a2711damr6039458f8f.59.1756760359419; 
+ Mon, 01 Sep 2025 13:59:19 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d690f2ebb9sm6186540f8f.20.2025.09.01.13.51.53
+ ffacd0b85a97d-3cf276d5816sm16637964f8f.25.2025.09.01.13.59.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 13:51:54 -0700 (PDT)
-Message-ID: <68c03c72-a001-40ca-b4d9-acbfbea46d6f@linaro.org>
-Date: Mon, 1 Sep 2025 22:51:53 +0200
+ Mon, 01 Sep 2025 13:59:18 -0700 (PDT)
+Message-ID: <0568f6da-20c2-479d-afb6-66889910630b@linaro.org>
+Date: Mon, 1 Sep 2025 22:59:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] system/main.c: compile only once
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250730220519.1140447-1-pierrick.bouvier@linaro.org>
- <20250730220519.1140447-4-pierrick.bouvier@linaro.org>
- <c6b5359b-27d0-4776-9690-7d49debe3d7c@linaro.org>
+Subject: Re: [PATCH] docs/about/removed-features: Clarify 'device_add' is
+ removed
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20250901113957.17113-1-philmd@linaro.org>
 Content-Language: en-US
-In-Reply-To: <c6b5359b-27d0-4776-9690-7d49debe3d7c@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250901113957.17113-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,73 +102,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 17:07, Philippe Mathieu-Daudé wrote:
-> Hi,
+On 1/9/25 13:39, Philippe Mathieu-Daudé wrote:
+> All other titles in removed-features.rst mention when
+> the feature was removed using "removed in". Use that
+> instead of "since" which we use for when a feature is
+> deprecated.
 > 
-> On 31/7/25 00:05, Pierrick Bouvier wrote:
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   meson.build        | 4 ++--
->>   system/meson.build | 1 +
->>   2 files changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/meson.build b/meson.build
->> index f94209bb301..b72d4ce8618 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -4420,14 +4420,14 @@ foreach target : target_dirs
->>       execs = [{
->>         'name': 'qemu-system-' + target_name,
->>         'win_subsystem': 'console',
->> -      'sources': files('system/main.c'),
->> +      'sources': [],
->>         'dependencies': [sdl]
->>       }]
->>       if host_os == 'windows' and (sdl.found() or gtk.found())
->>         execs += [{
->>           'name': 'qemu-system-' + target_name + 'w',
->>           'win_subsystem': 'windows',
->> -        'sources': files('system/main.c'),
->> +        'sources': [],
->>           'dependencies': [sdl]
->>         }]
->>       endif
->> diff --git a/system/meson.build b/system/meson.build
->> index 6d21ff9faa7..f358c2c446d 100644
->> --- a/system/meson.build
->> +++ b/system/meson.build
->> @@ -18,6 +18,7 @@ system_ss.add(files(
->>     'globals.c',
->>     'ioport.c',
->>     'ram-block-attributes.c',
->> +  'main.c',
->>     'memory_mapping.c',
->>     'memory.c',
->>     'physmem.c',
-> 
-> This makes the build-oss-fuzz job to fail:
-> 
-> FAILED: qemu-fuzz-i386
-> clang -m64 @qemu-fuzz-i386.rsp
-> /usr/bin/ld: libsystem.a.p/system_main.c.o: in function `main':
-> /builds/philmd/qemu/build-oss-fuzz/../system/main.c:70: multiple 
-> definition of `main'; /usr/bin/../lib/clang/18/lib/x86_64-redhat-linux- 
-> gnu/libclang_rt.fuzzer.a(FuzzerMain.cpp.o):(.text+0x0): first defined here
-> /usr/bin/ld: qemu-fuzz-i386.p/tests_qtest_fuzz_fuzz.c.o:(.bss+0x0): 
-> multiple definition of `__odr_asan_gen_qemu_main'; libsystem.a.p/ 
-> system_main.c.o:(.bss+0x0): first defined here
-> clang: error: linker command failed with exit code 1 (use -v to see 
-> invocation)
-> ninja: build stopped: subcommand failed.
-> make: *** [Makefile:168: run-ninja] Error 1
-> Error : Build failed. Please specify a compiler with fuzzing support 
-> using the $CC and $CXX environment variables \nFor example: CC=clang 
-> CXX=clang++ ./scripts/oss-fuzz/build.sh, exiting.
-> 
-> https://gitlab.com/philmd/qemu/-/jobs/11205571060
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   docs/about/removed-features.rst | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-FYI I'm dropping this single patch from my queue (but keeping the
-other two).
-
+Patch queued, thanks.
 
