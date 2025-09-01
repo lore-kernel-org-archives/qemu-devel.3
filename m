@@ -4,182 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651E0CA1002
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D60B7CA1005
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 13:14:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut4Ld-0008GT-Lv; Mon, 01 Sep 2025 09:13:26 -0400
+	id 1ut4MF-0008Kz-Fh; Mon, 01 Sep 2025 09:14:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1ut2XU-0004KE-M0
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:17:32 -0400
-Received: from smarthost4.eviden.com ([80.78.11.85])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut4MC-0008Kj-Ci
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 09:14:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
- id 1ut2XR-0004mW-OJ
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:17:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
- t=1756725450; x=1788261450;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=amPVrX+jmKm2/uDOdrP4xDSAH/CzR7LBcg7NaxuK/Jw=;
- b=QkcKMxPFzKIAOQQ721Lk0QAcHIq9FO4gurVHKHjYrdhnp6QFlxDhiYFh
- DScNsANupbOysrLF8rVFtdbnKjE2GTJiI7CcVCj/Z2e4T2LTtsI+8J9P8
- 4gOq/ukGT59jLQjZRrbxcr6x4FkLHDVT5pvRyyVrsPM2iiNnEc0MjBHwP
- VuN614s49noYad2MJafPxsGIp6RezXBQ9//XIC/NNGC9Y0Od30+Um6g5l
- YnskuGmzc6q6C4x/BTTBR9kW7FGt43JN+kNT89LVZkVGdy5LqfMM4OE/D
- imXFcDECIrdI11xORigxAmVKM+zgAXfakrPRYrleS0ol+LyRau1BqqKa3 g==;
-X-CSE-ConnectionGUID: 3bgnEg7jSPiVmr3K9FCi+A==
-X-CSE-MsgGUID: KkjMts3FTl2yG+vca0Tmmg==
-X-IronPort-AV: E=Sophos;i="6.18,225,1751234400"; d="scan'208";a="44649198"
-X-MGA-submission: =?us-ascii?q?MDFRxcILZ71Lz8IZJ8H1xOF3Gx+/TCfXjRZVZx?=
- =?us-ascii?q?5Od+vcXGR7C1p7tRU+AQz90bOyn1iqG2RLz0Iz6o3oBNXUZWZYU8l6JV?=
- =?us-ascii?q?KHqufBAgMohpcjoyFtCkgFoZBCP3D4VXs1k0+525FzCsWxdhTrubcVhD?=
- =?us-ascii?q?iO3GK5ymHUZc9gyPHcHYTt/A=3D=3D?=
-Received: from mail-francesouthazon11011025.outbound.protection.outlook.com
- (HELO MRWPR03CU001.outbound.protection.outlook.com) ([40.107.130.25])
- by smarthost4.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 01 Sep 2025 13:17:26 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=X8AASKdkRDTNkBDPnL+0tNsq7nLSt0o+kAWnb7yzMxErQDh1eARIM/3wYSpw1AZ3vP69vYDzQZMtPAwyXKYoS66FNlI+D4Fb1BmENYibCiRgqTuEITkAvWO7HCmTe8jTfBqHwhQFgysIpi8mhqQn7RrTSsPFPwW7cSH7cwoPsNOvvRSFbgpEibAmmEUByeLE6t0y1c5QKWujGs/mzhd8k5R0aN0uNL6tl7NozjnKvRYIuqSVtZa72n8DfZA+Zcdv6q7lg8cOEgKA/84kuUeeew6B8sc+JaeObFuupOpHRWc0M9pCsNFTILidhdrlvpPsD316ANLPKle09Y7ZBaJzhA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3XgBqkJ2w8BBAPlOMlCgmG8AAr4a/2XtJAoMjKXlbKQ=;
- b=NJvbCgR5005eIDEKXdsRhUJd+YMfh2hSzcyiLdfcQrzQGo7neb0wIdl2meY6RnRDoJmblKvKEwl0iYR0ztUb/iWN6oU4/GXoWKEerxWyGWjXSW/rC64XD2EWFbp7XdDijw0qWv3hxnL+MAMoIXo/vDLnT3/XdQnr8MUYlyap/Cd7ZUogEsrI6WfKm5gmBXa9oCMiTRWLnmx4TgDc9DJPDAD5lbYBJiPTEHBpdadK4XPADlkO2Ryk2V7rP6SaEMwIF4DeWNigWvkpc9xulygboZ4Q0WiFObUIrvR9az5HS09gjLfNkMINtrbEyOrjwV+kZbip5xiLn2FO8eCpTePfpA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
- dkim=pass header.d=eviden.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3XgBqkJ2w8BBAPlOMlCgmG8AAr4a/2XtJAoMjKXlbKQ=;
- b=Ju4fVh8n0EuTrdirNaAthCiy2WwT/BcDzvtaWIPeXVxB+Eahia44E1STm6Dwm3SfsEbR7XQiZHo3RubBlB5s01G9F8hZVPOBZX7yVzVD2gDxdCClc18SnbIOSYCE6fZRAa1oD+gCxAGtIAcVCP4pr8ZKQjKfCNC6zfZe7YpCnCP616l+eofy7Hkqac3lIK+7HuZekboeZbBXOSZzlmB5twWnu7k8eB9FzPaG2NLuz8r4Z2j9zpRv3uZOPGbCM7ngXNbhu7hLzcn+/cOJARP1MvlU798kZe6SbimbLbCIhxh9UlyVytVD9BrO+LQINE5hkxZVVugc/0BiioQDOuJ3MQ==
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by PAVPR07MB9215.eurprd07.prod.outlook.com (2603:10a6:102:317::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.17; Mon, 1 Sep
- 2025 11:17:21 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::fbd7:ca71:b636:6f9d%6]) with mapi id 15.20.9073.026; Mon, 1 Sep 2025
- 11:17:19 +0000
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "kevin.tian@intel.com"
- <kevin.tian@intel.com>, "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "minwoo.im@samsung.com" <minwoo.im@samsung.com>, CLEMENT MATHIEU--DRIF
- <clement.mathieu--drif@eviden.com>
-Subject: [PATCH 1/5] pcie: Add a way to get the outstanding page request
- allocation (pri) from the config space.
-Thread-Topic: [PATCH 1/5] pcie: Add a way to get the outstanding page request
- allocation (pri) from the config space.
-Thread-Index: AQHcGzH7Sukw9YjjskO8f5QA00gK3A==
-Date: Mon, 1 Sep 2025 11:17:19 +0000
-Message-ID: <20250901111630.1018573-2-clement.mathieu--drif@eviden.com>
-References: <20250901111630.1018573-1-clement.mathieu--drif@eviden.com>
-In-Reply-To: <20250901111630.1018573-1-clement.mathieu--drif@eviden.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=eviden.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|PAVPR07MB9215:EE_
-x-ms-office365-filtering-correlation-id: 499e8e22-88a7-4bee-02b9-08dde9491da4
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?PLJ/kWGnONOa9XHdXleFyUusNQbYCoMTycUKOsU24qFY/3utRChElJFkvh?=
- =?iso-8859-1?Q?hQjjrfmPQBYzW3rcO9K+Xe9872LCovajeVmXIRxwSa/Bud6XbAv9p6R5Xw?=
- =?iso-8859-1?Q?icSVjOswiqDWBa+5RwI9+8CAUd+aw3+bb/rNQnTZ4v5nYoU26mL6LYaPML?=
- =?iso-8859-1?Q?Pzn8J9/+Srohm4ShtxAgGjKRrpoI2U5vJrlvkc8li4Pp0lHfa0XhhznLU6?=
- =?iso-8859-1?Q?8ir4Mshjq33ge3CPSZiCpjkoskRJH+jceeDhhrD7KLI/SMtBkSyA6bVLNm?=
- =?iso-8859-1?Q?u/1UUCy+ZAV16fy8VFfcGLxfQ2Y2cztQH5jIFb8d71cVTHSiKOThXOPQNC?=
- =?iso-8859-1?Q?1jCbK3O9Fay92ZJtW5iHcYvY1e8Qnw6vBeRGZhyl1LO1fl09dPYIVeqcnF?=
- =?iso-8859-1?Q?YuyyTOF8RXMFPl8YiWPVuoF+5N64exgIcq+SxlX62xXtljEB9umJGcSovW?=
- =?iso-8859-1?Q?AvMdhp4YcpsEH3SSOEnniBxNDOX7Mpm94VYfQaL5diMsYgVsmkuBLIXNtH?=
- =?iso-8859-1?Q?EmASQ8RrSDlIEECuOg+h09h5Ycgz3PcmU0hdZEAiJQl2I38I5id4v/qqIr?=
- =?iso-8859-1?Q?XOpheItY6CQimqarGeIHBF+WyV/hcb7PoMMiu3FNGKpeP4aupfqPXm2Qyv?=
- =?iso-8859-1?Q?8XUiRxOGZysF67zdSMUYw2ecobtzUYc/WDwlL1WBhNTgj644BGQYhbgS05?=
- =?iso-8859-1?Q?HXoGmS/F0yumOfObaazLkENBGWr5qGuwgD4Cwr0eIhr+DH8K3XiaASbQdq?=
- =?iso-8859-1?Q?8PhKbAq2s9Eu7bk7mXSDv7CPAqGvEyjKwCLeVrV/KU7k4N/L8F2TIIogKa?=
- =?iso-8859-1?Q?x+85lh4FexYRvpzTXlzvXMD17jqWbtw1P3aOvXhBN5/n1ejsU/a89hmpRC?=
- =?iso-8859-1?Q?sI/NhO/AntTRxzKjpginxAyn5IuYKFU9QAJqvbVFwseivNA6g9St9FW+Ff?=
- =?iso-8859-1?Q?H5ArkKEpl+i5Ei9BBU8//bepxnVf4M4DWeTEjjZaO5kPVgthv/2NL6sjQE?=
- =?iso-8859-1?Q?qXYvZ8BNlvO+N4rox47mgdkR2V0JoTJqjqgPydBdhoKdm4HPJ3CQqhFE8a?=
- =?iso-8859-1?Q?QD5iAcrGxYNVb1bNXPlX39AeJKuYguoDkgiJsBTz9I8gWwgnkhoP7Gf0P3?=
- =?iso-8859-1?Q?iGtepTcF2x5FifBfrD1FCtm9g8VtYGJxy8rsEQwz8tGrvglO87sdARXbAd?=
- =?iso-8859-1?Q?j0gHmwSVVZ3yPGVrL5k7ksVAzccKbR44INCXUNyEmoseQ8hqthuJhMWDL1?=
- =?iso-8859-1?Q?p7zHq+cYmQEpTDbwBAKtIDOybOT860mgktZLRgh8/OSWCDF5ZWYl/nS8BD?=
- =?iso-8859-1?Q?txfeKzfJmFeXoKHF7Z5BMlFu2KGmhgAahrhLTRyezdAXf9cBnxBku1FfUD?=
- =?iso-8859-1?Q?34BWwMzbSIlN+/zLJqZyWn7oS2XrZDMMKo5IieqUkB37/EBrUUVPnWQDtr?=
- =?iso-8859-1?Q?Ufl12TXcWOHqhg0wzYCxlfTqDA5K9UuyKoNY03AleC/YZcQdPvbrUDq3QO?=
- =?iso-8859-1?Q?k1WcUc97ONCdQllLBYD3pLfZ9p7chLBGznk3+2o5Jdfg=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?edzPqlmIw3MbfDpVXwRaDP8OR0ObgzE93S6SaXCdWXamd4jCmOsBWvXQDu?=
- =?iso-8859-1?Q?YZ/LKaIFx235qLoy9kwFUVulFNK3nNeRkbpkrxLdCokYUBXwrHOy02E7aZ?=
- =?iso-8859-1?Q?k1dGr7h9deCs0Vrm211PZGgQ4yrJCdLo0p+VX3qa/M2H3oDo3mE6Ycmpm2?=
- =?iso-8859-1?Q?QkCeKTb3GgXlXccdizYNYW39I6HKpl/HDevZGwEZRBGf/0S5ngqVz2fWku?=
- =?iso-8859-1?Q?GaYjyVIgDCxMmHdV4s2EkE8aB1JxDSIiJDqsXz3ppnK0Eq826HSxxAs/u5?=
- =?iso-8859-1?Q?KTF+rOc06mwFd+qs6Byw2h5xXcMf+wG9nt5cXhEesxBiDVh8dsrOitFdtX?=
- =?iso-8859-1?Q?4t/WLLTRf1r53qGKWzKTWCm22tX/IHML4BhlLpYqt6hyU8Z71PkLUEtORh?=
- =?iso-8859-1?Q?3Lv5peSFK9B83QuseQNDlV1XB/2XDH4ZeAmw3iaMORmZliqHOAVbu+Bvz2?=
- =?iso-8859-1?Q?CooIMNchFgufhRoM/1yKK+hhdVJM+d5PiQT1ncjasd2BimV9mqcUrqNKHn?=
- =?iso-8859-1?Q?9F51ozLh9k7ZHstZslBoiKmqutdZTh0Y9c5ycrYvYKre8LEWIHGSIUDSCk?=
- =?iso-8859-1?Q?m+31b45KhlOIQ7uNEh9UM7ekILG+7cXJUsmoAIbKDDMmNWLcfdHsssI5Pf?=
- =?iso-8859-1?Q?l2y6WRBc/4iwI7r2PmQc4WgUuZLVgSMr9IDxyxvyOLnULMhcEbYXWzwzk/?=
- =?iso-8859-1?Q?Fhrjs1+t52YKWRss+mIyQv3qIW7zkR15PkbqDY5x+efqAhIYJ/5h2yEh4b?=
- =?iso-8859-1?Q?2c5MUDO+2zQjt4UoCv3hVQ/Cph+j9qnqzHBa8iY0571lbc0MOK3EHKNd8R?=
- =?iso-8859-1?Q?XLb/WR4+RcbjOgL3aMZC10EKOxQoSHlzrT8HQeBbzAbXf7VYhHXIfbrepe?=
- =?iso-8859-1?Q?TWi27PWHhYI/ErByZxxqWf0JC2jvCRA61EgCCwmqf/xziOXl5230pZKdBb?=
- =?iso-8859-1?Q?cxowXIPyxXdZFyW5cdmqqQgygNWWuac5mQBRgH+ie1Z7Reo8ljMrcmPaGA?=
- =?iso-8859-1?Q?MC+CjScyw3vVYCadcbdQZLN1JztAiR0Iqf1u0bafCwSayyJ5kWVZihZFCt?=
- =?iso-8859-1?Q?+AWanB9OQGNAAHhvfzLuv0IhYH6d3ySEOyZXPtDezKihzXPAkpNQpvoJOQ?=
- =?iso-8859-1?Q?iJdJm6FdI3cRuZTWawkI9pI+lRQB0fIr3h/X0uBfrK+ezB/netuHLvP4us?=
- =?iso-8859-1?Q?4c5MB2gUyVWa9RgulYXFBKTti0/s2qiG73Xn15TdeCl0m2yGYofcFcX3jH?=
- =?iso-8859-1?Q?zs/Vi4b0y9zJbD+sISXhkuPO2CwXTOPBNLXgojG5IKUpZHLC0fxNZ9zQWT?=
- =?iso-8859-1?Q?jDowqBVMLi/kRoVquUyWnDdtxCWCNfBbIEcC140vRP3SFc3+hnGfeRWfpu?=
- =?iso-8859-1?Q?E/kYMxIc8crQFGs0Ltj5aIkP2bzahSnKAQRD7YO/1M739I89XHsTm1KMtz?=
- =?iso-8859-1?Q?EB/D0oakvcIU5wgUiGmCZXXUGaN+ldgLFKneLLR9sVJN/cqzDWmDsB34ee?=
- =?iso-8859-1?Q?svPKKkiU5Pezr2vrruBUbXRI5fnNmogf8SQIDA/OPJFHK9JmItWJuHUyVz?=
- =?iso-8859-1?Q?Llc+Yq7s1fGO0fiqD6ep27YXjHfTWtgNFE+5oq+gNyS5fweVB5OEG0y+bw?=
- =?iso-8859-1?Q?lRbpRki2I1kcAEIgWO9VCn+mvWzxi6PnyAEtUy2FSmd4Tmpmjlko84shnp?=
- =?iso-8859-1?Q?2tvfbULRZrlLEPZuzzY=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ut4M5-0007Yu-Tk
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 09:13:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756732430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wzovtqV4yVdtqHUdl7Qy1Sg5S4Yb6KN0Oy3VffajCx8=;
+ b=QfsJ1aLQhpOiixWxh36lTNdrUDbbmrOM0MAymMLLt5yIU4q68eWGeEbZzfb+YcxsdcFClV
+ qn5OYdIzQcD6+zzLxzkRX0wDigNolymaWj+RDTSqPHC/7Kp6tcY/JtAgoJxVA/B04NRjYH
+ bu6z1PYsPlOyvC4uwzfeD7sGpZo6Kcc=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-270-eW_z3DY0PJapqOW9_68edA-1; Mon, 01 Sep 2025 09:13:48 -0400
+X-MC-Unique: eW_z3DY0PJapqOW9_68edA-1
+X-Mimecast-MFC-AGG-ID: eW_z3DY0PJapqOW9_68edA_1756732428
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4b30fadc974so57267791cf.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 06:13:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756732428; x=1757337228;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wzovtqV4yVdtqHUdl7Qy1Sg5S4Yb6KN0Oy3VffajCx8=;
+ b=gkGcNUqxCJYfPVxChfxQfdwW4nVf0LdKDV4HWNfYBYZqhepEbcuWNcItCyxZJV+VW2
+ dWaSX2V36lCzIvsOAyVGBn8J1e9NXlamELWVRX5I0RVxUxktR2AAH9zIuWHJZPR+2agm
+ 3zRSvvovL8KUjVit43nuCTxhJ5N39DoNqqJdjvQoGjZoIWqSvFK7ZTFyEhKQSWsV7j1x
+ kOxdf/8bqvaDt+pQUq1xCwhoay+LhEAN2HTRUgx54QteO1AvLQ3utCDIVZAQXVCPh+LT
+ KRb4c54u0xiyo9RqttFS+BSh3W8pMIw2Y4/p68x+gAf4NbhZdH6FoygZU1ZGgkHenolx
+ uVkw==
+X-Gm-Message-State: AOJu0YwMlSxvN28ATxxJPDPoK1HBHYVtKnbvQF62n+k0booyM2plTaVQ
+ sA4uGSOZ5hbxC5L/xO204TpTDN4/yLCBhQcykacyWmHDOVJEzkzz7joRFNkDHRforOIP4fMCJJY
+ grASGz0Am9ucIHY6iHogimWcQ0uWyXJdCvc42eZazCQU6qQJZeBorfIPm
+X-Gm-Gg: ASbGncuifOh6qG75/+M3O/DOdgTljkEt8eC167fZBSy7D+GK8aVEZnPErRzmaURV/Py
+ MwEALe4NwFg6T1ApjZ2OoL6mWiPC8qfTb2F0FwaqwrybnEi+pxfWtSRM1s16IqMdKZ8JuujnfZ6
+ p28eQNX4X6p8CCkrC/Rt4pHp0YJ8tDuBpaG1zGEPMEmaXZe4JdWzoeJBMoZ5ky2LY2imXsdv3Yj
+ MAy0Gup0WqKSbRaiQAVTkAX3XRWnrVdG4Rz3paVgO6+J4J8VXeyT5rf7ArfCdk1RmA+XW8rMeY0
+ WKDZkqLk9EJB0XQarjGkOT57Umls4Q==
+X-Received: by 2002:a05:622a:17cf:b0:4b3:1613:6025 with SMTP id
+ d75a77b69052e-4b31d80c9cbmr101312391cf.7.1756732427846; 
+ Mon, 01 Sep 2025 06:13:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGr3RHcr3pZqi+L+9jOayST1HE60V/Dxxx2QF4MeYsih5D9s+7Bj5nqQNMsCDXrK1/hFwGXww==
+X-Received: by 2002:a05:622a:17cf:b0:4b3:1613:6025 with SMTP id
+ d75a77b69052e-4b31d80c9cbmr101311631cf.7.1756732427151; 
+ Mon, 01 Sep 2025 06:13:47 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7fc0ecb89f9sm663710385a.24.2025.09.01.06.13.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Sep 2025 06:13:46 -0700 (PDT)
+Date: Mon, 1 Sep 2025 15:13:43 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, richard.henderson@linaro.org
+Subject: Re: [PATCH 09/18] accel: use store_release/load_acquire for
+ cross-thread exit_request
+Message-ID: <20250901151343.76fa22f6@fedora>
+In-Reply-To: <20250829153115.1590048-5-pbonzini@redhat.com>
+References: <20250829152909.1589668-1-pbonzini@redhat.com>
+ <20250829153115.1590048-5-pbonzini@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-OriginatorOrg: eviden.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 499e8e22-88a7-4bee-02b9-08dde9491da4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Sep 2025 11:17:19.5539 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: TW7f3L7xRj4Oh2q6RZxOXW1o7arQjSJTH4rvk/J+/oB6aZWVOzyY5Fhb0ssO+32Y84BBUdFqvuQQWgJBitMOtvGjXmUX0W1uO/rkob6Tgak+VGDGp+JkNTL9wsOEWQNi
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAVPR07MB9215
-Received-SPF: pass client-ip=80.78.11.85;
- envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.eviden.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 01 Sep 2025 09:13:13 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -194,47 +109,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
----
- hw/pci/pcie.c         | 8 ++++++++
- include/hw/pci/pcie.h | 1 +
- 2 files changed, 9 insertions(+)
+On Fri, 29 Aug 2025 17:31:06 +0200
+Paolo Bonzini <pbonzini@redhat.com> wrote:
 
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index eaeb68894e..b302de6419 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -1266,6 +1266,14 @@ void pcie_pri_init(PCIDevice *dev, uint16_t offset, =
-uint32_t outstanding_pr_cap,
-     dev->exp.pri_cap =3D offset;
- }
-=20
-+uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev)
-+{
-+    if (!pcie_pri_enabled(dev)) {
-+        return 0;
-+    }
-+    return pci_get_long(dev->config + dev->exp.pri_cap + PCI_PRI_ALLOC_REQ=
-);
-+}
-+
- bool pcie_pri_enabled(const PCIDevice *dev)
- {
-     if (!pci_is_express(dev) || !dev->exp.pri_cap) {
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index ff6ce08e13..42cebcd033 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -158,6 +158,7 @@ void pcie_pasid_init(PCIDevice *dev, uint16_t offset, u=
-int8_t pasid_width,
- void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_p=
-r_cap,
-                    bool prg_response_pasid_req);
-=20
-+uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev);
- bool pcie_pri_enabled(const PCIDevice *dev);
- bool pcie_pasid_enabled(const PCIDevice *dev);
- bool pcie_ats_enabled(const PCIDevice *dev);
---=20
-2.51.0
+> Reads and writes cpu->exit_request do not use a load-acquire/store-release
+> pair right now, but this means that cpu_exit() may not write cpu->exit_request
+> after any flags that are read by the vCPU thread.
+> 
+> Probably everything is protected one way or the other by the BQL, because
+> cpu->exit_request leads to the slow path, where the CPU thread often takes
+> the BQL (for example, to go to sleep by waiting on the BQL-protected
+> cpu->halt_cond); but it's not clear, so use load-acquire/store-release
+> consistently.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+
+nit below:
+> ---
+>  accel/kvm/kvm-all.c          | 19 +++++++++----------
+>  accel/tcg/cpu-exec.c         |  7 +++++--
+>  accel/tcg/tcg-accel-ops-rr.c |  2 +-
+>  hw/core/cpu-common.c         |  3 ++-
+>  target/i386/nvmm/nvmm-all.c  |  5 ++---
+>  target/i386/whpx/whpx-all.c  |  3 ++-
+>  6 files changed, 21 insertions(+), 18 deletions(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index f36dfe33492..bd9e5e3886d 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -3029,10 +3029,6 @@ static void kvm_eat_signals(CPUState *cpu)
+>  
+>      if (kvm_immediate_exit) {
+>          qatomic_set(&cpu->kvm_run->immediate_exit, 0);
+> -        /* Write kvm_run->immediate_exit before the cpu->exit_request
+> -         * write in kvm_cpu_exec.
+> -         */
+> -        smp_wmb();
+>          return;
+>      }
+>  
+> @@ -3187,7 +3183,8 @@ int kvm_cpu_exec(CPUState *cpu)
+>          }
+>  
+>          kvm_arch_pre_run(cpu, run);
+> -        if (qatomic_read(&cpu->exit_request)) {
+> +        /* Corresponding store-release is in cpu_exit. */
+> +        if (qatomic_load_acquire(&cpu->exit_request)) {
+>              trace_kvm_interrupt_exit_request();
+>              /*
+>               * KVM requires us to reenter the kernel after IO exits to complete
+> @@ -3197,13 +3194,15 @@ int kvm_cpu_exec(CPUState *cpu)
+>              kvm_cpu_kick_self();
+>          }
+>  
+> -        /* Read cpu->exit_request before KVM_RUN reads run->immediate_exit.
+> -         * Matching barrier in kvm_eat_signals.
+> -         */
+> -        smp_rmb();
+> -
+>          run_ret = kvm_vcpu_ioctl(cpu, KVM_RUN, 0);
+>  
+> +        /*
+> +         * After writing cpu->exit_request, cpu_exit() sends a signal that writes
+> +         * kvm->run->immediate_exit.  The signal is already happening after the
+> +         * write to cpu->exit_request so, if KVM read kvm->run->immediate_exit
+> +         * as true, cpu->exit_request will always read as true.
+> +         */
+> +
+>          attrs = kvm_arch_post_run(cpu, run);
+>  
+>  #ifdef KVM_HAVE_MCE_INJECTION
+> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> index 508d2d2d9e2..f838535d111 100644
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -851,8 +851,11 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+>      }
+>  #endif /* !CONFIG_USER_ONLY */
+>  
+> -    /* Finally, check if we need to exit to the main loop.  */
+> -    if (unlikely(qatomic_read(&cpu->exit_request)) || icount_exit_request(cpu)) {
+> +    /*
+> +     * Finally, check if we need to exit to the main loop.
+> +     * The corresponding store-release is in cpu_exit.
+> +     */
+> +    if (unlikely(qatomic_load_acquire(&cpu->exit_request)) || icount_exit_request(cpu)) {
+>          qatomic_set(&cpu->exit_request, 0);
+>          if (cpu->exception_index == -1) {
+>              cpu->exception_index = EXCP_INTERRUPT;
+> diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+> index 6eec5c9eee9..1e551e92d6d 100644
+> --- a/accel/tcg/tcg-accel-ops-rr.c
+> +++ b/accel/tcg/tcg-accel-ops-rr.c
+> @@ -242,7 +242,7 @@ static void *rr_cpu_thread_fn(void *arg)
+>              cpu = first_cpu;
+>          }
+>  
+
+should we have here a similar comment as in the previous hunk?
+
+> -        while (cpu && cpu_work_list_empty(cpu) && !cpu->exit_request) {
+> +        while (cpu && cpu_work_list_empty(cpu) && !qatomic_load_acquire(&cpu->exit_request)) {
+>              /* Store rr_current_cpu before evaluating cpu_can_run().  */
+>              qatomic_set_mb(&rr_current_cpu, cpu);
+>  
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index 9ea1f3764a8..ca00accd162 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -74,7 +74,8 @@ void cpu_reset_interrupt(CPUState *cpu, int mask)
+>  
+>  void cpu_exit(CPUState *cpu)
+>  {
+> -    qatomic_set(&cpu->exit_request, 1);
+> +    /* Ensure cpu_exec will see the reason why the exit request was set.  */
+> +    qatomic_store_release(&cpu->exit_request, true);
+>      /* Ensure cpu_exec will see the exit request after TCG has exited.  */
+>      smp_wmb();
+>      qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
+> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+> index e1151b04c6e..10bd51d9b59 100644
+> --- a/target/i386/nvmm/nvmm-all.c
+> +++ b/target/i386/nvmm/nvmm-all.c
+> @@ -743,7 +743,8 @@ nvmm_vcpu_loop(CPUState *cpu)
+>  
+>          nvmm_vcpu_pre_run(cpu);
+>  
+> -        if (qatomic_read(&cpu->exit_request)) {
+> +        /* Corresponding store-release is in cpu_exit. */
+> +        if (qatomic_load_acquire(&cpu->exit_request)) {
+>  #if NVMM_USER_VERSION >= 2
+>              nvmm_vcpu_stop(vcpu);
+>  #else
+> @@ -751,8 +752,6 @@ nvmm_vcpu_loop(CPUState *cpu)
+>  #endif
+>          }
+>  
+> -        /* Read exit_request before the kernel reads the immediate exit flag */
+> -        smp_rmb();
+>          ret = nvmm_vcpu_run(mach, vcpu);
+>          if (ret == -1) {
+>              error_report("NVMM: Failed to exec a virtual processor,"
+> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+> index c09a0a64f22..2106c29c3a0 100644
+> --- a/target/i386/whpx/whpx-all.c
+> +++ b/target/i386/whpx/whpx-all.c
+> @@ -1714,7 +1714,8 @@ static int whpx_vcpu_run(CPUState *cpu)
+>          if (exclusive_step_mode == WHPX_STEP_NONE) {
+>              whpx_vcpu_pre_run(cpu);
+>  
+> -            if (qatomic_read(&cpu->exit_request)) {
+> +            /* Corresponding store-release is in cpu_exit. */
+> +            if (qatomic_load_acquire(&cpu->exit_request)) {
+>                  whpx_vcpu_kick(cpu);
+>              }
+>          }
+
 
