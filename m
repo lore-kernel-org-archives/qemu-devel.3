@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 066CCCA1002
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B94CA0FFD
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Sep 2025 11:06:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ut2I8-0007E1-8U; Mon, 01 Sep 2025 07:01:41 -0400
+	id 1ut2MS-00008d-KF; Mon, 01 Sep 2025 07:06:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut2Hu-00072u-7U
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:01:27 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2ML-000083-Cb
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:06:01 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ut2Hl-0001vy-3C
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:01:21 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3cbe70a7923so3247473f8f.2
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:01:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ut2MJ-0002lg-AD
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 07:06:00 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-45b87a13242so13848505e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 04:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756724474; x=1757329274; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MkCbogk/efZJ0KLbVBX6ULxMCBrzvyHbeRfPU451Pv0=;
- b=QQ1iZbFhMbOJNS+iF+Gbv1debVEiOiU3bBKi53NbH176+wJOYCcNQaPRIW5DuGXnYf
- EuRF1oifV2WSXGm9bA0a4coLnIud/cXJVwiCb4D15tvhxW6OIJOhj5K4grtGhFtQK5ED
- 6udaURZ0roPO/3A8GqhjVGhnXsNUJnZerNykghimAcbFKrwx90/K9GSnkq9fP0ODDH6p
- BCO+ysCJo8/qLLEIX7mIgRzo2SF9RHfLyvQOVsGSOAsPmOdPaEZJoPAy7i7qy32Q4Qz+
- YdPWP81fGxxMs1+UMyPzZca5hlMeBXoyKP8Oacz5SYd1ISloXIQQ8nrchtYWpDrBkw6w
- g0hw==
+ d=linaro.org; s=google; t=1756724755; x=1757329555; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=g7LfsmVoQpvJ0TsCDcTvSH/tR1rq1IEO/y3R4BdxsFA=;
+ b=AQ/KybkvqaJihiQXlMxZ0zPMBXV7fLcJFn++aGgIts5oENnT/34xe61I1hp+8uSMUI
+ lnx+Lt7pbtUnOcbEgqdfOFJqA3FOTO/p7efTlcz5wYu2mbq/Qi1wP3Du+KdxjuShbd2e
+ uSvMi06NHXrlKgVy+lcdPEOlaBCwp2KLHsQncubWuU4nPIhbt2zrVqK89NBKM9gXhq/G
+ N5rgjAtvZRgUA3HsMgoWlm+7mwdTQW8b8B90FLHxYLJHsCqZRya2NscJ+87gkS9J6d4C
+ w85EfjaVYcz4zvOUSoSDMgivxnd7T3Z2uxc45/TA//kxGETx82CK7PmVT+Nu+YnljM0O
+ kJ3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756724474; x=1757329274;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MkCbogk/efZJ0KLbVBX6ULxMCBrzvyHbeRfPU451Pv0=;
- b=IeyuaH9ErHyEtrteVFzc7qXLO1ib3PLscr5H7wV9f5hJKu01psw76vjTtMJH6xJsMm
- RzRhto+5H/xjQKcGp1DApR4dkJRutpxiFXgZEKvLbVRPXrh4fd8jUcZkKZ2la2x01d9R
- 6VVKcB2nZzeE3ECyapNH/hAq6FoUuLBSV7ClbA/uIoNQQCWLS/U7Q7o2PuQm2/XCqKsr
- yALqFS31ZWg567ZuqJknvewKTBcpCCiE0NIyPoXms23AhZlaa7XS5AAgRGdDadwBzVQc
- 9+Oy9aBEktkee4nvOaoeXj6jnaZmCqjv2W6vFEEoV1b/Hg09HncJSveg/lXwhVlYXodX
- +h1w==
-X-Gm-Message-State: AOJu0Yx0fzZfUoRCwPQ7WZ1AI/SgTw0xh6iIBAcEo6G7eDaCWWB2OM2p
- tkGV65dCVItXT8Ev8kEQqpHyKTsG/VIB+xbzwnYttE6OQVoCQo71/g1mB4fMHrPXgjjxxUuQNlM
- M6pLxIuA=
-X-Gm-Gg: ASbGncvCPIIi34DXMVYLN6l0Ys8h6i55FG+lIyhKumKlvufoq/8Pg6hz1j+HpmdJXbX
- HBZ48ncGHE2GfQGr2htrvAkWVlLVUAo9hGxqnZYcK+6LlAFueB03rd0Bq3Dsv3OR2mRKVG0jpx6
- F5hQB0rEV9pQUvy41x/B/+DzHzERblgEMvUXm0KNfPXF1PsyLQg+lxu1tKS2naCbFvhpOjPDM/a
- Z2XzV5t15CrEDpmPUk72UNq7BEHbaAwFLR0o6HHVFxVLojy4+3F6TltxpGacnMrsRoeTM6+WZhI
- +ow68tJENDPIlU+upqQ7jw74Svwn/+4jx2gIUmO558ijfweurkfLAcrV3oDJLmGMGmkTnQcimRi
- NPQs4QZ9LqnghPd/BP53DqZA=
-X-Google-Smtp-Source: AGHT+IEud1io77LhrStnZV61FgBei8dTqUuBhgeyuIGgXPMI69TZdTRHUFwUWMHdxvSoKM9GU9tOmw==
-X-Received: by 2002:a05:6000:4021:b0:3ce:e9d6:ad24 with SMTP id
- ffacd0b85a97d-3d1e05bab3dmr5303570f8f.50.1756724474408; 
- Mon, 01 Sep 2025 04:01:14 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf34493b8csm14568857f8f.59.2025.09.01.04.01.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 04:01:13 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B86D85F7F5;
- Mon, 01 Sep 2025 12:01:12 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Stefano Garzarella <sgarzare@redhat.com>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] hw/virtio: rename vhost-user-device and make user
- creatable
-In-Reply-To: <20250828104021.3910859-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Thu, 28 Aug 2025 11:40:21 +0100")
-References: <20250828104021.3910859-1-alex.bennee@linaro.org>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Mon, 01 Sep 2025 12:01:12 +0100
-Message-ID: <87cy8a3093.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1756724755; x=1757329555;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=g7LfsmVoQpvJ0TsCDcTvSH/tR1rq1IEO/y3R4BdxsFA=;
+ b=pBKitHKT5vvLXXpMU0c3LHFF1j2z49/D+LMxMyXWie8eKLoa99h4qH8xinAXzos1zF
+ i41YA8fSKdqjLuuV0pYUledq0x7DtGnUV6XWDmT93HrkWe+6Qo8B0WZ3Ui8BWnUjHFUg
+ 3TzPtNn3M0MKHw8uSJ1H2VIMRMAcJ2tWt4ROfBXI0Kzi+0k518xM3sMcsP9w0gryFDmT
+ Ye84qPYhALOJrpL4TXL00GdK1BmHrD//zwAzhmSj1Mb1B1oho7S52q7ASyh/fcp6wiMA
+ ELFmIByT8MegyRPbhCsSTOO3E3Y0q8qIA/p9f34JKchmQuG1BxWiZ6x7TbZwt43asLAL
+ 0F6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdfv5vvR2W5IZ8+dUuYGbxfptlMK4kZ5udq1SKGK6ih3ca1x1h03KP+AdD3aUtOyWdPU9TeO34+K7f@nongnu.org
+X-Gm-Message-State: AOJu0YxUrP8yRSEHonAllxSvjij2NN1jHzY4Sszn3/GwzZeocJD0OHUX
+ 7kHlvEYHqqSDWsMt6c2C7erujdzctShk5nXz15igRCWAKPSIaxi0vsSvQzj71TzorjE=
+X-Gm-Gg: ASbGncuIwmL4SsCB7aQIxknQqPpe7yitDbNB4N9xBRb8VxrCXff17rZNAbUjvSDe+sq
+ joKBXMkjFBDxgRmZhlZTrIoNnU4StIg4f7ib8WmMVVkrX7UlokI10Wkuzy99ZKhYmxgPV3Y/R1x
+ v+HTVNjWTz0oQNsdjnO4NTnijuE9ALLlNLyZI6SbxGmFuT2P8lJCyBxdo95m6o0/bnP3sUk3oJY
+ d0bwJv6CQigJJeN6VvQD2h2twuMTE3l6NpkZ9V9018FiT0A5X3IUu2dyoW83dIWpmjLpV6lc/cF
+ r/Z2nShp0tRxyqAeMwc2019UWKfmKXFR3kpGqVgprhZm7QZaQAUzLG29IYjqzF8dEM0w5lcAcuf
+ Ds0zS7OS0K7ud6AzKnVDwoqtRb5bM15G8YjBcLFTZyfqzddTVFZEqLfnZkTR582lmTw==
+X-Google-Smtp-Source: AGHT+IF4D8hdX3lBSKH/Mx6rN2QmWaalI/tCjlcwyGM1+b+ZZeHaAdXhM1TSPOwp5lE3uVAW4o45pw==
+X-Received: by 2002:a05:600c:3b84:b0:45b:89ef:65ae with SMTP id
+ 5b1f17b1804b1-45b89ef6623mr55082115e9.16.1756724755316; 
+ Mon, 01 Sep 2025 04:05:55 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b87632365sm94069375e9.16.2025.09.01.04.05.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Sep 2025 04:05:54 -0700 (PDT)
+Message-ID: <ca5816d3-a0e7-4460-aead-8f0dbcb4bc92@linaro.org>
+Date: Mon, 1 Sep 2025 13:05:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 01/14] hw/intc: Allow gaps in hartids for aclint and
+ aplic
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>
+References: <20250717093833.402237-1-djordje.todorovic@htecgroup.com>
+ <20250717093833.402237-2-djordje.todorovic@htecgroup.com>
+ <5f0fb254-fa9c-4e29-a848-6e9b3bc8274d@linaro.org>
+ <046d60ed-aa62-4357-a812-721de3412573@htecgroup.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <046d60ed-aa62-4357-a812-721de3412573@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,51 +109,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+On 1/9/25 10:17, Djordje Todorovic wrote:
+> On 8. 8. 25. 17:52, Philippe Mathieu-Daudé wrote:
+> 
+>> CAUTION: This email originated from outside of the organization. Do
+>> not click links or open attachments unless you recognize the sender
+>> and know the content is safe.
+>>
+>>
+>> On 17/7/25 11:38, Djordje Todorovic wrote:
+>>> This is needed for riscv based CPUs by MIPS since those may have
+>>> sparse hart-ID layouts. ACLINT and APLIC still assume a dense
+>>> range, and if a hart is missing, this causes NULL derefs.
+>>>
+>>> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+>>> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+>>> ---
+>>>    hw/intc/riscv_aclint.c | 21 +++++++++++++++++++--
+>>>    hw/intc/riscv_aplic.c  | 11 ++++++++---
+>>>    2 files changed, 27 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+>>> index b0139f03f5..22ac4133d5 100644
+>>> --- a/hw/intc/riscv_aclint.c
+>>> +++ b/hw/intc/riscv_aclint.c
+>>> @@ -292,7 +292,13 @@ static void
+>>> riscv_aclint_mtimer_realize(DeviceState *dev, Error **errp)
+>>>        s->timecmp = g_new0(uint64_t, s->num_harts);
+>>>        /* Claim timer interrupt bits */
+>>>        for (i = 0; i < s->num_harts; i++) {
+>>> -        RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(s->hartid_base + i));
+>>> +        CPUState *cpu_by_hartid = cpu_by_arch_id(s->hartid_base + i);
+>>> +        if (cpu_by_hartid == NULL) {
+>>> +            qemu_log_mask(LOG_GUEST_ERROR, "aclint-mtimer: invalid
+>>> hartid: %u",
+>>> +                          s->hartid_base + i);
+>>
+>> DeviceRealize() handlers are part of machine modelling, not guest uses.
+>>
+>> IOW, triggering this is a programming mistake, so we should just
+>> abort() here.
+> 
+> Well, if we do it that way, our Boston board target for P8700 cannot run.
 
-> We didn't make the device user creatable in the first place because we
-> were worried users might get confused. Rename the device to make its
-> nature as a test device even more explicit. While we are at it add a
-> Kconfig variable so it can be skipped for those that want to thin out
-> their build configuration even further.
->
-> Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Message-ID: <20250820195632.1956795-1-alex.bennee@linaro.org>
->
-<snip>
-> --- a/hw/virtio/vhost-user-device-pci.c
-> +++ b/hw/virtio/vhost-user-test-device-pci.c
-> @@ -18,13 +18,13 @@ struct VHostUserDevicePCI {
->      VHostUserBase vub;
->  };
->=20=20
-> -#define TYPE_VHOST_USER_DEVICE_PCI "vhost-user-device-pci-base"
-> +#define TYPE_VHOST_USER_TEST_DEVICE_PCI "vhost-user-test-device-pci"
+So the problem is elsewhere :)
 
-oops dropping the -base here broke:
-
->=20=20
->  static const VirtioPCIDeviceTypeInfo vhost_user_device_pci_info =3D {
-> -    .base_name =3D TYPE_VHOST_USER_DEVICE_PCI,
-> -    .non_transitional_name =3D "vhost-user-device-pci",
-> +    .base_name =3D TYPE_VHOST_USER_TEST_DEVICE_PCI,
-> +    .non_transitional_name =3D "vhost-user-test-device-pci",
->      .instance_size =3D sizeof(VHostUserDevicePCI),
->      .instance_init =3D vhost_user_device_pci_instance_init,
->      .class_init =3D vhost_user_device_pci_class_init,
-<snip>
-
-the checking here. So I have sent v2:
-
-  Subject: [PATCH v2] hw/virtio: rename vhost-user-device and make user cre=
-atable
-  Date: Mon,  1 Sep 2025 11:59:48 +0100
-  Message-ID: <20250901105948.982583-1-alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
