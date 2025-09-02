@@ -4,117 +4,234 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD0EDCA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13FC7CA1007
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utVBn-0000Yn-Oe; Tue, 02 Sep 2025 13:53:03 -0400
+	id 1utVCC-0000h4-2l; Tue, 02 Sep 2025 13:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1utVBc-0000UW-Kh
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:52:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1utVC6-0000gI-Im; Tue, 02 Sep 2025 13:53:22 -0400
+Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vacha.bhavsar@oss.qualcomm.com>)
- id 1utVBY-0002ob-AU
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:52:52 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582EqCLa010163
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 17:52:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=MQQITzu+SmTy2msogTUYPvi5
- ItpgAPJEx+UJU5UFZHE=; b=kT0/scHHdIYehDHD3HCkM649a/dqp5elyniVcymP
- tG/GBETqmkNYh69pXz2oGDfreC1EXbOTdyzoVKAeS4gt/43qqfunzzcDUWSEmoOL
- FKbQrrDNxFDxImuSmqV3OjBd7cQKJBfQciqOaXSbtSmhSDDaOLFTPKZDnlfB0bRG
- 9ZfFC3NF3nLQBGmOR+pBxmBfMpg/P3NYRnNb17wbeU0+rDgGGZCKFxjxV/82MQYj
- 2I+iYpfKnSaBT3X4o3hNFXzGJo0gkzyw+GTED+Cnk+pXJnsOWnfcXRGOqdmFvvfz
- H8vo8xlkLq811s7RdmHJft3QQxAFpkRC/sS562pGqfkY2w==
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uq0egwra-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 17:52:44 +0000 (GMT)
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-e96e02b1c8dso6863486276.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 10:52:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756835563; x=1757440363;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MQQITzu+SmTy2msogTUYPvi5ItpgAPJEx+UJU5UFZHE=;
- b=i8QftbzScuqVuB/P85X9vxVoEjlbNRvnkj0tZ0OXu4gR/goXtawrrCVsOT7nYnLY4s
- tz0U9ioc0sOQYHJBU+6RlZ4wVnvpRxoRFl57Jf3scxXncu3oIQlX6DX4EGUgi6QDe6a9
- 0/2shAfHB+U9j/Cppo2wMoBewC1gPYx4W9Md3wKGM1zP+aTZ4e/OOCl0TyhQOqHfWXSR
- 8WHfLYqlSaOgMvQTP8OpjCZ/anDitQ5mYpb3CZNcBizlLHsXXYI1F55ygM6CFL/llaRU
- /zV7olfPzE2DNJfxivqD5UiSqJWbDLDAavF/Lj0Kcx01sB0wshRafYGVzZ1dh0MBJx1b
- XmKw==
-X-Gm-Message-State: AOJu0YxV2LvlySaD9Z7OuWI0AQEdoxB5ayNGXCFR3gECXy1zBZPPCe04
- 1GNsi6oaH4YPehbVCLdfu0MV+8Bum8La1Od3vEJ/2miyhGLFbGJDjkzWY+URIxzrL+97fFMYA2U
- LUDD9In/mP4Dbxw5UCdoROZNEQvpHcYohH6N8BnN8BY8XC8GsRfFmKLQKM+Za0htlRpmiCNTots
- Zy/zAzO5DHxLwMgv5Sa5xxY3K5WD1t1Cdw
-X-Gm-Gg: ASbGnct4ovSGaX8ShPk+R31vdiEsf/BwYXIPJlTooUeveSVzSJr8k0ZQnWTfoO8TeYc
- 0a3vtY3jT9Hhv8fS1cdXLc4IZWRr/cI5JouuE7Igrn/VpASKM3XXRb6Qx8FR+ie7hqcUNPeF+5I
- 1MsbbGLv68XbXJOUhr52M92A==
-X-Received: by 2002:a05:6902:154a:b0:e96:fa6b:878c with SMTP id
- 3f1490d57ef6-e98a5759c87mr10711997276.11.1756835563202; 
- Tue, 02 Sep 2025 10:52:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYXF7M3YoX9aW/R/RpdnzmrHwY0wH8kViMbKDfg8Wx1aMkGWp+u7mnIJr8x1f8fok7b6pu+A9iTd8yPlxc9So=
-X-Received: by 2002:a05:6902:154a:b0:e96:fa6b:878c with SMTP id
- 3f1490d57ef6-e98a5759c87mr10711978276.11.1756835562714; Tue, 02 Sep 2025
- 10:52:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1utVC4-0002vo-61; Tue, 02 Sep 2025 13:53:22 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MLIYGLKtEkXFSyRH0vUxcR2GaDRZIpk2twyKcswQeEYPz/muVmmLuD9dGgBGB30qYMN+vnBvGCxZFMaRbMxb578p0ACEWkMJgHNrR0p1JBINaL4uGQU3YnYm3RKSuXfju1p9+FvOMXAClKb2YXnguIcMX/SHdNDAA3ebjAdXTZiyHYa51RXsEGqlSEJrEkfEO4uR8XusoN2SHOzz8FTPL26sWkVwzN8oxGEAgpG8kdCi8E7emjU++UNxuEEIzcLo2wKXSz5h2mOSBFLAXcASOgabRzCI2e40gHmcZpbmLsYziFaTRy3rO4badn7jcrpqK4u5whbs4mrPG3SXLq1MPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fulwDc++WFyAiX2+DCzJhJ7b83IKS6gLMlYIrSpXkZg=;
+ b=YfqBD2KiruFxS9ewShch+tY6uoPnWAHOr5ZuHzeeTwlIYTK5qhmkfRkNwJRnxhKH+LsX3XTHMQjNCE2VDyKtNbQoF4/lqapJkv2LiX9ZECNT/rYG4vosrjm0S8gIZV+dZAqNfo7tTNVkF4KKgAHAyo0BfD33VPr6L6QVplE710oBZ+YvheFFX/2cAfrFyTYFpQPEdt4Z2V0dGFfvCzL08DHrrsHRtFnEzzBUYZmLLMLgjP5oAUOWDn9hX+rF7EU6+Fh6LvTMAP+eqLh2ZQ21QzruRVPEHXMfM6CN6fiAnGlPHW8FYt7M7XHpKTBt/POuVlRqQh8h2Y2xRRm4XL/9zQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
+ dkim=pass header.d=siemens.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fulwDc++WFyAiX2+DCzJhJ7b83IKS6gLMlYIrSpXkZg=;
+ b=MolhU72PA1+ZvTQuE1ZtsGdahz85EfA6RX8FRFGdRP9q7liuyPzJaocd+POdgS4iQQPV3lXuHR3dHbvrouSfIlU2dKP1QWPdmpiFoeWW1XiHn8ppoc29LhRPgb4IecdSJtW1kgeR22o8EDTlWLXDohoFB2zPzO0r47t4BtIjkBizFtuhcAejCOmOPX4TR74KWI6nlpquibL38y1anIRHS/Sfs5GgULAk7jiERi3qaHA6vaZQgGElkMijQR69yNMrnTVE1goY/dubF3K5UczCWnxmJWy6u0R1HZDzMKWlWGaPY992Aht25kIzwQyk+HNUsh/T/Z4zbf8x4AsQP4CLog==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siemens.com;
+Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:76::15)
+ by GV1PR10MB8444.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:1ca::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.27; Tue, 2 Sep
+ 2025 17:53:14 +0000
+Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::7fc:74bb:a781:a286]) by GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::7fc:74bb:a781:a286%7]) with mapi id 15.20.9073.026; Tue, 2 Sep 2025
+ 17:53:14 +0000
+Message-ID: <85e230b8-75f5-43c7-897f-5abb18799d52@siemens.com>
+Date: Tue, 2 Sep 2025 19:53:09 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
+ image
+To: Warner Losh <imp@bsdimp.com>
+Cc: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ qemu-devel <qemu-devel@nongnu.org>, Joel Stanley <joel@jms.id.au>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ qemu-arm <qemu-arm@nongnu.org>, Alistair Francis <alistair@alistair23.me>,
+ Alexander Bulekov <alxndr@bu.edu>
+References: <cover.1756706188.git.jan.kiszka@siemens.com>
+ <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
+ <11808e86-cee0-48bf-8fbd-de13a9a25ed0@linaro.org>
+ <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
+ <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
+ <03a51e36-9a15-4b49-a310-c36a4d0af360@linaro.org>
+ <2abbaeda-f9dc-4045-a9f7-b2b48451255f@kaod.org>
+ <42310bdb-4fad-4df2-b7ad-3ff3f863e248@linaro.org>
+ <d21f6449-e646-42fc-8277-b011a886e9c9@linaro.org>
+ <41d2e67e-3345-4720-b3aa-1051224025de@siemens.com>
+ <21b6726a-1ceb-4782-a219-36f32cebb774@siemens.com>
+ <a1463f9e36d8b3e6289859bec9a0a5a758709316.camel@pengutronix.de>
+ <CANCZdfprQZTVskt-EPgT-ALMO3HU-akdcw+yZ5=9Cmu1F00etQ@mail.gmail.com>
+ <85b059c1-4a08-447b-a908-8af6b22d06c3@siemens.com>
+ <CANCZdfp5AvUQNJ5m8V=z=R14CRwauSP7Qg+1FZ7VV_Ztb5Rb7A@mail.gmail.com>
+ <CANCZdfrqiFBP9vP76yjvurmE5KX=OvC7c6vnUp66xr8jc0zaMg@mail.gmail.com>
+ <1a7e47de-0021-4180-90a1-b249af8d22e0@siemens.com>
+ <CANCZdfrgB5NXNSa+KHs9AcgFW8Qy+raj1a75DkuQeX2Lt1=aAw@mail.gmail.com>
+From: Jan Kiszka <jan.kiszka@siemens.com>
+Content-Language: en-US
+Autocrypt: addr=jan.kiszka@siemens.com; keydata=
+ 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
+In-Reply-To: <CANCZdfrgB5NXNSa+KHs9AcgFW8Qy+raj1a75DkuQeX2Lt1=aAw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR2P281CA0111.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:9c::15) To GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:150:76::15)
 MIME-Version: 1.0
-References: <20250826185052.511223-1-vacha.bhavsar@oss.qualcomm.com>
- <CAFEAcA_R4tZTtP875VJM3_o_fTL=oo05GcCXO479eq3VNgDpLA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_R4tZTtP875VJM3_o_fTL=oo05GcCXO479eq3VNgDpLA@mail.gmail.com>
-From: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-Date: Tue, 2 Sep 2025 13:52:32 -0400
-X-Gm-Features: Ac12FXyiOQmiadBxOf0hodI9rjM2GPs4BJ9FLFQndV25GdrfIGZN4B0EVQmlK_8
-Message-ID: <CAEWVDmskFQWRH-vxTYbRgdDPSYPpUhXnP4yZ6bxv-gNf0LSQ-w@mail.gmail.com>
-Subject: Re: [PATCH v6 2/3] target/arm: Added support for SME register
- exposure to GDB
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000a50d0c063dd52710"
-X-Proofpoint-GUID: Pwl3kMklcBH3kLyHiXxCACjJviWF-LaH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwNCBTYWx0ZWRfX5d4cpER3cc3y
- YrKjDx3FAzIw+Ua4OhSBk7QhbQ3cE2IlIh4hgS5/qVPW4ThOEOPlTV+rJjVxdzRKSma8eWr1T/A
- nXLCr6aWCSwfifD/2Wax+PDpuNps8WGzGa4N2aul6OZDMdoAtRwKwHJZ7ZE5dvjzgwekQcogC1S
- RsCFMTIZRIr3qyqFF6EVylJ34WifmxDwwwLL2wfT0uvpAGeB2WIE0HNNuZCYPE8JeAp43JBasDE
- LCLjCI6hHpXEQvUyUWgmunU8odHIM7xnyPY6AWLbLwprRsz6UtO5ZqZYHE42JOObJE+3TzIKIOU
- KtYDjkd2IKaIFXONJj6oU+LTTL/ii6VJXSSCM/HeOo08QEOkrdHyTPLmnm4NqW+RJOVQOw/ZtHU
- /Rk1+vP/
-X-Proofpoint-ORIG-GUID: Pwl3kMklcBH3kLyHiXxCACjJviWF-LaH
-X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68b72eec cx=c_pps
- a=5rZgxjGdQ1phXw1xqkF1vg==:117 a=yJojWOMRYYMA:10 a=CCpqsmhAAAAA:8
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Dg_AUq5y-LNeIlJFgOoA:9 a=QEXdDO2ut3YA:10
- a=v2fgoWfUfwoA:10 a=HjjZBBvkAAAA:8 a=PsgF5xkfgFGdeFutLAIA:9
- a=tXgjE3hzoRJbHQGY:21 a=lqcHg5cX4UMA:10 a=FvMT9AR2qkiEEVpopuB7:22
- a=ul9cdbp4aOFLsgKbc677:22 a=cvBusfyB2V15izCimMoJ:22 a=yryXaR-spxf4diMYRkVC:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-02_06,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300004
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=vacha.bhavsar@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR10MB6186:EE_|GV1PR10MB8444:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5e2da957-60c3-47b0-1d8e-08ddea4996aa
+X-MS-Exchange-AtpMessageProperties: SA
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?WWhnRlF0L01iMzJneFlFUDRZTlJlcmZtNTFtQmZuVGhrdmFocnh5Y24wRTVZ?=
+ =?utf-8?B?VVl0NmJweWVqdU1iQjFZWnlOZlpyWjFhaWlsR0MxK0JWczZ6WC9QTEYrVGtY?=
+ =?utf-8?B?TDJEZmxUYU05RkpmVlZ0VE1GdVVCMjBBV2NKVTg0VFErbUlkODRFNVVVdkor?=
+ =?utf-8?B?d0FiYVIzYlRBait6TklBNVlzak1HcDI0bDh2YnREazc1UzUzNkZ5YzFmeG1k?=
+ =?utf-8?B?clJkcElZS3JaWTl1RmVPUFJJM2xRaXJDcmFXeGVrbklxRWZYU3pzWEhZYzNu?=
+ =?utf-8?B?MmxBd1ovQ3B2bTVGY0FjSXFvdXZ0VEU5TXFlc3c2bnUvaUpZb00vQkE4aXRZ?=
+ =?utf-8?B?ejBhY09rQnpFYWh3Q0J0UytlN1FuaXFSdCs2dStXaU12T1k2M1lZY1dud2h6?=
+ =?utf-8?B?YjJJOTgycnl2YXB2SjJSSWlROUdtMTFpbU0wZWZoM2VuWGd3aE5WaU02SGR3?=
+ =?utf-8?B?azZ2VEErN3BuaEI2QmNscXZhK1huS0xDVzg1ME1XUkZEUEh3akRVS2VWWFNa?=
+ =?utf-8?B?bm5mQW1Rb21XVG9XWmNnam9uV2k5ZUNDQ2J1R3IrR2Uvc1pHcjVHNTZRWmkz?=
+ =?utf-8?B?Qm9IUlhGVER4SnUxOEdqYk4wTUlsMkszc05IQWZmSkVualJPMmhDRXpPSlFM?=
+ =?utf-8?B?UjhkeC9PUFJFQ2Z5NTZUbnZRVXpLMzdudzhZK01GeWdMcC8yMXU0b0dBWUZX?=
+ =?utf-8?B?V3FGQjQ2ekJybXRhYjY1aVRWWUYxRFkvMFVkWVpxdEFxOXQrQ0VNd2hmTHB0?=
+ =?utf-8?B?Nnp1QlB5Q3lhNlEvQ0JtZXo3alZWNDRJSGZhUUxtWmdGZkhGUVB3dzVHR1lK?=
+ =?utf-8?B?OVo2UU9VMWZ4a2tMY3hudjZWK1llZFlGeWF4T2hUZndQeHpqakhWeHg4a0x0?=
+ =?utf-8?B?WU8xbDJTb09KaFVUcEFDc3hsV3NhWUdIcnA3anhtd05EL0ExVWNqZ3FmRFVq?=
+ =?utf-8?B?V1RhZnE2YVEyVlk1Z3p2SEpYbFlURU5PUTF5MC9PV2tWcGN1d0IzTTI2N3B5?=
+ =?utf-8?B?TkFlUlA0cU40OWdaTm5INEJsOUNyNTBtM1NBb3pPcU55elB6SkdRNmprcFRq?=
+ =?utf-8?B?VTE2SWdSR0NqVXNxdzZ6aHdUQkwvZnI5cXAwVkFrR0JEK2FoOUhQZGtSSVBL?=
+ =?utf-8?B?L1J1UGZtVDE4YmUzdE1sb1pSenlmd1Z1SmJMTzdseWlVc3VlcGNkOUQ3bkdw?=
+ =?utf-8?B?UU1BNzFoc2I3V0ZkNEF1VFNWUnJIV2ZXQmJEVjc0YkREL1lpUEY5dlMxdjRJ?=
+ =?utf-8?B?UERTdUo3NlNCbTF1cXU4TUt3YkE1VXgvU3h1cCtrNDBuQXlsWnhsU2tBZjd6?=
+ =?utf-8?B?UEkzMERLamNCK2dMbVhXaVlIakxVWTVLYTE0VlFVdmtvZjVyUWt1MzhqKzM2?=
+ =?utf-8?B?dmFiaWVZczFRUkpuVTJpZzhGVW1IS3k5NTNBZk1objNTZzZiYlhiM1NKa1BR?=
+ =?utf-8?B?NXEzTG90UjlRZldodDZaWVlFUEpTMHppeGRLbEl6Qm5JdnE2UDNkSURmT0xM?=
+ =?utf-8?B?aDI0L3d1RnVlS3g4bXNwbUY0NTRhT0paOHFBVnZOOW5UcUd5bjJXRkp4QWdJ?=
+ =?utf-8?B?bFZEcTlIZkl6VEVKdU5RbEFmM0Q2TmV6T3NJYjNBSWxGY1M5dW0rYXc2RkQ5?=
+ =?utf-8?B?OE5iSENERzJrNm95TVptem9JSkw4VVdqZEM5VnZwUEQyMXVJanNWRVdzS280?=
+ =?utf-8?B?SDhHdDhsQWlsTTRzV2VBT3l1Rjg5VlNxNFd5KytwSHZiNTJEMDE2d2Z6RC9K?=
+ =?utf-8?B?VkhtdUdjUTJ1QjdkTlplZTgraVgyT1VQbnJNUkZRRnQ3dWNlNkdhQ0NqRExH?=
+ =?utf-8?B?blc1YXIxWVRpejVIc0RvcVlaeFVWWElEdGJlRHg0ZzAzQnJBdHRnQTB4Z2M1?=
+ =?utf-8?B?bWRhR1gyRWRhVUY5eWRoNzJDbmFxQUhaMlh0K1lxNFVFQTZLa1ljQVJ5K0x3?=
+ =?utf-8?Q?yYZps1/mpiI=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RXRLb1VrS01KZitOay9kajM2Y3VkNm9jaHBYWm9qc1lyN1doQnMzRTlibGU3?=
+ =?utf-8?B?bXc2WlRDVkc5WkVCNllqcFMxWHdPV0xKUXdGeHQyc2JWdXNqcU9kblVhL0sy?=
+ =?utf-8?B?L0FmQmNEdUhlUWgyUHYzcFVlbVUvSGJPUlRIdFFCV0dTQWdMaWJBQzl4cEI2?=
+ =?utf-8?B?U0hwUzdCMVdmNkxqNjVtQXEwTHlOamNMcmZIOGVNcG9kVDV2a2NhSHlrUFdB?=
+ =?utf-8?B?c2xobUhTK1lyMmhkZGo4ZG8wL1JlZXRkNVFSek9UdlYwQkZjZGtGL29rQnZp?=
+ =?utf-8?B?UVBjTmFJNmMwWEVibGk4RmFuNitYc1pZNVlHVk5TV3RrelBTS1JGRFk4MnVk?=
+ =?utf-8?B?b1BEQWlNMmg3ZThjTGpIVFlEZG53Wm1JckhLOEMzb1g5TkdZcDJrVnIxcTJv?=
+ =?utf-8?B?elVlQVZ2NWo4V2M4aHg4eDZHcW8xeXB1TEMrZGEyUmNJcktkYVNhL2NobW9Z?=
+ =?utf-8?B?TVY4aS9kdkVMbjZTRE9pN3h5NWlTZkZUaXl5V0d3MlY2MHB1K0xYREVlNDQv?=
+ =?utf-8?B?a3pEWUZrM3l6Mk1Xdmp1VUcxaGM1U1pkUGVTVHlQYzhHV0R6SHpCT0c2RnBl?=
+ =?utf-8?B?Mkg2SG5PRWI0N1FqYnUrcncxTU15cEpHYnZRNDZ2Q3hsM3dLNjhqR3g2Zi9V?=
+ =?utf-8?B?SW8vc0ZQd0xxQzcvbDNuZ2J6V01vZ3pId2pNU3dIakZRYnVnR0ljWiszWldF?=
+ =?utf-8?B?K05VbzZQZzRMZkFxcmNrSGl1OExpcXVSR2FoaUk5RkFGN09jVzRIZlZaWFdV?=
+ =?utf-8?B?YWFjT013MkJHcVJZNlJxbXhHa1gwQjltTWQrQ2FKaCtFZFV5cnVzTTZKS1J5?=
+ =?utf-8?B?UGg4VitlVldBdG1KaFZLenlNbDlVaE5zZStJdk5GT01JQnBOSkdRTjcvMzVo?=
+ =?utf-8?B?VEpMVGtzdDcwYXhhOUpNc1AyZ3FudU5RbkdzNkIyTURTQlZmRmxBTWMwaStY?=
+ =?utf-8?B?bzA2UWpnUEE1dnhmTDZLNnY2VnRRcTQvRnA1VG5hbnFuRjFBOE9BdUNtMnk0?=
+ =?utf-8?B?MmxTL1U3eHdtS3ZMMDZLVU1YL2p2T0IzOS9MendMZE84VVpCbDVDMjlmMEI5?=
+ =?utf-8?B?SU1SekFwbVBmSVBTZXNTM2kxQ1l6MGRXR2puRTczV2FJdnpWNURnUlRPR3I3?=
+ =?utf-8?B?K3RnK2NiZ0tlRnZYOHgxekZEMCtpL0k0U1dzcmlNYnVwN0xLUUU0cUp4NldM?=
+ =?utf-8?B?S1F3QnFpd2xzWEM3emZqVlVlLzU2M1IzNlUzV20vemVEVFJnWVhDbUpGK1Yw?=
+ =?utf-8?B?VmdVdXpEWjRTTzF3aytNYzBqSkp4eGxZa0VoU3VUNmd4WFAzMmY5VWJqR2VG?=
+ =?utf-8?B?aHAzbk5SYVN2cmhqd2o1b0xCTUhtS0RXMHA4T2ZTSzhtK0hZcFlyWTdmVWhL?=
+ =?utf-8?B?UlJEK3NFdFduMk5SNm44K21ZbnBYTmo5cnUzNTIzV3o1cGRXblVpWm1iTFQ0?=
+ =?utf-8?B?MDBFemNxNVI1TkZBbUtzT0F3L2wxS1laUlJQMDUyTmFhU2ttbGZmdkZCMTZ2?=
+ =?utf-8?B?YVJtYmVJUHIzOFp2RElYUFZBTS9yNXFQalpLMVFuNjFGZmRWbkhtUngxenZh?=
+ =?utf-8?B?c1VZWHQxTTBNMWg0U0Ztc05HdkJZaHJaRkoxeWh2QjExSC9WcUthcWE4UVQw?=
+ =?utf-8?B?NVFiTjBjeEFndGZqR0d4a1RrNEJRd3U3Sk93T2ErMUQwRGQ4MkFEdUcySjU3?=
+ =?utf-8?B?aDhLcExObktaOXVjLy9FQzBHR0lvcUxmSjFyTlBKNDdZZkpvcnJLSWpOdFE2?=
+ =?utf-8?B?NmZHSjd6WFdEeEpwTnpqb1J5SDZmUWdnZE1uY3lwV1c5czZ5RkxEWG5MaWxP?=
+ =?utf-8?B?V096UW5USktyZUUxUnlYVzEraUVlUWN4Y3FVcWFDajFLNGpYeEFyVVJYWDVu?=
+ =?utf-8?B?T2ZKbzRQd0VEL0ZpZzVEN290YkJ0Y3UxbVV0Z2ZHUmdhYWZxV1hXYlB0M2Z2?=
+ =?utf-8?B?RGJBNHo0Y1MvRFkyU1ZoZEhveU9kV0dUbE80d2Z3T3VuZ2QwU0F1RFhOdzlr?=
+ =?utf-8?B?VU10L2JmWHo1Njk1cHZZaWwrOTRoWkRuTFVOWGFHU1c2Ung0T0lMZTJRZGhS?=
+ =?utf-8?B?TVIwanFQbFVGNWZDL2ozNnhyYXNBY250YU5WOTVXTk9TdHF1UjM5QXAxdjFI?=
+ =?utf-8?B?N3IzVkZjUzhabmJHamQ5NUJTbkVMWDVlTWNkZU9sdG5sUkl3cFJqcEhObVFY?=
+ =?utf-8?B?UXc9PQ==?=
+X-OriginatorOrg: siemens.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5e2da957-60c3-47b0-1d8e-08ddea4996aa
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 17:53:13.9867 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LbcvjLLSN2DxMzsbKB00QwgWodaFFAcEZEFFE3pGk7NuCUJZXPkF9ZOxxq32ipODU249vMSBEEH2KGMRXFyluQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR10MB8444
+Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
+ envelope-from=jan.kiszka@siemens.com;
+ helo=OSPPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,610 +247,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a50d0c063dd52710
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 02.09.25 19:48, Warner Losh wrote:
+> 
+> 
+> On Tue, Sep 2, 2025 at 11:37 AM Jan Kiszka <jan.kiszka@siemens.com
+> <mailto:jan.kiszka@siemens.com>> wrote:
+> 
+>     On 02.09.25 19:30, Warner Losh wrote:
+>     >
+>     >
+>     > On Tue, Sep 2, 2025 at 11:22 AM Warner Losh <imp@bsdimp.com
+>     <mailto:imp@bsdimp.com>
+>     > <mailto:imp@bsdimp.com <mailto:imp@bsdimp.com>>> wrote:
+>     >
+>     >
+>     >
+>     >     On Tue, Sep 2, 2025 at 11:18 AM Jan Kiszka
+>     <jan.kiszka@siemens.com <mailto:jan.kiszka@siemens.com>
+>     >     <mailto:jan.kiszka@siemens.com
+>     <mailto:jan.kiszka@siemens.com>>> wrote:
+>     >
+>     >         On 02.09.25 19:07, Warner Losh wrote:
+>     >         >
+>     >         >
+>     >         > On Tue, Sep 2, 2025 at 10:49 AM Jan Lübbe
+>     <jlu@pengutronix.de <mailto:jlu@pengutronix.de>
+>     >         <mailto:jlu@pengutronix.de <mailto:jlu@pengutronix.de>>
+>     >         > <mailto:jlu@pengutronix.de <mailto:jlu@pengutronix.de>
+>     <mailto:jlu@pengutronix.de <mailto:jlu@pengutronix.de>>>> wrote:
+>     >         >
+>     >         >     On Tue, 2025-09-02 at 18:39 +0200, Jan Kiszka wrote:
+>     >         >     > > > I expect us to be safe and able to deal with non-
+>     >         pow2 regions
+>     >         >     if we use
+>     >         >     > > > QEMUSGList from the "system/dma.h" API. But
+>     this is
+>     >         a rework
+>     >         >     nobody had
+>     >         >     > > > time to do so far.
+>     >         >     > >
+>     >         >     > > We have to tell two things apart: partitions
+>     sizes on
+>     >         the one
+>     >         >     side and
+>     >         >     > > backing storage sizes. The partitions sizes are
+>     (to my
+>     >         reading)
+>     >         >     clearly
+>     >         >     > > defined in the spec, and the user partition (alone!)
+>     >         has to be
+>     >         >     power of
+>     >         >     > > 2. The boot and RPMB partitions are multiples of
+>     128K.
+>     >         The sum
+>     >         >     of them
+>     >         >     > > all is nowhere limited to power of 2 or even only
+>     >         multiples of 128K.
+>     >         >     > >
+>     >         >     >
+>     >         >     > Re-reading the part of the device capacity, the rules
+>     >         are more
+>     >         >     complex:
+>     >         >     >  - power of two up to 2 GB
+>     >         >     >  - multiple of 512 bytes beyond that
+>     >         >     >
+>     >         >     > So that power-of-two enforcement was and still is
+>     likely
+>     >         too strict.
+>     >         >
+>     >         >
+>     >         > It is. Version 0 (and MMC) cards had the capacity
+>     encoded like so:
+>     >         >                 m = mmc_get_bits(raw_csd, 128, 62, 12);
+>     >         >                 e = mmc_get_bits(raw_csd, 128, 47, 3);
+>     >         >                 csd->capacity = ((1 + m) << (e + 2)) * csd-
+>     >         >read_bl_len;
+>     >         > so any card less than 2GB (well, technically 4GB, but 4GB
+>     >         version 0
+>     >         > cards were
+>     >         > rare and broke some stacks... I have one and I love it on my
+>     >         embedded
+>     >         > ARM board
+>     >         > that can't do version 1 cards). Version 1 cards encoded
+>     it like:
+>     >         >                 csd->capacity =
+>     >         ((uint64_t)mmc_get_bits(raw_csd, 128,
+>     >         > 48, 22) +
+>     >         >                     1) * 512 * 1024;
+>     >         > So it's a multiple of 512k. These are also called 'high
+>     >         capacity' cards.
+>     >         >
+>     >         > Version 4 introduces an extended CSD, which had a pure
+>     sector
+>     >         count in
+>     >         > the EXT CSD. I think this
+>     >         > is only for MMC cards. And also the partition information.
+>     >         >  
+>     >         >
+>     >         >     > But I still see no indication, neither in the existing
+>     >         eMMC code
+>     >         >     of QEMU
+>     >         >     > nor the spec, that the boot and RPMB partition
+>     sizes are
+>     >         included
+>     >         >     in that.
+>     >         >
+>     >         >     Correct. Non-power-of-two sizes are very common for real
+>     >         eMMCs.
+>     >         >     Taking a random
+>     >         >     one from our lab:
+>     >         >     [    1.220588] mmcblk1: mmc1:0001 S0J56X 14.8 GiB
+>     >         >     [    1.228055]  mmcblk1: p1 p2 p3 p4
+>     >         >     [    1.230375] mmcblk1boot0: mmc1:0001 S0J56X 31.5 MiB
+>     >         >     [    1.233651] mmcblk1boot1: mmc1:0001 S0J56X 31.5 MiB
+>     >         >     [    1.236682] mmcblk1rpmb: mmc1:0001 S0J56X 4.00 MiB,
+>     >         chardev (244:0)
+>     >         >
+>     >         >     For eMMCs using MLC NAND, you can also configure part of
+>     >         the user
+>     >         >     data area to
+>     >         >     be pSLC (pseudo single level cell), which changes the
+>     >         available
+>     >         >     capacity (after
+>     >         >     a required power cycle).
+>     >         >
+>     >         >
+>     >         > Yes. Extended partitions are a feature of version 4
+>     cards, so
+>     >         don't have
+>     >         > power-of-2 limits since they are a pure sector count in the
+>     >         ext_csd.
+>     >         >
+>     >
+>     >         JESD84-B51A (eMMC 5.1A):
+>     >
+>     >         "The C_SIZE parameter is used to compute the device
+>     capacity for
+>     >         devices
+>     >         up to 2 GB of density. See 7.4.52, SEC_COUNT [215:212] , for
+>     >         details on
+>     >         calculating densities greater than 2 GB."
+>     >
+>     >         So I would now continue to enforce power-of-2 for 2G
+>     (including)
+>     >         cards,
+>     >         and relax to multiples of 512 for larger ones.
+>     >
+>     >
+>     >     It's a multiple of 512k unless the card has a ext_csd, in
+>     which case
+>     >     it's a multiple of 512.
+>     >
+>     >
+>     > More completely, this is from MMC 4.0 and newer. Extended Capacity SD
+>     > cards report this in units of 512k bytes for all cards > 2GiB.
+>     >
+> 
+>     I'm not sure which spec version you are referring to, but JESD84-A441
+>     and JESD84-B51A mention nothing about 512K, rather "Device density =
+>     SEC_COUNT x 512B". And these are the specs we very likely need to follow
+>     here.
+> 
+> 
+> You are right that this is in the MMC spec. However, the SD spec is
+> controlling for SD cards.
+> 
+> SD Specifications Part 1 Physical Layer Simplified Specification Version
+> 9.10
+> December 1, 2023
+> 
+> Section 5.3 describes the CSD. Version 1.0 (which I'd called version 0
+> in an earlier email because of its encoding) is the 2GB rule. Version
 
-Hi,
+< 2G or <= 2G? For eMMC, it is <=.
 
-Regarding the definition of ZA as a 'vector of bytes' in the gdb
-documentation, the choice that we have made in representing it
-as a vector of vectors of bytes is based on the xml retrieved by
-the native gdb client when run on a host with SME capabilities.
+> 2.0 and 3.0 encode it as 512k count (from 5.3.3):
+> 
+> C_SIZE
+> This field is expanded to 28 bits and can indicate up to 128 TBytes.
+> 
+> This parameter is used to calculate the user data area capacity in the
+> SD memory card (note that size of the protected area is zero for SDUC
+> card). The user data area capacity is calculated from C_SIZE as follows:
+> 
+> memory capacity = (C_SIZE+1) * 512KByte
+> 
+> The Minimum user area size of SDUC Card is 4,294,968,320 sectors
+> (2TB+0.5MB).
+> The Minimum value of C_SIZE for SDUC in CSD Version 3.0 is 0400000h
+> (4194304). The Maximum user area size of SDUC Card is 274,877,906,944
+> sectors (128TB).
+> The Maximum value of C_SIZE for SDUC in CSD Version 3.0 is FFFFFFFh
+> (268435455).
+> 
+> So SD cards are yet again gratuitously different than MMC cards.
+> 
 
-Is it sufficient to document this discrepancy in the commit message?
+Argh, then we need to take the card type into account as well. Need to
+rework my patch...
 
-Thanks,
-Vacha
+Jan
 
-
-
-On Tue, Sep 2, 2025 at 6:45=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
-org>
-wrote:
-
-> On Tue, 26 Aug 2025 at 19:50, Vacha Bhavsar
-> <vacha.bhavsar@oss.qualcomm.com> wrote:
-> >
-> > The QEMU GDB stub does not expose the ZA storage SME register to GDB vi=
-a
-> > the remote serial protocol, which can be a useful functionality to debu=
-g
-> SME
-> > code. To provide this functionality in Aarch64 target, this patch
-> registers the
-> > SME register set with the GDB stub. To do so, this patch implements the
-> > aarch64_gdb_get_sme_reg() and aarch64_gdb_set_sme_reg() functions to
-> > specify how to get and set the SME registers, and the
-> > arm_gen_dynamic_smereg_feature() function to generate the target
-> > description in XML format to indicate the target architecture supports
-> SME.
-> > Finally, this patch includes a dyn_smereg_feature structure to hold thi=
-s
-> > GDB XML description of the SME registers for each CPU.
-> >
-> > Signed-off-by: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
-> > ---
-> > Changes since v5:
-> > - added code to handle the case when we have SME without SVE
-> > - added comments to indicate th cases in aarch64_gdb_get/set_sme_reg
-> > - added/removed braces where necessary
-> > - corrected capitalization in comments
-> > ---
-> >  target/arm/cpu.h       |   1 +
-> >  target/arm/gdbstub.c   |   9 ++-
-> >  target/arm/gdbstub64.c | 121 +++++++++++++++++++++++++++++++++++++++++
-> >  target/arm/internals.h |   3 +
-> >  4 files changed, 133 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> > index dc9b6dce4c..8bd66d7049 100644
-> > --- a/target/arm/cpu.h
-> > +++ b/target/arm/cpu.h
-> > @@ -933,6 +933,7 @@ struct ArchCPU {
-> >
-> >      DynamicGDBFeatureInfo dyn_sysreg_feature;
-> >      DynamicGDBFeatureInfo dyn_svereg_feature;
-> > +    DynamicGDBFeatureInfo dyn_smereg_feature;
-> >      DynamicGDBFeatureInfo dyn_m_systemreg_feature;
-> >      DynamicGDBFeatureInfo dyn_m_secextreg_feature;
-> >
-> > diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-> > index ce4497ad7c..110258ec18 100644
-> > --- a/target/arm/gdbstub.c
-> > +++ b/target/arm/gdbstub.c
-> > @@ -527,7 +527,7 @@ void arm_cpu_register_gdb_regs_for_features(ARMCPU
-> *cpu)
-> >           * registers so we don't need to include both.
-> >           */
-> >  #ifdef TARGET_AARCH64
-> > -        if (isar_feature_aa64_sve(&cpu->isar)) {
-> > +        if (isar_feature_aa64_sve(&cpu->isar) ||
-> isar_feature_aa64_sme(&cpu->isar)) {
-> >              GDBFeature *feature =3D arm_gen_dynamic_svereg_feature(cs,
-> cs->gdb_num_regs);
-> >              gdb_register_coprocessor(cs, aarch64_gdb_get_sve_reg,
-> >                                       aarch64_gdb_set_sve_reg, feature,
-> 0);
-> > @@ -537,6 +537,13 @@ void arm_cpu_register_gdb_regs_for_features(ARMCPU
-> *cpu)
-> >
->  gdb_find_static_feature("aarch64-fpu.xml"),
-> >                                       0);
-> >          }
-> > +
-> > +        if (isar_feature_aa64_sme(&cpu->isar)) {
-> > +            GDBFeature *sme_feature =3D arm_gen_dynamic_smereg_feature=
-(cs,
-> > +                cs->gdb_num_regs);
->
-> Your indent here and below for function calls on multiple
-> lines is wrong -- follow the way the existing code does it,
-> where the second line lines up with the first argument
-> after the '('.  (We sometimes make an exception where the wrapping
-> would look terrible, but this is the usual approach.)
->
-> > +            gdb_register_coprocessor(cs, aarch64_gdb_get_sme_reg,
-> > +                aarch64_gdb_set_sme_reg, sme_feature, 0);
-> > +        }
-> >          /*
-> >           * Note that we report pauth information via the feature name
-> >           * org.gnu.gdb.aarch64.pauth_v2, not org.gnu.gdb.aarch64.pauth=
-.
-> > diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-> > index 08e2858539..d3fd94b93d 100644
-> > --- a/target/arm/gdbstub64.c
-> > +++ b/target/arm/gdbstub64.c
-> > @@ -249,6 +249,90 @@ int aarch64_gdb_set_sve_reg(CPUState *cs, uint8_t
-> *buf, int reg)
-> >      return 0;
-> >  }
-> >
-> > +int aarch64_gdb_get_sme_reg(CPUState *cs, GByteArray *buf, int reg)
-> > +{
-> > +    ARMCPU *cpu =3D ARM_CPU(cs);
-> > +    CPUARMState *env =3D &cpu->env;
-> > +
-> > +    switch (reg) {
-> > +    case 0: /* svg register */
-> > +    {
-> > +        int vq =3D 0;
-> > +        if (FIELD_EX64(env->svcr, SVCR, SM)) {
-> > +            vq =3D sve_vqm1_for_el_sm(env, arm_current_el(env),
-> > +                     FIELD_EX64(env->svcr, SVCR, SM)) + 1;
-> > +        }
-> > +        /* svg =3D vector granules (2 * vector quardwords) in streamin=
-g
-> mode */
-> > +        return gdb_get_reg64(buf, vq * 2);
-> > +    }
-> > +    case 1: /* svcr register */
-> > +        return gdb_get_reg64(buf, env->svcr);
-> > +    case 2: /* za register */
-> > +    {
-> > +        int len =3D 0;
-> > +        int vq =3D cpu->sme_max_vq;
-> > +        int svl =3D vq * 16;
-> > +        for (int i =3D 0; i < svl; i++) {
-> > +            for (int q =3D 0; q < vq; q++) {
-> > +                len +=3D gdb_get_reg128(buf,
-> > +                           env->za_state.za[i].d[q * 2 + 1],
-> > +                           env->za_state.za[i].d[q * 2]);
-> > +            }
-> > +        }
-> > +        return len;
-> > +    }
-> > +    default:
-> > +        /* gdbstub asked for something out of range */
-> > +        qemu_log_mask(LOG_UNIMP, "%s: out of range register %d",
-> __func__, reg);
-> > +        break;
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> > +int aarch64_gdb_set_sme_reg(CPUState *cs, uint8_t *buf, int reg)
-> > +{
-> > +    ARMCPU *cpu =3D ARM_CPU(cs);
-> > +    CPUARMState *env =3D &cpu->env;
-> > +
-> > +    switch (reg) {
-> > +    case 0: /* svg register */
-> > +        /* cannot set svg via gdbstub */
-> > +        return 8;
-> > +    case 1: /* svcr register */
-> > +        aarch64_set_svcr(env, ldq_le_p(buf),
-> > +            R_SVCR_SM_MASK | R_SVCR_ZA_MASK);
-> > +        return 8;
-> > +    case 2: /* za register */
-> > +    {
-> > +        int len =3D 0;
-> > +        int vq =3D cpu->sme_max_vq;
-> > +        int svl =3D vq * 16;
-> > +        for (int i =3D 0; i < svl; i++) {
-> > +            for (int q =3D 0; q < vq; q++) {
-> > +                if (target_big_endian()) {
-> > +                    env->za_state.za[i].d[q * 2 + 1] =3D ldq_p(buf);
-> > +                    buf +=3D 8;
-> > +                    env->za_state.za[i].d[q * 2] =3D ldq_p(buf);
-> > +                } else{
-> > +                    env->za_state.za[i].d[q * 2] =3D ldq_p(buf);
-> > +                    buf +=3D 8;
-> > +                    env->za_state.za[i].d[q * 2 + 1] =3D ldq_p(buf);
-> > +                }
-> > +                buf +=3D 8;
-> > +                len +=3D 16;
-> > +            }
-> > +        }
-> > +        return len;
-> > +    }
-> > +    default:
-> > +        /* gdbstub asked for something out of range */
-> > +        break;
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> >  int aarch64_gdb_get_pauth_reg(CPUState *cs, GByteArray *buf, int reg)
-> >  {
-> >      ARMCPU *cpu =3D ARM_CPU(cs);
-> > @@ -413,6 +497,43 @@ GDBFeature *arm_gen_dynamic_svereg_feature(CPUStat=
-e
-> *cs, int base_reg)
-> >      return &cpu->dyn_svereg_feature.desc;
-> >  }
-> >
-> > +GDBFeature *arm_gen_dynamic_smereg_feature(CPUState *cs, int base_reg)
-> > +{
-> > +    ARMCPU *cpu =3D ARM_CPU(cs);
-> > +    int vq =3D cpu->sme_max_vq;
-> > +    int svl =3D vq * 16;
-> > +    GDBFeatureBuilder builder;
-> > +    int reg =3D 0;
-> > +
-> > +    gdb_feature_builder_init(&builder, &cpu->dyn_smereg_feature.desc,
-> > +        "org.gnu.gdb.aarch64.sme", "sme-registers.xml", base_reg);
-> > +
-> > +
-> > +    /* Create the sme_bv vector type. */
-> > +    gdb_feature_builder_append_tag(&builder,
-> > +        "<vector id=3D\"sme_bv\" type=3D\"uint8\" count=3D\"%d\"/>",
-> > +        svl);
-> > +
-> > +    /* Create the sme_bvv vector type. */
-> > +    gdb_feature_builder_append_tag(
-> > +        &builder, "<vector id=3D\"sme_bvv\" type=3D\"sme_bv\"
-> count=3D\"%d\"/>",
-> > +        svl);
->
->
-> https://sourceware.org/gdb/current/onlinedocs/gdb.html/AArch64-Features.h=
-tml#AArch64-Features
->
-> says ZA should be a vector of bytes, not a vector of a vector of bytes.
-> Is it wrong ?
->
-> > +
-> > +    /* Define the svg, svcr, and za registers. */
-> > +
-> > +    /* fpscr & status registers */
->
-> This comment seems to be wrong and can be deleted.
->
-> > +    gdb_feature_builder_append_reg(&builder, "svg", 64, reg++,
-> > +        "int", NULL);
-> > +    gdb_feature_builder_append_reg(&builder, "svcr", 64, reg++,
-> > +        "int", NULL);
-> > +    gdb_feature_builder_append_reg(&builder, "za", svl * svl * 8, reg+=
-+,
-> > +        "sme_bvv", NULL);
->
-> We will also want to have support for the org.gnu.gdb.aarch64.sme2
-> feature (which has the ZT0 register), but we can add that as
-> a separate patch later.
->
-> > +
-> > +    gdb_feature_builder_end(&builder);
-> > +
-> > +    return &cpu->dyn_smereg_feature.desc;
-> > +}
-> > +
-> >  #ifdef CONFIG_USER_ONLY
-> >  int aarch64_gdb_get_tag_ctl_reg(CPUState *cs, GByteArray *buf, int reg=
-)
-> >  {
->
-> thanks
-> -- PMM
->
-
---000000000000a50d0c063dd52710
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi,<div><br></div><div>Regarding the definition of ZA as a=
- &#39;vector of bytes&#39; in the gdb</div><div>documentation, the choice t=
-hat we have made in representing it</div><div>as a vector of vectors of byt=
-es is based on the xml retrieved by=C2=A0</div><div>the native gdb client w=
-hen run on a host with SME capabilities.</div><div><br></div><div>Is it suf=
-ficient to document this discrepancy in the commit message?</div><div><br><=
-/div><div>Thanks,</div><div>Vacha</div><div><br></div><div><br></div></div>=
-<br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Tue, Sep 2, 2025 at 6:45=E2=80=AFAM Peter Maydell &lt;<a=
- href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; =
-wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, 2=
-6 Aug 2025 at 19:50, Vacha Bhavsar<br>
-&lt;<a href=3D"mailto:vacha.bhavsar@oss.qualcomm.com" target=3D"_blank">vac=
-ha.bhavsar@oss.qualcomm.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; The QEMU GDB stub does not expose the ZA storage SME register to GDB v=
-ia<br>
-&gt; the remote serial protocol, which can be a useful functionality to deb=
-ug SME<br>
-&gt; code. To provide this functionality in Aarch64 target, this patch regi=
-sters the<br>
-&gt; SME register set with the GDB stub. To do so, this patch implements th=
-e<br>
-&gt; aarch64_gdb_get_sme_reg() and aarch64_gdb_set_sme_reg() functions to<b=
-r>
-&gt; specify how to get and set the SME registers, and the<br>
-&gt; arm_gen_dynamic_smereg_feature() function to generate the target<br>
-&gt; description in XML format to indicate the target architecture supports=
- SME.<br>
-&gt; Finally, this patch includes a dyn_smereg_feature structure to hold th=
-is<br>
-&gt; GDB XML description of the SME registers for each CPU.<br>
-&gt;<br>
-&gt; Signed-off-by: Vacha Bhavsar &lt;<a href=3D"mailto:vacha.bhavsar@oss.q=
-ualcomm.com" target=3D"_blank">vacha.bhavsar@oss.qualcomm.com</a>&gt;<br>
-&gt; ---<br>
-&gt; Changes since v5:<br>
-&gt; - added code to handle the case when we have SME without SVE<br>
-&gt; - added comments to indicate th cases in aarch64_gdb_get/set_sme_reg<b=
-r>
-&gt; - added/removed braces where necessary<br>
-&gt; - corrected capitalization in comments<br>
-&gt; ---<br>
-&gt;=C2=A0 target/arm/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
-&gt;=C2=A0 target/arm/gdbstub.c=C2=A0 =C2=A0|=C2=A0 =C2=A09 ++-<br>
-&gt;=C2=A0 target/arm/gdbstub64.c | 121 +++++++++++++++++++++++++++++++++++=
-++++++<br>
-&gt;=C2=A0 target/arm/internals.h |=C2=A0 =C2=A03 +<br>
-&gt;=C2=A0 4 files changed, 133 insertions(+), 1 deletion(-)<br>
-&gt;<br>
-&gt; diff --git a/target/arm/cpu.h b/target/arm/cpu.h<br>
-&gt; index dc9b6dce4c..8bd66d7049 100644<br>
-&gt; --- a/target/arm/cpu.h<br>
-&gt; +++ b/target/arm/cpu.h<br>
-&gt; @@ -933,6 +933,7 @@ struct ArchCPU {<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DynamicGDBFeatureInfo dyn_sysreg_feature;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DynamicGDBFeatureInfo dyn_svereg_feature;<br>
-&gt; +=C2=A0 =C2=A0 DynamicGDBFeatureInfo dyn_smereg_feature;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DynamicGDBFeatureInfo dyn_m_systemreg_feature;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DynamicGDBFeatureInfo dyn_m_secextreg_feature;<br>
-&gt;<br>
-&gt; diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c<br>
-&gt; index ce4497ad7c..110258ec18 100644<br>
-&gt; --- a/target/arm/gdbstub.c<br>
-&gt; +++ b/target/arm/gdbstub.c<br>
-&gt; @@ -527,7 +527,7 @@ void arm_cpu_register_gdb_regs_for_features(ARMCPU=
- *cpu)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* registers so we don&#39;t ne=
-ed to include both.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt;=C2=A0 #ifdef TARGET_AARCH64<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (isar_feature_aa64_sve(&amp;cpu-&gt;is=
-ar)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (isar_feature_aa64_sve(&amp;cpu-&gt;is=
-ar) || isar_feature_aa64_sme(&amp;cpu-&gt;isar)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GDBFeature *feature =
-=3D arm_gen_dynamic_svereg_feature(cs, cs-&gt;gdb_num_regs);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gdb_register_coprocess=
-or(cs, aarch64_gdb_get_sve_reg,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0aarch6=
-4_gdb_set_sve_reg, feature, 0);<br>
-&gt; @@ -537,6 +537,13 @@ void arm_cpu_register_gdb_regs_for_features(ARMCP=
-U *cpu)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gdb_fi=
-nd_static_feature(&quot;aarch64-fpu.xml&quot;),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00);<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (isar_feature_aa64_sme(&amp;cpu-&gt;is=
-ar)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 GDBFeature *sme_feature =3D=
- arm_gen_dynamic_smereg_feature(cs,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cs-&gt;gdb_nu=
-m_regs);<br>
-<br>
-Your indent here and below for function calls on multiple<br>
-lines is wrong -- follow the way the existing code does it,<br>
-where the second line lines up with the first argument<br>
-after the &#39;(&#39;.=C2=A0 (We sometimes make an exception where the wrap=
-ping<br>
-would look terrible, but this is the usual approach.)<br>
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gdb_register_coprocessor(cs=
-, aarch64_gdb_get_sme_reg,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 aarch64_gdb_s=
-et_sme_reg, sme_feature, 0);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Note that we report pauth in=
-formation via the feature name<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* org.gnu.gdb.aarch64.pauth_v2=
-, not org.gnu.gdb.aarch64.pauth.<br>
-&gt; diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c<br>
-&gt; index 08e2858539..d3fd94b93d 100644<br>
-&gt; --- a/target/arm/gdbstub64.c<br>
-&gt; +++ b/target/arm/gdbstub64.c<br>
-&gt; @@ -249,6 +249,90 @@ int aarch64_gdb_set_sve_reg(CPUState *cs, uint8_t=
- *buf, int reg)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 return 0;<br>
-&gt;=C2=A0 }<br>
-&gt;<br>
-&gt; +int aarch64_gdb_get_sme_reg(CPUState *cs, GByteArray *buf, int reg)<b=
-r>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 ARMCPU *cpu =3D ARM_CPU(cs);<br>
-&gt; +=C2=A0 =C2=A0 CPUARMState *env =3D &amp;cpu-&gt;env;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 switch (reg) {<br>
-&gt; +=C2=A0 =C2=A0 case 0: /* svg register */<br>
-&gt; +=C2=A0 =C2=A0 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int vq =3D 0;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (FIELD_EX64(env-&gt;svcr, SVCR, SM)) {=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 vq =3D sve_vqm1_for_el_sm(e=
-nv, arm_current_el(env),<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0FIELD_EX64(env-&gt;svcr, SVCR, SM)) + 1;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* svg =3D vector granules (2 * vector qu=
-ardwords) in streaming mode */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return gdb_get_reg64(buf, vq * 2);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 case 1: /* svcr register */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return gdb_get_reg64(buf, env-&gt;svcr);<=
-br>
-&gt; +=C2=A0 =C2=A0 case 2: /* za register */<br>
-&gt; +=C2=A0 =C2=A0 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int len =3D 0;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int vq =3D cpu-&gt;sme_max_vq;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int svl =3D vq * 16;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (int i =3D 0; i &lt; svl; i++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (int q =3D 0; q &lt; vq=
-; q++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 len +=3D gdb_=
-get_reg128(buf,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0env-&gt;<a href=3D"http://za_state.za" rel=3D"n=
-oreferrer" target=3D"_blank">za_state.za</a>[i].d[q * 2 + 1],<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0env-&gt;<a href=3D"http://za_state.za" rel=3D"n=
-oreferrer" target=3D"_blank">za_state.za</a>[i].d[q * 2]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return len;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 default:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* gdbstub asked for something out of ran=
-ge */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_log_mask(LOG_UNIMP, &quot;%s: out of=
- range register %d&quot;, __func__, reg);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return 0;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +int aarch64_gdb_set_sme_reg(CPUState *cs, uint8_t *buf, int reg)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 ARMCPU *cpu =3D ARM_CPU(cs);<br>
-&gt; +=C2=A0 =C2=A0 CPUARMState *env =3D &amp;cpu-&gt;env;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 switch (reg) {<br>
-&gt; +=C2=A0 =C2=A0 case 0: /* svg register */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* cannot set svg via gdbstub */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 8;<br>
-&gt; +=C2=A0 =C2=A0 case 1: /* svcr register */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 aarch64_set_svcr(env, ldq_le_p(buf),<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 R_SVCR_SM_MASK | R_SVCR_ZA_=
-MASK);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 8;<br>
-&gt; +=C2=A0 =C2=A0 case 2: /* za register */<br>
-&gt; +=C2=A0 =C2=A0 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int len =3D 0;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int vq =3D cpu-&gt;sme_max_vq;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int svl =3D vq * 16;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (int i =3D 0; i &lt; svl; i++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (int q =3D 0; q &lt; vq=
-; q++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (target_bi=
-g_endian()) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- env-&gt;<a href=3D"http://za_state.za" rel=3D"noreferrer" target=3D"_blank=
-">za_state.za</a>[i].d[q * 2 + 1] =3D ldq_p(buf);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- buf +=3D 8;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- env-&gt;<a href=3D"http://za_state.za" rel=3D"noreferrer" target=3D"_blank=
-">za_state.za</a>[i].d[q * 2] =3D ldq_p(buf);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else{<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- env-&gt;<a href=3D"http://za_state.za" rel=3D"noreferrer" target=3D"_blank=
-">za_state.za</a>[i].d[q * 2] =3D ldq_p(buf);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- buf +=3D 8;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- env-&gt;<a href=3D"http://za_state.za" rel=3D"noreferrer" target=3D"_blank=
-">za_state.za</a>[i].d[q * 2 + 1] =3D ldq_p(buf);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 buf +=3D 8;<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 len +=3D 16;<=
-br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return len;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 default:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* gdbstub asked for something out of ran=
-ge */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return 0;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt;=C2=A0 int aarch64_gdb_get_pauth_reg(CPUState *cs, GByteArray *buf, int=
- reg)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 ARMCPU *cpu =3D ARM_CPU(cs);<br>
-&gt; @@ -413,6 +497,43 @@ GDBFeature *arm_gen_dynamic_svereg_feature(CPUSta=
-te *cs, int base_reg)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 return &amp;cpu-&gt;dyn_svereg_feature.desc;<br>
-&gt;=C2=A0 }<br>
-&gt;<br>
-&gt; +GDBFeature *arm_gen_dynamic_smereg_feature(CPUState *cs, int base_reg=
-)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 ARMCPU *cpu =3D ARM_CPU(cs);<br>
-&gt; +=C2=A0 =C2=A0 int vq =3D cpu-&gt;sme_max_vq;<br>
-&gt; +=C2=A0 =C2=A0 int svl =3D vq * 16;<br>
-&gt; +=C2=A0 =C2=A0 GDBFeatureBuilder builder;<br>
-&gt; +=C2=A0 =C2=A0 int reg =3D 0;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 gdb_feature_builder_init(&amp;builder, &amp;cpu-&gt;dyn=
-_smereg_feature.desc,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;org.gnu.gdb.aarch64.sme&quot;, &quo=
-t;sme-registers.xml&quot;, base_reg);<br>
-&gt; +<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /* Create the sme_bv vector type. */<br>
-&gt; +=C2=A0 =C2=A0 gdb_feature_builder_append_tag(&amp;builder,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&lt;vector id=3D\&quot;sme_bv\&quot=
-; type=3D\&quot;uint8\&quot; count=3D\&quot;%d\&quot;/&gt;&quot;,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 svl);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /* Create the sme_bvv vector type. */<br>
-&gt; +=C2=A0 =C2=A0 gdb_feature_builder_append_tag(<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;builder, &quot;&lt;vector id=3D\&quo=
-t;sme_bvv\&quot; type=3D\&quot;sme_bv\&quot; count=3D\&quot;%d\&quot;/&gt;&=
-quot;,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 svl);<br>
-<br>
-<a href=3D"https://sourceware.org/gdb/current/onlinedocs/gdb.html/AArch64-F=
-eatures.html#AArch64-Features" rel=3D"noreferrer" target=3D"_blank">https:/=
-/sourceware.org/gdb/current/onlinedocs/gdb.html/AArch64-Features.html#AArch=
-64-Features</a><br>
-<br>
-says ZA should be a vector of bytes, not a vector of a vector of bytes.<br>
-Is it wrong ?<br>
-<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /* Define the svg, svcr, and za registers. */<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /* fpscr &amp; status registers */<br>
-<br>
-This comment seems to be wrong and can be deleted.<br>
-<br>
-&gt; +=C2=A0 =C2=A0 gdb_feature_builder_append_reg(&amp;builder, &quot;svg&=
-quot;, 64, reg++,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;int&quot;, NULL);<br>
-&gt; +=C2=A0 =C2=A0 gdb_feature_builder_append_reg(&amp;builder, &quot;svcr=
-&quot;, 64, reg++,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;int&quot;, NULL);<br>
-&gt; +=C2=A0 =C2=A0 gdb_feature_builder_append_reg(&amp;builder, &quot;za&q=
-uot;, svl * svl * 8, reg++,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sme_bvv&quot;, NULL);<br>
-<br>
-We will also want to have support for the org.gnu.gdb.aarch64.sme2<br>
-feature (which has the ZT0 register), but we can add that as<br>
-a separate patch later.<br>
-<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 gdb_feature_builder_end(&amp;builder);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return &amp;cpu-&gt;dyn_smereg_feature.desc;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt;=C2=A0 #ifdef CONFIG_USER_ONLY<br>
-&gt;=C2=A0 int aarch64_gdb_get_tag_ctl_reg(CPUState *cs, GByteArray *buf, i=
-nt reg)<br>
-&gt;=C2=A0 {<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
-
---000000000000a50d0c063dd52710--
+-- 
+Siemens AG, Foundational Technologies
+Linux Expert Center
 
