@@ -4,94 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CA77CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:17:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FDD8CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utTgr-00006M-7K; Tue, 02 Sep 2025 12:17:01 -0400
+	id 1utTkU-0002z9-Nt; Tue, 02 Sep 2025 12:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1utTgd-0008RQ-BS; Tue, 02 Sep 2025 12:16:58 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1utTga-000525-Fo; Tue, 02 Sep 2025 12:16:46 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0D3ED14F17E;
- Tue, 02 Sep 2025 19:16:30 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 43D1A26D879;
- Tue,  2 Sep 2025 19:16:30 +0300 (MSK)
-Message-ID: <20a96602-dcf3-46e0-b75a-39b5aad9c6ab@tls.msk.ru>
-Date: Tue, 2 Sep 2025 19:16:30 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utTkO-0002sy-1z
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:20:41 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utTkJ-0005bd-Cq
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:20:39 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3d0b6008a8bso2255205f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 09:20:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756830033; x=1757434833; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=10cXgaC3C/UoQgzZR9x55zN1RCuFGwwNO0y42Z+c758=;
+ b=V26zAXX9uo7VZKbeHx225BmgVeAaCECJ1VVZKfsZiYQKISQo1dFw9hcxDwFbKPpJ3N
+ H0aDDRdEv151oi1gBC519lHM97yos/jWGwXcdlQKkBaAzkXoeCEQFHHlfhpZUgVYiTkt
+ n92N5NfZw3cgV279F5Qfg9NVnm+0ezIpOTGDtpCZTL4EAJnOUlUotM8kEri7lpp7Iize
+ GK+VR4yNpW+r7GkKPBYKFxqDuIRCgMSXAnU6HSCfghaWhxTXM784Wsv+mqQg3eI4zmZI
+ +YR39WGSRKtz1kMSmnXVzL8H4MZQtBvesO1E+VGnsoEVQmaVCM6c0Yl+AxUqJcx0JYRV
+ ysKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756830033; x=1757434833;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=10cXgaC3C/UoQgzZR9x55zN1RCuFGwwNO0y42Z+c758=;
+ b=uEAStXZzlNQrpPRJRbLSlB67cqWBFiYmWVC4LdR0y9W1rVwcwsndyCMeiq4ABNK9DD
+ rXRlca4NxWmNVrj2zYAg8a28ODXjp1SIlz+ljJOLuzWo+ZYzviSXpHxAoXVSIHP3gMXS
+ 25nozwxw7HLIHJpG1vZdG15O4sS46BkZzeGhWrYw71kRmA/a7y/1pbyBSKwKXa2Eiv+Q
+ ZqEYsyjwAIAdesSWDJrbWT1nrbMGCAQ6sURFLFRZHYY+y7JNxm78I3mAUa1134U7vHYy
+ jnOyBeIGWiotSTNrAa7J+YJB9QP5vAp50l0RC0w3vN1Z/z+aJ4/PZxxuK8SPXBMg0Nxy
+ q9PA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFpzdNI1JuFgRVhXB8oq0ZIUZ70gnuIabRMwIwVfXGGTNWcIQfr3KjAa5HslWWs7EmkIZvN210e4jU@nongnu.org
+X-Gm-Message-State: AOJu0YzoX7HsnVednlEfIftnVja9p1w9yelUUf7oHNLSMYfJz0UO6V+R
+ tJ9GpikUekc+yvnDD0CWai/D78WFTcDKUr01Nr4GmZa5dG9dkCf0zclS1XMl4Y2KThg=
+X-Gm-Gg: ASbGncteWE2mRTwABRReTK6jP3DM2LaCvYkgAaY50mJIXE+eJoSR37hae7HavBMRZr5
+ qcCUGMG1lCbQkfPqmUYhMT4LfY97exJxJ8Ax4cfbLKQZyfQ3o8RrC4YeoHBqChd92FRVyELcKX5
+ +pJUMkR48eF2iSIYVhjfJV9N5mQZUTke5MlT6Av815Vt1MSQ1U7CX/CQ0UnC76BIpfkdPe4zPWc
+ n2rtVXtER48PSy+nkfu4lU2m/iolNz3xSCAR5JFUAuBh0CSqufyXF6+HUYrIXCZveeRA8TeF2wy
+ 8bWeeFy/NipgBeVKw8HlqrxFIlAyxd/W2+elrCSdTxc2fkqS8/xleH8dBMuZKrvb27/vffCDebi
+ ldMOLKazNC7wnnK3S/EbRieX48DJ7PiCV6M7WQ/EUoniB4PeLTPES2daSTByRkDGsdA==
+X-Google-Smtp-Source: AGHT+IEisykO+n6O8mP8/UZhsFXrAEWhbvP4zgGembqw05bwbly8nirGqt/qy/8xZqgGnTeLfV+TPg==
+X-Received: by 2002:a05:6000:2285:b0:3d9:3d95:b94d with SMTP id
+ ffacd0b85a97d-3d93d95bccfmr3139705f8f.6.1756830028280; 
+ Tue, 02 Sep 2025 09:20:28 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf34494776sm20082461f8f.61.2025.09.02.09.20.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Sep 2025 09:20:27 -0700 (PDT)
+Message-ID: <d21f6449-e646-42fc-8277-b011a886e9c9@linaro.org>
+Date: Tue, 2 Sep 2025 18:20:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: honor $TMPDIR in create_tmp_file()
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Cc: Bin Meng <bin.meng@windriver.com>
-References: <20250831114818.4136358-1-mjt@tls.msk.ru>
- <93e542af-63a2-4236-9b58-b95eeb6b9185@linaro.org>
- <cff16756-3855-4fc7-8fed-0404662cf35a@tls.msk.ru>
- <73b41cc4-dcb7-40fa-8ace-0fffd1f9465d@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <73b41cc4-dcb7-40fa-8ace-0fffd1f9465d@linaro.org>
+Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
+ image
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?B?SmFuIEzDvGJiZSI=?= <jlu@pengutronix.de>,
+ Joel Stanley <joel@jms.id.au>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ qemu-arm <qemu-arm@nongnu.org>, Alistair Francis <alistair@alistair23.me>,
+ Alexander Bulekov <alxndr@bu.edu>
+References: <cover.1756706188.git.jan.kiszka@siemens.com>
+ <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
+ <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
+ <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
+ <11808e86-cee0-48bf-8fbd-de13a9a25ed0@linaro.org>
+ <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
+ <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
+ <03a51e36-9a15-4b49-a310-c36a4d0af360@linaro.org>
+ <2abbaeda-f9dc-4045-a9f7-b2b48451255f@kaod.org>
+ <42310bdb-4fad-4df2-b7ad-3ff3f863e248@linaro.org>
+Content-Language: en-US
+In-Reply-To: <42310bdb-4fad-4df2-b7ad-3ff3f863e248@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,63 +117,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.09.2025 16:25, Richard Henderson wrote:
-> On 9/1/25 15:31, Michael Tokarev wrote:
-
->> It does not give reasons for "other failures".
+On 2/9/25 18:14, Philippe Mathieu-Daudé wrote:
+> On 2/9/25 18:00, Cédric Le Goater wrote:
+>> On 9/2/25 17:55, Philippe Mathieu-Daudé wrote:
+>>> On 2/9/25 17:47, Cédric Le Goater wrote:
+>>>> On 9/2/25 17:45, Philippe Mathieu-Daudé wrote:
+>>>>> On 2/9/25 17:43, Philippe Mathieu-Daudé wrote:
+>>>>>> On 2/9/25 17:34, Jan Kiszka wrote:
+>>>>>>> On 02.09.25 17:06, Philippe Mathieu-Daudé wrote:
+>>>>>>>> On 1/9/25 07:56, Jan Kiszka wrote:
+>>>>>>>>> From: Jan Kiszka <jan.kiszka@siemens.com>
+>>>>>>>>>
+>>>>>>>>> The power-of-2 rule applies to the user data area, not the 
+>>>>>>>>> complete
+>>>>>>>>> block image. The latter can be concatenation of boot partition 
+>>>>>>>>> images
+>>>>>>>>> and the user data.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+>>>>>>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>>>>> ---
+>>>>>>>>>    hw/sd/sd.c | 2 +-
+>>>>>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>>>>>
+>>>>>>>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+>>>>>>>>> index 8c290595f0..16aee210b4 100644
+>>>>>>>>> --- a/hw/sd/sd.c
+>>>>>>>>> +++ b/hw/sd/sd.c
+>>>>>>>>> @@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev, 
+>>>>>>>>> Error
+>>>>>>>>> **errp)
+>>>>>>>>>                return;
+>>>>>>>>>            }
+>>>>>>>>>    -        blk_size = blk_getlength(sd->blk);
+>>>>>>>>> +        blk_size = blk_getlength(sd->blk) - sd->boot_part_size 
+>>>>>>>>> * 2;
+>>>>>>>>>            if (blk_size > 0 && !is_power_of_2(blk_size)) {
+>>>>>>>>>                int64_t blk_size_aligned = pow2ceil(blk_size);
+>>>>>>>>>                char *blk_size_str;
+>>>>>>>>
+>>>>>>>> This seems to break the tests/functional/arm/test_aspeed_rainier.py
+>>>>>>>> test due to mmc-p10bmc-20240617.qcow2 size:
+>>>>>>>>
+>>>>>>>> Command: /builds/qemu-project/qemu/build/qemu-system-arm - 
+>>>>>>>> display none -
+>>>>>>>> vga none -chardev socket,id=mon,fd=5 -mon 
+>>>>>>>> chardev=mon,mode=control -
+>>>>>>>> machine rainier-bmc -chardev socket,id=console,fd=10 -serial
+>>>>>>>> chardev:console -drive file=/builds/qemu-project/qemu/ 
+>>>>>>>> functional- cache/
+>>>>>>>> download/
+>>>>>>>> d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b,if=sd,id=sd2,index=2 -net nic -net user -snapshot
+>>>>>>>> Output: qemu-system-arm: Invalid SD card size: 16 GiB
+>>>>>>>> SD card size has to be a power of 2, e.g. 16 GiB.
+>>>>>>>>
+>>>>>>>> https://gitlab.com/qemu-project/qemu/-/jobs/11217561316
+>>>>>>>>
+>>>>>>>
+>>>>>>> Hmm, then the test was always wrong as well. I suspect the aspeed is
+>>>>>>> enabling boot partitions by default, and the image was created to 
+>>>>>>> pass
+>>>>>>> the wrong alignment check. Where / by whom is the image maintained?
+>>>>>>
+>>>>>> Cédric Le Goater (Cc'ed).
+>>>>>>
+>>>>>> The test comes from:
+>>>>>> https://lore.kernel.org/qemu-devel/4d1777d6-0195-4ecb- 
+>>>>>> a85f-09964268533d@kaod.org/
+>>>>>>
+>>>>>> Maybe also relevant to your suspicion:
+>>>>>> https://lore.kernel.org/qemu-devel/e401d119-402e-0edd- 
+>>>>>> c2bf-28950ba48ccb@kaod.org/
 > 
-> It does gloss over the implications of "tmpfs".  But off the top of my 
-> head:
+> [*]
 > 
-> (1) tmpfs is generally smaller than any other disk-based tmpdir,
->      so ENOSPC is easier to trigger, and
-> (2) tmpfs does not support several O_FOO.
-
-O_DIRECT, yes.  I tried to fix this in mid-2000s, but weren't able to
-convince Linus at the time.  Now, in current kernels, O_DIRECT is
-finally supported, so this is a non-issue today.
-
-But all this is beyond the point.  The point is that we must not
-pretend we know better than the user who set $TMPDIR before invoking
-qemu, and override user's choice silently.
-
-Please note: in my case, /var/tmp is the default value, when the user
-didn't specify anything.  If the user did specify $TMPDIR, it is what
-we should use.
-
-If we want some other mechanism to set the temp directory, we should
-(or might) implement it.  But in the new mechanism, we, again, should
-not silently substitute /var/tmp for /tmp, as we currently do.  This
-is just plain wrong.
-
->> Are you saying the user, who decided to explicitly specify TMPDIR,
->> is wrong, and qemu should use /var/tmp which does not even exist
->> (see the bug report this patch is fixing)?
+>>>>>
+>>>>> Digging further:
+>>>>> https://lore.kernel.org/qemu- 
+>>>>> devel/9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de/
+>>>>>
+>>>>
+>>>> yes commit c078298301a8 might have some impact there.
+>>>
+>>> With Jan patch, your script doesn't need anymore the
+>>>
+>>>    echo "Fixing size to keep qemu happy..."
+>>>
+>>> kludge.
+>>
+>> which script ?
 > 
-> I think this is a very strong interpretation since the non-existence 
-> of /var/tmp is, IMO, new and rare.  /var/tmp most certainly *does* exist 
-> with all of the major distros.
-
-Please see the referenced issue,
-https://gitlab.com/qemu-project/qemu/-/issues/1626 , -
-myself, I'm not a fan of such systems which violate basic principles
-(and I already closed that bug report in the past).
-
-But once again, this is not the point.  The point is that we override
-user's choice by our "better" value.  *This* is what I'm trying to fix,
--- we should not pretend we know better than the user.
-
->> The original code (before 69fbfff95e84) was correct.  Current code
->> is not.  My change fixes current wrong code.
+> The one you pasted in [*]:
 > 
-> If this goes in as-is, you are on the hook for any reported testsuite 
-> regression.
+> -- 
+> #!/bin/sh
+> 
+> URLBASE=https://jenkins.openbmc.org/view/latest/job/latest-master/ 
+> label=docker-builder,target=witherspoon-tacoma/lastSuccessfulBuild/ 
+> artifact/openbmc/build/tmp/deploy/images/witherspoon-tacoma/
+> 
+> IMAGESIZE=128
+> OUTFILE=mmc.img
+> 
+> FILES="u-boot.bin u-boot-spl.bin obmc-phosphor-image-witherspoon- 
+> tacoma.wic.xz"
+> 
+> for file in ${FILES}; do
+> 
+>      if test -f ${file}; then
+>          echo "${file}: Already downloaded"
+>      else
+>          echo "${file}: Downloading"
+>          wget -nv ${URLBASE}/${file}
+>      fi
+> done
+> 
+> echo
+> 
+> echo "Creating empty image..."
+> dd status=none if=/dev/zero of=${OUTFILE} bs=1M count=${IMAGESIZE}
+> echo "Adding SPL..."
+> dd status=none if=u-boot-spl.bin of=${OUTFILE} conv=notrunc
+> echo "Adding u-boot..."
+> dd status=none if=u-boot.bin of=${OUTFILE} conv=notrunc bs=1K seek=64
+> echo "Adding userdata..."
+> unxz -c obmc-phosphor-image-witherspoon-tacoma.wic.xz | dd 
+> status=progress of=${OUTFILE} conv=notrunc bs=1M seek=2
+> echo "Fixing size to keep qemu happy..."
+> truncate --size 16G ${OUTFILE}
+> 
+> echo "Done!"
+> echo
+> echo " qemu-system-arm -M tacoma-bmc -nographic -drive 
+> file=mmc.img,if=sd,index=2,format=raw"
+> ---
 
-Sure.  If there will be regressions, it means we didn't honor our own
-choices somewhere, - when we did set TMPDIR but our qemu being tested
-used some different place.
+FTR the alignment check was added to shut up fuzzed CVEs in commit
+a9bcedd15a5 ("hw/sd/sdcard: Do not allow invalid SD card sizes"):
 
-Thanks,
+     QEMU allows to create SD card with unrealistic sizes. This could
+     work, but some guests (at least Linux) consider sizes that are not
+     a power of 2 as a firmware bug and fix the card size to the next
+     power of 2.
 
-/mjt
+     While the possibility to use small SD card images has been seen as
+     a feature, it became a bug with CVE-2020-13253, where the guest is
+     able to do OOB read/write accesses past the image size end.
+
+     In a pair of commits we will fix CVE-2020-13253 as:
+
+         Read command is rejected if BLOCK_LEN_ERROR or ADDRESS_ERROR
+         occurred and no data transfer is performed.
+
+         Write command is rejected if BLOCK_LEN_ERROR or ADDRESS_ERROR
+         occurred and no data transfer is performed.
+
+         WP_VIOLATION errors are not modified: the error bit is set, we
+         stay in receive-data state, wait for a stop command. All further
+         data transfer is ignored. See the check on sd->card_status at
+         the beginning of sd_read_data() and sd_write_data().
+
+     While this is the correct behavior, in case QEMU create smaller SD
+     cards, guests still try to access past the image size end, and QEMU
+     considers this is an invalid address, thus "all further data
+     transfer is ignored". This is wrong and make the guest looping until
+     eventually timeouts.
+
+     Fix by not allowing invalid SD card sizes (suggesting the expected
+     size as a hint):
+
+       $ qemu-system-arm -M orangepi-pc -drive 
+file=rootfs.ext2,if=sd,format=raw
+       qemu-system-arm: Invalid SD card size: 60 MiB
+       SD card size has to be a power of 2, e.g. 64 MiB.
+       You can resize disk images with 'qemu-img resize <imagefile> 
+<new-size>'
+       (note that this will lose data if you make the image smaller than 
+it currently is).
+
+
+I expect us to be safe and able to deal with non-pow2 regions if we use
+QEMUSGList from the "system/dma.h" API. But this is a rework nobody had
+time to do so far.
+
+Regards,
+
+Phil.
 
