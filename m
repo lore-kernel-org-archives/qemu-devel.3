@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7A2CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C7ACA1009
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQn6-0000Ye-UT; Tue, 02 Sep 2025 09:11:17 -0400
+	id 1utQp0-0006h9-6O; Tue, 02 Sep 2025 09:13:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQms-0000Sf-2l
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:03 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQon-00061w-Ek
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:13:02 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQmp-0004Rn-2R
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:01 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3cf48bde952so3723208f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:10:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQoh-0004he-FR
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:13:00 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3ceb9c3d98cso2366672f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756818655; x=1757423455; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756818771; x=1757423571; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=bdjUdksMSi5PcEKm6NTkntw2W6DG2YujIlvk6/azIfc=;
- b=SrsnD9RrawR1dtynLS4siSs87MW6XyVElsaL3ekYgqUsvab38tF6LNEhpeZjrMlTbe
- OuF/ek1r8T4afXaLFQkBxlI1DS+2fu3YvlxQ8hC1Ajr+jOA6muUV0fLtBxxDHBjfDc8s
- 8jvwLETwAZY5ddvMh6JGb0velZRQVzkr0ymPnJDV6rEbA4m/dGZ6ldT8FxXjhJG54q6G
- 3AoEAQAfNp+F4cFN5B16W6xwgEMl1Fl0WMGID6KBL/fDClcSK+2JLVAF1F6KEmnKvNFO
- Lk3jBBQ7hjRx3V46XYgdjGPS1TqkdDuV95Rgec0uYsbzBHEvDOSq0NDYADnpymKDFjeQ
- AeZQ==
+ :reply-to; bh=O0cgRxzdDVR3zXfTQqZdmJksGVdhvkEH1rphhF5Ksx4=;
+ b=IDSb6cnIB4fxQ3lEwYl5ptutAkLQC2FpXINXYsc+1j3gfOCx8v7NDYfx4zF3tbf0Lj
+ VRBy+tZF4tc62ag1Uk1zl9a5daGRfCBVx1pmQNXu98tm/lpaD2UaQtwylHqwK1vQWvjn
+ W33VZ1EqpZ3yyW7dJGEAwIMgkZsVXXnlpA6UF6X+VqjCyEmOmendrLDrsfgLPNMwSpix
+ Qky8CylnDX01ov0ICi0/G6B4/96JRfCIiGW0qKi5dHKO8wSdLdjqCoOVNJIA8zVrEDYX
+ 9HSaYD0xzHxLThKng8SuURIn0W6ZYnHZ0Op8mIMuCZ2zUSN0ip6a577l4wo4frpr4eRG
+ Xerg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756818655; x=1757423455;
+ d=1e100.net; s=20230601; t=1756818771; x=1757423571;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bdjUdksMSi5PcEKm6NTkntw2W6DG2YujIlvk6/azIfc=;
- b=rm6ST+pBvXHTi2g4jdP0tOGKmLnSSKOwRlmvl+ACd5KK5jGNTDT7R+gg9I2u3tkcV9
- 7TnZb69QoV+Jhq3MeGwgbrLEgl180hcjzS5FCodN94RFOLQJGDuLYRECdSM8cDdaBDda
- ujAwlEWnw5jgymrXGV/4HtlqZ3BVA64nxtoxfW+7QDlIuugAmnHnotANiWmY/ukyx39r
- PIcW2SYpYiBaPgcJPjWAp5yyDj9TWHvzGUDNfmfc/CDjngrxKj6vcv4agDNYDuForKB8
- 3cUdyaEcUP4g8jPUY5vp4xVAoxDZKyRsYClPPU5+XTGEKRGl8QLvbgYHapN1kwwrRfQR
- XTKA==
-X-Gm-Message-State: AOJu0YwpHXVI/PxT4IA7GzWwkyEwbYiVmMXUoPFPpNKP/l1adjtEvgf7
- d0ZsMXiZg43KG6UgPxtCGj+enow39/xUX1qQXBCydh+VG+h8b9T96yuGEME+yX3iUt/UCZvfBYP
- EGuJe
-X-Gm-Gg: ASbGncty1j0f08jcX+VCbSu/6I6KseP8KFqxk25eE5TVMTBUKqjAtEdGhIFXdsibVHq
- tJjS3qF5DaoYHG9g/CnH0QsxTpK/SP1Xs6ZsJmgzGkiPqfW7/SW70/KHqoIpAZeEGJi3r4FWyEb
- St9vzgrFqZ84nRiCwa2L1ULjBiC9nPp0si5nyLDCpvru4kkSq5bcLp8lAgCRduslT8bOMOgSm8N
- ccFpSAHagdXfToQNInsVL1+LmPQ7xsBjNYUTB4dLgrKPaefGTHy/QVFIDt9vTk3q/1Q32tAy/xS
- Z1nDIEUV1RpmcRwpOgns54dodL3A4YKSjK36FVEyhRPi8LJ4c5br7V5KzJQvQGda/SLJWf0CSEV
- aeQ7FIV1XcOc4e0Nac1fdiPJ8oWfMYLfDWq5UO668pm3YcUhWeJiGni3Ix7Hz1WtkmXFAAmsDDA
- RTNCm7BC2dI8zpyPugsw==
-X-Google-Smtp-Source: AGHT+IHltI4oUZ06r03G6luP97pDDV9ZGvIYrYSujgJRf2wqYNfl6pOPrkB12g0+jiUPX3f6NwPysg==
-X-Received: by 2002:adf:a3da:0:b0:3d2:2989:224 with SMTP id
- ffacd0b85a97d-3d229892c7dmr5790880f8f.7.1756818654828; 
- Tue, 02 Sep 2025 06:10:54 -0700 (PDT)
+ bh=O0cgRxzdDVR3zXfTQqZdmJksGVdhvkEH1rphhF5Ksx4=;
+ b=E9gn9v98qB78yuOLolOcSSsrO4E4+CSjtr21nD5v40m/j2+DO0A92g329neSa9ZS+b
+ O/GOTOgy0KGtyxGbi+cV0d4cf5L8mbHQ/meJ/bQydakPbF9jHTbnMX+19usStKNcdfhH
+ CgHlkN5eR0GfRw3wteYqXSIQr7FQoUbTg+2BGKUV2uwd+/rHRouNVEdQnAMOUPtJOjWZ
+ AnTW1by4IBvc49Kj8WKKvS5rvmcOADCKzarMgDIiMCFN3SM5eckUqSQpznPU6c/SKDiR
+ HSmW+GQuMl0FHPQXvOePlTjrxT7NXSzG03L1ymtlgq1uPgSATad3jEs4AdePR/EcUkaz
+ JIZg==
+X-Gm-Message-State: AOJu0YzCQTo/pqrxztRChbl0gxf9WfrVTpNFvkVkpK21zmCnZUxft5fD
+ GdkdvGN2UNWSoHBwsUKlXgvHEpPKLIAgs/coFjATKbU8Fkcl00Lz8yRPpjBAJaPGpuUt8CqF+lH
+ jFEZW
+X-Gm-Gg: ASbGncvn04Xstj8v2Zd8KdPW6ajXv4v6nm2b04hd/sAURV7G0pj753m6fw4yYjMdS3H
+ +FAN/GbU6URVRK1+dtvLJuhJ+L9ALQDhMVKfofrH7ImHToftxQS6V/3uoZ9241LOTDy//xDJzFo
+ hoH8jDRZI3A7sDSdu0nQNdkK/aQdiV785Mpc+CXkrY7ReD19VlWsdZDLqNRDb6l5wRgw9sm1lNk
+ nvQo2BQ71qPl/D9lcnlqJx9DujcMnqXHdvXtE0K9D12hvGWDilc6DDiqP+xvFAudJz6xYfaiGg3
+ 27+QgMKEaBNQPfKq8a4Q3K2JTK8EVdDShN35Iqy7e/WT8dRHTQYgZYPr+thaGrUWhWQkNZJcUWg
+ YMPiQZugY6q+VuZSvrelonGsuvJ6tw+fKl/PaV8ti3uTJKIHq8keeUUXGhgGZK4Xr1Mh6cmI/0X
+ wyOMvdls660lJ9dBG/rg==
+X-Google-Smtp-Source: AGHT+IGjSqVpRr9cgIrdKLG1o60VgwbQir5TgdJSFZnZdDPragq9wy5UxSBZhHjrvIv4dQh+N/Iqgg==
+X-Received: by 2002:a05:6000:24c3:b0:3ca:8031:4b38 with SMTP id
+ ffacd0b85a97d-3d1d99cbafcmr8816551f8f.0.1756818770547; 
+ Tue, 02 Sep 2025 06:12:50 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf270fc3fasm19381159f8f.5.2025.09.02.06.10.53
+ ffacd0b85a97d-3cf270fc3fasm19387060f8f.5.2025.09.02.06.12.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 06:10:54 -0700 (PDT)
+ Tue, 02 Sep 2025 06:12:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/39] include/exec/target_page.h: move page-target.c to header
-Date: Tue,  2 Sep 2025 15:09:45 +0200
-Message-ID: <20250902131016.84968-9-philmd@linaro.org>
+Subject: [PULL 33/39] hw/arm/virt: Include 'system/system.h'
+Date: Tue,  2 Sep 2025 15:10:10 +0200
+Message-ID: <20250902131016.84968-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131016.84968-1-philmd@linaro.org>
 References: <20250902131016.84968-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,81 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Cédric Le Goater <clg@redhat.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+hw/arm/virt.c should include 'system/system.h' for :
+
+  serial_hd()
+  qemu_add_machine_init_done_notifier()
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250730220519.1140447-3-pierrick.bouvier@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20250731144019.1403591-1-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20250901064631.530723-2-clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- meson.build                |  2 +-
- include/exec/target_page.h | 11 ++++++++++-
- page-target.c              | 21 ---------------------
- 3 files changed, 11 insertions(+), 23 deletions(-)
- delete mode 100644 page-target.c
+ hw/arm/virt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/meson.build b/meson.build
-index 7ff84787cf1..fa6186db334 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3899,7 +3899,7 @@ if get_option('b_lto')
-   pagevary = declare_dependency(link_with: pagevary)
- endif
- common_ss.add(pagevary)
--specific_ss.add(files('page-target.c', 'page-vary-target.c'))
-+specific_ss.add(files('page-vary-target.c'))
- 
- common_ss.add(files('target-info.c'))
- specific_ss.add(files('target-info-stub.c'))
-diff --git a/include/exec/target_page.h b/include/exec/target_page.h
-index ca0ebbc8bbd..813591c9b51 100644
---- a/include/exec/target_page.h
-+++ b/include/exec/target_page.h
-@@ -62,6 +62,15 @@ static inline int qemu_target_page_bits(void)
-     return TARGET_PAGE_BITS;
- }
- 
--size_t qemu_target_pages_to_MiB(size_t pages);
-+/* Convert target pages to MiB (2**20). */
-+static inline size_t qemu_target_pages_to_MiB(size_t pages)
-+{
-+    int page_bits = TARGET_PAGE_BITS;
-+
-+    /* So far, the largest (non-huge) page size is 64k, i.e. 16 bits. */
-+    g_assert(page_bits < 20);
-+
-+    return pages >> (20 - page_bits);
-+}
- 
- #endif
-diff --git a/page-target.c b/page-target.c
-deleted file mode 100644
-index 8fcd5443b52..00000000000
---- a/page-target.c
-+++ /dev/null
-@@ -1,21 +0,0 @@
--/*
-- * QEMU page values getters (target independent)
-- *
-- *  Copyright (c) 2003 Fabrice Bellard
-- *
-- * SPDX-License-Identifier: LGPL-2.1-or-later
-- */
--
--#include "qemu/osdep.h"
--#include "exec/target_page.h"
--
--/* Convert target pages to MiB (2**20). */
--size_t qemu_target_pages_to_MiB(size_t pages)
--{
--    int page_bits = TARGET_PAGE_BITS;
--
--    /* So far, the largest (non-huge) page size is 64k, i.e. 16 bits. */
--    g_assert(page_bits < 20);
--
--    return pages >> (20 - page_bits);
--}
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 1e63f40fbec..e5c4142e822 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -50,6 +50,7 @@
+ #include "system/kvm.h"
+ #include "system/hvf.h"
+ #include "system/qtest.h"
++#include "system/system.h"
+ #include "hw/loader.h"
+ #include "qapi/error.h"
+ #include "qemu/bitops.h"
 -- 
 2.51.0
 
