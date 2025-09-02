@@ -4,116 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32D6CA0FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E80CA100D
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 04:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utI1j-0004JY-P4; Mon, 01 Sep 2025 23:49:47 -0400
+	id 1utI2a-0007La-Nm; Mon, 01 Sep 2025 23:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI1f-0003pb-MR
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:43 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1utI2H-0006TQ-OS
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:50:24 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI1d-0004ew-4F
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:43 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822SEhr022405
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:49:29 GMT
+ id 1utI2E-0004wZ-1b
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:50:20 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822RodB012377
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:50:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 3r9XB5ApdGl0zJJXVSs68EPti39S8JotrbofO4ZR95E=; b=N72ub1ZJp+iTiKnD
- 3lVsF2XTiR2KEu9hGTqZPcUrW4gVWrqwfd08z22w0h1ZQs3tc27R9XxcrDLoaMTR
- 6BvTAvsuLLMLTI0Cw3V4xaNRZ5raEa06ImzSc7fusoELhW4SvEe8ya1uv7DgaJ8T
- NuixI+iDZDXqRpLQd3tD8fP4X7uLE+SznHNp8tY6XCxZ7vDRP4TwHrZc8AkrAbMc
- KYyP/wG22HjgBjFi3exHdxEYUj/EYejBikivw1hxG5sl5u9J5WDrSZdoiuXTxNs9
- L/PY6YrQTJ7fOjxvv4jqNnJZ6Yolu1T5weCc+GfUft6olbdDdOt4OaXHotENgEHI
- r5XgUQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnp6hv4-1
+ 0dJd7rPBObktu7Dct4MA8bg8pCcWYHCPBssdWvlBGw8=; b=MLIOZee5iLHYeY73
+ dnPma6J1hoBip2/WiykYqikr6ugbwvTiBAHxxd3wLy/EuM4kx9qhwtRYJtflkBAV
+ b/8mKvrzTNiNZavsWZATamkYMSb8jAxFuqyZRUtjyoOVKww1p3QwHIUSsvSBfLQm
+ SuPBUeCsE0rTF5gHF0emR+o+ZdcX4BoK/5nb+Nz/KyV7waJwaJnjE6Vwvgtdw82+
+ 1vf+Xsc0hqxu9dCTChoMEy/QfiigMJS0BFhA4PKZycwbs7Q2ajD5EpwwqxrPZIvm
+ 8YvsBuiSPOJ7Ys4jhIp26lc57AanUB/334isxLG0vgJBji4yRGr17WwzJMk/vkVx
+ 6fYVJA==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2fea7k-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:49:29 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-b4c229e2a42so3573963a12.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:49:29 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:50:15 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-76e2eb787f2so5321454b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:50:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756784968; x=1757389768;
+ d=1e100.net; s=20230601; t=1756785004; x=1757389804;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3r9XB5ApdGl0zJJXVSs68EPti39S8JotrbofO4ZR95E=;
- b=qcdNsz0Q4H54KPdudjt0fLM1KaUHgxPmrGFnHpTZpQ5de07XmiSatAZfVzt6JNjN54
- lPHBT/BRxKvh3ouDg9b9MfpHD9d+9BxgPAdrUmUzdRiPpya3/2DzDV9jKUx8TV0LPIJX
- EoUcUynCgU6Wu4ldyn4vbsaFqwcVdD3rl/Lyv/QEcKiFrkEQy3fEutR4nUA0sETB3y/u
- sFP+yfkld7w+Jadxq2wy42HXCV7Zl1Gu0XgAbC5gMqm2RtLjSCR3GfDjy/6BbJuguePE
- w4LsufLEHy1eMIHdSUUIiLnUy+gK60ndPjcb1Ke1u2RatQ5e5zlo0t+tCJFxr37P2btM
- R65Q==
-X-Gm-Message-State: AOJu0Yzu1dqF0GdG5httHsxRsAgoSpAQeYSQQdCo5aJE6NErA2Shxz/A
- 28BDZsL+t3W5NUMTLxVqzj9cVei9PWlZBlxJGR8VEx0hffU9wbKoOSSxhw1R9HCviRdloba15Yi
- kJekgDWT+ZW5YWZ3EOtitFoIqs7zGfXHYi/SkbCl3x1gvzSfd8D0LIfy66T+HqCmCTNB8
-X-Gm-Gg: ASbGncvPpWllgdEaqRIObIUrDfiN92t8Gx4As26F/yO1s7VPVApzzWV/bmtTLwfr7U0
- ZYu2rgDSFvBm+Y44UJ6anCqOlVuKtaoNYVYHY9rRF9G3QIl+ERzED8kzAq7p5Cp5C8+jDsAMX3s
- bI7Nhjq6/+IW/EBBJCD/K06qrl6AZkPJ7H/Auq7fPmdKSJy7sqMELF4yzn0pY7ORfEWLTKxe4ND
- tPadA7jq9RhEjnv454u05ujD5ZLAJ+2Peav4jUNj6jiXCBK6o9eYAGKGF9MBUNVMLSxVEj0DlE2
- DuXPXC/3d3DL78iJHDAEHqkI8TSROdBHyfXEbm98JvrFMrtdbl1n8jV00NYANBeNyvuKXPLY6IN
- QWf4vTv2hbnmS
-X-Received: by 2002:a17:90b:3148:b0:328:650:4e7a with SMTP id
- 98e67ed59e1d1-32815412274mr13594797a91.3.1756784968222; 
- Mon, 01 Sep 2025 20:49:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiw4IuRjfaE7GOIK3xUBxzcM85eeSUeG6gW+wxX8LF7w4Xh31xxdhN+a9W+VtaHPyi4//Ung==
-X-Received: by 2002:a17:90b:3148:b0:328:650:4e7a with SMTP id
- 98e67ed59e1d1-32815412274mr13594762a91.3.1756784967666; 
- Mon, 01 Sep 2025 20:49:27 -0700 (PDT)
+ bh=0dJd7rPBObktu7Dct4MA8bg8pCcWYHCPBssdWvlBGw8=;
+ b=PLl8pmGwyO/uqn/S3p4f0INZn+clWxgvTU9gESUo/lxTQ7/0KqWJpYM23DinK8CA1X
+ 2Tpak5MPo5v7/ziMpZZN/y6uRiKeUKadJc0Kvrgyg89cFJ3zUUnKC6D57OVo6bCziJGO
+ bN49lpu6O2dXwv4h/j14OzkyJdSlHdUEL79+rDxtK4vU7ZdQMo3FAVHvFSBIsb9Y0JyU
+ 3oIsecjnBPky3os3kfZUBNoXBpQ1DdmCnGyvuIeBQdBYMd6AZsbTE4lzo8MGT4IooFWg
+ H3OM4YMqDbopplFT9Enx25y4J1Zal8aINYBn6iSD9t4TaS6wN9+8UKzdzB6zsd+Q1AJg
+ 6OYg==
+X-Gm-Message-State: AOJu0YxA5KF7kFuVZbFcaKIJC3jtbGMZspjgUd7Nh6TihSY252EHYnsv
+ QzqCrH5Dq7/KuNQ5U5vz+O2D/SYRcuqcTMAgQeyigpkV95znDnyZn6b+7ND4oe31s2QM3W73cbd
+ Bp26qyEON9fgadyaOiH9VxV2Xg4lTTWPru9qjpxDV+ILVvOKJjieKL7hugIgNypfL1/C5
+X-Gm-Gg: ASbGncvqVTPZ81pvX/EU6RQDkKOum3XgQf4BQ9/qZUKw5tbPrMTXImB4ph0WHJ3m1Cc
+ LYBW8Wi1rJvfddFAoAz6o6XjNL08m8C5LUNgvPHt6xyUJxN8nsubLk3ehGoRF766+WhIRPtZcIl
+ BN19onYhIkMXL01ZvKSEvGDOK4Cvl3mFJYMZ57SG7nyE/Sgb35JTDRVvwrQcsnBIEeybvP8ItI8
+ FpDCkh8Kf/obmCAO/In8r4SlVUOqzD6s4H5RwMYCb+uB+DSLZgFJIbkqq4xM782goZUUm604CHn
+ 1E4yitaeK1ZvK7YfkSqNIcvxPPMI2ne2uyrfLmywjwMo6nM9zJ5bprVXE1Ggkdb8UbZDdbttPIU
+ 4r3k1Z1c19+5u
+X-Received: by 2002:a05:6a20:3d1c:b0:243:d52d:729d with SMTP id
+ adf61e73a8af0-243d6f0ba6dmr14145302637.34.1756785003706; 
+ Mon, 01 Sep 2025 20:50:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMheqv0nNu/LJw+HDJx9VN9VGZMoO6URYuYYoBm5TrqdUCvHU9CHc655n2VmxsbceQU3xpBQ==
+X-Received: by 2002:a05:6a20:3d1c:b0:243:d52d:729d with SMTP id
+ adf61e73a8af0-243d6f0ba6dmr14145264637.34.1756785003150; 
+ Mon, 01 Sep 2025 20:50:03 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327daeeca1csm12543546a91.25.2025.09.01.20.49.25
+ 98e67ed59e1d1-327c5fc5055sm14117932a91.14.2025.09.01.20.50.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 20:49:26 -0700 (PDT)
+ Mon, 01 Sep 2025 20:50:02 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
  philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
  anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  alex.bennee@linaro.org, quic_mburton@quicinc.com,
- sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v2 29/39] target/hexagon: Add pkt_ends_tb to translation
-Date: Mon,  1 Sep 2025 20:48:37 -0700
-Message-Id: <20250902034847.1948010-30-brian.cain@oss.qualcomm.com>
+ sid.manning@oss.qualcomm.com
+Subject: [PATCH v2 01/11] hw/hexagon: Add globalreg model
+Date: Mon,  1 Sep 2025 20:49:41 -0700
+Message-Id: <20250902034951.1948194-2-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
-References: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250902034951.1948194-1-brian.cain@oss.qualcomm.com>
+References: <20250902034951.1948194-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: AZzqbxHC6DbTqMjAvbyyBq3ji4E9x8mx
-X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b66949 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=imK-vThzYG-NRbbrpigA:9 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: AZzqbxHC6DbTqMjAvbyyBq3ji4E9x8mx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfX/A+LeQLfaLdJ
- Uq+THYORMD0rgaR6JTakOl/lUhHiN5RBCrREyRE8mYL3zo+uTchnFpaiLbg+i0iSgTdgszTz1k1
- l2ccCLOd79YK3+IuigIRCe3CR+mKhJXDoxPoEnGO6pKxWkXnVXexvOAVhfiNzyZvuOLmBCYxR+p
- 3P3BpjX+jNWT70rSS8e898TAnBW7RRZ28VHsMOf/mQp39sifkMNzVYMmAVImvcyFHGJ/2ms9zjc
- Jei6+wkMWtMx3aU4C/EzZboQQbIa/CxqHmddFMJPu+0zERia5irpzX+STkn/TfBlODfW/pTsUzE
- FFzRysNq1bKbdJi0i1HtV8nMwn8zV7IDukCLZLMhssPW+elMqhzOND4eRIY6+/2iMD0OyB8Lpvb
- s2W/Ib9O
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfX+09BFDLzRFkj
+ rgMlQQhWZee1a1MeQoiMDwPe3Bf+WclBBOpWTzWdLlbbs4oy9+D15AJovgD7hzGyALch4BfXOja
+ +X7NUQXpJw9/8/zHmcopuEdxw+aBfMNiRvrc9qxIrPNNMUL2/R7Ab1sjzRJI76bSLhfxTnqg3vP
+ J5kSwNBa45giFS6sDryY6gxJSK3i5/MUXCKqteMjHrZmAeSyH1s7af/n1jLtT30dzApt6sgERU8
+ JLJajsI/DpGm0npLDKMVBdrLsxBUqe4cmyz1cWYpqG0HJNgzVMqV5DvaOdV0/PGuSKSWLJwgXJT
+ SbWDFdCsWUEKFf/jkONXwRd2s0EIac3G+5jSHgagulW45cOlX/xbXo9RltGJCkrrbzEp9J7nVWg
+ G3p3trrC
+X-Proofpoint-ORIG-GUID: hEFjbdnYYBFEbwwoo9eAt1itcQywg0UT
+X-Proofpoint-GUID: hEFjbdnYYBFEbwwoo9eAt1itcQywg0UT
+X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68b66978 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=VMLKkawWpi7FIoa_xNcA:9
+ a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300001
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -136,167 +135,386 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <bcain@quicinc.com>
+Some of the system registers are shared among all threads
+in the core.  This object contains the representation and
+interface to the system registers.
 
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/hexagon/translate.h |   1 +
- target/hexagon/translate.c | 102 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 101 insertions(+), 2 deletions(-)
+ include/hw/hexagon/hexagon_globalreg.h |  60 ++++++
+ target/hexagon/cpu.h                   |   1 +
+ hw/hexagon/hexagon_globalreg.c         | 269 +++++++++++++++++++++++++
+ target/hexagon/cpu.c                   |   2 +
+ 4 files changed, 332 insertions(+)
+ create mode 100644 include/hw/hexagon/hexagon_globalreg.h
+ create mode 100644 hw/hexagon/hexagon_globalreg.c
 
-diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-index 0bdf526a9e..08194a3309 100644
---- a/target/hexagon/translate.h
-+++ b/target/hexagon/translate.h
-@@ -84,6 +84,7 @@ typedef struct DisasContext {
-     TCGv branch_taken;
-     TCGv dczero_addr;
-     bool pcycle_enabled;
-+    bool pkt_ends_tb;
-     uint32_t num_cycles;
- } DisasContext;
+diff --git a/include/hw/hexagon/hexagon_globalreg.h b/include/hw/hexagon/hexagon_globalreg.h
+new file mode 100644
+index 0000000000..01eac06056
+--- /dev/null
++++ b/include/hw/hexagon/hexagon_globalreg.h
+@@ -0,0 +1,60 @@
++/*
++ * Hexagon Global Registers QOM Object
++ *
++ * Copyright(c) 2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HEXAGON_GLOBALREG_H
++#define HEXAGON_GLOBALREG_H
++
++#include "hw/qdev-core.h"
++#include "hw/sysbus.h"
++#include "qom/object.h"
++#include "target/hexagon/cpu.h"
++
++#define TYPE_HEXAGON_GLOBALREG "hexagon-globalreg"
++OBJECT_DECLARE_SIMPLE_TYPE(HexagonGlobalRegState, HEXAGON_GLOBALREG)
++
++struct HexagonGlobalRegState {
++    SysBusDevice parent_obj;
++
++    /* Array of system registers */
++    target_ulong regs[NUM_SREGS];
++
++    /* Global performance cycle counter base */
++    uint64_t g_pcycle_base;
++
++    /* Properties for global register reset values */
++    uint32_t boot_evb;           /* Boot Exception Vector Base (HEX_SREG_EVB) */
++    uint64_t config_table_addr;  /* Configuration table base */
++    uint32_t dsp_rev;           /* DSP revision register (HEX_SREG_REV) */
++
++    /* ISDB properties */
++    bool isdben_etm_enable;     /* ISDB ETM enable bit */
++    bool isdben_dfd_enable;     /* ISDB DFD enable bit */
++    bool isdben_trusted;        /* ISDB trusted mode bit */
++    bool isdben_secure;         /* ISDB secure mode bit */
++
++    /* Hardware base addresses */
++    uint32_t qtimer_base_addr;  /* QTimer hardware base address */
++};
++
++/* Public interface functions */
++uint32_t hexagon_globalreg_read(HexagonCPU *cpu, uint32_t reg);
++void hexagon_globalreg_write(HexagonCPU *cpu, uint32_t reg,
++                             uint32_t value);
++uint32_t hexagon_globalreg_masked_value(HexagonCPU *cpu, uint32_t reg,
++                                        uint32_t value);
++void hexagon_globalreg_write_masked(HexagonCPU *cpu, uint32_t reg,
++                                    uint32_t value);
++void hexagon_globalreg_reset(HexagonCPU *cpu);
++
++/* Global performance cycle counter access */
++uint64_t hexagon_globalreg_get_pcycle_base(HexagonCPU *cpu);
++void hexagon_globalreg_set_pcycle_base(HexagonCPU *cpu, uint64_t value);
++
++/* Hardware base address access */
++uint32_t hexagon_globalreg_get_qtimer_base_addr(HexagonCPU *cpu);
++
++#endif /* HEXAGON_GLOBALREG_H */
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index 39d6983263..89c634a09c 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -197,6 +197,7 @@ struct ArchCPU {
+     uint32_t num_tlbs;
+     uint32_t l2vic_base_addr;
+     uint32_t boot_addr;
++    struct HexagonGlobalRegState *globalregs;
+ #endif
+ };
  
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index a71fa33ccf..92adc60d1a 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -258,6 +258,16 @@ static bool check_for_attrib(Packet *pkt, int attrib)
-     return false;
- }
- 
-+static bool check_for_opcode(Packet *pkt, uint16_t opcode)
+diff --git a/hw/hexagon/hexagon_globalreg.c b/hw/hexagon/hexagon_globalreg.c
+new file mode 100644
+index 0000000000..da943f7261
+--- /dev/null
++++ b/hw/hexagon/hexagon_globalreg.c
+@@ -0,0 +1,269 @@
++/*
++ * Hexagon Global Registers
++ *
++ * Copyright(c) 2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/hexagon/hexagon.h"
++#include "hw/hexagon/hexagon_globalreg.h"
++#include "hw/qdev-properties.h"
++#include "hw/sysbus.h"
++#include "hw/resettable.h"
++#include "migration/vmstate.h"
++#include "qom/object.h"
++#include "target/hexagon/cpu.h"
++#include "target/hexagon/hex_regs.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++
++#define IMMUTABLE (~0)
++#define INVALID_REG_VAL 0xdeadbeef
++
++/* Global system register mutability masks */
++static const uint32_t global_sreg_immut_masks[NUM_SREGS] = {
++    [HEX_SREG_EVB] = 0x000000ff,
++    [HEX_SREG_MODECTL] = IMMUTABLE,
++    [HEX_SREG_SYSCFG] = 0x80001c00,
++    [HEX_SREG_IPENDAD] = IMMUTABLE,
++    [HEX_SREG_VID] = 0xfc00fc00,
++    [HEX_SREG_VID1] = 0xfc00fc00,
++    [HEX_SREG_BESTWAIT] = 0xfffffe00,
++    [HEX_SREG_IAHL] = 0x00000000,
++    [HEX_SREG_SCHEDCFG] = 0xfffffee0,
++    [HEX_SREG_CFGBASE] = IMMUTABLE,
++    [HEX_SREG_DIAG] = 0x00000000,
++    [HEX_SREG_REV] = IMMUTABLE,
++    [HEX_SREG_ISDBST] = IMMUTABLE,
++    [HEX_SREG_ISDBCFG0] = 0xe0000000,
++    [HEX_SREG_BRKPTPC0] = 0x00000003,
++    [HEX_SREG_BRKPTCFG0] = 0xfc007000,
++    [HEX_SREG_BRKPTPC1] = 0x00000003,
++    [HEX_SREG_BRKPTCFG1] = 0xfc007000,
++    [HEX_SREG_ISDBMBXIN] = IMMUTABLE,
++    [HEX_SREG_ISDBMBXOUT] = 0x00000000,
++    [HEX_SREG_ISDBEN] = 0xfffffffe,
++    [HEX_SREG_TIMERLO] = IMMUTABLE,
++    [HEX_SREG_TIMERHI] = IMMUTABLE,
++};
++
++static void hexagon_globalreg_init(Object *obj)
 +{
-+    for (int i = 0; i < pkt->num_insns; i++) {
-+        if (pkt->insn[i].opcode == opcode) {
-+            return true;
-+        }
-+    }
-+    return false;
++    HexagonGlobalRegState *s = HEXAGON_GLOBALREG(obj);
++
++    memset(s->regs, 0, sizeof(target_ulong) * NUM_SREGS);
 +}
 +
- static bool need_slot_cancelled(Packet *pkt)
- {
-     /* We only need slot_cancelled for conditional store instructions */
-@@ -271,6 +281,90 @@ static bool need_slot_cancelled(Packet *pkt)
-     return false;
- }
- 
-+#ifndef CONFIG_USER_ONLY
-+static bool sreg_write_to_global(int reg_num)
++static inline uint32_t apply_write_mask(uint32_t new_val, uint32_t cur_val,
++                                        uint32_t reg_mask)
 +{
-+    return reg_num == HEX_SREG_SSR ||
-+           reg_num == HEX_SREG_STID ||
-+           reg_num == HEX_SREG_IMASK ||
-+           reg_num == HEX_SREG_IPENDAD ||
-+           reg_num == HEX_SREG_BESTWAIT ||
-+           reg_num == HEX_SREG_SCHEDCFG;
++    if (reg_mask) {
++        return (new_val & ~reg_mask) | (cur_val & reg_mask);
++    }
++    return new_val;
 +}
 +
-+static bool has_sreg_write_to_global(Packet const *pkt)
++static void read_timer(HexagonGlobalRegState *s, uint32_t *low, uint32_t *high)
 +{
-+    for (int i = 0; i < pkt->num_insns; i++) {
-+        Insn const *insn = &pkt->insn[i];
-+        uint16_t opcode = insn->opcode;
-+        if (opcode == Y2_tfrsrcr) {
-+            /* Write to a single sreg */
-+            int reg_num = insn->regno[0];
-+            if (sreg_write_to_global(reg_num)) {
-+                return true;
-+            }
-+        } else if (opcode == Y4_tfrspcp) {
-+            /* Write to a sreg pair */
-+            int reg_num = insn->regno[0];
-+            if (sreg_write_to_global(reg_num)) {
-+                return true;
-+            }
-+            if (sreg_write_to_global(reg_num + 1)) {
-+                return true;
-+            }
-+        }
-+    }
-+    return false;
++    /* Not yet implemented */
++    *low = 0;
++    *high = 0;
 +}
-+#endif
 +
-+static bool pkt_ends_tb(Packet *pkt)
++uint32_t hexagon_globalreg_read(HexagonCPU *cpu, uint32_t reg)
 +{
-+    if (pkt->pkt_has_cof) {
-+        return true;
++    g_assert(reg < NUM_SREGS);
++    g_assert(reg >= HEX_SREG_GLB_START);
++    HexagonGlobalRegState *s = cpu->globalregs;
++    g_assert(s);
++
++    uint32_t value;
++    uint32_t low;
++    uint32_t high;
++    if ((reg == HEX_SREG_TIMERLO) || (reg == HEX_SREG_TIMERHI)) {
++        read_timer(s, &low, &high);
++        value = (reg == HEX_SREG_TIMERLO) ? low : high;
++    } else {
++        value = s->regs[reg];
 +    }
-+#ifndef CONFIG_USER_ONLY
-+    /* System mode instructions that end TLB */
-+    if (check_for_opcode(pkt, Y2_swi) ||
-+        check_for_opcode(pkt, Y2_cswi) ||
-+        check_for_opcode(pkt, Y2_ciad) ||
-+        check_for_opcode(pkt, Y4_siad) ||
-+        check_for_opcode(pkt, Y2_wait) ||
-+        check_for_opcode(pkt, Y2_resume) ||
-+        check_for_opcode(pkt, Y2_iassignw) ||
-+        check_for_opcode(pkt, Y2_setimask) ||
-+        check_for_opcode(pkt, Y4_nmi) ||
-+        check_for_opcode(pkt, Y2_setprio) ||
-+        check_for_opcode(pkt, Y2_start) ||
-+        check_for_opcode(pkt, Y2_stop) ||
-+        check_for_opcode(pkt, Y2_k0lock) ||
-+        check_for_opcode(pkt, Y2_k0unlock) ||
-+        check_for_opcode(pkt, Y2_tlblock) ||
-+        check_for_opcode(pkt, Y2_tlbunlock) ||
-+        check_for_opcode(pkt, Y2_break) ||
-+        check_for_opcode(pkt, Y2_isync) ||
-+        check_for_opcode(pkt, Y2_syncht) ||
-+        check_for_opcode(pkt, Y2_tlbp) ||
-+        check_for_opcode(pkt, Y2_tlbw) ||
-+        check_for_opcode(pkt, Y5_ctlbw) ||
-+        check_for_opcode(pkt, Y5_tlbasidi)) {
-+        return true;
++
++    return value;
++}
++
++void hexagon_globalreg_write(HexagonCPU *cpu, uint32_t reg,
++                             uint32_t value)
++{
++    HexagonGlobalRegState *s = cpu->globalregs;
++    g_assert(s);
++    g_assert(reg < NUM_SREGS);
++    g_assert(reg >= HEX_SREG_GLB_START);
++    s->regs[reg] = value;
++}
++
++uint32_t hexagon_globalreg_masked_value(HexagonCPU *cpu, uint32_t reg,
++                                        uint32_t value)
++{
++    HexagonGlobalRegState *s = cpu->globalregs;
++    g_assert(s);
++    g_assert(reg < NUM_SREGS);
++    g_assert(reg >= HEX_SREG_GLB_START);
++    const uint32_t reg_mask = global_sreg_immut_masks[reg];
++    return reg_mask == IMMUTABLE ?
++            s->regs[reg] :
++            apply_write_mask(value, s->regs[reg], reg_mask);
++}
++
++void hexagon_globalreg_write_masked(HexagonCPU *cpu, uint32_t reg,
++                                    uint32_t value)
++{
++    HexagonGlobalRegState *s = cpu->globalregs;
++    g_assert(s);
++    s->regs[reg] = hexagon_globalreg_masked_value(cpu, reg, value);
++}
++
++uint64_t hexagon_globalreg_get_pcycle_base(HexagonCPU *cpu)
++{
++    HexagonGlobalRegState *s = cpu->globalregs;
++    g_assert(s);
++    return s->g_pcycle_base;
++}
++
++void hexagon_globalreg_set_pcycle_base(HexagonCPU *cpu, uint64_t value)
++{
++    HexagonGlobalRegState *s = cpu->globalregs;
++    g_assert(s);
++    s->g_pcycle_base = value;
++}
++
++uint32_t hexagon_globalreg_get_qtimer_base_addr(HexagonCPU *cpu)
++{
++    HexagonGlobalRegState *s = cpu->globalregs;
++    g_assert(s);
++    return s->qtimer_base_addr;
++}
++
++static void do_hexagon_globalreg_reset(HexagonGlobalRegState *s)
++{
++    g_assert(s);
++    memset(s->regs, 0, sizeof(target_ulong) * NUM_SREGS);
++
++    s->g_pcycle_base = 0;
++
++    s->regs[HEX_SREG_EVB] = s->boot_evb;
++    s->regs[HEX_SREG_CFGBASE] = HEXAGON_CFG_ADDR_BASE(s->config_table_addr);
++    s->regs[HEX_SREG_REV] = s->dsp_rev;
++
++    target_ulong isdben_val = 0;
++    if (s->isdben_etm_enable) {
++        isdben_val |= (1 << 0);  /* ETM enable bit */
 +    }
++    if (s->isdben_dfd_enable) {
++        isdben_val |= (1 << 1);  /* DFD enable bit */
++    }
++    if (s->isdben_trusted) {
++        isdben_val |= (1 << 2);  /* Trusted bit */
++    }
++    if (s->isdben_secure) {
++        isdben_val |= (1 << 3);  /* Secure bit */
++    }
++    s->regs[HEX_SREG_ISDBEN] = isdben_val;
++    s->regs[HEX_SREG_MODECTL] = 0x1;
 +
 +    /*
-+     * Check for sreg writes that would end the TB
++     * These register indices are placeholders in these arrays
++     * and their actual values are synthesized from state elsewhere.
++     * We can initialize these with invalid values so that if we
++     * mistakenly generate reads, they will look obviously wrong.
 +     */
-+    if (check_for_attrib(pkt, A_IMPLICIT_WRITES_SSR)) {
-+        return true;
-+    }
-+    if (has_sreg_write_to_global(pkt)) {
-+        return true;
-+    }
-+#endif
-+    return false;
++    s->regs[HEX_SREG_PCYCLELO] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PCYCLEHI] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_TIMERLO] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_TIMERHI] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PMUCNT0] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PMUCNT1] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PMUCNT2] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PMUCNT3] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PMUCNT4] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PMUCNT5] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PMUCNT6] = INVALID_REG_VAL;
++    s->regs[HEX_SREG_PMUCNT7] = INVALID_REG_VAL;
 +}
 +
++static void hexagon_globalreg_realize(DeviceState *dev, Error **errp)
++{
++}
 +
- static bool need_next_PC(DisasContext *ctx)
- {
-     Packet *pkt = ctx->pkt;
-@@ -426,7 +520,10 @@ static void analyze_packet(DisasContext *ctx)
- static void gen_start_packet(DisasContext *ctx)
- {
-     Packet *pkt = ctx->pkt;
--    target_ulong next_PC = ctx->base.pc_next + pkt->encod_pkt_size_in_bytes;
-+    target_ulong next_PC = (check_for_opcode(pkt, Y2_k0lock) ||
-+                            check_for_opcode(pkt, Y2_tlblock)) ?
-+                               ctx->base.pc_next :
-+                               ctx->base.pc_next + pkt->encod_pkt_size_in_bytes;
-     int i;
- 
-     /* Clear out the disassembly context */
-@@ -472,6 +569,7 @@ static void gen_start_packet(DisasContext *ctx)
-         tcg_gen_movi_tl(hex_slot_cancelled, 0);
-     }
-     ctx->branch_taken = NULL;
-+    ctx->pkt_ends_tb = pkt_ends_tb(pkt);
-     if (pkt->pkt_has_cof) {
-         ctx->branch_taken = tcg_temp_new();
-         if (pkt->pkt_has_multi_cof) {
-@@ -926,7 +1024,7 @@ static void gen_commit_packet(DisasContext *ctx)
-         pkt->vhist_insn->generate(ctx);
-     }
- 
--    if (pkt->pkt_has_cof) {
-+    if (ctx->pkt_ends_tb || ctx->base.is_jmp == DISAS_NORETURN) {
-         gen_end_tb(ctx);
-     }
- }
++void hexagon_globalreg_reset(HexagonCPU *cpu)
++{
++    do_hexagon_globalreg_reset(cpu->globalregs);
++}
++
++static void hexagon_globalreg_reset_hold(Object *obj, ResetType type)
++{
++    HexagonGlobalRegState *s = HEXAGON_GLOBALREG(obj);
++    do_hexagon_globalreg_reset(s);
++}
++
++static const VMStateDescription vmstate_hexagon_globalreg = {
++    .name = "hexagon_globalreg",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]){
++        VMSTATE_UINT32_ARRAY(regs, HexagonGlobalRegState, NUM_SREGS),
++        VMSTATE_UINT64(g_pcycle_base, HexagonGlobalRegState),
++        VMSTATE_UINT32(boot_evb, HexagonGlobalRegState),
++        VMSTATE_UINT64(config_table_addr, HexagonGlobalRegState),
++        VMSTATE_UINT32(dsp_rev, HexagonGlobalRegState),
++        VMSTATE_BOOL(isdben_etm_enable, HexagonGlobalRegState),
++        VMSTATE_BOOL(isdben_dfd_enable, HexagonGlobalRegState),
++        VMSTATE_BOOL(isdben_trusted, HexagonGlobalRegState),
++        VMSTATE_BOOL(isdben_secure, HexagonGlobalRegState),
++        VMSTATE_UINT32(qtimer_base_addr, HexagonGlobalRegState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const Property hexagon_globalreg_properties[] = {
++    DEFINE_PROP_UINT32("boot-evb", HexagonGlobalRegState, boot_evb, 0x0),
++    DEFINE_PROP_UINT64("config-table-addr", HexagonGlobalRegState,
++                       config_table_addr, 0xffffffffULL),
++    DEFINE_PROP_UINT32("dsp-rev", HexagonGlobalRegState, dsp_rev, 0),
++    DEFINE_PROP_BOOL("isdben-etm-enable", HexagonGlobalRegState,
++                     isdben_etm_enable, false),
++    DEFINE_PROP_BOOL("isdben-dfd-enable", HexagonGlobalRegState,
++                     isdben_dfd_enable, false),
++    DEFINE_PROP_BOOL("isdben-trusted", HexagonGlobalRegState,
++                     isdben_trusted, false),
++    DEFINE_PROP_BOOL("isdben-secure", HexagonGlobalRegState,
++                     isdben_secure, false),
++    DEFINE_PROP_UINT32("qtimer-base-addr", HexagonGlobalRegState,
++                       qtimer_base_addr, 0),
++};
++
++static void hexagon_globalreg_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = hexagon_globalreg_realize;
++    rc->phases.hold = hexagon_globalreg_reset_hold;
++    dc->vmsd = &vmstate_hexagon_globalreg;
++    dc->user_creatable = false;
++    device_class_set_props(dc, hexagon_globalreg_properties);
++}
++
++static const TypeInfo hexagon_globalreg_info = {
++    .name = TYPE_HEXAGON_GLOBALREG,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(HexagonGlobalRegState),
++    .instance_init = hexagon_globalreg_init,
++    .class_init = hexagon_globalreg_class_init,
++};
++
++static void hexagon_globalreg_register_types(void)
++{
++    type_register_static(&hexagon_globalreg_info);
++}
++
++type_init(hexagon_globalreg_register_types)
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 751ba613cc..256fdc177e 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -70,6 +70,8 @@ static const Property hexagon_cpu_properties[] = {
+     DEFINE_PROP_UINT32("l2vic-base-addr", HexagonCPU, l2vic_base_addr,
+         0xffffffffULL),
+     DEFINE_PROP_UINT32("exec-start-addr", HexagonCPU, boot_addr, 0xffffffffULL),
++    DEFINE_PROP_LINK("global-regs", HexagonCPU, globalregs,
++                     TYPE_HEXAGON_GLOBALREG, HexagonGlobalRegState *),
+ #endif
+     DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, lldb_compat, false),
+     DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, lldb_stack_adjust, 0,
 -- 
 2.34.1
 
