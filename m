@@ -4,77 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12AA4CA1009
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 14:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A879CCA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utRlY-00037H-7H; Tue, 02 Sep 2025 10:13:44 -0400
+	id 1utSah-0005nQ-0z; Tue, 02 Sep 2025 11:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3gfu2aAkKCqAANKEESLERGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--ankeesler.bounces.google.com>)
- id 1utRlU-00034w-Sg
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 10:13:41 -0400
-Received: from mail-qk1-x749.google.com ([2607:f8b0:4864:20::749])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utSac-0005lg-M1
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:06:31 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3gfu2aAkKCqAANKEESLERGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--ankeesler.bounces.google.com>)
- id 1utRlH-0005Kt-EU
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 10:13:40 -0400
-Received: by mail-qk1-x749.google.com with SMTP id
- af79cd13be357-7fa717ff66bso1114709085a.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 07:13:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utSaY-0008AA-VE
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:06:30 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-45b7e69570bso28370715e9.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 08:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1756822402; x=1757427202; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=UZNSCN5sYnNYWa8Hr4uwRVGbv6aMKp/piGaLp7BrsHs=;
- b=DBLyoAX/4kzwws1BxaWlo2dHk67z56hq4QzTxJe7u3vFvsruIXt/xRTSWUNyR04BPg
- Iptd2eBgg7tY+Hsjl4WlXyCVBSfj2wc3NKogqGC0jSjWlzXmxV2WgK2DufxzZXkPzglR
- 6KlewAkaPH/pwWoUtoYmUrA1d1C+zDKksHXichBUcl4k0LLU+IjAZj9KcRWmSbGnVAS7
- uhSOegTjxzlbUMLV97tK6LOwj8vNLBlPPuHXpA5wrfyv7Eh120SWisnOvlOrXCrtjEI1
- buAaEzWIekznrVQy4Eu2R9/qiv0BVmj6QJWQBsmnbskpMlE9lCNDJnIEsOda7k1ACm2d
- CgaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756822402; x=1757427202;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ d=linaro.org; s=google; t=1756825581; x=1757430381; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UZNSCN5sYnNYWa8Hr4uwRVGbv6aMKp/piGaLp7BrsHs=;
- b=lCx4TsjUgJZdKF7fzsz3RLQ5qDXUE16IC02WNTvIx9F5MX4kTikJI3RRdMW378qi5j
- XJdcq3jQPC09W4LT61UEb2lf8d55rgF08Np+CTnqKRncnLOnSwJx3Noeaypii5ioUr80
- 6BsXXcrIZknNsbyrHohfTgOi3WCOluyj8L/2p6YIPTgDVaVTmeF3rXVUHPlsy+5VWdKn
- EzgKes/2zJ7hAI72cCbnmEk8PED8Mp4wTRrNXrZ4PF1Nkv4sHwo+P0JJpocD11L5bMBv
- RRGpnNIpleh4uF/c8uZkKBUCoLRCTdTDl/YitvP/QMGik9egG9cwntHPChbgQlzdQeP8
- 9bZA==
-X-Gm-Message-State: AOJu0YweXnigVuPvz5NXBsS1iSHoWxicNtYODEaQ0PTLi4KNsKPUSpKp
- cClnR8CefsNvUB4NoX+Jaqci2sTav1k31oca17kEOxRMrXxFX6lje1JQbT1+OkehZNzi/2s850S
- HUABM1kmqRpdskfkH
-X-Google-Smtp-Source: AGHT+IG14FLglvlVh94qxRhWtrs/0kZICP6fsl3cnnx6X+6RdF+hMXJGf0U31e9EceikpmF/T0eX8FW6Qy0h60E=
-X-Received: from qkbdl5.prod.google.com ([2002:a05:620a:1d05:b0:807:e3b6:b77f])
- (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:620a:4451:b0:7e9:f81f:ce8d with SMTP id
- af79cd13be357-7ff2c145378mr1083271085a.79.1756822401622; 
- Tue, 02 Sep 2025 07:13:21 -0700 (PDT)
-Date: Tue,  2 Sep 2025 14:13:11 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae-goog
-Message-ID: <20250902141312.750525-1-ankeesler@google.com>
-Subject: [PATCH v3 0/1] Support per-head resolutions with virtio-gpu
-From: Andrew Keesler <ankeesler@google.com>
-To: berrange@redhat.com, marcandre.lureau@gmail.com
-Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::749;
- envelope-from=3gfu2aAkKCqAANKEESLERGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--ankeesler.bounces.google.com;
- helo=mail-qk1-x749.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ bh=ZEGO139SeqDxUI/SQqsVpNZ7wS1+CNUNhT7jQXyiEA8=;
+ b=EliLG+igVdHnlre29wOep/CMzAlJx3jdzmKWwnDrvjrZ3Iz9+wLN9uVud44RPq+mAT
+ H+A/HIKaUPoKCkulTUmdQVbu3AUZnmbrfrC+aljohV2nBr3tMRuEzHXnXE7XluTnuQB3
+ ZmLrsRW0rMU8/ozLzV9T3DbAhccNlAwNztMdn4vZdzzVfrpUAk7b1Czx8RwfZRCJUwlZ
+ Hx1Pa2/WCfYHAYuxJelNUYaOf5UpaNx3SUqhMwNYOufmts3rf+jmLDQm1mS7LuYzWBnK
+ oReN8EekCYj2cCJKJl105EzleDzvJP016ZOdbDIPUFh3rjB3fMEF2j9zabrTTIPPZDwl
+ 6ULQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756825581; x=1757430381;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZEGO139SeqDxUI/SQqsVpNZ7wS1+CNUNhT7jQXyiEA8=;
+ b=cJPuTHnYp2bjyC5f/2m5Xy1QCWqAJ4pubVs7nRNB8XfCdfFhTQZ2/aGvBcT3AwqZrL
+ qIFSF7C28Vw/nC85WL8lj7bTQujMu6DiWhXrVsBcNxq+koQYh0q3VxL3FtOA6aFokKg1
+ wPuOr+xIN6Vn0Pp7eU1yrqBCEZZR47V+MIRwwjw93zRstLREvljsFkpwyz4TXW7CiOii
+ 9Q2HRZ3b8+7CxYcCqTEJFM79pqGSzPOfy8JtbAt5sRbLOIg3jnfaQJurF1qdex99Lyq0
+ bIwE36HWCRem20P7QqxwznXVNbX7J9vQBH2/paoGNZyzqBQlYZVz0tzF0tUW8fYQpKX5
+ qjCA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMBrlwGYvbaS54RQg3POe482fK1LhAYZohDyc7GatgltxPBNfPGNsiR1SnxvOSOBwLLqUEJNFZQTPs@nongnu.org
+X-Gm-Message-State: AOJu0YwNoMUNcLC2a5fuPygKVS6tTZ3DTVF2r+HABkctFhh6NUdVUb9c
+ b07RqoljCSaLvtcuLPqMmDtAk3VUOSjwgJSgdfq+fv1C/5/PWNIJQYgUZrWXhH60X8U=
+X-Gm-Gg: ASbGncuPUoyM7eFT0G1oWtuRVZ/cxIKWDL3Jath3d9B/zAbdj3ipLfIFnh9BhS9mtje
+ PoI+dtjBxajpNn2u2Nc6p0JbFHzP7xSL8lpQhghiygN7TZpId1TNCV2Vfg6ttRqKTISR0GtaMwB
+ 5ChJLOUpdpivugrMkmCZGb8Kq/M1DP/086OC+ScgvEk1lre1BIrqU0zqWx2X3Qrumx8kO+/xkrg
+ UofpzSRsxeGlJ1zItuybBFgSkzXbWc3DK7A0f2KzclbLzeL7CX9krLmjwW6MY1/k+M4HJIlqP0v
+ AAQtouZGroaaekEwiFfntByAT/LSikGiSQXNwG7MLTE2qojLa5x03wnlnX69GVOZDwY90zSxxHJ
+ UbvTEWlnqaRMCubircb4GqaPaI/9wmxu3NresMuFOq6M/Ng3OBAFAyVWi4Bszb2y1ig==
+X-Google-Smtp-Source: AGHT+IF10ro3TGgEArpDgxiZs0Eqj3adox0tKbIlEUiJ0UdUIAUl6iMe3HcGU8/gvgQsDph+PdecLA==
+X-Received: by 2002:a05:600c:5248:b0:456:1a69:94fd with SMTP id
+ 5b1f17b1804b1-45b8549c438mr101209995e9.0.1756825580900; 
+ Tue, 02 Sep 2025 08:06:20 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf33fb9d37sm20272216f8f.49.2025.09.02.08.06.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Sep 2025 08:06:20 -0700 (PDT)
+Message-ID: <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
+Date: Tue, 2 Sep 2025 17:06:19 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
+ image
+To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ qemu-arm <qemu-arm@nongnu.org>
+References: <cover.1756706188.git.jan.kiszka@siemens.com>
+ <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,66 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In 454f4b0f, we started down the path of supporting separate
-configurations per display head (e.g., you have 2 heads - one with
-EDID name "AAA" and the other with EDID name "BBB").
+On 1/9/25 07:56, Jan Kiszka wrote:
+> From: Jan Kiszka <jan.kiszka@siemens.com>
+> 
+> The power-of-2 rule applies to the user data area, not the complete
+> block image. The latter can be concatenation of boot partition images
+> and the user data.
+> 
+> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/sd/sd.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index 8c290595f0..16aee210b4 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
+>               return;
+>           }
+>   
+> -        blk_size = blk_getlength(sd->blk);
+> +        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
+>           if (blk_size > 0 && !is_power_of_2(blk_size)) {
+>               int64_t blk_size_aligned = pow2ceil(blk_size);
+>               char *blk_size_str;
 
-In this change, we add resolution to this configuration surface (e.g.,
-you have 2 heads - one with resolution 111x222 and the other with
-resolution 333x444).
+This seems to break the tests/functional/arm/test_aspeed_rainier.py
+test due to mmc-p10bmc-20240617.qcow2 size:
 
-  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
-  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
-  -device '{"driver":"virtio-vga",
-            "max_outputs":2,
-            "id":"vga",
-            "outputs":[
-              {
-                 "name":"AAA",
-                 "xres":111,
-                 "yres":222
-              },
-              {
-                 "name":"BBB",
-                 "xres":333,
-                 "yres":444
-              }
-            ]}'
+Command: /builds/qemu-project/qemu/build/qemu-system-arm -display none 
+-vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control 
+-machine rainier-bmc -chardev socket,id=console,fd=10 -serial 
+chardev:console -drive 
+file=/builds/qemu-project/qemu/functional-cache/download/d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b,if=sd,id=sd2,index=2 
+-net nic -net user -snapshot
+Output: qemu-system-arm: Invalid SD card size: 16 GiB
+SD card size has to be a power of 2, e.g. 16 GiB.
 
-Here is the behavior matrix of the current resolution configuration
-surface (xres/yres) with the new resolution configuration surface
-(outputs[i].xres/yres).
-
-Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-Behavior: current behavior - outputs[0] enabled with default xres/yres
-
-Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-Behavior: current behavior - outputs[0] enabled with xres/yres
-
-Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-
-Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-
-Changelist:
-* v3: changes after v2 review
-  * fix new resolution configuration logic (&& instead of ||)
-  * correct use of api machinery (has_*)
-  * move documentation to QMP API
-* v2: changes after v1 review + 10.2 rebase
-  * updated code, commit message, and cover letter to match new res config logic
-  * marked new VirtIOGPUOutput fields as optional and since 10.2
-* v1: initial patch
-
-Andrew Keesler (1):
-  Support per-head resolutions with virtio-gpu
-
- hw/display/virtio-gpu-base.c | 10 ++++++++++
- qapi/virtio.json             | 10 ++++++++--
- 2 files changed, 18 insertions(+), 2 deletions(-)
-
--- 
-2.51.0.338.gd7d06c2dae-goog
+https://gitlab.com/qemu-project/qemu/-/jobs/11217561316
 
 
