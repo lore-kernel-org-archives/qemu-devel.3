@@ -4,105 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CD9BCA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC61CCA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utTRq-0005FV-DI; Tue, 02 Sep 2025 12:01:30 -0400
+	id 1utTSB-0005cH-2W; Tue, 02 Sep 2025 12:01:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utTQw-000455-Ha; Tue, 02 Sep 2025 12:00:38 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utTQs-0001oT-S5; Tue, 02 Sep 2025 12:00:34 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cGVnl2sz8z4w9s;
- Wed,  3 Sep 2025 02:00:27 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cGVnh2tjsz4w9V;
- Wed,  3 Sep 2025 02:00:24 +1000 (AEST)
-Message-ID: <2abbaeda-f9dc-4045-a9f7-b2b48451255f@kaod.org>
-Date: Tue, 2 Sep 2025 18:00:22 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utTQe-0003uU-Ti
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:00:21 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utTQY-0001k7-Jl
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:00:16 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3d17731ac0fso3286667f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 09:00:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756828806; x=1757433606; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=00fTmYfT8sFMDWcfT7XRf5jzzwv+EfO9iwFUCc5DA5M=;
+ b=HWc+S0NpQ/EpLlF0QE5fPR1PN2qvbNlMdSUmz/qh1GwyeEgizw1R+f3zysNJMBe2Ht
+ 1sSE4kbmxr1VGI/XiI8FipsdHJ0fPtGcunD6MJCJ1QacrMCPGl1WU6CTK6OfTxIo6wcu
+ LBzsQbCpyWNoPmHN+iWFW+uAlmlu4BkPgR1TcrHd8dkFn+4T1NH6J+C2xVsJ9c/vlayE
+ 6IVu3MGt73/Jc5puy1Hg3U1B9XX2rZyR8TJzxwaxQlsleu8wQWolQydSi5pDJam/LVyE
+ ll8iQbHRxdIotbIpS05RvRcPoMnJ7Rcb8DpIXJekKDOVIFhQYrI3p5gnn25iSbVXg5i/
+ 5C8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756828806; x=1757433606;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=00fTmYfT8sFMDWcfT7XRf5jzzwv+EfO9iwFUCc5DA5M=;
+ b=tx9pDFCZ3H6687Oxhu9ix+2nDRLwoN/USt23ShRHHw8zrQTegEqbiDQAqkMgjJ3jHC
+ btfNDEfXSCmuDwmruw8OfmXVr1J0BPOjnY7ypPWRA48uJmoWvtTe61byh7E00i7x2701
+ wyjxfRaKQrWq2+f5XiI7AXQ2ThdBPCVaXMETxz359roJx+9lXgbdYi6k2P89mkYV243Y
+ MiVj9DoHRZOE9tOLPv0B0OMGJvETt1aOB58AjD9xP648UcMP3bTW/SIa4oMkI7lExiss
+ YvUG4N/B2gAGheDWKS6SJdmdI/ByEBDsAh+XCyWAiMLNuH25ug2rfRlQS3qXYOHw2jlE
+ 1uEg==
+X-Gm-Message-State: AOJu0YwgmzQSEfSVOjYtABYUtXMqHnE0jFT5RuZ2dn/PTYYjXDN67tYC
+ uu11e4COkDU/53eN7c2tKnos+r/Xyx5XsPy9Jh4VxuPafvSRpAWHXybidIa8xTkQ4yqfjYOEtC1
+ 8MyKH
+X-Gm-Gg: ASbGncty6EDtv64aIippnF+qsSK4ChhRrAFu2PlNz+oAnpXcPLnVOKefbQxsIHBgtEr
+ Z2we7TfFeHFyTTw63wvg8DUizRokeWtXOvMgJjGbBUWHPoe4sonlAx236MyYz7td4ChCQlfQUYq
+ DwwvD1jJV9uwUeeF88mZb3poFiPSNrcKQkCj/MSVOBP+B9GqDNmRZ4uHKydaukDa3WZtJAzSsVS
+ 8n0Jd3hhDhS5qL1ByS/0cM9wKXXByqS8oqZGULh8X+qi/466PS3VE9KPwNFSlgM3AxR5DfTSK0w
+ etYRCOgRSS3jqrbNuU83x2ePYo2ZvFlKiuYcs0AdwDACaOLODL9cWQi31For2/beR/7Sj66xFhB
+ hBLofKMZ1PYhVSbxGsMcSnuSd6XQth0oni74cVM67qc/lLh85XZnQkqxLDGfbKPmAtXPQMCEm
+X-Google-Smtp-Source: AGHT+IFETW/E8wHNmdoOh2BYlJun+Py8+G5C/0HL8XTwckbyWaaUAIPtiPjc6DXe2EDCX7vQyrUGyA==
+X-Received: by 2002:a05:6000:25c1:b0:3d0:affe:ed78 with SMTP id
+ ffacd0b85a97d-3d1e05b9aadmr9562603f8f.48.1756828805811; 
+ Tue, 02 Sep 2025 09:00:05 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3dbead0b247sm729915f8f.6.2025.09.02.09.00.04
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 02 Sep 2025 09:00:05 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 00/38] Misc HW patches for 2025-09-02
+Date: Tue,  2 Sep 2025 18:00:04 +0200
+Message-ID: <20250902160004.3816-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
- image
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?B?SmFuIEzDvGJiZSI=?= <jlu@pengutronix.de>,
- Joel Stanley <joel@jms.id.au>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- qemu-arm <qemu-arm@nongnu.org>
-References: <cover.1756706188.git.jan.kiszka@siemens.com>
- <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
- <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
- <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
- <11808e86-cee0-48bf-8fbd-de13a9a25ed0@linaro.org>
- <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
- <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
- <03a51e36-9a15-4b49-a310-c36a4d0af360@linaro.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <03a51e36-9a15-4b49-a310-c36a4d0af360@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,79 +95,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/25 17:55, Philippe Mathieu-Daudé wrote:
-> On 2/9/25 17:47, Cédric Le Goater wrote:
->> On 9/2/25 17:45, Philippe Mathieu-Daudé wrote:
->>> On 2/9/25 17:43, Philippe Mathieu-Daudé wrote:
->>>> On 2/9/25 17:34, Jan Kiszka wrote:
->>>>> On 02.09.25 17:06, Philippe Mathieu-Daudé wrote:
->>>>>> On 1/9/25 07:56, Jan Kiszka wrote:
->>>>>>> From: Jan Kiszka <jan.kiszka@siemens.com>
->>>>>>>
->>>>>>> The power-of-2 rule applies to the user data area, not the complete
->>>>>>> block image. The latter can be concatenation of boot partition images
->>>>>>> and the user data.
->>>>>>>
->>>>>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
->>>>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>> ---
->>>>>>>    hw/sd/sd.c | 2 +-
->>>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>>>
->>>>>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->>>>>>> index 8c290595f0..16aee210b4 100644
->>>>>>> --- a/hw/sd/sd.c
->>>>>>> +++ b/hw/sd/sd.c
->>>>>>> @@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev, Error
->>>>>>> **errp)
->>>>>>>                return;
->>>>>>>            }
->>>>>>>    -        blk_size = blk_getlength(sd->blk);
->>>>>>> +        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
->>>>>>>            if (blk_size > 0 && !is_power_of_2(blk_size)) {
->>>>>>>                int64_t blk_size_aligned = pow2ceil(blk_size);
->>>>>>>                char *blk_size_str;
->>>>>>
->>>>>> This seems to break the tests/functional/arm/test_aspeed_rainier.py
->>>>>> test due to mmc-p10bmc-20240617.qcow2 size:
->>>>>>
->>>>>> Command: /builds/qemu-project/qemu/build/qemu-system-arm -display none -
->>>>>> vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -
->>>>>> machine rainier-bmc -chardev socket,id=console,fd=10 -serial
->>>>>> chardev:console -drive file=/builds/qemu-project/qemu/functional- cache/
->>>>>> download/
->>>>>> d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b,if=sd,id=sd2,index=2 -net nic -net user -snapshot
->>>>>> Output: qemu-system-arm: Invalid SD card size: 16 GiB
->>>>>> SD card size has to be a power of 2, e.g. 16 GiB.
->>>>>>
->>>>>> https://gitlab.com/qemu-project/qemu/-/jobs/11217561316
->>>>>>
->>>>>
->>>>> Hmm, then the test was always wrong as well. I suspect the aspeed is
->>>>> enabling boot partitions by default, and the image was created to pass
->>>>> the wrong alignment check. Where / by whom is the image maintained?
->>>>
->>>> Cédric Le Goater (Cc'ed).
->>>>
->>>> The test comes from:
->>>> https://lore.kernel.org/qemu-devel/4d1777d6-0195-4ecb- a85f-09964268533d@kaod.org/
->>>>
->>>> Maybe also relevant to your suspicion:
->>>> https://lore.kernel.org/qemu-devel/e401d119-402e-0edd- c2bf-28950ba48ccb@kaod.org/
->>>
->>> Digging further:
->>> https://lore.kernel.org/qemu- devel/9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de/
->>>
->>
->> yes commit c078298301a8 might have some impact there.
-> 
-> With Jan patch, your script doesn't need anymore the
-> 
->    echo "Fixing size to keep qemu happy..."
-> 
-> kludge.
-  
-which script ?
+The following changes since commit 8415b0619f65bff12f10c774659df92d3f61daca:
 
+  Merge tag 'qga-pull-2025-08-29-v2' of https://github.com/kostyanf14/qemu into staging (2025-09-02 12:07:05 +0200)
+
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/hw-misc-20250902
+
+for you to fetch changes up to e502e614f4c3e5ee7b12cf1c926d9581262fd626:
+
+  hw/i386/pc_piix.c: remove unnecessary if() from pc_init1() (2025-09-02 17:58:05 +0200)
+
+v2: Dropped "hw/sd/sdcard: Fix size check for backing block image"
+
+----------------------------------------------------------------
+Misc HW patches
+
+- Compile various system files once
+- Remove SDCard spec v1.10
+- Remove mipssim machine and mipsnet device model
+- Prevent crash in e1000e when legacy interrupt fires after enabling MSI-X
+- Introduce qemu_init_irq_child()
+- Remove various memory leaks reported by ASan
+- Few Coverity fixes
+- Use 74Kf CPU to run MIPS16e binaries and M14Kc for microMIPS ones
+
+(a pair if spurious checkpatch.pl warnings ignored).
+
+----------------------------------------------------------------
+
+Aditya Gupta (1):
+  hw/ppc: Fix build error with CONFIG_POWERNV disabled
+
+Cédric Le Goater (4):
+  hw/arm/virt: Include 'system/system.h'
+  hw/isa/superio: Include 'system/system.h'
+  hw/mips/loongson3_virt: Include 'system/system.h'
+  hw/mips/malta: Include 'system/system.h'
+
+Denis Rastyogin (1):
+  target/mips: fix TLB huge page check to use 64-bit shift
+
+Djordje Todorovic (1):
+  hw/pci: Allow explicit function numbers in pci
+
+Jan Kiszka (3):
+  hw/sd/sdcard: Add validation for boot-partition-size
+  hw/sd/sdcard: Refactor sd_bootpart_offset
+  crypto/hmac: Allow to build hmac over multiple
+    qcrypto_gnutls_hmac_bytes[v] calls
+
+Laurent Vivier (1):
+  e1000e: Prevent crash from legacy interrupt firing after MSI-X enable
+
+Mark Cave-Ayland (1):
+  hw/i386/pc_piix.c: remove unnecessary if() from pc_init1()
+
+Peter Maydell (8):
+  hw/irq: New qemu_init_irq_child() function
+  hw/char/serial-pci-multi: Use qemu_init_irq_child() to avoid leak
+  hw/ide/ich.c: Use qemu_init_irq_child() to avoid memory leak
+  hw/gpio/pca9554: Avoid leak in pca9554_set_pin()
+  hw/char/max78000_uart: Destroy FIFO on deinit
+  hw/misc/xlnx-versal-cframe-reg: Free FIFO, g_tree on deinit
+  hw/display/xlnx_dp: Don't leak dpcd and edid objects
+  hw/arm/boot: Correctly free the MemoryDeviceInfoList
+
+Philippe Mathieu-Daudé (12):
+  hw/sd/sdcard: Remove support for spec v1.10
+  target/ppc/kvm: Avoid using alloca()
+  docs/devel/style: Mention alloca() family API is forbidden
+  scripts/coverity-scan/COMPONENTS.md: Add a 'plugins' category
+  hw/scsi/mptsas: Avoid silent integer truncation in MPI_FUNC_IOC_INIT
+  hw/ssi: Document ssi_transfer() method
+  elf: Add EF_MIPS_ARCH_ASE definitions
+  linux-user/mips: Select 74Kf CPU to run MIPS16e binaries
+  linux-user/mips: Select M14Kc CPU to run microMIPS binaries
+  hw/mips: Remove mipssim machine
+  hw/net: Remove mipsnet device model
+  docs/about/removed-features: Clarify 'device_add' is removed
+
+Pierrick Bouvier (6):
+  migration: compile migration/ram.c once
+  migration/vfio: compile only once
+  cpu-target: build compilation unit once for user/system
+  include/exec/target_page.h: move page-target.c to header
+  hw/meson: enter target hw first
+  hw/intc: compile some arm related source once
+
+ MAINTAINERS                             |   7 +-
+ docs/about/deprecated.rst               |  18 --
+ docs/about/removed-features.rst         |  14 +-
+ docs/devel/style.rst                    |   4 +-
+ docs/system/target-mips.rst             |  11 -
+ configs/devices/mips-softmmu/common.mak |   1 -
+ meson.build                             |   5 +-
+ hw/sd/sdmmc-internal.h                  |   3 +-
+ include/crypto/hmac.h                   |  12 +
+ include/elf.h                           |   7 +
+ include/exec/target_page.h              |  11 +-
+ include/hw/irq.h                        |  23 +-
+ include/hw/sd/sd.h                      |   1 -
+ include/hw/ssi/ssi.h                    |  14 ++
+ target/ppc/cpu.h                        |   4 +
+ cpu-target.c                            |   5 -
+ crypto/hmac-gcrypt.c                    |   4 +-
+ crypto/hmac-glib.c                      |   4 +-
+ crypto/hmac-gnutls.c                    |   4 +-
+ crypto/hmac-nettle.c                    |   4 +-
+ hw/arm/boot.c                           |   2 +-
+ hw/arm/virt.c                           |   1 +
+ hw/char/max78000_uart.c                 |   7 +
+ hw/char/serial-pci-multi.c              |   3 +-
+ hw/core/irq.c                           |   8 +
+ hw/display/xlnx_dp.c                    |  10 +-
+ hw/gpio/pca9554.c                       |   2 +-
+ hw/i386/pc_piix.c                       |   6 +-
+ hw/ide/ich.c                            |   3 +-
+ hw/isa/isa-superio.c                    |   1 +
+ hw/mips/loongson3_virt.c                |   1 +
+ hw/mips/malta.c                         |   1 +
+ hw/mips/mipssim.c                       | 249 --------------------
+ hw/misc/xlnx-versal-cframe-reg.c        |   9 +
+ hw/net/e1000e_core.c                    |   5 -
+ hw/net/mipsnet.c                        | 297 ------------------------
+ hw/pci/pci.c                            |  15 +-
+ hw/ppc/pnv.c                            |  86 +++++++
+ hw/scsi/mptsas.c                        |   6 +-
+ hw/sd/sd.c                              |  37 +--
+ linux-user/mips/elfload.c               |   6 +
+ migration/vfio-stub.c                   |  16 ++
+ migration/vfio.c                        |  14 --
+ page-target.c                           |  21 --
+ target-info-stub.c                      |   4 +
+ target/mips/tcg/system/tlb_helper.c     |   2 +-
+ target/ppc/kvm.c                        |   6 +-
+ target/ppc/misc_helper.c                |  59 +----
+ hw/intc/meson.build                     |   6 +-
+ hw/meson.build                          |  45 ++--
+ hw/mips/Kconfig                         |   7 -
+ hw/mips/meson.build                     |   1 -
+ hw/net/Kconfig                          |   3 -
+ hw/net/meson.build                      |   1 -
+ hw/net/trace-events                     |   7 -
+ migration/meson.build                   |   8 +-
+ scripts/coverity-scan/COMPONENTS.md     |   3 +
+ 57 files changed, 330 insertions(+), 784 deletions(-)
+ delete mode 100644 hw/mips/mipssim.c
+ delete mode 100644 hw/net/mipsnet.c
+ create mode 100644 migration/vfio-stub.c
+ delete mode 100644 page-target.c
+
+-- 
+2.51.0
 
 
