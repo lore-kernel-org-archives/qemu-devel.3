@@ -4,100 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0562CCA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11ED6CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:10:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utUTe-0007cW-Gb; Tue, 02 Sep 2025 13:07:26 -0400
+	id 1utUWF-0000gH-Lx; Tue, 02 Sep 2025 13:10:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1utUTW-0007ZR-Nd
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:07:19 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1utUTU-0007cZ-Eb
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:07:18 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-323267bc2eeso4387886a91.1
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 10:07:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1756832834; x=1757437634;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CR78GFxKiZmUL74IgiD/HidqP9HCZYHKqFZRrAYZYq0=;
- b=UjAkt0XaVpuxDcWnMqpcvbNVXurov85yk/VbVSzoZmgxt7KiuZZZjkKaDFbgKsptno
- mtNWneQ/p9kLfacsY2mZNY8YhA+o5qerw5fwYy1npO/4g4Qp5fPz0NphcuDetunh6sua
- U2gahXu/K1QATGdJ6HAkFvyOPPUrY35iUyuWfAHkiwOsjbXGqs0L9UUq8vdL7D6Ikz/s
- bosX/0ajlUMjOH19V2PmVh9w3BJDw+D1Ceh9AKuMjG6h+JLEOw4mymxm57N0rXy2KfIJ
- 3XyYpMrwK43xA9OnCXVtoFJz2wrtlTjzOsrKUHliLqGIWiILR0MrNzM144FGVGOMvk4k
- +aVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756832834; x=1757437634;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CR78GFxKiZmUL74IgiD/HidqP9HCZYHKqFZRrAYZYq0=;
- b=mr+7CgSWbLndQaa2P+wT+DQbIDoNdAOXVcW89Btl3iwE3fkjMkfrr6MwAcVRiT5x6e
- 9+OYpJf27xHgMdoIjOoYSliiyPbewEePWRnQaRH4HAOlh8Y3+gSIH5nz4uWTw7iHho9A
- M0KP6wyfO3TKEUvl3Lbfe6cv9Kc3v8vPSe3bq3luivvkzgClRBvQ0jkHD3qNBknRSBAP
- 69sQRZEirNjaPQIvM518JNtUfG/mB5IruzspgPTJqOQYVm6xu3d6R8Y/K/AHkEGwyTb/
- wlCkMXsR4m4JykBMucnqz6hZmdC5iI8KA/PY2szerKEZvyfVi7iT7jISTbZ9iCdgL1pL
- ws6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbALOk4EOp2GR89+AFwGAUoYhGf/KJe2g+Q7FmqEOCNOThzYqzamdmxMZ+yoYuL7ERIme9yZlywO4+@nongnu.org
-X-Gm-Message-State: AOJu0Yz0XOcGziLT2+iJLPpFYz2uDWOIHIDngs3z3Y+oMFDbT8kYDSYJ
- daGw/mAzGuOthZdNfNHHLI0fAUaFnwKtGIPyWaJ/kiAAqHP2WKR04P10Z+J/E95oabQucQdF4jM
- 72APeLOPVoFy+lO838lUgm8oj+P9qNm/y8HR2BnowXLuP21/+btMVhWKwaw==
-X-Gm-Gg: ASbGncuoZaAimGQgqisT/IbLok7JppaplCt6wT+VVLbXFOjRoCw0pcxwiad9+BvN5ZO
- vwTARKRrpKNvE9hBoCWrjgrwONEZtSoAh+ow2yfDDT8zMGCVVkrp/N9wXU4PG4KSb7oKX/cB62D
- 5k2D6AaXhJaAV1OHNpUcEAIkPex6klayZFZVh4fK+M5jRtcC4og9/auR/Ys3Vvi+53iZXhddEZ4
- d/6L4Jrrm3QvWOxr7kDi8Zo/PvpbPd7XxeCobc=
-X-Google-Smtp-Source: AGHT+IEtCo2SErTdbJRmoaaLMDJrXnZKoGryLg8ZEVHBUJ46QuxVleZjWNBpiPVNJwmTE0AWMS1NxVSTyLFFZoeBPKQ=
-X-Received: by 2002:a17:90b:3f84:b0:329:d85b:d9ee with SMTP id
- 98e67ed59e1d1-329d85bdae7mr4963809a91.23.1756832833763; Tue, 02 Sep 2025
- 10:07:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1utUW3-0000cB-9L
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:09:58 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1utUVz-0007pg-Oj
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:09:54 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8FDBBC017F;
+ Tue, 02 Sep 2025 20:09:46 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b8f::1:11] (unknown
+ [2a02:6bf:8080:b8f::1:11])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id i9jgSG3Gt0U0-w9TnjlYH; Tue, 02 Sep 2025 20:09:45 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1756832985;
+ bh=LI3kA5UcnCwjWrAYCfNamQKQBaAfd3GbsWCw+JlWvYw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=DF7rIGhIotg+oDwpS40zgDrP4vwYS4O4IkhHozrGNKD2rjEMvOagc36OWO3CLQZ1y
+ wYTj3jbvF0O3bNh7NQFjzUPxAvTT22UXXu4XsuxIBzTlajVhwfvq8LV2z9IZeXds3G
+ 4BJLtmH7mZThtUn5wQctRrcwVGG7xfLlVTRpWW0o=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <c8b799f7-c549-4534-a156-99df204e62ec@yandex-team.ru>
+Date: Tue, 2 Sep 2025 20:09:44 +0300
 MIME-Version: 1.0
-References: <cover.1756706188.git.jan.kiszka@siemens.com>
- <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
- <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
- <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
- <11808e86-cee0-48bf-8fbd-de13a9a25ed0@linaro.org>
- <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
- <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
- <03a51e36-9a15-4b49-a310-c36a4d0af360@linaro.org>
- <2abbaeda-f9dc-4045-a9f7-b2b48451255f@kaod.org>
- <42310bdb-4fad-4df2-b7ad-3ff3f863e248@linaro.org>
- <d21f6449-e646-42fc-8277-b011a886e9c9@linaro.org>
- <41d2e67e-3345-4720-b3aa-1051224025de@siemens.com>
- <21b6726a-1ceb-4782-a219-36f32cebb774@siemens.com>
- <a1463f9e36d8b3e6289859bec9a0a5a758709316.camel@pengutronix.de>
-In-Reply-To: <a1463f9e36d8b3e6289859bec9a0a5a758709316.camel@pengutronix.de>
-From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 2 Sep 2025 11:07:02 -0600
-X-Gm-Features: Ac12FXw2wEKjxkKgZ1N5Of__fmN_Hz8kxEuAxNu7KA6yksaDaPvkX6BLdNR5q9o
-Message-ID: <CANCZdfprQZTVskt-EPgT-ALMO3HU-akdcw+yZ5=9Cmu1F00etQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
- image
-To: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- qemu-devel <qemu-devel@nongnu.org>, Joel Stanley <joel@jms.id.au>,
- Bin Meng <bmeng.cn@gmail.com>, 
- qemu-block@nongnu.org, Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
- qemu-arm <qemu-arm@nongnu.org>, Alistair Francis <alistair@alistair23.me>, 
- Alexander Bulekov <alxndr@bu.edu>
-Content-Type: multipart/alternative; boundary="000000000000fc96ce063dd484e4"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC V2 0/8] Live update: tap and vhost
+To: Steven Sistare <steven.sistare@oracle.com>,
+ "Chaney, Ben" <bchaney@akamai.com>
+Cc: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Hamza Khan <hamza.khan@nutanix.com>,
+ qemu-devel@nongnu.org
+References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
+ <ef7fd47a-f7c0-4bca-823c-07005c5f1959@yandex-team.ru>
+ <f3cb36ee-e677-4377-9e4d-652085b205aa@oracle.com>
+ <3c939b30-2479-4bdd-8fa8-1dcd7adaada5@oracle.com>
+ <2e6a35a4-b9b6-444c-90d7-1c748ad1b7d0@yandex-team.ru>
+ <ccd353ef-26c7-4590-94ae-d8f6193c2805@oracle.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <ccd353ef-26c7-4590-94ae-d8f6193c2805@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,161 +85,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fc96ce063dd484e4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 02.09.25 18:33, Steven Sistare wrote:
+> On 9/1/2025 7:44 AM, Vladimir Sementsov-Ogievskiy wrote:
+>> On 29.08.25 22:37, Steven Sistare wrote:
+>>> On 8/28/2025 11:48 AM, Steven Sistare wrote:
+>>>> On 8/23/2025 5:53 PM, Vladimir Sementsov-Ogievskiy wrote:
+>>>>> On 17.07.25 21:39, Steve Sistare wrote:
+>>>>>> Tap and vhost devices can be preserved during cpr-transfer using
+>>>>>> traditional live migration methods, wherein the management layer
+>>>>>> creates new interfaces for the target and fiddles with 'ip link'
+>>>>>> to deactivate the old interface and activate the new.
+>>>>>>
+>>>>>> However, CPR can simply send the file descriptors to new QEMU,
+>>>>>> with no special management actions required.  The user enables
+>>>>>> this behavior by specifing '-netdev tap,cpr=on'.  The default
+>>>>>> is cpr=off.
+>>>>>
+>>>>> Hi Steve!
+>>>>>
+>>>>> First, me trying to test the series:
+>>>>
+>>>> Thank-you Vladimir for all the work you are doing in this area.  I have
+>>>> reproduced the "virtio_net_set_queue_pairs: Assertion `!r' failed." bug.
+>>>> Let me dig into that before I study the larger questions you pose
+>>>> about preserving tap/vhost-user-blk in local migration versus cpr.
+>>>
+>>> I have reproduced your journey!  I fixed the assertion, the vnet_hdr, and
+>>> the blocking fd problems which you allude to.  The attached patch fixes
+>>> them, and will be squashed into the series.
+>>>
+>>> Ben, you also reported the !r assertion failure, so this fix should help
+>>> you also.
+>>>
+>>>>> SOURCE:
+>>>>>
+>>>>> sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :0 -nodefaults -vga std -qmp stdio -msg timestamp -S -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on
+>>>>>
+>>>>> {"execute": "qmp_capabilities"}
+>>>>> {"return": {}}
+>>>>> {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
+>>>>> {"return": {}}
+>>>>> {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
+>>>>> {"return": {}}
+>>>>> {"execute": "cont"}
+>>>>> {"timestamp": {"seconds": 1755977653, "microseconds": 248749}, "event": "RESUME"}
+>>>>> {"return": {}}
+>>>>> {"timestamp": {"seconds": 1755977657, "microseconds": 366274}, "event": "NIC_RX_FILTER_CHANGED", "data": {"name": "vnet.1", "path": "/machine/peripheral/vnet.1/virtio-backend"}}
+>>>>> {"execute": "migrate-set-parameters", "arguments": {"mode": "cpr-transfer"}}
+>>>>> {"return": {}}
+>>>>> {"execute": "migrate", "arguments": {"channels": [{"channel-type": "main", "addr": {"path": "/tmp/migr.sock", "transport": "socket", "type": "unix"}}, {"channel-type": "cpr", "addr": {"path": "/tmp/cpr.sock", "transport": "socket", "type": "unix"}}]}}
+>>>>> {"timestamp": {"seconds": 1755977767, "microseconds": 835571}, "event": "STOP"}
+>>>>> {"return": {}}
+>>>>>
+>>>>> TARGET:
+>>>>>
+>>>>> sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :1 -nodefaults -vga std -qmp stdio -S -object memory-backend-file,id=ram0,size=4G,mem-p
+>>>>> ath=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on -incoming defer -incoming '{"channel-type": "cpr","addr": { "transport": "socket","type": "unix", "path": "/tmp/cpr.sock"}}'
+>>>>>
+>>>>> <need to wait until "migrate" on source>
+>>>>>
+>>>>> {"execute": "qmp_capabilities"}
+>>>>> {"return": {}}
+>>>>> {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
+>>>>> {"return": {}}
+>>>>> {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
+>>>>> could not disable queue
+>>>>> qemu-system-x86_64: ../hw/net/virtio-net.c:771: virtio_net_set_queue_pairs: Assertion `!r' failed.
+>>>>> fish: Job 1, 'sudo build/qemu-system-x86_64 -…' terminated by signal SIGABRT (Abort)
+>>>>>
+>>>>> So, it crashes on device_add..
+>>>>>
+>>>>> Second, I've come a long way, backporting you TAP v1 series together with needed parts of CPR and migration channels to QEMU 7.2, fixing different issues (like, avoid reinitialization of vnet_hdr length on target, avoid simultaneous use of tap on source an target, avoid making the fd blocking again on target), and it finally started to work.
+>>>>>
+>>>>> But next, I went to support similar migration for vhost-user-blk, and that was a lot more complex. No reason to pass an fd in preliminary stage, when source is running (like in CPR), because:
+>>>>>
+>>>>> 1. we just can't use the fd on target at all, until we stop use it on source, otherwise we just break vhost-user-blk protocol on the wire (unlike TAP, where some ioctls called on target doesn't break source)
+>>>>> 2. we have to pass enough additional variables, which are simpler to pass through normal migration channel (how to pass anything except fds through cpr channel?)
+>>>
+>>> You can pass extra state through the cpr channel.  See for example vmstate_cpr_vfio_device,
+>>> and how vmstate_cpr_vfio_devices is defined as a sub-section of vmstate_cpr_state.
+>>
+>> O, I missed this.
+>>
+>> Hmm. Still, finally CPR becomes just an additional stage of migration, which is done prior device initialization on target..
+>>
+>> Didn't you think of integrating it to the common scheme: so that devices may have .vmsd_cpr in addition to .vmsd? This way we don't need a global CPR state, and CPR stage of migration will work the same way as normal migration?
+> 
+> I proposed a single migration stream containing pre-create state that was read early,
+> but that was rejected as too complex.
+> 
+> I also proposed refactoring initialization so the monitor and migration streams
+> could be opened earlier, but again rejected as too complex and/or not consistent with
+> a long term vision for reworking initialization.
+> 
+>> Still2, if we pass some state in CPR it should be a kind of constant. We need a guarantee that it will not change between migration start and source stop.
+>>
+>>>
+>>>>> So, I decided to go another way, and just migrate everything backend-related including fds through main migration channel. Of course, this requires deep reworking of device initialization in case of incoming migration (but for vhost-user-blk we need it anyway). The feature is in my series "[PATCH 00/33] vhost-user-blk: live-backend local migration" (you are in CC).
+>>>
+>>> You did a lot of work in those series!
+>>> I suspect much less rework of initialization is required if you pass variables in cpr state.
+>>
+>> Not sure. I had to rework initialization anyway, as initialization damaged the connection. And this lead me to idea "if rework anyway, why not to go with one migration channel".
+>>
+>>>
+>>>>> The success with vhost-user-blk (of-course) make me rethink TAP migration too: try to avoid using additional cpr channel and unusual waiting for QMP interface on target. And, I've just sent an RFC: "[RFC 0/7] virtio-net: live-TAP local migration"
+>>>
+>>> Is there a use case for this outside of CPR?
+>>
+>> It just works without CPR.. Will CPR bring more benefit if I enable it in the setup with my local-tap + local-vhost-user-blk capabilities ( + ignore-shared of-course)?
+>>
+>>
+>>> CPR is intended to be the "local migration" solution that does it all :)
+>>> But if you do proceed with your local migration tap solution, I would want
+>>> to see that CPR could also use your code paths.
+>>>
+>> CPR can transparently use my code: you may enable both CPR and local-tap capability and it should work. Some devices will migrate their fds through CPR, TAP fds amd state will migrate through main migration channel. 
+> 
+> OK, I believe that.
+> 
+> I also care about cpr-exec mode.  We use it internally, and I am trying to push
+> it upstream:
+>    https://lore.kernel.org/qemu-devel/1755191843-283480-8-git-send-email-steven.sistare@oracle.com/
+> I believe it would work with your code.  Migrated fd's in both the cpr channel and
+> the main migration channel would be handled differently as shown in vmstate-types.c
+> get_fd() and put_fd().  The fd is kept open across execv(), and vmstate represents
+> the fd by its value (eg a small integer), rather than as an object in the unix channel.
 
-On Tue, Sep 2, 2025 at 10:49=E2=80=AFAM Jan L=C3=BCbbe <jlu@pengutronix.de>=
- wrote:
+I'm close to publish new version, which will include
 
-> On Tue, 2025-09-02 at 18:39 +0200, Jan Kiszka wrote:
-> > > > I expect us to be safe and able to deal with non-pow2 regions if we
-> use
-> > > > QEMUSGList from the "system/dma.h" API. But this is a rework nobody
-> had
-> > > > time to do so far.
-> > >
-> > > We have to tell two things apart: partitions sizes on the one side an=
-d
-> > > backing storage sizes. The partitions sizes are (to my reading) clear=
-ly
-> > > defined in the spec, and the user partition (alone!) has to be power =
-of
-> > > 2. The boot and RPMB partitions are multiples of 128K. The sum of the=
-m
-> > > all is nowhere limited to power of 2 or even only multiples of 128K.
-> > >
-> >
-> > Re-reading the part of the device capacity, the rules are more complex:
-> >  - power of two up to 2 GB
-> >  - multiple of 512 bytes beyond that
-> >
-> > So that power-of-two enforcement was and still is likely too strict.
->
+> 
+>> Making both channels to be unix-sockets should not be a considerable overhead I think.
+>>
+>> Why I like my solution more:
+>>
+>> - no additional channel
+>> - no additional logic in management software (to handle target start with no QMP access until "migrate" command on source)
+>> - less code to backport (that's personal, of course not an argument for final upstream solution)
+>>
+>> It seems that CPR is simpler to support as we don't need to do deep rework of initialization code.. But in reality, there is a lot of work anyway: TAP, vhost-user-blk cases proves this. You series about vfio are also huge.
+> 
+> TAP is the only case where we can compare both approaches, and the numbers tell
+> the story:
+> 
+>    TAP initialization refactoring: 277 insertions(+), 308 deletions(-)
 
-It is. Version 0 (and MMC) cards had the capacity encoded like so:
-                m =3D mmc_get_bits(raw_csd, 128, 62, 12);
-                e =3D mmc_get_bits(raw_csd, 128, 47, 3);
-                csd->capacity =3D ((1 + m) << (e + 2)) * csd->read_bl_len;
-so any card less than 2GB (well, technically 4GB, but 4GB version 0 cards
-were
-rare and broke some stacks... I have one and I love it on my embedded ARM
-board
-that can't do version 1 cards). Version 1 cards encoded it like:
-                csd->capacity =3D ((uint64_t)mmc_get_bits(raw_csd, 128, 48,
-22) +
-                    1) * 512 * 1024;
-So it's a multiple of 512k. These are also called 'high capacity' cards.
+Actually, I've done a lot more refactoring than required for TAP local migration, trying to make the whole initialization more clear and consistent. And it's a good base for any modification of TAP device I think.
 
-Version 4 introduces an extended CSD, which had a pure sector count in the
-EXT CSD. I think this
-is only for MMC cards. And also the partition information.
+>    live-TAP local migration:       681 insertions(+), 72 deletions(-)
 
+But 369 is last patch which is not for commit, and 65 a first patch with tracepoints (look at it tap_dump_packet() - thanks to AI, really helps to debug network problems, when you see packet dumps in QEMU log)
+So, more honest estimate is ~250, which is in good accordance with Live update tap.
 
-> > But I still see no indication, neither in the existing eMMC code of QEM=
-U
-> > nor the spec, that the boot and RPMB partition sizes are included in
-> that.
->
-> Correct. Non-power-of-two sizes are very common for real eMMCs. Taking a
-> random
-> one from our lab:
-> [    1.220588] mmcblk1: mmc1:0001 S0J56X 14.8 GiB
-> [    1.228055]  mmcblk1: p1 p2 p3 p4
-> [    1.230375] mmcblk1boot0: mmc1:0001 S0J56X 31.5 MiB
-> [    1.233651] mmcblk1boot1: mmc1:0001 S0J56X 31.5 MiB
-> [    1.236682] mmcblk1rpmb: mmc1:0001 S0J56X 4.00 MiB, chardev (244:0)
->
-> For eMMCs using MLC NAND, you can also configure part of the user data
-> area to
-> be pSLC (pseudo single level cell), which changes the available capacity
-> (after
-> a required power cycle).
->
+>                          total:    958 insertions(+), 380 deletions(-)
+> 
+>    Live update tap and vhost:      223 insertions(+), 55 deletions(-)
+> 
+> For any given system, if the maintainers accept the larger amount of change,
+> then local migration is cool (and CPR made it possible by adding fd support
+> to vmstate+QEMUFile)
 
-Yes. Extended partitions are a feature of version 4 cards, so don't have
-power-of-2 limits since they are a pure sector count in the ext_csd.
+Yes, native support for fds in migration API opens the doors:)
 
-Warner
+>.  But the amount of change is a harder sell.
 
---000000000000fc96ce063dd484e4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Yes, that's right. But live-TAP isn't really big. Unlike live-vhost-user-blk unfortunately.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 2, =
-2025 at 10:49=E2=80=AFAM Jan L=C3=BCbbe &lt;<a href=3D"mailto:jlu@pengutron=
-ix.de">jlu@pengutronix.de</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">On Tue, 2025-09-02 at 18:39 +0200, Jan Kiszka wrot=
-e:<br>
-&gt; &gt; &gt; I expect us to be safe and able to deal with non-pow2 region=
-s if we use<br>
-&gt; &gt; &gt; QEMUSGList from the &quot;system/dma.h&quot; API. But this i=
-s a rework nobody had<br>
-&gt; &gt; &gt; time to do so far.<br>
-&gt; &gt; <br>
-&gt; &gt; We have to tell two things apart: partitions sizes on the one sid=
-e and<br>
-&gt; &gt; backing storage sizes. The partitions sizes are (to my reading) c=
-learly<br>
-&gt; &gt; defined in the spec, and the user partition (alone!) has to be po=
-wer of<br>
-&gt; &gt; 2. The boot and RPMB partitions are multiples of 128K. The sum of=
- them<br>
-&gt; &gt; all is nowhere limited to power of 2 or even only multiples of 12=
-8K.<br>
-&gt; &gt; <br>
-&gt; <br>
-&gt; Re-reading the part of the device capacity, the rules are more complex=
-:<br>
-&gt; =C2=A0- power of two up to 2 GB<br>
-&gt; =C2=A0- multiple of 512 bytes beyond that<br>
-&gt; <br>
-&gt; So that power-of-two enforcement was and still is likely too strict.<b=
-r></blockquote><div><br></div><div>It is. Version 0 (and MMC) cards had the=
- capacity encoded like so:</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 m =3D mmc_get_bits(raw_csd, 128, 62, 12);</div>=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 e =3D mmc_get_bits(raw_csd, 1=
-28, 47, 3);</div><div class=3D"gmail_quote gmail_quote_container"><div>=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 csd-&gt;capacity =3D (=
-(1 + m) &lt;&lt; (e + 2)) * csd-&gt;read_bl_len;</div><div>so any card less=
- than 2GB (well, technically 4GB, but 4GB version 0 cards were</div><div>ra=
-re and broke some stacks... I have one and I love it on=C2=A0my embedded AR=
-M board</div><div>that can&#39;t do version 1 cards). Version 1 cards encod=
-ed it like:</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 csd-&gt;capacity =3D ((uint64_t)mmc_get_bits(raw_csd, 128, 48, 22) +<br=
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 1) *=
- 512 * 1024;</div><div>So it&#39;s a multiple of 512k. These are also calle=
-d &#39;high capacity&#39; cards.</div><div><br></div><div>Version 4 introdu=
-ces an extended CSD, which had a=C2=A0pure sector count in the EXT CSD. I t=
-hink this</div><div>is only for MMC cards. And also the partition informati=
-on.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin=
-:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
->
-&gt; But I still see no indication, neither in the existing eMMC code of QE=
-MU<br>
-&gt; nor the spec, that the boot and RPMB partition sizes are included in t=
-hat.<br>
-<br>
-Correct. Non-power-of-two sizes are very common for real eMMCs. Taking a ra=
-ndom<br>
-one from our lab:<br>
-[=C2=A0 =C2=A0 1.220588] mmcblk1: mmc1:0001 S0J56X 14.8 GiB<br>
-[=C2=A0 =C2=A0 1.228055]=C2=A0 mmcblk1: p1 p2 p3 p4<br>
-[=C2=A0 =C2=A0 1.230375] mmcblk1boot0: mmc1:0001 S0J56X 31.5 MiB<br>
-[=C2=A0 =C2=A0 1.233651] mmcblk1boot1: mmc1:0001 S0J56X 31.5 MiB<br>
-[=C2=A0 =C2=A0 1.236682] mmcblk1rpmb: mmc1:0001 S0J56X 4.00 MiB, chardev (2=
-44:0)<br>
-<br>
-For eMMCs using MLC NAND, you can also configure part of the user data area=
- to<br>
-be pSLC (pseudo single level cell), which changes the available capacity (a=
-fter<br>
-a required power cycle).<br></blockquote><div><br></div><div>Yes. Extended =
-partitions are a feature of version 4 cards, so don&#39;t have power-of-2 l=
-imits since they are a pure sector count in the ext_csd.</div><div><br></di=
-v><div>Warner=C2=A0</div></div></div>
+>> What is the benefit of CPR against simple (unix-socket) migration?
 
---000000000000fc96ce063dd484e4--
+> CPR supports vfio, iommufd, and pinned memory.  Memory backend objects are
+> created early, before the main migration stream is read, and squashing
+> CPR into migration for those cases would require a major change in how
+> qemu creates objects during live migration.
+
+Yes, understand: less things to change in initialization code = we can cover more things..
+
+For my downstream I need TAP, vhost-user-blk and vfio. So vfio would be the most interesting challenge, if I try to make a kind of live-vfio local migration.
+
+- it already supported by CPR, so it would be really hard to cell 1-2 thousands of additional code lines) But I'll see, may be it will not be so much.
+- we already have support in downstream, which we've never tried to send. It based on getting fds from source and passing them to target by management software.. But of course one day we should sync with upstream.
+
+> 
+> Hence CPR is the method that works for all types of objects.  The mgmt
+> layer does not need to support multiple methods of live update, depending
+> on what devices the VM contains.
+> 
+
+So, I'll keep my live-migrations not to be a separate mode. And they may be used as part of CPR, and I'm saving a chance to switch to CPR if needed.
+
+Thanks for detailed answer!
+
+-- 
+Best regards,
+Vladimir
 
