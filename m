@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEFD3CA1005
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E88A5CA0FFE
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQpB-00071F-Ar; Tue, 02 Sep 2025 09:13:29 -0400
+	id 1utQph-0007dC-SN; Tue, 02 Sep 2025 09:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQow-0006Rs-8W
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:13:10 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQp4-0006qi-5W
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:13:18 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQop-0004iq-Fk
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:13:09 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3d1bf79d75aso1081484f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:13:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQp0-0004lA-Lb
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:13:17 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3d48b45f9deso1588398f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:13:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756818780; x=1757423580; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756818789; x=1757423589; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hjwcUJJSQtOz70iFspOPdXzaMy4QJRp2F0LsGT4wN/o=;
- b=ZteowRP+xVco5sMfKwFUWVn0dj8ZvucPiNS4DApHWAFJF5jyPv08dKX0JDLM3BXdfb
- 8gItc4z76H34gLWLWqy1w17FMC7NTrK59ErQCftCrBDdOycUedv2oLn/hm5jYLRmsp/U
- ih7OLnWavIFA9uWB3znRkfxBM/tVmfcMrmyaT+OnKpfxRxC37sPmSiIsa4KE4zo1hF7s
- hzOEP8Gb7dtq3ZJp2yEDzXnCrWv1iz+ri4aCa5gw8lBAS8BI6A4J2ypvUjNw/EDnggZZ
- uT9Eh3iibEtpnl/LWKePxL8e+kZr/d6cCxho9njdgCg37yJX5p18o7AY67zwb1m9pe+y
- JL6Q==
+ :reply-to; bh=xaWoWdLQrpe0mniNwXuP/Tmf92jerlSeexVJq+GCDFA=;
+ b=Ol4FU8LNdixk0MyEr3Dmm/Tmr1DSFugVN93Sm4mS2Ap3cZUNcHnV91qs5wog0jbap/
+ SA3ple5a+r0t9zNyeZ5alRYCDIZOsrr+q2OLZhoJ2JNApeiTEM2UWZnK1xGId+I3YhqP
+ 0Ov5hgOykEANXxNHAqQjkEA19OcbwmhHJNo19OR07yepgNQ1NWtFTnaPzvQAOT1LRqdG
+ REtssLNkRkjs0D4GXrfKjo5rlSF9roYeXn/SNQYu5w9wYnQ4EdRsEKBpkeAqWKSFDSlV
+ GN4tsy0BPe3Ayz4kTg/E3kp7A1KxZe3doLsyNcJ3/8hU3w99W+u2BEIP2hefGmYZ7T99
+ z9Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756818780; x=1757423580;
+ d=1e100.net; s=20230601; t=1756818789; x=1757423589;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hjwcUJJSQtOz70iFspOPdXzaMy4QJRp2F0LsGT4wN/o=;
- b=fwToschVrXvudID5fLUnWjkq0WTjDQb3vf4cXD92Pj2zQsI0bK1ATI1xJ+zs8BeJvQ
- 5sptCD477NNtrbA3PTy2XZwbIXRenRJx01zv1tpPC/ECBhh1/ecOk0aiHqAxLusmOckf
- SyCTPdwn9Fd0Bn8tVdjAwSNkOIHTnixFam6p4vPIDACveNnPPh86RNY7b776cxnDiwV+
- TfQnRBj4WL9dT/ukspmlP9AT3kC27mhtUXwKzvRNHONFGoa9pVvuHDWio+sFrsq9JWIn
- BRiJnkrNxnLdEeS5TWhaDdLtjGMdSvZLY4tflaBZXhIutWY1NjcDP5MxpcCZna9u/J8e
- yvgw==
-X-Gm-Message-State: AOJu0Yzp5Y7L9QAOhcw3hsVic5JevfrlJoO8cCTSJxgoShXppMCE15oQ
- hLYvdsFgD5HdpG1dI+NHfQzOLXoHDbydzaaXkSxz9xPvzrbScVPIq7TQ9WOHuf1W/Zpo5tDS/Gw
- 48Kqm
-X-Gm-Gg: ASbGncup523e+F8imz7vhr2gQtnIAnThXo6OfsVlCysmM+HwtsZQn0LEajQFd3JM3gp
- XwYwyi4/T9kcczUlfNzn4S/JmcXP2L1boRpnAC+zmxv4C/aIOvXKO2tSWEd+Fwg9dmq0LMKtr5Q
- VqUpJNXB+YLv0ySK7ht+ThREREG7xdYYoK1Qsvq+rIp5RK2r7KNVfzqQlkCaBkXCbhojJm5Dv6b
- LIwFDk2lB38chVnmdx8Cac56F6SuP50CtFfLXW5xLsKVOWTea+im334vMYfa7aLzeqtv0wPYIzE
- xKzKAyw38DF5kTyBCSG3R3iVHZMRC9MHn+4NJFNTFshdeoHuTY4gKW+cRZCdSOrxCZv/o09hvq0
- j+ZeicQdtOERitzArQk2hV51FZp/KW2TaL50agrwnF1ndr2MG4taXTg5mtbRW5SaML5cD4IY7
-X-Google-Smtp-Source: AGHT+IEWSZZBSg5pdiHeBdLAVFpObgfQwoGLF+6h6hXg8I3pakn+V4Bb/2G0IHMVTLRMbQQYDP+JFw==
-X-Received: by 2002:a05:6000:3110:b0:3cf:ef30:c819 with SMTP id
- ffacd0b85a97d-3d1dc699e64mr8347574f8f.4.1756818779794; 
- Tue, 02 Sep 2025 06:12:59 -0700 (PDT)
+ bh=xaWoWdLQrpe0mniNwXuP/Tmf92jerlSeexVJq+GCDFA=;
+ b=k5NPKAgKIMBKA/Ug5gCLO+AdPqtt7ENyvo49jMg/pzcoFx1qPc9R4CZ87rP6wCx0pf
+ /UEnTBjRJgSUktQJDl1JlmE9EnxhMNtQIc7lB89EdmLH/8TPukbcgiBUtq3xdlIWH5IS
+ xRr8VG6rT84jJSH7tdCL+4GutgPw0ZnRT9xtDhqhAQJX37DuDxdyeisFvoFyslHEDkEO
+ XxBl5x/Oy/6Xjk8KMcRP1I1A1AfJ6sO5SEr+FKTknofPv44qd4yw03rCSqG+954Tznx5
+ NPSyl4QiFnizdfmRuFxvwQo9OhhvoeoD6thDS9OPRHjyMnbNL7Z7mLBQEolDq69jAi2/
+ Rv6A==
+X-Gm-Message-State: AOJu0YyvsDOncEDRRin2y5rxIj23rXoWYii/ynLiGjBi3VOJDqL7tGQE
+ 5IIjJPirAamKAh+m1+ojm2DUBkxGba+kSIRJWs9D2oHLb4zbQ94QBzrpNeAzk28tlWs+3k7lolP
+ l1tEk
+X-Gm-Gg: ASbGncuW6mIL5WU+czw1hLX1MVlaUdPzDeeF3CrtARscgT1rKsWhS3f8Cwqw41WPgWR
+ tmaLYfN4nY8v9EXH8su22cV5x0ti4B7tBg2w1l4yYzorGNDC9CuHi/4guZoomHt/hLePOV73Z9k
+ IUZfsXPnWK1pAUVLZztlOOvQqP7B70Z69ppsUamOgVA7EgfSnGSo+5ScLcMl7Jm78WrgwCMVp/B
+ powlkVRaU/32bWZu/jXSwtt1qImzGYLLsiANfwyWl8oiPeowQMDRKTfILJR5sVZUY+EK9nKG6Et
+ JiA4tce4Y3dWO9vCQjP29QG4GRoDxQ7CpU2stfaYcOBrC7qT+CNAs+fwy9wun2nmAB5YF/Pat3e
+ 6rSlh22PEb0XgtVtYBfWlbKKRjhpD2pC3tRoSqjVgaBWaSApjOxylC8oAMcUaFMpEELDkcbf68G
+ tm3I5+lPg=
+X-Google-Smtp-Source: AGHT+IHI1EHQZcEe0Ms+4p+t4sstp7z4I1YT7wqq2a70iGy1ex83HqNaubJrzfoldATNh7zkuojQ4Q==
+X-Received: by 2002:a5d:588d:0:b0:3c6:97ae:a574 with SMTP id
+ ffacd0b85a97d-3d1dcf57b65mr10208453f8f.24.1756818788955; 
+ Tue, 02 Sep 2025 06:13:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d66b013b7dsm8869318f8f.28.2025.09.02.06.12.58
+ 5b1f17b1804b1-45b98e77231sm26125375e9.12.2025.09.02.06.13.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 06:12:59 -0700 (PDT)
+ Tue, 02 Sep 2025 06:13:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 35/39] hw/mips/loongson3_virt: Include 'system/system.h'
-Date: Tue,  2 Sep 2025 15:10:12 +0200
-Message-ID: <20250902131016.84968-36-philmd@linaro.org>
+Subject: [PULL 37/39] docs/about/removed-features: Clarify 'device_add' is
+ removed
+Date: Tue,  2 Sep 2025 15:10:14 +0200
+Message-ID: <20250902131016.84968-38-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131016.84968-1-philmd@linaro.org>
 References: <20250902131016.84968-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+All other titles in removed-features.rst mention when
+the feature was removed using "removed in". Use that
+instead of "since" which we use for when a feature is
+deprecated.
 
-Files using serial_hd() should include 'system/system.h'. Fix that.
-
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250901064631.530723-4-clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Message-Id: <20250901113957.17113-1-philmd@linaro.org>
 ---
- hw/mips/loongson3_virt.c | 1 +
- 1 file changed, 1 insertion(+)
+ docs/about/removed-features.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index de6fbcc0cb4..672083dec98 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -49,6 +49,7 @@
- #include "system/qtest.h"
- #include "system/reset.h"
- #include "system/runstate.h"
-+#include "system/system.h"
- #include "qemu/error-report.h"
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index dc3d4eaa2d1..fff781d6b7c 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -730,8 +730,8 @@ Use ``multifd-channels`` instead.
  
- #define PM_CNTL_MODE          0x10
+ Use ``multifd-compression`` instead.
+ 
+-Incorrectly typed ``device_add`` arguments (since 9.2)
+-''''''''''''''''''''''''''''''''''''''''''''''''''''''
++Incorrectly typed ``device_add`` arguments (removed in 9.2)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ Due to shortcomings in the internal implementation of ``device_add``,
+ QEMU used to incorrectly accept certain invalid arguments. Any object
 -- 
 2.51.0
 
