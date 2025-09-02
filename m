@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB021CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792F9CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 11:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utOiv-0006rY-Us; Tue, 02 Sep 2025 06:58:49 -0400
+	id 1utOjv-0007K1-Jt; Tue, 02 Sep 2025 06:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1utOiu-0006qn-EN
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:58:48 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOjo-0007IC-Cf
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:59:45 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1utOis-0004Cp-IY
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:58:48 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-71d6051aeafso44542697b3.2
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:58:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOjm-0004Io-2T
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:59:43 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3b9edf4cf6cso4484193f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:59:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756810725; x=1757415525; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yV+CNQks4sz0u20+BiRRmlFqbbFxD0ap07clOuus2Ko=;
- b=ph+OmknRK+frgXf73vmer7WNofAkn8vXCO9y5Mre8lF+/QuQmcBgAPaUgjiBeyAx+v
- J4ZCgM1O0+RCfQOnRlvAoKnRuv4H/FSrZM2ZJqLe8QM+QAL+UWo8Q+zX6YnLveJCwud9
- C/v4kdwEyrB4PwW/Q477tE/ne3b9VOXMd6/FTSFmUOd8ScALtM+Jil+oF3tt1khJSSPy
- BaHJ1zXnh3nJ3lpyWIwvYKlFfcbBdE6bw38UczLS6yOqg38bx3pDRNpgH+QfYFEZwGHL
- TNza3fUNihweQ/sf1L5420fNAIFakbxtZeeJ+EVaQtqBSWGgsj8jDV56aQQO0NncW2O3
- JMiw==
+ d=linaro.org; s=google; t=1756810780; x=1757415580; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sYSm3MALHXGITzvWOiv8N7/LI0WiPKeOPn+3WTtIWNs=;
+ b=AQlVzq9czSxeb+xWbYzSeNhj53jnSezqRq/ja367tzQBI7w55ZMibwbl8nBrDU19/X
+ V8qOqZoMwcldK8YrRR4jmCGyeyhfkOjTZaXubfEJpB5HKRMeiZ88Cfdo/c3wNr7eBFJX
+ xxEN/tQJIADqVMUEx6EzSiLSWnmydGFyMt75hIIz0EVSucbVKmi/soRNmFMIdu2J4wkc
+ MnNveL1c1BiSty+UBqfCEzEjgChg+bs5f2vsKtQtln3Tv4Exbi+ytb3FG899fGpZHths
+ BoMI2wqSK8k1RvzSocGXRyhlQzz+9OoqM/jNei/PlTp2TRNlQAiroaLrnzwdMvQTU0LO
+ sDMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756810725; x=1757415525;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yV+CNQks4sz0u20+BiRRmlFqbbFxD0ap07clOuus2Ko=;
- b=vQ8FdjjmNiVeRxKyZaKi3F7kOJaZGuSK/Mm4CB1Smw+R9dIhT9FYl8XC5QFk+HFvlr
- wYECNJDnokxrXtwfccSF6gaZqkCKd/aowV7XG/zuL4AKyETL70is6tM/5mZwpzj9ZIna
- rDryX0GCvQAwg8nX+OaAHrvU6K4HFuLvNYBud7KGX4GavuT8OhmwvS/b0a/G6MuJzMVH
- QMv1wpLbwkIG2HkQ+cV88I615UK1GwADUARCICcv+OnWcns1THYm2Ha77x/mw2cAjwUF
- VVPxEHS+BOXNrH03+DomlO14/jsCdPm++9qkNf1nNKal/cYbB9qCBQYq+IEV9L8WOd6M
- Leug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURG5a8GjU8NrgGV0R9rF9j+ThApLH4mSX6aHV2BF8sZ5vD02IiWc7rxp04gt8wZxcd7LG5xXpx8A+L@nongnu.org
-X-Gm-Message-State: AOJu0YxW8IPUE9CqPKCMMyslR0u+DBlQzPaCm3v1Bn4NYMy5umFREdTg
- VO8ekL6RetTYPe3HTi/31h+X1zgjdmkUasXfdcNlFQcCSYgtvmUjBefkKB8xj7ef/qw5PXkOW41
- JGXCKUoQiSA5FB5gW2dzaddyRb/qkAedM1N5dvinDBg==
-X-Gm-Gg: ASbGncsqQp8jQB8ET0j4OfgkZuHBsOv2xtOJ7Gnz3EMeg3efQB36SMGHMLa3ImbX2hR
- QuR2Si0cwzbTrPTwFtK54zK9XmaMEXYTTIH6K1bE2/UnXPcsdtEXK2zoGbtMUvlV8SQwpcmolUh
- w/1DGmxe3nijDKfo93SN9XQowyTpTuzFw1LaSZ6HvH8gqVZ0oQgxnHS2Vjru/11Z7HN9jOkMaED
- tQhz1Uoj0nF7F3N/II=
-X-Google-Smtp-Source: AGHT+IHA+Dfb4t8Rrkvv/8mnq+BNdIBrMbbHs2KvpQtXQLdr87wRwhzji9132Me30mr76kT22cF3DL96g105zS42HxQ=
-X-Received: by 2002:a05:690c:7105:b0:721:318f:85ba with SMTP id
- 00721157ae682-72276361f59mr105065627b3.17.1756810725149; Tue, 02 Sep 2025
- 03:58:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756810780; x=1757415580;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sYSm3MALHXGITzvWOiv8N7/LI0WiPKeOPn+3WTtIWNs=;
+ b=ipt99ANhy/D5pZhaMLCRfZ41aXL7pn86lZ5s6Kl8bUwA9PMSuGxySQtvadJ2rx/TUN
+ hQJ781CnuOUAAVLNyQpl23JdB2+SC8gwBxeqtHlJKGgzWx/LGg5WEykGewnUKI0YGmmG
+ RGpWadVXl77BzKTbbNK86xj3cB1UMlsf8tOMW7wZoO6ajDxr2F+P7FjKrUMZrDY1mtuF
+ GxJS8aQHsEzUL5hGNiSv6det9TAQt3L1QoplBFgwWL5RP2EMaHIUgBgI0QP3zleK6qIj
+ Y17Ak8PKIw3tTBmPBI6EqzAE/SbCZ7JVptpI93PzK4y6YyD6OlIVKxc8tjH4DmBhPxfa
+ LEPw==
+X-Gm-Message-State: AOJu0YydI3/SxcArj+7omvCGBsHVAWZx1JPnxpEBSHPGmQnGCsNXnJMi
+ mBKsvDVIcQhl5hK9VopipKo6JfSIqj+ZUtk3w2V5vHR8rm3px8rbqVyFX5IsZD0cVp3tszgzdbg
+ 8dzUN
+X-Gm-Gg: ASbGnctUbHzyespWIBue0okcPwtEvID0Wc0f5ouvCtkxg17CWmMgWF5qZPWrwzmb6s3
+ bdHWCaNUKeJSgOgdHcwnGnCcjitCzBh0EDfuUXoF0q3EvdwDZdx+21RqTZUF2YV2I/HOBShtlrT
+ ApWmI66/UfolVeCzpo0bTJO5Ovgkvkk9pdSt31NKP41X7nZcxURLeDG1hVB055fsNmy8ZhFpaDj
+ WU59vCHlsEVNlL6dMfq6CDHMzNOcFyp23N2EqE+cKBb+tMMKTKHvk4edwKUvFEkS9m+W8WtIglf
+ qKjAiq7uAxWmcPz+OhNM7+0+IRyUk3Ex2acB43aAbiIeqKkqmKyyam6EOPqAnbpTzKmk475Z7AN
+ Or7OphBjdzJCwmmMLe6+VXz7sdiJc0YnTATD91i6997Kjet2DZAnOt/8/lDm+SaFNgukw6U7vzO
+ tRNs4+z3cDkJ0=
+X-Google-Smtp-Source: AGHT+IEb1R1fWgUdPNYc8rfI+4h9Tdma1OwzjVWOrYg3L0hCbGSPM6rdbs/6PotjP/QUknCttXsGQQ==
+X-Received: by 2002:a05:6000:1ac8:b0:3cd:5405:16e7 with SMTP id
+ ffacd0b85a97d-3d1de4bc31dmr8088172f8f.29.1756810779754; 
+ Tue, 02 Sep 2025 03:59:39 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3cf270fbd01sm19642567f8f.13.2025.09.02.03.59.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Sep 2025 03:59:39 -0700 (PDT)
+Message-ID: <1a7c5f84-7cf0-4451-a82f-f6f5b938e2b0@linaro.org>
+Date: Tue, 2 Sep 2025 12:59:38 +0200
 MIME-Version: 1.0
-References: <20250828162700.3308812-1-peter.maydell@linaro.org>
- <8e759fdd-5ed4-4e2b-9769-c6b072f52ed1@linaro.org>
-In-Reply-To: <8e759fdd-5ed4-4e2b-9769-c6b072f52ed1@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Sep 2025 11:58:32 +0100
-X-Gm-Features: Ac12FXzZ-3GgUycMvzRU8W_0jA9YjPaSqAoNS8lErMqUCxueZ8vrFPVSz4mwUH0
-Message-ID: <CAFEAcA-Z9=gV-Ayu_9gD29H9+F3HZvLrtPxUxMv_c=0Y69yLTg@mail.gmail.com>
-Subject: Re: [PATCH] system: drop the -old-param option
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1? 0/3] linux-user: Select default CPUs for
+ MicroMIPS and MIPS16e ASEs
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20250814070650.78657-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250814070650.78657-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,37 +102,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Sept 2025 at 11:54, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 28/8/25 18:27, Peter Maydell wrote:
-> > We deprecated the command line option -old-param for the 10.0
-> > release, which allows us to drop it in 10.2.  This option was used to
-> > boot Arm targets with a very old boot protocol using the
-> > 'param_struct' ABI.  We only ever needed this on a handful of board
-> > types which have all now been removed from QEMU.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   docs/about/deprecated.rst       | 13 ------
-> >   docs/about/removed-features.rst | 12 +++++
-> >   include/system/system.h         |  1 -
-> >   hw/arm/boot.c                   | 81 +-------------------------------=
--
-> >   system/globals.c                |  1 -
-> >   system/vl.c                     |  4 --
-> >   qemu-options.hx                 |  7 ---
-> >   7 files changed, 13 insertions(+), 106 deletions(-)
->
-> FYI this patch doesn't apply anymore.
+On 14/8/25 09:06, Philippe Mathieu-Daudé wrote:
+> We weren't parsing MIPS ASE in the ELF header, so couldn't
+> automatically pick an appropriate CPU.
 
-I think I wrote it on top of
-https://patchwork.ozlabs.org/project/qemu-devel/patch/20250828162012.330764=
-7-1-peter.maydell@linaro.org/
-("linux-user: Drop deprecated -p option") -- the conflict
-is only in the deprecated-features.rst docs. I'll fix this
-up when I apply it to target-arm.next if the linux-user
-patch hasn't hit upstream first.
 
--- PMM
+> Philippe Mathieu-Daudé (3):
+>    elf: Add EF_MIPS_ARCH_ASE definitions
+>    linux-user/mips: Select 74Kf CPU to run MIPS16e binaries
+>    linux-user/mips: Select M14Kc CPU to run microMIPS binaries
+
+Series now queued, thanks.
 
