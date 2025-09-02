@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7AE7CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 09:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F51CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 09:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utNCI-0001yP-Fv; Tue, 02 Sep 2025 05:21:04 -0400
+	id 1utNE8-0003aq-EP; Tue, 02 Sep 2025 05:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utNC6-0001ws-3r
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:20:50 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1utNE6-0003a5-GT
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:22:54 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utNC3-00067x-25
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:20:49 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-45b9c35bc0aso1338835e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 02:20:46 -0700 (PDT)
+ id 1utNE3-0006Mw-ED
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:22:54 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3db9641b725so8589f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 02:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756804844; x=1757409644; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:in-reply-to
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gamy29gSA9Ji+RJyXqpzasJan+IzYu/xM24dBdO6Bv4=;
- b=LGwIOH1wx4IOAnwRluMxcPndqUJ6qrhLkQkqxg5yCfmO99IeDs5EdlDXVWtTQD20FY
- psW+6vlmxHmUKHH1gxQpfBSJOeK6iwwgjjcVOYItv8gK05fjR2YJTnZ7hG2OtHqZCXaj
- Na1amF5+rjy3ayHj5h35NcxYgzv1bAo5dQPVdPCkntimt/tiJ+yNeXprqRe6tM0hgSdt
- hBfEPiiicvtlPSEhcT40TNzHl87083u8lPw+OJY79fdfRLtbMwMuca/kunPkIdxY5cpC
- cRvQApL9CHhLkZObOAA6Fv1IFmpdY1VWfgSFB67KSRODQAfTSZlBpvtTOG0CBfrd+S0e
- looQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756804844; x=1757409644;
- h=content-transfer-encoding:mime-version:message-id:date:in-reply-to
- :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1756804969; x=1757409769; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gamy29gSA9Ji+RJyXqpzasJan+IzYu/xM24dBdO6Bv4=;
- b=NH1OhnZzfa2L8T21xvEo7SE28SWAktGcyk7lnx5DI4US4ZuVko6eZ6TGl/okWexs1w
- ZIh/6NuZLZ1Fe0+M5hvC41U9F9j9N8X7qSXb6VqZ3pZnGoyDrLTJ5gXYL8DRqYkJL5fI
- EKOJg23CV8FmslOqko6Q0b4ht7p0NdM3/xjrG5z4/jEFuAnW9UWPIlGsUP8whuiNKoo8
- Ca0NNtva4gu5P0UDMRBt5jZnh8lWRbgafvpMvd1TYcFMQB9oJLSwsaIgss1oplWorJMe
- KUrcb6dLi+jtmb8JT1MPpBEdM0WLmPMD9Z3a75AtxCUAfPw+RJUSDZf4bS5vTEHpioj1
- BkzQ==
+ bh=WPBJaao5eU9miItbgKqnM+Hdb/dWjIBar4Rn5uGCU90=;
+ b=U1cVIZBnOy6zHu11PSz/pSEAKGCQ212ek8srojz8psQXun/wSVYqoigrTyvJuBfc7I
+ EP7ryvYTiLJgY6oNgtfJU6VaPYVSo8vz4Rxz6G7WfO2nihS2fkiHMXMm1NmFKGXWm+tR
+ KAE/pNYNKNGH1x0Bj4EWd/RrsECjkDbDrWyGl/64SBULLXzVdawMBQs0EvSHtxJGqoGW
+ ksOVlHkXweKtfnxR5vJIj4qBLEnTtPycVfCbW6d4PxtDdzliBq0o0MN2SCDR1VrrvYhP
+ FPFB1OuPYhRCICpIXr1VEhC4EYQFiIeeEKltWcBU+W5RxhUtCTG4YHn89Fo5ElHx/rxI
+ PRXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756804969; x=1757409769;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WPBJaao5eU9miItbgKqnM+Hdb/dWjIBar4Rn5uGCU90=;
+ b=NbKVx+6lpBmBPaq0m5hCIBgM0iklbPFYFeLxNIkSG/KkujgBhVD/okZq1sIDxXByV+
+ ZIiyL4BpQtm/WCpuF04YlgaXQnNkMMVMDhh2so2LEMxNk56xVrpcEP0jLmZrk6/z4sIu
+ wRNZYCogFEZhmeh3j4SsQV7MD8PmvGt5cB+93Ia5wqLt3+dOhSczzM8cdJopDH/Hhsj1
+ 69PVPha7q2YAZKqiDB3P3Orf99Nhl0JvNlSsLQAbtaaP8fJe+6GGrXtS/3RDL/il9A8J
+ KK0PrJM9CEcPg3c6DUKuI17cK+2F1MH7z//71M4LH6FNT3XwJfVqMKZssPrPSJX7WtMv
+ zqrA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSsMC8TENl40EqRBnYa0Ha7OBsQmwfkFFSqXxbYy4KfCb6rS8dw1PXSNzNrAeqGlIhH5+MWpuMDk4j@nongnu.org
-X-Gm-Message-State: AOJu0YxG8RuVQFE3K+Y3yEguS047ylkcTMh1DUYD/eOQkzc595McIf7r
- to7qo0AAnFl8XkRudSHbt1aFYY3GbqVevqEQxhuZ8IwWheEpMfhChPovX1B6FNgz2Xw=
-X-Gm-Gg: ASbGncvFSB2QQK+hjYrn3lDW+uT1ZDHK7clDDLeafEB+tYIpI1FX1zPq3wLGI7LgK6o
- x3Mdy1MnXCYs625xOc/DWPwi0QsosA8P/Y6I2h80McwefH369UGPanm1Rps4gGcvMUaWZasFDpk
- OVEYbJxazfd/bbXcjahcpAFfVZ9MJIKqRHoKWd4UJUWVzXiEq1R+xg/U+oURMeIh47Ro5PFa+AY
- R8kJpFozlKZCCQRJ+BgnI4autG07uqnlmjqRtIcnXBzpIPvB1PAn08FgW7YSiz6AdlScR6dC+8m
- TjKRKWo5eL5njN3x/VVQlyyaWIePsn2ihW51mr4cowQlrThT+rt7gFHciJ82dTTy1pPlFeXvbtB
- itefmgigtQ/vxofiP4TyRLe0AnA/GeLqJtw==
-X-Google-Smtp-Source: AGHT+IFEtQuJmXi1y0zKfICl9LIBBEjqNn+tznv1KnDzE0WWGEn80XR4LRHN0i8+0lE8mU2M+H+45A==
-X-Received: by 2002:a05:600c:4687:b0:45b:8e26:5f46 with SMTP id
- 5b1f17b1804b1-45b8ee17c88mr47064585e9.5.1756804844018; 
- Tue, 02 Sep 2025 02:20:44 -0700 (PDT)
+ AJvYcCWzvgK7t5RLiG2FF9tFWih/YLx5yn3SdIgZ7OI1RHwZfFDLfrDuTKwQzMBrjkblW17QGn9IIcjwQdZn@nongnu.org
+X-Gm-Message-State: AOJu0YwumdoZdzKSxyMa83u36J+z1wHigAavitfilZj4PjBvaz1BhcFE
+ T9X/WJl/K5KAQCixDZPDCcC9IysD4GCzuhmdn1/3CWV641bEKXJrTrBqtO8oUgpnvL0=
+X-Gm-Gg: ASbGncvTpmwBihO1RBFjXoxNs5TY10L2fiBlVpyX+w2L29Zq6hrWp5WYEZHuM4LRMzo
+ /kb/cmCu7dQv6FrZQZnLNXWKaQ2XwlB2+oNiYkOmXeNEqeHnBHuTfmetX5Vf7NbmIWQZWHNfT40
+ 8M9e+/sli1EjllePNOGAjhoUnhwGgiNlYZbgfp51eJLMx7wur5BxHqE5KmzdMEmyZl9G/TLWgeQ
+ yU+Sm3E2fe/TH6rCyFBhXU13lkGLf3g0Z1n6IAUAccLfzYtyd3DoGu+e9tt0cgRJIvgdR9yO6h5
+ lHTh33FZ+X8aqV9Npm2BjWfaPLxswIbLZ5JFW+Qe0Ou0GFaUe6j2qLO0g/Tfr7pxMlhvpAdi80M
+ lx1rrwITUpSNf1TP1Sc0Xyj9rjQ3e2l2ykzKO4MLRdeOr
+X-Google-Smtp-Source: AGHT+IGtVRj02XbDxp/oZkR6xLljpfRs0MXZUU2nscQdKfGFiRwvUDCIswEJLfdafOzKqQWoufz6fw==
+X-Received: by 2002:a05:6000:1acd:b0:3cb:46fc:8eaa with SMTP id
+ ffacd0b85a97d-3d1de5b087dmr8666817f8f.31.1756804969301; 
+ Tue, 02 Sep 2025 02:22:49 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7e8ab093sm196789795e9.22.2025.09.02.02.20.42
+ ffacd0b85a97d-3d978ab6fc7sm3469726f8f.45.2025.09.02.02.22.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Sep 2025 02:20:43 -0700 (PDT)
+ Tue, 02 Sep 2025 02:22:48 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2ADC95F894;
- Tue, 02 Sep 2025 10:20:42 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A34135F894;
+ Tue, 02 Sep 2025 10:22:47 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Osama Abdelkader <osama.abdelkader@gmail.com>
 Cc: peter.maydell@linaro.org,  qemu-arm@nongnu.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/arm/raspi4b: replace fprintf with error_report
-In-Reply-To: <20250901213607.69603-1-osama.abdelkader@gmail.com> (Osama
- Abdelkader's message of "Mon, 1 Sep 2025 23:35:53 +0200")
-Date: Tue, 02 Sep 2025 10:20:42 +0100
-Message-ID: <87zfbdyzv9.fsf@draig.linaro.org>
+Subject: Re: [PATCH] hw/arm/boot: replace fprintf with error_report
+In-Reply-To: <aLYXHdYRlLyjr7Gc@osama> (Osama Abdelkader's message of "Mon, 1
+ Sep 2025 23:58:53 +0200")
+References: <20250823150321.135527-1-osama.abdelkader@gmail.com>
+ <CAFEAcA-GpC3ouaXTQ18VhcY7c-jXK_SF0MLiCMFW471U5Cqr9Q@mail.gmail.com>
+ <874itm2joo.fsf@draig.linaro.org> <aLYXHdYRlLyjr7Gc@osama>
+User-Agent: mu4e 1.12.12; emacs 30.1
+Date: Tue, 02 Sep 2025 10:22:47 +0100
+Message-ID: <87tt1lyzrs.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,89 +107,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-References: <20250901213607.69603-1-osama.abdelkader@gmail.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
 Osama Abdelkader <osama.abdelkader@gmail.com> writes:
 
-> Replace direct fprintf(stderr, .%80.) with QEMU's
-> error_report() API,
-
-Not sure what happened with the encoding there, it seems to be non-utf-8.
-
-> which ensures consistent formatting and integrates with QEMU's
-> logging infrastructure.
+> On Mon, Sep 01, 2025 at 05:59:03PM +0100, Alex Benn=C3=A9e wrote:
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>=20
+>> > On Sat, 23 Aug 2025 at 16:03, Osama Abdelkader
+>> > <osama.abdelkader@gmail.com> wrote:
+>> >>
+>> >> Replace direct fprintf(stderr, =E2=80=A6) with QEMU's error_report() =
+API,
+>> >> which ensures consistent formatting and integrates with QEMU's
+>> >> logging infrastructure.
+>> >>
+>> >> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+>> >> ---
+>> >>  hw/arm/boot.c | 22 +++++++++++-----------
+>> >>  1 file changed, 11 insertions(+), 11 deletions(-)
+>> >
+>> >
+>> >
+>> > Applied to target-arm.next, thanks.
+>>=20
+>> I didn't see this had been posted but I did a more extensive clean-up
+>> here:
+>>=20
+>>   Message-ID: <20250901125304.1047624-1-alex.bennee@linaro.org>
+>>   Date: Mon,  1 Sep 2025 13:53:00 +0100
+>>   Subject: [PATCH 0/4] arm_load_dtb cleanups
+>>   From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.org>
+>>=20
+>> >
+>> > -- PMM
+>>=20
+>> --=20
+>> Alex Benn=C3=A9e
+>> Virtualisation Tech Lead @ Linaro
 >
-> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-> ---
->  hw/arm/raspi4b.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> sorry Alex, I didn't know that your patch set covers that.
+
+No need to apologise - qemu-devel is a firehose of patches so its
+inevitable two or more people might touch the same thing at the same
+time.
+
+> I just submitted a simple patch to replace fprintf in raspi4b
+> Would appreciate your review.
+
+I have left some comments.
+
 >
-> diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-> index 20082d5266..4a5f0eb91e 100644
-> --- a/hw/arm/raspi4b.c
-> +++ b/hw/arm/raspi4b.c
-> @@ -47,7 +47,7 @@ static int raspi_add_memory_node(void *fdt, hwaddr mem_=
-base, hwaddr mem_len)
->      scells =3D qemu_fdt_getprop_cell(fdt, "/", "#size-cells",
->                                     NULL, &error_fatal);
->      if (acells =3D=3D 0 || scells =3D=3D 0) {
-> -        fprintf(stderr, "dtb file invalid (#address-cells or #size-cells=
- 0)\n");
-> +        error_report("dtb file invalid (#address-cells or #size-cells 0)=
-");
-
-This change is fine as far as it goes but I wonder if it is an
-error_report or a warn_report. The reason being:
-
->          ret =3D -1;
-
-we set -1 to ret here but it is ignored by the call:
-
-    if (info->ram_size > UPPER_RAM_BASE) {
-        raspi_add_memory_node(fdt, UPPER_RAM_BASE, ram_size - UPPER_RAM_BAS=
-E);
-    }
-
-which implies this isn't a fatal error, but the user should certainly be
-warned they won't get all the memory they were expecting.
-
-While these single line patches are a good way to get comfortable with
-the review and submission process I would also encourage you to look at
-the call chain.
-
-In this case we get here from arm_load_dtb:
-
-    if (binfo->modify_dtb) {
-        binfo->modify_dtb(binfo, fdt);
-    }
-
-And you can see further up that function we do the same test:
-
-    acells =3D qemu_fdt_getprop_cell(fdt, "/", "#address-cells",
-                                   NULL, &error_fatal);
-    scells =3D qemu_fdt_getprop_cell(fdt, "/", "#size-cells",
-                                   NULL, &error_fatal);
-    if (acells =3D=3D 0 || scells =3D=3D 0) {
-        fprintf(stderr, "dtb file invalid (#address-cells or #size-cells 0)=
-\n");
-        goto fail;
-    }
-
-which fails and ultimately causes QEMU to exit as it can't continue. In
-that case I don't think we could ever hit this condition. As it would be
-a programming failure I think we could replace the whole if leg with:
-
-  /* validated by arm_load_dtb */
-  g_assert(acells && scells);
-
-and maybe remove the ignored (and redundant) return value from
-raspi_add_memory_node().
-
->      } else {
->          qemu_fdt_add_subnode(fdt, nodename);
+> Thank you.
+>
+> Regards,
+> Osama
 
 --=20
 Alex Benn=C3=A9e
 Virtualisation Tech Lead @ Linaro
-Date: Tue, 02 Sep 2025 10:20:42 +0100
 
