@@ -4,73 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D7AECA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 08:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38989CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 09:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utMkV-0000K6-3m; Tue, 02 Sep 2025 04:52:20 -0400
+	id 1utN0O-0005aP-CK; Tue, 02 Sep 2025 05:08:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1utMkO-0000JJ-50
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 04:52:13 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1utMkJ-0002Pn-2P
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 04:52:11 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axjr8rsLZor7YFAA--.10653S3;
- Tue, 02 Sep 2025 16:51:56 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxpeQosLZo5Zh4AA--.51571S3;
- Tue, 02 Sep 2025 16:51:55 +0800 (CST)
-Subject: Re: [PATCH v2] hw/loongarch/virt: Add reset interface for virt-machine
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-References: <20250901081900.2931303-1-maobibo@loongson.cn>
- <e99ce8c4-b2cc-4eba-a947-f150330eda34@linaro.org>
- <a205202e-7d0d-0739-ddd6-11a2081a9810@loongson.cn>
- <186d81e1-220c-47b2-a899-9f48520b44ff@linaro.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <1ce8d6ce-7b86-62dd-e980-39d90deb3def@loongson.cn>
-Date: Tue, 2 Sep 2025 16:49:53 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1utN0M-0005aC-ML
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:08:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1utN0K-0004JH-Kf
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:08:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756804115;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VDihUIvEMHU54Tuq8CooNZpuBMajgBmM/4WmqmpLugM=;
+ b=aaxnhmth25ZjzsTpK+VOUTOsFuj5z8VCpwOdjIyewSNEz5zYGs9wPk/tqNmXQYDVpUwPC2
+ GTOZiHo5P5SegmPXSyu5RGHpH1lJWTxCu0ar+yPJKIsGXqz2k5h4IhZ9805IJX44Ui+Lhd
+ Pl5akSW8P01ldi0XznxqqRPmM+XiD+s=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-550-yHOEgvXKNWGo03GumaYqCg-1; Tue, 02 Sep 2025 05:08:33 -0400
+X-MC-Unique: yHOEgvXKNWGo03GumaYqCg-1
+X-Mimecast-MFC-AGG-ID: yHOEgvXKNWGo03GumaYqCg_1756804113
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-324e4c3af5fso5522407a91.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 02:08:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756804112; x=1757408912;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VDihUIvEMHU54Tuq8CooNZpuBMajgBmM/4WmqmpLugM=;
+ b=mv/54K3rKSdNV/hhwPTW/xkVLkRaMoa1Rkzg5zzLAuleIv6KnwMEAE45ho5hwKnNtx
+ Zhz02CYv9e2+tc4FNRNbx/EYcb5FesXXy8GQ0rVprjmrCu26ZO+XFCbFUwIGb8jINuY3
+ qUSAutY1wg0don4Eua30OfAFo7RGUOhAxPCFlvSTvaqpGtGsBO5PcJ7t16/qLdi71Xrh
+ LMtq/aQPZ/obtZDd3PKcmpg+tG9CSUY83icM82np73Dr53+hgCT54RNKuDOcys+iqyiZ
+ E+i+apfWboK0RiUaYUb19gW+e0IRgzSUOxKt2SXmlBx+EA27b3XzxXb+uM/oIsK90P5G
+ 7jhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXW1WXZYERlSaiIWezauj4uZH7MQ/0A7WERWE1IFmop3yKrA3wDh6J7rYwr1r26rDB+OlobnnxgQdh6@nongnu.org
+X-Gm-Message-State: AOJu0YxtveDmyC4O7f7IGy9Zad2mH6aBnoEETEFTHU2Z8VgL2pgSp24P
+ WXckcIy+Sc1NP23F9K/topmuvsZp9W0BQT/lT9kp1cV0m5dn4pFbcMO0ccKvBIKWBIP96xbQpl1
+ ZiQ8COwJhh0N5Dg/CYMNX41i0FmFHechrz/xpFAF73LF+uBbVqdwWeQ4GwkZY4qwNIRxg2GDjyQ
+ WRCLXdKcoGcTlQTc0SyBS+58Lv/Hnc9Ec=
+X-Gm-Gg: ASbGnctGUae3nB6AMLThW+RF0/CkNhmfXv1E628bxJelhPYy/GIoQVxxBnpyC6Rdkby
+ vmjGMNH/GNwUTAAw4KPP7h1dbvKKqmKr4JWpPx3J/KZeosLmM6KTqXwG0IYP3lcRSFxICkae4br
+ 4X+FjAhTw0mxwE7+KMBxX5rA==
+X-Received: by 2002:a17:90b:48c3:b0:327:f216:4360 with SMTP id
+ 98e67ed59e1d1-3281541434dmr14333016a91.8.1756804112483; 
+ Tue, 02 Sep 2025 02:08:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbOW79SkSDzrkVbTMBwTNFFG1RIl/iY682+mBZSzR4SnENev8eBXvITnSML+tKAvBfKxkrJEnlNGNri0LTvnA=
+X-Received: by 2002:a17:90b:48c3:b0:327:f216:4360 with SMTP id
+ 98e67ed59e1d1-3281541434dmr14332980a91.8.1756804112045; Tue, 02 Sep 2025
+ 02:08:32 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <186d81e1-220c-47b2-a899-9f48520b44ff@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpeQosLZo5Zh4AA--.51571S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tFyUXw1fJF1UWFyxCw4fXrc_yoW8Krykpr
- 97CFs8tryDGr1fJw4a9w1Uuryjyw1ktwn8ZF13JF1Fyrs0gryYqr4jvryq9FZrArWrGF4j
- qr4DKry3uFyUAFcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU92b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AK
- xVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
- AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
- 42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
- IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVF
- xhVjvjDU0xZFpf9x07UWHqcUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -54
-X-Spam_score: -5.5
-X-Spam_bar: -----
-X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.599,
+References: <cover.1755080613.git.pabeni@redhat.com>
+ <3590d748-752c-40f5-92c9-5c065dcc3c0b@rsg.ci.i.u-tokyo.ac.jp>
+ <CACGkMEvOmgGyqv5-FGDAgyDrY9TpssEDtpNp07ro2oamg_7r1w@mail.gmail.com>
+ <8c41ea67-c5a3-4f16-85a2-cc4876f09995@redhat.com>
+In-Reply-To: <8c41ea67-c5a3-4f16-85a2-cc4876f09995@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 2 Sep 2025 17:08:20 +0800
+X-Gm-Features: Ac12FXxqgyWOjLyF2XsDhNnKvrEE86yLh3igdtk39PdVUSouqVG49yr76zdLES0
+Message-ID: <CACGkMEuyhCFCdQ5owUZqWC490doqgDUVq3osFGPo7QnnZ7_Pqg@mail.gmail.com>
+Subject: Re: [PATCH v5 00/13] virtio: introduce support for GSO over UDP tunnel
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,67 +111,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Sep 1, 2025 at 2:44=E2=80=AFPM Paolo Abeni <pabeni@redhat.com> wrot=
+e:
+>
+> On 9/1/25 4:47 AM, Jason Wang wrote:
+> > On Thu, Aug 28, 2025 at 9:47=E2=80=AFAM Akihiko Odaki
+> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+> >>
+> >> On 2025/08/13 19:28, Paolo Abeni wrote:
+> >>> Some virtualized deployments use UDP tunnel pervasively and are impac=
+ted
+> >>> negatively by the lack of GSO support for such kind of traffic in the
+> >>> virtual NIC driver.
+> >>>
+> >>> The virtio_net specification recently introduced support for GSO over
+> >>> UDP tunnel, and the kernel side of the implementation has been merged
+> >>> into the net-next tree; this series updates the virtio implementation=
+ to
+> >>> support such a feature.
+> >>>
+> >>> Currently the qemu virtio support limits the feature space to 64 bits=
+,
+> >>> while the virtio specification allows for a larger number of features=
+.
+> >>> Specifically the GSO-over-UDP-tunnel-related virtio features use bits
+> >>> 65-69; the larger part of this series (patches 4-12) actually deals w=
+ith
+> >>> extending the features space.
+> >>>
+> >>> The extended features are carried by fixed size uint64_t arrays,
+> >>> bringing the current maximum features number to 128.
+> >>>
+> >>> The patches use some syntactic sugar to try to minimize the otherwise
+> >>> very large code churn. Specifically the extended features are boundle=
+d
+> >>> in an union with 'legacy' features definition, allowing no changes in
+> >>> the virtio devices not needing the extended features set.
+> >>>
+> >>> The actual offload implementation is in patches 13 and 14 and boils d=
+own
+> >>> to propagating the new offload to the tun devices and the vhost backe=
+nd.
+> >>>
+> >>> Patch 1 is a small pre-req refactor that ideally could enter the
+> >>> tree separately; it's presented here in the same series to help
+> >>> reviewers more easily getting the full picture, patch 2 updates to
+> >>> linux headers update script to deal with annotations recently introdu=
+ce
+> >>> in the kernel and patch 3 is a needed linux headers update.
+> >>>
+> >>> Tested with basic stream transfer with all the possible permutations =
+of
+> >>> host kernel/qemu/guest kernel with/without GSO over UDP tunnel suppor=
+t,
+> >>> vs snapshots creation and restore and vs migration.
+> >>>
+> >>> The new features are disabled by default to avoid compatibilty issues=
+.
+> >>> They could be enabled after that hw_compat_10_1 will be added, togeth=
+er
+> >>> with the related compatiblity entries.
+> >>>
+> >>> Based-on: 9d71108d7de139dd4f4e6efe6837cabb32bf5616.1755078918.git.pab=
+eni@redhat.com
+> >>
+> >> Now everything looks good to me. For the whole series:
+> >>
+> >> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >>
+> >> Regards,
+> >> Akihiko Odaki
+> >>
+> >
+> > Acked-by: Jason Wang <jasowang@redhat.com>
+>
+> Thank you for the feedback. I guess this series will go through
+> Micheal's tree, am I correct?
 
+Yes. I think so.
 
-On 2025/9/2 下午4:09, Philippe Mathieu-Daudé wrote:
-> On 2/9/25 04:27, Bibo Mao wrote:
->>
->>
->> On 2025/9/1 下午6:51, Philippe Mathieu-Daudé wrote:
->>> Hi Bibo,
->>>
->>> On 1/9/25 10:19, Bibo Mao wrote:
->>>> With generic cpu reset interface, pc register is entry of FLASH for
->>>> UEFI BIOS. However with direct kernel booting requirement, there is
->>>> a little different, pc register of primary cpu is entry address of ELF
->>>> file.
->>>>
->>>> At the same time with requirement of cpu hotplug, hot-added CPU should
->>>> register reset interface for this cpu object. Now reset callback is
->>>> not registered for hot-added CPU.
->>>>
->>>> With this patch reset callback for CPU is register when CPU instance
->>>> is created, and reset interface is added for virt-machine board. In
->>>> reset interface of virt-machine, reset for direct kernel booting
->>>> requirement is called.
->>>>
->>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>>> ---
->>>> v1 ... v2:
->>>>    1. Add qemu_unregister_reset() in function 
->>>> loongarch_cpu_unrealizefn(),
->>>>       remove reset callback if vCPU is unrealized.
->>>> ---
->>>>
->>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>>> ---
->>>>   hw/loongarch/boot.c         |  9 +--------
->>>>   hw/loongarch/virt.c         | 14 ++++++++++++++
->>>>   include/hw/loongarch/boot.h |  1 +
->>>>   target/loongarch/cpu.c      | 11 +++++++++++
->>>>   4 files changed, 27 insertions(+), 8 deletions(-)
-> 
-> 
->>>>   static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
->>>>   {
->>>>       CPUState *cs = CPU(dev);
->>>> @@ -668,6 +675,9 @@ static void loongarch_cpu_realizefn(DeviceState 
->>>> *dev, Error **errp)
->>>>       qemu_init_vcpu(cs);
->>>>       cpu_reset(cs);
->>>
->>> Devices shouldn't call their DeviceReset handler manually, as it is
->>> always called after DeviceRealize.
->  >> ok, will remove this.
-> 
-> This is a legacy pattern we want to eventually clean. Maybe we still
-> need this one at this point. See for reference this series:
-> https://lore.kernel.org/qemu-devel/20231128170008.57ddb03e@imammedo.users.ipa.redhat.com/ 
-> 
-Will keep it and thanks for the information, although it is hard to me 
-to know the details :-(
+>
+> Also I suspect/fear it could need rebasing due to some other patches
+> being applied meanwhile, please LMK if a repost is needed, thanks!
+>
+> Paolo
+>
 
-Regards
-Bibo Mao
+Thanks
 
 
