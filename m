@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427E9CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB89CCA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utOSH-0005Rs-FF; Tue, 02 Sep 2025 06:41:37 -0400
+	id 1utOUx-0006bV-Ex; Tue, 02 Sep 2025 06:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOSF-0005Rd-Gb
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:41:35 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOUo-0006Yc-E6
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:44:14 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOSD-0002DU-7r
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:41:35 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3cbb3ff70a0so3264576f8f.2
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:41:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOUm-0002MS-76
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:44:14 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-45b869d3571so5995965e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:44:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756809691; x=1757414491; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756809850; x=1757414650; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gUDo6zNB95Zm3AYI8zAP2Lnfdtiip0fMs9KZf4b+AmY=;
- b=eZNWnkrEb5/RUNaEtXdLU0v/YrzNSlNNe1RoILPV+iQboDHrEbUfTkXVfP5/Mk5/kI
- 3L8lvAdXxHzXZUmzd8jCtZ3iTmGIAvPvCtz+P688h7DDRMQM3bpVj0gFctTvkJekXlPs
- Q42GTzb8kRFMoprA1c1z9loxY78+G2YgIES61+zAix4cYlDkp+d9gN6I2NhrrVkfUTs6
- IUaTLmAZqS2Ry4Ar8eBcvnv2dv6kqWoyw1MyXU5P74C+zbMAlEJlD/c2CGyGKYaygtnh
- FU1LooPRAnG49tugL2YtmP5ci47J7Vw9RluN0cg5M2SBikTR2FPWCKc9MC9grphnDV4r
- VJrw==
+ bh=lKa+uzR2fZe5SDEjtJv45LjqghmibtaANiwzOL7+vIQ=;
+ b=bMiwGOs8st5BosiHwblkF0jHoTI8P0Nzv0iy260TinvcUTZngjevwxajq/Copur0kh
+ Ktgiukr6nuq5a2/ITKz3OLlrdRLh+xyb8PnA1OYHFQ++bTpvgBgKERqBwRm75y2Bb8ED
+ yPsduVSM4FUqgBQ+boiYO9GzfJ2U4zmb9SOfv+Sj2pT/fmC37Non004KHdp8Lmh7WaHe
+ XOLPnaAQjhIMfTx2QBRSxRuXK3Kwa3JcyTBIO+sFyCmRjnbEbcd3KnM35jliwyBtB8sM
+ ueC3+ammcCVyqczKsczg49zdv13qGSeMLaPVYeR2W3ZLyW4OPvXVvsrxKAN7ojX3ZXV0
+ Z6OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756809691; x=1757414491;
+ d=1e100.net; s=20230601; t=1756809850; x=1757414650;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gUDo6zNB95Zm3AYI8zAP2Lnfdtiip0fMs9KZf4b+AmY=;
- b=gj2Ffdx1+aiTsAPI+nwZNEx5HXTLvXrxJWvXH7rB8Zzb4bZba4EQmH/3pN2jL89ePc
- bvXYRpHKh+27mh6d5eP1SR1rNb+WgneoEuaOHytUTlDkLAo3q9K+4UiwIPCw4ctoLcl0
- OczjsWNVJ1X7gftDcqi9TMhWenCyYnoBDDk4DRxE36u84iaizuI7Q1F5ulyXgVgstA9p
- nArtqZfz7E0o0satI41umYaV+9jbt8zlPcyfD0NehnWmRsUFeiuLerWhzRratuWzswDc
- 49moPWg2gnTRfMcmhOjs4Af72t5Y+xZVR7B0ny3hVkRelfZQovHVNXsOqmGeNuKXnRdt
- Bv1g==
+ bh=lKa+uzR2fZe5SDEjtJv45LjqghmibtaANiwzOL7+vIQ=;
+ b=pWVNbiU5N3BQ3Ejc7IH+eFa4q4pRw+fKPph/CNoFxmnQbMWz/tXWZLkxSIqQ37wCDm
+ UIGxKOoH6iMKqc0MG27EGS3J3bGjaWxtS548fU/VV2IkPNtaJiGJg3pJ1QlRClpeQIuA
+ 8FmJ82fTYaV/3zAFCPIEZ7ySkuVlZLpbmd+kGEAmHUzoQkLDuOv6IxA/ZLcQoal/22cW
+ NKwGgS2ElKQM+vGdb0ufq08h0EG4hqgysy7mgQLkkVT3OytqdaSXOXX2ZtQCyFF+KLo5
+ xw2cMT1lUf79tyBfGqArNepAhWkrDS6CCNdvBxHab8d/dkrtq3X2enDkr0yUTm9kcl3X
+ AdyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoc5R9bpsaLXiF77Bp7uGvAYAPsfzjGcyvhxPTubC+GLfeIBcpULlRsJQtZc/6hdsLrNKn9HcL7U4s@nongnu.org
-X-Gm-Message-State: AOJu0YwRjuakDN8CU5A0gTnpmDod+jFUm9Tac6M0K84hG/xf0iGJn1wH
- KTveNjpdw/s59XP0toDbgm/BVrfuxyHLx+5oNtAp7wND7APtki8bW1/a0OtTmzz3BfU=
-X-Gm-Gg: ASbGncvhgPl02GrZQH6MPG+DSGFQKM1taMypcWDdDdDoqKQLdZm+GfK4Q+K9U3T9OXs
- GvTT19kyFQsr6fz9V6Q1NCcBLx9x1Px7Tl8IGxcTBdgwwobOqT2JnjBrKdYqEYTNIO1CsPtvCwu
- fUI9FFmcHyrnyDTQSMfribPfPWhF1+h0CwKKTPp5oZA2YPcvn1gHz1RxNiuq4FdJypzaJyKSY2W
- fwJI3pviIwinbluYeJK/vXdmldnoyS+bGQmF7qYNzTV32x+z6g2nwI7Hz5D29WOkwXLIqnWNKQ0
- 4RF+HFDjBnjZmg1STXATdWrnw8ppTZU8/sOgdB0oifsrSBg4LalDhky5Uq+n9wI6INBFeKuHiX7
- fx+j5hsqM9st0vI5z4nRz08C7X7xF6afnohYfs5v3LDhzNnIwTLgU/Mo+KCaRatkoAFOnNHqeMa
- GLzpLsTsdDivA=
-X-Google-Smtp-Source: AGHT+IH7s/WFoU74pm+CIlexktvXeNeXMou0UYvSY//nDCSNwRJWsAUuM7al3vdwSrlhCVbi/Y5H6Q==
-X-Received: by 2002:a5d:5d86:0:b0:3d7:2284:b06 with SMTP id
- ffacd0b85a97d-3d722841157mr4691447f8f.24.1756809690641; 
- Tue, 02 Sep 2025 03:41:30 -0700 (PDT)
+ AJvYcCWvLt9E+ljy7OGhmyuNy21G9E0IumF6JSd4R7ZUIA1Axxw8woy6urvMSNKZGtcYtEm8eTLBvTS/tVe2@nongnu.org
+X-Gm-Message-State: AOJu0YyOLLVYwRsZKk84gX1+415Aa2oWlGTC+MhmB50WcWrctSQbIvRG
+ O2+dMunflwJjf4pytdLKCG0ldV8rS5h0ziZhP4Sus4oSN+kP9XplJxfoOENRSWBQXsQ=
+X-Gm-Gg: ASbGnct1EB6k+hjIbFqKEdeigtG5x/rihfbC60hg4AkOKS8fNcVY8eTL44IwzGJmVTE
+ YIPT+0d+Bm3jdF2gmpnh0JDmFss5IKC8id4aIRaL0VUm6z8qN4dtUjc9GlTRwcCluZZugoey31v
+ QTk350KoZK2woG8ifcg83P52TbwngEGppNB7EjrWynnpoWk8dUiA7dhh8y/jGfqEfyms1hoKJ0h
+ WCbLMoqqG88zQfd3dgiypkkWCMYpqyygeqNspqGrI5PDecBnaC4jXv0r4xSLTei23my+TXD6S3Z
+ KkAO5I8TrNRx6/38b9Gp+XbLaEgIIcTqCI8vDIV0FZByW0SOqcytEK0TxILgsuQL6/XujoicSOD
+ g721MxzjsDYUxjpUg3xgUgUz/K1kw/uwqW3QVf6Jmeo4yKCMba21WUA+TmTX2YMLKww==
+X-Google-Smtp-Source: AGHT+IEWjg5RdM8rnHb/ivln5tDp2BNTuktCbmrYWsCAO5uKIgDOrFb73uHL7tkrALe40JpNHKYc0w==
+X-Received: by 2002:a05:600c:3baa:b0:45b:8b3e:9f7b with SMTP id
+ 5b1f17b1804b1-45b8b3ea15cmr58758845e9.3.1756809849813; 
+ Tue, 02 Sep 2025 03:44:09 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b93fae643sm38469815e9.3.2025.09.02.03.41.29
+ 5b1f17b1804b1-45b93fae643sm38561895e9.3.2025.09.02.03.44.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 03:41:30 -0700 (PDT)
-Message-ID: <54fe9253-1e34-4411-afaa-4c17f2040fa0@linaro.org>
-Date: Tue, 2 Sep 2025 12:41:29 +0200
+ Tue, 02 Sep 2025 03:44:09 -0700 (PDT)
+Message-ID: <aa71d2dc-ebd8-46bf-8693-4e17da3434ef@linaro.org>
+Date: Tue, 2 Sep 2025 12:44:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] e1000e: Prevent crash from legacy interrupt firing
- after MSI-X enable
-To: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Thomas Huth
- <thuth@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20250807110806.409065-1-lvivier@redhat.com>
- <CACGkMEsYDPjPBNmAd=AmZQ2AY46weFC_u8PK=+CSCuUD6W9zYg@mail.gmail.com>
- <20250818140313.GA7391@fedora>
- <CACGkMEvUq4ugS6PQ=mRH5Kx+rnDda5Wq3K8hSVrehv3=n5xk4Q@mail.gmail.com>
- <52f9eaaa-cf33-4558-b869-f4f66844f92e@redhat.com>
+Subject: Re: [PATCH] fix: Fix build error with CONFIG_POWERNV disabled
+To: Aditya Gupta <adityag@linux.ibm.com>, Nicholas Piggin
+ <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>
+References: <20250820122516.949766-2-adityag@linux.ibm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <52f9eaaa-cf33-4558-b869-f4f66844f92e@redhat.com>
+In-Reply-To: <20250820122516.949766-2-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,67 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 13:57, Laurent Vivier wrote:
-> Hi Jason,
+On 20/8/25 14:25, Aditya Gupta wrote:
+> Currently when CONFIG_POWERNV is not enabled, the build fails, such as
+> with --without-default-devices:
 > 
-> On 19/08/2025 04:46, Jason Wang wrote:
->> On Mon, Aug 18, 2025 at 10:03 PM Stefan Hajnoczi <stefanha@redhat.com> 
->> wrote:
->>>
->>> On Mon, Aug 18, 2025 at 10:08:18AM +0800, Jason Wang wrote:
->>>> On Thu, Aug 7, 2025 at 7:08 PM Laurent Vivier <lvivier@redhat.com> 
->>>> wrote:
->>>>>
->>>>> A race condition between guest driver actions and QEMU timers can lead
->>>>> to an assertion failure when the guest switches the e1000e from legacy
->>>>> interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
->>>>> RDTR) is active, but the guest enables MSI-X before the timer fires,
->>>>> the pending interrupt cause can trigger an assert in
->>>>> e1000e_intmgr_collect_delayed_causes().
->>>>>
->>>>> This patch removes the assertion and executes the code that clears the
->>>>> pending legacy causes. This change is safe and introduces no 
->>>>> unintended
->>>>> behavioral side effects, as it only alters a state that previously led
->>>>> to termination.
->>>>>
->>>>> - when core->delayed_causes == 0 the function was already a no-op and
->>>>>    remains so.
->>>>>
->>>>> - when core->delayed_causes != 0 the function would previously
->>>>>    crash due to the assertion failure. The patch now defines a safe
->>>>>    outcome by clearing the cause and returning. Since behavior after
->>>>>    the assertion never existed, this simply corrects the crash.
->>>>>
->>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
->>>>> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
->>>>> ---
->>>>
->>>> Acked-by: Jason Wang <jasowang@redhat.com>
->>>>
->>>> Consider rc3 is out. Can this be applied directly by maintainers or a
->>>> PULL request is expected?
->>>
->>> The commit description doesn't mention whether this fixes a regression
->>> introduced since QEMU 10.0, whether there is a security impact, etc.
->>> In the absence of more information, this looks like a regular bug fix
->>> that does not need to be merged for -rc4.
->>>
->>> Only release blockers will be merged for -rc4 (Tue 19 Aug). Please
->>> provide a justification if this commit is a release blocker. Reasoning:
->>> - From -rc3 onwards the goal is to make the final release and adding
->>>    additional patches risks introducing new issues that will delay the
->>>    release further.
->>> - Commits should include enough information to make the decision to
->>>    merge easy and documented in git-log(1). Don't rely on me to judge 
->>> the
->>>    severity in areas of the codebase I'm not an expert in.
->>
->> I see, I think it's not a release blocker so we can defer this to the
->> next release.
+>      $ ./configure --without-default-devices
+>      $ make
 > 
-> just a reminder not to forget to pull it now...
+>      [281/283] Linking target qemu-system-ppc64
+>      FAILED: qemu-system-ppc64
+>      cc -m64 @qemu-system-ppc64.rsp
+>      /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_load_sprd':
+>      .../target/ppc/misc_helper.c:335:(.text+0xcdc): undefined reference to `pnv_chip_find_core'
+>      /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_store_sprd':
+>      .../target/ppc/misc_helper.c:375:(.text+0xdf4): undefined reference to `pnv_chip_find_core'
+>      collect2: error: ld returned 1 exit status
+>      ...
+> 
+> This is since target/ppc/misc_helper.c references PowerNV specific
+> 'pnv_chip_find_core' call.
+> 
+> Split the PowerNV specific SPRD code out of the generic PowerPC code, by
+> moving the SPRD code to pnv.c
+> 
+> Fixes: 9808ce6d5cb ("target/ppc: Big-core scratch register fix")
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+> Note that while moving the code, the 'target_ulong' type for sprc has been
+> modified to 'uint64_t'.
+> 
+> Based on the discussion happened on [1].
+> Requires patch 1 and patch 2 of [1] to be applied, to fix the build.
+> 
+> [1]: https://lore.kernel.org/qemu-devel/20250526112346.48744-1-philmd@linaro.org/
+> ---
+> ---
+>   hw/ppc/pnv.c             | 86 ++++++++++++++++++++++++++++++++++++++++
+>   target/ppc/cpu.h         |  4 ++
+>   target/ppc/misc_helper.c | 59 +++------------------------
+>   3 files changed, 96 insertions(+), 53 deletions(-)
 
-Since Jason Acked the patch, I'll merge it via my hw-misc tree; thanks!
+Patch queued via hw-misc, thanks.
+
 
