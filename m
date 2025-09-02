@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA6ACA100B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32D6CA0FFE
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 04:05:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utI1q-00056C-Sf; Mon, 01 Sep 2025 23:49:55 -0400
+	id 1utI1j-0004JY-P4; Mon, 01 Sep 2025 23:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI1o-0004pG-7A
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:52 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1utI1f-0003pb-MR
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:43 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI1m-0004gq-71
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:51 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822SO4l013850
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:49:38 GMT
+ id 1utI1d-0004ew-4F
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:43 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822SEhr022405
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:49:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- O9I3g7Y55SmupnY5HGKX2w4q9NJsFa535eQugDny6JE=; b=gnyrqfDY+rKrKegw
- vdfv4m65eD5VIc7Xu+c0pyKcf1/USiAbRukT0/A4wdTgQIFPc4iWLRni0Mp0X47b
- q4cTpDKpgXeboR29AHFYbtVNER+XYaxIyTSoHZmGBs0Q063K/PJCQEWDW7zRhANK
- X3TV14ag6b0qssat37kmVQd1+k2K3w0m9jG9sb41+werYlkC4rJKYAxr6/4LL17L
- WsJmEpihYdM4rRVwMkXX88ALA2lOOWKjfCq8FHv6bRAGdSZ69s5AqKwIcqu2fwDd
- /9Vw6pQgtTIIa1dhbeE+2hI9LrEunl+YT8Re1VLVQOI2sTg40Z7HnbB5SdiXK4sQ
- aikQ+A==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uq0eejac-1
+ 3r9XB5ApdGl0zJJXVSs68EPti39S8JotrbofO4ZR95E=; b=N72ub1ZJp+iTiKnD
+ 3lVsF2XTiR2KEu9hGTqZPcUrW4gVWrqwfd08z22w0h1ZQs3tc27R9XxcrDLoaMTR
+ 6BvTAvsuLLMLTI0Cw3V4xaNRZ5raEa06ImzSc7fusoELhW4SvEe8ya1uv7DgaJ8T
+ NuixI+iDZDXqRpLQd3tD8fP4X7uLE+SznHNp8tY6XCxZ7vDRP4TwHrZc8AkrAbMc
+ KYyP/wG22HjgBjFi3exHdxEYUj/EYejBikivw1hxG5sl5u9J5WDrSZdoiuXTxNs9
+ L/PY6YrQTJ7fOjxvv4jqNnJZ6Yolu1T5weCc+GfUft6olbdDdOt4OaXHotENgEHI
+ r5XgUQ==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnp6hv4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:49:38 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-324e4c3af5fso5183780a91.3
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:49:38 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:49:29 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b4c229e2a42so3573963a12.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:49:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756784977; x=1757389777;
+ d=1e100.net; s=20230601; t=1756784968; x=1757389768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=O9I3g7Y55SmupnY5HGKX2w4q9NJsFa535eQugDny6JE=;
- b=epsakrAs3x/evTAHnFlkM6jZwLIACE4uf8fubhYiJtyydahAyu9eP/qxLXZCG6Xllu
- ICojMB4bzZ0nhvgeLKoNl/4TzV/s87A2khlOQt9UwMJ8NoLrZ9r2B0X7bj5yNnsK3FOQ
- a4cnDQ0hP1GvW81ZhWjMokpXoeHPjXWfhfuyTGExQqz8ocCue1MJRQWJn1GQ+VEzqSQS
- ay1xvStOiDQoE7qVvgAWgajcg3EbbU/4z6nMmBqVoGGvH8L+H52Gs0B32cmSKRMFJnvk
- uS5j00GODj1R6kQh2NBCEJcUPRRGwZQmmbWONlUDn2fNXSVWI9JlkzuJIZfg0VGjGGxQ
- y4Mw==
-X-Gm-Message-State: AOJu0YzlJSZjcRQ5yMlvEAvFH8SfveRQJ9adJf8HeakPzjwGsVe50yiY
- ma/RQjtOyrCmESfchy9nkvzkMV9Zxl4fuv47PTfLkMnAW9EfeVxSG7Ddv+Oixk6FkUksTd5Luay
- jxO+OnAmv+AGD0LYLHdc9ZkC85Z6nxH85/wTR1/SSjZMBSRj+rMiZRTWMxhYL5cGcpgKW
-X-Gm-Gg: ASbGncut1pUfCqQdPqOePie89CGfu2z/8mJoSGL+Z+zmqEJUiQfltFiCrhaEMLdgQGk
- vBdEUdFlXnouXL6eShU54jryreIT9nkc/14BEOssBiIma7QLsly8XHtMJKknBqAY5p/Sio7Zuyb
- M79N+hGNOPosWtJvZ55qRNruOEHkvpNVebZE8dYF717F8z/iy8vw9UrGiAvNImVYNDen6mLZlgs
- eeS0082CW4QAsW7ddC0iR2SSSUYDOmToRU9Da09tJV34YLpy11azQkYopsl0KzJiMjnsMAj6Ntz
- ng9NTWGwo3B82ifvrLgUbyQXskgucbtg639HEhuHLPr4AsQnXe473l1fj8UPsJY8pumDhzL6g6J
- HUi/DAmU9LT43
-X-Received: by 2002:a17:90b:54c5:b0:329:8160:437a with SMTP id
- 98e67ed59e1d1-3298160446amr11234194a91.24.1756784977174; 
- Mon, 01 Sep 2025 20:49:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+a7kkaLQKQ/CLk4rCxxF60Z65/NJ0QJZr63EscBAjOLwYKGEDEMj8gl9NVsu/37FSCVYtuw==
-X-Received: by 2002:a17:90b:54c5:b0:329:8160:437a with SMTP id
- 98e67ed59e1d1-3298160446amr11234168a91.24.1756784976699; 
- Mon, 01 Sep 2025 20:49:36 -0700 (PDT)
+ bh=3r9XB5ApdGl0zJJXVSs68EPti39S8JotrbofO4ZR95E=;
+ b=qcdNsz0Q4H54KPdudjt0fLM1KaUHgxPmrGFnHpTZpQ5de07XmiSatAZfVzt6JNjN54
+ lPHBT/BRxKvh3ouDg9b9MfpHD9d+9BxgPAdrUmUzdRiPpya3/2DzDV9jKUx8TV0LPIJX
+ EoUcUynCgU6Wu4ldyn4vbsaFqwcVdD3rl/Lyv/QEcKiFrkEQy3fEutR4nUA0sETB3y/u
+ sFP+yfkld7w+Jadxq2wy42HXCV7Zl1Gu0XgAbC5gMqm2RtLjSCR3GfDjy/6BbJuguePE
+ w4LsufLEHy1eMIHdSUUIiLnUy+gK60ndPjcb1Ke1u2RatQ5e5zlo0t+tCJFxr37P2btM
+ R65Q==
+X-Gm-Message-State: AOJu0Yzu1dqF0GdG5httHsxRsAgoSpAQeYSQQdCo5aJE6NErA2Shxz/A
+ 28BDZsL+t3W5NUMTLxVqzj9cVei9PWlZBlxJGR8VEx0hffU9wbKoOSSxhw1R9HCviRdloba15Yi
+ kJekgDWT+ZW5YWZ3EOtitFoIqs7zGfXHYi/SkbCl3x1gvzSfd8D0LIfy66T+HqCmCTNB8
+X-Gm-Gg: ASbGncvPpWllgdEaqRIObIUrDfiN92t8Gx4As26F/yO1s7VPVApzzWV/bmtTLwfr7U0
+ ZYu2rgDSFvBm+Y44UJ6anCqOlVuKtaoNYVYHY9rRF9G3QIl+ERzED8kzAq7p5Cp5C8+jDsAMX3s
+ bI7Nhjq6/+IW/EBBJCD/K06qrl6AZkPJ7H/Auq7fPmdKSJy7sqMELF4yzn0pY7ORfEWLTKxe4ND
+ tPadA7jq9RhEjnv454u05ujD5ZLAJ+2Peav4jUNj6jiXCBK6o9eYAGKGF9MBUNVMLSxVEj0DlE2
+ DuXPXC/3d3DL78iJHDAEHqkI8TSROdBHyfXEbm98JvrFMrtdbl1n8jV00NYANBeNyvuKXPLY6IN
+ QWf4vTv2hbnmS
+X-Received: by 2002:a17:90b:3148:b0:328:650:4e7a with SMTP id
+ 98e67ed59e1d1-32815412274mr13594797a91.3.1756784968222; 
+ Mon, 01 Sep 2025 20:49:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiw4IuRjfaE7GOIK3xUBxzcM85eeSUeG6gW+wxX8LF7w4Xh31xxdhN+a9W+VtaHPyi4//Ung==
+X-Received: by 2002:a17:90b:3148:b0:328:650:4e7a with SMTP id
+ 98e67ed59e1d1-32815412274mr13594762a91.3.1756784967666; 
+ Mon, 01 Sep 2025 20:49:27 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327daeeca1csm12543546a91.25.2025.09.01.20.49.35
+ 98e67ed59e1d1-327daeeca1csm12543546a91.25.2025.09.01.20.49.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 20:49:36 -0700 (PDT)
+ Mon, 01 Sep 2025 20:49:26 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
@@ -81,39 +81,39 @@ Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
  anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  alex.bennee@linaro.org, quic_mburton@quicinc.com,
  sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v2 37/39] target/hexagon: Add support for loadw_phys
-Date: Mon,  1 Sep 2025 20:48:45 -0700
-Message-Id: <20250902034847.1948010-38-brian.cain@oss.qualcomm.com>
+Subject: [PATCH v2 29/39] target/hexagon: Add pkt_ends_tb to translation
+Date: Mon,  1 Sep 2025 20:48:37 -0700
+Message-Id: <20250902034847.1948010-30-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
 References: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: KBU_yr8vpUEkAtd_Nl0kzC4WGH2sTg20
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwNCBTYWx0ZWRfXwv4U9pxmLZrj
- N1YsYPszHImchr9vyrUXrd4Z5El5+dc9kbvTjatMGeL1hHfCY4+t4d59gTtqYmxmuI8PC8+pX28
- P+lZiaDjutKj2sS4Lx/vAJCalmZ4Gga5EkpkwqQmaptYtayKJwPrTZdn/4S93g8Dt6of/FvtXt7
- 3Hj6f24ECRYBZfIEeyfVbug98vK3WpFlCMmwygPQkQNlD+Xd3L5poH1KZAQsuFbRAiUq96yvtWR
- X5Tyz8U7LByzfglagNHEUf0a15syPDus4LwIwmrKjxHjOfWV1L7E0344pMiiKlryBd1TDqK3NsE
- pXdyR5zRBaOfrAQsVRYK5oSYb+Vo2xueiT2wca9WaSolEOr253DbaJYY7XAdIUgwgHKgNuo4NPq
- C/EuOrqt
-X-Proofpoint-ORIG-GUID: KBU_yr8vpUEkAtd_Nl0kzC4WGH2sTg20
-X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68b66952 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=M_0_kNSAHlZdZebFLzYA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: AZzqbxHC6DbTqMjAvbyyBq3ji4E9x8mx
+X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b66949 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=imK-vThzYG-NRbbrpigA:9 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: AZzqbxHC6DbTqMjAvbyyBq3ji4E9x8mx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfX/A+LeQLfaLdJ
+ Uq+THYORMD0rgaR6JTakOl/lUhHiN5RBCrREyRE8mYL3zo+uTchnFpaiLbg+i0iSgTdgszTz1k1
+ l2ccCLOd79YK3+IuigIRCe3CR+mKhJXDoxPoEnGO6pKxWkXnVXexvOAVhfiNzyZvuOLmBCYxR+p
+ 3P3BpjX+jNWT70rSS8e898TAnBW7RRZ28VHsMOf/mQp39sifkMNzVYMmAVImvcyFHGJ/2ms9zjc
+ Jei6+wkMWtMx3aU4C/EzZboQQbIa/CxqHmddFMJPu+0zERia5irpzX+STkn/TfBlODfW/pTsUzE
+ FFzRysNq1bKbdJi0i1HtV8nMwn8zV7IDukCLZLMhssPW+elMqhzOND4eRIY6+/2iMD0OyB8Lpvb
+ s2W/Ib9O
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300004
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
+ spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300001
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -138,54 +138,165 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Brian Cain <bcain@quicinc.com>
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/hexagon/hex_common.py          | 3 +++
- target/hexagon/imported/encode_pp.def | 1 +
- target/hexagon/imported/ldst.idef     | 3 +++
- 3 files changed, 7 insertions(+)
+ target/hexagon/translate.h |   1 +
+ target/hexagon/translate.c | 102 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 101 insertions(+), 2 deletions(-)
 
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 39451e6d88..2770b0638b 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -265,6 +265,9 @@ def need_slot(tag):
-         and "A_CVI_GATHER" not in attribdict[tag]
-         and ("A_STORE" in attribdict[tag]
-              or "A_LOAD" in attribdict[tag])
-+        and tag != "L4_loadw_phys"
-+        and tag != "L6_memcpy"
-+        and tag != "Y6_dmlink"
-     ):
-         return 1
-     else:
-diff --git a/target/hexagon/imported/encode_pp.def b/target/hexagon/imported/encode_pp.def
-index 37faf62b1b..41e4ab9e3a 100644
---- a/target/hexagon/imported/encode_pp.def
-+++ b/target/hexagon/imported/encode_pp.def
-@@ -388,6 +388,7 @@ DEF_ENC32(L4_return_fnew_pnt, ICLASS_LD" 011 0 000 sssss PP1010vv ---ddddd")
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+index 0bdf526a9e..08194a3309 100644
+--- a/target/hexagon/translate.h
++++ b/target/hexagon/translate.h
+@@ -84,6 +84,7 @@ typedef struct DisasContext {
+     TCGv branch_taken;
+     TCGv dczero_addr;
+     bool pcycle_enabled;
++    bool pkt_ends_tb;
+     uint32_t num_cycles;
+ } DisasContext;
  
- /** Load Acquire Store Release Encoding **/
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index a71fa33ccf..92adc60d1a 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -258,6 +258,16 @@ static bool check_for_attrib(Packet *pkt, int attrib)
+     return false;
+ }
  
-+DEF_ENC32(L4_loadw_phys,      ICLASS_LD" 001 0 000 sssss PP1ttttt -00ddddd")
- DEF_ENC32(L2_loadw_locked,    ICLASS_LD" 001 0 000 sssss PP000--- 000ddddd")
- DEF_ENC32(L4_loadd_locked,    ICLASS_LD" 001 0 000 sssss PP010--- 000ddddd")
- 
-diff --git a/target/hexagon/imported/ldst.idef b/target/hexagon/imported/ldst.idef
-index 53198176a9..4e1e5d5326 100644
---- a/target/hexagon/imported/ldst.idef
-+++ b/target/hexagon/imported/ldst.idef
-@@ -203,6 +203,9 @@ Q6INSN(S2_storew_locked,"memw_locked(Rs32,Pd4)=Rt32", ATTRIBS(A_REGWRSIZE_4B,A_M
- Q6INSN(L4_loadd_locked,"Rdd32=memd_locked(Rs32)", ATTRIBS(A_REGWRSIZE_8B,A_MEMSIZE_8B,A_LOAD,A_RESTRICT_SLOT0ONLY,A_RESTRICT_PACKET_AXOK,A_NOTE_AXOK), "Load double with lock",
- { fEA_REG(RsV); fLOAD_LOCKED(1,8,u,EA,RddV) })
- 
-+Q6INSN(L4_loadw_phys,"Rd32=memw_phys(Rs32,Rt32)", ATTRIBS(A_REGWRSIZE_4B,A_PRIV,A_RESTRICT_SLOT0ONLY,A_NOTE_PRIV,A_MEMSIZE_4B,A_LOAD,A_NOTE_NOPACKET,A_RESTRICT_NOPACKET), "Load word from physical address",
-+{ fLOAD_PHYS(1,4,u,RsV,RtV,RdV); })
++static bool check_for_opcode(Packet *pkt, uint16_t opcode)
++{
++    for (int i = 0; i < pkt->num_insns; i++) {
++        if (pkt->insn[i].opcode == opcode) {
++            return true;
++        }
++    }
++    return false;
++}
 +
- Q6INSN(S4_stored_locked,"memd_locked(Rs32,Pd4)=Rtt32", ATTRIBS(A_REGWRSIZE_8B,A_MEMSIZE_8B,A_STORE,A_RESTRICT_SLOT0ONLY,A_RESTRICT_PACKET_AXOK,A_NOTE_AXOK,A_RESTRICT_LATEPRED,A_NOTE_LATEPRED), "Store word with lock",
- { fEA_REG(RsV); fSTORE_LOCKED(1,8,EA,RttV,PdV) })
+ static bool need_slot_cancelled(Packet *pkt)
+ {
+     /* We only need slot_cancelled for conditional store instructions */
+@@ -271,6 +281,90 @@ static bool need_slot_cancelled(Packet *pkt)
+     return false;
+ }
  
++#ifndef CONFIG_USER_ONLY
++static bool sreg_write_to_global(int reg_num)
++{
++    return reg_num == HEX_SREG_SSR ||
++           reg_num == HEX_SREG_STID ||
++           reg_num == HEX_SREG_IMASK ||
++           reg_num == HEX_SREG_IPENDAD ||
++           reg_num == HEX_SREG_BESTWAIT ||
++           reg_num == HEX_SREG_SCHEDCFG;
++}
++
++static bool has_sreg_write_to_global(Packet const *pkt)
++{
++    for (int i = 0; i < pkt->num_insns; i++) {
++        Insn const *insn = &pkt->insn[i];
++        uint16_t opcode = insn->opcode;
++        if (opcode == Y2_tfrsrcr) {
++            /* Write to a single sreg */
++            int reg_num = insn->regno[0];
++            if (sreg_write_to_global(reg_num)) {
++                return true;
++            }
++        } else if (opcode == Y4_tfrspcp) {
++            /* Write to a sreg pair */
++            int reg_num = insn->regno[0];
++            if (sreg_write_to_global(reg_num)) {
++                return true;
++            }
++            if (sreg_write_to_global(reg_num + 1)) {
++                return true;
++            }
++        }
++    }
++    return false;
++}
++#endif
++
++static bool pkt_ends_tb(Packet *pkt)
++{
++    if (pkt->pkt_has_cof) {
++        return true;
++    }
++#ifndef CONFIG_USER_ONLY
++    /* System mode instructions that end TLB */
++    if (check_for_opcode(pkt, Y2_swi) ||
++        check_for_opcode(pkt, Y2_cswi) ||
++        check_for_opcode(pkt, Y2_ciad) ||
++        check_for_opcode(pkt, Y4_siad) ||
++        check_for_opcode(pkt, Y2_wait) ||
++        check_for_opcode(pkt, Y2_resume) ||
++        check_for_opcode(pkt, Y2_iassignw) ||
++        check_for_opcode(pkt, Y2_setimask) ||
++        check_for_opcode(pkt, Y4_nmi) ||
++        check_for_opcode(pkt, Y2_setprio) ||
++        check_for_opcode(pkt, Y2_start) ||
++        check_for_opcode(pkt, Y2_stop) ||
++        check_for_opcode(pkt, Y2_k0lock) ||
++        check_for_opcode(pkt, Y2_k0unlock) ||
++        check_for_opcode(pkt, Y2_tlblock) ||
++        check_for_opcode(pkt, Y2_tlbunlock) ||
++        check_for_opcode(pkt, Y2_break) ||
++        check_for_opcode(pkt, Y2_isync) ||
++        check_for_opcode(pkt, Y2_syncht) ||
++        check_for_opcode(pkt, Y2_tlbp) ||
++        check_for_opcode(pkt, Y2_tlbw) ||
++        check_for_opcode(pkt, Y5_ctlbw) ||
++        check_for_opcode(pkt, Y5_tlbasidi)) {
++        return true;
++    }
++
++    /*
++     * Check for sreg writes that would end the TB
++     */
++    if (check_for_attrib(pkt, A_IMPLICIT_WRITES_SSR)) {
++        return true;
++    }
++    if (has_sreg_write_to_global(pkt)) {
++        return true;
++    }
++#endif
++    return false;
++}
++
++
+ static bool need_next_PC(DisasContext *ctx)
+ {
+     Packet *pkt = ctx->pkt;
+@@ -426,7 +520,10 @@ static void analyze_packet(DisasContext *ctx)
+ static void gen_start_packet(DisasContext *ctx)
+ {
+     Packet *pkt = ctx->pkt;
+-    target_ulong next_PC = ctx->base.pc_next + pkt->encod_pkt_size_in_bytes;
++    target_ulong next_PC = (check_for_opcode(pkt, Y2_k0lock) ||
++                            check_for_opcode(pkt, Y2_tlblock)) ?
++                               ctx->base.pc_next :
++                               ctx->base.pc_next + pkt->encod_pkt_size_in_bytes;
+     int i;
+ 
+     /* Clear out the disassembly context */
+@@ -472,6 +569,7 @@ static void gen_start_packet(DisasContext *ctx)
+         tcg_gen_movi_tl(hex_slot_cancelled, 0);
+     }
+     ctx->branch_taken = NULL;
++    ctx->pkt_ends_tb = pkt_ends_tb(pkt);
+     if (pkt->pkt_has_cof) {
+         ctx->branch_taken = tcg_temp_new();
+         if (pkt->pkt_has_multi_cof) {
+@@ -926,7 +1024,7 @@ static void gen_commit_packet(DisasContext *ctx)
+         pkt->vhist_insn->generate(ctx);
+     }
+ 
+-    if (pkt->pkt_has_cof) {
++    if (ctx->pkt_ends_tb || ctx->base.is_jmp == DISAS_NORETURN) {
+         gen_end_tb(ctx);
+     }
+ }
 -- 
 2.34.1
 
