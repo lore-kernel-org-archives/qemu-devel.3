@@ -4,93 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A879CCA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DAE9CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utSah-0005nQ-0z; Tue, 02 Sep 2025 11:06:36 -0400
+	id 1utSkH-0002Wt-Er; Tue, 02 Sep 2025 11:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utSac-0005lg-M1
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:06:31 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utSaY-0008AA-VE
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:06:30 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-45b7e69570bso28370715e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 08:06:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756825581; x=1757430381; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZEGO139SeqDxUI/SQqsVpNZ7wS1+CNUNhT7jQXyiEA8=;
- b=EliLG+igVdHnlre29wOep/CMzAlJx3jdzmKWwnDrvjrZ3Iz9+wLN9uVud44RPq+mAT
- H+A/HIKaUPoKCkulTUmdQVbu3AUZnmbrfrC+aljohV2nBr3tMRuEzHXnXE7XluTnuQB3
- ZmLrsRW0rMU8/ozLzV9T3DbAhccNlAwNztMdn4vZdzzVfrpUAk7b1Czx8RwfZRCJUwlZ
- Hx1Pa2/WCfYHAYuxJelNUYaOf5UpaNx3SUqhMwNYOufmts3rf+jmLDQm1mS7LuYzWBnK
- oReN8EekCYj2cCJKJl105EzleDzvJP016ZOdbDIPUFh3rjB3fMEF2j9zabrTTIPPZDwl
- 6ULQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756825581; x=1757430381;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZEGO139SeqDxUI/SQqsVpNZ7wS1+CNUNhT7jQXyiEA8=;
- b=cJPuTHnYp2bjyC5f/2m5Xy1QCWqAJ4pubVs7nRNB8XfCdfFhTQZ2/aGvBcT3AwqZrL
- qIFSF7C28Vw/nC85WL8lj7bTQujMu6DiWhXrVsBcNxq+koQYh0q3VxL3FtOA6aFokKg1
- wPuOr+xIN6Vn0Pp7eU1yrqBCEZZR47V+MIRwwjw93zRstLREvljsFkpwyz4TXW7CiOii
- 9Q2HRZ3b8+7CxYcCqTEJFM79pqGSzPOfy8JtbAt5sRbLOIg3jnfaQJurF1qdex99Lyq0
- bIwE36HWCRem20P7QqxwznXVNbX7J9vQBH2/paoGNZyzqBQlYZVz0tzF0tUW8fYQpKX5
- qjCA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWMBrlwGYvbaS54RQg3POe482fK1LhAYZohDyc7GatgltxPBNfPGNsiR1SnxvOSOBwLLqUEJNFZQTPs@nongnu.org
-X-Gm-Message-State: AOJu0YwNoMUNcLC2a5fuPygKVS6tTZ3DTVF2r+HABkctFhh6NUdVUb9c
- b07RqoljCSaLvtcuLPqMmDtAk3VUOSjwgJSgdfq+fv1C/5/PWNIJQYgUZrWXhH60X8U=
-X-Gm-Gg: ASbGncuPUoyM7eFT0G1oWtuRVZ/cxIKWDL3Jath3d9B/zAbdj3ipLfIFnh9BhS9mtje
- PoI+dtjBxajpNn2u2Nc6p0JbFHzP7xSL8lpQhghiygN7TZpId1TNCV2Vfg6ttRqKTISR0GtaMwB
- 5ChJLOUpdpivugrMkmCZGb8Kq/M1DP/086OC+ScgvEk1lre1BIrqU0zqWx2X3Qrumx8kO+/xkrg
- UofpzSRsxeGlJ1zItuybBFgSkzXbWc3DK7A0f2KzclbLzeL7CX9krLmjwW6MY1/k+M4HJIlqP0v
- AAQtouZGroaaekEwiFfntByAT/LSikGiSQXNwG7MLTE2qojLa5x03wnlnX69GVOZDwY90zSxxHJ
- UbvTEWlnqaRMCubircb4GqaPaI/9wmxu3NresMuFOq6M/Ng3OBAFAyVWi4Bszb2y1ig==
-X-Google-Smtp-Source: AGHT+IF10ro3TGgEArpDgxiZs0Eqj3adox0tKbIlEUiJ0UdUIAUl6iMe3HcGU8/gvgQsDph+PdecLA==
-X-Received: by 2002:a05:600c:5248:b0:456:1a69:94fd with SMTP id
- 5b1f17b1804b1-45b8549c438mr101209995e9.0.1756825580900; 
- Tue, 02 Sep 2025 08:06:20 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf33fb9d37sm20272216f8f.49.2025.09.02.08.06.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 08:06:20 -0700 (PDT)
-Message-ID: <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
-Date: Tue, 2 Sep 2025 17:06:19 +0200
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1utSkD-0002UI-P9; Tue, 02 Sep 2025 11:16:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1utSk4-0002JQ-Hy; Tue, 02 Sep 2025 11:16:25 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582F2ZDA008655;
+ Tue, 2 Sep 2025 15:16:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=7YBltm
+ gE+uxvZNjuu38qvOT8CmyYPfOUgTJSSrLSYEg=; b=U3zUSgDO/R+BisQ6ce581n
+ bRpaHHUjLgu49KMpjBBpR3NWH6hmMOpv0i+5iIJMjp/h/l3qd85hl3BmwEBK7kNx
+ 8nab277ERuYhwcvFsJpewHDkWARa/U2EZvJaL6motjnctWH71QQUOXHZ9JMeaGvy
+ +xrsocRoratFsmFldWbu0eFLGSAFCm5TYLqj43kG65eTQ9cgVKuX0yaUO/sjcnu+
+ N5x8ZRd4dpThapxZXY60J7QIVbZPfzCxiyW3yHZwctvkM3vbbrfrTU1o5KKl1GkR
+ RjKaL1rvTI1qnVfboxlzZcSZnfP1B/PUhFAkRb+2831adW72yarCgtYhYkC+wxzA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48uswd760r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 02 Sep 2025 15:16:02 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 582D066G021184;
+ Tue, 2 Sep 2025 15:16:01 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48vcmpk6jv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 02 Sep 2025 15:16:01 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 582FFxA134996660
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 2 Sep 2025 15:15:59 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5750858058;
+ Tue,  2 Sep 2025 15:15:59 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2EB6658057;
+ Tue,  2 Sep 2025 15:15:58 +0000 (GMT)
+Received: from [9.61.21.35] (unknown [9.61.21.35])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue,  2 Sep 2025 15:15:58 +0000 (GMT)
+Message-ID: <2b0476e1-97e1-4592-b70e-4f27f8695833@linux.ibm.com>
+Date: Tue, 2 Sep 2025 11:15:57 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
- image
-To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- qemu-arm <qemu-arm@nongnu.org>
-References: <cover.1756706188.git.jan.kiszka@siemens.com>
- <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
+Subject: Re: [PATCH v5 04/29] hw/s390x/ipl: Create certificate store
+To: Zhuoying Cai <zycai@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
+ thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com
+References: <20250818214323.529501-1-zycai@linux.ibm.com>
+ <20250818214323.529501-5-zycai@linux.ibm.com>
+ <f799baba-1c27-46ab-b6a9-5e88144a8947@linux.ibm.com>
+ <7d28e791-63ce-4d5f-9803-8f0dc140b594@linux.ibm.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <7d28e791-63ce-4d5f-9803-8f0dc140b594@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=PeP/hjhd c=1 sm=1 tr=0 ts=68b70a32 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=_ofrVq_TFKfIn1jaPocA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzNCBTYWx0ZWRfX4H7fCtt3tBfo
+ OjeXVXifoUH8rgEe2bUoc24Nq8nbkhcX3RsW10Wxe2zfk/ZmNBZnbLeJiitHpmH0cVzDu70Yw56
+ s9CwiWDQ5H7+heSJVg8XeslubOLHalSNJdR8kzmJ5P/4taxMtltvQHpdz46OoI9xKVxSIZRUdIo
+ MyhmMaezmJuQfNJFA/Q18e3YDyO1pTPDc2e7rribv1sPnOlpfounv08JB3TUYx4DpfajVlBjzH1
+ QOOoeI4iGqkmEvM2Ds3Fecbg30AsbP0knpfyM8mTFe73s6edidyhs+fVm1cz/pPHTyfCUQFfq6N
+ 0UPDQ+h9+BVCf7Sc25qCaKyAgRom5ma891FX4jaoRGssNKg1Lnfz3Wo1yxr/3lXQzLsa/epfNy7
+ BkJg9kyM
+X-Proofpoint-GUID: CSPci14KAtFmqcAvM54Wxkqe0ZM54ELH
+X-Proofpoint-ORIG-GUID: CSPci14KAtFmqcAvM54Wxkqe0ZM54ELH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-02_05,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 spamscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300034
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,45 +126,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/9/25 07:56, Jan Kiszka wrote:
-> From: Jan Kiszka <jan.kiszka@siemens.com>
-> 
-> The power-of-2 rule applies to the user data area, not the complete
-> block image. The latter can be concatenation of boot partition images
-> and the user data.
-> 
-> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/sd/sd.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 8c290595f0..16aee210b4 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
->               return;
->           }
->   
-> -        blk_size = blk_getlength(sd->blk);
-> +        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
->           if (blk_size > 0 && !is_power_of_2(blk_size)) {
->               int64_t blk_size_aligned = pow2ceil(blk_size);
->               char *blk_size_str;
 
-This seems to break the tests/functional/arm/test_aspeed_rainier.py
-test due to mmc-p10bmc-20240617.qcow2 size:
 
-Command: /builds/qemu-project/qemu/build/qemu-system-arm -display none 
--vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control 
--machine rainier-bmc -chardev socket,id=console,fd=10 -serial 
-chardev:console -drive 
-file=/builds/qemu-project/qemu/functional-cache/download/d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b,if=sd,id=sd2,index=2 
--net nic -net user -snapshot
-Output: qemu-system-arm: Invalid SD card size: 16 GiB
-SD card size has to be a power of 2, e.g. 16 GiB.
+On 8/28/25 10:46 AM, Zhuoying Cai wrote:
+> On 8/27/25 7:14 PM, Farhan Ali wrote:
+>> [snip...]
+>>
+>> +
+>> +static S390IPLCertificate *init_cert_x509(size_t size, uint8_t *raw, Error **errp)
+>> +{
+>> +    S390IPLCertificate *q_cert = NULL;
+>> +    g_autofree uint8_t *cert_der = NULL;
+>> +    size_t der_len = size;
+>> +    int rc;
+>> +
+>> +    rc = qcrypto_x509_convert_cert_der(raw, size, &cert_der, &der_len, errp);
+>> +    if (rc != 0) {
+>> +        return NULL;
+>> +    }
+>> +
+>> +    q_cert = g_new0(S390IPLCertificate, 1);
+>> +    q_cert->size = size;
+>> +    q_cert->der_size = der_len;
+>> +    q_cert->key_id_size = QCRYPTO_HASH_DIGEST_LEN_SHA256;
+>> +    q_cert->hash_size = QCRYPTO_HASH_DIGEST_LEN_SHA256;
+>> +    q_cert->raw = raw;
+>> +
+>> +    return q_cert;
+>> +}
+>> +
+>> +static S390IPLCertificate *init_cert(char *path)
+>> +{
+>> +    char *buf;
+>> +    size_t size;
+>> +    char vc_name[VC_NAME_LEN_BYTES];
+>> +    g_autofree gchar *filename = NULL;
+>> +    S390IPLCertificate *qcert = NULL;
+>> +    Error *local_err = NULL;
+>> +
+>> +    filename = g_path_get_basename(path);
+>> +
+>> +    size = cert2buf(path, &buf);
+>> +    if (size == 0) {
+>> +        error_report("Failed to load certificate: %s", path);
+>> +        return NULL;
+>> +    }
+>> +
+>> +    qcert = init_cert_x509(size, (uint8_t *)buf, &local_err);
+>> +    if (qcert == NULL) {
+>> +        error_reportf_err(local_err, "Failed to initialize certificate: %s:  ", path);
+>> +        g_free(buf);
+>> +        return NULL;
+>> +    }
+>> +
+>> +    /*
+>> +     * Left justified certificate name with padding on the right with blanks.
+>> +     * Convert certificate name to EBCDIC.
+>> +     */
+>> +    strpadcpy(vc_name, VC_NAME_LEN_BYTES, filename, ' ');
+>> +    ebcdic_put(qcert->vc_name, vc_name, VC_NAME_LEN_BYTES);
+>> +
+>> +    return qcert;
+>> +}
+>> +
+>> +static void update_cert_store(S390IPLCertificateStore *cert_store,
+>> +                              S390IPLCertificate *qcert)
+>> +{
+>> +    size_t data_buf_size;
+>> +    size_t keyid_buf_size;
+>> +    size_t hash_buf_size;
+>> +    size_t cert_buf_size;
+>> +
+>> +    /* length field is word aligned for later DIAG use */
+>> +    keyid_buf_size = ROUND_UP(qcert->key_id_size, 4);
+>> +    hash_buf_size = ROUND_UP(qcert->hash_size, 4);
+>> +    cert_buf_size = ROUND_UP(qcert->der_size, 4);
+>> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
+>> +
+>> +    if (cert_store->max_cert_size < data_buf_size) {
+>> +        cert_store->max_cert_size = data_buf_size;
+>> +    }
+>> +
+>> +    cert_store->certs[cert_store->count] = *qcert;
+>> +    cert_store->total_bytes += data_buf_size;
+>> +    cert_store->count++;
+>> +}
+>> +
+>> Do we need to free qcert here after we copied the contents to
+>> cert_store->certs[cert_store->count]? Also AFAIU we copy the certificate
+>> file contents into QEMU memory, but don't free it. Just wanted to
+>> clarify, do we need the file contents in QEMU memory for ccw-bios and
+>> guest kernel use? Thanks Farhan
+>>
+>>
+> Yes, the file contents need to remain in QEMU memory for both ccw-bios
+> and guest kernel use.
+>
+> * ccw-bios: The certificate used to verify the component is retrieved in
+> the BIOS via DIAG320, with its address stored in the IPL Information
+> Report Block.
+>
+> * guest kernel: Certificates can also be retrieved via DIAG320 and made
+> available to the guest kernel keyring.
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8cf57d7217c32133d25615324c0ab4aaacf4d9c4
+Something still doesn't seem right to me.  As far as I can tell the cert 
+store will be reinitialized each time the guest reboots, which sounds 
+like it will cause problems if there is no corresponding free somewhere.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/11217561316
+What is the expected behavior during a reboot?  Should the guest A)  
+parse the cert paths again and reinitialize, or B)  read the entries in 
+the previously created cert store?
 
+If A, then the cert store needs to be cleared/freed in some way each time.
+
+If B, then the cert store should not be reinitialized.
+
+> [snip...]
+Regards,
+Jared Rossi
 
