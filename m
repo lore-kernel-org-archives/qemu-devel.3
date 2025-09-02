@@ -4,123 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C36BCA0FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E361ECA100D
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 04:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utI0R-0007He-Kd; Mon, 01 Sep 2025 23:48:27 -0400
+	id 1utI47-0001xD-5Q; Mon, 01 Sep 2025 23:52:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI0G-000746-Vt
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:48:19 -0400
+ id 1utI45-0001uM-1t
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:52:14 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI0C-0004WC-GS
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:48:15 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822RqSO017322
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:48:01 GMT
+ id 1utI42-0005Ch-Fs
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:52:12 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822RmGx012352
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:52:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ez9CPisJo+6c6MuYDInXx9ZMS/0b1em92YuMNu0aV8I=; b=XoyJxBdZnWeNJWWD
- SkoNK0/+YaSczXLXU9RTdZEHidak8pBIaXy5gjlSqt1MEO3BCWNMlcW1eFyV9AwA
- WTGdMZEohGoalMnrRhZUFvVkq29wdXlVe4EzCpYlNZzeMmlX7uFakqAbPy2ObLaD
- 3U9wVnNp59S0HBUZFLB6zu1a24KPQfsNOIE2UXV4xh8OWrGIEhIYU9bg3S3v9BV+
- UMl4Kh9G6cBgY2BaDXCARVuMF6Pgm6CselBmQew9QvG9A5mSOikAZTxJAOtesrrR
- 6ToPxI5NC1GU5gQS8S8C5h/yWvM2qzeFzKUOwHLp/LWLyvIxFc0K9n+3MTRHPxcJ
- UvxWUQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48utk8x86v-1
+ r4MaRpX8EF9o7MIq5Bqxmd8+XlT18JYswZtoTOVoCYs=; b=KjvfQRXxktadKZ1D
+ Lyw+R+pv+xz85+LyMOY+hNYoj/GqvmgY79YsIJ+HAm9Q0rTvhmIqNpN+RpuBf4Sj
+ XbjlXA6eRMA+v5CjH6fB9uxIeXiVXgnD1WYNAHoggIz2BIZv7dvA26QutdqnJt4w
+ Sk8vR7an4plYkkEVcSbn3IHQOsOhOLCwgAcf/dhvIx7njZBhjQau5lEInL86qXeZ
+ f5ZMfLbWAKTnhKDm3TXYwlyUWxl1cnI+us6G5OM55uGNpuLxXFn67wrT3YrTKZyn
+ PfdpRQH0i0KRbjkCaH45rhJGh3DwJXdR+JSoP0M6XC73Pyq/RhkbkeyFaZLuvEoL
+ JEHZGA==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2feac6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:48:01 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-b47253319b8so3865290a12.3
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:48:01 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:52:09 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2445803f0cfso63112905ad.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:52:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756784880; x=1757389680;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ez9CPisJo+6c6MuYDInXx9ZMS/0b1em92YuMNu0aV8I=;
- b=d2vIbe7Ac5gl9JjzgTYk8+KR900iULxzU7nMYaqXqodFZYkFLZXPXeVcWyEK+HmcAh
- m2sN7MfnARg1yDEV0t3jLufE7cJo0tNMa4gwCRufSbOCNX7FyrmHaK2alsWnm3LUAQly
- yU4qBytMMpzV1nIX5nByNcMbAEykY+1fwjwyOf655cjN+lOdyGQM0o7Jv54e3fmgeY1J
- l/5n8XgrZ0aw5b0WL+pid7vH8LvmBP48lbxybwNG/SNoj0IEVjQ5+DXCrPfruHwXmfG5
- NFCCu0gRKDa72zCgG6PWdVW32QfR5cNrniam09TKh+wUQcCAEaKo8d9Z1JdtauIdlmGa
- hjeA==
-X-Gm-Message-State: AOJu0Yyl8sszqgsH60EQ8mHDBwZY/hBEoJQSjgLpylPAYRasvfrK4v3+
- IgKpR5wOjidN9+6SOfgHfhoG/Wsvked0gg/oqHXxZEIS2YvPiRh2v2RcTrYiNv46OLkH0A4HvE6
- pnea/CCZttbitBDJ+h+ugjO4jNbLsBBnsos8z83q8chJ7jmk72KOnCK7Kd6u9PLVAqJrJ
-X-Gm-Gg: ASbGncsQsnZyb75YdYtC7a88dYtEIkAbSJKzgYIx/ufVNaoTjVQ81P0HoelLxJJIAep
- wKYtMdtls2CbDU850791fMQHW0CZZwP3UgBwBcODtZOIEoxqFX9EiCb+EFlrj6VTrPL0AO/yMTm
- x/16zqoRgLuOAqKGuk9h8pkq5rxLoajIcqvg2EZgbPpOF8eEl5+uwh1FO9cA+rOFShtkotVdoav
- f6iBvWp1QKTNu0Y9RF1KD9QuwnhGFjUZ3MTNqWdtI8Ien0w7vKhzOmeOaTPDaJ03mNsiII+LRe4
- zFIFGeiqxNz9PmcXGYoks+W8y/SM6/JTxsB5KymWIpZFHZ66O8IhYdt7IeyqDt+iuEDhKa6bkoq
- xLScmykTHtoyn
-X-Received: by 2002:a05:6a20:3ca3:b0:240:101c:4417 with SMTP id
- adf61e73a8af0-243d6dc809bmr13877375637.4.1756784880143; 
- Mon, 01 Sep 2025 20:48:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+SamdyP0nffsEJy9XA/iGX7YcrGqz6IlT/ncyV/yNss2vHeYwYP+9/Sg2C3kUV9EHUMq1PQ==
-X-Received: by 2002:a05:6a20:3ca3:b0:240:101c:4417 with SMTP id
- adf61e73a8af0-243d6dc809bmr13877338637.4.1756784879627; 
- Mon, 01 Sep 2025 20:47:59 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b4cd006e2c6sm10633584a12.2.2025.09.01.20.47.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 20:47:59 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
- philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- alex.bennee@linaro.org, quic_mburton@quicinc.com,
- sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v2 32/40] target/hexagon: Add locks, id, next_PC to state
-Date: Mon,  1 Sep 2025 20:47:07 -0700
-Message-Id: <20250902034715.1947718-33-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250902034715.1947718-1-brian.cain@oss.qualcomm.com>
-References: <20250902034715.1947718-1-brian.cain@oss.qualcomm.com>
+ d=1e100.net; s=20230601; t=1756785128; x=1757389928;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=r4MaRpX8EF9o7MIq5Bqxmd8+XlT18JYswZtoTOVoCYs=;
+ b=HpEkDghElGg3hiRTNNaDTpbIWc+5tWq9zOTektnoFMQ6clWYDJy+6uQisvRIE34yZT
+ orT5rNRI3F5/PHFRMufZsAjZAEV57nw7AaO+OIpFTxzYREJ2TpnC6O5Fa68eQSWW73sU
+ /NDE/TXDGmzwjDP/jC6pW298xdepRbcEvJnNnNIMNQtJRD/WSxSjnzUEy3MCSNlK0ade
+ iH/yPZPmrKqzPVGIgcEMAxfvhr4btfWdkySMzZnoNkEkqgjV2T6i1NUx5FHLvhuDqmOj
+ C/0EV+c0hcnj4rV92jLFx5N8xnN6Hh9qtT9oexo8Vdb4U2+CmmmoOsUCzG4Zdo66Ffl7
+ 0H6A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXeBY6wNO9pPsgnDqBIg9LVwcfZTFQbf//AtxqMjAKfauV1mR+kjOv5r7Am5HOYgQBH07OkgzrzTMiU@nongnu.org
+X-Gm-Message-State: AOJu0Yw+eET9sX96sSIywqJehBk+4Qr3JvFn1LNC4YTJOSy/LvDBhKFC
+ sr6reur+ptRQUBrk28sokmbpPV8jxkeP8/tpbAUXvQQDg9Bg5ETeJsFpowcrD464feyP54w2G3G
+ 1Yb5OF/5FZfk9ej2986eBPDLVLtD5ojOjqX07Pq6dUV/Y6cTa5M8dZuUAGQ==
+X-Gm-Gg: ASbGncsQjmWSJ9zmu8NjkGvxE+IIh6d4rGPAls+GEn/ais0CRW/ePOt7JauV321faI8
+ qZAxxm2/KxsOiiENv2ZG1V2KIYjWsANilxsDKhrs3HFP7YPikdxPgdxYpEx1J12qxGdv6xW4+2i
+ i8YN7cxvuc9v3E6elwxp/aJTGSd3Y4ECkm2RxeLQ603vE30+NpIOXoHY+qwBOiqYAA99FgmTY/5
+ SFHzW5ageI9V7bi5zD/2hSM76prPf6ut92fUvWPuPfanwRGueMDW8miWA7huUl60KlVY++8NJzt
+ hu/3sqFiqn9wULASqVLAIi1FS1Nm7ye/dPIxJLVGHc9jlao+yJGZl9/4PWWlTw==
+X-Received: by 2002:a17:902:ced2:b0:249:1440:59a6 with SMTP id
+ d9443c01a7336-24944b0dc4dmr137619075ad.33.1756785128245; 
+ Mon, 01 Sep 2025 20:52:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7WYoSeavLNZ39l6WFb9WxFsJArz/74jGytCTsF3hQSmLItqhrq7RGsytpTSha9avBw+yh2Q==
+X-Received: by 2002:a17:902:ced2:b0:249:1440:59a6 with SMTP id
+ d9443c01a7336-24944b0dc4dmr137618295ad.33.1756785127108; 
+ Mon, 01 Sep 2025 20:52:07 -0700 (PDT)
+Received: from [172.19.248.181] ([80.149.170.9])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-24903727e23sm119295495ad.45.2025.09.01.20.51.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Sep 2025 20:52:06 -0700 (PDT)
+Message-ID: <82ff4ffc-a1a4-4dc6-837e-a319c803c9b8@oss.qualcomm.com>
+Date: Mon, 1 Sep 2025 19:27:15 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/38] target/hexagon: Add guest, system reg number state
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, quic_mathbern@quicinc.com, ale@rev.ng,
+ anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ Brian Cain <bcain@quicinc.com>
+References: <20250301052628.1011210-1-brian.cain@oss.qualcomm.com>
+ <20250301052628.1011210-10-brian.cain@oss.qualcomm.com>
+ <802e6fe2-1c76-42c9-88ab-eb8239eef569@linaro.org>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <802e6fe2-1c76-42c9-88ab-eb8239eef569@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: iyD_Xw6lyt_4s9HylYciulDRDC4nCt3W
-X-Proofpoint-ORIG-GUID: iyD_Xw6lyt_4s9HylYciulDRDC4nCt3W
-X-Authority-Analysis: v=2.4 cv=ccnSrmDM c=1 sm=1 tr=0 ts=68b668f1 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8
- a=EUspDBNiAAAA:8 a=3yPDquGOu9_QmsYTTv0A:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDA0MiBTYWx0ZWRfXygo7d9Hxryb2
- QdljtGxYu0aeD2B2ywByWgSlcCrmLITOSGTUIMXjkjcLI/AUr3U3TnlXTwoNd7YDqJWNQFfjlea
- NcFSrHrlPADvHZlfmWDOVyayzgPwLSG75JlPehAH+XXH9ioaEVUdlAQoe4wxiuplxqwnfeRE3Qj
- Mxu70ZYX3b/EPQnuR/EIN3tca7lFa1+rLA6SgUPMBfPYO4TSitNPylHx9JksvTp7BAwCF0SKeZ3
- cF/ebG0Z7/mZsXX31FCOElLzaLz4uctWQAV3I0bvOdv/rB1xceP2OHsApO+TfsQ8m5PytNt2i61
- ok7qSjRceWzZfBhm6XaHhZhqA2AEIuraEIeV4mZbrE79vFID5NOLlOOJsnMFrubA8m4iHfnShu8
- QF2QSh7d
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfX2AvAwFISaKbr
+ gz5oTO++hf2BHnTDwBV8wCOt3zmjYwl39udLr3FEGabXeUPpZpYTdegvwHdI5zeaivno+tqHaV5
+ CV3voXNOePBCyyNa58vePWKu5HVHKxeHw7HyY3XNJJffLiiXMM/lbO9wrnFnSOQNKg9SX4YBPLp
+ E77leHmyTM6XV8EfTK1bt8MsDJD7Kk3Riz72fCsXrrzl0LS5xcdj90UGqOJcjqiGE1aLLqXeNYm
+ H4db7DaVEL+PeQOwFvg6J5eHXcoVYikfn7U1X1HLqYxlu0YIMqCjVhgSVOm1byXLYGKOBP4rOOc
+ JVe3jNCK4BK6unJPR0XkLPbA3vx129RRkjI2qtDsu8s+GSvXPzQvCfONdh76txCusVjJDdfK5NH
+ 5OGjAvMj
+X-Proofpoint-ORIG-GUID: BXpMZXnZgiOjPRB17FTrGB-mHsNRDous
+X-Proofpoint-GUID: BXpMZXnZgiOjPRB17FTrGB-mHsNRDous
+X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68b669e9 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=oqm+nZh+PgUSu2IGv/nVbQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=_NB7oWaHVQA8DE6N4KcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- clxscore=1015 suspectscore=0 spamscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300042
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,101 +140,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <bcain@quicinc.com>
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
----
- target/hexagon/cpu.h     | 34 +++++++++++++++++++++++++++++++++-
- target/hexagon/cpu.c     |  4 ++++
- target/hexagon/machine.c |  4 ++++
- 3 files changed, 41 insertions(+), 1 deletion(-)
-
-diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index 42b877a04c..fc6552e64c 100644
---- a/target/hexagon/cpu.h
-+++ b/target/hexagon/cpu.h
-@@ -46,8 +46,34 @@
- #define VSTORES_MAX 2
- 
- #define CPU_RESOLVING_TYPE TYPE_HEXAGON_CPU
-+#ifndef CONFIG_USER_ONLY
-+#define CPU_INTERRUPT_SWI      CPU_INTERRUPT_TGT_INT_0
-+#define CPU_INTERRUPT_K0_UNLOCK CPU_INTERRUPT_TGT_INT_1
-+#define CPU_INTERRUPT_TLB_UNLOCK CPU_INTERRUPT_TGT_INT_2
-+
-+#define HEX_CPU_MODE_USER    1
-+#define HEX_CPU_MODE_GUEST   2
-+#define HEX_CPU_MODE_MONITOR 3
-+
-+#define HEX_EXE_MODE_OFF     1
-+#define HEX_EXE_MODE_RUN     2
-+#define HEX_EXE_MODE_WAIT    3
-+#define HEX_EXE_MODE_DEBUG   4
-+#endif
-+
-+#define MMU_USER_IDX         0
-+#ifndef CONFIG_USER_ONLY
-+#define MMU_GUEST_IDX        1
-+#define MMU_KERNEL_IDX       2
-+
-+typedef enum {
-+    HEX_LOCK_UNLOCKED       = 0,
-+    HEX_LOCK_WAITING        = 1,
-+    HEX_LOCK_OWNER          = 2,
-+    HEX_LOCK_QUEUED        = 3
-+} hex_lock_state_t;
-+#endif
- 
--#define MMU_USER_IDX 0
- 
- #define HEXAGON_CPU_IRQ_0 0
- #define HEXAGON_CPU_IRQ_1 1
-@@ -103,7 +129,13 @@ typedef struct CPUArchState {
-     target_ulong t_sreg[NUM_SREGS];
- 
-     target_ulong greg[NUM_GREGS];
-+
-+    /* This alias of CPUState.cpu_index is used by imported sources: */
-+    target_ulong threadId;
-+    hex_lock_state_t tlb_lock_state;
-+    hex_lock_state_t k0_lock_state;
- #endif
-+    target_ulong next_PC;
-     target_ulong new_value_usr;
- 
-     MemLog mem_log_stores[STORES_MAX];
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index bdc9d18395..a508f27fe4 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -301,6 +301,10 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
- #ifndef CONFIG_USER_ONLY
-     memset(env->t_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
-     memset(env->greg, 0, sizeof(target_ulong) * NUM_GREGS);
-+    env->threadId = cs->cpu_index;
-+    env->tlb_lock_state = HEX_LOCK_UNLOCKED;
-+    env->k0_lock_state = HEX_LOCK_UNLOCKED;
-+    env->next_PC = 0;
- #endif
-     env->cause_code = HEX_EVENT_NONE;
- }
-diff --git a/target/hexagon/machine.c b/target/hexagon/machine.c
-index 988ede06e9..18c3f87188 100644
---- a/target/hexagon/machine.c
-+++ b/target/hexagon/machine.c
-@@ -19,6 +19,10 @@ const VMStateDescription vmstate_hexagon_cpu = {
-         VMSTATE_UINTTL_ARRAY(env.pred, HexagonCPU, NUM_PREGS),
-         VMSTATE_UINTTL_ARRAY(env.t_sreg, HexagonCPU, NUM_SREGS),
-         VMSTATE_UINTTL_ARRAY(env.greg, HexagonCPU, NUM_GREGS),
-+        VMSTATE_UINTTL(env.next_PC, HexagonCPU),
-+        VMSTATE_UINTTL(env.tlb_lock_state, HexagonCPU),
-+        VMSTATE_UINTTL(env.k0_lock_state, HexagonCPU),
-+        VMSTATE_UINTTL(env.threadId, HexagonCPU),
-         VMSTATE_END_OF_LIST()
-     },
- };
--- 
-2.34.1
+On 3/12/2025 2:15 PM, Philippe Mathieu-Daudé wrote:
+> Hi Brian,
+>
+> On 1/3/25 06:25, Brian Cain wrote:
+>> From: Brian Cain <bcain@quicinc.com>
+>>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/cpu.h |  8 ++++++++
+>>   target/hexagon/cpu.c | 17 +++++++++++++++++
+>>   2 files changed, 25 insertions(+)
+>>
+>> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+>> index 20ea0adcca..b7789a3c90 100644
+>> --- a/target/hexagon/cpu.h
+>> +++ b/target/hexagon/cpu.h
+>> @@ -82,6 +82,14 @@ typedef struct CPUArchState {
+>>       target_ulong stack_start;
+>>         uint8_t slot_cancelled;
+>> +
+>> +#ifndef CONFIG_USER_ONLY
+>> +    /* Some system registers are per thread and some are global. */
+>> +    target_ulong t_sreg[NUM_SREGS];
+>> +    target_ulong *g_sreg;
+>> +
+>> +    target_ulong greg[NUM_GREGS];
+>> +#endif
+>>       target_ulong new_value_usr;
+>>         MemLog mem_log_stores[STORES_MAX];
+>> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+>> index 0b7fc98f6c..355e1eeef3 100644
+>> --- a/target/hexagon/cpu.c
+>> +++ b/target/hexagon/cpu.c
+>> @@ -288,6 +288,14 @@ static void hexagon_cpu_reset_hold(Object *obj, 
+>> ResetType type)
+>>       set_float_detect_tininess(float_tininess_before_rounding, 
+>> &env->fp_status);
+>>       /* Default NaN value: sign bit set, all frac bits set */
+>>       set_float_default_nan_pattern(0b11111111, &env->fp_status);
+>> +
+>> +#ifndef CONFIG_USER_ONLY
+>> +    if (cs->cpu_index == 0) {
+>
+> This doesn't scale to heterogeneous emulation.
+>
+>> +        memset(env->g_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
+>> +    }
+>> +    memset(env->t_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
+>> +    memset(env->greg, 0, sizeof(target_ulong) * NUM_GREGS);
+>> +#endif
+>>   }
+>>     static void hexagon_cpu_disas_set_info(CPUState *s, 
+>> disassemble_info *info)
+>> @@ -313,6 +321,15 @@ static void hexagon_cpu_realize(DeviceState 
+>> *dev, Error **errp)
+>>         qemu_init_vcpu(cs);
+>>       cpu_reset(cs);
+>> +#ifndef CONFIG_USER_ONLY
+>> +    if (cs->cpu_index == 0) {
+>
+> Ditto.
+>
+>> +        env->g_sreg = g_new0(target_ulong, NUM_SREGS);
+>> +    } else {
+>> +        CPUState *cpu0 = qemu_get_cpu(0);
+>> +        CPUHexagonState *env0 = cpu_env(cpu0);
+>> +        env->g_sreg = env0->g_sreg;
+>> +    }
+>> +#endif
+>>         mcc->parent_realize(dev, errp);
+>>   }
+>
+Redesigned with an object to hold this common state instead, in the v2 
+series.
 
 
