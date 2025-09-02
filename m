@@ -4,115 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4920CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 04:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 833ABCA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 04:01:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utI1i-00048u-BD; Mon, 01 Sep 2025 23:49:46 -0400
+	id 1utI2a-0007LG-II; Mon, 01 Sep 2025 23:50:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI1U-0002mg-L6
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:32 -0400
+ id 1utI2N-0006b3-Kv
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:50:28 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI1N-0004ck-3T
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:32 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822S44V030068
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:49:14 GMT
+ id 1utI2K-0004w9-J5
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:50:27 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822TL7O017357
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:50:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- rKZUkZXmHGjGkE0fk0NlHjSjG0NxZ4KmA4MKCdCGXvI=; b=NNYRcAawFMNsq4lC
- dzSwwb/Xr8No1K5pZQ3T5tViYNlEAF8j3BwXxzSgCO2yVzl213zS2nkUVDrPlt+E
- c9ihHuOo7DZLVTtYJSKO8xHvRSRZ3V8FfT/x3UrwGC++a1Ij9IHRFJmdjN0JJMcO
- T769AtChOlBG5UHlXrno5XekwRKz5grjyS0RDBqfcpTXa++Mar16q+4BHezSWm9+
- gDivdC4RReJQADUa0If2v3PFUhHAPv4UV79yVQRHFipfumv4lrog4ZHkswi+dpAH
- w6X6Pn7hUF2tAMGn46Yhg8XRmvdG1iq4vJ1TLgxEpR7DFX7gRDZHlSycDVrgKhKe
- dji2xg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48w8wy26sd-1
+ LsJ1LXtFQjKlVRm2VA8fsf5sAhwAw/Q3j5jrOxqGFCM=; b=fVTA9IjHb8hZx7xt
+ pO1p16n/AlB2jRJuw6xZGoGOlt63Ebfott0r3z6Y/aT1WPV3Jqzs3r/5Ggu7WE0x
+ SqdlfbwiqFhehhNBDC2Ng5ljSKOVEu+0cvoxeKSPVlWdvvKOQ6xjNL4PprBYg8XR
+ kuzr7NmKepBJglk28ap8QbzPmW8UUBMslhGLeWEfohfsZvzCeKOXZRMVYHw8KiXB
+ tFZPvNkBACqpSIxBrEO0HYPmAjAlkcCyNl7h6SLaUfTMwNDyMvGJpaqOWiaE1M+V
+ ORuwaa7m589kJcWWh8gXfSd0I94Nffmsk9dOD9OO1nuPiHB26Dfm/UGPlTYN6+Zw
+ Zl4gfg==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urvyxdnv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:49:13 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-325b2959306so8238326a91.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:49:13 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:50:12 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-329e375d372so274521a91.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:50:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756784952; x=1757389752;
+ d=1e100.net; s=20230601; t=1756785011; x=1757389811;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rKZUkZXmHGjGkE0fk0NlHjSjG0NxZ4KmA4MKCdCGXvI=;
- b=aGvCcdZxCgLxTiJ5W3wVXyUmwp8mdL+1Bhww9ASgo4dH72h2YUlhl8jCwaLAAgbVfb
- gK7KswKaLKJMhVtdE6yIoQbwFM4LTILjpf0WCSBDRNvZtMR7kefiqU7ZrBcBZos0fIiD
- FwkcB9UkIkGT9TRi7vHeyiBEXWQCMuc65rwlMA6aHoJAGbtl8OsF98a1+7KIQxxTGdU9
- /vowzYZPFTM7pvyRZVS53e4I7u1uTZIQP1ypkqSYk0DQWZAeP39vIy1sbJCYH0Y7fnao
- 9FZX7PD5jTQQprNbkyyz7xwWUcKmz2AAjiDGsMfbUgKlBfIE7LGtHrZ0fUKiaUZ20ebq
- tvUA==
-X-Gm-Message-State: AOJu0YxSgMCxY4EA/2kt9NREeYhsJJVbCfnp6tE9ZEuU+Z7DcPGfFNWS
- rqzc6XcYY5aM9YBuiJ7UChdssn17YSKzIwNjohxKNZ7PvF10I78K+utlBonxfxAtQzAbo/XJIjU
- ysnoUvkJr+3mZL2vYFjEopytb6zRsLH0Qgcl+wUSlXgjmH/zK+DNloSQA4iONSA674SHH
-X-Gm-Gg: ASbGncvFA17swBHvTSZHzPGUIWix/KkLlPPTYq7xDRO/wpCrx10XsaZgdIUpmoUVhK3
- MisBo1dHDimz4iYDftJh6eqChgH4rqsaGe8mMLHc2PNbcSEqRp5bY116G38Md3iIVT0wiflGVTv
- HD2PUJ6qcdttFz47ceXTZVK3a9z1pNah/ojSHJ0/6X8ZQl8TAXnu75tz1TMbteg/MfUcTkVQLPU
- s79Nl0QSZB53YqoikR6sS00GNqJzY+7PeUnFpXKOC+6sn3JogEQV9cnaw62YJKGZftdgVI8LVRU
- MMWdVFqZ/0fKPKYE2zilsKHNTqcTU0Ej+eFqSOW09zxVFKhObOWwAzXc0SkhhSvQzKxJLzAzOsn
- 26S5qVMdzPb6a
-X-Received: by 2002:a17:90a:d40d:b0:327:e8d0:cb21 with SMTP id
- 98e67ed59e1d1-328156f8332mr14717507a91.35.1756784952202; 
- Mon, 01 Sep 2025 20:49:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMSt1JSZxr5UiJVZjSlADCpt+E6I0nabSNzx1/n5yV67e7++dDvnYkFuhz/eFAbS5I0BDPKg==
-X-Received: by 2002:a17:90a:d40d:b0:327:e8d0:cb21 with SMTP id
- 98e67ed59e1d1-328156f8332mr14717471a91.35.1756784951625; 
- Mon, 01 Sep 2025 20:49:11 -0700 (PDT)
+ bh=LsJ1LXtFQjKlVRm2VA8fsf5sAhwAw/Q3j5jrOxqGFCM=;
+ b=LsveSSsBOQrDtsAQPJxPUnZpB2eEhbqziO5FoY00dsPXIiXcFNk28AKAhsoHvgkfYN
+ 5QEbiKkyFcgJ2Ghk/Evu3eSo77mlvs4gcd+ye0h7rXhwoSqNRV3tttoRxwPoQVNPCfj7
+ G9yrtyce0t/nVjvV80IPsMy5LfLvNAMQuYZ//yrHQ+WRdNmGzfBwo+OFPHRitCj8OQN2
+ Kox4odA7dEho9vbWkb5McrDnnzDrebv95HVr59ERpwFZqdAf3wIpQGW6RGR0Rs2NIPWS
+ VOseGD3vmHeJj37BNvBnaqNcn7j4P6EWQnt0eoATxEBhuT/NUWrdPujWfP0i/Zz0CsH/
+ LEGQ==
+X-Gm-Message-State: AOJu0YzKOE8Kl5G1PWKYuj68Tc1iCRgoaYpH92mKcyAiI/rReV2b53x2
+ UCSFVI+lLvI6db43q2v9EK/tRlV2v0r1TWJopVSfLtWaSv53VhuVVUMo4bIc4UQ2EQn5m1jozSE
+ 54PEbCd0FD8DmqG5nyBMp3arhJZGzDgObIkRAGrhnZaFv3EEr2hbJZkbJWNzSTSRXOS/b
+X-Gm-Gg: ASbGncsyvJTOnoa3Wao9diBO2/fHAfSFBG3JvqFi3pKMmkgoF97lYbQFKreeyPCYoDP
+ JMzjDo2ws1s0FK+clG39bRX7Kk/eaO9U5wrcPh3/xRb5VXU7dlmkSqYfFi/5QeEcBpl7i37KXVP
+ GHrF2oD1wCr4mA5DuPeeJn2QueNwq6DYGN3pbckAMZFXS06HbrzOffGe+loTg+5EnT2aVCqMB0D
+ V/q6H5StEio1k0gkDoawTnHxIrJa9bmOeDQjGzutAeDvlcLza15WUMS78kpuFwdB3cUL+jgAjK5
+ wL1ghG4RookY6+f/9H/99FqCBZqjIECPQFj5EEngicLx7BbDAqalqZ66068/Fv82ytekuxRVKiw
+ cxjqIzPrLEZwO
+X-Received: by 2002:a17:90b:17cb:b0:327:ea30:b with SMTP id
+ 98e67ed59e1d1-328156baa8bmr14470573a91.18.1756785011220; 
+ Mon, 01 Sep 2025 20:50:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkgb+jPbjDZWShsFLpXUtyKQGDkElNkrvO1PE81LjIGgqrVU5E0iEPEcnVJ/AiJgVFYmaZLQ==
+X-Received: by 2002:a17:90b:17cb:b0:327:ea30:b with SMTP id
+ 98e67ed59e1d1-328156baa8bmr14470519a91.18.1756785010564; 
+ Mon, 01 Sep 2025 20:50:10 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327daeeca1csm12543546a91.25.2025.09.01.20.49.10
+ 98e67ed59e1d1-327c5fc5055sm14117932a91.14.2025.09.01.20.50.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 20:49:11 -0700 (PDT)
+ Mon, 01 Sep 2025 20:50:10 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
  philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
  anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  alex.bennee@linaro.org, quic_mburton@quicinc.com,
- sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>,
- Mike Lambert <mlambert@quicinc.com>
-Subject: [PATCH v2 16/39] target/hexagon: Implement software interrupt
-Date: Mon,  1 Sep 2025 20:48:24 -0700
-Message-Id: <20250902034847.1948010-17-brian.cain@oss.qualcomm.com>
+ sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>
+Subject: [PATCH v2 08/11] hw/hexagon: Define hexagon "virt" machine
+Date: Mon,  1 Sep 2025 20:49:48 -0700
+Message-Id: <20250902034951.1948194-9-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
-References: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250902034951.1948194-1-brian.cain@oss.qualcomm.com>
+References: <20250902034951.1948194-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Ycq95xRf c=1 sm=1 tr=0 ts=68b66939 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-GUID: ovW6fqM6eWTY6Y7qtHcuSFioIhKXoHZJ
+X-Proofpoint-ORIG-GUID: ovW6fqM6eWTY6Y7qtHcuSFioIhKXoHZJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfX12ztyh5P1Olx
+ 1NFTUABAo31sf3URfk40G3YTaidPJAsVr8wpHn6iPqrfsMO8HQnt+mCfA94ggIrBdp1z73anhFb
+ vZKoaNHUd1AIptz2A1o9OXex9FJiPy6MmWeNUNXu5mJh6GjKrOsNWKaYBlUb/wZoSzegRl/u+kW
+ x0fSDUqoNucDuIc/bOLjmFO6gAf1Hv9Al1Fb8b8ljDNobhZCwNs2B+KIPhC3XACxSeoYea+bg1k
+ iN4mT/fQTKXlg5qDeR70MHtRDIkjXq8fnxsX64EhExtfZRdWPZSGDclndY4t0WiJ5Mce3F1kqE2
+ HEY2p3DGiRZhcnYARP8Gp023l67Xp+afsYpv0oS1O1i4GCnDX1p8l7/xW/sS6A5UHh0lP6bAuOp
+ LWVZLUiQ
+X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b66974 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=Befq45VWmXQcvcAHDQIA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+ a=6WAqP26IpYyNH_cq97EA:9 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: NxAViiKcFtvHsy_x6IKx5XidqtcAiSdV
-X-Proofpoint-ORIG-GUID: NxAViiKcFtvHsy_x6IKx5XidqtcAiSdV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTAxMDEwMSBTYWx0ZWRfXxuEpSJg+33mj
- oBWdAbznqiG9ivYm9Qv2pzbwq2KvKR0kBRYCiFkMzoWTqyPJAMojJsSRfVb3c1pBTOlYbq8E75z
- dDi/S/s7RNOvaGO+EC6KwAwtuGBjJa3O8LXkTEx0zLC62LoRhOqoTTV4B4QpP4gbSn89Vk7aSRC
- oWNPrC4QGp3ugXd2qGA+n1JQcHAmIBQQ8IdBd89piS+r7QWHUb5YI+0VusMApljBDNWUWYV+TTx
- dDM0fWlw/ncPNBZo46YyuYy9iH8qXAffxpXV0jaZFFFmiaCl+wkZEOAyGeVdRWoqk3aemBl0xlP
- KO5q9BYp+CPNHafaEZndyY89Cor5pn0ro3cxDDiFbSO+ce03yGsMPEPAR/fLcFVTBVgSYolYwyS
- 24lU4/GG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0
- bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0 classifier=typeunknown
+ clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509010101
+ engine=8.19.0-2507300000 definitions=main-2508300027
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -26
@@ -139,327 +138,569 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Brian Cain <bcain@quicinc.com>
 
-Co-authored-by: Mike Lambert <mlambert@quicinc.com>
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/hexagon/hexswi.h    |  17 +++
- target/hexagon/cpu.c       |   2 +
- target/hexagon/hexswi.c    | 256 +++++++++++++++++++++++++++++++++++++
- target/hexagon/op_helper.c |   1 +
- 4 files changed, 276 insertions(+)
- create mode 100644 target/hexagon/hexswi.h
- create mode 100644 target/hexagon/hexswi.c
+ configs/devices/hexagon-softmmu/default.mak |   1 +
+ configs/targets/hexagon-softmmu.mak         |   1 +
+ include/hw/hexagon/virt.h                   |  43 ++
+ hw/hexagon/virt.c                           | 435 ++++++++++++++++++++
+ hw/hexagon/Kconfig                          |  10 +
+ hw/hexagon/meson.build                      |   2 +
+ tests/qemu-iotests/testenv.py               |   1 +
+ 7 files changed, 493 insertions(+)
+ create mode 100644 include/hw/hexagon/virt.h
+ create mode 100644 hw/hexagon/virt.c
 
-diff --git a/target/hexagon/hexswi.h b/target/hexagon/hexswi.h
+diff --git a/configs/devices/hexagon-softmmu/default.mak b/configs/devices/hexagon-softmmu/default.mak
+index 08e709aea7..37b4f9f323 100644
+--- a/configs/devices/hexagon-softmmu/default.mak
++++ b/configs/devices/hexagon-softmmu/default.mak
+@@ -3,5 +3,6 @@
+ # Uncomment the following lines to disable these optional devices:
+ 
+ # Boards are selected by default, uncomment to keep out of the build.
++# CONFIG_HEX_VIRT=y
+ # CONFIG_HEX_DSP=y
+ # CONFIG_L2VIC=y
+diff --git a/configs/targets/hexagon-softmmu.mak b/configs/targets/hexagon-softmmu.mak
+index 8c208bf468..9f8fca1dc1 100644
+--- a/configs/targets/hexagon-softmmu.mak
++++ b/configs/targets/hexagon-softmmu.mak
+@@ -4,3 +4,4 @@ TARGET_ARCH=hexagon
+ TARGET_SUPPORTS_MTTCG=y
+ TARGET_XML_FILES=gdb-xml/hexagon-core.xml gdb-xml/hexagon-hvx.xml gdb-xml/hexagon-sys.xml
+ TARGET_LONG_BITS=32
++TARGET_NEED_FDT=y
+diff --git a/include/hw/hexagon/virt.h b/include/hw/hexagon/virt.h
 new file mode 100644
-index 0000000000..5d232cb06c
+index 0000000000..0c92fb3bb8
 --- /dev/null
-+++ b/target/hexagon/hexswi.h
-@@ -0,0 +1,17 @@
++++ b/include/hw/hexagon/virt.h
+@@ -0,0 +1,43 @@
 +/*
-+ * Copyright(c) 2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ * Definitions for hexagon virt board.
 + *
++ * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HEXSWI_H
-+#define HEXSWI_H
++#ifndef HW_HEXAGONVIRT_H
++#define HW_HEXAGONVIRT_H
 +
++#include "hw/boards.h"
++#include "target/hexagon/cpu.h"
 +
-+#include "cpu.h"
++struct HexagonVirtMachineState {
++    /*< private >*/
++    MachineState parent_obj;
 +
-+void hexagon_cpu_do_interrupt(CPUState *cpu);
-+void register_trap_exception(CPUHexagonState *env, int type, int imm,
-+                             target_ulong PC);
++    int fdt_size;
++    MemoryRegion *sys;
++    MemoryRegion cfgtable;
++    MemoryRegion ram;
++    MemoryRegion tcm;
++    MemoryRegion vtcm;
++    MemoryRegion bios;
++    DeviceState *l2vic;
++    Clock *apb_clk;
++};
 +
-+#endif /* HEXSWI_H */
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index b7e21c913f..22e21d401b 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -33,6 +33,8 @@
- #include "sys_macros.h"
- #include "accel/tcg/cpu-ldst.h"
- #include "qemu/main-loop.h"
-+#include "hex_interrupts.h"
-+#include "hexswi.h"
- #endif
- 
- static void hexagon_v66_cpu_init(Object *obj) { }
-diff --git a/target/hexagon/hexswi.c b/target/hexagon/hexswi.c
++void hexagon_load_fdt(const struct HexagonVirtMachineState *vms);
++
++enum {
++    VIRT_UART0,
++    VIRT_QTMR0,
++    VIRT_QTMR1,
++    VIRT_GPT,
++    VIRT_MMIO,
++    VIRT_FDT,
++};
++
++#define TYPE_HEXAGON_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
++OBJECT_DECLARE_SIMPLE_TYPE(HexagonVirtMachineState, HEXAGON_VIRT_MACHINE)
++
++#endif /* HW_HEXAGONVIRT_H */
+diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
 new file mode 100644
-index 0000000000..373133ed7f
+index 0000000000..615fde773d
 --- /dev/null
-+++ b/target/hexagon/hexswi.c
-@@ -0,0 +1,256 @@
++++ b/hw/hexagon/virt.c
+@@ -0,0 +1,435 @@
 +/*
-+ * Copyright(c) 2019-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ * Hexagon virt emulation
 + *
++ * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "cpu_helper.h"
-+#include "exec/helper-proto.h"
-+#include "qemu/log.h"
-+#include "qemu/main-loop.h"
-+#include "arch.h"
-+#include "internal.h"
-+#include "macros.h"
-+#include "sys_macros.h"
-+#include "tcg/tcg-op.h"
-+#include "hex_mmu.h"
-+#include "hexswi.h"
++#include "hw/hexagon/virt.h"
++#include "elf.h"
++#include "hw/char/pl011.h"
++#include "hw/clock.h"
++#include "hw/core/sysbus-fdt.h"
++#include "hw/hexagon/hexagon.h"
++#include "hw/hexagon/hexagon_globalreg.h"
++#include "hw/loader.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-clock.h"
++#include "hw/register.h"
++#include "qemu/error-report.h"
++#include "qemu/guest-random.h"
++#include "qemu/units.h"
++#include "elf.h"
++#include "machine_cfg_v68n_1024.h.inc"
++#include "system/address-spaces.h"
++#include "system/device_tree.h"
++#include "system/reset.h"
++#include "system/system.h"
++#include <libfdt.h>
 +
-+#ifdef CONFIG_USER_ONLY
-+#error "This file is only used in system emulation"
-+#endif
++static const int VIRTIO_DEV_COUNT = 8;
 +
-+static void set_addresses(CPUHexagonState *env, target_ulong pc_offset,
-+                          target_ulong exception_index)
-+
-+{
-+    HexagonCPU *cpu = env_archcpu(env);
-+    uint32_t evb = cpu->globalregs ?
-+        arch_get_system_reg(env, HEX_SREG_EVB) :
-+        cpu->boot_addr;
-+    arch_set_system_reg(env, HEX_SREG_ELR,
-+                        arch_get_thread_reg(env, HEX_REG_PC) + pc_offset);
-+    arch_set_thread_reg(env, HEX_REG_PC, evb | (exception_index << 2));
-+}
-+
-+static const char *event_name[] = {
-+    [HEX_EVENT_RESET] = "HEX_EVENT_RESET",
-+    [HEX_EVENT_IMPRECISE] = "HEX_EVENT_IMPRECISE",
-+    [HEX_EVENT_TLB_MISS_X] = "HEX_EVENT_TLB_MISS_X",
-+    [HEX_EVENT_TLB_MISS_RW] = "HEX_EVENT_TLB_MISS_RW",
-+    [HEX_EVENT_TRAP0] = "HEX_EVENT_TRAP0",
-+    [HEX_EVENT_TRAP1] = "HEX_EVENT_TRAP1",
-+    [HEX_EVENT_FPTRAP] = "HEX_EVENT_FPTRAP",
-+    [HEX_EVENT_DEBUG] = "HEX_EVENT_DEBUG",
-+    [HEX_EVENT_INT0] = "HEX_EVENT_INT0",
-+    [HEX_EVENT_INT1] = "HEX_EVENT_INT1",
-+    [HEX_EVENT_INT2] = "HEX_EVENT_INT2",
-+    [HEX_EVENT_INT3] = "HEX_EVENT_INT3",
-+    [HEX_EVENT_INT4] = "HEX_EVENT_INT4",
-+    [HEX_EVENT_INT5] = "HEX_EVENT_INT5",
-+    [HEX_EVENT_INT6] = "HEX_EVENT_INT6",
-+    [HEX_EVENT_INT7] = "HEX_EVENT_INT7",
-+    [HEX_EVENT_INT8] = "HEX_EVENT_INT8",
-+    [HEX_EVENT_INT9] = "HEX_EVENT_INT9",
-+    [HEX_EVENT_INTA] = "HEX_EVENT_INTA",
-+    [HEX_EVENT_INTB] = "HEX_EVENT_INTB",
-+    [HEX_EVENT_INTC] = "HEX_EVENT_INTC",
-+    [HEX_EVENT_INTD] = "HEX_EVENT_INTD",
-+    [HEX_EVENT_INTE] = "HEX_EVENT_INTE",
-+    [HEX_EVENT_INTF] = "HEX_EVENT_INTF"
++static const MemMapEntry base_memmap[] = {
++    [VIRT_UART0] = { 0x10000000, 0x00000200 },
++    [VIRT_MMIO] = { 0x11000000, 0x1000000, },
++    [VIRT_GPT] = { 0xab000000, 0x00001000 },
++    [VIRT_FDT] = { 0x99800000, 0x00400000 },
 +};
 +
-+void hexagon_cpu_do_interrupt(CPUState *cs)
++static const int irqmap[] = {
++    [VIRT_MMIO] = 18, /* ...to 18 + VIRTIO_DEV_COUNT - 1 */
++    [VIRT_GPT] = 12,
++    [VIRT_UART0] = 15,
++    [VIRT_QTMR0] = 2,
++    [VIRT_QTMR1] = 4,
++};
 +
++
++static void create_fdt(HexagonVirtMachineState *vms)
 +{
-+    CPUHexagonState *env = cpu_env(cs);
-+    uint32_t ssr;
++    MachineState *ms = MACHINE(vms);
++    void *fdt = create_device_tree(&vms->fdt_size);
 +
-+    BQL_LOCK_GUARD();
-+
-+    qemu_log_mask(CPU_LOG_INT, "\t%s: event 0x%x:%s, cause 0x%x(%d)\n",
-+                  __func__, cs->exception_index,
-+                  event_name[cs->exception_index], env->cause_code,
-+                  env->cause_code);
-+
-+    env->llsc_addr = ~0;
-+
-+    ssr = arch_get_system_reg(env, HEX_SREG_SSR);
-+    if (GET_SSR_FIELD(SSR_EX, ssr) == 1) {
-+        arch_set_system_reg(env, HEX_SREG_DIAG, env->cause_code);
-+        env->cause_code = HEX_CAUSE_DOUBLE_EXCEPT;
-+        cs->exception_index = HEX_EVENT_PRECISE;
++    if (!fdt) {
++        error_report("create_device_tree() failed");
++        exit(1);
 +    }
 +
-+    switch (cs->exception_index) {
-+    case HEX_EVENT_TRAP0:
-+        if (env->cause_code == 0) {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "trap0 is unhandled, no semihosting available\n");
-+        }
++    ms->fdt = fdt;
 +
-+        hexagon_ssr_set_cause(env, env->cause_code);
-+        set_addresses(env, 4, cs->exception_index);
-+        break;
++    qemu_fdt_setprop_string(fdt, "/", "compatible", "linux,hexagon-virt");
++    qemu_fdt_setprop_cell(fdt, "/", "#address-cells", 0x2);
++    qemu_fdt_setprop_cell(fdt, "/", "#size-cells", 0x1);
++    qemu_fdt_setprop_string(fdt, "/", "model", "linux,hexagon-virt");
 +
-+    case HEX_EVENT_TRAP1:
-+        hexagon_ssr_set_cause(env, env->cause_code);
-+        set_addresses(env, 4, cs->exception_index);
-+        break;
++    qemu_fdt_setprop_string(fdt, "/", "model", "hexagon-virt,qemu");
++    qemu_fdt_setprop_string(fdt, "/", "compatible", "qcom,sm8150");
 +
-+    case HEX_EVENT_TLB_MISS_X:
-+        switch (env->cause_code) {
-+        case HEX_CAUSE_TLBMISSX_CAUSE_NORMAL:
-+        case HEX_CAUSE_TLBMISSX_CAUSE_NEXTPAGE:
-+            qemu_log_mask(CPU_LOG_MMU,
-+                          "TLB miss EX exception (0x%x) caught: "
-+                          "Cause code (0x%x) "
-+                          "TID = 0x%" PRIx32 ", PC = 0x%" PRIx32
-+                          ", BADVA = 0x%" PRIx32 "\n",
-+                          cs->exception_index, env->cause_code, env->threadId,
-+                          arch_get_thread_reg(env, HEX_REG_PC),
-+                          arch_get_system_reg(env, HEX_SREG_BADVA));
++    qemu_fdt_add_subnode(fdt, "/soc");
++    qemu_fdt_setprop_cell(fdt, "/soc", "#address-cells", 0x2);
++    qemu_fdt_setprop_cell(fdt, "/soc", "#size-cells", 0x1);
++    qemu_fdt_setprop(fdt, "/soc", "ranges", NULL, 0);
 +
-+            hexagon_ssr_set_cause(env, env->cause_code);
-+            set_addresses(env, 0, cs->exception_index);
-+            break;
++    qemu_fdt_add_subnode(fdt, "/chosen");
 +
-+        default:
-+            cpu_abort(cs,
-+                      "1:Hexagon exception %d/0x%x: "
-+                      "Unknown cause code %d/0x%x\n",
-+                      cs->exception_index, cs->exception_index, env->cause_code,
-+                      env->cause_code);
-+            break;
-+        }
-+        break;
++    uint8_t rng_seed[32];
++    qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
++    qemu_fdt_setprop(fdt, "/chosen", "rng-seed", rng_seed, sizeof(rng_seed));
++}
 +
-+    case HEX_EVENT_TLB_MISS_RW:
-+        switch (env->cause_code) {
-+        case HEX_CAUSE_TLBMISSRW_CAUSE_READ:
-+        case HEX_CAUSE_TLBMISSRW_CAUSE_WRITE:
-+            qemu_log_mask(CPU_LOG_MMU,
-+                          "TLB miss RW exception (0x%x) caught: "
-+                          "Cause code (0x%x) "
-+                          "TID = 0x%" PRIx32 ", PC = 0x%" PRIx32
-+                          ", BADVA = 0x%" PRIx32 "\n",
-+                          cs->exception_index, env->cause_code, env->threadId,
-+                          env->gpr[HEX_REG_PC],
-+                          arch_get_system_reg(env, HEX_SREG_BADVA));
++static void fdt_add_hvx(HexagonVirtMachineState *vms,
++                        const hexagon_machine_config *m_cfg, Error **errp)
++{
++    const MachineState *ms = MACHINE(vms);
++    uint32_t vtcm_size_bytes = m_cfg->cfgtable.vtcm_size_kb * 1024;
++    if (vtcm_size_bytes > 0) {
++        memory_region_init_ram(&vms->vtcm, NULL, "vtcm.ram", vtcm_size_bytes,
++                               errp);
++        memory_region_add_subregion(vms->sys, m_cfg->cfgtable.vtcm_base << 16,
++                                    &vms->vtcm);
 +
-+            hexagon_ssr_set_cause(env, env->cause_code);
-+            set_addresses(env, 0, cs->exception_index);
-+            /* env->sreg[HEX_SREG_BADVA] is set when the exception is raised */
-+            break;
++        qemu_fdt_add_subnode(ms->fdt, "/soc/vtcm");
++        qemu_fdt_setprop_string(ms->fdt, "/soc/vtcm", "compatible",
++                                "qcom,hexagon_vtcm");
 +
-+        default:
-+            cpu_abort(cs,
-+                      "2:Hexagon exception %d/0x%x: "
-+                      "Unknown cause code %d/0x%x\n",
-+                      cs->exception_index, cs->exception_index, env->cause_code,
-+                      env->cause_code);
-+            break;
-+        }
-+        break;
-+
-+    case HEX_EVENT_FPTRAP:
-+        hexagon_ssr_set_cause(env, env->cause_code);
-+        arch_set_thread_reg(env, HEX_REG_PC,
-+                            arch_get_system_reg(env, HEX_SREG_EVB) |
-+                                (cs->exception_index << 2));
-+        break;
-+
-+    case HEX_EVENT_DEBUG:
-+        hexagon_ssr_set_cause(env, env->cause_code);
-+        set_addresses(env, 0, cs->exception_index);
-+        qemu_log_mask(LOG_UNIMP, "single-step exception is not handled\n");
-+        break;
-+
-+    case HEX_EVENT_PRECISE:
-+        switch (env->cause_code) {
-+        case HEX_CAUSE_FETCH_NO_XPAGE:
-+        case HEX_CAUSE_FETCH_NO_UPAGE:
-+        case HEX_CAUSE_PRIV_NO_READ:
-+        case HEX_CAUSE_PRIV_NO_UREAD:
-+        case HEX_CAUSE_PRIV_NO_WRITE:
-+        case HEX_CAUSE_PRIV_NO_UWRITE:
-+        case HEX_CAUSE_MISALIGNED_LOAD:
-+        case HEX_CAUSE_MISALIGNED_STORE:
-+        case HEX_CAUSE_PC_NOT_ALIGNED:
-+            qemu_log_mask(CPU_LOG_MMU,
-+                          "MMU permission exception (0x%x) caught: "
-+                          "Cause code (0x%x) "
-+                          "TID = 0x%" PRIx32 ", PC = 0x%" PRIx32
-+                          ", BADVA = 0x%" PRIx32 "\n",
-+                          cs->exception_index, env->cause_code, env->threadId,
-+                          env->gpr[HEX_REG_PC],
-+                          arch_get_system_reg(env, HEX_SREG_BADVA));
-+
-+
-+            hexagon_ssr_set_cause(env, env->cause_code);
-+            set_addresses(env, 0, cs->exception_index);
-+            /* env->sreg[HEX_SREG_BADVA] is set when the exception is raised */
-+            break;
-+
-+        case HEX_CAUSE_DOUBLE_EXCEPT:
-+        case HEX_CAUSE_PRIV_USER_NO_SINSN:
-+        case HEX_CAUSE_PRIV_USER_NO_GINSN:
-+        case HEX_CAUSE_INVALID_OPCODE:
-+        case HEX_CAUSE_NO_COPROC_ENABLE:
-+        case HEX_CAUSE_NO_COPROC2_ENABLE:
-+        case HEX_CAUSE_UNSUPORTED_HVX_64B:
-+        case HEX_CAUSE_REG_WRITE_CONFLICT:
-+        case HEX_CAUSE_VWCTRL_WINDOW_MISS:
-+            hexagon_ssr_set_cause(env, env->cause_code);
-+            set_addresses(env, 0, cs->exception_index);
-+            break;
-+
-+        case HEX_CAUSE_COPROC_LDST:
-+            hexagon_ssr_set_cause(env, env->cause_code);
-+            set_addresses(env, 0, cs->exception_index);
-+            break;
-+
-+        case HEX_CAUSE_STACK_LIMIT:
-+            hexagon_ssr_set_cause(env, env->cause_code);
-+            set_addresses(env, 0, cs->exception_index);
-+            break;
-+
-+        default:
-+            cpu_abort(cs,
-+                      "3:Hexagon exception %d/0x%x: "
-+                      "Unknown cause code %d/0x%x\n",
-+                      cs->exception_index, cs->exception_index, env->cause_code,
-+                      env->cause_code);
-+            break;
-+        }
-+        break;
-+
-+    case HEX_EVENT_IMPRECISE:
-+        qemu_log_mask(LOG_UNIMP,
-+                "Imprecise exception: this case is not yet handled");
-+        break;
-+
-+    default:
-+        qemu_log_mask(LOG_UNIMP,
-+                "Hexagon Unsupported exception 0x%x/0x%x\n",
-+                  cs->exception_index, env->cause_code);
-+        break;
++        assert(sizeof(m_cfg->cfgtable.vtcm_base) == sizeof(uint32_t));
++        qemu_fdt_setprop_cells(ms->fdt, "/soc/vtcm", "reg", 0,
++                               m_cfg->cfgtable.vtcm_base << 16,
++                               vtcm_size_bytes);
 +    }
 +
-+    cs->exception_index = HEX_EVENT_NONE;
++    if (m_cfg->cfgtable.ext_contexts > 0) {
++        qemu_fdt_add_subnode(ms->fdt, "/soc/hvx");
++        qemu_fdt_setprop_string(ms->fdt, "/soc/hvx", "compatible",
++                                "qcom,hexagon-hvx");
++        qemu_fdt_setprop_cells(ms->fdt, "/soc/hvx", "qcom,hvx-max-ctxts",
++                               m_cfg->cfgtable.ext_contexts);
++        qemu_fdt_setprop_cells(ms->fdt, "/soc/hvx", "qcom,hvx-vlength",
++                               m_cfg->cfgtable.hvx_vec_log_length);
++    }
 +}
 +
-+void register_trap_exception(CPUHexagonState *env, int traptype, int imm,
-+                             target_ulong PC)
++static int32_t irq_hvm_ic_phandle = -1;
++static void fdt_add_hvm_pic_node(HexagonVirtMachineState *vms,
++                                 const hexagon_machine_config *m_cfg)
 +{
-+    CPUState *cs = env_cpu(env);
++    MachineState *ms = MACHINE(vms);
++    irq_hvm_ic_phandle = qemu_fdt_alloc_phandle(ms->fdt);
 +
-+    cs->exception_index = (traptype == 0) ? HEX_EVENT_TRAP0 : HEX_EVENT_TRAP1;
-+    ASSERT_DIRECT_TO_GUEST_UNSET(env, cs->exception_index);
++    qemu_fdt_setprop_cell(ms->fdt, "/soc", "interrupt-parent",
++                          irq_hvm_ic_phandle);
 +
-+    env->cause_code = imm;
-+    env->gpr[HEX_REG_PC] = PC;
-+    cpu_loop_exit(cs);
++    qemu_fdt_add_subnode(ms->fdt, "/soc/interrupt-controller");
++    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller",
++                          "#address-cells", 2);
++    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller",
++                          "#interrupt-cells", 2);
++    qemu_fdt_setprop_string(ms->fdt, "/soc/interrupt-controller", "compatible",
++                            "qcom,h2-pic,hvm-pic");
++    qemu_fdt_setprop(ms->fdt, "/soc/interrupt-controller",
++                     "interrupt-controller", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, "/soc/interrupt-controller", "phandle",
++                          irq_hvm_ic_phandle);
++
++    sysbus_mmio_map(SYS_BUS_DEVICE(vms->l2vic), 1,
++                    m_cfg->cfgtable.fastl2vic_base << 16);
 +}
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index 53bf0591ec..569e8271b3 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -40,6 +40,7 @@
- #include "hex_mmu.h"
- #include "hw/intc/l2vic.h"
- #include "hex_interrupts.h"
-+#include "hexswi.h"
- #endif
++
++
++static void fdt_add_gpt_node(HexagonVirtMachineState *vms)
++{
++    g_autofree char *name = NULL;
++    MachineState *ms = MACHINE(vms);
++
++    name = g_strdup_printf("/soc/gpt@%" PRIx64,
++                           (int64_t)base_memmap[VIRT_GPT].base);
++    qemu_fdt_add_subnode(ms->fdt, name);
++    qemu_fdt_setprop_string(ms->fdt, name, "compatible",
++                            "qcom,h2-timer,hvm-timer");
++    qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", irqmap[VIRT_GPT], 0);
++    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0,
++                           base_memmap[VIRT_GPT].base,
++                           base_memmap[VIRT_GPT].size);
++}
++
++static int32_t clock_phandle = -1;
++static void fdt_add_clocks(const HexagonVirtMachineState *vms)
++{
++    MachineState *ms = MACHINE(vms);
++    clock_phandle = qemu_fdt_alloc_phandle(ms->fdt);
++    qemu_fdt_add_subnode(ms->fdt, "/apb-pclk");
++    qemu_fdt_setprop_string(ms->fdt, "/apb-pclk", "compatible", "fixed-clock");
++    qemu_fdt_setprop_cell(ms->fdt, "/apb-pclk", "#clock-cells", 0x0);
++    qemu_fdt_setprop_cell(ms->fdt, "/apb-pclk", "clock-frequency", 24000000);
++    qemu_fdt_setprop_string(ms->fdt, "/apb-pclk", "clock-output-names",
++                            "clk24mhz");
++    qemu_fdt_setprop_cell(ms->fdt, "/apb-pclk", "phandle", clock_phandle);
++}
++
++static void fdt_add_uart(const HexagonVirtMachineState *vms, int uart)
++{
++    char *nodename;
++    hwaddr base = base_memmap[uart].base;
++    hwaddr size = base_memmap[uart].size;
++    assert(uart == 0);
++    int irq = irqmap[VIRT_UART0 + uart];
++    const char compat[] = "arm,pl011\0arm,primecell";
++    const char clocknames[] = "uartclk\0apb_pclk";
++    MachineState *ms = MACHINE(vms);
++    DeviceState *dev;
++    SysBusDevice *s;
++
++    dev = qdev_new(TYPE_PL011);
++    s = SYS_BUS_DEVICE(dev);
++    qdev_prop_set_chr(dev, "chardev", serial_hd(0));
++    qdev_connect_clock_in(dev, "clk", vms->apb_clk);
++    sysbus_realize_and_unref(s, &error_fatal);
++    sysbus_mmio_map(s, 0, base);
++    sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->l2vic, irq));
++
++    nodename = g_strdup_printf("/pl011@%" PRIx64, base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++
++    /* Note that we can't use setprop_string because of the embedded NUL */
++    qemu_fdt_setprop(ms->fdt, nodename, "compatible", compat, sizeof(compat));
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0, base, size);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", 32 + irq, 0);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "clocks", clock_phandle,
++                           clock_phandle);
++    qemu_fdt_setprop(ms->fdt, nodename, "clock-names", clocknames,
++                     sizeof(clocknames));
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
++                          irq_hvm_ic_phandle);
++
++    qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
++    qemu_fdt_add_subnode(ms->fdt, "/aliases");
++    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", nodename);
++
++    g_free(nodename);
++}
++
++static void fdt_add_cpu_nodes(const HexagonVirtMachineState *vms)
++{
++    MachineState *ms = MACHINE(vms);
++    qemu_fdt_add_subnode(ms->fdt, "/cpus");
++    qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", 0x1);
++    qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
++
++    /* cpu nodes */
++    for (int num = ms->smp.cpus - 1; num >= 0; num--) {
++        char *nodename = g_strdup_printf("/cpus/cpu@%d", num);
++        qemu_fdt_add_subnode(ms->fdt, nodename);
++        qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "cpu");
++        qemu_fdt_setprop_cell(ms->fdt, nodename, "reg", num);
++        qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle",
++                              qemu_fdt_alloc_phandle(ms->fdt));
++        g_free(nodename);
++    }
++}
++
++
++static void fdt_add_virtio_devices(const HexagonVirtMachineState *vms)
++{
++    MachineState *ms = MACHINE(vms);
++    /* VirtIO MMIO devices */
++    for (int i = 0; i < VIRTIO_DEV_COUNT; i++) {
++        char *nodename;
++        int irq = irqmap[VIRT_MMIO] + i;
++        size_t size = base_memmap[VIRT_MMIO].size;
++        hwaddr base = base_memmap[VIRT_MMIO].base + i * size;
++
++        nodename = g_strdup_printf("/virtio_mmio@%" PRIx64, base);
++        qemu_fdt_add_subnode(ms->fdt, nodename);
++        qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "virtio,mmio");
++        qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 1,
++                                     size);
++        qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0);
++        qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
++                              irq_hvm_ic_phandle);
++
++        sysbus_create_simple(
++            "virtio-mmio", base,
++            qdev_get_gpio_in(vms->l2vic, irqmap[VIRT_MMIO] + i));
++
++        g_free(nodename);
++    }
++}
++
++static void virt_instance_init(Object *obj)
++{
++    HexagonVirtMachineState *vms = HEXAGON_VIRT_MACHINE(obj);
++
++    create_fdt(vms);
++}
++
++void hexagon_load_fdt(const HexagonVirtMachineState *vms)
++{
++    MachineState *ms = MACHINE(vms);
++    hwaddr fdt_addr = base_memmap[VIRT_FDT].base;
++    uint32_t fdtsize = vms->fdt_size;
++
++    g_assert(fdtsize <= base_memmap[VIRT_FDT].size);
++    /* copy in the device tree */
++    rom_add_blob_fixed_as("fdt", ms->fdt, fdtsize, fdt_addr,
++                          &address_space_memory);
++    qemu_register_reset_nosnapshotload(
++        qemu_fdt_randomize_seeds,
++        rom_ptr_for_as(&address_space_memory, fdt_addr, fdtsize));
++}
++
++static uint64_t load_kernel(const HexagonVirtMachineState *vms)
++{
++    MachineState *ms = MACHINE(vms);
++    uint64_t entry = 0;
++    if (load_elf_ram_sym(ms->kernel_filename, NULL, NULL, NULL, &entry, NULL,
++                         NULL, NULL, 0, EM_HEXAGON, 0, 0, &address_space_memory,
++                         false, NULL) > 0) {
++        return entry;
++    }
++    error_report("error loading '%s'", ms->kernel_filename);
++    exit(1);
++}
++
++static uint64_t load_bios(HexagonVirtMachineState *vms)
++{
++    MachineState *ms = MACHINE(vms);
++    uint64_t bios_addr = 0x0;  /* Load BIOS at reset vector address 0x0 */
++    int bios_size;
++
++    bios_size = load_image_targphys(ms->firmware ?: "", bios_addr, 64 * 1024);
++    if (bios_size < 0) {
++        error_report("Could not load BIOS '%s'", ms->firmware ?: "");
++        exit(1);
++    }
++
++    return bios_addr;  /* Return entry point at address 0x0 */
++}
++
++static void do_cpu_reset(void *opaque)
++{
++    HexagonCPU *cpu = opaque;
++    CPUState *cs = CPU(cpu);
++    cpu_reset(cs);
++}
++
++static void virt_init(MachineState *ms)
++{
++    HexagonVirtMachineState *vms = HEXAGON_VIRT_MACHINE(ms);
++    Error **errp = NULL;
++    const hexagon_machine_config *m_cfg = &v68n_1024;
++
++    qemu_fdt_setprop_string(ms->fdt, "/chosen", "bootargs", ms->kernel_cmdline);
++
++    vms->sys = get_system_memory();
++
++    /* Create APB clock for peripherals */
++    vms->apb_clk = clock_new(OBJECT(ms), "apb-pclk");
++    clock_set_hz(vms->apb_clk, 24000000);
++
++    memory_region_init_ram(&vms->ram, NULL, "ddr.ram", ms->ram_size, errp);
++    memory_region_add_subregion(vms->sys, 0x0, &vms->ram);
++
++    if (m_cfg->l2tcm_size) {
++        memory_region_init_ram(&vms->tcm, NULL, "tcm.ram", m_cfg->l2tcm_size,
++                               errp);
++        memory_region_add_subregion(vms->sys, m_cfg->cfgtable.l2tcm_base << 16,
++                                    &vms->tcm);
++    }
++
++    memory_region_init_rom(&vms->cfgtable, NULL, "config_table.rom",
++                           sizeof(m_cfg->cfgtable), errp);
++    memory_region_add_subregion(vms->sys, m_cfg->cfgbase, &vms->cfgtable);
++    fdt_add_hvx(vms, m_cfg, errp);
++    const char *cpu_model = ms->cpu_type;
++
++    if (!cpu_model) {
++        cpu_model = HEXAGON_CPU_TYPE_NAME("v73");
++    }
++
++    DeviceState *gsregs_dev = qdev_new(TYPE_HEXAGON_GLOBALREG);
++    object_property_add_child(OBJECT(ms), "global-regs", OBJECT(gsregs_dev));
++    qdev_prop_set_uint64(gsregs_dev, "config-table-addr", m_cfg->cfgbase);
++    qdev_prop_set_uint32(gsregs_dev, "dsp-rev", v68_rev);
++    qdev_prop_set_uint32(gsregs_dev, "qtimer-base-addr", m_cfg->qtmr_region);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(gsregs_dev), errp);
++
++    HexagonCPU *cpu_0 = NULL;
++    for (int i = 0; i < ms->smp.cpus; i++) {
++        HexagonCPU *cpu = HEXAGON_CPU(object_new(ms->cpu_type));
++        qemu_register_reset(do_cpu_reset, cpu);
++
++        if (i == 0) {
++            cpu_0 = cpu;
++            if (ms->kernel_filename) {
++                uint64_t entry = load_kernel(vms);
++                qdev_prop_set_uint32(DEVICE(cpu_0), "exec-start-addr", entry);
++            } else if (ms->firmware) {
++                uint64_t entry = load_bios(vms);
++                qdev_prop_set_uint32(DEVICE(cpu_0), "exec-start-addr", entry);
++            }
++        }
++        qdev_prop_set_bit(DEVICE(cpu), "start-powered-off", (i != 0));
++        qdev_prop_set_uint32(DEVICE(cpu), "hvx-contexts",
++                             m_cfg->cfgtable.ext_contexts);
++        object_property_set_link(OBJECT(cpu), "global-regs",
++                                 OBJECT(gsregs_dev), errp);
++        qdev_prop_set_uint32(DEVICE(cpu), "l2vic-base-addr", m_cfg->l2vic_base);
++        qdev_prop_set_uint32(DEVICE(cpu), "jtlb-entries",
++                             m_cfg->cfgtable.jtlb_size_entries);
++
++        if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
++            return;
++        }
++    }
++    vms->l2vic = sysbus_create_varargs(
++        "l2vic", m_cfg->l2vic_base, qdev_get_gpio_in(DEVICE(cpu_0), 0),
++        qdev_get_gpio_in(DEVICE(cpu_0), 1), qdev_get_gpio_in(DEVICE(cpu_0), 2),
++        qdev_get_gpio_in(DEVICE(cpu_0), 3), qdev_get_gpio_in(DEVICE(cpu_0), 4),
++        qdev_get_gpio_in(DEVICE(cpu_0), 5), qdev_get_gpio_in(DEVICE(cpu_0), 6),
++        qdev_get_gpio_in(DEVICE(cpu_0), 7), NULL);
++
++    fdt_add_hvm_pic_node(vms, m_cfg);
++    fdt_add_virtio_devices(vms);
++    fdt_add_cpu_nodes(vms);
++    fdt_add_clocks(vms);
++    fdt_add_uart(vms, VIRT_UART0);
++    fdt_add_gpt_node(vms);
++
++    rom_add_blob_fixed_as("config_table.rom", &m_cfg->cfgtable,
++                          sizeof(m_cfg->cfgtable), m_cfg->cfgbase,
++                          &address_space_memory);
++
++
++    hexagon_load_fdt(vms);
++}
++
++
++static void virt_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->init = virt_init;
++    mc->default_cpu_type = HEXAGON_CPU_TYPE_NAME("v73");
++    mc->default_ram_size = 4 * GiB;
++    mc->max_cpus = 8;
++    mc->default_cpus = 8;
++    mc->is_default = false;
++    mc->default_kernel_irqchip_split = false;
++    mc->block_default_type = IF_VIRTIO;
++    mc->default_boot_order = NULL;
++    mc->no_cdrom = 1;
++    mc->numa_mem_supported = false;
++    mc->default_nic = "virtio-mmio-bus";
++}
++
++
++static const TypeInfo virt_machine_types[] = { {
++    .name = TYPE_HEXAGON_VIRT_MACHINE,
++    .parent = TYPE_MACHINE,
++    .instance_size = sizeof(HexagonVirtMachineState),
++    .class_init = virt_class_init,
++    .instance_init = virt_instance_init,
++} };
++
++DEFINE_TYPES(virt_machine_types)
+diff --git a/hw/hexagon/Kconfig b/hw/hexagon/Kconfig
+index 7b9577f68f..dc74751d21 100644
+--- a/hw/hexagon/Kconfig
++++ b/hw/hexagon/Kconfig
+@@ -3,3 +3,13 @@ config HEX_DSP
+     default y
+     depends on HEXAGON && TCG
+     imply PTIMER
++
++config HEX_VIRT
++    bool
++    default y
++    depends on HEX_DSP && FDT
++    select DEVICE_TREE
++    select VIRTIO_MMIO
++    select PL011
++    select VIRTIO_BLK
++    select VIRTIO_SCSI
+diff --git a/hw/hexagon/meson.build b/hw/hexagon/meson.build
+index 11e71a67d5..4b856b9583 100644
+--- a/hw/hexagon/meson.build
++++ b/hw/hexagon/meson.build
+@@ -3,3 +3,5 @@ hexagon_ss.add(when: 'CONFIG_HEX_DSP', if_true: files('hexagon_dsp.c', 'hexagon_
  
- #define SF_BIAS        127
+ hw_arch += {'hexagon': hexagon_ss}
+ 
++hexagon_ss.add(when: 'CONFIG_HEX_VIRT', if_true: files('virt.c', 'hexagon_globalreg.c'))
++
+diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py
+index 6326e46b7b..b8eeed703a 100644
+--- a/tests/qemu-iotests/testenv.py
++++ b/tests/qemu-iotests/testenv.py
+@@ -239,6 +239,7 @@ def __init__(self, source_dir: str, build_dir: str,
+             ('arm', 'virt'),
+             ('aarch64', 'virt'),
+             ('avr', 'mega2560'),
++            ('hexagon', 'virt'),
+             ('m68k', 'virt'),
+             ('or1k', 'virt'),
+             ('riscv32', 'virt'),
 -- 
 2.34.1
 
