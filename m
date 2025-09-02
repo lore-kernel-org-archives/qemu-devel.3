@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54561CA1005
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60343CA100C
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQn0-0000Vb-5s; Tue, 02 Sep 2025 09:11:10 -0400
+	id 1utQor-0006Ad-Cw; Tue, 02 Sep 2025 09:13:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQmp-0000RC-0l
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:10:59 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQob-0005ZW-7L
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:12:49 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQmf-0004RN-FX
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:10:57 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45b82a21eeeso34638285e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:10:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQoW-0004fV-UM
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:12:48 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-45b7ebe667cso34871755e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:12:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756818646; x=1757423446; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756818761; x=1757423561; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=X+SFIFq6U9bHOZ8xKmEzKqugUCiHKif7YLVtYxmKJZo=;
- b=v0s+uuMGzOio/te6N7rgd/O0T8KBhLnKLJu8k7hige/sG6eVrslZd8r/2NWVJ4y8US
- NSZ8mX7d5C3kFrQ9HBepvGhBOjzLi2/LbL9+4uo451ssEc595MjooCg40xE3Tiyup7cT
- DFG9INUZx94ouoZswbOlUG8NTP3ltyvQw08E9KDuIAjyB/D0EmE4Sgs2Tccv/qfY5q3Q
- dif81vF94Bjs9wK724GZwJfUkjWXvUV4S5P1bxFlp4AwQXFw+EutX/pGxdKNBI6iPRaM
- 17evC9RNdANqhlOoUW4CvlZH2AJtZNXYqVYpflv/N30xAiE6SpT+suplvqhK910s7/jA
- RL5g==
+ :reply-to; bh=ydrW5bZ2XLFJIZV0r30kceaHkdWCHYqtutYU/gk76cY=;
+ b=QYZjemtocAUCcE9M0lHCwJ9M7u+kcqgQW3tWLNSXfYnbiGq6/u+Eauq4h0vPOv7Oqo
+ DThQLx0leIUCjB6IvB+uxR4KX6sBMtVNM72lfJad9y9YA9VGnMUZmdK6dImPup1xn9Tx
+ Bs3kElBARr1ZQBk9iBxsnMY896+QZPAWQjIdl90M8hF3cjxQuz6qXgN2xjUZoEv8LRpX
+ YRYRpEO7mnBAs/WBb8IfDtoYw1wz+lK9DaSvGBAbck65Cxl5hw/NBfxklqgGj3MT82tJ
+ rrAwVMiy1jTDntpPeORgHm9LCx6Onl+84P/0EUsfeSSAxYwx4kr6UxByVxN4dlkmc4jc
+ mCrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756818646; x=1757423446;
+ d=1e100.net; s=20230601; t=1756818761; x=1757423561;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X+SFIFq6U9bHOZ8xKmEzKqugUCiHKif7YLVtYxmKJZo=;
- b=rlxrXE8F3uhEm7EAkjoLR/i8vPrwfCHKuxu8Cf4QRAiqU70VaE5t2dtZc4Vbjx1/cD
- RljKvXJLGzB6L+w5e5QqAE+2fPv4WuQnvaXJJL45hG1Mkgoxo88ngmfL5ntmZY/5a2BF
- CgWrB8i+pGFzH42EJ8cEjTSrQ7j4HMYd0ZWDSqQNY9kKB3pfaUvHRWayDBRPXmM8unGh
- pWNdZtv0kNJ4sKAsXHV7tEB2qX8I9hegMT4nMCJ8+nARYJHlyIhVGj3R8xdpOJakxq3m
- M5BoN1zc35QdgJ6p7gK3Tc7/hWFmf9UrWSlkIctg+Ja7Uk7mJeZoSw/4RsE3CQBxku2k
- kr/w==
-X-Gm-Message-State: AOJu0Ywqwq9IbNz1PQUgaNvZR0EHR3L7sumfk/5dJtBa8HcE0z5+FPti
- F7vFjum5ZuPk5se+LX5j+0tMxCj9I5gb0DCaE1ltqOTXSWEWYqaIrrOPrBYXzSoYwo7tgjMGuRt
- 6bNbI
-X-Gm-Gg: ASbGncsFF3MOTpcG7SQ3pA8K1R/+bzb6ahoMJHFBpguga5oVS+x38lyQszOs7TEhghN
- krQ7OShzihyShi9d1MYMoe2S/MB+b3Xh0gW/rVqXMBeopQAskwJexiHcODiFJQpmfpBS7TDhmBO
- NO5dZQA5ndCm2SImCWwZAJDJ0/ZIAdzkERHQXPdc5LrTh42C9jw08rBPTo2yoylkgjTfuUissCA
- ZrnNe0MkoY4Ynx5oL+VlGO0lJ7qlhfFfC7FDXFOMphu0tqtd5qOZfi2L4yUpxuI8eiOwhUefnel
- Y7m/a0WlO66ePhjKyTMYYFWZr0O6eFly8tnxyYqsDWU6kAsnQD/sblHLoggsk1c8gEe639YU65q
- DHUg8ONO/1R+DgSByfGI6qckispa/vYUs1vqJmDbo3OH6GWekRAVSi2nmTkN51/PXjxNlvBiP1d
- GyG+Q7arU=
-X-Google-Smtp-Source: AGHT+IEYKryt2d0nkMVc4u4TFTS3RpP45uhnInPld68u6BuSaXOcmBp6TE302GNYTnlktiYdgePyRg==
-X-Received: by 2002:a05:600c:524b:b0:459:ddd6:1ca3 with SMTP id
- 5b1f17b1804b1-45b8549c817mr92937795e9.0.1756818645607; 
- Tue, 02 Sep 2025 06:10:45 -0700 (PDT)
+ bh=ydrW5bZ2XLFJIZV0r30kceaHkdWCHYqtutYU/gk76cY=;
+ b=JTdgCWMpE6Ix8DIDewvuPfo336+K9i2lCBqp7b5bm5V4WbjoQUezGkTuRdZf7oCxwX
+ RNec5s4/WVpAq1JMigLBQB3gxta9xpAwNjbT+QJG//hfPJ+iTtumkF56HYtjPEr3Fut1
+ uhDTqj0AV0lQFl/jkqvuafUwOt71E8wMFoSHXkZUdmOyyZEX03yRsOKrp6CWjozuWRYA
+ HfE+DfPiy8yBz+SNGbxrfxvQpBeqQJ/HZ9fIUiCSOftEHcHowpakjGoF9In8tuKxbbRB
+ 748m+a1h5ibsjn//RrICT9kaCC7WXrQ26lqC/HnqixR6RaBz5MwiLRxEvJpFRKP2bbsL
+ j8lQ==
+X-Gm-Message-State: AOJu0YwBd9Gm4jCMuMJUcjmCYmC73YjuPEfAsGeBSswwSgp4mU/w/w+s
+ 3bgv2eXGx6kyFKoVYXKequDWQuhXlFMy/NVvGyrP4V89mkcRZm7K5mytkc16TcXtlducTBjJJKx
+ bLPjo
+X-Gm-Gg: ASbGncum0Fku+98UFUBsBk7YzumkW9qYmJkAcdNLUEJyXVq8sdzj4mtedExzTyf/IAG
+ E7LeOK4uXVqCoXOvS6aniO8AOl5hbuDkDJgZg/RABQ941VmykoQFSQCzHB/Dc+V9/iM4ZJJv7Cb
+ 8XJL0fW8kytEaEUKx44U6h/Yt+EytHu4fGAqSUldwtGWY6r6ZhTjgG27+nWlntcQgxS9vSxPUWW
+ /+TNeyKjBeYynkuHaJ3cpFg5XHPpbC8lEdfzyaxm6CRqhoz9BjcbPqIr9GZ0+PdE/8gqJLrEj8W
+ bfVzvvkIDA8oCUwQAUcYwlkjmBpHZ9E/zdAIn+4Jw/GrmiDwAoRsyJyfslWtdOXaBfx3SeHiCdL
+ 7kU0Ub/T+Uqlu3ErWlQWut4vxecLrFs4+yu4ZpCk7b5Q1ch2TDKt96T3YvmKCPRHW9ddYmoEG
+X-Google-Smtp-Source: AGHT+IFAkFuUCQUquUqLOOGC44BcVdPda73TtvpFPYQRdbMBa2YjF4JG6eH2Y9cW9uTW8dc7DKXF2Q==
+X-Received: by 2002:a05:600c:a47:b0:450:cabd:b4a9 with SMTP id
+ 5b1f17b1804b1-45b8557ca38mr81715915e9.29.1756818761280; 
+ Tue, 02 Sep 2025 06:12:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b9a6ecfafsm23428815e9.21.2025.09.02.06.10.44
+ 5b1f17b1804b1-45b7e7d23b7sm197333265e9.1.2025.09.02.06.12.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 06:10:45 -0700 (PDT)
+ Tue, 02 Sep 2025 06:12:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/39] migration/vfio: compile only once
-Date: Tue,  2 Sep 2025 15:09:43 +0200
-Message-ID: <20250902131016.84968-7-philmd@linaro.org>
+Subject: [PULL 31/39] hw/sd/sdcard: Refactor sd_bootpart_offset
+Date: Tue,  2 Sep 2025 15:10:08 +0200
+Message-ID: <20250902131016.84968-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131016.84968-1-philmd@linaro.org>
 References: <20250902131016.84968-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,102 +98,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250730220435.1139101-3-pierrick.bouvier@linaro.org>
-[PMD: Cover vfio-stub.c in MAINTAINERS]
+This function provides the offset for any partition in the block image,
+not only the boot partitions, therefore rename it. Align the constant
+names with the numbering scheme in the standard and use constants for
+both boot partitions for consistency reasons. There is also no reason to
+return early if boot_part_size is zero because the existing code will
+provide the right value in that case as well.
+
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <66e9b07476aad61820c4f42f4f984cc90752ba5e.1756706188.git.jan.kiszka@siemens.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS           |  1 +
- migration/vfio-stub.c | 16 ++++++++++++++++
- migration/vfio.c      | 14 --------------
- migration/meson.build |  6 +++---
- 4 files changed, 20 insertions(+), 17 deletions(-)
- create mode 100644 migration/vfio-stub.c
+ hw/sd/sdmmc-internal.h |  3 ++-
+ hw/sd/sd.c             | 16 ++++++++--------
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8147fff3523..07c9f929d2b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2268,6 +2268,7 @@ F: util/vfio-helpers.c
- F: include/hw/vfio/
- F: docs/devel/migration/vfio.rst
- F: qapi/vfio.json
-+F: migration/vfio-stub.c
- F: tests/functional/aarch64/test_device_passthrough.py
+diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
+index 91eb5b6b2fc..ce6bc4e6ec4 100644
+--- a/hw/sd/sdmmc-internal.h
++++ b/hw/sd/sdmmc-internal.h
+@@ -116,7 +116,8 @@ DECLARE_OBJ_CHECKERS(SDState, SDCardClass, SDMMC_COMMON, TYPE_SDMMC_COMMON)
  
- vfio-igd
-diff --git a/migration/vfio-stub.c b/migration/vfio-stub.c
-new file mode 100644
-index 00000000000..f59ebe075dc
---- /dev/null
-+++ b/migration/vfio-stub.c
-@@ -0,0 +1,16 @@
-+/*
-+ * QEMU live migration - stubs for VFIO
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "migration.h"
-+
-+void migration_populate_vfio_info(MigrationInfo *info)
-+{
-+}
-+
-+void migration_reset_vfio_bytes_transferred(void)
-+{
-+}
-diff --git a/migration/vfio.c b/migration/vfio.c
-index 0b64e49ef06..af6ae2c1e19 100644
---- a/migration/vfio.c
-+++ b/migration/vfio.c
-@@ -8,13 +8,8 @@
- #include "qemu/osdep.h"
- #include "qapi/qapi-types-migration.h"
- #include "migration.h"
--#include CONFIG_DEVICES
--
--#ifdef CONFIG_VFIO
- #include "hw/vfio/vfio-migration.h"
--#endif
+ #define EXT_CSD_PART_CONFIG_ACC_MASK            (0x7)
+ #define EXT_CSD_PART_CONFIG_ACC_DEFAULT         (0x0)
+-#define EXT_CSD_PART_CONFIG_ACC_BOOT0           (0x1)
++#define EXT_CSD_PART_CONFIG_ACC_BOOT1           (0x1)
++#define EXT_CSD_PART_CONFIG_ACC_BOOT2           (0x2)
  
--#ifdef CONFIG_VFIO
- void migration_populate_vfio_info(MigrationInfo *info)
+ #define EXT_CSD_PART_CONFIG_EN_MASK             (0x7 << 3)
+ #define EXT_CSD_PART_CONFIG_EN_BOOT0            (0x1 << 3)
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 94ec58a83e1..2d34781fe47 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -833,14 +833,14 @@ static uint32_t sd_blk_len(SDState *sd)
+ 
+ /*
+  * This requires a disk image that has two boot partitions inserted at the
+- * beginning of it. The size of the boot partitions is the "boot-size"
+- * property.
++ * beginning of it, followed by an RPMB partition. The size of the boot
++ * partitions is the "boot-partition-size" property.
+  */
+-static uint32_t sd_bootpart_offset(SDState *sd)
++static uint32_t sd_part_offset(SDState *sd)
  {
-     if (vfio_migration_active()) {
-@@ -27,12 +22,3 @@ void migration_reset_vfio_bytes_transferred(void)
+     unsigned partition_access;
+ 
+-    if (!sd->boot_part_size || !sd_is_emmc(sd)) {
++    if (!sd_is_emmc(sd)) {
+         return 0;
+     }
+ 
+@@ -849,9 +849,9 @@ static uint32_t sd_bootpart_offset(SDState *sd)
+     switch (partition_access) {
+     case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
+         return sd->boot_part_size * 2;
+-    case EXT_CSD_PART_CONFIG_ACC_BOOT0:
++    case EXT_CSD_PART_CONFIG_ACC_BOOT1:
+         return 0;
+-    case EXT_CSD_PART_CONFIG_ACC_BOOT0 + 1:
++    case EXT_CSD_PART_CONFIG_ACC_BOOT2:
+         return sd->boot_part_size * 1;
+     default:
+          g_assert_not_reached();
+@@ -1052,7 +1052,7 @@ static const VMStateDescription sd_vmstate = {
+ static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
  {
-     vfio_migration_reset_bytes_transferred();
- }
--#else
--void migration_populate_vfio_info(MigrationInfo *info)
--{
--}
--
--void migration_reset_vfio_bytes_transferred(void)
--{
--}
--#endif
-diff --git a/migration/meson.build b/migration/meson.build
-index 45e9445f97d..0f71544a825 100644
---- a/migration/meson.build
-+++ b/migration/meson.build
-@@ -49,6 +49,6 @@ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
- system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
- system_ss.add(when: uadk, if_true: files('multifd-uadk.c'))
- system_ss.add(when: qatzip, if_true: files('multifd-qatzip.c'))
--
--specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
--                if_true: files('vfio.c'))
-+system_ss.add(when: 'CONFIG_VFIO',
-+              if_true: files('vfio.c'),
-+              if_false: files('vfio-stub.c'))
+     trace_sdcard_read_block(addr, len);
+-    addr += sd_bootpart_offset(sd);
++    addr += sd_part_offset(sd);
+     if (!sd->blk || blk_pread(sd->blk, addr, len, sd->data, 0) < 0) {
+         fprintf(stderr, "sd_blk_read: read error on host side\n");
+     }
+@@ -1061,7 +1061,7 @@ static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+ static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
+ {
+     trace_sdcard_write_block(addr, len);
+-    addr += sd_bootpart_offset(sd);
++    addr += sd_part_offset(sd);
+     if (!sd->blk || blk_pwrite(sd->blk, addr, len, sd->data, 0) < 0) {
+         fprintf(stderr, "sd_blk_write: write error on host side\n");
+     }
 -- 
 2.51.0
 
