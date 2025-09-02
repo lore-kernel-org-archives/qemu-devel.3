@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45573CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B20CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utO8f-0006K2-St; Tue, 02 Sep 2025 06:21:21 -0400
+	id 1utO9P-0006rh-GW; Tue, 02 Sep 2025 06:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utO8e-0006Jt-6I
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:21:20 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utO9I-0006oZ-T8
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:22:01 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utO8c-0007zz-6m
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:21:19 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b042cc3954fso288498766b.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:21:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utO9G-00082s-Ae
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:22:00 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-45b8b1a104cso19528165e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756808460; x=1757413260; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+x3b5/s9If+DnxIWAiX4ATSffwuvhZBjQMaIJiLs3wU=;
- b=rm2dBnDqGeJzI/uZuzcgaHSafNCMDjDROUDQLUzdOsZ1IX2Rq/G2tDd4QrxfLWW9j0
- RjPggLvr6r3y9kHcQObd/o6CGacgcjFfpw6vWirc1MDvN426p9/tIJtKKGQWyY9Zpuip
- 64OmN3DHrblqRkG7oK7d71APF3YnTKtgCqMpXpRJuKLHTeaGejH2LaB7++QsiRPva3mi
- ZolwOTkBS6/1NglgahaXRPOmPIWiqsr1eqGkBe+GumP2vEnvdlI2CZtrN7zZkFXadmKG
- huLxguNWuc4nl0iZWxeAG839SMlCB/eZZLplRsFTKS+4UZtd1AvRa3G/ujx3ENy8ntqg
- Drtw==
+ d=linaro.org; s=google; t=1756808516; x=1757413316; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=I2H0CPl24RUHVPwJV1KasKc5Bk1Uniw9WQcQ5TKh5BM=;
+ b=iS+mVQ2iroIAM3dNalI+BEUtztSSjLRJPJVzpgKIEbGWdVKSAkhmuvHm4jM/wwl29E
+ CNHnbydeE7UFMrDSG8QQxb9WRvK1ZBhb/dlyU9xUIBGk67zcpozzyW+S+oL2sSCFpinL
+ ajftkuf1wvgSfP1/SiSXKt7RsAFofDCv8wkk6Sxry2f0Nc/w5iCx9+dMrBSqJ38lJ1RU
+ rGZn5Dp33F9C7h08yhbz4DeiPklUwJyuOTABe2oWIORwHiZ1abI2QLr5wy2GVlGSvq4m
+ NnVijSydbwzFGsjRF/B+pmZ84RGKfd7HplF7pxFjCajmgUi8M1TpUhkE9Kv8pR9eEWFl
+ pkOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756808460; x=1757413260;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+x3b5/s9If+DnxIWAiX4ATSffwuvhZBjQMaIJiLs3wU=;
- b=ZCL4zY5o9EcrccvvhPRNWhxDZdkmQJl0tWmfnfJAUUTU3lMYc70UnwIQbEUZf0kEe4
- N4vRUj5QisJn91xV+vHceLe4QGS3dT7wUe+3RoD1FLZSIjveI02Fa6rVQ0YCaLknkpVr
- MOXZb/BxqRJEnyf9gLDpmOf7kzwVsr8R0naltexolu5+5tBZjH8++nXKcDkq4p98v45V
- HG8Z/DMoc/f7P4RX0DfPMsBssO0BkIXWb7a3iP0jPcOsv1zo9jtR0T4JtCF2sp9Abnam
- vlaVfuVnnRdh4/CXJRmGNC0QqCpZfVhUiTTFHECaCYOH6B9hg5Z/g4lyghnJ5fCRQwk8
- 5ojA==
-X-Gm-Message-State: AOJu0YztiMECNMKA807AqXjqQzJmTKF6ntAuhSHcCW654dd9wrZ9QHh7
- xVSSdCS6fhqVvaiCSlRUZztJDNj/inXneIWO75isjooPY8kqQyAKJG5ol/DS9uIB7YjDHLvwV5z
- jJxsysp4=
-X-Gm-Gg: ASbGnct5NA852FPeZcdNAa1Xwu9TEKcjU37Un7VJrX30DtvjBhKyQCI4bPjimY48brS
- lQeTd47AoZzqb5ompKdtr9ejV/bomRYMd30k2HXWi4C9foSd2YCQ09yKPLkKjzWQi7TAIeFxMEl
- e6XUCEhcnw7436T4+X3ml+XhnQDvPlDY9kAcDfDB5NvpX9wwEVcmUhvtw/0YXZ+gWP3ihsY/xF6
- QyOMqSb5lO9tzpRZopAVqOmfvYScrp4yW5494XEgDTOVMM2IiWVJD0+wMnGPbpVEVQ3zqzAVRRk
- v3UGiyjnp+4PTFgzswtRCdQCQXBSYg4wBVI3wm572OJePO8NdB5qN+rrR1F8mih3AUARdhcAzZ1
- H7zII/u8iN+J2716m0ltlnaY=
-X-Google-Smtp-Source: AGHT+IEgeS0SkbTK037y8h6ez4nByt4QS1rYLZRxXZy8/aD3Vv6RxM6pLqWGQLEndrjXKyZedPqY7w==
-X-Received: by 2002:a17:906:c10b:b0:afe:954b:25b2 with SMTP id
- a640c23a62f3a-b01d8a26dcbmr1098300266b.12.1756808460380; 
- Tue, 02 Sep 2025 03:21:00 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aff173ddc78sm869379166b.33.2025.09.02.03.20.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Sep 2025 03:20:59 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BA2F05F894;
- Tue, 02 Sep 2025 11:20:58 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 00/25] tcg-plugins: add hooks for discontinuities
-In-Reply-To: <cover.1747666625.git.neither@nut.email> (Julian Ganz's message
- of "Mon, 19 May 2025 17:19:40 +0200")
-References: <cover.1747666625.git.neither@nut.email>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Tue, 02 Sep 2025 11:20:58 +0100
-Message-ID: <87o6rtyx2t.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1756808516; x=1757413316;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I2H0CPl24RUHVPwJV1KasKc5Bk1Uniw9WQcQ5TKh5BM=;
+ b=XxiRBvQtHaBweJX+alZ9C96fZhkCa4Y7SXFd9OAqcL5Cz+CuMB+bggFhXfFcfT7Qho
+ J+0ErBeY73OLqbi55wKtD/51D9EVGnRYmoGEGigMRaufAUPR6OkLW1AMpnDbYECNMvaz
+ ycot5FZf80F9c9Pa2ybTbDBp9c5fHBZ0Xu00aJzzXHFUpm5kc1jhvkqtllEG9LSPSJQg
+ 1IghacnzTrDwJGMV6VE4ERgeGiJ9C2zQL/s9ywp1nBhz3jxl37XtKg/pAi03FHwZsLYB
+ HWWd3mlB3RxACYb3mGYOy7T3gkOEPWK0kQn5KQsJOHRmC+a7aaTP5UTXd+UXNxyaOXIG
+ msNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8q/VfarYOrEV9F/QTSUM8KQWsHu8Zfi8/Vwc28r/0dalASbHMOz/+wa5TWMAa0JT7B/wHkuOzayLr@nongnu.org
+X-Gm-Message-State: AOJu0YwPqvM9VpiPY0UmLv0avCFHuI6cR2jJ8h0WmIsxu2FIZQp8fgg0
+ cIh/O7xvceLXiFcOhlKYtX3SZ85Ro+bj8dWPS7mgWH/7Qy7g5ekMTt20/emSR5qIP0U=
+X-Gm-Gg: ASbGncsbxM6UXWKaY1AITK5ygk80I6GpLaZ0eTouukOgs1Rpp0aJCFCHyVrMLw2g2hu
+ 71ZfL6gCavKoiUQD1Xk4yO0NqiyprjholFbR5cwrJXV89N86X+EuDUjPAA+AgS4I0Z9K5+kubNA
+ DDBRVXesqbbORcDu2rnNb1H3Mg1yQowMGww4z4LdRxcP0afUvVlsCrjmzl1cxGluPJ6Rd039Bwm
+ UHp89SiL9xRTWMdnFwkR50hOzufDjnO+Y/bbyU/9LWevAl7uShQL6plDnhGO4Vn4RLer9oN0tie
+ xt0ygcQeICa7Iujxyjia37lbvNc6bd5ON38WXEXfsDXntp9ONHzVKLDu7LOawuue2cvLeVifdb2
+ GMJrBjj/tRiyCzcmGM9P/34BTLIyulP39QoP+0q/P3/pRsv5kkaFVDp70XhxpwejXpg==
+X-Google-Smtp-Source: AGHT+IFlqF7ST5Nw+61d5j+MENQ2VosNmsSMVNU8cguz9WrZqrbQyypEzopmLnNMgoerH72RZbix7A==
+X-Received: by 2002:a05:600c:4f0b:b0:459:d821:a45b with SMTP id
+ 5b1f17b1804b1-45b87bf56e3mr89107745e9.9.1756808515880; 
+ Tue, 02 Sep 2025 03:21:55 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b88007a60sm72572415e9.8.2025.09.02.03.21.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Sep 2025 03:21:55 -0700 (PDT)
+Message-ID: <7333954a-f5e3-4d67-8e27-ed8e3b30b7e3@linaro.org>
+Date: Tue, 2 Sep 2025 12:21:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] hw/irq: New qemu_init_irq_child() function
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250821154053.2417090-1-peter.maydell@linaro.org>
+ <20250821154053.2417090-2-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250821154053.2417090-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,59 +102,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Julian Ganz <neither@nut.email> writes:
+On 21/8/25 17:40, Peter Maydell wrote:
+> The qemu_init_irq() function initializes a TYPE_IRQ QOM object.  The
+> caller is therefore responsible for eventually calling
+> qemu_free_irq() to unref (and thus free) it.
+> 
+> In many places where we want to initialize an IRQ we are in
+> the init/realize of some other QOM object; if we have a variant
+> of this function that calls object_initialize_child() then the
+> IRQ will be automatically cleaned up when its parent object is
+> destroyed, and we don't need to remember to manually free it.
+> 
+> Implement qemu_init_irq_child(), which is to qemu_init_irq()
+> what object_initialize_child() is to object_initialize().
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/hw/irq.h | 23 ++++++++++++++++++++++-
+>   hw/core/irq.c    |  8 ++++++++
+>   2 files changed, 30 insertions(+), 1 deletion(-)
 
-> Some analysis greatly benefits, or depends on, information about
-> certain types of dicontinuities such as interrupts. For example, we may
-> need to handle the execution of a new translation block differently if
-> it is not the result of normal program flow but of an interrupt.
->
-> Even with the existing interfaces, it is more or less possible to
-> discern these situations, e.g. as done by the cflow plugin. However,
-> this process poses a considerable overhead to the core analysis one may
-> intend to perform.
->
-> These changes introduce a generic and easy-to-use interface for plugin
-> authors in the form of a callback for discontinuities. Patch 1 defines
-> an enumeration of some trap-related discontinuities including somewhat
-> narrow definitions of the discontinuity evetns and a callback type.
-> Patch 2 defines the callback registration function. Patch 3 adds some
-> hooks for triggering the callbacks. Patch 4 adds an example plugin
-> showcasing the new API.
->
-> Patches 5 through 22 call the hooks for all architectures but hexagon,
-> mapping architecture specific events to the three categories defined in
-> patch 1. We don't plan to add hooks for hexagon since despite having
-> exceptions apparently doesn't have any discontinuities associated with
-> them.
->
-> Patch 23 supplies a test plugin asserting some behavior of the plugin
-> API w.r.t. the PCs reported by the new API. Finally, patches 24 and 25
-> add new tests for riscv which serve as test-cases for the test plugin.
->
-> Sidenote: I'm likely doing something wrong for one architecture or
-> the other. These patches are untested for most of them.
->
-> Since v4:
->   - Fixed a typo in the documentation of the
->     qemu_plugin_vcpu_discon_cb_t function type (pointed out by Pierrick
->     Bouvier)
->   - Fixed a reference in the documentation of the
->     qemu_plugin_vcpu_discon_cb_t function type
->   - Added hooks for SuperH and TriCore targets
->   - Fixed typos in commit messages (pointed out by Daniel Henrique
->     Barboza)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Hi Julian,
-
-Just checking what the status of these patches are. It looks like you
-have a number of comments to address but the number of reviewed patches
-is going up each revision.
-
-Do you think you will be able to spin a new revision and look to get
-this merged in the 10.2 cycle?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
