@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8BACA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54561CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQns-0001yF-CI; Tue, 02 Sep 2025 09:12:04 -0400
+	id 1utQn0-0000Vb-5s; Tue, 02 Sep 2025 09:11:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQnj-0001Nx-Q6
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:55 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQmp-0000RC-0l
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:10:59 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQnf-0004aS-Lw
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:55 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3da4c14a5f9so416070f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:11:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQmf-0004RN-FX
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:10:57 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-45b82a21eeeso34638285e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756818706; x=1757423506; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756818646; x=1757423446; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=o+jLO/3nb8aNGzAALSlOJPeY6QIm6fDGV5/Q+uhwhJY=;
- b=E8J6kRT/zfOPJYldyRnrSQvDOjp+hVCLIiBWMEVFR44bDwgpqhGLUdrEN8WPpBCtAL
- 50bl/BOhS/gjE2RzhbBAcTEz9YiycS2Q4JB0QnTx3Xilxn+5LhDr9Yuw+p+1lqhGB9C4
- A/tUMqplv67VFmCkOqPfASB1ZTora+tJssgBDY0XO5Td6jSvNVrejFYfl3sOmA4AD3Py
- q2To8OLMM0YJKlh8k3rN6yohlw9ZqLzgKAQ3crMNZXDvjqZyh1mQhwujE4KtJyujB4q4
- 9PGqJu2wOJb+sRnf+NQ+iq+RByqmLdJAiOcztR/z3w+Lh15r2DM9uEKWniwAMgZPd6et
- vw/Q==
+ :reply-to; bh=X+SFIFq6U9bHOZ8xKmEzKqugUCiHKif7YLVtYxmKJZo=;
+ b=v0s+uuMGzOio/te6N7rgd/O0T8KBhLnKLJu8k7hige/sG6eVrslZd8r/2NWVJ4y8US
+ NSZ8mX7d5C3kFrQ9HBepvGhBOjzLi2/LbL9+4uo451ssEc595MjooCg40xE3Tiyup7cT
+ DFG9INUZx94ouoZswbOlUG8NTP3ltyvQw08E9KDuIAjyB/D0EmE4Sgs2Tccv/qfY5q3Q
+ dif81vF94Bjs9wK724GZwJfUkjWXvUV4S5P1bxFlp4AwQXFw+EutX/pGxdKNBI6iPRaM
+ 17evC9RNdANqhlOoUW4CvlZH2AJtZNXYqVYpflv/N30xAiE6SpT+suplvqhK910s7/jA
+ RL5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756818706; x=1757423506;
+ d=1e100.net; s=20230601; t=1756818646; x=1757423446;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o+jLO/3nb8aNGzAALSlOJPeY6QIm6fDGV5/Q+uhwhJY=;
- b=s7+22fjrA3vS4E/Lv3u6utu0joLFfpI1r5pcdUGt3g6f8xbZeNlTer/nTn0biKxAkp
- VnPi6403AGSzOdzvRBeZAtUEwYDv2opRZx4qciqlcDz3BcoV1CxNWomzaB7ZXI6CbG2z
- vEF2Igwqgv9QrO0ODnqZ24f0TnxFO6TAeFMZ0SqTQvfQt6Qgmx19YzuqVJBvMlNvZqXy
- FvssrP38HfkIATftLR9kTcAfSQlrTbkcR04su4ELYepumTzgXzLPwNWMgWysPtlZmAjJ
- is2YglfPfONLLSxleb7hVlmBNgK5D99hok49Bl3uPStTjuRI46LDA4RZXE1qYOC6npe+
- mMhA==
-X-Gm-Message-State: AOJu0Yx5orHY+N/oMjGx2GQ0vZyU6QXkYYNX5SaLiHCAcQUlyL+KIIDn
- 7U3DGQuojMgTfQUoJTbH5cWQklMUy4rGP+dbz6bVokgFtHhw8KkZWe1Of6yURNJJFJUBJwnv4mI
- q6JUZ
-X-Gm-Gg: ASbGncsY6OMs58aKsXGMYjwwP4DUPOoXqgyg3ZlZgtaJx5kt+AZtiZwSUVxGl4KpdOM
- ebS44HBHF1ogDcgqgY2n/as7jeRFp6MV1s6IlxLFDEWu4t/k7I3yasPy6tW/kV8NBmWyg6/zqnS
- TF+Nn8FklfafYANWGnMdjA4/5GSmuB9VrYQg9etHfLDS/sMJ1k2K/KU5pgof1gDZ4Rlo0PWk7mn
- MkA6l9p+YKhGOIVZWspO9rLd84h6NsJ1J3QIfEE3qCXxhtIuyMdxUA4j2ysGBJHQ51XB7/EVrEr
- 0oKacA7VCkKDPtDrz3hJC8VZ+2GcybtUA2Z65O+TXW/BS3ckNAFPF/f8tZuD27YS1KSu593kANC
- 3x8yBszu4Uuo62phercYRt+Nw3RZJGZHIUlEkudtz/q37Hnp8jYd0ME7M8Lgu12Ni8M3muB5m
-X-Google-Smtp-Source: AGHT+IEnd791XwRWyGuvmSYvq//9aPuv/ag6els0XgvtXAc+rU1ya6Xfaa3gOoas9ehRtwJtx6lUMg==
-X-Received: by 2002:a05:6000:2409:b0:3d6:4596:8a3a with SMTP id
- ffacd0b85a97d-3d645968c73mr4991116f8f.17.1756818705909; 
- Tue, 02 Sep 2025 06:11:45 -0700 (PDT)
+ bh=X+SFIFq6U9bHOZ8xKmEzKqugUCiHKif7YLVtYxmKJZo=;
+ b=rlxrXE8F3uhEm7EAkjoLR/i8vPrwfCHKuxu8Cf4QRAiqU70VaE5t2dtZc4Vbjx1/cD
+ RljKvXJLGzB6L+w5e5QqAE+2fPv4WuQnvaXJJL45hG1Mkgoxo88ngmfL5ntmZY/5a2BF
+ CgWrB8i+pGFzH42EJ8cEjTSrQ7j4HMYd0ZWDSqQNY9kKB3pfaUvHRWayDBRPXmM8unGh
+ pWNdZtv0kNJ4sKAsXHV7tEB2qX8I9hegMT4nMCJ8+nARYJHlyIhVGj3R8xdpOJakxq3m
+ M5BoN1zc35QdgJ6p7gK3Tc7/hWFmf9UrWSlkIctg+Ja7Uk7mJeZoSw/4RsE3CQBxku2k
+ kr/w==
+X-Gm-Message-State: AOJu0Ywqwq9IbNz1PQUgaNvZR0EHR3L7sumfk/5dJtBa8HcE0z5+FPti
+ F7vFjum5ZuPk5se+LX5j+0tMxCj9I5gb0DCaE1ltqOTXSWEWYqaIrrOPrBYXzSoYwo7tgjMGuRt
+ 6bNbI
+X-Gm-Gg: ASbGncsFF3MOTpcG7SQ3pA8K1R/+bzb6ahoMJHFBpguga5oVS+x38lyQszOs7TEhghN
+ krQ7OShzihyShi9d1MYMoe2S/MB+b3Xh0gW/rVqXMBeopQAskwJexiHcODiFJQpmfpBS7TDhmBO
+ NO5dZQA5ndCm2SImCWwZAJDJ0/ZIAdzkERHQXPdc5LrTh42C9jw08rBPTo2yoylkgjTfuUissCA
+ ZrnNe0MkoY4Ynx5oL+VlGO0lJ7qlhfFfC7FDXFOMphu0tqtd5qOZfi2L4yUpxuI8eiOwhUefnel
+ Y7m/a0WlO66ePhjKyTMYYFWZr0O6eFly8tnxyYqsDWU6kAsnQD/sblHLoggsk1c8gEe639YU65q
+ DHUg8ONO/1R+DgSByfGI6qckispa/vYUs1vqJmDbo3OH6GWekRAVSi2nmTkN51/PXjxNlvBiP1d
+ GyG+Q7arU=
+X-Google-Smtp-Source: AGHT+IEYKryt2d0nkMVc4u4TFTS3RpP45uhnInPld68u6BuSaXOcmBp6TE302GNYTnlktiYdgePyRg==
+X-Received: by 2002:a05:600c:524b:b0:459:ddd6:1ca3 with SMTP id
+ 5b1f17b1804b1-45b8549c817mr92937795e9.0.1756818645607; 
+ Tue, 02 Sep 2025 06:10:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf34491a5asm19367334f8f.55.2025.09.02.06.11.45
+ 5b1f17b1804b1-45b9a6ecfafsm23428815e9.21.2025.09.02.06.10.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 06:11:45 -0700 (PDT)
+ Tue, 02 Sep 2025 06:10:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/39] hw/ppc: Fix build error with CONFIG_POWERNV disabled
-Date: Tue,  2 Sep 2025 15:09:56 +0200
-Message-ID: <20250902131016.84968-20-philmd@linaro.org>
+Subject: [PULL 06/39] migration/vfio: compile only once
+Date: Tue,  2 Sep 2025 15:09:43 +0200
+Message-ID: <20250902131016.84968-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131016.84968-1-philmd@linaro.org>
 References: <20250902131016.84968-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,270 +98,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Currently when CONFIG_POWERNV is not enabled, the build fails, such as
-with --without-default-devices:
-
-    $ ./configure --without-default-devices
-    $ make
-
-    [281/283] Linking target qemu-system-ppc64
-    FAILED: qemu-system-ppc64
-    cc -m64 @qemu-system-ppc64.rsp
-    /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_load_sprd':
-    .../target/ppc/misc_helper.c:335:(.text+0xcdc): undefined reference to `pnv_chip_find_core'
-    /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in function `helper_store_sprd':
-    .../target/ppc/misc_helper.c:375:(.text+0xdf4): undefined reference to `pnv_chip_find_core'
-    collect2: error: ld returned 1 exit status
-    ...
-
-This is since target/ppc/misc_helper.c references PowerNV specific
-'pnv_chip_find_core' call.
-
-Split the PowerNV specific SPRD code out of the generic PowerPC code, by
-moving the SPRD code to pnv.c
-
-Fixes: 9808ce6d5cb ("target/ppc: Big-core scratch register fix")
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reported-by: Thomas Huth <thuth@redhat.com>
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Acked-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20250820122516.949766-2-adityag@linux.ibm.com>
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250730220435.1139101-3-pierrick.bouvier@linaro.org>
+[PMD: Cover vfio-stub.c in MAINTAINERS]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/cpu.h         |  4 ++
- hw/ppc/pnv.c             | 86 ++++++++++++++++++++++++++++++++++++++++
- target/ppc/misc_helper.c | 59 +++------------------------
- 3 files changed, 96 insertions(+), 53 deletions(-)
+ MAINTAINERS           |  1 +
+ migration/vfio-stub.c | 16 ++++++++++++++++
+ migration/vfio.c      | 14 --------------
+ migration/meson.build |  6 +++---
+ 4 files changed, 20 insertions(+), 17 deletions(-)
+ create mode 100644 migration/vfio-stub.c
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 6b90543811f..0e26e4343de 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1522,6 +1522,10 @@ struct PowerPCCPUClass {
-     void (*init_proc)(CPUPPCState *env);
-     int  (*check_pow)(CPUPPCState *env);
-     int  (*check_attn)(CPUPPCState *env);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8147fff3523..07c9f929d2b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2268,6 +2268,7 @@ F: util/vfio-helpers.c
+ F: include/hw/vfio/
+ F: docs/devel/migration/vfio.rst
+ F: qapi/vfio.json
++F: migration/vfio-stub.c
+ F: tests/functional/aarch64/test_device_passthrough.py
+ 
+ vfio-igd
+diff --git a/migration/vfio-stub.c b/migration/vfio-stub.c
+new file mode 100644
+index 00000000000..f59ebe075dc
+--- /dev/null
++++ b/migration/vfio-stub.c
+@@ -0,0 +1,16 @@
++/*
++ * QEMU live migration - stubs for VFIO
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    /* Handlers to be set by the machine initialising the chips */
-+    uint64_t (*load_sprd)(CPUPPCState *env);
-+    void (*store_sprd)(CPUPPCState *env, uint64_t val);
- };
- 
- static inline bool ppc_cpu_core_single_threaded(CPUState *cs)
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index d84c9067edb..9c74f46091a 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -21,6 +21,7 @@
- 
++#include "qemu/osdep.h"
++#include "migration.h"
++
++void migration_populate_vfio_info(MigrationInfo *info)
++{
++}
++
++void migration_reset_vfio_bytes_transferred(void)
++{
++}
+diff --git a/migration/vfio.c b/migration/vfio.c
+index 0b64e49ef06..af6ae2c1e19 100644
+--- a/migration/vfio.c
++++ b/migration/vfio.c
+@@ -8,13 +8,8 @@
  #include "qemu/osdep.h"
- #include "qemu/datadir.h"
-+#include "qemu/log.h"
- #include "qemu/units.h"
- #include "qemu/cutils.h"
- #include "qapi/error.h"
-@@ -1794,12 +1795,83 @@ static void pnv_chip_power9_pec_realize(PnvChip *chip, Error **errp)
-     }
- }
+ #include "qapi/qapi-types-migration.h"
+ #include "migration.h"
+-#include CONFIG_DEVICES
+-
+-#ifdef CONFIG_VFIO
+ #include "hw/vfio/vfio-migration.h"
+-#endif
  
-+static uint64_t pnv_handle_sprd_load(CPUPPCState *env)
-+{
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
-+    uint64_t sprc = env->spr[SPR_POWER_SPRC];
-+
-+    if (pc->big_core) {
-+        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
-+    }
-+
-+    switch (sprc & 0x3e0) {
-+    case 0: /* SCRATCH0-3 */
-+    case 1: /* SCRATCH4-7 */
-+        return pc->scratch[(sprc >> 3) & 0x7];
-+
-+    case 0x1e0: /* core thread state */
-+        if (env->excp_model == POWERPC_EXCP_POWER9) {
-+            /*
-+             * Only implement for POWER9 because skiboot uses it to check
-+             * big-core mode. Other bits are unimplemented so we would
-+             * prefer to get unimplemented message on POWER10 if it were
-+             * used anywhere.
-+             */
-+            if (pc->big_core) {
-+                return PPC_BIT(63);
-+            } else {
-+                return 0;
-+            }
-+        }
-+        /* fallthru */
-+
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
-+                                  TARGET_FMT_lx"\n", sprc);
-+        break;
-+    }
-+    return 0;
-+}
-+
-+static void pnv_handle_sprd_store(CPUPPCState *env, uint64_t val)
-+{
-+    PowerPCCPU *cpu = env_archcpu(env);
-+    uint64_t sprc = env->spr[SPR_POWER_SPRC];
-+    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
-+    int nr;
-+
-+    if (pc->big_core) {
-+        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
-+    }
-+
-+    switch (sprc & 0x3e0) {
-+    case 0: /* SCRATCH0-3 */
-+    case 1: /* SCRATCH4-7 */
-+        /*
-+         * Log stores to SCRATCH, because some firmware uses these for
-+         * debugging and logging, but they would normally be read by the BMC,
-+         * which is not implemented in QEMU yet. This gives a way to get at the
-+         * information. Could also dump these upon checkstop.
-+         */
-+        nr = (sprc >> 3) & 0x7;
-+        pc->scratch[nr] = val;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
-+                                  TARGET_FMT_lx"\n", sprc);
-+        break;
-+    }
-+}
-+
- static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+-#ifdef CONFIG_VFIO
+ void migration_populate_vfio_info(MigrationInfo *info)
  {
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(dev);
-     Pnv9Chip *chip9 = PNV9_CHIP(dev);
-     PnvChip *chip = PNV_CHIP(dev);
-     Pnv9Psi *psi9 = &chip9->psi;
-+    PowerPCCPU *cpu;
-+    PowerPCCPUClass *cpu_class;
-     Error *local_err = NULL;
-     int i;
- 
-@@ -1827,6 +1899,12 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    /* Set handlers for Special registers, such as SPRD */
-+    cpu = chip->cores[0]->threads[0];
-+    cpu_class = POWERPC_CPU_GET_CLASS(cpu);
-+    cpu_class->load_sprd = pnv_handle_sprd_load;
-+    cpu_class->store_sprd = pnv_handle_sprd_store;
-+
-     /* XIVE interrupt controller (POWER9) */
-     object_property_set_int(OBJECT(&chip9->xive), "ic-bar",
-                             PNV9_XIVE_IC_BASE(chip), &error_fatal);
-@@ -2078,6 +2156,8 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
-     PnvChipClass *pcc = PNV_CHIP_GET_CLASS(dev);
-     PnvChip *chip = PNV_CHIP(dev);
-     Pnv10Chip *chip10 = PNV10_CHIP(dev);
-+    PowerPCCPU *cpu;
-+    PowerPCCPUClass *cpu_class;
-     Error *local_err = NULL;
-     int i;
- 
-@@ -2105,6 +2185,12 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    /* Set handlers for Special registers, such as SPRD */
-+    cpu = chip->cores[0]->threads[0];
-+    cpu_class = POWERPC_CPU_GET_CLASS(cpu);
-+    cpu_class->load_sprd = pnv_handle_sprd_load;
-+    cpu_class->store_sprd = pnv_handle_sprd_store;
-+
-     /* XIVE2 interrupt controller (POWER10) */
-     object_property_set_int(OBJECT(&chip10->xive), "ic-bar",
-                             PNV10_XIVE2_IC_BASE(chip), &error_fatal);
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index e7d94625185..0e625cbb704 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -328,69 +328,22 @@ target_ulong helper_load_sprd(CPUPPCState *env)
-      * accessed by powernv machines.
-      */
-     PowerPCCPU *cpu = env_archcpu(env);
--    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
--    target_ulong sprc = env->spr[SPR_POWER_SPRC];
-+    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
- 
--    if (pc->big_core) {
--        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
-+    if (pcc->load_sprd) {
-+        return pcc->load_sprd(env);
-     }
- 
--    switch (sprc & 0x3e0) {
--    case 0: /* SCRATCH0-3 */
--    case 1: /* SCRATCH4-7 */
--        return pc->scratch[(sprc >> 3) & 0x7];
--
--    case 0x1e0: /* core thread state */
--        if (env->excp_model == POWERPC_EXCP_POWER9) {
--            /*
--             * Only implement for POWER9 because skiboot uses it to check
--             * big-core mode. Other bits are unimplemented so we would
--             * prefer to get unimplemented message on POWER10 if it were
--             * used anywhere.
--             */
--            if (pc->big_core) {
--                return PPC_BIT(63);
--            } else {
--                return 0;
--            }
--        }
--        /* fallthru */
--
--    default:
--        qemu_log_mask(LOG_UNIMP, "mfSPRD: Unimplemented SPRC:0x"
--                                  TARGET_FMT_lx"\n", sprc);
--        break;
--    }
-     return 0;
- }
- 
- void helper_store_sprd(CPUPPCState *env, target_ulong val)
+     if (vfio_migration_active()) {
+@@ -27,12 +22,3 @@ void migration_reset_vfio_bytes_transferred(void)
  {
--    target_ulong sprc = env->spr[SPR_POWER_SPRC];
-     PowerPCCPU *cpu = env_archcpu(env);
--    PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
--    int nr;
-+    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
- 
--    if (pc->big_core) {
--        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
--    }
--
--    switch (sprc & 0x3e0) {
--    case 0: /* SCRATCH0-3 */
--    case 1: /* SCRATCH4-7 */
--        /*
--         * Log stores to SCRATCH, because some firmware uses these for
--         * debugging and logging, but they would normally be read by the BMC,
--         * which is not implemented in QEMU yet. This gives a way to get at the
--         * information. Could also dump these upon checkstop.
--         */
--        nr = (sprc >> 3) & 0x7;
--        pc->scratch[nr] = val;
--        break;
--    default:
--        qemu_log_mask(LOG_UNIMP, "mtSPRD: Unimplemented SPRC:0x"
--                                  TARGET_FMT_lx"\n", sprc);
--        break;
-+    if (pcc->store_sprd) {
-+        return pcc->store_sprd(env, val);
-     }
+     vfio_migration_reset_bytes_transferred();
  }
- 
+-#else
+-void migration_populate_vfio_info(MigrationInfo *info)
+-{
+-}
+-
+-void migration_reset_vfio_bytes_transferred(void)
+-{
+-}
+-#endif
+diff --git a/migration/meson.build b/migration/meson.build
+index 45e9445f97d..0f71544a825 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -49,6 +49,6 @@ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
+ system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
+ system_ss.add(when: uadk, if_true: files('multifd-uadk.c'))
+ system_ss.add(when: qatzip, if_true: files('multifd-qatzip.c'))
+-
+-specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+-                if_true: files('vfio.c'))
++system_ss.add(when: 'CONFIG_VFIO',
++              if_true: files('vfio.c'),
++              if_false: files('vfio-stub.c'))
 -- 
 2.51.0
 
