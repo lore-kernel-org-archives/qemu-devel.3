@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E9ECA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D97B8CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utNuO-00025s-Vr; Tue, 02 Sep 2025 06:06:39 -0400
+	id 1utO2G-0000AM-Kl; Tue, 02 Sep 2025 06:14:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1utNuH-0001zc-9I
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:06:29 -0400
-Received: from mail-yb1-xb29.google.com ([2607:f8b0:4864:20::b29])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utO25-0008O8-7e
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:14:34 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1utNuF-0005Xd-63
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:06:29 -0400
-Received: by mail-yb1-xb29.google.com with SMTP id
- 3f1490d57ef6-e96ff518c08so4229782276.1
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:06:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utO22-0006wP-NU
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:14:32 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-45b88bff3ebso14435205e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:14:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756807585; x=1757412385; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nUtg0NfjgMS6VqrAMD7abuPWLy0kNYoziKDXF8HwgLM=;
- b=M7QMFVe58fpFnVvWEX6VkRtA95MT+9ca70kdcHfmWyvuYMPQjjSBwuctgv906tT36I
- VOvFd/8jHdmEfZctUNOF4VCTRHAm0pxfcLnsz/RAbv5GrhLd3GRwbwD9go1RiMTZuJYi
- x24SAfe239ENPAfgptkyfDEkqZIND0yAylDWRP4+wkw+prlojS3dOy2ylcW9W6PLzkwJ
- igEr/jmCgg7/YIkAvy3FEKIom3no1ZvLr3leNqpAwE6ZxkMgmi1XKhzHXohHKaQbd9c0
- Q+HPvTgVHTcgbpeGviSQszazUiA0MD9zql2I99D8suACMuy0rH10EvaSkmz+q8s/hT6r
- BE9g==
+ d=linaro.org; s=google; t=1756808068; x=1757412868; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=I+zkM9Ju/EP//gMBk68Sz1tKucIEH4sA7POeVxOpI/0=;
+ b=cYrBa+VKY6pyfG1qMUXQyPjatuPD1fnAQH9jmpvbf8ZKef51Poclww1I6bW7Ea0rKV
+ Jx7yROAnpb+FOMZe3VQ84vqrXrPhu6Kr0bkXkvr+1bQoIjc+yo2BNgWkmIcSC268lqPA
+ 0fLrDmulvOaqXzCkUe8pWt7jDjMaKhTYHkWq8pCp1sbT+v75XR05SrOczNrGm+U5/esX
+ 6o+zEHFSSl2j582JCqUDqI7f2W5s9RhHP0yYiXl7irGOHieWSImPR4/2wqRNsaRRZj9G
+ 4yBJkjTydaxs2tAtoVFLVjwzclUw8RZzXGOstsN+SGx9TGkeM13Fq7eaPxotbRtPgbJB
+ +HeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756807585; x=1757412385;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nUtg0NfjgMS6VqrAMD7abuPWLy0kNYoziKDXF8HwgLM=;
- b=Q5+A7l0PwD64vsUidogwQCftmoSbEccKohcTfQWqt/A1p8FoN84eHEPE32cx0EW+JT
- wTffZJLizYUrI9evtFCcoNRxgFKnapBp4qBxpVIpazKUnbdb9AfsMCKtuqm105Sp3rz7
- YQ1ZJGpoVr7nS5+EXQ2HJWHHQ5VvGSojk6DYdDXZ1HlCrNdg/Jo5dJGQwhT2dcrXhMuZ
- hSB3Lz7S4EdnAanrSMm/Lda39irPxyqLOl3U9NkQvuczy6DS0Rk/jF+b23Oeg+NNPX2n
- +ZUP95hnKGtY37kDB6nbEMxqP2tLJk9UGaxjyzrJKO3/8gY2KZqklK5twmVESuLagrUZ
- N6eA==
-X-Gm-Message-State: AOJu0YxbaEVyZW5U7kOZgfih92/kdolqLgeh6l1bZbyvJWsKppP3pnZ+
- YGh4bw1/BYM1fcQluK9oN+Ir6f1Xi9PMe1rb/Zjjl/Cx2Oy9cP279VP0dwndhnYS/3Nw52TGpsu
- yKxpb8DKSyAA/G17WWxN/0n1ZoSpkqs1b7uBHqOvOJg==
-X-Gm-Gg: ASbGncuc/cvb7XVL3qYdOYwhkPIqHkC/48RsKXJHkFKvLQVuO4J85VUlVEbj6sH2k8e
- 6/9tXONNgNIWnBFL+by0uXYJ92N/KYPTq25JorMMk5MZ5qvkMm3MhQfVLOkchMe5A1PrlTI71EX
- eEP/Z+t1aZfZhdZb7kbmTwXZ2VSQiZiYwv6WTmgKuO37BTG4Y9etw65upLBXdbI8W9biw2ksTAc
- H07jbLA
-X-Google-Smtp-Source: AGHT+IESuJFfPQqcx/PfjGYCuGeUkFUptrs52xgu7W4zYNFa3OFTZaYJ+EEAnp07RCrOe2d4wMzOyMQ1Pv733gLYFYI=
-X-Received: by 2002:a05:690c:61c6:b0:721:6667:60a0 with SMTP id
- 00721157ae682-722764acdd2mr110877237b3.31.1756807585393; Tue, 02 Sep 2025
- 03:06:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756808068; x=1757412868;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I+zkM9Ju/EP//gMBk68Sz1tKucIEH4sA7POeVxOpI/0=;
+ b=v7N9XEiLtzIigfXi+WClCVgt2tSstRheXhDC+1PyPbLxvW8VumHhUPDlDhfpwdtiuN
+ OEdrkxirdZ+QF6ZXuAWdRJE/wiDISU7W0dORPWfGZocmN8gQwC/tQS0TiV39i6jJTCZF
+ ixYuYTo2rzu7Ae/nKIOiO38H57cF0nOQH/nrzjc8/xAHo997gXt/M8Tn8FDHIMnjfNc7
+ 4niCMdoEx6UJQo7Wi9UIV4p6ePNROcla90WjYsRA0pBn5p+7XsK8hJK0ixlqA5xg/pIu
+ g6ia0Y5EVKwKMrqdY5zCbkOgDaNIUcdYmdK9GE2SZCxCAVIS0FgWJ5ez11ndvqA2qfW0
+ I3iw==
+X-Gm-Message-State: AOJu0YwTWHRUeVb45qEnvBCZ8ErqJAp8mykwiBS6xs1il1kRKQXCLkUk
+ crgljlJA8L3MfVr+yrfqZQUm7mxO2ad3oPmhq/+H4zhaKgfnGOYc8w10kPvZgfslU6TjmK4BZMy
+ MtHK1
+X-Gm-Gg: ASbGncvAnmrpjSqs5b8KlQlDnPgCMywXdf6xMlhiOj3IIauH8qrEzp8H1FAWHLfl1Hj
+ vk3HcqTnVxL0A8X+velNDUOBLgW7hKTpaSbTVvbmA1xDqgBYVRuhSHJ7vuYgBo2W12JPCyEwQhv
+ 1YBGwHwc5F/BeWlV5e6ouFGUVwQzjqv8/gG8It+AAJFBoFtC72M7q9tiYHvcmlt0GW3klsYaBxu
+ ff+UN5t+BWtXzDIlg4nhrt5ehJOAPeYBseTcRL15KePaG85z5cifg1Hh3Q920AG6Dyo/lUEdnM+
+ ZZQTRs7VnQTNxZ5Q+mkdPmMjJEZSXSytLqhvXJpUxmdTdshh0i/V0gdR21/fY1tVLVf8c2/+LWn
+ /2+PGrI8bh/TOvPzWKIjlmAmCC12TGxV6gyTBDtKnsPHFZNol5+/fP79OHEd0Hu2fxQ==
+X-Google-Smtp-Source: AGHT+IGcEcqMGsF0yu4IJA62wHRvaxuAOywmlaV4pdMP2zIrI5tcI1unKkom5Ei/cBNyeoVzfMfUzQ==
+X-Received: by 2002:a05:600c:3145:b0:45b:6b6e:ea37 with SMTP id
+ 5b1f17b1804b1-45b85570c73mr78121135e9.19.1756808067732; 
+ Tue, 02 Sep 2025 03:14:27 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45b73cf86f4sm249799525e9.6.2025.09.02.03.14.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Sep 2025 03:14:27 -0700 (PDT)
+Message-ID: <e52b9ce4-eb2f-4460-9709-fef9689c4761@linaro.org>
+Date: Tue, 2 Sep 2025 12:14:26 +0200
 MIME-Version: 1.0
-References: <20250826221750.285242-1-peterx@redhat.com>
-In-Reply-To: <20250826221750.285242-1-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Sep 2025 11:06:13 +0100
-X-Gm-Features: Ac12FXzA6a4tcbYYef0OKdvmO6y8RUH86oFN6UkSxJgy3GIn4lh0fFuwI8uDdNY
-Message-ID: <CAFEAcA-4pqbqSwiHtpVnRE0taReP7evnwwTtekRMGo307NN=mQ@mail.gmail.com>
-Subject: Re: [PATCH] memory: Fix leaks due to owner-shared MRs circular
- references
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b29;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb29.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] hw/sd/sdcard: Deprecate support for spec v1.10
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ devel@lists.libvirt.org, Bin Meng <bmeng.cn@gmail.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>
+References: <20240627071040.36190-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240627071040.36190-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,188 +102,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Aug 2025 at 23:20, Peter Xu <peterx@redhat.com> wrote:
->
-> Currently, QEMU refcounts the MR by always taking it from the owner.
->
-> It's common that one object will have multiple MR objects embeded in the
-> object itself.  All the MRs in this case share the same lifespan of the
-> owner object.
->
-> It's also common that in the instance_init() of an object, MR A can be a
-> container of MR B, C, D, by using memory_region_add_subregion*() set of
-> memory region APIs.
->
-> Now we have a circular reference issue, as when adding subregions for MR A,
-> we essentially incremented the owner's refcount within the instance_init(),
-> meaning the object will be self-boosted and its refcount can never go down
-> to zero if the MRs won't get detached properly before object's finalize().
->
-> Delete subregions within object's finalize() won't work either, because
-> finalize() will be invoked only if the refcount goes to zero first.  What
-> is worse, object_finalize() will do object_property_del_all() first before
-> object_deinit().  Since embeded MRs will be properties of the owner object,
-> it means they'll be freed _before_ the owner's finalize().
->
-> To fix that, teach memory API to stop refcount on MRs that share the same
-> owner.  Because if they share the lifecycle of the owner, then they share
-> the same lifecycle between themselves, hence the refcount doesn't help but
-> only introduce troubles.
->
-> Meanwhile, allow auto-detachments of MRs during finalize() of MRs even
-> against its container, as long as they belong to the same owner.
->
-> The latter is needed because now it's possible to have MRs' finalize()
-> happen in any order when they share the same lifespan with a same owner.
-> In this case, we should allow finalize() to happen in any order of either
-> the parent or child MR.  Loose the mr->container check in MR's finalize()
-> to allow auto-detach.  Double check it shares the same owner.
->
-> Proper document this behavior in code.
->
-> This patch is heavily based on the work done by Akihiko Odaki:
->
-> https://lore.kernel.org/r/CAFEAcA8DV40fGsci76r4yeP1P-SP_QjNRDD2OzPxjx5wRs0GEg@mail.gmail.com
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+On 27/6/24 09:10, Philippe Mathieu-Daudé wrote:
+> Deprecate SD spec v1.10, use v3.01 as new default.
+> 
+> Philippe Mathieu-Daudé (3):
+>    hw/sd/sdcard: Deprecate support for spec v1.10
+>    hw/sd/sdcard: Use spec v3.01 by default
 
-I have some wordsmithing review stuff for doc and comment text
-below, but otherwise
+The first 2 patches are already merged,
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Tested-by: Peter Maydell <peter.maydell@linaro.org>
-
-> ---
->  docs/devel/memory.rst |  7 +++++--
->  system/memory.c       | 45 ++++++++++++++++++++++++++++++++++---------
->  2 files changed, 41 insertions(+), 11 deletions(-)
->
-> diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-> index 57fb2aec76..a325e97d7b 100644
-> --- a/docs/devel/memory.rst
-> +++ b/docs/devel/memory.rst
-> @@ -158,8 +158,11 @@ ioeventfd) can be changed during the region lifecycle.  They take effect
->  as soon as the region is made visible.  This can be immediately, later,
->  or never.
->
-> -Destruction of a memory region happens automatically when the owner
-> -object dies.
-> +Destruction of a memory region happens automatically when the owner object
-> +dies.  When there are multiple memory regions under the same owner object,
-> +the memory API will guarantee all memory regions will be properly detached
-> +and finalized one by one.  The order which memory region will be finalized
-
-"The order in which memory regions will be finalized is not
-guaranteed."
-
-> +first is not guaranteed.
->
->  If however the memory region is part of a dynamically allocated data
->  structure, you should call object_unparent() to destroy the memory region
-> diff --git a/system/memory.c b/system/memory.c
-> index 5646547940..d7f6ad9be2 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1796,16 +1796,36 @@ static void memory_region_finalize(Object *obj)
->  {
->      MemoryRegion *mr = MEMORY_REGION(obj);
->
-> -    assert(!mr->container);
-> -
-> -    /* We know the region is not visible in any address space (it
-> -     * does not have a container and cannot be a root either because
-> -     * it has no references, so we can blindly clear mr->enabled.
-> -     * memory_region_set_enabled instead could trigger a transaction
-> -     * and cause an infinite loop.
-> +    /*
-> +     * Each memory region (that can be dynamically freed..) must has an
-
-s/..//
-s/must has/must have/
-
-> +     * owner, and it always has the same lifecycle of its owner.  It means
-> +     * when reaching here, the memory region's owner refcount is zero.
-
-"region's owner's refcount"
-
-> +     *
-> +     * Here it is possible that the MR has:
-> +     *
-> +     * (1) mr->container set, which means this MR can be a subregion of a
-
-"this MR is a subregion of"
-
-> +     *     container MR, in this case it must share the same owner
-
-s/, in/. In/
-
-"same owner as that container"
-
-> +     *     (otherwise the container should have kept a refcount of this
-> +     *     MR's owner), or,
-
-s/, or,/
-
-(it's possible for both 1 and 2 to be true for an MR here)
-
-> +     *
-> +     * (2) mr->subregions non-empty, which means this MR can be a container
-
-"is a container"
-
-> +     *     of other MRs (share the owner or not).
-
-"of another MR (which might have the same owner as this MR, or
- a different owner)"
-
-
-> +     *
-> +     * We know the MR, or any MR that is attached to this one as either
-> +     * container or children, is not visible in any address space, because
-> +     * otherwise the address space should have taken at least one refcount
-> +     * of this MR's owner.  So we can blindly clear mr->enabled.
-> +     *
-> +     * memory_region_set_enabled instead could trigger a transaction and
-> +     * cause an infinite loop.
->       */
->      mr->enabled = false;
->      memory_region_transaction_begin();
-> +    if (mr->container) {
-> +        /* Must share the owner; see above comments */
-> +        assert(mr->container->owner == mr->owner);
-> +        memory_region_del_subregion(mr->container, mr);
-> +    }
->      while (!QTAILQ_EMPTY(&mr->subregions)) {
->          MemoryRegion *subregion = QTAILQ_FIRST(&mr->subregions);
->          memory_region_del_subregion(mr, subregion);
-> @@ -2625,7 +2645,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
->
->      memory_region_transaction_begin();
->
-> -    memory_region_ref(subregion);
-> +    if (mr->owner != subregion->owner) {
-> +        memory_region_ref(subregion);
-> +    }
-> +
->      QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
->          if (subregion->priority >= other->priority) {
->              QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-> @@ -2683,7 +2706,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
->          assert(alias->mapped_via_alias >= 0);
->      }
->      QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
-> -    memory_region_unref(subregion);
-> +
-> +    if (mr->owner != subregion->owner) {
-> +        memory_region_unref(subregion);
-> +    }
-> +
->      memory_region_update_pending |= mr->enabled && subregion->enabled;
->      memory_region_transaction_commit();
->  }
-> --
-> 2.50.1
-
-thanks
--- PMM
+>    hw/sd/sdcard: Remove support for spec v1.10
+queuing the last one.
 
