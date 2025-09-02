@@ -4,95 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EE4CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:22:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A7CCA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utO9v-0007gd-EF; Tue, 02 Sep 2025 06:22:39 -0400
+	id 1utOB0-0001cF-JR; Tue, 02 Sep 2025 06:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utO9k-0007Z6-Oz
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:22:29 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOAz-0001aY-2I
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:23:45 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utO9i-000873-P5
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:22:28 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3d1bf79d6afso2103172f8f.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:22:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOAw-0008DR-To
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:23:44 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3b9edf4cf6cso4448054f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756808544; x=1757413344; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=linaro.org; s=google; t=1756808621; x=1757413421; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jw/1eNJgIOcepbKCObytsQWFr5tm+skVjNTS9u7cY+4=;
- b=PvTBR5uVvuW2VcMD1k3gTShWh1/M44PT5F4bA2SUeMda2C+J0u4qmkUyVb9Ph4IZQS
- xLV33BqLcX20GJlMpqbgo/xKgLc+e/uCSLf0Mi0nTMr4C1DK4FHNv2vkmR2Cqb2/0U69
- zfvBsCdIYmzTfyQkiEyuGa2PlAfzLEnSZirezSzz5duzwtwibp8ZDE3kw514jXVLDHAj
- NtbWxkfeTR3DsYU8PPQs0I+0tGSn5JqiHkzOiK+6ibRiTTJ0nRAwF1JYL7dN6M5ZAUM1
- WHic61kItc4OU1/VnTUzUoY/3drNs8tJodMHxfgYetztOFALUpLzDgxbKPwFZ8LY8Z1B
- BuRQ==
+ bh=JfWIWCH3TnD3+QAV9La1YOioI6YaS6rPL70UlLp4DPo=;
+ b=zyetPdhkCYz9eBQhSU8nH4WO/X7R3Rz67RSUu/Aqi65eG1AzJ4/UGfsrqV8tAR42k/
+ CBYNfDdGfydwmBhZBsMESN6/QeCDFVlQe9GuPz6e6XrlvegnHcZWTsqgYf94wlKb4O3N
+ wjjGb6V6p2uCyGEGqUSqQJ7gLBed5PbI8kJRNCw1yGKLdtnWzK6sqnI27zY9IKKenaF1
+ C5g6LCP3mVIG7KtHYpWWdlMo5lL96UGSMDKGo8c5OwocnP8bzr+6F0mGDBvDG540luyh
+ 3qlwJmHW+14Z140uPWBMpK/5pbgO/RW2iqxE/h4xpxILEINR4/Hw1oweMUS7LEF0DN+h
+ NEOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756808544; x=1757413344;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=1e100.net; s=20230601; t=1756808621; x=1757413421;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jw/1eNJgIOcepbKCObytsQWFr5tm+skVjNTS9u7cY+4=;
- b=cmXw2q3O4jD24RRE7LJKaQ7rC2fEI9RuCHetS6EkIW49fR9h8eXJcUNdOkCh8yAUeE
- Iua0JPeQL6o3Rn7igWLSQILgwlCBTPcbVRPFyezhUHYwLCTL0Atv2r9pY1zpnWbWT0XC
- 0ccEQiGC/wZqtg5JWKaaBb8vZBHOcbazng+MGge10iPmPAhp5z2R0gsa9EjrUwVHrwa9
- +ckvOgJPrxUz3lH//B5qzNWxtxcEFn3w/e/cCt+qddvQ9HkVy63uVVArQxOJQk6xIXGC
- rc5IAwdpsAO9dZWR/yOSCk9tqfc5i//H2RiIE6LUbzksLnS9Jq0fixZWlJ2ADMjCJ4cb
- dCuw==
+ bh=JfWIWCH3TnD3+QAV9La1YOioI6YaS6rPL70UlLp4DPo=;
+ b=rYQg2xvFDdqpCJwmfbClocGsG6V9ZIMQlGZxKz8QFnC+GTwBMztFngPJD6mx8Cb/i7
+ uGF+baroaWUgWQM1/cHQySApj1FmaXnlGbEtYmmkD71SfFIQPYCJ/eCPcXb+O1wOgVUg
+ G8pOV/FsicIIdcWAddqlpwiZcnNoc5DEu5lJ7PITEy2gtgpqSq7H0t91OBFiRB+dr6Hx
+ q7yr5uUyhHKC8MTL0UvQCHGkYDeJvZBY2AGoRnVU4zW9YO9GSCpWxS5yfwNxzzEBqjIc
+ lgkWidqP9+Ct9oXdbk3qXqcm9ZzrywiIJWSFPax+kZD0wcUZR6HUS4se4uqhLRQVB1Ed
+ UWFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFQu2GQlhpJSiQmYJf0cUvCHHpRAEplGrWOR8aT8eAv+ZjZwaA+PK83mCXIZBg6s+Fd10hGaWDw593@nongnu.org
-X-Gm-Message-State: AOJu0YyLFMyZVkY5OPkg3Dr92rfAgFFQ5R5MQlImtmZ4jkpwVytZ6MFD
- YM4qnHA8ogGl6Ahn3A5CB69H0uJOySD3o39gyrRkrI7gaQQwQ9QF+cbrnODXaC3Hgiw=
-X-Gm-Gg: ASbGncuJZ/gTtvJnsNLoWSVd1fJAS3wFJUjKcnBwQti2LYue6G4YaA8K5kfAeBvP+ch
- sgk624gxoGNODym7RHop5yrDrunIwzdcy9fJaE+UV9C8/+dKsf+Re61TObRcmCkNBuj9JL3SPCJ
- IioiJ1kRo+fMsag3BGP/5tQoQWbNbEshY2yW3IrNwY9c3gGw4/tqmDDBY18jkyri+vGguTO9g3x
- 325M0ONGeC+xL0UDiLyr3uO9Ze5CZUkkHYEe5QT1aBUnpJvkgGW8+WFgYei2ckCVLUTuUYYRbTR
- Cti63qIGf2/fL4dnAx7AzP8cQsPX/qtlGwV6cYhXVQ2/Zi+/Ry4PkRk2Fla96ELVlns7B/yd2NT
- 7RemBJYR5iqMQ4I6N9vhFLcDerkPdG1h+I1AUXh3SjBLEZhK3gwOcdFh8Kz+3KP2eBMt0hHlWgW
- BledT+wA==
-X-Google-Smtp-Source: AGHT+IHO3rNvFzx4zkkfn6w7oI99x2Oe6RDZif7TY37w4X2aQYpGbtFQSgasYeC+SgfkBSG+P1D0Ug==
-X-Received: by 2002:a05:6000:24c4:b0:3d5:787e:fd91 with SMTP id
- ffacd0b85a97d-3d5787f062emr5258636f8f.2.1756808544410; 
- Tue, 02 Sep 2025 03:22:24 -0700 (PDT)
-Received: from [10.20.0.233] (151-0-205-164.ip282.fastwebnet.it.
- [151.0.205.164]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d21a80c723sm14162215f8f.9.2025.09.02.03.22.22
+ AJvYcCXviFA51nQz5HiUTsCm8dFWdaVc+6rlSVmXMYUmqygdi0K8DqyFzlhXHa/ZfJuU6X9qGdaTMcHXxOpZ@nongnu.org
+X-Gm-Message-State: AOJu0Yy/+/6z8twlXHctaWjzihKB6SsEqQXrIZHW1ZeeqZJx5ZU9PR5F
+ brWoLqANzeWk5R655uW1oVs9sS1BoUqdy13QnZy571EVEuxeUc54YfBcNQjJ5KmDke0=
+X-Gm-Gg: ASbGnct+WZcFM4ClvI4MXH0l2Eq8iH4cnEkOv7kTbIbdCLHwknsr8aogtw+0dNMMwZL
+ o8xersCjAWj6UHPXb4uyQwhf/F2EXX3w45zKk97xjQqdUVrY/X93c4IzQev8Eo3xCeZEBnrRAK/
+ W7YEqglB+JM29rfNUCbqqojg3c7VBdbeUkpf206aDQCWEkHYwupuXoUkCAYK1Qr6kFWgsKVpzW5
+ AHk61V40j2wP6I202DKz4bFNfAhFEHVMtrf65GsYfTOhEuk1jgKy9zAl1JkXsV8MlSdB7UHA2JV
+ lfQi8YoMA5WNKBcEhiH+97Wr5ro8OgFV4G5APi6ewT4hCYfG0dslZIfuY7/lBsS/gRt/Fh19jM7
+ OCyQriIarO5ELydYAsmizHcQDRA/c7TgyV9zXvpwSOe75XgmKI+mLuFz8SICf2wO7RyKkN32VqJ
+ +khXh3+L6eDEk=
+X-Google-Smtp-Source: AGHT+IH2VB2a4wYEbk0ICFjdY446Tb/B3/J5N690UBbjzpAhz5dOYhDE9UqMGDZeqalYGF8lHeMH+w==
+X-Received: by 2002:a5d:5f4d:0:b0:3d5:a6a9:7d45 with SMTP id
+ ffacd0b85a97d-3d5a6a98cb4mr4729797f8f.18.1756808620746; 
+ Tue, 02 Sep 2025 03:23:40 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3d6cf485eb7sm8529738f8f.3.2025.09.02.03.23.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 03:22:23 -0700 (PDT)
-Message-ID: <1fb279c6-7512-4d95-9c0f-29d69d3564da@linaro.org>
-Date: Tue, 2 Sep 2025 12:22:20 +0200
+ Tue, 02 Sep 2025 03:23:40 -0700 (PDT)
+Message-ID: <2c2f25a6-4f11-4404-8298-60b43fb28052@linaro.org>
+Date: Tue, 2 Sep 2025 12:23:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/14] util: introduce common helper for error-report &
- log code
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250829180354.2922145-1-berrange@redhat.com>
- <20250829180354.2922145-10-berrange@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 2/3] hw/char/serial-pci-multi: Use qemu_init_irq_child()
+ to avoid leak
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250821154053.2417090-1-peter.maydell@linaro.org>
+ <20250821154053.2417090-3-peter.maydell@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250829180354.2922145-10-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250821154053.2417090-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,34 +104,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/29/25 04:03, Daniel P. Berrangé wrote:
-> +enum QMessageContextFlags {
-> +    QMESSAGE_CONTEXT_SKIP_MONITOR = (1 << 0),
-> +};
-> +
-> +/*
-> + * qmessage_context:
-> + * @flags: the message formatting control flags
-> + *
-> + * Format a message prefix with the information
-> + * previously selected by a call to
-> + * qmessage_set_format.
-> + *
-> + * If @flags contains QMESSAGE_CONTEXT_SKIP_MONITOR
-> + * an empty string will be returned if running in
-> + * the context of a HMP command
-> + *
-> + * Returns: a formatted message prefix, or empty string;
-> + * to be freed by the caller.
-> + */
-> +char *qmessage_context(int flags);
+On 21/8/25 17:40, Peter Maydell wrote:
+> The serial-pci-multi device initializes an IRQ with qemu_init_irq()
+> in its instance_init function; however it never calls qemu_free_irq(),
+> so the init/deinit cycle has a memory leak, which ASAN catches
+> in the device-introspect-test:
+> 
+> Direct leak of 576 byte(s) in 6 object(s) allocated from:
+>      #0 0x626306ddade3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qem
+> u-system-arm+0x21f1de3) (BuildId: 52ece17287eba2d68e5be980e1856cd1f6be932f)
+>      #1 0x7756ade79b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1
+> eb6131419edb83b2178b682829a6913cf682d75)
+>      #2 0x7756ade5b45a in g_hash_table_new_full (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4445a
+> ) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+>      #3 0x62630965da37 in object_initialize_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qem
+> u/build/arm-asan/../../qom/object.c:568:23
+>      #4 0x62630965d440 in object_initialize /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/ar
+> m-asan/../../qom/object.c:578:5
+>      #5 0x626309653eeb in qemu_init_irq /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-as
+> an/../../hw/core/irq.c:48:5
+>      #6 0x6263072370bb in multi_serial_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/char/serial-pci-multi.c:183:9
+> 
+> Use the new qemu_init_irq_child() function instead, so that the
+> IRQ object is automatically unreffed when the serial-pci
+> device is deinited.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/char/serial-pci-multi.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
+> index 13df272691a..9410428ba90 100644
+> --- a/hw/char/serial-pci-multi.c
+> +++ b/hw/char/serial-pci-multi.c
+> @@ -180,7 +180,9 @@ static void multi_serial_init(Object *o)
+>       size_t i, nports = multi_serial_get_port_count(PCI_DEVICE_GET_CLASS(dev));
+>   
+>       for (i = 0; i < nports; i++) {
+> -        qemu_init_irq(&pms->irqs[i], multi_serial_irq_mux, pms, i);
+> +        g_autofree char *irqpropname = g_strdup_printf("irq[%zu]", i);
+> +        qemu_init_irq_child(o, irqpropname, &pms->irqs[i],
+> +                            multi_serial_irq_mux, pms, i);
 
-I don't like QMESSAGE_CONTEXT_SKIP_MONITOR.
-It's just as easy to check monitor_cur in the single user and not call qmessage_context.
+We could also pass "irq[*]".
 
-The comment is out-of-date, since you can now return NULL.
-That said, I have a follow-up suggestion.
+>           object_initialize_child(o, "serial[*]", &pms->state[i], TYPE_SERIAL);
+>       }
+>   }
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-r~
 
