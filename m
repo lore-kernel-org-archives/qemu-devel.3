@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 888CDCA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C36CCA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:16:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQnl-0001Ua-GE; Tue, 02 Sep 2025 09:11:57 -0400
+	id 1utQnj-0001Kh-EB; Tue, 02 Sep 2025 09:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQnL-0000rf-35
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQnL-0000s7-8m
  for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:33 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQn6-0004Ve-NF
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:26 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-3d1bf79d75aso1080030f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:11:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQnC-0004Xc-KW
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:30 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3cf48bde952so3723553f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756818673; x=1757423473; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756818678; x=1757423478; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=h1bQ3YvXHpWdKZQA8th6hBcDTCJDn8e1NCM2+N1lCr4=;
- b=eT2Q4Ev/BFSWYoZgLckHVW+v2pprWe6ETLlJPFGkWOHiN8ZgS+1Ty1Q6P9LFDy7Jo9
- yZWvcY8j+J/uRKsDPURyYKmxelZyDYFHx8f4EWIcuQXAyvDgBYFo4Gj1XLZkzcI/A1mv
- PQ0ZnPVC4Pm6QfRf2oOIk1pbCKJUcUg0vqE2b0vG3r1DTsCAMv9lgp7X/TH7NfrULTxB
- DUB/dvaSfrX41XFrfdZ/hrUEmbqF4MZS0nvaMfaeHYT6YwR1+hWs6tOK8ZNdKQ6P4fl5
- uWIsVoZH1PlLrYxglMN2y2LM4PJsAz3rjHi0LLuHn5+0UE0Jn8AqZBFfkvyegzqfPSt1
- Ewqw==
+ :reply-to; bh=xLSY6a6sWL0T22LwducXeaaoZsK3dxB1C8UUGoL+RxI=;
+ b=hDpQe2Mp6JvN1EUf9Qbo0bL/V2zhISbgxIbK2s0IHvcadoW89ssDpCEtFAettdSZIH
+ K3L08JtZ0vNSvWm77899bWxyb5cLwgYr2ndOs5JIxm0747aRq7Yt1ljo0ieZ/r/lO7Pp
+ 33P0w6H7iEnpDQHj4hEyvY5ZXZryfKQoYrr2wQ3hq+XFa32uj3WMBLqX/dgqTJPeT5ow
+ kPZozOFLu7aEt2CB6WW1L6iKYwpWdGDMAMCB4fZZ9wV6Al6YDMfk54tBIekFv0SBzpAl
+ a1ZdDeZlV4dIsXzXVmrAbEiUxpvigjTQ5tgkDpBt4Pyppk5PXkb3xYz6hLOJ96HTYamI
+ NF9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756818673; x=1757423473;
+ d=1e100.net; s=20230601; t=1756818678; x=1757423478;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=h1bQ3YvXHpWdKZQA8th6hBcDTCJDn8e1NCM2+N1lCr4=;
- b=k/CdtWGEpGeHtFjdjAO5m4sr3dAvQia1K/35EbX9uWxZJ7QGNxJhIPb9CQg4WEWHa1
- Xnl6NeEKFQ36FnlULkjiHyhuQ5Tu74ASVC7zHFftkdo1Gz/oZ6AsZ78c546pT7YgDsvn
- 9vQbKGml7NUnwxilex0p7y1GkHgGmfgQ/B8v0kiW7lByKKvHw5CTVFzO/kMsjWWPg76H
- VzVf5GF966dftVdaFrM2ATJDnig6t1rg4wdc9TWKfgPNKfDGVyEEzc2G18QTZDzVPXyb
- l6EKoIjZRGJZGNm0ywNR39MZITwusO4K4WOEfob2ejNNZM9B1hpojbQhGJJzCgkFqMm1
- Pbfg==
-X-Gm-Message-State: AOJu0Yy/gveK9JO4tCl+lfD7PFNZnFhA9+qZkfo9TqivGLw/s3qOBejm
- xQGScjvkqu84xZJVMAbk2fkYWn3BsTBUkbc3N3+Nu8nSUhP8Vfi7W81QyzO14PzEe3d9NGu5Jy1
- zfjVh
-X-Gm-Gg: ASbGnctwjcmClM5fj/lECUK8lXKy4MiCfa+oGBgk/Qs3IDD/K+WBnqd3Tv+S6tszdux
- /40KHq/IzzKXffQCAnD7XLxcYOaLk/rqkhuORJIpNqYQ74DTkV/Z1FIcPCPpUhiDghMKWjGBEVD
- ax4ndB0S7C6pLKCgoAMZ7LIXAzNm4YhBAc+jEOpa3v+HJeUIBcniZZQYmXuWhKbLYoqHC2QSaT5
- IfR8wthd9Ps1u1p+jiPHXfj4B4jKTtasLgXtggPKlXy/8vUBBzq59IZY9pdwZbvGTWYSPuoJfds
- XdBQSpGZnCi2kPeBOzuByKKJqY0cm+XX6AICABFTAZFtwazYYELlqfYYG/lHy++krAOGMSFg821
- Xqxql0TW6q0sFlUyd6S1ycrN6kTaqX6siWzxNo3XB+Z/tGLlfZYuYEn9X9bGLt3mUgvoecGIQ
-X-Google-Smtp-Source: AGHT+IHajneaawPqJGVPbngsHpW1dzCmK3xuoE2XLTazpZL7IEuk/CQWZF3UDFRqxoWPYf2r8sBYwg==
-X-Received: by 2002:a5d:5849:0:b0:3cb:e47c:5e4e with SMTP id
- ffacd0b85a97d-3d1df34908bmr11490735f8f.24.1756818673509; 
- Tue, 02 Sep 2025 06:11:13 -0700 (PDT)
+ bh=xLSY6a6sWL0T22LwducXeaaoZsK3dxB1C8UUGoL+RxI=;
+ b=EUqwLvrlTjwg0CCQ1zEtaEZc4pL590WtWH0hZ/KNenYblyuLdGExtmwjsoys3WhRQ7
+ i+MyIn/bBNfeXvcQyKsYXvqR3+5xrAeAAQKFruFhvU+/fvWfHCOpZap+tp7/nfaMM7b7
+ tl9RwM5WIcVv4qzDOdCReuHsYYGE5vyWRnvwluxe1UO+0ZN6NOM+LDg1q9e5ssxQvcz3
+ 1RG4ihm37ukXntY9r1eSwecwzIzVBfii0e/OYS+CgM/CaDGcGdwjga55+uFJISPpaU0G
+ Jn7UH1TGIAn5k6+wkKHFdD/JZ4/wOU1nXW+SSKAiLxiiwHDemkyub4cTsM8rz+j2jUE1
+ 3UKA==
+X-Gm-Message-State: AOJu0YzylQkAdMCIcM8TtZY+F8PqKzdWdLKssc35rz2R815F7f6kBSgK
+ A1gVQIFGlJPAqaVUroGr0xuh0izkRXqGtPdtCtPcmINrazil6/rSe2UKTtYjuIjsCVG6Q/WoheQ
+ D2+cf
+X-Gm-Gg: ASbGncvqKiJTLR7yeh5ewBaxIeSb9AGqt091OOru28SdaYjyA57SoSI2/vzD0uiaCry
+ Aik0TbMMVMros5bnq9K9eX/51Js78JhJwLsHTvcCcHwq/zf9DluF1DC5MYlVmfKMhjszOVZp6ox
+ iQuYiJPggEPx7CeJUV9RfyPIoUvAdOFZ0xBZckzYungS3ccRLtmQyDap2YQBTTeM7D0Jt+m1q9I
+ /EClN8hHCt+mN/2C7FWxUFNBlxr10fkMReqWbNoZpHikkixgNbytzNDpAMhAwOCOnze5HF0IdHb
+ vDTXdSVk2YGm6Uh6kP2eTuHQQSk4/++nRfUmQZ7dDkXyAe/MhXwPIN9HnDdvTxCSBr85ENCQLl2
+ u74qncZMU7CWrlNis5tn3tL0RjVR0mp7hkuvey4qW90GSM0QufVnTGPCTSfgnq1xgOD6CwdM2eX
+ VcUwKdXIE=
+X-Google-Smtp-Source: AGHT+IF6m2HomZhoyW01LNdH7WwNgwHqiQcuHZtgARwPJQNnkuHVYg5IbLwDSRoiqXUMu4rdHP6e/A==
+X-Received: by 2002:a05:6000:430c:b0:3d3:9b18:227e with SMTP id
+ ffacd0b85a97d-3d39b1825a8mr9416998f8f.10.1756818678185; 
+ Tue, 02 Sep 2025 06:11:18 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf34493b8csm19233720f8f.59.2025.09.02.06.11.12
+ ffacd0b85a97d-3cf275d2717sm19669772f8f.15.2025.09.02.06.11.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 06:11:12 -0700 (PDT)
+ Tue, 02 Sep 2025 06:11:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/39] scripts/coverity-scan/COMPONENTS.md: Add a 'plugins'
- category
-Date: Tue,  2 Sep 2025 15:09:49 +0200
-Message-ID: <20250902131016.84968-13-philmd@linaro.org>
+Subject: [PULL 13/39] hw/scsi/mptsas: Avoid silent integer truncation in
+ MPI_FUNC_IOC_INIT
+Date: Tue,  2 Sep 2025 15:09:50 +0200
+Message-ID: <20250902131016.84968-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131016.84968-1-philmd@linaro.org>
 References: <20250902131016.84968-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,30 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover the TCG plugins files under their own Coverity category.
+For the MaxDevices 8-bit field of the request / response structures
+of the MPI_FUNCTION_IOC_INIT command, the 0x00 value means "max 256
+devices". This is not a problem because when max_devices=256, its
+value (0x100), being casted to a uint8_t, is truncated to 0x00.
+However Coverity complains for an "Overflowed constant". Fix by
+re-using the request fields in the response, since they are not
+modified and use the same types.
 
+Fix: Coverity 1547736 (Overflowed constant)
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250811094341.91597-1-philmd@linaro.org>
+Message-Id: <20250811095550.93655-1-philmd@linaro.org>
 ---
- scripts/coverity-scan/COMPONENTS.md | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/scsi/mptsas.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
-index 72995903ff9..95805b536bc 100644
---- a/scripts/coverity-scan/COMPONENTS.md
-+++ b/scripts/coverity-scan/COMPONENTS.md
-@@ -147,6 +147,9 @@ tcg
- system
-   ~ .*/qemu(/system/.*|/accel/.*)
+diff --git a/hw/scsi/mptsas.c b/hw/scsi/mptsas.c
+index 1ebe0b82a79..4ada35b7ec8 100644
+--- a/hw/scsi/mptsas.c
++++ b/hw/scsi/mptsas.c
+@@ -579,11 +579,11 @@ static void mptsas_process_ioc_init(MPTSASState *s, MPIMsgIOCInit *req)
+     }
  
-+plugins
-+  ~ .*/qemu(/contrib|/tests/tcg)?/plugins/.*
-+
- (headers)
-   ~ .*/qemu(/include/.*)
+     memset(&reply, 0, sizeof(reply));
+-    reply.WhoInit    = s->who_init;
++    reply.WhoInit    = req->WhoInit;
+     reply.MsgLength  = sizeof(reply) / 4;
+     reply.Function   = req->Function;
+-    reply.MaxDevices = s->max_devices;
+-    reply.MaxBuses   = s->max_buses;
++    reply.MaxDevices = req->MaxDevices;
++    reply.MaxBuses   = req->MaxBuses;
+     reply.MsgContext = req->MsgContext;
  
+     mptsas_fix_ioc_init_reply_endianness(&reply);
 -- 
 2.51.0
 
