@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D38CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 03:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0CBCA1007
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 03:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utI30-0008Et-81; Mon, 01 Sep 2025 23:51:06 -0400
+	id 1utI0X-0007MC-Mk; Mon, 01 Sep 2025 23:48:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI2Q-0006fx-07
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:50:32 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1utI0N-00079v-Od
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:48:24 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI2M-0004wN-4m
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:50:29 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822SAKQ022312
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:50:15 GMT
+ id 1utI0J-0004XO-5K
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:48:22 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822RtdH012437
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:48:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qApLnIlZX754sYloYJaLRUaEQvkkNUznqKtwxMhDgpU=; b=OspjrS5tIpHeL6vv
- NPFbu/2pfDxbvdvEtP2ArjCGngHxmvAxeFwrWkDT3X4oGdIVf5WOvggPbUo47jDm
- HotLuoS2Ru4AZdrU/vc5ZJxnX2XIdb+fBIHV+vAzmlYHgAqCZ2B3VngiPIOAdeQy
- T1COeupnMiImLU3LG0xwnhUy81nBGWHz3h6l4pt8tB3R7yC81idufCPxpGZYaTzB
- qE+FvRBeHwkYiR1BBZwW61xydTNUMbBatZfxR3Vs+ehmORrfnhTRD4Q0RjMwnDYv
- 7VU01spfE8IttHdwLZ5syw4bo0WFvVEmcrLhaRVjdMgsmO8+duv9oL5WvMgnFb7f
- UUwlpg==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnp6hwj-1
+ 3h6pGkmm/F0Vxjpevb4qVDHV/8snO/hu8HNA/KvSJCQ=; b=H4UaY7FLyJ/GtnA3
+ Z/w/mPgqQfMPYLPVTAtrFTMlwr+QDuEkhma/hqXBjQvH97+hWoqUnU4C1OePN7Hz
+ JGYq4DkbXkTcyrzbszWkayZlifO/I5hN4+0VwLn4B6rJ3kFDO8eTi0pr9ryEf7jz
+ lbH2a1RRcvs4eOjEE8PwpGIjC1hfoziIzibYE+I6KemZ9ebMjsSmkJTS4ZPV9mNA
+ tqQJSBF1/p1PTEfktYfwENGkjBXQrOZ6cH4nX5eLCLQvx3GsPqpr0vLDnV3MVg7d
+ Tcg/7XOMNTN3EF1utOgm6J+x6IPhamivKrtHxX5NXQIMrYwffjhUOVh2RxsGECXe
+ 3NS71g==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2fea26-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:50:14 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-329dfdc23d2so401143a91.1
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:50:14 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:48:07 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-324e41e946eso8953305a91.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:48:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756785006; x=1757389806;
+ d=1e100.net; s=20230601; t=1756784887; x=1757389687;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qApLnIlZX754sYloYJaLRUaEQvkkNUznqKtwxMhDgpU=;
- b=KQFGR4yD52H99locwvQ1yK6KfnddY8isMVdubaNLjol6+T4/FRO9BNPoRyau1eQvJO
- Fp2y2Ihisqz4oZ9wa4kPdBGVmr9uTuzoBc5cOob0XfrKL5fuj8gyn4i92/YKJ/ec8U2F
- R564SvGynQu/8eLvQ7jlnMhw9huKb/okXHXPfZR9u+YG78MqslDkr0AJF/1ejBQ51K9o
- griqKVC/IMo39lbBzYipg19pwscoXpzFOtLPHwlztjCCd0XTxW9XTfWZtJPUZHzZ1/O6
- p0ojWJUuw9wxp3ptivbBeHBxOXtK2AIP7RMHAcaHWNzXNvDJC2G7Pl2sxdGWNtW29I7y
- 9cUQ==
-X-Gm-Message-State: AOJu0Yy8Ly1o7KMkZjlRj9vPXz6j05M4Cska0NAPDPEKZ7zUGQHiZjV5
- 384trlDhPfSsT32qzvF/Cf5EWFXHYjNRWJGhCXVK/zzmYCSr46fU7/OTClGinqworM3nN43xbry
- c/vlr2S5mSetUI5qAxu7lnUBhNnKtGT6XLagILtY+nisILuX+EFoOmtaMgCf8jxF55lhf
-X-Gm-Gg: ASbGncurJs8eD1+Uf9J7ekZbmBk0lOrCIn/Kyia8ds3RA8tiDIvLM9TD/L5dZMlTC8c
- jG/zFAXswFJei0FMhp/Ug/T7CkZBhU0Lg1YhL30qN9SdDSdX6NUDuyA1DjV+r6MuHzi1thwe90z
- wllbRKIgaVTIbOGjEbgZ1CvDAVS7aw0syihz/UKRLWo8Cd6ENN0jMOnptZXwTgLYtiwLWPxrawI
- lmwPClRUhMf0MmXXH0In09Fdl5FLoQ2nnfPTBJu+mo4Q4txbiRI86clnBWnoaM3Xshax60n5w6x
- HsiIzEHEjpbS7LaFy9bN4lvI0p0qWP094QcoltFDBqxySpPgkEaJo5xXB6dDF87tGWESEEmnelR
- CJ24QY8KWn2EO
-X-Received: by 2002:a17:90b:3e4f:b0:327:e74e:f757 with SMTP id
- 98e67ed59e1d1-328156cc70amr11979539a91.30.1756785006086; 
- Mon, 01 Sep 2025 20:50:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGsz6Joem38x7JSVb3OEWI38A4ZoqiQ36s7UvbvWgIhvb5BhPPaduvesJiWX5ziCklrGoUErg==
-X-Received: by 2002:a17:90b:3e4f:b0:327:e74e:f757 with SMTP id
- 98e67ed59e1d1-328156cc70amr11979494a91.30.1756785005394; 
- Mon, 01 Sep 2025 20:50:05 -0700 (PDT)
+ bh=3h6pGkmm/F0Vxjpevb4qVDHV/8snO/hu8HNA/KvSJCQ=;
+ b=HKZVpxML11PT/04SFgUICvH1Aa2/iP+r/hUQ8yqcOcy66zi+8NtJFwAVcu6aplm1Ru
+ 6NRJbVvONzVSLcY3sY1TjQupL9BpUy5w1dN0UpKeDFNAKrul7CEMQy5HFGwlmSgIWlY+
+ BZWl7scVRcjB/HCiWeZCRuhWJhyGtxoCFB4IiGbAvhYTCoppT7U8Tmf1xQSWsCh44RsT
+ s0egJXRPlU0XAXhe4LQI9MSEEX+ZE6KSAjUU8KQ20WZQgiKj/bF4E0R7MG4quOs9gyOp
+ y07g7YLQ9zBb0TYH0gk2+uwIq/dsLF4s9E+J0ibO4eiG+/jKqt/SYSmU/F30+AEldBuz
+ mCIA==
+X-Gm-Message-State: AOJu0YxKtX/27af2PPI8jxp/CyznKPDHi6jHrOUlKfs4WgaO3htyIQ8Y
+ zoQqQkrS+YhXLgmzOXuA++GOTqxbgSXBQVNNzoHWujEUihg8WErXEqbbT9dd5kzpWEHTxMsNWDS
+ Yri7MZ7JfIyFumtehHOxPgx9YyJt0Av3ZPffEguaTemUEDXLDbXSAzqHDMdRVqLV31VoG
+X-Gm-Gg: ASbGncu8UP6Js15Q5jrqVnQkozhOICz49yigPSvoXs15/0y0cs8GmL87Kb1Mg4PG3rc
+ Tm3gaaf1+EmdbzZPpxYOQ8Sr2i2vPDYCZEf0CgMX6Ot8dCox4BjNo/lcP8rDm7EmeoL3uetTLKG
+ VTIEbk/jLZkJTdzu+GqzfuBYeXTVE04JAZ2Ns65iVVdrxMclvS2Rr0535jzR7mrnNo8skF8wSyp
+ i0P9z01hE2dmRxhk0OFcrPmHw2sYNJd1htxFf2njAsGxcI9byF+0xZ4UdkjvlZYrLiBMQYQStCu
+ TuG2hufwHAl9HW21B8x8H27hsUXVtYXJ4wLifgrC7/vNsitWuy1HYKvArLG4p33OYHNlZLQdSXH
+ +ZrUmku/z+9Wh
+X-Received: by 2002:a17:90b:38c2:b0:327:e67d:6595 with SMTP id
+ 98e67ed59e1d1-328156cc9c0mr13136398a91.25.1756784886117; 
+ Mon, 01 Sep 2025 20:48:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9tRp2lNB5mm+ULG56iQAjBcLCW+YnBWyo1Tn4v2D0gMirPF0XHAzF09Ok8hihns38zMTJ0w==
+X-Received: by 2002:a17:90b:38c2:b0:327:e67d:6595 with SMTP id
+ 98e67ed59e1d1-328156cc9c0mr13136349a91.25.1756784885397; 
+ Mon, 01 Sep 2025 20:48:05 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327c5fc5055sm14117932a91.14.2025.09.01.20.50.04
+ 41be03b00d2f7-b4cd006e2c6sm10633584a12.2.2025.09.01.20.48.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 20:50:05 -0700 (PDT)
+ Mon, 01 Sep 2025 20:48:05 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
@@ -81,41 +81,41 @@ Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
  anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  alex.bennee@linaro.org, quic_mburton@quicinc.com,
  sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>,
- Markus Armbruster <armbru@redhat.com>,
- Mike Lambert <mlambert@quicinc.com>, Sid Manning <sidneym@quicinc.com>
-Subject: [PATCH v2 03/11] hw/hexagon: Add machine configs for sysemu
-Date: Mon,  1 Sep 2025 20:49:43 -0700
-Message-Id: <20250902034951.1948194-4-brian.cain@oss.qualcomm.com>
+ Michael Lambert <mlambert@quicinc.com>, Sid Manning <sidneym@quicinc.com>,
+ Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Subject: [PATCH v2 37/40] target/hexagon: Add initial MMU model
+Date: Mon,  1 Sep 2025 20:47:12 -0700
+Message-Id: <20250902034715.1947718-38-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250902034951.1948194-1-brian.cain@oss.qualcomm.com>
-References: <20250902034951.1948194-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250902034715.1947718-1-brian.cain@oss.qualcomm.com>
+References: <20250902034715.1947718-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: sUAbk3t_pRI94N0R5h3V9sBYZxSDPNTt
-X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b66976 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=20KFwNOVAAAA:8
- a=EUspDBNiAAAA:8 a=2NUsffphLIBclc6jjpsA:9 a=hiJlUhq8NronkB9Q:21
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: sUAbk3t_pRI94N0R5h3V9sBYZxSDPNTt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfX8v/XCEoB+MFf
- DU8q+RkuATkojDUJzwlPtjP4LV2wByXhM3b5fCoMXl9NWG79k2+zB2t1d6hUw0xrFdjh8Y+1K2Q
- uNEvuPr3NAeu2nqWtN4srXQtDE5QPDcKsjqvDplmiR29Nc16AeOkAGo05NUBUSN2FOhiIXpuHBn
- I6SODxMUIHuXD3A9sbDyUK6mixM5xwfeeKkTsMcWTOff8UDuM8dHqIC/9xrjNvKlTINNAqX3wHU
- n6CznfZsOOeRfSsWckNEN+kdN0eWYH18XVGiafAROf8nCcWhuycwEfnYVe5rzBXak4ezcB4Q0nZ
- F59ORfgNWw149cDzsNJQK5L0DfCVUSzZZ5Lhp4FNMw2Grw0Vrl9P7rSFsC/cDL8czQVtekOAtql
- 6Qwmnnpu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfX3m0YJYol8ee8
+ hPgmz1QeVzP3Vg/kgzWrRluDN4AAxi6V/KUT8Kt4RQmrwrRxwPE5L6KBPx1WuTonnOvDsXz4kHs
+ 2vAAZVXPDJZvDPjAqhjbyH1BZiXYoVqxOlqyr8L70TSBt+GVtWys4Ke8bEi4T4zMMsvGkd4mtce
+ /A8Lfnf5o0JdgMCH8kSXedrDa4EEMgnh07IKlRrsUpuVB3NUfJ/ou8DkVTu7MiAE8fzpUDY2WSX
+ gWlVX6cWBZ9tvVu4C7r4fo8nGjEg96IrXk6RDQJ01UpxsbSA6w/+w12gup2DtZTw3Z4yjn/ZMR4
+ 1Sa8iWINm0p+5nAB8lF3z+xygu/rWylxFM7RAi/pXVWKkKe54+l80Y7xh1x/FbblJZSoWgMv72O
+ PlqSXr8I
+X-Proofpoint-ORIG-GUID: 1wHYQsFjHiSC8GM_Xs-Av3d-Vcs_C3jJ
+X-Proofpoint-GUID: 1wHYQsFjHiSC8GM_Xs-Av3d-Vcs_C3jJ
+X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68b668f7 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8
+ a=EUspDBNiAAAA:8 a=XoBo4ihvdZbvXjo1iqsA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300001
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -140,594 +140,817 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Brian Cain <bcain@quicinc.com>
 
-Some header includes are modified here: these are uniquely required for
-basic system emulation functionality and had not been required for linux-user.
-
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Co-authored-by: Mike Lambert <mlambert@quicinc.com>
+Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Co-authored-by: Michael Lambert <mlambert@quicinc.com>
 Co-authored-by: Sid Manning <sidneym@quicinc.com>
+Co-authored-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- MAINTAINERS                            |   2 +
- qapi/machine.json                      |   4 +-
- include/hw/hexagon/hexagon.h           | 150 ++++++++++++++++++++
- target/hexagon/cpu.h                   |   1 +
- hw/hexagon/machine_cfg_v66g_1024.h.inc |  63 +++++++++
- hw/hexagon/hexagon_dsp.c               | 183 +++++++++++++++++++++++++
- system/qdev-monitor.c                  |   2 +-
- target/hexagon/cpu.c                   |   1 +
- target/hexagon/op_helper.c             |   2 +-
- target/hexagon/translate.c             |   1 +
- hw/Kconfig                             |   1 +
- hw/hexagon/Kconfig                     |   5 +
- hw/hexagon/meson.build                 |   5 +
- hw/meson.build                         |   1 +
- 14 files changed, 418 insertions(+), 3 deletions(-)
- create mode 100644 include/hw/hexagon/hexagon.h
- create mode 100644 hw/hexagon/machine_cfg_v66g_1024.h.inc
- create mode 100644 hw/hexagon/hexagon_dsp.c
- create mode 100644 hw/hexagon/Kconfig
- create mode 100644 hw/hexagon/meson.build
+ target/hexagon/cpu-param.h |   4 +
+ target/hexagon/cpu.h       |   8 +
+ target/hexagon/hex_mmu.h   |  30 +++
+ target/hexagon/internal.h  |   8 +
+ target/hexagon/cpu.c       |  42 +++
+ target/hexagon/hex_mmu.c   | 525 +++++++++++++++++++++++++++++++++++++
+ target/hexagon/machine.c   |  30 +++
+ target/hexagon/translate.c |   2 +-
+ 8 files changed, 648 insertions(+), 1 deletion(-)
+ create mode 100644 target/hexagon/hex_mmu.h
+ create mode 100644 target/hexagon/hex_mmu.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index bf7695658a..efc237b27b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -229,6 +229,8 @@ Hexagon TCG CPUs
- M: Brian Cain <brian.cain@oss.qualcomm.com>
- S: Supported
- F: target/hexagon/
-+F: hw/hexagon/
-+F: include/hw/hexagon/
- X: target/hexagon/idef-parser/
- X: target/hexagon/gen_idef_parser_funcs.py
- F: linux-user/hexagon/
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 038eab281c..67f1929a98 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -26,6 +26,8 @@
- #
- # @avr: since 5.1
- #
-+# @hexagon: since 10.2
-+#
- # @loongarch64: since 7.1
- #
- # .. note:: The resulting QMP strings can be appended to the
-@@ -35,7 +37,7 @@
- # Since: 3.0
- ##
- { 'enum' : 'SysEmuTarget',
--  'data' : [ 'aarch64', 'alpha', 'arm', 'avr', 'hppa', 'i386',
-+  'data' : [ 'aarch64', 'alpha', 'arm', 'avr', 'hexagon', 'hppa', 'i386',
-              'loongarch64', 'm68k', 'microblaze', 'microblazeel', 'mips', 'mips64',
-              'mips64el', 'mipsel', 'or1k', 'ppc',
-              'ppc64', 'riscv32', 'riscv64', 'rx', 's390x', 'sh4',
-diff --git a/include/hw/hexagon/hexagon.h b/include/hw/hexagon/hexagon.h
-new file mode 100644
-index 0000000000..eb0c20276f
---- /dev/null
-+++ b/include/hw/hexagon/hexagon.h
-@@ -0,0 +1,150 @@
-+/*
-+ * Hexagon Baseboard System emulation.
-+ *
-+ * Copyright (c) 2020-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+
-+#ifndef HW_HEXAGON_H
-+#define HW_HEXAGON_H
-+
-+#include "system/memory.h"
-+
-+struct hexagon_board_boot_info {
-+    uint64_t ram_size;
-+    const char *kernel_filename;
-+    uint32_t kernel_elf_flags;
-+};
-+
-+typedef enum {
-+    unknown_rev = 0,
-+    v66_rev = 0xa666,
-+    v67_rev = 0x2667,
-+    v68_rev = 0x8d68,
-+    v69_rev = 0x8c69,
-+    v71_rev = 0x8c71,
-+    v73_rev = 0x8c73,
-+    v73m_rev = 0xcc73,
-+} Rev_t;
-+#define HEXAGON_LATEST_REV v73
-+#define HEXAGON_LATEST_REV_UPPER V73
-+
-+/*
-+ * Config table address bases represent bits [35:16].
-+ */
-+#define HEXAGON_CFG_ADDR_BASE(addr) (((addr) >> 16) & 0x0fffff)
-+
-+#define HEXAGON_CFGSPACE_ENTRIES (128)
-+
-+typedef  union {
-+  struct {
-+    /* Base address of L2TCM space */
-+    uint32_t l2tcm_base;
-+    uint32_t reserved0;
-+    /* Base address of subsystem space */
-+    uint32_t subsystem_base;
-+    /* Base address of ETM space */
-+    uint32_t etm_base;
-+    /* Base address of L2 configuration space */
-+    uint32_t l2cfg_base;
-+    uint32_t reserved1;
-+    /* Base address of L1S */
-+    uint32_t l1s0_base;
-+    /* Base address of AXI2 */
-+    uint32_t axi2_lowaddr;
-+    /* Base address of streamer base */
-+    uint32_t streamer_base;
-+    uint32_t reserved2;
-+    /* Base address of fast L2VIC */
-+    uint32_t fastl2vic_base;
-+    /* Number of entries in JTLB */
-+    uint32_t jtlb_size_entries;
-+    /* Coprocessor type */
-+    uint32_t coproc_present;
-+    /* Number of extension execution contexts available */
-+    uint32_t ext_contexts;
-+    /* Base address of Hexagon Vector Tightly Coupled Memory (VTCM) */
-+    uint32_t vtcm_base;
-+    /* Size of VTCM (in KB) */
-+    uint32_t vtcm_size_kb;
-+    /* L2 tag size */
-+    uint32_t l2tag_size;
-+    /* Amount of physical L2 memory in released version */
-+    uint32_t l2ecomem_size;
-+    /* Hardware threads available on the core */
-+    uint32_t thread_enable_mask;
-+    /* Base address of the ECC registers */
-+    uint32_t eccreg_base;
-+    /* L2 line size */
-+    uint32_t l2line_size;
-+    /* Small Core processor (also implies audio extension) */
-+    uint32_t tiny_core;
-+    /* Size of L2TCM */
-+    uint32_t l2itcm_size;
-+    /* Base address of L2-ITCM */
-+    uint32_t l2itcm_base;
-+    uint32_t reserved3;
-+    /* DTM is present */
-+    uint32_t dtm_present;
-+    /* Version of the DMA */
-+    uint32_t dma_version;
-+    /* Native HVX vector length in log of bytes */
-+    uint32_t hvx_vec_log_length;
-+    /* Core ID of the multi-core */
-+    uint32_t core_id;
-+    /* Number of multi-core cores */
-+    uint32_t core_count;
-+    uint32_t coproc2_reg0;
-+    uint32_t coproc2_reg1;
-+    /* Supported HVX vector length */
-+    uint32_t v2x_mode;
-+    uint32_t coproc2_reg2;
-+    uint32_t coproc2_reg3;
-+    uint32_t coproc2_reg4;
-+    uint32_t coproc2_reg5;
-+    uint32_t coproc2_reg6;
-+    uint32_t coproc2_reg7;
-+    /* Voltage droop mitigation technique parameter */
-+    uint32_t acd_preset;
-+    /* Voltage droop mitigation technique parameter */
-+    uint32_t mnd_preset;
-+    /* L1 data cache size (in KB) */
-+    uint32_t l1d_size_kb;
-+    /* L1 instruction cache size in (KB) */
-+    uint32_t l1i_size_kb;
-+    /* L1 data cache write policy: see HexagonL1WritePolicy */
-+    uint32_t l1d_write_policy;
-+    /* VTCM bank width  */
-+    uint32_t vtcm_bank_width;
-+    uint32_t reserved4;
-+    uint32_t reserved5;
-+    uint32_t reserved6;
-+    uint32_t coproc2_cvt_mpy_size;
-+    uint32_t consistency_domain;
-+    uint32_t capacity_domain;
-+    uint32_t axi3_lowaddr;
-+    uint32_t coproc2_int8_subcolumns;
-+    uint32_t corecfg_present;
-+    uint32_t coproc2_fp16_acc_exp;
-+    uint32_t AXIM2_secondary_base;
-+  };
-+  uint32_t raw[HEXAGON_CFGSPACE_ENTRIES];
-+} hexagon_config_table;
-+
-+typedef struct {
-+    /* Base address of config table */
-+    uint32_t cfgbase;
-+    /* Size of L2 TCM */
-+    uint32_t l2tcm_size;
-+    /* Base address of L2VIC */
-+    uint32_t l2vic_base;
-+    /* Size of L2VIC region */
-+    uint32_t l2vic_size;
-+    /* QTimer csr base */
-+    uint32_t csr_base;
-+    uint32_t qtmr_region;
-+    hexagon_config_table cfgtable;
-+} hexagon_machine_config;
-+
+diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
+index 22bffa7881..38b463a780 100644
+--- a/target/hexagon/cpu-param.h
++++ b/target/hexagon/cpu-param.h
+@@ -18,7 +18,11 @@
+ #ifndef HEXAGON_CPU_PARAM_H
+ #define HEXAGON_CPU_PARAM_H
+ 
++#ifdef CONFIG_USER_ONLY
+ #define TARGET_PAGE_BITS 16     /* 64K pages */
++#else
++#define TARGET_PAGE_BITS 12     /* 4K pages */
 +#endif
+ 
+ #define TARGET_PHYS_ADDR_SPACE_BITS 36
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
 diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index 89c634a09c..86fbe30dbb 100644
+index 627748392f..f25b483188 100644
 --- a/target/hexagon/cpu.h
 +++ b/target/hexagon/cpu.h
-@@ -196,6 +196,7 @@ struct ArchCPU {
- #ifndef CONFIG_USER_ONLY
-     uint32_t num_tlbs;
-     uint32_t l2vic_base_addr;
-+    uint32_t hvx_contexts;
-     uint32_t boot_addr;
-     struct HexagonGlobalRegState *globalregs;
+@@ -36,6 +36,10 @@
+ #error "Hexagon does not support system emulation"
  #endif
-diff --git a/hw/hexagon/machine_cfg_v66g_1024.h.inc b/hw/hexagon/machine_cfg_v66g_1024.h.inc
-new file mode 100644
-index 0000000000..8f2a593bb8
---- /dev/null
-+++ b/hw/hexagon/machine_cfg_v66g_1024.h.inc
-@@ -0,0 +1,63 @@
+ 
++#ifndef CONFIG_USER_ONLY
++typedef struct CPUHexagonTLBContext CPUHexagonTLBContext;
++#endif
 +
-+static hexagon_machine_config v66g_1024 = {
-+    .cfgbase =        0xd8180000,
-+    .l2tcm_size =     0x00000000,
-+    .l2vic_base =     0xfc910000,
-+    .l2vic_size =     0x00001000,
-+    .csr_base =       0xfc900000,
-+    .qtmr_region =    0xfc921000,
-+    .cfgtable = {
-+        .l2tcm_base = 0x0000d800,
-+        .reserved0 = 0x0000d400,
-+        .subsystem_base = 0x0000fc90,
-+        .etm_base = 0x0000d805,
-+        .l2cfg_base = 0x0000d81a,
-+        .reserved1 = 0x00000000,
-+        .l1s0_base = 0x0000d820,
-+        .axi2_lowaddr = 0x00003000,
-+        .streamer_base = 0x00000000,
-+        .reserved2 = 0x0000d819,
-+        .fastl2vic_base = 0x0000d81e,
-+        .jtlb_size_entries = 0x00000080,
-+        .coproc_present = 0x00000001,
-+        .ext_contexts = 0x00000004,
-+        .vtcm_base = 0x0000d820,
-+        .vtcm_size_kb = 0x00000100,
-+        .l2tag_size = 0x00000400,
-+        .l2ecomem_size = 0x00000400,
-+        .thread_enable_mask = 0x0000000f,
-+        .eccreg_base = 0x0000d81f,
-+        .l2line_size = 0x00000080,
-+        .tiny_core = 0x00000000,
-+        .l2itcm_size = 0x00000000,
-+        .l2itcm_base = 0x0000d820,
-+        .reserved3 = 0x00000000,
-+        .dtm_present = 0x00000000,
-+        .dma_version = 0x00000000,
-+        .hvx_vec_log_length = 0x00000080,
-+        .core_id = 0x00000000,
-+        .core_count = 0x00000000,
-+        .coproc2_reg0 = 0x00000000,
-+        .coproc2_reg1 = 0x00000000,
-+        .v2x_mode = 0x00000000,
-+        .coproc2_reg2 = 0x00000000,
-+        .coproc2_reg3 = 0x00000000,
-+        .coproc2_reg4 = 0x00000000,
-+        .coproc2_reg5 = 0x00000000,
-+        .coproc2_reg6 = 0x00000000,
-+        .coproc2_reg7 = 0x00000000,
-+        .acd_preset = 0x00000000,
-+        .mnd_preset = 0x00000000,
-+        .l1d_size_kb = 0x00000000,
-+        .l1i_size_kb = 0x00000000,
-+        .l1d_write_policy = 0x00000000,
-+        .vtcm_bank_width = 0x00000000,
-+        .reserved3 = 0x00000000,
-+        .reserved4 = 0x00000000,
-+        .reserved5 = 0x00000000,
-+        .coproc2_cvt_mpy_size = 0x00000000,
-+        .consistency_domain = 0x00000000,
-+        .capacity_domain = 0x00000000,
-+        .axi3_lowaddr = 0x00000000,
-+    },
-+};
-diff --git a/hw/hexagon/hexagon_dsp.c b/hw/hexagon/hexagon_dsp.c
+ #define NUM_PREGS 4
+ #define TOTAL_PER_THREAD_REGS 64
+ 
+@@ -138,6 +142,7 @@ typedef struct CPUArchState {
+     hex_lock_state_t k0_lock_state;
+     target_ulong tlb_lock_count;
+     target_ulong k0_lock_count;
++    CPUHexagonTLBContext *hex_tlb;
+ #endif
+     target_ulong next_PC;
+     target_ulong new_value_usr;
+@@ -185,12 +190,15 @@ struct ArchCPU {
+     bool lldb_compat;
+     target_ulong lldb_stack_adjust;
+     bool short_circuit;
++#ifndef CONFIG_USER_ONLY
+     uint32_t num_tlbs;
++#endif
+ };
+ 
+ #include "cpu_bits.h"
+ 
+ FIELD(TB_FLAGS, IS_TIGHT_LOOP, 0, 1)
++FIELD(TB_FLAGS, MMU_INDEX, 1, 3)
+ 
+ G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
+                                             uint32_t exception,
+diff --git a/target/hexagon/hex_mmu.h b/target/hexagon/hex_mmu.h
 new file mode 100644
-index 0000000000..d491a21a76
+index 0000000000..61a8056f08
 --- /dev/null
-+++ b/hw/hexagon/hexagon_dsp.c
-@@ -0,0 +1,183 @@
++++ b/target/hexagon/hex_mmu.h
+@@ -0,0 +1,30 @@
 +/*
-+ * Hexagon DSP Subsystem emulation.  This represents a generic DSP
-+ * subsystem with few peripherals, like the Compute DSP.
-+ *
-+ * Copyright (c) 2020-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ * Copyright(c) 2019-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
++#ifndef HEXAGON_MMU_H
++#define HEXAGON_MMU_H
 +
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "system/address-spaces.h"
-+#include "hw/hw.h"
-+#include "hw/boards.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/hexagon/hexagon.h"
-+#include "hw/hexagon/hexagon_globalreg.h"
-+#include "hw/loader.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "qemu/log.h"
-+#include "elf.h"
 +#include "cpu.h"
-+#include "include/migration/cpu.h"
-+#include "include/system/system.h"
-+#include "target/hexagon/internal.h"
-+#include "system/reset.h"
 +
-+#include "machine_cfg_v66g_1024.h.inc"
-+
-+static void hex_symbol_callback(const char *st_name, int st_info,
-+                                uint64_t st_value, uint64_t st_size)
-+{
-+}
-+
-+/* Board init.  */
-+static struct hexagon_board_boot_info hexagon_binfo;
-+
-+static void hexagon_load_kernel(HexagonCPU *cpu)
-+{
-+    uint64_t pentry;
-+    long kernel_size;
-+
-+    kernel_size = load_elf_ram_sym(hexagon_binfo.kernel_filename, NULL, NULL,
-+                      NULL, &pentry, NULL, NULL,
-+                      &hexagon_binfo.kernel_elf_flags, 0, EM_HEXAGON, 0, 0,
-+                      &address_space_memory, false, hex_symbol_callback);
-+
-+    if (kernel_size <= 0) {
-+        error_report("no kernel file '%s'",
-+            hexagon_binfo.kernel_filename);
-+        exit(1);
-+    }
-+
-+    qdev_prop_set_uint32(DEVICE(cpu), "exec-start-addr", pentry);
-+}
-+
-+static void hexagon_init_bootstrap(MachineState *machine, HexagonCPU *cpu)
-+{
-+    if (machine->kernel_filename) {
-+        hexagon_load_kernel(cpu);
-+    }
-+}
-+
-+static void do_cpu_reset(void *opaque)
-+{
-+    HexagonCPU *cpu = opaque;
-+    CPUState *cs = CPU(cpu);
-+    cpu_reset(cs);
-+}
-+
-+static void hexagon_common_init(MachineState *machine, Rev_t rev,
-+                                hexagon_machine_config *m_cfg)
-+{
-+    memset(&hexagon_binfo, 0, sizeof(hexagon_binfo));
-+    if (machine->kernel_filename) {
-+        hexagon_binfo.ram_size = machine->ram_size;
-+        hexagon_binfo.kernel_filename = machine->kernel_filename;
-+    }
-+
-+    machine->enable_graphics = 0;
-+
-+    MemoryRegion *address_space = get_system_memory();
-+
-+    MemoryRegion *sram = g_new(MemoryRegion, 1);
-+    memory_region_init_ram(sram, NULL, "ddr.ram",
-+        machine->ram_size, &error_fatal);
-+    memory_region_add_subregion(address_space, 0x0, sram);
-+
-+    Error **errp = NULL;
-+
-+    DeviceState *glob_regs_dev = qdev_new(TYPE_HEXAGON_GLOBALREG);
-+    qdev_prop_set_uint64(glob_regs_dev, "config-table-addr", m_cfg->cfgbase);
-+    qdev_prop_set_uint32(glob_regs_dev, "qtimer-base-addr", m_cfg->qtmr_region);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(glob_regs_dev), errp);
-+
-+    for (int i = 0; i < machine->smp.cpus; i++) {
-+        HexagonCPU *cpu = HEXAGON_CPU(object_new(machine->cpu_type));
-+        qemu_register_reset(do_cpu_reset, cpu);
-+
-+        /*
-+         * CPU #0 is the only CPU running at boot, others must be
-+         * explicitly enabled via start instruction.
-+         */
-+        qdev_prop_set_bit(DEVICE(cpu), "start-powered-off", (i != 0));
-+        qdev_prop_set_uint32(DEVICE(cpu), "l2vic-base-addr", m_cfg->l2vic_base);
-+        qdev_prop_set_uint32(DEVICE(cpu), "config-table-addr", m_cfg->cfgbase);
-+        qdev_prop_set_uint32(DEVICE(cpu), "hvx-contexts",
-+                             m_cfg->cfgtable.ext_contexts);
-+        qdev_prop_set_uint32(DEVICE(cpu), "jtlb-entries",
-+                             m_cfg->cfgtable.jtlb_size_entries);
-+
-+
-+        if (i == 0) {
-+            hexagon_init_bootstrap(machine, cpu);
-+            if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
-+                return;
-+            }
-+            DeviceState *l2vic_dev;
-+            l2vic_dev = sysbus_create_varargs("l2vic", m_cfg->l2vic_base,
-+                    /* IRQ#, Evnt#,CauseCode */
-+                    qdev_get_gpio_in(DEVICE(cpu), 0),
-+                    qdev_get_gpio_in(DEVICE(cpu), 1),
-+                    qdev_get_gpio_in(DEVICE(cpu), 2),
-+                    qdev_get_gpio_in(DEVICE(cpu), 3),
-+                    qdev_get_gpio_in(DEVICE(cpu), 4),
-+                    qdev_get_gpio_in(DEVICE(cpu), 5),
-+                    qdev_get_gpio_in(DEVICE(cpu), 6),
-+                    qdev_get_gpio_in(DEVICE(cpu), 7),
-+                    NULL);
-+            sysbus_mmio_map(SYS_BUS_DEVICE(l2vic_dev), 1,
-+                m_cfg->cfgtable.fastl2vic_base << 16);
-+        } else if (!qdev_realize_and_unref(DEVICE(cpu), NULL, errp)) {
-+            return;
-+        }
-+
-+    }
-+}
-+
-+static void init_mc(MachineClass *mc)
-+{
-+    mc->block_default_type = IF_SD;
-+    mc->default_ram_size = 4 * GiB;
-+    mc->no_parallel = 1;
-+    mc->no_floppy = 1;
-+    mc->no_cdrom = 1;
-+    mc->no_serial = 1;
-+    mc->is_default = false;
-+    mc->max_cpus = 8;
-+}
-+
-+/* ----------------------------------------------------------------- */
-+/* Core-specific configuration settings are defined below this line. */
-+/* Config table values defined in machine_configs.h.inc              */
-+/* ----------------------------------------------------------------- */
-+
-+static void v66g_1024_config_init(MachineState *machine)
-+{
-+    hexagon_common_init(machine, v66_rev, &v66g_1024);
-+}
-+
-+static void v66g_1024_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "Hexagon V66G_1024";
-+    mc->init = v66g_1024_config_init;
-+    init_mc(mc);
-+    mc->is_default = true;
-+    mc->default_cpu_type = TYPE_HEXAGON_CPU_V66;
-+    mc->default_cpus = 4;
-+}
-+
-+static const TypeInfo hexagon_machine_types[] = {
-+    {
-+        .name = MACHINE_TYPE_NAME("V66G_1024"),
-+        .parent = TYPE_MACHINE,
-+        .class_init = v66g_1024_init,
-+    },
++struct CPUHexagonTLBContext {
++    uint64_t entries[MAX_TLB_ENTRIES];
 +};
 +
-+DEFINE_TYPES(hexagon_machine_types)
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 2ac92d0a07..4acc2d3280 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -69,7 +69,7 @@ typedef struct QDevAlias
-                               QEMU_ARCH_SPARC | \
-                               QEMU_ARCH_XTENSA)
- #define QEMU_ARCH_VIRTIO_CCW (QEMU_ARCH_S390X)
--#define QEMU_ARCH_VIRTIO_MMIO (QEMU_ARCH_M68K)
-+#define QEMU_ARCH_VIRTIO_MMIO (QEMU_ARCH_M68K | QEMU_ARCH_HEXAGON)
++extern void hex_tlbw(CPUHexagonState *env, uint32_t index, uint64_t value);
++extern uint32_t hex_tlb_lookup(CPUHexagonState *env, uint32_t ssr, uint32_t VA);
++extern void hex_mmu_realize(CPUHexagonState *env);
++extern void hex_mmu_on(CPUHexagonState *env);
++extern void hex_mmu_off(CPUHexagonState *env);
++extern void hex_mmu_mode_change(CPUHexagonState *env);
++extern bool hex_tlb_find_match(CPUHexagonState *env, target_ulong VA,
++                               MMUAccessType access_type, hwaddr *PA, int *prot,
++                               int *size, int32_t *excp, int mmu_idx);
++extern int hex_tlb_check_overlap(CPUHexagonState *env, uint64_t entry,
++                                 uint64_t index);
++extern void hex_tlb_lock(CPUHexagonState *env);
++extern void hex_tlb_unlock(CPUHexagonState *env);
++void dump_mmu(CPUHexagonState *env);
++#endif
+diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
+index c24c360921..94e5e502a9 100644
+--- a/target/hexagon/internal.h
++++ b/target/hexagon/internal.h
+@@ -40,6 +40,14 @@ void G_NORETURN do_raise_exception(CPUHexagonState *env,
+         target_ulong PC,
+         uintptr_t retaddr);
  
- /* Please keep this table sorted by typename. */
- static const QDevAlias qdev_alias_table[] = {
++#define hexagon_cpu_mmu_enabled(env) ({ \
++    HexagonCPU *cpu = env_archcpu(env); \
++    cpu->globalregs ? \
++        GET_SYSCFG_FIELD(SYSCFG_MMUEN, \
++                          arch_get_system_reg(env, HEX_SREG_SYSCFG)) : \
++        0; \
++})
++
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_hexagon_cpu;
+ #endif
 diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 256fdc177e..ba78a04bdc 100644
+index 2ee379121e..eb3adebb60 100644
 --- a/target/hexagon/cpu.c
 +++ b/target/hexagon/cpu.c
-@@ -69,6 +69,7 @@ static const Property hexagon_cpu_properties[] = {
-     DEFINE_PROP_UINT32("jtlb-entries", HexagonCPU, num_tlbs, MAX_TLB_ENTRIES),
-     DEFINE_PROP_UINT32("l2vic-base-addr", HexagonCPU, l2vic_base_addr,
-         0xffffffffULL),
-+    DEFINE_PROP_UINT32("hvx-contexts", HexagonCPU, hvx_contexts, 0),
-     DEFINE_PROP_UINT32("exec-start-addr", HexagonCPU, boot_addr, 0xffffffffULL),
-     DEFINE_PROP_LINK("global-regs", HexagonCPU, globalregs,
-                      TYPE_HEXAGON_GLOBALREG, HexagonGlobalRegState *),
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index 1bc32769c6..fa893e480b 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -20,9 +20,9 @@
- #include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/probe.h"
- #include "qemu/main-loop.h"
+@@ -26,9 +26,12 @@
+ #include "tcg/tcg.h"
+ #include "exec/gdbstub.h"
+ #include "accel/tcg/cpu-ops.h"
++#include "cpu_helper.h"
++#include "hex_mmu.h"
+ 
+ #ifndef CONFIG_USER_ONLY
+ #include "sys_macros.h"
++#include "accel/tcg/cpu-ldst.h"
+ #endif
+ 
+ static void hexagon_v66_cpu_init(Object *obj) { }
+@@ -274,6 +277,13 @@ static TCGTBCPUState hexagon_get_tb_cpu_state(CPUState *cs)
+         hexagon_raise_exception_err(env, HEX_CAUSE_PC_NOT_ALIGNED, 0);
+     }
+ 
++#ifndef CONFIG_USER_ONLY
++    hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, MMU_INDEX,
++                           cpu_mmu_index(env_cpu(env), false));
++#else
++    hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, MMU_INDEX, MMU_USER_IDX);
++#endif
++
+     return (TCGTBCPUState){ .pc = pc, .flags = hex_flags };
+ }
+ 
+@@ -291,6 +301,18 @@ static void hexagon_restore_state_to_opc(CPUState *cs,
+     cpu_env(cs)->gpr[HEX_REG_PC] = data[0];
+ }
+ 
++
++#ifndef CONFIG_USER_ONLY
++static void mmu_reset(CPUHexagonState *env)
++{
++    CPUState *cs = env_cpu(env);
++    if (cs->cpu_index == 0) {
++        memset(env->hex_tlb, 0, sizeof(*env->hex_tlb));
++    }
++}
++#endif
++
++
+ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
+ {
+     CPUState *cs = CPU(obj);
+@@ -306,6 +328,13 @@ static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
+     /* Default NaN value: sign bit set, all frac bits set */
+     set_float_default_nan_pattern(0b11111111, &env->fp_status);
+ #ifndef CONFIG_USER_ONLY
++    HexagonCPU *cpu = HEXAGON_CPU(cs);
++
++    memset(env->t_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
++    memset(env->greg, 0, sizeof(target_ulong) * NUM_GREGS);
++
++    mmu_reset(env);
++    arch_set_system_reg(env, HEX_SREG_HTID, cs->cpu_index);
+     memset(env->t_sreg, 0, sizeof(target_ulong) * NUM_SREGS);
+     memset(env->greg, 0, sizeof(target_ulong) * NUM_GREGS);
+     env->threadId = cs->cpu_index;
+@@ -338,6 +367,14 @@ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++#ifndef CONFIG_USER_ONLY
++    HexagonCPU *cpu = HEXAGON_CPU(cs);
++    if (cpu->num_tlbs > MAX_TLB_ENTRIES) {
++        error_setg(errp, "Number of TLBs selected is invalid");
++        return;
++    }
++#endif
++
+     gdb_register_coprocessor(cs, hexagon_hvx_gdb_read_register,
+                              hexagon_hvx_gdb_write_register,
+                              gdb_find_static_feature("hexagon-hvx.xml"), 0);
+@@ -349,6 +386,11 @@ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
+ #endif
+ 
+     qemu_init_vcpu(cs);
++
++#ifndef CONFIG_USER_ONLY
++    CPUHexagonState *env = cpu_env(cs);
++    hex_mmu_realize(env);
++#endif
+     cpu_reset(cs);
+     mcc->parent_realize(dev, errp);
+ }
+diff --git a/target/hexagon/hex_mmu.c b/target/hexagon/hex_mmu.c
+new file mode 100644
+index 0000000000..332e7f4029
+--- /dev/null
++++ b/target/hexagon/hex_mmu.c
+@@ -0,0 +1,525 @@
++/*
++ * Copyright(c) 2019-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/main-loop.h"
++#include "qemu/qemu-print.h"
 +#include "cpu.h"
- #include "exec/helper-proto.h"
- #include "fpu/softfloat.h"
--#include "cpu.h"
- #include "exec/cpu-interrupt.h"
- #include "internal.h"
- #include "macros.h"
++#include "system/cpus.h"
++#include "internal.h"
++#include "exec/cpu-interrupt.h"
++#include "cpu_helper.h"
++#include "exec/cputlb.h"
++#include "hex_mmu.h"
++#include "macros.h"
++#include "sys_macros.h"
++#include "reg_fields.h"
++
++#define GET_TLB_FIELD(ENTRY, FIELD)                               \
++    ((uint64_t)fEXTRACTU_BITS(ENTRY, reg_field_info[FIELD].width, \
++                              reg_field_info[FIELD].offset))
++
++/* PPD (physical page descriptor) */
++static inline uint64_t GET_PPD(uint64_t entry)
++{
++    return GET_TLB_FIELD(entry, PTE_PPD) |
++        (GET_TLB_FIELD(entry, PTE_PA35) << reg_field_info[PTE_PPD].width);
++}
++
++#define NO_ASID      (1 << 8)
++
++typedef enum {
++    PGSIZE_4K,
++    PGSIZE_16K,
++    PGSIZE_64K,
++    PGSIZE_256K,
++    PGSIZE_1M,
++    PGSIZE_4M,
++    PGSIZE_16M,
++    PGSIZE_64M,
++    PGSIZE_256M,
++    PGSIZE_1G,
++    NUM_PGSIZE_TYPES
++} tlb_pgsize_t;
++
++static const char *pgsize_str[NUM_PGSIZE_TYPES] = {
++    "4K",
++    "16K",
++    "64K",
++    "256K",
++    "1M",
++    "4M",
++    "16M",
++    "64M",
++    "256M",
++    "1G",
++};
++
++#define INVALID_MASK 0xffffffffLL
++
++static const uint64_t encmask_2_mask[] = {
++    0x0fffLL,                           /* 4k,   0000 */
++    0x3fffLL,                           /* 16k,  0001 */
++    0xffffLL,                           /* 64k,  0010 */
++    0x3ffffLL,                          /* 256k, 0011 */
++    0xfffffLL,                          /* 1m,   0100 */
++    0x3fffffLL,                         /* 4m,   0101 */
++    0xffffffLL,                         /* 16m,  0110 */
++    0x3ffffffLL,                        /* 64m,  0111 */
++    0xfffffffLL,                        /* 256m, 1000 */
++    0x3fffffffLL,                       /* 1g,   1001 */
++    INVALID_MASK,                      /* RSVD, 0111 */
++};
++
++/*
++ * @return the page size type from @a entry.
++ */
++static inline tlb_pgsize_t hex_tlb_pgsize_type(uint64_t entry)
++{
++    if (entry == 0) {
++        qemu_log_mask(CPU_LOG_MMU, "%s: Supplied TLB entry was 0!\n", __func__);
++        return 0;
++    }
++    tlb_pgsize_t size = ctz64(entry);
++    g_assert(size < NUM_PGSIZE_TYPES);
++    return size;
++}
++
++/*
++ * @return the page size of @a entry, in bytes.
++ */
++static inline uint64_t hex_tlb_page_size_bytes(uint64_t entry)
++{
++    return 1ull << (TARGET_PAGE_BITS + 2 * hex_tlb_pgsize_type(entry));
++}
++
++static inline uint64_t hex_tlb_phys_page_num(uint64_t entry)
++{
++    uint32_t ppd = GET_PPD(entry);
++    return ppd >> 1;
++}
++
++static inline uint64_t hex_tlb_phys_addr(uint64_t entry)
++{
++    uint64_t pagemask = encmask_2_mask[hex_tlb_pgsize_type(entry)];
++    uint64_t pagenum = hex_tlb_phys_page_num(entry);
++    uint64_t PA = (pagenum << TARGET_PAGE_BITS) & (~pagemask);
++    return PA;
++}
++
++static inline uint64_t hex_tlb_virt_addr(uint64_t entry)
++{
++    return (uint64_t)GET_TLB_FIELD(entry, PTE_VPN) << TARGET_PAGE_BITS;
++}
++
++static bool hex_dump_mmu_entry(FILE *f, uint64_t entry)
++{
++    if (GET_TLB_FIELD(entry, PTE_V)) {
++        fprintf(f, "0x%016" PRIx64 ": ", entry);
++        uint64_t PA = hex_tlb_phys_addr(entry);
++        uint64_t VA = hex_tlb_virt_addr(entry);
++        fprintf(f, "V:%" PRId64 " G:%" PRId64 " A1:%" PRId64 " A0:%" PRId64,
++                GET_TLB_FIELD(entry, PTE_V), GET_TLB_FIELD(entry, PTE_G),
++                GET_TLB_FIELD(entry, PTE_ATR1), GET_TLB_FIELD(entry, PTE_ATR0));
++        fprintf(f, " ASID:0x%02" PRIx64 " VA:0x%08" PRIx64,
++                GET_TLB_FIELD(entry, PTE_ASID), VA);
++        fprintf(f,
++                " X:%" PRId64 " W:%" PRId64 " R:%" PRId64 " U:%" PRId64
++                " C:%" PRId64,
++                GET_TLB_FIELD(entry, PTE_X), GET_TLB_FIELD(entry, PTE_W),
++                GET_TLB_FIELD(entry, PTE_R), GET_TLB_FIELD(entry, PTE_U),
++                GET_TLB_FIELD(entry, PTE_C));
++        fprintf(f, " PA:0x%09" PRIx64 " SZ:%s (0x%" PRIx64 ")", PA,
++                pgsize_str[hex_tlb_pgsize_type(entry)],
++                hex_tlb_page_size_bytes(entry));
++        fprintf(f, "\n");
++        return true;
++    }
++
++    /* Not valid */
++    return false;
++}
++
++void dump_mmu(CPUHexagonState *env)
++{
++    int i;
++
++    HexagonCPU *cpu = env_archcpu(env);
++    for (i = 0; i < cpu->num_tlbs; i++) {
++        uint64_t entry = env->hex_tlb->entries[i];
++        if (GET_TLB_FIELD(entry, PTE_V)) {
++            qemu_printf("0x%016" PRIx64 ": ", entry);
++            uint64_t PA = hex_tlb_phys_addr(entry);
++            uint64_t VA = hex_tlb_virt_addr(entry);
++            qemu_printf(
++                "V:%" PRId64 " G:%" PRId64 " A1:%" PRId64 " A0:%" PRId64,
++                GET_TLB_FIELD(entry, PTE_V), GET_TLB_FIELD(entry, PTE_G),
++                GET_TLB_FIELD(entry, PTE_ATR1), GET_TLB_FIELD(entry, PTE_ATR0));
++            qemu_printf(" ASID:0x%02" PRIx64 " VA:0x%08" PRIx64,
++                        GET_TLB_FIELD(entry, PTE_ASID), VA);
++            qemu_printf(
++                " X:%" PRId64 " W:%" PRId64 " R:%" PRId64 " U:%" PRId64
++                " C:%" PRId64,
++                GET_TLB_FIELD(entry, PTE_X), GET_TLB_FIELD(entry, PTE_W),
++                GET_TLB_FIELD(entry, PTE_R), GET_TLB_FIELD(entry, PTE_U),
++                GET_TLB_FIELD(entry, PTE_C));
++            qemu_printf(" PA:0x%09" PRIx64 " SZ:%s (0x%" PRIx64 ")", PA,
++                        pgsize_str[hex_tlb_pgsize_type(entry)],
++                        hex_tlb_page_size_bytes(entry));
++            qemu_printf("\n");
++        }
++    }
++}
++
++static inline void hex_log_tlbw(uint32_t index, uint64_t entry)
++{
++    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
++        if (qemu_log_enabled()) {
++            FILE *logfile = qemu_log_trylock();
++            if (logfile) {
++                fprintf(logfile, "tlbw[%03d]: ", index);
++                if (!hex_dump_mmu_entry(logfile, entry)) {
++                    fprintf(logfile, "invalid\n");
++                }
++                qemu_log_unlock(logfile);
++            }
++        }
++    }
++}
++
++void hex_tlbw(CPUHexagonState *env, uint32_t index, uint64_t value)
++{
++    uint32_t myidx = fTLB_NONPOW2WRAP(fTLB_IDXMASK(index));
++    bool old_entry_valid = GET_TLB_FIELD(env->hex_tlb->entries[myidx], PTE_V);
++    if (old_entry_valid && hexagon_cpu_mmu_enabled(env)) {
++        CPUState *cs = env_cpu(env);
++
++        tlb_flush(cs);
++    }
++    env->hex_tlb->entries[myidx] = (value);
++    hex_log_tlbw(myidx, value);
++}
++
++void hex_mmu_realize(CPUHexagonState *env)
++{
++    CPUState *cs = env_cpu(env);
++    if (cs->cpu_index == 0) {
++        env->hex_tlb = g_malloc0(sizeof(CPUHexagonTLBContext));
++    } else {
++        CPUState *cpu0 = qemu_get_cpu(0);
++        CPUHexagonState *env0 = cpu_env(cpu0);
++        env->hex_tlb = env0->hex_tlb;
++    }
++}
++
++void hex_mmu_on(CPUHexagonState *env)
++{
++    CPUState *cs = env_cpu(env);
++    qemu_log_mask(CPU_LOG_MMU, "Hexagon MMU turned on!\n");
++    tlb_flush(cs);
++}
++
++void hex_mmu_off(CPUHexagonState *env)
++{
++    CPUState *cs = env_cpu(env);
++    qemu_log_mask(CPU_LOG_MMU, "Hexagon MMU turned off!\n");
++    tlb_flush(cs);
++}
++
++void hex_mmu_mode_change(CPUHexagonState *env)
++{
++    qemu_log_mask(CPU_LOG_MMU, "Hexagon mode change!\n");
++    CPUState *cs = env_cpu(env);
++    tlb_flush(cs);
++}
++
++static inline bool hex_tlb_entry_match_noperm(uint64_t entry, uint32_t asid,
++                                              uint64_t VA)
++{
++    if (GET_TLB_FIELD(entry, PTE_V)) {
++        if (GET_TLB_FIELD(entry, PTE_G)) {
++            /* Global entry - ingnore ASID */
++        } else if (asid != NO_ASID) {
++            uint32_t tlb_asid = GET_TLB_FIELD(entry, PTE_ASID);
++            if (tlb_asid != asid) {
++                return false;
++            }
++        }
++
++        uint64_t page_size = hex_tlb_page_size_bytes(entry);
++        uint64_t page_start =
++            ROUND_DOWN(hex_tlb_virt_addr(entry), page_size);
++        if (page_start <= VA && VA < page_start + page_size) {
++            return true;
++        }
++    }
++    return false;
++}
++
++static inline void hex_tlb_entry_get_perm(CPUHexagonState *env, uint64_t entry,
++                                          MMUAccessType access_type,
++                                          int mmu_idx, int *prot,
++                                          int32_t *excp)
++{
++    g_assert_not_reached();
++}
++
++static inline bool hex_tlb_entry_match(CPUHexagonState *env, uint64_t entry,
++                                       uint8_t asid, target_ulong VA,
++                                       MMUAccessType access_type, hwaddr *PA,
++                                       int *prot, int *size, int32_t *excp,
++                                       int mmu_idx)
++{
++    if (hex_tlb_entry_match_noperm(entry, asid, VA)) {
++        hex_tlb_entry_get_perm(env, entry, access_type, mmu_idx, prot, excp);
++        *PA = hex_tlb_phys_addr(entry);
++        *size = hex_tlb_page_size_bytes(entry);
++        return true;
++    }
++    return false;
++}
++
++bool hex_tlb_find_match(CPUHexagonState *env, target_ulong VA,
++                        MMUAccessType access_type, hwaddr *PA, int *prot,
++                        int *size, int32_t *excp, int mmu_idx)
++{
++    *PA = 0;
++    *prot = 0;
++    *size = 0;
++    *excp = 0;
++    uint32_t ssr = arch_get_system_reg(env, HEX_SREG_SSR);
++    uint8_t asid = GET_SSR_FIELD(SSR_ASID, ssr);
++    int i;
++    HexagonCPU *cpu = env_archcpu(env);
++    for (i = 0; i < cpu->num_tlbs; i++) {
++        uint64_t entry = env->hex_tlb->entries[i];
++        if (hex_tlb_entry_match(env, entry, asid, VA, access_type, PA, prot,
++                                size, excp, mmu_idx)) {
++            return true;
++        }
++    }
++    return false;
++}
++
++static uint32_t hex_tlb_lookup_by_asid(CPUHexagonState *env, uint32_t asid,
++                                       uint32_t VA)
++{
++    g_assert_not_reached();
++}
++
++/* Called from tlbp instruction */
++uint32_t hex_tlb_lookup(CPUHexagonState *env, uint32_t ssr, uint32_t VA)
++{
++    return hex_tlb_lookup_by_asid(env, GET_SSR_FIELD(SSR_ASID, ssr), VA);
++}
++
++static bool hex_tlb_is_match(CPUHexagonState *env,
++                             uint64_t entry1, uint64_t entry2,
++                             bool consider_gbit)
++{
++    bool valid1 = GET_TLB_FIELD(entry1, PTE_V);
++    bool valid2 = GET_TLB_FIELD(entry2, PTE_V);
++    uint64_t size1 = hex_tlb_page_size_bytes(entry1);
++    uint64_t vaddr1 = ROUND_DOWN(hex_tlb_virt_addr(entry1), size1);
++    uint64_t size2 = hex_tlb_page_size_bytes(entry2);
++    uint64_t vaddr2 = ROUND_DOWN(hex_tlb_virt_addr(entry2), size2);
++    int asid1 = GET_TLB_FIELD(entry1, PTE_ASID);
++    int asid2 = GET_TLB_FIELD(entry2, PTE_ASID);
++    bool gbit1 = GET_TLB_FIELD(entry1, PTE_G);
++    bool gbit2 = GET_TLB_FIELD(entry2, PTE_G);
++
++    if (!valid1 || !valid2) {
++        return false;
++    }
++
++    if (((vaddr1 <= vaddr2) && (vaddr2 < (vaddr1 + size1))) ||
++        ((vaddr2 <= vaddr1) && (vaddr1 < (vaddr2 + size2)))) {
++        if (asid1 == asid2) {
++            return true;
++        }
++        if ((consider_gbit && gbit1) || gbit2) {
++            return true;
++        }
++    }
++    return false;
++}
++
++/*
++ * Return codes:
++ * 0 or positive             index of match
++ * -1                        multiple matches
++ * -2                        no match
++ */
++int hex_tlb_check_overlap(CPUHexagonState *env, uint64_t entry, uint64_t index)
++{
++    int matches = 0;
++    int last_match = 0;
++    int i;
++
++    HexagonCPU *cpu = env_archcpu(env);
++    for (i = 0; i < cpu->num_tlbs; i++) {
++        if (hex_tlb_is_match(env, entry, env->hex_tlb->entries[i], false)) {
++            matches++;
++            last_match = i;
++        }
++    }
++
++    if (matches == 1) {
++        return last_match;
++    }
++    if (matches == 0) {
++        return -2;
++    }
++    return -1;
++}
++
++static inline void print_thread(const char *str, CPUState *cs)
++{
++    g_assert(bql_locked());
++    CPUHexagonState *thread = cpu_env(cs);
++    bool is_stopped = cpu_is_stopped(cs);
++    int exe_mode = get_exe_mode(thread);
++    hex_lock_state_t lock_state = thread->tlb_lock_state;
++    qemu_log_mask(CPU_LOG_MMU,
++           "%s: threadId = %d: %s, exe_mode = %s, tlb_lock_state = %s\n",
++           str,
++           thread->threadId,
++           is_stopped ? "stopped" : "running",
++           exe_mode == HEX_EXE_MODE_OFF ? "off" :
++           exe_mode == HEX_EXE_MODE_RUN ? "run" :
++           exe_mode == HEX_EXE_MODE_WAIT ? "wait" :
++           exe_mode == HEX_EXE_MODE_DEBUG ? "debug" :
++           "unknown",
++           lock_state == HEX_LOCK_UNLOCKED ? "unlocked" :
++           lock_state == HEX_LOCK_WAITING ? "waiting" :
++           lock_state == HEX_LOCK_OWNER ? "owner" :
++           "unknown");
++}
++
++static inline void print_thread_states(const char *str)
++{
++    CPUState *cs;
++    CPU_FOREACH(cs) {
++        print_thread(str, cs);
++    }
++}
++
++void hex_tlb_lock(CPUHexagonState *env)
++{
++    qemu_log_mask(CPU_LOG_MMU, "hex_tlb_lock: %d\n", env->threadId);
++    BQL_LOCK_GUARD();
++    g_assert((env->tlb_lock_count == 0) || (env->tlb_lock_count == 1));
++
++    uint32_t syscfg = arch_get_system_reg(env, HEX_SREG_SYSCFG);
++    uint8_t tlb_lock = GET_SYSCFG_FIELD(SYSCFG_TLBLOCK, syscfg);
++    if (tlb_lock) {
++        if (env->tlb_lock_state == HEX_LOCK_QUEUED) {
++            env->next_PC += 4;
++            env->tlb_lock_count++;
++            env->tlb_lock_state = HEX_LOCK_OWNER;
++            SET_SYSCFG_FIELD(env, SYSCFG_TLBLOCK, 1);
++            return;
++        }
++        if (env->tlb_lock_state == HEX_LOCK_OWNER) {
++            qemu_log_mask(CPU_LOG_MMU | LOG_GUEST_ERROR,
++                          "Double tlblock at PC: 0x%x, thread may hang\n",
++                          env->next_PC);
++            env->next_PC += 4;
++            CPUState *cs = env_cpu(env);
++            cpu_interrupt(cs, CPU_INTERRUPT_HALT);
++            return;
++        }
++        env->tlb_lock_state = HEX_LOCK_WAITING;
++        CPUState *cs = env_cpu(env);
++        cpu_interrupt(cs, CPU_INTERRUPT_HALT);
++    } else {
++        env->next_PC += 4;
++        env->tlb_lock_count++;
++        env->tlb_lock_state = HEX_LOCK_OWNER;
++        SET_SYSCFG_FIELD(env, SYSCFG_TLBLOCK, 1);
++    }
++
++    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
++        qemu_log_mask(CPU_LOG_MMU, "Threads after hex_tlb_lock:\n");
++        print_thread_states("\tThread");
++    }
++}
++
++void hex_tlb_unlock(CPUHexagonState *env)
++{
++    BQL_LOCK_GUARD();
++    g_assert((env->tlb_lock_count == 0) || (env->tlb_lock_count == 1));
++
++    /* Nothing to do if the TLB isn't locked by this thread */
++    uint32_t syscfg = arch_get_system_reg(env, HEX_SREG_SYSCFG);
++    uint8_t tlb_lock = GET_SYSCFG_FIELD(SYSCFG_TLBLOCK, syscfg);
++    if ((tlb_lock == 0) ||
++        (env->tlb_lock_state != HEX_LOCK_OWNER)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "thread %d attempted to tlbunlock without having the "
++                      "lock, tlb_lock state = %d\n",
++                      env->threadId, env->tlb_lock_state);
++        g_assert(env->tlb_lock_state != HEX_LOCK_WAITING);
++        return;
++    }
++
++    env->tlb_lock_count--;
++    env->tlb_lock_state = HEX_LOCK_UNLOCKED;
++    SET_SYSCFG_FIELD(env, SYSCFG_TLBLOCK, 0);
++
++    /* Look for a thread to unlock */
++    unsigned int this_threadId = env->threadId;
++    CPUHexagonState *unlock_thread = NULL;
++    CPUState *cs;
++    CPU_FOREACH(cs) {
++        CPUHexagonState *thread = cpu_env(cs);
++
++        /*
++         * The hardware implements round-robin fairness, so we look for threads
++         * starting at env->threadId + 1 and incrementing modulo the number of
++         * threads.
++         *
++         * To implement this, we check if thread is a earlier in the modulo
++         * sequence than unlock_thread.
++         *     if unlock thread is higher than this thread
++         *         thread must be between this thread and unlock_thread
++         *     else
++         *         thread higher than this thread is ahead of unlock_thread
++         *         thread must be lower then unlock thread
++         */
++        if (thread->tlb_lock_state == HEX_LOCK_WAITING) {
++            if (!unlock_thread) {
++                unlock_thread = thread;
++            } else if (unlock_thread->threadId > this_threadId) {
++                if (this_threadId < thread->threadId &&
++                    thread->threadId < unlock_thread->threadId) {
++                    unlock_thread = thread;
++                }
++            } else {
++                if (thread->threadId > this_threadId) {
++                    unlock_thread = thread;
++                }
++                if (thread->threadId < unlock_thread->threadId) {
++                    unlock_thread = thread;
++                }
++            }
++        }
++    }
++    if (unlock_thread) {
++        cs = env_cpu(unlock_thread);
++        print_thread("\tWaiting thread found", cs);
++        unlock_thread->tlb_lock_state = HEX_LOCK_QUEUED;
++        SET_SYSCFG_FIELD(unlock_thread, SYSCFG_TLBLOCK, 1);
++        cpu_interrupt(cs, CPU_INTERRUPT_TLB_UNLOCK);
++    }
++
++    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
++        qemu_log_mask(CPU_LOG_MMU, "Threads after hex_tlb_unlock:\n");
++        print_thread_states("\tThread");
++    }
++
++}
++
+diff --git a/target/hexagon/machine.c b/target/hexagon/machine.c
+index 10e0fe9688..f3d2bdf41d 100644
+--- a/target/hexagon/machine.c
++++ b/target/hexagon/machine.c
+@@ -7,6 +7,33 @@
+ #include "qemu/osdep.h"
+ #include "migration/cpu.h"
+ #include "cpu.h"
++#include "hex_mmu.h"
++
++static int get_hex_tlb_ptr(QEMUFile *f, void *pv, size_t size,
++                       const VMStateField *field)
++{
++    CPUHexagonTLBContext *tlb = pv;
++    for (int i = 0; i < ARRAY_SIZE(tlb->entries); i++) {
++        tlb->entries[i] = qemu_get_be64(f);
++    }
++    return 0;
++}
++
++static int put_hex_tlb_ptr(QEMUFile *f, void *pv, size_t size,
++                      const VMStateField *field, JSONWriter *vmdesc)
++{
++    CPUHexagonTLBContext *tlb = pv;
++    for (int i = 0; i < ARRAY_SIZE(tlb->entries); i++) {
++        qemu_put_be64(f,  tlb->entries[i]);
++    }
++    return 0;
++}
++
++const VMStateInfo vmstate_info_hex_tlb_ptr = {
++    .name = "hex_tlb_pointer",
++    .get  = get_hex_tlb_ptr,
++    .put  = put_hex_tlb_ptr,
++};
+ 
+ 
+ const VMStateDescription vmstate_hexagon_cpu = {
+@@ -27,6 +54,9 @@ const VMStateDescription vmstate_hexagon_cpu = {
+         VMSTATE_UINTTL(env.threadId, HexagonCPU),
+         VMSTATE_UINTTL(env.cause_code, HexagonCPU),
+         VMSTATE_UINTTL(env.wait_next_pc, HexagonCPU),
++        VMSTATE_POINTER(env.hex_tlb, HexagonCPU, 0,
++                        vmstate_info_hex_tlb_ptr, CPUHexagonTLBContext *),
++
+         VMSTATE_END_OF_LIST()
+     },
+ };
 diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 38c2037c47..3e70fa29bc 100644
+index d788aa227c..b74ddc2acb 100644
 --- a/target/hexagon/translate.c
 +++ b/target/hexagon/translate.c
-@@ -32,6 +32,7 @@
- #include "translate.h"
- #include "genptr.h"
- #include "printinsn.h"
-+#include "exec/target_page.h"
+@@ -943,7 +943,7 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
+     HexagonCPU *hex_cpu = env_archcpu(cpu_env(cs));
+     uint32_t hex_flags = dcbase->tb->flags;
  
- #define HELPER_H "helper.h"
- #include "exec/helper-info.c.inc"
-diff --git a/hw/Kconfig b/hw/Kconfig
-index 9e6c789ae7..1c3684055a 100644
---- a/hw/Kconfig
-+++ b/hw/Kconfig
-@@ -52,6 +52,7 @@ source arm/Kconfig
- source cpu/Kconfig
- source alpha/Kconfig
- source avr/Kconfig
-+source hexagon/Kconfig
- source hppa/Kconfig
- source i386/Kconfig
- source loongarch/Kconfig
-diff --git a/hw/hexagon/Kconfig b/hw/hexagon/Kconfig
-new file mode 100644
-index 0000000000..7b9577f68f
---- /dev/null
-+++ b/hw/hexagon/Kconfig
-@@ -0,0 +1,5 @@
-+config HEX_DSP
-+    bool
-+    default y
-+    depends on HEXAGON && TCG
-+    imply PTIMER
-diff --git a/hw/hexagon/meson.build b/hw/hexagon/meson.build
-new file mode 100644
-index 0000000000..11e71a67d5
---- /dev/null
-+++ b/hw/hexagon/meson.build
-@@ -0,0 +1,5 @@
-+hexagon_ss = ss.source_set()
-+hexagon_ss.add(when: 'CONFIG_HEX_DSP', if_true: files('hexagon_dsp.c', 'hexagon_globalreg.c'))
-+
-+hw_arch += {'hexagon': hexagon_ss}
-+
-diff --git a/hw/meson.build b/hw/meson.build
-index 791ce21ab4..7530742e69 100644
---- a/hw/meson.build
-+++ b/hw/meson.build
-@@ -50,6 +50,7 @@ subdir('fsi')
- subdir('alpha')
- subdir('arm')
- subdir('avr')
-+subdir('hexagon')
- subdir('hppa')
- subdir('i386')
- subdir('loongarch')
+-    ctx->mem_idx = MMU_USER_IDX;
++    ctx->mem_idx = FIELD_EX32(hex_flags, TB_FLAGS, MMU_INDEX);
+     ctx->num_packets = 0;
+     ctx->num_insns = 0;
+     ctx->num_hvx_insns = 0;
 -- 
 2.34.1
 
