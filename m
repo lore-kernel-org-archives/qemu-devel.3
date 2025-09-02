@@ -4,210 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE48CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430F9CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utV6n-0005pJ-J6; Tue, 02 Sep 2025 13:47:53 -0400
+	id 1utV8W-0006q2-J0; Tue, 02 Sep 2025 13:49:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1utV6j-0005oC-O0; Tue, 02 Sep 2025 13:47:49 -0400
-Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1utV6f-0001xz-LD; Tue, 02 Sep 2025 13:47:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=q8cqXm/65fnlR+1IVP3XRnPgcrQ1KlyEnJmNlWhtbtYyCV/4ds8zcZO0WTXCkjEftNUFs0uyGBi2eGEQ/ahzP04V5gv8RULkvLLHTu+E4jc5sDSauueEcgbgPms5Hl+GGdVYi8s5SpnUeT2iQRjIcSAK8ooBMJNdYNXhyzRA8Auz9sMc8OawZlbXi1sqkpnYj8esE34L2ximwoy6LLZ7ldNaPfYCpchq79j/ah587ftx6gjfefwwY9XzUfAnfixa7YfjAZNJ8z+L34AWIui4sz0HEfkUzUC8DqY3W1XQReBn0yYpvoTg003LH1iUz/cTEGJvsdw951UTSwrNQXtd6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ned5xGEPiSn66E4B0ONT+Ar/q92z8qcqGPGPl+dRxio=;
- b=BleN6LaZTCrBtOwlT1v2WPSUJExsSL6t9870N2DmaaH4alrVQoPdxhVqru++XRwfQn2RWwzEgllTU7baxEjIFV/6+JpkUs003UtZMYDPH06vAcSYgRL1lm4gtUm6sEeVUQ/+4mbnxOc5lNbzPhzXeUaCAoez+eE++3bUbWDlLJoAZCUj9xlkhOxNB0Kuy+Js6N0qdKx1XXQ4MlZib4O6bKHpCO1ttN+7k9kE147q1gJTBX7BxGubPt6WkDfkEUf1vVVlP74ocnALvcpqboeReArL0M9dxntkUbbzu5w4HYga1fAyDZ9L//73dJDe7Ve+IJp8kqcS37pz2da2JO5QXQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
- dkim=pass header.d=siemens.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ned5xGEPiSn66E4B0ONT+Ar/q92z8qcqGPGPl+dRxio=;
- b=a8qlClFWEFtX1x8y1bO/3Tmy2J0rwwrSFYv15HU3ZmpGcn013MDC0X84SPVo3PxpEi3klnOryQktexXnw0MJA7sbdfvM0pYZJW962JCSCmnU6/PQ0PE63Kbih/UDJaOnFrSUyYWCVsw8hs2vso82DMvGMxe+Wn4+bms+HUejG2NfoWYFKG10l+Zi/f2soQA41nyltJpO33jIgj1zehPvA7oLGPS5000frokIPySrl1VW1KYExhr18PfynFtSAMaGCiAiYVyobZa4tqcLUdP9omcj47VkCIsP30UPcZ4tOIBZELXIv6Nu69Ujpy0JkUomi/EdmCC9mSYCAgC8k5uvvA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siemens.com;
-Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:76::15)
- by GV2PR10MB6455.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:ba::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.17; Tue, 2 Sep
- 2025 17:47:36 +0000
-Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::7fc:74bb:a781:a286]) by GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::7fc:74bb:a781:a286%7]) with mapi id 15.20.9073.026; Tue, 2 Sep 2025
- 17:47:36 +0000
-Message-ID: <9f7fc688-7676-49ff-8f86-fac347f70f05@siemens.com>
-Date: Tue, 2 Sep 2025 19:47:30 +0200
-User-Agent: Mozilla Thunderbird
-From: Jan Kiszka <jan.kiszka@siemens.com>
-Subject: [PATCH] hw/sd/sdcard: Fix size check for backing block image, part II
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-block@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Jan_L=C3=BCbbe?=
- <jlu@pengutronix.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Joel Stanley <joel@jms.id.au>, Ilias Apalodimas
- <ilias.apalodimas@linaro.org>, qemu-arm <qemu-arm@nongnu.org>,
- Alistair Francis <alistair@alistair23.me>, Alexander Bulekov <alxndr@bu.edu>
-Autocrypt: addr=jan.kiszka@siemens.com; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CH2PR14CA0048.namprd14.prod.outlook.com
- (2603:10b6:610:56::28) To GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:150:76::15)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1utV86-0006kZ-7A
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:49:16 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1utV83-00026z-Dt
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:49:13 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-24a9cc916b3so27116325ad.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 10:49:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1756835349; x=1757440149;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=hYdL0c0h8e/f6IFUFfQ4CpQOV8PvCupqhJ/ce+m906s=;
+ b=ykiDTbk6El/kl+KVtsXKG8lmkvFm6T+dfci5xUHFbnXwElZuenm6riKNfK3y0TcVcm
+ jq7kKPqClrP6q+FAR4PryJfJETY2jwJNwXwcIgDxLYOXLWbdy3Zh6D9UD7d+QjcgM/zV
+ kmPpHkqD0XV0s/owH1i8dCQ9poSF/hJU8pS9NZ4KHGxBl6d79G2JDscYea4TwbnrEr6e
+ +uRjp2cIht/kx1eYa8zxUowIYaJZTe2pTb1m/2bqkQwTFU8PWQyVaN4jP6YcYXdEV4pK
+ IXwW/miXqdUT46mFO3fIcHayyRiigBwPcZRW1Se2/dOY1vLAbYd6SDramCRPbc0h5dVM
+ XDwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756835349; x=1757440149;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hYdL0c0h8e/f6IFUFfQ4CpQOV8PvCupqhJ/ce+m906s=;
+ b=XtvkvlwC7YQ14MvQ9t6aIHdBD8DERvJcaLn0zdfMVQONWL8t2D62EuLubi8DbB1YwX
+ lL2lJT5P/A7XOzzg27RnbgjTiLdZOXzY0mpujOHkCk0eIThE1j/GjqD3EOA7Vf2iQGkO
+ l9MxNeg8whYwe9v1E472zFHnLpCE+xI0L4oc//Y01iyjwi9grnUmaTmk0mCuc+XHR7MN
+ AFv/JgBaEOtEvRFUDNgcbYZgWidDlIEAwywohIWcPDNsYBDAjEDNdXugHACLnLGPKxk7
+ WikmFdyaJApDtYWFusOgN0VCiJ61aOxg3W4Be8rKJ/wi2R1z/WEexfaaMQjWnfqbpHiN
+ oSEQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+CyTK9A0NyJb8qFiCGkbkIcM4YuO4yhUNXHg/dVxCTQ3L238ktl6JIoVdfy7T1eUXViKPXMWpcI5U@nongnu.org
+X-Gm-Message-State: AOJu0Yy6LNxZGbkDpi6/9ghSytChJ/kFQWU7KFLBpiCCQk9TPDVEjYyw
+ JtHY1Vr2Z+HjYsy0ZU0FALT7XaKVH8mNVkJQkfeFkEdtESCzbkG6iZXBvRXg9bzbeZlibHOhcj/
+ Z2ns4cCGiSsB8nbvW+12ui3T0xji0wIf9nnytLE2Riw==
+X-Gm-Gg: ASbGncteTVTO0DCFyx9UZrwlkjx4awXd2YqsA5zRUU/v87dg479DCMTJdAaEfaWU7MY
+ V8SblKg7vVMgnZ9xPTrHA2NHdgIrnHbr2ySyaX6SzyQ2RQU/A109jiFFPaDDz57eszHmM130YLY
+ m5KFSdFIl7iUXzT4PqQWhDLGjLqL3ZrTiErdn4SzDbgtX/PhMuYBImyckR3K16est1MVjs8cmKk
+ YD+fcJUBak0FRmErGL8pFdj1FfXLa+lgyiiJmQ=
+X-Google-Smtp-Source: AGHT+IHy8FBfpzbCLa+ch4ukcV1XhygMFvcoTeOPUYlG3STGJxwl8oSw+PkDZ4KWWXhvSQ6Wrfh6ToVWVmrj3MW9Gtg=
+X-Received: by 2002:a17:902:f54d:b0:24a:9c83:e19f with SMTP id
+ d9443c01a7336-24a9c83e357mr121491665ad.53.1756835348886; Tue, 02 Sep 2025
+ 10:49:08 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR10MB6186:EE_|GV2PR10MB6455:EE_
-X-MS-Office365-Filtering-Correlation-Id: 89c876d8-f41e-4635-3cde-08ddea48cd91
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WURPdHNKektDcFJXbmFLa29nL1B5OXd5bjBNZFhvdXl4eGtBRmhORHk4MW14?=
- =?utf-8?B?aTJjT05NMGVLR0ZDYlJqOGpBVjV4ZFBTMXVTN2k2MGNIRStNT2loQmNZcUEy?=
- =?utf-8?B?Q01XeGlMM3o3Z3h4amZKaWlETjByOGhjWm9OUG91clp0dEN1Zy94VXNvSUJu?=
- =?utf-8?B?c3h1SWFKSTdyRXRBVEFCeVpCT2pnSWZSdURSL0FybWxGZUVNbjd0NUxXQ2RC?=
- =?utf-8?B?cjV1cC9TTVZ5bUhiVk45dXRjTlRlR3pJaGJFTkRTNFUwME5ZUWVqUWMzL2dr?=
- =?utf-8?B?YWFCY1FLSTNXMXhrQkcrMG83elU3OTVDUWVFZHljeTN4aERhSWovM0lITHpp?=
- =?utf-8?B?cEFxNFE3d1NuRnVuc1ZhS3R5UVlVbXRQSDI1QjJxTDRnTmlodXF3VTBsSTdr?=
- =?utf-8?B?elE2RkMzbEV6WHpYazJCclBweTZReVhvaklnWExuVzBnZHpkaDVYeHk2TTl1?=
- =?utf-8?B?N2NuMmluMWw2YTQrMm1oa09ERUNjZHhVam5leXdjd0lxYmswV2t1clk5bnlM?=
- =?utf-8?B?ZlV2K25ZYWVKYTB4NTlYRWhYYUlXSXpLdFpFVUxJaFBIUkE3TnFsZnFXOXpW?=
- =?utf-8?B?aXRzdFNaU3hFWksxbXJ1L0wzeUJmdGFwcGQ5VU1JaFNHcTRSYmF0dlJsUGFX?=
- =?utf-8?B?TDR2NTRDZmJzQmNlSTlDTTNFa3VVSlBraTM1dGFjTEhqVDQyS1pzOWJ2MW55?=
- =?utf-8?B?YlVNVGUyUFZ2TUh0dXFpUXd2M1BXYXlZQ0t2c3JObXVibTJCc3dGc0IwelJr?=
- =?utf-8?B?YWFHK3VqTVhNNGtmRld4cmRwNE9scElmR1VVSnRoVXZmZ0Z6dERFRGtDelZQ?=
- =?utf-8?B?K1lhVXBJZlF4MFdkL05oRi8wNm1kdkl3TUl6T1BnNzJEVEE1Qm04SU9KaFVG?=
- =?utf-8?B?R2czSmIwUEpuUjBsSEhwRjcrNHhla05jY3p6NHNVVWNvWEFRLytMa3dZNDJz?=
- =?utf-8?B?NXFQQVhNbHViWHpYQ0dQVUhYVVZyOG1LTHptaTF0OXRaaEdvWkk0cjNyV3JQ?=
- =?utf-8?B?YXdhV3V4M3JseHdaQThtWkxnYWN6MFZ6OGtzYXZFeUpCajZJU1o2MmhvY29F?=
- =?utf-8?B?bXRyTWJRRVFwbzJaN3lvWHdTQi9uZHBqdGEwSGcxN1RRRUpLVG9YeUdiQm9J?=
- =?utf-8?B?K3JvUk9VTTNGTEMyVFVXRUZCMFBPRE50aVhVL29rUWJONTk2RURNdHB4NFV6?=
- =?utf-8?B?NzdEeHNGN214Tk5ML1Y0TXhDUjMvNzNxTTY2eHJvd05zUS9TQWl5aWR5amg2?=
- =?utf-8?B?cHJWczJNeFJBZ2tvZFU5SWpubENMMEh0QlU0eDRTZFp3eFBrY29KUG9mdk15?=
- =?utf-8?B?aFh5cW9oYXJEOXlaVnJHVDZRMXk5ZU1kMjJIVTh5RFN6ZFZDUHRyeHdENmdr?=
- =?utf-8?B?ZmQ3QVFNekkrME1DcHpMRzF5b1Y2dTFWZXBESmljSFkwTS9mT2FIUWJnRHU5?=
- =?utf-8?B?KzJwNFBrMVZJMmNHSmtoLzM4MnZCQ3hlV2F0cHlNalVLb3Y0NytHaHhyV0p4?=
- =?utf-8?B?UEdQWWFEaWxCMnU2QTcvTEtaaXZaU3hNdEVPQW1pYi9zOUxhK0JmVGpLell4?=
- =?utf-8?B?ejRxSHhybG9nSDlsRCtZYUJ1ZDY2SEgzVGNBTWxsbkJiNXFLWFRsNFR5OVkr?=
- =?utf-8?B?Q3pFTDFZVFJLYUFwREJrTzJwRW1COXAyWUh3TGczMG45cUJTODd6VkhnQjdP?=
- =?utf-8?B?RnJ1d3VkWHJxditjaVNla0duak90eWZFVjR1UzB5c2JHTkw4L05Zdm9ldkJ4?=
- =?utf-8?B?Yk11U3ZLdEQrbWNSY2o3WmE2a0RZMzhHQnpldTZIajkrQnE0UTVlYUdwKzk0?=
- =?utf-8?B?L3Uza0ZwVC80a3MzSTFDRU93clFWallFNG4ycmJ3WlBab3ZoUnpNRlAybnJH?=
- =?utf-8?B?RnpndVJ0dGdVTnc5TEJMQTFHRk1hNUZhbElwSFdtOG13RnpWVFIySTVkNjZO?=
- =?utf-8?Q?iUs4jTPF5VU=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NUNZNUJSOTkvRXhvQ0NGWUJqVzJaWXBsZWJURC9QUUl0aUVQY1NFWUcyN2Y3?=
- =?utf-8?B?c1VXaFRsOStWNzYxSlZxa0cxR2hYbG5BVFY3a3BTM1dKVjlnMGREeEYyUjNG?=
- =?utf-8?B?ZHZHUTRiTjNwTWxkVnVhWUp2M2tFM2MzZmMvQWsreDc5SHQyTUV4ODFNcWgx?=
- =?utf-8?B?c05zRHRISExlK2ZVRzRHUnBhbmdPdTZwVERyZXNsbkRjQzdTOVJjZ3JkY2hw?=
- =?utf-8?B?QjN0NlBZOHRQeWIxYy83K1lzZHNDZlhXN3poTmFvaUpwSkhyN3pJTzVzUVBi?=
- =?utf-8?B?TE1Sc3cyNjArVGRGR1o4cmErbS9wWXcrK2hRa3BOMEdFYUxpVm04VXhDTGhm?=
- =?utf-8?B?V2ZaekRmOFRrc2dET2FWVCt4N055TXFKSXpuUzlhZGpEUWJKZytMRERiUUVl?=
- =?utf-8?B?UklzZTRHVUNESEd4QWpkQ1g2N1FGR3l5anBmejRhbTljZnZDbFdEMG41N3B2?=
- =?utf-8?B?RTIzOStUN1ZBL3dYaWdmekVJUDB3N2tXSzZ4T2c1NGdGRllJbHlzNk9EdU1F?=
- =?utf-8?B?RHpoaTRPV3U1OHN6V1JRV3lVMi9EelFIWGNRM2d2ak5RTnBaUjVOSUtheEp0?=
- =?utf-8?B?aG9nd1dkMGhtQUo1eklKanh4WFY3dXBvcDljL2dId21iYzNkSExjaEF3T2Uz?=
- =?utf-8?B?aHdIV3BiWWFGUGxXdFkvQ1M1cVVzdENtL0FmRjZmRmIxTytIWHJGVis3TGNH?=
- =?utf-8?B?OFl5bnVLcGJ4OHJCelduZjE1TVF5MTBid1FuRit4Z3ZYRjNuWlVyTFNLMytq?=
- =?utf-8?B?Q3Zub2ZUcUd5SWJKMWtTSGVENms5c05hMGQvRDBPRnFucGUrRWxtT1VTdEsr?=
- =?utf-8?B?TkcvVmNFclpzeFNVeThIUUEvandGanBiMzMwc0RZOTJIUG5nY3Q0eXVtUGFz?=
- =?utf-8?B?eE95TkZ0SnY5NFk5QnJNSzJMY0lQVEVPZmFVd1lXVVZHVHdubkwzTWEvVWl2?=
- =?utf-8?B?cXZvZ0lqczZFWnpIeXJhK0k3TmN3SjNiS1N6QjhOdXVqWjBoajYrLytnTnRI?=
- =?utf-8?B?ekt5Rit4SUxGRUdtZ0MzNWNERGFtRUVpMjc4L0RsUUVUeXh1YzllT0VtbG44?=
- =?utf-8?B?SHE5VExZeTZ5YWMxNEl4clc5ZzBsTEQ1SW9FZkNpVjhxZ1F4TUlZbjFweitW?=
- =?utf-8?B?WEQ5VURrTlVEZEFIUThCRDgycHhRTW1vOGhta3MvMHZTSm9LUURvNGtZK240?=
- =?utf-8?B?NDBDbE5iRUFMN3M5VkVFdEJTSHZNK3pLWnpSZWtXVUF5NEJqVXVkUzhYYVV4?=
- =?utf-8?B?eVJhUG1FcHYvclRCM1pPc3c3UjBLbm9DbHd3TTBxRlJHU1duZ3JIUnBNc1BY?=
- =?utf-8?B?NEljSkg3UnRMRTFsV2c1U0duSGt5eEViVGU4RElhMkpmRStDczdQM0thZkpq?=
- =?utf-8?B?elN2MVRRbU4rSzd3MzRjUkI4WnE5UDk1eFp4bklUTTNTZzRDUW8wU0NMT0dm?=
- =?utf-8?B?bnRHMnArMGJ6bitvUWtkdDNzUFJTdlNSamQ3TlovdTNNN3lhV01KQmsybWZm?=
- =?utf-8?B?d1NUSUlqWWhCQVBGeXN3b1luekNMSkJMdjBCK05hY3FZWW1Jbmpla0V0ZUdP?=
- =?utf-8?B?eEppYWlURWsyM3VqUkFrQ1lNbmtpcHZrQncwL0c2eUozOTlaS3pYazMwWjRp?=
- =?utf-8?B?c2doV3FPQWpIdVdqVmM2QTF6RUJtN0hPYU95NFNsR21BL0VvbWpXLzZYa0ly?=
- =?utf-8?B?TlRWMU5DTkFJZUd2NnZDRElhUExPbjM3T3FjNkQ2TTVQQUhnWWFySC9ydUwv?=
- =?utf-8?B?MUNVbkw0WlkvMnI1R04yeDg2NmJGWEIremFrTTI4ZkxSRFQ1VGwxdDN2OXl6?=
- =?utf-8?B?ODdyVkJMY2NNQ21mNGJXU3ZkVHl1a2R2ai9nL0M2NWt2TVBpQnZCc1VTWU95?=
- =?utf-8?B?TFpGamtQY2ovL3JReDRQK05JQ2UzYjBFRDMwUEVGSlU3TWlFdGM4RWNUR3JD?=
- =?utf-8?B?bnhwaUdhUzFEYkpRV1grRWgvMUVqMHdsUnFBRzhDK3JIL1haRDEvbEJiNy80?=
- =?utf-8?B?Z1NNd2pxN3RFeG42djh0UjRZNGlLVUZJQnQ4L1hrSVRPZ3B2bkk4eW5oZnJa?=
- =?utf-8?B?cGFlSm5vVGE3SExLOFJXQy9WM1pVL200dkpwaGQyQjg2WmR1YkROcC9ZNVNG?=
- =?utf-8?B?YVZyRFphS2Ryc0tnVnNmT3hjUW85bm5TaysrM2NWeFVqVWlPK0Y2SGNPYloz?=
- =?utf-8?B?Zmc9PQ==?=
-X-OriginatorOrg: siemens.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89c876d8-f41e-4635-3cde-08ddea48cd91
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 17:47:36.7394 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JBPqeawX+C8HB4kNNvCcA6XPPLbA1L+RWUCBwnIVw5MJW9VMr7Lwdq85lpFaI0uPWt2TixtWgwxc9ZPr/xn42A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR10MB6455
-Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
- envelope-from=jan.kiszka@siemens.com;
- helo=OSPPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+References: <cover.1756706188.git.jan.kiszka@siemens.com>
+ <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
+ <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
+ <11808e86-cee0-48bf-8fbd-de13a9a25ed0@linaro.org>
+ <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
+ <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
+ <03a51e36-9a15-4b49-a310-c36a4d0af360@linaro.org>
+ <2abbaeda-f9dc-4045-a9f7-b2b48451255f@kaod.org>
+ <42310bdb-4fad-4df2-b7ad-3ff3f863e248@linaro.org>
+ <d21f6449-e646-42fc-8277-b011a886e9c9@linaro.org>
+ <41d2e67e-3345-4720-b3aa-1051224025de@siemens.com>
+ <21b6726a-1ceb-4782-a219-36f32cebb774@siemens.com>
+ <a1463f9e36d8b3e6289859bec9a0a5a758709316.camel@pengutronix.de>
+ <CANCZdfprQZTVskt-EPgT-ALMO3HU-akdcw+yZ5=9Cmu1F00etQ@mail.gmail.com>
+ <85b059c1-4a08-447b-a908-8af6b22d06c3@siemens.com>
+ <CANCZdfp5AvUQNJ5m8V=z=R14CRwauSP7Qg+1FZ7VV_Ztb5Rb7A@mail.gmail.com>
+ <CANCZdfrqiFBP9vP76yjvurmE5KX=OvC7c6vnUp66xr8jc0zaMg@mail.gmail.com>
+ <1a7e47de-0021-4180-90a1-b249af8d22e0@siemens.com>
+In-Reply-To: <1a7e47de-0021-4180-90a1-b249af8d22e0@siemens.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 2 Sep 2025 11:48:57 -0600
+X-Gm-Features: Ac12FXwlPKYl_S-PhvC89tjoPDofymsDPSrCeQaYyOx53XtAJVCMqhVJfrAOKLA
+Message-ID: <CANCZdfrgB5NXNSa+KHs9AcgFW8Qy+raj1a75DkuQeX2Lt1=aAw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
+ image
+To: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, Joel Stanley <joel@jms.id.au>,
+ Bin Meng <bmeng.cn@gmail.com>, 
+ qemu-block@nongnu.org, Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
+ qemu-arm <qemu-arm@nongnu.org>, Alistair Francis <alistair@alistair23.me>, 
+ Alexander Bulekov <alxndr@bu.edu>
+Content-Type: multipart/alternative; boundary="000000000000e6480d063dd51ada"
+Received-SPF: none client-ip=2607:f8b0:4864:20::635;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -223,88 +117,425 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+--000000000000e6480d063dd51ada
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-There was another mistake in the size check which 8c81d38ea5ae now
-revealed: alignment rules depend on the size of the image. Up to and
-include 2GB, the power-of-2 rule applies. For larger images, multiples
-of 512 sectors must be used. Fix the check accordingly.
+On Tue, Sep 2, 2025 at 11:37=E2=80=AFAM Jan Kiszka <jan.kiszka@siemens.com>=
+ wrote:
 
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
----
+> On 02.09.25 19:30, Warner Losh wrote:
+> >
+> >
+> > On Tue, Sep 2, 2025 at 11:22=E2=80=AFAM Warner Losh <imp@bsdimp.com
+> > <mailto:imp@bsdimp.com>> wrote:
+> >
+> >
+> >
+> >     On Tue, Sep 2, 2025 at 11:18=E2=80=AFAM Jan Kiszka <jan.kiszka@siem=
+ens.com
+> >     <mailto:jan.kiszka@siemens.com>> wrote:
+> >
+> >         On 02.09.25 19:07, Warner Losh wrote:
+> >         >
+> >         >
+> >         > On Tue, Sep 2, 2025 at 10:49=E2=80=AFAM Jan L=C3=BCbbe <jlu@p=
+engutronix.de
+> >         <mailto:jlu@pengutronix.de>
+> >         > <mailto:jlu@pengutronix.de <mailto:jlu@pengutronix.de>>>
+> wrote:
+> >         >
+> >         >     On Tue, 2025-09-02 at 18:39 +0200, Jan Kiszka wrote:
+> >         >     > > > I expect us to be safe and able to deal with non-
+> >         pow2 regions
+> >         >     if we use
+> >         >     > > > QEMUSGList from the "system/dma.h" API. But this is
+> >         a rework
+> >         >     nobody had
+> >         >     > > > time to do so far.
+> >         >     > >
+> >         >     > > We have to tell two things apart: partitions sizes on
+> >         the one
+> >         >     side and
+> >         >     > > backing storage sizes. The partitions sizes are (to m=
+y
+> >         reading)
+> >         >     clearly
+> >         >     > > defined in the spec, and the user partition (alone!)
+> >         has to be
+> >         >     power of
+> >         >     > > 2. The boot and RPMB partitions are multiples of 128K=
+.
+> >         The sum
+> >         >     of them
+> >         >     > > all is nowhere limited to power of 2 or even only
+> >         multiples of 128K.
+> >         >     > >
+> >         >     >
+> >         >     > Re-reading the part of the device capacity, the rules
+> >         are more
+> >         >     complex:
+> >         >     >  - power of two up to 2 GB
+> >         >     >  - multiple of 512 bytes beyond that
+> >         >     >
+> >         >     > So that power-of-two enforcement was and still is likel=
+y
+> >         too strict.
+> >         >
+> >         >
+> >         > It is. Version 0 (and MMC) cards had the capacity encoded lik=
+e
+> so:
+> >         >                 m =3D mmc_get_bits(raw_csd, 128, 62, 12);
+> >         >                 e =3D mmc_get_bits(raw_csd, 128, 47, 3);
+> >         >                 csd->capacity =3D ((1 + m) << (e + 2)) * csd-
+> >         >read_bl_len;
+> >         > so any card less than 2GB (well, technically 4GB, but 4GB
+> >         version 0
+> >         > cards were
+> >         > rare and broke some stacks... I have one and I love it on my
+> >         embedded
+> >         > ARM board
+> >         > that can't do version 1 cards). Version 1 cards encoded it
+> like:
+> >         >                 csd->capacity =3D
+> >         ((uint64_t)mmc_get_bits(raw_csd, 128,
+> >         > 48, 22) +
+> >         >                     1) * 512 * 1024;
+> >         > So it's a multiple of 512k. These are also called 'high
+> >         capacity' cards.
+> >         >
+> >         > Version 4 introduces an extended CSD, which had a pure sector
+> >         count in
+> >         > the EXT CSD. I think this
+> >         > is only for MMC cards. And also the partition information.
+> >         >
+> >         >
+> >         >     > But I still see no indication, neither in the existing
+> >         eMMC code
+> >         >     of QEMU
+> >         >     > nor the spec, that the boot and RPMB partition sizes ar=
+e
+> >         included
+> >         >     in that.
+> >         >
+> >         >     Correct. Non-power-of-two sizes are very common for real
+> >         eMMCs.
+> >         >     Taking a random
+> >         >     one from our lab:
+> >         >     [    1.220588] mmcblk1: mmc1:0001 S0J56X 14.8 GiB
+> >         >     [    1.228055]  mmcblk1: p1 p2 p3 p4
+> >         >     [    1.230375] mmcblk1boot0: mmc1:0001 S0J56X 31.5 MiB
+> >         >     [    1.233651] mmcblk1boot1: mmc1:0001 S0J56X 31.5 MiB
+> >         >     [    1.236682] mmcblk1rpmb: mmc1:0001 S0J56X 4.00 MiB,
+> >         chardev (244:0)
+> >         >
+> >         >     For eMMCs using MLC NAND, you can also configure part of
+> >         the user
+> >         >     data area to
+> >         >     be pSLC (pseudo single level cell), which changes the
+> >         available
+> >         >     capacity (after
+> >         >     a required power cycle).
+> >         >
+> >         >
+> >         > Yes. Extended partitions are a feature of version 4 cards, so
+> >         don't have
+> >         > power-of-2 limits since they are a pure sector count in the
+> >         ext_csd.
+> >         >
+> >
+> >         JESD84-B51A (eMMC 5.1A):
+> >
+> >         "The C_SIZE parameter is used to compute the device capacity fo=
+r
+> >         devices
+> >         up to 2 GB of density. See 7.4.52, SEC_COUNT [215:212] , for
+> >         details on
+> >         calculating densities greater than 2 GB."
+> >
+> >         So I would now continue to enforce power-of-2 for 2G (including=
+)
+> >         cards,
+> >         and relax to multiples of 512 for larger ones.
+> >
+> >
+> >     It's a multiple of 512k unless the card has a ext_csd, in which cas=
+e
+> >     it's a multiple of 512.
+> >
+> >
+> > More completely, this is from MMC 4.0 and newer. Extended Capacity SD
+> > cards report this in units of 512k bytes for all cards > 2GiB.
+> >
+>
+> I'm not sure which spec version you are referring to, but JESD84-A441
+> and JESD84-B51A mention nothing about 512K, rather "Device density =3D
+> SEC_COUNT x 512B". And these are the specs we very likely need to follow
+> here.
+>
 
-Not fully tested yet, but as staging is broken right now, I wanted to 
-provide this already for early feedback.
+You are right that this is in the MMC spec. However, the SD spec is
+controlling for SD cards.
 
- hw/sd/sd.c | 48 ++++++++++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 18 deletions(-)
+SD Specifications Part 1 Physical Layer Simplified Specification Version
+9.10
+December 1, 2023
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 2d34781fe4..0f33784bd0 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2759,6 +2759,26 @@ static void sd_instance_finalize(Object *obj)
-     timer_free(sd->ocr_power_timer);
- }
- 
-+static void blk_size_error(int64_t blk_size, int64_t blk_size_aligned,
-+                           const char *rule, Error **errp)
-+{
-+    char *blk_size_str;
-+
-+    blk_size_str = size_to_str(blk_size);
-+    error_setg(errp, "Invalid SD card size: %s", blk_size_str);
-+    g_free(blk_size_str);
-+
-+    blk_size_str = size_to_str(blk_size_aligned);
-+    error_append_hint(errp,
-+                      "SD card size has to be %s, e.g. %s.\n"
-+                      "You can resize disk images with"
-+                      " 'qemu-img resize <imagefile> <new-size>'\n"
-+                      "(note that this will lose data if you make the"
-+                      " image smaller than it currently is).\n",
-+                      rule, blk_size_str);
-+    g_free(blk_size_str);
-+}
-+
- static void sd_realize(DeviceState *dev, Error **errp)
- {
-     SDState *sd = SDMMC_COMMON(dev);
-@@ -2782,24 +2802,16 @@ static void sd_realize(DeviceState *dev, Error **errp)
-         }
- 
-         blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
--        if (blk_size > 0 && !is_power_of_2(blk_size)) {
--            int64_t blk_size_aligned = pow2ceil(blk_size);
--            char *blk_size_str;
--
--            blk_size_str = size_to_str(blk_size);
--            error_setg(errp, "Invalid SD card size: %s", blk_size_str);
--            g_free(blk_size_str);
--
--            blk_size_str = size_to_str(blk_size_aligned);
--            error_append_hint(errp,
--                              "SD card size has to be a power of 2, e.g. %s.\n"
--                              "You can resize disk images with"
--                              " 'qemu-img resize <imagefile> <new-size>'\n"
--                              "(note that this will lose data if you make the"
--                              " image smaller than it currently is).\n",
--                              blk_size_str);
--            g_free(blk_size_str);
--
-+        if (blk_size > 0 && blk_size <= SDSC_MAX_CAPACITY &&
-+            !is_power_of_2(blk_size)) {
-+            blk_size_error(blk_size, pow2ceil(blk_size), "a power of 2", errp);
-+            return;
-+        } else if (blk_size > SDSC_MAX_CAPACITY &&
-+            blk_size % (1 << HWBLOCK_SHIFT) != 0) {
-+            int64_t blk_size_aligned =
-+                ((blk_size >> HWBLOCK_SHIFT) + 1) << HWBLOCK_SHIFT;
-+            blk_size_error(blk_size, blk_size_aligned, "multiples of 512",
-+                           errp);
-             return;
-         }
- 
--- 
-2.43.0
+Section 5.3 describes the CSD. Version 1.0 (which I'd called version 0 in
+an earlier email because of its encoding) is the 2GB rule. Version 2.0 and
+3.0 encode it as 512k count (from 5.3.3):
+
+C_SIZE
+This field is expanded to 28 bits and can indicate up to 128 TBytes.
+
+This parameter is used to calculate the user data area capacity in the SD
+memory card (note that size of the protected area is zero for SDUC card).
+The user data area capacity is calculated from C_SIZE as follows:
+
+memory capacity =3D (C_SIZE+1) * 512KByte
+
+The Minimum user area size of SDUC Card is 4,294,968,320 sectors
+(2TB+0.5MB).
+The Minimum value of C_SIZE for SDUC in CSD Version 3.0 is 0400000h
+(4194304). The Maximum user area size of SDUC Card is 274,877,906,944
+sectors (128TB).
+The Maximum value of C_SIZE for SDUC in CSD Version 3.0 is FFFFFFFh
+(268435455).
+
+So SD cards are yet again gratuitously different than MMC cards.
+
+Warner
+
+--000000000000e6480d063dd51ada
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 2, =
+2025 at 11:37=E2=80=AFAM Jan Kiszka &lt;<a href=3D"mailto:jan.kiszka@siemen=
+s.com">jan.kiszka@siemens.com</a>&gt; wrote:<br></div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">On 02.09.25 19:30, Warner Losh wrote:<br>
+&gt; <br>
+&gt; <br>
+&gt; On Tue, Sep 2, 2025 at 11:22=E2=80=AFAM Warner Losh &lt;<a href=3D"mai=
+lto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com</a><br>
+&gt; &lt;mailto:<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsd=
+imp.com</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On Tue, Sep 2, 2025 at 11:18=E2=80=AFAM Jan Kiszka =
+&lt;<a href=3D"mailto:jan.kiszka@siemens.com" target=3D"_blank">jan.kiszka@=
+siemens.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:jan.kiszka@siemens.com=
+" target=3D"_blank">jan.kiszka@siemens.com</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0On 02.09.25 19:07, Warner Losh wrote:=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; On Tue, Sep 2, 2025 at 10:49=E2=
+=80=AFAM Jan L=C3=BCbbe &lt;<a href=3D"mailto:jlu@pengutronix.de" target=3D=
+"_blank">jlu@pengutronix.de</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:jlu@peng=
+utronix.de" target=3D"_blank">jlu@pengutronix.de</a>&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; &lt;mailto:<a href=3D"mailto:jlu=
+@pengutronix.de" target=3D"_blank">jlu@pengutronix.de</a> &lt;mailto:<a hre=
+f=3D"mailto:jlu@pengutronix.de" target=3D"_blank">jlu@pengutronix.de</a>&gt=
+;&gt;&gt; wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0On Tue, 2025-=
+09-02 at 18:39 +0200, Jan Kiszka wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt; &gt=
+; I expect us to be safe and able to deal with non-<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pow2 regions<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0if we use<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt; &gt=
+; QEMUSGList from the &quot;system/dma.h&quot; API. But this is<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0a rework<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0nobody had<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt; &gt=
+; time to do so far.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt; We =
+have to tell two things apart: partitions sizes on<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0the one<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0side and<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt; bac=
+king storage sizes. The partitions sizes are (to my<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reading)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0clearly<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt; def=
+ined in the spec, and the user partition (alone!)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0has to be<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0power of<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt; 2. =
+The boot and RPMB partitions are multiples of 128K.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0The sum<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0of them<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt; all=
+ is nowhere limited to power of 2 or even only<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0multiples of 128K.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; Re-readi=
+ng the part of the device capacity, the rules<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0are more<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0complex:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; =C2=A0- =
+power of two up to 2 GB<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; =C2=A0- =
+multiple of 512 bytes beyond that<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; So that =
+power-of-two enforcement was and still is likely<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0too strict.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; It is. Version 0 (and MMC) cards=
+ had the capacity encoded like so:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 m =3D mmc_get_bits(raw_csd, 128, 62, 12);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 e =3D mmc_get_bits(raw_csd, 128, 47, 3);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 csd-&gt;capacity =3D ((1 + m) &lt;&lt; (e + 2)) * =
+csd-<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;read_bl_len;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; so any card less than 2GB (well,=
+ technically 4GB, but 4GB<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0version 0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; cards were<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; rare and broke some stacks... I =
+have one and I love it on=C2=A0my<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0embedded<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; ARM board<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; that can&#39;t do version 1 card=
+s). Version 1 cards encoded it like:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 csd-&gt;capacity =3D<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0((uint64_t)mmc_get_bits(raw_csd, 128,=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; 48, 22) +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 1) * 512 * 1024;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; So it&#39;s a multiple of 512k. =
+These are also called &#39;high<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0capacity&#39; cards.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Version 4 introduces an extended=
+ CSD, which had a=C2=A0pure sector<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0count in<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; the EXT CSD. I think this<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; is only for MMC cards. And also =
+the partition information.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; But I st=
+ill see no indication, neither in the existing<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0eMMC code<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0of QEMU<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; nor the =
+spec, that the boot and RPMB partition sizes are<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0included<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0in that.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Correct. Non-=
+power-of-two sizes are very common for real<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0eMMCs.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Taking a rand=
+om<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0one from our =
+lab:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0[=C2=A0 =C2=
+=A0 1.220588] mmcblk1: mmc1:0001 S0J56X 14.8 GiB<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0[=C2=A0 =C2=
+=A0 1.228055]=C2=A0 mmcblk1: p1 p2 p3 p4<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0[=C2=A0 =C2=
+=A0 1.230375] mmcblk1boot0: mmc1:0001 S0J56X 31.5 MiB<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0[=C2=A0 =C2=
+=A0 1.233651] mmcblk1boot1: mmc1:0001 S0J56X 31.5 MiB<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0[=C2=A0 =C2=
+=A0 1.236682] mmcblk1rpmb: mmc1:0001 S0J56X 4.00 MiB,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0chardev (244:0)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0For eMMCs usi=
+ng MLC NAND, you can also configure part of<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0the user<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0data area to<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0be pSLC (pseu=
+do single level cell), which changes the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0available<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0capacity (aft=
+er<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0a required po=
+wer cycle).<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Yes. Extended partitions are a f=
+eature of version 4 cards, so<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0don&#39;t have<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; power-of-2 limits since they are=
+ a pure sector count in the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ext_csd.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0JESD84-B51A (eMMC 5.1A):<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;The C_SIZE parameter is used to=
+ compute the device capacity for<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0devices<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0up to 2 GB of density. See 7.4.52, SE=
+C_COUNT [215:212] , for<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0details on<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0calculating densities greater than 2 =
+GB.&quot;<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0So I would now continue to enforce po=
+wer-of-2 for 2G (including)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cards,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0and relax to multiples of 512 for lar=
+ger ones.<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0It&#39;s a multiple of 512k unless the card has a e=
+xt_csd, in which case<br>
+&gt;=C2=A0 =C2=A0 =C2=A0it&#39;s a multiple of 512.<br>
+&gt; <br>
+&gt; <br>
+&gt; More completely, this is from MMC 4.0 and newer. Extended Capacity SD<=
+br>
+&gt; cards report this in units of 512k bytes for all cards &gt; 2GiB.<br>
+&gt; <br>
+<br>
+I&#39;m not sure which spec version you are referring to, but JESD84-A441<b=
+r>
+and JESD84-B51A mention nothing about 512K, rather &quot;Device density =3D=
+<br>
+SEC_COUNT x 512B&quot;. And these are the specs we very likely need to foll=
+ow<br>
+here.<br></blockquote><div><br></div><div>You are right that=C2=A0this is i=
+n the MMC spec. However, the SD spec is controlling for SD cards.</div><div=
+><br></div><div>SD Specifications=C2=A0Part 1=C2=A0Physical Layer=C2=A0Simp=
+lified Specification=C2=A0Version 9.10<br>December 1, 2023</div><div><br></=
+div><div>Section 5.3 describes the CSD. Version 1.0 (which I&#39;d called v=
+ersion 0 in an earlier email because of its encoding) is the 2GB rule. Vers=
+ion 2.0 and 3.0 encode it as 512k count (from 5.3.3):</div><div><br></div><=
+div>C_SIZE<br>This field is expanded to 28 bits and can indicate up to 128 =
+TBytes.<br><br>This parameter is used to calculate the user data area capac=
+ity in the SD memory card (note that size of the protected area is zero for=
+ SDUC card). The user data area capacity is calculated from C_SIZE as follo=
+ws:<br><br>memory capacity =3D (C_SIZE+1) * 512KByte<br><br>The Minimum use=
+r area size of SDUC Card is 4,294,968,320 sectors (2TB+0.5MB).<br>The Minim=
+um value of C_SIZE for SDUC in CSD Version 3.0 is 0400000h (4194304). The M=
+aximum user area size of SDUC Card is 274,877,906,944 sectors (128TB).<br>T=
+he Maximum value of C_SIZE for SDUC in CSD Version 3.0 is FFFFFFFh (2684354=
+55).</div><div><br></div><div>So SD cards are yet again gratuitously differ=
+ent than MMC cards.</div><div><br></div><div>Warner</div></div></div>
+
+--000000000000e6480d063dd51ada--
 
