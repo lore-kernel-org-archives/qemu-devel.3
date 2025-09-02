@@ -4,100 +4,186 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C099CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A88F6CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utTMh-0000bS-NV; Tue, 02 Sep 2025 11:56:11 -0400
+	id 1utTOW-0002I0-2p; Tue, 02 Sep 2025 11:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utTMX-0000U1-WC
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:56:04 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utTMU-0000u4-LQ
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:56:00 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-45b8b8d45b3so22173885e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 08:55:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756828556; x=1757433356; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aumluLao06HPHxsnlJEB0MGe8/kLO8/7Fr6H7vMw33g=;
- b=bX3quFErH11WoS4pPlFbeRkSkG49J4sD/Y3GJ+9oQNI/2ALuVWgJB7sgwMpnU3HVHs
- wfEBbv5RPYmQ/XqcEuJSVMsbPp+hfH7D2ZNFjO9oDXrxGXwCyKgjP93MFThB5t3MnNe5
- xSBHQbtwS0CsxGrFnv+z7BR8QnZ6gr0D82r3xFjecRU77VvU/c3TMs2bFMbeYL6Ic3rD
- pH5kiOxWSKNGEUxLIsBvurnF8FTzEJZsk4bWwL+2AFItqqBpDDIxW/o8wM+sWz8UpDUy
- 9khZXkGtOnagK49fyPpPXH4BHB59lEuU9xHT9yWJoMB10yyLlDHoulGQ0i7BGj/SXKoF
- SHuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756828556; x=1757433356;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aumluLao06HPHxsnlJEB0MGe8/kLO8/7Fr6H7vMw33g=;
- b=kpfiz+wIJxQ2Z2H8eErSQ32h6tnZTPdmQGVapr6B1M19ankSIKiKpt1mQNsSIc98aH
- ujuOlEBmOTu4WC8tQad+MexG4CFrukcwKiBacbBAt9HPo/RSR7jLQ7Gc9Z2ju+OKwqjs
- pPasahPI1gOSkoFMivNBy9/hN+7H7CpIjw0E6ZtoDPRRlRX78/du3SntepgIlQ5zr85S
- wLMhJrOd8u1i5cmqRakOqGjR6S4L0DBlz7U+/YMYNZBRKmmzPb/Zp+Tlp2o8NoPrOejl
- gAVQ7k20ce2RxDruYAkk4OXzBBnPAyga/zhw6le5W2NwysvmMdU2Kn/zk5ZnvLERmMgZ
- S2dw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWmGY1eo5+iZMCwFjrlLtfxBdy6zqP+NneH/plBaBGbGOo+Mg6ophxEUbOod4Sn5OoedzTNynq4AViF@nongnu.org
-X-Gm-Message-State: AOJu0YyfKG5YNL0HsGOiTVLfXeZAuj+BYx6MD59Rn3Q2kA+Ssq82/l0J
- +EeSBGiMKdEejFFZVLtHXCOyU3MQuBSZNkatT7OYFhGAdsVYCOtk2eBIxRenbct3eukFSG3QbbK
- dXvcs
-X-Gm-Gg: ASbGncshtafVTXKnZhJpQ7WnqHLWTSjMEALgN+b+bSRHziJ90tZLzVAMW7cZllneT7U
- VzFRDpQtOl4IMN/NP5NlQKzGpzEsnaQ5irZ01l/l+C/Fd4n+OmyhYNzV4Qc1OPzpw4OQgSfqFxi
- JROVBXDjLR1wdxiGZFIjktR2ptA1f6E062DW8DG4oH254/ftHucd6rKE+KSw62Rj8EA1crM92rV
- zwJ1+bklx7bLR++1nPKwR6zWiuY6PCUrHTwRe+7juqHBeubu/5AUjUVfgTjjcSZi+XKd+qaCvOB
- oK56BjzISZAFB2eiWnzInSRWs4m/GX38nbmmvpA6KQRhFgfzXxK2zQZzvH5eV+sQ9setBCAJpIg
- 2mnw/DFuoI+pLgrguiF1q77VotUvEh2yV+UtJloPk49YN63fzh2CcToIaURA3vJj9bQ==
-X-Google-Smtp-Source: AGHT+IGkAmncDVsYxLGE3caeldUHww7Fzi+IwKSus3u6ubppUV1lns6p42z3CdAwWfvTcH96XFVAdQ==
-X-Received: by 2002:a5d:5846:0:b0:3cf:3f1:accb with SMTP id
- ffacd0b85a97d-3d1df72f5bamr8972952f8f.61.1756828556158; 
- Tue, 02 Sep 2025 08:55:56 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3da13041bcasm3890768f8f.35.2025.09.02.08.55.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 08:55:55 -0700 (PDT)
-Message-ID: <03a51e36-9a15-4b49-a310-c36a4d0af360@linaro.org>
-Date: Tue, 2 Sep 2025 17:55:54 +0200
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1utTOU-0002HD-J1
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:58:02 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1utTOR-0001GO-Ec
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:58:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1756828679; x=1788364679;
+ h=date:from:to:cc:subject:message-id:references:
+ in-reply-to:mime-version;
+ bh=0Dy06LO2mGdAvFlCwBABTGYSbrwjh+iv9b3xA991QlQ=;
+ b=PWHknMVpm8hJpNLfCFr7ozGSHxXTYpfmUnzeoM6skWEnEl98A5sx3b1X
+ Zgjz7pEdOjVZ5SOH06R7NN1YlJYZ4Te1F559B+u0VjbIK2gO3K0iJbrZx
+ UM7/m1v9jqg94pUsttz2Whnqtp6svgqRw4Q0vSPPwnE7VqwOCNy6MHYh3
+ t56Z5jZLK/Db1MtklTWUentjsXcGFKiti1CTRVxbrrYKBg15gSSVntjav
+ P6VAvjSj0xkqbPJYOQUL5hBZMDcq2zANLmGEYjLiB3EC7SVmqxra5TXji
+ X34BmHRDpUpd+9HUUsQwibXfdtmRbaI7rsq12HJ1LrMPxeHTekFM9W4dL A==;
+X-CSE-ConnectionGUID: axGLXHt7SOyVQ6cHndyP4w==
+X-CSE-MsgGUID: jlAfOnAsRguYOt9wMzG8Eg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="69720742"
+X-IronPort-AV: E=Sophos;i="6.18,230,1751266800"; d="scan'208";a="69720742"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2025 08:57:53 -0700
+X-CSE-ConnectionGUID: lPggtp/gRDq4N5UimWWitA==
+X-CSE-MsgGUID: eaQ0mHIgSbmgzlaNlkYNRQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,230,1751266800"; d="scan'208";a="170603264"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2025 08:57:53 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Tue, 2 Sep 2025 08:57:51 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17 via Frontend Transport; Tue, 2 Sep 2025 08:57:51 -0700
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (40.107.243.41)
+ by edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Tue, 2 Sep 2025 08:57:51 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Hz5YZkxVfzR800BekR8z6gkmupnvOy5xUxsNjKrfakq1yFTmkcpR0qJ7lBJypnmqlunPOEdQiV9Pml0jgeVxJsO2wtf9UTSmWblDROIb8+EkXhvAJcSKNi7FqQoyex6jp4LUFJ2U5BkTAmUWF3esOSVXMt290wF+LWXI5BzB2cgib4gBKE8kx40N9dU0FWWAjceQD3PUszHCpns98Tnwnn3/RsW1CQWfhckTp/msxOWMGw/bsNGV3ZDlhw8Hk2i6rlSDYrPbpbodXmoUTbMoGS2Kp2sA3zOH49wUcEM2zu7D6uMNzh49ibLlhZCr3WV6V29WYMUyqKTPbz0uqHT0nw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6GUnBrPAPpSgum06hdebN553IFr+ftxnTCcOB2I3nLE=;
+ b=AKQc9+pavraw7n4yiPwa4xxKRf9oEknhWWeQqLxNuJb3u/3CHJhmZTaTIzGzVSdlnDQJ4WBj21V/O8gWCf39w+OBOkcdsyfotN+C1hy6QTnOIELPDPz3QeIOyDhqA84ozKuAzZ6O9VPSpCFknNRuvIrmvSi6hSLBmaU+N1A/Xn2/LU6qiYqt1gKasg9upyyF7t7LiUhAMjHtw+k/J/hQVtrG99b7aZtJuWr/w5OlAzxmcH7REijDPyH6K5KIIoDv1etgezQYtAaicmprzwoYL3iAW+CXrwC222xB3prshW+wSC/M+HAVUb52s1aP4I5S1h8djGYAEXn/CgSqB3kKIw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH3PPF9E162731D.namprd11.prod.outlook.com
+ (2603:10b6:518:1::d3c) by SA3PR11MB8047.namprd11.prod.outlook.com
+ (2603:10b6:806:2fc::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.25; Tue, 2 Sep
+ 2025 15:57:48 +0000
+Received: from PH3PPF9E162731D.namprd11.prod.outlook.com
+ ([fe80::bbd5:541c:86ba:3efa]) by PH3PPF9E162731D.namprd11.prod.outlook.com
+ ([fe80::bbd5:541c:86ba:3efa%7]) with mapi id 15.20.9052.019; Tue, 2 Sep 2025
+ 15:57:48 +0000
+Date: Tue, 2 Sep 2025 10:59:35 -0500
+From: Ira Weiny <ira.weiny@intel.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>, <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <jonathan.cameron@huawei.com>,
+ <linux-cxl@vger.kernel.org>, <gregory.price@memverge.com>,
+ <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
+ <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
+ <jim.harris@samsung.com>, <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>,
+ <armbru@redhat.com>, <mst@redhat.com>, Fan Ni <fan.ni@samsung.com>, "Svetly
+ Todorov" <svetly.todorov@memverge.com>
+Subject: Re: [PATCH v8 11/14] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+Message-ID: <68b71467b850a_4bae529418@iweiny-mobl.notmuch>
+References: <20240523174651.1089554-1-nifan.cxl@gmail.com>
+ <20240523174651.1089554-12-nifan.cxl@gmail.com>
+ <20250902113915.00001fbd.alireza.sanaee@huawei.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250902113915.00001fbd.alireza.sanaee@huawei.com>
+X-ClientProxiedBy: MW4PR04CA0120.namprd04.prod.outlook.com
+ (2603:10b6:303:83::35) To PH3PPF9E162731D.namprd11.prod.outlook.com
+ (2603:10b6:518:1::d3c)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
- image
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?B?SmFuIEzDvGJiZSI=?= <jlu@pengutronix.de>,
- Joel Stanley <joel@jms.id.au>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- qemu-arm <qemu-arm@nongnu.org>
-References: <cover.1756706188.git.jan.kiszka@siemens.com>
- <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
- <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
- <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
- <11808e86-cee0-48bf-8fbd-de13a9a25ed0@linaro.org>
- <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
- <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH3PPF9E162731D:EE_|SA3PR11MB8047:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5c1e27ce-4feb-4dd0-ca0e-08ddea3976be
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?D+q3RkvZ31hA+fNCz4CkC3WzPe7HMHBv8Ty8P6pLFfbOGsYR5wldkV0usVEC?=
+ =?us-ascii?Q?/qPAfmydGvvvvORfAyKf0sw7U+QxKqPiNCogZgFwEuomWMF1S5rYCS1cPMBP?=
+ =?us-ascii?Q?kDq2Wl1Zf2UmpPmXlC3MNHU+kZWdnMMocctCcsLQI+rH+yFxwRDNQtOdELWc?=
+ =?us-ascii?Q?xw5U/LHu5ReckEXxXMKHEAnz3aHpqnAnDBkV/iBWaI713pKunzelQWBnmL+V?=
+ =?us-ascii?Q?knXc3Zl65TbtYjKdk6z437e+fPq6D2b2yq6I6LJkitmz8MFPtTIOgQbtphXd?=
+ =?us-ascii?Q?OySgHf7qmjCVc0KUSgr2xKbMdJLuTAuEdSI0kSBnci8miJq61T8I0T91QLqD?=
+ =?us-ascii?Q?eyNnK3rwI5CVPbJLtGQKmxV2rnZIMa+lXGqULJJP68tC0/BOh0TcbK8x6pfi?=
+ =?us-ascii?Q?3cRLTlmTv3U//HTmIGQJJajrdPnweQ08yOUPG2pcCReMd6n45kU5pJ3tVaiF?=
+ =?us-ascii?Q?yu2LLXLkfGsLrjPnZitgh8KJaiY6uCmbt1ipq9hY7ZYzbgy3Kot/zyfUuTbS?=
+ =?us-ascii?Q?/tscPuzZdLdFL29fSrauroJPu8hTaqMxcIBMEZaxmIROU9aopg7Sch0j9ao+?=
+ =?us-ascii?Q?R4NsUtkyGiIWtX4lKIdkhOaIxdtbjW9WDY1cspBvpr54B0Vg8Bpph5dyxdj8?=
+ =?us-ascii?Q?bTVvEVJw7cxVD7jLSNZbzsvudjHW+JWdi3H+oHgBe++bZgU5cw2V8mSxeyzb?=
+ =?us-ascii?Q?aEgLdhKBRNrV/sI3r5t9vE7B1F+LqNJMyPzW+y/h6E5hYjVMfMtG2HDY68VO?=
+ =?us-ascii?Q?MShxJLdiLFFV0KRHizGU6DNYtacvmj7kD8f1RnkgHkj9Z7a5lJKfY+MY03et?=
+ =?us-ascii?Q?BMF4GZgc2ScUQtEmTaPt1W4DJrdffS74l9ablM+NZReYe/qfybHGmkJk4sG4?=
+ =?us-ascii?Q?XYKMmJ/LEc7rcCxFB8QzR1jg2ssZF447QM1J3vJIBLg9nCShvLtow30nyliq?=
+ =?us-ascii?Q?XXSkLndsVOwADyEajJ+DoFadA5aeZqaPnTPwTWq6KpcIAnYP1ipHPy8943oO?=
+ =?us-ascii?Q?cVgqLdIRVpunAX7y6wVCne1vUpoAWrYxy5Al7j+QmFuh35JgDjqkHJnxqdwG?=
+ =?us-ascii?Q?cBUigThBkCjnYCsaZI2JVdl9nZv3hV0MwIUT9W8024cCFPe/+r0syU0KG0N0?=
+ =?us-ascii?Q?eQEeyELU5HQ5pyQrvgk/rurApmE8UQsLSvjRm9RQH0rE9Xjt8nXTZSHIUw19?=
+ =?us-ascii?Q?z2p+0ERLuinnmA8o+h8qJDBd+QEiLDe0nvtalxdqPnxhcZ2XfstT5hLmp49O?=
+ =?us-ascii?Q?/LumGX2cbw0kS8nx9qV5a2iYGR3Yz1brIPyB0BjiASKixqwgJbCaC/YoQLv5?=
+ =?us-ascii?Q?1nNvYqGxvou8nJVXskdGJ9nWcVtLWOsQ0Qnbo+cnaSkGbwRNhvmFtZ3xVDKd?=
+ =?us-ascii?Q?k7M0ogODj1pYVW+SBG/bcm8a92Vnz9eqS4tQgf/q+gE/DeF8IhFz+27heGbV?=
+ =?us-ascii?Q?dIJs7bjuBYQ=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH3PPF9E162731D.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ghI2z1NwhvW/m9uSfzJjZIsgZ/5eDBxzF6ryVyXWOsa11n2dYwQWrKSeT1Ku?=
+ =?us-ascii?Q?mOT49R73cs2cQnqykTncpuj9amx7Dek9pcGSao1QKacCFm8Ma6KxxdKJMh/A?=
+ =?us-ascii?Q?L0IOHEsWvWA9f0cse2KQlbalFiN0GIsHZec80zXIUu6B+BIVK/2hdfEmBWxx?=
+ =?us-ascii?Q?pdBCduw5h5G2ParbFYhIJHUWYpbsGdwgB9jnCWlTr6RHuRb/mJ3gAG0fF/zj?=
+ =?us-ascii?Q?IiHnoOqNmTYcWmOGvjyDLtvUbq3hffoUPtyS1ZJcEnIVUNoLa4yWDXtRTZw4?=
+ =?us-ascii?Q?0L1nOkjfP4FAL+2UhfMLvAsNVsUtUPch3cQjgjhoef/fCaCs2R4T5/u+XFZ0?=
+ =?us-ascii?Q?B5JmTElNkjWGQ4rh7tSIeMrw7q2Qec35kvsZvcDz2HYjxmbx2hAHO0E8kev+?=
+ =?us-ascii?Q?88OrEiLG/iOFb6ToJWBQ3dFJHABBIfJ9ew9o/qkJ6baCe7uvm7T37uqrdXdU?=
+ =?us-ascii?Q?iRZpPa+CmuMTJR4B7D4dtXR4BZgtIGAag8lWbHJyTaryrUGdjPUsSKeTHlzU?=
+ =?us-ascii?Q?fQBjUShRIcCwq8uRKMjY8YoJ8h1gCSyohRIJDHMATbmyKkipl3qw/mWlUKWN?=
+ =?us-ascii?Q?voErExtm6X49jFeAelJRSZa+8C0WByrqiJ7wj4bVSBRuzKZ8QoSdz6Dy6xyv?=
+ =?us-ascii?Q?yOpJivcMvCVDqkpOpKpCxFpRmw/QyOtM1OoOEbyH1FwupL/dDPTMyq2cnhev?=
+ =?us-ascii?Q?9ywgA0szuh7xiWYr94Um/0mymrp86gyfDhP45+lzopfS6YkbruLZZoDsG9aV?=
+ =?us-ascii?Q?YkucLfn2+qmtgV6D4gPUboOjjVOOq4UhfK21ATbzkR8TVWS4dzpczH9kSLIX?=
+ =?us-ascii?Q?F5FU+6fOdroD56YSrrvvV3WiL6fWEv3JG4BOhaTduwIrUOlUw0ZGuK8yIP+4?=
+ =?us-ascii?Q?SBLccWkzkRtVj0mE/v19hVwRICwmwKaT3Eef+iAlKvCatTl5BBfiVOsuGcaa?=
+ =?us-ascii?Q?kLJp8q3zxXF3Fv7UKMpKpxYa5ewDgkRIijYS8pmDFYFjH2j5XM0jmXDjd06C?=
+ =?us-ascii?Q?eQKq4I7FOgKMvnI1wLpAZWNAQ0pC2tacFVUyNfMjAUXRDFJQen1OFckeR/MO?=
+ =?us-ascii?Q?B+d6B0LdCsN+JsSfXiVlNJv44jfxV3zmPRaC19ZnFL4iOEoakDiWvGySvfz7?=
+ =?us-ascii?Q?AMSgLoq8WZcgKIItI0aahZk9/yw94gTP7I8GlZNEKipb9f72+vTyIuhGzX9b?=
+ =?us-ascii?Q?uYXlCWD9HAfUIXINUHJNUnc0jAfALbMmh+F9SBkvXKlq/QZyu9JkgdVUe8lp?=
+ =?us-ascii?Q?4m/YubZWJqW+JalU5vSLe1KTCPAVqUkI5G2gtgs4ZZDP/qRRDkZZud17SdjC?=
+ =?us-ascii?Q?iEqylG8Wjz80prhMefc0J7LYw/Vbf6hLaIUDyqWIfV0ZcwRD/UYAOgEdFRGs?=
+ =?us-ascii?Q?r5JCqi8CVyHgAnOZ1os+orrz+9cl89Y6gsJsY9/dZJEFuMI+2pej/bxT97wM?=
+ =?us-ascii?Q?t5heiEhsBfgOBGLJjYErVPdr7bBH/H2wkjeKRVtBEiEMIEhyHOBBbDUK7zpt?=
+ =?us-ascii?Q?RLxZ4dPYs3F0KSiX8yAGdQCfa2eKv3LTRNRFdEM0RZMzxf2wv0B0J6096hPj?=
+ =?us-ascii?Q?hEhs0xCxJqPHzHgXBYSOb+kyk4zKe9x8v2POVm09?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5c1e27ce-4feb-4dd0-ca0e-08ddea3976be
+X-MS-Exchange-CrossTenant-AuthSource: PH3PPF9E162731D.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 15:57:48.4563 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9MtaUTjrsoQcZiv11x77l2bwcEuNnuvZiJ5wNmE6EiDHq/lZWWoJUiauiHdxtqbDg4/OiUiCprvyLmOC7spIDg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB8047
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=ira.weiny@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,80 +200,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/9/25 17:47, Cédric Le Goater wrote:
-> On 9/2/25 17:45, Philippe Mathieu-Daudé wrote:
->> On 2/9/25 17:43, Philippe Mathieu-Daudé wrote:
->>> On 2/9/25 17:34, Jan Kiszka wrote:
->>>> On 02.09.25 17:06, Philippe Mathieu-Daudé wrote:
->>>>> On 1/9/25 07:56, Jan Kiszka wrote:
->>>>>> From: Jan Kiszka <jan.kiszka@siemens.com>
->>>>>>
->>>>>> The power-of-2 rule applies to the user data area, not the complete
->>>>>> block image. The latter can be concatenation of boot partition images
->>>>>> and the user data.
->>>>>>
->>>>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
->>>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>> ---
->>>>>>    hw/sd/sd.c | 2 +-
->>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->>>>>> index 8c290595f0..16aee210b4 100644
->>>>>> --- a/hw/sd/sd.c
->>>>>> +++ b/hw/sd/sd.c
->>>>>> @@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev, Error
->>>>>> **errp)
->>>>>>                return;
->>>>>>            }
->>>>>>    -        blk_size = blk_getlength(sd->blk);
->>>>>> +        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
->>>>>>            if (blk_size > 0 && !is_power_of_2(blk_size)) {
->>>>>>                int64_t blk_size_aligned = pow2ceil(blk_size);
->>>>>>                char *blk_size_str;
->>>>>
->>>>> This seems to break the tests/functional/arm/test_aspeed_rainier.py
->>>>> test due to mmc-p10bmc-20240617.qcow2 size:
->>>>>
->>>>> Command: /builds/qemu-project/qemu/build/qemu-system-arm -display 
->>>>> none -
->>>>> vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -
->>>>> machine rainier-bmc -chardev socket,id=console,fd=10 -serial
->>>>> chardev:console -drive file=/builds/qemu-project/qemu/functional- 
->>>>> cache/
->>>>> download/
->>>>> d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b,if=sd,id=sd2,index=2 -net nic -net user -snapshot
->>>>> Output: qemu-system-arm: Invalid SD card size: 16 GiB
->>>>> SD card size has to be a power of 2, e.g. 16 GiB.
->>>>>
->>>>> https://gitlab.com/qemu-project/qemu/-/jobs/11217561316
->>>>>
->>>>
->>>> Hmm, then the test was always wrong as well. I suspect the aspeed is
->>>> enabling boot partitions by default, and the image was created to pass
->>>> the wrong alignment check. Where / by whom is the image maintained?
->>>
->>> Cédric Le Goater (Cc'ed).
->>>
->>> The test comes from:
->>> https://lore.kernel.org/qemu-devel/4d1777d6-0195-4ecb- 
->>> a85f-09964268533d@kaod.org/
->>>
->>> Maybe also relevant to your suspicion:
->>> https://lore.kernel.org/qemu-devel/e401d119-402e-0edd- 
->>> c2bf-28950ba48ccb@kaod.org/
->>
->> Digging further:
->> https://lore.kernel.org/qemu- 
->> devel/9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de/
->>
+Alireza Sanaee wrote:
+> On Thu, 23 May 2024 10:44:51 -0700
+> nifan.cxl@gmail.com wrote:
 > 
-> yes commit c078298301a8 might have some impact there.
+> > From: Fan Ni <fan.ni@samsung.com>
+> > 
+> > To simulate FM functionalities for initiating Dynamic Capacity Add
+> > (Opcode 5604h) and Dynamic Capacity Release (Opcode 5605h) as in CXL
+> > spec r3.1 7.6.7.6.5 and 7.6.7.6.6, we implemented two QMP interfaces
+> > to issue add/release dynamic capacity extents requests.
+> > 
+> > With the change, we allow to release an extent only when its DPA range
+> > is contained by a single accepted extent in the device. That is to
+> > say, extent superset release is not supported yet.
+> > 
+> > 1. Add dynamic capacity extents:
+> > 
+> > For example, the command to add two continuous extents (each 128MiB
+> > long) to region 0 (starting at DPA offset 0) looks like below:
+> > 
+> > { "execute": "qmp_capabilities" }
+> > 
+> > { "execute": "cxl-add-dynamic-capacity",
+> >   "arguments": {
+> >       "path": "/machine/peripheral/cxl-dcd0",
+> >       "host-id": 0,
+> >       "selection-policy": "prescriptive",
+> >       "region": 0,
+> >       "extents": [
+> >       {
+> >           "offset": 0,
+> >           "len": 134217728
+> >       },
+> >       {
+> >           "offset": 134217728,
+> >           "len": 134217728
+> >       }
+> >       ]
+> >   }
+> > }
+> > 
+> > 2. Release dynamic capacity extents:
+> > 
+> > For example, the command to release an extent of size 128MiB from
+> > region 0 (DPA offset 128MiB) looks like below:
+> > 
+> > { "execute": "cxl-release-dynamic-capacity",
+> >   "arguments": {
+> >       "path": "/machine/peripheral/cxl-dcd0",
+> >       "host-id": 0,
+> >       "removal-policy":"prescriptive",
+> >       "region": 0,
+> >       "extents": [
+> >       {
+> >           "offset": 134217728,
+> >           "len": 134217728
+> >       }
+> >       ]
+> >   }
+> > }
+> > 
+> > Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
+> > Reviewed-by: Gregory Price <gregory.price@memverge.com>
+> > Signed-off-by: Fan Ni <fan.ni@samsung.com>
 
-With Jan patch, your script doesn't need anymore the
+[snip]
 
-   echo "Fixing size to keep qemu happy..."
+> > +##
+> > +# @cxl-release-dynamic-capacity:
+> > +#
+> > +# Command to initiate to release dynamic capacity extents from a
+> > +# host.  It simulates operations defined in cxl spec r3.1 7.6.7.6.6.
+> > +#
+> > +# @path: CXL DCD canonical QOM path.
+> > +#
+> > +# @host-id: The "Host ID" field as defined in cxl spec r3.1
+> > +#     Table 7-71.
+> > +#
+> > +# @removal-policy: Bit[3:0] of the "Flags" field as defined in cxl
+> > +#     spec r3.1 Table 7-71.
+> > +#
+> > +# @forced-removal: Bit[4] of the "Flags" field in cxl spec r3.1
+> > +#     Table 7-71.  When set, device does not wait for a Release
+> > +#     Dynamic Capacity command from the host.  Host immediately
+> > +#     loses access to released capacity.
+> > +#
+> > +# @sanitize-on-release: Bit[5] of the "Flags" field in cxl spec r3.1
+> > +#     Table 7-71.  When set, device should sanitize all released
+> > +#     capacity as a result of this request.
+> > +#
+> > +# @region: The "Region Number" field as defined in cxl spec r3.1
+> > +#     Table 7-71.  The dynamic capacity region where the capacity
+> > +#     is being added.  Valid range is from 0-7.
+> > +#
+> > +# @tag: The "Tag" field as defined in cxl spec r3.1 Table 7-71.
+> > +#
+> > +# @extents: The "Extent List" field as defined in cxl spec r3.1
+> > +#     Table 7-71.
+> > +#
+> > +# Since : 9.1
+> > +##
+> > +{ 'command': 'cxl-release-dynamic-capacity',
+> > +  'data': { 'path': 'str',
+> > +            'host-id': 'uint16',
+> > +            'removal-policy': 'CXLExtRemovalPolicy',
+> > +            '*forced-removal': 'bool',
+> > +            '*sanitize-on-release': 'bool',
+> > +            'region': 'uint8',
+> > +            '*tag': 'str',
+> > +            'extents': [ 'CXLDynamicCapacityExtent' ]
+> > +           }
+> > +}
+> 
+> Although tag-based removal is not implemented yet, but still just wanted
+> to leave a comment here that exact extents are not needed for tag-based
+> removal and `extents` should be an optional parameter here; this is my
+> understanding reading the spec, so I still might be wrong, shout if you
+> think it does not make sense.
 
-kludge.
+It's been a while but I think this allows the removal of non-tagged
+extents as well(?)  If so the tag would be NULL (or empty-string) and one
+can remove a regular extent.
 
+But I could be miss-remembering something,
+Ira
 
