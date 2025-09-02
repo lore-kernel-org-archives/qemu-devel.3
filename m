@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38989CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 09:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8B19CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 09:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utN0O-0005aP-CK; Tue, 02 Sep 2025 05:08:44 -0400
+	id 1utN1a-0005vt-AB; Tue, 02 Sep 2025 05:09:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1utN0M-0005aC-ML
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:08:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1utN1K-0005ug-3J
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:09:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1utN0K-0004JH-Kf
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:08:42 -0400
+ id 1utN1I-0004Mb-29
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 05:09:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1756804115;
+ s=mimecast20190719; t=1756804177;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VDihUIvEMHU54Tuq8CooNZpuBMajgBmM/4WmqmpLugM=;
- b=aaxnhmth25ZjzsTpK+VOUTOsFuj5z8VCpwOdjIyewSNEz5zYGs9wPk/tqNmXQYDVpUwPC2
- GTOZiHo5P5SegmPXSyu5RGHpH1lJWTxCu0ar+yPJKIsGXqz2k5h4IhZ9805IJX44Ui+Lhd
- Pl5akSW8P01ldi0XznxqqRPmM+XiD+s=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=icQZRWICF94Ux0M33w/MDbGWZQnsPJrqSbUtj7kJb8Q=;
+ b=Rb847IQvrOXxw0MqKW4xIANW5tagM01uJ+Z9LqsgNYLEOUM/OL45q5DK5iwNRD0sfIrt7E
+ MhGHJJTrdxea9gRrc2fFihgK9R78I9OHge9fjNBkiT2n6wN1X7f87vNAIe48PI8Z7xUulu
+ IKejyYKIHq8sqW9uVGmiHsU42/G/4m0=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-yHOEgvXKNWGo03GumaYqCg-1; Tue, 02 Sep 2025 05:08:33 -0400
-X-MC-Unique: yHOEgvXKNWGo03GumaYqCg-1
-X-Mimecast-MFC-AGG-ID: yHOEgvXKNWGo03GumaYqCg_1756804113
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-324e4c3af5fso5522407a91.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 02:08:33 -0700 (PDT)
+ us-mta-251-Hmy2NzBSNtmQ65_Tc7J0hw-1; Tue, 02 Sep 2025 05:09:35 -0400
+X-MC-Unique: Hmy2NzBSNtmQ65_Tc7J0hw-1
+X-Mimecast-MFC-AGG-ID: Hmy2NzBSNtmQ65_Tc7J0hw_1756804175
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-248abeb9242so46259925ad.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 02:09:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756804112; x=1757408912;
+ d=1e100.net; s=20230601; t=1756804174; x=1757408974;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VDihUIvEMHU54Tuq8CooNZpuBMajgBmM/4WmqmpLugM=;
- b=mv/54K3rKSdNV/hhwPTW/xkVLkRaMoa1Rkzg5zzLAuleIv6KnwMEAE45ho5hwKnNtx
- Zhz02CYv9e2+tc4FNRNbx/EYcb5FesXXy8GQ0rVprjmrCu26ZO+XFCbFUwIGb8jINuY3
- qUSAutY1wg0don4Eua30OfAFo7RGUOhAxPCFlvSTvaqpGtGsBO5PcJ7t16/qLdi71Xrh
- LMtq/aQPZ/obtZDd3PKcmpg+tG9CSUY83icM82np73Dr53+hgCT54RNKuDOcys+iqyiZ
- E+i+apfWboK0RiUaYUb19gW+e0IRgzSUOxKt2SXmlBx+EA27b3XzxXb+uM/oIsK90P5G
- 7jhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXW1WXZYERlSaiIWezauj4uZH7MQ/0A7WERWE1IFmop3yKrA3wDh6J7rYwr1r26rDB+OlobnnxgQdh6@nongnu.org
-X-Gm-Message-State: AOJu0YxtveDmyC4O7f7IGy9Zad2mH6aBnoEETEFTHU2Z8VgL2pgSp24P
- WXckcIy+Sc1NP23F9K/topmuvsZp9W0BQT/lT9kp1cV0m5dn4pFbcMO0ccKvBIKWBIP96xbQpl1
- ZiQ8COwJhh0N5Dg/CYMNX41i0FmFHechrz/xpFAF73LF+uBbVqdwWeQ4GwkZY4qwNIRxg2GDjyQ
- WRCLXdKcoGcTlQTc0SyBS+58Lv/Hnc9Ec=
-X-Gm-Gg: ASbGnctGUae3nB6AMLThW+RF0/CkNhmfXv1E628bxJelhPYy/GIoQVxxBnpyC6Rdkby
- vmjGMNH/GNwUTAAw4KPP7h1dbvKKqmKr4JWpPx3J/KZeosLmM6KTqXwG0IYP3lcRSFxICkae4br
- 4X+FjAhTw0mxwE7+KMBxX5rA==
-X-Received: by 2002:a17:90b:48c3:b0:327:f216:4360 with SMTP id
- 98e67ed59e1d1-3281541434dmr14333016a91.8.1756804112483; 
- Tue, 02 Sep 2025 02:08:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbOW79SkSDzrkVbTMBwTNFFG1RIl/iY682+mBZSzR4SnENev8eBXvITnSML+tKAvBfKxkrJEnlNGNri0LTvnA=
-X-Received: by 2002:a17:90b:48c3:b0:327:f216:4360 with SMTP id
- 98e67ed59e1d1-3281541434dmr14332980a91.8.1756804112045; Tue, 02 Sep 2025
- 02:08:32 -0700 (PDT)
+ bh=icQZRWICF94Ux0M33w/MDbGWZQnsPJrqSbUtj7kJb8Q=;
+ b=NsUWNcC34Kv3xM3fRkFzfFEmvI1bcKeIEoiVvVtXLnq9ETG64PVyOeetjTYpbSZ9Z3
+ IXcAbaKUCcJFV8d07WypndP9KpeR3gVwpVJPTEF/m/YTt3hzgG8P0kpjvy3IwxmWba2E
+ vGuAkzE3Zn7EppjEULeBQNvAk5jdVUyBzkj/hrLAvVCcb2k2QtSUFMLEXPPCJsfRXn4U
+ 7tGnLgmAfAjDTmVivsHi1G2Q9E1sjrOl8DCOSK8jAztFWsH5D+7cs9hp+2LWTwUHvjDP
+ gokfIvxoyUNxblyFk/I/h35wN++iNxsU+aynxshnjAZf7LZeAUcDjdNfa4uWF1mcDkZE
+ 1ciQ==
+X-Gm-Message-State: AOJu0YwOCGMoMwKqYqOvyBCQ1dSSnIKRJIvQFsVmGEkfjfSTvuZvJZ8K
+ L7sbKty7YX33NvWo7ry86CFAc+5fFMTSwJ12SIU62ofN6J3TwCsfFpkUp3h+2GTM6r/9BpHI43E
+ ndfYvy4mvIqDO1HvqyTD/MplDw7BiShmaXwuyqiNur2aENsc9JtYaKTOxJvvFbFwNXAliQENY/w
+ jbEwmDjAndl0B+jxc1ciUE/oqD3c4leJQ3gcoQ8ki1Rw==
+X-Gm-Gg: ASbGncszQfEMDaKOhfdAJiwsVLdT+I1zBul9EFWPPoX5uehPzovrloYZMB5EN5Es61v
+ 1YphDEOill2kLFC0xASw56Ldc5Qwm63iEwzNBrziKJYpOEKF5Vzn5sYcGrv8ra8Q+bxHDP6vkHZ
+ riMvkZ+pDiO9D3N2vMog0xKA==
+X-Received: by 2002:a17:902:e84a:b0:24b:270e:56c0 with SMTP id
+ d9443c01a7336-24b270e59d9mr6232945ad.36.1756804174282; 
+ Tue, 02 Sep 2025 02:09:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFRwlwrI7ITsuC7hxVZE8H9unE8J+uw3idlvtHho4NpC6Az63pOeyyUH9/SnJuJcYFcX5WzCfy4X+IU+QDK+w=
+X-Received: by 2002:a17:902:e84a:b0:24b:270e:56c0 with SMTP id
+ d9443c01a7336-24b270e59d9mr6232695ad.36.1756804173832; Tue, 02 Sep 2025
+ 02:09:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1755080613.git.pabeni@redhat.com>
- <3590d748-752c-40f5-92c9-5c065dcc3c0b@rsg.ci.i.u-tokyo.ac.jp>
- <CACGkMEvOmgGyqv5-FGDAgyDrY9TpssEDtpNp07ro2oamg_7r1w@mail.gmail.com>
- <8c41ea67-c5a3-4f16-85a2-cc4876f09995@redhat.com>
-In-Reply-To: <8c41ea67-c5a3-4f16-85a2-cc4876f09995@redhat.com>
+References: <20250823160323.20811-1-vsementsov@yandex-team.ru>
+ <05aed3c3-f953-4287-b317-e7ef89c4c717@yandex-team.ru>
+In-Reply-To: <05aed3c3-f953-4287-b317-e7ef89c4c717@yandex-team.ru>
 From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 2 Sep 2025 17:08:20 +0800
-X-Gm-Features: Ac12FXxqgyWOjLyF2XsDhNnKvrEE86yLh3igdtk39PdVUSouqVG49yr76zdLES0
-Message-ID: <CACGkMEuyhCFCdQ5owUZqWC490doqgDUVq3osFGPo7QnnZ7_Pqg@mail.gmail.com>
-Subject: Re: [PATCH v5 00/13] virtio: introduce support for GSO over UDP tunnel
-To: Paolo Abeni <pabeni@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 2 Sep 2025 17:09:22 +0800
+X-Gm-Features: Ac12FXw9bT5TGugS2h9GWCT2diF4IWY5-ydeB9TifhgMTgcv0UbzuXUJNsjof88
+Message-ID: <CACGkMEsxBytJHwrhBCtcSqia4=1hK=AN42avaL2UcArQD=_3Jw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/20] TAP initialization refactoring
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, leiyang@redhat.com, steven.sistare@oracle.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,92 +103,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Sep 1, 2025 at 2:44=E2=80=AFPM Paolo Abeni <pabeni@redhat.com> wrot=
-e:
+On Mon, Sep 1, 2025 at 10:28=E2=80=AFPM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
 >
-> On 9/1/25 4:47 AM, Jason Wang wrote:
-> > On Thu, Aug 28, 2025 at 9:47=E2=80=AFAM Akihiko Odaki
-> > <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> >>
-> >> On 2025/08/13 19:28, Paolo Abeni wrote:
-> >>> Some virtualized deployments use UDP tunnel pervasively and are impac=
-ted
-> >>> negatively by the lack of GSO support for such kind of traffic in the
-> >>> virtual NIC driver.
-> >>>
-> >>> The virtio_net specification recently introduced support for GSO over
-> >>> UDP tunnel, and the kernel side of the implementation has been merged
-> >>> into the net-next tree; this series updates the virtio implementation=
- to
-> >>> support such a feature.
-> >>>
-> >>> Currently the qemu virtio support limits the feature space to 64 bits=
-,
-> >>> while the virtio specification allows for a larger number of features=
-.
-> >>> Specifically the GSO-over-UDP-tunnel-related virtio features use bits
-> >>> 65-69; the larger part of this series (patches 4-12) actually deals w=
-ith
-> >>> extending the features space.
-> >>>
-> >>> The extended features are carried by fixed size uint64_t arrays,
-> >>> bringing the current maximum features number to 128.
-> >>>
-> >>> The patches use some syntactic sugar to try to minimize the otherwise
-> >>> very large code churn. Specifically the extended features are boundle=
-d
-> >>> in an union with 'legacy' features definition, allowing no changes in
-> >>> the virtio devices not needing the extended features set.
-> >>>
-> >>> The actual offload implementation is in patches 13 and 14 and boils d=
-own
-> >>> to propagating the new offload to the tun devices and the vhost backe=
-nd.
-> >>>
-> >>> Patch 1 is a small pre-req refactor that ideally could enter the
-> >>> tree separately; it's presented here in the same series to help
-> >>> reviewers more easily getting the full picture, patch 2 updates to
-> >>> linux headers update script to deal with annotations recently introdu=
-ce
-> >>> in the kernel and patch 3 is a needed linux headers update.
-> >>>
-> >>> Tested with basic stream transfer with all the possible permutations =
-of
-> >>> host kernel/qemu/guest kernel with/without GSO over UDP tunnel suppor=
-t,
-> >>> vs snapshots creation and restore and vs migration.
-> >>>
-> >>> The new features are disabled by default to avoid compatibilty issues=
-.
-> >>> They could be enabled after that hw_compat_10_1 will be added, togeth=
-er
-> >>> with the related compatiblity entries.
-> >>>
-> >>> Based-on: 9d71108d7de139dd4f4e6efe6837cabb32bf5616.1755078918.git.pab=
-eni@redhat.com
-> >>
-> >> Now everything looks good to me. For the whole series:
-> >>
-> >> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >>
-> >> Regards,
-> >> Akihiko Odaki
-> >>
-> >
-> > Acked-by: Jason Wang <jasowang@redhat.com>
+> Ping!)
 >
-> Thank you for the feedback. I guess this series will go through
-> Micheal's tree, am I correct?
+> Understand, that it's quite big. I can split into 2-3 series, if this hel=
+ps.
 
-Yes. I think so.
-
->
-> Also I suspect/fear it could need rebasing due to some other patches
-> being applied meanwhile, please LMK if a repost is needed, thanks!
->
-> Paolo
->
+I will have a look this week. The size should be fine so no need to split.
 
 Thanks
+
+>
+> On 23.08.25 19:03, Vladimir Sementsov-Ogievskiy wrote:
+> > Hi all!
+> >
+> > Here is a refactoring of initialization code, to improve its
+> > readability and get rid of duplication.
+> >
+> > v2:
+> > 01,03: improve commit msg
+> > 14: fix return value for new net_tap_init_one()
+> > 15: add return statements to other cases, to not break them
+> > 20: new
+> >
+> > Below are the initialization flow diagrams showing the changes.
+> >
+> > BEFORE REFACTORING:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > ```
+> > net_init_tap()
+> >      |
+> >      +-- if (tap->fd)
+> >      |   +-- duplicated logic*
+> >      |   +-- net_init_tap_one()
+> >      |
+> >      +-- else if (tap->fds)
+> >      |   +-- for each fd:
+> >      |       +-- duplicated logic*
+> >      |       +-- net_init_tap_one()
+> >      |
+> >      +-- else if (tap->helper)
+> >      |   +-- duplicated logic*
+> >      |   +-- net_init_bridge()
+> >      |
+> >      +-- else (normal case)
+> >          +-- for each queue:
+> >              +-- net_tap_init()
+> >              +-- net_init_tap_one()
+> >
+> > net_init_bridge()
+> >      |
+> >      +-- duplicated logic*
+> >      +-- net_tap_fd_init()
+> >
+> > net_init_tap_one()
+> >      |
+> >      +-- net_tap_fd_init()
+> >
+> > net_tap_init()
+> >      |
+> >      +-- tap_open()
+> >
+> > net_tap_fd_init()
+> >      |
+> >      +-- qemu_new_net_client()
+> >      +-- Initialize TAPState
+> >
+> > * duplicated logic: set fd nonblocking + probe vnet_hdr
+> > ```
+> >
+> > AFTER REFACTORING:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >
+> > ```
+> > net_init_tap()
+> >      |
+> >      +-- if (tap->fd)
+> >      |   +-- net_tap_from_monitor_fd()
+> >      |
+> >      +-- else if (tap->fds)
+> >      |   +-- for each fd:
+> >      |       +-- net_tap_from_monitor_fd()
+> >      |
+> >      +-- else if (tap->helper)
+> >      |   +-- net_init_bridge()
+> >      |
+> >      +-- else (normal case)
+> >          +-- net_tap_open()
+> >
+> > net_tap_open()
+> >      |
+> >      +-- for each queue:
+> >          +-- net_tap_open_one()
+> >
+> > net_tap_open_one()
+> >      |
+> >      +-- tap_open()
+> >      +-- net_tap_fd_init_common()
+> >
+> > net_tap_from_monitor_fd()
+> >      |
+> >      +-- net_tap_fd_init_external()
+> >
+> > net_tap_fd_init_external()
+> >      |
+> >      +-- net_tap_fd_init_common()
+> >
+> > net_init_bridge()
+> >      |
+> >      +-- net_tap_fd_init_external()
+> >
+> > net_tap_fd_init_common()
+> >      |
+> >      +-- qemu_new_net_client()
+> >      +-- Initialize TAPState
+> > ```
+> >
+> > Solved problems:
+> >
+> > - duplicated logic to handle external
+> >    file descriptors (set nonblocking, probe vnet_hdr)
+> >
+> > - duplication between tap/helper case in
+> >    net_init_tap() and net_init_bridge()
+> >
+> > - confusing naming and functionality spread between functions (we had
+> >    net_init_tap(), together with net_tap_init(); also main central
+> >    function was net_init_tap_one(), and part of its logic (not clear
+> >    why) moved to separate net_tap_fd_init()),
+> >
+> > - net_init_tap() was just too big
+> >
+> > Vladimir Sementsov-Ogievskiy (20):
+> >    net/tap: net_init_tap_one(): add return value
+> >    net/tap: add set_fd_nonblocking() helper
+> >    net/tap: tap_set_sndbuf(): add return value
+> >    net/tap: net_init_tap_one(): drop extra error propagation
+> >    net/tap: net_init_tap_one(): move parameter checking earlier
+> >    net/tap: net_init_tap(): refactor parameter checking
+> >    net/tap: net_init_tap(): drop extra variable vhostfdname
+> >    net/tap: move local variables related to the latter case to else
+> >      branch
+> >    net/tap: use glib strings vector and g_strsplit for fds case
+> >    net/tap: drop extra tap_fd_get_ifname() call
+> >    net/tap: net_init_tap_one(): refactor to use netdev as first arg
+> >    net/tap: net_init_tap_one(): support bridge
+> >    net/tap: net_init_bridge(): support tap
+> >    net/tap: refactor net_tap_init() into net_tap_open_one()
+> >    net/tap: introduce net_tap_open()
+> >    net/tap: introduce net_tap_fd_init_external()
+> >    net/tap: introduce net_tap_from_monitor_fd() helper
+> >    net/tap: split net_tap_setup_vhost() separate function
+> >    net/tap: drop net_tap_fd_init()
+> >    net/tap: introduce net_init_tap_fds()
+> >
+> >   net/tap-linux.c |   5 +-
+> >   net/tap.c       | 578 +++++++++++++++++++++++------------------------=
+-
+> >   net/tap_int.h   |   2 +-
+> >   3 files changed, 277 insertions(+), 308 deletions(-)
+> >
+>
+>
+> --
+> Best regards,
+> Vladimir
+>
 
 
