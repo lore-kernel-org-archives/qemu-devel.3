@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F121CCA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764E8CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utRMJ-00015v-7v; Tue, 02 Sep 2025 09:47:40 -0400
+	id 1utRMa-0001PB-GG; Tue, 02 Sep 2025 09:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utRMC-000108-8n
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:47:32 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1utRMX-0001N8-4l
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:47:54 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utRMA-0001cW-3Z
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:47:31 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6188b793d21so6412906a12.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:47:29 -0700 (PDT)
+ id 1utRMN-0001dB-CK
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:47:52 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-61cd6089262so8684905a12.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756820847; x=1757425647; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756820859; x=1757425659; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RXDiikMBr5sTgVqsLvsvUiNl7i+RmxmaZDNA7vuKzj4=;
- b=CfXU1jUg/NnDHYH3XHoA/iSMO9inGUhRJzY6jq1+KTsL84q0JQsqG3i8WiYjhxcSzu
- SUym4l3LEBoJC7Xoq4yE5T0suuX8xVau7TD+cD3eHZl1WwV3rDHU2IQd5sgQv8CK8sGv
- Tr9gf3z04ivrZjghhLgxuQKMOvX4Gt9PXGi6QFOvdaZg+36bl6cWKUnyLNyva21GhSkW
- GTHg2fxsqSeBdAz8QvJnUM+CKforIDiWMcAOwCGuhJappzEt0C80bIiywTVs0QvrB/G9
- EuY8Ji0/95LaUJgvlDjB/sE6Fk7Nah0fuznTyXB28rvKAuwBfJIeEU5NhRmS5If4VyE3
- gsgA==
+ bh=TMKZgSE+4Wp4wamuyoH8DQR+QfTMZIlLwtNLdejvYFo=;
+ b=dL77aIExDy+pl1jHGZqTfE/BTHf7D6Q1RtesXsDtBZPus4TAvjL0IKkkQpeQgBRSFK
+ r2kd9d1xiQv9z69Rlq06wWYykCrJSHbM6WM4XIoSdouYZX282KX5ODfHo1KYyc++0H2Z
+ W1H7unYe9EmkUPr2+s9S8pfonY0U6+M2SK4I7KWz0yhUJJUuOkLS/nA/72HrclAB7uPM
+ SaAcWOqf+ZKYZBkPbN5dYq0cNPQdUvYg9UFk291T6UfLXiZz6064KcZE44MgOZMOkIfn
+ FyYFeLfwDthbp2OkY+TosA4Yqe3HS2DolR7W+j5DASlHN3DO1loXcw0HIAJ+WTfKV+jz
+ uewA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756820847; x=1757425647;
+ d=1e100.net; s=20230601; t=1756820860; x=1757425660;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RXDiikMBr5sTgVqsLvsvUiNl7i+RmxmaZDNA7vuKzj4=;
- b=EuUFRrRXn6c+dR6XXdPdOyuQBl+A3VJt549JxnXj5D9ctJt+/ZFj0MEEL8WwGGQnJN
- OY0X7gDMa0TD6bIpTCsatZ1GpzRKqSbQXjBNAyeQXNShZZJsY67ndDPvuVTmVEsSdL8z
- iDxUQeOoxd5jMIlCJI+o7iIvDbqn0f57zhiNf+f/OZVSzM6t1HY1/lbAd7tNemaL961n
- YJ6y7e5i+9CJ2GLg9uBXlE3kqD3WN+eVUjMmytklW2ubgYW0122Qf/xDs+2x0QuFMZX/
- K3sXO+d06hALUky9aUUewQgF5IjlNGTcpX+2C+gKhaPtIoJp7MaUdsDKriFh/Uzq4Wqd
- tLJQ==
+ bh=TMKZgSE+4Wp4wamuyoH8DQR+QfTMZIlLwtNLdejvYFo=;
+ b=v18vSHMNirkHQJIIX1mKMXcQzN1JQerkK2EPNXv6SQtBq/NbakaeK7yOOeMabAr/V9
+ JGazF2Azk8PIFwkBIgAzN0mu59U4UAv+tNjxUbAS1McbClPrHApuq112Oeur07WJRqBi
+ eV2yr6dyAEBSTKXRSGojTom3lDTfxAlNJif2VyDSP75DxfVtJlbXze2nVMzcIYwQmgFh
+ kuaoisYO3UGxrYx8qJVgS9mIJUWnhGuJW1R+ifsGxSyR/XtsL2mQbtB7rHVU7C7Uf7Yv
+ JQvKut3yhMNJnLJWQfRqsMEMm1UIdsnFN91A6pTqZGsvluXA4xqlO4itzl6iGiUB9o1F
+ s0Rg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLIqW9WEdbEHGZlruo7hIYWl3+JHMAPyJxHCisRI7eRgawat+164HgX4C82NtJkc+yFU0uhB0o4NUu@nongnu.org
-X-Gm-Message-State: AOJu0Yx62Uwy6NTZdz8V9BhSx4A3aPZK7LjKpf0w+L2ogbnQkpvmWZoJ
- nd5qw0RSazBNGU9TnlGeMxw58RVK3GcHr2Vyovv+x/iEGkzz6h3+eIKa5uvDmZXVBD8=
-X-Gm-Gg: ASbGncvQTTt1gk6U4BsqhURINU37cldrDTgr9+llpdBRFwpS6rCnXDoQB9vHDFcYksx
- HERHTu9Qd0p/jGS3NXtvvUdmYHWLlVROG9nlD8R8X/OztgaW0bU87+okwHFuu242uLV5J0vPBk4
- D2Y/Y3u/RUpyZqp5v0FLibIslIQyL/X+NptEhbLhZyjRFWTDZwF0C+bz6JYlH2SUVbPdS+Qo9xf
- oO2HqdKDxKQWqbrPJ8EMTLyC27epHuKJDzPaRGsf674X79F8QCJIy2Zc/GFcR5i0mzzIf3fyDfI
- jrUvXtG/StPsKbjVfpHHcJlSSDmy6pgeTGNgc12DjuzNZS4ZmO4DHdfd2YXvbj1r2CsEHdA3Iym
- 3aNfSREsed1kyOCjBi8X0Y2l1SHUpThyGC5hw9W6W1SNAOynMGp7cRRZYU/yNrhEnRb6ZNAZqVm
- 6jbBZgbA==
-X-Google-Smtp-Source: AGHT+IGmrLAs3yDBpLS7g2ehzcKlyslPkeIln4YuE06y0kmMK3YQlqqf0iqJDHIXIBQ49Rfse6gdug==
-X-Received: by 2002:a05:6402:4316:b0:61d:2d46:20af with SMTP id
- 4fb4d7f45d1cf-61d2d462318mr8782666a12.38.1756820846839; 
- Tue, 02 Sep 2025 06:47:26 -0700 (PDT)
+ AJvYcCUKAXuFqkNx1TOneqsBT/zev+nudfeVGzu2Gw+unklLy3vU8L84xunLVhzyNiq2B1/3bZj4hhVIpP30@nongnu.org
+X-Gm-Message-State: AOJu0YwBU09OL4bKRaUQRb+K66cR+iT/Zuz9pKHvf1KBpj0yPfpWiYlP
+ O//It3sV9TiY5FxUOC8CqFkfpY19naEu6hDWQW0mML4yj5g4p3eM4d45/WXiFDN67XyxGSPwvl1
+ bNYf3ZiI=
+X-Gm-Gg: ASbGncuR4Q9cIiyINYRAo8kbTSRLL6RoqhJkNRjBO7W4EovhE02H4/UyQdEOX85q05s
+ 91rg2x536W+ACOEX4EK8AGDMpF9uvgROFulB5qiobSyZHIj8H4iD3ixt6rekNTMf0dcj26I6Gwn
+ d09TYW2bWK5/8jYdNewFHYlV48b/bKc7x37CZiUIsUJiuWLvxGHzXM/duhByCAwAEN2vwEz2D9g
+ h5WN9fhsFw97hcBHnr8kCnMWETAjnmB0pwv7/zfSuHtDAgED7IeYxdOY4TRrN9oYMNbkTYbeIxN
+ yn1cUJxhcJB8SvgmwEYyLsVu66lqd5XmPSDW4uWsbB4R3MZA2NTS/JeaihSVxsxtFvyg2fsZ9Mx
+ FHE0CKQvIscxhpbwY/pAZRBYGt8Q+qLlD/xgaw73VqDL+wmmt2usDYHSH6qyHGdKT7Nb1ssTFut
+ 0G2/aBUA==
+X-Google-Smtp-Source: AGHT+IHxuurW6/mIjZX/ZXVlp2SPvqFc059y+3sKSzBEb0ejJKIIvz1K8Io4ygR5ABPNZPBt7IcQvA==
+X-Received: by 2002:a05:6402:4407:b0:61e:ae59:5f07 with SMTP id
+ 4fb4d7f45d1cf-61eae5973f6mr3891821a12.20.1756820859574; 
+ Tue, 02 Sep 2025 06:47:39 -0700 (PDT)
 Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
  [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc1c77d0sm9701605a12.11.2025.09.02.06.47.26
+ 4fb4d7f45d1cf-61cfc214bacsm9882275a12.16.2025.09.02.06.47.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 06:47:26 -0700 (PDT)
-Message-ID: <30f7a3a2-d432-46b5-821f-58e100dfba2b@linaro.org>
-Date: Tue, 2 Sep 2025 15:47:24 +0200
+ Tue, 02 Sep 2025 06:47:39 -0700 (PDT)
+Message-ID: <2585d9dc-d7d4-49ca-844b-53ffecb49d70@linaro.org>
+Date: Tue, 2 Sep 2025 15:47:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 0/9] Misc QGA fixes for 2025-08-29
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20250901112413.114314-1-kkostiuk@redhat.com>
+Subject: Re: [PULL 0/5] Testing patches for 2025-09-01
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20250901115300.2541937-1-armbru@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250901112413.114314-1-kkostiuk@redhat.com>
+In-Reply-To: <20250901115300.2541937-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,25 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/25 21:24, Kostiantyn Kostiuk wrote:
-> The following changes since commit e771ba98de25c9f43959f79fc7099cf7fbba44cc:
+On 9/1/25 21:52, Markus Armbruster wrote:
+> The following changes since commit 91589bcd9fee0e66b241d04e5f37cd4f218187a2:
 > 
->    Open 10.2 development tree (2025-08-26 14:10:25 -0400)
+>    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu into staging (2025-08-31 09:08:09 +1000)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/kostyanf14/qemu.git tags/qga-pull-2025-08-29-v2
+>    https://repo.or.cz/qemu/armbru.git tags/pull-tests-2025-09-01
 > 
-> for you to fetch changes up to 28c5d27dd4dc4100a96ff4c9e5871dd23c6b02ec:
+> for you to fetch changes up to c9a1ea9c52e6462ad5c7814f3abd65baa69dc4ce:
 > 
->    qga: Fix truncated output handling in guest-exec status reporting (2025-09-01 14:02:18 +0300)
+>    Revert "tests/qtest: use qos_printf instead of g_test_message" (2025-09-01 13:44:28 +0200)
 > 
 > ----------------------------------------------------------------
-> qga-pull-2025-08-29-v2
-> 
-> 
-> v2 -> v1: Fix author of commit
-> v1:https://lists.gnu.org/archive/html/qemu-devel/2025-08/msg04615.html
+> Testing patches for 2025-09-01
 
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
