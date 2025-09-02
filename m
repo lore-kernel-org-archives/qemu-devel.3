@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7F4CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F3DCA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:30:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utOHU-0006la-7U; Tue, 02 Sep 2025 06:30:28 -0400
+	id 1utOHl-0006pY-DZ; Tue, 02 Sep 2025 06:30:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utOHN-0006ht-DU
+ id 1utOHS-0006iR-3D
  for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:30:26 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utOHK-00012E-1O
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:30:19 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-45b8b1a104cso19606105e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:30:17 -0700 (PDT)
+ id 1utOHM-00012b-Kw
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:30:24 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-45b87bc67a4so17204155e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756809016; x=1757413816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756809018; x=1757413818; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8DZzfloCVYfnawb+HNzXt3BHlSz81vZt+CpZ/An1bjc=;
- b=hYrPyl13PiqR4upuXQsRkEYS3pDLMjGCNv1aQ8nSTxmQLGCQoqlk/F7Im0O7iCGE0T
- I00/H1QgdbISiOAW5+kN34ClvR3Xtht5rOvMeD6SGqaT3kUXXRGmiu4hb8a4CdujgbIs
- aBzCQuCWQbMMYmUCFj63rJrM1qu+bdwkCQx2k5W1xXKFv8haYGVyV3J8pof5Braf6DA5
- H0bddKL46nvYrYRGIx8InR7+OfPfYnvJAzs83ROHnLABaC3hbJiMa/cPMMhBaLIfLUr0
- n1zS0XEk97nH+3JshTspgcvbwR7mEfEcB1Z7MEy3FQqB96N/CXX5lhLPK9AC/rwnXnA5
- QQLw==
+ bh=on4A+GT89TCdUZSaNdrGf23a3e80Lqu5mz2DsnpTu8Q=;
+ b=SSfNhHn+UoEFrqvU2Z4VEehC2hmePm8HmCb63q+zL87JOLuFrIX45fGlH9BzLczvCH
+ szvO+Kk8AuKpMsiGWH9ERzBMZejjqPoB1kwqqNE1ZKqj02mEURo6Zc7UCbSlhXHIe+//
+ thfWV6C35j1NGAPGigK0rbHlyNATUmY0vDnt8CgYl8mIWp5B+jJ24lLKsxtkn0DVkbyX
+ SpkASxZWMaz8y4uidtQd9eQpWUofRHqJd9u2Sc1Kkb/axtMXjBw1bEC4VHZUK1t477SN
+ 0X2SWd1ZvenIHBuKdgChdSrg+7tl33RjIjNWfZGbWVzhC1zg2AmuseOk++xuMsnwMeCD
+ n4rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756809016; x=1757413816;
+ d=1e100.net; s=20230601; t=1756809018; x=1757413818;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8DZzfloCVYfnawb+HNzXt3BHlSz81vZt+CpZ/An1bjc=;
- b=uJiWn/6ZBHjF8gz3my5aNQV8TCkJ5eQ7p5IPisqwGVXGwglubZ63Zcl5TrTkGCk9mN
- R5j3IRFw4ZHjZ19J2rZwRq4Hx+YgIvKcuNq31N2Asq5Ha4TMiEWV2Zxc+BfzHU4WX4pj
- NCltrBTA6fOTbeGAE9JslaL9X8bMXplOYjew+JjD9qrZJmFHJ95VMYifm2L44wuvcAUW
- FZwyeOh7FzTtV9MKBQTN4f2vhkGWC91zyuozxLQcwDyXSbf+EAL2RlwSx4kQS2XZrpdd
- Jw5U+RW55Bhf5Jopb69M1GIhCAkL3lOOmpHPZPGbdgwyV1sQP3Hp2V5y58InUjKNp1xZ
- XjCw==
-X-Gm-Message-State: AOJu0YzAt4hvm+FsQW3y/zzyQ3CE6N3oJ69IHuzVpMHRWz8SSOOibrSV
- fKr2EPE5zdpQhtbTW6n4WK+L75osXv844LoIK3S4nvXbZNN0AeaCELVJKD6bYiul2hQBfw1yySx
- 6terQb+Y=
-X-Gm-Gg: ASbGnct+AySCjRKN4Lt+mGAIp45vKAxg4dkaIEoqvwL3XMcsqrVK9O1sRYpw+Ysy8re
- wIVtIYqNwsVDCXz9Sx3qZIGB2SGUJQYM/Tnf5w5gMT3DMKZzyK9JqzMoNiMbeD8+gRZhh3ymCjN
- QsouiWr6t26Bv+jv4fopqrgHSml86pbo2C3IVQbLQBzEHIFi2w9YJDtjcZABNyBccKeO8fI13AR
- Eu0uxEBhV88Hw86JbUA/N4x29EIDteWSzXoJ5uVakfmz3MAVIJ5TGM1zjcA4gwQZH/QmcgKWH2q
- PJVamZmw7bVLoBgGdPosU6C1TD+9607OuugZ3N/qsN7qnb+qMIFmpUZALv++cEmZCoDE9V8u72d
- d/ibCVzzEBruF87AENcYd8HSTdkZuLYKTLeLF8jDzvxsFbiLAVAUOuFFbNHCW8kE=
-X-Google-Smtp-Source: AGHT+IFJw/io0xUn77SLs4ccx+FzaqLixdyicaC1K62fMKtpMUpQdL4j89LVAEXIdH95f6bUaunIWg==
-X-Received: by 2002:a05:6000:4312:b0:3cf:3f1:acc3 with SMTP id
- ffacd0b85a97d-3d1df631895mr9852288f8f.60.1756809015716; 
- Tue, 02 Sep 2025 03:30:15 -0700 (PDT)
+ bh=on4A+GT89TCdUZSaNdrGf23a3e80Lqu5mz2DsnpTu8Q=;
+ b=ZqGVYQodNNmYtLhjdMGGI4vI/KgN5FQGBT5MhX2G875/slPoeo+aP6TSiiBVB+5U9d
+ kp9Wq82Dqj/tCXPN7var5A0V3raCg/dIn/OdscOgXG7r7YTbbm6O5XbqOtUuS7V3DSQF
+ cQoNDnxGw3mDNNON4Ci2n3XLZY1rDffKcZ7UH2kc9Y3g1/ECg9WdUYr18gJmrxZckT26
+ rEfRWq8e/GF0bXGovveGk1w38yzP8PvEjOVN/57ZgubXHowNeOAvHADHcESMWk6StLaa
+ luF/s0OEsA7B6Ta6egmUF2kjVrfdkNbS6W1xF7J+wP13S32xA2lM0YjZhqYdmSDfDtng
+ mcZg==
+X-Gm-Message-State: AOJu0YzBDz5xEZqds5HzLoocz2/pSKKH+wBf0ua5GIS/KMeHJeTsUFyZ
+ u2OJdFGjAm25Ysmdgnq+nZYpddyTVyy4AthQ+M39dtlQH+pPUWlNNM6qu4kC8YbhcO2RJ3x8mGh
+ +OrSujSU=
+X-Gm-Gg: ASbGncubVrFsHDlE5ssPelwMJs4829oZVbexpv3iVLZYCSfYFoWFHRQnNlkzKqs6cni
+ IsNkNHGPBFlepEdSwzOKOCYks9StROhJ6JxkIl6+zPPc1GytX7y5hvPFYnhnbK8b+RBANNrExL6
+ HAoADYfr1KRTmIafvTjgCxKLYkNaJxLBRrG1A12pjS0cL9eX7v4FYuGgcc9cUaigtB0LFtD14A5
+ Gac2bK4l4Hm06B7ywNc9WW1gE9AT8FvqCfiGGcjqDZ5LNhLl/SrJcJTyd/0QsVRoG/xG8wV3ulE
+ +51dj1iZVOoW4FyGUELojCF0zW1iCl5blcDJL+STZMsD1iyJiTdKdR+Xx2y+VqKFTzOzvET3LWo
+ iVDlQeYvPjPcBdQEdYmD/nV7sTtdyNz2n99zbuPhlbEUiX6i25FvzesQ94KAXHrHWMtamyJDq3A
+ ==
+X-Google-Smtp-Source: AGHT+IHKA6ZKsCdycg+Bp/Lv1UkvlSmjtEiQckLuBdmim4eFtGtcAEeKqym7Cdj1TP2FNKZjQH1s9A==
+X-Received: by 2002:a05:600c:474f:b0:459:ea5d:418b with SMTP id
+ 5b1f17b1804b1-45b85532b10mr89518435e9.9.1756809018375; 
+ Tue, 02 Sep 2025 03:30:18 -0700 (PDT)
 Received: from stoup.. (151-0-205-164.ip282.fastwebnet.it. [151.0.205.164])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b6f0d32a2sm296470665e9.9.2025.09.02.03.30.14
+ 5b1f17b1804b1-45b6f0d32a2sm296470665e9.9.2025.09.02.03.30.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Sep 2025 03:30:15 -0700 (PDT)
+ Tue, 02 Sep 2025 03:30:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com
-Subject: [RFC 2/4] util: Drop QMESSAGE_CONTEXT_SKIP_MONITOR
-Date: Tue,  2 Sep 2025 12:30:08 +0200
-Message-ID: <20250902103010.309094-3-richard.henderson@linaro.org>
+Subject: [RFC 4/4] util/error-report: Use LogOutput in vreport
+Date: Tue,  2 Sep 2025 12:30:10 +0200
+Message-ID: <20250902103010.309094-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250902103010.309094-1-richard.henderson@linaro.org>
 References: <20250902103010.309094-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,101 +101,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Merge print_loc.  Use the LogOutput callbacks instead of
+error_printf and error_vprintf.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/message.h | 11 +----------
- util/error-report.c    |  9 +++++----
- util/log.c             |  2 +-
- util/message.c         |  7 +------
- 4 files changed, 8 insertions(+), 21 deletions(-)
+ util/error-report.c | 72 +++++++++++++++++++++------------------------
+ 1 file changed, 34 insertions(+), 38 deletions(-)
 
-diff --git a/include/qemu/message.h b/include/qemu/message.h
-index 6dbb068ca9..68b08f0ea7 100644
---- a/include/qemu/message.h
-+++ b/include/qemu/message.h
-@@ -28,25 +28,16 @@ void qmessage_set_format(int flags);
-  */
- void qmessage_set_workload_name(const char *name);
- 
--enum QMessageContextFlags {
--    QMESSAGE_CONTEXT_SKIP_MONITOR = (1 << 0),
--};
--
- /**
-  * qmessage_context:
-- * @flags: the message formatting control flags
-  *
-  * Format a message prefix with the information
-  * previously selected by a call to
-  * qmessage_set_format.
-  *
-- * If @flags contains QMESSAGE_CONTEXT_SKIP_MONITOR
-- * an empty string will be returned if running in
-- * the context of a HMP command
-- *
-  * Returns: a formatted message prefix, or empty string;
-  * to be freed by the caller.
-  */
--char *qmessage_context(int flags);
-+char *qmessage_context(void);
- 
- #endif /* QEMU_MESSAGE_H */
 diff --git a/util/error-report.c b/util/error-report.c
-index 2e58ee1c50..fa34019dad 100644
+index 6ef556af5f..db5b2c1608 100644
 --- a/util/error-report.c
 +++ b/util/error-report.c
-@@ -172,10 +172,11 @@ static void print_loc(void)
+@@ -132,36 +132,6 @@ void loc_set_file(const char *fname, int lno)
+     }
+ }
+ 
+-/*
+- * Print current location to current monitor if we have one, else to stderr.
+- */
+-static void print_loc(void)
+-{
+-    const char *sep = "";
+-    int i;
+-    const char *const *argp;
+-
+-    switch (cur_loc->kind) {
+-    case LOC_CMDLINE:
+-        argp = cur_loc->ptr;
+-        for (i = 0; i < cur_loc->num; i++) {
+-            error_printf("%s%s", sep, argp[i]);
+-            sep = " ";
+-        }
+-        error_printf(": ");
+-        break;
+-    case LOC_FILE:
+-        error_printf("%s:", (const char *)cur_loc->ptr);
+-        if (cur_loc->num) {
+-            error_printf("%d:", cur_loc->num);
+-        }
+-        error_printf(" ");
+-        break;
+-    default:
+-        error_printf("%s", sep);
+-    }
+-}
+-
+ /*
+  * Print a message to current monitor if we have one, else to stderr.
+  * @report_type is the type of message: error, warning or informational.
+@@ -172,28 +142,54 @@ static void print_loc(void)
  G_GNUC_PRINTF(2, 0)
  static void vreport(report_type type, const char *fmt, va_list ap)
  {
--    g_autofree gchar *context = qmessage_context(QMESSAGE_CONTEXT_SKIP_MONITOR);
--
--    if (context != NULL) {
--        error_printf("%s", context);
+-    if (!monitor_cur()) {
+-        void *opaque;
+-        const LogOutput *l = error_log_output(&opaque);
++    void *opaque;
++    const LogOutput *l = error_log_output(&opaque);
+ 
 +    if (!monitor_cur()) {
-+        g_autofree gchar *context = qmessage_context();
-+        if (context) {
-+            error_printf("%s", context);
-+        }
+         qmessage_context(l, opaque);
      }
  
-     print_loc();
-diff --git a/util/log.c b/util/log.c
-index 4b5953dcc7..b129634708 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -161,7 +161,7 @@ void qemu_log(const char *fmt, ...)
-      * acquiring the mutex
-      */
-     g_autofree const char *context =
--        incomplete ? NULL : qmessage_context(0);
-+        incomplete ? NULL : qmessage_context();
+-    print_loc();
++    switch (cur_loc->kind) {
++    case LOC_CMDLINE:
++        {
++            const char *const *argp = cur_loc->ptr;
++            const char *sep = "";
++
++            for (int i = 0; i < cur_loc->num; i++) {
++                l->print(opaque, "%s%s", sep, argp[i]);
++                sep = " ";
++            }
++            l->print(opaque, ": ");
++        }
++        break;
++    case LOC_FILE:
++        {
++            const char *file = cur_loc->ptr;
++
++            if (cur_loc->num) {
++                error_printf("%s:%d: ", file, cur_loc->num);
++            } else {
++                error_printf("%s: ", file);
++            }
++        }
++        break;
++    case LOC_NONE:
++        break;
++    }
  
-     f = qemu_log_trylock();
-     if (f) {
-diff --git a/util/message.c b/util/message.c
-index 6d3580b7be..8deba3940c 100644
---- a/util/message.c
-+++ b/util/message.c
-@@ -20,17 +20,12 @@ void qmessage_set_workload_name(const char *name)
+     switch (type) {
+     case REPORT_TYPE_ERROR:
+         break;
+     case REPORT_TYPE_WARNING:
+-        error_printf("warning: ");
++        l->print(opaque, "warning: ");
+         break;
+     case REPORT_TYPE_INFO:
+-        error_printf("info: ");
++        l->print(opaque, "info: ");
+         break;
+     }
+ 
+-    error_vprintf(fmt, ap);
+-    error_printf("\n");
++    l->vprint(opaque, fmt, ap);
++    l->print(opaque, "\n");
  }
  
- 
--char *qmessage_context(int flags)
-+char *qmessage_context(void)
- {
-     g_autofree char *timestr = NULL;
-     const char *wknamestr = NULL;
-     const char *pgnamestr = NULL;
- 
--    if ((flags & QMESSAGE_CONTEXT_SKIP_MONITOR) &&
--        monitor_cur()) {
--        return NULL;
--    }
--
-     if (message_format & QMESSAGE_FORMAT_TIMESTAMP) {
-         g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
-         timestr = g_date_time_format_iso8601(dt);
+ /*
 -- 
 2.43.0
 
