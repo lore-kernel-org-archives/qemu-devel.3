@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66CC5CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49713CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utOX3-000878-Om; Tue, 02 Sep 2025 06:46:33 -0400
+	id 1utOYu-00027Q-QJ; Tue, 02 Sep 2025 06:48:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOX1-00085b-Mi
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:46:31 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOYs-00026O-TH
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:48:26 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOWz-0002hh-GD
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:46:31 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3d44d734cabso1690160f8f.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:46:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utOYp-0002pp-QT
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:48:26 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-45b83ae1734so22001355e9.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:48:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756809987; x=1757414787; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756810102; x=1757414902; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DEiHQIGlRJ6Sj5wIFF4qDACPjox2v/CBmFEmEPfHJ3o=;
- b=WJGnKFlY4GWXuyh2VNfNID3qBGOnHRDBFdu3ApKM0FhU7hxwIMTSO+nKKV4nY6KZx5
- 2vaWzUk99s3kj/lzEjmK598NxgbyyQiNzrawLJ4qqGjQXxCKFqOqo89zZLxbdA6VZwS2
- OT/LQxuGFDRLljAI2Hzv2kpUJAFY1qsZDN9KFWg8M8JnYaTTuVGagAnktTJiY2SdyGBC
- zxJjHatlyFIJ/0LjlKmN6qTAkRgy8ZYsLRoDtvSQNaCqfgis+ul6dBJc3Pl/RkBun74o
- /bK7nAl4gosqiTLUAxj5pMpcrhNQIAmB5JUiVyVf3TrQhp6WgojACjV9enE99ba2MxNk
- JT0Q==
+ bh=bRBuAjwYyLGtEfDp5Hp+CEQZdw5DIkIx0+K9YfLsRd0=;
+ b=lRl53/GpbmnFpvwXSoxPhjZuVvfUlF88Y/Bwx22+cAODuuVtXldY5Oq3wWY4/LMRD7
+ ZDGH04eiZC2S0zt3u6nOeOtX1ubYQhoyB22adfOJ0ipuyhu5aYn27LyMjhGx54/TasEA
+ HuQff7t9YzBb0o4Wvs6RS5wdLJ2la90zBo6NnYRgeWu11ii1T9oS9mweU82fzeDDvxcM
+ m89Dqop0ztCwqkQqpnMps1vGbTT0PFgWxse78Wyyw4MMxvWMskliFct79SpUOFKXGv0s
+ VTs0xVZsK3ETG5FdZJ1bhd63yOhlKBkXSkcwlcMXrQ4HdHCrD7GBDDay7B3sqjrI2LaP
+ VaLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756809987; x=1757414787;
+ d=1e100.net; s=20230601; t=1756810102; x=1757414902;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DEiHQIGlRJ6Sj5wIFF4qDACPjox2v/CBmFEmEPfHJ3o=;
- b=sK+1ycbWp86kvSBldsaaM4WX4l3YlTSDcgoRiYe3CRcgbWYBG/6gEglN3RMU/wLKPo
- wc3XBSDMhAM8u8QdRdewZzulo3wZPx/qFWp5SYX6FuM8cGHYTskySuYP5UksXdUIMQ68
- KsD/OLYOsR38QczwkVT5f70BJcJGMRNmToUxhlCa6GUl+JAzR0/Z8OAfGdGapvwSEEnp
- HLsxNZNrxprXNXDIQB7l7WDOb/QSPUD9npDa1c6qoC7+Af1fPJbub+Cskc8n+kqci8/s
- NkJAnjZJyRjYGBpqqzGQsvnl4LSoEclitouPIWz4Xhtq7ZoyiNRvAswJF/FyB2Vjii7I
- 2KAg==
+ bh=bRBuAjwYyLGtEfDp5Hp+CEQZdw5DIkIx0+K9YfLsRd0=;
+ b=uDM4uon9ZhrrhM+CIA5i5YC433RUpN1YmaS/paZTG+MN8OUtf4cq/xAWNshFwyfXO7
+ PRDum5P4m5YNAuFkxviavSdrvpDtljNq0K48s3tAfLqax4D7FEy63m7zsmcYaLNqxfwN
+ JkWfy0nmWpVpCCLgXmZ6651Xg0lXEm3defcToBRnzebbHkr1vkpkFwZ0VEPqVq5x3xwV
+ NRTTSXM8VGSLOtuUOlLQLP/iXFWfbTuma4A8kE8QNYALIIx2hxZakM8EqOUeln3JN9PN
+ vbZPN61AM5njSBR1ZYCx2CgNn6FRL50bdj2ANHL2hCGsqq1+PFE8IrULOtrJ4XXXAWpJ
+ rSFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+/TC9l3GxiTpUWeVcn73ksrM3PnUdOT/iS9KJHt+ULWTRb8gb4A8pZ9gNa1ESAu/VE3slsjBGys7A@nongnu.org
-X-Gm-Message-State: AOJu0YzpCn7g4DsxbkqPawadUn/Td+BkPgQIE9zZ+UZvnOCaoGeDd8Wv
- sflqptKGymvFgUpH5ketqXaWZLbyyJT7WiTmk5/7qO9n1dZsdGPRt5DTd7zDbRGg4YKcdjoGzkt
- NkZ/o
-X-Gm-Gg: ASbGncsplEwNNmUTo7F/wizQhIChJbegDxkv7jZyii0rx/4zzLOD32XveocRHs9ATPJ
- RobbEKiTwdIYvF5Ej6rdgUURGKyjh+gQTKyV+4Zvx7AWiyo6b6Kf2ulyO/j7Onx2YMJSwH9uflq
- 4d3fpdcJKv2uzZV+fXSRn1jAvO9Pmc3zsVuTkfP5G4Lrz+zLwmVMECbky33o0SeYA+m0FSxZ9eF
- NJEtscDcl2pAXP2QiJWqQvhFlzSm5QnvFjL1y5wBTnFVvI1E/xWNGHNIaDYHQAnMk/9KHj0/kWM
- RUF3kS7jeA1eS/J4Zertx7nr6YaSpbVTsjFcW08MUUaNs5cs5m4xQY7LF+eeKlaBbGPL0EbH1rk
- tdgbAuoSPDZXuH6d5G/73uSvOtVZJ+aY5swTJdwaDBuIPJA4MgJWgqWpQ4KaLNQ8bRu+v34V+Rs
- zeZD0h87rdNl4=
-X-Google-Smtp-Source: AGHT+IGODMoR8FCEV2IXVVGHbZ2ievzzVA4Ge+gU982bkXoKl/jBYRT/eZ7khUeuyvTjG/kVb0WYPQ==
-X-Received: by 2002:a5d:64cd:0:b0:3ce:16d3:7bd1 with SMTP id
- ffacd0b85a97d-3d1d9ac1cdamr8178739f8f.0.1756809987484; 
- Tue, 02 Sep 2025 03:46:27 -0700 (PDT)
+ AJvYcCWupYReJYrT4a9/fV99rpJCknilcSGqK9yeYxzR90+ZdOwZvkYJTH0xY+FIferJEv1Cpke5Lo3GkdcH@nongnu.org
+X-Gm-Message-State: AOJu0YwuVgid6zCt+v4ivGx5UEmMYi7S7BFvqwcTcBjk3g8I/Gk20JKB
+ BNw1bN9k1Lrs9H1wRv6LeWTvCKW8kJBG2bkgewiUgLKGLluepKE8gwzM/dihdJwFQoraiPSUecg
+ wXsnP
+X-Gm-Gg: ASbGncvAb1FtHsfTH0PwtGy9HkOxi5rhfKhCIxyT/QF8LLZLqUNawruiUzbZahubHAg
+ a9BO9H4GYB4zLP4HgzYMsgRZOImC0MhQ9rZ65mNxlMT1GDCw1jQDVQfx0MDmIYYrYvuQ4uwMFfi
+ 1hDlCjdaWArtDEQ+42BUOg23BVJk8qd9LTQIV9Z8NzQmvw2fHXaDbh2srzvnMtYsmzJk9LkdA3x
+ U6H40mYP+T95FPoJeTiWOIZ1908+mICj4+ySrLYJD3WXcuP0BS9G5TvjvcL980TUwOOOL8z0qvo
+ 0tRfxu1bE3rB+ZskaqC2nf9CjVCuzDccXSC2s9qu/0qpqVXbBO6PWxJJJvkt0Jx/9uHMGY3dRaq
+ 8+PYetBlufaZ93yNQcBPJVOiEOCu0qMh3sQNAsSKAGVX5LkPNGQbkZp2aD8SNSnil2g==
+X-Google-Smtp-Source: AGHT+IHrge87uErL1nNilvWUBDgSNIEavZ3QoheCwWmOk02dOEiliSVm1iqjmnPlv+gWxw98lNdS+A==
+X-Received: by 2002:a05:600c:4445:b0:456:13b6:4b18 with SMTP id
+ 5b1f17b1804b1-45b855b2bc3mr113833455e9.31.1756810101771; 
+ Tue, 02 Sep 2025 03:48:21 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d66b013b7dsm8416581f8f.28.2025.09.02.03.46.26
+ 5b1f17b1804b1-45b9ab7c7dbsm13426475e9.11.2025.09.02.03.48.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 03:46:26 -0700 (PDT)
-Message-ID: <e89ecfee-196e-4b5d-9a24-7856303cb84f@linaro.org>
-Date: Tue, 2 Sep 2025 12:46:26 +0200
+ Tue, 02 Sep 2025 03:48:21 -0700 (PDT)
+Message-ID: <1da5c7f3-1b14-4cac-a2a1-bd132b521898@linaro.org>
+Date: Tue, 2 Sep 2025 12:48:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] hw/mips/malta: Include 'system/system.h'
+Subject: Re: [PATCH v2 0/8] vfio: Remove 'vfio-platform'
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+ Alex Williamson <alex.williamson@redhat.com>
 References: <20250901064631.530723-1-clg@redhat.com>
- <20250901064631.530723-5-clg@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250901064631.530723-5-clg@redhat.com>
+In-Reply-To: <20250901064631.530723-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,15 +105,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/9/25 08:46, Cédric Le Goater wrote:
-> Files using serial_hd() should include 'system/system.h'. Fix that.
-> 
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Cc: Aurelien Jarno <aurelien@aurel32.net>
-> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/mips/malta.c | 1 +
->   1 file changed, 1 insertion(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Changes in v2:
+> 
+>   - Fixed 'system/system.h' include for the arm virt machine and a
+>     couple more models
+> 
+> Cédric Le Goater (8):
+>    hw/arm/virt: Include 'system/system.h'
+>    hw/isa/superio: Include 'system/system.h'
+>    hw/mips/loongson3_virt: Include 'system/system.h'
+>    hw/mips/malta: Include 'system/system.h'
+
+Patches 1-4 queued, thanks!
 
