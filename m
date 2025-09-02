@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637D6CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6558CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utR1L-00023E-TY; Tue, 02 Sep 2025 09:25:59 -0400
+	id 1utR1o-0002gv-QQ; Tue, 02 Sep 2025 09:26:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utR1F-0001ry-95
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:25:54 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utR1n-0002fm-9q
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:26:27 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utR17-0006px-0G
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:25:52 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b0418f6fc27so336527566b.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:25:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utR1f-0006te-8n
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:26:27 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3ce772ce0dbso3700433f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:26:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756819541; x=1757424341; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=linaro.org; s=google; t=1756819576; x=1757424376; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VBAsnhXa4nvQDi8aKvR1n6R047OySgxdhCJTape8SyQ=;
- b=wTQ2/ta05eBI+F0sAZXjyqcXUBqYF/q9DSNqC7bmwpguK4C01sOhtVT4ZwsQG3gOdU
- SFLzHJQfn5IOn1+yq/+Uic4xS3om3/PmyeFxDJ+q3srEoD1OJNd+4z90hy45uo+VAPuj
- bi5ZQE8JrXqYHgnuqvkxQ2h1kAxoilh5KvVi7YjkZKMQkKZ7znLLLfxV6PgHLoHx4kBV
- CULYoHmYTR3MDqlnnn3vB15wvMvrMv8Uo+RIlcLbFXYgW05a0HTIXMCsBypCLFmrCcIa
- kTEWOLk4ob2AjGyNlT53aRatCY25PgvUwoXwTtfmCIgVTVMNo7m4rdZQ2WqPqbHVb4Pv
- 9/uA==
+ bh=Jpw7O1hvdgg3zkQ+ExyEAJ/cdv77jV29nWmWeROzU08=;
+ b=AhGQZQBV8w4bvakHPLlnXIWwjh+XzROqxmu3/jBMMChoWsbEoSLNVJFSKWm99jAg9J
+ Drfpgap5raoHwHwIGMp2Cc+NUHUXQXZpa8j593LI1yO8dNlonUkhUop9NroZ6RXP1cal
+ p8r/S7fwwmLMskRRpmx5VsnkbDb/W8RbAhpgscj3LG2YuvhuFaoeMOLLUvErZc+OonjZ
+ SE06Mgye9kws2bArWrkKzyxYbYuQ/nM3w+VkVWNm5cabKjvkS1MOhV+ZvAB0DXu2RCOg
+ 2/qdJAcqj6W2ltOeUkN6RYUk0HXTc4Wwp5xgMRqV37JY5WpCQ0YGLaWDEm6OTOfTkLFO
+ k2LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756819541; x=1757424341;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=1e100.net; s=20230601; t=1756819576; x=1757424376;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VBAsnhXa4nvQDi8aKvR1n6R047OySgxdhCJTape8SyQ=;
- b=JeZc6ZwfvkdzUZIJdiwLbeAsw3Jr//x08hZE2QsIoIQIOMdaP1QjDp/hyhypquJcpr
- bd7ZBL8B2DDWLhN41cZ5psKn5HVHTfLzJxSpzgFW9EYCRrfK+WWSFwHL3eMyaqUX4tj2
- mi0FElbsLeKil/ZWl9TEQXYJVmgrBd/dkpe9eh9BT07iMQILEnafwlsyLEqvXBtAOKRb
- yzlYdpvWErWksa0JkwGSGVPQ0mvMiBQy353SktaTf9zYEmsoTt84vWBIMzU/70ZYcyGP
- LmCMx5G4cs+cyx6q8R2DDq8hYckWKJ0KXw0TJjbLqQIgMd72MyjNEmdwHepRuUdm43JR
- ywqQ==
+ bh=Jpw7O1hvdgg3zkQ+ExyEAJ/cdv77jV29nWmWeROzU08=;
+ b=f5cK5WwWdBk9vsJb44b+h7diSVSqYClf2zp2eEevEEnjLYtkz2dR5lR83wmGiKXbMZ
+ cppzhv2yt9tR9noxBn79IyZJ9enc2yAvB1IJMNLxMbzZinZOUEt+kqVpGhFAOUv+bVcB
+ nhTM1Xi+KmcflbE6Zs/TwDAJu3pBLRAnY3yBw2co5RCUjMX9b1X/i+Ly5sqbuCDjEmN1
+ 0z0sIwjdOxSoe1l8YWDOdbTi442sbTOR+qoVi/evx+8je5hXk5+RMrPbsuBCyJsoUmZA
+ 0kGnjF0+bWJF0zKfk4ysff7ir0DydAH+MLNiTKkz/BDdHT75vESXuEb6ypJ8VXMAuIKH
+ oGVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVg+cZhtHcyQop0XGwmACVrKNZb0lJX/Bnr1Np1pgUJIRj5tpQz6zONDXHSEUJ46x1nJha/HLnWe1sS@nongnu.org
-X-Gm-Message-State: AOJu0YxHgDx09KaiwWKmfyp9Ck5/Zn5EmqKBXc/Ly7BgP270Pk51XYBl
- xx8DWILFebta5v/TFT72stQvAwA8sLJn08MRHbnjd+2DA9BmpAnwLH8dA02IIfLhmu8NaNmqA4O
- 9PcYQ/Fc=
-X-Gm-Gg: ASbGncuq/0kTE+Hp7ps4PzzluDCmkp1YKxlvznQKG5p4KjReA4EJ3dWaSMF3O8yFfYz
- 96EH84luXzwGIcOUhHFii1zzn2tQWuzLAAIijJDYfydt4ZnM8BHO1kpbI1AcQAyJBvYZ9ZwY/rS
- djqWaSwWaOAH4KMd/yN4v+jwb/bhPdi43SaA2pxP9uW8gE5k/Qlud1lAiJhdRPArFy/bIMpujGB
- hqh62MOdLJxQfA0bQvvxCE8hPJro7FVojf6QhoypOJx2foOarv+mMznMx2HoO1SypzYWUvMfpZ1
- QANjyvytaAWKcr/FG/QFQ/r1vBDhXepp/Tn8U0tgsStAGsKSFZcFBMy+d4YJjDanYU2oPOuvMKz
- Vv5CnAkxeJ0REOlb/+zhLudekguOmfHrX/v6OLaxlbklAQ2nJSEHBChd/8VmVojEdJE8JM9+oUA
- D9aSQ3RQ==
-X-Google-Smtp-Source: AGHT+IFqyTMaGpd8ZukEkVpy+1FFh10MCAadCDhA0Xh3VHbUMQc2/9OJ5mzrgQ3YR8HdwomEcAGRKQ==
-X-Received: by 2002:a17:907:724a:b0:b04:3333:7e68 with SMTP id
- a640c23a62f3a-b0433338660mr656540866b.41.1756819540951; 
- Tue, 02 Sep 2025 06:25:40 -0700 (PDT)
-Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
- [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b041e6455casm606304466b.18.2025.09.02.06.25.40
+ AJvYcCVDSZ0A118ANNC/VsALxFC/vt3u3Ix2E1QGXt5PjfBsUeGGUaG9rKISjwNiAz5gi/KiK7zC9DqXjrqY@nongnu.org
+X-Gm-Message-State: AOJu0Yw0azzS3Fr3gJczVVmOXf72AubLd2plEfX3BNlAtyyZSsf8LPUX
+ DbVnP8RNpmYJSQPqDs4owZm0oMlFq/4bwY0m0OLhZtaYXNB98WMMWx1utQlL+bdQEyw=
+X-Gm-Gg: ASbGncsuFCdGwE38FYiZW5CEo2S1x+c9O7jA1gSqXF1GY1Y/vy6leBz1cyDP/DSyF2O
+ P+sU+tvyUwDuJ+XxuJ6o3r08tRsP1MzAvTkzEDQPGhJ92vJ4YDN/SlFdtF0bCSU1UhxuQVfIldN
+ Jl+0abrTPh8YC3sK56bn7syXka2SxY99t2xC2N5awsmBhSjgobbocaXua8WhbcuIEhDZAKZQ3VY
+ efd49HXmWifgAofT9mMY4oPBRkrtyM2vvKVn17osneQEdlUIWSQ5rqOt7nuIx709cnRjRCH3zYZ
+ kKcNshc+R6+4hUttOw9H05sc8f2xbZUPvz1P+yqIy3Tpx/jLgxPtruKGDl8uAJ/wWzpuKbf5I44
+ 8WL3jFaZ/6NRyqUag0MJGLEUM4TU6WEmOwK8jKQ4D5zC7V2+VkMNhtgP/yIA/vP6kpATnlnM3h1
+ wE
+X-Google-Smtp-Source: AGHT+IGdcmJ0xcrZ/PpCUNKK5qT5M62HF4dE794Hkisv+n4418KZbBk0qjBu7Nl1u2oeREPbt8SnAw==
+X-Received: by 2002:a05:6000:230c:b0:3d5:a6a9:7d38 with SMTP id
+ ffacd0b85a97d-3d5a6a98bd0mr6337929f8f.59.1756819575729; 
+ Tue, 02 Sep 2025 06:26:15 -0700 (PDT)
+Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3d540843a2csm11255089f8f.22.2025.09.02.06.26.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 06:25:40 -0700 (PDT)
-Message-ID: <73b41cc4-dcb7-40fa-8ace-0fffd1f9465d@linaro.org>
-Date: Tue, 2 Sep 2025 15:25:38 +0200
+ Tue, 02 Sep 2025 06:26:15 -0700 (PDT)
+Message-ID: <9fbbe9fe-1067-4273-8c4c-645c2c1084a7@linaro.org>
+Date: Tue, 2 Sep 2025 15:26:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: honor $TMPDIR in create_tmp_file()
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Cc: Bin Meng <bin.meng@windriver.com>
-References: <20250831114818.4136358-1-mjt@tls.msk.ru>
- <93e542af-63a2-4236-9b58-b95eeb6b9185@linaro.org>
- <cff16756-3855-4fc7-8fed-0404662cf35a@tls.msk.ru>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH RFC V5 11/30] arm/virt: Init PMU at host for all possible
+ vCPUs
+To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com
+Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, imammedo@redhat.com, andrew.jones@linux.dev,
+ david@redhat.com, peterx@redhat.com, eric.auger@redhat.com, will@kernel.org,
+ ardb@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
+ gshan@redhat.com, rafael@kernel.org, borntraeger@linux.ibm.com,
+ alex.bennee@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linux@armlinux.org.uk, darren@os.amperecomputing.com,
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+ karl.heubaum@oracle.com, miguel.luis@oracle.com, salil.mehta@opnsrc.net,
+ zhukeqian1@huawei.com, wangxiongfeng2@huawei.com, wangyanan55@huawei.com,
+ jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ shahuang@redhat.com, zhao1.liu@intel.com, linuxarm@huawei.com,
+ gustavo.romero@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20241015100012.254223-1-salil.mehta@huawei.com>
+ <20241015100012.254223-12-salil.mehta@huawei.com>
 Content-Language: en-US
-In-Reply-To: <cff16756-3855-4fc7-8fed-0404662cf35a@tls.msk.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241015100012.254223-12-salil.mehta@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,47 +118,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/25 15:31, Michael Tokarev wrote:
-> On 01.09.2025 01:39, Richard Henderson wrote:
->> On 8/31/25 21:48, Michael Tokarev wrote:
->>>       /*
->>>        * See commit 69bef79 ("block: use /var/tmp instead of /tmp for -snapshot")
->>>        *
->>> @@ -862,7 +860,12 @@ char *create_tmp_file(Error **errp)
->>>        * so the files can become very large. /tmp is often a tmpfs where as
->>>        * /var/tmp is usually on a disk, so more appropriate for disk images.
->>>        */
->>
->> This is going to cause other failures, per the tmpfs reason given in the comment.
+Hi Salil,
+
+On 15/10/24 11:59, Salil Mehta wrote:
+> The PMU for all possible vCPUs must be initialized during VM initialization.
+> Refactor the existing code to accommodate possible vCPUs. This assumes that all
+> processors being used are identical. It is an architectural constraint of ARM
+> CPUs that all vCPUs MUST have identical feature sets, at least until the ARM
+> specification is updated to allow otherwise.
 > 
-> This is the comment:
+> Past discussion for reference:
+> Link: https://lists.gnu.org/archive/html/qemu-devel/2020-06/msg00131.html
 > 
->       * This function is used to create temporary disk images (like -snapshot),
->       * so the files can become very large. /tmp is often a tmpfs where as
->       * /var/tmp is usually on a disk, so more appropriate for disk images.
-> 
-> It does not give reasons for "other failures".
-
-It does gloss over the implications of "tmpfs".  But off the top of my head:
-
-(1) tmpfs is generally smaller than any other disk-based tmpdir,
-     so ENOSPC is easier to trigger, and
-(2) tmpfs does not support several O_FOO.
-
-> 
-> Are you saying the user, who decided to explicitly specify TMPDIR,
-> is wrong, and qemu should use /var/tmp which does not even exist
-> (see the bug report this patch is fixing)?
-
-I think this is a very strong interpretation since the non-existence of /var/tmp is, IMO, 
-new and rare.  /var/tmp most certainly *does* exist with all of the major distros.
+> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> ---
+>   hw/arm/virt.c         | 9 +++++----
+>   include/hw/arm/virt.h | 1 +
+>   include/hw/core/cpu.h | 5 +++++
+>   3 files changed, 11 insertions(+), 4 deletions(-)
 
 
-> The original code (before 69fbfff95e84) was correct.  Current code
-> is not.  My change fixes current wrong code.
+> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> index 0be1984698..4a74c383ab 100644
+> --- a/include/hw/core/cpu.h
+> +++ b/include/hw/core/cpu.h
+> @@ -618,6 +618,11 @@ extern CPUTailQ cpus_queue;
+>   #define CPU_FOREACH_SAFE(cpu, next_cpu) \
+>       QTAILQ_FOREACH_SAFE_RCU(cpu, &cpus_queue, node, next_cpu)
+>   
+> +#define CPU_FOREACH_POSSIBLE(cpu, poslist) \
+> +    for (int iter = 0; \
+> +         iter < (poslist)->len && ((cpu) = (poslist)->cpus[iter].cpu, 1); \
+> +         iter++)
+> +
+>   extern __thread CPUState *current_cpu;
 
-If this goes in as-is, you are on the hook for any reported testsuite regression.
+Please add this macro in a distinct patch, and add a @docstring
+explaining how to use it.
 
+Thanks,
 
-r~
+Phil.
 
