@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A226ECA1007
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 21:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2036ACA1007
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 21:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utYEp-0006m5-89; Tue, 02 Sep 2025 17:08:23 -0400
+	id 1utYjh-0002Of-F0; Tue, 02 Sep 2025 17:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utYEn-0006lU-Ld
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 17:08:21 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utYEl-00056w-BS
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 17:08:21 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b042ec947e4so399468166b.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 14:08:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756847297; x=1757452097; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ahLAWzT+VhNtsYbfq5AhuxwmH4JDIOklfWn3TtCLJbY=;
- b=KBzlAUQpgN1dnF2vy3840uWmERj3ZMjeEuZfFndtiQkRjeZ/lhGXROQ2vK2btfJ6sj
- iC6aF06lYFWkgxRuCFvE8eduKDASI2sNowpNBMOx4gCYIL/S8VkezEsWD/jeWaZl/J5z
- 6P1kViyf/0traXYlxqdFYeRTZmZ2LRx88lTLvd9PZ8f4C7wwXJOfP4T6wqYu8BWROx7M
- OzzZlhoCNek0ixmKTUcrQKMqRXDseBDGLSknbzbhqm/gFTKL1LEouW/ShCAp24Qpu/k9
- WOcyI0tmThkok+P9BF14x8rDYd8XIzqjwDTsbJd17a/uRD5jwyVbVhKBpoorkK3PalgA
- UGcg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1utYjf-0002O2-PX
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 17:40:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1utYjc-0003Fe-Po
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 17:40:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756849210;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=8/AZsWJV3PvkJt4oVdod4Ydf8bV0b5EAA3J0l0E6vx8=;
+ b=XOG9gbd8+FCM7WP7iA9/RFleyySpTs/eLrUAfjF2aK8u9Z+s8DoJTYCGpuc4k+GfmTbXmO
+ iwTcEkX4RIAJMKACkMRk5nrcfR1uu4tpPpI5jVsU8jTXlVFJwZQQg0eYkoHNhGyZrkUKwF
+ wrql7jo15/p0kMLALNzrQVel6AnxMPU=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-3-UwIBzLj2PY6bx3_c0pINow-1; Tue, 02 Sep 2025 17:40:08 -0400
+X-MC-Unique: UwIBzLj2PY6bx3_c0pINow-1
+X-Mimecast-MFC-AGG-ID: UwIBzLj2PY6bx3_c0pINow_1756849208
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-70de0bdb600so96944286d6.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 14:40:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756847297; x=1757452097;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ahLAWzT+VhNtsYbfq5AhuxwmH4JDIOklfWn3TtCLJbY=;
- b=kHwrWtVePBq3cIlIj5l5RnT0fxZYTKl6Rw8almDCdtv29d5VKK4iAyRrfPa9HmJxes
- zLnfgHyfP1HGBcxhrhWDC0juhONNOZoS7sCrFdwl26WmLuBdIlZyWkNUymyg23eS6MUo
- QiHk4+dECe3oQ70V0BLGydjeSrZGHYwoSe4zqDW8HTV57ZKMothgObhmuXtu01Ypc2in
- /VdW/20fGeQV4bBU4neIykMwc2VHQIbwvcaraMa7WO47iSdZZwD8usqg4aD87R7BnUnE
- h6fB+hwr3OQxdZzSzZON2wAREfTATfxsJiLTZMH9xmv02GS6gRdSfBrKvFP3xZ+YqHH4
- SNyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVkLvhYSTGZwvugd90iwMl7wlwa6qbuWS9xqYsuHVCG5Qf5OLFjiqtlCsuacEr3p9XeP3HltNNO8D7i@nongnu.org
-X-Gm-Message-State: AOJu0Yzk59f/Uqpy0YkO30+EwiCcOTlsygxJGYlzHgBC5I4dMgYY4SEj
- S0Nuj9+2JAK9yO5q16BNdav1WjqGVQXrPkLjY2KIUh+UniycqRbqmgJdYvg0HSRHxrM=
-X-Gm-Gg: ASbGncs+UwfkedrT45e6mhQCmfDDx3R/bdsYT48G2fAi9ABf2GUyTNoRs5NvGWG5KDu
- cmm7NIPJxUaQAUGqJMGeqWaWmWqeabvGQxuZj+ap9qypPLnYHGtXekp32ipNuMNk5ZaRiTtksnW
- KblkLLH34QXI1rg7dtNOb4lPj70PtMKkQkztqZzaj+m35Ms3bVrkYKhEIqXz1lJueQZedB65QmF
- Tm1UfknoaPWK9jlPjR9Je3CyR3y8BnfJEx71KHqT+mClA+amhRS7cckgx2Qx7r+RWdlwMVkqZwQ
- adCZz8VDeVTxKvW3aNZrPxKRO4uj/ZafFugrjnVsXt4g7z54DGtHmH1LR/QIM8squV5hwDIec8i
- ecre4C3E3UxRM/yFQO+u7oYA=
-X-Google-Smtp-Source: AGHT+IFo6epFWG7ocYX7QZrndQ7WYSeeYoZ4qryb8TdujuqafIsHkhdOg/rf/1nEm2QEmMducHf8XQ==
-X-Received: by 2002:a17:906:6a0a:b0:b04:3402:393b with SMTP id
- a640c23a62f3a-b0434024070mr762886266b.40.1756847297352; 
- Tue, 02 Sep 2025 14:08:17 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aff9918dbd2sm977210066b.103.2025.09.02.14.08.16
+ d=1e100.net; s=20230601; t=1756849207; x=1757454007;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8/AZsWJV3PvkJt4oVdod4Ydf8bV0b5EAA3J0l0E6vx8=;
+ b=DI4zXQ0pe2o+bPr8cmJ0rXiNNZ9uz5j6Ko27xUD5hYekEOQ2FW0ifH5lRSMgoe48Ui
+ z2XX8yfEn1H6T7AaxpPrpbBoyR284ZFtAq8xBAXAGauv/Qh5PnSAQY22QsV4F2qmHcLL
+ wQbIwmCHFcnVaOoKAcHrRJdEl26DW1jVJPuhBqqUjONFG49suOArWDSNN44Bat9FF1LQ
+ XlS+nDkyzkLV9zHUUlud9dtix0jUkzYE7khi0AX5sMuzPkR+uES3tCW2nTX0fpE6SmtS
+ coO5d3fJRoxKZ1o230OkoNxr884bOGvwuM93p1efeb6ovoWcYBx5GM7jGixEH1Akbu8B
+ 9RjA==
+X-Gm-Message-State: AOJu0YxLCh4mdbsGvLITqHm9B4rEtvFT+USdV7+wI0emCj6eMei6FYv9
+ 5257dwDiAsiIvJBQmLDL7b0vADsku3opTG78l8XKo4Ft7e7RFqzrQa2rOOns06x7qiPLtzNNNE5
+ gNj708Pw6RjJtnbOwQzApFvL6JtfL4HP2yMJXhxe+zplWhJWSHuTfRwnM+yfNWSJ7Zho8c3juuA
+ Vxcmy3L8djXJvGoziEat8ubd2TkET4qmxjySv6Lw==
+X-Gm-Gg: ASbGnctO6G08wRXZLerDS5URbc80lKZJxa+l0//Rcm53RWjwLjTGReoNTDE4ZiwuFFo
+ 9Kf0aq6Z0sOt7T555Swl0KL1W+lhPidBESUPe8f3HtvshcnTdQrB/C/Al1iVnxT0z6gzTCs0PlR
+ ABpNYMiWMgqgDlVgcN939F6BeEjJ+mYb3BBWbgUG5i/BUOs5p+3s6W9BZbVVON5V04GcFPlQDR6
+ +EUSNMYxutRpzcoVwRKaNszatSoXQoLxWVrTYy9ybpdiqItNrSBknnlAO2vPOepAF4VLTlC4FPy
+ jDqyasTi9t4+0dRVF6I5Ys2lkLbdJFkj5wRJQguBfH0KDo29nb4GsonFQpk/H1Eiu3bEbAAfpzH
+ 5/eZc4Qk44CB2RXcJgNM=
+X-Received: by 2002:a05:6214:268a:b0:720:21b5:a696 with SMTP id
+ 6a1803df08f44-72021b5dd63mr50361376d6.39.1756849207636; 
+ Tue, 02 Sep 2025 14:40:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzF0n3gWz2VIoIV1vg1eLTocu6B6Lwp9duH/zacVVZ8nl9DiFdzUY97LYAg9FL82hqRWiRHg==
+X-Received: by 2002:a05:6214:268a:b0:720:21b5:a696 with SMTP id
+ 6a1803df08f44-72021b5dd63mr50361146d6.39.1756849207210; 
+ Tue, 02 Sep 2025 14:40:07 -0700 (PDT)
+Received: from x1.com
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-720ac262a4fsm18619106d6.11.2025.09.02.14.40.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Sep 2025 14:08:16 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8406E5F82D;
- Tue, 02 Sep 2025 22:08:15 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Osama Abdelkader <osama.abdelkader@gmail.com>
-Cc: peter.maydell@linaro.org,  qemu-arm@nongnu.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/arm/raspi4b: remove redundant check in
- raspi_add_memory_node
-In-Reply-To: <20250902200818.43305-1-osama.abdelkader@gmail.com> (Osama
- Abdelkader's message of "Tue, 2 Sep 2025 22:08:18 +0200")
-References: <20250902200818.43305-1-osama.abdelkader@gmail.com>
-User-Agent: mu4e 1.12.12; emacs 30.1
-Date: Tue, 02 Sep 2025 22:08:15 +0100
-Message-ID: <87cy88zhog.fsf@draig.linaro.org>
+ Tue, 02 Sep 2025 14:40:06 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, peterx@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] memory: Fix addr for flatview_access_allowed()
+Date: Tue,  2 Sep 2025 17:40:05 -0400
+Message-ID: <20250902214005.730358-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,19 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Osama Abdelkader <osama.abdelkader@gmail.com> writes:
+flatview_access_allowed() should pass in the address offset of the memory
+region, rather than the global address space.
 
-> The if (acells =3D=3D 0 || scells =3D=3D 0) check is redundant in
-> raspi_add_memory_node, since it is already checked in the call
-> chain, arm_load_dtb. Also the return value of the function is
-> not checked/used so it's removed.
->
-> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Shouldn't be a major issue yet, since the addr is only used in an error
+log.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 3ab6fdc91b ("softmmu/physmem: Introduce MemTxAttrs::memory field and MEMTX_ACCESS_ERROR")
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ system/physmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/system/physmem.c b/system/physmem.c
+index f498572fc8..019118cf75 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3027,7 +3027,7 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
+ 
+     l = len;
+     mr = flatview_translate(fv, addr, &mr_addr, &l, true, attrs);
+-    if (!flatview_access_allowed(mr, attrs, addr, len)) {
++    if (!flatview_access_allowed(mr, attrs, mr_addr, len)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+     return flatview_write_continue(fv, addr, attrs, buf, len,
+@@ -3118,7 +3118,7 @@ static MemTxResult flatview_read(FlatView *fv, hwaddr addr,
+ 
+     l = len;
+     mr = flatview_translate(fv, addr, &mr_addr, &l, false, attrs);
+-    if (!flatview_access_allowed(mr, attrs, addr, len)) {
++    if (!flatview_access_allowed(mr, attrs, mr_addr, len)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+     return flatview_read_continue(fv, addr, attrs, buf, len,
+-- 
+2.50.1
+
 
