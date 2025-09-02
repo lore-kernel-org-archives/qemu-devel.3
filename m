@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A0BCA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1967ACA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:51:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utUDl-0008HF-9v; Tue, 02 Sep 2025 12:51:01 -0400
+	id 1utUDg-0008FB-0F; Tue, 02 Sep 2025 12:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utUDh-0008Fp-VG
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:50:57 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1utUDe-0008ES-RW
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:50:54 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utUDf-0004Qi-CI
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:50:57 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b0431c12df3so343053566b.1
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 09:50:54 -0700 (PDT)
+ id 1utUDd-0004Po-6t
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:50:54 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b0225483ca0so550972566b.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 09:50:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756831854; x=1757436654; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WT25vLnlnlxahwzUq/9pnYWfOU5FHn9MQChZKROLaP8=;
- b=qKyu9e68K50/XMqNqfWHdE8q4JmvBqt851lTrO+ItA4jOsH1rB2/IAQjWdtkK3459a
- KQe/eNPQAG39vAaxnhX2B8I8R/i5BAQ5IsQoWukq4fby0Sbzee3L12rJAJIlwoIlGmN4
- MKYjKCmbqOKCQRS15YzmZaqFvz4r2LnzWwPa0MIvxAlG30XgRCpwLP50V5KcXJoPKf4C
- sumOxAHHMH0KVm2NcOrawk8Rezsmb6JzSSD22mjo4CXRhW6XdHcniHl+VThvT0MqVQCl
- QWtctpyJwKbnSQYloB8KTXmtHoWwKbrOKMRGIdzz0azS46fL+GC2eE0gVzxrzd+g/lF4
- 7Q6w==
+ d=linaro.org; s=google; t=1756831851; x=1757436651; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=jtVv37IFrMt/51iDXJklEJqQ7iS6Rm5PnqjC6DUh6f4=;
+ b=Kw8Wp+wZHdoMuYWaU+Ja9kQcNkQsUg44eX6/Ox5bxNVfvc3FLEoJnOqqQpsIRGY8Md
+ N/x6h7JMUNX2Cotfsz3bL1cBtNq/2K//Im6VN+x9YzOtRLgmCvxleDLISfJ+jw9toM72
+ akiuR7Y1y8ftNIgQ+2GzFOUs1XojMfYKa+eZnjjneo726TOc55QVNfwYfgIJyRV7CHcy
+ g2/SmptlWbMyKUajEQh7IlRpL1+r439v5QlBqAG1fp0ZZNnZSoLMJ6vi43ZvsQ5apBHG
+ J7BjhCNDEA18Ld+5qXQBr48X6en5//Cj/ZpsHsIpVXnhzBEI5tPVvIDQq5ZYobYSCwMB
+ BVCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756831854; x=1757436654;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WT25vLnlnlxahwzUq/9pnYWfOU5FHn9MQChZKROLaP8=;
- b=tx7nnmverkK0so/QWSPano+1wpJ/VxhJ0t5kKxP6DWIuFY/phDK0xnRnCJ5mbS9l3b
- KtPfVB9FVpkl7BVEFz/v8zeTdmk5ZNOSEDaymRCyd6rnS9TSkgfVS7rp9hq2vBzYygOE
- VEvKVplVgWtH3da7FGCb/Y1a7dtM5Y55TlppWQXA4Zu30P8xhF+aB7hAQqUkunV4DubF
- hPfEBbU6PiFjaRBl7NoCaD/sMPj+M4bK1S1ew1K9ahJEDfq9DMZQAc2qlMBzlrrRYYUJ
- jlC99We22EiCQspigCbvPVQPhptgLYLAsC699zaHcNFDmEt2IQkwYWW2UOzOovXLTnnT
- T08g==
-X-Gm-Message-State: AOJu0YwREpI/OZ2gwP3sM9GrfGcr/n+Fia+7ziKjBCfOXUWWETMcijSb
- CNVuKA03OhdAjywkVaqlH1Xf4zFUB282LayQwH75V0KFw5PUWs/Kr3rUjDJ48tfsutA=
-X-Gm-Gg: ASbGncv7MSRynApcHE79XIcBbP2vmbJRfHjVI4iwwP/HkBL4xx1wH28LgWNlwsxAeOc
- 9XqIlUR0P46dZKBB7JAfCFLiQ+8emI66/kXINWrOjYwfIozXYb/Ip8U7Vo8gLTq0JQU1Q4+YU3e
- RIchgsv8FeciCJJ2nQVCHr1eOdqDf1ietY1E02t5Qpx+pWGwLi4VCMjIIJdz/w3gGOQTFXvfPMR
- BLQaN64WzquFin24Yd8WkBQuMA7mphDFMod5FMzTZvmBbgZ2aW3MmilMHCFQ3sty6GXCN/wCaOx
- UkUX1burxD4WK0/UELhlV16kWScF0WWBbYk8htMDD3xI8l7M5MpoW7FuFjsForef+a0iKipO2kM
- 8KFvjiXUEOXLmncXuppE4LBw=
-X-Google-Smtp-Source: AGHT+IEAcrNNsRTK0Ud485h0nhmLpFHTDruH1qnwukJVPGEW6I3805c9yKqwj93H0gGDERiMjcXNPw==
-X-Received: by 2002:a17:906:4786:b0:afe:e7f1:28a2 with SMTP id
- a640c23a62f3a-b01d8c7835emr1281760466b.23.1756831853581; 
- Tue, 02 Sep 2025 09:50:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756831851; x=1757436651;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jtVv37IFrMt/51iDXJklEJqQ7iS6Rm5PnqjC6DUh6f4=;
+ b=L0weFiV+FOhYy2iapeXtzLurF5K5PrhDh7381SxkZTBce1eJOiXk6dgkBQv4ULYr0q
+ WF7WNCwaKOOUsrHIRDTlwLyWjEGJrpCvN/zXfeRfyCenJ5Pv1XRwzMXFltPGs0XDUhk1
+ qXPLShG454BtomJu5c/PMWfhAK9QzfLoF1/Xpb6Okd8VqHk8Mlp3k8O+zxWYlul/3DOZ
+ 4xA7Gkn0RWseH5mPJ/UKid0LKrb8Bo/0NctWzVzI5PHj+Gd/AeiwwgurYBY5wPqs0GRi
+ +4RyR/mVB1LSLm/ZH9ps3qTXnEzjgRF2LniBc7BS0DP7cxWnhqzCuYEoRnkQEqFEkw6Q
+ mi3Q==
+X-Gm-Message-State: AOJu0YwIXZk2CpD2Zepk0QI9GHUDHeYE9igN1MOoWp3cIlqJPSBDm7oE
+ tN/laFM4lwMmm+ye/0g+NpVJVkzxEqwmFB3d1znh86FbEbG/Gk63g441v3PX50GjvJU=
+X-Gm-Gg: ASbGncs5Qpr938RwRB/lnQuG3KdWa7PcwkDuLiyDvqY6mi+zZr6rdEL3QffGj82pfk2
+ iD0yy1ABQ4aXDPJgSlMpKekRHqp58VGu3urJ0bV5gEermnjipQUI1Jquf4fdZcP4RBFSwWLDGkz
+ zXKF701AfJTPAXt1H4X67uMHzPWhCvko7/u7UK9+s/yGKOAz0dkbKZFH2ik2G6cs/KC4B9L3lSS
+ YCIUZz2Ag8OWqk0AkPfv57S5htY4ZT7IU4e0WmgfUXxYC6edHqfdvy8XIpTiXARUDY5VvEOpAMC
+ qDpKVtqd6tcONmIkob9fpoSgGGqbzitkXJyxL5+J7gCnXGpcfPLldsXPOSSeAaE16mpJLcYonMH
+ ocrvTsyAla36qxxAL5NZ4vDY=
+X-Google-Smtp-Source: AGHT+IGgNhBEyN8gNysNAoj56uQ96otFlRHk/GUKx1iYSE3AzP/GlZi/DIxcHoRXEt8Qi7sxTTHA/g==
+X-Received: by 2002:a17:907:7e82:b0:afe:ec09:2a23 with SMTP id
+ a640c23a62f3a-b01d9769f7fmr1131782566b.43.1756831851341; 
+ Tue, 02 Sep 2025 09:50:51 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b04190700a4sm696958166b.63.2025.09.02.09.50.49
+ 4fb4d7f45d1cf-61cfc52ade4sm9831541a12.45.2025.09.02.09.50.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Sep 2025 09:50:50 -0700 (PDT)
+ Tue, 02 Sep 2025 09:50:49 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0F3955F8DF;
- Tue, 02 Sep 2025 17:50:49 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 9D80F5F82D;
+ Tue, 02 Sep 2025 17:50:48 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
  John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 4/4] docs/system: merge vhost-user-input into
- vhost-user-contrib
-Date: Tue,  2 Sep 2025 17:50:48 +0100
-Message-ID: <20250902165048.1653323-5-alex.bennee@linaro.org>
+Subject: [PATCH 0/4] virtio document cleanups (esp vhost-user)
+Date: Tue,  2 Sep 2025 17:50:44 +0100
+Message-ID: <20250902165048.1653323-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250902165048.1653323-1-alex.bennee@linaro.org>
-References: <20250902165048.1653323-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,244 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We might as well group all the contrib submissions together and gently
-dissuade people from using them in production. Update the references in
-vhost-user to neatly refer to the storage daemon and the various
-external rust backends.
+These just tidy up the device emulation area to be a little more
+organised as well as splitting out the VirtIO documents themselves.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/system/devices/virtio/index.rst          |  2 +-
+Alex.
+
+Alex Bennée (4):
+  docs/system: split VirtIO devices from the rest
+  docs/system: unify the naming style for VirtIO devices
+  docs/system: drop vhost-user-rng docs
+  docs/system: merge vhost-user-input into vhost-user-contrib
+
+ docs/system/device-emulation.rst              | 18 ++--
+ docs/system/devices/vfio-user.rst             |  2 +-
+ docs/system/devices/vhost-user-input.rst      | 45 ----------
+ docs/system/devices/vhost-user-rng.rst        | 41 ---------
+ docs/system/devices/virtio/index.rst          | 29 +++++++
  .../devices/virtio/vhost-user-contrib.rst     | 87 +++++++++++++++++++
- .../devices/virtio/vhost-user-input.rst       | 45 ----------
- docs/system/devices/virtio/vhost-user.rst     | 22 ++---
- docs/system/devices/virtio/virtio-gpu.rst     |  2 +
- 5 files changed, 101 insertions(+), 57 deletions(-)
+ .../devices/{ => virtio}/vhost-user.rst       | 22 ++---
+ .../devices/{ => virtio}/virtio-gpu.rst       |  4 +-
+ .../devices/{ => virtio}/virtio-pmem.rst      |  6 +-
+ .../devices/{ => virtio}/virtio-snd.rst       |  2 +-
+ 10 files changed, 141 insertions(+), 115 deletions(-)
+ delete mode 100644 docs/system/devices/vhost-user-input.rst
+ delete mode 100644 docs/system/devices/vhost-user-rng.rst
+ create mode 100644 docs/system/devices/virtio/index.rst
  create mode 100644 docs/system/devices/virtio/vhost-user-contrib.rst
- delete mode 100644 docs/system/devices/virtio/vhost-user-input.rst
+ rename docs/system/devices/{ => virtio}/vhost-user.rst (77%)
+ rename docs/system/devices/{ => virtio}/virtio-gpu.rst (99%)
+ rename docs/system/devices/{ => virtio}/virtio-pmem.rst (98%)
+ rename docs/system/devices/{ => virtio}/virtio-snd.rst (99%)
 
-diff --git a/docs/system/devices/virtio/index.rst b/docs/system/devices/virtio/index.rst
-index 7f931737cc1..04588fa78ab 100644
---- a/docs/system/devices/virtio/index.rst
-+++ b/docs/system/devices/virtio/index.rst
-@@ -24,6 +24,6 @@ can also be off-loaded to an external process via :ref:`vhost user
-    virtio-pmem.rst
-    virtio-snd.rst
-    vhost-user.rst
--   vhost-user-input.rst
-+   vhost-user-contrib.rst
- 
- .. _VirtIO specification: https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
-diff --git a/docs/system/devices/virtio/vhost-user-contrib.rst b/docs/system/devices/virtio/vhost-user-contrib.rst
-new file mode 100644
-index 00000000000..10a92c19e82
---- /dev/null
-+++ b/docs/system/devices/virtio/vhost-user-contrib.rst
-@@ -0,0 +1,87 @@
-+vhost-user daemons in contrib
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+QEMU provides a number of :ref:`vhost_user` daemons in the contrib
-+directory. They were often written when vhost-user was initially added
-+to the code base. You should also consider if other vhost-user daemons
-+such as those from the rust-vmm `vhost-device repository`_ are better
-+suited for production use.
-+
-+.. _vhost-device repository: https://github.com/rust-vmm/vhost-device
-+
-+.. _vhost_user_block:
-+
-+vhost-user-block - block device
-+===============================
-+
-+vhost-user-block is a backed for exposing block devices. It can
-+present a flat file or block device as a simple block device to the
-+guest. You almost certainly want to use the :ref:`storage-daemon`
-+instead which supports the wide variety of storage modes and exports a
-+number of interfaces include vhost-user.
-+
-+.. _vhost_user_gpu:
-+
-+vhost-user-gpu - gpu device
-+===========================
-+
-+vhost-user-gpu presents a paravirtualized GPU and display controller.
-+You probably want to use the internal :ref:`virtio_gpu` implementation
-+if you want the latest features. There is also a `vhost_device_gpu`_
-+daemon as part of the rust-vmm project.
-+
-+.. _vhost_device_gpu: https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-gpu
-+
-+.. _vhost_user_input:
-+
-+vhost-user-input - Input emulation
-+==================================
-+
-+The Virtio input device is a paravirtualized device for input events.
-+
-+Description
-+-----------
-+
-+The vhost-user-input device implementation was designed to work with a daemon
-+polling on input devices and passes input events to the guest.
-+
-+QEMU provides a backend implementation in contrib/vhost-user-input.
-+
-+Linux kernel support
-+--------------------
-+
-+Virtio input requires a guest Linux kernel built with the
-+``CONFIG_VIRTIO_INPUT`` option.
-+
-+Examples
-+--------
-+
-+The backend daemon should be started first:
-+
-+::
-+
-+  host# vhost-user-input --socket-path=input.sock	\
-+      --evdev-path=/dev/input/event17
-+
-+The QEMU invocation needs to create a chardev socket to communicate with the
-+backend daemon and access the VirtIO queues with the guest over the
-+:ref:`shared memory <shared_memory_object>`.
-+
-+::
-+
-+  host# qemu-system								\
-+      -chardev socket,path=/tmp/input.sock,id=mouse0				\
-+      -device vhost-user-input-pci,chardev=mouse0				\
-+      -m 4096 									\
-+      -object memory-backend-file,id=mem,size=4G,mem-path=/dev/shm,share=on	\
-+      -numa node,memdev=mem							\
-+      ...
-+
-+
-+.. _vhost_user_scsi:
-+
-+vhost-user-scsi - SCSI controller
-+=================================
-+
-+The vhost-user-scsi daemon can proxy iSCSI devices onto a virtualized
-+SCSI controller.
-diff --git a/docs/system/devices/virtio/vhost-user-input.rst b/docs/system/devices/virtio/vhost-user-input.rst
-deleted file mode 100644
-index 118eb78101c..00000000000
---- a/docs/system/devices/virtio/vhost-user-input.rst
-+++ /dev/null
-@@ -1,45 +0,0 @@
--.. _vhost_user_input:
--
--QEMU vhost-user-input - Input emulation
--=======================================
--
--This document describes the setup and usage of the Virtio input device.
--The Virtio input device is a paravirtualized device for input events.
--
--Description
-------------
--
--The vhost-user-input device implementation was designed to work with a daemon
--polling on input devices and passes input events to the guest.
--
--QEMU provides a backend implementation in contrib/vhost-user-input.
--
--Linux kernel support
----------------------
--
--Virtio input requires a guest Linux kernel built with the
--``CONFIG_VIRTIO_INPUT`` option.
--
--Examples
----------
--
--The backend daemon should be started first:
--
--::
--
--  host# vhost-user-input --socket-path=input.sock	\
--      --evdev-path=/dev/input/event17
--
--The QEMU invocation needs to create a chardev socket to communicate with the
--backend daemon and access the VirtIO queues with the guest over the
--:ref:`shared memory <shared_memory_object>`.
--
--::
--
--  host# qemu-system								\
--      -chardev socket,path=/tmp/input.sock,id=mouse0				\
--      -device vhost-user-input-pci,chardev=mouse0				\
--      -m 4096 									\
--      -object memory-backend-file,id=mem,size=4G,mem-path=/dev/shm,share=on	\
--      -numa node,memdev=mem							\
--      ...
-diff --git a/docs/system/devices/virtio/vhost-user.rst b/docs/system/devices/virtio/vhost-user.rst
-index 9c9a28df380..f556a840e99 100644
---- a/docs/system/devices/virtio/vhost-user.rst
-+++ b/docs/system/devices/virtio/vhost-user.rst
-@@ -27,37 +27,37 @@ platform details for what sort of virtio bus to use.
-     - Notes
-   * - vhost-user-blk
-     - Block storage
--    - See contrib/vhost-user-blk
-+    - :ref:`storage-daemon`
-   * - vhost-user-fs
-     - File based storage driver
--    - See https://gitlab.com/virtio-fs/virtiofsd
-+    - `virtiofsd <https://gitlab.com/virtio-fs/virtiofsd>`_
-   * - vhost-user-gpio
-     - Proxy gpio pins to host
--    - See https://github.com/rust-vmm/vhost-device
-+    - `vhost-device-gpio <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-gpio>`_
-   * - vhost-user-gpu
-     - GPU driver
--    - See contrib/vhost-user-gpu
-+    - `vhost-device-gpu <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-gpu>`_ or :ref:`vhost_user_gpu`
-   * - vhost-user-i2c
-     - Proxy i2c devices to host
--    - See https://github.com/rust-vmm/vhost-device
-+    - `vhost-device-i2c <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-i2c>`_
-   * - vhost-user-input
-     - Generic input driver
--    - :ref:`vhost_user_input`
-+    - `vhost-device-input <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-input>`_ or :ref:`vhost_user_input`
-   * - vhost-user-rng
-     - Entropy driver
--    - See https://github.com/rust-vmm/vhost-device
-+    - `vhost-device-rng <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-rng>`_
-   * - vhost-user-scmi
-     - System Control and Management Interface
--    - See https://github.com/rust-vmm/vhost-device
-+    - `vhost-device-scmi <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-scmi>`_
-   * - vhost-user-snd
-     - Audio device
--    - See https://github.com/rust-vmm/vhost-device/staging
-+    - `vhost-device-sound <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-sound>`_
-   * - vhost-user-scsi
-     - SCSI based storage
--    - See contrib/vhost-user-scsi
-+    - :ref:`vhost_user_scsi`
-   * - vhost-user-vsock
-     - Socket based communication
--    - See https://github.com/rust-vmm/vhost-device
-+    - `vhost-device-vsock <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock>`_
- 
- The referenced *daemons* are not exhaustive, any conforming backend
- implementing the device and using the vhost-user protocol should work.
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index 39d2fd2d21c..0f4bb304a9b 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -1,6 +1,8 @@
- ..
-    SPDX-License-Identifier: GPL-2.0-or-later
- 
-+.. _virtio_gpu:
-+
- VirtIO GPU
- ==========
- 
 -- 
 2.47.2
 
