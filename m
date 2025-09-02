@@ -4,69 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E5DCA1007
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 02:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0C1CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 03:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utGmC-0001SF-4f; Mon, 01 Sep 2025 22:29:40 -0400
+	id 1utHzf-0006gK-Uc; Mon, 01 Sep 2025 23:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1utGm9-0001S6-Mu
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 22:29:37 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1utGm5-0003ry-Ql
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 22:29:37 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxF9GEVrZoOJoFAA--.11588S3;
- Tue, 02 Sep 2025 10:29:25 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxH8J_VrZoQRh4AA--.61809S3;
- Tue, 02 Sep 2025 10:29:24 +0800 (CST)
-Subject: Re: [PATCH v2] hw/loongarch/virt: Add reset interface for virt-machine
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-References: <20250901081900.2931303-1-maobibo@loongson.cn>
- <e99ce8c4-b2cc-4eba-a947-f150330eda34@linaro.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <a205202e-7d0d-0739-ddd6-11a2081a9810@loongson.cn>
-Date: Tue, 2 Sep 2025 10:27:19 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1utHzc-0006f3-AC
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:47:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1utHzU-0004Q9-Pb
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:47:31 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822RmnG029940
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:47:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ V07Obdmlm93H9u7fTFgR+cEhr44VBifxtLzfjaaDFAE=; b=aIAIA5B1pkNX53IS
+ ge9adld4j8rjnpAEPq0+6ep3jxn4YFMvPM7brX2QWkLZdbxx3FHbc9iUzzLnlv1S
+ e5vst2j0LVYRt+6NJZ78SZXTaXHvG/t+mRCE6Z1jDhwXZP1eadc62FANTgSGHnd/
+ rxSWM/dWRq5jMoydVEdDQsxB1n8pDcoQG9Lr+3Lf2MDYpIVbHHEo0KBhMkbpdIiK
+ My2LxDTeNgdpskR5fBzx0sUfPcC6XdQLTkpXrFfjpwNOyZyrPN3ecSYO0x+vpgAO
+ HYj4BFRLrhc9Oes9IE8j9U5wNIRbqZX4R7r2y7lIsAqoZwY2ywjDaflZ8in35/bX
+ 0QtyJw==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ush2xaeb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:47:26 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-b47174c8fd2so6498991a12.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:47:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756784845; x=1757389645;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=V07Obdmlm93H9u7fTFgR+cEhr44VBifxtLzfjaaDFAE=;
+ b=QOz8LSorsuC2xn3B9kD82w12U4E8tL5gOxk6vWRGla2SZbQ1IfE/JbrnKetns4j8Cn
+ e+vs5o9wj7bwpBpfGjuoYwcxOP6SNAkqJZjJWrCwJE7T1R6lj8Vj3WuOV5SOIT80txM7
+ PUqR9V829RP7nAmYLlwc2wkpMP1b29KoR8fqLd57GiUOevtEmTkHp9IBxoiQWVeAk+7V
+ E29CUMwWvprfU2m7ZazviwGzYO32Y88gjKn0xWyUaRGjn3h4F+vvWJO0DY5LnM45fY8P
+ 4iUEbyrwKA9VABV40wAp8KuLd+nJcFved4XEoGkv+FrakIhCuS+nMxRDUPwQne+ep939
+ iV4A==
+X-Gm-Message-State: AOJu0YzLtOcxZJ05slAlgwbitqTAdDJUew3PNu46MjEdQp9RDnT/5uPk
+ 8yWs8YihgcwcDBWFPjMnK/U/O7aJCD8Ecl5L+lMvMa5xP8424J0+fh7PrPgFDeCW6eBXQfkWn0p
+ WFi6oP2pmqKHsfKtZ5UzlqGL2gxMn9CfyBuHgId1StPiUGLyAfMTKMCXQzPP50dTyxKc3
+X-Gm-Gg: ASbGnctna5rVmliwOLhC1s/2z2TxmIf5oHxHs1lUOXHNnzIXISqaRNjWmPtjQpXkDZW
+ BnaBIkfjkZM4Gdto889Vnp4mHsYG0Ee0O3KuzGI1eAnkbYniUEQw/Ryof42G4ti/UZasVCIjf4V
+ Wja8nZWDbGe+aCwCFgMEUeXeGmlMk8fmXvVzzjNozcKUncm6ztzgS2rYVY1Qdz5rCWBeWfpbQIY
+ KzUy1gxvfNgpLMXu9+gQU6ENRm+f/RWFHJUn3uJZJWxDROpyMzh5vH8SUTYfjeOp/OdDT0/G2va
+ B+scuHons34E47Qt1q8eFHpRzYsxnbbq7Eha0NiWgKVBhBWzFx7srRjAIE8VVKoTscVyHxcS/Pm
+ MuIBNGnnMkJQU
+X-Received: by 2002:a05:6a20:2449:b0:243:a21c:3730 with SMTP id
+ adf61e73a8af0-243d6f036c7mr13723612637.31.1756784845207; 
+ Mon, 01 Sep 2025 20:47:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+spZcw/JPdVnNUB7JZ3X0IZ49YyHtjzgXvlFQXUsuEAn+b9j7wGn+IRSkgR550KSRmKsEaQ==
+X-Received: by 2002:a05:6a20:2449:b0:243:a21c:3730 with SMTP id
+ adf61e73a8af0-243d6f036c7mr13723579637.31.1756784844771; 
+ Mon, 01 Sep 2025 20:47:24 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b4cd006e2c6sm10633584a12.2.2025.09.01.20.47.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Sep 2025 20:47:24 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
+ philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>
+Subject: [PATCH v2 02/40] docs/system: Add hexagon CPU emulation
+Date: Mon,  1 Sep 2025 20:46:37 -0700
+Message-Id: <20250902034715.1947718-3-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250902034715.1947718-1-brian.cain@oss.qualcomm.com>
+References: <20250902034715.1947718-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-In-Reply-To: <e99ce8c4-b2cc-4eba-a947-f150330eda34@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxH8J_VrZoQRh4AA--.61809S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Ww43ur1xJrW5WryDJr13GFX_yoWxWr47pr
- ykAFW5JrWrGr1kXw47A34UuFyDZr1xKa13ZF1xtFyIkr4UXryjqr1jqr9FgF1UAw4rWF1Y
- vr1DXw17ZF47J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UWHqcU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -54
-X-Spam_score: -5.5
-X-Spam_bar: -----
-X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.599,
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMiBTYWx0ZWRfX0v8LZN2a5O9x
+ OPyVE+Xmcb8WdiEzLDDK6X9SaZjDrd4YkxZHuPVg0hFdEU59ScoMbR6d6KSxhUMhMlUAJeo9ZjF
+ 8K91ar/SsN0Q22eF0ATuwhnFts2itr0qrDkeB2U86E1XefR2ZMnepZRm/i5MxxCtHYtztKcs82v
+ XjNfdyYoMUqRlhnIh0U0P+matJWlWcelI/KgHIcoHZT39W9zlLr7W4dTn/CwTzkptsZ+9BptdwS
+ oJkGHXme9woMPPNsOe/6AE8nZiFhljw/oOhe81Yp/4d0lR30SBqNLwoF3Bl0xjiJ03/ksvqY+3p
+ OOx2ZV/q4tZ8nj5yo/0XInVHb1e7iQ6hSvjKtmAeuylFQxH9TGsLtlAeiwU25QQfG9i58szBrNd
+ fZ4KpqBW
+X-Proofpoint-ORIG-GUID: -ieNxTI5RLn0XQ9cEuxjodd-tuIimjES
+X-Proofpoint-GUID: -ieNxTI5RLn0XQ9cEuxjodd-tuIimjES
+X-Authority-Analysis: v=2.4 cv=M9NNKzws c=1 sm=1 tr=0 ts=68b668ce cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=pGLkceISAAAA:8 a=2pVdXvZyqgCw3DkElpQA:9 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 suspectscore=0 phishscore=0 bulkscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300032
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,177 +136,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Brian Cain <bcain@quicinc.com>
 
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+---
+ docs/system/hexagon/emulation.rst | 18 ++++++++++++++++++
+ docs/system/target-hexagon.rst    |  1 +
+ 2 files changed, 19 insertions(+)
+ create mode 100644 docs/system/hexagon/emulation.rst
 
-On 2025/9/1 下午6:51, Philippe Mathieu-Daudé wrote:
-> Hi Bibo,
-> 
-> On 1/9/25 10:19, Bibo Mao wrote:
->> With generic cpu reset interface, pc register is entry of FLASH for
->> UEFI BIOS. However with direct kernel booting requirement, there is
->> a little different, pc register of primary cpu is entry address of ELF
->> file.
->>
->> At the same time with requirement of cpu hotplug, hot-added CPU should
->> register reset interface for this cpu object. Now reset callback is
->> not registered for hot-added CPU.
->>
->> With this patch reset callback for CPU is register when CPU instance
->> is created, and reset interface is added for virt-machine board. In
->> reset interface of virt-machine, reset for direct kernel booting
->> requirement is called.
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->> v1 ... v2:
->>    1. Add qemu_unregister_reset() in function 
->> loongarch_cpu_unrealizefn(),
->>       remove reset callback if vCPU is unrealized.
->> ---
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   hw/loongarch/boot.c         |  9 +--------
->>   hw/loongarch/virt.c         | 14 ++++++++++++++
->>   include/hw/loongarch/boot.h |  1 +
->>   target/loongarch/cpu.c      | 11 +++++++++++
->>   4 files changed, 27 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
->> index 14d6c52d4e..4919758a20 100644
->> --- a/hw/loongarch/boot.c
->> +++ b/hw/loongarch/boot.c
->> @@ -324,12 +324,11 @@ static int64_t load_kernel_info(struct 
->> loongarch_boot_info *info)
->>       return kernel_entry;
->>   }
->> -static void reset_load_elf(void *opaque)
->> +void reset_load_elf(void *opaque)
->>   {
->>       LoongArchCPU *cpu = opaque;
->>       CPULoongArchState *env = &cpu->env;
->> -    cpu_reset(CPU(cpu));
->>       if (env->load_elf) {
->>           if (cpu == LOONGARCH_CPU(first_cpu)) {
->>               env->gpr[4] = env->boot_info->a0;
->> @@ -429,12 +428,6 @@ static void 
->> loongarch_direct_kernel_boot(MachineState *ms,
->>   void loongarch_load_kernel(MachineState *ms, struct 
->> loongarch_boot_info *info)
->>   {
->>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
->> -    int i;
->> -
->> -    /* register reset function */
->> -    for (i = 0; i < ms->smp.cpus; i++) {
->> -        qemu_register_reset(reset_load_elf, 
->> LOONGARCH_CPU(qemu_get_cpu(i)));
-> 
-> I agree CPU reset shouldn't be part of loading code to memory.
-> 
->> -    }
->>       info->kernel_filename = ms->kernel_filename;
->>       info->kernel_cmdline = ms->kernel_cmdline;
->> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index b15ada2078..4fc8506c10 100644
->> --- a/hw/loongarch/virt.c
->> +++ b/hw/loongarch/virt.c
->> @@ -1199,6 +1199,19 @@ static int64_t 
->> virt_get_default_cpu_node_id(const MachineState *ms, int idx)
->>       }
->>   }
->> +static void virt_reset(MachineState *machine, ResetType type)
->> +{
->> +    CPUState *cs;
->> +
->> +    /* Reset all devices including CPU devices */
->> +    qemu_devices_reset(type);
->  > +> +    /* Reset PC and register context for kernel direct booting 
-> method */
->> +    CPU_FOREACH(cs) {
->> +        reset_load_elf(LOONGARCH_CPU(cs));
->> +    }
->> +}
->> +
->>   static void virt_class_init(ObjectClass *oc, const void *data)
->>   {
->>       MachineClass *mc = MACHINE_CLASS(oc);
->> @@ -1223,6 +1236,7 @@ static void virt_class_init(ObjectClass *oc, 
->> const void *data)
->>       mc->has_hotpluggable_cpus = true;
->>       mc->get_hotplug_handler = virt_get_hotplug_handler;
->>       mc->default_nic = "virtio-net-pci";
->> +    mc->reset = virt_reset;
->>       hc->plug = virt_device_plug_cb;
->>       hc->pre_plug = virt_device_pre_plug;
->>       hc->unplug_request = virt_device_unplug_request;
->> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
->> index 9819f7fbe3..386b4406ad 100644
->> --- a/include/hw/loongarch/boot.h
->> +++ b/include/hw/loongarch/boot.h
->> @@ -114,5 +114,6 @@ struct memmap_entry {
->>   };
->>   void loongarch_load_kernel(MachineState *ms, struct 
->> loongarch_boot_info *info);
->> +void reset_load_elf(void *opaque);
->>   #endif /* HW_LOONGARCH_BOOT_H */
->> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->> index 3a7621c0ea..61c8acb3c2 100644
->> --- a/target/loongarch/cpu.c
->> +++ b/target/loongarch/cpu.c
->> @@ -652,6 +652,13 @@ static void loongarch_cpu_disas_set_info(CPUState 
->> *s, disassemble_info *info)
->>       info->print_insn = print_insn_loongarch;
->>   }
->> +#ifndef CONFIG_USER_ONLY
->> +static void loongarch_cpu_reset_cb(void *opaque)
->> +{
->> +    cpu_reset((CPUState *) opaque);
->> +}
->> +#endif
->> +
->>   static void loongarch_cpu_realizefn(DeviceState *dev, Error **errp)
->>   {
->>       CPUState *cs = CPU(dev);
->> @@ -668,6 +675,9 @@ static void loongarch_cpu_realizefn(DeviceState 
->> *dev, Error **errp)
->>       qemu_init_vcpu(cs);
->>       cpu_reset(cs);
-> 
-> Devices shouldn't call their DeviceReset handler manually, as it is
-> always called after DeviceRealize.
-ok, will remove this.
-
-> 
->> +#ifndef CONFIG_USER_ONLY
->> +    qemu_register_reset(loongarch_cpu_reset_cb, dev);
-> 
-> qemu_register_reset() is a legacy API, replaced by
-> qemu_register_resettable().
-> 
-> That said, I don't think the CPU object has to register its own
-> reset handlers. Instead that should the be responsibility of the
-> object creating the CPU objects.
-sure, will use qemu_register_resettable().
-> 
->> +#endif
->>       lacc->parent_realize(dev, errp);
->>   }
->> @@ -678,6 +688,7 @@ static void loongarch_cpu_unrealizefn(DeviceState 
->> *dev)
->>   #ifndef CONFIG_USER_ONLY
->>       cpu_remove_sync(CPU(dev));
->> +    qemu_unregister_reset(loongarch_cpu_reset_cb, dev);
-> 
-> Ditto, legacy -> qemu_unregister_resettable().
-will use qemu_unregister_resettable().
-
-Regards
-Bibo Mao
-> 
->>   #endif
->>       lacc->parent_unrealize(dev);
->>
->> base-commit: 91589bcd9fee0e66b241d04e5f37cd4f218187a2
+diff --git a/docs/system/hexagon/emulation.rst b/docs/system/hexagon/emulation.rst
+new file mode 100644
+index 0000000000..75f46719b9
+--- /dev/null
++++ b/docs/system/hexagon/emulation.rst
+@@ -0,0 +1,18 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
++
++.. _Hexagon Emulation:
++
++Hexagon CPU architecture support
++================================
++
++QEMU's TCG emulation includes support for v65, v66, v67, v68, v69, v71, v73.
++It also has support for the following architecture extensions:
++
++- HVX (Hexagon Vector eXtensions)
++
++For information on the specifics of the HVX extension, please refer
++to the `Qualcomm Hexagon V73 HVX Programmer's Reference Manual
++<https://docs.qualcomm.com/bundle/publicresource/80-N2040-53.pdf>`_.
++
++.. code-block:: bash
++
+diff --git a/docs/system/target-hexagon.rst b/docs/system/target-hexagon.rst
+index 5f7084a6a0..416b8f7be7 100644
+--- a/docs/system/target-hexagon.rst
++++ b/docs/system/target-hexagon.rst
+@@ -98,5 +98,6 @@ is not yet implemented in QEMU hexagon.
+ Hexagon Features
+ ================
+ .. toctree::
++   hexagon/emulation
+    hexagon/cdsp
+ 
+-- 
+2.34.1
 
 
