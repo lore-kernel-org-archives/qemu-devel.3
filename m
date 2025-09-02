@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F63CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E07DCA1007
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:21:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utUeU-0005FT-1C; Tue, 02 Sep 2025 13:18:38 -0400
+	id 1utUgi-0006Yi-U9; Tue, 02 Sep 2025 13:20:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1utUeA-0005Ay-88; Tue, 02 Sep 2025 13:18:19 -0400
-Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
- id 1utUe7-0000ox-EI; Tue, 02 Sep 2025 13:18:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fKOy/hWs5FmQcvQpxmmlVe6Jdp/AiGxvsnxoE7oFVal5GS83bAWMVWwciNTtgN8fXiox31cREoP809byB7Xbz9V5O7d2ZuY7m9XSnIt0mnsxKZBUrzbPivA0rcpLceOPF+5vkZRNXQS24bYFOTVq+d7fsBd4HCNC0zeO+51E/n6WxcZky/w07uM/np56fpa7PeJOlk0iDK4N16tDd8uw89B/x9EzJ+bo/N3twJ3DTzAOKCBMukBe/EnsHrdTkwL+DTwZ4x8mzzPKPMnC+Z/cM2FypHO3cPZnB8gmauNMKbKYTxh9cEVrvGQKqsKCAobzeuN5gQMeE4Me/UEVUJCRkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mnkA+QYobEHt3Zb15CiT8A6snNwk/JjNBOpomHtBRME=;
- b=yKgejrFQZU0FVoPrQtiTyXUyJXsxSdJgQFKzVwEaVVjkIvR0cvOUbAKaKmsKrUQvCgCQetQB90V+IUhFC8rJjAtADzumh0HRNImqBbzueelNFWD3CLDH9/vPpWkWkF1sVFYOKTOGXdiRXsjUY6SAB/heGyEvB+GEgVrfjZE/gvWKDyeJP1goTYu2tCQUN6iZpHmFIHcGiRT09Hhyf01O//7kwSULElkidNkCUQ9A9nWd69CN1VWpOOa7wjhrTN5g3atTERDs3qLeM7yUTwt1DZhMXDJAi/uhiOEf0Uzf215bivI5z3LNzssDwlOrLdD06XMKr4dyNAQAir3aILe2Ng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
- dkim=pass header.d=siemens.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mnkA+QYobEHt3Zb15CiT8A6snNwk/JjNBOpomHtBRME=;
- b=qucs/9k/aA8FP0nr8dPvN8zFbuUbtwe+GBAVINZ+XZ01IEwcqorajJJZYuBDyaVXYi4ML1P1Cq5MUdL7+qWPSy/PAVWiqDSjGa7t7DrZ7SFA+z5paC+VkmPgjwv8/PrNL/9ZNKQL3wIyXrF3wTPnzUPO12LWXwoUSxPKR7Ok/88VYa5DXO8M8u3OKAfS/rE4cYAy5ZuDFzTvdvbuPS1doFfydNmbb9Ep8mUrqBG4DbsntdIWkKAxRVAx8nbvouafu7Q/mdfF8cwtMRWrLVo0xPPEVvjilCRBZJZy4iVe2n0JLAH5KKHE1fWQN0i21T0XSGjVCl9ArhUBSas2EkVAfA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siemens.com;
-Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:76::15)
- by GV2PR10MB8040.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:ba::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.17; Tue, 2 Sep
- 2025 17:18:09 +0000
-Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::7fc:74bb:a781:a286]) by GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::7fc:74bb:a781:a286%7]) with mapi id 15.20.9073.026; Tue, 2 Sep 2025
- 17:18:09 +0000
-Message-ID: <85b059c1-4a08-447b-a908-8af6b22d06c3@siemens.com>
-Date: Tue, 2 Sep 2025 19:18:02 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
- image
-To: Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Jan_L=C3=BCbbe?=
- <jlu@pengutronix.de>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- qemu-devel <qemu-devel@nongnu.org>, Joel Stanley <joel@jms.id.au>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- qemu-arm <qemu-arm@nongnu.org>, Alistair Francis <alistair@alistair23.me>,
- Alexander Bulekov <alxndr@bu.edu>
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1utUgh-0006Xi-LB
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:20:55 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1utUgc-0001EE-Nd
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:20:54 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-244582738b5so49228435ad.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 10:20:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1756833648; x=1757438448;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=MB/UTLU5xoKxE7cF24PN2jwSynC0IakO2k2lx1F4WAU=;
+ b=SieLn9pvY3BfXYbhoROflNaV4CN9A82idLEuRaX06+b2dAVQWAOuTZyRwjcyHnYfsJ
+ Mv8cllGdz9fopjU2T+4twaD8f3ysjWUBkuk/2+N+YQwAzv4BHAVHJKky6OWqAlPwftwa
+ f9FP//owKkQIpVz3V8HHTsgAkotaDIXOZBAYRuqbMngO/Nt/aCSrnjagea4hTa1wpYAY
+ 1qlqeZq8cipQVY9N7ioczCessI8mP6StYn5YawHhH4Tx4BhyPBDQrMEGD0C+J5rCuRH0
+ bqJNgoIaToPdTampiUgFSyUbY7VrjuwEXY4YZAeD7yFH07XlAtTMIzuQ4gllKDo1NIcx
+ o6Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756833648; x=1757438448;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MB/UTLU5xoKxE7cF24PN2jwSynC0IakO2k2lx1F4WAU=;
+ b=upWmrgsL32liunt80bAhXR260hfS62I/+OmROjSTrx73jRAaoHXAO6RuL0RbJh/NWV
+ 4rVFkg4e9A4tIdFHHuaSDiVVvo5vykCcK867lhpNtHQ9COX4AanEpIKcpTy+yTGTc4jx
+ tVAikCZbqdyjZ4nPGFTvhksRiG1p1mHZUHIXQWXGqMua8tq5UEvAORS4jy6R77ts7JS7
+ HkHDGo9KxMfgRw/P7eZgjHluzXNOeP4sskNVaVONjyaCs6j7v07tX7eIpMlEV7pHF7f6
+ p0qUhr4eMd3/d3W5QB4nW+KMbhv5KnYcaZ2VqbuXa9PrmxovC+52H0o4xorIQoXy5tKo
+ BsKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWL9ZM1Tpt7jBdhGQ35ZnSMLG7yEcpwWRCON9NLmc1oMOxNRVqoEzOlQ5AQqQ/NXagsy/gH/wr/ZQqS@nongnu.org
+X-Gm-Message-State: AOJu0YyK/2Qc88A94IG4rH9QeB9rUFhb+F221jNpkj41ncdIgZ90UxRL
+ af6fXP1h1guZZFCFAmafMfIhzzGAOpqE2NjKI9rpJyJ7xkAVCL8NGRT8Tn3AFL/97PLGAwJSeiz
+ 0DGWy2YTN06oU7GyUXBHNiNu8cTgTIT9Yc0wnZGXW+Q==
+X-Gm-Gg: ASbGncshuU+jT5vmziyFm9gulG05DbynBtOelHZBUQBHyoaNeNr8H896ZuUxYuUJl2E
+ HwW/dQ0PHb2XGDLzZgLhXjxW2N6efpBU3PsBnb6VU/tvLXweDPs45rBxklt4+C1jONVWNo1RHoD
+ 6Sd6RRsofREXTVf4c9thYMr1Pu4AzRWMl6YIobloZzaJ0UipP2e+BkHl3GYV6ADupGYqcNQMaDl
+ ztCSs5Iv00HL7w8XhqDkGQ05cTKnsps7oMflg/ssXd2j5g3og==
+X-Google-Smtp-Source: AGHT+IFN+CC6dEJWkXfmVt5FMjtW5GOstmtyQ4VNnNqeSdyBYs2+FNjwHzjJJI4yl6Yb5MPZbb7TFAvp3xZacQYidVQ=
+X-Received: by 2002:a17:903:41d0:b0:249:27b9:2a06 with SMTP id
+ d9443c01a7336-2494488a758mr172585625ad.2.1756833647708; Tue, 02 Sep 2025
+ 10:20:47 -0700 (PDT)
+MIME-Version: 1.0
 References: <cover.1756706188.git.jan.kiszka@siemens.com>
  <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
  <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
@@ -72,161 +72,32 @@ References: <cover.1756706188.git.jan.kiszka@siemens.com>
  <d21f6449-e646-42fc-8277-b011a886e9c9@linaro.org>
  <41d2e67e-3345-4720-b3aa-1051224025de@siemens.com>
  <21b6726a-1ceb-4782-a219-36f32cebb774@siemens.com>
- <a1463f9e36d8b3e6289859bec9a0a5a758709316.camel@pengutronix.de>
- <CANCZdfprQZTVskt-EPgT-ALMO3HU-akdcw+yZ5=9Cmu1F00etQ@mail.gmail.com>
-From: Jan Kiszka <jan.kiszka@siemens.com>
-Content-Language: en-US
-Autocrypt: addr=jan.kiszka@siemens.com; keydata=
- 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
-In-Reply-To: <CANCZdfprQZTVskt-EPgT-ALMO3HU-akdcw+yZ5=9Cmu1F00etQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: CH5PR05CA0003.namprd05.prod.outlook.com
- (2603:10b6:610:1f0::16) To GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:150:76::15)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR10MB6186:EE_|GV2PR10MB8040:EE_
-X-MS-Office365-Filtering-Correlation-Id: 54ac2fc2-768c-49d1-7999-08ddea44b009
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?R2V6ZHA2YnJEbFk2MHVPMHN3UkxVU1VKc2d0WXdTMFQ3UFRBaWFBSjJ2TjVO?=
- =?utf-8?B?WGJBRStiSTRvRTJGaktyWmc5VUZTU2RHeDd1RG1TYVgrU0EwUWxJRFM5c005?=
- =?utf-8?B?Q05nS2RCS1RiSHgrdWxuTHdhcUpvNEw1MktsSGIrZldubnBPck4vdHhXeW5q?=
- =?utf-8?B?NUdRSU10RFlhTzVXM3NJVllwY1ZQRG5JK0hGSkpHZDFHRnUvdEhmTVoyZ0ZG?=
- =?utf-8?B?RHJhZGNhalFacEowaTBaU1E5K0huaStmUU1jS2QwWk43aUpmaXkyemtmUkRX?=
- =?utf-8?B?Q1Z5MU1qQnlmTWd2RVM5NE1XRW9vY2NTRnRERXdXOFRvN2xJN0p6MCtDc3BC?=
- =?utf-8?B?SmR4VkFKWWYvUk5wNW5nNlJnNHh1N3dWOS9wdEFPdnBybE1ZZm15S0t6bVFU?=
- =?utf-8?B?T241Y2VWbWZldFVGaHU4dkxiWEdkVzZxVksyTW1jcGU4bytMdkc4M2xTeit2?=
- =?utf-8?B?VTRHd1lDUmZVRFExRnNEOHdGUlFsQWNPRmlxSjAvRGpWT1hENWkyLzlIemsx?=
- =?utf-8?B?NjFsREZ1cm1mMFF4Sm1hVTMvbDZjSHFqWU9TOGhvYzJPTWF2MmJCRUZ2a3ZZ?=
- =?utf-8?B?ck9HVWorT3QydStTME83NzFpOWdVTGtrNHZtK2JlenplTHp6dmE3SWZJU2tV?=
- =?utf-8?B?L3o4VjhtdHpsTXQrNEgzdGFTT1RHdmJib1NReXJxWjNhZnB2dXlSN1hYMklQ?=
- =?utf-8?B?Mjc4ZUo4K2kxWWhtOEkvSVhtR3N4U1BMVFI2ZEtQNzRvN2c2MnNQa0dQQTNT?=
- =?utf-8?B?RjRLTEQvRHIzYW15OXhQNXF2a0pxZ2VxMEdxUVNsRE1zNDJBbVJOLzNtS0Rk?=
- =?utf-8?B?bXJOQmhzQXFTeVZuc0prL2lwVUxjSjNxckppVk1DbGoxbDZWWmc3RmMzc3N6?=
- =?utf-8?B?NUdQQzBkcm4yU3ZFa0plTGtwelJSR0lUcHdKV3QwR2k4RWVmZWFKeXByNVNa?=
- =?utf-8?B?S21ZUmpqME9TOTc0UHM3TVRlWm9aM2huK2Jvd3lLUmJLYUIzRW5PUGw0UWhF?=
- =?utf-8?B?L3c3bVRJNTdDWmhBWmxveXpOSUdWTEJCcTBRMzdyREtNRjlsN0FDUGQwU0Vv?=
- =?utf-8?B?YUhWckpPN1FBQVZvTjR5VzJqdmJOSTZRN3lISFh6QzJlQzA4UFVqU0hQR2dL?=
- =?utf-8?B?MGxaNWNRMUtIT09vUDc4Qno4MnVRR1NiRGZkM284Y1B1N2xaWnpLSTgxL2gw?=
- =?utf-8?B?Z0h3cXFsY2RUUnVkb1ZOdWU0TkM3bzZrYTFZSjhMa2p2QTIvZjhVQ1JTMXdt?=
- =?utf-8?B?UnVUV3lxSjFwOVJ2OXBGR1lYZmdyQmJHb0RTY1k3V016VzFSNFR6UWY0M2hB?=
- =?utf-8?B?OU4yQUFuOWdoZVNvTXZxQUpqL0FjcThNMWZuYW4xTENEZTNSYlRDT2ZFUFBQ?=
- =?utf-8?B?SXBRYk8wN0hsaml2YWFwN2RFRnNpejZSZFVEVGkxWFZYcU1NMXJFR2EyUEE2?=
- =?utf-8?B?bW1DZUQ2Z2NCTUxJZ1NvWU5LbFQ1Tnl2aFZHdGpqRm9aZFV1Y0VmMGdoRURW?=
- =?utf-8?B?YklqZ3BIVkdPUEs5K1E1blBleWtUVVpGN1VGQmt2UEh0ZWhVcERBVkpiN3VO?=
- =?utf-8?B?Z0ZYa3c0QnI4aHV2b2srWWNWRERrbTZEZWVISWNrVC9RR3l6NG5IdU5kY0My?=
- =?utf-8?B?QmxwRi9zWmViN1lXNlgzSTFaV0RpUlpzUE81RlJhWUJlV1pEeStVRFpmK3hJ?=
- =?utf-8?B?MTNoVzc0WUh6azhHNU5BdzB3MUY3UVZmVDVPVmxvZTVzS0Y0bk5ZQUtFQnRT?=
- =?utf-8?B?MFpNZWQ1Wi85U3VYNkJTdG16WW5NbjlUQVVncGJTSjNvS211V2FTRzRIVEQ4?=
- =?utf-8?B?Q2dGVVJqTTJVN3JJQzJIN2dIZmM5TjFTNVM4R3NZOFYwb0ZhN0p3US8xSlE0?=
- =?utf-8?B?SmdyUEd0S25FRjd5b1dvMG1peEk1VXljaFVycTBEdi9GQ1VNMnkzNE5yQzB1?=
- =?utf-8?Q?hak/P7MjmKs=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RlViMGx0QlFqMHI4L0pISzFYaDdmVzE2ckZWL2dMM0dWazVsUzZxbXJGUXBW?=
- =?utf-8?B?S2JzbmNYeWR0dmJWaVZLdTZoQ21yUVRGNElzV1FnSjdHRkNHbXVFcExzN3dp?=
- =?utf-8?B?S3g3ZmxEdHA5UUxzQVJTYmJwUVIyeGxVR0xzQlNTWCt0N29xaGVtajBJMmxO?=
- =?utf-8?B?VDRQQ2NPcFVIUE1VeDMrMEgzWjJXczRtdXdqT01LSDViNU1uS0hEY2hlUVBj?=
- =?utf-8?B?dmRyTkc1a3hCOHNOZFNiUkdYN3lSL1VEamU3WDhWbWZUZjdzeTBaNTZ3b08y?=
- =?utf-8?B?TktmL0tOMFVQSEVZS2JDRXM1RTRWNnIyK09raUl0a0h6KzVEckFxU2ZzNnQz?=
- =?utf-8?B?eEJwRGd4RVQ1SXlTYWJJcjdySlJLU0w2T1F6MzdmNUJ4SWNUd0M3dTNja1N5?=
- =?utf-8?B?aXV0OTd3VExvcVp3ajRVN3JwV2xvYWxnUjVZbHhhN2Q4Nlg4dnFKT1FWekQw?=
- =?utf-8?B?TzdHZGVudE96Qm4wSnd4ZktnQXNRRjl5SUZwYWhZNUdyVlJ5dURSSmYvRFlx?=
- =?utf-8?B?alpkS09GeGJLaGswT3NPWjNCTDNHczZ4OEhWQ2dFRnMrWjM3eEVTbTcrMVhv?=
- =?utf-8?B?Z29oUER2V0VFN0h0NDdFWG16aHAwTmZwQysrK2RvU3NEWmowVHVBNjlpclVh?=
- =?utf-8?B?emQvUmtOTktFdHc5OUtZSUtzWnJ6ZWhNZzAzZ3JmWlFZZE9PQ0xyeTdSMjBu?=
- =?utf-8?B?dUIzSEZrUlF4L3p2aHQ4MEZyRW91NkhRMnJiMjliTmVvUFhKdk1XYW5QcmhY?=
- =?utf-8?B?b081dkliZUFlU3owZ0R5aGpha1JST2ZnbXVUQ2FDMVVFWDY4L1NndEdFV3BT?=
- =?utf-8?B?ZmFZcjlxZ01rcDFQMmlzQ0trY25lbys4SUdtSUMzdlR6eUlkaHlPOHVDSFIr?=
- =?utf-8?B?dTZ0M0FkU0Y2d3poK3cvMTI0bGdsenNlb0ZSQ0MxMitqU2twTksyN3V4V1hC?=
- =?utf-8?B?OTR5K29mS0xycW5SQ1YyOURPYlg3T2dsZ2dVRHIvWWtXVEppTFZRbTVNWkpw?=
- =?utf-8?B?a3QrckJYWlZQSnJmczlnVVVZWWxXVmg2Y3A4NlB2NzB6K05DN0pKclVwN3Nn?=
- =?utf-8?B?ZkZJNERRcGFWbW9EeEhOeDhVOTdwZE4rSVJSeUk5M0xlc2Vkb21RRFR4K21t?=
- =?utf-8?B?YnZrNkJiQmJ6WUxVVlFBL09tYlJ2ZG5JU2tKV0F5WjJXMEdrbUJONFJUQnh6?=
- =?utf-8?B?alFKVDNjQ0RPNGxNMHh4OGt6cjBUenkvbW15YVJBVjhFZlk5d1BKbnhJemNR?=
- =?utf-8?B?RUY1Nk1qY3NMbU4vdEppRVJQLzFVb0REOFZqeWx6Sk5ySERLQ3hrNURTZ3Zn?=
- =?utf-8?B?clBlSFdBU1YxUWg3WTlsK3hSR0QxbEdYUFhyaFV1SWNEdTIycW0yT0pJbGhW?=
- =?utf-8?B?VXZhRk1uZ3NkN0ZDTzB4ZnEzN3VhQW9Za3FJZjRPOVl5dW1JeWtGM28yN0s5?=
- =?utf-8?B?MEFXSzJsSXlhemE3UzNPY2QyakJNdlNCMThMS2RPeUI3MkZXLzFYZnJjRmsz?=
- =?utf-8?B?TWZpVXJuTmhNcytDelRlSEZLWnF6WHQyNGxIWnJRWWJTZ1BvcmpSbTdVN3Vm?=
- =?utf-8?B?WjdweU82MnY0ZzdwUnZmN0IrMFlkY0FaZ1JVbkZFRHRjU0EyazBKOWhMMWdo?=
- =?utf-8?B?UWpDbE1WWnhrN3RFY1pFZ0JEeEt1YTQ4eXNVVkd6WG9JMUVrdy9WeHhtVmhy?=
- =?utf-8?B?eDNYVVlPTGVabFl0Z1g0OWNnWTJjczl3VjBDQ0Uzd0N4cUcyMmZrTldxZitV?=
- =?utf-8?B?TytYSFYzR2V2TGQ4cHJ2SFF6VEMrOUFodFQ3dXpvMXp4UWtEUG9WbFh0WnI5?=
- =?utf-8?B?cTFNdmpaTjJGZnlkNEk0WlNnemhKdkVxWHNxUE9EY2Fab0l1aXNxczVodDFi?=
- =?utf-8?B?d0R2L1ZORU5TQkljdUxqK3RhL040QWFrc3lCNnZZMnhFeU5lcUNxNG0zOVgy?=
- =?utf-8?B?Rmw3V2VOOUxMZU1vblJNRjBtSXJvOUZVTVlmMG9zZ2ppUEpFbW8vTkMyUlJL?=
- =?utf-8?B?LytkZVMxeWJtYzhITjI3SVpkV01JQi8zV3hFbUxUS0NoUEtyZng5NUlEL29Q?=
- =?utf-8?B?UGNEQWx5cU5QMHRMMnlmMDFHTG1hY1dua0ZPeXJFSmw3RWtLWWpWMnFEMFU0?=
- =?utf-8?B?YlRpeUpYc21oUGdwcmlGYy9MSWNIb0V3MktKbmhwWWxiNlpHbm9GOFo0dVhl?=
- =?utf-8?B?N1E9PQ==?=
-X-OriginatorOrg: siemens.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54ac2fc2-768c-49d1-7999-08ddea44b009
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 17:18:09.1497 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Z+kf6IsSEd/7uqk5ruw6RQGotRK8wvtBies/H0SSLEeU3aF1Np9YV+1H64rqlkViEwMJkBDTE8zhOce8kLbL9g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR10MB8040
-Received-SPF: pass client-ip=2a01:111:f403:c201::6;
- envelope-from=jan.kiszka@siemens.com;
- helo=AM0PR02CU008.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+In-Reply-To: <21b6726a-1ceb-4782-a219-36f32cebb774@siemens.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 2 Sep 2025 11:20:36 -0600
+X-Gm-Features: Ac12FXyfqMuYvTFw8F1mZIMr4V0hMQtKgLv4ig9eRZGqFJ9MPwnTAGTxExBcI4A
+Message-ID: <CANCZdfrTouq9JVPQqxFdKttZ0xqfgPAjMX8fLNVEf+YdLwDhtg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
+ image
+To: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>, 
+ Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>, qemu-arm <qemu-arm@nongnu.org>,
+ Alistair Francis <alistair@alistair23.me>, Alexander Bulekov <alxndr@bu.edu>
+Content-Type: multipart/alternative; boundary="00000000000080a9fd063dd4b53b"
+Received-SPF: none client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ URI_HEX=0.1 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -242,94 +113,634 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.09.25 19:07, Warner Losh wrote:
-> 
-> 
-> On Tue, Sep 2, 2025 at 10:49 AM Jan Lübbe <jlu@pengutronix.de
-> <mailto:jlu@pengutronix.de>> wrote:
-> 
->     On Tue, 2025-09-02 at 18:39 +0200, Jan Kiszka wrote:
->     > > > I expect us to be safe and able to deal with non-pow2 regions
->     if we use
->     > > > QEMUSGList from the "system/dma.h" API. But this is a rework
->     nobody had
->     > > > time to do so far.
->     > >
->     > > We have to tell two things apart: partitions sizes on the one
->     side and
->     > > backing storage sizes. The partitions sizes are (to my reading)
->     clearly
->     > > defined in the spec, and the user partition (alone!) has to be
->     power of
->     > > 2. The boot and RPMB partitions are multiples of 128K. The sum
->     of them
->     > > all is nowhere limited to power of 2 or even only multiples of 128K.
->     > >
->     >
->     > Re-reading the part of the device capacity, the rules are more
->     complex:
->     >  - power of two up to 2 GB
->     >  - multiple of 512 bytes beyond that
->     >
->     > So that power-of-two enforcement was and still is likely too strict.
-> 
-> 
-> It is. Version 0 (and MMC) cards had the capacity encoded like so:
->                 m = mmc_get_bits(raw_csd, 128, 62, 12);
->                 e = mmc_get_bits(raw_csd, 128, 47, 3);
->                 csd->capacity = ((1 + m) << (e + 2)) * csd->read_bl_len;
-> so any card less than 2GB (well, technically 4GB, but 4GB version 0
-> cards were
-> rare and broke some stacks... I have one and I love it on my embedded
-> ARM board
-> that can't do version 1 cards). Version 1 cards encoded it like:
->                 csd->capacity = ((uint64_t)mmc_get_bits(raw_csd, 128,
-> 48, 22) +
->                     1) * 512 * 1024;
-> So it's a multiple of 512k. These are also called 'high capacity' cards.
-> 
-> Version 4 introduces an extended CSD, which had a pure sector count in
-> the EXT CSD. I think this
-> is only for MMC cards. And also the partition information.
->  
-> 
->     > But I still see no indication, neither in the existing eMMC code
->     of QEMU
->     > nor the spec, that the boot and RPMB partition sizes are included
->     in that.
-> 
->     Correct. Non-power-of-two sizes are very common for real eMMCs.
->     Taking a random
->     one from our lab:
->     [    1.220588] mmcblk1: mmc1:0001 S0J56X 14.8 GiB
->     [    1.228055]  mmcblk1: p1 p2 p3 p4
->     [    1.230375] mmcblk1boot0: mmc1:0001 S0J56X 31.5 MiB
->     [    1.233651] mmcblk1boot1: mmc1:0001 S0J56X 31.5 MiB
->     [    1.236682] mmcblk1rpmb: mmc1:0001 S0J56X 4.00 MiB, chardev (244:0)
-> 
->     For eMMCs using MLC NAND, you can also configure part of the user
->     data area to
->     be pSLC (pseudo single level cell), which changes the available
->     capacity (after
->     a required power cycle).
-> 
-> 
-> Yes. Extended partitions are a feature of version 4 cards, so don't have
-> power-of-2 limits since they are a pure sector count in the ext_csd.
-> 
+--00000000000080a9fd063dd4b53b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-JESD84-B51A (eMMC 5.1A):
+On Tue, Sep 2, 2025 at 10:40=E2=80=AFAM Jan Kiszka <jan.kiszka@siemens.com>=
+ wrote:
 
-"The C_SIZE parameter is used to compute the device capacity for devices
-up to 2 GB of density. See 7.4.52, SEC_COUNT [215:212] , for details on
-calculating densities greater than 2 GB."
+> On 02.09.25 18:24, Jan Kiszka wrote:
+> > On 02.09.25 18:20, Philippe Mathieu-Daud=C3=A9 wrote:
+> >> On 2/9/25 18:14, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>> On 2/9/25 18:00, C=C3=A9dric Le Goater wrote:
+> >>>> On 9/2/25 17:55, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>>>> On 2/9/25 17:47, C=C3=A9dric Le Goater wrote:
+> >>>>>> On 9/2/25 17:45, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>>>>>> On 2/9/25 17:43, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>>>>>>> On 2/9/25 17:34, Jan Kiszka wrote:
+> >>>>>>>>> On 02.09.25 17:06, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>>>>>>>>> On 1/9/25 07:56, Jan Kiszka wrote:
+> >>>>>>>>>>> From: Jan Kiszka <jan.kiszka@siemens.com>
+> >>>>>>>>>>>
+> >>>>>>>>>>> The power-of-2 rule applies to the user data area, not the
+> >>>>>>>>>>> complete
+> >>>>>>>>>>> block image. The latter can be concatenation of boot partitio=
+n
+> >>>>>>>>>>> images
+> >>>>>>>>>>> and the user data.
+> >>>>>>>>>>>
+> >>>>>>>>>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+> >>>>>>>>>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> >>>>>>>>>>> ---
+> >>>>>>>>>>>    hw/sd/sd.c | 2 +-
+> >>>>>>>>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>>>>>>>>>
+> >>>>>>>>>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> >>>>>>>>>>> index 8c290595f0..16aee210b4 100644
+> >>>>>>>>>>> --- a/hw/sd/sd.c
+> >>>>>>>>>>> +++ b/hw/sd/sd.c
+> >>>>>>>>>>> @@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev=
+,
+> >>>>>>>>>>> Error
+> >>>>>>>>>>> **errp)
+> >>>>>>>>>>>                return;
+> >>>>>>>>>>>            }
+> >>>>>>>>>>>    -        blk_size =3D blk_getlength(sd->blk);
+> >>>>>>>>>>> +        blk_size =3D blk_getlength(sd->blk) - sd-
+> >>>>>>>>>>>> boot_part_size * 2;
+> >>>>>>>>>>>            if (blk_size > 0 && !is_power_of_2(blk_size)) {
+> >>>>>>>>>>>                int64_t blk_size_aligned =3D pow2ceil(blk_size=
+);
+> >>>>>>>>>>>                char *blk_size_str;
+> >>>>>>>>>>
+> >>>>>>>>>> This seems to break the tests/functional/arm/
+> >>>>>>>>>> test_aspeed_rainier.py
+> >>>>>>>>>> test due to mmc-p10bmc-20240617.qcow2 size:
+> >>>>>>>>>>
+> >>>>>>>>>> Command: /builds/qemu-project/qemu/build/qemu-system-arm -
+> >>>>>>>>>> display none -
+> >>>>>>>>>> vga none -chardev socket,id=3Dmon,fd=3D5 -mon
+> >>>>>>>>>> chardev=3Dmon,mode=3Dcontrol -
+> >>>>>>>>>> machine rainier-bmc -chardev socket,id=3Dconsole,fd=3D10 -seri=
+al
+> >>>>>>>>>> chardev:console -drive file=3D/builds/qemu-project/qemu/
+> >>>>>>>>>> functional- cache/
+> >>>>>>>>>> download/
+> >>>>>>>>>>
+> d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b,if=3Dsd,=
+id=3Dsd2,index=3D2
+> -net nic -net user -snapshot
+> >>>>>>>>>> Output: qemu-system-arm: Invalid SD card size: 16 GiB
+> >>>>>>>>>> SD card size has to be a power of 2, e.g. 16 GiB.
+> >>>>>>>>>>
+> >>>>>>>>>> https://gitlab.com/qemu-project/qemu/-/jobs/11217561316
+> >>>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>> Hmm, then the test was always wrong as well. I suspect the
+> >>>>>>>>> aspeed is
+> >>>>>>>>> enabling boot partitions by default, and the image was created
+> >>>>>>>>> to pass
+> >>>>>>>>> the wrong alignment check. Where / by whom is the image
+> maintained?
+> >>>>>>>>
+> >>>>>>>> C=C3=A9dric Le Goater (Cc'ed).
+> >>>>>>>>
+> >>>>>>>> The test comes from:
+> >>>>>>>> https://lore.kernel.org/qemu-devel/4d1777d6-0195-4ecb-
+> >>>>>>>> a85f-09964268533d@kaod.org/
+> >>>>>>>>
+> >>>>>>>> Maybe also relevant to your suspicion:
+> >>>>>>>> https://lore.kernel.org/qemu-devel/e401d119-402e-0edd-
+> >>>>>>>> c2bf-28950ba48ccb@kaod.org/
+> >>>
+> >>> [*]
+> >>>
+> >>>>>>>
+> >>>>>>> Digging further:
+> >>>>>>> https://lore.kernel.org/qemu-
+> >>>>>>> devel/
+> 9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de/
+> >>>>>>>
+> >>>>>>
+> >>>>>> yes commit c078298301a8 might have some impact there.
+> >>>>>
+> >>>>> With Jan patch, your script doesn't need anymore the
+> >>>>>
+> >>>>>    echo "Fixing size to keep qemu happy..."
+> >>>>>
+> >>>>> kludge.
+> >>>>
+> >>>> which script ?
+> >>>
+> >>> The one you pasted in [*]:
+> >>>
+> >>> --
+> >>> #!/bin/sh
+> >>>
+> >>> URLBASE=3Dhttps://jenkins.openbmc.org/view/latest/job/latest-master/
+> >>> label=3Ddocker-builder,target=3Dwitherspoon-tacoma/lastSuccessfulBuil=
+d/
+> >>> artifact/openbmc/build/tmp/deploy/images/witherspoon-tacoma/
+> >>>
+> >>> IMAGESIZE=3D128
+> >>> OUTFILE=3Dmmc.img
+> >>>
+> >>> FILES=3D"u-boot.bin u-boot-spl.bin obmc-phosphor-image-witherspoon-
+> >>> tacoma.wic.xz"
+> >>>
+> >>> for file in ${FILES}; do
+> >>>
+> >>>      if test -f ${file}; then
+> >>>          echo "${file}: Already downloaded"
+> >>>      else
+> >>>          echo "${file}: Downloading"
+> >>>          wget -nv ${URLBASE}/${file}
+> >>>      fi
+> >>> done
+> >>>
+> >>> echo
+> >>>
+> >>> echo "Creating empty image..."
+> >>> dd status=3Dnone if=3D/dev/zero of=3D${OUTFILE} bs=3D1M count=3D${IMA=
+GESIZE}
+> >>> echo "Adding SPL..."
+> >>> dd status=3Dnone if=3Du-boot-spl.bin of=3D${OUTFILE} conv=3Dnotrunc
+> >>> echo "Adding u-boot..."
+> >>> dd status=3Dnone if=3Du-boot.bin of=3D${OUTFILE} conv=3Dnotrunc bs=3D=
+1K seek=3D64
+> >>> echo "Adding userdata..."
+> >>> unxz -c obmc-phosphor-image-witherspoon-tacoma.wic.xz | dd
+> >>> status=3Dprogress of=3D${OUTFILE} conv=3Dnotrunc bs=3D1M seek=3D2
+> >>> echo "Fixing size to keep qemu happy..."
+> >>> truncate --size 16G ${OUTFILE}
+> >>>
+> >>> echo "Done!"
+> >>> echo
+> >>> echo " qemu-system-arm -M tacoma-bmc -nographic -drive
+> >>> file=3Dmmc.img,if=3Dsd,index=3D2,format=3Draw"
+> >>> ---
+> >>
+> >> FTR the alignment check was added to shut up fuzzed CVEs in commit
+> >> a9bcedd15a5 ("hw/sd/sdcard: Do not allow invalid SD card sizes"):
+> >>
+> >>     QEMU allows to create SD card with unrealistic sizes. This could
+> >>     work, but some guests (at least Linux) consider sizes that are not
+> >>     a power of 2 as a firmware bug and fix the card size to the next
+> >>     power of 2.
+> >>
+> >>     While the possibility to use small SD card images has been seen as
+> >>     a feature, it became a bug with CVE-2020-13253, where the guest is
+> >>     able to do OOB read/write accesses past the image size end.
+> >>
+> >>     In a pair of commits we will fix CVE-2020-13253 as:
+> >>
+> >>         Read command is rejected if BLOCK_LEN_ERROR or ADDRESS_ERROR
+> >>         occurred and no data transfer is performed.
+> >>
+> >>         Write command is rejected if BLOCK_LEN_ERROR or ADDRESS_ERROR
+> >>         occurred and no data transfer is performed.
+> >>
+> >>         WP_VIOLATION errors are not modified: the error bit is set, we
+> >>         stay in receive-data state, wait for a stop command. All furth=
+er
+> >>         data transfer is ignored. See the check on sd->card_status at
+> >>         the beginning of sd_read_data() and sd_write_data().
+> >>
+> >>     While this is the correct behavior, in case QEMU create smaller SD
+> >>     cards, guests still try to access past the image size end, and QEM=
+U
+> >>     considers this is an invalid address, thus "all further data
+> >>     transfer is ignored". This is wrong and make the guest looping unt=
+il
+> >>     eventually timeouts.
+> >>
+> >>     Fix by not allowing invalid SD card sizes (suggesting the expected
+> >>     size as a hint):
+> >>
+> >>       $ qemu-system-arm -M orangepi-pc -drive
+> >> file=3Drootfs.ext2,if=3Dsd,format=3Draw
+> >>       qemu-system-arm: Invalid SD card size: 60 MiB
+> >>       SD card size has to be a power of 2, e.g. 64 MiB.
+> >>       You can resize disk images with 'qemu-img resize <imagefile> <ne=
+w-
+> >> size>'
+> >>       (note that this will lose data if you make the image smaller tha=
+n
+> >> it currently is).
+> >>
+> >>
+> >> I expect us to be safe and able to deal with non-pow2 regions if we us=
+e
+> >> QEMUSGList from the "system/dma.h" API. But this is a rework nobody ha=
+d
+> >> time to do so far.
+> >
+> > We have to tell two things apart: partitions sizes on the one side and
+> > backing storage sizes. The partitions sizes are (to my reading) clearly
+> > defined in the spec, and the user partition (alone!) has to be power of
+> > 2. The boot and RPMB partitions are multiples of 128K. The sum of them
+> > all is nowhere limited to power of 2 or even only multiples of 128K.
+> >
+>
+> Re-reading the part of the device capacity, the rules are more complex:
+>  - power of two up to 2 GB
+>  - multiple of 512 bytes beyond that
+>
 
-So I would now continue to enforce power-of-2 for 2G (including) cards,
-and relax to multiples of 512 for larger ones.
+Kinda. It is power of 2 up to 2GiB, but there were a number of 4GiB cards
+that were not high capacity cards that encoded their size and were otherwis=
+e
+low capacity cards. Qemu doesn't need to support that. Its existing capacit=
+y
+check should be enough.
 
-Jan
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index da5bdd134a..18b3f93965 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2151,7 +2151,7 @@ static void sd_realize(DeviceState *dev, Error **errp=
+)
+         }
 
--- 
-Siemens AG, Foundational Technologies
-Linux Expert Center
+         blk_size =3D blk_getlength(sd->blk);
+-        if (blk_size > 0 && !is_power_of_2(blk_size)) {
++        if (blk_size > 0 && (blksize < SDSC_MAX_CAPACITY &&
+!is_power_of_2(blk_size)) {
+             int64_t blk_size_aligned =3D pow2ceil(blk_size);
+             char *blk_size_str;
+
+is what I'm running with, but it should have a second check for 512k size
+if not an ext_csd situation.
+
+High capacity cards, though have a limitation where it's the number of 1024
+sectors (which are 512 bytes), so the limit is 512k. It encodes the CSD
+differently than normal capacity cards. Thankfully, we have this in our
+code already.
+
+And really high capacity cards have an extended structure the size of the
+card is reported in, and that appears to be in sectors.
+
+
+> So that power-of-two enforcement was and still is likely too strict.
+>
+
+Agreed.
+
+Warner
+
+
+> But I still see no indication, neither in the existing eMMC code of QEMU
+> nor the spec, that the boot and RPMB partition sizes are included in that=
+.
+>
+> Jan
+>
+> --
+> Siemens AG, Foundational Technologies
+> Linux Expert Center
+>
+>
+
+--00000000000080a9fd063dd4b53b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 2, =
+2025 at 10:40=E2=80=AFAM Jan Kiszka &lt;<a href=3D"mailto:jan.kiszka@siemen=
+s.com">jan.kiszka@siemens.com</a>&gt; wrote:<br></div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">On 02.09.25 18:24, Jan Kiszka wrote:<br>
+&gt; On 02.09.25 18:20, Philippe Mathieu-Daud=C3=A9 wrote:<br>
+&gt;&gt; On 2/9/25 18:14, Philippe Mathieu-Daud=C3=A9 wrote:<br>
+&gt;&gt;&gt; On 2/9/25 18:00, C=C3=A9dric Le Goater wrote:<br>
+&gt;&gt;&gt;&gt; On 9/2/25 17:55, Philippe Mathieu-Daud=C3=A9 wrote:<br>
+&gt;&gt;&gt;&gt;&gt; On 2/9/25 17:47, C=C3=A9dric Le Goater wrote:<br>
+&gt;&gt;&gt;&gt;&gt;&gt; On 9/2/25 17:45, Philippe Mathieu-Daud=C3=A9 wrote=
+:<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; On 2/9/25 17:43, Philippe Mathieu-Daud=C3=A9 w=
+rote:<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; On 2/9/25 17:34, Jan Kiszka wrote:<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; On 02.09.25 17:06, Philippe Mathieu-Da=
+ud=C3=A9 wrote:<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; On 1/9/25 07:56, Jan Kiszka wrote:=
+<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; From: Jan Kiszka &lt;<a href=
+=3D"mailto:jan.kiszka@siemens.com" target=3D"_blank">jan.kiszka@siemens.com=
+</a>&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; The power-of-2 rule applies to=
+ the user data area, not the<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; complete<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; block image. The latter can be=
+ concatenation of boot partition<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; images<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; and the user data.<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Signed-off-by: Jan Kiszka &lt;=
+<a href=3D"mailto:jan.kiszka@siemens.com" target=3D"_blank">jan.kiszka@siem=
+ens.com</a>&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Reviewed-by: Philippe Mathieu-=
+Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">philm=
+d@linaro.org</a>&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; ---<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0 hw/sd/sd.c | 2 +-=
+<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0 1 file changed, 1=
+ insertion(+), 1 deletion(-)<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; diff --git a/hw/sd/sd.c b/hw/s=
+d/sd.c<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; index 8c290595f0..16aee210b4 1=
+00644<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; --- a/hw/sd/sd.c<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; +++ b/hw/sd/sd.c<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; @@ -2789,7 +2789,7 @@ static v=
+oid sd_realize(DeviceState *dev,<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Error<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; **errp)<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0 -=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 blk_size =3D blk_getlength(sd-&gt;blk);<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 blk_size =3D blk_getlength(sd-&gt;blk) - sd-<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; boot_part_size * 2;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (blk_size &gt; 0 &amp;&amp; !is_power_of_=
+2(blk_size)) {<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int64_t blk_size_ali=
+gned =3D pow2ceil(blk_size);<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 char *blk_size_str;<=
+br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; This seems to break the tests/func=
+tional/arm/<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; test_aspeed_rainier.py<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; test due to mmc-p10bmc-20240617.qc=
+ow2 size:<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Command: /builds/qemu-project/qemu=
+/build/qemu-system-arm -<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; display none -<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; vga none -chardev socket,id=3Dmon,=
+fd=3D5 -mon<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; chardev=3Dmon,mode=3Dcontrol -<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; machine rainier-bmc -chardev socke=
+t,id=3Dconsole,fd=3D10 -serial<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; chardev:console -drive file=3D/bui=
+lds/qemu-project/qemu/<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; functional- cache/<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; download/<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; d523fb478d2b84d5adc5658d08502bc64b=
+1486955683814f89c6137518acd90b,if=3Dsd,id=3Dsd2,index=3D2 -net nic -net use=
+r -snapshot<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Output: qemu-system-arm: Invalid S=
+D card size: 16 GiB<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; SD card size has to be a power of =
+2, e.g. 16 GiB.<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; <a href=3D"https://gitlab.com/qemu=
+-project/qemu/-/jobs/11217561316" rel=3D"noreferrer" target=3D"_blank">http=
+s://gitlab.com/qemu-project/qemu/-/jobs/11217561316</a><br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Hmm, then the test was always wrong as=
+ well. I suspect the<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; aspeed is<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; enabling boot partitions by default, a=
+nd the image was created<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; to pass<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; the wrong alignment check. Where / by =
+whom is the image maintained?<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; C=C3=A9dric Le Goater (Cc&#39;ed).<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; The test comes from:<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; <a href=3D"https://lore.kernel.org/qemu-de=
+vel/4d1777d6-0195-4ecb-" rel=3D"noreferrer" target=3D"_blank">https://lore.=
+kernel.org/qemu-devel/4d1777d6-0195-4ecb-</a><br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; <a href=3D"http://a85f-09964268533d@kaod.o=
+rg/" rel=3D"noreferrer" target=3D"_blank">a85f-09964268533d@kaod.org/</a><b=
+r>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Maybe also relevant to your suspicion:<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; <a href=3D"https://lore.kernel.org/qemu-de=
+vel/e401d119-402e-0edd-" rel=3D"noreferrer" target=3D"_blank">https://lore.=
+kernel.org/qemu-devel/e401d119-402e-0edd-</a><br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; <a href=3D"http://c2bf-28950ba48ccb@kaod.o=
+rg/" rel=3D"noreferrer" target=3D"_blank">c2bf-28950ba48ccb@kaod.org/</a><b=
+r>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; [*]<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; Digging further:<br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; <a href=3D"https://lore.kernel.org/qemu-" rel=
+=3D"noreferrer" target=3D"_blank">https://lore.kernel.org/qemu-</a><br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; devel/<a href=3D"http://9046a4327336d4425f1e7e=
+7a973edef9e9948e80.camel@pengutronix.de/" rel=3D"noreferrer" target=3D"_bla=
+nk">9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de/</a><br>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt;&gt; yes commit c078298301a8 might have some impact the=
+re.<br>
+&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt; With Jan patch, your script doesn&#39;t need anymore t=
+he<br>
+&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt; =C2=A0=C2=A0 echo &quot;Fixing size to keep qemu happy=
+...&quot;<br>
+&gt;&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt;&gt; kludge.<br>
+&gt;&gt;&gt;&gt;<br>
+&gt;&gt;&gt;&gt; which script ?<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; The one you pasted in [*]:<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; --=C2=A0<br>
+&gt;&gt;&gt; #!/bin/sh<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; URLBASE=3D<a href=3D"https://jenkins.openbmc.org/view/latest/j=
+ob/latest-master/" rel=3D"noreferrer" target=3D"_blank">https://jenkins.ope=
+nbmc.org/view/latest/job/latest-master/</a><br>
+&gt;&gt;&gt; label=3Ddocker-builder,target=3Dwitherspoon-tacoma/lastSuccess=
+fulBuild/<br>
+&gt;&gt;&gt; artifact/openbmc/build/tmp/deploy/images/witherspoon-tacoma/<b=
+r>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; IMAGESIZE=3D128<br>
+&gt;&gt;&gt; OUTFILE=3Dmmc.img<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; FILES=3D&quot;u-boot.bin u-boot-spl.bin obmc-phosphor-image-wi=
+therspoon-<br>
+&gt;&gt;&gt; tacoma.wic.xz&quot;<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; for file in ${FILES}; do<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if test -f ${file}; then<br>
+&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 echo &quot;${=
+file}: Already downloaded&quot;<br>
+&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0else<br>
+&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 echo &quot;${=
+file}: Downloading&quot;<br>
+&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 wget -nv ${UR=
+LBASE}/${file}<br>
+&gt;&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0fi<br>
+&gt;&gt;&gt; done<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; echo<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; echo &quot;Creating empty image...&quot;<br>
+&gt;&gt;&gt; dd status=3Dnone if=3D/dev/zero of=3D${OUTFILE} bs=3D1M count=
+=3D${IMAGESIZE}<br>
+&gt;&gt;&gt; echo &quot;Adding SPL...&quot;<br>
+&gt;&gt;&gt; dd status=3Dnone if=3Du-boot-spl.bin of=3D${OUTFILE} conv=3Dno=
+trunc<br>
+&gt;&gt;&gt; echo &quot;Adding u-boot...&quot;<br>
+&gt;&gt;&gt; dd status=3Dnone if=3Du-boot.bin of=3D${OUTFILE} conv=3Dnotrun=
+c bs=3D1K seek=3D64<br>
+&gt;&gt;&gt; echo &quot;Adding userdata...&quot;<br>
+&gt;&gt;&gt; unxz -c obmc-phosphor-image-witherspoon-tacoma.wic.xz | dd<br>
+&gt;&gt;&gt; status=3Dprogress of=3D${OUTFILE} conv=3Dnotrunc bs=3D1M seek=
+=3D2<br>
+&gt;&gt;&gt; echo &quot;Fixing size to keep qemu happy...&quot;<br>
+&gt;&gt;&gt; truncate --size 16G ${OUTFILE}<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; echo &quot;Done!&quot;<br>
+&gt;&gt;&gt; echo<br>
+&gt;&gt;&gt; echo &quot; qemu-system-arm -M tacoma-bmc -nographic -drive<br=
+>
+&gt;&gt;&gt; file=3Dmmc.img,if=3Dsd,index=3D2,format=3Draw&quot;<br>
+&gt;&gt;&gt; ---<br>
+&gt;&gt;<br>
+&gt;&gt; FTR the alignment check was added to shut up fuzzed CVEs in commit=
+<br>
+&gt;&gt; a9bcedd15a5 (&quot;hw/sd/sdcard: Do not allow invalid SD card size=
+s&quot;):<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 QEMU allows to create SD card with unrealistic =
+sizes. This could<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 work, but some guests (at least Linux) consider=
+ sizes that are not<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 a power of 2 as a firmware bug and fix the card=
+ size to the next<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 power of 2.<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 While the possibility to use small SD card imag=
+es has been seen as<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 a feature, it became a bug with CVE-2020-13253,=
+ where the guest is<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 able to do OOB read/write accesses past the ima=
+ge size end.<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 In a pair of commits we will fix CVE-2020-13253=
+ as:<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Read command is rejecte=
+d if BLOCK_LEN_ERROR or ADDRESS_ERROR<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 occurred and no data tr=
+ansfer is performed.<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Write command is reject=
+ed if BLOCK_LEN_ERROR or ADDRESS_ERROR<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 occurred and no data tr=
+ansfer is performed.<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 WP_VIOLATION errors are=
+ not modified: the error bit is set, we<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 stay in receive-data st=
+ate, wait for a stop command. All further<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 data transfer is ignore=
+d. See the check on sd-&gt;card_status at<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 the beginning of sd_rea=
+d_data() and sd_write_data().<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 While this is the correct behavior, in case QEM=
+U create smaller SD<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 cards, guests still try to access past the imag=
+e size end, and QEMU<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 considers this is an invalid address, thus &quo=
+t;all further data<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 transfer is ignored&quot;. This is wrong and ma=
+ke the guest looping until<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 eventually timeouts.<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 Fix by not allowing invalid SD card sizes (sugg=
+esting the expected<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0 size as a hint):<br>
+&gt;&gt;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 $ qemu-system-arm -M orangepi-pc -d=
+rive<br>
+&gt;&gt; file=3Drootfs.ext2,if=3Dsd,format=3Draw<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu-system-arm: Invalid SD card si=
+ze: 60 MiB<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 SD card size has to be a power of 2=
+, e.g. 64 MiB.<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 You can resize disk images with &#3=
+9;qemu-img resize &lt;imagefile&gt; &lt;new-<br>
+&gt;&gt; size&gt;&#39;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (note that this will lose data if y=
+ou make the image smaller than<br>
+&gt;&gt; it currently is).<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; I expect us to be safe and able to deal with non-pow2 regions if w=
+e use<br>
+&gt;&gt; QEMUSGList from the &quot;system/dma.h&quot; API. But this is a re=
+work nobody had<br>
+&gt;&gt; time to do so far.<br>
+&gt; <br>
+&gt; We have to tell two things apart: partitions sizes on the one side and=
+<br>
+&gt; backing storage sizes. The partitions sizes are (to my reading) clearl=
+y<br>
+&gt; defined in the spec, and the user partition (alone!) has to be power o=
+f<br>
+&gt; 2. The boot and RPMB partitions are multiples of 128K. The sum of them=
+<br>
+&gt; all is nowhere limited to power of 2 or even only multiples of 128K.<b=
+r>
+&gt; <br>
+<br>
+Re-reading the part of the device capacity, the rules are more complex:<br>
+=C2=A0- power of two up to 2 GB<br>
+=C2=A0- multiple of 512 bytes beyond that<br></blockquote><div><br></div><d=
+iv>Kinda. It is power of 2 up to 2GiB, but there were a number of 4GiB card=
+s</div><div>that were not high capacity cards that encoded their size and w=
+ere otherwise</div><div>low capacity cards. Qemu doesn&#39;t need to suppor=
+t that. Its existing capacity</div><div>check should be enough.</div><div><=
+br></div><div>diff --git a/hw/sd/sd.c b/hw/sd/sd.c<br>index da5bdd134a..18b=
+3f93965 100644<br>--- a/hw/sd/sd.c<br>+++ b/hw/sd/sd.c<br>@@ -2151,7 +2151,=
+7 @@ static void sd_realize(DeviceState *dev, Error **errp)<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0}<br><br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0blk_size=
+ =3D blk_getlength(sd-&gt;blk);<br>- =C2=A0 =C2=A0 =C2=A0 =C2=A0if (blk_siz=
+e &gt; 0 &amp;&amp; !is_power_of_2(blk_size)) {<br>+ =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0if (blk_size &gt; 0 &amp;&amp; (blksize &lt; SDSC_MAX_CAPACITY &amp;&=
+amp; !is_power_of_2(blk_size)) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0int64_t blk_size_aligned =3D pow2ceil(blk_size);<br>=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0char *blk_size_str;<br></div><div><br></=
+div><div>is what I&#39;m running with, but it should have a second check fo=
+r 512k size if not an ext_csd situation.</div><div><br></div><div>High capa=
+city cards, though have a limitation where it&#39;s the number of 1024 sect=
+ors (which are 512 bytes), so the limit is 512k. It encodes the CSD differe=
+ntly than normal capacity cards. Thankfully, we have this in our code alrea=
+dy.</div><div><br></div><div>And really high capacity cards have an extende=
+d structure the size of the card is reported in, and that appears to be in =
+sectors.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
+:1ex">
+So that power-of-two enforcement was and still is likely too strict.<br></b=
+lockquote><div><br></div><div>Agreed.</div><div><br></div><div>Warner</div>=
+<div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+But I still see no indication, neither in the existing eMMC code of QEMU<br=
+>
+nor the spec, that the boot and RPMB partition sizes are included in that.<=
+br>
+<br>
+Jan<br>
+<br>
+-- <br>
+Siemens AG, Foundational Technologies<br>
+Linux Expert Center<br>
+<br>
+</blockquote></div></div>
+
+--00000000000080a9fd063dd4b53b--
 
