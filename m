@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28EE5CA1007
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 554D9CA100B
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 03:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utHzn-0006nf-W8; Mon, 01 Sep 2025 23:47:48 -0400
+	id 1utI1p-0004y3-Kc; Mon, 01 Sep 2025 23:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utHzj-0006ie-DW
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:47:44 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1utI1m-0004iV-L6
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:50 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utHzh-0004Sh-RX
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:47:43 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822Rk4x020472
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:47:40 GMT
+ id 1utI1g-0004fp-B6
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:50 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822SDqP030680
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:49:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mAJtXMwUtsS5y291JTNbgRaDyq5wKQuBRnzexP66Fwk=; b=QmzW3yx2HJrOg3Wg
- VRfDbUy6UtnZrxBXTsxvIDmBVbyH+k5I32YbRIkIvE9+BOeJgQi0zzUQWtDYxDeF
- rvFWmlZUCYN2aa0pRPCuQuPkKd88NY2Vf5Coio4dU3bZcoCb1rRnOXq4JJr7N2U0
- Bjt7/sugIfnJ8DI3WdW9ejdzeC4rNUBoBd9GEZ8TzLOsJ7tvd76INv0wpVJviKM9
- 1993v/KnG/o6yzPQ8ja6W84qc5CEXDisEXFaiL/Otp73tOISYiPw/BASaOVOdoE9
- RqYDCJhDxPHVjOD6GZW7UKfqk+m0rYNe0GHMCagtLaT4VLpfwcMFv1es3A7QiQDJ
- CZGquA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8rxf1u-1
+ UeEE5ojvXNhEhfJpLxhMabI5sN4yc768WwV+45QkkrI=; b=frOEJLYoVEXt9lLF
+ 9wDypURcfyZ898yWsv5j08I5xlYMo3H2siEuQ2j25qk7ovh+2vAxtUvim066Nc++
+ CpgX8y8UUloH/jdaBjKHSMrHOVtdcvo7YDUmfEP/MQNYQ/lNwNLGSvQFJZZ/j/QF
+ XU3V/F8LZoUvih1GDB+gtDkajaLyNI1d+zGZymmdLBQWvDTjO4VS3ZFtcax/l448
+ KHNcN0BmjzG5HQmbxFl9EeK1kRT1UJ9oAYjMjIuVEKT+lZj1q6GXjV2uxhFkTiEn
+ sdvhorACsUKlIdKYTxmxctLac3CSLXbMxh9lCd3+a7oyfjNGq0sPcrSTK2nz3eio
+ bC60ww==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8pc41-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:47:40 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-248f7745075so72304985ad.3
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:47:40 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:49:32 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b4d48818a04so2708374a12.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:49:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756784859; x=1757389659;
+ d=1e100.net; s=20230601; t=1756784971; x=1757389771;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mAJtXMwUtsS5y291JTNbgRaDyq5wKQuBRnzexP66Fwk=;
- b=piHbaTplCEYLYhrsEEdpLnM1ZnTfbrAO4pMUvVXd7um2D+iWCaqA1NYwISetrvySGc
- 9GW7BmNtWLr+ssoIS7FKisZ7iaI48GpMSrRFaJMpQ9WkfWCRW294nOhjFxbWOFFyetcC
- Rhr0tnnXcWmWK7bjWKcRXkjgs7LtHPAep4SQlSFnJzhM5vcu7jXIdg7sP7v+8B2edTGF
- Sl+S4tLHkBIzN28XEo+/WPgkxfpoVzRZDRBl6IkS0qY4FODtYDg4rHs0FfOgyvrdqVvX
- NgqAaQSqwcnPMY3S5h+CpKpKhsLtAQtFAW1VmaCDdYzNyBNWL0FDOvC62eFc2CrvkzHW
- 5Lhg==
-X-Gm-Message-State: AOJu0YzowerMZKEq/VqaPg9deBfQWBuug/LnhlX/cnVrtCHuoiVIj3Rs
- /cIVkJpq+7hMw2n3dEy+ZMEneZSl45JSfBKy8wKeJe4hUHSFgXHPreDz/n323aqIPnfcUhX6CJm
- Gzb/biQKeUqi0qXIM8WW3oMdA2Jx4q+M6fMOnJIJbsLJTPW9p5IK15mZBRU5u9NLJNil6
-X-Gm-Gg: ASbGncvBefBbgBapToLLtvJEJlGwLM9P8anlMZA1k6jH2npG7L8IU/vTnXibwZyMef4
- 9hOUczWa3eBlcl7K14aL3AVMoYMuF0VBelEGf1z8z0i8uEHo7HLjaZ81oIwT432ZKK3pL7QZ3+g
- u7WI2H+EdyKV3RaeXVaAZX+W747EoisumhJmFeuLa3fpurIUSKaGDTD3iNej4yb2+hZiw9gtFfQ
- luaAFXHy6l+UhY6xKJfY3h9Ng24KI5l2QjwLzWlL49cO5EeNV08xmqwDNJadAa+U+MZh/f3hbPA
- JA2fchESRnEGODXFbRYBFXrKq6VP3pWnF5flQckr2ap292lVrlCPCWP1KuhfutKqGBCD45ovTPd
- V8jkdbC2T4SBw
-X-Received: by 2002:a17:902:f78f:b0:24b:153f:7722 with SMTP id
- d9443c01a7336-24b153f792amr11968165ad.43.1756784859419; 
- Mon, 01 Sep 2025 20:47:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+fd+2AlHSe11wti96KJIbM8oCI6sg1lalh0/OtMo8K1sRNVbZwDHA2rpuSHq3RBLidAFptQ==
-X-Received: by 2002:a17:902:f78f:b0:24b:153f:7722 with SMTP id
- d9443c01a7336-24b153f792amr11967805ad.43.1756784858925; 
- Mon, 01 Sep 2025 20:47:38 -0700 (PDT)
+ bh=UeEE5ojvXNhEhfJpLxhMabI5sN4yc768WwV+45QkkrI=;
+ b=N8oueAaWBytpjKSnuMcXK7C3SkvupYtWXbNV3J1wq23wztEWvDlfrBJ/fo9Go4YoLs
+ euRDwwvdtFyP0f7yokUxf3a2SZeHjciv2OMeCyCyRpiEutB+IgeFbEz6CGZsvmWegGiW
+ lg1tw0AYhY5xA9MY8avM5cDXaGF5t4wMZkCea5vK2ypqtrCSUOvuVnaWW/SjuMrQ3I45
+ H0A2iEngQjhDgLyJWwBmgFEKkhtV6F0TRXsbQHy20fhWI6W7wrK4k/K4QwXGKFHfktaz
+ Rz9/W6lzTpDA7QpBNOLGOF8iueCqwdvzseBBNeZoi0r0/IhrT3z+nop/YMHay8j+/aav
+ LXxA==
+X-Gm-Message-State: AOJu0YzF7OMZ7E6r+V/S9G5eCUiRCwjGaD/QziSXbnDsdeQPTBJKtEKP
+ llR682ZFMDnohyMXXCApe1ZnA/WoqyPDi+QNhctJEdz0Gm1TE6ohj5igIwvISbsq8ahgvLqgc+a
+ aNQJUjASNavKOvshOfi0abDjKmBCu66/Fcj276ThsHyNZbPkXuwYN0A7kZ3K4+11x48+L
+X-Gm-Gg: ASbGncsrd/kOjVjvcP37lH+2r9+6yMIHdozSNskxYpEcpzRl+cH4iVk8NJCZoHKtTUW
+ EqqxTi3U55JikrSiCBqD3HBozVRXaKVCVDcCPlhBA9e6HJS79dpo38XiWEedN1OkIwRHiOB8XSb
+ qECUTxWscct8K0oXvKPbc2EiTGsmF6GKkJsOJhFImCj5BMQRhM8Zo5sy5vPlOwAj5+O3N05dWuF
+ HjtQcuqK7WekNt0qC1FGvfJ6p90h3Q/09/5TubwG3boenHML95GftxBcgYm6Q0PvVcBTa3bJZMc
+ bdVRLHd76pwXrpKqvm0RHqIiyZdlV9LBRmkuv580qNj28iKp55MJP284/+Lmzgl668fOTgoaU5I
+ seZ9OybRa0AVZ
+X-Received: by 2002:a05:6a20:3c8e:b0:23f:f712:411c with SMTP id
+ adf61e73a8af0-243d6f02f4cmr15427905637.36.1756784971529; 
+ Mon, 01 Sep 2025 20:49:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGp70sfZcgMOaXe6om1awLqZVuc0WpEXMNsnLKlPPJawiKVSvQUK/ub3PJRzUzjBtyPMHqSZQ==
+X-Received: by 2002:a05:6a20:3c8e:b0:23f:f712:411c with SMTP id
+ adf61e73a8af0-243d6f02f4cmr15427882637.36.1756784971082; 
+ Mon, 01 Sep 2025 20:49:31 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b4cd006e2c6sm10633584a12.2.2025.09.01.20.47.38
+ 98e67ed59e1d1-327daeeca1csm12543546a91.25.2025.09.01.20.49.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 20:47:38 -0700 (PDT)
+ Mon, 01 Sep 2025 20:49:30 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
@@ -81,39 +81,39 @@ Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
  anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  alex.bennee@linaro.org, quic_mburton@quicinc.com,
  sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v2 14/40] target/hexagon: Add TCG values for sreg, greg
-Date: Mon,  1 Sep 2025 20:46:49 -0700
-Message-Id: <20250902034715.1947718-15-brian.cain@oss.qualcomm.com>
+Subject: [PATCH v2 32/39] target/hexagon: Define system, guest reg names
+Date: Mon,  1 Sep 2025 20:48:40 -0700
+Message-Id: <20250902034847.1948010-33-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250902034715.1947718-1-brian.cain@oss.qualcomm.com>
-References: <20250902034715.1947718-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
+References: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX0RpdCy63DJ7y
- c3ntqzwy/7dVPlqVecTwQGDQyLzjTtszCeSAEiPz2ULxHEn1enW6GzK7dJDur5BtKNebAoAunKI
- cRdTSMZEo9kf78zjVsJsqTAnPnQiDhzcAHR2qyZwD+Sih28ibOzTeETLW0vafGgCLX9szWq+EXJ
- bOR0rWkJKHYj4cTLfuPRW9B/kGRKZUfrNVpvhKIeCATBqVlV5HXAWF1VjZf8Zjz7JSzfFykmjXI
- FOi2LCs/ZjwIkVLiv3+gc6RvxKGdkCcglTnvMQEGs2SnlEKZUFu4Kwm8n+QZmKbyDD8Mu5kZ4DQ
- eYqrOFsLNM/DAJmgr+AkWKKR4yMw5Me3z6yuyCoI4+dRywWpeuxbRRe/vHO+0YLML/lJ5nr1aAE
- Qe9FELIE
-X-Proofpoint-GUID: AW6xImXAGNSD6CW1DrbI95mgepbqcYCQ
-X-Proofpoint-ORIG-GUID: AW6xImXAGNSD6CW1DrbI95mgepbqcYCQ
-X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b668dc cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: 7Sy9waknEeqobfZ-I6BrS76d4LFHOT8c
+X-Proofpoint-GUID: 7Sy9waknEeqobfZ-I6BrS76d4LFHOT8c
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfXx4Mtzl4omSz9
+ oaJGyXOcVV62+FiOnw28NbyRbfdA3w6kmx/dZxQEoKPC0igWcHhCkVIyjZNY8yDNyJHH+rfP5jA
+ bKH4hn2FDUVmyMw57et8h3qZqar1YZ63JXlq2zY1Jy9CDJo+nn/ShGF78tXqIqhrNFbtxv7n13b
+ iRg9ewkoyvZqLxVhDhl4IQ3ij3ycZM3aTGtDTaYUp0Nn1Fjtdw52AbBGvRphZGOz+EPBy0o0B4X
+ jHf7Ju776UzRBtXdbkbbF4A7s87DVYe0qt1qy942sjmMZ9y3kS+8DqPLeylZJaTkUL51bBCVVLh
+ /j9Gw40vCRZiFT3HcDUftxbEdO3FZs1rKzYrlLVy5jWqKSp2oKWSWQrMd4mq50RiuZ6nyjNYp2X
+ TOBvjGZQ
+X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b6694c cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=cx3kwmWHRlzPn0WqSTwA:9 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+ a=Y3CEZXcnQwYgoNz55sMA:9 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
  a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -140,39 +140,63 @@ From: Brian Cain <bcain@quicinc.com>
 
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/hexagon/translate.h | 5 +++++
- target/hexagon/translate.c | 2 ++
- 2 files changed, 7 insertions(+)
+ target/hexagon/internal.h |  2 ++
+ target/hexagon/cpu.c      | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
-diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-index 2bd125297a..4c1868369a 100644
---- a/target/hexagon/translate.h
-+++ b/target/hexagon/translate.h
-@@ -280,6 +280,11 @@ extern TCGv_i64 hex_llsc_val_i64;
- extern TCGv hex_vstore_addr[VSTORES_MAX];
- extern TCGv hex_vstore_size[VSTORES_MAX];
- extern TCGv hex_vstore_pending[VSTORES_MAX];
+diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
+index 94e5e502a9..a9eb5645f1 100644
+--- a/target/hexagon/internal.h
++++ b/target/hexagon/internal.h
+@@ -34,6 +34,8 @@ void hexagon_debug_qreg(CPUHexagonState *env, int regnum);
+ void hexagon_debug(CPUHexagonState *env);
+ 
+ extern const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS];
++extern const char * const hexagon_sregnames[];
++extern const char * const hexagon_gregnames[];
+ 
+ void G_NORETURN do_raise_exception(CPUHexagonState *env,
+         uint32_t exception,
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 6d2013ce89..122761e657 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -88,6 +88,35 @@ const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS] = {
+   "c24", "c25", "c26", "c27", "c28",  "c29", "c30", "c31",
+ };
+ 
 +#ifndef CONFIG_USER_ONLY
-+extern TCGv hex_greg[NUM_GREGS];
-+extern TCGv hex_t_sreg[NUM_SREGS];
-+#endif
++const char * const hexagon_sregnames[] = {
++    "sgp0",       "sgp1",       "stid",       "elr",        "badva0",
++    "badva1",     "ssr",        "ccr",        "htid",       "badva",
++    "imask",      "gevb",       "vwctrl",     "s13",        "s14",
++    "s15",        "evb",        "modectl",    "syscfg",     "segment",
++    "ipendad",    "vid",        "vid1",       "bestwait",   "s24",
++    "schedcfg",   "s26",        "cfgbase",    "diag",       "rev",
++    "pcyclelo",   "pcyclehi",   "isdbst",     "isdbcfg0",   "isdbcfg1",
++    "livelock",   "brkptpc0",   "brkptcfg0",  "brkptpc1",   "brkptcfg1",
++    "isdbmbxin",  "isdbmbxout", "isdben",     "isdbgpr",    "pmucnt4",
++    "pmucnt5",    "pmucnt6",    "pmucnt7",    "pmucnt0",    "pmucnt1",
++    "pmucnt2",    "pmucnt3",    "pmuevtcfg",  "pmustid0",   "pmuevtcfg1",
++    "pmustid1",   "timerlo",    "timerhi",    "pmucfg",     "rgdr2",
++    "rgdr",       "turkey",     "duck",       "chicken",
++};
 +
- 
- void hex_gen_exception_end_tb(DisasContext *ctx, int excp);
- 
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index c87f07ab69..d788aa227c 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -62,6 +62,8 @@ TCGv hex_vstore_size[VSTORES_MAX];
- TCGv hex_vstore_pending[VSTORES_MAX];
- 
- #ifndef CONFIG_USER_ONLY
-+TCGv hex_greg[NUM_GREGS];
-+TCGv hex_t_sreg[NUM_SREGS];
- TCGv hex_cause_code;
- #endif
- 
++G_STATIC_ASSERT(NUM_SREGS == ARRAY_SIZE(hexagon_sregnames));
++
++const char * const hexagon_gregnames[] = {
++    "gelr",       "gsr",       "gosp",      "gbadva",    "gcommit1t",
++    "gcommit2t",  "gcommit3t", "gcommit4t", "gcommit5t", "gcommit6t",
++    "gpcycle1t",  "gpcycle2t", "gpcycle3t", "gpcycle4t", "gpcycle5t",
++    "gpcycle6t",  "gpmucnt4",  "gpmucnt5",  "gpmucnt6",  "gpmucnt7",
++    "gcommit7t",  "gcommit8t", "gpcycle7t", "gpcycle8t", "gpcyclelo",
++    "gpcyclehi",  "gpmucnt0",  "gpmucnt1",  "gpmucnt2",  "gpmucnt3",
++    "g30",        "g31",
++};
++#endif
+ /*
+  * One of the main debugging techniques is to use "-d cpu" and compare against
+  * LLDB output when single stepping.  However, the target and qemu put the
 -- 
 2.34.1
 
