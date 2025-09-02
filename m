@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76012CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 07:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA5F7CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 07:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utLnP-00077J-Ar; Tue, 02 Sep 2025 03:51:15 -0400
+	id 1utLnP-00077P-AN; Tue, 02 Sep 2025 03:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1utLnG-000749-8O
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 03:51:06 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1utLnH-00074d-JN
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 03:51:09 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1utLnB-0001un-F6
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 03:51:06 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-76e2ea933b7so4174311b3a.1
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 00:50:59 -0700 (PDT)
+ id 1utLnB-0001uc-F6
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 03:51:07 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7722f8cf9adso3484609b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 00:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756799459; x=1757404259; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756799457; x=1757404257; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n8jo0LSSh8lJpsdcimtvOxocpTr/cr5eTG3kdaxxUXg=;
- b=DqCN0h6YmYXM/ZmVGyYIy0OHoaFD3f6Uz3BX2WBSkCWvxAZ+kqGMZuuKcqmnYo/X8x
- sXojiVeglqcmsPj/v4qB98Ju0diVhne2E4ynwNNwH0aw3oXU0rBq+kBXckqWLFHVzU8A
- dhmQToWJB3D1RYTPvz8mFv+7gg4lyHqsWF0peH1jFNVx59alcVY7c7UrAa5MuZoRbyK3
- Ei0PtO9BEiJgTf80nD7BDpaIlh/RuuRNww3VA/P7O4XHR8bMrZkEGUk7hxv7AsK1bIzP
- o8sPLWDnNyqvA5JI+r2X7BfdseTwKbh+WB7MuFCPyvFCwDEIksOHXijhnFBHrNV9yCAV
- klBQ==
+ bh=KsrgAwcfXPf60wLi3R10FjsXpsAPM+d7uJ0mGFTRCRw=;
+ b=tMSX8xRRGdeOatBYYgof1RALpPvJFmxCpaQDoY6FaqwGyl/fj9dIPU4NiwpiL1iW3n
+ B+tW+fLVXyYP7APyOOHimtxtyaeFZnrtvo3y1JD1MjfYfHp8Xv5gx/zrVXYAATkIMExj
+ lunPRAA14JuympQWFmUu9s2nzVxgAbcSxi0zDrwwdET+UalonnKBrWUiGmTxHfyUQGGp
+ tFTyE+PaJLWkzeLcG3P+n2/OP99OaxJI2tfPYpitadXtUmpoW9W/Uy/OQ4n8OqNKuzg/
+ bI2nmkL9g6i1YD1DZVNtvyHaLbfUS3UpOGMDPHfgIf4NHIxuX9bT3PWUCMGYpXjAjBkV
+ ZZ/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756799459; x=1757404259;
+ d=1e100.net; s=20230601; t=1756799457; x=1757404257;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n8jo0LSSh8lJpsdcimtvOxocpTr/cr5eTG3kdaxxUXg=;
- b=pK702/HXJxFut9nyDqAwjt0G0TZq1w7rY/RPT4+0IsQvRHA+xBMOGZt3hc6A2etTHT
- meKKCTCB8AdXjs/nUcWNkMkRxcBgE40PNs9rS34KhVnIk8jG8jnLTktZukzJTDMkwBhV
- 8suN4ZSCOFtG/9flY7KtlL7/grkT/52+E+feuYQyZ0BVinGgXjp9JPs3jwqAoEYe8K11
- XaFnYdrzaBjhhdh9lNVaxVzPDhrY9JsW8/1cNHZ0AuivMmkuutTMl6J+B6xA6xNYRCTL
- ibao4tXtvxUxQ7X5iDUp1zz8ZOszzcvc/BmYz6wZOXF+IO/od677ZQQj8xXV/WdCJW30
- bN9Q==
+ bh=KsrgAwcfXPf60wLi3R10FjsXpsAPM+d7uJ0mGFTRCRw=;
+ b=TvRvnhCd8XtTEXtic82lg5Lnin2F88ObumbMCLIrd7TXuOWBhjjOgGUQPxomUB//lI
+ m/EXGahcJy90U/aYer0ablMWtQhMLoqBjtMb7SLFtpvS1e/MTz5K46muM4/rkgD1JCzy
+ Qp5McMNXvQW3pJZ4NiIQmWOaHRXFLjZ3D/q0/hgojx7In8ChxI/oyZ9+okRifuQTLew1
+ qtJaqtWu4PGNmVtwzyWMpTJGINZRIJav23J5iHfptIbifADnseYrAYwZVgnEKrLLfGHh
+ tRPHAqSQIqu06Y3hIjXFWsBm2xYUkRILU66yzHp8f5+eqF7ZedQnGzdJ7gI3Gpc49taa
+ yUaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGsRB+bUXBedneI0rVT5AZryerehnSbgAG5QqfnWlS5Xkgh5bKxgQG6TQ/GeGk5vkfS1jQHjXCR7ww@nongnu.org
-X-Gm-Message-State: AOJu0YzifOsbakYOy0Tpb5PryL1eIqYwCaAwynzmhhjO/reqAfaH+Qaa
- +c1SkWHVYAZfpcC6t9T4565SfJbkmWCrG12H+OtMwUAiPIiuFx2oY9eMlrPylE3AdGc=
-X-Gm-Gg: ASbGncsTwzK4AQQbkz9dL2kNOcvFEsfIcaIY4xd28BqjluxZ8JEp2cwi095RYWEz0Iu
- nf0PykleDprr+23hzS7mTcDXYouqSTyb2aoFyKsZiNCwSmhpDjCDXnaB+xTdEjh+1Qd3/Jt72hv
- xelP98oa9Jg8cRQsy7p/8ioxPr0PiT88/kbHQPbirDbzAavO3z8/elaM1tS4yk7LtRTXluLLkAf
- OPZ1V/HvpE9VrfOdgUGaZyYU5zB0WzS9alN9tLnSF9dvYNlj2dpLg220T6Qfhklim18PkoG+J+S
- j6O0pgX3zSGMCvnHX3mL2kaXMV2w78LWuped6jW9733OAvpV9T4UovRXBPGDeovlIxHtjUU8yXj
- uSM5zWpGUOnO9SDkuf1os5NhUT69S+YnPV7vACAyRgaw=
-X-Google-Smtp-Source: AGHT+IHZPc12v5wUMl4IagFfd4ZJIviALA2uvv6Etzy1rXPfhLTYsmFNpgm3aASFqDx0xeiRN7u/YA==
-X-Received: by 2002:a05:6a00:5a:b0:772:44c4:4e23 with SMTP id
- d2e1a72fcca58-77244c45955mr8476062b3a.6.1756799458839; 
- Tue, 02 Sep 2025 00:50:58 -0700 (PDT)
+ AJvYcCUxcBLP6iTqVGwlQn/XoIuCYCVnViS3F7KE+PFo6Dpy9Tm/orslDD7f6N7S41VEpKFIrjnDPTxwUFhQ@nongnu.org
+X-Gm-Message-State: AOJu0YyiY4Im3axeuhVMMAf06BQk8bk3CzXC+alW34KDNER7hYa980Hf
+ YDv+NXXcIX5k+eqZqEqXiBrxH2yaGPO52IQJXySaJWMmBj44bFiRBTmPv+vIvixwJn8=
+X-Gm-Gg: ASbGncunnH++rZVRP9K1PdDvfiBf+Kx5ost8MTiHF4xFrzNyEMrgjxlxdFytrefyGfm
+ OTpNrnzGPDC21enZsfF2JSxTofBhkLfK22V0KMoMo2hXU4C5MFNHqw4mkQSL71LmE5YsKYJ1Pa4
+ XpRnAwIWTN/KjOzYwc4yE1nLn0I/tmmT8Wbfbo4kWcHHl6aV3+ST5l2EvHMP3MfWVbTPihTJol7
+ lLqGFcVNOXMQcTLfR0ZVcewDfGm+07TbMjUSr7CgVUC55+bR7RExyApS9/5sHIzhnDQ6PXZP6Jh
+ pusVBTVIhmfHN4Wxfl54ZfyHb3avJdp8wYgsNSfUCFJsugHRC89+8dS0NZBR6URsTeiE+lZP7gn
+ CpsMnK5Da0wetuyeyEE26ZF8wEwILuhQZ2X9n2XMGPVc=
+X-Google-Smtp-Source: AGHT+IEnwkRQyoajQ+wzO1OBiSDoxbHYacNaBxleMIW05ToiFEKgPiq2iScaYZJlnmLRKoKx53Yw3Q==
+X-Received: by 2002:a05:6a21:33a8:b0:243:9b4e:281b with SMTP id
+ adf61e73a8af0-243d6f40ef6mr14322782637.49.1756799457122; 
+ Tue, 02 Sep 2025 00:50:57 -0700 (PDT)
 Received: from pc.taild8403c.ts.net ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7723d79fcfesm9642766b3a.16.2025.09.02.00.50.58
+ d2e1a72fcca58-7723d79fcfesm9642766b3a.16.2025.09.02.00.50.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Sep 2025 00:50:58 -0700 (PDT)
+ Tue, 02 Sep 2025 00:50:56 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: pierrick.bouvier@linaro.org,
 	qemu-devel@nongnu.org
@@ -77,16 +77,16 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  Gustavo Romero <gustavo.romero@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, rowan Hart <rowanbhart@gmail.com>
-Subject: [PATCH v7 3/9] contrib/plugins/uftrace: track callstack
-Date: Tue,  2 Sep 2025 00:50:36 -0700
-Message-ID: <20250902075042.223990-4-pierrick.bouvier@linaro.org>
+Subject: [PATCH v7 1/9] contrib/plugins/uftrace: skeleton file
+Date: Tue,  2 Sep 2025 00:50:34 -0700
+Message-ID: <20250902075042.223990-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250902075042.223990-1-pierrick.bouvier@linaro.org>
 References: <20250902075042.223990-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,229 +109,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We now track callstack, based on frame pointer analysis. We can detect
-function calls, returns, and discontinuities.
-We implement a frame pointer based unwinding that is used for
-discontinuities.
+We define a scoreboard that will hold our data per cpu. As well, we
+define a buffer per cpu that will be used to read registers and memories
+in a thread-safe way.
+
+For now, we just instrument all instructions with an empty callback.
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/uftrace.c | 160 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 160 insertions(+)
+ contrib/plugins/uftrace.c   | 73 +++++++++++++++++++++++++++++++++++++
+ contrib/plugins/meson.build |  3 +-
+ 2 files changed, 75 insertions(+), 1 deletion(-)
+ create mode 100644 contrib/plugins/uftrace.c
 
 diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-index d060513446c..bb775916270 100644
---- a/contrib/plugins/uftrace.c
+new file mode 100644
+index 00000000000..4af0130b159
+--- /dev/null
 +++ b/contrib/plugins/uftrace.c
-@@ -15,6 +15,15 @@
- 
- QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
- 
-+typedef struct {
-+    GArray *s;
-+} Callstack;
+@@ -0,0 +1,73 @@
++/*
++ * Copyright (C) 2025, Pierrick Bouvier <pierrick.bouvier@linaro.org>
++ *
++ * Generates a trace compatible with uftrace (similar to uftrace record).
++ * https://github.com/namhyung/uftrace
++ *
++ * See docs/about/emulation.rst|Uftrace for details and examples.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+typedef struct {
-+    uint64_t pc;
-+    uint64_t frame_pointer;
-+} CallstackEntry;
++#include <qemu-plugin.h>
++#include <glib.h>
 +
- typedef struct Cpu Cpu;
- 
- typedef struct {
-@@ -25,6 +34,7 @@ typedef struct {
- } CpuOps;
- 
- typedef struct Cpu {
-+    Callstack *cs;
-     GByteArray *buf;
-     CpuOps ops;
-     void *arch;
-@@ -37,6 +47,71 @@ typedef struct {
- static struct qemu_plugin_scoreboard *score;
- static CpuOps arch_ops;
- 
-+static Callstack *callstack_new(void)
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++typedef struct Cpu {
++    GByteArray *buf;
++} Cpu;
++
++static struct qemu_plugin_scoreboard *score;
++
++static void track_callstack(unsigned int cpu_index, void *udata)
 +{
-+    Callstack *cs = g_new0(Callstack, 1);
-+    cs->s = g_array_new(false, false, sizeof(CallstackEntry));
-+    return cs;
 +}
 +
-+static void callstack_free(Callstack *cs)
++static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
 +{
-+    g_array_free(cs->s, true);
-+    cs->s = NULL;
-+    g_free(cs);
-+}
++    size_t n_insns = qemu_plugin_tb_n_insns(tb);
 +
-+static size_t callstack_depth(const Callstack *cs)
-+{
-+    return cs->s->len;
-+}
++    for (size_t i = 0; i < n_insns; i++) {
++        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
 +
-+static size_t callstack_empty(const Callstack *cs)
-+{
-+    return callstack_depth(cs) == 0;
-+}
-+
-+static void callstack_clear(Callstack *cs)
-+{
-+    g_array_set_size(cs->s, 0);
-+}
-+
-+static const CallstackEntry *callstack_at(const Callstack *cs, size_t depth)
-+{
-+    g_assert(depth > 0);
-+    g_assert(depth <= callstack_depth(cs));
-+    return &g_array_index(cs->s, CallstackEntry, depth - 1);
-+}
-+
-+static CallstackEntry callstack_top(const Callstack *cs)
-+{
-+    if (callstack_depth(cs) >= 1) {
-+        return *callstack_at(cs, callstack_depth(cs));
-+    }
-+    return (CallstackEntry){};
-+}
-+
-+static CallstackEntry callstack_caller(const Callstack *cs)
-+{
-+    if (callstack_depth(cs) >= 2) {
-+        return *callstack_at(cs, callstack_depth(cs) - 1);
-+    }
-+    return (CallstackEntry){};
-+}
-+
-+static void callstack_push(Callstack *cs, CallstackEntry e)
-+{
-+    g_array_append_val(cs->s, e);
-+}
-+
-+static CallstackEntry callstack_pop(Callstack *cs)
-+{
-+    g_assert(!callstack_empty(cs));
-+    CallstackEntry e = callstack_top(cs);
-+    g_array_set_size(cs->s, callstack_depth(cs) - 1);
-+    return e;
-+}
-+
- static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
- {
-     GByteArray *buf = cpu->buf;
-@@ -47,6 +122,50 @@ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
-     return *((uint64_t *) buf->data);
- }
- 
-+static uint64_t cpu_read_memory64(Cpu *cpu, uint64_t addr)
-+{
-+    g_assert(addr);
-+    GByteArray *buf = cpu->buf;
-+    g_byte_array_set_size(buf, 0);
-+    bool read = qemu_plugin_read_memory_vaddr(addr, buf, 8);
-+    if (!read) {
-+        return 0;
-+    }
-+    g_assert(buf->len == 8);
-+    return *((uint64_t *) buf->data);
-+}
-+
-+static void cpu_unwind_stack(Cpu *cpu, uint64_t frame_pointer, uint64_t pc)
-+{
-+    g_assert(callstack_empty(cpu->cs));
-+
-+    #define UNWIND_STACK_MAX_DEPTH 1024
-+    CallstackEntry unwind[UNWIND_STACK_MAX_DEPTH];
-+    size_t depth = 0;
-+    do {
-+        /* check we don't have an infinite stack */
-+        for (size_t i = 0; i < depth; ++i) {
-+            if (frame_pointer == unwind[i].frame_pointer) {
-+                break;
-+            }
-+        }
-+        CallstackEntry e = {.frame_pointer = frame_pointer, .pc = pc};
-+        unwind[depth] = e;
-+        depth++;
-+        if (frame_pointer) {
-+            frame_pointer = cpu_read_memory64(cpu, frame_pointer);
-+        }
-+        pc = cpu_read_memory64(cpu, frame_pointer + 8); /* read previous lr */
-+    } while (frame_pointer && pc && depth < UNWIND_STACK_MAX_DEPTH);
-+    #undef UNWIND_STACK_MAX_DEPTH
-+
-+    /* push it from bottom to top */
-+    while (depth) {
-+        callstack_push(cpu->cs, unwind[depth - 1]);
-+        --depth;
++        uintptr_t pc = qemu_plugin_insn_vaddr(insn);
++        qemu_plugin_register_vcpu_insn_exec_cb(insn, track_callstack,
++                                               QEMU_PLUGIN_CB_R_REGS,
++                                               (void *) pc);
 +    }
 +}
 +
- static struct qemu_plugin_register *plugin_find_register(const char *name)
- {
-     g_autoptr(GArray) regs = qemu_plugin_get_registers();
-@@ -102,6 +221,43 @@ static CpuOps aarch64_ops = {
- 
- static void track_callstack(unsigned int cpu_index, void *udata)
- {
-+    uint64_t pc = (uintptr_t) udata;
-+    Cpu *cpu = qemu_plugin_scoreboard_find(score, cpu_index);
-+    Callstack *cs = cpu->cs;
++static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
++{
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
++    cpu->buf = g_byte_array_new();
++}
 +
-+    uint64_t fp = cpu->ops.get_frame_pointer(cpu);
-+    if (!fp && callstack_empty(cs)) {
-+        /*
-+         * We simply push current pc. Note that we won't detect symbol change as
-+         * long as a proper call does not happen.
-+         */
-+        callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
-+        return;
++static void vcpu_end(unsigned int vcpu_index)
++{
++    Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
++    g_byte_array_free(cpu->buf, true);
++    memset(cpu, 0, sizeof(Cpu));
++}
++
++static void at_exit(qemu_plugin_id_t id, void *data)
++{
++    for (size_t i = 0; i < qemu_plugin_num_vcpus(); ++i) {
++        vcpu_end(i);
 +    }
 +
-+    CallstackEntry top = callstack_top(cs);
-+    if (fp == top.frame_pointer) {
-+        /* same function */
-+        return;
-+    }
++    qemu_plugin_scoreboard_free(score);
++}
 +
-+    CallstackEntry caller = callstack_caller(cs);
-+    if (fp == caller.frame_pointer) {
-+        /* return */
-+        callstack_pop(cs);
-+        return;
-+    }
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info,
++                                           int argc, char **argv)
++{
++    score = qemu_plugin_scoreboard_new(sizeof(Cpu));
++    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
++    qemu_plugin_register_atexit_cb(id, at_exit, NULL);
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
 +
-+    uint64_t caller_fp = fp ? cpu_read_memory64(cpu, fp) : 0;
-+    if (caller_fp == top.frame_pointer) {
-+        /* call */
-+        callstack_push(cs, (CallstackEntry){.frame_pointer = fp, .pc = pc});
-+        return;
-+    }
-+
-+    /* discontinuity, exit current stack and unwind new one */
-+    callstack_clear(cs);
-+    cpu_unwind_stack(cpu, fp, pc);
- }
- 
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-@@ -140,12 +296,16 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
- 
-     cpu->ops.init(cpu);
-     cpu->buf = g_byte_array_new();
-+
-+    cpu->cs = callstack_new();
- }
- 
- static void vcpu_end(unsigned int vcpu_index)
- {
-     Cpu *cpu = qemu_plugin_scoreboard_find(score, vcpu_index);
-     g_byte_array_free(cpu->buf, true);
-+
-+    callstack_free(cpu->cs);
-     memset(cpu, 0, sizeof(Cpu));
- }
- 
++    return 0;
++}
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 1876bc78438..7eb3629c95d 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -1,5 +1,6 @@
+ contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
+-                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger']
++                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
++                   'uftrace']
+ if host_os != 'windows'
+   # lockstep uses socket.h
+   contrib_plugins += 'lockstep'
 -- 
 2.47.2
 
