@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4F12CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57820CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQn1-0000Wm-C6; Tue, 02 Sep 2025 09:11:11 -0400
+	id 1utQoa-0005UT-OC; Tue, 02 Sep 2025 09:12:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQmy-0000Uw-27
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:08 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQoX-00056j-P7
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:12:46 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQmt-0004SY-RR
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:07 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3d0b6008a8bso2100215f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:11:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQoP-0004eQ-0c
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:12:43 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-45b7c56a987so17031615e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:12:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756818660; x=1757423460; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756818752; x=1757423552; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7F5eIWtwGjAcSDjJbli/J422DEzt3H2+R5Kkkzggnos=;
- b=UWO72YEwPSF9Aeah8oyng9DeUVrbLxuDYprk6L0kscF5XUsSlit5YXmYyGMEQMQmI4
- GZKBj5+RMwA8JOT/bbJJUvROYucWKaa8kILq7vtsaBflHq1y0slsmegk4QZ2gDsXX+JJ
- 6+jRJKv1HMF6E1mIvPCra9j8xkwV6Fw6q6i6rcbSjU8avn7IkUX+JOpv+R2P8Kbk04/3
- bjdV0B7Ca84oxv9rI4r1wjpAgdQVqBue6llcNfADZRKHEX4WseSkwetOA7RSW5mG7Bzw
- HrP2yCEZNu3b7vVh7G5uxMm/XwmK8NbeYe79pIfrfHGI7puevKhi7pYf6pqfO3btH0BE
- 7IqQ==
+ :reply-to; bh=/tTBgokLUFCA34wn8/8NwWIbze6CCk78qIDAuN+F+4Q=;
+ b=y+Ge5uqd1YX1VqCpWHkLNqGGLqc3hsyYRgqkJV/jS3Gli/7fyC86ChN2E1vKmFDBPV
+ byGGnxpf9GwZ86mZ9iLxpb0BOc9dx7SPsIvbNRHesQAO0EbpF9gEBNRLUVN1tWU3D8el
+ rXtvDHM2/FlnaJTMwv1uaoLEPshFIA2C8IStL+w5CkLpFhyDSNPC9CchPCKFD9D4QPdz
+ LxAV8Th0zmTKoDIK325XvX05eqtDo8eN1iHE0aCaQ/nEurpNB1j6wspW7naLUhxpMSyt
+ WalCwgxZcvqEP8RAjMv+rzRFllPD8yT9WCqm4snaXIelrlWSyT755V2/tj+wDWc3O4Xr
+ cxkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756818660; x=1757423460;
+ d=1e100.net; s=20230601; t=1756818752; x=1757423552;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7F5eIWtwGjAcSDjJbli/J422DEzt3H2+R5Kkkzggnos=;
- b=NqcPTtUWmw1Pxqi0b4O0ZT9LUXK6qXdaGjveYb0PpNrobbdW2BxX/ocoNbQX+nZPNO
- kszE00QJ2vzCuv9RIU2z8fV2h0O9tFSzDmvQ/wi83jeSYrrS+Xc2LSTS00dewn7+7W6E
- qE5f98pmZL7FH3Q1zW8PSQT2JZ2CcPv+kScTtpHuBOoOiXd2JzphPyTe6I8EpGQ/PRGZ
- 51sq92YosDgmPMpP8+fngAnPk9W7DAcj+LYFJ6YONkHyqeqZcbar4nygim17BUtuikcp
- xzzC+5aovOizKKO1lSRSLiqeHyxHbKaQ/anWyJflv5c97UXc/8kGI4fl33+sJgwFHLXP
- KPag==
-X-Gm-Message-State: AOJu0YxSHZZd++HgFOVCm1aHXpiBzGRECT1c2AaWhxyeRPEfWiH5PC92
- 1BVivqnc95DyC5pu4xlEe+c4Wn7ND8dcTtIyPgsZ3FUM1sYv/mW/0g1GwnwTyDIxwAlhRSwg13C
- sHj3h
-X-Gm-Gg: ASbGncv4J9NQtBfdeLlpysj5EPQEJYCtpUHmfegv+H7/hxwKluDUPbxiP3/41Zma0dA
- 3EurSnpOd8YvOgySPj8Qwm/lfjm+y3KZ+1xcpN7uk3IAYTjp2Iv0wFDI7EXVkY54Zi3jWn4nM6U
- 6W8A5e76+5rX5Zz8sKf2rcWlKpL1B5MHIginzAvzTG4wy3odxeMWCYMryNi5pW4pLBi/Q7CC0z6
- u3fXyr+bB3HCB0ar/xkCXDuIilho0ZfxTAT/hg2TCeHvkHlRHMCueiWnSiF0AlipoN0/gToUiux
- wNpm9LIjP5u7VakrZNixjDIyjMT31Fc7ts5Q7FA4aHvtD+ID0XMXYk/GzoGrX6kV8cc9ina6WX5
- 882wUJLHlmiRe+0eNzaFWytAu6Pm96NIcqRbSNaZYxIxf0sAQ2l8RAoZyVzOILrxuY7lwDaOnf7
- 8xtfDhWKo=
-X-Google-Smtp-Source: AGHT+IGRru28GlAmQS2YlNliqsRwTVl7DfXxRd0qyRgM+12gljJrpPCPPZykgf4JxInVdOjtPkHoTg==
-X-Received: by 2002:a05:6000:18a2:b0:3c8:d236:26aa with SMTP id
- ffacd0b85a97d-3d1e05b9a97mr9648132f8f.58.1756818659560; 
- Tue, 02 Sep 2025 06:10:59 -0700 (PDT)
+ bh=/tTBgokLUFCA34wn8/8NwWIbze6CCk78qIDAuN+F+4Q=;
+ b=HCsNZvPyuwZmTLImYwUez+sGUKQ3vBttEpbfM0Lcoq4XEYRv7/CmwOlSzN6FlMckPW
+ lLJ6yFmibwBZCTv6DY90TXtwzJg6Ne9E/TehlR75AI8A3Ud6BrzxHd6+WsnNg88AvSeg
+ /KCdQZy2H1rO02qekdB7aWM2n+z3WB/SOGPLYMuR4pe4z4cxM+OFIATVR44+y+rOvJjE
+ pYPD923arRtiE+IermDHdxhEBETA9vG1GqxgWX80FAyslUYxogYYZHEIAix1Cv6HBgVX
+ ilnmaDv0raYIize/io4uqRbjzPJrpEWPhwOiIhSQR8w5v2g9lcW6Aewj67kbZ4LdPmkC
+ cGTw==
+X-Gm-Message-State: AOJu0Yzm3qUO8J3R0k2x0mW3Zd6M0S7VGfK7EpBpcU/SuwVqnDYB24Kx
+ +/aQPfTih30sqGKxKoh5IEy+67xRezMNoBzjLkU79vGpqjysZLkpKv2OxoKQ4VLhyVbUq28i7Bo
+ lF2fD
+X-Gm-Gg: ASbGncuSYYLLHdjg7rC66HaRjP5pVWXLGG41NZenCRzGpPrt3a5FmPESrpRreYgr/uR
+ rTCoBhvHw8oYv4LvilIxGz9s1xyMsCkxpWl+UyguNE5gyHC2SZ3V4QdPdeHP25y+8bCnBlGJ9ER
+ A/AHdBDRQ8TverAflepRCAtCyd/pKbZnI3jEqKSkSeLlz3HGWVFBGnXSuiyKbPwUJRuHNOM4H0/
+ K+tPjt6G1gpgrHYHNUec7L8Al2d89746BCIyhTVnjjm6UQrEDxNwkOuSA8qwLEgWvsu1vi6C/OC
+ fT5BcqfAImrOMn9YyhlxmyoNYTifrhClzCKVCqmLQ2FRSK1U5369myhgoiKUx/xnPAchlvJIsOj
+ HaiVvo3L794a/RzN5SpIQ3a/c69PTvCt7Vo/v1PvXU6EFUiUHxn9qz66mdLpYNUUci+DA0CPW
+X-Google-Smtp-Source: AGHT+IF4szdYYcE7KGURIilZU09UIvFaAXdncnUJP0o6T+7NPGetZbThP9l6y38TU6udFeoufI5bcw==
+X-Received: by 2002:a05:600c:1f84:b0:45b:7ce0:fb8a with SMTP id
+ 5b1f17b1804b1-45b8559bd2fmr93543915e9.35.1756818752134; 
+ Tue, 02 Sep 2025 06:12:32 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d21a32dbc5sm15924801f8f.11.2025.09.02.06.10.58
+ ffacd0b85a97d-3d2250115fdsm14225976f8f.40.2025.09.02.06.12.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 06:10:58 -0700 (PDT)
+ Tue, 02 Sep 2025 06:12:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/39] hw/meson: enter target hw first
-Date: Tue,  2 Sep 2025 15:09:46 +0200
-Message-ID: <20250902131016.84968-10-philmd@linaro.org>
+Subject: [PULL 29/39] hw/sd/sdcard: Fix size check for backing block image
+Date: Tue,  2 Sep 2025 15:10:06 +0200
+Message-ID: <20250902131016.84968-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131016.84968-1-philmd@linaro.org>
 References: <20250902131016.84968-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,78 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-We can reuse target source sets for "generic" devices that are related
-to a single architecture (like interrupt controllers).
+The power-of-2 rule applies to the user data area, not the complete
+block image. The latter can be concatenation of boot partition images
+and the user data.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250801174006.2466508-2-pierrick.bouvier@linaro.org>
+Message-ID: <0d95cffa6131a06404f3cd6ef5951720ce01c37e.1756019920.git.jan.kiszka@siemens.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/meson.build | 45 +++++++++++++++++++++++----------------------
- 1 file changed, 23 insertions(+), 22 deletions(-)
+ hw/sd/sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/meson.build b/hw/meson.build
-index 791ce21ab42..1022bdb8069 100644
---- a/hw/meson.build
-+++ b/hw/meson.build
-@@ -1,3 +1,26 @@
-+# Enter target code first to reuse variables associated
-+subdir('alpha')
-+subdir('arm')
-+subdir('avr')
-+subdir('hppa')
-+subdir('xenpv') # i386 uses it
-+subdir('i386')
-+subdir('loongarch')
-+subdir('m68k')
-+subdir('microblaze')
-+subdir('mips')
-+subdir('openrisc')
-+subdir('ppc')
-+subdir('remote')
-+subdir('riscv')
-+subdir('rx')
-+subdir('s390x')
-+subdir('sh4')
-+subdir('sparc')
-+subdir('sparc64')
-+subdir('tricore')
-+subdir('xtensa')
-+
- subdir('9pfs')
- subdir('acpi')
- subdir('adc')
-@@ -44,26 +67,4 @@ subdir('virtio')
- subdir('vmapple')
- subdir('watchdog')
- subdir('xen')
--subdir('xenpv')
- subdir('fsi')
--
--subdir('alpha')
--subdir('arm')
--subdir('avr')
--subdir('hppa')
--subdir('i386')
--subdir('loongarch')
--subdir('m68k')
--subdir('microblaze')
--subdir('mips')
--subdir('openrisc')
--subdir('ppc')
--subdir('remote')
--subdir('riscv')
--subdir('rx')
--subdir('s390x')
--subdir('sh4')
--subdir('sparc')
--subdir('sparc64')
--subdir('tricore')
--subdir('xtensa')
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 8b142e4796f..7038a140a28 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2781,7 +2781,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
+             return;
+         }
+ 
+-        blk_size = blk_getlength(sd->blk);
++        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
+         if (blk_size > 0 && !is_power_of_2(blk_size)) {
+             int64_t blk_size_aligned = pow2ceil(blk_size);
+             char *blk_size_str;
 -- 
 2.51.0
 
