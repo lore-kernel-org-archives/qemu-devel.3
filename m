@@ -4,116 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4E6CA100B
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6464CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utULr-0008Dl-HR; Tue, 02 Sep 2025 12:59:23 -0400
+	id 1utUMx-0000x2-Pw; Tue, 02 Sep 2025 13:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1utULk-00082d-6n; Tue, 02 Sep 2025 12:59:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1utUMn-0000py-Js
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:00:24 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1utULf-0006QX-Tc; Tue, 02 Sep 2025 12:59:15 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582C3OKU032738;
- Tue, 2 Sep 2025 16:59:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=+SGAinZ6FyVhyZ177Gihau0MaG8TeV1GZ7hu+/76UYo=; b=YntWC5H6QPqr
- 9DjnkV1CJOFfkqQ+H9rrs399yUsKxEjHrPhROVaEZA/MgQs9nPh9mxzm19cz9BfS
- O9lSIX/ywXoyI/pdUBL9+UwqDBa4TzqjXqG4Sw6OIMx+RiIx4zhHZqC/jHFoVpo1
- f8icOoT9NLm0md1dOxgFTlDfO+is4yY3qfVjZ1vwT9b9GbrZekZLjLq6SPdOyPlA
- dHPBjvHTH7hgcqsUVfm0Yp7DqTAkUFJRpGyeWS4VTEGbfshAKWlpAlRM6dGuBwZz
- 0vuKq00AgczG4qtly4dIvoMs4Cao5SFFWl6fbo7KPiump8VbawYNMMsXY6C3TEFm
- /9ItKUXoHg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48uswd7p4j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Sep 2025 16:59:09 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 582Gx8at027252;
- Tue, 2 Sep 2025 16:59:08 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48uswd7p4c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Sep 2025 16:59:08 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 582FY5ru017214;
- Tue, 2 Sep 2025 16:59:07 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48vc10kq8v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 02 Sep 2025 16:59:07 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 582Gx5WX26542380
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 2 Sep 2025 16:59:05 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 53B3D58069;
- Tue,  2 Sep 2025 16:59:05 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D2D3A58056;
- Tue,  2 Sep 2025 16:59:04 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  2 Sep 2025 16:59:04 +0000 (GMT)
-Message-ID: <6707e44ef91de579a0aa3bd265f4c4feb05c0121.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 1/4] target/ppc: Add IBM PPE42 family of processors
-From: Miles Glenn <milesg@linux.ibm.com>
-To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- thuth@redhat.com, rathc@linux.ibm.com, richard.henderson@linaro.org
-Date: Tue, 02 Sep 2025 11:59:04 -0500
-In-Reply-To: <a388fe15-f32f-45a6-accd-a85fe123a3e4@redhat.com>
-References: <20250826201920.335308-1-milesg@linux.ibm.com>
- <20250826201920.335308-2-milesg@linux.ibm.com>
- <a388fe15-f32f-45a6-accd-a85fe123a3e4@redhat.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1utUMl-0006XD-OC
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:00:21 -0400
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 582FLq5j985391; Tue, 2 Sep 2025 10:00:15 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=N7ziwNP2pspRG8XQsAytjzphrdrMaHWnnRMXRDI3v
+ 8k=; b=E1qQB1ce37gGdjEJ6CbxJnj/Osyq05leWNzNAi7G1NpUFXUSYv5KDe1sS
+ OJJU4TeeNbWkVul0zaKit8eycRw7tUJaMhiPdaC7rvXuUJUEn02wLJTcvFijm9ub
+ mMoNy6p9lMc0xrUMLDNd3zweyZvUE3W140VUJ10rKGxFmBf1RCyAsuAAyMkf3cB+
+ dZbjLRF1PeAGJiYX/vgGIPSUGQdFQXHseHDucnUt2o2G1CQJhPxjMkS0vAuWtAhG
+ jltoNz754W7esfSv7hDxpSN4Yolxj1RCx1U7AHrB2tZnF9skhxN1t57m2eywVjm1
+ qRdXDcSNjQQmv+ZvvU3TtkZK9CF2g==
+Received: from nam11-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11on2127.outbound.protection.outlook.com [40.107.236.127])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 48wew4jman-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 02 Sep 2025 10:00:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RVSsqMpRMRY97Y/LY/8DdZ3fNNk56/+63VRinyk5b7tJ17M1iVhaK85p3pcRDlIYukD+thSHh239A9CLLE5fcLm2o1x/mEb8VCO5WgPHg+k2YJ2fDVVwZx9udSVq8NItuaWv0YPdGF+UIszTozLBzktRSfdsqnC9RwdOy/6BM5eAwosoUJE31Ax6yPul69o9IuK1aQ9HG0hbAN6+dvmnHxCmSfUV7vOGfz7mSdf9lJwpu6i0Ea/gjsJz4S7x51DNUiigA1vIitPqDqnadMmIRz8lJDNQj6EPNrExe928JJCSJf3wTs6gEqSBaFOF3uWxDvISkYSe+LOk2woKH25HEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FBdcsU8LdLUQ6bsQD9fFTQ6/ZAdFx/n6ljoVsyANuMQ=;
+ b=mQFtG+KzftlKBBj5Ojp+/A2Gig3BvfePOjK7FdWt7JUbL+DZxhbIZpXjsDMyjdc6hjuzKV+lgONCl3dtiiNCLatGbqvUWs2TrS3mywqAVBc9QtdLcT2LnQaCpF77RSkOTYaUW9pWP7HopdEZmhnr0BV60yBdqE3x8/nys4seh1LrsMQQ5iD292q3f543PSC3Ob295bOZlaGb3NHd5WXh3XUsvt72iH+6zmtiLEXssHZeW0MREV6Tx94LDa9wUqnH4UKulKbWTqRkfINKqnMeH0L4V+eLTujPZYWYBvHAAX6wvucPOA1fR+CkmlHqCj3vscczmAqLiMMRpq7sjqWQsw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FBdcsU8LdLUQ6bsQD9fFTQ6/ZAdFx/n6ljoVsyANuMQ=;
+ b=s2vRH4oCi3LsTaknzR5D6fyGtCopYuP6xHG66wlAwuS2I3IU+0sBXmB61CTL4/969p0WkNRyqpvw8L9vDWKeZ7IWkH4k/cQrHD6cENRAxs/o6meLwNwPJUlcNf1XKS22SNm1TyDT7L48Fu8rmsi07a2nr+n1pwj/NLYfElsD8JTXK+x8QdWr248dLpKBENUWZLvq1gAR7o16YgB/0z2BSnShdcTlOshEn5JdXcJiH7pvEVMY6pKLtIqXx6tJGzHIfOhoBfIQr6hGxXNfBhHmwyQ3OQLtcfsowtH08abjvPpbKFzewLuMoHImewPnoA9Me0HmMSfEzEYFRLIhuWIqag==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by LV4PR02MB11050.namprd02.prod.outlook.com (2603:10b6:408:2d8::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.29; Tue, 2 Sep
+ 2025 17:00:12 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%7]) with mapi id 15.20.9052.027; Tue, 2 Sep 2025
+ 17:00:12 +0000
+Date: Tue, 2 Sep 2025 18:00:05 +0100
+From: John Levon <john.levon@nutanix.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>
+Subject: Re: [PATCH 1/4] docs/system: split VirtIO devices from the rest
+Message-ID: <aLcileMLBQjkFZ8s@lent>
+References: <20250902165048.1653323-1-alex.bennee@linaro.org>
+ <20250902165048.1653323-2-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=PeP/hjhd c=1 sm=1 tr=0 ts=68b7225d cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=jRLB2SoPAAAA:8 a=VnNF1IyMAAAA:8
- a=Io5jJl6bRmfzkjEwjXYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=yloqiLrygL2q3s9aD-8D:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzNCBTYWx0ZWRfX1TRvEa2Mi+K9
- 9Yn83PWZV8fJX/yihaIWSI6Yhs8DJc/Dfs1jELgZ//9KRzKN/XUoXwvL79s1MXi9uZbFKU/n5BV
- JJiLACKZuYXBpFJGmCBQTKnbqn791v3W5JMRu/CyRdZ9KO0iFAY+5JbZdFiY5u0gy0xXAAZITHg
- vLuw+DCn8XgSffDkcD3tZR0QvqwF7BDY13CCcv0GFYJJ1+Y9kuuMsBa1Cmi8apOTWSjEZsYZ8XN
- dsOVnN4z+pqomSrQ8wyphL/1Ah6VYKM3N4vLJUr93yChlNF3dbPa/uitA6TDHpDJ5VN6PGVPXWK
- uqLevMl2MNAczB6HK1hrlpvXAMhLqad29BB2qv9KVJskwUO4g/dND5nmDSOPJml5ue4NdHZAhr3
- 2pMVP2mX
-X-Proofpoint-GUID: 4UKzoQZYNooifO-Ljya9cgBfAlt0bYWR
-X-Proofpoint-ORIG-GUID: zxijtggv4c_Z9P2pAksX548be53Mb7J7
+In-Reply-To: <20250902165048.1653323-2-alex.bennee@linaro.org>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: AS4P190CA0007.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5de::6) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|LV4PR02MB11050:EE_
+X-MS-Office365-Filtering-Correlation-Id: 49dbc074-15e3-44b9-419f-08ddea422e37
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7053199007;
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?4F/LMKo6ZorphAbiWVPvYGj35zvEHkpvXgIDdVCKPPEMtEEeoZbrHT3h0A?=
+ =?iso-8859-1?Q?xmBhNS6CnTIsvXbk0CYkQGOVMFPwCfa9IFDYINAP+0CVkk/V5mo3t1j/Pm?=
+ =?iso-8859-1?Q?6iul5S/Q7/IQE58qUS2/py5G57CjcAfrBOYxWLdu55XcC6syEh9YQKoSEp?=
+ =?iso-8859-1?Q?V+AlK0j+N2S2r57fkNKu4eM9pyfuRMWufz6u4U6rgIMGWuzlOtqPe6zvvP?=
+ =?iso-8859-1?Q?H9fUnFYJiKppQulmilOelQxLGQX7rWwYyPwmynoEoqfwQ8qwUawU6ehNkB?=
+ =?iso-8859-1?Q?/jivb6Tv6pYM/r3G0xq15VnG9ljSgwyivnOrxA4nDJ3S9GmKl2/7VTYDrq?=
+ =?iso-8859-1?Q?hey3Ejqai9RAxQz+l2z8jFKPvXH0DeD6+7bZjt+Bf1zvLyVYQAukYB3vKQ?=
+ =?iso-8859-1?Q?tUJLTjuWQNkn+LfkMXy6XQFJajXtlm3JpRvdGGxI4O9poluAr5bmPLZMS7?=
+ =?iso-8859-1?Q?J2+dnSaWPQ5b7Xj5C0ooupkhtoiR9zuve6h6qX4OWroQ6Z94wBo9UKcSZW?=
+ =?iso-8859-1?Q?ZwqyozvZ1SZO3t/cTTkQfHuVfnlrebsZh8FGJWe7MzDzILILegzsAsjiHR?=
+ =?iso-8859-1?Q?yripVWDT5nZRi11zyhD3HRyMAHsxjQbF+3TKwsf2y6I3lEMn/dMDgnS8Cd?=
+ =?iso-8859-1?Q?z/XVjcI2UU7NAGO230wqPdYDM/BpEkHNd2//Kh9gzTCdiwO3Otyp30HT4y?=
+ =?iso-8859-1?Q?wYEKKrK9XlimNv0+mcdDMwLiEGodBCtYkgy8xYDwXMjlCSoeQSufGZxolV?=
+ =?iso-8859-1?Q?+4TnZu4eeupEf8YLO6peXCV7Q4yLME5DLlfUntuGm7ZInXGLXc5pbCTFwt?=
+ =?iso-8859-1?Q?YaYvsfRGGOgNoH7ByHeKUvVV/f0y/Vozt4zf/lwPM4rXX1SS5TmdrW48h9?=
+ =?iso-8859-1?Q?BWGTuW6JohP7Pc3u4s1OVzGAG95fGrA0kE6mgNy1EVhHxWMSCuT88XvzL4?=
+ =?iso-8859-1?Q?NODXOFIlpECTRvGs5AnjoEulwtMGnrB5whiHF7f7nERawQOGWLEVD0mxLh?=
+ =?iso-8859-1?Q?94mX6PJ7dzPdwt+bap8kuDrz+5J7eLg7zSZhsMvA6/aRSNrLVXQ8vF22xB?=
+ =?iso-8859-1?Q?NpeUE1JfP+6uj62y99dq1w1livXxYqXDODeoGxY12KNBCdHhhxFh1kvX6P?=
+ =?iso-8859-1?Q?RgQVhVQo7rakqfqP8EViOUn+bg7tfft4OdVEc5WHrrFxEQb3tJVwnKmING?=
+ =?iso-8859-1?Q?q/j49rM0+biWldjKQ0j7j7/lLYtCL+ROref3mirKe8GGOHTbjoq/AJOGGf?=
+ =?iso-8859-1?Q?lpDYmW0YIYUjIbRszylh01BwuezCpnt46kAxaLuYyw2CEAEM/aOGTpBjuO?=
+ =?iso-8859-1?Q?nRNv4GkO0jUtQ1rFUhPc70QoT1HoraXCO4G20u3NH83KqiOcMc0L8MJB+K?=
+ =?iso-8859-1?Q?RAhAsUbRoXIcRIKRjM/Dk4hiaJUVC7H7juYwduO8fxKHZq47efY1S955sS?=
+ =?iso-8859-1?Q?pqbAtvMWrrMrOidS+5jLdqXJZzLCen0vG9iryL11zU0D29nzx4yLlSik5X?=
+ =?iso-8859-1?Q?8=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7053199007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?ZjIWgpC/lEFWGrfNbT9qz7BPTA7iqRETYZ1wnjeOlIpYmr+f9TTfZBicVk?=
+ =?iso-8859-1?Q?GYnZQmQ98CmETYTEsOT0oYe0B1WAN0TsIKpCLHlo4FURHhgCadJPE7QSxX?=
+ =?iso-8859-1?Q?rEAMaKHTWjEb7rb1uKOYEVTpaNgfIdRxTVaXrqvUPNmpOSORNIhesF7/um?=
+ =?iso-8859-1?Q?7R/b6lATQ6Ys1roMT1Spy0mgknY+xWzCdXB17kSj4ojpUxHlHI+D05gNYE?=
+ =?iso-8859-1?Q?ymk7BJWLDcRB/JAM5Q3s27Yh4R6rrIv1aGjKct6rzMOUgorA3OJPMCoBLh?=
+ =?iso-8859-1?Q?VSIem86Uc76s8loQGfOGQMVG3sgfOWcoY/qc21IG4DXw9z4B1rQLvL3Xzi?=
+ =?iso-8859-1?Q?Y5rYSKEZL9RziPM0SqOZRi3SI8xNMHBYIFEY4hM2TUowWGu3D8y9czyipB?=
+ =?iso-8859-1?Q?49oHplIDSm6rhDW0yGntNVyrMMuJKCWr79wXB7NRj5PQV9L+NMG4McEbrm?=
+ =?iso-8859-1?Q?cAxJQkiG8fYI/opcf9WYcbLWACjtYPG3mPaalVpeauuUJPoIC72otPMG2X?=
+ =?iso-8859-1?Q?sTc9IupFJ0L8APQMiVpOs18MzeaTPlGGGaQ+lN5H9aVW8b/KlhatROKl33?=
+ =?iso-8859-1?Q?jMHrQqhfKyMgDZqdVCmkzAaGcL4UWYOP+GahOAia0GCFjKEro7ynGIfoqq?=
+ =?iso-8859-1?Q?yd2B+32T9DIkiqt1HH7fMxI+VGEtz6zK9eaZR4YWuroqH+H/68+48Kg+WN?=
+ =?iso-8859-1?Q?/XF7g9O6QWwIoedSvZYxLDP7oeJZ8iZxySh7/igM8dWLM2CgJNSFXeDoxC?=
+ =?iso-8859-1?Q?B+7o1uIHCSqE4c/71hhvK6Cvo6Lou+nnVONBXlFy9cvB951qVDP/1iSaHV?=
+ =?iso-8859-1?Q?c8VUpqS5zaQF2kF9tDef938Mabln5N/HyMfGa7f/NBHRX8xOnbC/sZO//n?=
+ =?iso-8859-1?Q?7fTRz993mjwBeHKsu7Qua0YqlmUXIm07oNoGFmF3Ezo5A1z12Y12xQgmTX?=
+ =?iso-8859-1?Q?lqBLVc5fIay8AevplAf/cZIQ/Y1njpuUcBG1lkHVi5WNsUu/HSortUznp+?=
+ =?iso-8859-1?Q?eQksaWEDXinlZdgF+8OE61HSypzpJUJLtGNL7uDawwmVbtgIaK+Jz+7FaM?=
+ =?iso-8859-1?Q?OdKrySy14gV/Jzv4gYXfnMhkqjyp5gz6r+kZQsUXNbIuCBzX9ZTkkJueee?=
+ =?iso-8859-1?Q?+0PwObgmTsHL0kA4de2sQdlTRZ2gB9SYMtrSGYUsU6+DOMapDsFfo7LXtM?=
+ =?iso-8859-1?Q?AO75zQ/ED5TfBP/whlp+QAiTXIZN5EMWJ3h/3j5y8QV44bTNbTmIA3+Fv0?=
+ =?iso-8859-1?Q?6PeETHsnWTlfDLiIpBBfR7Hk4AekoTAftuMvrzcNFpfYhVjvuJ0CZUvISx?=
+ =?iso-8859-1?Q?pv8FSq1rlqO1WIlNXEp5A/JryLrr60mpJsmZ8kF4JYPIG12qXIC/PXFYSJ?=
+ =?iso-8859-1?Q?eFOpxPeqdW2lkHYnBA7WrmMYNvx0RQ/lJpYAt4RedFpUTdixBUJXxOwQYj?=
+ =?iso-8859-1?Q?V4WLbXkEjKDOLGQW7kzGr15HFskqmY2D6u1pM3BVqXJfrfTx/pwTf6WIS5?=
+ =?iso-8859-1?Q?K/3mMkvTHMl+qFaJvx/XeKRJg/eOABX6y2BeCVnxpvSPL2s9RG3bgI8bHj?=
+ =?iso-8859-1?Q?MFOLAOT5EIV4710M3Qf9n3YoVgEFPCmibbAPFSTxRD4SNHUTbUu+GC9Cez?=
+ =?iso-8859-1?Q?whm7EhgULA/lSq7W4daNnHGci8CHZ0579K?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 49dbc074-15e3-44b9-419f-08ddea422e37
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 17:00:12.3841 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: cQrHM3ZzQwLH8w88bmC2OaaRmMl5xmqqVJqB7W6HTUlbbSnIflRY1aN0KGGVrMk82bFE3Gubj5mpFODVtP8oPg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV4PR02MB11050
+X-Authority-Analysis: v=2.4 cv=LeQ86ifi c=1 sm=1 tr=0 ts=68b7229f cx=c_pps
+ a=PuycMPbAwArgayjkkQxHog==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=yJojWOMRYYMA:10 a=0kUYKlekyDsA:10
+ a=KKAkSRfTAAAA:8 a=64Cc0HZtAAAA:8 a=vYx1NZrNwJsMaOGXpkoA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: xXoIdnwf0bER8LKMrKbSAzGim__Yv-cz
+X-Proofpoint-ORIG-GUID: xXoIdnwf0bER8LKMrKbSAzGim__Yv-cz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTAyMDE2OCBTYWx0ZWRfXx9YeT60WRA3D
+ mG4FhIJ4zzmKm3YcLzuAOKCA5F7V/dSdqqn1ne6hjAvUVL36g5wPIdmK3OsfBtrHu5LVquymKj3
+ JEmhz4yLHkhG7AVxvyhqpLEmWbgXAXIBGyb+A1DVowH0YXm2wjIhpdveMPiO7r0z3GSxLx2XdxT
+ i4+9zSUQhHjDB0I8PSmCEutkUSe9tLz8ex3RJnyWR6N/rqW8asScnx4RcUqJH69hg05u3H7M8Z8
+ cSB6JpPCcRvHi1ZY0wFgqupnkbw96e7Gq+hnTULVUDV3JKbLH+nGEnDsIaQ0pDTXpwFnhz9lQNH
+ 7oHsa11Ut0nmyVUaFshS29YO0wetsoK2Ot2NG5T+d/hybc56ovQUcR6bZfmZ9k=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_06,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 malwarescore=0 spamscore=0 adultscore=0
- impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300034
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,960 +197,24 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2025-09-01 at 09:29 +0200, CÃ©dric Le Goater wrote:
-> On 8/26/25 22:17, Glenn Miles wrote:
-> > Adds the IBM PPE42 family of 32-bit processors supporting
-> > the PPE42, PPE42X and PPE42XM processor versions.  These
-> > processors are used as embedded processors in the IBM
-> > Power9, Power10 and Power12 processors for various
-> > tasks.  It is basically a stripped down version of the
-> > IBM PowerPC 405 processor, with some added instructions
-> > for handling 64-bit loads and stores.
-> > 
-> > For more information on the PPE 42 processor please visit:
-> > 
-> > https://wiki.raptorcs.com/w/images/a/a3/PPE_42X_Core_Users_Manual.pdf
-> > 
-> > Supports PPE42 SPR's (Including the MSR) and  Exceptions.
-> > 
-> > Does not yet support new PPE42 instructions and does not
-> > prevent access to some invalid instructions and registers
-> > (currently allows for access to invalid GPR's and CR fields).
-> > 
-> > Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
-> 
-> Could you please split these changes : CPU, exceptions, MMU ?
-> Introduce the flags first in case they are needed.
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
+On Tue, Sep 02, 2025 at 05:50:45PM +0100, Alex Bennée wrote:
 
-Will do!
-
-Thanks,
-
-Glenn
-
->   
+> In an effort to tidy up our device documentation split the VirtIO docs
+> from the rest of the index and put the index to them at the front of
+> the list. Sort the remaining entries alphabetically and tweak the
+> references appropriately.
 > 
+> Add a short preface to the VirtIO section nudging users to use VirtIO
+> unless they specifically want a particular piece of hardware
+> emulation.
 > 
-> > ---
-> > 
-> > Changes since previous version
-> > - Added "32-bit" wording to commit message
-> > - Added 'unlikely' specifier to hreg_compute_hflags_value conditional
-> > - Added PPE42_ prefix to ISR definitions
-> > - Moved ISR_MCS* definitions from excp_helper.c to cpu.h
-> > - Moved common cpu_init code to a common function
-> > - Added 'likely' specifier to gen_mtmsr conditional
-> > - Formatting changes to fit comments within 80 character limit
-> > 
-> >   target/ppc/cpu-models.c      |   7 +
-> >   target/ppc/cpu-models.h      |   4 +
-> >   target/ppc/cpu.h             |  76 ++++++++++-
-> >   target/ppc/cpu_init.c        | 241 +++++++++++++++++++++++++++++------
-> >   target/ppc/excp_helper.c     | 163 +++++++++++++++++++++++
-> >   target/ppc/helper_regs.c     |  28 +++-
-> >   target/ppc/tcg-excp_helper.c |  12 ++
-> >   target/ppc/translate.c       |   6 +-
-> >   8 files changed, 492 insertions(+), 45 deletions(-)
-> > 
-> > diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-> > index ea86ea202a..09f73e23a8 100644
-> > --- a/target/ppc/cpu-models.c
-> > +++ b/target/ppc/cpu-models.c
-> > @@ -116,6 +116,13 @@
-> >                   NULL)
-> >       POWERPC_DEF("x2vp20",        CPU_POWERPC_X2VP20,                 405,
-> >                   NULL)
-> > +    /* PPE42 Embedded Controllers                                            */
-> > +    POWERPC_DEF("PPE42",         CPU_POWERPC_PPE42,                  ppe42,
-> > +                "Generic PPE 42")
-> > +    POWERPC_DEF("PPE42X",        CPU_POWERPC_PPE42X,                 ppe42x,
-> > +                "Generic PPE 42X")
-> > +    POWERPC_DEF("PPE42XM",       CPU_POWERPC_PPE42XM,                ppe42xm,
-> > +                "Generic PPE 42XM")
-> >       /* PowerPC 440 family                                                    */
-> >   #if defined(TODO_USER_ONLY)
-> >       POWERPC_DEF("440",           CPU_POWERPC_440,                    440GP,
-> > diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
-> > index 72ad31ba50..c6cd27f390 100644
-> > --- a/target/ppc/cpu-models.h
-> > +++ b/target/ppc/cpu-models.h
-> > @@ -69,6 +69,10 @@ enum {
-> >       /* Xilinx cores */
-> >       CPU_POWERPC_X2VP4              = 0x20010820,
-> >       CPU_POWERPC_X2VP20             = 0x20010860,
-> > +    /* IBM PPE42 Family */
-> > +    CPU_POWERPC_PPE42              = 0x42000000,
-> > +    CPU_POWERPC_PPE42X             = 0x42100000,
-> > +    CPU_POWERPC_PPE42XM            = 0x42200000,
-> >       /* PowerPC 440 family */
-> >       /* Generic PowerPC 440 */
-> >   #define CPU_POWERPC_440              CPU_POWERPC_440GXf
-> > diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> > index 6b90543811..c68dd4f141 100644
-> > --- a/target/ppc/cpu.h
-> > +++ b/target/ppc/cpu.h
-> > @@ -220,6 +220,8 @@ typedef enum powerpc_excp_t {
-> >       POWERPC_EXCP_POWER10,
-> >       /* POWER11 exception model           */
-> >       POWERPC_EXCP_POWER11,
-> > +    /* PPE42 exception model            */
-> > +    POWERPC_EXCP_PPE42,
-> >   } powerpc_excp_t;
-> >   
-> >   /*****************************************************************************/
-> > @@ -282,6 +284,8 @@ typedef enum powerpc_input_t {
-> >       PPC_FLAGS_INPUT_POWER9,
-> >       /* Freescale RCPU bus               */
-> >       PPC_FLAGS_INPUT_RCPU,
-> > +    /* PPE42 bus                        */
-> > +    PPC_FLAGS_INPUT_PPE42,
-> >   } powerpc_input_t;
-> >   
-> >   #define PPC_INPUT(env) ((env)->bus_model)
-> > @@ -433,39 +437,64 @@ typedef enum {
-> >   #define MSR_TM   PPC_BIT_NR(31) /* Transactional Memory Available (Book3s)   */
-> >   #define MSR_CM   PPC_BIT_NR(32) /* Computation mode for BookE         hflags */
-> >   #define MSR_ICM  PPC_BIT_NR(33) /* Interrupt computation mode for BookE      */
-> > +#define MSR_SEM0 PPC_BIT_NR(33) /* SIB Error Mask Bit 0 (PPE42)              */
-> > +#define MSR_SEM1 PPC_BIT_NR(34) /* SIB Error Mask Bit 1 (PPE42)              */
-> > +#define MSR_SEM2 PPC_BIT_NR(35) /* SIB Error Mask Bit 2 (PPE42)              */
-> >   #define MSR_GS   PPC_BIT_NR(35) /* guest state for BookE                     */
-> > +#define MSR_SEM3 PPC_BIT_NR(36) /* SIB Error Mask Bit 3 (PPE42)              */
-> > +#define MSR_SEM4 PPC_BIT_NR(37) /* SIB Error Mask Bit 4 (PPE42)              */
-> >   #define MSR_UCLE PPC_BIT_NR(37) /* User-mode cache lock enable for BookE     */
-> >   #define MSR_VR   PPC_BIT_NR(38) /* altivec available                x hflags */
-> >   #define MSR_SPE  PPC_BIT_NR(38) /* SPE enable for BookE             x hflags */
-> > +#define MSR_SEM5 PPC_BIT_NR(38) /* SIB Error Mask Bit 5 (PPE42)              */
-> > +#define MSR_SEM6 PPC_BIT_NR(39) /* SIB Error Mask Bit 6 (PPE42)              */
-> >   #define MSR_VSX  PPC_BIT_NR(40) /* Vector Scalar Extension (>= 2.06)x hflags */
-> > +#define MSR_IS0  PPC_BIT_NR(40) /* Instance Specific Bit 0 (PPE42)           */
-> >   #define MSR_S    PPC_BIT_NR(41) /* Secure state                              */
-> > +#define MSR_SIBRC0 PPC_BIT_NR(41) /* Last SIB return code Bit 0 (PPE42)      */
-> > +#define MSR_SIBRC1 PPC_BIT_NR(42) /* Last SIB return code Bit 1 (PPE42)      */
-> > +#define MSR_SIBRC2 PPC_BIT_NR(43) /* Last SIB return code Bit 2 (PPE42)      */
-> > +#define MSR_LP   PPC_BIT_NR(44) /* Low Priority (PPE42)                      */
-> >   #define MSR_KEY  PPC_BIT_NR(44) /* key bit on 603e                           */
-> >   #define MSR_POW  PPC_BIT_NR(45) /* Power management                          */
-> >   #define MSR_WE   PPC_BIT_NR(45) /* Wait State Enable on 405                  */
-> > +#define MSR_IS1  PPC_BIT_NR(46) /* Instance Specific Bit 1 (PPE42)           */
-> >   #define MSR_TGPR PPC_BIT_NR(46) /* TGPR usage on 602/603            x        */
-> >   #define MSR_CE   PPC_BIT_NR(46) /* Critical int. enable on embedded PPC x    */
-> >   #define MSR_ILE  PPC_BIT_NR(47) /* Interrupt little-endian mode              */
-> > +#define MSR_UIE  PPC_BIT_NR(47) /* Unmaskable Interrupt Enable (PPE42)       */
-> >   #define MSR_EE   PPC_BIT_NR(48) /* External interrupt enable                 */
-> >   #define MSR_PR   PPC_BIT_NR(49) /* Problem state                      hflags */
-> >   #define MSR_FP   PPC_BIT_NR(50) /* Floating point available           hflags */
-> >   #define MSR_ME   PPC_BIT_NR(51) /* Machine check interrupt enable            */
-> >   #define MSR_FE0  PPC_BIT_NR(52) /* Floating point exception mode 0           */
-> > +#define MSR_IS2  PPC_BIT_NR(52) /* Instance Specific Bit 2 (PPE42)           */
-> > +#define MSR_IS3  PPC_BIT_NR(53) /* Instance Specific Bit 3 (PPE42)           */
-> >   #define MSR_SE   PPC_BIT_NR(53) /* Single-step trace enable         x hflags */
-> >   #define MSR_DWE  PPC_BIT_NR(53) /* Debug wait enable on 405         x        */
-> >   #define MSR_UBLE PPC_BIT_NR(53) /* User BTB lock enable on e500     x        */
-> >   #define MSR_BE   PPC_BIT_NR(54) /* Branch trace enable              x hflags */
-> >   #define MSR_DE   PPC_BIT_NR(54) /* Debug int. enable on embedded PPC   x     */
-> >   #define MSR_FE1  PPC_BIT_NR(55) /* Floating point exception mode 1           */
-> > +#define MSR_IPE  PPC_BIT_NR(55) /* Imprecise Mode Enable (PPE42)             */
-> >   #define MSR_AL   PPC_BIT_NR(56) /* AL bit on POWER                           */
-> > +#define MSR_SIBRCA0 PPC_BIT_NR(56) /* SIB Return Code Accumulator 0 (PPE42)  */
-> > +#define MSR_SIBRCA1 PPC_BIT_NR(57) /* SIB Return Code Accumulator 1 (PPE42)  */
-> >   #define MSR_EP   PPC_BIT_NR(57) /* Exception prefix on 601                   */
-> >   #define MSR_IR   PPC_BIT_NR(58) /* Instruction relocate                      */
-> >   #define MSR_IS   PPC_BIT_NR(58) /* Instruction address space (BookE)         */
-> > +#define MSR_SIBRCA2 PPC_BIT_NR(58) /* SIB Return Code Accumulator 2 (PPE42)  */
-> > +#define MSR_SIBRCA3 PPC_BIT_NR(59) /* SIB Return Code Accumulator 3 (PPE42)  */
-> >   #define MSR_DR   PPC_BIT_NR(59) /* Data relocate                             */
-> >   #define MSR_DS   PPC_BIT_NR(59) /* Data address space (BookE)                */
-> >   #define MSR_PE   PPC_BIT_NR(60) /* Protection enable on 403                  */
-> > +#define MSR_SIBRCA4 PPC_BIT_NR(60) /* SIB Return Code Accumulator 4 (PPE42)  */
-> > +#define MSR_SIBRCA5 PPC_BIT_NR(61) /* SIB Return Code Accumulator 5 (PPE42)  */
-> >   #define MSR_PX   PPC_BIT_NR(61) /* Protection exclusive on 403        x      */
-> >   #define MSR_PMM  PPC_BIT_NR(61) /* Performance monitor mark on POWER  x      */
-> >   #define MSR_RI   PPC_BIT_NR(62) /* Recoverable interrupt            1        */
-> > +#define MSR_SIBRCA6 PPC_BIT_NR(62) /* SIB Return Code Accumulator 6 (PPE42)  */
-> > +#define MSR_SIBRCA7 PPC_BIT_NR(63) /* SIB Return Code Accumulator 7 (PPE42)  */
-> >   #define MSR_LE   PPC_BIT_NR(63) /* Little-endian mode               1 hflags */
-> >   
-> >   FIELD(MSR, SF, MSR_SF, 1)
-> > @@ -517,6 +546,9 @@ FIELD(MSR, PX, MSR_PX, 1)
-> >   FIELD(MSR, PMM, MSR_PMM, 1)
-> >   FIELD(MSR, RI, MSR_RI, 1)
-> >   FIELD(MSR, LE, MSR_LE, 1)
-> > +FIELD(MSR, SEM, MSR_SEM6, 7)
-> > +FIELD(MSR, SIBRC, MSR_SIBRC2, 3)
-> > +FIELD(MSR, SIBRCA, MSR_SIBRCA7, 8)
-> >   
-> >   /*
-> >    * FE0 and FE1 bits are not side-by-side
-> > @@ -730,6 +762,31 @@ FIELD(MSR, LE, MSR_LE, 1)
-> >   #define ESR_VLEMI PPC_BIT(58) /* VLE operation                          */
-> >   #define ESR_MIF   PPC_BIT(62) /* Misaligned instruction (VLE)           */
-> >   
-> > +/* PPE42 Interrupt Status Register bits */
-> > +#define PPE42_ISR_SRSMS0  PPC_BIT_NR(48) /* Sys Reset State Machine State 0   */
-> > +#define PPE42_ISR_SRSMS1  PPC_BIT_NR(49) /* Sys Reset State Machine State 1   */
-> > +#define PPE42_ISR_SRSMS2  PPC_BIT_NR(50) /* Sys Reset State Machine State 2   */
-> > +#define PPE42_ISR_SRSMS3  PPC_BIT_NR(51) /* Sys Reset State Machine State 3   */
-> > +#define PPE42_ISR_EP      PPC_BIT_NR(53) /* MSR[EE] Maskable Event Pending    */
-> > +#define PPE42_ISR_PTR     PPC_BIT_NR(56) /* Program Interrupt from trap       */
-> > +#define PPE42_ISR_ST      PPC_BIT_NR(57) /* Data Interrupt caused by store    */
-> > +#define PPE42_ISR_MFE     PPC_BIT_NR(60) /* Multiple Fault Error              */
-> > +#define PPE42_ISR_MCS0    PPC_BIT_NR(61) /* Machine Check Status bit0         */
-> > +#define PPE42_ISR_MCS1    PPC_BIT_NR(62) /* Machine Check Status bit1         */
-> > +#define PPE42_ISR_MCS2    PPC_BIT_NR(63) /* Machine Check Status bit2         */
-> > +FIELD(PPE42_ISR, SRSMS, PPE42_ISR_SRSMS3, 4)
-> > +FIELD(PPE42_ISR, MCS, PPE42_ISR_MCS2, 3)
-> > +
-> > +/* PPE42 Machine Check Status field values */
-> > +#define PPE42_ISR_MCS_INSTRUCTION             0
-> > +#define PPE42_ISR_MCS_DATA_LOAD               1
-> > +#define PPE42_ISR_MCS_DATA_PRECISE_STORE      2
-> > +#define PPE42_ISR_MCS_DATA_IMPRECISE_STORE    3
-> > +#define PPE42_ISR_MCS_PROGRAM                 4
-> > +#define PPE42_ISR_MCS_ISI                     5
-> > +#define PPE42_ISR_MCS_ALIGNMENT               6
-> > +#define PPE42_ISR_MCS_DSI                     7
-> > +
-> >   /* Transaction EXception And Summary Register bits                           */
-> >   #define TEXASR_FAILURE_PERSISTENT                (63 - 7)
-> >   #define TEXASR_DISALLOWED                        (63 - 8)
-> > @@ -785,6 +842,8 @@ enum {
-> >       POWERPC_FLAG_SMT_1LPAR = 0x00800000,
-> >       /* Has BHRB */
-> >       POWERPC_FLAG_BHRB      = 0x01000000,
-> > +    /* Use PPE42-specific behavior                                           */
-> > +    POWERPC_FLAG_PPE42     = 0x02000000,
-> >   };
-> >   
-> >   /*
-> > @@ -1750,9 +1809,12 @@ void ppc_compat_add_property(Object *obj, const char *name,
-> >   #define SPR_BOOKE_CSRR0       (0x03A)
-> >   #define SPR_BOOKE_CSRR1       (0x03B)
-> >   #define SPR_BOOKE_DEAR        (0x03D)
-> > +#define SPR_PPE42_EDR         (0x03D)
-> >   #define SPR_IAMR              (0x03D)
-> >   #define SPR_BOOKE_ESR         (0x03E)
-> > +#define SPR_PPE42_ISR         (0x03E)
-> >   #define SPR_BOOKE_IVPR        (0x03F)
-> > +#define SPR_PPE42_IVPR        (0x03F)
-> >   #define SPR_MPC_EIE           (0x050)
-> >   #define SPR_MPC_EID           (0x051)
-> >   #define SPR_MPC_NRI           (0x052)
-> > @@ -1818,6 +1880,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
-> >   #define SPR_TBU40             (0x11E)
-> >   #define SPR_SVR               (0x11E)
-> >   #define SPR_BOOKE_PIR         (0x11E)
-> > +#define SPR_PPE42_PIR         (0x11E)
-> >   #define SPR_PVR               (0x11F)
-> >   #define SPR_HSPRG0            (0x130)
-> >   #define SPR_BOOKE_DBSR        (0x130)
-> > @@ -1827,6 +1890,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
-> >   #define SPR_BOOKE_EPCR        (0x133)
-> >   #define SPR_SPURR             (0x134)
-> >   #define SPR_BOOKE_DBCR0       (0x134)
-> > +#define SPR_PPE42_DBCR        (0x134)
-> >   #define SPR_IBCR              (0x135)
-> >   #define SPR_PURR              (0x135)
-> >   #define SPR_BOOKE_DBCR1       (0x135)
-> > @@ -1844,6 +1908,7 @@ void ppc_compat_add_property(Object *obj, const char *name,
-> >   #define SPR_HSRR1             (0x13B)
-> >   #define SPR_BOOKE_IAC4        (0x13B)
-> >   #define SPR_BOOKE_DAC1        (0x13C)
-> > +#define SPR_PPE42_DACR        (0x13C)
-> >   #define SPR_MMCRH             (0x13C)
-> >   #define SPR_DABR2             (0x13D)
-> >   #define SPR_BOOKE_DAC2        (0x13D)
-> > @@ -1853,12 +1918,14 @@ void ppc_compat_add_property(Object *obj, const char *name,
-> >   #define SPR_BOOKE_DVC2        (0x13F)
-> >   #define SPR_LPIDR             (0x13F)
-> >   #define SPR_BOOKE_TSR         (0x150)
-> > +#define SPR_PPE42_TSR         (0x150)
-> >   #define SPR_HMER              (0x150)
-> >   #define SPR_HMEER             (0x151)
-> >   #define SPR_PCR               (0x152)
-> >   #define SPR_HEIR              (0x153)
-> >   #define SPR_BOOKE_LPIDR       (0x152)
-> >   #define SPR_BOOKE_TCR         (0x154)
-> > +#define SPR_PPE42_TCR         (0x154)
-> >   #define SPR_BOOKE_TLB0PS      (0x158)
-> >   #define SPR_BOOKE_TLB1PS      (0x159)
-> >   #define SPR_BOOKE_TLB2PS      (0x15A)
-> > @@ -2528,6 +2595,12 @@ enum {
-> >       PPC2_MEM_LWSYNC    = 0x0000000000200000ULL,
-> >       /* ISA 2.06 BCD assist instructions                                      */
-> >       PPC2_BCDA_ISA206   = 0x0000000000400000ULL,
-> > +    /* PPE42 instructions                                                    */
-> > +    PPC2_PPE42         = 0x0000000000800000ULL,
-> > +    /* PPE42X instructions                                                   */
-> > +    PPC2_PPE42X        = 0x0000000001000000ULL,
-> > +    /* PPE42XM instructions                                                  */
-> > +    PPC2_PPE42XM       = 0x0000000002000000ULL,
-> >   
-> >   #define PPC_TCG_INSNS2 (PPC2_BOOKE206 | PPC2_VSX | PPC2_PRCNTL | PPC2_DBRX | \
-> >                           PPC2_ISA205 | PPC2_VSX207 | PPC2_PERM_ISA206 | \
-> > @@ -2537,7 +2610,8 @@ enum {
-> >                           PPC2_ALTIVEC_207 | PPC2_ISA207S | PPC2_DFP | \
-> >                           PPC2_FP_CVT_S64 | PPC2_TM | PPC2_PM_ISA206 | \
-> >                           PPC2_ISA300 | PPC2_ISA310 | PPC2_MEM_LWSYNC | \
-> > -                        PPC2_BCDA_ISA206)
-> > +                        PPC2_BCDA_ISA206 | PPC2_PPE42 | PPC2_PPE42X | \
-> > +                        PPC2_PPE42XM)
-> >   };
-> >   
-> >   /*****************************************************************************/
-> > diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> > index a0e77f2673..698d61bf0c 100644
-> > --- a/target/ppc/cpu_init.c
-> > +++ b/target/ppc/cpu_init.c
-> > @@ -1653,6 +1653,47 @@ static void register_8xx_sprs(CPUPPCState *env)
-> >    * ... and more (thermal management, performance counters, ...)
-> >    */
-> >   
-> > +static void register_ppe42_sprs(CPUPPCState *env)
-> > +{
-> > +    spr_register(env, SPR_PPE42_EDR, "EDR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, &spr_write_generic,
-> > +                 0x00000000);
-> > +    spr_register(env, SPR_PPE42_ISR, "ISR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, &spr_write_generic,
-> > +                 0x00000000);
-> > +    spr_register(env, SPR_PPE42_IVPR, "IVPR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, SPR_NOACCESS,
-> > +                 0xfff80000);
-> > +    spr_register(env, SPR_PPE42_PIR, "PIR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, &spr_write_pir,
-> > +                 0x00000000);
-> > +    spr_register(env, SPR_PPE42_DBCR, "DBCR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, &spr_write_40x_dbcr0,
-> > +                 0x00000000);
-> > +    spr_register(env, SPR_PPE42_DACR, "DACR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, &spr_write_generic,
-> > +                 0x00000000);
-> > +    /* Timer */
-> > +    spr_register(env, SPR_DECR, "DECR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_decr, &spr_write_decr,
-> > +                 0x00000000);
-> > +    spr_register(env, SPR_PPE42_TSR, "TSR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, &spr_write_booke_tsr,
-> > +                 0x00000000);
-> > +    spr_register(env, SPR_BOOKE_TCR, "TCR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, &spr_write_booke_tcr,
-> > +                 0x00000000);
-> > +}
-> > +
-> >   /*****************************************************************************/
-> >   /* Exception vectors models                                                  */
-> >   static void init_excp_4xx(CPUPPCState *env)
-> > @@ -1679,6 +1720,30 @@ static void init_excp_4xx(CPUPPCState *env)
-> >   #endif
-> >   }
-> >   
-> > +static void init_excp_ppe42(CPUPPCState *env)
-> > +{
-> > +#if !defined(CONFIG_USER_ONLY)
-> > +    /* Machine Check vector changed after version 0 */
-> > +    if (((env->spr[SPR_PVR] & 0xf00000ul) >> 20) == 0) {
-> > +        env->excp_vectors[POWERPC_EXCP_MCHECK]   = 0x00000000;
-> > +    } else {
-> > +        env->excp_vectors[POWERPC_EXCP_MCHECK]   = 0x00000020;
-> > +    }
-> > +    env->excp_vectors[POWERPC_EXCP_RESET]    = 0x00000040;
-> > +    env->excp_vectors[POWERPC_EXCP_DSI]      = 0x00000060;
-> > +    env->excp_vectors[POWERPC_EXCP_ISI]      = 0x00000080;
-> > +    env->excp_vectors[POWERPC_EXCP_EXTERNAL] = 0x000000A0;
-> > +    env->excp_vectors[POWERPC_EXCP_ALIGN]    = 0x000000C0;
-> > +    env->excp_vectors[POWERPC_EXCP_PROGRAM]  = 0x000000E0;
-> > +    env->excp_vectors[POWERPC_EXCP_DECR]     = 0x00000100;
-> > +    env->excp_vectors[POWERPC_EXCP_FIT]      = 0x00000120;
-> > +    env->excp_vectors[POWERPC_EXCP_WDT]      = 0x00000140;
-> > +    env->ivpr_mask = 0xFFFFFE00UL;
-> > +    /* Hardware reset vector */
-> > +    env->hreset_vector = 0x00000040UL;
-> > +#endif
-> > +}
-> > +
-> >   static void init_excp_MPC5xx(CPUPPCState *env)
-> >   {
-> >   #if !defined(CONFIG_USER_ONLY)
-> > @@ -2200,6 +2265,80 @@ POWERPC_FAMILY(405)(ObjectClass *oc, const void *data)
-> >                    POWERPC_FLAG_DE | POWERPC_FLAG_BUS_CLK;
-> >   }
-> >   
-> > +static void init_proc_ppe42(CPUPPCState *env)
-> > +{
-> > +    register_ppe42_sprs(env);
-> > +
-> > +    init_excp_ppe42(env);
-> > +    env->dcache_line_size = 32;
-> > +    env->icache_line_size = 32;
-> > +    /* Allocate hardware IRQ controller */
-> > +    ppc40x_irq_init(env_archcpu(env));
-> > +
-> > +    SET_FIT_PERIOD(8, 12, 16, 20);
-> > +    SET_WDT_PERIOD(16, 20, 24, 28);
-> > +}
-> > +
-> > +static void ppe42_class_common_init(PowerPCCPUClass *pcc)
-> > +{
-> > +    pcc->init_proc = init_proc_ppe42;
-> > +    pcc->check_pow = check_pow_nocheck;
-> > +    pcc->check_attn = check_attn_none;
-> > +    pcc->insns_flags = PPC_INSNS_BASE |
-> > +                       PPC_WRTEE |
-> > +                       PPC_CACHE |
-> > +                       PPC_CACHE_DCBZ |
-> > +                       PPC_MEM_SYNC;
-> > +    pcc->msr_mask = R_MSR_SEM_MASK |
-> > +                    (1ull << MSR_IS0) |
-> > +                    R_MSR_SIBRC_MASK |
-> > +                    (1ull << MSR_LP) |
-> > +                    (1ull << MSR_WE) |
-> > +                    (1ull << MSR_IS1) |
-> > +                    (1ull << MSR_UIE) |
-> > +                    (1ull << MSR_EE) |
-> > +                    (1ull << MSR_ME) |
-> > +                    (1ull << MSR_IS2) |
-> > +                    (1ull << MSR_IS3) |
-> > +                    (1ull << MSR_IPE) |
-> > +                    R_MSR_SIBRCA_MASK;
-> > +    pcc->mmu_model = POWERPC_MMU_REAL;
-> > +    pcc->excp_model = POWERPC_EXCP_PPE42;
-> > +    pcc->bus_model = PPC_FLAGS_INPUT_PPE42;
-> > +    pcc->bfd_mach = bfd_mach_ppc_403;
-> > +    pcc->flags = POWERPC_FLAG_PPE42 | POWERPC_FLAG_BUS_CLK;
-> > +}
-> > +
-> > +POWERPC_FAMILY(ppe42)(ObjectClass *oc, const void *data)
-> > +{
-> > +    DeviceClass *dc = DEVICE_CLASS(oc);
-> > +    PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-> > +
-> > +    dc->desc = "PPE 42";
-> > +    pcc->insns_flags2 = PPC2_PPE42;
-> > +    ppe42_class_common_init(pcc);
-> > +}
-> > +
-> > +POWERPC_FAMILY(ppe42x)(ObjectClass *oc, const void *data)
-> > +{
-> > +    DeviceClass *dc = DEVICE_CLASS(oc);
-> > +    PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-> > +
-> > +    dc->desc = "PPE 42X";
-> > +    pcc->insns_flags2 = PPC2_PPE42 | PPC2_PPE42X;
-> > +    ppe42_class_common_init(pcc);
-> > +}
-> > +
-> > +POWERPC_FAMILY(ppe42xm)(ObjectClass *oc, const void *data)
-> > +{
-> > +    DeviceClass *dc = DEVICE_CLASS(oc);
-> > +    PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-> > +
-> > +    dc->desc = "PPE 42XM";
-> > +    pcc->insns_flags2 = PPC2_PPE42 | PPC2_PPE42X | PPC2_PPE42XM;
-> > +    ppe42_class_common_init(pcc);
-> > +}
-> > +
-> >   static void init_proc_440EP(CPUPPCState *env)
-> >   {
-> >       register_BookE_sprs(env, 0x000000000000FFFFULL);
-> > @@ -6802,53 +6941,63 @@ static void init_ppc_proc(PowerPCCPU *cpu)
-> >   
-> >       /* MSR bits & flags consistency checks */
-> >       if (env->msr_mask & (1 << 25)) {
-> > -        switch (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE)) {
-> > +        switch (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE |
-> > +                              POWERPC_FLAG_PPE42)) {
-> >           case POWERPC_FLAG_SPE:
-> >           case POWERPC_FLAG_VRE:
-> > +        case POWERPC_FLAG_PPE42:
-> >               break;
-> >           default:
-> >               fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-> > -                    "Should define POWERPC_FLAG_SPE or POWERPC_FLAG_VRE\n");
-> > +                    "Should define POWERPC_FLAG_SPE or POWERPC_FLAG_VRE\n"
-> > +                    "or POWERPC_FLAG_PPE42\n");
-> >               exit(1);
-> >           }
-> >       } else if (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE)) {
-> >           fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-> > -                "Should not define POWERPC_FLAG_SPE nor POWERPC_FLAG_VRE\n");
-> > +                "Should not define POWERPC_FLAG_SPE nor POWERPC_FLAG_VRE\n"
-> > +                "nor POWERPC_FLAG_PPE42\n");
-> >           exit(1);
-> >       }
-> >       if (env->msr_mask & (1 << 17)) {
-> > -        switch (env->flags & (POWERPC_FLAG_TGPR | POWERPC_FLAG_CE)) {
-> > +        switch (env->flags & (POWERPC_FLAG_TGPR | POWERPC_FLAG_CE |
-> > +                              POWERPC_FLAG_PPE42)) {
-> >           case POWERPC_FLAG_TGPR:
-> >           case POWERPC_FLAG_CE:
-> > +        case POWERPC_FLAG_PPE42:
-> >               break;
-> >           default:
-> >               fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-> > -                    "Should define POWERPC_FLAG_TGPR or POWERPC_FLAG_CE\n");
-> > +                    "Should define POWERPC_FLAG_TGPR or POWERPC_FLAG_CE\n"
-> > +                    "or POWERPC_FLAG_PPE42\n");
-> >               exit(1);
-> >           }
-> > -    } else if (env->flags & (POWERPC_FLAG_TGPR | POWERPC_FLAG_CE)) {
-> > +    } else if (env->flags & (POWERPC_FLAG_TGPR | POWERPC_FLAG_CE |
-> > +                             POWERPC_FLAG_PPE42)) {
-> >           fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-> > -                "Should not define POWERPC_FLAG_TGPR nor POWERPC_FLAG_CE\n");
-> > +                "Should not define POWERPC_FLAG_TGPR nor POWERPC_FLAG_CE\n"
-> > +                "nor POWERPC_FLAG_PPE42\n");
-> >           exit(1);
-> >       }
-> >       if (env->msr_mask & (1 << 10)) {
-> >           switch (env->flags & (POWERPC_FLAG_SE | POWERPC_FLAG_DWE |
-> > -                              POWERPC_FLAG_UBLE)) {
-> > +                              POWERPC_FLAG_UBLE | POWERPC_FLAG_PPE42)) {
-> >           case POWERPC_FLAG_SE:
-> >           case POWERPC_FLAG_DWE:
-> >           case POWERPC_FLAG_UBLE:
-> > +        case POWERPC_FLAG_PPE42:
-> >               break;
-> >           default:
-> >               fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-> >                       "Should define POWERPC_FLAG_SE or POWERPC_FLAG_DWE or "
-> > -                    "POWERPC_FLAG_UBLE\n");
-> > +                    "POWERPC_FLAG_UBLE or POWERPC_FLAG_PPE42\n");
-> >               exit(1);
-> >           }
-> >       } else if (env->flags & (POWERPC_FLAG_SE | POWERPC_FLAG_DWE |
-> > -                             POWERPC_FLAG_UBLE)) {
-> > +                             POWERPC_FLAG_UBLE | POWERPC_FLAG_PPE42)) {
-> >           fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-> >                   "Should not define POWERPC_FLAG_SE nor POWERPC_FLAG_DWE nor "
-> > -                "POWERPC_FLAG_UBLE\n");
-> > +                "POWERPC_FLAG_UBLE nor POWERPC_FLAG_PPE42\n");
-> >               exit(1);
-> >       }
-> >       if (env->msr_mask & (1 << 9)) {
-> > @@ -6867,18 +7016,23 @@ static void init_ppc_proc(PowerPCCPU *cpu)
-> >           exit(1);
-> >       }
-> >       if (env->msr_mask & (1 << 2)) {
-> > -        switch (env->flags & (POWERPC_FLAG_PX | POWERPC_FLAG_PMM)) {
-> > +        switch (env->flags & (POWERPC_FLAG_PX | POWERPC_FLAG_PMM |
-> > +                              POWERPC_FLAG_PPE42)) {
-> >           case POWERPC_FLAG_PX:
-> >           case POWERPC_FLAG_PMM:
-> > +        case POWERPC_FLAG_PPE42:
-> >               break;
-> >           default:
-> >               fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-> > -                    "Should define POWERPC_FLAG_PX or POWERPC_FLAG_PMM\n");
-> > +                    "Should define POWERPC_FLAG_PX or POWERPC_FLAG_PMM\n"
-> > +                    "or POWERPC_FLAG_PPE42\n");
-> >               exit(1);
-> >           }
-> > -    } else if (env->flags & (POWERPC_FLAG_PX | POWERPC_FLAG_PMM)) {
-> > +    } else if (env->flags & (POWERPC_FLAG_PX | POWERPC_FLAG_PMM |
-> > +                             POWERPC_FLAG_PPE42)) {
-> >           fprintf(stderr, "PowerPC MSR definition inconsistency\n"
-> > -                "Should not define POWERPC_FLAG_PX nor POWERPC_FLAG_PMM\n");
-> > +                "Should not define POWERPC_FLAG_PX nor POWERPC_FLAG_PMM\n"
-> > +                "nor POWERPC_FLAG_PPE42\n");
-> >           exit(1);
-> >       }
-> >       if ((env->flags & POWERPC_FLAG_BUS_CLK) == 0) {
-> > @@ -7243,39 +7397,40 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
-> >       }
-> >   
-> >       msr = (target_ulong)0;
-> > -    msr |= (target_ulong)MSR_HVB;
-> > -    msr |= (target_ulong)1 << MSR_EP;
-> > +    if (!(env->flags & POWERPC_FLAG_PPE42)) {
-> > +        msr |= (target_ulong)MSR_HVB;
-> > +        msr |= (target_ulong)1 << MSR_EP;
-> >   #if defined(DO_SINGLE_STEP) && 0
-> > -    /* Single step trace mode */
-> > -    msr |= (target_ulong)1 << MSR_SE;
-> > -    msr |= (target_ulong)1 << MSR_BE;
-> > +        /* Single step trace mode */
-> > +        msr |= (target_ulong)1 << MSR_SE;
-> > +        msr |= (target_ulong)1 << MSR_BE;
-> >   #endif
-> >   #if defined(CONFIG_USER_ONLY)
-> > -    msr |= (target_ulong)1 << MSR_FP; /* Allow floating point usage */
-> > -    msr |= (target_ulong)1 << MSR_FE0; /* Allow floating point exceptions */
-> > -    msr |= (target_ulong)1 << MSR_FE1;
-> > -    msr |= (target_ulong)1 << MSR_VR; /* Allow altivec usage */
-> > -    msr |= (target_ulong)1 << MSR_VSX; /* Allow VSX usage */
-> > -    msr |= (target_ulong)1 << MSR_SPE; /* Allow SPE usage */
-> > -    msr |= (target_ulong)1 << MSR_PR;
-> > +        msr |= (target_ulong)1 << MSR_FP; /* Allow floating point usage */
-> > +        msr |= (target_ulong)1 << MSR_FE0; /* Allow floating point exceptions */
-> > +        msr |= (target_ulong)1 << MSR_FE1;
-> > +        msr |= (target_ulong)1 << MSR_VR; /* Allow altivec usage */
-> > +        msr |= (target_ulong)1 << MSR_VSX; /* Allow VSX usage */
-> > +        msr |= (target_ulong)1 << MSR_SPE; /* Allow SPE usage */
-> > +        msr |= (target_ulong)1 << MSR_PR;
-> >   #if defined(TARGET_PPC64)
-> > -    msr |= (target_ulong)1 << MSR_TM; /* Transactional memory */
-> > +        msr |= (target_ulong)1 << MSR_TM; /* Transactional memory */
-> >   #endif
-> >   #if !TARGET_BIG_ENDIAN
-> > -    msr |= (target_ulong)1 << MSR_LE; /* Little-endian user mode */
-> > -    if (!((env->msr_mask >> MSR_LE) & 1)) {
-> > -        fprintf(stderr, "Selected CPU does not support little-endian.\n");
-> > -        exit(1);
-> > -    }
-> > +        msr |= (target_ulong)1 << MSR_LE; /* Little-endian user mode */
-> > +        if (!((env->msr_mask >> MSR_LE) & 1)) {
-> > +            fprintf(stderr, "Selected CPU does not support little-endian.\n");
-> > +            exit(1);
-> > +        }
-> >   #endif
-> >   #endif
-> >   
-> >   #if defined(TARGET_PPC64)
-> > -    if (mmu_is_64bit(env->mmu_model)) {
-> > -        msr |= (1ULL << MSR_SF);
-> > -    }
-> > +        if (mmu_is_64bit(env->mmu_model)) {
-> > +            msr |= (1ULL << MSR_SF);
-> > +        }
-> >   #endif
-> > -
-> > +    }
-> >       hreg_store_msr(env, msr, 1);
-> >   
-> >   #if !defined(CONFIG_USER_ONLY)
-> > @@ -7725,6 +7880,18 @@ void ppc_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-> >            * they can be read with "p $ivor0", "p $ivor1", etc.
-> >            */
-> >           break;
-> > +    case POWERPC_EXCP_PPE42:
-> > +        qemu_fprintf(f, "SRR0 " TARGET_FMT_lx " SRR1 " TARGET_FMT_lx "\n",
-> > +                     env->spr[SPR_SRR0], env->spr[SPR_SRR1]);
-> > +
-> > +        qemu_fprintf(f, "  TCR " TARGET_FMT_lx "   TSR " TARGET_FMT_lx
-> > +                     "    ISR " TARGET_FMT_lx "   EDR " TARGET_FMT_lx "\n",
-> > +                     env->spr[SPR_PPE42_TCR], env->spr[SPR_PPE42_TSR],
-> > +                     env->spr[SPR_PPE42_ISR], env->spr[SPR_PPE42_EDR]);
-> > +
-> > +        qemu_fprintf(f, "  PIR " TARGET_FMT_lx "   IVPR " TARGET_FMT_lx "\n",
-> > +                     env->spr[SPR_PPE42_PIR], env->spr[SPR_PPE42_IVPR]);
-> > +        break;
-> >       case POWERPC_EXCP_40x:
-> >           qemu_fprintf(f, "  TCR " TARGET_FMT_lx "   TSR " TARGET_FMT_lx
-> >                        "    ESR " TARGET_FMT_lx "   DEAR " TARGET_FMT_lx "\n",
-> > diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> > index 1efdc4066e..d8bca19fff 100644
-> > --- a/target/ppc/excp_helper.c
-> > +++ b/target/ppc/excp_helper.c
-> > @@ -949,6 +949,125 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-> >       powerpc_set_excp_state(cpu, vector, new_msr);
-> >   }
-> >   
-> > +static void powerpc_excp_ppe42(PowerPCCPU *cpu, int excp)
-> > +{
-> > +    CPUPPCState *env = &cpu->env;
-> > +    target_ulong msr, new_msr, vector;
-> > +    target_ulong mcs = PPE42_ISR_MCS_INSTRUCTION;
-> > +    bool promote_unmaskable;
-> > +
-> > +    msr = env->msr;
-> > +
-> > +    /*
-> > +     * New interrupt handler msr preserves SIBRC and ME unless explicitly
-> > +     * overridden by the exception.  All other MSR bits are zeroed out.
-> > +     */
-> > +    new_msr = env->msr & (((target_ulong)1 << MSR_ME) | R_MSR_SIBRC_MASK);
-> > +
-> > +    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
-> > +    if (excp == POWERPC_EXCP_HV_EMU) {
-> > +        excp = POWERPC_EXCP_PROGRAM;
-> > +    }
-> > +
-> > +    /*
-> > +     * Unmaskable interrupts (Program, ISI, Alignment and DSI) are promoted to
-> > +     * machine check if MSR_UIE is 0.
-> > +     */
-> > +    promote_unmaskable = !(msr & ((target_ulong)1 << MSR_UIE));
-> > +
-> > +
-> > +    switch (excp) {
-> > +    case POWERPC_EXCP_MCHECK:    /* Machine check exception                  */
-> > +        break;
-> > +    case POWERPC_EXCP_DSI:       /* Data storage exception                   */
-> > +        trace_ppc_excp_dsi(env->spr[SPR_PPE42_ISR], env->spr[SPR_PPE42_EDR]);
-> > +        if (promote_unmaskable) {
-> > +            excp = POWERPC_EXCP_MCHECK;
-> > +            mcs = PPE42_ISR_MCS_DSI;
-> > +        }
-> > +        break;
-> > +    case POWERPC_EXCP_ISI:       /* Instruction storage exception            */
-> > +        trace_ppc_excp_isi(msr, env->nip);
-> > +        if (promote_unmaskable) {
-> > +            excp = POWERPC_EXCP_MCHECK;
-> > +            mcs = PPE42_ISR_MCS_ISI;
-> > +        }
-> > +        break;
-> > +    case POWERPC_EXCP_EXTERNAL:  /* External input                           */
-> > +        break;
-> > +    case POWERPC_EXCP_ALIGN:     /* Alignment exception                      */
-> > +        if (promote_unmaskable) {
-> > +            excp = POWERPC_EXCP_MCHECK;
-> > +            mcs = PPE42_ISR_MCS_ALIGNMENT;
-> > +        }
-> > +        break;
-> > +    case POWERPC_EXCP_PROGRAM:   /* Program exception                        */
-> > +        if (promote_unmaskable) {
-> > +            excp = POWERPC_EXCP_MCHECK;
-> > +            mcs = PPE42_ISR_MCS_PROGRAM;
-> > +        }
-> > +        switch (env->error_code & ~0xF) {
-> > +        case POWERPC_EXCP_INVAL:
-> > +            trace_ppc_excp_inval(env->nip);
-> > +            env->spr[SPR_PPE42_ISR] &= ~((target_ulong)1 << PPE42_ISR_PTR);
-> > +            break;
-> > +        case POWERPC_EXCP_TRAP:
-> > +            env->spr[SPR_PPE42_ISR] |= ((target_ulong)1 << PPE42_ISR_PTR);
-> > +            break;
-> > +        default:
-> > +            /* Should never occur */
-> > +            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-> > +                      env->error_code);
-> > +            break;
-> > +        }
-> > +#ifdef CONFIG_TCG
-> > +        env->spr[SPR_PPE42_EDR] = ppc_ldl_code(env, env->nip);
-> > +#endif
-> > +        break;
-> > +    case POWERPC_EXCP_DECR:      /* Decrementer exception                    */
-> > +        break;
-> > +    case POWERPC_EXCP_FIT:       /* Fixed-interval timer interrupt           */
-> > +        trace_ppc_excp_print("FIT");
-> > +        break;
-> > +    case POWERPC_EXCP_WDT:       /* Watchdog timer interrupt                 */
-> > +        trace_ppc_excp_print("WDT");
-> > +        break;
-> > +    case POWERPC_EXCP_RESET:     /* System reset exception                   */
-> > +        /* reset exceptions don't have ME set */
-> > +        new_msr &= ~((target_ulong)1 << MSR_ME);
-> > +        break;
-> > +    default:
-> > +        cpu_abort(env_cpu(env), "Invalid PPE42 exception %d. Aborting\n",
-> > +                  excp);
-> > +        break;
-> > +    }
-> > +
-> > +    env->spr[SPR_SRR0] = env->nip;
-> > +    env->spr[SPR_SRR1] = msr;
-> > +
-> > +    vector = env->excp_vectors[excp];
-> > +    if (vector == (target_ulong)-1ULL) {
-> > +        cpu_abort(env_cpu(env),
-> > +                  "Raised an exception without defined vector %d\n", excp);
-> > +    }
-> > +    vector |= env->spr[SPR_PPE42_IVPR];
-> > +
-> > +    if (excp == POWERPC_EXCP_MCHECK) {
-> > +        /* Also set the Machine Check Status (MCS) */
-> > +        env->spr[SPR_PPE42_ISR] &= ~R_PPE42_ISR_MCS_MASK;
-> > +        env->spr[SPR_PPE42_ISR] |= (mcs & R_PPE42_ISR_MCS_MASK);
-> > +        env->spr[SPR_PPE42_ISR] &= ~((target_ulong)1 << PPE42_ISR_MFE);
-> > +
-> > +        /* Machine checks halt execution if MSR_ME is 0 */
-> > +        powerpc_mcheck_checkstop(env);
-> > +
-> > +        /* machine check exceptions don't have ME set */
-> > +        new_msr &= ~((target_ulong)1 << MSR_ME);
-> > +    }
-> > +
-> > +    powerpc_set_excp_state(cpu, vector, new_msr);
-> > +}
-> > +
-> >   static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-> >   {
-> >       CPUPPCState *env = &cpu->env;
-> > @@ -1589,6 +1708,9 @@ void powerpc_excp(PowerPCCPU *cpu, int excp)
-> >       case POWERPC_EXCP_POWER11:
-> >           powerpc_excp_books(cpu, excp);
-> >           break;
-> > +    case POWERPC_EXCP_PPE42:
-> > +        powerpc_excp_ppe42(cpu, excp);
-> > +        break;
-> >       default:
-> >           g_assert_not_reached();
-> >       }
-> > @@ -1945,6 +2067,43 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env,
-> >   }
-> >   #endif /* TARGET_PPC64 */
-> >   
-> > +static int ppe42_next_unmasked_interrupt(CPUPPCState *env)
-> > +{
-> > +    bool async_deliver;
-> > +
-> > +    /* External reset */
-> > +    if (env->pending_interrupts & PPC_INTERRUPT_RESET) {
-> > +        return PPC_INTERRUPT_RESET;
-> > +    }
-> > +    /* Machine check exception */
-> > +    if (env->pending_interrupts & PPC_INTERRUPT_MCK) {
-> > +        return PPC_INTERRUPT_MCK;
-> > +    }
-> > +
-> > +    async_deliver = FIELD_EX64(env->msr, MSR, EE);
-> > +
-> > +    if (async_deliver != 0) {
-> > +        /* Watchdog timer */
-> > +        if (env->pending_interrupts & PPC_INTERRUPT_WDT) {
-> > +            return PPC_INTERRUPT_WDT;
-> > +        }
-> > +        /* External Interrupt */
-> > +        if (env->pending_interrupts & PPC_INTERRUPT_EXT) {
-> > +            return PPC_INTERRUPT_EXT;
-> > +        }
-> > +        /* Fixed interval timer */
-> > +        if (env->pending_interrupts & PPC_INTERRUPT_FIT) {
-> > +            return PPC_INTERRUPT_FIT;
-> > +        }
-> > +        /* Decrementer exception */
-> > +        if (env->pending_interrupts & PPC_INTERRUPT_DECR) {
-> > +            return PPC_INTERRUPT_DECR;
-> > +        }
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> >   static int ppc_next_unmasked_interrupt(CPUPPCState *env)
-> >   {
-> >       uint32_t pending_interrupts = env->pending_interrupts;
-> > @@ -1970,6 +2129,10 @@ static int ppc_next_unmasked_interrupt(CPUPPCState *env)
-> >       }
-> >   #endif
-> >   
-> > +    if (env->excp_model == POWERPC_EXCP_PPE42) {
-> > +        return ppe42_next_unmasked_interrupt(env);
-> > +    }
-> > +
-> >       /* External reset */
-> >       if (pending_interrupts & PPC_INTERRUPT_RESET) {
-> >           return PPC_INTERRUPT_RESET;
-> > diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-> > index 7e5726871e..9953d73884 100644
-> > --- a/target/ppc/helper_regs.c
-> > +++ b/target/ppc/helper_regs.c
-> > @@ -186,6 +186,10 @@ static uint32_t hreg_compute_hflags_value(CPUPPCState *env)
-> >       if (env->spr[SPR_LPCR] & LPCR_HR) {
-> >           hflags |= 1 << HFLAGS_HR;
-> >       }
-> > +    if (unlikely(ppc_flags & POWERPC_FLAG_PPE42)) {
-> > +        /* PPE42 has a single address space and no problem state */
-> > +        msr = 0;
-> > +    }
-> >   
-> >   #ifndef CONFIG_USER_ONLY
-> >       if (!env->has_hv_mode || (msr & (1ull << MSR_HV))) {
-> > @@ -306,9 +310,6 @@ int hreg_store_msr(CPUPPCState *env, target_ulong value, int alter_hv)
-> >           value &= ~(1 << MSR_ME);
-> >           value |= env->msr & (1 << MSR_ME);
-> >       }
-> > -    if ((value ^ env->msr) & (R_MSR_IR_MASK | R_MSR_DR_MASK)) {
-> > -        cpu_interrupt_exittb(cs);
-> > -    }
-> >       if ((env->mmu_model == POWERPC_MMU_BOOKE ||
-> >            env->mmu_model == POWERPC_MMU_BOOKE206) &&
-> >           ((value ^ env->msr) & R_MSR_GS_MASK)) {
-> > @@ -319,8 +320,14 @@ int hreg_store_msr(CPUPPCState *env, target_ulong value, int alter_hv)
-> >           /* Swap temporary saved registers with GPRs */
-> >           hreg_swap_gpr_tgpr(env);
-> >       }
-> > -    if (unlikely((value ^ env->msr) & R_MSR_EP_MASK)) {
-> > -        env->excp_prefix = FIELD_EX64(value, MSR, EP) * 0xFFF00000;
-> > +    /* PPE42 MSR has bits overlapping with others */
-> > +    if (!(env->flags & POWERPC_FLAG_PPE42)) {
-> > +        if ((value ^ env->msr) & (R_MSR_IR_MASK | R_MSR_DR_MASK)) {
-> > +            cpu_interrupt_exittb(cs);
-> > +        }
-> > +        if (unlikely((value ^ env->msr) & R_MSR_EP_MASK)) {
-> > +            env->excp_prefix = FIELD_EX64(value, MSR, EP) * 0xFFF00000;
-> > +        }
-> >       }
-> >       /*
-> >        * If PR=1 then EE, IR and DR must be 1
-> > @@ -462,6 +469,17 @@ void register_generic_sprs(PowerPCCPU *cpu)
-> >                    SPR_NOACCESS, SPR_NOACCESS,
-> >                    &spr_read_generic, &spr_write_generic,
-> >                    0x00000000);
-> > +
-> > +    if (env->insns_flags2 & PPC2_PPE42) {
-> > +        spr_register(env, SPR_PVR, "PVR",
-> > +                 SPR_NOACCESS, SPR_NOACCESS,
-> > +                 &spr_read_generic, SPR_NOACCESS,
-> > +                 pcc->pvr);
-> > +
-> > +        /* PPE42 doesn't support additional SPRG regs or timebase */
-> > +        return;
-> > +    }
-> > +
-> >       spr_register(env, SPR_SPRG1, "SPRG1",
-> >                    SPR_NOACCESS, SPR_NOACCESS,
-> >                    &spr_read_generic, &spr_write_generic,
-> > diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-> > index f835be5156..edecfb8572 100644
-> > --- a/target/ppc/tcg-excp_helper.c
-> > +++ b/target/ppc/tcg-excp_helper.c
-> > @@ -229,6 +229,18 @@ void ppc_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
-> >       case POWERPC_MMU_BOOKE206:
-> >           env->spr[SPR_BOOKE_DEAR] = vaddr;
-> >           break;
-> > +    case POWERPC_MMU_REAL:
-> > +        if (env->flags & POWERPC_FLAG_PPE42) {
-> > +            env->spr[SPR_PPE42_EDR] = vaddr;
-> > +            if (access_type == MMU_DATA_STORE) {
-> > +                env->spr[SPR_PPE42_ISR] |= PPE42_ISR_ST;
-> > +            } else {
-> > +                env->spr[SPR_PPE42_ISR] &= ~PPE42_ISR_ST;
-> > +            }
-> > +        } else {
-> > +            env->spr[SPR_DAR] = vaddr;
-> > +        }
-> > +        break;
-> >       default:
-> >           env->spr[SPR_DAR] = vaddr;
-> >           break;
-> > diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> > index 27f90c3cc5..fc817dab54 100644
-> > --- a/target/ppc/translate.c
-> > +++ b/target/ppc/translate.c
-> > @@ -4264,8 +4264,10 @@ static void gen_mtmsr(DisasContext *ctx)
-> >           /* L=1 form only updates EE and RI */
-> >           mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
-> >       } else {
-> > -        /* mtmsr does not alter S, ME, or LE */
-> > -        mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
-> > +        if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
-> > +            /* mtmsr does not alter S, ME, or LE */
-> > +            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
-> > +        }
-> >   
-> >           /*
-> >            * XXX: we need to update nip before the store if we enter
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
+Reviewed-by: John Levon <john.levon@nutanix.com>
+
+regards
+john
 
