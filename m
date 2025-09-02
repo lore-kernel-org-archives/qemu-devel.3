@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB89CA1007
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 05:33:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25411CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 05:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utJdc-0002g7-Mu; Tue, 02 Sep 2025 01:33:00 -0400
+	id 1utJdj-0002l0-8z; Tue, 02 Sep 2025 01:33:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utJdO-0002b8-Gz; Tue, 02 Sep 2025 01:32:46 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1utJdh-0002k7-HY; Tue, 02 Sep 2025 01:33:05 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utJdM-0000Mv-BU; Tue, 02 Sep 2025 01:32:46 -0400
+ id 1utJde-0000O4-Sh; Tue, 02 Sep 2025 01:33:05 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cGDsM4z2Lz4w9x;
- Tue,  2 Sep 2025 15:32:39 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cGDsm1Jtcz4wB0;
+ Tue,  2 Sep 2025 15:33:00 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cGDsH4dSRz4w9s;
- Tue,  2 Sep 2025 15:32:35 +1000 (AEST)
-Message-ID: <a1a88dc6-6ba7-46e8-95b2-94fb2ebd072a@kaod.org>
-Date: Tue, 2 Sep 2025 07:32:35 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cGDsh6nG1z4w9w;
+ Tue,  2 Sep 2025 15:32:56 +1000 (AEST)
+Message-ID: <150cfb7b-3415-41da-a1c9-3b414e4e092a@kaod.org>
+Date: Tue, 2 Sep 2025 07:32:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v5 06/10] hw/arm: Integrate ASPEED OTP memory
- support into AST1030 SoCs
+Subject: Re: [SPAM] [PATCH v5 08/10] hw/misc/aspeed_sbc: Handle OTP write
+ command for voltage mode registers
 To: Kane Chen <kane_chen@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -42,7 +42,7 @@ To: Kane Chen <kane_chen@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250812094011.2617526-1-kane_chen@aspeedtech.com>
- <20250812094011.2617526-7-kane_chen@aspeedtech.com>
+ <20250812094011.2617526-9-kane_chen@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,16 +87,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250812094011.2617526-7-kane_chen@aspeedtech.com>
+In-Reply-To: <20250812094011.2617526-9-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,11 +117,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 8/12/25 11:40, Kane Chen wrote:
 > From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> The has_otp attribute is enabled in the SBC subclasses for AST1030 to
-> control the presence of OTP support per SoC type.
+> Extend OTP command handling to recognize specific voltage mode register
+> addresses and emulate the expected hardware behavior. Without this
+> change, legitimate voltage mode change requests would be incorrectly
+> reported as "Unknown command" and logged as an error.
+> 
+> This implementation does not perform actual mode changes, but ensures
+> that valid requests are accepted and ignored as per hardware behavior.
 > 
 > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -131,65 +136,91 @@ C.
 
 
 > ---
->   include/hw/misc/aspeed_sbc.h |  1 +
->   hw/arm/aspeed_ast10x0.c      |  2 +-
->   hw/misc/aspeed_sbc.c         | 16 ++++++++++++++++
->   3 files changed, 18 insertions(+), 1 deletion(-)
+>   hw/misc/aspeed_sbc.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>   hw/misc/trace-events |  1 +
+>   2 files changed, 42 insertions(+)
 > 
-> diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
-> index 0c2746d392..7d640a022e 100644
-> --- a/include/hw/misc/aspeed_sbc.h
-> +++ b/include/hw/misc/aspeed_sbc.h
-> @@ -14,6 +14,7 @@
->   
->   #define TYPE_ASPEED_SBC "aspeed.sbc"
->   #define TYPE_ASPEED_AST2600_SBC TYPE_ASPEED_SBC "-ast2600"
-> +#define TYPE_ASPEED_AST10X0_SBC TYPE_ASPEED_SBC "-ast10x0"
->   OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEED_SBC)
->   
->   #define ASPEED_SBC_NR_REGS (0x93c >> 2)
-> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-> index e6e1ee63c1..c446e70b24 100644
-> --- a/hw/arm/aspeed_ast10x0.c
-> +++ b/hw/arm/aspeed_ast10x0.c
-> @@ -154,7 +154,7 @@ static void aspeed_soc_ast1030_init(Object *obj)
->   
->       object_initialize_child(obj, "peci", &s->peci, TYPE_ASPEED_PECI);
->   
-> -    object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
-> +    object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_AST10X0_SBC);
->   
->       for (i = 0; i < sc->wdts_num; i++) {
->           snprintf(typename, sizeof(typename), "aspeed.wdt-%s", socname);
 > diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-> index b56a8b7678..052c70fd42 100644
+> index 787e2d0489..2fc5db749d 100644
 > --- a/hw/misc/aspeed_sbc.c
 > +++ b/hw/misc/aspeed_sbc.c
-> @@ -285,9 +285,25 @@ static const TypeInfo aspeed_ast2600_sbc_info = {
->       .class_init = aspeed_ast2600_sbc_class_init,
->   };
+> @@ -49,10 +49,17 @@
+>   #define OTP_MEMORY_SIZE 0x4000
+>   /* OTP command */
+>   #define SBC_OTP_CMD_READ 0x23b1e361
+> +#define SBC_OTP_CMD_WRITE 0x23b1e362
+>   #define SBC_OTP_CMD_PROG 0x23b1e364
 >   
-> +static void aspeed_ast10x0_sbc_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedSBCClass *sc = ASPEED_SBC_CLASS(klass);
+>   #define OTP_DATA_DWORD_COUNT        (0x800)
+>   #define OTP_TOTAL_DWORD_COUNT       (0x1000)
 > +
-> +    dc->desc = "AST10X0 Secure Boot Controller";
-> +    sc->has_otp = true;
-> +}
+> +/* Voltage mode */
+> +#define MODE_REGISTER               (0x1000)
+> +#define MODE_REGISTER_A             (0x3000)
+> +#define MODE_REGISTER_B             (0x5000)
 > +
-> +static const TypeInfo aspeed_ast10x0_sbc_info = {
-> +    .name = TYPE_ASPEED_AST10X0_SBC,
-> +    .parent = TYPE_ASPEED_SBC,
-> +    .class_init = aspeed_ast10x0_sbc_class_init,
-> +};
-> +
->   static void aspeed_sbc_register_types(void)
+>   static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
 >   {
->       type_register_static(&aspeed_ast2600_sbc_info);
-> +    type_register_static(&aspeed_ast10x0_sbc_info);
->       type_register_static(&aspeed_sbc_info);
+>       AspeedSBCState *s = ASPEED_SBC(opaque);
+> @@ -115,6 +122,37 @@ static bool aspeed_sbc_otp_read(AspeedSBCState *s,
+>       return true;
 >   }
 >   
+> +static bool mode_handler(uint32_t otp_addr)
+> +{
+> +    switch (otp_addr) {
+> +    case MODE_REGISTER:
+> +    case MODE_REGISTER_A:
+> +    case MODE_REGISTER_B:
+> +        /* HW behavior, do nothing here */
+> +        return true;
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Unsupported address 0x%x\n",
+> +                      otp_addr);
+> +        return false;
+> +    }
+> +}
+> +
+> +static bool aspeed_sbc_otp_write(AspeedSBCState *s,
+> +                                    uint32_t otp_addr)
+> +{
+> +    if (otp_addr == 0) {
+> +        trace_aspeed_sbc_ignore_cmd(otp_addr);
+> +        return true;
+> +    } else {
+> +        if (mode_handler(otp_addr) == false) {
+> +            return false;
+> +        }
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
+>                                      uint32_t otp_addr)
+>   {
+> @@ -157,6 +195,9 @@ static void aspeed_sbc_handle_command(void *opaque, uint32_t cmd)
+>       case SBC_OTP_CMD_READ:
+>           ret = aspeed_sbc_otp_read(s, otp_addr);
+>           break;
+> +    case SBC_OTP_CMD_WRITE:
+> +        ret = aspeed_sbc_otp_write(s, otp_addr);
+> +        break;
+>       case SBC_OTP_CMD_PROG:
+>           ret = aspeed_sbc_otp_prog(s, otp_addr);
+>           break;
+> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+> index 9e05b82f37..eeb9243898 100644
+> --- a/hw/misc/trace-events
+> +++ b/hw/misc/trace-events
+> @@ -91,6 +91,7 @@ slavio_led_mem_writew(uint32_t val) "Write diagnostic LED 0x%04x"
+>   slavio_led_mem_readw(uint32_t ret) "Read diagnostic LED 0x%04x"
+>   
+>   # aspeed_sbc.c
+> +aspeed_sbc_ignore_cmd(uint32_t cmd) "Ignoring command 0x%" PRIx32
+>   aspeed_sbc_handle_cmd(uint32_t cmd, uint32_t addr, bool ret) "Handling command 0x%" PRIx32 " for OTP addr 0x%" PRIx32 " Result: %d"
+>   aspeed_sbc_otp_read(uint32_t addr, uint32_t value) "OTP Memory read: addr 0x%" PRIx32 " value 0x%" PRIx32
+>   aspeed_sbc_otp_prog(uint32_t addr, uint32_t value) "OTP Memory write: addr 0x%" PRIx32 " value 0x%" PRIx32
 
 
