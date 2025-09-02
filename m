@@ -4,225 +4,213 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E894CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A15CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utT1l-0002zo-46; Tue, 02 Sep 2025 11:34:35 -0400
+	id 1utT2m-0003Ns-Ad; Tue, 02 Sep 2025 11:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1utT1h-0002yY-4l
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:34:29 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1utT2N-0003Kd-Df; Tue, 02 Sep 2025 11:35:13 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1utT1a-0005Cj-QA
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:34:28 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582Dfqu0012885;
- Tue, 2 Sep 2025 15:34:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=pVX1A3h1dO/D30qbs4C2IcYl3tjrpW12CkSFzz6Tnw8=; b=
- OIG5Hn2ACTpVMc5VWrhffteozss2f8Kxtdl7BSp3rJWTdVluAvMi5cCmnnLd/Kut
- bX6HychrAGb0PophLA3Jg1pcaROM591Brq+rTGN7uCET81Z8th3mVOUsRhT3X4PE
- Z0ByFlSCU/VfjF/0LRXtf1SdInlYs4UxX/NxWCIZVP51jqvIkGt9yscatQOiO1j6
- AU707dyYWqrb8s1P3oWZrMS1mx2hXx+V29kza9UloadYFccbF2aW5pZQO8mJCuyr
- YHIhlwzO9pPk4izee5iYecSCF2LM6/sYRCSy+lLTZa/d+K1LyiPiLghL30ffmT5W
- M0Xq3+EkPsqduTZXWILLkA==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48usmnccf4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 02 Sep 2025 15:34:12 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 582F4oIW040757; Tue, 2 Sep 2025 15:34:11 GMT
-Received: from ch1pr05cu001.outbound.protection.outlook.com
- (mail-northcentralusazon11010055.outbound.protection.outlook.com
- [52.101.193.55])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 48uqr90q2f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 02 Sep 2025 15:34:11 +0000
+ (Exim 4.90_1) (envelope-from <jan.kiszka@siemens.com>)
+ id 1utT2H-0005Mv-9V; Tue, 02 Sep 2025 11:35:11 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Dryj7DGkl3z/sCkpWY4uxH9rZjSqAgNKno4gbEHji/HfDwfpNu7Eyf75CmSQZ9EE8DY7iss2eA14nWqygDm5kTcsEBUdWXGwEcFbvjSbFl6FMhz6692URjzPS6gCYO7yN5p87UgzWdIAOrwgHgrnEZ4A4DqkuBAORG+Q4/3Iqp7wIZyVe96qgp5fXgXTCYmEKWcJp2t+BOAoL6/aTEYbXbh2F9H4n7Vm+mr6CFr9KtFbWi+ypdrVapAruKvmO2EL1gDldftTe0ocy8yUrxnAAx6z+4yxVPv9m/nmzM/28LOWQ5yvdewcrP8zJnj+YwMWzXmtTiB0qs8KFCtlVsohgQ==
+ b=ZbEuk7Bj2+qfBePZKkS/79EsS3m7HDjKmd/I2pwadU9G+Kg1JaM1O+CkVUAOK6rOsxMWg1Yyy9n9qKcT63Isz/EthSwVDrMaUboerU0Vo4hxYGZlZbQM3tyYhqIPawZ9NkgDDZaoDYPkTobkLqp4gP+Bh8za+Ce4koWalCCdJhXzZl1mI396l8N8sug10STVYGC66dUmggfy+61LQsC9ibkiTb6iU+Y8hdAXY9Q6ztnr3d/af2/eKnGyvUtZLQKyEHlJKZk2XFgu13vXJlB5elI8EaEL+GWZS3J4tY3sEAGLyYqYJo6KabNC0lWSbVwcY5DslbptMUsIHoir2LabRQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pVX1A3h1dO/D30qbs4C2IcYl3tjrpW12CkSFzz6Tnw8=;
- b=l+yln4f5inJ9AFwWH6T6ix0lVkSXpXLVUPI6qDjekNSOdlN/hFSx/HxlBkhwKN9iwC+qMNStd8RVIoz7V628Fs4jyzxXWR8wAmYH8feicAGay8Ceqnb32J12SrUSbtAAdV2dXwIZXIlyk1ypeQRk9pmBwp8UciWnww7seG8bI5mbOXPWMLaw5EJnNDolhorXQTHFDtziK6sG2nz64TJw+3FkmTriou7EJJptRWxNd3P46U6Z++0Ah7+dJt3qJV/+voLfnO+JHroy4mmyjAp8bLGGCOS7PqFTRIKo4VAjdWakjcMD6Kclp15GufvJPubDYoVclChX4LsAS79Cdi3X1A==
+ bh=TXeAbAfz1Jem7UjEg5gEURvIvYCcVaIHTNl3jYsEiPU=;
+ b=GqVRiV7yn/Xmq5ytc5oKBtVsC413UubbGVlZK1XomL6uri4OH+BbaVjuFlBY+VHFUSHb8Lq78twXNi91atG+JkLeuIAfobeA2br8SlKOCfYqaijaDisWpYSHd23gPK9xyWd6dHpoKSi4tVlR1VrPZYQUyaUheU/Kk5u29FjC5XjTP+E/M7ST8bbm+HCCJz9Km723gZMagFJiN1S/sHTFXLrN4GKbK2hAVup/NEoyh4UhmzuhxwFvA9ZtbthcZc0X6QNzVwrborrpA+CLs6vgUafK/2CcdkiAaTjX+BH9423VeWIYW8q5SkqMclO+nCgCd9s0Y5hpVvQG2mZbg1l3DQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
+ dkim=pass header.d=siemens.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pVX1A3h1dO/D30qbs4C2IcYl3tjrpW12CkSFzz6Tnw8=;
- b=iYI3TwkI6GGJmugOZkCjEnf/xxu1eNHyzz5QdwMJO8LoxGFRtmyekon1w6HzOshL3DjbNOUlaAy/tZYoqoLwH69CbUtGdrB44/u+fR0C2cJrP3Z/H11IiE6hi4Wtmps/7LUL5F0p/eKXqWOaOhGuVBZIUKpPF6/oiOkS84tHAVI=
-Received: from CH3PR10MB7436.namprd10.prod.outlook.com (2603:10b6:610:158::7)
- by DS7PR10MB7373.namprd10.prod.outlook.com (2603:10b6:8:ef::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9073.27; Tue, 2 Sep 2025 15:34:03 +0000
-Received: from CH3PR10MB7436.namprd10.prod.outlook.com
- ([fe80::dfba:d89:d13d:cd54]) by CH3PR10MB7436.namprd10.prod.outlook.com
- ([fe80::dfba:d89:d13d:cd54%4]) with mapi id 15.20.9073.026; Tue, 2 Sep 2025
- 15:34:03 +0000
-Message-ID: <ccd353ef-26c7-4590-94ae-d8f6193c2805@oracle.com>
-Date: Tue, 2 Sep 2025 11:33:59 -0400
+ bh=TXeAbAfz1Jem7UjEg5gEURvIvYCcVaIHTNl3jYsEiPU=;
+ b=LyDkAqnZ9DYahNrM5KUWek9wlTk6ejTgxCtL48DiklfXWpmWG5Ds1gz3/P0p8w1wUWPXoT/wcNWGxeE6OE8f1ZgWwHrEWDEfxjL1KWWPZEP21BXUlZtnD2hRcPY+NjenpVARCI4Vmj4j3Xi71ynlkhtTqromkFtbIzcmQawF/DlVvuVRphqDTQMaWcOjeA8JPzhZnmnd3eOCZJw5agVZ+oAKquw7ErQkXQmNEvlwECPRhiRbpoC38SeelcpJTUrhLMOWcE5wX4WVzZ+Hth3CUaSYka2/QlDvsa9oVzhwHdBiSDOxL83xRjBfyaHE85/Zwx4dgbWQSKcosAocck8KsA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siemens.com;
+Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:76::15)
+ by AS4PR10MB6087.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:582::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.16; Tue, 2 Sep
+ 2025 15:34:49 +0000
+Received: from GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::7fc:74bb:a781:a286]) by GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::7fc:74bb:a781:a286%7]) with mapi id 15.20.9073.026; Tue, 2 Sep 2025
+ 15:34:49 +0000
+Message-ID: <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
+Date: Tue, 2 Sep 2025 17:34:43 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V2 0/8] Live update: tap and vhost
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- "Chaney, Ben" <bchaney@akamai.com>
-Cc: Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Hamza Khan <hamza.khan@nutanix.com>,
- qemu-devel@nongnu.org
-References: <1752777568-236368-1-git-send-email-steven.sistare@oracle.com>
- <ef7fd47a-f7c0-4bca-823c-07005c5f1959@yandex-team.ru>
- <f3cb36ee-e677-4377-9e4d-652085b205aa@oracle.com>
- <3c939b30-2479-4bdd-8fa8-1dcd7adaada5@oracle.com>
- <2e6a35a4-b9b6-444c-90d7-1c748ad1b7d0@yandex-team.ru>
+Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
+ image
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>
+Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+ qemu-arm <qemu-arm@nongnu.org>
+References: <cover.1756706188.git.jan.kiszka@siemens.com>
+ <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
+ <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <2e6a35a4-b9b6-444c-90d7-1c748ad1b7d0@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=jan.kiszka@siemens.com; keydata=
+ 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
+In-Reply-To: <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR03CA0218.namprd03.prod.outlook.com
- (2603:10b6:a03:39f::13) To CH3PR10MB7436.namprd10.prod.outlook.com
- (2603:10b6:610:158::7)
+X-ClientProxiedBy: CH0PR04CA0120.namprd04.prod.outlook.com
+ (2603:10b6:610:75::35) To GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:150:76::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR10MB7436:EE_|DS7PR10MB7373:EE_
-X-MS-Office365-Filtering-Correlation-Id: 050fc78a-62e2-434d-a4ae-08ddea362575
+X-MS-TrafficTypeDiagnostic: GV2PR10MB6186:EE_|AS4PR10MB6087:EE_
+X-MS-Office365-Filtering-Correlation-Id: 42514f29-5e0b-45bb-83fe-08ddea3640bc
+X-MS-Exchange-AtpMessageProperties: SA
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WTloTkd1bCt1QnkrWnVPNUxOcC95STJXMThZcGpSb3JOamJ3N09yZXh6QnJ2?=
- =?utf-8?B?UGJ3bnZBcU45UXhVaFZYS0ZrUmxqbnZlYmZRUHJEMUFyL1M3YjYzbVgzbkIw?=
- =?utf-8?B?UEsySWw2cDBTMmo2MEhwa01iVmFIZjlwWW5oTTdJOUpxUENCRzhuSGRUeVBL?=
- =?utf-8?B?NThaa1kya0hhNVZqQk0rNG03NVFwUnNEUVpqTFJ4RjNMM2x6ZW42SnNQU1k5?=
- =?utf-8?B?NjdQZk9nd1BxVVJHRjNRMXJBaGdJMHRySTV4UW94djhwczhlaDZ2anl0Y3pF?=
- =?utf-8?B?S1UvR0hramFJVnRmclVHZ21scUphL0FiUG16b0h6aURWUGVkTnoyd05hVFUr?=
- =?utf-8?B?d0VSUmdyV3hxVjg4ejN4dnFGcFdwaGVwOVpuOFdhRU5FaEEvMklzYWFybnAy?=
- =?utf-8?B?ZHA4eFphdHJOL0QvUTZlaHN4TmhhZkwrVFQxNVRtaG5adzRITkR3VFlOL1g0?=
- =?utf-8?B?ZDhEaGVtSXNyZVpBN3h1ampmOVdraWpUMFhoVG1qRDQ1K21zWFFLZXkreHFS?=
- =?utf-8?B?RzNicXMzRG1ISEF0NEdCTmQ2SnY2aWJlN3kxS3VaUWZhd2JsNVFLT2R0ME5F?=
- =?utf-8?B?SE4vemxtYWk1aG1GZ09NYjdabTRFV2tlRzFzUnROaGFKc0tZVkpaRTJQSlBq?=
- =?utf-8?B?M0FIRVZyazg5MEJRczFsWFlCUjNUUDZhNFdKUzczZFNOejdtdWp6V1kwWlhH?=
- =?utf-8?B?RCt5cjB0dEg2MkhTNzN4ZnhEUnpROWhydGJGZjVwU2dGbE9xU29jbWVYcS9p?=
- =?utf-8?B?dXdGcktOM1k3TmU4WDk4V2FSdUtIOU90Y21NbHZwQmNPem9RQWRWbGM5YjU0?=
- =?utf-8?B?VExjdi83UmY3dlBibC8vS0kyZDlpdkhWSWQzY1VCdlVHOUhJcHVrczdCTW9T?=
- =?utf-8?B?WDZXd1QwUG5MTUlsYUtkLzcxWURMSlRVUXg2UGVFUDRtTGNvS3I1ekFTOFcw?=
- =?utf-8?B?YmZFZDBDT2FiaEVGeEFDS3RBM29QMjh6T29EVlMwTzdCeVdjM1lyZy9IcGph?=
- =?utf-8?B?Q1NWdTR5cEtjdFZ0RUk3RWlpK0VDZC9aNUFsVlZYRUI2WnRwOEJMRXE2UXJZ?=
- =?utf-8?B?UFQxbnlFaWlKcmJiNno2VkhBbFBNTVBDaWg4SWM5TVVDL3FDZHNvc0hueTd2?=
- =?utf-8?B?c0lkRXo5TnZHM280Q2xNRk9HVS9XU0lNMmVwSWZGdE9zWnBKT2NiemxseXMz?=
- =?utf-8?B?ZXA1YnZsY0VBVW4rVkhkdFpUUzRNd2RUNzdyaDhJMWp6ZktPcm4rek9vTWxX?=
- =?utf-8?B?MVdyNzMzTTRrSVNkQWIwQU9vTUVZNDROeUdRRlZkenM2OVVoLzU3NmJlK3RT?=
- =?utf-8?B?dHQxUlQ0QmR5cVpITWJqd3FTb1Mrd2Q4YVkzRHptZUVTNmllZUNPbUJXSm41?=
- =?utf-8?B?SW9MMUV0UFJhRXhkZHMxWEdMYS9RQndDWWdLc2FxaFdzL1FaR3BMZWtUcGJZ?=
- =?utf-8?B?SEYzNUhCRWJDR2VkT25xcisveTB1OTBVZExGeVhxU2U2ZzFNNE9ja3pqWUI3?=
- =?utf-8?B?TzdLU0hGc2huVVdxTEM1SkRJb1BHb2JnSmFzWS82ZW1wbzMwQUN6SVJ6UEs0?=
- =?utf-8?B?UGlQVXp3STI5WHVVOXZUZy8wRlhXRTBLakN3b1oyWFh3RW00eWJtVjBuaW5U?=
- =?utf-8?B?SERON3g0bmk4ck1hc0FqbUtqZTdJalhGOXBsSlNqeVBmYXFBelQweDhhTjhw?=
- =?utf-8?B?Qm1pVU04bERWTVpYVjBUdFBoV2dPekRkM0dqRTFubWRKaUhPalF5TTJFbFhr?=
- =?utf-8?B?MUtJTFNFU2tLeXpUTzBFK3UyWGcwdHhQbGh0Qld6V3pYSmNXRCt4R0ZyNVlU?=
- =?utf-8?B?eVgwaE52VXFHdUErRm9sWW54dDdvd1J5K1dBbllhMmU3RkF0TkVqdkRSenpX?=
- =?utf-8?B?RXJOd1h5UFlvZy85Z0E0RmtkU1JwUkJYL2lrSVlVZ0xWNkFBWml3L2tGYTdP?=
- =?utf-8?Q?5aDLejg8YBg=3D?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Z3BXVnFHNm1udFQ1cXk5bjYvMjRIOWlGVlhjbG9XelhaMUhCNUI4clZIVUFx?=
+ =?utf-8?B?dUE2WFBObVZBYVU1Q0ZuOTZTdEkyUXp5d1pLTmFsbXFVSFp2Mk15d295VVRW?=
+ =?utf-8?B?S0dUVnFibXhaTkxFTTlDcEpVQ21ab1duaWZ3L2NhdHU1aW9vMWJQWHR1VFZw?=
+ =?utf-8?B?LzBUVlFsRnExajI5dmZWcWZtdnFuSXZlL1NLQTh0RTZJeHdUcVp4bjZGQmpG?=
+ =?utf-8?B?cFF4cjB1Mkh4cStjOWUycHlMOHREQjhPTTdjN010S09FcVR3QS9Vb2ZudXFB?=
+ =?utf-8?B?QzFqVEgweDNnMU1UM1I5UzJLUHVDR1EzVzYzcmdJVndiMmpwUVR6ZUVHaU1S?=
+ =?utf-8?B?QlB2dlNyN044TmxxVDFvNHRrV0FmSk5uTTR6eS9DZmh6VzdxbXM0Y212RWF1?=
+ =?utf-8?B?VXp3aHlsWlZIUjhDVnNRWXdYcG9TR1dvbWFuNXltWXU5a0xRNmh4Qk9rZ2xk?=
+ =?utf-8?B?Tjljc2dMd0RVcHArZTZaOHJrcG5OZHBrVGJWRkFWNFhVaXVVYTBWWk9DYlJU?=
+ =?utf-8?B?UlVtdG9OaXVFU1VySFVUQlE5WEptY1JCbkVVd2pQZVNhN3BwNENlWGlBUDRw?=
+ =?utf-8?B?K3dIeVBwTlA1ZGhnbDRWaE8wclh4WlR1TGNTQ1dRTHl0dFkrcUpyVDFTU3RZ?=
+ =?utf-8?B?a1VrMFBobHlUY1g1K2c0ZGxzQlBrTWdYTXpZeWlJaGpYdThtaTF0NlhKd1ZE?=
+ =?utf-8?B?VVhSckd4ZjhMajJEMFptSTVjM042OEZWeWx6MVVJamZBNzRGMDZkL3ZIVWVh?=
+ =?utf-8?B?cVl3VEgwTmxmMXlhYkU3NWpTd3dpQUVYb25ONy9ub2cweUp2QituWGJGZW9P?=
+ =?utf-8?B?UDRqS0dadkdnWUV4Z05mbDRkb1lrbURqeEtJZ0NEY2hwUkZoc3lXT29QcUtO?=
+ =?utf-8?B?VXJBd3dldjBIelI2YUdsU3hVZjNiZWV3SW8xQkNCRmJkbjlBVGFoRTh1R25a?=
+ =?utf-8?B?dXpZeUhUeWpQaDhITGhiS2ZzcXZjSDU4V25JK0p0azVvSlZDRFNCVW5GWWty?=
+ =?utf-8?B?Y3ZtVlVpV3NqaFRsRHZCQms4ZlQ4MFdYNys2UGZ1Z1N0eVVVN0I5b0djZjFy?=
+ =?utf-8?B?bFp4ckN3OVUyUXVjeUs3ak5qTlMvSnJmcytBTWVaa0Y4VVhnZnFRSFVjZlhC?=
+ =?utf-8?B?YjA1QUYwWE9RNGkyUXRqd0g0SW5pMG4venhNUVp4VnZYckdScDNjeUUzQ0gz?=
+ =?utf-8?B?S1M2Nzl1R1l5ODUzelpGV3pvSGRTQmJ2bXRqNUl2ZTBrak9vSjNlUUxPUW03?=
+ =?utf-8?B?WmszMHFaMFVTU3l4YXFHOTRQenpCMVd6NjJrY0JyMTJqdXg2NHVrelJCbmVD?=
+ =?utf-8?B?SGc4Y3dSWENtSUk4Zm1wZVhabDdiZnRWUS8wTC9aZGxPV2x3Y1kyU0xjUGVw?=
+ =?utf-8?B?RVRBYmJQNk1HeU9vQnBQdEg0aUVuVVp1U3BzaGNtKzRCSUNqakZmejRpZXg4?=
+ =?utf-8?B?WitsQ3AvR2lSMmRmbmxhTVJ2dGhTMm1iRDdvTFphcCt3UllwaHU4WVFVQTN3?=
+ =?utf-8?B?NHprcTMvWkYxRnlncGMzK0NHOW9tUE4zZDlESi9iem1xdStKbHNxanRvRXZ1?=
+ =?utf-8?B?b0pQRDJmbnNvRHQxN3ZZWk81U3A4N3Z4UFpFSGZqWWhlakdSZnBOZjVnUC9y?=
+ =?utf-8?B?NUhnVGx0VmZPRlNkMnlmS1VCWWNScXpBdGxDZzdpODF0ZW5YTWpJOXNER0JJ?=
+ =?utf-8?B?aThySzMzRyt3ckNabjF3ZnRnaGp6UFVsV3BvNHg5NGVLM1dzcFZQU2thVkIx?=
+ =?utf-8?B?N245cEhYb0JGUDBKM2N4dStJd0psdkxGVjViMlcwNzQwdnI3MEZ2ZkpnQ1hk?=
+ =?utf-8?B?UHRxK2VhZnZzVEVrV1g2WHI5UkQ4VmQxOTdtR2FzKzBacmlNZXRvVnNHa3Q3?=
+ =?utf-8?B?NkYxMmc2WU5BbTNGQmsxRnp3T3puYkxHa3IrN25HbVloUU1IWGZFaDlTN3NL?=
+ =?utf-8?Q?eKz9nXCl1k8=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR10MB7436.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+ IPV:NLI; SFV:NSPM; H:GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(7053199007); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SHdacW9uSVF5ZGVNRWJWbFpGYnhxYy8wZ2p3b0dGTUduZW91L0l4ZUJWTyts?=
- =?utf-8?B?K3liMUZ5UVhlVXhrUjZGRlF2L0pKVGwxem1KTXgzV3pXaUlVNmVGb1FDNHI1?=
- =?utf-8?B?NEJXOHlpMTYwVEs2MUFpOENQL0o3dUpqNTdWbHo2VHdqczA1OGNJUlNlZ3c3?=
- =?utf-8?B?akdrSVhidGRCOXdKRlQvTmZDY2dVK2J6bDB1Rm91MXNLWHg1U0FHeVFpdEhh?=
- =?utf-8?B?ZmkwRGlZNTgzSjBML3VxN2F1bU9GZVBFcEN2T1g0V2hjZEJXUnlsY3E4Nzc3?=
- =?utf-8?B?UURVU3IyYUdiZFFLQ2xqb0tDL3hHeEJZVDJjVFFzSVpJSUVoSlhyaDQxUjV0?=
- =?utf-8?B?ckV6SE9MMzFiZ3l1SXduM3N3cjJzMkdvOFRPakx6dWd2K0xwNTV3VGl5RVdp?=
- =?utf-8?B?RXVkK1J2K3RlWlFZNlN6M2dHZGtUL0VGQnRDWm1kWEpvWG9ZbFBZR0g5MmN5?=
- =?utf-8?B?RVA3OVdmZ0ltejcyOC80Y0F3dkRvZ2NGOUM4ckJjSURxeFYxL0pTVGJTRDJ2?=
- =?utf-8?B?c0VpYmpVM1UvdnJRUVcrUzRQY0plb3ZGVHE3ZmRNV01tOW1HQThzenkvNUlJ?=
- =?utf-8?B?ellWOWJtblZsZkdpcFNJMW5tMDI2V1RvekVsdGlxUHN5YTFKQXNyK0tvR0Q4?=
- =?utf-8?B?c1A3ZHJiTGVLZWlXckE3V0p6My9CTEtta2FSazVpcllTbStsbVdLb2JEblE3?=
- =?utf-8?B?d2srU1g2WkpWcGNBUFlCZE5RdWtRdjZnWGs5cmZ0eStMT3pJRVZKdmVFWUh1?=
- =?utf-8?B?bmNYeDRIZEQ5bHB6WHBjQ2dkbC9SOVlDck1ISjRmSFNWd29GbnlIY3hQOUp4?=
- =?utf-8?B?R1M0U1lqNTU4b3JxRmlQeWNJZnZvL3NHcmJSc1RtZDB2UTlkRmxINGZrVHl6?=
- =?utf-8?B?eVQ3TWpUVlZTZ28wazN5clplSnk4TFltdlFna2hUZTVGOUpPMmltK0xVMUU2?=
- =?utf-8?B?QUdQTXZETWZGVk9HUC9zM0xrNkdjU25MUVFBL2F6UTZCZHMvMjdZajAvTEp1?=
- =?utf-8?B?bFBjZ2pZZUJYbGNHbm56bi9MM1o3dFpwclk1M3RQemhIRUJUdmJYZ1pXU3J2?=
- =?utf-8?B?K0VoWTAybWIwU2x3RUNZU1FONDRLSVdSMXoydUxraTdGTDV1ZmZ1cVkyRGhF?=
- =?utf-8?B?WVM2cFdCZDF0YWp4V0dTNkNGWjdHTkFBazQ4eWJoTmZzYlpld3FaVkNYbWE5?=
- =?utf-8?B?UEhxejBuRUR4OTByZURBdjBBNGFaSFBvSEVxQmp3djFibUtSY000VjQyczdP?=
- =?utf-8?B?QVhndEswVXVFRzRGWmo5cWZPVGZyem85Y3dsTzVOK3NtRUcyZHdCbkdvblV0?=
- =?utf-8?B?dmVxNWNvT2xRcFFNRzZ0cVFEWXhHMllweGthb01KUTBwWDRMTW0zSGNtaTha?=
- =?utf-8?B?NnFDelNtcjRiam1RTUJDYkNiOFZ5Y2V6dVVtUjZ0MmJsTjV5d0xOSWY0d3Zk?=
- =?utf-8?B?NDVycm03U3lHWS81ZldZcmhYc2pjT0s5K2ZUNlZzaVRtRFNYZ3p6NGJ2Yk91?=
- =?utf-8?B?RTlWWk1Gc252Umc2dTJneThlOHNYdUwzV0dWcGdmdFZxUlBZZStlSk5SNmRH?=
- =?utf-8?B?bjJCZTNnL1lXNWhabU8xYjBPM0NIOElzaGh6bExlaWY3WEJIc3RWTXFwdjB6?=
- =?utf-8?B?U0w1UmxscE9tUWlucmE0UC9VS012SGJaM3hQd1VTRys4eFRzc3AzQXMrVXBV?=
- =?utf-8?B?Yy9DS2tJbkpRTlE1akVPb293bkxoMlhnRXc3V2FwN3ZwRlRRZ0ZESC9qNTcv?=
- =?utf-8?B?UVlWUmJBQ0E2M3VtRWtYTDJackJoQ1RoSkh5Qnhabk9PZmZBckw5MzdINDB3?=
- =?utf-8?B?WlR2K096d09RQzdnUXZLREN2WDdvTFdVRyt5ei9nanE2Y2Z1eWxIanNCTWMx?=
- =?utf-8?B?OXNFZC9jd0lheGRoNjAvbzhObDFoOW8wUEJ0WGlxNEk2UXBlOU1UcUhKVzVB?=
- =?utf-8?B?eGM0R3ovVlMvdUJoamdCVGYrNGRyNUE1aW9GZG1kSDhqdWxaT1FoSjJGcWp2?=
- =?utf-8?B?VENOalI0SjNnUG51VjVpOXh2WjlwbFhoY3hHMjNwRWtncDVMeVJqczlPRitT?=
- =?utf-8?B?cGJiR1k5Rllvd2gzK1pIcTNtc1ViRWVidStENHRqLzNRKzEwRXdUMlJLZHVa?=
- =?utf-8?B?TnZ3d25LbGVwdTVZa0ttbU0zZE1iL01yK0lQaXVwTExjeDBGSmE4eEZRTHht?=
- =?utf-8?B?Unc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: f9s/1en2q0INatGAhCWTFWWZpWz28agtKePExMq+u3ijLkN9F6hltjKd4IXhky3+MgXwzMr6mF2FA1sMwW9iAbNoG2bRmpEkXQUylnaopEDCFzvP4wWpjxm7s0WMyzxql3pZP6gMwmrP/b2bQmYPnjv3svoS6zEZRk16wViLSLtoLBJVN6oWP6peeRzHQ0+vL3tgP+8/EPjx6ZQH6mib8mGDqHjLCA1HxwFHVBHT8jtXLbkVzUHQ9/tT7vEmRq0LY9KFZItpdVT6bwh62ZpkD1+6XiOMdqpo/L6qEVEX18Zc1fiVYMLpVSq7emJn1tRV5U22FJo1YnqRcw3/CtbRygHJMDWe4bL6v22wqMG9K+/zZGHPQu4EWPmfW2uRd4VbqGxxuPwhXs+758duLVyk2Jic9WvIN6JrOKAF5s5vnqmL5VB7ciXR2cui+QJDV+dC+iWb/zFajvPumDTtQpuroULdrg2xYacAmqkoE0TWKTxBwE/wQWax1xhk21v5/0ZS8vcJBEtIJyzCJfv4BQ3gapY/JZIZE7hLhpoeei2OGSs474tWp92b5hHCLEmAnv2YNyrE5D/kH6hABZv6dOJuPz4utz4l0s0k+Rzzs+cOP64=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 050fc78a-62e2-434d-a4ae-08ddea362575
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB7436.namprd10.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YzJwUklFTlZBTDU0TnFIWUgzU0tpS2RBeDdVaFBXbnpIZWlsRS84ekJmQkVH?=
+ =?utf-8?B?SEpCd3NqSzJ3VUhqVTBBdFBaeklhaThtNFNXdDZPamxBempCK3pQbGxvUzJk?=
+ =?utf-8?B?dHNzTm9BdTFIb0ZlMFVXTkR1ekdnMHQ0N3hwK0ZaSDIzUUZObkQwY0NCMktY?=
+ =?utf-8?B?ZlFoOUpHdDdYcGN2d0pzWFpUdDVVYVNYaFZlQ0RJOWpBVUgwK2oxWGdvV2la?=
+ =?utf-8?B?L1hXL2xFUEpCY2RuUHg0aSt6bHdoVlpmcC9pYzlrNGdyeUJqcEZWR3BQQitH?=
+ =?utf-8?B?K2Y1S1l0eG1vNzl4Q3JQaUhobHp0L2dYMG8wYmhBRVVMK3FKY0ozSkxrZlZq?=
+ =?utf-8?B?bDQ4YjBxTXV5S0pma05tQ1NYc2c4VVB1SEl0K3U5SnkzR2dROGJpcmd6S2I5?=
+ =?utf-8?B?SEx6b0N1THQ5QjdQQnhDSjdOWElKaURtaEcrdlZBMkN3Rzc4SGV5eEU4dysy?=
+ =?utf-8?B?OEo0SHZ6b1M2TlQwRThRNGJKU3ZLdFEwaFhGZW4wMk9idUhEWlpKek1qWFhU?=
+ =?utf-8?B?ZTVSczk4L3F2Qkt6QXIxV01FNENHMitqbDFPcEZFc1VGNFg2UllXdU04NTFM?=
+ =?utf-8?B?Q3hUeGU1Y1VpT3VSRHA0ZXRmVnJIQmRtN2N6aUJ4d0dOc1RIN0liMkxMSjhy?=
+ =?utf-8?B?aTh5czdIeGNIYi9CNVplLzBERlBseHZVYmNxc0tlVmY5T2U0T0ozclhBMEl3?=
+ =?utf-8?B?SjluS09Ea0lyTEVHUXdrSlhmbStrZTNMQXltVUhHR1BmWTFvenJyb1B2OWdH?=
+ =?utf-8?B?R0dPWUNBbEdrT1B0Q1ZuMGJRQ3dsd0NGcVljdUh5UmIyWnNVSFgyVGprVmRC?=
+ =?utf-8?B?UTZtTGFlS3VJTHRoUUdMMTREVEJxcEloTjNKNVpmTldXY0wwMXZzeXdjbVBP?=
+ =?utf-8?B?NGk0aXBuNjFKREFPRmFibXppUGQwTUVGMU5lNGxWRVUrWU92aUtnelZSSHNY?=
+ =?utf-8?B?eUt6ZE1mUW5DY0pseW1UZnVOUXpNdFBzT0NDeFE1ZkE1c2Nob0srTEVSc0lV?=
+ =?utf-8?B?cnVqS2J4a1VLdTIrcjZ2NXFwMzJhMWszOUpGTW9WVjNFcGVGYW5Hc0JseElE?=
+ =?utf-8?B?eGxDMjVLMXBkWUlWeHVyVjFtL1BHNDdvRkNLZTU4Q0hGN3JzN0xCV2t5MEdD?=
+ =?utf-8?B?MWU4VytocnQ0L1VWKzBCNVBVQlAwN2Y3d291OE5MWU03V3BmRmpqQ2ozNkk3?=
+ =?utf-8?B?aDU1MVd2Rit6VG5nMFk1TkpyaUJOeDJSVkZMcGpBL01FSS9kemJveUZ5VjlS?=
+ =?utf-8?B?bndmazkwUHgwL3Y1NytLUUxPY01CSHpjSG1qU3BRVEdOblhMQm00bXMvYXJD?=
+ =?utf-8?B?UU8renlMOUpIZEltck14ZldRMURieUk3alBLN25acEFxZk0ySkxIRVBGei8z?=
+ =?utf-8?B?c09ZSS9SN080M1pYVG5GaGMrdVlXTG4vTGNSQXE2ZDVXQXd0N29PU3BjbGdM?=
+ =?utf-8?B?UFZlS2tSRmNvZVJTWnVUeFd1QzgveTBwQURXZm04bGRGekVwMUlJa2FkZHJ0?=
+ =?utf-8?B?NHFmN3VoaURqRU03YVo4V2J2bVR1OFRvTGpvNERseGtQTDlnQURESEZnN2wx?=
+ =?utf-8?B?Y0RIZ0c1SXFpbDBjQmZ2NmZ5a1I1cGhYOGMrQVpLWWZUQXZDbjdyekowS3Bo?=
+ =?utf-8?B?QnJGOFNMMVZxOXAybSs5MnMwbU14TWRzTk1aRldZNVJscXd1YmNGVXBhMWpU?=
+ =?utf-8?B?RFZ6bUVHbzB6eDBydnhKbnhNQ2RvdTZUYy9MZUFCbjhQRkU3Y2ZmdTc3UnFn?=
+ =?utf-8?B?N0lTYmdNSnJ6eDdGZDEzM1l1VVI3SDMyT0FMVGg5cEdadzBxdFBDV0Fla3dR?=
+ =?utf-8?B?Vm13N0dEdkVOUXBSeldZM2h2STBVS0tXeWNueDk4MmEvWTBHWncvb25HbUVP?=
+ =?utf-8?B?cjJyRmdtZDhhbHNrU0R4RGxBUnBRVXJsZkFhWkRuS29kU1k2cFZBMDdIUlp6?=
+ =?utf-8?B?bys1c1dHVDVHTWpKUVpIUyswNjNQRW9iaU1JUEJTeTFhN29kd01ldDlXc2Fm?=
+ =?utf-8?B?UjBnWmxQMWYza0xsOTFOU2E4cVBYT0VWdWNvMTZ1eEJzNTdzTTF6c1ZhM3hD?=
+ =?utf-8?B?dHQ5M09oVG9oTVpEN0NrMFAwTlkxbkJrOWR6MlZYNmFXZCtSa0RqRFdCYllN?=
+ =?utf-8?B?WEFJVEpmR2ZGazN6VnIwRkpjYU5PcDZMVjQ0QVhYWUVhbDEvZEErWmNwSHJF?=
+ =?utf-8?B?WUE9PQ==?=
+X-OriginatorOrg: siemens.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42514f29-5e0b-45bb-83fe-08ddea3640bc
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR10MB6186.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 15:34:03.6801 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 15:34:49.4315 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vWqCJB6ZAfqfgIwQo7RigPndbpA2slj7Iq6XE5CPM+Mat2p4KJY/QXAoOOWgDMewXEYkD4Nnc5dr5I/nM8clVDWY4kNE2Zr/vxsrlAqfeaE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB7373
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-02_05,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 spamscore=0
- malwarescore=0 mlxlogscore=999 phishscore=0 suspectscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
- definitions=main-2509020154
-X-Proofpoint-GUID: W2OTDsMkbvNGHehtT7GlrmllvHJB6AGw
-X-Proofpoint-ORIG-GUID: W2OTDsMkbvNGHehtT7GlrmllvHJB6AGw
-X-Authority-Analysis: v=2.4 cv=Of2YDgTY c=1 sm=1 tr=0 ts=68b70e74 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8
- a=oMG-V2Gau2DtSPeflBkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMiBTYWx0ZWRfX9V8Ht8w62zBK
- AQMBVHTQrzKuC8rzt8JYpYntJhd+9N0QqB2vvxBxtHimvFYcA3wpHlco+/J4kUdG/FxlD0uFYna
- Jf0/VRZ0jLmDCpKrYQefaW7doGPbf59R+NftOELhFCiqI/z8Cd18DVaZde2YVrhlceko6VMUbSM
- FzTPF2PtvQPIHrVV8dyd6xI9zzt5vhUADs007yEsWOhzcfLlbzubs20YCgrx6q91Vz6LAhoZur5
- yV2bY7NqkyGLXkBw0+aVTPKGrJjkfCMMQUFW5ckM8KXThg0MPMQjzU+cpL5t0TRPh3tXbkFBj7H
- 9vQ0ITv2x08bWhFHQ94hoxj2UnPxfj/HmpXrMtOHdmVtF9pk6vp+apaofu80qicRBfJ2zQYVJJT
- OrhKAQKU
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-CrossTenant-UserPrincipalName: hC0VRYiBmk8+uVLHXwheEDSpMgMryH2rJrdaXUQWRZqAbB909LGvjOAk8sVZb6QnPURvYWf3io1O2UMaFrwoTw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR10MB6087
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
+ envelope-from=jan.kiszka@siemens.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -238,162 +226,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/2025 7:44 AM, Vladimir Sementsov-Ogievskiy wrote:
-> On 29.08.25 22:37, Steven Sistare wrote:
->> On 8/28/2025 11:48 AM, Steven Sistare wrote:
->>> On 8/23/2025 5:53 PM, Vladimir Sementsov-Ogievskiy wrote:
->>>> On 17.07.25 21:39, Steve Sistare wrote:
->>>>> Tap and vhost devices can be preserved during cpr-transfer using
->>>>> traditional live migration methods, wherein the management layer
->>>>> creates new interfaces for the target and fiddles with 'ip link'
->>>>> to deactivate the old interface and activate the new.
->>>>>
->>>>> However, CPR can simply send the file descriptors to new QEMU,
->>>>> with no special management actions required.  The user enables
->>>>> this behavior by specifing '-netdev tap,cpr=on'.  The default
->>>>> is cpr=off.
->>>>
->>>> Hi Steve!
->>>>
->>>> First, me trying to test the series:
->>>
->>> Thank-you Vladimir for all the work you are doing in this area.  I have
->>> reproduced the "virtio_net_set_queue_pairs: Assertion `!r' failed." bug.
->>> Let me dig into that before I study the larger questions you pose
->>> about preserving tap/vhost-user-blk in local migration versus cpr.
+On 02.09.25 17:06, Philippe Mathieu-Daudé wrote:
+> On 1/9/25 07:56, Jan Kiszka wrote:
+>> From: Jan Kiszka <jan.kiszka@siemens.com>
 >>
->> I have reproduced your journey!  I fixed the assertion, the vnet_hdr, and
->> the blocking fd problems which you allude to.  The attached patch fixes
->> them, and will be squashed into the series.
+>> The power-of-2 rule applies to the user data area, not the complete
+>> block image. The latter can be concatenation of boot partition images
+>> and the user data.
 >>
->> Ben, you also reported the !r assertion failure, so this fix should help
->> you also.
+>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/sd/sd.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->>>> SOURCE:
->>>>
->>>> sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :0 -nodefaults -vga std -qmp stdio -msg timestamp -S -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on
->>>>
->>>> {"execute": "qmp_capabilities"}
->>>> {"return": {}}
->>>> {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
->>>> {"return": {}}
->>>> {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
->>>> {"return": {}}
->>>> {"execute": "cont"}
->>>> {"timestamp": {"seconds": 1755977653, "microseconds": 248749}, "event": "RESUME"}
->>>> {"return": {}}
->>>> {"timestamp": {"seconds": 1755977657, "microseconds": 366274}, "event": "NIC_RX_FILTER_CHANGED", "data": {"name": "vnet.1", "path": "/machine/peripheral/vnet.1/virtio-backend"}}
->>>> {"execute": "migrate-set-parameters", "arguments": {"mode": "cpr-transfer"}}
->>>> {"return": {}}
->>>> {"execute": "migrate", "arguments": {"channels": [{"channel-type": "main", "addr": {"path": "/tmp/migr.sock", "transport": "socket", "type": "unix"}}, {"channel-type": "cpr", "addr": {"path": "/tmp/cpr.sock", "transport": "socket", "type": "unix"}}]}}
->>>> {"timestamp": {"seconds": 1755977767, "microseconds": 835571}, "event": "STOP"}
->>>> {"return": {}}
->>>>
->>>> TARGET:
->>>>
->>>> sudo build/qemu-system-x86_64 -display none -vga none -device pxb-pcie,bus_nr=128,bus=pcie.0,id=pcie.1 -device pcie-root-port,id=s0,slot=0,bus=pcie.1 -device pcie-root-port,id=s1,slot=1,bus=pcie.1 -device pcie-root-port,id=s2,slot=2,bus=pcie.1 -hda /home/vsementsov/work/vms/newfocal.raw -m 4G -enable-kvm -M q35 -vnc :1 -nodefaults -vga std -qmp stdio -S -object memory-backend-file,id=ram0,size=4G,mem-p
->>>> ath=/dev/shm/ram0,share=on -machine memory-backend=ram0 -machine aux-ram-share=on -incoming defer -incoming '{"channel-type": "cpr","addr": { "transport": "socket","type": "unix", "path": "/tmp/cpr.sock"}}'
->>>>
->>>> <need to wait until "migrate" on source>
->>>>
->>>> {"execute": "qmp_capabilities"}
->>>> {"return": {}}
->>>> {"execute": "netdev_add", "arguments": {"cpr": true, "script": "no", "downscript": "no", "vhostforce": false, "vhost": false, "queues": 4, "ifname": "tap0", "type": "tap", "id": "netdev.1"}}
->>>> {"return": {}}
->>>> {"execute": "device_add", "arguments": {"disable-legacy": "off", "bus": "s1", "netdev": "netdev.1", "driver": "virtio-net-pci", "vectors": 18, "mq": true, "romfile": "", "mac": "d6:0d:75:f8:0f:b7", "id": "vnet.1"}}
->>>> could not disable queue
->>>> qemu-system-x86_64: ../hw/net/virtio-net.c:771: virtio_net_set_queue_pairs: Assertion `!r' failed.
->>>> fish: Job 1, 'sudo build/qemu-system-x86_64 -…' terminated by signal SIGABRT (Abort)
->>>>
->>>> So, it crashes on device_add..
->>>>
->>>> Second, I've come a long way, backporting you TAP v1 series together with needed parts of CPR and migration channels to QEMU 7.2, fixing different issues (like, avoid reinitialization of vnet_hdr length on target, avoid simultaneous use of tap on source an target, avoid making the fd blocking again on target), and it finally started to work.
->>>>
->>>> But next, I went to support similar migration for vhost-user-blk, and that was a lot more complex. No reason to pass an fd in preliminary stage, when source is running (like in CPR), because:
->>>>
->>>> 1. we just can't use the fd on target at all, until we stop use it on source, otherwise we just break vhost-user-blk protocol on the wire (unlike TAP, where some ioctls called on target doesn't break source)
->>>> 2. we have to pass enough additional variables, which are simpler to pass through normal migration channel (how to pass anything except fds through cpr channel?)
->>
->> You can pass extra state through the cpr channel.  See for example vmstate_cpr_vfio_device,
->> and how vmstate_cpr_vfio_devices is defined as a sub-section of vmstate_cpr_state.
+>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+>> index 8c290595f0..16aee210b4 100644
+>> --- a/hw/sd/sd.c
+>> +++ b/hw/sd/sd.c
+>> @@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev, Error
+>> **errp)
+>>               return;
+>>           }
+>>   -        blk_size = blk_getlength(sd->blk);
+>> +        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
+>>           if (blk_size > 0 && !is_power_of_2(blk_size)) {
+>>               int64_t blk_size_aligned = pow2ceil(blk_size);
+>>               char *blk_size_str;
 > 
-> O, I missed this.
+> This seems to break the tests/functional/arm/test_aspeed_rainier.py
+> test due to mmc-p10bmc-20240617.qcow2 size:
 > 
-> Hmm. Still, finally CPR becomes just an additional stage of migration, which is done prior device initialization on target..
+> Command: /builds/qemu-project/qemu/build/qemu-system-arm -display none -
+> vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -
+> machine rainier-bmc -chardev socket,id=console,fd=10 -serial
+> chardev:console -drive file=/builds/qemu-project/qemu/functional-cache/
+> download/
+> d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b,if=sd,id=sd2,index=2 -net nic -net user -snapshot
+> Output: qemu-system-arm: Invalid SD card size: 16 GiB
+> SD card size has to be a power of 2, e.g. 16 GiB.
 > 
-> Didn't you think of integrating it to the common scheme: so that devices may have .vmsd_cpr in addition to .vmsd? This way we don't need a global CPR state, and CPR stage of migration will work the same way as normal migration?
-
-I proposed a single migration stream containing pre-create state that was read early,
-but that was rejected as too complex.
-
-I also proposed refactoring initialization so the monitor and migration streams
-could be opened earlier, but again rejected as too complex and/or not consistent with
-a long term vision for reworking initialization.
-
-> Still2, if we pass some state in CPR it should be a kind of constant. We need a guarantee that it will not change between migration start and source stop.
+> https://gitlab.com/qemu-project/qemu/-/jobs/11217561316
 > 
->>
->>>> So, I decided to go another way, and just migrate everything backend-related including fds through main migration channel. Of course, this requires deep reworking of device initialization in case of incoming migration (but for vhost-user-blk we need it anyway). The feature is in my series "[PATCH 00/33] vhost-user-blk: live-backend local migration" (you are in CC).
->>
->> You did a lot of work in those series!
->> I suspect much less rework of initialization is required if you pass variables in cpr state.
-> 
-> Not sure. I had to rework initialization anyway, as initialization damaged the connection. And this lead me to idea "if rework anyway, why not to go with one migration channel".
-> 
->>
->>>> The success with vhost-user-blk (of-course) make me rethink TAP migration too: try to avoid using additional cpr channel and unusual waiting for QMP interface on target. And, I've just sent an RFC: "[RFC 0/7] virtio-net: live-TAP local migration"
->>
->> Is there a use case for this outside of CPR?
-> 
-> It just works without CPR.. Will CPR bring more benefit if I enable it in the setup with my local-tap + local-vhost-user-blk capabilities ( + ignore-shared of-course)?
-> 
-> 
->> CPR is intended to be the "local migration" solution that does it all :)
->> But if you do proceed with your local migration tap solution, I would want
->> to see that CPR could also use your code paths.
->>
-> CPR can transparently use my code: you may enable both CPR and local-tap capability and it should work. Some devices will migrate their fds through CPR, TAP fds amd state will migrate through main migration channel. 
 
-OK, I believe that.
+Hmm, then the test was always wrong as well. I suspect the aspeed is
+enabling boot partitions by default, and the image was created to pass
+the wrong alignment check. Where / by whom is the image maintained?
 
-I also care about cpr-exec mode.  We use it internally, and I am trying to push
-it upstream:
-   https://lore.kernel.org/qemu-devel/1755191843-283480-8-git-send-email-steven.sistare@oracle.com/
-I believe it would work with your code.  Migrated fd's in both the cpr channel and
-the main migration channel would be handled differently as shown in vmstate-types.c
-get_fd() and put_fd().  The fd is kept open across execv(), and vmstate represents
-the fd by its value (eg a small integer), rather than as an object in the unix channel.
+Jan
 
-> Making both channels to be unix-sockets should not be a considerable overhead I think.
-> 
-> Why I like my solution more:
-> 
-> - no additional channel
-> - no additional logic in management software (to handle target start with no QMP access until "migrate" command on source)
-> - less code to backport (that's personal, of course not an argument for final upstream solution)
-> 
-> It seems that CPR is simpler to support as we don't need to do deep rework of initialization code.. But in reality, there is a lot of work anyway: TAP, vhost-user-blk cases proves this. You series about vfio are also huge.
-
-TAP is the only case where we can compare both approaches, and the numbers tell
-the story:
-
-   TAP initialization refactoring: 277 insertions(+), 308 deletions(-)
-   live-TAP local migration:       681 insertions(+), 72 deletions(-)
-                         total:    958 insertions(+), 380 deletions(-)
-
-   Live update tap and vhost:      223 insertions(+), 55 deletions(-)
-
-For any given system, if the maintainers accept the larger amount of change,
-then local migration is cool (and CPR made it possible by adding fd support
-to vmstate+QEMUFile).  But the amount of change is a harder sell.
-> What is the benefit of CPR against simple (unix-socket) migration?CPR supports vfio, iommufd, and pinned memory.  Memory backend objects are
-created early, before the main migration stream is read, and squashing
-CPR into migration for those cases would require a major change in how
-qemu creates objects during live migration.
-
-Hence CPR is the method that works for all types of objects.  The mgmt
-layer does not need to support multiple methods of live update, depending
-on what devices the VM contains.
-
-- Steve
+-- 
+Siemens AG, Foundational Technologies
+Linux Expert Center
 
