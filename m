@@ -4,116 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9606CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 03:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D24ECA100B
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 03:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utI1o-0004oy-6d; Mon, 01 Sep 2025 23:49:52 -0400
+	id 1utI2a-0007Jo-9s; Mon, 01 Sep 2025 23:50:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI1l-0004ct-HF
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:49 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1utI2R-0006sD-8B
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:50:33 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utI1e-0004f6-Ae
- for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:49:49 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822Rok9012516
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:49:30 GMT
+ id 1utI2O-0004wc-2a
+ for qemu-devel@nongnu.org; Mon, 01 Sep 2025 23:50:31 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822SGBd030247
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 03:50:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- odlSiS+rcvfGScBqQl/2ZTBdoBcRPzOiwcEO95H2Szk=; b=T7FHzg3055OWyLQJ
- z8JW3bKsN/LULkScvnR0vM18L51JAbENM++WMFwii/AhWVfesJt8dERCMvetOStN
- n3jI+buRJK17MlHnc9/KrMat2ymWz+AwYkCBBkTYbg6XcoBryp3ShbQ8xH1CdKvS
- iDZ6MOM3ts0NVNSLjH0cCzmmIur85SBGScXwo7m2uWAThgPmc44R4+UvgnmwVK5A
- zXd1EH92g/gNMUVlFr5gfJTyBNnw/X6XGyHTaGZNs4fDVsiR33+9IpTzzRXrvm1E
- CzKgSZjuAgnFsrIpZdA4MtYvd7VWpKpVlIXBQYqIzbNS3xkkmoezJwLie5cESxPc
- r6XzbA==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uq0eeja1-1
+ UrDhPZtJLVtIKBvAx7rgg9kjRX/dlVATLOPeCcMw1ZM=; b=CUBqUyegjb8NvSy/
+ icEjg2qZI/XJiRd0dDh36ZXDkhTd63YwQvYghXcrILfUPl2ifPSUY8MZGug4hYys
+ ikfBSxi7X/2d6r0E0n7BpVUjuymgSksPWpKRbs70KjwmgYq6lNShDYoHW84fiUk4
+ vPpV/6XJ4wDrXm3ZFsVmxrH7yDam0rqHPUmoXauW+eFMvwieod1XjgoBKEuEpRdW
+ bFr6is2GfDVxATkSmC0svvp3WrAP8YQGv5Tbn6PtdeuSnSvOI5AhsjCl7awbGzPy
+ k+NQPaKNfryYkehCyjPdkQKYrrFPfhRLYeqjNtu43CKocvUg/YR+ZX1eMooh38pF
+ myb2/A==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48w8wy26vp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:49:30 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3274f7e6c1fso5175918a91.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:49:30 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:50:16 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3234811cab3so6086162a91.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 20:50:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756784969; x=1757389769;
+ d=1e100.net; s=20230601; t=1756785015; x=1757389815;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=odlSiS+rcvfGScBqQl/2ZTBdoBcRPzOiwcEO95H2Szk=;
- b=Wfn1Go21QmDKKyOArTXD7Sd2gEPuL7J+wMY4AMVhHLbmxBv6eas1h4ifIryTVMdQAC
- fAU+2hAnDGRamHwepNmMDWdYupwqCXAk89krFohkEJMNuxUYgF7RElmgA2pZSZMcEGdi
- 2+UaKvvrxE4tKifbAIIOEbGYrCtfNPGCLIVWSzHkXfBcDtDKLKJjQQNnPUNV6i0HGOV6
- +W9lbEKdUw9gTbpeq0UVne2zFsx7uofcYHcAzujztBaVls6F2AAPB84Sd8pnAKEnEZ26
- xyi6pHnU6Fm3FcAk20xOxX6mEd9hEYbFcQcBVxixHsBN+zgcckYgadAxDL60c4JsRvbt
- T4oA==
-X-Gm-Message-State: AOJu0YwkFZLQbSBGJKmjDHpTvzbq3b0wgNwcLABrFthgtdLgXUfagJOn
- 974jCujTVuuoyC6hyCUQatjy9Hl93bAiEGc9+YeEgugHVe1wSJ+BIuh8yoFugK+mOoQQGsaKob6
- Ob6pTuvsfXCNsZaI4a2D724tQiufFzamkcyHHpZHf//dyzfKpoGTnNYYlUnhPkbkiP0LR
-X-Gm-Gg: ASbGncs4aBZhx922qZGlZmBwq2TM8vDrU724PkANixbjST7J4oD6CIWfh96Tpr6htCX
- ahQ5BXZ5x0PnqtYBB9g40+wxjPuXo+3URZa2+hd8BgdW9ZCCwF17a0zfLxhj259IOxn2C0T4Ie1
- 0k3o0yKZZRYosmvql/TZdPa+swi0ZgelQho2G380ggn2CKZCsq3aq+UywWiK1lYDYK9HIJzUZQf
- e69r3p06XF4IOl77Vh0e0c2OD7Ixp43TubbDPqH5PQ/ogoi2hL7uYvIJURMGwnt25ZcxCwtxlAS
- WHImiqNxH/uhr6esemm7AGna71qX4DlIEECLMsAHN3RDpTzfCtmv5cEBflMN46bUuwndE8r/m+/
- 6gxGvcGPn+bYo
-X-Received: by 2002:a17:90b:2ec8:b0:327:5081:d5d0 with SMTP id
- 98e67ed59e1d1-328156bac3dmr13404866a91.19.1756784969370; 
- Mon, 01 Sep 2025 20:49:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFR9+T75fORHH+wbdFXW8zCMda6dNO1WwyXLi77RQ6MtVMh2oRScSMBSuvBQS5OtehYZzXjEg==
-X-Received: by 2002:a17:90b:2ec8:b0:327:5081:d5d0 with SMTP id
- 98e67ed59e1d1-328156bac3dmr13404831a91.19.1756784968778; 
- Mon, 01 Sep 2025 20:49:28 -0700 (PDT)
+ bh=UrDhPZtJLVtIKBvAx7rgg9kjRX/dlVATLOPeCcMw1ZM=;
+ b=v3CNtlQxOKOc8/VW8BVPXWl6jTmMiicRtSCYUgOAqoPIlFZ6eC5O8T/pxHkDS5ofc6
+ PJLDRQ+uQqWdV5P6lqPXb+AZumZjHj7+SqmgGK3coh2sXjL4IDPavakThU1exonYCr39
+ oeMHTKKrmP5dZhk9QrPw77OwCjsW6EGARSD8hHWtNH4aMiJHbGHiJqJDbVC9jYK7tAu5
+ GhdgwErDSMm2WzB2c+IUsETdcULydvITipBcL0UqUB6+aiVVp9of/ABObEgxFcnXLPRz
+ Fbj4KE6qU8SQGfz1tIxXHGGlSGIQESlQejzFZJhLSCWd2T4Z/CbkKKRAj1qiPirs9NLa
+ 6e6A==
+X-Gm-Message-State: AOJu0YzoIc1RKkFTZjQLlA6l8zgn/jZdJy4xoE3W1xLD5ceK9LdWK6Ky
+ yVq5bmYSi9TzDoeRpRtej34164uY1hZzy9adZ9xngO2roj1rDvjYS5M4znYHtJpwLXVkCa82O+J
+ +H/vEmGAYTU6RKlGSWcr5d4c3ATfFA6K3mVSPhVtt5DmhwR8sISn/AoOxGjaVKwjRCuJB
+X-Gm-Gg: ASbGncstebyVOFfJF2vySKx4Kn5+13lI1rqwjEWt6S7nt3Yumn6GZI8YZGwxziwA1Vs
+ WY4mMbgVZ8D4n7D8K25h3bqbB/DfGjtqBOlqlDngFkbW9/Tajr7qm2G7r5WoSSLAOVgSo/QCWbH
+ sncEbO/MLOxK5PSa+SKFfc7Awikp4WnywOL3SBkHT+SCimsEqbDBmuQ8E67kIzs/owNcam6QHVh
+ Rrh984n1hg5icthIHCMLDcC5E3wONDJR2bH0CbnwTtR7oMqsUNxHl6xki0Kd/n7j9vDXgWRj9YJ
+ 6hjp96lK9mrU8t2z8yd0Dn1okHYrXt/H1ZpP2Z1o006tQo2tO5e7boPrvc/WezKgHe2M+Zekpp4
+ wzeBXp+tJWxdr
+X-Received: by 2002:a17:90b:39c5:b0:321:c567:44bf with SMTP id
+ 98e67ed59e1d1-328156c9739mr11713943a91.29.1756785014648; 
+ Mon, 01 Sep 2025 20:50:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG92VJFLhBkR7mpPulYB1tmcfYbLpwynzrCX/TM9zf18n1/zGSME/PRImuNyWlOiA2pqQHUUA==
+X-Received: by 2002:a17:90b:39c5:b0:321:c567:44bf with SMTP id
+ 98e67ed59e1d1-328156c9739mr11713896a91.29.1756785013910; 
+ Mon, 01 Sep 2025 20:50:13 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-327daeeca1csm12543546a91.25.2025.09.01.20.49.27
+ 98e67ed59e1d1-327c5fc5055sm14117932a91.14.2025.09.01.20.50.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Sep 2025 20:49:28 -0700 (PDT)
+ Mon, 01 Sep 2025 20:50:13 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
  philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
  anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
  alex.bennee@linaro.org, quic_mburton@quicinc.com,
- sid.manning@oss.qualcomm.com, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v2 30/39] target/hexagon: Add next_PC, {s,g}reg writes
-Date: Mon,  1 Sep 2025 20:48:38 -0700
-Message-Id: <20250902034847.1948010-31-brian.cain@oss.qualcomm.com>
+ sid.manning@oss.qualcomm.com, Sid Manning <sidneym@quicinc.com>,
+ Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
+ Damien Hedde <damien.hedde@dahe.fr>
+Subject: [PATCH v2 11/11] hw/intc: Add l2vic interrupt controller
+Date: Mon,  1 Sep 2025 20:49:51 -0700
+Message-Id: <20250902034951.1948194-12-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
-References: <20250902034847.1948010-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250902034951.1948194-1-brian.cain@oss.qualcomm.com>
+References: <20250902034951.1948194-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: qjTlhruIvykvi7Duy8Hr7s8pDQwcjm8h
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwNCBTYWx0ZWRfX6YShhM6xTMba
- XXBzkhBnRKG/IUOKSy2N22OW8wVmuZxGrFsiXazHcrnkMupKBduR5k7//W3Ocu34ESqtoY7IvNC
- 4rCg1GPanVyTJYwmqU8zTtsB6kVOATGlbZ84CKzonxRboYFO/EzHPgm8PLEhgTNNAAhK7Xchy/1
- bNPh+S7WqBzDfdp14wSFsvvlsD/cnxk1OmbChEDkNswuYj/GhbHOW/WxZrvkO7HgsV/au1J5jeI
- e/Mxmo5eNmCO4aeKTMmrVorC/DKhwUlpWMkh2OUnFO7Akot+6LsAN/Zjnw/Y1AP8gBO8ngtvAU/
- XwtKdl9U7LCIfkvi4MLvwfz9JNz8R/CmWX41dzERl0FsoLAuiGRvi+gdfgIqcbb7+EwSePZ1ssY
- 1vq+uoLo
-X-Proofpoint-ORIG-GUID: qjTlhruIvykvi7Duy8Hr7s8pDQwcjm8h
-X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68b6694a cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=2idpCataKItiPf5XX10A:9 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
- a=TjNXssC_j7lpFel5tvFf:22
+X-Authority-Analysis: v=2.4 cv=Ycq95xRf c=1 sm=1 tr=0 ts=68b66978 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=NEAV23lmAAAA:8 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=RIXGA4eaRyz-QDbuLqUA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: NZRYkY0tU7I-4vNG1b0mb8pwjGIU904I
+X-Proofpoint-ORIG-GUID: NZRYkY0tU7I-4vNG1b0mb8pwjGIU904I
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTAxMDEwMSBTYWx0ZWRfX/8lEVdNhkQn3
+ VNoBsgRdcqA/5ycYCLoOnkFSB8R7VwDctyuGRyf0kaxMl77Qi+g8Amj3OXYi6j2n78NmiPLQT4V
+ 8xxCgIHLtehOr9SyiLx01d9ClepKOw9KL2ku+ZLTWVPLlQdz7ipilsJ80sQSC+AuL10B6fsSZ/z
+ IlO2ZR08AiAUsdKauFzR/9NUhAdlk7h97o0K682AitEST8gbKK6QPxeuS7aoIXAjwp8McNnOrUq
+ nj/3um4Q+//SvWyxKd0SJeMtbUWU8q5RWSv7168qfFQzu0HVXoQ+daJIlNJiZpsrAo+5suV1GSy
+ AZpxgipMZMmFy/x3K0RZvvewWVGD8I9r+xNmQfzODqstPSsyigzM2sPWfO4rp5ECJ0vhwqomUD8
+ UySpS7VB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300004
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ clxscore=1015 priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509010101
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -136,276 +138,648 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brian Cain <bcain@quicinc.com>
+From: Sid Manning <sidneym@quicinc.com>
 
+Co-authored-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Co-authored-by: Damien Hedde <damien.hedde@dahe.fr>
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/hexagon/translate.h |   2 +
- target/hexagon/genptr.c    |   7 +-
- target/hexagon/translate.c | 134 ++++++++++++++++++++++++++++++++-----
- 3 files changed, 123 insertions(+), 20 deletions(-)
+ MAINTAINERS                    |   2 +
+ docs/devel/hexagon-l2vic.rst   |  59 +++++
+ docs/devel/index-internals.rst |   1 +
+ include/hw/intc/l2vic.h        |  38 +++
+ hw/intc/l2vic.c                | 421 +++++++++++++++++++++++++++++++++
+ hw/hexagon/Kconfig             |   1 +
+ hw/intc/Kconfig                |   3 +
+ hw/intc/meson.build            |   2 +
+ hw/intc/trace-events           |   4 +
+ 9 files changed, 531 insertions(+)
+ create mode 100644 docs/devel/hexagon-l2vic.rst
+ create mode 100644 include/hw/intc/l2vic.h
+ create mode 100644 hw/intc/l2vic.c
 
-diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-index 08194a3309..95f570c02a 100644
---- a/target/hexagon/translate.h
-+++ b/target/hexagon/translate.h
-@@ -85,6 +85,7 @@ typedef struct DisasContext {
-     TCGv dczero_addr;
-     bool pcycle_enabled;
-     bool pkt_ends_tb;
-+    bool need_next_pc;
-     uint32_t num_cycles;
- } DisasContext;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4f7748679b..228b5b672f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -233,6 +233,7 @@ F: hw/hexagon/
+ F: hw/timer/qct-qtimer.c
+ F: include/hw/hexagon/
+ F: include/hw/timer/qct-qtimer.h
++F: hw/intc/l2vic.[ch]
+ X: target/hexagon/idef-parser/
+ X: target/hexagon/gen_idef_parser_funcs.py
+ F: linux-user/hexagon/
+@@ -245,6 +246,7 @@ F: gdb-xml/hexagon*.xml
+ F: docs/system/target-hexagon.rst
+ F: docs/system/hexagon/cdsp.rst
+ F: docs/devel/hexagon-sys.rst
++F: docs/devel/hexagon-l2vic.rst
+ T: git https://github.com/quic/qemu.git hex-next
  
-@@ -306,6 +307,7 @@ static inline void ctx_log_qreg_read(DisasContext *ctx,
- }
- 
- extern TCGv hex_gpr[TOTAL_PER_THREAD_REGS];
-+extern TCGv hex_next_PC;
- extern TCGv hex_pred[NUM_PREGS];
- extern TCGv hex_slot_cancelled;
- extern TCGv hex_new_value_usr;
-diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
-index 0648daefb6..ca41ddf0e9 100644
---- a/target/hexagon/genptr.c
-+++ b/target/hexagon/genptr.c
-@@ -613,14 +613,15 @@ static void gen_write_new_pc_addr(DisasContext *ctx, TCGv addr,
-         tcg_gen_brcondi_tl(cond, pred, 0, pred_false);
-     }
- 
-+    TCGv PC_wr = ctx->need_next_pc ? hex_next_PC : hex_gpr[HEX_REG_PC];
-     if (ctx->pkt->pkt_has_multi_cof) {
-         /* If there are multiple branches in a packet, ignore the second one */
--        tcg_gen_movcond_tl(TCG_COND_NE, hex_gpr[HEX_REG_PC],
-+        tcg_gen_movcond_tl(TCG_COND_NE, PC_wr,
-                            ctx->branch_taken, tcg_constant_tl(0),
--                           hex_gpr[HEX_REG_PC], addr);
-+                           PC_wr, addr);
-         tcg_gen_movi_tl(ctx->branch_taken, 1);
-     } else {
--        tcg_gen_mov_tl(hex_gpr[HEX_REG_PC], addr);
-+        tcg_gen_mov_tl(PC_wr, addr);
-     }
- 
-     if (cond != TCG_COND_ALWAYS) {
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 92adc60d1a..70e0a1ff33 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -49,6 +49,7 @@ static const AnalyzeInsn opcode_analyze[XX_LAST_OPCODE] = {
- TCGv hex_gpr[TOTAL_PER_THREAD_REGS];
- TCGv hex_pred[NUM_PREGS];
- TCGv hex_slot_cancelled;
-+TCGv hex_next_PC;
- TCGv hex_new_value_usr;
- TCGv hex_store_addr[STORES_MAX];
- TCGv hex_store_width[STORES_MAX];
-@@ -61,6 +62,7 @@ TCGv_i64 hex_cycle_count;
- TCGv hex_vstore_addr[VSTORES_MAX];
- TCGv hex_vstore_size[VSTORES_MAX];
- TCGv hex_vstore_pending[VSTORES_MAX];
-+static bool need_next_PC(DisasContext *ctx);
- 
- #ifndef CONFIG_USER_ONLY
- TCGv hex_greg[NUM_GREGS];
-@@ -183,6 +185,9 @@ static void gen_end_tb(DisasContext *ctx)
- 
-     gen_exec_counters(ctx);
- 
-+    if (ctx->need_next_pc) {
-+        tcg_gen_mov_tl(hex_gpr[HEX_REG_PC], hex_next_PC);
-+    }
-     if (ctx->branch_cond != TCG_COND_NEVER) {
-         if (ctx->branch_cond != TCG_COND_ALWAYS) {
-             TCGLabel *skip = gen_new_label();
-@@ -368,18 +373,24 @@ static bool pkt_ends_tb(Packet *pkt)
- static bool need_next_PC(DisasContext *ctx)
- {
-     Packet *pkt = ctx->pkt;
--
--    /* Check for conditional control flow or HW loop end */
--    for (int i = 0; i < pkt->num_insns; i++) {
--        uint16_t opcode = pkt->insn[i].opcode;
--        if (GET_ATTRIB(opcode, A_CONDEXEC) && GET_ATTRIB(opcode, A_COF)) {
--            return true;
--        }
--        if (GET_ATTRIB(opcode, A_HWLOOP0_END) ||
--            GET_ATTRIB(opcode, A_HWLOOP1_END)) {
--            return true;
-+    if (pkt->pkt_has_cof || ctx->pkt_ends_tb) {
-+        for (int i = 0; i < pkt->num_insns; i++) {
-+            uint16_t opcode = pkt->insn[i].opcode;
-+            if ((GET_ATTRIB(opcode, A_CONDEXEC) && GET_ATTRIB(opcode, A_COF)) ||
-+                GET_ATTRIB(opcode, A_HWLOOP0_END) ||
-+                GET_ATTRIB(opcode, A_HWLOOP1_END)) {
-+                return true;
-+            }
-         }
-     }
+ Hexagon idef-parser
+diff --git a/docs/devel/hexagon-l2vic.rst b/docs/devel/hexagon-l2vic.rst
+new file mode 100644
+index 0000000000..0885636274
+--- /dev/null
++++ b/docs/devel/hexagon-l2vic.rst
+@@ -0,0 +1,59 @@
++Hexagon L2 Vectored Interrupt Controller
++========================================
++
++
++.. code-block:: none
++
++              +-------+
++              |       |             +----------------+
++              | l2vic |             |  hexagon core  |
++              |       |             |                |
++              | +-----|             |                |
++        ------> |VID0 >------------->irq2 -\         |
++        ------> |     |             |      |         |
++         ...  > |     |             |      |         |
++        ------> |     |             | <int steering> |
++              | +-----|             |   / |  | \     |
++              |  ...  |             |  |  |  |  |    |
++              | +-----|             | t0 t1 t2 t3 ...|
++        ------> |VIDN |             |                |
++        ------> |     |             |                |
++        ------> |     |             |                |
++        ------> |     |             |                |
++              | +-----|             |                |
++              |       |             |Global SREG File|
++              | State |             |                |
++              | [    ]|<============|=>[VID ]        |
++              | [    ]|<============|=>[VID1]        |
++              | [    ]|             |                |
++              | [    ]|             |                |
++              |       |             |                |
++              +-------+             +----------------+
++
++L2VIC/Core Integration
++----------------------
++
++* hexagon core supports 8 external interrupt sources
++* l2vic supports 1024 input interrupts mapped among 4 output interrupts
++* l2vic has four output signals: { VID0, VID1, VID2, VID3 }
++* l2vic device has a bank of registers per-VID that can be used to query
++  the status or assert new interrupts.
++* Interrupts are 'steered' to threads based on { thread priority, 'EX' state,
++  thread interrupt mask, thread interrupt enable, global interrupt enable,
++  etc. }.
++* Any hardware thread could conceivably handle any input interrupt, dependent
++  on state.
++* The system register transfer instruction can read the VID0-VID3 values from
++  the l2vic when reading from hexagon core system registers "VID" and "VID1".
++* When l2vic VID0 has multiple active interrupts, it pulses the VID0 output
++  IRQ and stores the IRQ number for the VID0 register field.  Only after this
++  interrupt is cleared can the l2vic pulse the VID0 output IRQ again and provide
++  the next interrupt number on the VID0 register.
++* The ``ciad`` instruction clears the l2vic input interrupt and un-disables the
++  core interrupt.  If some/an l2vic VID0 interrupt is pending when this occurs,
++  the next interrupt should fire and any subseqeunt reads of the VID register
++  should reflect the newly raised interrupt.
++* In QEMU, on an external interrupt or an unmasked-pending interrupt,
++  all vCPUs are triggered (has_work==true) and each will grab the IO lock
++  while considering the steering logic to determine whether they're the thread
++  that must handle the interrupt.
+diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
+index 0471db8064..6620497595 100644
+--- a/docs/devel/index-internals.rst
++++ b/docs/devel/index-internals.rst
+@@ -15,6 +15,7 @@ Details about QEMU's various subsystems including how to add features to them.
+    clocks
+    ebpf_rss
+    hexagon-sys
++   hexagon-l2vic
+    migration/index
+    multi-process
+    reset
+diff --git a/include/hw/intc/l2vic.h b/include/hw/intc/l2vic.h
+new file mode 100644
+index 0000000000..be845e360c
+--- /dev/null
++++ b/include/hw/intc/l2vic.h
+@@ -0,0 +1,38 @@
++/*
++ * QEMU L2VIC Interrupt Controller
++ *
++ * Copyright(c) 2020-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#define L2VIC_VID_GRP_0 0x0 /* Read */
++#define L2VIC_VID_GRP_1 0x4 /* Read */
++#define L2VIC_VID_GRP_2 0x8 /* Read */
++#define L2VIC_VID_GRP_3 0xC /* Read */
++#define L2VIC_VID_0 0x10 /* Read SOFTWARE DEFINED */
++#define L2VIC_VID_1 0x14 /* Read SOFTWARE DEFINED NOT YET USED */
++#define L2VIC_INT_ENABLEn 0x100 /* Read/Write */
++#define L2VIC_INT_ENABLE_CLEARn 0x180 /* Write */
++#define L2VIC_INT_ENABLE_SETn 0x200 /* Write */
++#define L2VIC_INT_TYPEn 0x280 /* Read/Write */
++#define L2VIC_INT_STATUSn 0x380 /* Read */
++#define L2VIC_INT_CLEARn 0x400 /* Write */
++#define L2VIC_SOFT_INTn 0x480 /* Write */
++#define L2VIC_INT_PENDINGn 0x500 /* Read */
++#define L2VIC_INT_GRPn_0 0x600 /* Read/Write */
++#define L2VIC_INT_GRPn_1 0x680 /* Read/Write */
++#define L2VIC_INT_GRPn_2 0x700 /* Read/Write */
++#define L2VIC_INT_GRPn_3 0x780 /* Read/Write */
++
++#define L2VIC_INTERRUPT_MAX 1024
++#define L2VIC_CIAD_INSTRUCTION -1
++#define L2VIC_NO_PENDING 0xffffffff
++/*
++ * Note about l2vic groups:
++ * Each interrupt to L2VIC can be configured to associate with one of
++ * four groups.
++ * Group 0 interrupts go to IRQ2 via VID 0 (SSR: 0xC2, the default)
++ * Group 1 interrupts go to IRQ3 via VID 1 (SSR: 0xC3)
++ * Group 2 interrupts go to IRQ4 via VID 2 (SSR: 0xC4)
++ * Group 3 interrupts go to IRQ5 via VID 3 (SSR: 0xC5)
++ */
+diff --git a/hw/intc/l2vic.c b/hw/intc/l2vic.c
+new file mode 100644
+index 0000000000..9753ba2d25
+--- /dev/null
++++ b/hw/intc/l2vic.c
+@@ -0,0 +1,421 @@
++/*
++ * QEMU L2VIC Interrupt Controller
++ *
++ * Arm PrimeCell PL190 Vector Interrupt Controller was used as a reference.
++ * Copyright(c) 2020-2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/irq.h"
++#include "hw/sysbus.h"
++#include "migration/vmstate.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "hw/intc/l2vic.h"
++#include "trace.h"
++
++#define L2VICA(s, n) (s[(n) >> 2])
++
++#define TYPE_L2VIC "l2vic"
++OBJECT_DECLARE_SIMPLE_TYPE(L2VICState, L2VIC)
++
++#define SLICE_MAX (L2VIC_INTERRUPT_MAX / 32)
++
++typedef struct L2VICState {
++    SysBusDevice parent_obj;
++
++    QemuMutex active;
++    MemoryRegion iomem;
++    MemoryRegion fast_iomem;
++    uint32_t level;
 +    /*
-+     * We end the TB on some instructions that do not change the flow (for
-+     * other reasons). In these cases, we must set pc too, as the insn won't
-+     * do it themselves.
++     * offset 0:vid group 0 etc, 10 bits in each group
++     * are used:
 +     */
-+    if (ctx->pkt_ends_tb && !check_for_attrib(pkt, A_COF)) {
++    uint32_t vid_group[4];
++    uint32_t vid0;
++    /* Clear Status of Active Edge interrupt, not used: */
++    uint32_t int_clear[SLICE_MAX] QEMU_ALIGNED(16);
++    /* Enable interrupt source */
++    uint32_t int_enable[SLICE_MAX] QEMU_ALIGNED(16);
++    /* Clear (set to 0) corresponding bit in int_enable */
++    uint32_t int_enable_clear;
++    /* Set (to 1) corresponding bit in int_enable */
++    uint32_t int_enable_set;
++    /* Present for debugging, not used */
++    uint32_t int_pending[SLICE_MAX] QEMU_ALIGNED(16);
++    /* Generate an interrupt */
++    uint32_t int_soft;
++    /* Which enabled interrupt is active */
++    uint32_t int_status[SLICE_MAX] QEMU_ALIGNED(16);
++    /* Edge or Level interrupt */
++    uint32_t int_type[SLICE_MAX] QEMU_ALIGNED(16);
++    /* L2 interrupt group 0-3 0x600-0x7FF */
++    uint32_t int_group_n0[SLICE_MAX] QEMU_ALIGNED(16);
++    uint32_t int_group_n1[SLICE_MAX] QEMU_ALIGNED(16);
++    uint32_t int_group_n2[SLICE_MAX] QEMU_ALIGNED(16);
++    uint32_t int_group_n3[SLICE_MAX] QEMU_ALIGNED(16);
++    qemu_irq irq[8];
++} L2VICState;
++
++
++/*
++ * Find out if this irq is associated with a group other than
++ * the default group
++ */
++static uint32_t *get_int_group(L2VICState *s, int irq)
++{
++    int n = irq & 0x1f;
++    if (n < 8) {
++        return s->int_group_n0;
++    }
++    if (n < 16) {
++        return s->int_group_n1;
++    }
++    if (n < 24) {
++        return s->int_group_n2;
++    }
++    return s->int_group_n3;
++}
++
++static int find_slice(int irq)
++{
++    return irq / 32;
++}
++
++static int get_vid(L2VICState *s, int irq)
++{
++    uint32_t *group = get_int_group(s, irq);
++    uint32_t slice = group[find_slice(irq)];
++    /* Mask with 0x7 to remove the GRP:EN bit */
++    uint32_t val = slice >> ((irq & 0x7) * 4);
++    if (val & 0x8) {
++        return val & 0x7;
++    } else {
++        return 0;
++    }
++}
++
++static inline bool vid_active(L2VICState *s)
++
++{
++    /* scan all 1024 bits in int_status arrary */
++    const int size = sizeof(s->int_status) * CHAR_BIT;
++    const int active_irq = find_first_bit((unsigned long *)s->int_status, size);
++    return ((active_irq != size)) ? true : false;
++}
++
++static bool l2vic_update(L2VICState *s, int irq)
++{
++    if (vid_active(s)) {
 +        return true;
 +    }
-     return false;
- }
- 
-@@ -531,6 +542,10 @@ static void gen_start_packet(DisasContext *ctx)
-     ctx->reg_log_idx = 0;
-     bitmap_zero(ctx->regs_written, TOTAL_PER_THREAD_REGS);
-     bitmap_zero(ctx->predicated_regs, TOTAL_PER_THREAD_REGS);
-+#ifndef CONFIG_USER_ONLY
-+    ctx->greg_log_idx = 0;
-+    ctx->sreg_log_idx = 0;
-+#endif
-     ctx->preg_log_idx = 0;
-     bitmap_zero(ctx->pregs_written, NUM_PREGS);
-     ctx->future_vregs_idx = 0;
-@@ -563,21 +578,41 @@ static void gen_start_packet(DisasContext *ctx)
-      * gen phase, so clear it again.
-      */
-     bitmap_zero(ctx->pregs_written, NUM_PREGS);
-+#ifndef CONFIG_USER_ONLY
-+    for (i = 0; i < NUM_SREGS; i++) {
-+        ctx->t_sreg_new_value[i] = NULL;
++
++    bool pending = test_bit(irq, (unsigned long *)s->int_pending);
++    bool enable = test_bit(irq, (unsigned long *)s->int_enable);
++    if (pending && enable) {
++        int vid = get_vid(s, irq);
++        set_bit(irq, (unsigned long *)s->int_status);
++        clear_bit(irq, (unsigned long *)s->int_pending);
++        clear_bit(irq, (unsigned long *)s->int_enable);
++        /* ensure the irq line goes low after going high */
++        s->vid0 = irq;
++        s->vid_group[get_vid(s, irq)] = irq;
++
++        /* already low: now call pulse */
++        /*     pulse: calls qemu_upper() and then qemu_lower()) */
++        qemu_irq_pulse(s->irq[vid + 2]);
++        trace_l2vic_delivered(irq, vid);
++        return true;
 +    }
-+    for (i = 0; i < ctx->sreg_log_idx; i++) {
-+        int reg_num = ctx->sreg_log[i];
-+        if (reg_num < HEX_SREG_GLB_START) {
-+            ctx->t_sreg_new_value[reg_num] = tcg_temp_new();
-+            tcg_gen_mov_tl(ctx->t_sreg_new_value[reg_num], hex_t_sreg[reg_num]);
-+        }
-+    }
-+    for (i = 0; i < NUM_GREGS; i++) {
-+        ctx->greg_new_value[i] = NULL;
-+    }
-+    for (i = 0; i < ctx->greg_log_idx; i++) {
-+        int reg_num = ctx->greg_log[i];
-+        ctx->greg_new_value[reg_num] = tcg_temp_new();
-+    }
-+#endif
- 
-     /* Initialize the runtime state for packet semantics */
-     if (need_slot_cancelled(pkt)) {
-         tcg_gen_movi_tl(hex_slot_cancelled, 0);
-     }
-     ctx->branch_taken = NULL;
--    ctx->pkt_ends_tb = pkt_ends_tb(pkt);
-     if (pkt->pkt_has_cof) {
-         ctx->branch_taken = tcg_temp_new();
--        if (pkt->pkt_has_multi_cof) {
--            tcg_gen_movi_tl(ctx->branch_taken, 0);
--        }
--        if (need_next_PC(ctx)) {
--            tcg_gen_movi_tl(hex_gpr[HEX_REG_PC], next_PC);
--        }
-+    }
-+    if (pkt->pkt_has_multi_cof) {
-+        tcg_gen_movi_tl(ctx->branch_taken, 0);
-+    }
-+    ctx->pkt_ends_tb = pkt_ends_tb(pkt);
-+    ctx->need_next_pc = need_next_PC(ctx);
-+    if (ctx->need_next_pc) {
-+        tcg_gen_movi_tl(hex_next_PC, next_PC);
-     }
- 
-     /* Preload the predicated registers into get_result_gpr(ctx, i) */
-@@ -713,6 +748,59 @@ static void gen_reg_writes(DisasContext *ctx)
-     }
- }
- 
-+#ifndef CONFIG_USER_ONLY
-+static void gen_greg_writes(DisasContext *ctx)
++    return false;
++}
++
++static void l2vic_update_all(L2VICState *s)
 +{
-+    int i;
-+
-+    for (i = 0; i < ctx->greg_log_idx; i++) {
-+        int reg_num = ctx->greg_log[i];
-+
-+        tcg_gen_mov_tl(hex_greg[reg_num], ctx->greg_new_value[reg_num]);
++    for (int i = 0; i < L2VIC_INTERRUPT_MAX; i++) {
++        if (l2vic_update(s, i) == true) {
++            /* once vid is active, no-one else can set it until ciad */
++            return;
++        }
 +    }
 +}
 +
-+
-+static void gen_sreg_writes(DisasContext *ctx)
++static void l2vic_set_irq(void *opaque, int irq, int level)
 +{
++    L2VICState *s = (L2VICState *)opaque;
++    if (level) {
++        qemu_mutex_lock(&s->active);
++        set_bit(irq, (unsigned long *)s->int_pending);
++        qemu_mutex_unlock(&s->active);
++    }
++    l2vic_update(s, irq);
++}
++
++static void l2vic_write(void *opaque, hwaddr offset, uint64_t val,
++                        unsigned size)
++{
++    L2VICState *s = (L2VICState *)opaque;
++    qemu_mutex_lock(&s->active);
++    trace_l2vic_reg_write((unsigned)offset, (uint32_t)val);
++
++    if (offset == L2VIC_VID_0) {
++        if ((int)val != L2VIC_CIAD_INSTRUCTION) {
++            s->vid0 = val;
++        } else {
++            /* ciad issued: clear int_status */
++            clear_bit(s->vid0, (unsigned long *)s->int_status);
++        }
++    } else if (offset >= L2VIC_INT_ENABLEn &&
++               offset < (L2VIC_INT_ENABLE_CLEARn)) {
++        L2VICA(s->int_enable, offset - L2VIC_INT_ENABLEn) = val;
++    } else if (offset >= L2VIC_INT_ENABLE_CLEARn &&
++               offset < L2VIC_INT_ENABLE_SETn) {
++        L2VICA(s->int_enable, offset - L2VIC_INT_ENABLE_CLEARn) &= ~val;
++    } else if (offset >= L2VIC_INT_ENABLE_SETn && offset < L2VIC_INT_TYPEn) {
++        L2VICA(s->int_enable, offset - L2VIC_INT_ENABLE_SETn) |= val;
++    } else if (offset >= L2VIC_INT_TYPEn && offset < L2VIC_INT_TYPEn + 0x80) {
++        L2VICA(s->int_type, offset - L2VIC_INT_TYPEn) = val;
++    } else if (offset >= L2VIC_INT_STATUSn && offset < L2VIC_INT_CLEARn) {
++        L2VICA(s->int_status, offset - L2VIC_INT_STATUSn) = val;
++    } else if (offset >= L2VIC_INT_CLEARn && offset < L2VIC_SOFT_INTn) {
++        L2VICA(s->int_clear, offset - L2VIC_INT_CLEARn) = val;
++    } else if (offset >= L2VIC_INT_PENDINGn &&
++               offset < L2VIC_INT_PENDINGn + 0x80) {
++        L2VICA(s->int_pending, offset - L2VIC_INT_PENDINGn) = val;
++    } else if (offset >= L2VIC_SOFT_INTn && offset < L2VIC_INT_PENDINGn) {
++        L2VICA(s->int_enable, offset - L2VIC_SOFT_INTn) |= val;
++        /*
++         *  Need to reverse engineer the actual irq number.
++         */
++        int irq = find_first_bit((unsigned long *)&val,
++                                 sizeof(s->int_enable[0]) * CHAR_BIT);
++        hwaddr byteoffset = offset - L2VIC_SOFT_INTn;
++        g_assert(irq != sizeof(s->int_enable[0]) * CHAR_BIT);
++        irq += byteoffset * 8;
++
++        /* The soft-int interface only works with edge-triggered interrupts */
++        if (test_bit(irq, (unsigned long *)s->int_type)) {
++            qemu_mutex_unlock(&s->active);
++            l2vic_set_irq(opaque, irq, 1);
++            qemu_mutex_lock(&s->active);
++        }
++    } else if (offset >= L2VIC_INT_GRPn_0 && offset < L2VIC_INT_GRPn_1) {
++        L2VICA(s->int_group_n0, offset - L2VIC_INT_GRPn_0) = val;
++    } else if (offset >= L2VIC_INT_GRPn_1 && offset < L2VIC_INT_GRPn_2) {
++        L2VICA(s->int_group_n1, offset - L2VIC_INT_GRPn_1) = val;
++    } else if (offset >= L2VIC_INT_GRPn_2 && offset < L2VIC_INT_GRPn_3) {
++        L2VICA(s->int_group_n2, offset - L2VIC_INT_GRPn_2) = val;
++    } else if (offset >= L2VIC_INT_GRPn_3 && offset < L2VIC_INT_GRPn_3 + 0x80) {
++        L2VICA(s->int_group_n3, offset - L2VIC_INT_GRPn_3) = val;
++    } else {
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: offset %" PRIx32 " unimplemented\n", __func__,
++                      (int)offset);
++    }
++    l2vic_update_all(s);
++    qemu_mutex_unlock(&s->active);
++    return;
++}
++
++static uint64_t l2vic_read(void *opaque, hwaddr offset, unsigned size)
++{
++    uint64_t value;
++    L2VICState *s = (L2VICState *)opaque;
++    qemu_mutex_lock(&s->active);
++
++    if (offset == L2VIC_VID_GRP_0) {
++        value = s->vid_group[0];
++    } else if (offset == L2VIC_VID_GRP_1) {
++        value = s->vid_group[1];
++    } else if (offset == L2VIC_VID_GRP_2) {
++        value = s->vid_group[2];
++    } else if (offset == L2VIC_VID_GRP_3) {
++        value = s->vid_group[3];
++    } else if (offset == L2VIC_VID_0) {
++        value = s->vid0;
++    } else if (offset >= L2VIC_INT_ENABLEn &&
++               offset < L2VIC_INT_ENABLE_CLEARn) {
++        value = L2VICA(s->int_enable, offset - L2VIC_INT_ENABLEn);
++    } else if (offset >= L2VIC_INT_ENABLE_CLEARn &&
++               offset < L2VIC_INT_ENABLE_SETn) {
++        value = 0;
++    } else if (offset >= L2VIC_INT_ENABLE_SETn && offset < L2VIC_INT_TYPEn) {
++        value = 0;
++    } else if (offset >= L2VIC_INT_TYPEn && offset < L2VIC_INT_TYPEn + 0x80) {
++        value = L2VICA(s->int_type, offset - L2VIC_INT_TYPEn);
++    } else if (offset >= L2VIC_INT_STATUSn && offset < L2VIC_INT_CLEARn) {
++        value = L2VICA(s->int_status, offset - L2VIC_INT_STATUSn);
++    } else if (offset >= L2VIC_INT_CLEARn && offset < L2VIC_SOFT_INTn) {
++        value = L2VICA(s->int_clear, offset - L2VIC_INT_CLEARn);
++    } else if (offset >= L2VIC_SOFT_INTn && offset < L2VIC_INT_PENDINGn) {
++        value = 0;
++    } else if (offset >= L2VIC_INT_PENDINGn &&
++               offset < L2VIC_INT_PENDINGn + 0x80) {
++        value = L2VICA(s->int_pending, offset - L2VIC_INT_PENDINGn);
++    } else if (offset >= L2VIC_INT_GRPn_0 && offset < L2VIC_INT_GRPn_1) {
++        value = L2VICA(s->int_group_n0, offset - L2VIC_INT_GRPn_0);
++    } else if (offset >= L2VIC_INT_GRPn_1 && offset < L2VIC_INT_GRPn_2) {
++        value = L2VICA(s->int_group_n1, offset - L2VIC_INT_GRPn_1);
++    } else if (offset >= L2VIC_INT_GRPn_2 && offset < L2VIC_INT_GRPn_3) {
++        value = L2VICA(s->int_group_n2, offset - L2VIC_INT_GRPn_2);
++    } else if (offset >= L2VIC_INT_GRPn_3 && offset < L2VIC_INT_GRPn_3 + 0x80) {
++        value = L2VICA(s->int_group_n3, offset - L2VIC_INT_GRPn_3);
++    } else {
++        value = 0;
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "L2VIC: %s: offset 0x%" PRIx32 "\n", __func__,
++                      (int)offset);
++    }
++
++    trace_l2vic_reg_read((unsigned)offset, value);
++    qemu_mutex_unlock(&s->active);
++
++    return value;
++}
++
++static const MemoryRegionOps l2vic_ops = {
++    .read = l2vic_read,
++    .write = l2vic_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
++    .valid.unaligned = false,
++};
++
++#define FASTL2VIC_ENABLE 0x0
++#define FASTL2VIC_DISABLE 0x1
++#define FASTL2VIC_INT 0x2
++
++static void fastl2vic_write(void *opaque, hwaddr offset, uint64_t val,
++                            unsigned size)
++{
++    if (offset == 0) {
++        uint32_t cmd = (val >> 16) & 0x3;
++        uint32_t irq = val & 0x3ff;
++        uint32_t slice = (irq / 32) * 4;
++        val = 1 << (irq % 32);
++
++        if (cmd == FASTL2VIC_ENABLE) {
++            l2vic_write(opaque, L2VIC_INT_ENABLE_SETn + slice, val, size);
++        } else if (cmd == FASTL2VIC_DISABLE) {
++            l2vic_write(opaque, L2VIC_INT_ENABLE_CLEARn + slice, val, size);
++        } else if (cmd == FASTL2VIC_INT) {
++            l2vic_write(opaque, L2VIC_SOFT_INTn + slice, val, size);
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid write cmd %" PRId32 "\n",
++                          __func__, cmd);
++        }
++        return;
++    }
++    qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid write offset 0x%08" HWADDR_PRIx
++            "\n", __func__, offset);
++}
++
++static const MemoryRegionOps fastl2vic_ops = {
++    .write = fastl2vic_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
++    .valid.unaligned = false,
++};
++
++static void l2vic_reset_hold(Object *obj, G_GNUC_UNUSED ResetType res_type)
++{
++    L2VICState *s = L2VIC(obj);
++    memset(s->int_clear, 0, sizeof(s->int_clear));
++    memset(s->int_enable, 0, sizeof(s->int_enable));
++    memset(s->int_pending, 0, sizeof(s->int_pending));
++    memset(s->int_status, 0, sizeof(s->int_status));
++    memset(s->int_type, 0, sizeof(s->int_type));
++    memset(s->int_group_n0, 0, sizeof(s->int_group_n0));
++    memset(s->int_group_n1, 0, sizeof(s->int_group_n1));
++    memset(s->int_group_n2, 0, sizeof(s->int_group_n2));
++    memset(s->int_group_n3, 0, sizeof(s->int_group_n3));
++    s->int_soft = 0;
++    s->vid0 = 0;
++
++    l2vic_update_all(s);
++}
++
++
++static void reset_irq_handler(void *opaque, int irq, int level)
++{
++    L2VICState *s = (L2VICState *)opaque;
++    Object *obj = OBJECT(opaque);
++    if (level) {
++        l2vic_reset_hold(obj, RESET_TYPE_COLD);
++    }
++    l2vic_update_all(s);
++}
++
++static void l2vic_init(Object *obj)
++{
++    DeviceState *dev = DEVICE(obj);
++    L2VICState *s = L2VIC(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
 +    int i;
 +
-+    TCGv old_reg = tcg_temp_new();
-+    for (i = 0; i < ctx->sreg_log_idx; i++) {
-+        int reg_num = ctx->sreg_log[i];
++    memory_region_init_io(&s->iomem, obj, &l2vic_ops, s, "l2vic", 0x1000);
++    sysbus_init_mmio(sbd, &s->iomem);
++    memory_region_init_io(&s->fast_iomem, obj, &fastl2vic_ops, s, "fast",
++                          0x10000);
++    sysbus_init_mmio(sbd, &s->fast_iomem);
 +
-+        if (reg_num == HEX_SREG_SSR) {
-+            tcg_gen_mov_tl(old_reg, hex_t_sreg[reg_num]);
-+            tcg_gen_mov_tl(hex_t_sreg[reg_num], ctx->t_sreg_new_value[reg_num]);
-+            gen_helper_modify_ssr(tcg_env, ctx->t_sreg_new_value[reg_num],
-+                                  old_reg);
-+            /* This can change processor state, so end the TB */
-+            ctx->base.is_jmp = DISAS_NORETURN;
-+        } else if ((reg_num == HEX_SREG_STID) ||
-+                   (reg_num == HEX_SREG_IMASK) ||
-+                   (reg_num == HEX_SREG_IPENDAD)) {
-+            if (reg_num < HEX_SREG_GLB_START) {
-+                tcg_gen_mov_tl(old_reg, hex_t_sreg[reg_num]);
-+                tcg_gen_mov_tl(hex_t_sreg[reg_num],
-+                               ctx->t_sreg_new_value[reg_num]);
-+            }
-+            /* This can change the interrupt state, so end the TB */
-+            gen_helper_pending_interrupt(tcg_env);
-+            ctx->base.is_jmp = DISAS_NORETURN;
-+        } else if ((reg_num == HEX_SREG_BESTWAIT) ||
-+                   (reg_num == HEX_SREG_SCHEDCFG)) {
-+            /* This can trigger resched interrupt, so end the TB */
-+            gen_helper_resched(tcg_env);
-+            ctx->base.is_jmp = DISAS_NORETURN;
-+        }
-+
-+        if (reg_num < HEX_SREG_GLB_START) {
-+            tcg_gen_mov_tl(hex_t_sreg[reg_num], ctx->t_sreg_new_value[reg_num]);
-+        }
++    qdev_init_gpio_in(dev, l2vic_set_irq, L2VIC_INTERRUPT_MAX);
++    qdev_init_gpio_in_named(dev, reset_irq_handler, "reset", 1);
++    for (i = 0; i < 8; i++) {
++        sysbus_init_irq(sbd, &s->irq[i]);
 +    }
++    qemu_mutex_init(&s->active); /* TODO: Remove this is an experiment */
 +}
-+#endif
 +
- static void gen_pred_writes(DisasContext *ctx)
- {
-     /* Early exit if not needed or the log is empty */
-@@ -1012,6 +1100,10 @@ static void gen_commit_packet(DisasContext *ctx)
-     process_store_log(ctx);
- 
-     gen_reg_writes(ctx);
-+#if !defined(CONFIG_USER_ONLY)
-+    gen_greg_writes(ctx);
-+    gen_sreg_writes(ctx);
-+#endif
-     gen_pred_writes(ctx);
-     if (pkt->pkt_has_hvx) {
-         gen_commit_hvx(ctx);
-@@ -1073,6 +1165,7 @@ static void hexagon_tr_init_disas_context(DisasContextBase *dcbase,
-     ctx->is_tight_loop = FIELD_EX32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP);
-     ctx->short_circuit = hex_cpu->short_circuit;
-     ctx->pcycle_enabled = FIELD_EX32(hex_flags, TB_FLAGS, PCYCLE_ENABLED);
-+    ctx->need_next_pc = false;
- }
- 
- static void hexagon_tr_tb_start(DisasContextBase *db, CPUState *cpu)
-@@ -1201,6 +1294,13 @@ void hexagon_translate_init(void)
-         offsetof(CPUHexagonState, llsc_val_i64), "llsc_val_i64");
-     hex_cycle_count = tcg_global_mem_new_i64(tcg_env,
-             offsetof(CPUHexagonState, t_cycle_count), "t_cycle_count");
-+#ifndef CONFIG_USER_ONLY
-+    hex_cause_code = tcg_global_mem_new(tcg_env,
-+        offsetof(CPUHexagonState, cause_code), "cause_code");
-+#endif
-+    hex_next_PC = tcg_global_mem_new(tcg_env,
-+        offsetof(CPUHexagonState, next_PC), "next_PC");
++static const VMStateDescription vmstate_l2vic = {
++    .name = "l2vic",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields =
++        (VMStateField[]){
++            VMSTATE_UINT32(level, L2VICState),
++            VMSTATE_UINT32_ARRAY(vid_group, L2VICState, 4),
++            VMSTATE_UINT32(vid0, L2VICState),
++            VMSTATE_UINT32_ARRAY(int_enable, L2VICState, SLICE_MAX),
++            VMSTATE_UINT32(int_enable_clear, L2VICState),
++            VMSTATE_UINT32(int_enable_set, L2VICState),
++            VMSTATE_UINT32_ARRAY(int_type, L2VICState, SLICE_MAX),
++            VMSTATE_UINT32_ARRAY(int_status, L2VICState, SLICE_MAX),
++            VMSTATE_UINT32_ARRAY(int_clear, L2VICState, SLICE_MAX),
++            VMSTATE_UINT32(int_soft, L2VICState),
++            VMSTATE_UINT32_ARRAY(int_pending, L2VICState, SLICE_MAX),
++            VMSTATE_UINT32_ARRAY(int_group_n0, L2VICState, SLICE_MAX),
++            VMSTATE_UINT32_ARRAY(int_group_n1, L2VICState, SLICE_MAX),
++            VMSTATE_UINT32_ARRAY(int_group_n2, L2VICState, SLICE_MAX),
++            VMSTATE_UINT32_ARRAY(int_group_n3, L2VICState, SLICE_MAX),
++            VMSTATE_END_OF_LIST() }
++};
 +
-     for (i = 0; i < STORES_MAX; i++) {
-         snprintf(store_addr_names[i], NAME_LEN, "store_addr_%d", i);
-         hex_store_addr[i] = tcg_global_mem_new(tcg_env,
++static void l2vic_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->vmsd = &vmstate_l2vic;
++    rc->phases.hold = l2vic_reset_hold;
++}
++
++static const TypeInfo l2vic_info = {
++    .name = TYPE_L2VIC,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(L2VICState),
++    .instance_init = l2vic_init,
++    .class_init = l2vic_class_init,
++};
++
++static void l2vic_register_types(void)
++{
++    type_register_static(&l2vic_info);
++}
++
++type_init(l2vic_register_types)
+diff --git a/hw/hexagon/Kconfig b/hw/hexagon/Kconfig
+index dc74751d21..f51c381a12 100644
+--- a/hw/hexagon/Kconfig
++++ b/hw/hexagon/Kconfig
+@@ -3,6 +3,7 @@ config HEX_DSP
+     default y
+     depends on HEXAGON && TCG
+     imply PTIMER
++    select L2VIC
+ 
+ config HEX_VIRT
+     bool
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+index 7547528f2c..a5b136e2fa 100644
+--- a/hw/intc/Kconfig
++++ b/hw/intc/Kconfig
+@@ -8,6 +8,9 @@ config I8259
+ config PL190
+     bool
+ 
++config L2VIC
++    bool
++
+ config IOAPIC
+     bool
+     select I8259
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index 3137521a4a..9a5e0b3a73 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -67,6 +67,8 @@ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('xics_spapr.c', 'spapr_xi
+ specific_ss.add(when: 'CONFIG_XIVE', if_true: files('xive.c'))
+ specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_XIVE'],
+ 		if_true: files('spapr_xive_kvm.c'))
++
++specific_ss.add(when: 'CONFIG_L2VIC', if_true: files('l2vic.c'))
+ specific_ss.add(when: 'CONFIG_M68K_IRQC', if_true: files('m68k_irqc.c'))
+ specific_ss.add(when: 'CONFIG_LOONGSON_IPI_COMMON', if_true: files('loongson_ipi_common.c'))
+ specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: files('loongson_ipi.c'))
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 018c609ca5..327514f498 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -314,6 +314,10 @@ sh_intc_register(const char *s, int id, unsigned short v, int c, int m) "%s %u -
+ sh_intc_read(unsigned size, uint64_t offset, unsigned long val) "size %u 0x%" PRIx64 " -> 0x%lx"
+ sh_intc_write(unsigned size, uint64_t offset, unsigned long val) "size %u 0x%" PRIx64 " <- 0x%lx"
+ sh_intc_set(int id, int enable) "setting interrupt group %d to %d"
++# l2vic.c
++l2vic_reg_write(unsigned int addr, uint32_t value) "addr: 0x%03x value: 0x%08"PRIx32
++l2vic_reg_read(unsigned int addr, uint32_t value) "addr: 0x%03x value: 0x%08"PRIx32
++l2vic_delivered(int irq, int vid) "l2vic: delivered %d (vid %d)"
+ 
+ # loongson_ipi.c
+ loongson_ipi_read(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%"PRIx64
 -- 
 2.34.1
 
