@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F3C9CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB7CFCA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQzE-0000ca-BU; Tue, 02 Sep 2025 09:23:48 -0400
+	id 1utR0b-0001ap-G8; Tue, 02 Sep 2025 09:25:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utQzB-0000bN-Kx; Tue, 02 Sep 2025 09:23:45 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1utR0P-0001T2-AE; Tue, 02 Sep 2025 09:25:01 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utQz3-0006Mg-F0; Tue, 02 Sep 2025 09:23:45 -0400
+ id 1utR0G-0006Zq-Pn; Tue, 02 Sep 2025 09:25:00 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cGRJf0JQVz4w9k;
- Tue,  2 Sep 2025 23:23:30 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cGRL62C9rz4w9l;
+ Tue,  2 Sep 2025 23:24:46 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cGRJZ249mz4w9g;
- Tue,  2 Sep 2025 23:23:25 +1000 (AEST)
-Message-ID: <f17784ea-80dc-4ca5-ae46-b73752e40905@kaod.org>
-Date: Tue, 2 Sep 2025 15:23:22 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cGRL26fc8z4w8y;
+ Tue,  2 Sep 2025 23:24:42 +1000 (AEST)
+Message-ID: <ed290a6c-2f6a-46f8-a391-83f68d71f474@kaod.org>
+Date: Tue, 2 Sep 2025 15:24:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 01/21] hw/arm/aspeed_ast27x0-fc: Support VBootRom
+Subject: Re: [SPAM] [PATCH v1 02/21] hw/arm/ast27x0: Move SSP coprocessor
+ initialization from machine to SoC leve
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -40,9 +41,9 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20250717034054.1903991-1-jamin_lin@aspeedtech.com>
- <20250717034054.1903991-2-jamin_lin@aspeedtech.com>
- <9e7ec38d-7bb9-4f1e-b75b-96c3eec97024@kaod.org>
- <SI2PR06MB5041202A90343458D2BE7724FC06A@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <20250717034054.1903991-3-jamin_lin@aspeedtech.com>
+ <555f7a62-7332-41a2-a316-e0888fbc819d@kaod.org>
+ <SI2PR06MB5041042A2809C082882B61AAFC06A@SI2PR06MB5041.apcprd06.prod.outlook.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,17 +88,16 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI2PR06MB5041202A90343458D2BE7724FC06A@SI2PR06MB5041.apcprd06.prod.outlook.com>
+In-Reply-To: <SI2PR06MB5041042A2809C082882B61AAFC06A@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,119 +114,321 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/25 10:28, Jamin Lin wrote:
+On 9/2/25 10:41, Jamin Lin wrote:
 > Hi Cédric
 > 
->> Subject: Re: [SPAM] [PATCH v1 01/21] hw/arm/aspeed_ast27x0-fc: Support
->> VBootRom
+>> Subject: Re: [SPAM] [PATCH v1 02/21] hw/arm/ast27x0: Move SSP coprocessor
+>> initialization from machine to SoC leve
 >>
 >> On 7/17/25 05:40, Jamin Lin wrote:
->>> Introduces support for loading a vbootrom image into the dedicated
->>> vbootrom memory region in the AST2700 Full Core machine.
+>>> In the previous design, the SSP coprocessor (aspeed27x0ssp-soc) was
+>>> initialized and realized at the machine level (e.g., AST2700FC).
+>>> However, to make sure the coprocessors can work together properly—such
+>>> as using the same SRAM, sharing the SCU, and having consistent memory
+>>> remapping—we need to change how these devices are set up.
 >>>
->>> Additionally, it implements a mechanism to extract the content of
->>> fmc_cs0 flash data(backend file) and copy it into the memory-mapped
->>> region corresponding to ASPEED_DEV_SPI_BOOT.
+>>> This commit moves the SSP coprocessor initialization and realization
+>>> into the
+>>> AST2700 SoC (aspeed_soc_ast2700_init() and
+>> aspeed_soc_ast2700_realize()).
+>>> By doing so, the SSP becomes a proper child of the SoC device, rather
+>>> than the machine.
+>>>
+>>> This is a preparation step for future commits that will support shared
+>>> SCU, SRAM, and memory remap logic—specifically enabling PSP DRAM
+>> remap
+>>> for SSP SDRAM access.
 >>>
 >>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 >>> ---
->>>    hw/arm/aspeed_ast27x0-fc.c | 75
->> ++++++++++++++++++++++++++++++++++++++
->>>    1 file changed, 75 insertions(+)
+>>>    include/hw/arm/aspeed_soc.h | 27 +++++++++++++-----------
+>>>    hw/arm/aspeed_ast27x0-fc.c  | 30 ++------------------------
+>>>    hw/arm/aspeed_ast27x0.c     | 42
+>> +++++++++++++++++++++++++++++++++++++
+>>>    3 files changed, 59 insertions(+), 40 deletions(-)
 >>>
+>>> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+>>> index 217ef0eafd..2831da91ab 100644
+>>> --- a/include/hw/arm/aspeed_soc.h
+>>> +++ b/include/hw/arm/aspeed_soc.h
+>>> @@ -128,6 +128,19 @@ struct Aspeed2600SoCState {
+>>>    #define TYPE_ASPEED2600_SOC "aspeed2600-soc"
+>>>    OBJECT_DECLARE_SIMPLE_TYPE(Aspeed2600SoCState,
+>> ASPEED2600_SOC)
+>>>
+>>> +struct Aspeed27x0SSPSoCState {
+>>> +    AspeedSoCState parent;
+>>> +    AspeedINTCState intc[2];
+>>> +    UnimplementedDeviceState ipc[2];
+>>> +    UnimplementedDeviceState scuio;
+>>> +    MemoryRegion memory;
+>>> +
+>>> +    ARMv7MState armv7m;
+>>> +};
+>>> +
+>>> +#define TYPE_ASPEED27X0SSP_SOC "aspeed27x0ssp-soc"
+>>> +OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SSPSoCState,
+>> ASPEED27X0SSP_SOC)
+>>> +
+>>>    struct Aspeed27x0SoCState {
+>>>        AspeedSoCState parent;
+>>>
+>>> @@ -135,6 +148,8 @@ struct Aspeed27x0SoCState {
+>>>        AspeedINTCState intc[2];
+>>>        GICv3State gic;
+>>>        MemoryRegion dram_empty;
+>>> +
+>>> +    Aspeed27x0SSPSoCState ssp;
+>>>    };
+>>>
+>>>    #define TYPE_ASPEED27X0_SOC "aspeed27x0-soc"
+>>> @@ -146,18 +161,6 @@ struct Aspeed10x0SoCState {
+>>>        ARMv7MState armv7m;
+>>>    };
+>>>
+>>> -struct Aspeed27x0SSPSoCState {
+>>> -    AspeedSoCState parent;
+>>> -    AspeedINTCState intc[2];
+>>> -    UnimplementedDeviceState ipc[2];
+>>> -    UnimplementedDeviceState scuio;
+>>> -
+>>> -    ARMv7MState armv7m;
+>>> -};
+>>> -
+>>> -#define TYPE_ASPEED27X0SSP_SOC "aspeed27x0ssp-soc"
+>>> -OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SSPSoCState,
+>> ASPEED27X0SSP_SOC)
+>>> -
+>>>    struct Aspeed27x0TSPSoCState {
+>>>        AspeedSoCState parent;
+>>>        AspeedINTCState intc[2];
 >>> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
->>> index 7087be4288..e2eee6183f 100644
+>>> index e2eee6183f..c9b338fe78 100644
 >>> --- a/hw/arm/aspeed_ast27x0-fc.c
 >>> +++ b/hw/arm/aspeed_ast27x0-fc.c
->>> @@ -11,6 +11,7 @@
->>>
->>>    #include "qemu/osdep.h"
->>>    #include "qemu/units.h"
->>> +#include "qemu/datadir.h"
->>>    #include "qapi/error.h"
->>>    #include "system/block-backend.h"
->>>    #include "system/system.h"
->>> @@ -35,6 +36,7 @@ struct Ast2700FCState {
->>>
+>>> @@ -37,14 +37,11 @@ struct Ast2700FCState {
 >>>        MemoryRegion ca35_memory;
 >>>        MemoryRegion ca35_dram;
->>> +    MemoryRegion ca35_boot_rom;
->>>        MemoryRegion ssp_memory;
+>>>        MemoryRegion ca35_boot_rom;
+>>> -    MemoryRegion ssp_memory;
 >>>        MemoryRegion tsp_memory;
 >>>
->>> @@ -55,12 +57,65 @@ struct Ast2700FCState {
->>>    #define AST2700FC_HW_STRAP2 0x00000003
->>>    #define AST2700FC_FMC_MODEL "w25q01jvq"
->>>    #define AST2700FC_SPI_MODEL "w25q512jv"
->>> +#define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
->>> +
->>> +static void ast2700fc_ca35_load_vbootrom(AspeedSoCState *soc,
->>> +                                         const char *bios_name,
->> Error
->>> +**errp) {
->>> +    g_autofree char *filename = NULL;
->>> +    int ret;
->>> +
->>> +    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
->>> +    if (!filename) {
->>> +        error_setg(errp, "Could not find vbootrom image '%s'",
->> bios_name);
->>> +        return;
->>> +    }
->>> +
->>> +    ret = load_image_mr(filename, &soc->vbootrom);
->>> +    if (ret < 0) {
->>> +        error_setg(errp, "Failed to load vbootrom image '%s'",
->> bios_name);
->>> +        return;
->>> +    }
->>> +}
->>> +
->>> +static void ast2700fc_ca35_write_boot_rom(DriveInfo *dinfo, hwaddr addr,
->>> +                                         size_t rom_size, Error
->>> +**errp) {
->>> +    BlockBackend *blk = blk_by_legacy_dinfo(dinfo);
->>> +    g_autofree void *storage = NULL;
->>> +    int64_t size;
->>> +
->>> +    /*
->>> +     * The block backend size should have already been 'validated' by
->>> +     * the creation of the m25p80 object.
->>> +     */
->>> +    size = blk_getlength(blk);
->>> +    if (size <= 0) {
->>> +        error_setg(errp, "failed to get flash size");
->>> +        return;
->>> +    }
->>> +
->>> +    if (rom_size > size) {
->>> +        rom_size = size;
->>> +    }
->>> +
->>> +    storage = g_malloc0(rom_size);
->>> +    if (blk_pread(blk, 0, rom_size, storage, 0) < 0) {
->>> +        error_setg(errp, "failed to read the initial flash content");
->>> +        return;
->>> +    }
->>> +
->>> +    rom_add_blob_fixed("aspeed.boot_rom", storage, rom_size, addr); }
+>>> -    Clock *ssp_sysclk;
+>>>        Clock *tsp_sysclk;
+>>>
+>>>        Aspeed27x0SoCState ca35;
+>>> -    Aspeed27x0SSPSoCState ssp;
+>>>        Aspeed27x0TSPSoCState tsp;
+>>>
+>>>        bool mmio_exec;
+>>> @@ -158,6 +155,8 @@ static void ast2700fc_ca35_init(MachineState
+>> *machine)
+>>>            return;
+>>>        }
+>>>        aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
+>>> +    aspeed_soc_uart_set_chr(ASPEED_SOC(&s->ca35.ssp),
+>> ASPEED_DEV_UART4,
+>>> +                            serial_hd(1));
 >>
->> The above is duplicated code. Could we try to have common routines instead ?
+>> hmm, I wonder if the second uart shouldn't be set from the init handler of the
+>> Aspeed27x0SSPSoCState child object.
 > 
-> Thanks for your review and suggestion.
+> Will try it.
 > 
-> Per our earlier discussion, we plan to refactor hw/arm/aspeed.c. As a first
-> step, I can move the vbootrom helpers into a common source file so they can be
-> reused by other boards.
+>>
+>>
+>>>        if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
+>>>            return;
+>>>        }
+>>> @@ -196,30 +195,6 @@ static void ast2700fc_ca35_init(MachineState
+>> *machine)
+>>>        arm_load_kernel(ARM_CPU(first_cpu), machine,
+>> &ast2700fc_board_info);
+>>>    }
+>>>
+>>> -static void ast2700fc_ssp_init(MachineState *machine) -{
+>>> -    AspeedSoCState *soc;
+>>> -    Ast2700FCState *s = AST2700A1FC(machine);
+>>> -    s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
+>>> -    clock_set_hz(s->ssp_sysclk, 200000000ULL);
+>>> -
+>>> -    object_initialize_child(OBJECT(s), "ssp", &s->ssp,
+>> TYPE_ASPEED27X0SSP_SOC);
+>>> -    memory_region_init(&s->ssp_memory, OBJECT(&s->ssp),
+>> "ssp-memory",
+>>> -                       UINT64_MAX);
+>>> -
+>>> -    qdev_connect_clock_in(DEVICE(&s->ssp), "sysclk", s->ssp_sysclk);
+>>> -    if (!object_property_set_link(OBJECT(&s->ssp), "memory",
+>>> -                                  OBJECT(&s->ssp_memory),
+>> &error_abort)) {
+>>> -        return;
+>>> -    }
+>>> -
+>>> -    soc = ASPEED_SOC(&s->ssp);
+>>> -    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
+>>> -    if (!qdev_realize(DEVICE(&s->ssp), NULL, &error_abort)) {
+>>> -        return;
+>>> -    }
+>>> -}
+>>> -
+>>>    static void ast2700fc_tsp_init(MachineState *machine)
+>>>    {
+>>>        AspeedSoCState *soc;
+>>> @@ -247,7 +222,6 @@ static void ast2700fc_tsp_init(MachineState
+>> *machine)
+>>>    static void ast2700fc_init(MachineState *machine)
+>>>    {
+>>>        ast2700fc_ca35_init(machine);
+>>> -    ast2700fc_ssp_init(machine);
+>>>        ast2700fc_tsp_init(machine);
+>>>    }
+>>>
+>>> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c index
+>>> 6aa3841b69..ffbc32fef2 100644
+>>> --- a/hw/arm/aspeed_ast27x0.c
+>>> +++ b/hw/arm/aspeed_ast27x0.c
+>>> @@ -22,6 +22,8 @@
+>>>    #include "hw/intc/arm_gicv3.h"
+>>>    #include "qobject/qlist.h"
+>>>    #include "qemu/log.h"
+>>> +#include "hw/qdev-clock.h"
+>>> +#include "hw/boards.h"
+>>>
+>>>    #define AST2700_SOC_IO_SIZE          0x00FE0000
+>>>    #define AST2700_SOC_IOMEM_SIZE       0x01000000
+>>> @@ -410,6 +412,8 @@ static bool
+>>> aspeed_soc_ast2700_dram_init(DeviceState *dev, Error **errp)
+>>>
+>>>    static void aspeed_soc_ast2700_init(Object *obj)
+>>>    {
+>>> +    MachineState *ms = MACHINE(qdev_get_machine());
+>>
+>> Calling qdev_get_machine() in a device model is a no-no. Please don't.
 > 
-> Do you have a preference for the filename?
-> hw/arm/aspeed_utils.c (with a small header in include/hw/arm/aspeed_utils.h),
+> Will remove it.
+> 
+>>
+>>> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+>>>        Aspeed27x0SoCState *a = ASPEED27X0_SOC(obj);
+>>>        AspeedSoCState *s = ASPEED_SOC(obj);
+>>>        AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s); @@ -426,6
+>> +430,11
+>>> @@ static void aspeed_soc_ast2700_init(Object *obj)
+>>>                                    aspeed_soc_cpu_type(sc));
+>>>        }
+>>>
+>>> +    /* Coprocessors */
+>>> +    if (mc->default_cpus > sc->num_cpus) {
+>>
+>> That's a hack.
+>>
+>> We need to find another way to conditionally create the co-processors if that's
+>> what you want to do. A SoC class attribute would be a better way.
+>>
+> 
+> If I understanding your suggestion correctly, I should create new SOC variant(ex: ast2700-fc) and set a class attribute in its class_init.
 
-
-There is a aspeed_soc_common.c file for such helpers.
+Yes. Something like that.
 
 
 Thanks,
 
 C.
+
+
+
+> Then, the SOC's init/realize will check the coprocessor features and initialize SSP/TSP objects accordingly.
+> If yes, I will add a new class attribute(ex: sc->coprocessor =2)
+> 
+>>> +        object_initialize_child(obj, "ssp", &a->ssp,
+>> TYPE_ASPEED27X0SSP_SOC);
+>>> +    }
+>>> +
+>>>        object_initialize_child(obj, "gic", &a->gic,
+>>> gicv3_class_name());
+>>>
+>>>        object_initialize_child(obj, "scu", &s->scu,
+>>> TYPE_ASPEED_2700_SCU); @@ -610,9 +619,35 @@ static bool
+>> aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
+>>>        return true;
+>>>    }
+>>>
+>>> +static bool aspeed_soc_ast2700_ssp_realize(DeviceState *dev, Error
+>>> +**errp)
+>>
+>> I would pass 'Aspeed27x0SoCState *' instead.
+>>
+> 
+> 
+> Will do
+> 
+>>> +{
+>>> +    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+>>> +    AspeedSoCState *s = ASPEED_SOC(dev);
+>>> +    Clock *sysclk;
+>>> +
+>>> +    sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
+>>> +    clock_set_hz(sysclk, 200000000ULL);
+>>> +    qdev_connect_clock_in(DEVICE(&a->ssp), "sysclk", sysclk);
+>>> +
+>>> +    memory_region_init(&a->ssp.memory, OBJECT(&a->ssp),
+>> "ssp-memory",
+>>> +                       UINT64_MAX);
+>>> +    if (!object_property_set_link(OBJECT(&a->ssp), "memory",
+>>> +                                  OBJECT(&a->ssp.memory),
+>>> + &error_abort)) {
+>>
+>> please use errp instead.
+>>
+> Will do
+>>
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    if (!qdev_realize(DEVICE(&a->ssp), NULL, &error_abort)) {
+>>
+>> same here.
+>>
+> Will do
+> 
+> Thanks for review and suggestions.
+> Jamin
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    return true;
+>>> +}
+>>> +
+>>>    static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>>>    {
+>>>        int i;
+>>> +    MachineState *ms = MACHINE(qdev_get_machine());
+>>> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+>>>        Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+>>>        AspeedSoCState *s = ASPEED_SOC(dev);
+>>>        AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s); @@ -719,6
+>> +754,13
+>>> @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>>>        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scuio), 0,
+>>>                        sc->memmap[ASPEED_DEV_SCUIO]);
+>>>
+>>> +    /* Coprocessors */
+>>> +    if (mc->default_cpus > sc->num_cpus) {
+>>> +        if (!aspeed_soc_ast2700_ssp_realize(dev, errp)) {
+>>> +            return;
+>>> +        }
+>>> +    }
+>>> +
+>>>        /* UART */
+>>>        if (!aspeed_soc_uart_realize(s, errp)) {
+>>>            return;
+> 
+
 
