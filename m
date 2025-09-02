@@ -4,82 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC61CCA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07029CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utTSB-0005cH-2W; Tue, 02 Sep 2025 12:01:51 -0400
+	id 1utTZs-0003Rj-KB; Tue, 02 Sep 2025 12:09:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utTQe-0003uU-Ti
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:00:21 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utTQY-0001k7-Jl
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:00:16 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3d17731ac0fso3286667f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 09:00:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756828806; x=1757433606; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=00fTmYfT8sFMDWcfT7XRf5jzzwv+EfO9iwFUCc5DA5M=;
- b=HWc+S0NpQ/EpLlF0QE5fPR1PN2qvbNlMdSUmz/qh1GwyeEgizw1R+f3zysNJMBe2Ht
- 1sSE4kbmxr1VGI/XiI8FipsdHJ0fPtGcunD6MJCJ1QacrMCPGl1WU6CTK6OfTxIo6wcu
- LBzsQbCpyWNoPmHN+iWFW+uAlmlu4BkPgR1TcrHd8dkFn+4T1NH6J+C2xVsJ9c/vlayE
- 6IVu3MGt73/Jc5puy1Hg3U1B9XX2rZyR8TJzxwaxQlsleu8wQWolQydSi5pDJam/LVyE
- ll8iQbHRxdIotbIpS05RvRcPoMnJ7Rcb8DpIXJekKDOVIFhQYrI3p5gnn25iSbVXg5i/
- 5C8Q==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1utTZq-0003Qr-UN
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:09:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1utTZo-0003W7-OT
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:09:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756829383;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=UpcHDAAyOTYM3eawixZKhDYVLH1RxWSoq6LduiFlQRw=;
+ b=aF+RDKF3Rx6UGrzbZnAwG1O/1s1FIuOJZuV+PK/ULdnlMo40gC6lvalSUOXwyF5SPoZeNT
+ WXmEkNA8n/v+3KdslIhxor/A5bQ8bH7Nk+eSUsRLE4/Fo/tJ7l0Y3A6VSAN5S8LG9Nu4XO
+ BsVEqm5DP+yD3GbHzYeqh3kjYj/ZCng=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-187-ApsGwFb2NrS0DyDL32MOsg-1; Tue, 02 Sep 2025 12:09:42 -0400
+X-MC-Unique: ApsGwFb2NrS0DyDL32MOsg-1
+X-Mimecast-MFC-AGG-ID: ApsGwFb2NrS0DyDL32MOsg_1756829381
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-80584b42d15so309506285a.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 09:09:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756828806; x=1757433606;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=00fTmYfT8sFMDWcfT7XRf5jzzwv+EfO9iwFUCc5DA5M=;
- b=tx9pDFCZ3H6687Oxhu9ix+2nDRLwoN/USt23ShRHHw8zrQTegEqbiDQAqkMgjJ3jHC
- btfNDEfXSCmuDwmruw8OfmXVr1J0BPOjnY7ypPWRA48uJmoWvtTe61byh7E00i7x2701
- wyjxfRaKQrWq2+f5XiI7AXQ2ThdBPCVaXMETxz359roJx+9lXgbdYi6k2P89mkYV243Y
- MiVj9DoHRZOE9tOLPv0B0OMGJvETt1aOB58AjD9xP648UcMP3bTW/SIa4oMkI7lExiss
- YvUG4N/B2gAGheDWKS6SJdmdI/ByEBDsAh+XCyWAiMLNuH25ug2rfRlQS3qXYOHw2jlE
- 1uEg==
-X-Gm-Message-State: AOJu0YwgmzQSEfSVOjYtABYUtXMqHnE0jFT5RuZ2dn/PTYYjXDN67tYC
- uu11e4COkDU/53eN7c2tKnos+r/Xyx5XsPy9Jh4VxuPafvSRpAWHXybidIa8xTkQ4yqfjYOEtC1
- 8MyKH
-X-Gm-Gg: ASbGncty6EDtv64aIippnF+qsSK4ChhRrAFu2PlNz+oAnpXcPLnVOKefbQxsIHBgtEr
- Z2we7TfFeHFyTTw63wvg8DUizRokeWtXOvMgJjGbBUWHPoe4sonlAx236MyYz7td4ChCQlfQUYq
- DwwvD1jJV9uwUeeF88mZb3poFiPSNrcKQkCj/MSVOBP+B9GqDNmRZ4uHKydaukDa3WZtJAzSsVS
- 8n0Jd3hhDhS5qL1ByS/0cM9wKXXByqS8oqZGULh8X+qi/466PS3VE9KPwNFSlgM3AxR5DfTSK0w
- etYRCOgRSS3jqrbNuU83x2ePYo2ZvFlKiuYcs0AdwDACaOLODL9cWQi31For2/beR/7Sj66xFhB
- hBLofKMZ1PYhVSbxGsMcSnuSd6XQth0oni74cVM67qc/lLh85XZnQkqxLDGfbKPmAtXPQMCEm
-X-Google-Smtp-Source: AGHT+IFETW/E8wHNmdoOh2BYlJun+Py8+G5C/0HL8XTwckbyWaaUAIPtiPjc6DXe2EDCX7vQyrUGyA==
-X-Received: by 2002:a05:6000:25c1:b0:3d0:affe:ed78 with SMTP id
- ffacd0b85a97d-3d1e05b9aadmr9562603f8f.48.1756828805811; 
- Tue, 02 Sep 2025 09:00:05 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3dbead0b247sm729915f8f.6.2025.09.02.09.00.04
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 09:00:05 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/38] Misc HW patches for 2025-09-02
-Date: Tue,  2 Sep 2025 18:00:04 +0200
-Message-ID: <20250902160004.3816-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ d=1e100.net; s=20230601; t=1756829381; x=1757434181;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UpcHDAAyOTYM3eawixZKhDYVLH1RxWSoq6LduiFlQRw=;
+ b=ta22/mnh+klG+V32AzywrCS0uFXKYUImkq5SYTNu6UYJbbq6gpwJ87bJamklivjzbv
+ JOgwHjUmsM6/XzC3vr0B1rroKGR131W2BqvkhaSLRzLmXssiGOOvZbnuCQpYPdS4Tzup
+ uG8MVNsDRFSu1B0Zx2gBJ3bBZ2mworiQpmFOJ2SCFjOHFMR81kW+zVj4L+AqYBd02MxZ
+ WyeymTyTXFfKNlDIHkJFya0Bh8BBWIzR4LpN19Vx6RfbjFGx9MeSZVL7PFnYUiO2vlEM
+ xhTkzJzTfdTG04z+kMa7dBQUWiiUkll/ZTA6drz2qW30nic3EqdoV0aXFsHHwzhUpKE/
+ MJMg==
+X-Gm-Message-State: AOJu0Yxd53EdWQxEME2gm4VEr7KTwKAvRGTAXsf9Y0OnWtPr+EA5lEUU
+ IRhP5er00T+v8PkfJ/v/l5zDI7rNkIJczp02S64D6Ciea5qV/o3cxZ7QC3QCMOeL3sXhT1t/0e2
+ t3Vrdwvoyg9z8ZDy/UUnAMtvJg7zyWaPmf4ssBsTGXYoIZENxjg/guEMs
+X-Gm-Gg: ASbGncu8EereY4067wOUpn7NQZ+Ki11pLm3xL2m4O0kUHL2frRatldpCtEoZ/riJfXm
+ dfK3KjlYGrBgJxrsMvgCzJUp+8yAmCZuHAGEiPDXf3u7CD+z4jI7Z9YK4/NRqSKuBu5cbfd1l8Z
+ WXOM9TntY2dr5NS69E9F6BAyHAOfP9BB9FOTnphL7ANIk35zxIKcM98ZpQDbnxLlIzmnFcUzUKD
+ 1dtbaJTkfpARqszzHdmBP6akNX1KgPTvcS/f+txMdIi/z8qP9/iMa30iwiK4bX0cas5qHqw1K+Q
+ ec2edEFZhrGEJR64DFEh+btw1VFAN76k5BeWaDPsBubEWi+v6YLcgpPvBpiQ81BGi0CNOJC56Oi
+ is0ZZuzAta9EYy6rBLxYljA==
+X-Received: by 2002:ad4:5bea:0:b0:719:8c9:ac46 with SMTP id
+ 6a1803df08f44-71908c9b053mr84640836d6.31.1756829380038; 
+ Tue, 02 Sep 2025 09:09:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFA+o8MtdVn6jh8uqZQg4EkE9j0wQjPLs6EY5RaKa/Upm95l8mvxsJO1EplXbmIuVokSj4Lg==
+X-Received: by 2002:ad4:5bea:0:b0:719:8c9:ac46 with SMTP id
+ 6a1803df08f44-71908c9b053mr84639366d6.31.1756829378573; 
+ Tue, 02 Sep 2025 09:09:38 -0700 (PDT)
+Received: from x1.local
+ (bras-base-aurron9134w-grc-11-174-89-135-121.dsl.bell.ca. [174.89.135.121])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-720b4947b1asm13911186d6.41.2025.09.02.09.09.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Sep 2025 09:09:37 -0700 (PDT)
+Date: Tue, 2 Sep 2025 12:09:33 -0400
+From: Peter Xu <peterx@redhat.com>
+To: CJ Chen <cjchen@igel.co.jp>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Tomoyuki Hirose <hrstmyk811m@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [RFC PATCH v2 1/9] doc/devel/memory.rst: additional explanation
+ for unaligned access
+Message-ID: <aLcWvR5Snm1RXEcY@x1.local>
+References: <20250822092410.25833-1-cjchen@igel.co.jp>
+ <20250822092410.25833-2-cjchen@igel.co.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+In-Reply-To: <20250822092410.25833-2-cjchen@igel.co.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,159 +123,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8415b0619f65bff12f10c774659df92d3f61daca:
+On Fri, Aug 22, 2025 at 06:24:02PM +0900, CJ Chen wrote:
+> Add documentation to clarify that if `.valid.unaligned = true` but
+> `.impl.unaligned = false`, QEMU’s memory core will automatically split
+> unaligned guest accesses into multiple aligned accesses. This helps
+> devices avoid implementing their own unaligned logic, but can be
+> problematic for devices with side-effect-heavy registers. Also note
+> that setting `.valid.unaligned = false` together with
+> `.impl.unaligned = true` is invalid, as it contradicts itself and
+> will trigger an assertion.
+> 
+> Signed-off-by: CJ Chen <cjchen@igel.co.jp>
+> Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  docs/devel/memory.rst | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+> index 57fb2aec76..71d7de7ae5 100644
+> --- a/docs/devel/memory.rst
+> +++ b/docs/devel/memory.rst
+> @@ -365,6 +365,24 @@ callbacks are called:
+>  - .impl.unaligned specifies that the *implementation* supports unaligned
+>    accesses; if false, unaligned accesses will be emulated by two aligned
+>    accesses.
+> +- Additionally, if .valid.unaligned = true but .impl.unaligned = false, the
+> +  memory core will emulate each unaligned guest access by splitting it into
+> +  multiple aligned sub-accesses. This ensures that devices which only handle
+> +  aligned requests do not need to implement unaligned logic themselves. For
+> +  example, see xhci_cap_ops in hw/usb/hcd-xhci.c: it sets  .valid.unaligned
+> +  = true so guests can do unaligned reads on the xHCI Capability Registers,
+> +  while keeping .impl.unaligned = false to rely on the core splitting logic.
+> +  However, if a device’s registers have side effects on read or write, this
+> +  extra splitting can introduce undesired behavior. Specifically, for devices
+> +  whose registers trigger state changes on each read/write, splitting an access
+> +  can lead to reading or writing bytes beyond the originally requested subrange
+> +  thereby triggering repeated or otherwise unintended register side effects.
+> +  In such cases, one should set .valid.unaligned = false to reject unaligned
+> +  accesses entirely.
+> +- Conversely, if .valid.unaligned = false but .impl.unaligned = true,
+> +  that setting is considered invalid; it claims unaligned access is allowed
+> +  by the implementation yet disallowed for the device. QEMU enforces this with
+> +  an assertion to prevent contradictory usage.
 
-  Merge tag 'qga-pull-2025-08-29-v2' of https://github.com/kostyanf14/qemu into staging (2025-09-02 12:07:05 +0200)
+Some cosmetic comments only..
 
-are available in the Git repository at:
+This shouldn't be another bullet, but rather a separate sub-section,
+because it describes the relationship of above two entries.
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20250902
+IMO it can be better like this:
 
-for you to fetch changes up to e502e614f4c3e5ee7b12cf1c926d9581262fd626:
+MMIO Operations
+---------------
 
-  hw/i386/pc_piix.c: remove unnecessary if() from pc_init1() (2025-09-02 17:58:05 +0200)
+...
 
-v2: Dropped "hw/sd/sdcard: Fix size check for backing block image"
+- .valid.min_access_size, .valid.max_access_size...
 
-----------------------------------------------------------------
-Misc HW patches
+- .valid.unaligned...  See :ref:`unaligned-mmio-accesses` for details.
 
-- Compile various system files once
-- Remove SDCard spec v1.10
-- Remove mipssim machine and mipsnet device model
-- Prevent crash in e1000e when legacy interrupt fires after enabling MSI-X
-- Introduce qemu_init_irq_child()
-- Remove various memory leaks reported by ASan
-- Few Coverity fixes
-- Use 74Kf CPU to run MIPS16e binaries and M14Kc for microMIPS ones
+- .impl.min_access_size, .impl.max_access_size...
 
-(a pair if spurious checkpatch.pl warnings ignored).
+- .impl.unaligned...  See :ref:`unaligned-mmio-accesses` for details.
 
-----------------------------------------------------------------
+.. _unaligned-mmio-accesses:
 
-Aditya Gupta (1):
-  hw/ppc: Fix build error with CONFIG_POWERNV disabled
+Unaligned MMIO Accesses
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Cédric Le Goater (4):
-  hw/arm/virt: Include 'system/system.h'
-  hw/isa/superio: Include 'system/system.h'
-  hw/mips/loongson3_virt: Include 'system/system.h'
-  hw/mips/malta: Include 'system/system.h'
-
-Denis Rastyogin (1):
-  target/mips: fix TLB huge page check to use 64-bit shift
-
-Djordje Todorovic (1):
-  hw/pci: Allow explicit function numbers in pci
-
-Jan Kiszka (3):
-  hw/sd/sdcard: Add validation for boot-partition-size
-  hw/sd/sdcard: Refactor sd_bootpart_offset
-  crypto/hmac: Allow to build hmac over multiple
-    qcrypto_gnutls_hmac_bytes[v] calls
-
-Laurent Vivier (1):
-  e1000e: Prevent crash from legacy interrupt firing after MSI-X enable
-
-Mark Cave-Ayland (1):
-  hw/i386/pc_piix.c: remove unnecessary if() from pc_init1()
-
-Peter Maydell (8):
-  hw/irq: New qemu_init_irq_child() function
-  hw/char/serial-pci-multi: Use qemu_init_irq_child() to avoid leak
-  hw/ide/ich.c: Use qemu_init_irq_child() to avoid memory leak
-  hw/gpio/pca9554: Avoid leak in pca9554_set_pin()
-  hw/char/max78000_uart: Destroy FIFO on deinit
-  hw/misc/xlnx-versal-cframe-reg: Free FIFO, g_tree on deinit
-  hw/display/xlnx_dp: Don't leak dpcd and edid objects
-  hw/arm/boot: Correctly free the MemoryDeviceInfoList
-
-Philippe Mathieu-Daudé (12):
-  hw/sd/sdcard: Remove support for spec v1.10
-  target/ppc/kvm: Avoid using alloca()
-  docs/devel/style: Mention alloca() family API is forbidden
-  scripts/coverity-scan/COMPONENTS.md: Add a 'plugins' category
-  hw/scsi/mptsas: Avoid silent integer truncation in MPI_FUNC_IOC_INIT
-  hw/ssi: Document ssi_transfer() method
-  elf: Add EF_MIPS_ARCH_ASE definitions
-  linux-user/mips: Select 74Kf CPU to run MIPS16e binaries
-  linux-user/mips: Select M14Kc CPU to run microMIPS binaries
-  hw/mips: Remove mipssim machine
-  hw/net: Remove mipsnet device model
-  docs/about/removed-features: Clarify 'device_add' is removed
-
-Pierrick Bouvier (6):
-  migration: compile migration/ram.c once
-  migration/vfio: compile only once
-  cpu-target: build compilation unit once for user/system
-  include/exec/target_page.h: move page-target.c to header
-  hw/meson: enter target hw first
-  hw/intc: compile some arm related source once
-
- MAINTAINERS                             |   7 +-
- docs/about/deprecated.rst               |  18 --
- docs/about/removed-features.rst         |  14 +-
- docs/devel/style.rst                    |   4 +-
- docs/system/target-mips.rst             |  11 -
- configs/devices/mips-softmmu/common.mak |   1 -
- meson.build                             |   5 +-
- hw/sd/sdmmc-internal.h                  |   3 +-
- include/crypto/hmac.h                   |  12 +
- include/elf.h                           |   7 +
- include/exec/target_page.h              |  11 +-
- include/hw/irq.h                        |  23 +-
- include/hw/sd/sd.h                      |   1 -
- include/hw/ssi/ssi.h                    |  14 ++
- target/ppc/cpu.h                        |   4 +
- cpu-target.c                            |   5 -
- crypto/hmac-gcrypt.c                    |   4 +-
- crypto/hmac-glib.c                      |   4 +-
- crypto/hmac-gnutls.c                    |   4 +-
- crypto/hmac-nettle.c                    |   4 +-
- hw/arm/boot.c                           |   2 +-
- hw/arm/virt.c                           |   1 +
- hw/char/max78000_uart.c                 |   7 +
- hw/char/serial-pci-multi.c              |   3 +-
- hw/core/irq.c                           |   8 +
- hw/display/xlnx_dp.c                    |  10 +-
- hw/gpio/pca9554.c                       |   2 +-
- hw/i386/pc_piix.c                       |   6 +-
- hw/ide/ich.c                            |   3 +-
- hw/isa/isa-superio.c                    |   1 +
- hw/mips/loongson3_virt.c                |   1 +
- hw/mips/malta.c                         |   1 +
- hw/mips/mipssim.c                       | 249 --------------------
- hw/misc/xlnx-versal-cframe-reg.c        |   9 +
- hw/net/e1000e_core.c                    |   5 -
- hw/net/mipsnet.c                        | 297 ------------------------
- hw/pci/pci.c                            |  15 +-
- hw/ppc/pnv.c                            |  86 +++++++
- hw/scsi/mptsas.c                        |   6 +-
- hw/sd/sd.c                              |  37 +--
- linux-user/mips/elfload.c               |   6 +
- migration/vfio-stub.c                   |  16 ++
- migration/vfio.c                        |  14 --
- page-target.c                           |  21 --
- target-info-stub.c                      |   4 +
- target/mips/tcg/system/tlb_helper.c     |   2 +-
- target/ppc/kvm.c                        |   6 +-
- target/ppc/misc_helper.c                |  59 +----
- hw/intc/meson.build                     |   6 +-
- hw/meson.build                          |  45 ++--
- hw/mips/Kconfig                         |   7 -
- hw/mips/meson.build                     |   1 -
- hw/net/Kconfig                          |   3 -
- hw/net/meson.build                      |   1 -
- hw/net/trace-events                     |   7 -
- migration/meson.build                   |   8 +-
- scripts/coverity-scan/COMPONENTS.md     |   3 +
- 57 files changed, 330 insertions(+), 784 deletions(-)
- delete mode 100644 hw/mips/mipssim.c
- delete mode 100644 hw/net/mipsnet.c
- create mode 100644 migration/vfio-stub.c
- delete mode 100644 page-target.c
+...
 
 -- 
-2.51.0
+Peter Xu
 
 
