@@ -4,72 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AA5CA0FFE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12AA4CA1009
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 14:15:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utRlg-0003Ao-SD; Tue, 02 Sep 2025 10:13:52 -0400
+	id 1utRlY-00037H-7H; Tue, 02 Sep 2025 10:13:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3gvu2aAkKCqEBOLFFTMFSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--ankeesler.bounces.google.com>)
- id 1utRlZ-000388-C7
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 10:13:45 -0400
-Received: from mail-qv1-xf49.google.com ([2607:f8b0:4864:20::f49])
+ <3gfu2aAkKCqAANKEESLERGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--ankeesler.bounces.google.com>)
+ id 1utRlU-00034w-Sg
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 10:13:41 -0400
+Received: from mail-qk1-x749.google.com ([2607:f8b0:4864:20::749])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3gvu2aAkKCqEBOLFFTMFSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--ankeesler.bounces.google.com>)
- id 1utRlH-0005LK-FE
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 10:13:44 -0400
-Received: by mail-qv1-xf49.google.com with SMTP id
- 6a1803df08f44-70dd6d255c4so135773806d6.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 07:13:24 -0700 (PDT)
+ <3gfu2aAkKCqAANKEESLERGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--ankeesler.bounces.google.com>)
+ id 1utRlH-0005Kt-EU
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 10:13:40 -0400
+Received: by mail-qk1-x749.google.com with SMTP id
+ af79cd13be357-7fa717ff66bso1114709085a.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 07:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1756822403; x=1757427203; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=dHSCPE30znSY0wWG1dnzAUCDvKJoJRQ7QqhxUlGgzFo=;
- b=dcHMaliOyNba2g+yphuv2Zk/5z8QTucL0lYTGSnP462FYNzkOSNjdsPKBQJmSPLPBT
- 9nSWo1ZIrCIjYxOgI5qYmdDmKW4Np0fvWATPqFKms0MBB/0Hb85FWhmpc08tIRC6G9iD
- Ppu5FY1IMa4C/fdHEbaXjJzgGHHqHBE3ZkPA/vcg/J0ZEWgWcgQU9Q8jSMjYsfIs1lc/
- qaGeXIigl2EKlHUQ3OeH8yCkowG4hM7P9rv+K/hTfh8etzF0yEw2j6ZKn8uUXM66m+dn
- 4efXrtX+l5PHFKTmD+Ay3N1PgPjLY/9LL+6TpkxEhnzi91UognPBN6YDLmGzFgGi9IhZ
- W/FQ==
+ d=google.com; s=20230601; t=1756822402; x=1757427202; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=UZNSCN5sYnNYWa8Hr4uwRVGbv6aMKp/piGaLp7BrsHs=;
+ b=DBLyoAX/4kzwws1BxaWlo2dHk67z56hq4QzTxJe7u3vFvsruIXt/xRTSWUNyR04BPg
+ Iptd2eBgg7tY+Hsjl4WlXyCVBSfj2wc3NKogqGC0jSjWlzXmxV2WgK2DufxzZXkPzglR
+ 6KlewAkaPH/pwWoUtoYmUrA1d1C+zDKksHXichBUcl4k0LLU+IjAZj9KcRWmSbGnVAS7
+ uhSOegTjxzlbUMLV97tK6LOwj8vNLBlPPuHXpA5wrfyv7Eh120SWisnOvlOrXCrtjEI1
+ buAaEzWIekznrVQy4Eu2R9/qiv0BVmj6QJWQBsmnbskpMlE9lCNDJnIEsOda7k1ACm2d
+ CgaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756822403; x=1757427203;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dHSCPE30znSY0wWG1dnzAUCDvKJoJRQ7QqhxUlGgzFo=;
- b=Vjnw+Gnj9ZRaDKOVVtu8fi6Hg+JXRTnzaXP3uCCBn0KzmvDeuyNfFVwzmZwX+FOdQD
- ZP7wnmWGUrct3ryrvLlV0sV8pa6XiDzyrcsaWLKldQrarcSjknDOhJxQ0+U6qU3j6voX
- SIoblM7Z5i3E+joNTruQqKbzIqstR+0e3gCUMMP4lpKGKuxYShkFhSuaqrTrB/O+gQgP
- 1hll+cY/HOJSi5/t1wlyllTiTpcwh0sn9eB8Wgp1r/KZnHkbywApIsQUN3emEvaZ/ReN
- Ywpys0+2XriRO8fkYVlYo5TVzEwSLoGJqCdR+joU53Ah7T6oUh6zRZl2qSfTyXG00u0w
- iSmg==
-X-Gm-Message-State: AOJu0YyIN3TFnZB9W5NWtJLAF83Hx3QYSyofXL45QLM+fmCu4wWSLAUp
- tTFT+4f5g4NEhQb7AOgh9JYt8DFOHLKOPzTxrYEyigAMC+jzYPgOY8Ir0ETvYbfgfDdJHCTsXz8
- gePh60NUgD8abThYU
-X-Google-Smtp-Source: AGHT+IGhn452ukdULXAIbH1TYQFSAodQviu9A4SiU72IYKb64PF3kuaVaXxon8m247idQq6IR2bdFijVcon4FsA=
-X-Received: from qkbef6.prod.google.com ([2002:a05:620a:8086:b0:7ff:c939:d59e])
+ d=1e100.net; s=20230601; t=1756822402; x=1757427202;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UZNSCN5sYnNYWa8Hr4uwRVGbv6aMKp/piGaLp7BrsHs=;
+ b=lCx4TsjUgJZdKF7fzsz3RLQ5qDXUE16IC02WNTvIx9F5MX4kTikJI3RRdMW378qi5j
+ XJdcq3jQPC09W4LT61UEb2lf8d55rgF08Np+CTnqKRncnLOnSwJx3Noeaypii5ioUr80
+ 6BsXXcrIZknNsbyrHohfTgOi3WCOluyj8L/2p6YIPTgDVaVTmeF3rXVUHPlsy+5VWdKn
+ EzgKes/2zJ7hAI72cCbnmEk8PED8Mp4wTRrNXrZ4PF1Nkv4sHwo+P0JJpocD11L5bMBv
+ RRGpnNIpleh4uF/c8uZkKBUCoLRCTdTDl/YitvP/QMGik9egG9cwntHPChbgQlzdQeP8
+ 9bZA==
+X-Gm-Message-State: AOJu0YweXnigVuPvz5NXBsS1iSHoWxicNtYODEaQ0PTLi4KNsKPUSpKp
+ cClnR8CefsNvUB4NoX+Jaqci2sTav1k31oca17kEOxRMrXxFX6lje1JQbT1+OkehZNzi/2s850S
+ HUABM1kmqRpdskfkH
+X-Google-Smtp-Source: AGHT+IG14FLglvlVh94qxRhWtrs/0kZICP6fsl3cnnx6X+6RdF+hMXJGf0U31e9EceikpmF/T0eX8FW6Qy0h60E=
+X-Received: from qkbdl5.prod.google.com ([2002:a05:620a:1d05:b0:807:e3b6:b77f])
  (user=ankeesler job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:622a:1101:b0:4af:1fe7:2170 with SMTP id
- d75a77b69052e-4b31dcd3740mr112062291cf.39.1756822402879; 
- Tue, 02 Sep 2025 07:13:22 -0700 (PDT)
-Date: Tue,  2 Sep 2025 14:13:12 +0000
-In-Reply-To: <20250902141312.750525-1-ankeesler@google.com>
+ 2002:a05:620a:4451:b0:7e9:f81f:ce8d with SMTP id
+ af79cd13be357-7ff2c145378mr1083271085a.79.1756822401622; 
+ Tue, 02 Sep 2025 07:13:21 -0700 (PDT)
+Date: Tue,  2 Sep 2025 14:13:11 +0000
 Mime-Version: 1.0
-References: <20250902141312.750525-1-ankeesler@google.com>
 X-Mailer: git-send-email 2.51.0.338.gd7d06c2dae-goog
-Message-ID: <20250902141312.750525-2-ankeesler@google.com>
-Subject: [PATCH v3 1/1] Support per-head resolutions with virtio-gpu
+Message-ID: <20250902141312.750525-1-ankeesler@google.com>
+Subject: [PATCH v3 0/1] Support per-head resolutions with virtio-gpu
 From: Andrew Keesler <ankeesler@google.com>
 To: berrange@redhat.com, marcandre.lureau@gmail.com
 Cc: qemu-devel@nongnu.org, Andrew Keesler <ankeesler@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f49;
- envelope-from=3gvu2aAkKCqEBOLFFTMFSHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--ankeesler.bounces.google.com;
- helo=mail-qv1-xf49.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::749;
+ envelope-from=3gfu2aAkKCqAANKEESLERGOOGLE.COMQEMU-DEVELNONGNU.ORG@flex--ankeesler.bounces.google.com;
+ helo=mail-qk1-x749.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -133,60 +131,24 @@ Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
 
 Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
 Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
----
+
+Changelist:
+* v3: changes after v2 review
+  * fix new resolution configuration logic (&& instead of ||)
+  * correct use of api machinery (has_*)
+  * move documentation to QMP API
+* v2: changes after v1 review + 10.2 rebase
+  * updated code, commit message, and cover letter to match new res config logic
+  * marked new VirtIOGPUOutput fields as optional and since 10.2
+* v1: initial patch
+
+Andrew Keesler (1):
+  Support per-head resolutions with virtio-gpu
+
  hw/display/virtio-gpu-base.c | 10 ++++++++++
  qapi/virtio.json             | 10 ++++++++--
  2 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 7269477a1c..6adb5312a4 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -233,6 +233,16 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-     g->req_state[0].width = g->conf.xres;
-     g->req_state[0].height = g->conf.yres;
- 
-+    for (output_idx = 0, node = g->conf.outputs;
-+         node && output_idx < g->conf.max_outputs;
-+         output_idx++, node = node->next) {
-+        if (node->value->has_xres && node->value->has_yres) {
-+            g->enabled_output_bitmask |= (1 << output_idx);
-+            g->req_state[output_idx].width = node->value->xres;
-+            g->req_state[output_idx].height = node->value->yres;
-+        }
-+    }
-+
-     g->hw_ops = &virtio_gpu_ops;
-     for (i = 0; i < g->conf.max_outputs; i++) {
-         g->scanout[i].con =
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 9d652fe4a8..9469c63e81 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -966,15 +966,21 @@
- ##
- # @VirtIOGPUOutput:
- #
--# Describes configuration of a VirtIO GPU output.
-+# Describes configuration of a VirtIO GPU output. If both xres and
-+# yres are set, they take precedence over root virtio-gpu
-+# resolution configuration and enable the corresponding output.
- #
- # @name: the name of the output
- #
-+# @xres: horizontal resolution of the output in pixels (since 10.2)
-+#
-+# @yres: vertical resolution of the output in pixels (since 10.2)
-+#
- # Since: 10.1
- ##
- 
- { 'struct': 'VirtIOGPUOutput',
--  'data': { 'name': 'str' } }
-+  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
- 
- ##
- # @DummyVirtioForceArrays:
 -- 
 2.51.0.338.gd7d06c2dae-goog
 
