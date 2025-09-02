@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7444ECA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23B7CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQpO-0007Q2-61; Tue, 02 Sep 2025 09:13:38 -0400
+	id 1utQnb-0000xQ-5A; Tue, 02 Sep 2025 09:11:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQp5-0006x7-Km
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:13:21 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQnK-0000rg-2O
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:33 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQoy-0004jq-Gz
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:13:19 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45b7d485173so33677295e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:13:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQn2-0004Uc-Se
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:11:29 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-45b8b1a104cso21161745e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756818784; x=1757423584; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756818669; x=1757423469; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NGqxHDZXqk8C+oMKaLUoVk4ghBJAywHOZPex4RT6YEI=;
- b=QEpcjAxst5cIS5OCN+0FbJdpTmlJjOk7VJryCxkbJgR0SkDxWc+aFM4YQhIXEW4i+X
- IGKUJbe5gQavQ5vNSG89siQFPWfj89oc5kfsW5V6jeinNY471XypH2HeHoRJzWKMDWo3
- jBD5ScmFiKHECe77fvOcDAcgkBZSUyHE2dKuJ084ncS/vETzIn93xXUhrKJeVUsGUdo/
- yaDo3p9UEXUmQD7dN0fc03D27wz1foOO/Hweo1PQRRy2F/XzuiP0FgQUi6UaJgO6XOKF
- Xr6Ny0m4Jsd7UgP0xoDAl94iTW3VSwijIx16tiVT21/uLbXfLTgVDmqxBHsXK6tjQ/gb
- lM7Q==
+ :reply-to; bh=ZO8GkHAjAS9SCd/410xii2goyI4MjiXciEMBan796CQ=;
+ b=mWrLD0Dc5/2Rcx8FOPStxW3sAg0irDs0E0EO5H8t1y1HKLSTO5/3spUUF0cGdRzE6l
+ V3OHgj0wSbBNVagpSvpWikTNZRqg2xJEvZu3Xj6d28gn0OI8O1ss6xEE4nF+NRsRnDPB
+ XEG2znT3eReN4S0QihMdw9iQz5bmzbBLNPaxcShb0zJBBIP+gnPyVlTD5QvY7qrj/zRJ
+ JzpNSpqxoBfaxmPspJA+qHu7zDX2UXKzJqnrn8i91HYhdy8g59G7SHV7xdpd7t5FF9dk
+ jso+y3DLk+JZVRLzDHhtKPkPkUjhdgfk5kicdZsCQr+hAcoH+v+taidNBGZyKCMVhhon
+ g6Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756818784; x=1757423584;
+ d=1e100.net; s=20230601; t=1756818669; x=1757423469;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NGqxHDZXqk8C+oMKaLUoVk4ghBJAywHOZPex4RT6YEI=;
- b=NxrlZ20kCZd0PEQnmK3yDcz/UFj1inVk3Xd227/UYjlXYujCp+F5wU+F8giNUVOxun
- zcdOY78heRdOEgQd+eZ8c26NOZmZAQ3VF8pbPi8PckodHatWvt7ejU+S9DVyeat94tSA
- zZ7G6OSblt/0osmAr3yorhXgg+romh2CBQEwKc+ug9N2axu2zp0LhI5edLe7VS9ubWKe
- YPR7AqusCDxUsij9aVduURCui324wc9/nj3X4O16CgRqOlEC3gA39jSN4dUkUa5gwBQr
- M3o5jF0ZuSMPneOCUTAbVOYXQvCxe5QGKvutnA1BtoHhFZNbf/LhFs/XNnAzTfRXKMrS
- uCkQ==
-X-Gm-Message-State: AOJu0Yz+KB9wm04USqbNQIaCD/aUSxs1yj271bPx7D4Xdl4DV7IRMgrO
- QbqVMIEpczfOUFWD7NPAiFu/UNApe4sDw10LeyP34AMaCLwkv4KDb48ztqrnwo7qt2j2XPSAGZu
- oMVuV
-X-Gm-Gg: ASbGnctptE3LpaBu9NjcltSxc39fXv8lTRc7tCxN14y1mtlcGaPRwNWgUQ0yso9bnah
- 976JdKp5VSlre93voA/QLuEI8rieCyYEl90rCJXVX1VcuUW3AE4IJv9/91Z/QJLZ9JUEun6CjJu
- 9Wj6U4inCzZuTid/xHctC10avVz4cFDAjBtDgf0jA1RyjTA6bxdtQiTcpqZM0lf49hNc861bsdN
- MjI3SDDtijGk8UuYr/DTxCJJRLnj6pvEcRl/gJNeb2tNhva8pHSLS0k0u/jWafg1Y+1uaYrhlTy
- mx7d57Y/JjGlRiaey8OsSoYwE+Eo0NsnU/jiuscghQ6qm2EnWGfesFjYkechsFvYcdluDeSQmjn
- o/EnvQA0AELuiyroe3Xny2Y0nCjLXzQUc57YSOm2zHCxBL6bZa3Q/Fvw95n1TlsntVM50VbZD
-X-Google-Smtp-Source: AGHT+IFhs4prCBDZxeoCadH1HaPY0Cfw/VTV2zYfVHZ2g2jqdJJDu8Q0Q0DRRW1fhU2K7Va2cDAojA==
-X-Received: by 2002:a05:600c:474f:b0:459:ea5d:418b with SMTP id
- 5b1f17b1804b1-45b85532b10mr94140325e9.9.1756818784349; 
- Tue, 02 Sep 2025 06:13:04 -0700 (PDT)
+ bh=ZO8GkHAjAS9SCd/410xii2goyI4MjiXciEMBan796CQ=;
+ b=QTT0QylusVKCYcsVImVLjsyh1F0dIGOFF+kxInaXtQ5DhgXGJj5mDeN0OnnTLjeuEH
+ zfE3wPRM4CvGED38NWcPwUsda6xioTCE3ajVn5PtyM39rmhJ9HBcZja0/5VWusPwd7Js
+ O4N+NNLu4mixNaomdVcGJxGGJShUZh/MSau435jlaiwlLczO7xIfeZClQSevWCD/sZD6
+ whJZl+4t5Tj/bzq1dy6WjSA9K+Doc03iCyv8ZWQVL1H7tJ+ZC8MtGwC/nbc2gYdcXJdc
+ ZQgVRLLMtuS844/a2iWpsqVwdYFBREnX3KxfRlAJHK/LpjMPxyDFIeGYBwsIrzrcYdOV
+ RfBg==
+X-Gm-Message-State: AOJu0Yw7A+1bN9vNQx9Y9zmF8eyAYBuR6zHck/0/MY7l62IiIsj4gvUX
+ LKTP71vGuH0TjNzdirdeWPQetPL80gg7dK6UclJoME9O1D5Tjw80JxP/tWOUJJynFX5aNsMBMKZ
+ 49jBs
+X-Gm-Gg: ASbGncvHDGpGT1XHxOu36Kime9TURpGhsuo51yFluPn4HoWpDApVSVyclOClmlUd61K
+ pgXpE282VoVJh3jH7WrIs9e89b9WtvRlwpj7kh7AeI97vEIVM8PTc327FW+3cZMdzczwnEsJKX4
+ 5dj8CotrwfnAyglQJvnbFrUvrHu+wCK6k6dNQU7xkYfXMGnrgspu09+OKuBwmANrObTXbTX+pnh
+ HEykZoEEzubIhzZAJWQg+AnGjVYxeCG385gumkwLn2yKaQwzNVUKIv6Am2NYrPT5M5eQ6NOl/1T
+ d+kIgyjh27LzQOjdjLgFGbEZ5gt9ZPfGSyCCm1fpKnVyUDO6uUtZJ5wsamZsu+taQCTN26Z0Qv8
+ Y+3ETpnlQsntyco12W+wXI7lGtfLO3I8FxSM2miJzGdhf8xDSyUdGn+gkZOuyxas11WYwiCanUJ
+ LFiRkdsPY=
+X-Google-Smtp-Source: AGHT+IH8JY8CCrI4uIi4M+ZyCNFpGD+mDcK0OQeXubBdonC8cQv2Ja2TbLQkYu3JpiLMhVX1LpnGbQ==
+X-Received: by 2002:a05:600c:3596:b0:45b:8a45:b540 with SMTP id
+ 5b1f17b1804b1-45b8a45b97amr62463075e9.19.1756818668831; 
+ Tue, 02 Sep 2025 06:11:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b7e8ab14esm214282885e9.21.2025.09.02.06.13.03
+ 5b1f17b1804b1-45b6f0d32a2sm303454045e9.9.2025.09.02.06.11.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 06:13:03 -0700 (PDT)
+ Tue, 02 Sep 2025 06:11:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 36/39] hw/mips/malta: Include 'system/system.h'
-Date: Tue,  2 Sep 2025 15:10:13 +0200
-Message-ID: <20250902131016.84968-37-philmd@linaro.org>
+Subject: [PULL 11/39] e1000e: Prevent crash from legacy interrupt firing after
+ MSI-X enable
+Date: Tue,  2 Sep 2025 15:09:48 +0200
+Message-ID: <20250902131016.84968-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131016.84968-1-philmd@linaro.org>
 References: <20250902131016.84968-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-Files using serial_hd() should include 'system/system.h'. Fix that.
+A race condition between guest driver actions and QEMU timers can lead
+to an assertion failure when the guest switches the e1000e from legacy
+interrupt mode to MSI-X. If a legacy interrupt delay timer (TIDV or
+RDTR) is active, but the guest enables MSI-X before the timer fires,
+the pending interrupt cause can trigger an assert in
+e1000e_intmgr_collect_delayed_causes().
 
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Aurelien Jarno <aurelien@aurel32.net>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250901064631.530723-5-clg@redhat.com>
+This patch removes the assertion and executes the code that clears the
+pending legacy causes. This change is safe and introduces no unintended
+behavioral side effects, as it only alters a state that previously led
+to termination.
+
+- when core->delayed_causes == 0 the function was already a no-op and
+  remains so.
+
+- when core->delayed_causes != 0 the function would previously
+  crash due to the assertion failure. The patch now defines a safe
+  outcome by clearing the cause and returning. Since behavior after
+  the assertion never existed, this simply corrects the crash.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1863
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20250807110806.409065-1-lvivier@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/mips/malta.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/net/e1000e_core.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/hw/mips/malta.c b/hw/mips/malta.c
-index cbdbb210568..344dc8ca766 100644
---- a/hw/mips/malta.c
-+++ b/hw/mips/malta.c
-@@ -52,6 +52,7 @@
- #include "system/qtest.h"
- #include "system/reset.h"
- #include "system/runstate.h"
-+#include "system/system.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "system/kvm.h"
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 24138587905..06657bb3ac5 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -341,11 +341,6 @@ e1000e_intmgr_collect_delayed_causes(E1000ECore *core)
+ {
+     uint32_t res;
+ 
+-    if (msix_enabled(core->owner)) {
+-        assert(core->delayed_causes == 0);
+-        return 0;
+-    }
+-
+     res = core->delayed_causes;
+     core->delayed_causes = 0;
+ 
 -- 
 2.51.0
 
