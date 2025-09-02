@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25AF9CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 05:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFDACA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 05:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utJmV-0008EO-AZ; Tue, 02 Sep 2025 01:42:11 -0400
+	id 1utJoq-0001hf-SH; Tue, 02 Sep 2025 01:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utJmT-0008Dh-Dy; Tue, 02 Sep 2025 01:42:09 -0400
+ id 1utJon-0001gS-4W; Tue, 02 Sep 2025 01:44:33 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utJmQ-0001V7-8P; Tue, 02 Sep 2025 01:42:09 -0400
+ id 1utJol-0001ax-40; Tue, 02 Sep 2025 01:44:32 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cGF482kdtz4wB0;
- Tue,  2 Sep 2025 15:42:00 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4cGF706CPfz4wB0;
+ Tue,  2 Sep 2025 15:44:28 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cGF443KLbz4w9t;
- Tue,  2 Sep 2025 15:41:56 +1000 (AEST)
-Message-ID: <4f415fd0-b890-463c-ac64-c3a7edf8fdfd@kaod.org>
-Date: Tue, 2 Sep 2025 07:41:54 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4cGF6x4Sbgz4w9t;
+ Tue,  2 Sep 2025 15:44:25 +1000 (AEST)
+Message-ID: <2ba426ce-58f3-4d01-b0a0-330d4718553e@kaod.org>
+Date: Tue, 2 Sep 2025 07:44:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v5 10/10] docs/system/arm/aspeed: Document OTP
- memory options
+Subject: Re: [SPAM] [PATCH v5 00/10] aspeed: OTP model, SBC integration,
+ tests, and docs
 To: Kane Chen <kane_chen@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -42,7 +42,6 @@ To: Kane Chen <kane_chen@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250812094011.2617526-1-kane_chen@aspeedtech.com>
- <20250812094011.2617526-11-kane_chen@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,9 +86,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250812094011.2617526-11-kane_chen@aspeedtech.com>
+In-Reply-To: <20250812094011.2617526-1-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -113,68 +112,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/25 11:40, Kane Chen wrote:
+Hello Kane,
+
+On 8/12/25 11:39, Kane Chen wrote:
 > From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > 
-> Add documentation for the OTP memory module used by AST2600 and AST1030
-> SoCs, and describe options for using a pre-generated image or an
-> internal buffer. Include example commands for configuration and image
-> generation.
+> This patch series extends the QEMU model for the ASPEED OTP (One-Time
+> Programmable) memory device with block backend support and tighter
+> integration with the SoC and machine configuration.
 > 
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> The OTP model simulates a simple fuse array used in ASPEED SoCs for
+> secure boot, configuration, key storage, and user-programmable data.
+> The updated model adds support for loading initial OTP content from a
+> file via the QEMU CLI.
+> 
+> Example usage:
+>    ./qemu-system-arm \
+>      -machine ast2600-evb \
+>      -blockdev driver=file,filename=otpmem.img,node-name=otp \
+>      -global aspeed-otp.drive=otp \
+>      ...
+> 
+> Any feedback or suggestions are appreciated!
+> 
+> Kane
 > ---
->   docs/system/arm/aspeed.rst | 31 +++++++++++++++++++++++++++++++
->   1 file changed, 31 insertions(+)
 > 
-> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index bf18c56347..6317c0e910 100644
-> --- a/docs/system/arm/aspeed.rst
-> +++ b/docs/system/arm/aspeed.rst
-> @@ -243,6 +243,37 @@ under Linux), use :
->   
->     -M ast2500-evb,bmc-console=uart3
->   
-> +OTP Option
-> +^^^^^^^^^^
-> +
-> +Both the AST2600 and AST1030 chips use the same One Time Programmable
-> +(OTP) memory module, which is utilized for configuration, key storage,
-> +and storing user-programmable data. This OTP memory module is managed
-> +by the Secure Boot Controller (SBC). The following options can be
-> +specified or omitted based on your needs.
-> +
-> +  * When the options are specified, the pre-generated configuration
-> +    file will be used as the OTP memory storage.
-> +
-> +  * When the options are omitted, an internal memory buffer will be
-> +    used to store the OTP memory data.
-> +
-> +.. code-block:: bash
-> +
-> +  -blockdev driver=file,filename=otpmem.img,node-name=otp \
-> +  -global aspeed-otp.drive=otp \
-> +
-> +The following bash command can be used to generate a default
-> +configuration file for OTP memory:
-> +
-> +.. code-block:: bash
-> +
-> +  if [ ! -f otpmem.img ]; then
-> +    for i in $(seq 1 2048); do
-> +      printf '\x00\x00\x00\x00\xff\xff\xff\xff'
-> +    done > otpmem.img
-> +  fi
-> +
->   Aspeed 2700 family boards (``ast2700-evb``)
->   ==================================================================
->   
+> ChangeLog
+> ---------
+> v5:
+> - Add OTP programming semantics and tracing
+> - Integrate OTP into AST1030 SoC
+> - Add CAMP2 register support for reading both DWORDs of OTP data
+>    entries
+> - Handle voltage mode write commands to avoid misreporting valid
+>    requests as "Unknown command"
+> - Add functional test to verify firmware boot with a pre-configured
+>    OTP image
+> - Add documentation for OTP memory options in QEMU
+> 
+> v4:
+> - Add a 'drive' property to allow backing OTP data with a block device
+> - Expose a machine parameter (`-machine otpmem=XXX`) for convenient
+>    aliasing of the OTP drive via QOM path
+> 
+> v3:
+> - Switched to object_property_set_int() for setting "size"
+> - Simplified qdev_realize() error handling by passing errp directly
+> - Added "drive" property to OTP model for future extensibility
+> 
+> v2:
+> - Rename device from 'aspeed_otpmem' to 'aspeed_otp' and move it to hw/nvram/
+> - Move OTP device realization from instance_init to the realize function
+> - Improve error logging with qemu_log_mask() and remove unused error propagation
+> 
+> v1:
+> - Initial version
+> 
+> ---
+> 
+> Kane-Chen-AS (10):
+>    hw/nvram/aspeed_otp: Add ASPEED OTP memory device model
+>    hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC
+>    hw/arm: Integrate ASPEED OTP memory support into AST2600 SoCs
+>    hw/nvram/aspeed_otp: Add 'drive' property to support block backend
+>    hw/nvram/aspeed_otp: Add OTP programming semantics and tracing
+>    hw/arm: Integrate ASPEED OTP memory support into AST1030 SoCs
+>    hw/misc/aspeed_sbc: Add CAMP2 support for OTP data reads
+>    hw/misc/aspeed_sbc: Handle OTP write command for voltage mode
+>      registers
+>    tests/function/aspeed: Add OTP functional test
+>    docs/system/arm/aspeed: Document OTP memory options
+> 
+>   docs/system/arm/aspeed.rst              |  31 ++++
+>   include/hw/misc/aspeed_sbc.h            |   6 +
+>   include/hw/nvram/aspeed_otp.h           |  33 ++++
+>   hw/arm/aspeed_ast10x0.c                 |   2 +-
+>   hw/arm/aspeed_ast2600.c                 |   2 +-
+>   hw/misc/aspeed_sbc.c                    | 196 ++++++++++++++++++++++++
+>   hw/nvram/aspeed_otp.c                   | 190 +++++++++++++++++++++++
+>   hw/misc/trace-events                    |   6 +
+>   hw/nvram/meson.build                    |   4 +
+>   hw/nvram/trace-events                   |   5 +
+>   tests/functional/meson.build            |   2 +
+>   tests/functional/test_arm_aspeed_otp.py |  55 +++++++
+>   12 files changed, 530 insertions(+), 2 deletions(-)
+>   create mode 100644 include/hw/nvram/aspeed_otp.h
+>   create mode 100644 hw/nvram/aspeed_otp.c
+>   create mode 100644 tests/functional/test_arm_aspeed_otp.py
+> 
 
+I will queue patches 1-8,10 in aspeed-next. No need to resend.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Please address the comments on patch 9 in a new series, Cc: Thomas.
 
 Thanks,
 
 C.
+
+
+
+
 
 
 
