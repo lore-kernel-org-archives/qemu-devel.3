@@ -4,82 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B20CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:22:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EE4CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 10:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utO9P-0006rh-GW; Tue, 02 Sep 2025 06:22:07 -0400
+	id 1utO9v-0007gd-EF; Tue, 02 Sep 2025 06:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utO9I-0006oZ-T8
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:22:01 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utO9k-0007Z6-Oz
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:22:29 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utO9G-00082s-Ae
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:22:00 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45b8b1a104cso19528165e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:21:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utO9i-000873-P5
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 06:22:28 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3d1bf79d6afso2103172f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 03:22:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756808516; x=1757413316; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
+ d=linaro.org; s=google; t=1756808544; x=1757413344; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=I2H0CPl24RUHVPwJV1KasKc5Bk1Uniw9WQcQ5TKh5BM=;
- b=iS+mVQ2iroIAM3dNalI+BEUtztSSjLRJPJVzpgKIEbGWdVKSAkhmuvHm4jM/wwl29E
- CNHnbydeE7UFMrDSG8QQxb9WRvK1ZBhb/dlyU9xUIBGk67zcpozzyW+S+oL2sSCFpinL
- ajftkuf1wvgSfP1/SiSXKt7RsAFofDCv8wkk6Sxry2f0Nc/w5iCx9+dMrBSqJ38lJ1RU
- rGZn5Dp33F9C7h08yhbz4DeiPklUwJyuOTABe2oWIORwHiZ1abI2QLr5wy2GVlGSvq4m
- NnVijSydbwzFGsjRF/B+pmZ84RGKfd7HplF7pxFjCajmgUi8M1TpUhkE9Kv8pR9eEWFl
- pkOA==
+ bh=jw/1eNJgIOcepbKCObytsQWFr5tm+skVjNTS9u7cY+4=;
+ b=PvTBR5uVvuW2VcMD1k3gTShWh1/M44PT5F4bA2SUeMda2C+J0u4qmkUyVb9Ph4IZQS
+ xLV33BqLcX20GJlMpqbgo/xKgLc+e/uCSLf0Mi0nTMr4C1DK4FHNv2vkmR2Cqb2/0U69
+ zfvBsCdIYmzTfyQkiEyuGa2PlAfzLEnSZirezSzz5duzwtwibp8ZDE3kw514jXVLDHAj
+ NtbWxkfeTR3DsYU8PPQs0I+0tGSn5JqiHkzOiK+6ibRiTTJ0nRAwF1JYL7dN6M5ZAUM1
+ WHic61kItc4OU1/VnTUzUoY/3drNs8tJodMHxfgYetztOFALUpLzDgxbKPwFZ8LY8Z1B
+ BuRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756808516; x=1757413316;
- h=content-transfer-encoding:in-reply-to:from:content-language
+ d=1e100.net; s=20230601; t=1756808544; x=1757413344;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I2H0CPl24RUHVPwJV1KasKc5Bk1Uniw9WQcQ5TKh5BM=;
- b=XxiRBvQtHaBweJX+alZ9C96fZhkCa4Y7SXFd9OAqcL5Cz+CuMB+bggFhXfFcfT7Qho
- J+0ErBeY73OLqbi55wKtD/51D9EVGnRYmoGEGigMRaufAUPR6OkLW1AMpnDbYECNMvaz
- ycot5FZf80F9c9Pa2ybTbDBp9c5fHBZ0Xu00aJzzXHFUpm5kc1jhvkqtllEG9LSPSJQg
- 1IghacnzTrDwJGMV6VE4ERgeGiJ9C2zQL/s9ywp1nBhz3jxl37XtKg/pAi03FHwZsLYB
- HWWd3mlB3RxACYb3mGYOy7T3gkOEPWK0kQn5KQsJOHRmC+a7aaTP5UTXd+UXNxyaOXIG
- msNg==
+ bh=jw/1eNJgIOcepbKCObytsQWFr5tm+skVjNTS9u7cY+4=;
+ b=cmXw2q3O4jD24RRE7LJKaQ7rC2fEI9RuCHetS6EkIW49fR9h8eXJcUNdOkCh8yAUeE
+ Iua0JPeQL6o3Rn7igWLSQILgwlCBTPcbVRPFyezhUHYwLCTL0Atv2r9pY1zpnWbWT0XC
+ 0ccEQiGC/wZqtg5JWKaaBb8vZBHOcbazng+MGge10iPmPAhp5z2R0gsa9EjrUwVHrwa9
+ +ckvOgJPrxUz3lH//B5qzNWxtxcEFn3w/e/cCt+qddvQ9HkVy63uVVArQxOJQk6xIXGC
+ rc5IAwdpsAO9dZWR/yOSCk9tqfc5i//H2RiIE6LUbzksLnS9Jq0fixZWlJ2ADMjCJ4cb
+ dCuw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8q/VfarYOrEV9F/QTSUM8KQWsHu8Zfi8/Vwc28r/0dalASbHMOz/+wa5TWMAa0JT7B/wHkuOzayLr@nongnu.org
-X-Gm-Message-State: AOJu0YwPqvM9VpiPY0UmLv0avCFHuI6cR2jJ8h0WmIsxu2FIZQp8fgg0
- cIh/O7xvceLXiFcOhlKYtX3SZ85Ro+bj8dWPS7mgWH/7Qy7g5ekMTt20/emSR5qIP0U=
-X-Gm-Gg: ASbGncsbxM6UXWKaY1AITK5ygk80I6GpLaZ0eTouukOgs1Rpp0aJCFCHyVrMLw2g2hu
- 71ZfL6gCavKoiUQD1Xk4yO0NqiyprjholFbR5cwrJXV89N86X+EuDUjPAA+AgS4I0Z9K5+kubNA
- DDBRVXesqbbORcDu2rnNb1H3Mg1yQowMGww4z4LdRxcP0afUvVlsCrjmzl1cxGluPJ6Rd039Bwm
- UHp89SiL9xRTWMdnFwkR50hOzufDjnO+Y/bbyU/9LWevAl7uShQL6plDnhGO4Vn4RLer9oN0tie
- xt0ygcQeICa7Iujxyjia37lbvNc6bd5ON38WXEXfsDXntp9ONHzVKLDu7LOawuue2cvLeVifdb2
- GMJrBjj/tRiyCzcmGM9P/34BTLIyulP39QoP+0q/P3/pRsv5kkaFVDp70XhxpwejXpg==
-X-Google-Smtp-Source: AGHT+IFlqF7ST5Nw+61d5j+MENQ2VosNmsSMVNU8cguz9WrZqrbQyypEzopmLnNMgoerH72RZbix7A==
-X-Received: by 2002:a05:600c:4f0b:b0:459:d821:a45b with SMTP id
- 5b1f17b1804b1-45b87bf56e3mr89107745e9.9.1756808515880; 
- Tue, 02 Sep 2025 03:21:55 -0700 (PDT)
-Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45b88007a60sm72572415e9.8.2025.09.02.03.21.54
+ AJvYcCVFQu2GQlhpJSiQmYJf0cUvCHHpRAEplGrWOR8aT8eAv+ZjZwaA+PK83mCXIZBg6s+Fd10hGaWDw593@nongnu.org
+X-Gm-Message-State: AOJu0YyLFMyZVkY5OPkg3Dr92rfAgFFQ5R5MQlImtmZ4jkpwVytZ6MFD
+ YM4qnHA8ogGl6Ahn3A5CB69H0uJOySD3o39gyrRkrI7gaQQwQ9QF+cbrnODXaC3Hgiw=
+X-Gm-Gg: ASbGncuJZ/gTtvJnsNLoWSVd1fJAS3wFJUjKcnBwQti2LYue6G4YaA8K5kfAeBvP+ch
+ sgk624gxoGNODym7RHop5yrDrunIwzdcy9fJaE+UV9C8/+dKsf+Re61TObRcmCkNBuj9JL3SPCJ
+ IioiJ1kRo+fMsag3BGP/5tQoQWbNbEshY2yW3IrNwY9c3gGw4/tqmDDBY18jkyri+vGguTO9g3x
+ 325M0ONGeC+xL0UDiLyr3uO9Ze5CZUkkHYEe5QT1aBUnpJvkgGW8+WFgYei2ckCVLUTuUYYRbTR
+ Cti63qIGf2/fL4dnAx7AzP8cQsPX/qtlGwV6cYhXVQ2/Zi+/Ry4PkRk2Fla96ELVlns7B/yd2NT
+ 7RemBJYR5iqMQ4I6N9vhFLcDerkPdG1h+I1AUXh3SjBLEZhK3gwOcdFh8Kz+3KP2eBMt0hHlWgW
+ BledT+wA==
+X-Google-Smtp-Source: AGHT+IHO3rNvFzx4zkkfn6w7oI99x2Oe6RDZif7TY37w4X2aQYpGbtFQSgasYeC+SgfkBSG+P1D0Ug==
+X-Received: by 2002:a05:6000:24c4:b0:3d5:787e:fd91 with SMTP id
+ ffacd0b85a97d-3d5787f062emr5258636f8f.2.1756808544410; 
+ Tue, 02 Sep 2025 03:22:24 -0700 (PDT)
+Received: from [10.20.0.233] (151-0-205-164.ip282.fastwebnet.it.
+ [151.0.205.164]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3d21a80c723sm14162215f8f.9.2025.09.02.03.22.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 03:21:55 -0700 (PDT)
-Message-ID: <7333954a-f5e3-4d67-8e27-ed8e3b30b7e3@linaro.org>
-Date: Tue, 2 Sep 2025 12:21:54 +0200
+ Tue, 02 Sep 2025 03:22:23 -0700 (PDT)
+Message-ID: <1fb279c6-7512-4d95-9c0f-29d69d3564da@linaro.org>
+Date: Tue, 2 Sep 2025 12:22:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] hw/irq: New qemu_init_irq_child() function
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250821154053.2417090-1-peter.maydell@linaro.org>
- <20250821154053.2417090-2-peter.maydell@linaro.org>
+Subject: Re: [PATCH v2 09/14] util: introduce common helper for error-report &
+ log code
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Stefan Weil <sw@weilnetz.de>, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250829180354.2922145-1-berrange@redhat.com>
+ <20250829180354.2922145-10-berrange@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250821154053.2417090-2-peter.maydell@linaro.org>
+In-Reply-To: <20250829180354.2922145-10-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,26 +115,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/8/25 17:40, Peter Maydell wrote:
-> The qemu_init_irq() function initializes a TYPE_IRQ QOM object.  The
-> caller is therefore responsible for eventually calling
-> qemu_free_irq() to unref (and thus free) it.
-> 
-> In many places where we want to initialize an IRQ we are in
-> the init/realize of some other QOM object; if we have a variant
-> of this function that calls object_initialize_child() then the
-> IRQ will be automatically cleaned up when its parent object is
-> destroyed, and we don't need to remember to manually free it.
-> 
-> Implement qemu_init_irq_child(), which is to qemu_init_irq()
-> what object_initialize_child() is to object_initialize().
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   include/hw/irq.h | 23 ++++++++++++++++++++++-
->   hw/core/irq.c    |  8 ++++++++
->   2 files changed, 30 insertions(+), 1 deletion(-)
+On 8/29/25 04:03, Daniel P. Berrangé wrote:
+> +enum QMessageContextFlags {
+> +    QMESSAGE_CONTEXT_SKIP_MONITOR = (1 << 0),
+> +};
+> +
+> +/*
+> + * qmessage_context:
+> + * @flags: the message formatting control flags
+> + *
+> + * Format a message prefix with the information
+> + * previously selected by a call to
+> + * qmessage_set_format.
+> + *
+> + * If @flags contains QMESSAGE_CONTEXT_SKIP_MONITOR
+> + * an empty string will be returned if running in
+> + * the context of a HMP command
+> + *
+> + * Returns: a formatted message prefix, or empty string;
+> + * to be freed by the caller.
+> + */
+> +char *qmessage_context(int flags);
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I don't like QMESSAGE_CONTEXT_SKIP_MONITOR.
+It's just as easy to check monitor_cur in the single user and not call qmessage_context.
 
+The comment is out-of-date, since you can now return NULL.
+That said, I have a follow-up suggestion.
+
+
+r~
 
