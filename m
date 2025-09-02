@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1967ACA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A5B9CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 16:51:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utUDg-0008FB-0F; Tue, 02 Sep 2025 12:50:56 -0400
+	id 1utUDf-0008Ey-Mz; Tue, 02 Sep 2025 12:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utUDe-0008ES-RW
+ id 1utUDe-0008E7-5I
  for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:50:54 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1utUDd-0004Po-6t
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:50:54 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-b0225483ca0so550972566b.2
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 09:50:52 -0700 (PDT)
+ id 1utUDc-0004PO-DG
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 12:50:53 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b0449b1b56eso201125166b.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 09:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756831851; x=1757436651; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jtVv37IFrMt/51iDXJklEJqQ7iS6Rm5PnqjC6DUh6f4=;
- b=Kw8Wp+wZHdoMuYWaU+Ja9kQcNkQsUg44eX6/Ox5bxNVfvc3FLEoJnOqqQpsIRGY8Md
- N/x6h7JMUNX2Cotfsz3bL1cBtNq/2K//Im6VN+x9YzOtRLgmCvxleDLISfJ+jw9toM72
- akiuR7Y1y8ftNIgQ+2GzFOUs1XojMfYKa+eZnjjneo726TOc55QVNfwYfgIJyRV7CHcy
- g2/SmptlWbMyKUajEQh7IlRpL1+r439v5QlBqAG1fp0ZZNnZSoLMJ6vi43ZvsQ5apBHG
- J7BjhCNDEA18Ld+5qXQBr48X6en5//Cj/ZpsHsIpVXnhzBEI5tPVvIDQq5ZYobYSCwMB
- BVCA==
+ d=linaro.org; s=google; t=1756831850; x=1757436650; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BrVjWsHcZyingugi7ctu2XV6MLij18kQAJ1wqTXEpSY=;
+ b=Q3xuiQKLQzcPuXotfKoE3v3OJZkcAZiVvcHsK8amhD3uUAL5Mrsb2nLK1vNlxkL5ZI
+ KgFTirI5DINOXc7RHJOLygXLarEBfNLll7L2EadzgyaPgUvAY1alVzHYrgDBeI/dXI20
+ sircMSYpEAeZN7t30DuqMNplc78O1+HDUr36DQEjJRFzfZtXqU/7maULGt6GwBSoZFKK
+ iWNaZbS1zzqTjyK5mPIR/quoDGBU2qvXnR5rzHgTBPU/KuAf6JFOjwTvLlF3DIDJQBLh
+ NEZFqzIq1ow+zG5IV2atT+aaQVV+K8p4P4l/9SDAZTnjg3PPu7LeonrDqOXaetkCwScG
+ Na5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756831851; x=1757436651;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jtVv37IFrMt/51iDXJklEJqQ7iS6Rm5PnqjC6DUh6f4=;
- b=L0weFiV+FOhYy2iapeXtzLurF5K5PrhDh7381SxkZTBce1eJOiXk6dgkBQv4ULYr0q
- WF7WNCwaKOOUsrHIRDTlwLyWjEGJrpCvN/zXfeRfyCenJ5Pv1XRwzMXFltPGs0XDUhk1
- qXPLShG454BtomJu5c/PMWfhAK9QzfLoF1/Xpb6Okd8VqHk8Mlp3k8O+zxWYlul/3DOZ
- 4xA7Gkn0RWseH5mPJ/UKid0LKrb8Bo/0NctWzVzI5PHj+Gd/AeiwwgurYBY5wPqs0GRi
- +4RyR/mVB1LSLm/ZH9ps3qTXnEzjgRF2LniBc7BS0DP7cxWnhqzCuYEoRnkQEqFEkw6Q
- mi3Q==
-X-Gm-Message-State: AOJu0YwIXZk2CpD2Zepk0QI9GHUDHeYE9igN1MOoWp3cIlqJPSBDm7oE
- tN/laFM4lwMmm+ye/0g+NpVJVkzxEqwmFB3d1znh86FbEbG/Gk63g441v3PX50GjvJU=
-X-Gm-Gg: ASbGncs5Qpr938RwRB/lnQuG3KdWa7PcwkDuLiyDvqY6mi+zZr6rdEL3QffGj82pfk2
- iD0yy1ABQ4aXDPJgSlMpKekRHqp58VGu3urJ0bV5gEermnjipQUI1Jquf4fdZcP4RBFSwWLDGkz
- zXKF701AfJTPAXt1H4X67uMHzPWhCvko7/u7UK9+s/yGKOAz0dkbKZFH2ik2G6cs/KC4B9L3lSS
- YCIUZz2Ag8OWqk0AkPfv57S5htY4ZT7IU4e0WmgfUXxYC6edHqfdvy8XIpTiXARUDY5VvEOpAMC
- qDpKVtqd6tcONmIkob9fpoSgGGqbzitkXJyxL5+J7gCnXGpcfPLldsXPOSSeAaE16mpJLcYonMH
- ocrvTsyAla36qxxAL5NZ4vDY=
-X-Google-Smtp-Source: AGHT+IGgNhBEyN8gNysNAoj56uQ96otFlRHk/GUKx1iYSE3AzP/GlZi/DIxcHoRXEt8Qi7sxTTHA/g==
-X-Received: by 2002:a17:907:7e82:b0:afe:ec09:2a23 with SMTP id
- a640c23a62f3a-b01d9769f7fmr1131782566b.43.1756831851341; 
- Tue, 02 Sep 2025 09:50:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1756831850; x=1757436650;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BrVjWsHcZyingugi7ctu2XV6MLij18kQAJ1wqTXEpSY=;
+ b=DPt4YiYU8nBQyG0+HQkfSXPV42QsiFt09vIQ0v4VDbvra1QytxaUH+xKFiexIQIG2e
+ HrYiuO8eX9tq1NWL+OtzD9dvVxH1LBTly5SwRiI0jDTWbYMlH9cWX6Cu1Lrjs1iN5IfD
+ m9GGShIjDtUfdaIrSkhDdTkEESak4EBMXzggi4QviUZjusapdjiPv6iLrXravskZ8QjI
+ 5pS/6r42GsFQbxLvxgdP0nlP4L0MhC9HLmCyyaRZOB22rW2LkTMRMNfz87roLDIYHOUB
+ 4LrQhTmIRKyqmDYXoLK3UaqMFVGusL1qlNjS1O7e+ODbavvwrdUirZvq6ts5GU4QyuCX
+ rjWQ==
+X-Gm-Message-State: AOJu0Ywz5EX3xUhFYgnDJAF3jm4bZWfFSPhplPap3BD6gXxlHMUNr6bD
+ SRlLTovbx2UL1azqbTSIrQOLJ4vTZ0W01RBXtgJqosUb6p12iFamBo2GbzqV12aHxO8=
+X-Gm-Gg: ASbGncvkHw8gcgFOraqtDDnAek+Sf4G/M/lv3sFEMjzwksnzvnzlwlWz10sYfEevQzB
+ N9O1yy/OxuIS+PooPuRZvOkw2aHQUkTVkoFPoPMD0XhmSKt0mPlzDlWkFSAxjTVmP70Q7Z/p7WM
+ Temz40UYAgGUjIRb7is6CSdF5J/PuoxpG8ErPTshP4u28w9K1yXNTPvAlwkc183Imn0Q1Wn0FL8
+ WLIM7QBvIo/eZch/IF4M/mQvKQ+KTZjbhEvLuaPkD3E+0vZ7UZzIluGX4+smyZFv/J3FSCDmHzy
+ IcSaEyCJJ6qts2tPFCDgJSyONQmMOATjKA2pkIvGp7r4HD+Q9mYFonMzH7ZHTGko3nBGtDfQ3/o
+ WsBgMjWUBTVTXKHEu6eATKpjwqEUpE6EuFw==
+X-Google-Smtp-Source: AGHT+IEeJxb8P67X8byzzu7f7TFVuVXRh5jN2TohRy1M0QtxrvsUlbJ3XKN1eTbeHz06pKr96Exj7Q==
+X-Received: by 2002:a17:906:9f90:b0:afe:d1cb:6327 with SMTP id
+ a640c23a62f3a-b01d976c577mr1262831866b.48.1756831850326; 
+ Tue, 02 Sep 2025 09:50:50 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc52ade4sm9831541a12.45.2025.09.02.09.50.49
+ a640c23a62f3a-b0420a16c32sm624240866b.94.2025.09.02.09.50.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 02 Sep 2025 09:50:49 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9D80F5F82D;
+ by draig.lan (Postfix) with ESMTP id D0C1B5F8D8;
  Tue, 02 Sep 2025 17:50:48 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -71,15 +72,17 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
  John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 0/4] virtio document cleanups (esp vhost-user)
-Date: Tue,  2 Sep 2025 17:50:44 +0100
-Message-ID: <20250902165048.1653323-1-alex.bennee@linaro.org>
+Subject: [PATCH 2/4] docs/system: unify the naming style for VirtIO devices
+Date: Tue,  2 Sep 2025 17:50:46 +0100
+Message-ID: <20250902165048.1653323-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250902165048.1653323-1-alex.bennee@linaro.org>
+References: <20250902165048.1653323-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,37 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These just tidy up the device emulation area to be a little more
-organised as well as splitting out the VirtIO documents themselves.
+This makes the index look a little neater.
 
-Alex.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ docs/system/devices/virtio/virtio-gpu.rst  | 2 +-
+ docs/system/devices/virtio/virtio-pmem.rst | 6 ++----
+ docs/system/devices/virtio/virtio-snd.rst  | 2 +-
+ 3 files changed, 4 insertions(+), 6 deletions(-)
 
-Alex Bennée (4):
-  docs/system: split VirtIO devices from the rest
-  docs/system: unify the naming style for VirtIO devices
-  docs/system: drop vhost-user-rng docs
-  docs/system: merge vhost-user-input into vhost-user-contrib
-
- docs/system/device-emulation.rst              | 18 ++--
- docs/system/devices/vfio-user.rst             |  2 +-
- docs/system/devices/vhost-user-input.rst      | 45 ----------
- docs/system/devices/vhost-user-rng.rst        | 41 ---------
- docs/system/devices/virtio/index.rst          | 29 +++++++
- .../devices/virtio/vhost-user-contrib.rst     | 87 +++++++++++++++++++
- .../devices/{ => virtio}/vhost-user.rst       | 22 ++---
- .../devices/{ => virtio}/virtio-gpu.rst       |  4 +-
- .../devices/{ => virtio}/virtio-pmem.rst      |  6 +-
- .../devices/{ => virtio}/virtio-snd.rst       |  2 +-
- 10 files changed, 141 insertions(+), 115 deletions(-)
- delete mode 100644 docs/system/devices/vhost-user-input.rst
- delete mode 100644 docs/system/devices/vhost-user-rng.rst
- create mode 100644 docs/system/devices/virtio/index.rst
- create mode 100644 docs/system/devices/virtio/vhost-user-contrib.rst
- rename docs/system/devices/{ => virtio}/vhost-user.rst (77%)
- rename docs/system/devices/{ => virtio}/virtio-gpu.rst (99%)
- rename docs/system/devices/{ => virtio}/virtio-pmem.rst (98%)
- rename docs/system/devices/{ => virtio}/virtio-snd.rst (99%)
-
+diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
+index b7eb0fc0e72..39d2fd2d21c 100644
+--- a/docs/system/devices/virtio/virtio-gpu.rst
++++ b/docs/system/devices/virtio/virtio-gpu.rst
+@@ -1,7 +1,7 @@
+ ..
+    SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-virtio-gpu
++VirtIO GPU
+ ==========
+ 
+ This document explains the setup and usage of the virtio-gpu device.
+diff --git a/docs/system/devices/virtio/virtio-pmem.rst b/docs/system/devices/virtio/virtio-pmem.rst
+index c82ac067315..0c24de83ec7 100644
+--- a/docs/system/devices/virtio/virtio-pmem.rst
++++ b/docs/system/devices/virtio/virtio-pmem.rst
+@@ -1,7 +1,5 @@
+-
+-===========
+-virtio pmem
+-===========
++VirtIO Persistent Memory
++========================
+ 
+ This document explains the setup and usage of the virtio pmem device.
+ The virtio pmem device is a paravirtualized persistent memory device
+diff --git a/docs/system/devices/virtio/virtio-snd.rst b/docs/system/devices/virtio/virtio-snd.rst
+index 2a9187fd701..3c797f66e03 100644
+--- a/docs/system/devices/virtio/virtio-snd.rst
++++ b/docs/system/devices/virtio/virtio-snd.rst
+@@ -1,4 +1,4 @@
+-virtio sound
++VirtIO Sound
+ ============
+ 
+ This document explains the setup and usage of the Virtio sound device.
 -- 
 2.47.2
 
