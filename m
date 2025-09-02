@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4551BCA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93A1CA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utQnx-0002cb-ER; Tue, 02 Sep 2025 09:12:09 -0400
+	id 1utQo9-0004BG-K0; Tue, 02 Sep 2025 09:12:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQns-00024C-JP
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:12:04 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQo7-00043M-Ev
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:12:19 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQnm-0004bm-SQ
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:12:04 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3cef6debedcso2433888f8f.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:11:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1utQo0-0004cO-RE
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:12:18 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-45b873a2092so25194515e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756818715; x=1757423515; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756818729; x=1757423529; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RM//SOSyMG1jcYS0Uj3ddE2XoaaYiQer2JjB+xASa4s=;
- b=WKaMEc+rS1oYZAR1DxvBsKk22+zk2/CUbnpTEVS+zDP+Dc+VU2DD14xFX8je1vD0zj
- CRy5bVBi+xgh8QSw7D9ekoS+RohQht6b0hjskEUFYdBlWQNar9fnA5DR7rRF6ke45X/w
- T/AOBLyUX48C581b4eYeqOd6sQ3KM6uB69Mu+2U8VwK+b0LqwuRgdbZVNhdEqnFQOb8l
- DGGjwRgBh2JOWRb8Z/AOwfEvpJPJRjEHFReNZKVC5kkDtMKBNUSrFeqfxps6LpGTw39i
- EkgdxYVunbsy5J8UePHNAXc+u6hhNJ7kWSjN/lwl6hn+pFeO++SgRxBz7M0tWIAE5flm
- fESA==
+ :reply-to; bh=Td3nvqZKIvcK1wV49niKvXWkSXIsMzUAcPCww/paHbo=;
+ b=YpgeN2VVXCQ/f6G2EyLJpU3o8kZnqLq9XfGBPQEDXVTb50aAqIxmXboUONCti/do2J
+ U9s3Gn9F8DksV8gL72cCYlmyAv3mCCvubWsBsLRBUAqtBAF7n8YYcHGn1x3yfPZ8Fnok
+ tI/imIabtGU8vUBQ6kC3p5Xg05ZU7V0xNJ0nUDRn7K27sxpJzjYoYwhMzc7Hwgb7Crzu
+ 07tYjdf6DmRNthz0kz/YMWWrJYYSRgWCJzIR4/XKNeEiv8hZIJeRqVWvjLoSVpO6XIzn
+ TC4u19qE+0aREPSbwe9qxNndrqVF8TAG1osF+4h86dUp8ykiDC+TeESAlR8Hu6EzfPwJ
+ sVGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756818715; x=1757423515;
+ d=1e100.net; s=20230601; t=1756818729; x=1757423529;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RM//SOSyMG1jcYS0Uj3ddE2XoaaYiQer2JjB+xASa4s=;
- b=cw0OQ2Nw0z7sHgspXpB4VC0+n6gQoc2ioTNF6nUy+MXCiLd1jNvZrgF8xF2QIkB01r
- /o0ly6qY0z8169ygUQfxvP5aIc10Xo3eIwDBTu4eEI2WMie2JZpdDc1hGbDhFQo+yAP9
- 9HOndSCU/LMeZE0Gy02Qm8lV+vHJ/QzCzLsaGJfuI/JXYaRvyb0xhNyyshF3UqkA++uB
- Id437XEsfOAfCt4425YY8WTl111OUJhWLeTNclXNIoNXLinx2okBzH1ekjomBKJsgQ/P
- 18beAtcMywL79Oft8tW4Y9ZN2oxNJ5zCvivyxTodNUkMjQcImqOJ+/3jvh+E1LwlKgWa
- Nk6A==
-X-Gm-Message-State: AOJu0YwcK9gAmShdUtHMOV4kPjIZA15o6VmiOPr2RSU2tjR9SaifEY+e
- eDZenTi9ztS7F71tvuTViRw7gyn6IB3ua78M7JjyRfpdwr8CYO6+xoc3YHwcwe8ufvxkpww0fij
- 661IN
-X-Gm-Gg: ASbGncupN0xwqTYcTiq00LUwu63MGupWx4z4PlI53hREXh5aRNAkPZrePO2vslOlosU
- +JoGkts5eTh8iI5EG0AFOMPm1kuXO+UcIxEz3M08n3aNVSyje/foSpiLfUqqMB2ROG7+UGSU1T2
- YWAxsxnwlZtl3s0iWDcFqEHHXqw3vkzUuvhesvIier2L+xfyAJRiwNeebGmX0L9xfew7FAzbgdf
- CXcV/DRONEu4ZzB5TbzotcROlop/cchPQ9a1KGwK2h9iOnb1rySyvk8kijqZgoOOSoL5PJhSst7
- unkONS9gAIWEPhBcr8dJMUamQxK90I346uf29mDyvJbxfucgSbQC6pxTCrE2F6s3pDnvADc9Blw
- uHcJBcUM322AigMGghfKIRemhQmyj1ajqneGijlFTq6Q7JgGhBFD6aNLfugmQKdNf3/QwoRO0
-X-Google-Smtp-Source: AGHT+IGn/QtRcRwvQpS0NGy0xyc9gtUZcOnYBTxRHUQsQ770bbSYnEvCseuTdtlMCTU6VtkpKMhf9A==
-X-Received: by 2002:a05:6000:25ca:b0:3cd:93c5:eabc with SMTP id
- ffacd0b85a97d-3d1dcb7627emr7293564f8f.18.1756818715176; 
- Tue, 02 Sep 2025 06:11:55 -0700 (PDT)
+ bh=Td3nvqZKIvcK1wV49niKvXWkSXIsMzUAcPCww/paHbo=;
+ b=FaWwTyzdYputKmM+8qv3HAsiwBtr6BzldwUT3eZmQDNUIVMVEStJ6yY1hSJY24zyGh
+ SyNhhxXmCfx5oz3a8wnn2mv1g7Z0tBmVPMdjA/tptWF/iN3wflPAmri6dNLhmOJWyycO
+ HvXVg8IQLjkxF/cht9CqQL45ME1jFAoRN+5JmgiDLiHNGW8KF2f6QLSMSDdN93bwCJij
+ yRqdskKzVm0Rwcnypaa/9xJW2dFBNsC52MGg3GiRd0Z1crzDgMSsYehzGH5SqCx//spW
+ YG3ly3gEisDPNdQIB396ZYlc9g9eK9bmp9rnbZgPeXwarHgXgvQjH2x3iCS6pXpCVV9+
+ zYzQ==
+X-Gm-Message-State: AOJu0Yz2y/Zrpxe3FIwj1xnO6fkOiWonduujwLrKNszeWjToV9Suse1X
+ Cu1t1TldIMRk7VvnT9D3I2YxW+jOpvc+qus5t0kqmn7oKlfh5f5Yqyeh1Qb08lBDaxXtUR/Zixi
+ JkEJO
+X-Gm-Gg: ASbGnctsjbqw7LpQJw7OMJJBLVzN1jbPxlubaGLPsxNlfA6vbj0YEJVf9KYt3sHe9A3
+ rDFMwlp7mJB68m2jJajFHcLUo9SHO6pGbHpD3sP/itZvIUL3svtRWwASrHx5PIyPISy/AEU7lCU
+ LF8Tgt3t1dwxdtTOVoE4DzqKRL8u0042PKpDBPTuNOusRr48aI2Oh0j++cnYGY7F+SVYHsvASxe
+ /xKvkhLiySmIELS9B0MsXGDtOdzzlx8HDwkeUbgF+MBuNVJgqRvhh2/01bFGbCbvWDr4aQ9EbZT
+ gVOntfaaStRt0nRlgmU4c3+LmdgEnuM5snN2clZ4WB5vu7m3yiuQRXura445weacgZYjeL5lMVJ
+ mKyzOPjINf7U442NTac7nxUl97njpqun0mZsc7jiqIUtAY1s+cO/s9NGcl++LQz43pKlQihKdhR
+ AWyjI4/Vk=
+X-Google-Smtp-Source: AGHT+IEgmE6dDucwrHlEiyTLqj8rutInoVMgxlC5ubZ5AjJ+oEALsdPKf2VZBtInwe2xxOyTzcqoYQ==
+X-Received: by 2002:a05:600c:1e8f:b0:45b:83fe:9cf7 with SMTP id
+ 5b1f17b1804b1-45b85525d75mr84750915e9.6.1756818728988; 
+ Tue, 02 Sep 2025 06:12:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3d53fda847dsm10623228f8f.0.2025.09.02.06.11.54
+ 5b1f17b1804b1-45b7e68c83asm212334315e9.20.2025.09.02.06.12.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Sep 2025 06:11:54 -0700 (PDT)
+ Tue, 02 Sep 2025 06:12:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/39] hw/char/serial-pci-multi: Use qemu_init_irq_child() to
- avoid leak
-Date: Tue,  2 Sep 2025 15:09:58 +0200
-Message-ID: <20250902131016.84968-22-philmd@linaro.org>
+Subject: [PULL 24/39] hw/char/max78000_uart: Destroy FIFO on deinit
+Date: Tue,  2 Sep 2025 15:10:01 +0200
+Message-ID: <20250902131016.84968-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250902131016.84968-1-philmd@linaro.org>
 References: <20250902131016.84968-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,53 +101,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The serial-pci-multi device initializes an IRQ with qemu_init_irq()
-in its instance_init function; however it never calls qemu_free_irq(),
-so the init/deinit cycle has a memory leak, which ASAN catches
-in the device-introspect-test:
+In the max78000_uart we create a FIFO in the instance_init function,
+but we don't destroy it on deinit, so ASAN reports a leak in the
+device-introspect-test:
 
-Direct leak of 576 byte(s) in 6 object(s) allocated from:
-    #0 0x626306ddade3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qem
-u-system-arm+0x21f1de3) (BuildId: 52ece17287eba2d68e5be980e1856cd1f6be932f)
-    #1 0x7756ade79b09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1
-eb6131419edb83b2178b682829a6913cf682d75)
-    #2 0x7756ade5b45a in g_hash_table_new_full (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4445a
-) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
-    #3 0x62630965da37 in object_initialize_with_type /mnt/nvmedisk/linaro/qemu-from-laptop/qem
-u/build/arm-asan/../../qom/object.c:568:23
-    #4 0x62630965d440 in object_initialize /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/ar
-m-asan/../../qom/object.c:578:5
-    #5 0x626309653eeb in qemu_init_irq /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-as
-an/../../hw/core/irq.c:48:5
-    #6 0x6263072370bb in multi_serial_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/char/serial-pci-multi.c:183:9
+    #0 0x561cc92d5de3 in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/qemu-system-arm+0x21f1de3) (BuildId: 98fdf9fc85c3beaeca8eda0be8412f1e11b9c6ad)
+    #1 0x70cbf2afab09 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62b09) (BuildId: 1eb6131419edb83b2178b682829a6913cf682d75)
+    #2 0x561ccc4c884d in fifo8_create /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../util/fifo8.c:27:18
+    #3 0x561cc9744ec9 in max78000_uart_init /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-asan/../../hw/char/max78000_uart.c:241:5
 
-Use the new qemu_init_irq_child() function instead, so that the
-IRQ object is automatically unreffed when the serial-pci
-device is deinited.
+Add an instance_finalize method to destroy the FIFO.
 
+Cc: qemu-stable@nongnu.org
+Fixes: d447e4b70295 ("MAX78000: UART Implementation")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250821154053.2417090-3-peter.maydell@linaro.org>
-[PMD: Use "irq[*]" as child property name]
+Message-ID: <20250821154358.2417744-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/serial-pci-multi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/char/max78000_uart.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
-index 13df272691a..34f30fb70b8 100644
---- a/hw/char/serial-pci-multi.c
-+++ b/hw/char/serial-pci-multi.c
-@@ -180,7 +180,8 @@ static void multi_serial_init(Object *o)
-     size_t i, nports = multi_serial_get_port_count(PCI_DEVICE_GET_CLASS(dev));
- 
-     for (i = 0; i < nports; i++) {
--        qemu_init_irq(&pms->irqs[i], multi_serial_irq_mux, pms, i);
-+        qemu_init_irq_child(o, "irq[*]", &pms->irqs[i],
-+                            multi_serial_irq_mux, pms, i);
-         object_initialize_child(o, "serial[*]", &pms->state[i], TYPE_SERIAL);
-     }
+diff --git a/hw/char/max78000_uart.c b/hw/char/max78000_uart.c
+index 19506d52ef9..c76c0e759b6 100644
+--- a/hw/char/max78000_uart.c
++++ b/hw/char/max78000_uart.c
+@@ -247,6 +247,12 @@ static void max78000_uart_init(Object *obj)
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
  }
+ 
++static void max78000_uart_finalize(Object *obj)
++{
++    Max78000UartState *s = MAX78000_UART(obj);
++    fifo8_destroy(&s->rx_fifo);
++}
++
+ static void max78000_uart_realize(DeviceState *dev, Error **errp)
+ {
+     Max78000UartState *s = MAX78000_UART(dev);
+@@ -274,6 +280,7 @@ static const TypeInfo max78000_uart_info = {
+     .parent        = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(Max78000UartState),
+     .instance_init = max78000_uart_init,
++    .instance_finalize = max78000_uart_finalize,
+     .class_init    = max78000_uart_class_init,
+ };
+ 
 -- 
 2.51.0
 
