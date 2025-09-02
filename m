@@ -4,124 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08AFCA100B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE461CA0FFE
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 04:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utIa0-0004ZT-Ta; Tue, 02 Sep 2025 00:25:13 -0400
+	id 1utIZx-0004Mp-Kj; Tue, 02 Sep 2025 00:25:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utIZp-0004Ed-84
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 00:25:01 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1utIZa-00042K-SS
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 00:24:52 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utIZn-0001Bi-CL
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 00:25:00 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822Rnhj020757
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 04:24:58 GMT
+ id 1utIZY-0001AF-6c
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 00:24:46 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822SuwU011396
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 04:24:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 572yDz5gdmSjF8J7pzmJkjSWBFoqtnZUo6EgbeAUMbs=; b=gjFDL5Sd6tWwIQ3r
- KZI0eUoknKvTY+jHhi+B5AmRU3EYNUUvZkT5+ruYsIHxoxkxSRTj+b87GYM5GrmY
- uiSkoH2ja4cg9tf9DVOwFa/zGxTlbV0TFYjC9va5eL5ST0Gg6P7dMDssEJdvKZIw
- KBasJ80LWUcIXrNV8mdN8j/RYPRbLFOtSiaOcpfLjeUbaDJ0q1ZTE0g3uJW9fQKj
- Kw1avoTpQP6zlbrKH0Z0ZWL2CAA0AW/1N3E7Gw9iKHuGeUzRwYF2oufD1Xqz//pW
- RLpBIy5c2W0sB6sozlkQxY4wZJWzurbRF5Srpg6bEipvH1EM6O7qLfPJmANm7UGK
- uBzhaQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8rxhhx-1
+ HtFBowf/B5f24nMQ7iGb1zz8xAYQ+fqDLO5A/K0h5WU=; b=FAFpRGO74dwaJZ9x
+ +5aZ/eUn/QfEvfAqBilV+f3NrnXQuwYGK7L58t8e5dUcHUkeAhhcONNLcpKm/0x2
+ UlYVGCnP1DOFETV2XM7Kx5H5QiL/bxeUu7UtPsGoc7bAOG78cuvrOSstuKv1UPC8
+ PQ8jA+DFOy7CSX+17uoYr4kjBfSu1gfIpqSj4oaLpr0V81Q7TdrTiXu59T4XaXdg
+ sH0bU4/XrY7vz0EJq2qOQfylylWC7/2oSbeZumMkJjcnG8UY494lbSXQNZ54aHba
+ 3qT3QlPZJK7bFzcloPVUe+dcny4o5j9B+00tK2Iy7INtxQjJG9qBykv4t7lnnyMC
+ 8ucdRw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmjefkg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 04:24:57 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4b32a58c3f9so44548641cf.0
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 21:24:57 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 04:24:43 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4b339e7d107so19263981cf.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 21:24:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756787096; x=1757391896;
+ d=1e100.net; s=20230601; t=1756787082; x=1757391882;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=572yDz5gdmSjF8J7pzmJkjSWBFoqtnZUo6EgbeAUMbs=;
- b=GFk0A8Thk0YejyKqCZiwYSKM7SuBkB6Z6oxaMl+TNMJeomel/Gb70W990g2yvoxnhw
- 6rwN736BeEpJOf+LCanaJFD7A9ZhB3vXBGy568oDRECcXoDFMfP7hMttVYDhiRGpJfIN
- YHd7QNZEzrlxFQ3ouLJuvfJJfVzqUtyoX5nnONDwPakSQuhIyrgwHqFmzI3E91fGH73k
- 5TYuY18Qj2F7idFAqCYeN9Rz9rfrnCmiv2ONQIKR/QJbfbAjVeuuH1XixVJCuI6XXSS3
- X1g7Led1CynapKCEYbBm3W76wYSxsSDPBtNbuIuwIrDCFidnG/8Qk16iXf7U724BRBej
- MuNw==
+ bh=HtFBowf/B5f24nMQ7iGb1zz8xAYQ+fqDLO5A/K0h5WU=;
+ b=VkLdkZKf++yDPDlwY1AZEoX0dQFIT52zFVB9rGiOb3ldvcKF4BIsoy583y2XG/ye11
+ SjwzdvAnwLfyi8bN1P31eLC822HZ9VNNL64K7NcniMij9/v1Q/Xfp5VjwiVOpsxVjT71
+ Xf0unLg/EYie37vnpndK50cCIkuq9YITtizekVAbo9iTehJhxjKkiMXnvZoZwRFx7fz3
+ 5reiKbY+NLO6l2MG4sfc2hqVhvLTdfsqrSVrtZoMnF4qjWf9Qlu4uu2rdP6MWaI4zZ3q
+ s2y8j0SjM+I4VL1jEJ17MgWlP+6253WsPF708L2KC72n7ZOrlyn4m+LTd1IJz/rHO9R4
+ /0xg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZYb7JrhVs4hj1eW5x0xFQhgxNzfVJPaNKrfnsUGqkI41oqwSV5+TOjojVjWz2GLugMVH5RLgN2zx9@nongnu.org
-X-Gm-Message-State: AOJu0YzZwH96JEugSMShKiN1+bPfegrQb5ecvoOA9hPUDi3n3I+k/bFG
- G6d4hwpi6d0ytQwzHcxj4KAzXl0EJTtFXWD8doolel13/WwkzU3hb+NWP9nQjQX6sm13Gm7IdoV
- 9G2WqCmI8yAJqR32K4siVoIfyo3TczBaRsOuM3UPt4X4CSkLaSme7aF1eAA==
-X-Gm-Gg: ASbGncvION1YRywNGofzkHpZRbjBc96c4dIWJOaEh6DzUDHbRgi8UqtISI5fQzT+/xh
- 6HyBav7SvRIDIcKTZqTfztkOQ431Gc02Z+PlyPRspc3X6WqKj41lCFkiFhcSB5kcP63vMh8M6Us
- lf4eJd360uxTRbsUNfUb821+nYnfcsqdCGYwqqq6ctqJ25mjBeAU5mVsWi/HooVzRT6iYZlPg7c
- 1sRchwqdmXXqtCxok80zXksQwvDjTquC4m4ni6SNXB6BWGwKw0W8YpkF0dsE3EHc/ZywJd5Tlrh
- cmRrCgUoohbHVh+M3B0ZWeM0H/cAhgFIyzo3GLQgu2TRX2NdmYrl3xfpIsqVdw==
-X-Received: by 2002:a05:622a:1394:b0:4b2:8ac5:25a3 with SMTP id
- d75a77b69052e-4b31dcbcc9amr127247851cf.76.1756787096626; 
- Mon, 01 Sep 2025 21:24:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCVSWtndf5s+796GYlwewpF6F98Ep5dMdOX7UrbBZSdkK0GO6mHRhefF6zO6Ow6AQL3pm6OA==
-X-Received: by 2002:a05:622a:1394:b0:4b2:8ac5:25a3 with SMTP id
- d75a77b69052e-4b31dcbcc9amr127247611cf.76.1756787096074; 
- Mon, 01 Sep 2025 21:24:56 -0700 (PDT)
+ AJvYcCUbCBeFYKvKhyQB6fsw565XQSqosgzaXJs17Wb6eLKz3jkfuFtMjyrZo4F29e+nmmBz5ReKOMFQ2o1B@nongnu.org
+X-Gm-Message-State: AOJu0YzmRFRikUMUcErAg2DkI5gAGDOJ5dSAYC40yq7DnWT+CtT+EfNJ
+ cwllXhYziPu5CkpXQQFYYF9RheZOsyxqxkiDgdEbvdGzmev5RAToEtz9y8krt9GCf8NHtPmrCn2
+ lsjLTv3vXUy1gmBRrOTfAQUPDv/25b3EBvwJZKAHk3WxkfDjHbYybAfZa7Q==
+X-Gm-Gg: ASbGncsHKc1oP3Amn/ONPwaCydXfHbqK44GZGaZJ6AnW+DXEsA/ebZN0HrmmTz86u/N
+ NJ8xPEJXY8AqOQsW5HgrXLhR7MKfavEy9hs5iDq5gkaCahNvoyhybReGnEjhpF+kxgjGTW72HGD
+ 4xRGMOugR0rjf0bzpVcu05LDceBaRG0XMQ79FAXsQUdzoV1OVb4MGA8HkBDFczibxzZNpZaLlEj
+ sae8wFe4ul66o6K9fu7EEPWZb4q+k6SomFPPamsRuBzhMlq8wm7V0MH+qoG+TrZRLLi/xsmSOFT
+ x+9wT0TrPoKm0zCcH57BQo5Nz5unSrMPtPRnj5qOthPK9slnpcMi9Sq3iIRJqg==
+X-Received: by 2002:a05:622a:4e:b0:4b0:b7ce:90b4 with SMTP id
+ d75a77b69052e-4b31dcd88admr121933331cf.44.1756787081901; 
+ Mon, 01 Sep 2025 21:24:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFamebzO4kb9FKSny5B1dF0Sqgpw3em0CqJvFpcKwSqS6VZc7CKqU9lS0oqen9DnMXDtXG69w==
+X-Received: by 2002:a05:622a:4e:b0:4b0:b7ce:90b4 with SMTP id
+ d75a77b69052e-4b31dcd88admr121933041cf.44.1756787081378; 
+ Mon, 01 Sep 2025 21:24:41 -0700 (PDT)
 Received: from [172.19.248.181] ([80.149.170.9])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf276d5e5fsm17958390f8f.27.2025.09.01.21.24.45
+ ffacd0b85a97d-3cf276d5e5fsm17958390f8f.27.2025.09.01.21.24.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 21:24:55 -0700 (PDT)
-Message-ID: <439dbebe-759f-444c-8e2b-8acd8b5ce5df@oss.qualcomm.com>
-Date: Mon, 1 Sep 2025 21:08:29 -0500
+ Mon, 01 Sep 2025 21:24:40 -0700 (PDT)
+Message-ID: <97c99d4e-12c5-46b1-9d1f-5734b5dc7f81@oss.qualcomm.com>
+Date: Mon, 1 Sep 2025 21:03:39 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/39] target/hexagon: Implement setprio, resched
-To: ltaylorsimpson@gmail.com, 'Sid Manning' <sidneym@quicinc.com>,
- qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, philmd@linaro.org,
- "'Matheus Bernardino (QUIC)'" <quic_mathbern@quicinc.com>, ale@rev.ng,
- anjo@rev.ng, "'Marco Liebel (QUIC)'" <quic_mliebel@quicinc.com>,
- alex.bennee@linaro.org, "'Mark Burton (QUIC)'" <quic_mburton@quicinc.com>,
- 'Brian Cain' <bcain@quicinc.com>
+Subject: Re: [PATCH 17/39] target/hexagon: Implement software interrupt
+To: ltaylorsimpson@gmail.com, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, philmd@linaro.org, quic_mathbern@quicinc.com,
+ ale@rev.ng, anjo@rev.ng, quic_mliebel@quicinc.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ 'Brian Cain' <bcain@quicinc.com>, 'Mike Lambert' <mlambert@quicinc.com>
 References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-23-brian.cain@oss.qualcomm.com>
- <03a101db99d0$8c67c5e0$a53751a0$@gmail.com>
- <IA0PR02MB9486BDD73D3CBCD3468C367FBED82@IA0PR02MB9486.namprd02.prod.outlook.com>
- <03aa01db99e7$6f8a20a0$4e9e61e0$@gmail.com>
+ <20250301052845.1012069-18-brian.cain@oss.qualcomm.com>
+ <02e101db9915$d1c42fe0$754c8fa0$@gmail.com>
 Content-Language: en-US
 From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <03aa01db99e7$6f8a20a0$4e9e61e0$@gmail.com>
+In-Reply-To: <02e101db9915$d1c42fe0$754c8fa0$@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfXxWKsaoFSSgdN
- 1Bb/HP6diUMGByMm1lwbMrc/4YcXDMOXW/GztZ7W1K3coJqXX6YPbjUDLonHeJy1qahnkXwddes
- Mx8VMojtTj05JNJ+OG0anO9QNHhxVyJIImxoFRrzqOu9JHAxttnSHb2YKxrHORNuK37VhD+ubb0
- 8I0i0duDPUtCCmNlqfyAA8XiQ4kwOJBIZVJkRlWJww+gOKm6JLDozvyAfDiidq0PUOdf0E5yt/w
- c6poXJPuYJlVAtnI9rR5skzDBrK4FnDqeM/RxJmfXfnH3Nnk60JzhMJLZDPyCygtA9/7lMfwR/1
- Ho5aCVVQ8qWzmpHA2Ldq0SDcBt1s/sxNQDW8K6fhVdAcxqFMbiMmiGh7ofKvGhXysqHhG+AxMWK
- NJcjKL0M
-X-Proofpoint-GUID: yVHe-HRGEMC4b_fhU2LisKNjlkuRj7ct
-X-Proofpoint-ORIG-GUID: yVHe-HRGEMC4b_fhU2LisKNjlkuRj7ct
-X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b6719a cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=oqm+nZh+PgUSu2IGv/nVbQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=pGLkceISAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=cwRB2rIEbE6GN1lDXnkA:9
- a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=TjNXssC_j7lpFel5tvFf:22
- a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68b6718b cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=oqm+nZh+PgUSu2IGv/nVbQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=fjZv-glThPG368fN3rIA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+ a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: G1xMI228W2lUBxuaqh7ut23uynP2PPea
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfX4P0Si6g+BfMU
+ djbJP11/kZZClSIfKGNboMpi2LxdjkCX4v7HQJ03QULp2kz3bfbE21cEMcG5iLQ6VuDdymYdCM6
+ n7NW/aNmiPlDTQ/gAyw8zmnhik32EII340cwahuF+zYUzi7X/rbfJKlmrnDilMIZKl8fZKxmlwA
+ Rq0qE5KT37N6ud1HPdnd/0wS2LyOGV5IN094IqUzzxyECEEs5CoDgMw6pb3VSeTYBe51ysMczX9
+ TDY866iV80kH4rNhP2Ag+pTYMehF3fgz8ipoGMHCR8jr6ctkW5EIV9VIzMKZtArgTbpW5+qqG51
+ 94i2dzpBxD4bM5O4xyqedp5a+iM79jiZUoDZyQiBZGgSqf/Cbd+ArrFqJcbV94Onn1XF7AHTshQ
+ lezetbKN
+X-Proofpoint-ORIG-GUID: G1xMI228W2lUBxuaqh7ut23uynP2PPea
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -145,43 +141,385 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 3/20/2025 5:28 PM, ltaylorsimpson@gmail.com wrote:
+On 3/19/2025 4:28 PM, ltaylorsimpson@gmail.com wrote:
 >
 >> -----Original Message-----
->> From: Sid Manning <sidneym@quicinc.com>
->> Sent: Thursday, March 20, 2025 3:26 PM
->> To: ltaylorsimpson@gmail.com; 'Brian Cain'
->> <brian.cain@oss.qualcomm.com>; qemu-devel@nongnu.org
->> Cc: richard.henderson@linaro.org; philmd@linaro.org; Matheus Bernardino
->> (QUIC) <quic_mathbern@quicinc.com>; ale@rev.ng; anjo@rev.ng; Marco
->> Liebel (QUIC) <quic_mliebel@quicinc.com>; alex.bennee@linaro.org; Mark
->> Burton (QUIC) <quic_mburton@quicinc.com>; Brian Cain
->> <bcain@quicinc.com>
->> Subject: RE: [PATCH 22/39] target/hexagon: Implement setprio, resched
->>>> +    if (lowest_th_prio > best_prio) {
->>>> +        qemu_log_mask(CPU_LOG_INT,
->>>> +                "%s: raising resched int %d, cur PC 0x" TARGET_FMT_lx "\n",
->>>> +                __func__, int_number, arch_get_thread_reg(env,
->>> HEX_REG_PC));
->>>> +        SET_SYSTEM_FIELD(env, HEX_SREG_BESTWAIT, BESTWAIT_PRIO,
->>>> 0x1ff);
->>> What is the significance of 0x1ff?  The field is 10 bits, so this
->>> isn't setting all the bits.
->>> Should this be lowest_th_prio?
->> [Sid Manning]
+>> From: Brian Cain <brian.cain@oss.qualcomm.com>
+>> Sent: Friday, February 28, 2025 11:28 PM
+>> To: qemu-devel@nongnu.org
+>> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+>> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+>> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+>> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+>> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>; Mike Lambert
+>> <mlambert@quicinc.com>
+>> Subject: [PATCH 17/39] target/hexagon: Implement software interrupt
 >>
->> Hi Taylor,
+>> From: Brian Cain <bcain@quicinc.com>
 >>
->> The value 0x1ff is correct but it does look like BESTWAIT_PRIO is not, it should
->> be 9 not 10 target/hexagon/reg_fields_def.h.inc
+>> Co-authored-by: Mike Lambert <mlambert@quicinc.com>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/cpu.h       |   1 -
+>>   target/hexagon/hexswi.h    |  17 +++
+>>   target/hexagon/cpu.c       |   2 +
+>>   target/hexagon/hexswi.c    | 258
+>> +++++++++++++++++++++++++++++++++++++
+>>   target/hexagon/op_helper.c |   1 +
+>>   5 files changed, 278 insertions(+), 1 deletion(-)  create mode 100644
+>> target/hexagon/hexswi.h  create mode 100644 target/hexagon/hexswi.c
 >>
->> It looks like it was added in "PATCH 19/38 target/hexagon: Define register
->> fields for system regs"
->> I will make a fixup to that patch and correct the value.
-> I see.
-> If the intent is to set all the bits in the field, then use ~0.
-This didn't make it into v2 but it's a simple fix - will add it for v3.
-> Taylor
+>> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h index
+>> dabee310c5..045581d7be 100644
+>> --- a/target/hexagon/cpu.h
+>> +++ b/target/hexagon/cpu.h
+>> @@ -256,5 +256,4 @@ typedef HexagonCPU ArchCPU;  void
+>> hexagon_translate_init(void);  void hexagon_translate_code(CPUState *cs,
+>> TranslationBlock *tb,
+>>                               int *max_insns, vaddr pc, void *host_pc);
+>> -
+> Gratuitous change
+Fixed in v2.
+>>   #endif /* HEXAGON_CPU_H */
+>> diff --git a/target/hexagon/hexswi.h b/target/hexagon/hexswi.h new file
+>> mode 100644 index 0000000000..5d232cb06c
+>> --- /dev/null
+>> +++ b/target/hexagon/hexswi.h
+>> @@ -0,0 +1,17 @@
+>> +/*
+>> + * Copyright(c) 2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later  */
+>> +
+>> +#ifndef HEXSWI_H
+>> +#define HEXSWI_H
+>> +
+>> +
+>> +#include "cpu.h"
+>> +
+>> +void hexagon_cpu_do_interrupt(CPUState *cpu); void
+>> +register_trap_exception(CPUHexagonState *env, int type, int imm,
+>> +                             target_ulong PC);
+>> +
+>> +#endif /* HEXSWI_H */
+>> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c index
+>> 89a051b41d..843be8221f 100644
+>> --- a/target/hexagon/cpu.c
+>> +++ b/target/hexagon/cpu.c
+>> @@ -33,6 +33,8 @@
+>>   #ifndef CONFIG_USER_ONLY
+>>   #include "sys_macros.h"
+>>   #include "qemu/main-loop.h"
+>> +#include "hex_interrupts.h"
+>> +#include "hexswi.h"
+> Move these added include to a different patch where the contents are needed.
+
+I didn't fix this in v2 because I convinced myself that these were 
+appropriate as-is.  But on reconsideration I think I'm mistaken and will 
+try to fix this for v3.
+
+
+>>   #endif
+>>
+>>   static void hexagon_v66_cpu_init(Object *obj) { } diff --git
+>> a/target/hexagon/hexswi.c b/target/hexagon/hexswi.c new file mode
+>> 100644 index 0000000000..5fcf9b2be9
+>> --- /dev/null
+>> +++ b/target/hexagon/hexswi.c
+>> @@ -0,0 +1,258 @@
+>> +/*
+>> + * Copyright(c) 2019-2025 Qualcomm Innovation Center, Inc. All Rights
+>> Reserved.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later  */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "cpu.h"
+>> +#ifdef CONFIG_USER_ONLY
+> This file is only included in the system-mode build, so we don't need these guards.  Several in this file.
+
+Fixed in v2.
+
+
+>> +#include "exec/helper-proto.h"
+>> +#include "qemu.h"
+>> +#endif
+>> +#include "exec/cpu_ldst.h"
+>> +#include "exec/exec-all.h"
+>> +#include "qemu/log.h"
+>> +#include "qemu/main-loop.h"
+>> +#include "arch.h"
+>> +#include "internal.h"
+>> +#include "macros.h"
+>> +#include "sys_macros.h"
+>> +#include "tcg/tcg-op.h"
+>> +#ifndef CONFIG_USER_ONLY
+>> +#include "hex_mmu.h"
+>> +#include "hexswi.h"
+>> +#endif
+>> +
+>> +#ifndef CONFIG_USER_ONLY
+>> +
+>> +
+>> +static void set_addresses(CPUHexagonState *env, target_ulong pc_offset,
+>> +                          target_ulong exception_index)
+>> +
+>> +{
+>> +    arch_set_system_reg(env, HEX_SREG_ELR,
+>> +                        arch_get_thread_reg(env, HEX_REG_PC) + pc_offset);
+>> +    arch_set_thread_reg(env, HEX_REG_PC,
+>> +                        arch_get_system_reg(env, HEX_SREG_EVB) |
+>> +                            (exception_index << 2)); }
+>> +
+>> +static const char *event_name[] = {
+>> +    [HEX_EVENT_RESET] = "HEX_EVENT_RESET",
+>> +    [HEX_EVENT_IMPRECISE] = "HEX_EVENT_IMPRECISE",
+>> +    [HEX_EVENT_TLB_MISS_X] = "HEX_EVENT_TLB_MISS_X",
+>> +    [HEX_EVENT_TLB_MISS_RW] = "HEX_EVENT_TLB_MISS_RW",
+>> +    [HEX_EVENT_TRAP0] = "HEX_EVENT_TRAP0",
+>> +    [HEX_EVENT_TRAP1] = "HEX_EVENT_TRAP1",
+>> +    [HEX_EVENT_FPTRAP] = "HEX_EVENT_FPTRAP",
+>> +    [HEX_EVENT_DEBUG] = "HEX_EVENT_DEBUG",
+>> +    [HEX_EVENT_INT0] = "HEX_EVENT_INT0",
+>> +    [HEX_EVENT_INT1] = "HEX_EVENT_INT1",
+>> +    [HEX_EVENT_INT2] = "HEX_EVENT_INT2",
+>> +    [HEX_EVENT_INT3] = "HEX_EVENT_INT3",
+>> +    [HEX_EVENT_INT4] = "HEX_EVENT_INT4",
+>> +    [HEX_EVENT_INT5] = "HEX_EVENT_INT5",
+>> +    [HEX_EVENT_INT6] = "HEX_EVENT_INT6",
+>> +    [HEX_EVENT_INT7] = "HEX_EVENT_INT7",
+>> +    [HEX_EVENT_INT8] = "HEX_EVENT_INT8",
+>> +    [HEX_EVENT_INT9] = "HEX_EVENT_INT9",
+>> +    [HEX_EVENT_INTA] = "HEX_EVENT_INTA",
+>> +    [HEX_EVENT_INTB] = "HEX_EVENT_INTB",
+>> +    [HEX_EVENT_INTC] = "HEX_EVENT_INTC",
+>> +    [HEX_EVENT_INTD] = "HEX_EVENT_INTD",
+>> +    [HEX_EVENT_INTE] = "HEX_EVENT_INTE",
+>> +    [HEX_EVENT_INTF] = "HEX_EVENT_INTF"
+>> +};
+>> +
+>> +void hexagon_cpu_do_interrupt(CPUState *cs)
+>> +
+>> +{
+>> +    CPUHexagonState *env = cpu_env(cs);
+>> +    BQL_LOCK_GUARD();
+>> +
+>> +    qemu_log_mask(CPU_LOG_INT, "\t%s: event 0x%x:%s, cause
+>> 0x%x(%d)\n",
+>> +                  __func__, cs->exception_index,
+>> +                  event_name[cs->exception_index], env->cause_code,
+>> +                  env->cause_code);
+>> +
+>> +    env->llsc_addr = ~0;
+>> +
+>> +    uint32_t ssr = arch_get_system_reg(env, HEX_SREG_SSR);
+> Declarations at the beginning of the function.
+
+Fixed in v2.
+
+
+>> +    if (GET_SSR_FIELD(SSR_EX, ssr) == 1) {
+>> +        arch_set_system_reg(env, HEX_SREG_DIAG, env->cause_code);
+>> +        env->cause_code = HEX_CAUSE_DOUBLE_EXCEPT;
+>> +        cs->exception_index = HEX_EVENT_PRECISE;
+>> +    }
+>> +
+>> +    switch (cs->exception_index) {
+>> +    case HEX_EVENT_TRAP0:
+>> +        if (env->cause_code == 0) {
+>> +            qemu_log_mask(LOG_UNIMP,
+>> +                          "trap0 is unhandled, no semihosting available\n");
+>> +        }
+>> +
+>> +        hexagon_ssr_set_cause(env, env->cause_code);
+>> +        set_addresses(env, 4, cs->exception_index);
+>> +        break;
+>> +
+>> +    case HEX_EVENT_TRAP1:
+>> +        hexagon_ssr_set_cause(env, env->cause_code);
+>> +        set_addresses(env, 4, cs->exception_index);
+>> +        break;
+>> +
+>> +    case HEX_EVENT_TLB_MISS_X:
+>> +        switch (env->cause_code) {
+>> +        case HEX_CAUSE_TLBMISSX_CAUSE_NORMAL:
+>> +        case HEX_CAUSE_TLBMISSX_CAUSE_NEXTPAGE:
+>> +            qemu_log_mask(CPU_LOG_MMU,
+>> +                          "TLB miss EX exception (0x%x) caught: "
+>> +                          "Cause code (0x%x) "
+>> +                          "TID = 0x%" PRIx32 ", PC = 0x%" PRIx32
+>> +                          ", BADVA = 0x%" PRIx32 "\n",
+>> +                          cs->exception_index, env->cause_code, env->threadId,
+>> +                          arch_get_thread_reg(env, HEX_REG_PC),
+>> +                          arch_get_system_reg(env, HEX_SREG_BADVA));
+>> +
+>> +            hexagon_ssr_set_cause(env, env->cause_code);
+>> +            set_addresses(env, 0, cs->exception_index);
+>> +            break;
+>> +
+>> +        default:
+>> +            cpu_abort(cs,
+>> +                      "1:Hexagon exception %d/0x%x: "
+>> +                      "Unknown cause code %d/0x%x\n",
+>> +                      cs->exception_index, cs->exception_index, env->cause_code,
+>> +                      env->cause_code);
+>> +            break;
+>> +        }
+>> +        break;
+>> +
+>> +    case HEX_EVENT_TLB_MISS_RW:
+>> +        switch (env->cause_code) {
+>> +        case HEX_CAUSE_TLBMISSRW_CAUSE_READ:
+>> +        case HEX_CAUSE_TLBMISSRW_CAUSE_WRITE:
+>> +            qemu_log_mask(CPU_LOG_MMU,
+>> +                          "TLB miss RW exception (0x%x) caught: "
+>> +                          "Cause code (0x%x) "
+>> +                          "TID = 0x%" PRIx32 ", PC = 0x%" PRIx32
+>> +                          ", BADVA = 0x%" PRIx32 "\n",
+>> +                          cs->exception_index, env->cause_code, env->threadId,
+>> +                          env->gpr[HEX_REG_PC],
+>> +                          arch_get_system_reg(env, HEX_SREG_BADVA));
+>> +
+>> +            hexagon_ssr_set_cause(env, env->cause_code);
+>> +            set_addresses(env, 0, cs->exception_index);
+>> +            /* env->sreg[HEX_SREG_BADVA] is set when the exception is raised
+>> */
+>> +            break;
+>> +
+>> +        default:
+>> +            cpu_abort(cs,
+>> +                      "2:Hexagon exception %d/0x%x: "
+>> +                      "Unknown cause code %d/0x%x\n",
+>> +                      cs->exception_index, cs->exception_index, env->cause_code,
+>> +                      env->cause_code);
+>> +            break;
+>> +        }
+>> +        break;
+>> +
+>> +    case HEX_EVENT_FPTRAP:
+>> +        hexagon_ssr_set_cause(env, env->cause_code);
+>> +        arch_set_thread_reg(env, HEX_REG_PC,
+>> +                            arch_get_system_reg(env, HEX_SREG_EVB) |
+>> +                                (cs->exception_index << 2));
+> Why not use set_addresses here?  How is ELR set?
 >
+>> +        break;
+>> +
+>> +    case HEX_EVENT_DEBUG:
+>> +        hexagon_ssr_set_cause(env, env->cause_code);
+>> +        set_addresses(env, 0, cs->exception_index);
+>> +        qemu_log_mask(LOG_UNIMP, "single-step exception is not
+>> handled\n");
+>> +        break;
+>> +
+>> +    case HEX_EVENT_PRECISE:
+>> +        switch (env->cause_code) {
+>> +        case HEX_CAUSE_FETCH_NO_XPAGE:
+>> +        case HEX_CAUSE_FETCH_NO_UPAGE:
+>> +        case HEX_CAUSE_PRIV_NO_READ:
+>> +        case HEX_CAUSE_PRIV_NO_UREAD:
+>> +        case HEX_CAUSE_PRIV_NO_WRITE:
+>> +        case HEX_CAUSE_PRIV_NO_UWRITE:
+>> +        case HEX_CAUSE_MISALIGNED_LOAD:
+>> +        case HEX_CAUSE_MISALIGNED_STORE:
+>> +        case HEX_CAUSE_PC_NOT_ALIGNED:
+>> +            qemu_log_mask(CPU_LOG_MMU,
+>> +                          "MMU permission exception (0x%x) caught: "
+>> +                          "Cause code (0x%x) "
+>> +                          "TID = 0x%" PRIx32 ", PC = 0x%" PRIx32
+>> +                          ", BADVA = 0x%" PRIx32 "\n",
+>> +                          cs->exception_index, env->cause_code, env->threadId,
+>> +                          env->gpr[HEX_REG_PC],
+>> +                          arch_get_system_reg(env, HEX_SREG_BADVA));
+>> +
+>> +
+>> +            hexagon_ssr_set_cause(env, env->cause_code);
+>> +            set_addresses(env, 0, cs->exception_index);
+>> +            /* env->sreg[HEX_SREG_BADVA] is set when the exception is raised
+>> */
+>> +            break;
+>> +
+>> +        case HEX_CAUSE_DOUBLE_EXCEPT:
+>> +        case HEX_CAUSE_PRIV_USER_NO_SINSN:
+>> +        case HEX_CAUSE_PRIV_USER_NO_GINSN:
+>> +        case HEX_CAUSE_INVALID_OPCODE:
+>> +        case HEX_CAUSE_NO_COPROC_ENABLE:
+>> +        case HEX_CAUSE_NO_COPROC2_ENABLE:
+>> +        case HEX_CAUSE_UNSUPORTED_HVX_64B:
+>> +        case HEX_CAUSE_REG_WRITE_CONFLICT:
+>> +        case HEX_CAUSE_VWCTRL_WINDOW_MISS:
+>> +            hexagon_ssr_set_cause(env, env->cause_code);
+>> +            set_addresses(env, 0, cs->exception_index);
+>> +            break;
+>> +
+>> +        case HEX_CAUSE_COPROC_LDST:
+>> +            hexagon_ssr_set_cause(env, env->cause_code);
+>> +            set_addresses(env, 0, cs->exception_index);
+>> +            break;
+>> +
+>> +        case HEX_CAUSE_STACK_LIMIT:
+>> +            hexagon_ssr_set_cause(env, env->cause_code);
+>> +            set_addresses(env, 0, cs->exception_index);
+>> +            break;
+>> +
+>> +        default:
+>> +            cpu_abort(cs,
+>> +                      "3:Hexagon exception %d/0x%x: "
+>> +                      "Unknown cause code %d/0x%x\n",
+>> +                      cs->exception_index, cs->exception_index, env->cause_code,
+>> +                      env->cause_code);
+>> +            break;
+>> +        }
+>> +        break;
+>> +
+>> +    case HEX_EVENT_IMPRECISE:
+>> +        qemu_log_mask(LOG_UNIMP,
+>> +                "Imprecise exception: this case is not yet handled");
+>> +        break;
+>> +
+>> +    default:
+>> +        qemu_log_mask(LOG_UNIMP,
+>> +                "Hexagon Unsupported exception 0x%x/0x%x\n",
+>> +                  cs->exception_index, env->cause_code);
+>> +        break;
+>> +    }
+>> +
+>> +    cs->exception_index = HEX_EVENT_NONE; }
+>> +
+>> +void register_trap_exception(CPUHexagonState *env, int traptype, int
+>> imm,
+>> +                             target_ulong PC) {
+>> +    CPUState *cs = env_cpu(env);
+>> +
+>> +    cs->exception_index = (traptype == 0) ? HEX_EVENT_TRAP0 :
+>> HEX_EVENT_TRAP1;
+>> +    ASSERT_DIRECT_TO_GUEST_UNSET(env, cs->exception_index);
+>> +
+>> +    env->cause_code = imm;
+>> +    env->gpr[HEX_REG_PC] = PC;
+>> +    cpu_loop_exit(cs);
+>> +}
+>> +#endif
+>> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+>> index 42805d0f1d..687e7f45c2 100644
+>> --- a/target/hexagon/op_helper.c
+>> +++ b/target/hexagon/op_helper.c
+>> @@ -38,6 +38,7 @@
+>>   #include "hex_mmu.h"
+>>   #include "hw/intc/l2vic.h"
+>>   #include "hex_interrupts.h"
+>> +#include "hexswi.h"
+> Move this do a different patch where the contents are needed
+
+I didn't fix this in v2 because I convinced myself that these were 
+appropriate as-is.  But on reconsideration I think I'm mistaken and will 
+try to fix this for v3.
+
+
+>>   #endif
+>>
+>>   #define SF_BIAS        127
+>> --
+>> 2.34.1
 >
 
