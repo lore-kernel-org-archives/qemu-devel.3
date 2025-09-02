@@ -4,187 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAC4CA1005
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:01:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0562CCA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 17:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utUO1-0002Ew-W6; Tue, 02 Sep 2025 13:01:38 -0400
+	id 1utUTe-0007cW-Gb; Tue, 02 Sep 2025 13:07:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1utUNa-0001Qg-PZ
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:01:13 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1utUNV-0006ma-Cg
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:01:07 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 582Gb61U3048030; Tue, 2 Sep 2025 10:01:03 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=S0BVXxZf4roSOWtmt4v2jGkMrrodQ/eGbo/R+5Luk
- J4=; b=iy8+B98KuwPC+iuop4a4bMKj/TZxJaZHQ4cDtuuZOtdo1C0FapP9s82hE
- Z37bP6uWHR9gA89XSikNH3DB6AsSGaMviB8CmWsd8oxQLE+qPrAMC8e71A6ZVMGN
- 4VyYIFLf8WDKZWieObAS33anZi+9AsNygv65LQ585PaFaAhiT82lpe3PzuUidEkw
- LUEg0ckQIM2VnnL5AD6QK2DpuMkW/1jCbrbS6Ne0GPvp4GJvnS2N5jT5oIDiZ3aD
- cZ8HGhMnKYopiYLwETLFCr+M7+bvFKQgoQfivoW8e/D3BfEpD7SUk13pg3txM2w2
- u+L7fsPFvbxMZSUvvQW38G5ubgzYA==
-Received: from nam10-bn7-obe.outbound.protection.outlook.com
- (mail-bn7nam10on2122.outbound.protection.outlook.com [40.107.92.122])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 48ww8h94qe-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 02 Sep 2025 10:01:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JzJgg5zhPf9kafb+39YXQc3R0gE+wKDPuZHRxAfu9k1C0Lar40y0KY2zDQfRuirZ1gUWJIxFXSijh8w+S6zPk0RAXGxJnDN8UAFz1sqJRgZefDj6KkYyMEqu4eCN/wEpegF84Qj+1U6DfOJlMizCnvPgcaGssuRZuyiIKYVku/X3eRq7ygYgRHr/HbwuO2dKoBz4iBigiz3xwqQvENte5HQbuDntZNoVQg3nPcQtlhvMBoHSerqGkQBF9rzLPYaOsaivcc6tRjpo9gOe2hy5KzxAyY+FBoAxbMP6FcXoFb2kQL31R/Ns5WRYWuixNV5sw1vSLe/NkTE0CzA60dknvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SnuEReQXXVobqqmXpgfKm73SKgwHdNZjoRrPznbwYyY=;
- b=M00JjRFdnakkw44tPCKfNUm4BxsccQn+E+74HTRV2k+TdyhdV+bAbBA3FTEY1JsGtWYb3g+Mh43j/JG7xmfwMy9dQr3tCD5Ka/KnU6mRKMP6uGqEAajA54cvhIxMGkSjX2TbkBwjc+9bvthycxbMeJXO0FuMOFS8BVJekUmCO6sh+JaU3nV/RrUyBuKwnNSdHfNAHDTvArtkwIx3wKiBso0zWLIerIFSHdkksha+tOh8aHR3MOvphCwP/nTozHcIHm/SH4X3Tq6RWi3RRPe9UsebkHa8I2fCQ6CMpxEr3AFIcSm7jDrq4rXz3Sie+AjIhl9MxXR9el5cGF0eCrhw7w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SnuEReQXXVobqqmXpgfKm73SKgwHdNZjoRrPznbwYyY=;
- b=oca0jRyi5KeRNvc6HqfyZvyMGYCIm4sDuyB1IgwgCqwpsPQW8CYsejrSY5ZVTLLFV6pHvD2OkExOkP9o+24mWAI3/BDG3a8o7S/H9aVyLjVhdwb2HrwSzXM8jmlkSO+9eVmDlLaF5SsY6KSCV1+wMCzkvzMG2GGch00CB93UKcpA3XKHzqbzaQVU2bKi6eQ4caa4Dn0JpXrw2i2VjCZX8jn1oGms8TmsaL46HKz1tFPgDdSZVkjvXR0SL0I+Cr8w3hUFH+4lnxiY02WybQ4S5O8UrgALrS8yxlawZ9oOwemw5BJXpma0ovA8kINPGaRLUSy5OjOQ72/FDwPNJnvmWw==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by SJ0PR02MB7167.namprd02.prod.outlook.com (2603:10b6:a03:297::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.29; Tue, 2 Sep
- 2025 17:01:00 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51%7]) with mapi id 15.20.9052.027; Tue, 2 Sep 2025
- 17:01:00 +0000
-Date: Tue, 2 Sep 2025 18:00:56 +0100
-From: John Levon <john.levon@nutanix.com>
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-Subject: Re: [PATCH 3/4] docs/system: drop vhost-user-rng docs
-Message-ID: <aLciyCOUIrEwQHOF@lent>
-References: <20250902165048.1653323-1-alex.bennee@linaro.org>
- <20250902165048.1653323-4-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250902165048.1653323-4-alex.bennee@linaro.org>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: AS4P191CA0052.EURP191.PROD.OUTLOOK.COM
- (2603:10a6:20b:657::25) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1utUTW-0007ZR-Nd
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:07:19 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1utUTU-0007cZ-Eb
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 13:07:18 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-323267bc2eeso4387886a91.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 10:07:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1756832834; x=1757437634;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=CR78GFxKiZmUL74IgiD/HidqP9HCZYHKqFZRrAYZYq0=;
+ b=UjAkt0XaVpuxDcWnMqpcvbNVXurov85yk/VbVSzoZmgxt7KiuZZZjkKaDFbgKsptno
+ mtNWneQ/p9kLfacsY2mZNY8YhA+o5qerw5fwYy1npO/4g4Qp5fPz0NphcuDetunh6sua
+ U2gahXu/K1QATGdJ6HAkFvyOPPUrY35iUyuWfAHkiwOsjbXGqs0L9UUq8vdL7D6Ikz/s
+ bosX/0ajlUMjOH19V2PmVh9w3BJDw+D1Ceh9AKuMjG6h+JLEOw4mymxm57N0rXy2KfIJ
+ 3XyYpMrwK43xA9OnCXVtoFJz2wrtlTjzOsrKUHliLqGIWiILR0MrNzM144FGVGOMvk4k
+ +aVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756832834; x=1757437634;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CR78GFxKiZmUL74IgiD/HidqP9HCZYHKqFZRrAYZYq0=;
+ b=mr+7CgSWbLndQaa2P+wT+DQbIDoNdAOXVcW89Btl3iwE3fkjMkfrr6MwAcVRiT5x6e
+ 9+OYpJf27xHgMdoIjOoYSliiyPbewEePWRnQaRH4HAOlh8Y3+gSIH5nz4uWTw7iHho9A
+ M0KP6wyfO3TKEUvl3Lbfe6cv9Kc3v8vPSe3bq3luivvkzgClRBvQ0jkHD3qNBknRSBAP
+ 69sQRZEirNjaPQIvM518JNtUfG/mB5IruzspgPTJqOQYVm6xu3d6R8Y/K/AHkEGwyTb/
+ wlCkMXsR4m4JykBMucnqz6hZmdC5iI8KA/PY2szerKEZvyfVi7iT7jISTbZ9iCdgL1pL
+ ws6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbALOk4EOp2GR89+AFwGAUoYhGf/KJe2g+Q7FmqEOCNOThzYqzamdmxMZ+yoYuL7ERIme9yZlywO4+@nongnu.org
+X-Gm-Message-State: AOJu0Yz0XOcGziLT2+iJLPpFYz2uDWOIHIDngs3z3Y+oMFDbT8kYDSYJ
+ daGw/mAzGuOthZdNfNHHLI0fAUaFnwKtGIPyWaJ/kiAAqHP2WKR04P10Z+J/E95oabQucQdF4jM
+ 72APeLOPVoFy+lO838lUgm8oj+P9qNm/y8HR2BnowXLuP21/+btMVhWKwaw==
+X-Gm-Gg: ASbGncuoZaAimGQgqisT/IbLok7JppaplCt6wT+VVLbXFOjRoCw0pcxwiad9+BvN5ZO
+ vwTARKRrpKNvE9hBoCWrjgrwONEZtSoAh+ow2yfDDT8zMGCVVkrp/N9wXU4PG4KSb7oKX/cB62D
+ 5k2D6AaXhJaAV1OHNpUcEAIkPex6klayZFZVh4fK+M5jRtcC4og9/auR/Ys3Vvi+53iZXhddEZ4
+ d/6L4Jrrm3QvWOxr7kDi8Zo/PvpbPd7XxeCobc=
+X-Google-Smtp-Source: AGHT+IEtCo2SErTdbJRmoaaLMDJrXnZKoGryLg8ZEVHBUJ46QuxVleZjWNBpiPVNJwmTE0AWMS1NxVSTyLFFZoeBPKQ=
+X-Received: by 2002:a17:90b:3f84:b0:329:d85b:d9ee with SMTP id
+ 98e67ed59e1d1-329d85bdae7mr4963809a91.23.1756832833763; Tue, 02 Sep 2025
+ 10:07:13 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|SJ0PR02MB7167:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3d6ab088-29d5-4e14-8979-08ddea424af3
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7053199007;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?whPDkmt6KE6xclnatvJv+UgUf2W/QqW/xqOGiluSxWO24+5xpuWIhRoABU?=
- =?iso-8859-1?Q?u0ja7XFJfRuNcyVOgbvqCwqVUAg0eQa+yokl4yYOkZDFGhNvfhA5IeN90k?=
- =?iso-8859-1?Q?hhb4wrwpgU2phyf450dakH159VKKoxCfa818eEWwCAvrv/e3j/uGvmoHRH?=
- =?iso-8859-1?Q?KzRPR9oeaXMHXsUL1bT2ba4vtVZjeuPoptmlunjEGYKh2Wbd6+594vyHhV?=
- =?iso-8859-1?Q?nbf+37wjf/X4RM/3NHiNiw7lwAf/J00C4gCvxy6zI2bgskO+dRJ12mXbCx?=
- =?iso-8859-1?Q?DaEsMh2gbclzte1gVpEKVmvsfJ44CqUIrQVAUQmvdwpOaoj8rRbjLKNyPA?=
- =?iso-8859-1?Q?DlaY6bNkQ5gRLJtovMhBvDXlhAK1diD4rRpyTlMZvBARy0Vx5iWrxqy2oA?=
- =?iso-8859-1?Q?XKXokA66ctlaKjGJpKFYsBr4/UKh7QPWrPpgOVog3cMMAyEfaWQtCsXYnF?=
- =?iso-8859-1?Q?zBhBMrU0Tn5yQaPVhFqGkKkOVrt8/a8OO+QNRIhIJd0HqTWxbC916WHWHu?=
- =?iso-8859-1?Q?ihMf5yB+nBROHg1BhlaXw8sIHDxEh+E8EgyLDqEldpXY4iFQcUISMsdgdz?=
- =?iso-8859-1?Q?jDunLKuhF+qBqDGxG5tTIVQYu7hmCPjXZdpY1ytoCG4J46LF4UjlLfAncG?=
- =?iso-8859-1?Q?UKnxCg70Fb2sTJtjvEBw7MmuamDpc7G7HqrZkmmjHcUAbzb2gvVIqbBnTY?=
- =?iso-8859-1?Q?EXUkhdi21hyE65irUzh1Ne9Bn+ysx4Y4VPTEXHN45LTNMpyTyRJR9UWYYY?=
- =?iso-8859-1?Q?vYQcp0mxESXl8G+4iaqKTPy8EX81Dlu36JlTx5Ec+sgmckvb8zZDF9pZdQ?=
- =?iso-8859-1?Q?Ffhsqo9/CvuVCV2zaC9svBy7Jvsm+7fVunnhVGvWFjymQZZEbfcuOCB4Oo?=
- =?iso-8859-1?Q?gq63/bhe+WTOoNt0OLE/HuVgAymM0Ze76xbUhGBCBc0GSIUEUY9JOS/uCK?=
- =?iso-8859-1?Q?5foJ1QNUP6v4Hlly5Nw57tB39HSFGBelLWE868w1p50crMqXz6BhM7RtbA?=
- =?iso-8859-1?Q?xYH37SA977dOfPeIUnGAnIOkZBL3Y3rux/F0wdyAVTxFLjcYkfk0DfTmTH?=
- =?iso-8859-1?Q?ohoMCHz+F6oC+eiVJAy0qd4PRVcqEb1yCK1oILvQynoU8YSpufKyGQUYKV?=
- =?iso-8859-1?Q?xxjrsLUP48ebHnl+/juWJ6KeTJx41EGlgMhVIXlF80D7OQ/nKF2KA/aZlf?=
- =?iso-8859-1?Q?hgLWRoE5C7o9y1S6NWpmP/RCyCTKtjJ5GuC0PHgW2M3Wdi+3r2wSnLkdmH?=
- =?iso-8859-1?Q?bEC8J+VXinaMMZMPVrp/VG6QBFsSxLIY559vIyp8O5JvwxY0utPJXeL6bN?=
- =?iso-8859-1?Q?gGaM9vxgwCvcfy1YiNb/dFoNltdxl3rSI202duvunK6oSQrPmFRjvmrH+u?=
- =?iso-8859-1?Q?2DmBv53RJ5mjyTf4c6jfmqnbWS8tTkZu+N6P+GJT8DjSekZcOblL96coTr?=
- =?iso-8859-1?Q?ELXSC84bMdm89EYER1As5xWx0KN8VmwME3VVCBKJTF2V804UwbVp9DWFXk?=
- =?iso-8859-1?Q?4=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7053199007); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?JVNHOp/XvRP8pbpN3BGJyc63HEn7JTZz5xZZiVZCXJAURwQac91t7mOqj9?=
- =?iso-8859-1?Q?TD35JQwOSePEs3DNF1FJ4Fq4alAphqFTqVFPuVYzzr9ahpxgmIYwY7axjx?=
- =?iso-8859-1?Q?5Db1h54iiMc7xthz/JCu8UcR8HqGOvEKNukJoZPaaRV4VJ4Q+2vtsWU3GS?=
- =?iso-8859-1?Q?qL+//OkwjTanFjnexjFkqhj9q+m7ADkOvtTymFDHJfVxSlYnFxXjuv1YwA?=
- =?iso-8859-1?Q?jAuB5O4AnCqz9sVZt0ze76guMjMFPmnrG7TEjAUObe+kUBNlA8ocyiSIzK?=
- =?iso-8859-1?Q?b76shQGUv51m271ee8yceIO3ae1WTjc2rN1z6hHI7SeP6QEvSto5HvdpyK?=
- =?iso-8859-1?Q?FRzyzobzEMZhSrHf/mmjBMUbW0H7I5CaCMmvbDztMeBIRKo44bY3CrQCIA?=
- =?iso-8859-1?Q?mYuT8fWjN5NVkg7mbiPcjZCD9EC/L791HMG2A9+TphUlzcJgSaQii0ym7S?=
- =?iso-8859-1?Q?ZZ2wiBUSU0PStd9NGpg83vHnAYuwG36JBUb3SuxTWLRXTAKpKZCaFBA/Us?=
- =?iso-8859-1?Q?nMF1f7BzlgTVPbyXfl4bxZO2Ua/R8jx3N9H0QLr9mkA/gQvYFgWpBvz3kx?=
- =?iso-8859-1?Q?FREd8L0pu2p30WZyF8cbl/FHKw9Uf88wZkadQiESHoMENJ6NqmlxUDfNrU?=
- =?iso-8859-1?Q?3xZBK0gRUaPgh0X5ukno/2XYJmbNwwNigeNn1GuvtNEWPZDQ3PcTj7ZcEQ?=
- =?iso-8859-1?Q?/PIEogjnqyyPcYD2RFbgyLK8zOEhcOt0bkJICMVBz4HiQUCTW3LxWw13cn?=
- =?iso-8859-1?Q?TYHrX/0qxecIsU2OsjbcKVOeEVFtv0y9P6/R2WlUAbVGsQxDVEU5tllCaD?=
- =?iso-8859-1?Q?QN/NEgm9l4FcKtMETtb5zIpdfwDVRCA+5mLyqZoPe7kuX/3rMHadfaJ82n?=
- =?iso-8859-1?Q?aeH0ac2zPqqWdlmKDlfDDJ1v/qHQKwm/vdlylQ9spo2aB5SQbwVtWr89aq?=
- =?iso-8859-1?Q?ak5PQZOnQhDuxyDZ7JHHCeV5uwo/Rshr5GqqoloJI644yl3N9FZkKihIaQ?=
- =?iso-8859-1?Q?N/B3U2C8h5zyVvLcf8ux8wkQUv1dA87XJPK/gf9Zy1ilOb0dImMi/7yaGg?=
- =?iso-8859-1?Q?Svy3iICHvjkd10x2ufpsDQrGWZNzIxJcwbxwwTwtLWyegKVjrERhNMO8FP?=
- =?iso-8859-1?Q?BMxS23aB2wgRvibktr8xXO+uTZR4Je2RGfNL0jpNd9+1iI/J1PZPJhqzFu?=
- =?iso-8859-1?Q?5YO7tTY6ImlK3afEefJ32bZHmwKMUhIxeMmvlm8gOxYvjELCa3G2Le+t3/?=
- =?iso-8859-1?Q?z7b4xEDz4pDgiKyUkZVxoqEK8ohYydZC1jlqg1vdazOd0ngXIHFcvYGLBW?=
- =?iso-8859-1?Q?9Ty2y4xL3GhHRvRmfo0yB+aNTI1xzJTUFe5OHpcJzCGF/gHIPbuww/zNqG?=
- =?iso-8859-1?Q?KbhS2fx+PqL31exuN60/CGePcc1ax2+m5ywhSFSyKyCMQwmnnWDzKuLHIy?=
- =?iso-8859-1?Q?CVF2X14vrO8orpm9NxXNGbuZ/Ft+zgN57RUnaqW3Bi01k5lKT81VrJEwxH?=
- =?iso-8859-1?Q?Y7iKz/ma7qCdqT9s30zr7kmG8NIosDgxOS2Z1dQ0c8PrCgW/ru7GUoEtK5?=
- =?iso-8859-1?Q?F7EBOvNL2OqLdbueScUnHA5L89OrvRqFcixVW7o5vIY1kf9RiK/BZTUjNK?=
- =?iso-8859-1?Q?KIHhOzBz8XhPvoYzsLMxHzOzO8g9M8FHth?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d6ab088-29d5-4e14-8979-08ddea424af3
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 17:01:00.4083 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ySJfyQleHOl5QOu+zjEacMxbXhgDbeS/ItfU4GKTsmnnRWrye7nL/FzqRzz8HIqtfGCZDKTq8QvFOlwmDOHphQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7167
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTAyMDE2OCBTYWx0ZWRfX2VR8u3O3YtWH
- Pg0s7r4fi8K2aG9m1l//WQWxwWhAxyGABFMIhC/TnryHqD+HAOiOBiRE2Gkp5KmZnj9BQpsrhwk
- EQU6wNyZJt8V29IuGORcaDeg2jbRd9lzTjms1EKS7fWwPy6MZ/KhKnhyqTbt8GBg0TOSCXT1HH+
- XS+jpOWRvIuDTvkjOJgA7JVY12P7jVluFE3ltGGwcClTv62xjMRMByBP4BvfyE4iWWKezj69udY
- pD2l+v+AyvlLJmwPKDGgfoMTm+Aj3g4t/sISPPDlkuGw3TtkxvzFg2zFTunPfSz6crx9yXOmH/i
- jwQqqaeabKPtQSXvGa9ciQKrHFnqa1759bF9PoJkFvZJ0s1luKEE60PbL9FQOs=
-X-Authority-Analysis: v=2.4 cv=TONFS0la c=1 sm=1 tr=0 ts=68b722cf cx=c_pps
- a=ITavxs4S4at15BTzwWu3Ng==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=yJojWOMRYYMA:10 a=0kUYKlekyDsA:10
- a=KKAkSRfTAAAA:8 a=64Cc0HZtAAAA:8 a=d3oM7ixe-CCtZzQ8SnAA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: ltFGPO1EXnCrC4ck6QrUUm5oLMS47Cwg
-X-Proofpoint-GUID: ltFGPO1EXnCrC4ck6QrUUm5oLMS47Cwg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-02_06,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <cover.1756706188.git.jan.kiszka@siemens.com>
+ <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
+ <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
+ <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
+ <11808e86-cee0-48bf-8fbd-de13a9a25ed0@linaro.org>
+ <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
+ <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
+ <03a51e36-9a15-4b49-a310-c36a4d0af360@linaro.org>
+ <2abbaeda-f9dc-4045-a9f7-b2b48451255f@kaod.org>
+ <42310bdb-4fad-4df2-b7ad-3ff3f863e248@linaro.org>
+ <d21f6449-e646-42fc-8277-b011a886e9c9@linaro.org>
+ <41d2e67e-3345-4720-b3aa-1051224025de@siemens.com>
+ <21b6726a-1ceb-4782-a219-36f32cebb774@siemens.com>
+ <a1463f9e36d8b3e6289859bec9a0a5a758709316.camel@pengutronix.de>
+In-Reply-To: <a1463f9e36d8b3e6289859bec9a0a5a758709316.camel@pengutronix.de>
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 2 Sep 2025 11:07:02 -0600
+X-Gm-Features: Ac12FXw2wEKjxkKgZ1N5Of__fmN_Hz8kxEuAxNu7KA6yksaDaPvkX6BLdNR5q9o
+Message-ID: <CANCZdfprQZTVskt-EPgT-ALMO3HU-akdcw+yZ5=9Cmu1F00etQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
+ image
+To: =?UTF-8?Q?Jan_L=C3=BCbbe?= <jlu@pengutronix.de>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, Joel Stanley <joel@jms.id.au>,
+ Bin Meng <bmeng.cn@gmail.com>, 
+ qemu-block@nongnu.org, Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
+ qemu-arm <qemu-arm@nongnu.org>, Alistair Francis <alistair@alistair23.me>, 
+ Alexander Bulekov <alxndr@bu.edu>
+Content-Type: multipart/alternative; boundary="000000000000fc96ce063dd484e4"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -200,16 +113,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Sep 02, 2025 at 05:50:47PM +0100, Alex Bennée wrote:
+--000000000000fc96ce063dd484e4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> This is a fairly lightweight document which doesn't add much to the
-> general advice in vhost-user. Update the vhost-user docs to point
-> directly at the rust-vmm repo.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+On Tue, Sep 2, 2025 at 10:49=E2=80=AFAM Jan L=C3=BCbbe <jlu@pengutronix.de>=
+ wrote:
 
-Reviewed-by: John Levon <john.levon@nutanix.com>
+> On Tue, 2025-09-02 at 18:39 +0200, Jan Kiszka wrote:
+> > > > I expect us to be safe and able to deal with non-pow2 regions if we
+> use
+> > > > QEMUSGList from the "system/dma.h" API. But this is a rework nobody
+> had
+> > > > time to do so far.
+> > >
+> > > We have to tell two things apart: partitions sizes on the one side an=
+d
+> > > backing storage sizes. The partitions sizes are (to my reading) clear=
+ly
+> > > defined in the spec, and the user partition (alone!) has to be power =
+of
+> > > 2. The boot and RPMB partitions are multiples of 128K. The sum of the=
+m
+> > > all is nowhere limited to power of 2 or even only multiples of 128K.
+> > >
+> >
+> > Re-reading the part of the device capacity, the rules are more complex:
+> >  - power of two up to 2 GB
+> >  - multiple of 512 bytes beyond that
+> >
+> > So that power-of-two enforcement was and still is likely too strict.
+>
 
-regards
-john
+It is. Version 0 (and MMC) cards had the capacity encoded like so:
+                m =3D mmc_get_bits(raw_csd, 128, 62, 12);
+                e =3D mmc_get_bits(raw_csd, 128, 47, 3);
+                csd->capacity =3D ((1 + m) << (e + 2)) * csd->read_bl_len;
+so any card less than 2GB (well, technically 4GB, but 4GB version 0 cards
+were
+rare and broke some stacks... I have one and I love it on my embedded ARM
+board
+that can't do version 1 cards). Version 1 cards encoded it like:
+                csd->capacity =3D ((uint64_t)mmc_get_bits(raw_csd, 128, 48,
+22) +
+                    1) * 512 * 1024;
+So it's a multiple of 512k. These are also called 'high capacity' cards.
+
+Version 4 introduces an extended CSD, which had a pure sector count in the
+EXT CSD. I think this
+is only for MMC cards. And also the partition information.
+
+
+> > But I still see no indication, neither in the existing eMMC code of QEM=
+U
+> > nor the spec, that the boot and RPMB partition sizes are included in
+> that.
+>
+> Correct. Non-power-of-two sizes are very common for real eMMCs. Taking a
+> random
+> one from our lab:
+> [    1.220588] mmcblk1: mmc1:0001 S0J56X 14.8 GiB
+> [    1.228055]  mmcblk1: p1 p2 p3 p4
+> [    1.230375] mmcblk1boot0: mmc1:0001 S0J56X 31.5 MiB
+> [    1.233651] mmcblk1boot1: mmc1:0001 S0J56X 31.5 MiB
+> [    1.236682] mmcblk1rpmb: mmc1:0001 S0J56X 4.00 MiB, chardev (244:0)
+>
+> For eMMCs using MLC NAND, you can also configure part of the user data
+> area to
+> be pSLC (pseudo single level cell), which changes the available capacity
+> (after
+> a required power cycle).
+>
+
+Yes. Extended partitions are a feature of version 4 cards, so don't have
+power-of-2 limits since they are a pure sector count in the ext_csd.
+
+Warner
+
+--000000000000fc96ce063dd484e4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 2, =
+2025 at 10:49=E2=80=AFAM Jan L=C3=BCbbe &lt;<a href=3D"mailto:jlu@pengutron=
+ix.de">jlu@pengutronix.de</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">On Tue, 2025-09-02 at 18:39 +0200, Jan Kiszka wrot=
+e:<br>
+&gt; &gt; &gt; I expect us to be safe and able to deal with non-pow2 region=
+s if we use<br>
+&gt; &gt; &gt; QEMUSGList from the &quot;system/dma.h&quot; API. But this i=
+s a rework nobody had<br>
+&gt; &gt; &gt; time to do so far.<br>
+&gt; &gt; <br>
+&gt; &gt; We have to tell two things apart: partitions sizes on the one sid=
+e and<br>
+&gt; &gt; backing storage sizes. The partitions sizes are (to my reading) c=
+learly<br>
+&gt; &gt; defined in the spec, and the user partition (alone!) has to be po=
+wer of<br>
+&gt; &gt; 2. The boot and RPMB partitions are multiples of 128K. The sum of=
+ them<br>
+&gt; &gt; all is nowhere limited to power of 2 or even only multiples of 12=
+8K.<br>
+&gt; &gt; <br>
+&gt; <br>
+&gt; Re-reading the part of the device capacity, the rules are more complex=
+:<br>
+&gt; =C2=A0- power of two up to 2 GB<br>
+&gt; =C2=A0- multiple of 512 bytes beyond that<br>
+&gt; <br>
+&gt; So that power-of-two enforcement was and still is likely too strict.<b=
+r></blockquote><div><br></div><div>It is. Version 0 (and MMC) cards had the=
+ capacity encoded like so:</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 m =3D mmc_get_bits(raw_csd, 128, 62, 12);</div>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 e =3D mmc_get_bits(raw_csd, 1=
+28, 47, 3);</div><div class=3D"gmail_quote gmail_quote_container"><div>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 csd-&gt;capacity =3D (=
+(1 + m) &lt;&lt; (e + 2)) * csd-&gt;read_bl_len;</div><div>so any card less=
+ than 2GB (well, technically 4GB, but 4GB version 0 cards were</div><div>ra=
+re and broke some stacks... I have one and I love it on=C2=A0my embedded AR=
+M board</div><div>that can&#39;t do version 1 cards). Version 1 cards encod=
+ed it like:</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 csd-&gt;capacity =3D ((uint64_t)mmc_get_bits(raw_csd, 128, 48, 22) +<br=
+>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 1) *=
+ 512 * 1024;</div><div>So it&#39;s a multiple of 512k. These are also calle=
+d &#39;high capacity&#39; cards.</div><div><br></div><div>Version 4 introdu=
+ces an extended CSD, which had a=C2=A0pure sector count in the EXT CSD. I t=
+hink this</div><div>is only for MMC cards. And also the partition informati=
+on.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+>
+&gt; But I still see no indication, neither in the existing eMMC code of QE=
+MU<br>
+&gt; nor the spec, that the boot and RPMB partition sizes are included in t=
+hat.<br>
+<br>
+Correct. Non-power-of-two sizes are very common for real eMMCs. Taking a ra=
+ndom<br>
+one from our lab:<br>
+[=C2=A0 =C2=A0 1.220588] mmcblk1: mmc1:0001 S0J56X 14.8 GiB<br>
+[=C2=A0 =C2=A0 1.228055]=C2=A0 mmcblk1: p1 p2 p3 p4<br>
+[=C2=A0 =C2=A0 1.230375] mmcblk1boot0: mmc1:0001 S0J56X 31.5 MiB<br>
+[=C2=A0 =C2=A0 1.233651] mmcblk1boot1: mmc1:0001 S0J56X 31.5 MiB<br>
+[=C2=A0 =C2=A0 1.236682] mmcblk1rpmb: mmc1:0001 S0J56X 4.00 MiB, chardev (2=
+44:0)<br>
+<br>
+For eMMCs using MLC NAND, you can also configure part of the user data area=
+ to<br>
+be pSLC (pseudo single level cell), which changes the available capacity (a=
+fter<br>
+a required power cycle).<br></blockquote><div><br></div><div>Yes. Extended =
+partitions are a feature of version 4 cards, so don&#39;t have power-of-2 l=
+imits since they are a pure sector count in the ext_csd.</div><div><br></di=
+v><div>Warner=C2=A0</div></div></div>
+
+--000000000000fc96ce063dd484e4--
 
