@@ -4,127 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B15CA1007
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 04:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2078CA1007
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 04:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utIYC-0002XJ-Pl; Tue, 02 Sep 2025 00:23:20 -0400
+	id 1utIYd-0002cp-BR; Tue, 02 Sep 2025 00:23:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utIY9-0002X4-Sa
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 00:23:17 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1utIYc-0002cW-A2
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 00:23:46 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1utIY7-0000xk-P8
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 00:23:17 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822S5JP021586
- for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 04:23:13 GMT
+ id 1utIYa-00015i-CC
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 00:23:46 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822Rtdl015204
+ for <qemu-devel@nongnu.org>; Tue, 2 Sep 2025 04:23:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- fd6ozZRZ9e6A0HdsAdBkqdjXqLsv83O7o8FHI5Sq+N0=; b=MTTz5zHegjBOP2Km
- l5q2eDeh9PVLNpOEgtVHrJi8g9R8/s5dTqjtA6X1vwD3ft4MWXMetcHPv5GVTYHw
- 0ctatbB7tVNA3j2YMY8rDsVxNWbI7+Aoy8voyOxW9Fh04FH75SjE8XRG8ZOMDlvg
- Y7HCt1gkVjZ0FTUgwBDRceRMNetuNnmxMk3J3iCHr8MaJiWL7DVHkRKFvOV6XeKj
- 44QQSNN/2CF7riSWdjY/CFueZVUP1Bif6iDG0oEZOv24AsoijswspL2rFMLfG5Gw
- 9h5XvGZ8/imaL1T0PfPVndTE0tNQyzNjqJWIZ09DET5Z1DGu/2EAODdPNx3B/e7K
- smH3RQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8rxhdt-1
+ +dySApDg8xu5H7CXLSDmFXCif6UpW+jUjSzaDhWYEjg=; b=PJqBzo1rqrzmGjuF
+ fmkvfjZbyR/Rq3uqVjC6YjVeZXNDXiWG4GJ4wx3bo7tw5fWGBYQIVyJ57nU5glZY
+ orfQpvy+RUAIZADNEB929K1Gi1Vp+bFx0rXBe6/h01LCGiJRUEzQu/SB3iDA9Iqh
+ 3zAeH9asBDMDsHzZ+7L1WCVVxAfd6R1ujwTKlQ3b/E4UfRxMWy7uOWpzNMpPu14X
+ 8knb/zbEH95GaqCtm44/0SSw7PKbJWLI4SuYADNlXALT72lk/xzHkJmwRiFHUGxb
+ DykvxVAEvS/sJLp6s6uN/3LiYNc51IXGrhY/CLFpyELe3T82Onlk0eIcKF7+Z2kz
+ LzlR0g==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urvyxfsy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 04:23:13 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-4b2f7851326so124344101cf.1
- for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 21:23:12 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 04:23:42 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-70faf8b375cso51871146d6.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Sep 2025 21:23:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756786991; x=1757391791;
+ d=1e100.net; s=20230601; t=1756787022; x=1757391822;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fd6ozZRZ9e6A0HdsAdBkqdjXqLsv83O7o8FHI5Sq+N0=;
- b=S44vVG7Gf/NLuDTnVT5k9FZUMb735hg0+sSs2qXBUxTnESXqhn7qDbCQpSRY2HEzh1
- lW6XwTZvsYLKsfyfIrgcy8lpxhIW3+OJC6qDTffyqY3LehdH2SaJE2Hc0CKF5UM+grj5
- BM+ge3K5NF67wE57ryRIFuIi9yFlzsPHLdKz3emRDHqb9oV9l8FFAgATCFC1WrO2dpf3
- MP9n4uB5z/jX86mGxqBrAKYAqehutVkmN4sWR0YA1dtG98NTUdrrtctU0hMfa2JweVkX
- REQk1dNc1kH7yhwAMC7Ua7yt6JqBP94jMaDYI5t9L5VWVTZsKtIizjDTaUajAfNpwVR/
- QdvQ==
+ bh=+dySApDg8xu5H7CXLSDmFXCif6UpW+jUjSzaDhWYEjg=;
+ b=Q3XRzTBXnzq0WB9Zz4wwXdjyRo/HTNgGv4Oel1L/Eatn0paJ4k9BdHrD6XOTsqWHPP
+ 2cK/orMvIwLORyI2baErp9E3MY3rwU75h58ychBnjdeeXHdIZTU6vXi0SoAPmXwngCW9
+ CEidtjR6hXOT7S32coyATc1rpwNjQFNr2/N21nK17FH4Y23A3DM7ov4+PHakEv8vc6wz
+ O8ds/0Nd7QGYwhyDFUyah6ebSFCs9uelpkFhiXinwJO71jI+EanZlhoDGp+KbwHx0hzN
+ UxWmNpTKkk2chu1CU8xP8Q04f99zJBUBbwlasaVpLQXdUTXShOZ/exsLG0DyHPtOxlPh
+ rXNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWgU4FiTAXeWuIt7neGUm8xjmWAq9stg13gr0vwrbdHQ8NhPsTnmFgpuyhs9giujmJZdnR/yqkcpNm/@nongnu.org
-X-Gm-Message-State: AOJu0YxxK9DvJFqYY3xOHVhq2DKg8+YJVKkb5Jz4ALvP5IICFyKNahAX
- KoQF/50AEX/Np+ph8rGAovZ4P145Ao9mp/xIUt2p6xnwyOy8YWivt2d2Yc++Aw9whw7x946BhYU
- ho/1zm7s3Gl+U6uG7lz0y/0CaqZHBWu/TCi4Hb5MvG9ncav4VtM4lAA+iXA==
-X-Gm-Gg: ASbGncupCJFccs36xuWBQ7YNG/Oukn8XwvR+IzlqiSHGTJuYzzN9UMr84ZxAp/dE79q
- j5xSN8eEl0g/hjXpvbiJLBs64WyRNT8IRryZIHD8kA9gayLOD7eeCyR+brfEmAl+ONscmuTFKEx
- DP1wv533tCCAckqi6C5WlnQfJDI68bx9pswEWB+YSSTl+AUTDtbUHW7JvgtYmup54xewKRkgn+b
- rczCs8FMDReWOxjLzgrUaIkXDYhb7Lh+jQmA4D/3ZNYWZgAV2WzVKT2e8ndRjXR6KHiIg//Vr8f
- n2uafiudXzDF+VwwY0+KA4YhueZQpQdbJUWCz0UCREie4PA6vMtaqrwdo7A6Tg==
-X-Received: by 2002:ac8:594b:0:b0:4b2:eeed:6a17 with SMTP id
- d75a77b69052e-4b31db69339mr126536461cf.46.1756786991538; 
- Mon, 01 Sep 2025 21:23:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGkMeYIgP+85w65gv1hEq/qQNnI9VC7sU3s/Saw3wx+2PrpPd23wWoUV6uIM8TABtY0cS2WHQ==
-X-Received: by 2002:ac8:594b:0:b0:4b2:eeed:6a17 with SMTP id
- d75a77b69052e-4b31db69339mr126536211cf.46.1756786990869; 
- Mon, 01 Sep 2025 21:23:10 -0700 (PDT)
+ AJvYcCX/wGsPseTFRA7b5GTVkU9w3o4xqRBkQBuSIHY63CuwlxYUYycbGuZzS5Cx8haA9/kdSu90MUNUKXE8@nongnu.org
+X-Gm-Message-State: AOJu0Yy8LopJGPUQrJbv+ciYY0HPgx99RNLe3f7h91gAz4JSSXsEKBuZ
+ ygTAXZEL98F184JrsouedTLa80PCqGSjdAQDOdxqVgHtfTpm8mLM0X3EsTziOHIpG6813/wsFll
+ TmAp/uVahTUkIOnnSMHwpL3yWNVntSHVYJCZKfYaS1Ot98usIuh+VA/ULYQ==
+X-Gm-Gg: ASbGncvZTjOqOoF4/1whUKs30IA2AgH2k2TB8Bha5vK8XQWXZh3MOk8sgCwAwzlks8V
+ 7xWFM02S0E8f1CgkxEKQLq8KJdLQk0XEWEmP5DbJ/Vj0pp8CZgCAR9oI3ZSkvXhZZkm7BGiGO5f
+ jyVIRmIBxv+ca7lVMm2fOBA4Vvhzk2BjTnf653lvQGW4NDm8SmY5H2lMxoQqIqCHBq4mK6c6lZt
+ LykGqZ3mQUYkMHorYkOdhkInEWzYNhsS9BQgZZD02ijuBMZSovyiWbaKL5luaEFmV2xIZ7EWCKb
+ 4Yl+0l2rWZQ1MH/uhbV/NxO5nyHtHh/u5/+Ju6AtqY2W+JEFUzRrNbHfDjLs3Q==
+X-Received: by 2002:a05:6214:3d10:b0:710:e1bc:ae42 with SMTP id
+ 6a1803df08f44-710e1bcb2c6mr102602956d6.10.1756787021768; 
+ Mon, 01 Sep 2025 21:23:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG50Sg4We0y5cfTI6Xdck4NAH7f+BOWmTIvcC/3aegAHOjr+MfZh5PRp2oN/ljjiu+qBRhGgw==
+X-Received: by 2002:a05:6214:3d10:b0:710:e1bc:ae42 with SMTP id
+ 6a1803df08f44-710e1bcb2c6mr102602686d6.10.1756787021183; 
+ Mon, 01 Sep 2025 21:23:41 -0700 (PDT)
 Received: from [172.19.248.181] ([80.149.170.9])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3cf276d5e5fsm17958390f8f.27.2025.09.01.21.22.56
+ ffacd0b85a97d-3cf276d5e5fsm17958390f8f.27.2025.09.01.21.23.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Sep 2025 21:23:10 -0700 (PDT)
-Message-ID: <2edceb98-ec8f-424d-849b-bb5543c00679@oss.qualcomm.com>
-Date: Mon, 1 Sep 2025 20:44:19 -0500
+ Mon, 01 Sep 2025 21:23:40 -0700 (PDT)
+Message-ID: <4f296987-64fd-46a4-8783-2536a01c2466@oss.qualcomm.com>
+Date: Mon, 1 Sep 2025 20:50:07 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/39] target/hexagon: Implement {g,s}etimask helpers
-To: Sid Manning <sidneym@quicinc.com>,
- "ltaylorsimpson@gmail.com" <ltaylorsimpson@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "Matheus Bernardino (QUIC)" <quic_mathbern@quicinc.com>,
- "ale@rev.ng" <ale@rev.ng>, "anjo@rev.ng" <anjo@rev.ng>,
- "Marco Liebel (QUIC)" <quic_mliebel@quicinc.com>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "Mark Burton (QUIC)" <quic_mburton@quicinc.com>,
- Brian Cain <bcain@quicinc.com>
+Subject: Re: [PATCH 10/39] target/hexagon: Implement
+ arch_{s,g}et_{thread,system}_reg()
+To: ltaylorsimpson@gmail.com, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, philmd@linaro.org, quic_mathbern@quicinc.com,
+ ale@rev.ng, anjo@rev.ng, quic_mliebel@quicinc.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ 'Brian Cain' <bcain@quicinc.com>
 References: <20250301052845.1012069-1-brian.cain@oss.qualcomm.com>
- <20250301052845.1012069-7-brian.cain@oss.qualcomm.com>
- <017301db9764$35236f00$9f6a4d00$@gmail.com>
- <IA0PR02MB94869B8845A4B698519DDFF9BEDB2@IA0PR02MB9486.namprd02.prod.outlook.com>
+ <20250301052845.1012069-11-brian.cain@oss.qualcomm.com>
+ <017c01db9772$3f31b610$bd952230$@gmail.com>
 Content-Language: en-US
 From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <IA0PR02MB94869B8845A4B698519DDFF9BEDB2@IA0PR02MB9486.namprd02.prod.outlook.com>
+In-Reply-To: <017c01db9772$3f31b610$bd952230$@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX+TuRiqZS1abA
- en8+VAwa6SzvbV6Bm2hOCATYLqFM0EaLl72DlXnKOeP9+GbTf600gqkC0lIG0fSLZoJP8A3r8AX
- upqIZYHuS6d7wI9fH2E1qgXpLnOvEv+/nOA+xKNXM/Y3FqNyDNYmUWU74kHquzUX6kXM24j2L72
- 7fs/BNfEg3wp6fj28p5yhUvdxqmVw1/s7lrQBI5B/LRzIDHlvwZDTlhPON/+FI3YPYWCsyDOMNP
- xF4ftGgTlarN/poXcMTRk0snAy+JqLBiQDiuQqa0merorzzEC5u+Naz59wboUfykSu1pq5VusnD
- HE1u23DQNFxgeW0kpFXYS/jotoK2kP71MzXuJJj1/YjBXHNwvJjpVqYJfMZXalgl7e0C1uwP34H
- ZJ7vjMVK
-X-Proofpoint-GUID: SwFm-Qb70L10EkzGH0MFhpmphPFNVQES
-X-Proofpoint-ORIG-GUID: SwFm-Qb70L10EkzGH0MFhpmphPFNVQES
-X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b67131 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=oqm+nZh+PgUSu2IGv/nVbQ==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: QN0VNhRQKLZ63neOCM9J9HypqX5y6un0
+X-Proofpoint-ORIG-GUID: QN0VNhRQKLZ63neOCM9J9HypqX5y6un0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfXy4kvq8ijUwEr
+ 4IL6scBHD497n+8MYmNOprR6iZ+FfRAU4xf1IG3PI8MYabgwNVd+BBD9G5eNL2C9xCf3d7d4A2j
+ 8zs/UO+pMGYiFacdKfH+IXklnQg/NKhy3HqVf5e69QX+JxeI3W3fFJ1pW7T8xC9oGK0/coOE6Jh
+ zVbH7c/qUv/fmdYdCg1d+YISwgv8F7EeryhH8/AbN8ga2imR82SkIJLb97Cr7opfXptM2S5eJmO
+ aKBpxVIRneLp/CLExxCG9QqYp8IsQ8Wob0i9Tvt2slROuO9hUCDU9NQGNT9psq/JTjq6XiBgiid
+ LlNnYwUT/pChF8POFSdfSWS+Yvh2iYJXjVBjATafin9sBek81+zYLpZ9ocPWhkwVudorL3M/CbU
+ xR9IWoi3
+X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b6714e cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=oqm+nZh+PgUSu2IGv/nVbQ==:17
  a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=gr_Q40nmJAwP1si43coA:9
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=NzjH97FNM7v7ZbvR8GsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+ a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300027
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -148,111 +142,71 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 3/21/2025 4:48 PM, Sid Manning wrote:
+On 3/17/2025 2:24 PM, ltaylorsimpson@gmail.com wrote:
 >
 >> -----Original Message-----
->> From: ltaylorsimpson@gmail.com <ltaylorsimpson@gmail.com>
->> Sent: Monday, March 17, 2025 12:44 PM
->> To: 'Brian Cain' <brian.cain@oss.qualcomm.com>; qemu-devel@nongnu.org
->> Cc: richard.henderson@linaro.org; philmd@linaro.org; Matheus Bernardino
->> (QUIC) <quic_mathbern@quicinc.com>; ale@rev.ng; anjo@rev.ng; Marco
->> Liebel (QUIC) <quic_mliebel@quicinc.com>; alex.bennee@linaro.org; Mark
->> Burton (QUIC) <quic_mburton@quicinc.com>; Sid Manning
->> <sidneym@quicinc.com>; Brian Cain <bcain@quicinc.com>
->> Subject: RE: [PATCH 06/39] target/hexagon: Implement {g,s}etimask helpers
+>> From: Brian Cain <brian.cain@oss.qualcomm.com>
+>> Sent: Friday, February 28, 2025 11:28 PM
+>> To: qemu-devel@nongnu.org
+>> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+>> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng; anjo@rev.ng;
+>> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
+>> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+>> sidneym@quicinc.com; Brian Cain <bcain@quicinc.com>
+>> Subject: [PATCH 10/39] target/hexagon: Implement
+>> arch_{s,g}et_{thread,system}_reg()
 >>
->> WARNING: This email originated from outside of Qualcomm. Please be wary
->> of any links or attachments, and do not enable macros.
+>> From: Brian Cain <bcain@quicinc.com>
 >>
->>> -----Original Message-----
->>> From: Brian Cain <brian.cain@oss.qualcomm.com>
->>> Sent: Friday, February 28, 2025 11:28 PM
->>> To: qemu-devel@nongnu.org
->>> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
->>> philmd@linaro.org; quic_mathbern@quicinc.com; ale@rev.ng;
->> anjo@rev.ng;
->>> quic_mliebel@quicinc.com; ltaylorsimpson@gmail.com;
->>> alex.bennee@linaro.org; quic_mburton@quicinc.com;
->> sidneym@quicinc.com;
->>> Brian Cain <bcain@quicinc.com>
->>> Subject: [PATCH 06/39] target/hexagon: Implement {g,s}etimask helpers
->>>
->>> From: Brian Cain <bcain@quicinc.com>
->>>
->>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>> ---
->>>   target/hexagon/op_helper.c | 31 +++++++++++++++++++++++++++++--
->>>   1 file changed, 29 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
->>> index 9f79b1a20c..83088cfaa3 100644
->>> --- a/target/hexagon/op_helper.c
->>> +++ b/target/hexagon/op_helper.c
->>> @@ -1468,12 +1468,39 @@ void HELPER(resume)(CPUHexagonState *env,
->>> uint32_t mask)
->>>
->>>   uint32_t HELPER(getimask)(CPUHexagonState *env, uint32_t tid)  {
->>> -    g_assert_not_reached();
->>> +    CPUState *cs;
->>> +    CPU_FOREACH(cs) {
->>> +        HexagonCPU *found_cpu = HEXAGON_CPU(cs);
->>> +        CPUHexagonState *found_env = &found_cpu->env;
->>> +        if (found_env->threadId == tid) {
->>> +            target_ulong imask = arch_get_system_reg(found_env,
->>> HEX_SREG_IMASK);
->>> +            qemu_log_mask(CPU_LOG_INT, "%s: tid %d imask = 0x%x\n",
->>> +                          __func__, env->threadId,
->>> +                          (unsigned)GET_FIELD(IMASK_MASK, imask));
->>> +            return GET_FIELD(IMASK_MASK, imask);
->>> +        }
->>> +    }
->>> +    return 0;
->>>   }
->>>
->>>   void HELPER(setimask)(CPUHexagonState *env, uint32_t pred, uint32_t
->>> imask)  {
->> The name pred sounds like a predicate register.  Use tid instead.
-> [Sid Manning]
-> In this case pred is referring to the predicate register.
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/cpu_helper.h | 13 ++++++++++---
+>>   1 file changed, 10 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/target/hexagon/cpu_helper.h b/target/hexagon/cpu_helper.h
+>> index e8d89d8526..1cdf4f8dd0 100644
+>> --- a/target/hexagon/cpu_helper.h
+>> +++ b/target/hexagon/cpu_helper.h
+>> @@ -26,20 +26,27 @@ static inline void
+>> arch_set_thread_reg(CPUHexagonState *env, uint32_t reg,
+>>                                          uint32_t val)  {
+>>       g_assert(reg < TOTAL_PER_THREAD_REGS);
+>> -    g_assert_not_reached();
+>> +    env->gpr[reg] = val;
+> Gotta be careful here.  Not all registers can be assigned directly.  Look at gen_write_ctrl_reg in genptr.c.
 >
-> setimask(Pt,Rs)
-> The setimask instruction writes the IMASK for the thread indicated by the low bits of
-> predicate Pt. Register Rs contains the 32-bit mask value to be written. For Pt values outside of
-> [0-NUM_THREADS-1], the results are undefined.
+>>   }
+>>
+>>   static inline uint32_t arch_get_thread_reg(CPUHexagonState *env, uint32_t
+>> reg)  {
+>>       g_assert(reg < TOTAL_PER_THREAD_REGS);
+>> -    g_assert_not_reached();
+>> +    return env->gpr[reg];
+> Ditto - look at gen_read_ctrl_reg in genptr.c
 >
->>> -    g_assert_not_reached();
->>> +    CPUState *cs;
->>> +
->>> +    BQL_LOCK_GUARD();
->>> +    CPU_FOREACH(cs) {
->>> +        HexagonCPU *found_cpu = HEXAGON_CPU(cs);
->>> +        CPUHexagonState *found_env = &found_cpu->env;
->>> +
->>> +        if (pred == found_env->threadId) {
->>> +            SET_SYSTEM_FIELD(found_env, HEX_SREG_IMASK, IMASK_MASK,
->>> imask);
->>> +            qemu_log_mask(CPU_LOG_INT, "%s: tid %d imask 0x%x\n",
->>> +                          __func__, found_env->threadId, imask);
->>> +            hex_interrupt_update(env);
->> Shouldn't this be found_env?
-> [Sid Manning]
-> It could be either, hex_interrupt_update is just using env to get the global ipend register.
->>> +            return;
->>> +        }
->>> +    }
->>> +    hex_interrupt_update(env);
->> Do you need to update if the thread wasn't found?
-> [Sid Manning]
-> This may not be strictly needed since the only way to reach this line is for setimask to pass a predicate that is outside the range of valid htids.  We can remove this and add a guest error.
+>>   }
+>>
+>> +#ifndef CONFIG_USER_ONLY
+>>   static inline void arch_set_system_reg(CPUHexagonState *env, uint32_t
+>> reg,
+>>                                          uint32_t val)  {
+>> -    g_assert_not_reached();
+>> +    g_assert(reg < NUM_SREGS);
+>> +    if (reg < HEX_SREG_GLB_START) {
+>> +        env->t_sreg[reg] = val;
+>> +    } else {
+>> +        env->g_sreg[reg] = val;
+>> +    }
+> Be careful here too.  Look at gen_log_sreg_write.
 >
-
-Fixed in v2 but I see now that we used the wrong format specifier - will 
-fix it for v3.
+>>   }
+>> +#endif
+>>
+>>   uint32_t arch_get_system_reg(CPUHexagonState *env, uint32_t reg);
+> Honestly, consider getting rid of these.  All the uses are a specific register number, so there's no benefit of things like g_assert(reg < TOTAL_PER_THREAD_REGS) or reg < HEX_SREG_GLB_START.  Also, keeping them runs the risk of not having all the proper checks inside.
 
 
->>>   }
->>>
->>>   static bool handle_pmu_sreg_write(CPUHexagonState *env, uint32_t reg,
->>> --
->>> 2.34.1
+I see your point.  We will take a look at this for v3.
+
+>
 
