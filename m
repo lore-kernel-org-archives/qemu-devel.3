@@ -4,104 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA23CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:49:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3752DCA0FFE
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 15:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utTF1-0003zf-MU; Tue, 02 Sep 2025 11:48:15 -0400
+	id 1utTHk-0006CU-LW; Tue, 02 Sep 2025 11:51:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utTEv-0003vp-OZ; Tue, 02 Sep 2025 11:48:10 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1utTHe-000683-W3
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:50:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org>)
- id 1utTEf-0007zF-Pc; Tue, 02 Sep 2025 11:48:08 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4cGVW60p4Xz4w9k;
- Wed,  3 Sep 2025 01:47:46 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4cGVW26LXGz4w9V;
- Wed,  3 Sep 2025 01:47:42 +1000 (AEST)
-Message-ID: <c8e1a073-7702-4bad-b7f1-2b4f51da47f4@kaod.org>
-Date: Tue, 2 Sep 2025 17:47:40 +0200
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1utTHc-000084-BJ
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 11:50:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756828252;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O1z93Pub6Mp61IS2E3/nCiNg21wlLukxFEpvL9CDvMM=;
+ b=CNvMCcJEYVMHp/lY2ep1bN78LfL9UpgW1m9cH0ZK2MZcQNDvOY99Pmc+QkVYEuRE7KeNBE
+ yKK4OwbqorFD71w1LVZLzIMEOA+A2ORII3JwDcxTbFOqleDgckUP65XjxMYyyiFOC57tB2
+ xDU91idziNaxeNXsn6dRlYPNYgkdtQU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-626-PSIv5fosNkKM1gZv3VYO5g-1; Tue, 02 Sep 2025 11:49:37 -0400
+X-MC-Unique: PSIv5fosNkKM1gZv3VYO5g-1
+X-Mimecast-MFC-AGG-ID: PSIv5fosNkKM1gZv3VYO5g_1756828176
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-45b9ca27a11so9555e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 08:49:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756828175; x=1757432975;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=O1z93Pub6Mp61IS2E3/nCiNg21wlLukxFEpvL9CDvMM=;
+ b=hGwGoe3T8hSIVYD9NIsG3YMXZ+1W73ymk5RbePNsvpdZVpJYXyHJrdkzFfovBzzoUl
+ S3NwCx7BPIZFUCiDZ93QYPuNH7y9c6I/8V7cwthu9McwHlaTAxJDmumOx4pBcjJM4Awy
+ KdypxpQ7mEqoRmTafC5rnqlHnCWANs1aqt7twYbdvB8FjpM5i/3EsqUgmEk/7zmAShTy
+ UeI2XGYNX1zRe4dbSNxKBMS72WdfpBulK8tWbrCJRD5PTZhjqpW7US8ONhYLC6o+XMOn
+ BCbykDn1NVoftIAuQjqPhY3JnkxAiXKBDza++rnENh9x9p+gIXpeN+DBYhqVm3e67gxF
+ UNZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXZzapX4TsmTJ20UxVH0hDbdDB4qMBd9BbV0qTA5AviphqVWDqBznXMTLMc+gm1HaGxX7pQAnVeioYT@nongnu.org
+X-Gm-Message-State: AOJu0Yw3r0/Ze6h3Geq9ZKDjP9BBPeK+hCzxEkSlt0TtSU0niCUS2pfc
+ HfM9XuhX1hdFHlSk9V0fwi8M+KGGL2PgrhF1xvTbJGSsvNMoLhcRslOgt7gMNUk2Jo+xQaLtVXr
+ 6Ady36FGYtUTXfjKxlUmCn60vfcpeiBdtcPGGhF9jjaGmceG9aiwzAOOE
+X-Gm-Gg: ASbGncsF/RKP09oS+7QJ3CFZF+YIicDatxAkcRq5DANIme7rTqiBOXblxe5U4/r3QAG
+ JESkaxf4MCeWozKwqiUn0QXcQD9AWkabfv7upq46B4ieDjnocSbodWICv+VbQdxwwao6p7/CJOt
+ 1JXYajgcoG+D09cNdeRgZwwLv9P05nMb56rWJSR9rmutCF3/FI9Gy6ZoVeRl09yXV3z4XXONo1A
+ W3ZtUPDaekx5vy9u2mYUyT6lIcDGvc5GZL5IiifW8ktMAwq2cj7w5P9aWh/9kRZlVj1rLlx7mbO
+ G+zu1tIJbayK/MYJMFkEczFuoXnDLA4ud04rSdUtzDx+MBxXrTn8vgZ7OX7wer6tmGX+rPjQZV5
+ EOj2f8PLLA4Zrjw==
+X-Received: by 2002:a05:600c:6818:b0:45b:733b:1feb with SMTP id
+ 5b1f17b1804b1-45b84c58673mr87438025e9.10.1756828175625; 
+ Tue, 02 Sep 2025 08:49:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5F50p2Jjn0NMfNYTGSC0rcw62uzpx0Pd6HVdBpsVpb0sq/at7wOiHh5kJ9Fz2RTvLmDE2QQ==
+X-Received: by 2002:a05:600c:6818:b0:45b:733b:1feb with SMTP id
+ 5b1f17b1804b1-45b84c58673mr87437855e9.10.1756828175189; 
+ Tue, 02 Sep 2025 08:49:35 -0700 (PDT)
+Received: from rh (p200300f6af131a0027bd20bfc18c447d.dip0.t-ipconnect.de.
+ [2003:f6:af13:1a00:27bd:20bf:c18c:447d])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3d1007c0dc8sm18485519f8f.53.2025.09.02.08.49.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Sep 2025 08:49:34 -0700 (PDT)
+Date: Tue, 2 Sep 2025 17:49:33 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Cornelia Huck <cohuck@redhat.com>
+cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Eric Auger <eric.auger@redhat.com>
+Subject: Re: [PATCH v2] arm/kvm: report registers we failed to set
+In-Reply-To: <20250902092732.706338-1-cohuck@redhat.com>
+Message-ID: <eecb8e82-f4a3-5def-30ff-690082f6b582@redhat.com>
+References: <20250902092732.706338-1-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] hw/sd/sdcard: Fix size check for backing block
- image
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jan Kiszka <jan.kiszka@siemens.com>, qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?B?SmFuIEzDvGJiZSI=?= <jlu@pengutronix.de>,
- Joel Stanley <joel@jms.id.au>
-Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- qemu-arm <qemu-arm@nongnu.org>
-References: <cover.1756706188.git.jan.kiszka@siemens.com>
- <86217712232abd5152e7dfa98111f57b9b78d83b.1756706188.git.jan.kiszka@siemens.com>
- <6289fe04-82be-4a34-9fed-b0cc08e3b8f0@linaro.org>
- <a9fdf524-0ca1-45db-be39-7bfccc468f0f@siemens.com>
- <11808e86-cee0-48bf-8fbd-de13a9a25ed0@linaro.org>
- <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <4c039b3c-dc2c-4478-b1bb-90b925e56245@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Sj0j=3N=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,69 +108,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/25 17:45, Philippe Mathieu-Daudé wrote:
-> On 2/9/25 17:43, Philippe Mathieu-Daudé wrote:
->> On 2/9/25 17:34, Jan Kiszka wrote:
->>> On 02.09.25 17:06, Philippe Mathieu-Daudé wrote:
->>>> On 1/9/25 07:56, Jan Kiszka wrote:
->>>>> From: Jan Kiszka <jan.kiszka@siemens.com>
->>>>>
->>>>> The power-of-2 rule applies to the user data area, not the complete
->>>>> block image. The latter can be concatenation of boot partition images
->>>>> and the user data.
->>>>>
->>>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
->>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>> ---
->>>>>    hw/sd/sd.c | 2 +-
->>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->>>>> index 8c290595f0..16aee210b4 100644
->>>>> --- a/hw/sd/sd.c
->>>>> +++ b/hw/sd/sd.c
->>>>> @@ -2789,7 +2789,7 @@ static void sd_realize(DeviceState *dev, Error
->>>>> **errp)
->>>>>                return;
->>>>>            }
->>>>>    -        blk_size = blk_getlength(sd->blk);
->>>>> +        blk_size = blk_getlength(sd->blk) - sd->boot_part_size * 2;
->>>>>            if (blk_size > 0 && !is_power_of_2(blk_size)) {
->>>>>                int64_t blk_size_aligned = pow2ceil(blk_size);
->>>>>                char *blk_size_str;
->>>>
->>>> This seems to break the tests/functional/arm/test_aspeed_rainier.py
->>>> test due to mmc-p10bmc-20240617.qcow2 size:
->>>>
->>>> Command: /builds/qemu-project/qemu/build/qemu-system-arm -display none -
->>>> vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -
->>>> machine rainier-bmc -chardev socket,id=console,fd=10 -serial
->>>> chardev:console -drive file=/builds/qemu-project/qemu/functional-cache/
->>>> download/
->>>> d523fb478d2b84d5adc5658d08502bc64b1486955683814f89c6137518acd90b,if=sd,id=sd2,index=2 -net nic -net user -snapshot
->>>> Output: qemu-system-arm: Invalid SD card size: 16 GiB
->>>> SD card size has to be a power of 2, e.g. 16 GiB.
->>>>
->>>> https://gitlab.com/qemu-project/qemu/-/jobs/11217561316
->>>>
->>>
->>> Hmm, then the test was always wrong as well. I suspect the aspeed is
->>> enabling boot partitions by default, and the image was created to pass
->>> the wrong alignment check. Where / by whom is the image maintained?
->>
->> Cédric Le Goater (Cc'ed).
->>
->> The test comes from:
->> https://lore.kernel.org/qemu-devel/4d1777d6-0195-4ecb- a85f-09964268533d@kaod.org/
->>
->> Maybe also relevant to your suspicion:
->> https://lore.kernel.org/qemu-devel/e401d119-402e-0edd- c2bf-28950ba48ccb@kaod.org/
-> 
-> Digging further:
-> https://lore.kernel.org/qemu-devel/9046a4327336d4425f1e7e7a973edef9e9948e80.camel@pengutronix.de/
-> 
+On Tue, 2 Sep 2025, Cornelia Huck wrote:
+> If we fail migration because of a mismatch of some registers between
+> source and destination, the error message is not very informative:
+>
+> qemu-system-aarch64: error while loading state for instance 0x0 ofdevice 'cpu'
+> qemu-system-aarch64: Failed to put registers after init: Invalid argument
+>
+> At least try to give the user a hint which registers had a problem,
+> even if they cannot really do anything about it right now.
+>
+> Sample output:
+>
+> Could not set register op0:3 op1:0 crn:0 crm:0 op2:0 to c00fac31 (is 413fd0c1)
+>
+> We could be even more helpful once we support writable ID registers,
+> at which point the user might actually be able to configure something
+> that is migratable.
+>
+> Suggested-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 
-yes commit c078298301a8 might have some impact there.
+I did some basic tests - this one looks good!
 
-C.
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+
 
