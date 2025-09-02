@@ -4,95 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55F43CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C37CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 13:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utRE9-0003yp-ES; Tue, 02 Sep 2025 09:39:14 -0400
+	id 1utRFf-00050Z-D3; Tue, 02 Sep 2025 09:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utRDr-0003tr-V1
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:38:58 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1utRFW-0004ro-P9
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:40:40 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1utRDj-00007U-7y
- for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:38:53 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-61ebe5204c2so970274a12.3
- for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:38:45 -0700 (PDT)
+ id 1utRFP-0000TM-Nj
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 09:40:38 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b042cc3954fso322445666b.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Sep 2025 06:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1756820323; x=1757425123; darn=nongnu.org;
+ d=linaro.org; s=google; t=1756820428; x=1757425228; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wmLuN/L6a+1f3NMiwbY7vqahMITBbCj9nv51vA3FXlE=;
- b=m8UAPs9hKhDQcyX0UVafI/BQLiH9q8ddqwSnaJ8pJI+cCm8YTQEF7DMkmny5P8c2XX
- fTpyBC0BwHyk5hRpHXypj7+pT1dKBQ22DxhL8TN0S51XbupDdE4FLkks4HClT0wuTbau
- VWykT8JtWFmxwM2trU2gWdzGG8m2fTFW5NfrZRfQlbKSbDRYg5rWgpYbeVf9D0B4FmAs
- f/8e1J5jxeiyHYO8wbL/CVy5bypg6UFxHBLwAJXUsaf5HtKTWJPihHYFzHUU7JhNpdVE
- tbZzVlhGietvCBa4GrNmS+EBsE5Z4MX92aCFZQ+aGK4w9x54DcBHPjlcPa+D8DgBFvcT
- peXA==
+ bh=e+EscHSP7SD2gZzjWCHGVqr15+Rbxbx8Wq/mTcIkmgo=;
+ b=HMHjJX2gongFaQDZWzr92h8s7V7zLrPeXmuejBGsEoyMTcGlrkvPHV8p/wuzgbTNSE
+ XDSqdvYokbA9vszOb/mjAT5WdDiPXUI/fupsywW/MUW5t/YRBytgQsi9pkPKFvh9Cr0z
+ 9zmt1XYnFQT9/Yl9QbacfelP83PUFtXWerw2m5k136DuVushW80CAyYWUogGhjh4t+eH
+ xEXD4K+1xAqUCtvRXZkEkaen9JxpXWHhCQxlU+oFkqqBpc2OFStOX3hrVPvde/9Uqes+
+ x4gDVWGm6+AcnM4RWR9pItVUUp+jsE+ptfIgCZTGG0BwPGQS5rlQj6jCaec3RuKOB7Hy
+ SI9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1756820323; x=1757425123;
+ d=1e100.net; s=20230601; t=1756820428; x=1757425228;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wmLuN/L6a+1f3NMiwbY7vqahMITBbCj9nv51vA3FXlE=;
- b=ap7T1mufb05QgNXlmAiiUmulH2EM6y24wED0HtoeeApObrfIEjHuhgnEz0jPQaS+Ok
- apXDVDd6HtS7jf/BsOOYx6sKAqpNc7Hc0xSKCQ5jxntQFUhrnVXs/eGLrTg/uFElK5Wa
- KdDL04SNCHi6pmbZS/whpkxqGbjJU088kRFSuJ7CcjZ1OZcElsp3uHUe8ZKJ49gXOlYM
- TNsXhw6mEDwEnnPZ34F2ARzFR+Yokq7g/DIUMikwfqcASGyTzhPvziGOFrgnkbd9kTG/
- j5RnwhR7gtkU71QBN+lrw9HnNQmShPJ1OJAtETCAH0sVQzci+rBPbxR6OkY2MLxY8bnS
- WtCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXesZoe4RZMyd2vsyHTAcO6kC5/xK9SOikDKHqUhVbxXCjvKPHdNF2s0JBgu56HmIjV+hJN4B7qUfxp@nongnu.org
-X-Gm-Message-State: AOJu0Yxoyiwqgf74UvgUTEhmd3gxVfC+l03XPY53u6DydMZgGIQSGuli
- S851ziv/WwrXaLw2FipXuuSt0ODfu5bo3CnXB4d4KGnBbsxeFuj8xUHGHgqMhYqmuog=
-X-Gm-Gg: ASbGnct7BpkUvyji9kn4n9tVTGQGE4+eGJ1bLQp6X0MiuMorsbc+BdedzdCKUIjOIUt
- +y7n7c2LZYmdkPubm8+o2YKLUvtVSk3fHV0W+1meNfoYK9v40q69bXT3M/ijKor0Ijg2UQUonn8
- BUVMVaY8Nb5elBUPQp6+hJCKRIbkHc1jkTF4NZhlUrXklfnwgeBXQVQGBHtfVdO9TMO6ZaOm/kn
- 16mAExhdR+Cl7WeQuNuIL05rJO+fBZEe/bUrnTaS3ILToOu9weIv+sNbez1xmSol1QR8OWJOXnj
- n0GzYCH/xgyJci6Bhup5YiHwM74i38+IsgeCg4T+126lt1Z9i6iWf2oTGHJByk/yZ4FNLE3Nu/J
- JkmWt50tBnES0+jf3Wp/MqHTNld9AGdRzws4KGtlnRJ3ZrJV2gSTkla9sjR1AVXE7yzzZwMc=
-X-Google-Smtp-Source: AGHT+IFySwjcqrEbFbl72gAuJPszLA7vj3X0Qv/OAIcOit4yG81vxbDgXgKPrKaGdvAihpRT+uPzKQ==
-X-Received: by 2002:a05:6402:504b:b0:61c:5264:902c with SMTP id
- 4fb4d7f45d1cf-61d26c53e03mr11015110a12.23.1756820323467; 
- Tue, 02 Sep 2025 06:38:43 -0700 (PDT)
+ bh=e+EscHSP7SD2gZzjWCHGVqr15+Rbxbx8Wq/mTcIkmgo=;
+ b=VCiwdk8iNzjWPIKh3EenZsaEhhjeIpwzab6AvEe/k9q50YzQV0SqiEpNtRWlrN74iY
+ O0q3a5Z+weMMKBVLdU4y9ZGpMHgxDrANruL69nBvJEyH01t/zyypqhChwuANrJ1BsCUR
+ bQ6z2zAWAiI/cZBowHrmSHn3jIGHtX3RxzhLBcN1P3JXRHQu9ZpIrMi2hSHdDO2u+hl3
+ gA6mUlDGcs1b50ax+dD7NRNUZ+vTEkLMVRfpPXYzdboMXqNrHcTstLV9sT0K2pMuAqCj
+ tyaa7QO68o+YS8/P26HsHRa3+dg4S2ghKvHWeYMjA1Ih7814qM1fFaEuy9zvNc2GVfUv
+ p7uQ==
+X-Gm-Message-State: AOJu0YyVNAuBfly0YXXtxamDlUNM8E4Vw9VdM+H4z7aQGiZjP5dXRTM9
+ oOT99nUE12WlY/LJkzR67so/nNYPBUdecG3W0nbv/Ym+GLaGU19nMmLhHYiR7GAdN54=
+X-Gm-Gg: ASbGncunrt9xZuHcm/oEg0k/BUKaqrv6T8Sn2Ifbqi9EKtLzYcPkTgX106qVqhEDibE
+ BXjS7hqzVmcW0xIBO4XtHR6sDQ3NH09oZ9zAXUAfIf0TPPV762q+jXqQQedQ1SQoFFwWeJtHcOi
+ tFD0Tx5+o+8HkS+jogqfrfMTdo+c+zy11Sdp8CfMxze7vJATQ6RGqvBx3d6I4r6oZGoJvbYJggX
+ IFZkRGtAly5ILNniQFF0C1W8ihJiQK/daGdbw4sBMQjuO3263ro5gwZ+i2akGH5Q7woFGd9Fgx4
+ HP7wziSSL0+ncpS9LGs9TTb/VI9EBqRfhRLVZ6CKd2nNYnv/VpMHpYhVQMe2awDNOuSgq2Qb2qF
+ VOgWHytxrV0ne7PUiloI5PR0mGPBIgdwC/YIEK83PAbGxZ3WugCKR+4oSn5KlOScwxCoHVErRoH
+ OSXz5c2A==
+X-Google-Smtp-Source: AGHT+IEPU7mUAUwLlrIQUtD9Tw0O4b4+kXj/nE5COigs7iq+bITyVjq6ItO2AfJJ52jzmPRMXP0tfQ==
+X-Received: by 2002:a17:907:7fac:b0:afe:677e:a633 with SMTP id
+ a640c23a62f3a-b01af2df4e5mr1238624266b.0.1756820428282; 
+ Tue, 02 Sep 2025 06:40:28 -0700 (PDT)
 Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
  [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-61cfc52a886sm9467717a12.43.2025.09.02.06.38.42
+ a640c23a62f3a-b04148f95b5sm673875466b.92.2025.09.02.06.40.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Sep 2025 06:38:43 -0700 (PDT)
-Message-ID: <5d0fe741-9063-441d-8abc-3bb0662c1fbe@linaro.org>
-Date: Tue, 2 Sep 2025 15:38:41 +0200
+ Tue, 02 Sep 2025 06:40:27 -0700 (PDT)
+Message-ID: <ec2724a5-278b-4acd-abb9-08d838106549@linaro.org>
+Date: Tue, 2 Sep 2025 15:40:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/3] target/riscv: rvv: Add Zvqdotq support
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20250901133815.1693077-1-max.chou@sifive.com>
- <20250901133815.1693077-3-max.chou@sifive.com>
+Subject: Re: [PATCH 4/7] target/arm/hvf: Add KVMID_TO_HVF, HVF_TO_KVMID
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, mads@ynddal.dk, agraf@csgraf.de,
+ Danny Canter <danny_canter@apple.com>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Cameron Esfahani <dirty@apple.com>, Akihiko Odaki <akihiko.odaki@gmail.com>
+References: <20250818041354.2393041-1-richard.henderson@linaro.org>
+ <20250818041354.2393041-5-richard.henderson@linaro.org>
+ <4312974c-9b7e-48c2-a190-071ea72da33f@linaro.org>
+ <5b9e5f5a-b434-479c-8840-dbb4cda1365c@linaro.org>
+ <a4a4c7a8-df35-4bd3-9de1-b22ca7bcca22@linaro.org>
+ <BCCED674-EAEF-4755-9BE1-116FB36FB5C9@apple.com>
+ <65617771-37ce-457e-aa2f-f59bf524bcca@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250901133815.1693077-3-max.chou@sifive.com>
+In-Reply-To: <65617771-37ce-457e-aa2f-f59bf524bcca@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,45 +111,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/1/25 23:38, Max Chou wrote:
-> +#define OPMVV_VQDOTQ(NAME, TD, T1, T2, TX1, TX2, HD, HS1, HS2)          \
-> +static void do_##NAME(void *vd, void *vs1, void *vs2, int i)            \
-> +{                                                                       \
-> +    int idx;                                                            \
-> +    T1 r1;                                                              \
-> +    T2 r2;                                                              \
-> +    TX1 *r1_buf = (TX1 *)vs1 + HD(i);                                   \
-> +    TX2 *r2_buf = (TX2 *)vs2 + HD(i);                                   \
-> +    TD acc = *((TD *)vd + HD(i));                                       \
-> +    int64_t partial_sum = 0;                                            \
+On 9/1/25 01:02, Philippe Mathieu-Daudé wrote:
+> On 18/8/25 20:37, Danny Canter wrote:
+>> Howdy,
+>>
+>> On macOS versions/SDKs before 26 you are correct, we had an invalid enum value for 
+>> HV_SYS_REG_MDCR_EL2 in the API, but the hv_vcpu_get/ set_sys_reg APIs work with this 
+>> value even though the
+>> encoding is incorrect. The enum value has been remedied in 26+ (0xe089 as you pointed 
+>> out) and has been done in a backwards compatible way internally in the framework.
+> 
+> Thanks Danny!
+> 
+> Richard, should we guard the QEMU_BUILD_BUG_ON() macro with:
+> 
+>    #if defined(MAC_OS_VERSION_26_0) && \
+>        MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_26_0
+> 
+> ?
 
-I think it's clear partial_sum should be the 32-bit type TD.
-Indeed, I'm not sure why you don't just have
-
-	TD acc = ((TD *)vd)[HD(i)];
-
-> +                                                                        \
-> +    for (idx = 0; idx < 4; ++idx) {                                     \
-> +        r1 = *((T1 *)r1_buf + HS1(idx));                                \
-> +        r2 = *((T2 *)r2_buf + HS2(idx));                                \
-> +        partial_sum += (r1 * r2);                                       \
-
-	acc += r1 * r2;
-
-> +    }                                                                   \
-> +    *((TD *)vd + HD(i)) = (acc + partial_sum) & MAKE_64BIT_MASK(0, 32); \
-
-	((TD *)vd)[HD(i)] = acc;
-
-because that final mask is bogus.
+That's one possibility.  Another is to remap the one broken enum, since this fix is 
+described to be backward compatible.
 
 
 r~
-
-> +}
-> +
-> +RVVCALL(OPMVV_VQDOTQ, vqdot_vv, QOP_SSS_B, H4, H1, H1)
-> +RVVCALL(OPMVV_VQDOTQ, vqdotu_vv, QOP_UUU_B, H4, H1, H1)
-> +RVVCALL(OPMVV_VQDOTQ, vqdotsu_vv, QOP_SUS_B, H4, H1, H1)
-
 
