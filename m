@@ -4,153 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCD4CA0FFE
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 07:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F68CA1005
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Sep 2025 07:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utLL6-0005uO-2f; Tue, 02 Sep 2025 03:22:00 -0400
+	id 1utLR2-00082y-Vn; Tue, 02 Sep 2025 03:28:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1utLKt-0005se-M8; Tue, 02 Sep 2025 03:21:47 -0400
-Received: from mail-co1nam11on2062a.outbound.protection.outlook.com
- ([2a01:111:f403:2416::62a]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1utLQt-00082B-Jd
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 03:28:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1utLKr-00061G-46; Tue, 02 Sep 2025 03:21:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iLLXbgq8fgL2fHHlXwzGNb/kvIdP/Bxt4M5MCSQQDvgYnTT8aS8IW5Sqwvnq+t1FhEhaFHHu1tP2BbEJ4TEBN4ZqT71n3eiY8utE5k0I0zd8hQErVWMXv4+IeKAqcl4La43S5CFxeXp/9kNUR7S8g5xDXKW2JaUUCqNesa79GUhZQlbavedW1KaFYC0F8AgZC+sYBdOCvuim/2Zvyt6tq+D5Eb0bNPnULKm/2lg5lj9D8nL/boxwzLOSCPcgE4pZ1WQj6znCELwUyHr4M7O5uJIIDSFWk2bG4SZUhlDNoDfpXKjdNJTgJbGIdq1q3erORsk8xxoY6+DwMmJCQfkghw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SyI+PlBQkrEMumjXLGRtY1g5bEqMa+XhTtXcxX31qH8=;
- b=wYi+BmM3EqzTnffuTjcMj2Rh1AMM/h161cJR3tHcbU8NThpW81vfcQitjmEsTbjko9Acq1Jzy4UjCh4SfgaHDV69AOnIb0XL32lECyyWgTY5Fsm+hPpgwD3MRyb9TtfNg6R0kApPezDZJAKHA6QfTduyajYAQbv6UpeE/OhC44CfNWoBnzIHzj06+A3DmXZ7+jMOao73lj7DelRt2VFL/EgFV4UKdw1z5HIO1OTMNSWnXAfw3CA2j4QKbmusvRv0cx7ysLVVr/+2+3c0KVFbvbpW4iV68N463R+L8OxHgI/5CkrGdO4/GI6EV03kWvPYbiGGH/yv3MWNUOk2yt/DSg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SyI+PlBQkrEMumjXLGRtY1g5bEqMa+XhTtXcxX31qH8=;
- b=BC22qXlef1qdlLqx97zJzx1JuBCEBJuyyvP6vvF3qBup8I0JbAQQ7LQdRpVLVBhCjfH6aqbaCzxsiQ+QoGTKKsxft+FjwZzAbMlgg2D73j9H/ddDfWoMxqfvdvbzzEm3nEbotAWZKU78Seacj8huqG2XXC0+WIndjgrROw/bdfA=
-Received: from BYAPR07CA0044.namprd07.prod.outlook.com (2603:10b6:a03:60::21)
- by SN7PR12MB8146.namprd12.prod.outlook.com (2603:10b6:806:323::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.27; Tue, 2 Sep
- 2025 07:21:36 +0000
-Received: from MWH0EPF000A672E.namprd04.prod.outlook.com
- (2603:10b6:a03:60:cafe::86) by BYAPR07CA0044.outlook.office365.com
- (2603:10b6:a03:60::21) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9073.27 via Frontend Transport; Tue,
- 2 Sep 2025 07:21:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- MWH0EPF000A672E.mail.protection.outlook.com (10.167.249.20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.9094.14 via Frontend Transport; Tue, 2 Sep 2025 07:21:35 +0000
-Received: from satlexmb07.amd.com (10.181.42.216) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 2 Sep
- 2025 02:21:35 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.1748.10; Tue, 2 Sep
- 2025 00:21:34 -0700
-Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39 via Frontend
- Transport; Tue, 2 Sep 2025 02:21:33 -0500
-Date: Tue, 2 Sep 2025 09:21:31 +0200
-From: Luc Michel <luc.michel@amd.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, Peter Maydell
- <peter.maydell@linaro.org>, Francisco Iglesias <francisco.iglesias@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>, Alistair Francis
- <alistair@alistair23.me>, Frederic Konrad <frederic.konrad@amd.com>, "Sai
- Pavan Boddu" <sai.pavan.boddu@amd.com>
-Subject: Re: [PATCH v4 36/47] hw/misc/xlnx-versal-crl: add the versal2 version
-Message-ID: <aLaa-xuqqa-iNgay@XFR-LUMICHEL-L2.amd.com>
-References: <20250822151614.187856-1-luc.michel@amd.com>
- <20250822151614.187856-37-luc.michel@amd.com>
- <f5aeb950-47b6-47e2-8b6d-cdd01004f1f6@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1utLQn-0006zU-Ls
+ for qemu-devel@nongnu.org; Tue, 02 Sep 2025 03:27:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1756798069;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dpF1u5nXWmAgn3o3LsdADLDlOOmkx83IL0RxVjOmH3Q=;
+ b=A5USgaTpYiBYWRTw6qtbkIqPUjv46ihWDNKbaTOddbD8+wdPcVs8ER671hAW1u37V5JViJ
+ +5RmtW9CTqlUpRNWRg6JrRb6uSC4IdnuWG1D+aQkhEOphVI+88UIt98R2AXTK9/HtNfnlY
+ yMrdNMHIjnTKCDCz/MwUHtxbor526Bg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-c1TYhwWVMOqWHDwMKIIJ6A-1; Tue,
+ 02 Sep 2025 03:27:45 -0400
+X-MC-Unique: c1TYhwWVMOqWHDwMKIIJ6A-1
+X-Mimecast-MFC-AGG-ID: c1TYhwWVMOqWHDwMKIIJ6A_1756798064
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E0C67195608E; Tue,  2 Sep 2025 07:27:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 43DEA1954B04; Tue,  2 Sep 2025 07:27:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 873C521E6A27; Tue, 02 Sep 2025 09:27:38 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Steven Lee <steven_lee@aspeedtech.com>,  Troy
+ Lee <leetroy@gmail.com>,  Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,  "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>,  "open list:All patches CC here"
+ <qemu-devel@nongnu.org>,  troy_lee@aspeedtech.com
+Subject: Re: [SPAM] [PATCH v1 02/21] hw/arm/ast27x0: Move SSP coprocessor
+ initialization from machine to SoC leve
+In-Reply-To: <555f7a62-7332-41a2-a316-e0888fbc819d@kaod.org>
+ (=?utf-8?Q?=22C=C3=A9dric?= Le
+ Goater"'s message of "Tue, 2 Sep 2025 08:20:40 +0200")
+References: <20250717034054.1903991-1-jamin_lin@aspeedtech.com>
+ <20250717034054.1903991-3-jamin_lin@aspeedtech.com>
+ <555f7a62-7332-41a2-a316-e0888fbc819d@kaod.org>
+Date: Tue, 02 Sep 2025 09:27:38 +0200
+Message-ID: <87ms7dpb4l.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f5aeb950-47b6-47e2-8b6d-cdd01004f1f6@linaro.org>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A672E:EE_|SN7PR12MB8146:EE_
-X-MS-Office365-Filtering-Correlation-Id: d0f1f4d6-3d83-4093-9c3f-08dde9f159cf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZXNmUkZUVzk5OFcwV25IZ0pNZFFYMTRYeHVkUUFHVml1R3BUUjdYUG1kM3Fw?=
- =?utf-8?B?OEEwMlNZbVlXTFZ6WDhEWUsxNWRXWDYvaFM4NzhWbHJQLzNRQ0VDRXJVQTYr?=
- =?utf-8?B?Uno5ZXl6WDQxVmtjMUVUTStGNnBOVXNyMEx3RTZiazJNNkIwUnIrZ1gwbi92?=
- =?utf-8?B?NE11MHdZL3dFc2tzSzU3aFVoeGltRzZjUStyWENzTStNSzFKZFJ5TDVXclk3?=
- =?utf-8?B?WVZFeXNRWWtiN2t5WGRaNUNUWGk1aHkvZUpoZG53cmIzN3NNNUZpUmdWZmxJ?=
- =?utf-8?B?K05DdVUzUTB2Wm9ibFhKMFh2dVVQcklLMGtCeExrQjYvbkcyNzFKSldkVzFL?=
- =?utf-8?B?QTNIV2pWRnJtM3NxV01XYTFQbngzcWtvQ1k0c2QwWXZGMVAzZ1dOTUZVQ2Ry?=
- =?utf-8?B?U2xOZFBkV3ZMbmZ3Z1hCZTlQLzIyRXJzUkdFUTZaQnBjSXl3NEY5V0pTTGUv?=
- =?utf-8?B?Q25WYVZsNWJNdHpFWDQ2OWZ0K1hDN01PbjdCZXJyNDB5SjJJdFlvL3NHVm05?=
- =?utf-8?B?SkZucW04OERGVnRYeE1wN3hCK2lKQlJsSFBkOXUyRm54S2VFclIvMTVxbU5l?=
- =?utf-8?B?UzJGVDNSelM2bHUwUG9KYVJmbENjMExiOTJoeUNhRVJ4RmNPNW82Mm53TDFq?=
- =?utf-8?B?Z3g5TFdJK3BrbHFMeFlJTXpBcU5ocS9TZ2JNaGtpVXYyeUp6RFZlUnFQVS83?=
- =?utf-8?B?enlKZzF4dkEwSjc4eDRUTENwK1BFcWpmNkNQUm44K2oyWmltR2VYVFN1dHJT?=
- =?utf-8?B?WlBaWHNMS1RqRDhuL3hBNnM1TElFMlpuUGhySzF3Y3d0OXRlQU42TmkvVTRs?=
- =?utf-8?B?MFRUTTk4c2ltRHpZcEh0WUV3WUkzczVrQWhmK1BlazdGa0dtZjJVdE04WWJr?=
- =?utf-8?B?bWpEYk5SdHprRTF2ZU1kT0dlN0dvL3Zka0ZoOVJxSkxZM2c2Qmxpb0tIY2pk?=
- =?utf-8?B?cVBkekRJY0hRalRlbXhZY3lwSGV5RDRzN3NGaFB5NUdrckRuNnJEOWhYV2Na?=
- =?utf-8?B?NHgydlRsV3VpQ0J3bmNYZWR3MkxjMk1QOCtxNTVuQ3luZXMrdG03UjFqUWww?=
- =?utf-8?B?cmNnTzV4YTh4RHlkdmppRXp2bHVxZjhhQ051WmxQRm9IcXZnWlFJU01KM2sr?=
- =?utf-8?B?RjJqSFdlZWFvblFQVDFRN0p4OU9tNXRTdmdrcHFZWHJrNTdnRjF1aE9EcDAz?=
- =?utf-8?B?UFFSQmc4MFpDVmNkNUVXWTduL0F2N1F5RGN6MlRqN2g3andraG0yK0lnM3hZ?=
- =?utf-8?B?dlJzaWxPdzFxWklLWUgxSkg4cFBnMFA2bVZJZHBDSUdqNGxSL3pDdkZvZ01h?=
- =?utf-8?B?OFZSaUhxQlhFVzBmLzJYaUtlNlFNZkpwa1pWN1BOU3RkMWNERHpmRXJjT0Zl?=
- =?utf-8?B?bXJkU2R2dnEvNHNUSVJYczRQMitEUmNoZWFLa1NJcUcwTnY0elYzY1JYZDVM?=
- =?utf-8?B?cG95TENLZjZKOU1VcTFoQ3o1clVPaHRqMDBJaUhvOEkxSGQ0c2UwcHlGTEVj?=
- =?utf-8?B?clJ6U1BFWm8yVnhSdUkvSTNBT2pUL3FxSW9kbUI3UzdiZkZTWlBwVUpNU01Z?=
- =?utf-8?B?enpYRENDaUF6M3R2YkR3SnE5eEhGVXpRay9aL0srWEYyc1lYKzJIQUFZZ2Fj?=
- =?utf-8?B?UE5qTFk2ZWNESkZ2SkhXRGdtSmFyTzBjMU9vOFZaZVBpQ2hFODlva2RPS08x?=
- =?utf-8?B?SXdtL09NMHVTUHJFTVdJY3RUczhIb1JJejJuNU1IT1JoMGZEK1NnK3MreVhS?=
- =?utf-8?B?elhKUTJpRStqa3docG5seG1lTklzb0x4REsydmZaOWtjOThhdzNPMzdOeGVV?=
- =?utf-8?B?WER1SmxVWWd6S1pIOXFaYVAranV1dmxja2FFRFBIUnN0WXdtSWRldXhoUG5D?=
- =?utf-8?B?cUo4aGFIWmV1bVNodVJTd2VRMGVqV1h4SVg2ak9NREt3clFIUjNjYm11c2U1?=
- =?utf-8?B?bXdvTUsvdjZYREtGZ0FwWVBxaVlkSFNHVlRvQ1pZWTR1MUlqVXVMcUpWeitZ?=
- =?utf-8?B?RnNDUk94aHVXdlF6NHd4NTBnMnEyakhkRkcrVkxoN0lobUsyREpNK3VGNlJ5?=
- =?utf-8?Q?ZbeaLM?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 07:21:35.8043 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d0f1f4d6-3d83-4093-9c3f-08dde9f159cf
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A672E.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8146
-Received-SPF: permerror client-ip=2a01:111:f403:2416::62a;
- envelope-from=Luc.Michel@amd.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,83 +95,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 00:22 Fri 29 Aug     , Philippe Mathieu-Daudé wrote:
-> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
-> 
-> 
-> On 22/8/25 17:16, Luc Michel wrote:
-> > Add the versal2 version of the CRL device. For the implemented part, it
-> > is similar to the versal version but drives reset line of more devices.
-> > 
-> > Signed-off-by: Luc Michel <luc.michel@amd.com>
-> > Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
-> > ---
-> >   include/hw/arm/xlnx-versal-version.h |   1 +
-> >   include/hw/misc/xlnx-versal-crl.h    | 329 ++++++++++++++++++++++
-> >   hw/misc/xlnx-versal-crl.c            | 392 +++++++++++++++++++++++++++
-> >   3 files changed, 722 insertions(+)
-> 
-> 
-> > +static DeviceState **versal2_decode_periph_rst(XlnxVersalCRLBase *s,
-> > +                                               hwaddr addr, size_t *count)
-> > +{
-> > +    size_t idx;
-> > +    XlnxVersal2CRL *xvc = XLNX_VERSAL2_CRL(s);
-> > +
-> > +    *count = 1;
-> > +
-> > +    switch (addr) {
-> > +    case A_VERSAL2_RST_RPU_A ... A_VERSAL2_RST_RPU_E:
-> > +        idx = (addr - A_VERSAL2_RST_RPU_A) / sizeof(uint32_t);
-> > +        idx *= 2; /* two RPUs per RST_RPU_x registers */
-> > +        return xvc->cfg.rpu + idx;
-> > +
-> > +    case A_VERSAL2_RST_ADMA:
-> > +        /* A single register fans out to all DMA reset inputs */
-> > +        *count = ARRAY_SIZE(xvc->cfg.adma);
-> > +        return xvc->cfg.adma;
-> > +
-> > +    case A_VERSAL2_RST_SDMA:
-> > +        *count = ARRAY_SIZE(xvc->cfg.sdma);
-> > +        return xvc->cfg.sdma;
-> > +
-> > +    case A_VERSAL2_RST_UART0 ... A_VERSAL2_RST_UART1:
-> > +        idx = (addr - A_VERSAL2_RST_UART0) / sizeof(uint32_t);
-> > +        return xvc->cfg.uart + idx;
-> > +
-> > +    case A_VERSAL2_RST_GEM0 ... A_VERSAL2_RST_GEM1:
-> > +        idx = (addr - A_VERSAL2_RST_GEM0) / sizeof(uint32_t);
-> > +        return xvc->cfg.gem + idx;
-> > +
-> > +    case A_VERSAL2_RST_USB0 ... A_VERSAL2_RST_USB1:
-> > +        idx = (addr - A_VERSAL2_RST_USB0) / sizeof(uint32_t);
-> > +        return xvc->cfg.usb + idx;
-> > +
-> > +    case A_VERSAL2_RST_CAN0 ... A_VERSAL2_RST_CAN3:
-> > +        idx = (addr - A_VERSAL2_RST_CAN0) / sizeof(uint32_t);
-> > +        return xvc->cfg.can + idx;
-> > +
-> > +    default:
-> > +        /* invalid or unimplemented */
-> > +        return NULL;
-> 
-> Can that happen?
+C=C3=A9dric Le Goater <clg@kaod.org> writes:
 
-Not in the current state because I connected the crl_rst_dev_prew
-callback only on implemented registers. One could hit this when iterating
-on the code for e.g., a futur version of the SoC. A
-g_assert_not_reached() would be a good fit here.
+> On 7/17/25 05:40, Jamin Lin wrote:
+>> In the previous design, the SSP coprocessor (aspeed27x0ssp-soc) was init=
+ialized
+>> and realized at the machine level (e.g., AST2700FC). However, to make su=
+re the
+>> coprocessors can work together properly=E2=80=94such as using the same S=
+RAM, sharing
+>> the SCU, and having consistent memory remapping=E2=80=94we need to chang=
+e how these
+>> devices are set up.
+>>
+>> This commit moves the SSP coprocessor initialization and realization int=
+o the
+>> AST2700 SoC (aspeed_soc_ast2700_init() and aspeed_soc_ast2700_realize()).
+>> By doing so, the SSP becomes a proper child of the SoC device, rather th=
+an
+>> the machine.
+>>
+>> This is a preparation step for future commits that will support shared S=
+CU,
+>> SRAM, and memory remap logic=E2=80=94specifically enabling PSP DRAM rema=
+p for SSP SDRAM
+>> access.
+>>
+>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-> 
-> Note count=1 when returning. Should we set to 0?
-> 
-> > +    }
-> > +}
-> 
-> Otherwise,
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+[...]
 
--- 
+>> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+>> index 6aa3841b69..ffbc32fef2 100644
+>> --- a/hw/arm/aspeed_ast27x0.c
+>> +++ b/hw/arm/aspeed_ast27x0.c
+
+[...]
+
+>> @@ -610,9 +619,35 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceSt=
+ate *dev, Error **errp)
+>>       return true;
+>>   }
+>>   +static bool aspeed_soc_ast2700_ssp_realize(DeviceState *dev, Error **=
+errp)
+>
+> I would pass 'Aspeed27x0SoCState *' instead.
+>
+>> +{
+>> +    Aspeed27x0SoCState *a =3D ASPEED27X0_SOC(dev);
+>> +    AspeedSoCState *s =3D ASPEED_SOC(dev);
+>> +    Clock *sysclk;
+>> +
+>> +    sysclk =3D clock_new(OBJECT(s), "SSP_SYSCLK");
+>> +    clock_set_hz(sysclk, 200000000ULL);
+>> +    qdev_connect_clock_in(DEVICE(&a->ssp), "sysclk", sysclk);
+>> +
+>> +    memory_region_init(&a->ssp.memory, OBJECT(&a->ssp), "ssp-memory",
+>> +                       UINT64_MAX);
+>> +    if (!object_property_set_link(OBJECT(&a->ssp), "memory",
+>> +                                  OBJECT(&a->ssp.memory), &error_abort)=
+) {
+>
+> please use errp instead.
+>
+>> +        return false;
+>> +    }
+
+object_property_set_link() can return false only when it fails, and it
+sets an error when it fails.  Since you pass &error_abort, it cannot
+fail (it aborts instead).  Therefore the return value is always true,
+and the return statement is dead code.
+
+If object_property_set_link() is not expected to fail, i.e. failure
+would be a programming error, use
+
+        object_property_set_link(..., &error_abort);
+
+If failure is not a programming error, passing &error_abort is wrong,
+and you need to pass errp instead.
+
+>> +
+>> +    if (!qdev_realize(DEVICE(&a->ssp), NULL, &error_abort)) {
+>
+> same here.
+
+Same argument.
+
+[...]
+
 
