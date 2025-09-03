@@ -4,64 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF72BCA0FF2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 12:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A7ECCA1009
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 12:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utmAU-00028B-T6; Wed, 03 Sep 2025 08:00:52 -0400
+	id 1utmEO-0004sA-GQ; Wed, 03 Sep 2025 08:04:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1utm9z-00020v-NZ
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:00:23 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1utm9w-0008Oa-T0
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:00:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=eaFTxrHtbDTWKC+ongoolNfS/7cZ6curOBlgb49UKuw=; b=PI//acqxabtgETTm
- pyw7BLSa2sFmY3X1jqaTcjcVGpsUNkqZfYFCIC+79HdMsoQDQodaGdab70qASXKvmy88L/8vLtyQF
- 3PtoW/9DbCilX0JD8+t1EHO+r4UKtfe2DXAXgZIi851Mo73GI0ULv3KQfgzEH3rVSCZ73UXfmavJF
- pMMrDyMQ0UV7/AXqSp0ezLTpwOyaGeDk7VMn4s7xyc5L+n2VQVJMa/76dPXTyqOBKAF9zVKhXcO0a
- BbnRr1/vxvpTjY6u4coTs3DbOvKrA1zp7QlhjCU1XvCdwZsD1rTq3gNBsEbRb3cj63liwIVZ9n4HO
- V+YPbfycGy9WndLxzA==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1utm9r-008Ik9-1e;
- Wed, 03 Sep 2025 12:00:11 +0000
-Date: Wed, 3 Sep 2025 12:00:11 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Juraj Marcin <jmarcin@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Jiri Denemark <jdenemar@redhat.com>,
- qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [RFC PATCH 0/4] migration: Introduce postcopy-setup capability
- and state
-Message-ID: <aLgtyy_UAfsmOLET@gallifrey>
-References: <20250807114922.1013286-1-jmarcin@redhat.com>
- <aJoEJhJw-_rGVBbA@x1.local>
- <xfzgjwld4ba7mymu3xhkxdwpeie7bbjnbei2xchkqncamktk3g@rbafrorlpvcv>
- <aJzOo7P8aA64AfY_@x1.local>
- <xbqqss2yshtjkew5cirlp2bx3dkumxg3grwpduol5ucpx3leqq@irqeo2csi2vg>
- <aJ43_JQct45mnVgV@x1.local> <aLXehgy3S5G6A3ub@gallifrey>
- <w6qkokuof6ge2gwajhcwul5boaqf57w6m4yzsbyljpgpnigc64@pw2unqceumjn>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utmDJ-0004XR-Lk
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:03:45 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1utmDH-0002IB-TA
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 08:03:45 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-61cc281171cso11116548a12.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Sep 2025 05:03:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1756901017; x=1757505817; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=algJ480OcxSO7wlz2vQBELrWBE2zSJqUfbtVSEJ4UyE=;
+ b=dV/2uYWVRSntWyMV70hoc8i4VHl8I4dLZSBENZ53OiL27P0Y0OU702cuf3Zz2kxdwr
+ a+8ig4L45B/CGNFuqmN5pODTTfXL/TrndI8JFQgS4aVl0+zQZUG6DWJx3/EUWWvRwPgT
+ z4u0BC3+eke+6eWjWuJJPhPEKdd5DnZkeRIhJ1l9T1MEDA4MadMyewHcubtsogKf+9Gk
+ 42dYq5UnezT+17qn8UZOOdRkc4wKXH1uhI7HuxTePTPokmBet+7mAkybZcVarpR1Z5HL
+ rA28bZYBLDk2ZcfzdVok1XvrKtyOlUn24v2hoAeq/f6Sw027hYx4+O8UrvugHlo7/Q7r
+ 3TEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1756901017; x=1757505817;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=algJ480OcxSO7wlz2vQBELrWBE2zSJqUfbtVSEJ4UyE=;
+ b=DR4WQwmgMS9XCfVnrWTQ1JH7lVO2L/h7b+VSJlF3rNw+kVVozr1vSft/1x7k274eGo
+ UrYcBGK7zOFk/qbTa/aVNCWxk40sa7v96c2ghkTVNRw2Vv+gSWGXO6QKDhoVGSgB0AFQ
+ d/G0wYaWPgSz0XCTHmh4RiHZGdxR3GFDEDLwN9c5dPQWaJ0IuCzHKtby45hB8HaI7yb2
+ LwiCojxWwEcFH7xmQhOFPXHDu6u6x7KGsEP44khkU5oW4fJM5/0L5v60HwRa/bySE7u7
+ RIbB6wJLgHx9aHWhARQvQ23Yrr3ym6TNPDpYNFO1W8UxpNERymgLMmPxKH6HDcUV/FN4
+ 5+rA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVtzVeMjfGxweCDQZv4+DQCNETIWbyi0gWTM3FqzHW16UaMuhu58zdGFQUeVmNbGNng0grDUJ1JyK/s@nongnu.org
+X-Gm-Message-State: AOJu0YzqZjz+FvErLzH6Q9OZ0sWml7vIltXl3sHOyoStWI+4uUKBsjse
+ Xq3rkbXaeQECyVUGPHinSnOjOOEhwuWeRg4yBf3i3oQzr8QkpNjABaf9EaT6RP1pigg=
+X-Gm-Gg: ASbGncuRET0Ceh1ISGhMBRvVmCAFQIiINFEBzz73z8lYq7Sr1P6jvAtV7P1gmmRgi9+
+ qCZ8/WftyYaxGX/PiNKQ2vLC1GNaRZEwTRwUFm0dK+42q3gbQLZoFI9Tdm2rgMgMov1MQZCpLtg
+ PHJZlwQZBfNGRcXlcWUBg5Ll+j8MsqAtaY6HopoICZg7vXgftTNK4D8bPTB3jRrXAm3yYThvcGJ
+ KNCsNBCjvuVtWfeJPKibP4IxSAj7fEmoN+pSzAvUwPGOddX4mT4KjZ3Mwxw/pL+6O5+jfnv7waZ
+ Gr3WPQPkYuQXtWBWPfe8meQjiJn83tUP42ZSfQL6k7e1TsM9CaBQoIvkemh4VHrpn+ySlMP3pth
+ nSBEQDSl5CkbUsHahNX5TD8mdUcBGf/t5UN1xbRxiUUhEUWAKjGCUZPCPuPRBU9PIvXh6wwU=
+X-Google-Smtp-Source: AGHT+IH5FueLXJi635PAj3vemL/fFpBhdAeNlPFyjhrfLDpYHyzIip8SLYQncJNtUHR+UP1PeybJ3g==
+X-Received: by 2002:a05:6402:5243:b0:61c:6386:5398 with SMTP id
+ 4fb4d7f45d1cf-61d269974f5mr13761959a12.5.1756901017505; 
+ Wed, 03 Sep 2025 05:03:37 -0700 (PDT)
+Received: from [10.40.6.207] (93-51-222-138.ip268.fastwebnet.it.
+ [93.51.222.138]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-61cfc1c7dfesm11909648a12.7.2025.09.03.05.03.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Sep 2025 05:03:36 -0700 (PDT)
+Message-ID: <30d20299-1797-4e49-8dba-5ce3ed00162e@linaro.org>
+Date: Wed, 3 Sep 2025 14:03:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <w6qkokuof6ge2gwajhcwul5boaqf57w6m4yzsbyljpgpnigc64@pw2unqceumjn>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 11:58:45 up 128 days, 20:12,  2 users,  load average: 0.09, 0.05,
- 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/24] target/arm/hvf: switch
+ hvf_arm_get_host_cpu_features to not create a vCPU
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250903100702.16726-1-philmd@linaro.org>
+ <20250903100702.16726-16-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250903100702.16726-16-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,96 +111,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Juraj Marcin (jmarcin@redhat.com) wrote:
-> Hi Dave,
-> 
-> On 2025-09-01 17:57, Dr. David Alan Gilbert wrote:
-> > * Peter Xu (peterx@redhat.com) wrote:
-> > > On Thu, Aug 14, 2025 at 05:42:23PM +0200, Juraj Marcin wrote:
-> > > > Fair point, I'll then continue with the PING/PONG solution, the first
-> > > > implementation I have seems to be working to resolve Issue 1.
-> > > > 
-> > > > For rarer split brain, we'll rely on block device locks/mgmt to resolve
-> > > > and change the failure handling, so it registers errors from disk
-> > > > activation.
-> > > > 
-> > > > As tested, there should be no problems with the destination
-> > > > transitioning to POSTCOPY_PAUSED, since the VM was not started yet.
-> > > > 
-> > > > However, to prevent the source side from transitioning to
-> > > > POSTCOPY_PAUSED, I think adding a new state is still the best option.
-> > > > 
-> > > > I tried keeping the migration states as they are now and just rely on an
-> > > > attribute of MigrationState if 3rd PONG was received, however, this
-> > > > collides with (at least) migrate_pause tests, that are waiting for
-> > > > POSTCOPY_ACTIVE, and then pause the migration triggering the source to
-> > > > resume. We could maybe work around it by waiting for the 3rd pong
-> > > > instead, but I am not sure if it is possible from tests, or by not
-> > > > resuming if migrate_pause command is executed?
-> > > > 
-> > > > I also tried extending the span of the DEVICE state, but some functions
-> > > > behave differently depending on if they are in postcopy or not, using
-> > > > the migration_in_postcopy() function, but adding the DEVICE there isn't
-> > > > working either. And treating the DEVICE state sometimes as postcopy and
-> > > > sometimes as not seems just too messy, if it would even be possible.
-> > > 
-> > > Yeah, it might indeed be a bit messy.
-> > > 
-> > > Is it possible to find a middle ground?  E.g. add postcopy-setup status,
-> > > but without any new knob to enable it?  Just to describe the period of time
-> > > where dest QEMU haven't started running but started loading device states.
-> > > 
-> > > The hope is libvirt (which, AFAIU, always enables the "events" capability)
-> > > can ignore the new postcopy-setup status transition, then maybe we can also
-> > > introduce the postcopy-setup and make it always appear.
-> > 
-> > When the destination is started with '-S' (autostart=false), which is what
-> > I think libvirt does, doesn't management only start the destination
-> > after a certain useful event?
-> > In other words, is there an event we already emit to say that the destination
-> > has finished loading the postcopy devices, or could we just add that
-> > event, so that management could just wait for that before issuing
-> > the continue?
-> 
-> I am not aware of any such event on the destination side. When postcopy
-> (and its switchower) starts, the destination transitions from ACTIVE
-> directly to POSTCOPY_ACTIVE in the listen thread while devices are
-> loaded concurrently by the main thread.
-> 
-> There is DEVICE state on the source side, but that is used only on the
-> source side when device state is being collected. When device state is
-> being loaded on the destination, the source side is also already in
-> POSTCOPY_ACTIVE state.
+On 9/3/25 12:06, Philippe Mathieu-Daudé wrote:
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 3039c0987dc..fd209d23c1e 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -869,24 +869,25 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>   {
+>       ARMISARegisters host_isar = {};
+>       const struct isar_regs {
+> -        int reg;
+> +        hv_feature_reg_t reg;
+>           uint64_t *val;
+>       } regs[] = {
+> -        { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.idregs[ID_AA64PFR0_EL1_IDX] },
 
-So I wonder what libvirt uses to trigger it starting the destination in
-the postcopy case?  It's got to be after the device state has loaded.
+Versus the original, I suggested that this should be
 
-Dave
+	{ HV_SYS_REG_ID_AA64PFR0_EL1, ID_AA64PFR0_EL1_IDX },
 
-> Best regards,
-> 
-> Juraj Marcin
-> 
-> > 
-> > Dave
-> > 
-> > > Thanks,
-> > > 
-> > > -- 
-> > > Peter Xu
-> > > 
-> > > 
-> > -- 
-> >  -----Open up your eyes, open up your mind, open up your code -------   
-> > / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-> > \        dave @ treblig.org |                               | In Hex /
-> >  \ _________________________|_____ http://www.treblig.org   |_______/
-> > 
-> 
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+etc, so that the data structure could be static const.
+
+
+r~
 
