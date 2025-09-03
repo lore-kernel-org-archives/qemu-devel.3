@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6946CA1009
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D9ECA0FF2
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 13:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utngE-0005N9-0T; Wed, 03 Sep 2025 09:37:42 -0400
+	id 1utng6-0005H2-6l; Wed, 03 Sep 2025 09:37:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1utnfu-00059R-Q9
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:23 -0400
+ id 1utnft-000584-4P
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:21 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1utnfp-0004tH-Qf
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:22 -0400
+ id 1utnfq-0004wC-5C
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 09:37:20 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id EFC90C0197;
- Wed, 03 Sep 2025 16:37:13 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id BFF5CC01A7;
+ Wed, 03 Sep 2025 16:37:16 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:b8f::1:11])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id BbgRSa3GomI0-S0T2KLBN; Wed, 03 Sep 2025 16:37:13 +0300
+ ESMTPSA id BbgRSa3GomI0-H5C7rK5S; Wed, 03 Sep 2025 16:37:16 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1756906633;
- bh=vTD8jN8GgnHxP7miFMJzCoDR8mpWlWdzUIe3poEf6UQ=;
+ s=default; t=1756906636;
+ bh=3KYcrL9COF6I/pEql3juewALPYmRgt15qbCAujjYteQ=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=PEqWXXBV6BmEKO1CTYhh61qfBngaROTC+QHAwReNsM75Gp/JeJdgSiK9+ZxE44Vlt
- ANIbSdfhSbZG/28oFtkbZRiQoSqJJi/41i/sEgy18Aw/wQ06anV6vir2EwgLJknugy
- RCY1Wb6rNL8NCp56vQF2sCEJxpd9wlPpNCXoesUw=
+ b=rih6eT3xn7hslh1z/c5HYOIruhoTgvBOzNn0ZPYLVBq15idHB7Qph2faLJ+C4tRaS
+ Hi2r4+QyW09Wp4xaIWAOkENDeJgw1/ZcxG4BULJOIaHgjtppmtLb4yIP9C36DRwZD7
+ 4a8Z8ZEaxVUhei6/C6jIt5dYSJEvsSBhSdtlq2RI=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,9 +45,9 @@ Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, leiyang@redhat.com,
  steven.sistare@oracle.com, yc-core@yandex-team.ru, peterx@redhat.com,
  mst@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
  thuth@redhat.com, philmd@linaro.org, berrange@redhat.com
-Subject: [PATCH v2 1/8] net/tap: add some trace points
-Date: Wed,  3 Sep 2025 16:36:58 +0300
-Message-ID: <20250903133706.1177633-2-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 5/8] net/tap: implement interfaces for local migration
+Date: Wed,  3 Sep 2025 16:37:02 +0300
+Message-ID: <20250903133706.1177633-6-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
 References: <20250903133706.1177633-1-vsementsov@yandex-team.ru>
@@ -76,133 +76,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add trace points to simplify debugging migration.
+Handle local-incoming option:
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c        | 58 ++++++++++++++++++++++++++++++++++++++++++++++++
- net/trace-events |  7 ++++++
- 2 files changed, 65 insertions(+)
+ include/net/tap.h |   4 ++
+ net/tap.c         | 136 +++++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 119 insertions(+), 21 deletions(-)
 
+diff --git a/include/net/tap.h b/include/net/tap.h
+index 6f34f13eae..3ef2e2dbae 100644
+--- a/include/net/tap.h
++++ b/include/net/tap.h
+@@ -30,7 +30,11 @@
+ 
+ int tap_enable(NetClientState *nc);
+ int tap_disable(NetClientState *nc);
++bool tap_local_incoming(NetClientState *nc);
+ 
+ int tap_get_fd(NetClientState *nc);
+ 
++int tap_load(NetClientState *nc, QEMUFile *f);
++int tap_save(NetClientState *nc, QEMUFile *f);
++
+ #endif /* QEMU_NET_TAP_H */
 diff --git a/net/tap.c b/net/tap.c
-index 2530627a9a..224fb37310 100644
+index a9d955ac5f..499db756ea 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -43,6 +43,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/sockets.h"
- #include "hw/virtio/vhost.h"
-+#include "trace.h"
+@@ -35,6 +35,8 @@
+ #include "net/eth.h"
+ #include "net/net.h"
+ #include "clients.h"
++#include "migration/migration.h"
++#include "migration/qemu-file.h"
+ #include "monitor/monitor.h"
+ #include "system/system.h"
+ #include "qapi/error.h"
+@@ -82,6 +84,7 @@ typedef struct TAPState {
+     VHostNetState *vhost_net;
+     unsigned host_vnet_hdr_len;
+     Notifier exit;
++    bool local_incoming;
+ } TAPState;
  
- #include "net/tap.h"
- 
-@@ -148,6 +149,9 @@ static ssize_t tap_receive_iov(NetClientState *nc, const struct iovec *iov,
-     g_autofree struct iovec *iov_copy = NULL;
-     struct virtio_net_hdr hdr = { };
- 
-+    trace_tap_receive_iov(s->using_vnet_hdr, s->host_vnet_hdr_len, iovcnt,
-+                          iov->iov_len);
-+
-     if (s->host_vnet_hdr_len && !s->using_vnet_hdr) {
-         iov_copy = g_new(struct iovec, iovcnt + 1);
-         iov_copy[0].iov_base = &hdr;
-@@ -183,6 +187,49 @@ static void tap_send_completed(NetClientState *nc, ssize_t len)
-     tap_read_poll(s, true);
+ static void launch_script(const char *setup_script, const char *ifname,
+@@ -803,6 +806,40 @@ static int net_tap_init_vhost(TAPState *s, Error **errp) {
+     return 0;
  }
  
-+static char *tap_dump_packet(const uint8_t *buf, int size)
++int tap_save(NetClientState *nc, QEMUFile *f)
 +{
-+    int i, j;
-+    char hex_line[80];  /* Enough space for hex pairs + spaces */
-+    char ascii_line[17]; /* 16 + 1 for null terminator */
-+    GString *dump_str = g_string_new(NULL);
++    TAPState *s = DO_UPCAST(TAPState, nc, nc);
 +
-+    g_string_append_printf(dump_str, "Packet dump (%d bytes):\n", size);
++    qemu_file_put_fd(f, s->fd);
++    qemu_put_byte(f, s->using_vnet_hdr);
++    qemu_put_byte(f, s->has_ufo);
++    qemu_put_byte(f, s->has_uso);
++    qemu_put_byte(f, s->enabled);
++    qemu_put_be32(f, s->host_vnet_hdr_len);
 +
-+    for (i = 0; i < size; i += 16) {
-+        memset(hex_line, 0, sizeof(hex_line));
-+        memset(ascii_line, 0, sizeof(ascii_line));
-+
-+        /* Build hex line in groups of 2 bytes (4 hex chars) */
-+        int hex_pos = 0;
-+        for (j = 0; j < 16 && (i + j) < size; j += 2) {
-+            if (i + j + 1 < size) {
-+                /* Two bytes available */
-+                hex_pos += snprintf(hex_line + hex_pos,
-+                                    sizeof(hex_line) - hex_pos,
-+                                    "%02x%02x ", buf[i + j], buf[i + j + 1]);
-+            } else {
-+                /* Only one byte left */
-+                hex_pos += snprintf(hex_line + hex_pos,
-+                                    sizeof(hex_line) - hex_pos,
-+                                    "%02x   ", buf[i + j]);
-+            }
-+        }
-+
-+        /* Build ASCII line */
-+        for (j = 0; j < 16 && (i + j) < size; j++) {
-+            uint8_t byte = buf[i + j];
-+            ascii_line[j] = (byte >= 32 && byte <= 126) ? byte : '.';
-+        }
-+
-+        /* Add the line in tcpdump-like format */
-+        g_string_append_printf(dump_str, "\t0x%04x:  %-40s %s\n",
-+                               i, hex_line, ascii_line);
-+    }
-+
-+    return g_string_free(dump_str, false);
++    return 0;
 +}
 +
- static void tap_send(void *opaque)
++int tap_load(NetClientState *nc, QEMUFile *f)
++{
++    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++
++    s->fd = qemu_file_get_fd(f);
++    if (s->fd < 0) {
++        return -1;
++    }
++
++    s->using_vnet_hdr = qemu_get_byte(f);
++    s->has_ufo = qemu_get_byte(f);
++    s->has_uso = qemu_get_byte(f);
++    s->enabled = qemu_get_byte(f);
++    qemu_get_be32s(f, &s->host_vnet_hdr_len);
++
++    tap_read_poll(s, true);
++
++    return net_tap_init_vhost(s, NULL);
++}
++
+ static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
+                                   const char *model, const char *name,
+                                   const char *ifname, const char *script,
+@@ -810,30 +847,40 @@ static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
+                                   const char *vhostfdname,
+                                   int vnet_hdr, int fd, Error **errp)
  {
-     TAPState *s = opaque;
-@@ -199,6 +246,13 @@ static void tap_send(void *opaque)
-             break;
+-    const NetdevTapOptions *tap;
++    const NetdevTapOptions *tap = NULL;
+     int ret;
+     NetClientState *nc;
+     TAPState *s;
++    bool local_incoming = false;
++
++    if (netdev->type == NET_CLIENT_DRIVER_TAP) {
++        tap = &netdev->u.tap;
++        local_incoming = tap->local_incoming;
++    }
+ 
+     nc = qemu_new_net_client(&net_tap_info, peer, model, name);
+ 
+     s = DO_UPCAST(TAPState, nc, nc);
+-
+-    s->fd = fd;
+-    s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
+-    s->using_vnet_hdr = false;
+-    s->has_ufo = tap_probe_has_ufo(s->fd);
+-    s->has_uso = tap_probe_has_uso(s->fd);
+-    s->enabled = true;
+-    tap_set_offload(&s->nc, 0, 0, 0, 0, 0, 0, 0);
+-    /*
+-     * Make sure host header length is set correctly in tap:
+-     * it might have been modified by another instance of qemu.
+-     */
+-    if (vnet_hdr) {
+-        tap_fd_set_vnet_hdr_len(s->fd, s->host_vnet_hdr_len);
++    s->local_incoming = local_incoming;
++
++    if (!local_incoming) {
++        s->fd = fd;
++        s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
++        s->using_vnet_hdr = false;
++        s->has_ufo = tap_probe_has_ufo(s->fd);
++        s->has_uso = tap_probe_has_uso(s->fd);
++        s->enabled = true;
++        tap_set_offload(&s->nc, 0, 0, 0, 0, 0, 0, 0);
++        /*
++         * Make sure host header length is set correctly in tap:
++         * it might have been modified by another instance of qemu.
++         */
++        if (vnet_hdr) {
++            tap_fd_set_vnet_hdr_len(s->fd, s->host_vnet_hdr_len);
++        }
++        tap_read_poll(s, true);
+     }
+-    tap_read_poll(s, true);
++
+     s->vhost_net = NULL;
+     s->exit.notify = NULL;
+ 
+@@ -845,9 +892,8 @@ static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
+     }
+ 
+     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
+-    tap = &netdev->u.tap;
+ 
+-    if (tap_set_sndbuf(s->fd, tap, errp) < 0) {
++    if (!local_incoming && tap_set_sndbuf(s->fd, tap, errp) < 0) {
+         goto failed;
+     }
+ 
+@@ -873,9 +919,11 @@ static int net_tap_fd_init_common(const Netdev *netdev, NetClientState *peer,
+         goto failed;
+     }
+ 
+-    ret = net_tap_init_vhost(s, errp);
+-    if (ret < 0) {
+-        goto failed;
++    if (!local_incoming) {
++        ret = net_tap_init_vhost(s, errp);
++        if (ret < 0) {
++            goto failed;
++        }
+     }
+ 
+     return 0;
+@@ -942,6 +990,38 @@ static int net_tap_open(const Netdev *netdev,
+     return 0;
+ }
+ 
++static int net_init_local_incoming(const Netdev *netdev,
++                                   const char *name,
++                                   NetClientState *peer,
++                                   Error **errp)
++{
++    const NetdevTapOptions *tap = &netdev->u.tap;
++    const char *downscript = tap->downscript;
++    int queues = tap->has_queues ? tap->queues : 1;
++    g_autofree char *default_downscript = NULL;
++    int i, ret;
++
++    assert(netdev->type == NET_CLIENT_DRIVER_TAP);
++    assert(!tap->script);
++
++    if (!downscript) {
++        downscript = default_downscript =
++                             get_relocated_path(DEFAULT_NETWORK_DOWN_SCRIPT);
++    }
++
++    for (i = 0; i < queues; i++) {
++        ret = net_tap_fd_init_common(netdev, peer, "tap", name,
++                                     tap->ifname ?: "",
++                                     "no", downscript,
++                                     tap->vhostfd, -1, -1, errp);
++        if (ret < 0) {
++            return -1;
++        }
++    }
++
++    return 0;
++}
++
+ static int net_init_tap_fds(const Netdev *netdev, const char *name,
+                             NetClientState *peer, Error **errp)
+ {
+@@ -1030,6 +1110,13 @@ int net_init_tap(const Netdev *netdev, const char *name,
          }
  
-+        if (trace_event_get_state_backends(TRACE_TAP_PACKET_DUMP)) {
-+            g_autofree char *dump = tap_dump_packet(s->buf, size);
-+            trace_tap_packet_dump(dump);
+         return net_init_bridge(netdev, name, peer, errp);
++    } else if (tap->local_incoming) {
++        if (tap->script) {
++            error_setg(errp, "script= is invalid with local-incoming");
++            return -1;
 +        }
 +
-+        trace_tap_send_packet(s->using_vnet_hdr, s->host_vnet_hdr_len, size);
-+
-         if (s->host_vnet_hdr_len && size <= s->host_vnet_hdr_len) {
-             /* Invalid packet */
-             break;
-@@ -980,6 +1034,8 @@ int tap_enable(NetClientState *nc)
-     TAPState *s = DO_UPCAST(TAPState, nc, nc);
-     int ret;
++        return net_init_local_incoming(netdev, name, peer, errp);
+     }
  
-+    trace_tap_enable();
+     if (tap->vhostfds) {
+@@ -1078,3 +1165,10 @@ int tap_disable(NetClientState *nc)
+         return ret;
+     }
+ }
 +
-     if (s->enabled) {
-         return 0;
-     } else {
-@@ -997,6 +1053,8 @@ int tap_disable(NetClientState *nc)
-     TAPState *s = DO_UPCAST(TAPState, nc, nc);
-     int ret;
- 
-+    trace_tap_disable();
++bool tap_local_incoming(NetClientState *nc)
++{
++    TAPState *s = DO_UPCAST(TAPState, nc, nc);
 +
-     if (s->enabled == 0) {
-         return 0;
-     } else {
-diff --git a/net/trace-events b/net/trace-events
-index cda960f42b..b51427f539 100644
---- a/net/trace-events
-+++ b/net/trace-events
-@@ -29,3 +29,10 @@ vhost_vdpa_set_address_space_id(void *v, unsigned vq_group, unsigned asid_num) "
- vhost_vdpa_net_load_cmd(void *s, uint8_t class, uint8_t cmd, int data_num, int data_size) "vdpa state: %p class: %u cmd: %u sg_num: %d size: %d"
- vhost_vdpa_net_load_cmd_retval(void *s, uint8_t class, uint8_t cmd, int r) "vdpa state: %p class: %u cmd: %u retval: %d"
- vhost_vdpa_net_load_mq(void *s, int ncurqps) "vdpa state: %p current_qpairs: %d"
-+
-+# tap.c
-+tap_receive_iov(bool using_vnet_hdr, uint32_t host_vnet_hdr_len, int iovcnt, size_t iov_len) "using_vnet_hdr:%d host_vnet_hdr_len:%u iovcnt:%d iov_len:%zu"
-+tap_send_packet(bool using_vnet_hdr, uint32_t host_vnet_hdr_len, int size) "using_vnet_hdr:%d host_vnet_hdr_len:%u size:%d"
-+tap_enable(void) "tap enabled"
-+tap_disable(void) "tap disabled"
-+tap_packet_dump(const char *dump_str) "%s"
++    return s->local_incoming && runstate_check(RUN_STATE_INMIGRATE);
++}
 -- 
 2.48.1
 
