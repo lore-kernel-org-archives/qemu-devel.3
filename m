@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D032CA100B
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349A8CA1007
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Sep 2025 05:47:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1utgKz-0005RU-PJ; Wed, 03 Sep 2025 01:47:17 -0400
+	id 1utgLB-0005Vm-R0; Wed, 03 Sep 2025 01:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1utgKx-0005Qy-Ls
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:15 -0400
+ id 1utgL4-0005Sd-1O
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:24 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1utgKu-000206-34
- for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:15 -0400
+ id 1utgL1-00020d-1J
+ for qemu-devel@nongnu.org; Wed, 03 Sep 2025 01:47:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1756878433; x=1788414433;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=F068w2uet0gCfJJMRsmAhZ6dLwCgtueHGaTQy1w2tw4=;
- b=Ns0IK73mZH/SifuLYWWrRP8IFuUH9mbGM624+vS4BY9ikGXcrS6Aa+0A
- WF1047Pa8znO6OdoVQqxWu6ZaH0XsUJY8ed9v07B9QJqXurKUvqU0hese
- vpTq1iG9jUtQDxIkKjsTKYNoG0Hvc0brr3slFS9gTch+9XK53+keSKg+g
- mIiScd+znPWY1qNoObPRW9AZu7AN5sXzPU3pKSZPhoxGBlQuBJrToM81w
- MzGlqzyZw6X7nb++ZO9MCJ+aPbeAdltcK/OTV8PscWAF1VeOpS37nh/uy
- T/HFKflevy9U3Pgrc9xwkDpapTcZAgrsdmQaaco/NVUHSt+W6gzTeN6MB w==;
-X-CSE-ConnectionGUID: R9eFAYxLRdeDg6DSTD8Ivw==
-X-CSE-MsgGUID: xt5xOMsUS/i5co5AgdppJw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="58878184"
-X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="58878184"
+ t=1756878440; x=1788414440;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=/b9BrS4N3IBhHzwSjL7/bGnI4s0+FhlyYtfD4N/KW4c=;
+ b=JLF6/uZFmi1AwCPlpknmL5uxW8seIV1gcye1h6IoVlIzg7OzZnMFWO95
+ xrCoYymUUVSKon9D4eAblD/uY2GIGy9w8xCmUOLujCptYyH4lsp9EL6Hm
+ SPf+a+Ti/7IzoN2OYzfsu8DXf/JhiMWNrIUFv3nZiRDLNcBu2YUpwivom
+ sJBDS6o6EU3IwvivKLzCEAABSDRv4Jki4IAX7GkqIQhs5B3I9J+pLqmBv
+ i2RffkTxarBBmfHsRb3J0j6rcfEl5ygjNHx54JZNCKhh8+aVRSpsPAWCN
+ Y8S9KQx8lVI+xl4RByFd6oRexjiw5Jk2LyawJsryiuoL8F8z5dVd2do5J A==;
+X-CSE-ConnectionGUID: lCz8yaA+T9OHmRcZb3b1PQ==
+X-CSE-MsgGUID: q2fkgIsZTO6NL5XJ6s97kw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="58878200"
+X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="58878200"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2025 22:47:08 -0700
-X-CSE-ConnectionGUID: Hfiw9vIyQPumV2CGXiQHyw==
-X-CSE-MsgGUID: pY5y4FukR8aDjdT9FzTejQ==
+ 02 Sep 2025 22:47:09 -0700
+X-CSE-ConnectionGUID: PUiCqFV2RxuMYLNF1fZeEQ==
+X-CSE-MsgGUID: JvnLlx8tRxq656Pk+Y4qTQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="175634757"
+X-IronPort-AV: E=Sophos;i="6.18,233,1751266800"; d="scan'208";a="175634774"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2025 22:47:07 -0700
+ 02 Sep 2025 22:47:08 -0700
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Leon Romanovsky <leon@kernel.org>, Leon Romanovsky <leonro@nvidia.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Dongwon Kim <dongwon.kim@intel.com>
-Subject: [RFC 0/6] vfio: Implement VFIO_DEVICE_FEATURE_DMA_BUF and use it in
- virtio-gpu
-Date: Tue,  2 Sep 2025 22:42:13 -0700
-Message-ID: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [RFC 4/6] virtio-gpu: Don't rely on res->blob to identify blob
+ resources
+Date: Tue,  2 Sep 2025 22:42:17 -0700
+Message-ID: <20250903054438.1179384-5-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
+References: <20250903054438.1179384-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -90,58 +88,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio-gpu driver running in the Guest VM can create Guest blob
-resources (by importing dmabufs) that are backed by System RAM. This
-is made possible by making use of memfd memory backend and udmabuf
-driver on the Host side. However, in order to create Guest blobs
-that are backed by vfio-pci device regions, we have to implement
-VFIO_DEVICE_FEATURE_DMA_BUF and leverage it in virtio-gpu.
+The res->blob pointer is only valid for blobs that have their
+backing storage in memfd. Therefore, we cannot use it to determine
+if a resource is a blob or not. Instead, we could use res->blob_size
+to make this determination as it is non-zero for blob resources
+regardless of where their backing storage is located.
 
-So, while creating the blobs we use memory_region_is_ram_device() to
-figure out if the blob is backed by memfd or a vfio-pci device. If
-it is determined that the blob is backed by vfio-pci device region,
-instead of calling into udmabuf driver to create dmabuf we would
-now call into vfio-pci driver to have a dmabuf created on the Host.
-
-Tested with an SRIOV enabled Intel dGPU by running Gnome Wayland
-(in the VM) and Qemu with the following (relevant) parameters:
--device vfio-pci,host=0000:03:00.1
--device virtio-vga,max_outputs=1,xres=1920,yres=1080,blob=true
--display gtk,gl=on
-
-Associated vfio-pci kernel driver series:
-https://lore.kernel.org/dri-devel/cover.1754311439.git.leon@kernel.org/
-Associated virtio-gpu kernel driver series (merged):
-https://lore.kernel.org/dri-devel/20241126031643.3490496-1-vivek.kasireddy@intel.com/
-
----
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
 Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: Cédric Le Goater <clg@redhat.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Leon Romanovsky <leonro@nvidia.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Dongwon Kim <dongwon.kim@intel.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+---
+ hw/display/virtio-gpu.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-Vivek Kasireddy (6):
-  linux-headers: Update vfio.h to include VFIO_DEVICE_FEATURE_DMA_BUF
-  vfio: Add support for VFIO_DEVICE_FEATURE_DMA_BUF
-  virtio-gpu-udmabuf: Create dmabuf for blobs associated with VFIO
-    devices
-  virtio-gpu: Don't rely on res->blob to identify blob resources
-  virtio-gpu: Recreate the resource's dmabuf if new backing is attached
-  virtio-gpu: Find the host addr given gpa associated with a ram device
-
- hw/display/virtio-gpu-udmabuf.c | 60 ++++++++++++++++++++++++++++-----
- hw/display/virtio-gpu.c         | 58 +++++++++++++++++++++++++------
- hw/vfio/region.c                | 49 +++++++++++++++++++++++++++
- include/hw/vfio/vfio-device.h   |  3 ++
- linux-headers/linux/vfio.h      | 25 ++++++++++++++
- 5 files changed, 176 insertions(+), 19 deletions(-)
-
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 0a1a625b0e..2f9133c3b6 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -57,7 +57,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+     }
+ 
+     if (res->blob_size) {
+-        if (res->blob_size < (s->current_cursor->width *
++        if (!res->blob || res->blob_size < (s->current_cursor->width *
+                               s->current_cursor->height * 4)) {
+             return;
+         }
+@@ -144,7 +144,7 @@ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
+     }
+ 
+     if (require_backing) {
+-        if (!res->iov || (!res->image && !res->blob)) {
++        if (!res->iov || (!res->image && !res->blob_size)) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: no backing storage %d\n",
+                           caller, resource_id);
+             if (error) {
+@@ -444,7 +444,7 @@ static void virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
+ 
+     res = virtio_gpu_find_check_resource(g, t2d.resource_id, true,
+                                          __func__, &cmd->error);
+-    if (!res || res->blob) {
++    if (!res || res->blob_size) {
+         return;
+     }
+ 
+@@ -507,7 +507,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
+         return;
+     }
+ 
+-    if (res->blob) {
++    if (res->blob_size) {
+         for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
+             scanout = &g->parent_obj.scanout[i];
+             if (scanout->resource_id == res->resource_id &&
+@@ -538,7 +538,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
+         }
+     }
+ 
+-    if (!res->blob &&
++    if (!res->blob_size &&
+         (rf.r.x > res->width ||
+         rf.r.y > res->height ||
+         rf.r.width > res->width ||
+@@ -634,7 +634,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+ 
+     g->parent_obj.enable = 1;
+ 
+-    if (res->blob) {
++    if (res->blob_size) {
+         if (console_has_gl(scanout->con)) {
+             if (!virtio_gpu_update_dmabuf(g, scanout_id, res, fb, r)) {
+                 virtio_gpu_update_scanout(g, scanout_id, res, fb, r);
+@@ -645,13 +645,16 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+             return true;
+         }
+ 
++        if (!res->blob) {
++            return false;
++        }
+         data = res->blob;
+     } else {
+         data = (uint8_t *)pixman_image_get_data(res->image);
+     }
+ 
+     /* create a surface for this scanout */
+-    if ((res->blob && !console_has_gl(scanout->con)) ||
++    if ((res->blob_size && !console_has_gl(scanout->con)) ||
+         !scanout->ds ||
+         surface_data(scanout->ds) != data + fb->offset ||
+         scanout->width != r->width ||
+@@ -899,7 +902,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+     g_free(res->addrs);
+     res->addrs = NULL;
+ 
+-    if (res->blob) {
++    if (res->blob_size) {
+         virtio_gpu_fini_udmabuf(res);
+     }
+ }
 -- 
 2.50.1
 
